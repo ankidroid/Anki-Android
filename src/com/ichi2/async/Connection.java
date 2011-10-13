@@ -73,7 +73,9 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
 
     private static Connection sInstance;
     private TaskListener mListener;
-    
+
+    public static final int RETURN_TYPE_OUT_OF_MEMORY = -1;
+
     public static final String CONFLICT_RESOLUTION = "ConflictResolutionRequired";
 
     
@@ -150,10 +152,6 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
         return launchConnectionTask(listener, data);
     }
 
-    public static void cancelGetDecks() {
-    	sInstance.cancel(true);
-    }
-
 
     public static Connection syncAllDecks(TaskListener listener, Payload data) {
         data.taskType = TASK_TYPE_SYNC_ALL_DECKS;
@@ -220,6 +218,12 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
     }
 
 
+    public static void cancelGetSharedDecks() {
+       	AnkiDroidProxy.resetSharedDecks();
+    	sInstance.cancel(true);
+    }
+
+
     private Payload doInBackgroundLogin(Payload data) {
         try {
             String username = (String) data.data[0];
@@ -241,8 +245,16 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
 
 
     private Payload doInBackgroundGetSharedDecks(Payload data) {
+        if (AnkiDroidApp.deck() != null) {
+            AnkiDroidApp.deck().closeDeck();
+            AnkiDroidApp.setDeck(null);
+        }
         try {
             data.result = AnkiDroidProxy.getSharedDecks();
+        } catch (OutOfMemoryError e) {
+            data.success = false;
+            data.returnType = RETURN_TYPE_OUT_OF_MEMORY;
+	    	Log.e(AnkiDroidApp.TAG, "doInBackgroundGetSharedDecks: OutOfMemoryError: " + e);
         } catch (Exception e) {
             data.success = false;
             data.exception = e;
@@ -255,7 +267,10 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
 
     private Payload doInBackgroundGetPersonalDecks(Payload data) {
         Resources res = sContext.getResources();
-        
+        if (AnkiDroidApp.deck() != null) {
+            AnkiDroidApp.deck().closeDeck();
+            AnkiDroidApp.setDeck(null);
+        }
         try {
             String username = (String) data.data[0];
             String password = (String) data.data[1];
@@ -297,12 +312,18 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
         //Log.i(AnkiDroidApp.TAG, "username = " + username);
         //Log.i(AnkiDroidApp.TAG, "password = " + password);
 
+        Deck currentDeck = AnkiDroidApp.deck();
+        if (currentDeck != null) {
+        	currentDeck.closeDeck();
+        }
+
         ArrayList<HashMap<String, String>> decksToSync = (ArrayList<HashMap<String, String>>) data.data[2];
         for (HashMap<String, String> deckToSync : decksToSync) {
             Log.i(AnkiDroidApp.TAG, "Synchronizing deck");
             String deckPath = deckToSync.get("filepath");
             try {
-                Deck deck = Deck.openDeck(deckPath);
+            	boolean forceDeleteJournalMode =  Deck.isWalEnabled(deckPath);
+                Deck deck = Deck.openDeck(deckPath, true, forceDeleteJournalMode);
 
                 Payload syncDeckData = new Payload(new Object[] { username, password, deck, deckPath, null });
                 syncDeckData = doInBackgroundSyncDeck(syncDeckData);
@@ -337,6 +358,12 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
         String deckPath = (String) data.data[3];
         String syncName = deckPath.substring(deckPath.lastIndexOf("/") + 1, deckPath.length() - 5);
         String conflictResolution = (String) data.data[4];
+
+        if (deck == null) {
+        	// if syncing in study options screen, deck is set to null if wal mode is enabled
+        	publishProgress(syncName, res.getString(R.string.sync_set_journal_mode));
+        	deck = Deck.openDeck(deckPath, true, true);
+        }
 
         syncChangelog.put("deckName", syncName);
 

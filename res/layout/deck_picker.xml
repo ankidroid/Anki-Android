@@ -3,25 +3,30 @@
 	xmlns:android="http://schemas.android.com/apk/res/android"
 	android:layout_width="fill_parent"
 	android:layout_height="fill_parent"
-	android:orientation="vertical">
+	android:orientation="vertical"
+	android:background="?android:attr/colorBackground"
+	android:id="@+id/deckpicker_view">
 
 	<ListView android:id="@+id/files"
 		android:layout_width="fill_parent"
 		android:layout_height="0dp"
 		android:layout_weight="1"
-		android:fastScrollEnabled="true"/>
+		android:background="?android:attr/colorBackground"
+		android:fastScrollEnabled="true" 
+		android:drawSelectorOnTop="true"
+		android:focusable="true"/>
 
 	<LinearLayout
+		android:id="@+id/deckpicker_buttons"
 		android:layout_width="fill_parent"
 		android:layout_height="wrap_content"
 		android:orientation="horizontal">
-		
+
 		<Button	android:id="@+id/sync_all_button"
 			android:layout_width="0dip"
 			android:layout_height="fill_parent"
 			android:layout_weight="1"
 			android:layout_marginTop="3dp"
-			android:layout_marginBottom="3dp"
 			android:enabled="true"
 			android:text="@string/sync_all"/>
 		
@@ -30,7 +35,6 @@
 			android:layout_height="fill_parent"
 			android:layout_weight="1"
 			android:layout_marginTop="3dp"
-			android:layout_marginBottom="3dp"
 			android:enabled="true"
 			android:text="@string/statistics"/>
 	</LinearLayout>

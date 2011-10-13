@@ -25,13 +25,17 @@
 	android:background="#ffffff">
 
 	<!-- Top bar -->
+	<RelativeLayout android:id="@+id/top_bar"
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content">
 	<TextView android:id="@+id/red_number"
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
 		android:paddingLeft="9dp"
 		android:layout_marginTop="4dp"
 		android:text=""
-		android:textColor="#0000ff" />
+		android:textSize="14dip"
+		android:textColor="#ff0000" />
 	<TextView android:id="@+id/black_number"
 		android:layout_toRightOf="@+id/red_number"
 		android:layout_alignTop="@+id/red_number"
@@ -39,7 +43,8 @@
 		android:layout_height="wrap_content"
 		android:paddingLeft="8dp"
 		android:text=""
-		android:textColor="#ff0000" />
+		android:textSize="14dip"
+		android:textColor="#000000" />
 	<TextView android:id="@+id/blue_number"
 		android:layout_toRightOf="@+id/black_number"
 		android:layout_alignTop="@+id/red_number"
@@ -47,7 +52,8 @@
 		android:layout_height="wrap_content"
 		android:paddingLeft="8dp"
 		android:text=""
-		android:textColor="#000000" />
+		android:textSize="14dip"
+		android:textColor="@color/textbar_blue_color" />
 	<TextView android:id="@+id/choosen_answer"
 		android:layout_centerHorizontal="true"
 		android:layout_alignTop="@+id/red_number"
@@ -55,7 +61,7 @@
 		android:layout_height="wrap_content"
 		android:gravity="center"
 		android:text=""
-		android:textColor="#808080" />
+		android:textSize="14dip"/>
 	<LinearLayout
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
@@ -69,7 +75,7 @@
 			android:layout_toLeftOf="@+id/card_time"
 			android:orientation="vertical"
 			android:gravity="center"
-			android:visibility="gone"
+			android:visibility="invisible"
 			android:paddingRight="8dp">
 			<FrameLayout android:id="@+id/progress_bars_border1"
 				android:background="#808080"
@@ -81,10 +87,10 @@
 					android:background="#ffffff"
 					android:layout_width="fill_parent"
 					android:layout_height="fill_parent">
-					<View android:id="@+id/daily_bar"
+					<View android:id="@+id/session_progress"
 						android:layout_width="0dip"
 						android:layout_height="fill_parent"
-						android:background="#000000"/>
+						android:background="#323232"/>
 				</FrameLayout>
 			</FrameLayout>
 			<FrameLayout android:id="@+id/progress_bars_border2"
@@ -96,7 +102,7 @@
 					android:background="#ffffff"
 					android:layout_width="fill_parent"
 					android:layout_height="fill_parent">
-					<View android:id="@+id/global_bar"
+					<View android:id="@+id/daily_bar"
 						android:layout_width="0dip"
 						android:layout_height="fill_parent"
 						android:background="#000000"/>
@@ -107,26 +113,52 @@
 			android:layout_alignParentRight="true"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
+		android:paddingRight="4dp"
+		android:textSize="14dip"
+		android:visibility="invisible"
 			android:gravity="right"
 			android:textColor="#000000" />
 	</LinearLayout>
+</RelativeLayout>
 	<!-- Card and whiteboard -->
-	<WebView android:id="@+id/flashcard"
-		android:longClickable="true"
-		android:layout_below="@+id/red_number"
+	<FrameLayout android:id="@+id/flashcard_frame"
+		android:layout_margin="3dip"
+		android:layout_below="@+id/top_bar"
 		android:layout_above="@+id/answer_nextTime_layout"
 		android:layout_width="fill_parent"
-		android:layout_height="fill_parent"
-		android:textSize="15sp" />
-	<FrameLayout android:id="@+id/whiteboard"
-		android:layout_below="@+id/red_number"
-		android:layout_above="@+id/answer_nextTime_layout"
-		android:layout_width="fill_parent"
-		android:layout_height="fill_parent" />
-
+		android:layout_height="fill_parent">
+		<FrameLayout android:id="@+id/flashcard"
+			android:layout_width="fill_parent"
+			android:layout_height="fill_parent"/>
+		<LinearLayout
+			android:layout_width="fill_parent"
+			android:layout_height="fill_parent">			
+			<FrameLayout android:id="@+id/touch_layer"
+				android:layout_marginTop="20dip"
+				android:longClickable="true"
+				android:layout_width="fill_parent"
+				android:layout_height="fill_parent"/>
+		</LinearLayout>
+		<FrameLayout android:id="@+id/whiteboard"
+			android:layout_width="fill_parent"
+			android:layout_height="fill_parent"/>
+		<ImageView android:id="@+id/lookup_button"
+			android:padding="5dip"
+			android:layout_gravity="right"
+			android:src="@drawable/ic_lookup"
+			android:visibility="gone"
+			android:clickable="true"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"/>
+		<FrameLayout android:id="@+id/flashcard_border"
+			android:visibility="gone"
+			android:layout_width="fill_parent"
+			android:layout_height="fill_parent"/>
+	</FrameLayout>
 	<LinearLayout android:id="@+id/answer_nextTime_layout"
 		android:layout_width="fill_parent"
 		android:layout_height="wrap_content"
+		android:layout_marginBottom="1dp"
 		android:layout_above="@+id/bottom_area_layout">
 		<TextView android:id="@+id/nextTime1"
 			android:textColor="@color/next_time_failed_color"
@@ -134,13 +166,12 @@
 			android:layout_height="fill_parent"
 			android:layout_weight="1"
 			android:layout_gravity="center"
-			android:visibility="gone"
 			android:gravity="bottom|center_horizontal"/>
 		<include android:id="@+id/nextTime2" layout="@layout/next_time_textview" />
 		<include android:id="@+id/nextTime3" layout="@layout/next_time_textview" />
 		<include android:id="@+id/nextTime4" layout="@layout/next_time_textview" />
 	</LinearLayout>
-	
+
 	<LinearLayout android:id="@+id/bottom_area_layout"
 		android:layout_width="fill_parent"
 		android:layout_height="wrap_content"

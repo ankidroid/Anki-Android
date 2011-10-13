@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
   	android:layout_width="fill_parent"
   	android:layout_height="fill_parent"
+  	android:background="?android:attr/colorBackground"
   	android:orientation="vertical">
 	<EditText android:id="@+id/shared_deck_download_search"
 		android:layout_width="fill_parent"
@@ -12,5 +13,6 @@
   	<ListView android:id="@+id/list"
   		android:layout_width="fill_parent"
     	android:layout_height="wrap_content"
+    	android:background="?android:attr/colorBackground"
     	android:fastScrollEnabled="true"/>
 </LinearLayout>

@@ -26,7 +26,6 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.res.Resources;
 import android.os.Environment;
-import android.os.PowerManager;
 import android.util.Log;
 import android.view.Display;
 import android.view.WindowManager;
@@ -37,16 +36,14 @@ import com.tomgibara.android.veecheck.Veecheck;
 import com.tomgibara.android.veecheck.util.PrefSettings;
 
 import java.io.File;
+import java.io.IOException;
+
 import com.zeemote.zc.Controller;
-import com.zeemote.zc.event.BatteryEvent;
-import com.zeemote.zc.event.ControllerEvent;
-import com.zeemote.zc.event.DisconnectEvent;
-import com.zeemote.zc.event.IStatusListener;
 
 /**
  * Application class. This file mainly contains Veecheck stuff.
  */
-public class AnkiDroidApp extends Application implements IStatusListener {
+public class AnkiDroidApp extends Application {
 	
 	public static final String LIBANKI_VERSION = "1.2.5";
 	public static final String DROPBOX_PUBLIC_DIR = "/dropbox/Public/Anki";
@@ -67,7 +64,6 @@ public class AnkiDroidApp extends Application implements IStatusListener {
     private Deck mLoadedDeck;
     
     private Controller mZeemoteController;
-	private PowerManager.WakeLock wakeLock;
 
     /**
      * On application creation.
@@ -99,11 +95,12 @@ public class AnkiDroidApp extends Application implements IStatusListener {
 
             // Create the folder "AnkiDroid", if not exists, where the decks
             // will be stored by default
-            new File(getStorageDirectory() + "/AnkiDroid").mkdir();
+            String deckPath = getStorageDirectory() + "/AnkiDroid";
+            createDecksDirectoryIfMissing(new File(deckPath));
 
             // Put the base path in preferences pointing to the default
             // "AnkiDroid" folder
-            editor.putString("deckPath", getStorageDirectory() + "/AnkiDroid");
+            editor.putString("deckPath", deckPath);
 
             // Using commit instead of apply even though we don't need a return value.
             // Reason: apply() not available on Android 1.5
@@ -115,8 +112,8 @@ public class AnkiDroidApp extends Application implements IStatusListener {
         // It may also necessary in the case where an application has been
         // updated
         // Here for simplicity, we do it every time the application is launched
-        Intent intent = new Intent(Veecheck.getRescheduleAction(this));
-        sendBroadcast(intent);
+        // Intent intent = new Intent(Veecheck.getRescheduleAction(this));
+        // sendBroadcast(intent);
     }
 
 
@@ -127,6 +124,31 @@ public class AnkiDroidApp extends Application implements IStatusListener {
 
     public static String getStorageDirectory() {
         return Environment.getExternalStorageDirectory().getAbsolutePath();
+    }
+
+
+    public static void createDecksDirectoryIfMissing(File decksDirectory) {
+    	if (!decksDirectory.isDirectory()) {
+    		decksDirectory.mkdirs();
+        }
+    	try {
+			new File(decksDirectory.getAbsolutePath() + "/.nomedia").createNewFile();
+		} catch (IOException e) {
+			Log.e(AnkiDroidApp.TAG, "Nomedia file could not be created");
+		}
+		createNoMediaFileIfMissing(decksDirectory);
+    }
+
+
+    public static void createNoMediaFileIfMissing(File decksDirectory) {
+    	File mediaFile = new File(decksDirectory.getAbsolutePath() + "/.nomedia");
+    	if (!mediaFile.exists()) {
+        	try {
+        		mediaFile.createNewFile();
+    		} catch (IOException e) {
+    			Log.e(AnkiDroidApp.TAG, "Nomedia file could not be created in path " + decksDirectory.getAbsolutePath());
+    		}    		
+    	}
     }
 
 
@@ -232,26 +254,5 @@ public class AnkiDroidApp extends Application implements IStatusListener {
         }
         return null;
     }
-
-	@Override
-	public void batteryUpdate(BatteryEvent arg0) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void connected(ControllerEvent arg0) {
-        final PowerManager pm = (PowerManager)getSystemService(Context.POWER_SERVICE);
-        wakeLock = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, TAG);
-        wakeLock.acquire();
-	}
-
-	@Override
-	public void disconnected(DisconnectEvent arg0) {
-		if (wakeLock!=null) {
-			wakeLock.release();
-			wakeLock = null;
-		}
-	}
     
 }

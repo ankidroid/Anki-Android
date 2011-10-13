@@ -7,16 +7,15 @@
 	<TextView
 		android:layout_height="wrap_content"
 		android:text="@string/studyoptions_no_external_storage_title"
-		android:textColor="#ffffff"
 		android:textStyle="bold"
 		android:textSize="28dip"
 		android:gravity="center"
+		android:id="@+id/studyoptions_nostorage_title"
 		android:layout_width="fill_parent" />
 	<TextView
+		android:id="@+id/studyoptions_nostorage_message"
 		android:layout_height="wrap_content"
 		android:layout_width="fill_parent"
 		android:text="@string/studyoptions_no_external_storage_message"
-		android:layout_marginTop="10dip"
-		android:paddingLeft="20dip"
-		android:paddingRight="20dip" />
+		android:layout_margin="15dip"/>
 </LinearLayout>

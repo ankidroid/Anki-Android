@@ -48,15 +48,21 @@
 	</string-array>
 	<string-array name="dictionary_labels">
 		<item>Aedict</item>
+		<item>Eijiro (Web)</item>
 		<item>Leo.org (Web)</item>
 		<item>Leo.org (App)</item>
-		<item>ColorDict</item>
+		<item>ColorDict/GoldenDict</item>
+		<item>Fora</item>
+		<item>Nciku (Web)</item>
 	</string-array>
 	<string-array name="dictionary_values">
 		<item>0</item>
 		<item>1</item>
 		<item>2</item>
 		<item>3</item>
+		<item>4</item>
+		<item>5</item>
+		<item>6</item>
 	</string-array>
 	<string-array name="error_reporting_choice_values">
 		<item>0</item>
@@ -73,20 +79,13 @@
 		<item>200</item>
 		<item>1000000</item>
 	</string-array>
-	<string-array name="card_browser_order_values">
-		<item>SUBSTR(cards.question, 34) COLLATE NOCASE</item>
-		<item>SUBSTR(cards.answer, 34) COLLATE NOCASE</item>
-		<item>combinedDue ASC</item>
-		<item>interval ASC</item>
-		<item>factor DESC</item>
-		<item>cards.created DESC</item>
-	</string-array>
 	<string-array name="statistics_type_values">
 		<item>0</item>
 		<item>1</item>
 		<item>2</item>
 		<item>3</item>
 		<item>4</item>
+		<item>5</item>
 	</string-array>
 	<string-array name="statistics_period_values">
 		<item>8</item>
@@ -121,6 +120,11 @@
 		<item>15</item>
 		<item>16</item>
 	</string-array>
+	<string-array name="theme_values">
+		<item>0</item>
+		<item>1</item>
+		<item>2</item>
+	</string-array>
 	<string name="link_anki">http://ankisrs.net</string>
 	<string name="link_ankidroid">http://code.google.com/p/ankidroid</string>
 	<string name="link_forum">http://groups.google.com/group/anki-android</string>
@@ -137,19 +141,57 @@
 	<string name="error_post_url">http://ankidroid-triage.appspot.com/crash_receiver</string>		
 	<string name="ankionline_sign_up_url">http://ankiweb.net/</string>
 	<string name="feedback_post_url">http://ankidroid-triage.appspot.com/feedback_receiver</string>
-
+	<string name="repair_deck">http://ankisrs.net/docs/DeckErrors.html</string>
 	<!--change report: not needed by now-->
 	<string name="change_report_format">&lt;table&gt;&lt;tr&gt;&lt;td&gt;&lt;b&gt;Added/Changed&lt;/b&gt;&lt;/td&gt;&lt;td&gt;&lt;b&gt;Here&lt;/b&gt;&lt;/td&gt;&lt;td&gt;&lt;b&gt;Server&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Cards&lt;/td&gt;&lt;td&gt;%1$s&lt;/td&gt;&lt;td&gt;%2$s&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Facts&lt;/td&gt;&lt;td&gt;%3$s&lt;/td>&lt;td&gt;%4$s&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Models&lt;/td&gt;&lt;td&gt;%5$s&lt;/td&gt;&lt;td&gt;%6$s&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Stats&lt;/td&gt;&lt;td&gt;%7$s&lt;/td&gt;&lt;td&gt;%8$s&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;</string>
 	<!--<string name="change_report_format">&lt;table&gt;&lt;tr&gt;&lt;td&gt;&lt;b&gt;%1$s&lt;/b&gt;&lt;/td&gt;&lt;td&gt;&lt;b&gt;%2$s&lt;/b&gt;&lt;/td&gt;&lt;td&gt;&lt;b&gt;%3$s&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;%4$s&lt;/td&gt;&lt;td&gt;%5$s&lt;/td&gt;&lt;td&gt;%6$s&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;%7$s&lt;/td&gt;&lt;td&gt;%8$s&lt;/td>&lt;td&gt;9$s&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;%10$s&lt;/td&gt;&lt;td&gt;%11$s&lt;/td&gt;&lt;td&gt;%12$s&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;%13$s&lt;/td&gt;&lt;td&gt;%14$s&lt;/td&gt;&lt;td&gt;%15$s&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;</string>-->
 
+	<string-array name="tutorial_capitals_questions">
+		<item>Cambodia</item>
+		<item>Chile</item>
+		<item>Egypt</item>
+		<item>Estonia</item>
+		<item>Iceland</item>
+		<item>Nigeria</item>
+		<item>Mali</item>
+		<item></item>
+	</string-array>
+	<string-array name="tutorial_capitals_answers">
+		<item>Phnom Penh</item>
+		<item>Santiago</item>
+		<item>Cairo</item>
+		<item>Tallinn</item>
+		<item>Reykjavík</item>
+		<item>Abuja</item>
+		<item>Bamako</item>
+		<item></item>
+	</string-array>
 	<string-array name="new_version_features">
-		<item>gestures can be chosen now</item>
-		<item>better sibling spacing</item>
-		<item>increase in deck picker startup</item>
-		<item>speed improvements for answering cards</item>
-		<item>whiteboard state is now saved for every deck</item>
-		<item>sort order in deckpicker can be changed now</item>
-		<item>time estimation for tomorrow\'s workload</item>
-		<item>improvements in card browser</item>
+		<item>two new themes</item>
+		<item>animations</item>
+		<item>backup system</item>
+		<item>small widget</item>
+		<item>new statistic: deck summary</item>
+		<item>optional wal journaling mode to speed things up</item>
+		<item>optional sync=off mode to speed things up</item>
+		<item>better progress bars while learning</item>
+		<item>localised number appearance</item>
+		<item>lookup dictionary now for every deck selectable</item>
+		<item>card details now accessible via click on top bar</item>
+		<item>option to fix screen orientation</item>
+		<item>better card editor: lookup, add card, copy card, reset</item>
+		<item>possibility to reset cards progress (in card editor)</item>
+		<item>faster card browser searching</item>
+		<item>intent-based card addition</item>
+		<item>more convenient lookup via appearing icon</item>
+		<item>new text selection in card adder and card editor</item>
+		<item>option to swap question/answer very easily</item>
+		<item>support for line breaks in card editor and card browser</item>
+		<item>hide AnkiDroid folder from Android\'s media scanner</item>
+		<item>support for huge decks in card browser</item>
+		<item>support for scrolling with hardware buttons</item>
+		<item>new broadcasting system for showing upgrade messages</item>
+		<item>support for new dictionaries: fora, nciku, eijiro</item>
+		<item>a lot of bug fixes</item>
 	</string-array>
 </resources>

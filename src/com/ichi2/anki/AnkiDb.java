@@ -18,6 +18,8 @@
 
 package com.ichi2.anki;
 
+import android.content.ContentValues;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
@@ -25,6 +27,8 @@ import android.util.Log;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
+
+import com.tomgibara.android.veecheck.util.PrefSettings;
 
 /**
  * Database layer for AnkiDroid. Can read the native Anki format through Android's SQLite driver.
@@ -36,30 +40,57 @@ public class AnkiDb {
      */
     private SQLiteDatabase mDatabase;
 
-
     /**
      * Open a database connection to an ".anki" SQLite file.
      */
-    public AnkiDb(String ankiFilename) throws SQLException {
+    public AnkiDb(String ankiFilename, boolean forceDeleteJournalMode) {
         mDatabase = SQLiteDatabase.openDatabase(ankiFilename, null, SQLiteDatabase.OPEN_READWRITE
                 | SQLiteDatabase.NO_LOCALIZED_COLLATORS);
-//        if (mDatabase != null) {
-//            Cursor cur = null;
-//            try {
-//                cur = mDatabase.rawQuery("PRAGMA journal_mode", null);
-//                if (cur.moveToNext()) {
-//                    String journalMode = cur.getString(0);
-//                    if (!journalMode.equalsIgnoreCase("delete")) {
-//                        Log.w(AnkiDroidApp.TAG, "Journal mode was set to " + journalMode + ", changing it to DELETE");
-//                        mDatabase.execSQL("PRAGMA journal_mode = DELETE");
-//                    }
-//                }
-//            } finally {
-//                if (cur != null) {
-//                    cur.close();
-//                }
-//            }
-//        }
+        if (mDatabase != null) {
+            Cursor cur = null;
+            try {
+                String mode;
+            	SharedPreferences prefs = PrefSettings.getSharedPrefs(AnkiDroidApp.getInstance().getBaseContext());
+            	if (prefs.getBoolean("walMode", false) && !forceDeleteJournalMode) {
+            		mode = "WAL";
+            	} else {
+            		mode = "DELETE";
+            	}
+                cur = mDatabase.rawQuery("PRAGMA journal_mode", null);
+                if (cur.moveToFirst()) {
+                	String journalModeOld = cur.getString(0);
+                	cur.close();
+                	Log.w(AnkiDroidApp.TAG, "Current Journal mode: " + journalModeOld);                    		
+                	if (!journalModeOld.equalsIgnoreCase(mode)) {
+                    	cur = mDatabase.rawQuery("PRAGMA journal_mode = " + mode, null);
+                    	if (cur.moveToFirst()) {
+                        	String journalModeNew = cur.getString(0);
+                        	cur.close();
+                        	Log.w(AnkiDroidApp.TAG, "Old journal mode was: " + journalModeOld + ". Trying to set journal mode to " + mode + ". Result: " + journalModeNew);                    		
+                        	if (journalModeNew.equalsIgnoreCase("wal") && mode.equals("DELETE")) {
+                        		Log.e(AnkiDroidApp.TAG, "Journal could not be changed to DELETE. Deck will probably be unreadable on sqlite < 3.7");
+                        	}
+                    	}
+                	}
+                }
+                if (prefs.getBoolean("asyncMode", false)) {
+                    cur = mDatabase.rawQuery("PRAGMA synchronous = 0", null);
+                } else {
+                    cur = mDatabase.rawQuery("PRAGMA synchronous = 2", null);
+                }
+                cur.close();
+                cur = mDatabase.rawQuery("PRAGMA synchronous", null);
+                if (cur.moveToFirst()) {
+                	String syncMode = cur.getString(0);
+                	Log.w(AnkiDroidApp.TAG, "Current synchronous setting: " + syncMode);                    		
+                }
+                cur.close();
+            } finally {
+                if (cur != null && !cur.isClosed()) {
+                    cur.close();
+                }
+            }
+        }
     }
 
 

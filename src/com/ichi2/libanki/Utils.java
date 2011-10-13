@@ -107,6 +107,10 @@ public class Utils {
     private static final int TIME_MONTHS = 4;
     private static final int TIME_YEARS = 5;
 
+    public static final int TIME_FORMAT_DEFAULT = 0;
+    public static final int TIME_FORMAT_IN = 1;
+    public static final int TIME_FORMAT_BEFORE = 2;
+
     /* Prevent class from being instantiated */
     private Utils() { }
 
@@ -119,7 +123,89 @@ public class Utils {
 
 
     /**
-     * Time handling
+     * Return a string representing a time span (eg '2 days').
+     * @param inFormat: if true, return eg 'in 2 days'
+     */
+    public static String fmtTimeSpan(double time, int format) {
+    	return fmtTimeSpan(time, format, false);
+    }
+    public static String fmtTimeSpan(double time, int format, boolean boldNumber) {
+    	int type;
+    	int unit = 99;
+    	int point = 0;
+    	if (Math.abs(time) < 60 || unit < 1) {
+    		type = TIME_SECONDS;
+    	} else if (Math.abs(time) < 3599 || unit < 2) {
+    		type = TIME_MINUTES;
+    	} else if (Math.abs(time) < 60 * 60 * 24 || unit < 3) {
+    		type = TIME_HOURS;
+    	} else if (Math.abs(time) < 60 * 60 * 24 * 29.5 || unit < 4) {
+    		type = TIME_DAYS;
+    	} else if (Math.abs(time) < 60 * 60 * 24 * 30 * 11.95 || unit < 5) {
+    		type = TIME_MONTHS;
+    		point = 1;
+    	} else {
+    		type = TIME_YEARS;
+    		point = 1;
+    	}
+    	time = convertSecondsTo(time, type);
+
+    	int formatId;
+    	switch (format) {
+    	case TIME_FORMAT_IN:
+    		if (Math.round(time * 10) == 10) {
+    			formatId = R.array.next_review_in_s;
+    		} else {
+    			formatId = R.array.next_review_in_p;    			
+    		}
+    		break;
+    	case TIME_FORMAT_BEFORE:
+    		if (Math.round(time * 10) == 10) {
+    			formatId = R.array.next_review_before_s;
+    		} else {
+    			formatId = R.array.next_review_before_p;    			
+    		}
+    		break;
+    	case TIME_FORMAT_DEFAULT:
+    	default:
+    		if (Math.round(time * 10) == 10) {
+    			formatId = R.array.next_review_s;
+    		} else {
+    			formatId = R.array.next_review_p;    			
+    		}
+    		break;
+    	}
+
+    	String timeString = String.format(AnkiDroidApp.getAppResources().getStringArray(formatId)[type], boldNumber ? "<b>" + fmtDouble(time, point) + "</b>" : fmtDouble(time, point));
+		if (boldNumber && time == 1) {
+			timeString = timeString.replace("1", "<b>1</b>");
+		}
+		return timeString;
+    }
+
+
+    private static double convertSecondsTo(double seconds, int type) {
+    	switch (type) {
+    	case TIME_SECONDS:
+    		return seconds;
+    	case TIME_MINUTES:
+    		return seconds / 60.0;
+    	case TIME_HOURS:
+    		return seconds / 3600.0;    		
+    	case TIME_DAYS:
+    		return seconds / 86400.0;    		
+    	case TIME_MONTHS:
+    		return seconds / 2592000.0;    		
+    	case TIME_YEARS:
+    		return seconds / 31536000.0;
+		default:
+    		return 0;
+    	}
+    }
+
+
+    /**
+     * Locale
      * ***********************************************************************************************
      */
 
@@ -673,11 +759,11 @@ public class Utils {
         Log.i(AnkiDroidApp.TAG, "Finished writing!");
         long durationSeconds = (endTimeMillis - startTimeMillis) / 1000;
         long sizeKb = sizeBytes / 1024;
-        long speedKbSec = sizeKb * 1000 / (endTimeMillis - startTimeMillis);
-        Log.d(AnkiDroidApp.TAG, "Utils.writeToFile: "
-            + "Size: " + sizeKb + "Kb, "
-            + "Duration: " + durationSeconds + "s, "
-            + "Speed: " + speedKbSec + "Kb/s");
+        long speedKbSec = 0;
+        if (endTimeMillis != startTimeMillis) {
+            speedKbSec = sizeKb * 1000 / (endTimeMillis - startTimeMillis);
+        }
+        Log.d(AnkiDroidApp.TAG, "Utils.writeToFile: " + "Size: " + sizeKb + "Kb, " + "Duration: " + durationSeconds + "s, " + "Speed: " + speedKbSec + "Kb/s");
         output.close();
     }
 
@@ -904,19 +990,24 @@ public class Utils {
   
 
     public static void updateProgressBars(Context context, View view, double progress, int maxX, int y, boolean singleBar) {
+    	updateProgressBars(context, view, progress, maxX, y, singleBar, true);
+    }
+	public static void updateProgressBars(Context context, View view, double progress, int maxX, int y, boolean singleBar, boolean changeColor) {
         if (view == null) {
             return;
         }
         if (singleBar) {
-            if (progress < 0.5) {
-                view.setBackgroundColor(context.getResources().getColor(R.color.progressbar_1));
-            } else if (progress < 0.65) {
-                view.setBackgroundColor(context.getResources().getColor(R.color.progressbar_2));
-            } else if (progress < 0.75) {
-                view.setBackgroundColor(context.getResources().getColor(R.color.progressbar_3));
-            } else {
-                view.setBackgroundColor(context.getResources().getColor(R.color.progressbar_4));            
-            }            
+        	if (changeColor) {
+                if (progress < 0.5) {
+                    view.setBackgroundColor(context.getResources().getColor(R.color.progressbar_1));
+                } else if (progress < 0.65) {
+                    view.setBackgroundColor(context.getResources().getColor(R.color.progressbar_2));
+                } else if (progress < 0.75) {
+                    view.setBackgroundColor(context.getResources().getColor(R.color.progressbar_3));
+                } else {
+                    view.setBackgroundColor(context.getResources().getColor(R.color.progressbar_4));            
+                }        		
+        	}
             FrameLayout.LayoutParams lparam = new FrameLayout.LayoutParams(0, 0);            
             lparam.height = y;
             lparam.width = (int) (maxX * progress);

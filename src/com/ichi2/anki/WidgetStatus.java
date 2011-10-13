@@ -36,6 +36,10 @@ import java.util.Collections;
  * It contains the status of each of the decks.
  */
 public final class WidgetStatus {
+
+	static boolean mediumWidget = false;
+	static boolean smallWidget = false;
+
     /** This class should not be instantiated. */
     private WidgetStatus() {}
 
@@ -45,6 +49,16 @@ public final class WidgetStatus {
         // TODO(flerda): Split widget from notifications.
         SharedPreferences preferences = PrefSettings.getSharedPrefs(context);
         if (preferences.getBoolean("widgetEnabled", false)) {
+            mediumWidget = true;
+        } else {
+            mediumWidget = false;
+        }
+        if (preferences.getBoolean("widgetSmallEnabled", false)) {
+            smallWidget = true;
+        } else {
+            smallWidget = false;
+        }
+	if (mediumWidget || smallWidget) {
             Log.d(AnkiDroidApp.TAG, "WidgetStatus.update(): updating");
             AsyncTask<Context,Void,Context> updateDeckStatusAsyncTask =
                     new UpdateDeckStatusAsyncTask();
@@ -57,6 +71,11 @@ public final class WidgetStatus {
     /** Returns the status of each of the decks. */
     public static DeckStatus[] fetch(Context context) {
         return MetaDB.getWidgetStatus(context);
+    }
+
+    /** Returns the status of each of the decks. */
+    public static int[] fetchSmall(Context context) {
+        return MetaDB.getWidgetSmallStatus(context);
     }
 
     private static class UpdateDeckStatusAsyncTask extends AsyncTask<Context, Void, Context> {
@@ -94,7 +113,18 @@ public final class WidgetStatus {
 
                     Log.i(AnkiDroidApp.TAG, "Found deck: " + absPath);
 
-                    Deck deck = Deck.openDeck(absPath, false);
+                    Deck deck;
+                    Deck currentDeck = AnkiDroidApp.deck();
+                    if (currentDeck != null && currentDeck.getDeckPath().equals(deckName)) {
+                    	deck = currentDeck;
+                    } else {
+                    	try {
+                        	deck = Deck.openDeck(absPath, false);                    		
+            			} catch (RuntimeException e) {
+            				Log.w(AnkiDroidApp.TAG, "Widget: Could not open database " + absPath + ": " + e);
+            				deck = null;
+            			}
+                    }
                     if (deck == null) {
                         Log.e(AnkiDroidApp.TAG, "Skipping null deck: " + absPath);
                         // Use the data from the last time we updated the deck, if available.
@@ -110,13 +140,12 @@ public final class WidgetStatus {
                     int[] counts = deck.getSched().counts();
                     // Close the database connection, but only if this is not the current database.
                     // Probably we need to make this atomic to be sure it will not cause a failure.
-                    Deck currentDeck = AnkiDroidApp.deck();
-//                    if (currentDeck != null && currentDeck.getDB() != deck.getDB()) {
-//                        deck.closeDeck();
-//                    }
+                    if (currentDeck != null && currentDeck.getDB() != deck.getDB()) {
+                        deck.closeDeck();
+                    }
 
                     // Add the information about the deck
-                    decks.add(new DeckStatus(absPath, deckName, counts[Scheduler.COUNTS_NEW], counts[Scheduler.COUNTS_REV], counts[Scheduler.COUNTS_LRN]));
+                    decks.add(new DeckStatus(absPath, deckName, counts[Scheduler.COUNTS_NEW], counts[Scheduler.COUNTS_REV], counts[Scheduler.COUNTS_LRN], eta, reps));
                 } catch (SQLException e) {
                     Log.i(AnkiDroidApp.TAG, "Could not open deck");
                     Log.e(AnkiDroidApp.TAG, e.toString());
@@ -139,9 +168,18 @@ public final class WidgetStatus {
         protected void onPostExecute(Context context) {
             Log.d(AnkiDroidApp.TAG, "WidgetStatus.UpdateDeckStatusAsyncTask.onPostExecute()");
             MetaDB.storeWidgetStatus(context, mDecks);
-            Intent intent = new Intent(context, AnkiDroidWidget.UpdateService.class);
-            intent.setAction(AnkiDroidWidget.UpdateService.ACTION_UPDATE);
-            context.startService(intent);
+	    if (mediumWidget) {
+	        Intent intent;
+                intent = new Intent(context, AnkiDroidWidgetMedium.UpdateService.class);
+                intent.setAction(AnkiDroidWidgetMedium.UpdateService.ACTION_UPDATE);
+                context.startService(intent);
+            }
+            if (smallWidget) {
+	        Intent intent;
+                intent = new Intent(context, AnkiDroidWidgetSmall.UpdateService.class);
+                intent.setAction(AnkiDroidWidgetSmall.UpdateService.ACTION_UPDATE);            	
+                context.startService(intent);
+            } 
         }
 
         /** Comparator that sorts instances of {@link DeckStatus} based on number of due cards. */

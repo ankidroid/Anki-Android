@@ -47,11 +47,12 @@ import android.view.ViewGroup.LayoutParams;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.ichi2.anim.ActivityTransitionAnimation;
 import com.ichi2.anki.AnkiDroidApp;
-import com.ichi2.anki.MyAnimation;
 import com.ichi2.anki.R;
 import com.ichi2.anki.Statistics;
 import com.ichi2.anki.StudyOptions;
+import com.ichi2.themes.Themes;
 import com.tomgibara.android.veecheck.util.PrefSettings;
 
 public class ChartBuilder extends Activity {
@@ -72,13 +73,12 @@ public class ChartBuilder extends Activity {
     private static final int MENU_ZOOM_IN = 1;
     private static final int MENU_ZOOM_OUT = 2;
 
-    /**
+	/**
      * Swipe Detection
-     */
-    private GestureDetector gestureDetector;
-    View.OnTouchListener gestureListener;
-    private boolean mSwipeEnabled;
-
+     */    
+ 	private GestureDetector gestureDetector;
+ 	View.OnTouchListener gestureListener;
+ 	private boolean mSwipeEnabled;
 
     @Override
     protected void onRestoreInstanceState(Bundle savedState) {
@@ -173,7 +173,7 @@ public class ChartBuilder extends Activity {
     public void closeChartBuilder() {
         finish();
         if (Integer.valueOf(android.os.Build.VERSION.SDK) > 4) {
-            MyAnimation.slide(this, MyAnimation.UP);
+            ActivityTransitionAnimation.slide(this, ActivityTransitionAnimation.UP);
         }
     }
 
@@ -220,7 +220,7 @@ public class ChartBuilder extends Activity {
                 Intent intent = new Intent(this, com.ichi2.charts.ChartBuilder.class);
                 startActivity(intent);
                 if (Integer.valueOf(android.os.Build.VERSION.SDK) > 4) {
-                    MyAnimation.slide(this, MyAnimation.FADE);
+                    ActivityTransitionAnimation.slide(this, ActivityTransitionAnimation.FADE);
                 }
                 return true;
             case MENU_ZOOM_IN:
@@ -241,18 +241,28 @@ public class ChartBuilder extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+    	Themes.applyTheme(this);
         super.onCreate(savedInstanceState);
         restorePreferences();
+        if (Statistics.sSeriesList == null) {
+            Log.i(AnkiDroidApp.TAG, "ChartBuilder - Data variable empty, closing chartbuilder");
+        	finish();
+        	return;
+        }
         if (mFullScreen) {
             getWindow()
                     .setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
             requestWindowFeature(Window.FEATURE_NO_TITLE);
         }
-        setContentView(R.layout.statistics);
+        View mainView = getLayoutInflater().inflate(R.layout.statistics, null);
+        setContentView(mainView);
+        int[] colors = Themes.getChartColors();
+        mainView.setBackgroundColor(colors[1]);
         mTitle = (TextView) findViewById(R.id.statistics_title);
         if (mChartView == null) {
             if (mFullScreen) {
                 mTitle.setText(Statistics.sTitle);
+                mTitle.setTextColor(colors[0]);
             } else {
                 setTitle(Statistics.sTitle);
                 mTitle.setVisibility(View.GONE);
@@ -274,7 +284,10 @@ public class ChartBuilder extends Activity {
             mRenderer.setYAxisMin(0);
             mRenderer.setXTitle(Statistics.axisLabels[0]);
             mRenderer.setYTitle(Statistics.axisLabels[1]);
-            mRenderer.setBarSpacing(0.4);
+            mRenderer.setBackgroundColor(colors[1]);
+            mRenderer.setMarginsColor(colors[1]);
+            mRenderer.setAxesColor(colors[0]);
+            mRenderer.setLabelsColor(colors[0]);
             mRenderer.setZoomEnabled(false, false);
             // if (Statistics.sSeriesList[0][0] > 100 || Statistics.sSeriesList[0][1] > 100 ||
             // Statistics.sSeriesList[0][Statistics.sSeriesList[0].length - 1] > 100) {
@@ -314,14 +327,14 @@ public class ChartBuilder extends Activity {
         }
         gestureDetector = new GestureDetector(new MyGestureDetector());
         mChartView.setOnTouchListener(new View.OnTouchListener() {
-            public boolean onTouch(View v, MotionEvent event) {
-                if (gestureDetector.onTouchEvent(event)) {
-                    return true;
-                }
-                return false;
-            }
-        });
-        zoom = Statistics.sZoom;
+        	public boolean onTouch(View v, MotionEvent event) {
+        		if (gestureDetector.onTouchEvent(event)) {
+        			return true;
+        		}
+        		return false;
+        		}
+        	});
+		zoom = Statistics.sZoom;
         if (zoom > 0) {
             zoom();
         }

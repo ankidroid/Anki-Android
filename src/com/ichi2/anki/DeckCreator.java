@@ -27,8 +27,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
-import com.ichi2.libanki.Deck;
-import com.ichi2.libanki.Utils;
+import com.ichi2.anim.ActivityTransitionAnimation;
+import com.ichi2.themes.Themes;
 import com.tomgibara.android.veecheck.util.PrefSettings;
 
 import java.io.File;
@@ -43,7 +43,7 @@ import java.io.InputStream;
 
 public class DeckCreator extends Activity {
 
-    private final static String EMPTY_DECK_NAME = "empty.anki";
+    public final static String EMPTY_DECK_NAME = "empty.anki";
     
     private String mPrefDeckPath;
     
@@ -54,6 +54,7 @@ public class DeckCreator extends Activity {
     
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+    	Themes.applyTheme(this);
         super.onCreate(savedInstanceState);
     	Resources res = getResources();
 
@@ -63,7 +64,9 @@ public class DeckCreator extends Activity {
         SharedPreferences preferences = PrefSettings.getSharedPrefs(getBaseContext());
         mPrefDeckPath = preferences.getString("deckPath", AnkiDroidApp.getStorageDirectory());
         
-        setContentView(R.layout.deck_creator);
+        View mainView = getLayoutInflater().inflate(R.layout.deck_creator, null);
+        setContentView(mainView);
+        Themes.setWallpaper(mainView);
         
         mCreate = (Button) findViewById(R.id.DeckCreatorOKButton);
         mCancel = (Button) findViewById(R.id.DeckCreatorCancelButton);
@@ -101,15 +104,13 @@ public class DeckCreator extends Activity {
      */
     private boolean createDeck(String filename) {
         Log.d(AnkiDroidApp.TAG, "Creating deck: " + filename);
-        
+
         filename = filename + ".anki";
-        
+
         // If decks directory does not exist, create it.
         File decksDirectory = new File(mPrefDeckPath);
-        if (!decksDirectory.isDirectory()) {
-            decksDirectory.mkdirs();
-        }
-        
+        AnkiDroidApp.createDecksDirectoryIfMissing(decksDirectory);
+
         File destinationFile = new File(mPrefDeckPath, filename);
         if (destinationFile.exists()) {
             return false;
@@ -135,7 +136,7 @@ public class DeckCreator extends Activity {
     private void closeDeckCreator() {
         finish();
         if (Integer.valueOf(android.os.Build.VERSION.SDK) > 4) {
-            MyAnimation.slide(DeckCreator.this, MyAnimation.LEFT);
+            ActivityTransitionAnimation.slide(DeckCreator.this, ActivityTransitionAnimation.LEFT);
         }    
     }
 

@@ -4,10 +4,12 @@
 	android:layout_height="fill_parent">
 	
 	<LinearLayout android:id="@+id/logged_text"
-		android:layout_width="wrap_content"
+		android:layout_above="@+id/logout_button"
+		android:layout_width="fill_parent"
 		android:layout_height="wrap_content"
+		android:layout_marginBottom="15dp"
+		android:gravity="center"
 		android:layout_centerHorizontal="true"
-		android:layout_centerVertical="true"
 		android:orientation="horizontal">
 
 		<TextView
@@ -22,15 +24,12 @@
 			android:layout_marginLeft="6dp"
 			android:textSize="20dp"
 			android:textStyle="bold"/>
-		
 	</LinearLayout>
 	
 	<Button android:id="@+id/logout_button"
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
-		android:layout_below="@id/logged_text"
-		android:layout_centerHorizontal="true"
-		android:layout_marginTop="10dp"
+		android:layout_centerInParent="true"
 		android:text="@string/log_out"/>
 		
 </RelativeLayout>

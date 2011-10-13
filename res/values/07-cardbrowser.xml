@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+~ Copyright (c) 2009 Andrew <andrewdubya@gmail>
+~ Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com>
+~ Copyright (c) 2009 Daniel Svärd <daniel.svard@gmail.com>
+~ Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com>
+~ Copyright (c) 2010 Norbert Nagold <norbert.nagold@gmail.com>
+~
+~ This program is free software; you can redistribute it and/or modify it under
+~ the terms of the GNU General Public License as published by the Free Software
+~ Foundation; either version 3 of the License, or (at your option) any later
+~ version.
+~
+~ This program is distributed in the hope that it will be useful, but WITHOUT ANY
+~ WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+~ PARTICULAR PURPOSE. See the GNU General Public License for more details.
+~
+~ You should have received a copy of the GNU General Public License along with
+~ this program.  If not, see <http://www.gnu.org/licenses/>.
+-->
+<resources>
+
+<!-- CardBrowser -->
+<string name="card_browser">Card Browser</string>
+<plurals name="card_browser_title">
+  <item quantity="one">%1$s: 1 of %3$d cards shown</item>
+  <item quantity="other">%1$s: %2$d of %3$d cards shown</item>
+</plurals>
+<string name="card_browser_load">Loading cards</string>
+<string name="card_browser_cardloading_error">Error on loading cards. This is probably related to your device\'s memory restrictions. Try again with a smaller deck</string>
+<string name="card_browser_delete_card">Delete card</string>
+<string name="card_browser_suspend_card">Suspend card</string>
+<string name="card_browser_unsuspend_card">Unsuspend card</string>
+<string name="card_browser_mark_card">Mark card</string>
+<string name="card_browser_unmark_card">Unmark card</string>
+<string name="delete_card_title">Delete Card</string>
+<string name="delete_card_message">Really delete this card?\n%1$s\n%2$s</string>
+<string name="card_browser_show_marked">Show marked cards</string>
+<string name="card_browser_show_suspended">Show suspended cards</string>
+<string name="card_browser_search">Search</string>
+<string name="card_browser_search_suspended">Search suspended</string>
+<string name="card_browser_search_by_tag">Search by tag</string>
+<string name="card_browser_tags_shown">Tags: %1$s</string>
+<string name="card_browser_change_display_order">Change display order</string>
+<string name="card_browser_change_display_order_title">Choose display order</string>
+<string name="card_browser_card_details">Card details</string>
+<string name="card_details_question">Question</string>
+<string name="card_details_answer">Answer</string>
+<string name="card_details_due">Due</string>
+<string name="card_details_last_due">Last due</string>
+<string name="card_details_now">Now</string>
+<string name="card_details_interval">Interval</string>
+<string name="card_details_ease">Ease</string>
+<string name="card_details_average_time">Average time</string>
+<string name="card_details_total_time">Total time</string>
+<string name="card_details_yes_count">Yes count</string>
+<string name="card_details_no_count">No count</string>
+<string name="card_details_added">Added</string>
+<string name="card_details_changed">Changed</string>
+<string name="card_details_tags">Tags</string>
+<string name="card_details_model">Model</string>
+<string name="card_browser_sorting_cards">Sorting cards.\nPlease wait...</string>
+<string name="card_details_card_model">Card model</string>
+
+	<string-array name="card_browser_order_labels">
+		<item>By question</item>
+		<item>By answer</item>
+		<item>By due time</item>
+		<item>By interval</item>
+		<item>By ease</item>
+		<item>Date created</item>
+	</string-array>	
+
+</resources>
