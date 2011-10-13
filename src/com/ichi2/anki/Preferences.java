@@ -56,6 +56,7 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
 	private static final int DIALOG_WAL = 0;
 	private static final int DIALOG_ASYNC = 1;
 	private static final int DIALOG_BACKUP = 2;
+	private static final int DIALOG_WRITE_ANSWERS = 4;
 
 //    private boolean mVeecheckStatus;
     private PreferenceManager mPrefMan;
@@ -253,7 +254,7 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
             	} else {
             		animationsCheckboxPreference.setEnabled(true);
             	}
-            	Themes.resetTheme();
+            	Themes.loadTheme();
     			Intent intent = this.getIntent();
     			setResult(StudyOptions.RESULT_RESTART, intent);
     			finish();
@@ -261,6 +262,8 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
                 updateListPreference(key);
             } else if (Arrays.asList(mShowValueInSummSeek).contains(key)) {
                 updateSeekBarPreference(key);
+            } else if (key.equals("writeAnswers") && sharedPreferences.getBoolean("writeAnswers", false)) {
+                showDialog(DIALOG_WRITE_ANSWERS);
             } else if (key.equals("walMode") && !lockCheckAction) {
             	lockCheckAction = true;
             	if (sharedPreferences.getBoolean("walMode", false)) {
@@ -383,6 +386,12 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
     			}
     		});
     		builder.setNegativeButton(res.getString(R.string.no), null);
+    		break;
+        case DIALOG_WRITE_ANSWERS:
+    		builder.setTitle(res.getString(R.string.write_answers));
+    		builder.setCancelable(false);
+    		builder.setMessage(res.getString(R.string.write_answers_message));
+    		builder.setNegativeButton(res.getString(R.string.ok), null);
     		break;
         }
 		return builder.create();    	

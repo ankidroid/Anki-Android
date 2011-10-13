@@ -78,12 +78,9 @@ import com.zeemote.zc.util.JoystickToButtonAdapter;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
-import java.lang.reflect.Method;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
 
@@ -170,6 +167,7 @@ public class StudyOptions extends Activity implements IButtonListener {
     private String mCurrentDialogMessage;
 
     private StyledDialog mNewVersionAlert;
+    private StyledDialog mWelcomeAlert;
     
     /** Zeemote messages */
     private static final int MSG_ZEEMOTE_BUTTON_A = 0x110;
@@ -616,7 +614,6 @@ public class StudyOptions extends Activity implements IButtonListener {
             boolean perDayChanged = deck.getPerDay() ^ mCheckBoxPerDay.isChecked();
           	deck.setPerDay(mCheckBoxPerDay.isChecked());
           	deck.setSuspendLeeches(mCheckBoxSuspendLeeches.isChecked());
-            // TODO: Update number of due cards after change of per day scheduling
             dialog.dismiss();
             if (perDayChanged){
                 deck.updateCutoff();
@@ -1613,6 +1610,7 @@ public class StudyOptions extends Activity implements IButtonListener {
 
 	        });
 	        dialog = builder.create();
+	        mWelcomeAlert = dialog;
 			break;
 
 		default:
@@ -1684,7 +1682,7 @@ public class StudyOptions extends Activity implements IButtonListener {
 	        if (allTags == null) {
 	            allTags = deck3.allTags_();
 	            Log.i(AnkiDroidApp.TAG, "all tags: " + Arrays.toString(allTags));
-		        if (allCramTags == null) {
+		        if (allTags == null) {
 		        	Themes.showThemedToast(StudyOptions.this, getResources().getString(R.string.error_insufficient_memory), false);
 		        	ad.setEnabled(false);
 		        	return;
@@ -1766,7 +1764,6 @@ public class StudyOptions extends Activity implements IButtonListener {
                             getResources().getString(R.string.studyoptions_nodeck_message), mPrefDeckPath));
                     if (mNewVersionAlert != null) {
                     	mNewVersionAlert.show();
-                    	mNewVersionAlert = null;
                     }
                 }
                 setContentView(mNoDeckView);
@@ -2323,6 +2320,19 @@ public class StudyOptions extends Activity implements IButtonListener {
         	syncDeck(null);
         } else if (requestCode == STATISTICS && mCurrentContentView == CONTENT_CONGRATS) {
         	showContentView(CONTENT_STUDY_OPTIONS);
+        } else if (requestCode == REPORT_ERROR) {
+  	      // workaround for dialog problems when returning from error reporter
+  	      	try {
+  	      		if (mWelcomeAlert != null && mWelcomeAlert.isShowing()) {
+  	      			mWelcomeAlert.dismiss();
+      				mWelcomeAlert.show();
+  	      		} else if (mNewVersionAlert != null && mNewVersionAlert.isShowing()) {
+  	      			mNewVersionAlert.dismiss();
+  	      			mNewVersionAlert.show();
+  	      		}
+  	      	} catch (IllegalArgumentException e) {
+  	      		Log.e(AnkiDroidApp.TAG, "Error on dismissing and showing dialog: " + e);
+  	      	}
         }
     }
 
@@ -2373,11 +2383,13 @@ public class StudyOptions extends Activity implements IButtonListener {
     			@Override
     			public void onClick(DialogInterface dialog, int which) {
 		        	PrefSettings.getSharedPrefs(StudyOptions.this.getBaseContext()).edit().putString("lastVersion", getVersion()).commit();
+		        	mNewVersionAlert = null;
 			        BroadcastMessages.checkForNewMessages(StudyOptions.this);
     			}
             }, new DialogInterface.OnCancelListener() {
     			@Override
     			public void onCancel(DialogInterface dialog) {
+		        	mNewVersionAlert = null;
 			        BroadcastMessages.checkForNewMessages(StudyOptions.this);
     			}
             }, true);
@@ -2617,7 +2629,6 @@ public class StudyOptions extends Activity implements IButtonListener {
                     } catch (Exception e) {
                         Log.e(AnkiDroidApp.TAG, "onPostExecute - Show new version dialog exception = " + e.getMessage());
                 	}
-                    mNewVersionAlert = null;
                 }
             }
             Deck deck = AnkiDroidApp.deck();

@@ -194,7 +194,9 @@ public class CardBrowser extends Activity {
 		Themes.applyTheme(this);
 		super.onCreate(savedInstanceState);
 
-		setContentView(R.layout.card_browser);
+		View mainView = getLayoutInflater().inflate(R.layout.card_browser, null);
+		setContentView(mainView);
+		Themes.setContentStyle(mainView, Themes.CALLER_CARDBROWSER);
 
 		mDeck = AnkiDroidApp.deck();
 		mDeck.resetUndo();
@@ -836,7 +838,7 @@ public class CardBrowser extends Activity {
 		@Override
 		public void onPreExecute() {
 			Resources res = getResources();
-			if (mProgressDialog.isShowing()) {
+			if (mProgressDialog != null && mProgressDialog.isShowing()) {
 				mProgressDialog.setMessage(res.getString(R.string.card_browser_sorting_cards));
 			} else {
 				mProgressDialog = ProgressDialog.show(CardBrowser.this, "", res
