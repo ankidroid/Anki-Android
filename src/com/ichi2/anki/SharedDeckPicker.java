@@ -47,7 +47,6 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.ichi2.anim.ActivityTransitionAnimation;
 import com.ichi2.anki.services.DownloadManagerService;
@@ -136,9 +135,7 @@ public class SharedDeckPicker extends Activity {
                     for (Download d : mSharedDeckDownloads) {
                         if (d.getTitle().equals(selectedDeck.getTitle())) {
                             // Duplicate downloads not allowed, sorry.
-                            Toast duplicateMessage = Toast.makeText(SharedDeckPicker.this,
-                                res.getString(R.string.duplicate_download), Toast.LENGTH_SHORT);
-                            duplicateMessage.show();
+                        	Themes.showThemedToast(SharedDeckPicker.this, res.getString(R.string.duplicate_download), true);
                             return;
                         }
                     }
