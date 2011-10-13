@@ -54,7 +54,7 @@ public class Download extends HashMap<String, Object> implements Parcelable {
         // The deck file name should match the deck title. The only characters that we cannot
         // absolutely allow to appear in the filename are the ones reserved in some file system.
         // Currently these include \, /, and :, in order to cover Linux, OSX, and Windows.
-        mFilename = mTitle.replaceAll(":/\\\\", "");
+        mFilename = mTitle.replaceAll("[:/\\\\]", "");
 //        if (mFilename.length() > 40) {
 //            mFilename = mFilename.substring(0, 40);
 //        }
