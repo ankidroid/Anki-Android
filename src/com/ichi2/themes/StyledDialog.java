@@ -35,8 +35,6 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.ichi2.anki.R;
-import com.ichi2.anki.StudyOptions;
-
 import java.util.ArrayList;
 import java.util.List;
  

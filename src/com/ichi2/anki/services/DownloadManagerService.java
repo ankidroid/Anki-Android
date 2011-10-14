@@ -25,7 +25,6 @@ import android.content.SharedPreferences.Editor;
 import android.content.res.Resources;
 import android.database.CursorIndexOutOfBoundsException;
 import android.database.SQLException;
-import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.IBinder;
 import android.os.RemoteCallbackList;
