@@ -154,7 +154,6 @@
 		<item>Iceland</item>
 		<item>Nigeria</item>
 		<item>Mali</item>
-		<item></item>
 	</string-array>
 	<string-array name="tutorial_capitals_answers">
 		<item>Phnom Penh</item>
@@ -164,7 +163,6 @@
 		<item>Reykjavík</item>
 		<item>Abuja</item>
 		<item>Bamako</item>
-		<item></item>
 	</string-array>
 	<string-array name="new_version_features">
 		<item>two new themes</item>
