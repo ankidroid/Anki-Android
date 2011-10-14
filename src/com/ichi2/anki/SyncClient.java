@@ -1718,7 +1718,6 @@ public class SyncClient {
      * @return
      * @throws JSONException
      */
-    @SuppressWarnings("unchecked")
     public boolean needFullSync(JSONArray sums) throws JSONException {
         Log.i(AnkiDroidApp.TAG, "needFullSync - lastSync = " + mDeck.getLastSync());
 
@@ -1731,9 +1730,9 @@ public class SyncClient {
         for (int i = 0; i < len; i++) {
 
             JSONObject summary = sums.getJSONObject(i);
-            Iterator keys = summary.keys();
+            @SuppressWarnings("unchecked") Iterator<String> keys = (Iterator<String>) summary.keys();
             while (keys.hasNext()) {
-                String key = (String) keys.next();
+                String key = keys.next();
                 JSONArray l = (JSONArray) summary.get(key);
                 Log.i(AnkiDroidApp.TAG, "Key " + key + ", length = " + l.length());
                 if (l.length() > 500) {

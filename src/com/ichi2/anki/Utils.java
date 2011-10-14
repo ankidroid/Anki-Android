@@ -528,7 +528,7 @@ public class Utils {
     public static void printJSONObject(JSONObject jsonObject, String indentation, boolean writeToFile) {
         try {
 
-            Iterator<String> keys = jsonObject.keys();
+            @SuppressWarnings("unchecked") Iterator<String> keys = (Iterator<String>) jsonObject.keys();
             TreeSet<String> orderedKeysSet = new TreeSet<String>();
             while (keys.hasNext()) {
                 orderedKeysSet.add(keys.next());
