@@ -232,7 +232,7 @@ public class DownloadManagerService extends Service {
 
         File dir = new File(mDestination + "/tmp/");
         File[] fileList = dir.listFiles(new IncompleteDownloadsFilter());
-        HashSet<String> filenames = new HashSet();
+        HashSet<String> filenames = new HashSet<String>();
 
         // Get all incomplete downloads filenames
         if (fileList != null) {

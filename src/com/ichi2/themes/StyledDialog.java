@@ -46,7 +46,7 @@ public class StyledDialog extends Dialog {
 	private Context mContext;
 	private List<String> mItemList;
 	private boolean[] mCheckedItems;
-	private ArrayAdapter mListAdapter;
+	private ArrayAdapter<String> mListAdapter;
 	private OnClickListener mListener;
 	private ListView mListView;
 	private boolean mDoNotShow = false;
@@ -116,18 +116,18 @@ public class StyledDialog extends Dialog {
     	}
     	switch (type) {
     	case 1:
-    		mListAdapter = new ArrayAdapter(mContext, R.layout.select_dialog_nochoice, 0, mItemList);
+    		mListAdapter = new ArrayAdapter<String>(mContext, R.layout.select_dialog_nochoice, 0, mItemList);
     		mListView.setAdapter(mListAdapter);
     		mListView.setChoiceMode(ListView.CHOICE_MODE_NONE);
 	    	break;
     	case 2:
-    		mListAdapter = new ArrayAdapter(mContext, R.layout.select_dialog_singlechoice, 0, mItemList);
+    		mListAdapter = new ArrayAdapter<String>(mContext, R.layout.select_dialog_singlechoice, 0, mItemList);
     		mListView.setAdapter(mListAdapter);
     		mListView.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
     		mListView.setItemChecked(checkedItem, true);
         	break;
     	case 3:
-    		mListAdapter = new ArrayAdapter(mContext, R.layout.select_dialog_multichoice, 0, mItemList);
+    		mListAdapter = new ArrayAdapter<String>(mContext, R.layout.select_dialog_multichoice, 0, mItemList);
     		mListView.setAdapter(mListAdapter);
     		mListView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
 	    	for (int i = 0; i < checked.length; i++) {
