@@ -44,7 +44,6 @@ import android.text.style.UnderlineSpan;
 import android.util.Log;
 import android.view.ContextMenu;
 import android.view.GestureDetector;
-import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -58,7 +57,6 @@ import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.FrameLayout;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.SimpleAdapter;
@@ -122,15 +120,15 @@ public class DeckPicker extends Activity implements Runnable, IButtonListener {
 	/**
 	 * Context Menus
 	 */
-    private static final int CONTEXT_MENU_OPTIMIZE = 0;
-    private static final int CONTEXT_MENU_CUSTOM_DICTIONARY = 1;
-    private static final int CONTEXT_MENU_DOWNLOAD_MEDIA = 2;
+    private static final int CONTEXT_MENU_DECK_SUMMARY = 0;
+    private static final int CONTEXT_MENU_OPTIMIZE = 1;
+    private static final int CONTEXT_MENU_CUSTOM_DICTIONARY = 2;
     private static final int CONTEXT_MENU_RESET_LANGUAGE = 3;
-//    private static final int CONTEXT_MENU_RESTORE_BACKUPS = 4;
     private static final int CONTEXT_MENU_REMOVE_BACKUPS = 4;
     private static final int CONTEXT_MENU_RENAME_DECK = 5;
     private static final int CONTEXT_MENU_DELETE_DECK = 6;
-    private static final int CONTEXT_MENU_DECK_SUMMARY = 7;
+    private static final int CONTEXT_MENU_DOWNLOAD_MEDIA = 7;
+//  private static final int CONTEXT_MENU_RESTORE_BACKUPS = 4;
     
 	/**
 	 * Message types
