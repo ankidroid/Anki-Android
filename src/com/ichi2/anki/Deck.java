@@ -233,7 +233,7 @@ public class Deck {
         return openDeck(path, true);
     }
     public static synchronized Deck openDeck(String path, boolean rebuild) throws SQLException {
-    	return openDeck(path, true, false);
+    	return openDeck(path, rebuild, false);
     }
     public static synchronized Deck openDeck(String path, boolean rebuild, boolean forceDeleteJournalMode) throws SQLException {
         Deck deck = null;
