@@ -701,7 +701,9 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
         	sampleDeckFile.delete();
         	return new TaskData(TUTORIAL_NOT_CREATED);
     	} finally {
-    		ankiDB.getDatabase().endTransaction();
+		if (ankiDB != null && ankiDB.getDatabase().inTransaction()) {
+	    		ankiDB.getDatabase().endTransaction();
+		}
     	}
     }
 
