@@ -82,4 +82,7 @@
 <string name="tutorial_load">Creating tutorial deck</string>
 <string name="tutorial_loading_error">Tutorial deck could not be created</string>
 
+<string name="rename">Rename</string>
+<string name="rename_error">Deck %s could not be renamed</string>
+
 </resources>

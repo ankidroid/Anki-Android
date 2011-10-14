@@ -36,12 +36,15 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.preference.PreferenceManager;
+import android.text.InputFilter;
 import android.text.SpannableStringBuilder;
+import android.text.Spanned;
 import android.text.style.StyleSpan;
 import android.text.style.UnderlineSpan;
 import android.util.Log;
 import android.view.ContextMenu;
 import android.view.GestureDetector;
+import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -54,6 +57,8 @@ import android.view.GestureDetector.SimpleOnGestureListener;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.SimpleAdapter;
@@ -123,8 +128,9 @@ public class DeckPicker extends Activity implements Runnable, IButtonListener {
     private static final int CONTEXT_MENU_RESET_LANGUAGE = 3;
 //    private static final int CONTEXT_MENU_RESTORE_BACKUPS = 4;
     private static final int CONTEXT_MENU_REMOVE_BACKUPS = 4;
-    private static final int CONTEXT_MENU_DELETE_DECK = 5;
-    private static final int CONTEXT_MENU_DECK_SUMMARY = 6;
+    private static final int CONTEXT_MENU_RENAME_DECK = 5;
+    private static final int CONTEXT_MENU_DELETE_DECK = 6;
+    private static final int CONTEXT_MENU_DECK_SUMMARY = 7;
     
 	/**
 	 * Message types
@@ -204,6 +210,8 @@ public class DeckPicker extends Activity implements Runnable, IButtonListener {
 	private int mTotalDueCards = 0;
 	private int mTotalCards = 0;
 	private int mTotalTime = 0;
+
+	private EditText mRenameDeckEditText;
 
 	int mStatisticType;
 
@@ -317,6 +325,48 @@ public class DeckPicker extends Activity implements Runnable, IButtonListener {
 			    deck = getDeck(deckPath);
 			    Reviewer.setupMedia(deck);
 			    Connection.downloadMissingMedia(mDownloadMediaListener, new Connection.Payload(new Object[] {deck}));
+				return;
+			case CONTEXT_MENU_RENAME_DECK:
+				StyledDialog.Builder builder2 = new StyledDialog.Builder(DeckPicker.this);
+				builder2.setTitle(res.getString(R.string.contextmenu_deckpicker_rename_deck));
+
+				mCurrentDeckPath = null;
+				mCurrentDeckPath = data.get("filepath");
+
+				mRenameDeckEditText = (EditText) new EditText(DeckPicker.this);
+				mRenameDeckEditText.setText(mCurrentDeckFilename.replace(".anki", ""));
+				InputFilter filter = new InputFilter() {
+					public CharSequence filter(CharSequence source, int start,
+							int end, Spanned dest, int dstart, int dend) {
+						for (int i = start; i < end; i++) {
+							if (!Character.isLetterOrDigit(source.charAt(i))) {
+								return "";
+							}
+						}
+						return null;
+					}
+				};
+				mRenameDeckEditText.setFilters(new InputFilter[] { filter });
+				builder2.setView(mRenameDeckEditText, false, true);
+				builder2.setPositiveButton(res.getString(R.string.rename),
+						new DialogInterface.OnClickListener() {
+
+							@Override
+							public void onClick(DialogInterface dialog, int which) {
+								Log.i(AnkiDroidApp.TAG, "Renaming file " + mCurrentDeckFilename + " to " + mRenameDeckEditText.getText().toString());
+								File file = new File(mCurrentDeckPath);
+								String newFilename = file.getParentFile().getAbsolutePath() + "/" + mRenameDeckEditText.getText().toString().replace("[:\\/]", "") + ".anki";
+								File newFile = new File(newFilename);
+								if (newFile.exists() || !file.renameTo(newFile)) {
+									Themes.showThemedToast(DeckPicker.this, getResources().getString(R.string.rename_error, mCurrentDeckFilename), true);
+								} else {
+									populateDeckList(mPrefDeckPath);
+								}
+								mCurrentDeckPath = null;
+							}
+						});
+				builder2.setNegativeButton(res.getString(R.string.cancel), null);
+				builder2.create().show();
 				return;
 			case CONTEXT_MENU_REMOVE_BACKUPS:
 				mCurrentDeckPath = null;
@@ -848,13 +898,14 @@ public class DeckPicker extends Activity implements Runnable, IButtonListener {
 				dialog = null;
 				break;
 			}
-			String[] entries = new String[7];
+			String[] entries = new String[8];
 			entries[CONTEXT_MENU_OPTIMIZE] = res.getString(R.string.contextmenu_deckpicker_optimize_deck);
 			entries[CONTEXT_MENU_CUSTOM_DICTIONARY] = res.getString(R.string.contextmenu_deckpicker_set_custom_dictionary);
 			entries[CONTEXT_MENU_DOWNLOAD_MEDIA] = res.getString(R.string.contextmenu_deckpicker_download_missing_media);
 			entries[CONTEXT_MENU_RESET_LANGUAGE] = res.getString(R.string.contextmenu_deckpicker_reset_language_assignments);
 //			entries[CONTEXT_MENU_RESTORE_BACKUPS] = res.getString(R.string.R.string.contextmenu_deckpicker_restore_backups);
 			entries[CONTEXT_MENU_REMOVE_BACKUPS] = res.getString(R.string.contextmenu_deckpicker_remove_backups);
+			entries[CONTEXT_MENU_RENAME_DECK] = res.getString(R.string.contextmenu_deckpicker_rename_deck);
 			entries[CONTEXT_MENU_DELETE_DECK] = res.getString(R.string.contextmenu_deckpicker_delete_deck);
 			entries[CONTEXT_MENU_DECK_SUMMARY] = res.getStringArray(R.array.statistics_type_labels)[Statistics.TYPE_DECK_SUMMARY];
 

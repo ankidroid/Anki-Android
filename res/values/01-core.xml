@@ -112,6 +112,7 @@
 <string name="contextmenu_deckpicker_reset_language_assignments">Reset Language Assignments</string>
 <string name="contextmenu_deckpicker_reset_reset_message">Language reset</string>
 <string name="contextmenu_deckpicker_optimize_deck">Optimize database</string>
+<string name="contextmenu_deckpicker_rename_deck">Rename deck</string>
 <string name="contextmenu_deckpicker_set_custom_dictionary">Set custom dictionary</string>
 
 <string name="begin_cram">Start Cram mode</string>
