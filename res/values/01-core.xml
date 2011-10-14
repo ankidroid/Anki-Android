@@ -172,5 +172,6 @@
 <string name="visit">Visit</string>
 <string name="later">Later</string>
 <string name="download">Download</string>
+<string name="deckpicker_loading_error">Deck could not be loaded</string>
 
 </resources>

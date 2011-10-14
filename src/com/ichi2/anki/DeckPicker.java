@@ -131,6 +131,7 @@ public class DeckPicker extends Activity implements Runnable, IButtonListener {
 	private static final int MSG_UPGRADE_NEEDED = 0;
 	private static final int MSG_UPGRADE_SUCCESS = 1;
 	private static final int MSG_UPGRADE_FAILURE = 2;
+	private static final int MSG_COULD_NOT_BE_LOADED = 3;
     /** Zeemote messages */
     private static final int MSG_ZEEMOTE_BUTTON_A = 0x110;
     private static final int MSG_ZEEMOTE_BUTTON_B = MSG_ZEEMOTE_BUTTON_A+1;
@@ -363,6 +364,10 @@ public class DeckPicker extends Activity implements Runnable, IButtonListener {
 						.format(res.getString(R.string.deckpicker_new), data
 								.getInt("new"));
 				showProgress = "false";
+			} else if (msgtype == DeckPicker.MSG_COULD_NOT_BE_LOADED) {
+				dueString = res.getString(R.string.deckpicker_loading_error);
+				newString = "";
+				showProgress = "false";				
 			}
 
 			int count = mDeckListAdapter.getCount();
@@ -863,15 +868,17 @@ public class DeckPicker extends Activity implements Runnable, IButtonListener {
 	protected void onPrepareDialog(int id, Dialog dialog) {
 		Resources res = getResources();
 		StyledDialog ad = (StyledDialog)dialog;
-		mCurrentDeckFilename = mDeckList.get(mContextMenuPosition).get("name");
 		switch (id) {
 		case DIALOG_DELETE_DECK:
+			mCurrentDeckFilename = mDeckList.get(mContextMenuPosition).get("name");
 			ad.setMessage(String.format(res.getString(R.string.delete_deck_message), mCurrentDeckFilename));
 			break;
 		case DIALOG_DELETE_BACKUPS:
+			mCurrentDeckFilename = mDeckList.get(mContextMenuPosition).get("name");
 			ad.setMessage(String.format(res.getString(R.string.backup_delete_deck_backups_alert), mCurrentDeckFilename));
 			break;
 		case DIALOG_CONTEXT_MENU:
+			mCurrentDeckFilename = mDeckList.get(mContextMenuPosition).get("name");
 			ad.setTitle(mCurrentDeckFilename);
 			break;
 		}		
@@ -1378,12 +1385,18 @@ public class DeckPicker extends Activity implements Runnable, IButtonListener {
 					int version = 0;
 					try {
 						version = Deck.getDeckVersion(path);
-					} catch (SQLException e) {
+					} catch (Exception e) {
 						Log.w(AnkiDroidApp.TAG, "Could not open database "
 								+ path);
 						if (!mBrokenDecks.contains(path)) {
 							mBrokenDecks.add(path);
 						}
+						Bundle data = new Bundle();
+						data.putString("absPath", path);
+						data.putInt("msgtype", MSG_COULD_NOT_BE_LOADED);
+						Message msg = Message.obtain();
+						msg.setData(data);
+						mHandler.sendMessage(msg);						
 						continue;
 					}
 
@@ -1399,6 +1412,12 @@ public class DeckPicker extends Activity implements Runnable, IButtonListener {
 					}
 					deck = getDeck(path);
 					if (deck == null) {
+						Bundle data = new Bundle();
+						data.putString("absPath", path);
+						data.putInt("msgtype", MSG_COULD_NOT_BE_LOADED);
+						Message msg = Message.obtain();
+						msg.setData(data);
+						mHandler.sendMessage(msg);
 						continue;
 					}
 					version = deck.getVersion();

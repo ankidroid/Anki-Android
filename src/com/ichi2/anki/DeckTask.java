@@ -33,6 +33,7 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.database.CursorIndexOutOfBoundsException;
 import android.database.SQLException;
+import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.os.AsyncTask;
 import android.util.Log;
@@ -664,33 +665,37 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
     		Deck deck = Deck.openDeck(sampleDeckFile.getAbsolutePath(), false);
             ankiDB = AnkiDatabaseManager.getDatabase(deck.getDeckPath());
             ankiDB.getDatabase().beginTransaction();
-            CardModel cardModel = null;
-    		int len = Math.min(questions.length, answers.length);
-    		for (int i = 0; i < len - 1 + Math.min(sampleQuestions.length, sampleAnswers.length); i++) {
-    			Fact fact = deck.newFact();
-    			if (cardModel == null) {
-    				cardModel = deck.activeCardModels(fact).entrySet().iterator().next().getValue();
-    			}
-    			int fidx = 0;
-    			for (Fact.Field f : fact.getFields()) {
-    				if (fidx == 0) {
-    					f.setValue((i < len - 1) ? questions[i] : sampleQuestions[i - len + 1]);
-    				} else if (fidx == 1) {
-    					f.setValue((i < len - 1) ? answers[i] : sampleAnswers[i - len + 1]);
-    				}
-    				fidx++;
-    			}
-    			if (!deck.importFact(fact, cardModel)) {
-    				sampleDeckFile.delete();
-    				return new TaskData(TUTORIAL_NOT_CREATED);
-    			}
-    		}
-    		deck.setSessionTimeLimit(0);
-    		deck.flushMod();
-    		deck.reset();
-    		AnkiDroidApp.setDeck(deck);
-            ankiDB.getDatabase().setTransactionSuccessful();
-        	return new TaskData(DECK_LOADED, deck, null);
+            try {
+            	CardModel cardModel = null;
+            	int len = Math.min(questions.length, answers.length);
+            	for (int i = 0; i < len - 1 + Math.min(sampleQuestions.length, sampleAnswers.length); i++) {
+            		Fact fact = deck.newFact();
+            		if (cardModel == null) {
+            			cardModel = deck.activeCardModels(fact).entrySet().iterator().next().getValue();
+            		}
+            		int fidx = 0;
+            		for (Fact.Field f : fact.getFields()) {
+            			if (fidx == 0) {
+            				f.setValue((i < len - 1) ? questions[i] : sampleQuestions[i - len + 1]);
+            			} else if (fidx == 1) {
+            				f.setValue((i < len - 1) ? answers[i] : sampleAnswers[i - len + 1]);
+            			}
+            			fidx++;
+            		}
+            		if (!deck.importFact(fact, cardModel)) {
+            			sampleDeckFile.delete();
+            			return new TaskData(TUTORIAL_NOT_CREATED);
+            		}
+            	}
+            	deck.setSessionTimeLimit(0);
+            	deck.flushMod();
+            	deck.reset();
+            	AnkiDroidApp.setDeck(deck);
+            	ankiDB.getDatabase().setTransactionSuccessful();
+            	return new TaskData(DECK_LOADED, deck, null);
+            } finally {
+        		ankiDB.getDatabase().endTransaction();
+        	}
         } catch (IOException e) {
         	Log.e(AnkiDroidApp.TAG, Log.getStackTraceString(e));
         	Log.e(AnkiDroidApp.TAG, "Empty deck could not be copied to the sd card.");
@@ -700,8 +705,6 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
         	Log.e(AnkiDroidApp.TAG, "Error on creating tutorial deck: " + e);
         	sampleDeckFile.delete();
         	return new TaskData(TUTORIAL_NOT_CREATED);
-    	} finally {
-    		ankiDB.getDatabase().endTransaction();
     	}
     }
 
