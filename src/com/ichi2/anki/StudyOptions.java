@@ -2210,7 +2210,7 @@ public class StudyOptions extends Activity implements IButtonListener {
             } else {
             	return;
             }
-        	if (Deck.isWalEnabled(mDeckFilename)) {
+        	if (Deck.isWalEnabled(deck.getDeckPath())) {
         		deck = null;
         	}
             Connection.syncDeck(mSyncListener, new Connection.Payload(new Object[] { username, password, deck,
