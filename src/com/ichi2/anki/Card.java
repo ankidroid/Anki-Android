@@ -785,8 +785,9 @@ public class Card {
     public String getCardDetails(Context context, boolean full) {
     	Resources res = context.getResources();
     	StringBuilder builder = new StringBuilder();
-       	builder.append("<html><body text=\"#FFFFFF\"><b>");
+       	builder.append("<html><body text=\"#FFFFFF\">");
        	if (full) {
+            builder.append("<b>");
             builder.append(res.getString(R.string.card_details_question));
             builder.append("</b>: ");
             builder.append(Utils.stripHTML(mQuestion));
