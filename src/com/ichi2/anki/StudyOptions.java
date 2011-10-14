@@ -2210,7 +2210,7 @@ public class StudyOptions extends Activity implements IButtonListener {
             } else {
             	return;
             }
-        	if (Deck.isWalEnabled(mDeckFilename)) {
+        	if (Deck.isWalEnabled(deck.getDeckPath())) {
         		deck = null;
         	}
             Connection.syncDeck(mSyncListener, new Connection.Payload(new Object[] { username, password, deck,
@@ -2261,7 +2261,7 @@ public class StudyOptions extends Activity implements IButtonListener {
                     if (AnkiDroidApp.deck() == null || !AnkiDroidApp.deck().getDeckPath().equals(mDeckFilename)) {
                     	if (resultCode != RESULT_DONT_RELOAD_DECK) {
                             displayProgressDialogAndLoadDeck();
-                        }                    	
+                        }
                     }
             	}
                 return;
@@ -2278,7 +2278,9 @@ public class StudyOptions extends Activity implements IButtonListener {
             Log.i(AnkiDroidApp.TAG, "onActivityResult = OK");
             mDeckFilename = intent.getExtras().getString(OPT_DB);
             savePreferences("deckFilename");
-
+            if (mDeckFilename == null || !new File(mDeckFilename).exists()) {
+            	showContentView(CONTENT_NO_DECK);
+            }
             // Log.i(AnkiDroidApp.TAG, "onActivityResult - deckSelected = " + deckSelected);
             if (AnkiDroidApp.deck() == null || !AnkiDroidApp.deck().getDeckPath().equals(mDeckFilename)) {
                 boolean updateAllCards = (requestCode == DOWNLOAD_SHARED_DECK);
@@ -2602,7 +2604,7 @@ public class StudyOptions extends Activity implements IButtonListener {
                     break;
 
                 case DeckTask.DECK_NOT_LOADED:
-                	showContentView(CONTENT_STUDY_OPTIONS);
+                	showContentView(CONTENT_DECK_NOT_LOADED);
                 	mCurrentDialogMessage = getResources().getString(R.string.open_deck_failed, new File(mDeckFilename).getName().replace(".anki", ""), BackupManager.BROKEN_DECKS_SUFFIX.replace("/", ""), getResources().getString(R.string.repair_deck));
         			showDialog(DIALOG_DECK_NOT_LOADED);
                     break;

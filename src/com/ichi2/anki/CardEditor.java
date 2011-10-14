@@ -690,7 +690,7 @@ public class CardEditor extends Activity {
 			frame.addView(mNewTagEditText);
 			frame.addView(mAddTextButton);
 
-			builder.setView(frame, true);
+			builder.setView(frame, false, true);
 			dialog = builder.create();
 			mTagsDialog = dialog;
 			break;

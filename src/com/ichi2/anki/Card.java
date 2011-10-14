@@ -785,8 +785,9 @@ public class Card {
     public String getCardDetails(Context context, boolean full) {
     	Resources res = context.getResources();
     	StringBuilder builder = new StringBuilder();
-       	builder.append("<html><body text=\"#FFFFFF\"><b>");
+       	builder.append("<html><body text=\"#FFFFFF\">");
        	if (full) {
+            builder.append("<b>");
             builder.append(res.getString(R.string.card_details_question));
             builder.append("</b>: ");
             builder.append(Utils.stripHTML(mQuestion));
@@ -1072,7 +1073,9 @@ public class Card {
     	String typeAnswer = myCardModel.getTypeAnswer();
         // Check if we have a valid field to use as the answer to type.
     	if (null == typeAnswer || 0 == typeAnswer.trim().length()) {
-    		returnArray[0] = null;
+		// no field specified, compare with whole answer
+    		returnArray[0] = mAnswer;
+    		returnArray[1] = "";
                 return returnArray;
     	}
 

@@ -112,6 +112,8 @@ public class BroadcastMessages {
 			try {
 				mDialog.dismiss();
 				mDialog.show();			
+			} catch (BadTokenException e) {
+				Log.e(AnkiDroidApp.TAG, "Error on dismissing and showing new messages dialog: " + e);
 			} catch (IllegalArgumentException e) {
 				Log.e(AnkiDroidApp.TAG, "Error on dismissing and showing new messages dialog: " + e);
 			}

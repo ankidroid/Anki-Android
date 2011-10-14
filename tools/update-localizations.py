@@ -35,7 +35,7 @@ import urllib
 import string
 import re
 
-def replacechars(filename, fileExt):
+def replacechars(filename, fileExt, isCrowdin):
 	s = open(filename,"r+")
 	newfilename = filename + ".tmp"
 	fin = open(newfilename,"w")
@@ -46,7 +46,7 @@ def replacechars(filename, fileExt):
 				line = "<?xml version=\"1.0\" encoding=\"utf-8\"?> \n <!-- \n ~ Copyright (c) 2009 Andrew <andrewdubya@gmail> \n ~ Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com> \n ~ Copyright (c) 2009 Daniel Svaerd <daniel.svard@gmail.com> \n ~ Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com> \n ~ Copyright (c) 2010 Norbert Nagold <norbert.nagold@gmail.com> \n ~ This program is free software; you can redistribute it and/or modify it under \n ~ the terms of the GNU General Public License as published by the Free Software \n ~ Foundation; either version 3 of the License, or (at your option) any later \n ~ version. \n ~ \n ~ This program is distributed in the hope that it will be useful, but WITHOUT ANY \n ~ WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A \n ~ PARTICULAR PURPOSE. See the GNU General Public License for more details. \n ~ \n ~ You should have received a copy of the GNU General Public License along with \n ~ this program.  If not, see <http://www.gnu.org/licenses/>. \n --> \n \n"
 			else:
 				# some people outwitted crowdin's "0"-bug by filling in "0 ", this changes it back:
-				if line.startswith("    <item>0 </item>"): 
+				if line.startswith("	<item>0 </item>"): 
 					line = "    <item>0</item>\n"
 				line = string.replace(line, '\'', '\\\'')
 				line = string.replace(line, '\\\\\'', '\\\'')
@@ -61,7 +61,12 @@ def replacechars(filename, fileExt):
 		length = len(content)
 		line = []
 		for i in range(length - 1):
-			contentLine = content[i][content[i].rfind('\",\"') + 3:len(content[i])-1]
+			if isCrowdin:
+				start = content[i].rfind('\",\"') + 3
+			else:
+				start=content[i].find('\"') + 1
+
+			contentLine = content[i][start:len(content[i])-1]
 			sepPos = contentLine.find('<separator>')
 			if sepPos == -1 and len(contentLine) > 2:
 				errorOccured = True
@@ -86,7 +91,20 @@ def replacechars(filename, fileExt):
 		print 'error in file ' + filename
 	else:
 		print 'file ' + filename + ' successfully copied'
-	
+
+def fileExtFor(f):
+	if f == 'tutorial':
+		return '.csv'
+	else:
+		return '.xml'
+def createIfNotExisting(directory):
+	if not os.path.isdir(directory):
+		os.mkdir(directory)
+def update(valuesDirectory, f, source, fileExt, isCrowdin):
+	newfile = valuesDirectory + f + '.xml'
+	file(newfile, 'w').write(source)
+	replacechars(newfile, fileExt, isCrowdin)
+
 zipname = 'ankidroid.zip'
 
 print "downloading crowdin-file"
@@ -106,20 +124,22 @@ for language in languages:
 
 	print "\ncopying language files for: " + androidLanguage
 	valuesDirectory = "../res/values-" + androidLanguage + "/"
-
-	# Create directory if it does not exist yet.
-	if not os.path.isdir(valuesDirectory):
-		os.mkdir(valuesDirectory)
+	createIfNotExisting(valuesDirectory)
 
 	# Copy localization files, mask chars and append gnu/gpl licence
 	for f in fileNames:
-		if f == 'tutorial':
-			fileExt = '.csv'
-		else:
-			fileExt = '.xml'
-		newfile = valuesDirectory + f + '.xml'
-		file(newfile, 'w').write(zip.read(language + "/" + f + fileExt))
-		replacechars(newfile, fileExt)
+		fileExt = fileExtFor(f)
+		update(valuesDirectory, f, zip.read(language + "/" + f + fileExt), fileExt, True)
+
+# Special case: English tutorial.
+valuesDirectory = "../res/values/"
+createIfNotExisting(valuesDirectory)
+f = 'tutorial'
+fileExt = fileExtFor(f)
+source = open("../assets/" + f + fileExt)
+#Note: the original tutorial.csv has less columns, therefore we have special
+#support for its syntax.
+update(valuesDirectory, f, source.read(), fileExt, False)
 
 print "removing crowdin-file"
 os.remove(zipname)

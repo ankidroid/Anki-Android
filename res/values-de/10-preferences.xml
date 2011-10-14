@@ -197,4 +197,5 @@
   <string name="show_broadcast_messages_summ">Aktuelle AnkiDroid-Nachrichten, wie etwa Informationen über neue Versionen oder Ähnliches, anzeigen</string>
   <string name="input_workaround">Eingabe-Fehlerbehebung</string>
   <string name="input_workaround_summ">Fehlerbehebung für Fokusierungsprobleme mit HTML-Eingabe-Feldern. Verursacht Probleme auf einigen Geräten.</string>
+  <string name="write_answers_message">Bevor Antworten eingegeben werden können muss für jeden Stapel das Feld festgelegt werden, mit dem Antworten verglichen werden sollen.\n\nSie können das mit Anki-Desktop erledigen (Stapel-Einstellungen -&gt; Modell bearbeiten -&gt; Karten-Layout).</string>
 </resources>
