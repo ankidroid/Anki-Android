@@ -667,7 +667,7 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
             try {
             	CardModel cardModel = null;
             	int len = Math.min(questions.length, answers.length);
-            	for (int i = 0; i < len - 1 + Math.min(sampleQuestions.length, sampleAnswers.length); i++) {
+            	for (int i = 0; i < len + Math.min(sampleQuestions.length, sampleAnswers.length); i++) {
             		Fact fact = deck.newFact();
             		if (cardModel == null) {
             			cardModel = deck.activeCardModels(fact).entrySet().iterator().next().getValue();
@@ -675,9 +675,9 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
             		int fidx = 0;
             		for (Fact.Field f : fact.getFields()) {
             			if (fidx == 0) {
-            				f.setValue((i < len - 1) ? questions[i] : sampleQuestions[i - len + 1]);
+            				f.setValue((i < len) ? questions[i] : sampleQuestions[i - len]);
             			} else if (fidx == 1) {
-            				f.setValue((i < len - 1) ? answers[i] : sampleAnswers[i - len + 1]);
+            				f.setValue((i < len) ? answers[i] : sampleAnswers[i - len]);
             			}
             			fidx++;
             		}
