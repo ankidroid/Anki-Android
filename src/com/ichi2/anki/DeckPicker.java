@@ -867,15 +867,17 @@ public class DeckPicker extends Activity implements Runnable, IButtonListener {
 	protected void onPrepareDialog(int id, Dialog dialog) {
 		Resources res = getResources();
 		StyledDialog ad = (StyledDialog)dialog;
-		mCurrentDeckFilename = mDeckList.get(mContextMenuPosition).get("name");
 		switch (id) {
 		case DIALOG_DELETE_DECK:
+			mCurrentDeckFilename = mDeckList.get(mContextMenuPosition).get("name");
 			ad.setMessage(String.format(res.getString(R.string.delete_deck_message), mCurrentDeckFilename));
 			break;
 		case DIALOG_DELETE_BACKUPS:
+			mCurrentDeckFilename = mDeckList.get(mContextMenuPosition).get("name");
 			ad.setMessage(String.format(res.getString(R.string.backup_delete_deck_backups_alert), mCurrentDeckFilename));
 			break;
 		case DIALOG_CONTEXT_MENU:
+			mCurrentDeckFilename = mDeckList.get(mContextMenuPosition).get("name");
 			ad.setTitle(mCurrentDeckFilename);
 			break;
 		}		
