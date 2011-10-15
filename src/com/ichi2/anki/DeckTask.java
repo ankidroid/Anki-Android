@@ -88,7 +88,8 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
         sInstance.mListener = listener;
         sInstance.mType = type;
 
-        return (DeckTask) sInstance.execute(params);
+        sInstance.execute(params);
+        return sInstance;
     }
 
 
