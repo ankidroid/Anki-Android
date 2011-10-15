@@ -1751,8 +1751,6 @@ public class DeckPicker extends Activity implements Runnable, IButtonListener {
 
 
     public class AlternatingAdapter extends SimpleAdapter {
-        private int[] colors;
-    	 
     	    public AlternatingAdapter(Context context, ArrayList<HashMap<String, String>> items, int resource, String[] from, int[] to) {
     	        super(context, items, resource, from, to);
     	    }
