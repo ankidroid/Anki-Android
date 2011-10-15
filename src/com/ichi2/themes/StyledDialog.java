@@ -21,6 +21,7 @@ package com.ichi2.themes;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup.LayoutParams;
@@ -34,6 +35,7 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.R;
 import java.util.ArrayList;
 import java.util.List;
@@ -507,7 +509,13 @@ public class StyledDialog extends Dialog {
             }
 
             // set background
-            Themes.setStyledDialogBackgrounds(layout, numberOfButtons, brightViewBackground);
+            try {
+            	Themes.setStyledDialogBackgrounds(layout, numberOfButtons, brightViewBackground);
+            } catch (OutOfMemoryError e) {
+            	Log.e(AnkiDroidApp.TAG, "StyledDialog - Dialog could not be created: " + e);
+            	Themes.showThemedToast(context, context.getResources().getString(R.string.error_insufficient_memory), false);
+            	return null;
+            }
 
             dialog.setContentView(layout);
             return dialog;
