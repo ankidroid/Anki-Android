@@ -272,7 +272,7 @@ public class SyncClient {
         }
 
         Log.i(AnkiDroidApp.TAG, "Payload =");
-        Utils.printJSONObject(payload, true);
+        Utils.printJSONObject(payload, true); //XXX: Why writeToFile = true?
 
         return payload;
     }
