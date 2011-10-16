@@ -320,6 +320,7 @@ public class CardModel implements Comparator<CardModel> {
     }
 
 
+    /*
     private static String replaceField(String replaceFrom, Fact fact, int replaceAt, boolean isQuestion) {
         int endIndex = replaceFrom.indexOf(")", replaceAt);
         String fieldName = replaceFrom.substring(replaceAt + 2, endIndex);
@@ -347,6 +348,7 @@ public class CardModel implements Comparator<CardModel> {
         replaceFrom = replaceFrom.replace(replace, with);
         return replaceFrom;
     }
+    */
 
 
     /**

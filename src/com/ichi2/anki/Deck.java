@@ -1726,11 +1726,6 @@ public class Deck {
     }
 
 
-    private void removeSpaced(LinkedList<QueueItem> queue) {
-        removeSpaced(queue, false);
-    }
-
-
     private void removeSpaced(LinkedList<QueueItem> queue, boolean _new) {
         ArrayList<Long> popped = new ArrayList<Long>();
         double delay = 0.0;
@@ -4101,6 +4096,7 @@ public class Deck {
     }
 
 
+    /*
     // CSS for all the fields
     private String rebuildCSS() {
         StringBuilder css = new StringBuilder(512);
@@ -4194,6 +4190,7 @@ public class Deck {
         }
         setVar("hexCache", jsonObject.toString(), false);
     }
+    */
 
     //
     // Syncing

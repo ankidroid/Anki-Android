@@ -115,7 +115,9 @@ public class RubyParser {
     	return sourceText.replaceAll(" ?([^ >]+?)\\[([^(sound:)].*?)\\]", "$2");
     }
     
+    /*
     private static String newRubyPair(String baseText, String rubyText) {
         return "<ruby><rb>" + baseText + "</rb><rt>" + rubyText + "</rt></ruby>";
     }
+    */
 }
