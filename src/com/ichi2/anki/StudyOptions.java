@@ -1547,7 +1547,7 @@ public class StudyOptions extends Activity implements IButtonListener {
 
 	        Spinner spinner = new Spinner(this);
 	        
-	        ArrayAdapter adapter = ArrayAdapter.createFromResource(this, R.array.cram_review_order_labels, android.R.layout.simple_spinner_item);
+	        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.cram_review_order_labels, android.R.layout.simple_spinner_item);
 	        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 	        spinner.setAdapter(adapter);
 	        spinner.setSelection(0);

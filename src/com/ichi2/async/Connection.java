@@ -98,7 +98,8 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
         sInstance = new Connection();
         sInstance.mListener = listener;
 
-        return (Connection) sInstance.execute(data);
+        sInstance.execute(data);
+        return sInstance;
     }
 
 
@@ -182,11 +183,14 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
         return launchConnectionTask(listener, data);
     }
 
-    
     @Override
     protected Payload doInBackground(Payload... params) {
-        Payload data = params[0];
-
+    	if (params.length != 1)
+    		throw new IllegalArgumentException();
+    	return doOneInBackground(params[0]);
+    }
+    
+    private Payload doOneInBackground(Payload data) {
         switch (data.taskType) {
             case TASK_TYPE_LOGIN:
                 return doInBackgroundLogin(data);

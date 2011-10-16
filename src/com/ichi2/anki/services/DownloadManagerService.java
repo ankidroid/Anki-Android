@@ -25,7 +25,6 @@ import android.content.SharedPreferences.Editor;
 import android.content.res.Resources;
 import android.database.CursorIndexOutOfBoundsException;
 import android.database.SQLException;
-import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.IBinder;
 import android.os.RemoteCallbackList;
@@ -232,7 +231,7 @@ public class DownloadManagerService extends Service {
 
         File dir = new File(mDestination + "/tmp/");
         File[] fileList = dir.listFiles(new IncompleteDownloadsFilter());
-        HashSet<String> filenames = new HashSet();
+        HashSet<String> filenames = new HashSet<String>();
 
         // Get all incomplete downloads filenames
         if (fileList != null) {

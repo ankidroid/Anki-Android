@@ -242,7 +242,7 @@ public class Reviewer extends Activity implements IButtonListener{
     private boolean mTouchStarted = false;
     private boolean mIsAnswering = false;
 
-    @SuppressWarnings("unused")
+//    @SuppressWarnings("unused")
 //    private boolean mUpdateNotifications; // TODO use Veecheck only if this is true
 
     private String mCardTemplate;
