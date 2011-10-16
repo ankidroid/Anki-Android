@@ -513,24 +513,29 @@ public class Utils {
 
     // Print methods
     public static void printJSONObject(JSONObject jsonObject) {
-        printJSONObject(jsonObject, "-", false);
+        printJSONObject(jsonObject, "-", null);
     }
 
 
     public static void printJSONObject(JSONObject jsonObject, boolean writeToFile) {
-        if (writeToFile) {
-            new File("/sdcard/payloadAndroid.txt").delete();
+        BufferedWriter buff;
+        try {
+            buff = writeToFile ?  
+                    new BufferedWriter(new FileWriter("/sdcard/payloadAndroid.txt", true), 8192) : null;
+            try {
+                printJSONObject(jsonObject, "-", buff);
+            } finally {
+                if (buff != null)
+                    buff.close();
+            }
+        } catch (IOException ioe) {
+            Log.e(AnkiDroidApp.TAG, "IOException = " + ioe.getMessage());
         }
-        printJSONObject(jsonObject, "-", writeToFile);
     }
 
 
-    private static void printJSONObject(JSONObject jsonObject, String indentation, boolean writeToFile) {
-        BufferedWriter buff = null;
+    private static void printJSONObject(JSONObject jsonObject, String indentation, BufferedWriter buff) {
         try {
-            if (writeToFile)
-                buff = new BufferedWriter(new FileWriter("/sdcard/payloadAndroid.txt", true), 8192);
-            try {
                 @SuppressWarnings("unchecked") Iterator<String> keys = (Iterator<String>) jsonObject.keys();
                 TreeSet<String> orderedKeysSet = new TreeSet<String>();
                 while (keys.hasNext()) {
@@ -544,14 +549,14 @@ public class Utils {
                     try {
                         Object value = jsonObject.get(key);
                         if (value instanceof JSONObject) {
-                            if (writeToFile) {
+                            if (buff != null) {
                                 buff.write(indentation + " " + key + " : ");
                                 buff.newLine();
                             }
                             Log.i(AnkiDroidApp.TAG, "	" + indentation + key + " : ");
-                            printJSONObject((JSONObject) value, indentation + "-", writeToFile);
+                            printJSONObject((JSONObject) value, indentation + "-", buff);
                         } else {
-                            if (writeToFile) {
+                            if (buff != null) {
                                 buff.write(indentation + " " + key + " = " + jsonObject.get(key).toString());
                                 buff.newLine();
                             }
@@ -561,10 +566,6 @@ public class Utils {
                         Log.e(AnkiDroidApp.TAG, "JSONException = " + e.getMessage());
                     }
                 }
-            } finally {
-                if (buff != null)
-                    buff.close();
-            }
         } catch (IOException e1) {
             Log.e(AnkiDroidApp.TAG, "IOException = " + e1.getMessage());
         }
