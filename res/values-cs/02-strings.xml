@@ -57,7 +57,7 @@
   <string name="studyoptions_no_external_storage_title">Není k dispozici externí paměť</string>
   <string name="studyoptions_no_external_storage_message">Žádná externí paměť není momentálně k dispozici. AnkiDroid potřebuje přistupovat k SD kartě, aby mohl načíst Anki balíčky. Zkontrolujte, zda je vaše SD karta připojena a akci opakujte.</string>
   <string name="fact_adder_intent_title">AnkiDroid karta</string>
-  <string name="fact_adder_swap">Swap</string>
+  <string name="fact_adder_swap">Vyměň</string>
   <string name="deckpicker_select_dictionary_title">Výběr slovníku</string>
   <string name="deckpicker_select_dictionary_default">Výchozí</string>
   <string name="card_editor_add_card">Přidat kartu</string>
@@ -65,6 +65,6 @@
   <string name="card_editor_copy_card">Kopírovat kartu</string>
   <string name="card_editor_reset_card">Obnovit proces učení</string>
   <string name="error_insufficient_memory">Operaci není možná z důvodu nedostatku paměti na zařízení</string>
-  <string name="tutorial_load">Creating tutorial deck</string>
-  <string name="tutorial_loading_error">Tutorial deck could not be created</string>
+  <string name="tutorial_load">Vytváření výukového balíčku</string>
+  <string name="tutorial_loading_error">Nebylo možné vytvořit výukový balíček</string>
 </resources>

@@ -96,6 +96,7 @@
   <string name="visit">Посещение</string>
   <string name="later">Позже</string>
   <string name="download">Скачать</string>
+  <string name="deckpicker_loading_error">Колода не может быть открыта</string>
   <string-array name="next_review_s">
     <item>1 секунда</item>
     <item>1 минута</item>

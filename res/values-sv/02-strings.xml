@@ -65,6 +65,6 @@
   <string name="card_editor_copy_card">Kopiera kort</string>
   <string name="card_editor_reset_card">Återställ framsteg</string>
   <string name="error_insufficient_memory">Åtgärden är inte möjlig på grund av otillräckligt med minne på enheten.</string>
-  <string name="tutorial_load">Creating tutorial deck</string>
-  <string name="tutorial_loading_error">Tutorial deck could not be created</string>
+  <string name="tutorial_load">Skapa övningskortlek</string>
+  <string name="tutorial_loading_error">Övningskortlek kunde inte skapas</string>
 </resources>

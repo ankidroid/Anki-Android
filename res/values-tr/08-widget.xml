@@ -27,13 +27,13 @@
   <string name="widget_minimum_cards_due_blink">Işığı yak</string>
   <string name="widget_minimum_cards_due_notification_ticker_title">Vadesi Gelmiş Kart</string>
   <string name="widget_minimum_cards_due_notification_ticker_text">%d AnkiDroid kartı</string>
-  <string name="widget_no_cards_due">Vadesi gelmiş kart yok</string>
+  <string name="widget_no_cards_due">No cards due</string>
   <string name="widget_loading">Bileşen yükleniyor...</string>
   <string name="widget_medium">AnkiDroid Orta</string>
   <string name="widget_small">AnkiDroid Küçük</string>
   <plurals name="widget_cards_in_decks_due">
-    <item quantity="one">%2$s\'de 1 kart</item>
-    <item quantity="other">%2$s\'de %1$d kart</item>
+    <item quantity="one">%2$s\'de 1 kart çalışılacak</item>
+    <item quantity="other">%2$s\'de %1$d kart çalışılacak</item>
   </plurals>
   <plurals name="widget_decks">
     <item quantity="one">1 deste</item>
