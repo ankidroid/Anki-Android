@@ -32,6 +32,7 @@ import android.content.SharedPreferences;
 import android.content.DialogInterface.OnCancelListener;
 import android.content.res.Resources;
 import android.database.SQLException;
+import android.database.sqlite.SQLiteException;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -1434,44 +1435,57 @@ public class DeckPicker extends Activity implements Runnable, IButtonListener {
 						msg.setData(data);
 						mHandler.sendMessage(msg);
 					} else {
-						int dueCards = deck.getDueCount();
-						int totalCards = deck.getCardCount();
-						int newCards = deck.getNewCountToday();
-						int totalNewCards = deck.getNewCount(mCompletionBarRestrictToActive);
-						int matureCards = deck.getMatureCardCount(mCompletionBarRestrictToActive);
-						int totalRevCards = deck.getTotalRevFailedCount(mCompletionBarRestrictToActive);
-						int totalCardsCompletionBar = totalRevCards + totalNewCards;
-						double modified = deck.getModified();
+						try {
+							int dueCards = deck.getDueCount();
+							int totalCards = deck.getCardCount();
+							int newCards = deck.getNewCountToday();
+							int totalNewCards = deck.getNewCount(mCompletionBarRestrictToActive);
+							int matureCards = deck.getMatureCardCount(mCompletionBarRestrictToActive);
+							int totalRevCards = deck.getTotalRevFailedCount(mCompletionBarRestrictToActive);
+							int totalCardsCompletionBar = totalRevCards + totalNewCards;
+							double modified = deck.getModified();
 
-						String upgradeNotes = Deck.upgradeNotesToMessages(deck, getResources());
-						
-						closeDeck(deck);
+							String upgradeNotes = Deck.upgradeNotesToMessages(deck, getResources());
+							
+							closeDeck(deck);
 
-						data.putString("absPath", path);
-						data.putInt("msgtype", MSG_UPGRADE_SUCCESS);
-						data.putInt("due", dueCards);
-						data.putDouble("mod", modified);
-						data.putInt("total", totalCards);
-						data.putInt("new", newCards);
-						data.putInt("totalNew", totalNewCards);
-						data.putString("notes", upgradeNotes);
+							data.putString("absPath", path);
+							data.putInt("msgtype", MSG_UPGRADE_SUCCESS);
+							data.putInt("due", dueCards);
+							data.putDouble("mod", modified);
+							data.putInt("total", totalCards);
+							data.putInt("new", newCards);
+							data.putInt("totalNew", totalNewCards);
+							data.putString("notes", upgradeNotes);
 
-						int rateOfCompletionMat;
-						int rateOfCompletionAll;
-						if (totalCardsCompletionBar != 0) {
-						    rateOfCompletionMat = (matureCards * 100) / totalCardsCompletionBar;
-		                    rateOfCompletionAll = (totalRevCards * 100) / totalCardsCompletionBar; 
-						} else {
-						    rateOfCompletionMat = 0;
-						    rateOfCompletionAll = 0;
+							int rateOfCompletionMat;
+							int rateOfCompletionAll;
+							if (totalCardsCompletionBar != 0) {
+							    rateOfCompletionMat = (matureCards * 100) / totalCardsCompletionBar;
+			                    rateOfCompletionAll = (totalRevCards * 100) / totalCardsCompletionBar; 
+							} else {
+							    rateOfCompletionMat = 0;
+							    rateOfCompletionAll = 0;
+							}
+							data.putInt("rateOfCompletionMat", rateOfCompletionMat);
+	                        data.putInt("rateOfCompletionAll", Math.max(0, rateOfCompletionAll - rateOfCompletionMat));
+							msg.setData(data);
+							
+							mTotalDueCards += dueCards + newCards;
+							mTotalCards += totalCards;
+							mTotalTime += Math.max(deck.getETA(), 0);							
+						} catch (SQLiteException e) {
+							Log.e(AnkiDroidApp.TAG, "DeckPicker - run - error on loading deck values from file " + path + ": " + e);
+							data.putString("absPath", path);
+							data.putInt("msgtype", MSG_COULD_NOT_BE_LOADED);
+							msg.setData(data);
+							mHandler.sendMessage(msg);
+							if (!mBrokenDecks.contains(path)) {
+								mBrokenDecks.add(path);
+							}
+							continue;
 						}
-						data.putInt("rateOfCompletionMat", rateOfCompletionMat);
-                        data.putInt("rateOfCompletionAll", Math.max(0, rateOfCompletionAll - rateOfCompletionMat));
-						msg.setData(data);
-						
-						mTotalDueCards += dueCards + newCards;
-						mTotalCards += totalCards;
-						mTotalTime += Math.max(deck.getETA(), 0);
+
 
 						mHandler.sendMessage(msg);
 					}
