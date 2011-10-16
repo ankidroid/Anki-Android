@@ -4515,7 +4515,7 @@ public class Deck {
             bundledDeck.put("cardCount", mCardCount);
             bundledDeck.put("collapseTime", mCollapseTime);
             bundledDeck.put("created", mCreated);
-            // bundledDeck.put("currentModelId", currentModelId);
+            // bundledDeck.put("currentModelId", mCurrentModelId); //XXX: Why? I believe this should is sent by AnkiDesktop.
             bundledDeck.put("delay0", mDelay0);
             bundledDeck.put("delay1", mDelay1);
             bundledDeck.put("delay2", mDelay2);
