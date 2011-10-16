@@ -4543,7 +4543,7 @@ public class Deck {
             bundledDeck.put("revCount", mRevCount);
             bundledDeck.put("reviewEarly", mReviewEarly);
             bundledDeck.put("suspended", mSuspended);
-            bundledDeck.put("undoEnabled", mUndoEnabled); //XXX: this is synced in Anki 1.2.8, but I believe it should not be... it causes a bug!
+            bundledDeck.put("undoEnabled", mUndoEnabled); //XXX: this is synced in Anki 1.2.8, but I believe it should not be, as it's useless.
             bundledDeck.put("utcOffset", mUtcOffset);
         } catch (JSONException e) {
             Log.i(AnkiDroidApp.TAG, "JSONException = " + e.getMessage());
@@ -4604,7 +4604,7 @@ public class Deck {
             mSessionTimeLimit = deckPayload.getInt("sessionTimeLimit");
             mSuspended = deckPayload.getString("suspended");
             // tmpMediaDir
-            mUndoEnabled = deckPayload.getBoolean("undoEnabled");
+            //mUndoEnabled = deckPayload.getBoolean("undoEnabled"); //XXX: this is synced in Anki 1.2.8, but it should not be... it causes a bug!
             mUtcOffset = deckPayload.getDouble("utcOffset");
 
             commitToDB();
