@@ -189,7 +189,7 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
                 return doInBackgroundCloseDeck(params);
                 
             case TASK_TYPE_DELETE_BACKUPS:
-                return doInBackgroundDeleteBackups(params);
+                return doInBackgroundDeleteBackups();
                 
             case TASK_TYPE_RESTORE_DECK:
                 return doInBackgroundRestoreDeck(params);
@@ -626,7 +626,7 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
     }
 
 
-    private TaskData doInBackgroundDeleteBackups(TaskData... params) {
+    private TaskData doInBackgroundDeleteBackups() {
         Log.i(AnkiDroidApp.TAG, "doInBackgroundDeleteBackups");
     	return new TaskData(BackupManager.deleteAllBackups());
     }
