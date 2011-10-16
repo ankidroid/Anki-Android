@@ -25,12 +25,12 @@ package com.ichi2.utils;
  */
 public class RubyParser {
 
-    private static final char RUBY_SPACER_JAP_SPACE = ' ';
-    private static final char RUBY_SPACER_JAP_COMMA = '\u3001';
-    private static final char RUBY_TEXT_START = '[';
-    private static final char RUBY_TEXT_END = ']';
-    private static final char HTML_TAG_START = '<';
-    private static final char HTML_TAG_END = '>';
+//    private static final char RUBY_SPACER_JAP_SPACE = ' ';
+//    private static final char RUBY_SPACER_JAP_COMMA = '\u3001';
+//    private static final char RUBY_TEXT_START = '[';
+//    private static final char RUBY_TEXT_END = ']';
+//    private static final char HTML_TAG_START = '<';
+//    private static final char HTML_TAG_END = '>';
 
 
     /**

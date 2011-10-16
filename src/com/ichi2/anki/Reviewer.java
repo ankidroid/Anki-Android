@@ -212,7 +212,7 @@ public class Reviewer extends Activity implements IButtonListener{
     private boolean mPrefFullscreenReview;
     private boolean mshowNextReviewTime;
     private boolean mZoomEnabled;    
-    private boolean mZeemoteEnabled;    
+//    private boolean mZeemoteEnabled;    
     private boolean mPrefUseRubySupport; // Parse for ruby annotations
     private String mDeckFilename;
     private int mPrefHideQuestionInAnswer; // Hide the question when showing the answer
@@ -382,7 +382,7 @@ public class Reviewer extends Activity implements IButtonListener{
  	 */
 	protected JoystickToButtonAdapter adapter;
 
-    private int zEase;
+//    private int zEase;
     
     /**
      * The answer in the compare to field for the current card if answer should be given by learner.
@@ -1866,7 +1866,7 @@ public class Reviewer extends Activity implements IButtonListener{
         mPrefFullscreenReview = preferences.getBoolean("fullscreenReview", true);
         mshowNextReviewTime = preferences.getBoolean("showNextReviewTime", true);
         mZoomEnabled = preferences.getBoolean("zoom", false);
-        mZeemoteEnabled = preferences.getBoolean("zeemote", false);
+//        mZeemoteEnabled = preferences.getBoolean("zeemote", false);
         mDisplayFontSize = preferences.getInt("relativeDisplayFontSize", CardModel.DEFAULT_FONT_SIZE_RATIO);
         mRelativeButtonSize = preferences.getInt("answerButtonSize", 100);
         mPrefHideQuestionInAnswer = Integer.parseInt(preferences.getString("hideQuestionInAnswer",
