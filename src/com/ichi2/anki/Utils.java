@@ -531,36 +531,36 @@ public class Utils {
             if (writeToFile)
                 buff = new BufferedWriter(new FileWriter("/sdcard/payloadAndroid.txt", true), 8192);
             try {
-            @SuppressWarnings("unchecked") Iterator<String> keys = (Iterator<String>) jsonObject.keys();
-            TreeSet<String> orderedKeysSet = new TreeSet<String>();
-            while (keys.hasNext()) {
-                orderedKeysSet.add(keys.next());
-            }
-
-            Iterator<String> orderedKeys = orderedKeysSet.iterator();
-            while (orderedKeys.hasNext()) {
-                String key = orderedKeys.next();
-
-                try {
-                    Object value = jsonObject.get(key);
-                    if (value instanceof JSONObject) {
-                        if (writeToFile) {
-                            buff.write(indentation + " " + key + " : ");
-                            buff.newLine();
-                        }
-                        Log.i(AnkiDroidApp.TAG, "	" + indentation + key + " : ");
-                        printJSONObject((JSONObject) value, indentation + "-", writeToFile);
-                    } else {
-                        if (writeToFile) {
-                            buff.write(indentation + " " + key + " = " + jsonObject.get(key).toString());
-                            buff.newLine();
-                        }
-                        Log.i(AnkiDroidApp.TAG, "	" + indentation + key + " = " + jsonObject.get(key).toString());
-                    }
-                } catch (JSONException e) {
-                    Log.e(AnkiDroidApp.TAG, "JSONException = " + e.getMessage());
+                @SuppressWarnings("unchecked") Iterator<String> keys = (Iterator<String>) jsonObject.keys();
+                TreeSet<String> orderedKeysSet = new TreeSet<String>();
+                while (keys.hasNext()) {
+                    orderedKeysSet.add(keys.next());
                 }
-            }
+
+                Iterator<String> orderedKeys = orderedKeysSet.iterator();
+                while (orderedKeys.hasNext()) {
+                    String key = orderedKeys.next();
+
+                    try {
+                        Object value = jsonObject.get(key);
+                        if (value instanceof JSONObject) {
+                            if (writeToFile) {
+                                buff.write(indentation + " " + key + " : ");
+                                buff.newLine();
+                            }
+                            Log.i(AnkiDroidApp.TAG, "	" + indentation + key + " : ");
+                            printJSONObject((JSONObject) value, indentation + "-", writeToFile);
+                        } else {
+                            if (writeToFile) {
+                                buff.write(indentation + " " + key + " = " + jsonObject.get(key).toString());
+                                buff.newLine();
+                            }
+                            Log.i(AnkiDroidApp.TAG, "	" + indentation + key + " = " + jsonObject.get(key).toString());
+                        }
+                    } catch (JSONException e) {
+                        Log.e(AnkiDroidApp.TAG, "JSONException = " + e.getMessage());
+                    }
+                }
             } finally {
                 if (buff != null)
                     buff.close();
