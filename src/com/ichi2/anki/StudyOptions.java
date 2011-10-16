@@ -2314,7 +2314,7 @@ public class StudyOptions extends Activity implements IButtonListener {
                 	showContentView(CONTENT_STUDY_OPTIONS);
                     break;
             }
-        } else if (requestCode == ADD_FACT && resultCode == RESULT_OK) {
+        } else if (requestCode == ADD_FACT && resultCode != RESULT_CANCELED) {
         	resetAndUpdateValuesFromDeck();
         } else if (requestCode == BROWSE_CARDS && resultCode == RESULT_OK) {
         	resetAndUpdateValuesFromDeck();
