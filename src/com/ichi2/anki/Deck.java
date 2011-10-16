@@ -29,7 +29,6 @@ import android.util.Log;
 
 import com.ichi2.anki.Fact.Field;
 import com.ichi2.anki.Utils.SqlCommandType;
-import static com.ichi2.anki.Utils.SqlCommandType.*;
 
 import org.json.JSONException;
 import org.json.JSONObject;
