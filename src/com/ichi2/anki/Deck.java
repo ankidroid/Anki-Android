@@ -136,7 +136,7 @@ public class Deck {
     private String mLowPriority;
     private String mSuspended; // obsolete in libanki 1.1
 
-    // 0 is random, 1 is by input date, 2 is by input date inverse
+    // Can be NEW_CARDS_RANDOM, NEW_CARDS_OLD_FIRST or NEW_CARDS_NEW_FIRST, i.e. random, by input date or by input date inverse. Should be an enum.
     private int mNewCardOrder;
 
     // When to show new cards
