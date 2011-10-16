@@ -1455,10 +1455,13 @@ public class SyncClient {
         bundledDeck = mDeck.bundleJson(bundledDeck);
 
         // AnkiDroid Deck.java does not have:
-        // css, forceMediaDir, lastSessionStart, lastTags, needLock, newCardOrder, newCardSpacing, newCardsPerDay,
+        // css, forceMediaDir, lastSessionStart, lastTags, needLock,
         // progressHandlerCalled,
-        // progressHandlerEnabled, revCardOrder, sessionRepLimit, sessionStartReps, sessionStartTime,
-        // sessionTimeLimit, tmpMediaDir
+        // progressHandlerEnabled, revCardOrder, sessionStartReps, sessionStartTime,
+        // tmpMediaDir
+
+        // XXX: this implies that they are not synched toward the server, I guess (tested on 0.7).
+        // However, the ones left are not persisted by libanki on the DB, so it's a libanki bug that they are sync'ed at all.
 
         // Our bundleDeck also doesn't need all those fields that store the scheduler Methods
 
