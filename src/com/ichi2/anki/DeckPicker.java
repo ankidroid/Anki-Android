@@ -1504,7 +1504,6 @@ public class DeckPicker extends Activity implements Runnable, IButtonListener {
 
     public void openPersonalDeckPicker() {
         if (AnkiDroidApp.isUserLoggedIn()) {
-            Intent i = getIntent();
             startActivityForResult(new Intent(this, PersonalDeckPicker.class), DOWNLOAD_PERSONAL_DECK);
             if (StudyOptions.getApiLevel() > 4) {
                 ActivityTransitionAnimation.slide(this, ActivityTransitionAnimation.RIGHT);
