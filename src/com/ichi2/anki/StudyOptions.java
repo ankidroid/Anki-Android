@@ -1964,6 +1964,8 @@ public class StudyOptions extends Activity implements IButtonListener {
 * Switch schedulers
 */
 
+    //UNUSED and never used, introduced in commit e44130abcd84928a288ddb0f3512e984ada190e7
+    /*
     private void reset() {
         reset(false);
     }
@@ -1973,6 +1975,7 @@ public class StudyOptions extends Activity implements IButtonListener {
         }
         AnkiDroidApp.deck().reset();
     }
+    */
 
 
     /**

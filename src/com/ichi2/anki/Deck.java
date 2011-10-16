@@ -3665,11 +3665,6 @@ public class Deck {
     }
 
 
-    private void updatePriorities(long[] cardIds, String[] suspend) {
-        updatePriorities(cardIds, suspend, true);
-    }
-
-
     void updatePriorities(long[] cardIds, String[] suspend, boolean dirty) {
         Cursor cursor = null;
         Log.i(AnkiDroidApp.TAG, "updatePriorities - Updating priorities...");
@@ -4304,11 +4299,14 @@ public class Deck {
     }
 
 
+    //XXX: this method has never been used.
+    /*
     private void setUndoBarrier() {
         if (mUndoStack.isEmpty() || mUndoStack.peek() != null) {
             mUndoStack.push(null);
         }
     }
+    */
 
 
     public void setUndoStart(String name) {
