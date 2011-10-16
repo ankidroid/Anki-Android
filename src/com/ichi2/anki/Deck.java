@@ -4532,13 +4532,18 @@ public class Deck {
             bundledDeck.put("midIntervalMin", mMidIntervalMin);
             bundledDeck.put("modified", mModified);
             bundledDeck.put("newCardModulus", mNewCardModulus);
+            bundledDeck.put("newCardSpacing", mNewCardSpacing);
+            bundledDeck.put("newCardOrder", mNewCardOrder);
+            bundledDeck.put("newCardsPerDay", mNewCardsPerDay);
+            bundledDeck.put("sessionTimeLimit", mSessionTimeLimit);
+            bundledDeck.put("sessionRepLimit", mSessionRepLimit);
             bundledDeck.put("newCount", mNewCount);
             bundledDeck.put("newCountToday", mNewCountToday);
             bundledDeck.put("newEarly", mNewEarly);
             bundledDeck.put("revCount", mRevCount);
             bundledDeck.put("reviewEarly", mReviewEarly);
             bundledDeck.put("suspended", mSuspended);
-            bundledDeck.put("undoEnabled", mUndoEnabled);
+            bundledDeck.put("undoEnabled", mUndoEnabled); //XXX: this is synced in Anki 1.2.8, but I believe it should not be... it causes a bug!
             bundledDeck.put("utcOffset", mUtcOffset);
         } catch (JSONException e) {
             Log.i(AnkiDroidApp.TAG, "JSONException = " + e.getMessage());
