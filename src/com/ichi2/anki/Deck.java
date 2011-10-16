@@ -28,6 +28,8 @@ import android.database.sqlite.SQLiteStatement;
 import android.util.Log;
 
 import com.ichi2.anki.Fact.Field;
+import com.ichi2.anki.Utils.SqlCommandType;
+import static com.ichi2.anki.Utils.SqlCommandType.*;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -4255,12 +4257,12 @@ public class Deck {
 
 
     private class UndoCommand {
-        private String mCommand;
+        private SqlCommandType mCommand;
         private String mTable;
         private ContentValues mValues;
         private String mWhereClause;
 
-        UndoCommand(String command, String table, ContentValues values, String whereClause) {
+        UndoCommand(SqlCommandType command, String table, ContentValues values, String whereClause) {
         	mCommand = command;
         	mTable = table;
         	mValues = values;
@@ -4373,7 +4375,7 @@ public class Deck {
     }
 
 
-    public void addUndoCommand(String command, String table, ContentValues values, String whereClause) {
+    public void addUndoCommand(SqlCommandType command, String table, ContentValues values, String whereClause) {
     	mUndoRedoStackToRecord.peek().mUndoCommands.add(new UndoCommand(command, table, values, whereClause));
     }
 

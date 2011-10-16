@@ -81,6 +81,7 @@ import java.util.zip.Deflater;
  * TODO comments
  */
 public class Utils {
+    enum SqlCommandType { SQL_INS, SQL_UPD, SQL_DEL };
 
     // Used to format doubles with English's decimal separator system
     public static final Locale ENGLISH_LOCALE = new Locale("en_US");

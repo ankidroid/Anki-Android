@@ -30,6 +30,8 @@ import java.util.ArrayList;
 import java.util.Map.Entry;
 
 import com.tomgibara.android.veecheck.util.PrefSettings;
+import com.ichi2.anki.Utils.SqlCommandType;
+import static com.ichi2.anki.Utils.SqlCommandType.*;
 
 /**
  * Database layer for AnkiDroid. Can read the native Anki format through Android's SQLite driver.
@@ -182,12 +184,12 @@ public class AnkiDb {
     /**
      * Method for executing db commands with simultaneous storing of undo information. This should only be called from undo method.
      */
-    public void execSQL(Deck deck, String command, String table, ContentValues values, String whereClause) {
-    	if (command.equals("INS")) {
+    public void execSQL(Deck deck, SqlCommandType command, String table, ContentValues values, String whereClause) {
+    	if (command == SQL_INS) {
 			insert(deck, table, null, values);
-    	} else if (command.equals("UPD")) {
+    	} else if (command == SQL_UPD) {
 			update(deck, table, values, whereClause, null);
-    	} else if (command.equals("DEL")) {
+    	} else if (command == SQL_DEL) {
     		delete(deck, table, whereClause, null);
     	} else {
     		Log.i(AnkiDroidApp.TAG, "wrong command. no action performed");
@@ -203,7 +205,7 @@ public class AnkiDb {
     public long insert(Deck deck, String table, String nullColumnHack, ContentValues values) {
     	long rowid = mDatabase.insert(table, nullColumnHack, values);
     	if (rowid != -1 && deck.recordUndoInformation()) {
-        	deck.addUndoCommand("DEL", table, null, "rowid = " + rowid);
+        	deck.addUndoCommand(SQL_DEL, table, null, "rowid = " + rowid);
     	}
     	return rowid;
     }
@@ -234,7 +236,7 @@ public class AnkiDb {
     	if (deck.recordUndoInformation()) {
         	if (oldValuesArray != null) {
                 for (int i = 0; i < oldValuesArray.length; i++) {
-                    deck.addUndoCommand("UPD", table, oldValuesArray[i], whereClauseArray[i]);
+                    deck.addUndoCommand(SQL_UPD, table, oldValuesArray[i], whereClauseArray[i]);
                 }
         	} else {
         		ArrayList<String> ar = new ArrayList<String>();
@@ -272,7 +274,7 @@ public class AnkiDb {
                             	oldvalues.put(columns[i], cursor.getString(i));
 //                            }
                         }
-                        deck.addUndoCommand("UPD", table, oldvalues, "rowid = " + cursor.getString(len));
+                        deck.addUndoCommand(SQL_UPD, table, oldvalues, "rowid = " + cursor.getString(len));
                     }
                 } finally {
                     if (cursor != null) {
@@ -355,7 +357,7 @@ public class AnkiDb {
                         	oldvalues.put(columns[i], cursor.getString(i));
 //                        }
                     }
-                    deck.addUndoCommand("INS", table, oldvalues, null);
+                    deck.addUndoCommand(SQL_INS, table, oldvalues, null);
                 }
 			} finally {
                 if (cursor != null) {
