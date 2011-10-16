@@ -199,6 +199,10 @@ public class CardBrowser extends Activity {
 		Themes.setContentStyle(mainView, Themes.CALLER_CARDBROWSER);
 
 		mDeck = AnkiDroidApp.deck();
+		if (mDeck == null) {
+			finish();
+			return;
+		}
 		mDeck.resetUndo();
 
 		mBackground = Themes.getCardBrowserBackground();
