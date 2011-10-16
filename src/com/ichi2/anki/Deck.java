@@ -4340,7 +4340,7 @@ public class Deck {
         if (mUndoStack.size() > 20) {
         	mUndoStack.removeElementAt(0);
         }
-        mUndoRedoStackToRecord = mUndoStack;
+        startRecordingUndoInfo(mUndoStack);
     }
 
 
@@ -4357,9 +4357,16 @@ public class Deck {
         } else {
             mRedoStack.clear();
         }
-        mUndoRedoStackToRecord = null;
+        stopRecordingUndoInfo();
     }
 
+    private void startRecordingUndoInfo(Stack<UndoRow> dst) {
+        mUndoRedoStackToRecord = dst;
+    }
+
+    private void stopRecordingUndoInfo() {
+        mUndoRedoStackToRecord = null;
+    }
 
     public boolean recordUndoInformation() {
     	return mUndoEnabled && (mUndoRedoStackToRecord != null);
@@ -4384,7 +4391,7 @@ public class Deck {
         } else {
            dst.push(new UndoRow(row.mName, oldCardId));
         }
-        mUndoRedoStackToRecord = dst;
+        startRecordingUndoInfo(dst);
         getDB().getDatabase().beginTransaction();
         try {
             for (UndoCommand u : row.mUndoCommands) {
@@ -4392,7 +4399,7 @@ public class Deck {
             }
             getDB().getDatabase().setTransactionSuccessful();
         } finally {
-        	mUndoRedoStackToRecord = null;
+        	stopRecordingUndoInfo();
         	getDB().getDatabase().endTransaction();
         }
         if (row.mUndoCommands.size() == 0) {
@@ -4401,7 +4408,6 @@ public class Deck {
         mCurrentUndoRedoType = row.mName;
         return row.mCardId;
     }
-
 
     /**
      * Undo the last action(s). Caller must .reset()
