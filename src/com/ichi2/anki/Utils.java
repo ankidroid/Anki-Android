@@ -525,9 +525,12 @@ public class Utils {
     }
 
 
-    public static void printJSONObject(JSONObject jsonObject, String indentation, boolean writeToFile) {
+    private static void printJSONObject(JSONObject jsonObject, String indentation, boolean writeToFile) {
+        BufferedWriter buff = null;
         try {
-
+            if (writeToFile)
+                buff = new BufferedWriter(new FileWriter("/sdcard/payloadAndroid.txt", true), 8192);
+            try {
             @SuppressWarnings("unchecked") Iterator<String> keys = (Iterator<String>) jsonObject.keys();
             TreeSet<String> orderedKeysSet = new TreeSet<String>();
             while (keys.hasNext()) {
@@ -542,19 +545,15 @@ public class Utils {
                     Object value = jsonObject.get(key);
                     if (value instanceof JSONObject) {
                         if (writeToFile) {
-                            BufferedWriter buff = new BufferedWriter(new FileWriter("/sdcard/payloadAndroid.txt", true));
                             buff.write(indentation + " " + key + " : ");
                             buff.newLine();
-                            buff.close();
                         }
                         Log.i(AnkiDroidApp.TAG, "	" + indentation + key + " : ");
                         printJSONObject((JSONObject) value, indentation + "-", writeToFile);
                     } else {
                         if (writeToFile) {
-                            BufferedWriter buff = new BufferedWriter(new FileWriter("/sdcard/payloadAndroid.txt", true));
                             buff.write(indentation + " " + key + " = " + jsonObject.get(key).toString());
                             buff.newLine();
-                            buff.close();
                         }
                         Log.i(AnkiDroidApp.TAG, "	" + indentation + key + " = " + jsonObject.get(key).toString());
                     }
@@ -562,11 +561,13 @@ public class Utils {
                     Log.e(AnkiDroidApp.TAG, "JSONException = " + e.getMessage());
                 }
             }
-
+            } finally {
+                if (buff != null)
+                    buff.close();
+            }
         } catch (IOException e1) {
             Log.e(AnkiDroidApp.TAG, "IOException = " + e1.getMessage());
         }
-
     }
 
 
