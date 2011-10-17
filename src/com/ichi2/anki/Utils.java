@@ -522,7 +522,7 @@ public class Utils {
         BufferedWriter buff;
         try {
             buff = writeToFile ?  
-                    new BufferedWriter(new FileWriter("/sdcard/payloadAndroid.txt", true), 8192) : null;
+                    new BufferedWriter(new FileWriter("/sdcard/payloadAndroid.txt"), 8192) : null;
             try {
                 printJSONObject(jsonObject, "-", buff);
             } finally {
