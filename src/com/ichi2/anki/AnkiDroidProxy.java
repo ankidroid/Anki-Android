@@ -470,7 +470,7 @@ public class AnkiDroidProxy {
             Log.i(AnkiDroidApp.TAG, "Payload response = ");
             payloadReply = new JSONObject(contentString);
             Utils.printJSONObject(payloadReply, false);
-            Utils.saveJSONObject(payloadReply);
+            //Utils.saveJSONObject(payloadReply); //XXX: do we really want to append all JSON objects forever? I don't think so.
         } catch (UnsupportedEncodingException e) {
             Log.e(AnkiDroidApp.TAG, "UnsupportedEncodingException = " + e.getMessage());
             Log.e(AnkiDroidApp.TAG, Log.getStackTraceString(e));

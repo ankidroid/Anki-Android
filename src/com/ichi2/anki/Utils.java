@@ -573,12 +573,14 @@ public class Utils {
     }
 
 
+    /*
     public static void saveJSONObject(JSONObject jsonObject) throws IOException {
         Log.i(AnkiDroidApp.TAG, "saveJSONObject");
         BufferedWriter buff = new BufferedWriter(new FileWriter("/sdcard/jsonObjectAndroid.txt", true));
         buff.write(jsonObject.toString());
         buff.close();
     }
+    */
 
 
     /**
