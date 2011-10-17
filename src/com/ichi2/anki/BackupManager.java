@@ -20,6 +20,8 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
@@ -91,8 +93,14 @@ public class BackupManager {
 			return true;
 		}
 		String backupDateString = deckBackups[len - 1].getName().replaceAll("^.*-(\\d{4}-\\d{2}-\\d{2}).anki$", "$1");
-		Date backupDate = new SimpleDateFormat("yyyy-MM-dd").parse(backupDateString);
-	        Date target = Utils.genToday(Utils.utcOffset()) - (days * 86400);
+		Date backupDate;
+		try {
+			backupDate = new SimpleDateFormat("yyyy-MM-dd").parse(backupDateString);
+		} catch (ParseException e) {
+			Log.e(AnkiDroidApp.TAG, "BackupManager - safetyBackupNeeded - Error on parsing backups: " + e);
+			return true;
+		}
+        Date target = Utils.genToday(Utils.utcOffset() + (days * 86400));
 		return backupDate.before(target);
 	}
 
@@ -230,7 +238,7 @@ public class BackupManager {
 		File[] files = getBackupDirectory().listFiles();
 		ArrayList<File> deckBackups = new ArrayList<File>();
 		for (File aktFile : files){
-			if (aktFile.getName().replaceAll("-\\d{4}-\\d{2}-\\d{2}.anki", ".anki").equals(deckFile.getName())) {
+			if (aktFile.getName().replaceAll("^(.*)-\\d{4}-\\d{2}-\\d{2}.anki$", "$1.anki").equals(deckFile.getName())) {
 				deckBackups.add(aktFile);
 			}
 		}

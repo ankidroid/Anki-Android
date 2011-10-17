@@ -1766,7 +1766,7 @@ public class StudyOptions extends Activity implements IButtonListener {
                 mTextNoDeckTitle.setText(R.string.studyoptions_deck_not_loaded_title);
                 mTextNoDeckMessage.setText(R.string.studyoptions_deck_not_loaded_message);
                 setContentView(mNoDeckView);
-            	mCurrentDialogMessage = getResources().getString(R.string.open_deck_failed, new File(mDeckFilename).getName().replace(".anki", ""), BackupManager.BROKEN_DECKS_SUFFIX.replace("/", ""), getResources().getString(R.string.repair_deck));
+            	mCurrentDialogMessage = getResources().getString(R.string.open_deck_failed, "\'" + new File(mDeckFilename).getName() + "\'", BackupManager.BROKEN_DECKS_SUFFIX.replace("/", ""), getResources().getString(R.string.repair_deck));
     			showDialog(DIALOG_DECK_NOT_LOADED);
                 break;
             case CONTENT_STUDY_OPTIONS:

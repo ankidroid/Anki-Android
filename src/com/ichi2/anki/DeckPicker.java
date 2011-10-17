@@ -1034,7 +1034,7 @@ public class DeckPicker extends Activity implements Runnable, IButtonListener {
 					break;
 				}
 			}
-        	mDeckNotLoadedAlert.setMessage(getResources().getString(R.string.open_deck_failed, new File(mCurrentDeckPath).getName().replace(".anki", ""), BackupManager.BROKEN_DECKS_SUFFIX.replace("/", ""), getResources().getString(R.string.repair_deck)));
+        	mDeckNotLoadedAlert.setMessage(getResources().getString(R.string.open_deck_failed, "\'" + new File(mCurrentDeckPath).getName() + "\'", BackupManager.BROKEN_DECKS_SUFFIX.replace("/", ""), getResources().getString(R.string.repair_deck)));
 			mDeckNotLoadedAlert.show();
 		} else if (reloadIfEmpty) {
 			if (mRestoredOrDeleted) {
@@ -1413,7 +1413,7 @@ public class DeckPicker extends Activity implements Runnable, IButtonListener {
 					Deck deck;
 
 					Bundle data = new Bundle();
-					Message msg = Message.obtain();
+					Message msg;
 
 					// See if a backup is needed (only done in deckpicker, if last backup is quite old or no backup at all is available)
 					// It is necessary to do it here, because retrieving deck information can already lead to a deck removal (Android bug)
@@ -1421,16 +1421,19 @@ public class DeckPicker extends Activity implements Runnable, IButtonListener {
 						Log.i(AnkiDroidApp.TAG, "DeckPicker - Safety backup for deck " + path + "needed");
 						data.putString("absPath", path);
 						data.putInt("msgtype", MSG_CREATING_BACKUP);
+						msg = Message.obtain();
 						msg.setData(data);
 						mHandler.sendMessage(msg);
-						if (BackupManager.backupDeck(deckFilename) == BackupManager.RETURN_BACKUP_CREATED) {
+						if (BackupManager.backupDeck(path) == BackupManager.RETURN_BACKUP_CREATED) {
 							data.putString("absPath", path);
 							data.putInt("msgtype", MSG_LOADING_DECK);
+							msg = Message.obtain();
 							msg.setData(data);
 							mHandler.sendMessage(msg);
 						} else {
 							data.putString("absPath", path);
 							data.putInt("msgtype", MSG_BACKUP_ERROR);
+							msg = Message.obtain();
 							msg.setData(data);
 							mHandler.sendMessage(msg);
 							continue;
@@ -1449,6 +1452,7 @@ public class DeckPicker extends Activity implements Runnable, IButtonListener {
 						}
 						data.putString("absPath", path);
 						data.putInt("msgtype", MSG_COULD_NOT_BE_LOADED);
+						msg = Message.obtain();
 						msg.setData(data);
 						mHandler.sendMessage(msg);						
 						continue;
@@ -1459,6 +1463,7 @@ public class DeckPicker extends Activity implements Runnable, IButtonListener {
 						data.putInt("msgtype", MSG_UPGRADE_NEEDED);
 						data.putInt("version", version);
 						data.putString("notes", "");
+						msg = Message.obtain();
 						msg.setData(data);
 						mHandler.sendMessage(msg);
 					}
@@ -1466,6 +1471,7 @@ public class DeckPicker extends Activity implements Runnable, IButtonListener {
 					if (deck == null) {
 						data.putString("absPath", path);
 						data.putInt("msgtype", MSG_COULD_NOT_BE_LOADED);
+						msg = Message.obtain();
 						msg.setData(data);
 						mHandler.sendMessage(msg);
 						continue;
@@ -1479,6 +1485,7 @@ public class DeckPicker extends Activity implements Runnable, IButtonListener {
 						data.putInt("version", version);
 						data.putString("notes", Deck.upgradeNotesToMessages(deck, getResources()));
 						closeDeck(deck);
+						msg = Message.obtain();
 						msg.setData(data);
 						mHandler.sendMessage(msg);
 					} else {
@@ -1516,6 +1523,7 @@ public class DeckPicker extends Activity implements Runnable, IButtonListener {
 							}
 							data.putInt("rateOfCompletionMat", rateOfCompletionMat);
 	                        data.putInt("rateOfCompletionAll", Math.max(0, rateOfCompletionAll - rateOfCompletionMat));
+							msg = Message.obtain();
 							msg.setData(data);
 							
 							mTotalDueCards += dueCards + newCards;
@@ -1525,6 +1533,7 @@ public class DeckPicker extends Activity implements Runnable, IButtonListener {
 							Log.e(AnkiDroidApp.TAG, "DeckPicker - run - error on loading deck values from file " + path + ": " + e);
 							data.putString("absPath", path);
 							data.putInt("msgtype", MSG_COULD_NOT_BE_LOADED);
+							msg = Message.obtain();
 							msg.setData(data);
 							mHandler.sendMessage(msg);
 							if (!mBrokenDecks.contains(path)) {
