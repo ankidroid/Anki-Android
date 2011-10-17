@@ -25,7 +25,7 @@ public class CardHistoryEntry {
 
     // BEGIN: SQL table columns
     private long mCardId;
-    private double mTime;
+//    private double mTime;
     private double mLastInterval;
     private double mNextInterval;
     private int mEase;

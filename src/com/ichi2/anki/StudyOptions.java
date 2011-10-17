@@ -55,7 +55,6 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.ToggleButton;
@@ -252,7 +251,7 @@ public class StudyOptions extends Activity implements IButtonListener {
     /*
 * Cram related
 */
-    private StyledDialog mCramTagsDialog;
+//    private StyledDialog mCramTagsDialog;
     private String allCramTags[];
     private HashSet<String> activeCramTags;
     private String cramOrder;
@@ -317,8 +316,8 @@ public class StudyOptions extends Activity implements IButtonListener {
     /**
 * UI elements for "Cram Tags" view
 */
-    private ListView mCramTagsListView;
-    private Spinner mSpinnerCramOrder;
+//    private ListView mCramTagsListView;
+//    private Spinner mSpinnerCramOrder;
 
     /**
     * Swipe Detection
@@ -1970,6 +1969,8 @@ public class StudyOptions extends Activity implements IButtonListener {
 * Switch schedulers
 */
 
+    //UNUSED and never used, introduced in commit e44130abcd84928a288ddb0f3512e984ada190e7
+    /*
     private void reset() {
         reset(false);
     }
@@ -1979,6 +1980,7 @@ public class StudyOptions extends Activity implements IButtonListener {
         }
         AnkiDroidApp.deck().reset();
     }
+    */
 
 
     /**

@@ -366,7 +366,7 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
     				lockCheckAction = true;
     				useBackupPreference.setChecked(false);
     				dialogMessage = getResources().getString(R.string.backup_delete);
-    				DeckTask.launchDeckTask(DeckTask.TASK_TYPE_DELETE_BACKUPS, mDeckOperationHandler, null);
+    				DeckTask.launchDeckTask(DeckTask.TASK_TYPE_DELETE_BACKUPS, mDeckOperationHandler, (DeckTask.TaskData[]) null);
     			}
     		});
     		builder.setNegativeButton(res.getString(R.string.no), null);
