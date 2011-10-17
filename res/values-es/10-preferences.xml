@@ -197,4 +197,5 @@
   <string name="show_broadcast_messages_summ">Mostrar notificaciones de AnkiDroid, como nuevas versiones u otras noticias importantes</string>
   <string name="input_workaround">Solución para Entrada</string>
   <string name="input_workaround_summ">Solución para atajar los problemas en cajas de texto HTML. Causa problemas en varios dispositivos.</string>
+  <string name="write_answers_message">Antes de poder escribir tus respuestas, debes crear para cada mazo un campo para comparar con la respuesta escrita.\n\nPuedes hacerlo a través de Anki versión escritorio. (Propiedades del mazo -&gt; Editar modelo -&gt; Formato de tarjeta).</string>
 </resources>

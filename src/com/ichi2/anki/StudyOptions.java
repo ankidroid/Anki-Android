@@ -30,6 +30,7 @@ import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.content.res.Configuration;
 import android.content.res.Resources;
+import android.database.sqlite.SQLiteException;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -54,7 +55,6 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.ToggleButton;
@@ -78,12 +78,9 @@ import com.zeemote.zc.util.JoystickToButtonAdapter;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
-import java.lang.reflect.Method;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
 
@@ -170,6 +167,7 @@ public class StudyOptions extends Activity implements IButtonListener {
     private String mCurrentDialogMessage;
 
     private StyledDialog mNewVersionAlert;
+    private StyledDialog mWelcomeAlert;
     
     /** Zeemote messages */
     private static final int MSG_ZEEMOTE_BUTTON_A = 0x110;
@@ -253,7 +251,7 @@ public class StudyOptions extends Activity implements IButtonListener {
     /*
 * Cram related
 */
-    private StyledDialog mCramTagsDialog;
+//    private StyledDialog mCramTagsDialog;
     private String allCramTags[];
     private HashSet<String> activeCramTags;
     private String cramOrder;
@@ -318,8 +316,8 @@ public class StudyOptions extends Activity implements IButtonListener {
     /**
 * UI elements for "Cram Tags" view
 */
-    private ListView mCramTagsListView;
-    private Spinner mSpinnerCramOrder;
+//    private ListView mCramTagsListView;
+//    private Spinner mSpinnerCramOrder;
 
     /**
     * Swipe Detection
@@ -616,7 +614,6 @@ public class StudyOptions extends Activity implements IButtonListener {
             boolean perDayChanged = deck.getPerDay() ^ mCheckBoxPerDay.isChecked();
           	deck.setPerDay(mCheckBoxPerDay.isChecked());
           	deck.setSuspendLeeches(mCheckBoxSuspendLeeches.isChecked());
-            // TODO: Update number of due cards after change of per day scheduling
             dialog.dismiss();
             if (perDayChanged){
                 deck.updateCutoff();
@@ -1354,13 +1351,6 @@ public class StudyOptions extends Activity implements IButtonListener {
 	            }
 	        });
 	        builder.setCancelable(true);
-	        builder.setOnCancelListener(new OnCancelListener() {
-
-				@Override
-				public void onCancel(DialogInterface arg0) {
-					showContentView(CONTENT_DECK_NOT_LOADED);
-				}
-	        });
 	        dialog = builder.create();
 			break;
 		case DIALOG_MORE:
@@ -1556,7 +1546,7 @@ public class StudyOptions extends Activity implements IButtonListener {
 
 	        Spinner spinner = new Spinner(this);
 	        
-	        ArrayAdapter adapter = ArrayAdapter.createFromResource(this, R.array.cram_review_order_labels, android.R.layout.simple_spinner_item);
+	        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.cram_review_order_labels, android.R.layout.simple_spinner_item);
 	        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 	        spinner.setAdapter(adapter);
 	        spinner.setSelection(0);
@@ -1613,6 +1603,7 @@ public class StudyOptions extends Activity implements IButtonListener {
 
 	        });
 	        dialog = builder.create();
+	        mWelcomeAlert = dialog;
 			break;
 
 		default:
@@ -1684,7 +1675,7 @@ public class StudyOptions extends Activity implements IButtonListener {
 	        if (allTags == null) {
 	            allTags = deck3.allTags_();
 	            Log.i(AnkiDroidApp.TAG, "all tags: " + Arrays.toString(allTags));
-		        if (allCramTags == null) {
+		        if (allTags == null) {
 		        	Themes.showThemedToast(StudyOptions.this, getResources().getString(R.string.error_insufficient_memory), false);
 		        	ad.setEnabled(false);
 		        	return;
@@ -1766,7 +1757,6 @@ public class StudyOptions extends Activity implements IButtonListener {
                             getResources().getString(R.string.studyoptions_nodeck_message), mPrefDeckPath));
                     if (mNewVersionAlert != null) {
                     	mNewVersionAlert.show();
-                    	mNewVersionAlert = null;
                     }
                 }
                 setContentView(mNoDeckView);
@@ -1776,6 +1766,8 @@ public class StudyOptions extends Activity implements IButtonListener {
                 mTextNoDeckTitle.setText(R.string.studyoptions_deck_not_loaded_title);
                 mTextNoDeckMessage.setText(R.string.studyoptions_deck_not_loaded_message);
                 setContentView(mNoDeckView);
+            	mCurrentDialogMessage = getResources().getString(R.string.open_deck_failed, new File(mDeckFilename).getName().replace(".anki", ""), BackupManager.BROKEN_DECKS_SUFFIX.replace("/", ""), getResources().getString(R.string.repair_deck));
+    			showDialog(DIALOG_DECK_NOT_LOADED);
                 break;
             case CONTENT_STUDY_OPTIONS:
             case CONTENT_SESSION_COMPLETE:
@@ -1789,8 +1781,11 @@ public class StudyOptions extends Activity implements IButtonListener {
                 } else {
                     mButtonStart.setText(R.string.studyoptions_continue);
                 }
-                updateValuesFromDeck();
-                setContentView(mStudyOptionsView);
+                if (updateValuesFromDeck()) {
+                    setContentView(mStudyOptionsView);
+                } else {
+                	showContentView(CONTENT_DECK_NOT_LOADED);
+                }
                 break;
             case CONTENT_CONGRATS:
                 setCongratsMessage();
@@ -1897,55 +1892,62 @@ public class StudyOptions extends Activity implements IButtonListener {
     }
 
 
-    private void updateValuesFromDeck() {
+    private boolean updateValuesFromDeck() {
         Deck deck = AnkiDroidApp.deck();
         Resources res = getResources();
         if (deck != null && !mIsClosing) {
             // TODO: updateActives() from anqiqt/ui/main.py
-            int dueCount = deck.getDueCount();
-            int newTodayCount = deck.getNewCountToday();
-            int cardsCount = deck.getCardCount();
-            setTitle(res.getQuantityString(R.plurals.studyoptions_window_title, dueCount + newTodayCount, deck.getDeckName(), dueCount + newTodayCount, cardsCount));
+        	try {
+            	int dueCount = deck.getDueCount();
+                int newTodayCount = deck.getNewCountToday();
+                int cardsCount = deck.getCardCount();
+                setTitle(res.getQuantityString(R.plurals.studyoptions_window_title, dueCount + newTodayCount, deck.getDeckName(), dueCount + newTodayCount, cardsCount));
 
-            mTextDeckName.setText(deck.getDeckName());
+                mTextDeckName.setText(deck.getDeckName());
 
-            mTextReviewsDue.setText(String.valueOf(dueCount));
-            mTextNewToday.setText(String.valueOf(newTodayCount));
-            String etastr = "-";
-            int eta = deck.getETA();
-            if (eta != -1) {
-            	etastr = Integer.toString(eta);
-            }
-            mTextETA.setText(etastr);
-            int totalNewCount = deck.getNewCount(false);
-            mTextNewTotal.setText(String.valueOf(totalNewCount));
-
-            // Progress bars are not shown on small screens
-            if (mDailyBar != null) {
-                double totalCardsCount = cardsCount;
-                mProgressTodayYes = deck.getProgress(false);
-                mProgressMatureYes = deck.getProgress(true);
-                double mature = deck.getMatureCardCount(false);
-                mProgressMature = mature / totalCardsCount;
-                double allRev = deck.getTotalRevFailedCount(false);
-                mProgressAll = allRev / totalCardsCount;
-                if (deck.isLimitedByTag()) {
-                	if (mToggleCram.isChecked()) {
-                		mGlobalLimitFrame.setVisibility(View.GONE);
-                	} else {
-                        mGlobalLimitFrame.setVisibility(View.VISIBLE);
-                        mature = deck.getMatureCardCount(true);
-                        allRev = deck.getTotalRevFailedCount(true);
-                        totalCardsCount = allRev + deck.getNewCount(true);
-                        mProgressMatureLimit = mature / totalCardsCount;
-                        mProgressAllLimit = allRev / totalCardsCount;
-                	}
-                } else {
-                    mGlobalLimitFrame.setVisibility(View.GONE);
+                mTextReviewsDue.setText(String.valueOf(dueCount));
+                mTextNewToday.setText(String.valueOf(newTodayCount));
+                String etastr = "-";
+                int eta = deck.getETA();
+                if (eta != -1) {
+                	etastr = Integer.toString(eta);
                 }
-                updateStatisticBars();
+                mTextETA.setText(etastr);
+                int totalNewCount = deck.getNewCount(false);
+                mTextNewTotal.setText(String.valueOf(totalNewCount));
+
+                // Progress bars are not shown on small screens
+                if (mDailyBar != null) {
+                    double totalCardsCount = cardsCount;
+                    mProgressTodayYes = deck.getProgress(false);
+                    mProgressMatureYes = deck.getProgress(true);
+                    double mature = deck.getMatureCardCount(false);
+                    mProgressMature = mature / totalCardsCount;
+                    double allRev = deck.getTotalRevFailedCount(false);
+                    mProgressAll = allRev / totalCardsCount;
+                    if (deck.isLimitedByTag()) {
+                    	if (mToggleCram.isChecked()) {
+                    		mGlobalLimitFrame.setVisibility(View.GONE);
+                    	} else {
+                            mGlobalLimitFrame.setVisibility(View.VISIBLE);
+                            mature = deck.getMatureCardCount(true);
+                            allRev = deck.getTotalRevFailedCount(true);
+                            totalCardsCount = allRev + deck.getNewCount(true);
+                            mProgressMatureLimit = mature / totalCardsCount;
+                            mProgressAllLimit = allRev / totalCardsCount;
+                    	}
+                    } else {
+                        mGlobalLimitFrame.setVisibility(View.GONE);
+                    }
+                    updateStatisticBars();
+                }
+                return true;
+            } catch (SQLiteException e) {
+            	Log.e(AnkiDroidApp.TAG, "updateValuesFromDeck - error on retrieving deck information: " + e);
+            	return false;
             }
         }
+        return true;
     }
 
 
@@ -1967,6 +1969,8 @@ public class StudyOptions extends Activity implements IButtonListener {
 * Switch schedulers
 */
 
+    //UNUSED and never used, introduced in commit e44130abcd84928a288ddb0f3512e984ada190e7
+    /*
     private void reset() {
         reset(false);
     }
@@ -1976,6 +1980,7 @@ public class StudyOptions extends Activity implements IButtonListener {
         }
         AnkiDroidApp.deck().reset();
     }
+    */
 
 
     /**
@@ -2213,7 +2218,7 @@ public class StudyOptions extends Activity implements IButtonListener {
             } else {
             	return;
             }
-        	if (Deck.isWalEnabled(mDeckFilename)) {
+        	if (Deck.isWalEnabled(deck.getDeckPath())) {
         		deck = null;
         	}
             Connection.syncDeck(mSyncListener, new Connection.Payload(new Object[] { username, password, deck,
@@ -2264,7 +2269,7 @@ public class StudyOptions extends Activity implements IButtonListener {
                     if (AnkiDroidApp.deck() == null || !AnkiDroidApp.deck().getDeckPath().equals(mDeckFilename)) {
                     	if (resultCode != RESULT_DONT_RELOAD_DECK) {
                             displayProgressDialogAndLoadDeck();
-                        }                    	
+                        }
                     }
             	}
                 return;
@@ -2281,7 +2286,9 @@ public class StudyOptions extends Activity implements IButtonListener {
             Log.i(AnkiDroidApp.TAG, "onActivityResult = OK");
             mDeckFilename = intent.getExtras().getString(OPT_DB);
             savePreferences("deckFilename");
-
+            if (mDeckFilename == null || !new File(mDeckFilename).exists()) {
+            	showContentView(CONTENT_NO_DECK);
+            }
             // Log.i(AnkiDroidApp.TAG, "onActivityResult - deckSelected = " + deckSelected);
             if (AnkiDroidApp.deck() == null || !AnkiDroidApp.deck().getDeckPath().equals(mDeckFilename)) {
                 boolean updateAllCards = (requestCode == DOWNLOAD_SHARED_DECK);
@@ -2315,7 +2322,7 @@ public class StudyOptions extends Activity implements IButtonListener {
                 	showContentView(CONTENT_STUDY_OPTIONS);
                     break;
             }
-        } else if (requestCode == ADD_FACT && resultCode == RESULT_OK) {
+        } else if (requestCode == ADD_FACT && resultCode != RESULT_CANCELED) {
         	resetAndUpdateValuesFromDeck();
         } else if (requestCode == BROWSE_CARDS && resultCode == RESULT_OK) {
         	resetAndUpdateValuesFromDeck();
@@ -2323,6 +2330,19 @@ public class StudyOptions extends Activity implements IButtonListener {
         	syncDeck(null);
         } else if (requestCode == STATISTICS && mCurrentContentView == CONTENT_CONGRATS) {
         	showContentView(CONTENT_STUDY_OPTIONS);
+        } else if (requestCode == REPORT_ERROR) {
+  	      // workaround for dialog problems when returning from error reporter
+  	      	try {
+  	      		if (mWelcomeAlert != null && mWelcomeAlert.isShowing()) {
+  	      			mWelcomeAlert.dismiss();
+      				mWelcomeAlert.show();
+  	      		} else if (mNewVersionAlert != null && mNewVersionAlert.isShowing()) {
+  	      			mNewVersionAlert.dismiss();
+  	      			mNewVersionAlert.show();
+  	      		}
+  	      	} catch (IllegalArgumentException e) {
+  	      		Log.e(AnkiDroidApp.TAG, "Error on dismissing and showing dialog: " + e);
+  	      	}
         }
     }
 
@@ -2373,11 +2393,13 @@ public class StudyOptions extends Activity implements IButtonListener {
     			@Override
     			public void onClick(DialogInterface dialog, int which) {
 		        	PrefSettings.getSharedPrefs(StudyOptions.this.getBaseContext()).edit().putString("lastVersion", getVersion()).commit();
+		        	mNewVersionAlert = null;
 			        BroadcastMessages.checkForNewMessages(StudyOptions.this);
     			}
             }, new DialogInterface.OnCancelListener() {
     			@Override
     			public void onCancel(DialogInterface dialog) {
+		        	mNewVersionAlert = null;
 			        BroadcastMessages.checkForNewMessages(StudyOptions.this);
     			}
             }, true);
@@ -2579,7 +2601,6 @@ public class StudyOptions extends Activity implements IButtonListener {
                     AnkiDroidApp.setDeck(result.getDeck());
                     mCompat.invalidateOptionsMenu(StudyOptions.this);
 
-                    updateValuesFromDeck();
                     showContentView(CONTENT_STUDY_OPTIONS);
                     showDeckInformation(true);
 
@@ -2590,9 +2611,7 @@ public class StudyOptions extends Activity implements IButtonListener {
                     break;
 
                 case DeckTask.DECK_NOT_LOADED:
-                	showContentView(CONTENT_STUDY_OPTIONS);
-                	mCurrentDialogMessage = getResources().getString(R.string.open_deck_failed, new File(mDeckFilename).getName().replace(".anki", ""), BackupManager.BROKEN_DECKS_SUFFIX.replace("/", ""), getResources().getString(R.string.repair_deck));
-        			showDialog(DIALOG_DECK_NOT_LOADED);
+                	showContentView(CONTENT_DECK_NOT_LOADED);
                     break;
 
                 case DeckTask.DECK_EMPTY:
@@ -2617,7 +2636,6 @@ public class StudyOptions extends Activity implements IButtonListener {
                     } catch (Exception e) {
                         Log.e(AnkiDroidApp.TAG, "onPostExecute - Show new version dialog exception = " + e.getMessage());
                 	}
-                    mNewVersionAlert = null;
                 }
             }
             Deck deck = AnkiDroidApp.deck();

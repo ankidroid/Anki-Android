@@ -53,7 +53,7 @@
   <string name="studyoptions_congrats_syncdeck">Synchronizovat balíček</string>
   <string name="studyoptions_congrats_open_other_deck">Otevřít jiný balíček</string>
   <string name="studyoptions_congrats_finish">Zpět na studijní obrazovku</string>
-  <string name="card_unsuspended">Card suspension undone</string>
+  <string name="card_unsuspended">Zrušeno vyřazení karty</string>
   <string name="card_suspended">Card resuspended</string>
   <string name="menu_rotate">Otočit</string>
   <string name="undo">Vrátit zpět</string>
@@ -93,9 +93,10 @@
   <string name="studyoptions_load_tutorial_deck">Načíst výukový balíček</string>
   <string name="studyoptions_night_mode">Noční režim</string>
   <string name="studyoptions_swap_qa">Prohoď Q/A</string>
-  <string name="visit">Visit</string>
+  <string name="visit">Navštívit</string>
   <string name="later">Později</string>
   <string name="download">Stáhnout</string>
+  <string name="deckpicker_loading_error">Balíček nemohl být načten</string>
   <string-array name="next_review_s">
     <item>1 sekunda</item>
     <item>1 minuta</item>

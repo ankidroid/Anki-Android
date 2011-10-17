@@ -28,6 +28,7 @@ import android.database.sqlite.SQLiteStatement;
 import android.util.Log;
 
 import com.ichi2.anki.Fact.Field;
+import com.ichi2.anki.Utils.SqlCommandType;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -136,7 +137,7 @@ public class Deck {
     private String mLowPriority;
     private String mSuspended; // obsolete in libanki 1.1
 
-    // 0 is random, 1 is by input date, 2 is by input date inverse
+    // Can be NEW_CARDS_RANDOM, NEW_CARDS_OLD_FIRST or NEW_CARDS_NEW_FIRST, i.e. random, by input date or by input date inverse. Should be an enum.
     private int mNewCardOrder;
 
     // When to show new cards
@@ -233,7 +234,7 @@ public class Deck {
         return openDeck(path, true);
     }
     public static synchronized Deck openDeck(String path, boolean rebuild) throws SQLException {
-    	return openDeck(path, true, false);
+    	return openDeck(path, rebuild, false);
     }
     public static synchronized Deck openDeck(String path, boolean rebuild, boolean forceDeleteJournalMode) throws SQLException {
         Deck deck = null;
@@ -1722,11 +1723,6 @@ public class Deck {
                 return false;
 //            }
 //        }
-    }
-
-
-    private void removeSpaced(LinkedList<QueueItem> queue) {
-        removeSpaced(queue, false);
     }
 
 
@@ -3663,11 +3659,6 @@ public class Deck {
     }
 
 
-    private void updatePriorities(long[] cardIds, String[] suspend) {
-        updatePriorities(cardIds, suspend, true);
-    }
-
-
     void updatePriorities(long[] cardIds, String[] suspend, boolean dirty) {
         Cursor cursor = null;
         Log.i(AnkiDroidApp.TAG, "updatePriorities - Updating priorities...");
@@ -4105,6 +4096,7 @@ public class Deck {
     }
 
 
+    /*
     // CSS for all the fields
     private String rebuildCSS() {
         StringBuilder css = new StringBuilder(512);
@@ -4198,6 +4190,7 @@ public class Deck {
         }
         setVar("hexCache", jsonObject.toString(), false);
     }
+    */
 
     //
     // Syncing
@@ -4255,12 +4248,12 @@ public class Deck {
 
 
     private class UndoCommand {
-        private String mCommand;
+        private SqlCommandType mCommand;
         private String mTable;
         private ContentValues mValues;
         private String mWhereClause;
 
-        UndoCommand(String command, String table, ContentValues values, String whereClause) {
+        UndoCommand(SqlCommandType command, String table, ContentValues values, String whereClause) {
         	mCommand = command;
         	mTable = table;
         	mValues = values;
@@ -4302,11 +4295,14 @@ public class Deck {
     }
 
 
+    //XXX: this method has never been used.
+    /*
     private void setUndoBarrier() {
         if (mUndoStack.isEmpty() || mUndoStack.peek() != null) {
             mUndoStack.push(null);
         }
     }
+    */
 
 
     public void setUndoStart(String name) {
@@ -4340,7 +4336,7 @@ public class Deck {
         if (mUndoStack.size() > 20) {
         	mUndoStack.removeElementAt(0);
         }
-        mUndoRedoStackToRecord = mUndoStack;
+        startRecordingUndoInfo(mUndoStack);
     }
 
 
@@ -4357,16 +4353,23 @@ public class Deck {
         } else {
             mRedoStack.clear();
         }
-        mUndoRedoStackToRecord = null;
+        stopRecordingUndoInfo();
     }
 
+    private void startRecordingUndoInfo(Stack<UndoRow> dst) {
+        mUndoRedoStackToRecord = dst;
+    }
+
+    private void stopRecordingUndoInfo() {
+        mUndoRedoStackToRecord = null;
+    }
 
     public boolean recordUndoInformation() {
     	return mUndoEnabled && (mUndoRedoStackToRecord != null);
     }
 
 
-    public void addUndoCommand(String command, String table, ContentValues values, String whereClause) {
+    public void addUndoCommand(SqlCommandType command, String table, ContentValues values, String whereClause) {
     	mUndoRedoStackToRecord.peek().mUndoCommands.add(new UndoCommand(command, table, values, whereClause));
     }
 
@@ -4384,7 +4387,7 @@ public class Deck {
         } else {
            dst.push(new UndoRow(row.mName, oldCardId));
         }
-        mUndoRedoStackToRecord = dst;
+        startRecordingUndoInfo(dst);
         getDB().getDatabase().beginTransaction();
         try {
             for (UndoCommand u : row.mUndoCommands) {
@@ -4392,7 +4395,7 @@ public class Deck {
             }
             getDB().getDatabase().setTransactionSuccessful();
         } finally {
-        	mUndoRedoStackToRecord = null;
+        	stopRecordingUndoInfo();
         	getDB().getDatabase().endTransaction();
         }
         if (row.mUndoCommands.size() == 0) {
@@ -4401,7 +4404,6 @@ public class Deck {
         mCurrentUndoRedoType = row.mName;
         return row.mCardId;
     }
-
 
     /**
      * Undo the last action(s). Caller must .reset()
@@ -4509,7 +4511,7 @@ public class Deck {
             bundledDeck.put("cardCount", mCardCount);
             bundledDeck.put("collapseTime", mCollapseTime);
             bundledDeck.put("created", mCreated);
-            // bundledDeck.put("currentModelId", currentModelId);
+            // bundledDeck.put("currentModelId", mCurrentModelId); //XXX: Why? I believe this should is sent by AnkiDesktop.
             bundledDeck.put("delay0", mDelay0);
             bundledDeck.put("delay1", mDelay1);
             bundledDeck.put("delay2", mDelay2);
@@ -4532,13 +4534,18 @@ public class Deck {
             bundledDeck.put("midIntervalMin", mMidIntervalMin);
             bundledDeck.put("modified", mModified);
             bundledDeck.put("newCardModulus", mNewCardModulus);
+            bundledDeck.put("newCardSpacing", mNewCardSpacing);
+            bundledDeck.put("newCardOrder", mNewCardOrder);
+            bundledDeck.put("newCardsPerDay", mNewCardsPerDay);
+            bundledDeck.put("sessionTimeLimit", mSessionTimeLimit);
+            bundledDeck.put("sessionRepLimit", mSessionRepLimit);
             bundledDeck.put("newCount", mNewCount);
             bundledDeck.put("newCountToday", mNewCountToday);
             bundledDeck.put("newEarly", mNewEarly);
             bundledDeck.put("revCount", mRevCount);
             bundledDeck.put("reviewEarly", mReviewEarly);
             bundledDeck.put("suspended", mSuspended);
-            bundledDeck.put("undoEnabled", mUndoEnabled);
+            bundledDeck.put("undoEnabled", mUndoEnabled); //XXX: this is synced in Anki 1.2.8, but I believe it should not be, as it's useless.
             bundledDeck.put("utcOffset", mUtcOffset);
         } catch (JSONException e) {
             Log.i(AnkiDroidApp.TAG, "JSONException = " + e.getMessage());
@@ -4599,7 +4606,7 @@ public class Deck {
             mSessionTimeLimit = deckPayload.getInt("sessionTimeLimit");
             mSuspended = deckPayload.getString("suspended");
             // tmpMediaDir
-            mUndoEnabled = deckPayload.getBoolean("undoEnabled");
+            //mUndoEnabled = deckPayload.getBoolean("undoEnabled"); //XXX: this is synced in Anki 1.2.8, but it should not be... it causes a bug!
             mUtcOffset = deckPayload.getDouble("utcOffset");
 
             commitToDB();

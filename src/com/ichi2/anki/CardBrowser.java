@@ -53,7 +53,6 @@ import com.ichi2.themes.StyledDialog;
 import com.ichi2.themes.Themes;
 import com.tomgibara.android.veecheck.util.PrefSettings;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
@@ -194,9 +193,15 @@ public class CardBrowser extends Activity {
 		Themes.applyTheme(this);
 		super.onCreate(savedInstanceState);
 
-		setContentView(R.layout.card_browser);
+		View mainView = getLayoutInflater().inflate(R.layout.card_browser, null);
+		setContentView(mainView);
+		Themes.setContentStyle(mainView, Themes.CALLER_CARDBROWSER);
 
 		mDeck = AnkiDroidApp.deck();
+		if (mDeck == null) {
+			finish();
+			return;
+		}
 		mDeck.resetUndo();
 
 		mBackground = Themes.getCardBrowserBackground();
@@ -836,7 +841,7 @@ public class CardBrowser extends Activity {
 		@Override
 		public void onPreExecute() {
 			Resources res = getResources();
-			if (mProgressDialog.isShowing()) {
+			if (mProgressDialog != null && mProgressDialog.isShowing()) {
 				mProgressDialog.setMessage(res.getString(R.string.card_browser_sorting_cards));
 			} else {
 				mProgressDialog = ProgressDialog.show(CardBrowser.this, "", res

@@ -195,6 +195,7 @@
   <string name="studyoptions_more_save">Spara</string>
   <string name="show_broadcast_messages">Visa aktuella meddelanden</string>
   <string name="show_broadcast_messages_summ">Visa meddelanden om nya versioner av AnkiDroid eller andra viktiga meddelanden</string>
-  <string name="input_workaround">Input Workaround</string>
-  <string name="input_workaround_summ">Workaround for focusing problems on HTML input boxes. Causes problems on several devices.</string>
+  <string name="input_workaround">Inmatningslösning</string>
+  <string name="input_workaround_summ">Inmatningslösning för problem med att fokusera på inmatningsfält för HTML. Orsakar problem på flera enheter. </string>
+  <string name="write_answers_message">Before being able to write your answers, you have to define for every deck a field to compare the written answer with.\n\nYou can do this via Anki Desktop (deck properties -&gt; edit model -&gt; card layout).</string>
 </resources>

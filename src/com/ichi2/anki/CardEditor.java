@@ -159,8 +159,8 @@ public class CardEditor extends Activity {
 
 	private HashMap<String, String> mFullDeckPaths;
 	private String[] mDeckNames;
-	private String mSourceLanguage;
-	private String mTargetLanguage;
+//	private String mSourceLanguage;
+//	private String mTargetLanguage;
 	private String mSourceText;
 	private String mTargetText;
 	private int mSourcePosition = 0;
@@ -268,8 +268,8 @@ public class CardEditor extends Activity {
 		if (action != null && action.equals(INTENT_CREATE_FLASHCARD)) {
 			prepareForIntentAddition();
 			Bundle extras = intent.getExtras();
-			mSourceLanguage = extras.getString(SOURCE_LANGUAGE);
-			mTargetLanguage = extras.getString(TARGET_LANGUAGE);
+//			mSourceLanguage = extras.getString(SOURCE_LANGUAGE);
+//			mTargetLanguage = extras.getString(TARGET_LANGUAGE);
 			mSourceText = extras.getString(SOURCE_TEXT);
 			mTargetText = extras.getString(TARGET_TEXT);
 			mAddFact = true;
@@ -291,10 +291,20 @@ public class CardEditor extends Activity {
 			}
 			switch (intent.getIntExtra(CARD_EDITOR_ACTION, ADD_CARD)) {
 			case EDIT_REVIEWER_CARD:
-				mEditorFact = Reviewer.getEditorCard().getFact();
+				Card revCard = Reviewer.getEditorCard();
+				if (revCard == null) {
+					finish();
+					return;
+				}
+				mEditorFact = revCard.getFact();
 				break;
 			case EDIT_BROWSER_CARD:
-				mEditorFact = CardBrowser.getEditorCard().getFact();
+				Card browCard = CardBrowser.getEditorCard();
+				if (browCard == null) {
+					finish();
+					return;
+				}
+				mEditorFact = browCard.getFact();
 				break;
 			case COPY_CARD:
 				mForCopy = true;
@@ -680,7 +690,7 @@ public class CardEditor extends Activity {
 			frame.addView(mNewTagEditText);
 			frame.addView(mAddTextButton);
 
-			builder.setView(frame, true);
+			builder.setView(frame, false, true);
 			dialog = builder.create();
 			mTagsDialog = dialog;
 			break;

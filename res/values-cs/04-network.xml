@@ -90,7 +90,7 @@
   <string name="sync_log_old_version">Synchronizační protokol se změnil, proveďte aktualizaci na poslední verzi AnkiDroid. Viz %s</string>
   <string name="sync_log_conflict_resolution_required">Balíček byl změněn zde i na straně serveru. Prosím otevřete balíček a proveďte synchronizaci, aby se tento konflikt vyřešil.</string>
   <string name="sync_log_create_deck_failed">Nepodařilo se vytvořit balíček na serveru:: %1$s</string>
-  <string name="sync_log_finish_error">Error while sending finish direction to server</string>
+  <string name="sync_log_finish_error">Chyba při odesílání závěrečné části na server</string>
   <string name="sync_conflict_title">Konflikt synchronizace</string>
   <string name="sync_conflict_message">Balíček %s byl změněn jak zde, tak na serveru. Kterou verzi chcete ponechat?</string>
   <string name="sync_conflict_local">Ponechat místní</string>

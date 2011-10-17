@@ -21,6 +21,7 @@ package com.ichi2.themes;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup.LayoutParams;
@@ -34,9 +35,8 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.R;
-import com.ichi2.anki.StudyOptions;
-
 import java.util.ArrayList;
 import java.util.List;
  
@@ -46,7 +46,7 @@ public class StyledDialog extends Dialog {
 	private Context mContext;
 	private List<String> mItemList;
 	private boolean[] mCheckedItems;
-	private ArrayAdapter mListAdapter;
+	private ArrayAdapter<String> mListAdapter;
 	private OnClickListener mListener;
 	private ListView mListView;
 	private boolean mDoNotShow = false;
@@ -116,18 +116,18 @@ public class StyledDialog extends Dialog {
     	}
     	switch (type) {
     	case 1:
-    		mListAdapter = new ArrayAdapter(mContext, R.layout.select_dialog_nochoice, 0, mItemList);
+    		mListAdapter = new ArrayAdapter<String>(mContext, R.layout.select_dialog_nochoice, 0, mItemList);
     		mListView.setAdapter(mListAdapter);
     		mListView.setChoiceMode(ListView.CHOICE_MODE_NONE);
 	    	break;
     	case 2:
-    		mListAdapter = new ArrayAdapter(mContext, R.layout.select_dialog_singlechoice, 0, mItemList);
+    		mListAdapter = new ArrayAdapter<String>(mContext, R.layout.select_dialog_singlechoice, 0, mItemList);
     		mListView.setAdapter(mListAdapter);
     		mListView.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
     		mListView.setItemChecked(checkedItem, true);
         	break;
     	case 3:
-    		mListAdapter = new ArrayAdapter(mContext, R.layout.select_dialog_multichoice, 0, mItemList);
+    		mListAdapter = new ArrayAdapter<String>(mContext, R.layout.select_dialog_multichoice, 0, mItemList);
     		mListView.setAdapter(mListAdapter);
     		mListView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
 	    	for (int i = 0; i < checked.length; i++) {
@@ -509,7 +509,13 @@ public class StyledDialog extends Dialog {
             }
 
             // set background
-            Themes.setStyledDialogBackgrounds(layout, numberOfButtons, brightViewBackground);
+            try {
+            	Themes.setStyledDialogBackgrounds(layout, numberOfButtons, brightViewBackground);
+            } catch (OutOfMemoryError e) {
+            	Log.e(AnkiDroidApp.TAG, "StyledDialog - Dialog could not be created: " + e);
+            	Themes.showThemedToast(context, context.getResources().getString(R.string.error_insufficient_memory), false);
+            	return null;
+            }
 
             dialog.setContentView(layout);
             return dialog;

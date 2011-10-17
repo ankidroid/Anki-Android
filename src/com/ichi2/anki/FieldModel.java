@@ -37,22 +37,22 @@ public class FieldModel implements Comparator<FieldModel> {
     private String mName = "";
     private String mDescription = "";
     // Reused as RTL marker
-    private String mFeatures = "";
-    private int mRequired = 1;
-    private int mUnique = 1;
-    private int mNumeric = 0;
+//    private String mFeatures = "";
+//    private int mRequired = 1;
+//    private int mUnique = 1;
+//    private int mNumeric = 0;
     // Display
     private String mQuizFontFamily = CardModel.DEFAULT_FONT_FAMILY;
     private int mQuizFontSize = CardModel.DEFAULT_FONT_SIZE;
     private String mQuizFontColour;
-    private String mEditFontFamily = "1"; // reused as <pre> toggle
+//    private String mEditFontFamily = "1"; // reused as <pre> toggle
     private int mEditFontSize = CardModel.DEFAULT_FONT_SIZE;
     // END SQL table entries
 
     /**
      * Backward reference
      */
-    private Model mModel;
+//    private Model mModel;
 
 
     public FieldModel(long id, int ordinal, long modelId, String name, String description) {
@@ -66,8 +66,8 @@ public class FieldModel implements Comparator<FieldModel> {
 
     public FieldModel(String name, boolean required, boolean unique) {
         mName = name;
-        mRequired = required ? 1 : 0;
-        mUnique = unique ? 1 : 0;
+//        mRequired = required ? 1 : 0;
+//        mUnique = unique ? 1 : 0;
         mId = Utils.genID();
     }
 

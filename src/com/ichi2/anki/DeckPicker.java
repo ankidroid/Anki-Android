@@ -32,6 +32,7 @@ import android.content.SharedPreferences;
 import android.content.DialogInterface.OnCancelListener;
 import android.content.res.Resources;
 import android.database.SQLException;
+import android.database.sqlite.SQLiteException;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -131,6 +132,7 @@ public class DeckPicker extends Activity implements Runnable, IButtonListener {
 	private static final int MSG_UPGRADE_NEEDED = 0;
 	private static final int MSG_UPGRADE_SUCCESS = 1;
 	private static final int MSG_UPGRADE_FAILURE = 2;
+	private static final int MSG_COULD_NOT_BE_LOADED = 3;
     /** Zeemote messages */
     private static final int MSG_ZEEMOTE_BUTTON_A = 0x110;
     private static final int MSG_ZEEMOTE_BUTTON_B = MSG_ZEEMOTE_BUTTON_A+1;
@@ -362,6 +364,10 @@ public class DeckPicker extends Activity implements Runnable, IButtonListener {
 						.format(res.getString(R.string.deckpicker_new), data
 								.getInt("new"));
 				showProgress = "false";
+			} else if (msgtype == DeckPicker.MSG_COULD_NOT_BE_LOADED) {
+				dueString = res.getString(R.string.deckpicker_loading_error);
+				newString = "";
+				showProgress = "false";				
 			}
 
 			int count = mDeckListAdapter.getCount();
@@ -862,15 +868,17 @@ public class DeckPicker extends Activity implements Runnable, IButtonListener {
 	protected void onPrepareDialog(int id, Dialog dialog) {
 		Resources res = getResources();
 		StyledDialog ad = (StyledDialog)dialog;
-		mCurrentDeckFilename = mDeckList.get(mContextMenuPosition).get("name");
 		switch (id) {
 		case DIALOG_DELETE_DECK:
+			mCurrentDeckFilename = mDeckList.get(mContextMenuPosition).get("name");
 			ad.setMessage(String.format(res.getString(R.string.delete_deck_message), mCurrentDeckFilename));
 			break;
 		case DIALOG_DELETE_BACKUPS:
+			mCurrentDeckFilename = mDeckList.get(mContextMenuPosition).get("name");
 			ad.setMessage(String.format(res.getString(R.string.backup_delete_deck_backups_alert), mCurrentDeckFilename));
 			break;
 		case DIALOG_CONTEXT_MENU:
+			mCurrentDeckFilename = mDeckList.get(mContextMenuPosition).get("name");
 			ad.setTitle(mCurrentDeckFilename);
 			break;
 		}		
@@ -1377,12 +1385,18 @@ public class DeckPicker extends Activity implements Runnable, IButtonListener {
 					int version = 0;
 					try {
 						version = Deck.getDeckVersion(path);
-					} catch (SQLException e) {
+					} catch (Exception e) {
 						Log.w(AnkiDroidApp.TAG, "Could not open database "
 								+ path);
 						if (!mBrokenDecks.contains(path)) {
 							mBrokenDecks.add(path);
 						}
+						Bundle data = new Bundle();
+						data.putString("absPath", path);
+						data.putInt("msgtype", MSG_COULD_NOT_BE_LOADED);
+						Message msg = Message.obtain();
+						msg.setData(data);
+						mHandler.sendMessage(msg);						
 						continue;
 					}
 
@@ -1398,6 +1412,12 @@ public class DeckPicker extends Activity implements Runnable, IButtonListener {
 					}
 					deck = getDeck(path);
 					if (deck == null) {
+						Bundle data = new Bundle();
+						data.putString("absPath", path);
+						data.putInt("msgtype", MSG_COULD_NOT_BE_LOADED);
+						Message msg = Message.obtain();
+						msg.setData(data);
+						mHandler.sendMessage(msg);
 						continue;
 					}
 					version = deck.getVersion();
@@ -1415,44 +1435,57 @@ public class DeckPicker extends Activity implements Runnable, IButtonListener {
 						msg.setData(data);
 						mHandler.sendMessage(msg);
 					} else {
-						int dueCards = deck.getDueCount();
-						int totalCards = deck.getCardCount();
-						int newCards = deck.getNewCountToday();
-						int totalNewCards = deck.getNewCount(mCompletionBarRestrictToActive);
-						int matureCards = deck.getMatureCardCount(mCompletionBarRestrictToActive);
-						int totalRevCards = deck.getTotalRevFailedCount(mCompletionBarRestrictToActive);
-						int totalCardsCompletionBar = totalRevCards + totalNewCards;
-						double modified = deck.getModified();
+						try {
+							int dueCards = deck.getDueCount();
+							int totalCards = deck.getCardCount();
+							int newCards = deck.getNewCountToday();
+							int totalNewCards = deck.getNewCount(mCompletionBarRestrictToActive);
+							int matureCards = deck.getMatureCardCount(mCompletionBarRestrictToActive);
+							int totalRevCards = deck.getTotalRevFailedCount(mCompletionBarRestrictToActive);
+							int totalCardsCompletionBar = totalRevCards + totalNewCards;
+							double modified = deck.getModified();
 
-						String upgradeNotes = Deck.upgradeNotesToMessages(deck, getResources());
-						
-						closeDeck(deck);
+							String upgradeNotes = Deck.upgradeNotesToMessages(deck, getResources());
+							
+							closeDeck(deck);
 
-						data.putString("absPath", path);
-						data.putInt("msgtype", MSG_UPGRADE_SUCCESS);
-						data.putInt("due", dueCards);
-						data.putDouble("mod", modified);
-						data.putInt("total", totalCards);
-						data.putInt("new", newCards);
-						data.putInt("totalNew", totalNewCards);
-						data.putString("notes", upgradeNotes);
+							data.putString("absPath", path);
+							data.putInt("msgtype", MSG_UPGRADE_SUCCESS);
+							data.putInt("due", dueCards);
+							data.putDouble("mod", modified);
+							data.putInt("total", totalCards);
+							data.putInt("new", newCards);
+							data.putInt("totalNew", totalNewCards);
+							data.putString("notes", upgradeNotes);
 
-						int rateOfCompletionMat;
-						int rateOfCompletionAll;
-						if (totalCardsCompletionBar != 0) {
-						    rateOfCompletionMat = (matureCards * 100) / totalCardsCompletionBar;
-		                    rateOfCompletionAll = (totalRevCards * 100) / totalCardsCompletionBar; 
-						} else {
-						    rateOfCompletionMat = 0;
-						    rateOfCompletionAll = 0;
+							int rateOfCompletionMat;
+							int rateOfCompletionAll;
+							if (totalCardsCompletionBar != 0) {
+							    rateOfCompletionMat = (matureCards * 100) / totalCardsCompletionBar;
+			                    rateOfCompletionAll = (totalRevCards * 100) / totalCardsCompletionBar; 
+							} else {
+							    rateOfCompletionMat = 0;
+							    rateOfCompletionAll = 0;
+							}
+							data.putInt("rateOfCompletionMat", rateOfCompletionMat);
+	                        data.putInt("rateOfCompletionAll", Math.max(0, rateOfCompletionAll - rateOfCompletionMat));
+							msg.setData(data);
+							
+							mTotalDueCards += dueCards + newCards;
+							mTotalCards += totalCards;
+							mTotalTime += Math.max(deck.getETA(), 0);							
+						} catch (SQLiteException e) {
+							Log.e(AnkiDroidApp.TAG, "DeckPicker - run - error on loading deck values from file " + path + ": " + e);
+							data.putString("absPath", path);
+							data.putInt("msgtype", MSG_COULD_NOT_BE_LOADED);
+							msg.setData(data);
+							mHandler.sendMessage(msg);
+							if (!mBrokenDecks.contains(path)) {
+								mBrokenDecks.add(path);
+							}
+							continue;
 						}
-						data.putInt("rateOfCompletionMat", rateOfCompletionMat);
-                        data.putInt("rateOfCompletionAll", Math.max(0, rateOfCompletionAll - rateOfCompletionMat));
-						msg.setData(data);
-						
-						mTotalDueCards += dueCards + newCards;
-						mTotalCards += totalCards;
-						mTotalTime += Math.max(deck.getETA(), 0);
+
 
 						mHandler.sendMessage(msg);
 					}
@@ -1485,12 +1518,6 @@ public class DeckPicker extends Activity implements Runnable, IButtonListener {
 
     public void openPersonalDeckPicker() {
         if (AnkiDroidApp.isUserLoggedIn()) {
-            if (AnkiDroidApp.deck() != null)// && sdCardAvailable)
-            {
-                AnkiDroidApp.deck().closeDeck();
-                AnkiDroidApp.setDeck(null);
-            }
-            Intent i = getIntent();
             startActivityForResult(new Intent(this, PersonalDeckPicker.class), DOWNLOAD_PERSONAL_DECK);
             if (StudyOptions.getApiLevel() > 4) {
                 ActivityTransitionAnimation.slide(this, ActivityTransitionAnimation.RIGHT);
@@ -1502,11 +1529,6 @@ public class DeckPicker extends Activity implements Runnable, IButtonListener {
 
 
     public void openSharedDeckPicker() {
-        if (AnkiDroidApp.deck() != null)// && sdCardAvailable)
-        {
-            AnkiDroidApp.deck().closeDeck();
-            AnkiDroidApp.setDeck(null);
-        }
         // deckLoaded = false;
         startActivityForResult(new Intent(this, SharedDeckPicker.class), DOWNLOAD_SHARED_DECK);
         if (StudyOptions.getApiLevel() > 4) {
@@ -1742,8 +1764,6 @@ public class DeckPicker extends Activity implements Runnable, IButtonListener {
 
 
     public class AlternatingAdapter extends SimpleAdapter {
-        private int[] colors;
-    	 
     	    public AlternatingAdapter(Context context, ArrayList<HashMap<String, String>> items, int resource, String[] from, int[] to) {
     	        super(context, items, resource, from, to);
     	    }

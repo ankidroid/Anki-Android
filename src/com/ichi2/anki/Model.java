@@ -21,7 +21,6 @@ import android.content.ContentValues;
 import android.database.Cursor;
 import android.graphics.Color;
 
-import com.ichi2.themes.Themes;
 import com.mindprod.common11.StringTools;
 
 import java.util.ArrayList;
