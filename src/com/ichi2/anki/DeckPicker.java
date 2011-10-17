@@ -1447,9 +1447,7 @@ public class DeckPicker extends Activity implements Runnable, IButtonListener {
 					} catch (Exception e) {
 						Log.w(AnkiDroidApp.TAG, "Could not open database "
 								+ path);
-						if (!mBrokenDecks.contains(path)) {
-							mBrokenDecks.add(path);
-						}
+						addBrokenDeck(path);
 						data.putString("absPath", path);
 						data.putInt("msgtype", MSG_COULD_NOT_BE_LOADED);
 						msg = Message.obtain();
@@ -1469,6 +1467,7 @@ public class DeckPicker extends Activity implements Runnable, IButtonListener {
 					}
 					deck = getDeck(path);
 					if (deck == null) {
+						addBrokenDeck(path);
 						data.putString("absPath", path);
 						data.putInt("msgtype", MSG_COULD_NOT_BE_LOADED);
 						msg = Message.obtain();
@@ -1536,9 +1535,7 @@ public class DeckPicker extends Activity implements Runnable, IButtonListener {
 							msg = Message.obtain();
 							msg.setData(data);
 							mHandler.sendMessage(msg);
-							if (!mBrokenDecks.contains(path)) {
-								mBrokenDecks.add(path);
-							}
+							addBrokenDeck(path);
 							continue;
 						}
 
@@ -1624,16 +1621,26 @@ public class DeckPicker extends Activity implements Runnable, IButtonListener {
 				deck = Deck.openDeck(filePath, false);
 			} catch (SQLException e) {
 				Log.w(AnkiDroidApp.TAG, "Could not open database " + filePath + ": " + e);
-				if (!mBrokenDecks.contains(filePath)) {
-					mBrokenDecks.add(filePath);
-				}
+				addBrokenDeck(filePath);
 			} catch (RuntimeException e) {
 				Log.w(AnkiDroidApp.TAG, "Could not open database " + filePath + ": " + e);
-				if (!mBrokenDecks.contains(filePath)) {
-					mBrokenDecks.add(filePath);
-				}
+				addBrokenDeck(filePath);
 			}
 			return deck;
+		}
+	}
+
+
+	public void addBrokenDeck(String filePath) {
+		if (!mBrokenDecks.contains(filePath)) {
+			mBrokenDecks.add(filePath);
+			if (!(new File(filePath)).exists()) {
+				Log.e(AnkiDroidApp.TAG, "DeckPicker: Deck " + filePath + " has been deleted by Android. Restoring it:");
+				File[] fl = BackupManager.getDeckBackups(new File(filePath));
+				if (fl.length > 0) {
+					BackupManager.restoreDeckBackup(filePath, fl[fl.length - 1].getAbsolutePath());					
+				}
+			}
 		}
 	}
 

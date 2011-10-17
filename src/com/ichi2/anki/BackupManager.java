@@ -53,6 +53,8 @@ public class BackupManager {
 	public final static String BACKUP_SUFFIX = "/backup";
 	public final static String BROKEN_DECKS_SUFFIX = "/broken";
 
+	private static ArrayList<String> mDeckPickerDecks = new ArrayList<String>();
+	
     /* Prevent class from being instantiated */
 	private BackupManager() {
 	}
@@ -86,6 +88,10 @@ public class BackupManager {
 
 
 	public static boolean safetyBackupNeeded(String deckpath, int days) {
+		if (mDeckPickerDecks.contains(deckpath)) {
+			return false;
+		}
+		mDeckPickerDecks.add(deckpath);
 	        File[] deckBackups = getDeckBackups(new File(deckpath));
 	        int len = deckBackups.length;
 		if (len == 0) {
@@ -149,15 +155,15 @@ public class BackupManager {
 	}
 
 
-	public static long getFreeDiscSpace(File file) {
-		return getFreeDiscSpace(file.getPath());
-	}
 	public static long getFreeDiscSpace(String path) {
+		return getFreeDiscSpace(new File(path));
+	}
+	public static long getFreeDiscSpace(File file) {
 		try {
-		    	StatFs stat = new StatFs(path);
-		    	long blocks = stat.getAvailableBlocks();
-		    	long blocksize = stat.getBlockSize();
-		    	return blocks * blocksize;
+			StatFs stat = new StatFs(file.getParentFile().getPath());
+	    	long blocks = stat.getAvailableBlocks();
+	    	long blocksize = stat.getBlockSize();
+	    	return blocks * blocksize;
 		} catch (IllegalArgumentException e) {
 			Log.e(AnkiDroidApp.TAG, "Free space could not be retrieved: " + e);
 			return StudyOptions.MIN_FREE_SPACE * 1024 * 1024;
@@ -177,7 +183,7 @@ public class BackupManager {
 
 	public static int restoreDeckBackup(String deckpath, String backupPath) {
         // rename old file and move it to subdirectory
-    	if (!moveDeckToBrokenFolder(deckpath)) {
+    	if ((new File(deckpath)).exists() && !moveDeckToBrokenFolder(deckpath)) {
     		return RETURN_ERROR;
     	}
 
