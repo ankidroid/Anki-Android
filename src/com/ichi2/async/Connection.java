@@ -580,6 +580,11 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
                 publishProgress(syncName, res.getString(R.string.sync_no_changes_message));
                 syncChangelog.put("message", res.getString(R.string.sync_log_no_changes_message));
             }
+        } catch (OutOfMemoryError e) {
+            Log.e(AnkiDroidApp.TAG, "doInBackgroundSyncDeck - JSONException: " + e.getMessage());
+            Log.e(AnkiDroidApp.TAG, Log.getStackTraceString(e));
+            syncChangelog.put("message", res.getString(R.string.sync_log_error_message));
+            data.success = false;
         } catch (JSONException e) {
             Log.e(AnkiDroidApp.TAG, "doInBackgroundSyncDeck - JSONException: " + e.getMessage());
             Log.e(AnkiDroidApp.TAG, Log.getStackTraceString(e));
