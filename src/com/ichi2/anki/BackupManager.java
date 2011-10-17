@@ -46,6 +46,7 @@ public class BackupManager {
 	public final static int RETURN_DECK_RESTORED = 5;
 	public final static int RETURN_NULL = 6;
 	public final static int RETURN_LOW_SYSTEM_SPACE = 7;
+	public final static int RETURN_BACKUP_NEEDED = 8;
 
 	public final static String BACKUP_SUFFIX = "/backup";
 	public final static String BROKEN_DECKS_SUFFIX = "/broken";
@@ -79,6 +80,20 @@ public class BackupManager {
         	directory.mkdirs();
         }
         return directory;
+	}
+
+
+	public static boolean safetyBackupNeeded(String deckpath, int days) {
+	        File[] deckBackups = getDeckBackups(new File(deckpath));
+	        int len = deckBackups.length;
+		if (len == 0) {
+			// no backup available
+			return true;
+		}
+		String backupDateString = deckBackups[len - 1].getName().replaceAll("^.*-(\\d{4}-\\d{2}-\\d{2}).anki$", "$1");
+		Date backupDate = new SimpleDateFormat("yyyy-MM-dd").parse(backupDateString);
+	        Date target = Utils.genToday(Utils.utcOffset()) - (days * 86400);
+		return backupDate.before(target);
 	}
 
 

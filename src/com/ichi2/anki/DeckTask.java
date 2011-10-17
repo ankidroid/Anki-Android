@@ -340,6 +340,7 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
             return new TaskData(DECK_LOADED, deck, null);
 		} catch (SQLException e) {
             Log.i(AnkiDroidApp.TAG, "The database " + deckFilename + " could not be opened = " + e.getMessage());
+                BackupManager.cleanUpAfterBackupCreation(false);
             return new TaskData(DECK_NOT_LOADED);
         } catch (CursorIndexOutOfBoundsException e) {
             // XXX: Where is this exception thrown?
