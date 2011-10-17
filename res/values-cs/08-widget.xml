@@ -22,18 +22,18 @@
 <resources>
   <string name="widget_pref">Widget</string>
   <string name="widget_minimum_cards_due">Práh oznámení Widgetu</string>
-  <string name="widget_minimum_cards_due_summary">The minimum number of cards due at which a notification is raised: XXX</string>
+  <string name="widget_minimum_cards_due_summary">Minimální počet karet ke zkoušení, při kterém je vyvolávalo oznámení: XXX</string>
   <string name="widget_minimum_cards_due_vibrate">Vibrovat</string>
   <string name="widget_minimum_cards_due_blink">Blikat</string>
   <string name="widget_minimum_cards_due_notification_ticker_title">Karty k zopakování</string>
   <string name="widget_minimum_cards_due_notification_ticker_text">%d AnkiDroid karet k zopakování</string>
   <string name="widget_no_cards_due">Žádné karty k zopakování</string>
   <string name="widget_loading">Načítám Widget...</string>
-  <string name="widget_medium">AnkiDroid Medium</string>
-  <string name="widget_small">AnkiDroid Small</string>
+  <string name="widget_medium">AnkiDroid Střední</string>
+  <string name="widget_small">AnkiDroid Malý</string>
   <plurals name="widget_cards_in_decks_due">
-    <item quantity="one">1 card due in %2$s</item>
-    <item quantity="other">%1$d cards due in %2$s</item>
+    <item quantity="one">1 karta za %2$s</item>
+    <item quantity="other">%1$d karet za %2$s</item>
   </plurals>
   <plurals name="widget_decks">
     <item quantity="one">1 balíček</item>

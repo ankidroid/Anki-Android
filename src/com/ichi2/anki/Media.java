@@ -131,7 +131,6 @@ public class Media {
         updateMediaCount(deck, file, 1);
     }
     public static void updateMediaCount(Deck deck, String file, int count) {
-        String mdir = deck.mediaDir();
         if (deck.getDB().queryScalar("SELECT 1 FROM media WHERE filename = '" + file + "'") == 1l) {
             deck.getDB().getDatabase().execSQL(String.format(Utils.ENGLISH_LOCALE,
                         "UPDATE media SET size = size + %d, created = %f WHERE filename = '%s'",

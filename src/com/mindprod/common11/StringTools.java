@@ -33,8 +33,8 @@ package com.mindprod.common11;
 
 import android.graphics.Color;
 
+import java.util.ArrayList;
 import java.util.BitSet;
-import java.util.Vector;
 
 /**
  * Miscellaneous static methods for dealing with Strings in JDK 1.1+.
@@ -693,7 +693,7 @@ public class StringTools {
 
         // collapse blank lines in the middle chunk
 
-        Vector keep = new Vector(lastNonBlankLine - firstNonBlankLine + 1);
+        ArrayList<String> keep = new ArrayList<String>(lastNonBlankLine - firstNonBlankLine + 1);
         int pendingBlankLines = 0;
         for (int i = firstNonBlankLine; i <= lastNonBlankLine; i++) {
             if (lines[i].trim().length() == 0) {
@@ -706,7 +706,7 @@ public class StringTools {
                 pendingBlankLines = 0;
             }
         }
-        return (String[]) keep.toArray(new String[keep.size()]);
+        return keep.toArray(new String[keep.size()]);
     }
 
 

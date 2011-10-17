@@ -81,6 +81,7 @@ import java.util.zip.Deflater;
  * TODO comments
  */
 public class Utils {
+    enum SqlCommandType { SQL_INS, SQL_UPD, SQL_DEL };
 
     // Used to format doubles with English's decimal separator system
     public static final Locale ENGLISH_LOCALE = new Locale("en_US");
@@ -513,22 +514,30 @@ public class Utils {
 
     // Print methods
     public static void printJSONObject(JSONObject jsonObject) {
-        printJSONObject(jsonObject, "-", false);
+        printJSONObject(jsonObject, "-", null);
     }
 
 
     public static void printJSONObject(JSONObject jsonObject, boolean writeToFile) {
-        if (writeToFile) {
-            new File("/sdcard/payloadAndroid.txt").delete();
+        BufferedWriter buff;
+        try {
+            buff = writeToFile ?  
+                    new BufferedWriter(new FileWriter("/sdcard/payloadAndroid.txt"), 8192) : null;
+            try {
+                printJSONObject(jsonObject, "-", buff);
+            } finally {
+                if (buff != null)
+                    buff.close();
+            }
+        } catch (IOException ioe) {
+            Log.e(AnkiDroidApp.TAG, "IOException = " + ioe.getMessage());
         }
-        printJSONObject(jsonObject, "-", writeToFile);
     }
 
 
-    public static void printJSONObject(JSONObject jsonObject, String indentation, boolean writeToFile) {
+    private static void printJSONObject(JSONObject jsonObject, String indentation, BufferedWriter buff) {
         try {
-
-            Iterator<String> keys = jsonObject.keys();
+            @SuppressWarnings("unchecked") Iterator<String> keys = (Iterator<String>) jsonObject.keys();
             TreeSet<String> orderedKeysSet = new TreeSet<String>();
             while (keys.hasNext()) {
                 orderedKeysSet.add(keys.next());
@@ -541,20 +550,16 @@ public class Utils {
                 try {
                     Object value = jsonObject.get(key);
                     if (value instanceof JSONObject) {
-                        if (writeToFile) {
-                            BufferedWriter buff = new BufferedWriter(new FileWriter("/sdcard/payloadAndroid.txt", true));
+                        if (buff != null) {
                             buff.write(indentation + " " + key + " : ");
                             buff.newLine();
-                            buff.close();
                         }
                         Log.i(AnkiDroidApp.TAG, "	" + indentation + key + " : ");
-                        printJSONObject((JSONObject) value, indentation + "-", writeToFile);
+                        printJSONObject((JSONObject) value, indentation + "-", buff);
                     } else {
-                        if (writeToFile) {
-                            BufferedWriter buff = new BufferedWriter(new FileWriter("/sdcard/payloadAndroid.txt", true));
+                        if (buff != null) {
                             buff.write(indentation + " " + key + " = " + jsonObject.get(key).toString());
                             buff.newLine();
-                            buff.close();
                         }
                         Log.i(AnkiDroidApp.TAG, "	" + indentation + key + " = " + jsonObject.get(key).toString());
                     }
@@ -562,20 +567,20 @@ public class Utils {
                     Log.e(AnkiDroidApp.TAG, "JSONException = " + e.getMessage());
                 }
             }
-
         } catch (IOException e1) {
             Log.e(AnkiDroidApp.TAG, "IOException = " + e1.getMessage());
         }
-
     }
 
 
+    /*
     public static void saveJSONObject(JSONObject jsonObject) throws IOException {
         Log.i(AnkiDroidApp.TAG, "saveJSONObject");
         BufferedWriter buff = new BufferedWriter(new FileWriter("/sdcard/jsonObjectAndroid.txt", true));
         buff.write(jsonObject.toString());
         buff.close();
     }
+    */
 
 
     /**

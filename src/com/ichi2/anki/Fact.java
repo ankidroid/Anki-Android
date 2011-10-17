@@ -40,12 +40,12 @@ public class Fact {
 
     private long mId;
     private long mModelId;
-    private double mCreated;
-    private double mModified;
+//    private double mCreated;
+//    private double mModified;
     private String mTags;
     private String mSpaceUntil; // Once obsolete, under libanki1.1 spaceUntil is reused as a html-stripped cache of the fields
 
-    private Model mModel;
+//    private Model mModel;
     private TreeSet<Field> mFields;
     private Deck mDeck;
 
@@ -60,7 +60,7 @@ public class Fact {
 
     public Fact(Deck deck, Model model) {
         mDeck = deck;
-        mModel = model;
+//        mModel = model;
         mId = Utils.genID();
         if (model == null) {
             mModelId = deck.getCurrentModelId();
@@ -131,8 +131,8 @@ public class Fact {
 
             mId = cursor.getLong(0);
             mModelId = cursor.getLong(1);
-            mCreated = cursor.getDouble(2);
-            mModified = cursor.getDouble(3);
+//            mCreated = cursor.getDouble(2);
+//            mModified = cursor.getDouble(3);
             mTags = cursor.getString(4);
             mSpaceUntil = cursor.getString(5);
         } finally {
@@ -255,7 +255,7 @@ public class Fact {
         setModified(textChanged, deck, true);
     }
     public void setModified(boolean textChanged, Deck deck, boolean media) {
-        mModified = Utils.now();
+//        mModified = Utils.now();
         if (textChanged) {
             assert (deck != null);
             mSpaceUntil = "";
@@ -301,7 +301,7 @@ public class Fact {
         // END JOINed entries
 
         // Backward reference
-        private Fact mFact;
+//        private Fact mFact;
 
 
         // for creating instances of existing fields

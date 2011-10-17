@@ -33,7 +33,6 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.database.CursorIndexOutOfBoundsException;
 import android.database.SQLException;
-import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.os.AsyncTask;
 import android.util.Log;
@@ -88,7 +87,8 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
         sInstance.mListener = listener;
         sInstance.mType = type;
 
-        return (DeckTask) sInstance.execute(params);
+        sInstance.execute(params);
+        return sInstance;
     }
 
 
@@ -188,7 +188,7 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
                 return doInBackgroundCloseDeck(params);
                 
             case TASK_TYPE_DELETE_BACKUPS:
-                return doInBackgroundDeleteBackups(params);
+                return doInBackgroundDeleteBackups();
                 
             case TASK_TYPE_RESTORE_DECK:
                 return doInBackgroundRestoreDeck(params);
@@ -344,6 +344,7 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
             return new TaskData(DECK_LOADED, deck, null);
 		} catch (SQLException e) {
             Log.i(AnkiDroidApp.TAG, "The database " + deckFilename + " could not be opened = " + e.getMessage());
+                BackupManager.cleanUpAfterBackupCreation(false);
             return new TaskData(DECK_NOT_LOADED);
         } catch (CursorIndexOutOfBoundsException e) {
             // XXX: Where is this exception thrown?
@@ -646,7 +647,7 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
     }
 
 
-    private TaskData doInBackgroundDeleteBackups(TaskData... params) {
+    private TaskData doInBackgroundDeleteBackups() {
         Log.i(AnkiDroidApp.TAG, "doInBackgroundDeleteBackups");
     	return new TaskData(BackupManager.deleteAllBackups());
     }
@@ -688,7 +689,7 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
             try {
             	CardModel cardModel = null;
             	int len = Math.min(questions.length, answers.length);
-            	for (int i = 0; i < len - 1 + Math.min(sampleQuestions.length, sampleAnswers.length); i++) {
+            	for (int i = 0; i < len + Math.min(sampleQuestions.length, sampleAnswers.length); i++) {
             		Fact fact = deck.newFact();
             		if (cardModel == null) {
             			cardModel = deck.activeCardModels(fact).entrySet().iterator().next().getValue();
@@ -696,9 +697,9 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
             		int fidx = 0;
             		for (Fact.Field f : fact.getFields()) {
             			if (fidx == 0) {
-            				f.setValue((i < len - 1) ? questions[i] : sampleQuestions[i - len + 1]);
+            				f.setValue((i < len) ? questions[i] : sampleQuestions[i - len]);
             			} else if (fidx == 1) {
-            				f.setValue((i < len - 1) ? answers[i] : sampleAnswers[i - len + 1]);
+            				f.setValue((i < len) ? answers[i] : sampleAnswers[i - len]);
             			}
             			fidx++;
             		}

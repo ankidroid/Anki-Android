@@ -212,7 +212,7 @@ public class Reviewer extends Activity implements IButtonListener{
     private boolean mPrefFullscreenReview;
     private boolean mshowNextReviewTime;
     private boolean mZoomEnabled;    
-    private boolean mZeemoteEnabled;    
+//    private boolean mZeemoteEnabled;    
     private boolean mPrefUseRubySupport; // Parse for ruby annotations
     private String mDeckFilename;
     private int mPrefHideQuestionInAnswer; // Hide the question when showing the answer
@@ -242,7 +242,7 @@ public class Reviewer extends Activity implements IButtonListener{
     private boolean mTouchStarted = false;
     private boolean mIsAnswering = false;
 
-    @SuppressWarnings("unused")
+//    @SuppressWarnings("unused")
 //    private boolean mUpdateNotifications; // TODO use Veecheck only if this is true
 
     private String mCardTemplate;
@@ -382,7 +382,7 @@ public class Reviewer extends Activity implements IButtonListener{
  	 */
 	protected JoystickToButtonAdapter adapter;
 
-    private int zEase;
+//    private int zEase;
     
     /**
      * The answer in the compare to field for the current card if answer should be given by learner.
@@ -857,7 +857,7 @@ public class Reviewer extends Activity implements IButtonListener{
       	  	mCustomFontFiles = Utils.getCustomFonts(getBaseContext());
             initLayout(R.layout.flashcard);
             if (mPrefTextSelection) {
-                mClipboard.setText("");
+                clipboardSetText("");
                 Lookup.initialize(this, mDeckFilename);
             }
 
@@ -1111,6 +1111,19 @@ public class Reviewer extends Activity implements IButtonListener{
         return true;
     }
 
+    //These three methods use a deprecated API - they should be updated to possibly use its more modern version.
+    private boolean clipboardHasText() {
+        return mClipboard.hasText();
+    }
+
+    private void clipboardSetText(CharSequence text) {
+        mClipboard.setText(text);
+    }
+
+    private CharSequence clipboardGetText() {
+        return mClipboard.getText();
+    }
+
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
         MenuItem item = menu.findItem(MENU_MARK);
@@ -1126,7 +1139,7 @@ public class Reviewer extends Activity implements IButtonListener{
         }
         if (mPrefTextSelection) {
             item = menu.findItem(MENU_SEARCH);
-            if (mClipboard.hasText()) {
+            if (clipboardHasText()) {
             	item.setTitle(Lookup.getSearchStringTitle());
         		item.setEnabled(Lookup.isAvailable());
             } else {
@@ -1266,7 +1279,7 @@ public class Reviewer extends Activity implements IButtonListener{
             }
         }
         if (mPrefTextSelection) {
-        	mClipboard.setText("");
+        	clipboardSetText("");
         }
     }
 
@@ -1364,8 +1377,8 @@ public class Reviewer extends Activity implements IButtonListener{
 
 
     private void lookUpOrSelectText() {
-        if (mClipboard.hasText()) {
-            Log.i(AnkiDroidApp.TAG, "Clipboard has text = " + mClipboard.hasText());
+        if (clipboardHasText()) {
+            Log.i(AnkiDroidApp.TAG, "Clipboard has text = " + clipboardHasText());
             lookUp();
     	} else {
         	selectAndCopyText();
@@ -1376,8 +1389,8 @@ public class Reviewer extends Activity implements IButtonListener{
     private boolean lookUp() {
     	mLookUpIcon.setVisibility(View.GONE);
 	    mIsSelecting = false;
-	    if (Lookup.lookUp(mClipboard.getText().toString(), mCurrentCard)) {
-	        mClipboard.setText("");
+	    if (Lookup.lookUp(clipboardGetText().toString(), mCurrentCard)) {
+	        clipboardSetText("");
 	    }
 	    return true;
     }
@@ -1408,7 +1421,7 @@ public class Reviewer extends Activity implements IButtonListener{
         mIsSelecting = false;
         mIsAnswering = true;
         if (mPrefTextSelection) {
-            mClipboard.setText("");
+            clipboardSetText("");
             if (mLookUpIcon.getVisibility() == View.VISIBLE) {
                 mLookUpIcon.setVisibility(View.GONE);
                 mLookUpIcon.setAnimation(ViewAnimation.fade(ViewAnimation.FADE_OUT, mFadeDuration, 0));        	
@@ -1583,7 +1596,7 @@ public class Reviewer extends Activity implements IButtonListener{
 
 			@Override
 			public void onClick(View arg0) {
-				if (mClipboard.hasText()) {
+				if (clipboardHasText()) {
 					lookUp();
 				}
 			}
@@ -1866,7 +1879,7 @@ public class Reviewer extends Activity implements IButtonListener{
         mPrefFullscreenReview = preferences.getBoolean("fullscreenReview", true);
         mshowNextReviewTime = preferences.getBoolean("showNextReviewTime", true);
         mZoomEnabled = preferences.getBoolean("zoom", false);
-        mZeemoteEnabled = preferences.getBoolean("zeemote", false);
+//        mZeemoteEnabled = preferences.getBoolean("zeemote", false);
         mDisplayFontSize = preferences.getInt("relativeDisplayFontSize", CardModel.DEFAULT_FONT_SIZE_RATIO);
         mRelativeButtonSize = preferences.getInt("answerButtonSize", 100);
         mPrefHideQuestionInAnswer = Integer.parseInt(preferences.getString("hideQuestionInAnswer",
@@ -3089,7 +3102,7 @@ public class Reviewer extends Activity implements IButtonListener{
  			}
     		mIsSelecting = false;
     		if (mPrefTextSelection && mClipboard != null) {
-                if (mClipboard.getText().length() != 0 && Lookup.isAvailable()) {
+                if (clipboardGetText().length() != 0 && Lookup.isAvailable()) {
                 	if (mLookUpIcon.getVisibility() != View.VISIBLE) {
             			mLookUpIcon.setVisibility(View.VISIBLE);
                         mLookUpIcon.setAnimation(ViewAnimation.fade(ViewAnimation.FADE_IN, mFadeDuration, 0));                		

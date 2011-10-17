@@ -137,7 +137,7 @@ public class ArabicUtilities {
 	private static String[] getWordsFromMixedWord(String word){
 
 		//The return result of words
-		ArrayList finalWords=new ArrayList();
+		ArrayList<String> finalWords=new ArrayList<String>();
 
 		//Temp word to hold the current word
 		String tempWord="";

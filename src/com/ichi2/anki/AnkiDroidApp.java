@@ -19,7 +19,6 @@ package com.ichi2.anki;
 
 import android.app.Application;
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.content.pm.PackageInfo;
@@ -31,7 +30,6 @@ import android.view.Display;
 import android.view.WindowManager;
 
 import com.ichi2.async.Connection;
-import com.tomgibara.android.veecheck.Veecheck;
 import com.tomgibara.android.veecheck.util.PrefSettings;
 
 import java.io.File;

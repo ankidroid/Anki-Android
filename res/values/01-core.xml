@@ -175,4 +175,6 @@
 <string name="download">Download</string>
 <string name="deckpicker_loading_error">Deck could not be loaded</string>
 
+<string name="deckpicker_creating_backup">Creating backup...</string>
+
 </resources>

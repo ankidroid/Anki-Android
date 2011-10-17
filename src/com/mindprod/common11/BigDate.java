@@ -171,7 +171,7 @@ import java.util.TimeZone;
  * @noinspection WeakerAccess,UnusedDeclaration
  * @since 1997-05-03
  */
-public final class BigDate implements Cloneable, Serializable, Comparable {
+public final class BigDate implements Cloneable, Serializable, Comparable<BigDate> {
     // ------------------------------ CONSTANTS ------------------------------
 
     /**
@@ -1352,8 +1352,8 @@ public final class BigDate implements Cloneable, Serializable, Comparable {
      * @return +ve if this&gt;other, 0 if this==other, -ve if this&lt;other
      */
     @Override
-    public final int compareTo(Object other) {
-        return ordinal - ((BigDate) other).ordinal;
+    public final int compareTo(BigDate other) {
+        return ordinal - other.ordinal;
     }
 
 

@@ -96,6 +96,7 @@
   <string name="visit">Besök</string>
   <string name="later">Senare</string>
   <string name="download">Hämta</string>
+  <string name="deckpicker_loading_error">Kortleken kunde inte laddas</string>
   <string-array name="next_review_s">
     <item>1 sekund</item>
     <item>1 minut</item>

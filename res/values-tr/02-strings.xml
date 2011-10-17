@@ -65,6 +65,6 @@
   <string name="card_editor_copy_card">Kartı kopyala</string>
   <string name="card_editor_reset_card">İlerlemeyi sıfırla</string>
   <string name="error_insufficient_memory">Cihazda yetersiz bellek olması nedeniyle işlem gerçekleştirilemiyor</string>
-  <string name="tutorial_load">Creating tutorial deck</string>
-  <string name="tutorial_loading_error">Tutorial deck could not be created</string>
+  <string name="tutorial_load">Eğitim destesi oluşturuluyor</string>
+  <string name="tutorial_loading_error">Eğitim destesi oluşturulamadı</string>
 </resources>
