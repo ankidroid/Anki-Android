@@ -112,6 +112,7 @@ public class BackupManager {
 
 
 	public static int backupDeck(String deckpath) {
+		mDeckPickerDecks.add(deckpath);
 		mLastCreatedBackup = null;
 		mLastDeckBackups = null;
         File deckFile = new File(deckpath);
