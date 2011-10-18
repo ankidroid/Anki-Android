@@ -818,7 +818,7 @@ public class DeckPicker extends Activity implements Runnable, IButtonListener {
 						@Override
 						public void onClick(DialogInterface dialog, int which) {
 							if (BackupManager.deleteDeckBackups(mCurrentDeckPath, 0)) {
-								Themes.showThemedToast(DeckPicker.this, getResources().getString(R.string.backup_delete_deck_backups, mCurrentDeckFilename), true);
+								Themes.showThemedToast(DeckPicker.this, getResources().getString(R.string.backup_delete_deck_backups, "\'" + mCurrentDeckFilename + "\'"), true);
 							}
 							mCurrentDeckPath = null;
 							mCurrentDeckFilename = null;
@@ -1160,7 +1160,7 @@ public class DeckPicker extends Activity implements Runnable, IButtonListener {
 						@Override
 						public void onClick(DialogInterface dialog, int which) {
 							if (BackupManager.moveDeckToBrokenFolder(mCurrentDeckPath)) {
-								Themes.showThemedToast(DeckPicker.this, getResources().getString(R.string.delete_deck_success, new File(mCurrentDeckPath).getName().replace(".anki", ""), BackupManager.BROKEN_DECKS_SUFFIX.replace("/", "")), false);								
+								Themes.showThemedToast(DeckPicker.this, getResources().getString(R.string.delete_deck_success, "\'" + (new File(mCurrentDeckPath).getName().replace(".anki", "")) + "\'", BackupManager.BROKEN_DECKS_SUFFIX.replace("/", "")), false);								
 								mRestoredOrDeleted = true;
 								handleRestoreDecks(true);
 							}

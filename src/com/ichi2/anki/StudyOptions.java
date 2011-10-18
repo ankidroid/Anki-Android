@@ -843,8 +843,12 @@ public class StudyOptions extends Activity implements IButtonListener {
 	      	  AnkiDroidApp.zeemoteController().addJoystickListener(adapter);
 	      	  adapter.addButtonListener(this);
 	      }
-	      if ((mCurrentContentView == CONTENT_STUDY_OPTIONS || mCurrentContentView == CONTENT_SESSION_COMPLETE) && mTextDeckName.getVisibility() != View.VISIBLE && (mProgressDialog == null || !mProgressDialog.isShowing())) {
-		      showDeckInformation(true);
+	      if ((mCurrentContentView == CONTENT_STUDY_OPTIONS || mCurrentContentView == CONTENT_SESSION_COMPLETE)) {
+	    	  if (mTextDeckName.getVisibility() != View.VISIBLE && (mProgressDialog == null || !mProgressDialog.isShowing())) {
+			      showDeckInformation(true);
+	    	  } else {
+	    	      updateValuesFromDeck();
+	    	  }
 	      }
 	      // check for new day and reset deck if yes
 	      if (Utils.isNewDay(PrefSettings.getSharedPrefs(getBaseContext()).getLong("lastTimeOpened", 0)) && (mCurrentContentView == CONTENT_STUDY_OPTIONS || mCurrentContentView == CONTENT_SESSION_COMPLETE)) {
