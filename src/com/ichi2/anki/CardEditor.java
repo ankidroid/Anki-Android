@@ -956,12 +956,21 @@ public class CardEditor extends Activity {
 		if (deck != null && deck.getDeckPath().equals(mDeckPath)) {
 			mDeck = deck;
 		} else {
-			mDeck = Deck.openDeck(mDeckPath, false);
-			if (mDeck == null) {
+			try {
+				mDeck = Deck.openDeck(mDeckPath, false);
+				if (mDeck == null) {
+					Themes.showThemedToast(CardEditor.this, getResources().getString(
+							R.string.fact_adder_deck_not_loaded), true);
+					BackupManager.restoreDeckIfMissing(mDeckPath);
+					return;
+				}				
+			} catch (RuntimeException e) {
+				Log.e(AnkiDroidApp.TAG, "CardEditor: error on opening deck: " + e);
 				Themes.showThemedToast(CardEditor.this, getResources().getString(
 						R.string.fact_adder_deck_not_loaded), true);
-				return;
-			}			
+				BackupManager.restoreDeckIfMissing(mDeckPath);
+				return;				
+			}
 		}
 		setTitle(deckName);
 		loadContents();

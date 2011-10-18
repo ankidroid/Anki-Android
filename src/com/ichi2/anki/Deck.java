@@ -241,14 +241,14 @@ public class Deck {
 	// this is normally done on loading in studyoptions (full) or loading in deckpicker
 	// nevertheless, it's still necessary to check here, if it has been really done because other routines open decks too (widget, card editor, syncing)
 	// a cache variable will indicate, if the deck has been already treated
-	if (BackupManager.safetyBackupNeeded(path, BackupManager.SAFETY_BACKUP_THRESHOLD)) {
-		Log.i(AnkiDroidApp.TAG, "openDeck: Backup needed");
-		if (BackupManager.backupDeck(path) == BackupManager.RETURN_BACKUP_CREATED) {
-			Log.i(AnkiDroidApp.TAG, "openDeck: Backup successfully created");
-		} else {
-			Log.e(AnkiDroidApp.TAG, "openDeck: Backup creation failed");
-		}
-	}
+    	if (BackupManager.safetyBackupNeeded(path, BackupManager.SAFETY_BACKUP_THRESHOLD)) {
+    		Log.i(AnkiDroidApp.TAG, "openDeck: Backup needed");
+    		if (BackupManager.backupDeck(path) == BackupManager.RETURN_BACKUP_CREATED) {
+    			Log.i(AnkiDroidApp.TAG, "openDeck: Backup successfully created");
+    		} else {
+    			Log.e(AnkiDroidApp.TAG, "openDeck: Backup creation failed");
+    		}
+    	}
 
         Deck deck = null;
         Cursor cursor = null;
