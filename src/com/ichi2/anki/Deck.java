@@ -4691,7 +4691,7 @@ public class Deck {
             Cursor cur = null;
             try {
                 cur = getDB().getDatabase().rawQuery(
-                        "SELECT tag, id FROM tags WHERE tag in (" + tagList.toString() + ")", null);
+                        "SELECT tag, id FROM tags WHERE tag in (" + tagList.toString().replaceAll("\\'+", "\'\'") + ")", null);
                 while (cur.moveToNext()) {
                     results.put(cur.getString(0).toLowerCase(), cur.getLong(1));
                 }
