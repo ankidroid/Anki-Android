@@ -4383,7 +4383,9 @@ public class Deck {
 
 
     public void addUndoCommand(SqlCommandType command, String table, ContentValues values, String whereClause) {
-    	mUndoRedoStackToRecord.peek().mUndoCommands.add(new UndoCommand(command, table, values, whereClause));
+	if(!mUndoRedoStackToRecord.empty()) {
+	    	mUndoRedoStackToRecord.peek().mUndoCommands.add(new UndoCommand(command, table, values, whereClause));
+	}
     }
 
 
