@@ -4683,7 +4683,7 @@ public class Deck {
         if (tags.length != 0) {
             StringBuilder tagList = new StringBuilder(128);
             for (int i = 0; i < tags.length; i++) {
-                tagList.append("'").append(tags[i]).append("'");
+                tagList.append("'").append(tags[i].replaceAll("\\'+", "\'\'")).append("'");
                 if (i < tags.length - 1) {
                     tagList.append(", ");
                 }
@@ -4691,7 +4691,7 @@ public class Deck {
             Cursor cur = null;
             try {
                 cur = getDB().getDatabase().rawQuery(
-                        "SELECT tag, id FROM tags WHERE tag in (" + tagList.toString().replaceAll("\\'+", "\'\'") + ")", null);
+                        "SELECT tag, id FROM tags WHERE tag in (" + tagList.toString() + ")", null);
                 while (cur.moveToNext()) {
                     results.put(cur.getString(0).toLowerCase(), cur.getLong(1));
                 }
