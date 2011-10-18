@@ -2614,7 +2614,7 @@ public class StudyOptions extends Activity implements IButtonListener {
                     break;
 
                 case DeckTask.DECK_NOT_LOADED:
-			BackupManager.restoreDeckIfMissing(mDeckFilename);
+                	BackupManager.restoreDeckIfMissing(mDeckFilename);
                 	showContentView(CONTENT_DECK_NOT_LOADED);
                     break;
 

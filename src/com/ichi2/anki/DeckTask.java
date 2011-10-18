@@ -691,12 +691,12 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
             	deck.setSessionTimeLimit(0);
             	deck.flushMod();
             	deck.reset();
-            	AnkiDroidApp.setDeck(deck);
             	ankiDB.getDatabase().setTransactionSuccessful();
-            	return new TaskData(DECK_LOADED, deck, null);
             } finally {
         		ankiDB.getDatabase().endTransaction();
         	}
+        	AnkiDroidApp.setDeck(deck);
+        	return new TaskData(DECK_LOADED, deck, null);
         } catch (IOException e) {
         	Log.e(AnkiDroidApp.TAG, Log.getStackTraceString(e));
         	Log.e(AnkiDroidApp.TAG, "Empty deck could not be copied to the sd card.");

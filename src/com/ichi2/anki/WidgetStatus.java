@@ -121,12 +121,12 @@ public final class WidgetStatus {
                         	deck = Deck.openDeck(absPath, false);                    		
             			} catch (RuntimeException e) {
             				Log.w(AnkiDroidApp.TAG, "Widget: Could not open database " + absPath + ": " + e);
-					BackupManager.restoreDeckIfMissing(absPath);
+            				BackupManager.restoreDeckIfMissing(absPath);
             				deck = null;
             			}
                     }
                     if (deck == null) {
-                        Log.e(AnkiDroidApp.TAG, "Skipping null deck: " + absPath);
+                        Log.e(AnkiDroidApp.TAG, "Widget: Skipping null deck: " + absPath);
                         // Use the data from the last time we updated the deck, if available.
                         for (DeckStatus deckStatus : mDecks) {
                             if (absPath.equals(deckStatus.mDeckPath)) {

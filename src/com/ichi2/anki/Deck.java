@@ -3921,7 +3921,7 @@ public class Deck {
         HashMap<String, String> newQA = CardModel.formatQA(fact, newCard.getCardModel(), newCard.splitTags());
         newCard.setQuestion(newQA.get("question"));
         newCard.setAnswer(newQA.get("answer"));
-        newCard.addToDb();            
+        newCard.addToDb();
 
         return true;
     }

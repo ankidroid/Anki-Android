@@ -1643,6 +1643,7 @@ public class DeckPicker extends Activity implements Runnable, IButtonListener {
 
 	private void removeDeck(String deckFilename) {
 		if (deckFilename != null) {
+			AnkiDatabaseManager.closeDatabase(deckFilename);
 			File file = new File(deckFilename);
 			boolean deleted = BackupManager.removeDeck(file);
 			if (deleted) {
