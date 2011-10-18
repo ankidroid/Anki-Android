@@ -1273,7 +1273,7 @@ public class StudyOptions extends Activity implements IButtonListener {
 	                displayProgressDialogAndLoadDeck();
 	            }
 	        });
-	        builder.setNeutralButton(res.getString(R.string.backup_restore), new OnClickListener() {
+	        builder.setNegativeButton(res.getString(R.string.backup_restore), new OnClickListener() {
 
 	            @Override
 	            public void onClick(DialogInterface dialog, int which) {
@@ -1322,38 +1322,11 @@ public class StudyOptions extends Activity implements IButtonListener {
 	        		}
 	            }
 	        });
-	        builder.setNegativeButton(res.getString(R.string.delete_deck_title), new OnClickListener() {
+	        builder.setNeutralButton(res.getString(R.string.backup_repair_deck), new OnClickListener() {
 
 	            @Override
 	            public void onClick(DialogInterface dialog, int which) {
-	            	Resources res = getResources();
-	            	StyledDialog.Builder builder = new StyledDialog.Builder(StudyOptions.this);
-	            	builder.setCancelable(true).setTitle(res.getString(R.string.delete_deck_title))
-	            		.setIcon(android.R.drawable.ic_dialog_alert)
-	            		.setMessage(String.format(res.getString(R.string.delete_deck_message), new File(mDeckFilename).getName().replace(".anki", "")))
-	            		.setPositiveButton(res.getString(R.string.delete_deck_confirm), new DialogInterface.OnClickListener() {
-
-							@Override
-							public void onClick(DialogInterface dialog, int which) {
-								if (BackupManager.moveDeckToBrokenFolder(mDeckFilename)) {
-									Themes.showThemedToast(StudyOptions.this, getResources().getString(R.string.delete_deck_success, new File(mDeckFilename).getName().replace(".anki", ""), BackupManager.BROKEN_DECKS_SUFFIX.replace("/", "")), false);
-								}
-								showContentView(CONTENT_NO_DECK);
-							}
-						}).setNegativeButton(res.getString(R.string.cancel), new DialogInterface.OnClickListener() {
-
-							@Override
-							public void onClick(DialogInterface dialog, int which) {
-								showDialog(DIALOG_DECK_NOT_LOADED);
-							}
-						}).setOnCancelListener(new DialogInterface.OnCancelListener() {
-
-							@Override
-							public void onCancel(DialogInterface dialog) {
-								showDialog(DIALOG_DECK_NOT_LOADED);
-							}
-						}).show();
-							
+	            	DeckTask.launchDeckTask(DeckTask.TASK_TYPE_REPAIR_DECK, mRepairDeckHandler, new DeckTask.TaskData(mDeckFilename));
 	            }
 	        });
 	        builder.setCancelable(true);
@@ -2525,6 +2498,34 @@ public class StudyOptions extends Activity implements IButtonListener {
         // displaySdError();
         // }
     }
+
+
+    DeckTask.TaskListener mRepairDeckHandler = new DeckTask.TaskListener() {
+
+    	@Override
+        public void onPreExecute() {
+            mProgressDialog = ProgressDialog.show(StudyOptions.this, "", getResources()
+                    .getString(R.string.backup_repair_deck_progress), true);
+        }
+
+
+        @Override
+        public void onPostExecute(DeckTask.TaskData result) {
+        	if (result.getBoolean()) {
+        		displayProgressDialogAndLoadDeck();
+        	} else {
+        		Themes.showThemedToast(StudyOptions.this, getResources().getString(R.string.deck_repair_error), true);
+        	}
+        	if (mProgressDialog != null && mProgressDialog.isShowing()) {
+        		mProgressDialog.dismiss();
+        	}
+        }
+ 
+		@Override
+		public void onProgressUpdate(TaskData... values) {
+		}
+
+    };
 
 
     DeckTask.TaskListener mRestoreDeckHandler = new DeckTask.TaskListener() {

@@ -63,6 +63,7 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
     public static final int TASK_TYPE_RESTORE_DECK = 18;
     public static final int TASK_TYPE_SORT_CARDS = 19;
     public static final int TASK_TYPE_LOAD_TUTORIAL = 20;
+    public static final int TASK_TYPE_REPAIR_DECK = 21;
 
 
     /**
@@ -199,6 +200,9 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
 
             case TASK_TYPE_LOAD_TUTORIAL:
                 return doInBackgroundLoadTutorial(params);
+
+            case TASK_TYPE_REPAIR_DECK:
+                return doInBackgroundRepairDeck(params);
 
             default:
                 return null;
@@ -573,6 +577,12 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
         long result = 0;
     	result = deck.optimizeDeck();
         return new TaskData(deck, result);
+    }
+
+
+    private TaskData doInBackgroundRepairDeck(TaskData... params) {
+    	Log.i(AnkiDroidApp.TAG, "doInBackgroundRepairDeck");
+    	return new TaskData(BackupManager.repairDeck(params[0].getString()));
     }
 
 

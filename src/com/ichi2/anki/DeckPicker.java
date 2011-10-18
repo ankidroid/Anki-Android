@@ -1146,6 +1146,13 @@ public class DeckPicker extends Activity implements Runnable, IButtonListener {
         		}
             }
         });
+        builder.setNeutralButton(res.getString(R.string.backup_repair_deck), new Dialog.OnClickListener() {
+
+			@Override
+			public void onClick(DialogInterface arg0, int arg1) {
+	        	DeckTask.launchDeckTask(DeckTask.TASK_TYPE_REPAIR_DECK, mRepairDeckHandler, new DeckTask.TaskData(mCurrentDeckPath));
+			}
+        });
         builder.setNegativeButton(res.getString(R.string.delete_deck_title), new Dialog.OnClickListener() {
 
             @Override
@@ -1177,8 +1184,7 @@ public class DeckPicker extends Activity implements Runnable, IButtonListener {
 						public void onCancel(DialogInterface dialog) {
 							mDeckNotLoadedAlert.show();
 						}
-					}).show();
-						
+					}).show();					
             }
         });
         builder.setCancelable(true);
@@ -1740,6 +1746,34 @@ public class DeckPicker extends Activity implements Runnable, IButtonListener {
 		public void onProgressUpdate(DeckTask.TaskData... values) {
 		}
     	
+    };
+
+
+    DeckTask.TaskListener mRepairDeckHandler = new DeckTask.TaskListener() {
+
+    	@Override
+        public void onPreExecute() {
+            mProgressDialog = ProgressDialog.show(DeckPicker.this, "", getResources()
+                    .getString(R.string.backup_repair_deck_progress), true);
+        }
+
+
+        @Override
+        public void onPostExecute(DeckTask.TaskData result) {
+        	if (result.getBoolean()) {
+        		populateDeckList(mPrefDeckPath);
+        	} else {
+        		Themes.showThemedToast(DeckPicker.this, getResources().getString(R.string.deck_repair_error), true);
+        	}
+        	if (mProgressDialog != null && mProgressDialog.isShowing()) {
+        		mProgressDialog.dismiss();
+        	}
+        }
+ 
+		@Override
+		public void onProgressUpdate(TaskData... values) {
+		}
+
     };
 
 
