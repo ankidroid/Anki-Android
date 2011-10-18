@@ -4303,8 +4303,8 @@ public class Deck {
 
 
     public void resetUndo() {
-        mUndoStack.clear();
-        mRedoStack.clear();
+        mUndoStack = new Stack<UndoRow>();
+        mRedoStack = new Stack<UndoRow>();
     }
 
 
