@@ -777,7 +777,7 @@ public class DeckPicker extends Activity implements Runnable, IButtonListener {
 		case DIALOG_DELETE_DECK:
 			builder.setTitle(res.getString(R.string.delete_deck_title));
 			builder.setIcon(android.R.drawable.ic_dialog_alert);
-			builder.setMessage(String.format(res.getString(R.string.delete_deck_message), mCurrentDeckFilename));
+			builder.setMessage(String.format(res.getString(R.string.delete_deck_message), "\'" + mCurrentDeckFilename + "\'"));
 			builder.setPositiveButton(res.getString(R.string.delete_deck_confirm),
 					new DialogInterface.OnClickListener() {
 
@@ -811,7 +811,7 @@ public class DeckPicker extends Activity implements Runnable, IButtonListener {
 		case DIALOG_DELETE_BACKUPS:
 			builder.setTitle(res.getString(R.string.backup_manager_title));
 			builder.setIcon(android.R.drawable.ic_dialog_alert);
-			builder.setMessage(String.format(res.getString(R.string.backup_delete_deck_backups_alert), mCurrentDeckFilename));
+			builder.setMessage(String.format(res.getString(R.string.backup_delete_deck_backups_alert), "\'" + mCurrentDeckFilename + "\'"));
 			builder.setPositiveButton(res.getString(R.string.delete_deck_confirm),
 					new DialogInterface.OnClickListener() {
 
@@ -895,11 +895,11 @@ public class DeckPicker extends Activity implements Runnable, IButtonListener {
 		switch (id) {
 		case DIALOG_DELETE_DECK:
 			mCurrentDeckFilename = mDeckList.get(mContextMenuPosition).get("name");
-			ad.setMessage(String.format(res.getString(R.string.delete_deck_message), mCurrentDeckFilename));
+			ad.setMessage(String.format(res.getString(R.string.delete_deck_message), "\'" + mCurrentDeckFilename + "\'"));
 			break;
 		case DIALOG_DELETE_BACKUPS:
 			mCurrentDeckFilename = mDeckList.get(mContextMenuPosition).get("name");
-			ad.setMessage(String.format(res.getString(R.string.backup_delete_deck_backups_alert), mCurrentDeckFilename));
+			ad.setMessage(String.format(res.getString(R.string.backup_delete_deck_backups_alert), "\'" +mCurrentDeckFilename + "\'"));
 			break;
 		case DIALOG_CONTEXT_MENU:
 			mCurrentDeckFilename = mDeckList.get(mContextMenuPosition).get("name");
@@ -1154,7 +1154,7 @@ public class DeckPicker extends Activity implements Runnable, IButtonListener {
             	StyledDialog.Builder builder = new StyledDialog.Builder(DeckPicker.this);
             	builder.setCancelable(true).setTitle(res.getString(R.string.delete_deck_title))
             		.setIcon(android.R.drawable.ic_dialog_alert)
-            		.setMessage(String.format(res.getString(R.string.delete_deck_message), new File(mCurrentDeckPath).getName().replace(".anki", "")))
+            		.setMessage(String.format(res.getString(R.string.delete_deck_message), "\'" + new File(mCurrentDeckPath).getName().replace(".anki", "") + "\'"))
             		.setPositiveButton(res.getString(R.string.delete_deck_confirm), new DialogInterface.OnClickListener() {
 
 						@Override
