@@ -65,13 +65,13 @@ public class BackupManager {
 	}
 
 
-	private static void initBackup() {
+	public static void initBackup() {
 		mUseBackups = PrefSettings.getSharedPrefs(AnkiDroidApp.getInstance().getBaseContext()).getBoolean("useBackup", true);
 		mDeckPickerDecks = new ArrayList<String>();
 	}
 
 
-	private static boolean isActivated() {
+	public static boolean isActivated() {
 		return mUseBackups;
 	}
 
@@ -129,7 +129,7 @@ public class BackupManager {
 
 
 	/** Restores the current deck from backup if Android deleted it */
-	public static int restoreDeckIfMissing(String deckpath) {
+	public static void restoreDeckIfMissing(String deckpath) {
 		if (mUseBackups && !(new File(deckpath)).exists()) {
 			Log.e(AnkiDroidApp.TAG, "BackupManager: Deck " + deckpath + " has been deleted by Android. Restoring it:");
 			File[] fl = BackupManager.getDeckBackups(new File(deckpath));
