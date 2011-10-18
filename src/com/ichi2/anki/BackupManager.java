@@ -53,10 +53,26 @@ public class BackupManager {
 	public final static String BACKUP_SUFFIX = "/backup";
 	public final static String BROKEN_DECKS_SUFFIX = "/broken";
 
-	private static ArrayList<String> mDeckPickerDecks = new ArrayList<String>();
+	private static ArrayList<String> mDeckPickerDecks;
+	private static boolean mUseBackups = true;
+
+ 	/** Number of day, after which a backup is done on first non-studyoptions-opening (for safety reasons) */
+	public static final int SAFETY_BACKUP_THRESHOLD = 3;
+
 	
     /* Prevent class from being instantiated */
 	private BackupManager() {
+	}
+
+
+	private static void initBackup() {
+		mUseBackups = PrefSettings.getSharedPrefs(AnkiDroidApp.getInstance().getBaseContext()).getBoolean("useBackup", true)
+		mDeckPickerDecks = new ArrayList<String>();
+	}
+
+
+	private static boolean isActivated() {
+		return mUseBackups;
 	}
 
 
@@ -87,8 +103,9 @@ public class BackupManager {
 	}
 
 
+	/** If deck has not been opened for a long time, we perform a backup here because Android deleted sometimes corrupted decks */
 	public static boolean safetyBackupNeeded(String deckpath, int days) {
-		if (mDeckPickerDecks.contains(deckpath)) {
+		if (!mUseBackups || mDeckPickerDecks.contains(deckpath)) {
 			return false;
 		}
 		mDeckPickerDecks.add(deckpath);
@@ -108,6 +125,21 @@ public class BackupManager {
 		}
         Date target = Utils.genToday(Utils.utcOffset() + (days * 86400));
 		return backupDate.before(target);
+	}
+
+
+	/** Restores the current deck from backup if Android deleted it */
+	public static int restoreDeckIfMissing(String deckpath) {
+		if (mUseBackups && !(new File(deckpath)).exists()) {
+			Log.e(AnkiDroidApp.TAG, "BackupManager: Deck " + filePath + " has been deleted by Android. Restoring it:");
+			File[] fl = BackupManager.getDeckBackups(new File(deckpath));
+			if (fl.length > 0) {
+				Log.e(AnkiDroidApp.TAG, "BackupManager: Deck " + filePath + " successfully restored");
+				BackupManager.restoreDeckBackup(deckpath, fl[fl.length - 1].getAbsolutePath());					
+			} else {
+				Log.e(AnkiDroidApp.TAG, "BackupManager: Deck " + filePath + " could not be restored");
+			}
+		}
 	}
 
 

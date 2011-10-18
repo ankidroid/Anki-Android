@@ -211,8 +211,6 @@ public class DeckPicker extends Activity implements Runnable, IButtonListener {
 
 	int mStatisticType;
 
-	boolean mUseBackups;
-
 	boolean mCompletionBarRestrictToActive = false; // set this to true in order to calculate completion bar only for active cards
 
 	private int[] mDictValues;
@@ -230,9 +228,6 @@ public class DeckPicker extends Activity implements Runnable, IButtonListener {
  	 * Zeemote controller
  	 */
 	protected JoystickToButtonAdapter adapter;
-
- 	/** Number of day, after which a backup is already done in deckpicker (for safety reasons) */
-	private static final int SAFETY_BACKUP_THRESHOLD = 3;
 
 	// ----------------------------------------------------------------------------
 	// LISTENERS
@@ -587,8 +582,6 @@ public class DeckPicker extends Activity implements Runnable, IButtonListener {
 		Themes.setContentStyle(mainView, Themes.CALLER_DECKPICKER);
 
 		registerExternalStorageListener();
-
-		mUseBackups = PrefSettings.getSharedPrefs(this).getBoolean("useBackup", true);
 
 		initDialogs();
 		mBrokenDecks = new ArrayList<String>();
@@ -1289,6 +1282,7 @@ public class DeckPicker extends Activity implements Runnable, IButtonListener {
             	finish();
             } else {
             	SharedPreferences preferences = PrefSettings.getSharedPrefs(getBaseContext());
+				BackupManager.initBackup();
                 if (!mPrefDeckPath.equals(preferences.getString("deckPath", AnkiDroidApp.getStorageDirectory())) || mPrefDeckOrder != Integer.parseInt(preferences.getString("deckOrder", "0"))) {
                 	populateDeckList(preferences.getString("deckPath", AnkiDroidApp.getStorageDirectory()));
                 }
@@ -1417,7 +1411,7 @@ public class DeckPicker extends Activity implements Runnable, IButtonListener {
 
 					// See if a backup is needed (only done in deckpicker, if last backup is quite old or no backup at all is available)
 					// It is necessary to do it here, because retrieving deck information can already lead to a deck removal (Android bug)
-					if (mUseBackups && BackupManager.safetyBackupNeeded(path, SAFETY_BACKUP_THRESHOLD)) {
+					if (BackupManager.isActivated() && BackupManager.safetyBackupNeeded(path, BackupManager.SAFETY_BACKUP_THRESHOLD)) {
 						Log.i(AnkiDroidApp.TAG, "DeckPicker - Safety backup for deck " + path + "needed");
 						data.putString("absPath", path);
 						data.putInt("msgtype", MSG_CREATING_BACKUP);
@@ -1634,13 +1628,7 @@ public class DeckPicker extends Activity implements Runnable, IButtonListener {
 	public void addBrokenDeck(String filePath) {
 		if (!mBrokenDecks.contains(filePath)) {
 			mBrokenDecks.add(filePath);
-			if (!(new File(filePath)).exists()) {
-				Log.e(AnkiDroidApp.TAG, "DeckPicker: Deck " + filePath + " has been deleted by Android. Restoring it:");
-				File[] fl = BackupManager.getDeckBackups(new File(filePath));
-				if (fl.length > 0) {
-					BackupManager.restoreDeckBackup(filePath, fl[fl.length - 1].getAbsolutePath());					
-				}
-			}
+			BackupManager.restoreDeckIfMissing(filePath);
 		}
 	}
 

@@ -636,6 +636,7 @@ public class StudyOptions extends Activity implements IButtonListener {
         }
 
         SharedPreferences preferences = restorePreferences();
+	BackupManager.initBackup();
         registerExternalStorageListener();
 
         activeCramTags = new HashSet<String>();
@@ -847,6 +848,7 @@ public class StudyOptions extends Activity implements IButtonListener {
 	      }
 	      // check for new day and reset deck if yes
 	      if (Utils.isNewDay(PrefSettings.getSharedPrefs(getBaseContext()).getLong("lastTimeOpened", 0)) && (mCurrentContentView == CONTENT_STUDY_OPTIONS || mCurrentContentView == CONTENT_SESSION_COMPLETE)) {
+	    	  BackupManager.initBackup();
 	    	  if (!DeckTask.taskIsRunning()) {
 		    	  displayProgressDialogAndLoadDeck();
 	    	  }
@@ -2296,6 +2298,7 @@ public class StudyOptions extends Activity implements IButtonListener {
             }
         } else if (requestCode == PREFERENCES_UPDATE) {
             restorePreferences();
+            BackupManager.initBackup();
             showContentView();
             if (resultCode == RESULT_RESTART) {
             	restartApp();
@@ -2611,6 +2614,7 @@ public class StudyOptions extends Activity implements IButtonListener {
                     break;
 
                 case DeckTask.DECK_NOT_LOADED:
+			BackupManager.restoreDeckIfMissing(mDeckFilename);
                 	showContentView(CONTENT_DECK_NOT_LOADED);
                     break;
 

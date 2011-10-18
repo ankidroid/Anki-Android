@@ -120,6 +120,7 @@ public final class WidgetStatus {
                         	deck = Deck.openDeck(absPath, false);                    		
             			} catch (RuntimeException e) {
             				Log.w(AnkiDroidApp.TAG, "Widget: Could not open database " + absPath + ": " + e);
+					BackupManager.restoreDeckIfMissing(absPath);
             				deck = null;
             			}
                     }
@@ -149,7 +150,8 @@ public final class WidgetStatus {
                     // Add the information about the deck
                     decks.add(new DeckStatus(absPath, deckName, newCards, dueCards, failedCards, eta, reps));
                 } catch (SQLException e) {
-                    Log.i(AnkiDroidApp.TAG, "Could not open deck");
+                    Log.i(AnkiDroidApp.TAG, "Widget: Could not open deck");
+                    BackupManager.restoreDeckIfMissing(absPath);
                     Log.e(AnkiDroidApp.TAG, e.toString());
                 }
             }
