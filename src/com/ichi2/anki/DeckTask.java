@@ -663,7 +663,7 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
     		String[] answers = res.getStringArray(R.array.tutorial_answers);
     		String[] sampleQuestions = res.getStringArray(R.array.tutorial_capitals_questions);
     		String[] sampleAnswers = res.getStringArray(R.array.tutorial_capitals_answers);
-    		Deck deck = Deck.openDeck(sampleDeckFile.getAbsolutePath(), false);
+    		Deck deck = Deck.openDeck(sampleDeckFile.getAbsolutePath());
             ankiDB = AnkiDatabaseManager.getDatabase(deck.getDeckPath());
             ankiDB.getDatabase().beginTransaction();
             try {

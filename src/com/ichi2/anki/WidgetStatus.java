@@ -104,9 +104,10 @@ public final class WidgetStatus {
             ArrayList<DeckStatus> decks = new ArrayList<DeckStatus>(fileList.length);
 
             for (File file : fileList) {
+            	String absPath = null;
                 try {
                     // Run through the decks and get the information
-                    String absPath = file.getAbsolutePath();
+                    absPath = file.getAbsolutePath();
                     String deckName = file.getName().replaceAll(".anki", "");
 
                     Log.i(AnkiDroidApp.TAG, "Found deck: " + absPath);
@@ -151,8 +152,10 @@ public final class WidgetStatus {
                     decks.add(new DeckStatus(absPath, deckName, newCards, dueCards, failedCards, eta, reps));
                 } catch (SQLException e) {
                     Log.i(AnkiDroidApp.TAG, "Widget: Could not open deck");
-                    BackupManager.restoreDeckIfMissing(absPath);
                     Log.e(AnkiDroidApp.TAG, e.toString());
+                    if (absPath != null) {
+                        BackupManager.restoreDeckIfMissing(absPath);                    	
+                    }
                 }
             }
 
