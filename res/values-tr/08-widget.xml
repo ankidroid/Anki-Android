@@ -25,9 +25,9 @@
   <string name="widget_minimum_cards_due_summary">Bir bildirimin oluşturulacağı en az kart sayısı: XXX</string>
   <string name="widget_minimum_cards_due_vibrate">Titret</string>
   <string name="widget_minimum_cards_due_blink">Işığı yak</string>
-  <string name="widget_minimum_cards_due_notification_ticker_title">Vadesi Gelmiş Kart</string>
-  <string name="widget_minimum_cards_due_notification_ticker_text">%d AnkiDroid kartı</string>
-  <string name="widget_no_cards_due">No cards due</string>
+  <string name="widget_minimum_cards_due_notification_ticker_title">Çalışılacak Kart</string>
+  <string name="widget_minimum_cards_due_notification_ticker_text">%d AnkiDroid kartı çalışılacak</string>
+  <string name="widget_no_cards_due">Çalışılacak kart yok</string>
   <string name="widget_loading">Bileşen yükleniyor...</string>
   <string name="widget_medium">AnkiDroid Orta</string>
   <string name="widget_small">AnkiDroid Küçük</string>

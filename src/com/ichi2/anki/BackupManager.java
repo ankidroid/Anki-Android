@@ -20,6 +20,8 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
@@ -46,10 +48,13 @@ public class BackupManager {
 	public final static int RETURN_DECK_RESTORED = 5;
 	public final static int RETURN_NULL = 6;
 	public final static int RETURN_LOW_SYSTEM_SPACE = 7;
+	public final static int RETURN_BACKUP_NEEDED = 8;
 
 	public final static String BACKUP_SUFFIX = "/backup";
 	public final static String BROKEN_DECKS_SUFFIX = "/broken";
 
+	private static ArrayList<String> mDeckPickerDecks = new ArrayList<String>();
+	
     /* Prevent class from being instantiated */
 	private BackupManager() {
 	}
@@ -79,6 +84,30 @@ public class BackupManager {
         	directory.mkdirs();
         }
         return directory;
+	}
+
+
+	public static boolean safetyBackupNeeded(String deckpath, int days) {
+		if (mDeckPickerDecks.contains(deckpath)) {
+			return false;
+		}
+		mDeckPickerDecks.add(deckpath);
+	        File[] deckBackups = getDeckBackups(new File(deckpath));
+	        int len = deckBackups.length;
+		if (len == 0) {
+			// no backup available
+			return true;
+		}
+		String backupDateString = deckBackups[len - 1].getName().replaceAll("^.*-(\\d{4}-\\d{2}-\\d{2}).anki$", "$1");
+		Date backupDate;
+		try {
+			backupDate = new SimpleDateFormat("yyyy-MM-dd").parse(backupDateString);
+		} catch (ParseException e) {
+			Log.e(AnkiDroidApp.TAG, "BackupManager - safetyBackupNeeded - Error on parsing backups: " + e);
+			return true;
+		}
+        Date target = Utils.genToday(Utils.utcOffset() + (days * 86400));
+		return backupDate.before(target);
 	}
 
 
@@ -126,15 +155,15 @@ public class BackupManager {
 	}
 
 
-	public static long getFreeDiscSpace(File file) {
-		return getFreeDiscSpace(file.getPath());
-	}
 	public static long getFreeDiscSpace(String path) {
+		return getFreeDiscSpace(new File(path));
+	}
+	public static long getFreeDiscSpace(File file) {
 		try {
-		    	StatFs stat = new StatFs(path);
-		    	long blocks = stat.getAvailableBlocks();
-		    	long blocksize = stat.getBlockSize();
-		    	return blocks * blocksize;
+			StatFs stat = new StatFs(file.getParentFile().getPath());
+	    	long blocks = stat.getAvailableBlocks();
+	    	long blocksize = stat.getBlockSize();
+	    	return blocks * blocksize;
 		} catch (IllegalArgumentException e) {
 			Log.e(AnkiDroidApp.TAG, "Free space could not be retrieved: " + e);
 			return StudyOptions.MIN_FREE_SPACE * 1024 * 1024;
@@ -154,7 +183,7 @@ public class BackupManager {
 
 	public static int restoreDeckBackup(String deckpath, String backupPath) {
         // rename old file and move it to subdirectory
-    	if (!moveDeckToBrokenFolder(deckpath)) {
+    	if ((new File(deckpath)).exists() && !moveDeckToBrokenFolder(deckpath)) {
     		return RETURN_ERROR;
     	}
 
@@ -215,7 +244,7 @@ public class BackupManager {
 		File[] files = getBackupDirectory().listFiles();
 		ArrayList<File> deckBackups = new ArrayList<File>();
 		for (File aktFile : files){
-			if (aktFile.getName().replaceAll("-\\d{4}-\\d{2}-\\d{2}.anki", ".anki").equals(deckFile.getName())) {
+			if (aktFile.getName().replaceAll("^(.*)-\\d{4}-\\d{2}-\\d{2}.anki$", "$1.anki").equals(deckFile.getName())) {
 				deckBackups.add(aktFile);
 			}
 		}
