@@ -66,7 +66,7 @@ public class BackupManager {
 
 
 	private static void initBackup() {
-		mUseBackups = PrefSettings.getSharedPrefs(AnkiDroidApp.getInstance().getBaseContext()).getBoolean("useBackup", true)
+		mUseBackups = PrefSettings.getSharedPrefs(AnkiDroidApp.getInstance().getBaseContext()).getBoolean("useBackup", true);
 		mDeckPickerDecks = new ArrayList<String>();
 	}
 
