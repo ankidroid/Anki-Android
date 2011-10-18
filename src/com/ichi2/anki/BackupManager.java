@@ -131,13 +131,13 @@ public class BackupManager {
 	/** Restores the current deck from backup if Android deleted it */
 	public static int restoreDeckIfMissing(String deckpath) {
 		if (mUseBackups && !(new File(deckpath)).exists()) {
-			Log.e(AnkiDroidApp.TAG, "BackupManager: Deck " + filePath + " has been deleted by Android. Restoring it:");
+			Log.e(AnkiDroidApp.TAG, "BackupManager: Deck " + deckpath + " has been deleted by Android. Restoring it:");
 			File[] fl = BackupManager.getDeckBackups(new File(deckpath));
 			if (fl.length > 0) {
-				Log.e(AnkiDroidApp.TAG, "BackupManager: Deck " + filePath + " successfully restored");
+				Log.e(AnkiDroidApp.TAG, "BackupManager: Deck " + deckpath + " successfully restored");
 				BackupManager.restoreDeckBackup(deckpath, fl[fl.length - 1].getAbsolutePath());					
 			} else {
-				Log.e(AnkiDroidApp.TAG, "BackupManager: Deck " + filePath + " could not be restored");
+				Log.e(AnkiDroidApp.TAG, "BackupManager: Deck " + deckpath + " could not be restored");
 			}
 		}
 	}
