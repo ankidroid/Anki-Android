@@ -968,13 +968,19 @@ public class CardEditor extends Activity {
 	}
 
 	private void swapText(boolean reset) {
-		String sourceText = mEditFields.get(mSourcePosition).getText().toString();
+		FieldEditText field = mEditFields.get(mSourcePosition);
+		Editable sourceText = field.getText();
+		boolean sourceCutMode = field.getCutMode();
+		FieldEditText.WordRow[] sourceCutString = field.getCutString(); 
 		if (sourceText.length() == 0) {
-			sourceText = mSourceText;
+			sourceText = Editable.Factory.getInstance().newEditable(mSourceText);
 		}
-		String targetText = mEditFields.get(mTargetPosition).getText().toString();
+		field = mEditFields.get(mTargetPosition);
+		Editable targetText = field.getText();
+		boolean targetCutMode = field.getCutMode();
+		FieldEditText.WordRow[] targetCutString = field.getCutString(); 
 		if (targetText.length() == 0) {
-			targetText = mTargetText;
+			targetText = Editable.Factory.getInstance().newEditable(mTargetText);
 		}
 		if (mEditFields.size() > mSourcePosition) {
 			mEditFields.get(mSourcePosition).setText("");
@@ -1001,9 +1007,11 @@ public class CardEditor extends Activity {
 		}
 		if (sourceText != null) {
 			mEditFields.get(mSourcePosition).setText(sourceText);
+			mEditFields.get(mSourcePosition).setCutMode(sourceCutMode, sourceCutString);
 		}
 		if (targetText != null) {
 			mEditFields.get(mTargetPosition).setText(targetText);
+			mEditFields.get(mTargetPosition).setCutMode(targetCutMode, targetCutString);
 		}
 	}
 
@@ -1176,6 +1184,24 @@ public class CardEditor extends Activity {
 			}
 			return mCircle;
 		}
+
+
+		public boolean getCutMode() {
+			return mCutMode;
+		}
+
+
+		public WordRow[] getCutString() {
+			return mCutString;
+		}
+
+
+		public void setCutMode(boolean active, WordRow[] cutString) {
+			mCutMode = active;
+			mCircle.setImageResource(mCutMode ? R.drawable.ic_circle_pressed : R.drawable.ic_circle_normal);
+			mCutString = cutString;
+		}
+
 
 		public boolean updateField() {
 			if (mCutMode) {
