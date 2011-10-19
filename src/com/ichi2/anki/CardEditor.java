@@ -588,6 +588,8 @@ public class CardEditor extends Activity {
 		mModels = Model.getModels(mDeck);
 		mCurrentSelectedModelId = mDeck.getCurrentModelId();
 		modelChanged();
+		mEditFields.get(0).setText(mSourceText);
+		mEditFields.get(1).setText(mTargetText);
 	}
 
 	private void prepareForIntentAddition() {
@@ -949,6 +951,7 @@ public class CardEditor extends Activity {
 		swapText(true);
 	}
 
+
 	private void loadDeck(int item) {
 		String deckName = mDeckNames[item];
 		mDeckPath = mFullDeckPaths.get(deckName);
@@ -1145,6 +1148,7 @@ public class CardEditor extends Activity {
 		public ImageView getCircle() {
 			mCircle = new ImageView(this.getContext());
 			mCircle.setImageResource(R.drawable.ic_circle_normal);
+			mKeyListener = FieldEditText.this.getKeyListener();
 			mCircle.setOnClickListener(new View.OnClickListener() {
 				@Override
 				public void onClick(View v) {
@@ -1198,7 +1202,6 @@ public class CardEditor extends Activity {
 				mCircle.setImageResource(R.drawable.ic_circle_pressed);
 				InputMethodManager imm = (InputMethodManager) mContext.getSystemService(Context.INPUT_METHOD_SERVICE);
 				imm.hideSoftInputFromWindow(FieldEditText.this.getWindowToken(), 0);
-				mKeyListener = FieldEditText.this.getKeyListener();
 				FieldEditText.this.setKeyListener(null);
 				FieldEditText.this.setCursorVisible(false);
 				if (cutString != null) {

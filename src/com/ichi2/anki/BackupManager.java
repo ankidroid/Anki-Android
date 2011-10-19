@@ -258,7 +258,7 @@ public class BackupManager {
     		// move deck to broken folder
     		String brokenDirectory = getBrokenDirectory().getPath();
     		Date value = Utils.genToday(Utils.utcOffset());
-            String movedFilename = String.format(Utils.ENGLISH_LOCALE, "to-repair-" + deckFile.getName().replace(".anki", "") + "-%tF.anki", value);
+            String movedFilename = String.format(Utils.ENGLISH_LOCALE, deckFile.getName().replace(".anki", "") + "-corrupt-%tF.anki", value);
             File movedFile = new File(brokenDirectory, movedFilename);
             int i = 1;
             while (movedFile.exists()) {
@@ -288,7 +288,7 @@ public class BackupManager {
 		File deckFile = new File(deckPath);
 		AnkiDatabaseManager.closeDatabase(deckPath);
         Date value = Utils.genToday(Utils.utcOffset());
-        String movedFilename = String.format(Utils.ENGLISH_LOCALE, "to-repair-" + deckFile.getName().replace(".anki", "") + "-%tF.anki", value);
+        String movedFilename = String.format(Utils.ENGLISH_LOCALE, deckFile.getName().replace(".anki", "") + "-corrupt-%tF.anki", value);
         File movedFile = new File(getBrokenDirectory().getPath(), movedFilename);
         int i = 1;
         while (movedFile.exists()) {

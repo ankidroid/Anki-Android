@@ -33,6 +33,7 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.database.CursorIndexOutOfBoundsException;
 import android.database.SQLException;
+import android.database.sqlite.SQLiteDiskIOException;
 import android.database.sqlite.SQLiteException;
 import android.os.AsyncTask;
 import android.util.Log;
@@ -608,11 +609,11 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
 
     private TaskData doInBackgroundRepairDeck(TaskData... params) {
     	Log.i(AnkiDroidApp.TAG, "doInBackgroundRepairDeck");
-	String deckPath = params[0].getString();
-	Deck currentDeck = AnkiDroidApp.deck();
-	if (currentDeck != null && currentDeck.getDeckPath().equals(deckPath)) {
-		doInBackgroundCloseDeck(new TaskData(currentDeck, 0))
-	}
+    	String deckPath = params[0].getString();
+    	Deck currentDeck = AnkiDroidApp.deck();
+    	if (currentDeck != null && currentDeck.getDeckPath().equals(deckPath)) {
+    		doInBackgroundCloseDeck(new TaskData(currentDeck, 0));
+    	}
     	return new TaskData(BackupManager.repairDeck(deckPath));
     }
 
