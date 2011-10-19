@@ -46,7 +46,7 @@ public final class WidgetStatus {
         // Only update the widget if it is enabled.
         // TODO(flerda): Split widget from notifications.
         SharedPreferences preferences = PrefSettings.getSharedPrefs(context);
-        if (preferences.getBoolean("widgetEnabled", false)) {
+        if (preferences.getBoolean("widgetMediumEnabled", false)) {
             mediumWidget = true;
         } else {
             mediumWidget = false;
@@ -175,14 +175,14 @@ public final class WidgetStatus {
         protected void onPostExecute(Context context) {
             Log.d(AnkiDroidApp.TAG, "WidgetStatus.UpdateDeckStatusAsyncTask.onPostExecute()");
             MetaDB.storeWidgetStatus(context, mDecks);
-	    if (mediumWidget) {
-	        Intent intent;
+            if (mediumWidget) {
+            	Intent intent;
                 intent = new Intent(context, AnkiDroidWidgetMedium.UpdateService.class);
                 intent.setAction(AnkiDroidWidgetMedium.UpdateService.ACTION_UPDATE);
                 context.startService(intent);
             }
             if (smallWidget) {
-	        Intent intent;
+            	Intent intent;
                 intent = new Intent(context, AnkiDroidWidgetSmall.UpdateService.class);
                 intent.setAction(AnkiDroidWidgetSmall.UpdateService.ACTION_UPDATE);            	
                 context.startService(intent);
