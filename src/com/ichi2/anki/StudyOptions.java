@@ -2173,6 +2173,7 @@ public class StudyOptions extends Activity implements IButtonListener {
         File sampleDeckFile = new File(mPrefDeckPath, SAMPLE_DECK_NAME);
         if (!sampleDeckFile.exists()) {
             mDeckFilename = sampleDeckFile.getAbsolutePath();
+            savePreferences("deckFilename");
         	DeckTask.launchDeckTask(DeckTask.TASK_TYPE_LOAD_TUTORIAL, mLoadDeckHandler, new DeckTask.TaskData(sampleDeckFile.getAbsolutePath()));
         } else {
         	Intent deckLoadIntent = new Intent();
