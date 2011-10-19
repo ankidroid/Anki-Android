@@ -883,14 +883,24 @@ public class StudyOptions extends Activity implements IButtonListener {
     	closeStudyOptions(true);
     }
     private void closeStudyOptions(boolean closeDeck) {
+		mIsClosing = true;
         MetaDB.closeDB();
         if (closeDeck && AnkiDroidApp.deck() != null && mSdCardAvailable) {
-        	DeckTask.launchDeckTask(DeckTask.TASK_TYPE_CLOSE_DECK, mCloseDeckHandler, new DeckTask.TaskData(AnkiDroidApp.deck(), 0));
-        } else {
-        	AnkiDroidApp.setDeck(null);
-            mCompat.invalidateOptionsMenu(this);
-            StudyOptions.this.finish();
+        	DeckTask.launchDeckTask(DeckTask.TASK_TYPE_CLOSE_DECK, new DeckTask.TaskListener() {
+		        @Override
+		        public void onPreExecute() {
+		        }
+		        @Override
+		        public void onPostExecute(DeckTask.TaskData result) {
+		        }
+		        @Override
+		        public void onProgressUpdate(DeckTask.TaskData... values) {
+		        }
+			}, new DeckTask.TaskData(AnkiDroidApp.deck(), 0));
         }
+        AnkiDroidApp.setDeck(null);
+        mCompat.invalidateOptionsMenu(this);
+        StudyOptions.this.finish();
     }
 
 
@@ -2704,34 +2714,6 @@ public class StudyOptions extends Activity implements IButtonListener {
         	} else {
         		mProgressDialog.setMessage(message);
         	}
-        }
-    };
-
-
-    DeckTask.TaskListener mCloseDeckHandler = new DeckTask.TaskListener() {
-
-        @Override
-        public void onPreExecute() {
-        	mIsClosing = true;
-            mProgressDialog = ProgressDialog.show(StudyOptions.this, "", getResources()
-                    .getString(R.string.close_deck), true);
-        }
-
-
-        @Override
-        public void onPostExecute(DeckTask.TaskData result) {
-        	mIsClosing = false;
-        	if (mProgressDialog != null && mProgressDialog.isShowing()) {
-        		mProgressDialog.dismiss();
-        	}
-        	AnkiDroidApp.setDeck(null);
-            mCompat.invalidateOptionsMenu(StudyOptions.this);
-            StudyOptions.this.finish();
-        }
-
-
-        @Override
-        public void onProgressUpdate(DeckTask.TaskData... values) {
         }
     };
 
