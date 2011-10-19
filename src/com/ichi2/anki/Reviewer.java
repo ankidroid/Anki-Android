@@ -104,6 +104,7 @@ public class Reviewer extends Activity implements IButtonListener{
     public static final int RESULT_SESSION_COMPLETED = 1;
     public static final int RESULT_NO_MORE_CARDS = 2;
     public static final int RESULT_EDIT_CARD_RESET = 3;
+    public static final int RESULT_ANSWERING_ERROR = 4;
 
     /**
      * Possible values for update card handler
@@ -686,6 +687,11 @@ public class Reviewer extends Activity implements IButtonListener{
 
         @Override
         public void onPostExecute(DeckTask.TaskData result) {
+            if (!result.getBoolean) {
+		// SQLiteDiskIOException occured on answering cards
+                Reviewer.this.setResult(RESULT_ANSWERING_ERROR);
+                closeReviewer();
+            }
             // Check for no more cards before session complete. If they are both true,
             // no more cards will take precedence when returning to study options.
             if (mNoMoreCards) {

@@ -76,4 +76,7 @@
 <string name="reset_card_dialog_message">This resets the learning progress for all cards of this fact (they will look like new cards).\nReally continue?</string>
 <string name="reset_card_dialog_confirmation">All cards of this fact reset</string>
 
+<string name="answering_error_title">Error on answering card</string>
+<string name="answering_error_message">An error occured while answering the last card. This could be related to a corrupt database or to insufficient disc space.\n\nIf it happens more often, please try to repair the deck.</string>
+
 </resources>

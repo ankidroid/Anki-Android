@@ -285,27 +285,29 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
         Card oldCard = params[0].getCard();
         int ease = params[0].getInt();
         Card newCard;
-
-        AnkiDb ankiDB = AnkiDatabaseManager.getDatabase(deck.getDeckPath());
-        ankiDB.getDatabase().beginTransaction();
-        try {
-            if (oldCard != null) {
-                deck.answerCard(oldCard, ease);
-                Log.i(AnkiDroidApp.TAG, "leech flag: " + oldCard.getLeechFlag());
-            }
-            newCard = deck.getCard();
-            if (oldCard != null) {
-                publishProgress(new TaskData(newCard, oldCard.getLeechFlag(), oldCard.getSuspendedFlag()));
-            } else {
-                publishProgress(new TaskData(newCard));
-            }
-
-            ankiDB.getDatabase().setTransactionSuccessful();
-        } finally {
-            ankiDB.getDatabase().endTransaction();
-        }
-
-        return null;
+	try {
+	        AnkiDb ankiDB = AnkiDatabaseManager.getDatabase(deck.getDeckPath());
+	        ankiDB.getDatabase().beginTransaction();
+	        try {
+	            if (oldCard != null) {
+	                deck.answerCard(oldCard, ease);
+	                Log.i(AnkiDroidApp.TAG, "leech flag: " + oldCard.getLeechFlag());
+	            }
+	            newCard = deck.getCard();
+	            if (oldCard != null) {
+	                publishProgress(new TaskData(newCard, oldCard.getLeechFlag(), oldCard.getSuspendedFlag()));
+	            } else {
+	                publishProgress(new TaskData(newCard));
+	            }
+	            ankiDB.getDatabase().setTransactionSuccessful();
+	        } finally {
+	            ankiDB.getDatabase().endTransaction();
+	        }
+	} catch (SQLiteDiskIOException e) {
+		Log.e(AnkiDroidApp.TAG, "doInBackgroundAnswerCard - SQLiteDiskIOException on answering card: " + e);
+		return new TaskData(false);
+	}
+        return new TaskData(true);
     }
 
 
@@ -361,12 +363,16 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
     	Deck deck = params[0].getDeck();
         Log.i(AnkiDroidApp.TAG, "doInBackgroundSaveAndResetDeck");
         if (deck != null) {
-            deck.commitToDB();
-            deck.updateCutoff();
-            if (AnkiDroidApp.deck().hasFinishScheduler()) {
-                AnkiDroidApp.deck().finishScheduler();
+            try {
+		deck.commitToDB();
+            	deck.updateCutoff();
+            	if (AnkiDroidApp.deck().hasFinishScheduler()) {
+            		AnkiDroidApp.deck().finishScheduler();
+            	}
+            	deck.reset();
+            } catch (SQLiteDiskIOException e) {
+            	Log.e(AnkiDroidApp.TAG, "Error on saving deck in background: " + e);
             }
-            deck.reset();
         }
         return null;
     }
@@ -582,7 +588,12 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
 
     private TaskData doInBackgroundRepairDeck(TaskData... params) {
     	Log.i(AnkiDroidApp.TAG, "doInBackgroundRepairDeck");
-    	return new TaskData(BackupManager.repairDeck(params[0].getString()));
+	String deckPath = params[0].getString();
+	Deck currentDeck = AnkiDroidApp.deck();
+	if (currentDeck != null && currentDeck.getDeckPath().equals(deckPath)) {
+		doInBackgroundCloseDeck(new TaskData(currentDeck, 0))
+	}
+    	return new TaskData(BackupManager.repairDeck(deckPath));
     }
 
 

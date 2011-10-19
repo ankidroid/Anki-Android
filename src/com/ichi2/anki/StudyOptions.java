@@ -163,6 +163,7 @@ public class StudyOptions extends Activity implements IButtonListener {
     private static final int DIALOG_DOWNLOAD_SELECTOR = 15;
     private static final int DIALOG_CRAM = 16;
     private static final int DIALOG_BACKUP_NO_SPACE_LEFT = 17;
+    private static final int DIALOG_ANSWERING_ERROR = 18;
 
     private String mCurrentDialogMessage;
 
@@ -1585,6 +1586,20 @@ public class StudyOptions extends Activity implements IButtonListener {
 	        mWelcomeAlert = dialog;
 			break;
 
+		case DIALOG_ANSWERING_ERROR:
+			builder.setTitle(R.string.answering_error_title);
+			builder.setMessage(R.string.answering_error_message);
+		        builder.setPositiveButton(res.getString(R.string.backup_repair_deck), new OnClickListener() {
+		            @Override
+		            public void onClick(DialogInterface dialog, int which) {
+		            	DeckTask.launchDeckTask(DeckTask.TASK_TYPE_REPAIR_DECK, mRepairDeckHandler, new DeckTask.TaskData(mDeckFilename));
+		            }
+		        });
+			builder.setNegativeButton(res.getString(R.string.close), null);
+		        builder.setCancelable(true);
+		        dialog = builder.create();
+			break;
+
 		default:
 			dialog = null;
 		}
@@ -2297,6 +2312,10 @@ public class StudyOptions extends Activity implements IButtonListener {
                     break;
                 case Reviewer.RESULT_NO_MORE_CARDS:
                 	showContentView(CONTENT_CONGRATS);
+                    break;
+                case Reviewer.RESULT_ANSWERING_ERROR:
+                	showContentView(CONTENT_STUDY_OPTIONS);
+			showDialog(DIALOG_ANSWERING_ERROR);
                     break;
                 default:
                 	showContentView(CONTENT_STUDY_OPTIONS);
