@@ -181,13 +181,16 @@ public class CardEditor extends Activity {
 
 		@Override
 		public void onProgressUpdate(DeckTask.TaskData... values) {
-			if (values[0].getBoolean()) {
+			int count = values[0].getInt();
+			if (count > 0) {
 				mEditorFact = mDeck.newFact(mCurrentSelectedModelId);
 				populateEditFields();
 				mSave.setEnabled(false);
 				mSourceText = null;
 				mTargetText = null;
 				mSwapButton.setVisibility(View.GONE);
+				Themes.showThemedToast(CardEditor.this, getResources()
+						.getQuantityString(R.plurals.factadder_cards_added, count, count), true);
 			} else {
 				Themes.showThemedToast(CardEditor.this, getResources()
 						.getString(R.string.factadder_saving_error), true);

@@ -3825,12 +3825,12 @@ public class Deck {
     /**
      * Add a fact to the deck. Return list of new cards
      */
-    public Fact addFact(Fact fact, HashMap<Long, CardModel> cardModels) {
+    public int addFact(Fact fact, HashMap<Long, CardModel> cardModels) {
         return addFact(fact, cardModels, true);
     }
 
 
-    public Fact addFact(Fact fact, HashMap<Long, CardModel> cardModels, boolean reset) {
+    public int addFact(Fact fact, HashMap<Long, CardModel> cardModels, boolean reset) {
         // TODO: assert fact is Valid
         // TODO: assert fact is Unique
         double now = Utils.now();
@@ -3848,7 +3848,7 @@ public class Deck {
         // TreeMap<Long, CardModel> availableCardModels = availableCardModels(fact);
         if (cardModels.isEmpty()) {
             Log.e(AnkiDroidApp.TAG, "Error while adding fact: No cardmodels for the new fact");
-            return null;
+            return 0;
         }
         // update counts
         mFactCount++;
@@ -3866,15 +3866,17 @@ public class Deck {
         }
 
         ArrayList<Long> newCardIds = new ArrayList<Long>();
+        int count = 0;
         for (Map.Entry<Long, CardModel> entry : cardModels.entrySet()) {
             CardModel cardModel = entry.getValue();
             Card newCard = new Card(this, fact, cardModel, Utils.now());
             newCard.addToDb();
             newCardIds.add(newCard.getId());
-            mCardCount++;
-            mNewCount++;
+            count++;
             Log.i(AnkiDroidApp.TAG, entry.getKey().toString());
         }
+        mCardCount += count;
+        mNewCount += count;
         commitToDB();
         // TODO: code related to random in newCardOrder
 
@@ -3890,7 +3892,7 @@ public class Deck {
             reset();
         }
 
-        return fact;
+        return count;
     }
 
 

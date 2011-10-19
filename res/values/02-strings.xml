@@ -85,4 +85,9 @@
 <string name="rename">Rename</string>
 <string name="rename_error">Deck %s could not be renamed</string>
 
+<plurals name="factadder_cards_added">
+  <item quantity="one">1 card added</item>
+  <item quantity="other">%d cards added</item>
+</plurals>
+
 </resources>
