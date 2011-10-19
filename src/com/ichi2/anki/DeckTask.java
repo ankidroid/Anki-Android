@@ -637,10 +637,10 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
     private TaskData doInBackgroundCloseDeck(TaskData... params) {
         Log.i(AnkiDroidApp.TAG, "doInBackgroundCloseDeck");
     	Deck deck = params[0].getDeck();
-    	boolean wait = params[0].getBoolean();
     	if (deck != null) {
     		try {
-    			deck.closeDeck(wait);
+    			deck.closeDeck(false);
+    			Log.i(AnkiDroidApp.TAG, "doInBackgroundCloseDeck - Deck closed");
     		} catch (SQLiteException e) {
     			Log.e(AnkiDroidApp.TAG, "Error on closing deck: " + e);
     		}
