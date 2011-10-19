@@ -1148,23 +1148,12 @@ public class CardEditor extends Activity {
 			mCircle.setOnClickListener(new View.OnClickListener() {
 				@Override
 				public void onClick(View v) {
-					ImageView view = ((ImageView) v);
 					Editable editText = FieldEditText.this.getText();
 					if (mCutMode) {
-						view.setImageResource(R.drawable.ic_circle_normal);
-						FieldEditText.this.setKeyListener(mKeyListener);
-						FieldEditText.this.setCursorVisible(true);
+						setCutMode(false, null);
 						updateContentAfterWordSelection(editText);
 					} else {
-						view.setImageResource(R.drawable.ic_circle_pressed);
-						InputMethodManager imm = (InputMethodManager) mContext
-								.getSystemService(Context.INPUT_METHOD_SERVICE);
-						imm.hideSoftInputFromWindow(FieldEditText.this
-								.getWindowToken(), 0);
-						mKeyListener = FieldEditText.this.getKeyListener();
-						FieldEditText.this.setKeyListener(null);
-						FieldEditText.this.setCursorVisible(false);
-						mCutMode = true;
+						setCutMode(true, null);
 						String text = editText.toString();
 						splitText(text);
 						int pos = 0;
@@ -1205,8 +1194,21 @@ public class CardEditor extends Activity {
 
 		public void setCutMode(boolean active, WordRow[] cutString) {
 			mCutMode = active;
-			mCircle.setImageResource(mCutMode ? R.drawable.ic_circle_pressed : R.drawable.ic_circle_normal);
-			mCutString = cutString;
+			if (mCutMode) {
+				mCircle.setImageResource(R.drawable.ic_circle_pressed);
+				InputMethodManager imm = (InputMethodManager) mContext.getSystemService(Context.INPUT_METHOD_SERVICE);
+				imm.hideSoftInputFromWindow(FieldEditText.this.getWindowToken(), 0);
+				mKeyListener = FieldEditText.this.getKeyListener();
+				FieldEditText.this.setKeyListener(null);
+				FieldEditText.this.setCursorVisible(false);
+				if (cutString != null) {
+					mCutString = cutString;
+				}
+			} else {
+				mCircle.setImageResource(R.drawable.ic_circle_normal);
+				FieldEditText.this.setKeyListener(mKeyListener);
+				FieldEditText.this.setCursorVisible(true);
+			}
 		}
 
 
