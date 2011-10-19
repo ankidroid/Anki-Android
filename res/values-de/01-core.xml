@@ -96,7 +96,8 @@
   <string name="visit">Besuchen</string>
   <string name="later">Später</string>
   <string name="download">Holen</string>
-  <string name="deckpicker_loading_error">Stapel konnte nicht geladen werden</string>
+  <string name="deckpicker_loading_error">Fehler beim Laden</string>
+  <string name="deckpicker_creating_backup">Sicherung wird angelegt...</string>
   <string-array name="next_review_s">
     <item>1 Sekunde</item>
     <item>1 Minute</item>

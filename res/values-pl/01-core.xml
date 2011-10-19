@@ -97,6 +97,7 @@
   <string name="later">Później</string>
   <string name="download">Pobierz</string>
   <string name="deckpicker_loading_error">Nie można załadować talii</string>
+  <string name="deckpicker_creating_backup">Creating backup...</string>
   <string-array name="next_review_s">
     <item>1 sekunda</item>
     <item>1 minuta</item>

@@ -197,5 +197,5 @@
   <string name="show_broadcast_messages_summ">Yeni sürüm güncellemeleri ve önemli diğer haberler gibi AnkiDroid bildirimlerini göster</string>
   <string name="input_workaround">Giriş Çözümü</string>
   <string name="input_workaround_summ">HTML giriş kutularındaki odaklama sorunları için çözüm. Bazı cihazlarda sorun yaratabilir.</string>
-  <string name="write_answers_message">Yanıtlarınızı yazabilmeye başlamadan önce, her deste için yazılı yanıtın karşılaştırılacağı bir alan belirlemeniz gerekli.\n\nBunu Anki Masaüstü\'yle yapabilirsiniz (deste özellikleri -&gt; modeli düzenle -&gt; kart düzeni).</string>
+  <string name="write_answers_message">You should define for every deck a field to compare the written answer with. You can do this via Anki Desktop (deck properties -&gt; edit model -&gt; card layout).\n\nIf no compare field is set, your written answer will always be compared with the whole card answer.</string>
 </resources>

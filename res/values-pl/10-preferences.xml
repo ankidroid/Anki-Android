@@ -197,5 +197,5 @@
   <string name="show_broadcast_messages_summ">Pokazuj powiadomienia AnkiDroida, np. o nowych wersjach lub inne ważne informacje</string>
   <string name="input_workaround">Poprawka przy wpisywaniu</string>
   <string name="input_workaround_summ">Obejście problemu nieaktywnych pól tekstowych HTML na niektórych urządzeniach.</string>
-  <string name="write_answers_message">Aby móc wpisywać odpowiedź, należy zdefiniować w każdej talii pole, z którym będzie ona porównywana.\n\nMożna to zrobić w desktopowej wersji Anki (właściwości talii -&gt; edytuj model -&gt; układ karty).</string>
+  <string name="write_answers_message">You should define for every deck a field to compare the written answer with. You can do this via Anki Desktop (deck properties -&gt; edit model -&gt; card layout).\n\nIf no compare field is set, your written answer will always be compared with the whole card answer.</string>
 </resources>

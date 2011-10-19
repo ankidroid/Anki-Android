@@ -153,7 +153,7 @@
   <string name="studyoptions_limit_button_text">Limit</string>
   <string name="studyoptions_limit_dialog_title">Limit učení</string>
   <string name="studyoptions_session">Sezení</string>
-  <string name="studyoptions_tag">Podle štítku</string>
+  <string name="studyoptions_tag">Štítky</string>
   <string name="studyoptions_tag_new">Zobrazit nové karty podle štítků:</string>
   <string name="studyoptions_tag_rev">Zobrazit opakované karty podle štítků:</string>
   <string name="studyoptions_session_minutes">Limit sezení (minuty):</string>
@@ -197,5 +197,5 @@
   <string name="show_broadcast_messages_summ">Zobrazovat upozornění AnkiDroid, jako jsou nové aktualizace nebo jiné důležité zprávy</string>
   <string name="input_workaround">Input Workaround</string>
   <string name="input_workaround_summ">Řešení problémů se vstupními HTML poli. Způsobuje problémy na několika zařízeních.</string>
-  <string name="write_answers_message">Předtím, než budou moci napsat své odpovědi, musíte definovat pro každý balíček pole pro porovnání písemné odpovědi.\n\nMůžete to provést přes Anki Desktop. (Vlastnosti balíku -&gt;Upravit model -&gt; Rozvržení karty).</string>
+  <string name="write_answers_message">You should define for every deck a field to compare the written answer with. You can do this via Anki Desktop (deck properties -&gt; edit model -&gt; card layout).\n\nIf no compare field is set, your written answer will always be compared with the whole card answer.</string>
 </resources>

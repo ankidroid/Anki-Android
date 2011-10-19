@@ -29,6 +29,8 @@
   <string name="backup_delete">Usuwanie kopii.\nProszę czekać...</string>
   <string name="contextmenu_deckpicker_remove_backups">Usuń kopię</string>
   <string name="backup_restore">Odtwórz kopię</string>
+  <string name="backup_repair_deck">Repair deck</string>
+  <string name="backup_repair_deck_progress">Repairing deck.\nPlease wait...</string>
   <string name="backup_restore_error">Nie można odtworzyć talii.</string>
   <string name="backup_restore_deck">Odtwarzanie talii.\nCierpliwości...</string>
   <string name="backup_restore_select_title">Wybierz kopię do odtworzenia.</string>
@@ -36,5 +38,7 @@
   <string name="backup_delete_deck_backups">Kopia talii %s usunięta</string>
   <string name="delete_deck_success">Talia %1$s usunięta.  Kopia w folderze %2$s</string>
   <string name="backup_delete_deck_backups_alert">Na pewno usunąć wszystkie kopie talii %s?</string>
-  <string name="open_deck_failed">Nie można otworzyć pliku %1$s. Nie jest to plik anki lub został on uszkodzony.\n\nMożna spróbować odtworzyć plik z kopii; bieżący plik zostanie wtedy przeniesiony do folderu \'%2$s\' (informacje na temat naprawiania uszkodzonych talii: %3$s).\n\nNaciśnij Wstecz aby zamknąć to okienko.</string>
+  <string name="open_deck_failed">File %1$s could not be opened. It is either not a real anki file or has been corrupted.\n\nYou can try to repair the deck or restore it from a backup (in both cases, the copy of the corrupt deck will be moved to the subfolder \'%2$s\'). More information about repairing corrupted decks: %3$s.\n\nHit the back button to close this dialog</string>
+  <string name="deckpicker_backup_error">Backup could not be created</string>
+  <string name="deck_repair_error">Deck could not be repaired</string>
 </resources>
