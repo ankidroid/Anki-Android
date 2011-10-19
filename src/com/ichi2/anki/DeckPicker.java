@@ -1049,13 +1049,13 @@ public class DeckPicker extends Activity implements Runnable, IButtonListener {
 			        public void onProgressUpdate(DeckTask.TaskData... values) {
 			        }
 				}, new DeckTask.TaskData(deck, 0));
-	    		}
+    		}
 			finish();
 		} else {
 			finish();
 			if (StudyOptions.getApiLevel() > 4) {
 	    			ActivityTransitionAnimation.slide(this, ActivityTransitionAnimation.LEFT);
-	    		}
+    		}
 		}
 	}
 
