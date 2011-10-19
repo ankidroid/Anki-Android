@@ -33,7 +33,6 @@ import android.util.Log;
 import android.view.View;
 import android.widget.RemoteViews;
 
-
 public class AnkiDroidWidgetSmall extends AppWidgetProvider {
 	
     private static BroadcastReceiver mMountReceiver = null;
@@ -41,13 +40,14 @@ public class AnkiDroidWidgetSmall extends AppWidgetProvider {
 
     @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
-        Log.i(AnkiDroidApp.TAG, "onUpdate");
+        Log.i(AnkiDroidApp.TAG, "SmallWidget: onUpdate");
         WidgetStatus.update(context);
     }
 
     @Override
     public void onEnabled(Context context) {
         super.onEnabled(context);
+        Log.i(AnkiDroidApp.TAG, "SmallWidget: Widget enabled");
         SharedPreferences preferences = PrefSettings.getSharedPrefs(context);
         preferences.edit().putBoolean("widgetSmallEnabled", true).commit();
     }
@@ -55,7 +55,7 @@ public class AnkiDroidWidgetSmall extends AppWidgetProvider {
     @Override
     public void onDisabled(Context context) {
         super.onDisabled(context);
-        Log.d(AnkiDroidApp.TAG, "Widget disabled");
+        Log.i(AnkiDroidApp.TAG, "SmallWidget: Widget disabled");
         SharedPreferences preferences = PrefSettings.getSharedPrefs(context);
         preferences.edit().putBoolean("widgetSmallEnabled", false).commit();
     }
@@ -94,7 +94,7 @@ public class AnkiDroidWidgetSmall extends AppWidgetProvider {
 
         @Override
         public void onStart(Intent intent, int startId) {
-            Log.i(AnkiDroidApp.TAG, "OnStart");
+            Log.i(AnkiDroidApp.TAG, "SmallWidget: OnStart");
 
             RemoteViews updateViews = buildUpdate(this, true);
 
