@@ -248,30 +248,6 @@ public class DeckPicker extends Activity implements Runnable, IButtonListener {
 	};
 
 
-	DeckTask.TaskListener mCloseDeckHandler = new DeckTask.TaskListener() {
-
-        @Override
-        public void onPreExecute() {
-            mProgressDialog = ProgressDialog.show(DeckPicker.this, "", getResources()
-                    .getString(R.string.close_deck), true);
-        }
-
-
-        @Override
-        public void onPostExecute(DeckTask.TaskData result) {
-        	if (mProgressDialog != null && mProgressDialog.isShowing()) {
-        		mProgressDialog.dismiss();
-        	}
-        	DeckPicker.this.finish();
-        }
-
-
-        @Override
-        public void onProgressUpdate(DeckTask.TaskData... values) {
-        }
-    };
-
-
 	private DialogInterface.OnClickListener mContextMenuListener = new DialogInterface.OnClickListener() {
 		@Override
 		public void onClick(DialogInterface dialog, int item) {
@@ -1059,18 +1035,27 @@ public class DeckPicker extends Activity implements Runnable, IButtonListener {
 	}
 	private void closeDeckPicker(boolean backPressed) {
 		if (mPrefStartupDeckPicker && backPressed) {
-    		setResult(StudyOptions.RESULT_CLOSE);
-    		Deck deck = AnkiDroidApp.deck();
-    		if (deck != null) {
-    			DeckTask.launchDeckTask(DeckTask.TASK_TYPE_CLOSE_DECK, mCloseDeckHandler, new DeckTask.TaskData(deck, 0));
-    		} else {
-    			finish();
-    		}
+    			setResult(StudyOptions.RESULT_CLOSE);
+	    		Deck deck = AnkiDroidApp.deck();
+	    		if (deck != null) {
+	        	DeckTask.launchDeckTask(DeckTask.TASK_TYPE_CLOSE_DECK, new DeckTask.TaskListener() {
+			        @Override
+			        public void onPreExecute() {
+			        }
+			        @Override
+			        public void onPostExecute(DeckTask.TaskData result) {
+			        }
+			        @Override
+			        public void onProgressUpdate(DeckTask.TaskData... values) {
+			        }
+				}, new DeckTask.TaskData(deck, 0));
+	    		}
+			finish();
 		} else {
 			finish();
 			if (StudyOptions.getApiLevel() > 4) {
-	    		ActivityTransitionAnimation.slide(this, ActivityTransitionAnimation.LEFT);
-	    	}
+	    			ActivityTransitionAnimation.slide(this, ActivityTransitionAnimation.LEFT);
+	    		}
 		}
 	}
 
