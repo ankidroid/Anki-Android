@@ -1588,6 +1588,7 @@ public class StudyOptions extends Activity implements IButtonListener {
 
 		case DIALOG_ANSWERING_ERROR:
 			builder.setTitle(R.string.answering_error_title);
+	        builder.setIcon(android.R.drawable.ic_dialog_alert);
 			builder.setMessage(R.string.answering_error_message);
 		        builder.setPositiveButton(res.getString(R.string.backup_repair_deck), new OnClickListener() {
 		            @Override
@@ -2315,7 +2316,7 @@ public class StudyOptions extends Activity implements IButtonListener {
                     break;
                 case Reviewer.RESULT_ANSWERING_ERROR:
                 	showContentView(CONTENT_STUDY_OPTIONS);
-			showDialog(DIALOG_ANSWERING_ERROR);
+                	showDialog(DIALOG_ANSWERING_ERROR);
                     break;
                 default:
                 	showContentView(CONTENT_STUDY_OPTIONS);

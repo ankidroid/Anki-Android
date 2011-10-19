@@ -687,7 +687,7 @@ public class Reviewer extends Activity implements IButtonListener{
 
         @Override
         public void onPostExecute(DeckTask.TaskData result) {
-            if (!result.getBoolean) {
+            if (!result.getBoolean()) {
 		// SQLiteDiskIOException occured on answering cards
                 Reviewer.this.setResult(RESULT_ANSWERING_ERROR);
                 closeReviewer();
