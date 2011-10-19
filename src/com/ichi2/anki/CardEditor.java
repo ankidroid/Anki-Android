@@ -977,20 +977,18 @@ public class CardEditor extends Activity {
 	}
 
 	private void swapText(boolean reset) {
+		// get source text
 		FieldEditText field = mEditFields.get(mSourcePosition);
 		Editable sourceText = field.getText();
 		boolean sourceCutMode = field.getCutMode();
 		FieldEditText.WordRow[] sourceCutString = field.getCutString(); 
-		if (sourceText.length() == 0) {
-			sourceText = Editable.Factory.getInstance().newEditable(mSourceText);
-		}
+
+		// get target text
 		field = mEditFields.get(mTargetPosition);
 		Editable targetText = field.getText();
 		boolean targetCutMode = field.getCutMode();
 		FieldEditText.WordRow[] targetCutString = field.getCutString(); 
-		if (targetText.length() == 0) {
-			targetText = Editable.Factory.getInstance().newEditable(mTargetText);
-		}
+
 		if (mEditFields.size() > mSourcePosition) {
 			mEditFields.get(mSourcePosition).setText("");
 		}
