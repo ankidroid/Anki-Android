@@ -29,6 +29,8 @@
   <string name="backup_delete">Suppression des sauvegardes en cours.\nVeuillez patienter...</string>
   <string name="contextmenu_deckpicker_remove_backups">Supprimer les sauvegardes</string>
   <string name="backup_restore">Récupérer une sauvegarde</string>
+  <string name="backup_repair_deck">Repair deck</string>
+  <string name="backup_repair_deck_progress">Repairing deck.\nPlease wait...</string>
   <string name="backup_restore_error">Le paquet n\'a pu être récupéré</string>
   <string name="backup_restore_deck">Récupération du paquet en cours.\nVeuillez patienter...</string>
   <string name="backup_restore_select_title">Choisissez la sauvegarde à récupérer</string>
@@ -36,5 +38,7 @@
   <string name="backup_delete_deck_backups">Les sauvegardes du paquet %s ont été supprimées.</string>
   <string name="delete_deck_success">Le paquet %1$s a été supprimé. Une sauvegarde se trouve dans le dossier %2$s.</string>
   <string name="backup_delete_deck_backups_alert">Voulez-vous vraiment supprimer toutes les sauvegardes du paquet %s ?</string>
-  <string name="open_deck_failed">Le fichier %1$s n\'a pu être ouvert. Soit ce n\'est pas vraiment un fichier Anki soit il est corrompu.\n\nVous pouvez essayer de récupérer le paquet depuis une sauvegarde; le paquet actuel sera alors déplacé dans le sous dossier \'%2$s\'(Informations pour récupérer des paquets corrompus : %3$s).\n\nAppuyez sur le bouton retour pour fermer cette fenêtre</string>
+  <string name="open_deck_failed">File %1$s could not be opened. It is either not a real anki file or has been corrupted.\n\nYou can try to repair the deck or restore it from a backup (in both cases, the copy of the corrupt deck will be moved to the subfolder \'%2$s\'). More information about repairing corrupted decks: %3$s.\n\nHit the back button to close this dialog</string>
+  <string name="deckpicker_backup_error">Backup could not be created</string>
+  <string name="deck_repair_error">Deck could not be repaired</string>
 </resources>

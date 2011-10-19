@@ -956,26 +956,39 @@ public class CardEditor extends Activity {
 		if (deck != null && deck.getDeckPath().equals(mDeckPath)) {
 			mDeck = deck;
 		} else {
-			mDeck = Deck.openDeck(mDeckPath, false);
-			if (mDeck == null) {
+			try {
+				mDeck = Deck.openDeck(mDeckPath, false);
+				if (mDeck == null) {
+					Themes.showThemedToast(CardEditor.this, getResources().getString(
+							R.string.fact_adder_deck_not_loaded), true);
+					BackupManager.restoreDeckIfMissing(mDeckPath);
+					return;
+				}				
+			} catch (RuntimeException e) {
+				Log.e(AnkiDroidApp.TAG, "CardEditor: error on opening deck: " + e);
 				Themes.showThemedToast(CardEditor.this, getResources().getString(
 						R.string.fact_adder_deck_not_loaded), true);
-				return;
-			}			
+				BackupManager.restoreDeckIfMissing(mDeckPath);
+				return;				
+			}
 		}
 		setTitle(deckName);
 		loadContents();
 	}
 
 	private void swapText(boolean reset) {
-		String sourceText = mEditFields.get(mSourcePosition).getText().toString();
-		if (sourceText.length() == 0) {
-			sourceText = mSourceText;
-		}
-		String targetText = mEditFields.get(mTargetPosition).getText().toString();
-		if (targetText.length() == 0) {
-			targetText = mTargetText;
-		}
+		// get source text
+		FieldEditText field = mEditFields.get(mSourcePosition);
+		Editable sourceText = field.getText();
+		boolean sourceCutMode = field.getCutMode();
+		FieldEditText.WordRow[] sourceCutString = field.getCutString(); 
+
+		// get target text
+		field = mEditFields.get(mTargetPosition);
+		Editable targetText = field.getText();
+		boolean targetCutMode = field.getCutMode();
+		FieldEditText.WordRow[] targetCutString = field.getCutString(); 
+
 		if (mEditFields.size() > mSourcePosition) {
 			mEditFields.get(mSourcePosition).setText("");
 		}
@@ -1001,9 +1014,11 @@ public class CardEditor extends Activity {
 		}
 		if (sourceText != null) {
 			mEditFields.get(mSourcePosition).setText(sourceText);
+			mEditFields.get(mSourcePosition).setCutMode(sourceCutMode, sourceCutString);
 		}
 		if (targetText != null) {
 			mEditFields.get(mTargetPosition).setText(targetText);
+			mEditFields.get(mTargetPosition).setCutMode(targetCutMode, targetCutString);
 		}
 	}
 
@@ -1133,23 +1148,12 @@ public class CardEditor extends Activity {
 			mCircle.setOnClickListener(new View.OnClickListener() {
 				@Override
 				public void onClick(View v) {
-					ImageView view = ((ImageView) v);
 					Editable editText = FieldEditText.this.getText();
 					if (mCutMode) {
-						view.setImageResource(R.drawable.ic_circle_normal);
-						FieldEditText.this.setKeyListener(mKeyListener);
-						FieldEditText.this.setCursorVisible(true);
+						setCutMode(false, null);
 						updateContentAfterWordSelection(editText);
 					} else {
-						view.setImageResource(R.drawable.ic_circle_pressed);
-						InputMethodManager imm = (InputMethodManager) mContext
-								.getSystemService(Context.INPUT_METHOD_SERVICE);
-						imm.hideSoftInputFromWindow(FieldEditText.this
-								.getWindowToken(), 0);
-						mKeyListener = FieldEditText.this.getKeyListener();
-						FieldEditText.this.setKeyListener(null);
-						FieldEditText.this.setCursorVisible(false);
-						mCutMode = true;
+						setCutMode(true, null);
 						String text = editText.toString();
 						splitText(text);
 						int pos = 0;
@@ -1176,6 +1180,37 @@ public class CardEditor extends Activity {
 			}
 			return mCircle;
 		}
+
+
+		public boolean getCutMode() {
+			return mCutMode;
+		}
+
+
+		public WordRow[] getCutString() {
+			return mCutString;
+		}
+
+
+		public void setCutMode(boolean active, WordRow[] cutString) {
+			mCutMode = active;
+			if (mCutMode) {
+				mCircle.setImageResource(R.drawable.ic_circle_pressed);
+				InputMethodManager imm = (InputMethodManager) mContext.getSystemService(Context.INPUT_METHOD_SERVICE);
+				imm.hideSoftInputFromWindow(FieldEditText.this.getWindowToken(), 0);
+				mKeyListener = FieldEditText.this.getKeyListener();
+				FieldEditText.this.setKeyListener(null);
+				FieldEditText.this.setCursorVisible(false);
+				if (cutString != null) {
+					mCutString = cutString;
+				}
+			} else {
+				mCircle.setImageResource(R.drawable.ic_circle_normal);
+				FieldEditText.this.setKeyListener(mKeyListener);
+				FieldEditText.this.setCursorVisible(true);
+			}
+		}
+
 
 		public boolean updateField() {
 			if (mCutMode) {
