@@ -112,6 +112,7 @@ public final class WidgetStatus {
 
                     Log.i(AnkiDroidApp.TAG, "Found deck: " + absPath);
 
+                	DeckTask.waitToFinish();
                     Deck deck;
                     Deck currentDeck = AnkiDroidApp.deck();
                     if (currentDeck != null && currentDeck.getDeckPath().equals(deckName)) {
