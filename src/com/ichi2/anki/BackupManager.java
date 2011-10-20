@@ -105,6 +105,9 @@ public class BackupManager {
 
 	/** If deck has not been opened for a long time, we perform a backup here because Android deleted sometimes corrupted decks */
 	public static boolean safetyBackupNeeded(String deckpath, int days) {
+		if (mDeckPickerDecks == null) {
+			initBackup();
+		}
 		if (!mUseBackups || mDeckPickerDecks.contains(deckpath)) {
 			return false;
 		}
@@ -144,6 +147,9 @@ public class BackupManager {
 
 
 	public static int backupDeck(String deckpath) {
+		if (mDeckPickerDecks == null) {
+			initBackup();
+		}
 		mDeckPickerDecks.add(deckpath);
 		mLastCreatedBackup = null;
 		mLastDeckBackups = null;
