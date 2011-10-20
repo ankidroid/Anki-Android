@@ -581,6 +581,11 @@ public class Reviewer extends Activity implements IButtonListener{
 
         @Override
         public void onPostExecute(DeckTask.TaskData result) {
+            if (!result.getBoolean()) {
+            	// RuntimeException occured on marking cards
+                Reviewer.this.setResult(RESULT_ANSWERING_ERROR);
+                closeReviewer();
+            }
             mProgressDialog.dismiss();
         }
     };
@@ -604,6 +609,12 @@ public class Reviewer extends Activity implements IButtonListener{
 
         @Override
         public void onPostExecute(DeckTask.TaskData result) {
+            if (!result.getBoolean()) {
+            	// RuntimeException occured on dismissing cards
+                Reviewer.this.setResult(RESULT_ANSWERING_ERROR);
+                closeReviewer();
+                return;
+            }
             // Check for no more cards before session complete. If they are both true,
             // no more cards will take precedence when returning to study options.
             if (mNoMoreCards) {
@@ -650,6 +661,12 @@ public class Reviewer extends Activity implements IButtonListener{
 
         @Override
         public void onPostExecute(DeckTask.TaskData result) {
+            if (!result.getBoolean()) {
+            	// RuntimeException occured on update cards
+                Reviewer.this.setResult(RESULT_ANSWERING_ERROR);
+                closeReviewer();
+                return;
+            }
             mShakeActionStarted = false;
             if (result != null) {
                 String str = result.getString();
@@ -688,9 +705,10 @@ public class Reviewer extends Activity implements IButtonListener{
         @Override
         public void onPostExecute(DeckTask.TaskData result) {
             if (!result.getBoolean()) {
-		// SQLiteDiskIOException occured on answering cards
+            	// RuntimeException occured on answering cards
                 Reviewer.this.setResult(RESULT_ANSWERING_ERROR);
                 closeReviewer();
+                return;
             }
             // Check for no more cards before session complete. If they are both true,
             // no more cards will take precedence when returning to study options.

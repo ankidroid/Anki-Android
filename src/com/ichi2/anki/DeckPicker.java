@@ -1696,6 +1696,9 @@ public class DeckPicker extends Activity implements Runnable, IButtonListener {
 			if (deleted) {
 				Log.i(AnkiDroidApp.TAG, "DeckPicker - " + deckFilename + " deleted");
 				mDeckIsSelected = false;
+				if (AnkiDroidApp.deck() != null && AnkiDroidApp.deck().getDeckPath().equals(deckFilename)) {
+					AnkiDroidApp.setDeck(null);
+				}
 				populateDeckList(mPrefDeckPath);
 			} else {
 				Log.e(AnkiDroidApp.TAG, "Error: Could not delete "

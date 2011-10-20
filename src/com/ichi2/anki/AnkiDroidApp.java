@@ -251,5 +251,9 @@ public class AnkiDroidApp extends Application {
         }
         return null;
     }
-    
+
+
+    public static void saveExceptionReportFile(Throwable e) {
+    	CustomExceptionHandler.getInstance().uncaughtException(null, e);
+    }
 }

@@ -170,7 +170,9 @@ public class CustomExceptionHandler implements Thread.UncaughtExceptionHandler {
         Log.i(AnkiDroidApp.TAG, "report infomation string created");
         saveReportToFile(reportInformation.toString());
 
-        mPreviousHandler.uncaughtException(t, e);
+        if (t != null) {
+            mPreviousHandler.uncaughtException(t, e);
+        }
     }
 
 

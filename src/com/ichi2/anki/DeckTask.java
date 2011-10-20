@@ -258,30 +258,43 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
         Fact editFact = editCard.getFact();
         int showQuestion = params[0].getInt();
 
-        // Start undo routine
-        String undoName = Deck.UNDO_TYPE_EDIT_CARD;
-        deck.setUndoStart(undoName, editCard.getId());
+        try {
+	        AnkiDb ankiDB = AnkiDatabaseManager.getDatabase(deck.getDeckPath());
+	        ankiDB.getDatabase().beginTransaction();
+	        try {
+	            // Start undo routine
+	            String undoName = Deck.UNDO_TYPE_EDIT_CARD;
+	            deck.setUndoStart(undoName, editCard.getId());
 
-        // Set modified also updates the text of cards and their modified flags
-        editFact.setModified(true, deck, false);
-        editFact.toDb();
+	            // Set modified also updates the text of cards and their modified flags
+	            editFact.setModified(true, deck, false);
+	            editFact.toDb();
 
-        deck.flushMod();
+	            deck.flushMod();
 
-        // Find all cards based on this fact and update them with the updateCard method.
-        // for (Card modifyCard : editFact.getUpdatedRelatedCards()) {
-        //     modifyCard.updateQAfields();
-        // }
+	            // Find all cards based on this fact and update them with the updateCard method.
+	            // for (Card modifyCard : editFact.getUpdatedRelatedCards()) {
+	            //     modifyCard.updateQAfields();
+	            // }
 
-        // deck.reset();
-        deck.setUndoEnd(undoName);
-        if (showQuestion == Reviewer.UPDATE_CARD_NEW_CARD) {
-            publishProgress(new TaskData(showQuestion, null, deck.getCard()));
-        } else {
-            publishProgress(new TaskData(showQuestion, null, deck.cardFromId(editCard.getId())));        	
-        }
+	            // deck.reset();
+	            deck.setUndoEnd(undoName);
+	            if (showQuestion == Reviewer.UPDATE_CARD_NEW_CARD) {
+	                publishProgress(new TaskData(showQuestion, null, deck.getCard()));
+	            } else {
+	                publishProgress(new TaskData(showQuestion, null, deck.cardFromId(editCard.getId())));        	
+	            }
 
-        return null;
+	        	ankiDB.getDatabase().setTransactionSuccessful();
+	        } finally {
+	            ankiDB.getDatabase().endTransaction();
+	        }
+		} catch (RuntimeException e) {
+			Log.e(AnkiDroidApp.TAG, "doInBackgroundUpdateFact - RuntimeException on updating fact: " + e);
+			AnkiDroidApp.saveExceptionReportFile(e);
+			return new TaskData(false);
+		}
+        return new TaskData(true);
     }
 
 
@@ -290,7 +303,7 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
         Card oldCard = params[0].getCard();
         int ease = params[0].getInt();
         Card newCard;
-	try {
+        try {
 	        AnkiDb ankiDB = AnkiDatabaseManager.getDatabase(deck.getDeckPath());
 	        ankiDB.getDatabase().beginTransaction();
 	        try {
@@ -308,10 +321,11 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
 	        } finally {
 	            ankiDB.getDatabase().endTransaction();
 	        }
-	} catch (SQLiteDiskIOException e) {
-		Log.e(AnkiDroidApp.TAG, "doInBackgroundAnswerCard - SQLiteDiskIOException on answering card: " + e);
-		return new TaskData(false);
-	}
+		} catch (RuntimeException e) {
+			Log.e(AnkiDroidApp.TAG, "doInBackgroundAnswerCard - RuntimeException on answering card: " + e);
+			AnkiDroidApp.saveExceptionReportFile(e);
+			return new TaskData(false);
+		}
         return new TaskData(true);
     }
 
@@ -388,59 +402,71 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
         Card oldCard = params[0].getCard();
         Card newCard = null;
 
-        AnkiDb ankiDB = AnkiDatabaseManager.getDatabase(deck.getDeckPath());
-        ankiDB.getDatabase().beginTransaction();
         try {
-            if (oldCard != null) {
-                String undoName = Deck.UNDO_TYPE_SUSPEND_CARD;
-                deck.setUndoStart(undoName, oldCard.getId());
-                if (oldCard.getSuspendedState()) {
-                    oldCard.unsuspend();
-                    newCard = oldCard;
-                } else {
-                    oldCard.suspend();
-                    newCard = deck.getCard();
+            AnkiDb ankiDB = AnkiDatabaseManager.getDatabase(deck.getDeckPath());
+            ankiDB.getDatabase().beginTransaction();
+            try {
+                if (oldCard != null) {
+                    String undoName = Deck.UNDO_TYPE_SUSPEND_CARD;
+                    deck.setUndoStart(undoName, oldCard.getId());
+                    if (oldCard.getSuspendedState()) {
+                        oldCard.unsuspend();
+                        newCard = oldCard;
+                    } else {
+                        oldCard.suspend();
+                        newCard = deck.getCard();
+                    }
+                    deck.setUndoEnd(undoName);
                 }
-                deck.setUndoEnd(undoName);
+                
+                publishProgress(new TaskData(newCard));
+                ankiDB.getDatabase().setTransactionSuccessful();
+            } finally {
+                ankiDB.getDatabase().endTransaction();
             }
-            
-            publishProgress(new TaskData(newCard));
-            ankiDB.getDatabase().setTransactionSuccessful();
-        } finally {
-            ankiDB.getDatabase().endTransaction();
-        }
-
-        return null;
+    	} catch (RuntimeException e) {
+    		Log.e(AnkiDroidApp.TAG, "doInBackgroundSuspendCard - RuntimeException on suspending card: " + e);
+    		AnkiDroidApp.saveExceptionReportFile(e);
+    		return new TaskData(false);
+    	}
+        return new TaskData(true);
     }
+        	
 
 
     private TaskData doInBackgroundMarkCard(TaskData... params) {
         Deck deck = params[0].getDeck();
         Card currentCard = params[0].getCard();
 
-        AnkiDb ankiDB = AnkiDatabaseManager.getDatabase(deck.getDeckPath());
-        ankiDB.getDatabase().beginTransaction();
         try {
-            if (currentCard != null) {
-                String undoName = Deck.UNDO_TYPE_MARK_CARD;
-                deck.setUndoStart(undoName, currentCard.getId());
-            	if (currentCard.isMarked()) {
-                    deck.deleteTag(currentCard.getFactId(), Deck.TAG_MARKED);
-                } else {
-                    deck.addTag(currentCard.getFactId(), Deck.TAG_MARKED);
+            AnkiDb ankiDB = AnkiDatabaseManager.getDatabase(deck.getDeckPath());
+            ankiDB.getDatabase().beginTransaction();
+            try {
+                if (currentCard != null) {
+                    String undoName = Deck.UNDO_TYPE_MARK_CARD;
+                    deck.setUndoStart(undoName, currentCard.getId());
+                	if (currentCard.isMarked()) {
+                        deck.deleteTag(currentCard.getFactId(), Deck.TAG_MARKED);
+                    } else {
+                        deck.addTag(currentCard.getFactId(), Deck.TAG_MARKED);
+                    }
+                	deck.resetMarkedTagId();
+                	deck.setUndoEnd(undoName);
                 }
-            	deck.resetMarkedTagId();
-            	deck.setUndoEnd(undoName);
+
+                publishProgress(new TaskData(currentCard));
+                ankiDB.getDatabase().setTransactionSuccessful();
+            } finally {
+                ankiDB.getDatabase().endTransaction();
             }
-
-            publishProgress(new TaskData(currentCard));
-            ankiDB.getDatabase().setTransactionSuccessful();
-        } finally {
-            ankiDB.getDatabase().endTransaction();
+    	} catch (RuntimeException e) {
+    		Log.e(AnkiDroidApp.TAG, "doInBackgroundMarkCard - RuntimeException on marking card: " + e);
+    		AnkiDroidApp.saveExceptionReportFile(e);
+    		return new TaskData(false);
         }
-
-        return null;
+		return new TaskData(true);
     }
+
 
     private TaskData doInBackgroundUndo(TaskData... params) {
         Deck deck = params[0].getDeck();
@@ -448,27 +474,32 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
         long currentCardId = params[0].getLong();
         boolean inReview = params[0].getBoolean();
         long oldCardId = 0;
-        String undoType;
-
-        AnkiDb ankiDB = AnkiDatabaseManager.getDatabase(deck.getDeckPath());
-        ankiDB.getDatabase().beginTransaction();
+        String undoType = null;
+        
         try {
-        	oldCardId = deck.undo(currentCardId, inReview);
-        	undoType = deck.getUndoType();
-        	if (undoType == Deck.UNDO_TYPE_SUSPEND_CARD) {
-        		oldCardId = currentCardId;
-        	}
-            newCard = deck.getCard();
-            if (oldCardId != 0 && newCard != null && oldCardId != newCard.getId()) {
-            	newCard = deck.cardFromId(oldCardId);
+            AnkiDb ankiDB = AnkiDatabaseManager.getDatabase(deck.getDeckPath());
+            ankiDB.getDatabase().beginTransaction();
+            try {
+            	oldCardId = deck.undo(currentCardId, inReview);
+            	undoType = deck.getUndoType();
+            	if (undoType == Deck.UNDO_TYPE_SUSPEND_CARD) {
+            		oldCardId = currentCardId;
+            	}
+                newCard = deck.getCard();
+                if (oldCardId != 0 && newCard != null && oldCardId != newCard.getId()) {
+                	newCard = deck.cardFromId(oldCardId);
+                }
+                publishProgress(new TaskData(newCard));
+                ankiDB.getDatabase().setTransactionSuccessful();
+            } finally {
+                ankiDB.getDatabase().endTransaction();
             }
-            publishProgress(new TaskData(newCard));
-            ankiDB.getDatabase().setTransactionSuccessful();
-        } finally {
-            ankiDB.getDatabase().endTransaction();
+    	} catch (RuntimeException e) {
+    		Log.e(AnkiDroidApp.TAG, "doInBackgroundUndo - RuntimeException on undoing: " + e);
+    		AnkiDroidApp.saveExceptionReportFile(e);
+            return new TaskData(undoType, oldCardId, false);
         }
-
-        return new TaskData(undoType, oldCardId);
+        return new TaskData(undoType, oldCardId, true);
     }
 
 
@@ -478,25 +509,32 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
         long currentCardId = params[0].getLong();
         boolean inReview = params[0].getBoolean();
         long oldCardId = 0;
+        String undoType = null;
 
-        AnkiDb ankiDB = AnkiDatabaseManager.getDatabase(deck.getDeckPath());
-        ankiDB.getDatabase().beginTransaction();
         try {
-        	oldCardId = deck.redo(currentCardId, inReview);
-            newCard = deck.getCard();
-            if (oldCardId != 0 && newCard != null && oldCardId != newCard.getId()) {
-            	newCard = deck.cardFromId(oldCardId);
+            AnkiDb ankiDB = AnkiDatabaseManager.getDatabase(deck.getDeckPath());
+            ankiDB.getDatabase().beginTransaction();
+            try {
+            	oldCardId = deck.redo(currentCardId, inReview);
+                newCard = deck.getCard();
+                if (oldCardId != 0 && newCard != null && oldCardId != newCard.getId()) {
+                	newCard = deck.cardFromId(oldCardId);
+                }
+                publishProgress(new TaskData(newCard));
+                ankiDB.getDatabase().setTransactionSuccessful();
+            } finally {
+                ankiDB.getDatabase().endTransaction();
             }
-            publishProgress(new TaskData(newCard));
-            ankiDB.getDatabase().setTransactionSuccessful();
-        } finally {
-            ankiDB.getDatabase().endTransaction();
+            undoType = deck.getUndoType();
+            if (undoType == Deck.UNDO_TYPE_SUSPEND_CARD) {
+            	undoType = "redo suspend";
+            }
+    	} catch (RuntimeException e) {
+    		Log.e(AnkiDroidApp.TAG, "doInBackgroundRedo - RuntimeException on redoing: " + e);
+    		AnkiDroidApp.saveExceptionReportFile(e);
+            return new TaskData(undoType, oldCardId, false);
         }
-        String undoType = deck.getUndoType();
-        if (undoType == Deck.UNDO_TYPE_SUSPEND_CARD) {
-        	undoType = "redo suspend";
-        }
-        return new TaskData(undoType, oldCardId);
+        return new TaskData(undoType, oldCardId, true);
     }
 
 
@@ -525,19 +563,25 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
         Long id = 0l;
         Log.i(AnkiDroidApp.TAG, "doInBackgroundDeleteCard");
 
-        AnkiDb ankiDB = AnkiDatabaseManager.getDatabase(deck.getDeckPath());
-        ankiDB.getDatabase().beginTransaction();
         try {
-            id = card.getId();
-            card.delete();
-            deck.reset();
-            newCard = deck.getCard();
-            publishProgress(new TaskData(newCard));
-            ankiDB.getDatabase().setTransactionSuccessful();
-        } finally {
-            ankiDB.getDatabase().endTransaction();
-        }
-        return new TaskData(String.valueOf(id));
+            AnkiDb ankiDB = AnkiDatabaseManager.getDatabase(deck.getDeckPath());
+            ankiDB.getDatabase().beginTransaction();
+            try {
+                id = card.getId();
+                card.delete();
+                deck.reset();
+                newCard = deck.getCard();
+                publishProgress(new TaskData(newCard));
+                ankiDB.getDatabase().setTransactionSuccessful();
+            } finally {
+                ankiDB.getDatabase().endTransaction();
+            }
+    	} catch (RuntimeException e) {
+    		Log.e(AnkiDroidApp.TAG, "doInBackgroundDeleteCard - RuntimeException on deleting card: " + e);
+    		AnkiDroidApp.saveExceptionReportFile(e);
+            return new TaskData(String.valueOf(id), 0, false);
+    	}
+        return new TaskData(String.valueOf(id), 0, true);
     }
 
 
@@ -548,19 +592,25 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
         Long id = 0l;
         Log.i(AnkiDroidApp.TAG, "doInBackgroundBuryCard");
 
-        AnkiDb ankiDB = AnkiDatabaseManager.getDatabase(deck.getDeckPath());
-        ankiDB.getDatabase().beginTransaction();
         try {
-            id = card.getId();
-            deck.buryFact(card.getFactId(), id);
-            deck.reset();
-            newCard = deck.getCard();
-            publishProgress(new TaskData(newCard));
-            ankiDB.getDatabase().setTransactionSuccessful();
-        } finally {
-            ankiDB.getDatabase().endTransaction();
-        }
-        return new TaskData(String.valueOf(id));
+            AnkiDb ankiDB = AnkiDatabaseManager.getDatabase(deck.getDeckPath());
+            ankiDB.getDatabase().beginTransaction();
+            try {
+                id = card.getId();
+                deck.buryFact(card.getFactId(), id);
+                deck.reset();
+                newCard = deck.getCard();
+                publishProgress(new TaskData(newCard));
+                ankiDB.getDatabase().setTransactionSuccessful();
+            } finally {
+                ankiDB.getDatabase().endTransaction();
+            }
+    	} catch (RuntimeException e) {
+    		Log.e(AnkiDroidApp.TAG, "doInBackgroundSuspendCard - RuntimeException on suspending card: " + e);
+    		AnkiDroidApp.saveExceptionReportFile(e);
+            return new TaskData(String.valueOf(id), 0, false);
+    	}
+        return new TaskData(String.valueOf(id), 0, true);
     }
 
 
@@ -868,9 +918,10 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
         }
 
 
-        public TaskData(String msg, long cardId) {
+        public TaskData(String msg, long cardId, boolean bool) {
             mMsg = msg;
             mLong = cardId;
+            mBool = bool;
         }
 
 
