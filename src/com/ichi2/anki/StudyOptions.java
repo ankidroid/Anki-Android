@@ -200,6 +200,7 @@ public class StudyOptions extends Activity implements IButtonListener {
     private boolean mPrefStudyOptions;
     // private boolean deckSelected;
     private boolean mInDeckPicker;
+    private boolean mInReviewer;
     private String mDeckFilename;
     private int mStartupMode;
     private boolean mSwipeEnabled;
@@ -828,7 +829,7 @@ public class StudyOptions extends Activity implements IButtonListener {
     	 
          super.onPause();
          // Update the widget when pausing this activity.
-         if (!mInDeckPicker) {
+         if (!mInDeckPicker && !mInReviewer) {
              WidgetStatus.update(getBaseContext());
          }
      }
@@ -920,6 +921,7 @@ public class StudyOptions extends Activity implements IButtonListener {
 
     private void openReviewer() {
     	if (mCurrentContentView == CONTENT_STUDY_OPTIONS || mCurrentContentView == CONTENT_SESSION_COMPLETE) {
+    		mInReviewer = true;
     		Intent reviewer = new Intent(StudyOptions.this, Reviewer.class);
             reviewer.putExtra("deckFilename", mDeckFilename);
     		startActivityForResult(reviewer, REQUEST_REVIEW);
@@ -935,6 +937,7 @@ public class StudyOptions extends Activity implements IButtonListener {
     private void startEarlyReview() {
 		Deck deck = AnkiDroidApp.deck();
         if (deck != null) {
+    		mInReviewer = true;
             deck.setupReviewEarlyScheduler();
             deck.reset();
     		Intent reviewer = new Intent(StudyOptions.this, Reviewer.class);
@@ -950,6 +953,7 @@ public class StudyOptions extends Activity implements IButtonListener {
     private void startLearnMore() {
 		Deck deck = AnkiDroidApp.deck();
         if (deck != null) {
+    		mInReviewer = true;
             deck.setupLearnMoreScheduler();
             deck.reset();
     		Intent reviewer = new Intent(StudyOptions.this, Reviewer.class);
@@ -2327,6 +2331,7 @@ public class StudyOptions extends Activity implements IButtonListener {
         } else if (requestCode == REQUEST_REVIEW) {
             Log.i(AnkiDroidApp.TAG, "Result code = " + resultCode);
             // Return to standard scheduler
+    		mInReviewer = false;
             switch (resultCode) {
                 case Reviewer.RESULT_SESSION_COMPLETED:
                 	showContentView(CONTENT_SESSION_COMPLETE);
@@ -2653,6 +2658,7 @@ public class StudyOptions extends Activity implements IButtonListener {
                     showDeckInformation(true);
 
                     if (!mPrefStudyOptions) {
+                		mInReviewer = true;
                         startActivityForResult(new Intent(StudyOptions.this, Reviewer.class), REQUEST_REVIEW);
                     }
 
