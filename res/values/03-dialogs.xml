@@ -77,6 +77,7 @@
 <string name="reset_card_dialog_confirmation">All cards of this fact reset</string>
 
 <string name="answering_error_title">Answering error</string>
-<string name="answering_error_message">An error occured while answering the last card. This could be related to a corrupt database or to insufficient disc space.\n\nIf it happens more often, please try to repair the deck.</string>
+<string name="answering_error_message">An error occured while answering/changing the last card. This could be related to a corrupt database or insufficient disc space.\n\nIf it happens more often, please try to repair the deck.\n\nNevertheless, please report the error to make sure it\'s not related to a bug of AnkiDroid.</string>
+<string name="answering_error_report">Report error</string>
 
 </resources>

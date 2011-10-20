@@ -637,7 +637,7 @@ public class StudyOptions extends Activity implements IButtonListener {
         }
 
         SharedPreferences preferences = restorePreferences();
-	BackupManager.initBackup();
+        BackupManager.initBackup();
         registerExternalStorageListener();
 
         activeCramTags = new HashSet<String>();
@@ -1600,15 +1600,24 @@ public class StudyOptions extends Activity implements IButtonListener {
 			builder.setTitle(R.string.answering_error_title);
 	        builder.setIcon(android.R.drawable.ic_dialog_alert);
 			builder.setMessage(R.string.answering_error_message);
-		        builder.setPositiveButton(res.getString(R.string.backup_repair_deck), new OnClickListener() {
-		            @Override
-		            public void onClick(DialogInterface dialog, int which) {
-		            	DeckTask.launchDeckTask(DeckTask.TASK_TYPE_REPAIR_DECK, mRepairDeckHandler, new DeckTask.TaskData(mDeckFilename));
-		            }
-		        });
+	        builder.setPositiveButton(res.getString(R.string.backup_repair_deck), new OnClickListener() {
+	            @Override
+	            public void onClick(DialogInterface dialog, int which) {
+	            	DeckTask.launchDeckTask(DeckTask.TASK_TYPE_REPAIR_DECK, mRepairDeckHandler, new DeckTask.TaskData(mDeckFilename));
+	            }
+	        });
+	        builder.setNeutralButton(res.getString(R.string.answering_error_report), new OnClickListener() {
+	            @Override
+	            public void onClick(DialogInterface dialog, int which) {
+	                if (hasErrorFiles()) {
+	                    Intent i = new Intent(StudyOptions.this, Feedback.class);
+	                    startActivityForResult(i, REPORT_ERROR);
+	                }
+	            }
+	        });	        	
 			builder.setNegativeButton(res.getString(R.string.close), null);
-		        builder.setCancelable(true);
-		        dialog = builder.create();
+	        builder.setCancelable(true);
+		    dialog = builder.create();
 			break;
 
 		default:
