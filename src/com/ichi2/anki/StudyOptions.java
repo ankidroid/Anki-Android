@@ -1615,6 +1615,7 @@ public class StudyOptions extends Activity implements IButtonListener {
 	            public void onClick(DialogInterface dialog, int which) {
 	                mShowRepairDialog = true;
 	                Intent i = new Intent(StudyOptions.this, Feedback.class);
+			dialog.dismiss();
 	                startActivityForResult(i, REPORT_ERROR);
 		        if (getApiLevel() > 4) {
 			    ActivityTransitionAnimation.slide(StudyOptions.this, ActivityTransitionAnimation.FADE);

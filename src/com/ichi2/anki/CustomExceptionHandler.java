@@ -150,10 +150,10 @@ public class CustomExceptionHandler implements Thread.UncaughtExceptionHandler {
 
 	// check, if exception has ben catched and forwarded to report it anyway (only out of reviewer)
 	if (t == null) {
-		reportInformation.append("This occured in reviewer and is probably related to a corrupt db/insufficient disc space (has been catched)\n");
+		reportInformation.append("(This exception occured in reviewer and is probably related to a corrupt db/insufficient disc space. Has been catched)\nBegin Stacktrace\n(PossiblyCorruptDB)\n");
+	} else {
+	        reportInformation.append("Begin Stacktrace\n");	
 	}
-
-        reportInformation.append("Begin Stacktrace\n");
 
         // Stack trace
         final Writer result = new StringWriter();
