@@ -100,7 +100,7 @@ public class Feedback extends Activity {
     public void onBackPressed() {
         deleteFiles(true, false);
         setResult(RESULT_OK);
-        finish();
+        closeFeedback();
     }
 
     /**
@@ -123,6 +123,15 @@ public class Feedback extends Activity {
         });
         mNoConnectionAlert = builder.create();
     }
+
+
+	private void closeFeedback() {
+                if (StudyOptions.getApiLevel() > 4) {
+                    ActivityTransitionAnimation.slide(Feedback.this, ActivityTransitionAnimation.FADE);
+                }
+		finish();
+	}
+
 
     private void refreshInterface() {
         if (mReportErrorMode.equals(REPORT_ASK)) {
@@ -207,13 +216,13 @@ public class Feedback extends Activity {
 
             deleteFiles(true, false);
             setResult(RESULT_OK);
-            finish();
+            closeFeedback();
 
             return;
         } else if (mReportErrorMode.equals(REPORT_NEVER)) { // Never report
             deleteFiles(false, false);
             setResult(RESULT_OK);
-            finish();
+            closeFeedback();
         }
 
         View mainView = getLayoutInflater().inflate(R.layout.feedback, null);

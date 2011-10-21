@@ -1616,6 +1616,9 @@ public class StudyOptions extends Activity implements IButtonListener {
 	                if (hasErrorFiles()) {
 	                    Intent i = new Intent(StudyOptions.this, Feedback.class);
 	                    startActivityForResult(i, REPORT_ERROR);
+		                if (getApiLevel() > 4) {
+		                    ActivityTransitionAnimation.slide(StudyOptions.this, ActivityTransitionAnimation.FADE);
+		                }
 	                }
 	            }
 	        });	        	
