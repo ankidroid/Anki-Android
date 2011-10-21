@@ -373,7 +373,7 @@ public class StudyOptions extends Activity implements IButtonListener {
 	protected JoystickToButtonAdapter adapter;
  	ControllerAndroidUi controllerUi;
  	
-
+	private boolean mShowRepairDialog = false;
 
     /**
 * Callbacks for UI events
@@ -1613,10 +1613,12 @@ public class StudyOptions extends Activity implements IButtonListener {
 	        builder.setNeutralButton(res.getString(R.string.answering_error_report), new OnClickListener() {
 	            @Override
 	            public void onClick(DialogInterface dialog, int which) {
-	                if (hasErrorFiles()) {
-	                    Intent i = new Intent(StudyOptions.this, Feedback.class);
-	                    startActivityForResult(i, REPORT_ERROR);
-	                }
+	                Intent i = new Intent(StudyOptions.this, Feedback.class);
+	                startActivityForResult(i, REPORT_ERROR);
+		        if (getApiLevel() > 4) {
+		            ActivityTransitionAnimation.slide(StudyOptions.this, ActivityTransitionAnimation.FADE);
+		        }
+	                mShowRepairDialog = true;
 	            }
 	        });	        	
 			builder.setNegativeButton(res.getString(R.string.close), null);
@@ -1748,6 +1750,9 @@ public class StudyOptions extends Activity implements IButtonListener {
 					}
 				}
 	        });
+			break;
+		case DIALOG_ANSWERING_ERROR:
+			ad.getButton(Dialog.BUTTON_NEUTRAL).setEnabled(hasErrorFiles() && !PrefSettings.getSharedPrefs(StudyOptions.this).getString("reportErrorMode", Feedback.REPORT_ASK).equals(Feedback.NEVER));
 			break;
 		}
 	}
@@ -2368,6 +2373,10 @@ public class StudyOptions extends Activity implements IButtonListener {
   	      	} catch (IllegalArgumentException e) {
   	      		Log.e(AnkiDroidApp.TAG, "Error on dismissing and showing dialog: " + e);
   	      	}
+		if (mShowRepairDialog) {
+			showDialog(DIALOG_ANSWERING_ERROR);
+			mShowRepairDialog = false;
+		}
         }
     }
 
