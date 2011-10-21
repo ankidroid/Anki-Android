@@ -1613,12 +1613,12 @@ public class StudyOptions extends Activity implements IButtonListener {
 	        builder.setNeutralButton(res.getString(R.string.answering_error_report), new OnClickListener() {
 	            @Override
 	            public void onClick(DialogInterface dialog, int which) {
+	                mShowRepairDialog = true;
 	                Intent i = new Intent(StudyOptions.this, Feedback.class);
 	                startActivityForResult(i, REPORT_ERROR);
 		        if (getApiLevel() > 4) {
-		            ActivityTransitionAnimation.slide(StudyOptions.this, ActivityTransitionAnimation.FADE);
+			    ActivityTransitionAnimation.slide(StudyOptions.this, ActivityTransitionAnimation.FADE);
 		        }
-	                mShowRepairDialog = true;
 	            }
 	        });	        	
 			builder.setNegativeButton(res.getString(R.string.close), null);
