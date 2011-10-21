@@ -61,9 +61,9 @@ import java.util.TimeZone;
 import java.util.UUID;
 
 public class Feedback extends Activity {
-    protected static String REPORT_ASK = "2";
-    protected static String REPORT_NEVER = "1";
-    protected static String REPORT_ALWAYS = "0";
+    public static String REPORT_ASK = "2";
+    public static String REPORT_NEVER = "1";
+    public static String REPORT_ALWAYS = "0";
 
     public static String STATE_WAITING = "0";
     public static String STATE_UPLOADING = "1";

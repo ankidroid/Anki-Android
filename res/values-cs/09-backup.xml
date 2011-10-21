@@ -29,8 +29,8 @@
   <string name="backup_delete">Výmaz záloh.\nProsím čekejte...</string>
   <string name="contextmenu_deckpicker_remove_backups">Odstranit zálohy</string>
   <string name="backup_restore">Obnovit ze zálohy</string>
-  <string name="backup_repair_deck">Repair deck</string>
-  <string name="backup_repair_deck_progress">Repairing deck.\nPlease wait...</string>
+  <string name="backup_repair_deck">Opravit balíčku</string>
+  <string name="backup_repair_deck_progress">Opravuji balíček.\nProsím čekejte...</string>
   <string name="backup_restore_error">Balíček nelze obnovit.</string>
   <string name="backup_restore_deck">Obnovování balíčku.\nProsím čekejte...</string>
   <string name="backup_restore_select_title">Vyberte zálohu pro obnovení</string>
@@ -38,7 +38,7 @@
   <string name="backup_delete_deck_backups">Zálohy balíčku %s smazány</string>
   <string name="delete_deck_success">Balíček %1$s smazán. Záloha ve složce %2$s</string>
   <string name="backup_delete_deck_backups_alert">Opravdu smazat všechny zálohy balíčku %s?</string>
-  <string name="open_deck_failed">File %1$s could not be opened. It is either not a real anki file or has been corrupted.\n\nYou can try to repair the deck or restore it from a backup (in both cases, the copy of the corrupt deck will be moved to the subfolder \'%2$s\'). More information about repairing corrupted decks: %3$s.\n\nHit the back button to close this dialog</string>
-  <string name="deckpicker_backup_error">Backup could not be created</string>
-  <string name="deck_repair_error">Deck could not be repaired</string>
+  <string name="open_deck_failed">Soubor %1$s nelze otevřít. Buď to není Anki soubor nebo byl poškozen.\n\nMůžete se pokusit opravit balíček nebo obnovit ze zálohy (v obou případech bude kopie poškozeného balíčku přesunuta do podsložky \'%2$s\'). Další informace o opravě poškozeného balíčku: %3$s.\n\nStiskněte tlačítko Zpět pro zavření tohoto dialogu.</string>
+  <string name="deckpicker_backup_error">Zálohu nebylo možné vytvořit</string>
+  <string name="deck_repair_error">Balíček nemohl být opraven</string>
 </resources>
