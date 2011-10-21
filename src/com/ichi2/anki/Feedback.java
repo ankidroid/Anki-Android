@@ -96,12 +96,16 @@ public class Feedback extends Activity {
 
     private boolean mErrorsSent = false;
 
+
     @Override
-    public void onBackPressed() {
-        deleteFiles(true, false);
-        setResult(RESULT_OK);
-        closeFeedback();
+    public boolean onKeyDown(int keyCode, KeyEvent event)  {
+        if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
+        	deleteFiles(true, false);
+	        closeFeedback();
+        }
+        return super.onKeyDown(keyCode, event);
     }
+
 
     /**
      * Create AlertDialogs used on all the activity
@@ -126,6 +130,7 @@ public class Feedback extends Activity {
 
 
 	private void closeFeedback() {
+	        setResult(RESULT_OK);
                 if (StudyOptions.getApiLevel() > 4) {
                     ActivityTransitionAnimation.slide(Feedback.this, ActivityTransitionAnimation.FADE);
                 }
@@ -215,13 +220,11 @@ public class Feedback extends Activity {
             }
 
             deleteFiles(true, false);
-            setResult(RESULT_OK);
             closeFeedback();
 
             return;
         } else if (mReportErrorMode.equals(REPORT_NEVER)) { // Never report
             deleteFiles(false, false);
-            setResult(RESULT_OK);
             closeFeedback();
         }
 
