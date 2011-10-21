@@ -668,11 +668,11 @@ public class Reviewer extends Activity implements IButtonListener{
                 return;
             }
             mShakeActionStarted = false;
-            if (result != null) {
-                String str = result.getString();
-                if (str != null && str.equals(Deck.UNDO_TYPE_SUSPEND_CARD)) {
+            String str = result.getString();
+            if (str != null) {
+                if (str.equals(Deck.UNDO_TYPE_SUSPEND_CARD)) {
                 	Themes.showThemedToast(Reviewer.this, getResources().getString(R.string.card_unsuspended), true);
-                } else if (result.getString().equals("redo suspend")) {
+                } else if (str.equals("redo suspend")) {
                 	Themes.showThemedToast(Reviewer.this, getResources().getString(R.string.card_suspended), true);           	
                 }            	
             }
