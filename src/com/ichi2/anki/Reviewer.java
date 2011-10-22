@@ -926,6 +926,11 @@ public class Reviewer extends Activity implements IButtonListener{
         super.onPause();
         Log.i(AnkiDroidApp.TAG, "Reviewer - onPause()");
 
+    	mTimeoutHandler.removeCallbacks(mShowAnswerTask);
+    	mTimeoutHandler.removeCallbacks(mShowQuestionTask);
+    	longClickHandler.removeCallbacks(longClickTestRunnable);
+    	longClickHandler.removeCallbacks(startSelection);
+
         stopTimer();
         if (!mClosing) {
             // Save changes
@@ -1354,12 +1359,12 @@ public class Reviewer extends Activity implements IButtonListener{
 
     private void restartTimer() {
         if (mCurrentCard != null) {
-            mCurrentCard.resumeTimer();          
+            mCurrentCard.resumeTimer();
         }
         if (mPrefTimer && mSavedTimer != 0) {
             mCardTimer.setBase(SystemClock.elapsedRealtime() - mSavedTimer);
             mCardTimer.start();
-        }    	
+        }
     }
 
 
