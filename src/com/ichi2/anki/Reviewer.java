@@ -3038,6 +3038,7 @@ public class Reviewer extends Activity implements IButtonListener{
 
     	setOutAnimation(true);    		
     	mClosing = true;
+    	DeckTask.waitToFinish();
         DeckTask.launchDeckTask(DeckTask.TASK_TYPE_SAVE_DECK, mSaveAndResetDeckHandler, new DeckTask.TaskData(AnkiDroidApp.deck(), 0));
     }
     
