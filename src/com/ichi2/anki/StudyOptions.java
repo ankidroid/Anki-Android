@@ -1730,7 +1730,11 @@ public class StudyOptions extends Activity implements IButtonListener {
 	        break;
 
 		case DIALOG_CRAM:
-	        activeCramTags.clear();
+			if (activeCramTags == null) {
+				activeCramTags = new HashSet<String>();
+			} else {
+		        activeCramTags.clear();				
+			}
 	        allCramTags = AnkiDroidApp.deck().allTags_();
 	        if (allCramTags == null) {
 	        	Themes.showThemedToast(StudyOptions.this, getResources().getString(R.string.error_insufficient_memory), false);
