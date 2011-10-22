@@ -37,14 +37,14 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
+import android.view.GestureDetector;
+import android.view.GestureDetector.SimpleOnGestureListener;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewTreeObserver;
-import android.view.GestureDetector;
-import android.view.GestureDetector.SimpleOnGestureListener;
 import android.view.ViewTreeObserver.OnGlobalLayoutListener;
 import android.view.inputmethod.InputMethodManager;
 import android.webkit.WebView;
@@ -71,9 +71,9 @@ import com.ichi2.themes.StyledDialog;
 import com.ichi2.themes.Themes;
 import com.tomgibara.android.veecheck.util.PrefSettings;
 import com.zeemote.zc.Controller;
-import com.zeemote.zc.ui.android.ControllerAndroidUi;
 import com.zeemote.zc.event.ButtonEvent;
 import com.zeemote.zc.event.IButtonListener;
+import com.zeemote.zc.ui.android.ControllerAndroidUi;
 import com.zeemote.zc.util.JoystickToButtonAdapter;
 
 import java.io.File;
@@ -1613,12 +1613,13 @@ public class StudyOptions extends Activity implements IButtonListener {
 	        builder.setNeutralButton(res.getString(R.string.answering_error_report), new OnClickListener() {
 	            @Override
 	            public void onClick(DialogInterface dialog, int which) {
+	                mShowRepairDialog = true;
 	                Intent i = new Intent(StudyOptions.this, Feedback.class);
+			dialog.dismiss();
 	                startActivityForResult(i, REPORT_ERROR);
 		        if (getApiLevel() > 4) {
-		            ActivityTransitionAnimation.slide(StudyOptions.this, ActivityTransitionAnimation.FADE);
+			    ActivityTransitionAnimation.slide(StudyOptions.this, ActivityTransitionAnimation.FADE);
 		        }
-	                mShowRepairDialog = true;
 	            }
 	        });	        	
 			builder.setNegativeButton(res.getString(R.string.close), null);
@@ -1729,7 +1730,11 @@ public class StudyOptions extends Activity implements IButtonListener {
 	        break;
 
 		case DIALOG_CRAM:
-	        activeCramTags.clear();
+			if (activeCramTags == null) {
+				activeCramTags = new HashSet<String>();
+			} else {
+		        activeCramTags.clear();
+			}
 	        allCramTags = AnkiDroidApp.deck().allTags_();
 	        if (allCramTags == null) {
 	        	Themes.showThemedToast(StudyOptions.this, getResources().getString(R.string.error_insufficient_memory), false);
@@ -1752,7 +1757,7 @@ public class StudyOptions extends Activity implements IButtonListener {
 	        });
 			break;
 		case DIALOG_ANSWERING_ERROR:
-			ad.getButton(Dialog.BUTTON_NEUTRAL).setEnabled(hasErrorFiles() && !PrefSettings.getSharedPrefs(StudyOptions.this).getString("reportErrorMode", Feedback.REPORT_ASK).equals(Feedback.NEVER));
+			ad.getButton(Dialog.BUTTON_NEUTRAL).setEnabled(hasErrorFiles() && !PrefSettings.getSharedPrefs(StudyOptions.this).getString("reportErrorMode", Feedback.REPORT_ASK).equals(Feedback.REPORT_NEVER));
 			break;
 		}
 	}

@@ -54,7 +54,7 @@
   <string name="studyoptions_congrats_open_other_deck">Otevřít jiný balíček</string>
   <string name="studyoptions_congrats_finish">Zpět na studijní obrazovku</string>
   <string name="card_unsuspended">Zrušeno vyřazení karty</string>
-  <string name="card_suspended">Card resuspended</string>
+  <string name="card_suspended">Zrušeno pozastavení karty</string>
   <string name="menu_rotate">Otočit</string>
   <string name="undo">Vrátit zpět</string>
   <string name="redo">Zrušit vrácení</string>
@@ -97,7 +97,7 @@
   <string name="later">Později</string>
   <string name="download">Stáhnout</string>
   <string name="deckpicker_loading_error">Balíček nemohl být načten</string>
-  <string name="deckpicker_creating_backup">Creating backup...</string>
+  <string name="deckpicker_creating_backup">Vytváření zálohy...</string>
   <string-array name="next_review_s">
     <item>1 sekunda</item>
     <item>1 minuta</item>

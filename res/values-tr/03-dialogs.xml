@@ -58,4 +58,7 @@
   <string name="reset_card_dialog_title">Kart ilerlemesini sıfırla</string>
   <string name="reset_card_dialog_message">Bu işlem bu bilgideki bütün kartların öğrenim ilerlemelerini sıfırlar (yeni kart gibi gözükürler).\nGerçekten devam edilsin mi?</string>
   <string name="reset_card_dialog_confirmation">Bu bilginin tüm kartlarının sıfırlanması</string>
+  <string name="answering_error_title">Database error</string>
+  <string name="answering_error_message">An error occured while answering/changing the last card. This could be related to a corrupt deck or to insufficient disc space.\n\nIf it happens more often, please try to repair the deck.\n\nNevertheless, it could be an AnkiDroid bug as well; please report the error that we can check this.</string>
+  <string name="answering_error_report">Hatayı bildir</string>
 </resources>

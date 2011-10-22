@@ -26,7 +26,7 @@
     <item><![CDATA[Las tarjetas se agrupan en mazos y se pueden organizar con la ayuda de todo tipo de etiquetas.]]></item> 
     <item><![CDATA[Existen principalmente dos formas de conseguir nuevas tarjetas:<br /><br />O bien te descargas mazos prefabricados de otros usuarios (elegir la opción \"Descargar mazo\" en el menú de opciones del resumen de mazos), o bien crearlas tú mismo.]]></item> 
     <item><![CDATA[En cualquier caso, crear tus propios mazos es esencial para cubrir tus necesidades a la perfección. Puedes hacerlo directamente en AnkiDroid...]]></item> 
-    <item><![CDATA[Vamos a echar un vistazo a la barra superior:<br /><br />En la esquina superior izquierda se encuentran algunos números. El rojo cuenta las tarjetas falladas (contestadas con un \"Otra vez\"),]]></item> 
+    <item><![CDATA[Vamos a echar un vistazo a la barra superior: <br /><br /> En la esquina superior izquierda se encuentran algunos números. El rojo cuenta las tarjetas falladas (contestadas con un \"Otra vez\"),]]></item> 
     <item><![CDATA[En la esquina derecha se encuentra información acerca de tu tiempo de reflexion con esta tarjeta, y sobre tu rendimiento.]]></item> 
     <item><![CDATA[Estos han sido los principales puntos sobre el uso de AnkiDroid.<br /><br>Para más información sobre el concepto clave de Anki, visita http://ankisrs.net/]]></item> 
  </string-array>
@@ -40,7 +40,7 @@
     <item><![CDATA[Aprenderás rápidamente acerca de esto cuando empieces a utilizar AnkiDroid.]]></item> 
     <item><![CDATA[Encontrarás miles de cubiertas prefabricadas para descargar y seguramente algunas te serán de utilidad.]]></item> 
     <item><![CDATA[... o (un poco más cómodo) con la aplicación de escritorio Anki (descargable gratuitamente en http://ankisrs.net/).<br><br>Puedes sincronizar tus mazos con la aplicación de escritorio muy fácilmente, por lo que transferir los datos no es un problema.]]></item> 
-    <item><![CDATA[el negro muestran el número de tarjetas que ya habías aprendido antes y que debes repasar hoy, y el número azul te dice la cantidad de tarjetas nuevas previstas para hoy. <br /><br />El tipo al que pertenece la tarjeta actual se especifica mediante un subrayado.]]></item> 
+    <item><![CDATA[el negro muestra el número de tarjetas que ya habías aprendido antes y que debes repasar hoy, y el número azul te dice la cantidad de tarjetas nuevas previstas para hoy. <br /><br /> El tipo al que pertenece la tarjeta actual se especifica mediante un subrayado.]]></item> 
     <item><![CDATA[La barra superior muestra tu progreso sobre el total de fichas programadas para hoy, la inferior indica el porcentaje de respuestas afirmativas (que son cualquiera excepto \"Otra vez\").]]></item> 
     <item><![CDATA[Pruébalo un poco ahora y comprueba si se ajusta a tus necesidades.<br><br>Tal vez puedas comenzar con el resumen de mazos (pulsa el botón menu en la pantalla principal y selecciona \"Todos los mazos\"), donde puedes descargar mazos prefabricados o crear los tuyos propios (sólo tienes que utilizar el menú de allí).]]></item> 
  </string-array>

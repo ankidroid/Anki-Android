@@ -236,7 +236,7 @@ public class Reviewer extends Activity implements IButtonListener{
     private boolean mIsLastCard = false;
     private boolean mShowProgressBars;
     private boolean mPrefUseTimer;
-    private boolean mShowAnimations = true;
+    private boolean mShowAnimations = false;
     private String mLocale;
 
     private boolean mIsSelecting = false;
@@ -926,6 +926,11 @@ public class Reviewer extends Activity implements IButtonListener{
         super.onPause();
         Log.i(AnkiDroidApp.TAG, "Reviewer - onPause()");
 
+    	mTimeoutHandler.removeCallbacks(mShowAnswerTask);
+    	mTimeoutHandler.removeCallbacks(mShowQuestionTask);
+    	longClickHandler.removeCallbacks(longClickTestRunnable);
+    	longClickHandler.removeCallbacks(startSelection);
+
         stopTimer();
         if (!mClosing) {
             // Save changes
@@ -1354,12 +1359,12 @@ public class Reviewer extends Activity implements IButtonListener{
 
     private void restartTimer() {
         if (mCurrentCard != null) {
-            mCurrentCard.resumeTimer();          
+            mCurrentCard.resumeTimer();
         }
         if (mPrefTimer && mSavedTimer != 0) {
             mCardTimer.setBase(SystemClock.elapsedRealtime() - mSavedTimer);
             mCardTimer.start();
-        }    	
+        }
     }
 
 
@@ -3033,6 +3038,7 @@ public class Reviewer extends Activity implements IButtonListener{
 
     	setOutAnimation(true);    		
     	mClosing = true;
+    	DeckTask.waitToFinish();
         DeckTask.launchDeckTask(DeckTask.TASK_TYPE_SAVE_DECK, mSaveAndResetDeckHandler, new DeckTask.TaskData(AnkiDroidApp.deck(), 0));
     }
     
