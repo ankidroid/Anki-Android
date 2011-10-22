@@ -236,7 +236,7 @@ public class Reviewer extends Activity implements IButtonListener{
     private boolean mIsLastCard = false;
     private boolean mShowProgressBars;
     private boolean mPrefUseTimer;
-    private boolean mShowAnimations = true;
+    private boolean mShowAnimations = false;
     private String mLocale;
 
     private boolean mIsSelecting = false;

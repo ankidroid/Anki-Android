@@ -325,7 +325,13 @@ public class Themes {
 		if (mCurrentTheme >= THEME_BLUE) {
 			result.getView().setBackgroundResource(mToastBackground);
 		}
-        result.show();
+		try {
+	        result.show();
+		} catch (OutOfMemoryError e) {
+			Log.e(AnkiDroidApp.TAG, "showThemedToast - OutOfMemoryError occured: " + e);
+			result.getView().setBackgroundResource(R.color.black);
+			result.show();
+		}
 	}
 
 
@@ -366,7 +372,12 @@ public class Themes {
 		boolean[] visibility = new boolean[5];
 
 		if (topPanel.getVisibility() == View.VISIBLE) {
-			topPanel.setBackgroundResource(mPopupTopDark);
+			try {
+				topPanel.setBackgroundResource(mPopupTopDark);
+			} catch (OutOfMemoryError e) {
+				Log.e(AnkiDroidApp.TAG, "setStyledDialogBackgrounds - OutOfMemoryError occured: " + e);
+				topPanel.setBackgroundResource(R.color.black);
+			}
 			((View) main.findViewById(R.id.titleDivider)).setBackgroundResource(mDividerHorizontalBright);
 			visibility[0] = true;
 		}
@@ -384,7 +395,12 @@ public class Themes {
 		}
 		if (buttonNumbers > 0) {
         	LinearLayout buttonPanel = (LinearLayout) main.findViewById(R.id.buttonPanel);
-        	buttonPanel.setBackgroundResource(mPopupBottomMedium);
+			try {
+	        	buttonPanel.setBackgroundResource(mPopupBottomMedium);
+			} catch (OutOfMemoryError e) {
+				Log.e(AnkiDroidApp.TAG, "setStyledDialogBackgrounds - OutOfMemoryError occured: " + e);
+				buttonPanel.setBackgroundResource(R.color.white);
+			}
     		if (buttonNumbers > 1) {
     			main.findViewById(R.id.rightSpacer).setVisibility(View.GONE);
     			main.findViewById(R.id.leftSpacer).setVisibility(View.GONE);
@@ -413,7 +429,12 @@ public class Themes {
 				res = mPopupFullDark;
 			}
 		}
-		contentPanel.setBackgroundResource(res);
+		try {
+			contentPanel.setBackgroundResource(res);
+		} catch (OutOfMemoryError e) {
+			Log.e(AnkiDroidApp.TAG, "setStyledDialogBackgrounds - OutOfMemoryError occured: " + e);
+			contentPanel.setBackgroundResource(R.color.black);
+		}
 
 		res = mPopupCenterBright;
 		if (first == 2) {
@@ -425,7 +446,12 @@ public class Themes {
 				res = mPopupFullBright;
 			}
 		}
-		listViewPanel.setBackgroundResource(res);
+		try {
+			listViewPanel.setBackgroundResource(res);
+		} catch (OutOfMemoryError e) {
+			Log.e(AnkiDroidApp.TAG, "setStyledDialogBackgrounds - OutOfMemoryError occured: " + e);
+			listViewPanel.setBackgroundResource(R.color.white);
+		}
 
 		res = brightCustomPanelBackground ? mPopupCenterMedium : mPopupCenterDark;
 		if (first == 3) {
@@ -437,7 +463,12 @@ public class Themes {
 				res = brightCustomPanelBackground ? mPopupFullMedium : mPopupFullDark;;
 			}
 		}
-		customPanel.setBackgroundResource(res);
+		try {
+			customPanel.setBackgroundResource(res);
+		} catch (OutOfMemoryError e) {
+			Log.e(AnkiDroidApp.TAG, "setStyledDialogBackgrounds - OutOfMemoryError occured: " + e);
+			customPanel.setBackgroundResource(brightCustomPanelBackground ? R.color.white : R.color.black);
+		}
 	}
 
 
