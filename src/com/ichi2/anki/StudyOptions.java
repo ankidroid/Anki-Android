@@ -37,14 +37,14 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
+import android.view.GestureDetector;
+import android.view.GestureDetector.SimpleOnGestureListener;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewTreeObserver;
-import android.view.GestureDetector;
-import android.view.GestureDetector.SimpleOnGestureListener;
 import android.view.ViewTreeObserver.OnGlobalLayoutListener;
 import android.view.inputmethod.InputMethodManager;
 import android.webkit.WebView;
@@ -71,9 +71,9 @@ import com.ichi2.themes.StyledDialog;
 import com.ichi2.themes.Themes;
 import com.tomgibara.android.veecheck.util.PrefSettings;
 import com.zeemote.zc.Controller;
-import com.zeemote.zc.ui.android.ControllerAndroidUi;
 import com.zeemote.zc.event.ButtonEvent;
 import com.zeemote.zc.event.IButtonListener;
+import com.zeemote.zc.ui.android.ControllerAndroidUi;
 import com.zeemote.zc.util.JoystickToButtonAdapter;
 
 import java.io.File;
@@ -1753,7 +1753,7 @@ public class StudyOptions extends Activity implements IButtonListener {
 	        });
 			break;
 		case DIALOG_ANSWERING_ERROR:
-			ad.getButton(Dialog.BUTTON_NEUTRAL).setEnabled(hasErrorFiles() && !PrefSettings.getSharedPrefs(StudyOptions.this).getString("reportErrorMode", Feedback.REPORT_ASK).equals(Feedback.NEVER));
+			ad.getButton(Dialog.BUTTON_NEUTRAL).setEnabled(hasErrorFiles() && !PrefSettings.getSharedPrefs(StudyOptions.this).getString("reportErrorMode", Feedback.REPORT_ASK).equals(Feedback.REPORT_NEVER));
 			break;
 		}
 	}
