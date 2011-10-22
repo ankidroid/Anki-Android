@@ -116,6 +116,8 @@ public class BroadcastMessages {
 				Log.e(AnkiDroidApp.TAG, "Error on dismissing and showing new messages dialog: " + e);
 			} catch (IllegalArgumentException e) {
 				Log.e(AnkiDroidApp.TAG, "Error on dismissing and showing new messages dialog: " + e);
+			} catch (NullPointerException e) {
+				Log.e(AnkiDroidApp.TAG, "Error on dismissing and showing new messages dialog: " + e);
 			}
 		}
 	}
