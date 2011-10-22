@@ -22,7 +22,7 @@
 <resources>
   <string name="card_browser">Kaartbrowser</string>
   <string name="card_browser_load">Loading cards</string>
-  <string name="card_browser_cardloading_error">Fout bij het laden van de kaarten. Dit is waarschijnlijk gerelateerd aan de geheugenlimiet van uw apparaat. Probeer opnieuw met een kleiner dek</string>
+  <string name="card_browser_cardloading_error">Fout bij het laden van de kaarten. Dit is waarschijnlijk gerelateerd aan de geheugenlimiet van uw apparaat. Probeer nogmaals met een kleiner set</string>
   <string name="card_browser_delete_card">Delete card</string>
   <string name="card_browser_suspend_card">Suspend card</string>
   <string name="card_browser_unsuspend_card">Unsuspend card</string>
@@ -61,7 +61,7 @@
     <item>Op antwoord</item>
     <item>By due time</item>
     <item>Op interval</item>
-    <item>Op gemakkelijkheidsgraad</item>
+    <item>Op moeilijkheidsgraad</item>
     <item>Aanmaakdatum</item>
   </string-array>
   <plurals name="card_browser_title">

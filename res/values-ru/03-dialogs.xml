@@ -58,7 +58,7 @@
   <string name="reset_card_dialog_title">Сброс учебного прогресса карты</string>
   <string name="reset_card_dialog_message">Этот действие сбрасывает успехи в учебе для всех карт этого факта (они будут выглядеть как новые карты).\nВы действительно хотите продолжить?</string>
   <string name="reset_card_dialog_confirmation">Все карты этого факта будут переустановлены</string>
-  <string name="answering_error_title">Database error</string>
+  <string name="answering_error_title">Ошибка базы данных</string>
   <string name="answering_error_message">An error occured while answering/changing the last card. This could be related to a corrupt deck or to insufficient disc space.\n\nIf it happens more often, please try to repair the deck.\n\nNevertheless, it could be an AnkiDroid bug as well; please report the error that we can check this.</string>
   <string name="answering_error_report">Сообщить об ошибке</string>
 </resources>
