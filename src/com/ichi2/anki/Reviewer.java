@@ -340,6 +340,7 @@ public class Reviewer extends Activity implements IButtonListener{
  	private int mGestureTapRight;
  	private int mGestureTapTop;
  	private int mGestureTapBottom;
+ 	private int mGestureLongclick;
 
  	private static final int GESTURE_NOTHING = 0;
  	private static final int GESTURE_ANSWER_EASE1 = 1;
@@ -440,12 +441,12 @@ public class Reviewer extends Activity implements IButtonListener{
     		Log.i(AnkiDroidApp.TAG, "onEmulatedLongClick");
         	Vibrator vibratorManager = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
             vibratorManager.vibrate(50);
-            longClickHandler.postDelayed(startSelection, 300);
+            longClickHandler.postDelayed(startLongClickAction, 300);
         }
     };
-    private final Runnable startSelection = new Runnable() {
+    private final Runnable startLongClickAction = new Runnable() {
         public void run() {
-            selectAndCopyText();
+            executeCommand(mGestureLongclick);
         }
     };
 
@@ -560,7 +561,7 @@ public class Reviewer extends Activity implements IButtonListener{
     		Log.i(AnkiDroidApp.TAG, "onLongClick");
     		Vibrator vibratorManager = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
     		vibratorManager.vibrate(50);
-            longClickHandler.postDelayed(startSelection, 300);
+            longClickHandler.postDelayed(startLongClickAction, 300);
     		return true;
     	}
     };
@@ -929,7 +930,7 @@ public class Reviewer extends Activity implements IButtonListener{
     	mTimeoutHandler.removeCallbacks(mShowAnswerTask);
     	mTimeoutHandler.removeCallbacks(mShowQuestionTask);
     	longClickHandler.removeCallbacks(longClickTestRunnable);
-    	longClickHandler.removeCallbacks(startSelection);
+    	longClickHandler.removeCallbacks(startLongClickAction);
 
         stopTimer();
         if (!mClosing) {
@@ -1941,6 +1942,7 @@ public class Reviewer extends Activity implements IButtonListener{
          	mGestureTapRight = Integer.parseInt(preferences.getString("gestureTapRight", "0"));
          	mGestureTapTop = Integer.parseInt(preferences.getString("gestureTapTop", "0"));
          	mGestureTapBottom = Integer.parseInt(preferences.getString("gestureTapBottom", "0"));
+         	mGestureLongclick = Integer.parseInt(preferences.getString("gestureLongclick", "0"));
         }
         mShowAnimations = preferences.getBoolean("themeAnimations", false);
         if (mShowAnimations) {
@@ -3034,7 +3036,7 @@ public class Reviewer extends Activity implements IButtonListener{
 	mTimeoutHandler.removeCallbacks(mShowQuestionTask);
 	mTimerHandler.removeCallbacks(removeChosenAnswerText);
 	longClickHandler.removeCallbacks(longClickTestRunnable);
-	longClickHandler.removeCallbacks(startSelection);
+	longClickHandler.removeCallbacks(startLongClickAction);
 
     	setOutAnimation(true);    		
     	mClosing = true;

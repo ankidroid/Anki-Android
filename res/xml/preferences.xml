@@ -326,6 +326,14 @@
 				android:entries="@array/gestures_labels"
 				android:entryValues="@array/gestures_values" />
 			<ListPreference
+				android:title="@string/gestures_longclick"
+				android:summary=""
+				android:key="gestureLongclick"
+				android:defaultValue="11"
+				android:dependency="swipe"
+				android:entries="@array/gestures_labels"
+				android:entryValues="@array/gestures_values" />
+			<ListPreference
 				android:title="@string/gestures_shake"
 				android:summary=""
 				android:key="gestureShake"
