@@ -319,6 +319,7 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
         Deck currentDeck = AnkiDroidApp.deck();
         if (currentDeck != null) {
         	currentDeck.closeDeck();
+        	AnkiDroidApp.setDeck(null);
         }
 
         ArrayList<HashMap<String, String>> decksToSync = (ArrayList<HashMap<String, String>>) data.data[2];
@@ -329,8 +330,11 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
             	boolean forceDeleteJournalMode =  Deck.isWalEnabled(deckPath);
                 Deck deck = Deck.openDeck(deckPath, true, forceDeleteJournalMode);
 
-                Payload syncDeckData = new Payload(new Object[] { username, password, deck, deckPath, null });
+                Payload syncDeckData = new Payload(new Object[] { username, password, deck, null, false });
                 syncDeckData = doInBackgroundSyncDeck(syncDeckData);
+                if (deck != null) {
+                	deck.closeDeck();
+                }
                 decksChangelogs.add((HashMap<String, String>) syncDeckData.result);
             } catch (Exception e) {
                 Log.e(AnkiDroidApp.TAG, "Exception e = " + e.getMessage());
@@ -359,14 +363,17 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
         String username = (String) data.data[0];
         String password = (String) data.data[1];
         Deck deck = (Deck) data.data[2];
-        String deckPath = (String) data.data[3];
+        String deckPath = deck.getDeckPath();
         String syncName = deckPath.substring(deckPath.lastIndexOf("/") + 1, deckPath.length() - 5);
-        String conflictResolution = (String) data.data[4];
+        String conflictResolution = (String) data.data[3];
+        boolean singleDeckSync = (Boolean) data.data[4];
 
-        if (deck == null) {
-        	// if syncing in study options screen, deck is set to null if wal mode is enabled
+        if (singleDeckSync) {
+        	// if syncing in study options screen, deck must be reloaded in order to set delete journal mode
         	publishProgress(syncName, res.getString(R.string.sync_set_journal_mode));
+        	deck.closeDeck();
         	deck = Deck.openDeck(deckPath, true, true);
+        	AnkiDroidApp.setDeck(deck);
         }
 
         syncChangelog.put("deckName", syncName);
@@ -428,13 +435,9 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
             
             // Check conflicts
             double localMod = deck.getModified();
-            Utils.printDate("localMod", localMod);
             double localSync = deck.getLastSync();
-            Utils.printDate("localSync", localSync);
             double remoteMod = server.modified();
-            Utils.printDate("remoteMod", remoteMod);
             double remoteSync = server.lastSync();
-            Utils.printDate("remoteSync", remoteSync);
             if (remoteMod < 0 || remoteSync < 0) {
                 data.success = false;
                 syncChangelog.put("message", res.getString(R.string.sync_log_error_message));
@@ -511,6 +514,8 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
                         if (result.containsKey("code") && result.get("code").equals("200")) {
                             syncChangelog.put("message", res.getString(R.string.sync_log_downloading_message));
                         }
+                        deck = Deck.openDeck(deckPath);
+                    	AnkiDroidApp.setDeck(deck);
                     }
 
                     publishProgress(syncName, res.getString(R.string.sync_complete_message));
@@ -562,7 +567,7 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
                     if (preferences.getBoolean("syncFetchMedia", true)) {
                         doInBackgroundDownloadMissingMedia(new Payload(new Object[] {deck}));
                     }
-                    
+
                     if (!client.getServer().finish()) {
                         data.success = false;
                         syncChangelog.put("message", res.getString(R.string.sync_log_finish_error));
@@ -598,10 +603,6 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
         } finally {
             if (ankiDB.getDatabase() != null && ankiDB.getDatabase().inTransaction()) {
                 ankiDB.getDatabase().endTransaction();
-            }
-
-            if (deck != null) {
-                deck.closeDeck();
             }
         }
 

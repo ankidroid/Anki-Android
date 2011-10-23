@@ -2244,15 +2244,9 @@ public class StudyOptions extends Activity implements IButtonListener {
             Deck deck = AnkiDroidApp.deck();
             if (deck != null) {
                 Log.i(AnkiDroidApp.TAG, "Synchronizing deck " + mDeckFilename + ", conflict resolution: " + conflictResolution);
-                Log.i(AnkiDroidApp.TAG, String.format(Utils.ENGLISH_LOCALE, "Before syncing - mod: %f, last sync: %f", deck.getModified(), deck.getLastSync()));            	
-            } else {
-            	return;
+                Log.i(AnkiDroidApp.TAG, String.format(Utils.ENGLISH_LOCALE, "Before syncing - mod: %f, last sync: %f", deck.getModified(), deck.getLastSync()));
+                Connection.syncDeck(mSyncListener, new Connection.Payload(new Object[] { username, password, deck, conflictResolution, true }));
             }
-        	if (Deck.isWalEnabled(deck.getDeckPath())) {
-        		deck = null;
-        	}
-            Connection.syncDeck(mSyncListener, new Connection.Payload(new Object[] { username, password, deck,
-                    mDeckFilename, conflictResolution }));
         } else {
         	showDialog(DIALOG_USER_NOT_LOGGED_IN);
         }
