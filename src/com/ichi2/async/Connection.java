@@ -428,9 +428,13 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
             
             // Check conflicts
             double localMod = deck.getModified();
+            Utils.printDate("localMod", localMod);
             double localSync = deck.getLastSync();
+            Utils.printDate("localSync", localSync);
             double remoteMod = server.modified();
+            Utils.printDate("remoteMod", remoteMod);
             double remoteSync = server.lastSync();
+            Utils.printDate("remoteSync", remoteSync);
             if (remoteMod < 0 || remoteSync < 0) {
                 data.success = false;
                 syncChangelog.put("message", res.getString(R.string.sync_log_error_message));

@@ -624,6 +624,15 @@ public class Utils {
     }
 
 
+    public static void printDate(String name, double date) {
+    	SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH-mm-ss");
+    	df.setTimeZone(TimeZone.getTimeZone("GMT"));
+    	Calendar cal = new GregorianCalendar(TimeZone.getTimeZone("GMT"));
+    	cal.setTimeInMillis((long)date * 1000);
+    	Log.d(AnkiDroidApp.TAG, "Value of " + name + ": " + cal.getTime().toGMTString());
+	}
+
+
     public static String doubleToTime(double value) {
     	int time = (int) Math.round(value);
     	int seconds = time % 60;
