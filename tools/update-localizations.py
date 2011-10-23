@@ -27,7 +27,7 @@ languages = ['ar', 'ca', 'cs', 'de', 'el', 'es-ES', 'fi', 'fr', 'hu', 'id', 'it'
 #languages = ['ar', 'ca', 'cs', 'de', 'el', 'es-ES', 'fi', 'fr', 'hu', 'it', 'ja', 'ko', 'nl', 'pl', 'pt-PT', 'ro', 'ru', 'sr', 'sv-SE', 'vi', 'zh-CN', 'zh-TW', 'th', 'sk', 'da', 'ko', 'he', 'uk'];
 
 fileNames = ['01-core', '02-strings', '03-dialogs', '04-network', '05-feedback', '06-statistics', '07-cardbrowser', '08-widget', '09-backup', '10-preferences', '11-arrays', 'tutorial']
-
+anyError = False
 
 import os
 import zipfile
@@ -89,8 +89,10 @@ def replacechars(filename, fileExt, isCrowdin):
 	if errorOccured:
 		os.remove(filename)
 		print 'error in file ' + filename
+		return False
 	else:
 		print 'file ' + filename + ' successfully copied'
+		return True
 
 def fileExtFor(f):
 	if f == 'tutorial':
@@ -103,7 +105,7 @@ def createIfNotExisting(directory):
 def update(valuesDirectory, f, source, fileExt, isCrowdin):
 	newfile = valuesDirectory + f + '.xml'
 	file(newfile, 'w').write(source)
-	replacechars(newfile, fileExt, isCrowdin)
+	return replacechars(newfile, fileExt, isCrowdin)
 
 zipname = 'ankidroid.zip'
 
@@ -129,7 +131,7 @@ for language in languages:
 	# Copy localization files, mask chars and append gnu/gpl licence
 	for f in fileNames:
 		fileExt = fileExtFor(f)
-		update(valuesDirectory, f, zip.read(language + "/" + f + fileExt), fileExt, True)
+		anyError = update(valuesDirectory, f, zip.read(language + "/" + f + fileExt), fileExt, True)
 
 # Special case: English tutorial.
 valuesDirectory = "../res/values/"
@@ -141,7 +143,10 @@ source = open("../assets/" + f + fileExt)
 #support for its syntax.
 update(valuesDirectory, f, source.read(), fileExt, False)
 
-print "removing crowdin-file"
+print "\nremoving crowdin-file\n"
 os.remove(zipname)
+
+if not(anyError):
+	print "At least one file contained an error\nPlease check!\n"
 
 

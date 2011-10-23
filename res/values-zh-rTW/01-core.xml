@@ -97,6 +97,7 @@
   <string name="later">Later</string>
   <string name="download">Download</string>
   <string name="deckpicker_loading_error">Deck could not be loaded</string>
+  <string name="deckpicker_creating_backup">Creating backup...</string>
   <string-array name="next_review_s">
     <item>1秒</item>
     <item>1分鐘</item>

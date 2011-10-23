@@ -237,6 +237,19 @@ public class Deck {
     	return openDeck(path, rebuild, false);
     }
     public static synchronized Deck openDeck(String path, boolean rebuild, boolean forceDeleteJournalMode) throws SQLException {
+	// first do a backup if last backup is very old or not existing
+	// this is normally done on loading in studyoptions (full) or loading in deckpicker
+	// nevertheless, it's still necessary to check here, if it has been really done because other routines open decks too (widget, card editor, syncing)
+	// a cache variable will indicate, if the deck has been already treated
+    	if (BackupManager.safetyBackupNeeded(path, BackupManager.SAFETY_BACKUP_THRESHOLD)) {
+    		Log.i(AnkiDroidApp.TAG, "openDeck: Backup needed");
+    		if (BackupManager.backupDeck(path) == BackupManager.RETURN_BACKUP_CREATED) {
+    			Log.i(AnkiDroidApp.TAG, "openDeck: Backup successfully created");
+    		} else {
+    			Log.e(AnkiDroidApp.TAG, "openDeck: Backup creation failed");
+    		}
+    	}
+
         Deck deck = null;
         Cursor cursor = null;
         Log.i(AnkiDroidApp.TAG, "openDeck - Opening database " + path);
@@ -3908,7 +3921,7 @@ public class Deck {
         HashMap<String, String> newQA = CardModel.formatQA(fact, newCard.getCardModel(), newCard.splitTags());
         newCard.setQuestion(newQA.get("question"));
         newCard.setAnswer(newQA.get("answer"));
-        newCard.addToDb();            
+        newCard.addToDb();
 
         return true;
     }
@@ -4370,7 +4383,9 @@ public class Deck {
 
 
     public void addUndoCommand(SqlCommandType command, String table, ContentValues values, String whereClause) {
-    	mUndoRedoStackToRecord.peek().mUndoCommands.add(new UndoCommand(command, table, values, whereClause));
+	if(!mUndoRedoStackToRecord.empty()) {
+	    	mUndoRedoStackToRecord.peek().mUndoCommands.add(new UndoCommand(command, table, values, whereClause));
+	}
     }
 
 
@@ -4671,7 +4686,7 @@ public class Deck {
         if (tags.length != 0) {
             StringBuilder tagList = new StringBuilder(128);
             for (int i = 0; i < tags.length; i++) {
-                tagList.append("'").append(tags[i]).append("'");
+                tagList.append("'").append(tags[i].replaceAll("\\'+", "\'\'")).append("'");
                 if (i < tags.length - 1) {
                     tagList.append(", ");
                 }

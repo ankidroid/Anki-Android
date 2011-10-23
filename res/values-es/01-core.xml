@@ -97,6 +97,7 @@
   <string name="later">Más tarde</string>
   <string name="download">Descargar</string>
   <string name="deckpicker_loading_error">El mazo no se pudo cargar</string>
+  <string name="deckpicker_creating_backup">Creando copia de seguridad...</string>
   <string-array name="next_review_s">
     <item>1 segundo</item>
     <item>1 minuto</item>

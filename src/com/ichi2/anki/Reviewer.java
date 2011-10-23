@@ -104,6 +104,7 @@ public class Reviewer extends Activity implements IButtonListener{
     public static final int RESULT_SESSION_COMPLETED = 1;
     public static final int RESULT_NO_MORE_CARDS = 2;
     public static final int RESULT_EDIT_CARD_RESET = 3;
+    public static final int RESULT_ANSWERING_ERROR = 4;
 
     /**
      * Possible values for update card handler
@@ -235,7 +236,7 @@ public class Reviewer extends Activity implements IButtonListener{
     private boolean mIsLastCard = false;
     private boolean mShowProgressBars;
     private boolean mPrefUseTimer;
-    private boolean mShowAnimations = true;
+    private boolean mShowAnimations = false;
     private String mLocale;
 
     private boolean mIsSelecting = false;
@@ -580,6 +581,11 @@ public class Reviewer extends Activity implements IButtonListener{
 
         @Override
         public void onPostExecute(DeckTask.TaskData result) {
+            if (!result.getBoolean()) {
+            	// RuntimeException occured on marking cards
+                Reviewer.this.setResult(RESULT_ANSWERING_ERROR);
+                closeReviewer();
+            }
             mProgressDialog.dismiss();
         }
     };
@@ -603,6 +609,12 @@ public class Reviewer extends Activity implements IButtonListener{
 
         @Override
         public void onPostExecute(DeckTask.TaskData result) {
+            if (!result.getBoolean()) {
+            	// RuntimeException occured on dismissing cards
+                Reviewer.this.setResult(RESULT_ANSWERING_ERROR);
+                closeReviewer();
+                return;
+            }
             // Check for no more cards before session complete. If they are both true,
             // no more cards will take precedence when returning to study options.
             if (mNoMoreCards) {
@@ -649,12 +661,18 @@ public class Reviewer extends Activity implements IButtonListener{
 
         @Override
         public void onPostExecute(DeckTask.TaskData result) {
+            if (!result.getBoolean()) {
+            	// RuntimeException occured on update cards
+                Reviewer.this.setResult(RESULT_ANSWERING_ERROR);
+                closeReviewer();
+                return;
+            }
             mShakeActionStarted = false;
-            if (result != null) {
-                String str = result.getString();
-                if (str != null && str.equals(Deck.UNDO_TYPE_SUSPEND_CARD)) {
+            String str = result.getString();
+            if (str != null) {
+                if (str.equals(Deck.UNDO_TYPE_SUSPEND_CARD)) {
                 	Themes.showThemedToast(Reviewer.this, getResources().getString(R.string.card_unsuspended), true);
-                } else if (result.getString().equals("redo suspend")) {
+                } else if (str.equals("redo suspend")) {
                 	Themes.showThemedToast(Reviewer.this, getResources().getString(R.string.card_suspended), true);           	
                 }            	
             }
@@ -686,6 +704,12 @@ public class Reviewer extends Activity implements IButtonListener{
 
         @Override
         public void onPostExecute(DeckTask.TaskData result) {
+            if (!result.getBoolean()) {
+            	// RuntimeException occured on answering cards
+                Reviewer.this.setResult(RESULT_ANSWERING_ERROR);
+                closeReviewer();
+                return;
+            }
             // Check for no more cards before session complete. If they are both true,
             // no more cards will take precedence when returning to study options.
             if (mNoMoreCards) {
@@ -901,6 +925,11 @@ public class Reviewer extends Activity implements IButtonListener{
     protected void onPause() {
         super.onPause();
         Log.i(AnkiDroidApp.TAG, "Reviewer - onPause()");
+
+    	mTimeoutHandler.removeCallbacks(mShowAnswerTask);
+    	mTimeoutHandler.removeCallbacks(mShowQuestionTask);
+    	longClickHandler.removeCallbacks(longClickTestRunnable);
+    	longClickHandler.removeCallbacks(startSelection);
 
         stopTimer();
         if (!mClosing) {
@@ -1330,12 +1359,12 @@ public class Reviewer extends Activity implements IButtonListener{
 
     private void restartTimer() {
         if (mCurrentCard != null) {
-            mCurrentCard.resumeTimer();          
+            mCurrentCard.resumeTimer();
         }
         if (mPrefTimer && mSavedTimer != 0) {
             mCardTimer.setBase(SystemClock.elapsedRealtime() - mSavedTimer);
             mCardTimer.start();
-        }    	
+        }
     }
 
 
@@ -3009,6 +3038,7 @@ public class Reviewer extends Activity implements IButtonListener{
 
     	setOutAnimation(true);    		
     	mClosing = true;
+    	DeckTask.waitToFinish();
         DeckTask.launchDeckTask(DeckTask.TASK_TYPE_SAVE_DECK, mSaveAndResetDeckHandler, new DeckTask.TaskData(AnkiDroidApp.deck(), 0));
     }
     

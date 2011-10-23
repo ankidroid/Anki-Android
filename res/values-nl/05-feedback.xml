@@ -24,7 +24,7 @@
   <string name="error_cancel">Fouten niet melden</string>
   <string name="error_reporting_choice">Foutrapportage-modus</string>
   <string name="error_reporting_choice_summary">Errors can be reported automatically, never reported, or you can be prompted</string>
-  <string name="feedback_disclaimer">Disclaimer: Wij verzamelen geen persoonlijke informatie, zoals uw e-mailadres, telefoonnummer, IP-adres of uw IMEU-nummer. We verzamelen wel wat informatie over uw apparaat, zoals de fabrikant, het modelnummer en de versie van Android, en de aard van de gerapporteerde problemen zelf.</string>
+  <string name="feedback_disclaimer">Disclaimer: Wij verzamelen geen persoonlijke informatie, zoals uw e-mailadres, telefoonnummer, IP-adres of uw IMEU-nummer. We verzamelen wel wat informatie over uw apparaat, zoals de fabrikant, het modelnummer, de versie van Android en de aard van de gerapporteerde problemen zelf.</string>
   <string name="feedback_title">Feedback</string>
   <string name="feedback_send_feedback">Send us your feedback</string>
   <string name="feedback_send_feedback_and_errors">Send errors and your feedback</string>
