@@ -2572,6 +2572,7 @@ public class Deck {
      * @return the lastSync
      */
     public double getLastSync() {
+    	Utils.printDate("getLastSync", mLastSync);
         return mLastSync;
     }
 

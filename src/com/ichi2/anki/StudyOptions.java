@@ -674,7 +674,7 @@ public class StudyOptions extends Activity implements IButtonListener {
             if (mDeckFilename == null || !new File(mDeckFilename).exists()) {
                 showContentView(CONTENT_NO_DECK);
             } else {
-            	if ((showDeckPickerOnStartup() || getIntent().getBooleanExtra("startDeckpicker", false)) && !hasErrorFiles()) {
+            	if ((showDeckPickerOnStartup() || getIntent().getBooleanExtra("startDeckpicker", false)) && (!hasErrorFiles())) {
             		openDeckPicker();
             	} else {
             		// Load previous deck.
@@ -1631,6 +1631,7 @@ public class StudyOptions extends Activity implements IButtonListener {
 			dialog = null;
 		}
 
+		dialog.setOwnerActivity(StudyOptions.this);
 		return dialog;
 	}
 
@@ -2243,15 +2244,9 @@ public class StudyOptions extends Activity implements IButtonListener {
             Deck deck = AnkiDroidApp.deck();
             if (deck != null) {
                 Log.i(AnkiDroidApp.TAG, "Synchronizing deck " + mDeckFilename + ", conflict resolution: " + conflictResolution);
-                Log.i(AnkiDroidApp.TAG, String.format(Utils.ENGLISH_LOCALE, "Before syncing - mod: %f, last sync: %f", deck.getModified(), deck.getLastSync()));            	
-            } else {
-            	return;
+                Log.i(AnkiDroidApp.TAG, String.format(Utils.ENGLISH_LOCALE, "Before syncing - mod: %f, last sync: %f", deck.getModified(), deck.getLastSync()));
+                Connection.syncDeck(mSyncListener, new Connection.Payload(new Object[] { username, password, deck, conflictResolution, true }));
             }
-        	if (Deck.isWalEnabled(deck.getDeckPath())) {
-        		deck = null;
-        	}
-            Connection.syncDeck(mSyncListener, new Connection.Payload(new Object[] { username, password, deck,
-                    mDeckFilename, conflictResolution }));
         } else {
         	showDialog(DIALOG_USER_NOT_LOGGED_IN);
         }
@@ -2366,22 +2361,25 @@ public class StudyOptions extends Activity implements IButtonListener {
         } else if (requestCode == STATISTICS && mCurrentContentView == CONTENT_CONGRATS) {
         	showContentView(CONTENT_STUDY_OPTIONS);
         } else if (requestCode == REPORT_ERROR) {
-  	      // workaround for dialog problems when returning from error reporter
-  	      	try {
-  	      		if (mWelcomeAlert != null && mWelcomeAlert.isShowing()) {
-  	      			mWelcomeAlert.dismiss();
-      				mWelcomeAlert.show();
-  	      		} else if (mNewVersionAlert != null && mNewVersionAlert.isShowing()) {
-  	      			mNewVersionAlert.dismiss();
-  	      			mNewVersionAlert.show();
-  	      		}
-  	      	} catch (IllegalArgumentException e) {
-  	      		Log.e(AnkiDroidApp.TAG, "Error on dismissing and showing dialog: " + e);
-  	      	}
-		if (mShowRepairDialog) {
-			showDialog(DIALOG_ANSWERING_ERROR);
-			mShowRepairDialog = false;
-		}
+  	      	if (mShowRepairDialog) {
+  	      		showDialog(DIALOG_ANSWERING_ERROR);
+  	      		mShowRepairDialog = false;
+  	      	} else if ((showDeckPickerOnStartup() || getIntent().getBooleanExtra("startDeckpicker", false))) {
+        		openDeckPicker();
+        	} else {
+        		// workaround for dialog problems when returning from error reporter
+        		try {
+      	      		if (mWelcomeAlert != null && mWelcomeAlert.isShowing()) {
+      	      			mWelcomeAlert.dismiss();
+          				mWelcomeAlert.show();
+      	      		} else if (mNewVersionAlert != null && mNewVersionAlert.isShowing()) {
+      	      			mNewVersionAlert.dismiss();
+      	      			mNewVersionAlert.show();
+      	      		}
+      	      	} catch (IllegalArgumentException e) {
+      	      		Log.e(AnkiDroidApp.TAG, "Error on dismissing and showing dialog: " + e);
+      	      	}
+        	}
         }
     }
 

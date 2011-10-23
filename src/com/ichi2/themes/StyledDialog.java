@@ -25,6 +25,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup.LayoutParams;
+import android.view.WindowManager.BadTokenException;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
@@ -55,6 +56,16 @@ public class StyledDialog extends Dialog {
     public StyledDialog(Context context) {
         super(context, R.style.StyledDialog);
         mContext = context;
+    }
+
+
+    @Override
+    public void show() {
+    	try {
+    		super.show();
+    	} catch (BadTokenException e) {
+    		Log.e(AnkiDroidApp.TAG, "Could not show dialog: " + e);
+    	}
     }
 
 
