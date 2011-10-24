@@ -22,7 +22,7 @@ import pycurl
 import StringIO
 import sys
 
-CROWDIN_KEY = 'YOUR_IDENTIFIER'
+CROWDIN_KEY = ''
 PROJECT_IDENTIFIER = 'ankidroid'
 
 path = '../res/values/'
@@ -81,7 +81,12 @@ def updateMasterFile(selu):
 		c.close()
 		print b.getvalue()
 
-
+try:
+	c = open("crowdin_key.txt","r+")
+	CROWDIN_KEY = c.readline();
+	c.close()
+except IOError as e:
+	CROWDIN_KEY = raw_input("please enter your crowdin key or create \'crowdin_key.txt\': ")
 
 sel = raw_input("update (m)aster file, update (t)ranslation or (r)efresh builds? ")
 
