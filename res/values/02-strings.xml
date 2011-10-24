@@ -82,4 +82,8 @@
 <string name="tutorial_load">Creating tutorial deck</string>
 <string name="tutorial_loading_error">Tutorial deck could not be created</string>
 
+<string name="help_title">Help</string>
+<string name="help_online">Online help</string>
+<string name="help_tutorial">Tutorial deck</string>
+
 </resources>
