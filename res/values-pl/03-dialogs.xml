@@ -58,7 +58,7 @@
   <string name="reset_card_dialog_title">Reset postępu karty</string>
   <string name="reset_card_dialog_message">Reset postępów nauki wszystkich kart tego faktu (będą one wyglądały jak nowe karty).\nNa pewno kontynuować?</string>
   <string name="reset_card_dialog_confirmation">Reset wszystkich kart tego faktu</string>
-  <string name="answering_error_title">Database error</string>
-  <string name="answering_error_message">An error occured while answering/changing the last card. This could be related to a corrupt deck or to insufficient disc space.\n\nIf it happens more often, please try to repair the deck.\n\nNevertheless, it could be an AnkiDroid bug as well; please report the error that we can check this.</string>
-  <string name="answering_error_report">Report error</string>
+  <string name="answering_error_title">Błąd bazy danych</string>
+  <string name="answering_error_message">Wystąpił błąd podczas oceniania/edycji karty. Przyczyną może być uszkodzona talia lub brak miejsca.\n\nJeśli będzie się to zdarzać częściej, spróbuj naprawić talię.\n\nMoże to być również błąd w AnkiDroidzie; prosimy o jego zgłoszenie, abyśmy mogli to sprawdzić.</string>
+  <string name="answering_error_report">Zgłoś błąd</string>
 </resources>
