@@ -17,7 +17,7 @@
  
 <resources> 
  <string-array name="tutorial_questions"> 
-    <item><![CDATA[Merci d\'avoir installé AnkiDroid !<br />Ceci est une courte introduction.<br /><br />Ce que vous voyez maintenant est la partie <span style=\'font-weight:600;\'>question</span> de la TODO-flashcard.<br />Cliquez sur le bouton large ci-dessous pour continuer...]]></item> 
+    <item><![CDATA[Merci d\'avoir installé AnkiDroid !<br />Ceci est une courte introduction.<br /><br />Ce que vous voyez maintenant est la partie <span style=\'font-weight:600;\'>question</span> de la carte-mémoire.<br />Cliquez sur le bouton large ci-dessous pour continuer...]]></item> 
     <item><![CDATA[Vous voyez désormais la deuxième carte-mémoire.<br /><br />L\'idée est simple : comme avec les cartes-mémoire du &quot; monde réel &quot;, vous écrivez une question au dessus de la carte et la réponse au dos de la carte.<br /><br />(cliquez sur le bouton pour afficher le dos de la carte)]]></item> 
     <item><![CDATA[&quot; Quelle est la capitale du Burkina Faso ? &quot;<br /><br />Réfléchissez un peu à la réponse et cliquez pour &quot; montrer la réponse &quot;]]></item> 
     <item><![CDATA[Sur chacun des boutons de réponse, vous voyez une information sur l\'intervalle de temps au bout duquel la carte sera répétée si vous appuyez sur ce bouton.]]></item> 
