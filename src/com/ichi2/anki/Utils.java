@@ -690,7 +690,7 @@ public class Utils {
 
     
     public static String getBaseUrl(String mediaDir, Model model, Deck deck) {
-        String base;// = model.getFeatures().trim();
+        String base = null;// = model.getFeatures().trim();
 //        if (deck.getBool("remoteImages") && base.length() != 0 && !base.equalsIgnoreCase("null")) {
   //          return base;
     //    } else {
