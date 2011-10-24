@@ -974,6 +974,7 @@ public class StudyOptions extends Activity implements IButtonListener {
 
 
     private void closeOpenedDeck() {
+	DeckTask.waitToFinish();
         if (AnkiDroidApp.deck() != null && mSdCardAvailable) {
             AnkiDroidApp.deck().closeDeck();
             AnkiDroidApp.setDeck(null);
