@@ -164,6 +164,7 @@ public class StudyOptions extends Activity implements IButtonListener {
     private static final int DIALOG_CRAM = 16;
     private static final int DIALOG_BACKUP_NO_SPACE_LEFT = 17;
     private static final int DIALOG_ANSWERING_ERROR = 18;
+    private static final int DIALOG_SELECT_HELP = 19;
 
     private String mCurrentDialogMessage;
 
@@ -450,12 +451,7 @@ public class StudyOptions extends Activity implements IButtonListener {
                 	}
                 	return;
                 case R.id.studyoptions_help:
-                    if (Utils.isIntentAvailable(StudyOptions.this, "android.intent.action.VIEW")) {
-                        Intent intent = new Intent("android.intent.action.VIEW", Uri.parse(getResources().getString(R.string.link_help)));
-                        startActivity(intent);
-                    } else {
-                        startActivity(new Intent(StudyOptions.this, About.class));
-                    }
+                	showDialog(DIALOG_SELECT_HELP);
                     return;
                 case R.id.studyoptions_limit_tag_tv2:
                     if (mLimitTagNewActiveCheckBox.isChecked()) {
@@ -734,7 +730,7 @@ public class StudyOptions extends Activity implements IButtonListener {
     public void onConfigurationChanged(Configuration newConfig){
     	super.onConfigurationChanged(newConfig);
        	setLanguage(mLocale);
-    	hideDeckInformation();
+    	hideDeckInformation(false);
         boolean cramChecked = mToggleCram.isChecked();
         boolean limitChecked = mToggleLimit.isChecked();
         boolean limitEnabled = mToggleLimit.isEnabled();
@@ -1627,6 +1623,27 @@ public class StudyOptions extends Activity implements IButtonListener {
 	        builder.setCancelable(true);
 		    dialog = builder.create();
 			break;
+		case DIALOG_SELECT_HELP:
+	        builder.setTitle(res.getString(R.string.help_title));
+	        builder.setItems(new String[] {res.getString(R.string.help_tutorial), res.getString(R.string.help_online)}, new OnClickListener() {
+
+				@Override
+				public void onClick(DialogInterface arg0, int arg1) {
+					if (arg1 == 0) {
+						loadSampleDeck();
+					} else {
+			            if (Utils.isIntentAvailable(StudyOptions.this, "android.intent.action.VIEW")) {
+			                Intent intent = new Intent("android.intent.action.VIEW", Uri.parse(getResources().getString(R.string.link_help)));
+			                startActivity(intent);
+			            } else {
+			                startActivity(new Intent(StudyOptions.this, About.class));
+			            }						
+					}
+				}
+	        	
+	        });
+			dialog = builder.create();
+			break;
 
 		default:
 			dialog = null;
@@ -1903,10 +1920,16 @@ public class StudyOptions extends Activity implements IButtonListener {
     }
 
 
-    private void hideDeckInformation() {
+    private void hideDeckInformation(boolean fade) {
     	setTitle(getResources().getString(R.string.app_name));
         mTextDeckName.setVisibility(View.INVISIBLE);
+        if (fade) {
+        	mTextDeckName.setAnimation(ViewAnimation.fade(ViewAnimation.FADE_OUT, 500, 0));        	
+        }
         mStatisticsField.setVisibility(View.INVISIBLE);
+        if (fade) {
+        	mStatisticsField.setAnimation(ViewAnimation.fade(ViewAnimation.FADE_OUT, 500, 0));        	
+        }
     }
 
 
@@ -2204,18 +2227,11 @@ public class StudyOptions extends Activity implements IButtonListener {
         // If decks directory does not exist, create it.
         File decksDirectory = new File(mPrefDeckPath);
         AnkiDroidApp.createDecksDirectoryIfMissing(decksDirectory);
-
-        File sampleDeckFile = new File(mPrefDeckPath, SAMPLE_DECK_NAME);
-        if (!sampleDeckFile.exists()) {
-            mDeckFilename = sampleDeckFile.getAbsolutePath();
-            savePreferences("deckFilename");
-        	DeckTask.launchDeckTask(DeckTask.TASK_TYPE_LOAD_TUTORIAL, mLoadDeckHandler, new DeckTask.TaskData(sampleDeckFile.getAbsolutePath()));
-        } else {
-        	Intent deckLoadIntent = new Intent();
-        	deckLoadIntent.putExtra(OPT_DB, sampleDeckFile.getAbsolutePath());
-        	onActivityResult(PICK_DECK_REQUEST, RESULT_OK, deckLoadIntent);
-    	}
+        mDeckFilename = mPrefDeckPath + "/" + SAMPLE_DECK_NAME;
+        savePreferences("deckFilename");
+        DeckTask.launchDeckTask(DeckTask.TASK_TYPE_LOAD_TUTORIAL, mLoadDeckHandler, new DeckTask.TaskData(mDeckFilename));        	
     }
+
 
     private void syncDeckWithPrompt() {
         if (AnkiDroidApp.isUserLoggedIn()) {
@@ -2643,7 +2659,7 @@ public class StudyOptions extends Activity implements IButtonListener {
     						}
                 });
         	}
-	    	hideDeckInformation();
+	    	hideDeckInformation(false);
             // }
         }
 

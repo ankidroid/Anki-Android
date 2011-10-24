@@ -726,7 +726,17 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
     	publishProgress(new TaskData(res.getString(R.string.tutorial_load)));
     	AnkiDb ankiDB = null;
     	try{
-    		// Copy the empty deck from the assets to the SD card.
+    		// close open deck
+    		Deck openDeck = AnkiDroidApp.deck();
+    		if (openDeck != null) {
+    			openDeck.closeDeck(false);
+    			AnkiDroidApp.setDeck(null);
+    		}
+    		// delete any existing tutorial file
+            if (!sampleDeckFile.exists()) {
+            	sampleDeckFile.delete();
+            }
+    		// copy the empty deck from the assets to the SD card.
     		InputStream stream = res.getAssets().open(DeckCreator.EMPTY_DECK_NAME);
     		Utils.writeToFile(stream, sampleDeckFile.getAbsolutePath());
     		stream.close();
