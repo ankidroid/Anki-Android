@@ -690,16 +690,16 @@ public class Utils {
 
     
     public static String getBaseUrl(String mediaDir, Model model, Deck deck) {
-        String base = model.getFeatures().trim();
-        if (deck.getBool("remoteImages") && base.length() != 0 && !base.equalsIgnoreCase("null")) {
-            return base;
-        } else {
+        String base = null;// = model.getFeatures().trim();
+//        if (deck.getBool("remoteImages") && base.length() != 0 && !base.equalsIgnoreCase("null")) {
+  //          return base;
+    //    } else {
             // Anki desktop calls deck.mediaDir() here, but for efficiency reasons we only call it once in
             // Reviewer.onCreate() and use the value from there            
             if (mediaDir != null) {                              
                 base = urlEncodeMediaDir(mediaDir);
             }
-        }
+      //  }
         return base;
     }
 
