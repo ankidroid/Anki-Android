@@ -8,7 +8,7 @@ gen/
 /testbin/com/ichi2/anki/AnkiDroidTest.class
 /test/com/ichi2/anki/AllTests.java
 /test/com/ichi2/anki/AnkiDroidTest.java
-tools/manage-crowdin.py
+tools/crowdin_key.txt
 
 .idea/
 out/
