@@ -58,4 +58,7 @@
   <string name="reset_card_dialog_title">Restear el progreso de la tarjeta</string>
   <string name="reset_card_dialog_message">Esto resetea el proceso de aprendizaje para todas las tarjetas de este hecho (se mostrarán igual que tarjetas nuevas).\n¿Estás seguro de continuar?</string>
   <string name="reset_card_dialog_confirmation">Resetear todas las tarjetas de este hecho</string>
+  <string name="answering_error_title">Error en la base de datos</string>
+  <string name="answering_error_message">Ocurrió un error al responder/modificar la última tarjeta. Esto puede deberse a que el mazo está corrupto o a que el espacio en disco es insuficiente.\n\nSi esto ocurre con más frecuencia, por favor, trata de reparar el mazo.\n\nAún así, la causa podría ser un error de AnkiDroid, por lo que te rogamos nos informes del error para que podamos comprobarlo.</string>
+  <string name="answering_error_report">Informar sobre el error</string>
 </resources>

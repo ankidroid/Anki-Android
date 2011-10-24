@@ -29,6 +29,8 @@
   <string name="backup_delete">Eliminando copias de seguridad.\nPor favor, espera...</string>
   <string name="contextmenu_deckpicker_remove_backups">Eliminar copias de seguridad</string>
   <string name="backup_restore">Restaurar copia de seguridad</string>
+  <string name="backup_repair_deck">Reparar mazo</string>
+  <string name="backup_repair_deck_progress">Reparando el mazo.\nPor favor, espera...</string>
   <string name="backup_restore_error">No se pudo restaurar el mazo</string>
   <string name="backup_restore_deck">Restaurando mazo.\nPor favor, espera...</string>
   <string name="backup_restore_select_title">Selecciona copia de seguridad para restaurar</string>
@@ -36,5 +38,7 @@
   <string name="backup_delete_deck_backups">Copias de seguridad del mazo %s eliminadas</string>
   <string name="delete_deck_success">Mazo %1$s eliminado. Copia de seguridad en la carpeta %2$s</string>
   <string name="backup_delete_deck_backups_alert">¿Eliminar realmente todas las copias de seguridad del mazo %s?</string>
-  <string name="open_deck_failed">No se pudo abrir el archivo %1$s. O bien no es un archivo anki real, o bien ha sido dañado.\n\nPuedes intentar restaurar el mazo a partir de una copia de seguridad; el mazo actual será movido a la subcarpeta \'%2$s\' (información acerca de cómo reparar mazos dañados: %3$s).\n\nPresiona el botón Atrás para cerrar este cuadro de diálogo</string>
+  <string name="open_deck_failed">El archivo %1$s no se pudo abrir. O bien no es realmente un archivo anki, o bien está dañado.\n\nPuedes tratar de reparar el mazo o restaurarlo desde una copia de seguridad (en ambos casos, la copia del mazo dañado será movida a la subcarpeta \'%2$s\'). Más información sobre la reparación de mazos dañados: %3$s.\n\nPresiona el botón Atrás para cerrar este cuadro de diálogo</string>
+  <string name="deckpicker_backup_error">No se pudo crear la copia de seguridad</string>
+  <string name="deck_repair_error">El mazo no pudo ser reparado</string>
 </resources>

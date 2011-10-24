@@ -97,6 +97,7 @@
   <string name="later">Daha sonra</string>
   <string name="download">İndir</string>
   <string name="deckpicker_loading_error">Deste yüklenemedi</string>
+  <string name="deckpicker_creating_backup">Yedek oluşturuluyor...</string>
   <string-array name="next_review_s">
     <item>1 saniye</item>
     <item>1 dakika</item>

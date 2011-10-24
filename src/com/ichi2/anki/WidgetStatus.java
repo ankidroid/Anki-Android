@@ -46,7 +46,7 @@ public final class WidgetStatus {
         // Only update the widget if it is enabled.
         // TODO(flerda): Split widget from notifications.
         SharedPreferences preferences = PrefSettings.getSharedPrefs(context);
-        if (preferences.getBoolean("widgetEnabled", false)) {
+        if (preferences.getBoolean("widgetMediumEnabled", false)) {
             mediumWidget = true;
         } else {
             mediumWidget = false;
@@ -104,13 +104,15 @@ public final class WidgetStatus {
             ArrayList<DeckStatus> decks = new ArrayList<DeckStatus>(fileList.length);
 
             for (File file : fileList) {
+            	String absPath = null;
                 try {
                     // Run through the decks and get the information
-                    String absPath = file.getAbsolutePath();
+                    absPath = file.getAbsolutePath();
                     String deckName = file.getName().replaceAll(".anki", "");
 
                     Log.i(AnkiDroidApp.TAG, "Found deck: " + absPath);
 
+                	DeckTask.waitToFinish();
                     Deck deck;
                     Deck currentDeck = AnkiDroidApp.deck();
                     if (currentDeck != null && currentDeck.getDeckPath().equals(deckName)) {
@@ -120,11 +122,12 @@ public final class WidgetStatus {
                         	deck = Deck.openDeck(absPath, false);                    		
             			} catch (RuntimeException e) {
             				Log.w(AnkiDroidApp.TAG, "Widget: Could not open database " + absPath + ": " + e);
+            				BackupManager.restoreDeckIfMissing(absPath);
             				deck = null;
             			}
                     }
                     if (deck == null) {
-                        Log.e(AnkiDroidApp.TAG, "Skipping null deck: " + absPath);
+                        Log.e(AnkiDroidApp.TAG, "Widget: Skipping null deck: " + absPath);
                         // Use the data from the last time we updated the deck, if available.
                         for (DeckStatus deckStatus : mDecks) {
                             if (absPath.equals(deckStatus.mDeckPath)) {
@@ -149,8 +152,11 @@ public final class WidgetStatus {
                     // Add the information about the deck
                     decks.add(new DeckStatus(absPath, deckName, newCards, dueCards, failedCards, eta, reps));
                 } catch (SQLException e) {
-                    Log.i(AnkiDroidApp.TAG, "Could not open deck");
+                    Log.i(AnkiDroidApp.TAG, "Widget: Could not open deck");
                     Log.e(AnkiDroidApp.TAG, e.toString());
+                    if (absPath != null) {
+                        BackupManager.restoreDeckIfMissing(absPath);                    	
+                    }
                 }
             }
 
@@ -170,14 +176,14 @@ public final class WidgetStatus {
         protected void onPostExecute(Context context) {
             Log.d(AnkiDroidApp.TAG, "WidgetStatus.UpdateDeckStatusAsyncTask.onPostExecute()");
             MetaDB.storeWidgetStatus(context, mDecks);
-	    if (mediumWidget) {
-	        Intent intent;
+            if (mediumWidget) {
+            	Intent intent;
                 intent = new Intent(context, AnkiDroidWidgetMedium.UpdateService.class);
                 intent.setAction(AnkiDroidWidgetMedium.UpdateService.ACTION_UPDATE);
                 context.startService(intent);
             }
             if (smallWidget) {
-	        Intent intent;
+            	Intent intent;
                 intent = new Intent(context, AnkiDroidWidgetSmall.UpdateService.class);
                 intent.setAction(AnkiDroidWidgetSmall.UpdateService.ACTION_UPDATE);            	
                 context.startService(intent);

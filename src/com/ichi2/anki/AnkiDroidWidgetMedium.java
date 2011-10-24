@@ -50,23 +50,24 @@ public class AnkiDroidWidgetMedium extends AppWidgetProvider {
 
     @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
-        Log.i(AnkiDroidApp.TAG, "onUpdate");
+        Log.i(AnkiDroidApp.TAG, "MediumWidget: onUpdate");
         WidgetStatus.update(context);
     }
 
     @Override
     public void onEnabled(Context context) {
         super.onEnabled(context);
+        Log.i(AnkiDroidApp.TAG, "MediumWidget: Widget enabled");
         SharedPreferences preferences = PrefSettings.getSharedPrefs(context);
-        preferences.edit().putBoolean("widgetEnabled", true).commit();
+        preferences.edit().putBoolean("widgetMediumEnabled", true).commit();
     }
 
     @Override
     public void onDisabled(Context context) {
         super.onDisabled(context);
-        Log.d(AnkiDroidApp.TAG, "Widget disabled");
+        Log.i(AnkiDroidApp.TAG, "MediumWidget: Widget disabled");
         SharedPreferences preferences = PrefSettings.getSharedPrefs(context);
-        preferences.edit().putBoolean("widgetEnabled", false).commit();
+        preferences.edit().putBoolean("widgetMediumEnabled", false).commit();
     }
 
     public static class UpdateService extends Service {
@@ -151,7 +152,7 @@ public class AnkiDroidWidgetMedium extends AppWidgetProvider {
 
         @Override
         public void onStart(Intent intent, int startId) {
-            Log.i(AnkiDroidApp.TAG, "OnStart");
+            Log.i(AnkiDroidApp.TAG, "MediumWidget: OnStart");
 
             boolean updateDueDecksNow = true;
             if (intent != null) {

@@ -58,4 +58,7 @@
   <string name="reset_card_dialog_title">Lernfortschritt zurücksetzen</string>
   <string name="reset_card_dialog_message">Dies setzt den Lernfortschritt für alle Karten dieses Fakts zurück (diese sehen danach aus wie neue Karten).\nWirklich fortfahren?</string>
   <string name="reset_card_dialog_confirmation">Alle Karten dieses Fakts wurden zurückgesetzt</string>
+  <string name="answering_error_title">Datenbank-Fehler</string>
+  <string name="answering_error_message">Beim Antworten/Ändern der letzten Karte ist ein Fehler aufgetreten. Das könnte an einem beschädigten Stapel oder an unzureichendem Festplattenspeicher liegen.\n\nSollte dies häufiger auftreten, versuchen Sie bitte, den Stapel zu reparieren.\n\nDie Ursache könnte auch ein AnkiDroid-Fehler sein; bitte melden Sie ihn deshalb, damit wir das überprüfen können.</string>
+  <string name="answering_error_report">Fehler melden</string>
 </resources>

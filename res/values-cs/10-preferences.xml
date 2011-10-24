@@ -72,7 +72,7 @@
   <string name="reset_messages_question">Zobrazit tyto zprávy znovu?</string>
   <string name="reset_messages_summ">Zobrazit aktuální AnkiDroid zprávy později</string>
   <string name="reset_all_question">Obnovit všechny jazyky, widget, tabuli a slovníky?</string>
-  <string name="reset_confirmation">All states reset</string>
+  <string name="reset_confirmation">Všechny stavy obnoveny</string>
   <string name="use_ruby_support">Poskytovat podporu ruby anotace</string>
   <string name="use_ruby_support_summ">Pokud jsou nalezeny znaky \ \' [\ \' a \ \'] \ \', pak je text mezi nimi zpracován jako ruby anotace </string>
   <string name="display_font_size">Relativní velikost fontu</string>
@@ -107,10 +107,10 @@
   <string name="gestures_tap_bottom">Klepnutí dolů</string>
   <string name="gestures_tap_left">Klepnutí vlevo</string>
   <string name="gestures_tap_right">Klepnutí vpravo</string>
-  <string name="pref_cat_scrolling">Hardware up/down buttons</string>
+  <string name="pref_cat_scrolling">Hardwarová tlačítka nahoru/dolů</string>
   <string name="more_scrolling_buttons">eReader</string>
   <string name="more_scrolling_buttons_summ">Použít také Kanji/Katakana, Emoji/Kao-moji tlačítka pro posun.</string>
-  <string name="double_scrolling_gap">Double scrolling</string>
+  <string name="double_scrolling_gap">Dvojitý posun</string>
   <string name="double_scrolling_gap_summ">Označte, pokud chcete zdvojnásobit posuv.</string>
   <string name="swipe_sensibility">Citlivost tažení</string>
   <string name="swipe_sensibility_summ">Citlivost gest tažení: XXX</string>
@@ -153,7 +153,7 @@
   <string name="studyoptions_limit_button_text">Limit</string>
   <string name="studyoptions_limit_dialog_title">Limit učení</string>
   <string name="studyoptions_session">Sezení</string>
-  <string name="studyoptions_tag">Podle štítku</string>
+  <string name="studyoptions_tag">Štítky</string>
   <string name="studyoptions_tag_new">Zobrazit nové karty podle štítků:</string>
   <string name="studyoptions_tag_rev">Zobrazit opakované karty podle štítků:</string>
   <string name="studyoptions_session_minutes">Limit sezení (minuty):</string>
@@ -197,5 +197,5 @@
   <string name="show_broadcast_messages_summ">Zobrazovat upozornění AnkiDroid, jako jsou nové aktualizace nebo jiné důležité zprávy</string>
   <string name="input_workaround">Input Workaround</string>
   <string name="input_workaround_summ">Řešení problémů se vstupními HTML poli. Způsobuje problémy na několika zařízeních.</string>
-  <string name="write_answers_message">Předtím, než budou moci napsat své odpovědi, musíte definovat pro každý balíček pole pro porovnání písemné odpovědi.\n\nMůžete to provést přes Anki Desktop. (Vlastnosti balíku -&gt;Upravit model -&gt; Rozvržení karty).</string>
+  <string name="write_answers_message">Měli byste definovat pro každý balíček pole srovnání s písemnou odpovědí. Můžete to udělat pomocí Anki Desktop (Vlastnosti balíku -&gt; Upravit model -&gt; Rozvržení karty).\n\nPokud není srovnávací pole nastaveno, budou vaše písemné odpovědi vždy porovnávány s celou kartou odpovědi.</string>
 </resources>

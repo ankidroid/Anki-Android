@@ -146,7 +146,14 @@ public class CustomExceptionHandler implements Thread.UncaughtExceptionHandler {
             reportInformation.append(String.format("%s=%s\n", key.toLowerCase(), value));
         }
 
-        reportInformation.append("stacktrace=\nBegin Stacktrace\n");
+        reportInformation.append("stacktrace=\n");
+
+        // check, if exception has ben catched and forwarded to report it anyway (only out of reviewer)
+        if (t == null) {
+        	reportInformation.append("(This exception occured in reviewer and is probably related to a corrupt db/insufficient disc space. Has been catched)\nBegin Stacktrace\n(ProbablyCorruptDB)\n");
+        } else {
+        	reportInformation.append("Begin Stacktrace\n");	
+        }
 
         // Stack trace
         final Writer result = new StringWriter();
@@ -170,7 +177,9 @@ public class CustomExceptionHandler implements Thread.UncaughtExceptionHandler {
         Log.i(AnkiDroidApp.TAG, "report infomation string created");
         saveReportToFile(reportInformation.toString());
 
-        mPreviousHandler.uncaughtException(t, e);
+        if (t != null) {
+            mPreviousHandler.uncaughtException(t, e);
+        }
     }
 
 

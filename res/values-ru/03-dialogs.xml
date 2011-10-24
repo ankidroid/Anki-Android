@@ -58,4 +58,7 @@
   <string name="reset_card_dialog_title">Сброс учебного прогресса карты</string>
   <string name="reset_card_dialog_message">Этот действие сбрасывает успехи в учебе для всех карт этого факта (они будут выглядеть как новые карты).\nВы действительно хотите продолжить?</string>
   <string name="reset_card_dialog_confirmation">Все карты этого факта будут переустановлены</string>
+  <string name="answering_error_title">Ошибка базы данных</string>
+  <string name="answering_error_message">Произошла ошибка при ответе/изменении последней карты. Это может быть связано с испорченной колодой или с отсутствием места на диске.\n\nЕсли это встречается часто, пожалуйста, попробуйте исправить колоду.\n\nТем не менее стоит сообщить нам об ошибке AnkiDroid, чтобы мы могли проверить её.</string>
+  <string name="answering_error_report">Сообщить об ошибке</string>
 </resources>
