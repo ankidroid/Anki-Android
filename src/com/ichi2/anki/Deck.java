@@ -4558,6 +4558,9 @@ public class Deck {
             bundledDeck.put("newCount", mNewCount);
             bundledDeck.put("newCountToday", mNewCountToday);
             bundledDeck.put("newEarly", mNewEarly);
+            //bundledDeck.put("revCardOrder", mRevCardOrder); //XXX shouldn't
+            //this be there? It's definitely sent by Anki; maybe we don't change
+            //it yet, that's the only possible reason.
             bundledDeck.put("revCount", mRevCount);
             bundledDeck.put("reviewEarly", mReviewEarly);
             bundledDeck.put("suspended", mSuspended);
