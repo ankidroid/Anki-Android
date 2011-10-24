@@ -33,7 +33,7 @@
  <string-array name="tutorial_answers">
     <item><![CDATA[... um die <span style=\'font-weight:600;\'>Antwort</span> zu sehen (unter der Linie).<br><br><br>Klicken Sie nun auf die rechte untere Schaltfläche.]]></item> 
     <item><![CDATA[Nehmen wir an, Sie wollen Hauptstädte lernen. Die Frage sei...<br><br>(klicken Sie auf eine der Schaltflächen, um die nächsten Karte zu zeigen)]]></item> 
-    <item><![CDATA[\"Ouagadougou\" ist die richtige Antwort.<br><br>Sie wussten es nicht? Klicken Sie auf \"Nochmal\", um die Karten ein einigen Minuten noch einmal zu zeigen. Andernfalls klicken Sie auf einen der anderen Schaltflächen, je nachdem, wie einfach die Antwort für Sie war.]]></item> 
+    <item><![CDATA[\"Ouagadougou\" ist die richtige Antwort.<br><br>Sie wussten es nicht? Klicken Sie auf \"Nochmal\", um die Karten nach einigen Minuten noch einmal zu zeigen. Andernfalls klicken Sie auf einen der anderen Schaltflächen, je nachdem, wie einfach die Antwort für Sie war.]]></item> 
     <item><![CDATA[Diese Zeit wird berechnet aus dem Datum, an dem Sie die Karten das letzte Mal beantwortet haben, der aktuell gewählten Schwierigkeit und der früher gewählten Schwierigkeiten.]]></item> 
     <item><![CDATA[Wenn Sie mehr zum Thema Spaced Repetition wissen wollen, können Sie hier mehr nachlesen:<br>http://en.wikipedia.org/wiki/Spaced_repetition_system]]></item> 
     <item><![CDATA[Keine Sorge, das kann automatisch erledigt werden. Informationen müssen nicht doppelt eingegeben werden.]]></item> 

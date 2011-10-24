@@ -111,7 +111,6 @@ public class BackupManager {
 		if (!mUseBackups || mDeckPickerDecks.contains(deckpath)) {
 			return false;
 		}
-		mDeckPickerDecks.add(deckpath);
 	        File[] deckBackups = getDeckBackups(new File(deckpath));
 	        int len = deckBackups.length;
 		if (len == 0) {
@@ -127,7 +126,12 @@ public class BackupManager {
 			return true;
 		}
         Date target = Utils.genToday(Utils.utcOffset() + (days * 86400));
-		return backupDate.before(target);
+		if (backupDate.before(target)) {
+			return true;
+		} else {
+			mDeckPickerDecks.add(deckpath);
+			return false;
+		}
 	}
 
 

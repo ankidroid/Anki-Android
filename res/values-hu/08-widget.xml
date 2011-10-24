@@ -28,15 +28,15 @@
   <string name="widget_minimum_cards_due_notification_ticker_title">Esedékes kártyák</string>
   <string name="widget_minimum_cards_due_notification_ticker_text">%d darab AnkiDroid kártya esedékes</string>
   <string name="widget_no_cards_due">Nincs esedékes kártya</string>
-  <string name="widget_loading">Widget loading...</string>
-  <string name="widget_medium">AnkiDroid Medium</string>
-  <string name="widget_small">AnkiDroid Small</string>
+  <string name="widget_loading">Widget betöltése...</string>
+  <string name="widget_medium">AnkiDroid közepes</string>
+  <string name="widget_small">AnkiDroid kicsi</string>
   <plurals name="widget_cards_in_decks_due">
     <item quantity="one">1 kártya esedékes %2$s</item>
     <item quantity="other">%1$d cards due in %2$s</item>
   </plurals>
   <plurals name="widget_decks">
-    <item quantity="one">1 deck</item>
+    <item quantity="one">1 kártya</item>
     <item quantity="other">%1$d decks</item>
   </plurals>
 </resources>
