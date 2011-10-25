@@ -364,6 +364,7 @@ public class StudyOptions extends Activity implements IButtonListener {
     private double mProgressAll;
 
     private boolean mIsClosing = false;
+    private boolean mDeckNotAvailable = false;
 
     /** Used to perform operation in a platform specific way. */
     private Compat mCompat;
@@ -1956,7 +1957,7 @@ public class StudyOptions extends Activity implements IButtonListener {
     private boolean updateValuesFromDeck() {
         Deck deck = AnkiDroidApp.deck();
         Resources res = getResources();
-        if (deck != null && !mIsClosing) {
+        if (deck != null && !mIsClosing && !mDeckNotAvailable) {
             // TODO: updateActives() from anqiqt/ui/main.py
         	try {
             	int dueCount = deck.getDueCount();
@@ -2372,6 +2373,7 @@ public class StudyOptions extends Activity implements IButtonListener {
                 	showDialog(DIALOG_ANSWERING_ERROR);
                     break;
                 default:
+                    DeckTask.launchDeckTask(DeckTask.TASK_TYPE_SAVE_DECK, mSaveAndResetDeckHandler, new DeckTask.TaskData(AnkiDroidApp.deck(), 0));
                 	showContentView(CONTENT_STUDY_OPTIONS);
                     break;
             }
@@ -2871,6 +2873,22 @@ public class StudyOptions extends Activity implements IButtonListener {
 		public void onProgressUpdate(DeckTask.TaskData... values) {
 		}
 
+    };
+
+
+    DeckTask.TaskListener mSaveAndResetDeckHandler = new DeckTask.TaskListener() {
+        @Override
+        public void onPreExecute() {
+        	mDeckNotAvailable = true;
+        }
+        @Override
+        public void onPostExecute(DeckTask.TaskData result) {
+        	mDeckNotAvailable = false;
+        	updateValuesFromDeck();
+        }
+        @Override
+        public void onProgressUpdate(DeckTask.TaskData... values) {
+        }
     };
 
 

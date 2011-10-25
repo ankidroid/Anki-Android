@@ -585,7 +585,7 @@ public class Reviewer extends Activity implements IButtonListener{
             if (!result.getBoolean()) {
             	// RuntimeException occured on marking cards
                 Reviewer.this.setResult(RESULT_ANSWERING_ERROR);
-                closeReviewer();
+                closeReviewer(true);
             }
             mProgressDialog.dismiss();
         }
@@ -613,7 +613,7 @@ public class Reviewer extends Activity implements IButtonListener{
             if (!result.getBoolean()) {
             	// RuntimeException occured on dismissing cards
                 Reviewer.this.setResult(RESULT_ANSWERING_ERROR);
-                closeReviewer();
+                closeReviewer(true);
                 return;
             }
             // Check for no more cards before session complete. If they are both true,
@@ -621,10 +621,10 @@ public class Reviewer extends Activity implements IButtonListener{
             if (mNoMoreCards) {
                 Reviewer.this.setResult(RESULT_NO_MORE_CARDS);
                 mShowCongrats = true;
-                closeReviewer();
+                closeReviewer(true);
             } else if (mSessionComplete) {
                 Reviewer.this.setResult(RESULT_SESSION_COMPLETED);
-                closeReviewer();
+                closeReviewer(true);
             }
         }
     };
@@ -665,7 +665,7 @@ public class Reviewer extends Activity implements IButtonListener{
             if (!result.getBoolean()) {
             	// RuntimeException occured on update cards
                 Reviewer.this.setResult(RESULT_ANSWERING_ERROR);
-                closeReviewer();
+                closeReviewer(true);
                 return;
             }
             mShakeActionStarted = false;
@@ -708,7 +708,7 @@ public class Reviewer extends Activity implements IButtonListener{
             if (!result.getBoolean()) {
             	// RuntimeException occured on answering cards
                 Reviewer.this.setResult(RESULT_ANSWERING_ERROR);
-                closeReviewer();
+                closeReviewer(true);
                 return;
             }
             // Check for no more cards before session complete. If they are both true,
@@ -716,10 +716,10 @@ public class Reviewer extends Activity implements IButtonListener{
             if (mNoMoreCards) {
                 Reviewer.this.setResult(RESULT_NO_MORE_CARDS);
                 mShowCongrats = true;
-                closeReviewer();
+                closeReviewer(true);
             } else if (mSessionComplete) {
                 Reviewer.this.setResult(RESULT_SESSION_COMPLETED);
-                closeReviewer();
+                closeReviewer(true);
             }
         }
     };
@@ -811,7 +811,7 @@ public class Reviewer extends Activity implements IButtonListener{
 	            }
 				break;
 			case MSG_ZEEMOTE_BUTTON_B:
-				closeReviewer();
+				closeReviewer(false);
 				break;
 			case MSG_ZEEMOTE_BUTTON_C:
 				if (AnkiDroidApp.deck().undoAvailable()){
@@ -1005,7 +1005,7 @@ public class Reviewer extends Activity implements IButtonListener{
     public boolean onKeyDown(int keyCode, KeyEvent event)  {
         if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
         	Log.i(AnkiDroidApp.TAG, "Reviewer - onBackPressed()");
-        	closeReviewer();
+        	closeReviewer(false);
         	return true;
         }
          /** Enhancement 722: Hardware buttons for scrolling, I.Z. */
@@ -1385,7 +1385,7 @@ public class Reviewer extends Activity implements IButtonListener{
 
     private void finishNoStorageAvailable() {
         setResult(StudyOptions.CONTENT_NO_EXTERNAL_STORAGE);
-        closeReviewer();
+        closeReviewer(false);
     }
 
 
@@ -2956,7 +2956,7 @@ public class Reviewer extends Activity implements IButtonListener{
 			}
     		break;
     	case GESTURE_EXIT:
-       	 	closeReviewer();
+       	 	closeReviewer(false);
     		break;
     	case GESTURE_UNDO:
     		if (AnkiDroidApp.deck().undoAvailable()) {
@@ -3045,7 +3045,7 @@ public class Reviewer extends Activity implements IButtonListener{
     }
 
 
-    private void closeReviewer() {
+    private void closeReviewer(boolean saveDeck) {
 	mTimeoutHandler.removeCallbacks(mShowAnswerTask);
 	mTimeoutHandler.removeCallbacks(mShowQuestionTask);
 	mTimerHandler.removeCallbacks(removeChosenAnswerText);
@@ -3054,7 +3054,11 @@ public class Reviewer extends Activity implements IButtonListener{
 
     	setOutAnimation(true);    		
     	mClosing = true;
-        DeckTask.launchDeckTask(DeckTask.TASK_TYPE_SAVE_DECK, mSaveAndResetDeckHandler, new DeckTask.TaskData(AnkiDroidApp.deck(), 0));
+    	if (saveDeck) {
+            DeckTask.launchDeckTask(DeckTask.TASK_TYPE_SAVE_DECK, mSaveAndResetDeckHandler, new DeckTask.TaskData(AnkiDroidApp.deck(), 0));
+    	} else {
+    		finish();
+    	}
     }
     
     /** Fixing bug 720: <input> focus, thanks to pablomouzo on android issue 7189*/
