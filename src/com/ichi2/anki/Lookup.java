@@ -100,7 +100,7 @@ public class Lookup {
             		}
         		}
     		}
-    		final String[] items = {"Englisch", "FranzÃ¶sisch", "Spanisch", "Italienisch", "Chinesisch", "Russisch"};
+    		final String[] items = {"Englisch", "Französisch", "Spanisch", "Italienisch", "Chinesisch", "Russisch"};
     		StyledDialog.Builder builder = new StyledDialog.Builder(mContext);
     		builder.setTitle("\"" + mLookupText + "\" nachschlagen");
     		builder.setItems(items, new DialogInterface.OnClickListener() {
