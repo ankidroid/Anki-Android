@@ -310,6 +310,7 @@ public class Reviewer extends Activity implements IButtonListener{
 
     private long mSavedTimer = 0;
 
+    private boolean mRefreshWebview = false;
     private File[] mCustomFontFiles;
     private String mCustomDefaultFontCss;
 
@@ -877,8 +878,9 @@ public class Reviewer extends Activity implements IButtonListener{
             } else {
             	mCurrentBackgroundColor = Color.WHITE;
             }
+		
+		mRefreshWebview = getRefreshWebview();
 
-      	  	mCustomFontFiles = Utils.getCustomFonts(getBaseContext());
             initLayout(R.layout.flashcard);
             if (mPrefTextSelection) {
                 clipboardSetText("");
@@ -1518,7 +1520,7 @@ public class Reviewer extends Activity implements IButtonListener{
             ((View)findViewById(R.id.flashcard_border)).setVisibility(View.VISIBLE);        	
         }
         
-        if (mCustomFontFiles.length != 0) {
+        if (mRefreshWebview) {
             mNextCard = createWebView();
             mNextCard.setVisibility(View.GONE);
             mCardFrame.addView(mNextCard, 0);        	
@@ -2315,7 +2317,7 @@ public class Reviewer extends Activity implements IButtonListener{
     public void fillFlashcard(boolean flip) {
     	if (!flip) {
 	        Log.i(AnkiDroidApp.TAG, "base url = " + mBaseUrl);
-	        if (mCustomFontFiles.length != 0) {
+	        if (mRefreshWebview) {
 	            mNextCard.setBackgroundColor(mCurrentBackgroundColor);
 	            mNextCard.loadDataWithBaseURL(mBaseUrl, mCardContent, "text/html", "utf-8", null);
 	            mNextCard.setVisibility(View.VISIBLE);
@@ -2817,6 +2819,20 @@ public class Reviewer extends Activity implements IButtonListener{
         } catch (Exception e) {
             throw new AssertionError(e);
         }
+    }
+
+
+    public static boolean getRefreshWebview() {
+      	  	mCustomFontFiles = Utils.getCustomFonts(getBaseContext());
+		if (mCustomFontFiles.length != 0) {
+			return true;
+		}
+		for (String s : new String[] {"nook"}) {
+			if  (android.os.Build.DEVICE.indexOf(s) != -1 || android.os.Build.MODEL.indexOf(s) != -1) {
+				return true;
+			}
+		}
+		return false;
     }
 
 
