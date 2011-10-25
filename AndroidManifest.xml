@@ -92,7 +92,7 @@
 			android:label="@string/notification_title"
 			android:configChanges="locale"/>
 		<activity android:name="com.zeemote.zc.ui.android.ControllerAndroidUi$Activity" />
-		<receiver android:name="com.ichi2.veecheck.CheckReceiver"
+<!-- 		<receiver android:name="com.ichi2.veecheck.CheckReceiver"
 					android:permission="android.permission.RECEIVE_BOOT_COMPLETED">
 			<intent-filter>
 				<action
@@ -117,7 +117,7 @@
 				</action>
 				<data android:scheme="http"></data>
 			</intent-filter>
-		</service>
+		</service> -->
 		<service android:name="com.ichi2.anki.services.DownloadManagerService"/>
 		<!-- Broadcast Receiver that will process AppWidget updates -->
 		<receiver android:name="AnkiDroidWidgetMedium" android:label="@string/widget_medium">
