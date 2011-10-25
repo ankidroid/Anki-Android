@@ -61,4 +61,5 @@
   <string name="answering_error_title">Fout in database</string>
   <string name="answering_error_message">Er is een fout opgetreden bij het beantwoorden of veranderen van de laatste kaart. Dit kan duiden op een beschadigde leerset of onvoldoende schijfruimte\n\nAls dit gebeurt vaker, probeer de set dan te repareren\n\nHet kan ook een bug in AnkiDroid zijn;. Rapporteer dan de fout zodat we dit kunnen nagaan.</string>
   <string name="answering_error_report">Fout melden</string>
+  <string name="repair_deck_dialog">Do you really want to try to repair deck \'%1$s\'?\n\nBefore starting the attempt, a copy of the deck will be created in subfolder \'%2$s\'.</string>
 </resources>

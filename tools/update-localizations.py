@@ -71,6 +71,7 @@ def replacechars(filename, fileExt, isCrowdin):
 			if sepPos == -1:
 				if len(contentLine) > 2:
 					errorOccured = True
+					print contentLine
 				continue
 			line.append(["<![CDATA[" + contentLine[:sepPos] + "]]>", "<![CDATA[" + contentLine[sepPos+11:] + "]]>"])
 		for fi in line:
@@ -101,9 +102,11 @@ def fileExtFor(f):
 		return '.csv'
 	else:
 		return '.xml'
+
 def createIfNotExisting(directory):
 	if not os.path.isdir(directory):
 		os.mkdir(directory)
+
 def update(valuesDirectory, f, source, fileExt, isCrowdin):
 	newfile = valuesDirectory + f + '.xml'
 	file(newfile, 'w').write(source)
@@ -133,7 +136,9 @@ for language in languages:
 	# Copy localization files, mask chars and append gnu/gpl licence
 	for f in fileNames:
 		fileExt = fileExtFor(f)
-		anyError = update(valuesDirectory, f, zip.read(language + "/" + f + fileExt), fileExt, True)
+		if update(valuesDirectory, f, zip.read(language + "/" + f + fileExt), fileExt, True):
+			continue
+		anyError = True
 
 # Special case: English tutorial.
 valuesDirectory = "../res/values/"

@@ -61,4 +61,5 @@
   <string name="answering_error_title">Datenbank-Fehler</string>
   <string name="answering_error_message">Beim Antworten/Ändern der letzten Karte ist ein Fehler aufgetreten. Das könnte an einem beschädigten Stapel oder an unzureichendem Festplattenspeicher liegen.\n\nSollte dies häufiger auftreten, versuchen Sie bitte, den Stapel zu reparieren.\n\nDie Ursache könnte auch ein AnkiDroid-Fehler sein; bitte melden Sie ihn deshalb, damit wir das überprüfen können.</string>
   <string name="answering_error_report">Fehler melden</string>
+  <string name="repair_deck_dialog">Wollen Sie wirklich versuchen, den Stapel \'%1$s\' zu reparieren?\n\nBevor der Versuch gestartet wird, wird eine Kopie des Stapels im Unterordner \'%2$s\' angelegt.</string>
 </resources>

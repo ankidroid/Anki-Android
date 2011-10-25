@@ -67,4 +67,7 @@
   <string name="error_insufficient_memory">La operación no es posible debido a insuficiencia de memoria en tu dispositivo</string>
   <string name="tutorial_load">Creando mazo tutorial</string>
   <string name="tutorial_loading_error">No se pudo crear el mazo tutorial</string>
+  <string name="help_title">Ayuda</string>
+  <string name="help_online">Ayuda en línea</string>
+  <string name="help_tutorial">Mazo tutorial</string>
 </resources>

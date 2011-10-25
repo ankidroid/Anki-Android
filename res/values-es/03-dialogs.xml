@@ -61,4 +61,5 @@
   <string name="answering_error_title">Error en la base de datos</string>
   <string name="answering_error_message">Ocurrió un error al responder/modificar la última tarjeta. Esto puede deberse a que el mazo está corrupto o a que el espacio en disco es insuficiente.\n\nSi esto ocurre con más frecuencia, por favor, trata de reparar el mazo.\n\nAún así, la causa podría ser un error de AnkiDroid, por lo que te rogamos nos informes del error para que podamos comprobarlo.</string>
   <string name="answering_error_report">Informar sobre el error</string>
+  <string name="repair_deck_dialog">Do you really want to try to repair deck \'%1$s\'?\n\nBefore starting the attempt, a copy of the deck will be created in subfolder \'%2$s\'.</string>
 </resources>
