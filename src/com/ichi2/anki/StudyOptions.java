@@ -825,7 +825,7 @@ public class StudyOptions extends Activity implements IButtonListener {
          	AnkiDroidApp.zeemoteController().removeJoystickListener(adapter);
      		adapter.removeButtonListener(this);
      		adapter = null;
-         }        
+         }
     	 
          super.onPause();
          // Update the widget when pausing this activity.
@@ -2648,6 +2648,7 @@ public class StudyOptions extends Activity implements IButtonListener {
 
         @Override
         public void onPreExecute() {
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_NOSENSOR);
             // if(updateDialog == null || !updateDialog.isShowing())
             // {
         	if (mProgressDialog != null && mProgressDialog.isShowing()) {
@@ -2680,6 +2681,8 @@ public class StudyOptions extends Activity implements IButtonListener {
             // AnkidroidApp.setDeck(null);
             // mCompat.invalidateOptionsMenu(StudyOptions.this);
             // }
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR);
+
             allTags = null;
 
             switch (result.getInt()) {
