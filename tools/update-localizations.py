@@ -68,8 +68,10 @@ def replacechars(filename, fileExt, isCrowdin):
 
 			contentLine = content[i][start:len(content[i])-1]
 			sepPos = contentLine.find('<separator>')
-			if sepPos == -1 and len(contentLine) > 2:
-				errorOccured = True
+			if sepPos == -1:
+				if len(contentLine) > 2:
+					errorOccured = True
+				continue
 			line.append(["<![CDATA[" + contentLine[:sepPos] + "]]>", "<![CDATA[" + contentLine[sepPos+11:] + "]]>"])
 		for fi in line:
 			fi[0] = re.sub('\"+', '\\\"', fi[0])
