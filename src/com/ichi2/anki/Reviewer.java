@@ -2822,7 +2822,7 @@ public class Reviewer extends Activity implements IButtonListener{
     }
 
 
-    public static boolean getRefreshWebview() {
+    public boolean getRefreshWebview() {
       	  	mCustomFontFiles = Utils.getCustomFonts(getBaseContext());
 		if (mCustomFontFiles.length != 0) {
 			return true;
