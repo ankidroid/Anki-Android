@@ -643,10 +643,6 @@ public class StudyOptions extends Activity implements IButtonListener {
 
         initAllContentViews();
 
-        if ((AnkiDroidApp.deck() != null) && (AnkiDroidApp.deck().hasFinishScheduler())) {
-            AnkiDroidApp.deck().finishScheduler();
-        }
-
         Intent intent = getIntent();
         if (Intent.ACTION_VIEW.equalsIgnoreCase(intent.getAction())
                 && intent.getDataString() != null) {

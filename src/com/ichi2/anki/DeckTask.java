@@ -357,6 +357,9 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
                 return new TaskData(DECK_NOT_LOADED);
             }
             BackupManager.cleanUpAfterBackupCreation(true);
+            if (deck.hasFinishScheduler()) {
+            	deck.finishScheduler();
+            }
             publishProgress(new TaskData(backupResult));
             return new TaskData(DECK_LOADED, deck, null);
 		} catch (SQLException e) {
