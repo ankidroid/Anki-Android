@@ -1736,6 +1736,10 @@ public class StudyOptions extends Activity implements IButtonListener {
 	                new DialogInterface.OnClickListener() {
 						@Override
 						public void onClick(DialogInterface dialog, int which) {
+				if (allTags == null) {
+					dialog.dismiss();
+					return;
+				}
 	                        String tag = allTags[which];
 	                        if (mSelectedTags.contains(tag)) {
 	                            Log.i(AnkiDroidApp.TAG, "unchecked tag: " + tag);
