@@ -15,10 +15,9 @@ VERSION=${1:-$GUESSED_VERSION}
 # Edit AndroidManifest.xml to bump version string
 echo "Bumping version from $PREVIOUS_VERSION to $VERSION"
 sed -i -e s/$PREVIOUS_VERSION/$VERSION/g AndroidManifest.xml
-exit
 
 # Generate signed APK
-ant release
+ant clean release
 
 # Upload APK to Google Project's downloads section
 mv bin/Anki-Android-release.apk /tmp/AnkiDroid-$VERSION.apk
@@ -27,5 +26,5 @@ python tools/lib/googlecode_upload.py --summary "AnkiDroid $VERSION" --project a
 
 # Commit modified AndroidManifest.xml
 git add AndroidManifest.xml
-git commit -m "Bumped version $VERSION"
+git commit -m "Bumped version to $VERSION"
 git push
