@@ -373,7 +373,7 @@ public class StudyOptions extends Activity implements IButtonListener {
  	 */
 	protected JoystickToButtonAdapter adapter;
  	ControllerAndroidUi controllerUi;
- 	
+
 	private boolean mShowRepairDialog = false;
 
     /**
@@ -770,7 +770,11 @@ public class StudyOptions extends Activity implements IButtonListener {
                     String action = intent.getAction();
                     if (action.equals(Intent.ACTION_MEDIA_EJECT)) {
                         Log.i(AnkiDroidApp.TAG, "mUnmountReceiver - Action = Media Eject");
-                        closeOpenedDeck();
+                        if (mIsClosing) {
+                        	DeckTask.waitToFinish();
+                        } else {
+                        	closeOpenedDeck();                        	
+                        }
                         showContentView(CONTENT_NO_EXTERNAL_STORAGE);
                         mSdCardAvailable = false;
                     } else if (action.equals(Intent.ACTION_MEDIA_MOUNTED)) {
@@ -889,6 +893,7 @@ public class StudyOptions extends Activity implements IButtonListener {
 		        }
 		        @Override
 		        public void onPostExecute(DeckTask.TaskData result) {
+		        	mIsClosing = false;
 		        }
 		        @Override
 		        public void onProgressUpdate(DeckTask.TaskData... values) {
@@ -970,8 +975,7 @@ public class StudyOptions extends Activity implements IButtonListener {
 
 
     private void closeOpenedDeck() {
-	DeckTask.waitToFinish();
-        if (AnkiDroidApp.deck() != null && mSdCardAvailable) {
+        if (!mIsClosing && AnkiDroidApp.deck() != null && mSdCardAvailable) {
             AnkiDroidApp.deck().closeDeck();
             AnkiDroidApp.setDeck(null);
             mCompat.invalidateOptionsMenu(this);
@@ -2154,8 +2158,6 @@ public class StudyOptions extends Activity implements IButtonListener {
 
 
     private void openDeckPicker() {
-//        closeOpenedDeck();
-        // deckLoaded = false;
         Intent decksPicker = new Intent(StudyOptions.this, DeckPicker.class);
         mInDeckPicker = true;
         startActivityForResult(decksPicker, PICK_DECK_REQUEST);
