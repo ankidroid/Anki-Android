@@ -56,7 +56,7 @@ public final class WidgetStatus {
         } else {
             smallWidget = false;
         }
-	if (mediumWidget || smallWidget) {
+        if (mediumWidget || smallWidget) {
             Log.d(AnkiDroidApp.TAG, "WidgetStatus.update(): updating");
             AsyncTask<Context,Void,Context> updateDeckStatusAsyncTask =
                     new UpdateDeckStatusAsyncTask();
@@ -84,8 +84,11 @@ public final class WidgetStatus {
         @Override
         protected Context doInBackground(Context... params) {
             Log.d(AnkiDroidApp.TAG, "WidgetStatus.UpdateDeckStatusAsyncTask.doInBackground()");
-
             Context context = params[0];
+
+            if (!AnkiDroidApp.isSdCardMounted()) {
+            	return context;
+            }
 
             SharedPreferences preferences = PrefSettings.getSharedPrefs(context);
             String deckPath = preferences.getString("deckPath",
