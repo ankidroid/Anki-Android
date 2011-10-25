@@ -82,4 +82,25 @@
     <!-- version-tag: 1 -->
     <import file="${sdk.dir}/tools/ant/build.xml" />
 
+    <!-- Install the package on the default emulator -->
+    <target name="install-emulator" depends="debug">
+        <echo>Installing ${out.debug.package} onto default emulator...</echo>
+        <exec executable="${adb}" failonerror="true">
+            <arg value="-e" />
+            <arg value="install" />
+            <arg value="-r" />
+            <arg path="${out.debug.package}"/>
+        </exec>
+    </target>
+ 
+    <!-- Install the package on the default device -->
+    <target name="install-device" depends="debug">
+        <echo>Installing ${out.debug.package} onto default device...</echo>
+        <exec executable="${adb}" failonerror="true">
+            <arg value="-d" />
+            <arg value="install" />
+            <arg value="-r" />
+            <arg path="${out.debug.package}"/>
+        </exec>
+    </target>
 </project>
