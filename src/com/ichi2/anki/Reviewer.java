@@ -633,7 +633,11 @@ public class Reviewer extends Activity implements IButtonListener{
         @Override
         public void onPreExecute() {
         	Resources res = getResources();
-        	mProgressDialog = ProgressDialog.show(Reviewer.this, "", res.getString(R.string.saving_changes), true);
+		try {
+	        	mProgressDialog = ProgressDialog.show(Reviewer.this, "", res.getString(R.string.saving_changes), true);
+		} catch (IllegalArgumentException e) {
+			Log.e(AnkiDroidApp.TAG, "Reviewer: Error on showing progress dialog: " + e);
+		}
         }
 
 
@@ -655,7 +659,11 @@ public class Reviewer extends Activity implements IButtonListener{
                 displayCardQuestion();
             }
             if (mProgressDialog != null && mProgressDialog.isShowing()) {
-                mProgressDialog.dismiss();            	
+		try {
+			mProgressDialog.dismiss();
+		} catch (IllegalArgumentException e) {
+			Log.e(AnkiDroidApp.TAG, "Reviewer: Error on dismissing progress dialog: " + e);
+		}
             }
         }
 
