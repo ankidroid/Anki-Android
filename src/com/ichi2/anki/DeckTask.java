@@ -109,6 +109,17 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
     }
 
 
+    public static void cancelTask() {
+        try {
+            if ((sInstance != null) && (sInstance.getStatus() != AsyncTask.Status.FINISHED)) {
+                sInstance.cancel(true);
+            }
+        } catch (Exception e) {
+            return;
+        }
+    }
+
+
     public static boolean taskIsRunning() {
         try {
             if ((sInstance != null) && (sInstance.getStatus() != AsyncTask.Status.FINISHED)) {

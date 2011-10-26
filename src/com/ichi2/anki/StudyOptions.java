@@ -2658,6 +2658,7 @@ public class StudyOptions extends Activity implements IButtonListener {
     						@Override
     						public void onCancel(DialogInterface dialog) {
     							mNewVersionAlert = null;
+    							DeckTask.cancelTask();
     				            closeOpenedDeck();
     				            MetaDB.closeDB();
     				            finish();
