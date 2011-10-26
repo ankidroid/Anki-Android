@@ -26,7 +26,7 @@
 languages = ['ar', 'ca', 'cs', 'de', 'el', 'es-ES', 'fi', 'fr', 'hu', 'id', 'it', 'ja', 'ko', 'nl', 'pl', 'pt-PT', 'ro', 'ru', 'sr', 'sv-SE', 'tr', 'vi', 'zh-CN', 'zh-TW'];
 #languages = ['ar', 'ca', 'cs', 'de', 'el', 'es-ES', 'fi', 'fr', 'hu', 'it', 'ja', 'ko', 'nl', 'pl', 'pt-PT', 'ro', 'ru', 'sr', 'sv-SE', 'vi', 'zh-CN', 'zh-TW', 'th', 'sk', 'da', 'ko', 'he', 'uk'];
 
-fileNames = ['01-core', '02-strings', '03-dialogs', '04-network', '05-feedback', '06-statistics', '07-cardbrowser', '08-widget', '09-backup', '10-preferences', '11-arrays', 'tutorial']
+fileNames = ['01-core', '02-strings', '03-dialogs', '04-network', '05-feedback', '06-statistics', '07-cardbrowser', '08-widget', '09-backup', '10-preferences', '11-arrays', '12-tutorial', '13-newfeatures']
 anyError = False
 
 import os
@@ -98,7 +98,7 @@ def replacechars(filename, fileExt, isCrowdin):
 		return True
 
 def fileExtFor(f):
-	if f == 'tutorial':
+	if f == '12-tutorial':
 		return '.csv'
 	else:
 		return '.xml'
@@ -136,24 +136,23 @@ for language in languages:
 	# Copy localization files, mask chars and append gnu/gpl licence
 	for f in fileNames:
 		fileExt = fileExtFor(f)
-		if update(valuesDirectory, f, zip.read(language + "/" + f + fileExt), fileExt, True):
-			continue
-		anyError = True
+		anyError = not(update(valuesDirectory, f, zip.read(language + "/" + f + fileExt), fileExt, True)) or anyError
 
 # Special case: English tutorial.
 valuesDirectory = "../res/values/"
 createIfNotExisting(valuesDirectory)
-f = 'tutorial'
+f = '12-tutorial'
 fileExt = fileExtFor(f)
-source = open("../assets/" + f + fileExt)
+source = open("../assets/" + 'tutorial' + fileExt)
 #Note: the original tutorial.csv has less columns, therefore we have special
 #support for its syntax.
+print
 update(valuesDirectory, f, source.read(), fileExt, False)
 
 print "\nremoving crowdin-file\n"
 os.remove(zipname)
 
-if not(anyError):
+if anyError:
 	print "At least one file contained an error\nPlease check!\n"
 
 
