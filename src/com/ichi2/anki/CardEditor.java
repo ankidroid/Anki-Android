@@ -833,7 +833,7 @@ public class CardEditor extends Activity {
 		switch (id) {
 		case DIALOG_TAGS:
 			if (allTags == null) {
-				String[] oldTags = AnkiDroidApp.deck().allUserTags();
+				String[] oldTags = mDeck.allUserTags();
 		        if (oldTags == null) {
 		        	Themes.showThemedToast(CardEditor.this, getResources().getString(R.string.error_insufficient_memory), false);
 		        	ad.setEnabled(false);
