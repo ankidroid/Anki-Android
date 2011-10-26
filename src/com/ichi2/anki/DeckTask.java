@@ -384,8 +384,8 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
             try {
             	deck.commitToDB();
             	deck.updateCutoff();
-            	if (AnkiDroidApp.deck().hasFinishScheduler()) {
-            		AnkiDroidApp.deck().finishScheduler();
+            	if (deck.hasFinishScheduler()) {
+            		deck.finishScheduler();
             	}
             	deck.reset();
             } catch (SQLiteDiskIOException e) {
