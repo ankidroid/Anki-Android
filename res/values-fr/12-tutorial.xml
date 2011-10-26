@@ -31,15 +31,15 @@
     <item><![CDATA[Voilà, vous connaissez les grands principes d\'utilisation d\'Anki.<br /><br>Pour plus d\'informations sur ses concepts clés, visitez http://ankisrs.net/]]></item> 
  </string-array>
  <string-array name="tutorial_answers">
-    <item><![CDATA[... de manière à voir la partie <span style=\'font-weight:600;\'>réponse</span> de la carte mémoire (en-dessous de la ligne médiane).<br /><br /><br />Cliquez sur le plus à droite des quatre boutons]]></item> 
+    <item><![CDATA[... de manière à voir la partie <span style=\'font-weight:600;\'>réponse</span> de la carte mémoire (en-dessous de la ligne médiane).<br /><br /><br />Cliquez sur le plus à droite des quatres boutons.]]></item> 
     <item><![CDATA[Imaginez que vous voulez apprendre les noms des capitales du monde. La question serait...<br /><br />(cliquez sur un bouton pour afficher la prochaine carte)]]></item> 
-    <item><![CDATA[&quot;Ouagadougou&quot; est la bonne réponse. <br /><br />Vous ne le saviez pas ? Cliquez sur &quot; Encore &quot; pour que la carte vous soit re-montrée dans quelques minutes. Autrement cliquez sur un autre bouton en fonction de la facilité de la réponse]]></item> 
+    <item><![CDATA[&quot;Ouagadougou&quot; est la bonne réponse. <br /><br />Vous ne le saviez pas ? Cliquez sur &quot; Encore &quot; pour que la carte vous soit re-montrée dans quelques minutes. Autrement cliquez sur un autre bouton en fonction de la facilité de la réponse.]]></item> 
     <item><![CDATA[Ce temps est calculé en fonction du temps de la dernière réponse à cette carte, de la facilité avec laquelle vous venez de répondre à la carte cette fois-ci ainsi que les fois précédentes.]]></item> 
-    <item><![CDATA[Si vous voulez en savoir plus sur la technique de répétition espacée, visitez la page :<br>http://fr.wikipedia.org/wiki/Répétition_espacé]]></item> 
+    <item><![CDATA[Si vous voulez en savoir plus sur la technique de répétition espacée, visitez la page :<br>http://fr.wikipedia.org/wiki/Répétition_espacée]]></item> 
     <item><![CDATA[Ne vous inquiétez pas, cela peut être fait automatiquement. Nul besoin d\'entrez la même information deux fois de suite]]></item> 
     <item><![CDATA[Vous allez apprendre ça rapidement quand vous commencerez à utiliser AnkiDroid.]]></item> 
     <item><![CDATA[Vous allez trouver des milliers de paquets tout faits et il y en aura probablement certains d\'utiles pour vous.]]></item> 
-    <item><![CDATA[... ou (c\'est plutôt plus pratique) avec l\'application d\'Anki pour Linux, MacOs X ou Windows téléchargeable gratuitement et librement sur http://ankisrs.net/ .<br><br>Vous pouvez synchroniser vos données aisément entre la version mobile et la version bureau (ou web), donc transférer vos données n\'est pas un problème]]></item> 
+    <item><![CDATA[... ou (c\'est plutôt plus pratique) avec l\'application d\'Anki pour Linux, MacOs X ou Windows téléchargeable gratuitement et librement sur http://ankisrs.net/ .<br><br>Vous pouvez synchroniser vos données aisément entre la version mobile et la version bureau (ou web), donc transférer vos données n\'est pas un problème.]]></item> 
     <item><![CDATA[le nombre en noir montre le nombre de cartes que vous avez déjà apprises auparavant et qui sont à revoir aujourd\'hui, tandis que le nombre en bleu est le nombre de cartes nouvelles prévues pour aujourd\'hui. <br /><br />Le type de la carte actuelle est soulignée.]]></item> 
     <item><![CDATA[La barre du haut montre vos progrès, celle du bas le pourcentage de réponses correctes.]]></item> 
     <item><![CDATA[Essayez simplement de l\'utiliser maintenant et voyez s\'il correspond à vos besoins.<br><br>Commencez peut-être avec l\'écran \"Tous les paquets\", où vous pouvez télécharger des paquets tout faits ou créer les vôtres (utilisez simplement la touche menu).]]></item> 

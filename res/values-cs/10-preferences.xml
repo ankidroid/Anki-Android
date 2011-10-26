@@ -150,7 +150,7 @@
   <string name="studyoptions_limit_select_tags">Výběr štítků</string>
   <string name="studyoptions_limit_tags_active">S: %1$s</string>
   <string name="studyoptions_limit_tags_inactive">Bez: %1$s</string>
-  <string name="studyoptions_limit_button_text">Limit</string>
+  <string name="studyoptions_limit_button_text">Omezení</string>
   <string name="studyoptions_limit_dialog_title">Limit učení</string>
   <string name="studyoptions_session">Sezení</string>
   <string name="studyoptions_tag">Štítky</string>

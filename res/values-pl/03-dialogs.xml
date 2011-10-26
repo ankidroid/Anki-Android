@@ -61,5 +61,5 @@
   <string name="answering_error_title">Błąd bazy danych</string>
   <string name="answering_error_message">Wystąpił błąd podczas oceniania/edycji karty. Przyczyną może być uszkodzona talia lub brak miejsca.\n\nJeśli będzie się to zdarzać częściej, spróbuj naprawić talię.\n\nMoże to być również błąd w AnkiDroidzie; prosimy o jego zgłoszenie, abyśmy mogli to sprawdzić.</string>
   <string name="answering_error_report">Zgłoś błąd</string>
-  <string name="repair_deck_dialog">Do you really want to try to repair deck \'%1$s\'?\n\nBefore starting the attempt, a copy of the deck will be created in subfolder \'%2$s\'.</string>
+  <string name="repair_deck_dialog">Na pewno chcesz naprawić talię \'%1$s\'?\n\nPrzed próbą naprawy zostanie utworzona jej kopia w podfolderze \'%2$s\'.</string>
 </resources>
