@@ -112,7 +112,7 @@ elif sel == 't':
 		sourcefile = raw_input("enter source file (default: " + defaultSource + "): ")
 		if sourcefile == "":
 			sourcefile = defaultSource
-	elif language == 'all':
+	if language == 'all':
 		for language in alllang:
 			if selu == 'all':
 				for s in files:
