@@ -624,6 +624,16 @@ public class StudyOptions extends Activity implements IButtonListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+		if (!isTaskRoot()) {
+			Log.i(AnkiDroidApp.TAG, "StudyOptions - onCreate: Detected multiple instance of this activity, closing it and return to root activity");
+	        Intent reloadIntent = new Intent(StudyOptions.this, StudyOptions.class);
+	        reloadIntent.setAction(Intent.ACTION_MAIN);
+	        reloadIntent.addCategory(Intent.CATEGORY_LAUNCHER);
+	        reloadIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+			finish();
+			startActivityIfNeeded(reloadIntent, 0);
+		}
+
         Themes.applyTheme(this);
         super.onCreate(savedInstanceState);
 
@@ -796,8 +806,10 @@ public class StudyOptions extends Activity implements IButtonListener {
     protected void onDestroy() {
     	super.onDestroy();
         Log.i(AnkiDroidApp.TAG, "StudyOptions - onDestroy()");
-        closeOpenedDeck();
-        MetaDB.closeDB();
+		if (!isFinishing()) {
+        	closeOpenedDeck();
+	        MetaDB.closeDB();
+		}
         if (mUnmountReceiver != null) {
             unregisterReceiver(mUnmountReceiver);
         }
