@@ -60,6 +60,7 @@
   <string name="redo">إعادة</string>
   <string name="close_previous_deck">Closing previous deck.\nPlease wait...</string>
   <string name="close_deck">Closing deck.\nPlease wait...</string>
+  <string name="finish_operation">Finishing previous operation.\nPlease wait...</string>
   <string name="contextmenu_deckpicker_download_missing_media">Download missing media</string>
   <string name="contextmenu_deckpicker_reset_language_assignments">إعادة تعيين تعيينات اللغة</string>
   <string name="contextmenu_deckpicker_reset_reset_message">تعيين اللغة</string>
