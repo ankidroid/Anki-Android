@@ -658,12 +658,13 @@ public class Reviewer extends Activity implements IButtonListener{
             } else {
                 displayCardQuestion();
             }
-            if (mProgressDialog != null && mProgressDialog.isShowing()) {
-		try {
+            try {
+                if (mProgressDialog != null && mProgressDialog.isShowing()) {
 			mProgressDialog.dismiss();
-		} catch (IllegalArgumentException e) {
-			Log.e(AnkiDroidApp.TAG, "Reviewer: Error on dismissing progress dialog: " + e);
-		}
+                }
+            } catch (IllegalArgumentException e) {
+                Log.e(AnkiDroidApp.TAG, "Reviewer: Error on dismissing progress dialog: " + e);
+                mProgressDialog = null;
             }
         }
 
