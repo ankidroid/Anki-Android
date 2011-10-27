@@ -38,6 +38,7 @@ import android.widget.TextView;
 
 import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.R;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
  
@@ -51,6 +52,8 @@ public class StyledDialog extends Dialog {
 	private OnClickListener mListener;
 	private ListView mListView;
 	private boolean mDoNotShow = false;
+	private static Method mSetScrollbarBarFading;
+	private static boolean mSetScrollBarFading = true;
 
 
     public StyledDialog(Context context) {
@@ -104,6 +107,15 @@ public class StyledDialog extends Dialog {
 
     public void setItems(int type, ListView listview, String[] values, int checkedItem, boolean[] checked, DialogInterface.OnClickListener listener) {
     	mListView = listview;
+	if (mSetScrollBarFading) {
+            try {
+		mSetScrollbarBarFading = ListView.class.getMethod("setScrollbarFadingEnabled", boolean.class);
+            	mSetScrollbarBarFading.invoke(mListView, false);
+            } catch (Throwable e) {
+            	Log.i(AnkiDroidApp.TAG, "setScrollbarFadingEnabled could not be set due to a too low Android version (< 2.1)");
+		mSetScrollBarFading = false;
+            }
+	}
     	mItemList = new ArrayList<String>();
         for (String titel : values) {
         	mItemList.add(titel);
