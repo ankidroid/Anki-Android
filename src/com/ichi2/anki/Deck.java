@@ -2995,7 +2995,7 @@ public class Deck {
         // - The card failed AND
         // - The number of failures exceeds the leech threshold AND
         // - There were at least threshold/2 reps since last time
-        if (!card.isRev() && (no >= fmax) && ((fmax - no) % Math.max(fmax / 2, 1) == 0)) {
+        if (!card.isRev() && (no >= fmax) && (((double)(fmax - no)) % Math.max(fmax / 2, 1) == 0)) {
             return true;
         } else {
             return false;

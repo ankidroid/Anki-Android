@@ -60,6 +60,7 @@
   <string name="redo">Gör om</string>
   <string name="close_previous_deck">Stänger föregående kortlek.\nVänligen vänta...</string>
   <string name="close_deck">Stänger kortleken.\nVänligen vänta...</string>
+  <string name="finish_operation">Finishing previous operation.\nPlease wait...</string>
   <string name="contextmenu_deckpicker_download_missing_media">Hämta saknade media</string>
   <string name="contextmenu_deckpicker_reset_language_assignments">Återställ språktilldelningar</string>
   <string name="contextmenu_deckpicker_reset_reset_message">Återställning av språk</string>

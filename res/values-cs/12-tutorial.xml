@@ -22,9 +22,9 @@
     <item><![CDATA[&quot;Jaké je hlavní město státu Burkina Faso?&quot;<br/><br/>Zamyslete se nad odpovědí a pak klikněte na &quot;Zobrazit odpověď&quot;]]></item> 
     <item><![CDATA[Nad každým tlačítkem pro ohodnocení odpovědi vidíte informaci o čase, za který se karta znovu zobrazí, pokud jej zvolíte.]]></item> 
     <item><![CDATA[Záměrem je zobrazit kartu znovu bezprostředně před tím, než by jste ji zapomněli. Empirické studie ukazují, že se lze takto učit mnohem efektivněji.]]></item> 
-    <item><![CDATA[Some words about the organisation in AnkiDroid:<br /><br>All information has to be put into pairs of question and answer. If you want to learn in the other direction, you should create another card with swapped information.]]></item> 
+    <item><![CDATA[Pár slov o organizaci v AnkiDroid:<br/><br>Veškeré informace musí být uvedeny v páru otázka/odpověď. Pokud se chcete učit i v opačném směru, měli byste vytvořit další kartu s prohozenými informacemi.]]></item> 
     <item><![CDATA[Karty jsou shromažďovány do balíčků a můžou být organizovány pomocí nejrůznějších štítků.]]></item> 
-    <item><![CDATA[There are mainly two ways of getting new cards:<br /><br />You either download premade decks of other users (choose &quot;download deck&quot; in the deck summary\'s options menu) or create them by yourself. ]]></item> 
+    <item><![CDATA[K dispozici jsou dva způsoby, jak získat nové karty:<br/><br/> Můžete buď stáhnout sdílené balíčky ostatních uživatelů (zvolte &quot;Stáhnout balíček&quot; v části Všechny balíčky volbou v menu), nebo je můžete vytvářet sami.]]></item> 
     <item><![CDATA[But anyway, creating own decks is essential to suit your needs perfectly. You can do this directly in AnkiDroid...]]></item> 
     <item><![CDATA[Let\'s have a look on the top bar:<br /><br />In the left top corner you find some numbers. The red one counts the failed cards (answered by &quot;again&quot;),]]></item> 
     <item><![CDATA[On the right corner you find information about your thinking time of this card and about your performance.]]></item> 
@@ -36,9 +36,9 @@
     <item><![CDATA[&quot;Ouagadougou&quot; je správná odpověď.<br/><br/>Nevěděli jste? Klikněte na &quot;Znovu&quot; pro opětovné zobrazení karty za pár minut. V opačném případě klikněte na další tlačítka podle snadnosti odpovědi.]]></item> 
     <item><![CDATA[Tento čas se počítá podle předcházejících odpovědi na této kartě a volbě současné snadnosti této karty.]]></item> 
     <item><![CDATA[Pokud se chcete dozvědět více o rozloženém opakování, navštivte:<br>http://en.wikipedia.org/wiki/Spaced_repetition_system]]></item> 
-    <item><![CDATA[Don\'t worry, this can be done automatically. There is no need of inserting the same information twice.]]></item> 
+    <item><![CDATA[Nebojte se, to lze provést automaticky. Není třeba vkládat stejné informace dvakrát.]]></item> 
     <item><![CDATA[Naučíte se to rychle, když začnete používat AnkiDroid.]]></item> 
-    <item><![CDATA[You\'ll find thousands of premade decks to download and there are probably some which are useful for you.]]></item> 
+    <item><![CDATA[Najdete zde tisíce  balíčků ke stažení a pravděpodobně existují některé, které jsou užitečné pro vás.]]></item> 
     <item><![CDATA[... or (a bit more convenient) with the desktop application Anki (downloadable for free under http://ankisrs.net/).<br><br>You can sync your decks with the desktop application very easily, so transfering the data is not a problem.]]></item> 
     <item><![CDATA[the black one shows the number of cards you\'ve already learned before and which are due to review today, and the blue number tells you, how many new cards are projected for today. <br /><br />The type of the actual cards is specified by an underline.]]></item> 
     <item><![CDATA[The upper bar shows your progress, the lower one indicates the percentage of yes answers.]]></item> 

@@ -19,6 +19,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.lang.reflect.Method;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.text.ParseException;
@@ -306,8 +307,6 @@ public class Reviewer extends Activity implements IButtonListener{
     private int mStatisticBarsMax;
     private int mStatisticBarsHeight;
 
-    private boolean mClosing = false;
-
     private long mSavedTimer = 0;
 
     private boolean mRefreshWebview = false;
@@ -378,6 +377,7 @@ public class Reviewer extends Activity implements IButtonListener{
 
     private int mFadeDuration = 300;
 
+	private Method mSetScrollbarBarFading = null;
 
  	/**
  	 * Zeemote controller
@@ -658,12 +658,13 @@ public class Reviewer extends Activity implements IButtonListener{
             } else {
                 displayCardQuestion();
             }
-            if (mProgressDialog != null && mProgressDialog.isShowing()) {
-		try {
+            try {
+                if (mProgressDialog != null && mProgressDialog.isShowing()) {
 			mProgressDialog.dismiss();
-		} catch (IllegalArgumentException e) {
-			Log.e(AnkiDroidApp.TAG, "Reviewer: Error on dismissing progress dialog: " + e);
-		}
+                }
+            } catch (IllegalArgumentException e) {
+                Log.e(AnkiDroidApp.TAG, "Reviewer: Error on dismissing progress dialog: " + e);
+                mProgressDialog = null;
             }
         }
 
@@ -886,7 +887,13 @@ public class Reviewer extends Activity implements IButtonListener{
             } else {
             	mCurrentBackgroundColor = Color.WHITE;
             }
-		
+
+            try {
+            	mSetScrollbarBarFading = WebView.class.getMethod("setScrollbarFadingEnabled", boolean.class);
+            } catch (Throwable e) {
+            	Log.i(AnkiDroidApp.TAG, "setScrollbarFadingEnabled could not be found due to a too low Android version (< 2.1)");
+            }
+
 		mRefreshWebview = getRefreshWebview();
 
             initLayout(R.layout.flashcard);
@@ -942,7 +949,7 @@ public class Reviewer extends Activity implements IButtonListener{
     	longClickHandler.removeCallbacks(startSelection);
 
         stopTimer();
-        if (!mClosing) {
+        if (!isFinishing()) {
             // Save changes
             Deck deck = AnkiDroidApp.deck();
             if (deck != null) {
@@ -1659,7 +1666,14 @@ public class Reviewer extends Activity implements IButtonListener{
             webView.setFocusableInTouchMode(false);
         }
         Log.i(AnkiDroidApp.TAG, "Focusable = " + webView.isFocusable() + ", Focusable in touch mode = " + webView.isFocusableInTouchMode());
-
+        if (mSetScrollbarBarFading != null) {
+            try {
+            	mSetScrollbarBarFading.invoke(webView, false);
+            } catch (Throwable e) {
+            	Log.i(AnkiDroidApp.TAG, "setScrollbarFadingEnabled could not be set due to a too low Android version (< 2.1)");
+            	mSetScrollbarBarFading = null;
+            }
+        }
         mScaleInPercent = webView.getScale();
         return webView;
     }
@@ -2221,6 +2235,11 @@ public class Reviewer extends Activity implements IButtonListener{
         	
             Deck currentDeck = AnkiDroidApp.deck();
             Model myModel = Model.getModel(currentDeck, mCurrentCard.getCardModelId(), false);
+		if (myModel == null) {
+			Log.e(AnkiDroidApp.TAG, "updateCard - no Model could be fetched. Closing Reviewer and showing db-error dialog");
+	                Reviewer.this.setResult(RESULT_ANSWERING_ERROR);
+	                closeReviewer(true);			
+		}
             mBaseUrl = Utils.getBaseUrl(mMediaDir, myModel, currentDeck);
             int nightBackground = Themes.getNightModeCardBackground(this);
             content = myModel.getCSSForFontColorSize(mCurrentCard.getCardModelId(), mDisplayFontSize, mNightMode, nightBackground) + Model.invertColors(content, mNightMode);
@@ -3061,7 +3080,6 @@ public class Reviewer extends Activity implements IButtonListener{
 	longClickHandler.removeCallbacks(startSelection);
 
     	setOutAnimation(true);    		
-    	mClosing = true;
     	if (saveDeck) {
             DeckTask.launchDeckTask(DeckTask.TASK_TYPE_SAVE_DECK, mSaveAndResetDeckHandler, new DeckTask.TaskData(AnkiDroidApp.deck(), 0));
     	} else {

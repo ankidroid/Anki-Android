@@ -27,7 +27,7 @@ PROJECT_IDENTIFIER = 'ankidroid'
 
 path = '../res/values/'
 
-files = ['01-core', '02-strings', '03-dialogs', '04-network', '05-feedback', '06-statistics', '07-cardbrowser', '08-widget', '09-backup', '10-preferences', '11-arrays', '12-tutorial', '13-newfeatures];
+files = ['01-core', '02-strings', '03-dialogs', '04-network', '05-feedback', '06-statistics', '07-cardbrowser', '08-widget', '09-backup', '10-preferences', '11-arrays', '12-tutorial', '13-newfeatures'];
 alllang = ['ar', 'ca', 'cs', 'de', 'el', 'es-ES', 'fi', 'fr', 'hu', 'id', 'it', 'ja', 'ko', 'nl', 'pl', 'pt-PT', 'ro', 'ru', 'sr', 'sv-SE', 'tr', 'vi', 'zh-CN', 'zh-TW']
 
 def uploadtranslation(language, filename, sourcefile):
@@ -81,6 +81,7 @@ def updateMasterFile(selu):
 		c.close()
 		print b.getvalue()
 
+
 try:
 	c = open("crowdin_key.txt","r+")
 	CROWDIN_KEY = c.readline();
@@ -105,13 +106,13 @@ elif sel == 't':
 	language = raw_input("enter language code: ")
 	selu = raw_input("update 0(1)-core, 0(2)-strings, 0(3)-dialogs, 0(4)-network, 0(5)-feedback, 0(6)-statistics, 0(7)-cardbrowser, 0(8)-widget, 0(9)-backup, (10)-preferences, (11)-arrays, (13)-newfeatures? ")
 	if selu == '12':
-		return
+		print "translations of this file cannot be uploaded"
 	elif selu != 'all':
 		defaultSource = files[int(selu)-1]
 		sourcefile = raw_input("enter source file (default: " + defaultSource + "): ")
 		if sourcefile == "":
 			sourcefile = defaultSource
-	elif language == 'all':
+	if language == 'all':
 		for language in alllang:
 			if selu == 'all':
 				for s in files:

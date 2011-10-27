@@ -59,7 +59,7 @@
   <string name="reset_card_dialog_message">Bu işlem bu bilgideki bütün kartların öğrenim ilerlemelerini sıfırlar (yeni kart gibi gözükürler).\nGerçekten devam edilsin mi?</string>
   <string name="reset_card_dialog_confirmation">Bu bilginin tüm kartlarının sıfırlanması</string>
   <string name="answering_error_title">Veritabanı hatası</string>
-  <string name="answering_error_message">Son kartı yanıtlarken/değiştirirken bir hata meydana geldi. Bunun nedeni bozuk bir deste veya yetersiz disk alanı olabilir.\n\nBununla sık karşılaşıyorsanız, lütfen desteyi onarmayı deneyin.\n\nBunun yanında, bu AnkiDroid\'deki bir bozukluk da olabilir; lütfen hatayı bildirin ki kontrol edebilelim.</string>
+  <string name="answering_error_message">An error occured while answering/changing the last card. This could be related to a corrupt deck or to insufficient disc space.\n\nIf it happens more often, please try to repair the deck. Try a db check with Anki Desktop as well.\n\nNevertheless, it could be an AnkiDroid bug as well; please report the error that we can check this.</string>
   <string name="answering_error_report">Hatayı bildir</string>
-  <string name="repair_deck_dialog">Do you really want to try to repair deck \'%1$s\'?\n\nBefore starting the attempt, a copy of the deck will be created in subfolder \'%2$s\'.</string>
+  <string name="repair_deck_dialog">\"%1$s\" destesini gerçekten onarmak istiyor musunuz?\n\nİşlem başlamadan önce \"%2$s\" altklasöründe destenin bir kopyası oluşturulacak.</string>
 </resources>
