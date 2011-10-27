@@ -2234,6 +2234,11 @@ public class Reviewer extends Activity implements IButtonListener{
         	
             Deck currentDeck = AnkiDroidApp.deck();
             Model myModel = Model.getModel(currentDeck, mCurrentCard.getCardModelId(), false);
+		if (myModel == null) {
+			Log.e(AnkiDroidApp.TAG, "updateCard - no Model could be fetched. Closing Reviewer and showing db-error dialog");
+	                Reviewer.this.setResult(RESULT_ANSWERING_ERROR);
+	                closeReviewer(true);			
+		}
             mBaseUrl = Utils.getBaseUrl(mMediaDir, myModel, currentDeck);
             int nightBackground = Themes.getNightModeCardBackground(this);
             content = myModel.getCSSForFontColorSize(mCurrentCard.getCardModelId(), mDisplayFontSize, mNightMode, nightBackground) + Model.invertColors(content, mNightMode);

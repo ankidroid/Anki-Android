@@ -249,8 +249,9 @@ public class CardModel implements Comparator<CardModel> {
         try {
             String query = "SELECT modelId FROM cardModels WHERE id = " + cardModelId;
             cursor = AnkiDatabaseManager.getDatabase(deck.getDeckPath()).getDatabase().rawQuery(query, null);
-            cursor.moveToFirst();
-            modelId = cursor.getLong(0);
+            if (cursor.moveToFirst()) {
+	            modelId = cursor.getLong(0);
+	    }
         } finally {
             if (cursor != null && !cursor.isClosed()) {
                 cursor.close();
