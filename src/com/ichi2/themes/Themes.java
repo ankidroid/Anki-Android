@@ -321,12 +321,12 @@ public class Themes {
 
 
 	public static void showThemedToast(Context context, String text, boolean shortLength) {
-		Toast result = Toast.makeText(context, text, shortLength ? Toast.LENGTH_SHORT : Toast.LENGTH_LONG);
-		if (mCurrentTheme >= THEME_BLUE) {
-			result.getView().setBackgroundResource(mToastBackground);
-		}
 		try {
-	        result.show();
+			Toast result = Toast.makeText(context, text, shortLength ? Toast.LENGTH_SHORT : Toast.LENGTH_LONG);
+			if (mCurrentTheme >= THEME_BLUE) {
+				result.getView().setBackgroundResource(mToastBackground);
+			}
+	        	result.show();
 		} catch (OutOfMemoryError e) {
 			Log.e(AnkiDroidApp.TAG, "showThemedToast - OutOfMemoryError occured: " + e);
 			result.getView().setBackgroundResource(R.color.black);
