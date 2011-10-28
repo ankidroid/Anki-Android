@@ -321,9 +321,8 @@ public class Themes {
 
 
 	public static void showThemedToast(Context context, String text, boolean shortLength) {
-		Toast result = null;
+		Toast result = Toast.makeText(context, text, shortLength ? Toast.LENGTH_SHORT : Toast.LENGTH_LONG);
 		try {
-			result = Toast.makeText(context, text, shortLength ? Toast.LENGTH_SHORT : Toast.LENGTH_LONG);
 			if (mCurrentTheme >= THEME_BLUE) {
 				result.getView().setBackgroundResource(mToastBackground);
 			}
