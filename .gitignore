@@ -1,7 +1,7 @@
 #.classpath
 .project
 .settings
-local.properties
+
 bin/
 gen/
 /testbin/com/ichi2/anki/AllTests.class
@@ -9,6 +9,10 @@ gen/
 /test/com/ichi2/anki/AllTests.java
 /test/com/ichi2/anki/AnkiDroidTest.java
 tools/crowdin_key.txt
+
+.build.xml
+local.properties
+proguard.cfg
 
 .idea/
 out/
