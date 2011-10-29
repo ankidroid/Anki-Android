@@ -594,7 +594,7 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
                     syncChangelog.put("message", res.getString(R.string.sync_log_no_changes_message));
                 }
             } finally {
-                if (ankiDB.getDatabase() != null && ankiDB.getDatabase().inTransaction()) {
+                if (ankiDB.getDatabase() != null && ankiDB.getDatabase().isOpen() && ankiDB.getDatabase().inTransaction()) {
                     ankiDB.getDatabase().endTransaction();
                 }
             }
