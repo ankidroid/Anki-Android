@@ -49,6 +49,7 @@
   <string name="sync_all">Menyelaraskan semua</string>
   <string name="sync_prepare_syncing">Mempersiapkan sinkronisasi...</string>
   <string name="connection_error_message">Telah terjadi ralat jaringan.</string>
+  <string name="sync_log_db_error">A database error has occurred.</string>
   <string name="no_user_password_error_message">Untuk melanjutkan dengan operasi ini, anda perlu memiliki akaun AnkiOnline dan login.</string>
   <string name="fact">fakta</string>
   <string name="facts">fakta</string>

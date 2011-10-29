@@ -49,6 +49,7 @@
   <string name="sync_all">Alle synchronisieren</string>
   <string name="sync_prepare_syncing">Synchronisierung wird vorbereitet...</string>
   <string name="connection_error_message">Ein Netzwerkfehler ist aufgetreten.</string>
+  <string name="sync_log_db_error">Ein Datenbankfehler ist aufgetreten.</string>
   <string name="no_user_password_error_message">Um fortzufahren, benötigen Sie einen AnkiOnline-Account und müssen eingeloggt sein.</string>
   <string name="fact">Fakt</string>
   <string name="facts">Fakten</string>
