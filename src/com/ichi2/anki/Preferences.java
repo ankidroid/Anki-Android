@@ -60,6 +60,8 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
 //    private boolean mVeecheckStatus;
     private PreferenceManager mPrefMan;
     private CheckBoxPreference zoomCheckboxPreference;
+    private CheckBoxPreference keepScreenOnCheckBoxPreference;
+    private CheckBoxPreference showAnswerCheckBoxPreference;
     private CheckBoxPreference swipeCheckboxPreference;
     private CheckBoxPreference animationsCheckboxPreference;
     private CheckBoxPreference walModePreference;
@@ -91,6 +93,8 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
         getPreferenceScreen().getSharedPreferences().registerOnSharedPreferenceChangeListener(this);
         swipeCheckboxPreference = (CheckBoxPreference) getPreferenceScreen().findPreference("swipe");
         zoomCheckboxPreference = (CheckBoxPreference) getPreferenceScreen().findPreference("zoom");
+        keepScreenOnCheckBoxPreference = (CheckBoxPreference) getPreferenceScreen().findPreference("keepScreenOn");
+        showAnswerCheckBoxPreference = (CheckBoxPreference) getPreferenceScreen().findPreference("timeoutAnswer");
         animationsCheckboxPreference = (CheckBoxPreference) getPreferenceScreen().findPreference("themeAnimations");
         walModePreference = (CheckBoxPreference) getPreferenceScreen().findPreference("walMode");
         useBackupPreference = (CheckBoxPreference) getPreferenceScreen().findPreference("useBackup");
@@ -238,6 +242,8 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
             if (key.equals("swipe")) {
             	zoomCheckboxPreference.setChecked(false);
             	zoomCheckboxPreference.setEnabled(!swipeCheckboxPreference.isChecked());
+            } else if (key.equals("timeoutAnswer")) {
+            	keepScreenOnCheckBoxPreference.setChecked(showAnswerCheckBoxPreference.isChecked());
             } else if (key.equals("language")) {
     			Intent intent = this.getIntent();
     			setResult(StudyOptions.RESULT_RESTART, intent);

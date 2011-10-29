@@ -1982,7 +1982,11 @@ public class Reviewer extends Activity implements IButtonListener{
                 setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
             }
         }
-        
+
+        if (preferences.getBoolean("keepScreenOn", false)) {
+        	this.getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+        }
+
         return preferences;
     }
 
