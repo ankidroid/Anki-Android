@@ -65,15 +65,15 @@ def uploadtranslation(language, filename, sourcefile):
 
 def updateMasterFile(selu):
 	if selu == '12':
-		filename = 'tutorial.csv'
-		curPath = path + '../../assets/'
+		targetName = '12-tutorial.csv'
+		sourceName = '../assets/tutorial.csv'
 	else:
-		filename = files[int(selu)-1] + '.xml'
-		curPath = path
-	if filename:	
-		print 'Update of Master File ' + filename
+		targetName = files[int(selu)-1] + '.xml'
+		sourceName = path + targetName
+	if targetName:	
+		print 'Update of Master File ' + targetName
 		c = pycurl.Curl()
-		fields = [('files['+filename+']', (c.FORM_FILE, curPath + filename))]
+		fields = [('files['+targetName+']', (c.FORM_FILE, sourceName))]
 		c.setopt(pycurl.URL, 'http://crowdin.net/api/project/' + PROJECT_IDENTIFIER + '/update-file?key=' + CROWDIN_KEY)
 		c.setopt(pycurl.HTTPPOST, fields)
 		b = StringIO.StringIO()
@@ -96,8 +96,8 @@ if sel == 'm':
 	# Update Master Files:
 	selu = raw_input("update 0(1)-core, 0(2)-strings, 0(3)-dialogs, 0(4)-network, 0(5)-feedback, 0(6)-statistics, 0(7)-cardbrowser, 0(8)-widget, 0(9)-backup, (10)-preferences, (11)-arrays, (12)-tutorial, (13)-newfeatures? ")
 	if selu == 'all':
-		for n in range(1, 13):
-			updateMasterFile(n)
+		for n in range(1, len(files) + 1):
+			updateMasterFile(str(n))
 	else:
 		updateMasterFile(selu)
 
