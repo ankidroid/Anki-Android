@@ -60,7 +60,7 @@
   <string name="redo">Ponów</string>
   <string name="close_previous_deck">Zamykanie poprzedniej talii.\nMomencik...</string>
   <string name="close_deck">Zamykanie talii.\nProszę czekać...</string>
-  <string name="finish_operation">Finishing previous operation.\nPlease wait...</string>
+  <string name="finish_operation">Kończenie poprzedniej operacji.\nProszę czekać...</string>
   <string name="contextmenu_deckpicker_download_missing_media">Pobierz brakujące media</string>
   <string name="contextmenu_deckpicker_reset_language_assignments">Zresetuj przypisanie języka</string>
   <string name="contextmenu_deckpicker_reset_reset_message">Reset języka</string>

@@ -60,7 +60,7 @@
   <string name="redo">Repetir</string>
   <string name="close_previous_deck">Cerrando el mazo anterior.\nPor favor, espera...</string>
   <string name="close_deck">Cerrando el mazo.\nPor favor, espera...</string>
-  <string name="finish_operation">Finishing previous operation.\nPlease wait...</string>
+  <string name="finish_operation">Finalizando la operación anterior.\nPor favor, espera...</string>
   <string name="contextmenu_deckpicker_download_missing_media">Descargar archivos multimedia que falten</string>
   <string name="contextmenu_deckpicker_reset_language_assignments">Restablecer las Asignaciones de Idioma</string>
   <string name="contextmenu_deckpicker_reset_reset_message">Restablecer idioma</string>
