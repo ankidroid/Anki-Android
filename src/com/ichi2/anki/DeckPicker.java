@@ -1996,6 +1996,14 @@ public class DeckPicker extends Activity implements Runnable, IButtonListener {
 	@Override
 	protected void onResume() {
 		super.onResume();
+		// workaround for hidden dialog when resuming
+		if (mSyncLogAlert != null && mSyncLogAlert.isShowing()) {
+			try {				
+				mSyncLogAlert.dismiss();
+				mSyncLogAlert.show();
+			} catch (Exception e) {
+			}
+		}
 	      if ((AnkiDroidApp.zeemoteController() != null) && (AnkiDroidApp.zeemoteController().isConnected())){
 	    	  Log.d("Zeemote","Adding listener in onResume");
 	    	  AnkiDroidApp.zeemoteController().addButtonListener(this);
