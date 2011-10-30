@@ -56,7 +56,7 @@
   <string name="write_answers_summ">Laat u het antwoord invullen en vergelijken met het juiste antwoord</string>
   <string name="text_selection">Tekstselectie toestaan</string>
   <string name="text_selection_summ">Laat je tekst van de kaarten selecteren en kopiëren (via het menu of met een lange klik) om te zoeken in een extern woordenboek</string>
-  <string name="text_selection_click">Longclick Workaround</string>
+  <string name="text_selection_click">Oplossing voor lange klik</string>
   <string name="text_selection_click_summ">Zet dit als tekstselectie via lange klik niet werkt</string>
   <string name="dictionary">Woordenboek</string>
   <string name="dictionary_summ">Woordenboek waarin u wilt zoeken: XXX</string>
@@ -198,4 +198,6 @@
   <string name="input_workaround">Workaround voor invoer</string>
   <string name="input_workaround_summ">Oplossing voor  problemen met het scherpstellen op HTML-invoervelden. Dit veroorzaakt problemen op meerdere apparaten.</string>
   <string name="write_answers_message">Definieer voor ieder leerset een veld om te vergelijken met het geschreven antwoord. U kunt dit doen met Anki Desktop (eigenschappen van de leerset -&gt; bewerken model -&gt; Kaart Layout).\n\nAls geen vergelijk veld is ingesteld, zal het schriftelijke antwoord altijd worden vergeleken met het antwoord van de gehele kaart.</string>
+  <string name="pref_keep_screen_on">Zorg dat scherm aan blijft</string>
+  <string name="pref_keep_screen_on_summ">Voorkom dat scherm uitgeschakeld wordt tijdens herhalen</string>
 </resources>

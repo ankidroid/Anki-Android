@@ -26,14 +26,18 @@
 languages = ['ar', 'ca', 'cs', 'de', 'el', 'es-ES', 'fi', 'fr', 'hu', 'id', 'it', 'ja', 'ko', 'nl', 'pl', 'pt-PT', 'ro', 'ru', 'sr', 'sv-SE', 'th', 'tr', 'vi', 'zh-CN', 'zh-TW'];
 #languages = ['ar', 'ca', 'cs', 'de', 'el', 'es-ES', 'fi', 'fr', 'hu', 'it', 'ja', 'ko', 'nl', 'pl', 'pt-PT', 'ro', 'ru', 'sr', 'sv-SE', 'vi', 'zh-CN', 'zh-TW', 'th', 'sk', 'da', 'ko', 'he', 'uk'];
 
-fileNames = ['01-core', '02-strings', '03-dialogs', '04-network', '05-feedback', '06-statistics', '07-cardbrowser', '08-widget', '09-backup', '10-preferences', '11-arrays', '12-tutorial', '13-newfeatures']
+fileNames = ['01-core', '02-strings', '03-dialogs', '04-network', '05-feedback', '06-statistics', '07-cardbrowser', '08-widget', '09-backup', '10-preferences', '11-arrays', '12-tutorial', '13-newfeatures', '14-marketdescription', '15-markettitle']
 anyError = False
+titleFile = '../docs/marketing/localized description/ankidroid-titles.txt'
+titleString = 'AnkiDroid Flashcards'
+
 
 import os
 import zipfile
 import urllib
 import string
 import re
+import difflib
 
 def replacechars(filename, fileExt, isCrowdin):
 	s = open(filename,"r+")
@@ -100,6 +104,10 @@ def replacechars(filename, fileExt, isCrowdin):
 def fileExtFor(f):
 	if f == '12-tutorial':
 		return '.csv'
+	elif f == '14-marketdescription':
+		return '.txt'
+	elif f == '15-markettitle':
+		return '.txt'
 	else:
 		return '.xml'
 
@@ -107,10 +115,35 @@ def createIfNotExisting(directory):
 	if not os.path.isdir(directory):
 		os.mkdir(directory)
 
-def update(valuesDirectory, f, source, fileExt, isCrowdin):
-	newfile = valuesDirectory + f + '.xml'
-	file(newfile, 'w').write(source)
-	return replacechars(newfile, fileExt, isCrowdin)
+def update(valuesDirectory, f, source, fileExt, isCrowdin, language=''):
+	if f == '14-marketdescription':
+		newfile = '../docs/marketing/localized description/marketdescription' + '-' + language + fileExt
+		file(newfile, 'w').write(source)
+		oldContent = open('../docs/marketing/localized description/marketdescription' + fileExt).readlines()
+		newContent = open(newfile).readlines()
+		for i in range(0, len(oldContent)):
+			if oldContent[i] != newContent[i]:
+				print 'file ' + newfile + ' successfully copied'
+				return True			
+		os.remove(newfile)
+		print 'file marketdescription is not translated into language ' + language
+		return True
+	elif f == '15-markettitle':
+#		newfile = '../docs/marketing/localized description/marketdescription' + '-' + language + fileExt
+#		file(newfile, 'w').write(source)
+		translatedTitle = source.replace("\n", "")
+		if titleString != translatedTitle:
+			s = open(titleFile, 'a')
+			s.write("\n" + language + ': ' + translatedTitle)
+			s.close()
+			print 'added translated title'
+		else:
+			print 'title not translated'
+		return True
+	else:
+		newfile = valuesDirectory + f + '.xml'
+		file(newfile, 'w').write(source)
+		return replacechars(newfile, fileExt, isCrowdin)
 
 zipname = 'ankidroid.zip'
 
@@ -120,6 +153,11 @@ file(zipname, 'w').write(req.read())
 req.close()
 
 zip = zipfile.ZipFile(zipname, "r")
+
+#create title file
+t = open(titleFile, 'w')
+t.write(titleString)
+t.close()
 
 for language in languages:
 	if language == 'zh-TW':
@@ -136,7 +174,7 @@ for language in languages:
 	# Copy localization files, mask chars and append gnu/gpl licence
 	for f in fileNames:
 		fileExt = fileExtFor(f)
-		anyError = not(update(valuesDirectory, f, zip.read(language + "/" + f + fileExt), fileExt, True)) or anyError
+		anyError = not(update(valuesDirectory, f, zip.read(language + "/" + f + fileExt), fileExt, True, language)) or anyError
 
 # Special case: English tutorial.
 valuesDirectory = "../res/values/"

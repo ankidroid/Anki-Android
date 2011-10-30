@@ -60,7 +60,7 @@
   <string name="redo">Opnieuw uitvoeren</string>
   <string name="close_previous_deck">Sluiten vorige set.\nEven wachten...</string>
   <string name="close_deck">Sluiten set.\nEven wachten...</string>
-  <string name="finish_operation">Finishing previous operation.\nPlease wait...</string>
+  <string name="finish_operation">Vorige bewerking wordt voltooid.\nGelieve te wachten...</string>
   <string name="contextmenu_deckpicker_download_missing_media">Download ontbrekende media</string>
   <string name="contextmenu_deckpicker_reset_language_assignments">Taalopdrachten opnieuw instellen</string>
   <string name="contextmenu_deckpicker_reset_reset_message">Taal opnieuw instellen</string>

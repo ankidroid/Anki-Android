@@ -49,14 +49,14 @@
   <string name="sync_all">Sychroniseer alles</string>
   <string name="sync_prepare_syncing">Synchronisatie wordt voorbereid...</string>
   <string name="connection_error_message">Een netwerkfout is opgetreden.</string>
-  <string name="sync_log_db_error">A database error has occurred.</string>
+  <string name="sync_log_db_error">Er deed zich een probleem met de database voor.</string>
   <string name="no_user_password_error_message">Om verder te gaan met deze actie, moet u een AnkiOnline-account hebben en ingelogd zijn.</string>
   <string name="fact">feit</string>
   <string name="facts">feiten</string>
   <string name="username">Gebruikersnaam</string>
   <string name="password">Wachtwoord</string>
   <string name="password_warning">Let op: Wordt verstuurd in leesbare tekst</string>
-  <string name="log_in">Log in</string>
+  <string name="log_in">Aanmelden</string>
   <string name="sign_up_description">Nog geen AnkiOnline account? Het is gratis!</string>
   <string name="sign_up">Meld je nu aan</string>
   <string name="logged_as">Ingelogd als</string>
