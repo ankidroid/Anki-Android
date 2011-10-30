@@ -10,9 +10,11 @@ gen/
 /test/com/ichi2/anki/AnkiDroidTest.java
 tools/crowdin_key.txt
 
+build.xml
 .build.xml
 local.properties
 proguard.cfg
+coverage.em
 
 .idea/
 out/
