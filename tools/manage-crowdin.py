@@ -27,7 +27,7 @@ PROJECT_IDENTIFIER = 'ankidroid'
 
 path = '../res/values/'
 
-files = ['01-core', '02-strings', '03-dialogs', '04-network', '05-feedback', '06-statistics', '07-cardbrowser', '08-widget', '09-backup', '10-preferences', '11-arrays', '12-tutorial', '13-newfeatures'];
+files = ['01-core', '02-strings', '03-dialogs', '04-network', '05-feedback', '06-statistics', '07-cardbrowser', '08-widget', '09-backup', '10-preferences', '11-arrays', '12-tutorial', '13-newfeatures', '14-marketdescription']
 alllang = ['ar', 'ca', 'cs', 'de', 'el', 'es-ES', 'fi', 'fr', 'hu', 'id', 'it', 'ja', 'ko', 'nl', 'pl', 'pt-PT', 'ro', 'ru', 'sr', 'sv-SE', 'th', 'tr', 'vi', 'zh-CN', 'zh-TW']
 
 
@@ -67,6 +67,9 @@ def updateMasterFile(selu):
 	if selu == '12':
 		targetName = '12-tutorial.csv'
 		sourceName = '../assets/tutorial.csv'
+	elif selu == '14':
+		targetName = '14-marketdescription.txt'
+		sourceName = '../docs/marketing/localized description/marketdescription.txt'
 	else:
 		targetName = files[int(selu)-1] + '.xml'
 		sourceName = path + targetName
@@ -94,7 +97,7 @@ sel = raw_input("update (m)aster file, update (t)ranslation or (r)efresh builds?
 
 if sel == 'm':
 	# Update Master Files:
-	selu = raw_input("update 0(1)-core, 0(2)-strings, 0(3)-dialogs, 0(4)-network, 0(5)-feedback, 0(6)-statistics, 0(7)-cardbrowser, 0(8)-widget, 0(9)-backup, (10)-preferences, (11)-arrays, (12)-tutorial, (13)-newfeatures? ")
+	selu = raw_input("update 0(1)-core, 0(2)-strings, 0(3)-dialogs, 0(4)-network, 0(5)-feedback, 0(6)-statistics, 0(7)-cardbrowser, 0(8)-widget, 0(9)-backup, (10)-preferences, (11)-arrays, (12)-tutorial, (13)-newfeatures, (14)-marketdescription? ")
 	if selu == 'all':
 		for n in range(1, len(files) + 1):
 			updateMasterFile(str(n))
@@ -106,7 +109,7 @@ elif sel == 't':
 	print 'still problems with crowding here'
 	language = raw_input("enter language code: ")
 	selu = raw_input("update 0(1)-core, 0(2)-strings, 0(3)-dialogs, 0(4)-network, 0(5)-feedback, 0(6)-statistics, 0(7)-cardbrowser, 0(8)-widget, 0(9)-backup, (10)-preferences, (11)-arrays, (13)-newfeatures? ")
-	if selu == '12':
+	if selu == '12' or selu == '14':
 		print "translations of this file cannot be uploaded"
 	elif selu != 'all':
 		defaultSource = files[int(selu)-1]
