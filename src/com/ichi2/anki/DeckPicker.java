@@ -896,6 +896,7 @@ public class DeckPicker extends Activity implements Runnable, IButtonListener {
 		default:
 			dialog = null;
 		}
+		dialog.setOwnerActivity(DeckPicker.this);
 		return dialog;
 	}
 
@@ -1097,6 +1098,7 @@ public class DeckPicker extends Activity implements Runnable, IButtonListener {
 		builder.setTitle(res.getString(R.string.sync_log_title));
 		builder.setPositiveButton(res.getString(R.string.ok), null);
 		mSyncLogAlert = builder.create();
+		mSyncLogAlert.setOwnerActivity(DeckPicker.this);
 		// Upgrade notes dialog
 		builder = new StyledDialog.Builder(this);
 		builder.setTitle(res.getString(
