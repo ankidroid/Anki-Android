@@ -2960,7 +2960,7 @@ public class StudyOptions extends Activity implements IButtonListener {
         Intent loadDeckIntent = new Intent(context, StudyOptions.class);
         loadDeckIntent.setAction(Intent.ACTION_MAIN);
         loadDeckIntent.addCategory(Intent.CATEGORY_LAUNCHER);
-        loadDeckIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        loadDeckIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
         loadDeckIntent.putExtra(StudyOptions.EXTRA_DECK, deckPath);
         return loadDeckIntent;
     }
