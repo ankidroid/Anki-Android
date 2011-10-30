@@ -59,7 +59,7 @@
   <string name="reset_card_dialog_message">De reset van het leer proces voor alle kaarten van deze kennis (ze zullen er uitzien als nieuwe karten).\nDoorgaan?</string>
   <string name="reset_card_dialog_confirmation">Alle kaarten van deze kennis resetten?</string>
   <string name="answering_error_title">Fout in database</string>
-  <string name="answering_error_message">An error occurred while answering the last card or changing the deck otherwise. This could be related to a corrupt deck or to insufficient disc space.\n\nIf it happens more often, please try to repair the deck. Try a db check with Anki Desktop as well.\n\nNevertheless, it could be an AnkiDroid bug as well; please report the error that we can check this.</string>
+  <string name="answering_error_message">Er deed zich een fout voor bij het beantwoorden van de laatste kaart of het anderzijds wijzigen van het deck. Mogelijk is een beschadigd deck of een tekort aan opslagruimte de oorzaak.\n\nProbeer het deck te repareren indien het probleem zich blijft voordoen. Probeer eveneens een databasecontrole via Anki Desktop.\n\nHet is ook mogelijk dat een bug in AnkiDroid de oorzaak is; gelieve de foutmelding te rapporteren zodat we dit kunnen controleren.</string>
   <string name="answering_error_report">Fout melden</string>
-  <string name="repair_deck_dialog">Do you really want to try to repair deck \'%1$s\'?\n\nBefore starting the attempt, a copy of the deck will be created in subfolder \'%2$s\'.</string>
+  <string name="repair_deck_dialog">Bent u zeker dat u het deck \'%1$s\' wilt proberen te herstellen?\n\nEr zal eerst een kopie van het deck gemaakt worden in de submap \'%2$s\'.</string>
 </resources>
