@@ -198,4 +198,6 @@
   <string name="input_workaround">Трюк с полями ввода</string>
   <string name="input_workaround_summ">Решение проблемы с html-полями ввода для нескольких устройств.</string>
   <string name="write_answers_message">Вы должны определить для каждой колоды поле, с которым будет сравниваться написанный ответ. Вы можете сделать это в Anki Desktop (Свойства колоды -&gt; Изменить модель -&gt; Шаблон карты). \n\n Если поле для сравнения не было установлено, то Ваш написанный ответ будет сравниваться со всем ответом карты.</string>
+  <string name="pref_keep_screen_on">Keep Screen On</string>
+  <string name="pref_keep_screen_on_summ">Prevent screen from being turned off while reviewing</string>
 </resources>

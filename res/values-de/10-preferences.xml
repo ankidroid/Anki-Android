@@ -198,4 +198,6 @@
   <string name="input_workaround">Eingabe-Fehlerbehebung</string>
   <string name="input_workaround_summ">Fehlerbehebung für Fokusierungsprobleme mit HTML-Eingabe-Feldern. Verursacht Probleme auf einigen Geräten.</string>
   <string name="write_answers_message">Sie sollten für jeden Stapel ein Feld definieren, mit dem Ihre geschriebene Antwort verglichen wird. Sie können das mit Anki Desktop erledigen (Stapel-Eigenschaften -&gt; Modell bearbeiten -&gt; Kartenlayout).\n\nWenn kein Vergleichsfeld festgelegt ist, wird Ihre geschriebene Antwort steht mit der gesamten Kartenantwort verglichen.</string>
+  <string name="pref_keep_screen_on">Ausschalten verhindern</string>
+  <string name="pref_keep_screen_on_summ">Keine automatische Bildschirmabschaltung während des Lernens</string>
 </resources>

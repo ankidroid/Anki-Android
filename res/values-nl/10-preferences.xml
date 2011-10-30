@@ -198,4 +198,6 @@
   <string name="input_workaround">Workaround voor invoer</string>
   <string name="input_workaround_summ">Oplossing voor  problemen met het scherpstellen op HTML-invoervelden. Dit veroorzaakt problemen op meerdere apparaten.</string>
   <string name="write_answers_message">Definieer voor ieder leerset een veld om te vergelijken met het geschreven antwoord. U kunt dit doen met Anki Desktop (eigenschappen van de leerset -&gt; bewerken model -&gt; Kaart Layout).\n\nAls geen vergelijk veld is ingesteld, zal het schriftelijke antwoord altijd worden vergeleken met het antwoord van de gehele kaart.</string>
+  <string name="pref_keep_screen_on">Keep Screen On</string>
+  <string name="pref_keep_screen_on_summ">Prevent screen from being turned off while reviewing</string>
 </resources>
