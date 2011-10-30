@@ -59,7 +59,7 @@
   <string name="reset_card_dialog_message">Toto obnoví pokrok v učení pro všechny karty tohoto faktu (karta bude vypadat jako nová).\nChcete opravdu pokračovat?</string>
   <string name="reset_card_dialog_confirmation">Všechny karty tohoto faktu obnoveny</string>
   <string name="answering_error_title">Chyba databáze</string>
-  <string name="answering_error_message">An error occured while answering/changing the last card. This could be related to a corrupt deck or to insufficient disc space.\n\nIf it happens more often, please try to repair the deck. Try a db check with Anki Desktop as well.\n\nNevertheless, it could be an AnkiDroid bug as well; please report the error that we can check this.</string>
+  <string name="answering_error_message">An error occurred while answering the last card or changing the deck otherwise. This could be related to a corrupt deck or to insufficient disc space.\n\nIf it happens more often, please try to repair the deck. Try a db check with Anki Desktop as well.\n\nNevertheless, it could be an AnkiDroid bug as well; please report the error that we can check this.</string>
   <string name="answering_error_report">Hlášení chyby</string>
   <string name="repair_deck_dialog">Opravdu se chcete pokusit opravit balíček \'%1$s\'?\n\nPřed provedením opravy bude kopie balíčku nakopírována do podadresáře \'%2$s\'.</string>
 </resources>

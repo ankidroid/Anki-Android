@@ -67,7 +67,7 @@
   <string name="contextmenu_deckpicker_optimize_deck">Optimiser la base de données</string>
   <string name="contextmenu_deckpicker_set_custom_dictionary">Définir un dictionnaire personnalisé</string>
   <string name="begin_cram">Démarrer la bachotage</string>
-  <string name="cram">Boulonner</string>
+  <string name="cram">Bachoter</string>
   <string name="menu_open_deck">Tous les paquets</string>
   <string name="menu_sync">Synchronisation</string>
   <string name="menu_download_deck">Télécharger le paquet</string>

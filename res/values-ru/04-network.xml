@@ -49,6 +49,7 @@
   <string name="sync_all">Синхронизировать все</string>
   <string name="sync_prepare_syncing">Подготовка синхронизации...</string>
   <string name="connection_error_message">Ошибка сети.</string>
+  <string name="sync_log_db_error">A database error has occurred.</string>
   <string name="no_user_password_error_message">Для того, чтобы продолжить эту операцию, вы должны иметь AnkiOnline-аккаунт (это бесплатно) и указать логин и пароль в настройках AnkiDroid.</string>
   <string name="fact">факт</string>
   <string name="facts">факты</string>

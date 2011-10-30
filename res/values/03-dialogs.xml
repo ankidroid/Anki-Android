@@ -77,7 +77,7 @@
 <string name="reset_card_dialog_confirmation">All cards of this fact reset</string>
 
 <string name="answering_error_title">Database error</string>
-<string name="answering_error_message">An error occured while answering/changing the last card. This could be related to a corrupt deck or to insufficient disc space.\n\nIf it happens more often, please try to repair the deck. Try a db check with Anki Desktop as well.\n\nNevertheless, it could be an AnkiDroid bug as well; please report the error that we can check this.</string>
+<string name="answering_error_message">An error occurred while answering the last card or changing the deck otherwise. This could be related to a corrupt deck or to insufficient disc space.\n\nIf it happens more often, please try to repair the deck. Try a db check with Anki Desktop as well.\n\nNevertheless, it could be an AnkiDroid bug as well; please report the error that we can check this.</string>
 <string name="answering_error_report">Report error</string>
 
 <string name="repair_deck_dialog">Do you really want to try to repair deck \'%1$s\'?\n\nBefore starting the attempt, a copy of the deck will be created in subfolder \'%2$s\'.</string>

@@ -71,6 +71,7 @@ public class AnkiDroidProxy {
     public static final int LOGIN_OLD_VERSION = 4;
     /** The server is too busy to serve the request. */
     public static final int LOGIN_TOO_BUSY = 5;
+    public static final int DB_ERROR = 6;
 
     /**
      * Shared deck's fields

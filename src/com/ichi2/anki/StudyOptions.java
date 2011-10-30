@@ -163,7 +163,7 @@ public class StudyOptions extends Activity implements IButtonListener {
     private static final int DIALOG_DOWNLOAD_SELECTOR = 15;
     private static final int DIALOG_CRAM = 16;
     private static final int DIALOG_BACKUP_NO_SPACE_LEFT = 17;
-    private static final int DIALOG_ANSWERING_ERROR = 18;
+    private static final int DIALOG_DB_ERROR = 18;
     private static final int DIALOG_SELECT_HELP = 19;
 
     private String mCurrentDialogMessage;
@@ -1610,7 +1610,7 @@ public class StudyOptions extends Activity implements IButtonListener {
 	        mWelcomeAlert = dialog;
 			break;
 
-		case DIALOG_ANSWERING_ERROR:
+		case DIALOG_DB_ERROR:
 			builder.setTitle(R.string.answering_error_title);
 	        builder.setIcon(android.R.drawable.ic_dialog_alert);
 			builder.setMessage(R.string.answering_error_message);
@@ -1792,7 +1792,7 @@ public class StudyOptions extends Activity implements IButtonListener {
 				}
 	        });
 			break;
-		case DIALOG_ANSWERING_ERROR:
+		case DIALOG_DB_ERROR:
 			ad.getButton(Dialog.BUTTON_NEUTRAL).setEnabled(hasErrorFiles() && !PrefSettings.getSharedPrefs(StudyOptions.this).getString("reportErrorMode", Feedback.REPORT_ASK).equals(Feedback.REPORT_NEVER));
 			break;
 		}
@@ -2378,7 +2378,7 @@ public class StudyOptions extends Activity implements IButtonListener {
                     break;
                 case Reviewer.RESULT_ANSWERING_ERROR:
                 	showContentView(CONTENT_STUDY_OPTIONS);
-                	showDialog(DIALOG_ANSWERING_ERROR);
+                	showDialog(DIALOG_DB_ERROR);
                     break;
                 default:
                     DeckTask.launchDeckTask(DeckTask.TASK_TYPE_SAVE_DECK, mSaveAndResetDeckHandler, new DeckTask.TaskData(AnkiDroidApp.deck(), 0));
@@ -2395,7 +2395,7 @@ public class StudyOptions extends Activity implements IButtonListener {
         	showContentView(CONTENT_STUDY_OPTIONS);
         } else if (requestCode == REPORT_ERROR) {
   	      	if (mShowRepairDialog) {
-  	      		showDialog(DIALOG_ANSWERING_ERROR);
+  	      		showDialog(DIALOG_DB_ERROR);
   	      		mShowRepairDialog = false;
   	      	} else if ((showDeckPickerOnStartup() || getIntent().getBooleanExtra("startDeckpicker", false))) {
         		openDeckPicker();
@@ -2805,7 +2805,9 @@ public class StudyOptions extends Activity implements IButtonListener {
                 resetAndUpdateValuesFromDeck();
                 showDialog(DIALOG_SYNC_LOG);
             } else {
-                if (data.returnType == AnkiDroidProxy.SYNC_CONFLICT_RESOLUTION) {
+                if (data.returnType == AnkiDroidProxy.DB_ERROR) {
+                	showDialog(DIALOG_DB_ERROR);
+                } else if (data.returnType == AnkiDroidProxy.SYNC_CONFLICT_RESOLUTION) {
                     // Need to ask user for conflict resolution direction and re-run sync
                     syncDeckWithPrompt();
                 } else {

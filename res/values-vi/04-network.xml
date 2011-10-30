@@ -49,6 +49,7 @@
   <string name="sync_all">Đồng bộ tất cả</string>
   <string name="sync_prepare_syncing">Đang chuẩn bị đồng bộ...</string>
   <string name="connection_error_message">Một lỗi mạng đã xảy ra.</string>
+  <string name="sync_log_db_error">A database error has occurred.</string>
   <string name="no_user_password_error_message">Để tiếp tục thao tác này, bạn cần phải có một tài khoản AnkiOnline và đăng nhập.</string>
   <string name="fact">fact</string>
   <string name="facts">facts</string>
