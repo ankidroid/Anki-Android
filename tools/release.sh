@@ -20,7 +20,7 @@ sed -i -e s/$PREVIOUS_VERSION/$VERSION/g AndroidManifest.xml
 ant clean release
 
 # Upload APK to Google Project's downloads section
-mv bin/Anki-Android-release.apk /tmp/AnkiDroid-$VERSION.apk
+mv bin/AnkiDroid-release.apk /tmp/AnkiDroid-$VERSION.apk
 GOOGLECODE_PASSWORD=`cat ~/src/googlecode-password.txt` # Can be found at https://code.google.com/hosting/settings
 python tools/lib/googlecode_upload.py --summary "AnkiDroid $VERSION" --project ankidroid --user nicolas.raoul --password $GOOGLECODE_PASSWORD /tmp/AnkiDroid-$VERSION.apk
 
