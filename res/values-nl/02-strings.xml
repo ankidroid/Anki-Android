@@ -31,9 +31,9 @@
   <string name="session_question_limit_reached">Limiet bereikt aan vragen in deze sessie</string>
   <string name="session_time_limit_reached">Tijdslimiet bereikt in deze sessie</string>
   <string name="cram_edit_warning">Bewerken kaart niet toegestaan tijdens stampen</string>
-  <string name="suspend_leeches">Uitgestelde achterlijke kaarten</string>
-  <string name="leech_suspend_notification">Kaart gemarkeerd als achterlijk en uitgesteld</string>
-  <string name="leech_notification">Kaart gemarkeerd als achterlijk</string>
+  <string name="suspend_leeches">Uitgestelde moeilijke kaarten</string>
+  <string name="leech_suspend_notification">Kaart gemarkeerd als moeilijk en uitgesteld</string>
+  <string name="leech_notification">Kaart gemarkeerd als moeilijk</string>
   <string name="about_title">Over</string>
   <string name="cardeditor_title">Feitenbewerker</string>
   <string name="factadder_saving_error">Fout bij het opslaan van dit feit</string>

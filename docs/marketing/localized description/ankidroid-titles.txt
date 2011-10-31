@@ -1,13 +1,13 @@
 AnkiDroid Flashcards
 ar: البطاقات التعليميةآنكيدرويد
 ca: AnkiDroid fitxes per memoritzar
+cs: AnkiDroid kartičky
 de: AnkiDroid Karteikarten
+es-ES: Tarjetas AnkiDroid
 fi: AnkiDroid-muistikortit
 hu: AnkiDroid tanuló kártyák
 id: Kad imbas AnkiDroid
 ja: AnkiDroid単語帳
-nl: AnkiDroid flitskaarten
-ru: AnkiDroid флэш-карты
 th: บัตรคำ AnkiDroid
 tr: AnkiDroid bilgi kartları
 vi: Thẻ thông minh AnkiDroid

@@ -27,16 +27,16 @@
     <item>mogelijkheid om beschadigde decks te repareren</item>
     <item>klein widget</item>
     <item>intent-based card addition</item>
-    <item>better card editor: lookup, add card, copy card, reset</item>
+    <item>betere kaarteditor: opzoeken, kaart toevoegen, kaart kopiëren, resetten</item>
     <item>nieuwe statistiek: samenvatting deck</item>
     <item>optionele wal journaling-modus (sneller)</item>
     <item>optionele sync=uit modus (sneller)</item>
     <item>betere vooruitgangsbalken tijdens leren</item>
-    <item>localised number appearance</item>
+    <item>gelokaliseerde getalweergave</item>
     <item>referentiewoordenboek voor elk deck nu selecteerbaar</item>
     <item>kaartdetails nu raadpleegbaar via klik op bovenste balk</item>
     <item>optie om schermoriëntatie in te stellen</item>
-    <item>possibility to reset cards progress (in card editor)</item>
+    <item>mogelijkheid om kaarten te resetten (in kaarteditor)</item>
     <item>sneller zoeken in kaartbrowser</item>
     <item>more convenient lookup via appearing icon</item>
     <item>new text selection in card adder and card editor</item>

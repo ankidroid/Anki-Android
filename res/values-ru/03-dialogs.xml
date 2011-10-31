@@ -59,7 +59,7 @@
   <string name="reset_card_dialog_message">Этот действие сбрасывает успехи в учебе для всех карт этого факта (они будут выглядеть как новые карты).\nВы действительно хотите продолжить?</string>
   <string name="reset_card_dialog_confirmation">Все карты этого факта будут переустановлены</string>
   <string name="answering_error_title">Ошибка базы данных</string>
-  <string name="answering_error_message">An error occurred while answering the last card or changing the deck otherwise. This could be related to a corrupt deck or to insufficient disc space.\n\nIf it happens more often, please try to repair the deck. Try a db check with Anki Desktop as well.\n\nNevertheless, it could be an AnkiDroid bug as well; please report the error that we can check this.</string>
+  <string name="answering_error_message">Произошла ошибка при ответе на последнюю карту или при изменении колоды. Это может быть связано с испорченной колодой или недостаточным местом на диске. \n\nЕсли это случается, попробуйте восстановить колоду. Попробуйте проверить колоду в Anki Desktop (Инструменты - Расширенные - Проверить базу данных).\n\nЕсли же это может быть ошибкой работы программы, то, пожалуйста, сообщите об ошибке, чтобы мы могли проверить это.</string>
   <string name="answering_error_report">Сообщить об ошибке</string>
   <string name="repair_deck_dialog">Вы действительно хотите попытаться исправить колоду \'%1$s\'?\n\nДо исправления копия колоды будет помещена в папку \'%2$s\'.</string>
 </resources>
