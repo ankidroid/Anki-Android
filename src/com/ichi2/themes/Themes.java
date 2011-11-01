@@ -128,7 +128,9 @@ public class Themes {
 			break;
 		case CALLER_DECKPICKER:
 			if (mCurrentTheme == THEME_BLUE) {
-				((ListView)view.findViewById(R.id.files)).setSelector(R.drawable.blue_deckpicker_list_selector);
+				ListView lv = (ListView) view.findViewById(R.id.files);
+				lv.setSelector(R.drawable.blue_deckpicker_list_selector);
+				lv.setDivider(mContext.getResources().getDrawable(R.color.transparent));
 			}
 			break;
 		case CALLER_CARDBROWSER:
