@@ -165,6 +165,8 @@ public class AnkiDroidWidgetSmall extends AppWidgetProvider {
         			if (dueCardsCount <= 0) {
         				if (dueCardsCount == 0) {
     		                updateViews.setViewVisibility(R.id.ankidroid_widget_small_finish_layout, View.VISIBLE);        					
+        				} else {
+    		                updateViews.setViewVisibility(R.id.ankidroid_widget_small_finish_layout, View.INVISIBLE);        					
         				}
 		                updateViews.setViewVisibility(R.id.widget_due, View.INVISIBLE);
 		                updateViews.setViewVisibility(R.id.widget_progress_frame, View.INVISIBLE);
