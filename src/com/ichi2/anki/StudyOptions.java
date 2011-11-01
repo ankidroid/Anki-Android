@@ -2296,6 +2296,7 @@ public class StudyOptions extends Activity implements IButtonListener {
             mInDeckPicker = false;
         	if (requestCode == PICK_DECK_REQUEST && resultCode == RESULT_CLOSE) {
         		closeStudyOptions(true);
+        		return;
         	} else if (requestCode == PICK_DECK_REQUEST && resultCode == RESULT_RESTART) {
         		restartApp();
         	}
