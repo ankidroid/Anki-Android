@@ -440,6 +440,28 @@ public class MetaDB {
     }
 
 
+    public static int getNotificationStatus(Context context) {
+        openDBIfClosed(context);
+        Cursor cursor = null;
+        int due = 0;
+        try {
+            cursor = mMetaDb.query("widgetStatus",
+                    new String[]{"dueCards", "failedCards", "newCards"},
+                    null, null, null, null, null);
+            while (cursor.moveToNext()) {
+            	due += cursor.getInt(0) + cursor.getInt(1) + cursor.getInt(2);
+            }
+        } catch (SQLiteException e) {
+            Log.e(AnkiDroidApp.TAG, "Error while querying widgetStatus", e);
+        } finally {
+            if (cursor != null && !cursor.isClosed()) {
+                cursor.close();
+            }
+        }
+        return due;
+    }
+
+
     /**
      * Stores the current state of the widget.
      * <p>

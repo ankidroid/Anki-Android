@@ -119,6 +119,7 @@
 			</intent-filter>
 		</service> -->
 		<service android:name="com.ichi2.anki.services.DownloadManagerService"/>
+		<service android:name="com.ichi2.anki.services.NotificationService"/>
 		<!-- Broadcast Receiver that will process AppWidget updates -->
 		<receiver android:name="AnkiDroidWidgetMedium" android:label="@string/widget_medium">
 			<intent-filter>

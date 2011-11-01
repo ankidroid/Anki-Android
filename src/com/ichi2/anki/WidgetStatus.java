@@ -14,6 +14,7 @@
 
 package com.ichi2.anki;
 
+import com.ichi2.anki.services.NotificationService;
 import com.tomgibara.android.veecheck.util.PrefSettings;
 
 import android.content.Context;
@@ -37,6 +38,7 @@ public final class WidgetStatus {
 
 	private static boolean mediumWidget = false;
 	private static boolean smallWidget = false;
+	private static boolean notification = false;
 	private static AsyncTask<Context,Void,Context> mUpdateDeckStatusAsyncTask;
 
     /** This class should not be instantiated. */
@@ -57,7 +59,12 @@ public final class WidgetStatus {
         } else {
             smallWidget = false;
         }
-        if (mediumWidget || smallWidget) {
+        if (Integer.parseInt(preferences.getString("minimumCardsDueForNotification", "25")) < 1000000) {
+        	notification = true;
+        } else {
+        	notification = false;
+        }
+        if (mediumWidget || smallWidget || notification) {
             Log.d(AnkiDroidApp.TAG, "WidgetStatus.update(): updating");
             mUpdateDeckStatusAsyncTask = new UpdateDeckStatusAsyncTask();
             mUpdateDeckStatusAsyncTask.execute(context);
@@ -89,6 +96,10 @@ public final class WidgetStatus {
     /** Returns the status of each of the decks. */
     public static int[] fetchSmall(Context context) {
         return MetaDB.getWidgetSmallStatus(context);
+    }
+
+    public static int fetchDue(Context context) {
+        return MetaDB.getNotificationStatus(context);
     }
 
     private static class UpdateDeckStatusAsyncTask extends AsyncTask<Context, Void, Context> {
@@ -201,10 +212,14 @@ public final class WidgetStatus {
             }
             if (smallWidget) {
             	Intent intent;
-                intent = new Intent(context, AnkiDroidWidgetSmall.UpdateService.class);
-                intent.setAction(AnkiDroidWidgetSmall.UpdateService.ACTION_UPDATE);            	
+                intent = new Intent(context, AnkiDroidWidgetSmall.UpdateService.class);            	
                 context.startService(intent);
-            } 
+            }
+            if (notification) {
+            	Intent intent;
+                intent = new Intent(context, NotificationService.class);
+                context.startService(intent);
+            }
         }
 
         /** Comparator that sorts instances of {@link DeckStatus} based on number of due cards. */

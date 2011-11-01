@@ -16,8 +16,6 @@ package com.ichi2.anki;
 
 import com.tomgibara.android.veecheck.util.PrefSettings;
 
-import android.app.Notification;
-import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
 import android.appwidget.AppWidgetManager;
@@ -62,11 +60,6 @@ public class AnkiDroidWidgetSmall extends AppWidgetProvider {
 
     public static class UpdateService extends Service {
 
-        /**
-         * Update the state of the widget.
-         */
-        public static final String ACTION_UPDATE = "org.ichi2.anki.AnkiDroidWidgetSmall.UPDATE";
-
         /** The cached number of total due cards. */
         private int dueCardsCount;
 
@@ -75,20 +68,6 @@ public class AnkiDroidWidgetSmall extends AppWidgetProvider {
 
         /** The cached estimated reviewing time. */
         private int eta;
-
-        /** The id of the notification for due cards. */
-        private static final int WIDGET_NOTIFY_ID = 1;
-
-        /** The notification service to show notifications of due cards. */
-        private NotificationManager mNotificationManager;
-
-        @Override
-        public void onCreate() {
-            super.onCreate();
-            mNotificationManager =
-                (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-        }
-
 
         @Override
         public void onStart(Intent intent, int startId) {
@@ -185,38 +164,6 @@ public class AnkiDroidWidgetSmall extends AppWidgetProvider {
         			}
                 }
             }
-
-            SharedPreferences preferences = PrefSettings.getSharedPrefs(context);
-            int minimumCardsDueForNotification = Integer.parseInt(preferences.getString(
-                    "minimumCardsDueForNotification", "25"));
-
-            if (mounted && dueCardsCount >= minimumCardsDueForNotification) {
-                // Show a notification
-                int icon = R.drawable.anki;
-                CharSequence tickerText = String.format(
-                        getString(R.string.widget_minimum_cards_due_notification_ticker_text),
-                        dueCardsCount);
-                long when = System.currentTimeMillis();
-
-                Notification notification = new Notification(icon, tickerText, when);
-
-                if (preferences.getBoolean("widgetVibrate", false)) {
-                    notification.defaults |= Notification.DEFAULT_VIBRATE;
-                }
-                if (preferences.getBoolean("widgetBlink", false)) {
-                    notification.defaults |= Notification.DEFAULT_LIGHTS;
-                }
-
-                Context appContext = getApplicationContext();
-                CharSequence contentTitle = getText(R.string.widget_minimum_cards_due_notification_ticker_title);
-
-                notification.setLatestEventInfo(appContext, contentTitle, tickerText, pendingAnkiDroidIntent);
-
-                mNotificationManager.notify(WIDGET_NOTIFY_ID, notification);
-            } else {
-                // Cancel the existing notification, if any.
-                mNotificationManager.cancel(WIDGET_NOTIFY_ID);
-            }            	
 
             return updateViews;
         }
