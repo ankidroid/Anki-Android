@@ -1731,6 +1731,9 @@ public class Reviewer extends Activity implements IButtonListener{
         boolean noMoreCards = false;
         // Check to see if session rep or time limit has been reached
         Deck deck = AnkiDroidApp.deck();
+        if (deck == null) {
+        	return new boolean[] {false, false};
+        }
         long sessionRepLimit = deck.getSessionRepLimit();
         long sessionTime = deck.getSessionTimeLimit();
         String sessionMessage = null;
