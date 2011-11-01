@@ -677,7 +677,7 @@ public class StudyOptions extends Activity implements IButtonListener {
             if (mDeckFilename == null || !new File(mDeckFilename).exists()) {
                 showContentView(CONTENT_NO_DECK);
             } else {
-            	if ((showDeckPickerOnStartup() || getIntent().getBooleanExtra("startDeckpicker", false)) && (!hasErrorFiles())) {
+            	if ((showDeckPickerOnStartup()) && (!hasErrorFiles())) {
             		openDeckPicker();
             	} else {
             		// Load previous deck.
@@ -2397,7 +2397,7 @@ public class StudyOptions extends Activity implements IButtonListener {
   	      	if (mShowRepairDialog) {
   	      		showDialog(DIALOG_DB_ERROR);
   	      		mShowRepairDialog = false;
-  	      	} else if ((showDeckPickerOnStartup() || getIntent().getBooleanExtra("startDeckpicker", false))) {
+  	      	} else if (showDeckPickerOnStartup()) {
         		openDeckPicker();
         	} else {
         		// workaround for dialog problems when returning from error reporter

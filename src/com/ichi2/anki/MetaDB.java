@@ -416,21 +416,16 @@ public class MetaDB {
         Cursor cursor = null;
         int due = 0;
         int eta = 0;
-        int currentDeckdue = 0;
         int time = 0;
-        String currentDeck = PrefSettings.getSharedPrefs(context).getString("deckFilename", "");
         try {
             cursor = mMetaDb.query("widgetStatus",
-                    new String[]{"dueCards", "failedCards", "newCards", "time", "eta", "deckPath"},
+                    new String[]{"dueCards", "failedCards", "newCards", "time", "eta"},
                     null, null, null, null, null);
             while (cursor.moveToNext()) {
             	int d = cursor.getInt(0) + cursor.getInt(1) + cursor.getInt(2);
             	due += d;
             	time += cursor.getInt(3);
             	eta += cursor.getInt(4);
-            	if (currentDeck.equals(cursor.getString(5))) {
-            		currentDeckdue = d;
-            	}
             }
         } catch (SQLiteException e) {
             Log.e(AnkiDroidApp.TAG, "Error while querying widgetStatus", e);
@@ -439,7 +434,7 @@ public class MetaDB {
                 cursor.close();
             }
         }
-        return new int[]{due, time, eta, currentDeckdue};
+        return new int[]{due, time, eta};
     }
 
 

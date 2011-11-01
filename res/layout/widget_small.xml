@@ -4,10 +4,16 @@
     android:layout_height="fill_parent"
     android:focusable="false"
     android:orientation="horizontal"
-    android:padding="4dip"
-    android:background="@drawable/widget_bg_small"
-    android:clickable="true">
+    android:clickable="true"
+    android:background="@drawable/widget_bg_small">
 
+<RelativeLayout
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:focusable="false"
+    android:orientation="horizontal"
+    android:padding="4dip"
+    android:clickable="false">
     <TextView android:id="@+id/widget_due"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -16,7 +22,7 @@
        	android:singleLine="true"
        	android:textColor="#ffffff"
        	android:gravity="center"
-        android:text="-"/>
+		android:visibility="invisible"/>
  
 	<FrameLayout android:id="@+id/widget_progress_frame"
 		android:layout_below="@+id/widget_due"
@@ -25,6 +31,7 @@
 		android:background="#ffffff"
 		android:layout_height="5dip"
 		android:layout_width="fill_parent"
+		android:visibility="invisible"
 		android:padding="1dip">	
 		<ProgressBar android:id="@+id/widget_progress"
 			android:layout_width="fill_parent"
@@ -47,5 +54,16 @@
        	android:singleLine="true"
        	android:gravity="center"
        	android:textColor="#ffffff"
-        android:text="-"/>
+       	android:visibility="invisible"/>
+</RelativeLayout>
+<FrameLayout
+    android:id="@+id/ankidroid_widget_small_finish_layout"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:focusable="false"
+    android:orientation="horizontal"
+    android:background="@drawable/widget_bg_small_finish"
+    android:visibility="gone"
+    android:clickable="false">
+</FrameLayout>
 </RelativeLayout>
