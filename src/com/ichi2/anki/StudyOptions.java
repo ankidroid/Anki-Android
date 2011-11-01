@@ -2293,8 +2293,9 @@ public class StudyOptions extends Activity implements IButtonListener {
             showContentView(CONTENT_NO_EXTERNAL_STORAGE);
         } else if (requestCode == PICK_DECK_REQUEST || requestCode == DOWNLOAD_PERSONAL_DECK
                 || requestCode == DOWNLOAD_SHARED_DECK) {
+            mInDeckPicker = false;
         	if (requestCode == PICK_DECK_REQUEST && resultCode == RESULT_CLOSE) {
-        		closeStudyOptions(false);
+        		closeStudyOptions(true);
         	} else if (requestCode == PICK_DECK_REQUEST && resultCode == RESULT_RESTART) {
         		restartApp();
         	}
@@ -2303,7 +2304,6 @@ public class StudyOptions extends Activity implements IButtonListener {
             // updateCard("");
             // hideSdError();
             // hideDeckErrors();
-            mInDeckPicker = false;
 
             if (requestCode == PICK_DECK_REQUEST && resultCode == RESULT_OK) {
                 showContentView(CONTENT_STUDY_OPTIONS);

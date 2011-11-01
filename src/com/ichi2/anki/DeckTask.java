@@ -704,6 +704,10 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
     private TaskData doInBackgroundCloseDeck(TaskData... params) {
         Log.i(AnkiDroidApp.TAG, "doInBackgroundCloseDeck");
     	Deck deck = params[0].getDeck();
+
+    	// wait for widget updating before closing db
+    	WidgetStatus.waitToFinish();
+
     	if (deck != null) {
     		try {
     			deck.closeDeck(false);

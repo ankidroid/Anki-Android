@@ -35,8 +35,9 @@ import java.util.Collections;
  */
 public final class WidgetStatus {
 
-	static boolean mediumWidget = false;
-	static boolean smallWidget = false;
+	private static boolean mediumWidget = false;
+	private static boolean smallWidget = false;
+	private static AsyncTask<Context,Void,Context> mUpdateDeckStatusAsyncTask;
 
     /** This class should not be instantiated. */
     private WidgetStatus() {}
@@ -58,13 +59,27 @@ public final class WidgetStatus {
         }
         if (mediumWidget || smallWidget) {
             Log.d(AnkiDroidApp.TAG, "WidgetStatus.update(): updating");
-            AsyncTask<Context,Void,Context> updateDeckStatusAsyncTask =
-                    new UpdateDeckStatusAsyncTask();
-            updateDeckStatusAsyncTask.execute(context);
+            mUpdateDeckStatusAsyncTask = new UpdateDeckStatusAsyncTask();
+            mUpdateDeckStatusAsyncTask.execute(context);
         } else {
             Log.d(AnkiDroidApp.TAG, "WidgetStatus.update(): not enabled");
         }
     }
+
+
+    /**
+     * Block the current thread until the currently running UpdateDeckStatusAsyncTask instance (if any) has finished.
+     */
+    public static void waitToFinish() {
+        try {
+            if ((mUpdateDeckStatusAsyncTask != null) && (mUpdateDeckStatusAsyncTask.getStatus() != AsyncTask.Status.FINISHED)) {
+            	mUpdateDeckStatusAsyncTask.get();
+            }
+        } catch (Exception e) {
+            return;
+        }
+    }
+
 
     /** Returns the status of each of the decks. */
     public static DeckStatus[] fetch(Context context) {
@@ -115,7 +130,6 @@ public final class WidgetStatus {
 
                     Log.i(AnkiDroidApp.TAG, "Found deck: " + absPath);
 
-                	DeckTask.waitToFinish();
                     Deck deck;
                     Deck currentDeck = AnkiDroidApp.deck();
                     if (currentDeck != null && currentDeck.getDeckPath().equals(deckName)) {
@@ -132,13 +146,13 @@ public final class WidgetStatus {
                     if (deck == null) {
                         Log.e(AnkiDroidApp.TAG, "Widget: Skipping null deck: " + absPath);
                         // Use the data from the last time we updated the deck, if available.
-                        for (DeckStatus deckStatus : mDecks) {
-                            if (absPath.equals(deckStatus.mDeckPath)) {
-                                Log.d(AnkiDroidApp.TAG, "Using previous value");
-                                decks.add(deckStatus);
-                                break;
-                            }
-                        }
+//                        for (DeckStatus deckStatus : mDecks) {
+//                            if (absPath.equals(deckStatus.mDeckPath)) {
+//                                Log.d(AnkiDroidApp.TAG, "Using previous value");
+//                                decks.add(deckStatus);
+//                                break;
+//                            }
+//                        }
                         continue;
                     }
                     int dueCards = deck.getRevCount();

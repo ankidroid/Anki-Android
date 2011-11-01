@@ -162,8 +162,10 @@ public class AnkiDroidWidgetSmall extends AppWidgetProvider {
                 	if (totalreps != 0) {
                 		progress = (int) Math.round((100.0d * reps) / totalreps);
                 	}
-        			if (dueCardsCount == 0) {
-		                updateViews.setViewVisibility(R.id.ankidroid_widget_small_finish_layout, View.VISIBLE);
+        			if (dueCardsCount <= 0) {
+        				if (dueCardsCount == 0) {
+    		                updateViews.setViewVisibility(R.id.ankidroid_widget_small_finish_layout, View.VISIBLE);        					
+        				}
 		                updateViews.setViewVisibility(R.id.widget_due, View.INVISIBLE);
 		                updateViews.setViewVisibility(R.id.widget_progress_frame, View.INVISIBLE);
         			} else {
@@ -173,7 +175,7 @@ public class AnkiDroidWidgetSmall extends AppWidgetProvider {
 	                    updateViews.setTextViewText(R.id.widget_due, Integer.toString(dueCardsCount));
 	                    updateViews.setProgressBar(R.id.widget_progress, 100, progress, false);
 					}
-        			if (eta <= 0 || dueCardsCount == 0) {
+        			if (eta <= 0 || dueCardsCount <= 0) {
 		                updateViews.setViewVisibility(R.id.widget_eta, View.INVISIBLE);        				
         			} else {
 		                updateViews.setViewVisibility(R.id.widget_eta, View.VISIBLE);        				

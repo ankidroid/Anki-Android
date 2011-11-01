@@ -417,11 +417,13 @@ public class MetaDB {
         int due = 0;
         int eta = 0;
         int time = 0;
+        boolean noDeck = true;
         try {
             cursor = mMetaDb.query("widgetStatus",
                     new String[]{"dueCards", "failedCards", "newCards", "time", "eta"},
                     null, null, null, null, null);
             while (cursor.moveToNext()) {
+            	noDeck = false;
             	int d = cursor.getInt(0) + cursor.getInt(1) + cursor.getInt(2);
             	due += d;
             	time += cursor.getInt(3);
@@ -434,7 +436,7 @@ public class MetaDB {
                 cursor.close();
             }
         }
-        return new int[]{due, time, eta};
+        return new int[]{noDeck ? -1 : due, time, eta};
     }
 
 

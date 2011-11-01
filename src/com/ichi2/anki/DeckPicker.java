@@ -1020,21 +1020,7 @@ public class DeckPicker extends Activity implements Runnable, IButtonListener {
 	}
 	private void closeDeckPicker(boolean backPressed) {
 		if (mPrefStartupDeckPicker && backPressed) {
-    			setResult(StudyOptions.RESULT_CLOSE);
-	    		Deck deck = AnkiDroidApp.deck();
-	    		if (deck != null) {
-	        	DeckTask.launchDeckTask(DeckTask.TASK_TYPE_CLOSE_DECK, new DeckTask.TaskListener() {
-			        @Override
-			        public void onPreExecute() {
-			        }
-			        @Override
-			        public void onPostExecute(DeckTask.TaskData result) {
-			        }
-			        @Override
-			        public void onProgressUpdate(DeckTask.TaskData... values) {
-			        }
-				}, new DeckTask.TaskData(deck, 0));
-    		}
+			setResult(StudyOptions.RESULT_CLOSE);
 			finish();
 		} else {
 			finish();
