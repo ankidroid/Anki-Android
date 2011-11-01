@@ -65,7 +65,7 @@ Les non-développeurs peuvent aussi aider, par exemple en actualisant le wiki et
   <string name="reset_card_dialog_message">Cela va réinitialiser les progrès d\'apprentissage pour toutes les cartes de ces données (elles apparaîtront comme des nouvelles cartes).\nVoulez-vous réellement continuer ?</string>
   <string name="reset_card_dialog_confirmation">Toutes les cartes de cette donnée ont été réinitialisées.</string>
   <string name="answering_error_title">Erreur de la base de données</string>
-  <string name="answering_error_message">An error occurred while answering the last card or changing the deck otherwise. This could be related to a corrupt deck or to insufficient disc space.\n\nIf it happens more often, please try to repair the deck. Try a db check with Anki Desktop as well.\n\nNevertheless, it could be an AnkiDroid bug as well; please report the error that we can check this.</string>
+  <string name="answering_error_message">Une erreur est intervenue lors de la modification de la dernière carte ou d\'un changement du paquet. Ceci peut être dû à un paquet corrompu ou un espace disque insuffisant.\n\nEn cas de répétition, veuillez tenter de réparer le paquet. Vous pouvez aussi tenter une vérification du paquet avec la version bureau d\'Anki.\n\nNéanmoins cela peut être un bug d\'AnkiDroid également ; merci de reporter l\'erreur pour que nous puissions le vérifier.</string>
   <string name="answering_error_report">Signaler les erreurs</string>
-  <string name="repair_deck_dialog">Do you really want to try to repair deck \'%1$s\'?\n\nBefore starting the attempt, a copy of the deck will be created in subfolder \'%2$s\'.</string>
+  <string name="repair_deck_dialog">Voulez-vous vraiment essayer de réparer le paquet \'%1$s\'?\n\nAvant de commencer la réparation, une copie du paquet sera créée dans le sous-dossier \'%2$s\'.</string>
 </resources>

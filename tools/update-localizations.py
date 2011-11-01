@@ -119,7 +119,8 @@ def update(valuesDirectory, f, source, fileExt, isCrowdin, language=''):
 	if f == '14-marketdescription':
 		newfile = '../docs/marketing/localized description/marketdescription' + '-' + language + fileExt
 		file(newfile, 'w').write(source)
-		oldContent = open('../docs/marketing/localized description/marketdescription' + fileExt).readlines()
+		# translations must be compared to the old version of marketdescription (bug of crowdin)
+		oldContent = open('../docs/marketing/localized description/oldVersionJustToCompareWith.txt').readlines()
 		newContent = open(newfile).readlines()
 		for i in range(0, len(oldContent)):
 			if oldContent[i] != newContent[i]:

@@ -198,6 +198,6 @@
   <string name="input_workaround">Giriş Çözümü</string>
   <string name="input_workaround_summ">HTML giriş kutularındaki odaklama sorunları için çözüm. Bazı cihazlarda sorun yaratabilir.</string>
   <string name="write_answers_message">Her deste için yazılı yanıtların karşılaştırılacağı bir alan belirlemelisiniz. Bunu Anki Masaüstü yoluyla yapabilirsiniz (deste özellikleri -&gt; modeli düzenle -&gt; kart düzeni).\n\nKarşılaştırma alanı ayarlanmamışsa, yazılı yanıtınız her zaman kart yanıtının tümüyle karşılaştırılacak.</string>
-  <string name="pref_keep_screen_on">Keep Screen On</string>
-  <string name="pref_keep_screen_on_summ">Prevent screen from being turned off while reviewing</string>
+  <string name="pref_keep_screen_on">Ekranı Açık Tut</string>
+  <string name="pref_keep_screen_on_summ">Gözden geçirme sırasında ekranın kapanmasını engelle</string>
 </resources>

@@ -198,6 +198,6 @@
   <string name="input_workaround">Řešení psaní odpovědí</string>
   <string name="input_workaround_summ">Řešení problémů se vstupními HTML poli. Způsobuje problémy na několika zařízeních.</string>
   <string name="write_answers_message">Měli byste definovat pro každý balíček pole srovnání s písemnou odpovědí. Můžete to udělat pomocí Anki Desktop (Vlastnosti balíku -&gt; Upravit model -&gt; Rozvržení karty).\n\nPokud není srovnávací pole nastaveno, budou vaše písemné odpovědi vždy porovnávány s celou kartou odpovědi.</string>
-  <string name="pref_keep_screen_on">Keep Screen On</string>
-  <string name="pref_keep_screen_on_summ">Prevent screen from being turned off while reviewing</string>
+  <string name="pref_keep_screen_on">Nevypínat obrazovku</string>
+  <string name="pref_keep_screen_on_summ">Zabránit vypnutí obrazovky během opakování</string>
 </resources>
