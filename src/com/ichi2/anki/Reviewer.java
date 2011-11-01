@@ -1514,7 +1514,6 @@ public class Reviewer extends Activity implements IButtonListener{
         Themes.setContentStyle(mMainLayout, Themes.CALLER_REVIEWER);
 
         mCardContainer = (FrameLayout) findViewById(R.id.flashcard_frame);
-        mCardContainer.setVisibility(mConfigurationChanged ? View.VISIBLE : View.INVISIBLE);
 		setInAnimation(false);
 
         findViewById(R.id.top_bar).setOnClickListener(mCardStatisticsListener);
@@ -2026,7 +2025,9 @@ public class Reviewer extends Activity implements IButtonListener{
 
 
     private void updateScreenCounts() {
-    	
+    	if (mCurrentCard == null) {
+    		return;
+    	}
         Deck deck = AnkiDroidApp.deck();
         int eta = deck.getETA();
         if (deck.hasFinishScheduler() || eta < 1) {
@@ -2393,10 +2394,8 @@ public class Reviewer extends Activity implements IButtonListener{
 	            	}
 		        }	        	
 	        }
-	        if (!mShowAnimations && mCardContainer.getVisibility() == View.INVISIBLE) {
+	        if (!mShowAnimations && mCardTimer.getVisibility() == View.INVISIBLE) {
     	    	switchTopBarVisibility(View.VISIBLE);
-				mCardContainer.setVisibility(View.VISIBLE);
-				mCardContainer.setAnimation(ViewAnimation.fade(ViewAnimation.FADE_IN, mFadeDuration, 0));
 	        }
     		if (!sDisplayAnswer) {
         		updateForNewCard();
