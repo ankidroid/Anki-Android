@@ -950,14 +950,6 @@ public class Reviewer extends Activity implements IButtonListener{
     	longClickHandler.removeCallbacks(startLongClickAction);
 
         stopTimer();
-        if (!isFinishing()) {
-            // Save changes
-            Deck deck = AnkiDroidApp.deck();
-            if (deck != null) {
-	            DeckTask.waitToFinish();
-	            deck.commitToDB();
-            }
-        }
 
         if (mShakeEnabled) {
             mSensorManager.unregisterListener(mSensorListener);    	  
@@ -1001,6 +993,13 @@ public class Reviewer extends Activity implements IButtonListener{
           mSensorManager.unregisterListener(mSensorListener);    	  
       }
       DeckTask.waitToFinish();
+      if (!isFinishing()) {
+          // Save changes
+          Deck deck = AnkiDroidApp.deck();
+          if (deck != null) {
+	            deck.commitToDB();
+          }
+      }
       WidgetStatus.update(getBaseContext(), true);
       super.onStop();
     }
