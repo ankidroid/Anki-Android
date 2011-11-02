@@ -168,13 +168,12 @@ public final class WidgetStatus {
                     }
                     int dueCards = 0;
                     int newCards = 0;
-                    int failedCards = 0;
+                    int failedCards = deck.getFailedSoonCount();
                     int eta = 0;
                     int reps = deck.getSessionFinishedCards();
 		    if(!deck.hasFinishScheduler()) {
         	            dueCards = deck.getRevCount();
         	            newCards = deck.getNewCountToday();
-        	            failedCards = deck.getFailedSoonCount();
         	            eta = deck.getETA();
 		    }
                     // Close the database connection, but only if this is not the current database.
