@@ -23,6 +23,7 @@ Create your own flashcard decks or download free decks compiled for many languag
 • whiteboard
 • kaartbrowser
 • kaarten bewerken/toevoegen
+• import existing collection files (via Anki Desktop)
 • add cards by intent from other applications like dictionaries
 • Woordenboekintegratie (ColorDict, GoldenDict, Leo.org, Aedict, verscheidene webwoordenboeken)
 • ondersteuning voor aangepaste lettertypes
