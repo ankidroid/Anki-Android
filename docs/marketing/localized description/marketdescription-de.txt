@@ -23,6 +23,7 @@ Open Source
 • Whiteboard
 • Kartenübersicht
 • Karteneditor/Möglichkeit, Karten hinzuzufügen
+• Importieren von bestehenden Sammlungen (über Anki Desktop)
 • Fügen Sie Karten über Intents von anderen Programmen (wie z.B. Wörterbüchern) hinzu
 • Wörterbuch-Integration (ColorDict, GoldenDict, Leo.org, Aedict, diverse Web-Wörterbücher)
 • Unterstützung für andere Schriftarten

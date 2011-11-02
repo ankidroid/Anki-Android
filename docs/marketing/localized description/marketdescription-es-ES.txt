@@ -23,6 +23,7 @@ Crea tus propios mazos de tarjetas o descarga mazos gratuitos creados para mucho
 • pizarra
 • explorador de tarjetas
 • editor/creador de tarjetas
+• import existing collection files (via Anki Desktop)
 • agregar tarjetas instantáneamente a partir de otras aplicaciones como diccionarios
 • integración con diccionarios (ColorDict, GoldenDict, Leo.org, Aedict, diversos diccionarios online)
 • soporte para fuentes personalizadas
