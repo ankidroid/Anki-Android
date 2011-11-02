@@ -1000,6 +1000,7 @@ public class Reviewer extends Activity implements IButtonListener{
       if (mShakeEnabled) {
           mSensorManager.unregisterListener(mSensorListener);    	  
       }
+      DeckTask.waitToFinish();
       WidgetStatus.update(getBaseContext(), true);
       super.onStop();
     }
