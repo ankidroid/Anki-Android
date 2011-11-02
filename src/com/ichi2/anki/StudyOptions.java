@@ -826,22 +826,32 @@ public class StudyOptions extends Activity implements IButtonListener {
     }
 
 
-     @Override
-     protected void onPause() {
-         if ((AnkiDroidApp.zeemoteController() != null) && (AnkiDroidApp.zeemoteController().isConnected())){ 
-         	Log.d("Zeemote","Removing listener in onPause");
-         	AnkiDroidApp.zeemoteController().removeButtonListener(this);
-         	AnkiDroidApp.zeemoteController().removeJoystickListener(adapter);
-     		adapter.removeButtonListener(this);
-     		adapter = null;
-         }
-    	 
-         super.onPause();
-         // Update the widget when pausing this activity.
-         if (!mInDeckPicker && !mInReviewer) {
-             WidgetStatus.update(getBaseContext());
-         }
-     }
+    @Override
+    protected void onPause() {
+        if ((AnkiDroidApp.zeemoteController() != null) && (AnkiDroidApp.zeemoteController().isConnected())){ 
+        	Log.d("Zeemote","Removing listener in onPause");
+        	AnkiDroidApp.zeemoteController().removeButtonListener(this);
+        	AnkiDroidApp.zeemoteController().removeJoystickListener(adapter);
+    		adapter.removeButtonListener(this);
+    		adapter = null;
+        }
+   	 
+        super.onPause();
+    }
+
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        // Update the widget when stopping this activity (all when closing, only current when pressing home).
+        if (!mInDeckPicker && !mInReviewer) {
+        	if (isFinishing()) {
+                WidgetStatus.update(getBaseContext());
+        	} else {
+                WidgetStatus.update(getBaseContext(), true);
+        	}
+        }
+    }
 
 
     @Override

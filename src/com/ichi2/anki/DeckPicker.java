@@ -733,10 +733,19 @@ public class DeckPicker extends Activity implements Runnable, IButtonListener {
         	AnkiDroidApp.zeemoteController().removeJoystickListener(adapter);
     		adapter.removeButtonListener(this);
     		adapter = null;
-        }        
+        }
         
 		super.onPause();
 		waitForDeckLoaderThread();
+	}
+
+	@Override
+	protected void onStop() {
+		Log.i(AnkiDroidApp.TAG, "DeckPicker - onStop");
+		super.onStop();
+		if (!isFinishing() && mIsFinished) {
+			WidgetStatus.update(this);
+		}
 	}
 
 	@Override

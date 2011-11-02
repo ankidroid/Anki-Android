@@ -39,6 +39,7 @@ public final class WidgetStatus {
 	private static boolean mediumWidget = false;
 	private static boolean smallWidget = false;
 	private static boolean notification = false;
+	private static boolean onlyCurrentDeck = false;
 	private static AsyncTask<Context,Void,Context> mUpdateDeckStatusAsyncTask;
 
     /** This class should not be instantiated. */
@@ -46,8 +47,11 @@ public final class WidgetStatus {
 
     /** Request the widget to update its status. */
     public static void update(Context context) {
-        // Only update the widget if it is enabled.
-        // TODO(flerda): Split widget from notifications.
+    	update(context, false);
+    }
+    /** Request the widget to update its status. */
+    public static void update(Context context, boolean onlyCurrent) {
+    	onlyCurrentDeck = onlyCurrent;
         SharedPreferences preferences = PrefSettings.getSharedPrefs(context);
         if (preferences.getBoolean("widgetMediumEnabled", false)) {
             mediumWidget = true;
@@ -59,7 +63,7 @@ public final class WidgetStatus {
         } else {
             smallWidget = false;
         }
-        if (Integer.parseInt(preferences.getString("minimumCardsDueForNotification", "25")) < 1000000) {
+        if (Integer.parseInt(preferences.getString("minimumCardsDueForNotification", "25")) < 1000000 && !onlyCurrentDeck) {
         	notification = true;
         } else {
         	notification = false;
@@ -116,74 +120,103 @@ public final class WidgetStatus {
             	return context;
             }
 
-            SharedPreferences preferences = PrefSettings.getSharedPrefs(context);
-            String deckPath = preferences.getString("deckPath",
-                    AnkiDroidApp.getStorageDirectory() + "/AnkiDroid");
-
-            File dir = new File(deckPath);
-
-            File[] fileList = dir.listFiles(new AnkiFileFilter());
-
-            if (fileList == null || fileList.length == 0) {
-                mDecks = EMPTY_DECK_STATUS;
-                return context;
-            }
-
             // For the deck information
-            ArrayList<DeckStatus> decks = new ArrayList<DeckStatus>(fileList.length);
+            ArrayList<DeckStatus> decks;
 
-            for (File file : fileList) {
-            	String absPath = null;
-                try {
-                    // Run through the decks and get the information
-                    absPath = file.getAbsolutePath();
-                    String deckName = file.getName().replaceAll(".anki", "");
+            if (onlyCurrentDeck) {
+                decks = new ArrayList<DeckStatus>(mDecks.length);
 
-                    Log.i(AnkiDroidApp.TAG, "Found deck: " + absPath);
-
-                    Deck deck;
-                    Deck currentDeck = AnkiDroidApp.deck();
-                    if (currentDeck != null && currentDeck.getDeckPath().equals(deckName)) {
-                    	deck = currentDeck;
-                    } else {
-                    	try {
-                        	deck = Deck.openDeck(absPath, false);                    		
-            			} catch (RuntimeException e) {
-            				Log.w(AnkiDroidApp.TAG, "Widget: Could not open database " + absPath + ": " + e);
-            				BackupManager.restoreDeckIfMissing(absPath);
-            				deck = null;
-            			}
+                Deck currentDeck = AnkiDroidApp.deck();
+                if (currentDeck != null) {
+                	String currentDeckPath = currentDeck.getDeckPath();
+                	try {
+                		for (DeckStatus m : mDecks) {
+                			if (m.mDeckPath.equals(currentDeckPath)) {
+                    			Log.i(AnkiDroidApp.TAG, "UpdateWidget - update information for deck " + currentDeckPath);
+                				decks.add(new DeckStatus(currentDeckPath, currentDeck.getDeckName(), currentDeck.getNewCountToday(), currentDeck.getRevCount(), currentDeck.getFailedSoonCount(), currentDeck.getETA(), currentDeck.getSessionFinishedCards()));
+                			} else {
+                    			Log.i(AnkiDroidApp.TAG, "UpdateWidget - copy information for deck " + m.mDeckPath);
+                				decks.add(m);
+                			}
+                		}
+                    } catch (SQLException e) {
+                        Log.i(AnkiDroidApp.TAG, "Widget: Could not retrieve deck information");
+                        Log.e(AnkiDroidApp.TAG, e.toString());
+                        if (currentDeckPath != null) {
+                            BackupManager.restoreDeckIfMissing(currentDeckPath);                    	
+                        }
                     }
-                    if (deck == null) {
-                        Log.e(AnkiDroidApp.TAG, "Widget: Skipping null deck: " + absPath);
-                        // Use the data from the last time we updated the deck, if available.
-//                        for (DeckStatus deckStatus : mDecks) {
-//                            if (absPath.equals(deckStatus.mDeckPath)) {
-//                                Log.d(AnkiDroidApp.TAG, "Using previous value");
-//                                decks.add(deckStatus);
-//                                break;
+                }
+
+            } else {
+                SharedPreferences preferences = PrefSettings.getSharedPrefs(context);
+                String deckPath = preferences.getString("deckPath",
+                        AnkiDroidApp.getStorageDirectory() + "/AnkiDroid");
+
+                File dir = new File(deckPath);
+
+                File[] fileList = dir.listFiles(new AnkiFileFilter());
+
+                if (fileList == null || fileList.length == 0) {
+                    mDecks = EMPTY_DECK_STATUS;
+                    return context;
+                }
+
+                decks = new ArrayList<DeckStatus>(fileList.length);
+
+                for (File file : fileList) {
+                	String absPath = null;
+                    try {
+                        // Run through the decks and get the information
+                        absPath = file.getAbsolutePath();
+                        String deckName = file.getName().replaceAll(".anki", "");
+
+                        Log.i(AnkiDroidApp.TAG, "Found deck: " + absPath);
+
+                        Deck deck;
+                        Deck currentDeck = AnkiDroidApp.deck();
+                        if (currentDeck != null && currentDeck.getDeckPath().equals(deckName)) {
+                        	deck = currentDeck;
+                        } else {
+                        	try {
+                            	deck = Deck.openDeck(absPath, false);                    		
+                			} catch (RuntimeException e) {
+                				Log.w(AnkiDroidApp.TAG, "Widget: Could not open database " + absPath + ": " + e);
+                				BackupManager.restoreDeckIfMissing(absPath);
+                				deck = null;
+                			}
+                        }
+                        if (deck == null) {
+                            Log.e(AnkiDroidApp.TAG, "Widget: Skipping null deck: " + absPath);
+                            // Use the data from the last time we updated the deck, if available.
+//                            for (DeckStatus deckStatus : mDecks) {
+//                                if (absPath.equals(deckStatus.mDeckPath)) {
+//                                    Log.d(AnkiDroidApp.TAG, "Using previous value");
+//                                    decks.add(deckStatus);
+//                                    break;
+//                                }
 //                            }
-//                        }
-                        continue;
-                    }
-                    int dueCards = deck.getRevCount();
-                    int newCards = deck.getNewCountToday();
-                    int failedCards = deck.getFailedSoonCount();
-                    int eta = deck.getETA();
-                    int reps = deck.getSessionFinishedCards();
-                    // Close the database connection, but only if this is not the current database.
-                    // Probably we need to make this atomic to be sure it will not cause a failure.
-                    if (currentDeck != null && currentDeck.getDB() != deck.getDB()) {
-                        deck.closeDeck();
-                    }
+                            continue;
+                        }
+                        int dueCards = deck.getRevCount();
+                        int newCards = deck.getNewCountToday();
+                        int failedCards = deck.getFailedSoonCount();
+                        int eta = deck.getETA();
+                        int reps = deck.getSessionFinishedCards();
+                        // Close the database connection, but only if this is not the current database.
+                        // Probably we need to make this atomic to be sure it will not cause a failure.
+                        if (currentDeck != null && currentDeck.getDB() != deck.getDB()) {
+                            deck.closeDeck();
+                        }
 
-                    // Add the information about the deck
-                    decks.add(new DeckStatus(absPath, deckName, newCards, dueCards, failedCards, eta, reps));
-                } catch (SQLException e) {
-                    Log.i(AnkiDroidApp.TAG, "Widget: Could not open deck");
-                    Log.e(AnkiDroidApp.TAG, e.toString());
-                    if (absPath != null) {
-                        BackupManager.restoreDeckIfMissing(absPath);                    	
+                        // Add the information about the deck
+                        decks.add(new DeckStatus(absPath, deckName, newCards, dueCards, failedCards, eta, reps));
+                    } catch (SQLException e) {
+                        Log.i(AnkiDroidApp.TAG, "Widget: Could not open deck");
+                        Log.e(AnkiDroidApp.TAG, e.toString());
+                        if (absPath != null) {
+                            BackupManager.restoreDeckIfMissing(absPath);                    	
+                        }
                     }
                 }
             }

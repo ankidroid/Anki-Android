@@ -957,7 +957,6 @@ public class Reviewer extends Activity implements IButtonListener{
 	            DeckTask.waitToFinish();
 	            deck.commitToDB();
             }
-            WidgetStatus.update(getBaseContext());
         }
 
         if (mShakeEnabled) {
@@ -1001,6 +1000,7 @@ public class Reviewer extends Activity implements IButtonListener{
       if (mShakeEnabled) {
           mSensorManager.unregisterListener(mSensorListener);    	  
       }
+      WidgetStatus.update(getBaseContext(), true);
       super.onStop();
     }
 
