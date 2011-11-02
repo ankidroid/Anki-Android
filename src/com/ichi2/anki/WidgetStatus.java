@@ -136,7 +136,7 @@ public final class WidgetStatus {
 						if (!currentDeck.hasFinishScheduler()) {
 		                			decks.add(new DeckStatus(currentDeckPath, currentDeck.getDeckName(), currentDeck.getNewCountToday(), currentDeck.getRevCount(), currentDeck.getFailedSoonCount(), currentDeck.getETA(), currentDeck.getSessionFinishedCards()));
 						} else {
-		                			decks.add(new DeckStatus(currentDeckPath, currentDeck.getDeckName(), 0, 0, 0, 0, currentDeck.getSessionFinishedCards()));
+		                			decks.add(new DeckStatus(currentDeckPath, currentDeck.getDeckName(), 0, 0, currentDeck.getFailedSoonCount(), 0, currentDeck.getSessionFinishedCards()));
 						}
                 			} else {
                     			Log.i(AnkiDroidApp.TAG, "UpdateWidget - copy information for deck " + m.mDeckPath);
@@ -203,7 +203,7 @@ public final class WidgetStatus {
                         }
                         int dueCards = 0;
                         int newCards = 0;
-                        int failedCards = 0;
+                        int failedCards = deck.getFailedSoonCount();
                         int eta = 0;
                         int reps = deck.getSessionFinishedCards();
 
@@ -211,7 +211,6 @@ public final class WidgetStatus {
 			if(!deck.hasFinishScheduler()) {
         	                dueCards = deck.getRevCount();
         	                newCards = deck.getNewCountToday();
-        	                failedCards = deck.getFailedSoonCount();
         	                eta = deck.getETA();
 			}
                         // Close the database connection, but only if this is not the current database.
