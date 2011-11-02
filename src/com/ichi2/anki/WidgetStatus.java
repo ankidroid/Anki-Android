@@ -143,7 +143,7 @@ public final class WidgetStatus {
 
                     Deck deck;
                     Deck currentDeck = AnkiDroidApp.deck();
-                    if (currentDeck != null && currentDeck.getDeckPath().equals(deckName)) {
+                    if (currentDeck != null && currentDeck.getDeckPath().equals(absPath)) {
                     	deck = currentDeck;
                     } else {
                     	try {
@@ -166,11 +166,17 @@ public final class WidgetStatus {
 //                        }
                         continue;
                     }
-                    int dueCards = deck.getRevCount();
-                    int newCards = deck.getNewCountToday();
-                    int failedCards = deck.getFailedSoonCount();
-                    int eta = deck.getETA();
+                    int dueCards = 0;
+                    int newCards = 0;
+                    int failedCards = 0;
+                    int eta = 0;
                     int reps = deck.getSessionFinishedCards();
+		    if(!deck.hasFinishScheduler()) {
+        	            dueCards = deck.getRevCount();
+        	            newCards = deck.getNewCountToday();
+        	            failedCards = deck.getFailedSoonCount();
+        	            eta = deck.getETA();
+		    }
                     // Close the database connection, but only if this is not the current database.
                     // Probably we need to make this atomic to be sure it will not cause a failure.
                     if (currentDeck != null && currentDeck.getDB() != deck.getDB()) {
