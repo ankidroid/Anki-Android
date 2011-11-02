@@ -59,6 +59,7 @@
   <string name="reset_card_dialog_message">Dies setzt den Lernfortschritt für alle Karten dieses Fakts zurück (diese sehen danach aus wie neue Karten).\nWirklich fortfahren?</string>
   <string name="reset_card_dialog_confirmation">Alle Karten dieses Fakts wurden zurückgesetzt</string>
   <string name="answering_error_title">Datenbank-Fehler</string>
-  <string name="answering_error_message">Beim Antworten/Ändern der letzten Karte ist ein Fehler aufgetreten. Das könnte an einem beschädigten Stapel oder an unzureichendem Festplattenspeicher liegen.\n\nSollte dies häufiger auftreten, versuchen Sie bitte, den Stapel zu reparieren.\n\nDie Ursache könnte auch ein AnkiDroid-Fehler sein; bitte melden Sie ihn deshalb, damit wir das überprüfen können.</string>
+  <string name="answering_error_message">Beim Antworten/Ändern der letzten Karte oder bei einer sonstigen Datenbankänderung ist ein Fehler aufgetreten. Das könnte an einem beschädigten Stapel oder an unzureichendem Festplattenspeicher liegen.\n\nSollte dies häufiger auftreten, versuchen Sie bitte, den Stapel zu reparieren. Versuchen Sie auch eine Datenbank-Überprüfung mit Anki-Desktop.\n\nDie Ursache könnte auch ein AnkiDroid-Fehler sein; bitte melden Sie ihn deshalb, damit wir das überprüfen können.</string>
   <string name="answering_error_report">Fehler melden</string>
+  <string name="repair_deck_dialog">Wollen Sie wirklich versuchen, den Stapel \'%1$s\' zu reparieren?\n\nBevor der Versuch gestartet wird, wird eine Kopie des Stapels im Unterordner \'%2$s\' angelegt.</string>
 </resources>

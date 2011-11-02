@@ -60,6 +60,7 @@
   <string name="redo">Opnieuw uitvoeren</string>
   <string name="close_previous_deck">Sluiten vorige set.\nEven wachten...</string>
   <string name="close_deck">Sluiten set.\nEven wachten...</string>
+  <string name="finish_operation">Vorige bewerking wordt voltooid.\nGelieve te wachten...</string>
   <string name="contextmenu_deckpicker_download_missing_media">Download ontbrekende media</string>
   <string name="contextmenu_deckpicker_reset_language_assignments">Taalopdrachten opnieuw instellen</string>
   <string name="contextmenu_deckpicker_reset_reset_message">Taal opnieuw instellen</string>
@@ -87,7 +88,7 @@
   <string name="menu_marked">Gemarkeerd</string>
   <string name="menu_create_deck">Maak een set</string>
   <string name="studyoptions_feedback">Terugkoppeling</string>
-  <string name="studyoptions_cram_dialog_title">Tags to cram</string>
+  <string name="studyoptions_cram_dialog_title">Tags om te stampen</string>
   <string name="statistics">Statistieken</string>
   <string name="studyoptions_load_other_deck">Ander Set Laden</string>
   <string name="studyoptions_load_tutorial_deck">Laden van voorbeeldset</string>

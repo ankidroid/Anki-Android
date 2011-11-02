@@ -2995,7 +2995,7 @@ public class Deck {
         // - The card failed AND
         // - The number of failures exceeds the leech threshold AND
         // - There were at least threshold/2 reps since last time
-        if (!card.isRev() && (no >= fmax) && ((fmax - no) % Math.max(fmax / 2, 1) == 0)) {
+        if (!card.isRev() && (no >= fmax) && (((double)(fmax - no)) % Math.max(fmax / 2, 1) == 0)) {
             return true;
         } else {
             return false;
@@ -4560,6 +4560,7 @@ public class Deck {
             bundledDeck.put("newCount", mNewCount);
             bundledDeck.put("newCountToday", mNewCountToday);
             bundledDeck.put("newEarly", mNewEarly);
+            bundledDeck.put("revCardOrder", mRevCardOrder);
             bundledDeck.put("revCount", mRevCount);
             bundledDeck.put("reviewEarly", mReviewEarly);
             bundledDeck.put("suspended", mSuspended);

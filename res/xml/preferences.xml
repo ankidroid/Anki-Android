@@ -138,6 +138,11 @@
 			android:defaultValue="false"
 			android:summary="@string/fix_orientation_summ"
 			android:key="fixOrientation" />
+		<CheckBoxPreference
+			android:title="@string/pref_keep_screen_on"
+			android:defaultValue="false"
+			android:summary="@string/pref_keep_screen_on_summ"
+			android:key="keepScreenOn" />
 		<ListPreference
 			android:title="@string/hide_question_in_answer"
 			android:summary="@string/hide_question_in_answer_summ"

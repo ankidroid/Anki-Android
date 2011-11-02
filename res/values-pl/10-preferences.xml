@@ -198,4 +198,6 @@
   <string name="input_workaround">Poprawka przy wpisywaniu</string>
   <string name="input_workaround_summ">Obejście problemu nieaktywnych pól tekstowych HTML na niektórych urządzeniach.</string>
   <string name="write_answers_message">Dla każdej talii należy zdefiniować pole, które porównywane będzie z wpisywaną odpowiedzią. Można to zrobić w wersji desktopowej Anki (Własności talii -&gt; Edytuj model -&gt; Układ karty).\n\nJeśli nie zdefiniowano takiego pola, wpisywana odpowiedź będzie zawsze porównywana z całym polem odpowiedzi karty.</string>
+  <string name="pref_keep_screen_on">Nie wyłączaj ekranu</string>
+  <string name="pref_keep_screen_on_summ">Nie pozwól na wyłączanie ekranu podczas powtórek</string>
 </resources>

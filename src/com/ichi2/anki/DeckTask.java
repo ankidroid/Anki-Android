@@ -108,6 +108,17 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
     }
 
 
+    public static void cancelTask() {
+        try {
+            if ((sInstance != null) && (sInstance.getStatus() != AsyncTask.Status.FINISHED)) {
+                sInstance.cancel(true);
+            }
+        } catch (Exception e) {
+            return;
+        }
+    }
+
+
     public static boolean taskIsRunning() {
         try {
             if ((sInstance != null) && (sInstance.getStatus() != AsyncTask.Status.FINISHED)) {
@@ -124,6 +135,9 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
     protected TaskData doInBackground(TaskData... params) {
         // Wait for previous thread (if any) to finish before continuing
         try {
+            if (mType == TASK_TYPE_LOAD_DECK) {
+	   			publishProgress(new TaskData(AnkiDroidApp.getInstance().getBaseContext().getResources().getString(R.string.finish_operation)));
+            }
             if ((sOldInstance != null) && (sOldInstance.getStatus() != AsyncTask.Status.FINISHED)) {
                 sOldInstance.get();
             }
@@ -291,7 +305,7 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
 	        }
 		} catch (RuntimeException e) {
 			Log.e(AnkiDroidApp.TAG, "doInBackgroundUpdateFact - RuntimeException on updating fact: " + e);
-			AnkiDroidApp.saveExceptionReportFile(e);
+			AnkiDroidApp.saveExceptionReportFile(e, "doInBackgroundUpdateFact");
 			return new TaskData(false);
 		}
         return new TaskData(true);
@@ -323,7 +337,7 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
 	        }
 		} catch (RuntimeException e) {
 			Log.e(AnkiDroidApp.TAG, "doInBackgroundAnswerCard - RuntimeException on answering card: " + e);
-			AnkiDroidApp.saveExceptionReportFile(e);
+			AnkiDroidApp.saveExceptionReportFile(e, "doInBackgroundAnswerCard");
 			return new TaskData(false);
 		}
         return new TaskData(true);
@@ -361,6 +375,9 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
                 return new TaskData(DECK_NOT_LOADED);
             }
             BackupManager.cleanUpAfterBackupCreation(true);
+            if (deck.hasFinishScheduler()) {
+            	deck.finishScheduler();
+            }
             publishProgress(new TaskData(backupResult));
             return new TaskData(DECK_LOADED, deck, null);
 		} catch (SQLException e) {
@@ -385,8 +402,8 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
             try {
             	deck.commitToDB();
             	deck.updateCutoff();
-            	if (AnkiDroidApp.deck().hasFinishScheduler()) {
-            		AnkiDroidApp.deck().finishScheduler();
+            	if (deck.hasFinishScheduler()) {
+            		deck.finishScheduler();
             	}
             	deck.reset();
             } catch (SQLiteDiskIOException e) {
@@ -426,7 +443,7 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
             }
     	} catch (RuntimeException e) {
     		Log.e(AnkiDroidApp.TAG, "doInBackgroundSuspendCard - RuntimeException on suspending card: " + e);
-    		AnkiDroidApp.saveExceptionReportFile(e);
+			AnkiDroidApp.saveExceptionReportFile(e, "doInBackgroundSuspendCard");
     		return new TaskData(false);
     	}
         return new TaskData(true);
@@ -461,7 +478,7 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
             }
     	} catch (RuntimeException e) {
     		Log.e(AnkiDroidApp.TAG, "doInBackgroundMarkCard - RuntimeException on marking card: " + e);
-    		AnkiDroidApp.saveExceptionReportFile(e);
+			AnkiDroidApp.saveExceptionReportFile(e, "doInBackgroundMarkCard");
     		return new TaskData(false);
         }
 		return new TaskData(true);
@@ -496,7 +513,7 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
             }
     	} catch (RuntimeException e) {
     		Log.e(AnkiDroidApp.TAG, "doInBackgroundUndo - RuntimeException on undoing: " + e);
-    		AnkiDroidApp.saveExceptionReportFile(e);
+			AnkiDroidApp.saveExceptionReportFile(e, "doInBackgroundUndo");
             return new TaskData(undoType, oldCardId, false);
         }
         return new TaskData(undoType, oldCardId, true);
@@ -531,7 +548,7 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
             }
     	} catch (RuntimeException e) {
     		Log.e(AnkiDroidApp.TAG, "doInBackgroundRedo - RuntimeException on redoing: " + e);
-    		AnkiDroidApp.saveExceptionReportFile(e);
+			AnkiDroidApp.saveExceptionReportFile(e, "doInBackgroundRedo");
             return new TaskData(undoType, oldCardId, false);
         }
         return new TaskData(undoType, oldCardId, true);
@@ -578,7 +595,7 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
             }
     	} catch (RuntimeException e) {
     		Log.e(AnkiDroidApp.TAG, "doInBackgroundDeleteCard - RuntimeException on deleting card: " + e);
-    		AnkiDroidApp.saveExceptionReportFile(e);
+			AnkiDroidApp.saveExceptionReportFile(e, "doInBackgroundDeleteCard");
             return new TaskData(String.valueOf(id), 0, false);
     	}
         return new TaskData(String.valueOf(id), 0, true);
@@ -607,7 +624,7 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
             }
     	} catch (RuntimeException e) {
     		Log.e(AnkiDroidApp.TAG, "doInBackgroundSuspendCard - RuntimeException on suspending card: " + e);
-    		AnkiDroidApp.saveExceptionReportFile(e);
+			AnkiDroidApp.saveExceptionReportFile(e, "doInBackgroundBuryCard");
             return new TaskData(String.valueOf(id), 0, false);
     	}
         return new TaskData(String.valueOf(id), 0, true);
@@ -707,6 +724,10 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
     private TaskData doInBackgroundCloseDeck(TaskData... params) {
         Log.i(AnkiDroidApp.TAG, "doInBackgroundCloseDeck");
     	Deck deck = params[0].getDeck();
+
+    	// wait for widget updating before closing db
+    	WidgetStatus.waitToFinish();
+
     	if (deck != null) {
     		try {
     			deck.closeDeck(false);
@@ -746,7 +767,17 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
     	publishProgress(new TaskData(res.getString(R.string.tutorial_load)));
     	AnkiDb ankiDB = null;
     	try{
-    		// Copy the empty deck from the assets to the SD card.
+    		// close open deck
+    		Deck openDeck = AnkiDroidApp.deck();
+    		if (openDeck != null) {
+    			openDeck.closeDeck(false);
+    			AnkiDroidApp.setDeck(null);
+    		}
+    		// delete any existing tutorial file
+            if (!sampleDeckFile.exists()) {
+            	sampleDeckFile.delete();
+            }
+    		// copy the empty deck from the assets to the SD card.
     		InputStream stream = res.getAssets().open(DeckCreator.EMPTY_DECK_NAME);
     		Utils.writeToFile(stream, sampleDeckFile.getAbsolutePath());
     		stream.close();

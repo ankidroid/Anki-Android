@@ -49,6 +49,7 @@
   <string name="sync_all">Synchronizovat vše</string>
   <string name="sync_prepare_syncing">Příprava synchronizace...</string>
   <string name="connection_error_message">Došlo k síťové chybě.</string>
+  <string name="sync_log_db_error">Došlo k chybě databáze.</string>
   <string name="no_user_password_error_message">Abyste v této operaci mohli pokračovat, potřebujete mít účet na AnkiOnline a být přihlášeni.</string>
   <string name="fact">fakt</string>
   <string name="facts">fakta</string>

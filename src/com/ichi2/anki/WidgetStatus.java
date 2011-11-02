@@ -14,6 +14,7 @@
 
 package com.ichi2.anki;
 
+import com.ichi2.anki.services.NotificationService;
 import com.tomgibara.android.veecheck.util.PrefSettings;
 
 import android.content.Context;
@@ -35,8 +36,10 @@ import java.util.Collections;
  */
 public final class WidgetStatus {
 
-	static boolean mediumWidget = false;
-	static boolean smallWidget = false;
+	private static boolean mediumWidget = false;
+	private static boolean smallWidget = false;
+	private static boolean notification = false;
+	private static AsyncTask<Context,Void,Context> mUpdateDeckStatusAsyncTask;
 
     /** This class should not be instantiated. */
     private WidgetStatus() {}
@@ -56,15 +59,34 @@ public final class WidgetStatus {
         } else {
             smallWidget = false;
         }
-	if (mediumWidget || smallWidget) {
+        if (Integer.parseInt(preferences.getString("minimumCardsDueForNotification", "25")) < 1000000) {
+        	notification = true;
+        } else {
+        	notification = false;
+        }
+        if (mediumWidget || smallWidget || notification) {
             Log.d(AnkiDroidApp.TAG, "WidgetStatus.update(): updating");
-            AsyncTask<Context,Void,Context> updateDeckStatusAsyncTask =
-                    new UpdateDeckStatusAsyncTask();
-            updateDeckStatusAsyncTask.execute(context);
+            mUpdateDeckStatusAsyncTask = new UpdateDeckStatusAsyncTask();
+            mUpdateDeckStatusAsyncTask.execute(context);
         } else {
             Log.d(AnkiDroidApp.TAG, "WidgetStatus.update(): not enabled");
         }
     }
+
+
+    /**
+     * Block the current thread until the currently running UpdateDeckStatusAsyncTask instance (if any) has finished.
+     */
+    public static void waitToFinish() {
+        try {
+            if ((mUpdateDeckStatusAsyncTask != null) && (mUpdateDeckStatusAsyncTask.getStatus() != AsyncTask.Status.FINISHED)) {
+            	mUpdateDeckStatusAsyncTask.get();
+            }
+        } catch (Exception e) {
+            return;
+        }
+    }
+
 
     /** Returns the status of each of the decks. */
     public static DeckStatus[] fetch(Context context) {
@@ -76,6 +98,10 @@ public final class WidgetStatus {
         return MetaDB.getWidgetSmallStatus(context);
     }
 
+    public static int fetchDue(Context context) {
+        return MetaDB.getNotificationStatus(context);
+    }
+
     private static class UpdateDeckStatusAsyncTask extends AsyncTask<Context, Void, Context> {
         private static final DeckStatus[] EMPTY_DECK_STATUS = new DeckStatus[0];
 
@@ -84,8 +110,11 @@ public final class WidgetStatus {
         @Override
         protected Context doInBackground(Context... params) {
             Log.d(AnkiDroidApp.TAG, "WidgetStatus.UpdateDeckStatusAsyncTask.doInBackground()");
-
             Context context = params[0];
+
+            if (!AnkiDroidApp.isSdCardMounted()) {
+            	return context;
+            }
 
             SharedPreferences preferences = PrefSettings.getSharedPrefs(context);
             String deckPath = preferences.getString("deckPath",
@@ -112,7 +141,6 @@ public final class WidgetStatus {
 
                     Log.i(AnkiDroidApp.TAG, "Found deck: " + absPath);
 
-                	DeckTask.waitToFinish();
                     Deck deck;
                     Deck currentDeck = AnkiDroidApp.deck();
                     if (currentDeck != null && currentDeck.getDeckPath().equals(deckName)) {
@@ -129,13 +157,13 @@ public final class WidgetStatus {
                     if (deck == null) {
                         Log.e(AnkiDroidApp.TAG, "Widget: Skipping null deck: " + absPath);
                         // Use the data from the last time we updated the deck, if available.
-                        for (DeckStatus deckStatus : mDecks) {
-                            if (absPath.equals(deckStatus.mDeckPath)) {
-                                Log.d(AnkiDroidApp.TAG, "Using previous value");
-                                decks.add(deckStatus);
-                                break;
-                            }
-                        }
+//                        for (DeckStatus deckStatus : mDecks) {
+//                            if (absPath.equals(deckStatus.mDeckPath)) {
+//                                Log.d(AnkiDroidApp.TAG, "Using previous value");
+//                                decks.add(deckStatus);
+//                                break;
+//                            }
+//                        }
                         continue;
                     }
                     int dueCards = deck.getRevCount();
@@ -184,10 +212,14 @@ public final class WidgetStatus {
             }
             if (smallWidget) {
             	Intent intent;
-                intent = new Intent(context, AnkiDroidWidgetSmall.UpdateService.class);
-                intent.setAction(AnkiDroidWidgetSmall.UpdateService.ACTION_UPDATE);            	
+                intent = new Intent(context, AnkiDroidWidgetSmall.UpdateService.class);            	
                 context.startService(intent);
-            } 
+            }
+            if (notification) {
+            	Intent intent;
+                intent = new Intent(context, NotificationService.class);
+                context.startService(intent);
+            }
         }
 
         /** Comparator that sorts instances of {@link DeckStatus} based on number of due cards. */

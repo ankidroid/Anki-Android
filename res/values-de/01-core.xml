@@ -53,13 +53,14 @@
   <string name="studyoptions_congrats_syncdeck">Stapel synchronisieren</string>
   <string name="studyoptions_congrats_open_other_deck">Einen anderen Stapel öffnen</string>
   <string name="studyoptions_congrats_finish">Zurück zu den Lerneinstellungen</string>
-  <string name="card_unsuspended">Aussetzung rückgängig gemacht</string>
+  <string name="card_unsuspended">Aussetzen rückgängig gemacht</string>
   <string name="card_suspended">Karte wieder ausgesetzt</string>
   <string name="menu_rotate">Drehen</string>
   <string name="undo">Rückgängig</string>
   <string name="redo">Wiederholen</string>
-  <string name="close_previous_deck">Alter Stapel wird geschlossen.\nBitte warten...</string>
+  <string name="close_previous_deck">Letzter Stapel wird geschlossen.\nBitte warten...</string>
   <string name="close_deck">Stapel wird geschlossen.\nBitte warten...</string>
+  <string name="finish_operation">Beende letzte Operation.\nBitte warten...</string>
   <string name="contextmenu_deckpicker_download_missing_media">Fehlende Media-Daten herunterladen</string>
   <string name="contextmenu_deckpicker_reset_language_assignments">Sprachzuordnungen zurücksetzen</string>
   <string name="contextmenu_deckpicker_reset_reset_message">Sprachen zurückgesetzt</string>

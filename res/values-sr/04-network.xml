@@ -49,6 +49,7 @@
   <string name="sync_all">Sinhronizuj sve</string>
   <string name="sync_prepare_syncing">Preparing syncing...</string>
   <string name="connection_error_message">Došlo je do greške sa internetom.</string>
+  <string name="sync_log_db_error">A database error has occurred.</string>
   <string name="no_user_password_error_message">Da bi nastavili sa ovim postupkom, morate da imate AnkiOnline račun i da budete prijavljeni.</string>
   <string name="fact">činjenica</string>
   <string name="facts">činjenice</string>

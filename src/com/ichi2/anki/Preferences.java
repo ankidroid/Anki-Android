@@ -60,6 +60,8 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
 //    private boolean mVeecheckStatus;
     private PreferenceManager mPrefMan;
     private CheckBoxPreference zoomCheckboxPreference;
+    private CheckBoxPreference keepScreenOnCheckBoxPreference;
+    private CheckBoxPreference showAnswerCheckBoxPreference;
     private CheckBoxPreference swipeCheckboxPreference;
     private CheckBoxPreference animationsCheckboxPreference;
     private CheckBoxPreference walModePreference;
@@ -68,7 +70,7 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
     private ListPreference mLanguageSelection;
     private CharSequence[] mLanguageDialogLabels;
     private CharSequence[] mLanguageDialogValues;
-    private static String[] mAppLanguages = {"ar", "ca", "cs", "de", "el", "es_ES", "fi", "fr", "hu", "id", "it", "ja", "ko", "pl", "pt_PT", "ro", "ru", "sr", "sv-SE", "tr", "vi", "zh-CN", "zh-TW", "en"};
+    private static String[] mAppLanguages = {"ar", "ca", "cs", "de", "el", "es_ES", "fi", "fr", "hu", "id", "it", "ja", "ko", "pl", "pt_PT", "ro", "ru", "sr", "sv-SE", "th", "tr", "vi", "zh-CN", "zh-TW", "en"};
     private static String[] mShowValueInSummList = {"language", "startup_mode", "hideQuestionInAnswer", "dictionary", "reportErrorMode", "minimumCardsDueForNotification", "deckOrder", "gestureShake", "gestureSwipeUp", "gestureSwipeDown", "gestureSwipeLeft", "gestureSwipeRight", "gestureDoubleTap", "gestureTapTop", "gestureTapBottom", "gestureTapRight", "gestureTapLeft", "theme"};
     private static String[] mShowValueInSummSeek = {"relativeDisplayFontSize", "relativeCardBrowserFontSize", "answerButtonSize", "whiteBoardStrokeWidth", "minShakeIntensity", "swipeSensibility", "timeoutAnswerSeconds", "timeoutQuestionSeconds", "animationDuration", "backupMax"};
     private TreeMap<String, String> mListsToUpdate = new TreeMap<String, String>();
@@ -91,6 +93,8 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
         getPreferenceScreen().getSharedPreferences().registerOnSharedPreferenceChangeListener(this);
         swipeCheckboxPreference = (CheckBoxPreference) getPreferenceScreen().findPreference("swipe");
         zoomCheckboxPreference = (CheckBoxPreference) getPreferenceScreen().findPreference("zoom");
+        keepScreenOnCheckBoxPreference = (CheckBoxPreference) getPreferenceScreen().findPreference("keepScreenOn");
+        showAnswerCheckBoxPreference = (CheckBoxPreference) getPreferenceScreen().findPreference("timeoutAnswer");
         animationsCheckboxPreference = (CheckBoxPreference) getPreferenceScreen().findPreference("themeAnimations");
         walModePreference = (CheckBoxPreference) getPreferenceScreen().findPreference("walMode");
         useBackupPreference = (CheckBoxPreference) getPreferenceScreen().findPreference("useBackup");
@@ -238,6 +242,8 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
             if (key.equals("swipe")) {
             	zoomCheckboxPreference.setChecked(false);
             	zoomCheckboxPreference.setEnabled(!swipeCheckboxPreference.isChecked());
+            } else if (key.equals("timeoutAnswer")) {
+            	keepScreenOnCheckBoxPreference.setChecked(showAnswerCheckBoxPreference.isChecked());
             } else if (key.equals("language")) {
     			Intent intent = this.getIntent();
     			setResult(StudyOptions.RESULT_RESTART, intent);

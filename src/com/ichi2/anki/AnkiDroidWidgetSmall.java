@@ -16,8 +16,6 @@ package com.ichi2.anki;
 
 import com.tomgibara.android.veecheck.util.PrefSettings;
 
-import android.app.Notification;
-import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
 import android.appwidget.AppWidgetManager;
@@ -62,11 +60,6 @@ public class AnkiDroidWidgetSmall extends AppWidgetProvider {
 
     public static class UpdateService extends Service {
 
-        /**
-         * Update the state of the widget.
-         */
-        public static final String ACTION_UPDATE = "org.ichi2.anki.AnkiDroidWidgetSmall.UPDATE";
-
         /** The cached number of total due cards. */
         private int dueCardsCount;
 
@@ -75,22 +68,6 @@ public class AnkiDroidWidgetSmall extends AppWidgetProvider {
 
         /** The cached estimated reviewing time. */
         private int eta;
-
-        private boolean startDeckPicker = false;
-
-        /** The id of the notification for due cards. */
-        private static final int WIDGET_NOTIFY_ID = 1;
-
-        /** The notification service to show notifications of due cards. */
-        private NotificationManager mNotificationManager;
-
-        @Override
-        public void onCreate() {
-            super.onCreate();
-            mNotificationManager =
-                (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-        }
-
 
         @Override
         public void onStart(Intent intent, int startId) {
@@ -110,12 +87,21 @@ public class AnkiDroidWidgetSmall extends AppWidgetProvider {
             // Resources res = context.getResources();
             RemoteViews updateViews = new RemoteViews(context.getPackageName(), R.layout.widget_small);
 
+            // Add a click listener to open Anki from the icon.
+            // This should be always there, whether there are due cards or not.
+            Intent ankiDroidIntent = new Intent(context, StudyOptions.class);
+            ankiDroidIntent.setAction(Intent.ACTION_MAIN);
+            ankiDroidIntent.addCategory(Intent.CATEGORY_LAUNCHER);
+            PendingIntent pendingAnkiDroidIntent = PendingIntent.getActivity(context, 0, ankiDroidIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+            updateViews.setOnClickPendingIntent(R.id.ankidroid_widget_small_layout, pendingAnkiDroidIntent);
+
             boolean mounted = AnkiDroidApp.isSdCardMounted();
             if (!mounted) {
-                updateViews.setViewVisibility(R.id.widget_due, View.VISIBLE);
-                updateViews.setTextViewText(R.id.widget_due, "-");
+                updateViews.setViewVisibility(R.id.widget_due, View.INVISIBLE);
                 updateViews.setViewVisibility(R.id.widget_eta, View.INVISIBLE);
                 updateViews.setViewVisibility(R.id.widget_progress_frame, View.INVISIBLE);
+                updateViews.setViewVisibility(R.id.ankidroid_widget_small_finish_layout, View.GONE);
+
                 if (mMountReceiver == null) {
                 	mMountReceiver = new BroadcastReceiver() {
                         @Override
@@ -155,17 +141,22 @@ public class AnkiDroidWidgetSmall extends AppWidgetProvider {
                 	if (totalreps != 0) {
                 		progress = (int) Math.round((100.0d * reps) / totalreps);
                 	}
-                	startDeckPicker = counts[3] == 0;
-        			if (dueCardsCount == 0) {
+        			if (dueCardsCount <= 0) {
+        				if (dueCardsCount == 0) {
+    		                updateViews.setViewVisibility(R.id.ankidroid_widget_small_finish_layout, View.VISIBLE);        					
+        				} else {
+    		                updateViews.setViewVisibility(R.id.ankidroid_widget_small_finish_layout, View.INVISIBLE);        					
+        				}
 		                updateViews.setViewVisibility(R.id.widget_due, View.INVISIBLE);
 		                updateViews.setViewVisibility(R.id.widget_progress_frame, View.INVISIBLE);
         			} else {
+		                updateViews.setViewVisibility(R.id.ankidroid_widget_small_finish_layout, View.INVISIBLE);
 		                updateViews.setViewVisibility(R.id.widget_due, View.VISIBLE);
 		                updateViews.setViewVisibility(R.id.widget_progress_frame, View.VISIBLE);
 	                    updateViews.setTextViewText(R.id.widget_due, Integer.toString(dueCardsCount));
 	                    updateViews.setProgressBar(R.id.widget_progress, 100, progress, false);
 					}
-        			if (eta <= 0 || dueCardsCount == 0) {
+        			if (eta <= 0 || dueCardsCount <= 0) {
 		                updateViews.setViewVisibility(R.id.widget_eta, View.INVISIBLE);        				
         			} else {
 		                updateViews.setViewVisibility(R.id.widget_eta, View.VISIBLE);        				
@@ -173,46 +164,6 @@ public class AnkiDroidWidgetSmall extends AppWidgetProvider {
         			}
                 }
             }
-            // Add a click listener to open Anki from the icon.
-            // This should be always there, whether there are due cards or not.
-            Intent ankiDroidIntent = new Intent(context, StudyOptions.class);
-            ankiDroidIntent.setAction(Intent.ACTION_MAIN);
-            ankiDroidIntent.addCategory(Intent.CATEGORY_LAUNCHER);
-            ankiDroidIntent.putExtra("startDeckpicker", startDeckPicker);
-            PendingIntent pendingAnkiDroidIntent = PendingIntent.getActivity(context, 0, ankiDroidIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-            updateViews.setOnClickPendingIntent(R.id.ankidroid_widget_small_layout, pendingAnkiDroidIntent);
-
-            SharedPreferences preferences = PrefSettings.getSharedPrefs(context);
-            int minimumCardsDueForNotification = Integer.parseInt(preferences.getString(
-                    "minimumCardsDueForNotification", "25"));
-
-            if (mounted && dueCardsCount >= minimumCardsDueForNotification) {
-                // Show a notification
-                int icon = R.drawable.anki;
-                CharSequence tickerText = String.format(
-                        getString(R.string.widget_minimum_cards_due_notification_ticker_text),
-                        dueCardsCount);
-                long when = System.currentTimeMillis();
-
-                Notification notification = new Notification(icon, tickerText, when);
-
-                if (preferences.getBoolean("widgetVibrate", false)) {
-                    notification.defaults |= Notification.DEFAULT_VIBRATE;
-                }
-                if (preferences.getBoolean("widgetBlink", false)) {
-                    notification.defaults |= Notification.DEFAULT_LIGHTS;
-                }
-
-                Context appContext = getApplicationContext();
-                CharSequence contentTitle = getText(R.string.widget_minimum_cards_due_notification_ticker_title);
-
-                notification.setLatestEventInfo(appContext, contentTitle, tickerText, pendingAnkiDroidIntent);
-
-                mNotificationManager.notify(WIDGET_NOTIFY_ID, notification);
-            } else {
-                // Cancel the existing notification, if any.
-                mNotificationManager.cancel(WIDGET_NOTIFY_ID);
-            }            	
 
             return updateViews;
         }

@@ -49,6 +49,7 @@
   <string name="sync_all">全部同步</string>
   <string name="sync_prepare_syncing">Preparing syncing...</string>
   <string name="connection_error_message">網路出了點問題。</string>
+  <string name="sync_log_db_error">A database error has occurred.</string>
   <string name="no_user_password_error_message">要繼續進行下一步，您需要有一個AnkiOnline的帳戶，並登入完成。</string>
   <string name="fact">事實</string>
   <string name="facts">事實</string>

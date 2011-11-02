@@ -37,8 +37,8 @@
   <string name="backup_restore_no_backups">No backups for this deck available on AnkiDroid. If you have backups on your desktop computer, please copy them manually into your AnkiDroid folder</string>
   <string name="backup_delete_deck_backups">Backups of deck %s deleted</string>
   <string name="delete_deck_success">Deck %1$s deleted. Backup in folder %2$s</string>
-  <string name="backup_delete_deck_backups_alert">Really delete all backups of deck %s?</string>
+  <string name="backup_delete_deck_backups_alert">确定删除所有词库备份？</string>
   <string name="open_deck_failed">File %1$s could not be opened. It is either not a real anki file or has been corrupted.\n\nYou can try to repair the deck or restore it from a backup (in both cases, the copy of the corrupt deck will be moved to the subfolder \'%2$s\'). More information about repairing corrupted decks: %3$s.\n\nHit the back button to close this dialog</string>
-  <string name="deckpicker_backup_error">Backup could not be created</string>
+  <string name="deckpicker_backup_error">无法创建备份</string>
   <string name="deck_repair_error">Deck could not be repaired</string>
 </resources>

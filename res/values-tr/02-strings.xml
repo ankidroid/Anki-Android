@@ -67,4 +67,7 @@
   <string name="error_insufficient_memory">Cihazda yetersiz bellek olması nedeniyle işlem gerçekleştirilemiyor</string>
   <string name="tutorial_load">Eğitim destesi oluşturuluyor</string>
   <string name="tutorial_loading_error">Eğitim destesi oluşturulamadı</string>
+  <string name="help_title">Yardım</string>
+  <string name="help_online">Çevrimiçi yardım</string>
+  <string name="help_tutorial">Eğitim destesi</string>
 </resources>

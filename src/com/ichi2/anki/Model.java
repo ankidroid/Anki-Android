@@ -276,8 +276,9 @@ public class Model {
             query.append(" WHERE id = ").append(id);
             cursor = AnkiDatabaseManager.getDatabase(deck.getDeckPath()).getDatabase().rawQuery(query.toString(), null);
 
-            cursor.moveToFirst();
-            model = new Model(deck);
+            if (cursor.moveToFirst()) {
+	            model = new Model(deck);
+	    }
 
             model.mId = cursor.getLong(0); // Primary key
             model.mDeckId = cursor.getLong(1); // Foreign key

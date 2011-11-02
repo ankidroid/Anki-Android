@@ -58,13 +58,14 @@
   <string name="menu_rotate">Rotate</string>
   <string name="undo">撤销</string>
   <string name="redo">重做</string>
-  <string name="close_previous_deck">Closing previous deck.\nPlease wait...</string>
+  <string name="close_previous_deck">正在关闭上个词库。\ n请稍候...</string>
   <string name="close_deck">Closing deck.\nPlease wait...</string>
+  <string name="finish_operation">Finishing previous operation.\nPlease wait...</string>
   <string name="contextmenu_deckpicker_download_missing_media">下载缺失的媒体文件</string>
   <string name="contextmenu_deckpicker_reset_language_assignments">取消指定牌组语言</string>
   <string name="contextmenu_deckpicker_reset_reset_message">重置语言设置</string>
   <string name="contextmenu_deckpicker_optimize_deck">优化数据库</string>
-  <string name="contextmenu_deckpicker_set_custom_dictionary">Set custom dictionary</string>
+  <string name="contextmenu_deckpicker_set_custom_dictionary">设置自定义词典</string>
   <string name="begin_cram">开始强记模式</string>
   <string name="cram">强记模式</string>
   <string name="menu_open_deck">所有牌组</string>
@@ -95,7 +96,7 @@
   <string name="studyoptions_swap_qa">Swap Q/A</string>
   <string name="visit">Visit</string>
   <string name="later">Later</string>
-  <string name="download">Download</string>
+  <string name="download">下载</string>
   <string name="deckpicker_loading_error">Deck could not be loaded</string>
   <string name="deckpicker_creating_backup">Creating backup...</string>
   <string-array name="next_review_s">

@@ -59,6 +59,7 @@
   <string name="reset_card_dialog_message">Detta återställer all inlärning för alla kort med detta fakta (de blir nya kort).\nFortsätt ändå?</string>
   <string name="reset_card_dialog_confirmation">Alla kort med detta fakta återställs</string>
   <string name="answering_error_title">Databasfel</string>
-  <string name="answering_error_message">An error occured while answering/changing the last card. This could be related to a corrupt deck or to insufficient disc space.\n\nIf it happens more often, please try to repair the deck.\n\nNevertheless, it could be an AnkiDroid bug as well; please report the error that we can check this.</string>
+  <string name="answering_error_message">An error occurred while answering the last card or changing the deck otherwise. This could be related to a corrupt deck or to insufficient disc space.\n\nIf it happens more often, please try to repair the deck. Try a db check with Anki Desktop as well.\n\nNevertheless, it could be an AnkiDroid bug as well; please report the error that we can check this.</string>
   <string name="answering_error_report">Rapportera fel</string>
+  <string name="repair_deck_dialog">Vill du verkligen försöka reparera kortleken \'%1$s\'?\n\nEn kopia av kortleken kommer att skapas i \'%2$s\'.</string>
 </resources>

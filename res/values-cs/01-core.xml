@@ -60,6 +60,7 @@
   <string name="redo">Zrušit vrácení</string>
   <string name="close_previous_deck">Uzavírám předchozí balíček.\nProsím čekejte...</string>
   <string name="close_deck">Uzavírám balíček.\nProsím čekejte...</string>
+  <string name="finish_operation">Dokončování předchozí operace.\nProsím čekejte...</string>
   <string name="contextmenu_deckpicker_download_missing_media">Stáhnout chybějící média</string>
   <string name="contextmenu_deckpicker_reset_language_assignments">Obnovit přiřazení jazyka</string>
   <string name="contextmenu_deckpicker_reset_reset_message">Obnovení jazyka</string>

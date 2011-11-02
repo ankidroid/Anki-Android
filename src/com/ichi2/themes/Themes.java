@@ -128,12 +128,16 @@ public class Themes {
 			break;
 		case CALLER_DECKPICKER:
 			if (mCurrentTheme == THEME_BLUE) {
-				((ListView)view.findViewById(R.id.files)).setSelector(R.drawable.blue_deckpicker_list_selector);
+				ListView lv = (ListView) view.findViewById(R.id.files);
+				lv.setSelector(R.drawable.blue_deckpicker_list_selector);
+				lv.setDivider(mContext.getResources().getDrawable(R.color.transparent));
 			}
 			break;
 		case CALLER_CARDBROWSER:
 			if (mCurrentTheme == THEME_BLUE) {
-				((ListView)view.findViewById(R.id.card_browser_list)).setSelector(R.drawable.blue_cardbrowser_list_selector);
+				ListView lv = (ListView) view.findViewById(R.id.card_browser_list);
+				lv.setSelector(R.drawable.blue_cardbrowser_list_selector);
+				lv.setDivider(mContext.getResources().getDrawable(R.color.transparent));
 			}
 			break;
 		case CALLER_DECKPICKER_DECK:
@@ -322,11 +326,11 @@ public class Themes {
 
 	public static void showThemedToast(Context context, String text, boolean shortLength) {
 		Toast result = Toast.makeText(context, text, shortLength ? Toast.LENGTH_SHORT : Toast.LENGTH_LONG);
-		if (mCurrentTheme >= THEME_BLUE) {
-			result.getView().setBackgroundResource(mToastBackground);
-		}
 		try {
-	        result.show();
+			if (mCurrentTheme >= THEME_BLUE) {
+				result.getView().setBackgroundResource(mToastBackground);
+			}
+	        	result.show();
 		} catch (OutOfMemoryError e) {
 			Log.e(AnkiDroidApp.TAG, "showThemedToast - OutOfMemoryError occured: " + e);
 			result.getView().setBackgroundResource(R.color.black);

@@ -118,6 +118,9 @@ public class CustomExceptionHandler implements Thread.UncaughtExceptionHandler {
 
     @Override
     public void uncaughtException(Thread t, Throwable e) {
+    	uncaughtException(t, e, null);
+    }
+    public void uncaughtException(Thread t, Throwable e, String origin) {
         Log.i(AnkiDroidApp.TAG, "uncaughtException");
 
         collectInformation();
@@ -139,21 +142,18 @@ public class CustomExceptionHandler implements Thread.UncaughtExceptionHandler {
         reportInformation.append(String.format("reportgeneratedutc=%s\n", reportgeneratedutc));
         reportInformation.append(String.format("reportgeneratedtzoffset=%s\n", reportgeneratedtzoffset));
         reportInformation.append(String.format("reportgeneratedtz=%s\n", reportgeneratedtz));
-        
+
+        if (origin != null && origin.length() > 0) {
+        	reportInformation.append(String.format("origin=%s\n", origin));
+        }
+
         for (String key : mInformation.keySet()) {
             String value = mInformation.get(key);
 
             reportInformation.append(String.format("%s=%s\n", key.toLowerCase(), value));
         }
 
-        reportInformation.append("stacktrace=\n");
-
-        // check, if exception has ben catched and forwarded to report it anyway (only out of reviewer)
-        if (t == null) {
-        	reportInformation.append("(This exception occured in reviewer and is probably related to a corrupt db/insufficient disc space. Has been catched)\nBegin Stacktrace\n(ProbablyCorruptDB)\n");
-        } else {
-        	reportInformation.append("Begin Stacktrace\n");	
-        }
+        reportInformation.append("stacktrace=\nBegin Stacktrace\n");	
 
         // Stack trace
         final Writer result = new StringWriter();

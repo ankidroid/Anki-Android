@@ -58,7 +58,8 @@
   <string name="reset_card_dialog_title">Restear el progreso de la tarjeta</string>
   <string name="reset_card_dialog_message">Esto resetea el proceso de aprendizaje para todas las tarjetas de este hecho (se mostrarán igual que tarjetas nuevas).\n¿Estás seguro de continuar?</string>
   <string name="reset_card_dialog_confirmation">Resetear todas las tarjetas de este hecho</string>
-  <string name="answering_error_title">Database error</string>
-  <string name="answering_error_message">An error occured while answering/changing the last card. This could be related to a corrupt deck or to insufficient disc space.\n\nIf it happens more often, please try to repair the deck.\n\nNevertheless, it could be an AnkiDroid bug as well; please report the error that we can check this.</string>
+  <string name="answering_error_title">Error en la base de datos</string>
+  <string name="answering_error_message">Ocurrió un error al responder la última tarjeta o al cambiar de alguna otra forma el mazo. Esto puede deberse a que el mazo está corrupto o a que el espacio en disco es insuficiente.\n\nSi esto ocurre con más frecuencia, por favor, trata de reparar el mazo. Prueba además a comprobar la base de datos con Anki escritorio.\n\nDe todos modos, también podría ser un error de AnkiDroid, por lo que te rogamos nos informes del error para que podamos comprobar esto.</string>
   <string name="answering_error_report">Informar sobre el error</string>
+  <string name="repair_deck_dialog">¿Estás seguro de intentar reparar el mazo \'%1$s\'?\n\nAntes de iniciar el intento, se creará una copia del mazo en la subcarpeta \'%2$s\'.</string>
 </resources>

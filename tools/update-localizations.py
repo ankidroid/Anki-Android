@@ -23,17 +23,21 @@
 # Do not remove languages.
 # When you add a language, please also add it to mAppLanguages in Preferences.java
 
-languages = ['ar', 'ca', 'cs', 'de', 'el', 'es-ES', 'fi', 'fr', 'hu', 'id', 'it', 'ja', 'ko', 'nl', 'pl', 'pt-PT', 'ro', 'ru', 'sr', 'sv-SE', 'tr', 'vi', 'zh-CN', 'zh-TW'];
+languages = ['ar', 'ca', 'cs', 'de', 'el', 'es-ES', 'fi', 'fr', 'hu', 'id', 'it', 'ja', 'ko', 'nl', 'pl', 'pt-PT', 'ro', 'ru', 'sr', 'sv-SE', 'th', 'tr', 'vi', 'zh-CN', 'zh-TW'];
 #languages = ['ar', 'ca', 'cs', 'de', 'el', 'es-ES', 'fi', 'fr', 'hu', 'it', 'ja', 'ko', 'nl', 'pl', 'pt-PT', 'ro', 'ru', 'sr', 'sv-SE', 'vi', 'zh-CN', 'zh-TW', 'th', 'sk', 'da', 'ko', 'he', 'uk'];
 
-fileNames = ['01-core', '02-strings', '03-dialogs', '04-network', '05-feedback', '06-statistics', '07-cardbrowser', '08-widget', '09-backup', '10-preferences', '11-arrays', 'tutorial']
+fileNames = ['01-core', '02-strings', '03-dialogs', '04-network', '05-feedback', '06-statistics', '07-cardbrowser', '08-widget', '09-backup', '10-preferences', '11-arrays', '12-tutorial', '13-newfeatures', '14-marketdescription', '15-markettitle']
 anyError = False
+titleFile = '../docs/marketing/localized description/ankidroid-titles.txt'
+titleString = 'AnkiDroid Flashcards'
+
 
 import os
 import zipfile
 import urllib
 import string
 import re
+import difflib
 
 def replacechars(filename, fileExt, isCrowdin):
 	s = open(filename,"r+")
@@ -68,8 +72,11 @@ def replacechars(filename, fileExt, isCrowdin):
 
 			contentLine = content[i][start:len(content[i])-1]
 			sepPos = contentLine.find('<separator>')
-			if sepPos == -1 and len(contentLine) > 2:
-				errorOccured = True
+			if sepPos == -1:
+				if len(contentLine) > 2:
+					errorOccured = True
+					print contentLine
+				continue
 			line.append(["<![CDATA[" + contentLine[:sepPos] + "]]>", "<![CDATA[" + contentLine[sepPos+11:] + "]]>"])
 		for fi in line:
 			fi[0] = re.sub('\"+', '\\\"', fi[0])
@@ -95,17 +102,49 @@ def replacechars(filename, fileExt, isCrowdin):
 		return True
 
 def fileExtFor(f):
-	if f == 'tutorial':
+	if f == '12-tutorial':
 		return '.csv'
+	elif f == '14-marketdescription':
+		return '.txt'
+	elif f == '15-markettitle':
+		return '.txt'
 	else:
 		return '.xml'
+
 def createIfNotExisting(directory):
 	if not os.path.isdir(directory):
 		os.mkdir(directory)
-def update(valuesDirectory, f, source, fileExt, isCrowdin):
-	newfile = valuesDirectory + f + '.xml'
-	file(newfile, 'w').write(source)
-	return replacechars(newfile, fileExt, isCrowdin)
+
+def update(valuesDirectory, f, source, fileExt, isCrowdin, language=''):
+	if f == '14-marketdescription':
+		newfile = '../docs/marketing/localized description/marketdescription' + '-' + language + fileExt
+		file(newfile, 'w').write(source)
+		# translations must be compared to the old version of marketdescription (bug of crowdin)
+		oldContent = open('../docs/marketing/localized description/oldVersionJustToCompareWith.txt').readlines()
+		newContent = open(newfile).readlines()
+		for i in range(0, len(oldContent)):
+			if oldContent[i] != newContent[i]:
+				print 'file ' + newfile + ' successfully copied'
+				return True			
+		os.remove(newfile)
+		print 'file marketdescription is not translated into language ' + language
+		return True
+	elif f == '15-markettitle':
+#		newfile = '../docs/marketing/localized description/marketdescription' + '-' + language + fileExt
+#		file(newfile, 'w').write(source)
+		translatedTitle = source.replace("\n", "")
+		if titleString != translatedTitle:
+			s = open(titleFile, 'a')
+			s.write("\n" + language + ': ' + translatedTitle)
+			s.close()
+			print 'added translated title'
+		else:
+			print 'title not translated'
+		return True
+	else:
+		newfile = valuesDirectory + f + '.xml'
+		file(newfile, 'w').write(source)
+		return replacechars(newfile, fileExt, isCrowdin)
 
 zipname = 'ankidroid.zip'
 
@@ -115,6 +154,11 @@ file(zipname, 'w').write(req.read())
 req.close()
 
 zip = zipfile.ZipFile(zipname, "r")
+
+#create title file
+t = open(titleFile, 'w')
+t.write(titleString)
+t.close()
 
 for language in languages:
 	if language == 'zh-TW':
@@ -131,22 +175,23 @@ for language in languages:
 	# Copy localization files, mask chars and append gnu/gpl licence
 	for f in fileNames:
 		fileExt = fileExtFor(f)
-		anyError = update(valuesDirectory, f, zip.read(language + "/" + f + fileExt), fileExt, True)
+		anyError = not(update(valuesDirectory, f, zip.read(language + "/" + f + fileExt), fileExt, True, language)) or anyError
 
 # Special case: English tutorial.
 valuesDirectory = "../res/values/"
 createIfNotExisting(valuesDirectory)
-f = 'tutorial'
+f = '12-tutorial'
 fileExt = fileExtFor(f)
-source = open("../assets/" + f + fileExt)
+source = open("../assets/" + 'tutorial' + fileExt)
 #Note: the original tutorial.csv has less columns, therefore we have special
 #support for its syntax.
+print
 update(valuesDirectory, f, source.read(), fileExt, False)
 
 print "\nremoving crowdin-file\n"
 os.remove(zipname)
 
-if not(anyError):
+if anyError:
 	print "At least one file contained an error\nPlease check!\n"
 
 

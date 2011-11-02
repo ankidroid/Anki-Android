@@ -60,6 +60,7 @@
   <string name="redo">Yeniden Yap</string>
   <string name="close_previous_deck">Önceki deste kapatılıyor.\nLütfen bekleyin...</string>
   <string name="close_deck">Deste kapatılıyor.\nLütfen bekleyin...</string>
+  <string name="finish_operation">Önceki işlem bitiriliyor.\nLütfen bekleyin...</string>
   <string name="contextmenu_deckpicker_download_missing_media">Eksik ortamı indir</string>
   <string name="contextmenu_deckpicker_reset_language_assignments">Dil Görevlerini Sıfırla</string>
   <string name="contextmenu_deckpicker_reset_reset_message">Dil sıfırlama</string>

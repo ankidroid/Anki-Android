@@ -1,0 +1,37 @@
+Lernen Sie mit AnkiDroid alles, was Sie benötigen!
+
+Mit AnkiDroid lassen sich Karteikarten sehr effizient auswendig lernen, indem sie kurz vor dem Vergessen wiederholt werden. Voll kompatibel mit der Spaced-Repetition-Software Anki (inklusive Synchronisation). Anki gibt es für Windows, Linux und Mac OS.
+
+Lernen Sie alle möglichen Dinge, wo und wann Sie wollen. Nutzen Sie freie Zeit sinnvoll, sei es im Bus, in der Supermarkt-Warteschlange oder in irgend einer anderen Situation in der Sie warten müssen.
+
+Fügen Sie neues Material mit der Desktop-Applikation oder direkt mit AnkiDroid hinzu.
+
+Erstellen Sie eigenen Karteikarten-Stapel oder laden kostenlos vorgefertigte Stapel herunter (es sind mehr als 6000 Stapel zu verschiedenen Sprachen und Themen verfügbar). Die Anwendung unterstützt sogar das automatische Hinzufügen von Material aus einem Wörterbuch!
+
+★ Haupt-Merkmale:
+Unterstützte Flashcard-Inhalte: Text, Bilder, Sounds
+Spaced Repetition (SuperMemo 2 Algorithmus)
+Text-to-speech Integration
+Mehr als 6000 vorgefertigte Decks
+Zwei Widgets
+Detaillierte Statistiken
+Synchronisation mit AnkiWeb
+Open Source
+
+★ Zusätzliche Merkmale:
+• Antworten schreiben (optional)
+• Whiteboard
+• Kartenübersicht
+• Karteneditor/Möglichkeit, Karten hinzuzufügen
+• Fügen Sie Karten über Intents von anderen Programmen (wie z.B. Wörterbüchern) hinzu
+• Wörterbuch-Integration (ColorDict, GoldenDict, Leo.org, Aedict, diverse Web-Wörterbücher)
+• Unterstützung für andere Schriftarten
+• ausgebautes Sicherungssystem
+• Navigation per Wischen, Klicken oder Schütteln
+• Voll konfigurierbar
+• Pauk-Modus
+Schränke das Lernen nach Stichwort, Zeit oder Flashcards ein.
+• Nacht-Modus
+• Zeemote-Unterstützung
+Drei verschiedene Farb-Themen
+23 Übersetzungen
