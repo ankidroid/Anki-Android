@@ -23,6 +23,7 @@ Add material through the desktop application Anki or directly through Ankidroid.
 • whiteboard
 • card editor/adder
 • card browser
+• import existing collection files (via Anki Desktop)
 • dictionary integration (ColorDict, GoldenDict, Leo.org, Aedict, diverse web dictionaries)
 • add cards by intent from other applications like dictionaries
 • custom font support

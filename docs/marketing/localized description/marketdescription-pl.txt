@@ -23,6 +23,7 @@ Twórz własne talie lub pobierz talie darmowe, tworzone dla wielu języków ora
 • tablica do rysowania
 • przeglądarka kart
 • edytor kart
+• import existing collection files (via Anki Desktop)
 • dodawanie kart za pomocą intentów z innych aplikacji, np. słowników
 • integracja ze słownikami (ColorDict, GodenDict, Leo.org, Aedict, różne słowniki online)
 • wsparcie dla czcionek użytkownika

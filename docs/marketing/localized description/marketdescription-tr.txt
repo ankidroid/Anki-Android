@@ -23,6 +23,7 @@ Kendi bilgi kartı destelerinizi oluşturun veya birçok dil ve konu için hazı
 • yazı tahtası
 • kart tarayıcı
 • kart düzenleyici/ekleyici
+• import existing collection files (via Anki Desktop)
 • sözlük gibi diğer uygulamalardan istek tabanlı kart ekleme
 • sözlük entegrasyonu (ColorDict, GoldenDict, Leo.org, Aedict, çeşitli web sözlükleri)
 • haricî yazı tipi desteği
