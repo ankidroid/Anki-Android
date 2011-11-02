@@ -152,7 +152,7 @@ public class Themes {
 		case CALLER_REVIEWER:
 	        ((View)view.findViewById(R.id.main_layout)).setBackgroundResource(mReviewerBackground);
 	        ((View)view.findViewById(R.id.flashcard_border)).setBackgroundResource(mFlashcardBorder);
-	        ((View)view.findViewById(R.id.flashcard_frame)).setBackgroundResource(R.color.white);
+	        ((View)view.findViewById(R.id.flashcard_frame)).setBackgroundResource(PrefSettings.getSharedPrefs(mContext).getBoolean("invertedColors", false) ? (mCurrentTheme == THEME_BLUE ? R.color.reviewer_night_card_background : R.color.black): R.color.white);
 	        ((View)view.findViewById(R.id.session_progress)).setBackgroundResource(mReviewerProgressbar);
 			break;
 		case CALLER_FEEDBACK:
