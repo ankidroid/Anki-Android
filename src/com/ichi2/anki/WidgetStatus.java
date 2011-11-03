@@ -78,6 +78,12 @@ public final class WidgetStatus {
     }
 
 
+    public static void deckOperation(WidgetDeckTaskData params, int muh) {
+    	AsyncTask<WidgetDeckTaskData,Void,WidgetDeckTaskData> aDeckStatusAsyncTask = new DeckOperationAsyncTask();
+    	aDeckStatusAsyncTask.execute(params);
+    }
+
+
     /**
      * Block the current thread until the currently running UpdateDeckStatusAsyncTask instance (if any) has finished.
      */
@@ -263,6 +269,10 @@ public final class WidgetStatus {
                 intent = new Intent(context, NotificationService.class);
                 context.startService(intent);
             }
+        	Intent intent;
+            intent = new Intent(context, AnkiDroidWidgetBig.UpdateService.class);
+            intent.setAction(AnkiDroidWidgetBig.UpdateService.ACTION_UPDATE);
+            context.startService(intent);
         }
 
         /** Comparator that sorts instances of {@link DeckStatus} based on number of due cards. */
@@ -280,6 +290,38 @@ public final class WidgetStatus {
             public boolean accept(File pathname) {
                 return pathname.isFile() && pathname.getName().endsWith(".anki");
             }
+        }
+    }
+
+    private static class DeckOperationAsyncTask extends AsyncTask<WidgetDeckTaskData, Void, WidgetDeckTaskData> {
+
+    	public static final int TASK_OPEN_DECK = 0;
+    	public static final int TASK_ANSWER_CARD = 1;
+    	public static final int TASK_CLOSE_DECK = 2;
+    	
+        @Override
+        protected WidgetDeckTaskData doInBackground(WidgetDeckTaskData ... params) {
+            Log.d(AnkiDroidApp.TAG, "WidgetStatus.DeckOperationAsyncTask.doInBackground()");
+            Context context = params[0];
+
+            if (!AnkiDroidApp.isSdCardMounted()) {
+            	return context;
+            }
+            return context;
+        }
+
+        @Override
+        protected void onPostExecute(WidgetDeckTaskData context) {
+            Log.d(AnkiDroidApp.TAG, "WidgetStatus.DeckOperationAsyncTask.onPostExecute()");
+
+        }
+
+    }
+
+    public static class WidgetDeckTaskData {
+
+    	public WidgetDeckTaskData(int value, Deck deck, Card card) {
+
         }
     }
 }

@@ -1,0 +1,29 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/ankidroid_widget_big_layout"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:focusable="false"
+    android:orientation="horizontal"
+    android:clickable="true"
+    android:background="@drawable/widget_big">
+
+<RelativeLayout
+	android:id="@+id/widget_big_side"
+    android:layout_width="50dip"
+    android:layout_height="fill_parent"
+    android:focusable="false"
+    android:orientation="horizontal"
+    android:padding="4dip"
+    android:clickable="true"
+    android:layout_alignParentRight="true">
+    <TextView android:id="@+id/widget_due22"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/widget_bg_number"
+       	android:textSize="16dip"
+       	android:singleLine="true"
+       	android:textColor="#ffffff"
+       	android:gravity="center"
+		android:visibility="invisible"/>
+</RelativeLayout>
+</RelativeLayout>
