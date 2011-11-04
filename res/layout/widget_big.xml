@@ -6,24 +6,81 @@
     android:orientation="horizontal"
     android:clickable="true"
     android:background="@drawable/widget_big">
-
-<RelativeLayout
+<LinearLayout
 	android:id="@+id/widget_big_side"
-    android:layout_width="50dip"
+    android:layout_width="100dip"
     android:layout_height="fill_parent"
     android:focusable="false"
-    android:orientation="horizontal"
-    android:padding="4dip"
-    android:clickable="true"
+    android:orientation="vertical"
+    android:padding="0dip"
+    android:clickable="false"
     android:layout_alignParentRight="true">
-    <TextView android:id="@+id/widget_due22"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@drawable/widget_bg_number"
-       	android:textSize="16dip"
-       	android:singleLine="true"
-       	android:textColor="#ffffff"
-       	android:gravity="center"
-		android:visibility="invisible"/>
-</RelativeLayout>
+    <TextView android:id="@+id/widget_big_open"
+        android:layout_width="fill_parent"
+        android:layout_height="0dip"
+        android:layout_weight="1"/>
+    <TextView android:id="@+id/widget_big_ease1"
+        android:layout_width="fill_parent"
+        android:layout_height="0dip"
+        android:layout_weight="1"/>
+    <TextView android:id="@+id/widget_big_ease2"
+        android:layout_width="fill_parent"
+        android:layout_height="0dip"
+        android:layout_weight="1"/>
+    <TextView android:id="@+id/widget_big_ease3"
+        android:layout_width="fill_parent"
+        android:layout_height="0dip"
+        android:layout_weight="1"/>
+    <TextView android:id="@+id/widget_big_ease4"
+        android:layout_width="fill_parent"
+        android:layout_height="0dip"
+        android:layout_weight="1"/>
+</LinearLayout>
+<LinearLayout
+	android:id="@+id/widget_big_top"
+    android:layout_width="fill_parent"
+    android:layout_height="80dip"
+    android:focusable="false"
+    android:orientation="horizontal"
+    android:padding="20dip"
+    android:clickable="false"
+    android:layout_toLeftOf="@+id/widget_big_side"
+    android:layout_alignParentTop="true">
+    <TextView android:id="@+id/widget_big_deckname"
+        android:layout_width="0dip"
+        android:layout_height="fill_parent"
+        android:textColor="#000000"
+        android:layout_weight="1"/>
+    <TextView android:id="@+id/widget_big_counts"
+        android:layout_width="0dip"
+        android:layout_height="fill_parent"
+        android:layout_weight="1"/>
+</LinearLayout>
+<LinearLayout
+	android:id="@+id/widget_big_cardcontent"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:focusable="false"
+    android:orientation="vertical"
+    android:padding="20dip"
+    android:clickable="false"
+    android:layout_toLeftOf="@+id/widget_big_side"
+    android:layout_below="@+id/widget_big_top">
+    <TextView android:id="@+id/widget_big_question"
+        android:layout_width="fill_parent"
+        android:layout_height="0dip"
+        android:textColor="#000000"
+        android:textSize="18sp"
+        android:gravity="bottom|center_horizontal"
+        android:background="#44444466"
+        android:layout_weight="1"/>
+    <TextView android:id="@+id/widget_big_answer"
+        android:layout_width="fill_parent"
+        android:layout_height="0dip"
+        android:textColor="#000000"
+        android:gravity="top|center_horizontal"
+        android:textSize="18sp"
+        android:background="#ffffff66"
+        android:layout_weight="1"/>
+</LinearLayout> 
 </RelativeLayout>

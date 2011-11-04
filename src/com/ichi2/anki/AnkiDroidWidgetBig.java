@@ -14,6 +14,7 @@
 
 package com.ichi2.anki;
 
+import com.ichi2.anki.WidgetStatus.WidgetDeckTaskData;
 import com.tomgibara.android.veecheck.util.PrefSettings;
 
 import android.app.PendingIntent;
@@ -50,6 +51,9 @@ public class AnkiDroidWidgetBig extends AppWidgetProvider {
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
         Log.i(AnkiDroidApp.TAG, "BigWidget: onUpdate");
 //        WidgetStatus.update(context);
+        Intent intent;
+        intent = new Intent(context, AnkiDroidWidgetBig.UpdateService.class);            	
+        context.startService(intent);
     }
 
     @Override
@@ -108,19 +112,29 @@ public class AnkiDroidWidgetBig extends AppWidgetProvider {
 
             boolean updateDueDecksNow = true;
             if (intent != null) {
+            	if (intent.getAction() != null) {
+                	Log.e("intentaction", "a " + intent.getAction());            		
+            	}
                 if (ACTION_OPENDECK.equals(intent.getAction())) {
-                	WidgetStatus.deckOperation(this, 0);
+                	WidgetStatus.deckOperation(WidgetStatus.TASK_OPEN_DECK, new WidgetDeckTaskData(this, "/emmc/AnkiDroid/Fra-2-Red.anki"));
                 } else if (ACTION_CLOSEDECK.equals(intent.getAction())) {
+                	Deck deck = WidgetStatus.getDeck();
+                	if (deck != null) {
+                    	WidgetStatus.deckOperation(WidgetStatus.TASK_CLOSE_DECK, new WidgetDeckTaskData(this, deck));                		
+                	}
                 } else if (ACTION_OPEN.equals(intent.getAction())) {
                 	startActivity(StudyOptions.getLoadDeckIntent(this, intent.getData().getPath()));
                 } else if (ACTION_ANSWER.equals(intent.getAction())) {
+                	Deck deck = WidgetStatus.getDeck();
+                	Card card = WidgetStatus.getCard();
+                	WidgetStatus.deckOperation(WidgetStatus.TASK_ANSWER_CARD, new WidgetDeckTaskData(this, deck, card, intent.getIntExtra(EXTRA_ANSWER_EASE, 0)));
                 } else if (ACTION_UPDATE.equals(intent.getAction())) {
-
+                	
                 }
             }
             RemoteViews updateViews = buildUpdate(this, updateDueDecksNow);
 
-            ComponentName thisWidget = new ComponentName(this, AnkiDroidWidgetMedium.class);
+            ComponentName thisWidget = new ComponentName(this, AnkiDroidWidgetBig.class);
             AppWidgetManager manager = AppWidgetManager.getInstance(this);
             manager.updateAppWidget(thisWidget, updateViews);
         }
@@ -131,118 +145,26 @@ public class AnkiDroidWidgetBig extends AppWidgetProvider {
             // Resources res = context.getResources();
             RemoteViews updateViews = new RemoteViews(context.getPackageName(), R.layout.widget_big);
 
-            // Add a click listener to open Anki from the icon.
-            // This should be always there, whether there are due cards or not.
-            Intent ankiDroidIntent = new Intent(context, StudyOptions.class);
-            ankiDroidIntent.setAction(Intent.ACTION_MAIN);
-            ankiDroidIntent.addCategory(Intent.CATEGORY_LAUNCHER);
-            PendingIntent pendingAnkiDroidIntent = PendingIntent.getActivity(context, 0, ankiDroidIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-            updateViews.setOnClickPendingIntent(R.id.ankidroid_widget_big_layout, pendingAnkiDroidIntent);
-
-//            
-//            RemoteViews updateViews = new RemoteViews(context.getPackageName(), R.layout.widget_big);
-//            PendingIntent openPendingIntent = getOpenDeckPendingIntent(context);
-//            updateViews.setOnClickPendingIntent(R.id.ankidroid_widget_big_layout, openPendingIntent);
-
-            
-//
-//            // Add a click listener to open Anki from the icon.
-//            // This should be always there, whether there are due cards or not.
-//            Intent ankiDroidIntent = new Intent(context, StudyOptions.class);
-//            ankiDroidIntent.setAction(Intent.ACTION_MAIN);
-//            ankiDroidIntent.addCategory(Intent.CATEGORY_LAUNCHER);
-//            PendingIntent pendingAnkiDroidIntent =
-//                PendingIntent.getActivity(context, 0, ankiDroidIntent, 0);
-//            updateViews.setOnClickPendingIntent(R.id.anki_droid_logo,
-//                    pendingAnkiDroidIntent);
-//
-//            if (!AnkiDroidApp.isSdCardMounted()) {
-//                updateViews.setTextViewText(R.id.anki_droid_title,
-//                    context.getText(R.string.sdcard_missing_message));
-//                updateViews.setTextViewText(R.id.anki_droid_name, "");
-//                updateViews.setTextViewText(R.id.anki_droid_status, "");
-//                if (mMountReceiver == null) {
-//                	mMountReceiver = new BroadcastReceiver() {
-//                        @Override
-//                        public void onReceive(Context context, Intent intent) {
-//                            String action = intent.getAction();
-//                        	if (action.equals(Intent.ACTION_MEDIA_MOUNTED)) {
-//                                Log.i(AnkiDroidApp.TAG, "mMountReceiver - Action = Media Mounted");
-//                                if (remounted) {
-//                                    WidgetStatus.update(getBaseContext());                                	
-//                                	remounted = false;
-//                                    if (mMountReceiver != null) {
-//                                        unregisterReceiver(mMountReceiver);
-//                                    }
-//                                } else {
-//                                	remounted = true;
-//                                }
-//                            }
-//                        }
-//                    };
-//                    IntentFilter iFilter = new IntentFilter();
-//                    iFilter.addAction(Intent.ACTION_MEDIA_MOUNTED);
-//                    iFilter.addDataScheme("file");
-//                    registerReceiver(mMountReceiver, iFilter);
-//                }
-//                return updateViews;
-//            }
-//
-//            // If we do not have a cached version, always update.
-//            if (dueDecks == null || updateDueDecksNow) {
-//                // Build a list of decks with due cards.
-//                // Also compute the total number of cards due.
-//                updateDueDecks();
-//            }
-//
-//            if (dueCardsCount > 0) {
-//                Resources resources = getResources();
-//                String decksText = resources.getQuantityString(
-//                        R.plurals.widget_decks, dueDecks.size(), dueDecks.size());
-//                String text = resources.getQuantityString(
-//                        R.plurals.widget_cards_in_decks_due, dueCardsCount, dueCardsCount, decksText);
-//                updateViews.setTextViewText(R.id.anki_droid_title, text);
-//                // If the current due deck is out of bound, go back to the first one.
-//                if (currentDueDeck < 0 || currentDueDeck > dueDecks.size() - 1) {
-//                    currentDueDeck = 0;
-//                }
-//                // Show the name and info from the current due deck.
-//                DeckStatus deckStatus = dueDecks.get(currentDueDeck);
-//                updateViews.setTextViewText(R.id.anki_droid_name, deckStatus.mDeckName);
-//                updateViews.setTextViewText(R.id.anki_droid_status,
-//                    getDeckStatusString(deckStatus));
-//
-//                // Enable or disable the prev and next buttons.
-////                if (currentDueDeck > 0) {
-////                    updateViews.setImageViewResource(R.id.anki_droid_prev, R.drawable.widget_left_arrow);
-////                    updateViews.setOnClickPendingIntent(R.id.anki_droid_prev, getPrevPendingIntent(context));
-////                } else {
-////                    updateViews.setImageViewResource(R.id.anki_droid_prev, R.drawable.widget_left_arrow_disabled);
-////                    updateViews.setOnClickPendingIntent(R.id.anki_droid_prev, getIgnoredPendingIntent(context));
-////                }
-////                if (currentDueDeck < dueDecks.size() - 1) {
-////                    updateViews.setImageViewResource(R.id.anki_droid_next, R.drawable.widget_right_arrow);
-////                    updateViews.setOnClickPendingIntent(R.id.anki_droid_next, getNextPendingIntent(context));
-////                } else {
-////                    updateViews.setImageViewResource(R.id.anki_droid_next, R.drawable.widget_right_arrow_disabled);
-////                    updateViews.setOnClickPendingIntent(R.id.anki_droid_next, getIgnoredPendingIntent(context));
-////                }
-//                updateViews.setViewVisibility(R.id.anki_droid_name, View.VISIBLE);
-//                updateViews.setViewVisibility(R.id.anki_droid_status, View.VISIBLE);
-//                updateViews.setViewVisibility(R.id.anki_droid_next, View.VISIBLE);
-//                updateViews.setViewVisibility(R.id.anki_droid_prev, View.VISIBLE);
-//            } else {
-//                // No card is currently due.
-//                updateViews.setTextViewText(R.id.anki_droid_title,
-//                    context.getString(R.string.widget_no_cards_due));
-//                updateViews.setTextViewText(R.id.anki_droid_name, "");
-//                updateViews.setTextViewText(R.id.anki_droid_status, "");
-//                updateViews.setViewVisibility(R.id.anki_droid_name, View.INVISIBLE);
-//                updateViews.setViewVisibility(R.id.anki_droid_status, View.INVISIBLE);
-//                updateViews.setViewVisibility(R.id.anki_droid_next, View.INVISIBLE);
-//                updateViews.setViewVisibility(R.id.anki_droid_prev, View.INVISIBLE);
-//            }
-
+            Deck deck = WidgetStatus.getDeck();
+        	if (deck != null) {
+        		updateViews.setTextViewText(R.id.widget_big_deckname, deck.getDeckName());
+        		PendingIntent closeDeckPendingIntent = getCloseDeckPendingIntent(context);
+                updateViews.setOnClickPendingIntent(R.id.widget_big_open, closeDeckPendingIntent);
+                updateViews.setTextViewText(R.id.widget_big_question, WidgetStatus.getQuestion());
+                updateViews.setTextViewText(R.id.widget_big_answer, WidgetStatus.getAnswer());
+                // answer buttons
+        		PendingIntent ease1PendindIntent = getAnswerPendingIntent(context, 1);
+                updateViews.setOnClickPendingIntent(R.id.widget_big_ease1, ease1PendindIntent);
+        		PendingIntent ease2PendindIntent = getAnswerPendingIntent(context, 2);
+                updateViews.setOnClickPendingIntent(R.id.widget_big_ease2, ease2PendindIntent);
+        		PendingIntent ease3PendindIntent = getAnswerPendingIntent(context, 3);
+                updateViews.setOnClickPendingIntent(R.id.widget_big_ease3, ease3PendindIntent);
+        		PendingIntent ease4PendindIntent = getAnswerPendingIntent(context, 4);
+                updateViews.setOnClickPendingIntent(R.id.widget_big_ease4, ease4PendindIntent);
+        	} else {
+        		PendingIntent openPendingIntent = getOpenDeckPendingIntent(context);
+                updateViews.setOnClickPendingIntent(R.id.widget_big_open, openPendingIntent);
+        	}
             return updateViews;
         }
 

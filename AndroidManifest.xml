@@ -136,7 +136,7 @@
 			<meta-data android:name="android.appwidget.provider" android:resource="@xml/widget_provider_small" />
 		</receiver>
 		<!-- Service to perform web API queries -->
-		<service android:name=".AnkiDroidWidgetBig$UpdateService" />
+		<service android:name=".AnkiDroidWidgetSmall$UpdateService" />
 		<receiver android:name="AnkiDroidWidgetBig" android:label="ad gross">
 			<intent-filter>
 			<action android:name="android.appwidget.action.APPWIDGET_UPDATE" />

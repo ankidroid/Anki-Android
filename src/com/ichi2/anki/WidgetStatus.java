@@ -14,6 +14,7 @@
 
 package com.ichi2.anki;
 
+import com.ichi2.anki.DeckTask.TaskData;
 import com.ichi2.anki.services.NotificationService;
 import com.tomgibara.android.veecheck.util.PrefSettings;
 
@@ -40,7 +41,15 @@ public final class WidgetStatus {
 	private static boolean smallWidget = false;
 	private static boolean notification = false;
 	private static boolean onlyCurrentDeck = false;
-	private static AsyncTask<Context,Void,Context> mUpdateDeckStatusAsyncTask;
+	private static AsyncTask<Context,Void,Context> sUpdateDeckStatusAsyncTask;
+	private static AsyncTask<WidgetDeckTaskData,Void,WidgetDeckTaskData> sDeckOperationTask;
+	private static int sDeckOperationType;
+	public static final int TASK_OPEN_DECK = 0;
+	public static final int TASK_ANSWER_CARD = 1;
+	public static final int TASK_CLOSE_DECK = 2;
+	private static Deck sDeck;
+	private static Card sCard;
+
 
     /** This class should not be instantiated. */
     private WidgetStatus() {}
@@ -70,17 +79,11 @@ public final class WidgetStatus {
         }
         if (mediumWidget || smallWidget || notification) {
             Log.d(AnkiDroidApp.TAG, "WidgetStatus.update(): updating");
-            mUpdateDeckStatusAsyncTask = new UpdateDeckStatusAsyncTask();
-            mUpdateDeckStatusAsyncTask.execute(context);
+            sUpdateDeckStatusAsyncTask = new UpdateDeckStatusAsyncTask();
+            sUpdateDeckStatusAsyncTask.execute(context);
         } else {
             Log.d(AnkiDroidApp.TAG, "WidgetStatus.update(): not enabled");
         }
-    }
-
-
-    public static void deckOperation(WidgetDeckTaskData params, int muh) {
-    	AsyncTask<WidgetDeckTaskData,Void,WidgetDeckTaskData> aDeckStatusAsyncTask = new DeckOperationAsyncTask();
-    	aDeckStatusAsyncTask.execute(params);
     }
 
 
@@ -89,8 +92,8 @@ public final class WidgetStatus {
      */
     public static void waitToFinish() {
         try {
-            if ((mUpdateDeckStatusAsyncTask != null) && (mUpdateDeckStatusAsyncTask.getStatus() != AsyncTask.Status.FINISHED)) {
-            	mUpdateDeckStatusAsyncTask.get();
+            if ((sUpdateDeckStatusAsyncTask != null) && (sUpdateDeckStatusAsyncTask.getStatus() != AsyncTask.Status.FINISHED)) {
+            	sUpdateDeckStatusAsyncTask.get();
             }
         } catch (Exception e) {
             return;
@@ -110,6 +113,29 @@ public final class WidgetStatus {
 
     public static int fetchDue(Context context) {
         return MetaDB.getNotificationStatus(context);
+    }
+
+
+    public static void deckOperation(int type, WidgetDeckTaskData params) {
+    	sDeckOperationType = type;
+    	sDeckOperationTask = new DeckOperationAsyncTask();
+    	sDeckOperationTask.execute(params);
+    }
+
+    public static Deck getDeck() {
+    	return sDeck;
+    }
+
+    public static Card getCard() {
+    	return sCard;
+    }
+
+    public static String getQuestion() {
+    	return Utils.stripHTML(sCard.getQuestion().replaceAll("<br(\\s*\\/*)>", "\n"));
+    }
+
+    public static String getAnswer() {
+    	return Utils.stripHTML(sCard.getAnswer().replaceAll("<br(\\s*\\/*)>", "\n"));
     }
 
     private static class UpdateDeckStatusAsyncTask extends AsyncTask<Context, Void, Context> {
@@ -295,33 +321,132 @@ public final class WidgetStatus {
 
     private static class DeckOperationAsyncTask extends AsyncTask<WidgetDeckTaskData, Void, WidgetDeckTaskData> {
 
-    	public static final int TASK_OPEN_DECK = 0;
-    	public static final int TASK_ANSWER_CARD = 1;
-    	public static final int TASK_CLOSE_DECK = 2;
-    	
         @Override
-        protected WidgetDeckTaskData doInBackground(WidgetDeckTaskData ... params) {
+        protected WidgetDeckTaskData doInBackground(WidgetDeckTaskData... params) {
             Log.d(AnkiDroidApp.TAG, "WidgetStatus.DeckOperationAsyncTask.doInBackground()");
-            Context context = params[0];
 
-            if (!AnkiDroidApp.isSdCardMounted()) {
-            	return context;
+            switch (sDeckOperationType) {
+            case TASK_OPEN_DECK:
+            	return doInBackgroundOpenDeck(params);
+            case TASK_ANSWER_CARD:
+            	return doInBackgroundAnswerCard(params);
+            case TASK_CLOSE_DECK:
+            	return doInBackgroundCloseDeck(params);
             }
-            return context;
+            return params[0];
+        }
+
+        protected WidgetDeckTaskData doInBackgroundOpenDeck(WidgetDeckTaskData... params) {
+        	Log.e(AnkiDroidApp.TAG, "doInBackgroundOpenDeck");
+        	Deck deck = Deck.openDeck(params[0].getString());
+        	Card card = deck.getCard();
+        	return new WidgetDeckTaskData(params[0].getContext(), deck, card);
+        }
+
+        protected WidgetDeckTaskData doInBackgroundAnswerCard(WidgetDeckTaskData... params) {
+        	Log.e(AnkiDroidApp.TAG, "doInBackgroundAnswerCard");
+        	Card card = params[0].getCard();
+        	Deck deck = params[0].getDeck();
+        	Card newCard;
+        	int ease = params[0].getInt();
+        	if (ease == 0) {
+        		return new WidgetDeckTaskData(params[0].getContext(), deck, card);
+        	}
+//            try {
+    	        AnkiDb ankiDB = AnkiDatabaseManager.getDatabase(deck.getDeckPath());
+    	        ankiDB.getDatabase().beginTransaction();
+    	        try {
+    	            if (card != null) {
+    	                deck.answerCard(card, 3);
+    	                Log.e(AnkiDroidApp.TAG, "WidgetBig: answering card with ease " + ease);
+    	            }
+    	            newCard = deck.getCard();
+    	            ankiDB.getDatabase().setTransactionSuccessful();
+    	        } finally {
+    	            ankiDB.getDatabase().endTransaction();
+    	        }
+    	    
+        	return new WidgetDeckTaskData(params[0].getContext(), deck, newCard);
+        }
+
+        protected WidgetDeckTaskData doInBackgroundCloseDeck(WidgetDeckTaskData... params) {
+        	Log.e(AnkiDroidApp.TAG, "doInBackgroundCloseDeck");
+        	params[0].getDeck().closeDeck(false);
+        	return new WidgetDeckTaskData(params[0].getContext());
         }
 
         @Override
-        protected void onPostExecute(WidgetDeckTaskData context) {
+        protected void onPostExecute(WidgetDeckTaskData params) {
             Log.d(AnkiDroidApp.TAG, "WidgetStatus.DeckOperationAsyncTask.onPostExecute()");
-
+            Context context = params.getContext();
+            sDeck = params.getDeck();
+            sCard = params.getCard();
+            Intent intent;
+            intent = new Intent(context, AnkiDroidWidgetBig.UpdateService.class);
+            intent.setAction(AnkiDroidWidgetBig.UpdateService.ACTION_UPDATE);
+            context.startService(intent);
         }
 
     }
 
     public static class WidgetDeckTaskData {
+    	private Context context;
+    	private String string;
+    	private Deck deck;
+    	private Card card;
+    	private int integer;
 
-    	public WidgetDeckTaskData(int value, Deck deck, Card card) {
-
+    	public WidgetDeckTaskData(Context context) {
+    		this.context = context;
         }
+
+    	public WidgetDeckTaskData(Context context, String string) {
+    		this.context = context;
+    		this.string = string;
+        }
+
+    	public WidgetDeckTaskData(Context context, Card card) {
+    		this.context = context;
+    		this.card = card;
+        }
+
+    	public WidgetDeckTaskData(Context context, Deck deck) {
+    		this.context = context;
+    		this.deck = deck;
+        }
+
+    	public WidgetDeckTaskData(Context context, Deck deck, Card card) {
+    		this.context = context;
+    		this.deck = deck;
+    		this.card = card;
+        }
+
+    	public WidgetDeckTaskData(Context context, Deck deck, Card card, int integer) {
+    		this.context = context;
+    		this.deck = deck;
+    		this.card = card;
+    		this.integer = integer;
+        }
+
+    	public String getString() {
+    		this.context = context;
+    		return string;
+    	}
+
+    	public Card getCard() {
+    		return card;
+    	}
+
+    	public Deck getDeck() {
+    		return deck;
+    	}
+
+    	public Context getContext() {
+    		return context;
+    	}
+
+    	public int getInt() {
+    		return integer;
+    	}
     }
 }
