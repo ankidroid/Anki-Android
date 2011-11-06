@@ -144,6 +144,7 @@ public class StudyOptions extends Activity implements IButtonListener {
 
 
     public static final String EXTRA_DECK = "deck";
+    public static final String EXTRA_START_REVIEWER = "startReviewer";
 
     private static final int DIALOG_NO_CONNECTION = 0;
     private static final int DIALOG_USER_NOT_LOGGED_IN = 1;
@@ -628,6 +629,7 @@ public class StudyOptions extends Activity implements IButtonListener {
 			Log.i(AnkiDroidApp.TAG, "StudyOptions - onCreate: Detected multiple instance of this activity, closing it and return to root activity");
 	        Intent reloadIntent = new Intent(StudyOptions.this, StudyOptions.class);
 	        reloadIntent.setAction(Intent.ACTION_MAIN);
+	        reloadIntent.putExtras(getIntent().getExtras());
 	        reloadIntent.addCategory(Intent.CATEGORY_LAUNCHER);
 	        reloadIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 			finish();
@@ -653,6 +655,7 @@ public class StudyOptions extends Activity implements IButtonListener {
 
         initAllContentViews();
 
+        boolean startReviewer = false;
         Intent intent = getIntent();
         if (Intent.ACTION_VIEW.equalsIgnoreCase(intent.getAction())
                 && intent.getDataString() != null) {
@@ -662,6 +665,8 @@ public class StudyOptions extends Activity implements IButtonListener {
                 && intent.hasExtra(EXTRA_DECK)) {
             mDeckFilename = intent.getStringExtra(EXTRA_DECK);
             Log.i(AnkiDroidApp.TAG, "onCreate - deckFilename from MAIN intent: " + mDeckFilename);
+        } else if (Intent.ACTION_MAIN.equalsIgnoreCase(intent.getAction()) && intent.hasExtra(EXTRA_START_REVIEWER)) {
+        	startReviewer = true;
         } else if (savedInstanceState != null) {
             // Use the same deck as last time Ankidroid was used.
             mDeckFilename = savedInstanceState.getString("deckFilename");
@@ -673,6 +678,10 @@ public class StudyOptions extends Activity implements IButtonListener {
         }
         if (!mSdCardAvailable) {
             showContentView(CONTENT_NO_EXTERNAL_STORAGE);
+        } if (startReviewer) {
+        	mCurrentContentView = CONTENT_STUDY_OPTIONS;
+        	openReviewer();
+        	showContentView();
         } else {
             if (mDeckFilename == null || !new File(mDeckFilename).exists()) {
                 showContentView(CONTENT_NO_DECK);

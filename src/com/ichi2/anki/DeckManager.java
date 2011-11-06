@@ -75,7 +75,7 @@ public class DeckManager {
 	}
 	public static Deck getDeck(String deckpath, boolean setAsMainDeck, boolean doSafetyBackupIfNeeded, int requestingActivity, boolean rebuild) {
 		Deck deck = null;
-		waitForDeckOpening(deckpath);
+		waitForDeckOpening(deckpath);			
 		mLock.lock();
 		mOpeningDeck = deckpath;
 		try {
@@ -264,6 +264,7 @@ public class DeckManager {
 	public static void closeDeck(String deckpath, int requestingActivity, boolean waitToFinish) {
 		waitForDeckOpening(deckpath);
 		if (sLoadedDecks.containsKey(deckpath)) {
+			Log.e("try", "to close with " + requestingActivity + " deck " + deckpath + ": " + sLoadedDecks.get(deckpath).mOpenedBy.toString());
 			ArrayList<Integer> openList = sLoadedDecks.get(deckpath).mOpenedBy;
 			if (waitToFinish && (openList.contains(REQUESTING_ACTIVITY_STUDYOPTIONS))) {
 				DeckTask.waitToFinish();
@@ -271,6 +272,9 @@ public class DeckManager {
 			if (requestingActivity != -1 && openList.size() > 1) {
 				openList.remove(deckpath);
 				Log.i(AnkiDroidApp.TAG, "DeckManager: deck " + deckpath + " used by more than one activity (" + openList.toString() + "), removing only " + requestingActivity);
+				if (requestingActivity == REQUESTING_ACTIVITY_BIGWIDGET) {
+					sendWidgetBigClosedNotification();
+				}
 			} else {
 				Log.i(AnkiDroidApp.TAG, "DeckManager: closing deck " + deckpath + " (" + requestingActivity + ")");
 				sLoadedDecks.get(deckpath).mClosingAsyncTask = new CloseDeckAsyncTask();

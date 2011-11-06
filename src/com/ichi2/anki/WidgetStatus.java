@@ -362,7 +362,7 @@ public final class WidgetStatus {
         	DeckManager.closeDeck(params[0].getString(), DeckManager.REQUESTING_ACTIVITY_BIGWIDGET);
         	return new WidgetDeckTaskData(params[0].getContext());
         }
-        
+
 
         protected WidgetDeckTaskData doInBackgroundUndo(WidgetDeckTaskData... params) {
         	Log.e(AnkiDroidApp.TAG, "doInBackgroundUndo");

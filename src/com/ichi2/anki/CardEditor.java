@@ -91,8 +91,9 @@ public class CardEditor extends Activity {
 	public static final String CARD_EDITOR_ACTION = "cea";
 	public static final int EDIT_REVIEWER_CARD = 0;
 	public static final int EDIT_BROWSER_CARD = 1;
-	public static final int ADD_CARD = 2;
-	public static final int COPY_CARD = 3;
+	public static final int EDIT_BIGWIDGET_CARD = 2;
+	public static final int ADD_CARD = 3;
+	public static final int COPY_CARD = 4;
 
 	private static final int DIALOG_MODEL_SELECT = 0;
 	private static final int DIALOG_CARD_MODEL_SELECT = 1;
@@ -181,7 +182,9 @@ public class CardEditor extends Activity {
 		@Override
 		public void onProgressUpdate(DeckTask.TaskData... values) {
 			int count = values[0].getInt();
-			if (count > 0) {
+			if (getIntent().getIntExtra(CARD_EDITOR_ACTION, ADD_CARD) == EDIT_BIGWIDGET_CARD) {
+				AnkiDroidWidgetBig.setCard(values[0].getCard());
+			} else if (count > 0) {
 				mEditorFact = mDeck.newFact(mCurrentSelectedModelId);
 				populateEditFields();
 				mSave.setEnabled(false);
@@ -206,7 +209,7 @@ public class CardEditor extends Activity {
 
 		@Override
 		public void onPostExecute(DeckTask.TaskData result) {
-			if (mForCopy) {
+			if (mForCopy || getIntent().getIntExtra(CARD_EDITOR_ACTION, ADD_CARD) == EDIT_BIGWIDGET_CARD) {
 				closeCardEditor();
 			}
 		}
@@ -285,6 +288,14 @@ public class CardEditor extends Activity {
 					return;
 				}
 				mEditorFact = browCard.getFact();
+				break;
+			case EDIT_BIGWIDGET_CARD:
+				Card widgetCard = AnkiDroidWidgetBig.getCard();
+				if (widgetCard == null) {
+					finish();
+					return;
+				}
+				mEditorFact = widgetCard.getFact();
 				break;
 			case COPY_CARD:
 				mForCopy = true;
@@ -381,9 +392,16 @@ public class CardEditor extends Activity {
 						mEditorFact.setTags(mFactTags);
 						mModified = true;
 					}
-					// Only send result to save if something was actually
-					// changed
-					if (!mCardReset) {
+					if (getIntent().getIntExtra(CARD_EDITOR_ACTION, ADD_CARD) == EDIT_BIGWIDGET_CARD) {
+//						DeckTask.launchDeckTask(DeckTask.TASK_TYPE_UPDATE_FACT, mSaveFactHandler, new DeckTask.TaskData(Reviewer.UPDATE_CARD_SHOW_QUESTION,
+//		                    mDeck, AnkiDroidWidgetBig.getCard()));
+						mEditorFact.setModified(true, mDeck, false);
+						mEditorFact.toDb();
+						mDeck.flushMod();
+						AnkiDroidWidgetBig.setCard(mDeck.cardFromId(AnkiDroidWidgetBig.getCard().getId()));
+					} else if (!mCardReset) {
+						// Only send result to save if something was actually
+						// changed
 						if (mModified) {
 							setResult(RESULT_OK);
 						} else {
@@ -589,7 +607,7 @@ public class CardEditor extends Activity {
 	}
 
 	private void closeCardEditor() {
-		if (mIntentAdd && mDeck != null) {
+		if (mIntentAdd) {
 			DeckManager.closeDeck(mDeck.getDeckPath(), DeckManager.REQUESTING_ACTIVITY_CARDEDITOR);
 		}
 		finish();
