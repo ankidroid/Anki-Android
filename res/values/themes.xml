@@ -50,4 +50,10 @@
 	<style name="Theme_Black" parent="android:style/Theme">
 		<item name="listItemBackgroundDrawable">@android:drawable/list_selector_background</item>
 	</style>
+
+    <style name="Theme_Translucent" parent="android:Theme.Translucent.NoTitleBar">
+       <item name="listItemBackgroundDrawable">@drawable/blue_list_selector_background</item>
+       <item name="android:listPreferredItemHeight">56dip</item>
+	</style>
+
 </resources>

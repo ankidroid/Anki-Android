@@ -158,7 +158,6 @@ public class CardEditor extends Activity {
 	private ProgressDialog mProgressDialog;
 
 	private HashMap<String, String> mFullDeckPaths;
-	private String[] mDeckNames;
 //	private String mSourceLanguage;
 //	private String mTargetLanguage;
 	private String mSourceText;
@@ -688,50 +687,18 @@ public class CardEditor extends Activity {
 			break;
 
 		case DIALOG_DECK_SELECT:
-			int len = 0;
-			File[] fileList;
-
-			File dir = new File(PrefSettings.getSharedPrefs(getBaseContext())
-					.getString("deckPath", AnkiDroidApp.getStorageDirectory()));
-			fileList = dir.listFiles(new AnkiFilter());
-
-			if (dir.exists() && dir.isDirectory() && fileList != null) {
-				len = fileList.length;
-			}
-
-			TreeSet<String> tree = new TreeSet<String>();
-			mFullDeckPaths = new HashMap<String, String>();
-
-			if (len > 0 && fileList != null) {
-				Log.i(AnkiDroidApp.TAG,
-						"CardEditor - populateDeckDialog, number of anki files = "
-								+ len);
-				for (File file : fileList) {
-					String name = file.getName().replaceAll(".anki", "");
-					tree.add(name);
-					mFullDeckPaths.put(name, file.getAbsolutePath());
-				}
-			}
-
-			builder.setTitle(R.string.fact_adder_select_deck);
-			// Convert to Array
-			mDeckNames = new String[tree.size()];
-			tree.toArray(mDeckNames);
-
-			builder.setItems(mDeckNames, new DialogInterface.OnClickListener() {
+			dialog = DeckManager.getSelectDeckDialog(this, new DialogInterface.OnClickListener() {
 				@Override
 				public void onClick(DialogInterface dialog, int item) {
 					loadDeck(item);
 				}
-			});
-			builder.setOnCancelListener(new OnCancelListener() {
+			}, new OnCancelListener() {
 				@Override
 				public void onCancel(DialogInterface arg0) {
 					mCancelled = true;
 				}
 
-			});
-			builder.setOnDismissListener(new OnDismissListener() {
+			}, new OnDismissListener() {
 				@Override
 				public void onDismiss(DialogInterface arg0) {
 					if (mCancelled == true) {
@@ -741,8 +708,8 @@ public class CardEditor extends Activity {
 					}
 				}
 			});
-			dialog = builder.create();
 			break;
+
 		case DIALOG_MODEL_SELECT:
 			ArrayList<CharSequence> dialogItems = new ArrayList<CharSequence>();
 			// Use this array to know which ID is associated with each
@@ -943,8 +910,7 @@ public class CardEditor extends Activity {
 
 
 	private void loadDeck(int item) {
-		String deckName = mDeckNames[item];
-		mDeckPath = mFullDeckPaths.get(deckName);
+		mDeckPath = DeckManager.getDeckPath(item);
 		Deck deck = AnkiDroidApp.deck();
 		if (deck != null && deck.getDeckPath().equals(mDeckPath)) {
 			mDeck = deck;
@@ -965,7 +931,7 @@ public class CardEditor extends Activity {
 				return;				
 			}
 		}
-		setTitle(deckName);
+		setTitle(deck.getDeckName());
 		loadContents();
 	}
 

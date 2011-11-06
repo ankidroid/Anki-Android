@@ -14,7 +14,6 @@
 
 package com.ichi2.anki;
 
-import com.ichi2.anki.DeckTask.TaskData;
 import com.ichi2.anki.services.NotificationService;
 import com.tomgibara.android.veecheck.util.PrefSettings;
 

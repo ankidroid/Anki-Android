@@ -15,6 +15,8 @@
 package com.ichi2.anki;
 
 import com.ichi2.anki.WidgetStatus.WidgetDeckTaskData;
+import com.ichi2.themes.StyledDialog;
+import com.ichi2.widget.WidgetDialog;
 import com.tomgibara.android.veecheck.util.PrefSettings;
 
 import android.app.PendingIntent;
@@ -24,6 +26,8 @@ import android.appwidget.AppWidgetProvider;
 import android.content.BroadcastReceiver;
 import android.content.ComponentName;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
@@ -97,6 +101,7 @@ public class AnkiDroidWidgetBig extends AppWidgetProvider {
         public static final String ACTION_BURY_CARD = "org.ichi2.anki.AnkiDroidWidgetBig.BURYCARD";
         public static final String ACTION_UNDO = "org.ichi2.anki.AnkiDroidWidgetBig.UNDO";
         public static final String EXTRA_ANSWER_EASE = "answerEase";
+        public static final String EXTRA_DECK_PATH = "deckPath";
 
 
         public static final int VIEW_ACTION_DEFAULT = 0;
@@ -140,12 +145,12 @@ public class AnkiDroidWidgetBig extends AppWidgetProvider {
         @Override
         public void onStart(Intent intent, int startId) {
             Log.i(AnkiDroidApp.TAG, "BigWidget: OnStart");
-
+    		
             if (intent != null && intent.getAction() != null) {
             	String action = intent.getAction();
                 if (ACTION_OPENDECK.equals(action)) {
                 	updateViews(VIEW_ACTION_SHOW_PROGRESS_DIALOG);
-                	WidgetStatus.deckOperation(WidgetStatus.TASK_OPEN_DECK, new WidgetDeckTaskData(this, "/emmc/AnkiDroid/Eng-1ab-Red+Gru+Auf.anki"));
+                	WidgetStatus.deckOperation(WidgetStatus.TASK_OPEN_DECK, new WidgetDeckTaskData(AnkiDroidWidgetBig.UpdateService.this, intent.getStringExtra(EXTRA_DECK_PATH)));
                 } else if (ACTION_CLOSEDECK.equals(action)) {
                 	updateViews(VIEW_ACTION_SHOW_PROGRESS_DIALOG);
                 	if (sLoadedDeck != null) {
@@ -290,7 +295,7 @@ public class AnkiDroidWidgetBig extends AppWidgetProvider {
                 }
         	} else {
         		sShowAnswer = false;
-        		PendingIntent openPendingIntent = getOpenDeckPendingIntent(context);
+        		PendingIntent openPendingIntent = getShowDeckSelectionPendingIntent(context);
                 updateViews.setOnClickPendingIntent(R.id.widget_big_open, openPendingIntent);
                 updateViews.setTextViewText(R.id.widget_big_counts, "");
                 updateViews.setTextViewText(R.id.widget_big_deckname, "");
@@ -317,6 +322,12 @@ public class AnkiDroidWidgetBig extends AppWidgetProvider {
             Intent ankiDroidIntent = new Intent(context, UpdateService.class);
             ankiDroidIntent.setAction(ACTION_OPENDECK);
             return PendingIntent.getService(context, 0, ankiDroidIntent, 0);
+        }
+
+        private PendingIntent getShowDeckSelectionPendingIntent(Context context) {
+            Intent ankiDroidIntent = new Intent(context, WidgetDialog.class);
+            ankiDroidIntent.setAction(WidgetDialog.ACTION_SHOW_DECK_SELECTION_DIALOG);
+            return PendingIntent.getActivity(context, 0, ankiDroidIntent, 0);
         }
 
         private PendingIntent getCloseDeckPendingIntent(Context context) {
