@@ -28,6 +28,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.IBinder;
 import android.text.Html;
 import android.text.SpannableString;
@@ -47,10 +48,13 @@ public class AnkiDroidWidgetBig extends AppWidgetProvider {
     private static Card sCard;
     private static boolean sShowAnswer = false;
 
+    private static Context sContext;
+
     @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
         Log.i(AnkiDroidApp.TAG, "BigWidget: onUpdate");
 //        WidgetStatus.update(context);
+        sContext = context;
         Intent intent;
         intent = new Intent(context, AnkiDroidWidgetBig.UpdateService.class);            	
         intent.setAction(UpdateService.ACTION_UPDATE);
@@ -83,8 +87,9 @@ public class AnkiDroidWidgetBig extends AppWidgetProvider {
     public static void setDeckAndLoadCard(Deck deck) {
     	sLoadedDeck = deck;
     	if (deck != null) {
-        	sCard = sLoadedDeck.getCard();    		
+        	sCard = sLoadedDeck.getCard();
     	}
+    	updateWidget();
     }
 
 
@@ -92,6 +97,15 @@ public class AnkiDroidWidgetBig extends AppWidgetProvider {
     	if (sLoadedDeck != null) {
         	sCard = card;
     	}
+    	updateWidget();
+    }
+
+
+    public static void updateWidget() {
+        Intent intent;
+        intent = new Intent(sContext, AnkiDroidWidgetBig.UpdateService.class);
+        intent.setAction(AnkiDroidWidgetBig.UpdateService.ACTION_UPDATE);
+        sContext.startService(intent);
     }
 
 
@@ -160,7 +174,7 @@ public class AnkiDroidWidgetBig extends AppWidgetProvider {
                 } else if (ACTION_CLOSEDECK.equals(action)) {
                 	updateViews(VIEW_ACTION_SHOW_PROGRESS_DIALOG);
                 	if (sLoadedDeck != null) {
-                    	WidgetStatus.deckOperation(WidgetStatus.TASK_CLOSE_DECK, new WidgetDeckTaskData(this, sLoadedDeck));
+                    	WidgetStatus.deckOperation(WidgetStatus.TASK_CLOSE_DECK, new WidgetDeckTaskData(this, sLoadedDeck.getDeckPath()));
                 	}
                 } else if (ACTION_UNDO.equals(action)) {
                 	sShowAnswer = false;
@@ -185,6 +199,8 @@ public class AnkiDroidWidgetBig extends AppWidgetProvider {
                     dialogIntent.setAction(WidgetDialog.ACTION_SHOW_RESTRICTIONS_DIALOG);
                     dialogIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     this.startActivity(dialogIntent);
+                } else if (ACTION_OPEN.equals(action)) {
+                	startActivity(StudyOptions.getLoadDeckIntent(this, intent.getData().getPath()));
                 }
             }
         }
@@ -219,6 +235,9 @@ public class AnkiDroidWidgetBig extends AppWidgetProvider {
             	updateViews.setViewVisibility(R.id.widget_big_empty, View.VISIBLE);
             } else if (sLoadedDeck != null) {
         		updateViews.setTextViewText(R.id.widget_big_deckname, sLoadedDeck.getDeckName());
+        		PendingIntent openADIntent = getOpenPendingIntent(this, sLoadedDeck.getDeckPath());
+        		updateViews.setOnClickPendingIntent(R.id.widget_big_deckname, openADIntent);
+
         		updateViews.setTextViewText(R.id.widget_big_counts, getDeckStatusString(sLoadedDeck, sCard));
         		
 //        		WebView webView = new WebView(this);
@@ -360,7 +379,7 @@ public class AnkiDroidWidgetBig extends AppWidgetProvider {
         private PendingIntent getOpenPendingIntent(Context context, String deckPath) {
             Intent ankiDroidIntent = new Intent(context, UpdateService.class);
             ankiDroidIntent.setAction(ACTION_OPEN);
-            //ankiDroidIntent.setData(Uri.parse("file://" + deckPath));
+            ankiDroidIntent.setData(Uri.parse("file://" + deckPath));
             return PendingIntent.getService(context, 0, ankiDroidIntent, 0);
         }
 

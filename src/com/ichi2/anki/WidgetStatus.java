@@ -147,34 +147,34 @@ public final class WidgetStatus {
             // For the deck information
             ArrayList<DeckStatus> decks;
 
-            if (onlyCurrentDeck) {
-                decks = new ArrayList<DeckStatus>(mDecks.length);
-
-                Deck currentDeck = AnkiDroidApp.deck();
-                if (currentDeck != null) {
-                	String currentDeckPath = currentDeck.getDeckPath();
-                	try {
-                		for (DeckStatus m : mDecks) {
-                			if (m.mDeckPath.equals(currentDeckPath)) {
-	                    			Log.i(AnkiDroidApp.TAG, "UpdateWidget - update information for deck " + currentDeckPath);
-						if (!currentDeck.hasFinishScheduler()) {
-		                			decks.add(new DeckStatus(currentDeckPath, currentDeck.getDeckName(), currentDeck.getNewCountToday(), currentDeck.getRevCount(), currentDeck.getFailedSoonCount(), currentDeck.getETA(), currentDeck.getSessionFinishedCards()));
-						} else {
-		                			decks.add(new DeckStatus(currentDeckPath, currentDeck.getDeckName(), 0, 0, currentDeck.getFailedSoonCount(), 0, currentDeck.getSessionFinishedCards()));
-						}
-                			} else {
-                    			Log.i(AnkiDroidApp.TAG, "UpdateWidget - copy information for deck " + m.mDeckPath);
-                				decks.add(m);
-                			}
-                		}
-                    } catch (SQLException e) {
-                        Log.i(AnkiDroidApp.TAG, "Widget: Could not retrieve deck information");
-                        Log.e(AnkiDroidApp.TAG, e.toString());
-                        if (currentDeckPath != null) {
-                            BackupManager.restoreDeckIfMissing(currentDeckPath);                    	
-                        }
-                    }
-                }
+            if (false){//onlyCurrentDeck) {
+//                decks = new ArrayList<DeckStatus>(mDecks.length);
+//
+//                Deck currentDeck = AnkiDroidApp.deck();
+//                if (currentDeck != null) {
+//                	String currentDeckPath = currentDeck.getDeckPath();
+//                	try {
+//                		for (DeckStatus m : mDecks) {
+//                			if (m.mDeckPath.equals(currentDeckPath)) {
+//	                    			Log.i(AnkiDroidApp.TAG, "UpdateWidget - update information for deck " + currentDeckPath);
+//						if (!currentDeck.hasFinishScheduler()) {
+//		                			decks.add(new DeckStatus(currentDeckPath, currentDeck.getDeckName(), currentDeck.getNewCountToday(), currentDeck.getRevCount(), currentDeck.getFailedSoonCount(), currentDeck.getETA(), currentDeck.getSessionFinishedCards()));
+//						} else {
+//		                			decks.add(new DeckStatus(currentDeckPath, currentDeck.getDeckName(), 0, 0, currentDeck.getFailedSoonCount(), 0, currentDeck.getSessionFinishedCards()));
+//						}
+//                			} else {
+//                    			Log.i(AnkiDroidApp.TAG, "UpdateWidget - copy information for deck " + m.mDeckPath);
+//                				decks.add(m);
+//                			}
+//                		}
+//                    } catch (SQLException e) {
+//                        Log.i(AnkiDroidApp.TAG, "Widget: Could not retrieve deck information");
+//                        Log.e(AnkiDroidApp.TAG, e.toString());
+//                        if (currentDeckPath != null) {
+//                            BackupManager.restoreDeckIfMissing(currentDeckPath);                    	
+//                        }
+//                    }
+//                }
             } else {
                 SharedPreferences preferences = PrefSettings.getSharedPrefs(context);
                 String deckPath = preferences.getString("deckPath",
@@ -198,21 +198,9 @@ public final class WidgetStatus {
                         absPath = file.getAbsolutePath();
                         String deckName = file.getName().replaceAll(".anki", "");
 
-                        Log.i(AnkiDroidApp.TAG, "Found deck: " + absPath);
+                        Log.i(AnkiDroidApp.TAG, "WidgetStatus: Found deck: " + absPath);
 
-                        Deck deck;
-                        Deck currentDeck = AnkiDroidApp.deck();
-                        if (currentDeck != null && currentDeck.getDeckPath().equals(absPath)) {
-                        	deck = currentDeck;
-                        } else {
-                        	try {
-                            	deck = Deck.openDeck(absPath, false);                    		
-                			} catch (RuntimeException e) {
-                				Log.w(AnkiDroidApp.TAG, "Widget: Could not open database " + absPath + ": " + e);
-                				BackupManager.restoreDeckIfMissing(absPath);
-                				deck = null;
-                			}
-                        }
+                        Deck deck = DeckManager.getDeck(absPath, DeckManager.REQUESTING_ACTIVITY_WIDGETSTATUS);
                         if (deck == null) {
                             Log.e(AnkiDroidApp.TAG, "Widget: Skipping null deck: " + absPath);
                             // Use the data from the last time we updated the deck, if available.
@@ -232,21 +220,18 @@ public final class WidgetStatus {
                         int reps = deck.getSessionFinishedCards();
 
 
-			if(!deck.hasFinishScheduler()) {
+                        if(!deck.hasFinishScheduler()) {
         	                dueCards = deck.getRevCount();
         	                newCards = deck.getNewCountToday();
         	                eta = deck.getETA();
-			}
-                        // Close the database connection, but only if this is not the current database.
-                        // Probably we need to make this atomic to be sure it will not cause a failure.
-                        if (currentDeck != null && currentDeck.getDB() != deck.getDB()) {
-                            deck.closeDeck();
                         }
+
+                        DeckManager.closeDeck(absPath, DeckManager.REQUESTING_ACTIVITY_WIDGETSTATUS);
 
                         // Add the information about the deck
                         decks.add(new DeckStatus(absPath, deckName, newCards, dueCards, failedCards, eta, reps));
                     } catch (SQLException e) {
-                        Log.i(AnkiDroidApp.TAG, "Widget: Could not open deck");
+                        Log.i(AnkiDroidApp.TAG, "Widget: Problems on retrieving deck information");
                         Log.e(AnkiDroidApp.TAG, e.toString());
                         if (absPath != null) {
                             BackupManager.restoreDeckIfMissing(absPath);                    	
@@ -333,14 +318,12 @@ public final class WidgetStatus {
         }
 
         protected WidgetDeckTaskData doInBackgroundOpenDeck(WidgetDeckTaskData... params) {
-        	Log.e(AnkiDroidApp.TAG, "doInBackgroundOpenDeck");
-        	Deck deck = Deck.openDeck(params[0].getString(), true);
-        	Card card = deck.getCard();
-        	return new WidgetDeckTaskData(params[0].getContext(), deck, card);
+        	Log.i(AnkiDroidApp.TAG, "DeckOperationAsyncTask: doInBackgroundOpenDeck");
+        	return new WidgetDeckTaskData(params[0].getContext(), DeckManager.getDeck(params[0].getString(), DeckManager.REQUESTING_ACTIVITY_BIGWIDGET));
         }
 
         protected WidgetDeckTaskData doInBackgroundAnswerCard(WidgetDeckTaskData... params) {
-        	Log.e(AnkiDroidApp.TAG, "doInBackgroundAnswerCard");
+        	Log.e(AnkiDroidApp.TAG, "DeckOperationAsyncTask: doInBackgroundAnswerCard");
         	Context context = params[0].getContext();
         	Card card = params[0].getCard();
         	Deck deck = params[0].getDeck();
@@ -364,7 +347,7 @@ public final class WidgetStatus {
     	            newCard = deck.getCard();
 
     	            AnkiDroidWidgetBig.setCard(newCard);
-    	            sendUpdateIntent(context);
+                	AnkiDroidWidgetBig.updateWidget();
 
     	            ankiDB.getDatabase().setTransactionSuccessful();
     	        } finally {
@@ -375,8 +358,8 @@ public final class WidgetStatus {
         }
 
         protected WidgetDeckTaskData doInBackgroundCloseDeck(WidgetDeckTaskData... params) {
-        	Log.e(AnkiDroidApp.TAG, "doInBackgroundCloseDeck");
-        	params[0].getDeck().closeDeck(false);
+        	Log.i(AnkiDroidApp.TAG, "doInBackgroundCloseDeck");
+        	DeckManager.closeDeck(params[0].getString(), DeckManager.REQUESTING_ACTIVITY_BIGWIDGET);
         	return new WidgetDeckTaskData(params[0].getContext());
         }
         
@@ -386,7 +369,7 @@ public final class WidgetStatus {
         	Deck deck = params[0].getDeck();
         	deck.undo(0, true);
         	AnkiDroidWidgetBig.setCard(deck.getCard());//deck.cardFromId(deck.undo(0, true)));
-        	sendUpdateIntent(params[0].getContext());
+        	AnkiDroidWidgetBig.updateWidget();
 
         	return new WidgetDeckTaskData(params[0].getContext());
         }
@@ -401,7 +384,7 @@ public final class WidgetStatus {
         	deck.reset();
 
         	AnkiDroidWidgetBig.setCard(deck.getCard());
-        	sendUpdateIntent(params[0].getContext());
+        	AnkiDroidWidgetBig.updateWidget();
 
         	return new WidgetDeckTaskData(params[0].getContext());
         }
@@ -418,8 +401,6 @@ public final class WidgetStatus {
             	update = true;
             	break;
             case TASK_CLOSE_DECK:
-                AnkiDroidWidgetBig.setDeckAndLoadCard(params.getDeck());            	
-            	update = true;
             	break;
             case TASK_ANSWER_CARD:
             	break;
@@ -429,16 +410,9 @@ public final class WidgetStatus {
             	break;            	
             }
             if (update) {
-            	sendUpdateIntent(context);
+            	AnkiDroidWidgetBig.updateWidget();
             }
         }
-    }
-
-    public static void sendUpdateIntent(Context context) {
-        Intent intent;
-        intent = new Intent(context, AnkiDroidWidgetBig.UpdateService.class);
-        intent.setAction(AnkiDroidWidgetBig.UpdateService.ACTION_UPDATE);
-        context.startService(intent);
     }
 
 
@@ -488,7 +462,6 @@ public final class WidgetStatus {
         }
 
     	public String getString() {
-    		this.context = context;
     		return string;
     	}
 

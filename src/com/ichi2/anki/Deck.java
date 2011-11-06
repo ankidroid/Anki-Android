@@ -230,12 +230,6 @@ public class Deck {
     private Stack<UndoRow> mUndoRedoStackToRecord = null;
 
 
-    public static synchronized Deck openDeck(String path) throws SQLException {
-        return openDeck(path, true);
-    }
-    public static synchronized Deck openDeck(String path, boolean rebuild) throws SQLException {
-    	return openDeck(path, rebuild, false);
-    }
     public static synchronized Deck openDeck(String path, boolean rebuild, boolean forceDeleteJournalMode) throws SQLException {
 	// first do a backup if last backup is very old or not existing
 	// this is normally done on loading in studyoptions (full) or loading in deckpicker
@@ -4799,28 +4793,6 @@ public class Deck {
         values.put("newTomorrow", (int)newCards);
         values.put("timeTomorrow", (int)eta);
         return values;
-    }
-
-
-    public static boolean isWalEnabled(String deckPath) {
-        Cursor cursor = null;
-        boolean value = false;
-        boolean dbAlreadyOpened = AnkiDatabaseManager.isDatabaseOpen(deckPath);
-        try {
-            cursor = AnkiDatabaseManager.getDatabase(deckPath).getDatabase().rawQuery(
-            		"PRAGMA journal_mode", null);
-        	if (cursor.moveToFirst()) {
-        		value = cursor.getString(0).equalsIgnoreCase("wal");
-        	}
-        } finally {
-            if (cursor != null && !cursor.isClosed()) {
-                cursor.close();
-            }
-        }
-        if (!dbAlreadyOpened) {
-            AnkiDatabaseManager.closeDatabase(deckPath);
-        }
-        return value;
     }
 
 }

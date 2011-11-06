@@ -25,7 +25,6 @@ import com.ichi2.themes.Themes;
 
 import android.app.Activity;
 import android.content.DialogInterface;
-import android.content.DialogInterface.OnCancelListener;
 import android.content.DialogInterface.OnClickListener;
 import android.content.DialogInterface.OnDismissListener;
 import android.content.res.Resources;
@@ -39,6 +38,7 @@ public class WidgetDialog extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+    	Themes.applyTheme(this, Themes.THEME_NO_THEME);
     	super.onCreate(savedInstanceState);
     	Intent intent = getIntent();
     	if (intent != null) {
@@ -51,7 +51,7 @@ public class WidgetDialog extends Activity {
 						public void onClick(DialogInterface dialog, int which) {
 		            		Intent newIntent = new Intent(WidgetDialog.this, AnkiDroidWidgetBig.UpdateService.class);
 		            		newIntent.setAction(AnkiDroidWidgetBig.UpdateService.ACTION_OPENDECK);
-		            		newIntent.putExtra(AnkiDroidWidgetBig.UpdateService.EXTRA_DECK_PATH, DeckManager.getDeckPath(which));
+		            		newIntent.putExtra(AnkiDroidWidgetBig.UpdateService.EXTRA_DECK_PATH, DeckManager.getDeckPathAfterDeckSelectionDialog(which));
 		            		startService(newIntent);
 						}
     				}, null, new OnDismissListener() {

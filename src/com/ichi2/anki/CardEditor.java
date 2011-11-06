@@ -265,9 +265,9 @@ public class CardEditor extends Activity {
 		} else {
 			mDeckPath = intent.getStringExtra(DECKPATH);
 			if (mDeckPath != null && mDeckPath.length() > 0) {
-				mDeck = Deck.openDeck(mDeckPath, false);
+				mDeck = DeckManager.getDeck(mDeckPath, DeckManager.REQUESTING_ACTIVITY_CARDEDITOR, false);
 			} else {
-				mDeck = AnkiDroidApp.deck();
+				mDeck = DeckManager.getMainDeck();
 			}
 			switch (intent.getIntExtra(CARD_EDITOR_ACTION, ADD_CARD)) {
 			case EDIT_REVIEWER_CARD:
@@ -590,20 +590,7 @@ public class CardEditor extends Activity {
 
 	private void closeCardEditor() {
 		if (mIntentAdd && mDeck != null) {
-			Deck deck = AnkiDroidApp.deck();
-			if (deck == null || !deck.getDeckPath().equals(mDeckPath)) {
-				DeckTask.launchDeckTask(DeckTask.TASK_TYPE_CLOSE_DECK,  new DeckTask.TaskListener() {
-			        @Override
-			        public void onPreExecute() {
-			        }
-			        @Override
-			        public void onPostExecute(DeckTask.TaskData result) {
-			        }
-			        @Override
-			        public void onProgressUpdate(DeckTask.TaskData... values) {
-			        }
-				}, new DeckTask.TaskData(mDeck, 0));
-			}
+			DeckManager.closeDeck(mDeck.getDeckPath(), DeckManager.REQUESTING_ACTIVITY_CARDEDITOR);
 		}
 		finish();
 	}
@@ -910,28 +897,16 @@ public class CardEditor extends Activity {
 
 
 	private void loadDeck(int item) {
-		mDeckPath = DeckManager.getDeckPath(item);
-		Deck deck = AnkiDroidApp.deck();
-		if (deck != null && deck.getDeckPath().equals(mDeckPath)) {
-			mDeck = deck;
-		} else {
-			try {
-				mDeck = Deck.openDeck(mDeckPath, false);
-				if (mDeck == null) {
-					Themes.showThemedToast(CardEditor.this, getResources().getString(
-							R.string.fact_adder_deck_not_loaded), true);
-					BackupManager.restoreDeckIfMissing(mDeckPath);
-					return;
-				}				
-			} catch (RuntimeException e) {
-				Log.e(AnkiDroidApp.TAG, "CardEditor: error on opening deck: " + e);
-				Themes.showThemedToast(CardEditor.this, getResources().getString(
-						R.string.fact_adder_deck_not_loaded), true);
-				BackupManager.restoreDeckIfMissing(mDeckPath);
-				return;				
-			}
+		mDeckPath = DeckManager.getDeckPathAfterDeckSelectionDialog(item);
+		mDeck = DeckManager.getDeck(mDeckPath, DeckManager.REQUESTING_ACTIVITY_CARDEDITOR);
+		if (mDeck == null) {
+			Log.e(AnkiDroidApp.TAG, "CardEditor: error on opening deck");
+			Themes.showThemedToast(CardEditor.this, getResources().getString(
+					R.string.fact_adder_deck_not_loaded), true);
+			BackupManager.restoreDeckIfMissing(mDeckPath);
+			return;			
 		}
-		setTitle(deck.getDeckName());
+		setTitle(mDeck.getDeckName());
 		loadContents();
 	}
 

@@ -205,7 +205,7 @@ public class CardBrowser extends Activity {
 		setContentView(mainView);
 		Themes.setContentStyle(mainView, Themes.CALLER_CARDBROWSER);
 
-		mDeck = AnkiDroidApp.deck();
+		mDeck = DeckManager.getMainDeck();
 		if (mDeck == null) {
 			finish();
 			return;
@@ -566,7 +566,7 @@ public class CardBrowser extends Activity {
 	private void recreateTagsDialog() {
 		Resources res = getResources();
 		if (allTags == null) {
-			String[] oldTags = AnkiDroidApp.deck().allTags_();
+			String[] oldTags = DeckManager.getMainDeck().allTags_();
 			Log.i(AnkiDroidApp.TAG, "all tags: " + Arrays.toString(oldTags));
 			allTags = new String[oldTags.length];
 			for (int i = 0; i < oldTags.length; i++) {

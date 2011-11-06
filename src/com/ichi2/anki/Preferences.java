@@ -276,7 +276,7 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
             	} else if (walModeInitiallySet) {
             		walModeInitiallySet = false;
             		dialogMessage = getResources().getString(R.string.wal_mode_set_message);
-                	DeckTask.launchDeckTask(DeckTask.TASK_TYPE_SET_ALL_DECKS_JOURNAL_MODE, mDeckOperationHandler, new DeckTask.TaskData(AnkiDroidApp.deck(), PrefSettings.getSharedPrefs(getBaseContext()).getString("deckPath", AnkiDroidApp.getStorageDirectory())));
+                	DeckTask.launchDeckTask(DeckTask.TASK_TYPE_SET_ALL_DECKS_JOURNAL_MODE, mDeckOperationHandler, new DeckTask.TaskData(DeckManager.getMainDeck(), PrefSettings.getSharedPrefs(getBaseContext()).getString("deckPath", AnkiDroidApp.getStorageDirectory())));
             	} else {
             		lockCheckAction = false;        		
             	}
@@ -328,8 +328,7 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
 
 
     private void setReloadDeck() {
-    	dialogMessage = getResources().getString(R.string.close_deck);
-    	DeckTask.launchDeckTask(DeckTask.TASK_TYPE_CLOSE_DECK, mDeckOperationHandler, new DeckTask.TaskData(0, AnkiDroidApp.deck(), 0l, false));
+    	DeckManager.closeMainDeck();
 		setResult(StudyOptions.RESULT_RELOAD_DECK, getIntent());
     }
 

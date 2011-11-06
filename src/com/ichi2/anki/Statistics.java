@@ -105,17 +105,8 @@ public class Statistics {
 
     public static boolean refreshAllDeckStatistics(Context context, String[] deckPaths, int type, int period, String title) {
         initVariables(context, type, period, title);
-        Deck currentDeck = AnkiDroidApp.deck();
-        String currentDeckPath = null;
-        if (currentDeck != null) {
-        	currentDeckPath = currentDeck.getDeckPath();
-        }
     	for (String dp : deckPaths) {
-    		if (currentDeckPath != null && dp.equals(currentDeckPath)) {
-    			sDeck = currentDeck;
-    		} else {
-                sDeck = Deck.openDeck(dp);    			
-    		}
+    		DeckManager.getDeck(dp, DeckManager.REQUESTING_ACTIVITY_STATISTICS);
             if (sDeck == null) {
                 continue;
             }
@@ -143,6 +134,7 @@ public class Statistics {
     		} else {
                 double[][] seriesList;
                 seriesList = getSeriesList(context, type, period);
+                DeckManager.closeDeck(dp, DeckManager.REQUESTING_ACTIVITY_STATISTICS, false);
                 sDeck.closeDeck(false);
                 for (int i = 0; i < sSeriesList.length; i++) {
                     for (int j = 0; j < period; j++) {
