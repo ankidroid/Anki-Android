@@ -138,7 +138,7 @@
 		</receiver>
 		<!-- Service to perform web API queries -->
 		<service android:name=".AnkiDroidWidgetSmall$UpdateService" />
-		<receiver android:name="AnkiDroidWidgetBig" android:label="ad gross">
+		<receiver android:name="AnkiDroidWidgetBig" android:label="@string/widget_big">
 			<intent-filter>
 			<action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
 			</intent-filter>

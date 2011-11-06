@@ -19,6 +19,8 @@ package com.ichi2.widget;
 
 import com.ichi2.anki.AnkiDroidWidgetBig;
 import com.ichi2.anki.DeckManager;
+import com.ichi2.anki.R;
+import com.ichi2.themes.StyledDialog;
 import com.ichi2.themes.Themes;
 
 import android.app.Activity;
@@ -26,12 +28,14 @@ import android.content.DialogInterface;
 import android.content.DialogInterface.OnCancelListener;
 import android.content.DialogInterface.OnClickListener;
 import android.content.DialogInterface.OnDismissListener;
+import android.content.res.Resources;
 import android.content.Intent;
 import android.os.Bundle;
 
 public class WidgetDialog extends Activity {
 
 	public static final String ACTION_SHOW_DECK_SELECTION_DIALOG = "org.ichi2.WidgetDialog.SHOWDECKSELECTIONDIALOG";
+	public static final String ACTION_SHOW_RESTRICTIONS_DIALOG = "org.ichi2.WidgetDialog.SHOWRESTRICTIONSDIALOG";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,6 +62,19 @@ public class WidgetDialog extends Activity {
 						}
     					
     				}).show();
+    			} else if (ACTION_SHOW_RESTRICTIONS_DIALOG.equals(action)) {
+    				Resources res = getResources();
+    				StyledDialog.Builder builder = new StyledDialog.Builder(this);
+    				builder.setTitle(res.getString(R.string.widget_big)).
+    					setMessage(R.string.widget_big_restrictions_dialog).
+    					setOnDismissListener(new OnDismissListener() {
+
+    						@Override
+    						public void onDismiss(DialogInterface arg0) {
+    							WidgetDialog.this.finish();
+    						}
+    					}).setPositiveButton(res.getString(R.string.ok), null);
+					builder.show();
     			}
     		}
     	}

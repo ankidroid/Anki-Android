@@ -15,7 +15,6 @@
 package com.ichi2.anki;
 
 import com.ichi2.anki.WidgetStatus.WidgetDeckTaskData;
-import com.ichi2.themes.StyledDialog;
 import com.ichi2.widget.WidgetDialog;
 import com.tomgibara.android.veecheck.util.PrefSettings;
 
@@ -26,12 +25,9 @@ import android.appwidget.AppWidgetProvider;
 import android.content.BroadcastReceiver;
 import android.content.ComponentName;
 import android.content.Context;
-import android.content.DialogInterface;
-import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
-import android.os.Bundle;
 import android.os.IBinder;
 import android.text.Html;
 import android.text.SpannableString;
@@ -57,6 +53,7 @@ public class AnkiDroidWidgetBig extends AppWidgetProvider {
 //        WidgetStatus.update(context);
         Intent intent;
         intent = new Intent(context, AnkiDroidWidgetBig.UpdateService.class);            	
+        intent.setAction(UpdateService.ACTION_UPDATE);
         context.startService(intent);
     }
 
@@ -66,6 +63,12 @@ public class AnkiDroidWidgetBig extends AppWidgetProvider {
         Log.i(AnkiDroidApp.TAG, "BigWidget: Widget enabled");
         SharedPreferences preferences = PrefSettings.getSharedPrefs(context);
         preferences.edit().putBoolean("widgetBigEnabled", true).commit();
+
+        // show info dialog
+        Intent intent;
+        intent = new Intent(context, AnkiDroidWidgetBig.UpdateService.class);
+        intent.setAction(UpdateService.ACTION_SHOW_RESTRICTIONS_DIALOG);
+        context.startService(intent);
     }
 
     @Override
@@ -100,6 +103,7 @@ public class AnkiDroidWidgetBig extends AppWidgetProvider {
         public static final String ACTION_UPDATE = "org.ichi2.anki.AnkiDroidWidgetBig.UPDATE";
         public static final String ACTION_BURY_CARD = "org.ichi2.anki.AnkiDroidWidgetBig.BURYCARD";
         public static final String ACTION_UNDO = "org.ichi2.anki.AnkiDroidWidgetBig.UNDO";
+        public static final String ACTION_SHOW_RESTRICTIONS_DIALOG = "org.ichi2.anki.AnkiDroidWidgetBig.SHOWRESTRICTIONSDIALOG";
         public static final String EXTRA_ANSWER_EASE = "answerEase";
         public static final String EXTRA_DECK_PATH = "deckPath";
 
@@ -148,7 +152,9 @@ public class AnkiDroidWidgetBig extends AppWidgetProvider {
     		
             if (intent != null && intent.getAction() != null) {
             	String action = intent.getAction();
-                if (ACTION_OPENDECK.equals(action)) {
+            	if (ACTION_UPDATE.equals(action)) {
+            		updateViews();
+            	} else if (ACTION_OPENDECK.equals(action)) {
                 	updateViews(VIEW_ACTION_SHOW_PROGRESS_DIALOG);
                 	WidgetStatus.deckOperation(WidgetStatus.TASK_OPEN_DECK, new WidgetDeckTaskData(AnkiDroidWidgetBig.UpdateService.this, intent.getStringExtra(EXTRA_DECK_PATH)));
                 } else if (ACTION_CLOSEDECK.equals(action)) {
@@ -174,8 +180,11 @@ public class AnkiDroidWidgetBig extends AppWidgetProvider {
                     	updateViews(VIEW_ACTION_HIDE_BUTTONS);
                     	WidgetStatus.deckOperation(WidgetStatus.TASK_ANSWER_CARD, new WidgetDeckTaskData(this, sLoadedDeck, sCard, ease));                		
                 	}
-                } else if (ACTION_UPDATE.equals(action)) {
-                	updateViews();
+                } else if (ACTION_SHOW_RESTRICTIONS_DIALOG.equals(action)) {
+                    Intent dialogIntent = new Intent(this, WidgetDialog.class);
+                    dialogIntent.setAction(WidgetDialog.ACTION_SHOW_RESTRICTIONS_DIALOG);
+                    dialogIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    this.startActivity(dialogIntent);
                 }
             }
         }

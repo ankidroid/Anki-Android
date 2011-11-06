@@ -40,5 +40,7 @@
 </plurals>
 <string name="widget_medium">AnkiDroid Medium</string>
 <string name="widget_small">AnkiDroid Small</string>
+<string name="widget_big">AnkiDroid Big</string>
+<string name="widget_big_restrictions_dialog">Due to some restrictions of Android\'s widget framework this widget can only show text but no images/sounds etc.</string>
 
 </resources>
