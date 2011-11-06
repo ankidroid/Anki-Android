@@ -1,86 +1,214 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/ankidroid_widget_big_layout"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:focusable="false"
-    android:orientation="horizontal"
-    android:clickable="true"
-    android:background="@drawable/widget_big">
-<LinearLayout
-	android:id="@+id/widget_big_side"
-    android:layout_width="100dip"
-    android:layout_height="fill_parent"
-    android:focusable="false"
-    android:orientation="vertical"
-    android:padding="0dip"
-    android:clickable="false"
-    android:layout_alignParentRight="true">
-    <TextView android:id="@+id/widget_big_open"
+    android:layout_height="fill_parent">
+    <LinearLayout
         android:layout_width="fill_parent"
-        android:layout_height="0dip"
-        android:layout_weight="1"/>
-    <TextView android:id="@+id/widget_big_ease1"
-        android:layout_width="fill_parent"
-        android:layout_height="0dip"
-        android:layout_weight="1"/>
-    <TextView android:id="@+id/widget_big_ease2"
-        android:layout_width="fill_parent"
-        android:layout_height="0dip"
-        android:layout_weight="1"/>
-    <TextView android:id="@+id/widget_big_ease3"
-        android:layout_width="fill_parent"
-        android:layout_height="0dip"
-        android:layout_weight="1"/>
-    <TextView android:id="@+id/widget_big_ease4"
-        android:layout_width="fill_parent"
-        android:layout_height="0dip"
-        android:layout_weight="1"/>
-</LinearLayout>
-<LinearLayout
-	android:id="@+id/widget_big_top"
-    android:layout_width="fill_parent"
-    android:layout_height="80dip"
-    android:focusable="false"
-    android:orientation="horizontal"
-    android:padding="20dip"
-    android:clickable="false"
-    android:layout_toLeftOf="@+id/widget_big_side"
-    android:layout_alignParentTop="true">
-    <TextView android:id="@+id/widget_big_deckname"
-        android:layout_width="0dip"
-        android:layout_height="fill_parent"
-        android:textColor="#000000"
-        android:layout_weight="1"/>
-    <TextView android:id="@+id/widget_big_counts"
-        android:layout_width="0dip"
-        android:layout_height="fill_parent"
-        android:layout_weight="1"/>
-</LinearLayout>
-<LinearLayout
-	android:id="@+id/widget_big_cardcontent"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:focusable="false"
-    android:orientation="vertical"
-    android:padding="20dip"
-    android:clickable="false"
-    android:layout_toLeftOf="@+id/widget_big_side"
-    android:layout_below="@+id/widget_big_top">
-    <TextView android:id="@+id/widget_big_question"
-        android:layout_width="fill_parent"
-        android:layout_height="0dip"
-        android:textColor="#000000"
-        android:textSize="18sp"
-        android:gravity="bottom|center_horizontal"
-        android:background="#44444466"
-        android:layout_weight="1"/>
-    <TextView android:id="@+id/widget_big_answer"
-        android:layout_width="fill_parent"
-        android:layout_height="0dip"
-        android:textColor="#000000"
-        android:gravity="top|center_horizontal"
-        android:textSize="18sp"
-        android:background="#ffffff66"
-        android:layout_weight="1"/>
-</LinearLayout> 
-</RelativeLayout>
+    	android:layout_height="fill_parent">
+    	<FrameLayout
+		    android:layout_marginBottom="11.33dip"
+	    	android:layout_marginRight="44dip"
+	    	android:layout_marginLeft="11.33dip"
+	    	android:layout_marginTop="30dip"
+		    android:layout_width="fill_parent"
+		    android:background="#ffffff"
+		    android:layout_height="fill_parent">
+	    	<FrameLayout
+			    android:id="@+id/widget_big_cardbackground"
+			    android:layout_width="fill_parent"
+			    android:layout_height="fill_parent"
+			    android:background="#ffffff"
+		    	android:focusable="false"
+			    android:clickable="false"/>
+	    	<TextView
+			    android:id="@+id/widget_big_cardcontent"
+			    android:layout_width="fill_parent"
+			    android:layout_height="fill_parent"
+		    	android:gravity="center"
+		    	android:textSize="18sp"
+		    	android:textColor="#000000"/>
+		    <LinearLayout
+			    android:layout_width="fill_parent"
+			    android:layout_height="fill_parent"
+			    android:orientation="vertical">
+			    <LinearLayout
+				    android:layout_width="fill_parent"
+				    android:layout_height="0dip"
+				    android:orientation="horizontal"
+				    android:layout_weight="1">
+					<TextView android:id="@+id/widget_big_topleft"
+					    android:layout_width="0dip"
+					    android:layout_height="fill_parent"
+					    android:gravity="center"
+					    android:layout_weight="1"/>
+					<TextView android:id="@+id/widget_big_topright"
+					    android:layout_width="0dip"
+					    android:layout_height="fill_parent"
+					    android:gravity="center"
+					    android:layout_weight="1"/>						
+			    </LinearLayout>
+			    <LinearLayout
+				    android:layout_width="fill_parent"
+				    android:layout_height="0dip"
+				    android:orientation="horizontal"
+				    android:layout_weight="1">
+					<TextView android:id="@+id/widget_big_bottomleft"
+					    android:layout_width="0dip"
+					    android:layout_height="fill_parent"
+					    android:gravity="center"
+					    android:layout_weight="1"/>
+					<TextView android:id="@+id/widget_big_bottomright"
+					    android:layout_width="0dip"
+					    android:layout_height="fill_parent"
+					    android:gravity="center"
+					    android:layout_weight="1"/>						
+			    </LinearLayout>
+		    </LinearLayout>
+			<LinearLayout
+			    android:id="@+id/widget_big_progressbar"
+				android:gravity="center"
+		    	android:background="#ffffff"
+	    	    android:layout_width="fill_parent"
+		    	android:visibility="invisible"
+		    	android:clickable="false"
+    			android:layout_height="fill_parent">			    
+		    	<ProgressBar
+				    android:layout_width="wrap_content"
+				    android:layout_height="wrap_content"
+	    			android:indeterminate="true"
+				    android:focusable="false"
+				    style="@android:style/Widget.ProgressBar.Large"
+			    	android:clickable="false"/>
+			</LinearLayout>
+	    </FrameLayout>
+	</LinearLayout>
+	<RelativeLayout
+	    android:id="@+id/ankidroid_widget_big_layout"
+	    android:layout_width="fill_parent"
+	    android:layout_height="fill_parent"
+	    android:focusable="false"
+	    android:orientation="horizontal"
+	    android:clickable="false"
+	    android:background="@drawable/widget_big_bg">
+		<LinearLayout
+		    android:id="@+id/widget_big_side"
+		    android:layout_width="35.33dip"
+		    android:layout_height="fill_parent"
+		    android:layout_marginTop="43.33dip"
+		    android:layout_marginBottom="23.33dip"
+		    android:layout_marginRight="8.67dip"
+		    android:focusable="false"
+		    android:orientation="vertical"
+		    android:padding="0dip"
+		    android:clickable="false"
+		    android:layout_alignParentRight="true">
+		    <FrameLayout
+		        android:layout_width="fill_parent"
+	    	    android:layout_height="0dip"
+	    	    android:layout_weight="1">
+			    <TextView android:id="@+id/widget_big_open"
+			        android:layout_width="fill_parent"
+		    	    android:layout_height="fill_parent"
+					android:background="@drawable/widget_big_opendeck"
+					android:visibility="visible"/>
+			    <TextView android:id="@+id/widget_big_close"
+		    	    android:layout_width="fill_parent"
+	    	    	android:layout_height="fill_parent"
+					android:background="@drawable/widget_big_closedeck"
+					android:visibility="invisible"/>
+		    </FrameLayout>
+			<FrameLayout
+			    android:layout_width="fill_parent"
+			    android:layout_height="dip"
+			    android:layout_weight="4">
+				<LinearLayout
+				    android:layout_width="fill_parent"
+				    android:layout_height="fill_parent"
+				    android:focusable="false"
+				    android:orientation="vertical">
+				    <TextView android:id="@+id/widget_big_ease4"
+			    	    android:layout_width="fill_parent"
+			        	android:layout_height="0dip"
+				        android:layout_weight="1"
+				        android:background="@drawable/widget_big_ease4"/>
+				    <FrameLayout
+				        android:layout_width="fill_parent"
+			    	    android:layout_height="0dip"
+			    	    android:layout_weight="1">
+					    <TextView android:id="@+id/widget_big_ease3"
+					        android:layout_width="fill_parent"
+				    	    android:layout_height="fill_parent"
+							android:background="@drawable/widget_big_ease3"
+							android:visibility="invisible"/>
+					    <TextView android:id="@+id/widget_big_ease3_rec"
+					        android:layout_width="fill_parent"
+				    	    android:layout_height="fill_parent"
+							android:background="@drawable/widget_big_ease3_rec"
+							android:visibility="visible"/>
+		    	    </FrameLayout>
+				    <FrameLayout
+				        android:layout_width="fill_parent"
+			    	    android:layout_height="0dip"
+			    	    android:layout_weight="1">
+					    <TextView android:id="@+id/widget_big_ease2"
+					        android:layout_width="fill_parent"
+				    	    android:layout_height="fill_parent"
+							android:background="@drawable/widget_big_ease2"
+							android:visibility="visible"/>
+					    <TextView android:id="@+id/widget_big_ease2_rec"
+					        android:layout_width="fill_parent"
+				    	    android:layout_height="fill_parent"
+							android:background="@drawable/widget_big_ease2_rec"
+							android:visibility="invisible"/>
+		    	    </FrameLayout>
+				    <TextView android:id="@+id/widget_big_ease1"
+				        android:layout_width="fill_parent"
+				        android:layout_height="0dip"
+						android:background="@drawable/widget_big_ease1"
+			    	    android:layout_weight="1"/>
+				</LinearLayout>
+				<FrameLayout android:id="@+id/widget_big_flipcard"	
+				    android:layout_width="fill_parent"
+				    android:layout_height="fill_parent"
+					android:background="@drawable/widget_big_flipcard"
+				    android:focusable="false"
+			    	android:visibility="invisible"/>
+				<FrameLayout android:id="@+id/widget_big_empty"	
+				    android:layout_width="fill_parent"
+				    android:layout_height="fill_parent"
+					android:background="@drawable/widget_big_empty"
+				    android:focusable="false"
+				    android:clickable="true"
+			    	android:visibility="visible"/>
+			</FrameLayout>
+		</LinearLayout>
+		<RelativeLayout
+			android:id="@+id/widget_big_top"
+		    android:layout_width="fill_parent"
+	    	android:layout_height="22dip"
+		    android:focusable="false"
+		    android:layout_marginTop="8dip"
+	    	android:layout_marginLeft="22dip"
+		    android:orientation="horizontal"
+		    android:clickable="false"
+	    	android:singleLine="true"
+		    android:layout_toLeftOf="@+id/widget_big_side"
+		    android:layout_alignParentTop="true">
+	    	<TextView android:id="@+id/widget_big_deckname"
+		        android:layout_width="fill_parent"
+				android:layout_alignParentLeft="true"
+	    	    android:layout_toLeftOf="@+id/widget_big_counts"
+	        	android:layout_height="fill_parent"
+		        android:textColor="#000000"
+				android:gravity="center"
+	        	android:layout_weight="1"/>
+		    <TextView android:id="@+id/widget_big_counts"
+				android:gravity="center"
+	    	    android:singleLine="true"
+	    	    android:layout_marginRight="4sp"
+	        	android:layout_width="wrap_content"
+		        android:layout_height="fill_parent"
+				android:layout_alignParentRight="true"
+	    	    android:layout_weight="1"/>
+		</RelativeLayout>
+	</RelativeLayout>
+</FrameLayout>
