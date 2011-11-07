@@ -2542,6 +2542,9 @@ public class StudyOptions extends Activity implements IButtonListener {
         	mToggleCram.setChecked(false);
         	mToggleLimit.setEnabled(true);
 
+        	// close previous deck
+        	DeckManager.closeMainDeck(DeckManager.REQUESTING_ACTIVITY_STUDYOPTIONS);
+
             if (updateAllCards) {
                 DeckTask.launchDeckTask(DeckTask.TASK_TYPE_LOAD_DECK_AND_UPDATE_CARDS, mLoadDeckHandler,
                         new DeckTask.TaskData(mDeckFilename));

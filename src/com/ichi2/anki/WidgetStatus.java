@@ -75,7 +75,7 @@ public final class WidgetStatus {
         } else {
         	notification = false;
         }
-        if (mediumWidget || smallWidget || notification) {
+        if ((mediumWidget || smallWidget || notification) && ((sUpdateDeckStatusAsyncTask == null) || (sUpdateDeckStatusAsyncTask.getStatus() == AsyncTask.Status.FINISHED))) {
             Log.d(AnkiDroidApp.TAG, "WidgetStatus.update(): updating");
             sUpdateDeckStatusAsyncTask = new UpdateDeckStatusAsyncTask();
             sUpdateDeckStatusAsyncTask.execute(context);
