@@ -133,9 +133,6 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
     protected TaskData doInBackground(TaskData... params) {
         // Wait for previous thread (if any) to finish before continuing
         try {
-            if (mType == TASK_TYPE_LOAD_DECK) {
-	   			publishProgress(new TaskData(AnkiDroidApp.getInstance().getBaseContext().getResources().getString(R.string.finish_operation)));
-            }
             if ((sOldInstance != null) && (sOldInstance.getStatus() != AsyncTask.Status.FINISHED)) {
                 sOldInstance.get();
             }
@@ -339,6 +336,9 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
         Log.i(AnkiDroidApp.TAG, "doInBackgroundLoadDeck - deckFilename = " + deckFilename);
 
         Resources res = AnkiDroidApp.getInstance().getBaseContext().getResources();
+
+        publishProgress(new TaskData(AnkiDroidApp.getInstance().getBaseContext().getResources().getString(R.string.finish_operation)));
+        DeckManager.waitForDeckClosingThread(deckFilename);
 
         int backupResult = BackupManager.RETURN_NULL;
         if (PrefSettings.getSharedPrefs(AnkiDroidApp.getInstance().getBaseContext()).getBoolean("useBackup", true)) {
