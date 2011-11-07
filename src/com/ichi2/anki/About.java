@@ -43,19 +43,16 @@ public class About extends Activity {
         WebView webview = (WebView) findViewById(R.id.about);
         webview.setBackgroundColor(res.getColor(Themes.getBackgroundColor()));        	
 
-        String text = String.format(res.getString(R.string.about_content) + "</p></body></html>", 
-                "<html><body><h2>" + res.getString(R.string.app_name) + ":<br/>", 
-                "<a href=\"" + res.getString(R.string.link_anki) + "\">", 
-        		"<a href=\"" + res.getString(R.string.link_issue_tracker) + "\">",
-        		"<a href=\"" + res.getString(R.string.link_wiki) + "\">", 
-        		"<a href=\"" + res.getString(R.string.link_forum) + "\">",
-        		"<a href=\"" + res.getString(R.string.link_wikipedia_open_source) + "\">", 
-        		"<a href=\"" + res.getString(R.string.link_contribution) + "\">",
-        		"<a href=\"" + res.getString(R.string.link_contribution_contributors) + "\">", 
-        		"<a href=\"" + res.getString(R.string.link_donation) + "\">",
-        		"<a href=\"" + res.getString(R.string.licence_wiki) + "\">",
-        		"<a href=\"" + res.getString(R.string.link_source) + "\">");
-        webview.loadDataWithBaseURL("", text, "text/html", "utf-8", null);
+	String[] content = res.getStringArray(R.array.about_content);
+	StringBuilder sb = new StringBuilder();
+	sb.append("<html><body>");
+	sb.append(String.format(content[0], res.getString(R.string.app_name), res.getString(R.string.link_anki))).append("<br/><br/>");
+	sb.append(String.format(content[1], res.getString(R.string.link_issue_tracker), res.getString(R.string.link_wiki), res.getString(R.string.link_forum))).append("<br/><br/>");
+	sb.append(String.format(content[2], res.getString(R.string.link_wikipedia_open_source), res.getString(R.string.link_contribution), res.getString(R.string.link_contribution_contributors))).append(" ");
+	sb.append(String.format(content[3], res.getString(R.string.link_translation), res.getString(R.string.link_donation))).append("<br/><br/>");
+	sb.append(String.format(content[4], res.getString(R.string.licence_wiki), res.getString(R.string.link_source))).append("<br/><br/>");
+	sb.append("</body></html>");
+        webview.loadDataWithBaseURL("", sb.toString(), "text/html", "utf-8", null);
     }
 
 
