@@ -4,6 +4,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.TreeSet;
+import java.util.concurrent.ExecutionException;
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.ReentrantLock;
 
@@ -75,7 +76,6 @@ public class DeckManager {
 	}
 	public static Deck getDeck(String deckpath, boolean setAsMainDeck, boolean doSafetyBackupIfNeeded, int requestingActivity, boolean rebuild) {
 		Deck deck = null;
-		waitForDeckOpening(deckpath);			
 		mLock.lock();
 		mOpeningDeck = deckpath;
 		try {
@@ -261,10 +261,14 @@ public class DeckManager {
 	public static void closeDeck(String deckpath, int requestingActivity) {
 		closeDeck(deckpath, requestingActivity, true);
 	}
-	public static void closeDeck(String deckpath, int requestingActivity, boolean waitToFinish) {
+	public static synchronized void closeDeck(String deckpath, int requestingActivity, boolean waitToFinish) {
 		waitForDeckOpening(deckpath);
 		if (sLoadedDecks.containsKey(deckpath)) {
-			Log.e("try", "to close with " + requestingActivity + " deck " + deckpath + ": " + sLoadedDecks.get(deckpath).mOpenedBy.toString());
+			DeckInformation di = sLoadedDecks.get(deckpath);
+			if ((di.mClosingAsyncTask != null) && (di.mClosingAsyncTask.getStatus() != AsyncTask.Status.FINISHED)) {
+				Log.i(AnkiDroidApp.TAG, "DeckManager: closeDeck - deck " + deckpath + " is already closing");
+            	return;
+            }
 			ArrayList<Integer> openList = sLoadedDecks.get(deckpath).mOpenedBy;
 			if (waitToFinish && (openList.contains(REQUESTING_ACTIVITY_STUDYOPTIONS))) {
 				DeckTask.waitToFinish();
@@ -354,7 +358,7 @@ public class DeckManager {
             DeckInformation di = params[0];
             String deckpath = di.mDeck.getDeckPath();
             try {
-                di.mDeck.closeDeck();
+                di.mDeck.closeDeck(false);
                 Log.i(AnkiDroidApp.TAG, "DeckManager.CloseDeckAsyncTask: deck " + deckpath + " successfully closed");
             } catch (RuntimeException e) {
             	Log.e(AnkiDroidApp.TAG, "DeckManager.CloseDeckAsyncTask: could not close deck " + deckpath + ": " + e);

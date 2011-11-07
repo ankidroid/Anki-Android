@@ -88,7 +88,9 @@
 			android:configChanges="locale"/>
 		<activity android:name="com.ichi2.charts.ChartBuilder"
 			android:configChanges="orientation|locale"/>
-		<activity android:name="com.ichi2.widget.WidgetDialog" android:theme="@style/Theme_Translucent"/>
+		<activity android:name="com.ichi2.widget.WidgetDialog" 
+			android:theme="@style/Theme_Translucent"
+			android:launchMode="singleInstance"/>
 		<activity android:name="com.ichi2.veecheck.Notification" 
 			android:label="@string/notification_title"
 			android:configChanges="locale"/>
