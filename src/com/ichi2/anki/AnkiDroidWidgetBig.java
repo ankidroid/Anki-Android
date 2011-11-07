@@ -66,7 +66,7 @@ public class AnkiDroidWidgetBig extends AppWidgetProvider {
         super.onEnabled(context);
         Log.i(AnkiDroidApp.TAG, "BigWidget: Widget enabled");
         SharedPreferences preferences = PrefSettings.getSharedPrefs(context);
-        if (preferences.getBoolean("widgetBigEnabled", false)) {
+        if (!preferences.getBoolean("widgetBigEnabled", false)) {
             // show info dialog
             Intent intent;
             intent = new Intent(context, AnkiDroidWidgetBig.UpdateService.class);
