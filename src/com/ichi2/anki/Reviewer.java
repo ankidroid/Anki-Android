@@ -929,9 +929,6 @@ public class Reviewer extends Activity implements IButtonListener{
             	mWhiteboard.setVisibility(View.VISIBLE);
             }
 
-            // Close widget reviewing, when starting in reviewer
-            DeckManager.closeDeck(DeckManager.getMainDeckPath(), DeckManager.REQUESTING_ACTIVITY_BIGWIDGET);
-
             // Load the first card and start reviewing. Uses the answer card task to load a card, but since we send null
             // as the card to answer, no card will be answered.
             DeckTask.launchDeckTask(DeckTask.TASK_TYPE_ANSWER_CARD, mAnswerCardHandler, new DeckTask.TaskData(0,
@@ -972,13 +969,21 @@ public class Reviewer extends Activity implements IButtonListener{
     @Override
     protected void onResume() {
       super.onResume();
-      if (DeckManager.getMainDeck() == null) {
+      Deck deck = DeckManager.getMainDeck();
+      if (deck == null) {
     	  finish();
       }
+
+      // check if deck is already opened in big widget. If yes, reload card (to make sure it's not answered yet) and close it in widget
+      if (DeckManager.mainIsOpenedInBigWidget()) {
+	DeckTask.launchDeckTask(DeckTask.TASK_TYPE_ANSWER_CARD, mAnswerCardHandler, new DeckTask.TaskData(0, deck, null));
+      } else {
+	restartTimer();
+      }
+
       if (mShakeEnabled) {
           mSensorManager.registerListener(mSensorListener, mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER), SensorManager.SENSOR_DELAY_NORMAL);    	  
       }
-      restartTimer();
       if ((AnkiDroidApp.zeemoteController() != null) && (AnkiDroidApp.zeemoteController().isConnected())){
     	  Log.d("Zeemote","Adding listener in onResume");
     	  AnkiDroidApp.zeemoteController().addButtonListener(this);

@@ -85,20 +85,6 @@ public final class WidgetStatus {
     }
 
 
-    /**
-     * Block the current thread until the currently running UpdateDeckStatusAsyncTask instance (if any) has finished.
-     */
-    public static void waitToFinish() {
-        try {
-            if ((sUpdateDeckStatusAsyncTask != null) && (sUpdateDeckStatusAsyncTask.getStatus() != AsyncTask.Status.FINISHED)) {
-            	sUpdateDeckStatusAsyncTask.get();
-            }
-        } catch (Exception e) {
-            return;
-        }
-    }
-
-
     /** Returns the status of each of the decks. */
     public static DeckStatus[] fetch(Context context) {
         return MetaDB.getWidgetStatus(context);
@@ -127,6 +113,24 @@ public final class WidgetStatus {
     	sDeckOperationType = type;
     	sDeckOperationTask = new DeckOperationAsyncTask();
     	sDeckOperationTask.execute(params);
+    }
+
+
+    /**
+     * Block the current thread until the currently running DeckOperationAsyncTask instance (if any) has finished.
+     */
+    public static void deckOperationWaitToFinish() {
+	if (sDeckOperationType == TASK_CLOSE_DECK) {
+		// prevent deadlock when calling this from deckmanager.closedeck
+		return;
+	}
+        try {
+            if ((sUpdateDeckStatusAsyncTask != null) && (sUpdateDeckStatusAsyncTask.getStatus() != AsyncTask.Status.FINISHED)) {
+            	sUpdateDeckStatusAsyncTask.get();
+            }
+        } catch (Exception e) {
+            return;
+        }
     }
 
 
@@ -319,7 +323,8 @@ public final class WidgetStatus {
 
         protected WidgetDeckTaskData doInBackgroundOpenDeck(WidgetDeckTaskData... params) {
         	Log.i(AnkiDroidApp.TAG, "DeckOperationAsyncTask: doInBackgroundOpenDeck");
-        	return new WidgetDeckTaskData(params[0].getContext(), DeckManager.getDeck(params[0].getString(), DeckManager.REQUESTING_ACTIVITY_BIGWIDGET));
+        	Deck deck = DeckManager.getDeck(params[0].getString(), DeckManager.REQUESTING_ACTIVITY_BIGWIDGET);
+        	return new WidgetDeckTaskData(params[0].getContext(), deck);
         }
 
         protected WidgetDeckTaskData doInBackgroundAnswerCard(WidgetDeckTaskData... params) {
@@ -333,25 +338,33 @@ public final class WidgetStatus {
         		return new WidgetDeckTaskData(context, deck, card);
         	}
 //            try {
+Log.e("suchen"," doInBackgroundAnswerCard1");
     	        AnkiDb ankiDB = AnkiDatabaseManager.getDatabase(deck.getDeckPath());
+Log.e("suchen"," doInBackgroundAnswerCard2");
     	        ankiDB.getDatabase().beginTransaction();
+Log.e("suchen"," doInBackgroundAnswerCard3");
     	        try {
     	            if (card != null) {
     	            	if (card.thinkingTime() >= 20) {
     	            		// user restarted learning
     	            		card.startTimer();
     	            	}
+Log.e("suchen"," doInBackgroundAnswerCard4");
     	                deck.answerCard(card, ease);
+Log.e("suchen"," doInBackgroundAnswerCard5");
     	                Log.e(AnkiDroidApp.TAG, "WidgetBig: answering card with ease " + ease);
     	            }
     	            newCard = deck.getCard();
+Log.e("suchen"," doInBackgroundAnswerCard6");
 
     	            AnkiDroidWidgetBig.setCard(newCard);
-                	AnkiDroidWidgetBig.updateWidget();
+Log.e("suchen"," doInBackgroundAnswerCard7");
 
     	            ankiDB.getDatabase().setTransactionSuccessful();
+Log.e("suchen"," doInBackgroundAnswerCard8");
     	        } finally {
     	            ankiDB.getDatabase().endTransaction();
+Log.e("suchen"," doInBackgroundAnswerCard9");
     	        }
     	    
         	return new WidgetDeckTaskData(params[0].getContext(), deck, newCard);
@@ -369,8 +382,6 @@ public final class WidgetStatus {
         	Deck deck = params[0].getDeck();
         	deck.undo(0, true);
         	AnkiDroidWidgetBig.setCard(deck.getCard());//deck.cardFromId(deck.undo(0, true)));
-        	AnkiDroidWidgetBig.updateWidget();
-
         	return new WidgetDeckTaskData(params[0].getContext());
         }
 
@@ -384,8 +395,6 @@ public final class WidgetStatus {
         	deck.reset();
 
         	AnkiDroidWidgetBig.setCard(deck.getCard());
-        	AnkiDroidWidgetBig.updateWidget();
-
         	return new WidgetDeckTaskData(params[0].getContext());
         }
         
@@ -393,12 +402,9 @@ public final class WidgetStatus {
         @Override
         protected void onPostExecute(WidgetDeckTaskData params) {
             Log.d(AnkiDroidApp.TAG, "WidgetStatus.DeckOperationAsyncTask.onPostExecute()");
-            Context context = params.getContext();
-            boolean update = false;
             switch(sDeckOperationType) {
             case TASK_OPEN_DECK:
                 AnkiDroidWidgetBig.setDeckAndLoadCard(params.getDeck());            	
-            	update = true;
             	break;
             case TASK_CLOSE_DECK:
             	break;
@@ -409,9 +415,7 @@ public final class WidgetStatus {
             case TASK_BURY_CARD:
             	break;            	
             }
-            if (update) {
-            	AnkiDroidWidgetBig.updateWidget();
-            }
+
         }
     }
 

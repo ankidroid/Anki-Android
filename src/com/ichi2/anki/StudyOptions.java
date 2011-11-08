@@ -1841,7 +1841,7 @@ public class StudyOptions extends Activity implements IButtonListener {
                 }
                 break;
             case CONTENT_CONGRATS:
-                setCongratsMessage();
+            	mTextCongratsMessage.setText(getCongratsMessage(this, DeckManager.getMainDeck()));
                 updateValuesFromDeck();
                 setContentView(mCongratsView);
                 break;
@@ -1900,9 +1900,8 @@ public class StudyOptions extends Activity implements IButtonListener {
     }
 
 
-    private void setCongratsMessage() {
-    	Resources res = getResources();
-        Deck deck = DeckManager.getMainDeck();
+    public static String getCongratsMessage(Context context, Deck deck) {
+    	Resources res = context.getResources();
         if (deck != null) {
     		int failedCards = deck.getFailedDelayedCount();
             int revCards = deck.getNextDueCards(1);
@@ -1911,8 +1910,9 @@ public class StudyOptions extends Activity implements IButtonListener {
             int eta = deck.getETA(failedCards, revCards, newCards, true);
             String newCardsText = res.getQuantityString(R.plurals.studyoptions_congrats_new_cards, newCards, newCards);
             String etaText = res.getQuantityString(R.plurals.studyoptions_congrats_eta, eta, eta);
-            mTextCongratsMessage.setText(res.getQuantityString(R.plurals.studyoptions_congrats_message, revFailedCards, revFailedCards, newCardsText, etaText));
+            return res.getQuantityString(R.plurals.studyoptions_congrats_message, revFailedCards, revFailedCards, newCardsText, etaText);
         }
+        return null;
     }
 
 

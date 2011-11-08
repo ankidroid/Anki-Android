@@ -210,6 +210,17 @@ public class DeckManager {
 	}
 
 
+    /** checks if main deck is opened in big widget and closes it if yes */
+	public static boolean mainIsOpenedInBigWidget() {
+		if (sLoadedDecks.containsKey(sMainDeckPath) && sLoadedDecks.get(sMainDeckPath).mOpenedBy.contains(REQUESTING_ACTIVITY_BIGWIDGET)) {
+			DeckManager.closeDeck(sMainDeckPath, DeckManager.REQUESTING_ACTIVITY_BIGWIDGET);
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+
 	/** closes main deck, regardless of openings by other activities */
 	public static void closeMainDeck(boolean waitToFinish) {
 		closeMainDeck(-1, waitToFinish);
@@ -296,7 +307,10 @@ public class DeckManager {
 					Log.i(AnkiDroidApp.TAG, "DeckManager: closing deck " + deckpath + " (" + requestingActivity + ")");
 					if (waitToFinish && (openList.contains(REQUESTING_ACTIVITY_STUDYOPTIONS))) {
 						DeckTask.waitToFinish();
+					} else if (waitToFinish && (openList.contains(REQUESTING_ACTIVITY_BIGWIDGET))) {
+						WidgetStatus.deckOperationWaitToFinish();
 					}
+
 					sLoadedDecks.get(deckpath).mClosingAsyncTask = new CloseDeckAsyncTask();
 					sLoadedDecks.get(deckpath).mClosingAsyncTask.execute(sLoadedDecks.get(deckpath));
 
@@ -323,7 +337,7 @@ public class DeckManager {
 
 	private static void sendWidgetBigClosedNotification() {
 		AnkiDroidWidgetBig.setDeckAndLoadCard(null);
-    	AnkiDroidWidgetBig.updateWidget();
+    	AnkiDroidWidgetBig.updateWidget(AnkiDroidWidgetBig.UpdateService.VIEW_NOT_SPECIFIED);
 	}
 
 
