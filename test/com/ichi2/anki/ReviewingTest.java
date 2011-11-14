@@ -19,6 +19,9 @@ import com.jayway.android.robotium.solo.Solo;
  *   1. Load the deck you want to test in the emulator/device 
  *   2. Run this class as a Android JUnit Test
  *   
+ * Pre-conditions:
+ *   - Run AnkiDroid a first time to make sure no welcome/changelog/etc popups will appear
+ *   - Set your locale to English as those tests rely on window title name
  *   
  */
 public class ReviewingTest extends
