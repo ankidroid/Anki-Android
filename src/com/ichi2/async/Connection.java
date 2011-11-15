@@ -683,7 +683,7 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
                 if (reply.success) {
                     publishProgress(postType, i, Feedback.STATE_SUCCESSFUL, reply.returnType, reply.result);
                     if (deleteAfterSending) {
-                    	File file = new File(error.get("filename"));
+                    	File file = new File(app.getFilesDir() + "/" + error.get("filename"));
                     	file.delete();
                     }
                 } else {
