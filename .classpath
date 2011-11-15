@@ -10,5 +10,5 @@
 	<classpathentry kind="src" path="gen"/>
 	<classpathentry kind="src" path="test"/>
 	<classpathentry kind="lib" path="libs/robotium-solo-2.5.jar"/>
-	<classpathentry kind="output" path="bin"/>
+	<classpathentry kind="output" path="bin/classes"/>
 </classpath>
