@@ -50,7 +50,7 @@
 					    android:layout_width="wrap_content"
 				    android:lineSpacingMultiplier="1.2"
 					    android:layout_height="fill_parent"
-					    android:textColor="#000000"
+					    android:textColor="@color/widget_big_font_color"
 					    android:gravity="left"/>
 					<TextView android:id="@+id/widget_big_deckdues"
 					    android:layout_width="wrap_content"
@@ -61,7 +61,7 @@
 				<TextView android:id="@+id/widget_big_decketa"
 				    android:layout_width="fill_parent"
 				    android:layout_height="fill_parent"
-				    android:textColor="#000000"
+				    android:textColor="@color/widget_big_font_color"
 				    android:lineSpacingMultiplier="1.2"
 				    android:gravity="center"/>
 		    </LinearLayout>
@@ -130,6 +130,49 @@
 					    android:layout_weight="1"/>						
 			    </LinearLayout>
 		    </LinearLayout>
+		    <RelativeLayout  android:id="@+id/widget_big_nothing_due"
+			    android:layout_width="fill_parent"
+			    android:layout_height="fill_parent"
+			    android:orientation="vertical"
+			    android:layout_margin="15dip"
+			    android:layout_gravity="center"
+			    android:visibility="invisible">
+			    	<TextView
+				    android:id="@+id/widget_big_congrats"
+				    android:layout_width="fill_parent"
+				    android:layout_height="fill_parent"
+					android:layout_above="@+id/widget_big_congrats_buttons"
+			    	android:gravity="center"
+				    android:layout_marginBottom="5dip"
+			    	android:textColor="#000000"/>
+			    <LinearLayout android:id="@+id/widget_big_congrats_buttons"
+				    android:layout_width="fill_parent"
+				    android:layout_height="wrap_content"
+					android:layout_alignParentBottom="true"
+				    android:orientation="horizontal"
+				    android:layout_gravity="center">
+					<TextView
+					    android:id="@+id/widget_big_review_early"
+					    android:layout_width="0dip"
+						android:layout_weight="1"
+					    android:layout_height="fill_parent"
+					    	android:gravity="center"
+						android:clickable="true"
+					    	android:textColor="@color/widget_big_font_color"
+						android:background="@drawable/blue_btn_small"
+						android:text="@string/studyoptions_congrats_learnmore"/>
+					<TextView
+					    android:id="@+id/widget_big_learn_more"
+					    android:layout_width="0dip"
+						android:layout_weight="1"
+					    android:layout_height="fill_parent"
+						android:background="@drawable/blue_btn_small"
+					    	android:gravity="center"
+						android:clickable="true"
+					    	android:textColor="@color/widget_big_font_color"
+						android:text="@string/studyoptions_congrats_reviewearly"/>
+				</LinearLayout>
+			</RelativeLayout>
 			<RelativeLayout
 			    android:id="@+id/widget_big_progressbar"
 	    	    android:layout_width="fill_parent"
@@ -161,9 +204,10 @@
 		    android:layout_width="35.3333dip"
 		    android:layout_height="fill_parent"
 		    android:layout_marginTop="36dip"
-		    android:layout_marginBottom="36dip"
+		    android:layout_marginBottom="5dip"
 		    android:layout_marginRight="8dip"
 		    android:focusable="false"
+		    android:layout_above="@+id/widget_big_message"
 		    android:orientation="vertical"
 		    android:padding="0dip"
 		    android:clickable="false"
@@ -295,36 +339,36 @@
 		    android:layout_alignParentTop="true">
 	    	<TextView android:id="@+id/widget_big_deckname"
 		        android:layout_width="fill_parent"
-				android:layout_alignParentLeft="true"
-	    	    android:layout_toLeftOf="@+id/widget_big_counts"
+			android:textStyle="bold"
+			android:layout_alignParentLeft="true"
+	    	    	android:layout_toLeftOf="@+id/widget_big_counts"
 	        	android:layout_height="fill_parent"
-	    	android:singleLine="true"
-		        android:textColor="#000000"
-				android:gravity="center"
+		    	android:singleLine="true"
+		        android:textColor="@color/widget_big_font_color"
+			android:gravity="center"
 	        	android:layout_weight="1"/>
 		    <TextView android:id="@+id/widget_big_counts"
-				android:gravity="center"
-	    	    android:singleLine="true"
-	    	    android:layout_marginRight="2sp"
+			android:gravity="center"
+		    	android:singleLine="true"
+			android:layout_marginRight="2sp"
 	        	android:layout_width="wrap_content"
 		        android:layout_height="fill_parent"
-				android:layout_alignParentRight="true"
-	    	    android:layout_weight="1"/>
+			android:layout_alignParentRight="true"
+	    	    	android:layout_weight="1"/>
 		</RelativeLayout>
 		<TextView android:id="@+id/widget_big_message"
 		    android:layout_width="fill_parent"
 	    	android:layout_height="22dip"
 		    android:focusable="false"
 	    	android:singleLine="true"
-	        android:textColor="#000000"
+	        android:textColor="@color/widget_big_font_color"
 			android:gravity="center"
 		    android:layout_marginBottom="9dip"
-	    	android:layout_marginLeft="18dip"
-    	    android:layout_marginRight="2sp"
+		 	android:layout_marginLeft="11dip"
+	    	    android:layout_marginRight="43sp"
 		    android:orientation="horizontal"
 		    android:clickable="false"
 		    android:textSize="13sp"
-		    android:layout_toLeftOf="@+id/widget_big_side"
 		    android:layout_alignParentBottom="true"/>
 	</RelativeLayout>
 </FrameLayout>
