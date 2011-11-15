@@ -25,7 +25,7 @@
   <string name="error_reporting_choice">Režim hlášení chyb</string>
   <string name="error_reporting_choice_summary">Chyby mohou být oznámeny automaticky, nikdy nebo okamžitě</string>
   <string name="feedback_disclaimer">Upozornění: Neshromažďujeme žádné osobní údaje, jako je například vaše e-mailová adresa, telefonní číslo, IP adresa nebo IMEI telefonu. Shromažďujeme některé informace o vašem zařízení, jako například výrobce, model a verze Android, jakož i povahu hlášené chyby.</string>
-  <string name="feedback_title">Feedback</string>
+  <string name="feedback_title">Napište nám</string>
   <string name="feedback_send_feedback">Zašlete nám váš názor</string>
   <string name="feedback_send_feedback_and_errors">Pošlete chyby a váš názor</string>
   <string name="feedback_message_sent_success">Zpětná vazba obdržena, děkujeme!</string>

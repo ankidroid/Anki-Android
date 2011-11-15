@@ -1,4 +1,4 @@
-Memorize anything with AnkiDroid!
+Zapamatujte si cokoliv s AnkiDroid!
 
 AnkiDroid lets you learn flashcards very efficiently by showing them just before you will forget. It is fully compatible with the spaced repetition software Anki (including synchronization), which is available for Windows, Linux and MacOS.
 

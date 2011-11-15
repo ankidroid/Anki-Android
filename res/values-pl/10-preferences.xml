@@ -22,7 +22,7 @@
 <resources>
   <string name="pref_cat_decks">Talie</string>
   <string name="pref_cat_sync">Synchronizacja</string>
-  <string name="pref_cat_qadisplay">Wyświetlanie pytania i odpowiedzi</string>
+  <string name="pref_cat_qadisplay">Wyświetlanie kart</string>
   <string name="pref_cat_general">Ogólne</string>
   <string name="pref_cat_start">Uruchamianie</string>
   <string name="pref_cat_extras">Dodatki</string>
@@ -172,8 +172,8 @@
   <string name="review_cards_in">Przeglądanie kart w...</string>
   <string name="review_cards_order_summ">Kolejność, w której mają być wyświetlane przeglądane karty.</string>
   <string name="soon">Wkrótce</string>
-  <string name="show_next_review_time">Czas kolejnego przeglądnięcia</string>
-  <string name="show_next_review_time_summ">Pokazuje czas następnego przeglądnięcia w zależności od wyboru</string>
+  <string name="show_next_review_time">Czas kolejnej powtórki</string>
+  <string name="show_next_review_time_summ">Pokazuje czas następnej powtórki w zależności od oceny</string>
   <string name="update_notification">Powiadomienia o nowych wersjach</string>
   <string name="update_notification_summ">Powiadom mnie, gdy AnkiDroid jest aktualizowany</string>
   <string name="fix_arabic_text">Popraw wyświetlanie arabskiego</string>

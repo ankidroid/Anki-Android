@@ -38,7 +38,7 @@
   <string name="backup_delete_deck_backups">Säkerhetskopior av kortlek %s borttagna</string>
   <string name="delete_deck_success">Kortleken %1$s borttagen. Säkerhetskopia i mapp %2$s</string>
   <string name="backup_delete_deck_backups_alert">Ta bort alla säkerhetskopior av kortlek %s?</string>
-  <string name="open_deck_failed">File %1$s could not be opened. It is either not a real anki file or has been corrupted.\n\nYou can try to repair the deck or restore it from a backup (in both cases, the copy of the corrupt deck will be moved to the subfolder \'%2$s\'). More information about repairing corrupted decks: %3$s.\n\nHit the back button to close this dialog</string>
+  <string name="open_deck_failed">Filen %1$s kunde inte öppnas. Det är endera inte en riktig ankifil eller så har den blivit korrupt.\n\nDu kan prova att reparera kortleken eller återställa den från en säkerhetskopia (i båda fallen kommer en kopia av den korrupta kortleken att flyttas till \'%2$s\'). Mer information om att reparera korrupta kortlekar: %3$s.\n\nTryck på bakåtknappen för att stänga denna dialog</string>
   <string name="deckpicker_backup_error">Säkerhetskopia kunde inte skapas</string>
   <string name="deck_repair_error">Kortlek kunde inte repareras</string>
 </resources>

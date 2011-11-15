@@ -9,7 +9,7 @@ Dodawanie materiału za pomocą desktopowego programu Anki lub bezpośrednio w A
 Twórz własne talie lub pobierz talie darmowe, tworzone dla wielu języków oraz dziedzin (dostępnych jest ponad 6000 talii). Aplikacja wspiera nawet dodawanie materiału automatycznie z poziomu słownika
 
 ★ Podstawowe cechy:
-• obsługiwane formaty kart: tekst, obrazy, dźwięki
+• karty mogą zawierać: tekst, obrazki, dźwięki, LaTeX
 • planowane powtórki (algorytm SM2)
 • wsparcie dla syntezy mowy
 • ponad 6000 gotowych talii
@@ -23,7 +23,7 @@ Twórz własne talie lub pobierz talie darmowe, tworzone dla wielu języków ora
 • tablica do rysowania
 • przeglądarka kart
 • edytor kart
-• import existing collection files (via Anki Desktop)
+• importowanie gotowych plików z kolekcjami (poprzez Anki Desktop)
 • dodawanie kart za pomocą intentów z innych aplikacji, np. słowników
 • integracja ze słownikami (ColorDict, GodenDict, Leo.org, Aedict, różne słowniki online)
 • wsparcie dla czcionek użytkownika
