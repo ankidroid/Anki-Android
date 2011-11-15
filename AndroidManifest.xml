@@ -140,14 +140,14 @@
 		</receiver>
 		<!-- Service to perform web API queries -->
 		<service android:name=".AnkiDroidWidgetSmall$UpdateService" />
-		<receiver android:name="AnkiDroidWidgetBig" android:label="@string/widget_big">
+		<receiver android:name="com.ichi2.widget.AnkiDroidWidgetBig" android:label="@string/widget_big">
 			<intent-filter>
 			<action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
 			</intent-filter>
 			<meta-data android:name="android.appwidget.provider" android:resource="@xml/widget_provider_big" />
 		</receiver>
 		<!-- Service to perform web API queries -->
-		<service android:name=".AnkiDroidWidgetBig$UpdateService" />
+		<service android:name="com.ichi2.widget.AnkiDroidWidgetBig$UpdateService" />
 </application>
 	<uses-sdk  android:minSdkVersion="3"
 		android:targetSdkVersion="11"/>

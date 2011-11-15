@@ -17,7 +17,6 @@
 
 package com.ichi2.widget;
 
-import com.ichi2.anki.AnkiDroidWidgetBig;
 import com.ichi2.anki.DeckManager;
 import com.ichi2.anki.R;
 import com.ichi2.themes.StyledDialog;

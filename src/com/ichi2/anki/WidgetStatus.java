@@ -15,6 +15,7 @@
 package com.ichi2.anki;
 
 import com.ichi2.anki.services.NotificationService;
+import com.ichi2.widget.AnkiDroidWidgetBig;
 import com.tomgibara.android.veecheck.util.PrefSettings;
 
 import android.content.Context;
@@ -38,27 +39,21 @@ public final class WidgetStatus {
 
 	private static boolean mediumWidget = false;
 	private static boolean smallWidget = false;
+	private static boolean bigWidget = false;
 	private static boolean notification = false;
-	private static boolean onlyCurrentDeck = false;
+	private static DeckStatus sDeckStatus;
 	private static AsyncTask<Context,Void,Context> sUpdateDeckStatusAsyncTask;
-	private static AsyncTask<WidgetDeckTaskData,Void,WidgetDeckTaskData> sDeckOperationTask;
-	private static int sDeckOperationType;
-	public static final int TASK_OPEN_DECK = 0;
-	public static final int TASK_ANSWER_CARD = 1;
-	public static final int TASK_CLOSE_DECK = 2;
-	public static final int TASK_UNDO = 3;
-	public static final int TASK_BURY_CARD = 4;
 
     /** This class should not be instantiated. */
     private WidgetStatus() {}
 
     /** Request the widget to update its status. */
     public static void update(Context context) {
-    	update(context, false);
+    	update(context, null);
     }
     /** Request the widget to update its status. */
-    public static void update(Context context, boolean onlyCurrent) {
-    	onlyCurrentDeck = onlyCurrent;
+    public static void update(Context context, DeckStatus deckStatus) {
+    	sDeckStatus = deckStatus;
         SharedPreferences preferences = PrefSettings.getSharedPrefs(context);
         if (preferences.getBoolean("widgetMediumEnabled", false)) {
             mediumWidget = true;
@@ -70,12 +65,17 @@ public final class WidgetStatus {
         } else {
             smallWidget = false;
         }
-        if (Integer.parseInt(preferences.getString("minimumCardsDueForNotification", "25")) < 1000000 && !onlyCurrentDeck) {
+        if (preferences.getBoolean("widgetBidEnabled", false)) {
+            bigWidget = true;
+        } else {
+            bigWidget = false;
+        }
+        if (Integer.parseInt(preferences.getString("minimumCardsDueForNotification", "25")) < 1000000 && sDeckStatus == null) {
         	notification = true;
         } else {
         	notification = false;
         }
-        if ((mediumWidget || smallWidget || notification) && ((sUpdateDeckStatusAsyncTask == null) || (sUpdateDeckStatusAsyncTask.getStatus() == AsyncTask.Status.FINISHED))) {
+        if ((mediumWidget || smallWidget || bigWidget || notification) && ((sUpdateDeckStatusAsyncTask == null) || (sUpdateDeckStatusAsyncTask.getStatus() == AsyncTask.Status.FINISHED))) {
             Log.d(AnkiDroidApp.TAG, "WidgetStatus.update(): updating");
             sUpdateDeckStatusAsyncTask = new UpdateDeckStatusAsyncTask();
             sUpdateDeckStatusAsyncTask.execute(context);
@@ -99,38 +99,23 @@ public final class WidgetStatus {
         return MetaDB.getNotificationStatus(context);
     }
 
+    public static DeckStatus getDeckStatus(Deck deck) {
+		if (deck == null) {
+			return null;
+		}
+        int dueCards = 0;
+        int newCards = 0;
+        int failedCards = deck.getFailedSoonCount();
+        int eta = 0;
+        int reps = deck.getSessionFinishedCards();
 
-    public static void deckOperation(int type, WidgetDeckTaskData params) {
-        try {
-            if ((sDeckOperationTask != null) && (sDeckOperationTask.getStatus() != AsyncTask.Status.FINISHED)) {
-            	sDeckOperationTask.get();
-            }
-        } catch (Exception e) {
-            Log.e(AnkiDroidApp.TAG,
-                    "deckOperation - Got exception while waiting for thread to finish: " + e.getMessage());
+
+        if(!deck.hasFinishScheduler()) {
+            dueCards = deck.getRevCount();
+            newCards = deck.getNewCountToday();
+            eta = deck.getETA();
         }
-
-    	sDeckOperationType = type;
-    	sDeckOperationTask = new DeckOperationAsyncTask();
-    	sDeckOperationTask.execute(params);
-    }
-
-
-    /**
-     * Block the current thread until the currently running DeckOperationAsyncTask instance (if any) has finished.
-     */
-    public static void deckOperationWaitToFinish() {
-	if (sDeckOperationType == TASK_CLOSE_DECK) {
-		// prevent deadlock when calling this from deckmanager.closedeck
-		return;
-	}
-        try {
-            if ((sUpdateDeckStatusAsyncTask != null) && (sUpdateDeckStatusAsyncTask.getStatus() != AsyncTask.Status.FINISHED)) {
-            	sUpdateDeckStatusAsyncTask.get();
-            }
-        } catch (Exception e) {
-            return;
-        }
+        return new DeckStatus(deck.getDeckPath(), deck.getDeckName(), newCards, dueCards, failedCards, eta, reps);
     }
 
 
@@ -151,34 +136,17 @@ public final class WidgetStatus {
             // For the deck information
             ArrayList<DeckStatus> decks;
 
-            if (false){//onlyCurrentDeck) {
-//                decks = new ArrayList<DeckStatus>(mDecks.length);
-//
-//                Deck currentDeck = AnkiDroidApp.deck();
-//                if (currentDeck != null) {
-//                	String currentDeckPath = currentDeck.getDeckPath();
-//                	try {
-//                		for (DeckStatus m : mDecks) {
-//                			if (m.mDeckPath.equals(currentDeckPath)) {
-//	                    			Log.i(AnkiDroidApp.TAG, "UpdateWidget - update information for deck " + currentDeckPath);
-//						if (!currentDeck.hasFinishScheduler()) {
-//		                			decks.add(new DeckStatus(currentDeckPath, currentDeck.getDeckName(), currentDeck.getNewCountToday(), currentDeck.getRevCount(), currentDeck.getFailedSoonCount(), currentDeck.getETA(), currentDeck.getSessionFinishedCards()));
-//						} else {
-//		                			decks.add(new DeckStatus(currentDeckPath, currentDeck.getDeckName(), 0, 0, currentDeck.getFailedSoonCount(), 0, currentDeck.getSessionFinishedCards()));
-//						}
-//                			} else {
-//                    			Log.i(AnkiDroidApp.TAG, "UpdateWidget - copy information for deck " + m.mDeckPath);
-//                				decks.add(m);
-//                			}
-//                		}
-//                    } catch (SQLException e) {
-//                        Log.i(AnkiDroidApp.TAG, "Widget: Could not retrieve deck information");
-//                        Log.e(AnkiDroidApp.TAG, e.toString());
-//                        if (currentDeckPath != null) {
-//                            BackupManager.restoreDeckIfMissing(currentDeckPath);                    	
-//                        }
-//                    }
-//                }
+            if (sDeckStatus != null) {
+            	decks = new ArrayList<DeckStatus>(mDecks.length);
+            		for (DeckStatus m : mDecks) {
+            			if (m.mDeckPath.equals(sDeckStatus.mDeckPath)) {
+            				Log.i(AnkiDroidApp.TAG, "UpdateWidget - update information for deck " + sDeckStatus.mDeckPath);
+            				decks.add(sDeckStatus);
+            			} else {
+            				Log.i(AnkiDroidApp.TAG, "UpdateWidget - copy information for deck " + m.mDeckPath);
+            				decks.add(m);
+            			}
+            		}
             } else {
                 SharedPreferences preferences = PrefSettings.getSharedPrefs(context);
                 String deckPath = preferences.getString("deckPath",
@@ -204,7 +172,7 @@ public final class WidgetStatus {
 
                         Log.i(AnkiDroidApp.TAG, "WidgetStatus: Found deck: " + absPath);
 
-                        Deck deck = DeckManager.getDeck(absPath, DeckManager.REQUESTING_ACTIVITY_WIDGETSTATUS);
+                        Deck deck = DeckManager.getDeck(absPath, DeckManager.REQUESTING_ACTIVITY_WIDGETSTATUS, false);
                         if (deck == null) {
                             Log.e(AnkiDroidApp.TAG, "Widget: Skipping null deck: " + absPath);
                             // Use the data from the last time we updated the deck, if available.
@@ -271,15 +239,17 @@ public final class WidgetStatus {
                 intent = new Intent(context, AnkiDroidWidgetSmall.UpdateService.class);            	
                 context.startService(intent);
             }
+            if (bigWidget) {
+            	Intent intent;
+                intent = new Intent(context, AnkiDroidWidgetSmall.UpdateService.class);            	
+		intent.setAction(AnkiDroidWidgetBig.UpdateService.ACTION_UPDATE);
+                context.startService(intent);
+            }
             if (notification) {
             	Intent intent;
                 intent = new Intent(context, NotificationService.class);
                 context.startService(intent);
             }
-        	Intent intent;
-            intent = new Intent(context, AnkiDroidWidgetBig.UpdateService.class);
-            intent.setAction(AnkiDroidWidgetBig.UpdateService.ACTION_UPDATE);
-            context.startService(intent);
         }
 
         /** Comparator that sorts instances of {@link DeckStatus} based on number of due cards. */
@@ -298,191 +268,5 @@ public final class WidgetStatus {
                 return pathname.isFile() && pathname.getName().endsWith(".anki");
             }
         }
-    }
-
-    private static class DeckOperationAsyncTask extends AsyncTask<WidgetDeckTaskData, Void, WidgetDeckTaskData> {
-
-        @Override
-        protected WidgetDeckTaskData doInBackground(WidgetDeckTaskData... params) {
-            Log.d(AnkiDroidApp.TAG, "WidgetStatus.DeckOperationAsyncTask.doInBackground()");
-
-            switch (sDeckOperationType) {
-            case TASK_OPEN_DECK:
-            	return doInBackgroundOpenDeck(params);
-            case TASK_ANSWER_CARD:
-            	return doInBackgroundAnswerCard(params);
-            case TASK_CLOSE_DECK:
-            	return doInBackgroundCloseDeck(params);
-            case TASK_UNDO:
-            	return doInBackgroundUndo(params);
-            case TASK_BURY_CARD:
-            	return doInBackgroundBury(params);
-            }
-            return params[0];
-        }
-
-        protected WidgetDeckTaskData doInBackgroundOpenDeck(WidgetDeckTaskData... params) {
-        	Log.i(AnkiDroidApp.TAG, "DeckOperationAsyncTask: doInBackgroundOpenDeck");
-        	Deck deck = DeckManager.getDeck(params[0].getString(), DeckManager.REQUESTING_ACTIVITY_BIGWIDGET);
-        	return new WidgetDeckTaskData(params[0].getContext(), deck);
-        }
-
-        protected WidgetDeckTaskData doInBackgroundAnswerCard(WidgetDeckTaskData... params) {
-        	Log.e(AnkiDroidApp.TAG, "DeckOperationAsyncTask: doInBackgroundAnswerCard");
-        	Context context = params[0].getContext();
-        	Card card = params[0].getCard();
-        	Deck deck = params[0].getDeck();
-        	Card newCard;
-        	int ease = params[0].getInt();
-        	if (ease == 0) {
-        		return new WidgetDeckTaskData(context, deck, card);
-        	}
-//            try {
-Log.e("suchen"," doInBackgroundAnswerCard1");
-    	        AnkiDb ankiDB = AnkiDatabaseManager.getDatabase(deck.getDeckPath());
-Log.e("suchen"," doInBackgroundAnswerCard2");
-    	        ankiDB.getDatabase().beginTransaction();
-Log.e("suchen"," doInBackgroundAnswerCard3");
-    	        try {
-    	            if (card != null) {
-    	            	if (card.thinkingTime() >= 20) {
-    	            		// user restarted learning
-    	            		card.startTimer();
-    	            	}
-Log.e("suchen"," doInBackgroundAnswerCard4");
-    	                deck.answerCard(card, ease);
-Log.e("suchen"," doInBackgroundAnswerCard5");
-    	                Log.e(AnkiDroidApp.TAG, "WidgetBig: answering card with ease " + ease);
-    	            }
-    	            newCard = deck.getCard();
-Log.e("suchen"," doInBackgroundAnswerCard6");
-
-    	            AnkiDroidWidgetBig.setCard(newCard);
-Log.e("suchen"," doInBackgroundAnswerCard7");
-
-    	            ankiDB.getDatabase().setTransactionSuccessful();
-Log.e("suchen"," doInBackgroundAnswerCard8");
-    	        } finally {
-    	            ankiDB.getDatabase().endTransaction();
-Log.e("suchen"," doInBackgroundAnswerCard9");
-    	        }
-    	    
-        	return new WidgetDeckTaskData(params[0].getContext(), deck, newCard);
-        }
-
-        protected WidgetDeckTaskData doInBackgroundCloseDeck(WidgetDeckTaskData... params) {
-        	Log.i(AnkiDroidApp.TAG, "doInBackgroundCloseDeck");
-        	DeckManager.closeDeck(params[0].getString(), DeckManager.REQUESTING_ACTIVITY_BIGWIDGET);
-        	return new WidgetDeckTaskData(params[0].getContext());
-        }
-
-
-        protected WidgetDeckTaskData doInBackgroundUndo(WidgetDeckTaskData... params) {
-        	Log.e(AnkiDroidApp.TAG, "doInBackgroundUndo");
-        	Deck deck = params[0].getDeck();
-        	deck.undo(0, true);
-        	AnkiDroidWidgetBig.setCard(deck.getCard());//deck.cardFromId(deck.undo(0, true)));
-        	return new WidgetDeckTaskData(params[0].getContext());
-        }
-
-
-        protected WidgetDeckTaskData doInBackgroundBury(WidgetDeckTaskData... params) {
-        	Log.e(AnkiDroidApp.TAG, "doInBackgroundBury");
-        	Card card = params[0].getCard();
-        	long id = card.getId();
-        	Deck deck = params[0].getDeck();
-        	deck.buryFact(card.getFactId(), id);
-        	deck.reset();
-
-        	AnkiDroidWidgetBig.setCard(deck.getCard());
-        	return new WidgetDeckTaskData(params[0].getContext());
-        }
-        
-
-        @Override
-        protected void onPostExecute(WidgetDeckTaskData params) {
-            Log.d(AnkiDroidApp.TAG, "WidgetStatus.DeckOperationAsyncTask.onPostExecute()");
-            switch(sDeckOperationType) {
-            case TASK_OPEN_DECK:
-                AnkiDroidWidgetBig.setDeckAndLoadCard(params.getDeck());            	
-            	break;
-            case TASK_CLOSE_DECK:
-            	break;
-            case TASK_ANSWER_CARD:
-            	break;
-            case TASK_UNDO:
-            	break;
-            case TASK_BURY_CARD:
-            	break;            	
-            }
-
-        }
-    }
-
-
-    public static class WidgetDeckTaskData {
-    	private Context context;
-    	private String string;
-    	private Deck deck;
-    	private Card card;
-    	private int integer;
-
-    	public WidgetDeckTaskData(Context context) {
-    		this.context = context;
-        }
-
-    	public WidgetDeckTaskData(Context context, String string) {
-    		this.context = context;
-    		this.string = string;
-        }
-
-    	public WidgetDeckTaskData(Context context, Deck deck, String string) {
-    		this.deck = deck;
-    		this.context = context;
-    		this.string = string;
-        }
-
-    	public WidgetDeckTaskData(Context context, Card card) {
-    		this.context = context;
-    		this.card = card;
-        }
-
-    	public WidgetDeckTaskData(Context context, Deck deck) {
-    		this.context = context;
-    		this.deck = deck;
-        }
-
-    	public WidgetDeckTaskData(Context context, Deck deck, Card card) {
-    		this.context = context;
-    		this.deck = deck;
-    		this.card = card;
-        }
-
-    	public WidgetDeckTaskData(Context context, Deck deck, Card card, int integer) {
-    		this.context = context;
-    		this.deck = deck;
-    		this.card = card;
-    		this.integer = integer;
-        }
-
-    	public String getString() {
-    		return string;
-    	}
-
-    	public Card getCard() {
-    		return card;
-    	}
-
-    	public Deck getDeck() {
-    		return deck;
-    	}
-
-    	public Context getContext() {
-    		return context;
-    	}
-
-    	public int getInt() {
-    		return integer;
-    	}
     }
 }

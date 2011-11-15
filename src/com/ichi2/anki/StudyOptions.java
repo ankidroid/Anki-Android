@@ -852,9 +852,9 @@ public class StudyOptions extends Activity implements IButtonListener {
         // Update the widget when stopping this activity (all when closing, only current when pressing home).
         if (!mInDeckPicker && !mInReviewer) {
         	if (isFinishing()) {
-                WidgetStatus.update(getBaseContext());
+        		WidgetStatus.update(this, null);
         	} else {
-                WidgetStatus.update(getBaseContext(), true);
+        		WidgetStatus.update(this, WidgetStatus.getDeckStatus(DeckManager.getMainDeck()));
         	}
         }
     }
@@ -1918,7 +1918,7 @@ public class StudyOptions extends Activity implements IButtonListener {
 
     private void resetAndUpdateValuesFromDeck() {
         Deck deck = DeckManager.getMainDeck();
-        DeckTask.waitToFinish();
+//        DeckTask.waitToFinish();
         if (deck != null) {
             deck.reset();
         	updateValuesFromDeck();        	

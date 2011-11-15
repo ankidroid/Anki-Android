@@ -1001,14 +1001,14 @@ public class Reviewer extends Activity implements IButtonListener{
       }
       super.onStop();
       DeckTask.waitToFinish();
+      Deck deck = DeckManager.getMainDeck();
       if (!isFinishing()) {
           // Save changes
-          Deck deck = DeckManager.getMainDeck();
           if (deck != null) {
 	            deck.commitToDB();
           }
       }
-      WidgetStatus.update(getBaseContext(), true);
+      WidgetStatus.update(this, WidgetStatus.getDeckStatus(deck));
     }
 
     @Override

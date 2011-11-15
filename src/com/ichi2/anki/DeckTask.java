@@ -31,10 +31,7 @@ import com.tomgibara.android.veecheck.util.PrefSettings;
 
 import android.content.Context;
 import android.content.res.Resources;
-import android.database.CursorIndexOutOfBoundsException;
-import android.database.SQLException;
 import android.database.sqlite.SQLiteDiskIOException;
-import android.database.sqlite.SQLiteException;
 import android.os.AsyncTask;
 import android.util.Log;
 
@@ -64,6 +61,7 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
     public static final int TASK_TYPE_SORT_CARDS = 18;
     public static final int TASK_TYPE_LOAD_TUTORIAL = 19;
     public static final int TASK_TYPE_REPAIR_DECK = 20;
+    public static final int TASK_TYPE_CLOSE_DECK = 21;
 
 
     /**
@@ -98,6 +96,7 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
     public static void waitToFinish() {
         try {
             if ((sInstance != null) && (sInstance.getStatus() != AsyncTask.Status.FINISHED)) {
+		Log.i(AnkiDroidApp.TAG, "DeckTask: wait to finish");
                 sInstance.get();
             }
         } catch (Exception e) {
@@ -209,6 +208,9 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
 
             case TASK_TYPE_REPAIR_DECK:
                 return doInBackgroundRepairDeck(params);
+
+            case TASK_TYPE_CLOSE_DECK:
+                return doInBackgroundCloseDeck(params);
 
             default:
                 return null;
@@ -363,7 +365,7 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
         	deck.finishScheduler();
         }
         publishProgress(new TaskData(backupResult));
-        return new TaskData(DECK_LOADED);
+        return new TaskData(DECK_LOADED, deck, null);
     }
 
 
@@ -638,6 +640,14 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
     	String deckPath = params[0].getString();
     	DeckManager.closeDeck(deckPath, false);
     	return new TaskData(BackupManager.repairDeck(deckPath));
+    }
+
+
+    private TaskData doInBackgroundCloseDeck(TaskData... params) {
+    	Log.i(AnkiDroidApp.TAG, "doInBackgroundCloseDeck");
+    	String deckPath = params[0].getString();
+    	DeckManager.closeDeck(deckPath, false);
+    	return null;
     }
 
 

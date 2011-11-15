@@ -197,7 +197,7 @@ public class AnkiDroidWidgetMedium extends AppWidgetProvider {
                         	if (action.equals(Intent.ACTION_MEDIA_MOUNTED)) {
                                 Log.i(AnkiDroidApp.TAG, "mMountReceiver - Action = Media Mounted");
                                 if (remounted) {
-                                    WidgetStatus.update(getBaseContext());                                	
+                                    WidgetStatus.update(getBaseContext());
                                 	remounted = false;
                                     if (mMountReceiver != null) {
                                         unregisterReceiver(mMountReceiver);
