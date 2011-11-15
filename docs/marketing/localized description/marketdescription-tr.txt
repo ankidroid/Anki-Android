@@ -9,7 +9,7 @@ Masaüstü uygulaması Anki veya doğrudan Ankidroid yoluyla malzeme ekleyin
 Kendi bilgi kartı destelerinizi oluşturun veya birçok dil ve konu için hazırlanmış ücretsiz desteleri indirin (6000'den fazla mevcut). Uygulama bir sözlükten otomatik olarak malzeme eklemeyi bile destekler!
 
 ★ Anahtar özellikler:
-• desteklenen bilgi kartı içerikleri: yazı, resim, ses
+• desteklenen bilgi kartı içerikleri: yazı, resim, ses, LaTeX
 • aralıklı yineleme (supermemo 2 algoritması)
 • metin okuma entegrasyonu
 • 6000'den fazla hazır deste
@@ -23,7 +23,7 @@ Kendi bilgi kartı destelerinizi oluşturun veya birçok dil ve konu için hazı
 • yazı tahtası
 • kart tarayıcı
 • kart düzenleyici/ekleyici
-• import existing collection files (via Anki Desktop)
+• var olan toplama dosyalarını kullanma (Anki Masaüstü yoluyla)
 • sözlük gibi diğer uygulamalardan istek tabanlı kart ekleme
 • sözlük entegrasyonu (ColorDict, GoldenDict, Leo.org, Aedict, çeşitli web sözlükleri)
 • haricî yazı tipi desteği

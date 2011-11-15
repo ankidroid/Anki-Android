@@ -9,7 +9,7 @@ Add material through the desktop application Anki or directly through Ankidroid.
 Create your own flashcard decks or download free decks compiled for many languages and topics (more than 6000 available). De toepassing biedt zelfs ondersteuning voor het automatisch toevoegen van materiaal uit een woordenboek!
 
 ★ Belangrijkste functies:
-• supported flashcard contents: text, images, sounds
+• supported flashcard contents: text, images, sounds, LaTeX
 • gespreide herhaling (supermemo 2-algoritme)
 • tekst-naar-spraak-integratie
 • meer dan 6000 premade decks
