@@ -416,21 +416,18 @@ public class MetaDB {
         Cursor cursor = null;
         int due = 0;
         int eta = 0;
-        int currentDeckdue = 0;
         int time = 0;
-        String currentDeck = PrefSettings.getSharedPrefs(context).getString("deckFilename", "");
+        boolean noDeck = true;
         try {
             cursor = mMetaDb.query("widgetStatus",
-                    new String[]{"dueCards", "failedCards", "newCards", "time", "eta", "deckPath"},
+                    new String[]{"dueCards", "failedCards", "newCards", "time", "eta"},
                     null, null, null, null, null);
             while (cursor.moveToNext()) {
+            	noDeck = false;
             	int d = cursor.getInt(0) + cursor.getInt(1) + cursor.getInt(2);
             	due += d;
             	time += cursor.getInt(3);
             	eta += cursor.getInt(4);
-            	if (currentDeck.equals(cursor.getString(5))) {
-            		currentDeckdue = d;
-            	}
             }
         } catch (SQLiteException e) {
             Log.e(AnkiDroidApp.TAG, "Error while querying widgetStatus", e);
@@ -439,7 +436,29 @@ public class MetaDB {
                 cursor.close();
             }
         }
-        return new int[]{due, time, eta, currentDeckdue};
+        return new int[]{noDeck ? -1 : due, time, eta};
+    }
+
+
+    public static int getNotificationStatus(Context context) {
+        openDBIfClosed(context);
+        Cursor cursor = null;
+        int due = 0;
+        try {
+            cursor = mMetaDb.query("widgetStatus",
+                    new String[]{"dueCards", "failedCards", "newCards"},
+                    null, null, null, null, null);
+            while (cursor.moveToNext()) {
+            	due += cursor.getInt(0) + cursor.getInt(1) + cursor.getInt(2);
+            }
+        } catch (SQLiteException e) {
+            Log.e(AnkiDroidApp.TAG, "Error while querying widgetStatus", e);
+        } finally {
+            if (cursor != null && !cursor.isClosed()) {
+                cursor.close();
+            }
+        }
+        return due;
     }
 
 
@@ -452,10 +471,10 @@ public class MetaDB {
      */
     public static void storeWidgetStatus(Context context, DeckStatus[] decks) {
         openDBIfClosed(context);
-        mMetaDb.beginTransaction();
-        // First clear all the existing content.
-        mMetaDb.execSQL("DELETE FROM widgetStatus");
         try {
+            mMetaDb.beginTransaction();
+            // First clear all the existing content.
+            mMetaDb.execSQL("DELETE FROM widgetStatus");
             for (DeckStatus deck : decks) {
                 mMetaDb.execSQL("INSERT INTO widgetStatus(deckPath, deckName, newCards, dueCards, failedCards, eta, time) "
                         + "VALUES (?, ?, ?, ?, ?, ?, ?)",
@@ -463,11 +482,13 @@ public class MetaDB {
                         );
             }
             mMetaDb.setTransactionSuccessful();
+            mMetaDb.endTransaction();
+        } catch (IllegalStateException e) {
+            Log.e(AnkiDroidApp.TAG, "MetaDB.storeWidgetStatus: failed", e);
         } catch (SQLiteException e) {
             Log.e(AnkiDroidApp.TAG, "MetaDB.storeWidgetStatus: failed", e);
             closeDB();
             Log.i(AnkiDroidApp.TAG, "Trying to reset Widget: " + resetWidget(context));
         }
-        mMetaDb.endTransaction();
     }
 }

@@ -76,10 +76,10 @@
         <ScrollView android:id="@+id/scrollView"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:paddingTop="2dip"
-            android:paddingBottom="12dip"
-            android:paddingLeft="14dip"
-            android:paddingRight="10dip">
+            android:paddingTop="8dip"
+            android:paddingBottom="10dip"
+            android:paddingLeft="8dip"
+            android:paddingRight="8dip">
             <TextView android:id="@+id/message"
                 android:textColor="#ffff"
                 android:textSize="18sp"
@@ -139,6 +139,8 @@
                 android:layout_gravity="left"
                 android:layout_weight="1"
                 android:maxLines="2"
+				android:singleLine="false"
+				android:ellipsize="none"
                 style="?android:attr/buttonStyleSmall"
                 android:layout_height="fill_parent" />
             <Button android:id="@+id/button3"
@@ -146,6 +148,8 @@
                 android:layout_gravity="center_horizontal"
                 android:layout_weight="1"
                 android:maxLines="2"
+				android:singleLine="false"
+				android:ellipsize="none"
                 style="?android:attr/buttonStyleSmall"
                 android:layout_height="fill_parent" />
             <Button android:id="@+id/button2"
@@ -153,6 +157,8 @@
                 android:layout_gravity="right"
                 android:layout_weight="1"
                 android:maxLines="2"
+				android:singleLine="false"
+				android:ellipsize="none"
                 style="?android:attr/buttonStyleSmall"
                 android:layout_height="fill_parent" />
             <LinearLayout android:id="@+id/rightSpacer"

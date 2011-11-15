@@ -119,6 +119,15 @@ public class PersonalDeckPicker extends Activity {
                     return;
                 }
                 String deckName = (String) deckNameObject;
+
+                  for (Download d : mPersonalDeckDownloads) {
+                        if (d.getTitle().equals(deckName)) {
+                            // Duplicate downloads not allowed, sorry.
+                        	Themes.showThemedToast(PersonalDeckPicker.this, getResources().getString(R.string.duplicate_download), true);
+                            return;
+                        }
+                    }
+
                 Download personalDeckDownload = new Download(deckName);
                 mDestination = PrefSettings.getSharedPrefs(getBaseContext()).getString("deckPath", AnkiDroidApp.getStorageDirectory());
                 setDeckToDownload(personalDeckDownload);
@@ -476,7 +485,6 @@ public class PersonalDeckPicker extends Activity {
                         getResources().getString(R.string.loading_personal_decks), true, true, new DialogInterface.OnCancelListener() {
                 	@Override
                 	public void onCancel(DialogInterface dialog) {
-                		Connection.cancelGetDecks();
                 		closePersonalDeckPicker();
                 	}
                 });

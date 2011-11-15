@@ -30,7 +30,6 @@
   <string name="feedback_send_feedback_and_errors">发送错误报告和反馈信息</string>
   <string name="feedback_message_sent_success">收到反馈，非常感谢！</string>
   <string name="feedback_message_sent_failure">无法发送反馈，编号%1$s</string>
-  <string name="feedback_error_list_header">要发送的错误报告列表</string>
   <string name="feedback_keep_latest">只保留最后的错误</string>
   <string name="feedback_clear_all">清除所有的错误</string>
   <string name="feedback_default_text">请填写你的反馈信息，或者有关你需要报告的错误的信息。</string>
@@ -42,8 +41,4 @@
   <string name="feedback_error_reply_issue_fixed_prod">问题%1$d，已修正在最新版本中</string>
   <string name="feedback_error_reply_malformed">记录bug，无回应</string>
   <string name="feedback_error_reply_failed">发送失败</string>
-  <plurals name="error_message">
-    <item quantity="one">有1个错误需要报告</item>
-    <item quantity="other">有%d个错误需要报告</item>
-  </plurals>
 </resources>

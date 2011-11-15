@@ -22,7 +22,7 @@
 <resources>
   <string name="card_browser">Kart Tarayıcısı</string>
   <string name="card_browser_load">Kartlar yükleniyor</string>
-  <string name="card_browser_cardloading_error">Kartlar yüklenirken hata. Bu muhtemelen cihazınızın hafıza kısıtlamalarıyla ilgili. Daha küçük bir desteyle tekrar deneyin.</string>
+  <string name="card_browser_cardloading_error">Kartlar yüklenirken hata. Bu muhtemelen cihazınızın bellek kısıtlamalarıyla ilgili. Daha küçük bir desteyle tekrar deneyin.</string>
   <string name="card_browser_delete_card">Kartı sil</string>
   <string name="card_browser_suspend_card">Kartı askıya al</string>
   <string name="card_browser_unsuspend_card">Kartı devreye sok</string>
@@ -38,7 +38,7 @@
   <string name="card_browser_tags_shown">Etiketler: %1$s</string>
   <string name="card_browser_change_display_order">Gösterme sırasını seç</string>
   <string name="card_browser_change_display_order_title">Gösterme sırasını seç</string>
-  <string name="card_browser_card_details">Kart ayrıntıları</string>
+  <string name="card_browser_card_details">Kart bilgileri</string>
   <string name="card_details_question">Soru</string>
   <string name="card_details_answer">Yanıt</string>
   <string name="card_details_due">Vade</string>
@@ -49,11 +49,12 @@
   <string name="card_details_average_time">Ortalama süre</string>
   <string name="card_details_total_time">Toplam süre</string>
   <string name="card_details_yes_count">Evet sayısı</string>
-  <string name="card_details_no_count">Sayısız</string>
+  <string name="card_details_no_count">Hayır sayısı</string>
   <string name="card_details_added">Eklenme tarihi</string>
   <string name="card_details_changed">Değiştirilme tarihi</string>
   <string name="card_details_tags">Etiketler</string>
   <string name="card_details_model">Model</string>
+  <string name="card_browser_sorting_cards">Kartlar sıralanıyor.\nLütfen bekleyin...</string>
   <string name="card_details_card_model">Kart modeli</string>
   <string-array name="card_browser_order_labels">
     <item>Sorusuna göre</item>

@@ -7,6 +7,7 @@ package com.samskivert.mustache;
 /**
  * An exception thrown when an error occurs parsing or executing a Mustache template.
  */
+@SuppressWarnings("serial")
 public class MustacheException extends RuntimeException
 {
     public MustacheException (String message) {

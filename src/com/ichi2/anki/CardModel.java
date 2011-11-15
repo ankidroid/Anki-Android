@@ -49,9 +49,9 @@ public class CardModel implements Comparator<CardModel> {
     public static final String DEFAULT_BACKGROUND_COLOR = "#FFFFFF";
 
     /** Regex pattern used in removing tags from text before diff */
-    private static final Pattern sFactPattern = Pattern.compile("%\\([tT]ags\\)s");
-    private static final Pattern sModelPattern = Pattern.compile("%\\(modelTags\\)s");
-    private static final Pattern sTemplPattern = Pattern.compile("%\\(cardModel\\)s");
+//    private static final Pattern sFactPattern = Pattern.compile("%\\([tT]ags\\)s");
+//    private static final Pattern sModelPattern = Pattern.compile("%\\(modelTags\\)s");
+//    private static final Pattern sTemplPattern = Pattern.compile("%\\(cardModel\\)s");
 
     // Regex pattern for converting old style template to new
     private static final Pattern sOldStylePattern = Pattern.compile("%\\((.+?)\\)s");
@@ -66,10 +66,10 @@ public class CardModel implements Comparator<CardModel> {
     // Formats: question/answer/last (not used)
     private String mQformat;
     private String mAformat;
-    private String mLformat;
+//    private String mLformat;
     // Question/answer editor format (not used yet)
-    private String mQedformat;
-    private String mAedformat;
+//    private String mQedformat;
+//    private String mAedformat;
     private int mQuestionInAnswer = 0;
     // Unused
     private String mQuestionFontFamily = DEFAULT_FONT_FAMILY;
@@ -82,16 +82,16 @@ public class CardModel implements Comparator<CardModel> {
     private int mAnswerFontSize = DEFAULT_FONT_SIZE;
     private String mAnswerFontColour = DEFAULT_FONT_COLOR;
     private int mAnswerAlign = 0;
-    private String mLastFontFamily = DEFAULT_FONT_FAMILY;
-    private int mLastFontSize = DEFAULT_FONT_SIZE;
+//    private String mLastFontFamily = DEFAULT_FONT_FAMILY;
+//    private int mLastFontSize = DEFAULT_FONT_SIZE;
     // Used as background colour
     private String mLastFontColour = DEFAULT_BACKGROUND_COLOR;
-    private String mEditQuestionFontFamily = "";
-    private int mEditQuestionFontSize = 0;
-    private String mEditAnswerFontFamily = "";
-    private int mEditAnswerFontSize = 0;
+//    private String mEditQuestionFontFamily = "";
+//    private int mEditQuestionFontSize = 0;
+//    private String mEditAnswerFontFamily = "";
+//    private int mEditAnswerFontSize = 0;
     // Empty answer
-    private int mAllowEmptyAnswer = 1;
+//    private int mAllowEmptyAnswer = 1;
     private String mTypeAnswer = "";
     // END SQL table entries
 
@@ -102,7 +102,7 @@ public class CardModel implements Comparator<CardModel> {
     /**
      * Backward reference
      */
-    private Model mModel;
+//    private Model mModel;
 
 
     /**
@@ -249,8 +249,9 @@ public class CardModel implements Comparator<CardModel> {
         try {
             String query = "SELECT modelId FROM cardModels WHERE id = " + cardModelId;
             cursor = AnkiDatabaseManager.getDatabase(deck.getDeckPath()).getDatabase().rawQuery(query, null);
-            cursor.moveToFirst();
-            modelId = cursor.getLong(0);
+            if (cursor.moveToFirst()) {
+	            modelId = cursor.getLong(0);
+	    }
         } finally {
             if (cursor != null && !cursor.isClosed()) {
                 cursor.close();
@@ -320,6 +321,7 @@ public class CardModel implements Comparator<CardModel> {
     }
 
 
+    /*
     private static String replaceField(String replaceFrom, Fact fact, int replaceAt, boolean isQuestion) {
         int endIndex = replaceFrom.indexOf(")", replaceAt);
         String fieldName = replaceFrom.substring(replaceAt + 2, endIndex);
@@ -347,6 +349,7 @@ public class CardModel implements Comparator<CardModel> {
         replaceFrom = replaceFrom.replace(replace, with);
         return replaceFrom;
     }
+    */
 
 
     /**

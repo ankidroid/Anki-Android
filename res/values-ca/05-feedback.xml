@@ -30,7 +30,6 @@
   <string name="feedback_send_feedback_and_errors">Envieu errors i els vostres comentaris</string>
   <string name="feedback_message_sent_success">Hem rebut els vostres comentaris, gràcies!</string>
   <string name="feedback_message_sent_failure">No es poden enviar els comentaris, codi %1$s</string>
-  <string name="feedback_error_list_header">Llista d\'errors per enviar</string>
   <string name="feedback_keep_latest">Manté el darrer error</string>
   <string name="feedback_clear_all">Esborra tots els errors</string>
   <string name="feedback_default_text">Si us plau, introduiu els vostres comentaris, o informació sobre la natura dels errors que esteu describint.</string>
@@ -42,8 +41,4 @@
   <string name="feedback_error_reply_issue_fixed_prod">Problema %1$d, resolt a la darrera versió</string>
   <string name="feedback_error_reply_malformed">Problema arxivat, sense resposta</string>
   <string name="feedback_error_reply_failed">No s\'ha pogut enviar</string>
-  <plurals name="error_message">
-    <item quantity="one">Hi ha un error pendent d\'informar</item>
-    <item quantity="other">Hi ha %d errors pendents d\'informar</item>
-  </plurals>
 </resources>

@@ -49,8 +49,8 @@
   <string name="sync_all">Sync all</string>
   <string name="sync_prepare_syncing">Preparing syncing...</string>
   <string name="connection_error_message">A network error has occurred.</string>
+  <string name="sync_log_db_error">A database error has occurred.</string>
   <string name="no_user_password_error_message">In order to proceed with this operation, you need to have an AnkiOnline account and be logged in.</string>
-  <string name="sync_progress_bar_title">Syncing %s</string>
   <string name="fact">fact</string>
   <string name="facts">facts</string>
   <string name="username">아이디</string>

@@ -30,7 +30,6 @@
   <string name="feedback_send_feedback_and_errors">Kirim ralat dan maklum balas</string>
   <string name="feedback_message_sent_success">Maklum balas diterima, terima kasih!</string>
   <string name="feedback_message_sent_failure">Gagal mengirim maklum balas, kod %1$s</string>
-  <string name="feedback_error_list_header">Senarai ralat untuk dikirim</string>
   <string name="feedback_keep_latest">Kekalkan ralat terakhir</string>
   <string name="feedback_clear_all">Padam semua ralat</string>
   <string name="feedback_default_text">Silakan beri maklum balas, atau informasi tentang ciri dari ralat yang dilapor.</string>
@@ -42,8 +41,4 @@
   <string name="feedback_error_reply_issue_fixed_prod">Isu %1$d, dibetulkan dalam versi terbaru</string>
   <string name="feedback_error_reply_malformed">Bug difail, tidak ada respon</string>
   <string name="feedback_error_reply_failed">Gagal mengirim</string>
-  <plurals name="error_message">
-    <item quantity="one">Ada satu ralat untuk dilaporkan</item>
-    <item quantity="other">Ada d% ralat untuk dilapor</item>
-  </plurals>
 </resources>

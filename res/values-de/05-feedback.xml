@@ -30,7 +30,6 @@
   <string name="feedback_send_feedback_and_errors">Senden Sie uns Fehler- und Rückmeldungen</string>
   <string name="feedback_message_sent_success">Rückmeldung erhalten, vielen Dank!</string>
   <string name="feedback_message_sent_failure">Rückmeldung konnte nicht gesendet werden, Fehler: %1$s</string>
-  <string name="feedback_error_list_header">Fehlerliste</string>
   <string name="feedback_keep_latest">Letzte Fehler nicht löschen</string>
   <string name="feedback_clear_all">Alle Fehlermeldungen löschen</string>
   <string name="feedback_default_text">Bitte geben Sie Ihr Feedback bzw. Informationen über die Art der Fehler, über die berichtet werden soll, hier ein.</string>
@@ -42,8 +41,4 @@
   <string name="feedback_error_reply_issue_fixed_prod">Fehler %1$d, in der neuesten Version behoben</string>
   <string name="feedback_error_reply_malformed">Archivierter Fehler, keine Antwort</string>
   <string name="feedback_error_reply_failed">Senden fehlgeschlagen</string>
-  <plurals name="error_message">
-    <item quantity="one">Es gibt einen Fehler zu melden</item>
-    <item quantity="other">Es gibt %d Fehler zu melden</item>
-  </plurals>
 </resources>

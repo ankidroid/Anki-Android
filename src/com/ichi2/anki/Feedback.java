@@ -22,18 +22,19 @@ import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.inputmethod.InputMethodManager;
 import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.SimpleAdapter;
-import android.widget.Toast;
 
+import com.ichi2.anim.ActivityTransitionAnimation;
 import com.ichi2.async.Connection;
 import com.ichi2.async.Connection.Payload;
 import com.ichi2.themes.StyledDialog;
@@ -63,9 +64,9 @@ import java.util.TimeZone;
 import java.util.UUID;
 
 public class Feedback extends Activity {
-    protected static String REPORT_ASK = "2";
-    protected static String REPORT_NEVER = "1";
-    protected static String REPORT_ALWAYS = "0";
+    public static String REPORT_ASK = "2";
+    public static String REPORT_NEVER = "1";
+    public static String REPORT_ALWAYS = "0";
 
     public static String STATE_WAITING = "0";
     public static String STATE_UPLOADING = "1";
@@ -98,12 +99,16 @@ public class Feedback extends Activity {
 
     private boolean mErrorsSent = false;
 
+
     @Override
-    public void onBackPressed() {
-        deleteFiles(true, false);
-        setResult(RESULT_OK);
-        finish();
+    public boolean onKeyDown(int keyCode, KeyEvent event)  {
+        if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
+        	deleteFiles(true, false);
+	        closeFeedback();
+        }
+        return super.onKeyDown(keyCode, event);
     }
+
 
     /**
      * Create AlertDialogs used on all the activity
@@ -125,6 +130,16 @@ public class Feedback extends Activity {
         });
         mNoConnectionAlert = builder.create();
     }
+
+
+	private void closeFeedback() {
+	        setResult(RESULT_OK);
+		finish();
+                if (StudyOptions.getApiLevel() > 4) {
+                    ActivityTransitionAnimation.slide(Feedback.this, ActivityTransitionAnimation.FADE);
+                }
+	}
+
 
     private void refreshInterface() {
         if (mReportErrorMode.equals(REPORT_ASK)) {
@@ -208,14 +223,12 @@ public class Feedback extends Activity {
             }
 
             deleteFiles(true, false);
-            setResult(RESULT_OK);
-            finish();
+            closeFeedback();
 
             return;
         } else if (mReportErrorMode.equals(REPORT_NEVER)) { // Never report
             deleteFiles(false, false);
-            setResult(RESULT_OK);
-            finish();
+            closeFeedback();
         }
 
         View mainView = getLayoutInflater().inflate(R.layout.feedback, null);
@@ -380,7 +393,7 @@ public class Feedback extends Activity {
             int errorIndex = (Integer)values[1];
             String state = (String)values[2];
 
-            if (isErrorType(postType)) {
+            if (isErrorType(postType) && mErrorReports.size() > errorIndex) {
                 mErrorReports.get(errorIndex).put("state", state);
                 if (!state.equals(Feedback.STATE_UPLOADING)) {
                     int returnCode = (Integer)values[3];

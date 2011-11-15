@@ -30,7 +30,6 @@
   <string name="feedback_send_feedback_and_errors">Отправить ошибки и ваши отзывы</string>
   <string name="feedback_message_sent_success">Отзыв получен, спасибо!</string>
   <string name="feedback_message_sent_failure">Не удалось отправить отзыв, code %1$s</string>
-  <string name="feedback_error_list_header">Список ошибок для отправки</string>
   <string name="feedback_keep_latest">Сохранить последнюю ошибку</string>
   <string name="feedback_clear_all">Очистить все ошибки</string>
   <string name="feedback_default_text">Пожалуйста, введите Ваш отзыв, или информацию о характере ошибки, которую Вы хотите сообщить.</string>
@@ -42,8 +41,4 @@
   <string name="feedback_error_reply_issue_fixed_prod">Проблема %1$d, устранена в последней версии</string>
   <string name="feedback_error_reply_malformed">Зарегистрированная ошибка, но пока не исправляется</string>
   <string name="feedback_error_reply_failed">Не удалось отправить</string>
-  <plurals name="error_message">
-    <item quantity="one">Есть одна ошибка для отчёта</item>
-    <item quantity="other">Найдено %d ошибки для отчета</item>
-  </plurals>
 </resources>

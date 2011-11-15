@@ -23,7 +23,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
-import android.content.res.Resources;
 import android.net.Uri;
 import android.text.Html;
 import android.util.Log;
@@ -82,6 +81,7 @@ import java.util.zip.Deflater;
  * TODO comments
  */
 public class Utils {
+    enum SqlCommandType { SQL_INS, SQL_UPD, SQL_DEL };
 
     // Used to format doubles with English's decimal separator system
     public static final Locale ENGLISH_LOCALE = new Locale("en_US");
@@ -135,9 +135,9 @@ public class Utils {
     		type = TIME_MINUTES;
     	} else if (Math.abs(time) < 60 * 60 * 24 || unit < 3) {
     		type = TIME_HOURS;
-    	} else if (Math.abs(time) < 60 * 60 * 24 * 30 || unit < 4) {
+    	} else if (Math.abs(time) < 60 * 60 * 24 * 29.5 || unit < 4) {
     		type = TIME_DAYS;
-    	} else if (Math.abs(time) < 60 * 60 * 24 * 365 || unit < 5) {
+    	} else if (Math.abs(time) < 60 * 60 * 24 * 30 * 11.95 || unit < 5) {
     		type = TIME_MONTHS;
     		point = 1;
     	} else {
@@ -218,6 +218,28 @@ public class Utils {
     	}
     	mCurrentNumberFormat.setMaximumFractionDigits(point);
     	return mCurrentPercentageFormat.format(value);
+    }
+
+
+    /**
+     * @return double with percentage sign
+     */
+    public static boolean isNewDay(long millies) {
+		Calendar cal = Calendar.getInstance();
+		if (cal.get(Calendar.HOUR_OF_DAY) < StudyOptions.mNewDayStartsAt) {
+            cal.add(Calendar.HOUR_OF_DAY, -cal.get(Calendar.HOUR_OF_DAY) - 24 + StudyOptions.mNewDayStartsAt);
+		} else {
+            cal.add(Calendar.HOUR_OF_DAY, -cal.get(Calendar.HOUR_OF_DAY) + StudyOptions.mNewDayStartsAt);
+		}
+        cal.add(Calendar.MINUTE, -cal.get(Calendar.MINUTE));
+        cal.add(Calendar.SECOND, -cal.get(Calendar.SECOND));
+        if (cal.getTimeInMillis() > millies) {
+        	return true;
+        } else {
+        	return false;
+        }
+	
+
     }
 
 
@@ -492,22 +514,30 @@ public class Utils {
 
     // Print methods
     public static void printJSONObject(JSONObject jsonObject) {
-        printJSONObject(jsonObject, "-", false);
+        printJSONObject(jsonObject, "-", null);
     }
 
 
     public static void printJSONObject(JSONObject jsonObject, boolean writeToFile) {
-        if (writeToFile) {
-            new File("/sdcard/payloadAndroid.txt").delete();
+        BufferedWriter buff;
+        try {
+            buff = writeToFile ?  
+                    new BufferedWriter(new FileWriter("/sdcard/payloadAndroid.txt"), 8192) : null;
+            try {
+                printJSONObject(jsonObject, "-", buff);
+            } finally {
+                if (buff != null)
+                    buff.close();
+            }
+        } catch (IOException ioe) {
+            Log.e(AnkiDroidApp.TAG, "IOException = " + ioe.getMessage());
         }
-        printJSONObject(jsonObject, "-", writeToFile);
     }
 
 
-    public static void printJSONObject(JSONObject jsonObject, String indentation, boolean writeToFile) {
+    private static void printJSONObject(JSONObject jsonObject, String indentation, BufferedWriter buff) {
         try {
-
-            Iterator<String> keys = jsonObject.keys();
+            @SuppressWarnings("unchecked") Iterator<String> keys = (Iterator<String>) jsonObject.keys();
             TreeSet<String> orderedKeysSet = new TreeSet<String>();
             while (keys.hasNext()) {
                 orderedKeysSet.add(keys.next());
@@ -520,20 +550,16 @@ public class Utils {
                 try {
                     Object value = jsonObject.get(key);
                     if (value instanceof JSONObject) {
-                        if (writeToFile) {
-                            BufferedWriter buff = new BufferedWriter(new FileWriter("/sdcard/payloadAndroid.txt", true));
+                        if (buff != null) {
                             buff.write(indentation + " " + key + " : ");
                             buff.newLine();
-                            buff.close();
                         }
                         Log.i(AnkiDroidApp.TAG, "	" + indentation + key + " : ");
-                        printJSONObject((JSONObject) value, indentation + "-", writeToFile);
+                        printJSONObject((JSONObject) value, indentation + "-", buff);
                     } else {
-                        if (writeToFile) {
-                            BufferedWriter buff = new BufferedWriter(new FileWriter("/sdcard/payloadAndroid.txt", true));
+                        if (buff != null) {
                             buff.write(indentation + " " + key + " = " + jsonObject.get(key).toString());
                             buff.newLine();
-                            buff.close();
                         }
                         Log.i(AnkiDroidApp.TAG, "	" + indentation + key + " = " + jsonObject.get(key).toString());
                     }
@@ -541,20 +567,20 @@ public class Utils {
                     Log.e(AnkiDroidApp.TAG, "JSONException = " + e.getMessage());
                 }
             }
-
         } catch (IOException e1) {
             Log.e(AnkiDroidApp.TAG, "IOException = " + e1.getMessage());
         }
-
     }
 
 
+    /*
     public static void saveJSONObject(JSONObject jsonObject) throws IOException {
         Log.i(AnkiDroidApp.TAG, "saveJSONObject");
         BufferedWriter buff = new BufferedWriter(new FileWriter("/sdcard/jsonObjectAndroid.txt", true));
         buff.write(jsonObject.toString());
         buff.close();
     }
+    */
 
 
     /**
@@ -596,6 +622,15 @@ public class Utils {
         Date today = Date.valueOf(df.format(cal.getTime()));
         return today;
     }
+
+
+    public static void printDate(String name, double date) {
+    	SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH-mm-ss");
+    	df.setTimeZone(TimeZone.getTimeZone("GMT"));
+    	Calendar cal = new GregorianCalendar(TimeZone.getTimeZone("GMT"));
+    	cal.setTimeInMillis((long)date * 1000);
+    	Log.d(AnkiDroidApp.TAG, "Value of " + name + ": " + cal.getTime().toGMTString());
+	}
 
 
     public static String doubleToTime(double value) {
@@ -655,16 +690,16 @@ public class Utils {
 
     
     public static String getBaseUrl(String mediaDir, Model model, Deck deck) {
-        String base = model.getFeatures().trim();
-        if (deck.getBool("remoteImages") && base.length() != 0 && !base.equalsIgnoreCase("null")) {
-            return base;
-        } else {
+        String base = null;// = model.getFeatures().trim();
+//        if (deck.getBool("remoteImages") && base.length() != 0 && !base.equalsIgnoreCase("null")) {
+  //          return base;
+    //    } else {
             // Anki desktop calls deck.mediaDir() here, but for efficiency reasons we only call it once in
             // Reviewer.onCreate() and use the value from there            
             if (mediaDir != null) {                              
                 base = urlEncodeMediaDir(mediaDir);
             }
-        }
+      //  }
         return base;
     }
 

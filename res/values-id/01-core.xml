@@ -24,7 +24,6 @@
   <string name="yes">Ya</string>
   <string name="no">Tidak</string>
   <string name="ok">OK</string>
-  <string name="studyoptions_title">Opsyen Studi</string>
   <string name="studyoptions_deck_name">Nama Dek</string>
   <string name="studyoptions_reviews_due">Reviu genap:</string>
   <string name="studyoptions_new_today">Baru hari ini:</string>
@@ -38,8 +37,6 @@
   <string name="deckpicker_loaddeck">Memuat dek ...</string>
   <string name="deckpicker_nodeck">Dek tidak dijumpai.</string>
   <string name="show_answer">Tunjuk Jawapan</string>
-  <string name="show_question">Ulang tayang Soalan</string>
-  <string name="card_hint">Kad imbas</string>
   <string name="ease1_learning">Lagi</string>
   <string name="ease2_learning">Baik</string>
   <string name="ease3_learning">Mudah</string>
@@ -50,10 +47,7 @@
   <string name="ease4_successive">Mudah</string>
   <string name="loading">Memuat...</string>
   <string name="studyoptions_continue">Terus Reviu</string>
-  <string name="studyoptions_well_done">Bagus!</string>
   <string name="studyoptions_congrats_title">Tahniah!</string>
-  <string name="studyoptions_congrats_card">Kad</string>
-  <string name="studyoptions_congrats_cards">Kad</string>
   <string name="studyoptions_congrats_learnmore">Belajar Lagi</string>
   <string name="studyoptions_congrats_reviewearly">Reviu Awal</string>
   <string name="studyoptions_congrats_syncdeck">Sinkronisasi dek</string>
@@ -64,25 +58,24 @@
   <string name="menu_rotate">Pusing</string>
   <string name="undo">Buat asal</string>
   <string name="redo">Buat semula</string>
-  <string name="close_current_deck">Penutupan dek. \nHarap tunggu...</string>
+  <string name="close_previous_deck">Closing previous deck.\nPlease wait...</string>
+  <string name="close_deck">Closing deck.\nPlease wait...</string>
+  <string name="finish_operation">Finishing previous operation.\nPlease wait...</string>
   <string name="contextmenu_deckpicker_download_missing_media">Muat turun media kurang</string>
   <string name="contextmenu_deckpicker_reset_language_assignments">Set Tugasan Bahasa</string>
   <string name="contextmenu_deckpicker_reset_reset_message">Set bahasa</string>
   <string name="contextmenu_deckpicker_optimize_deck">Optimumkan data</string>
   <string name="contextmenu_deckpicker_set_custom_dictionary">Set custom dictionary</string>
   <string name="begin_cram">Mula mod Cram</string>
-  <string name="end_cram">Henti mod Cram</string>
   <string name="cram">Cram</string>
   <string name="menu_open_deck">Semua dek</string>
   <string name="menu_sync">Sync</string>
   <string name="menu_download_deck">Muat turun dek</string>
   <string name="menu_download_shared_deck">Dek kongsi</string>
   <string name="menu_download_personal_deck">Dek personal</string>
-  <string name="menu_synchronize">Sinkronisasi</string>
   <string name="menu_my_account">Akaun Saya</string>
   <string name="menu_preferences">Keutamaan</string>
   <string name="menu_zeemote">Zeemote</string>
-  <string name="menu_deck_properties">Sifat-sifat Dek</string>
   <string name="menu_add_card">Tambahkan kad</string>
   <string name="menu_about">Tentang</string>
   <string name="menu_remove_card">Buang Kad</string>
@@ -98,9 +91,14 @@
   <string name="studyoptions_cram_dialog_title">Tag untuk cram</string>
   <string name="statistics">Statistik</string>
   <string name="studyoptions_load_other_deck">Muat Dek Lain</string>
-  <string name="studyoptions_load_sample_deck">Muat Dek Contoh</string>
+  <string name="studyoptions_load_tutorial_deck">Load Tutorial Deck</string>
   <string name="studyoptions_night_mode">Mod malam</string>
   <string name="studyoptions_swap_qa">Swap Soal/Jawab</string>
+  <string name="visit">Visit</string>
+  <string name="later">Later</string>
+  <string name="download">Download</string>
+  <string name="deckpicker_loading_error">Deck could not be loaded</string>
+  <string name="deckpicker_creating_backup">Creating backup...</string>
   <string-array name="next_review_s">
     <item>1 saat</item>
     <item>1 minit</item>

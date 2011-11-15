@@ -22,7 +22,7 @@
 <resources>
   <string name="pref_cat_decks">Desteler</string>
   <string name="pref_cat_sync">Eşitleme</string>
-  <string name="pref_cat_qadisplay">Ekran</string>
+  <string name="pref_cat_qadisplay">Görüntü</string>
   <string name="pref_cat_general">Genel</string>
   <string name="pref_cat_start">Açılış</string>
   <string name="pref_cat_extras">Ekstralar</string>
@@ -51,7 +51,7 @@
   <string name="whiteboard_stroke_width">Yazı tahtası kontur kalınlığı</string>
   <string name="whiteboard_stroke_width_summ">Kontur kalınlığı: XXX</string>
   <string name="whiteboard_black">Siyah-beyaz</string>
-  <string name="whiteboard_black_summ">Renkli yerleri siyah-beyaz gösterir (düşük hafızalı cihazlar için, gece modunda çalışmaz)</string>
+  <string name="whiteboard_black_summ">Renkli yerleri siyah-beyaz gösterir (düşük bellekli cihazlar için, gece modunda çalışmaz)</string>
   <string name="write_answers">Yanıtları yaz</string>
   <string name="write_answers_summ">Yanıtları yazıp doğrusuyla karşılaştırmanızı sağlar</string>
   <string name="text_selection">Metin seçimine izin ver</string>
@@ -62,14 +62,17 @@
   <string name="dictionary_summ">Aramaların gerçekleştirileceği sözlük: XXX</string>
   <string name="reset_languages">Dilleri Sıfırla</string>
   <string name="reset_languages_summ">Tüm destelerdeki dil atamalarını sıfırla (metin okuma ve sözlükler için). Belirli deste atamalarını sıfırlamak için deste seçiciyi kullanın.</string>
-  <string name="reset_all">Reset All</string>
-  <string name="reset_all_summ">Reset language, widget, whiteboard and dictionary states</string>
+  <string name="reset_all">Hepsini Sıfırla</string>
+  <string name="reset_all_summ">Dil, bileşen, yazı tahtası ve sözlük durumlarını sıfırla</string>
   <string name="reset_dialogs">İletişim Kutularını Sıfırla</string>
   <string name="reset_dialogs_question">Tüm iletişim kutuları sıfırlansın mı?</string>
   <string name="reset_dialogs_summ">Yeniden gösterilmemeye ayarlanmış tüm iletişim kutularını sıfırla</string>
   <string name="reset_languages_question">Tüm dil atamaları sıfırlansın mı?</string>
-  <string name="reset_all_question">Reset all language, widget, whiteboard and dictionary states?</string>
-  <string name="reset_confirmation">All states reset</string>
+  <string name="reset_messages">İletileri Sıfırla</string>
+  <string name="reset_messages_question">Geçerli iletiler yeniden gösterilsin mi?</string>
+  <string name="reset_messages_summ">Geçerli AnkiDroid iletilerini başka bir zaman göster</string>
+  <string name="reset_all_question">Tüm dil, bileşen, yazı tahtası ve sözlük durumları sıfırlansın mı?</string>
+  <string name="reset_confirmation">Tüm durumların sıfırlanması</string>
   <string name="use_ruby_support">Ruby dipnot desteği sağla</string>
   <string name="use_ruby_support_summ">\"[\" ve \"]\" karakterleri bulunuyorsa, aralarındaki metin ruby dipnotu olarak işlenir</string>
   <string name="display_font_size">Bağıl ekran yazı boyutu</string>
@@ -89,16 +92,16 @@
   <string name="zoom">Yakınlaştırmayı etkinleştir</string>
   <string name="zoom_summ">Gözden geçirme sırasında yakınlaştırma denetimlerini göster</string>
   <string name="zeemote">Zeemote JS1 desteği</string>
-  <string name="zeemote_summ">Use Zeemote JS1 controller to navigate reviews.</string>
+  <string name="zeemote_summ">Gözden geçirmelerde gezinmek için Zeemote JS1 denetimcisini kullan</string>
   <string name="swipe">Özel Hareketleri Etkinleştir</string>
   <string name="swipe_summ_off">Ekranlar arasında geçiş yapmak ve kartları yanıtlamak için özel hareketleri kullan. Bu seçenek yakınlaştırma denetimleriyle uyumlu değildir.</string>
   <string name="swipe_summ_on">Ekranlar arasında geçiş yapmak için yatay olarak sürükle. Diğer eylemleri aşağıda yapılandırın.</string>
   <string name="pref_cat_actions">Eylemler</string>
-  <string name="gestures_shake">Salla</string>
-  <string name="gestures_swipe_up">Yukarı sürükle</string>
-  <string name="gestures_swipe_down">Aşağı sürükle</string>
-  <string name="gestures_swipe_left">Sola sürükle</string>
-  <string name="gestures_swipe_right">Sağa sürükle</string>
+  <string name="gestures_shake">Sallama</string>
+  <string name="gestures_swipe_up">Yukarı sürükleme</string>
+  <string name="gestures_swipe_down">Aşağı sürükleme</string>
+  <string name="gestures_swipe_left">Sola sürükleme</string>
+  <string name="gestures_swipe_right">Sağa sürükleme</string>
   <string name="gestures_double_tap">Çift dokunma</string>
   <string name="gestures_tap_top">Yukarıya dokunma</string>
   <string name="gestures_tap_bottom">Aşağıya dokunma</string>
@@ -107,7 +110,7 @@
   <string name="pref_cat_scrolling">Fiziksel yukarı/aşağı düğmeleri</string>
   <string name="more_scrolling_buttons">eOkuyucu</string>
   <string name="more_scrolling_buttons_summ">Düşey kaydırma için Kanji/Katakana, Emoji/Kao-moji tuşlarını da kullan.</string>
-  <string name="double_scrolling_gap">Çift kaydırma</string>
+  <string name="double_scrolling_gap">Hızlı kaydırma</string>
   <string name="double_scrolling_gap_summ">Kaydırma hızını iki katına çıkarmak istiyorsanız bunu etkinleştirin.</string>
   <string name="swipe_sensibility">Sürükleme Duyarlılığı</string>
   <string name="swipe_sensibility_summ">Sürükleme hareketlerinin duyarlılığı: XXX</string>
@@ -129,9 +132,7 @@
   <string name="timeout_answer_text">Yanıtı kendiliğinden gösterme</string>
   <string name="timeout_answer_summ">Soruyu belli bir süre gösterdikten sonra yanıtı kullanıcı girdisi olmadan kendiliğinden gösterir.</string>
   <string name="timeout_answer_seconds">Yanıt gösterilmeden önceki saniye sayısı</string>
-  <string name="timeout_answer_seconds_summ">Yanıt kendiliğinden gözükmeden önceki süre miktarını seçin</string>
-  <string name="timeout_question_seconds">Seconds before the next question is shown</string>
-  <string name="timeout_question_seconds_summ">Select the amount of time before next question is automatically shown</string>
+  <string name="timeout_question_seconds">Sonraki soru gösterilmeden önceki saniye sayısı</string>
   <string name="select_locale_title">Dil Seç</string>
   <string name="select_theme">Tema</string>
   <string name="theme_animations">Animasyonlar</string>
@@ -192,4 +193,11 @@
   <string name="studyoptions_new_cards_per_day">Gün başına yeni kart sayısı</string>
   <string name="studyoptions_max_fail_card">En fazla başarısız kart sayısı</string>
   <string name="studyoptions_more_save">Kaydet</string>
+  <string name="show_broadcast_messages">Geçerli İletileri Göster</string>
+  <string name="show_broadcast_messages_summ">Yeni sürüm güncellemeleri ve önemli diğer haberler gibi AnkiDroid bildirimlerini göster</string>
+  <string name="input_workaround">Giriş Çözümü</string>
+  <string name="input_workaround_summ">HTML giriş kutularındaki odaklama sorunları için çözüm. Bazı cihazlarda sorun yaratabilir.</string>
+  <string name="write_answers_message">Her deste için yazılı yanıtların karşılaştırılacağı bir alan belirlemelisiniz. Bunu Anki Masaüstü yoluyla yapabilirsiniz (deste özellikleri -&gt; modeli düzenle -&gt; kart düzeni).\n\nKarşılaştırma alanı ayarlanmamışsa, yazılı yanıtınız her zaman kart yanıtının tümüyle karşılaştırılacak.</string>
+  <string name="pref_keep_screen_on">Ekranı Açık Tut</string>
+  <string name="pref_keep_screen_on_summ">Gözden geçirme sırasında ekranın kapanmasını engelle</string>
 </resources>

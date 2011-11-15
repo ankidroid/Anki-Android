@@ -36,7 +36,6 @@
   <string name="leech_notification">Tarjeta marcada como sanguijuela</string>
   <string name="about_title">Acerca de</string>
   <string name="cardeditor_title">Editor de tarjetas</string>
-  <string name="factadder_title">Añadir Tarjeta</string>
   <string name="factadder_saving_error">Error al guardar el hecho</string>
   <string name="saving_facts">Guardando los hechos</string>
   <string name="deckcreator_title">Creador de Mazos</string>
@@ -59,11 +58,16 @@
   <string name="studyoptions_no_external_storage_message">Almacenamiento externo no disponible actualmente. AnkiDroid necesita tener acceso a la tarjeta de memoria para leer y cargar tus mazos. Comprueba que la tarjeta de memoria está conectada e inténtalo de nuevo.</string>
   <string name="fact_adder_intent_title">Tarjeta de AnkiDroid</string>
   <string name="fact_adder_swap">Intercambiar</string>
-  <string name="deckpicker_select_dictionary_title">Select Dictionary</string>
-  <string name="deckpicker_select_dictionary_default">Default</string>
-  <string name="card_editor_lookup">Lookup</string>
-  <string name="card_editor_add_card">Add card</string>
-  <string name="card_editor_reset">Reset</string>
-  <string name="card_editor_copy_card">Copy card</string>
-  <string name="card_editor_reset_card">Reset progress</string>
+  <string name="deckpicker_select_dictionary_title">Seleccionar diccionario</string>
+  <string name="deckpicker_select_dictionary_default">Por defecto</string>
+  <string name="card_editor_add_card">Añadir tarjeta</string>
+  <string name="card_editor_reset">Restablecer</string>
+  <string name="card_editor_copy_card">Copiar tarjeta</string>
+  <string name="card_editor_reset_card">Reiniciar cuenta de progreso</string>
+  <string name="error_insufficient_memory">La operación no es posible debido a insuficiencia de memoria en tu dispositivo</string>
+  <string name="tutorial_load">Creando mazo tutorial</string>
+  <string name="tutorial_loading_error">No se pudo crear el mazo tutorial</string>
+  <string name="help_title">Ayuda</string>
+  <string name="help_online">Ayuda en línea</string>
+  <string name="help_tutorial">Mazo tutorial</string>
 </resources>

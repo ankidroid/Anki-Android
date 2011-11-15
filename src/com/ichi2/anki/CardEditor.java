@@ -82,6 +82,12 @@ import org.amr.arabic.ArabicUtilities;
  */
 public class CardEditor extends Activity {
 
+	public static final String SOURCE_LANGUAGE = "SOURCE_LANGUAGE";
+	public static final String TARGET_LANGUAGE = "TARGET_LANGUAGE";
+	public static final String SOURCE_TEXT = "SOURCE_TEXT";
+	public static final String TARGET_TEXT = "TARGET_TEXT";
+	public static final String DECKPATH = "DECK_PATH";
+
 	public static final String CARD_EDITOR_ACTION = "cea";
 	public static final int EDIT_REVIEWER_CARD = 0;
 	public static final int EDIT_BROWSER_CARD = 1;
@@ -104,7 +110,7 @@ public class CardEditor extends Activity {
 	private static final int MENU_RESET_CARD_PROGRESS = 4;
 
 	private static final int ACTION_ADD_CARD = 0;
-	
+
 	/**
 	 * Broadcast that informs us when the sd card is about to be unmounted
 	 */
@@ -122,12 +128,14 @@ public class CardEditor extends Activity {
 	private Button mCardModelButton;
 
 	private StyledDialog mCardModelDialog;
-	private StyledDialog mDeckSelectDialog;
 
 	private Fact mEditorFact;
 	private boolean mAddFact = false;
 	private boolean mForCopy = false;
 	private boolean mIntentAdd = false;
+	private String mDeckPath;
+
+	private boolean mCardReset = false;
 
 	private Deck mDeck;
 	private Long mCurrentSelectedModelId;
@@ -145,15 +153,14 @@ public class CardEditor extends Activity {
 	private HashSet<String> mSelectedTags;
 	private String mFactTags = "";
 	private EditText mNewTagEditText;
-	private ImageView mAddTextButton;
 	private StyledDialog mTagsDialog;
 
 	private ProgressDialog mProgressDialog;
 
 	private HashMap<String, String> mFullDeckPaths;
 	private String[] mDeckNames;
-	private String mSourceLanguage;
-	private String mTargetLanguage;
+//	private String mSourceLanguage;
+//	private String mTargetLanguage;
 	private String mSourceText;
 	private String mTargetText;
 	private int mSourcePosition = 0;
@@ -175,7 +182,6 @@ public class CardEditor extends Activity {
 		@Override
 		public void onProgressUpdate(DeckTask.TaskData... values) {
 			if (values[0].getBoolean()) {
-				setResult(RESULT_OK);
 				mEditorFact = mDeck.newFact(mCurrentSelectedModelId);
 				populateEditFields();
 				mSave.setEnabled(false);
@@ -187,7 +193,12 @@ public class CardEditor extends Activity {
 						.getString(R.string.factadder_saving_error), true);
 			}
 			if (mProgressDialog != null && mProgressDialog.isShowing()) {
-				mProgressDialog.dismiss();
+				try {
+					mProgressDialog.dismiss();
+				} catch (IllegalArgumentException e) {
+					Log.e(AnkiDroidApp.TAG, "Card Editor: Error on dismissing progress dialog: " + e);
+				}
+
 			}
 		}
 
@@ -198,6 +209,7 @@ public class CardEditor extends Activity {
 			}
 		}
 	};
+
 
 	// ----------------------------------------------------------------------------
 	// ANDROID METHODS
@@ -234,10 +246,10 @@ public class CardEditor extends Activity {
 		if (action != null && action.equals(INTENT_CREATE_FLASHCARD)) {
 			prepareForIntentAddition();
 			Bundle extras = intent.getExtras();
-			mSourceLanguage = extras.getString("SOURCE_LANGUAGE");
-			mTargetLanguage = extras.getString("TARGET_LANGUAGE");
-			mSourceText = extras.getString("SOURCE_TEXT");
-			mTargetText = extras.getString("TARGET_TEXT");
+//			mSourceLanguage = extras.getString(SOURCE_LANGUAGE);
+//			mTargetLanguage = extras.getString(TARGET_LANGUAGE);
+			mSourceText = extras.getString(SOURCE_TEXT);
+			mTargetText = extras.getString(TARGET_TEXT);
 			mAddFact = true;
 			mIntentAdd = true;
 		} else if (action != null
@@ -249,13 +261,28 @@ public class CardEditor extends Activity {
 			mAddFact = true;
 			mIntentAdd = true;
 		} else {
-			mDeck = AnkiDroidApp.deck();
+			mDeckPath = intent.getStringExtra(DECKPATH);
+			if (mDeckPath != null && mDeckPath.length() > 0) {
+				mDeck = Deck.openDeck(mDeckPath, false);
+			} else {
+				mDeck = AnkiDroidApp.deck();
+			}
 			switch (intent.getIntExtra(CARD_EDITOR_ACTION, ADD_CARD)) {
 			case EDIT_REVIEWER_CARD:
-				mEditorFact = Reviewer.getEditorCard().getFact();
+				Card revCard = Reviewer.getEditorCard();
+				if (revCard == null) {
+					finish();
+					return;
+				}
+				mEditorFact = revCard.getFact();
 				break;
 			case EDIT_BROWSER_CARD:
-				mEditorFact = CardBrowser.getEditorCard().getFact();
+				Card browCard = CardBrowser.getEditorCard();
+				if (browCard == null) {
+					finish();
+					return;
+				}
+				mEditorFact = browCard.getFact();
 				break;
 			case COPY_CARD:
 				mForCopy = true;
@@ -332,13 +359,15 @@ public class CardEditor extends Activity {
 						}
 					}
 					if (!empty) {
+						setResult(Reviewer.RESULT_EDIT_CARD_RESET);
 						mEditorFact.setTags(mFactTags);
 						DeckTask.launchDeckTask(DeckTask.TASK_TYPE_ADD_FACT,
 								mSaveFactHandler, new DeckTask.TaskData(mDeck,
 										mEditorFact, mSelectedCardModels));
-						setResult(RESULT_OK);
 					} else {
-						setResult(RESULT_CANCELED);
+						if (!mCardReset) {
+							setResult(RESULT_CANCELED);
+						}
 					}
 				} else {
 					Iterator<FieldEditText> iter = mEditFields.iterator();
@@ -352,10 +381,12 @@ public class CardEditor extends Activity {
 					}
 					// Only send result to save if something was actually
 					// changed
-					if (mModified) {
-						setResult(RESULT_OK);
-					} else {
-						setResult(RESULT_CANCELED);
+					if (!mCardReset) {
+						if (mModified) {
+							setResult(RESULT_OK);
+						} else {
+							setResult(RESULT_CANCELED);
+						}						
 					}
 					closeCardEditor();
 				}
@@ -367,7 +398,9 @@ public class CardEditor extends Activity {
 
 			@Override
 			public void onClick(View v) {
-				setResult(RESULT_CANCELED);
+				if (!mCardReset) {
+					setResult(RESULT_CANCELED);					
+				}
 				closeCardEditor();
 			}
 
@@ -426,7 +459,7 @@ public class CardEditor extends Activity {
 	@Override
 	public boolean onPrepareOptionsMenu(Menu menu) {
 		View focus = this.getWindow().getCurrentFocus();
-        menu.findItem(MENU_LOOKUP).setEnabled(focus instanceof FieldEditText);			
+        menu.findItem(MENU_LOOKUP).setEnabled(focus instanceof FieldEditText && ((TextView)focus).getText().length() > 0 && Lookup.isAvailable());			
 
         for (int i = 0; i < mEditFields.size(); i++) {
 			if (mEditFields.get(i).getText().length() > 0) {
@@ -453,6 +486,9 @@ public class CardEditor extends Activity {
 					contents.append(current.getText().toString()).append("\u001f");
 				}
 				intent.putExtra("contents", contents.toString());
+				if (mDeckPath != null && mDeckPath.length() > 0) {
+					intent.putExtra(DECKPATH, mDeckPath);
+				}
 			} else {
 				intent.putExtra(CardEditor.CARD_EDITOR_ACTION, CardEditor.ADD_CARD);
 			}
@@ -490,7 +526,7 @@ public class CardEditor extends Activity {
 				if (!field.isSelected()) {
 					field.selectAll();
 				}
-				Lookup.lookUp(field.getText().toString().substring(field.getSelectionStart(), field.getSelectionEnd()), mDeck.cardFromId(mDeck.getCardsFromFactId(mEditorFact.getId()).get(0)));
+				Lookup.lookUp(field.getText().toString().substring(field.getSelectionStart(), field.getSelectionEnd()), null);
 			}
 			return true;
 		case MENU_RESET_CARD_PROGRESS:
@@ -530,6 +566,8 @@ public class CardEditor extends Activity {
 		mModels = Model.getModels(mDeck);
 		mCurrentSelectedModelId = mDeck.getCurrentModelId();
 		modelChanged();
+		mEditFields.get(0).setText(mSourceText);
+		mEditFields.get(1).setText(mTargetText);
 	}
 
 	private void prepareForIntentAddition() {
@@ -549,11 +587,23 @@ public class CardEditor extends Activity {
 	}
 
 	private void closeCardEditor() {
-		finish();
-		if (Integer.valueOf(android.os.Build.VERSION.SDK) > 4) {
-			ActivityTransitionAnimation.slide(CardEditor.this,
-					ActivityTransitionAnimation.RIGHT);
+		if (mIntentAdd && mDeck != null) {
+			Deck deck = AnkiDroidApp.deck();
+			if (deck == null || !deck.getDeckPath().equals(mDeckPath)) {
+				DeckTask.launchDeckTask(DeckTask.TASK_TYPE_CLOSE_DECK,  new DeckTask.TaskListener() {
+			        @Override
+			        public void onPreExecute() {
+			        }
+			        @Override
+			        public void onPostExecute(DeckTask.TaskData result) {
+			        }
+			        @Override
+			        public void onProgressUpdate(DeckTask.TaskData... values) {
+			        }
+				}, new DeckTask.TaskData(mDeck, 0));
+			}
 		}
+		finish();
 	}
 
 	@Override
@@ -629,7 +679,7 @@ public class CardEditor extends Activity {
 			frame.addView(mNewTagEditText);
 			frame.addView(mAddTextButton);
 
-			builder.setView(frame, true);
+			builder.setView(frame, false, true);
 			dialog = builder.create();
 			mTagsDialog = dialog;
 			break;
@@ -763,7 +813,8 @@ public class CardEditor extends Activity {
 								mDeck.cardFromId(cardId).resetCard();
 							}
 							mDeck.reset();
-							setResult(RESULT_OK);
+							setResult(Reviewer.RESULT_EDIT_CARD_RESET);
+							mCardReset = true;
 							Themes.showThemedToast(CardEditor.this, getResources().getString(
 									R.string.reset_card_dialog_confirmation), true);
 						}
@@ -782,7 +833,12 @@ public class CardEditor extends Activity {
 		switch (id) {
 		case DIALOG_TAGS:
 			if (allTags == null) {
-				String[] oldTags = AnkiDroidApp.deck().allUserTags();
+				String[] oldTags = mDeck.allUserTags();
+		        if (oldTags == null) {
+		        	Themes.showThemedToast(CardEditor.this, getResources().getString(R.string.error_insufficient_memory), false);
+		        	ad.setEnabled(false);
+		        	return;
+		        }
 				Log.i(AnkiDroidApp.TAG, "all tags: "
 								+ Arrays.toString(oldTags));
 				allTags = new String[oldTags.length];
@@ -860,7 +916,18 @@ public class CardEditor extends Activity {
 		}
 	}
 
-	private void modelChanged() {
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == Reviewer.RESULT_EDIT_CARD_RESET) {
+        	mCardReset = true;
+        	setResult(Reviewer.RESULT_EDIT_CARD_RESET);
+        }
+    }
+
+
+    private void modelChanged() {
 		mEditorFact = mDeck.newFact(mCurrentSelectedModelId);
 		mSelectedCardModels = mDeck.activeCardModels(mEditorFact);
 
@@ -871,26 +938,47 @@ public class CardEditor extends Activity {
 		swapText(true);
 	}
 
+
 	private void loadDeck(int item) {
-		mDeck = Deck.openDeck(mFullDeckPaths.get(mDeckNames[item]), false);
-		if (mDeck == null) {
-			Themes.showThemedToast(CardEditor.this, getResources().getString(
-					R.string.fact_adder_deck_not_loaded), true);
+		String deckName = mDeckNames[item];
+		mDeckPath = mFullDeckPaths.get(deckName);
+		Deck deck = AnkiDroidApp.deck();
+		if (deck != null && deck.getDeckPath().equals(mDeckPath)) {
+			mDeck = deck;
 		} else {
-			setTitle(mDeckNames[item]);
-			loadContents();
+			try {
+				mDeck = Deck.openDeck(mDeckPath, false);
+				if (mDeck == null) {
+					Themes.showThemedToast(CardEditor.this, getResources().getString(
+							R.string.fact_adder_deck_not_loaded), true);
+					BackupManager.restoreDeckIfMissing(mDeckPath);
+					return;
+				}				
+			} catch (RuntimeException e) {
+				Log.e(AnkiDroidApp.TAG, "CardEditor: error on opening deck: " + e);
+				Themes.showThemedToast(CardEditor.this, getResources().getString(
+						R.string.fact_adder_deck_not_loaded), true);
+				BackupManager.restoreDeckIfMissing(mDeckPath);
+				return;				
+			}
 		}
+		setTitle(deckName);
+		loadContents();
 	}
 
 	private void swapText(boolean reset) {
-		String sourceText = mEditFields.get(mSourcePosition).getText().toString();
-		if (sourceText.length() == 0) {
-			sourceText = mSourceText;
-		}
-		String targetText = mEditFields.get(mTargetPosition).getText().toString();
-		if (targetText.length() == 0) {
-			targetText = mTargetText;
-		}
+		// get source text
+		FieldEditText field = mEditFields.get(mSourcePosition);
+		Editable sourceText = field.getText();
+		boolean sourceCutMode = field.getCutMode();
+		FieldEditText.WordRow[] sourceCutString = field.getCutString(); 
+
+		// get target text
+		field = mEditFields.get(mTargetPosition);
+		Editable targetText = field.getText();
+		boolean targetCutMode = field.getCutMode();
+		FieldEditText.WordRow[] targetCutString = field.getCutString(); 
+
 		if (mEditFields.size() > mSourcePosition) {
 			mEditFields.get(mSourcePosition).setText("");
 		}
@@ -916,9 +1004,11 @@ public class CardEditor extends Activity {
 		}
 		if (sourceText != null) {
 			mEditFields.get(mSourcePosition).setText(sourceText);
+			mEditFields.get(mSourcePosition).setCutMode(sourceCutMode, sourceCutString);
 		}
 		if (targetText != null) {
 			mEditFields.get(mTargetPosition).setText(targetText);
+			mEditFields.get(mTargetPosition).setCutMode(targetCutMode, targetCutString);
 		}
 	}
 
@@ -1045,37 +1135,16 @@ public class CardEditor extends Activity {
 		public ImageView getCircle() {
 			mCircle = new ImageView(this.getContext());
 			mCircle.setImageResource(R.drawable.ic_circle_normal);
+			mKeyListener = FieldEditText.this.getKeyListener();
 			mCircle.setOnClickListener(new View.OnClickListener() {
 				@Override
 				public void onClick(View v) {
-					ImageView view = ((ImageView) v);
 					Editable editText = FieldEditText.this.getText();
 					if (mCutMode) {
-						view.setImageResource(R.drawable.ic_circle_normal);
-						FieldEditText.this.setKeyListener(mKeyListener);
-						FieldEditText.this.setCursorVisible(true);
-						for (WordRow row : mCutString) {
-							if (row.mEnabled && !row.mWord.equals(NL_MARK)) {
-								removeDeleted();
-								break;
-							}
-						}
-						StrikethroughSpan[] ss = editText.getSpans(0, editText
-								.length(), StrikethroughSpan.class);
-						for (StrikethroughSpan s : ss) {
-							editText.removeSpan(s);
-						}
-						mCutMode = false;
+						setCutMode(false, null);
+						updateContentAfterWordSelection(editText);
 					} else {
-						view.setImageResource(R.drawable.ic_circle_pressed);
-						InputMethodManager imm = (InputMethodManager) mContext
-								.getSystemService(Context.INPUT_METHOD_SERVICE);
-						imm.hideSoftInputFromWindow(FieldEditText.this
-								.getWindowToken(), 0);
-						mKeyListener = FieldEditText.this.getKeyListener();
-						FieldEditText.this.setKeyListener(null);
-						FieldEditText.this.setCursorVisible(false);
-						mCutMode = true;
+						setCutMode(true, null);
 						String text = editText.toString();
 						splitText(text);
 						int pos = 0;
@@ -1103,7 +1172,40 @@ public class CardEditor extends Activity {
 			return mCircle;
 		}
 
+
+		public boolean getCutMode() {
+			return mCutMode;
+		}
+
+
+		public WordRow[] getCutString() {
+			return mCutString;
+		}
+
+
+		public void setCutMode(boolean active, WordRow[] cutString) {
+			mCutMode = active;
+			if (mCutMode) {
+				mCircle.setImageResource(R.drawable.ic_circle_pressed);
+				InputMethodManager imm = (InputMethodManager) mContext.getSystemService(Context.INPUT_METHOD_SERVICE);
+				imm.hideSoftInputFromWindow(FieldEditText.this.getWindowToken(), 0);
+				FieldEditText.this.setKeyListener(null);
+				FieldEditText.this.setCursorVisible(false);
+				if (cutString != null) {
+					mCutString = cutString;
+				}
+			} else {
+				mCircle.setImageResource(R.drawable.ic_circle_normal);
+				FieldEditText.this.setKeyListener(mKeyListener);
+				FieldEditText.this.setCursorVisible(true);
+			}
+		}
+
+
 		public boolean updateField() {
+			if (mCutMode) {
+				updateContentAfterWordSelection(FieldEditText.this.getText());
+			}
 			String newValue = this.getText().toString().replace(NEW_LINE, "<br />");
 			if (!mPairField.getValue().equals(newValue)) {
 				mPairField.setValue(newValue);
@@ -1111,6 +1213,23 @@ public class CardEditor extends Activity {
 			}
 			return false;
 		}
+
+
+		public void updateContentAfterWordSelection(Editable editText) {
+			for (WordRow row : mCutString) {
+				if (row.mEnabled && !row.mWord.equals(NL_MARK)) {
+					removeDeleted();
+					break;
+				}
+			}
+			StrikethroughSpan[] ss = editText.getSpans(0, editText
+					.length(), StrikethroughSpan.class);
+			for (StrikethroughSpan s : ss) {
+				editText.removeSpan(s);
+			}
+			mCutMode = false;
+		}
+
 
 		public void updateSpannables() {
 			int cursorPosition = this.getSelectionStart();

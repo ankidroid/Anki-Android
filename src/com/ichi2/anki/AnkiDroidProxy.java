@@ -71,6 +71,7 @@ public class AnkiDroidProxy {
     public static final int LOGIN_OLD_VERSION = 4;
     /** The server is too busy to serve the request. */
     public static final int LOGIN_TOO_BUSY = 5;
+    public static final int DB_ERROR = 6;
 
     /**
      * Shared deck's fields
@@ -174,9 +175,9 @@ public class AnkiDroidProxy {
     public boolean hasDeck(String name) {
         // We assume that gets have already been loading by doing a connect.
         if (mDecks == null) throw new IllegalStateException("Should have called connect first");
-        Iterator decksIterator = mDecks.keys();
+        @SuppressWarnings("unchecked") Iterator<String> decksIterator = (Iterator<String>) mDecks.keys();
         while (decksIterator.hasNext()) {
-            String serverDeckName = (String) decksIterator.next();
+            String serverDeckName = decksIterator.next();
             if (name.equalsIgnoreCase(serverDeckName)) {
                 return true;
             }
@@ -307,7 +308,7 @@ public class AnkiDroidProxy {
 
     public List<String> getPersonalDecks() {
         ArrayList<String> personalDecks = new ArrayList<String>();
-        Iterator decksIterator = mDecks.keys();
+        @SuppressWarnings("unchecked") Iterator<String> decksIterator = (Iterator<String>) mDecks.keys();
         while (decksIterator.hasNext()) {
             personalDecks.add((String) decksIterator.next());
         }
@@ -424,6 +425,9 @@ public class AnkiDroidProxy {
         } catch (JSONException e) {
             Log.e(AnkiDroidApp.TAG, "JSONException = " + e.getMessage());
             Log.e(AnkiDroidApp.TAG, Log.getStackTraceString(e));
+        } catch (OutOfMemoryError e) {
+            Log.e(AnkiDroidApp.TAG, "OutOfMemoryError = " + e.getMessage());
+            Log.e(AnkiDroidApp.TAG, Log.getStackTraceString(e));
         }
         return null;
     }
@@ -467,7 +471,7 @@ public class AnkiDroidProxy {
             Log.i(AnkiDroidApp.TAG, "Payload response = ");
             payloadReply = new JSONObject(contentString);
             Utils.printJSONObject(payloadReply, false);
-            Utils.saveJSONObject(payloadReply);
+            //Utils.saveJSONObject(payloadReply); //XXX: do we really want to append all JSON objects forever? I don't think so.
         } catch (UnsupportedEncodingException e) {
             Log.e(AnkiDroidApp.TAG, "UnsupportedEncodingException = " + e.getMessage());
             Log.e(AnkiDroidApp.TAG, Log.getStackTraceString(e));
@@ -511,6 +515,11 @@ public class AnkiDroidProxy {
         }
 
         return sSharedDecks;
+    }
+
+
+    public static void resetSharedDecks() {
+    	sSharedDecks = null;
     }
 
 

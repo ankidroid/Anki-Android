@@ -54,6 +54,7 @@
   <string name="card_details_changed">Άλλαξε</string>
   <string name="card_details_tags">Ετικέτες</string>
   <string name="card_details_model">Μοντέλο</string>
+  <string name="card_browser_sorting_cards">Sorting cards.\nPlease wait...</string>
   <string name="card_details_card_model">Υπόδειγμα κάρτα</string>
   <string-array name="card_browser_order_labels">
     <item>Με την ερώτηση</item>

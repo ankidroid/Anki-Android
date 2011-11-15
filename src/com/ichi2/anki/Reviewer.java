@@ -19,6 +19,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.lang.reflect.Method;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.text.ParseException;
@@ -30,7 +31,6 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
-import android.content.ComponentName;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -47,7 +47,6 @@ import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.media.AudioManager;
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -101,7 +100,16 @@ public class Reviewer extends Activity {
      */
     public static final int RESULT_SESSION_COMPLETED = 1;
     public static final int RESULT_NO_MORE_CARDS = 2;
+    public static final int RESULT_EDIT_CARD_RESET = 3;
+    public static final int RESULT_ANSWERING_ERROR = 4;
 
+    /**
+     * Possible values for update card handler
+     */
+    public static final int UPDATE_CARD_NEW_CARD = 0;
+    public static final int UPDATE_CARD_SHOW_QUESTION = 1;
+    public static final int UPDATE_CARD_SHOW_ANSWER = 2;
+    
     /**
      * Available options performed by other activities.
      */
@@ -187,6 +195,7 @@ public class Reviewer extends Activity {
     private boolean mPrefWhiteboard;
     private boolean mPrefWriteAnswers;
     private boolean mPrefTextSelection;
+    private boolean mInputWorkaround;
     private boolean mLongClickWorkaround;
     private boolean mPrefFullscreenReview;
     private boolean mshowNextReviewTime;
@@ -213,15 +222,15 @@ public class Reviewer extends Activity {
     private boolean mIsLastCard = false;
     private boolean mShowProgressBars;
     private boolean mPrefUseTimer;
-    private boolean mShowAnimations = true;
+    private boolean mShowAnimations = false;
     private String mLocale;
 
     private boolean mIsSelecting = false;
     private boolean mTouchStarted = false;
     private boolean mIsAnswering = false;
 
-    @SuppressWarnings("unused")
-    private boolean mUpdateNotifications; // TODO use Veecheck only if this is true
+//    @SuppressWarnings("unused")
+//    private boolean mUpdateNotifications; // TODO use Veecheck only if this is true
 
     private String mCardTemplate;
     
@@ -283,10 +292,9 @@ public class Reviewer extends Activity {
     private int mStatisticBarsMax;
     private int mStatisticBarsHeight;
 
-    private boolean mClosing = false;
-
     private long mSavedTimer = 0;
 
+    private boolean mRefreshWebview = false;
     private File[] mCustomFontFiles;
     private String mCustomDefaultFontCss;
 
@@ -354,6 +362,7 @@ public class Reviewer extends Activity {
 
     private int mFadeDuration = 300;
 
+	private Method mSetScrollbarBarFading = null;
 
     /**
      * The answer in the compare to field for the current card if answer should be given by learner.
@@ -445,7 +454,7 @@ public class Reviewer extends Activity {
         @Override
         public void onClick(View view) {
             Log.i(AnkiDroidApp.TAG, "Flip card changed:");
-
+            mTimeoutHandler.removeCallbacks(mShowAnswerTask);
             displayCardAnswer();
         }
     };
@@ -454,6 +463,7 @@ public class Reviewer extends Activity {
     private View.OnClickListener mSelectEaseHandler = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
+        	mTimeoutHandler.removeCallbacks(mShowQuestionTask);
         	if (mIsAnswering) {
         		return;
         	}
@@ -490,19 +500,30 @@ public class Reviewer extends Activity {
             if (mPrefTextSelection && !mLongClickWorkaround) {
             	switch (event.getAction()) {
             	case MotionEvent.ACTION_DOWN:
-            		longClickHandler.postDelayed(longClickTestRunnable, 500);
             		mTouchStarted = true;
+            		longClickHandler.postDelayed(longClickTestRunnable, 800);
             		break;
             	case MotionEvent.ACTION_UP:
             	case MotionEvent.ACTION_MOVE:
                     if(mTouchStarted) {
-                    	mTouchStarted = false;
                         longClickHandler.removeCallbacks(longClickTestRunnable);
+                    	mTouchStarted = false;
                     }
             		break;
             	}
             }
-            mCard.dispatchTouchEvent(event);
+            try {
+                if (event != null) {
+    	            mCard.dispatchTouchEvent(event);
+                }            	
+            } catch (NullPointerException e) {
+            	Log.e(AnkiDroidApp.TAG, "Error on dispatching touch event: " + e);
+            	if (mInputWorkaround) {
+                	Log.e(AnkiDroidApp.TAG, "Error on using InputWorkaround: " + e + " --> disabled");
+                	PrefSettings.getSharedPrefs(getBaseContext()).edit().putBoolean("inputWorkaround", false).commit();            		
+                	finish();
+            	}
+            }
             return false;
         }
     };
@@ -539,6 +560,11 @@ public class Reviewer extends Activity {
 
         @Override
         public void onPostExecute(DeckTask.TaskData result) {
+            if (!result.getBoolean()) {
+            	// RuntimeException occured on marking cards
+                Reviewer.this.setResult(RESULT_ANSWERING_ERROR);
+                closeReviewer(true);
+            }
             mProgressDialog.dismiss();
         }
     };
@@ -562,15 +588,21 @@ public class Reviewer extends Activity {
 
         @Override
         public void onPostExecute(DeckTask.TaskData result) {
+            if (!result.getBoolean()) {
+            	// RuntimeException occured on dismissing cards
+                Reviewer.this.setResult(RESULT_ANSWERING_ERROR);
+                closeReviewer(true);
+                return;
+            }
             // Check for no more cards before session complete. If they are both true,
             // no more cards will take precedence when returning to study options.
             if (mNoMoreCards) {
                 Reviewer.this.setResult(RESULT_NO_MORE_CARDS);
                 mShowCongrats = true;
-                closeReviewer();
+                closeReviewer(true);
             } else if (mSessionComplete) {
                 Reviewer.this.setResult(RESULT_SESSION_COMPLETED);
-                closeReviewer();
+                closeReviewer(true);
             }
         }
     };
@@ -579,13 +611,18 @@ public class Reviewer extends Activity {
         @Override
         public void onPreExecute() {
         	Resources res = getResources();
-        	mProgressDialog = ProgressDialog.show(Reviewer.this, "", res.getString(R.string.saving_changes), true);
+		try {
+	        	mProgressDialog = ProgressDialog.show(Reviewer.this, "", res.getString(R.string.saving_changes), true);
+		} catch (IllegalArgumentException e) {
+			Log.e(AnkiDroidApp.TAG, "Reviewer: Error on showing progress dialog: " + e);
+		}
         }
 
 
         @Override
         public void onProgressUpdate(DeckTask.TaskData... values) {
             mCurrentCard = values[0].getCard();
+            int showQuestion = values[0].getInt();
             if (mPrefWhiteboard) {
                 mWhiteboard.clear();
             }
@@ -594,21 +631,36 @@ public class Reviewer extends Activity {
                 mCardTimer.setBase(SystemClock.elapsedRealtime());
                 mCardTimer.start();
             }
-            displayCardQuestion();
-            if (mProgressDialog != null && mProgressDialog.isShowing()) {
-                mProgressDialog.dismiss();            	
+            if (showQuestion == UPDATE_CARD_SHOW_ANSWER) {
+                displayCardAnswer();            	
+            } else {
+                displayCardQuestion();
+            }
+            try {
+                if (mProgressDialog != null && mProgressDialog.isShowing()) {
+			mProgressDialog.dismiss();
+                }
+            } catch (IllegalArgumentException e) {
+                Log.e(AnkiDroidApp.TAG, "Reviewer: Error on dismissing progress dialog: " + e);
+                mProgressDialog = null;
             }
         }
 
 
         @Override
         public void onPostExecute(DeckTask.TaskData result) {
+            if (!result.getBoolean()) {
+            	// RuntimeException occured on update cards
+                Reviewer.this.setResult(RESULT_ANSWERING_ERROR);
+                closeReviewer(true);
+                return;
+            }
             mShakeActionStarted = false;
-            if (result != null) {
-                String str = result.getString();
-                if (str != null && str.equals(Deck.UNDO_TYPE_SUSPEND_CARD)) {
+            String str = result.getString();
+            if (str != null) {
+                if (str.equals(Deck.UNDO_TYPE_SUSPEND_CARD)) {
                 	Themes.showThemedToast(Reviewer.this, getResources().getString(R.string.card_unsuspended), true);
-                } else if (result.getString().equals("redo suspend")) {
+                } else if (str.equals("redo suspend")) {
                 	Themes.showThemedToast(Reviewer.this, getResources().getString(R.string.card_suspended), true);           	
                 }            	
             }
@@ -640,15 +692,21 @@ public class Reviewer extends Activity {
 
         @Override
         public void onPostExecute(DeckTask.TaskData result) {
+            if (!result.getBoolean()) {
+            	// RuntimeException occured on answering cards
+                Reviewer.this.setResult(RESULT_ANSWERING_ERROR);
+                closeReviewer(true);
+                return;
+            }
             // Check for no more cards before session complete. If they are both true,
             // no more cards will take precedence when returning to study options.
             if (mNoMoreCards) {
                 Reviewer.this.setResult(RESULT_NO_MORE_CARDS);
                 mShowCongrats = true;
-                closeReviewer();
+                closeReviewer(true);
             } else if (mSessionComplete) {
                 Reviewer.this.setResult(RESULT_SESSION_COMPLETED);
-                closeReviewer();
+                closeReviewer(true);
             }
         }
     };
@@ -711,7 +769,6 @@ public class Reviewer extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
     	Themes.applyTheme(this);
         super.onCreate(savedInstanceState);
-
         Log.i(AnkiDroidApp.TAG, "Reviewer - onCreate");
 
         mChangeBorderStyle = Themes.getTheme() != Themes.THEME_BLUE;
@@ -749,10 +806,17 @@ public class Reviewer extends Activity {
             	mCurrentBackgroundColor = Color.WHITE;
             }
 
-      	  	mCustomFontFiles = Utils.getCustomFonts(getBaseContext());
+            try {
+            	mSetScrollbarBarFading = WebView.class.getMethod("setScrollbarFadingEnabled", boolean.class);
+            } catch (Throwable e) {
+            	Log.i(AnkiDroidApp.TAG, "setScrollbarFadingEnabled could not be found due to a too low Android version (< 2.1)");
+            }
+
+		mRefreshWebview = getRefreshWebview();
+
             initLayout(R.layout.flashcard);
             if (mPrefTextSelection) {
-                mClipboard.setText("");
+                clipboardSetText("");
                 Lookup.initialize(this, mDeckFilename);
             }
 
@@ -784,6 +848,7 @@ public class Reviewer extends Activity {
 
             // Load the first card and start reviewing. Uses the answer card task to load a card, but since we send null
             // as the card to answer, no card will be answered.
+
             DeckTask.launchDeckTask(DeckTask.TASK_TYPE_ANSWER_CARD, mAnswerCardHandler, new DeckTask.TaskData(0,
                     deck, null));
         }
@@ -796,11 +861,19 @@ public class Reviewer extends Activity {
         super.onPause();
         Log.i(AnkiDroidApp.TAG, "Reviewer - onPause()");
 
+    	mTimeoutHandler.removeCallbacks(mShowAnswerTask);
+    	mTimeoutHandler.removeCallbacks(mShowQuestionTask);
+    	longClickHandler.removeCallbacks(longClickTestRunnable);
+    	longClickHandler.removeCallbacks(startSelection);
+
         stopTimer();
-        if (!mClosing) {
+        if (!isFinishing()) {
             // Save changes
             Deck deck = AnkiDroidApp.deck();
-            deck.commitToDB();
+            if (deck != null) {
+	            DeckTask.waitToFinish();
+	            deck.commitToDB();
+            }
             WidgetStatus.update(getBaseContext());
         }
 
@@ -849,7 +922,7 @@ public class Reviewer extends Activity {
     public boolean onKeyDown(int keyCode, KeyEvent event)  {
         if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
         	Log.i(AnkiDroidApp.TAG, "Reviewer - onBackPressed()");
-        	closeReviewer();
+        	closeReviewer(false);
         	return true;
         }
          /** Enhancement 722: Hardware buttons for scrolling, I.Z. */
@@ -986,6 +1059,19 @@ public class Reviewer extends Activity {
         return true;
     }
 
+    //These three methods use a deprecated API - they should be updated to possibly use its more modern version.
+    private boolean clipboardHasText() {
+        return mClipboard.hasText();
+    }
+
+    private void clipboardSetText(CharSequence text) {
+        mClipboard.setText(text);
+    }
+
+    private CharSequence clipboardGetText() {
+        return mClipboard.getText();
+    }
+
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
         MenuItem item = menu.findItem(MENU_MARK);
@@ -1001,7 +1087,7 @@ public class Reviewer extends Activity {
         }
         if (mPrefTextSelection) {
             item = menu.findItem(MENU_SEARCH);
-            if (mClipboard.hasText()) {
+            if (clipboardHasText()) {
             	item.setTitle(Lookup.getSearchStringTitle());
         		item.setEnabled(Lookup.isAvailable());
             } else {
@@ -1107,12 +1193,12 @@ public class Reviewer extends Activity {
 
             case MENU_UNDO:
             	setNextCardAnimation(true);
-            	DeckTask.launchDeckTask(DeckTask.TASK_TYPE_UNDO, mUpdateCardHandler, new DeckTask.TaskData(0,
+            	DeckTask.launchDeckTask(DeckTask.TASK_TYPE_UNDO, mUpdateCardHandler, new DeckTask.TaskData(UPDATE_CARD_SHOW_QUESTION,
                         AnkiDroidApp.deck(), mCurrentCard.getId(), false));
                 return true;
 
             case MENU_REDO:
-                DeckTask.launchDeckTask(DeckTask.TASK_TYPE_REDO, mUpdateCardHandler, new DeckTask.TaskData(0,
+                DeckTask.launchDeckTask(DeckTask.TASK_TYPE_REDO, mUpdateCardHandler, new DeckTask.TaskData(UPDATE_CARD_SHOW_QUESTION,
                         AnkiDroidApp.deck(), mCurrentCard.getId(), false));
                 return true;
         }
@@ -1126,12 +1212,14 @@ public class Reviewer extends Activity {
 
         if (requestCode == EDIT_CURRENT_CARD) {
         	setInAnimation(true);
-            if (resultCode == RESULT_OK) {
+            if (resultCode == RESULT_OK || resultCode == RESULT_EDIT_CARD_RESET) {
                 Log.i(AnkiDroidApp.TAG, "Saving card...");
-                DeckTask.launchDeckTask(DeckTask.TASK_TYPE_UPDATE_FACT, mUpdateCardHandler, new DeckTask.TaskData(0,
+                int showQuestion = sDisplayAnswer ? UPDATE_CARD_SHOW_ANSWER : UPDATE_CARD_SHOW_QUESTION;
+                if (resultCode == RESULT_EDIT_CARD_RESET) {
+                	showQuestion = UPDATE_CARD_NEW_CARD;
+                }
+                DeckTask.launchDeckTask(DeckTask.TASK_TYPE_UPDATE_FACT, mUpdateCardHandler, new DeckTask.TaskData(showQuestion,
                         AnkiDroidApp.deck(), mCurrentCard));
-                // TODO: code to save the changes made to the current card.
-                // TODO: resume with edited card
             } else if (resultCode == StudyOptions.CONTENT_NO_EXTERNAL_STORAGE) {
                 finishNoStorageAvailable();
             } else {
@@ -1139,7 +1227,7 @@ public class Reviewer extends Activity {
             }
         }
         if (mPrefTextSelection) {
-        	mClipboard.setText("");
+        	clipboardSetText("");
         }
     }
 
@@ -1190,12 +1278,12 @@ public class Reviewer extends Activity {
 
     private void restartTimer() {
         if (mCurrentCard != null) {
-            mCurrentCard.resumeTimer();          
+            mCurrentCard.resumeTimer();
         }
         if (mPrefTimer && mSavedTimer != 0) {
             mCardTimer.setBase(SystemClock.elapsedRealtime() - mSavedTimer);
             mCardTimer.start();
-        }    	
+        }
     }
 
 
@@ -1214,7 +1302,7 @@ public class Reviewer extends Activity {
 
     private void finishNoStorageAvailable() {
         setResult(StudyOptions.CONTENT_NO_EXTERNAL_STORAGE);
-        closeReviewer();
+        closeReviewer(false);
     }
 
 
@@ -1237,8 +1325,8 @@ public class Reviewer extends Activity {
 
 
     private void lookUpOrSelectText() {
-        if (mClipboard.hasText()) {
-            Log.i(AnkiDroidApp.TAG, "Clipboard has text = " + mClipboard.hasText());
+        if (clipboardHasText()) {
+            Log.i(AnkiDroidApp.TAG, "Clipboard has text = " + clipboardHasText());
             lookUp();
     	} else {
         	selectAndCopyText();
@@ -1249,8 +1337,8 @@ public class Reviewer extends Activity {
     private boolean lookUp() {
     	mLookUpIcon.setVisibility(View.GONE);
 	    mIsSelecting = false;
-	    if (Lookup.lookUp(mClipboard.getText().toString(), mCurrentCard)) {
-	        mClipboard.setText("");
+	    if (Lookup.lookUp(clipboardGetText().toString(), mCurrentCard)) {
+	        clipboardSetText("");
 	    }
 	    return true;
     }
@@ -1281,7 +1369,7 @@ public class Reviewer extends Activity {
         mIsSelecting = false;
         mIsAnswering = true;
         if (mPrefTextSelection) {
-            mClipboard.setText("");
+            clipboardSetText("");
             if (mLookUpIcon.getVisibility() == View.VISIBLE) {
                 mLookUpIcon.setVisibility(View.GONE);
                 mLookUpIcon.setAnimation(ViewAnimation.fade(ViewAnimation.FADE_OUT, mFadeDuration, 0));        	
@@ -1328,7 +1416,6 @@ public class Reviewer extends Activity {
         Themes.setContentStyle(mMainLayout, Themes.CALLER_REVIEWER);
 
         mCardContainer = (FrameLayout) findViewById(R.id.flashcard_frame);
-        mCardContainer.setVisibility(mConfigurationChanged ? View.VISIBLE : View.INVISIBLE);
 		setInAnimation(false);
 
         findViewById(R.id.top_bar).setOnClickListener(mCardStatisticsListener);
@@ -1349,7 +1436,7 @@ public class Reviewer extends Activity {
             ((View)findViewById(R.id.flashcard_border)).setVisibility(View.VISIBLE);        	
         }
         
-        if (mCustomFontFiles.length != 0) {
+        if (mRefreshWebview) {
             mNextCard = createWebView();
             mNextCard.setVisibility(View.GONE);
             mCardFrame.addView(mNextCard, 0);        	
@@ -1399,7 +1486,7 @@ public class Reviewer extends Activity {
         mFlipCard = (Button) findViewById(R.id.flip_card);
         mFlipCard.setOnClickListener(mFlipCardListener);
         mFlipCard.setText(getResources().getString(R.string.show_answer));
-    	mDefaultButtonDrawable = new Drawable[]{mFlipCard.getBackground(), mEase1.getBackground()};
+    	mDefaultButtonDrawable = new Drawable[]{mFlipCard.getBackground(), mEase1.getBackground(), mEase2.getBackground(), mEase3.getBackground(), mEase4.getBackground()};
 
         mTextBarRed = (TextView) findViewById(R.id.red_number);
         mTextBarBlack = (TextView) findViewById(R.id.black_number);
@@ -1456,7 +1543,7 @@ public class Reviewer extends Activity {
 
 			@Override
 			public void onClick(View arg0) {
-				if (mClipboard.hasText()) {
+				if (clipboardHasText()) {
 					lookUp();
 				}
 			}
@@ -1480,7 +1567,14 @@ public class Reviewer extends Activity {
             webView.setFocusableInTouchMode(false);
         }
         Log.i(AnkiDroidApp.TAG, "Focusable = " + webView.isFocusable() + ", Focusable in touch mode = " + webView.isFocusableInTouchMode());
-
+        if (mSetScrollbarBarFading != null) {
+            try {
+            	mSetScrollbarBarFading.invoke(webView, false);
+            } catch (Throwable e) {
+            	Log.i(AnkiDroidApp.TAG, "setScrollbarFadingEnabled could not be set due to a too low Android version (< 2.1)");
+            	mSetScrollbarBarFading = null;
+            }
+        }
         mScaleInPercent = webView.getScale();
         return webView;
     }
@@ -1491,18 +1585,21 @@ public class Reviewer extends Activity {
         int fgColor = invert ? res.getColor(R.color.foreground_color_inv) : res.getColor(R.color.black);
         mCard.setBackgroundColor(mCurrentBackgroundColor);
 
-        Drawable buttonDrawable;
         if (mChangeBorderStyle) {
             mMainLayout.setBackgroundColor(mCurrentBackgroundColor);
-            buttonDrawable = invert ? res.getDrawable(R.drawable.btn_keyboard_key_fulltrans_normal) : mDefaultButtonDrawable[1];
             mFlipCard.setBackgroundDrawable(invert ? res.getDrawable(R.drawable.btn_keyboard_key_fulltrans_normal) : mDefaultButtonDrawable[0]);
+            mEase1.setBackgroundDrawable(invert ? res.getDrawable(R.drawable.btn_keyboard_key_fulltrans_normal) : mDefaultButtonDrawable[1]);
+            mEase2.setBackgroundDrawable(invert ? res.getDrawable(R.drawable.btn_keyboard_key_fulltrans_normal) : mDefaultButtonDrawable[2]);
+            mEase3.setBackgroundDrawable(invert ? res.getDrawable(R.drawable.btn_keyboard_key_fulltrans_normal) : mDefaultButtonDrawable[3]);
+            mEase4.setBackgroundDrawable(invert ? res.getDrawable(R.drawable.btn_keyboard_key_fulltrans_normal) : mDefaultButtonDrawable[4]);
         } else {
             mMainLayout.setBackgroundResource(invert ? R.color.reviewer_background_night : R.color.reviewer_background);
         	findViewById(R.id.flashcard_border).setBackgroundResource(invert ? R.drawable.blue_bg_webview_night : R.drawable.blue_bg_webview);
-            buttonDrawable = invert ? res.getDrawable(R.drawable.blue_btn_night) : mDefaultButtonDrawable[1];
-            if (invert) {
-                mFlipCard.setBackgroundDrawable(invert ? res.getDrawable(R.drawable.blue_btn_night) : mDefaultButtonDrawable[0]);            	
-            }
+            mFlipCard.setBackgroundDrawable(invert ? res.getDrawable(R.drawable.blue_btn_night) : mDefaultButtonDrawable[0]);
+            mEase1.setBackgroundDrawable(invert ? res.getDrawable(R.drawable.blue_btn_night) : mDefaultButtonDrawable[1]);
+            mEase2.setBackgroundDrawable(invert ? res.getDrawable(R.drawable.blue_btn_night) : mDefaultButtonDrawable[2]);
+            mEase3.setBackgroundDrawable(invert ? res.getDrawable(R.drawable.blue_btn_night) : mDefaultButtonDrawable[3]);
+            mEase4.setBackgroundDrawable(invert ? res.getDrawable(R.drawable.blue_btn_night) : mDefaultButtonDrawable[4]);
         }
         if (invert || mChangeBorderStyle) {
             mNextTimeTextColor = invert ? res.getColor(R.color.next_time_usual_color_inv) : res.getColor(R.color.next_time_usual_color);
@@ -1513,10 +1610,6 @@ public class Reviewer extends Activity {
             mTextBarBlack.setTextColor(fgColor);
             mTextBarBlue.setTextColor(invert ? res.getColor(R.color.textbar_blue_color_inv) : res.getColor(R.color.textbar_blue_color));
 
-            mEase1.setBackgroundDrawable(buttonDrawable);
-            mEase2.setBackgroundDrawable(buttonDrawable);
-            mEase3.setBackgroundDrawable(buttonDrawable);
-            mEase4.setBackgroundDrawable(buttonDrawable);
             mFlipCard.setTextColor(fgColor);
             mEase1.setTextColor(fgColor);
             mEase2.setTextColor(fgColor);
@@ -1539,6 +1632,9 @@ public class Reviewer extends Activity {
         boolean noMoreCards = false;
         // Check to see if session rep or time limit has been reached
         Deck deck = AnkiDroidApp.deck();
+        if (deck == null) {
+        	return new boolean[] {false, false};
+        }
         long sessionRepLimit = deck.getSessionRepLimit();
         long sessionTime = deck.getSessionTimeLimit();
         String sessionMessage = null;
@@ -1551,7 +1647,7 @@ public class Reviewer extends Activity {
             } else {
                 leechMessage = res.getString(R.string.leech_notification);
             }
-            Themes.showThemedToast(Reviewer.this, leechMessage, false);
+            Themes.showThemedToast(Reviewer.this, leechMessage, true);
         }
 
         if ((sessionRepLimit > 0) && (mSessionCurrReps >= sessionRepLimit)) {
@@ -1729,7 +1825,7 @@ public class Reviewer extends Activity {
         mPrefTimer = preferences.getBoolean("timer", true);
         mPrefWhiteboard = preferences.getBoolean("whiteboard", false);
         mPrefWriteAnswers = preferences.getBoolean("writeAnswers", false);
-        mPrefTextSelection = preferences.getBoolean("textSelection", false);
+        mPrefTextSelection = preferences.getBoolean("textSelection", true);
         mLongClickWorkaround = preferences.getBoolean("textSelectionLongclickWorkaround", false);
         mDeckFilename = preferences.getString("deckFilename", "");
         mNightMode = preferences.getBoolean("invertedColors", false);
@@ -1744,7 +1840,7 @@ public class Reviewer extends Activity {
         mRelativeButtonSize = preferences.getInt("answerButtonSize", 100);
         mPrefHideQuestionInAnswer = Integer.parseInt(preferences.getString("hideQuestionInAnswer",
                 Integer.toString(HQIA_DO_SHOW)));
-
+        mInputWorkaround = preferences.getBoolean("inputWorkaround", false);
         mPrefFixHebrew = preferences.getBoolean("fixHebrewText", false);
         mPrefFixArabic = preferences.getBoolean("fixArabicText", false);
         mSpeakText = preferences.getBoolean("tts", false);
@@ -1773,7 +1869,7 @@ public class Reviewer extends Activity {
          	mGestureTapTop = Integer.parseInt(preferences.getString("gestureTapTop", "0"));
          	mGestureTapBottom = Integer.parseInt(preferences.getString("gestureTapBottom", "0"));
         }
-        mShowAnimations = preferences.getBoolean("themeAnimations", true);
+        mShowAnimations = preferences.getBoolean("themeAnimations", false);
         if (mShowAnimations) {
             int animationDuration = preferences.getInt("animationDuration", 500);
            	mAnimationDurationTurn = animationDuration;
@@ -1789,7 +1885,11 @@ public class Reviewer extends Activity {
                 setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
             }
         }
-        
+
+        if (preferences.getBoolean("keepScreenOn", false)) {
+        	this.getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+        }
+
         return preferences;
     }
 
@@ -1826,7 +1926,9 @@ public class Reviewer extends Activity {
 
 
     private void updateScreenCounts() {
-    	
+    	if (mCurrentCard == null) {
+    		return;
+    	}
         Deck deck = AnkiDroidApp.deck();
         int eta = deck.getETA();
         if (deck.hasFinishScheduler() || eta < 1) {
@@ -1882,7 +1984,9 @@ public class Reviewer extends Activity {
     private Runnable mShowQuestionTask = new Runnable() {
         public void run() {
             //Assume hitting the "Again" button when auto next question
-            mEase1.performClick();
+            if (mEase1.isEnabled() == true && mEase1.getVisibility() == View.VISIBLE) {
+		mEase1.performClick();
+            }
         }
     };
 
@@ -1891,7 +1995,9 @@ public class Reviewer extends Activity {
             if (mPrefTimer) {
                 mCardTimer.stop();
             }
-            mFlipCard.performClick();
+            if (mFlipCard.isEnabled() == true && mFlipCard.getVisibility() == View.VISIBLE && !mIsAnswering) {
+		mFlipCard.performClick();
+            }
         }
     };
 
@@ -1947,6 +2053,12 @@ public class Reviewer extends Activity {
 
     private void displayCardAnswer() {
         Log.i(AnkiDroidApp.TAG, "displayCardAnswer");
+
+        // prevent answering (by e.g. gestures) before card is loaded
+        if (mCurrentCard == null) {
+        	return;
+        }
+
         sDisplayAnswer = true;
         setFlipCardAnimation();
         
@@ -2032,6 +2144,11 @@ public class Reviewer extends Activity {
         	
             Deck currentDeck = AnkiDroidApp.deck();
             Model myModel = Model.getModel(currentDeck, mCurrentCard.getCardModelId(), false);
+		if (myModel == null) {
+			Log.e(AnkiDroidApp.TAG, "updateCard - no Model could be fetched. Closing Reviewer and showing db-error dialog");
+	                Reviewer.this.setResult(RESULT_ANSWERING_ERROR);
+	                closeReviewer(true);			
+		}
             mBaseUrl = Utils.getBaseUrl(mMediaDir, myModel, currentDeck);
             int nightBackground = Themes.getNightModeCardBackground(this);
             content = myModel.getCSSForFontColorSize(mCurrentCard.getCardModelId(), mDisplayFontSize, mNightMode, nightBackground) + Model.invertColors(content, mNightMode);
@@ -2136,7 +2253,7 @@ public class Reviewer extends Activity {
     public void fillFlashcard(boolean flip) {
     	if (!flip) {
 	        Log.i(AnkiDroidApp.TAG, "base url = " + mBaseUrl);
-	        if (mCustomFontFiles.length != 0) {
+	        if (mRefreshWebview) {
 	            mNextCard.setBackgroundColor(mCurrentBackgroundColor);
 	            mNextCard.loadDataWithBaseURL(mBaseUrl, mCardContent, "text/html", "utf-8", null);
 	            mNextCard.setVisibility(View.VISIBLE);
@@ -2178,10 +2295,8 @@ public class Reviewer extends Activity {
 	            	}
 		        }	        	
 	        }
-	        if (!mShowAnimations && mCardContainer.getVisibility() == View.INVISIBLE) {
+	        if (!mShowAnimations && mCardTimer.getVisibility() == View.INVISIBLE) {
     	    	switchTopBarVisibility(View.VISIBLE);
-				mCardContainer.setVisibility(View.VISIBLE);
-				mCardContainer.setAnimation(ViewAnimation.fade(ViewAnimation.FADE_IN, mFadeDuration, 0));
 	        }
     		if (!sDisplayAnswer) {
         		updateForNewCard();
@@ -2641,6 +2756,20 @@ public class Reviewer extends Activity {
     }
 
 
+    public boolean getRefreshWebview() {
+      	  	mCustomFontFiles = Utils.getCustomFonts(getBaseContext());
+		if (mCustomFontFiles.length != 0) {
+			return true;
+		}
+		for (String s : new String[] {"nook"}) {
+			if  (android.os.Build.DEVICE.indexOf(s) != -1 || android.os.Build.MODEL.indexOf(s) != -1) {
+				return true;
+			}
+		}
+		return false;
+    }
+
+
     /**
      * Setup media.
      * Try to detect if we're using dropbox and set the mediaPrefix accordingly. Then set the media directory.
@@ -2761,18 +2890,18 @@ public class Reviewer extends Activity {
 			}
     		break;
     	case GESTURE_EXIT:
-       	 	closeReviewer();
+       	 	closeReviewer(false);
     		break;
     	case GESTURE_UNDO:
     		if (AnkiDroidApp.deck().undoAvailable()) {
     			setNextCardAnimation(true);
-        		DeckTask.launchDeckTask(DeckTask.TASK_TYPE_UNDO, mUpdateCardHandler, new DeckTask.TaskData(0,
+        		DeckTask.launchDeckTask(DeckTask.TASK_TYPE_UNDO, mUpdateCardHandler, new DeckTask.TaskData(UPDATE_CARD_SHOW_QUESTION,
                         AnkiDroidApp.deck(), mCurrentCard.getId(), false));    			
     		}
     		break;
     	case GESTURE_REDO:
     		if (AnkiDroidApp.deck().redoAvailable()) {
-                DeckTask.launchDeckTask(DeckTask.TASK_TYPE_REDO, mUpdateCardHandler, new DeckTask.TaskData(0,
+                DeckTask.launchDeckTask(DeckTask.TASK_TYPE_REDO, mUpdateCardHandler, new DeckTask.TaskData(UPDATE_CARD_SHOW_QUESTION,
                         AnkiDroidApp.deck(), mCurrentCard.getId(), false));    			
     		}
     		break;
@@ -2850,10 +2979,19 @@ public class Reviewer extends Activity {
     }
 
 
-    private void closeReviewer() {
+    private void closeReviewer(boolean saveDeck) {
+	mTimeoutHandler.removeCallbacks(mShowAnswerTask);
+	mTimeoutHandler.removeCallbacks(mShowQuestionTask);
+	mTimerHandler.removeCallbacks(removeChosenAnswerText);
+	longClickHandler.removeCallbacks(longClickTestRunnable);
+	longClickHandler.removeCallbacks(startSelection);
+
     	setOutAnimation(true);    		
-    	mClosing = true;
-        DeckTask.launchDeckTask(DeckTask.TASK_TYPE_SAVE_DECK, mSaveAndResetDeckHandler, new DeckTask.TaskData(AnkiDroidApp.deck(), 0));
+    	if (saveDeck) {
+            DeckTask.launchDeckTask(DeckTask.TASK_TYPE_SAVE_DECK, mSaveAndResetDeckHandler, new DeckTask.TaskData(AnkiDroidApp.deck(), 0));
+    	} else {
+    		finish();
+    	}
     }
     
     /** Fixing bug 720: <input> focus, thanks to pablomouzo on android issue 7189*/
@@ -2865,7 +3003,11 @@ public class Reviewer extends Activity {
 
     	@Override
     	public boolean onCheckIsTextEditor() {
-    		return true; 
+    		if (mInputWorkaround) {
+        		return true;
+    		} else {
+        		return super.onCheckIsTextEditor();    			
+    		}
     	}
     }
 
@@ -2905,8 +3047,19 @@ public class Reviewer extends Activity {
     		if (mGesturesEnabled) {
         		executeCommand(mGestureDoubleTap);            	
 			}
-    		return false;
+    		return true;
     	}
+
+    	
+    	@Override
+    	public boolean onSingleTapUp(MotionEvent e) {
+            if(mTouchStarted) {
+                longClickHandler.removeCallbacks(longClickTestRunnable);
+            	mTouchStarted = false;
+            }
+            return false;
+    	}
+
     	
     	@Override
     	public boolean onSingleTapConfirmed(MotionEvent e) {
@@ -2931,7 +3084,7 @@ public class Reviewer extends Activity {
  			}
     		mIsSelecting = false;
     		if (mPrefTextSelection && mClipboard != null) {
-                if (mClipboard.getText().length() != 0) {
+                if (clipboardGetText().length() != 0 && Lookup.isAvailable()) {
                 	if (mLookUpIcon.getVisibility() != View.VISIBLE) {
             			mLookUpIcon.setVisibility(View.VISIBLE);
                         mLookUpIcon.setAnimation(ViewAnimation.fade(ViewAnimation.FADE_IN, mFadeDuration, 0));                		

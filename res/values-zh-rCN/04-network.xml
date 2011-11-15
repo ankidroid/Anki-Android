@@ -49,8 +49,8 @@
   <string name="sync_all">同步所有牌组</string>
   <string name="sync_prepare_syncing">Preparing syncing...</string>
   <string name="connection_error_message">出现网络错误。</string>
+  <string name="sync_log_db_error">A database error has occurred.</string>
   <string name="no_user_password_error_message">你需要一个AnkiOnline账户并登入来继续这项操作。</string>
-  <string name="sync_progress_bar_title">同步%s</string>
   <string name="fact">条目</string>
   <string name="facts">个条目</string>
   <string name="username">用户名</string>

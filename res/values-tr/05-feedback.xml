@@ -30,7 +30,6 @@
   <string name="feedback_send_feedback_and_errors">Hataları ve geribildiriminizi gönderin</string>
   <string name="feedback_message_sent_success">Geribildirim alındı, teşekkür ederiz!</string>
   <string name="feedback_message_sent_failure">Geribildirim gönderilemiyor, %1$s kodu</string>
-  <string name="feedback_error_list_header">Gönderilecek hataların listesi</string>
   <string name="feedback_keep_latest">Son hatayı tut</string>
   <string name="feedback_clear_all">Tüm hataları temizle</string>
   <string name="feedback_default_text">Lütfen geribildiriminizi veya bildirdiğiniz hatalarla ilgili sahip olduğunuz bilgiyi girin.</string>
@@ -42,8 +41,4 @@
   <string name="feedback_error_reply_issue_fixed_prod">%1$d sorunu, son sürümde düzeltildi</string>
   <string name="feedback_error_reply_malformed">Hata kayda geçirildi, yanıt yok</string>
   <string name="feedback_error_reply_failed">Gönderme başarısız</string>
-  <plurals name="error_message">
-    <item quantity="one">Bildirilecek bir hata var</item>
-    <item quantity="other">Bildirilecek %d hata var</item>
-  </plurals>
 </resources>

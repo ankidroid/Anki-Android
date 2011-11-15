@@ -49,8 +49,8 @@
   <string name="sync_all">Sincronizza tutto</string>
   <string name="sync_prepare_syncing">Preparing syncing...</string>
   <string name="connection_error_message">Problemi di connessione.</string>
+  <string name="sync_log_db_error">A database error has occurred.</string>
   <string name="no_user_password_error_message">Occorre autenticarsi a AnkiOnline per fare questa operazione.</string>
-  <string name="sync_progress_bar_title">Sincronizzazione al %s</string>
   <string name="fact">fatto</string>
   <string name="facts">fatti</string>
   <string name="username">Nome utente</string>

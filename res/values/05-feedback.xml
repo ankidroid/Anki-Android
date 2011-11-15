@@ -22,11 +22,11 @@
 
 
 <!-- Feedback.java -->
-<plurals name="error_message">
+<!--<plurals name="error_message">
   <item quantity="one">There is one error to report</item>
   <item quantity="other">There are %d errors to report</item>
 </plurals>
-<string name="error_ok">Report errors</string>
+--><string name="error_ok">Report errors</string>
 <string name="error_cancel">Do not report errors</string>
 <string name="error_reporting_choice">Error reporting mode</string>
 <string name="error_reporting_choice_summary">Errors can be reported automatically, never reported, or you can be prompted</string>
@@ -36,7 +36,7 @@
 <string name="feedback_send_feedback_and_errors">Send errors and your feedback</string>
 <string name="feedback_message_sent_success">Feedback received, thank you!</string>
 <string name="feedback_message_sent_failure">Unable to send feedback, code %1$s</string>
-<string name="feedback_error_list_header">List of errors to send</string>
+<!-- <string name="feedback_error_list_header">List of errors to send</string>-->
 <string name="feedback_keep_latest">Keep latest error</string>
 <string name="feedback_clear_all">Clear all errors</string>
 <string name="feedback_default_text">Please enter your feedback, or information about the nature of any errors you\'re reporting.</string>

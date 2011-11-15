@@ -19,7 +19,6 @@
         <item name="android:listViewStyle">@style/Blue.Widget.ListView</item>
         <item name="android:dropDownListViewStyle">@style/Blue.Widget.ListView.DropDown</item>
         <item name="android:listDivider">@drawable/blue_divider_horizontal_bright</item>
-        <item name="android:dividerHorizontal">@drawable/blue_divider_horizontal_bright</item>
 
         <item name="android:listPreferredItemHeight">56dip</item>
         <!-- <item name="android:dropdownListPreferredItemHeight">40dip</item> -->

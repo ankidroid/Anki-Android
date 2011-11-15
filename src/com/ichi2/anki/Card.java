@@ -785,8 +785,9 @@ public class Card {
     public String getCardDetails(Context context, boolean full) {
     	Resources res = context.getResources();
     	StringBuilder builder = new StringBuilder();
-       	builder.append("<html><body text=\"#FFFFFF\"><b>");
+       	builder.append("<html><body text=\"#FFFFFF\">");
        	if (full) {
+            builder.append("<b>");
             builder.append(res.getString(R.string.card_details_question));
             builder.append("</b>: ");
             builder.append(Utils.stripHTML(mQuestion));
@@ -794,13 +795,17 @@ public class Card {
             builder.append(res.getString(R.string.card_details_answer));
             builder.append("</b>: ");
             builder.append(Utils.stripHTML(mAnswer));
-            builder.append("<br><b>");
+            builder.append("<br>");
        	}
-        builder.append(res.getString(R.string.card_details_tags));
-        builder.append("</b>: ");
-        String tags = Arrays.toString(mDeck.allUserTags("WHERE id = " + mFactId));
-        builder.append(tags.substring(1, tags.length() - 1));
-        builder.append("<br><br>");
+        String[] userTags = mDeck.allUserTags("WHERE id = " + mFactId);
+        if (userTags != null) {
+            String tags = Arrays.toString(userTags);        	
+            builder.append("<b>");
+            builder.append(res.getString(R.string.card_details_tags));
+            builder.append("</b>: ");
+            builder.append(tags.substring(1, tags.length() - 1));
+            builder.append("<br><br>");
+        }
         if (full) {
             builder.append(res.getString(R.string.card_details_due));
             builder.append(": ");
@@ -1068,7 +1073,9 @@ public class Card {
     	String typeAnswer = myCardModel.getTypeAnswer();
         // Check if we have a valid field to use as the answer to type.
     	if (null == typeAnswer || 0 == typeAnswer.trim().length()) {
-    		returnArray[0] = null;
+		// no field specified, compare with whole answer
+    		returnArray[0] = mAnswer;
+    		returnArray[1] = "";
                 return returnArray;
     	}
 

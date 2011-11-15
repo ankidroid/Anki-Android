@@ -36,7 +36,6 @@
   <string name="leech_notification">Karte als Lernbremse markiert</string>
   <string name="about_title">Über</string>
   <string name="cardeditor_title">Fakteneditor</string>
-  <string name="factadder_title">Karten hinzufügen</string>
   <string name="factadder_saving_error">Fehler beim Speichern des Fakts</string>
   <string name="saving_facts">Fakt wird gespeichert</string>
   <string name="deckcreator_title">Stapel erstellen</string>
@@ -61,9 +60,14 @@
   <string name="fact_adder_swap">Tauschen</string>
   <string name="deckpicker_select_dictionary_title">Wörterbuch wählen</string>
   <string name="deckpicker_select_dictionary_default">Standard</string>
-  <string name="card_editor_lookup">Nachschlagen</string>
   <string name="card_editor_add_card">Karte hinzufügen</string>
   <string name="card_editor_reset">Zurücksetzen</string>
   <string name="card_editor_copy_card">Karte kopieren</string>
   <string name="card_editor_reset_card">Fortschritt zurücksetzen</string>
+  <string name="error_insufficient_memory">Vorgang wegen unzureichenden Gerätespeichers nicht möglich</string>
+  <string name="tutorial_load">Einführungsstapel wird erstellt</string>
+  <string name="tutorial_loading_error">Einführungsstapel konnte nicht erstellt werden</string>
+  <string name="help_title">Hilfe</string>
+  <string name="help_online">Online-Hilfe</string>
+  <string name="help_tutorial">Einführungsstapel</string>
 </resources>

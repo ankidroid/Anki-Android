@@ -36,7 +36,6 @@
   <string name="leech_notification">Κάρτα σημαδεμένη ως βδέλλα</string>
   <string name="about_title">Σχετικά</string>
   <string name="cardeditor_title">Επεξεργαστής Γεγονότος</string>
-  <string name="factadder_title">Προσθήκη Κάρτας</string>
   <string name="factadder_saving_error">Σφάλμα κατά την αποθήκευση γεγονότος</string>
   <string name="saving_facts">Αποθήκευση γεγονότων</string>
   <string name="deckcreator_title">Δημιουργός Τράπουλας</string>
@@ -61,9 +60,14 @@
   <string name="fact_adder_swap">Swap</string>
   <string name="deckpicker_select_dictionary_title">Select Dictionary</string>
   <string name="deckpicker_select_dictionary_default">Default</string>
-  <string name="card_editor_lookup">Lookup</string>
   <string name="card_editor_add_card">Add card</string>
   <string name="card_editor_reset">Reset</string>
   <string name="card_editor_copy_card">Copy card</string>
   <string name="card_editor_reset_card">Reset progress</string>
+  <string name="error_insufficient_memory">Operation not possible due to insufficient memory on your device</string>
+  <string name="tutorial_load">Creating tutorial deck</string>
+  <string name="tutorial_loading_error">Tutorial deck could not be created</string>
+  <string name="help_title">Help</string>
+  <string name="help_online">Online help</string>
+  <string name="help_tutorial">Tutorial deck</string>
 </resources>

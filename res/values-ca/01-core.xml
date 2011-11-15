@@ -24,7 +24,6 @@
   <string name="yes">Sí</string>
   <string name="no">No</string>
   <string name="ok">D\'acord</string>
-  <string name="studyoptions_title">Opcions d\'estudi</string>
   <string name="studyoptions_deck_name">Nom del paquet</string>
   <string name="studyoptions_reviews_due">Pendents de revisar:</string>
   <string name="studyoptions_new_today">Noves avui:</string>
@@ -38,8 +37,6 @@
   <string name="deckpicker_loaddeck">S\'està carregant el paquet...</string>
   <string name="deckpicker_nodeck">No s\'ha trobat cap paquet.</string>
   <string name="show_answer">Mostra la resposta</string>
-  <string name="show_question">Torna a mostrar la pregunta</string>
-  <string name="card_hint">Fitxa</string>
   <string name="ease1_learning">De nou</string>
   <string name="ease2_learning">Correcte</string>
   <string name="ease3_learning">Fàcil</string>
@@ -50,10 +47,7 @@
   <string name="ease4_successive">Fàcil</string>
   <string name="loading">S\'està carregant...</string>
   <string name="studyoptions_continue">Continua amb la revisió</string>
-  <string name="studyoptions_well_done">Ben fet!</string>
   <string name="studyoptions_congrats_title">Enhorabona!</string>
-  <string name="studyoptions_congrats_card">fitxa</string>
-  <string name="studyoptions_congrats_cards">fitxes</string>
   <string name="studyoptions_congrats_learnmore">Aprendre més</string>
   <string name="studyoptions_congrats_reviewearly">Revisa aviat</string>
   <string name="studyoptions_congrats_syncdeck">Sincronitza el paquet</string>
@@ -64,25 +58,24 @@
   <string name="menu_rotate">Rotate</string>
   <string name="undo">Desfés</string>
   <string name="redo">Refés</string>
-  <string name="close_current_deck">Closing current deck.\nPlease wait...</string>
+  <string name="close_previous_deck">Closing previous deck.\nPlease wait...</string>
+  <string name="close_deck">Closing deck.\nPlease wait...</string>
+  <string name="finish_operation">Finishing previous operation.\nPlease wait...</string>
   <string name="contextmenu_deckpicker_download_missing_media">Baixa els media que falten</string>
   <string name="contextmenu_deckpicker_reset_language_assignments">Reinicia les assignacions de tots el idiomes</string>
   <string name="contextmenu_deckpicker_reset_reset_message">Restableix l\'idioma</string>
   <string name="contextmenu_deckpicker_optimize_deck">Optimitza la base de dades</string>
   <string name="contextmenu_deckpicker_set_custom_dictionary">Set custom dictionary</string>
   <string name="begin_cram">Comença el mode repàs (cram)</string>
-  <string name="end_cram">Atura el mode repàs (cram)</string>
   <string name="cram">Repàs (cram)</string>
   <string name="menu_open_deck">Tots els paquets</string>
   <string name="menu_sync">Sincronització</string>
   <string name="menu_download_deck">Baixa el paquet</string>
   <string name="menu_download_shared_deck">Paquet compartit</string>
   <string name="menu_download_personal_deck">Paquet personal</string>
-  <string name="menu_synchronize">Sincronitza</string>
   <string name="menu_my_account">El meu Compte</string>
   <string name="menu_preferences">Preferències</string>
   <string name="menu_zeemote">Zeemote</string>
-  <string name="menu_deck_properties">Detalls del paquet</string>
   <string name="menu_add_card">Nova fitxa</string>
   <string name="menu_about">Quant a</string>
   <string name="menu_remove_card">Retira la fitxa</string>
@@ -98,9 +91,14 @@
   <string name="studyoptions_cram_dialog_title">Etiquetes que voleu repassar (cram)</string>
   <string name="statistics">Estadístiques</string>
   <string name="studyoptions_load_other_deck">Carrega un altre paquet</string>
-  <string name="studyoptions_load_sample_deck">Carrega les fitxes d\'exemple</string>
+  <string name="studyoptions_load_tutorial_deck">Load Tutorial Deck</string>
   <string name="studyoptions_night_mode">Mode Nit</string>
   <string name="studyoptions_swap_qa">Swap Q/A</string>
+  <string name="visit">Visit</string>
+  <string name="later">Later</string>
+  <string name="download">Download</string>
+  <string name="deckpicker_loading_error">Deck could not be loaded</string>
+  <string name="deckpicker_creating_backup">Creating backup...</string>
   <string-array name="next_review_s">
     <item>1 second</item>
     <item>1 minute</item>

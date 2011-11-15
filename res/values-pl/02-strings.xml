@@ -36,7 +36,6 @@
   <string name="leech_notification">Karta oznaczona jako pijawka</string>
   <string name="about_title">O programie</string>
   <string name="cardeditor_title">Edytor kart</string>
-  <string name="factadder_title">Dodawanie kart</string>
   <string name="factadder_saving_error">Wystąpił błąd podczas zapisywania faktu</string>
   <string name="saving_facts">Zapisywanie faktów</string>
   <string name="deckcreator_title">Twórca talii</string>
@@ -56,14 +55,19 @@
   <string name="studyoptions_deck_not_loaded_title">Talia nie może być wczytana</string>
   <string name="studyoptions_deck_not_loaded_message">Talia którą wybrałeś nie jest prawidłową talią Anki. Proszę użyć Anki na komputerze aby stworzyć prawidłową talię zanim spróbujesz otworzyć ją w AnkiDroid.\n\nW międzyczasie możesz wybrać inną talię lub otworzyć talię przykładową przyciskiem poniżej.</string>
   <string name="studyoptions_no_external_storage_title">Brak zewnętrznej pamięci masowej</string>
-  <string name="studyoptions_no_external_storage_message">Brak zewnętrznej pamięci masowej. AnkiDroid potrzebuje dostępu do karty SD aby móc wczytać twoje talie Anki. Sprawdź, czy twoja karta SD jest zamontowana i spróbuj ponownie.</string>
+  <string name="studyoptions_no_external_storage_message">Brak zewnętrznej pamięci masowej. AnkiDroid potrzebuje dostępu do karty SD aby móc wczytać Twoje talie. Sprawdź, czy karta SD jest zamontowana i spróbuj ponownie.</string>
   <string name="fact_adder_intent_title">Karta AnkiDroid</string>
   <string name="fact_adder_swap">Zamień</string>
-  <string name="deckpicker_select_dictionary_title">Select Dictionary</string>
-  <string name="deckpicker_select_dictionary_default">Default</string>
-  <string name="card_editor_lookup">Lookup</string>
-  <string name="card_editor_add_card">Add card</string>
+  <string name="deckpicker_select_dictionary_title">Wybierz słownik</string>
+  <string name="deckpicker_select_dictionary_default">Domyślny</string>
+  <string name="card_editor_add_card">Dodaj kartę</string>
   <string name="card_editor_reset">Reset</string>
-  <string name="card_editor_copy_card">Copy card</string>
-  <string name="card_editor_reset_card">Reset progress</string>
+  <string name="card_editor_copy_card">Kopiuj kartę</string>
+  <string name="card_editor_reset_card">Resetuj postępy</string>
+  <string name="error_insufficient_memory">Operacja nie może być wykonana z powodu niewystarczającej pamięci na urządzeniu</string>
+  <string name="tutorial_load">Tworzenie talii instruktażowej</string>
+  <string name="tutorial_loading_error">Nie można utworzyć talii instruktażowej</string>
+  <string name="help_title">Pomoc</string>
+  <string name="help_online">Pomoc online</string>
+  <string name="help_tutorial">Talia instruktażowa</string>
 </resources>

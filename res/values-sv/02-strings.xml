@@ -36,7 +36,6 @@
   <string name="leech_notification">Markerat som utsugarkort</string>
   <string name="about_title">Om</string>
   <string name="cardeditor_title">Kort-editor</string>
-  <string name="factadder_title">Kortskapare</string>
   <string name="factadder_saving_error">Fel vid sparande av fakta</string>
   <string name="saving_facts">Sparar fakta</string>
   <string name="deckcreator_title">Kortleksskapare</string>
@@ -59,11 +58,16 @@
   <string name="studyoptions_no_external_storage_message">Ingen extern lagring är tillgänglig för tillfället. AnkiDroid måste ha tillgång till SD-kortet för att läsa och ladda dina Anki-kortlekar. Kontrollera att SD-kortet är monterat och försök igen.</string>
   <string name="fact_adder_intent_title">AnkiDroid-kort</string>
   <string name="fact_adder_swap">Byt riktning</string>
-  <string name="deckpicker_select_dictionary_title">Select Dictionary</string>
-  <string name="deckpicker_select_dictionary_default">Default</string>
-  <string name="card_editor_lookup">Lookup</string>
-  <string name="card_editor_add_card">Add card</string>
-  <string name="card_editor_reset">Reset</string>
-  <string name="card_editor_copy_card">Copy card</string>
-  <string name="card_editor_reset_card">Reset progress</string>
+  <string name="deckpicker_select_dictionary_title">Välj ordlista</string>
+  <string name="deckpicker_select_dictionary_default">Standard</string>
+  <string name="card_editor_add_card">Lägg till kort</string>
+  <string name="card_editor_reset">Återställ</string>
+  <string name="card_editor_copy_card">Kopiera kort</string>
+  <string name="card_editor_reset_card">Återställ framsteg</string>
+  <string name="error_insufficient_memory">Åtgärden är inte möjlig på grund av otillräckligt med minne på enheten.</string>
+  <string name="tutorial_load">Skapa övningskortlek</string>
+  <string name="tutorial_loading_error">Övningskortlek kunde inte skapas</string>
+  <string name="help_title">Hjälp</string>
+  <string name="help_online">Onlinehjälp</string>
+  <string name="help_tutorial">Övningskortlek</string>
 </resources>

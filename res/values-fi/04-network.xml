@@ -49,8 +49,8 @@
   <string name="sync_all">Synkronoi kaikki</string>
   <string name="sync_prepare_syncing">Preparing syncing...</string>
   <string name="connection_error_message">Verkkovirhe on tapahtunut.</string>
+  <string name="sync_log_db_error">A database error has occurred.</string>
   <string name="no_user_password_error_message">Jotta voit jatkaa toimintoa, sinulla täytyy olla AnkiOnline-tili ja olla kirjautunut sisälle.</string>
-  <string name="sync_progress_bar_title">Synkronoidaan %s</string>
   <string name="fact">kortti</string>
   <string name="facts">korttia</string>
   <string name="username">Käyttäjätunnus</string>

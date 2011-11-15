@@ -24,7 +24,6 @@
   <string name="yes">Ja</string>
   <string name="no">Nej</string>
   <string name="ok">Ok</string>
-  <string name="studyoptions_title">Studieinställningar</string>
   <string name="studyoptions_deck_name">Kortleksnamn</string>
   <string name="studyoptions_reviews_due">Repetitioner i kö:</string>
   <string name="studyoptions_new_today">Nya idag:</string>
@@ -38,8 +37,6 @@
   <string name="deckpicker_loaddeck">Laddar kortlek...</string>
   <string name="deckpicker_nodeck">Hittade inga kortlekar.</string>
   <string name="show_answer">Visa Svar</string>
-  <string name="show_question">Visa Fråga</string>
-  <string name="card_hint">Flashkort</string>
   <string name="ease1_learning">Igen</string>
   <string name="ease2_learning">Bra</string>
   <string name="ease3_learning">Lätt</string>
@@ -50,10 +47,7 @@
   <string name="ease4_successive">Lätt</string>
   <string name="loading">Laddar...</string>
   <string name="studyoptions_continue">Fortsätt granska</string>
-  <string name="studyoptions_well_done">Bra jobbat!</string>
   <string name="studyoptions_congrats_title">Grattis!</string>
-  <string name="studyoptions_congrats_card">kort</string>
-  <string name="studyoptions_congrats_cards">kort</string>
   <string name="studyoptions_congrats_learnmore">Lär dig mer</string>
   <string name="studyoptions_congrats_reviewearly">Granska tidigt</string>
   <string name="studyoptions_congrats_syncdeck">Synkronisera kortlek</string>
@@ -64,25 +58,24 @@
   <string name="menu_rotate">Rotera</string>
   <string name="undo">Ångra</string>
   <string name="redo">Gör om</string>
-  <string name="close_current_deck">Stänger aktuell kortlek.\nVar god vänta...</string>
+  <string name="close_previous_deck">Stänger föregående kortlek.\nVänligen vänta...</string>
+  <string name="close_deck">Stänger kortleken.\nVänligen vänta...</string>
+  <string name="finish_operation">Finishing previous operation.\nPlease wait...</string>
   <string name="contextmenu_deckpicker_download_missing_media">Hämta saknade media</string>
   <string name="contextmenu_deckpicker_reset_language_assignments">Återställ språktilldelningar</string>
   <string name="contextmenu_deckpicker_reset_reset_message">Återställning av språk</string>
   <string name="contextmenu_deckpicker_optimize_deck">Optimera databas</string>
-  <string name="contextmenu_deckpicker_set_custom_dictionary">Set custom dictionary</string>
+  <string name="contextmenu_deckpicker_set_custom_dictionary">Ange egen ordlista</string>
   <string name="begin_cram">Starta råplugg</string>
-  <string name="end_cram">Avbryt råplugg</string>
   <string name="cram">Råplugg</string>
   <string name="menu_open_deck">Alla kortlekar</string>
   <string name="menu_sync">Synkronisera</string>
   <string name="menu_download_deck">Hämta kortlek</string>
   <string name="menu_download_shared_deck">Delad kortlek</string>
   <string name="menu_download_personal_deck">Egen kortlek</string>
-  <string name="menu_synchronize">Synkronisera</string>
   <string name="menu_my_account">Mitt konto</string>
   <string name="menu_preferences">Inställningar</string>
   <string name="menu_zeemote">Zeemote</string>
-  <string name="menu_deck_properties">Kortleksinställningar</string>
   <string name="menu_add_card">Lägg till kort</string>
   <string name="menu_about">Om</string>
   <string name="menu_remove_card">Avfärda kort</string>
@@ -98,9 +91,14 @@
   <string name="studyoptions_cram_dialog_title">Taggar att råplugga</string>
   <string name="statistics">Statistik</string>
   <string name="studyoptions_load_other_deck">Ladda annan kortlek</string>
-  <string name="studyoptions_load_sample_deck">Ladda exempelkortlek</string>
+  <string name="studyoptions_load_tutorial_deck">Ladda Övningskortlek</string>
   <string name="studyoptions_night_mode">Nattläge</string>
   <string name="studyoptions_swap_qa">Växla fråga/svar</string>
+  <string name="visit">Besök</string>
+  <string name="later">Senare</string>
+  <string name="download">Hämta</string>
+  <string name="deckpicker_loading_error">Kortleken kunde inte laddas</string>
+  <string name="deckpicker_creating_backup">Skapar säkerhetskopia...</string>
   <string-array name="next_review_s">
     <item>1 sekund</item>
     <item>1 minut</item>

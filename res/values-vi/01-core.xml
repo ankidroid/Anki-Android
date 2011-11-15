@@ -24,7 +24,6 @@
   <string name="yes">Có</string>
   <string name="no">Không</string>
   <string name="ok">Đồng ý</string>
-  <string name="studyoptions_title">Tùy chọn học tập</string>
   <string name="studyoptions_deck_name">Tên tập thẻ</string>
   <string name="studyoptions_reviews_due">Reviews due:</string>
   <string name="studyoptions_new_today">Thẻ mới hôm nay:</string>
@@ -38,8 +37,6 @@
   <string name="deckpicker_loaddeck">Đang nạp tập thẻ...</string>
   <string name="deckpicker_nodeck">Không tìm thấy deck nào.</string>
   <string name="show_answer">Show Answer</string>
-  <string name="show_question">Re-display Question</string>
-  <string name="card_hint">Flashcard</string>
   <string name="ease1_learning">Làm lại</string>
   <string name="ease2_learning">Tốt</string>
   <string name="ease3_learning">Dễ</string>
@@ -50,10 +47,7 @@
   <string name="ease4_successive">Dễ</string>
   <string name="loading">Đang tải...</string>
   <string name="studyoptions_continue">Tiếp tục Ôn tập</string>
-  <string name="studyoptions_well_done">Rất Tốt!</string>
   <string name="studyoptions_congrats_title">Xin chúc mừng!</string>
-  <string name="studyoptions_congrats_card">thẻ</string>
-  <string name="studyoptions_congrats_cards">các thẻ</string>
   <string name="studyoptions_congrats_learnmore">Tìm hiểu thêm</string>
   <string name="studyoptions_congrats_reviewearly">Ôn tập Sớm</string>
   <string name="studyoptions_congrats_syncdeck">Synchronize deck</string>
@@ -64,25 +58,24 @@
   <string name="menu_rotate">Rotate</string>
   <string name="undo">Hoàn tác</string>
   <string name="redo">Làm lại</string>
-  <string name="close_current_deck">Đang đóng bài hiện tại \n Hãy chờ.</string>
+  <string name="close_previous_deck">Closing previous deck.\nPlease wait...</string>
+  <string name="close_deck">Closing deck.\nPlease wait...</string>
+  <string name="finish_operation">Finishing previous operation.\nPlease wait...</string>
   <string name="contextmenu_deckpicker_download_missing_media">Download missing media</string>
   <string name="contextmenu_deckpicker_reset_language_assignments">Đặt lại ngôn ngữ phân công</string>
   <string name="contextmenu_deckpicker_reset_reset_message">Đặt lại ngôn ngữ</string>
   <string name="contextmenu_deckpicker_optimize_deck">Optimize database</string>
   <string name="contextmenu_deckpicker_set_custom_dictionary">Set custom dictionary</string>
   <string name="begin_cram">Bắt đầu chế độ nhồi</string>
-  <string name="end_cram">Dừng chế độ nhồi</string>
   <string name="cram">Nhồi nhét</string>
   <string name="menu_open_deck">Tất cả các tập thẻ</string>
   <string name="menu_sync">Đồng bộ</string>
   <string name="menu_download_deck">Tải về tập thẻ</string>
   <string name="menu_download_shared_deck">Tập thẻ chia sẻ</string>
   <string name="menu_download_personal_deck">Tập thẻ cá nhân</string>
-  <string name="menu_synchronize">Đồng bộ hóa</string>
   <string name="menu_my_account">Tài khoản của tôi</string>
   <string name="menu_preferences">Tuỳ chọn</string>
   <string name="menu_zeemote">Zeemote</string>
-  <string name="menu_deck_properties">Thuộc tính tập thẻ</string>
   <string name="menu_add_card">Thêm thẻ</string>
   <string name="menu_about">Giới thiệu</string>
   <string name="menu_remove_card">Bỏ qua thẻ</string>
@@ -98,9 +91,14 @@
   <string name="studyoptions_cram_dialog_title">Đánh dấu để nhồi</string>
   <string name="statistics">Thống kê</string>
   <string name="studyoptions_load_other_deck">Mở tập thẻ khác</string>
-  <string name="studyoptions_load_sample_deck">Mở tập thẻ mẫu</string>
+  <string name="studyoptions_load_tutorial_deck">Load Tutorial Deck</string>
   <string name="studyoptions_night_mode">Chế độ ban đêm</string>
   <string name="studyoptions_swap_qa">Chuyển đổi Q/A</string>
+  <string name="visit">Visit</string>
+  <string name="later">Later</string>
+  <string name="download">Download</string>
+  <string name="deckpicker_loading_error">Deck could not be loaded</string>
+  <string name="deckpicker_creating_backup">Creating backup...</string>
   <string-array name="next_review_s">
     <item>1 second</item>
     <item>1 minute</item>

@@ -17,9 +17,12 @@ public class Lookup {
      * Searches
      */
     private static final int DICTIONARY_AEDICT = 0;
-    private static final int DICTIONARY_LEO_WEB = 1;    // German web dictionary for English, French, Spanish, Italian, Chinese, Russian
-    private static final int DICTIONARY_LEO_APP = 2;    // German web dictionary for English, French, Spanish, Italian, Chinese, Russian
-    private static final int DICTIONARY_COLORDICT = 3;
+    private static final int DICTIONARY_EIJIRO_WEB = 1; // japanese web dictionary
+    private static final int DICTIONARY_LEO_WEB = 2;    // German web dictionary for English, French, Spanish, Italian, Chinese, Russian
+    private static final int DICTIONARY_LEO_APP = 3;    // German web dictionary for English, French, Spanish, Italian, Chinese, Russian
+    private static final int DICTIONARY_COLORDICT = 4;
+    private static final int DICTIONARY_FORA = 5;
+    private static final int DICTIONARY_NCIKU_WEB = 6;  // chinese web dictionary
 
     private static Context mContext;
     private static boolean mIsDictionaryAvailable;
@@ -46,6 +49,8 @@ public class Lookup {
                 mIsDictionaryAvailable = Utils.isIntentAvailable(mContext, mDictionaryAction);
         		break;
             case DICTIONARY_LEO_WEB:
+            case DICTIONARY_NCIKU_WEB:
+            case DICTIONARY_EIJIRO_WEB:
                 mDictionaryAction = "android.intent.action.VIEW";
                 mIsDictionaryAvailable = Utils.isIntentAvailable(mContext, mDictionaryAction);
                 break;
@@ -55,6 +60,10 @@ public class Lookup {
                 break;
             case DICTIONARY_COLORDICT:
                 mDictionaryAction = "colordict.intent.action.SEARCH";                   
+                mIsDictionaryAvailable = Utils.isIntentAvailable(mContext, mDictionaryAction);
+                break;
+            case DICTIONARY_FORA:
+                mDictionaryAction = "com.ngc.fora.action.LOOKUP";                   
                 mIsDictionaryAvailable = Utils.isIntentAvailable(mContext, mDictionaryAction);
                 break;
             default:
@@ -68,6 +77,8 @@ public class Lookup {
 
 	public static boolean lookUp(String text, Card card) {
 		mCurrentCard = card;
+		// clear text from leading and closing dots, commas, brackets etc.
+		text = text.trim().replaceAll("[,;:\\s\\(\\[\\)\\]\\.]*$", "").replaceAll("^[,;:\\s\\(\\[\\)\\]\\.]*", "");
 		switch (mDictionary) {
     	case DICTIONARY_AEDICT:
     		Intent aedictSearchIntent = new Intent(mDictionaryAction);
@@ -105,9 +116,22 @@ public class Lookup {
             return true;
     	case DICTIONARY_COLORDICT:
     		Intent colordictSearchIntent = new Intent(mDictionaryAction);
-    		colordictSearchIntent.putExtra("EXTRA_QUERY",text.trim().replaceAll("[,;:\\s\\(\\[\\)\\]]*$", ""));
+    		colordictSearchIntent.putExtra("EXTRA_QUERY", text);
     		mContext.startActivity(colordictSearchIntent);
-            return true;     
+            return true;
+    	case DICTIONARY_FORA:
+    		Intent foraSearchIntent = new Intent(mDictionaryAction);
+    		foraSearchIntent.putExtra("HEADWORD", text.trim());
+    		mContext.startActivity(foraSearchIntent);
+            return true;
+    	case DICTIONARY_NCIKU_WEB:
+            Intent ncikuWebIntent = new Intent(mDictionaryAction, Uri.parse("http://m.nciku.com/en/entry/?query=" + text));
+            mContext.startActivity(ncikuWebIntent);
+            return true;
+    	case DICTIONARY_EIJIRO_WEB:
+            Intent eijiroWebIntent = new Intent(mDictionaryAction, Uri.parse("http://eow.alc.co.jp/" + text));
+            mContext.startActivity(eijiroWebIntent);
+            return true;
 		}
 		return false;
 	}
@@ -143,12 +167,17 @@ public class Lookup {
 
 
     private static String getLanguage(int questionAnswer) {
-    	String language = MetaDB.getLanguage(mContext, mDeckFilename, Model.getModel(AnkiDroidApp.deck(), mCurrentCard.getCardModelId(), false).getId(), mCurrentCard.getCardModelId(), questionAnswer);
-		return language;
+    	if (mCurrentCard == null) {
+    		return "";
+    	} else {
+        	return MetaDB.getLanguage(mContext, mDeckFilename, Model.getModel(AnkiDroidApp.deck(), mCurrentCard.getCardModelId(), false).getId(), mCurrentCard.getCardModelId(), questionAnswer);    		
+    	}
     }
     
     private static void storeLanguage(String language, int questionAnswer) {
-    	MetaDB.storeLanguage(mContext, mDeckFilename,  Model.getModel(AnkiDroidApp.deck(), mCurrentCard.getCardModelId(), false).getId(), mCurrentCard.getCardModelId(), questionAnswer, language);
+    	if (mCurrentCard != null) {
+        	MetaDB.storeLanguage(mContext, mDeckFilename,  Model.getModel(AnkiDroidApp.deck(), mCurrentCard.getCardModelId(), false).getId(), mCurrentCard.getCardModelId(), questionAnswer, language);    		
+    	}
     }
 
 }

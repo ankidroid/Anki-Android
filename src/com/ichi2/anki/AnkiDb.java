@@ -30,6 +30,8 @@ import java.util.ArrayList;
 import java.util.Map.Entry;
 
 import com.tomgibara.android.veecheck.util.PrefSettings;
+import com.ichi2.anki.Utils.SqlCommandType;
+import static com.ichi2.anki.Utils.SqlCommandType.*;
 
 /**
  * Database layer for AnkiDroid. Can read the native Anki format through Android's SQLite driver.
@@ -40,11 +42,6 @@ public class AnkiDb {
      * The deck, which is actually an SQLite database.
      */
     private SQLiteDatabase mDatabase;
-
-    public static final int NO_WAL_WARNING = 0;
-    public static final int WAL_WARNING_SHOW = 1;
-    public static final int WAL_WARNING_ALREADY_SHOWN = 2;
-    public static final int WAL_SET_ENABLED = 3;
 
     /**
      * Open a database connection to an ".anki" SQLite file.
@@ -73,17 +70,8 @@ public class AnkiDb {
                         	String journalModeNew = cur.getString(0);
                         	cur.close();
                         	Log.w(AnkiDroidApp.TAG, "Old journal mode was: " + journalModeOld + ". Trying to set journal mode to " + mode + ". Result: " + journalModeNew);                    		
-                        	if (!journalModeNew.equalsIgnoreCase("wal")) {
-                        		prefs.edit().putInt("walWarning", NO_WAL_WARNING).commit();
-                        	} else {
-                        		if (mode.equals("WAL")) {
-                        			prefs.edit().putInt("walWarning", WAL_SET_ENABLED).commit();                			
-                        		} else {
-                                    Log.e(AnkiDroidApp.TAG, "Journal could not be changed to DELETE. Deck will probably be unreadable on sqlite < 3.7");
-                                    if (prefs.getInt("walWarning", NO_WAL_WARNING) == NO_WAL_WARNING) {
-                                    	prefs.edit().putInt("walWarning", WAL_WARNING_SHOW).commit();
-                                    }                			
-                        		}
+                        	if (journalModeNew.equalsIgnoreCase("wal") && mode.equals("DELETE")) {
+                        		Log.e(AnkiDroidApp.TAG, "Journal could not be changed to DELETE. Deck will probably be unreadable on sqlite < 3.7");
                         	}
                     	}
                 	}
@@ -196,12 +184,12 @@ public class AnkiDb {
     /**
      * Method for executing db commands with simultaneous storing of undo information. This should only be called from undo method.
      */
-    public void execSQL(Deck deck, String command, String table, ContentValues values, String whereClause) {
-    	if (command.equals("INS")) {
+    public void execSQL(Deck deck, SqlCommandType command, String table, ContentValues values, String whereClause) {
+    	if (command == SQL_INS) {
 			insert(deck, table, null, values);
-    	} else if (command.equals("UPD")) {
+    	} else if (command == SQL_UPD) {
 			update(deck, table, values, whereClause, null);
-    	} else if (command.equals("DEL")) {
+    	} else if (command == SQL_DEL) {
     		delete(deck, table, whereClause, null);
     	} else {
     		Log.i(AnkiDroidApp.TAG, "wrong command. no action performed");
@@ -217,7 +205,7 @@ public class AnkiDb {
     public long insert(Deck deck, String table, String nullColumnHack, ContentValues values) {
     	long rowid = mDatabase.insert(table, nullColumnHack, values);
     	if (rowid != -1 && deck.recordUndoInformation()) {
-        	deck.addUndoCommand("DEL", table, null, "rowid = " + rowid);
+        	deck.addUndoCommand(SQL_DEL, table, null, "rowid = " + rowid);
     	}
     	return rowid;
     }
@@ -248,7 +236,7 @@ public class AnkiDb {
     	if (deck.recordUndoInformation()) {
         	if (oldValuesArray != null) {
                 for (int i = 0; i < oldValuesArray.length; i++) {
-                    deck.addUndoCommand("UPD", table, oldValuesArray[i], whereClauseArray[i]);
+                    deck.addUndoCommand(SQL_UPD, table, oldValuesArray[i], whereClauseArray[i]);
                 }
         	} else {
         		ArrayList<String> ar = new ArrayList<String>();
@@ -286,7 +274,7 @@ public class AnkiDb {
                             	oldvalues.put(columns[i], cursor.getString(i));
 //                            }
                         }
-                        deck.addUndoCommand("UPD", table, oldvalues, "rowid = " + cursor.getString(len));
+                        deck.addUndoCommand(SQL_UPD, table, oldvalues, "rowid = " + cursor.getString(len));
                     }
                 } finally {
                     if (cursor != null) {
@@ -369,7 +357,7 @@ public class AnkiDb {
                         	oldvalues.put(columns[i], cursor.getString(i));
 //                        }
                     }
-                    deck.addUndoCommand("INS", table, oldvalues, null);
+                    deck.addUndoCommand(SQL_INS, table, oldvalues, null);
                 }
 			} finally {
                 if (cursor != null) {

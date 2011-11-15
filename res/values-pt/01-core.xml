@@ -24,7 +24,6 @@
   <string name="yes">Sim</string>
   <string name="no">Não</string>
   <string name="ok">OK</string>
-  <string name="studyoptions_title">Opções de estudo</string>
   <string name="studyoptions_deck_name">Nome do deck</string>
   <string name="studyoptions_reviews_due">Reviões programadas:</string>
   <string name="studyoptions_new_today">Novos hoje:</string>
@@ -38,8 +37,6 @@
   <string name="deckpicker_loaddeck">Carregando Deck...</string>
   <string name="deckpicker_nodeck">Não foi encontrado nenhum deck.</string>
   <string name="show_answer">Mostrar Resposta</string>
-  <string name="show_question">Mostrar Questão</string>
-  <string name="card_hint">Cartões de Memorização</string>
   <string name="ease1_learning">Novamente</string>
   <string name="ease2_learning">Bom</string>
   <string name="ease3_learning">Fácil</string>
@@ -50,10 +47,7 @@
   <string name="ease4_successive">Fácil</string>
   <string name="loading">Carregando...</string>
   <string name="studyoptions_continue">Continuar Revisando</string>
-  <string name="studyoptions_well_done">Muito bem!</string>
   <string name="studyoptions_congrats_title">Parabéns!</string>
-  <string name="studyoptions_congrats_card">card</string>
-  <string name="studyoptions_congrats_cards">cards</string>
   <string name="studyoptions_congrats_learnmore">Aprender mais</string>
   <string name="studyoptions_congrats_reviewearly">Revisar antes</string>
   <string name="studyoptions_congrats_syncdeck">Sincronizar deck</string>
@@ -64,25 +58,24 @@
   <string name="menu_rotate">Rotate</string>
   <string name="undo">Desfazer</string>
   <string name="redo">Refazer</string>
-  <string name="close_current_deck">Closing current deck.\nPlease wait...</string>
+  <string name="close_previous_deck">Closing previous deck.\nPlease wait...</string>
+  <string name="close_deck">Closing deck.\nPlease wait...</string>
+  <string name="finish_operation">Finishing previous operation.\nPlease wait...</string>
   <string name="contextmenu_deckpicker_download_missing_media">Baixar mídia ausentes</string>
   <string name="contextmenu_deckpicker_reset_language_assignments">Redefinir as configuraçãoes de idioma</string>
   <string name="contextmenu_deckpicker_reset_reset_message">Redefinição de idioma</string>
   <string name="contextmenu_deckpicker_optimize_deck">Otimizar o banco de dados</string>
   <string name="contextmenu_deckpicker_set_custom_dictionary">Set custom dictionary</string>
   <string name="begin_cram">Iniciar o modo \"Estudo Focado\"</string>
-  <string name="end_cram">Parar modo \"Estudo focado\"</string>
   <string name="cram">Estudo Focado</string>
   <string name="menu_open_deck">Todos os decks</string>
   <string name="menu_sync">Sincronizar</string>
   <string name="menu_download_deck">Baixar deck</string>
   <string name="menu_download_shared_deck">Deck compartilhado</string>
   <string name="menu_download_personal_deck">Deck pessoal</string>
-  <string name="menu_synchronize">Sincronizar</string>
   <string name="menu_my_account">Minha Conta</string>
   <string name="menu_preferences">Preferências</string>
   <string name="menu_zeemote">Zeemote</string>
-  <string name="menu_deck_properties">Propriedades do Deck</string>
   <string name="menu_add_card">Adicionar card</string>
   <string name="menu_about">Sobre</string>
   <string name="menu_remove_card">\"Dispensar\" card</string>
@@ -98,9 +91,14 @@
   <string name="studyoptions_cram_dialog_title">Tags para revisar</string>
   <string name="statistics">Estatísticas</string>
   <string name="studyoptions_load_other_deck">Carregar outro Deck</string>
-  <string name="studyoptions_load_sample_deck">Carregar Deck de exemplo</string>
+  <string name="studyoptions_load_tutorial_deck">Load Tutorial Deck</string>
   <string name="studyoptions_night_mode">Modo Noite</string>
   <string name="studyoptions_swap_qa">Swap Q/A</string>
+  <string name="visit">Visit</string>
+  <string name="later">Later</string>
+  <string name="download">Download</string>
+  <string name="deckpicker_loading_error">Deck could not be loaded</string>
+  <string name="deckpicker_creating_backup">Creating backup...</string>
   <string-array name="next_review_s">
     <item>1 second</item>
     <item>1 minute</item>

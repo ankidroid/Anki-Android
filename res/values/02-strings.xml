@@ -42,7 +42,7 @@
 <!--Card Editor-->
 <string name="about_title">About</string>
 <string name="cardeditor_title">Fact Editor</string>
-<string name="factadder_title">Card Adder</string>
+<!-- <string name="factadder_title">Card Adder</string> -->
 <string name="factadder_saving_error">Error saving fact</string>
 <string name="saving_facts">Saving facts</string>
 <string name="deckcreator_title">Deck Creator</string>
@@ -76,5 +76,14 @@
 <string name="card_editor_reset">Reset</string>
 <string name="card_editor_copy_card">Copy card</string>
 <string name="card_editor_reset_card">Reset progress</string>
+
+<string name="error_insufficient_memory">Operation not possible due to insufficient memory on your device</string>
+
+<string name="tutorial_load">Creating tutorial deck</string>
+<string name="tutorial_loading_error">Tutorial deck could not be created</string>
+
+<string name="help_title">Help</string>
+<string name="help_online">Online help</string>
+<string name="help_tutorial">Tutorial deck</string>
 
 </resources>

@@ -42,7 +42,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.AdapterView;
-import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -94,6 +93,7 @@ public class CardBrowser extends Activity {
 	private static final int CONTEXT_MENU_DETAILS = 3;
 
 	private static final int DIALOG_ORDER = 0;
+	private static final int DIALOG_CONTEXT_MENU = 1;
 
 	private static final int BACKGROUND_NORMAL = 0;
 	private static final int BACKGROUND_MARKED = 1;
@@ -125,7 +125,7 @@ public class CardBrowser extends Activity {
 	private boolean mShowOnlyMarSus = false;
 
 	private int mSelectedOrder = CARD_ORDER_CREATED;
-
+	
 	private String[] allTags;
 	private HashSet<String> mSelectedTags;
 	private StyledDialog mTagsDialog;
@@ -141,14 +141,67 @@ public class CardBrowser extends Activity {
     	}
     };
 
+
+    private DialogInterface.OnClickListener mContextMenuListener = new DialogInterface.OnClickListener() {
+
+		@Override
+		public void onClick(DialogInterface dialog, int which) {
+			switch (which) {
+			case CONTEXT_MENU_MARK:
+				DeckTask.launchDeckTask(DeckTask.TASK_TYPE_MARK_CARD,
+						mMarkCardHandler, new DeckTask.TaskData(0, mDeck,
+								mSelectedCard));
+				return;
+			case CONTEXT_MENU_SUSPEND:
+				DeckTask.launchDeckTask(DeckTask.TASK_TYPE_SUSPEND_CARD,
+						mSuspendCardHandler, new DeckTask.TaskData(0, mDeck,
+								mSelectedCard));
+				return;
+			case CONTEXT_MENU_DELETE:
+				Resources res = getResources();
+				StyledDialog.Builder builder = new StyledDialog.Builder(CardBrowser.this);
+				builder.setTitle(res.getString(R.string.delete_card_title));
+				builder.setIcon(android.R.drawable.ic_dialog_alert);
+				builder.setMessage(String.format(res
+						.getString(R.string.delete_card_message), mCards.get(
+						mPositionInCardsList).get("question"), mCards.get(
+						mPositionInCardsList).get("answer")));
+				builder.setPositiveButton(res.getString(R.string.yes),
+						new DialogInterface.OnClickListener() {
+							@Override
+							public void onClick(DialogInterface dialog, int which) {
+								DeckTask.launchDeckTask(
+										DeckTask.TASK_TYPE_DELETE_CARD,
+										mDeleteCardHandler, new DeckTask.TaskData(
+												0, mDeck, mSelectedCard));
+							}
+						});
+				builder.setNegativeButton(res.getString(R.string.no), null);
+				builder.create().show();
+				return;
+			case CONTEXT_MENU_DETAILS:
+				Themes.htmlOkDialog(CardBrowser.this, getResources().getString(R.string.card_browser_card_details), mSelectedCard.getCardDetails(CardBrowser.this, true)).show();
+				return;
+			}
+		}
+    	
+    };
+
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		Themes.applyTheme(this);
 		super.onCreate(savedInstanceState);
 
-		setContentView(R.layout.card_browser);
+		View mainView = getLayoutInflater().inflate(R.layout.card_browser, null);
+		setContentView(mainView);
+		Themes.setContentStyle(mainView, Themes.CALLER_CARDBROWSER);
 
 		mDeck = AnkiDroidApp.deck();
+		if (mDeck == null) {
+			finish();
+			return;
+		}
 		mDeck.resetUndo();
 
 		mBackground = Themes.getCardBrowserBackground();
@@ -234,94 +287,14 @@ public class CardBrowser extends Activity {
 		getCards();
 	}
 
+
 	@Override
 	public void onCreateContextMenu(ContextMenu menu, View v,
 			ContextMenuInfo menuInfo) {
-		super.onCreateContextMenu(menu, v, menuInfo);
-		int selectedPosition = ((AdapterView.AdapterContextMenuInfo) menuInfo).position;
-		Resources res = getResources();
-		@SuppressWarnings("unused")
-		MenuItem item;
-		mSelectedCard = mDeck.cardFromId(Long.parseLong(mCards.get(
-				selectedPosition).get("id")));
-		if (mSelectedCard.isMarked()) {
-			item = menu.add(Menu.NONE, CONTEXT_MENU_MARK, Menu.NONE, res
-					.getString(R.string.card_browser_unmark_card));
-			mIsMarked = true;
-			Log.i(AnkiDroidApp.TAG, "Selected Card is currently marked");
-		} else {
-			item = menu.add(Menu.NONE, CONTEXT_MENU_MARK, Menu.NONE, res
-					.getString(R.string.card_browser_mark_card));
-			mIsMarked = false;
-		}
-		if (mSelectedCard.getSuspendedState()) {
-			item = menu.add(Menu.NONE, CONTEXT_MENU_SUSPEND, Menu.NONE, res
-					.getString(R.string.card_browser_unsuspend_card));
-			mIsSuspended = true;
-			Log.i(AnkiDroidApp.TAG, "Selected Card is currently suspended");
-		} else {
-			item = menu.add(Menu.NONE, CONTEXT_MENU_SUSPEND, Menu.NONE, res
-					.getString(R.string.card_browser_suspend_card));
-			mIsSuspended = false;
-		}
-		item = menu.add(Menu.NONE, CONTEXT_MENU_DELETE, Menu.NONE, res
-				.getString(R.string.card_browser_delete_card));
-		item = menu.add(Menu.NONE, CONTEXT_MENU_DETAILS, Menu.NONE, res
-				.getString(R.string.card_browser_card_details));
-		menu.setHeaderTitle(mCards.get(selectedPosition).get("question"));
+		mPositionInCardsList = ((AdapterView.AdapterContextMenuInfo) menuInfo).position;
+		showDialog(DIALOG_CONTEXT_MENU);
 	}
 
-	@Override
-	public boolean onContextItemSelected(MenuItem item) {
-		AdapterContextMenuInfo info = (AdapterContextMenuInfo) item
-				.getMenuInfo();
-
-		switch (item.getItemId()) {
-		case CONTEXT_MENU_MARK:
-			mPositionInCardsList = info.position;
-			DeckTask.launchDeckTask(DeckTask.TASK_TYPE_MARK_CARD,
-					mMarkCardHandler, new DeckTask.TaskData(0, mDeck,
-							mSelectedCard));
-			return true;
-		case CONTEXT_MENU_SUSPEND:
-			mPositionInCardsList = info.position;
-			DeckTask.launchDeckTask(DeckTask.TASK_TYPE_SUSPEND_CARD,
-					mSuspendCardHandler, new DeckTask.TaskData(0, mDeck,
-							mSelectedCard));
-			return true;
-		case CONTEXT_MENU_DELETE:
-			mPositionInCardsList = info.position;
-
-			Dialog dialog;
-			Resources res = getResources();
-			StyledDialog.Builder builder = new StyledDialog.Builder(this);
-			builder.setTitle(res.getString(R.string.delete_card_title));
-			builder.setIcon(android.R.drawable.ic_dialog_alert);
-			builder.setMessage(String.format(res
-					.getString(R.string.delete_card_message), mCards.get(
-					mPositionInCardsList).get("question"), mCards.get(
-					mPositionInCardsList).get("answer")));
-			builder.setPositiveButton(res.getString(R.string.yes),
-					new DialogInterface.OnClickListener() {
-						@Override
-						public void onClick(DialogInterface dialog, int which) {
-							DeckTask.launchDeckTask(
-									DeckTask.TASK_TYPE_DELETE_CARD,
-									mDeleteCardHandler, new DeckTask.TaskData(
-											0, mDeck, mSelectedCard));
-						}
-					});
-			builder.setNegativeButton(res.getString(R.string.no), null);
-			dialog = builder.create();
-			dialog.show();
-			return true;
-		case CONTEXT_MENU_DETAILS:
-			Themes.htmlOkDialog(this, getResources().getString(R.string.card_browser_card_details), mSelectedCard.getCardDetails(this, true)).show();
-			return true;
-		default:
-			return super.onContextItemSelected(item);
-		}
-	}
 
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
@@ -456,7 +429,6 @@ public class CardBrowser extends Activity {
 			DeckTask.launchDeckTask(DeckTask.TASK_TYPE_UPDATE_FACT,
 					mUpdateCardHandler, new DeckTask.TaskData(0, mDeck,
 							mSelectedCard));
-			// TODO: code to save the changes made to the current card.
 		} else if (requestCode == ADD_FACT && resultCode == RESULT_OK) {
 			getCards();
 		}
@@ -484,8 +456,51 @@ public class CardBrowser extends Activity {
 				}
 	        });
 			dialog = builder.create();
+			break;
+		case DIALOG_CONTEXT_MENU:
+			String[] entries = new String[4];
+			@SuppressWarnings("unused")
+			MenuItem item;
+			entries[CONTEXT_MENU_MARK] = res.getString(R.string.card_browser_mark_card);
+			entries[CONTEXT_MENU_SUSPEND] = res.getString(R.string.card_browser_suspend_card);
+			entries[CONTEXT_MENU_DELETE] = res.getString(R.string.card_browser_delete_card);
+			entries[CONTEXT_MENU_DETAILS] = res.getString(R.string.card_browser_card_details);
+	        builder.setTitle("contextmenu");
+	        builder.setIcon(R.drawable.ic_menu_manage);
+	        builder.setItems(entries, mContextMenuListener);
+	        dialog = builder.create();
+			break;
 		}
 		return dialog;
+	}
+
+
+	@Override
+	protected void onPrepareDialog(int id, Dialog dialog) {
+		Resources res = getResources();
+		StyledDialog ad = (StyledDialog)dialog;
+		switch (id) {
+		case DIALOG_CONTEXT_MENU:
+			mSelectedCard = mDeck.cardFromId(Long.parseLong(mCards.get(mPositionInCardsList).get("id")));
+			if (mSelectedCard.isMarked()) {
+				ad.changeListItem(CONTEXT_MENU_MARK, res.getString(R.string.card_browser_unmark_card));
+				mIsMarked = true;
+				Log.i(AnkiDroidApp.TAG, "Selected Card is currently marked");
+			} else {
+				ad.changeListItem(CONTEXT_MENU_MARK, res.getString(R.string.card_browser_mark_card));
+				mIsMarked = false;
+			}
+			if (mSelectedCard.getSuspendedState()) {
+				ad.changeListItem(CONTEXT_MENU_SUSPEND, res.getString(R.string.card_browser_unsuspend_card));
+				mIsSuspended = true;
+				Log.i(AnkiDroidApp.TAG, "Selected Card is currently suspended");
+			} else {
+				ad.changeListItem(CONTEXT_MENU_SUSPEND, res.getString(R.string.card_browser_suspend_card));
+				mIsSuspended = false;
+			}
+			ad.setTitle(mCards.get(mPositionInCardsList).get("question"));
+			break;
+		}		
 	}
 
 
@@ -748,8 +763,14 @@ public class CardBrowser extends Activity {
 						entry.put("answer", ArabicUtilities.reshapeSentence(entry.get("answer")));
 					}
 				}
-				mAllCards.addAll(cards);
-				mCards.addAll(cards);
+				try {
+					mAllCards.addAll(cards);
+					mCards.addAll(cards);					
+				} catch (OutOfMemoryError e) {
+			    	Log.e(AnkiDroidApp.TAG, "CardBrowser: mLoadCardsHandler: OutOfMemoryError: " + e);
+					Themes.showThemedToast(CardBrowser.this, getResources().getString(R.string.error_insufficient_memory), false);
+			    	finish();
+				}
 				updateList();
 			}
 		}
@@ -820,7 +841,7 @@ public class CardBrowser extends Activity {
 		@Override
 		public void onPreExecute() {
 			Resources res = getResources();
-			if (mProgressDialog.isShowing()) {
+			if (mProgressDialog != null && mProgressDialog.isShowing()) {
 				mProgressDialog.setMessage(res.getString(R.string.card_browser_sorting_cards));
 			} else {
 				mProgressDialog = ProgressDialog.show(CardBrowser.this, "", res

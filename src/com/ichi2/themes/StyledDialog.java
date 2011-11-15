@@ -18,42 +18,65 @@
 
 package com.ichi2.themes;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-
-import com.ichi2.anki.R;
-
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup.LayoutParams;
+import android.view.WindowManager.BadTokenException;
 import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.CheckedTextView;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.AdapterView.OnItemClickListener;
+
+import com.ichi2.anki.AnkiDroidApp;
+import com.ichi2.anki.R;
+import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.List;
  
 
 public class StyledDialog extends Dialog {
 
 	private Context mContext;
 	private List<String> mItemList;
-	private ArrayAdapter mListAdapter;
+	private boolean[] mCheckedItems;
+	private ArrayAdapter<String> mListAdapter;
 	private OnClickListener mListener;
 	private ListView mListView;
+	private boolean mDoNotShow = false;
+	private static Method mSetScrollbarBarFading;
+	private static boolean mSetScrollBarFading = true;
 
 
     public StyledDialog(Context context) {
         super(context, R.style.StyledDialog);
         mContext = context;
+    }
+
+
+    @Override
+    public void show() {
+    	try {
+    		super.show();
+    	} catch (BadTokenException e) {
+    		Log.e(AnkiDroidApp.TAG, "Could not show dialog: " + e);
+    	}
+    }
+
+
+    @Override
+    public void onAttachedToWindow() {
+    	if (mDoNotShow) {
+        	this.dismiss();
+    	}
     }
 
 
@@ -64,6 +87,12 @@ public class StyledDialog extends Dialog {
     }
 
 
+    public void setTitle(String message) {
+    	View main = super.getWindow().getDecorView();
+    	((TextView) main.findViewById(R.id.alertTitle)).setText(message);
+    }
+
+
     public void setMessage(String message) {
     	View main = super.getWindow().getDecorView();
     	((TextView) main.findViewById(R.id.message)).setText(message);
@@ -71,8 +100,22 @@ public class StyledDialog extends Dialog {
     }
 
 
+    public void setEnabled(boolean enabled) {
+    	mDoNotShow = !enabled;
+    }
+
+
     public void setItems(int type, ListView listview, String[] values, int checkedItem, boolean[] checked, DialogInterface.OnClickListener listener) {
     	mListView = listview;
+	if (mSetScrollBarFading) {
+            try {
+		mSetScrollbarBarFading = ListView.class.getMethod("setScrollbarFadingEnabled", boolean.class);
+            	mSetScrollbarBarFading.invoke(mListView, false);
+            } catch (Throwable e) {
+            	Log.i(AnkiDroidApp.TAG, "setScrollbarFadingEnabled could not be set due to a too low Android version (< 2.1)");
+		mSetScrollBarFading = false;
+            }
+	}
     	mItemList = new ArrayList<String>();
         for (String titel : values) {
         	mItemList.add(titel);
@@ -96,18 +139,18 @@ public class StyledDialog extends Dialog {
     	}
     	switch (type) {
     	case 1:
-    		mListAdapter = new ArrayAdapter(mContext, R.layout.select_dialog_nochoice, 0, mItemList);
+    		mListAdapter = new ArrayAdapter<String>(mContext, R.layout.select_dialog_nochoice, 0, mItemList);
     		mListView.setAdapter(mListAdapter);
     		mListView.setChoiceMode(ListView.CHOICE_MODE_NONE);
 	    	break;
     	case 2:
-    		mListAdapter = new ArrayAdapter(mContext, R.layout.select_dialog_singlechoice, 0, mItemList);
+    		mListAdapter = new ArrayAdapter<String>(mContext, R.layout.select_dialog_singlechoice, 0, mItemList);
     		mListView.setAdapter(mListAdapter);
     		mListView.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
     		mListView.setItemChecked(checkedItem, true);
         	break;
     	case 3:
-    		mListAdapter = new ArrayAdapter(mContext, R.layout.select_dialog_multichoice, 0, mItemList);
+    		mListAdapter = new ArrayAdapter<String>(mContext, R.layout.select_dialog_multichoice, 0, mItemList);
     		mListView.setAdapter(mListAdapter);
     		mListView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
 	    	for (int i = 0; i < checked.length; i++) {
@@ -133,24 +176,33 @@ public class StyledDialog extends Dialog {
 
 
     public void addMultiChoiceItems(String value, boolean checked) {
-    	boolean[] checkedItems = new boolean[mListView.getChildCount()];
-    	for (int i = 0; i < mListView.getChildCount(); i++) {
-    		checkedItems[i] = ((CheckedTextView)mListView.getChildAt(i)).isChecked();
-    	}
     	mItemList.add(0, value);
-    	mListView.setItemChecked(0, true);
-    	for (int i = 1; i < mListView.getChildCount(); i++) {
-    		mListView.setItemChecked(i, checkedItems[i-1]);
+    	mListView.setItemChecked(0, checked);
+    	boolean[] newChecked = new boolean[mItemList.size()];
+    	newChecked[0] = checked;
+    	for (int i = 1; i < mItemList.size(); i++) {
+    		boolean c = mCheckedItems[i-1];
+    		mListView.setItemChecked(i, c);
+    		newChecked[i] = c;
     	}
+    	mCheckedItems = newChecked;
     	mListAdapter.notifyDataSetChanged();
     }
 
 
     public void setMultiChoiceItems(String[] values, boolean[] checked, DialogInterface.OnClickListener listener) {
     	View main = super.getWindow().getDecorView();
+    	mCheckedItems = checked;
         ((View) main.findViewById(R.id.listViewPanel)).setVisibility(View.VISIBLE);
-    	setItems(3, (ListView) super.getWindow().getDecorView().findViewById(R.id.listview), values, 0, checked, listener);
+    	setItems(3, (ListView) super.getWindow().getDecorView().findViewById(R.id.listview), values, 0, mCheckedItems, listener);
 	}
+
+
+    public void changeListItem(int position, String text) {
+    	mItemList.remove(position);
+    	mItemList.add(position, text);
+    	mListAdapter.notifyDataSetChanged();
+    }
 
 
     public static class Builder {
@@ -162,8 +214,9 @@ public class StyledDialog extends Dialog {
         private String negativeButtonText;
         private String neutralButtonText;
         private View contentView;
+        private int bottomMargin = 0;
         private boolean brightViewBackground = false;
-        private int icon;
+        private int icon = 0;
  
         private DialogInterface.OnClickListener positiveButtonClickListener;
         private DialogInterface.OnClickListener negativeButtonClickListener;
@@ -250,8 +303,12 @@ public class StyledDialog extends Dialog {
         public Builder setView(View v) {
         	return setView(v, false);
         }
-        public Builder setView(View v, boolean bright) {
+        public Builder setView(View v, boolean isSingleView) {
+        	return setView(v, isSingleView, false);
+        }
+        public Builder setView(View v, boolean isSingleView, boolean bright) {
             this.contentView = v;
+        	this.bottomMargin = isSingleView ? 5 : 0;
             this.brightViewBackground = bright;
             return this;
         }
@@ -399,8 +456,16 @@ public class StyledDialog extends Dialog {
             dialog.addContentView(layout, new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT));
 
             // set title
-            ((TextView) layout.findViewById(R.id.alertTitle)).setText(title);
-            ((ImageView) layout.findViewById(R.id.icon)).setImageResource(icon);
+            if (title != null && title.length() > 0) {
+                ((TextView) layout.findViewById(R.id.alertTitle)).setText(title);            	
+                if (icon != 0) {
+                    ((ImageView) layout.findViewById(R.id.icon)).setImageResource(icon);            	
+                } else {
+                	layout.findViewById(R.id.icon).setVisibility(View.GONE);
+                }
+            } else {
+            	layout.findViewById(R.id.topPanel).setVisibility(View.GONE);
+            }
 
             // set buttons
             int numberOfButtons = 0;
@@ -431,6 +496,9 @@ public class StyledDialog extends Dialog {
             } else {
                 layout.findViewById(R.id.button3).setVisibility(View.GONE);
             }
+            if (numberOfButtons == 0) {
+            	layout.findViewById(R.id.buttonPanel).setVisibility(View.GONE);
+            }
 
             dialog.setCancelable(cancelable);
             dialog.setOnCancelListener(cancelListener);
@@ -455,6 +523,8 @@ public class StyledDialog extends Dialog {
             // set a custom view
             if (contentView != null) {
             	FrameLayout frame = (FrameLayout) layout.findViewById(R.id.custom);
+            	float factor = context.getResources().getDisplayMetrics().density;
+        		frame.setPadding((int)(2 * factor), (int)((5  - bottomMargin) * factor), (int)(2 * factor), (int)(bottomMargin * factor));
             	frame.removeAllViews();
             	frame.addView(contentView);
             } else {
@@ -462,7 +532,13 @@ public class StyledDialog extends Dialog {
             }
 
             // set background
-            Themes.setStyledDialogBackgrounds(layout, numberOfButtons, brightViewBackground);
+            try {
+            	Themes.setStyledDialogBackgrounds(layout, numberOfButtons, brightViewBackground);
+            } catch (OutOfMemoryError e) {
+            	Log.e(AnkiDroidApp.TAG, "StyledDialog - Dialog could not be created: " + e);
+            	Themes.showThemedToast(context, context.getResources().getString(R.string.error_insufficient_memory), false);
+            	return null;
+            }
 
             dialog.setContentView(layout);
             return dialog;

@@ -43,7 +43,7 @@ import java.io.InputStream;
 
 public class DeckCreator extends Activity {
 
-    private final static String EMPTY_DECK_NAME = "empty.anki";
+    public final static String EMPTY_DECK_NAME = "empty.anki";
     
     private String mPrefDeckPath;
     

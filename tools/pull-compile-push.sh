@@ -27,7 +27,7 @@ git pull b$DEVELOPER $BRANCH
 if [ "$?" -ne "0" ]; then zenity --error --text 'pull failed'; exit 1; fi 
 
 # Compile
-ant compile
+ant debug
 if [ "$?" -ne "0" ]; then zenity --error --text 'compile failed'; exit 1; fi 
 
 # If compile worked, push

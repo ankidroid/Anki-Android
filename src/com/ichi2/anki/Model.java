@@ -21,7 +21,6 @@ import android.content.ContentValues;
 import android.database.Cursor;
 import android.graphics.Color;
 
-import com.ichi2.themes.Themes;
 import com.mindprod.common11.StringTools;
 
 import java.util.ArrayList;
@@ -277,8 +276,9 @@ public class Model {
             query.append(" WHERE id = ").append(id);
             cursor = AnkiDatabaseManager.getDatabase(deck.getDeckPath()).getDatabase().rawQuery(query.toString(), null);
 
-            cursor.moveToFirst();
-            model = new Model(deck);
+            if (cursor.moveToFirst()) {
+	            model = new Model(deck);
+	    }
 
             model.mId = cursor.getLong(0); // Primary key
             model.mDeckId = cursor.getLong(1); // Foreign key

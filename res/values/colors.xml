@@ -16,16 +16,12 @@
 -->
 <resources>
 	<color name="wb_fg_color">#B00000FF</color>
-	<color name="wb_bg_color">#0000</color>
 	<color name="wb_fg_color_inv">#0099FF</color>
-	<color name="wb_bg_color_inv">#FFFF</color>
 	<color name="next_time_usual_color">#000000</color>
 	<color name="next_time_failed_color">#FF0000</color>
 	<color name="next_time_recommended_color">#007700</color>
 	<color name="next_time_usual_color_inv">#FFFFFF</color>
-	<color name="next_time_failed_color_inv">#00FFFF</color>
 	<color name="next_time_recommended_color_inv">#4AA02C</color>
-	<color name="background_color_inv">#000000</color>
 	<color name="foreground_color_inv">#FFFFFF</color>
 	<color name="textbar_blue_color_inv">#4AA02C</color>
 	<color name="textbar_blue_color">#0000ff</color>
@@ -47,7 +43,6 @@
 	<color name="progressbar_4">#4aa02c</color>	
 
 	<color name="studyoptions_foreground">#FFFF</color>	
-	<color name="studyoptions_background">#000000</color>
 	<color name="studyoptions_foreground_deactivated">#484848</color>
 	<color name="background">#FFFF</color>
 
@@ -64,7 +59,6 @@
 	<color name="reviewer_progressbar_session_blue">#a9a9a9</color>
 	<color name="studyoptions_progressbar_background_nightmode">#d7d7d7</color>
 
-	<color name="deckpicker_background">#c6cfd6</color>
 	<color name="deckpicker_progressbar_young_light">#999999</color>
 
 	<color name="reviewer_background">#c6cfd6</color>

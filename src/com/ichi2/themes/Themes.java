@@ -29,20 +29,23 @@ import android.util.Log;
 import android.view.View;
 import android.webkit.WebView;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 public class Themes {
 
-	public final static int THEME_DEFAULT = 0;
+	public final static int THEME_ANDROID_DARK = 0;
 	public final static int THEME_ANDROID_LIGHT = 1;
-	public final static int THEME_BLUE= 2;
+	public final static int THEME_BLUE = 2;
 
 	public final static int CALLER_STUDYOPTIONS = 1;
 	public final static int CALLER_DECKPICKER_DECK = 3;
 	public final static int CALLER_REVIEWER= 4;
 	public final static int CALLER_FEEDBACK= 5;
 	public final static int CALLER_DOWNLOAD_DECK= 6;
+	public final static int CALLER_DECKPICKER = 7;
+	public final static int CALLER_CARDBROWSER = 8;
 
 	private static int mCurrentTheme = -1;
 	private static int mProgressbarsBackgroundColor;
@@ -64,24 +67,128 @@ public class Themes {
 	private static int[] mCardbrowserItemBorder;
 	private static int[] mChartColors;
 	private static int mPopupTopDark;
+	private static int mPopupTopMedium;
+	private static int mPopupTopBright;
 	private static int mPopupCenterDark;
 	private static int mPopupCenterBright;
 	private static int mPopupCenterMedium;
 	private static int mPopupBottomDark;
 	private static int mPopupBottomBright;
 	private static int mPopupBottomMedium;
+	private static int mPopupFullDark;
+	private static int mPopupFullMedium;
+	private static int mPopupFullBright;
 	private static int mDividerHorizontalBright;
-	
+
+	private static Context mContext;
 
 	public static void applyTheme(Context context) {
+		mContext = context;
 		if (mCurrentTheme == -1) {
-			SharedPreferences preferences = PrefSettings.getSharedPrefs(context);
+			loadTheme();
+		}
+		switch (mCurrentTheme) {
+		case THEME_ANDROID_DARK:
+			context.setTheme(R.style.Theme_Black);
+			Log.i(AnkiDroidApp.TAG, "Set theme: dark");
+			break;
+		case THEME_ANDROID_LIGHT:
+			context.setTheme(R.style.Theme_Light);
+			Log.i(AnkiDroidApp.TAG, "Set theme: light");
+			break;
+		case THEME_BLUE:
+			context.setTheme(R.style.Theme_Blue);
+			Log.i(AnkiDroidApp.TAG, "Set theme: blue");
+			break;
+		}
+	}
+
+
+	public static void setContentStyle(View view, int caller) {
+		if (mCurrentTheme == THEME_ANDROID_DARK) {
+			return;
+		}
+		switch (caller) {
+		case CALLER_STUDYOPTIONS:
+			((View) view.findViewById(R.id.studyoptions_progressbar1_border)).setBackgroundResource(mProgressbarsFrameColor);
+			((View) view.findViewById(R.id.studyoptions_progressbar2_border)).setBackgroundResource(mProgressbarsFrameColor);
+			((View) view.findViewById(R.id.studyoptions_global_limit_bars)).setBackgroundResource(mProgressbarsFrameColor);
+			((View) view.findViewById(R.id.studyoptions_progressbar4_border)).setBackgroundResource(mProgressbarsFrameColor);
+
+			((View) view.findViewById(R.id.studyoptions_bars_max)).setBackgroundResource(mProgressbarsBackgroundColor);
+			((View) view.findViewById(R.id.studyoptions_progressbar2_content)).setBackgroundResource(mProgressbarsBackgroundColor);
+			((View) view.findViewById(R.id.studyoptions_global_limit_bars_content)).setBackgroundResource(mProgressbarsBackgroundColor);
+			((View) view.findViewById(R.id.studyoptions_progressbar4_content)).setBackgroundResource(mProgressbarsBackgroundColor);
+
+			((View) view.findViewById(R.id.studyoptions_global_mat_limit_bar)).setBackgroundResource(mProgressbarsMatureColor);
+			((View) view.findViewById(R.id.studyoptions_global_mat_bar)).setBackgroundResource(mProgressbarsMatureColor);
+
+			((View) view.findViewById(R.id.studyoptions_global_limit_bar)).setBackgroundResource(mProgressbarsYoungColor);
+			((View) view.findViewById(R.id.studyoptions_global_bar)).setBackgroundResource(mProgressbarsYoungColor);
+			break;
+		case CALLER_DECKPICKER:
+			if (mCurrentTheme == THEME_BLUE) {
+				ListView lv = (ListView) view.findViewById(R.id.files);
+				lv.setSelector(R.drawable.blue_deckpicker_list_selector);
+				lv.setDivider(mContext.getResources().getDrawable(R.color.transparent));
+			}
+			break;
+		case CALLER_CARDBROWSER:
+			if (mCurrentTheme == THEME_BLUE) {
+				ListView lv = (ListView) view.findViewById(R.id.card_browser_list);
+				lv.setSelector(R.drawable.blue_cardbrowser_list_selector);
+				lv.setDivider(mContext.getResources().getDrawable(R.color.transparent));
+			}
+			break;
+		case CALLER_DECKPICKER_DECK:
+			if (view.getId() == R.id.DeckPickerCompletionMat) {
+				view.setBackgroundResource(mProgressbarsFrameColor);
+			} else if (view.getId() == R.id.DeckPickerCompletionAll) {
+				view.setBackgroundResource(mProgressbarsDeckpickerYoungColor);
+			} else if (view.getId() == R.id.deckpicker_deck) {
+				view.setBackgroundResource(mDeckpickerItemBorder);
+			}
+			break;
+		case CALLER_REVIEWER:
+	        ((View)view.findViewById(R.id.main_layout)).setBackgroundResource(mReviewerBackground);
+	        ((View)view.findViewById(R.id.flashcard_border)).setBackgroundResource(mFlashcardBorder);
+	        ((View)view.findViewById(R.id.flashcard_frame)).setBackgroundResource(PrefSettings.getSharedPrefs(mContext).getBoolean("invertedColors", false) ? (mCurrentTheme == THEME_BLUE ? R.color.reviewer_night_card_background : R.color.black): R.color.white);
+	        ((View)view.findViewById(R.id.session_progress)).setBackgroundResource(mReviewerProgressbar);
+			break;
+		case CALLER_FEEDBACK:
+			((TextView)view).setTextColor(mProgressbarsFrameColor);
+			break;
+		case CALLER_DOWNLOAD_DECK:
+			view.setBackgroundResource(mDeckpickerItemBorder);
+			break;
+		}
+	}
+
+
+	public static void loadTheme(){
+			SharedPreferences preferences = PrefSettings.getSharedPrefs(mContext);
 			mCurrentTheme = Integer.parseInt(preferences.getString("theme", "2"));
 			switch (mCurrentTheme) {
-			case THEME_DEFAULT:
+			case THEME_ANDROID_DARK:
 				mDialogBackgroundColor = R.color.card_browser_background;
+				mProgressbarsBackgroundColor = 0;
+				mProgressbarsFrameColor = 0;
+				mProgressbarsMatureColor = 0;
+				mProgressbarsYoungColor = 0;
+				mProgressbarsDeckpickerYoungColor = 0;
+				mReviewerBackground = 0;
+				mFlashcardBorder = 0;
+				mDeckpickerItemBorder = 0;
+				mTitleStyle = 0;
+				mTextViewStyle = 0;
+				mWallpaper = 0;
+				mToastBackground = 0;
+				mBackgroundDarkColor = 0;
+				mReviewerProgressbar = 0;
 				mCardbrowserItemBorder = new int[] {0, R.color.card_browser_marked, R.color.card_browser_suspended, R.color.card_browser_marked};
 				mChartColors = new int[] {Color.WHITE, Color.BLACK};
+				mPopupTopBright = R.drawable.popup_top_bright;
+				mPopupTopMedium = R.drawable.popup_top_bright;
 				mPopupTopDark = R.drawable.popup_top_dark;
 				mPopupCenterDark = R.drawable.popup_center_dark;
 				mPopupCenterBright = R.drawable.popup_center_bright;
@@ -89,6 +196,9 @@ public class Themes {
 				mPopupBottomDark = R.drawable.popup_bottom_dark;
 				mPopupBottomBright = R.drawable.popup_bottom_bright;
 				mPopupBottomMedium = R.drawable.popup_bottom_medium;
+				mPopupFullBright = R.drawable.popup_full_bright;
+				mPopupFullDark = R.drawable.popup_full_dark;
+				mPopupFullMedium = R.drawable.popup_full_bright;
 				mDividerHorizontalBright = R.drawable.blue_divider_horizontal_bright;
 				mBackgroundColor = R.color.white;
 				break;
@@ -98,17 +208,30 @@ public class Themes {
 				mProgressbarsMatureColor = R.color.studyoptions_progressbar_mature_light;
 				mProgressbarsYoungColor = R.color.studyoptions_progressbar_young_light;
 				mProgressbarsDeckpickerYoungColor = R.color.deckpicker_progressbar_young_light;
+				mReviewerBackground = 0;
+				mFlashcardBorder = 0;
+				mDeckpickerItemBorder = 0;
+				mTitleStyle = 0;
+				mTextViewStyle = 0;
+				mWallpaper = 0;
+				mToastBackground = 0;
+				mBackgroundDarkColor = 0;
 				mDialogBackgroundColor = R.color.card_browser_background;
 				mCardbrowserItemBorder = new int[] {0, R.color.card_browser_marked, R.color.card_browser_suspended, R.color.card_browser_marked};
 				mReviewerProgressbar = mProgressbarsYoungColor;
 				mChartColors = new int[] {Color.BLACK, Color.WHITE};
 				mPopupTopDark = R.drawable.popup_top_dark;
+				mPopupTopBright = R.drawable.popup_top_bright;
+				mPopupTopMedium = R.drawable.popup_top_bright;
 				mPopupCenterDark = R.drawable.popup_center_dark;
 				mPopupCenterBright = R.drawable.popup_center_bright;
 				mPopupCenterMedium = R.drawable.popup_center_medium;
 				mPopupBottomDark = R.drawable.popup_bottom_dark;
 				mPopupBottomBright = R.drawable.popup_bottom_bright;
 				mPopupBottomMedium = R.drawable.popup_bottom_medium;
+				mPopupFullBright = R.drawable.popup_full_bright;
+				mPopupFullMedium = R.drawable.popup_full_bright;
+				mPopupFullDark = R.drawable.popup_full_dark;
 				mDividerHorizontalBright = R.drawable.blue_divider_horizontal_bright;
 				mBackgroundColor = R.color.white;
 				break;				
@@ -132,94 +255,20 @@ public class Themes {
 				mCardbrowserItemBorder = new int[] {R.drawable.blue_bg_cardbrowser, R.drawable.blue_bg_cardbrowser_marked, R.drawable.blue_bg_cardbrowser_suspended, R.drawable.blue_bg_cardbrowser_marked_suspended};
 				mChartColors = new int[] {Color.BLACK, Color.WHITE};
 				mPopupTopDark = R.drawable.blue_popup_top_dark;
+				mPopupTopBright = R.drawable.blue_popup_top_bright;
+				mPopupTopMedium = R.drawable.blue_popup_top_medium;
 				mPopupCenterDark = R.drawable.blue_popup_center_dark;
 				mPopupCenterBright = R.drawable.blue_popup_center_bright;
 				mPopupCenterMedium = R.drawable.blue_popup_center_medium;
 				mPopupBottomDark = R.drawable.blue_popup_bottom_dark;
 				mPopupBottomBright = R.drawable.blue_popup_bottom_bright;
 				mPopupBottomMedium = R.drawable.blue_popup_bottom_medium;
+				mPopupFullBright = R.drawable.blue_popup_full_bright;
+				mPopupFullMedium = R.drawable.blue_popup_full_medium;
+				mPopupFullDark = R.drawable.blue_popup_full_dark;
 				mDividerHorizontalBright = R.drawable.blue_divider_horizontal_bright;
 				break;
 			}
-		}
-		switch (mCurrentTheme) {
-		case THEME_DEFAULT:
-			context.setTheme(R.style.Theme_Black);
-			Log.i(AnkiDroidApp.TAG, "Set theme: dark");
-			break;
-		case THEME_ANDROID_LIGHT:
-			context.setTheme(R.style.Theme_Light);
-			Log.i(AnkiDroidApp.TAG, "Set theme: light");
-			break;
-		case THEME_BLUE:
-			context.setTheme(R.style.Theme_Blue);
-			Log.i(AnkiDroidApp.TAG, "Set theme: blue");
-			break;
-		}
-	}
-
-
-	public static void setContentStyle(View view, int caller) {
-		if (mCurrentTheme == THEME_DEFAULT) {
-			return;
-		}
-		switch (caller) {
-		case CALLER_STUDYOPTIONS:
-			((View) view.findViewById(R.id.studyoptions_progressbar1_border)).setBackgroundResource(mProgressbarsFrameColor);
-			((View) view.findViewById(R.id.studyoptions_progressbar2_border)).setBackgroundResource(mProgressbarsFrameColor);
-			((View) view.findViewById(R.id.studyoptions_global_limit_bars)).setBackgroundResource(mProgressbarsFrameColor);
-			((View) view.findViewById(R.id.studyoptions_progressbar4_border)).setBackgroundResource(mProgressbarsFrameColor);
-
-			((View) view.findViewById(R.id.studyoptions_bars_max)).setBackgroundResource(mProgressbarsBackgroundColor);
-			((View) view.findViewById(R.id.studyoptions_progressbar2_content)).setBackgroundResource(mProgressbarsBackgroundColor);
-			((View) view.findViewById(R.id.studyoptions_global_limit_bars_content)).setBackgroundResource(mProgressbarsBackgroundColor);
-			((View) view.findViewById(R.id.studyoptions_progressbar4_content)).setBackgroundResource(mProgressbarsBackgroundColor);
-
-			((View) view.findViewById(R.id.studyoptions_global_mat_limit_bar)).setBackgroundResource(mProgressbarsMatureColor);
-			((View) view.findViewById(R.id.studyoptions_global_mat_bar)).setBackgroundResource(mProgressbarsMatureColor);
-
-			((View) view.findViewById(R.id.studyoptions_global_limit_bar)).setBackgroundResource(mProgressbarsYoungColor);
-			((View) view.findViewById(R.id.studyoptions_global_bar)).setBackgroundResource(mProgressbarsYoungColor);
-			break;
-		case CALLER_DECKPICKER_DECK:
-			if (view.getId() == R.id.DeckPickerCompletionMat) {
-				view.setBackgroundResource(mProgressbarsFrameColor);
-			} else if (view.getId() == R.id.DeckPickerCompletionAll) {
-				view.setBackgroundResource(mProgressbarsDeckpickerYoungColor);
-			} else if (view.getId() == R.id.deckpicker_deck) {
-				view.setBackgroundResource(mDeckpickerItemBorder);
-			}
-			break;
-		case CALLER_REVIEWER:
-	        ((View)view.findViewById(R.id.main_layout)).setBackgroundResource(mReviewerBackground);
-	        ((View)view.findViewById(R.id.flashcard_border)).setBackgroundResource(mFlashcardBorder);
-	        ((View)view.findViewById(R.id.session_progress)).setBackgroundResource(mReviewerProgressbar);
-			break;
-		case CALLER_FEEDBACK:
-			((TextView)view).setTextColor(mProgressbarsFrameColor);
-			break;
-		case CALLER_DOWNLOAD_DECK:
-			view.setBackgroundResource(mDeckpickerItemBorder);
-			break;
-		}
-	}
-
-
-	public static void resetTheme(){
-		mCurrentTheme = -1;
-		mProgressbarsBackgroundColor = 0;
-		mProgressbarsFrameColor = 0;
-		mProgressbarsMatureColor = 0;
-		mProgressbarsYoungColor = 0;
-		mProgressbarsDeckpickerYoungColor = 0;
-		mReviewerBackground = 0;
-		mFlashcardBorder = 0;
-		mDeckpickerItemBorder = 0;
-		mTitleStyle = 0;
-		mTextViewStyle = 0;
-		mWallpaper = 0;
-		mBackgroundColor = 0;
-		mToastBackground = 0;
 	}
 
 
@@ -230,7 +279,13 @@ public class Themes {
 		if (solid) {
 			view.setBackgroundResource(mBackgroundDarkColor);
 		} else {
-			view.setBackgroundResource(mWallpaper);
+			try {
+				view.setBackgroundResource(mWallpaper);
+			} catch (OutOfMemoryError e) {
+				mWallpaper = mBackgroundColor;
+				view.setBackgroundResource(mWallpaper);
+				Log.e(AnkiDroidApp.TAG, "Themes: setWallpaper: OutOfMemoryError = " + e);
+			}
 		}
 	}
 
@@ -272,10 +327,16 @@ public class Themes {
 
 	public static void showThemedToast(Context context, String text, boolean shortLength) {
 		Toast result = Toast.makeText(context, text, shortLength ? Toast.LENGTH_SHORT : Toast.LENGTH_LONG);
-		if (mCurrentTheme >= THEME_BLUE) {
-			result.getView().setBackgroundResource(mToastBackground);
+		try {
+			if (mCurrentTheme >= THEME_BLUE) {
+				result.getView().setBackgroundResource(mToastBackground);
+			}
+	        	result.show();
+		} catch (OutOfMemoryError e) {
+			Log.e(AnkiDroidApp.TAG, "showThemedToast - OutOfMemoryError occured: " + e);
+			result.getView().setBackgroundResource(R.color.black);
+			result.show();
 		}
-        result.show();
 	}
 
 
@@ -283,12 +344,18 @@ public class Themes {
 		return htmlOkDialog(context, title, text, null, null);
 	}
 	public static StyledDialog htmlOkDialog(Context context, String title, String text, OnClickListener okListener, OnCancelListener cancelListener) {
+		return htmlOkDialog(context, title, text, null, null, false);		
+	}
+	public static StyledDialog htmlOkDialog(Context context, String title, String text, OnClickListener okListener, OnCancelListener cancelListener, boolean includeBody) {
 		StyledDialog.Builder builder = new StyledDialog.Builder(context);
         builder.setTitle(title);
         WebView view = new WebView(context);
         view.setBackgroundColor(context.getResources().getColor(mDialogBackgroundColor));
+        if (includeBody) {
+        	text = "<html><body text=\"#FFFFFF\" link=\"#E37068\" alink=\"#E37068\" vlink=\"#E37068\">" + text + "</body></html>";
+        }
         view.loadDataWithBaseURL("", text, "text/html", "UTF-8", "");
-        builder.setView(view);
+        builder.setView(view, true);
         builder.setPositiveButton(context.getResources().getString(R.string.ok), okListener);
         builder.setCancelable(true);
         builder.setOnCancelListener(cancelListener);
@@ -300,33 +367,115 @@ public class Themes {
 		setStyledDialogBackgrounds(main, buttonNumbers, false);
 	}
 	public static void setStyledDialogBackgrounds(View main, int buttonNumbers, boolean brightCustomPanelBackground) {
-		((View) main.findViewById(R.id.topPanel)).setBackgroundResource(mPopupTopDark);
-		((View) main.findViewById(R.id.titleDivider)).setBackgroundResource(mDividerHorizontalBright);
-		((View) main.findViewById(R.id.contentPanel)).setBackgroundResource(mPopupCenterDark);
-		((View) main.findViewById(R.id.listViewPanel)).setBackgroundResource(mPopupCenterBright);
-		if (brightCustomPanelBackground) {
-			((View) main.findViewById(R.id.customPanel)).setBackgroundResource(mPopupCenterMedium);			
-		} else {
-			((View) main.findViewById(R.id.customPanel)).setBackgroundResource(mPopupCenterDark);
+		// order of styled dialog elements:
+		// 1. top panel (title)
+		// 2. content panel
+		// 3. listview panel
+		// 4. custom view panel
+		// 5. button panel
+		View topPanel = ((View) main.findViewById(R.id.topPanel));
+		boolean[] visibility = new boolean[5];
+
+		if (topPanel.getVisibility() == View.VISIBLE) {
+			try {
+				topPanel.setBackgroundResource(mPopupTopDark);
+			} catch (OutOfMemoryError e) {
+				Log.e(AnkiDroidApp.TAG, "setStyledDialogBackgrounds - OutOfMemoryError occured: " + e);
+				topPanel.setBackgroundResource(R.color.black);
+			}
+			((View) main.findViewById(R.id.titleDivider)).setBackgroundResource(mDividerHorizontalBright);
+			visibility[0] = true;
 		}
-		if (buttonNumbers == 0) {
-			((LinearLayout) main.findViewById(R.id.buttonPanel)).setVisibility(View.GONE);
-			if (((View) main.findViewById(R.id.customPanel)).getVisibility() != View.GONE) {
-    		   ((View) main.findViewById(R.id.customPanel)).setBackgroundResource(mPopupBottomDark);
-    	   } else if (((View) main.findViewById(R.id.listViewPanel)).getVisibility() != View.GONE) {
-    		   ((View) main.findViewById(R.id.listViewPanel)).setBackgroundResource(mPopupBottomBright);
-    	   } else if (((View) main.findViewById(R.id.contentPanel)).getVisibility() != View.GONE) {
-    		   ((View) main.findViewById(R.id.contentPanel)).setBackgroundResource(mPopupBottomDark);
-    	   }
-        } else {
+		View contentPanel = ((View) main.findViewById(R.id.contentPanel));
+		if (contentPanel.getVisibility() == View.VISIBLE) {
+			visibility[1] = true;
+		}
+		View listViewPanel = ((View) main.findViewById(R.id.listViewPanel));
+		if (listViewPanel.getVisibility() == View.VISIBLE) {
+			visibility[2] = true;
+		}
+		View customPanel = ((View) main.findViewById(R.id.customPanel));
+		if (customPanel.getVisibility() == View.VISIBLE) {
+			visibility[3] = true;
+		}
+		if (buttonNumbers > 0) {
         	LinearLayout buttonPanel = (LinearLayout) main.findViewById(R.id.buttonPanel);
-        	buttonPanel.setBackgroundResource(mPopupBottomMedium);
+			try {
+	        	buttonPanel.setBackgroundResource(mPopupBottomMedium);
+			} catch (OutOfMemoryError e) {
+				Log.e(AnkiDroidApp.TAG, "setStyledDialogBackgrounds - OutOfMemoryError occured: " + e);
+				buttonPanel.setBackgroundResource(R.color.white);
+			}
+    		if (buttonNumbers > 1) {
+    			main.findViewById(R.id.rightSpacer).setVisibility(View.GONE);
+    			main.findViewById(R.id.leftSpacer).setVisibility(View.GONE);
+    		}
+			visibility[4] = true;
         }
-		if (buttonNumbers > 1) {
-			main.findViewById(R.id.rightSpacer).setVisibility(View.GONE);
-			main.findViewById(R.id.leftSpacer).setVisibility(View.GONE);
+
+		int first = -1;
+		int last = -1;
+		for (int i = 0; i < 5; i++) {
+			if (first == -1 && visibility[i]) {
+				first = i;
+			}
+			if (visibility[i]) {
+				last = i;
+			}
+		}
+
+		int res = mPopupCenterDark;
+		if (first == 1) {
+			res = mPopupTopDark;
+		}
+		if (last == 1) {
+			res = mPopupBottomDark;
+			if (first == 1) {
+				res = mPopupFullDark;
+			}
+		}
+		try {
+			contentPanel.setBackgroundResource(res);
+		} catch (OutOfMemoryError e) {
+			Log.e(AnkiDroidApp.TAG, "setStyledDialogBackgrounds - OutOfMemoryError occured: " + e);
+			contentPanel.setBackgroundResource(R.color.black);
+		}
+
+		res = mPopupCenterBright;
+		if (first == 2) {
+			res = mPopupTopBright;
+		}
+		if (last == 2) {
+			res = mPopupBottomBright;
+			if (first == 2) {
+				res = mPopupFullBright;
+			}
+		}
+		try {
+			listViewPanel.setBackgroundResource(res);
+		} catch (OutOfMemoryError e) {
+			Log.e(AnkiDroidApp.TAG, "setStyledDialogBackgrounds - OutOfMemoryError occured: " + e);
+			listViewPanel.setBackgroundResource(R.color.white);
+		}
+
+		res = brightCustomPanelBackground ? mPopupCenterMedium : mPopupCenterDark;
+		if (first == 3) {
+			res = brightCustomPanelBackground ? mPopupTopMedium : mPopupTopDark;;
+		}
+		if (last == 3) {
+			res = brightCustomPanelBackground ? mPopupBottomMedium : mPopupBottomDark;;
+			if (first == 3) {
+				res = brightCustomPanelBackground ? mPopupFullMedium : mPopupFullDark;;
+			}
+		}
+		try {
+			customPanel.setBackgroundResource(res);
+		} catch (OutOfMemoryError e) {
+			Log.e(AnkiDroidApp.TAG, "setStyledDialogBackgrounds - OutOfMemoryError occured: " + e);
+			customPanel.setBackgroundResource(brightCustomPanelBackground ? R.color.white : R.color.black);
 		}
 	}
+
 
 	public static int[] getChartColors() {
 		return mChartColors;

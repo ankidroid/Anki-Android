@@ -30,7 +30,6 @@
   <string name="feedback_send_feedback_and_errors">Στείλτε σφάλματα και τα σχόλιά σας</string>
   <string name="feedback_message_sent_success">Σχόλια ελήφθησαν, σας ευχαριστούμε!</string>
   <string name="feedback_message_sent_failure">Δεν είναι δυνατή η αποστολή σχολίων, κωδικός %1$s</string>
-  <string name="feedback_error_list_header">Λίστα σφαλμάτων για την αποστολή</string>
   <string name="feedback_keep_latest">Διατηρείτε το πιο πρόσφατο σφάλμα</string>
   <string name="feedback_clear_all">Διαγραφή όλων των σφαλμάτων</string>
   <string name="feedback_default_text">Παρακαλώ εισάγετε τα σχόλιά σας ή πληροφορίες σχετικά με τη φύση των τυχών λάθών που αναφέρετε.</string>
@@ -42,8 +41,4 @@
   <string name="feedback_error_reply_issue_fixed_prod">Πρόβλημα %1$d, επιλυμένο στην τελευταία έκδοση</string>
   <string name="feedback_error_reply_malformed">Αρχειοθετημένο πρόβλημα, καμία απάντηση</string>
   <string name="feedback_error_reply_failed">Αποστολή απέτυχε</string>
-  <plurals name="error_message">
-    <item quantity="one">Υπάρχει ένα σφάλμα προς αναφορά</item>
-    <item quantity="other">Υπάρχουν %d σφάλματα προς αναφορά</item>
-  </plurals>
 </resources>

@@ -30,7 +30,6 @@
   <string name="feedback_send_feedback_and_errors">エラーとフィードバックを送信します</string>
   <string name="feedback_message_sent_success">フィードバックを受け取りました. ありがとう!</string>
   <string name="feedback_message_sent_failure">フィードバックを送信できませんでした: コード%1$s</string>
-  <string name="feedback_error_list_header">送信するエラーの一覧</string>
   <string name="feedback_keep_latest">最新のエラーを保持します</string>
   <string name="feedback_clear_all">すべてのエラーを消去します</string>
   <string name="feedback_default_text">フィードバックか, 報告するエラーについての情報を入力してください.</string>
@@ -42,8 +41,4 @@
   <string name="feedback_error_reply_issue_fixed_prod">問題 %1$d, 最新版で修正済みです</string>
   <string name="feedback_error_reply_malformed">提出されたバグ、無応答</string>
   <string name="feedback_error_reply_failed">送信に失敗しました</string>
-  <plurals name="error_message">
-    <item quantity="one">報告すべきエラーが1つあります</item>
-    <item quantity="other">報告すべきエラーが%dつあります</item>
-  </plurals>
 </resources>

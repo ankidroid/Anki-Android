@@ -24,7 +24,6 @@
   <string name="yes">نعم</string>
   <string name="no">لا</string>
   <string name="ok">موافق</string>
-  <string name="studyoptions_title">خيارات الدراسة</string>
   <string name="studyoptions_deck_name">Deck name</string>
   <string name="studyoptions_reviews_due">Reviews due:</string>
   <string name="studyoptions_new_today">New today:</string>
@@ -38,8 +37,6 @@
   <string name="deckpicker_loaddeck">Loading deck...</string>
   <string name="deckpicker_nodeck">لم يتم العثور على مجموعات ورق</string>
   <string name="show_answer">اظهار الإجابة</string>
-  <string name="show_question">إعادة عرض السؤال</string>
-  <string name="card_hint">البطاقات التعليمية</string>
   <string name="ease1_learning">مرة أخرى</string>
   <string name="ease2_learning">جيد</string>
   <string name="ease3_learning">سهل</string>
@@ -50,10 +47,7 @@
   <string name="ease4_successive">سهل</string>
   <string name="loading">تحميل...</string>
   <string name="studyoptions_continue">مواصلة المراجعة</string>
-  <string name="studyoptions_well_done">أحسنت!</string>
   <string name="studyoptions_congrats_title">تهانينا!</string>
-  <string name="studyoptions_congrats_card">بطاقة</string>
-  <string name="studyoptions_congrats_cards">بطاقات</string>
   <string name="studyoptions_congrats_learnmore">تعلم المزيد</string>
   <string name="studyoptions_congrats_reviewearly">استعراض مبكر</string>
   <string name="studyoptions_congrats_syncdeck">Synchronize deck</string>
@@ -64,25 +58,24 @@
   <string name="menu_rotate">Rotate</string>
   <string name="undo">تراجع</string>
   <string name="redo">إعادة</string>
-  <string name="close_current_deck">Closing current deck.\nPlease wait...</string>
+  <string name="close_previous_deck">Closing previous deck.\nPlease wait...</string>
+  <string name="close_deck">Closing deck.\nPlease wait...</string>
+  <string name="finish_operation">Finishing previous operation.\nPlease wait...</string>
   <string name="contextmenu_deckpicker_download_missing_media">Download missing media</string>
   <string name="contextmenu_deckpicker_reset_language_assignments">إعادة تعيين تعيينات اللغة</string>
   <string name="contextmenu_deckpicker_reset_reset_message">تعيين اللغة</string>
   <string name="contextmenu_deckpicker_optimize_deck">تحسين قاعدة البيانات</string>
   <string name="contextmenu_deckpicker_set_custom_dictionary">Set custom dictionary</string>
   <string name="begin_cram">Start Cram mode</string>
-  <string name="end_cram">Stop Cram mode</string>
   <string name="cram">حشر</string>
   <string name="menu_open_deck">All decks</string>
   <string name="menu_sync">مزامنة</string>
   <string name="menu_download_deck">Download deck</string>
   <string name="menu_download_shared_deck">Shared deck</string>
   <string name="menu_download_personal_deck">Personal deck</string>
-  <string name="menu_synchronize">مزامنة</string>
   <string name="menu_my_account">حسابي</string>
   <string name="menu_preferences">تفضيلات</string>
   <string name="menu_zeemote">Zeemote</string>
-  <string name="menu_deck_properties">Deck Properties</string>
   <string name="menu_add_card">إضافة بطاقة</string>
   <string name="menu_about">حول</string>
   <string name="menu_remove_card">Dismiss Card</string>
@@ -98,9 +91,14 @@
   <string name="studyoptions_cram_dialog_title">Tags to cram</string>
   <string name="statistics">الإحصاءات</string>
   <string name="studyoptions_load_other_deck">Load Other Deck</string>
-  <string name="studyoptions_load_sample_deck">Load Sample Deck</string>
+  <string name="studyoptions_load_tutorial_deck">Load Tutorial Deck</string>
   <string name="studyoptions_night_mode">وضع ليلي</string>
   <string name="studyoptions_swap_qa">Swap Q/A</string>
+  <string name="visit">Visit</string>
+  <string name="later">Later</string>
+  <string name="download">Download</string>
+  <string name="deckpicker_loading_error">Deck could not be loaded</string>
+  <string name="deckpicker_creating_backup">Creating backup...</string>
   <string-array name="next_review_s">
     <item>1 second</item>
     <item>1 minute</item>

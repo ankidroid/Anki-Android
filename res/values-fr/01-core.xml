@@ -24,7 +24,6 @@
   <string name="yes">Oui</string>
   <string name="no">Non</string>
   <string name="ok">OK</string>
-  <string name="studyoptions_title">Options d\'étude</string>
   <string name="studyoptions_deck_name">Nom du paquet</string>
   <string name="studyoptions_reviews_due">Révisions dues:</string>
   <string name="studyoptions_new_today">Nouvelles aujourd\'hui :</string>
@@ -38,8 +37,6 @@
   <string name="deckpicker_loaddeck">Chargement du paquet…</string>
   <string name="deckpicker_nodeck">Aucun paquet trouvé.</string>
   <string name="show_answer">Voir Réponse</string>
-  <string name="show_question">Voir Question</string>
-  <string name="card_hint">Carte</string>
   <string name="ease1_learning">Encore</string>
   <string name="ease2_learning">Bon</string>
   <string name="ease3_learning">Facile</string>
@@ -50,10 +47,7 @@
   <string name="ease4_successive">Facile</string>
   <string name="loading">Chargement...</string>
   <string name="studyoptions_continue">Continuer à réviser</string>
-  <string name="studyoptions_well_done">Bien joué !</string>
   <string name="studyoptions_congrats_title">Félicitations !</string>
-  <string name="studyoptions_congrats_card">carte</string>
-  <string name="studyoptions_congrats_cards">cartes</string>
   <string name="studyoptions_congrats_learnmore">En savoir plus</string>
   <string name="studyoptions_congrats_reviewearly">Réviser à l\'avance</string>
   <string name="studyoptions_congrats_syncdeck">Synchroniser le paquet</string>
@@ -64,25 +58,24 @@
   <string name="menu_rotate">Changer d\'orientation</string>
   <string name="undo">Annuler</string>
   <string name="redo">Refaire</string>
-  <string name="close_current_deck">Fermeture du paquet.\nVeuillez patienter...</string>
+  <string name="close_previous_deck">Fermeture du paquet précédent\nMerci de patienter</string>
+  <string name="close_deck">Fermeture du paquet\nMerci de patienter</string>
+  <string name="finish_operation">Finishing previous operation.\nPlease wait...</string>
   <string name="contextmenu_deckpicker_download_missing_media">Télécharger les médias manquants</string>
   <string name="contextmenu_deckpicker_reset_language_assignments">Réinitialiser les affectations de langue</string>
   <string name="contextmenu_deckpicker_reset_reset_message">Réinitialiser la langue</string>
   <string name="contextmenu_deckpicker_optimize_deck">Optimiser la base de données</string>
-  <string name="contextmenu_deckpicker_set_custom_dictionary">Set custom dictionary</string>
+  <string name="contextmenu_deckpicker_set_custom_dictionary">Définir un dictionnaire personnalisé</string>
   <string name="begin_cram">Démarrer la bachotage</string>
-  <string name="end_cram">Cesser la bachotage</string>
-  <string name="cram">Boulonner</string>
+  <string name="cram">Bachoter</string>
   <string name="menu_open_deck">Tous les paquets</string>
   <string name="menu_sync">Synchronisation</string>
   <string name="menu_download_deck">Télécharger le paquet</string>
   <string name="menu_download_shared_deck">Paquet partagé</string>
   <string name="menu_download_personal_deck">Paquet personnel</string>
-  <string name="menu_synchronize">Synchroniser</string>
   <string name="menu_my_account">Mon compte</string>
   <string name="menu_preferences">Préférences</string>
   <string name="menu_zeemote">Zeemote</string>
-  <string name="menu_deck_properties">Propriétés du paquet</string>
   <string name="menu_add_card">Ajouter une carte</string>
   <string name="menu_about">À propos</string>
   <string name="menu_remove_card">Retirer la carte</string>
@@ -98,9 +91,14 @@
   <string name="studyoptions_cram_dialog_title">Marqueurs à bachoter</string>
   <string name="statistics">Statistiques</string>
   <string name="studyoptions_load_other_deck">Charger un autre paquet</string>
-  <string name="studyoptions_load_sample_deck">Charger un paquet d\'exemple</string>
+  <string name="studyoptions_load_tutorial_deck">Chargement du paquet tutoriel</string>
   <string name="studyoptions_night_mode">Mode nuit</string>
   <string name="studyoptions_swap_qa">Inverser Q/R</string>
+  <string name="visit">Visitez</string>
+  <string name="later">Plus tard</string>
+  <string name="download">Télécharger</string>
+  <string name="deckpicker_loading_error">Le paquet n\'a pas pu être chargé</string>
+  <string name="deckpicker_creating_backup">Création d\'une sauvegarde</string>
   <string-array name="next_review_s">
     <item>1 seconde</item>
     <item>1 minute</item>

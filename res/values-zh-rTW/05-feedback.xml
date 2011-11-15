@@ -30,7 +30,6 @@
   <string name="feedback_send_feedback_and_errors">回饋錯誤和您的意見</string>
   <string name="feedback_message_sent_success">收到您的回饋，謝謝！</string>
   <string name="feedback_message_sent_failure">無法傳送回饋意見，錯誤 %1$s</string>
-  <string name="feedback_error_list_header">要傳送的錯誤列表</string>
   <string name="feedback_keep_latest">保持剛剛的錯誤</string>
   <string name="feedback_clear_all">清除所有錯誤</string>
   <string name="feedback_default_text">請輸入您的意見，或關於此錯誤的任何資訊。</string>
@@ -42,8 +41,4 @@
   <string name="feedback_error_reply_issue_fixed_prod">問題%1$d，最新版本中已解決</string>
   <string name="feedback_error_reply_malformed">已送出bug，沒有回應</string>
   <string name="feedback_error_reply_failed">發送失敗</string>
-  <plurals name="error_message">
-    <item quantity="one">有一個錯誤要報告</item>
-    <item quantity="other">有%d個錯誤報告</item>
-  </plurals>
 </resources>

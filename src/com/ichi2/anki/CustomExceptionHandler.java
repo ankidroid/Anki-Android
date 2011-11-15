@@ -118,6 +118,9 @@ public class CustomExceptionHandler implements Thread.UncaughtExceptionHandler {
 
     @Override
     public void uncaughtException(Thread t, Throwable e) {
+    	uncaughtException(t, e, null);
+    }
+    public void uncaughtException(Thread t, Throwable e, String origin) {
         Log.i(AnkiDroidApp.TAG, "uncaughtException");
 
         collectInformation();
@@ -139,14 +142,18 @@ public class CustomExceptionHandler implements Thread.UncaughtExceptionHandler {
         reportInformation.append(String.format("reportgeneratedutc=%s\n", reportgeneratedutc));
         reportInformation.append(String.format("reportgeneratedtzoffset=%s\n", reportgeneratedtzoffset));
         reportInformation.append(String.format("reportgeneratedtz=%s\n", reportgeneratedtz));
-        
+
+        if (origin != null && origin.length() > 0) {
+        	reportInformation.append(String.format("origin=%s\n", origin));
+        }
+
         for (String key : mInformation.keySet()) {
             String value = mInformation.get(key);
 
             reportInformation.append(String.format("%s=%s\n", key.toLowerCase(), value));
         }
 
-        reportInformation.append("stacktrace=\nBegin Stacktrace\n");
+        reportInformation.append("stacktrace=\nBegin Stacktrace\n");	
 
         // Stack trace
         final Writer result = new StringWriter();
@@ -170,7 +177,9 @@ public class CustomExceptionHandler implements Thread.UncaughtExceptionHandler {
         Log.i(AnkiDroidApp.TAG, "report infomation string created");
         saveReportToFile(reportInformation.toString());
 
-        mPreviousHandler.uncaughtException(t, e);
+        if (t != null) {
+            mPreviousHandler.uncaughtException(t, e);
+        }
     }
 
 

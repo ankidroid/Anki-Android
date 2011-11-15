@@ -4,5 +4,7 @@
 	<classpathentry kind="lib" path="libs/achartengine-0.6.0.r140-1.5.jar"/>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="src" path="gen"/>
-	<classpathentry kind="output" path="bin"/>
+	<classpathentry kind="src" path="test"/>
+	<classpathentry kind="lib" path="libs/robotium-solo-2.5.jar"/>
+	<classpathentry kind="output" path="bin/classes"/>
 </classpath>

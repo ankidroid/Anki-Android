@@ -33,12 +33,10 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedOutputStream;
-import java.io.BufferedWriter;
 import java.io.DataOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
@@ -274,7 +272,7 @@ public class SyncClient {
         }
 
         Log.i(AnkiDroidApp.TAG, "Payload =");
-        Utils.printJSONObject(payload, true);
+        Utils.printJSONObject(payload, true); //XXX: Why writeToFile = true?
 
         return payload;
     }
@@ -1457,10 +1455,13 @@ public class SyncClient {
         bundledDeck = mDeck.bundleJson(bundledDeck);
 
         // AnkiDroid Deck.java does not have:
-        // css, forceMediaDir, lastSessionStart, lastTags, needLock, newCardOrder, newCardSpacing, newCardsPerDay,
+        // css, forceMediaDir, lastSessionStart, lastTags, needLock,
         // progressHandlerCalled,
-        // progressHandlerEnabled, revCardOrder, sessionRepLimit, sessionStartReps, sessionStartTime,
-        // sessionTimeLimit, tmpMediaDir
+        // progressHandlerEnabled, revCardOrder, sessionStartReps, sessionStartTime,
+        // tmpMediaDir
+
+        // XXX: this implies that they are not synched toward the server, I guess (tested on 0.7).
+        // However, the ones left are not persisted by libanki on the DB, so it's a libanki bug that they are sync'ed at all.
 
         // Our bundleDeck also doesn't need all those fields that store the scheduler Methods
 
@@ -1718,7 +1719,6 @@ public class SyncClient {
      * @return
      * @throws JSONException
      */
-    @SuppressWarnings("unchecked")
     public boolean needFullSync(JSONArray sums) throws JSONException {
         Log.i(AnkiDroidApp.TAG, "needFullSync - lastSync = " + mDeck.getLastSync());
 
@@ -1731,9 +1731,9 @@ public class SyncClient {
         for (int i = 0; i < len; i++) {
 
             JSONObject summary = sums.getJSONObject(i);
-            Iterator keys = summary.keys();
+            @SuppressWarnings("unchecked") Iterator<String> keys = (Iterator<String>) summary.keys();
             while (keys.hasNext()) {
-                String key = (String) keys.next();
+                String key = keys.next();
                 JSONArray l = (JSONArray) summary.get(key);
                 Log.i(AnkiDroidApp.TAG, "Key " + key + ", length = " + l.length());
                 if (l.length() > 500) {
