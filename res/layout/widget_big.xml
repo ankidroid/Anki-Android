@@ -30,8 +30,7 @@
 			    android:layout_width="fill_parent"
 			    android:layout_height="fill_parent"
 		    	android:gravity="center"
-			    android:layout_marginLeft="5dip"
-			    android:layout_marginRight="5dip"
+			    android:padding="5dip"
 		    	android:textSize="18sp"
 		    	android:textColor="#000000"/>
 		    <LinearLayout  android:id="@+id/widget_big_deckfield"
@@ -160,7 +159,7 @@
 						android:clickable="true"
 					    	android:textColor="@color/widget_big_font_color"
 						android:background="@drawable/blue_btn_small"
-						android:text="@string/studyoptions_congrats_learnmore"/>
+						android:text="@string/studyoptions_congrats_reviewearly"/>
 					<TextView
 					    android:id="@+id/widget_big_learn_more"
 					    android:layout_width="0dip"
@@ -170,7 +169,7 @@
 					    	android:gravity="center"
 						android:clickable="true"
 					    	android:textColor="@color/widget_big_font_color"
-						android:text="@string/studyoptions_congrats_reviewearly"/>
+						android:text="@string/studyoptions_congrats_learnmore"/>
 				</LinearLayout>
 			</RelativeLayout>
 			<RelativeLayout
@@ -363,7 +362,7 @@
 	    	android:singleLine="true"
 	        android:textColor="@color/widget_big_font_color"
 			android:gravity="center"
-		    android:layout_marginBottom="9dip"
+		    android:layout_marginBottom="8.6667dip"
 		 	android:layout_marginLeft="11dip"
 	    	    android:layout_marginRight="43sp"
 		    android:orientation="horizontal"
