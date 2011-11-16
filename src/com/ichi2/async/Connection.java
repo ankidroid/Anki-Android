@@ -682,12 +682,12 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
                 Payload reply = Feedback.postFeedback(errorUrl, postType, error.get("filename"), groupId, i, app);
                 if (reply.success) {
                     publishProgress(postType, i, Feedback.STATE_SUCCESSFUL, reply.returnType, reply.result);
-                    if (deleteAfterSending) {
-                    	File file = new File(app.getFilesDir() + "/" + error.get("filename"));
-                    	file.delete();
-                    }
                 } else {
                     publishProgress(postType, i, Feedback.STATE_FAILED, reply.returnType, reply.result);
+                }
+                if (deleteAfterSending && (reply.success || reply.returnType == 200)) {
+                	File file = new File(app.getFilesDir() + "/" + error.get("filename"));
+                	file.delete();
                 }
             }
         }
