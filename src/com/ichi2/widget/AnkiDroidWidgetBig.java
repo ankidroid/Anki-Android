@@ -246,11 +246,11 @@ public class AnkiDroidWidgetBig extends AppWidgetProvider {
     		case VIEW_SHOW_QUESTION:
     		case VIEW_NOTHING_DUE:
         		updateViews.setTextViewText(R.id.widget_big_counts, getDeckStatusString(sLoadedDeck, sCard));
-			int sessionProgress = sLoadedDeck.getSessionProgress(true);
+			double sessionProgress = sLoadedDeck.getSessionProgress(true);
 			if (sessionProgress == -1) {
 	        		updateViews.setViewVisibility(R.id.widget_big_progress_frame_deck, View.INVISIBLE);
 			} else {
-	        		updateViews.setProgressBar(R.id.widget_big_progress_deck, 100, (int) (sLoadedDeck.getSessionProgress() * 100), false);
+	        		updateViews.setProgressBar(R.id.widget_big_progress_deck, 100, (int) (sessionProgress * 100), false);
 	        		updateViews.setViewVisibility(R.id.widget_big_progress_frame_deck, View.VISIBLE);
 			}
         		break;
