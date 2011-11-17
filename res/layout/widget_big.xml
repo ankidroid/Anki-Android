@@ -376,7 +376,7 @@
 		    <TextView android:id="@+id/widget_big_counts"
 				android:gravity="center"
 		    	android:singleLine="true"
-				android:layout_marginRight="4sp"
+				android:layout_marginRight="8sp"
 	        	android:layout_width="wrap_content"
 				android:layout_toLeftOf="@+id/widget_big_eta_layout"
 		        android:layout_height="fill_parent"/>

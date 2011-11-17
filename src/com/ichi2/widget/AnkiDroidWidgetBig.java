@@ -575,6 +575,32 @@ public class AnkiDroidWidgetBig extends AppWidgetProvider {
         		updateViews.setViewVisibility(R.id.widget_big_add, View.INVISIBLE);
         		break;
 
+            case VIEW_SHOW_QUESTION:
+           		if (!mShowProgressDialog) {
+                		updateViews.setViewVisibility(R.id.widget_big_empty, View.VISIBLE);
+                		updateViews.setOnClickPendingIntent(R.id.widget_big_empty, getAnswerPendingIntent(context, 0));		
+                		updateViews.setViewVisibility(R.id.widget_big_flipcard, View.VISIBLE);
+                		updateViews.setViewVisibility(R.id.widget_big_help, View.INVISIBLE);
+                		enableCardAreaListeners(updateViews, true);
+
+            			updateViews.setOnClickPendingIntent(R.id.widget_big_openclose, getCloseDeckPendingIntent(context));
+            		}
+            		updateViews.setTextViewText(R.id.widget_big_cardcontent,  Html.fromHtml(sCard.getQuestion())); 
+        		updateViews.setTextViewText(R.id.widget_big_message, getNextTimeString(sCard));
+
+        		updateViews.setTextViewText(R.id.widget_big_deckname, sLoadedDeck.getDeckName());
+        		updateCounts(updateViews);
+
+        		updateViews.setViewVisibility(R.id.widget_big_open, View.INVISIBLE);
+        		updateViews.setViewVisibility(R.id.widget_big_close, View.VISIBLE);
+
+        		updateViews.setViewVisibility(R.id.widget_big_nothing_due, View.INVISIBLE);
+
+        		updateViews.setViewVisibility(R.id.widget_big_deckfield, View.INVISIBLE);
+        		updateViews.setViewVisibility(R.id.widget_big_cardbackgroundstar, View.INVISIBLE);
+        		updateViews.setViewVisibility(R.id.widget_big_add, View.VISIBLE);
+			break;
+
             case VIEW_SHOW_ANSWER:
             	if (!mShowProgressDialog) {
             		updateViews.setOnClickPendingIntent(R.id.widget_big_ease1, getAnswerPendingIntent(context, 1));
@@ -596,7 +622,6 @@ public class AnkiDroidWidgetBig extends AppWidgetProvider {
         		updateViews.setViewVisibility(R.id.widget_big_nothing_due, View.INVISIBLE);
             		updateViews.setViewVisibility(R.id.widget_big_empty, View.INVISIBLE);
         			enableCardAreaListeners(updateViews, false);
-        			updateViews.setTextViewText(R.id.widget_big_message, getNextTimeString(sCard));
             	} else {
             		updateViews.setOnClickPendingIntent(R.id.widget_big_ease1, doNothingIntent);
             		updateViews.setOnClickPendingIntent(R.id.widget_big_ease2, doNothingIntent);
@@ -607,33 +632,6 @@ public class AnkiDroidWidgetBig extends AppWidgetProvider {
             	updateViews.setTextViewText(R.id.widget_big_cardcontent,  Html.fromHtml(sCard.getQuestion() 
             			+ "<br>─────<br>" 
             			+ sCard.getAnswer()));
-
-            case VIEW_SHOW_QUESTION:
-            	if (sCurrentView == VIEW_SHOW_QUESTION) {
-            		if (!mShowProgressDialog) {
-                		updateViews.setViewVisibility(R.id.widget_big_empty, View.VISIBLE);
-                		updateViews.setOnClickPendingIntent(R.id.widget_big_empty, getAnswerPendingIntent(context, 0));            			
-                		updateViews.setViewVisibility(R.id.widget_big_flipcard, View.VISIBLE);            		
-                		updateViews.setViewVisibility(R.id.widget_big_help, View.INVISIBLE);            		
-                		enableCardAreaListeners(updateViews, true);
-            		}
-
-            		updateViews.setTextViewText(R.id.widget_big_cardcontent,  Html.fromHtml(sCard.getQuestion())); 
-            	}
-
-        		updateViews.setTextViewText(R.id.widget_big_deckname, sLoadedDeck.getDeckName());
-        		updateCounts(updateViews);
-        		updateViews.setViewVisibility(R.id.widget_big_open, View.INVISIBLE);
-        		if (!mShowProgressDialog) {
-            		updateViews.setOnClickPendingIntent(R.id.widget_big_openclose, getCloseDeckPendingIntent(context));
-        		}
-        		updateViews.setViewVisibility(R.id.widget_big_close, View.VISIBLE);
-
-        		updateViews.setViewVisibility(R.id.widget_big_nothing_due, View.INVISIBLE);
-
-        		updateViews.setViewVisibility(R.id.widget_big_deckfield, View.INVISIBLE);
-        		updateViews.setViewVisibility(R.id.widget_big_cardbackgroundstar, View.INVISIBLE);
-        		updateViews.setViewVisibility(R.id.widget_big_add, View.VISIBLE);
         		break;
 
             case VIEW_NOTHING_DUE:
