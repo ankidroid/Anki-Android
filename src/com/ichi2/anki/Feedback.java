@@ -211,7 +211,7 @@ public class Feedback extends Activity {
             try {
                 String feedback = "Automatically sent";
                 Connection.sendFeedback(mSendListener, new Payload(new Object[] {
-                        mFeedbackUrl, mErrorUrl, feedback, mErrorReports, mNonce, getApplication()}));
+                        mFeedbackUrl, mErrorUrl, feedback, mErrorReports, mNonce, getApplication(), true}));
                 if (mErrorReports.size() > 0) {
                     mPostingFeedback = true;
                 }
@@ -221,10 +221,7 @@ public class Feedback extends Activity {
             } catch (Exception e) {
                 Log.e(AnkiDroidApp.TAG, e.toString());
             }
-
-            deleteFiles(true, false);
             closeFeedback();
-
             return;
         } else if (mReportErrorMode.equals(REPORT_NEVER)) { // Never report
             deleteFiles(false, false);
@@ -287,7 +284,7 @@ public class Feedback extends Activity {
                 if (!mPostingFeedback) {
                     String feedback = mEtFeedbackText.getText().toString();
                     Connection.sendFeedback(mSendListener, new Payload(new Object[] {
-                            mFeedbackUrl, mErrorUrl, feedback, mErrorReports, mNonce, getApplication()}));
+                            mFeedbackUrl, mErrorUrl, feedback, mErrorReports, mNonce, getApplication(), false}));
                     if (mErrorReports.size() > 0) {
                         mPostingFeedback = true;
                     }
