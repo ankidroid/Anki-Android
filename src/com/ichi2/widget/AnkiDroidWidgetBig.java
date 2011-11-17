@@ -63,7 +63,7 @@ public class AnkiDroidWidgetBig extends AppWidgetProvider {
     private static Deck sLoadedDeck;
     private static Card sCard;
     private static boolean mShowProgressDialog = false;
-    private static int mCurrentView;
+    private static int sCurrentView;
     private static String mCurrentMessage;
 
     private static Context sContext;
@@ -93,11 +93,11 @@ public class AnkiDroidWidgetBig extends AppWidgetProvider {
         }
         preferences.edit().putBoolean("widgetBigEnabled", true).commit();
         sContext = context;
-	mCurrentView = UpdateService.VIEW_NOT_SPECIFIED;
-	sLoadedDeck = null;
-	sCard = null;
-	mCurrentMessage = null;
-	mShowProgressDialog = false;
+        sCurrentView = UpdateService.VIEW_NOT_SPECIFIED;
+        sLoadedDeck = null;
+        sCard = null;
+        mCurrentMessage = null;
+        mShowProgressDialog = false;
     }
 
     @Override
@@ -226,26 +226,60 @@ public class AnkiDroidWidgetBig extends AppWidgetProvider {
         }
 
 
-        private CharSequence[] getDeckNamesAndDues() {
-        	DeckStatus[] decks = WidgetStatus.fetch(this);
-        	StringBuilder namesSb = new StringBuilder();
-        	SpannableStringBuilder duesSb = new SpannableStringBuilder();
+    	private void updateCounts(RemoteViews updateViews) {
+			DeckStatus[] decks = WidgetStatus.fetch(this);
         	int eta = 0;
+        	int reps = 0;
+        	int due = 0;
         	for (DeckStatus d : decks) {
-        		namesSb.append(d.mDeckName).append("  \n");
         		eta += d.mEta;
-        		duesSb.append(getDeckStatusString(d.mFailedCards, d.mDueCards, d.mNewCards, null)).append("\n");
+        		reps += d.mTime;
+        		due += d.mFailedCards + d.mNewCards + d.mDueCards;
         	}
-        	int pos = namesSb.length() - 1;
-        	if (pos != -1) {
-        		namesSb.delete(pos, pos + 1);
+        	int totalreps = reps + due;
+        	int progressTotal = 0;
+        	if (totalreps != 0) {
+        		progressTotal = (int) Math.round((100.0d * reps) / totalreps);
         	}
-        	pos = duesSb.length() - 1;
-        	if (pos != -1) {
-        		duesSb.delete(pos, pos + 1);
-        	}
-        	return new CharSequence[] {namesSb, duesSb, getResources().getQuantityString(R.plurals.widget_big_eta, eta, eta)};
-        }
+
+    		switch (sCurrentView) {
+    		case VIEW_SHOW_QUESTION:
+    		case VIEW_NOTHING_DUE:
+        		updateViews.setTextViewText(R.id.widget_big_counts, getDeckStatusString(sLoadedDeck, sCard));
+			int sessionProgress = sLoadedDeck.getSessionProgress(true);
+			if (sessionProgress == -1) {
+	        		updateViews.setViewVisibility(R.id.widget_big_progress_frame_deck, View.INVISIBLE);
+			} else {
+	        		updateViews.setProgressBar(R.id.widget_big_progress_deck, 100, (int) (sLoadedDeck.getSessionProgress() * 100), false);
+	        		updateViews.setViewVisibility(R.id.widget_big_progress_frame_deck, View.VISIBLE);
+			}
+        		break;
+    		case VIEW_DECKS:
+        		updateViews.setViewVisibility(R.id.widget_big_progress_frame_deck, View.INVISIBLE);
+        		updateViews.setTextViewText(R.id.widget_big_counts, "");
+            	StringBuilder namesSb = new StringBuilder();
+            	SpannableStringBuilder duesSb = new SpannableStringBuilder();
+            	for (DeckStatus d : decks) {
+            		namesSb.append(d.mDeckName).append("  \n");
+            		duesSb.append(getDeckStatusString(d.mFailedCards, d.mDueCards, d.mNewCards, null)).append("\n");
+            	}
+            	int pos = namesSb.length() - 1;
+            	if (pos != -1) {
+            		namesSb.delete(pos, pos + 1);
+            	}
+            	pos = duesSb.length() - 1;
+            	if (pos != -1) {
+            		duesSb.delete(pos, pos + 1);
+            	}
+        		updateViews.setTextViewText(R.id.widget_big_decknames, namesSb);
+        		updateViews.setTextViewText(R.id.widget_big_deckdues, duesSb);
+        		updateViews.setTextViewText(R.id.widget_big_decketa, "─────\n" + getResources().getQuantityString(R.plurals.widget_big_eta, eta, eta));
+        		break;
+    		}
+    		
+    		updateViews.setProgressBar(R.id.widget_big_progress_total, 100, progressTotal, false);
+    		updateViews.setTextViewText(R.id.widget_big_eta, eta > 99 ? "\u2027\u2027\u2027" : Integer.toString(eta));
+    	}
 
 
         private DeckTask.TaskListener mOpenDeckHandler = new DeckTask.TaskListener() {
@@ -425,50 +459,51 @@ public class AnkiDroidWidgetBig extends AppWidgetProvider {
                 	DeckManager.getDeck(intent.getData().getPath(), true, DeckManager.REQUESTING_ACTIVITY_STUDYOPTIONS);
                 	Intent newIntent = StudyOptions.getLoadDeckIntent(this, "");
                 	newIntent.removeExtra(StudyOptions.EXTRA_DECK);
-                	newIntent.putExtra(StudyOptions.EXTRA_START_REVIEWER, (mCurrentView != VIEW_NOTHING_DUE));
+                	newIntent.putExtra(StudyOptions.EXTRA_START_REVIEWER, (sCurrentView != VIEW_NOTHING_DUE));
                 	startActivity(newIntent);
-                } else if (ACTION_CARDEDITOR.equals(action)) {
+                } else if (action.startsWith(ACTION_CARDEDITOR)) {
                     Intent editIntent = new Intent(this, CardEditor.class);
                     editIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    editIntent.putExtra(CardEditor.CARD_EDITOR_ACTION, CardEditor.EDIT_BIGWIDGET_CARD);
-                    editIntent.putExtra(CardEditor.DECKPATH, sLoadedDeck.getDeckPath());
+                    if (action.substring(action.length() - 1).equals("1")) {
+                        editIntent.putExtra(CardEditor.CARD_EDITOR_ACTION, CardEditor.EDIT_BIGWIDGET_CARD);
+                        editIntent.putExtra(CardEditor.DECKPATH, sLoadedDeck.getDeckPath());
+                    } else {
+                        editIntent.putExtra(CardEditor.CARD_EDITOR_ACTION, CardEditor.ADD_CARD);
+                        editIntent.putExtra(CardEditor.DECKPATH, sLoadedDeck.getDeckPath());
+                    }
                     this.startActivity(editIntent);
                 } else if (ACTION_HELP.equals(action)) {
                 	updateViews(VIEW_SHOW_HELP);
                 } else if (ACTION_LEARN_MORE.equals(action)) {
-			if (sLoadedDeck != null) {
-				sLoadedDeck.setupLearnMoreScheduler();
-				sLoadedDeck.reset();
-	                    	sCard = sLoadedDeck.getCard();
+                	if (sLoadedDeck != null) {
+                		sLoadedDeck.setupLearnMoreScheduler();
+                		sLoadedDeck.reset();
+	                    sCard = sLoadedDeck.getCard();
 	                	mShowProgressDialog = false;
 	                	mCurrentMessage = null;
         	        	updateViews(VIEW_SHOW_QUESTION); 
                 	}			
                 } else if (ACTION_REVIEW_EARLY.equals(action)) {
-			if (sLoadedDeck != null) {
-				sLoadedDeck.setupReviewEarlyScheduler();
-				sLoadedDeck.reset();
-	                    	sCard = sLoadedDeck.getCard();
+                	if (sLoadedDeck != null) {
+                		sLoadedDeck.setupReviewEarlyScheduler();
+                		sLoadedDeck.reset();
+	                    sCard = sLoadedDeck.getCard();
 	                	mShowProgressDialog = false;
 	                	mCurrentMessage = null;
         	        	updateViews(VIEW_SHOW_QUESTION); 
                 	}			
-		}
+                }
             }
         }
 
 
-        private void hideProgressDialog() {
-        	mShowProgressDialog = false;
-        	updateViews();
-        }
         private void showProgressDialog() {
         	mShowProgressDialog = true;
         	updateViews();
         }
         private void updateViews(int view) {
         	if (view != VIEW_NOT_SPECIFIED) {
-        		mCurrentView = view;
+        		sCurrentView = view;
         	}
         	updateViews();
         }
@@ -482,15 +517,15 @@ public class AnkiDroidWidgetBig extends AppWidgetProvider {
 
 
     	private RemoteViews buildUpdate(Context context) {
-            Log.i(AnkiDroidApp.TAG, "BigWidget: buildUpdate (" + mCurrentView + ")");
+            Log.i(AnkiDroidApp.TAG, "BigWidget: buildUpdate (" + sCurrentView + ")");
             Resources res = getResources();
             RemoteViews updateViews = new RemoteViews(context.getPackageName(), R.layout.widget_big);
 
-            if (mCurrentView == VIEW_SHOW_HELP) {
+            if (sCurrentView == VIEW_SHOW_HELP) {
             } else if (sLoadedDeck == null) {
-            	mCurrentView = VIEW_DECKS;
+            	sCurrentView = VIEW_DECKS;
             } else if (sCard == null) {
-            	mCurrentView = VIEW_NOTHING_DUE;
+            	sCurrentView = VIEW_NOTHING_DUE;
             }
 
             PendingIntent doNothingIntent = getDoNothingPendingIntent(context);
@@ -515,14 +550,14 @@ public class AnkiDroidWidgetBig extends AppWidgetProvider {
             	updateViews.setViewVisibility(R.id.widget_big_progressbar, View.INVISIBLE);            	
             }
 
-            switch (mCurrentView) {
+            switch (sCurrentView) {
             case VIEW_SHOW_HELP:
             case VIEW_DECKS:
         		updateViews.setTextViewText(R.id.widget_big_deckname, "");
-        		updateViews.setTextViewText(R.id.widget_big_counts, "");
+        		updateCounts(updateViews);
 
         		updateViews.setViewVisibility(R.id.widget_big_empty, View.VISIBLE);
-        		updateViews.setOnClickPendingIntent(R.id.widget_big_empty, mCurrentView == VIEW_SHOW_HELP ? getUpdatePendingIntent(this, VIEW_DECKS) : getHelpPendingIntent(this));
+        		updateViews.setOnClickPendingIntent(R.id.widget_big_empty, sCurrentView == VIEW_SHOW_HELP ? getUpdatePendingIntent(this, VIEW_DECKS) : getHelpPendingIntent(this));
         		updateViews.setViewVisibility(R.id.widget_big_flipcard, View.INVISIBLE);
         		updateViews.setViewVisibility(R.id.widget_big_help, View.VISIBLE);
 
@@ -536,11 +571,8 @@ public class AnkiDroidWidgetBig extends AppWidgetProvider {
 
         		updateViews.setViewVisibility(R.id.widget_big_cardbackgroundstar, View.VISIBLE);
         		updateViews.setViewVisibility(R.id.widget_big_deckfield, View.VISIBLE);
-        		CharSequence[] content = getDeckNamesAndDues();
-        		updateViews.setTextViewText(R.id.widget_big_decknames, content[0]);
-        		updateViews.setTextViewText(R.id.widget_big_deckdues, content[1]);
-        		updateViews.setTextViewText(R.id.widget_big_decketa, "─────\n" + content[2]);
         		updateViews.setTextViewText(R.id.widget_big_cardcontent, "");
+        		updateViews.setViewVisibility(R.id.widget_big_add, View.INVISIBLE);
         		break;
 
             case VIEW_SHOW_ANSWER:
@@ -577,7 +609,7 @@ public class AnkiDroidWidgetBig extends AppWidgetProvider {
             			+ sCard.getAnswer()));
 
             case VIEW_SHOW_QUESTION:
-            	if (mCurrentView == VIEW_SHOW_QUESTION) {
+            	if (sCurrentView == VIEW_SHOW_QUESTION) {
             		if (!mShowProgressDialog) {
                 		updateViews.setViewVisibility(R.id.widget_big_empty, View.VISIBLE);
                 		updateViews.setOnClickPendingIntent(R.id.widget_big_empty, getAnswerPendingIntent(context, 0));            			
@@ -590,7 +622,7 @@ public class AnkiDroidWidgetBig extends AppWidgetProvider {
             	}
 
         		updateViews.setTextViewText(R.id.widget_big_deckname, sLoadedDeck.getDeckName());
-        		updateViews.setTextViewText(R.id.widget_big_counts, getDeckStatusString(sLoadedDeck, sCard));
+        		updateCounts(updateViews);
         		updateViews.setViewVisibility(R.id.widget_big_open, View.INVISIBLE);
         		if (!mShowProgressDialog) {
             		updateViews.setOnClickPendingIntent(R.id.widget_big_openclose, getCloseDeckPendingIntent(context));
@@ -601,14 +633,16 @@ public class AnkiDroidWidgetBig extends AppWidgetProvider {
 
         		updateViews.setViewVisibility(R.id.widget_big_deckfield, View.INVISIBLE);
         		updateViews.setViewVisibility(R.id.widget_big_cardbackgroundstar, View.INVISIBLE);
+        		updateViews.setViewVisibility(R.id.widget_big_add, View.VISIBLE);
         		break;
 
             case VIEW_NOTHING_DUE:
         		updateViews.setTextViewText(R.id.widget_big_deckname, sLoadedDeck.getDeckName());
-        		updateViews.setTextViewText(R.id.widget_big_counts, getDeckStatusString(sLoadedDeck, sCard));
+        		updateCounts(updateViews);
 
         		if (!mShowProgressDialog) {
             		updateViews.setViewVisibility(R.id.widget_big_empty, View.VISIBLE);
+            		updateViews.setOnClickPendingIntent(R.id.widget_big_empty, doNothingIntent);
             		updateViews.setViewVisibility(R.id.widget_big_flipcard, View.INVISIBLE);
             		updateViews.setViewVisibility(R.id.widget_big_help, View.INVISIBLE);
             		updateViews.setViewVisibility(R.id.widget_big_open, View.VISIBLE);
@@ -621,6 +655,7 @@ public class AnkiDroidWidgetBig extends AppWidgetProvider {
         		updateViews.setTextViewText(R.id.widget_big_cardcontent, "");
         		}
 
+        		updateViews.setViewVisibility(R.id.widget_big_add, View.VISIBLE);
 
         		updateViews.setViewVisibility(R.id.widget_big_deckfield, View.INVISIBLE);
         		updateViews.setViewVisibility(R.id.widget_big_cardbackgroundstar, View.VISIBLE);
@@ -634,7 +669,7 @@ public class AnkiDroidWidgetBig extends AppWidgetProvider {
         		break;
             }
 
-            if (mCurrentView == VIEW_SHOW_HELP) {
+            if (sCurrentView == VIEW_SHOW_HELP) {
             	String[] values = res.getStringArray(R.array.gestures_labels);
         		updateViews.setTextViewText(R.id.widget_big_topleft, res.getString(R.string.open_in_reviewer));
         		updateViews.setTextViewText(R.id.widget_big_middleleft, values[12]);
@@ -650,9 +685,9 @@ public class AnkiDroidWidgetBig extends AppWidgetProvider {
         		updateViews.setViewVisibility(R.id.widget_big_cardbackgroundstar, View.INVISIBLE);
         		updateViews.setViewVisibility(R.id.widget_big_nothing_due, View.INVISIBLE);
 
-			if (!mShowProgressDialog) {
-				disableCardAreaListeners(updateViews, false, doNothingIntent);
-			}
+        		if (!mShowProgressDialog) {
+        			disableCardAreaListeners(updateViews, false, doNothingIntent);
+        		}
             } else {
         		updateViews.setTextViewText(R.id.widget_big_topleft, "");
         		updateViews.setTextViewText(R.id.widget_big_middleleft, "");
@@ -689,6 +724,7 @@ public class AnkiDroidWidgetBig extends AppWidgetProvider {
             		updateViews.setOnClickPendingIntent(R.id.widget_big_topright, doNothingIntent);
             		updateViews.setOnClickPendingIntent(R.id.widget_big_middleleft, doNothingIntent);
             		updateViews.setOnClickPendingIntent(R.id.widget_big_middleright, keepUndoOpening ? getUndoPendingIntent(this) : doNothingIntent);
+            		updateViews.setOnClickPendingIntent(R.id.widget_big_bottom_right, keepUndoOpening ? getCardEditorPendingIntent(this, false) : doNothingIntent);
             		updateViews.setOnClickPendingIntent(R.id.widget_big_bottomleft, doNothingIntent);
             		updateViews.setOnClickPendingIntent(R.id.widget_big_bottomright, doNothingIntent);
 	}
@@ -697,7 +733,8 @@ public class AnkiDroidWidgetBig extends AppWidgetProvider {
             		updateViews.setOnClickPendingIntent(R.id.widget_big_topleft, getOpenPendingIntent(this, sLoadedDeck.getDeckPath()));
             		updateViews.setOnClickPendingIntent(R.id.widget_big_middleleft, getBuryCardPendingIntent(this));
             		updateViews.setOnClickPendingIntent(R.id.widget_big_bottomleft, getAnswerPendingIntent(this, questionsShown ? 0 : 1));
-            		updateViews.setOnClickPendingIntent(R.id.widget_big_topright, getCardEditorPendingIntent(this));
+            		updateViews.setOnClickPendingIntent(R.id.widget_big_topright, getCardEditorPendingIntent(this, true));
+            		updateViews.setOnClickPendingIntent(R.id.widget_big_bottom_right, getCardEditorPendingIntent(this, false));
             		updateViews.setOnClickPendingIntent(R.id.widget_big_middleright, getUndoPendingIntent(this));
             		updateViews.setOnClickPendingIntent(R.id.widget_big_bottomright, getAnswerPendingIntent(this, questionsShown ? 0 : (sCard.isRev() ? 3 : 2)));
 	}
@@ -711,7 +748,7 @@ public class AnkiDroidWidgetBig extends AppWidgetProvider {
         private PendingIntent getShowDeckSelectionPendingIntent(Context context) {
             Intent ankiDroidIntent = new Intent(context, WidgetDialog.class);
             ankiDroidIntent.setAction(WidgetDialog.ACTION_SHOW_DECK_SELECTION_DIALOG);
-            ankiDroidIntent.setFlags(Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS);
+//            ankiDroidIntent.setFlags(Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS);
             return PendingIntent.getActivity(context, 0, ankiDroidIntent, 0);
         }
 
@@ -752,9 +789,9 @@ public class AnkiDroidWidgetBig extends AppWidgetProvider {
             return PendingIntent.getService(context, 0, ankiDroidIntent, 0);
         }
 
-        private PendingIntent getCardEditorPendingIntent(Context context) {
+        private PendingIntent getCardEditorPendingIntent(Context context, boolean editCurrentCard) {
             Intent ankiDroidIntent = new Intent(context, UpdateService.class);
-            ankiDroidIntent.setAction(ACTION_CARDEDITOR);
+            ankiDroidIntent.setAction(ACTION_CARDEDITOR + (editCurrentCard ? "1" : "0"));
             return PendingIntent.getService(context, 0, ankiDroidIntent, 0);
         }
 

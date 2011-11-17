@@ -80,7 +80,12 @@
     </style>
 
     <style name="Widget.ProgressBar.Horizontal" parent="@android:style/Widget.ProgressBar.Horizontal">
-        <item name="android:progressDrawable">@drawable/progress_horizontal</item>
+        <item name="android:progressDrawable">@drawable/progress_widgetbig_horizontal</item>
+        <item name="android:orientation">vertical</item>
+    </style>
+
+    <style name="Widget.ProgressBar.BigWidget.Horizontal" parent="@android:style/Widget.ProgressBar.Horizontal">
+        <item name="android:progressDrawable">@drawable/progress_widgetbig_horizontal</item>
         <item name="android:orientation">vertical</item>
     </style>
 

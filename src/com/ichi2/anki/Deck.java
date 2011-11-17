@@ -1188,8 +1188,14 @@ public class Deck {
     }
 
     public double getSessionProgress() {
+    	return getSessionProgress(false);
+    }
+    public double getSessionProgress(boolean notifyEmpty) {
     	int done = mDailyStats.getYesReps();
     	int total = done + mFailedSoonCount + mRevCount + mNewCountToday;
+	if (notifyEmpty && total == 0) {
+		return -1;
+	}
     	if (hasFinishScheduler()) {
     		return 1.0d;
     	} else {
