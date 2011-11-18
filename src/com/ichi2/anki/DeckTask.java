@@ -793,10 +793,13 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
             	try {
             		Deck deck = DeckManager.getDeck(absPath, requestingActivity, false);
             		if (deck != null) {
-            			failedCards += deck.getFailedDelayedCount();
-                        revCards += deck.getNextDueCards(1);
-                        newCards += deck.getNextNewCards();
-                        eta += deck.getETA(failedCards, revCards, newCards, true);
+			int failed = deck.getFailedDelayedCount();
+			int revs = deck.getNextDueCards(1);
+			int news = deck.getNextNewCards();
+            		failedCards += failed;
+                        revCards += revs;
+                        newCards += news;
+                        eta += deck.getETA(failed, revs, news, true);
             		}
             		DeckManager.closeDeck(absPath, requestingActivity);
             	} catch (RuntimeException e) {
