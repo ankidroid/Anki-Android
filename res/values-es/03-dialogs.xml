@@ -35,7 +35,6 @@
   <string name="no_tts_available_title">Texto-a-Voz</string>
   <string name="no_tts_available_message">No hay idiomas de texto-a-voz disponibles</string>
   <string name="tts_no_tts">No hablar</string>
-  <string name="about_content">%1$s Flashcards para Android &lt;/h2&gt;&lt;p&gt; AnkiDroid puede leer archivos .anki creados en el programa de ordenador %2$s Anki&lt;/a&gt;. &lt;/p&gt;&lt;p&gt; Para ayudarnos a mejorar AnkiDroid, por favor, infórmanos sobre cualquier error %3$s aquí&lt;/a&gt;; las ideas sobre nuevas funcionalidades son también muy bienvenidas! Por favor, usa la %4$s wiki&lt;/a&gt; y salúdanos en el %5$s foro&lt;/a&gt;.&lt;/p&gt;&lt;p&gt; AnkiDroid es un %6$s software de código abierto&lt;/a&gt;, por lo que animamos a todo el mundo a %7$s unirse&lt;/a&gt; a los %8$s colaboradores&lt;/a&gt; :-) Los que no sean programadores también pueden ayudar, por ejemplo actualizando la wiki y las capturas de pantalla, %9$s haciendo una donación&lt;/a&gt; a Anki, o blogueando sobre AnkiDroid! &lt;/p&gt;&lt;p&gt; AnkiDroid es distribuido bajo la %10$s licencia GNU-GPL v3&lt;/a&gt; y el código fuente está disponible %11$s aquí&lt;/a&gt;.</string>
   <string name="dont_show_again">No mostrar de nuevo</string>
   <string name="deck_upgrade_too_old_version">Los mazos con versiones anteriores a la 39 no están soportados por AnkiDroid, por favor abre el mazo con la versión de escritorio de Anki para actualizarlo a la última versión.</string>
   <string name="deck_upgrade_version_61_has_latex">El mazo no puede ser completamente actualizado, ya que contiene expresiones LaTeX; por favor, abre el mazo con la versión para PC de Anki, para actualizarlo a la última versión y regenerar LaTeX.</string>
@@ -62,4 +61,11 @@
   <string name="answering_error_message">Ocurrió un error al responder la última tarjeta o al cambiar de alguna otra forma el mazo. Esto puede deberse a que el mazo está corrupto o a que el espacio en disco es insuficiente.\n\nSi esto ocurre con más frecuencia, por favor, trata de reparar el mazo. Prueba además a comprobar la base de datos con Anki escritorio.\n\nDe todos modos, también podría ser un error de AnkiDroid, por lo que te rogamos nos informes del error para que podamos comprobar esto.</string>
   <string name="answering_error_report">Informar sobre el error</string>
   <string name="repair_deck_dialog">¿Estás seguro de intentar reparar el mazo \'%1$s\'?\n\nAntes de iniciar el intento, se creará una copia del mazo en la subcarpeta \'%2$s\'.</string>
+  <string-array name="about_content">
+    <item><![CDATA[<h2>%1$s:<br/>Tarjetas de estudio para Android</h2>AnkiDroid es una aplicación de tarjetas de estudio que es totalmente compatible con el software de escritorio <a href="%2$s">Anki</a>. Puedes crear, descargar y estudiar contenidos en ambos, AnkiDroid o Anki Escritorio, y sincronizarlos muy fácilmente.]]></item>
+    <item><![CDATA[Para ayudarnos a mejorar AnkiDroid, por favor, infórmanos de cualquier error <a href="%1$s">aquí</a>; ¡también apreciamos mucho las ideas sobre nuevas funciones! Por favor, usa la <a href="%2$s">wiki</a> y salúdanos en el <a href="%3$s">foro</a>.]]></item>
+    <item><![CDATA[AnkiDroid es un <a href="%1$s">software de código abierto<a/>, por lo que todo el mundo está invitado a <a href="%2$s">unirse</a> a los <a href="%3$s">colaboradores</a>:-)]]></item>
+    <item><![CDATA[Los que no sean desarrolladores también pueden ayudar, por ejemplo, <a href="%1$s">traduciendo</a> AnkiDroid, actualizando la wiki y las capturas de pantalla, <a href="%2$s">haciendo una donación</a> a Anki Escritorio, ¡o blogueando sobre AnkiDroid!]]></item>
+    <item><![CDATA[AnkiDroid es distribuido bajo la <a href="%1$s">licencia GNU-GPL v3</a> y el código fuente está disponible <a href="%2$s">aquí</a>.]]></item>
+  </string-array>
 </resources>

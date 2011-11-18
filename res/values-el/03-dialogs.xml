@@ -35,7 +35,6 @@
   <string name="no_tts_available_title">Μετατροπή κειμένου σε ομιλία</string>
   <string name="no_tts_available_message">Δεν είναι διαθέσιμη η μετατροπής κειμένου σε ομιλία</string>
   <string name="tts_no_tts">Σίγαση</string>
-  <string name="about_content">%1$s Flashcards για το Android &lt;/ h2&gt; &lt;p&gt; Το AnkiDroid μπορεί να διαβάσει.anki αρχεία που παράγονται από το πρόγραμμα %2$s Anki &lt;/ a&gt; για σταθερό υπολογιστή. &lt;/ P&gt; Για να μας βοηθήσετε να κάνουμε το AnkiDroid καλύτερο, παρακαλούμε να αναφέρετε τυχόν σφαλμάτα %3$s εδώ &lt;/ a&gt;? Νέες ιδέες είναι επίσης πάρα πολύ ευπρόσδεκτες! Παρακαλούμε χρησιμοποιήστε το %4$s wiki &lt;/ a&gt; και περάστε και από το %5$s forum &lt;/ a&gt;. &lt;/ P&gt; Το AnkiDroid είναι %6$s λογισμικό ανοιχτού κώδικα &lt;/ a&gt;, έτσι ώστε όλοι ενθαρρύνονται να %7$s ενταχθούν &lt;/ a&gt; και να %8$s συμβάλουν &lt;/ a&gt; :-) Μη προγραμματιστές μπορούν επίσης να βοηθήσουν, για παράδειγμα με την ενημέρωση του wiki και screenshots, %9$s κάνοντας δωρεές &lt;/ a&gt; στο Anki, ή γράφοντας σε blog για το AnkiDroid! &lt;/ P&gt; Το AnkiDroid διατίθεται κάτω από την %10$s GNU-GPL v3 άδεια χρήσης &lt;/ a&gt; και ο πηγαίος κώδικας είναι διαθέσιμος %11$s εδώ &lt;/ a&gt;.</string>
   <string name="dont_show_again">Don\'t show again</string>
   <string name="deck_upgrade_too_old_version">Τράπουλες παλιότερες από έκδοση 39 δεν υποστηρίζονται από το AnkiDroid· παρακαλούμε να ανοίξετε την τράπουλα με την εφαρμογή Anki, ώστε να αναβαθμιστεί στην τελευταία έκδοση.</string>
   <string name="deck_upgrade_version_61_has_latex">Η τράπουλα δε μπορεί να αναβαθμιστεί πλήρως επειδή περιέχει κώδικα LaTeX, παρακαλούμε να ανοίξετε την τράπουλα με την εφαρμογή Anki, ώστε να αναβαθμιστεί στην τελευταία έκδοση και να μεταφραστεί ο κώδικας LaTeX.</string>
@@ -62,4 +61,11 @@
   <string name="answering_error_message">An error occurred while answering the last card or changing the deck otherwise. This could be related to a corrupt deck or to insufficient disc space.\n\nIf it happens more often, please try to repair the deck. Try a db check with Anki Desktop as well.\n\nNevertheless, it could be an AnkiDroid bug as well; please report the error that we can check this.</string>
   <string name="answering_error_report">Report error</string>
   <string name="repair_deck_dialog">Do you really want to try to repair deck \'%1$s\'?\n\nBefore starting the attempt, a copy of the deck will be created in subfolder \'%2$s\'.</string>
+  <string-array name="about_content">
+    <item><![CDATA[<h2>%1$s:<br/>Flashcards for Android</h2>AnkiDroid is a flashcard application which is fully compatible with the desktop software <a href="%2$s">Anki</a>. You can create, download and learn contents on both, AnkiDroid or Anki Desktop, and synchronize them very easily.]]></item>
+    <item><![CDATA[To help us make AnkiDroid better, please report any bug <a href="%1$s">here</a>; new feature ideas are very welcome too! Please use the <a href="%2$s">wiki</a> and say Hi on the <a href="%3$s">forum</a>.]]></item>
+    <item><![CDATA[AnkiDroid is <a href="%1$s">open source software<a/>, so everyone is encouraged to <a href="%2$s">join</a> the <a href="%3$s">contributors</a>:-)]]></item>
+    <item><![CDATA[Non-developers can also help, for instance by <a href="%1$s">translating</a> AnkiDroid, updating the wiki and screenshots, <a href="%2$s">donating</a> to Anki Desktop, or blogging about AnkiDroid!]]></item>
+    <item><![CDATA[AnkiDroid is released under the <a href="%1$s">GNU-GPL v3 license</a> and the source code is available <a href="%2$s">here</a>.]]></item>
+  </string-array>
 </resources>

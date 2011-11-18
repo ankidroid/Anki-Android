@@ -643,6 +643,7 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
         ArrayList<HashMap<String, String>> errors  = (ArrayList<HashMap<String, String>>) data.data[3];
         String groupId  = ((Long) data.data[4]).toString();
         Application app  = (Application) data.data[5];
+        boolean deleteAfterSending = (Boolean) data.data[6];
 
         String postType = null;
         if (feedback.length() > 0) {
@@ -670,6 +671,10 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
                     publishProgress(postType, i, Feedback.STATE_SUCCESSFUL, reply.returnType, reply.result);
                 } else {
                     publishProgress(postType, i, Feedback.STATE_FAILED, reply.returnType, reply.result);
+                }
+                if (deleteAfterSending && (reply.success || reply.returnType == 200)) {
+                	File file = new File(app.getFilesDir() + "/" + error.get("filename"));
+                	file.delete();
                 }
             }
         }

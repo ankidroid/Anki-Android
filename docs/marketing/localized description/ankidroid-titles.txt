@@ -5,6 +5,7 @@ cs: AnkiDroid kartičky
 de: AnkiDroid Karteikarten
 es-ES: Tarjetas AnkiDroid
 fi: AnkiDroid-muistikortit
+fr: AnkiDroid (Cartes mémoire)
 hu: AnkiDroid tanuló kártyák
 id: Kad imbas AnkiDroid
 ja: AnkiDroid単語帳
