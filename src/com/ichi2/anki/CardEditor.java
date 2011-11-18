@@ -769,9 +769,9 @@ public class CardEditor extends Activity {
 									.toString();
 						}
 						modelChanged();
-						if ((mSourceText == null || mSourceText.isEmpty())
+						if ((mSourceText == null || mSourceText.length() == 0)
 								&& (mTargetText == null || mTargetText
-										.isEmpty())) {
+										.length() == 0)) {
 							for (int i = 0; i < Math.min(size, mEditFields
 									.size()); i++) {
 								mEditFields.get(i).setText(oldValues[i]);
