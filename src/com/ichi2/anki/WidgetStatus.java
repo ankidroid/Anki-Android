@@ -155,7 +155,6 @@ public final class WidgetStatus {
                 File dir = new File(deckPath);
 
                 File[] fileList = dir.listFiles(new AnkiFileFilter());
-
                 if (fileList == null || fileList.length == 0) {
                     mDecks = EMPTY_DECK_STATUS;
                     return context;
@@ -216,8 +215,8 @@ public final class WidgetStatus {
                 // Sort and reverse the list if there are decks
                 Log.i(AnkiDroidApp.TAG, "Sorting deck");
 
-                // Ordered by reverse due cards number
-                Collections.sort(decks, new ByDueComparator());
+                // Ordered by deck name
+                Collections.sort(decks, new ByNameComparator());
             }
 
             mDecks = decks.toArray(EMPTY_DECK_STATUS);
@@ -252,13 +251,23 @@ public final class WidgetStatus {
             }
         }
 
-        /** Comparator that sorts instances of {@link DeckStatus} based on number of due cards. */
-        private static class ByDueComparator implements java.util.Comparator<DeckStatus> {
-            @Override
-            public int compare(DeckStatus deck1, DeckStatus deck2) {
-                // Reverse due cards number order
-                return deck2.mDueCards - deck1.mDueCards;
-            }
+    }
+
+    /** Comparator that sorts instances of {@link DeckStatus} based on number of due cards. */
+    public static class ByDueComparator implements java.util.Comparator<DeckStatus> {
+        @Override
+        public int compare(DeckStatus deck1, DeckStatus deck2) {
+            // Reverse due cards number order
+            return deck2.mDueCards - deck1.mDueCards;
+        }
+    }
+
+
+    /** Comparator that sorts instances of {@link DeckStatus} based on number of due cards. */
+    public static class ByNameComparator implements java.util.Comparator<DeckStatus> {
+        @Override
+        public int compare(DeckStatus deck1, DeckStatus deck2) {
+            return - deck2.mDeckName.compareTo(deck1.mDeckName);
         }
     }
 

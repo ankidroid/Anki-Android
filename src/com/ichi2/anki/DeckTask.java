@@ -62,7 +62,6 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
     public static final int TASK_TYPE_LOAD_TUTORIAL = 19;
     public static final int TASK_TYPE_REPAIR_DECK = 20;
     public static final int TASK_TYPE_CLOSE_DECK = 21;
-    public static final int TASK_TYPE_GET_TOMORROW_DUE = 22;
 
 
     /**
@@ -212,9 +211,6 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
 
             case TASK_TYPE_CLOSE_DECK:
                 return doInBackgroundCloseDeck(params);
-
-            case TASK_TYPE_GET_TOMORROW_DUE:
-                return doInBackgroundGetTomorrowDue(params);
             	
             default:
                 return null;
@@ -774,41 +770,6 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
     	}
     }
 
-
-    private TaskData doInBackgroundGetTomorrowDue(TaskData... params) {
-        Log.i(AnkiDroidApp.TAG, "doInBackgroundGetTomorrowDue");
-
-        File dir = new File(params[0].getString());
-        File[] fileList = dir.listFiles(new WidgetStatus.AnkiFileFilter());
-        int requestingActivity = params[0].getInt();
-
-        int failedCards = 0;
-        int revCards = 0;
-        int newCards = 0;
-        int eta = 0;
-
-        if (fileList != null && fileList.length != 0) {
-            for (File file : fileList) {
-            	String absPath = file.getAbsolutePath();
-            	try {
-            		Deck deck = DeckManager.getDeck(absPath, requestingActivity, false);
-            		if (deck != null) {
-			int failed = deck.getFailedDelayedCount();
-			int revs = deck.getNextDueCards(1);
-			int news = deck.getNextNewCards();
-            		failedCards += failed;
-                        revCards += revs;
-                        newCards += news;
-                        eta += deck.getETA(failed, revs, news, true);
-            		}
-            		DeckManager.closeDeck(absPath, requestingActivity);
-            	} catch (RuntimeException e) {
-            		Log.e(AnkiDroidApp.TAG, "doInBackgroundGetTomorrowDue: an error occurred: " + e);
-            	}
-            }
-        }
-        return new TaskData(new int[] {failedCards, revCards, newCards, eta});
-    }
 
     public static interface TaskListener {
         public void onPreExecute();

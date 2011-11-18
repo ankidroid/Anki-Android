@@ -47,4 +47,5 @@
   <item quantity="one">Estimated time: 1 min.</item>
   <item quantity="other">Estimated time: %d min.</item>
 </plurals>
+<string name="widget_big_tomorrow_due">Tomorrow due:</string>
 </resources>

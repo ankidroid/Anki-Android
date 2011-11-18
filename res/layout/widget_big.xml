@@ -41,10 +41,20 @@
 			    android:layout_gravity="center"
 			    android:background="@drawable/widget_big_deckfield"
 			    android:visibility="invisible">
-			    <LinearLayout
+			    <TextView android:id="@+id/widget_big_totalcongrats"
+					android:layout_width="fill_parent"
+				 	android:layout_height="fill_parent"
+				 	android:textColor="@color/widget_big_font_color"
+				 	android:lineSpacingMultiplier="1.2"
+				 	android:textStyle="bold"
+				 	android:visibility="gone"
+				 	android:text="@string/widget_big_tomorrow_due"
+				 	android:gravity="center"/>
+				<LinearLayout
 				    android:layout_width="wrap_content"
 				    android:layout_height="wrap_content"
 				    android:orientation="horizontal"
+				    android:layout_gravity="center"
 				    android:clickable="false">
 					<TextView android:id="@+id/widget_big_decknames"
 					    android:layout_width="wrap_content"
