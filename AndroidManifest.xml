@@ -20,7 +20,7 @@
 -->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
 	package="com.ichi2.anki"
-	android:versionName="1.0beta29"
+	android:versionName="1.0beta31"
 	android:versionCode="22"
 	android:installLocation="auto">
     <instrumentation android:name="android.test.InstrumentationTestRunner" android:targetPackage="com.ichi2.anki"></instrumentation>
@@ -152,7 +152,7 @@
 		<service android:name="com.ichi2.widget.AnkiDroidWidgetBig$UpdateService" />
 </application>
 	<uses-sdk  android:minSdkVersion="3"
-		android:targetSdkVersion="11"/>
+		android:targetSdkVersion="3"/>
 	<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 	<uses-permission android:name="android.permission.VIBRATE" android:required="false" />
 	<uses-permission android:name="android.permission.INTERNET" android:required="false" />
