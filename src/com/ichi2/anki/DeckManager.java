@@ -4,7 +4,6 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.TreeSet;
-import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.ReentrantLock;
 
 import com.ichi2.anki.DeckPicker.AnkiFilter;
@@ -80,16 +79,17 @@ public class DeckManager {
 				// do not open deck if already loaded
 			        DeckInformation deckInformation = sLoadedDecks.get(deckpath);
 		        	try {
-		                if ((deckInformation.mClosingAsyncTask != null) && (deckInformation.mClosingAsyncTask.getStatus() != AsyncTask.Status.FINISHED && !deckInformation.mClosingAsyncTask.isCancelled())) {
-					if (deckInformation.mWaitForDeckTaskToFinish) {
+		        		AsyncTask<CloseDeckInformation, Void, DeckInformation> closingTask = deckInformation.mClosingAsyncTask;
+		                if (closingTask != null && closingTask.getStatus() == AsyncTask.Status.RUNNING && !closingTask.isCancelled()) {
+		                	if (deckInformation.mWaitForDeckTaskToFinish) {
 			                	Log.i(AnkiDroidApp.TAG, "DeckManager: deck " + deckpath + " is closing now, cancelling this");
-						deckInformation.mClosingAsyncTask.cancel(true);
-						deckInformation.mOpenedBy = new ArrayList<Integer>();
-					} else {
+			                	closingTask.cancel(true);
+			                	deckInformation.mOpenedBy = new ArrayList<Integer>();
+		                	} else {
 			                	Log.i(AnkiDroidApp.TAG, "DeckManager: deck " + deckpath + " is closing now, waiting for this to finish and reopening it");
-						deckInformation.mClosingAsyncTask.get();
+			                	closingTask.get();
 			                	return getDeck(deckpath, setAsMainDeck, doSafetyBackupIfNeeded, requestingActivity, rebuild);
-					}
+		                	}
 		                }
 		            } catch (Exception e) {
 		            	Log.i(AnkiDroidApp.TAG, "DeckManager: An exception occurred while waiting for closing task of deck " + deckpath);
@@ -181,18 +181,6 @@ public class DeckManager {
 	}
 
 
-//	public static void waitForDeckOperation(String path) {
-//		if (sDeckLocks.containsKey(path)) {
-//			if (sDeckLocks.get(path).is)
-//			Log.i(AnkiDroidApp.TAG, "DeckManager: waitForDeckOperation");
-////			while (mClosingDeck != null && mClosingDeck.equals(deckpath)) {
-////				Log.e(AnkiDroidApp.TAG, "DeckManager: waitForDeckClosing (" + deckpath + ")");
-////					mCondFinished.await();
-////			}
-//		}
-//	}
-
-
     /** get main deck path */
 	public static String getMainDeckPath() {
 		return sMainDeckPath;
@@ -222,10 +210,16 @@ public class DeckManager {
 	public static void waitForDeckClosingThread(String deckpath) {
 		DeckInformation deckInformation = sLoadedDecks.get(deckpath);
     	try {
-            if ((deckInformation.mClosingAsyncTask != null) && (deckInformation.mClosingAsyncTask.getStatus() != AsyncTask.Status.FINISHED && !deckInformation.mClosingAsyncTask.isCancelled())) {
-            	// wait for closing deck async task before resuming
-            	Log.e(AnkiDroidApp.TAG, "DeckManager: deck " + deckpath + " is closing now, waiting for this to finish and reopening it");
-            	deckInformation.mClosingAsyncTask.get();
+            if ((deckInformation.mClosingAsyncTask != null) && deckInformation.mClosingAsyncTask.getStatus() == AsyncTask.Status.RUNNING && !deckInformation.mClosingAsyncTask.isCancelled()) {
+            	if (deckInformation.mWaitForDeckTaskToFinish) {
+                	Log.i(AnkiDroidApp.TAG, "DeckManager: deck " + deckpath + " is closing now, cancelling this");
+                	deckInformation.mClosingAsyncTask.cancel(true);
+                	deckInformation.mOpenedBy = new ArrayList<Integer>();
+            	} else {
+                	// wait for closing deck async task before resuming
+                	Log.e(AnkiDroidApp.TAG, "DeckManager: deck " + deckpath + " is closing now, waiting for this to finish and reopening it");
+                	deckInformation.mClosingAsyncTask.get();
+            	}
             }
         } catch (Exception e) {
         	Log.i(AnkiDroidApp.TAG, "DeckManager: An exception occurred while waiting for closing task of deck " + deckpath);
@@ -313,7 +307,7 @@ public class DeckManager {
 		try {
 			if (sLoadedDecks.containsKey(deckpath)) {
 				DeckInformation di = sLoadedDecks.get(deckpath);
-				if ((di.mClosingAsyncTask != null) && (di.mClosingAsyncTask.getStatus() != AsyncTask.Status.FINISHED && !di.mClosingAsyncTask.isCancelled())) {
+				if ((di.mClosingAsyncTask != null) && di.mClosingAsyncTask.getStatus() == AsyncTask.Status.RUNNING && !di.mClosingAsyncTask.isCancelled()) {
 					Log.i(AnkiDroidApp.TAG, "DeckManager: closeDeck - deck " + deckpath + " is already closing");
 	            	return;
 	            }
@@ -412,12 +406,12 @@ public class DeckManager {
             
             if (di.mOpenedBy.contains(REQUESTING_ACTIVITY_STUDYOPTIONS) && requestingActivity != REQUESTING_ACTIVITY_STUDYOPTIONS) {
             	// wait for any decktask operation
-		di.mWaitForDeckTaskToFinish = true;
+            	di.mWaitForDeckTaskToFinish = true;
             	DeckTask.waitToFinish();
-		if (this.isCancelled()) {
-			return null;
-		}
-		di.mWaitForDeckTaskToFinish = false;
+            	di.mWaitForDeckTaskToFinish = false;
+            	if (this.isCancelled()) {
+            		return null;
+            	}
             }
 
             try {
@@ -432,9 +426,9 @@ public class DeckManager {
         @Override
         protected void onPostExecute(DeckInformation deckInformation) {
             Log.d(AnkiDroidApp.TAG, "DeckManager.CloseDeckAsyncTask.onPostExecute()");
-		if (this.isCancelled()) {
-			return;
-		}
+            if (this.isCancelled()) {
+            	return;
+            }
             sLoadedDecks.remove(deckInformation.mKey);
     		for (String dp : sLoadedDecks.keySet()) {
         		Log.i(AnkiDroidApp.TAG, "DeckManager: still loaded: " + dp + ": " + sLoadedDecks.get(dp).mOpenedBy.toString());
