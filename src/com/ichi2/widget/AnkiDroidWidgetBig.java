@@ -911,7 +911,9 @@ public class AnkiDroidWidgetBig extends AppWidgetProvider {
             	sCurrentMessage = null;
             	sWaitForAsyncTask = false;
             	sTomorrowDues = status;
-            	updateWidget(VIEW_CONGRATS);
+            	if (sCurrentView != VIEW_SHOW_HELP) {
+                	updateWidget(VIEW_CONGRATS);            		
+            	}
             }
         }        
     }
