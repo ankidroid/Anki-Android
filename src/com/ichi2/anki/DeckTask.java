@@ -62,6 +62,7 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
     public static final int TASK_TYPE_LOAD_TUTORIAL = 19;
     public static final int TASK_TYPE_REPAIR_DECK = 20;
     public static final int TASK_TYPE_CLOSE_DECK = 21;
+    public static final int TASK_TYPE_GET_TOMORROW_DUE = 22;
 
 
     /**
@@ -212,6 +213,9 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
             case TASK_TYPE_CLOSE_DECK:
                 return doInBackgroundCloseDeck(params);
 
+            case TASK_TYPE_GET_TOMORROW_DUE:
+                return doInBackgroundGetTomorrowDue(params);
+            	
             default:
                 return null;
         }
@@ -771,6 +775,38 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
     }
 
 
+    private TaskData doInBackgroundGetTomorrowDue(TaskData... params) {
+        Log.i(AnkiDroidApp.TAG, "doInBackgroundGetTomorrowDue");
+
+        File dir = new File(params[0].getString());
+        File[] fileList = dir.listFiles(new WidgetStatus.AnkiFileFilter());
+        int requestingActivity = params[0].getInt();
+
+        int failedCards = 0;
+        int revCards = 0;
+        int newCards = 0;
+        int eta = 0;
+
+        if (fileList != null && fileList.length != 0) {
+            for (File file : fileList) {
+            	String absPath = file.getAbsolutePath();
+            	try {
+            		Deck deck = DeckManager.getDeck(absPath, requestingActivity, false);
+            		if (deck != null) {
+            			failedCards += deck.getFailedDelayedCount();
+                        revCards += deck.getNextDueCards(1);
+                        newCards += deck.getNextNewCards();
+                        eta += deck.getETA(failedCards, revCards, newCards, true);
+            		}
+            		DeckManager.closeDeck(absPath, requestingActivity);
+            	} catch (RuntimeException e) {
+            		Log.e(AnkiDroidApp.TAG, "doInBackgroundGetTomorrowDue: an error occurred: " + e);
+            	}
+            }
+        }
+        return new TaskData(new int[] {failedCards, revCards, newCards, eta});
+    }
+
     public static interface TaskListener {
         public void onPreExecute();
 
@@ -797,6 +833,7 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
         private String[] mDeckList;
         private LinkedHashMap<Long, CardModel> mCardModels;
         private Comparator<? super HashMap<String, String>> mComparator;
+        private int[] mIntList;
 
 
         public TaskData(int value, Deck deck, Card card) {
@@ -887,10 +924,21 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
         }
 
 
+        public TaskData(int value, String msg) {
+            mMsg = msg;
+            mInteger = value;
+        }
+
+
         public TaskData(String msg, long cardId, boolean bool) {
             mMsg = msg;
             mLong = cardId;
             mBool = bool;
+        }
+
+
+        public TaskData(int[] intlist) {
+            mIntList = intlist;
         }
 
 
@@ -966,6 +1014,11 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
 
         public String[] getDeckList() {
             return mDeckList;
+        }
+
+
+        public int[] getIntList() {
+            return mIntList;
         }
     }
 

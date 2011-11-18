@@ -37,6 +37,7 @@
 			    android:layout_width="wrap_content"
 			    android:layout_height="wrap_content"
 			    android:orientation="vertical"
+			    android:layout_margin="8dip"
 			    android:layout_gravity="center"
 			    android:background="@drawable/widget_big_deckfield"
 			    android:visibility="invisible">
@@ -47,13 +48,13 @@
 				    android:clickable="false">
 					<TextView android:id="@+id/widget_big_decknames"
 					    android:layout_width="wrap_content"
-				    android:lineSpacingMultiplier="1.2"
+				    	android:lineSpacingMultiplier="1.2"
 					    android:layout_height="fill_parent"
 					    android:textColor="@color/widget_big_font_color"
 					    android:gravity="left"/>
 					<TextView android:id="@+id/widget_big_deckdues"
 					    android:layout_width="wrap_content"
-				    android:lineSpacingMultiplier="1.2"
+				    	android:lineSpacingMultiplier="1.2"
 					    android:layout_height="fill_parent"
 					    android:gravity="right"/>
 			    </LinearLayout>
@@ -64,7 +65,7 @@
 				    android:lineSpacingMultiplier="1.2"
 				    android:gravity="center"/>
 		    </LinearLayout>
-		    <LinearLayout
+		    <LinearLayout android:id="@+id/widget_big_card_areas"
 			    android:layout_width="fill_parent"
 			    android:layout_height="fill_parent"
 			    android:orientation="vertical">
@@ -135,11 +136,13 @@
 			    android:orientation="vertical"
 			    android:layout_margin="15dip"
 			    android:layout_gravity="center"
+			android:clickable="false"
 			    android:visibility="invisible">
 			    	<TextView
 				    android:id="@+id/widget_big_congrats"
 				    android:layout_width="fill_parent"
 				    android:layout_height="fill_parent"
+				android:clickable="false"
 					android:layout_above="@+id/widget_big_congrats_buttons"
 			    	android:gravity="center"
 				    android:layout_marginBottom="5dip"
@@ -409,7 +412,7 @@
 		        android:layout_height="fill_parent"
 		        android:background="@drawable/widget_big_add"
 		        android:clickable="false"
-		        android:visibility="visible"/>
+		        android:visibility="invisible"/>
 		</FrameLayout>
 		<TextView android:id="@+id/widget_big_message"
 		    android:layout_width="fill_parent"
@@ -427,4 +430,9 @@
 		android:layout_toLeftOf="@+id/widget_big_bottom_right"
 		    android:layout_alignParentBottom="true"/>
 	</RelativeLayout>
+    <FrameLayout android:id="@+id/widget_big_noclicks"
+	android:clickable="true"
+	android:visibility="invisible"
+        android:layout_width="fill_parent"
+    	android:layout_height="fill_parent"/>
 </FrameLayout>

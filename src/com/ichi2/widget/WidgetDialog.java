@@ -50,7 +50,6 @@ public class WidgetDialog extends Activity {
 						public void onClick(DialogInterface dialog, int which) {
 		            		Intent newIntent = new Intent(WidgetDialog.this, AnkiDroidWidgetBig.UpdateService.class);
 		            		newIntent.setAction(AnkiDroidWidgetBig.UpdateService.ACTION_OPENDECK);
-		            		newIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 		            		newIntent.putExtra(AnkiDroidWidgetBig.UpdateService.EXTRA_DECK_PATH, DeckManager.getDeckPathAfterDeckSelectionDialog(which));
 		            		startService(newIntent);
 						}

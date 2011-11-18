@@ -260,13 +260,13 @@ public final class WidgetStatus {
                 return deck2.mDueCards - deck1.mDueCards;
             }
         }
+    }
 
-        /** Filter for Anki files. */
-        private static final class AnkiFileFilter implements FileFilter {
-            @Override
-            public boolean accept(File pathname) {
-                return pathname.isFile() && pathname.getName().endsWith(".anki");
-            }
+    /** Filter for Anki files. */
+    public static final class AnkiFileFilter implements FileFilter {
+        @Override
+        public boolean accept(File pathname) {
+            return pathname.isFile() && pathname.getName().endsWith(".anki");
         }
     }
 }

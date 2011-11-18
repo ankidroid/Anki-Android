@@ -1841,7 +1841,14 @@ public class StudyOptions extends Activity implements IButtonListener {
                 }
                 break;
             case CONTENT_CONGRATS:
-            	mTextCongratsMessage.setText(getCongratsMessage(this, DeckManager.getMainDeck()));
+            	Deck deck = DeckManager.getMainDeck();
+                if (deck != null) {
+            		int failedCards = deck.getFailedDelayedCount();
+                    int revCards = deck.getNextDueCards(1);
+                    int newCards = deck.getNextNewCards();
+                    int eta = deck.getETA(failedCards, revCards, newCards, true);
+                	mTextCongratsMessage.setText(getCongratsMessage(this, failedCards, revCards, newCards, eta));
+                }
                 updateValuesFromDeck();
                 setContentView(mCongratsView);
                 break;
@@ -1900,19 +1907,12 @@ public class StudyOptions extends Activity implements IButtonListener {
     }
 
 
-    public static String getCongratsMessage(Context context, Deck deck) {
+    public static String getCongratsMessage(Context context, int failedCards, int revCards, int newCards, int eta) {
     	Resources res = context.getResources();
-        if (deck != null) {
-    		int failedCards = deck.getFailedDelayedCount();
-            int revCards = deck.getNextDueCards(1);
-            int revFailedCards = failedCards + revCards;
-            int newCards = deck.getNextNewCards();
-            int eta = deck.getETA(failedCards, revCards, newCards, true);
-            String newCardsText = res.getQuantityString(R.plurals.studyoptions_congrats_new_cards, newCards, newCards);
-            String etaText = res.getQuantityString(R.plurals.studyoptions_congrats_eta, eta, eta);
-            return res.getQuantityString(R.plurals.studyoptions_congrats_message, revFailedCards, revFailedCards, newCardsText, etaText);
-        }
-        return null;
+        int revFailedCards = failedCards + revCards;
+        String newCardsText = res.getQuantityString(R.plurals.studyoptions_congrats_new_cards, newCards, newCards);
+        String etaText = res.getQuantityString(R.plurals.studyoptions_congrats_eta, eta, eta);
+        return res.getQuantityString(R.plurals.studyoptions_congrats_message, revFailedCards, revFailedCards, newCardsText, etaText);
     }
 
 
