@@ -423,6 +423,12 @@
 		        android:background="@drawable/widget_big_add"
 		        android:clickable="false"
 		        android:visibility="invisible"/>
+		    <TextView android:id="@+id/widget_big_star"
+		        android:layout_width="fill_parent"
+		        android:layout_height="fill_parent"
+		        android:background="@drawable/widget_big_button_star"
+		        android:clickable="false"
+		        android:visibility="visible"/>
 		</FrameLayout>
 		<TextView android:id="@+id/widget_big_message"
 		    android:layout_width="fill_parent"

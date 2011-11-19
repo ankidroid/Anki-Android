@@ -145,6 +145,7 @@ public class StudyOptions extends Activity implements IButtonListener {
 
     public static final String EXTRA_DECK = "deck";
     public static final String EXTRA_START_REVIEWER = "startReviewer";
+    public static final String EXTRA_START_DECKPICKER = "startDeckPicker";
 
     private static final int DIALOG_NO_CONNECTION = 0;
     private static final int DIALOG_USER_NOT_LOGGED_IN = 1;
@@ -661,12 +662,14 @@ public class StudyOptions extends Activity implements IButtonListener {
                 && intent.getDataString() != null) {
             mDeckFilename = Uri.parse(intent.getDataString()).getPath();
             Log.i(AnkiDroidApp.TAG, "onCreate - deckFilename from VIEW intent: " + mDeckFilename);
-        } else if (Intent.ACTION_MAIN.equalsIgnoreCase(intent.getAction())
-                && intent.hasExtra(EXTRA_DECK)) {
+        } else if (Intent.ACTION_MAIN.equalsIgnoreCase(intent.getAction()) && intent.getBooleanExtra(EXTRA_START_REVIEWER, false)) {
+        	startReviewer = true;
+        } else if (Intent.ACTION_MAIN.equalsIgnoreCase(intent.getAction()) && intent.getBooleanExtra(EXTRA_START_DECKPICKER, false)) {
+        	mDeckFilename = preferences.getString("deckFilename", null);
+        	openDeckPicker();
+        } else if (Intent.ACTION_MAIN.equalsIgnoreCase(intent.getAction()) && intent.hasExtra(EXTRA_DECK)) {
             mDeckFilename = intent.getStringExtra(EXTRA_DECK);
             Log.i(AnkiDroidApp.TAG, "onCreate - deckFilename from MAIN intent: " + mDeckFilename);
-        } else if (Intent.ACTION_MAIN.equalsIgnoreCase(intent.getAction()) && intent.hasExtra(EXTRA_START_REVIEWER)) {
-        	startReviewer = true;
         } else if (savedInstanceState != null) {
             // Use the same deck as last time Ankidroid was used.
             mDeckFilename = savedInstanceState.getString("deckFilename");
@@ -685,7 +688,7 @@ public class StudyOptions extends Activity implements IButtonListener {
         } else {
             if (mDeckFilename == null || !new File(mDeckFilename).exists()) {
                 showContentView(CONTENT_NO_DECK);
-            } else {
+            } else if (!mInDeckPicker) {
             	if ((showDeckPickerOnStartup()) && (!hasErrorFiles())) {
             		openDeckPicker();
             	} else {

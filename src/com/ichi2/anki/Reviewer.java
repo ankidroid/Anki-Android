@@ -895,7 +895,7 @@ public class Reviewer extends Activity implements IButtonListener{
             	Log.i(AnkiDroidApp.TAG, "setScrollbarFadingEnabled could not be found due to a too low Android version (< 2.1)");
             }
 
-		mRefreshWebview = getRefreshWebview();
+            mRefreshWebview = getRefreshWebview();
 
             initLayout(R.layout.flashcard);
             if (mPrefTextSelection) {
@@ -976,9 +976,9 @@ public class Reviewer extends Activity implements IButtonListener{
 
       // check if deck is already opened in big widget. If yes, reload card (to make sure it's not answered yet) and close it in widget
       if (DeckManager.mainIsOpenedInBigWidget()) {
-	DeckTask.launchDeckTask(DeckTask.TASK_TYPE_ANSWER_CARD, mAnswerCardHandler, new DeckTask.TaskData(0, deck, null));
+//	DeckTask.launchDeckTask(DeckTask.TASK_TYPE_ANSWER_CARD, mAnswerCardHandler, new DeckTask.TaskData(0, deck, null));
       } else {
-	restartTimer();
+    	  restartTimer();
       }
 
       if (mShakeEnabled) {

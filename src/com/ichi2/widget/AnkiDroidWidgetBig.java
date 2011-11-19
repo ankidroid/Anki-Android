@@ -160,6 +160,7 @@ public class AnkiDroidWidgetBig extends AppWidgetProvider {
         public static final String EXTRA_DECK_PATH = "deckPath";
         public static final String EXTRA_EASE = "ease";
         public static final String EXTRA_VIEW = "view";
+        public static final String EXTRA_START_REVIEWER = "startReviewer";
 
 
         public static final int VIEW_ACTION_DEFAULT = 0;
@@ -410,10 +411,18 @@ public class AnkiDroidWidgetBig extends AppWidgetProvider {
                     dialogIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     this.startActivity(dialogIntent);
                 } else if (ACTION_OPEN.equals(action)) {
-                	DeckManager.getDeck(sLoadedDeck.getDeckPath(), true, DeckManager.REQUESTING_ACTIVITY_STUDYOPTIONS);
-                	Intent newIntent = StudyOptions.getLoadDeckIntent(this, "");
-                	newIntent.removeExtra(StudyOptions.EXTRA_DECK);
-                	newIntent.putExtra(StudyOptions.EXTRA_START_REVIEWER, (sCurrentView != VIEW_NOTHING_DUE));
+                	String deckpath = intent.getStringExtra(EXTRA_DECK_PATH);
+                	Intent newIntent = StudyOptions.getLoadDeckIntent(this, deckpath);
+                	if (deckpath != null) {
+                		if (sCurrentView == VIEW_NOTHING_DUE) {
+                			newIntent.putExtra(StudyOptions.EXTRA_START_REVIEWER, false);
+                		} else {
+                        	DeckManager.getDeck(deckpath, true, DeckManager.REQUESTING_ACTIVITY_STUDYOPTIONS);                			
+                        	newIntent.putExtra(StudyOptions.EXTRA_START_REVIEWER, true);
+                		}
+                	} else {
+                		newIntent.putExtra(StudyOptions.EXTRA_START_DECKPICKER, true);                		
+                	}
                 	startActivity(newIntent);
                 } else if (ACTION_CARDEDITOR.equals(action)) {
                     Intent editIntent = new Intent(this, CardEditor.class);
@@ -526,7 +535,8 @@ public class AnkiDroidWidgetBig extends AppWidgetProvider {
        			removeAreaListeners(this, true);
 
        			updateViews.setViewVisibility(R.id.widget_big_add, View.INVISIBLE);
-       			updateViews.setViewVisibility(R.id.widget_big_bottom_right, View.INVISIBLE);
+       			updateViews.setViewVisibility(R.id.widget_big_star, View.VISIBLE);
+       			updateViews.setOnClickPendingIntent(R.id.widget_big_bottom_right, getOpenPendingIntent(this, null));
        			break;
 
             case VIEW_SHOW_HELP:
@@ -560,7 +570,7 @@ public class AnkiDroidWidgetBig extends AppWidgetProvider {
         		updateViews.setOnClickPendingIntent(R.id.widget_big_empty, getAnswerPendingIntent(context, 0));
 
         		updateViews.setViewVisibility(R.id.widget_big_card_areas, View.VISIBLE);
-        		updateViews.setOnClickPendingIntent(R.id.widget_big_topleft, getOpenPendingIntent(this));
+        		updateViews.setOnClickPendingIntent(R.id.widget_big_topleft, getOpenPendingIntent(this, sLoadedDeck.getDeckPath()));
         		updateViews.setOnClickPendingIntent(R.id.widget_big_middleleft, getBuryCardPendingIntent(this));
         		updateViews.setOnClickPendingIntent(R.id.widget_big_bottomleft, getAnswerPendingIntent(this, 0));
         		updateViews.setOnClickPendingIntent(R.id.widget_big_topright, getCardEditorPendingIntent(this));
@@ -575,7 +585,7 @@ public class AnkiDroidWidgetBig extends AppWidgetProvider {
         		updateViews.setTextViewText(R.id.widget_big_cardcontent,  Html.fromHtml(sCard.getQuestion())); 
 
         		updateViews.setViewVisibility(R.id.widget_big_add, View.VISIBLE);
-        		updateViews.setViewVisibility(R.id.widget_big_bottom_right, View.VISIBLE);
+       			updateViews.setViewVisibility(R.id.widget_big_star, View.INVISIBLE);
         		updateViews.setOnClickPendingIntent(R.id.widget_big_bottom_right, getFactAdderPendingIntent(context));
         		break;
 
@@ -623,7 +633,7 @@ public class AnkiDroidWidgetBig extends AppWidgetProvider {
             	getUpdatePendingIntent(this, VIEW_DECKS).cancel();
 
             	updateViews.setViewVisibility(R.id.widget_big_card_areas, View.VISIBLE);
-            	updateViews.setOnClickPendingIntent(R.id.widget_big_topleft, getOpenPendingIntent(this));
+            	updateViews.setOnClickPendingIntent(R.id.widget_big_topleft, getOpenPendingIntent(this, sLoadedDeck.getDeckPath()));
             	removeAreaListeners(this, false);
             	updateViews.setOnClickPendingIntent(R.id.widget_big_middleright, getUndoPendingIntent(this));
             	emptyCardAreaTexts(updateViews);
@@ -643,7 +653,7 @@ public class AnkiDroidWidgetBig extends AppWidgetProvider {
        			updateViews.setOnClickPendingIntent(R.id.widget_big_learn_more, getLearnMorePendingIntent(context));
 
        			updateViews.setViewVisibility(R.id.widget_big_add, View.VISIBLE);
-       			updateViews.setViewVisibility(R.id.widget_big_bottom_right, View.VISIBLE);
+       			updateViews.setViewVisibility(R.id.widget_big_star, View.INVISIBLE);
        			updateViews.setOnClickPendingIntent(R.id.widget_big_bottom_right, getFactAdderPendingIntent(context));
        			break;
             }
@@ -768,7 +778,7 @@ public class AnkiDroidWidgetBig extends AppWidgetProvider {
 		getAnswerPendingIntent(context, 3).cancel();
 		getCardEditorPendingIntent(context).cancel();
 		if (all) {
-			getOpenPendingIntent(context).cancel();
+			getOpenPendingIntent(context, null).cancel();
 			getUndoPendingIntent(context).cancel();
 		}
 	}
@@ -829,10 +839,11 @@ public class AnkiDroidWidgetBig extends AppWidgetProvider {
             return PendingIntent.getService(context, 0, ankiDroidIntent, 0);
         }
 
-        private PendingIntent getOpenPendingIntent(Context context) {
+        private PendingIntent getOpenPendingIntent(Context context, String deckPath) {
             Intent ankiDroidIntent = new Intent(context, UpdateService.class);
             ankiDroidIntent.setAction(ACTION_OPEN);
-            return PendingIntent.getService(context, 0, ankiDroidIntent, 0);
+            ankiDroidIntent.putExtra(EXTRA_DECK_PATH, deckPath);
+            return PendingIntent.getService(context, 0, ankiDroidIntent, PendingIntent.FLAG_CANCEL_CURRENT);
         }
 
         private PendingIntent getLearnMorePendingIntent(Context context) {

@@ -27,6 +27,7 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 
 import com.ichi2.anki.DeckPicker.AnkiFilter;
+import com.ichi2.widget.AnkiDroidWidgetBig;
 import com.tomgibara.android.veecheck.util.PrefSettings;
 
 import android.content.Context;
