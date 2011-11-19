@@ -120,7 +120,7 @@ public class StudyOptions extends Activity implements IButtonListener {
     private static final int BROWSE_CARDS = 7;
     private static final int STATISTICS = 8;
     private static final int LOG_IN = 9;
-    
+
     public static final int RESULT_RESTART = 100;
     public static final int RESULT_CLOSE = 101;
     public static final int RESULT_RELOAD_DECK = 102;
