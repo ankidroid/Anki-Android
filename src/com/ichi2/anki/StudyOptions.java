@@ -1704,14 +1704,12 @@ public class StudyOptions extends Activity implements IButtonListener {
 
 	        mLimitTagsCheckBox.setChecked(mLimitTagNewActiveCheckBox.isChecked() || mLimitTagNewInactiveCheckBox.isChecked()
 	                || mLimitTagRevActiveCheckBox.isChecked() || mLimitTagRevInactiveCheckBox.isChecked());
+	        allTags = null;
 	        break;
 
 		case DIALOG_TAGS:
-			Deck deck3 = DeckManager.getMainDeck();
-            allTags = deck3.allTags_();
-            Log.i(AnkiDroidApp.TAG, "all tags: " + Arrays.toString(allTags));
 	        if (allTags == null) {
-	            allTags = deck3.allTags_();
+	            allTags = DeckManager.getMainDeck().allTags_();
 	            Log.i(AnkiDroidApp.TAG, "all tags: " + Arrays.toString(allTags));
 		        if (allTags == null) {
 		        	Themes.showThemedToast(StudyOptions.this, getResources().getString(R.string.error_insufficient_memory), false);
