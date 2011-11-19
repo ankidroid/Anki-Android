@@ -255,7 +255,8 @@ public class CardBrowser extends Activity {
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
 				Intent editCard = new Intent(CardBrowser.this, CardEditor.class);
-				editCard.putExtra(CardEditor.CARD_EDITOR_ACTION, CardEditor.EDIT_BROWSER_CARD);
+	            editCard.putExtra(CardEditor.EXTRA_CALLER, CardEditor.CALLER_CARDBROWSER_EDIT);
+	            editCard.putExtra(CardEditor.EXTRA_DECKPATH, DeckManager.getMainDeckPath());
 				mPositionInCardsList = position;
 				mSelectedCard = mDeck.cardFromId(Long.parseLong(mCards.get(
 						mPositionInCardsList).get("id")));
@@ -386,7 +387,8 @@ public class CardBrowser extends Activity {
 			return true;
 		case MENU_ADD_FACT:
 			Intent intent = new Intent(CardBrowser.this, CardEditor.class);
-			intent.putExtra(CardEditor.CARD_EDITOR_ACTION, CardEditor.ADD_CARD);
+			intent.putExtra(CardEditor.EXTRA_CALLER, CardEditor.CALLER_CARDBROWSER_ADD);
+			intent.putExtra(CardEditor.EXTRA_DECKPATH, DeckManager.getMainDeckPath());
 			startActivityForResult(intent, ADD_FACT);
 			if (Integer.valueOf(android.os.Build.VERSION.SDK) > 4) {
 				ActivityTransitionAnimation.slide(CardBrowser.this,

@@ -1418,7 +1418,8 @@ public class Reviewer extends Activity implements IButtonListener{
             return false;
         } else {
             Intent editCard = new Intent(Reviewer.this, CardEditor.class);
-            editCard.putExtra(CardEditor.CARD_EDITOR_ACTION, CardEditor.EDIT_REVIEWER_CARD);
+            editCard.putExtra(CardEditor.EXTRA_DECKPATH, CardEditor.CALLER_REVIEWER);
+            editCard.putExtra(CardEditor.EXTRA_DECKPATH, DeckManager.getMainDeckPath());
         	sEditorCard = mCurrentCard;
         	setOutAnimation(true);
             startActivityForResult(editCard, EDIT_CURRENT_CARD);

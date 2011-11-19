@@ -2116,7 +2116,8 @@ public class StudyOptions extends Activity implements IButtonListener {
 
             case MENU_ADD_FACT:
             	Intent intent = new Intent(StudyOptions.this, CardEditor.class);
-            	intent.putExtra(CardEditor.CARD_EDITOR_ACTION, CardEditor.ADD_CARD);
+            	intent.putExtra(CardEditor.EXTRA_DECKPATH, CardEditor.CALLER_STUDYOPTIONS);
+            	intent.putExtra(CardEditor.EXTRA_DECKPATH, DeckManager.getMainDeckPath());
             	startActivityForResult(intent, ADD_FACT);
                 if (getApiLevel() > 4) {
                     ActivityTransitionAnimation.slide(StudyOptions.this, ActivityTransitionAnimation.LEFT);

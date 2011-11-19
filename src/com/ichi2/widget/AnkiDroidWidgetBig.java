@@ -120,7 +120,6 @@ public class AnkiDroidWidgetBig extends AppWidgetProvider {
     	if (sLoadedDeck != null) {
         	sCard = card;
     	}
-    	updateWidget(UpdateService.VIEW_SHOW_QUESTION);
     }
 
     public static Card getCard() {
@@ -129,14 +128,14 @@ public class AnkiDroidWidgetBig extends AppWidgetProvider {
 
     public static void updateWidget(int view) {
         if (sContext != null) {
-            sContext.startService(getUpdateIntent(sContext, UpdateService.VIEW_DECKS));
+            sContext.startService(getUpdateIntent(sContext, view));
         }
     }
 
 
     public static Intent getUpdateIntent(Context context, int view) {
         Intent intent = new Intent(context, AnkiDroidWidgetBig.UpdateService.class);            	
-	intent.putExtra(UpdateService.EXTRA_VIEW, view);
+        intent.putExtra(UpdateService.EXTRA_VIEW, view);
         return intent.setAction(UpdateService.ACTION_UPDATE);
     }
 
@@ -419,14 +418,14 @@ public class AnkiDroidWidgetBig extends AppWidgetProvider {
                 } else if (ACTION_CARDEDITOR.equals(action)) {
                     Intent editIntent = new Intent(this, CardEditor.class);
                     editIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    editIntent.putExtra(CardEditor.CARD_EDITOR_ACTION, CardEditor.EDIT_BIGWIDGET_CARD);
-                    editIntent.putExtra(CardEditor.DECKPATH, sLoadedDeck.getDeckPath());
+                    editIntent.putExtra(CardEditor.EXTRA_CALLER, CardEditor.CALLER_BIGWIDGET_EDIT);
+                    editIntent.putExtra(CardEditor.EXTRA_DECKPATH, sLoadedDeck.getDeckPath());
                     this.startActivity(editIntent);
                 } else if (ACTION_FACTADDER.equals(action)) {
                     Intent editIntent = new Intent(this, CardEditor.class);
                     editIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    editIntent.putExtra(CardEditor.CARD_EDITOR_ACTION, CardEditor.ADD_CARD);
-                    editIntent.putExtra(CardEditor.DECKPATH, sLoadedDeck.getDeckPath());
+                    editIntent.putExtra(CardEditor.EXTRA_CALLER, CardEditor.CALLER_BIGWIDGET_ADD);
+                    editIntent.putExtra(CardEditor.EXTRA_DECKPATH, sLoadedDeck.getDeckPath());
                     this.startActivity(editIntent);
                 } else if (ACTION_HELP.equals(action)) {
                 	if (sShowProgressDialog) {
