@@ -1698,10 +1698,6 @@ public class StudyOptions extends Activity implements IButtonListener {
 		case DIALOG_LIMIT_SESSION:
 	        // Update spinner selections from deck prior to showing the dialog.
 	        Deck deck2 = AnkiDroidApp.deck();
-		if (deck2 == null) {
-			ad.setEnabled(false);
-			return;
-		}
 	        long timeLimit = deck2.getSessionTimeLimit() / 60;
 	        long repLimit = deck2.getSessionRepLimit();
 	        mSessionLimitCheckBox.setChecked(timeLimit + repLimit > 0);
@@ -1723,11 +1719,8 @@ public class StudyOptions extends Activity implements IButtonListener {
 	        break;
 
 		case DIALOG_TAGS:
-			Deck deck3 = DeckManager.getMainDeck();
-            allTags = deck3.allTags_();
-            Log.i(AnkiDroidApp.TAG, "all tags: " + Arrays.toString(allTags));
 	        if (allTags == null) {
-	            allTags = DeckManager.getMainDeck().allTags_();
+	            allTags = AnkiDroidApp.deck().allTags_();
 	            Log.i(AnkiDroidApp.TAG, "all tags: " + Arrays.toString(allTags));
 		        if (allTags == null) {
 		        	Themes.showThemedToast(StudyOptions.this, getResources().getString(R.string.error_insufficient_memory), false);
