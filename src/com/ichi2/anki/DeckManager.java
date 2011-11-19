@@ -244,6 +244,16 @@ public class DeckManager {
 	}
 
 
+    /** checks if deck is opened in big widget */
+	public static boolean deckIsOpenedInBigWidget(String deckpath) {
+		if (sLoadedDecks.containsKey(deckpath) && sLoadedDecks.get(deckpath).mOpenedBy.contains(REQUESTING_ACTIVITY_BIGWIDGET)) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+
 	/** closes main deck, regardless of openings by other activities */
 	public static void closeMainDeck(boolean waitToFinish) {
 		closeMainDeck(-1, waitToFinish);

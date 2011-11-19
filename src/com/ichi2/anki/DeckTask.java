@@ -306,7 +306,7 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
         Deck deck = params[0].getDeck();
         Card oldCard = params[0].getCard();
         int ease = params[0].getInt();
-        Card newCard;
+        Card newCard = null;
         try {
 	        AnkiDb ankiDB = AnkiDatabaseManager.getDatabase(deck.getDeckPath());
 	        ankiDB.getDatabase().beginTransaction();
@@ -314,8 +314,15 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
 	            if (oldCard != null) {
 	                deck.answerCard(oldCard, ease);
 	                Log.i(AnkiDroidApp.TAG, "leech flag: " + oldCard.getLeechFlag());
+
+	                // first card in reviewer is retrieved
+	                if (DeckManager.deckIsOpenedInBigWidget(deck.getDeckPath())) {
+	                	newCard = AnkiDroidWidgetBig.getCard();
+	                }
 	            }
-	            newCard = deck.getCard();
+	            if (newCard == null) {
+		            newCard = deck.getCard();	            	
+	            }
 	            if (oldCard != null) {
 	                publishProgress(new TaskData(newCard, oldCard.getLeechFlag(), oldCard.getSuspendedFlag()));
 	            } else {
