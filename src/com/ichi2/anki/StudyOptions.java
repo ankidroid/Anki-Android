@@ -1685,7 +1685,6 @@ public class StudyOptions extends Activity implements IButtonListener {
 		case DIALOG_MORE:
 	        // Update spinner selections from deck prior to showing the dialog.
 	        Deck deck = AnkiDroidApp.deck();
-	        if (deck != null) {
 		        mSpinnerNewCardOrder.setSelection(deck.getNewCardOrder());
 		        mSpinnerNewCardSchedule.setSelection(deck.getNewCardSpacing());
 		        mSpinnerRevCardOrder.setSelection(deck.getRevCardOrder());
@@ -1694,7 +1693,6 @@ public class StudyOptions extends Activity implements IButtonListener {
 		        mEditNewPerDay.setText(String.valueOf(deck.getNewCardsPerDay()));
 		        mCheckBoxPerDay.setChecked(deck.getPerDay());
 		        mCheckBoxSuspendLeeches.setChecked(deck.getSuspendLeeches());	        	
-	        }
 			break;
 			
 		case DIALOG_LIMIT_SESSION:
@@ -1725,6 +1723,9 @@ public class StudyOptions extends Activity implements IButtonListener {
 	        break;
 
 		case DIALOG_TAGS:
+			Deck deck3 = DeckManager.getMainDeck();
+            allTags = deck3.allTags_();
+            Log.i(AnkiDroidApp.TAG, "all tags: " + Arrays.toString(allTags));
 	        if (allTags == null) {
 	            allTags = DeckManager.getMainDeck().allTags_();
 	            Log.i(AnkiDroidApp.TAG, "all tags: " + Arrays.toString(allTags));
@@ -1766,11 +1767,6 @@ public class StudyOptions extends Activity implements IButtonListener {
 	        break;
 
 		case DIALOG_CRAM:
-			if (activeCramTags == null) {
-				activeCramTags = new HashSet<String>();
-			} else {
-		        activeCramTags.clear();				
-			}
 	        allCramTags = AnkiDroidApp.deck().allTags_();
 	        if (allCramTags == null) {
 	        	Themes.showThemedToast(StudyOptions.this, getResources().getString(R.string.error_insufficient_memory), false);
