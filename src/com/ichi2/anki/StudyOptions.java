@@ -1670,6 +1670,10 @@ public class StudyOptions extends Activity implements IButtonListener {
 	@Override
 	protected void onPrepareDialog(int id, Dialog dialog) {
 		StyledDialog ad = (StyledDialog)dialog;
+
+		// wait for deck loading thread (to avoid problems with resuming destroyed activities)
+		DeckTask.waitToFinish();
+
 		switch (id) {
 		case DIALOG_SYNC_CONFLICT_RESOLUTION:
 		case DIALOG_NO_SPACE_LEFT:
@@ -1717,16 +1721,12 @@ public class StudyOptions extends Activity implements IButtonListener {
 
 	        mLimitTagsCheckBox.setChecked(mLimitTagNewActiveCheckBox.isChecked() || mLimitTagNewInactiveCheckBox.isChecked()
 	                || mLimitTagRevActiveCheckBox.isChecked() || mLimitTagRevInactiveCheckBox.isChecked());
+	        allTags = null;
 	        break;
 
 		case DIALOG_TAGS:
-			Deck deck3 = AnkiDroidApp.deck();
-			if (deck3 == null) {
-				ad.setEnabled(false);
-				return;
-			}
 	        if (allTags == null) {
-	            allTags = deck3.allTags_();
+	            allTags = DeckManager.getMainDeck().allTags_();
 	            Log.i(AnkiDroidApp.TAG, "all tags: " + Arrays.toString(allTags));
 		        if (allTags == null) {
 		        	Themes.showThemedToast(StudyOptions.this, getResources().getString(R.string.error_insufficient_memory), false);
