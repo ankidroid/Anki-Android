@@ -620,6 +620,7 @@ public class AnkiDroidWidgetBig extends AppWidgetProvider {
 				break;
 
             case VIEW_NOTHING_DUE:
+        		updateViews.setTextViewText(R.id.widget_big_deckname, sLoadedDeck.getDeckName());
             	updateCounts(updateViews, sCurrentView);
 
             	updateViews.setOnClickPendingIntent(R.id.widget_big_openclose, getCloseDeckPendingIntent(context));
