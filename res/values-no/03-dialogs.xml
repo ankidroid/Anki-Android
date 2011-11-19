@@ -28,7 +28,7 @@
   <string name="optimize_deck_message">Databasen optimalisert. \nShrunk med %d kb</string>
   <string name="contextmenu_deckpicker_delete_deck">Slett kortstokk</string>
   <string name="delete_deck_title">Slett kortstokk</string>
-  <string name="delete_deck_message">Ønsker du virkelig slette kortstokken%s?</string>
+  <string name="delete_deck_message">Ønsker du virkelig slette kortstokken %s?</string>
   <string name="delete_deck_confirm">Slett den</string>
   <string name="new_version_title">Ny versjon:</string>
   <string name="new_version_message">Nye funksjoner:</string>
@@ -44,8 +44,8 @@
   <string name="deckpicker_upgrade_notes_button">Merknader</string>
   <string name="deckpicker_download_missing_title">Henter manglende media</string>
   <string name="deckpicker_download_missing_none">Ingen mediefiler savnes</string>
-  <string name="deckpicker_download_missing_success">Hentet %1$d, mangler%2$d</string>
-  <string name="deckpicker_download_missing_error">Feil med filen: %1$ s</string>
+  <string name="deckpicker_download_missing_success">Hentet %1$d, mangler %2$d</string>
+  <string name="deckpicker_download_missing_error">Feil med filen: %1$s</string>
   <string name="notify_ticker">Programvareoppdatering</string>
   <string name="notify_title">AnkiDroid oppdatert</string>
   <string name="notify_message">Last ned en ny versjon</string>
@@ -54,7 +54,7 @@
   <string name="notification_stop">Ikke varsle meg om denne oppdateringen på nytt</string>
   <string name="swap_qa_title">Bytt Spørsmål/svar</string>
   <string name="swap_qa_text">Vær oppmerksom på at enkel ombytting av spørsmål og svar er i strid med konseptet om tidsforsinket repetisjon. Ideelt sett bør du opprette nye kort for den motsatte innlæring-retningen. Du kan gjøre dette enkelt med Anki skrivebordet. \nBytte retning på spørsmål/svar likevel?</string>
-  <string name="reset_card_dialog_title">Reset card progress</string>
+  <string name="reset_card_dialog_title">Tilbakestille fremdrift for kort</string>
   <string name="reset_card_dialog_message">Dette tilbakestiller læringsfremdriften for alle kort på dette faktum (de vil se ut som nye kort). \nØnsker du virkelig å fortsette?</string>
   <string name="reset_card_dialog_confirmation">Alle kort med dette faktum er tilbakestilt</string>
   <string name="answering_error_title">Databasefeil</string>
