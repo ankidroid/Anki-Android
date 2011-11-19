@@ -1053,11 +1053,12 @@ public class CardEditor extends Activity {
 	}
 
 	private void setEditFieldTexts(String contents) {
-		String[] fields = contents.split("\\x1f");
+		String[] fields = null;
 		int len;
-		if (fields == null) {
+		if (contents == null) {
 			len = 0;
 		} else {
+			fields = contents.split("\\x1f");
 			len = fields.length;
 		}
 		for (int i = 0; i < mEditFields.size(); i++) {
