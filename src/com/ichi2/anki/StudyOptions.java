@@ -1659,6 +1659,10 @@ public class StudyOptions extends Activity implements IButtonListener {
 	@Override
 	protected void onPrepareDialog(int id, Dialog dialog) {
 		StyledDialog ad = (StyledDialog)dialog;
+
+		// wait for deck loading thread (to avoid problems with resuming destroyed activities)
+		DeckTask.waitToFinish();
+
 		switch (id) {
 		case DIALOG_SYNC_CONFLICT_RESOLUTION:
 		case DIALOG_NO_SPACE_LEFT:
@@ -1670,25 +1674,19 @@ public class StudyOptions extends Activity implements IButtonListener {
 		case DIALOG_MORE:
 	        // Update spinner selections from deck prior to showing the dialog.
 	        Deck deck = DeckManager.getMainDeck();
-	        if (deck != null) {
-		        mSpinnerNewCardOrder.setSelection(deck.getNewCardOrder());
-		        mSpinnerNewCardSchedule.setSelection(deck.getNewCardSpacing());
-		        mSpinnerRevCardOrder.setSelection(deck.getRevCardOrder());
-		        mSpinnerFailCardOption.setVisibility(View.GONE); // TODO: Not implemented yet.
-		        mEditMaxFailCard.setText(String.valueOf(deck.getFailedCardMax()));
-		        mEditNewPerDay.setText(String.valueOf(deck.getNewCardsPerDay()));
-		        mCheckBoxPerDay.setChecked(deck.getPerDay());
-		        mCheckBoxSuspendLeeches.setChecked(deck.getSuspendLeeches());	        	
-	        }
+	        mSpinnerNewCardOrder.setSelection(deck.getNewCardOrder());
+	        mSpinnerNewCardSchedule.setSelection(deck.getNewCardSpacing());
+	        mSpinnerRevCardOrder.setSelection(deck.getRevCardOrder());
+	        mSpinnerFailCardOption.setVisibility(View.GONE); // TODO: Not implemented yet.
+	        mEditMaxFailCard.setText(String.valueOf(deck.getFailedCardMax()));
+	        mEditNewPerDay.setText(String.valueOf(deck.getNewCardsPerDay()));
+	        mCheckBoxPerDay.setChecked(deck.getPerDay());
+	        mCheckBoxSuspendLeeches.setChecked(deck.getSuspendLeeches());	        	
 			break;
 			
 		case DIALOG_LIMIT_SESSION:
 	        // Update spinner selections from deck prior to showing the dialog.
 	        Deck deck2 = DeckManager.getMainDeck();
-	        if (deck2 == null) {
-	        	ad.setEnabled(false);
-				return;
-	        }
 	        long timeLimit = deck2.getSessionTimeLimit() / 60;
 	        long repLimit = deck2.getSessionRepLimit();
 	        mSessionLimitCheckBox.setChecked(timeLimit + repLimit > 0);
@@ -1710,10 +1708,8 @@ public class StudyOptions extends Activity implements IButtonListener {
 
 		case DIALOG_TAGS:
 			Deck deck3 = DeckManager.getMainDeck();
-			if (deck3 == null) {
-				ad.setEnabled(false);
-				return;
-			}
+            allTags = deck3.allTags_();
+            Log.i(AnkiDroidApp.TAG, "all tags: " + Arrays.toString(allTags));
 	        if (allTags == null) {
 	            allTags = deck3.allTags_();
 	            Log.i(AnkiDroidApp.TAG, "all tags: " + Arrays.toString(allTags));
@@ -1755,11 +1751,6 @@ public class StudyOptions extends Activity implements IButtonListener {
 	        break;
 
 		case DIALOG_CRAM:
-			if (activeCramTags == null) {
-				activeCramTags = new HashSet<String>();
-			} else {
-		        activeCramTags.clear();
-			}
 	        allCramTags = DeckManager.getMainDeck().allTags_();
 	        if (allCramTags == null) {
 	        	Themes.showThemedToast(StudyOptions.this, getResources().getString(R.string.error_insufficient_memory), false);
