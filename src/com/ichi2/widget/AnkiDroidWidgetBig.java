@@ -16,8 +16,6 @@ package com.ichi2.widget;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.concurrent.ExecutionException;
 
 import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.BackupManager;
@@ -66,7 +64,6 @@ public class AnkiDroidWidgetBig extends AppWidgetProvider {
     private static String sCurrentMessage;
     private static DeckStatus[] sTomorrowDues;
     private static boolean sWaitForAsyncTask = false;
-    private static AsyncTask<String, Void, DeckStatus[]> sGetTomorrowCountAsyncTask;
 
     private static Context sContext;
 
@@ -387,10 +384,7 @@ public class AnkiDroidWidgetBig extends AppWidgetProvider {
             		}
             	} else if (ACTION_OPENDECK.equals(action)) {
             		showProgressDialog();
-            		if (sGetTomorrowCountAsyncTask != null && sGetTomorrowCountAsyncTask.getStatus() == AsyncTask.Status.RUNNING) {
-            			sGetTomorrowCountAsyncTask.cancel(true);
-            		}
-            		DeckTask.launchDeckTask(DeckTask.TASK_TYPE_LOAD_DECK, mOpenDeckHandler, new DeckTask.TaskData(intent.getStringExtra(EXTRA_DECK_PATH), 0, false));
+            		DeckTask.launchDeckTask(DeckTask.TASK_TYPE_LOAD_DECK, mOpenDeckHandler, new DeckTask.TaskData(DeckManager.REQUESTING_ACTIVITY_BIGWIDGET, intent.getStringExtra(EXTRA_DECK_PATH)));
                 } else if (ACTION_CLOSEDECK.equals(action)) {
                 	if (sLoadedDeck != null) {
                 		DeckTask.launchDeckTask(DeckTask.TASK_TYPE_CLOSE_DECK, mCloseDeckHandler, new DeckTask.TaskData(sLoadedDeck.getDeckPath()));                		
@@ -431,9 +425,7 @@ public class AnkiDroidWidgetBig extends AppWidgetProvider {
                 	String deckpath = intent.getStringExtra(EXTRA_DECK_PATH);
                 	Intent newIntent = StudyOptions.getLoadDeckIntent(this, deckpath);
                 	if (deckpath != null) {
-                		if (sCurrentView == VIEW_NOTHING_DUE) {
-                			newIntent.putExtra(StudyOptions.EXTRA_START_REVIEWER, false);
-                		} else {
+                		if (sCurrentView != VIEW_NOTHING_DUE) {
                         	DeckManager.getDeck(deckpath, true, DeckManager.REQUESTING_ACTIVITY_STUDYOPTIONS);                			
                         	newIntent.putExtra(StudyOptions.EXTRA_START_REVIEWER, true);
                 		}
@@ -485,12 +477,10 @@ public class AnkiDroidWidgetBig extends AppWidgetProvider {
                 	}			
                 } else if (ACTION_SHOW_TOMORROW_DUES.equals(action)) {
                 	if (sTomorrowDues == null) {
-                		if (sGetTomorrowCountAsyncTask == null || sGetTomorrowCountAsyncTask.getStatus() != AsyncTask.Status.RUNNING) {
-                    		showProgressDialog();
-                    		sWaitForAsyncTask = true;
-                			sGetTomorrowCountAsyncTask = new GetTomorrowDueAsyncTask();
-                			sGetTomorrowCountAsyncTask.execute(PrefSettings.getSharedPrefs(AnkiDroidWidgetBig.UpdateService.this).getString("deckPath", AnkiDroidApp.getStorageDirectory() + "/AnkiDroid"));
-        				}
+                		showProgressDialog();
+                		sWaitForAsyncTask = true;
+                		AsyncTask<String, Void, DeckStatus[]> getTomorrowDuesAsyncTask = new GetTomorrowDueAsyncTask();
+                		getTomorrowDuesAsyncTask.execute(PrefSettings.getSharedPrefs(AnkiDroidWidgetBig.UpdateService.this).getString("deckPath", AnkiDroidApp.getStorageDirectory() + "/AnkiDroid"));
     				} else {
         	        	updateViews(VIEW_CONGRATS);
     				}
@@ -523,16 +513,7 @@ public class AnkiDroidWidgetBig extends AppWidgetProvider {
             Resources res = getResources();
             RemoteViews updateViews = new RemoteViews(context.getPackageName(), R.layout.widget_big);
 
-            if (sShowProgressDialog) {
-            	updateViews.setViewVisibility(R.id.widget_big_progressbar, View.VISIBLE);
-            	updateViews.setViewVisibility(R.id.widget_big_noclicks, View.VISIBLE);
-            	return updateViews;
-            } else {
-            	updateViews.setViewVisibility(R.id.widget_big_progressbar, View.INVISIBLE);            	
-            	updateViews.setViewVisibility(R.id.widget_big_noclicks, View.INVISIBLE);
-            }
-
-            if (sCurrentView == VIEW_SHOW_HELP || sCurrentView == VIEW_CONGRATS) {
+            if (sCurrentView == VIEW_DECKS || sCurrentView == VIEW_SHOW_HELP || sCurrentView == VIEW_CONGRATS) {
             } else if (sLoadedDeck == null) {
             	sCurrentView = VIEW_DECKS;
             } else if (sCard == null) {
@@ -543,6 +524,15 @@ public class AnkiDroidWidgetBig extends AppWidgetProvider {
             	updateViews.setTextViewText(R.id.widget_big_message, sCurrentMessage);				
             } else {
             	updateViews.setTextViewText(R.id.widget_big_message, "");				
+            }
+
+            if (sShowProgressDialog) {
+            	updateViews.setViewVisibility(R.id.widget_big_progressbar, View.VISIBLE);
+            	updateViews.setViewVisibility(R.id.widget_big_noclicks, View.VISIBLE);
+            	return updateViews;
+            } else {
+            	updateViews.setViewVisibility(R.id.widget_big_progressbar, View.INVISIBLE);            	
+            	updateViews.setViewVisibility(R.id.widget_big_noclicks, View.INVISIBLE);
             }
 
             switch (sCurrentView) {

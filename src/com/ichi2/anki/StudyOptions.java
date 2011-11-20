@@ -69,6 +69,7 @@ import com.ichi2.compat.CompatV11;
 import com.ichi2.compat.CompatV3;
 import com.ichi2.themes.StyledDialog;
 import com.ichi2.themes.Themes;
+import com.ichi2.widget.AnkiDroidWidgetBig;
 import com.tomgibara.android.veecheck.util.PrefSettings;
 import com.zeemote.zc.Controller;
 import com.zeemote.zc.event.ButtonEvent;
@@ -934,7 +935,7 @@ public class StudyOptions extends Activity implements IButtonListener {
     		Intent reviewer = new Intent(StudyOptions.this, Reviewer.class);
             reviewer.putExtra("deckFilename", mDeckFilename);
     		startActivityForResult(reviewer, REQUEST_REVIEW);
-        	if (getApiLevel() > 4) {
+        	if (getApiLevel() > 4 && !mStartedByBigWidget) {
        			ActivityTransitionAnimation.slide(this, ActivityTransitionAnimation.LEFT);
         	}
     	} else if (mCurrentContentView == CONTENT_CONGRATS) {
@@ -2150,7 +2151,7 @@ public class StudyOptions extends Activity implements IButtonListener {
         Intent decksPicker = new Intent(StudyOptions.this, DeckPicker.class);
         mInDeckPicker = true;
         startActivityForResult(decksPicker, PICK_DECK_REQUEST);
-    	if (getApiLevel() > 4) {
+    	if (getApiLevel() > 4 && !mStartedByBigWidget) {
     		ActivityTransitionAnimation.slide(this, ActivityTransitionAnimation.RIGHT);
     	}
         // Log.i(AnkiDroidApp.TAG, "openDeckPicker - Ending");
@@ -2259,7 +2260,7 @@ public class StudyOptions extends Activity implements IButtonListener {
     protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
         super.onActivityResult(requestCode, resultCode, intent);
 
-        if (mStartedByBigWidget && (requestCode == REQUEST_REVIEW || (requestCode == PICK_DECK_REQUEST && resultCode != RESULT_OK))) {
+        if (mStartedByBigWidget && ((requestCode == REQUEST_REVIEW && resultCode == Reviewer.RESULT_DEFAULT) || (requestCode == PICK_DECK_REQUEST && resultCode != RESULT_OK))) {
         	DeckManager.closeMainDeck(DeckManager.REQUESTING_ACTIVITY_STUDYOPTIONS);
         	finish();
         	return;
@@ -2326,7 +2327,7 @@ public class StudyOptions extends Activity implements IButtonListener {
             // Log.i(AnkiDroidApp.TAG, "onActivityResult - deckSelected = " + deckSelected);
             if (DeckManager.getMainDeck() == null || !DeckManager.getMainDeckPath().equals(mDeckFilename)) {
                 boolean updateAllCards = (requestCode == DOWNLOAD_SHARED_DECK);
-                displayProgressDialogAndLoadDeck(updateAllCards);	
+                displayProgressDialogAndLoadDeck(updateAllCards);
             }
         } else if (requestCode == PREFERENCES_UPDATE) {
             restorePreferences();
@@ -2358,7 +2359,12 @@ public class StudyOptions extends Activity implements IButtonListener {
                 	showContentView(CONTENT_STUDY_OPTIONS);
                 	showDialog(DIALOG_DB_ERROR);
                     break;
-                default:
+                case Reviewer.RESULT_DECK_CLOSED:
+                	showContentView(CONTENT_STUDY_OPTIONS);
+                	mDeckFilename = PrefSettings.getSharedPrefs(getBaseContext()).getString("deckFilename", null);
+                	displayProgressDialogAndLoadDeck();
+                	break;
+                case Reviewer.RESULT_DEFAULT:
                     DeckTask.launchDeckTask(DeckTask.TASK_TYPE_SAVE_DECK, mSaveAndResetDeckHandler, new DeckTask.TaskData(DeckManager.getMainDeck(), 0));
                 	showContentView(CONTENT_STUDY_OPTIONS);
                     break;
@@ -2546,9 +2552,9 @@ public class StudyOptions extends Activity implements IButtonListener {
 
             if (updateAllCards) {
                 DeckTask.launchDeckTask(DeckTask.TASK_TYPE_LOAD_DECK_AND_UPDATE_CARDS, mLoadDeckHandler,
-                        new DeckTask.TaskData(mDeckFilename, 0, true));
+                        new DeckTask.TaskData(DeckManager.REQUESTING_ACTIVITY_STUDYOPTIONS, mDeckFilename));
             } else {
-                DeckTask.launchDeckTask(DeckTask.TASK_TYPE_LOAD_DECK, mLoadDeckHandler, new DeckTask.TaskData(mDeckFilename, 0, true));
+                DeckTask.launchDeckTask(DeckTask.TASK_TYPE_LOAD_DECK, mLoadDeckHandler, new DeckTask.TaskData(DeckManager.REQUESTING_ACTIVITY_STUDYOPTIONS, mDeckFilename));
             }
         } else {
             if (mDeckFilename == null) {

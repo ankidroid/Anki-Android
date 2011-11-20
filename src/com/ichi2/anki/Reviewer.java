@@ -103,10 +103,12 @@ public class Reviewer extends Activity implements IButtonListener{
     /**
      * Result codes that are returned when this activity finishes.
      */
-    public static final int RESULT_SESSION_COMPLETED = 1;
-    public static final int RESULT_NO_MORE_CARDS = 2;
-    public static final int RESULT_EDIT_CARD_RESET = 3;
-    public static final int RESULT_ANSWERING_ERROR = 4;
+    public static final int RESULT_DEFAULT = 50;
+    public static final int RESULT_SESSION_COMPLETED = 51;
+    public static final int RESULT_NO_MORE_CARDS = 52;
+    public static final int RESULT_EDIT_CARD_RESET = 53;
+    public static final int RESULT_ANSWERING_ERROR = 54;
+    public static final int RESULT_DECK_CLOSED = 55;
 
     /**
      * Possible values for update card handler
@@ -586,8 +588,7 @@ public class Reviewer extends Activity implements IButtonListener{
         public void onPostExecute(DeckTask.TaskData result) {
             if (!result.getBoolean()) {
             	// RuntimeException occured on marking cards
-                Reviewer.this.setResult(RESULT_ANSWERING_ERROR);
-                closeReviewer(true);
+                closeReviewer(RESULT_ANSWERING_ERROR, true);
             }
             mProgressDialog.dismiss();
         }
@@ -615,18 +616,16 @@ public class Reviewer extends Activity implements IButtonListener{
             if (!result.getBoolean()) {
             	// RuntimeException occured on dismissing cards
                 Reviewer.this.setResult(RESULT_ANSWERING_ERROR);
-                closeReviewer(true);
+                closeReviewer(RESULT_ANSWERING_ERROR, true);
                 return;
             }
             // Check for no more cards before session complete. If they are both true,
             // no more cards will take precedence when returning to study options.
             if (mNoMoreCards) {
-                Reviewer.this.setResult(RESULT_NO_MORE_CARDS);
                 mShowCongrats = true;
-                closeReviewer(true);
+                closeReviewer(RESULT_NO_MORE_CARDS, true);
             } else if (mSessionComplete) {
-                Reviewer.this.setResult(RESULT_SESSION_COMPLETED);
-                closeReviewer(true);
+                closeReviewer(RESULT_SESSION_COMPLETED, true);
             }
         }
     };
@@ -675,8 +674,7 @@ public class Reviewer extends Activity implements IButtonListener{
         public void onPostExecute(DeckTask.TaskData result) {
             if (!result.getBoolean()) {
             	// RuntimeException occured on update cards
-                Reviewer.this.setResult(RESULT_ANSWERING_ERROR);
-                closeReviewer(true);
+                closeReviewer(RESULT_ANSWERING_ERROR, true);
                 return;
             }
             mShakeActionStarted = false;
@@ -718,19 +716,16 @@ public class Reviewer extends Activity implements IButtonListener{
         public void onPostExecute(DeckTask.TaskData result) {
             if (!result.getBoolean()) {
             	// RuntimeException occured on answering cards
-                Reviewer.this.setResult(RESULT_ANSWERING_ERROR);
-                closeReviewer(true);
+                closeReviewer(RESULT_ANSWERING_ERROR, true);
                 return;
             }
             // Check for no more cards before session complete. If they are both true,
             // no more cards will take precedence when returning to study options.
             if (mNoMoreCards) {
-                Reviewer.this.setResult(RESULT_NO_MORE_CARDS);
                 mShowCongrats = true;
-                closeReviewer(true);
+                closeReviewer(RESULT_NO_MORE_CARDS, true);
             } else if (mSessionComplete) {
-                Reviewer.this.setResult(RESULT_SESSION_COMPLETED);
-                closeReviewer(true);
+                closeReviewer(RESULT_SESSION_COMPLETED, true);
             }
         }
     };
@@ -822,7 +817,7 @@ public class Reviewer extends Activity implements IButtonListener{
 	            }
 				break;
 			case MSG_ZEEMOTE_BUTTON_B:
-				closeReviewer(false);
+				closeReviewer(RESULT_DEFAULT, false);
 				break;
 			case MSG_ZEEMOTE_BUTTON_C:
 				if (DeckManager.getMainDeck().undoAvailable()){
@@ -863,8 +858,7 @@ public class Reviewer extends Activity implements IButtonListener{
         // Make sure a deck is loaded before continuing.
         Deck deck = DeckManager.getMainDeck();
         if (deck == null) {
-            setResult(StudyOptions.CONTENT_NO_EXTERNAL_STORAGE);
-			finish();
+        	finishNoStorageAvailable();
 			return;
         } else {
             mMediaDir = setupMedia(deck);
@@ -973,12 +967,15 @@ public class Reviewer extends Activity implements IButtonListener{
       super.onResume();
       Deck deck = DeckManager.getMainDeck();
       if (deck == null) {
-    	  finish();
+    	  Log.e(AnkiDroidApp.TAG, "Reviewer: Deck already closed, returning to study options");
+    	  closeReviewer(RESULT_DECK_CLOSED, false);
+    	  return;
       }
 
-      // check if deck is already opened in big widget. If yes, reload card (to make sure it's not answered yet) and close it in widget
-      if (DeckManager.mainIsOpenedInBigWidget()) {
-//	DeckTask.launchDeckTask(DeckTask.TASK_TYPE_ANSWER_CARD, mAnswerCardHandler, new DeckTask.TaskData(0, deck, null));
+      // check if deck is already opened in big widget. If yes, reload card (to make sure it's not answered yet)
+      if (DeckManager.deckIsOpenedInBigWidget(deck.getDeckPath()) && mCurrentCard != null) {
+    	  Log.i(AnkiDroidApp.TAG, "Reviewer: onResume: get card from big widget");
+    	  DeckTask.launchDeckTask(DeckTask.TASK_TYPE_ANSWER_CARD, mAnswerCardHandler, new DeckTask.TaskData(0, deck, null));
       } else {
     	  restartTimer();
       }
@@ -1009,10 +1006,11 @@ public class Reviewer extends Activity implements IButtonListener{
           if (deck != null) {
 	         	deck.commitToDB();
           }
-      }
-      if (DeckManager.deckIsOpenedInBigWidget(DeckManager.getMainDeckPath())) {
-    	  AnkiDroidWidgetBig.setCard(mCurrentCard);
-    	  AnkiDroidWidgetBig.updateWidget(AnkiDroidWidgetBig.UpdateService.VIEW_SHOW_QUESTION);
+          if (DeckManager.deckIsOpenedInBigWidget(DeckManager.getMainDeckPath())) {
+        	  Log.i(AnkiDroidApp.TAG, "Reviewer: onStop: updating big widget");
+        	  AnkiDroidWidgetBig.setCard(mCurrentCard);
+        	  AnkiDroidWidgetBig.updateWidget(AnkiDroidWidgetBig.UpdateService.VIEW_SHOW_QUESTION);
+          }
       }
       WidgetStatus.update(this, WidgetStatus.getDeckStatus(deck));
     }
@@ -1034,7 +1032,7 @@ public class Reviewer extends Activity implements IButtonListener{
     public boolean onKeyDown(int keyCode, KeyEvent event)  {
         if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
         	Log.i(AnkiDroidApp.TAG, "Reviewer - onBackPressed()");
-        	closeReviewer(false);
+        	closeReviewer(RESULT_DEFAULT, false);
         	return true;
         }
          /** Enhancement 722: Hardware buttons for scrolling, I.Z. */
@@ -1413,8 +1411,7 @@ public class Reviewer extends Activity implements IButtonListener{
 
 
     private void finishNoStorageAvailable() {
-        setResult(StudyOptions.CONTENT_NO_EXTERNAL_STORAGE);
-        closeReviewer(false);
+        closeReviewer(StudyOptions.CONTENT_NO_EXTERNAL_STORAGE, false);
     }
 
 
@@ -2260,8 +2257,7 @@ public class Reviewer extends Activity implements IButtonListener{
             Model myModel = Model.getModel(currentDeck, mCurrentCard.getCardModelId(), false);
 		if (myModel == null) {
 			Log.e(AnkiDroidApp.TAG, "updateCard - no Model could be fetched. Closing Reviewer and showing db-error dialog");
-	                Reviewer.this.setResult(RESULT_ANSWERING_ERROR);
-	                closeReviewer(true);			
+	                closeReviewer(RESULT_ANSWERING_ERROR, true);			
 		}
             mBaseUrl = Utils.getBaseUrl(mMediaDir, myModel, currentDeck);
             int nightBackground = Themes.getNightModeCardBackground(this);
@@ -3004,7 +3000,7 @@ public class Reviewer extends Activity implements IButtonListener{
 			}
     		break;
     	case GESTURE_EXIT:
-       	 	closeReviewer(false);
+       	 	closeReviewer(RESULT_DEFAULT, false);
     		break;
     	case GESTURE_UNDO:
     		if (DeckManager.getMainDeck().undoAvailable()) {
@@ -3093,17 +3089,24 @@ public class Reviewer extends Activity implements IButtonListener{
     }
 
 
-    private void closeReviewer(boolean saveDeck) {
-	mTimeoutHandler.removeCallbacks(mShowAnswerTask);
-	mTimeoutHandler.removeCallbacks(mShowQuestionTask);
-	mTimerHandler.removeCallbacks(removeChosenAnswerText);
-	longClickHandler.removeCallbacks(longClickTestRunnable);
-	longClickHandler.removeCallbacks(startLongClickAction);
+    private void closeReviewer(int result, boolean saveDeck) {
+    	mTimeoutHandler.removeCallbacks(mShowAnswerTask);
+		mTimeoutHandler.removeCallbacks(mShowQuestionTask);
+		mTimerHandler.removeCallbacks(removeChosenAnswerText);
+		longClickHandler.removeCallbacks(longClickTestRunnable);
+		longClickHandler.removeCallbacks(startLongClickAction);
 
-    	setOutAnimation(true);    		
+		Reviewer.this.setResult(result);
+
+		setOutAnimation(true);    		
     	if (saveDeck) {
             DeckTask.launchDeckTask(DeckTask.TASK_TYPE_SAVE_DECK, mSaveAndResetDeckHandler, new DeckTask.TaskData(DeckManager.getMainDeck(), 0));
     	} else {
+            if (DeckManager.deckIsOpenedInBigWidget(DeckManager.getMainDeckPath())) {
+          	  Log.i(AnkiDroidApp.TAG, "Reviewer: closeReviewer: updating big widget");
+          	  AnkiDroidWidgetBig.setCard(mCurrentCard);
+          	  AnkiDroidWidgetBig.updateWidget(AnkiDroidWidgetBig.UpdateService.VIEW_SHOW_QUESTION);
+            }
     		finish();
     	}
     }

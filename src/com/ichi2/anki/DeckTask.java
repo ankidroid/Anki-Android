@@ -314,11 +314,10 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
 	            if (oldCard != null) {
 	                deck.answerCard(oldCard, ease);
 	                Log.i(AnkiDroidApp.TAG, "leech flag: " + oldCard.getLeechFlag());
-
+	            } else if (DeckManager.deckIsOpenedInBigWidget(deck.getDeckPath())) {
 	                // first card in reviewer is retrieved
-	                if (DeckManager.deckIsOpenedInBigWidget(deck.getDeckPath())) {
-	                	newCard = AnkiDroidWidgetBig.getCard();
-	                }
+	            	Log.i(AnkiDroidApp.TAG, "doInBackgroundAnswerCard: get card from big widget");
+                	newCard = AnkiDroidWidgetBig.getCard();
 	            }
 	            if (newCard == null) {
 		            newCard = deck.getCard();	            	
@@ -343,7 +342,9 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
 
     private TaskData doInBackgroundLoadDeck(TaskData... params) {
         String deckFilename = params[0].getString();
-        Log.i(AnkiDroidApp.TAG, "doInBackgroundLoadDeck - deckFilename = " + deckFilename);
+        int requestingActivity = params[0].getInt();
+
+        Log.i(AnkiDroidApp.TAG, "doInBackgroundLoadDeck - deckFilename = " + deckFilename + ", requesting activity = " + requestingActivity);
 
         Resources res = AnkiDroidApp.getInstance().getBaseContext().getResources();
 
@@ -362,7 +363,7 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
         Log.i(AnkiDroidApp.TAG, "loadDeck - SD card mounted and existent file -> Loading deck...");
 
     	// load deck and set it as main deck
-        Deck deck = DeckManager.getDeck(deckFilename, params[0].getBoolean(), DeckManager.REQUESTING_ACTIVITY_STUDYOPTIONS);
+        Deck deck = DeckManager.getDeck(deckFilename, requestingActivity == DeckManager.REQUESTING_ACTIVITY_STUDYOPTIONS, requestingActivity);
         if (deck == null) {
             Log.i(AnkiDroidApp.TAG, "The database " + deckFilename + " could not be opened");
             BackupManager.cleanUpAfterBackupCreation(false);
@@ -703,7 +704,8 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
 
     private TaskData doInBackgroundSortCards(TaskData... params) {
         Log.i(AnkiDroidApp.TAG, "doInBackgroundSortCards");
-		Collections.sort(params[0].getCards(), params[0].getComparator());
+        Comparator<? super HashMap<String, String>> comparator = params[0].getComparator();
+		Collections.sort(params[0].getCards(), comparator);
 		return null;
     }
 

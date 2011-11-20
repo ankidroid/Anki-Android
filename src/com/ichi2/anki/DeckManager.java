@@ -139,8 +139,6 @@ public class DeckManager {
         					deckInformation.mDeck = Deck.openDeck(deckpath, true, requestingActivity == REQUESTING_ACTIVITY_SYNCCLIENT);
         					deckInformation.mInitiallyRebuilt = true;
         					WidgetStatus.update(AnkiDroidApp.getInstance().getBaseContext(), WidgetStatus.getDeckStatus(deck));
-            		} else {
-            			deckInformation.mDeck.reset();
             		}
                 }
 			} else {
