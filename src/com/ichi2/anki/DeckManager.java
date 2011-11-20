@@ -87,7 +87,9 @@ public class DeckManager {
 			                	deckInformation.mOpenedBy = new ArrayList<Integer>();
 		                	} else {
 			                	Log.i(AnkiDroidApp.TAG, "DeckManager: deck " + deckpath + " is closing now, waiting for this to finish and reopening it");
-			                	closingTask.get();
+			                	while (closingTask.getStatus() == AsyncTask.Status.RUNNING) {
+				                	closingTask.get();			                		
+			                	}
 			                	return getDeck(deckpath, setAsMainDeck, doSafetyBackupIfNeeded, requestingActivity, rebuild);
 		                	}
 		                }
@@ -156,10 +158,10 @@ public class DeckManager {
 					deck = null;
 		        }
 			}
+		} finally {
 			if (setAsMainDeck && deck != null) {
 				sMainDeckPath = deckpath;
 			}
-		} finally {
 			unlockDeck(deckpath);
 		}
 		return deck;

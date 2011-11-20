@@ -50,14 +50,12 @@ import android.widget.TextView;
 
 import com.ichi2.anim.ActivityTransitionAnimation;
 import com.ichi2.anim.ViewAnimation;
-import com.ichi2.anki.DeckPicker.AnkiFilter;
 import com.ichi2.anki.Fact.Field;
 import com.ichi2.themes.StyledDialog;
 import com.ichi2.themes.Themes;
 import com.ichi2.widget.AnkiDroidWidgetBig;
 import com.tomgibara.android.veecheck.util.PrefSettings;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;

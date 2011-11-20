@@ -89,6 +89,7 @@ import com.ichi2.themes.StyledDialog;
 import com.ichi2.themes.Themes;
 import com.ichi2.utils.DiffEngine;
 import com.ichi2.utils.RubyParser;
+import com.ichi2.widget.AnkiDroidWidgetBig;
 import com.tomgibara.android.veecheck.util.PrefSettings;
 
 import org.amr.arabic.ArabicUtilities;
@@ -864,6 +865,7 @@ public class Reviewer extends Activity implements IButtonListener{
         if (deck == null) {
             setResult(StudyOptions.CONTENT_NO_EXTERNAL_STORAGE);
 			finish();
+			return;
         } else {
             mMediaDir = setupMedia(deck);
             restorePreferences();
@@ -1005,8 +1007,12 @@ public class Reviewer extends Activity implements IButtonListener{
       if (!isFinishing()) {
           // Save changes
           if (deck != null) {
-	            deck.commitToDB();
+	         	deck.commitToDB();
           }
+      }
+      if (DeckManager.deckIsOpenedInBigWidget(DeckManager.getMainDeckPath())) {
+    	  AnkiDroidWidgetBig.setCard(mCurrentCard);
+    	  AnkiDroidWidgetBig.updateWidget(AnkiDroidWidgetBig.UpdateService.VIEW_SHOW_QUESTION);
       }
       WidgetStatus.update(this, WidgetStatus.getDeckStatus(deck));
     }
@@ -1418,7 +1424,7 @@ public class Reviewer extends Activity implements IButtonListener{
             return false;
         } else {
             Intent editCard = new Intent(Reviewer.this, CardEditor.class);
-            editCard.putExtra(CardEditor.EXTRA_DECKPATH, CardEditor.CALLER_REVIEWER);
+            editCard.putExtra(CardEditor.EXTRA_CALLER, CardEditor.CALLER_REVIEWER);
             editCard.putExtra(CardEditor.EXTRA_DECKPATH, DeckManager.getMainDeckPath());
         	sEditorCard = mCurrentCard;
         	setOutAnimation(true);
@@ -1771,10 +1777,10 @@ public class Reviewer extends Activity implements IButtonListener{
             setOutAnimation(true);
         } else {
             // session limits not reached, show next card
-            Card newCard = values[0].getCard();
+        	mCurrentCard = values[0].getCard();
 
             // If the card is null means that there are no more cards scheduled for review.
-            if (newCard == null) {
+            if (mCurrentCard == null) {
             	noMoreCards = true;
                 mProgressDialog = ProgressDialog.show(Reviewer.this, "", getResources()
                         .getString(R.string.saving_changes), true);
@@ -1783,7 +1789,6 @@ public class Reviewer extends Activity implements IButtonListener{
             }
 
             // Start reviewing next card
-            mCurrentCard = newCard;
             if (mPrefWriteAnswers) { //only bother query deck if needed
             	String[] answer = mCurrentCard.getComparedFieldAnswer();
             	comparedFieldAnswer = answer[0];

@@ -38,6 +38,7 @@
 			    android:layout_height="wrap_content"
 			    android:orientation="vertical"
 			    android:layout_margin="8dip"
+			    android:clickable="true"
 			    android:layout_gravity="center"
 			    android:background="@drawable/widget_big_deckfield"
 			    android:visibility="invisible">
