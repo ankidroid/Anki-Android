@@ -64,6 +64,7 @@ public class AnkiDroidWidgetBig extends AppWidgetProvider {
     private static String sCurrentMessage;
     private static DeckStatus[] sTomorrowDues;
     private static boolean sWaitForAsyncTask = false;
+    private static boolean sUpdateStarted = false;
 
     private static Context sContext;
 
@@ -813,6 +814,12 @@ public class AnkiDroidWidgetBig extends AppWidgetProvider {
        	}
        	if (namesSb.length() == 0 || duesSb.length() == 0) {
        		updateViews.setViewVisibility(R.id.widget_big_deckfield, View.INVISIBLE);
+       		if (!sUpdateStarted) {
+       			sUpdateStarted = true;
+       			WidgetStatus.update(sContext);
+       		}
+       	} else {
+       		sUpdateStarted = false;
        	}
    		updateViews.setTextViewText(R.id.widget_big_decknames, namesSb);
    		updateViews.setTextViewText(R.id.widget_big_deckdues, duesSb);
