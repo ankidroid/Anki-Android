@@ -105,8 +105,8 @@ public class Statistics {
 
     public static boolean refreshAllDeckStatistics(Context context, String[] deckPaths, int type, int period, String title) {
         initVariables(context, type, period, title);
-    	for (String dp : deckPaths) {
-    		DeckManager.getDeck(dp, DeckManager.REQUESTING_ACTIVITY_STATISTICS);
+     	for (String dp : deckPaths) {
+    		sDeck = DeckManager.getDeck(dp, DeckManager.REQUESTING_ACTIVITY_STATISTICS);
             if (sDeck == null) {
                 continue;
             }
@@ -134,17 +134,16 @@ public class Statistics {
     		} else {
                 double[][] seriesList;
                 seriesList = getSeriesList(context, type, period);
-                DeckManager.closeDeck(dp, DeckManager.REQUESTING_ACTIVITY_STATISTICS, false);
-                sDeck.closeDeck(false);
                 for (int i = 0; i < sSeriesList.length; i++) {
                     for (int j = 0; j < period; j++) {
                     	sSeriesList[i][j] += seriesList[i][j];
                     }        	
                 }    			
     		}
+            DeckManager.closeDeck(dp, DeckManager.REQUESTING_ACTIVITY_STATISTICS, false);
     	}
         if (type == TYPE_DECK_SUMMARY) {
-        	return sDeckSummaryValues != null ? true : false;
+        	return (sDeckSummaryValues != null && sDeckSummaryValues.size() > 0) ? true : false;
         } else {
         	return sSeriesList != null ? true : false;        	
         }

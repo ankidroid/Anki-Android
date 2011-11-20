@@ -110,7 +110,7 @@ public class DeckManager {
                 if (requestingActivity == REQUESTING_ACTIVITY_SYNCCLIENT) {
                 	// close other learning activities
     				sendWidgetBigClosedNotification();
-    				deckInformation.mOpenedBy.remove(REQUESTING_ACTIVITY_BIGWIDGET);
+    				deckInformation.mOpenedBy.remove(new Integer(REQUESTING_ACTIVITY_BIGWIDGET));
     				if (!deckInformation.mDeleteJournalModeForced) {
             			Cursor cur = null;
                         try {
