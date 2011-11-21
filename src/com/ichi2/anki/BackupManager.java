@@ -25,6 +25,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
+import java.util.UnknownFormatConversionException;
 
 import com.tomgibara.android.veecheck.util.PrefSettings;
 
@@ -165,7 +166,14 @@ public class BackupManager {
         	return RETURN_DECK_NOT_CHANGED;
         }
         Date value = Utils.genToday(Utils.utcOffset());
-        String backupFilename = String.format(Utils.ENGLISH_LOCALE, deckFile.getName().replace(".anki", "") + "-%tF.anki", value);
+
+        String backupFilename;
+        try {
+        	backupFilename = String.format(Utils.ENGLISH_LOCALE, deckFile.getName().replace(".anki", "") + "-%tF.anki", value);        	
+        } catch (UnknownFormatConversionException e) {
+        	Log.e(AnkiDroidApp.TAG, "backupDeck: error on creating backup filename: " + e);
+        	return RETURN_ERROR;
+        }
 
         File backupFile = new File(getBackupDirectory().getPath(), backupFilename);
         if (backupFile.exists()) {

@@ -220,6 +220,11 @@ public class CardEditor extends Activity {
 		Themes.applyTheme(this);
 		super.onCreate(savedInstanceState);
 
+		if (savedInstanceState != null) {
+			finish();
+			return;
+		}
+
 		registerExternalStorageListener();
 
 		View mainView = getLayoutInflater().inflate(R.layout.card_editor, null);
@@ -430,6 +435,18 @@ public class CardEditor extends Activity {
 			unregisterReceiver(mUnmountReceiver);
 		}
 	}
+
+
+	@Override
+    protected void onSaveInstanceState(Bundle outState) {
+		String path = mDeck.getDeckPath();
+        Log.i(AnkiDroidApp.TAG, "onSaveInstanceState: " + path);
+        // Remember current deck's filename.
+        if (path != null) {
+            outState.putString("deckFilename", path);
+        }
+        Log.i(AnkiDroidApp.TAG, "onSaveInstanceState - Ending");
+    }
 
 
 	@Override
@@ -769,9 +786,9 @@ public class CardEditor extends Activity {
 									.toString();
 						}
 						modelChanged();
-						if ((mSourceText == null || mSourceText.isEmpty())
+						if ((mSourceText == null || mSourceText.length() == 0)
 								&& (mTargetText == null || mTargetText
-										.isEmpty())) {
+										.length() == 0)) {
 							for (int i = 0; i < Math.min(size, mEditFields
 									.size()); i++) {
 								mEditFields.get(i).setText(oldValues[i]);

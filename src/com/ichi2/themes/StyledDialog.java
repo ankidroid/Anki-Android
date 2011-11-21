@@ -72,7 +72,7 @@ public class StyledDialog extends Dialog {
     }
 
 
-    @Override
+    // @Override  On Android 1.5 this is not Override
     public void onAttachedToWindow() {
     	if (mDoNotShow) {
         	this.dismiss();
