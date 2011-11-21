@@ -917,13 +917,7 @@ public class StudyOptions extends Activity implements IButtonListener {
 
     private void restartApp() {
     	// restarts application in order to apply new themes or localisations
-    	Intent i = null;
-        try {
-            i = getBaseContext().getPackageManager().getLaunchIntentForPackage(getBaseContext().getPackageName());
-        } catch (NameNotFoundException e) {
-            // TODO Auto-generated catch block
-            Log.e(AnkiDroidApp.TAG, e.getMessage());
-        }
+    	Intent i = getBaseContext().getPackageManager().getLaunchIntentForPackage(getBaseContext().getPackageName());
         if (AnkiDroidApp.deck() != null && mSdCardAvailable) {
         	AnkiDroidApp.deck().closeDeck();
         }
