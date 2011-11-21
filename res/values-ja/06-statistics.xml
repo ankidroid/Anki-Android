@@ -91,12 +91,12 @@
     <item>%s年後</item>
   </string-array>
   <string-array name="next_review_before_s">
-    <item>1 second before</item>
-    <item>1 minute before</item>
-    <item>1 hour before</item>
-    <item>1 day before</item>
-    <item>1 month before</item>
-    <item>1 year before</item>
+    <item>1秒前</item>
+    <item>1分前</item>
+    <item>1時間前</item>
+    <item>1日前</item>
+    <item>1ヶ月前</item>
+    <item>1年前</item>
   </string-array>
   <string-array name="next_review_before_p">
     <item>%s seconds before</item>

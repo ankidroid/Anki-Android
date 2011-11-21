@@ -47,7 +47,7 @@
   <string name="duplicate_download">この単語帳は既にダウンロード中です</string>
   <string name="sync_all_title">Sync all decks</string>
   <string name="sync_all">すべて同期する</string>
-  <string name="sync_prepare_syncing">Preparing syncing...</string>
+  <string name="sync_prepare_syncing">同期の準備中...</string>
   <string name="connection_error_message">ネットワークエラーが発生しました。</string>
   <string name="sync_log_db_error">A database error has occurred.</string>
   <string name="no_user_password_error_message">この操作を続行するには、AnkiOnlineのアカウントを取得し、ログインしてください。</string>

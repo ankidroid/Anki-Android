@@ -57,9 +57,9 @@
   <string name="reset_card_dialog_title">Reset card progress</string>
   <string name="reset_card_dialog_message">This resets the learning progress for all cards of this fact (they will look like new cards).\nReally continue?</string>
   <string name="reset_card_dialog_confirmation">All cards of this fact reset</string>
-  <string name="answering_error_title">Database error</string>
+  <string name="answering_error_title">データベース エラー</string>
   <string name="answering_error_message">An error occurred while answering the last card or changing the deck otherwise. This could be related to a corrupt deck or to insufficient disc space.\n\nIf it happens more often, please try to repair the deck. Try a db check with Anki Desktop as well.\n\nNevertheless, it could be an AnkiDroid bug as well; please report the error that we can check this.</string>
-  <string name="answering_error_report">Report error</string>
+  <string name="answering_error_report">エラーを報告する</string>
   <string name="repair_deck_dialog">Do you really want to try to repair deck \'%1$s\'?\n\nBefore starting the attempt, a copy of the deck will be created in subfolder \'%2$s\'.</string>
   <string-array name="about_content">
     <item><![CDATA[<h2>%1$s:<br/>Flashcards for Android</h2>AnkiDroid is a flashcard application which is fully compatible with the desktop software <a href="%2$s">Anki</a>. You can create, download and learn contents on both, AnkiDroid or Anki Desktop, and synchronize them very easily.]]></item>

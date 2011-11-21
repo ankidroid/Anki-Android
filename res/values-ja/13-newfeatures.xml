@@ -22,10 +22,10 @@
 <resources>
   <string-array name="new_version_features">
     <item>two new themes</item>
-    <item>animations</item>
-    <item>backup system</item>
+    <item>アニメーション</item>
+    <item>バックアップシステム</item>
     <item>possibility to repair corrupted decks</item>
-    <item>small widget</item>
+    <item>小さなウィジェット</item>
     <item>intent-based card addition</item>
     <item>better card editor: lookup, add card, copy card, reset</item>
     <item>new statistic: deck summary</item>
@@ -47,6 +47,6 @@
     <item>support for scrolling with hardware buttons</item>
     <item>new broadcasting system for showing upgrade messages</item>
     <item>support for new dictionaries: fora, nciku, eijiro</item>
-    <item>a lot of bug fixes</item>
+    <item>多くのバグ修正</item>
   </string-array>
 </resources>
