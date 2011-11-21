@@ -398,7 +398,7 @@
 		<ListPreference
 			android:title="@string/widget_minimum_cards_due"
 			android:summary="@string/widget_minimum_cards_due_summary"
-			android:defaultValue="25"
+			android:defaultValue="1000000"
 			android:entries="@array/widget_minimum_cards_due_labels"
 			android:entryValues="@array/widget_minimum_cards_due_values"
 			android:key="minimumCardsDueForNotification" />
