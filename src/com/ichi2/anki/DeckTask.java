@@ -363,6 +363,7 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
         Log.i(AnkiDroidApp.TAG, "loadDeck - SD card mounted and existent file -> Loading deck...");
 
     	// load deck and set it as main deck
+    	publishProgress(new TaskData(res.getString(R.string.loading_deck)));
         Deck deck = DeckManager.getDeck(deckFilename, requestingActivity == DeckManager.REQUESTING_ACTIVITY_STUDYOPTIONS, requestingActivity);
         if (deck == null) {
             Log.i(AnkiDroidApp.TAG, "The database " + deckFilename + " could not be opened");
