@@ -141,7 +141,7 @@
 		<uses-library android:name="android.test.runner"></uses-library>
 </application>
 	<uses-sdk  android:minSdkVersion="3"
-		android:targetSdkVersion="3"/>
+		android:targetSdkVersion="11"/>
 	<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 	<uses-permission android:name="android.permission.VIBRATE" android:required="false" />
 	<uses-permission android:name="android.permission.INTERNET" android:required="false" />
