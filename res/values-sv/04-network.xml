@@ -49,7 +49,7 @@
   <string name="sync_all">Synka alla</string>
   <string name="sync_prepare_syncing">Förbereder synkning ...</string>
   <string name="connection_error_message">Ett nätverksfel har uppstått.</string>
-  <string name="sync_log_db_error">A database error has occurred.</string>
+  <string name="sync_log_db_error">Ett databasfel har inträffat.</string>
   <string name="no_user_password_error_message">För att fortsätta med denna åtgärd måste du ha ett AnkiOnline-konto och vara inloggad.</string>
   <string name="fact">kort</string>
   <string name="facts">kort</string>

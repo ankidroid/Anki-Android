@@ -35,7 +35,6 @@
   <string name="no_tts_available_title">Teks-Kepada-Bahasa</string>
   <string name="no_tts_available_message">Tiada teks-kepada-bahasa tersedia</string>
   <string name="tts_no_tts">Jangan sebut</string>
-  <string name="about_content">%1$s Kad imbas untuk Android &lt;/ h2&gt; AnkiDroid &lt;p&gt; dapat membaca kad .anki dibuat dari %2$s perisian &lt;/ a&gt; Anki. &lt;/ P&gt; Untuk membantu kita membuat AnkiDroid lebih baik, sila laporkan bug %3$s di sini &lt;/ a&gt;; Permintaan baru juga! Sila gunakan %4$s wiki &lt;/ a&gt; dan katakan Hi pada forum %5$s  &lt;/ a&gt; &lt;/ p&gt; AnkiDroid ialah perisian terbuka %6$s &lt;/ A&gt;, semua orang didorong untuk %7$s bergabung &lt;/ a&gt; %8$s menyumbang &lt;/ a&gt; :-) Orang biasa juga dapat membantu, misalnya dengan memperbarui wiki dan gambar, %9$s menderma &lt;/ a&gt; untuk Anki, atau blogging tentang AnkiDroid! &lt;/ P&gt; AnkiDroid &lt;p&gt; dirilis di bawah %10$s lesen GNU GPL v3 &lt;/ a&gt; dan kod sumber %11$sdi sini &lt;/ a&gt;.</string>
   <string name="dont_show_again">Jangan tampilkan lagi</string>
   <string name="deck_upgrade_too_old_version">Dek selepas versi 39 tidak disokong AnkiDroid. Sila guna Anki Desktop untuk mendapatkan versi terbaru.</string>
   <string name="deck_upgrade_version_61_has_latex">Dek tidak dapat ditingkatkan kerana ada ekspresi LaTeX. Sila guna Desktop Anki untuk mengubah kepada versi baru dan membaiki LaTeX.</string>
@@ -62,4 +61,11 @@
   <string name="answering_error_message">An error occurred while answering the last card or changing the deck otherwise. This could be related to a corrupt deck or to insufficient disc space.\n\nIf it happens more often, please try to repair the deck. Try a db check with Anki Desktop as well.\n\nNevertheless, it could be an AnkiDroid bug as well; please report the error that we can check this.</string>
   <string name="answering_error_report">Report error</string>
   <string name="repair_deck_dialog">Do you really want to try to repair deck \'%1$s\'?\n\nBefore starting the attempt, a copy of the deck will be created in subfolder \'%2$s\'.</string>
+  <string-array name="about_content">
+    <item><![CDATA[<h2>%1$s:<br/>Flashcards for Android</h2>AnkiDroid is a flashcard application which is fully compatible with the desktop software <a href="%2$s">Anki</a>. You can create, download and learn contents on both, AnkiDroid or Anki Desktop, and synchronize them very easily.]]></item>
+    <item><![CDATA[To help us make AnkiDroid better, please report any bug <a href="%1$s">here</a>; new feature ideas are very welcome too! Please use the <a href="%2$s">wiki</a> and say Hi on the <a href="%3$s">forum</a>.]]></item>
+    <item><![CDATA[AnkiDroid is <a href="%1$s">open source software<a/>, so everyone is encouraged to <a href="%2$s">join</a> the <a href="%3$s">contributors</a>:-)]]></item>
+    <item><![CDATA[Non-developers can also help, for instance by <a href="%1$s">translating</a> AnkiDroid, updating the wiki and screenshots, <a href="%2$s">donating</a> to Anki Desktop, or blogging about AnkiDroid!]]></item>
+    <item><![CDATA[AnkiDroid is released under the <a href="%1$s">GNU-GPL v3 license</a> and the source code is available <a href="%2$s">here</a>.]]></item>
+  </string-array>
 </resources>

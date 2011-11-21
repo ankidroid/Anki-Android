@@ -35,7 +35,6 @@
   <string name="no_tts_available_title">Tekst-naar-Spraak</string>
   <string name="no_tts_available_message">Geen tekst-naar-spraak taal beschikbaar</string>
   <string name="tts_no_tts">Niet praten</string>
-  <string name="about_content">%1$s Flitskaarten voor Android &lt;/h2&gt;&lt;p&gt; AnkiDroid kan .anki bestanden lezen die gemaakt zijn voor PC software %2$s Anki&lt;/a&gt; software. &lt;/p&gt;&lt;p&gt; Om ons te helpen AnkiDroid beter te maken, rapporteer fouten %3$s hier&lt;/a&gt;; Suggesties voor nieuwe ideeën zijn ook van harte welkom! Maak gebruik van de %4$s wiki&lt;/a&gt; en groet ons op de %5$s forum&lt;/a&gt;.&lt;/p&gt;&lt;p&gt; AnkiDroid is %6$s open source software&lt;/a&gt;, dus iedereen wordt aangemoedigd om %7$s te helpen&lt;/a&gt; de %8$s bijdragers&lt;/a&gt; :-) Ook niet-ontwikkelaars kunnen ons helpen, bijvoorbeeld met het bijwerken van de wiki en screenshots, %9$s doneren&lt;/a&gt; aan Anki, of bloggen over AnkiDroid! &lt;/p&gt;&lt;p&gt; AnkiDroid wordt uitgegeven onder de %10$s GNU-GPL v3 licentie&lt;/a&gt; en de broncode is beschikbaar %11$s hier&lt;/a&gt;.</string>
   <string name="dont_show_again">Dit bericht niet meer tonen</string>
   <string name="deck_upgrade_too_old_version">Sets met versies ouder dan 39 worden niet ondersteund door AnkiDroid, open de set met Anki Desktop om het te upgraden naar de nieuwste versie.</string>
   <string name="deck_upgrade_version_61_has_latex">De set kan niet volledig worden opgewaardeerd, want het bevat LaTeX-commando\'s; open het dek met Anki Desktop om het te upgraden naar de nieuwste versie en LaTeX te behouden.</string>
@@ -62,4 +61,11 @@
   <string name="answering_error_message">Er deed zich een fout voor bij het beantwoorden van de laatste kaart of het anderzijds wijzigen van het deck. Mogelijk is een beschadigd deck of een tekort aan opslagruimte de oorzaak.\n\nProbeer het deck te repareren indien het probleem zich blijft voordoen. Probeer eveneens een databasecontrole via Anki Desktop.\n\nHet is ook mogelijk dat een bug in AnkiDroid de oorzaak is; gelieve de foutmelding te rapporteren zodat we dit kunnen controleren.</string>
   <string name="answering_error_report">Fout melden</string>
   <string name="repair_deck_dialog">Bent u zeker dat u het deck \'%1$s\' wilt proberen te herstellen?\n\nEr zal eerst een kopie van het deck gemaakt worden in de submap \'%2$s\'.</string>
+  <string-array name="about_content">
+    <item><![CDATA[<h2>%1$s:<br/>Flashcards for Android</h2>AnkiDroid is a flashcard application which is fully compatible with the desktop software <a href="%2$s">Anki</a>. You can create, download and learn contents on both, AnkiDroid or Anki Desktop, and synchronize them very easily.]]></item>
+    <item><![CDATA[To help us make AnkiDroid better, please report any bug <a href="%1$s">here</a>; new feature ideas are very welcome too! Please use the <a href="%2$s">wiki</a> and say Hi on the <a href="%3$s">forum</a>.]]></item>
+    <item><![CDATA[AnkiDroid is <a href="%1$s">open source software<a/>, so everyone is encouraged to <a href="%2$s">join</a> the <a href="%3$s">contributors</a>:-)]]></item>
+    <item><![CDATA[Non-developers can also help, for instance by <a href="%1$s">translating</a> AnkiDroid, updating the wiki and screenshots, <a href="%2$s">donating</a> to Anki Desktop, or blogging about AnkiDroid!]]></item>
+    <item><![CDATA[AnkiDroid is released under the <a href="%1$s">GNU-GPL v3 license</a> and the source code is available <a href="%2$s">here</a>.]]></item>
+  </string-array>
 </resources>

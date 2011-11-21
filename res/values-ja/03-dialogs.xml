@@ -35,7 +35,6 @@
   <string name="no_tts_available_title">テキスト読み上げ</string>
   <string name="no_tts_available_message">テキスト読み上げ可能な言語がありません</string>
   <string name="tts_no_tts">話さない</string>
-  <string name="about_content">%1$s Android用学習カード &lt;/h2&gt;&lt;p&gt; AnkiDroidはデスクトップの %2$s Anki&lt;/a&gt;で作成した.ankiファイルを読むことができます. &lt;/p&gt;&lt;p&gt; AnkiDroidをより良くするために, バグ報告を%3$s ここ&lt;/a&gt;にお願いします; 新機能のアイデアも大歓迎です! この %4$s wiki&lt;/a&gt;で%5$s フォーラム&lt;/a&gt;にメッセージを残してください.&lt;/p&gt;&lt;p&gt; AnkiDroid は %6$s オープンソースソフトウェア&lt;/a&gt;であり, %7$s 参加&lt;/a&gt;して%8$s 貢献&lt;/a&gt;して下さる方は誰でも歓迎です:-) 開発者でなくても助けになります. 例えばwikiやスクリーンショットを更新したり, Ankiへの%9$s 寄付&lt;/a&gt;, AnkiDroidについてブログで書いたり! &lt;/p&gt;&lt;p&gt; AnkiDroid は %10$s GNU-GPL v3 license&lt;/a&gt; の下で公開され, ソースコードは%11$s ここ&lt;/a&gt;から入手できます.</string>
   <string name="dont_show_again">Don\'t show again</string>
   <string name="deck_upgrade_too_old_version">39よりも古いバージョンの単語帳は, AnkiDroid ではサポートされていません;単語帳をデスクトップ版Ankiで開いて最新版に更新してください.</string>
   <string name="deck_upgrade_version_61_has_latex">これはLaTeX式が含まれているので, 単語帳が完全に更新できませんでした; 単語帳をデスクトップ版Ankiで開き, 最新版に更新しLaTeXを再生成してください.</string>
@@ -62,4 +61,11 @@
   <string name="answering_error_message">An error occurred while answering the last card or changing the deck otherwise. This could be related to a corrupt deck or to insufficient disc space.\n\nIf it happens more often, please try to repair the deck. Try a db check with Anki Desktop as well.\n\nNevertheless, it could be an AnkiDroid bug as well; please report the error that we can check this.</string>
   <string name="answering_error_report">Report error</string>
   <string name="repair_deck_dialog">Do you really want to try to repair deck \'%1$s\'?\n\nBefore starting the attempt, a copy of the deck will be created in subfolder \'%2$s\'.</string>
+  <string-array name="about_content">
+    <item><![CDATA[<h2>%1$s:<br/>Flashcards for Android</h2>AnkiDroid is a flashcard application which is fully compatible with the desktop software <a href="%2$s">Anki</a>. You can create, download and learn contents on both, AnkiDroid or Anki Desktop, and synchronize them very easily.]]></item>
+    <item><![CDATA[To help us make AnkiDroid better, please report any bug <a href="%1$s">here</a>; new feature ideas are very welcome too! Please use the <a href="%2$s">wiki</a> and say Hi on the <a href="%3$s">forum</a>.]]></item>
+    <item><![CDATA[AnkiDroid is <a href="%1$s">open source software<a/>, so everyone is encouraged to <a href="%2$s">join</a> the <a href="%3$s">contributors</a>:-)]]></item>
+    <item><![CDATA[Non-developers can also help, for instance by <a href="%1$s">translating</a> AnkiDroid, updating the wiki and screenshots, <a href="%2$s">donating</a> to Anki Desktop, or blogging about AnkiDroid!]]></item>
+    <item><![CDATA[AnkiDroid is released under the <a href="%1$s">GNU-GPL v3 license</a> and the source code is available <a href="%2$s">here</a>.]]></item>
+  </string-array>
 </resources>

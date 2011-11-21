@@ -130,14 +130,14 @@ public class Themes {
 			if (mCurrentTheme == THEME_BLUE) {
 				ListView lv = (ListView) view.findViewById(R.id.files);
 				lv.setSelector(R.drawable.blue_deckpicker_list_selector);
-				lv.setDivider(mContext.getResources().getDrawable(R.color.transparent));
+				lv.setDividerHeight(0);
 			}
 			break;
 		case CALLER_CARDBROWSER:
 			if (mCurrentTheme == THEME_BLUE) {
 				ListView lv = (ListView) view.findViewById(R.id.card_browser_list);
 				lv.setSelector(R.drawable.blue_cardbrowser_list_selector);
-				lv.setDivider(mContext.getResources().getDrawable(R.color.transparent));
+				lv.setDividerHeight(0);
 			}
 			break;
 		case CALLER_DECKPICKER_DECK:

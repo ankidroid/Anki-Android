@@ -35,7 +35,6 @@
   <string name="no_tts_available_title">Síntesi de veu</string>
   <string name="no_tts_available_message">No hi ha idiomes de síntesi de veu disponibles</string>
   <string name="tts_no_tts">No parlis</string>
-  <string name="about_content">%1$s Flashcards per a Android &lt;/h2&gt;&lt;p&gt; AnkiDroid pot llegir els arxius. Anki produïts per programari %2$s Anki &lt;/a&gt; d\'escriptori. &lt;/p&gt;&lt;p&gt; Per ajudar-nos a millorar AnkiDroid, si us plau envieu qualsevol error %3$s aquí&lt;/a&gt;; també ens agradaria rebre les vostres idees i propostes! Si us plau, utilitzeu el %4$s wiki&lt;/a&gt; i saludeu al %5$s fòrum&lt;/a&gt;.&lt;/p&gt;&lt;p&gt; AnkiDroid és %6$s programari de codi obert &lt;/a&gt;, així que animem a tothom a %7$s unir-se &lt;/a&gt; i %8$s participar&lt;/a&gt; :-) No cal ser desenvolupador per ajudar, podeu per exemple actualitzar la wiki i les captures de pantalla, %9$s fer un donatiu &lt;/a&gt; a Anki, o parlar al bloc sobre AnkiDroid! &lt;/p&gt;&lt;p&gt; AnkiDroid es publica sota la llicència %10$s GNU-GPL v3 &lt;/a&gt; i el codi font està disponible %11$s aquí &lt;/a&gt;.</string>
   <string name="dont_show_again">Don\'t show again</string>
   <string name="deck_upgrade_too_old_version">El paquets de les versions posteriors a la 39 no són compatibles amb AnkiDroid, si us plau, obriu el paquet a la versió de l\'Anki d\'escriptori per actualitzar-ho a la versió més recent.</string>
   <string name="deck_upgrade_version_61_has_latex">El paquet no es pot actualitzar del tot, ja que conté expressions LaTeX, podeu obrir el paquet amb la versió de l\'Anki d\'escriptori per actualitzar el paquet a la darrera versió i regenerar el LaTeX.</string>
@@ -62,4 +61,11 @@
   <string name="answering_error_message">An error occurred while answering the last card or changing the deck otherwise. This could be related to a corrupt deck or to insufficient disc space.\n\nIf it happens more often, please try to repair the deck. Try a db check with Anki Desktop as well.\n\nNevertheless, it could be an AnkiDroid bug as well; please report the error that we can check this.</string>
   <string name="answering_error_report">Report error</string>
   <string name="repair_deck_dialog">Do you really want to try to repair deck \'%1$s\'?\n\nBefore starting the attempt, a copy of the deck will be created in subfolder \'%2$s\'.</string>
+  <string-array name="about_content">
+    <item><![CDATA[<h2>%1$s:<br/>Flashcards for Android</h2>AnkiDroid is a flashcard application which is fully compatible with the desktop software <a href="%2$s">Anki</a>. You can create, download and learn contents on both, AnkiDroid or Anki Desktop, and synchronize them very easily.]]></item>
+    <item><![CDATA[To help us make AnkiDroid better, please report any bug <a href="%1$s">here</a>; new feature ideas are very welcome too! Please use the <a href="%2$s">wiki</a> and say Hi on the <a href="%3$s">forum</a>.]]></item>
+    <item><![CDATA[AnkiDroid is <a href="%1$s">open source software<a/>, so everyone is encouraged to <a href="%2$s">join</a> the <a href="%3$s">contributors</a>:-)]]></item>
+    <item><![CDATA[Non-developers can also help, for instance by <a href="%1$s">translating</a> AnkiDroid, updating the wiki and screenshots, <a href="%2$s">donating</a> to Anki Desktop, or blogging about AnkiDroid!]]></item>
+    <item><![CDATA[AnkiDroid is released under the <a href="%1$s">GNU-GPL v3 license</a> and the source code is available <a href="%2$s">here</a>.]]></item>
+  </string-array>
 </resources>
