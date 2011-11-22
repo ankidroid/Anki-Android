@@ -69,6 +69,7 @@ import com.ichi2.async.Connection;
 import com.ichi2.async.Connection.Payload;
 import com.ichi2.themes.StyledDialog;
 import com.ichi2.themes.Themes;
+import com.ichi2.widget.WidgetStatus;
 import com.tomgibara.android.veecheck.util.PrefSettings;
 
 import java.io.File;

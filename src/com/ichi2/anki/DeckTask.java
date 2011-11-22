@@ -134,6 +134,7 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
         // Wait for previous thread (if any) to finish before continuing
         try {
             if ((sOldInstance != null) && (sOldInstance.getStatus() != AsyncTask.Status.FINISHED)) {
+            	Log.i(AnkiDroidApp.TAG, "Waiting for " + sOldInstance.mType + " to finish");
                 sOldInstance.get();
             }
         } catch (Exception e) {

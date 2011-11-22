@@ -28,7 +28,6 @@ import com.ichi2.anki.DeckTask;
 import com.ichi2.anki.R;
 import com.ichi2.anki.StudyOptions;
 import com.ichi2.anki.Utils;
-import com.ichi2.anki.WidgetStatus;
 import com.tomgibara.android.veecheck.util.PrefSettings;
 
 import android.app.PendingIntent;

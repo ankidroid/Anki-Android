@@ -12,10 +12,16 @@
  * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
  ****************************************************************************************/
 
-package com.ichi2.anki;
+package com.ichi2.widget;
 
+import com.ichi2.anki.AnkiDroidApp;
+import com.ichi2.anki.BackupManager;
+import com.ichi2.anki.Deck;
+import com.ichi2.anki.DeckManager;
+import com.ichi2.anki.DeckStatus;
+import com.ichi2.anki.MetaDB;
 import com.ichi2.anki.services.NotificationService;
-import com.ichi2.widget.AnkiDroidWidgetBig;
+import com.ichi2.widget.AnkiDroidWidgetSmall.UpdateService;
 import com.tomgibara.android.veecheck.util.PrefSettings;
 
 import android.content.Context;

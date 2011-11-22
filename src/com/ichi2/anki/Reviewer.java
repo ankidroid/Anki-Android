@@ -90,6 +90,7 @@ import com.ichi2.themes.Themes;
 import com.ichi2.utils.DiffEngine;
 import com.ichi2.utils.RubyParser;
 import com.ichi2.widget.AnkiDroidWidgetBig;
+import com.ichi2.widget.WidgetStatus;
 import com.tomgibara.android.veecheck.util.PrefSettings;
 
 import org.amr.arabic.ArabicUtilities;

@@ -70,6 +70,7 @@ import com.ichi2.compat.CompatV3;
 import com.ichi2.themes.StyledDialog;
 import com.ichi2.themes.Themes;
 import com.ichi2.widget.AnkiDroidWidgetBig;
+import com.ichi2.widget.WidgetStatus;
 import com.tomgibara.android.veecheck.util.PrefSettings;
 import com.zeemote.zc.Controller;
 import com.zeemote.zc.event.ButtonEvent;

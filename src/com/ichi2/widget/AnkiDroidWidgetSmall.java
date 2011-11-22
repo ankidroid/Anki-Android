@@ -12,8 +12,13 @@
  * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
  ****************************************************************************************/
 
-package com.ichi2.anki;
+package com.ichi2.widget;
 
+import com.ichi2.anki.AnkiDroidApp;
+import com.ichi2.anki.R;
+import com.ichi2.anki.StudyOptions;
+import com.ichi2.anki.R.id;
+import com.ichi2.anki.R.layout;
 import com.tomgibara.android.veecheck.util.PrefSettings;
 
 import android.app.PendingIntent;

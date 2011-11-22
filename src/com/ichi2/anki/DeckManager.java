@@ -9,6 +9,7 @@ import java.util.concurrent.locks.ReentrantLock;
 import com.ichi2.anki.DeckPicker.AnkiFilter;
 import com.ichi2.themes.StyledDialog;
 import com.ichi2.widget.AnkiDroidWidgetBig;
+import com.ichi2.widget.WidgetStatus;
 import com.tomgibara.android.veecheck.util.PrefSettings;
 
 import android.content.Context;

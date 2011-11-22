@@ -227,6 +227,7 @@ public class CardEditor extends Activity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
+		Log.i(AnkiDroidApp.TAG, "CardEditor: onCreate");
 		Themes.applyTheme(this);
 		super.onCreate(savedInstanceState);
 
@@ -260,13 +261,18 @@ public class CardEditor extends Activity {
 			DeckManager.getDeck(mDeckPath, DeckManager.REQUESTING_ACTIVITY_CARDEDITOR);
 		} else {
 			mCaller = intent.getIntExtra(EXTRA_CALLER, CALLER_NOCALLER);
-			if (mCaller == CALLER_NOCALLER && intent.getAction() != null && (ACTION_CREATE_FLASHCARD.equals(intent.getAction()) || ACTION_CREATE_FLASHCARD.equals(intent.getAction()))) {
-				mCaller = CALLER_INDICLASH;
+			if (mCaller == CALLER_NOCALLER) {
+				String action = intent.getAction();
+				if (action != null && (ACTION_CREATE_FLASHCARD.equals(action) || ACTION_CREATE_FLASHCARD_SEND.equals(action))) {
+					mCaller = CALLER_INDICLASH;
+				}
 			}
 		}
+		Log.i(AnkiDroidApp.TAG, "Caller: " + mCaller);
 
 		switch (mCaller) {
 		case CALLER_NOCALLER:
+			Log.i(AnkiDroidApp.TAG, "CardEditor: no caller could be identified, closing");
 			finish();
 			return;
 
@@ -346,11 +352,13 @@ public class CardEditor extends Activity {
 		}
 
 		if (mAddFact) {
-			loadContents();
-			modelChanged();
-			mSave.setEnabled(false);
-			String contents = intent.getStringExtra(EXTRA_CONTENTS);
-			setEditFieldTexts(contents);
+			if (mCaller != CALLER_INDICLASH) {
+				loadContents();
+				modelChanged();
+				mSave.setEnabled(false);
+				String contents = intent.getStringExtra(EXTRA_CONTENTS);
+				setEditFieldTexts(contents);				
+			}
 
 			mModelButtons.setVisibility(View.VISIBLE);
 			mModelButton.setOnClickListener(new View.OnClickListener() {
