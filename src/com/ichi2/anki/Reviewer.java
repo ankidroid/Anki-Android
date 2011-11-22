@@ -255,6 +255,7 @@ public class Reviewer extends Activity implements IButtonListener{
     
     private String mMediaDir;
 
+    private boolean mInEditor = false;
     
     /**
      * Variables to hold layout objects that we need to update or handle events for
@@ -687,6 +688,7 @@ public class Reviewer extends Activity implements IButtonListener{
                 	Themes.showThemedToast(Reviewer.this, getResources().getString(R.string.card_suspended), true);           	
                 }            	
             }
+            mInEditor = false;
         }
     };
 
@@ -974,7 +976,7 @@ public class Reviewer extends Activity implements IButtonListener{
       }
 
       // check if deck is already opened in big widget. If yes, reload card (to make sure it's not answered yet)
-      if (DeckManager.deckIsOpenedInBigWidget(deck.getDeckPath()) && mCurrentCard != null) {
+      if (DeckManager.deckIsOpenedInBigWidget(deck.getDeckPath()) && mCurrentCard != null && !mInEditor) {
     	  Log.i(AnkiDroidApp.TAG, "Reviewer: onResume: get card from big widget");
     	  DeckTask.launchDeckTask(DeckTask.TASK_TYPE_ANSWER_CARD, mAnswerCardHandler, new DeckTask.TaskData(0, deck, null));
       } else {
@@ -1334,6 +1336,7 @@ public class Reviewer extends Activity implements IButtonListener{
             } else if (resultCode == StudyOptions.CONTENT_NO_EXTERNAL_STORAGE) {
                 finishNoStorageAvailable();
             } else {
+            	mInEditor = false;
             	fillFlashcard(mShowAnimations);
             }
         }
@@ -1421,6 +1424,7 @@ public class Reviewer extends Activity implements IButtonListener{
         	Themes.showThemedToast(Reviewer.this, getResources().getString(R.string.cram_edit_warning), true);
             return false;
         } else {
+        	mInEditor = true;
             Intent editCard = new Intent(Reviewer.this, CardEditor.class);
             editCard.putExtra(CardEditor.EXTRA_CALLER, CardEditor.CALLER_REVIEWER);
             editCard.putExtra(CardEditor.EXTRA_DECKPATH, DeckManager.getMainDeckPath());
@@ -3113,7 +3117,7 @@ public class Reviewer extends Activity implements IButtonListener{
     		finish();
     	}
     }
-    
+
     /** Fixing bug 720: <input> focus, thanks to pablomouzo on android issue 7189*/
     class MyWebView extends WebView {
 
