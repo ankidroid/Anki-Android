@@ -3100,14 +3100,16 @@ public class Reviewer extends Activity implements IButtonListener{
 		Reviewer.this.setResult(result);
 
 		setOutAnimation(true);    		
-    	if (saveDeck) {
+
+		if (DeckManager.deckIsOpenedInBigWidget(DeckManager.getMainDeckPath())) {
+        	  Log.i(AnkiDroidApp.TAG, "Reviewer: closeReviewer: updating big widget");
+        	  AnkiDroidWidgetBig.setCard(mCurrentCard);
+        	  AnkiDroidWidgetBig.updateWidget(AnkiDroidWidgetBig.UpdateService.VIEW_SHOW_QUESTION);
+        }
+
+        if (saveDeck) {
             DeckTask.launchDeckTask(DeckTask.TASK_TYPE_SAVE_DECK, mSaveAndResetDeckHandler, new DeckTask.TaskData(DeckManager.getMainDeck(), 0));
     	} else {
-            if (DeckManager.deckIsOpenedInBigWidget(DeckManager.getMainDeckPath())) {
-          	  Log.i(AnkiDroidApp.TAG, "Reviewer: closeReviewer: updating big widget");
-          	  AnkiDroidWidgetBig.setCard(mCurrentCard);
-          	  AnkiDroidWidgetBig.updateWidget(AnkiDroidWidgetBig.UpdateService.VIEW_SHOW_QUESTION);
-            }
     		finish();
     	}
     }
