@@ -70,5 +70,6 @@
   <string name="tutorial_loading_error">Tutorial deck could not be created</string>
   <string name="help_title">ヘルプ</string>
   <string name="help_online">オンラインヘルプ</string>
+  <string name="help_faq">FAQ</string>
   <string name="help_tutorial">Tutorial deck</string>
 </resources>

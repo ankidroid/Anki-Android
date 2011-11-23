@@ -69,5 +69,6 @@
   <string name="tutorial_loading_error">Övningskortlek kunde inte skapas</string>
   <string name="help_title">Hjälp</string>
   <string name="help_online">Onlinehjälp</string>
+  <string name="help_faq">FAQ</string>
   <string name="help_tutorial">Övningskortlek</string>
 </resources>

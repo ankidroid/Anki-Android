@@ -69,5 +69,6 @@
   <string name="tutorial_loading_error">Le paquet-tutoriel n\'a pas pu être créé</string>
   <string name="help_title">Aide</string>
   <string name="help_online">Aide en ligne</string>
+  <string name="help_faq">FAQ</string>
   <string name="help_tutorial">Paquet-tutoriel</string>
 </resources>
