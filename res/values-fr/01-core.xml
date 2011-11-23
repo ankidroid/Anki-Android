@@ -60,7 +60,7 @@
   <string name="redo">Refaire</string>
   <string name="close_previous_deck">Fermeture du paquet précédent\nMerci de patienter</string>
   <string name="close_deck">Fermeture du paquet\nMerci de patienter</string>
-  <string name="finish_operation">Finishing previous operation.\nPlease wait...</string>
+  <string name="finish_operation">En train de finir l\'opération précédente.\nVeuillez patienter...</string>
   <string name="contextmenu_deckpicker_download_missing_media">Télécharger les médias manquants</string>
   <string name="contextmenu_deckpicker_reset_language_assignments">Réinitialiser les affectations de langue</string>
   <string name="contextmenu_deckpicker_reset_reset_message">Réinitialiser la langue</string>

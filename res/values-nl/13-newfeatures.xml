@@ -26,7 +26,7 @@
     <item>backupsysteem</item>
     <item>mogelijkheid om beschadigde decks te repareren</item>
     <item>klein widget</item>
-    <item>intent-based card addition</item>
+    <item>Kaarten toevoegen met het Intent-protocol</item>
     <item>betere kaarteditor: opzoeken, kaart toevoegen, kaart kopiëren, resetten</item>
     <item>nieuwe statistiek: samenvatting deck</item>
     <item>optionele wal journaling-modus (sneller)</item>
@@ -38,10 +38,10 @@
     <item>optie om schermoriëntatie in te stellen</item>
     <item>mogelijkheid om kaarten te resetten (in kaarteditor)</item>
     <item>sneller zoeken in kaartbrowser</item>
-    <item>more convenient lookup via appearing icon</item>
-    <item>new text selection in card adder and card editor</item>
+    <item>handiger opzoeken met een pictogram</item>
+    <item>Nieuwe tekstselectie in kaartteller en kaarteditor</item>
     <item>optie om vraag/antwoord zeer eenvoudig te verwisselen</item>
-    <item>support for line breaks in card editor and card browser</item>
+    <item>ondersteuning voor regeleinden in kaarteditor en kaartbrowser</item>
     <item>verberg AnkiDroid-map voor Androids mediascanner</item>
     <item>ondersteuning voor enorme decks in kaartbrowser</item>
     <item>ondersteuning voor scrollen met hardwareknoppen</item>

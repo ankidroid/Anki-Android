@@ -55,7 +55,7 @@
   <string name="studyoptions_congrats_finish">返回学习界面</string>
   <string name="card_unsuspended">Card suspension undone</string>
   <string name="card_suspended">Card resuspended</string>
-  <string name="menu_rotate">Rotate</string>
+  <string name="menu_rotate">旋转</string>
   <string name="undo">撤销</string>
   <string name="redo">重做</string>
   <string name="close_previous_deck">正在关闭上个词库。\ n请稍候...</string>
@@ -82,7 +82,7 @@
   <string name="menu_suspend_card">不要复习</string>
   <string name="menu_bury_card">留到下回合</string>
   <string name="menu_edit_card">编辑卡片</string>
-  <string name="menu_select">Select text</string>
+  <string name="menu_select">选择文本</string>
   <string name="menu_search">在%1$s中查找</string>
   <string name="menu_mark_card">标记卡片</string>
   <string name="menu_marked">已标记</string>
@@ -93,22 +93,22 @@
   <string name="studyoptions_load_other_deck">载入其他牌组</string>
   <string name="studyoptions_load_tutorial_deck">Load Tutorial Deck</string>
   <string name="studyoptions_night_mode">夜间模式</string>
-  <string name="studyoptions_swap_qa">Swap Q/A</string>
-  <string name="visit">Visit</string>
-  <string name="later">Later</string>
+  <string name="studyoptions_swap_qa">交换问题和答案</string>
+  <string name="visit">访问</string>
+  <string name="later">稍后</string>
   <string name="download">下载</string>
   <string name="deckpicker_loading_error">Deck could not be loaded</string>
-  <string name="deckpicker_creating_backup">Creating backup...</string>
+  <string name="deckpicker_creating_backup">创建备份...</string>
   <string-array name="next_review_s">
-    <item>1 second</item>
-    <item>1 minute</item>
+    <item>1秒</item>
+    <item>1分钟</item>
     <item>一小时</item>
     <item>一天</item>
     <item>1个月</item>
     <item>1年</item>
   </string-array>
   <string-array name="next_review_p">
-    <item>%s seconds</item>
+    <item>%s秒</item>
     <item>%s minutes</item>
     <item>%s小时</item>
     <item>%s天</item>
@@ -136,15 +136,15 @@
     <item quantity="other">%1$s (%2$d min. left)</item>
   </plurals>
   <plurals name="studyoptions_congrats_message">
-    <item quantity="one">You have finished for now.\nTomorrow there will be:\n1 card to review and %2$s.\n Estimated time: %3$s</item>
-    <item quantity="other">You have finished for now.\nTomorrow there will be:\n%1$d cards to review and %2$s.\n Estimated time: %3$s</item>
+    <item quantity="one">你已完成今日任务。\n明天的任务：\n复习%1$d张卡片，学习%2$s。\n预计时间：%3$s</item>
+    <item quantity="other">你已完成今日任务。\n明天的任务：\n复习%1$d张卡片，学习%2$s。\n预计时间：%3$s</item>
   </plurals>
   <plurals name="studyoptions_congrats_new_cards">
-    <item quantity="one">1 card</item>
-    <item quantity="other">%1$d new cards</item>
+    <item quantity="one">1张卡片</item>
+    <item quantity="other">%1$d张新卡片</item>
   </plurals>
   <plurals name="studyoptions_congrats_eta">
-    <item quantity="one">1 min.</item>
-    <item quantity="other">%1$d min.</item>
+    <item quantity="one">1分钟</item>
+    <item quantity="other">%1$d 分钟</item>
   </plurals>
 </resources>

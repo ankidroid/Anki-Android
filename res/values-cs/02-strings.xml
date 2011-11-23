@@ -69,6 +69,6 @@
   <string name="tutorial_loading_error">Nebylo možné vytvořit výukový balíček</string>
   <string name="help_title">Nápověda</string>
   <string name="help_online">Online nápověda</string>
-  <string name="help_faq">FAQ</string>
+  <string name="help_faq">Nejčastější dotazy</string>
   <string name="help_tutorial">Výukový balíček</string>
 </resources>
