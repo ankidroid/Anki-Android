@@ -36,8 +36,8 @@
   <string name="leech_notification">卡片被标记为记忆难点</string>
   <string name="about_title">关于</string>
   <string name="cardeditor_title">编辑条目</string>
-  <string name="factadder_saving_error">Error saving fact</string>
-  <string name="saving_facts">Saving facts</string>
+  <string name="factadder_saving_error">保存失败</string>
+  <string name="saving_facts">保存中</string>
   <string name="deckcreator_title">牌组创建器</string>
   <string name="model">模型:</string>
   <string name="select_model">模型</string>
@@ -56,19 +56,19 @@
   <string name="studyoptions_deck_not_loaded_message">你选择的牌组不是有效的Anki牌组，请使用桌面版Anki软件来创建一个有效地牌组以用于AnkiDroid。\n\n你也可以选择另一个牌组，或者点击下面的按钮来载入一个示例牌组。</string>
   <string name="studyoptions_no_external_storage_title">没有可用的外部存储</string>
   <string name="studyoptions_no_external_storage_message">没有可用的外部存储空间，AnkiDroid需要访问SD卡以载入您的Anki牌组。确认SD卡挂载后重试。</string>
-  <string name="fact_adder_intent_title">AnkiDroid Card</string>
+  <string name="fact_adder_intent_title">AnkiDroid卡片</string>
   <string name="fact_adder_swap">交换</string>
   <string name="deckpicker_select_dictionary_title">选择词典</string>
   <string name="deckpicker_select_dictionary_default">默认</string>
   <string name="card_editor_add_card">添加卡片</string>
   <string name="card_editor_reset">复原</string>
   <string name="card_editor_copy_card">复制卡片</string>
-  <string name="card_editor_reset_card">Reset progress</string>
+  <string name="card_editor_reset_card">清空学习记录</string>
   <string name="error_insufficient_memory">由于设备内存不足导致操作无法完成。</string>
   <string name="tutorial_load">正在创建教程词库。</string>
   <string name="tutorial_loading_error">无法创建教程词库。</string>
   <string name="help_title">帮助</string>
   <string name="help_online">在线帮助</string>
-  <string name="help_faq">FAQ</string>
+  <string name="help_faq">常见问题</string>
   <string name="help_tutorial">教程词库</string>
 </resources>

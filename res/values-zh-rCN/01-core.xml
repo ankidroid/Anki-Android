@@ -50,11 +50,11 @@
   <string name="studyoptions_congrats_title">恭喜！</string>
   <string name="studyoptions_congrats_learnmore">继续学习</string>
   <string name="studyoptions_congrats_reviewearly">提前复习</string>
-  <string name="studyoptions_congrats_syncdeck">Synchronize deck</string>
+  <string name="studyoptions_congrats_syncdeck">同步牌组</string>
   <string name="studyoptions_congrats_open_other_deck">打开其他牌组</string>
   <string name="studyoptions_congrats_finish">返回学习界面</string>
-  <string name="card_unsuspended">Card suspension undone</string>
-  <string name="card_suspended">Card resuspended</string>
+  <string name="card_unsuspended">卡片本次跳过失败</string>
+  <string name="card_suspended">卡片再次跳过</string>
   <string name="menu_rotate">旋转</string>
   <string name="undo">撤销</string>
   <string name="redo">重做</string>
@@ -109,19 +109,19 @@
   </string-array>
   <string-array name="next_review_p">
     <item>%s秒</item>
-    <item>%s minutes</item>
+    <item>%s分钟</item>
     <item>%s小时</item>
     <item>%s天</item>
     <item>%s月</item>
     <item>%s年</item>
   </string-array>
   <plurals name="studyoptions_window_title">
-    <item quantity="one">%1$s(1张到期\/共%3$d张卡片)</item>
-    <item quantity="other">%1$s(%2$d张待复习\/共%3$d张卡片)</item>
+    <item quantity="one">%1$s(1张待复习，共%3$d张卡片)</item>
+    <item quantity="other">%1$s(%2$d张待复习，共%3$d张)</item>
   </plurals>
   <plurals name="deckpicker_title">
-    <item quantity="one">所有牌组: %2$d张中有1张待复习（%3$s）</item>
-    <item quantity="other">所有牌组: %2$d张中有%1$d张待复习（%3$s）</item>
+    <item quantity="one">所有牌组: 1个张待复习，共%2$d张(%3$s)</item>
+    <item quantity="other">所有牌组: %1$d张待复习，共%2$d张(%3$s)</item>
   </plurals>
   <plurals name="deckpicker_title_minutes">
     <item quantity="one">1分钟</item>
@@ -132,8 +132,8 @@
     <item quantity="other">%2$d张中的%1$d张待复习</item>
   </plurals>
   <plurals name="reviewer_window_title">
-    <item quantity="one">%1$s (1 min. left)</item>
-    <item quantity="other">%1$s (%2$d min. left)</item>
+    <item quantity="one">%1$s (还需1分钟)</item>
+    <item quantity="other">%1$s (还需%2$d分钟)</item>
   </plurals>
   <plurals name="studyoptions_congrats_message">
     <item quantity="one">你已完成今日任务。\n明天的任务：\n复习%1$d张卡片，学习%2$s。\n预计时间：%3$s</item>
@@ -145,6 +145,6 @@
   </plurals>
   <plurals name="studyoptions_congrats_eta">
     <item quantity="one">1分钟</item>
-    <item quantity="other">%1$d 分钟</item>
+    <item quantity="other">%1$d分钟</item>
   </plurals>
 </resources>

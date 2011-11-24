@@ -45,11 +45,11 @@
   <string name="resume_download">Επανεκκίνηση λήψης</string>
   <string name="pause_download">Παύση Λήψης</string>
   <string name="duplicate_download">Αυτή η τράπουλα κατεβαίνει ήδη</string>
-  <string name="sync_all_title">Sync all decks</string>
+  <string name="sync_all_title">Συγχρονίστε όλες τισ τράπουλες</string>
   <string name="sync_all">Συγχρονισμός όλων</string>
-  <string name="sync_prepare_syncing">Preparing syncing...</string>
+  <string name="sync_prepare_syncing">Προετοιμασία συγχρονισμού...</string>
   <string name="connection_error_message">Παρουσιάστηκε σφάλμα δικτύου.</string>
-  <string name="sync_log_db_error">A database error has occurred.</string>
+  <string name="sync_log_db_error">Παρουσιάστηκε σφάλμα στη βάση δεδομένων.</string>
   <string name="no_user_password_error_message">Για να συνεχίσετε αυτή τη λειτουργία, πρέπει να έχετε λογαριασμό στο AnkiOnline και να συνδεθείτε.</string>
   <string name="fact">γεγονός</string>
   <string name="facts">γεγονότα</string>
