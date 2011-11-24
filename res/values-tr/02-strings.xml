@@ -69,5 +69,6 @@
   <string name="tutorial_loading_error">Eğitim destesi oluşturulamadı</string>
   <string name="help_title">Yardım</string>
   <string name="help_online">Çevrimiçi yardım</string>
+  <string name="help_faq">FAQ</string>
   <string name="help_tutorial">Eğitim destesi</string>
 </resources>

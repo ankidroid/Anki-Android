@@ -1,0 +1,38 @@
+Memoritzeu de tot amb AnkiDroid!
+
+AnkiDroid us permet aprendre targetes per memoritzar de manera molt eficient, mostrant-les just abans que les oblideu. És totalment compatible amb la repetició espaiada del programari Anki (incloent sincronització), que està disponible per a Windows, Linux i MacOS.
+
+Estudieu tot tipus de temes on i quan vulgueu. Fer bon ús dels temps morts en els viatges en autobús, en les cues dels supermercats o qualsevol altra situació d'espera!
+
+Afegiu material a través de l'aplicació d&#39;escriptori Anki o directament a través de Ankidroid.
+
+Create your own flashcard decks or download free decks compiled for many languages and topics (more than 6000 available). L'aplicació suporta fins i tot l&#39;addició de material de forma automàtica a partir d&#39;un diccionari!
+
+★ Les característiques clau:
+• supported flashcard contents: text, images, sounds, LaTeX
+• Repetició espaiada ( algorisme SuperMemo 2 )
+• Text a veu integrat
+• més de 6.000 paquets prefabricats
+• dos ginys
+• Estadístiques detallades
+• sincronització amb AnkiWeb
+• codi obert
+
+★ Les característiques addicionals:
+• escriure les respostes (opcional)
+• pissarra
+• navegador de targetes
+• card editor/adder
+• import existing collection files (via Anki Desktop)
+• add cards by intent from other applications like dictionaries
+• dictionary integration (ColorDict, GoldenDict, Leo.org, Aedict, diverse web dictionaries)
+• Permet lletres personalitzades
+• Sistema de còpia de seguretat complet
+• navegació per escombrat, cop o sacsejada
+• Totalment personalitzable
+• mode intesiu
+• limitar l'estudi per etiqueta, pel temps o per les targetes
+• Mode nocturn
+• Zeemote suport
+• Tres aparençes diferents
+• 23 localitzacions

@@ -62,10 +62,10 @@
   <string name="answering_error_report">Fout melden</string>
   <string name="repair_deck_dialog">Bent u zeker dat u het deck \'%1$s\' wilt proberen te herstellen?\n\nEr zal eerst een kopie van het deck gemaakt worden in de submap \'%2$s\'.</string>
   <string-array name="about_content">
-    <item><![CDATA[<h2>%1$s:<br/>Flashcards for Android</h2>AnkiDroid is a flashcard application which is fully compatible with the desktop software <a href="%2$s">Anki</a>. You can create, download and learn contents on both, AnkiDroid or Anki Desktop, and synchronize them very easily.]]></item>
-    <item><![CDATA[To help us make AnkiDroid better, please report any bug <a href="%1$s">here</a>; new feature ideas are very welcome too! Please use the <a href="%2$s">wiki</a> and say Hi on the <a href="%3$s">forum</a>.]]></item>
-    <item><![CDATA[AnkiDroid is <a href="%1$s">open source software<a/>, so everyone is encouraged to <a href="%2$s">join</a> the <a href="%3$s">contributors</a>:-)]]></item>
-    <item><![CDATA[Non-developers can also help, for instance by <a href="%1$s">translating</a> AnkiDroid, updating the wiki and screenshots, <a href="%2$s">donating</a> to Anki Desktop, or blogging about AnkiDroid!]]></item>
-    <item><![CDATA[AnkiDroid is released under the <a href="%1$s">GNU-GPL v3 license</a> and the source code is available <a href="%2$s">here</a>.]]></item>
+    <item><![CDATA[<h2>%1$s:<br/>Flitskaarten voor Android</h2>AnkiDroid is een flitskaartprogramma dat volledig samenwerkt met de desktop programma <a href="%2$s">Anki</a>. Je kan content downloaden en leren op zowel AnkiDroid als Anki Desktop, en eenvoudig synchroniseren tussen beide.]]></item>
+    <item><![CDATA[Om Ankidroid te verbeteren, stuur je <a href="%1$s">hier</a>  het foutenverslag op; ook nieuwe ideeën zijn van harte welkom! Lees de <a href="%2$s">wiki</a> en zeg ons gedag op het <a href="%3$s">forum</a>.]]></item>
+    <item><![CDATA[AnkiDroid is <a href="%1$s">Opensourcesoftware<a/>, dus iedereen mag <a href="%2$s">meedoen</a> met <a href="%3$s">medewerkers</a>:-)]]></item>
+    <item><![CDATA[Ook als niet-ontwikkelaar kan je ons helpen, bijvoorbeeld met <a href="%1$s">vertalen</a> van AnkiDroid, het up-to-date houden van de wiki en schermafbeeldingen, <a href="%2$s">doneren</a> aan Anki Desktop, of the bloggen over AnkiDroid!]]></item>
+    <item><![CDATA[AnkiDroid is uitgebracht onder de <a href="%1$s">GNU-GPL v3 licentie</a> en de broncode is <a href="%2$s">here</a> beschikbaar.]]></item>
   </string-array>
 </resources>

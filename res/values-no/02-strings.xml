@@ -69,5 +69,6 @@
   <string name="tutorial_loading_error">Opplæringskortstokk kunne ikke opprettes</string>
   <string name="help_title">Hjelp</string>
   <string name="help_online">Online hjelp</string>
+  <string name="help_faq">FAQ</string>
   <string name="help_tutorial">Opplæringskortstokk</string>
 </resources>

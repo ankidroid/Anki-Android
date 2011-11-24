@@ -2,14 +2,14 @@ Memoriseer om het even wat met AnkiDroid!
 
 AnkiDroid stelt u in staat zeer efficiënt flashcards te leren, door ze te tonen net voor u ze vergeet. Het is volledig compatibel met met de gespreide herhalingssoftware Anki (synchronisatie inbegrepen). Deze is beschikbaar voor Windows, Linux en Mac OS X.
 
-Study all sorts of things wherever and whenever you want. Maak nuttig gebruik van uw tijd terwijl u op de bus zit, aanschuift aan de kassa, of elke andere situatie waarin u moet wachten.
+Leer van alles, waar en wanneer u maar wilt. Maak nuttig gebruik van uw tijd terwijl u op de bus zit, aanschuift aan de kassa, of elke andere situatie waarin u moet wachten.
 
-Add material through the desktop application Anki or directly through Ankidroid.
+Voeg materiaal toe via de desktopapplicatie Anki of rechtstreeks via Ankidroid.
 
-Create your own flashcard decks or download free decks compiled for many languages and topics (more than 6000 available). De toepassing biedt zelfs ondersteuning voor het automatisch toevoegen van materiaal uit een woordenboek!
+Maak je eigen sets met flitskaart, of download gratis sets samengesteld voor vele talen en onderwerpen (meer dan 6000 beschikbaar). De toepassing biedt zelfs ondersteuning voor het automatisch toevoegen van materiaal uit een woordenboek!
 
 ★ Belangrijkste functies:
-• supported flashcard contents: text, images, sounds, LaTeX
+• ondersteunde inhoud voor flitskaarten: tekst, afbeeldingen, geluiden, LaTeX
 • gespreide herhaling (supermemo 2-algoritme)
 • tekst-naar-spraak-integratie
 • meer dan 6000 premade decks
@@ -23,8 +23,8 @@ Create your own flashcard decks or download free decks compiled for many languag
 • whiteboard
 • kaartbrowser
 • kaarten bewerken/toevoegen
-• import existing collection files (via Anki Desktop)
-• add cards by intent from other applications like dictionaries
+• importeren van bestaande verzameling bestanden (via Anki Desktop)
+• kaarten via het intent-protocol toevoegen vanuit andere toepassingen zoals woordenboeken
 • Woordenboekintegratie (ColorDict, GoldenDict, Leo.org, Aedict, verscheidene webwoordenboeken)
 • ondersteuning voor aangepaste lettertypes
 • volledig backupsysteem

@@ -37,14 +37,14 @@
     <item>Willekeurige volgorde</item>
   </string-array>
   <string-array name="hideQuestionInAnswerLabels">
-    <item>Verberg de vraag in het antwoord</item>
+    <item>Verbergt de vraag wanneer het antwoord wordt getoond</item>
     <item>Toon de vraag in het antwoord</item>
     <item>Zoals gedefinieerd in CardModel</item>
   </string-array>
   <string-array name="startup_mode_labels">
     <item>Toon studie-opties</item>
-    <item>Toon dekkiezer</item>
-    <item>Toon dekkiezer bij eerste start van de dag</item>
+    <item>Toon leersets</item>
+    <item>Toon leersets bij de eerste start van de dag</item>
   </string-array>
   <string-array name="error_reporting_choice_labels">
     <item>Altijd rapporteren</item>
@@ -62,9 +62,9 @@
     <item>Nooit</item>
   </string-array>
   <string-array name="cram_review_order_labels">
-    <item>Toon laatst gewijzigde eerst</item>
-    <item>Toon in volgorde toegevoegd</item>
-    <item>Toon in willekeurige volgorde</item>
+    <item>laatst gewijzigde eerst tonen</item>
+    <item>In volgorde van toevoeging tonen</item>
+    <item>In willekeurige volgorde tonen</item>
   </string-array>
   <string-array name="studyoptions_more_new_card_order">
     <item>Nieuwe kaarten in willekeurige volgorde</item>

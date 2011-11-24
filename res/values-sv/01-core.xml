@@ -46,10 +46,10 @@
   <string name="ease3_successive">Bra</string>
   <string name="ease4_successive">Lätt</string>
   <string name="loading">Laddar...</string>
-  <string name="studyoptions_continue">Fortsätt granska</string>
+  <string name="studyoptions_continue">Fortsätt repetera</string>
   <string name="studyoptions_congrats_title">Grattis!</string>
   <string name="studyoptions_congrats_learnmore">Lär dig mer</string>
-  <string name="studyoptions_congrats_reviewearly">Granska tidigt</string>
+  <string name="studyoptions_congrats_reviewearly">Repetera tidigt</string>
   <string name="studyoptions_congrats_syncdeck">Synkronisera kortlek</string>
   <string name="studyoptions_congrats_open_other_deck">Öppna annan kortlek</string>
   <string name="studyoptions_congrats_finish">Tillbaka till Studieskärmen</string>

@@ -46,7 +46,7 @@
   <string name="show_timer">Visa timer</string>
   <string name="show_timer_summ">Timer som visar hur lång tid det tar dig att svara</string>
   <string name="show_progress_bars">Visa förloppsmätare</string>
-  <string name="show_progress_bars_summ">Visar dagens framsteg och andel av dagens korrekta svar vid granskning</string>
+  <string name="show_progress_bars_summ">Visar dagens framsteg och andel av dagens korrekta svar vid repetition</string>
   <string name="show_whiteboard_summ">Låter dig skriva på skärmen</string>
   <string name="whiteboard_stroke_width">Linjevidd för Whiteboard</string>
   <string name="whiteboard_stroke_width_summ">Linjebredd: XXX</string>
@@ -90,7 +90,7 @@
   <string name="fullscreen_review">Repetera i fullskärm</string>
   <string name="fullscreen_review_summ">Du kan välja om all tillgänglig skärmyta ska användas vid repetition av kort</string>
   <string name="zoom">Aktivera Zoom</string>
-  <string name="zoom_summ">Visa zoom-kontrollerna vid granskning</string>
+  <string name="zoom_summ">Visa zoom-kontrollerna vid repetition</string>
   <string name="zeemote">Stöd för Zeemote JS1</string>
   <string name="zeemote_summ">Använd Zeemote JS1 handkontroll för att navigera vid granskning</string>
   <string name="swipe">Aktivera gester</string>
@@ -155,7 +155,7 @@
   <string name="studyoptions_session">Studiepass</string>
   <string name="studyoptions_tag">Efter tagg</string>
   <string name="studyoptions_tag_new">Visa nya kort beroende på tagg:</string>
-  <string name="studyoptions_tag_rev">Visa repetionskort beroende på tagg:</string>
+  <string name="studyoptions_tag_rev">Visa repetitionskort beroende på tagg:</string>
   <string name="studyoptions_session_minutes">Studiegräns (minuter):</string>
   <string name="studyoptions_session_questions">Studiegräns (frågor):</string>
   <string name="session_time_limit">Tidsgräns per studiepass</string>
