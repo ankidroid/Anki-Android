@@ -23,6 +23,9 @@
 	<string-array name="new_version_features">
 		<item>review widget</item>
 		<item>rename decks</item>
+		<item>cached list in card browser</item>
+		<item>long click configurable</item>
+		<item>feedback for added facts</item>
 		<item>deck summary in deckpicker</item>
 	</string-array>
 </resources>
