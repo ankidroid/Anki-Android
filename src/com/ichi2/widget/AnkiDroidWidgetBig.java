@@ -418,6 +418,10 @@ public class AnkiDroidWidgetBig extends AppWidgetProvider {
                 		updateViews(VIEW_SHOW_ANSWER);
                 	} else {
                     	if (sLoadedDeck != null) {
+                    		if (sCard.thinkingTime() > 12) {
+                    			// assume, user was not learning
+                    			sCard.setTimerStart(Utils.now() - 6);
+                    		}
                     		DeckTask.launchDeckTask(DeckTask.TASK_TYPE_ANSWER_CARD, mAnswerCardHandler, new DeckTask.TaskData(ease, sLoadedDeck, sCard));
                     	} else {
                     		updateViews(VIEW_DECKS);

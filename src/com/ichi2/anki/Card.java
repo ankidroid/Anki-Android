@@ -245,6 +245,11 @@ public class Card {
     }
 
 
+    public void setTimerStart(double time) {
+        mTimerStarted = time;
+    }
+
+
     public void startTimer() {
         mTimerStarted = Utils.now();
     }
