@@ -206,6 +206,8 @@ public class Reviewer extends Activity implements IButtonListener{
      */
     private BroadcastReceiver mUnmountReceiver = null;
 
+    private boolean mInBackground = false;
+
     /**
      * Variables to hold preferences
      */
@@ -967,6 +969,7 @@ public class Reviewer extends Activity implements IButtonListener{
 
     @Override
     protected void onResume() {
+    	mInBackground = false;
       super.onResume();
       Deck deck = DeckManager.getMainDeck();
       if (deck == null) {
@@ -978,6 +981,8 @@ public class Reviewer extends Activity implements IButtonListener{
       // check if deck is already opened in big widget. If yes, reload card (to make sure it's not answered yet)
       if (DeckManager.deckIsOpenedInBigWidget(deck.getDeckPath()) && mCurrentCard != null && !mInEditor) {
     	  Log.i(AnkiDroidApp.TAG, "Reviewer: onResume: get card from big widget");
+    	  blockControls();
+    	  AnkiDroidWidgetBig.updateWidget(AnkiDroidWidgetBig.UpdateService.VIEW_NOT_SPECIFIED, true);
     	  DeckTask.launchDeckTask(DeckTask.TASK_TYPE_ANSWER_CARD, mAnswerCardHandler, new DeckTask.TaskData(0, deck, null));
       } else {
     	  restartTimer();
@@ -998,24 +1003,21 @@ public class Reviewer extends Activity implements IButtonListener{
 
     @Override
     protected void onStop() {
+    	mInBackground = true;
       if (mShakeEnabled) {
           mSensorManager.unregisterListener(mSensorListener);    	  
       }
       super.onStop();
-      DeckTask.waitToFinish();
       Deck deck = DeckManager.getMainDeck();
       if (!isFinishing()) {
           // Save changes
+          updateBigWidget(!mCardFrame.isEnabled());
+          DeckTask.waitToFinish();
           if (deck != null) {
 	         	deck.commitToDB();
           }
-          if (DeckManager.deckIsOpenedInBigWidget(DeckManager.getMainDeckPath())) {
-        	  Log.i(AnkiDroidApp.TAG, "Reviewer: onStop: updating big widget");
-        	  AnkiDroidWidgetBig.setCard(mCurrentCard);
-        	  AnkiDroidWidgetBig.updateWidget(AnkiDroidWidgetBig.UpdateService.VIEW_SHOW_QUESTION);
-          }
       }
-      WidgetStatus.update(this, WidgetStatus.getDeckStatus(deck));
+    WidgetStatus.update(this, WidgetStatus.getDeckStatus(deck));
     }
 
     @Override
@@ -1171,6 +1173,16 @@ public class Reviewer extends Activity implements IButtonListener{
                 R.drawable.ic_menu_redo);
         return true;
     }
+
+
+    private void updateBigWidget(boolean showProgressDialog) {
+    	if (DeckManager.deckIsOpenedInBigWidget(DeckManager.getMainDeckPath())) {
+      	  	Log.i(AnkiDroidApp.TAG, "Reviewer: updateBigWidget");
+      	  	AnkiDroidWidgetBig.setCard(mCurrentCard);
+      	  	AnkiDroidWidgetBig.updateWidget(AnkiDroidWidgetBig.UpdateService.VIEW_SHOW_QUESTION, showProgressDialog);
+    	}
+    }
+
 
     //These three methods use a deprecated API - they should be updated to possibly use its more modern version.
     private boolean clipboardHasText() {
@@ -1780,6 +1792,11 @@ public class Reviewer extends Activity implements IButtonListener{
         } else {
             // session limits not reached, show next card
         	mCurrentCard = values[0].getCard();
+
+        	// if in background, actualise widget
+        	if (mInBackground) {
+        		updateBigWidget(false);
+            }
 
             // If the card is null means that there are no more cards scheduled for review.
             if (mCurrentCard == null) {
@@ -3105,11 +3122,7 @@ public class Reviewer extends Activity implements IButtonListener{
 
 		setOutAnimation(true);    		
 
-		if (DeckManager.deckIsOpenedInBigWidget(DeckManager.getMainDeckPath())) {
-        	  Log.i(AnkiDroidApp.TAG, "Reviewer: closeReviewer: updating big widget");
-        	  AnkiDroidWidgetBig.setCard(mCurrentCard);
-        	  AnkiDroidWidgetBig.updateWidget(AnkiDroidWidgetBig.UpdateService.VIEW_SHOW_QUESTION);
-        }
+		updateBigWidget(!mCardFrame.isEnabled());
 
         if (saveDeck) {
             DeckTask.launchDeckTask(DeckTask.TASK_TYPE_SAVE_DECK, mSaveAndResetDeckHandler, new DeckTask.TaskData(DeckManager.getMainDeck(), 0));

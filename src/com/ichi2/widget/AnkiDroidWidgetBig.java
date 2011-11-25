@@ -72,7 +72,7 @@ public class AnkiDroidWidgetBig extends AppWidgetProvider {
         Log.i(AnkiDroidApp.TAG, "BigWidget: onUpdate");
         WidgetStatus.update(context);
         sContext = context;
-        context.startService(getUpdateIntent(context, UpdateService.VIEW_DECKS));
+        context.startService(getUpdateIntent(context, UpdateService.VIEW_DECKS, false));
     }
 
     @Override
@@ -124,15 +124,19 @@ public class AnkiDroidWidgetBig extends AppWidgetProvider {
     }
 
     public static void updateWidget(int view) {
+    	updateWidget(view, false);
+    }
+    public static void updateWidget(int view, boolean showProgressDialog) {
         if (sContext != null) {
-            sContext.startService(getUpdateIntent(sContext, view));
+            sContext.startService(getUpdateIntent(sContext, view, showProgressDialog));
         }
     }
 
 
-    public static Intent getUpdateIntent(Context context, int view) {
+    public static Intent getUpdateIntent(Context context, int view, boolean showProgressDialog) {
         Intent intent = new Intent(context, AnkiDroidWidgetBig.UpdateService.class);            	
         intent.putExtra(UpdateService.EXTRA_VIEW, view);
+        intent.putExtra(UpdateService.EXTRA_PROGRESSDIALOG, showProgressDialog);
         return intent.setAction(UpdateService.ACTION_UPDATE);
     }
 
@@ -158,6 +162,7 @@ public class AnkiDroidWidgetBig extends AppWidgetProvider {
         public static final String EXTRA_DECK_PATH = "deckPath";
         public static final String EXTRA_EASE = "ease";
         public static final String EXTRA_VIEW = "view";
+        public static final String EXTRA_PROGRESSDIALOG = "progressDialog";
         public static final String EXTRA_START_REVIEWER = "startReviewer";
 
 
@@ -377,10 +382,12 @@ public class AnkiDroidWidgetBig extends AppWidgetProvider {
             		// do nothing
             	} else if (ACTION_UPDATE.equals(action)) {
             		if (!sWaitForAsyncTask) {
-                		sShowProgressDialog = false;
-                		updateViews(intent.getIntExtra(EXTRA_VIEW, VIEW_NOT_SPECIFIED));            			
-            		} else if (sCurrentView == VIEW_SHOW_HELP) {
-            			showProgressDialog();
+            			if (!intent.getBooleanExtra(EXTRA_PROGRESSDIALOG, false)) {
+                			sShowProgressDialog = false;
+                			updateViews(intent.getIntExtra(EXTRA_VIEW, VIEW_NOT_SPECIFIED));            				
+            			} else if (!sShowProgressDialog) {
+            				showProgressDialog();
+            			}
             		}
             	} else if (ACTION_OPENDECK.equals(action)) {
             		showProgressDialog();
@@ -428,11 +435,13 @@ public class AnkiDroidWidgetBig extends AppWidgetProvider {
                 		if (sCurrentView != VIEW_NOTHING_DUE) {
                         	DeckManager.getDeck(deckpath, true, DeckManager.REQUESTING_ACTIVITY_STUDYOPTIONS);                			
                         	newIntent.putExtra(StudyOptions.EXTRA_START_REVIEWER, true);
+                        	startActivity(newIntent);
+                    		showProgressDialog();
                 		}
                 	} else {
                 		newIntent.putExtra(StudyOptions.EXTRA_START_DECKPICKER, true);                		
+                    	startActivity(newIntent);
                 	}
-                	startActivity(newIntent);
                 } else if (ACTION_CARDEDITOR.equals(action)) {
                     Intent editIntent = new Intent(this, CardEditor.class);
                     editIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -490,7 +499,7 @@ public class AnkiDroidWidgetBig extends AppWidgetProvider {
 
 
         private void showProgressDialog() {
-		Log.i(AnkiDroidApp.TAG, "BigWidget: show progress dialog");
+        	Log.i(AnkiDroidApp.TAG, "BigWidget: show progress dialog");
         	sShowProgressDialog = true;
         	updateViews();
         }
