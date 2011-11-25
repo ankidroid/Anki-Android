@@ -230,26 +230,7 @@ public class Deck {
     private Stack<UndoRow> mUndoRedoStackToRecord = null;
 
 
-    public static synchronized Deck openDeck(String path) throws SQLException {
-        return openDeck(path, true);
-    }
-    public static synchronized Deck openDeck(String path, boolean rebuild) throws SQLException {
-    	return openDeck(path, rebuild, false);
-    }
     public static synchronized Deck openDeck(String path, boolean rebuild, boolean forceDeleteJournalMode) throws SQLException {
-	// first do a backup if last backup is very old or not existing
-	// this is normally done on loading in studyoptions (full) or loading in deckpicker
-	// nevertheless, it's still necessary to check here, if it has been really done because other routines open decks too (widget, card editor, syncing)
-	// a cache variable will indicate, if the deck has been already treated
-    	if (BackupManager.safetyBackupNeeded(path, BackupManager.SAFETY_BACKUP_THRESHOLD)) {
-    		Log.i(AnkiDroidApp.TAG, "openDeck: Backup needed");
-    		if (BackupManager.backupDeck(path) == BackupManager.RETURN_BACKUP_CREATED) {
-    			Log.i(AnkiDroidApp.TAG, "openDeck: Backup successfully created");
-    		} else {
-    			Log.e(AnkiDroidApp.TAG, "openDeck: Backup creation failed");
-    		}
-    	}
-
         Deck deck = null;
         Cursor cursor = null;
         Log.i(AnkiDroidApp.TAG, "openDeck - Opening database " + path);
@@ -1207,8 +1188,14 @@ public class Deck {
     }
 
     public double getSessionProgress() {
+    	return getSessionProgress(false);
+    }
+    public double getSessionProgress(boolean notifyEmpty) {
     	int done = mDailyStats.getYesReps();
     	int total = done + mFailedSoonCount + mRevCount + mNewCountToday;
+	if (notifyEmpty && total == 0) {
+		return -1;
+	}
     	if (hasFinishScheduler()) {
     		return 1.0d;
     	} else {
@@ -3826,12 +3813,12 @@ public class Deck {
     /**
      * Add a fact to the deck. Return list of new cards
      */
-    public Fact addFact(Fact fact, HashMap<Long, CardModel> cardModels) {
+    public int addFact(Fact fact, HashMap<Long, CardModel> cardModels) {
         return addFact(fact, cardModels, true);
     }
 
 
-    public Fact addFact(Fact fact, HashMap<Long, CardModel> cardModels, boolean reset) {
+    public int addFact(Fact fact, HashMap<Long, CardModel> cardModels, boolean reset) {
         // TODO: assert fact is Valid
         // TODO: assert fact is Unique
         double now = Utils.now();
@@ -3849,7 +3836,7 @@ public class Deck {
         // TreeMap<Long, CardModel> availableCardModels = availableCardModels(fact);
         if (cardModels.isEmpty()) {
             Log.e(AnkiDroidApp.TAG, "Error while adding fact: No cardmodels for the new fact");
-            return null;
+            return 0;
         }
         // update counts
         mFactCount++;
@@ -3867,15 +3854,17 @@ public class Deck {
         }
 
         ArrayList<Long> newCardIds = new ArrayList<Long>();
+        int count = 0;
         for (Map.Entry<Long, CardModel> entry : cardModels.entrySet()) {
             CardModel cardModel = entry.getValue();
             Card newCard = new Card(this, fact, cardModel, Utils.now());
             newCard.addToDb();
             newCardIds.add(newCard.getId());
-            mCardCount++;
-            mNewCount++;
+            count++;
             Log.i(AnkiDroidApp.TAG, entry.getKey().toString());
         }
+        mCardCount += count;
+        mNewCount += count;
         commitToDB();
         // TODO: code related to random in newCardOrder
 
@@ -3891,7 +3880,7 @@ public class Deck {
             reset();
         }
 
-        return fact;
+        return count;
     }
 
 
@@ -4797,28 +4786,6 @@ public class Deck {
         values.put("newTomorrow", (int)newCards);
         values.put("timeTomorrow", (int)eta);
         return values;
-    }
-
-
-    public static boolean isWalEnabled(String deckPath) {
-        Cursor cursor = null;
-        boolean value = false;
-        boolean dbAlreadyOpened = AnkiDatabaseManager.isDatabaseOpen(deckPath);
-        try {
-            cursor = AnkiDatabaseManager.getDatabase(deckPath).getDatabase().rawQuery(
-            		"PRAGMA journal_mode", null);
-        	if (cursor.moveToFirst()) {
-        		value = cursor.getString(0).equalsIgnoreCase("wal");
-        	}
-        } finally {
-            if (cursor != null && !cursor.isClosed()) {
-                cursor.close();
-            }
-        }
-        if (!dbAlreadyOpened) {
-            AnkiDatabaseManager.closeDatabase(deckPath);
-        }
-        return value;
     }
 
 }

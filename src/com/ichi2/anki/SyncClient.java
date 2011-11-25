@@ -1768,7 +1768,6 @@ public class SyncClient {
         mDeck.setModified(Math.min(mDeck.getModified(), mServer.getTimestamp()));
         mDeck.commitToDB();
         // The deck is closed after the full sync is completed
-        // mDeck.closeDeck();
 
         if (mLocalTime > mRemoteTime) {
             return "fromLocal";

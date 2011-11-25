@@ -105,17 +105,8 @@ public class Statistics {
 
     public static boolean refreshAllDeckStatistics(Context context, String[] deckPaths, int type, int period, String title) {
         initVariables(context, type, period, title);
-        Deck currentDeck = AnkiDroidApp.deck();
-        String currentDeckPath = null;
-        if (currentDeck != null) {
-        	currentDeckPath = currentDeck.getDeckPath();
-        }
-    	for (String dp : deckPaths) {
-    		if (currentDeckPath != null && dp.equals(currentDeckPath)) {
-    			sDeck = currentDeck;
-    		} else {
-                sDeck = Deck.openDeck(dp);    			
-    		}
+     	for (String dp : deckPaths) {
+    		sDeck = DeckManager.getDeck(dp, DeckManager.REQUESTING_ACTIVITY_STATISTICS);
             if (sDeck == null) {
                 continue;
             }
@@ -143,16 +134,16 @@ public class Statistics {
     		} else {
                 double[][] seriesList;
                 seriesList = getSeriesList(context, type, period);
-                sDeck.closeDeck(false);
                 for (int i = 0; i < sSeriesList.length; i++) {
                     for (int j = 0; j < period; j++) {
                     	sSeriesList[i][j] += seriesList[i][j];
                     }        	
                 }    			
     		}
+            DeckManager.closeDeck(dp, DeckManager.REQUESTING_ACTIVITY_STATISTICS, false);
     	}
         if (type == TYPE_DECK_SUMMARY) {
-        	return sDeckSummaryValues != null ? true : false;
+        	return (sDeckSummaryValues != null && sDeckSummaryValues.size() > 0) ? true : false;
         } else {
         	return sSeriesList != null ? true : false;        	
         }
@@ -361,6 +352,7 @@ public class Statistics {
        	builder.append(res.getString(R.string.deck_summary_news)).append(" ").append(res.getString(R.string.deck_summary_cards_per_day, getFraction(newsLastYear, Math.min((double)deckAge, 365.0d)))).append("<br>");
        	builder.append("<br><b>").append(res.getString(R.string.deck_summary_average_total)).append("</b><br>");
        	builder.append(res.getString(R.string.deck_summary_reviews)).append(" ").append(res.getString(R.string.deck_summary_cards_per_day, getFraction(repsMatCount + repsYoungCount + repsFirstCount, deckAge))).append("<br>");
+       	builder.append(res.getString(R.string.deck_summary_news)).append(" ").append(res.getString(R.string.deck_summary_cards_per_day, getFraction(matureCount + youngCount, deckAge))).append("<br>");
        	builder.append("</body></html>");
        	return builder.toString();
     }

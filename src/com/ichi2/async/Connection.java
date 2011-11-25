@@ -32,6 +32,7 @@ import com.ichi2.anki.AnkiDb;
 import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.AnkiDroidProxy;
 import com.ichi2.anki.Deck;
+import com.ichi2.anki.DeckManager;
 import com.ichi2.anki.Feedback;
 import com.ichi2.anki.R;
 import com.ichi2.anki.Reviewer;
@@ -250,10 +251,7 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
 
 
     private Payload doInBackgroundGetSharedDecks(Payload data) {
-        if (AnkiDroidApp.deck() != null) {
-            AnkiDroidApp.deck().closeDeck();
-            AnkiDroidApp.setDeck(null);
-        }
+    	DeckManager.closeMainDeck();
         try {
             data.result = AnkiDroidProxy.getSharedDecks();
         } catch (OutOfMemoryError e) {
@@ -272,10 +270,7 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
 
     private Payload doInBackgroundGetPersonalDecks(Payload data) {
         Resources res = sContext.getResources();
-        if (AnkiDroidApp.deck() != null) {
-            AnkiDroidApp.deck().closeDeck();
-            AnkiDroidApp.setDeck(null);
-        }
+    	DeckManager.closeMainDeck();
         try {
             String username = (String) data.data[0];
             String password = (String) data.data[1];
@@ -317,25 +312,20 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
         //Log.i(AnkiDroidApp.TAG, "username = " + username);
         //Log.i(AnkiDroidApp.TAG, "password = " + password);
 
-        Deck currentDeck = AnkiDroidApp.deck();
-        if (currentDeck != null) {
-        	currentDeck.closeDeck();
-        	AnkiDroidApp.setDeck(null);
-        }
+        DeckManager.closeAllDecks();
 
         ArrayList<HashMap<String, String>> decksToSync = (ArrayList<HashMap<String, String>>) data.data[2];
         for (HashMap<String, String> deckToSync : decksToSync) {
             Log.i(AnkiDroidApp.TAG, "Synchronizing deck");
             String deckPath = deckToSync.get("filepath");
             try {
-            	boolean forceDeleteJournalMode =  Deck.isWalEnabled(deckPath);
-                Deck deck = Deck.openDeck(deckPath, true, forceDeleteJournalMode);
+                Deck deck = DeckManager.getDeck(deckPath, DeckManager.REQUESTING_ACTIVITY_SYNCCLIENT, true);
 
                 Payload syncDeckData = new Payload(new Object[] { username, password, deck, null, false });
                 syncDeckData = doInBackgroundSyncDeck(syncDeckData);
-                if (deck != null) {
-                	deck.closeDeck();
-                }
+
+                DeckManager.closeDeck(deckPath);
+
                 decksChangelogs.add((HashMap<String, String>) syncDeckData.result);
             } catch (Exception e) {
                 Log.e(AnkiDroidApp.TAG, "Exception e = " + e.getMessage());
@@ -375,9 +365,7 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
             if (singleDeckSync) {
             	// if syncing in study options screen, deck must be reloaded in order to set delete journal mode
             	publishProgress(syncName, res.getString(R.string.sync_set_journal_mode));
-            	deck.closeDeck();
-            	deck = Deck.openDeck(deckPath, true, true);        		
-            	AnkiDroidApp.setDeck(deck);
+            	DeckManager.getDeck(deckPath, true, true, DeckManager.REQUESTING_ACTIVITY_SYNCCLIENT, true);
             }
 
 
@@ -511,15 +499,11 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
                         } else if ("fromServer".equalsIgnoreCase(syncFrom)) {
                             publishProgress(syncName, res.getString(R.string.sync_downloading_message));
                             ankiDB.getDatabase().endTransaction();
-                            if (deck != null) {
-                                deck.closeDeck();
-                            }
+                            DeckManager.closeDeck(deckPath);
                             result = SyncClient.fullSyncFromServer(password, username, syncName, deckPath);
                             if (result.containsKey("code") && result.get("code").equals("200")) {
                                 syncChangelog.put("message", res.getString(R.string.sync_log_downloading_message));
                             }
-                            deck = Deck.openDeck(deckPath);
-                        	AnkiDroidApp.setDeck(deck);
                         }
 
                         publishProgress(syncName, res.getString(R.string.sync_complete_message));
@@ -592,6 +576,9 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
                     Log.i(AnkiDroidApp.TAG, "NO CHANGES.");
                     publishProgress(syncName, res.getString(R.string.sync_no_changes_message));
                     syncChangelog.put("message", res.getString(R.string.sync_log_no_changes_message));
+                }
+                if (singleDeckSync) {
+                    DeckManager.getDeck(deckPath, DeckManager.REQUESTING_ACTIVITY_STUDYOPTIONS);                	
                 }
             } finally {
                 if (ankiDB.getDatabase() != null && ankiDB.getDatabase().isOpen() && ankiDB.getDatabase().inTransaction()) {

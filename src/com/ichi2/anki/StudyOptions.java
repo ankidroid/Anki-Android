@@ -69,6 +69,7 @@ import com.ichi2.compat.CompatV11;
 import com.ichi2.compat.CompatV3;
 import com.ichi2.themes.StyledDialog;
 import com.ichi2.themes.Themes;
+import com.ichi2.widget.WidgetStatus;
 import com.tomgibara.android.veecheck.util.PrefSettings;
 import com.zeemote.zc.Controller;
 import com.zeemote.zc.event.ButtonEvent;
@@ -144,6 +145,8 @@ public class StudyOptions extends Activity implements IButtonListener {
 
 
     public static final String EXTRA_DECK = "deck";
+    public static final String EXTRA_START_REVIEWER = "startReviewer";
+    public static final String EXTRA_START_DECKPICKER = "startDeckPicker";
 
     private static final int DIALOG_NO_CONNECTION = 0;
     private static final int DIALOG_USER_NOT_LOGGED_IN = 1;
@@ -202,6 +205,7 @@ public class StudyOptions extends Activity implements IButtonListener {
     // private boolean deckSelected;
     private boolean mInDeckPicker;
     private boolean mInReviewer;
+    private boolean mStartedByBigWidget = false;
     private String mDeckFilename;
     private int mStartupMode;
     private boolean mSwipeEnabled;
@@ -583,7 +587,7 @@ public class StudyOptions extends Activity implements IButtonListener {
     private DialogInterface.OnClickListener mDialogSaveListener = new DialogInterface.OnClickListener() {
         @Override
         public void onClick(DialogInterface dialog, int which) {
-            Deck deck = AnkiDroidApp.deck();
+        	Deck deck = DeckManager.getMainDeck();
             deck.setNewCardOrder(mSpinnerNewCardOrder.getSelectedItemPosition());
             deck.setNewCardSpacing(mSpinnerNewCardSchedule.getSelectedItemPosition());
             deck.setRevCardOrder(mSpinnerRevCardOrder.getSelectedItemPosition());
@@ -628,6 +632,7 @@ public class StudyOptions extends Activity implements IButtonListener {
 			Log.i(AnkiDroidApp.TAG, "StudyOptions - onCreate: Detected multiple instance of this activity, closing it and return to root activity");
 	        Intent reloadIntent = new Intent(StudyOptions.this, StudyOptions.class);
 	        reloadIntent.setAction(Intent.ACTION_MAIN);
+	        reloadIntent.putExtras(getIntent().getExtras());
 	        reloadIntent.addCategory(Intent.CATEGORY_LAUNCHER);
 	        reloadIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 			finish();
@@ -639,7 +644,10 @@ public class StudyOptions extends Activity implements IButtonListener {
 
         Log.i(AnkiDroidApp.TAG, "StudyOptions - OnCreate()");
 
-        if (hasErrorFiles()) {
+        Intent intent = getIntent();
+        mStartedByBigWidget = intent.hasExtra(EXTRA_START_REVIEWER) || intent.hasExtra(EXTRA_START_DECKPICKER);
+
+        if (hasErrorFiles() && !mStartedByBigWidget) {
             Intent i = new Intent(this, Feedback.class);
             startActivityForResult(i, REPORT_ERROR);
         }
@@ -653,13 +661,15 @@ public class StudyOptions extends Activity implements IButtonListener {
 
         initAllContentViews();
 
-        Intent intent = getIntent();
         if (Intent.ACTION_VIEW.equalsIgnoreCase(intent.getAction())
                 && intent.getDataString() != null) {
             mDeckFilename = Uri.parse(intent.getDataString()).getPath();
             Log.i(AnkiDroidApp.TAG, "onCreate - deckFilename from VIEW intent: " + mDeckFilename);
-        } else if (Intent.ACTION_MAIN.equalsIgnoreCase(intent.getAction())
-                && intent.hasExtra(EXTRA_DECK)) {
+        } else if (Intent.ACTION_MAIN.equalsIgnoreCase(intent.getAction()) && intent.getBooleanExtra(EXTRA_START_REVIEWER, false)) {
+        	openReviewer();
+        } else if (Intent.ACTION_MAIN.equalsIgnoreCase(intent.getAction()) && intent.getBooleanExtra(EXTRA_START_DECKPICKER, false)) {
+        	openDeckPicker();
+        } else if (Intent.ACTION_MAIN.equalsIgnoreCase(intent.getAction()) && intent.hasExtra(EXTRA_DECK)) {
             mDeckFilename = intent.getStringExtra(EXTRA_DECK);
             Log.i(AnkiDroidApp.TAG, "onCreate - deckFilename from MAIN intent: " + mDeckFilename);
         } else if (savedInstanceState != null) {
@@ -671,12 +681,13 @@ public class StudyOptions extends Activity implements IButtonListener {
             mDeckFilename = preferences.getString("deckFilename", null);
             Log.i(AnkiDroidApp.TAG, "onCreate - deckFilename from preferences: " + mDeckFilename);
         }
+
         if (!mSdCardAvailable) {
             showContentView(CONTENT_NO_EXTERNAL_STORAGE);
         } else {
             if (mDeckFilename == null || !new File(mDeckFilename).exists()) {
                 showContentView(CONTENT_NO_DECK);
-            } else {
+            } else if (!mStartedByBigWidget) {
             	if ((showDeckPickerOnStartup()) && (!hasErrorFiles())) {
             		openDeckPicker();
             	} else {
@@ -777,11 +788,7 @@ public class StudyOptions extends Activity implements IButtonListener {
                     String action = intent.getAction();
                     if (action.equals(Intent.ACTION_MEDIA_EJECT)) {
                         Log.i(AnkiDroidApp.TAG, "mUnmountReceiver - Action = Media Eject");
-                        if (mIsClosing) {
-                        	DeckTask.waitToFinish();
-                        } else {
-                        	closeOpenedDeck();                        	
-                        }
+                        DeckManager.closeAllDecks();
                         showContentView(CONTENT_NO_EXTERNAL_STORAGE);
                         mSdCardAvailable = false;
                     } else if (action.equals(Intent.ACTION_MEDIA_MOUNTED)) {
@@ -807,7 +814,8 @@ public class StudyOptions extends Activity implements IButtonListener {
     	super.onDestroy();
         Log.i(AnkiDroidApp.TAG, "StudyOptions - onDestroy()");
 		if (!isFinishing()) {
-        	closeOpenedDeck();
+            DeckManager.closeMainDeck(DeckManager.REQUESTING_ACTIVITY_STUDYOPTIONS);
+            mCompat.invalidateOptionsMenu(StudyOptions.this);
 	        MetaDB.closeDB();
 		}
         if (mUnmountReceiver != null) {
@@ -826,22 +834,32 @@ public class StudyOptions extends Activity implements IButtonListener {
     }
 
 
-     @Override
-     protected void onPause() {
-         if ((AnkiDroidApp.zeemoteController() != null) && (AnkiDroidApp.zeemoteController().isConnected())){ 
-         	Log.d("Zeemote","Removing listener in onPause");
-         	AnkiDroidApp.zeemoteController().removeButtonListener(this);
-         	AnkiDroidApp.zeemoteController().removeJoystickListener(adapter);
-     		adapter.removeButtonListener(this);
-     		adapter = null;
-         }
-    	 
-         super.onPause();
-         // Update the widget when pausing this activity.
-         if (!mInDeckPicker && !mInReviewer) {
-             WidgetStatus.update(getBaseContext());
-         }
-     }
+    @Override
+    protected void onPause() {
+        if ((AnkiDroidApp.zeemoteController() != null) && (AnkiDroidApp.zeemoteController().isConnected())){ 
+        	Log.d("Zeemote","Removing listener in onPause");
+        	AnkiDroidApp.zeemoteController().removeButtonListener(this);
+        	AnkiDroidApp.zeemoteController().removeJoystickListener(adapter);
+    		adapter.removeButtonListener(this);
+    		adapter = null;
+        }
+   	 
+        super.onPause();
+    }
+
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        // Update the widget when stopping this activity (all when closing, only current when pressing home).
+        if (!mInDeckPicker && !mInReviewer) {
+        	if (isFinishing()) {
+        		WidgetStatus.update(this, null);
+        	} else {
+        		WidgetStatus.update(this, WidgetStatus.getDeckStatus(DeckManager.getMainDeck()));
+        	}
+        }
+    }
 
 
     @Override
@@ -895,21 +913,7 @@ public class StudyOptions extends Activity implements IButtonListener {
     private void closeStudyOptions(boolean closeDeck) {
 		mIsClosing = true;
         MetaDB.closeDB();
-        if (closeDeck && AnkiDroidApp.deck() != null && mSdCardAvailable) {
-        	DeckTask.launchDeckTask(DeckTask.TASK_TYPE_CLOSE_DECK, new DeckTask.TaskListener() {
-		        @Override
-		        public void onPreExecute() {
-		        }
-		        @Override
-		        public void onPostExecute(DeckTask.TaskData result) {
-		        	mIsClosing = false;
-		        }
-		        @Override
-		        public void onProgressUpdate(DeckTask.TaskData... values) {
-		        }
-			}, new DeckTask.TaskData(AnkiDroidApp.deck(), 0));
-        }
-        AnkiDroidApp.setDeck(null);
+        DeckManager.closeMainDeck(DeckManager.REQUESTING_ACTIVITY_STUDYOPTIONS);
         mCompat.invalidateOptionsMenu(this);
         StudyOptions.this.finish();
     }
@@ -918,10 +922,6 @@ public class StudyOptions extends Activity implements IButtonListener {
     private void restartApp() {
     	// restarts application in order to apply new themes or localisations
     	Intent i = getBaseContext().getPackageManager().getLaunchIntentForPackage(getBaseContext().getPackageName());
-        if (AnkiDroidApp.deck() != null && mSdCardAvailable) {
-        	AnkiDroidApp.deck().closeDeck();
-        }
-    	AnkiDroidApp.setDeck(null);
         mCompat.invalidateOptionsMenu(this);
         MetaDB.closeDB();
         StudyOptions.this.finish();
@@ -930,12 +930,12 @@ public class StudyOptions extends Activity implements IButtonListener {
 
 
     private void openReviewer() {
-    	if (mCurrentContentView == CONTENT_STUDY_OPTIONS || mCurrentContentView == CONTENT_SESSION_COMPLETE) {
+    	if (mStartedByBigWidget || mCurrentContentView == CONTENT_STUDY_OPTIONS || mCurrentContentView == CONTENT_SESSION_COMPLETE) {
     		mInReviewer = true;
     		Intent reviewer = new Intent(StudyOptions.this, Reviewer.class);
             reviewer.putExtra("deckFilename", mDeckFilename);
     		startActivityForResult(reviewer, REQUEST_REVIEW);
-        	if (getApiLevel() > 4) {
+        	if (getApiLevel() > 4 && !mStartedByBigWidget) {
        			ActivityTransitionAnimation.slide(this, ActivityTransitionAnimation.LEFT);
         	}
     	} else if (mCurrentContentView == CONTENT_CONGRATS) {
@@ -945,7 +945,7 @@ public class StudyOptions extends Activity implements IButtonListener {
 
 
     private void startEarlyReview() {
-		Deck deck = AnkiDroidApp.deck();
+		Deck deck = DeckManager.getMainDeck();
         if (deck != null) {
     		mInReviewer = true;
             deck.setupReviewEarlyScheduler();
@@ -961,7 +961,7 @@ public class StudyOptions extends Activity implements IButtonListener {
 
 
     private void startLearnMore() {
-		Deck deck = AnkiDroidApp.deck();
+		Deck deck = DeckManager.getMainDeck();
         if (deck != null) {
     		mInReviewer = true;
             deck.setupLearnMoreScheduler();
@@ -980,15 +980,6 @@ public class StudyOptions extends Activity implements IButtonListener {
         Intent deckLoadIntent = new Intent();
         deckLoadIntent.putExtra(OPT_DB, mDeckFilename);
         onActivityResult(PICK_DECK_REQUEST, RESULT_OK, deckLoadIntent);
-    }
-
-
-    private void closeOpenedDeck() {
-        if (!mIsClosing && AnkiDroidApp.deck() != null && mSdCardAvailable) {
-            AnkiDroidApp.deck().closeDeck();
-            AnkiDroidApp.setDeck(null);
-            mCompat.invalidateOptionsMenu(this);
-        }
     }
 
 
@@ -1467,7 +1458,7 @@ public class StudyOptions extends Activity implements IButtonListener {
 
 	            @Override
 	            public void onClick(DialogInterface dialog, int which) {
-	                Deck deck = AnkiDroidApp.deck();
+	                Deck deck = DeckManager.getMainDeck();
 	                boolean changed = false;
 	                String textTime = mEditSessionTime.getText().toString();
 	                if (!textTime.equals(Long.toString(deck.getSessionTimeLimit() / 60))) {
@@ -1684,20 +1675,20 @@ public class StudyOptions extends Activity implements IButtonListener {
 
 		case DIALOG_MORE:
 	        // Update spinner selections from deck prior to showing the dialog.
-	        Deck deck = AnkiDroidApp.deck();
-		        mSpinnerNewCardOrder.setSelection(deck.getNewCardOrder());
-		        mSpinnerNewCardSchedule.setSelection(deck.getNewCardSpacing());
-		        mSpinnerRevCardOrder.setSelection(deck.getRevCardOrder());
-		        mSpinnerFailCardOption.setVisibility(View.GONE); // TODO: Not implemented yet.
-		        mEditMaxFailCard.setText(String.valueOf(deck.getFailedCardMax()));
-		        mEditNewPerDay.setText(String.valueOf(deck.getNewCardsPerDay()));
-		        mCheckBoxPerDay.setChecked(deck.getPerDay());
-		        mCheckBoxSuspendLeeches.setChecked(deck.getSuspendLeeches());	        	
+	        Deck deck = DeckManager.getMainDeck();
+	        mSpinnerNewCardOrder.setSelection(deck.getNewCardOrder());
+	        mSpinnerNewCardSchedule.setSelection(deck.getNewCardSpacing());
+	        mSpinnerRevCardOrder.setSelection(deck.getRevCardOrder());
+	        mSpinnerFailCardOption.setVisibility(View.GONE); // TODO: Not implemented yet.
+	        mEditMaxFailCard.setText(String.valueOf(deck.getFailedCardMax()));
+	        mEditNewPerDay.setText(String.valueOf(deck.getNewCardsPerDay()));
+	        mCheckBoxPerDay.setChecked(deck.getPerDay());
+	        mCheckBoxSuspendLeeches.setChecked(deck.getSuspendLeeches());	        	
 			break;
 			
 		case DIALOG_LIMIT_SESSION:
 	        // Update spinner selections from deck prior to showing the dialog.
-	        Deck deck2 = AnkiDroidApp.deck();
+	        Deck deck2 = DeckManager.getMainDeck();
 	        long timeLimit = deck2.getSessionTimeLimit() / 60;
 	        long repLimit = deck2.getSessionRepLimit();
 	        mSessionLimitCheckBox.setChecked(timeLimit + repLimit > 0);
@@ -1720,7 +1711,7 @@ public class StudyOptions extends Activity implements IButtonListener {
 
 		case DIALOG_TAGS:
 	        if (allTags == null) {
-	            allTags = AnkiDroidApp.deck().allTags_();
+	            allTags = DeckManager.getMainDeck().allTags_();
 	            Log.i(AnkiDroidApp.TAG, "all tags: " + Arrays.toString(allTags));
 		        if (allTags == null) {
 		        	Themes.showThemedToast(StudyOptions.this, getResources().getString(R.string.error_insufficient_memory), false);
@@ -1760,7 +1751,7 @@ public class StudyOptions extends Activity implements IButtonListener {
 	        break;
 
 		case DIALOG_CRAM:
-	        allCramTags = AnkiDroidApp.deck().allTags_();
+	        allCramTags = DeckManager.getMainDeck().allTags_();
 	        if (allCramTags == null) {
 	        	Themes.showThemedToast(StudyOptions.this, getResources().getString(R.string.error_insufficient_memory), false);
 	        	ad.setEnabled(false);
@@ -1825,7 +1816,7 @@ public class StudyOptions extends Activity implements IButtonListener {
             case CONTENT_STUDY_OPTIONS:
             case CONTENT_SESSION_COMPLETE:
                 // Enable timeboxing in case it was disabled from the previous deck
-                if ((AnkiDroidApp.deck() != null) && (AnkiDroidApp.deck().name().equals("cram"))) {
+                if ((DeckManager.getMainDeck() != null) && (DeckManager.getMainDeck().name().equals("cram"))) {
                     mToggleCram.setChecked(false);
                     mToggleLimit.setEnabled(true);
                 }
@@ -1841,7 +1832,14 @@ public class StudyOptions extends Activity implements IButtonListener {
                 }
                 break;
             case CONTENT_CONGRATS:
-                setCongratsMessage();
+            	Deck deck = DeckManager.getMainDeck();
+                if (deck != null) {
+            		int failedCards = deck.getFailedDelayedCount();
+                    int revCards = deck.getNextDueCards(1);
+                    int newCards = deck.getNextNewCards();
+                    int eta = deck.getETA(failedCards, revCards, newCards, true);
+                	mTextCongratsMessage.setText(getCongratsMessage(this, failedCards, revCards, newCards, eta));
+                }
                 updateValuesFromDeck();
                 setContentView(mCongratsView);
                 break;
@@ -1900,25 +1898,18 @@ public class StudyOptions extends Activity implements IButtonListener {
     }
 
 
-    private void setCongratsMessage() {
-    	Resources res = getResources();
-        Deck deck = AnkiDroidApp.deck();
-        if (deck != null) {
-    		int failedCards = deck.getFailedDelayedCount();
-            int revCards = deck.getNextDueCards(1);
-            int revFailedCards = failedCards + revCards;
-            int newCards = deck.getNextNewCards();
-            int eta = deck.getETA(failedCards, revCards, newCards, true);
-            String newCardsText = res.getQuantityString(R.plurals.studyoptions_congrats_new_cards, newCards, newCards);
-            String etaText = res.getQuantityString(R.plurals.studyoptions_congrats_eta, eta, eta);
-            mTextCongratsMessage.setText(res.getQuantityString(R.plurals.studyoptions_congrats_message, revFailedCards, revFailedCards, newCardsText, etaText));
-        }
+    public static String getCongratsMessage(Context context, int failedCards, int revCards, int newCards, int eta) {
+    	Resources res = context.getResources();
+        int revFailedCards = failedCards + revCards;
+        String newCardsText = res.getQuantityString(R.plurals.studyoptions_congrats_new_cards, newCards, newCards);
+        String etaText = res.getQuantityString(R.plurals.studyoptions_congrats_eta, eta, eta);
+        return res.getQuantityString(R.plurals.studyoptions_congrats_message, revFailedCards, revFailedCards, newCardsText, etaText);
     }
 
 
     private void resetAndUpdateValuesFromDeck() {
-        Deck deck = AnkiDroidApp.deck();
-        DeckTask.waitToFinish();
+        Deck deck = DeckManager.getMainDeck();
+//        DeckTask.waitToFinish();
         if (deck != null) {
             deck.reset();
         	updateValuesFromDeck();        	
@@ -1952,7 +1943,7 @@ public class StudyOptions extends Activity implements IButtonListener {
 
 
     private boolean updateValuesFromDeck() {
-        Deck deck = AnkiDroidApp.deck();
+        Deck deck = DeckManager.getMainDeck();
         Resources res = getResources();
         if (deck != null && !mIsClosing && !mDeckNotAvailable) {
             // TODO: updateActives() from anqiqt/ui/main.py
@@ -2047,7 +2038,7 @@ public class StudyOptions extends Activity implements IButtonListener {
 * Currently not supporting cramming from selection of cards, as we don't have a card list view anyway.
 */
     private void onCram() {
-        AnkiDroidApp.deck().setupCramScheduler(activeCramTags.toArray(new String[activeCramTags.size()]), cramOrder);
+    	DeckManager.getMainDeck().setupCramScheduler(activeCramTags.toArray(new String[activeCramTags.size()]), cramOrder);
         // Timeboxing only supported using the standard scheduler
         mToggleLimit.setEnabled(false);
         resetAndUpdateValuesFromDeck();
@@ -2057,7 +2048,7 @@ public class StudyOptions extends Activity implements IButtonListener {
 * Exit cramming mode.
 */
     private void onCramStop() {
-        AnkiDroidApp.deck().setupStandardScheduler();
+    	DeckManager.getMainDeck().setupStandardScheduler();
         mToggleLimit.setEnabled(true);
     }
 
@@ -2094,7 +2085,7 @@ public class StudyOptions extends Activity implements IButtonListener {
 
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
-        boolean deckChangeable = (AnkiDroidApp.deck() != null) && mSdCardAvailable && !mToggleCram.isChecked();
+        boolean deckChangeable = (DeckManager.getMainDeck() != null) && mSdCardAvailable && !mToggleCram.isChecked();
         menu.findItem(MENU_OPEN).setEnabled(mSdCardAvailable);
         menu.findItem(MENU_ADD_FACT).setEnabled(deckChangeable);
         menu.findItem(MENU_MORE_OPTIONS).setEnabled(deckChangeable);
@@ -2127,7 +2118,8 @@ public class StudyOptions extends Activity implements IButtonListener {
 
             case MENU_ADD_FACT:
             	Intent intent = new Intent(StudyOptions.this, CardEditor.class);
-            	intent.putExtra(CardEditor.CARD_EDITOR_ACTION, CardEditor.ADD_CARD);
+            	intent.putExtra(CardEditor.EXTRA_CALLER, CardEditor.CALLER_STUDYOPTIONS);
+            	intent.putExtra(CardEditor.EXTRA_DECKPATH, DeckManager.getMainDeckPath());
             	startActivityForResult(intent, ADD_FACT);
                 if (getApiLevel() > 4) {
                     ActivityTransitionAnimation.slide(StudyOptions.this, ActivityTransitionAnimation.LEFT);
@@ -2159,7 +2151,7 @@ public class StudyOptions extends Activity implements IButtonListener {
         Intent decksPicker = new Intent(StudyOptions.this, DeckPicker.class);
         mInDeckPicker = true;
         startActivityForResult(decksPicker, PICK_DECK_REQUEST);
-    	if (getApiLevel() > 4) {
+    	if (getApiLevel() > 4 && !mStartedByBigWidget) {
     		ActivityTransitionAnimation.slide(this, ActivityTransitionAnimation.RIGHT);
     	}
         // Log.i(AnkiDroidApp.TAG, "openDeckPicker - Ending");
@@ -2187,7 +2179,7 @@ public class StudyOptions extends Activity implements IButtonListener {
 
 
     private void openStatistics(int period) {
-        if (AnkiDroidApp.deck() != null) {
+        if (DeckManager.getMainDeck() != null) {
             DeckTask.launchDeckTask(DeckTask.TASK_TYPE_LOAD_STATISTICS, mLoadStatisticsHandler, new DeckTask.TaskData(this, new String[]{""}, mStatisticType, period));
         }
     }
@@ -2195,12 +2187,7 @@ public class StudyOptions extends Activity implements IButtonListener {
 
     public void openPersonalDeckPicker() {
         if (AnkiDroidApp.isUserLoggedIn()) {
-            if (AnkiDroidApp.deck() != null)// && sdCardAvailable)
-            {
-                AnkiDroidApp.deck().closeDeck();
-                AnkiDroidApp.setDeck(null);
-                mCompat.invalidateOptionsMenu(this);
-            }
+            mCompat.invalidateOptionsMenu(this);
             startActivityForResult(
                     new Intent(StudyOptions.this, PersonalDeckPicker.class), DOWNLOAD_PERSONAL_DECK);
         	if (getApiLevel() > 4) {
@@ -2213,12 +2200,7 @@ public class StudyOptions extends Activity implements IButtonListener {
 
 
     public void openSharedDeckPicker() {
-        if (AnkiDroidApp.deck() != null)// && sdCardAvailable)
-        {
-            AnkiDroidApp.deck().closeDeck();
-            AnkiDroidApp.setDeck(null);
-            mCompat.invalidateOptionsMenu(this);
-        }
+        mCompat.invalidateOptionsMenu(this);
         // deckLoaded = false;
         startActivityForResult(new Intent(StudyOptions.this, SharedDeckPicker.class), DOWNLOAD_SHARED_DECK);
     	if (getApiLevel() > 4) {
@@ -2239,7 +2221,7 @@ public class StudyOptions extends Activity implements IButtonListener {
 
     private void syncDeckWithPrompt() {
         if (AnkiDroidApp.isUserLoggedIn()) {
-            Deck deck = AnkiDroidApp.deck();
+            Deck deck = DeckManager.getMainDeck();
             if (deck != null) {
                 // Close existing sync progress dialog
                 if (mProgressDialog != null && mProgressDialog.isShowing()) {
@@ -2262,7 +2244,7 @@ public class StudyOptions extends Activity implements IButtonListener {
         String password = preferences.getString("password", "");
 
         if (AnkiDroidApp.isUserLoggedIn()) {
-            Deck deck = AnkiDroidApp.deck();
+            Deck deck = DeckManager.getMainDeck();
             if (deck != null) {
                 Log.i(AnkiDroidApp.TAG, "Synchronizing deck " + mDeckFilename + ", conflict resolution: " + conflictResolution);
                 Log.i(AnkiDroidApp.TAG, String.format(Utils.ENGLISH_LOCALE, "Before syncing - mod: %f, last sync: %f", deck.getModified(), deck.getLastSync()));
@@ -2277,6 +2259,14 @@ public class StudyOptions extends Activity implements IButtonListener {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
         super.onActivityResult(requestCode, resultCode, intent);
+
+        if (mStartedByBigWidget && ((requestCode == REQUEST_REVIEW && resultCode == Reviewer.RESULT_DEFAULT) || (requestCode == PICK_DECK_REQUEST && resultCode != RESULT_OK))) {
+        	DeckManager.closeMainDeck(DeckManager.REQUESTING_ACTIVITY_STUDYOPTIONS);
+        	finish();
+        	return;
+        } else {
+        	mStartedByBigWidget = false;
+        }
 
         if (resultCode == CONTENT_NO_EXTERNAL_STORAGE) {
             showContentView(CONTENT_NO_EXTERNAL_STORAGE);
@@ -2302,17 +2292,16 @@ public class StudyOptions extends Activity implements IButtonListener {
             	return;
             }
             if (resultCode != RESULT_OK) {
-                Log.e(AnkiDroidApp.TAG, "onActivityResult - Deck browser returned with error");
+                Log.i(AnkiDroidApp.TAG, "onActivityResult - Deck browser returned without picking new deck");
                 // Make sure we open the database again in onResume() if user pressed "back"
                 // deckSelected = false;
-                boolean fileNotDeleted = mDeckFilename != null && new File(mDeckFilename).exists();
-            	if (!fileNotDeleted) {
-                    AnkiDroidApp.setDeck(null);
+            	if (mDeckFilename == null || !(new File(mDeckFilename).exists())) {
+                    DeckManager.closeMainDeck();
                     mCompat.invalidateOptionsMenu(this);
                     showContentView(CONTENT_NO_DECK);
             	} else {
                 	showContentView(CONTENT_STUDY_OPTIONS);
-                    if (AnkiDroidApp.deck() == null || !AnkiDroidApp.deck().getDeckPath().equals(mDeckFilename)) {
+                    if (DeckManager.getMainDeck() == null || !DeckManager.getMainDeckPath().equals(mDeckFilename)) {
                     	if (resultCode != RESULT_DONT_RELOAD_DECK) {
                             displayProgressDialogAndLoadDeck();
                         }
@@ -2336,9 +2325,9 @@ public class StudyOptions extends Activity implements IButtonListener {
             	showContentView(CONTENT_NO_DECK);
             }
             // Log.i(AnkiDroidApp.TAG, "onActivityResult - deckSelected = " + deckSelected);
-            if (AnkiDroidApp.deck() == null || !AnkiDroidApp.deck().getDeckPath().equals(mDeckFilename)) {
+            if (DeckManager.getMainDeck() == null || !DeckManager.getMainDeckPath().equals(mDeckFilename)) {
                 boolean updateAllCards = (requestCode == DOWNLOAD_SHARED_DECK);
-                displayProgressDialogAndLoadDeck(updateAllCards);	
+                displayProgressDialogAndLoadDeck(updateAllCards);
             }
         } else if (requestCode == PREFERENCES_UPDATE) {
             restorePreferences();
@@ -2370,8 +2359,13 @@ public class StudyOptions extends Activity implements IButtonListener {
                 	showContentView(CONTENT_STUDY_OPTIONS);
                 	showDialog(DIALOG_DB_ERROR);
                     break;
-                default:
-                    DeckTask.launchDeckTask(DeckTask.TASK_TYPE_SAVE_DECK, mSaveAndResetDeckHandler, new DeckTask.TaskData(AnkiDroidApp.deck(), 0));
+                case Reviewer.RESULT_DECK_CLOSED:
+                	showContentView(CONTENT_STUDY_OPTIONS);
+                	mDeckFilename = PrefSettings.getSharedPrefs(getBaseContext()).getString("deckFilename", null);
+                	displayProgressDialogAndLoadDeck();
+                	break;
+                case Reviewer.RESULT_DEFAULT:
+                    DeckTask.launchDeckTask(DeckTask.TASK_TYPE_SAVE_DECK, mSaveAndResetDeckHandler, new DeckTask.TaskData(DeckManager.getMainDeck(), 0));
                 	showContentView(CONTENT_STUDY_OPTIONS);
                     break;
             }
@@ -2553,12 +2547,14 @@ public class StudyOptions extends Activity implements IButtonListener {
         	mToggleCram.setChecked(false);
         	mToggleLimit.setEnabled(true);
 
+        	// close previous deck
+        	DeckManager.closeMainDeck(DeckManager.REQUESTING_ACTIVITY_STUDYOPTIONS);
+
             if (updateAllCards) {
                 DeckTask.launchDeckTask(DeckTask.TASK_TYPE_LOAD_DECK_AND_UPDATE_CARDS, mLoadDeckHandler,
-                        new DeckTask.TaskData(AnkiDroidApp.deck(), mDeckFilename));
+                        new DeckTask.TaskData(DeckManager.REQUESTING_ACTIVITY_STUDYOPTIONS, mDeckFilename));
             } else {
-                DeckTask.launchDeckTask(DeckTask.TASK_TYPE_LOAD_DECK, mLoadDeckHandler, new DeckTask.TaskData(
-                		AnkiDroidApp.deck(), mDeckFilename));
+                DeckTask.launchDeckTask(DeckTask.TASK_TYPE_LOAD_DECK, mLoadDeckHandler, new DeckTask.TaskData(DeckManager.REQUESTING_ACTIVITY_STUDYOPTIONS, mDeckFilename));
             }
         } else {
             if (mDeckFilename == null) {
@@ -2661,7 +2657,8 @@ public class StudyOptions extends Activity implements IButtonListener {
     						public void onCancel(DialogInterface dialog) {
     							mNewVersionAlert = null;
     							DeckTask.cancelTask();
-    				            closeOpenedDeck();
+    				            DeckManager.closeMainDeck(DeckManager.REQUESTING_ACTIVITY_STUDYOPTIONS);
+    				            mCompat.invalidateOptionsMenu(StudyOptions.this);
     				            MetaDB.closeDB();
     				            finish();
     						}
@@ -2675,11 +2672,6 @@ public class StudyOptions extends Activity implements IButtonListener {
         @Override
         public void onPostExecute(DeckTask.TaskData result) {
 
-            // Close the previously opened deck.
-            // if (AnkidroidApp.deck() != null)
-            // {
-            // AnkidroidApp.deck().closeDeck();
-            // AnkidroidApp.setDeck(null);
             // mCompat.invalidateOptionsMenu(StudyOptions.this);
             // }
             setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR);
@@ -2690,7 +2682,6 @@ public class StudyOptions extends Activity implements IButtonListener {
                 case DeckTask.DECK_LOADED:
                     // Set the deck in the application instance, so other activities
                     // can access the loaded deck.
-                    AnkiDroidApp.setDeck(result.getDeck());
                     mCompat.invalidateOptionsMenu(StudyOptions.this);
 
                     showContentView(CONTENT_STUDY_OPTIONS);
@@ -2732,7 +2723,7 @@ public class StudyOptions extends Activity implements IButtonListener {
                 	}
                 }
             }
-            Deck deck = AnkiDroidApp.deck();
+            Deck deck = DeckManager.getMainDeck();
             if (deck != null) {
                 mToggleLimit.setChecked(deck.isLimitedByTag() || deck.getSessionRepLimit() + deck.getSessionTimeLimit() > 0);
             }
@@ -2791,7 +2782,7 @@ public class StudyOptions extends Activity implements IButtonListener {
             }
             if (data.success) {
             	mCurrentDialogMessage = ((HashMap<String, String>) data.result).get("message");
-                AnkiDroidApp.deck().updateCutoff();
+            	DeckManager.getMainDeck().updateCutoff();
                 resetAndUpdateValuesFromDeck();
                 showDialog(DIALOG_SYNC_LOG);
             } else {

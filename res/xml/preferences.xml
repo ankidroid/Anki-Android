@@ -331,6 +331,14 @@
 				android:entries="@array/gestures_labels"
 				android:entryValues="@array/gestures_values" />
 			<ListPreference
+				android:title="@string/gestures_longclick"
+				android:summary=""
+				android:key="gestureLongclick"
+				android:defaultValue="11"
+				android:dependency="swipe"
+				android:entries="@array/gestures_labels"
+				android:entryValues="@array/gestures_values" />
+			<ListPreference
 				android:title="@string/gestures_shake"
 				android:summary=""
 				android:key="gestureShake"
@@ -487,6 +495,11 @@
 				android:summary="@string/fix_arabic_text_summ"
 				android:defaultValue="false"
 				android:key="fixArabicText"/>
+			<CheckBoxPreference
+				android:title="@string/pref_cache_cardbrowser"
+				android:summary="@string/pref_cache_cardbrowser_summ"
+				android:defaultValue="false"
+				android:key="cardBrowserCache"/>
 			<CheckBoxPreference
 				android:title="@string/input_workaround"
 				android:summary="@string/input_workaround_summ"

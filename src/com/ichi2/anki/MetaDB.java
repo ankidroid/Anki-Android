@@ -3,8 +3,6 @@ package com.ichi2.anki;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import com.tomgibara.android.veecheck.util.PrefSettings;
-
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
