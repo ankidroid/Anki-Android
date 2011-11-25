@@ -48,7 +48,7 @@ public class DeckPreferences extends PreferenceActivity implements OnSharedPrefe
 
 
         protected void cacheValues() {
-            Log.i(AnkiDroidApp.TAG, "DeckPreferences - CacheValues");
+            // Log.i(AnkiDroidApp.TAG, "DeckPreferences - CacheValues");
             mValues.put("newCardsPDay", String.valueOf(AnkiDroidApp.deck().getNewCardsPerDay()));
             mValues.put("sessionQLimit", String.valueOf(AnkiDroidApp.deck().getSessionRepLimit()));
             mValues.put("sessionTLimit", String.valueOf(AnkiDroidApp.deck().getSessionTimeLimit() / 60));
@@ -64,7 +64,7 @@ public class DeckPreferences extends PreferenceActivity implements OnSharedPrefe
 
             @Override
             public SharedPreferences.Editor clear() {
-                Log.d(AnkiDroidApp.TAG, "clear()");
+                // Log.d(AnkiDroidApp.TAG, "clear()");
                 mUpdate = new ContentValues();
                 return this;
             }
@@ -72,7 +72,7 @@ public class DeckPreferences extends PreferenceActivity implements OnSharedPrefe
 
             @Override
             public boolean commit() {
-                Log.d(AnkiDroidApp.TAG, "DeckPreferences - commit() changes back to database");
+                // Log.d(AnkiDroidApp.TAG, "DeckPreferences - commit() changes back to database");
 
                 // make sure we refresh the parent cached values
                 // cacheValues();
@@ -130,7 +130,7 @@ public class DeckPreferences extends PreferenceActivity implements OnSharedPrefe
 
             @Override
             public SharedPreferences.Editor putString(String key, String value) {
-                Log.d(this.getClass().toString(), String.format("Editor.putString(key=%s, value=%s)", key, value));
+                // Log.d(this.getClass().toString(), String.format("Editor.putString(key=%s, value=%s)", key, value));
                 mUpdate.put(key, value);
                 return this;
             }
@@ -138,7 +138,7 @@ public class DeckPreferences extends PreferenceActivity implements OnSharedPrefe
 
             @Override
             public SharedPreferences.Editor remove(String key) {
-                Log.d(this.getClass().toString(), String.format("Editor.remove(key=%s)", key));
+                // Log.d(this.getClass().toString(), String.format("Editor.remove(key=%s)", key));
                 mUpdate.remove(key);
                 return this;
             }
@@ -203,7 +203,7 @@ public class DeckPreferences extends PreferenceActivity implements OnSharedPrefe
 
         @Override
         public String getString(String key, String defValue) {
-            Log.d(this.getClass().toString(), String.format("getString(key=%s, defValue=%s)", key, defValue));
+            // Log.d(this.getClass().toString(), String.format("getString(key=%s, defValue=%s)", key, defValue));
 
             if (!mValues.containsKey(key)) {
                 return defValue;
@@ -239,7 +239,7 @@ public class DeckPreferences extends PreferenceActivity implements OnSharedPrefe
 
     @Override
     public SharedPreferences getSharedPreferences(String name, int mode) {
-        Log.d(this.getClass().toString(), String.format("getSharedPreferences(name=%s)", name));
+        // Log.d(this.getClass().toString(), String.format("getSharedPreferences(name=%s)", name));
         return mPref;
     }
 
@@ -249,7 +249,7 @@ public class DeckPreferences extends PreferenceActivity implements OnSharedPrefe
         super.onCreate(icicle);
 
         if (AnkiDroidApp.deck() == null) {
-            Log.i(AnkiDroidApp.TAG, "DeckPreferences - Selected Deck is NULL");
+            // Log.i(AnkiDroidApp.TAG, "DeckPreferences - Selected Deck is NULL");
             finish();
         } else {
             // requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);

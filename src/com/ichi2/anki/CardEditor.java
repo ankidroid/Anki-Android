@@ -420,7 +420,7 @@ public class CardEditor extends Activity {
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
 		if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
-			Log.i(AnkiDroidApp.TAG, "CardEditor - onBackPressed()");
+			// Log.i(AnkiDroidApp.TAG, "CardEditor - onBackPressed()");
 			closeCardEditor();
 			return true;
 		}
@@ -440,12 +440,12 @@ public class CardEditor extends Activity {
 	@Override
     protected void onSaveInstanceState(Bundle outState) {
 		String path = mDeck.getDeckPath();
-        Log.i(AnkiDroidApp.TAG, "onSaveInstanceState: " + path);
+        // Log.i(AnkiDroidApp.TAG, "onSaveInstanceState: " + path);
         // Remember current deck's filename.
         if (path != null) {
             outState.putString("deckFilename", path);
         }
-        Log.i(AnkiDroidApp.TAG, "onSaveInstanceState - Ending");
+        // Log.i(AnkiDroidApp.TAG, "onSaveInstanceState - Ending");
     }
 
 
@@ -717,7 +717,7 @@ public class CardEditor extends Activity {
 			mFullDeckPaths = new HashMap<String, String>();
 
 			if (len > 0 && fileList != null) {
-				Log.i(AnkiDroidApp.TAG, "CardEditor - populateDeckDialog, number of anki files = " + len);
+				// Log.i(AnkiDroidApp.TAG, "CardEditor - populateDeckDialog, number of anki files = " + len);
 				for (File file : fileList) {
 					String name = file.getName().replaceAll(".anki", "");
 					tree.add(name);
@@ -854,7 +854,7 @@ public class CardEditor extends Activity {
 		        	ad.setEnabled(false);
 		        	return;
 		        }
-				Log.i(AnkiDroidApp.TAG, "all tags: " + Arrays.toString(oldTags));
+				// Log.i(AnkiDroidApp.TAG, "all tags: " + Arrays.toString(oldTags));
 				allTags = new String[oldTags.length];
 				for (int i = 0; i < oldTags.length; i++) {
 					allTags[i] = oldTags[i];
@@ -883,7 +883,7 @@ public class CardEditor extends Activity {
 												+ tag);
 								mSelectedTags.remove(tag);
 							} else {
-								Log.i(AnkiDroidApp.TAG, "checked tag: " + tag);
+								// Log.i(AnkiDroidApp.TAG, "checked tag: " + tag);
 								mSelectedTags.add(tag);
 							}
 						}

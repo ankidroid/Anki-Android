@@ -177,7 +177,7 @@ public class BackupManager {
 
         File backupFile = new File(getBackupDirectory().getPath(), backupFilename);
         if (backupFile.exists()) {
-            Log.i(AnkiDroidApp.TAG, "No new backup of " + deckFile.getName() + " created. Already made one today");
+            // Log.i(AnkiDroidApp.TAG, "No new backup of " + deckFile.getName() + " created. Already made one today");
     		deleteDeckBackups(deckBackups, mMaxBackups);
             return RETURN_TODAY_ALREADY_BACKUP_DONE;
         }
@@ -267,7 +267,7 @@ public class BackupManager {
 
     	// repair file
     	String execString = "sqlite3 " + deckPath + " .dump | sqlite3 " + deckPath + ".tmp";
-    	Log.i(AnkiDroidApp.TAG, "repairDeck - Execute: " + execString);
+    	// Log.i(AnkiDroidApp.TAG, "repairDeck - Execute: " + execString);
     	try {
     		String[] cmd = {"/system/bin/sh", "-c", execString };
     	    Process process = Runtime.getRuntime().exec(cmd);
@@ -287,7 +287,7 @@ public class BackupManager {
         	if (!deckFile.renameTo(movedFile)) {
         		return false;
         	}
-        	Log.i(AnkiDroidApp.TAG, "repairDeck - moved corrupt file to " + movedFile.getAbsolutePath());
+        	// Log.i(AnkiDroidApp.TAG, "repairDeck - moved corrupt file to " + movedFile.getAbsolutePath());
         	File repairedFile = new File(deckPath + ".tmp");
         	if (!repairedFile.renameTo(deckFile)) {
         		return false;
