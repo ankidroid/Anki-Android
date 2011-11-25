@@ -20,7 +20,7 @@
 -->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
 	package="com.ichi2.anki"
-	android:versionName="0.7.1beta2_nobluetooth"
+	android:versionName="1.0nobluetooth"
 	android:versionCode="22"
 	android:installLocation="auto">
     <instrumentation android:name="android.test.InstrumentationTestRunner" android:targetPackage="com.ichi2.anki"></instrumentation>
