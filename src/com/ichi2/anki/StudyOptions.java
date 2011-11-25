@@ -2262,7 +2262,6 @@ public class StudyOptions extends Activity implements IButtonListener {
         super.onActivityResult(requestCode, resultCode, intent);
 
         if (mStartedByBigWidget && ((requestCode == REQUEST_REVIEW && resultCode == Reviewer.RESULT_DEFAULT) || (requestCode == PICK_DECK_REQUEST && resultCode != RESULT_OK))) {
-        	AnkiDroidWidgetBig.updateWidget(AnkiDroidWidgetBig.UpdateService.VIEW_NOT_SPECIFIED, false);
         	DeckManager.closeMainDeck(DeckManager.REQUESTING_ACTIVITY_STUDYOPTIONS);
         	finish();
         	return;
@@ -2350,6 +2349,7 @@ public class StudyOptions extends Activity implements IButtonListener {
             Log.i(AnkiDroidApp.TAG, "Result code = " + resultCode);
             // Return to standard scheduler
     		mInReviewer = false;
+        	AnkiDroidWidgetBig.updateWidget(AnkiDroidWidgetBig.UpdateService.VIEW_NOT_SPECIFIED, false);
             switch (resultCode) {
                 case Reviewer.RESULT_SESSION_COMPLETED:
                 	showContentView(CONTENT_SESSION_COMPLETE);
