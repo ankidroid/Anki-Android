@@ -58,14 +58,14 @@
   <string name="menu_rotate">Pusing</string>
   <string name="undo">Buat asal</string>
   <string name="redo">Buat semula</string>
-  <string name="close_previous_deck">Closing previous deck.\nPlease wait...</string>
-  <string name="close_deck">Closing deck.\nPlease wait...</string>
-  <string name="finish_operation">Finishing previous operation.\nPlease wait...</string>
+  <string name="close_previous_deck">Penutupan dek sebelumnya. \nSila tunggu ...</string>
+  <string name="close_deck">Penutupan dek.\nSila tunggu ...</string>
+  <string name="finish_operation">Menyudah operasi lepas.\nSila tunggu...</string>
   <string name="contextmenu_deckpicker_download_missing_media">Muat turun media kurang</string>
   <string name="contextmenu_deckpicker_reset_language_assignments">Set Tugasan Bahasa</string>
   <string name="contextmenu_deckpicker_reset_reset_message">Set bahasa</string>
   <string name="contextmenu_deckpicker_optimize_deck">Optimumkan data</string>
-  <string name="contextmenu_deckpicker_set_custom_dictionary">Set custom dictionary</string>
+  <string name="contextmenu_deckpicker_set_custom_dictionary">Tetapkan kamus sendiri</string>
   <string name="begin_cram">Mula mod Cram</string>
   <string name="cram">Cram</string>
   <string name="menu_open_deck">Semua dek</string>
@@ -91,14 +91,14 @@
   <string name="studyoptions_cram_dialog_title">Tag untuk cram</string>
   <string name="statistics">Statistik</string>
   <string name="studyoptions_load_other_deck">Muat Dek Lain</string>
-  <string name="studyoptions_load_tutorial_deck">Load Tutorial Deck</string>
+  <string name="studyoptions_load_tutorial_deck">Muat Dek Tutorial</string>
   <string name="studyoptions_night_mode">Mod malam</string>
   <string name="studyoptions_swap_qa">Swap Soal/Jawab</string>
-  <string name="visit">Visit</string>
-  <string name="later">Later</string>
-  <string name="download">Download</string>
-  <string name="deckpicker_loading_error">Deck could not be loaded</string>
-  <string name="deckpicker_creating_backup">Creating backup...</string>
+  <string name="visit">Kunjungi</string>
+  <string name="later">Kemudian</string>
+  <string name="download">Muat turun</string>
+  <string name="deckpicker_loading_error">Deck tidak dapat dimuat</string>
+  <string name="deckpicker_creating_backup">Membuat salinan...</string>
   <string-array name="next_review_s">
     <item>1 saat</item>
     <item>1 minit</item>

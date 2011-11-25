@@ -69,5 +69,6 @@
   <string name="tutorial_loading_error">Учебная колода не может быть создана</string>
   <string name="help_title">Справка</string>
   <string name="help_online">Онлайн помощь</string>
+  <string name="help_faq">Вопросы и ответы</string>
   <string name="help_tutorial">Учебная колода</string>
 </resources>

@@ -1525,7 +1525,7 @@ public class StudyOptions extends Activity {
 			break;
 		case DIALOG_SELECT_HELP:
 	        builder.setTitle(res.getString(R.string.help_title));
-	        builder.setItems(new String[] {res.getString(R.string.help_tutorial), res.getString(R.string.help_online)}, new OnClickListener() {
+	        builder.setItems(new String[] {res.getString(R.string.help_tutorial), res.getString(R.string.help_online), res.getString(R.string.help_faq)}, new OnClickListener() {
 
 				@Override
 				public void onClick(DialogInterface arg0, int arg1) {
@@ -1533,7 +1533,7 @@ public class StudyOptions extends Activity {
 						loadSampleDeck();
 					} else {
 			            if (Utils.isIntentAvailable(StudyOptions.this, "android.intent.action.VIEW")) {
-			                Intent intent = new Intent("android.intent.action.VIEW", Uri.parse(getResources().getString(R.string.link_help)));
+			                Intent intent = new Intent("android.intent.action.VIEW", Uri.parse(getResources().getString(arg1 == 0 ? R.string.link_help : R.string.link_faq)));
 			                startActivity(intent);
 			            } else {
 			                startActivity(new Intent(StudyOptions.this, About.class));

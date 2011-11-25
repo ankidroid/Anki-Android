@@ -29,8 +29,8 @@
   <string name="widget_minimum_cards_due_notification_ticker_text">%d fitxes pendents</string>
   <string name="widget_no_cards_due">No hi ha fitxes pendents</string>
   <string name="widget_loading">S\'està carregant el giny ...</string>
-  <string name="widget_medium">AnkiDroid Medium</string>
-  <string name="widget_small">AnkiDroid Small</string>
+  <string name="widget_medium">AnkiDroid Mitg</string>
+  <string name="widget_small">AnkiDroid Petit</string>
   <plurals name="widget_cards_in_decks_due">
     <item quantity="one">1 fitxa estarà pendent en %2$s</item>
     <item quantity="other">%1$d fitxes estaràn pendents en %2$s</item>

@@ -25,7 +25,7 @@
   <string name="CardEditorTags">Labels: %1$s</string>
   <string name="add_new_tag">Ajouter un nouveau label</string>
   <string name="sdcard_missing_message">La carte SD n\'est pas disponible car elle est connectée en USB. Déconnectez l\'USB pour accéder aux paquets.</string>
-  <string name="show_whiteboard">Afficher timer/whiteboard</string>
+  <string name="show_whiteboard">Afficher tableau blanc</string>
   <string name="hide_whiteboard">Masquer le tableau blanc</string>
   <string name="clear_whiteboard">Effacer le tableau blanc</string>
   <string name="session_question_limit_reached">Limite de questions par session atteinte</string>
@@ -69,5 +69,6 @@
   <string name="tutorial_loading_error">Le paquet-tutoriel n\'a pas pu être créé</string>
   <string name="help_title">Aide</string>
   <string name="help_online">Aide en ligne</string>
+  <string name="help_faq">FAQ</string>
   <string name="help_tutorial">Paquet-tutoriel</string>
 </resources>

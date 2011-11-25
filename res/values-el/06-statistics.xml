@@ -34,38 +34,38 @@
   <string name="statistics_zoom_out">Σμίκρυνση</string>
   <string name="statistics_all_decks">(όλες οι τράπουλες)</string>
   <string name="calculating_statistics">Υπολογισμός στατιστικών</string>
-  <string name="deck_summary_cards">Number of cards:</string>
-  <string name="deck_summary_facts">Number of facts:</string>
-  <string name="deck_summary_cards_mature">Mature cards:</string>
-  <string name="deck_summary_cards_young">Young cards:</string>
-  <string name="deck_summary_cards_unseen">Unseen cards:</string>
-  <string name="deck_summary_card_age">Card age</string>
-  <string name="deck_summary_average_interval">Average interval: &lt;b&gt;%.1f&lt;/b&gt; days</string>
-  <string name="deck_summary_answers_correct">Correct Answers</string>
-  <string name="deck_summary_answers_mature">Mature cards: &lt;b&gt;%1$.1f %2$s&lt;/b&gt; %2$s (%3$d of %4$d)</string>
-  <string name="deck_summary_answers_young">Young cards: &lt;b&gt;%1$.1f %2$s&lt;/b&gt; (%3$d of %4$d)</string>
-  <string name="deck_summary_answers_firstseen">Seen the first time: &lt;b&gt;%1$.1f %2$s&lt;/b&gt; (%3$d of %4$d)</string>
-  <string name="deck_summary_reviews">Reviews:</string>
-  <string name="deck_summary_news">New cards:</string>
-  <string name="deck_summary_average_week">Average seen last week</string>
-  <string name="deck_summary_average_month">Average seen last month</string>
-  <string name="deck_summary_average_year">Average seen last year</string>
-  <string name="deck_summary_average_total">Average seen ever</string>
-  <string name="deck_summary_forecast">Forecast</string>
-  <string name="deck_summary_tomorrow_due">Tomorrow due: &lt;b&gt;%d&lt;/b&gt; cards</string>
-  <string name="deck_summary_tomorrow_new">Tomorrow new: &lt;b&gt;%d&lt;/b&gt; cards</string>
-  <string name="deck_summary_tomorrow_time">Estimated time tomorrow: &lt;b&gt;%d&lt;/b&gt; min.</string>
-  <string name="deck_summary_finished_in">New cards finished in: &lt;b&gt;%d&lt;/b&gt; days</string>
-  <string name="deck_summary_cards_per_day">&lt;b&gt;%.1f&lt;/b&gt; cards/day</string>
-  <string name="deck_summary_deck_age">Deck age: &lt;b&gt;%d&lt;/b&gt; days</string>
-  <string name="deck_summary_all_decks">All decks</string>
+  <string name="deck_summary_cards">Αριθμός καρτών:</string>
+  <string name="deck_summary_facts">Αριθμός γεγονότων:</string>
+  <string name="deck_summary_cards_mature">Ώριμες κάρτες:</string>
+  <string name="deck_summary_cards_young">Νεαρές κάρτες:</string>
+  <string name="deck_summary_cards_unseen">Μη ανοιγμένες κάρτες:</string>
+  <string name="deck_summary_card_age">Ηλικία κάρτας</string>
+  <string name="deck_summary_average_interval">Μέσο διάστημα: &lt;b&gt;%.1f&lt;/b&gt; μέρες</string>
+  <string name="deck_summary_answers_correct">Σωστές απαντήσεις</string>
+  <string name="deck_summary_answers_mature">Ώριμες κάρτες: &lt;b&gt;%1$.1f %2$s&lt;/b&gt; %2$s (%3$d από %4$d)</string>
+  <string name="deck_summary_answers_young">Νεαρές κάρτες: &lt;b&gt;%1$.1f %2$s&lt;/b&gt; (%3$d από %4$d)</string>
+  <string name="deck_summary_answers_firstseen">Ειδομένες πρώτη φορά: &lt;b&gt;%1$.1f %2$s&lt;/b&gt; (%3$d από %4$d)</string>
+  <string name="deck_summary_reviews">Αναθεωρήσεις:</string>
+  <string name="deck_summary_news">Νέες κάρτες:</string>
+  <string name="deck_summary_average_week">Μέσος όρος περασμένης εβδομάδας</string>
+  <string name="deck_summary_average_month">Μέσος όρος περασμένου μήνα</string>
+  <string name="deck_summary_average_year">Μέσος όρος που παρατηρήθηκε πέρυσι</string>
+  <string name="deck_summary_average_total">Μέσος όρος από αρχής</string>
+  <string name="deck_summary_forecast">Πρόγνωση</string>
+  <string name="deck_summary_tomorrow_due">Αύριο δέοντες: &lt;b&gt;%d&lt;/b&gt; κάρτες</string>
+  <string name="deck_summary_tomorrow_new">Νέες αύριο: &lt;b&gt;%d&lt;/b&gt; κάρτες</string>
+  <string name="deck_summary_tomorrow_time">Εκτιμώμενος χρόνος αύριο: &lt;b&gt;%d&lt;/b&gt; λεπ.</string>
+  <string name="deck_summary_finished_in">Νέες κάρτες τέλειωσαν σε: &lt;b&gt;%d&lt;/b&gt; μέρες</string>
+  <string name="deck_summary_cards_per_day">&lt;b&gt;%.1f&lt;/b&gt; κάρτες/μέρα</string>
+  <string name="deck_summary_deck_age">Ηλικία τράπουλας: &lt;b&gt;%d&lt;/b&gt; μέρες</string>
+  <string name="deck_summary_all_decks">Όλες οι τράπουλες</string>
   <string-array name="statistics_type_labels">
     <item>Δέον χρόνος</item>
     <item>Με το συνολικό δέοντα χρόνο</item>
     <item>Διαστήματα</item>
     <item>Αναθεωρήσεις</item>
     <item>χρόνος αναθεώρησης</item>
-    <item>Deck Summary</item>
+    <item>Περίληψη Τράπουλας</item>
   </string-array>
   <string-array name="statistics_period_labels">
     <item>1 εβδομάδα</item>
@@ -75,35 +75,35 @@
     <item>1 χρόνος</item>
   </string-array>
   <string-array name="next_review_in_s">
-    <item>in 1 second</item>
-    <item>in 1 minute</item>
+    <item>σε 1 δευτερόλεπτο</item>
+    <item>σε 1 λεπτό</item>
     <item>σε 1 ώρα</item>
     <item>σε 1 ημέρα</item>
     <item>σε 1 μήνα</item>
     <item>σε 1 χρόνο</item>
   </string-array>
   <string-array name="next_review_in_p">
-    <item>in %s seconds</item>
-    <item>in %s minutes</item>
+    <item>σε %s δευτερόλεπτα</item>
+    <item>in %s λεπτά</item>
     <item>σε %s ώρες</item>
     <item>σε %s ημέρες</item>
     <item>σε %s μήνες</item>
     <item>σε %s χρόνια</item>
   </string-array>
   <string-array name="next_review_before_s">
-    <item>1 second before</item>
-    <item>1 minute before</item>
-    <item>1 hour before</item>
-    <item>1 day before</item>
-    <item>1 month before</item>
-    <item>1 year before</item>
+    <item>1 δευτερόλεπτο πριν</item>
+    <item>1 λεπτό πριν</item>
+    <item>1 ώρα πριν</item>
+    <item>1 μέρα πριν</item>
+    <item>1 μήνα πριν</item>
+    <item>1 έτος πριν</item>
   </string-array>
   <string-array name="next_review_before_p">
-    <item>%s seconds before</item>
-    <item>%s minutes before</item>
-    <item>%s hours before</item>
-    <item>%s days before</item>
-    <item>%s months before</item>
-    <item>%s years before</item>
+    <item>%s δευτερόλεπτα πριν</item>
+    <item>%s λεπτά πριν</item>
+    <item>%s ώρες πριν</item>
+    <item>%s μέρες πριν</item>
+    <item>%s μήνες πριν</item>
+    <item>%s έτη πριν</item>
   </string-array>
 </resources>

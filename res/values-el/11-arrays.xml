@@ -116,8 +116,8 @@
     <item>Ματαίωση μάθησης</item>
   </string-array>
   <string-array name="theme_labels">
-    <item>Android Dark</item>
-    <item>Android Light</item>
-    <item>Blue</item>
+    <item>Android Σκούρο</item>
+    <item>Android Ανοικτό</item>
+    <item>Μπλε</item>
   </string-array>
 </resources>

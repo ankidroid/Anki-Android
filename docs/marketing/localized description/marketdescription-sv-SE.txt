@@ -10,7 +10,7 @@ Skapa dina egna flashcard eller ladda ner gratis kortlekar på flera olika språ
 
 ★ Huvudfunktioner:
 • stöder flashcardinnehåll: text, bilder, ljud och LaTeX
-• repetitionsbaserad (supermemo 2 algoritm)
+• intervallbaserad repetition (supermemo 2 algoritm)
 • text-till-tal-integration
 • mer än 6000 tillgängliga kortlekar
 • två widgetar
