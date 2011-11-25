@@ -13,8 +13,8 @@ Kendi bilgi kartı destelerinizi oluşturun veya birçok dil ve konu için hazı
 • aralıklı yineleme (supermemo 2 algoritması)
 • metin okuma entegrasyonu
 • 6000'den fazla hazır deste
-• iki bileşen
 • ayrıntılı istatistikler
+• üç bileşen
 • AnkiWeb ile eşitleme
 • açık kaynaklı
 
@@ -29,10 +29,11 @@ Kendi bilgi kartı destelerinizi oluşturun veya birçok dil ve konu için hazı
 • haricî yazı tipi desteği
 • yedekleme sistemi
 • sürükleme, dokunma, sallama yoluyla komut verme
+• bileşende gözden geçirme
 • tamamen kişiselleştirilebilir
 • yoğun çalışma modu
 • çalışmayı etikete, süreye veya kart sayısına göre sınırlama
 • gece modu
 • zeemote desteği
 • üç farklı arayüz teması
-• 23 dil seçeneği
+• 27 dil seçeneği

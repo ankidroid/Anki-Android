@@ -58,13 +58,12 @@
   <string name="menu_rotate">Girar</string>
   <string name="undo">Desfés</string>
   <string name="redo">Refés</string>
-  <string name="close_previous_deck">Tancant paquet anterior.\nSi us plau espera...</string>
-  <string name="close_deck">Tancant paquet.\nEsperi si us plau...</string>
   <string name="finish_operation">Acabant l\'operació anterior.\nSi us plau, espera...</string>
   <string name="contextmenu_deckpicker_download_missing_media">Baixa els media que falten</string>
   <string name="contextmenu_deckpicker_reset_language_assignments">Reinicia les assignacions de tots el idiomes</string>
   <string name="contextmenu_deckpicker_reset_reset_message">Restableix l\'idioma</string>
   <string name="contextmenu_deckpicker_optimize_deck">Optimitza la base de dades</string>
+  <string name="contextmenu_deckpicker_rename_deck">Rename deck</string>
   <string name="contextmenu_deckpicker_set_custom_dictionary">Establir diccionari personalitzat</string>
   <string name="begin_cram">Comença el mode repàs (cram)</string>
   <string name="cram">Repàs (cram)</string>

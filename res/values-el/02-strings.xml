@@ -67,8 +67,14 @@
   <string name="error_insufficient_memory">Η λειτουργία δεν είναι δυνατή λόγω ανεπαρκούς μνήμης στη συσκευή σας</string>
   <string name="tutorial_load">Δημιουργία τράπουλας δείγματος</string>
   <string name="tutorial_loading_error">Η τράπουλα Δείγμα δε μπόρεσε να δημιουργηθεί</string>
+  <string name="rename">Rename</string>
+  <string name="rename_error">Deck %s could not be renamed</string>
   <string name="help_title">Βοήθεια</string>
   <string name="help_online">Online βοήθεια</string>
   <string name="help_faq">Συχνές ερωτήσεις</string>
   <string name="help_tutorial">Τράπουλα δείγμα</string>
+  <plurals name="factadder_cards_added">
+    <item quantity="one">1 card added</item>
+    <item quantity="other">%d cards added</item>
+  </plurals>
 </resources>

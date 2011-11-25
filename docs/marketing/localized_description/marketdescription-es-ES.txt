@@ -13,8 +13,8 @@ Crea tus propios mazos de tarjetas o descarga mazos gratuitos creados para mucho
 • repaso espaciado (algoritmo de SuperMemo 2)
 • integración de texto a voz
 • más de 6000 mazos prediseñados
-• dos widgets
 • estadísticas detalladas
+• tres widgets
 • sincronización con AnkiWeb
 • código abierto
 
@@ -29,10 +29,11 @@ Crea tus propios mazos de tarjetas o descarga mazos gratuitos creados para mucho
 • soporte para fuentes personalizadas
 • completo sistema de copias de seguridad
 • navegación por gestos, toques, agitado
+• repaso en el widget
 • totalmente personalizable
 • modo empollar
 • limita el estudio por etiquetas, tiempo o tarjetas
 • modo noche
 • soporte para zeemote
 • tres temas de interfaz diferentes
-• traducido en 23 idiomas
+• traducido en 27 idiomas

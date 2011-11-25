@@ -13,8 +13,8 @@ Buat dek sendiri  atau download percuma dek untuk sebarang bahasa dan topik (leb
 • spasi pengulangan (algoritma supermemo 2)
 • integrasi teks-suara
 • lebih dari 6000 dek tersedia
-• dua wijet
 • statistik rinci
+• three widgets
 • sinkronisasi dengan AnkiWeb
 • sumber terbuka
 
@@ -29,10 +29,11 @@ Pelayar kad
 • dukungan kustom font
 • sistem sokongan penuh
 • navigasi dengan gesek, tekan, goyang
+• review in widget
 • sepenuhnya disesuaikan
 • modus cram
 • membatasi belajar dengan tag, waktu atau kad
 • modus malam
 • dukungan zeemote
 • tiga ui-tema yang berbeda
-• 23 lokasi
+• 27 localisations

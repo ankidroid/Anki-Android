@@ -107,6 +107,7 @@
   <string name="gestures_tap_bottom">Tekan bawah</string>
   <string name="gestures_tap_left">Tekan kiri</string>
   <string name="gestures_tap_right">Tekan kanan</string>
+  <string name="gestures_longclick">Long click</string>
   <string name="pref_cat_scrolling">Butang atas/bawah peranti</string>
   <string name="more_scrolling_buttons">eReader</string>
   <string name="more_scrolling_buttons_summ">Guna butang Kanji/Katakana, Emoji/Kao-moji untuk skrol.</string>
@@ -198,6 +199,9 @@
   <string name="input_workaround">Jalan sementara Input</string>
   <string name="input_workaround_summ">Jalan sementara untuk masalah petak HTML. Berlaku pada beberapa peranti.</string>
   <string name="write_answers_message">Anda patut menyediakan jawapan dalam petak. Gunakan Anki Desktop untuk ini (deck properties -&gt; edit model -&gt; card layout).\n\nJika petak jawapan tidak diisi, jawapan ditulis akan dirujuk kepada jawapan semua kad.</string>
+  <string name="pref_cache_cardbrowser">Card Browser Cache</string>
+  <string name="pref_cache_cardbrowser_summ">Holds all card browser cards in cache (memory consumptive).</string>
+  <string name="pref_cache_cardbrowser_reload">Reload all cards?</string>
   <string name="pref_keep_screen_on">Sentiasa Hidup Skrin</string>
   <string name="pref_keep_screen_on_summ">Menghalan skrin ditutup semasa reviu</string>
 </resources>

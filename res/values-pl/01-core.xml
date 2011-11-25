@@ -58,13 +58,12 @@
   <string name="menu_rotate">Obrót</string>
   <string name="undo">Cofnij</string>
   <string name="redo">Ponów</string>
-  <string name="close_previous_deck">Zamykanie poprzedniej talii.\nMomencik...</string>
-  <string name="close_deck">Zamykanie talii.\nProszę czekać...</string>
   <string name="finish_operation">Kończenie poprzedniej operacji.\nProszę czekać...</string>
   <string name="contextmenu_deckpicker_download_missing_media">Pobierz brakujące media</string>
   <string name="contextmenu_deckpicker_reset_language_assignments">Zresetuj przypisanie języka</string>
   <string name="contextmenu_deckpicker_reset_reset_message">Reset języka</string>
   <string name="contextmenu_deckpicker_optimize_deck">Optymalizacja bazy danych</string>
+  <string name="contextmenu_deckpicker_rename_deck">Zmień nazwę talii</string>
   <string name="contextmenu_deckpicker_set_custom_dictionary">Ustaw własny słownik</string>
   <string name="begin_cram">Zacznij zakuwanie</string>
   <string name="cram">Zakuwaj</string>

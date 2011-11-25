@@ -68,8 +68,14 @@
   <string name="error_insufficient_memory">Operation not possible due to insufficient memory on your device</string>
   <string name="tutorial_load">Creating tutorial deck</string>
   <string name="tutorial_loading_error">Tutorial deck could not be created</string>
+  <string name="rename">Rename</string>
+  <string name="rename_error">Deck %s could not be renamed</string>
   <string name="help_title">ヘルプ</string>
   <string name="help_online">オンラインヘルプ</string>
   <string name="help_faq">FAQ</string>
   <string name="help_tutorial">Tutorial deck</string>
+  <plurals name="factadder_cards_added">
+    <item quantity="one">1 card added</item>
+    <item quantity="other">%d cards added</item>
+  </plurals>
 </resources>

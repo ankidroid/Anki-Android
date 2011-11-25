@@ -107,6 +107,7 @@
   <string name="gestures_tap_bottom">Dotknij na dole</string>
   <string name="gestures_tap_left">Dotknij po lewej</string>
   <string name="gestures_tap_right">Dotknij po prawej</string>
+  <string name="gestures_longclick">Przytrzymanie</string>
   <string name="pref_cat_scrolling">Sprzętowe przyciski góra/dół</string>
   <string name="more_scrolling_buttons">eCzytnik</string>
   <string name="more_scrolling_buttons_summ">Używaj również przycisków Kanji/Katakana, Emoji/Kao-moji do przewijania.</string>
@@ -198,6 +199,9 @@
   <string name="input_workaround">Poprawka przy wpisywaniu</string>
   <string name="input_workaround_summ">Obejście problemu nieaktywnych pól tekstowych HTML na niektórych urządzeniach.</string>
   <string name="write_answers_message">Dla każdej talii należy zdefiniować pole, które porównywane będzie z wpisywaną odpowiedzią. Można to zrobić w wersji desktopowej Anki (Własności talii -&gt; Edytuj model -&gt; Układ karty).\n\nJeśli nie zdefiniowano takiego pola, wpisywana odpowiedź będzie zawsze porównywana z całym polem odpowiedzi karty.</string>
+  <string name="pref_cache_cardbrowser">Pamięć podręczna przeglądarki kart</string>
+  <string name="pref_cache_cardbrowser_summ">Przechowuje karty z przeglądarki kart w pamięci podręcznej (większe zużycie pamięci).</string>
+  <string name="pref_cache_cardbrowser_reload">Wczytać ponownie wszystkie karty?</string>
   <string name="pref_keep_screen_on">Nie wyłączaj ekranu</string>
   <string name="pref_keep_screen_on_summ">Nie pozwól na wyłączanie ekranu podczas powtórek</string>
 </resources>

@@ -13,8 +13,8 @@ Create your own flashcard decks or download free decks compiled for many languag
 • spaced repetition (supermemo 2 algorithm)
 • text-to-speech integration
 • more than 6000 premade decks
-• two widgets
 • detailed statistics
+• three widgets
 • syncing with AnkiWeb
 • open source
 
@@ -29,10 +29,11 @@ Create your own flashcard decks or download free decks compiled for many languag
 • custom font support
 • full backup system
 • navigation by swipe, tap, shake
+• review in widget
 • fully customisable
 • cram mode
 • limit studying by tag, time or cards
 •ナイトモード
 • zeemote support
 • three different ui-themes
-• 23 localisations
+• 27 localisations

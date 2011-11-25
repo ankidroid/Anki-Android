@@ -58,13 +58,12 @@
   <string name="menu_rotate">Changer d\'orientation</string>
   <string name="undo">Annuler</string>
   <string name="redo">Refaire</string>
-  <string name="close_previous_deck">Fermeture du paquet précédent\nMerci de patienter</string>
-  <string name="close_deck">Fermeture du paquet\nMerci de patienter</string>
   <string name="finish_operation">En train de finir l\'opération précédente.\nVeuillez patienter...</string>
   <string name="contextmenu_deckpicker_download_missing_media">Télécharger les médias manquants</string>
   <string name="contextmenu_deckpicker_reset_language_assignments">Réinitialiser les affectations de langue</string>
   <string name="contextmenu_deckpicker_reset_reset_message">Réinitialiser la langue</string>
   <string name="contextmenu_deckpicker_optimize_deck">Optimiser la base de données</string>
+  <string name="contextmenu_deckpicker_rename_deck">Rename deck</string>
   <string name="contextmenu_deckpicker_set_custom_dictionary">Définir un dictionnaire personnalisé</string>
   <string name="begin_cram">Démarrer la bachotage</string>
   <string name="cram">Bachoter</string>

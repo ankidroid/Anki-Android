@@ -58,13 +58,12 @@
   <string name="menu_rotate">Forgatás</string>
   <string name="undo">Visszavonás</string>
   <string name="redo">Ismét</string>
-  <string name="close_previous_deck">Closing previous deck.\nPlease wait...</string>
-  <string name="close_deck">Closing deck.\nPlease wait...</string>
   <string name="finish_operation">Befejező előző művelet.\n Kérlek várj...</string>
   <string name="contextmenu_deckpicker_download_missing_media">Download missing media</string>
   <string name="contextmenu_deckpicker_reset_language_assignments">Nyelv-hozzárendelés visszaállítása</string>
   <string name="contextmenu_deckpicker_reset_reset_message">Nyelv visszaállítása</string>
   <string name="contextmenu_deckpicker_optimize_deck">Adatbázis optimalizálása </string>
+  <string name="contextmenu_deckpicker_rename_deck">Rename deck</string>
   <string name="contextmenu_deckpicker_set_custom_dictionary">Beállítása saját szótár</string>
   <string name="begin_cram">Indítsa el a Cram mód</string>
   <string name="cram">Cram</string>

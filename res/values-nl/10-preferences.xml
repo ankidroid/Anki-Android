@@ -107,6 +107,7 @@
   <string name="gestures_tap_bottom">Druk onderaan</string>
   <string name="gestures_tap_left">Druk links</string>
   <string name="gestures_tap_right">Druk rechts</string>
+  <string name="gestures_longclick">Lange klik</string>
   <string name="pref_cat_scrolling">Hardware omhoog/omlaag knoppen</string>
   <string name="more_scrolling_buttons">eReader</string>
   <string name="more_scrolling_buttons_summ">Gebruik ook Kanji/Katakana, Emoji/Kao-Moji knoppen om te bladeren.</string>
@@ -198,6 +199,9 @@
   <string name="input_workaround">Workaround voor invoer</string>
   <string name="input_workaround_summ">Oplossing voor  problemen met het scherpstellen op HTML-invoervelden. Dit veroorzaakt problemen op meerdere apparaten.</string>
   <string name="write_answers_message">Definieer voor ieder leerset een veld om te vergelijken met het geschreven antwoord. U kunt dit doen met Anki Desktop (eigenschappen van de leerset -&gt; bewerken model -&gt; Kaart Layout).\n\nAls geen vergelijk veld is ingesteld, zal het schriftelijke antwoord altijd worden vergeleken met het antwoord van de gehele kaart.</string>
+  <string name="pref_cache_cardbrowser">Kaartbrowser cache</string>
+  <string name="pref_cache_cardbrowser_summ">Alle kaarten van de kaartbrowser in het cache-geheugen houden (neemt geheugen in gebruik).</string>
+  <string name="pref_cache_cardbrowser_reload">Alle kaarten opnieuw laden?</string>
   <string name="pref_keep_screen_on">Zorg dat scherm aan blijft</string>
   <string name="pref_keep_screen_on_summ">Voorkom dat scherm uitgeschakeld wordt tijdens herhalen</string>
 </resources>

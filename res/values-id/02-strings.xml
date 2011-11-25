@@ -67,8 +67,14 @@
   <string name="error_insufficient_memory">Operasi gagal kerana tahap memori pada peranti anda</string>
   <string name="tutorial_load">Membuat dek tutorial</string>
   <string name="tutorial_loading_error">Dek tutorial tidak dapat dibuat</string>
+  <string name="rename">Rename</string>
+  <string name="rename_error">Deck %s could not be renamed</string>
   <string name="help_title">Bantuan</string>
   <string name="help_online">Bantuan online</string>
   <string name="help_faq">FAQ</string>
   <string name="help_tutorial">Dek tutorial</string>
+  <plurals name="factadder_cards_added">
+    <item quantity="one">1 card added</item>
+    <item quantity="other">%d cards added</item>
+  </plurals>
 </resources>

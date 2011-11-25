@@ -58,13 +58,12 @@
   <string name="menu_rotate">Περιστροφή</string>
   <string name="undo">Αναίρεση</string>
   <string name="redo">Επαναφορά</string>
-  <string name="close_previous_deck">Κλείσιμο προηγούμενης τράπουλας.\nΠαρακαλώ περιμένετε...</string>
-  <string name="close_deck">Κλείσιμο τράπουλας.\nΠαρακαλώ περιμένετε...</string>
   <string name="finish_operation">Τελειώνει η προηγούμενη λειτουργία.\nΠαρακαλώ περιμένετε...</string>
   <string name="contextmenu_deckpicker_download_missing_media">Λήψη απόντων μέσων</string>
   <string name="contextmenu_deckpicker_reset_language_assignments">Επαναφορά καταχωρήσεων Γλωσσών</string>
   <string name="contextmenu_deckpicker_reset_reset_message">Επαναφορά γλώσσας</string>
   <string name="contextmenu_deckpicker_optimize_deck">Βελτιστοποίηση βάσης δεδομένων</string>
+  <string name="contextmenu_deckpicker_rename_deck">Rename deck</string>
   <string name="contextmenu_deckpicker_set_custom_dictionary">Ορισμός προσαρμοσμένου λεξικού</string>
   <string name="begin_cram">Έναρξη εντατικής μελέτης</string>
   <string name="cram">Εντατική μελέτη</string>

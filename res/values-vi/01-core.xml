@@ -58,13 +58,12 @@
   <string name="menu_rotate">Xoay</string>
   <string name="undo">Hoàn tác</string>
   <string name="redo">Làm lại</string>
-  <string name="close_previous_deck">Đang đóng tập thẻ trước.\nXin hãy chờ...</string>
-  <string name="close_deck">Đang đóng tập thẻ.\nXin hãy chờ...</string>
   <string name="finish_operation">Đang kết thúc thao tác trước.\nXin hãy chờ...</string>
   <string name="contextmenu_deckpicker_download_missing_media">Tải thông tin bị thiếu</string>
   <string name="contextmenu_deckpicker_reset_language_assignments">Đặt lại ngôn ngữ phân công</string>
   <string name="contextmenu_deckpicker_reset_reset_message">Đặt lại ngôn ngữ</string>
   <string name="contextmenu_deckpicker_optimize_deck">Tối ưu hóa cơ sở dữ liệu</string>
+  <string name="contextmenu_deckpicker_rename_deck">Rename deck</string>
   <string name="contextmenu_deckpicker_set_custom_dictionary">Thiết lập từ điển riêng</string>
   <string name="begin_cram">Bắt đầu chế độ nhồi</string>
   <string name="cram">Nhồi nhét</string>

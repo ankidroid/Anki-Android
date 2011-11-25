@@ -58,13 +58,12 @@
   <string name="menu_rotate">หมุน</string>
   <string name="undo">เรียกคืน</string>
   <string name="redo">ทำซ้ำ</string>
-  <string name="close_previous_deck">กำลังปิดสำรับก่อนหน้านี้.\n กรุณารอสักครู่</string>
-  <string name="close_deck">กำลังปิดสำรับ.\n กรุณารอสักครู่</string>
   <string name="finish_operation">กำลังทำงานที่ค้างไว้ให้เสร็จ.\n กรุณารอสักครู่</string>
   <string name="contextmenu_deckpicker_download_missing_media">ดาวน์โหลดสื่อที่หายไป</string>
   <string name="contextmenu_deckpicker_reset_language_assignments">ตั้งค่าการกำหนดภาษาใหม่</string>
   <string name="contextmenu_deckpicker_reset_reset_message">ตั้งค่าภาษาใหม่</string>
   <string name="contextmenu_deckpicker_optimize_deck">การปรับฐานข้อมูลให้มีประสิทธิภาพ</string>
+  <string name="contextmenu_deckpicker_rename_deck">Rename deck</string>
   <string name="contextmenu_deckpicker_set_custom_dictionary">ตั้งค่าพจนากรุมแบบกำหนดเอง</string>
   <string name="begin_cram">Start Cram mode</string>
   <string name="cram">Cram</string>
