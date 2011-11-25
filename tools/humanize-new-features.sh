@@ -1,6 +1,9 @@
 #!/bin/bash
 # Shows human-readable (not XML) changelog for English and for languages where it is not identical to English.
 
+echo "English:"
+grep "<item>" res/values/13-newfeatures.xml | sed -e "s/.*<item>/• /" -e "s/<.*//" -e "s/\\\\//"
+
 LANGS=`ls res | grep "values-" | sed -e "s/values-//" | grep -v "v11"`
 
 for LANG in $LANGS
