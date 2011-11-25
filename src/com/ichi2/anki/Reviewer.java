@@ -89,6 +89,8 @@ import com.ichi2.themes.StyledDialog;
 import com.ichi2.themes.Themes;
 import com.ichi2.utils.DiffEngine;
 import com.ichi2.utils.RubyParser;
+import com.ichi2.widget.AnkiDroidWidgetBig;
+import com.ichi2.widget.WidgetStatus;
 import com.tomgibara.android.veecheck.util.PrefSettings;
 
 import org.amr.arabic.ArabicUtilities;
@@ -102,10 +104,12 @@ public class Reviewer extends Activity implements IButtonListener{
     /**
      * Result codes that are returned when this activity finishes.
      */
-    public static final int RESULT_SESSION_COMPLETED = 1;
-    public static final int RESULT_NO_MORE_CARDS = 2;
-    public static final int RESULT_EDIT_CARD_RESET = 3;
-    public static final int RESULT_ANSWERING_ERROR = 4;
+    public static final int RESULT_DEFAULT = 50;
+    public static final int RESULT_SESSION_COMPLETED = 51;
+    public static final int RESULT_NO_MORE_CARDS = 52;
+    public static final int RESULT_EDIT_CARD_RESET = 53;
+    public static final int RESULT_ANSWERING_ERROR = 54;
+    public static final int RESULT_DECK_CLOSED = 55;
 
     /**
      * Possible values for update card handler
@@ -251,6 +255,7 @@ public class Reviewer extends Activity implements IButtonListener{
     
     private String mMediaDir;
 
+    private boolean mInEditor = false;
     
     /**
      * Variables to hold layout objects that we need to update or handle events for
@@ -340,6 +345,7 @@ public class Reviewer extends Activity implements IButtonListener{
  	private int mGestureTapRight;
  	private int mGestureTapTop;
  	private int mGestureTapBottom;
+ 	private int mGestureLongclick;
 
  	private static final int GESTURE_NOTHING = 0;
  	private static final int GESTURE_ANSWER_EASE1 = 1;
@@ -441,12 +447,12 @@ public class Reviewer extends Activity implements IButtonListener{
     		Log.i(AnkiDroidApp.TAG, "onEmulatedLongClick");
         	Vibrator vibratorManager = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
             vibratorManager.vibrate(50);
-            longClickHandler.postDelayed(startSelection, 300);
+            longClickHandler.postDelayed(startLongClickAction, 300);
         }
     };
-    private final Runnable startSelection = new Runnable() {
+    private final Runnable startLongClickAction = new Runnable() {
         public void run() {
-            selectAndCopyText();
+            executeCommand(mGestureLongclick);
         }
     };
 
@@ -561,7 +567,7 @@ public class Reviewer extends Activity implements IButtonListener{
     		Log.i(AnkiDroidApp.TAG, "onLongClick");
     		Vibrator vibratorManager = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
     		vibratorManager.vibrate(50);
-            longClickHandler.postDelayed(startSelection, 300);
+            longClickHandler.postDelayed(startLongClickAction, 300);
     		return true;
     	}
     };
@@ -584,8 +590,7 @@ public class Reviewer extends Activity implements IButtonListener{
         public void onPostExecute(DeckTask.TaskData result) {
             if (!result.getBoolean()) {
             	// RuntimeException occured on marking cards
-                Reviewer.this.setResult(RESULT_ANSWERING_ERROR);
-                closeReviewer(true);
+                closeReviewer(RESULT_ANSWERING_ERROR, true);
             }
             mProgressDialog.dismiss();
         }
@@ -613,18 +618,16 @@ public class Reviewer extends Activity implements IButtonListener{
             if (!result.getBoolean()) {
             	// RuntimeException occured on dismissing cards
                 Reviewer.this.setResult(RESULT_ANSWERING_ERROR);
-                closeReviewer(true);
+                closeReviewer(RESULT_ANSWERING_ERROR, true);
                 return;
             }
             // Check for no more cards before session complete. If they are both true,
             // no more cards will take precedence when returning to study options.
             if (mNoMoreCards) {
-                Reviewer.this.setResult(RESULT_NO_MORE_CARDS);
                 mShowCongrats = true;
-                closeReviewer(true);
+                closeReviewer(RESULT_NO_MORE_CARDS, true);
             } else if (mSessionComplete) {
-                Reviewer.this.setResult(RESULT_SESSION_COMPLETED);
-                closeReviewer(true);
+                closeReviewer(RESULT_SESSION_COMPLETED, true);
             }
         }
     };
@@ -673,8 +676,7 @@ public class Reviewer extends Activity implements IButtonListener{
         public void onPostExecute(DeckTask.TaskData result) {
             if (!result.getBoolean()) {
             	// RuntimeException occured on update cards
-                Reviewer.this.setResult(RESULT_ANSWERING_ERROR);
-                closeReviewer(true);
+                closeReviewer(RESULT_ANSWERING_ERROR, true);
                 return;
             }
             mShakeActionStarted = false;
@@ -686,6 +688,7 @@ public class Reviewer extends Activity implements IButtonListener{
                 	Themes.showThemedToast(Reviewer.this, getResources().getString(R.string.card_suspended), true);           	
                 }            	
             }
+            mInEditor = false;
         }
     };
 
@@ -716,19 +719,16 @@ public class Reviewer extends Activity implements IButtonListener{
         public void onPostExecute(DeckTask.TaskData result) {
             if (!result.getBoolean()) {
             	// RuntimeException occured on answering cards
-                Reviewer.this.setResult(RESULT_ANSWERING_ERROR);
-                closeReviewer(true);
+                closeReviewer(RESULT_ANSWERING_ERROR, true);
                 return;
             }
             // Check for no more cards before session complete. If they are both true,
             // no more cards will take precedence when returning to study options.
             if (mNoMoreCards) {
-                Reviewer.this.setResult(RESULT_NO_MORE_CARDS);
                 mShowCongrats = true;
-                closeReviewer(true);
+                closeReviewer(RESULT_NO_MORE_CARDS, true);
             } else if (mSessionComplete) {
-                Reviewer.this.setResult(RESULT_SESSION_COMPLETED);
-                closeReviewer(true);
+                closeReviewer(RESULT_SESSION_COMPLETED, true);
             }
         }
     };
@@ -820,13 +820,13 @@ public class Reviewer extends Activity implements IButtonListener{
 	            }
 				break;
 			case MSG_ZEEMOTE_BUTTON_B:
-				closeReviewer(false);
+				closeReviewer(RESULT_DEFAULT, false);
 				break;
 			case MSG_ZEEMOTE_BUTTON_C:
-				if (AnkiDroidApp.deck().undoAvailable()){
+				if (DeckManager.getMainDeck().undoAvailable()){
             	setNextCardAnimation(true);
             	DeckTask.launchDeckTask(DeckTask.TASK_TYPE_UNDO, mUpdateCardHandler, new DeckTask.TaskData(UPDATE_CARD_SHOW_QUESTION,
-                        AnkiDroidApp.deck(), mCurrentCard.getId(), false));
+                        DeckManager.getMainDeck(), mCurrentCard.getId(), false));
 				}
 				break;
 			case MSG_ZEEMOTE_BUTTON_D:
@@ -859,10 +859,10 @@ public class Reviewer extends Activity implements IButtonListener{
         setVolumeControlStream(AudioManager.STREAM_MUSIC);
 
         // Make sure a deck is loaded before continuing.
-        Deck deck = AnkiDroidApp.deck();
+        Deck deck = DeckManager.getMainDeck();
         if (deck == null) {
-            setResult(StudyOptions.CONTENT_NO_EXTERNAL_STORAGE);
-			finish();
+        	finishNoStorageAvailable();
+			return;
         } else {
             mMediaDir = setupMedia(deck);
             restorePreferences();
@@ -894,7 +894,7 @@ public class Reviewer extends Activity implements IButtonListener{
             	Log.i(AnkiDroidApp.TAG, "setScrollbarFadingEnabled could not be found due to a too low Android version (< 2.1)");
             }
 
-		mRefreshWebview = getRefreshWebview();
+            mRefreshWebview = getRefreshWebview();
 
             initLayout(R.layout.flashcard);
             if (mPrefTextSelection) {
@@ -930,7 +930,6 @@ public class Reviewer extends Activity implements IButtonListener{
 
             // Load the first card and start reviewing. Uses the answer card task to load a card, but since we send null
             // as the card to answer, no card will be answered.
-
             DeckTask.launchDeckTask(DeckTask.TASK_TYPE_ANSWER_CARD, mAnswerCardHandler, new DeckTask.TaskData(0,
                     deck, null));
         }
@@ -946,18 +945,9 @@ public class Reviewer extends Activity implements IButtonListener{
     	mTimeoutHandler.removeCallbacks(mShowAnswerTask);
     	mTimeoutHandler.removeCallbacks(mShowQuestionTask);
     	longClickHandler.removeCallbacks(longClickTestRunnable);
-    	longClickHandler.removeCallbacks(startSelection);
+    	longClickHandler.removeCallbacks(startLongClickAction);
 
         stopTimer();
-        if (!isFinishing()) {
-            // Save changes
-            Deck deck = AnkiDroidApp.deck();
-            if (deck != null) {
-	            DeckTask.waitToFinish();
-	            deck.commitToDB();
-            }
-            WidgetStatus.update(getBaseContext());
-        }
 
         if (mShakeEnabled) {
             mSensorManager.unregisterListener(mSensorListener);    	  
@@ -978,13 +968,24 @@ public class Reviewer extends Activity implements IButtonListener{
     @Override
     protected void onResume() {
       super.onResume();
-      if (AnkiDroidApp.deck() == null) {
-    	  finish();
+      Deck deck = DeckManager.getMainDeck();
+      if (deck == null) {
+    	  Log.e(AnkiDroidApp.TAG, "Reviewer: Deck already closed, returning to study options");
+    	  closeReviewer(RESULT_DECK_CLOSED, false);
+    	  return;
       }
+
+      // check if deck is already opened in big widget. If yes, reload card (to make sure it's not answered yet)
+      if (DeckManager.deckIsOpenedInBigWidget(deck.getDeckPath()) && mCurrentCard != null && !mInEditor) {
+    	  Log.i(AnkiDroidApp.TAG, "Reviewer: onResume: get card from big widget");
+    	  DeckTask.launchDeckTask(DeckTask.TASK_TYPE_ANSWER_CARD, mAnswerCardHandler, new DeckTask.TaskData(0, deck, null));
+      } else {
+    	  restartTimer();
+      }
+
       if (mShakeEnabled) {
           mSensorManager.registerListener(mSensorListener, mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER), SensorManager.SENSOR_DELAY_NORMAL);    	  
       }
-      restartTimer();
       if ((AnkiDroidApp.zeemoteController() != null) && (AnkiDroidApp.zeemoteController().isConnected())){
     	  Log.d("Zeemote","Adding listener in onResume");
     	  AnkiDroidApp.zeemoteController().addButtonListener(this);
@@ -1001,6 +1002,20 @@ public class Reviewer extends Activity implements IButtonListener{
           mSensorManager.unregisterListener(mSensorListener);    	  
       }
       super.onStop();
+      DeckTask.waitToFinish();
+      Deck deck = DeckManager.getMainDeck();
+      if (!isFinishing()) {
+          // Save changes
+          if (deck != null) {
+	         	deck.commitToDB();
+          }
+          if (DeckManager.deckIsOpenedInBigWidget(DeckManager.getMainDeckPath())) {
+        	  Log.i(AnkiDroidApp.TAG, "Reviewer: onStop: updating big widget");
+        	  AnkiDroidWidgetBig.setCard(mCurrentCard);
+        	  AnkiDroidWidgetBig.updateWidget(AnkiDroidWidgetBig.UpdateService.VIEW_SHOW_QUESTION);
+          }
+      }
+      WidgetStatus.update(this, WidgetStatus.getDeckStatus(deck));
     }
 
     @Override
@@ -1020,7 +1035,7 @@ public class Reviewer extends Activity implements IButtonListener{
     public boolean onKeyDown(int keyCode, KeyEvent event)  {
         if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
         	Log.i(AnkiDroidApp.TAG, "Reviewer - onBackPressed()");
-        	closeReviewer(false);
+        	closeReviewer(RESULT_DEFAULT, false);
         	return true;
         }
          /** Enhancement 722: Hardware buttons for scrolling, I.Z. */
@@ -1208,8 +1223,8 @@ public class Reviewer extends Activity implements IButtonListener{
 
             getWindow().setFlags(0, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         }
-        menu.findItem(MENU_UNDO).setEnabled(AnkiDroidApp.deck().undoAvailable());
-        menu.findItem(MENU_REDO).setEnabled(AnkiDroidApp.deck().redoAvailable());
+        menu.findItem(MENU_UNDO).setEnabled(DeckManager.getMainDeck().undoAvailable());
+        menu.findItem(MENU_REDO).setEnabled(DeckManager.getMainDeck().redoAvailable());
         return true;
     }
 
@@ -1267,13 +1282,13 @@ public class Reviewer extends Activity implements IButtonListener{
             case MENU_REMOVE_BURY:
             	setNextCardAnimation(false);
                 DeckTask.launchDeckTask(DeckTask.TASK_TYPE_BURY_CARD, mDismissCardHandler, new DeckTask.TaskData(0,
-                        AnkiDroidApp.deck(), mCurrentCard));
+                        DeckManager.getMainDeck(), mCurrentCard));
                 return true;
 
             case MENU_REMOVE_SUSPEND:
             	setNextCardAnimation(false);
                 DeckTask.launchDeckTask(DeckTask.TASK_TYPE_SUSPEND_CARD, mDismissCardHandler, new DeckTask.TaskData(0,
-                        AnkiDroidApp.deck(), mCurrentCard));
+                        DeckManager.getMainDeck(), mCurrentCard));
                 return true;
 
             case MENU_REMOVE_DELETE:
@@ -1286,18 +1301,18 @@ public class Reviewer extends Activity implements IButtonListener{
 
             case MENU_MARK:
                 DeckTask.launchDeckTask(DeckTask.TASK_TYPE_MARK_CARD, mMarkCardHandler, new DeckTask.TaskData(0,
-                        AnkiDroidApp.deck(), mCurrentCard));
+                        DeckManager.getMainDeck(), mCurrentCard));
                 return true;
 
             case MENU_UNDO:
             	setNextCardAnimation(true);
             	DeckTask.launchDeckTask(DeckTask.TASK_TYPE_UNDO, mUpdateCardHandler, new DeckTask.TaskData(UPDATE_CARD_SHOW_QUESTION,
-                        AnkiDroidApp.deck(), mCurrentCard.getId(), false));
+                        DeckManager.getMainDeck(), mCurrentCard.getId(), false));
                 return true;
 
             case MENU_REDO:
                 DeckTask.launchDeckTask(DeckTask.TASK_TYPE_REDO, mUpdateCardHandler, new DeckTask.TaskData(UPDATE_CARD_SHOW_QUESTION,
-                        AnkiDroidApp.deck(), mCurrentCard.getId(), false));
+                        DeckManager.getMainDeck(), mCurrentCard.getId(), false));
                 return true;
         }
         return false;
@@ -1317,10 +1332,11 @@ public class Reviewer extends Activity implements IButtonListener{
                 	showQuestion = UPDATE_CARD_NEW_CARD;
                 }
                 DeckTask.launchDeckTask(DeckTask.TASK_TYPE_UPDATE_FACT, mUpdateCardHandler, new DeckTask.TaskData(showQuestion,
-                        AnkiDroidApp.deck(), mCurrentCard));
+                        DeckManager.getMainDeck(), mCurrentCard));
             } else if (resultCode == StudyOptions.CONTENT_NO_EXTERNAL_STORAGE) {
                 finishNoStorageAvailable();
             } else {
+            	mInEditor = false;
             	fillFlashcard(mShowAnimations);
             }
         }
@@ -1330,7 +1346,7 @@ public class Reviewer extends Activity implements IButtonListener{
     }
 
     private boolean isCramming() {
-        return (AnkiDroidApp.deck() != null) && (AnkiDroidApp.deck().name().compareTo("cram") == 0);
+        return (DeckManager.getMainDeck() != null) && (DeckManager.getMainDeck().name().compareTo("cram") == 0);
     }
 
     // ----------------------------------------------------------------------------
@@ -1399,8 +1415,7 @@ public class Reviewer extends Activity implements IButtonListener{
 
 
     private void finishNoStorageAvailable() {
-        setResult(StudyOptions.CONTENT_NO_EXTERNAL_STORAGE);
-        closeReviewer(false);
+        closeReviewer(StudyOptions.CONTENT_NO_EXTERNAL_STORAGE, false);
     }
 
 
@@ -1409,8 +1424,10 @@ public class Reviewer extends Activity implements IButtonListener{
         	Themes.showThemedToast(Reviewer.this, getResources().getString(R.string.cram_edit_warning), true);
             return false;
         } else {
+        	mInEditor = true;
             Intent editCard = new Intent(Reviewer.this, CardEditor.class);
-            editCard.putExtra(CardEditor.CARD_EDITOR_ACTION, CardEditor.EDIT_REVIEWER_CARD);
+            editCard.putExtra(CardEditor.EXTRA_CALLER, CardEditor.CALLER_REVIEWER);
+            editCard.putExtra(CardEditor.EXTRA_DECKPATH, DeckManager.getMainDeckPath());
         	sEditorCard = mCurrentCard;
         	setOutAnimation(true);
             startActivityForResult(editCard, EDIT_CURRENT_CARD);
@@ -1454,7 +1471,7 @@ public class Reviewer extends Activity implements IButtonListener{
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                     	setNextCardAnimation(false);
-                        DeckTask.launchDeckTask(DeckTask.TASK_TYPE_DELETE_CARD, mDismissCardHandler, new DeckTask.TaskData(0, AnkiDroidApp.deck(), mCurrentCard));
+                        DeckTask.launchDeckTask(DeckTask.TASK_TYPE_DELETE_CARD, mDismissCardHandler, new DeckTask.TaskData(0, DeckManager.getMainDeck(), mCurrentCard));
                     }
                 });
         builder.setNegativeButton(res.getString(R.string.no), null);
@@ -1473,7 +1490,7 @@ public class Reviewer extends Activity implements IButtonListener{
                 mLookUpIcon.setAnimation(ViewAnimation.fade(ViewAnimation.FADE_OUT, mFadeDuration, 0));        	
             }        	
         }
-        Deck deck = AnkiDroidApp.deck();
+        Deck deck = DeckManager.getMainDeck();
     	switch (ease) {
     		case Card.EASE_FAILED:
     		    mChosenAnswer.setText("\u2022");
@@ -1729,7 +1746,7 @@ public class Reviewer extends Activity implements IButtonListener{
         boolean sessionComplete = false;
         boolean noMoreCards = false;
         // Check to see if session rep or time limit has been reached
-        Deck deck = AnkiDroidApp.deck();
+        Deck deck = DeckManager.getMainDeck();
         if (deck == null) {
         	return new boolean[] {false, false};
         }
@@ -1762,10 +1779,10 @@ public class Reviewer extends Activity implements IButtonListener{
             setOutAnimation(true);
         } else {
             // session limits not reached, show next card
-            Card newCard = values[0].getCard();
+        	mCurrentCard = values[0].getCard();
 
             // If the card is null means that there are no more cards scheduled for review.
-            if (newCard == null) {
+            if (mCurrentCard == null) {
             	noMoreCards = true;
                 mProgressDialog = ProgressDialog.show(Reviewer.this, "", getResources()
                         .getString(R.string.saving_changes), true);
@@ -1774,7 +1791,6 @@ public class Reviewer extends Activity implements IButtonListener{
             }
 
             // Start reviewing next card
-            mCurrentCard = newCard;
             if (mPrefWriteAnswers) { //only bother query deck if needed
             	String[] answer = mCurrentCard.getComparedFieldAnswer();
             	comparedFieldAnswer = answer[0];
@@ -1967,6 +1983,7 @@ public class Reviewer extends Activity implements IButtonListener{
          	mGestureTapRight = Integer.parseInt(preferences.getString("gestureTapRight", "0"));
          	mGestureTapTop = Integer.parseInt(preferences.getString("gestureTapTop", "0"));
          	mGestureTapBottom = Integer.parseInt(preferences.getString("gestureTapBottom", "0"));
+         	mGestureLongclick = Integer.parseInt(preferences.getString("gestureLongclick", "0"));
         }
         mShowAnimations = preferences.getBoolean("themeAnimations", false);
         if (mShowAnimations) {
@@ -1994,7 +2011,7 @@ public class Reviewer extends Activity implements IButtonListener{
 
 
     private void setDueMessage() {
-    	Deck deck = AnkiDroidApp.deck();
+    	Deck deck = DeckManager.getMainDeck();
 		if (mCurrentCard != null && deck != null && deck.getScheduler().equals("reviewEarly") && mCurrentCard.getType() != Card.TYPE_FAILED) {
     		mChosenAnswer.setTextColor(mForegroundColor);
     		mChosenAnswer.setText(Utils.fmtTimeSpan(mCurrentCard.getCombinedDue() - Utils.now(), Utils.TIME_FORMAT_IN));				
@@ -2028,7 +2045,7 @@ public class Reviewer extends Activity implements IButtonListener{
     	if (mCurrentCard == null) {
     		return;
     	}
-        Deck deck = AnkiDroidApp.deck();
+        Deck deck = DeckManager.getMainDeck();
         int eta = deck.getETA();
         if (deck.hasFinishScheduler() || eta < 1) {
             setTitle(deck.getDeckName());
@@ -2069,7 +2086,7 @@ public class Reviewer extends Activity implements IButtonListener{
             mStatisticBarsMax = view.getWidth();
             mStatisticBarsHeight = view.getHeight();
         }
-        Deck deck = AnkiDroidApp.deck();
+        Deck deck = DeckManager.getMainDeck();
         Utils.updateProgressBars(this, mSessionProgressBar, deck.getSessionProgress(), mStatisticBarsMax, mStatisticBarsHeight, true, false);
         Utils.updateProgressBars(this, mSessionYesBar, deck.getProgress(false), mStatisticBarsMax, mStatisticBarsHeight, true);
     }
@@ -2136,7 +2153,7 @@ public class Reviewer extends Activity implements IButtonListener{
         }
 
         if (mSpeakText && Integer.valueOf(android.os.Build.VERSION.SDK) > 3) {
-            ReadText.setLanguageInformation(Model.getModel(AnkiDroidApp.deck(), mCurrentCard.getCardModelId(), false).getId(), mCurrentCard.getCardModelId());          
+            ReadText.setLanguageInformation(Model.getModel(DeckManager.getMainDeck(), mCurrentCard.getCardModelId(), false).getId(), mCurrentCard.getCardModelId());          
         }
 
         updateCard(displayString);
@@ -2241,12 +2258,11 @@ public class Reviewer extends Activity implements IButtonListener{
         if (mCurrentCard != null) {
         	final String japaneseModelTag = "Japanese";
         	
-            Deck currentDeck = AnkiDroidApp.deck();
+            Deck currentDeck = DeckManager.getMainDeck();
             Model myModel = Model.getModel(currentDeck, mCurrentCard.getCardModelId(), false);
 		if (myModel == null) {
 			Log.e(AnkiDroidApp.TAG, "updateCard - no Model could be fetched. Closing Reviewer and showing db-error dialog");
-	                Reviewer.this.setResult(RESULT_ANSWERING_ERROR);
-	                closeReviewer(true);			
+	                closeReviewer(RESULT_ANSWERING_ERROR, true);			
 		}
             mBaseUrl = Utils.getBaseUrl(mMediaDir, myModel, currentDeck);
             int nightBackground = Themes.getNightModeCardBackground(this);
@@ -2282,8 +2298,8 @@ public class Reviewer extends Activity implements IButtonListener{
         }
 
         // Parse out the LaTeX images
-        question = LaTeX.parseLaTeX(AnkiDroidApp.deck(), question);
-        answer = LaTeX.parseLaTeX(AnkiDroidApp.deck(), answer);
+        question = LaTeX.parseLaTeX(DeckManager.getMainDeck(), question);
+        answer = LaTeX.parseLaTeX(DeckManager.getMainDeck(), answer);
 
        
         // If ruby annotation support is activated, then parse and handle:
@@ -2546,7 +2562,7 @@ public class Reviewer extends Activity implements IButtonListener{
                 return true;
 
             case HQIA_CARD_MODEL:
-                return (Model.getModel(AnkiDroidApp.deck(), mCurrentCard.getCardModelId(), false).getCardModel(
+                return (Model.getModel(DeckManager.getMainDeck(), mCurrentCard.getCardModelId(), false).getCardModel(
                         mCurrentCard.getCardModelId()).isQuestionInAnswer());
 
             default:
@@ -2989,19 +3005,19 @@ public class Reviewer extends Activity implements IButtonListener{
 			}
     		break;
     	case GESTURE_EXIT:
-       	 	closeReviewer(false);
+       	 	closeReviewer(RESULT_DEFAULT, false);
     		break;
     	case GESTURE_UNDO:
-    		if (AnkiDroidApp.deck().undoAvailable()) {
+    		if (DeckManager.getMainDeck().undoAvailable()) {
     			setNextCardAnimation(true);
         		DeckTask.launchDeckTask(DeckTask.TASK_TYPE_UNDO, mUpdateCardHandler, new DeckTask.TaskData(UPDATE_CARD_SHOW_QUESTION,
-                        AnkiDroidApp.deck(), mCurrentCard.getId(), false));    			
+                        DeckManager.getMainDeck(), mCurrentCard.getId(), false));    			
     		}
     		break;
     	case GESTURE_REDO:
-    		if (AnkiDroidApp.deck().redoAvailable()) {
+    		if (DeckManager.getMainDeck().redoAvailable()) {
                 DeckTask.launchDeckTask(DeckTask.TASK_TYPE_REDO, mUpdateCardHandler, new DeckTask.TaskData(UPDATE_CARD_SHOW_QUESTION,
-                        AnkiDroidApp.deck(), mCurrentCard.getId(), false));    			
+                        DeckManager.getMainDeck(), mCurrentCard.getId(), false));    			
     		}
     		break;
     	case GESTURE_EDIT:
@@ -3009,7 +3025,7 @@ public class Reviewer extends Activity implements IButtonListener{
     		break;
     	case GESTURE_MARK:
             DeckTask.launchDeckTask(DeckTask.TASK_TYPE_MARK_CARD, mMarkCardHandler, new DeckTask.TaskData(0,
-                    AnkiDroidApp.deck(), mCurrentCard));
+                    DeckManager.getMainDeck(), mCurrentCard));
     		break;
     	case GESTURE_LOOKUP:
     		lookUpOrSelectText();
@@ -3017,12 +3033,12 @@ public class Reviewer extends Activity implements IButtonListener{
     	case GESTURE_BURY:
         	setNextCardAnimation(false);
             DeckTask.launchDeckTask(DeckTask.TASK_TYPE_BURY_CARD, mAnswerCardHandler, new DeckTask.TaskData(0,
-                    AnkiDroidApp.deck(), mCurrentCard));
+                    DeckManager.getMainDeck(), mCurrentCard));
     		break;
     	case GESTURE_SUSPEND:
         	setNextCardAnimation(false);
     		DeckTask.launchDeckTask(DeckTask.TASK_TYPE_SUSPEND_CARD, mAnswerCardHandler, new DeckTask.TaskData(0,
-                    AnkiDroidApp.deck(), mCurrentCard));
+                    DeckManager.getMainDeck(), mCurrentCard));
     		break;
     	case GESTURE_DELETE:
     		showDeleteCardDialog();
@@ -3078,21 +3094,30 @@ public class Reviewer extends Activity implements IButtonListener{
     }
 
 
-    private void closeReviewer(boolean saveDeck) {
-	mTimeoutHandler.removeCallbacks(mShowAnswerTask);
-	mTimeoutHandler.removeCallbacks(mShowQuestionTask);
-	mTimerHandler.removeCallbacks(removeChosenAnswerText);
-	longClickHandler.removeCallbacks(longClickTestRunnable);
-	longClickHandler.removeCallbacks(startSelection);
+    private void closeReviewer(int result, boolean saveDeck) {
+    	mTimeoutHandler.removeCallbacks(mShowAnswerTask);
+		mTimeoutHandler.removeCallbacks(mShowQuestionTask);
+		mTimerHandler.removeCallbacks(removeChosenAnswerText);
+		longClickHandler.removeCallbacks(longClickTestRunnable);
+		longClickHandler.removeCallbacks(startLongClickAction);
 
-    	setOutAnimation(true);    		
-    	if (saveDeck) {
-            DeckTask.launchDeckTask(DeckTask.TASK_TYPE_SAVE_DECK, mSaveAndResetDeckHandler, new DeckTask.TaskData(AnkiDroidApp.deck(), 0));
+		Reviewer.this.setResult(result);
+
+		setOutAnimation(true);    		
+
+		if (DeckManager.deckIsOpenedInBigWidget(DeckManager.getMainDeckPath())) {
+        	  Log.i(AnkiDroidApp.TAG, "Reviewer: closeReviewer: updating big widget");
+        	  AnkiDroidWidgetBig.setCard(mCurrentCard);
+        	  AnkiDroidWidgetBig.updateWidget(AnkiDroidWidgetBig.UpdateService.VIEW_SHOW_QUESTION);
+        }
+
+        if (saveDeck) {
+            DeckTask.launchDeckTask(DeckTask.TASK_TYPE_SAVE_DECK, mSaveAndResetDeckHandler, new DeckTask.TaskData(DeckManager.getMainDeck(), 0));
     	} else {
     		finish();
     	}
     }
-    
+
     /** Fixing bug 720: <input> focus, thanks to pablomouzo on android issue 7189*/
     class MyWebView extends WebView {
 

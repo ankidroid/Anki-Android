@@ -17,7 +17,7 @@ package com.ichi2.anki.services;
 import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.R;
 import com.ichi2.anki.StudyOptions;
-import com.ichi2.anki.WidgetStatus;
+import com.ichi2.widget.WidgetStatus;
 import com.tomgibara.android.veecheck.util.PrefSettings;
 
 import android.app.Notification;

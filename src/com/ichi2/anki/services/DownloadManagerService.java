@@ -35,6 +35,7 @@ import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.AnkiDroidProxy;
 import com.ichi2.anki.Card;
 import com.ichi2.anki.Deck;
+import com.ichi2.anki.DeckManager;
 import com.ichi2.anki.DeckTask;
 import com.ichi2.anki.Download;
 import com.ichi2.anki.R;
@@ -1019,7 +1020,7 @@ public class DownloadManagerService extends Service {
             Log.i(AnkiDroidApp.TAG, "loadDeck - SD card mounted and existent file -> Loading deck...");
             try {
                 // Open the right deck.
-                Deck deck = Deck.openDeck(deckFilename);
+                Deck deck = DeckManager.getDeck(deckFilename, DeckManager.REQUESTING_ACTIVITY_DOWNLOADMANAGER);
                 // Start by getting the first card and displaying it.
                 Card card = deck.getCard();
                 Log.i(AnkiDroidApp.TAG, "Deck loaded!");
@@ -1055,9 +1056,8 @@ public class DownloadManagerService extends Service {
             HashMap<String, Object> results = (HashMap<String, Object>) result.result;
             Deck deck = (Deck) results.get("deck");
             // Close the previously opened deck.
-            if (deck != null) {
-                deck.closeDeck();
-            }
+            DeckManager.closeDeck(deck.getDeckPath());
+
             SharedDeckDownload download = (SharedDeckDownload) result.data[0];
             SharedPreferences pref = PrefSettings.getSharedPrefs(getBaseContext());
             Editor editor = pref.edit();

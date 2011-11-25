@@ -210,6 +210,7 @@ public class StyledDialog extends Dialog {
         private Context context;
         private String title;
         private String message;
+        private int messageSize = 0;
         private String positiveButtonText;
         private String negativeButtonText;
         private String neutralButtonText;
@@ -244,6 +245,11 @@ public class StyledDialog extends Dialog {
          */
         public Builder setMessage(String message) {
             this.message = message;
+            return this;
+        }
+        public Builder setMessage(String message, int size) {
+            this.message = message;
+            this.messageSize = size;
             return this;
         }
 
@@ -507,7 +513,11 @@ public class StyledDialog extends Dialog {
 
             // set the message
             if (message != null) {
-                ((TextView) layout.findViewById(R.id.message)).setText(message);
+                TextView tv = (TextView) layout.findViewById(R.id.message);
+                tv.setText(message);
+                if (messageSize != 0) {
+                    tv.setTextSize(messageSize * context.getResources().getDisplayMetrics().scaledDensity);
+                }
             } else {
             	((LinearLayout) layout.findViewById(R.id.contentPanel)).setVisibility(View.GONE);
             }

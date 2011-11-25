@@ -134,7 +134,7 @@ public class Feedback extends Activity {
 
 	private void closeFeedback() {
 	        setResult(RESULT_OK);
-		finish();
+			finish();
                 if (StudyOptions.getApiLevel() > 4) {
                     ActivityTransitionAnimation.slide(Feedback.this, ActivityTransitionAnimation.FADE);
                 }

@@ -50,4 +50,14 @@
 	<style name="Theme_Black" parent="android:style/Theme">
 		<item name="listItemBackgroundDrawable">@android:drawable/list_selector_background</item>
 	</style>
+
+    <style name="Theme_Translucent" parent="style/Theme_Blue">
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:colorBackgroundCacheHint">@null</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowAnimationStyle">@android:style/Animation</item>
+	</style>
+
 </resources>
