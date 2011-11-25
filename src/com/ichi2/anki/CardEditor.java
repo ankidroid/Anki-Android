@@ -717,9 +717,7 @@ public class CardEditor extends Activity {
 			mFullDeckPaths = new HashMap<String, String>();
 
 			if (len > 0 && fileList != null) {
-				Log.i(AnkiDroidApp.TAG,
-						"CardEditor - populateDeckDialog, number of anki files = "
-								+ len);
+				Log.i(AnkiDroidApp.TAG, "CardEditor - populateDeckDialog, number of anki files = " + len);
 				for (File file : fileList) {
 					String name = file.getName().replaceAll(".anki", "");
 					tree.add(name);
@@ -856,8 +854,7 @@ public class CardEditor extends Activity {
 		        	ad.setEnabled(false);
 		        	return;
 		        }
-				Log.i(AnkiDroidApp.TAG, "all tags: "
-								+ Arrays.toString(oldTags));
+				Log.i(AnkiDroidApp.TAG, "all tags: " + Arrays.toString(oldTags));
 				allTags = new String[oldTags.length];
 				for (int i = 0; i < oldTags.length; i++) {
 					allTags[i] = oldTags[i];
