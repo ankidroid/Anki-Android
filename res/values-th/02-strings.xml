@@ -69,6 +69,7 @@
   <string name="tutorial_loading_error">Tutorial deck could not be created</string>
   <string name="help_title">Help</string>
   <string name="help_online">ค้นหาวิธีใช้แบบออนไลน์</string>
+  <string name="help_faq">FAQ</string>
   <string name="help_tutorial">บทเรียนการใช้สำรับ
 </string>
 </resources>

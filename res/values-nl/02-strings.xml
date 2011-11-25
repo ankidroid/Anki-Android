@@ -69,5 +69,6 @@
   <string name="tutorial_loading_error">Voorbeeld set kon niet worden aangemaakt</string>
   <string name="help_title">Hulp</string>
   <string name="help_online">Online help</string>
+  <string name="help_faq">FAQ</string>
   <string name="help_tutorial">Voorbeelddeck</string>
 </resources>

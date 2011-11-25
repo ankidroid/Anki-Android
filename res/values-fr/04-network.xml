@@ -49,7 +49,7 @@
   <string name="sync_all">Synchroniser tous</string>
   <string name="sync_prepare_syncing">Préparation de la synchronisation...</string>
   <string name="connection_error_message">Une erreur réseau s\'est produite.</string>
-  <string name="sync_log_db_error">A database error has occurred.</string>
+  <string name="sync_log_db_error">Une erreur s\'est produite dans la base de données.</string>
   <string name="no_user_password_error_message">Afin de procéder à cette opération, vous devez avoir un compte AnkiOnline et être connecté.</string>
   <string name="fact">fait</string>
   <string name="facts">faits</string>

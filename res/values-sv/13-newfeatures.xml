@@ -26,19 +26,19 @@
     <item>säkerhetskopieringssystem</item>
     <item>möjlighet att reparera skadade kortlekar</item>
     <item>liten widget</item>
-    <item>intent-based card addition</item>
+    <item>avsiktsbaserad tilläggning av kort</item>
     <item>bättre korteditor: sök, lägg till kort, kopiera kort, återställ</item>
     <item>ny statistik: kortlekssammanfattning</item>
     <item>valfritt wal journalläge för att snabba upp programmet</item>
     <item>valfritt synkronisering=av för att snabba upp programmet</item>
     <item>bättre förloppsindikatorer under inlärning</item>
-    <item>localised number appearance</item>
+    <item>lokaliserat utseende</item>
     <item>valbar ordlista för varje kortlek</item>
     <item>kortuppgifter är nu tillgängliga via klick på övre stapeln</item>
     <item>alternativ för fast skärmorientering</item>
     <item>möjlighet att återställa framsteg på kort (i korteditorn)</item>
     <item>snabbare sökning i kortutforskaren</item>
-    <item>more convenient lookup via appearing icon</item>
+    <item>bekvämare sökning via ikon</item>
     <item>ny textmarkering i korteditorn och när kort läggs till</item>
     <item>alternativ för att väldigt enkelt byta plats på fråga/svar</item>
     <item>stöd för radbrytningar i korteditor och kortutforskaren</item>

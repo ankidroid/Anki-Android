@@ -69,5 +69,6 @@
   <string name="tutorial_loading_error">Einführungsstapel konnte nicht erstellt werden</string>
   <string name="help_title">Hilfe</string>
   <string name="help_online">Online-Hilfe</string>
+  <string name="help_faq">Häufige Fragen</string>
   <string name="help_tutorial">Einführungsstapel</string>
 </resources>

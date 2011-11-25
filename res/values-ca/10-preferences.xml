@@ -37,7 +37,7 @@
   <string name="pref_cat_reset">Reinicia</string>
   <string name="pref_cat_other">Altres</string>
   <string name="pref_cat_experimental">EXPERIMENTAL</string>
-  <string name="pref_cat_themes">Themes</string>
+  <string name="pref_cat_themes">Temes</string>
   <string name="pref_cat_flashcard">Reviewing screen</string>
   <string name="show_study_options_on_deck_load">Mostra les opcions d\'aprenentatge en carregar el paquet</string>
   <string name="show_study_options_on_deck_load_summ">Mostra les opcions d\'aprenentatge en carregar un paquet</string>
@@ -50,7 +50,7 @@
   <string name="show_whiteboard_summ">Permet escriure a la pantalla</string>
   <string name="whiteboard_stroke_width">Amplada del traç a la pissarra</string>
   <string name="whiteboard_stroke_width_summ">Amplada del traç: XXX</string>
-  <string name="whiteboard_black">Monochrome</string>
+  <string name="whiteboard_black">Monocrom</string>
   <string name="whiteboard_black_summ">Use monochrome instead of colored stroke (for devices with lower memory, does not work in night mode)</string>
   <string name="write_answers">Escriure les respostes</string>
   <string name="write_answers_summ">Permet escriure la resposta i comparar-la amb la solució correcta</string>
@@ -62,7 +62,7 @@
   <string name="dictionary_summ">Diccionari on realitzar les cerques: XXX</string>
   <string name="reset_languages">Reinicia tots el idiomes</string>
   <string name="reset_languages_summ">Reinicia les assignacions d\'idioma (per text a la síntesi de veu i els diccionaris) per a tots els paquets. Reinicia les assignacions específiques dels paquets al selector de paquets</string>
-  <string name="reset_all">Reset All</string>
+  <string name="reset_all">Reinitza-ho tot</string>
   <string name="reset_all_summ">Reset language, widget, whiteboard and dictionary states</string>
   <string name="reset_dialogs">Reset Dialogs</string>
   <string name="reset_dialogs_question">Reset all dialogs?</string>
@@ -132,7 +132,7 @@
   <string name="timeout_answer_text">Automatic display answer</string>
   <string name="timeout_answer_summ">After displaying the Question for a set amount of time, the answer is displayed automatically without user input</string>
   <string name="timeout_answer_seconds">Seconds before the answer is shown</string>
-  <string name="timeout_question_seconds">Seconds before the next question is shown</string>
+  <string name="timeout_question_seconds">Activeu aquesta opció si no podeu seleccionar text amb un clic llarg</string>
   <string name="select_locale_title">Seleccioneu l\'idioma</string>
   <string name="select_theme">Theme</string>
   <string name="theme_animations">Animations</string>

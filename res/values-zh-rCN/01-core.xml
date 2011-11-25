@@ -23,9 +23,9 @@
   <string name="app_name">AnkiDroid</string>
   <string name="yes">是</string>
   <string name="no">否</string>
-  <string name="ok">好</string>
+  <string name="ok">确定</string>
   <string name="studyoptions_deck_name">牌组名称</string>
-  <string name="studyoptions_reviews_due">到期复习卡片：</string>
+  <string name="studyoptions_reviews_due">待复习卡片：</string>
   <string name="studyoptions_new_today">今日新卡片：</string>
   <string name="studyoptions_new_total">全部新卡片：</string>
   <string name="studyoptions_eta">预计所需时间（分钟）：</string>
@@ -50,17 +50,17 @@
   <string name="studyoptions_congrats_title">恭喜！</string>
   <string name="studyoptions_congrats_learnmore">继续学习</string>
   <string name="studyoptions_congrats_reviewearly">提前复习</string>
-  <string name="studyoptions_congrats_syncdeck">Synchronize deck</string>
+  <string name="studyoptions_congrats_syncdeck">同步牌组</string>
   <string name="studyoptions_congrats_open_other_deck">打开其他牌组</string>
   <string name="studyoptions_congrats_finish">返回学习界面</string>
-  <string name="card_unsuspended">Card suspension undone</string>
-  <string name="card_suspended">Card resuspended</string>
-  <string name="menu_rotate">Rotate</string>
+  <string name="card_unsuspended">卡片本次跳过失败</string>
+  <string name="card_suspended">卡片再次跳过</string>
+  <string name="menu_rotate">旋转</string>
   <string name="undo">撤销</string>
   <string name="redo">重做</string>
   <string name="close_previous_deck">正在关闭上个词库。\ n请稍候...</string>
-  <string name="close_deck">Closing deck.\nPlease wait...</string>
-  <string name="finish_operation">Finishing previous operation.\nPlease wait...</string>
+  <string name="close_deck">关闭牌组中。\n请稍候...</string>
+  <string name="finish_operation">正在执行之前的操作。\n请稍等</string>
   <string name="contextmenu_deckpicker_download_missing_media">下载缺失的媒体文件</string>
   <string name="contextmenu_deckpicker_reset_language_assignments">取消指定牌组语言</string>
   <string name="contextmenu_deckpicker_reset_reset_message">重置语言设置</string>
@@ -75,76 +75,76 @@
   <string name="menu_download_personal_deck">个人牌组</string>
   <string name="menu_my_account">我的账号</string>
   <string name="menu_preferences">偏好设置</string>
-  <string name="menu_zeemote">Zeemote</string>
+  <string name="menu_zeemote">蓝牙手柄</string>
   <string name="menu_add_card">添加卡片</string>
   <string name="menu_about">关于</string>
   <string name="menu_remove_card">忽略卡片</string>
   <string name="menu_suspend_card">不要复习</string>
   <string name="menu_bury_card">留到下回合</string>
   <string name="menu_edit_card">编辑卡片</string>
-  <string name="menu_select">Select text</string>
+  <string name="menu_select">选择文本</string>
   <string name="menu_search">在%1$s中查找</string>
   <string name="menu_mark_card">标记卡片</string>
   <string name="menu_marked">已标记</string>
   <string name="menu_create_deck">创建牌组</string>
   <string name="studyoptions_feedback">反馈</string>
-  <string name="studyoptions_cram_dialog_title">选择标签进行强记</string>
+  <string name="studyoptions_cram_dialog_title">强记选项</string>
   <string name="statistics">统计</string>
   <string name="studyoptions_load_other_deck">载入其他牌组</string>
-  <string name="studyoptions_load_tutorial_deck">Load Tutorial Deck</string>
+  <string name="studyoptions_load_tutorial_deck">加载教学牌组</string>
   <string name="studyoptions_night_mode">夜间模式</string>
-  <string name="studyoptions_swap_qa">Swap Q/A</string>
-  <string name="visit">Visit</string>
-  <string name="later">Later</string>
+  <string name="studyoptions_swap_qa">交换问题和答案</string>
+  <string name="visit">访问</string>
+  <string name="later">稍后</string>
   <string name="download">下载</string>
-  <string name="deckpicker_loading_error">Deck could not be loaded</string>
-  <string name="deckpicker_creating_backup">Creating backup...</string>
+  <string name="deckpicker_loading_error">牌组无法加载</string>
+  <string name="deckpicker_creating_backup">创建备份...</string>
   <string-array name="next_review_s">
-    <item>1 second</item>
-    <item>1 minute</item>
+    <item>1秒</item>
+    <item>1分钟</item>
     <item>一小时</item>
     <item>一天</item>
     <item>1个月</item>
     <item>1年</item>
   </string-array>
   <string-array name="next_review_p">
-    <item>%s seconds</item>
-    <item>%s minutes</item>
+    <item>%s秒</item>
+    <item>%s分钟</item>
     <item>%s小时</item>
     <item>%s天</item>
     <item>%s月</item>
     <item>%s年</item>
   </string-array>
   <plurals name="studyoptions_window_title">
-    <item quantity="one">%1$s(1张到期\/共%3$d张卡片)</item>
-    <item quantity="other">%1$s(%2$d张到期\/共%3$d张卡片)</item>
+    <item quantity="one">%1$s(1张待复习，共%3$d张卡片)</item>
+    <item quantity="other">%1$s(%2$d张待复习，共%3$d张)</item>
   </plurals>
   <plurals name="deckpicker_title">
-    <item quantity="one">所有牌组: %2$d中有1个到期（%3$s）</item>
-    <item quantity="other">所有牌组: %2$d中有%1$d个到期（%3$s）</item>
+    <item quantity="one">所有牌组: 1个张待复习，共%2$d张(%3$s)</item>
+    <item quantity="other">所有牌组: %1$d张待复习，共%2$d张(%3$s)</item>
   </plurals>
   <plurals name="deckpicker_title_minutes">
     <item quantity="one">1分钟</item>
     <item quantity="other">%d分钟</item>
   </plurals>
   <plurals name="deckpicker_due">
-    <item quantity="one">%2$d中有1个到期</item>
+    <item quantity="one">%2$d张中有1张待复习</item>
     <item quantity="other">%2$d张中的%1$d张待复习</item>
   </plurals>
   <plurals name="reviewer_window_title">
-    <item quantity="one">%1$s (1 min. left)</item>
-    <item quantity="other">%1$s (%2$d min. left)</item>
+    <item quantity="one">%1$s (还需1分钟)</item>
+    <item quantity="other">%1$s (还需%2$d分钟)</item>
   </plurals>
   <plurals name="studyoptions_congrats_message">
-    <item quantity="one">You have finished for now.\nTomorrow there will be:\n1 card to review and %2$s.\n Estimated time: %3$s</item>
-    <item quantity="other">You have finished for now.\nTomorrow there will be:\n%1$d cards to review and %2$s.\n Estimated time: %3$s</item>
+    <item quantity="one">你已完成今日任务。\n明天的任务：\n复习%1$d张卡片，学习%2$s。\n预计时间：%3$s</item>
+    <item quantity="other">你已完成今日任务。\n明天的任务：\n复习%1$d张卡片，学习%2$s。\n预计时间：%3$s</item>
   </plurals>
   <plurals name="studyoptions_congrats_new_cards">
-    <item quantity="one">1 card</item>
-    <item quantity="other">%1$d new cards</item>
+    <item quantity="one">1张卡片</item>
+    <item quantity="other">%1$d张新卡片</item>
   </plurals>
   <plurals name="studyoptions_congrats_eta">
-    <item quantity="one">1 min.</item>
-    <item quantity="other">%1$d min.</item>
+    <item quantity="one">1分钟</item>
+    <item quantity="other">%1$d分钟</item>
   </plurals>
 </resources>
