@@ -1005,7 +1005,7 @@ public class Reviewer extends Activity implements IButtonListener{
     protected void onStop() {
     	mInBackground = true;
       if (mShakeEnabled) {
-          mSensorManager.unregisterListener(mSensorListener);    	  
+          mSensorManager.unregisterListener(mSensorListener);
       }
       super.onStop();
       Deck deck = DeckManager.getMainDeck();
@@ -1757,6 +1757,12 @@ public class Reviewer extends Activity implements IButtonListener{
         Resources res = getResources();
         boolean sessionComplete = false;
         boolean noMoreCards = false;
+
+        // if in background, actualise widget
+    	if (mInBackground) {
+    		updateBigWidget(false);
+        }
+
         // Check to see if session rep or time limit has been reached
         Deck deck = DeckManager.getMainDeck();
         if (deck == null) {
@@ -1792,11 +1798,6 @@ public class Reviewer extends Activity implements IButtonListener{
         } else {
             // session limits not reached, show next card
         	mCurrentCard = values[0].getCard();
-
-        	// if in background, actualise widget
-        	if (mInBackground) {
-        		updateBigWidget(false);
-            }
 
             // If the card is null means that there are no more cards scheduled for review.
             if (mCurrentCard == null) {

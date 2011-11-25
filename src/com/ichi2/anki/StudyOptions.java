@@ -69,6 +69,7 @@ import com.ichi2.compat.CompatV11;
 import com.ichi2.compat.CompatV3;
 import com.ichi2.themes.StyledDialog;
 import com.ichi2.themes.Themes;
+import com.ichi2.widget.AnkiDroidWidgetBig;
 import com.ichi2.widget.WidgetStatus;
 import com.tomgibara.android.veecheck.util.PrefSettings;
 import com.zeemote.zc.Controller;
@@ -2261,6 +2262,7 @@ public class StudyOptions extends Activity implements IButtonListener {
         super.onActivityResult(requestCode, resultCode, intent);
 
         if (mStartedByBigWidget && ((requestCode == REQUEST_REVIEW && resultCode == Reviewer.RESULT_DEFAULT) || (requestCode == PICK_DECK_REQUEST && resultCode != RESULT_OK))) {
+        	AnkiDroidWidgetBig.updateWidget(AnkiDroidWidgetBig.UpdateService.VIEW_NOT_SPECIFIED, false);
         	DeckManager.closeMainDeck(DeckManager.REQUESTING_ACTIVITY_STUDYOPTIONS);
         	finish();
         	return;
