@@ -112,7 +112,7 @@ public class StyledDialog extends Dialog {
 		mSetScrollbarBarFading = ListView.class.getMethod("setScrollbarFadingEnabled", boolean.class);
             	mSetScrollbarBarFading.invoke(mListView, false);
             } catch (Throwable e) {
-            	// Log.i(AnkiDroidApp.TAG, "setScrollbarFadingEnabled could not be set due to a too low Android version (< 2.1)");
+            	Log.i(AnkiDroidApp.TAG, "setScrollbarFadingEnabled could not be set due to a too low Android version (< 2.1)");
 		mSetScrollBarFading = false;
             }
 	}

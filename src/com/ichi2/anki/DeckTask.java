@@ -319,7 +319,7 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
 	        try {
 	            if (oldCard != null) {
 	                deck.answerCard(oldCard, ease);
-	                // Log.i(AnkiDroidApp.TAG, "leech flag: " + oldCard.getLeechFlag());
+	                Log.i(AnkiDroidApp.TAG, "leech flag: " + oldCard.getLeechFlag());
 	            }
 	            newCard = deck.getCard();
 	            if (oldCard != null) {
@@ -357,15 +357,15 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
         if (BackupManager.getFreeDiscSpace(deckFilename) < (StudyOptions.MIN_FREE_SPACE * 1024 * 1024)) {
         	backupResult = BackupManager.RETURN_LOW_SYSTEM_SPACE;
         }
-        // Log.i(AnkiDroidApp.TAG, "doInBackgroundLoadDeck - deckFilename = " + deckFilename);
+        Log.i(AnkiDroidApp.TAG, "doInBackgroundLoadDeck - deckFilename = " + deckFilename);
 
-        // Log.i(AnkiDroidApp.TAG, "loadDeck - SD card mounted and existent file -> Loading deck...");
+        Log.i(AnkiDroidApp.TAG, "loadDeck - SD card mounted and existent file -> Loading deck...");
         try {
             // Open the right deck.
             Deck deck = Deck.openDeck(deckFilename);
             // Start by getting the first card and displaying it.
             // Card card = deck.getCard();
-            // Log.i(AnkiDroidApp.TAG, "Deck loaded!");
+            Log.i(AnkiDroidApp.TAG, "Deck loaded!");
             if (deck == null) {
                 BackupManager.cleanUpAfterBackupCreation(false);
                 return new TaskData(DECK_NOT_LOADED);
@@ -377,15 +377,15 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
             publishProgress(new TaskData(backupResult));
             return new TaskData(DECK_LOADED, deck, null);
 		} catch (SQLException e) {
-            // Log.i(AnkiDroidApp.TAG, "The database " + deckFilename + " could not be opened = " + e.getMessage());
+            Log.i(AnkiDroidApp.TAG, "The database " + deckFilename + " could not be opened = " + e.getMessage());
                 BackupManager.cleanUpAfterBackupCreation(false);
             return new TaskData(DECK_NOT_LOADED);
         } catch (CursorIndexOutOfBoundsException e) {
             // XXX: Where is this exception thrown?
-            // Log.i(AnkiDroidApp.TAG, "The deck has no cards = " + e.getMessage());
+            Log.i(AnkiDroidApp.TAG, "The deck has no cards = " + e.getMessage());
             return new TaskData(DECK_EMPTY);
 		} catch (RuntimeException e) {
-            // Log.i(AnkiDroidApp.TAG, "The database " + deckFilename + " could not be opened = " + e.getMessage());
+            Log.i(AnkiDroidApp.TAG, "The database " + deckFilename + " could not be opened = " + e.getMessage());
             return new TaskData(DECK_NOT_LOADED);
         }
     }
@@ -393,7 +393,7 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
 
     private TaskData doInBackgroundSaveDeck(TaskData... params) {
     	Deck deck = params[0].getDeck();
-        // Log.i(AnkiDroidApp.TAG, "doInBackgroundSaveAndResetDeck");
+        Log.i(AnkiDroidApp.TAG, "doInBackgroundSaveAndResetDeck");
         if (deck != null) {
             try {
             	deck.commitToDB();
@@ -554,7 +554,7 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
     private TaskData doInBackgroundLoadCards(TaskData... params) {
         Deck deck = params[0].getDeck();
         int chunk = params[0].getInt();
-    	// Log.i(AnkiDroidApp.TAG, "doInBackgroundLoadCards");
+    	Log.i(AnkiDroidApp.TAG, "doInBackgroundLoadCards");
     	String startId = "";
     	while (true) {
     		ArrayList<HashMap<String, String>> cards = deck.getCards(chunk, startId);
@@ -573,7 +573,7 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
         Card card = params[0].getCard();
         Card newCard = null;
         Long id = 0l;
-        // Log.i(AnkiDroidApp.TAG, "doInBackgroundDeleteCard");
+        Log.i(AnkiDroidApp.TAG, "doInBackgroundDeleteCard");
 
         try {
             AnkiDb ankiDB = AnkiDatabaseManager.getDatabase(deck.getDeckPath());
@@ -602,7 +602,7 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
         Card card = params[0].getCard();
         Card newCard = null;
         Long id = 0l;
-        // Log.i(AnkiDroidApp.TAG, "doInBackgroundBuryCard");
+        Log.i(AnkiDroidApp.TAG, "doInBackgroundBuryCard");
 
         try {
             AnkiDb ankiDB = AnkiDatabaseManager.getDatabase(deck.getDeckPath());
@@ -627,7 +627,7 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
 
 
     private TaskData doInBackgroundLoadStatistics(TaskData... params) {
-        // Log.i(AnkiDroidApp.TAG, "doInBackgroundLoadStatistics");
+        Log.i(AnkiDroidApp.TAG, "doInBackgroundLoadStatistics");
         int type = params[0].getType();
         int period = params[0].getInt();
         Context context = params[0].getContext();
@@ -646,7 +646,7 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
 
 
     private TaskData doInBackgroundOptimizeDeck(TaskData... params) {
-        // Log.i(AnkiDroidApp.TAG, "doInBackgroundOptimizeDeck");
+        Log.i(AnkiDroidApp.TAG, "doInBackgroundOptimizeDeck");
     	Deck deck = params[0].getDeck();
         long result = 0;
     	result = deck.optimizeDeck();
@@ -655,7 +655,7 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
 
 
     private TaskData doInBackgroundRepairDeck(TaskData... params) {
-    	// Log.i(AnkiDroidApp.TAG, "doInBackgroundRepairDeck");
+    	Log.i(AnkiDroidApp.TAG, "doInBackgroundRepairDeck");
     	String deckPath = params[0].getString();
     	Deck currentDeck = AnkiDroidApp.deck();
     	if (currentDeck != null && currentDeck.getDeckPath().equals(deckPath)) {
@@ -666,7 +666,7 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
 
 
     private TaskData doInBackgroundSetJournalMode(TaskData... params) {
-        // Log.i(AnkiDroidApp.TAG, "doInBackgroundSetJournalMode");
+        Log.i(AnkiDroidApp.TAG, "doInBackgroundSetJournalMode");
         String path = params[0].getString();
         Deck currentDeck = params[0].getDeck();
         if (currentDeck != null) {
@@ -686,13 +686,13 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
 		}
 
 		if (len > 0 && fileList != null) {
-			// Log.i(AnkiDroidApp.TAG, "Set journal mode: number of anki files = " + len);
+			Log.i(AnkiDroidApp.TAG, "Set journal mode: number of anki files = " + len);
 			for (File file : fileList) {
 				// on deck open, journal mode will be automatically set
 				String filePath = file.getAbsolutePath();
 				Deck deck = Deck.openDeck(filePath, false);
 				if (deck != null) {
-					// Log.i(AnkiDroidApp.TAG, "Journal mode of file " + filePath + " set");
+					Log.i(AnkiDroidApp.TAG, "Journal mode of file " + filePath + " set");
 					deck.closeDeck(false);					
 				}
 			}
@@ -702,7 +702,7 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
 
     
     private TaskData doInBackgroundCloseDeck(TaskData... params) {
-        // Log.i(AnkiDroidApp.TAG, "doInBackgroundCloseDeck");
+        Log.i(AnkiDroidApp.TAG, "doInBackgroundCloseDeck");
     	Deck deck = params[0].getDeck();
 
     	// wait for widget updating before closing db
@@ -711,7 +711,7 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
     	if (deck != null) {
     		try {
     			deck.closeDeck(false);
-    			// Log.i(AnkiDroidApp.TAG, "doInBackgroundCloseDeck - Deck closed");
+    			Log.i(AnkiDroidApp.TAG, "doInBackgroundCloseDeck - Deck closed");
     		} catch (SQLiteException e) {
     			Log.e(AnkiDroidApp.TAG, "Error on closing deck: " + e);
     		}
@@ -721,27 +721,27 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
 
 
     private TaskData doInBackgroundDeleteBackups() {
-        // Log.i(AnkiDroidApp.TAG, "doInBackgroundDeleteBackups");
+        Log.i(AnkiDroidApp.TAG, "doInBackgroundDeleteBackups");
     	return new TaskData(BackupManager.deleteAllBackups());
     }
 
 
     private TaskData doInBackgroundRestoreDeck(TaskData... params) {
-        // Log.i(AnkiDroidApp.TAG, "doInBackgroundRestoreDeck");
+        Log.i(AnkiDroidApp.TAG, "doInBackgroundRestoreDeck");
         String[] paths = params[0].getDeckList();
     	return new TaskData(BackupManager.restoreDeckBackup(paths[0], paths[1]));
     }
 
 
     private TaskData doInBackgroundSortCards(TaskData... params) {
-        // Log.i(AnkiDroidApp.TAG, "doInBackgroundSortCards");
+        Log.i(AnkiDroidApp.TAG, "doInBackgroundSortCards");
 		Collections.sort(params[0].getCards(), params[0].getComparator());
 		return null;
     }
 
 
     private TaskData doInBackgroundLoadTutorial(TaskData... params) {
-        // Log.i(AnkiDroidApp.TAG, "doInBackgroundLoadTutorial");
+        Log.i(AnkiDroidApp.TAG, "doInBackgroundLoadTutorial");
         Resources res = AnkiDroidApp.getInstance().getBaseContext().getResources();
         File sampleDeckFile = new File(params[0].getString());
     	publishProgress(new TaskData(res.getString(R.string.tutorial_load)));
