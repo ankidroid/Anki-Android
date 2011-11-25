@@ -986,16 +986,14 @@ public class DeckPicker extends Activity implements Runnable, IButtonListener {
 				public void onReceive(Context context, Intent intent) {
 					String action = intent.getAction();
 					if (action.equals(Intent.ACTION_MEDIA_UNMOUNTED)) {
-						Log.i(AnkiDroidApp.TAG,
-										"DeckPicker - mUnmountReceiver, Action = Media Unmounted");
+						Log.i(AnkiDroidApp.TAG, "DeckPicker - mUnmountReceiver, Action = Media Unmounted");
 						SharedPreferences preferences = PreferenceManager
 								.getDefaultSharedPreferences(getBaseContext());
 						String deckPath = preferences.getString("deckPath",
 								AnkiDroidApp.getStorageDirectory());
 						populateDeckList(deckPath);
 					} else if (action.equals(Intent.ACTION_MEDIA_MOUNTED)) {
-						Log.i(AnkiDroidApp.TAG,
-										"DeckPicker - mUnmountReceiver, Action = Media Mounted");
+						Log.i(AnkiDroidApp.TAG, "DeckPicker - mUnmountReceiver, Action = Media Mounted");
 						SharedPreferences preferences = PreferenceManager
 								.getDefaultSharedPreferences(getBaseContext());
 						String deckPath = preferences.getString("deckPath",
@@ -1681,8 +1679,7 @@ public class DeckPicker extends Activity implements Runnable, IButtonListener {
 
 	private void waitForDeckLoaderThread() {
 		mDeckIsSelected = true;
-		Log.i(AnkiDroidApp.TAG,
-						"DeckPicker - waitForDeckLoaderThread(), mDeckIsSelected set to true");
+		Log.i(AnkiDroidApp.TAG, "DeckPicker - waitForDeckLoaderThread(), mDeckIsSelected set to true");
 		mLock.lock();
 		try {
 			while (!mIsFinished) {
