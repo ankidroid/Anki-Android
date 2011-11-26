@@ -686,9 +686,12 @@ public class StudyOptions extends Activity implements IButtonListener {
         if (!mSdCardAvailable) {
             showContentView(CONTENT_NO_EXTERNAL_STORAGE);
         } else {
-            if (mDeckFilename == null || !new File(mDeckFilename).exists()) {
+        	if (mStartedByBigWidget) {
+        		showContentView(CONTENT_STUDY_OPTIONS);
+            	showDeckInformation(false);
+        	} else if (mDeckFilename == null || !new File(mDeckFilename).exists()) {
                 showContentView(CONTENT_NO_DECK);
-            } else if (!mStartedByBigWidget) {
+            } else {
             	if ((showDeckPickerOnStartup()) && (!hasErrorFiles())) {
             		openDeckPicker();
             	} else {
