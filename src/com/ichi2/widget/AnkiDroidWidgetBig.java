@@ -283,9 +283,7 @@ public class AnkiDroidWidgetBig extends AppWidgetProvider {
                 	sCurrentMessage = null;
                 	updateViews(VIEW_SHOW_QUESTION);            		
             	} else {
-                	sShowProgressDialog = false;
-                	sCurrentMessage = "deck could not be loaded";
-                	updateViews(VIEW_DECKS);
+            		handleError();
             	}
             }
         };
@@ -310,13 +308,13 @@ public class AnkiDroidWidgetBig extends AppWidgetProvider {
                 }
             	sShowProgressDialog = false;
             	updateViews(VIEW_SHOW_QUESTION);
+            	WidgetStatus.update(sContext, WidgetStatus.getDeckStatus(sLoadedDeck));
             }
             @Override
             public void onPostExecute(DeckTask.TaskData result) {
             	if (!result.getBoolean()) {
-            		// TODO: db error handling
+            		handleError();
             	}
-                WidgetStatus.update(sContext, WidgetStatus.getDeckStatus(sLoadedDeck));
             }
         };
 
@@ -336,7 +334,8 @@ public class AnkiDroidWidgetBig extends AppWidgetProvider {
             @Override
             public void onPostExecute(DeckTask.TaskData result) {
             	if (!result.getBoolean()) {
-            		// TODO: db error handling
+            		handleError();
+            		return;
             	}
                 String str = result.getString();
                 if (str != null) {
@@ -438,12 +437,12 @@ public class AnkiDroidWidgetBig extends AppWidgetProvider {
                 	if (deckpath != null) {
                 		if (sCurrentView != VIEW_NOTHING_DUE) {
                         	DeckManager.getDeck(deckpath, true, DeckManager.REQUESTING_ACTIVITY_STUDYOPTIONS);                			
-                        	newIntent.putExtra(StudyOptions.EXTRA_START_REVIEWER, true);
+                        	newIntent.putExtra(StudyOptions.EXTRA_START, StudyOptions.EXTRA_START_REVIEWER);
                         	startActivity(newIntent);
                     		showProgressDialog();
                 		}
                 	} else {
-                		newIntent.putExtra(StudyOptions.EXTRA_START_DECKPICKER, true);                		
+                		newIntent.putExtra(StudyOptions.EXTRA_START, StudyOptions.EXTRA_START_DECKPICKER);                		
                     	startActivity(newIntent);
                 	}
                 } else if (ACTION_CARDEDITOR.equals(action)) {
@@ -499,6 +498,19 @@ public class AnkiDroidWidgetBig extends AppWidgetProvider {
     				}
                 }
             }
+        }
+
+
+        private void handleError() {
+        	Intent newIntent = StudyOptions.getLoadDeckIntent(AnkiDroidWidgetBig.UpdateService.this, "");
+        	newIntent.putExtra(StudyOptions.EXTRA_START, StudyOptions.EXTRA_DB_ERROR);
+        	startActivity(newIntent);
+    		sCurrentMessage = null;
+    		DeckManager.closeDeck(sLoadedDeck.getDeckPath());
+    		sLoadedDeck = null;
+    		sCard = null;
+    		sShowProgressDialog = false;
+    		updateViews(VIEW_DECKS);
         }
 
 
