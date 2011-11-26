@@ -400,8 +400,8 @@ public class AnkiDroidWidgetBig extends AppWidgetProvider {
                 } else if (ACTION_UNDO.equals(action)) {
                 	if (sLoadedDeck != null) {
                     	if (sLoadedDeck.undoAvailable()) {
-                    		DeckTask.launchDeckTask(DeckTask.TASK_TYPE_UNDO, mUpdateCardHandler, new DeckTask.TaskData(0, sLoadedDeck, sCard.getId(), true));                		
-                    	}                		
+                    		DeckTask.launchDeckTask(DeckTask.TASK_TYPE_UNDO, mUpdateCardHandler, new DeckTask.TaskData(0, sLoadedDeck, sCard != null ? sCard.getId() : 0, true));                		
+                    	}
                 	} else {
                 		updateViews(VIEW_DECKS);
                 	}
@@ -435,11 +435,13 @@ public class AnkiDroidWidgetBig extends AppWidgetProvider {
                 	String deckpath = intent.getStringExtra(EXTRA_DECK_PATH);
                 	Intent newIntent = StudyOptions.getLoadDeckIntent(this, deckpath);
                 	if (deckpath != null) {
+                    	DeckManager.getDeck(deckpath, true, DeckManager.REQUESTING_ACTIVITY_STUDYOPTIONS);                			
                 		if (sCurrentView != VIEW_NOTHING_DUE) {
-                        	DeckManager.getDeck(deckpath, true, DeckManager.REQUESTING_ACTIVITY_STUDYOPTIONS);                			
                         	newIntent.putExtra(StudyOptions.EXTRA_START, StudyOptions.EXTRA_START_REVIEWER);
                         	startActivity(newIntent);
                     		showProgressDialog();
+                		} else {
+                        	startActivity(newIntent);                			
                 		}
                 	} else {
                 		newIntent.putExtra(StudyOptions.EXTRA_START, StudyOptions.EXTRA_START_DECKPICKER);                		
