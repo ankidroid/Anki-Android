@@ -8,17 +8,17 @@ Add material through the desktop application Anki or directly through Ankidroid.
 
 Create your own flashcard decks or download free decks compiled for many languages and topics (more than 6000 available). The application even supports adding material automatically from a dictionary!
 
-★主な機能：
+★ Key features:
 • supported flashcard contents: text, images, sounds, LaTeX
 • spaced repetition (supermemo 2 algorithm)
 • text-to-speech integration
 • more than 6000 premade decks
-• two widgets
 • detailed statistics
+• three widgets
 • syncing with AnkiWeb
 • open source
 
-★ 追加機能：
+★ Additional features:
 • write answers (optional)
 • whiteboard
 • card browser
@@ -29,10 +29,11 @@ Create your own flashcard decks or download free decks compiled for many languag
 • custom font support
 • full backup system
 • navigation by swipe, tap, shake
+• review in widget
 • fully customisable
 • cram mode
 • limit studying by tag, time or cards
-•ナイトモード
+• night mode
 • zeemote support
 • three different ui-themes
-• 23 localisations
+• 27 localisations

@@ -9,7 +9,8 @@ fi: AnkiDroid-muistikortit
 fr: AnkiDroid (Cartes mémoire)
 hu: AnkiDroid tanuló kártyák
 id: Kad imbas AnkiDroid
-ja: AnkiDroid単語帳
+ja: アンキドロイド単語帳
+ru: AnkiDroid флэш-карты
 th: บัตรคำ AnkiDroid
 tr: AnkiDroid bilgi kartları
 vi: Thẻ thông minh AnkiDroid

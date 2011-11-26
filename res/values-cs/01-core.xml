@@ -58,13 +58,12 @@
   <string name="menu_rotate">Otočit</string>
   <string name="undo">Vrátit zpět</string>
   <string name="redo">Zrušit vrácení</string>
-  <string name="close_previous_deck">Uzavírám předchozí balíček.\nProsím čekejte...</string>
-  <string name="close_deck">Uzavírám balíček.\nProsím čekejte...</string>
   <string name="finish_operation">Dokončování předchozí operace.\nProsím čekejte...</string>
   <string name="contextmenu_deckpicker_download_missing_media">Stáhnout chybějící média</string>
   <string name="contextmenu_deckpicker_reset_language_assignments">Obnovit přiřazení jazyka</string>
   <string name="contextmenu_deckpicker_reset_reset_message">Obnovení jazyka</string>
   <string name="contextmenu_deckpicker_optimize_deck">Optimalizovat databázi</string>
+  <string name="contextmenu_deckpicker_rename_deck">Rename deck</string>
   <string name="contextmenu_deckpicker_set_custom_dictionary">Nastavit vlastní slovník</string>
   <string name="begin_cram">Spustit Šprtání</string>
   <string name="cram">Šprtat</string>

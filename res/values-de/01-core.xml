@@ -58,13 +58,12 @@
   <string name="menu_rotate">Drehen</string>
   <string name="undo">Rückgängig</string>
   <string name="redo">Wiederholen</string>
-  <string name="close_previous_deck">Letzter Stapel wird geschlossen.\nBitte warten...</string>
-  <string name="close_deck">Stapel wird geschlossen.\nBitte warten...</string>
   <string name="finish_operation">Beende letzte Operation.\nBitte warten...</string>
   <string name="contextmenu_deckpicker_download_missing_media">Fehlende Media-Daten herunterladen</string>
   <string name="contextmenu_deckpicker_reset_language_assignments">Sprachzuordnungen zurücksetzen</string>
   <string name="contextmenu_deckpicker_reset_reset_message">Sprachen zurückgesetzt</string>
   <string name="contextmenu_deckpicker_optimize_deck">Datenbank optimieren</string>
+  <string name="contextmenu_deckpicker_rename_deck">Stapel umbenennen</string>
   <string name="contextmenu_deckpicker_set_custom_dictionary">Eigenes Wörterbuch festlegen</string>
   <string name="begin_cram">Pauken starten</string>
   <string name="cram">Pauken</string>

@@ -107,6 +107,7 @@
   <string name="gestures_tap_bottom">Aşağıya dokunma</string>
   <string name="gestures_tap_left">Sola dokunma</string>
   <string name="gestures_tap_right">Sağa dokunma</string>
+  <string name="gestures_longclick">Basılı tutma</string>
   <string name="pref_cat_scrolling">Fiziksel yukarı/aşağı düğmeleri</string>
   <string name="more_scrolling_buttons">eOkuyucu</string>
   <string name="more_scrolling_buttons_summ">Düşey kaydırma için Kanji/Katakana, Emoji/Kao-moji tuşlarını da kullan.</string>
@@ -198,6 +199,9 @@
   <string name="input_workaround">Giriş Çözümü</string>
   <string name="input_workaround_summ">HTML giriş kutularındaki odaklama sorunları için çözüm. Bazı cihazlarda sorun yaratabilir.</string>
   <string name="write_answers_message">Her deste için yazılı yanıtların karşılaştırılacağı bir alan belirlemelisiniz. Bunu Anki Masaüstü yoluyla yapabilirsiniz (deste özellikleri -&gt; modeli düzenle -&gt; kart düzeni).\n\nKarşılaştırma alanı ayarlanmamışsa, yazılı yanıtınız her zaman kart yanıtının tümüyle karşılaştırılacak.</string>
+  <string name="pref_cache_cardbrowser">Kart Tarayıcısı Önbelleği</string>
+  <string name="pref_cache_cardbrowser_summ">Bütün kart tarayıcısı kartlarını önbellekte tutar (bellek harcar).</string>
+  <string name="pref_cache_cardbrowser_reload">Bütün kartlar yeniden yüklensin mi?</string>
   <string name="pref_keep_screen_on">Ekranı Açık Tut</string>
   <string name="pref_keep_screen_on_summ">Gözden geçirme sırasında ekranın kapanmasını engelle</string>
 </resources>

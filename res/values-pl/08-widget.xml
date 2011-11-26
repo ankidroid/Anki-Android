@@ -31,6 +31,10 @@
   <string name="widget_loading">Ładowanie widżetu...</string>
   <string name="widget_medium">AnkiDroid Średni</string>
   <string name="widget_small">AnkiDroid Mały</string>
+  <string name="widget_big">AnkiDroid Duży</string>
+  <string name="widget_big_restrictions_dialog">Z powodu ograniczeń obsługi widżetów przez Androida, widżet ten może wyświetlać tekst lecz nie obsługuje obrazów/dźwięków itd.</string>
+  <string name="open_in_reviewer">Otwórz talię w AnkiDroidzie</string>
+  <string name="widget_big_tomorrow_due">Do przejrzenia jutro:</string>
   <plurals name="widget_cards_in_decks_due">
     <item quantity="one">1 karta za %2$s</item>
     <item quantity="other">%1$d kart zaległe w %2$s</item>
@@ -38,5 +42,9 @@
   <plurals name="widget_decks">
     <item quantity="one">1 talia</item>
     <item quantity="other">%1$d talie</item>
+  </plurals>
+  <plurals name="widget_big_eta">
+    <item quantity="one">Szacowany czas: 1 min.</item>
+    <item quantity="other">Szacowany czas: %d min.</item>
   </plurals>
 </resources>

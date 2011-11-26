@@ -67,8 +67,14 @@
   <string name="error_insufficient_memory">Operacja nie może być wykonana z powodu niewystarczającej pamięci na urządzeniu</string>
   <string name="tutorial_load">Tworzenie talii instruktażowej</string>
   <string name="tutorial_loading_error">Nie można utworzyć talii instruktażowej</string>
+  <string name="rename">Zmień nazwę</string>
+  <string name="rename_error">Nie można zmienić nazwy talii %s</string>
   <string name="help_title">Pomoc</string>
   <string name="help_online">Pomoc online</string>
   <string name="help_faq">FAQ</string>
   <string name="help_tutorial">Talia instruktażowa</string>
+  <plurals name="factadder_cards_added">
+    <item quantity="one">dodana 1 karta</item>
+    <item quantity="other">dodanych %d kart</item>
+  </plurals>
 </resources>

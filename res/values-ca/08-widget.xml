@@ -31,6 +31,10 @@
   <string name="widget_loading">S\'està carregant el giny ...</string>
   <string name="widget_medium">AnkiDroid Mitg</string>
   <string name="widget_small">AnkiDroid Petit</string>
+  <string name="widget_big">AnkiDroid Big</string>
+  <string name="widget_big_restrictions_dialog">Due to some restrictions of Android\'s widget framework this widget can only show text but no images/sounds etc.</string>
+  <string name="open_in_reviewer">Open deck in AnkiDroid</string>
+  <string name="widget_big_tomorrow_due">Tomorrow due:</string>
   <plurals name="widget_cards_in_decks_due">
     <item quantity="one">1 fitxa estarà pendent en %2$s</item>
     <item quantity="other">%1$d fitxes estaràn pendents en %2$s</item>
@@ -38,5 +42,9 @@
   <plurals name="widget_decks">
     <item quantity="one">1 paquet</item>
     <item quantity="other">%1$d paquets</item>
+  </plurals>
+  <plurals name="widget_big_eta">
+    <item quantity="one">Estimated time: 1 min.</item>
+    <item quantity="other">Estimated time: %d min.</item>
   </plurals>
 </resources>

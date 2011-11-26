@@ -58,13 +58,12 @@
   <string name="menu_rotate">回転</string>
   <string name="undo">元に戻す</string>
   <string name="redo">再実行</string>
-  <string name="close_previous_deck">Closing previous deck.\nPlease wait...</string>
-  <string name="close_deck">デッキを閉じています。\nお待ちください...</string>
   <string name="finish_operation">前の操作を終了しています。\nしばらくお待ちください…</string>
   <string name="contextmenu_deckpicker_download_missing_media">不足しているメディアをダウンロードします</string>
   <string name="contextmenu_deckpicker_reset_language_assignments">言語設定のリセット</string>
   <string name="contextmenu_deckpicker_reset_reset_message">言語設定のリセット</string>
   <string name="contextmenu_deckpicker_optimize_deck">データベースを最適化します</string>
+  <string name="contextmenu_deckpicker_rename_deck">Rename deck</string>
   <string name="contextmenu_deckpicker_set_custom_dictionary">カスタム辞書設定</string>
   <string name="begin_cram">総復習を始める</string>
   <string name="cram">総復習</string>

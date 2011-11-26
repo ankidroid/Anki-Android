@@ -28,7 +28,7 @@ languages = ['ar', 'ca', 'cs', 'de', 'el', 'es-ES', 'fi', 'fr', 'hu', 'id', 'it'
 
 fileNames = ['01-core', '02-strings', '03-dialogs', '04-network', '05-feedback', '06-statistics', '07-cardbrowser', '08-widget', '09-backup', '10-preferences', '11-arrays', '12-tutorial', '13-newfeatures', '14-marketdescription', '15-markettitle']
 anyError = False
-titleFile = '../docs/marketing/localized description/ankidroid-titles.txt'
+titleFile = '../docs/marketing/localized_description/ankidroid-titles.txt'
 titleString = 'AnkiDroid Flashcards'
 
 
@@ -116,10 +116,10 @@ def createIfNotExisting(directory):
 
 def update(valuesDirectory, f, source, fileExt, isCrowdin, language=''):
 	if f == '14-marketdescription':
-		newfile = '../docs/marketing/localized description/marketdescription' + '-' + language + fileExt
+		newfile = '../docs/marketing/localized_description/marketdescription' + '-' + language + fileExt
 		file(newfile, 'w').write(source)
 		# translations must be compared to the old version of marketdescription (bug of crowdin)
-		oldContent = open('../docs/marketing/localized description/oldVersionJustToCompareWith.txt').readlines()
+		oldContent = open('../docs/marketing/localized_description/oldVersionJustToCompareWith.txt').readlines()
 		newContent = open(newfile).readlines()
 		for i in range(0, len(oldContent)):
 			if oldContent[i] != newContent[i]:
@@ -129,7 +129,7 @@ def update(valuesDirectory, f, source, fileExt, isCrowdin, language=''):
 		print 'file marketdescription is not translated into language ' + language
 		return True
 	elif f == '15-markettitle':
-#		newfile = '../docs/marketing/localized description/marketdescription' + '-' + language + fileExt
+#		newfile = '../docs/marketing/localized_description/marketdescription' + '-' + language + fileExt
 #		file(newfile, 'w').write(source)
 		translatedTitle = source.replace("\n", "")
 		if titleString != translatedTitle:

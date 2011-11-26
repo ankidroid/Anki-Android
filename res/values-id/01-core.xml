@@ -58,13 +58,12 @@
   <string name="menu_rotate">Pusing</string>
   <string name="undo">Buat asal</string>
   <string name="redo">Buat semula</string>
-  <string name="close_previous_deck">Penutupan dek sebelumnya. \nSila tunggu ...</string>
-  <string name="close_deck">Penutupan dek.\nSila tunggu ...</string>
   <string name="finish_operation">Menyudah operasi lepas.\nSila tunggu...</string>
   <string name="contextmenu_deckpicker_download_missing_media">Muat turun media kurang</string>
   <string name="contextmenu_deckpicker_reset_language_assignments">Set Tugasan Bahasa</string>
   <string name="contextmenu_deckpicker_reset_reset_message">Set bahasa</string>
   <string name="contextmenu_deckpicker_optimize_deck">Optimumkan data</string>
+  <string name="contextmenu_deckpicker_rename_deck">Rename deck</string>
   <string name="contextmenu_deckpicker_set_custom_dictionary">Tetapkan kamus sendiri</string>
   <string name="begin_cram">Mula mod Cram</string>
   <string name="cram">Cram</string>

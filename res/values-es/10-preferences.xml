@@ -107,6 +107,7 @@
   <string name="gestures_tap_bottom">Tocar la parte inferior</string>
   <string name="gestures_tap_left">Tocar la parte izquierda</string>
   <string name="gestures_tap_right">Tocar la parte derecha</string>
+  <string name="gestures_longclick">Click largo</string>
   <string name="pref_cat_scrolling">Botones arriba/abajo de hardware</string>
   <string name="more_scrolling_buttons">eReader</string>
   <string name="more_scrolling_buttons_summ">Usar también botones Kanji/Katakana, Emoji/Kao-moji para despalzarse.</string>
@@ -198,6 +199,9 @@
   <string name="input_workaround">Solución para Entrada</string>
   <string name="input_workaround_summ">Solución para atajar los problemas en cajas de texto HTML. Causa problemas en varios dispositivos.</string>
   <string name="write_answers_message">Debes definir un campo en cada mazo para comparar con la respuesta escrita. Puedes hacerlo a través de Anki versión escritorio (Propiedades del mazo - &gt; Editar modelo - &gt; Formato de tarjeta).\n\nSi no se establece ningún campo de comparación, siempre se comparará tu respuesta por escrito con la respuesta de la tarjeta al completo.</string>
+  <string name="pref_cache_cardbrowser">Memoria Caché del Explorador de Tarjetas</string>
+  <string name="pref_cache_cardbrowser_summ">Guarda todas las tarjetas del explorador de tarjetas en la memoria caché (consume memoria).</string>
+  <string name="pref_cache_cardbrowser_reload">¿Volver a cargar todas las tarjetas?</string>
   <string name="pref_keep_screen_on">Mantener encendida la pantalla</string>
   <string name="pref_keep_screen_on_summ">Impedir que la pantalla se apague mientras estás repasando</string>
 </resources>

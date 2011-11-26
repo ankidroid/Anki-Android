@@ -58,13 +58,12 @@
   <string name="menu_rotate">Rotera</string>
   <string name="undo">Ångra</string>
   <string name="redo">Gör om</string>
-  <string name="close_previous_deck">Stänger föregående kortlek.\nVänligen vänta...</string>
-  <string name="close_deck">Stänger kortleken.\nVänligen vänta...</string>
   <string name="finish_operation">Slutför föregående beräkning.\nVänligen vänta...</string>
   <string name="contextmenu_deckpicker_download_missing_media">Hämta saknade media</string>
   <string name="contextmenu_deckpicker_reset_language_assignments">Återställ språktilldelningar</string>
   <string name="contextmenu_deckpicker_reset_reset_message">Återställning av språk</string>
   <string name="contextmenu_deckpicker_optimize_deck">Optimera databas</string>
+  <string name="contextmenu_deckpicker_rename_deck">Rename deck</string>
   <string name="contextmenu_deckpicker_set_custom_dictionary">Ange egen ordlista</string>
   <string name="begin_cram">Starta råplugg</string>
   <string name="cram">Råplugg</string>

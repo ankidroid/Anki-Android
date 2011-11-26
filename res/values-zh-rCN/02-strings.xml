@@ -67,8 +67,14 @@
   <string name="error_insufficient_memory">由于设备内存不足导致操作无法完成。</string>
   <string name="tutorial_load">正在创建教程词库。</string>
   <string name="tutorial_loading_error">无法创建教程词库。</string>
+  <string name="rename">Rename</string>
+  <string name="rename_error">Deck %s could not be renamed</string>
   <string name="help_title">帮助</string>
   <string name="help_online">在线帮助</string>
   <string name="help_faq">常见问题</string>
   <string name="help_tutorial">教程词库</string>
+  <plurals name="factadder_cards_added">
+    <item quantity="one">1 card added</item>
+    <item quantity="other">%d cards added</item>
+  </plurals>
 </resources>

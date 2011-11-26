@@ -58,13 +58,12 @@
   <string name="menu_rotate">회전</string>
   <string name="undo">취소</string>
   <string name="redo">다시 하기</string>
-  <string name="close_previous_deck">이전 덱을 닫는중. 기다려주세요...</string>
-  <string name="close_deck">덱을 닫는 중 입니다. 기다려주세요...</string>
   <string name="finish_operation">이전 작업 마무리 중. 기다려주세요...</string>
   <string name="contextmenu_deckpicker_download_missing_media">누락된 미디어 다운로드</string>
   <string name="contextmenu_deckpicker_reset_language_assignments">Reset Language Assignments</string>
   <string name="contextmenu_deckpicker_reset_reset_message">언어 재설정</string>
   <string name="contextmenu_deckpicker_optimize_deck">데이터베이스 최적화</string>
+  <string name="contextmenu_deckpicker_rename_deck">Rename deck</string>
   <string name="contextmenu_deckpicker_set_custom_dictionary">사용자 정의 사전 설정</string>
   <string name="begin_cram">벼락치기 모드 시작</string>
   <string name="cram">벼락치기</string>

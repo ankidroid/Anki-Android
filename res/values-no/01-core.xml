@@ -58,13 +58,12 @@
   <string name="menu_rotate">Rotér</string>
   <string name="undo">Angre</string>
   <string name="redo">Gjør om</string>
-  <string name="close_previous_deck">Lukker forrige kortstokk.\nVennligst vent...</string>
-  <string name="close_deck">Lukker kortstokk.\nVennligst vent...</string>
   <string name="finish_operation">Ferdigstiller forrige operasjon.\n Vennligst vent...</string>
   <string name="contextmenu_deckpicker_download_missing_media">Last ned manglende mediafiler</string>
   <string name="contextmenu_deckpicker_reset_language_assignments">Tilbakestill språkinnstillinger</string>
   <string name="contextmenu_deckpicker_reset_reset_message">Tilbakestill språk</string>
   <string name="contextmenu_deckpicker_optimize_deck">Optimaliser database</string>
+  <string name="contextmenu_deckpicker_rename_deck">Rename deck</string>
   <string name="contextmenu_deckpicker_set_custom_dictionary">Sett egendefinert ordliste</string>
   <string name="begin_cram">Start pugging</string>
   <string name="cram">Pugg</string>
