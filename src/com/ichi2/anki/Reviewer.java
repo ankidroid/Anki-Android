@@ -2886,11 +2886,12 @@ public class Reviewer extends Activity implements IButtonListener{
     public boolean getRefreshWebviewAndInitializeWebviewVariables() {
     	mCustomFontFiles = Utils.getCustomFonts(getBaseContext());
 		for (String s : new String[] {"nook"}) {
-			if  (android.os.Build.DEVICE.indexOf(s) != -1 || android.os.Build.MODEL.indexOf(s) != -1) {
+			if  (android.os.Build.DEVICE.toLowerCase().indexOf(s) != -1 || android.os.Build.MODEL.toLowerCase().indexOf(s) != -1) {
 				return true;
 			}
 		}
         try {
+        	// this must not be executed on nook (causes fc)
         	mSetScrollbarBarFading = WebView.class.getMethod("setScrollbarFadingEnabled", boolean.class);
         } catch (Throwable e) {
         	Log.i(AnkiDroidApp.TAG, "setScrollbarFadingEnabled could not be found due to a too low Android version (< 2.1)");
