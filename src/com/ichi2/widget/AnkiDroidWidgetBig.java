@@ -307,7 +307,7 @@ public class AnkiDroidWidgetBig extends AppWidgetProvider {
                 }
             	sShowProgressDialog = false;
             	updateViews(VIEW_SHOW_QUESTION);
-            	WidgetStatus.update(sContext, WidgetStatus.getDeckStatus(sLoadedDeck));
+            	WidgetStatus.update(sContext, WidgetStatus.getDeckStatus(sLoadedDeck), false);
             }
             @Override
             public void onPostExecute(DeckTask.TaskData result) {
@@ -345,7 +345,7 @@ public class AnkiDroidWidgetBig extends AppWidgetProvider {
                     }
                 }
                 updateViews();
-                WidgetStatus.update(sContext, WidgetStatus.getDeckStatus(sLoadedDeck));
+                WidgetStatus.update(sContext, WidgetStatus.getDeckStatus(sLoadedDeck), false);
             }
         };
 
