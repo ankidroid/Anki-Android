@@ -223,6 +223,8 @@ public class StudyOptions extends Activity implements IButtonListener {
     String mLocale;
     private boolean mZeemoteEnabled;
 
+    private String mRepairFileName;
+
     /**
 * Alerts to inform the user about different situations
 */
@@ -678,6 +680,7 @@ public class StudyOptions extends Activity implements IButtonListener {
         			openDeckPicker();
                 	break;
         		case EXTRA_DB_ERROR:
+        			mRepairFileName = intent.getStringExtra(EXTRA_DECK);
         			onActivityResult(REQUEST_REVIEW, Reviewer.RESULT_ANSWERING_ERROR, null);
         			break;
         		}
@@ -1623,7 +1626,7 @@ public class StudyOptions extends Activity implements IButtonListener {
 	        builder.setPositiveButton(res.getString(R.string.backup_repair_deck), new OnClickListener() {
 	            @Override
 	            public void onClick(DialogInterface dialog, int which) {
-	            	DeckTask.launchDeckTask(DeckTask.TASK_TYPE_REPAIR_DECK, mRepairDeckHandler, new DeckTask.TaskData(mDeckFilename));
+	            	DeckTask.launchDeckTask(DeckTask.TASK_TYPE_REPAIR_DECK, mRepairDeckHandler, new DeckTask.TaskData(mDeckFilename != null ? mDeckFilename : mRepairFileName));
 	            }
 	        });
 	        builder.setNeutralButton(res.getString(R.string.answering_error_report), new OnClickListener() {
@@ -1631,17 +1634,18 @@ public class StudyOptions extends Activity implements IButtonListener {
 	            public void onClick(DialogInterface dialog, int which) {
 	                mShowRepairDialog = true;
 	                Intent i = new Intent(StudyOptions.this, Feedback.class);
-			dialog.dismiss();
+	                dialog.dismiss();
 	                startActivityForResult(i, REPORT_ERROR);
-		        if (getApiLevel() > 4) {
-			    ActivityTransitionAnimation.slide(StudyOptions.this, ActivityTransitionAnimation.FADE);
-		        }
+	                if (getApiLevel() > 4) {
+	                	ActivityTransitionAnimation.slide(StudyOptions.this, ActivityTransitionAnimation.FADE);
+		        	}
 	            }
 	        });	        	
 			builder.setNegativeButton(res.getString(R.string.close), null);
 	        builder.setCancelable(true);
 		    dialog = builder.create();
 			break;
+
 		case DIALOG_SELECT_HELP:
 	        builder.setTitle(res.getString(R.string.help_title));
 	        builder.setItems(new String[] {res.getString(R.string.help_tutorial), res.getString(R.string.help_online), res.getString(R.string.help_faq)}, new OnClickListener() {
@@ -2610,6 +2614,10 @@ public class StudyOptions extends Activity implements IButtonListener {
         	}
         	if (mProgressDialog != null && mProgressDialog.isShowing()) {
         		mProgressDialog.dismiss();
+        	}
+        	if (mRepairFileName != null) {
+            	mRepairFileName = null;
+        		finish();
         	}
         }
  
