@@ -71,7 +71,7 @@ public final class WidgetStatus {
         } else {
             smallWidget = false;
         }
-        if (preferences.getBoolean("widgetBidEnabled", false)) {
+        if (preferences.getBoolean("widgetBigEnabled", false)) {
             bigWidget = true;
         } else {
             bigWidget = false;
