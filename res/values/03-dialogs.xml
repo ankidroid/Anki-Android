@@ -89,7 +89,7 @@
 <string name="repair_deck_dialog">Do you really want to try to repair deck \'%1$s\'?\n\nBefore starting the attempt, a copy of the deck will be created in subfolder \'%2$s\'.</string>
 
 <string name="intent_add_save_for_later">Save for later</string>
-<string name="intent_add_saved_information">Saved information</string>
+<string name="intent_add_saved_information">Saved data</string>
 <string name="intent_add_clear_all">Clear all</string>
 
 </resources>
