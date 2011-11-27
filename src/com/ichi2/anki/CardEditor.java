@@ -821,7 +821,7 @@ public class CardEditor extends Activity {
 						finish();
 						if (Integer.valueOf(android.os.Build.VERSION.SDK) > 4) {
 							ActivityTransitionAnimation.slide(CardEditor.this,
-									ActivityTransitionAnimation.NONE);
+									ActivityTransitionAnimation.FADE);
 						}			
 					} else if (mDeck == null) {
 						showDialog(DIALOG_DECK_SELECT);
@@ -944,7 +944,7 @@ public class CardEditor extends Activity {
     				startActivityForResult(intent, REQUEST_INTENT_ADD);
     				if (Integer.valueOf(android.os.Build.VERSION.SDK) > 4) {
     					ActivityTransitionAnimation.slide(CardEditor.this,
-    							ActivityTransitionAnimation.NONE);
+    							ActivityTransitionAnimation.FADE);
     				}
     				mIntentInformationDialog.dismiss();
     			}
