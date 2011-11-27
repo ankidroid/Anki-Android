@@ -47,6 +47,7 @@ public class Themes {
 	public final static int CALLER_DOWNLOAD_DECK= 6;
 	public final static int CALLER_DECKPICKER = 7;
 	public final static int CALLER_CARDBROWSER = 8;
+	public final static int CALLER_CARDEDITOR_INTENTDIALOG = 9;
 
 	private static int mCurrentTheme = -1;
 	private static int mProgressbarsBackgroundColor;
@@ -142,6 +143,13 @@ public class Themes {
 		case CALLER_CARDBROWSER:
 			if (mCurrentTheme == THEME_BLUE) {
 				ListView lv = (ListView) view.findViewById(R.id.card_browser_list);
+				lv.setSelector(R.drawable.blue_cardbrowser_list_selector);
+				lv.setDividerHeight(0);
+			}
+			break;
+		case CALLER_CARDEDITOR_INTENTDIALOG:
+			if (mCurrentTheme == THEME_BLUE) {
+				ListView lv = (ListView) view;
 				lv.setSelector(R.drawable.blue_cardbrowser_list_selector);
 				lv.setDividerHeight(0);
 			}

@@ -27,5 +27,6 @@
 		<item>long click configurable</item>
 		<item>feedback for added facts</item>
 		<item>deck summary in deckpicker</item>
+		<item>temporary storage for intent add information</item>
 	</string-array>
 </resources>

@@ -41,12 +41,16 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListView;
+import android.widget.SimpleAdapter;
 import android.widget.TextView;
+import android.widget.AdapterView.OnItemClickListener;
 
 import com.ichi2.anim.ActivityTransitionAnimation;
 import com.ichi2.anim.ViewAnimation;
@@ -88,12 +92,14 @@ public class CardEditor extends Activity {
 	public static final String EXTRA_DECKPATH = "DECKPATH";
 	public static final String EXTRA_CALLER = "CALLER";
 	public static final String EXTRA_CONTENTS = "CONTENTS";
+	public static final String EXTRA_ID = "ID";
 
 	private static final int DIALOG_MODEL_SELECT = 0;
 	private static final int DIALOG_CARD_MODEL_SELECT = 1;
 	private static final int DIALOG_TAGS = 2;
 	private static final int DIALOG_DECK_SELECT = 3;
 	private static final int DIALOG_RESET_CARD = 4;
+	private static final int DIALOG_INTENT_INFORMATION = 5;
 
 	private static final String ACTION_CREATE_FLASHCARD = "org.openintents.indiclash.CREATE_FLASHCARD";
 	private static final String ACTION_CREATE_FLASHCARD_SEND = "android.intent.action.SEND";
@@ -103,6 +109,7 @@ public class CardEditor extends Activity {
 	private static final int MENU_COPY_CARD = 2;
 	private static final int MENU_ADD_CARD = 3;
 	private static final int MENU_RESET_CARD_PROGRESS = 4;
+	private static final int MENU_SAVED_INTENT = 5;
 
 	public static final int CALLER_NOCALLER = 0;
 	public static final int CALLER_REVIEWER = 1;
@@ -112,7 +119,11 @@ public class CardEditor extends Activity {
 	public static final int CALLER_CARDBROWSER_EDIT = 5;
 	public static final int CALLER_CARDBROWSER_ADD = 6;
 	public static final int CALLER_CARDEDITOR = 7;
-	public static final int CALLER_INDICLASH = 8;
+	public static final int CALLER_CARDEDITOR_INTENT_ADD = 8;
+	public static final int CALLER_INDICLASH = 9;
+
+	public static final int REQUEST_ADD = 0;
+	public static final int REQUEST_INTENT_ADD = 1;
 
 	/**
 	 * Broadcast that informs us when the sd card is about to be unmounted
@@ -153,6 +164,11 @@ public class CardEditor extends Activity {
 	private LinkedHashMap<Long, CardModel> mSelectedCardModels;
 	private LinkedHashMap<Long, CardModel> mNewSelectedCardModels;
 	private ArrayList<Long> cardModelIds = new ArrayList<Long>();
+
+	private int mCardItemBackground;
+	private ArrayList<HashMap<String, String>> mIntentInformation;
+	private SimpleAdapter mIntentInformationAdapter;
+	private StyledDialog mIntentInformationDialog;
 
 	private boolean mModified;
 
@@ -212,6 +228,13 @@ public class CardEditor extends Activity {
 			}
 			if (!mAddFact || mCaller == CALLER_CARDEDITOR || mCaller == CALLER_BIGWIDGET_EDIT) {
 				closeCardEditor();
+			} else if (mCaller == CALLER_CARDEDITOR_INTENT_ADD) {
+				if (count > 0) {
+					Intent intent = new Intent();
+					intent.putExtra(EXTRA_ID, getIntent().getStringExtra(EXTRA_ID));
+					setResult(RESULT_OK, intent);
+					closeCardEditor();
+				}
 			}
 		}
 
@@ -322,6 +345,14 @@ public class CardEditor extends Activity {
 			mAddFact = true;
 			break;
 
+		case CALLER_CARDEDITOR_INTENT_ADD:
+			prepareForIntentAddition();
+			mAddFact = true;
+			String[] fields = intent.getStringExtra(EXTRA_CONTENTS).split("\\x1f");
+			mSourceText = fields[0];
+			mTargetText = fields[1];
+			break;
+
 		case CALLER_INDICLASH:
 			prepareForIntentAddition();
 			Bundle extras = intent.getExtras();
@@ -342,7 +373,7 @@ public class CardEditor extends Activity {
 			break;
 		}
 
-		if (mCaller != CALLER_INDICLASH) {
+		if (mCaller != CALLER_INDICLASH && mCaller != CALLER_CARDEDITOR_INTENT_ADD) {
 			mDeckPath = intent.getStringExtra(EXTRA_DECKPATH);
 			mDeck = DeckManager.getDeck(mDeckPath, DeckManager.REQUESTING_ACTIVITY_CARDEDITOR, false);
 			if (mDeck == null) {
@@ -352,7 +383,7 @@ public class CardEditor extends Activity {
 		}
 
 		if (mAddFact) {
-			if (mCaller != CALLER_INDICLASH) {
+			if (mCaller != CALLER_INDICLASH && mCaller != CALLER_CARDEDITOR_INTENT_ADD) {
 				loadContents();
 				modelChanged();
 				mSave.setEnabled(false);
@@ -519,7 +550,12 @@ public class CardEditor extends Activity {
 		item.setIcon(R.drawable.ic_menu_upload);
 		if (!mAddFact) {
 			item = menu.add(Menu.NONE, MENU_RESET_CARD_PROGRESS, Menu.NONE, res.getString(R.string.card_editor_reset_card));
-			item.setIcon(R.drawable.ic_menu_delete);			
+			item.setIcon(R.drawable.ic_menu_delete);
+		}
+		if (mCaller != CALLER_CARDEDITOR_INTENT_ADD) {
+			mIntentInformation = MetaDB.getIntentInformation(this);
+			item = menu.add(Menu.NONE, MENU_SAVED_INTENT, Menu.NONE, res.getString(R.string.intent_add_saved_information));
+			item.setIcon(R.drawable.ic_menu_archive);			
 		}
 		return true;
 	}
@@ -535,10 +571,15 @@ public class CardEditor extends Activity {
 		        menu.findItem(MENU_COPY_CARD).setEnabled(true);
 				break;
 			} else if (i == mEditFields.size() - 1) {
-		        menu.findItem(MENU_COPY_CARD).setEnabled(false);				
+		        menu.findItem(MENU_COPY_CARD).setEnabled(false);
 			}
 		}
-		return true;
+
+        if (mCaller != CALLER_CARDEDITOR_INTENT_ADD) {
+        	mIntentInformation = MetaDB.getIntentInformation(this);
+    		menu.findItem(MENU_SAVED_INTENT).setEnabled(mIntentInformation.size() > 0);        	
+        }
+        return true;
 	}
 
 
@@ -557,7 +598,7 @@ public class CardEditor extends Activity {
 				}
 				intent.putExtra(EXTRA_CONTENTS, contents.toString());
 			}
-			startActivity(intent);
+			startActivityForResult(intent, REQUEST_ADD);
 			if (Integer.valueOf(android.os.Build.VERSION.SDK) > 4) {
 				ActivityTransitionAnimation.slide(CardEditor.this,
 						ActivityTransitionAnimation.LEFT);
@@ -566,7 +607,7 @@ public class CardEditor extends Activity {
 
 		case MENU_RESET:
 			if (mAddFact) {
-				if (mCaller == CALLER_INDICLASH) {
+				if (mCaller == CALLER_INDICLASH  || mCaller == CALLER_CARDEDITOR_INTENT_ADD) {
 					if (mSourceText != null) {
 						mEditFields.get(0).setText(mSourceText);
 					}
@@ -597,6 +638,10 @@ public class CardEditor extends Activity {
 
 		case MENU_RESET_CARD_PROGRESS:
 			showDialog(DIALOG_RESET_CARD);
+			return true;
+
+		case MENU_SAVED_INTENT:
+			showDialog(DIALOG_INTENT_INFORMATION);
 			return true;
 		}
 		return false;
@@ -655,6 +700,22 @@ public class CardEditor extends Activity {
 	private void closeCardEditor() {
 		DeckManager.closeDeck(mDeck.getDeckPath(), DeckManager.REQUESTING_ACTIVITY_CARDEDITOR);
 		finish();
+		if (mCaller == CALLER_CARDEDITOR_INTENT_ADD) {
+			if (Integer.valueOf(android.os.Build.VERSION.SDK) > 4) {
+				ActivityTransitionAnimation.slide(CardEditor.this,
+						ActivityTransitionAnimation.FADE);
+			}
+		} else if (mCaller == CALLER_INDICLASH) {
+			if (Integer.valueOf(android.os.Build.VERSION.SDK) > 4) {
+				ActivityTransitionAnimation.slide(CardEditor.this,
+						ActivityTransitionAnimation.NONE);
+			}
+		} else {
+			if (Integer.valueOf(android.os.Build.VERSION.SDK) > 4) {
+				ActivityTransitionAnimation.slide(CardEditor.this,
+						ActivityTransitionAnimation.RIGHT);
+			}
+		}
 	}
 
 	@Override
@@ -752,10 +813,22 @@ public class CardEditor extends Activity {
 				public void onDismiss(DialogInterface arg0) {
 					if (mCancelled == true) {
 						finish();
+						if (Integer.valueOf(android.os.Build.VERSION.SDK) > 4) {
+							ActivityTransitionAnimation.slide(CardEditor.this,
+									ActivityTransitionAnimation.NONE);
+						}			
 					} else if (mDeck == null) {
 						showDialog(DIALOG_DECK_SELECT);
 					}
 				}
+			}, mCaller == CALLER_CARDEDITOR_INTENT_ADD ? null : res.getString(R.string.intent_add_save_for_later), mCaller == CALLER_CARDEDITOR_INTENT_ADD ? null : new View.OnClickListener() {
+
+				@Override
+				public void onClick(View v) {
+					MetaDB.saveIntentInformation(CardEditor.this, mSourceText, mTargetText);
+					mCancelled = true;
+					finish();
+				}				
 			});
 			break;
 
@@ -821,6 +894,7 @@ public class CardEditor extends Activity {
 			mCardModelDialog = builder.create();
 			dialog = mCardModelDialog;
 			break;
+
 		case DIALOG_RESET_CARD:
     		builder.setTitle(res.getString(R.string.reset_card_dialog_title));
     		builder.setMessage(res.getString(R.string.reset_card_dialog_message));
@@ -841,6 +915,60 @@ public class CardEditor extends Activity {
 			builder.setNegativeButton(res.getString(R.string.no), null);
 			builder.setCancelable(true);
 			dialog = builder.create();
+			break;
+
+		case DIALOG_INTENT_INFORMATION:
+    		builder.setTitle(res.getString(R.string.intent_add_saved_information));
+    		ListView listView = new ListView(this);
+    		
+    		mIntentInformationAdapter = new SimpleAdapter(this, mIntentInformation, R.layout.card_item, new String[] { "source", "target", "id"}, new int[] { R.id.card_question, R.id.card_answer, R.id.card_item});
+    		listView.setAdapter(mIntentInformationAdapter);
+    		listView.setOnItemClickListener(new OnItemClickListener() {
+    			@Override
+    			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+    				Intent intent = new Intent(CardEditor.this, CardEditor.class);
+    				intent.putExtra(EXTRA_CALLER, CALLER_CARDEDITOR_INTENT_ADD);
+    				HashMap<String, String> map = mIntentInformation.get(position);
+    				StringBuilder contents = new StringBuilder();
+    				contents.append(map.get("source"))
+    					.append("\u001f")
+    					.append(map.get("target"));
+					intent.putExtra(EXTRA_CONTENTS, contents.toString());
+					intent.putExtra(EXTRA_ID, map.get("id"));
+    				startActivityForResult(intent, REQUEST_INTENT_ADD);
+    				if (Integer.valueOf(android.os.Build.VERSION.SDK) > 4) {
+    					ActivityTransitionAnimation.slide(CardEditor.this,
+    							ActivityTransitionAnimation.NONE);
+    				}
+    				mIntentInformationDialog.dismiss();
+    			}
+    		});
+    		mCardItemBackground = Themes.getCardBrowserBackground()[0];
+    		mIntentInformationAdapter.setViewBinder(new SimpleAdapter.ViewBinder() {
+    			@Override
+    			public boolean setViewValue(View view, Object arg1, String text) {
+    				if (view.getId() == R.id.card_item) {
+    					view.setBackgroundResource(mCardItemBackground);
+    					return true;
+    				}
+    				return false;
+    			}
+    		});
+    		listView.setBackgroundColor(android.R.attr.colorBackground);
+    		listView.setDrawSelectorOnTop(true);
+    		listView.setFastScrollEnabled(true);
+    		Themes.setContentStyle(listView, Themes.CALLER_CARDEDITOR_INTENTDIALOG);
+    		builder.setView(listView, false, true);
+			builder.setCancelable(true);
+			builder.setPositiveButton(res.getString(R.string.intent_add_clear_all), new OnClickListener() {
+				@Override
+				public void onClick(DialogInterface dialog, int arg1) {
+					MetaDB.resetIntentInformation(CardEditor.this);
+					mIntentInformation.clear();
+					dialog.dismiss();
+				}});
+			dialog = builder.create();
+			mIntentInformationDialog = dialog;
 			break;
 		}
 		return dialog;
@@ -931,6 +1059,10 @@ public class CardEditor extends Activity {
 			ad.getButton(StyledDialog.BUTTON_POSITIVE).setEnabled(
 					!mNewSelectedCardModels.isEmpty());
 			break;
+
+		case DIALOG_INTENT_INFORMATION:
+			mIntentInformationAdapter.notifyDataSetChanged();
+			break;
 		}
 	}
 
@@ -938,9 +1070,32 @@ public class CardEditor extends Activity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == Reviewer.RESULT_EDIT_CARD_RESET) {
-        	mCardReset = true;
-        	setResult(Reviewer.RESULT_EDIT_CARD_RESET);
+        switch (requestCode) {
+        case REQUEST_INTENT_ADD:
+            if (resultCode != RESULT_CANCELED) {
+            	String id = data.getStringExtra(EXTRA_ID);
+            	if (id != null) {
+                	for (int i = 0; i < mIntentInformation.size(); i++) {
+                		if (mIntentInformation.get(i).get("id").endsWith(id)) {
+                			if (MetaDB.removeIntentInformation(CardEditor.this, id)) {
+                    			mIntentInformation.remove(i);
+                            	mIntentInformationAdapter.notifyDataSetChanged();                				
+                			}
+                        	break;
+                		}
+                	}
+            	}
+            }
+			if (mIntentInformation.size() > 0) {
+				showDialog(DIALOG_INTENT_INFORMATION);
+			}
+        	break;
+        case REQUEST_ADD:
+            if (resultCode == Reviewer.RESULT_EDIT_CARD_RESET) {
+            	mCardReset = true;
+            	setResult(Reviewer.RESULT_EDIT_CARD_RESET);
+            }
+        	break;        	
         }
     }
 
