@@ -689,7 +689,6 @@ public class CardEditor extends Activity {
 	}
 
 	private void prepareForIntentAddition() {
-		mSwapButton.setVisibility(View.VISIBLE);
 		mSwapButton.setOnClickListener(new View.OnClickListener() {
 
 			public void onClick(View v) {
@@ -1134,6 +1133,7 @@ public class CardEditor extends Activity {
 		mCancel.setVisibility(View.VISIBLE);
 		mTags.setVisibility(View.VISIBLE);
 		mFieldsLayoutContainer.setVisibility(View.VISIBLE);
+		mSwapButton.setVisibility(View.VISIBLE);
 		setTitle(mDeck.getDeckName());
 		loadContents();
 	}
