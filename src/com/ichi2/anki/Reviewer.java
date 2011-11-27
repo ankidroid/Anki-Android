@@ -890,13 +890,7 @@ public class Reviewer extends Activity implements IButtonListener{
             	mCurrentBackgroundColor = Color.WHITE;
             }
 
-            try {
-            	mSetScrollbarBarFading = WebView.class.getMethod("setScrollbarFadingEnabled", boolean.class);
-            } catch (Throwable e) {
-            	Log.i(AnkiDroidApp.TAG, "setScrollbarFadingEnabled could not be found due to a too low Android version (< 2.1)");
-            }
-
-            mRefreshWebview = getRefreshWebview();
+            mRefreshWebview = getRefreshWebviewAndInitializeWebviewVariables();
 
             initLayout(R.layout.flashcard);
             if (mPrefTextSelection) {
@@ -2889,15 +2883,21 @@ public class Reviewer extends Activity implements IButtonListener{
     }
 
 
-    public boolean getRefreshWebview() {
-      	  	mCustomFontFiles = Utils.getCustomFonts(getBaseContext());
-		if (mCustomFontFiles.length != 0) {
-			return true;
-		}
+    public boolean getRefreshWebviewAndInitializeWebviewVariables() {
+    	mCustomFontFiles = Utils.getCustomFonts(getBaseContext());
 		for (String s : new String[] {"nook"}) {
-			if  (android.os.Build.DEVICE.indexOf(s) != -1 || android.os.Build.MODEL.indexOf(s) != -1) {
+			if  (android.os.Build.DEVICE.toLowerCase().indexOf(s) != -1 || android.os.Build.MODEL.toLowerCase().indexOf(s) != -1) {
 				return true;
 			}
+		}
+        try {
+        	// this must not be executed on nook (causes fc)
+        	mSetScrollbarBarFading = WebView.class.getMethod("setScrollbarFadingEnabled", boolean.class);
+        } catch (Throwable e) {
+        	Log.i(AnkiDroidApp.TAG, "setScrollbarFadingEnabled could not be found due to a too low Android version (< 2.1)");
+        }
+		if (mCustomFontFiles.length != 0) {
+			return true;
 		}
 		return false;
     }

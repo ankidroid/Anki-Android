@@ -146,8 +146,11 @@ public class StudyOptions extends Activity implements IButtonListener {
 
 
     public static final String EXTRA_DECK = "deck";
-    public static final String EXTRA_START_REVIEWER = "startReviewer";
-    public static final String EXTRA_START_DECKPICKER = "startDeckPicker";
+    public static final String EXTRA_START = "start";
+    public static final int EXTRA_START_NOTHING = 0;
+    public static final int EXTRA_START_REVIEWER = 1;
+    public static final int EXTRA_START_DECKPICKER = 2;
+    public static final int EXTRA_DB_ERROR = 3;
 
     private static final int DIALOG_NO_CONNECTION = 0;
     private static final int DIALOG_USER_NOT_LOGGED_IN = 1;
@@ -206,7 +209,7 @@ public class StudyOptions extends Activity implements IButtonListener {
     // private boolean deckSelected;
     private boolean mInDeckPicker;
     private boolean mInReviewer;
-    private boolean mStartedByBigWidget = false;
+    private int mStartedByBigWidget;
     private String mDeckFilename;
     private int mStartupMode;
     private boolean mSwipeEnabled;
@@ -646,9 +649,9 @@ public class StudyOptions extends Activity implements IButtonListener {
         Log.i(AnkiDroidApp.TAG, "StudyOptions - OnCreate()");
 
         Intent intent = getIntent();
-        mStartedByBigWidget = intent.hasExtra(EXTRA_START_REVIEWER) || intent.hasExtra(EXTRA_START_DECKPICKER);
+        mStartedByBigWidget = intent.getIntExtra(EXTRA_START, EXTRA_START_NOTHING);
 
-        if (hasErrorFiles() && !mStartedByBigWidget) {
+        if (hasErrorFiles() && mStartedByBigWidget == EXTRA_START_NOTHING) {
             Intent i = new Intent(this, Feedback.class);
             startActivityForResult(i, REPORT_ERROR);
         }
@@ -666,10 +669,18 @@ public class StudyOptions extends Activity implements IButtonListener {
                 && intent.getDataString() != null) {
             mDeckFilename = Uri.parse(intent.getDataString()).getPath();
             Log.i(AnkiDroidApp.TAG, "onCreate - deckFilename from VIEW intent: " + mDeckFilename);
-        } else if (Intent.ACTION_MAIN.equalsIgnoreCase(intent.getAction()) && intent.getBooleanExtra(EXTRA_START_REVIEWER, false)) {
-        	openReviewer();
-        } else if (Intent.ACTION_MAIN.equalsIgnoreCase(intent.getAction()) && intent.getBooleanExtra(EXTRA_START_DECKPICKER, false)) {
-        	openDeckPicker();
+        } else if (Intent.ACTION_MAIN.equalsIgnoreCase(intent.getAction()) && mStartedByBigWidget != EXTRA_START_NOTHING) {
+        		switch (intent.getIntExtra(EXTRA_START, EXTRA_START_NOTHING)) {
+        		case EXTRA_START_REVIEWER:
+                	openReviewer();
+                	break;
+        		case EXTRA_START_DECKPICKER:
+        			openDeckPicker();
+                	break;
+        		case EXTRA_DB_ERROR:
+        			onActivityResult(REQUEST_REVIEW, Reviewer.RESULT_ANSWERING_ERROR, null);
+        			break;
+        		}
         } else if (Intent.ACTION_MAIN.equalsIgnoreCase(intent.getAction()) && intent.hasExtra(EXTRA_DECK)) {
             mDeckFilename = intent.getStringExtra(EXTRA_DECK);
             Log.i(AnkiDroidApp.TAG, "onCreate - deckFilename from MAIN intent: " + mDeckFilename);
@@ -686,9 +697,12 @@ public class StudyOptions extends Activity implements IButtonListener {
         if (!mSdCardAvailable) {
             showContentView(CONTENT_NO_EXTERNAL_STORAGE);
         } else {
-            if (mDeckFilename == null || !new File(mDeckFilename).exists()) {
+        	if (mStartedByBigWidget == EXTRA_START_DECKPICKER || mStartedByBigWidget == EXTRA_START_REVIEWER) {
+        		showContentView(CONTENT_STUDY_OPTIONS);
+            	showDeckInformation(false);
+        	} else if (mDeckFilename == null || !new File(mDeckFilename).exists()) {
                 showContentView(CONTENT_NO_DECK);
-            } else if (!mStartedByBigWidget) {
+            } else if (mStartedByBigWidget == EXTRA_START_NOTHING) {
             	if ((showDeckPickerOnStartup()) && (!hasErrorFiles())) {
             		openDeckPicker();
             	} else {
@@ -931,12 +945,12 @@ public class StudyOptions extends Activity implements IButtonListener {
 
 
     private void openReviewer() {
-    	if (mStartedByBigWidget || mCurrentContentView == CONTENT_STUDY_OPTIONS || mCurrentContentView == CONTENT_SESSION_COMPLETE) {
+    	if (mStartedByBigWidget != EXTRA_START_NOTHING || mCurrentContentView == CONTENT_STUDY_OPTIONS || mCurrentContentView == CONTENT_SESSION_COMPLETE) {
     		mInReviewer = true;
     		Intent reviewer = new Intent(StudyOptions.this, Reviewer.class);
             reviewer.putExtra("deckFilename", mDeckFilename);
     		startActivityForResult(reviewer, REQUEST_REVIEW);
-        	if (getApiLevel() > 4 && !mStartedByBigWidget) {
+        	if (getApiLevel() > 4 && mStartedByBigWidget == EXTRA_START_NOTHING) {
        			ActivityTransitionAnimation.slide(this, ActivityTransitionAnimation.LEFT);
         	}
     	} else if (mCurrentContentView == CONTENT_CONGRATS) {
@@ -2152,7 +2166,7 @@ public class StudyOptions extends Activity implements IButtonListener {
         Intent decksPicker = new Intent(StudyOptions.this, DeckPicker.class);
         mInDeckPicker = true;
         startActivityForResult(decksPicker, PICK_DECK_REQUEST);
-    	if (getApiLevel() > 4 && !mStartedByBigWidget) {
+    	if (getApiLevel() > 4 && mStartedByBigWidget == EXTRA_START_NOTHING) {
     		ActivityTransitionAnimation.slide(this, ActivityTransitionAnimation.RIGHT);
     	}
         // Log.i(AnkiDroidApp.TAG, "openDeckPicker - Ending");
@@ -2261,12 +2275,12 @@ public class StudyOptions extends Activity implements IButtonListener {
     protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
         super.onActivityResult(requestCode, resultCode, intent);
 
-        if (mStartedByBigWidget && ((requestCode == REQUEST_REVIEW && resultCode == Reviewer.RESULT_DEFAULT) || (requestCode == PICK_DECK_REQUEST && resultCode != RESULT_OK))) {
+        if (mStartedByBigWidget != EXTRA_START_NOTHING && ((requestCode == REQUEST_REVIEW && resultCode == Reviewer.RESULT_DEFAULT) || (requestCode == PICK_DECK_REQUEST && resultCode != RESULT_OK))) {
         	DeckManager.closeMainDeck(DeckManager.REQUESTING_ACTIVITY_STUDYOPTIONS);
         	finish();
         	return;
         } else {
-        	mStartedByBigWidget = false;
+        	mStartedByBigWidget = EXTRA_START_NOTHING;
         }
 
         if (resultCode == CONTENT_NO_EXTERNAL_STORAGE) {
