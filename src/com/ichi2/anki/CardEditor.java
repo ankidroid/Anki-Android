@@ -389,9 +389,14 @@ public class CardEditor extends Activity {
 				mSave.setEnabled(false);
 				String contents = intent.getStringExtra(EXTRA_CONTENTS);
 				setEditFieldTexts(contents);				
+				mModelButtons.setVisibility(View.VISIBLE);
+			} else {
+				mSave.setVisibility(View.INVISIBLE);
+				mCancel.setVisibility(View.INVISIBLE);
+				mTags.setVisibility(View.INVISIBLE);
+				mFieldsLayoutContainer.setVisibility(View.INVISIBLE);
 			}
 
-			mModelButtons.setVisibility(View.VISIBLE);
 			mModelButton.setOnClickListener(new View.OnClickListener() {
 				public void onClick(View v) {
 					showDialog(DIALOG_MODEL_SELECT);
@@ -1122,9 +1127,15 @@ public class CardEditor extends Activity {
 			BackupManager.restoreDeckIfMissing(mDeckPath);
 			return;			
 		}
+		mModelButtons.setVisibility(View.VISIBLE);
+		mSave.setVisibility(View.VISIBLE);
+		mCancel.setVisibility(View.VISIBLE);
+		mTags.setVisibility(View.VISIBLE);
+		mFieldsLayoutContainer.setVisibility(View.VISIBLE);
 		setTitle(mDeck.getDeckName());
 		loadContents();
 	}
+
 
 	private void swapText(boolean reset) {
 		// get source text
