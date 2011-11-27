@@ -525,15 +525,17 @@ public class CardEditor extends Activity {
 
 	@Override
     protected void onSaveInstanceState(Bundle outState) {
-		String path = mDeck.getDeckPath();
-        Log.i(AnkiDroidApp.TAG, "onSaveInstanceState: " + path);
-        // Remember current deck's filename.
-        if (path != null) {
-            outState.putString("deckFilename", path);
-            outState.putBoolean("addFact", mAddFact);
-            outState.putInt("caller", mCaller);
-        }
-        Log.i(AnkiDroidApp.TAG, "onSaveInstanceState - Ending");
+		if (mDeck != null) {
+			String path = mDeck.getDeckPath();
+	        // Remember current deck's filename.
+	        if (path != null) {
+	            Log.i(AnkiDroidApp.TAG, "onSaveInstanceState: " + path);
+	            outState.putString("deckFilename", path);
+	            outState.putBoolean("addFact", mAddFact);
+	            outState.putInt("caller", mCaller);
+	            Log.i(AnkiDroidApp.TAG, "onSaveInstanceState - Ending");
+	        }			
+		}
     }
 
 
