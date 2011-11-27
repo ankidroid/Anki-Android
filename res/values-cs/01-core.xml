@@ -63,7 +63,7 @@
   <string name="contextmenu_deckpicker_reset_language_assignments">Obnovit přiřazení jazyka</string>
   <string name="contextmenu_deckpicker_reset_reset_message">Obnovení jazyka</string>
   <string name="contextmenu_deckpicker_optimize_deck">Optimalizovat databázi</string>
-  <string name="contextmenu_deckpicker_rename_deck">Rename deck</string>
+  <string name="contextmenu_deckpicker_rename_deck">Přejmenovat balíček</string>
   <string name="contextmenu_deckpicker_set_custom_dictionary">Nastavit vlastní slovník</string>
   <string name="begin_cram">Spustit Šprtání</string>
   <string name="cram">Šprtat</string>

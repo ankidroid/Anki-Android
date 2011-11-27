@@ -67,14 +67,14 @@
   <string name="error_insufficient_memory">L\'opération n\'a pas pu être accomplie du fait d\'une mémoire disponible insuffisante sur votre périphérique</string>
   <string name="tutorial_load">Créer le pont tutoriel</string>
   <string name="tutorial_loading_error">Le paquet-tutoriel n\'a pas pu être créé</string>
-  <string name="rename">Rename</string>
-  <string name="rename_error">Deck %s could not be renamed</string>
+  <string name="rename">Renommer</string>
+  <string name="rename_error">Le paquet %s n\'a pas pu être renommé</string>
   <string name="help_title">Aide</string>
   <string name="help_online">Aide en ligne</string>
   <string name="help_faq">FAQ</string>
   <string name="help_tutorial">Paquet-tutoriel</string>
   <plurals name="factadder_cards_added">
-    <item quantity="one">1 card added</item>
-    <item quantity="other">%d cards added</item>
+    <item quantity="one">1 carte ajoutée</item>
+    <item quantity="other">%d cartes ajoutées</item>
   </plurals>
 </resources>

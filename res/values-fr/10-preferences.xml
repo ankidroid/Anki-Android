@@ -201,7 +201,7 @@
   <string name="write_answers_message">Vous devriez définir un champ de comparaison avec la réponse écrite pour chaque paquet de cartes. Vous pouvez faire ceci par l\'intermédiaire d\'Anki Desktop (propriétés du paquet -&gt; édtier modèle -&gt; disposition de la carte).\n\nSi aucun champ de comparaison n\'est défini, votre réponse sera toujours comparée avec toutes les réponses de la carte en question.</string>
   <string name="pref_cache_cardbrowser">Card Browser Cache</string>
   <string name="pref_cache_cardbrowser_summ">Holds all card browser cards in cache (memory consumptive).</string>
-  <string name="pref_cache_cardbrowser_reload">Reload all cards?</string>
+  <string name="pref_cache_cardbrowser_reload">Recharger toutes les cartes ?</string>
   <string name="pref_keep_screen_on">Garder l\'écran allumé</string>
   <string name="pref_keep_screen_on_summ">Empêcher l\'écran d\'être mis sous tension pendant la revue des cartes</string>
 </resources>

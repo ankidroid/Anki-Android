@@ -61,6 +61,9 @@
   <string name="answering_error_message">Ett fel uppstod när senaste kortet besvarades eller när kortleken ändrades. Detta kan vara relaterat till en korrupt kortlek eller på grund av för lite utrymme.\n\nOm detta fel uppstår ofta, prova att reparera kortleken. Prova också att kontrollera databasen med Anki Desktop.\n\nDet kan också vara en bugg i AnkiDroid. Vänligen rapportera felet så att vi kan kontrollera detta.</string>
   <string name="answering_error_report">Rapportera fel</string>
   <string name="repair_deck_dialog">Vill du verkligen försöka reparera kortleken \'%1$s\'?\n\nEn kopia av kortleken kommer att skapas i \'%2$s\'.</string>
+  <string name="intent_add_save_for_later">Save for later</string>
+  <string name="intent_add_saved_information">Saved data</string>
+  <string name="intent_add_clear_all">Clear all</string>
   <string-array name="about_content">
     <item><![CDATA[<h2>%1$s:<br/>Flashcards till Android</h2>AnkiDroid är en flashcardapplikation som är fullt kompitabel med skrivbordsmjukvaran <a href="%2$s">Anki</a>. Du kan skapa, ladda ner och lära dig nya saker via både AnkiDroid och Anki Desktop, och därefter enkelt synkronisera dem.]]></item>
     <item><![CDATA[Hjälp gärna till att göra AnkiDroid ännu bättre genom att rapportera buggar <a href="%1$s">här</a>; Idéer på nya funktioner är också välkomna! Använd också <a href="%2$s">wikin</a> och säg Hej på <a href="%3$s">forumet</a>.]]></item>

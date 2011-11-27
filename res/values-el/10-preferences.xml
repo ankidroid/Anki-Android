@@ -107,7 +107,7 @@
   <string name="gestures_tap_bottom">Ακουμπήστε κάτω</string>
   <string name="gestures_tap_left">Ακουμπήστε αριστερά</string>
   <string name="gestures_tap_right">Ακουμπήστε δεξιά</string>
-  <string name="gestures_longclick">Long click</string>
+  <string name="gestures_longclick">Μακρό κλικ</string>
   <string name="pref_cat_scrolling">Hardware πάνω/κάτω πλήκτρα</string>
   <string name="more_scrolling_buttons">eReader</string>
   <string name="more_scrolling_buttons_summ">Επίσης χρησιμοποιήστε τα κουμπιά Kanji/Katakana, Emoji/Kao-Moji για την κύλιση.</string>
@@ -199,9 +199,9 @@
   <string name="input_workaround">Εναλλακτικός τρόπος εισόδου</string>
   <string name="input_workaround_summ">Εναλλακτικός τρόπος αντιμετώπισης για προβλήματα με την εστίαση σε HTML πεδία εισόδου. Προκαλεί προβλήματα σε πολλές συσκευές.</string>
   <string name="write_answers_message">Θα πρέπει να ορίσετε για κάθε τράπουλα ένα πεδίο να συγκρίνετε με γραπτή απάντηση. Μπορείτε να το κάνετε αυτό μέσω του Anki Desktop (deck properties -&gt; edit model -&gt; card layout).\n\nαν δεν έχει οριστεί κανένα πεδίο σύγκρισης, η γραπτή απάντηση θα συγκριθεί πάντα με όλη την κάρτα απάντηση.</string>
-  <string name="pref_cache_cardbrowser">Card Browser Cache</string>
-  <string name="pref_cache_cardbrowser_summ">Holds all card browser cards in cache (memory consumptive).</string>
-  <string name="pref_cache_cardbrowser_reload">Reload all cards?</string>
+  <string name="pref_cache_cardbrowser">Μνήμη Ευρετηρίου Καρτών</string>
+  <string name="pref_cache_cardbrowser_summ">Κρατάει όλες τις κάρτες του ευρετηρίου στη μνήμη (καταναλώνει μνήμη).</string>
+  <string name="pref_cache_cardbrowser_reload">Ανανέωση όλων των καρτών;</string>
   <string name="pref_keep_screen_on">Κρατήστε οθόνη αναμένη</string>
   <string name="pref_keep_screen_on_summ">Αποτροπή της οθόνης από το να σβήσει κατά την επανάληψη</string>
 </resources>

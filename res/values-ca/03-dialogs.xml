@@ -61,11 +61,15 @@
   <string name="answering_error_message">S\'ha produït un error en respondre a la darrera fitxa o canviant el paquet d\'una altra manera. Això podria estar relacionat amb un paquet corrupte o falta d\'espai al disc.\n\nSi passa més sovint, si us plau intenteu reparar el paquet. Intenteu també una comprovació de la base de dades amb Anki d\'Escriptori.\n\nTot i així, també podria ser un error d\'AnkiDroid; si us plau envieu-nos l\'error que ho poguem comprovar.</string>
   <string name="answering_error_report">Informa dels errors</string>
   <string name="repair_deck_dialog">Esteu segur que voleu intentar reparar el paquet \"%1$s\'?\n\nAbans de començar es farà una còpia del paquet a la carpeta \'%2$s\'.</string>
+  <string name="intent_add_save_for_later">Save for later</string>
+  <string name="intent_add_saved_information">Saved data</string>
+  <string name="intent_add_clear_all">Clear all</string>
   <string-array name="about_content">
-    <item><![CDATA[<h2>%1$s: <br/> Fitxes per memoritzar per Android </h2> AnkiDroid és una aplicació de gestió de fitxes per memoritzar, totalment compatible amb el programari d\'escriptori <a href="%2$s">Anki</a>. Podeu generar, descarregar i aprendre els continguts als dos programaris, a l&#39;Escriptori i a AnkiDroid Anki, i sincronitzar-los amb molta facilitat.]]</item>
-    <item><![CDATA[Per ajudar-nos a millorar AnkiDroid, podeu informar de qualsevol error <a href="%1$s"> aquí</a>; les noves idees també són benvingudes ! Si us plau, utilitzeu el <a href="%2$s">wiki</a> i presenteu-vos al <a href="%3$s"> Fòrum</a>.]]></item>
+    <item><![CDATA[<h2>%1$s: <br/> Fitxes per memoritzar per Android </h2> AnkiDroid és una aplicació de gestió de fitxes per memoritzar, totalment compatible amb el programari d\'escriptori <a href="%2$s">Anki</a>. Podeu generar, descarregar i aprendre els continguts als dos programaris, a l&#39;Escriptori i a AnkiDroid Anki, i sincronitzar-los amb molta facilitat.]]
+    <![CDATA[Per ajudar-nos a millorar AnkiDroid, podeu informar de qualsevol error <a href="%1$s"> aquí</a>; les noves idees també són benvingudes ! Si us plau, utilitzeu el <a href="%2$s">wiki</a> i presenteu-vos al <a href="%3$s"> Fòrum</a>.]]></item>
     <item><![CDATA[AnkiDroid és <a href="%1$s">programari de codi obert<a/>, així que us animem a <a href="%2$s">unir-vos</a> als <a href="%3$s">col·laboradors</a>:-)]]></item>
     <item><![CDATA[Els no desenvolupadors també podeu ajudar, per exemple <a href="%1$s"> amb la traducció</a> d\'AnkiDroid, l\'actualització de la wiki i de les captures de pantalla, <a href="%2$s"> col·labora amb</a> l\'Anki taula d\'Escriptori, o critant AnkiDroid al vostre blog!]]></item>
     <item><![CDATA[AnkiDroid és publica sota la <a href="%1$s"> llicència GNU GPL v3</a> i el codi font està disponible <a href="%2$s">aquí</a>.]]></item>
+    <item><![CDATA [AnkiDroid és publica sota la <a href="%1$s"> llicència GNU GPL v3</a> i el codi font està disponible <a href="%2$s">aquí</a>.]]></item>
   </string-array>
 </resources>

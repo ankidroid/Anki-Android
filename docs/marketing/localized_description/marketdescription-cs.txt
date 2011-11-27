@@ -1,39 +1,39 @@
 Zapamatujte si cokoliv s AnkiDroid!
 
-AnkiDroid lets you learn flashcards very efficiently by showing them just before you will forget. It is fully compatible with the spaced repetition software Anki (including synchronization), which is available for Windows, Linux and MacOS.
+AnkiDroid umožňuje velmi efektivní učení kartiček jejich zobrazením těsně předtím, než je zapomenete. Je plně kompatibilní s programem pro rozložené opakování (spaced repetition) Anki (včetně synchronizace), který je k dispozici pro Windows, Linux a MacOS.
 
-Study all sorts of things wherever and whenever you want. Make good use of idle times on bus trips, in supermarket queues or any other waiting situation!
+Studium mnoha věcí kdekoliv a kdykoliv chcete. Dobré využití volného času během cesty autobusem, ve frontě v obchodě nebo kdykoliv během čekání!
 
-Add material through the desktop application Anki or directly through Ankidroid.
+Přidání učebního materiálu prostřednictvím aplikace Anki nebo přímo přes Ankidroid.
 
-Create your own flashcard decks or download free decks compiled for many languages and topics (more than 6000 available). The application even supports adding material automatically from a dictionary!
+Vytvořte si vlastní balíčky kartiček nebo si stáhněte zdarma balíčky vytvořené pro mnoho jazyků a témat (k dispozici více než 6000). Aplikace také podporuje automatické přidávání materiálu ze slovníku!
 
-★ Key features:
-• supported flashcard contents: text, images, sounds, LaTeX
-• spaced repetition (supermemo 2 algorithm)
-• text-to-speech integration
-• more than 6000 premade decks
-• detailed statistics
-• three widgets
-• syncing with AnkiWeb
+Hlavní vlastnosti:
+• podporovaný obsah kartiček: text, obrázky, zvuky, LaTeX
+• rozložené opakování (spaced repetition - algoritmus z programu Supermemo 2)
+• integrované předčítání textu
+• více než 6000 již vytvořených znalostních balíčků
+• podrobné statistiky
+• tři widgety
+• synchronizace s AnkiWeb
 • open source
 
-★ Additional features:
-• write answers (optional)
-• whiteboard
-• card browser
-• card editor/adder
-• import existing collection files (via Anki Desktop)
+Další funkce:
+• psání odpovědí (volitelné)
+• tabule
+• prohlížeč karet
+přidání/ editace karet
+• import stávající kolekce souborů (přes Anki Desktop)
 • add cards by intent from other applications like dictionaries
-• dictionary integration (ColorDict, GoldenDict, Leo.org, Aedict, diverse web dictionaries)
-• custom font support
-• full backup system
-• navigation by swipe, tap, shake
+• začlenění slovníku (ColorDict, GoldenDict, Leo.org, Aedict, webové slovníky)
+• podpora vlastního fontu písma
+• kompletní záložní systém
+• ovládání pomocí gest, kliknutí, třesení
 • review in widget
-• fully customisable
-• cram mode
-• limit studying by tag, time or cards
-• night mode
-• zeemote support
-• three different ui-themes
-• 27 localisations
+• plně přizpůsobitelný
+• režim šprtání
+• možnost omezení studia podle štítků, času nebo počtu karet
+• noční režim
+• Podpora zeemote
+• tři různá témata pro zobrazení
+• 27 lokalizací

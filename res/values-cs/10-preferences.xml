@@ -107,7 +107,7 @@
   <string name="gestures_tap_bottom">Klepnutí dolů</string>
   <string name="gestures_tap_left">Klepnutí vlevo</string>
   <string name="gestures_tap_right">Klepnutí vpravo</string>
-  <string name="gestures_longclick">Long click</string>
+  <string name="gestures_longclick">Dlouhý klik</string>
   <string name="pref_cat_scrolling">Hardwarová tlačítka nahoru/dolů</string>
   <string name="more_scrolling_buttons">eReader</string>
   <string name="more_scrolling_buttons_summ">Použít také Kanji/Katakana, Emoji/Kao-moji tlačítka pro posun.</string>
@@ -199,9 +199,9 @@
   <string name="input_workaround">Řešení psaní odpovědí</string>
   <string name="input_workaround_summ">Řešení problémů se vstupními HTML poli. Způsobuje problémy na několika zařízeních.</string>
   <string name="write_answers_message">Měli byste definovat pro každý balíček pole srovnání s písemnou odpovědí. Můžete to udělat pomocí Anki Desktop (Vlastnosti balíku -&gt; Upravit model -&gt; Rozvržení karty).\n\nPokud není srovnávací pole nastaveno, budou vaše písemné odpovědi vždy porovnávány s celou kartou odpovědi.</string>
-  <string name="pref_cache_cardbrowser">Card Browser Cache</string>
-  <string name="pref_cache_cardbrowser_summ">Holds all card browser cards in cache (memory consumptive).</string>
-  <string name="pref_cache_cardbrowser_reload">Reload all cards?</string>
+  <string name="pref_cache_cardbrowser">Vyrovnávací paměť prohlížeče karet</string>
+  <string name="pref_cache_cardbrowser_summ">Drží všechny karty prohlížeče karet ve vyrovnávací paměti (větší využití paměti).</string>
+  <string name="pref_cache_cardbrowser_reload">Znovu načíst všechny karty?</string>
   <string name="pref_keep_screen_on">Nevypínat obrazovku</string>
   <string name="pref_keep_screen_on_summ">Zabránit vypnutí obrazovky během opakování</string>
 </resources>

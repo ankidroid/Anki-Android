@@ -61,6 +61,9 @@
   <string name="answering_error_message">Beim Antworten/Ändern der letzten Karte oder bei einer sonstigen Datenbankänderung ist ein Fehler aufgetreten. Das könnte an einem beschädigten Stapel oder an unzureichendem Festplattenspeicher liegen.\n\nSollte dies häufiger auftreten, versuchen Sie bitte, den Stapel zu reparieren. Versuchen Sie auch eine Datenbank-Überprüfung mit Anki-Desktop.\n\nDie Ursache könnte auch ein AnkiDroid-Fehler sein; bitte melden Sie ihn deshalb, damit wir das überprüfen können.</string>
   <string name="answering_error_report">Fehler melden</string>
   <string name="repair_deck_dialog">Wollen Sie wirklich versuchen, den Stapel \'%1$s\' zu reparieren?\n\nBevor der Versuch gestartet wird, wird eine Kopie des Stapels im Unterordner \'%2$s\' angelegt.</string>
+  <string name="intent_add_save_for_later">Für später speichern</string>
+  <string name="intent_add_saved_information">Gespeicherte Daten</string>
+  <string name="intent_add_clear_all">Alles löschen</string>
   <string-array name="about_content">
     <item><![CDATA[<h2>%1$s:<br/>Karteikarten für Android</h2>AnkiDroid ist eine Karteikarten-Anwendung, die voll kompatibel ist mit der Desktop-Software <a href="%2$s">Anki</a>. Sie können mit beiden Programmen Inhalte erstellen, herunterladen und lernen und sie sehr einfach synchronisieren.]]></item>
     <item><![CDATA[Helfen Sie uns, AnkiDroid besser zu machen und melden alle Fehler <a href="%1$s">hier</a>; Ideen für neue Funktionen sind ebenfalls willkommen! Benutzen Sie das <a href="%2$s">Wiki</a> und sagen im <a href="%3$s">Forum</a> Hallo.]]></item>
