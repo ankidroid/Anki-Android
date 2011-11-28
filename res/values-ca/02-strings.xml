@@ -67,7 +67,7 @@
   <string name="error_insufficient_memory">No hi ha suficient memòria al dispositiu per a aquesta operació</string>
   <string name="tutorial_load">Creant paquet Tutorial</string>
   <string name="tutorial_loading_error">No ha estat possible generar el paquet de mostra</string>
-  <string name="rename">Rename</string>
+  <string name="rename">Canvia el nom</string>
   <string name="rename_error">Deck %s could not be renamed</string>
   <string name="help_title">Ajuda</string>
   <string name="help_online">Ajuda online</string>

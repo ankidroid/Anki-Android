@@ -27,6 +27,6 @@
     <item>Click largo configurable</item>
     <item>comentarios para hechos añadidos</item>
     <item>Resumen de mazo en selector de mazos</item>
-    <item>temporary storage for intent add information</item>
+    <item>almacenamiento temporal para información añadida desde otras aplicaciones</item>
   </string-array>
 </resources>

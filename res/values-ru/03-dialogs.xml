@@ -62,7 +62,7 @@
   <string name="answering_error_report">Сообщить об ошибке</string>
   <string name="repair_deck_dialog">Вы действительно хотите попытаться исправить колоду \'%1$s\'?\n\nДо исправления копия колоды будет помещена в папку \'%2$s\'.</string>
   <string name="intent_add_save_for_later">Отложено</string>
-  <string name="intent_add_saved_information">Saved data</string>
+  <string name="intent_add_saved_information">Сохранённые данные</string>
   <string name="intent_add_clear_all">Очистить все</string>
   <string-array name="about_content">
     <item><![CDATA[<h2>%1$s:<br/>Flashcards для Android</h2>AnkiDroid - это приложение для изучения учебных карточек, полностью совместимо с настольной версией <a href="%2$s">Anki</a>. Вы можете создавать, скачивать и изучать информацию, и в AnkiDroid и Anki Desktop, синхронизируя их между собой.]]></item>

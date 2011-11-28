@@ -61,9 +61,9 @@
   <string name="answering_error_message">Při odpovídání na poslední kartičku nebo při změně balíčku došlo k chybě. To by mohlo souviset s poškozeným balíčkem nebo s nedostatkem místa na kartě.\n\nJestliže se to stává často, pokuste se opravit balíček. Vyzkoušejte také kontrolu balíčku v Anki.\n\nNicméně to může být i chyba v AnkiDroid. Prosím, nahlaste chybu, ať to můžeme zkontrolovat.</string>
   <string name="answering_error_report">Hlášení chyby</string>
   <string name="repair_deck_dialog">Opravdu se chcete pokusit opravit balíček \'%1$s\'?\n\nPřed provedením opravy bude kopie balíčku nakopírována do podadresáře \'%2$s\'.</string>
-  <string name="intent_add_save_for_later">Save for later</string>
-  <string name="intent_add_saved_information">Saved data</string>
-  <string name="intent_add_clear_all">Clear all</string>
+  <string name="intent_add_save_for_later">Uložit na později</string>
+  <string name="intent_add_saved_information">Uložená data</string>
+  <string name="intent_add_clear_all">Vymazat vše</string>
   <string-array name="about_content">
     <item><![CDATA[<h2>%1$s:<br/>Flashcards pro Android</h2>AnkiDroid je flashcard aplikace, která je plně kompatibilní s programem pro pc  <a href="%2$s">Anki</a>. Můžete vytvářet, stahovat a učit se v obou, v AnkiDroid nebo Anki pro pc, a vše mezi nimi velmi jednoduše synchronizovat.]]></item>
     <item><![CDATA[Pomozte nám, prosím, zlepšit AnkiDroid a nahlašte nám chyby <a href="%1$s">zde</a>; nové nápady jsou vítany také! Prosím, využijte <a href="%2$s">wiki</a> a podělte se s námi o poznatky na <a href="%3$s">fóru</a>.]]></item>

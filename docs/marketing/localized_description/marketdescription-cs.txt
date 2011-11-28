@@ -24,12 +24,12 @@ Další funkce:
 • prohlížeč karet
 přidání/ editace karet
 • import stávající kolekce souborů (přes Anki Desktop)
-• add cards by intent from other applications like dictionaries
+• přidání kartiček pomocí intent z jiných aplikací, např. slovníků
 • začlenění slovníku (ColorDict, GoldenDict, Leo.org, Aedict, webové slovníky)
 • podpora vlastního fontu písma
 • kompletní záložní systém
 • ovládání pomocí gest, kliknutí, třesení
-• review in widget
+• opakování ve widgetu
 • plně přizpůsobitelný
 • režim šprtání
 • možnost omezení studia podle štítků, času nebo počtu karet
