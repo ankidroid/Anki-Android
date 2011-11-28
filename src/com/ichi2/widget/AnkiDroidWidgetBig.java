@@ -163,7 +163,6 @@ public class AnkiDroidWidgetBig extends AppWidgetProvider {
         public static final String EXTRA_EASE = "ease";
         public static final String EXTRA_VIEW = "view";
         public static final String EXTRA_PROGRESSDIALOG = "progressDialog";
-        public static final String EXTRA_START_REVIEWER = "startReviewer";
 
 
         public static final int VIEW_ACTION_DEFAULT = 0;
@@ -308,7 +307,7 @@ public class AnkiDroidWidgetBig extends AppWidgetProvider {
                 }
             	sShowProgressDialog = false;
             	updateViews(VIEW_SHOW_QUESTION);
-            	WidgetStatus.update(sContext, WidgetStatus.getDeckStatus(sLoadedDeck));
+            	WidgetStatus.update(sContext, WidgetStatus.getDeckStatus(sLoadedDeck), false);
             }
             @Override
             public void onPostExecute(DeckTask.TaskData result) {
@@ -346,7 +345,7 @@ public class AnkiDroidWidgetBig extends AppWidgetProvider {
                     }
                 }
                 updateViews();
-                WidgetStatus.update(sContext, WidgetStatus.getDeckStatus(sLoadedDeck));
+                WidgetStatus.update(sContext, WidgetStatus.getDeckStatus(sLoadedDeck), false);
             }
         };
 
@@ -504,7 +503,11 @@ public class AnkiDroidWidgetBig extends AppWidgetProvider {
 
 
         private void handleError() {
-        	Intent newIntent = StudyOptions.getLoadDeckIntent(AnkiDroidWidgetBig.UpdateService.this, "");
+        	String deckpath = null;
+        	if (sLoadedDeck != null) {
+        		deckpath = sLoadedDeck.getDeckPath();
+        	}
+        	Intent newIntent = StudyOptions.getLoadDeckIntent(AnkiDroidWidgetBig.UpdateService.this, deckpath);
         	newIntent.putExtra(StudyOptions.EXTRA_START, StudyOptions.EXTRA_DB_ERROR);
         	startActivity(newIntent);
     		sCurrentMessage = null;

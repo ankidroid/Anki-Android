@@ -107,15 +107,15 @@ public class StyledDialog extends Dialog {
 
     public void setItems(int type, ListView listview, String[] values, int checkedItem, boolean[] checked, DialogInterface.OnClickListener listener) {
     	mListView = listview;
-	if (mSetScrollBarFading) {
+    	if (mSetScrollBarFading) {
             try {
-		mSetScrollbarBarFading = ListView.class.getMethod("setScrollbarFadingEnabled", boolean.class);
+            	mSetScrollbarBarFading = ListView.class.getMethod("setScrollbarFadingEnabled", boolean.class);
             	mSetScrollbarBarFading.invoke(mListView, false);
             } catch (Throwable e) {
             	Log.i(AnkiDroidApp.TAG, "setScrollbarFadingEnabled could not be set due to a too low Android version (< 2.1)");
-		mSetScrollBarFading = false;
+            	mSetScrollBarFading = false;
             }
-	}
+    	}
     	mItemList = new ArrayList<String>();
         for (String titel : values) {
         	mItemList.add(titel);
@@ -130,10 +130,10 @@ public class StyledDialog extends Dialog {
 			    });
     	} else {
 	        mListView.setOnItemClickListener(new OnItemClickListener() {
-    				@Override    
+    				@Override
     				public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
     						mListener.onClick(StyledDialog.this, position);
-						StyledDialog.this.dismiss();
+    						StyledDialog.this.dismiss();
     			    	}
 			    });
     	}

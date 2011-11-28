@@ -27,5 +27,6 @@
     <item>możliwość konfigurowania przytrzymania</item>
     <item>informacja o dodanych faktach</item>
     <item>podsumowanie na liście talii</item>
+    <item>temporary storage for intent add information</item>
   </string-array>
 </resources>

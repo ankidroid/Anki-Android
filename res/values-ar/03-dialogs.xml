@@ -62,6 +62,9 @@
   <string name="answering_error_message">An error occurred while answering the last card or changing the deck otherwise. This could be related to a corrupt deck or to insufficient disc space.\n\nIf it happens more often, please try to repair the deck. Try a db check with Anki Desktop as well.\n\nNevertheless, it could be an AnkiDroid bug as well; please report the error that we can check this.</string>
   <string name="answering_error_report">Report error</string>
   <string name="repair_deck_dialog">Do you really want to try to repair deck \'%1$s\'?\n\nBefore starting the attempt, a copy of the deck will be created in subfolder \'%2$s\'.</string>
+  <string name="intent_add_save_for_later">Save for later</string>
+  <string name="intent_add_saved_information">Saved data</string>
+  <string name="intent_add_clear_all">Clear all</string>
   <string-array name="about_content">
     <item><![CDATA[<h2>%1$s:<br/>Flashcards for Android</h2>AnkiDroid is a flashcard application which is fully compatible with the desktop software <a href="%2$s">Anki</a>. You can create, download and learn contents on both, AnkiDroid or Anki Desktop, and synchronize them very easily.]]></item>
     <item><![CDATA[To help us make AnkiDroid better, please report any bug <a href="%1$s">here</a>; new feature ideas are very welcome too! Please use the <a href="%2$s">wiki</a> and say Hi on the <a href="%3$s">forum</a>.]]></item>

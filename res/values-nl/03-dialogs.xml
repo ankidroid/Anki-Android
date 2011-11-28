@@ -61,6 +61,9 @@
   <string name="answering_error_message">Er deed zich een fout voor bij het beantwoorden van de laatste kaart of het anderzijds wijzigen van het deck. Mogelijk is een beschadigd deck of een tekort aan opslagruimte de oorzaak.\n\nProbeer het deck te repareren indien het probleem zich blijft voordoen. Probeer eveneens een databasecontrole via Anki Desktop.\n\nHet is ook mogelijk dat een bug in AnkiDroid de oorzaak is; gelieve de foutmelding te rapporteren zodat we dit kunnen controleren.</string>
   <string name="answering_error_report">Fout melden</string>
   <string name="repair_deck_dialog">Bent u zeker dat u het deck \'%1$s\' wilt proberen te herstellen?\n\nEr zal eerst een kopie van het deck gemaakt worden in de submap \'%2$s\'.</string>
+  <string name="intent_add_save_for_later">Save for later</string>
+  <string name="intent_add_saved_information">Saved data</string>
+  <string name="intent_add_clear_all">Clear all</string>
   <string-array name="about_content">
     <item><![CDATA[<h2>%1$s:<br/>Flitskaarten voor Android</h2>AnkiDroid is een flitskaartprogramma dat volledig samenwerkt met de desktop programma <a href="%2$s">Anki</a>. Je kan content downloaden en leren op zowel AnkiDroid als Anki Desktop, en eenvoudig synchroniseren tussen beide.]]></item>
     <item><![CDATA[Om Ankidroid te verbeteren, stuur je <a href="%1$s">hier</a>  het foutenverslag op; ook nieuwe ideeën zijn van harte welkom! Lees de <a href="%2$s">wiki</a> en zeg ons gedag op het <a href="%3$s">forum</a>.]]></item>

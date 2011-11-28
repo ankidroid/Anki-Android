@@ -123,8 +123,10 @@
 			</intent-filter>
 		</service> -->
 		<service android:name="com.ichi2.anki.services.DownloadManagerService"/>
+
 		<service android:name="com.ichi2.anki.services.NotificationService"/>
-		<!-- Broadcast Receiver that will process AppWidget updates -->
+
+		<!-- medium widget -->
 		<receiver android:name="com.ichi2.widget.AnkiDroidWidgetMedium" android:label="@string/widget_medium">
 			<intent-filter>
 			<action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
@@ -132,7 +134,9 @@
 			<meta-data android:name="android.appwidget.provider" android:resource="@xml/widget_provider" />
 		</receiver>
 		<!-- Service to perform web API queries -->
-		<service android:name=".AnkiDroidWidgetMedium$UpdateService" />
+		<service android:name="com.ichi2.widget.AnkiDroidWidgetMedium$UpdateService" />
+
+		<!-- small widget -->
 		<receiver android:name="com.ichi2.widget.AnkiDroidWidgetSmall" android:label="@string/widget_small">
 			<intent-filter>
 			<action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
@@ -140,7 +144,9 @@
 			<meta-data android:name="android.appwidget.provider" android:resource="@xml/widget_provider_small" />
 		</receiver>
 		<!-- Service to perform web API queries -->
-		<service android:name=".AnkiDroidWidgetSmall$UpdateService" />
+		<service android:name="com.ichi2.widget.AnkiDroidWidgetSmall$UpdateService" />
+
+		<!-- big widget -->
 		<uses-library android:name="android.test.runner"></uses-library>
 		<receiver android:name="com.ichi2.widget.AnkiDroidWidgetBig" android:label="@string/widget_big">
 			<intent-filter>
@@ -150,6 +156,7 @@
 		</receiver>
 		<!-- Service to perform web API queries -->
 		<service android:name="com.ichi2.widget.AnkiDroidWidgetBig$UpdateService" />
+
 </application>
 	<uses-sdk  android:minSdkVersion="3"
 		android:targetSdkVersion="11"/>

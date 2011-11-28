@@ -61,6 +61,9 @@
   <string name="answering_error_message">Det oppstod en feil under svaret på det siste kortet eller en annen endring av kortstokken. Dette kan være knyttet til en skadet kortstokk eller til utilstrekkelig lagringsplass.\n\nHvis det skjer ofte kan du prøve å reparere kortstokken. Prøv også en databasesjekk med Anki skrivebordet.\n\nImidlertid kan det være en AnkiDroid-feil i tillegg. Vennligst rapporter feilen slik at vi kan sjekke dette.</string>
   <string name="answering_error_report">Rapporter feil</string>
   <string name="repair_deck_dialog">Ønsker du virkelig å prøve å reparere kortstokken\'%1$s\'?\n\nEn kopi av kortstokken vil bli opprettet før dette gjøres i undermappen \'%2$s\'.</string>
+  <string name="intent_add_save_for_later">Save for later</string>
+  <string name="intent_add_saved_information">Saved data</string>
+  <string name="intent_add_clear_all">Clear all</string>
   <string-array name="about_content">
     <item><![CDATA[<h2>%1$s: <br/>Puggekort til Android</h2>AnkiDroid er et puggekortprogram som er fullstendig kompatibel med skrivebordsprogramvaren <a href="%2$s"> Anki</a>. Du kan opprette, laste ned og lære innholdet på både AnkiDroid og Anki Desktop, og synkroniser dem veldig enkelt.]]></item>
     <item><![CDATA[For å hjelpe oss med å gjøre AnkiDroid bedre, vennligst rapporter alle feil <a href="%1$s"> her</a>; ideer til nye funksjon er svært velkommen også! Vennligst bruk <a href="%2$s"> wiki</a> og si hei på <a href="%3$s"> forumet</a>.]]></item>

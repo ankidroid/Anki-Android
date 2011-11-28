@@ -19,6 +19,8 @@ import android.content.DialogInterface.OnDismissListener;
 import android.database.Cursor;
 import android.os.AsyncTask;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 
 public class DeckManager {
 
@@ -369,6 +371,9 @@ public class DeckManager {
 
 
 	public static StyledDialog getSelectDeckDialog(Context context, OnClickListener itemClickListener, OnCancelListener cancelListener, OnDismissListener dismissListener) {
+		return getSelectDeckDialog(context, itemClickListener, cancelListener, dismissListener, null, null);
+	}
+	public static StyledDialog getSelectDeckDialog(Context context, OnClickListener itemClickListener, OnCancelListener cancelListener, OnDismissListener dismissListener, String buttonTitle, View.OnClickListener buttonClickListener) {
 		int len = 0;
 		File[] fileList;
 
@@ -402,6 +407,14 @@ public class DeckManager {
 		builder.setItems(sDeckNames, itemClickListener);
 		builder.setOnCancelListener(cancelListener);
 		builder.setOnDismissListener(dismissListener);
+
+		if (buttonTitle != null) {
+			Button button = new Button(context, null, android.R.attr.buttonStyleSmall);
+			button.setText(buttonTitle);
+			button.setOnClickListener(buttonClickListener);
+			builder.setView(button, false, true);
+		}
+
 		return builder.create();
 	}
 

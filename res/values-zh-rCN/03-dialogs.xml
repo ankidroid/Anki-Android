@@ -61,6 +61,9 @@
   <string name="answering_error_message">回答最后一张卡片或切换牌组时发生错误。这可能由于牌组损坏或者磁盘空间不足。\n\n如果这种情况经常发生，请尝试修复该牌组。也可以使用Anki桌面版检查数据库。\n\n然而这也有可能是AnkiDroid的软件错误，请向我们报告错误以便修复。</string>
   <string name="answering_error_report">报告错误</string>
   <string name="repair_deck_dialog">您确定要尝试修复牌组“%1$s”吗?\n\n在尝试前，将在子文件夹“%2$s”创建该牌组的备份。</string>
+  <string name="intent_add_save_for_later">Save for later</string>
+  <string name="intent_add_saved_information">Saved data</string>
+  <string name="intent_add_clear_all">Clear all</string>
   <string-array name="about_content">
     <item><![CDATA[<h2>%1$s:<br/>Flashcards for Android</h2>AnkiDroid is a flashcard application which is fully compatible with the desktop software <a href="%2$s">Anki</a>. You can create, download and learn contents on both, AnkiDroid or Anki Desktop, and synchronize them very easily.]]></item>
     <item><![CDATA[To help us make AnkiDroid better, please report any bug <a href="%1$s">here</a>; new feature ideas are very welcome too! Please use the <a href="%2$s">wiki</a> and say Hi on the <a href="%3$s">forum</a>.]]></item>

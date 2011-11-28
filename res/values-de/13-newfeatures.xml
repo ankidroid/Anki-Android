@@ -27,5 +27,6 @@
     <item>Langklick konfigurierbar</item>
     <item>Rückmeldung für hinzugefügte Karten</item>
     <item>Stapelzusammenfassung in Stapelübersicht</item>
+    <item>Zwischenspeicher für Intent-Informationen</item>
   </string-array>
 </resources>

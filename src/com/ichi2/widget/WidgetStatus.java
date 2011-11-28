@@ -59,6 +59,9 @@ public final class WidgetStatus {
     }
     /** Request the widget to update its status. */
     public static void update(Context context, DeckStatus deckStatus) {
+    	update(context, deckStatus, true);
+    }
+    public static void update(Context context, DeckStatus deckStatus, boolean updateBigWidget) {
     	sDeckStatus = deckStatus;
         SharedPreferences preferences = PrefSettings.getSharedPrefs(context);
         if (preferences.getBoolean("widgetMediumEnabled", false)) {
@@ -71,7 +74,7 @@ public final class WidgetStatus {
         } else {
             smallWidget = false;
         }
-        if (preferences.getBoolean("widgetBidEnabled", false)) {
+        if (updateBigWidget && preferences.getBoolean("widgetBigEnabled", false)) {
             bigWidget = true;
         } else {
             bigWidget = false;
