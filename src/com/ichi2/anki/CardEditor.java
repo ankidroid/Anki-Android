@@ -354,7 +354,6 @@ public class CardEditor extends Activity {
 			break;
 
 		case CALLER_INDICLASH:
-			prepareForIntentAddition();
 			Bundle extras = intent.getExtras();
 			if (ACTION_CREATE_FLASHCARD.equals(intent.getAction())) {
 //				mSourceLanguage = extras.getString(SOURCE_LANGUAGE);
@@ -369,6 +368,11 @@ public class CardEditor extends Activity {
 				finish();
 				return;
 			}
+			if (mSourceText.equals("Aedict Notepad") && addFromAedict(mTargetText)) {
+		          finish();
+		          return;
+		        }
+			prepareForIntentAddition(); 
 			mAddFact = true;
 			break;
 		}
@@ -500,6 +504,30 @@ public class CardEditor extends Activity {
 		if (!mAddFact) {
 			populateEditFields();
 		}
+	}
+
+
+	private boolean addFromAedict(String extra_text) {
+		String category = "";
+		String[] notepad_lines = extra_text.split("\n");
+		for (int i=0;i<notepad_lines.length;i++){
+			if (notepad_lines[i].startsWith("[") && notepad_lines[i].endsWith("]")) {
+				category = notepad_lines[i].substring(1,notepad_lines[i].length()-1);
+				if (category.equals("default")) {
+					if (notepad_lines.length > 1) {
+						String[] entry_lines = notepad_lines[1].split(":");
+						if (entry_lines.length > 1){
+							mSourceText = entry_lines[1];
+							mTargetText = entry_lines[0];
+						}
+					}
+					return false;
+				}
+				//TODO: implement non-interactive adding from category tabs in Aedict
+			}
+		}
+		Themes.showThemedToast(CardEditor.this, "AnkiDroid: adding from categories is not yet supported.", true);
+		return true;
 	}
 
 
