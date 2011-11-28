@@ -23,7 +23,7 @@ BRANCH=${2:-$DEFAULT_BRANCH}
 cd "$(dirname "$0")/.."
 
 # Pull
-git pull b$DEVELOPER $BRANCH
+git pull https://github.com/$DEVELOPER/Anki-Android.git $BRANCH
 if [ "$?" -ne "0" ]; then zenity --error --text 'pull failed'; exit 1; fi 
 
 # Compile
