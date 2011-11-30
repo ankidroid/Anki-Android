@@ -21,7 +21,6 @@ import com.ichi2.anki.DeckManager;
 import com.ichi2.anki.DeckStatus;
 import com.ichi2.anki.MetaDB;
 import com.ichi2.anki.services.NotificationService;
-import com.ichi2.widget.AnkiDroidWidgetSmall.UpdateService;
 import com.tomgibara.android.veecheck.util.PrefSettings;
 
 import android.content.Context;
@@ -145,7 +144,7 @@ public final class WidgetStatus {
             // For the deck information
             ArrayList<DeckStatus> decks;
 
-            if (sDeckStatus != null) {
+            if (sDeckStatus != null && mDecks != null && mDecks.length > 0) {
             	decks = new ArrayList<DeckStatus>(mDecks.length);
             		for (DeckStatus m : mDecks) {
             			if (m.mDeckPath.equals(sDeckStatus.mDeckPath)) {
