@@ -63,7 +63,7 @@
   <string name="contextmenu_deckpicker_reset_language_assignments">Återställ språktilldelningar</string>
   <string name="contextmenu_deckpicker_reset_reset_message">Återställning av språk</string>
   <string name="contextmenu_deckpicker_optimize_deck">Optimera databas</string>
-  <string name="contextmenu_deckpicker_rename_deck">Rename deck</string>
+  <string name="contextmenu_deckpicker_rename_deck">Byt namn på kortlek</string>
   <string name="contextmenu_deckpicker_set_custom_dictionary">Ange egen ordlista</string>
   <string name="begin_cram">Starta råplugg</string>
   <string name="cram">Råplugg</string>

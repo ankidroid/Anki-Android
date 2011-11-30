@@ -14,14 +14,14 @@ Skapa dina egna flashcard eller ladda ner gratis kortlekar på flera olika språ
 • text-till-tal-integration
 • mer än 6000 tillgängliga kortlekar
 • detaljerad statistik
-• three widgets
+• tre widgetar
 • synkronisering med AnkiWeb
 • öppen källkod
 
 ★ Ytterligare funktioner:
 • skriv svar (frivilligt)
 • whiteboard
-• kortutforsakre
+• kortutforskare
 • korteditor
 • importera befintliga kortlekar (via Anki Desktop)
 • lägga till kort från andra program som t.ex. ordlistor
@@ -29,11 +29,11 @@ Skapa dina egna flashcard eller ladda ner gratis kortlekar på flera olika språ
 • stöd för anpassade teckensnitt
 • fullständigt säkerhetskopieringssystem
 • navigera genom att svepa, trycka och skaka
-• review in widget
+• repetera i widgeten
 • helt anpassningsbart
 • råpluggsläge
 • begränsa studierna via etikett, tid eller kort
 • nattläge
 • zeemote stöd
 • tre olika ui-teman
-• 27 localisations
+• översatt till 27 språk

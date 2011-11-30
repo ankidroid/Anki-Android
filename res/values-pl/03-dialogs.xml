@@ -61,9 +61,9 @@
   <string name="answering_error_message">Podczas oceniania ostatniej karty lub edycji talii wystąpił błąd. Przyczyną może być uszkodzenie talii lub brak miejsca.\n\nJeśli będzie się to zdarzać częściej, spróbuj naprawić talię.  Możesz również użyć narzędzia sprawdzania bazy w desktopowym Anki.\n\nMógł to być również błąd AnkiDroida; prosimy o jego zgłoszenie, abyśmy mogli to sprawdzić.</string>
   <string name="answering_error_report">Zgłoś błąd</string>
   <string name="repair_deck_dialog">Na pewno chcesz naprawić talię \'%1$s\'?\n\nPrzed próbą naprawy zostanie utworzona jej kopia w podfolderze \'%2$s\'.</string>
-  <string name="intent_add_save_for_later">Save for later</string>
-  <string name="intent_add_saved_information">Saved data</string>
-  <string name="intent_add_clear_all">Clear all</string>
+  <string name="intent_add_save_for_later">Zapisz na później</string>
+  <string name="intent_add_saved_information">Zapisane dane</string>
+  <string name="intent_add_clear_all">Wyczyść wszystko</string>
   <string-array name="about_content">
     <item><![CDATA[<h2>%1$s:<br/>Fiszki dla Androida</h2>AnkiDroid to programowy odpowiednik pudełka z fiszkami, w pełni kompatybilny z desktopową wersją programu <a href="%2$s">Anki</a>. Karty z materiałem do nauki można tworzyć lub pobierać za pomocą zarówno AnkiDroida jak i wersji desktopowej Anki, a następnie łatwo synchronizować je pomiędzy tymi programami.]]></item>
     <item><![CDATA[Aby pomóc nam w ulepszaniu AnkiDroida, prosimy zgłaszać błędy <a href="%1$s">tutaj</a>; nowe pomysły też są mile widziane! Skorzystaj z <a href="%2$s">wiki</a> i przywitaj się na <a href="%3$s">forum</a>.]]></item>

@@ -67,14 +67,14 @@
   <string name="error_insufficient_memory">Åtgärden är inte möjlig på grund av otillräckligt med minne på enheten.</string>
   <string name="tutorial_load">Skapa övningskortlek</string>
   <string name="tutorial_loading_error">Övningskortlek kunde inte skapas</string>
-  <string name="rename">Rename</string>
-  <string name="rename_error">Deck %s could not be renamed</string>
+  <string name="rename">Byt namn</string>
+  <string name="rename_error">Kortleken %s kunde inte byta namn</string>
   <string name="help_title">Hjälp</string>
   <string name="help_online">Onlinehjälp</string>
   <string name="help_faq">FAQ</string>
   <string name="help_tutorial">Övningskortlek</string>
   <plurals name="factadder_cards_added">
-    <item quantity="one">1 card added</item>
-    <item quantity="other">%d cards added</item>
+    <item quantity="one">1 kort har lagts till</item>
+    <item quantity="other">%d kort har lagts till</item>
   </plurals>
 </resources>

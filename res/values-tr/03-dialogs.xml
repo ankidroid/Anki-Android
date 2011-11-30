@@ -61,9 +61,9 @@
   <string name="answering_error_message">Son kartı yanıtlarken veya desteyi değiştirirken bir hata meydana geldi. Bunun nedeni bozuk bir deste veya yetersiz disk alanı olabilir.\n\nEğer bununla sıklıkla karşılaşıyorsanız, lütfen desteyi onarmayı deneyin. Anki Masaüstü ile bir veritabanı kontrolü de yapabilirsiniz.\n\nBununla birlikte, bu bir AnkiDroid sorunu da olabilir; lütfen hatayı bildirin ki kontrol edebilelim.</string>
   <string name="answering_error_report">Hatayı bildir</string>
   <string name="repair_deck_dialog">\"%1$s\" destesini gerçekten onarmak istiyor musunuz?\n\nİşlem başlamadan önce \"%2$s\" altklasöründe destenin bir kopyası oluşturulacak.</string>
-  <string name="intent_add_save_for_later">Save for later</string>
-  <string name="intent_add_saved_information">Saved data</string>
-  <string name="intent_add_clear_all">Clear all</string>
+  <string name="intent_add_save_for_later">Daha sonrası için kaydet</string>
+  <string name="intent_add_saved_information">Veri kaydedildi</string>
+  <string name="intent_add_clear_all">Hepsini temizle</string>
   <string-array name="about_content">
     <item><![CDATA[<h2>%1$s:<br/>Android için bilgi kartları</h2>AnkiDroid <a href="%2$s">Anki</a> masaüstü uygulamasıyla tamamen uyumlu bir bilgi kartı uygulamasıdır. İster AnkiDroid\'de ister Anki Masaüstünde içerikler oluşturabilir, indirebilir, öğrenebilir ve kolaylıkla eşitleyebilirsiniz.]]></item>
     <item><![CDATA[AnkiDroid\'i geliştirmemize yardımcı olmak için, lütfen karşılaştığınız sorunları <a href="%1$s">buradan</a> bildirin; yeni özellik fikirleri de çok iyi olur! Lütfen <a href="%2$s">vikiyi</a> kullanın ve <a href="%3$s">forumda</a> bir selam verin.]]></item>

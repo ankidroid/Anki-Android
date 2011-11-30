@@ -27,6 +27,6 @@
     <item>basılı tutma ayarlanabilir</item>
     <item>eklenen bilgiler için geribildirim</item>
     <item>deste seçicide deste bilgisi</item>
-    <item>temporary storage for intent add information</item>
+    <item>\'>intent bilgi ekleme için geçici depolama</item>
   </string-array>
 </resources>
