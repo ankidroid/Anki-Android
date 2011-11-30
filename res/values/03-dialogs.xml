@@ -91,5 +91,8 @@
 <string name="intent_add_save_for_later">Save for later</string>
 <string name="intent_add_saved_information">Saved data</string>
 <string name="intent_add_clear_all">Clear all</string>
+<string name="intent_aedict_empty">Category \'default\' is empty</string>
+<string name="intent_aedict_category">To add cards to AnkiDroid remove all Notepad categories or add one named \'default\'</string>
+
 
 </resources>
