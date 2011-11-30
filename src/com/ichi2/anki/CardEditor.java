@@ -147,6 +147,8 @@ public class CardEditor extends Activity {
 
 	/* indicates if a new fact is added or a card is edited */
 	private boolean mAddFact;
+	
+	private boolean mAedictIntent;
 
 	/* indicates which activity called card editor */
 	private int mCaller;
@@ -226,7 +228,7 @@ public class CardEditor extends Activity {
 					Log.e(AnkiDroidApp.TAG, "Card Editor: Error on dismissing progress dialog: " + e);
 				}
 			}
-			if (!mAddFact || mCaller == CALLER_CARDEDITOR || mCaller == CALLER_BIGWIDGET_EDIT) {
+			if (!mAddFact || mCaller == CALLER_CARDEDITOR || mCaller == CALLER_BIGWIDGET_EDIT || mAedictIntent) {
 				closeCardEditor();
 			} else if (mCaller == CALLER_CARDEDITOR_INTENT_ADD) {
 				if (count > 0) {
@@ -274,6 +276,7 @@ public class CardEditor extends Activity {
 
 		mNewSelectedCardModels = new LinkedHashMap<Long, CardModel>();
 		cardModelIds = new ArrayList<Long>();
+		mAedictIntent = false;
 
 		Intent intent = getIntent();
 		if (savedInstanceState != null) {
@@ -514,19 +517,28 @@ public class CardEditor extends Activity {
 			if (notepad_lines[i].startsWith("[") && notepad_lines[i].endsWith("]")) {
 				category = notepad_lines[i].substring(1,notepad_lines[i].length()-1);
 				if (category.equals("default")) {
-					if (notepad_lines.length > 1) {
-						String[] entry_lines = notepad_lines[1].split(":");
+					if (notepad_lines.length > i+1) {
+						String[] entry_lines = notepad_lines[i+1].split(":");
 						if (entry_lines.length > 1){
 							mSourceText = entry_lines[1];
 							mTargetText = entry_lines[0];
+							mAedictIntent = true;
+						} else {
+							Themes.showThemedToast(CardEditor.this, getResources().getString(
+									R.string.intent_aedict_empty), false);
+							return true;
 						}
+					} else {
+						Themes.showThemedToast(CardEditor.this, getResources().getString(
+								R.string.intent_aedict_empty), false);
+						return true;
 					}
 					return false;
 				}
-				//TODO: implement non-interactive adding from category tabs in Aedict
 			}
 		}
-		Themes.showThemedToast(CardEditor.this, "AnkiDroid: adding from categories is not yet supported.", true);
+		Themes.showThemedToast(CardEditor.this, getResources().getString(
+				R.string.intent_aedict_category), false);
 		return true;
 	}
 
@@ -713,7 +725,16 @@ public class CardEditor extends Activity {
 		mCurrentSelectedModelId = mDeck.getCurrentModelId();
 		modelChanged();
 		mEditFields.get(0).setText(mSourceText);
-		mEditFields.get(1).setText(mTargetText);
+		if (mAedictIntent && (mEditFields.size() == 3) && mTargetText.contains("[")) {
+			String[] subfields = mTargetText.replaceFirst("\\[", "\u001f").split("\\x1f");
+			if (subfields.length > 1) {
+				mEditFields.get(1).setText(subfields[0]);
+				mEditFields.get(2).setText(subfields[1].substring(0,subfields[1].length()-1));
+			}
+		}
+		else {
+			mEditFields.get(1).setText(mTargetText);
+		}
 	}
 
 	private void prepareForIntentAddition() {
