@@ -90,7 +90,6 @@ public class AnkiDroidWidgetBig extends AppWidgetProvider {
     @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
         Log.i(AnkiDroidApp.TAG, "BigWidget: onUpdate");
-        sContext = context;
         WidgetStatus.update(context);
     }
 
@@ -154,7 +153,7 @@ public class AnkiDroidWidgetBig extends AppWidgetProvider {
     	updateWidget(view, false);
     }
     public static void updateWidget(int view, boolean showProgressDialog) {
-    	sContext.startService(getUpdateIntent(sContext, view, showProgressDialog));
+    	AnkiDroidApp.getInstance().getApplicationContext().startService(getUpdateIntent(AnkiDroidApp.getInstance().getApplicationContext(), view, showProgressDialog));
     }
 
 
