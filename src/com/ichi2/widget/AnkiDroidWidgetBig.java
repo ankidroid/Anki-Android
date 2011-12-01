@@ -108,7 +108,8 @@ public class AnkiDroidWidgetBig extends AppWidgetProvider {
         if (contentService != null) {
     		contentService.mBigCurrentView = UpdateService.VIEW_NOT_SPECIFIED;
     		contentService.mLoadedDeck = null;
-    		contentService.mCurrentCard = null;
+		PrefSettings.getSharedPrefs(AnkiDroidApp.getInstance().getBaseContext()).edit().putString("lastWidgetDeck", "").commit();
+    		contentService.setCard(null);
     		contentService.mBigCurrentMessage = null;
     		contentService.mBigShowProgressDialog = false;
     		contentService.mTomorrowDues = null;
@@ -135,7 +136,7 @@ public class AnkiDroidWidgetBig extends AppWidgetProvider {
 
     public static void setCard(Card card) {
     	if (contentService != null && contentService.mLoadedDeck != null) {
-    		contentService.mCurrentCard = card;
+    		contentService.setCard(card);
     	}
     }
 
@@ -299,7 +300,8 @@ public class AnkiDroidWidgetBig extends AppWidgetProvider {
             	if (result.getInt() == DeckTask.DECK_LOADED) {
                 	contentService.mLoadedDeck = result.getDeck();
                 	if (contentService.mLoadedDeck != null) {
-                    	contentService.mCurrentCard = contentService.mLoadedDeck.getCard();
+						PrefSettings.getSharedPrefs(UpdateService.this.getBaseContext()).edit().putString("lastWidgetDeck", contentService.mLoadedDeck.getDeckPath()).commit();
+                    	contentService.setCard();
                 	}
                 	contentService.mBigShowProgressDialog = false;
                 	contentService.mBigCurrentMessage = null;
@@ -318,7 +320,7 @@ public class AnkiDroidWidgetBig extends AppWidgetProvider {
             }
             @Override
             public void onProgressUpdate(DeckTask.TaskData... values) {
-            	contentService.mCurrentCard = values[0].getCard();
+            	contentService.setCard(values[0].getCard());
                 if (values[0].isPreviousCardLeech()) {
                     if (values[0].isPreviousCardSuspended()) {
                     	contentService.mBigCurrentMessage = getResources().getString(R.string.leech_suspend_notification);
@@ -348,7 +350,7 @@ public class AnkiDroidWidgetBig extends AppWidgetProvider {
             }
             @Override
             public void onProgressUpdate(DeckTask.TaskData... values) {
-            	contentService.mCurrentCard = values[0].getCard();
+            	contentService.setCard(values[0].getCard());
             	contentService.mBigShowProgressDialog = false;
             	contentService.mBigCurrentMessage = null;
             	updateViews(VIEW_SHOW_QUESTION);
@@ -384,7 +386,8 @@ public class AnkiDroidWidgetBig extends AppWidgetProvider {
             @Override
             public void onPostExecute(DeckTask.TaskData result) {
             	contentService.mLoadedDeck = null;
-            	contentService.mCurrentCard = null;
+				PrefSettings.getSharedPrefs(UpdateService.this.getBaseContext()).edit().putString("lastWidgetDeck", "").commit();
+            	contentService.setCard(null);
             	contentService.mBigShowProgressDialog = false;
             	contentService.mBigCurrentMessage = null;
             	updateViews(VIEW_DECKS);
@@ -501,7 +504,7 @@ public class AnkiDroidWidgetBig extends AppWidgetProvider {
                 	if (contentService.mLoadedDeck != null) {
                 		contentService.mLoadedDeck.setupLearnMoreScheduler();
                 		contentService.mLoadedDeck.reset();
-	                    contentService.mCurrentCard = contentService.mLoadedDeck.getCard();
+	                    contentService.setCard();
 	                	contentService.mBigShowProgressDialog = false;
 	                	contentService.mBigCurrentMessage = null;
         	        	updateViews(VIEW_SHOW_QUESTION); 
@@ -512,7 +515,7 @@ public class AnkiDroidWidgetBig extends AppWidgetProvider {
                 	if (contentService.mLoadedDeck != null) {
                 		contentService.mLoadedDeck.setupReviewEarlyScheduler();
                 		contentService.mLoadedDeck.reset();
-	                    contentService.mCurrentCard = contentService.mLoadedDeck.getCard();
+	                    contentService.setCard();
 	                	contentService.mBigShowProgressDialog = false;
 	                	contentService.mBigCurrentMessage = null;
         	        	updateViews(VIEW_SHOW_QUESTION); 
@@ -544,7 +547,7 @@ public class AnkiDroidWidgetBig extends AppWidgetProvider {
     		contentService.mBigCurrentMessage = null;
     		DeckManager.closeDeck(contentService.mLoadedDeck.getDeckPath());
     		contentService.mLoadedDeck = null;
-    		contentService.mCurrentCard = null;
+                contentService.setCard(null);
     		contentService.mBigShowProgressDialog = false;
     		updateViews(VIEW_DECKS);
         }

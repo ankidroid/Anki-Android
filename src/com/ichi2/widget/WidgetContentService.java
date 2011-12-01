@@ -42,8 +42,9 @@ public class WidgetContentService extends Service{
 
 	@Override
 	public void onDestroy() {
+		// TODO: this does not seem to be reliably called
 		String path = "";
-		long cardId = 0;
+		long cardId = 0l;
 		if (mLoadedDeck != null) {
 			path = mLoadedDeck.getDeckPath();
 			DeckManager.closeDeck(path, DeckManager.REQUESTING_ACTIVITY_BIGWIDGET);
@@ -52,6 +53,20 @@ public class WidgetContentService extends Service{
 			}
 		}
 		PrefSettings.getSharedPrefs(AnkiDroidApp.getInstance().getBaseContext()).edit().putString("lastWidgetDeck", path).commit();
+		PrefSettings.getSharedPrefs(AnkiDroidApp.getInstance().getBaseContext()).edit().putLong("lastWidgetCard", cardId).commit();
+	}
+
+	public void setCard() {
+		if (mLoadedDeck != null) {
+			setCard(mLoadedDeck.getCard());
+		}
+	}
+	public void setCard(Card card) {
+		mCurrentCard = card;
+		Long cardId = 0l;
+		if (card != null) {
+			cardId = card.getId();
+		}
 		PrefSettings.getSharedPrefs(AnkiDroidApp.getInstance().getBaseContext()).edit().putLong("lastWidgetCard", cardId).commit();
 	}
 
