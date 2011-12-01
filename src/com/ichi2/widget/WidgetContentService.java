@@ -10,6 +10,7 @@ import com.tomgibara.android.veecheck.util.PrefSettings;
 
 import android.app.Service;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Binder;
 import android.os.IBinder;
 import android.util.Log;
@@ -29,7 +30,8 @@ public class WidgetContentService extends Service{
 	@Override
 	public void onCreate() {
 		super.onCreate();
-		String path = PrefSettings.getSharedPrefs(AnkiDroidApp.getInstance().getBaseContext()).getString("lastWidgetDeck", "");
+		SharedPreferences prefs = PrefSettings.getSharedPrefs(AnkiDroidApp.getInstance().getBaseContext());
+		String path = prefs.getString("lastWidgetDeck", "");
 		if (path != null && path.length() > 0 && AnkiDroidApp.isSdCardMounted()) {
 			Log.i(AnkiDroidApp.TAG, "BigWidget: reloading deck " + path);
 			mLoadedDeck = DeckManager.getDeck(path, DeckManager.REQUESTING_ACTIVITY_BIGWIDGET, true);

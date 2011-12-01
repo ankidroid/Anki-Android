@@ -68,17 +68,16 @@ public class AnkiDroidWidgetBig extends AppWidgetProvider {
 
     	@Override
     	public void onServiceConnected(ComponentName className, IBinder binder) {
+		Log.i(AnkiDroidApp.TAG, "binding content service - success");
     		contentServiceBinder = (WidgetContentService.WidgetContentBinder) binder;
     		contentService = contentServiceBinder.getService();
-    		if (tempIntent != null) {
-			// check, if card is still the same after reloading the deck. If not, show question instead of answering
-			if (tempIntent.getAction().startsWith(UpdateService.ACTION_ANSWER) && contentService.mCurrentCard != null && PrefSettings.getSharedPrefs(AnkiDroidApp.getInstance().getBaseContext()).getLong("lastWidgetCard", 0) != contentService.mCurrentCard.getId()) {
-				tempIntent.setAction(UpdateService.ACTION_UPDATE);
-				tempIntent.putExtra(UpdateService.EXTRA_VIEW, UpdateService.VIEW_SHOW_QUESTION);
-			}
-        		sContext.startService(tempIntent);
-        		tempIntent = null;
-    		}
+		// check, if card is still the same after reloading the deck. If not, show question instead of answering
+		if (tempIntent.getAction().startsWith(UpdateService.ACTION_ANSWER) && contentService.mCurrentCard != null && PrefSettings.getSharedPrefs(AnkiDroidApp.getInstance().getBaseContext()).getLong("lastWidgetCard", 0) != contentService.mCurrentCard.getId()) {
+			tempIntent.setAction(UpdateService.ACTION_UPDATE);
+			tempIntent.putExtra(UpdateService.EXTRA_VIEW, UpdateService.VIEW_SHOW_QUESTION);
+		}
+       		sContext.startService(tempIntent);
+       		tempIntent = null;
     	}
 
 		@Override
@@ -397,17 +396,16 @@ public class AnkiDroidWidgetBig extends AppWidgetProvider {
         public void onStart(Intent intent, int startId) {
             Log.i(AnkiDroidApp.TAG, "BigWidget: OnStart");
 
-            if (contentService == null) {
+            if (intent == null) {
+		// do nothing
+            } else if (contentService == null) {
             	Log.i(AnkiDroidApp.TAG, "binding content service");
 		updateViews();
             	tempIntent = intent;
             	sContext = this;
-                Intent contentIntent = new Intent(this.getApplicationContext(),	WidgetContentService.class);
+                Intent contentIntent = new Intent(this,	WidgetContentService.class);
                 this.bindService(contentIntent, localServiceConnection, Context.BIND_AUTO_CREATE);
-                return;
-            }
-            
-            if (intent != null && intent.getAction() != null) {
+            } else if (intent.getAction() != null) {
             	String action = intent.getAction();
             	if (ACTION_NOTHING.equals(action)) {
             		// do nothing
