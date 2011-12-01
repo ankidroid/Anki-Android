@@ -71,6 +71,11 @@ public class AnkiDroidWidgetBig extends AppWidgetProvider {
     		contentServiceBinder = (WidgetContentService.WidgetContentBinder) binder;
     		contentService = contentServiceBinder.getService();
     		if (tempIntent != null) {
+			// check, if card is still the same after reloading the deck. If not, show question instead of answering
+			if (tempIntent.getAction().startsWith(UpdateService.ACTION_ANSWER) && contentService.mCurrentCard != null && PrefSettings.getSharedPrefs(AnkiDroidApp.getInstance().getBaseContext()).getLong("lastWidgetCard", 0) != contentService.mCurrentCard.getId()) {
+				tempIntent.setAction(UpdateService.ACTION_UPDATE);
+				tempIntent.putExtra(UpdateService.EXTRA_VIEW, UpdateService.VIEW_SHOW_QUESTION);
+			}
         		sContext.startService(tempIntent);
         		tempIntent = null;
     		}
@@ -396,6 +401,7 @@ public class AnkiDroidWidgetBig extends AppWidgetProvider {
 
             if (contentService == null) {
             	Log.i(AnkiDroidApp.TAG, "binding content service");
+		updateViews();
             	tempIntent = intent;
             	sContext = this;
                 Intent contentIntent = new Intent(this.getApplicationContext(),	WidgetContentService.class);
@@ -568,9 +574,16 @@ public class AnkiDroidWidgetBig extends AppWidgetProvider {
         }
 
     	private synchronized RemoteViews buildUpdate(Context context) {
-            Log.i(AnkiDroidApp.TAG, "BigWidget: buildUpdate (" + contentService.mBigCurrentView + ")");
             Resources res = getResources();
             RemoteViews updateViews = new RemoteViews(context.getPackageName(), R.layout.widget_big);
+
+            if (contentService == null) {
+            	updateViews.setViewVisibility(R.id.widget_big_progressbar, View.VISIBLE);
+            	updateViews.setViewVisibility(R.id.widget_big_noclicks, View.VISIBLE);
+            	return updateViews;
+            }
+
+            Log.i(AnkiDroidApp.TAG, "BigWidget: buildUpdate (" + contentService.mBigCurrentView + ")");
 
             if (contentService.mBigCurrentView == VIEW_DECKS || contentService.mBigCurrentView == VIEW_SHOW_HELP || contentService.mBigCurrentView == VIEW_CONGRATS) {
             } else if (contentService.mLoadedDeck == null) {
