@@ -248,7 +248,7 @@ public final class WidgetStatus {
             }
             if (bigWidget) {
             	Intent intent;
-                intent = new Intent(context, AnkiDroidWidgetSmall.UpdateService.class);            	
+                intent = new Intent(context, AnkiDroidWidgetBig.UpdateService.class);            	
                 intent.setAction(AnkiDroidWidgetBig.UpdateService.ACTION_UPDATE);
                 context.startService(intent);
             }

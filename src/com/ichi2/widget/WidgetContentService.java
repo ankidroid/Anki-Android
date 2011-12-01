@@ -20,7 +20,7 @@ public class WidgetContentService extends Service{
     public Deck mLoadedDeck;
     public Card mCurrentCard;
     public boolean mBigShowProgressDialog = false;
-    public int mBigCurrentView;
+    public int mBigCurrentView = AnkiDroidWidgetBig.UpdateService.VIEW_NOT_SPECIFIED;
     public String mBigCurrentMessage;
     public DeckStatus[] mTomorrowDues;
     public boolean mWaitForAsyncTask = false;

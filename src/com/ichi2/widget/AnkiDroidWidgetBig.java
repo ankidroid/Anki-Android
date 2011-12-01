@@ -92,7 +92,6 @@ public class AnkiDroidWidgetBig extends AppWidgetProvider {
         Log.i(AnkiDroidApp.TAG, "BigWidget: onUpdate");
         sContext = context;
         WidgetStatus.update(context);
-        context.startService(getUpdateIntent(context, UpdateService.VIEW_DECKS, false));
     }
 
     @Override
@@ -581,6 +580,10 @@ public class AnkiDroidWidgetBig extends AppWidgetProvider {
             	updateViews.setViewVisibility(R.id.widget_big_progressbar, View.VISIBLE);
             	updateViews.setViewVisibility(R.id.widget_big_noclicks, View.VISIBLE);
             	return updateViews;
+            }
+
+            if (contentService.mBigCurrentView == VIEW_NOT_SPECIFIED) {
+            	contentService.mBigCurrentView = VIEW_DECKS;
             }
 
             Log.i(AnkiDroidApp.TAG, "BigWidget: buildUpdate (" + contentService.mBigCurrentView + ")");
