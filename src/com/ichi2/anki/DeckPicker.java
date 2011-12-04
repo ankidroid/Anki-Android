@@ -1088,7 +1088,7 @@ public class DeckPicker extends Activity implements Runnable, IButtonListener {
 			finish();
 		} else {
 			finish();
-			if (StudyOptions.getApiLevel() > 4) {
+			if (getIntent().getBooleanExtra("showAnimation", false) && StudyOptions.getApiLevel() > 4) {
 	    			ActivityTransitionAnimation.slide(this, ActivityTransitionAnimation.LEFT);
     		}
 		}
