@@ -677,7 +677,7 @@ public class StudyOptions extends Activity implements IButtonListener {
                 	openReviewer();
                 	break;
         		case EXTRA_START_DECKPICKER:
-        			openDeckPicker();
+        			openDeckPicker(false);
                 	break;
         		case EXTRA_DB_ERROR:
         			mRepairFileName = intent.getStringExtra(EXTRA_DECK);
@@ -2167,10 +2167,14 @@ public class StudyOptions extends Activity implements IButtonListener {
 
 
     private void openDeckPicker() {
+    	openDeckPicker(true);
+    }
+    private void openDeckPicker(boolean showAnimation) {
         Intent decksPicker = new Intent(StudyOptions.this, DeckPicker.class);
         mInDeckPicker = true;
+    	decksPicker.putExtra("showAnimation", showAnimation);
         startActivityForResult(decksPicker, PICK_DECK_REQUEST);
-    	if (getApiLevel() > 4 && mStartedByBigWidget == EXTRA_START_NOTHING) {
+    	if (showAnimation && getApiLevel() > 4) {
     		ActivityTransitionAnimation.slide(this, ActivityTransitionAnimation.RIGHT);
     	}
         // Log.i(AnkiDroidApp.TAG, "openDeckPicker - Ending");
@@ -2800,7 +2804,7 @@ public class StudyOptions extends Activity implements IButtonListener {
         @Override
         public void onPostExecute(Payload data) {
             Log.i(AnkiDroidApp.TAG, "onPostExecute");
-            if (mProgressDialog != null) {
+            if (mProgressDialog != null && mProgressDialog.isShowing()) {
                 mProgressDialog.dismiss();
                 setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR);
             }
