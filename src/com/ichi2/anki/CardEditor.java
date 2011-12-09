@@ -756,7 +756,7 @@ public class CardEditor extends Activity {
 		DeckManager.closeDeck(mDeck.getDeckPath(), DeckManager.REQUESTING_ACTIVITY_CARDEDITOR);
 		finish();
 		if (mCaller == CALLER_CARDEDITOR_INTENT_ADD || mCaller == CALLER_BIGWIDGET_EDIT || mCaller == CALLER_BIGWIDGET_ADD) {
-			if (Integer.valueOf(android.os.Build.VERSION.SDK) > 4) {
+			if (Integer.valueOf(android.os.Build.VERSION.SDK) > 4) { 
 				ActivityTransitionAnimation.slide(CardEditor.this,
 						ActivityTransitionAnimation.FADE);
 			}

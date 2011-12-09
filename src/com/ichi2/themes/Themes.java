@@ -38,6 +38,7 @@ public class Themes {
 	public final static int THEME_ANDROID_DARK = 0;
 	public final static int THEME_ANDROID_LIGHT = 1;
 	public final static int THEME_BLUE = 2;
+	public final static int THEME_FLAT = 3;
 	public final static int THEME_NO_THEME = 100;
 
 	public final static int CALLER_STUDYOPTIONS = 1;
@@ -105,6 +106,10 @@ public class Themes {
 			context.setTheme(R.style.Theme_Blue);
 			Log.i(AnkiDroidApp.TAG, "Set theme: blue");
 			break;
+		case THEME_FLAT:
+			context.setTheme(R.style.Theme_Flat);
+			Log.i(AnkiDroidApp.TAG, "Set theme: flat");
+			break;
 		case -1:
 			break;
 		}
@@ -112,9 +117,6 @@ public class Themes {
 
 
 	public static void setContentStyle(View view, int caller) {
-		if (mCurrentTheme == THEME_ANDROID_DARK) {
-			return;
-		}
 		switch (caller) {
 		case CALLER_STUDYOPTIONS:
 			((View) view.findViewById(R.id.studyoptions_progressbar1_border)).setBackgroundResource(mProgressbarsFrameColor);
@@ -134,24 +136,51 @@ public class Themes {
 			((View) view.findViewById(R.id.studyoptions_global_bar)).setBackgroundResource(mProgressbarsYoungColor);
 			break;
 		case CALLER_DECKPICKER:
-			if (mCurrentTheme == THEME_BLUE) {
+			switch (mCurrentTheme) {
+			case THEME_BLUE:
 				ListView lv = (ListView) view.findViewById(R.id.files);
 				lv.setSelector(R.drawable.blue_deckpicker_list_selector);
 				lv.setDividerHeight(0);
+				break;
+			case THEME_FLAT:
+				ListView lv = (ListView) view.findViewById(R.id.files);
+				lv.setSelector(R.drawable.blue_deckpicker_list_selector);
+				lv.setDividerHeight(0);
+				break;
+			default:
+				break;
 			}
 			break;
 		case CALLER_CARDBROWSER:
-			if (mCurrentTheme == THEME_BLUE) {
+			switch (mCurrentTheme) {
+			case THEME_BLUE:
 				ListView lv = (ListView) view.findViewById(R.id.card_browser_list);
 				lv.setSelector(R.drawable.blue_cardbrowser_list_selector);
 				lv.setDividerHeight(0);
+				break;
+			case THEME_FLAT:
+				ListView lv = (ListView) view.findViewById(R.id.card_browser_list);
+				lv.setSelector(R.drawable.blue_cardbrowser_list_selector);
+				lv.setDividerHeight(0);
+				break;
+			default:
+				break;
 			}
 			break;
 		case CALLER_CARDEDITOR_INTENTDIALOG:
-			if (mCurrentTheme == THEME_BLUE) {
+			switch (mCurrentTheme) {
+			case THEME_BLUE:
 				ListView lv = (ListView) view;
 				lv.setSelector(R.drawable.blue_cardbrowser_list_selector);
 				lv.setDividerHeight(0);
+				break;
+			case THEME_FLAT:
+				ListView lv = (ListView) view;
+				lv.setSelector(R.drawable.blue_cardbrowser_list_selector);
+				lv.setDividerHeight(0);
+				break;
+			default:
+				break;
 			}
 			break;
 		case CALLER_DECKPICKER_DECK:
@@ -164,10 +193,21 @@ public class Themes {
 			}
 			break;
 		case CALLER_REVIEWER:
-	        ((View)view.findViewById(R.id.main_layout)).setBackgroundResource(mReviewerBackground);
-	        ((View)view.findViewById(R.id.flashcard_border)).setBackgroundResource(mFlashcardBorder);
-	        ((View)view.findViewById(R.id.flashcard_frame)).setBackgroundResource(PrefSettings.getSharedPrefs(mContext).getBoolean("invertedColors", false) ? (mCurrentTheme == THEME_BLUE ? R.color.reviewer_night_card_background : R.color.black): R.color.white);
-	        ((View)view.findViewById(R.id.session_progress)).setBackgroundResource(mReviewerProgressbar);
+		        ((View)view.findViewById(R.id.main_layout)).setBackgroundResource(mReviewerBackground);
+		        ((View)view.findViewById(R.id.flashcard_border)).setBackgroundResource(mFlashcardBorder);
+			switch (mCurrentTheme) {
+			case THEME_ANDROID_DARK:
+			case THEME_ANDROID_LIGHT:
+			        ((View)view.findViewById(R.id.flashcard_frame)).setBackgroundResource(PrefSettings.getSharedPrefs(mContext).getBoolean("invertedColors", false) ? R.color.black : R.color.white);
+				break;
+			case THEME_BLUE:
+			        ((View)view.findViewById(R.id.flashcard_frame)).setBackgroundResource(PrefSettings.getSharedPrefs(mContext).getBoolean("invertedColors", false) ? R.color.reviewer_night_card_background : R.color.white);
+				break;
+			case THEME_FLAT:
+			        ((View)view.findViewById(R.id.flashcard_frame)).setBackgroundResource(PrefSettings.getSharedPrefs(mContext).getBoolean("invertedColors", false) ? R.color.reviewer_night_card_background : R.color.white);
+				break;
+			}
+		        ((View)view.findViewById(R.id.session_progress)).setBackgroundResource(mReviewerProgressbar);
 			break;
 		case CALLER_FEEDBACK:
 			((TextView)view).setTextColor(mProgressbarsFrameColor);
@@ -248,7 +288,7 @@ public class Themes {
 				mPopupFullDark = R.drawable.popup_full_dark;
 				mDividerHorizontalBright = R.drawable.blue_divider_horizontal_bright;
 				mBackgroundColor = R.color.white;
-				break;				
+				break;
 			case THEME_BLUE:
 				mProgressbarsBackgroundColor = R.color.studyoptions_progressbar_background_blue;
 				mProgressbarsFrameColor = R.color.studyoptions_progressbar_frame_light;
@@ -261,6 +301,39 @@ public class Themes {
 				mTitleStyle = R.drawable.blue_title;
 				mTextViewStyle = R.drawable.blue_textview;
 				mWallpaper = R.drawable.blue_background;
+				mBackgroundColor = R.color.background_blue;
+				mToastBackground = R.drawable.blue_toast_frame;
+				mDialogBackgroundColor = R.color.background_dialog_blue;
+				mBackgroundDarkColor = R.color.background_dark_blue;
+				mReviewerProgressbar = R.color.reviewer_progressbar_session_blue;
+				mCardbrowserItemBorder = new int[] {R.drawable.blue_bg_cardbrowser, R.drawable.blue_bg_cardbrowser_marked, R.drawable.blue_bg_cardbrowser_suspended, R.drawable.blue_bg_cardbrowser_marked_suspended};
+				mChartColors = new int[] {Color.BLACK, Color.WHITE};
+				mPopupTopDark = R.drawable.blue_popup_top_dark;
+				mPopupTopBright = R.drawable.blue_popup_top_bright;
+				mPopupTopMedium = R.drawable.blue_popup_top_medium;
+				mPopupCenterDark = R.drawable.blue_popup_center_dark;
+				mPopupCenterBright = R.drawable.blue_popup_center_bright;
+				mPopupCenterMedium = R.drawable.blue_popup_center_medium;
+				mPopupBottomDark = R.drawable.blue_popup_bottom_dark;
+				mPopupBottomBright = R.drawable.blue_popup_bottom_bright;
+				mPopupBottomMedium = R.drawable.blue_popup_bottom_medium;
+				mPopupFullBright = R.drawable.blue_popup_full_bright;
+				mPopupFullMedium = R.drawable.blue_popup_full_medium;
+				mPopupFullDark = R.drawable.blue_popup_full_dark;
+				mDividerHorizontalBright = R.drawable.blue_divider_horizontal_bright;
+				break;
+			case THEME_FLAT:
+				mProgressbarsBackgroundColor = R.color.studyoptions_progressbar_background_blue;
+				mProgressbarsFrameColor = R.color.studyoptions_progressbar_frame_light;
+				mProgressbarsMatureColor = R.color.studyoptions_progressbar_mature_light;
+				mProgressbarsYoungColor = R.color.studyoptions_progressbar_young_blue;
+				mProgressbarsDeckpickerYoungColor = R.color.deckpicker_progressbar_young_light;
+				mReviewerBackground = R.color.reviewer_background;
+				mFlashcardBorder = R.drawable.blue_bg_webview;
+				mDeckpickerItemBorder = R.drawable.blue_bg_deckpicker;
+				mTitleStyle = R.drawable.flat_title;
+				mTextViewStyle = R.drawable.blue_textview;
+				mWallpaper = R.drawable.flat_background;
 				mBackgroundColor = R.color.background_blue;
 				mToastBackground = R.drawable.blue_toast_frame;
 				mDialogBackgroundColor = R.color.background_dialog_blue;
@@ -499,6 +572,8 @@ public class Themes {
 	public static int getNightModeCardBackground(Context context) {
 		switch (mCurrentTheme) {
 		case THEME_BLUE:
+			return context.getResources().getColor(R.color.reviewer_night_card_background);
+		case THEME_FLAT:
 			return context.getResources().getColor(R.color.reviewer_night_card_background);
 		default:
 			return Color.BLACK;

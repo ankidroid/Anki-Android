@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>   
+<resources>
+
+    <!-- Blue Theme -->
     <style name="Theme_Blue" parent="@android:Theme.Light">
-	<!-- Button styles -->
         <item name="android:buttonStyle">@style/Blue.Button</item>
         <item name="android:buttonStyleSmall">@style/Blue.Button.Small</item>
         <item name="android:buttonStyleToggle">@style/Blue.Button.Toggle</item>
         <item name="android:checkboxStyle">@style/Blue.CompoundButton.CheckBox</item>
         <item name="android:colorForeground">#0000</item>
         <item name="android:colorBackground">@color/background_blue</item>
-
         <item name="android:editTextStyle">@style/Blue.Edittext</item>
         <item name="android:radioButtonStyle">@style/Blue.CompoundButton.RadioButton</item>
 
@@ -19,38 +19,54 @@
         <item name="android:listViewStyle">@style/Blue.Widget.ListView</item>
         <item name="android:dropDownListViewStyle">@style/Blue.Widget.ListView.DropDown</item>
         <item name="android:listDivider">@drawable/blue_divider_horizontal_bright</item>
-
         <item name="android:listPreferredItemHeight">56dip</item>
-        <!-- <item name="android:dropdownListPreferredItemHeight">40dip</item> -->
-
         <item name="android:spinnerStyle">@style/Blue.Widget.Spinner</item>
         <item name="android:spinnerDropDownItemStyle">@style/Blue.Widget.DropDownItem.Spinner</item>
         <item name="listItemBackgroundDrawable">@drawable/blue_list_selector_background</item>
+    </style>
 
+    <!-- Flat Theme -->
+    <style name="Theme_Flat" parent="@android:Theme.Light">
+        <item name="android:buttonStyle">@style/Blue.Button</item>
+        <item name="android:buttonStyleSmall">@style/Blue.Button.Small</item>
+        <item name="android:buttonStyleToggle">@style/Blue.Button.Toggle</item>
+        <item name="android:checkboxStyle">@style/Blue.CompoundButton.CheckBox</item>
+        <item name="android:colorForeground">#0000</item>
+        <item name="android:colorBackground">@color/background_blue</item>
+        <item name="android:editTextStyle">@style/Blue.Edittext</item>
+        <item name="android:radioButtonStyle">@style/Blue.CompoundButton.RadioButton</item>
 
+	<!-- Dialog styles -->
+        <item name="android:alertDialogStyle">@style/Blue.AlertDialog</item>
+        <item name="android:listChoiceIndicatorSingle">@drawable/blue_btn_radio</item>
+        <item name="android:listChoiceIndicatorMultiple">@drawable/blue_btn_check</item>
+        <item name="android:listViewStyle">@style/Blue.Widget.ListView</item>
+        <item name="android:dropDownListViewStyle">@style/Blue.Widget.ListView.DropDown</item>
+        <item name="android:listDivider">@drawable/blue_divider_horizontal_bright</item>
+        <item name="android:listPreferredItemHeight">56dip</item>
+        <item name="android:spinnerStyle">@style/Blue.Widget.Spinner</item>
+        <item name="android:spinnerDropDownItemStyle">@style/Blue.Widget.DropDownItem.Spinner</item>
+        <item name="listItemBackgroundDrawable">@drawable/blue_list_selector_background</item>
+    </style>
 
-  <!--      <item name="android:popupMenuStyle">@style/Blue.Widget.PopupMenu</item>
-        <item name="android:progressBarStyle">@style/Blue.Widget.ProgressBar</item>
-        <item name="android:progressBarStyleSmall">@style/Blue.Widget.ProgressBar.Small</item>
+    <!-- White Theme -->
+    <style name="Theme_Light" parent="@android:style/Theme.Light">
+	<item name="listItemBackgroundDrawable">@android:drawable/list_selector_background</item>
+    </style>
 
-    <item name="android:panelBackground">@drawable/blue_menu_background</item>
-        <item name="android:panelFullBackground">@drawable/blue_menu_background_fill_parent_width</item>-->
-	</style>
+    <!-- Black Theme -->
+    <style name="Theme_Black" parent="@android:style/Theme">
+	<item name="listItemBackgroundDrawable">@android:drawable/list_selector_background</item>
+    </style>
 
+    <!-- Basic theme for dialogs -->
     <style name="StyledDialog" parent="@android:style/Theme.Dialog">
         <item name="android:windowBackground">@color/transparent</item>
         <item name="android:windowNoTitle">true</item>
         <item name="android:windowIsFloating">true</item>
     </style>
 
-	<style name="Theme_Light" parent="@android:style/Theme.Light">
-		<item name="listItemBackgroundDrawable">@android:drawable/list_selector_background</item>
-	</style>
-
-	<style name="Theme_Black" parent="@android:style/Theme">
-		<item name="listItemBackgroundDrawable">@android:drawable/list_selector_background</item>
-	</style>
-
+    <!-- Theme for widget dialogs -->
     <style name="Theme_Translucent" parent="style/Theme_Blue">
         <item name="android:windowNoTitle">true</item>
         <item name="android:windowContentOverlay">@null</item>
@@ -58,6 +74,6 @@
         <item name="android:colorBackgroundCacheHint">@null</item>
         <item name="android:windowIsTranslucent">true</item>
         <item name="android:windowAnimationStyle">@android:style/Animation</item>
-	</style>
+    </style>
 
 </resources>
