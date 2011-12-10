@@ -1053,15 +1053,15 @@ public class DeckPicker extends Activity implements Runnable, IButtonListener {
 					String action = intent.getAction();
 					if (action.equals(Intent.ACTION_MEDIA_UNMOUNTED)) {
 						Log.i(AnkiDroidApp.TAG, "DeckPicker - mUnmountReceiver, Action = Media Unmounted");
-						SharedPreferences preferences = PreferenceManager
-								.getDefaultSharedPreferences(getBaseContext());
+						SharedPreferences preferences = PrefSettings
+								.getSharedPrefs(getBaseContext());
 						String deckPath = preferences.getString("deckPath",
 								AnkiDroidApp.getStorageDirectory());
 						populateDeckList(deckPath);
 					} else if (action.equals(Intent.ACTION_MEDIA_MOUNTED)) {
 						Log.i(AnkiDroidApp.TAG, "DeckPicker - mUnmountReceiver, Action = Media Mounted");
-						SharedPreferences preferences = PreferenceManager
-								.getDefaultSharedPreferences(getBaseContext());
+						SharedPreferences preferences = PrefSettings
+								.getSharedPrefs(getBaseContext());
 						String deckPath = preferences.getString("deckPath",
 								AnkiDroidApp.getStorageDirectory());
 						mDeckIsSelected = false;
