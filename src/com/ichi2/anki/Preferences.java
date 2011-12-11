@@ -253,13 +253,26 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
     			setResult(StudyOptions.RESULT_RESTART, intent);
     			finish();
             } else if (key.equals("theme")) {
-            	if (!sharedPreferences.getString("theme", "0").equals("2")) {
+            	if (!sharedPreferences.getString("theme", "2").equals("2")) {
             		animationsCheckboxPreference.setChecked(false);
             		animationsCheckboxPreference.setEnabled(false);
             	} else {
             		animationsCheckboxPreference.setEnabled(true);
             	}
             	Themes.loadTheme();
+            	switch (Integer.parseInt(sharedPreferences.getString("theme", "2"))) {
+            	case Themes.THEME_ANDROID_DARK:
+            	case Themes.THEME_ANDROID_LIGHT:
+            	case Themes.THEME_BLUE:
+            		sharedPreferences.edit().putString("defaultFont", "").commit();
+            		break;
+            	case Themes.THEME_FLAT:
+            		sharedPreferences.edit().putString("defaultFont", "OpenSans-Regular").commit();
+            		break;
+            	case Themes.THEME_WHITE:
+            		sharedPreferences.edit().putString("defaultFont", "OpenSans-Regular").commit();
+            		break;
+            	}
     			Intent intent = this.getIntent();
     			setResult(StudyOptions.RESULT_RESTART, intent);
     			finish();
@@ -314,15 +327,15 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
 
     /** Returns a list of the names of the installed custom fonts. */
     private String[] getCustomFonts(String defaultValue) {
-        File[] files = Utils.getCustomFonts(this);
+        String[] files = Utils.getCustomFonts(this);
         int count = files.length;
         Log.d(AnkiDroidApp.TAG, "There are " + count + " custom fonts");
         String[] names = new String[count + 1];
-        for (int index = 0; index < count; ++index) {
-            names[index] = Utils.removeExtension(files[index].getName());
+        names[0] = defaultValue;
+        for (int index = 1; index < count + 1; ++index) {
+            names[index] =  Utils.removeExtension((new File(files[index - 1])).getName());
             Log.d(AnkiDroidApp.TAG, "Adding custom font: " + names[index]);
         }
-        names[count] = defaultValue;
         return names;
     }
 

@@ -1006,15 +1006,39 @@ public class Utils {
     }
 
     /** Returns a list of files for the installed custom fonts. */
-    public static File[] getCustomFonts(Context context) {
+    public static String[] getCustomFonts(Context context) {
         SharedPreferences preferences = PrefSettings.getSharedPrefs(context);
         String deckPath = preferences.getString("deckPath",
                 AnkiDroidApp.getStorageDirectory() + "/AnkiDroid");
         String fontsPath = deckPath + "/fonts/";
         File fontsDir = new File(fontsPath);
-        if (!fontsDir.exists() || !fontsDir.isDirectory()) {
-          return new File[0];
+        int fontsCount = 0;
+        File[] fontsList = null;
+        if (fontsDir.exists() && fontsDir.isDirectory()) {
+        	fontsCount = fontsDir.listFiles().length;
+        	fontsList = fontsDir.listFiles();
         }
-        return fontsDir.listFiles();
+        String[] ankiDroidFonts = null;
+        String assetPath = "/android_asset/fonts/";
+        int adFontsCount = 0;
+		try {
+			ankiDroidFonts = context.getAssets().list("fonts");
+			adFontsCount = ankiDroidFonts.length;
+		} catch (IOException e) {
+			Log.e(AnkiDroidApp.TAG, "Error on retrieving ankidroid fonts: " + e);
+		}
+		String[] fonts = new String[fontsCount + adFontsCount];
+        for (int i = 0; i < fontsCount; i++) {
+        	fonts[i] = fontsList[i].getAbsolutePath();
+        }
+        for (int i = fontsCount; i < fonts.length; i++) {
+        	fonts[i] = assetPath + ankiDroidFonts[i - fontsCount];        	
+        }
+
+        if (fonts.length > 0) {
+        	return fonts;
+        } else {
+        	return new String[0];
+        }
     }
 }

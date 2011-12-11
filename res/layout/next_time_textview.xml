@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <TextView xmlns:android="http://schemas.android.com/apk/res/android"
-	android:textColor="@color/next_time_usual_color"
-    android:layout_width="0dip"
-	android:layout_height="fill_parent"
-	android:layout_weight="1"
+    android:layout_width="wrap_content"
+	android:layout_height="wrap_content"
 	android:layout_gravity="center"
+	android:layout_marginBottom="1dip"
+	android:ellipsize="start" 
+	android:lines="1"
+	android:textSize="12.5sp"
 	android:gravity="bottom|center_horizontal"/>

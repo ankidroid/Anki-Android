@@ -138,7 +138,9 @@ public class DeckManager {
     			} else if (rebuild) {
             		if (!deckInformation.mInitiallyRebuilt) {
         					Log.i(AnkiDroidApp.TAG, "DeckManager: reopen deck in order to rebuild");
-        					deck.closeDeck(false);
+        					if (deck != null) {
+            					deck.closeDeck(false);        						
+        					}
         					deckInformation.mDeck = Deck.openDeck(deckpath, true, requestingActivity == REQUESTING_ACTIVITY_SYNCCLIENT);
         					deckInformation.mInitiallyRebuilt = true;
         					WidgetStatus.update(AnkiDroidApp.getInstance().getBaseContext(), WidgetStatus.getDeckStatus(deck));

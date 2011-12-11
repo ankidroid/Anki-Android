@@ -267,7 +267,7 @@ public class Reviewer extends Activity implements IButtonListener{
     private FrameLayout mCardContainer;
     private WebView mCard;
     private WebView mNextCard;
-    private FrameLayout mCardFrame;
+    private LinearLayout mCardFrame;
     private FrameLayout mTouchLayer;
     private TextView mTextBarRed;
     private TextView mTextBarBlack;
@@ -287,6 +287,11 @@ public class Reviewer extends Activity implements IButtonListener{
     private Button mEase2;
     private Button mEase3;
     private Button mEase4;
+    private LinearLayout mFlipCardLayout;
+    private LinearLayout mEase1Layout;
+    private LinearLayout mEase2Layout;
+    private LinearLayout mEase3Layout;
+    private LinearLayout mEase4Layout;
     private Chronometer mCardTimer;
     private Whiteboard mWhiteboard;
 	private ClipboardManager mClipboard;
@@ -317,7 +322,7 @@ public class Reviewer extends Activity implements IButtonListener{
     private long mSavedTimer = 0;
 
     private boolean mRefreshWebview = false;
-    private File[] mCustomFontFiles;
+    private String[] mCustomFontFiles;
     private String mCustomDefaultFontCss;
 
 	/** 
@@ -498,16 +503,16 @@ public class Reviewer extends Activity implements IButtonListener{
         		return;
         	}
             switch (view.getId()) {
-                case R.id.ease1:
+                case R.id.flashcard_layout_ease1:
                     answerCard(Card.EASE_FAILED);
                     break;
-                case R.id.ease2:
+                case R.id.flashcard_layout_ease2:
                 	answerCard(Card.EASE_HARD);
                     break;
-                case R.id.ease3:
+                case R.id.flashcard_layout_ease3:
                 	answerCard(Card.EASE_MID);
                     break;
-                case R.id.ease4:
+                case R.id.flashcard_layout_ease4:
                 	answerCard(Card.EASE_EASY);
                     break;
                 default:
@@ -855,7 +860,7 @@ public class Reviewer extends Activity implements IButtonListener{
         super.onCreate(savedInstanceState);
         Log.i(AnkiDroidApp.TAG, "Reviewer - onCreate");
 
-        mChangeBorderStyle = Themes.getTheme() != Themes.THEME_BLUE;
+        mChangeBorderStyle = Themes.getTheme() == Themes.THEME_ANDROID_LIGHT || Themes.getTheme() == Themes.THEME_ANDROID_DARK;
 
         // The hardware buttons should control the music volume while reviewing.
         setVolumeControlStream(AudioManager.STREAM_MUSIC);
@@ -1541,7 +1546,7 @@ public class Reviewer extends Activity implements IButtonListener{
 
         findViewById(R.id.top_bar).setOnClickListener(mCardStatisticsListener);
 
-        mCardFrame = (FrameLayout) findViewById(R.id.flashcard);
+        mCardFrame = (LinearLayout) findViewById(R.id.flashcard);
         mTouchLayer = (FrameLayout) findViewById(R.id.touch_layer);
         mTouchLayer.setOnTouchListener(mGestureListener);
     	if (mPrefTextSelection && mLongClickWorkaround) {
@@ -1580,24 +1585,36 @@ public class Reviewer extends Activity implements IButtonListener{
             mAccelLast = SensorManager.GRAVITY_EARTH;	
         }
 
+        Resources res = getResources();
+
         mEase1 = (Button) findViewById(R.id.ease1);
-        mEase1.setOnClickListener(mSelectEaseHandler);
+        mEase1.setTextColor(res.getColor(R.color.next_time_failed_color));
+        mEase1Layout = (LinearLayout) findViewById(R.id.flashcard_layout_ease1);
+        mEase1Layout.setOnClickListener(mSelectEaseHandler);
 
         mEase2 = (Button) findViewById(R.id.ease2);
-        mEase2.setOnClickListener(mSelectEaseHandler);
+        mEase2.setTextColor(res.getColor(R.color.next_time_usual_color));
+        mEase2Layout = (LinearLayout) findViewById(R.id.flashcard_layout_ease2);
+        mEase2Layout.setOnClickListener(mSelectEaseHandler);
 
         mEase3 = (Button) findViewById(R.id.ease3);
-        mEase3.setOnClickListener(mSelectEaseHandler);
+        mEase3Layout = (LinearLayout) findViewById(R.id.flashcard_layout_ease3);
+        mEase3Layout.setOnClickListener(mSelectEaseHandler);
 
         mEase4 = (Button) findViewById(R.id.ease4);
-        mEase4.setOnClickListener(mSelectEaseHandler);
+        mEase4Layout = (LinearLayout) findViewById(R.id.flashcard_layout_ease4);
+        mEase4Layout.setOnClickListener(mSelectEaseHandler);
 
         mNext1 = (TextView) findViewById(R.id.nextTime1);
         mNext2 = (TextView) findViewById(R.id.nextTime2);
         mNext3 = (TextView) findViewById(R.id.nextTime3);
         mNext4 = (TextView) findViewById(R.id.nextTime4);
 
+        mNext1.setTextColor(res.getColor(R.color.next_time_failed_color));
+        mNext2.setTextColor(res.getColor(R.color.next_time_usual_color));
+
         if (!mshowNextReviewTime) {
+        	((LinearLayout) findViewById(R.id.nextTimeflip)).setVisibility(View.GONE);
             mNext1.setVisibility(View.GONE);
             mNext2.setVisibility(View.GONE);
             mNext3.setVisibility(View.GONE);
@@ -1605,9 +1622,9 @@ public class Reviewer extends Activity implements IButtonListener{
         }
 
         mFlipCard = (Button) findViewById(R.id.flip_card);
-        mFlipCard.setOnClickListener(mFlipCardListener);
-        mFlipCard.setText(getResources().getString(R.string.show_answer));
-    	mDefaultButtonDrawable = new Drawable[]{mFlipCard.getBackground(), mEase1.getBackground(), mEase2.getBackground(), mEase3.getBackground(), mEase4.getBackground()};
+        mFlipCardLayout = (LinearLayout) findViewById(R.id.flashcard_layout_flip);
+        mFlipCardLayout.setOnClickListener(mFlipCardListener);
+    	mDefaultButtonDrawable = new Drawable[]{mFlipCardLayout.getBackground(), mEase1Layout.getBackground(), mEase2Layout.getBackground(), mEase3Layout.getBackground(), mEase4Layout.getBackground()};
 
         mTextBarRed = (TextView) findViewById(R.id.red_number);
         mTextBarBlack = (TextView) findViewById(R.id.black_number);
@@ -1708,31 +1725,31 @@ public class Reviewer extends Activity implements IButtonListener{
 
         if (mChangeBorderStyle) {
             mMainLayout.setBackgroundColor(mCurrentBackgroundColor);
-            mFlipCard.setBackgroundDrawable(invert ? res.getDrawable(R.drawable.btn_keyboard_key_fulltrans_normal) : mDefaultButtonDrawable[0]);
-            mEase1.setBackgroundDrawable(invert ? res.getDrawable(R.drawable.btn_keyboard_key_fulltrans_normal) : mDefaultButtonDrawable[1]);
-            mEase2.setBackgroundDrawable(invert ? res.getDrawable(R.drawable.btn_keyboard_key_fulltrans_normal) : mDefaultButtonDrawable[2]);
-            mEase3.setBackgroundDrawable(invert ? res.getDrawable(R.drawable.btn_keyboard_key_fulltrans_normal) : mDefaultButtonDrawable[3]);
-            mEase4.setBackgroundDrawable(invert ? res.getDrawable(R.drawable.btn_keyboard_key_fulltrans_normal) : mDefaultButtonDrawable[4]);
+            mFlipCardLayout.setBackgroundDrawable(invert ? res.getDrawable(R.drawable.btn_keyboard_key_fulltrans_normal) : mDefaultButtonDrawable[0]);
+            mEase1Layout.setBackgroundDrawable(invert ? res.getDrawable(R.drawable.btn_keyboard_key_fulltrans_normal) : mDefaultButtonDrawable[1]);
+            mEase2Layout.setBackgroundDrawable(invert ? res.getDrawable(R.drawable.btn_keyboard_key_fulltrans_normal) : mDefaultButtonDrawable[2]);
+            mEase3Layout.setBackgroundDrawable(invert ? res.getDrawable(R.drawable.btn_keyboard_key_fulltrans_normal) : mDefaultButtonDrawable[3]);
+            mEase4Layout.setBackgroundDrawable(invert ? res.getDrawable(R.drawable.btn_keyboard_key_fulltrans_normal) : mDefaultButtonDrawable[4]);
         } else {
             mMainLayout.setBackgroundResource(invert ? R.color.reviewer_background_night : R.color.reviewer_background);
         	findViewById(R.id.flashcard_border).setBackgroundResource(invert ? R.drawable.blue_bg_webview_night : R.drawable.blue_bg_webview);
-            mFlipCard.setBackgroundDrawable(invert ? res.getDrawable(R.drawable.blue_btn_night) : mDefaultButtonDrawable[0]);
-            mEase1.setBackgroundDrawable(invert ? res.getDrawable(R.drawable.blue_btn_night) : mDefaultButtonDrawable[1]);
-            mEase2.setBackgroundDrawable(invert ? res.getDrawable(R.drawable.blue_btn_night) : mDefaultButtonDrawable[2]);
-            mEase3.setBackgroundDrawable(invert ? res.getDrawable(R.drawable.blue_btn_night) : mDefaultButtonDrawable[3]);
-            mEase4.setBackgroundDrawable(invert ? res.getDrawable(R.drawable.blue_btn_night) : mDefaultButtonDrawable[4]);
+            mFlipCardLayout.setBackgroundDrawable(invert ? res.getDrawable(R.drawable.blue_btn_night) : mDefaultButtonDrawable[0]);
+            mEase1Layout.setBackgroundDrawable(invert ? res.getDrawable(R.drawable.blue_btn_night) : mDefaultButtonDrawable[1]);
+            mEase2Layout.setBackgroundDrawable(invert ? res.getDrawable(R.drawable.blue_btn_night) : mDefaultButtonDrawable[2]);
+            mEase3Layout.setBackgroundDrawable(invert ? res.getDrawable(R.drawable.blue_btn_night) : mDefaultButtonDrawable[3]);
+            mEase4Layout.setBackgroundDrawable(invert ? res.getDrawable(R.drawable.blue_btn_night) : mDefaultButtonDrawable[4]);
         }
         if (invert || mChangeBorderStyle) {
             mNextTimeTextColor = invert ? res.getColor(R.color.next_time_usual_color_inv) : res.getColor(R.color.next_time_usual_color);
             mNextTimeTextRecomColor = invert ? res.getColor(R.color.next_time_recommended_color_inv) : res.getColor(R.color.next_time_recommended_color);
             mNext4.setTextColor(mNextTimeTextColor);
+            mEase4.setTextColor(mNextTimeTextColor);
             mCardTimer.setTextColor(fgColor);
             mForegroundColor = fgColor;
             mTextBarBlack.setTextColor(fgColor);
             mTextBarBlue.setTextColor(invert ? res.getColor(R.color.textbar_blue_color_inv) : res.getColor(R.color.textbar_blue_color));
 
             mFlipCard.setTextColor(fgColor);
-            mEase1.setTextColor(fgColor);
             mEase2.setTextColor(fgColor);
             mEase3.setTextColor(fgColor);
             mEase4.setTextColor(fgColor);
@@ -1830,7 +1847,7 @@ public class Reviewer extends Activity implements IButtonListener{
         Resources res = getResources();
 
         // hide flipcard button
-        switchVisibility(mFlipCard, View.GONE);
+        switchVisibility(mFlipCardLayout, View.GONE);
 
         // Set correct label for each button
         if (mCurrentCard.isRev()) {
@@ -1846,20 +1863,24 @@ public class Reviewer extends Activity implements IButtonListener{
         }
 
         // Show buttons
-        switchVisibility(mEase1, View.VISIBLE);
-        switchVisibility(mEase2, View.VISIBLE);
-        switchVisibility(mEase3, View.VISIBLE);
-        switchVisibility(mEase4, View.VISIBLE);
+        switchVisibility(mEase1Layout, View.VISIBLE);
+        switchVisibility(mEase2Layout, View.VISIBLE);
+        switchVisibility(mEase3Layout, View.VISIBLE);
+        switchVisibility(mEase4Layout, View.VISIBLE);
         
         // Focus default button
         if (mCurrentCard.isRev()) {
-            mEase3.requestFocus();
+            mEase3Layout.requestFocus();
             mNext2.setTextColor(mNextTimeTextColor);
+            mEase2.setTextColor(mNextTimeTextColor);
             mNext3.setTextColor(mNextTimeTextRecomColor);
+            mEase3.setTextColor(mNextTimeTextRecomColor);
         } else {
-            mEase2.requestFocus();
+            mEase2Layout.requestFocus();
             mNext2.setTextColor(mNextTimeTextRecomColor);
+            mEase2.setTextColor(mNextTimeTextRecomColor);
             mNext3.setTextColor(mNextTimeTextColor);
+            mEase3.setTextColor(mNextTimeTextColor);
         }
 
         // Show next review time
@@ -1877,10 +1898,10 @@ public class Reviewer extends Activity implements IButtonListener{
 
 
     private void hideEaseButtons() {
-    	switchVisibility(mEase1, View.GONE);
-    	switchVisibility(mEase2, View.GONE);
-    	switchVisibility(mEase3, View.GONE);
-    	switchVisibility(mEase4, View.GONE);
+    	switchVisibility(mEase1Layout, View.GONE);
+    	switchVisibility(mEase2Layout, View.GONE);
+    	switchVisibility(mEase3Layout, View.GONE);
+    	switchVisibility(mEase4Layout, View.GONE);
     	if (mshowNextReviewTime) {
     		int visibility = typeAnswer() ? View.GONE : View.INVISIBLE;
     		switchVisibility(mNext1, visibility);
@@ -1888,9 +1909,9 @@ public class Reviewer extends Activity implements IButtonListener{
     		switchVisibility(mNext3, visibility);
     		switchVisibility(mNext4, visibility);
     	}
-    	if (mFlipCard.getVisibility() != View.VISIBLE) {
-    		switchVisibility(mFlipCard, View.VISIBLE);
-        	mFlipCard.requestFocus();
+    	if (mFlipCardLayout.getVisibility() != View.VISIBLE) {
+    		switchVisibility(mFlipCardLayout, View.VISIBLE);
+    		mFlipCardLayout.requestFocus();
     	} else if (typeAnswer()) {
             mAnswerField.requestFocus();
 
@@ -1937,7 +1958,7 @@ public class Reviewer extends Activity implements IButtonListener{
         mTextBarBlack.setVisibility(View.VISIBLE);
         mTextBarBlue.setVisibility(View.VISIBLE);
         mChosenAnswer.setVisibility(View.VISIBLE);
-        mFlipCard.setVisibility(View.VISIBLE);
+        mFlipCardLayout.setVisibility(View.VISIBLE);
         
         if (mPrefWhiteboard) {
             mWhiteboard.setVisibility(mShowWhiteboard ? View.VISIBLE : View.GONE);            
@@ -2112,8 +2133,8 @@ public class Reviewer extends Activity implements IButtonListener{
     private Runnable mShowQuestionTask = new Runnable() {
         public void run() {
             //Assume hitting the "Again" button when auto next question
-            if (mEase1.isEnabled() == true && mEase1.getVisibility() == View.VISIBLE) {
-		mEase1.performClick();
+            if (mEase1Layout.isEnabled() == true && mEase1Layout.getVisibility() == View.VISIBLE) {
+		mEase1Layout.performClick();
             }
         }
     };
@@ -2123,8 +2144,8 @@ public class Reviewer extends Activity implements IButtonListener{
             if (mPrefTimer) {
                 mCardTimer.stop();
             }
-            if (mFlipCard.isEnabled() == true && mFlipCard.getVisibility() == View.VISIBLE && !mIsAnswering) {
-		mFlipCard.performClick();
+            if (mFlipCardLayout.isEnabled() == true && mFlipCardLayout.getVisibility() == View.VISIBLE && !mIsAnswering) {
+		mFlipCardLayout.performClick();
             }
         }
     };
@@ -2538,10 +2559,10 @@ public class Reviewer extends Activity implements IButtonListener{
      */
     private String getCustomFontsStyle() {
       StringBuilder builder = new StringBuilder();
-      for (File fontFile : mCustomFontFiles) {
+      for (String fontPath : mCustomFontFiles) {
         String fontFace = String.format(
             "@font-face {font-family: \"%s\"; src: url(\"file://%s\");}",
-            Utils.removeExtension(fontFile.getName()), fontFile.getAbsolutePath());
+            Utils.removeExtension((new File(fontPath)).getName()), fontPath);
         Log.d(AnkiDroidApp.TAG, "adding to style: " + fontFace);
         builder.append(fontFace);
         builder.append('\n');
@@ -2746,42 +2767,42 @@ public class Reviewer extends Activity implements IButtonListener{
 
     private void unblockControls() {
         mCardFrame.setEnabled(true);
-        mFlipCard.setEnabled(true);
+        mFlipCardLayout.setEnabled(true);
 
         switch (mCurrentEase) {
             case Card.EASE_FAILED:
-                mEase1.setClickable(true);
-                mEase2.setEnabled(true);
-                mEase3.setEnabled(true);
-                mEase4.setEnabled(true);
+                mEase1Layout.setClickable(true);
+                mEase2Layout.setEnabled(true);
+                mEase3Layout.setEnabled(true);
+                mEase4Layout.setEnabled(true);
                 break;
 
             case Card.EASE_HARD:
-                mEase1.setEnabled(true);
-                mEase2.setClickable(true);
-                mEase3.setEnabled(true);
-                mEase4.setEnabled(true);
+                mEase1Layout.setEnabled(true);
+                mEase2Layout.setClickable(true);
+                mEase3Layout.setEnabled(true);
+                mEase4Layout.setEnabled(true);
                 break;
 
             case Card.EASE_MID:
-                mEase1.setEnabled(true);
-                mEase2.setEnabled(true);
-                mEase3.setClickable(true);
-                mEase4.setEnabled(true);
+                mEase1Layout.setEnabled(true);
+                mEase2Layout.setEnabled(true);
+                mEase3Layout.setClickable(true);
+                mEase4Layout.setEnabled(true);
                 break;
 
             case Card.EASE_EASY:
-                mEase1.setEnabled(true);
-                mEase2.setEnabled(true);
-                mEase3.setEnabled(true);
-                mEase4.setClickable(true);
+                mEase1Layout.setEnabled(true);
+                mEase2Layout.setEnabled(true);
+                mEase3Layout.setEnabled(true);
+                mEase4Layout.setClickable(true);
                 break;
 
             default:
-                mEase1.setEnabled(true);
-                mEase2.setEnabled(true);
-                mEase3.setEnabled(true);
-                mEase4.setEnabled(true);
+                mEase1Layout.setEnabled(true);
+                mEase2Layout.setEnabled(true);
+                mEase3Layout.setEnabled(true);
+                mEase4Layout.setEnabled(true);
                 break;
         }
 
@@ -2802,43 +2823,43 @@ public class Reviewer extends Activity implements IButtonListener{
 
     private void blockControls() {
         mCardFrame.setEnabled(false);
-        mFlipCard.setEnabled(false);
+        mFlipCardLayout.setEnabled(false);
         mTouchLayer.setVisibility(View.INVISIBLE);
 
         switch (mCurrentEase) {
             case Card.EASE_FAILED:
-                mEase1.setClickable(false);
-                mEase2.setEnabled(false);
-                mEase3.setEnabled(false);
-                mEase4.setEnabled(false);
+                mEase1Layout.setClickable(false);
+                mEase2Layout.setEnabled(false);
+                mEase3Layout.setEnabled(false);
+                mEase4Layout.setEnabled(false);
                 break;
 
             case Card.EASE_HARD:
-                mEase1.setEnabled(false);
-                mEase2.setClickable(false);
-                mEase3.setEnabled(false);
-                mEase4.setEnabled(false);
+                mEase1Layout.setEnabled(false);
+                mEase2Layout.setClickable(false);
+                mEase3Layout.setEnabled(false);
+                mEase4Layout.setEnabled(false);
                 break;
 
             case Card.EASE_MID:
-                mEase1.setEnabled(false);
-                mEase2.setEnabled(false);
-                mEase3.setClickable(false);
-                mEase4.setEnabled(false);
+                mEase1Layout.setEnabled(false);
+                mEase2Layout.setEnabled(false);
+                mEase3Layout.setClickable(false);
+                mEase4Layout.setEnabled(false);
                 break;
 
             case Card.EASE_EASY:
-                mEase1.setEnabled(false);
-                mEase2.setEnabled(false);
-                mEase3.setEnabled(false);
-                mEase4.setClickable(false);
+                mEase1Layout.setEnabled(false);
+                mEase2Layout.setEnabled(false);
+                mEase3Layout.setEnabled(false);
+                mEase4Layout.setClickable(false);
                 break;
 
             default:
-                mEase1.setEnabled(false);
-                mEase2.setEnabled(false);
-                mEase3.setEnabled(false);
-                mEase4.setEnabled(false);
+                mEase1Layout.setEnabled(false);
+                mEase2Layout.setEnabled(false);
+                mEase3Layout.setEnabled(false);
+                mEase4Layout.setEnabled(false);
                 break;
         }
 
@@ -3129,6 +3150,7 @@ public class Reviewer extends Activity implements IButtonListener{
             DeckTask.launchDeckTask(DeckTask.TASK_TYPE_SAVE_DECK, mSaveAndResetDeckHandler, new DeckTask.TaskData(DeckManager.getMainDeck(), 0));
     	} else {
     		finish();
+    		ActivityTransitionAnimation.slide(Reviewer.this, ActivityTransitionAnimation.RIGHT);
     	}
     }
 
@@ -3202,8 +3224,8 @@ public class Reviewer extends Activity implements IButtonListener{
     	@Override
     	public boolean onSingleTapConfirmed(MotionEvent e) {
     		if (mGesturesEnabled && !mIsSelecting) {
-    			int height = mCard.getHeight();
-    			int width = mCard.getWidth();
+    			int height = mTouchLayer.getHeight();
+    			int width = mTouchLayer.getWidth();
     			float posX = e.getX();
     			float posY = e.getY();
     			if (posX > posY / height * width) {

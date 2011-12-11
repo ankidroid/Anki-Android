@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Button xmlns:android="http://schemas.android.com/apk/res/android"
-	android:layout_width="0dip"
-	android:layout_height="fill_parent"
-	android:layout_weight="1"
-	android:visibility="gone"
+	android:layout_width="fill_parent"
+	android:layout_height="wrap_content"
 	android:layout_gravity="center"
 	android:gravity="center"
+	android:background="@color/transparent"
+	android:lines="1"
+	android:textSize="14sp"
+	android:clickable="false"
+	android:ellipsize="start"
 	android:layout_alignParentBottom="true"/>

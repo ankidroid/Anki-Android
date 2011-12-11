@@ -471,6 +471,7 @@ public class StyledDialog extends Dialog {
                 }
             } else {
             	layout.findViewById(R.id.topPanel).setVisibility(View.GONE);
+            	layout.findViewById(R.id.titleDivider).setVisibility(View.GONE);
             }
 
             // set buttons

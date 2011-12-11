@@ -307,7 +307,7 @@ public class AnkiDroidWidgetBig extends AppWidgetProvider {
                 	contentService.mBigCurrentMessage = null;
                 	updateViews(VIEW_SHOW_QUESTION);            		
             	} else {
-            		handleError();
+            		handleError(result.getString());
             	}
             }
         };
@@ -337,7 +337,7 @@ public class AnkiDroidWidgetBig extends AppWidgetProvider {
             @Override
             public void onPostExecute(DeckTask.TaskData result) {
             	if (!result.getBoolean()) {
-            		handleError();
+            		handleError(contentService.mLoadedDeck.getDeckPath());
             	}
             }
         };
@@ -358,7 +358,7 @@ public class AnkiDroidWidgetBig extends AppWidgetProvider {
             @Override
             public void onPostExecute(DeckTask.TaskData result) {
             	if (!result.getBoolean()) {
-            		handleError();
+            		handleError(contentService.mLoadedDeck.getDeckPath());
             		return;
             	}
                 String str = result.getString();
@@ -536,18 +536,14 @@ public class AnkiDroidWidgetBig extends AppWidgetProvider {
         }
 
 
-        private void handleError() {
-        	String deckpath = null;
-        	if (contentService.mLoadedDeck != null) {
-        		deckpath = contentService.mLoadedDeck.getDeckPath();
-        	}
-        	Intent newIntent = StudyOptions.getLoadDeckIntent(AnkiDroidWidgetBig.UpdateService.this, deckpath);
+        private void handleError(String deckPath) {
+        	Intent newIntent = StudyOptions.getLoadDeckIntent(AnkiDroidWidgetBig.UpdateService.this, deckPath);
         	newIntent.putExtra(StudyOptions.EXTRA_START, StudyOptions.EXTRA_DB_ERROR);
         	startActivity(newIntent);
     		contentService.mBigCurrentMessage = null;
-    		DeckManager.closeDeck(contentService.mLoadedDeck.getDeckPath());
+    		DeckManager.closeDeck(deckPath);    			
     		contentService.mLoadedDeck = null;
-                contentService.setCard(null);
+            contentService.setCard(null);
     		contentService.mBigShowProgressDialog = false;
     		updateViews(VIEW_DECKS);
         }

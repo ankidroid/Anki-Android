@@ -1024,7 +1024,6 @@ public class StudyOptions extends Activity implements IButtonListener {
         Themes.setTitleStyle(mTextDeckName);
 
         mStatisticsField = (LinearLayout) mStudyOptionsView.findViewById(R.id.studyoptions_statistic_field);
-        Themes.setTextViewStyle(mStatisticsField);
 
         Themes.setTitleStyle(mStudyOptionsView.findViewById(R.id.studyoptions_bottom));
 

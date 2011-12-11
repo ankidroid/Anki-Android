@@ -25,11 +25,19 @@ import android.content.SharedPreferences;
 import android.content.DialogInterface.OnCancelListener;
 import android.content.DialogInterface.OnClickListener;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.ViewGroup.MarginLayoutParams;
+import android.view.ViewParent;
 import android.webkit.WebView;
+import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.LinearLayout;
+import android.widget.LinearLayout.LayoutParams;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -39,6 +47,7 @@ public class Themes {
 	public final static int THEME_ANDROID_LIGHT = 1;
 	public final static int THEME_BLUE = 2;
 	public final static int THEME_FLAT = 3;
+	public final static int THEME_WHITE = 4;
 	public final static int THEME_NO_THEME = 100;
 
 	public final static int CALLER_STUDYOPTIONS = 1;
@@ -61,6 +70,7 @@ public class Themes {
 	private static int mFlashcardBorder = 0;
 	private static int mDeckpickerItemBorder = 0;
 	private static int mTitleStyle = 0;
+	private static int mTitleTextColor;
 	private static int mTextViewStyle= 0;
 	private static int mWallpaper = 0;
 	private static int mBackgroundColor;
@@ -82,6 +92,9 @@ public class Themes {
 	private static int mPopupFullMedium;
 	private static int mPopupFullBright;
 	private static int mDividerHorizontalBright;
+	private static Typeface mLightFont;
+	private static Typeface mRegularFont;
+	private static Typeface mBoldFont;
 
 	private static Context mContext;
 
@@ -110,6 +123,10 @@ public class Themes {
 			context.setTheme(R.style.Theme_Flat);
 			Log.i(AnkiDroidApp.TAG, "Set theme: flat");
 			break;
+		case THEME_WHITE:
+			context.setTheme(R.style.Theme_White);
+			Log.i(AnkiDroidApp.TAG, "Set theme: white");
+			break;
 		case -1:
 			break;
 		}
@@ -117,6 +134,7 @@ public class Themes {
 
 
 	public static void setContentStyle(View view, int caller) {
+		setFont(view);
 		switch (caller) {
 		case CALLER_STUDYOPTIONS:
 			((View) view.findViewById(R.id.studyoptions_progressbar1_border)).setBackgroundResource(mProgressbarsFrameColor);
@@ -134,61 +152,97 @@ public class Themes {
 
 			((View) view.findViewById(R.id.studyoptions_global_limit_bar)).setBackgroundResource(mProgressbarsYoungColor);
 			((View) view.findViewById(R.id.studyoptions_global_bar)).setBackgroundResource(mProgressbarsYoungColor);
+
+			if (mCurrentTheme == THEME_WHITE) {
+				((View) view.findViewById(R.id.studyoptions_deckinformation)).setBackgroundResource(mTextViewStyle);
+				((View) view.findViewById(R.id.studyoptions_statistic_field)).setBackgroundResource(R.color.transparent);
+				((View) view.findViewById(R.id.studyoptions_deckinformation)).setBackgroundResource(mTextViewStyle);
+		        setMargins(view.findViewById(R.id.studyoptions_mainframe), LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT, 4f, 0, 4f, 4f);				
+			} else {
+				((View) view.findViewById(R.id.studyoptions_statistic_field)).setBackgroundResource(mTextViewStyle);				
+			}
 			break;
+
 		case CALLER_DECKPICKER:
+			ListView lv = (ListView) view.findViewById(R.id.files);
 			switch (mCurrentTheme) {
 			case THEME_BLUE:
-				ListView lv = (ListView) view.findViewById(R.id.files);
 				lv.setSelector(R.drawable.blue_deckpicker_list_selector);
 				lv.setDividerHeight(0);
 				break;
 			case THEME_FLAT:
-				ListView lv = (ListView) view.findViewById(R.id.files);
 				lv.setSelector(R.drawable.blue_deckpicker_list_selector);
 				lv.setDividerHeight(0);
+				break;
+			case THEME_WHITE:
+				lv.setBackgroundResource(R.drawable.white_textview);
+				lv.setSelector(R.drawable.white_deckpicker_list_selector);
+				lv.setDivider(mContext.getResources().getDrawable(R.drawable.white_listdivider));
+//				setFont(view);
+		        setMargins(view, LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT, 4f, 4f, 4f, 4f);
+//		        for (int i = 0; i < lv.getChildCount(); i++) {
+//		        	ViewGroup child = (ViewGroup) lv.getChildAt(i);
+//		        	for (int j = 0; j < child.getChildCount(); j++) {
+//		        		View cc = child.getChildAt(j);
+//		        		if (cc.getId() == R.id.DeckPickerName) {
+//		        			setBoldFont((TextView) cc);
+//		        		}
+//		        	}
+//		        }
+				//lv.setDividerHeight(0);
 				break;
 			default:
 				break;
 			}
 			break;
+
 		case CALLER_CARDBROWSER:
+			ListView lv2 = (ListView) view.findViewById(R.id.card_browser_list);
 			switch (mCurrentTheme) {
 			case THEME_BLUE:
-				ListView lv = (ListView) view.findViewById(R.id.card_browser_list);
-				lv.setSelector(R.drawable.blue_cardbrowser_list_selector);
-				lv.setDividerHeight(0);
+				lv2.setSelector(R.drawable.blue_cardbrowser_list_selector);
+				lv2.setDividerHeight(0);
 				break;
 			case THEME_FLAT:
-				ListView lv = (ListView) view.findViewById(R.id.card_browser_list);
-				lv.setSelector(R.drawable.blue_cardbrowser_list_selector);
-				lv.setDividerHeight(0);
+				lv2.setSelector(R.drawable.blue_cardbrowser_list_selector);
+				lv2.setDividerHeight(0);
+				break;
+			case THEME_WHITE:
+				lv2.setSelector(R.drawable.blue_cardbrowser_list_selector);
+				lv2.setDividerHeight(0);
 				break;
 			default:
 				break;
 			}
 			break;
+
 		case CALLER_CARDEDITOR_INTENTDIALOG:
+			ListView lv3 = (ListView) view;
 			switch (mCurrentTheme) {
 			case THEME_BLUE:
-				ListView lv = (ListView) view;
-				lv.setSelector(R.drawable.blue_cardbrowser_list_selector);
-				lv.setDividerHeight(0);
+				lv3.setSelector(R.drawable.blue_cardbrowser_list_selector);
+				lv3.setDividerHeight(0);
 				break;
 			case THEME_FLAT:
-				ListView lv = (ListView) view;
-				lv.setSelector(R.drawable.blue_cardbrowser_list_selector);
-				lv.setDividerHeight(0);
+				lv3.setSelector(R.drawable.blue_cardbrowser_list_selector);
+				lv3.setDividerHeight(0);
+				break;
+			case THEME_WHITE:
+				lv3.setSelector(R.drawable.blue_cardbrowser_list_selector);
+				lv3.setDividerHeight(0);
 				break;
 			default:
 				break;
 			}
 			break;
+
 		case CALLER_DECKPICKER_DECK:
 			if (view.getId() == R.id.DeckPickerCompletionMat) {
 				view.setBackgroundResource(mProgressbarsFrameColor);
 			} else if (view.getId() == R.id.DeckPickerCompletionAll) {
 				view.setBackgroundResource(mProgressbarsDeckpickerYoungColor);
 			} else if (view.getId() == R.id.deckpicker_deck) {
+//				setFont(view);
 				view.setBackgroundResource(mDeckpickerItemBorder);
 			}
 			break;
@@ -206,12 +260,37 @@ public class Themes {
 			case THEME_FLAT:
 			        ((View)view.findViewById(R.id.flashcard_frame)).setBackgroundResource(PrefSettings.getSharedPrefs(mContext).getBoolean("invertedColors", false) ? R.color.reviewer_night_card_background : R.color.white);
 				break;
+			case THEME_WHITE:
+			        ((View)view.findViewById(R.id.flashcard_frame)).setBackgroundResource(PrefSettings.getSharedPrefs(mContext).getBoolean("invertedColors", false) ? R.color.reviewer_night_card_background : R.color.white);
+			        setMargins(view.findViewById(R.id.main_layout), LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT, 4f, 0, 4f, 4f);
+			        
+			        //			        ((View)view.findViewById(R.id.nextTime1)).setBackgroundResource(R.drawable.white_next_time_separator);
+//			        ((View)view.findViewById(R.id.nextTime2)).setBackgroundResource(R.drawable.white_next_time_separator);
+//			        ((View)view.findViewById(R.id.nextTime3)).setBackgroundResource(R.drawable.white_next_time_separator);
+//			        ((View)view.findViewById(R.id.nextTime4)).setBackgroundResource(R.drawable.white_next_time_separator);
+				break;
 			}
-		        ((View)view.findViewById(R.id.session_progress)).setBackgroundResource(mReviewerProgressbar);
+	        ((View)view.findViewById(R.id.session_progress)).setBackgroundResource(mReviewerProgressbar);
+//	        setRegularFont((TextView)view.findViewById(R.id.flip_card));
+//	        setRegularFont((TextView)view.findViewById(R.id.ease1));
+//	        setRegularFont((TextView)view.findViewById(R.id.ease2));
+//	        setRegularFont((TextView)view.findViewById(R.id.ease3));
+//	        setRegularFont((TextView)view.findViewById(R.id.ease4));
+//	        setRegularFont((TextView)view.findViewById(R.id.red_number));
+//	        setRegularFont((TextView)view.findViewById(R.id.black_number));
+//	        setRegularFont((TextView)view.findViewById(R.id.blue_number));
+//	        setRegularFont((TextView)view.findViewById(R.id.card_time));
+//	        setRegularFont((TextView)view.findViewById(R.id.choosen_answer));
+//		    setLightFont((TextView)view.findViewById(R.id.nextTime1));
+//		    setLightFont((TextView)view.findViewById(R.id.nextTime2));
+//		    setLightFont((TextView)view.findViewById(R.id.nextTime3));
+//		    setLightFont((TextView)view.findViewById(R.id.nextTime4));
 			break;
+
 		case CALLER_FEEDBACK:
 			((TextView)view).setTextColor(mProgressbarsFrameColor);
 			break;
+
 		case CALLER_DOWNLOAD_DECK:
 			view.setBackgroundResource(mDeckpickerItemBorder);
 			break;
@@ -234,6 +313,7 @@ public class Themes {
 				mFlashcardBorder = 0;
 				mDeckpickerItemBorder = 0;
 				mTitleStyle = 0;
+				mTitleTextColor = mContext.getResources().getColor(R.color.white);
 				mTextViewStyle = 0;
 				mWallpaper = 0;
 				mToastBackground = 0;
@@ -256,6 +336,7 @@ public class Themes {
 				mDividerHorizontalBright = R.drawable.blue_divider_horizontal_bright;
 				mBackgroundColor = R.color.white;
 				break;
+
 			case THEME_ANDROID_LIGHT:
 				mProgressbarsBackgroundColor = R.color.studyoptions_progressbar_background_light;
 				mProgressbarsFrameColor = R.color.studyoptions_progressbar_frame_light;
@@ -266,6 +347,7 @@ public class Themes {
 				mFlashcardBorder = 0;
 				mDeckpickerItemBorder = 0;
 				mTitleStyle = 0;
+				mTitleTextColor = mContext.getResources().getColor(R.color.black);
 				mTextViewStyle = 0;
 				mWallpaper = 0;
 				mToastBackground = 0;
@@ -289,6 +371,7 @@ public class Themes {
 				mDividerHorizontalBright = R.drawable.blue_divider_horizontal_bright;
 				mBackgroundColor = R.color.white;
 				break;
+
 			case THEME_BLUE:
 				mProgressbarsBackgroundColor = R.color.studyoptions_progressbar_background_blue;
 				mProgressbarsFrameColor = R.color.studyoptions_progressbar_frame_light;
@@ -299,6 +382,7 @@ public class Themes {
 				mFlashcardBorder = R.drawable.blue_bg_webview;
 				mDeckpickerItemBorder = R.drawable.blue_bg_deckpicker;
 				mTitleStyle = R.drawable.blue_title;
+				mTitleTextColor = mContext.getResources().getColor(R.color.black);
 				mTextViewStyle = R.drawable.blue_textview;
 				mWallpaper = R.drawable.blue_background;
 				mBackgroundColor = R.color.background_blue;
@@ -322,6 +406,7 @@ public class Themes {
 				mPopupFullDark = R.drawable.blue_popup_full_dark;
 				mDividerHorizontalBright = R.drawable.blue_divider_horizontal_bright;
 				break;
+
 			case THEME_FLAT:
 				mProgressbarsBackgroundColor = R.color.studyoptions_progressbar_background_blue;
 				mProgressbarsFrameColor = R.color.studyoptions_progressbar_frame_light;
@@ -332,7 +417,8 @@ public class Themes {
 				mFlashcardBorder = R.drawable.blue_bg_webview;
 				mDeckpickerItemBorder = R.drawable.blue_bg_deckpicker;
 				mTitleStyle = R.drawable.flat_title;
-				mTextViewStyle = R.drawable.blue_textview;
+				mTitleTextColor = mContext.getResources().getColor(R.color.flat_title_color);
+				mTextViewStyle = R.drawable.flat_textview;
 				mWallpaper = R.drawable.flat_background;
 				mBackgroundColor = R.color.background_blue;
 				mToastBackground = R.drawable.blue_toast_frame;
@@ -354,10 +440,99 @@ public class Themes {
 				mPopupFullMedium = R.drawable.blue_popup_full_medium;
 				mPopupFullDark = R.drawable.blue_popup_full_dark;
 				mDividerHorizontalBright = R.drawable.blue_divider_horizontal_bright;
+				mLightFont = Typeface.createFromAsset(mContext.getAssets(), "fonts/OpenSans-Light.ttf");
+				mRegularFont = Typeface.createFromAsset(mContext.getAssets(), "fonts/OpenSans-Regular.ttf");
+				mBoldFont = Typeface.createFromAsset(mContext.getAssets(), "fonts/OpenSans-Bold.ttf");
+				break;
+
+			case THEME_WHITE:
+			mProgressbarsBackgroundColor = R.color.studyoptions_progressbar_background_blue;
+			mProgressbarsFrameColor = R.color.studyoptions_progressbar_frame_light;
+			mProgressbarsMatureColor = R.color.studyoptions_progressbar_mature_light;
+			mProgressbarsYoungColor = R.color.studyoptions_progressbar_young_blue;
+			mProgressbarsDeckpickerYoungColor = R.color.deckpicker_progressbar_young_light;
+				mReviewerBackground = R.color.white_background;
+				mFlashcardBorder = R.drawable.white_bg_webview;
+				mDeckpickerItemBorder = R.color.white;
+			mTitleStyle = R.drawable.flat_title;
+			mTitleTextColor = mContext.getResources().getColor(R.color.flat_title_color);
+				mTextViewStyle = R.drawable.white_textview;
+				mWallpaper = R.color.white_background;
+				mBackgroundColor = R.color.white_background;
+			mToastBackground = R.drawable.blue_toast_frame;
+			mDialogBackgroundColor = R.color.background_dialog_blue;
+			mBackgroundDarkColor = R.color.background_dark_blue;
+			mReviewerProgressbar = R.color.reviewer_progressbar_session_blue;
+			mCardbrowserItemBorder = new int[] {R.drawable.blue_bg_cardbrowser, R.drawable.blue_bg_cardbrowser_marked, R.drawable.blue_bg_cardbrowser_suspended, R.drawable.blue_bg_cardbrowser_marked_suspended};
+			mChartColors = new int[] {Color.BLACK, Color.WHITE};
+			mPopupTopDark = R.drawable.white_popup_top_bright;
+				mPopupTopBright = R.drawable.white_popup_top_bright;
+				mPopupTopMedium = R.drawable.white_popup_top_medium;
+			mPopupCenterDark = R.drawable.white_popup_center_bright;
+				mPopupCenterBright = R.drawable.white_popup_center_bright;
+				mPopupCenterMedium = R.drawable.white_popup_center_medium;
+			mPopupBottomDark = R.drawable.white_popup_bottom_bright;
+				mPopupBottomBright = R.drawable.white_popup_bottom_bright;
+				mPopupBottomMedium = R.drawable.white_popup_bottom_medium;
+				mPopupFullBright = R.drawable.white_popup_full_bright;
+				mPopupFullMedium = R.drawable.white_popup_full_medium;
+			mPopupFullDark = R.drawable.white_popup_full_dark;
+				mDividerHorizontalBright = R.drawable.white_dialog_divider;
+				mLightFont = Typeface.createFromAsset(mContext.getAssets(), "fonts/OpenSans-Light.ttf");
+				mRegularFont = Typeface.createFromAsset(mContext.getAssets(), "fonts/OpenSans-Regular.ttf");
+				mBoldFont = Typeface.createFromAsset(mContext.getAssets(), "fonts/OpenSans-Bold.ttf");
 				break;
 			}
 	}
 
+
+	public static void setLightFont(TextView view) {
+		if (mLightFont != null) {
+			view.setTypeface(mLightFont);
+		}
+	}
+	public static void setRegularFont(TextView view) {
+		if (mRegularFont != null) {
+			view.setTypeface(mRegularFont);
+		}
+	}
+	public static void setBoldFont(TextView view) {
+		if (mBoldFont != null) {
+			view.setTypeface(mBoldFont);
+		}
+	}
+
+	public static void setFont(View view) {
+		if (view instanceof ViewGroup) {
+			ViewGroup vg = (ViewGroup) view;
+			for (int i = 0; i < vg.getChildCount(); i++) {
+				View child = vg.getChildAt(i);
+				if (child instanceof TextView) {
+					TextView tv = (TextView) child;
+					if (tv.getTypeface() != null && tv.getTypeface().getStyle() == Typeface.BOLD) {
+						setBoldFont((TextView) child);
+					} else {
+						setRegularFont((TextView) child);
+					}
+				}
+				setFont(child);
+			}
+		}
+	}
+
+	public static void setTextColor(View view, int color) {
+		if (view instanceof ViewGroup) {
+			ViewGroup vg = (ViewGroup) view;
+			for (int i = 0; i < vg.getChildCount(); i++) {
+				View child = vg.getChildAt(i);
+				if (child instanceof TextView) {
+					TextView tv = (TextView) child;
+					tv.setTextColor(color);
+				}
+				setTextColor(child, color);
+			}
+		}
+	}
 
 	public static void setWallpaper(View view) {
 		setWallpaper(view, false);
@@ -384,6 +559,36 @@ public class Themes {
 
 	public static void setTitleStyle(View view) {
 		view.setBackgroundResource(mTitleStyle);
+		if (view instanceof TextView) {
+			TextView tv = (TextView) view;
+			tv.setTextColor(mTitleTextColor);
+			if (mCurrentTheme == THEME_FLAT) {
+				tv.setMinLines(1);
+				tv.setMaxLines(2);
+				int height = (int) (tv.getLineHeight() / 2);
+				LinearLayout.LayoutParams llp = new LinearLayout.LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT);
+				MarginLayoutParams mlp = (MarginLayoutParams) tv.getLayoutParams();
+				height += mlp.bottomMargin;
+				llp.setMargins(0, height, 0, height);
+				tv.setLayoutParams(llp);
+				setBoldFont(tv);
+			}
+		}
+	}
+
+
+	public static void setMargins(View view, int width, int height, float dipLeft, float dipTop, float dipRight, float dipBottom) {
+		View parent = (View) view.getParent();
+		parent.setBackgroundResource(mBackgroundColor);
+		Class c = view.getParent().getClass();
+    	float factor = mContext.getResources().getDisplayMetrics().density;
+		if (c == LinearLayout.class) {
+			parent.setPadding((int)(dipLeft * factor), (int)(dipTop * factor), (int)(dipRight * factor), (int)(dipBottom * factor));
+		} else if (c == FrameLayout.class) {
+			parent.setPadding((int)(dipLeft * factor), (int)(dipTop * factor), (int)(dipRight * factor), (int)(dipBottom * factor));
+		} else if (c == RelativeLayout.class) {
+			parent.setPadding((int)(dipLeft * factor), (int)(dipTop * factor), (int)(dipRight * factor), (int)(dipBottom * factor));
+		}
 	}
 
 
@@ -454,6 +659,10 @@ public class Themes {
 		setStyledDialogBackgrounds(main, buttonNumbers, false);
 	}
 	public static void setStyledDialogBackgrounds(View main, int buttonNumbers, boolean brightCustomPanelBackground) {
+		setFont(main);
+		if (mCurrentTheme == THEME_WHITE) {
+			setTextColor(main, mContext.getResources().getColor(R.color.black));
+		}
 		// order of styled dialog elements:
 		// 1. top panel (title)
 		// 2. content panel
@@ -466,11 +675,11 @@ public class Themes {
 		if (topPanel.getVisibility() == View.VISIBLE) {
 			try {
 				topPanel.setBackgroundResource(mPopupTopDark);
+				((View) main.findViewById(R.id.titleDivider)).setBackgroundResource(mDividerHorizontalBright);
 			} catch (OutOfMemoryError e) {
 				Log.e(AnkiDroidApp.TAG, "setStyledDialogBackgrounds - OutOfMemoryError occured: " + e);
 				topPanel.setBackgroundResource(R.color.black);
 			}
-			((View) main.findViewById(R.id.titleDivider)).setBackgroundResource(mDividerHorizontalBright);
 			visibility[0] = true;
 		}
 		View contentPanel = ((View) main.findViewById(R.id.contentPanel));
@@ -574,6 +783,8 @@ public class Themes {
 		case THEME_BLUE:
 			return context.getResources().getColor(R.color.reviewer_night_card_background);
 		case THEME_FLAT:
+			return context.getResources().getColor(R.color.reviewer_night_card_background);
+		case THEME_WHITE:
 			return context.getResources().getColor(R.color.reviewer_night_card_background);
 		default:
 			return Color.BLACK;
