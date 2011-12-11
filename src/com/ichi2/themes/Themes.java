@@ -56,6 +56,7 @@ public class Themes {
 	public final static int CALLER_DECKPICKER = 7;
 	public final static int CALLER_CARDBROWSER = 8;
 	public final static int CALLER_CARDEDITOR_INTENTDIALOG = 9;
+	public final static int CALLER_CARD_EDITOR = 10;
 
 	private static int mCurrentTheme = -1;
 	private static int mProgressbarsBackgroundColor;
@@ -239,6 +240,7 @@ public class Themes {
 				view.setBackgroundResource(mDeckpickerItemBorder);
 			}
 			break;
+
 		case CALLER_REVIEWER:
 		        ((View)view.findViewById(R.id.main_layout)).setBackgroundResource(mReviewerBackground);
 		        ((View)view.findViewById(R.id.flashcard_border)).setBackgroundResource(mFlashcardBorder);
@@ -269,6 +271,12 @@ public class Themes {
 
 		case CALLER_FEEDBACK:
 			((TextView)view).setTextColor(mProgressbarsFrameColor);
+			break;
+
+		case CALLER_CARD_EDITOR:
+			view.findViewById(R.id.CardEditorEditFieldsLayout).setBackgroundResource(mTextViewStyle);
+			int padding = (int) (4 * mContext.getResources().getDisplayMetrics().density);
+			view.findViewById(R.id.CardEditorScroll).setPadding(padding, padding, padding, padding);
 			break;
 
 		case CALLER_DOWNLOAD_DECK:

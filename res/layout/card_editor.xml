@@ -44,7 +44,6 @@
 			android:layout_height="wrap_content" 
 			android:id="@+id/CardEditorTagButton"
 			style="?android:attr/buttonStyleSmall"
-			android:padding="4dip"
 			android:text="@string/CardEditorTags"
 			android:layout_gravity="center"
         	android:layout_weight="2"

@@ -261,9 +261,9 @@ public class CardEditor extends Activity {
 		View mainView = getLayoutInflater().inflate(R.layout.card_editor, null);
 		setContentView(mainView);
 		Themes.setWallpaper(mainView);
+		Themes.setContentStyle(mainView, Themes.CALLER_CARD_EDITOR);
 
 		mFieldsLayoutContainer = (LinearLayout) findViewById(R.id.CardEditorEditFieldsLayout);
-		Themes.setTextViewStyle(mFieldsLayoutContainer);
 
 		setTitle(R.string.cardeditor_title);
 		mSave = (Button) findViewById(R.id.CardEditorSaveButton);
