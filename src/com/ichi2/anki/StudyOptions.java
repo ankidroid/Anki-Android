@@ -279,7 +279,7 @@ public class StudyOptions extends Activity implements IButtonListener {
     private ToggleButton mToggleCram;
     private ToggleButton mToggleLimit;
     private TextView mTextDeckName;
-    private LinearLayout mStatisticsField;
+    private LinearLayout mDeckInformation;
     private TextView mTextReviewsDue;
     private TextView mTextNewToday;
     private TextView mTextETA;
@@ -1023,9 +1023,7 @@ public class StudyOptions extends Activity implements IButtonListener {
         mTextDeckName = (TextView) mStudyOptionsView.findViewById(R.id.studyoptions_deck_name);
         Themes.setTitleStyle(mTextDeckName);
 
-        mStatisticsField = (LinearLayout) mStudyOptionsView.findViewById(R.id.studyoptions_statistic_field);
-
-        Themes.setTitleStyle(mStudyOptionsView.findViewById(R.id.studyoptions_bottom));
+        mDeckInformation = (LinearLayout) mStudyOptionsView.findViewById(R.id.studyoptions_deckinformation);
 
         mButtonStart = (Button) mStudyOptionsView.findViewById(R.id.studyoptions_start);
         mToggleCram = (ToggleButton) mStudyOptionsView.findViewById(R.id.studyoptions_cram);
@@ -1937,25 +1935,18 @@ public class StudyOptions extends Activity implements IButtonListener {
 
     private void hideDeckInformation(boolean fade) {
     	setTitle(getResources().getString(R.string.app_name));
-        mTextDeckName.setVisibility(View.INVISIBLE);
+        mDeckInformation.setVisibility(View.INVISIBLE);
         if (fade) {
-        	mTextDeckName.setAnimation(ViewAnimation.fade(ViewAnimation.FADE_OUT, 500, 0));        	
-        }
-        mStatisticsField.setVisibility(View.INVISIBLE);
-        if (fade) {
-        	mStatisticsField.setAnimation(ViewAnimation.fade(ViewAnimation.FADE_OUT, 500, 0));        	
+        	mDeckInformation.setAnimation(ViewAnimation.fade(ViewAnimation.FADE_OUT, 500, 0));        	
         }
     }
 
 
     private void showDeckInformation(boolean fade) {
         mTextDeckName.setVisibility(View.VISIBLE);
+        mDeckInformation.setVisibility(View.VISIBLE);
         if (fade) {
-            mTextDeckName.setAnimation(ViewAnimation.fade(ViewAnimation.FADE_IN, 500, 0));        	
-        }
-        mStatisticsField.setVisibility(View.VISIBLE);
-        if (fade) {
-        	mStatisticsField.setAnimation(ViewAnimation.fade(ViewAnimation.FADE_IN, 500, 0));
+        	mDeckInformation.setAnimation(ViewAnimation.fade(ViewAnimation.FADE_IN, 500, 0));
         }
     }
 

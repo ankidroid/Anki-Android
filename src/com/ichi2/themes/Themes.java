@@ -30,9 +30,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewGroup.MarginLayoutParams;
-import android.view.ViewParent;
 import android.webkit.WebView;
-import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.LinearLayout.LayoutParams;
@@ -154,12 +152,16 @@ public class Themes {
 			((View) view.findViewById(R.id.studyoptions_global_bar)).setBackgroundResource(mProgressbarsYoungColor);
 
 			if (mCurrentTheme == THEME_WHITE) {
-				((View) view.findViewById(R.id.studyoptions_deckinformation)).setBackgroundResource(mTextViewStyle);
+				((View) view.findViewById(R.id.studyoptions_deckinformation)).setBackgroundResource(R.drawable.white_textview);
 				((View) view.findViewById(R.id.studyoptions_statistic_field)).setBackgroundResource(R.color.transparent);
 				((View) view.findViewById(R.id.studyoptions_deckinformation)).setBackgroundResource(mTextViewStyle);
-		        setMargins(view.findViewById(R.id.studyoptions_mainframe), LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT, 4f, 0, 4f, 4f);				
+				((View) view.findViewById(R.id.studyoptions_bottom)).setBackgroundResource(mTextViewStyle);
+				setMargins(view.findViewById(R.id.studyoptions_bottom), LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT, 0, 0, 0, 0);
+				setMargins(view.findViewById(R.id.studyoptions_deck_name), LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT, 0, 12f, 0, 0);
+		        setMargins(view.findViewById(R.id.studyoptions_statistic_field), LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT, 0, 2f, 0, 12f);
+		        setMargins(view.findViewById(R.id.studyoptions_mainframe), LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT, 4f, 0, 4f, 4f);
 			} else {
-				((View) view.findViewById(R.id.studyoptions_statistic_field)).setBackgroundResource(mTextViewStyle);				
+				((View) view.findViewById(R.id.studyoptions_statistic_field)).setBackgroundResource(mTextViewStyle);
 			}
 			break;
 
@@ -178,18 +180,7 @@ public class Themes {
 				lv.setBackgroundResource(R.drawable.white_textview);
 				lv.setSelector(R.drawable.white_deckpicker_list_selector);
 				lv.setDivider(mContext.getResources().getDrawable(R.drawable.white_listdivider));
-//				setFont(view);
 		        setMargins(view, LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT, 4f, 4f, 4f, 4f);
-//		        for (int i = 0; i < lv.getChildCount(); i++) {
-//		        	ViewGroup child = (ViewGroup) lv.getChildAt(i);
-//		        	for (int j = 0; j < child.getChildCount(); j++) {
-//		        		View cc = child.getChildAt(j);
-//		        		if (cc.getId() == R.id.DeckPickerName) {
-//		        			setBoldFont((TextView) cc);
-//		        		}
-//		        	}
-//		        }
-				//lv.setDividerHeight(0);
 				break;
 			default:
 				break;
@@ -208,14 +199,17 @@ public class Themes {
 				lv2.setDividerHeight(0);
 				break;
 			case THEME_WHITE:
-				lv2.setSelector(R.drawable.blue_cardbrowser_list_selector);
-				lv2.setDividerHeight(0);
+				lv2.setBackgroundResource(R.drawable.white_textview);
+				lv2.setSelector(R.drawable.white_deckpicker_list_selector);
+				lv2.setDivider(mContext.getResources().getDrawable(R.drawable.white_listdivider));
+//				setFont(view);
+		        setMargins(view, LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT, 4f, 4f, 4f, 4f);
 				break;
 			default:
 				break;
 			}
 			break;
-
+			
 		case CALLER_CARDEDITOR_INTENTDIALOG:
 			ListView lv3 = (ListView) view;
 			switch (mCurrentTheme) {
@@ -260,8 +254,9 @@ public class Themes {
 			        ((View)view.findViewById(R.id.flashcard_frame)).setBackgroundResource(PrefSettings.getSharedPrefs(mContext).getBoolean("invertedColors", false) ? R.color.reviewer_night_card_background : R.color.white);
 				break;
 			case THEME_WHITE:
-			        ((View)view.findViewById(R.id.flashcard_frame)).setBackgroundResource(PrefSettings.getSharedPrefs(mContext).getBoolean("invertedColors", false) ? R.color.reviewer_night_card_background : R.color.white);
-			        setMargins(view.findViewById(R.id.main_layout), LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT, 4f, 0, 4f, 4f);
+		        ((View)view.findViewById(R.id.flashcard_frame)).setBackgroundResource(PrefSettings.getSharedPrefs(mContext).getBoolean("invertedColors", false) ? R.color.reviewer_night_card_background : R.color.white);
+		        
+		        setMargins(view.findViewById(R.id.main_layout), LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT, 4f, 0, 4f, 4f);
 			        
 			        //			        ((View)view.findViewById(R.id.nextTime1)).setBackgroundResource(R.drawable.white_next_time_separator);
 //			        ((View)view.findViewById(R.id.nextTime2)).setBackgroundResource(R.drawable.white_next_time_separator);
@@ -441,23 +436,23 @@ public class Themes {
 				mDeckpickerItemBorder = R.drawable.white_bg_deckpicker;
 			mTitleStyle = R.drawable.flat_title;
 			mTitleTextColor = mContext.getResources().getColor(R.color.flat_title_color);
-				mTextViewStyle = R.drawable.white_textview;
+				mTextViewStyle = R.drawable.white_textview_padding;
 				mWallpaper = R.color.white_background;
 				mBackgroundColor = R.color.white_background;
 			mToastBackground = R.drawable.blue_toast_frame;
 			mDialogBackgroundColor = R.color.background_dialog_blue;
 			mBackgroundDarkColor = R.color.background_dark_blue;
 			mReviewerProgressbar = R.color.reviewer_progressbar_session_blue;
-			mCardbrowserItemBorder = new int[] {R.drawable.blue_bg_cardbrowser, R.drawable.blue_bg_cardbrowser_marked, R.drawable.blue_bg_cardbrowser_suspended, R.drawable.blue_bg_cardbrowser_marked_suspended};
+				mCardbrowserItemBorder = new int[] {R.drawable.white_bg_cardbrowser, R.drawable.white_bg_cardbrowser_marked, R.drawable.white_bg_cardbrowser_suspended, R.drawable.white_bg_cardbrowser_marked_suspended};
 			mChartColors = new int[] {Color.BLACK, Color.WHITE};
-				mPopupTopDark = mPopupTopBright;
 				mPopupTopBright = R.drawable.white_popup_top_bright;
+				mPopupTopDark = mPopupTopBright;
 				mPopupTopMedium = R.drawable.white_popup_top_medium;
 				mPopupCenterDark = R.drawable.white_popup_center_bright;
 				mPopupCenterBright = R.drawable.white_popup_center_bright;
 				mPopupCenterMedium = R.drawable.white_popup_center_medium;
-				mPopupBottomDark = mPopupBottomBright;
 				mPopupBottomBright = R.drawable.white_popup_bottom_bright;
+				mPopupBottomDark = mPopupBottomBright;
 				mPopupBottomMedium = R.drawable.white_popup_bottom_medium;
 				mPopupFullBright = R.drawable.white_popup_full_bright;
 				mPopupFullMedium = R.drawable.white_popup_full_medium;
@@ -564,15 +559,20 @@ public class Themes {
 
 	public static void setMargins(View view, int width, int height, float dipLeft, float dipTop, float dipRight, float dipBottom) {
 		View parent = (View) view.getParent();
-		parent.setBackgroundResource(mBackgroundColor);
 		Class c = view.getParent().getClass();
     	float factor = mContext.getResources().getDisplayMetrics().density;
 		if (c == LinearLayout.class) {
-			parent.setPadding((int)(dipLeft * factor), (int)(dipTop * factor), (int)(dipRight * factor), (int)(dipBottom * factor));
+			LinearLayout.LayoutParams llp = new LinearLayout.LayoutParams(width, height);
+			llp.setMargins((int)(dipLeft * factor), (int)(dipTop * factor), (int)(dipRight * factor), (int)(dipBottom * factor));
+			view.setLayoutParams(llp);
 		} else if (c == FrameLayout.class) {
-			parent.setPadding((int)(dipLeft * factor), (int)(dipTop * factor), (int)(dipRight * factor), (int)(dipBottom * factor));
+			FrameLayout.LayoutParams llp = new FrameLayout.LayoutParams(width, height);
+			llp.setMargins((int)(dipLeft * factor), (int)(dipTop * factor), (int)(dipRight * factor), (int)(dipBottom * factor));
+			view.setLayoutParams(llp);
 		} else if (c == RelativeLayout.class) {
-			parent.setPadding((int)(dipLeft * factor), (int)(dipTop * factor), (int)(dipRight * factor), (int)(dipBottom * factor));
+			RelativeLayout.LayoutParams llp = new RelativeLayout.LayoutParams(width, height);
+			llp.setMargins((int)(dipLeft * factor), (int)(dipTop * factor), (int)(dipRight * factor), (int)(dipBottom * factor));
+			view.setLayoutParams(llp);
 		}
 	}
 

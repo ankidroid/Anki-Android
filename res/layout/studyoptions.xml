@@ -32,7 +32,9 @@
 				android:textSize="28sp" 
 				android:textStyle="bold"
 				android:ellipsize="end"
-				android:lines="2"
+				android:maxLines="2"
+				android:minLines="1"
+				android:background="#000000"
 				android:gravity="center" 
 				android:layout_width="fill_parent" 
 				android:layout_height="wrap_content"
@@ -46,7 +48,6 @@
 				android:layout_gravity="center"
 				android:layout_marginBottom="8dp"
 				android:layout_width="wrap_content"
-				android:visibility="invisible"
 				android:layout_height="wrap_content">
 				<LinearLayout
 					android:layout_width="fill_parent"
@@ -205,6 +206,7 @@
    	    	  		android:layout_height="fill_parent"
 					android:paddingLeft="15dip"	
 		         	android:layout_width="0dip"
+		         	android:textStyle="bold"
    		 	     	android:layout_weight="3"
 					android:text="@string/studyoptions_start"
 					android:drawableLeft="@drawable/ic_start"/>	
@@ -250,7 +252,6 @@
 					android:layout_weight="1" 
 					android:text="@string/card_browser"/> 
 			</LinearLayout>
-		</LinearLayout>
 		<LinearLayout
 			android:id="@+id/studyoptions_bottom"
 			android:gravity="center_vertical"
@@ -272,6 +273,7 @@
 				android:layout_weight="1"
 				android:layout_width="fill_parent"
 				android:layout_height="wrap_content"/>
+		</LinearLayout>
 		</LinearLayout>
 	</LinearLayout>
 </LinearLayout>

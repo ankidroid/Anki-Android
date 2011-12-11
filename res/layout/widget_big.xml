@@ -72,6 +72,7 @@
 				<TextView android:id="@+id/widget_big_decketa"
 				    android:layout_width="fill_parent"
 				    android:layout_height="fill_parent"
+				    android:visibility="invisible"
 				    android:textColor="@color/widget_big_font_color"
 				    android:lineSpacingMultiplier="1.2"
 				    android:gravity="center"/>

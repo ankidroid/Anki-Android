@@ -122,7 +122,7 @@
 
     <!-- White Theme -->
     <style name="White">
-        <item name="android:background">@color/reviewer_background</item>
+        <item name="android:background">@color/white_background</item>
     </style>
     <style name="White.Button" parent="@android:style/Widget.Button">
         <item name="android:background">@drawable/white_btn_default</item>
@@ -131,7 +131,7 @@
         <item name="android:background">@drawable/white_btn_small</item>
     </style>
     <style name="White.Button.Toggle" parent="@android:style/Widget.Button">
-        <item name="android:background">@drawable/blue_btn_toggle_bg</item>
+        <item name="android:background">@drawable/white_btn_toggle_bg</item>
     </style>
     <style name="White.CompoundButton">
     </style>
@@ -143,19 +143,19 @@
         <item name="android:button">?android:attr/listChoiceIndicatorSingle</item>
     </style>
     <style name="White.AlertDialog">
-        <item name="android:fullDark">@drawable/blue_popup_full_dark</item>
-        <item name="android:topDark">@drawable/blue_popup_top_dark</item>
-        <item name="android:centerDark">@drawable/blue_popup_center_dark</item>
-        <item name="android:bottomDark">@drawable/blue_popup_bottom_dark</item>
+        <item name="android:fullDark">@drawable/white_popup_full_bright</item>
+        <item name="android:topDark">@drawable/white_popup_top_bright</item>
+        <item name="android:centerDark">@drawable/white_popup_center_bright</item>
+        <item name="android:bottomDark">@drawable/white_popup_bottom_bright</item>
 
-        <item name="android:fullBright">@drawable/blue_popup_full_bright</item>
-        <item name="android:topBright">@drawable/blue_popup_top_bright</item>
-        <item name="android:centerBright">@drawable/blue_popup_center_bright</item>
-        <item name="android:bottomBright">@drawable/blue_popup_bottom_bright</item>
+        <item name="android:fullBright">@drawable/white_popup_full_bright</item>
+        <item name="android:topBright">@drawable/white_popup_top_bright</item>
+        <item name="android:centerBright">@drawable/white_popup_center_bright</item>
+        <item name="android:bottomBright">@drawable/white_popup_bottom_bright</item>
 
-        <item name="android:bottomMedium">@drawable/blue_popup_bottom_medium</item>
-        <item name="android:centerMedium">@drawable/blue_popup_center_medium</item>
-        <item name="android:buttonStyle">@style/Blue.Button</item>
+        <item name="android:bottomMedium">@drawable/white_popup_bottom_medium</item>
+        <item name="android:centerMedium">@drawable/white_popup_center_medium</item>
+        <item name="android:buttonStyle">@style/White.Button</item>
         
         <item name="android:textColor">#00FF00</item>
         <item name="android:typeface">monospace</item>

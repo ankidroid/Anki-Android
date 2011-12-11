@@ -10,7 +10,6 @@
 		android:layout_height="wrap_content">
         <LinearLayout
 	        android:id="@+id/CardEditorSelectModelLayout"
-			android:layout_marginBottom="2dip"
 	        android:visibility="gone"
 	        android:layout_width="fill_parent"
 	        android:layout_height="wrap_content">
@@ -34,9 +33,9 @@
 		<LinearLayout android:layout_width="fill_parent"
 			android:layout_height="wrap_content" 
 			android:id="@+id/CardEditorEditFieldsLayout"
-			android:orientation="vertical"></LinearLayout>
+			android:padding="4dip"
+			android:orientation="vertical"/>
  	    <LinearLayout
-		android:layout_marginTop="5dip"
   		android:layout_height="wrap_content" 
        	android:layout_width="fill_parent"
 	  	android:orientation="horizontal"
@@ -45,6 +44,7 @@
 			android:layout_height="wrap_content" 
 			android:id="@+id/CardEditorTagButton"
 			style="?android:attr/buttonStyleSmall"
+			android:padding="4dip"
 			android:text="@string/CardEditorTags"
 			android:layout_gravity="center"
         	android:layout_weight="2"
@@ -60,7 +60,6 @@
 				android:gravity="center"/>
 			        </LinearLayout>
 		<LinearLayout android:layout_width="fill_parent"
-			android:layout_marginTop="2dip"
 			android:layout_height="wrap_content" 
 			android:orientation="horizontal"
 			android:layout_gravity="right" 
