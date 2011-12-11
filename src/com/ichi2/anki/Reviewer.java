@@ -334,6 +334,7 @@ public class Reviewer extends Activity implements IButtonListener{
     private boolean mRefreshWebview = false;
     private String[] mCustomFontFiles;
     private String mCustomDefaultFontCss;
+    private String mCustomFontStyle;
 
 	/** 
 	 * Shake Detection
@@ -1585,7 +1586,9 @@ public class Reviewer extends Activity implements IButtonListener{
         if (mRefreshWebview && !mSimpleInterface) {
             mNextCard = createWebView();
             mNextCard.setVisibility(View.GONE);
-            mCardFrame.addView(mNextCard, 0);        	
+            mCardFrame.addView(mNextCard, 0);
+
+            mCustomFontStyle = getCustomFontsStyle() + getDefaultFontStyle();
         }
 
         // hunt for input issue 720, like android issue 3341
@@ -2410,8 +2413,7 @@ public class Reviewer extends Activity implements IButtonListener{
 		
         Log.i(AnkiDroidApp.TAG, "content card = \n" + content);
         StringBuilder style = new StringBuilder();
-        style.append(getCustomFontsStyle());
-        style.append(getDefaultFontStyle());
+        style.append(mCustomFontStyle);
         style.append(getDeckStyle(mCurrentCard.mDeck.getDeckPath()));
         Log.i(AnkiDroidApp.TAG, "::style::" + style);
         mCardContent = new SpannedString(mCardTemplate.replace("::content::", content).replace("::style::", style.toString()));
