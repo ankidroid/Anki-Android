@@ -19,10 +19,6 @@
 	android:layout_height="wrap_content" 
 	android:layout_width="fill_parent" 
 	android:orientation="vertical"
-	android:paddingTop="5dip"
-	android:paddingBottom="5dip"
-	android:paddingLeft="10dip"
-	android:paddingRight="10dip"
 	android:id="@+id/deckpicker_deck">
 
 	<LinearLayout 

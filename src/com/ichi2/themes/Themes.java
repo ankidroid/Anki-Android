@@ -242,7 +242,6 @@ public class Themes {
 			} else if (view.getId() == R.id.DeckPickerCompletionAll) {
 				view.setBackgroundResource(mProgressbarsDeckpickerYoungColor);
 			} else if (view.getId() == R.id.deckpicker_deck) {
-//				setFont(view);
 				view.setBackgroundResource(mDeckpickerItemBorder);
 			}
 			break;
@@ -271,20 +270,6 @@ public class Themes {
 				break;
 			}
 	        ((View)view.findViewById(R.id.session_progress)).setBackgroundResource(mReviewerProgressbar);
-//	        setRegularFont((TextView)view.findViewById(R.id.flip_card));
-//	        setRegularFont((TextView)view.findViewById(R.id.ease1));
-//	        setRegularFont((TextView)view.findViewById(R.id.ease2));
-//	        setRegularFont((TextView)view.findViewById(R.id.ease3));
-//	        setRegularFont((TextView)view.findViewById(R.id.ease4));
-//	        setRegularFont((TextView)view.findViewById(R.id.red_number));
-//	        setRegularFont((TextView)view.findViewById(R.id.black_number));
-//	        setRegularFont((TextView)view.findViewById(R.id.blue_number));
-//	        setRegularFont((TextView)view.findViewById(R.id.card_time));
-//	        setRegularFont((TextView)view.findViewById(R.id.choosen_answer));
-//		    setLightFont((TextView)view.findViewById(R.id.nextTime1));
-//		    setLightFont((TextView)view.findViewById(R.id.nextTime2));
-//		    setLightFont((TextView)view.findViewById(R.id.nextTime3));
-//		    setLightFont((TextView)view.findViewById(R.id.nextTime4));
 			break;
 
 		case CALLER_FEEDBACK:
@@ -453,7 +438,7 @@ public class Themes {
 			mProgressbarsDeckpickerYoungColor = R.color.deckpicker_progressbar_young_light;
 				mReviewerBackground = R.color.white_background;
 				mFlashcardBorder = R.drawable.white_bg_webview;
-				mDeckpickerItemBorder = R.color.white;
+				mDeckpickerItemBorder = R.drawable.white_bg_deckpicker;
 			mTitleStyle = R.drawable.flat_title;
 			mTitleTextColor = mContext.getResources().getColor(R.color.flat_title_color);
 				mTextViewStyle = R.drawable.white_textview;
@@ -465,18 +450,18 @@ public class Themes {
 			mReviewerProgressbar = R.color.reviewer_progressbar_session_blue;
 			mCardbrowserItemBorder = new int[] {R.drawable.blue_bg_cardbrowser, R.drawable.blue_bg_cardbrowser_marked, R.drawable.blue_bg_cardbrowser_suspended, R.drawable.blue_bg_cardbrowser_marked_suspended};
 			mChartColors = new int[] {Color.BLACK, Color.WHITE};
-			mPopupTopDark = R.drawable.white_popup_top_bright;
+				mPopupTopDark = mPopupTopBright;
 				mPopupTopBright = R.drawable.white_popup_top_bright;
 				mPopupTopMedium = R.drawable.white_popup_top_medium;
-			mPopupCenterDark = R.drawable.white_popup_center_bright;
+				mPopupCenterDark = R.drawable.white_popup_center_bright;
 				mPopupCenterBright = R.drawable.white_popup_center_bright;
 				mPopupCenterMedium = R.drawable.white_popup_center_medium;
-			mPopupBottomDark = R.drawable.white_popup_bottom_bright;
+				mPopupBottomDark = mPopupBottomBright;
 				mPopupBottomBright = R.drawable.white_popup_bottom_bright;
 				mPopupBottomMedium = R.drawable.white_popup_bottom_medium;
 				mPopupFullBright = R.drawable.white_popup_full_bright;
 				mPopupFullMedium = R.drawable.white_popup_full_medium;
-			mPopupFullDark = R.drawable.white_popup_full_dark;
+				mPopupFullDark = mPopupFullBright;
 				mDividerHorizontalBright = R.drawable.white_dialog_divider;
 				mLightFont = Typeface.createFromAsset(mContext.getAssets(), "fonts/OpenSans-Light.ttf");
 				mRegularFont = Typeface.createFromAsset(mContext.getAssets(), "fonts/OpenSans-Regular.ttf");

@@ -95,4 +95,6 @@
 <string name="help_faq">FAQ</string>
 <string name="help_tutorial">Tutorial deck</string>
 
+<string name="simple_interface_hint">Empty %s. Bear in mind that simple interface cannot show pictures/sounds etc.</string>
+
 </resources>

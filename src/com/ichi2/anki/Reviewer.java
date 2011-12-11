@@ -41,6 +41,7 @@ import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
@@ -53,11 +54,18 @@ import android.os.Message;
 import android.os.SystemClock;
 import android.os.Vibrator;
 import android.text.ClipboardManager;
+import android.text.Html;
 import android.text.SpannableString;
+import android.text.SpannableStringBuilder;
+import android.text.Spanned;
+import android.text.SpannedString;
+import android.text.style.ForegroundColorSpan;
+import android.text.style.StyleSpan;
 import android.text.style.UnderlineSpan;
 import android.util.Log;
 import android.view.GestureDetector;
 import android.view.GestureDetector.SimpleOnGestureListener;
+import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -244,6 +252,7 @@ public class Reviewer extends Activity implements IButtonListener{
     private boolean mShowProgressBars;
     private boolean mPrefUseTimer;
     private boolean mShowAnimations = false;
+    private boolean mSimpleInterface = false;
     private String mLocale;
 
     private boolean mIsSelecting = false;
@@ -266,6 +275,7 @@ public class Reviewer extends Activity implements IButtonListener{
     private View mLookUpIcon;
     private FrameLayout mCardContainer;
     private WebView mCard;
+    private TextView mSimpleCard;
     private WebView mNextCard;
     private LinearLayout mCardFrame;
     private FrameLayout mTouchLayer;
@@ -372,7 +382,7 @@ public class Reviewer extends Activity implements IButtonListener{
  	private static final int GESTURE_CLEAR_WHITEBOARD = 15;
  	private static final int GESTURE_EXIT = 16;
 
- 	private String mCardContent;
+ 	private Spanned mCardContent;
  	private String mBaseUrl;
 
  	private static final int ANIMATION_NO_ANIMATION = 0;
@@ -548,7 +558,7 @@ public class Reviewer extends Activity implements IButtonListener{
             	}
             }
             try {
-                if (event != null) {
+                if (event != null && !mSimpleInterface) {
     	            mCard.dispatchTouchEvent(event);
                 }            	
             } catch (NullPointerException e) {
@@ -1040,33 +1050,35 @@ public class Reviewer extends Activity implements IButtonListener{
         	return true;
         }
          /** Enhancement 722: Hardware buttons for scrolling, I.Z. */
-        if (keyCode == 92)  {
-        	mCard.pageUp(false);
-        	if (mDoubleScrolling)  {
-        		mCard.pageUp(false);
-        	}
-        	return true;
-        }
-        if (keyCode == 93)  {
-        	mCard.pageDown(false);
-        	if (mDoubleScrolling)  {
-        		mCard.pageDown(false);
-        	}
-        	return true;
-        }
-        if (mScrollingButtons && keyCode == 94)  {
-        	mCard.pageUp(false);
-        	if (mDoubleScrolling)  {
-        		mCard.pageUp(false);
-        	}
-        	return true;
-        }
-        if (mScrollingButtons && keyCode == 95)  {
-        	mCard.pageDown(false);
-        	if (mDoubleScrolling)  {
-        		mCard.pageDown(false);
-        	}
-        	return true;
+        if (!mSimpleInterface) {
+            if (keyCode == 92)  {
+            	mCard.pageUp(false);
+            	if (mDoubleScrolling)  {
+            		mCard.pageUp(false);
+            	}
+            	return true;
+            }
+            if (keyCode == 93)  {
+            	mCard.pageDown(false);
+            	if (mDoubleScrolling)  {
+            		mCard.pageDown(false);
+            	}
+            	return true;
+            }
+            if (mScrollingButtons && keyCode == 94)  {
+            	mCard.pageUp(false);
+            	if (mDoubleScrolling)  {
+            		mCard.pageUp(false);
+            	}
+            	return true;
+            }
+            if (mScrollingButtons && keyCode == 95)  {
+            	mCard.pageDown(false);
+            	if (mDoubleScrolling)  {
+            		mCard.pageDown(false);
+            	}
+            	return true;
+            }        	
         }
 
         return super.onKeyDown(keyCode, event);
@@ -1556,20 +1568,28 @@ public class Reviewer extends Activity implements IButtonListener{
             mClipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
         }
         mCardFrame.removeAllViews();
-        mCard = createWebView();
-        mCardFrame.addView(mCard);
+        if (mSimpleInterface) {
+        	mSimpleCard = new TextView(this);
+        	Themes.setRegularFont(mSimpleCard);
+        	mSimpleCard.setTextSize(mSimpleCard.getTextSize() * mDisplayFontSize / 100);
+        	mSimpleCard.setGravity(Gravity.CENTER);
+        	mCardFrame.addView(mSimpleCard);
+        } else {
+            mCard = createWebView();
+            mCardFrame.addView(mCard);
+        }
         if (!mChangeBorderStyle) {
             ((View)findViewById(R.id.flashcard_border)).setVisibility(View.VISIBLE);        	
         }
         
-        if (mRefreshWebview) {
+        if (mRefreshWebview && !mSimpleInterface) {
             mNextCard = createWebView();
             mNextCard.setVisibility(View.GONE);
             mCardFrame.addView(mNextCard, 0);        	
         }
 
         // hunt for input issue 720, like android issue 3341
-        if (Integer.parseInt(android.os.Build.VERSION.SDK) < 8) {
+        if (Integer.parseInt(android.os.Build.VERSION.SDK) < 8 && !mSimpleInterface) {
             mCard.setFocusableInTouchMode(true);
         }
         
@@ -1721,7 +1741,10 @@ public class Reviewer extends Activity implements IButtonListener{
     private void invertColors(boolean invert) {
         Resources res = getResources();        
         int fgColor = invert ? res.getColor(R.color.foreground_color_inv) : res.getColor(R.color.black);
-        mCard.setBackgroundColor(mCurrentBackgroundColor);
+
+        if (!mSimpleInterface) {
+            mCard.setBackgroundColor(mCurrentBackgroundColor);        	
+        }
 
         if (mChangeBorderStyle) {
             mMainLayout.setBackgroundColor(mCurrentBackgroundColor);
@@ -2039,6 +2062,8 @@ public class Reviewer extends Activity implements IButtonListener{
         	this.getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         }
 
+        mSimpleInterface = preferences.getBoolean("simpleInterface", false);
+
         return preferences;
     }
 
@@ -2163,15 +2188,6 @@ public class Reviewer extends Activity implements IButtonListener{
         	mEase4.setHeight(mButtonHeight);        	
         }
 
-        // If the user wants to write the answer
-        if (typeAnswer()) {
-            mAnswerField.setVisibility(View.VISIBLE);
-
-            // Show soft keyboard
-            InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-            inputMethodManager.showSoftInput(mAnswerField, InputMethodManager.SHOW_FORCED);
-        }
-
         String question = getQuestion();
 
         if(mPrefFixArabic) {
@@ -2179,14 +2195,34 @@ public class Reviewer extends Activity implements IButtonListener{
         }
         Log.i(AnkiDroidApp.TAG, "question: '" + question + "'");
 
-        String displayString = enrichWithQADiv(question, false);
-        // Show an horizontal line as separation when question is shown in answer
-        if (isQuestionDisplayed()) {
-            displayString = displayString + "<hr/>";
-        }
+        String displayString = "";
 
-        if (mSpeakText && Integer.valueOf(android.os.Build.VERSION.SDK) > 3) {
-            ReadText.setLanguageInformation(Model.getModel(DeckManager.getMainDeck(), mCurrentCard.getCardModelId(), false).getId(), mCurrentCard.getCardModelId());          
+        if (mSimpleInterface) {
+        	mCardContent = Html.fromHtml(question);
+        	if (mCardContent.length() == 0) {
+        		SpannableString hint = new SpannableString(getResources().getString(R.string.simple_interface_hint, R.string.card_details_question));
+        		hint.setSpan(new StyleSpan(Typeface.ITALIC), 0, mCardContent.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        		mCardContent = hint;
+        	}
+        } else {
+            // If the user wants to write the answer
+            if (typeAnswer()) {
+                mAnswerField.setVisibility(View.VISIBLE);
+
+                // Show soft keyboard
+                InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                inputMethodManager.showSoftInput(mAnswerField, InputMethodManager.SHOW_FORCED);
+            }
+
+            displayString = enrichWithQADiv(question, false);
+            // Show an horizontal line as separation when question is shown in answer
+            if (isQuestionDisplayed()) {
+                displayString = displayString + "<hr/>";
+            }
+
+            if (mSpeakText && Integer.valueOf(android.os.Build.VERSION.SDK) > 3) {
+                ReadText.setLanguageInformation(Model.getModel(DeckManager.getMainDeck(), mCurrentCard.getCardModelId(), false).getId(), mCurrentCard.getCardModelId());          
+            }
         }
 
         updateCard(displayString);
@@ -2210,59 +2246,74 @@ public class Reviewer extends Activity implements IButtonListener{
 
         sDisplayAnswer = true;
         setFlipCardAnimation();
-        
-        Sound.stopSounds();
+
+        String answer = getAnswer(), question = getQuestion();
 
         String displayString = "";
         
-        String answer = getAnswer(), question = getQuestion();
-        if(mPrefFixArabic) {
-        	// reshape
-        	answer = ArabicUtilities.reshapeSentence(answer, true);
-        	question = ArabicUtilities.reshapeSentence(question, true);
-        }
+        if (mSimpleInterface) {
+        	Spanned ans = Html.fromHtml(answer);
+        	if (ans.length() == 0) {
+        		SpannableString hint = new SpannableString(getResources().getString(R.string.simple_interface_hint, R.string.card_details_answer));
+        		hint.setSpan(new StyleSpan(Typeface.ITALIC), 0, hint.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        		ans = hint;
+        	}
+        	SpannableStringBuilder sb = new SpannableStringBuilder();
+        	sb.append(mCardContent);
+        	sb.append("\n─────\n");
+        	sb.append(ans);
+        	mCardContent = sb;
+        } else {
+            Sound.stopSounds();
 
-        // If the user wrote an answer
-        if (typeAnswer()) {
-            mAnswerField.setVisibility(View.GONE);
-            if (mCurrentCard != null) {
-                // Obtain the user answer and the correct answer
-                String userAnswer = mAnswerField.getText().toString();         
-                Matcher matcher = sSpanPattern.matcher(Utils.stripHTMLMedia(ArabicUtilities.reshapeSentence(comparedFieldAnswer, true)));
-                String correctAnswer = matcher.replaceAll("");
-                matcher = sBrPattern.matcher(correctAnswer);
-                correctAnswer = matcher.replaceAll("\n");
-                matcher = Sound.sSoundPattern.matcher(correctAnswer);
-                correctAnswer = matcher.replaceAll("");
-                matcher = Image.sImagePattern.matcher(correctAnswer);
-                correctAnswer = matcher.replaceAll("");
-                Log.i(AnkiDroidApp.TAG, "correct answer = " + correctAnswer);
-
-                // Obtain the diff and send it to updateCard
-                DiffEngine diff = new DiffEngine();
-
-                StringBuffer span = new StringBuffer();
-                span.append("<span class=\"").append(comparedFieldClass).append("\">");
-                span.append(diff.diff_prettyHtml(diff.diff_main(userAnswer, correctAnswer)));
-                span.append("</span>");
-                span.append("<br/>").append(answer);
-                displayString = enrichWithQADiv(span.toString(), true);
+            if(mPrefFixArabic) {
+            	// reshape
+            	answer = ArabicUtilities.reshapeSentence(answer, true);
+            	question = ArabicUtilities.reshapeSentence(question, true);
             }
 
-            // Hide soft keyboard
-            InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-            inputMethodManager.hideSoftInputFromWindow(mAnswerField.getWindowToken(), 0);
-        } else {
-            displayString = enrichWithQADiv(answer, true);
-        }
+            // If the user wrote an answer
+            if (typeAnswer()) {
+                mAnswerField.setVisibility(View.GONE);
+                if (mCurrentCard != null) {
+                    // Obtain the user answer and the correct answer
+                    String userAnswer = mAnswerField.getText().toString();         
+                    Matcher matcher = sSpanPattern.matcher(Utils.stripHTMLMedia(ArabicUtilities.reshapeSentence(comparedFieldAnswer, true)));
+                    String correctAnswer = matcher.replaceAll("");
+                    matcher = sBrPattern.matcher(correctAnswer);
+                    correctAnswer = matcher.replaceAll("\n");
+                    matcher = Sound.sSoundPattern.matcher(correctAnswer);
+                    correctAnswer = matcher.replaceAll("");
+                    matcher = Image.sImagePattern.matcher(correctAnswer);
+                    correctAnswer = matcher.replaceAll("");
+                    Log.i(AnkiDroidApp.TAG, "correct answer = " + correctAnswer);
 
-        // Depending on preferences do or do not show the question
-        if (isQuestionDisplayed()) {
-            StringBuffer sb = new StringBuffer();
-            sb.append(enrichWithQADiv(question, false));
-            sb.append("<a name=\"question\"></a><hr/>");
-            sb.append(displayString);
-            displayString = sb.toString();
+                    // Obtain the diff and send it to updateCard
+                    DiffEngine diff = new DiffEngine();
+
+                    StringBuffer span = new StringBuffer();
+                    span.append("<span class=\"").append(comparedFieldClass).append("\">");
+                    span.append(diff.diff_prettyHtml(diff.diff_main(userAnswer, correctAnswer)));
+                    span.append("</span>");
+                    span.append("<br/>").append(answer);
+                    displayString = enrichWithQADiv(span.toString(), true);
+                }
+
+                // Hide soft keyboard
+                InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                inputMethodManager.hideSoftInputFromWindow(mAnswerField.getWindowToken(), 0);
+            } else {
+                displayString = enrichWithQADiv(answer, true);
+            }
+
+            // Depending on preferences do or do not show the question
+            if (isQuestionDisplayed()) {
+                StringBuffer sb = new StringBuffer();
+                sb.append(enrichWithQADiv(question, false));
+                sb.append("<a name=\"question\"></a><hr/>");
+                sb.append(displayString);
+                displayString = sb.toString();
+            }
         }
 
         mIsSelecting = false;
@@ -2279,6 +2330,11 @@ public class Reviewer extends Activity implements IButtonListener{
 
     private void updateCard(String content) {
         Log.i(AnkiDroidApp.TAG, "updateCard");
+
+        if (mSimpleInterface) {
+        	fillFlashcard(mShowAnimations);
+        	return;
+        }
 
         mBaseUrl = "";
         Boolean isJapaneseModel = false;
@@ -2358,8 +2414,7 @@ public class Reviewer extends Activity implements IButtonListener{
         style.append(getDefaultFontStyle());
         style.append(getDeckStyle(mCurrentCard.mDeck.getDeckPath()));
         Log.i(AnkiDroidApp.TAG, "::style::" + style);
-        mCardContent =
-            mCardTemplate.replace("::content::", content).replace("::style::", style.toString());
+        mCardContent = new SpannedString(mCardTemplate.replace("::content::", content).replace("::style::", style.toString()));
         // Log.i(AnkiDroidApp.TAG, "card html = \n" + card);
         Log.i(AnkiDroidApp.TAG, "base url = " + mBaseUrl );
 
@@ -2401,9 +2456,11 @@ public class Reviewer extends Activity implements IButtonListener{
     public void fillFlashcard(boolean flip) {
     	if (!flip) {
 	        Log.i(AnkiDroidApp.TAG, "base url = " + mBaseUrl);
-	        if (mRefreshWebview) {
+        	if (mSimpleInterface) {
+        		mSimpleCard.setText(mCardContent);
+        	} else if (mRefreshWebview) {
 	            mNextCard.setBackgroundColor(mCurrentBackgroundColor);
-	            mNextCard.loadDataWithBaseURL(mBaseUrl, mCardContent, "text/html", "utf-8", null);
+	            mNextCard.loadDataWithBaseURL(mBaseUrl, mCardContent.toString(), "text/html", "utf-8", null);
 	            mNextCard.setVisibility(View.VISIBLE);
 	            mCardFrame.removeView(mCard);
 	            mCard.destroy();
@@ -2416,7 +2473,7 @@ public class Reviewer extends Activity implements IButtonListener{
 	            	mCard.setFocusableInTouchMode(true);
 	            }
 	        } else {
-	            mCard.loadDataWithBaseURL(mBaseUrl, mCardContent, "text/html", "utf-8", null);
+	            mCard.loadDataWithBaseURL(mBaseUrl, mCardContent.toString(), "text/html", "utf-8", null);
 	            mCard.setBackgroundColor(mCurrentBackgroundColor);
 	        }
 	        if (mChangeBorderStyle) {
@@ -2458,14 +2515,14 @@ public class Reviewer extends Activity implements IButtonListener{
     		boolean directionToLeft = true;
     		switch (mNextAnimation) {
     		case ANIMATION_TURN:
-    			rotation = new Animation3D(mCard.getWidth(), mCard.getHeight(), 9, Animation3D.ANIMATION_TURN, true, true, this);
+    			rotation = new Animation3D(mCardContainer.getWidth(), mCardContainer.getHeight(), 9, Animation3D.ANIMATION_TURN, true, true, this);
     			rotation.setDuration(mAnimationDurationTurn);
     			rotation.setInterpolator(new AccelerateDecelerateInterpolator());
     			break;
     		case ANIMATION_NEXT_CARD_FROM_LEFT:
     			directionToLeft = false;
     		case ANIMATION_NEXT_CARD_FROM_RIGHT:
-    			rotation = new Animation3D(mCard.getWidth(), mCard.getHeight(), 0, Animation3D.ANIMATION_EXCHANGE_CARD, directionToLeft, true, this);
+    			rotation = new Animation3D(mCardContainer.getWidth(), mCardContainer.getHeight(), 0, Animation3D.ANIMATION_EXCHANGE_CARD, directionToLeft, true, this);
     			rotation.setDuration(mAnimationDurationMove);
     			rotation.setInterpolator(new AccelerateDecelerateInterpolator());
     			break;
@@ -2473,7 +2530,7 @@ public class Reviewer extends Activity implements IButtonListener{
     			directionToLeft = false;
     		case ANIMATION_SLIDE_OUT_TO_LEFT:
         		fillFlashcard(false);
-    			rotation = new Animation3D(mCard.getWidth(), mCard.getHeight(), 0, Animation3D.ANIMATION_SLIDE_OUT_CARD, directionToLeft, true, this);
+    			rotation = new Animation3D(mCardContainer.getWidth(), mCardContainer.getHeight(), 0, Animation3D.ANIMATION_SLIDE_OUT_CARD, directionToLeft, true, this);
     			rotation.setDuration(mAnimationDurationMove);
     			rotation.setInterpolator(new AccelerateInterpolator());
     	    	switchTopBarVisibility(View.INVISIBLE);
@@ -2482,7 +2539,7 @@ public class Reviewer extends Activity implements IButtonListener{
     			directionToLeft = false;
     		case ANIMATION_SLIDE_IN_FROM_RIGHT:
         		fillFlashcard(false);
-    			rotation = new Animation3D(mCard.getWidth(), mCard.getHeight(), 0, Animation3D.ANIMATION_SLIDE_IN_CARD, directionToLeft, true, this);
+    			rotation = new Animation3D(mCardContainer.getWidth(), mCardContainer.getHeight(), 0, Animation3D.ANIMATION_SLIDE_IN_CARD, directionToLeft, true, this);
     			rotation.setDuration(mAnimationDurationMove);
     			rotation.setInterpolator(new DecelerateInterpolator());
     	    	switchTopBarVisibility(View.VISIBLE);
@@ -3261,12 +3318,14 @@ public class Reviewer extends Activity implements IButtonListener{
     	
         @Override
         public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
-        	if (mCard.getScrollY() != 0) {
-        		mIsYScrolling = true;        		
+        	if (!mSimpleInterface) {
+            	if (mCard.getScrollY() != 0) {
+            		mIsYScrolling = true;        		
+            	}
+            	if (mCard.getScrollX() != 0) {
+            		mIsXScrolling = true;
+            	}        		
         	}
-        	if (mCard.getScrollX() != 0) {
-        		mIsXScrolling = true;
-        	}  
             return super.onScroll(e1, e2, distanceX, distanceY);
         }
 
