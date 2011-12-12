@@ -755,7 +755,7 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
         for (String file : missingPaths.keySet()) {
             
             try {
-                android.net.Uri uri = android.net.Uri.parse(urlbase + Uri.encode(file));
+                android.net.Uri uri = android.net.Uri.parse(Uri.encode(urlbase, ":/@%") + Uri.encode(file));
                 url = new URI(uri.toString()).toURL();
                 connection = (HttpURLConnection) url.openConnection();
                 connection.connect();
