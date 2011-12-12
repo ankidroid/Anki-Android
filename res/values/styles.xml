@@ -159,19 +159,19 @@
         
         <item name="android:textColor">#00FF00</item>
         <item name="android:typeface">monospace</item>
-        <item name="android:textSize">10sp</item>
+        <item name="android:textSize">30sp</item>
     </style>
     <style name="White.Edittext" parent="@android:style/Widget.EditText">
         <item name="android:background">@drawable/blue_edit_text</item>
     </style>
     <style name="White.Widget.ListView" parent="@android:Widget.ListView">
-        <item name="android:listSelector">@drawable/blue_list_selector_background</item>
+        <item name="android:listSelector">@drawable/white_list_selector_background</item>
     </style>
     <style name="White.Widget.ListView.DropDown" parent="@android:Widget.ListView.DropDown">
-        <item name="android:listSelector">@drawable/blue_list_selector_background</item>
+        <item name="android:listSelector">@drawable/white_list_selector_background</item>
     </style>
     <style name="White.Widget.ListView.Menu" parent="@android:Widget.ListView.Menu">
-        <item name="android:listSelector">@drawable/blue_list_selector_background</item>
+        <item name="android:listSelector">@drawable/white_list_selector_background</item>
     </style>
     <style name="White.Widget.Spinner" parent="@android:style/Widget.Spinner">
         <item name="android:background">@drawable/blue_btn_dropdown</item>

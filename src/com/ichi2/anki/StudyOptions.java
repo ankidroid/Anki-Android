@@ -16,7 +16,6 @@ package com.ichi2.anki;
 
 import android.app.Activity;
 import android.app.Dialog;
-import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -68,6 +67,7 @@ import com.ichi2.compat.Compat;
 import com.ichi2.compat.CompatV11;
 import com.ichi2.compat.CompatV3;
 import com.ichi2.themes.StyledDialog;
+import com.ichi2.themes.StyledProgressDialog;
 import com.ichi2.themes.Themes;
 import com.ichi2.widget.AnkiDroidWidgetBig;
 import com.ichi2.widget.WidgetStatus;
@@ -101,13 +101,14 @@ public class StudyOptions extends Activity implements IButtonListener {
     /**
 * Menus
 */
+    private static final int MENU_HELP = 0;
     private static final int MENU_OPEN = 1;
-    private static final int MENU_SYNC = 3;
-    private static final int MENU_PREFERENCES = 5;
-    private static final int MENU_ADD_FACT = 6;
-    private static final int MENU_MORE_OPTIONS = 7;
-    private static final int MENU_ROTATE = 8;
-    private static final int MENU_ZEEMOTE = 9;
+    private static final int MENU_SYNC = 2;
+    private static final int MENU_PREFERENCES = 3;
+    private static final int MENU_ADD_FACT = 4;
+    private static final int MENU_MORE_OPTIONS = 5;
+    private static final int MENU_ROTATE = 6;
+    private static final int MENU_ZEEMOTE = 7;
 
     /**
 * Available options performed by other activities
@@ -228,7 +229,7 @@ public class StudyOptions extends Activity implements IButtonListener {
     /**
 * Alerts to inform the user about different situations
 */
-    private ProgressDialog mProgressDialog;
+    private StyledProgressDialog mProgressDialog;
 
 	/*
 	* Limit session dialog
@@ -284,7 +285,6 @@ public class StudyOptions extends Activity implements IButtonListener {
     private TextView mTextNewToday;
     private TextView mTextETA;
     private TextView mTextNewTotal;
-    private TextView mHelp;
     private CheckBox mNightMode;
     private CheckBox mSwapQA;
     private Button mCardBrowser;
@@ -461,9 +461,6 @@ public class StudyOptions extends Activity implements IButtonListener {
                     	}
                 	}
                 	return;
-                case R.id.studyoptions_help:
-                	showDialog(DIALOG_SELECT_HELP);
-                    return;
                 case R.id.studyoptions_limit_tag_tv2:
                     if (mLimitTagNewActiveCheckBox.isChecked()) {
                         mSelectedLimitTagText = LIMIT_NEW_ACTIVE;
@@ -1084,9 +1081,6 @@ public class StudyOptions extends Activity implements IButtonListener {
             }
         });
         
-        mHelp = (TextView) mStudyOptionsView.findViewById(R.id.studyoptions_help);
-        mHelp.setOnClickListener(mButtonClickListener);
-
         mButtonStart.setOnClickListener(mButtonClickListener);
         mToggleCram.setOnClickListener(mButtonClickListener);
         mToggleLimit.setOnClickListener(mButtonClickListener);
@@ -2074,7 +2068,8 @@ public class StudyOptions extends Activity implements IButtonListener {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        Utils.addMenuItemInActionBar(menu, Menu.NONE, MENU_OPEN, Menu.NONE, R.string.menu_open_deck,
+    	Utils.addMenuItemInActionBar(menu, Menu.NONE, MENU_HELP, Menu.NONE, R.string.help_title, 0);
+    	Utils.addMenuItemInActionBar(menu, Menu.NONE, MENU_OPEN, Menu.NONE, R.string.menu_open_deck,
                 R.drawable.ic_menu_manage);
         Utils.addMenuItemInActionBar(menu, Menu.NONE, MENU_SYNC, Menu.NONE, R.string.menu_sync,
                 R.drawable.ic_menu_refresh);        	
@@ -2107,6 +2102,10 @@ public class StudyOptions extends Activity implements IButtonListener {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
+        	case MENU_HELP:
+        		showDialog(DIALOG_SELECT_HELP);
+        		return true;
+ 
             case MENU_OPEN:
                 openDeckPicker();
                 return true;
@@ -2594,7 +2593,7 @@ public class StudyOptions extends Activity implements IButtonListener {
 
     	@Override
         public void onPreExecute() {
-            mProgressDialog = ProgressDialog.show(StudyOptions.this, "", getResources()
+            mProgressDialog = StyledProgressDialog.show(StudyOptions.this, "", getResources()
                     .getString(R.string.backup_repair_deck_progress), true);
         }
 
@@ -2626,7 +2625,7 @@ public class StudyOptions extends Activity implements IButtonListener {
 
     	@Override
         public void onPreExecute() {
-            mProgressDialog = ProgressDialog.show(StudyOptions.this, "", getResources()
+            mProgressDialog = StyledProgressDialog.show(StudyOptions.this, "", getResources()
                     .getString(R.string.backup_restore_deck), true);
         }
 
@@ -2668,7 +2667,7 @@ public class StudyOptions extends Activity implements IButtonListener {
         	if (mProgressDialog != null && mProgressDialog.isShowing()) {
         		mProgressDialog.setMessage(getResources().getString(R.string.loading_deck));
         	} else {
-                mProgressDialog = ProgressDialog.show(StudyOptions.this, "", getResources()
+                mProgressDialog = StyledProgressDialog.show(StudyOptions.this, "", getResources()
                         .getString(R.string.loading_deck), true, true, new OnCancelListener() {
 
     						@Override
@@ -2837,7 +2836,7 @@ public class StudyOptions extends Activity implements IButtonListener {
                 values[1] = res.getString(R.string.sync_downloading_media, done, total);
             }
             if (mProgressDialog == null || !mProgressDialog.isShowing()) {
-                mProgressDialog = ProgressDialog.show(StudyOptions.this, (String) values[0], (String) values[1]);
+                mProgressDialog = StyledProgressDialog.show(StudyOptions.this, (String) values[0], (String) values[1]);
                 // Forbid orientation changes as long as progress dialog is shown
                 setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_NOSENSOR);
             } else {
@@ -2875,7 +2874,7 @@ public class StudyOptions extends Activity implements IButtonListener {
 
 		@Override
 		public void onPreExecute() {
-            mProgressDialog = ProgressDialog.show(StudyOptions.this, "", getResources()
+            mProgressDialog = StyledProgressDialog.show(StudyOptions.this, "", getResources()
                     .getString(R.string.calculating_statistics), true);
 		}
 

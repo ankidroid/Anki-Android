@@ -18,7 +18,6 @@ package com.ichi2.anki;
 
 import android.app.Activity;
 import android.app.Dialog;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnCancelListener;
@@ -50,6 +49,7 @@ import android.widget.TextView;
 
 import com.ichi2.anim.ActivityTransitionAnimation;
 import com.ichi2.themes.StyledDialog;
+import com.ichi2.themes.StyledProgressDialog;
 import com.ichi2.themes.Themes;
 import com.tomgibara.android.veecheck.util.PrefSettings;
 
@@ -71,7 +71,7 @@ public class CardBrowser extends Activity {
 	private SimpleAdapter mCardsAdapter;
 	private EditText mSearchEditText;
 
-	private ProgressDialog mProgressDialog;
+	private StyledProgressDialog mProgressDialog;
 	private boolean mUndoRedoDialogShowing = false;
 	private Card mSelectedCard;
 	private Card mUndoRedoCard;
@@ -772,7 +772,7 @@ public class CardBrowser extends Activity {
 		@Override
 		public void onPreExecute() {
 			if (!mUndoRedoDialogShowing) {
-				mProgressDialog = ProgressDialog.show(CardBrowser.this, "",
+				mProgressDialog = StyledProgressDialog.show(CardBrowser.this, "",
 						getResources().getString(R.string.card_browser_load),
 						true, true, new OnCancelListener() {
 
@@ -856,7 +856,7 @@ public class CardBrowser extends Activity {
 		@Override
 		public void onPreExecute() {
 			Resources res = getResources();
-			mProgressDialog = ProgressDialog.show(CardBrowser.this, "", res
+			mProgressDialog = StyledProgressDialog.show(CardBrowser.this, "", res
 					.getString(R.string.saving_changes), true);
 		}
 
@@ -877,7 +877,7 @@ public class CardBrowser extends Activity {
 		@Override
 		public void onPreExecute() {
 			Resources res = getResources();
-			mProgressDialog = ProgressDialog.show(CardBrowser.this, "", res
+			mProgressDialog = StyledProgressDialog.show(CardBrowser.this, "", res
 					.getString(R.string.saving_changes), true);
 		}
 
@@ -896,7 +896,7 @@ public class CardBrowser extends Activity {
 		@Override
 		public void onPreExecute() {
 			Resources res = getResources();
-			mProgressDialog = ProgressDialog.show(CardBrowser.this, "", res
+			mProgressDialog = StyledProgressDialog.show(CardBrowser.this, "", res
 					.getString(R.string.saving_changes), true);
 		}
 
@@ -920,7 +920,7 @@ public class CardBrowser extends Activity {
 			if (mProgressDialog != null && mProgressDialog.isShowing()) {
 				mProgressDialog.setMessage(res.getString(R.string.card_browser_sorting_cards));
 			} else {
-				mProgressDialog = ProgressDialog.show(CardBrowser.this, "", res
+				mProgressDialog = StyledProgressDialog.show(CardBrowser.this, "", res
 						.getString(R.string.card_browser_sorting_cards), true);				
 			}
 		}
@@ -943,7 +943,7 @@ public class CardBrowser extends Activity {
 		@Override
 		public void onPreExecute() {
 			Resources res = getResources();
-			mProgressDialog = ProgressDialog.show(CardBrowser.this, "", res
+			mProgressDialog = StyledProgressDialog.show(CardBrowser.this, "", res
 					.getString(R.string.saving_changes), true);
 		}
 
@@ -1006,7 +1006,7 @@ public class CardBrowser extends Activity {
 	private DeckTask.TaskListener mUpdateCardHandler = new DeckTask.TaskListener() {
 		@Override
 		public void onPreExecute() {
-			mProgressDialog = ProgressDialog.show(CardBrowser.this, "",
+			mProgressDialog = StyledProgressDialog.show(CardBrowser.this, "",
 					getResources().getString(R.string.saving_changes), true);
 		}
 

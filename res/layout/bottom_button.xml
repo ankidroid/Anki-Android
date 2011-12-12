@@ -5,8 +5,8 @@
 	android:layout_gravity="center"
 	android:gravity="center"
 	android:background="@color/transparent"
-	android:lines="1"
+	android:singleLine="true"
+	android:ellipsize="marquee"
 	android:textSize="14sp"
 	android:clickable="false"
-	android:ellipsize="start"
 	android:layout_alignParentBottom="true"/>

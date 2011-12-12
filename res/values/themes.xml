@@ -66,11 +66,11 @@
         <item name="android:listChoiceIndicatorMultiple">@drawable/blue_btn_check</item>
         <item name="android:listViewStyle">@style/White.Widget.ListView</item>
         <item name="android:dropDownListViewStyle">@style/White.Widget.ListView.DropDown</item>
-        <item name="android:listDivider">@drawable/blue_divider_horizontal_bright</item>
+        <item name="android:listDivider">@drawable/white_listdivider</item>
         <item name="android:listPreferredItemHeight">56dip</item>
         <item name="android:spinnerStyle">@style/White.Widget.Spinner</item>
         <item name="android:spinnerDropDownItemStyle">@style/White.Widget.DropDownItem.Spinner</item>
-        <item name="listItemBackgroundDrawable">@drawable/blue_list_selector_background</item>
+        <item name="listItemBackgroundDrawable">@drawable/white_list_selector_background</item>
     </style>
 
     <!-- Android White Theme -->

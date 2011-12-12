@@ -68,13 +68,11 @@
 				android:id="@+id/CardEditorSaveButton"
 				android:text="@string/CardEditorSaveButton"
 				android:layout_gravity="center"
-				style="?android:attr/buttonStyleSmall"
 				android:gravity="center"
 				android:layout_weight="1"/>
 			<Button android:layout_width="0dip"
 				android:layout_height="fill_parent" 
 				android:id="@+id/CardEditorCancelButton"
-				style="?android:attr/buttonStyleSmall"
 				android:text="@string/CardEditorCancelButton"
 				android:layout_gravity="center"
 				android:gravity="center"

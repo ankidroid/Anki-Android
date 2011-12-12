@@ -16,7 +16,6 @@ package com.ichi2.anki;
 
 import android.app.Activity;
 import android.app.Dialog;
-import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -56,6 +55,7 @@ import com.ichi2.anim.ActivityTransitionAnimation;
 import com.ichi2.anim.ViewAnimation;
 import com.ichi2.anki.Fact.Field;
 import com.ichi2.themes.StyledDialog;
+import com.ichi2.themes.StyledProgressDialog;
 import com.ichi2.themes.Themes;
 import com.ichi2.widget.AnkiDroidWidgetBig;
 import com.tomgibara.android.veecheck.util.PrefSettings;
@@ -180,7 +180,7 @@ public class CardEditor extends Activity {
 	private EditText mNewTagEditText;
 	private StyledDialog mTagsDialog;
 
-	private ProgressDialog mProgressDialog;
+	private StyledProgressDialog mProgressDialog;
 
 //	private String mSourceLanguage;
 //	private String mTargetLanguage;
@@ -198,7 +198,7 @@ public class CardEditor extends Activity {
 		@Override
 		public void onPreExecute() {
 			Resources res = getResources();
-			mProgressDialog = ProgressDialog.show(CardEditor.this, "", res
+			mProgressDialog = StyledProgressDialog.show(CardEditor.this, "", res
 					.getString(R.string.saving_facts), true);
 		}
 

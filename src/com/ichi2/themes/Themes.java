@@ -44,8 +44,8 @@ public class Themes {
 	public final static int THEME_ANDROID_DARK = 0;
 	public final static int THEME_ANDROID_LIGHT = 1;
 	public final static int THEME_BLUE = 2;
-	public final static int THEME_FLAT = 3;
-	public final static int THEME_WHITE = 4;
+	public final static int THEME_WHITE = 3;
+	public final static int THEME_FLAT = 4;
 	public final static int THEME_NO_THEME = 100;
 
 	public final static int CALLER_STUDYOPTIONS = 1;
@@ -94,6 +94,7 @@ public class Themes {
 	private static Typeface mLightFont;
 	private static Typeface mRegularFont;
 	private static Typeface mBoldFont;
+	private static int mProgressDialogFontColor;
 
 	private static Context mContext;
 
@@ -153,14 +154,14 @@ public class Themes {
 			((View) view.findViewById(R.id.studyoptions_global_bar)).setBackgroundResource(mProgressbarsYoungColor);
 
 			if (mCurrentTheme == THEME_WHITE) {
+		        setMargins(view.findViewById(R.id.studyoptions_mainframe), LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT, 4f, 0, 4f, 4f);
+				setMargins(view.findViewById(R.id.studyoptions_deck_name), LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT, 0, 6f, 0, 2f);
+		        setMargins(view.findViewById(R.id.studyoptions_statistic_field), LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT, 0, 2f, 0, 12f);
+				setMargins(view.findViewById(R.id.studyoptions_bottom), LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT, 0, 0, 0, 8f);
 				((View) view.findViewById(R.id.studyoptions_deckinformation)).setBackgroundResource(R.drawable.white_textview);
 				((View) view.findViewById(R.id.studyoptions_statistic_field)).setBackgroundResource(R.color.transparent);
 				((View) view.findViewById(R.id.studyoptions_deckinformation)).setBackgroundResource(mTextViewStyle);
 				((View) view.findViewById(R.id.studyoptions_bottom)).setBackgroundResource(mTextViewStyle);
-				setMargins(view.findViewById(R.id.studyoptions_bottom), LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT, 0, 0, 0, 0);
-				setMargins(view.findViewById(R.id.studyoptions_deck_name), LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT, 0, 12f, 0, 0);
-		        setMargins(view.findViewById(R.id.studyoptions_statistic_field), LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT, 0, 2f, 0, 12f);
-		        setMargins(view.findViewById(R.id.studyoptions_mainframe), LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT, 4f, 0, 4f, 4f);
 			} else {
 				((View) view.findViewById(R.id.studyoptions_statistic_field)).setBackgroundResource(mTextViewStyle);
 			}
@@ -323,6 +324,7 @@ public class Themes {
 				mPopupFullMedium = R.drawable.popup_full_bright;
 				mDividerHorizontalBright = R.drawable.blue_divider_horizontal_bright;
 				mBackgroundColor = R.color.white;
+				mProgressDialogFontColor = mContext.getResources().getColor(R.color.white);
 				break;
 
 			case THEME_ANDROID_LIGHT:
@@ -358,6 +360,7 @@ public class Themes {
 				mPopupFullDark = R.drawable.popup_full_dark;
 				mDividerHorizontalBright = R.drawable.blue_divider_horizontal_bright;
 				mBackgroundColor = R.color.white;
+				mProgressDialogFontColor = mContext.getResources().getColor(R.color.white);
 				break;
 
 			case THEME_BLUE:
@@ -393,6 +396,7 @@ public class Themes {
 				mPopupFullMedium = R.drawable.blue_popup_full_medium;
 				mPopupFullDark = R.drawable.blue_popup_full_dark;
 				mDividerHorizontalBright = R.drawable.blue_divider_horizontal_bright;
+				mProgressDialogFontColor = mContext.getResources().getColor(R.color.white);
 				break;
 
 			case THEME_FLAT:
@@ -431,6 +435,7 @@ public class Themes {
 				mLightFont = Typeface.createFromAsset(mContext.getAssets(), "fonts/OpenSans-Light.ttf");
 				mRegularFont = Typeface.createFromAsset(mContext.getAssets(), "fonts/OpenSans-Regular.ttf");
 				mBoldFont = Typeface.createFromAsset(mContext.getAssets(), "fonts/OpenSans-Bold.ttf");
+				mProgressDialogFontColor = mContext.getResources().getColor(R.color.white);
 				break;
 
 			case THEME_WHITE:
@@ -443,19 +448,19 @@ public class Themes {
 				mFlashcardBorder = R.drawable.white_bg_webview;
 				mDeckpickerItemBorder = R.drawable.white_bg_deckpicker;
 			mTitleStyle = R.drawable.flat_title;
-			mTitleTextColor = mContext.getResources().getColor(R.color.flat_title_color);
+				mTitleTextColor = mContext.getResources().getColor(R.color.black);
 				mTextViewStyle = R.drawable.white_textview_padding;
 				mWallpaper = R.color.white_background;
 				mBackgroundColor = R.color.white_background;
-			mToastBackground = R.drawable.blue_toast_frame;
-			mDialogBackgroundColor = R.color.background_dialog_blue;
+				mToastBackground = R.drawable.white_toast_frame;
+				mDialogBackgroundColor = mBackgroundColor;
 			mBackgroundDarkColor = R.color.background_dark_blue;
 			mReviewerProgressbar = R.color.reviewer_progressbar_session_blue;
 				mCardbrowserItemBorder = new int[] {R.drawable.white_bg_cardbrowser, R.drawable.white_bg_cardbrowser_marked, R.drawable.white_bg_cardbrowser_suspended, R.drawable.white_bg_cardbrowser_marked_suspended};
 			mChartColors = new int[] {Color.BLACK, Color.WHITE};
 				mPopupTopBright = R.drawable.white_popup_top_bright;
-				mPopupTopDark = mPopupTopBright;
 				mPopupTopMedium = R.drawable.white_popup_top_medium;
+				mPopupTopDark = mPopupTopMedium;
 				mPopupCenterDark = R.drawable.white_popup_center_bright;
 				mPopupCenterBright = R.drawable.white_popup_center_bright;
 				mPopupCenterMedium = R.drawable.white_popup_center_medium;
@@ -469,6 +474,7 @@ public class Themes {
 				mLightFont = Typeface.createFromAsset(mContext.getAssets(), "fonts/OpenSans-Light.ttf");
 				mRegularFont = Typeface.createFromAsset(mContext.getAssets(), "fonts/OpenSans-Regular.ttf");
 				mBoldFont = Typeface.createFromAsset(mContext.getAssets(), "fonts/OpenSans-Bold.ttf");
+				mProgressDialogFontColor = mContext.getResources().getColor(R.color.black);
 				break;
 			}
 	}
@@ -567,6 +573,7 @@ public class Themes {
 
 	public static void setMargins(View view, int width, int height, float dipLeft, float dipTop, float dipRight, float dipBottom) {
 		View parent = (View) view.getParent();
+		parent.setBackgroundResource(mBackgroundColor);
 		Class c = view.getParent().getClass();
     	float factor = mContext.getResources().getDisplayMetrics().density;
 		if (c == LinearLayout.class) {
@@ -614,9 +621,13 @@ public class Themes {
 		Toast result = Toast.makeText(context, text, shortLength ? Toast.LENGTH_SHORT : Toast.LENGTH_LONG);
 		try {
 			if (mCurrentTheme >= THEME_BLUE) {
-				result.getView().setBackgroundResource(mToastBackground);
+				TextView tv = new TextView(context);
+				tv.setBackgroundResource(mToastBackground);
+				tv.setTextColor(mProgressDialogFontColor);
+				tv.setText(text);
+				result.setView(tv);
 			}
-	        	result.show();
+        	result.show();
 		} catch (OutOfMemoryError e) {
 			Log.e(AnkiDroidApp.TAG, "showThemedToast - OutOfMemoryError occured: " + e);
 			result.getView().setBackgroundResource(R.color.black);
@@ -645,6 +656,32 @@ public class Themes {
         builder.setCancelable(true);
         builder.setOnCancelListener(cancelListener);
         return builder.create();
+	}
+
+
+	public static void setStyledProgressDialogDialogBackgrounds(View main) {
+		View topPanel = ((View) main.findViewById(R.id.topPanel));
+		View contentPanel = ((View) main.findViewById(R.id.contentPanel));
+		if (topPanel.getVisibility() == View.VISIBLE) {
+			try {
+				topPanel.setBackgroundResource(mPopupTopDark);
+				((View) main.findViewById(R.id.titleDivider)).setBackgroundResource(mDividerHorizontalBright);
+				contentPanel.setBackgroundResource(mPopupBottomMedium);
+			} catch (OutOfMemoryError e) {
+				Log.e(AnkiDroidApp.TAG, "setStyledDialogBackgrounds - OutOfMemoryError occured: " + e);
+				topPanel.setBackgroundResource(R.color.black);
+				contentPanel.setBackgroundResource(R.color.white);
+			}			
+		} else {
+			try {
+				contentPanel.setBackgroundResource(mPopupFullMedium);
+			} catch (OutOfMemoryError e) {
+				Log.e(AnkiDroidApp.TAG, "setStyledDialogBackgrounds - OutOfMemoryError occured: " + e);
+				contentPanel.setBackgroundResource(R.color.white);
+			}
+		}
+		((TextView) main.findViewById(R.id.alertTitle)).setTextColor(mProgressDialogFontColor);
+		((TextView) main.findViewById(R.id.message)).setTextColor(mProgressDialogFontColor);
 	}
 
 

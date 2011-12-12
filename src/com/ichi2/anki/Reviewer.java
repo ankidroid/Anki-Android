@@ -29,7 +29,6 @@ import java.util.regex.Pattern;
 
 import android.app.Activity;
 import android.app.Dialog;
-import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -94,6 +93,7 @@ import com.ichi2.anim.ActivityTransitionAnimation;
 import com.ichi2.anim.Animation3D;
 import com.ichi2.anim.ViewAnimation;
 import com.ichi2.themes.StyledDialog;
+import com.ichi2.themes.StyledProgressDialog;
 import com.ichi2.themes.Themes;
 import com.ichi2.utils.DiffEngine;
 import com.ichi2.utils.RubyParser;
@@ -305,7 +305,7 @@ public class Reviewer extends Activity implements IButtonListener{
     private Chronometer mCardTimer;
     private Whiteboard mWhiteboard;
 	private ClipboardManager mClipboard;
-    private ProgressDialog mProgressDialog;
+    private StyledProgressDialog mProgressDialog;
 
     private Card mCurrentCard;
     private int mCurrentEase;
@@ -559,8 +559,12 @@ public class Reviewer extends Activity implements IButtonListener{
             	}
             }
             try {
-                if (event != null && !mSimpleInterface) {
-    	            mCard.dispatchTouchEvent(event);
+                if (event != null) {
+                	if (mSimpleInterface) {
+                		mSimpleCard.dispatchTouchEvent(event);
+                	} else {
+        	            mCard.dispatchTouchEvent(event);	
+                	}   	            
                 }            	
             } catch (NullPointerException e) {
             	Log.e(AnkiDroidApp.TAG, "Error on dispatching touch event: " + e);
@@ -595,7 +599,7 @@ public class Reviewer extends Activity implements IButtonListener{
         @Override
         public void onPreExecute() {
         	Resources res = getResources();
-            mProgressDialog = ProgressDialog.show(Reviewer.this, "", res.getString(R.string.saving_changes), true);
+            mProgressDialog = StyledProgressDialog.show(Reviewer.this, "", res.getString(R.string.saving_changes), true);
         }
 
         @Override
@@ -655,7 +659,7 @@ public class Reviewer extends Activity implements IButtonListener{
         public void onPreExecute() {
         	Resources res = getResources();
 		try {
-	        	mProgressDialog = ProgressDialog.show(Reviewer.this, "", res.getString(R.string.saving_changes), true);
+	        	mProgressDialog = StyledProgressDialog.show(Reviewer.this, "", res.getString(R.string.saving_changes), true);
 		} catch (IllegalArgumentException e) {
 			Log.e(AnkiDroidApp.TAG, "Reviewer: Error on showing progress dialog: " + e);
 		}
@@ -758,7 +762,7 @@ public class Reviewer extends Activity implements IButtonListener{
         	if (mProgressDialog != null && mProgressDialog.isShowing()) {
         		mProgressDialog.setMessage(getResources().getString(R.string.saving_changes));
         	} else {
-                mProgressDialog = ProgressDialog.show(Reviewer.this, "", getResources()
+                mProgressDialog = StyledProgressDialog.show(Reviewer.this, "", getResources()
                         .getString(R.string.saving_changes), true);
         	}
         }
@@ -1574,6 +1578,10 @@ public class Reviewer extends Activity implements IButtonListener{
         	Themes.setRegularFont(mSimpleCard);
         	mSimpleCard.setTextSize(mSimpleCard.getTextSize() * mDisplayFontSize / 100);
         	mSimpleCard.setGravity(Gravity.CENTER);
+        	if (Integer.parseInt(android.os.Build.VERSION.SDK) >= 11) {
+            	mSimpleCard.setTextIsSelectable(true);        		
+        	}
+        	mSimpleCard.setClickable(true);
         	mCardFrame.addView(mSimpleCard);
         } else {
             mCard = createWebView();
@@ -1637,7 +1645,7 @@ public class Reviewer extends Activity implements IButtonListener{
         mNext2.setTextColor(res.getColor(R.color.next_time_usual_color));
 
         if (!mshowNextReviewTime) {
-        	((LinearLayout) findViewById(R.id.nextTimeflip)).setVisibility(View.GONE);
+        	((TextView)findViewById(R.id.nextTimeflip)).setVisibility(View.GONE);
             mNext1.setVisibility(View.GONE);
             mNext2.setVisibility(View.GONE);
             mNext3.setVisibility(View.GONE);
@@ -1829,7 +1837,7 @@ public class Reviewer extends Activity implements IButtonListener{
             sessionMessage = res.getString(R.string.session_time_limit_reached);
         } else if (mIsLastCard) {
         	noMoreCards = true;
-            mProgressDialog = ProgressDialog.show(Reviewer.this, "", getResources()
+            mProgressDialog = StyledProgressDialog.show(Reviewer.this, "", getResources()
                     .getString(R.string.saving_changes), true);
             setOutAnimation(true);
         } else {
@@ -1839,7 +1847,7 @@ public class Reviewer extends Activity implements IButtonListener{
             // If the card is null means that there are no more cards scheduled for review.
             if (mCurrentCard == null) {
             	noMoreCards = true;
-                mProgressDialog = ProgressDialog.show(Reviewer.this, "", getResources()
+                mProgressDialog = StyledProgressDialog.show(Reviewer.this, "", getResources()
                         .getString(R.string.saving_changes), true);
                 setOutAnimation(false);
                 return new boolean[] {sessionComplete, noMoreCards};
@@ -2255,15 +2263,23 @@ public class Reviewer extends Activity implements IButtonListener{
         String displayString = "";
         
         if (mSimpleInterface) {
+        	SpannableStringBuilder sb = new SpannableStringBuilder();
+		if (isQuestionDisplayed()) {
+	        	Spanned ques = Html.fromHtml(question);
+	        	if (ques.length() == 0) {
+	        		ques = new SpannableString(getResources().getString(R.string.simple_interface_hint, R.string.card_details_question));
+	        		((SpannableString)ques).setSpan(new StyleSpan(Typeface.ITALIC), 0, mCardContent.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+			}
+	        	sb.append(ques);
+	        	sb.append("\n─────\n");
+        	}
+
         	Spanned ans = Html.fromHtml(answer);
         	if (ans.length() == 0) {
         		SpannableString hint = new SpannableString(getResources().getString(R.string.simple_interface_hint, R.string.card_details_answer));
         		hint.setSpan(new StyleSpan(Typeface.ITALIC), 0, hint.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         		ans = hint;
         	}
-        	SpannableStringBuilder sb = new SpannableStringBuilder();
-        	sb.append(mCardContent);
-        	sb.append("\n─────\n");
         	sb.append(ans);
         	mCardContent = sb;
         } else {
@@ -2954,7 +2970,11 @@ public class Reviewer extends Activity implements IButtonListener{
     private void selectAndCopyText() {
         try {
             KeyEvent shiftPressEvent = new KeyEvent(0, 0, KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_SHIFT_LEFT, 0, 0);
-            shiftPressEvent.dispatch(mCard);
+            if (mSimpleInterface) {
+            	shiftPressEvent.dispatch(mSimpleCard);
+            } else {            	
+                shiftPressEvent.dispatch(mCard);
+            }
             shiftPressEvent.isShiftPressed();
             mIsSelecting = true;
         } catch (Exception e) {
