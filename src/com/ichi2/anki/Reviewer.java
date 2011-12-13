@@ -1583,7 +1583,7 @@ public class Reviewer extends Activity implements IButtonListener{
 	        	mSetTextIsSelectable = TextView.class.getMethod("setTextIsSelectable", boolean.class);
 	        } catch (Throwable e) {
 	        	Log.i(AnkiDroidApp.TAG, "mSetTextIsSelectable could not be found due to a too low Android version (< 3.0)");
-			mSetTextIsSelectable = null;
+	        	mSetTextIsSelectable = null;
 	        }
         	if (mSetTextIsSelectable != null) {
 	            	mSetTextIsSelectable.invoke(mSimpleCard, true);
