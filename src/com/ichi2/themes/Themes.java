@@ -24,8 +24,10 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.DialogInterface.OnCancelListener;
 import android.content.DialogInterface.OnClickListener;
+import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.Typeface;
+import android.graphics.drawable.Drawable;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -95,6 +97,7 @@ public class Themes {
 	private static Typeface mRegularFont;
 	private static Typeface mBoldFont;
 	private static int mProgressDialogFontColor;
+	private static int mNightModeButton;
 
 	private static Context mContext;
 
@@ -257,7 +260,7 @@ public class Themes {
 			        ((View)view.findViewById(R.id.flashcard_frame)).setBackgroundResource(PrefSettings.getSharedPrefs(mContext).getBoolean("invertedColors", false) ? R.color.reviewer_night_card_background : R.color.white);
 				break;
 			case THEME_WHITE:
-		        ((View)view.findViewById(R.id.flashcard_frame)).setBackgroundResource(PrefSettings.getSharedPrefs(mContext).getBoolean("invertedColors", false) ? R.color.reviewer_night_card_background : R.color.white);
+		        ((View)view.findViewById(R.id.flashcard_frame)).setBackgroundResource(PrefSettings.getSharedPrefs(mContext).getBoolean("invertedColors", false) ? R.color.black : R.color.white);
 		        
 		        setMargins(view.findViewById(R.id.main_layout), LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT, 4f, 0, 4f, 4f);
 			        
@@ -325,6 +328,7 @@ public class Themes {
 				mDividerHorizontalBright = R.drawable.blue_divider_horizontal_bright;
 				mBackgroundColor = R.color.white;
 				mProgressDialogFontColor = mContext.getResources().getColor(R.color.white);
+				mNightModeButton = R.drawable.btn_keyboard_key_fulltrans_normal;
 				break;
 
 			case THEME_ANDROID_LIGHT:
@@ -361,6 +365,7 @@ public class Themes {
 				mDividerHorizontalBright = R.drawable.blue_divider_horizontal_bright;
 				mBackgroundColor = R.color.white;
 				mProgressDialogFontColor = mContext.getResources().getColor(R.color.white);
+				mNightModeButton = R.drawable.btn_keyboard_key_fulltrans_normal;
 				break;
 
 			case THEME_BLUE:
@@ -397,6 +402,7 @@ public class Themes {
 				mPopupFullDark = R.drawable.blue_popup_full_dark;
 				mDividerHorizontalBright = R.drawable.blue_divider_horizontal_bright;
 				mProgressDialogFontColor = mContext.getResources().getColor(R.color.white);
+				mNightModeButton = R.drawable.blue_btn_night;
 				break;
 
 			case THEME_FLAT:
@@ -436,6 +442,7 @@ public class Themes {
 				mRegularFont = Typeface.createFromAsset(mContext.getAssets(), "fonts/OpenSans-Regular.ttf");
 				mBoldFont = Typeface.createFromAsset(mContext.getAssets(), "fonts/OpenSans-Bold.ttf");
 				mProgressDialogFontColor = mContext.getResources().getColor(R.color.white);
+				mNightModeButton = R.drawable.blue_btn_night;
 				break;
 
 			case THEME_WHITE:
@@ -475,6 +482,7 @@ public class Themes {
 				mRegularFont = Typeface.createFromAsset(mContext.getAssets(), "fonts/OpenSans-Regular.ttf");
 				mBoldFont = Typeface.createFromAsset(mContext.getAssets(), "fonts/OpenSans-Bold.ttf");
 				mProgressDialogFontColor = mContext.getResources().getColor(R.color.black);
+				mNightModeButton = R.drawable.white_btn_night;
 				break;
 			}
 	}
@@ -815,9 +823,61 @@ public class Themes {
 		case THEME_FLAT:
 			return context.getResources().getColor(R.color.reviewer_night_card_background);
 		case THEME_WHITE:
-			return context.getResources().getColor(R.color.reviewer_night_card_background);
 		default:
-			return Color.BLACK;
+			return context.getResources().getColor(R.color.black);
 		}
+	}
+
+
+	public static int[] setNightMode(Context context, View view, boolean nightMode) {
+		Resources res = context.getResources();
+		View flipCard = view.findViewById(R.id.flashcard_layout_flip);
+		View ease1 = view.findViewById(R.id.flashcard_layout_ease1);
+		View ease2 = view.findViewById(R.id.flashcard_layout_ease2);
+		View ease3 = view.findViewById(R.id.flashcard_layout_ease3);
+		View ease4 = view.findViewById(R.id.flashcard_layout_ease4);
+		View border = view.findViewById(R.id.flashcard_border);
+		final Drawable[] defaultButtons = new Drawable[]{flipCard.getBackground(), ease1.getBackground(), ease2.getBackground(), ease3.getBackground(), ease4.getBackground()};
+
+		int foregroundColor;
+		int nextTimeRecommendedColor;
+
+		if (nightMode) {
+			flipCard.setBackgroundResource(mNightModeButton);
+			ease1.setBackgroundResource(mNightModeButton);
+			ease2.setBackgroundResource(mNightModeButton);
+			ease3.setBackgroundResource(mNightModeButton);
+			ease4.setBackgroundResource(mNightModeButton);
+
+			foregroundColor = Color.WHITE;
+			nextTimeRecommendedColor = res.getColor(R.color.next_time_recommended_color_inv);
+
+			switch (mCurrentTheme) {
+			case THEME_BLUE:
+				border.setBackgroundResource(R.drawable.blue_bg_webview_night);
+				view.setBackgroundColor(res.getColor(R.color.background_dark_blue));
+				break;
+			case THEME_WHITE:
+				border.setBackgroundResource(R.drawable.white_bg_webview_night);
+				view.setBackgroundColor(res.getColor(R.color.white_background_night));
+				((View)view.getParent()).setBackgroundColor(res.getColor(R.color.white_background_night));
+				break;
+			case THEME_FLAT:
+			default:
+				view.setBackgroundColor(res.getColor(R.color.black));
+				break;
+			}
+		} else {
+			foregroundColor = Color.BLACK;
+			nextTimeRecommendedColor = res.getColor(R.color.next_time_recommended_color);
+			flipCard.setBackgroundDrawable(defaultButtons[0]);
+			ease1.setBackgroundDrawable(defaultButtons[1]);
+			ease2.setBackgroundDrawable(defaultButtons[2]);
+			ease3.setBackgroundDrawable(defaultButtons[3]);
+			ease4.setBackgroundDrawable(defaultButtons[4]);
+			border.setBackgroundResource(mFlashcardBorder);
+		}
+		
+    	return new int[]{foregroundColor, nextTimeRecommendedColor}; 
 	}
 }

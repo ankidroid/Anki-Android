@@ -19,6 +19,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
@@ -283,7 +284,6 @@ public class Reviewer extends Activity implements IButtonListener{
     private TextView mTextBarBlack;
     private TextView mTextBarBlue;
     private TextView mChosenAnswer;
-    private Drawable[] mDefaultButtonDrawable;
     private LinearLayout mProgressBars;
     private View mSessionYesBar;
     private View mSessionProgressBar;
@@ -1586,7 +1586,11 @@ public class Reviewer extends Activity implements IButtonListener{
 	        	mSetTextIsSelectable = null;
 	        }
         	if (mSetTextIsSelectable != null) {
-	            	mSetTextIsSelectable.invoke(mSimpleCard, true);
+	            	try {
+						mSetTextIsSelectable.invoke(mSimpleCard, true);
+					} catch (Exception e) {
+						Log.e(AnkiDroidApp.TAG, e.toString());
+					}
         	}
         	mSimpleCard.setClickable(true);
         	mCardFrame.addView(mSimpleCard);
@@ -1662,7 +1666,7 @@ public class Reviewer extends Activity implements IButtonListener{
         mFlipCard = (Button) findViewById(R.id.flip_card);
         mFlipCardLayout = (LinearLayout) findViewById(R.id.flashcard_layout_flip);
         mFlipCardLayout.setOnClickListener(mFlipCardListener);
-    	mDefaultButtonDrawable = new Drawable[]{mFlipCardLayout.getBackground(), mEase1Layout.getBackground(), mEase2Layout.getBackground(), mEase3Layout.getBackground(), mEase4Layout.getBackground()};
+
 
         mTextBarRed = (TextView) findViewById(R.id.red_number);
         mTextBarBlack = (TextView) findViewById(R.id.black_number);
@@ -1758,50 +1762,33 @@ public class Reviewer extends Activity implements IButtonListener{
 
     private void invertColors(boolean invert) {
         Resources res = getResources();        
-        int fgColor = invert ? res.getColor(R.color.foreground_color_inv) : res.getColor(R.color.black);
 
-        if (!mSimpleInterface) {
+        int[] colors = Themes.setNightMode(this, mMainLayout, invert);
+        mForegroundColor = colors[0];
+        mNextTimeTextColor = mForegroundColor;
+        mNextTimeTextRecomColor = colors[1];
+
+        mFlipCard.setTextColor(mForegroundColor);
+        mNext4.setTextColor(mNextTimeTextColor);
+        mEase4.setTextColor(mNextTimeTextColor);
+        mCardTimer.setTextColor(mForegroundColor);
+        mTextBarBlack.setTextColor(mForegroundColor);
+        mTextBarBlue.setTextColor(invert ? res.getColor(R.color.textbar_blue_color_inv) : res.getColor(R.color.textbar_blue_color));
+
+        if (mSimpleInterface) {
+            mSimpleCard.setBackgroundColor(mCurrentBackgroundColor);
+            mSimpleCard.setTextColor(mForegroundColor);
+        } else {
             mCard.setBackgroundColor(mCurrentBackgroundColor);        	
         }
 
-        if (mChangeBorderStyle) {
-            mMainLayout.setBackgroundColor(mCurrentBackgroundColor);
-            mFlipCardLayout.setBackgroundDrawable(invert ? res.getDrawable(R.drawable.btn_keyboard_key_fulltrans_normal) : mDefaultButtonDrawable[0]);
-            mEase1Layout.setBackgroundDrawable(invert ? res.getDrawable(R.drawable.btn_keyboard_key_fulltrans_normal) : mDefaultButtonDrawable[1]);
-            mEase2Layout.setBackgroundDrawable(invert ? res.getDrawable(R.drawable.btn_keyboard_key_fulltrans_normal) : mDefaultButtonDrawable[2]);
-            mEase3Layout.setBackgroundDrawable(invert ? res.getDrawable(R.drawable.btn_keyboard_key_fulltrans_normal) : mDefaultButtonDrawable[3]);
-            mEase4Layout.setBackgroundDrawable(invert ? res.getDrawable(R.drawable.btn_keyboard_key_fulltrans_normal) : mDefaultButtonDrawable[4]);
-        } else {
-            mMainLayout.setBackgroundResource(invert ? R.color.reviewer_background_night : R.color.reviewer_background);
-        	findViewById(R.id.flashcard_border).setBackgroundResource(invert ? R.drawable.blue_bg_webview_night : R.drawable.blue_bg_webview);
-            mFlipCardLayout.setBackgroundDrawable(invert ? res.getDrawable(R.drawable.blue_btn_night) : mDefaultButtonDrawable[0]);
-            mEase1Layout.setBackgroundDrawable(invert ? res.getDrawable(R.drawable.blue_btn_night) : mDefaultButtonDrawable[1]);
-            mEase2Layout.setBackgroundDrawable(invert ? res.getDrawable(R.drawable.blue_btn_night) : mDefaultButtonDrawable[2]);
-            mEase3Layout.setBackgroundDrawable(invert ? res.getDrawable(R.drawable.blue_btn_night) : mDefaultButtonDrawable[3]);
-            mEase4Layout.setBackgroundDrawable(invert ? res.getDrawable(R.drawable.blue_btn_night) : mDefaultButtonDrawable[4]);
-        }
-        if (invert || mChangeBorderStyle) {
-            mNextTimeTextColor = invert ? res.getColor(R.color.next_time_usual_color_inv) : res.getColor(R.color.next_time_usual_color);
-            mNextTimeTextRecomColor = invert ? res.getColor(R.color.next_time_recommended_color_inv) : res.getColor(R.color.next_time_recommended_color);
-            mNext4.setTextColor(mNextTimeTextColor);
-            mEase4.setTextColor(mNextTimeTextColor);
-            mCardTimer.setTextColor(fgColor);
-            mForegroundColor = fgColor;
-            mTextBarBlack.setTextColor(fgColor);
-            mTextBarBlue.setTextColor(invert ? res.getColor(R.color.textbar_blue_color_inv) : res.getColor(R.color.textbar_blue_color));
+        int fgColor = R.color.studyoptions_progressbar_frame_light;
+        int bgColor = R.color.studyoptions_progressbar_background_nightmode;
+        findViewById(R.id.progress_bars_border1).setBackgroundResource(fgColor);
+        findViewById(R.id.progress_bars_border2).setBackgroundResource(fgColor);
+        findViewById(R.id.progress_bars_back1).setBackgroundResource(bgColor);
+        findViewById(R.id.progress_bars_back2).setBackgroundResource(bgColor);
 
-            mFlipCard.setTextColor(fgColor);
-            mEase2.setTextColor(fgColor);
-            mEase3.setTextColor(fgColor);
-            mEase4.setTextColor(fgColor);
-
-            fgColor = R.color.studyoptions_progressbar_frame_light;
-            int bgColor = R.color.studyoptions_progressbar_background_nightmode;
-            findViewById(R.id.progress_bars_border1).setBackgroundResource(fgColor);
-            findViewById(R.id.progress_bars_border2).setBackgroundResource(fgColor);
-            findViewById(R.id.progress_bars_back1).setBackgroundResource(bgColor);
-            findViewById(R.id.progress_bars_back2).setBackgroundResource(bgColor);
-        }
     }
 
 
