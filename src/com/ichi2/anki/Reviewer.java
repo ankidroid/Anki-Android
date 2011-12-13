@@ -1579,7 +1579,7 @@ public class Reviewer extends Activity implements IButtonListener{
         	mSimpleCard.setTextSize(mSimpleCard.getTextSize() * mDisplayFontSize / 100);
         	mSimpleCard.setGravity(Gravity.CENTER);
         	if (Integer.parseInt(android.os.Build.VERSION.SDK) >= 11) {
-            	mSimpleCard.setTextIsSelectable(true);        		
+            		//mSimpleCard.setTextIsSelectable(true);        		
         	}
         	mSimpleCard.setClickable(true);
         	mCardFrame.addView(mSimpleCard);
