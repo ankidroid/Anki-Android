@@ -402,6 +402,7 @@ public class Reviewer extends Activity implements IButtonListener{
     private int mFadeDuration = 300;
 
 	private Method mSetScrollbarBarFading = null;
+	private Method mSetTextIsSelectable = null;
 
  	/**
  	 * Zeemote controller
@@ -1578,8 +1579,14 @@ public class Reviewer extends Activity implements IButtonListener{
         	Themes.setRegularFont(mSimpleCard);
         	mSimpleCard.setTextSize(mSimpleCard.getTextSize() * mDisplayFontSize / 100);
         	mSimpleCard.setGravity(Gravity.CENTER);
-        	if (Integer.parseInt(android.os.Build.VERSION.SDK) >= 11) {
-            	mSimpleCard.setTextIsSelectable(true);        		
+	        try {
+	        	mSetTextIsSelectable = TextView.class.getMethod("setTextIsSelectable", boolean.class);
+	        } catch (Throwable e) {
+	        	Log.i(AnkiDroidApp.TAG, "mSetTextIsSelectable could not be found due to a too low Android version (< 3.0)");
+			mSetTextIsSelectable = null;
+	        }
+        	if (mSetTextIsSelectable != null) {
+	            	mSetTextIsSelectable.invoke(mSimpleCard, true);
         	}
         	mSimpleCard.setClickable(true);
         	mCardFrame.addView(mSimpleCard);
