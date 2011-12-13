@@ -73,6 +73,7 @@
   <string name="help_online">Онлайн помощь</string>
   <string name="help_faq">Вопросы и ответы</string>
   <string name="help_tutorial">Учебная колода</string>
+  <string name="simple_interface_hint">Пустой %s. Имейте в виду то, что простой интерфейс не может показывать фотографии/звуки и т.д.</string>
   <plurals name="factadder_cards_added">
     <item quantity="one">1 карта добавлена</item>
     <item quantity="other">%d карт добавлено</item>

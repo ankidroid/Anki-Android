@@ -10,7 +10,6 @@
 		android:layout_height="wrap_content">
         <LinearLayout
 	        android:id="@+id/CardEditorSelectModelLayout"
-			android:layout_marginBottom="2dip"
 	        android:visibility="gone"
 	        android:layout_width="fill_parent"
 	        android:layout_height="wrap_content">
@@ -34,9 +33,9 @@
 		<LinearLayout android:layout_width="fill_parent"
 			android:layout_height="wrap_content" 
 			android:id="@+id/CardEditorEditFieldsLayout"
-			android:orientation="vertical"></LinearLayout>
+			android:padding="4dip"
+			android:orientation="vertical"/>
  	    <LinearLayout
-		android:layout_marginTop="5dip"
   		android:layout_height="wrap_content" 
        	android:layout_width="fill_parent"
 	  	android:orientation="horizontal"
@@ -60,7 +59,6 @@
 				android:gravity="center"/>
 			        </LinearLayout>
 		<LinearLayout android:layout_width="fill_parent"
-			android:layout_marginTop="2dip"
 			android:layout_height="wrap_content" 
 			android:orientation="horizontal"
 			android:layout_gravity="right" 
@@ -70,13 +68,11 @@
 				android:id="@+id/CardEditorSaveButton"
 				android:text="@string/CardEditorSaveButton"
 				android:layout_gravity="center"
-				style="?android:attr/buttonStyleSmall"
 				android:gravity="center"
 				android:layout_weight="1"/>
 			<Button android:layout_width="0dip"
 				android:layout_height="fill_parent" 
 				android:id="@+id/CardEditorCancelButton"
-				style="?android:attr/buttonStyleSmall"
 				android:text="@string/CardEditorCancelButton"
 				android:layout_gravity="center"
 				android:gravity="center"

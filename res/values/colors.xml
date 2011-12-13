@@ -23,8 +23,6 @@
 	<color name="next_time_usual_color_inv">#FFFFFF</color>
 	<color name="next_time_recommended_color_inv">#4AA02C</color>
 	<color name="foreground_color_inv">#FFFFFF</color>
-	<color name="textbar_blue_color_inv">#4AA02C</color>
-	<color name="textbar_blue_color">#0000ff</color>
 	<color name="card_browser_background">#000000</color>
 	<color name="card_browser_marked">#5E5A80</color>
 	<color name="card_browser_suspended">#646D7E</color>
@@ -54,9 +52,6 @@
 	<color name="studyoptions_progressbar_young_light">#B0B0B0</color>
 	<color name="studyoptions_progressbar_frame_light">#000000</color>
 	<color name="studyoptions_progressbar_background_light">#FFFF</color>
-	<color name="studyoptions_progressbar_background_blue">#cecfd6</color>
-	<color name="studyoptions_progressbar_young_blue">#8a8a8a</color>
-	<color name="reviewer_progressbar_session_blue">#a9a9a9</color>
 	<color name="studyoptions_progressbar_background_nightmode">#d7d7d7</color>
 
 	<color name="deckpicker_progressbar_young_light">#999999</color>
@@ -64,9 +59,6 @@
 	<color name="reviewer_background">#c6cfd6</color>
 	<color name="reviewer_background_night">#19242e</color>	
 	<color name="reviewer_night_card_background">#0c1217</color>	
-	<color name="background_blue">#c6cfd6</color>
-	<color name="background_dark_blue">#10171d</color>
-	<color name="background_dialog_blue">#10171d</color>
 	<color name="transparent">#00000000</color>
 	<color name="white">#ffffff</color>
 	<color name="black">#000000</color>
@@ -76,5 +68,22 @@
 	<color name="widget_big_font_color_red">#cd5554</color>
 	<color name="widget_big_font_color_blue">#1a1ac3</color>
 	<color name="widget_big_font_color_green">#217721</color>
+
+	<!-- colors for blue theme -->
+	<color name="textbar_blue_color_inv">#4AA02C</color>
+	<color name="textbar_blue_color">#0000ff</color>
+	<color name="background_blue">#c6cfd6</color>
+	<color name="background_dark_blue">#10171d</color>
+	<color name="background_dialog_blue">#10171d</color>
+	<color name="studyoptions_progressbar_background_blue">#cecfd6</color>
+	<color name="studyoptions_progressbar_young_blue">#8a8a8a</color>
+	<color name="reviewer_progressbar_session_blue">#a9a9a9</color>
+
+
+	<!-- colors for flat theme -->
+	<color name="flat_title_color">#ffa300</color>
+
+	<!-- colors for white theme -->
+	<color name="white_background">#f5f5f5</color>
 
 </resources>

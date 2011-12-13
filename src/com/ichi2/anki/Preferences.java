@@ -26,7 +26,6 @@ import java.util.TreeMap;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -44,6 +43,7 @@ import android.util.Log;
 import android.view.WindowManager.BadTokenException;
 
 import com.hlidskialf.android.preference.SeekBarPreference;
+import com.ichi2.themes.StyledProgressDialog;
 import com.ichi2.themes.Themes;
 import com.tomgibara.android.veecheck.util.PrefSettings;
 
@@ -74,7 +74,7 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
     private static String[] mShowValueInSummList = {"language", "startup_mode", "hideQuestionInAnswer", "dictionary", "reportErrorMode", "minimumCardsDueForNotification", "deckOrder", "gestureShake", "gestureSwipeUp", "gestureSwipeDown", "gestureSwipeLeft", "gestureSwipeRight", "gestureDoubleTap", "gestureTapTop", "gestureTapBottom", "gestureTapRight", "gestureTapLeft", "theme"};
     private static String[] mShowValueInSummSeek = {"relativeDisplayFontSize", "relativeCardBrowserFontSize", "answerButtonSize", "whiteBoardStrokeWidth", "minShakeIntensity", "swipeSensibility", "timeoutAnswerSeconds", "timeoutQuestionSeconds", "animationDuration", "backupMax"};
     private TreeMap<String, String> mListsToUpdate = new TreeMap<String, String>();
-    private ProgressDialog mProgressDialog;
+    private StyledProgressDialog mProgressDialog;
     private boolean lockCheckAction = false;
     private boolean walModeInitiallySet = false;
     private String dialogMessage;
@@ -253,13 +253,26 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
     			setResult(StudyOptions.RESULT_RESTART, intent);
     			finish();
             } else if (key.equals("theme")) {
-            	if (!sharedPreferences.getString("theme", "0").equals("2")) {
+            	if (!sharedPreferences.getString("theme", "2").equals("2")) {
             		animationsCheckboxPreference.setChecked(false);
             		animationsCheckboxPreference.setEnabled(false);
             	} else {
             		animationsCheckboxPreference.setEnabled(true);
             	}
             	Themes.loadTheme();
+            	switch (Integer.parseInt(sharedPreferences.getString("theme", "2"))) {
+            	case Themes.THEME_ANDROID_DARK:
+            	case Themes.THEME_ANDROID_LIGHT:
+            	case Themes.THEME_BLUE:
+            		sharedPreferences.edit().putString("defaultFont", "").commit();
+            		break;
+            	case Themes.THEME_FLAT:
+            		sharedPreferences.edit().putString("defaultFont", "OpenSans-Regular").commit();
+            		break;
+            	case Themes.THEME_WHITE:
+            		sharedPreferences.edit().putString("defaultFont", "OpenSans-Regular").commit();
+            		break;
+            	}
     			Intent intent = this.getIntent();
     			setResult(StudyOptions.RESULT_RESTART, intent);
     			finish();
@@ -314,15 +327,15 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
 
     /** Returns a list of the names of the installed custom fonts. */
     private String[] getCustomFonts(String defaultValue) {
-        File[] files = Utils.getCustomFonts(this);
+        String[] files = Utils.getCustomFonts(this);
         int count = files.length;
         Log.d(AnkiDroidApp.TAG, "There are " + count + " custom fonts");
         String[] names = new String[count + 1];
-        for (int index = 0; index < count; ++index) {
-            names[index] = Utils.removeExtension(files[index].getName());
+        names[0] = defaultValue;
+        for (int index = 1; index < count + 1; ++index) {
+            names[index] =  Utils.removeExtension((new File(files[index - 1])).getName());
             Log.d(AnkiDroidApp.TAG, "Adding custom font: " + names[index]);
         }
-        names[count] = defaultValue;
         return names;
     }
 
@@ -405,7 +418,7 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
     private DeckTask.TaskListener mDeckOperationHandler = new DeckTask.TaskListener() {
         @Override
         public void onPreExecute() {
-        	mProgressDialog = ProgressDialog.show(Preferences.this, "", dialogMessage, true);
+        	mProgressDialog = StyledProgressDialog.show(Preferences.this, "", dialogMessage, true);
         }
 
 

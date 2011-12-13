@@ -204,4 +204,6 @@
   <string name="pref_cache_cardbrowser_reload">Reload all cards?</string>
   <string name="pref_keep_screen_on">Manté la pantalla engegada</string>
   <string name="pref_keep_screen_on_summ">Evita que la pantalla s\'apagui durant la revisió</string>
+  <string name="pref_simple_interface">Simple Interface</string>
+  <string name="pref_simple_interface_summ">Speeds up card showing but does only support text (no pictures, sounds etc.)</string>
 </resources>

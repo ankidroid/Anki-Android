@@ -25,89 +25,81 @@
 		android:id="@+id/DeckPickerHoriz" 
 		android:layout_height="wrap_content" 
 		android:orientation="horizontal"
+		android:paddingBottom="5dip"
 		android:layout_width="fill_parent">
-
 		<TextView 
 			android:id="@+id/DeckPickerName" 
-			android:layout_height="wrap_content" 
-			android:layout_width="fill_parent"
-			android:gravity="center_horizontal"
+			android:layout_height="fill_parent" 
+			android:layout_width="wrap_content"
+			android:gravity="left"
 			android:layout_weight="1"
-			android:padding="5dip"
-			android:textSize="24sp">
-		</TextView>
+			android:lines="1"
+			android:textStyle="bold"
+			android:textSize="20sp"/>
 		<Button
 			android:id="@+id/DeckPickerUpgradeNotesButton"
-			android:layout_height="wrap_content"
-			android:layout_width="fill_parent"
+			android:layout_height="fill_parent"
+			android:layout_width="wrap_content"
 			android:layout_weight="4"
-			android:paddingLeft="10dip"
 			android:textSize="14sp"
 			android:focusable="false"
 			android:focusableInTouchMode="false"
 			android:text="@string/deckpicker_upgrade_notes_button"/>
+		<LinearLayout 
+			android:layout_height="fill_parent"
+			android:layout_width="wrap_content"
+			android:gravity="center"
+			android:layout_alignParentRight="true">
+			<ProgressBar
+				android:layout_height="wrap_content"
+				android:layout_width="wrap_content"
+				android:id="@+id/DeckPickerProgress"
+				android:layout_gravity="center_vertical"
+				android:indeterminate="true" 
+				style="?android:attr/progressBarStyleSmall"/>
+		</LinearLayout>
 	</LinearLayout>
 
 	<RelativeLayout 
 		android:id="@+id/DeckPickerHoriz" 
 		android:layout_height="wrap_content" 
+		android:paddingBottom="5dip"
 		android:orientation="horizontal" 
 		android:layout_width="fill_parent">
-		
 		<TextView 
 			android:id="@+id/DeckPickerDue" 
 			android:layout_height="wrap_content" 
 			android:layout_width="wrap_content"
 			android:layout_alignParentLeft="true"
 			android:layout_toLeftOf="@+id/DeckPickerNew"
-			android:paddingLeft="10dip"
 			android:paddingRight="5dip"
-			android:paddingBottom="5dip"
 			android:maxLines="2"
-			android:textSize="17sp">
-		</TextView>
-		
+			android:textSize="14sp"/>
 		<TextView 
 			android:id="@+id/DeckPickerNew" 
 			android:layout_height="wrap_content" 
 			android:layout_width="wrap_content"
 			android:layout_alignParentRight="true"
-			android:paddingRight="10dip"
 			android:paddingLeft="5dip"
-			android:paddingBottom="5dip"
 			android:maxLines="2"
-			android:textSize="17sp">
-		</TextView>
-		
-		<ProgressBar
-			android:id="@+id/DeckPickerProgress"
-			android:layout_height="wrap_content"
-			android:layout_width="wrap_content"
-			android:layout_alignParentRight="true"
-			android:indeterminate="true" 
-			android:paddingRight="10dip"
-			android:paddingLeft="5dip"
-			android:paddingBottom="5dip"
-			style="?android:attr/progressBarStyleSmall">
-		</ProgressBar>
-		
-
+			android:textSize="14sp"/>
 	</RelativeLayout>
 	<LinearLayout 
 		android:layout_height="wrap_content" 
 		android:orientation="horizontal" 
-		android:layout_width="fill_parent">
-	<TextView
-		android:id="@+id/DeckPickerCompletionMat"
-    	android:layout_width="0dip"
-    	android:layout_height="2dip"
-    	android:background="#ffffff"
-		android:paddingBottom="5dip"/>
-	<TextView
-		android:id="@+id/DeckPickerCompletionAll"
-    	android:layout_width="0dip"
-    	android:layout_height="2dip"
-    	android:background="#808080"
-		android:paddingBottom="5dip"/>
+		android:layout_width="fill_parent"
+		android:layout_marginBottom="3dip">
+		<TextView
+			android:id="@+id/DeckPickerCompletionMat"
+	    	android:layout_width="0dip"
+    		android:layout_height="2dip"
+    		android:background="#ffffff"
+			android:paddingBottom="5dip"/>
+		<TextView
+			android:id="@+id/DeckPickerCompletionAll"
+    		android:layout_width="0dip"
+	    	android:layout_height="2dip"
+    		android:background="#808080"
+			android:paddingBottom="5dip"/>
 	</LinearLayout>
 </LinearLayout>

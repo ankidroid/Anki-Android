@@ -114,5 +114,6 @@
 		<item>Android Dark</item>
 		<item>Android Light</item>
 		<item>Blue</item>
+		<item>White</item>
 	</string-array>
 </resources>

@@ -15,7 +15,6 @@
 package com.ichi2.anki;
 
 import android.app.Activity;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -36,6 +35,7 @@ import com.ichi2.anim.ActivityTransitionAnimation;
 import com.ichi2.async.Connection;
 import com.ichi2.async.Connection.Payload;
 import com.ichi2.themes.StyledDialog;
+import com.ichi2.themes.StyledProgressDialog;
 import com.ichi2.themes.Themes;
 import com.tomgibara.android.veecheck.util.PrefSettings;
 
@@ -49,7 +49,7 @@ public class MyAccount extends Activity {
 
     private TextView mUsernameLoggedIn;
 
-    private ProgressDialog mProgressDialog;
+    private StyledProgressDialog mProgressDialog;
     private StyledDialog mNoConnectionAlert;
     private StyledDialog mConnectionErrorAlert;
     private StyledDialog mInvalidUserPassAlert;
@@ -232,7 +232,7 @@ public class MyAccount extends Activity {
         public void onPreExecute() {
             Log.i(AnkiDroidApp.TAG, "onPreExcecute");
             if (mProgressDialog == null || !mProgressDialog.isShowing()) {
-                mProgressDialog = ProgressDialog.show(MyAccount.this, "",
+                mProgressDialog = StyledProgressDialog.show(MyAccount.this, "",
                         getResources().getString(R.string.alert_logging_message), true);
             }
         }

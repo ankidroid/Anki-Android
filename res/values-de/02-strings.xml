@@ -73,6 +73,7 @@
   <string name="help_online">Online-Hilfe</string>
   <string name="help_faq">Häufige Fragen</string>
   <string name="help_tutorial">Einführungsstapel</string>
+  <string name="simple_interface_hint">Leere %s. Beachten Sie, dass die einfache Oberfläche keine Bilder/Sounds etc. anzeigen kann.</string>
   <plurals name="factadder_cards_added">
     <item quantity="one">1 Karte hinzugefügt</item>
     <item quantity="other">%d Karten hinzugefügt</item>

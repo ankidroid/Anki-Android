@@ -52,9 +52,6 @@ public class StyledDialog extends Dialog {
 	private OnClickListener mListener;
 	private ListView mListView;
 	private boolean mDoNotShow = false;
-	private static Method mSetScrollbarBarFading;
-	private static boolean mSetScrollBarFading = true;
-
 
     public StyledDialog(Context context) {
         super(context, R.style.StyledDialog);
@@ -107,15 +104,6 @@ public class StyledDialog extends Dialog {
 
     public void setItems(int type, ListView listview, String[] values, int checkedItem, boolean[] checked, DialogInterface.OnClickListener listener) {
     	mListView = listview;
-    	if (mSetScrollBarFading) {
-            try {
-            	mSetScrollbarBarFading = ListView.class.getMethod("setScrollbarFadingEnabled", boolean.class);
-            	mSetScrollbarBarFading.invoke(mListView, false);
-            } catch (Throwable e) {
-            	Log.i(AnkiDroidApp.TAG, "setScrollbarFadingEnabled could not be set due to a too low Android version (< 2.1)");
-            	mSetScrollBarFading = false;
-            }
-    	}
     	mItemList = new ArrayList<String>();
         for (String titel : values) {
         	mItemList.add(titel);
@@ -471,6 +459,7 @@ public class StyledDialog extends Dialog {
                 }
             } else {
             	layout.findViewById(R.id.topPanel).setVisibility(View.GONE);
+            	layout.findViewById(R.id.titleDivider).setVisibility(View.GONE);
             }
 
             // set buttons

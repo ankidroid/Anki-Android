@@ -1,7 +1,9 @@
 package com.ichi2.anim;
 
 import com.ichi2.anki.R;
+import com.ichi2.anki.StudyOptions;
 import android.app.Activity;
+import android.util.Log;
 
 public class ActivityTransitionAnimation {
 	public static int LEFT = 0;
@@ -12,18 +14,23 @@ public class ActivityTransitionAnimation {
     public static int NONE = 5;
 	
 	public static void slide(Activity activity, int direction) {
-		if (direction == LEFT) {
-			activity.overridePendingTransition(R.anim.slide_left_in, R.anim.slide_left_out);
-		} else if (direction == RIGHT) {
-			activity.overridePendingTransition(R.anim.slide_right_in, R.anim.slide_right_out);
-		} else if (direction == FADE) {
-			activity.overridePendingTransition(R.anim.fade_out, R.anim.fade_in);
-		} else if (direction == UP) {
-			activity.overridePendingTransition(R.anim.slide_up_in, R.anim.slide_up_out);
-		} else if (direction == DOWN) {
-			activity.overridePendingTransition(R.anim.slide_down_in, R.anim.slide_down_out);
-		} else if (direction == NONE){
-		    activity.overridePendingTransition(R.anim.none, R.anim.none);
+		Log.e("sometag", "StudyOptions.getApiLevel(): " + StudyOptions.getApiLevel());
+		/*
+		if (StudyOptions.getApiLevel() >= 5) {
+			if (direction == LEFT) {
+				activity.overridePendingTransition(R.anim.slide_left_in, R.anim.slide_left_out);
+			} else if (direction == RIGHT) {
+				activity.overridePendingTransition(R.anim.slide_right_in, R.anim.slide_right_out);
+			} else if (direction == FADE) {
+				activity.overridePendingTransition(R.anim.fade_out, R.anim.fade_in);
+			} else if (direction == UP) {
+				activity.overridePendingTransition(R.anim.slide_up_in, R.anim.slide_up_out);
+			} else if (direction == DOWN) {
+				activity.overridePendingTransition(R.anim.slide_down_in, R.anim.slide_down_out);
+			} else if (direction == NONE){
+			    activity.overridePendingTransition(R.anim.none, R.anim.none);
+			}
 		}
+		*/
 	}
 }

@@ -64,6 +64,8 @@
   <string name="intent_add_save_for_later">Save for later</string>
   <string name="intent_add_saved_information">Saved data</string>
   <string name="intent_add_clear_all">Clear all</string>
+  <string name="intent_aedict_empty">Category \'default\' is empty</string>
+  <string name="intent_aedict_category">To add cards to AnkiDroid remove all Notepad categories or add one named \'default\'</string>
   <string-array name="about_content">
     <item><![CDATA[<h2>%1$s: <br/>Puggekort til Android</h2>AnkiDroid er et puggekortprogram som er fullstendig kompatibel med skrivebordsprogramvaren <a href="%2$s"> Anki</a>. Du kan opprette, laste ned og lære innholdet på både AnkiDroid og Anki Desktop, og synkroniser dem veldig enkelt.]]></item>
     <item><![CDATA[For å hjelpe oss med å gjøre AnkiDroid bedre, vennligst rapporter alle feil <a href="%1$s"> her</a>; ideer til nye funksjon er svært velkommen også! Vennligst bruk <a href="%2$s"> wiki</a> og si hei på <a href="%3$s"> forumet</a>.]]></item>

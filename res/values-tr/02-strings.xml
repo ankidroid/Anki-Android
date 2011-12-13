@@ -73,6 +73,7 @@
   <string name="help_online">Çevrimiçi yardım</string>
   <string name="help_faq">SSS</string>
   <string name="help_tutorial">Eğitim destesi</string>
+  <string name="simple_interface_hint">Boş %s. Basit arayüzün resimleri/sesleri vb. gösteremediğini unutmayın.</string>
   <plurals name="factadder_cards_added">
     <item quantity="one">1 kart eklendi</item>
     <item quantity="other">%d kart eklendi</item>

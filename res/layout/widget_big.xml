@@ -72,6 +72,7 @@
 				<TextView android:id="@+id/widget_big_decketa"
 				    android:layout_width="fill_parent"
 				    android:layout_height="fill_parent"
+				    android:visibility="invisible"
 				    android:textColor="@color/widget_big_font_color"
 				    android:lineSpacingMultiplier="1.2"
 				    android:gravity="center"/>
@@ -172,14 +173,14 @@
 					    	android:gravity="center"
 						android:clickable="true"
 					    	android:textColor="@color/widget_big_font_color"
-						android:background="@drawable/blue_btn_small"
+						android:background="@drawable/white_btn_default"
 						android:text="@string/studyoptions_congrats_reviewearly"/>
 					<TextView
 					    android:id="@+id/widget_big_learn_more"
 					    android:layout_width="0dip"
 						android:layout_weight="1"
 					    android:layout_height="fill_parent"
-						android:background="@drawable/blue_btn_small"
+						android:background="@drawable/white_btn_default"
 					    	android:gravity="center"
 						android:clickable="true"
 					    	android:textColor="@color/widget_big_font_color"

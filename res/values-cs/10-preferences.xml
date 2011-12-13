@@ -204,4 +204,6 @@
   <string name="pref_cache_cardbrowser_reload">Znovu načíst všechny karty?</string>
   <string name="pref_keep_screen_on">Nevypínat obrazovku</string>
   <string name="pref_keep_screen_on_summ">Zabránit vypnutí obrazovky během opakování</string>
+  <string name="pref_simple_interface">Simple Interface</string>
+  <string name="pref_simple_interface_summ">Speeds up card showing but does only support text (no pictures, sounds etc.)</string>
 </resources>

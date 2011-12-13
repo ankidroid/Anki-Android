@@ -68,6 +68,7 @@ import com.ichi2.anki.DeckTask.TaskData;
 import com.ichi2.async.Connection;
 import com.ichi2.async.Connection.Payload;
 import com.ichi2.themes.StyledDialog;
+import com.ichi2.themes.StyledProgressDialog;
 import com.ichi2.themes.Themes;
 import com.ichi2.widget.WidgetStatus;
 import com.tomgibara.android.veecheck.util.PrefSettings;
@@ -178,7 +179,7 @@ public class DeckPicker extends Activity implements Runnable, IButtonListener {
 
 	private DeckPicker mSelf;
 
-	private ProgressDialog mProgressDialog;
+	private StyledProgressDialog mProgressDialog;
 	private StyledDialog mSyncLogAlert;
 	private StyledDialog mUpgradeNotesAlert;
 	private StyledDialog mMissingMediaAlert;
@@ -472,7 +473,7 @@ public class DeckPicker extends Activity implements Runnable, IButtonListener {
 		@Override
 		public void onPreExecute() {
 			if (mProgressDialog == null || !mProgressDialog.isShowing()) {
-				mProgressDialog = ProgressDialog.show(DeckPicker.this, getResources().getString(R.string.sync_all_title), getResources().getString(R.string.sync_prepare_syncing), true);
+				mProgressDialog = StyledProgressDialog.show(DeckPicker.this, getResources().getString(R.string.sync_all_title), getResources().getString(R.string.sync_prepare_syncing), true);
 			}
 		}
 
@@ -1159,7 +1160,7 @@ public class DeckPicker extends Activity implements Runnable, IButtonListener {
         builder.setTitle(res.getString(R.string.deckpicker_download_missing_title));
         builder.setPositiveButton(res.getString(R.string.ok), null);
         mMissingMediaAlert = builder.create();
-        mProgressDialog = new ProgressDialog(DeckPicker.this);
+        mProgressDialog = new StyledProgressDialog(DeckPicker.this);
         mProgressDialog.setTitle(R.string.deckpicker_download_missing_title);
         mProgressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
         mProgressDialog.setMax(100);
@@ -1791,7 +1792,7 @@ public class DeckPicker extends Activity implements Runnable, IButtonListener {
 
 		@Override
 		public void onPreExecute() {
-            mProgressDialog = ProgressDialog.show(DeckPicker.this, "", getResources()
+            mProgressDialog = StyledProgressDialog.show(DeckPicker.this, "", getResources()
                     .getString(R.string.calculating_statistics), true);
 		}
 
@@ -1806,7 +1807,7 @@ public class DeckPicker extends Activity implements Runnable, IButtonListener {
 
     	@Override
         public void onPreExecute() {
-            mProgressDialog = ProgressDialog.show(DeckPicker.this, "", getResources()
+            mProgressDialog = StyledProgressDialog.show(DeckPicker.this, "", getResources()
                     .getString(R.string.backup_repair_deck_progress), true);
         }
 
@@ -1834,7 +1835,7 @@ public class DeckPicker extends Activity implements Runnable, IButtonListener {
 
     	@Override
         public void onPreExecute() {
-            mProgressDialog = ProgressDialog.show(DeckPicker.this, "", getResources()
+            mProgressDialog = StyledProgressDialog.show(DeckPicker.this, "", getResources()
                     .getString(R.string.backup_restore_deck), true);
         }
 
@@ -1886,7 +1887,7 @@ public class DeckPicker extends Activity implements Runnable, IButtonListener {
 
 		@Override
 		public void onPreExecute() {
-            mProgressDialog = ProgressDialog.show(DeckPicker.this, "", getResources()
+            mProgressDialog = StyledProgressDialog.show(DeckPicker.this, "", getResources()
                     .getString(R.string.optimize_deck_dialog), true);
 		}
 
