@@ -2068,21 +2068,21 @@ public class StudyOptions extends Activity implements IButtonListener {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-    	Utils.addMenuItemInActionBar(menu, Menu.NONE, MENU_HELP, Menu.NONE, R.string.help_title, 0);
     	Utils.addMenuItemInActionBar(menu, Menu.NONE, MENU_OPEN, Menu.NONE, R.string.menu_open_deck,
                 R.drawable.ic_menu_manage);
         Utils.addMenuItemInActionBar(menu, Menu.NONE, MENU_SYNC, Menu.NONE, R.string.menu_sync,
                 R.drawable.ic_menu_refresh);        	
         Utils.addMenuItem(menu, Menu.NONE, MENU_ADD_FACT, Menu.NONE, R.string.menu_add_card,
                 R.drawable.ic_menu_add);
-        Utils.addMenuItem(menu, Menu.NONE, MENU_MORE_OPTIONS, Menu.NONE, R.string.studyoptions_more,
-                R.drawable.ic_menu_archive);
         Utils.addMenuItem(menu, Menu.NONE, MENU_PREFERENCES, Menu.NONE, R.string.menu_preferences,
                 R.drawable.ic_menu_preferences);
+        Utils.addMenuItem(menu, Menu.NONE, MENU_MORE_OPTIONS, Menu.NONE, R.string.studyoptions_more,
+                R.drawable.ic_menu_archive);
         Utils.addMenuItem(menu, Menu.NONE, MENU_ROTATE, Menu.NONE, R.string.menu_rotate,
                 android.R.drawable.ic_menu_always_landscape_portrait);        
         Utils.addMenuItem(menu, Menu.NONE, MENU_ZEEMOTE, Menu.NONE, R.string.menu_zeemote,
                 R.drawable.ic_menu_zeemote);
+    	Utils.addMenuItemInActionBar(menu, Menu.NONE, MENU_HELP, Menu.NONE, R.string.help_title, 0);
         return true;
     }
 
