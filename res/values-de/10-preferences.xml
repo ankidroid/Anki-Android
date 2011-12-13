@@ -204,4 +204,6 @@
   <string name="pref_cache_cardbrowser_reload">Karten neu laden?</string>
   <string name="pref_keep_screen_on">Ausschalten verhindern</string>
   <string name="pref_keep_screen_on_summ">Keine automatische Bildschirmabschaltung während des Lernens</string>
+  <string name="pref_simple_interface">Einfache Oberfläche</string>
+  <string name="pref_simple_interface_summ">Beschleunigt die Kartenanzeige, unterstützt aber nur Text (keine Bilder, Sounds etc.)</string>
 </resources>

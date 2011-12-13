@@ -57,7 +57,7 @@
   <string name="studyoptions_no_external_storage_title">Külső tároló nem elérhető</string>
   <string name="studyoptions_no_external_storage_message">No external storage is currently available. AnkiDroid needs to have access to the SD card in order to read and load your Anki decks. Check that your SD card is mounted and try again.</string>
   <string name="fact_adder_intent_title">AnkiDroid Card</string>
-  <string name="fact_adder_swap">Swap</string>
+  <string name="fact_adder_swap">Csere</string>
   <string name="deckpicker_select_dictionary_title">Select Dictionary</string>
   <string name="deckpicker_select_dictionary_default">Default</string>
   <string name="card_editor_add_card">Add card</string>
@@ -73,6 +73,7 @@
   <string name="help_online">Online help</string>
   <string name="help_faq">FAQ</string>
   <string name="help_tutorial">Tutorial deck</string>
+  <string name="simple_interface_hint">Empty %s. Bear in mind that simple interface cannot show pictures/sounds etc.</string>
   <plurals name="factadder_cards_added">
     <item quantity="one">1 card added</item>
     <item quantity="other">%d cards added</item>

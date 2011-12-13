@@ -73,6 +73,7 @@
   <string name="help_online">Pomoc online</string>
   <string name="help_faq">FAQ</string>
   <string name="help_tutorial">Talia instruktażowa</string>
+  <string name="simple_interface_hint">Empty %s. Bear in mind that simple interface cannot show pictures/sounds etc.</string>
   <plurals name="factadder_cards_added">
     <item quantity="one">dodana 1 karta</item>
     <item quantity="other">dodanych %d kart</item>

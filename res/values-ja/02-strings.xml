@@ -74,6 +74,7 @@
   <string name="help_online">オンラインヘルプ</string>
   <string name="help_faq">FAQ</string>
   <string name="help_tutorial">Tutorial deck</string>
+  <string name="simple_interface_hint">Empty %s. Bear in mind that simple interface cannot show pictures/sounds etc.</string>
   <plurals name="factadder_cards_added">
     <item quantity="one">1 card added</item>
     <item quantity="other">%d cards added</item>

@@ -31,7 +31,7 @@
   <string name="studyoptions_eta">Becsült idő (perc):</string>
   <string name="studyoptions_start">Gyakorlás kezdése</string>
   <string name="studyoptions_more">Tanulási beállítások</string>
-  <string name="studyoptions_more_dialog_title">Még több beállítás</string>
+  <string name="studyoptions_more_dialog_title">További beállítások</string>
   <string name="deckpicker_title_nosdcard">Nincs SD-kártya</string>
   <string name="deckpicker_new">Ma új %d</string>
   <string name="deckpicker_loaddeck">Pakli betöltése...</string>
@@ -63,7 +63,7 @@
   <string name="contextmenu_deckpicker_reset_language_assignments">Nyelv-hozzárendelés visszaállítása</string>
   <string name="contextmenu_deckpicker_reset_reset_message">Nyelv visszaállítása</string>
   <string name="contextmenu_deckpicker_optimize_deck">Adatbázis optimalizálása </string>
-  <string name="contextmenu_deckpicker_rename_deck">Rename deck</string>
+  <string name="contextmenu_deckpicker_rename_deck">Pakli átnevezése</string>
   <string name="contextmenu_deckpicker_set_custom_dictionary">Beállítása saját szótár</string>
   <string name="begin_cram">Indítsa el a Cram mód</string>
   <string name="cram">Cram</string>
