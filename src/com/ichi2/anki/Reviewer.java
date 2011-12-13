@@ -1586,7 +1586,15 @@ public class Reviewer extends Activity implements IButtonListener{
 	        	mSetTextIsSelectable = null;
 	        }
         	if (mSetTextIsSelectable != null) {
-	            	mSetTextIsSelectable.invoke(mSimpleCard, true);
+			try {
+		            	mSetTextIsSelectable.invoke(mSimpleCard, true);
+			}
+			catch(IllegalAccessException e) {
+				Log.e(AnkiDroidApp.TAG, e.getMessage());
+			}
+			catch(InvocationTargetException e) {
+				Log.e(AnkiDroidApp.TAG, e.getMessage());
+			}
         	}
         	mSimpleCard.setClickable(true);
         	mCardFrame.addView(mSimpleCard);
