@@ -2531,7 +2531,7 @@ public class StudyOptions extends Activity implements IButtonListener {
     private void setLanguage(String language) {
     	Locale locale;
     	if (language.equals("")) {
-        	return;
+        	locale = Locale.getDefault();
     	} else {
         	locale = new Locale(language);
     	}
