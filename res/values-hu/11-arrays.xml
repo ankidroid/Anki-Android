@@ -118,6 +118,7 @@
   <string-array name="theme_labels">
     <item>Android Dark</item>
     <item>Android Light</item>
-    <item>Blue</item>
+    <item>Kék</item>
+    <item>White</item>
   </string-array>
 </resources>

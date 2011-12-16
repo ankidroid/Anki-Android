@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?> 
+ <!-- 
+ ~ Copyright (c) 2011 Norbert Nagold <norbert.nagold@gmail.com> 
+ ~ This program is free software; you can redistribute it and/or modify it under 
+ ~ the terms of the GNU General Public License as published by the Free Software 
+ ~ Foundation; either version 3 of the License, or (at your option) any later 
+ ~ version. 
+ ~ 
+ ~ This program is distributed in the hope that it will be useful, but WITHOUT ANY 
+ ~ WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A 
+ ~ PARTICULAR PURPOSE. See the GNU General Public License for more details. 
+ ~ 
+ ~ You should have received a copy of the GNU General Public License along with 
+ ~ this program.  If not, see <http://www.gnu.org/licenses/>. 
+ --> 
+ 
+ 
+<resources> 
+ <string-array name="tutorial_questions"> 
+    <item><![CDATA[¡Gracias por instalar AnkiDroid!<br />Esta es una breve introducción.<br /><br />Lo que ves ahora es el lado de la <span style=\'font-weight:600;\'>pregunta</span> de una tarjeta.<br />Por favor, haz clic en el botón grande de abajo...]]></item> 
+    <item><![CDATA[Se muestra ahora la siguiente tarjeta:< br / >< br / >La idea es sencilla: al igual que en tarjetas de papel \"reales\", escribes una pregunta sobre el frente y la respuesta en la parte trasera de tus tarjetas.< br / >< br />(haz click en el botón para mostrar la parte trasera)]]></item> 
+    <item><![CDATA[\"¿Cuál es la capital de Burkina Faso?\"<br /><br />Reflexiona un poco sobre la respuesta y luego haga clic en \"Mostrar respuesta\"]]></item> 
+    <item><![CDATA[Por encima de cada botón de respuesta, encontrarás información sobre el tiempo que pasará antes de que la tarjeta se vuelva a mostrar en caso de responder con ese botón.]]></item> 
+    <item><![CDATA[La intención es mostrarte la tarjeta de nuevo, inmediatamente antes de que la olvides. Estudios empíricos han mostrado que de este modo la información se puede aprender más eficientemente.]]></item> 
+    <item><![CDATA[Algunas palabras acerca de la organización en AnkiDroid:<br /><br>Toda la información tiene que ser presentada en pares de preguntas y respuestas. Si quieres aprender en la dirección inversa, debes crear otra tarjeta con la información intercambiada.]]></item> 
+    <item><![CDATA[Las tarjetas se agrupan en mazos y se pueden organizar con la ayuda de todo tipo de etiquetas.]]></item> 
+    <item><![CDATA[Existen principalmente dos formas de conseguir nuevas tarjetas:<br /><br />O bien te descargas mazos prefabricados de otros usuarios (elegir la opción \"Descargar mazo\" en el menú de opciones del resumen de mazos), o bien crearlas tú mismo.]]></item> 
+    <item><![CDATA[En cualquier caso, crear tus propios mazos es esencial para cubrir tus necesidades a la perfección. Puedes hacerlo directamente en AnkiDroid...]]></item> 
+    <item><![CDATA[Vamos a echar un vistazo a la barra superior: <br /><br /> En la esquina superior izquierda se encuentran algunos números. El rojo cuenta las tarjetas falladas (contestadas con un \"Otra vez\"),]]></item> 
+    <item><![CDATA[En la esquina derecha se encuentra información acerca de tu tiempo de reflexion con esta tarjeta, y sobre tu rendimiento.]]></item> 
+    <item><![CDATA[Estos han sido los principales puntos sobre el uso de AnkiDroid.<br /><br>Para más información sobre el concepto clave de Anki, visita http://ankisrs.net/]]></item> 
+ </string-array>
+ <string-array name="tutorial_answers">
+    <item><![CDATA[... para ver el lado de la <span style=\'font-weight:600;\'>respuesta</span> de la tarjeta (por debajo de la línea).<br /><br /><br />Haz clic en el botón más a la derecha de los cuatro botones.]]></item> 
+    <item><![CDATA[Supongamos que deseas aprender las capitales del mundo. Hagamos que la pregunta sea...<br /><br />(haz click en uno de los botones para mostrar la siguiente tarjeta)]]></item> 
+    <item><![CDATA[\"Ouagadougou\" es la respuesta correcta.<br /><br />¿No acertaste? Haz clic en \"Otra vez\" para ver de nuevo la tarjeta en un par de minutos. Si acertaste, haz clic en uno de los botones restantes, dependiendo de la facilidad con la que respondiste.]]></item> 
+    <item><![CDATA[Este período de tiempo se calcula en base a la última vez que respondiste a la tarjeta, la facilidad de repuesta actual y facilidad de repuestas anteriores de la tarjeta.]]></item> 
+    <item><![CDATA[Si quieres aprender más sobre el repaso espaciado, visita:<br>http://en.wikipedia.org/wiki/Spaced_repetition_system]]></item> 
+    <item><![CDATA[No te preocupes, esto se puede hacer de forma automática. No es necesario introducir la misma información dos veces.]]></item> 
+    <item><![CDATA[Aprenderás rápidamente acerca de esto cuando empieces a utilizar AnkiDroid.]]></item> 
+    <item><![CDATA[Encontrarás miles de cubiertas prefabricadas para descargar y seguramente algunas te serán de utilidad.]]></item> 
+    <item><![CDATA[... o (un poco más cómodo) con la aplicación de escritorio Anki (descargable gratuitamente en http://ankisrs.net/).<br><br>Puedes sincronizar tus mazos con la aplicación de escritorio muy fácilmente, por lo que transferir los datos no es un problema.]]></item> 
+    <item><![CDATA[el negro muestra el número de tarjetas que ya habías aprendido antes y que debes repasar hoy, y el número azul te dice la cantidad de tarjetas nuevas previstas para hoy. <br /><br /> El tipo al que pertenece la tarjeta actual se especifica mediante un subrayado.]]></item> 
+    <item><![CDATA[La barra superior muestra tu progreso sobre el total de fichas programadas para hoy, la inferior indica el porcentaje de respuestas afirmativas (que son cualquiera excepto \"Otra vez\").]]></item> 
+    <item><![CDATA[Pruébalo un poco ahora y comprueba si se ajusta a tus necesidades.<br><br>Tal vez puedas comenzar con el resumen de mazos (pulsa el botón menu en la pantalla principal y selecciona \"Todos los mazos\"), donde puedes descargar mazos prefabricados o crear los tuyos propios (sólo tienes que utilizar el menú de allí).]]></item> 
+ </string-array>
+</resources>

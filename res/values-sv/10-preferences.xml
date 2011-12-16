@@ -46,7 +46,7 @@
   <string name="show_timer">Visa timer</string>
   <string name="show_timer_summ">Timer som visar hur lång tid det tar dig att svara</string>
   <string name="show_progress_bars">Visa förloppsmätare</string>
-  <string name="show_progress_bars_summ">Visar dagens framsteg och andel av dagens korrekta svar vid granskning</string>
+  <string name="show_progress_bars_summ">Visar dagens framsteg och andel av dagens korrekta svar vid repetition</string>
   <string name="show_whiteboard_summ">Låter dig skriva på skärmen</string>
   <string name="whiteboard_stroke_width">Linjevidd för Whiteboard</string>
   <string name="whiteboard_stroke_width_summ">Linjebredd: XXX</string>
@@ -56,7 +56,7 @@
   <string name="write_answers_summ">Låter dig skriva svaret och jämföra med det korrekta svaret</string>
   <string name="text_selection">Tillåt textmarkering</string>
   <string name="text_selection_summ">Låter dig markera och kopiera text från kort (via meny eller långt klick) för att söka i extern ordlista</string>
-  <string name="text_selection_click">Långt klick-lösning</string>
+  <string name="text_selection_click">Långt klick-workaround</string>
   <string name="text_selection_click_summ">Aktivera detta om du inte kan påbörja textmarkering via långt klick</string>
   <string name="dictionary">Ordbok</string>
   <string name="dictionary_summ">Ordbok där sökningar ska göras: XXX</string>
@@ -90,7 +90,7 @@
   <string name="fullscreen_review">Repetera i fullskärm</string>
   <string name="fullscreen_review_summ">Du kan välja om all tillgänglig skärmyta ska användas vid repetition av kort</string>
   <string name="zoom">Aktivera Zoom</string>
-  <string name="zoom_summ">Visa zoom-kontrollerna vid granskning</string>
+  <string name="zoom_summ">Visa zoom-kontrollerna vid repetition</string>
   <string name="zeemote">Stöd för Zeemote JS1</string>
   <string name="zeemote_summ">Använd Zeemote JS1 handkontroll för att navigera vid granskning</string>
   <string name="swipe">Aktivera gester</string>
@@ -107,6 +107,7 @@
   <string name="gestures_tap_bottom">Tryck på botten</string>
   <string name="gestures_tap_left">Tryck till vänster</string>
   <string name="gestures_tap_right">Tryck till höger</string>
+  <string name="gestures_longclick">Långt klick</string>
   <string name="pref_cat_scrolling">Upp/ner-knappar på hårdvara</string>
   <string name="more_scrolling_buttons">eReader</string>
   <string name="more_scrolling_buttons_summ">Använd också Kanji/Katakana, Emoji/Kao-moji-knappar för att bläddra.</string>
@@ -123,7 +124,7 @@
   <string name="sync_fetch_missing_media">Hämta media vid synk</string>
   <string name="sync_fetch_missing_media_summ">Hämta automatiskt saknade media vid synkning.</string>
   <string name="fix_hebrew_text">Framtvinga RTL för hebreiska</string>
-  <string name="fix_hebrew_text_summ">Lösning för begränsat stöd för hebreiska på Android-plattformen. Stöder inte vokaler.</string>
+  <string name="fix_hebrew_text_summ">Tillfällig lösning för begränsat stöd för hebreiska på Android-plattformen. Stöder inte vokaler.</string>
   <string name="default_font">Standardteckensnitt</string>
   <string name="default_font_summ">Tillåt ändring av standardteckensnitt som används för att visa kort. Teckensnitt ska installeras på SD-kortet i en mapp som heter \'fonts\' i din Anki-mapp.</string>
   <string name="language">Språk</string>
@@ -155,7 +156,7 @@
   <string name="studyoptions_session">Studiepass</string>
   <string name="studyoptions_tag">Efter tagg</string>
   <string name="studyoptions_tag_new">Visa nya kort beroende på tagg:</string>
-  <string name="studyoptions_tag_rev">Visa repetionskort beroende på tagg:</string>
+  <string name="studyoptions_tag_rev">Visa repetitionskort beroende på tagg:</string>
   <string name="studyoptions_session_minutes">Studiegräns (minuter):</string>
   <string name="studyoptions_session_questions">Studiegräns (frågor):</string>
   <string name="session_time_limit">Tidsgräns per studiepass</string>
@@ -187,7 +188,7 @@
   <string name="async_mode_summ">Detta snabbar AnkiDroid upp men kan korrumpera databaser när hela Android-systemet kraschar, så använd säkerhetskopior</string>
   <string name="async_mode_message">Detta alternativt är osäkert och kan göra dina kortlekar oanvändbara om AnkiDroid kraschar (t.ex. på grund av slut på batteriet).\nDet är rekommenderas STARKT att säkerhetskopieringssytemet används om detta alternativ är aktiverat.\nAktivera ändå?</string>
   <string name="fix_orientation">Fix orienting</string>
-  <string name="fix_orientation_summ">Tillåt inte att orienteringen ändras under granskning</string>
+  <string name="fix_orientation_summ">Tillåt inte att orienteringen ändras vid repetition av kort</string>
   <string name="per_day">Per dag</string>
   <string name="wal_warning">Din enhets sqlite-implementation tillåter inte korrekt Anki journalläge.\nDärför kommer du inte kunna synkronisera dina kortlekar via AnkiDroid synkroniseringsfunktion innan vi hittar en lösning på detta.\ni övrigt bör AnkiDroid fungera.\nVar vänlig hjälp oss genom att skicka in en felrapport.\nBesök http://bit.ly/n5MaOF för mer information.</string>
   <string name="studyoptions_new_cards_per_day">Nya kort per dag</string>
@@ -195,7 +196,14 @@
   <string name="studyoptions_more_save">Spara</string>
   <string name="show_broadcast_messages">Visa aktuella meddelanden</string>
   <string name="show_broadcast_messages_summ">Visa meddelanden om nya versioner av AnkiDroid eller andra viktiga meddelanden</string>
-  <string name="input_workaround">Input Workaround</string>
-  <string name="input_workaround_summ">Workaround for focusing problems on HTML input boxes. Causes problems on several devices.</string>
-  <string name="write_answers_message">Before being able to write your answers, you have to define for every deck a field to compare the written answer with.\n\nYou can do this via Anki Desktop (deck properties -&gt; edit model -&gt; card layout).</string>
+  <string name="input_workaround">Inmatnings-workaround</string>
+  <string name="input_workaround_summ">Tillfällig lösning på att fokusera på inmatningsfält för HTML. Orsakar problem på flera enheter.</string>
+  <string name="write_answers_message">För varje kortlek bör du definiera ett fält att jämföra det skrivna svaret med. Du kan kan göra detta via Anki Desktop (korleksegenskaper -&gt; redigera modell -&gt; kortlekslayout).\n\nOm inget fält anges kommer ditt skrivna svar att jämföras med hela svaret hos kortet.</string>
+  <string name="pref_cache_cardbrowser">Kortutforskarecache</string>
+  <string name="pref_cache_cardbrowser_summ">Håll alla kort från kortutforskaren i cacheminnet (stor minnesåtgång).</string>
+  <string name="pref_cache_cardbrowser_reload">Ladda om alla kort?</string>
+  <string name="pref_keep_screen_on">Håll skärmen på</string>
+  <string name="pref_keep_screen_on_summ">Förhindra att skärmen stängs av vid repetition av kort</string>
+  <string name="pref_simple_interface">Enkelt gränssnitt</string>
+  <string name="pref_simple_interface_summ">Speeds up card showing but does only support text (no pictures, sounds etc.)</string>
 </resources>

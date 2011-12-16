@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?> 
+ <!-- 
+ ~ Copyright (c) 2011 Norbert Nagold <norbert.nagold@gmail.com> 
+ ~ This program is free software; you can redistribute it and/or modify it under 
+ ~ the terms of the GNU General Public License as published by the Free Software 
+ ~ Foundation; either version 3 of the License, or (at your option) any later 
+ ~ version. 
+ ~ 
+ ~ This program is distributed in the hope that it will be useful, but WITHOUT ANY 
+ ~ WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A 
+ ~ PARTICULAR PURPOSE. See the GNU General Public License for more details. 
+ ~ 
+ ~ You should have received a copy of the GNU General Public License along with 
+ ~ this program.  If not, see <http://www.gnu.org/licenses/>. 
+ --> 
+ 
+ 
+<resources> 
+ <string-array name="tutorial_questions"> 
+    <item><![CDATA[Tack för att du installerat AnkiDroid!<br />Detta är en kort introduktion.<br /><br />Vad du ser nu är en <span style=\'font-weight:600;\'>fråga</span>, en del av ett flashcard.<br />Tryck på den stora knappen nedan...]]></item> 
+    <item><![CDATA[Nästa kort visas nu.<br /><br />Idéen är enkel: Precis som i den &quot;verkliga världen&quot; med flashcards av papper, skriver du en fråga på framsidan och svaret på baksidan av dina kort.<br /><br />(tryck på knappen för att visa baksidan)]]></item> 
+    <item><![CDATA[&quot;Vad heter huvudstaden i Burkina Faso?&quot;<br /><br />Tänk en stund på svaret och tryck sedan på &quot;visa svar&quot;]]></item> 
+    <item><![CDATA[Ovanför varje svarsknapp hittar du information om tiden till nästa gång detta kort kommer att visas om den knappen används för att svara kortet.]]></item> 
+    <item><![CDATA[Tanken är att visa dig kortet igen precis innan du gömmer bort det. Empiriska studier har visat att information kan läras in mest effektivt på det här sättet.]]></item> 
+    <item><![CDATA[Lite kort om strukturen i AnkiDroid:<br /><br>All information måste anges som svar och fråga. Om du vill lära dig båda vägarna bör du skapa ett nytt kort som byter plats på svaret och frågan.]]></item> 
+    <item><![CDATA[Kort läggs samman i kortlekar och kan organiseras med hjälp av taggar.]]></item> 
+    <item><![CDATA[Det finns i princip två sätt att få nya kort:<br /><br />Du kan endera ladda ner färdiga kortlekar skapade av andra användare (välj &quot;ladda ner kortlek&quot; i menyn för kortlekens sammanfattning) eller skapa egna kortlekar. ]]></item> 
+    <item><![CDATA[Men att skapa egna kortlekar är troligen bäst för dina egna behov. Du kan göra detta direkt i AnkiDroid...]]></item> 
+    <item><![CDATA[Låt oss ta en titt på den övre stapeln:<br /><br />I det övre vänstra hörnet finns några nummer. Det röda visar antalet felaktigt svarade kort (svarade &quot;igen&quot;),]]></item> 
+    <item><![CDATA[I det högra hörnet hittar du information om använd tid för detta kort och om dina framsteg.]]></item> 
+    <item><![CDATA[Detta har varit de viktigaste punkterna vid användning av AnkiDroid.<br /><br>För mer information om funktioner och användningsområden, gå till http://ankisrs.net/]]></item> 
+ </string-array>
+ <string-array name="tutorial_answers">
+    <item><![CDATA[... för att se <span style=\'font-weight:600;\'>svaret</span> som också är en del av detta kort (nedanför linjen).<br /><br /><br />Klicka på den högra av de fyra knapparna]]></item> 
+    <item><![CDATA[Låt oss anta att du vill lära dig världens huvudstäder. Låt frågan vara...<br /><br />(klicka på en av knapparna för att visa nästa kort)]]></item> 
+    <item><![CDATA[&quot;Ouagadougou&quot; är det korrekta svaret. <br /><br />Visste du det inte? Tryck &quot;igen&quot; för att se kortet igen om några minuter. Klicka annars på en av de andra knapparna beroende på hur lätt du kunde svaret.]]></item> 
+    <item><![CDATA[Denna tid beräknas utifrån när du senast svarade på kortet, knappen du använder för att svara på kortet nu och tidigare svar av kortet.]]></item> 
+    <item><![CDATA[Om du vill lära dig mer om intervallbaserad repetition, besök:<br>http://en.wikipedia.org/wiki/Spaced_repetition_system]]></item> 
+    <item><![CDATA[Detta kan göras automatiskt. Du behöver inte ange samma information två gånger.]]></item> 
+    <item><![CDATA[Du kommer att lära dig detta snabbt när du börjar använda AnkiDroid.]]></item> 
+    <item><![CDATA[Du kan hitta tusentals färdiga kortlekar att ladda ner och det finns förhoppningsvis några som passar dig.]]></item> 
+    <item><![CDATA[... eller (något enklare) med hjälp av skrivbordsmjukvaran Anki (som kan laddas ner gratis här http://ankisrs.net/).<br><br>Du kan synkronisera dina kortlekar mellan AnkiDroid och Anki väldigt enkelt, så det är inga problem att föra över dem.]]></item> 
+    <item><![CDATA[det svarta visar antalet kort du redan lärt dig och ska granskas idag, och det blå hur många nya kort som ska repeteras idag.<br /><br />Det nuvarande kortets typ visas genom en understrykning.]]></item> 
+    <item><![CDATA[Den övre stapeln visar dina framsteg och den undre visar andelen korrekta svar.]]></item> 
+    <item><![CDATA[Prova att använda det nu en stund och se om det passar just dig.<br><br>Börja med kortlekssammanfattningen (tryck meny på huvudskärmen och välj &quot;alla kortlekar&quot;). Där kan du ladda ner färdiga kortlekar eller skapa dina egna (använd menyn där).]]></item> 
+ </string-array>
+</resources>

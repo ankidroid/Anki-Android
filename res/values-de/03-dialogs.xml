@@ -35,7 +35,6 @@
   <string name="no_tts_available_title">Vorlesen</string>
   <string name="no_tts_available_message">Keine Vorlese-Sprache verfügbar</string>
   <string name="tts_no_tts">Nicht vorlesen</string>
-  <string name="about_content">%1$s Karteikarten für Android &lt;/h2&gt;&lt;p&gt; AnkiDroid kann .anki-Dateien lesen, die mit der Desktop-Version von %2$s Anki&lt;/a&gt; erzeugt werden. &lt;/p&gt;&lt;p&gt; Um mitzuhelfen, AnkiDroid besser zu machen, bitten wir Sie, Fehler %3$s hier&lt;/a&gt; zu melden; neue Verbesserungsideen sind ebenfalls sehr wilkommen! Benutzen Sie das %4$s Wiki&lt;/a&gt; und sagen Sie Hallo im %5$s Forum&lt;/a&gt;.&lt;/p&gt;&lt;p&gt; AnkiDroid ist %6$s Open-SourceSoftware&lt;/a&gt;, %8$s jeder&lt;/a&gt; kann also %7$s mitmachen&lt;/a&gt; :-) Auch Nicht-Entwickler können helfen, zum Beispiel, indem sie das Wiki oder Screenshots aktualisieren, für die Anki-Desktop-Version %9$s spenden&lt;/a&gt; oder über AnkiDroid bloggen! &lt;/p&gt;&lt;p&gt; AnkiDroid wird unter der %10$s GNU-GPL-v3-Lizenz&lt;/a&gt; veröffentlicht; der Quellcode findet sich %11$s hier&lt;/a&gt;.</string>
   <string name="dont_show_again">Nicht mehr anzeigen</string>
   <string name="deck_upgrade_too_old_version">Stapel mit einer älteren Version als 39 werden nicht durch AnkiDroid unterstützt. Öffnen Sie den Stapel mit Anki-Desktop um ihn auf die neueste Version zu aktualisieren.</string>
   <string name="deck_upgrade_version_61_has_latex">Der Stapel kann nicht voll synchronisiert werden, weil er LaTeX-Ausdrücke enthält; bitte öffnen Sie den Stapel mit der Desktop-Version von Anki, um ihn auf die neueste Version zu aktualisieren und die LaTeX-Ausdrücke neu zu erzeugen.</string>
@@ -58,4 +57,20 @@
   <string name="reset_card_dialog_title">Lernfortschritt zurücksetzen</string>
   <string name="reset_card_dialog_message">Dies setzt den Lernfortschritt für alle Karten dieses Fakts zurück (diese sehen danach aus wie neue Karten).\nWirklich fortfahren?</string>
   <string name="reset_card_dialog_confirmation">Alle Karten dieses Fakts wurden zurückgesetzt</string>
+  <string name="answering_error_title">Datenbank-Fehler</string>
+  <string name="answering_error_message">Beim Antworten/Ändern der letzten Karte oder bei einer sonstigen Datenbankänderung ist ein Fehler aufgetreten. Das könnte an einem beschädigten Stapel oder an unzureichendem Festplattenspeicher liegen.\n\nSollte dies häufiger auftreten, versuchen Sie bitte, den Stapel zu reparieren. Versuchen Sie auch eine Datenbank-Überprüfung mit Anki-Desktop.\n\nDie Ursache könnte auch ein AnkiDroid-Fehler sein; bitte melden Sie ihn deshalb, damit wir das überprüfen können.</string>
+  <string name="answering_error_report">Fehler melden</string>
+  <string name="repair_deck_dialog">Wollen Sie wirklich versuchen, den Stapel \'%1$s\' zu reparieren?\n\nBevor der Versuch gestartet wird, wird eine Kopie des Stapels im Unterordner \'%2$s\' angelegt.</string>
+  <string name="intent_add_save_for_later">Für später speichern</string>
+  <string name="intent_add_saved_information">Gespeicherte Daten</string>
+  <string name="intent_add_clear_all">Alles löschen</string>
+  <string name="intent_aedict_empty">Kategorie \'Standard\' ist leer</string>
+  <string name="intent_aedict_category">Entfernen Sie alle Notepad-Kategorien um Karten zu AnkiDroid hinzuzufügen oder fügen Sie die Kategorie \'Standard\' hinzu</string>
+  <string-array name="about_content">
+    <item><![CDATA[<h2>%1$s:<br/>Karteikarten für Android</h2>AnkiDroid ist eine Karteikarten-Anwendung, die voll kompatibel ist mit der Desktop-Software <a href="%2$s">Anki</a>. Sie können mit beiden Programmen Inhalte erstellen, herunterladen und lernen und sie sehr einfach synchronisieren.]]></item>
+    <item><![CDATA[Helfen Sie uns, AnkiDroid besser zu machen und melden alle Fehler <a href="%1$s">hier</a>; Ideen für neue Funktionen sind ebenfalls willkommen! Benutzen Sie das <a href="%2$s">Wiki</a> und sagen im <a href="%3$s">Forum</a> Hallo.]]></item>
+    <item><![CDATA[AnkiDroid ist <a href="%1$s">Open-Source-Software<a/>; jeder kann also <a href="%2$s">beitragen</a> und selbst <a href="%3$s">Entwickler</a> werden :-)]]></item>
+    <item><![CDATA[Auch Nicht-Entwickler können helfen; zum Beispiel, indem sie AnkiDroid <a href="%1$s">übersetzen</a>, das Wiki aktualisieren und Bildschirmfotos erstellen, für Anki Desktop <a href="%2$s">spenden</a> oder über AnkiDroid bloggen!]]></item>
+    <item><![CDATA[AnkiDroid ist unter der <a href="%1$s">GNU-GPL-v3-Lizenz</a> veröffentlicht; der Quellcode ist <a href="%2$s">hier</a> verfügbar.]]></item>
+  </string-array>
 </resources>

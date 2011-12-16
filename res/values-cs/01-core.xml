@@ -53,17 +53,17 @@
   <string name="studyoptions_congrats_syncdeck">Synchronizovat balíček</string>
   <string name="studyoptions_congrats_open_other_deck">Otevřít jiný balíček</string>
   <string name="studyoptions_congrats_finish">Zpět na studijní obrazovku</string>
-  <string name="card_unsuspended">Card suspension undone</string>
-  <string name="card_suspended">Card resuspended</string>
+  <string name="card_unsuspended">Zrušeno vyřazení karty</string>
+  <string name="card_suspended">Zrušeno pozastavení karty</string>
   <string name="menu_rotate">Otočit</string>
   <string name="undo">Vrátit zpět</string>
   <string name="redo">Zrušit vrácení</string>
-  <string name="close_previous_deck">Uzavírám předchozí balíček.\nProsím čekejte...</string>
-  <string name="close_deck">Uzavírám balíček.\nProsím čekejte...</string>
+  <string name="finish_operation">Dokončování předchozí operace.\nProsím čekejte...</string>
   <string name="contextmenu_deckpicker_download_missing_media">Stáhnout chybějící média</string>
   <string name="contextmenu_deckpicker_reset_language_assignments">Obnovit přiřazení jazyka</string>
   <string name="contextmenu_deckpicker_reset_reset_message">Obnovení jazyka</string>
   <string name="contextmenu_deckpicker_optimize_deck">Optimalizovat databázi</string>
+  <string name="contextmenu_deckpicker_rename_deck">Přejmenovat balíček</string>
   <string name="contextmenu_deckpicker_set_custom_dictionary">Nastavit vlastní slovník</string>
   <string name="begin_cram">Spustit Šprtání</string>
   <string name="cram">Šprtat</string>
@@ -93,9 +93,11 @@
   <string name="studyoptions_load_tutorial_deck">Načíst výukový balíček</string>
   <string name="studyoptions_night_mode">Noční režim</string>
   <string name="studyoptions_swap_qa">Prohoď Q/A</string>
-  <string name="visit">Visit</string>
+  <string name="visit">Navštívit</string>
   <string name="later">Později</string>
   <string name="download">Stáhnout</string>
+  <string name="deckpicker_loading_error">Balíček nemohl být načten</string>
+  <string name="deckpicker_creating_backup">Vytváření zálohy...</string>
   <string-array name="next_review_s">
     <item>1 sekunda</item>
     <item>1 minuta</item>

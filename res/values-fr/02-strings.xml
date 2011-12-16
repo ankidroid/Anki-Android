@@ -25,7 +25,7 @@
   <string name="CardEditorTags">Labels: %1$s</string>
   <string name="add_new_tag">Ajouter un nouveau label</string>
   <string name="sdcard_missing_message">La carte SD n\'est pas disponible car elle est connectée en USB. Déconnectez l\'USB pour accéder aux paquets.</string>
-  <string name="show_whiteboard">Afficher timer/whiteboard</string>
+  <string name="show_whiteboard">Afficher tableau blanc</string>
   <string name="hide_whiteboard">Masquer le tableau blanc</string>
   <string name="clear_whiteboard">Effacer le tableau blanc</string>
   <string name="session_question_limit_reached">Limite de questions par session atteinte</string>
@@ -58,13 +58,24 @@
   <string name="studyoptions_no_external_storage_message">Aucun moyen de stockage externe n\'est disponible pour l\'instant. AnkiDroid nécessite d\'avoir accès à la carte SD afin de lire et charger vos paquets Anki. Veuillez vérifier que votre carte SD est montée et essayez à nouveau.</string>
   <string name="fact_adder_intent_title">Carte AnkiDroid</string>
   <string name="fact_adder_swap">Inverser</string>
-  <string name="deckpicker_select_dictionary_title">Select Dictionary</string>
-  <string name="deckpicker_select_dictionary_default">Default</string>
-  <string name="card_editor_add_card">Add card</string>
-  <string name="card_editor_reset">Reset</string>
-  <string name="card_editor_copy_card">Copy card</string>
-  <string name="card_editor_reset_card">Reset progress</string>
-  <string name="error_insufficient_memory">Operation not possible due to insufficient memory on your device</string>
-  <string name="tutorial_load">Creating tutorial deck</string>
-  <string name="tutorial_loading_error">Tutorial deck could not be created</string>
+  <string name="deckpicker_select_dictionary_title">Sélectionner un dictionnaire</string>
+  <string name="deckpicker_select_dictionary_default">Par défaut</string>
+  <string name="card_editor_add_card">Ajouter une carte</string>
+  <string name="card_editor_reset">Réinitialiser</string>
+  <string name="card_editor_copy_card">Copier la carte</string>
+  <string name="card_editor_reset_card">Réinitialiser les progrès</string>
+  <string name="error_insufficient_memory">L\'opération n\'a pas pu être accomplie du fait d\'une mémoire disponible insuffisante sur votre périphérique</string>
+  <string name="tutorial_load">Créer le pont tutoriel</string>
+  <string name="tutorial_loading_error">Le paquet-tutoriel n\'a pas pu être créé</string>
+  <string name="rename">Renommer</string>
+  <string name="rename_error">Le paquet %s n\'a pas pu être renommé</string>
+  <string name="help_title">Aide</string>
+  <string name="help_online">Aide en ligne</string>
+  <string name="help_faq">FAQ</string>
+  <string name="help_tutorial">Paquet-tutoriel</string>
+  <string name="simple_interface_hint">Empty %s. Bear in mind that simple interface cannot show pictures/sounds etc.</string>
+  <plurals name="factadder_cards_added">
+    <item quantity="one">1 carte ajoutée</item>
+    <item quantity="other">%d cartes ajoutées</item>
+  </plurals>
 </resources>

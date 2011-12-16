@@ -86,6 +86,7 @@ import java.util.zip.Deflater;
  * TODO comments
  */
 public class Utils {
+    enum SqlCommandType { SQL_INS, SQL_UPD, SQL_DEL };
 
     // Used to format doubles with English's decimal separator system
     public static final Locale ENGLISH_LOCALE = new Locale("en_US");
@@ -770,22 +771,30 @@ public class Utils {
 
     // Print methods
     public static void printJSONObject(JSONObject jsonObject) {
-        printJSONObject(jsonObject, "-", false);
+        printJSONObject(jsonObject, "-", null);
     }
 
 
     public static void printJSONObject(JSONObject jsonObject, boolean writeToFile) {
-        if (writeToFile) {
-            new File("/sdcard/payloadAndroid.txt").delete();
+        BufferedWriter buff;
+        try {
+            buff = writeToFile ?  
+                    new BufferedWriter(new FileWriter("/sdcard/payloadAndroid.txt"), 8192) : null;
+            try {
+                printJSONObject(jsonObject, "-", buff);
+            } finally {
+                if (buff != null)
+                    buff.close();
+            }
+        } catch (IOException ioe) {
+            Log.e(AnkiDroidApp.TAG, "IOException = " + ioe.getMessage());
         }
-        printJSONObject(jsonObject, "-", writeToFile);
     }
 
 
-    public static void printJSONObject(JSONObject jsonObject, String indentation, boolean writeToFile) {
+    private static void printJSONObject(JSONObject jsonObject, String indentation, BufferedWriter buff) {
         try {
-
-            Iterator<String> keys = jsonObject.keys();
+            @SuppressWarnings("unchecked") Iterator<String> keys = (Iterator<String>) jsonObject.keys();
             TreeSet<String> orderedKeysSet = new TreeSet<String>();
             while (keys.hasNext()) {
                 orderedKeysSet.add(keys.next());
@@ -798,20 +807,16 @@ public class Utils {
                 try {
                     Object value = jsonObject.get(key);
                     if (value instanceof JSONObject) {
-                        if (writeToFile) {
-                            BufferedWriter buff = new BufferedWriter(new FileWriter("/sdcard/payloadAndroid.txt", true));
+                        if (buff != null) {
                             buff.write(indentation + " " + key + " : ");
                             buff.newLine();
-                            buff.close();
                         }
                         Log.i(AnkiDroidApp.TAG, "	" + indentation + key + " : ");
-                        printJSONObject((JSONObject) value, indentation + "-", writeToFile);
+                        printJSONObject((JSONObject) value, indentation + "-", buff);
                     } else {
-                        if (writeToFile) {
-                            BufferedWriter buff = new BufferedWriter(new FileWriter("/sdcard/payloadAndroid.txt", true));
+                        if (buff != null) {
                             buff.write(indentation + " " + key + " = " + jsonObject.get(key).toString());
                             buff.newLine();
-                            buff.close();
                         }
                         Log.i(AnkiDroidApp.TAG, "	" + indentation + key + " = " + jsonObject.get(key).toString());
                     }
@@ -819,20 +824,20 @@ public class Utils {
                     Log.e(AnkiDroidApp.TAG, "JSONException = " + e.getMessage());
                 }
             }
-
         } catch (IOException e1) {
             Log.e(AnkiDroidApp.TAG, "IOException = " + e1.getMessage());
         }
-
     }
 
 
+    /*
     public static void saveJSONObject(JSONObject jsonObject) throws IOException {
         Log.i(AnkiDroidApp.TAG, "saveJSONObject");
         BufferedWriter buff = new BufferedWriter(new FileWriter("/sdcard/jsonObjectAndroid.txt", true));
         buff.write(jsonObject.toString());
         buff.close();
     }
+    */
 
 
     /**
@@ -865,6 +870,15 @@ public class Utils {
         Date today = Date.valueOf(df.format(cal.getTime()));
         return today;
     }
+
+
+    public static void printDate(String name, double date) {
+    	SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH-mm-ss");
+    	df.setTimeZone(TimeZone.getTimeZone("GMT"));
+    	Calendar cal = new GregorianCalendar(TimeZone.getTimeZone("GMT"));
+    	cal.setTimeInMillis((long)date * 1000);
+    	Log.d(AnkiDroidApp.TAG, "Value of " + name + ": " + cal.getTime().toGMTString());
+	}
 
 
     public static String doubleToTime(double value) {
@@ -939,7 +953,7 @@ public class Utils {
             if (mediaDir != null) {                              
                 base = urlEncodeMediaDir(mediaDir);
             }
-        }
+      //  }
         return base;
     }
 
@@ -1081,15 +1095,39 @@ public class Utils {
     }
 
     /** Returns a list of files for the installed custom fonts. */
-    public static File[] getCustomFonts(Context context) {
+    public static String[] getCustomFonts(Context context) {
         SharedPreferences preferences = PrefSettings.getSharedPrefs(context);
         String deckPath = preferences.getString("deckPath",
                 AnkiDroidApp.getStorageDirectory() + "/AnkiDroid");
         String fontsPath = deckPath + "/fonts/";
         File fontsDir = new File(fontsPath);
-        if (!fontsDir.exists() || !fontsDir.isDirectory()) {
-          return new File[0];
+        int fontsCount = 0;
+        File[] fontsList = null;
+        if (fontsDir.exists() && fontsDir.isDirectory()) {
+        	fontsCount = fontsDir.listFiles().length;
+        	fontsList = fontsDir.listFiles();
         }
-        return fontsDir.listFiles();
+        String[] ankiDroidFonts = null;
+        String assetPath = "/android_asset/fonts/";
+        int adFontsCount = 0;
+		try {
+			ankiDroidFonts = context.getAssets().list("fonts");
+			adFontsCount = ankiDroidFonts.length;
+		} catch (IOException e) {
+			Log.e(AnkiDroidApp.TAG, "Error on retrieving ankidroid fonts: " + e);
+		}
+		String[] fonts = new String[fontsCount + adFontsCount];
+        for (int i = 0; i < fontsCount; i++) {
+        	fonts[i] = fontsList[i].getAbsolutePath();
+        }
+        for (int i = fontsCount; i < fonts.length; i++) {
+        	fonts[i] = assetPath + ankiDroidFonts[i - fontsCount];        	
+        }
+
+        if (fonts.length > 0) {
+        	return fonts;
+        } else {
+        	return new String[0];
+        }
     }
 }

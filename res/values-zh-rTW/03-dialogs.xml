@@ -35,7 +35,6 @@
   <string name="no_tts_available_title">朗讀</string>
   <string name="no_tts_available_message">沒有可用的朗讀語言</string>
   <string name="tts_no_tts">不要發音</string>
-  <string name="about_content">%1$s Flashcards for Android &lt;/h2&gt;&lt;p&gt; AnkiDroid can read .anki files produced by the desktop %2$s Anki&lt;/a&gt; software. &lt;/p&gt;&lt;p&gt; To help us make AnkiDroid better, please report any bug %3$s here&lt;/a&gt;; new feature ideas are very welcome too! Please use the %4$s wiki&lt;/a&gt; and say Hi on the %5$s forum&lt;/a&gt;.&lt;/p&gt;&lt;p&gt; AnkiDroid is %6$s open source software&lt;/a&gt;, so everyone is encouraged to %7$s join&lt;/a&gt; the %8$s contributors&lt;/a&gt; :-) Non-developers can also help, for instance by updating the wiki and screenshots, %9$s donating&lt;/a&gt; to Anki, or blogging about AnkiDroid! &lt;/p&gt;&lt;p&gt; AnkiDroid is released under the %10$s GNU-GPL v3 license&lt;/a&gt; and the source code is available %11$s here&lt;/a&gt;.</string>
   <string name="dont_show_again">Don\'t show again</string>
   <string name="deck_upgrade_too_old_version">AnkiDroid不支援39版以前的牌組。請用電腦上的Anki打開該牌組，以便更新到最新版本。</string>
   <string name="deck_upgrade_version_61_has_latex">排組無法完全升級，因為它包含LaTeX敘述式；請打開Anki桌面版升級到最新版本並重新產生LaTeX。</string>
@@ -58,4 +57,20 @@
   <string name="reset_card_dialog_title">Reset card progress</string>
   <string name="reset_card_dialog_message">This resets the learning progress for all cards of this fact (they will look like new cards).\nReally continue?</string>
   <string name="reset_card_dialog_confirmation">All cards of this fact reset</string>
+  <string name="answering_error_title">Database error</string>
+  <string name="answering_error_message">An error occurred while answering the last card or changing the deck otherwise. This could be related to a corrupt deck or to insufficient disc space.\n\nIf it happens more often, please try to repair the deck. Try a db check with Anki Desktop as well.\n\nNevertheless, it could be an AnkiDroid bug as well; please report the error that we can check this.</string>
+  <string name="answering_error_report">Report error</string>
+  <string name="repair_deck_dialog">Do you really want to try to repair deck \'%1$s\'?\n\nBefore starting the attempt, a copy of the deck will be created in subfolder \'%2$s\'.</string>
+  <string name="intent_add_save_for_later">Save for later</string>
+  <string name="intent_add_saved_information">Saved data</string>
+  <string name="intent_add_clear_all">Clear all</string>
+  <string name="intent_aedict_empty">Category \'default\' is empty</string>
+  <string name="intent_aedict_category">To add cards to AnkiDroid remove all Notepad categories or add one named \'default\'</string>
+  <string-array name="about_content">
+    <item><![CDATA[<h2>%1$s:<br/>Flashcards for Android</h2>AnkiDroid is a flashcard application which is fully compatible with the desktop software <a href="%2$s">Anki</a>. You can create, download and learn contents on both, AnkiDroid or Anki Desktop, and synchronize them very easily.]]></item>
+    <item><![CDATA[To help us make AnkiDroid better, please report any bug <a href="%1$s">here</a>; new feature ideas are very welcome too! Please use the <a href="%2$s">wiki</a> and say Hi on the <a href="%3$s">forum</a>.]]></item>
+    <item><![CDATA[AnkiDroid is <a href="%1$s">open source software<a/>, so everyone is encouraged to <a href="%2$s">join</a> the <a href="%3$s">contributors</a>:-)]]></item>
+    <item><![CDATA[Non-developers can also help, for instance by <a href="%1$s">translating</a> AnkiDroid, updating the wiki and screenshots, <a href="%2$s">donating</a> to Anki Desktop, or blogging about AnkiDroid!]]></item>
+    <item><![CDATA[AnkiDroid is released under the <a href="%1$s">GNU-GPL v3 license</a> and the source code is available <a href="%2$s">here</a>.]]></item>
+  </string-array>
 </resources>

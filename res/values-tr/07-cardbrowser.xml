@@ -38,7 +38,7 @@
   <string name="card_browser_tags_shown">Etiketler: %1$s</string>
   <string name="card_browser_change_display_order">Gösterme sırasını seç</string>
   <string name="card_browser_change_display_order_title">Gösterme sırasını seç</string>
-  <string name="card_browser_card_details">Kart ayrıntıları</string>
+  <string name="card_browser_card_details">Kart bilgileri</string>
   <string name="card_details_question">Soru</string>
   <string name="card_details_answer">Yanıt</string>
   <string name="card_details_due">Vade</string>
@@ -49,7 +49,7 @@
   <string name="card_details_average_time">Ortalama süre</string>
   <string name="card_details_total_time">Toplam süre</string>
   <string name="card_details_yes_count">Evet sayısı</string>
-  <string name="card_details_no_count">Sayısız</string>
+  <string name="card_details_no_count">Hayır sayısı</string>
   <string name="card_details_added">Eklenme tarihi</string>
   <string name="card_details_changed">Değiştirilme tarihi</string>
   <string name="card_details_tags">Etiketler</string>

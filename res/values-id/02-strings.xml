@@ -58,13 +58,24 @@
   <string name="studyoptions_no_external_storage_message">Storan luaran tidak ditemui. AnkiDroid tidak boleh memuat dek Anki tanpanya. Sila periksa kad SD terpasang dan cuba lagi.</string>
   <string name="fact_adder_intent_title">Kad AnkiDroid</string>
   <string name="fact_adder_swap">Swap</string>
-  <string name="deckpicker_select_dictionary_title">Select Dictionary</string>
-  <string name="deckpicker_select_dictionary_default">Default</string>
-  <string name="card_editor_add_card">Add card</string>
-  <string name="card_editor_reset">Reset</string>
-  <string name="card_editor_copy_card">Copy card</string>
-  <string name="card_editor_reset_card">Reset progress</string>
-  <string name="error_insufficient_memory">Operation not possible due to insufficient memory on your device</string>
-  <string name="tutorial_load">Creating tutorial deck</string>
-  <string name="tutorial_loading_error">Tutorial deck could not be created</string>
+  <string name="deckpicker_select_dictionary_title">Pilih Kamus</string>
+  <string name="deckpicker_select_dictionary_default">Standard</string>
+  <string name="card_editor_add_card">Tambahkan kad</string>
+  <string name="card_editor_reset">Set semula</string>
+  <string name="card_editor_copy_card">Salin kad</string>
+  <string name="card_editor_reset_card">Set semula aktiviti</string>
+  <string name="error_insufficient_memory">Operasi gagal kerana tahap memori pada peranti anda</string>
+  <string name="tutorial_load">Membuat dek tutorial</string>
+  <string name="tutorial_loading_error">Dek tutorial tidak dapat dibuat</string>
+  <string name="rename">Rename</string>
+  <string name="rename_error">Deck %s could not be renamed</string>
+  <string name="help_title">Bantuan</string>
+  <string name="help_online">Bantuan online</string>
+  <string name="help_faq">FAQ</string>
+  <string name="help_tutorial">Dek tutorial</string>
+  <string name="simple_interface_hint">Empty %s. Bear in mind that simple interface cannot show pictures/sounds etc.</string>
+  <plurals name="factadder_cards_added">
+    <item quantity="one">1 card added</item>
+    <item quantity="other">%d cards added</item>
+  </plurals>
 </resources>

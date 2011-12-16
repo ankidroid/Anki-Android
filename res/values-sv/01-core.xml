@@ -46,10 +46,10 @@
   <string name="ease3_successive">Bra</string>
   <string name="ease4_successive">Lätt</string>
   <string name="loading">Laddar...</string>
-  <string name="studyoptions_continue">Fortsätt granska</string>
+  <string name="studyoptions_continue">Fortsätt repetera</string>
   <string name="studyoptions_congrats_title">Grattis!</string>
   <string name="studyoptions_congrats_learnmore">Lär dig mer</string>
-  <string name="studyoptions_congrats_reviewearly">Granska tidigt</string>
+  <string name="studyoptions_congrats_reviewearly">Repetera tidigt</string>
   <string name="studyoptions_congrats_syncdeck">Synkronisera kortlek</string>
   <string name="studyoptions_congrats_open_other_deck">Öppna annan kortlek</string>
   <string name="studyoptions_congrats_finish">Tillbaka till Studieskärmen</string>
@@ -58,12 +58,12 @@
   <string name="menu_rotate">Rotera</string>
   <string name="undo">Ångra</string>
   <string name="redo">Gör om</string>
-  <string name="close_previous_deck">Stänger föregående kortlek.\nVänligen vänta...</string>
-  <string name="close_deck">Stänger kortleken.\nVänligen vänta...</string>
+  <string name="finish_operation">Slutför föregående beräkning.\nVänligen vänta...</string>
   <string name="contextmenu_deckpicker_download_missing_media">Hämta saknade media</string>
   <string name="contextmenu_deckpicker_reset_language_assignments">Återställ språktilldelningar</string>
   <string name="contextmenu_deckpicker_reset_reset_message">Återställning av språk</string>
   <string name="contextmenu_deckpicker_optimize_deck">Optimera databas</string>
+  <string name="contextmenu_deckpicker_rename_deck">Byt namn på kortlek</string>
   <string name="contextmenu_deckpicker_set_custom_dictionary">Ange egen ordlista</string>
   <string name="begin_cram">Starta råplugg</string>
   <string name="cram">Råplugg</string>
@@ -96,6 +96,8 @@
   <string name="visit">Besök</string>
   <string name="later">Senare</string>
   <string name="download">Hämta</string>
+  <string name="deckpicker_loading_error">Kortleken kunde inte laddas</string>
+  <string name="deckpicker_creating_backup">Skapar säkerhetskopia...</string>
   <string-array name="next_review_s">
     <item>1 sekund</item>
     <item>1 minut</item>

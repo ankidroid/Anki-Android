@@ -22,7 +22,7 @@
 <resources>
   <string name="pref_cat_decks">Talie</string>
   <string name="pref_cat_sync">Synchronizacja</string>
-  <string name="pref_cat_qadisplay">Wyświetlanie pytania i odpowiedzi</string>
+  <string name="pref_cat_qadisplay">Wyświetlanie kart</string>
   <string name="pref_cat_general">Ogólne</string>
   <string name="pref_cat_start">Uruchamianie</string>
   <string name="pref_cat_extras">Dodatki</string>
@@ -107,6 +107,7 @@
   <string name="gestures_tap_bottom">Dotknij na dole</string>
   <string name="gestures_tap_left">Dotknij po lewej</string>
   <string name="gestures_tap_right">Dotknij po prawej</string>
+  <string name="gestures_longclick">Przytrzymanie</string>
   <string name="pref_cat_scrolling">Sprzętowe przyciski góra/dół</string>
   <string name="more_scrolling_buttons">eCzytnik</string>
   <string name="more_scrolling_buttons_summ">Używaj również przycisków Kanji/Katakana, Emoji/Kao-moji do przewijania.</string>
@@ -172,8 +173,8 @@
   <string name="review_cards_in">Przeglądanie kart w...</string>
   <string name="review_cards_order_summ">Kolejność, w której mają być wyświetlane przeglądane karty.</string>
   <string name="soon">Wkrótce</string>
-  <string name="show_next_review_time">Czas kolejnego przeglądnięcia</string>
-  <string name="show_next_review_time_summ">Pokazuje czas następnego przeglądnięcia w zależności od wyboru</string>
+  <string name="show_next_review_time">Czas kolejnej powtórki</string>
+  <string name="show_next_review_time_summ">Pokazuje czas następnej powtórki w zależności od oceny</string>
   <string name="update_notification">Powiadomienia o nowych wersjach</string>
   <string name="update_notification_summ">Powiadom mnie, gdy AnkiDroid jest aktualizowany</string>
   <string name="fix_arabic_text">Popraw wyświetlanie arabskiego</string>
@@ -197,5 +198,12 @@
   <string name="show_broadcast_messages_summ">Pokazuj powiadomienia AnkiDroida, np. o nowych wersjach lub inne ważne informacje</string>
   <string name="input_workaround">Poprawka przy wpisywaniu</string>
   <string name="input_workaround_summ">Obejście problemu nieaktywnych pól tekstowych HTML na niektórych urządzeniach.</string>
-  <string name="write_answers_message">Aby móc wpisywać odpowiedź, należy zdefiniować w każdej talii pole, z którym będzie ona porównywana.\n\nMożna to zrobić w desktopowej wersji Anki (właściwości talii -&gt; edytuj model -&gt; układ karty).</string>
+  <string name="write_answers_message">Dla każdej talii należy zdefiniować pole, które porównywane będzie z wpisywaną odpowiedzią. Można to zrobić w wersji desktopowej Anki (Własności talii -&gt; Edytuj model -&gt; Układ karty).\n\nJeśli nie zdefiniowano takiego pola, wpisywana odpowiedź będzie zawsze porównywana z całym polem odpowiedzi karty.</string>
+  <string name="pref_cache_cardbrowser">Pamięć podręczna przeglądarki kart</string>
+  <string name="pref_cache_cardbrowser_summ">Przechowuje karty z przeglądarki kart w pamięci podręcznej (większe zużycie pamięci).</string>
+  <string name="pref_cache_cardbrowser_reload">Wczytać ponownie wszystkie karty?</string>
+  <string name="pref_keep_screen_on">Nie wyłączaj ekranu</string>
+  <string name="pref_keep_screen_on_summ">Nie pozwól na wyłączanie ekranu podczas powtórek</string>
+  <string name="pref_simple_interface">Simple Interface</string>
+  <string name="pref_simple_interface_summ">Speeds up card showing but does only support text (no pictures, sounds etc.)</string>
 </resources>

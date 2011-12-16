@@ -138,6 +138,11 @@
 			android:defaultValue="false"
 			android:summary="@string/fix_orientation_summ"
 			android:key="fixOrientation" />
+		<CheckBoxPreference
+			android:title="@string/pref_keep_screen_on"
+			android:defaultValue="false"
+			android:summary="@string/pref_keep_screen_on_summ"
+			android:key="keepScreenOn" />
 		<ListPreference
 			android:title="@string/hide_question_in_answer"
 			android:summary="@string/hide_question_in_answer_summ"
@@ -326,6 +331,14 @@
 				android:entries="@array/gestures_labels"
 				android:entryValues="@array/gestures_values" />
 			<ListPreference
+				android:title="@string/gestures_longclick"
+				android:summary=""
+				android:key="gestureLongclick"
+				android:defaultValue="11"
+				android:dependency="swipe"
+				android:entries="@array/gestures_labels"
+				android:entryValues="@array/gestures_values" />
+			<ListPreference
 				android:title="@string/gestures_shake"
 				android:summary=""
 				android:key="gestureShake"
@@ -393,7 +406,7 @@
 		<ListPreference
 			android:title="@string/widget_minimum_cards_due"
 			android:summary="@string/widget_minimum_cards_due_summary"
-			android:defaultValue="25"
+			android:defaultValue="1000000"
 			android:entries="@array/widget_minimum_cards_due_labels"
 			android:entryValues="@array/widget_minimum_cards_due_values"
 			android:key="minimumCardsDueForNotification" />
@@ -483,6 +496,11 @@
 				android:defaultValue="false"
 				android:key="fixArabicText"/>
 			<CheckBoxPreference
+				android:title="@string/pref_cache_cardbrowser"
+				android:summary="@string/pref_cache_cardbrowser_summ"
+				android:defaultValue="false"
+				android:key="cardBrowserCache"/>
+			<CheckBoxPreference
 				android:title="@string/input_workaround"
 				android:summary="@string/input_workaround_summ"
 				android:defaultValue="false"
@@ -492,6 +510,11 @@
 				android:summary="@string/default_font_summ"
 				android:key="defaultFont"
 				android:defaultValue=""/>
+			<CheckBoxPreference
+				android:title="@string/pref_simple_interface"
+				android:summary="@string/pref_simple_interface_summ"
+				android:defaultValue="false"
+				android:key="simpleInterface"/>
 			<CheckBoxPreference android:title="@string/timeout_answer_text"
 				android:summary="@string/timeout_answer_summ" android:defaultValue="false"
 				android:disableDependentsState="false" android:key="timeoutAnswer" />

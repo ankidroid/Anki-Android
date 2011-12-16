@@ -17,6 +17,7 @@ import com.ichi2.themes.StyledDialog;
 import com.ichi2.themes.Themes;
 import com.tomgibara.android.veecheck.util.PrefSettings;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -54,9 +55,9 @@ public class BroadcastMessages {
 	}
 
 
-	public static void checkForNewMessages(Context context) {
+	public static void checkForNewMessages(Activity activity) {
 		Log.d(AnkiDroidApp.TAG, "BroadcastMessages: checkForNewMessages");
-		SharedPreferences prefs = PrefSettings.getSharedPrefs(context);
+		SharedPreferences prefs = PrefSettings.getSharedPrefs(activity);
 		// don't retrieve messages, if option in preferences is not set
 		if (!prefs.getBoolean("showBroadcastMessages", true)) {
 			return;
@@ -66,8 +67,8 @@ public class BroadcastMessages {
 			Log.d(AnkiDroidApp.TAG, "BroadcastMessages: already shown today");
 			return;
 		}
-        AsyncTask<Context,Void,Context> checkForNewMessage = new DownloadBroadcastMessage();
-        checkForNewMessage.execute(context);
+        AsyncTask<Activity,Void,Context> checkForNewMessage = new DownloadBroadcastMessage();
+        checkForNewMessage.execute(activity);
 	}
 
 
@@ -111,17 +112,19 @@ public class BroadcastMessages {
 			// workaround for the dialog content not showing when starting AnkiDroid with Deckpicker and open then Studyoptions
 			try {
 				mDialog.dismiss();
-				mDialog.show();			
+				mDialog.show();
 			} catch (BadTokenException e) {
 				Log.e(AnkiDroidApp.TAG, "Error on dismissing and showing new messages dialog: " + e);
 			} catch (IllegalArgumentException e) {
+				Log.e(AnkiDroidApp.TAG, "Error on dismissing and showing new messages dialog: " + e);
+			} catch (NullPointerException e) {
 				Log.e(AnkiDroidApp.TAG, "Error on dismissing and showing new messages dialog: " + e);
 			}
 		}
 	}
 
 
-    private static class DownloadBroadcastMessage extends AsyncTask<Context, Void, Context> {
+    private static class DownloadBroadcastMessage extends AsyncTask<Activity, Void, Context> {
 
     	private static int mNum;
     	private static String mMinVersion;
@@ -130,24 +133,24 @@ public class BroadcastMessages {
     	private static String mText;
     	private static String mUrl;
 
-    	private static Context mContext;
+    	private static Activity mActivity;
 
     	private static boolean mShowDialog = false;
 
         @Override
-        protected Context doInBackground(Context... params) {
+        protected Context doInBackground(Activity... params) {
             Log.d(AnkiDroidApp.TAG, "BroadcastMessage.DownloadBroadcastMessage.doInBackground()");
 
-            Context context = params[0];
-            mContext = context;
+            Activity activity = params[0];
+            mActivity = activity;
 
-    		SharedPreferences prefs = PrefSettings.getSharedPrefs(context);
+    		SharedPreferences prefs = PrefSettings.getSharedPrefs(activity);
     		int lastNum = prefs.getInt("lastMessageNum", -1);
 		if (lastNum == -1) {
 			// first start of AnkiDroid ever (or at least of a version which supports broadcast messages).
 			// do nothing yet but retrieve message the next time, AD is started
 			prefs.edit().putInt("lastMessageNum", 0).commit();
-			return context;
+			return activity;
 		}
     		try {
         		Log.i(AnkiDroidApp.TAG, "BroadcastMessage: download file " + FILE_URL);
@@ -176,12 +179,12 @@ public class BroadcastMessages {
     					// get message version info
     					mMinVersion = getXmlValue(el, MIN_VERSION);
     					if (mMinVersion != null && mMinVersion.length() > 0 && compareVersions(mMinVersion, currentVersion) > 0) {
-        			            Log.d(AnkiDroidApp.TAG, "BroadcastMessage - too low AnkiDroid version (" + currentVersion + "), message " + mNum + " only for > " + mMinVersion);
+        			            Log.d(AnkiDroidApp.TAG, "BroadcastMessage - too low AnkiDroid version (" + currentVersion + "), message " + mNum + " only for >= " + mMinVersion);
         			            continue;
     					}
     					mMaxVersion = getXmlValue(el, MAX_VERSION);
     					if (mMaxVersion != null && mMaxVersion.length() > 0 && compareVersions(mMaxVersion, currentVersion) < 0) {
-        			            Log.d(AnkiDroidApp.TAG, "BroadcastMessage - too high AnkiDroid version (" + currentVersion + "), message " + mNum + " only for > " + mMaxVersion);
+        			            Log.d(AnkiDroidApp.TAG, "BroadcastMessage - too high AnkiDroid version (" + currentVersion + "), message " + mNum + " only for <= " + mMaxVersion);
         			            continue;
     					}
 
@@ -191,7 +194,7 @@ public class BroadcastMessages {
     					mUrl = getXmlValue(el, URL);
     					if (mText != null && mText.length() > 0) {
         	    				mShowDialog = true;
-        	    				return context;
+        	    				return activity;
     					}
     				}
     				// no valid message left
@@ -201,18 +204,18 @@ public class BroadcastMessages {
     			}
     		} catch (IOException e) {
             	Log.e(AnkiDroidApp.TAG, "DownloadBroadcastMessage: IOException on reading file " + FILE_URL + ": " + e);
-				return context;
+				return activity;
         	} catch (NumberFormatException e) {
             	Log.e(AnkiDroidApp.TAG, "DownloadBroadcastMessage: Number of file " + FILE_URL + " could not be read: " + e);
-				return context;
+				return activity;
         	}catch(ParserConfigurationException e) {
             	Log.e(AnkiDroidApp.TAG, "DownloadBroadcastMessage: ParserConfigurationException: " + e);
-				return context;
+				return activity;
     		}catch(SAXException e) {
             	Log.e(AnkiDroidApp.TAG, "DownloadBroadcastMessage: SAXException: " + e);
-				return context;
+				return activity;
         	}
-            return context;
+            return activity;
         }
 
 
@@ -233,8 +236,8 @@ public class BroadcastMessages {
 	    		builder.setNegativeButton(res.getString(R.string.close),  new DialogInterface.OnClickListener() {
 						@Override
 						public void onClick(DialogInterface dialog, int which) {
-	    					setMessageRead(mContext, mNum);
-	    			        BroadcastMessages.checkForNewMessages(mContext);
+	    					setMessageRead(mActivity, mNum);
+	    			        BroadcastMessages.checkForNewMessages(mActivity);
 						}
 					});
 	    	} else {
@@ -247,11 +250,11 @@ public class BroadcastMessages {
     			builder.setPositiveButton(mUrl.substring(mUrl.length() - 4).equals(".apk") ? res.getString(R.string.download) : res.getString(R.string.visit), new DialogInterface.OnClickListener() {
     				@Override
     				public void onClick(DialogInterface dialog, int which) {
-    					setMessageRead(mContext, mNum);
+    					setMessageRead(mActivity, mNum);
     					String action = "android.intent.action.VIEW";
-    					if (Utils.isIntentAvailable(mContext, action)) {
+    					if (Utils.isIntentAvailable(mActivity, action)) {
     						Intent i = new Intent(action, Uri.parse(mUrl));
-    						mContext.startActivity(i);
+    						mActivity.startActivity(i);
     					}
     				}
     			});
@@ -259,7 +262,8 @@ public class BroadcastMessages {
     		}
     		try {
     			mDialog = builder.create();
-			Log.d(AnkiDroidApp.TAG, "BroadcastMessages: show dialog");
+    			Log.d(AnkiDroidApp.TAG, "BroadcastMessages: show dialog");
+    			mDialog.setOwnerActivity(mActivity);
     			mDialog.show();
     		} catch (BadTokenException e) {
                 Log.e(AnkiDroidApp.TAG, "BroadcastMessage - BadTokenException on showing dialog: " + e);

@@ -53,18 +53,18 @@
   <string name="studyoptions_congrats_syncdeck">Sincronitza el paquet</string>
   <string name="studyoptions_congrats_open_other_deck">Obre un altre paquet</string>
   <string name="studyoptions_congrats_finish">Torna a la pantalla d\'aprenentatge</string>
-  <string name="card_unsuspended">Card suspension undone</string>
-  <string name="card_suspended">Card resuspended</string>
-  <string name="menu_rotate">Rotate</string>
+  <string name="card_unsuspended">Suspensió de targeta desfeta</string>
+  <string name="card_suspended">Targeta suspesa de nou</string>
+  <string name="menu_rotate">Girar</string>
   <string name="undo">Desfés</string>
   <string name="redo">Refés</string>
-  <string name="close_previous_deck">Closing previous deck.\nPlease wait...</string>
-  <string name="close_deck">Closing deck.\nPlease wait...</string>
+  <string name="finish_operation">Acabant l\'operació anterior.\nSi us plau, espera...</string>
   <string name="contextmenu_deckpicker_download_missing_media">Baixa els media que falten</string>
   <string name="contextmenu_deckpicker_reset_language_assignments">Reinicia les assignacions de tots el idiomes</string>
   <string name="contextmenu_deckpicker_reset_reset_message">Restableix l\'idioma</string>
   <string name="contextmenu_deckpicker_optimize_deck">Optimitza la base de dades</string>
-  <string name="contextmenu_deckpicker_set_custom_dictionary">Set custom dictionary</string>
+  <string name="contextmenu_deckpicker_rename_deck">Rename deck</string>
+  <string name="contextmenu_deckpicker_set_custom_dictionary">Establir diccionari personalitzat</string>
   <string name="begin_cram">Comença el mode repàs (cram)</string>
   <string name="cram">Repàs (cram)</string>
   <string name="menu_open_deck">Tots els paquets</string>
@@ -81,7 +81,7 @@
   <string name="menu_suspend_card">Suspèn la fitxa</string>
   <string name="menu_bury_card">Aparca la fitxa</string>
   <string name="menu_edit_card">Edita la fitxa</string>
-  <string name="menu_select">Select text</string>
+  <string name="menu_select">Selecciona text</string>
   <string name="menu_search">Cerca-ho a %1$s</string>
   <string name="menu_mark_card">Marca la fitxa</string>
   <string name="menu_marked">Marcada</string>
@@ -90,23 +90,25 @@
   <string name="studyoptions_cram_dialog_title">Etiquetes que voleu repassar (cram)</string>
   <string name="statistics">Estadístiques</string>
   <string name="studyoptions_load_other_deck">Carrega un altre paquet</string>
-  <string name="studyoptions_load_tutorial_deck">Load Tutorial Deck</string>
+  <string name="studyoptions_load_tutorial_deck">Carregar paquet Tutorial</string>
   <string name="studyoptions_night_mode">Mode Nit</string>
-  <string name="studyoptions_swap_qa">Swap Q/A</string>
-  <string name="visit">Visit</string>
-  <string name="later">Later</string>
-  <string name="download">Download</string>
+  <string name="studyoptions_swap_qa">Intercanviar Preg./Resp.</string>
+  <string name="visit">Visita</string>
+  <string name="later">Més tard</string>
+  <string name="download">Descarrega</string>
+  <string name="deckpicker_loading_error">No ha estat possible carregar el paquet</string>
+  <string name="deckpicker_creating_backup">Creant còpia de seguretat...</string>
   <string-array name="next_review_s">
-    <item>1 second</item>
-    <item>1 minute</item>
+    <item>1 segon</item>
+    <item>1 minut</item>
     <item>1 hora</item>
     <item>1 dia</item>
     <item>1 mes</item>
     <item>1 any</item>
   </string-array>
   <string-array name="next_review_p">
-    <item>%s seconds</item>
-    <item>%s minutes</item>
+    <item>%s segons</item>
+    <item>%s minuts</item>
     <item>%s hores</item>
     <item>%s dies</item>
     <item>%s mesos</item>

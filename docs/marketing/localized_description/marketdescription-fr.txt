@@ -1,0 +1,39 @@
+Mémorisez tout avec AnkiDroid !
+
+AnkiDroid vous permet d'apprendre des flashcards très efficacement en vous les montrant juste avant que ne les oubliez. Entièrement compatible avec le logiciel de répétition espacée Anki (incluant la synchronisation), qui est disponible pour Windows, Linux et MacOS.
+
+Révisez toutes sortes de choses partout et chaque fois que vous le souhaitez. Faire bon usage des temps morts pendant les voyages en train, l'attente aux caisses des supermarchés ou tout autre situation d'attente !
+
+Ajouter des cartes par le biais de l'application Anki Desktop ou directement avec AnkiDroid.
+
+Créez vos propres paquets de cartes à mémoriser ou téléchargez des paquets gratuits pour de nombreuses langues et sujets (plus de 6 000 disponibles). L'application prend même en charge l'ajout de cartes automatiquement à partir d'un dictionnaire !
+
+★ Principales caractéristiques :
+• contenu des cartes pris en charge: texte, images, sons, LaTeX
+• répétition espacée (algorithme supermemo 2)
+• intégration de la synthèse vocale
+• plus de 6000 paquets de cartes téléchargeables
+• statistiques détaillées
+• three widgets
+• synchronisation avec AnkiWeb
+• open source
+
+★ Fonctionnalités supplémentaires:
+• écrire les réponses (en option)
+• tableau blanc
+• navigateur de cartes
+• éditeur de cartes
+• importation des collections existantes (via Anki Desktop)
+• ajout de cartes par "intent" depuis d'autres applications comme des dictionnaires
+• intégration avec des dictionnaires (ColorDict, GoldenDict, Leo.org, Aedict, divers dictionnaires web)
+• prise en charge de polices personnalisées
+• système de sauvegarde 
+• navigation par swipe, tap, shake
+• review in widget
+• entièrement personnalisable
+• mode bachottage
+• possibilité d'étudier par tag, temps ou cartes
+• mode nuit
+• prise en charge zeemote
+• trois thèmes d'interface différents
+• 27 localisations

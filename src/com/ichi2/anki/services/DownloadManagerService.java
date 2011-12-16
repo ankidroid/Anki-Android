@@ -25,7 +25,6 @@ import android.content.SharedPreferences.Editor;
 import android.content.res.Resources;
 import android.database.CursorIndexOutOfBoundsException;
 import android.database.SQLException;
-import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.IBinder;
 import android.os.RemoteCallbackList;
@@ -34,6 +33,7 @@ import android.util.Log;
 
 import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.AnkiDroidProxy;
+import com.ichi2.anki.DeckManager;
 import com.ichi2.anki.DeckTask;
 import com.ichi2.anki.Download;
 import com.ichi2.anki.R;
@@ -232,7 +232,7 @@ public class DownloadManagerService extends Service {
 
         File dir = new File(mDestination + "/tmp/");
         File[] fileList = dir.listFiles(new IncompleteDownloadsFilter());
-        HashSet<String> filenames = new HashSet();
+        HashSet<String> filenames = new HashSet<String>();
 
         // Get all incomplete downloads filenames
         if (fileList != null) {
@@ -935,7 +935,6 @@ public class DownloadManagerService extends Service {
 
             Payload data = doInBackgroundLoadDeck(args);
             if (data.returnType == DeckTask.DECK_LOADED) {
-                double now = System.currentTimeMillis();
                 HashMap<String, Object> results = (HashMap<String, Object>) data.result;
                 Deck deck = (Deck) results.get("deck");
 //                if (!deck.isUnpackNeeded()) {
@@ -1021,7 +1020,7 @@ public class DownloadManagerService extends Service {
             Log.i(AnkiDroidApp.TAG, "loadDeck - SD card mounted and existent file -> Loading deck...");
             try {
                 // Open the right deck.
-                Deck deck = Deck.openDeck(deckFilename);
+                Deck deck = DeckManager.getDeck(deckFilename, DeckManager.REQUESTING_ACTIVITY_DOWNLOADMANAGER);
                 // Start by getting the first card and displaying it.
 //                Card card = deck.getCard();
                 Log.i(AnkiDroidApp.TAG, "Deck loaded!");
@@ -1057,9 +1056,8 @@ public class DownloadManagerService extends Service {
             HashMap<String, Object> results = (HashMap<String, Object>) result.result;
             Deck deck = (Deck) results.get("deck");
             // Close the previously opened deck.
-            if (deck != null) {
-                deck.closeDeck();
-            }
+            DeckManager.closeDeck(deck.getDeckPath());
+
             SharedDeckDownload download = (SharedDeckDownload) result.data[0];
             SharedPreferences pref = PrefSettings.getSharedPrefs(getBaseContext());
             Editor editor = pref.edit();

@@ -107,6 +107,7 @@
   <string name="gestures_tap_bottom">Unten antippen</string>
   <string name="gestures_tap_left">Links antippen</string>
   <string name="gestures_tap_right">Rechts antippen</string>
+  <string name="gestures_longclick">Langklick</string>
   <string name="pref_cat_scrolling">Hoch/Runter-Tasten</string>
   <string name="more_scrolling_buttons">eReader</string>
   <string name="more_scrolling_buttons_summ">Kanji/Katakana- und Emoji/Kao-moji-Tasten ebenfalls zum Scrollen benutzen.</string>
@@ -197,5 +198,12 @@
   <string name="show_broadcast_messages_summ">Aktuelle AnkiDroid-Nachrichten, wie etwa Informationen über neue Versionen oder Ähnliches, anzeigen</string>
   <string name="input_workaround">Eingabe-Fehlerbehebung</string>
   <string name="input_workaround_summ">Fehlerbehebung für Fokusierungsprobleme mit HTML-Eingabe-Feldern. Verursacht Probleme auf einigen Geräten.</string>
-  <string name="write_answers_message">Bevor Antworten eingegeben werden können muss für jeden Stapel das Feld festgelegt werden, mit dem Antworten verglichen werden sollen.\n\nSie können das mit Anki-Desktop erledigen (Stapel-Einstellungen -&gt; Modell bearbeiten -&gt; Karten-Layout).</string>
+  <string name="write_answers_message">Sie sollten für jeden Stapel ein Feld definieren, mit dem Ihre geschriebene Antwort verglichen wird. Sie können das mit Anki Desktop erledigen (Stapel-Eigenschaften -&gt; Modell bearbeiten -&gt; Kartenlayout).\n\nWenn kein Vergleichsfeld festgelegt ist, wird Ihre geschriebene Antwort steht mit der gesamten Kartenantwort verglichen.</string>
+  <string name="pref_cache_cardbrowser">Kartenübersicht-Cache</string>
+  <string name="pref_cache_cardbrowser_summ">Karten der Kartenübersicht im Cache behalten (verbraucht Speicher).</string>
+  <string name="pref_cache_cardbrowser_reload">Karten neu laden?</string>
+  <string name="pref_keep_screen_on">Ausschalten verhindern</string>
+  <string name="pref_keep_screen_on_summ">Keine automatische Bildschirmabschaltung während des Lernens</string>
+  <string name="pref_simple_interface">Einfache Oberfläche</string>
+  <string name="pref_simple_interface_summ">Beschleunigt die Kartenanzeige, unterstützt aber nur Text (keine Bilder, Sounds etc.)</string>
 </resources>

@@ -20,7 +20,6 @@ package com.ichi2.charts;
 import org.achartengine.ChartFactory;
 import org.achartengine.GraphicalView;
 import org.achartengine.chart.BarChart;
-import org.achartengine.chart.LineChart;
 import org.achartengine.model.XYMultipleSeriesDataset;
 import org.achartengine.model.XYSeries;
 import org.achartengine.renderer.XYMultipleSeriesRenderer;
@@ -109,44 +108,31 @@ public class ChartBuilder extends Activity {
         Resources res = getResources();
         XYSeriesRenderer renderer = new XYSeriesRenderer();
         if (type <= Statistics.TYPE_CUMULATIVE_DUE) {
-            switch (row) {
-                case 0:
-                    renderer.setColor(res.getColor(R.color.statistics_due_young_cards));
-                    break;
-                case 1:
-                    renderer.setColor(res.getColor(R.color.statistics_due_mature_cards));
-                    break;
-                case 2:
-                    renderer.setColor(res.getColor(R.color.statistics_due_learn_cards));
-                    break;
-                case 3:
-                    renderer.setColor(res.getColor(R.color.statistics_due_average_line));
-                    renderer.setLineWidth(2f);
-                    break;
-            }
-        } else if (type <= Statistics.TYPE_REVIEWING_TIME) {
-            switch (row) {
-                case 0:
-                    renderer.setColor(res.getColor(R.color.statistics_reps_cram_cards));
-                    break;
-                case 1:
-                    renderer.setColor(res.getColor(R.color.statistics_reps_learn_cards));
-                    break;
-                case 2:
-                    renderer.setColor(res.getColor(R.color.statistics_reps_relearn_cards));
-                    break;
-                case 3:
-                    renderer.setColor(res.getColor(R.color.statistics_reps_young_cards));
-                    break;
-                case 4:
-                    renderer.setColor(res.getColor(R.color.statistics_reps_mature_cards));
-                    break;
-                case 5:
-                    renderer.setColor(res.getColor(R.color.statistics_due_average_line));
-                    break;
-            }
+        	switch (row) {
+        	case 0: 
+                renderer.setColor(res.getColor(R.color.statistics_due_young_cards));
+        		break;
+        	case 1:
+                renderer.setColor(res.getColor(R.color.statistics_due_mature_cards));
+                break;
+        	case 2:
+                renderer.setColor(res.getColor(R.color.statistics_due_failed_cards));
+        		break;
+        	}
+        } else if (type == Statistics.TYPE_REVIEWS) {
+        	switch (row) {
+        	case 0: 
+                renderer.setColor(res.getColor(R.color.statistics_reps_new_cards));
+        		break;
+        	case 1:
+                renderer.setColor(res.getColor(R.color.statistics_reps_young_cards));
+                break;
+        	case 2:
+                renderer.setColor(res.getColor(R.color.statistics_reps_mature_cards));
+        		break;
+        	}
         } else {
-            renderer.setColor(res.getColor(R.color.statistics_default));
+            renderer.setColor(res.getColor(R.color.statistics_default));        	
         }
         mRenderer.addSeriesRenderer(renderer);
     }
@@ -161,9 +147,7 @@ public class ChartBuilder extends Activity {
                 mRenderer.setXAxisMin(mPan[0]);
                 mRenderer.setXAxisMax(mPan[1]);
             }
-            // mChartView = ChartFactory.getBarChartView(this, mDataset, mRenderer, BarChart.Type.STACKED);
-            // mChartView = ChartFactory.getCombinedXYChartView(this, mDataset, mRenderer, new String[] {BarChart.TYPE,
-            // BarChart.TYPE, LineChart.TYPE});
+            mChartView = ChartFactory.getBarChartView(this, mDataset, mRenderer, BarChart.Type.STACKED);
             LinearLayout layout = (LinearLayout) findViewById(R.id.chart);
             layout.addView(mChartView, new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT));
         }
@@ -181,7 +165,7 @@ public class ChartBuilder extends Activity {
     private SharedPreferences restorePreferences() {
         SharedPreferences preferences = PrefSettings.getSharedPrefs(getBaseContext());
         mFullScreen = preferences.getBoolean("fullScreen", false);
-        mSwipeEnabled = preferences.getBoolean("swipe", false);
+		mSwipeEnabled = preferences.getBoolean("swipe", false);
         return preferences;
     }
 
@@ -238,7 +222,7 @@ public class ChartBuilder extends Activity {
         }
     }
 
-
+    
     @Override
     protected void onCreate(Bundle savedInstanceState) {
     	Themes.applyTheme(this);
@@ -274,7 +258,8 @@ public class ChartBuilder extends Activity {
             if (Statistics.sSeriesList.length == 1) {
                 mRenderer.setShowLegend(false);
             }
-            mPan = new double[] { Statistics.sStart - 1, Statistics.sEnd + 1 };
+            mPan = new double[] { Statistics.xAxisData[0] - 1,
+                    Statistics.xAxisData[Statistics.xAxisData.length - 1] + 1 };
             mRenderer.setLegendTextSize(17);
             mRenderer.setLegendHeight(60);
             mRenderer.setAxisTitleTextSize(17);
@@ -289,43 +274,22 @@ public class ChartBuilder extends Activity {
             mRenderer.setAxesColor(colors[0]);
             mRenderer.setLabelsColor(colors[0]);
             mRenderer.setZoomEnabled(false, false);
-            // if (Statistics.sSeriesList[0][0] > 100 || Statistics.sSeriesList[0][1] > 100 ||
-            // Statistics.sSeriesList[0][Statistics.sSeriesList[0].length - 1] > 100) {
-            // mRenderer.setMargins(new int[] { 15, 50, 25, 0 });
-            // } else {
-            mRenderer.setMargins(new int[] { 15, 42, 25, 0 });
-            // }
+            if (Statistics.sSeriesList[0][0] > 100 || Statistics.sSeriesList[0][1] > 100 || Statistics.sSeriesList[0][Statistics.sSeriesList[0].length - 1] > 100) {
+                mRenderer.setMargins(new int[] { 15, 50, 25, 0 });
+            } else {
+                mRenderer.setMargins(new int[] { 15, 42, 25, 0 });
+            }
             mRenderer.setPanEnabled(true, false);
             mRenderer.setPanLimits(mPan);
             mRenderer.setXLabelsAlign(Align.CENTER);
             mRenderer.setYLabelsAlign(Align.RIGHT);
-
-            switch (Statistics.sType) {
-                case Statistics.TYPE_DUE:
-                    mChartView = ChartFactory.getCombinedXYChartView(this, mDataset, mRenderer, new String[] {
-                            BarChart.TYPE, BarChart.TYPE, BarChart.TYPE, LineChart.TYPE });
-                    break;
-                case Statistics.TYPE_CUMULATIVE_DUE:
-                    mChartView = ChartFactory.getCombinedXYChartView(this, mDataset, mRenderer, new String[] {
-                            BarChart.TYPE, BarChart.TYPE, BarChart.TYPE });
-                    break;
-                case Statistics.TYPE_INTERVALS:
-                    mChartView = ChartFactory.getBarChartView(this, mDataset, mRenderer, BarChart.Type.STACKED);
-                    break;
-                case Statistics.TYPE_REVIEWS:
-                case Statistics.TYPE_REVIEWING_TIME:
-                    mChartView = ChartFactory
-                            .getCombinedXYChartView(this, mDataset, mRenderer, new String[] { BarChart.TYPE,
-                                    BarChart.TYPE, BarChart.TYPE, BarChart.TYPE, BarChart.TYPE, LineChart.TYPE });
-                    break;
-            }
-
+            mChartView = ChartFactory.getBarChartView(this, mDataset, mRenderer, BarChart.Type.STACKED);
             LinearLayout layout = (LinearLayout) findViewById(R.id.chart);
             layout.addView(mChartView, new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT));
         } else {
             mChartView.repaint();
         }
-        gestureDetector = new GestureDetector(new MyGestureDetector());
+		gestureDetector = new GestureDetector(new MyGestureDetector());
         mChartView.setOnTouchListener(new View.OnTouchListener() {
         	public boolean onTouch(View v, MotionEvent event) {
         		if (gestureDetector.onTouchEvent(event)) {
@@ -336,7 +300,7 @@ public class ChartBuilder extends Activity {
         	});
 		zoom = Statistics.sZoom;
         if (zoom > 0) {
-            zoom();
+        	zoom();
         }
     }
 
@@ -350,30 +314,27 @@ public class ChartBuilder extends Activity {
         return super.onKeyDown(keyCode, event);
     }
 
-    class MyGestureDetector extends SimpleOnGestureListener {
-        @Override
+    class MyGestureDetector extends SimpleOnGestureListener {	
+    	@Override
         public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
             if (mSwipeEnabled) {
                 try {
-                    if (e1.getY() - e2.getY() > StudyOptions.sSwipeMinDistance
-                            && Math.abs(velocityY) > StudyOptions.sSwipeThresholdVelocity
-                            && Math.abs(e1.getX() - e2.getX()) < StudyOptions.sSwipeMaxOffPath) {
-                        closeChartBuilder();
+                	if (e1.getY() - e2.getY() > StudyOptions.sSwipeMinDistance && Math.abs(velocityY) > StudyOptions.sSwipeThresholdVelocity && Math.abs(e1.getX() - e2.getX()) < StudyOptions.sSwipeMaxOffPath) {
+                		closeChartBuilder();
                     }
-                } catch (Exception e) {
-                    Log.e(AnkiDroidApp.TAG, "onFling Exception = " + e.getMessage());
+       			}
+                catch (Exception e) {
+                  	Log.e(AnkiDroidApp.TAG, "onFling Exception = " + e.getMessage());
                 }
-            }
+            }	            	
             return false;
-        }
+    	}
     }
-
-
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         if (gestureDetector.onTouchEvent(event))
-            return true;
-        else
-            return false;
+	        return true;
+	    else
+	    	return false;
     }
 }

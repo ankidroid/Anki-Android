@@ -32,7 +32,7 @@
   <string name="cancelling">İptal ediliyor...</string>
   <string name="loading_personal_decks">Mevcut kişisel desteler yükleniyor...</string>
   <string name="connection_error_title">Dikkât</string>
-  <string name="connection_error_return_message">Bir ağ hatası oluştu. Yeniden deneyin, veya iptal edip önceki ekrana dönün.</string>
+  <string name="connection_error_return_message">Bir ağ hatası meydana geldi. Yeniden deneyin, veya iptal edip önceki ekrana dönün.</string>
   <string name="retry">Yeniden Dene</string>
   <string name="cancel">İptal</string>
   <string name="download_overwrite">Üzerine Yaz</string>
@@ -48,7 +48,8 @@
   <string name="sync_all_title">Tüm desteleri eşitle</string>
   <string name="sync_all">Hepsini eşitle</string>
   <string name="sync_prepare_syncing">Eşitlemeye hazırlanıyor...</string>
-  <string name="connection_error_message">Bir ağ hatası oluştu.</string>
+  <string name="connection_error_message">Bir ağ hatası meydana geldi.</string>
+  <string name="sync_log_db_error">Bir veritabanı hatası meydana geldi.</string>
   <string name="no_user_password_error_message">Bu işleme devam etmek için, bir AnkiOnline hesabınızın olması ve giriş yapmış olmanız gerekir.</string>
   <string name="fact">bilgi</string>
   <string name="facts">bilgi</string>

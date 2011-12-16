@@ -29,6 +29,8 @@
   <string name="backup_delete">Memadam salinan.\nSila tunggu...</string>
   <string name="contextmenu_deckpicker_remove_backups">Hapus salinan</string>
   <string name="backup_restore">Pulihkan salinan</string>
+  <string name="backup_repair_deck">Baiki dek</string>
+  <string name="backup_repair_deck_progress">Membaiki dek.\nSila tunggu...</string>
   <string name="backup_restore_error">Dek tidak dapat dipulihkan</string>
   <string name="backup_restore_deck">Memulihkan dek. \nHarap menunggu...</string>
   <string name="backup_restore_select_title">Pilih salinan</string>
@@ -36,5 +38,7 @@
   <string name="backup_delete_deck_backups">Salinan dek %s dipadam</string>
   <string name="delete_deck_success">Dek %1$s dipadam. Salinan berada dalam folder %2$s</string>
   <string name="backup_delete_deck_backups_alert">Benar-benar menghapus semua salinan dek %s?</string>
-  <string name="open_deck_failed">Fail %1$s tidak boleh dibuka. Samada bukan fail anki atau rosak.\n\nCuba salinan; dek sekarang akan dimasuk ke dalam subfolder \'%2$s\' (bagaimana membetulkan dek: %3$s).\n\nTekan butang patah balik untuk tutup dialog ini.</string>
+  <string name="open_deck_failed">Fail %1$s tidak dapat dibuka kerana bukan fail anki atau ia rosak.\n\nAnda boleh perbaikinya atau guna semula dari salinan (satu salinan fail rosak ini akan dipindah ke folder \'%2$s\'). Maklumat tambahan tentang membaiki dek rosak di sini: %3$s.\n\nTekan butang undur untuk menutup dialog ini</string>
+  <string name="deckpicker_backup_error">Salinan tidak dapat dibuat</string>
+  <string name="deck_repair_error">Dek tidak dapat diperbaiki</string>
 </resources>

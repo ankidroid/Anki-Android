@@ -19,7 +19,6 @@ package com.ichi2.anki;
 
 import android.app.Application;
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.content.pm.PackageInfo;
@@ -31,7 +30,6 @@ import android.view.Display;
 import android.view.WindowManager;
 
 import com.ichi2.async.Connection;
-import com.ichi2.libanki.Deck;
 import com.tomgibara.android.veecheck.Veecheck;
 import com.tomgibara.android.veecheck.util.PrefSettings;
 
@@ -58,11 +56,7 @@ public class AnkiDroidApp extends Application {
      */
     private static AnkiDroidApp sInstance;
 
-    /**
-     * Currently loaded Anki deck.
-     */
-    private Deck mLoadedDeck;
-    
+   
     private Controller mZeemoteController;
 
     /**
@@ -157,20 +151,12 @@ public class AnkiDroidApp extends Application {
     }
 
 
-    public static Deck deck() {
-        return sInstance.mLoadedDeck;
-    }
-
     public static Controller zeemoteController() {
     	return sInstance.mZeemoteController;
     }
     
     public static void setZeemoteController(Controller controller) {
     	sInstance.mZeemoteController = controller;
-    }
-    
-    public static void setDeck(Deck deck) {
-        sInstance.mLoadedDeck = deck;
     }
 
 
@@ -254,5 +240,8 @@ public class AnkiDroidApp extends Application {
         }
         return null;
     }
-    
+
+    public static void saveExceptionReportFile(Throwable e, String origin) {
+    	CustomExceptionHandler.getInstance().uncaughtException(null, e, origin);
+    }
 }

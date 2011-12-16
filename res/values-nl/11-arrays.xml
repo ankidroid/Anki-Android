@@ -37,14 +37,14 @@
     <item>Willekeurige volgorde</item>
   </string-array>
   <string-array name="hideQuestionInAnswerLabels">
-    <item>Verberg de vraag in het antwoord</item>
+    <item>Verbergt de vraag wanneer het antwoord wordt getoond</item>
     <item>Toon de vraag in het antwoord</item>
     <item>Zoals gedefinieerd in CardModel</item>
   </string-array>
   <string-array name="startup_mode_labels">
     <item>Toon studie-opties</item>
-    <item>Toon dekkiezer</item>
-    <item>Toon dekkiezer bij eerste start van de dag</item>
+    <item>Toon leersets</item>
+    <item>Toon leersets bij de eerste start van de dag</item>
   </string-array>
   <string-array name="error_reporting_choice_labels">
     <item>Altijd rapporteren</item>
@@ -62,9 +62,9 @@
     <item>Nooit</item>
   </string-array>
   <string-array name="cram_review_order_labels">
-    <item>Toon oudste gewijzigde eerst</item>
-    <item>Toon in volgorde toegevoegd</item>
-    <item>Toon in willekeurige volgorde</item>
+    <item>laatst gewijzigde eerst tonen</item>
+    <item>In volgorde van toevoeging tonen</item>
+    <item>In willekeurige volgorde tonen</item>
   </string-array>
   <string-array name="studyoptions_more_new_card_order">
     <item>Nieuwe kaarten in willekeurige volgorde</item>
@@ -73,51 +73,52 @@
   </string-array>
   <string-array name="studyoptions_more_new_card_schedule">
     <item>Verspreid nieuwe kaarten over overhoringen</item>
-    <item>New cards after reviews</item>
-    <item>New cards before reviews</item>
+    <item>Nieuwe kaarten als laatste leren</item>
+    <item>Eerst beginnen met nieuwe kaarten</item>
   </string-array>
   <string-array name="studyoptions_more_rev_card_order">
-    <item>Review cards from largest interval</item>
-    <item>Review cards from smallest interval</item>
-    <item>Review cards in order due</item>
-    <item>Review cards in random order</item>
+    <item>Overhoor kaarten met de grootste intervaltijd</item>
+    <item>Overhoor kaarten met de kleinste intervaltijd</item>
+    <item>Overhoor kaarten die als eerste herhaald moeten worden</item>
+    <item>Overhoor in willekeurige volgorde</item>
   </string-array>
   <string-array name="studyoptions_more_fail_card_option">
-    <item>Show failed cards soon</item>
-    <item>Show failed cards at end</item>
-    <item>Show failed cards in 10 minutes</item>
-    <item>Show failed cards in 8 hours</item>
-    <item>Show failed cards in 3 days</item>
+    <item>Toon niet-gelukte kaarten snel weer</item>
+    <item>Toon niet-gelukte kaarten op het einde</item>
+    <item>Toon niet-gelukte kaarten binnen 10 minuten</item>
+    <item>Toon niet-gelukte kaarten binnen 8 uur</item>
+    <item>Toon niet-gelukte kaarten binnen 3 dagen</item>
   </string-array>
   <string-array name="deck_order_labels">
-    <item>By last access</item>
-    <item>Alphabetical</item>
-    <item>By number of due cards</item>
-    <item>By number of total cards</item>
-    <item>By number of total new cards</item>
+    <item>Op laatst toegang</item>
+    <item>Alfabetisch</item>
+    <item>Op aantal te leren kaarten</item>
+    <item>Op totaal aantal kaarten</item>
+    <item>Op totaal aantal nieuwe kaarten</item>
   </string-array>
   <string-array name="gestures_labels">
-    <item>No action</item>
-    <item>Answer button 1</item>
-    <item>Answer button 2</item>
-    <item>Answer button 3</item>
-    <item>Answer button 4</item>
-    <item>Answer recommended (green)</item>
-    <item>Answer better than recommended</item>
-    <item>Undo</item>
-    <item>Redo</item>
-    <item>Edit card</item>
-    <item>Mark card</item>
-    <item>Lookup expression</item>
-    <item>Bury card</item>
-    <item>Suspend card</item>
-    <item>Delete card</item>
-    <item>Clear Whiteboard</item>
-    <item>Abort learning</item>
+    <item>Geen actie</item>
+    <item>Antwoordknop 1</item>
+    <item>Antwoordknop 2</item>
+    <item>Antwoordknop 3</item>
+    <item>Antwoordknop 4</item>
+    <item>Antwoord aangeraden (groen)</item>
+    <item>Antwoord beter dan aangeraden</item>
+    <item>Ongedaan maken</item>
+    <item>Opnieuw</item>
+    <item>Kaart bewerken</item>
+    <item>Markeer kaart</item>
+    <item>Uitdrukking opzoeken</item>
+    <item>Kaart verbergen</item>
+    <item>Kaart uitstellen</item>
+    <item>Kaart verwijderen</item>
+    <item>Wis Whiteboard</item>
+    <item>Het leren afbreken</item>
   </string-array>
   <string-array name="theme_labels">
-    <item>Android Dark</item>
-    <item>Android Light</item>
-    <item>Blue</item>
+    <item>Android Donker</item>
+    <item>Android (klein)</item>
+    <item>Blauw</item>
+    <item>White</item>
   </string-array>
 </resources>

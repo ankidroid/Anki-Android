@@ -52,7 +52,7 @@
   <string name="deck_summary_average_year">Geçen yıl ortalama bakılan</string>
   <string name="deck_summary_average_total">Şimdiye kadar ortalama bakılan</string>
   <string name="deck_summary_forecast">Tahmin</string>
-  <string name="deck_summary_tomorrow_due">Yarın gelecek: &lt;b&gt;%d&lt;/b&gt; kart</string>
+  <string name="deck_summary_tomorrow_due">Yarın tekrarlanacak: &lt;b&gt;%d&lt;/b&gt; kart</string>
   <string name="deck_summary_tomorrow_new">Yarın yeni: &lt;b&gt;%d&lt;/b&gt; kart</string>
   <string name="deck_summary_tomorrow_time">Yarınki tahmini süre: &lt;b&gt;%d&lt;/b&gt; dk.</string>
   <string name="deck_summary_finished_in">Yeni kartlar bitirildi: &lt;b&gt;%d&lt;/b&gt; gün</string>

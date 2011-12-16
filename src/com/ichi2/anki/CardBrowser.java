@@ -18,7 +18,6 @@ package com.ichi2.anki;
 
 import android.app.Activity;
 import android.app.Dialog;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnCancelListener;
@@ -50,10 +49,10 @@ import android.widget.TextView;
 
 import com.ichi2.anim.ActivityTransitionAnimation;
 import com.ichi2.themes.StyledDialog;
+import com.ichi2.themes.StyledProgressDialog;
 import com.ichi2.themes.Themes;
 import com.tomgibara.android.veecheck.util.PrefSettings;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
@@ -72,7 +71,7 @@ public class CardBrowser extends Activity {
 	private SimpleAdapter mCardsAdapter;
 	private EditText mSearchEditText;
 
-	private ProgressDialog mProgressDialog;
+	private StyledProgressDialog mProgressDialog;
 	private boolean mUndoRedoDialogShowing = false;
 	private Card mSelectedCard;
 	private Card mUndoRedoCard;
@@ -95,6 +94,7 @@ public class CardBrowser extends Activity {
 
 	private static final int DIALOG_ORDER = 0;
 	private static final int DIALOG_CONTEXT_MENU = 1;
+	private static final int DIALOG_RELOAD_CARDS = 2;
 
 	private static final int BACKGROUND_NORMAL = 0;
 	private static final int BACKGROUND_MARKED = 1;
@@ -133,6 +133,10 @@ public class CardBrowser extends Activity {
 
 	private boolean mPrefFixArabic;
 
+	private boolean mPrefCacheCardBrowser;
+	private static ArrayList<HashMap<String, String>> sAllCardsCache;
+	private static String sCachedDeckPath;
+
     private Handler mTimerHandler = new Handler();
     private static final int WAIT_TIME_UNTIL_UPDATE = 500;
 
@@ -153,6 +157,9 @@ public class CardBrowser extends Activity {
 
 		@Override
 		public void onClick(DialogInterface dialog, int which) {
+			if (mSelectedCard == null) {
+				return;
+			}
 			switch (which) {
 			case CONTEXT_MENU_MARK:
 				DeckTask.launchDeckTask(DeckTask.TASK_TYPE_MARK_CARD,
@@ -205,7 +212,11 @@ public class CardBrowser extends Activity {
 		setContentView(mainView);
 		Themes.setContentStyle(mainView, Themes.CALLER_CARDBROWSER);
 
-		mDeck = AnkiDroidApp.deck();
+		mDeck = DeckManager.getMainDeck();
+		if (mDeck == null) {
+			finish();
+			return;
+		}
 		mDeck.resetUndo();
 
 		mBackground = Themes.getCardBrowserBackground();
@@ -215,6 +226,7 @@ public class CardBrowser extends Activity {
 		mrelativeBrowserFontSize = preferences.getInt(
 				"relativeCardBrowserFontSize", DEFAULT_FONT_SIZE_RATIO);
 		mPrefFixArabic = preferences.getBoolean("fixArabicText", false);
+		mPrefCacheCardBrowser = preferences.getBoolean("cardBrowserCache", false);
 
 		mCards = new ArrayList<HashMap<String, String>>();
 		mAllCards = new ArrayList<HashMap<String, String>>();
@@ -250,10 +262,15 @@ public class CardBrowser extends Activity {
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
 				Intent editCard = new Intent(CardBrowser.this, CardEditor.class);
-				editCard.putExtra(CardEditor.CARD_EDITOR_ACTION, CardEditor.EDIT_BROWSER_CARD);
+	            editCard.putExtra(CardEditor.EXTRA_CALLER, CardEditor.CALLER_CARDBROWSER_EDIT);
+	            editCard.putExtra(CardEditor.EXTRA_DECKPATH, DeckManager.getMainDeckPath());
 				mPositionInCardsList = position;
 				mSelectedCard = mDeck.cardFromId(Long.parseLong(mCards.get(
 						mPositionInCardsList).get("id")));
+				if (mSelectedCard == null) {
+					deleteCard(mCards.get(mPositionInCardsList).get("id"), mPositionInCardsList);
+					return;
+				}
 				sEditorCard = mSelectedCard;
 				editCard.putExtra("callfromcardbrowser", true);
 				startActivityForResult(editCard, EDIT_CARD);
@@ -306,6 +323,11 @@ public class CardBrowser extends Activity {
 			Log.i(AnkiDroidApp.TAG, "CardBrowser - onBackPressed()");
 			if (mSearchEditText.getText().length() == 0 && !mShowOnlyMarSus
 					&& mSelectedTags.size() == 0) {
+				if (mPrefCacheCardBrowser) {
+					sCachedDeckPath = mDeck.getDeckPath();
+					sAllCardsCache = new ArrayList<HashMap<String, String>>();
+					sAllCardsCache.addAll(mAllCards);					
+				}
 				setResult(RESULT_OK);
 				finish();
 				if (Integer.valueOf(android.os.Build.VERSION.SDK) > 4) {
@@ -372,7 +394,8 @@ public class CardBrowser extends Activity {
 			return true;
 		case MENU_ADD_FACT:
 			Intent intent = new Intent(CardBrowser.this, CardEditor.class);
-			intent.putExtra(CardEditor.CARD_EDITOR_ACTION, CardEditor.ADD_CARD);
+			intent.putExtra(CardEditor.EXTRA_CALLER, CardEditor.CALLER_CARDBROWSER_ADD);
+			intent.putExtra(CardEditor.EXTRA_DECKPATH, DeckManager.getMainDeckPath());
 			startActivityForResult(intent, ADD_FACT);
 			if (Integer.valueOf(android.os.Build.VERSION.SDK) > 4) {
 				ActivityTransitionAnimation.slide(CardBrowser.this,
@@ -474,6 +497,42 @@ public class CardBrowser extends Activity {
 	        builder.setItems(entries, mContextMenuListener);
 	        dialog = builder.create();
 			break;
+		case DIALOG_RELOAD_CARDS:
+			builder.setTitle(res.getString(R.string.pref_cache_cardbrowser));
+			builder.setMessage(res.getString(R.string.pref_cache_cardbrowser_reload));
+			builder.setPositiveButton(res.getString(R.string.yes), new OnClickListener() {
+
+				@Override
+				public void onClick(DialogInterface arg0, int arg1) {
+					DeckTask.launchDeckTask(DeckTask.TASK_TYPE_LOAD_CARDS,
+							mLoadCardsHandler,
+							new DeckTask.TaskData(mDeck, LOAD_CHUNK));	
+					}
+				
+			});
+			builder.setNegativeButton(res.getString(R.string.no), new OnClickListener() {
+
+				@Override
+				public void onClick(DialogInterface arg0, int arg1) {
+					mAllCards.addAll(sAllCardsCache);
+					mCards.addAll(mAllCards);
+					updateList();
+				}
+				
+			});
+			builder.setCancelable(true);
+			builder.setOnCancelListener(new OnCancelListener() {
+
+				@Override
+				public void onCancel(DialogInterface arg0) {
+					mAllCards.addAll(sAllCardsCache);
+					mCards.addAll(mAllCards);
+					updateList();
+				}
+				
+			});
+			dialog = builder.create();
+			break;
 		}
 		return dialog;
 	}
@@ -486,6 +545,11 @@ public class CardBrowser extends Activity {
 		switch (id) {
 		case DIALOG_CONTEXT_MENU:
 			mSelectedCard = mDeck.cardFromId(Long.parseLong(mCards.get(mPositionInCardsList).get("id")));
+			if (mSelectedCard == null) {
+				deleteCard(mCards.get(mPositionInCardsList).get("id"), mPositionInCardsList);
+				ad.setEnabled(false);
+				return;
+			}
 			if (mSelectedCard.isMarked()) {
 				ad.changeListItem(CONTEXT_MENU_MARK, res.getString(R.string.card_browser_unmark_card));
 				mIsMarked = true;
@@ -511,7 +575,7 @@ public class CardBrowser extends Activity {
 	private void recreateTagsDialog() {
 		Resources res = getResources();
 		if (allTags == null) {
-			String[] oldTags = AnkiDroidApp.deck().allTags_();
+			String[] oldTags = DeckManager.getMainDeck().allTags_();
 			Log.i(AnkiDroidApp.TAG, "all tags: " + Arrays.toString(oldTags));
 			allTags = new String[oldTags.length];
 			for (int i = 0; i < oldTags.length; i++) {
@@ -592,9 +656,17 @@ public class CardBrowser extends Activity {
 	}
 
 	private void getCards() {
-		DeckTask.launchDeckTask(DeckTask.TASK_TYPE_LOAD_CARDS,
-				mLoadCardsHandler,
-				new DeckTask.TaskData(mDeck, LOAD_CHUNK));
+		if ((sCachedDeckPath != null && !sCachedDeckPath.equals(mDeck.getDeckPath())) || !mPrefCacheCardBrowser) {
+			sCachedDeckPath = null;
+			sAllCardsCache = null;
+		}
+		if (mPrefCacheCardBrowser && sAllCardsCache != null && !sAllCardsCache.isEmpty()) {
+			showDialog(DIALOG_RELOAD_CARDS);
+		} else {
+			DeckTask.launchDeckTask(DeckTask.TASK_TYPE_LOAD_CARDS,
+					mLoadCardsHandler,
+					new DeckTask.TaskData(mDeck, LOAD_CHUNK));
+		}
 	}
 
 	public static Card getEditorCard() {
@@ -707,9 +779,16 @@ public class CardBrowser extends Activity {
 		@Override
 		public void onPreExecute() {
 			if (!mUndoRedoDialogShowing) {
-				mProgressDialog = ProgressDialog.show(CardBrowser.this, "",
+				mProgressDialog = StyledProgressDialog.show(CardBrowser.this, "",
 						getResources().getString(R.string.card_browser_load),
-						true);
+						true, true, new OnCancelListener() {
+
+							@Override
+							public void onCancel(DialogInterface arg0) {
+								DeckTask.cancelTask();
+							}
+					
+				});
 			} else {
 				mProgressDialog.setMessage(getResources().getString(
 						R.string.card_browser_load));
@@ -784,7 +863,7 @@ public class CardBrowser extends Activity {
 		@Override
 		public void onPreExecute() {
 			Resources res = getResources();
-			mProgressDialog = ProgressDialog.show(CardBrowser.this, "", res
+			mProgressDialog = StyledProgressDialog.show(CardBrowser.this, "", res
 					.getString(R.string.saving_changes), true);
 		}
 
@@ -805,7 +884,7 @@ public class CardBrowser extends Activity {
 		@Override
 		public void onPreExecute() {
 			Resources res = getResources();
-			mProgressDialog = ProgressDialog.show(CardBrowser.this, "", res
+			mProgressDialog = StyledProgressDialog.show(CardBrowser.this, "", res
 					.getString(R.string.saving_changes), true);
 		}
 
@@ -824,7 +903,7 @@ public class CardBrowser extends Activity {
 		@Override
 		public void onPreExecute() {
 			Resources res = getResources();
-			mProgressDialog = ProgressDialog.show(CardBrowser.this, "", res
+			mProgressDialog = StyledProgressDialog.show(CardBrowser.this, "", res
 					.getString(R.string.saving_changes), true);
 		}
 
@@ -848,7 +927,7 @@ public class CardBrowser extends Activity {
 			if (mProgressDialog != null && mProgressDialog.isShowing()) {
 				mProgressDialog.setMessage(res.getString(R.string.card_browser_sorting_cards));
 			} else {
-				mProgressDialog = ProgressDialog.show(CardBrowser.this, "", res
+				mProgressDialog = StyledProgressDialog.show(CardBrowser.this, "", res
 						.getString(R.string.card_browser_sorting_cards), true);				
 			}
 		}
@@ -871,7 +950,7 @@ public class CardBrowser extends Activity {
 		@Override
 		public void onPreExecute() {
 			Resources res = getResources();
-			mProgressDialog = ProgressDialog.show(CardBrowser.this, "", res
+			mProgressDialog = StyledProgressDialog.show(CardBrowser.this, "", res
 					.getString(R.string.saving_changes), true);
 		}
 
@@ -934,7 +1013,7 @@ public class CardBrowser extends Activity {
 	private DeckTask.TaskListener mUpdateCardHandler = new DeckTask.TaskListener() {
 		@Override
 		public void onPreExecute() {
-			mProgressDialog = ProgressDialog.show(CardBrowser.this, "",
+			mProgressDialog = StyledProgressDialog.show(CardBrowser.this, "",
 					getResources().getString(R.string.saving_changes), true);
 		}
 

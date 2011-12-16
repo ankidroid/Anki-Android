@@ -107,6 +107,7 @@
   <string name="gestures_tap_bottom">Касание внизу</string>
   <string name="gestures_tap_left">Касание слева</string>
   <string name="gestures_tap_right">Касание справа</string>
+  <string name="gestures_longclick">Длинное нажатие</string>
   <string name="pref_cat_scrolling">Аппаратные кнопки вверх/вниз</string>
   <string name="more_scrolling_buttons">eReader</string>
   <string name="more_scrolling_buttons_summ">Использовать Kanji/Katakana, Emoji/Kao-moji (японские) кнопки для скроллинга.</string>
@@ -196,6 +197,13 @@
   <string name="show_broadcast_messages">Показывать текущие сообщения</string>
   <string name="show_broadcast_messages_summ">Показывать AnkiDroid уведомления, такие как новые версии программы или другие важные новости</string>
   <string name="input_workaround">Трюк с полями ввода</string>
-  <string name="input_workaround_summ">Решение проблемы с html-полями ввода на нескольких устройствах.</string>
-  <string name="write_answers_message">Чтобы было возможно писать ответ, Вы должны определить для каждой колоды поле, с которым будет сравниваться написанный Вами ответ.\n\nВы можете сделать это используя Anki Desktop. (Свойства колоды -&gt; Изменить модель -&gt; Шаблон карты).</string>
+  <string name="input_workaround_summ">Решение проблемы с html-полями ввода для нескольких устройств.</string>
+  <string name="write_answers_message">Вы должны определить для каждой колоды поле, с которым будет сравниваться написанный ответ. Вы можете сделать это в Anki Desktop (Свойства колоды -&gt; Изменить модель -&gt; Шаблон карты). \n\n Если поле для сравнения не было установлено, то Ваш написанный ответ будет сравниваться со всем ответом карты.</string>
+  <string name="pref_cache_cardbrowser">Кэш браузера карт</string>
+  <string name="pref_cache_cardbrowser_summ">Держать все карты браузера карт в кэше (неэкономное потребление памяти).</string>
+  <string name="pref_cache_cardbrowser_reload">Перезагрузить все карты?</string>
+  <string name="pref_keep_screen_on">Держать экран включенным</string>
+  <string name="pref_keep_screen_on_summ">Запретить отключение экрана при просмотре карт</string>
+  <string name="pref_simple_interface">Простой интерфейс</string>
+  <string name="pref_simple_interface_summ">Speeds up card showing but does only support text (no pictures, sounds etc.)</string>
 </resources>

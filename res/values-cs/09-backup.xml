@@ -29,6 +29,8 @@
   <string name="backup_delete">Výmaz záloh.\nProsím čekejte...</string>
   <string name="contextmenu_deckpicker_remove_backups">Odstranit zálohy</string>
   <string name="backup_restore">Obnovit ze zálohy</string>
+  <string name="backup_repair_deck">Opravit balíček</string>
+  <string name="backup_repair_deck_progress">Opravuji balíček.\nProsím čekejte...</string>
   <string name="backup_restore_error">Balíček nelze obnovit.</string>
   <string name="backup_restore_deck">Obnovování balíčku.\nProsím čekejte...</string>
   <string name="backup_restore_select_title">Vyberte zálohu pro obnovení</string>
@@ -36,5 +38,7 @@
   <string name="backup_delete_deck_backups">Zálohy balíčku %s smazány</string>
   <string name="delete_deck_success">Balíček %1$s smazán. Záloha ve složce %2$s</string>
   <string name="backup_delete_deck_backups_alert">Opravdu smazat všechny zálohy balíčku %s?</string>
-  <string name="open_deck_failed">Soubor %1$s nelze otevřít. Buď to není anki soubor nebo je porušen.\n\nMůžete zkusit obnovit balíček ze zálohy. Současný balíček bude přesunut do podadresáře \'%2$s\'. Informace o opravě porušených balíčků naleznete na adrese: %3$s).\n\nStiskněte tlačítko zpět pro uzavření této zprávy.</string>
+  <string name="open_deck_failed">Soubor %1$s nelze otevřít. Buď to není Anki soubor nebo byl poškozen.\n\nMůžete se pokusit opravit balíček nebo obnovit ze zálohy (v obou případech bude kopie poškozeného balíčku přesunuta do podsložky \'%2$s\'). Další informace o opravě poškozeného balíčku: %3$s.\n\nStiskněte tlačítko Zpět pro zavření tohoto dialogu.</string>
+  <string name="deckpicker_backup_error">Zálohu nebylo možné vytvořit</string>
+  <string name="deck_repair_error">Balíček nemohl být opraven</string>
 </resources>

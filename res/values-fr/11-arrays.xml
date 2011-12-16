@@ -116,8 +116,9 @@
     <item>Quitter l\'apprentissage</item>
   </string-array>
   <string-array name="theme_labels">
-    <item>Android Dark</item>
-    <item>Android Light</item>
-    <item>Blue</item>
+    <item>Android sombre</item>
+    <item>Android clair</item>
+    <item>Bleu</item>
+    <item>White</item>
   </string-array>
 </resources>

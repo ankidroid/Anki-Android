@@ -53,17 +53,17 @@
   <string name="studyoptions_congrats_syncdeck">Stapel synchronisieren</string>
   <string name="studyoptions_congrats_open_other_deck">Einen anderen Stapel öffnen</string>
   <string name="studyoptions_congrats_finish">Zurück zu den Lerneinstellungen</string>
-  <string name="card_unsuspended">Aussetzung rückgängig gemacht</string>
+  <string name="card_unsuspended">Aussetzen rückgängig gemacht</string>
   <string name="card_suspended">Karte wieder ausgesetzt</string>
   <string name="menu_rotate">Drehen</string>
   <string name="undo">Rückgängig</string>
   <string name="redo">Wiederholen</string>
-  <string name="close_previous_deck">Alter Stapel wird geschlossen.\nBitte warten...</string>
-  <string name="close_deck">Stapel wird geschlossen.\nBitte warten...</string>
+  <string name="finish_operation">Beende letzte Operation.\nBitte warten...</string>
   <string name="contextmenu_deckpicker_download_missing_media">Fehlende Media-Daten herunterladen</string>
   <string name="contextmenu_deckpicker_reset_language_assignments">Sprachzuordnungen zurücksetzen</string>
   <string name="contextmenu_deckpicker_reset_reset_message">Sprachen zurückgesetzt</string>
   <string name="contextmenu_deckpicker_optimize_deck">Datenbank optimieren</string>
+  <string name="contextmenu_deckpicker_rename_deck">Stapel umbenennen</string>
   <string name="contextmenu_deckpicker_set_custom_dictionary">Eigenes Wörterbuch festlegen</string>
   <string name="begin_cram">Pauken starten</string>
   <string name="cram">Pauken</string>
@@ -96,6 +96,8 @@
   <string name="visit">Besuchen</string>
   <string name="later">Später</string>
   <string name="download">Holen</string>
+  <string name="deckpicker_loading_error">Fehler beim Laden</string>
+  <string name="deckpicker_creating_backup">Sicherung wird angelegt...</string>
   <string-array name="next_review_s">
     <item>1 Sekunde</item>
     <item>1 Minute</item>

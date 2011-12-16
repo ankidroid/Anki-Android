@@ -29,8 +29,12 @@
   <string name="widget_minimum_cards_due_notification_ticker_text">%d κάρτες AnkiDroid εις αναμονή</string>
   <string name="widget_no_cards_due">Δεν απομένουν επαναλήψεις</string>
   <string name="widget_loading">Φόρτωση widget...</string>
-  <string name="widget_medium">AnkiDroid Medium</string>
-  <string name="widget_small">AnkiDroid Small</string>
+  <string name="widget_medium">AnkiDroid Μεσαίο</string>
+  <string name="widget_small">AnkiDroid Μικρό</string>
+  <string name="widget_big">AnkiDroid Μεγάλο</string>
+  <string name="widget_big_restrictions_dialog">Λόγω ορισμένων περιορισμών του Android widget αυτό το widget μπορεί να δείξει μόνο κείμενο κι όχι εικόνες/ήχους κλπ.</string>
+  <string name="open_in_reviewer">Άνοιγμα τράπουλας στο AnkiDroid</string>
+  <string name="widget_big_tomorrow_due">Δέουσες αύριο:</string>
   <plurals name="widget_cards_in_decks_due">
     <item quantity="one">1 δέουσα κάρτα στο %2$s</item>
     <item quantity="other">%1$d δέουσες κάρτες στο %2$s</item>
@@ -38,5 +42,9 @@
   <plurals name="widget_decks">
     <item quantity="one">1 τράπουλα</item>
     <item quantity="other">%1$d τράπουλες</item>
+  </plurals>
+  <plurals name="widget_big_eta">
+    <item quantity="one">Εκτιμώμενος χρόνος: 1 λεπτό</item>
+    <item quantity="other">Εκτιμώμενος χρόνος: %d λεπτά</item>
   </plurals>
 </resources>

@@ -58,12 +58,12 @@
   <string name="menu_rotate">Rotar</string>
   <string name="undo">Deshacer</string>
   <string name="redo">Repetir</string>
-  <string name="close_previous_deck">Cerrando el mazo anterior.\nPor favor, espera...</string>
-  <string name="close_deck">Cerrando el mazo.\nPor favor, espera...</string>
+  <string name="finish_operation">Finalizando la operación anterior.\nPor favor, espera...</string>
   <string name="contextmenu_deckpicker_download_missing_media">Descargar archivos multimedia que falten</string>
   <string name="contextmenu_deckpicker_reset_language_assignments">Restablecer las Asignaciones de Idioma</string>
-  <string name="contextmenu_deckpicker_reset_reset_message">Restablecer Idioma</string>
+  <string name="contextmenu_deckpicker_reset_reset_message">Restablecer idioma</string>
   <string name="contextmenu_deckpicker_optimize_deck">Optimizar la base de datos</string>
+  <string name="contextmenu_deckpicker_rename_deck">Renombrar mazo</string>
   <string name="contextmenu_deckpicker_set_custom_dictionary">Establecer diccionario personalizado</string>
   <string name="begin_cram">Comenzar a empollar</string>
   <string name="cram">Empollar</string>
@@ -96,6 +96,8 @@
   <string name="visit">Visita</string>
   <string name="later">Más tarde</string>
   <string name="download">Descargar</string>
+  <string name="deckpicker_loading_error">El mazo no se pudo cargar</string>
+  <string name="deckpicker_creating_backup">Creando copia de seguridad...</string>
   <string-array name="next_review_s">
     <item>1 segundo</item>
     <item>1 minuto</item>

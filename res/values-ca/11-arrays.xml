@@ -116,8 +116,9 @@
     <item>Atura l\'estudi</item>
   </string-array>
   <string-array name="theme_labels">
-    <item>Android Dark</item>
-    <item>Android Light</item>
-    <item>Blue</item>
+    <item>Android Fosc</item>
+    <item>Android Clar</item>
+    <item>Blau</item>
+    <item>White</item>
   </string-array>
 </resources>

@@ -6,23 +6,30 @@
 	android:layout_height="fill_parent"
 	android:gravity="center"
 	android:orientation="vertical">
-	<LinearLayout
+    
+	<LinearLayout android:id="@+id/studyoptions_mainframe"
 		android:orientation="vertical"
 		android:gravity="center"
 		android:layout_width="fill_parent"
 		android:layout_height="fill_parent">
-		<TextView 
+
+		<LinearLayout android:id="@+id/studyoptions_deckinformation"
+		android:orientation="vertical"
+		android:gravity="center"
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content">
+	    		<TextView
 			android:id="@+id/studyoptions_deck_name"
 			android:textSize="26sp" 
 			android:textStyle="bold" 
 			android:ellipsize="end"
-			android:lines="1"
+			android:singleLine="true"
 			android:gravity="center" 
 			android:layout_width="fill_parent" 
 			android:layout_height="wrap_content"
-			android:layout_marginTop="3dp" 
-			android:layout_marginBottom="8dp" 
 			android:text=""/>
+	    			</LinearLayout>
+	    		
 		<LinearLayout
 			android:orientation="horizontal"
 			android:gravity="center"
@@ -35,10 +42,15 @@
 			android:gravity="center"
 			android:layout_gravity="center"
 			android:layout_marginLeft="3dp"
-			android:layout_marginBottom="3dp"
 			android:layout_width="0dip"
 			android:layout_weight="1"
 			android:layout_height="wrap_content">
+				<LinearLayout 
+		android:orientation="vertical"
+		android:gravity="center"
+		android:layout_width="fill_parent"
+		android:layout_height="fill_parent">
+		    
 			<LinearLayout
 			android:id="@+id/studyoptions_statistic_field" 
 				android:layout_width="wrap_content"
@@ -188,6 +200,7 @@
 			</TableLayout>
 		</LinearLayout>
 		</LinearLayout>
+		</LinearLayout>
 		<LinearLayout
 			android:layout_width="0dip"
 			android:layout_weight="1"
@@ -203,7 +216,7 @@
     	     	android:layout_weight="1"
 				android:text="@string/studyoptions_start"
 				android:paddingLeft="10dip"	
-				android:drawableLeft="@drawable/chronometer"/>	
+				android:drawableLeft="@drawable/ic_start"/>	
 			<LinearLayout
 				android:layout_weight="1"
 				android:orientation="vertical"
@@ -283,14 +296,6 @@ style="?android:attr/buttonStyleSmall"
 				android:layout_height="wrap_content"/>
 
 		</LinearLayout>
-				<TextView
-			android:id="@+id/studyoptions_help"
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:layout_alignParentRight="true"
-			android:layout_margin="2dp"
-			android:layout_centerInParent="true"
-			android:drawableLeft="@drawable/help"/>
 	</RelativeLayout>	
 		
 	</LinearLayout>

@@ -53,18 +53,18 @@
   <string name="studyoptions_congrats_syncdeck">Συγχρονισμός τράπουλας</string>
   <string name="studyoptions_congrats_open_other_deck">Ανοίξτε άλλη τράπουλα</string>
   <string name="studyoptions_congrats_finish">Επιστροφή στην Οθόνη Μελέτης</string>
-  <string name="card_unsuspended">Card suspension undone</string>
-  <string name="card_suspended">Card resuspended</string>
-  <string name="menu_rotate">Rotate</string>
+  <string name="card_unsuspended">Αναστολή κάρτας αναιρέθηκε</string>
+  <string name="card_suspended">Κάρτα επαναστάλει</string>
+  <string name="menu_rotate">Περιστροφή</string>
   <string name="undo">Αναίρεση</string>
   <string name="redo">Επαναφορά</string>
-  <string name="close_previous_deck">Closing previous deck.\nPlease wait...</string>
-  <string name="close_deck">Closing deck.\nPlease wait...</string>
+  <string name="finish_operation">Τελειώνει η προηγούμενη λειτουργία.\nΠαρακαλώ περιμένετε...</string>
   <string name="contextmenu_deckpicker_download_missing_media">Λήψη απόντων μέσων</string>
   <string name="contextmenu_deckpicker_reset_language_assignments">Επαναφορά καταχωρήσεων Γλωσσών</string>
   <string name="contextmenu_deckpicker_reset_reset_message">Επαναφορά γλώσσας</string>
   <string name="contextmenu_deckpicker_optimize_deck">Βελτιστοποίηση βάσης δεδομένων</string>
-  <string name="contextmenu_deckpicker_set_custom_dictionary">Set custom dictionary</string>
+  <string name="contextmenu_deckpicker_rename_deck">Μετονομασία τράπουλας</string>
+  <string name="contextmenu_deckpicker_set_custom_dictionary">Ορισμός προσαρμοσμένου λεξικού</string>
   <string name="begin_cram">Έναρξη εντατικής μελέτης</string>
   <string name="cram">Εντατική μελέτη</string>
   <string name="menu_open_deck">Όλες οι τράπουλες</string>
@@ -81,7 +81,7 @@
   <string name="menu_suspend_card">Αναστολή κάρτας</string>
   <string name="menu_bury_card">Θάψιμο κάρτας</string>
   <string name="menu_edit_card">Επεξεργασία κάρτας</string>
-  <string name="menu_select">Select text</string>
+  <string name="menu_select">Επιλογή κειμένου</string>
   <string name="menu_search">Αναζήτηση στο %1$s</string>
   <string name="menu_mark_card">Σημάδεμα κάρτας</string>
   <string name="menu_marked">Σημαδεμένη</string>
@@ -90,23 +90,25 @@
   <string name="studyoptions_cram_dialog_title">Ετικέτες προς εντατική μελέτη</string>
   <string name="statistics">Στατιστικά</string>
   <string name="studyoptions_load_other_deck">Φορτώστε άλλη τράπουλα</string>
-  <string name="studyoptions_load_tutorial_deck">Load Tutorial Deck</string>
+  <string name="studyoptions_load_tutorial_deck">Φόρτωση Τράπουλας Δείγμα</string>
   <string name="studyoptions_night_mode">Νυκτερινή λειτουργία</string>
-  <string name="studyoptions_swap_qa">Swap Q/A</string>
-  <string name="visit">Visit</string>
-  <string name="later">Later</string>
-  <string name="download">Download</string>
+  <string name="studyoptions_swap_qa">Εναλλαγή Q/A</string>
+  <string name="visit">Επίσκεψη</string>
+  <string name="later">Αργότερα</string>
+  <string name="download">Λήψη</string>
+  <string name="deckpicker_loading_error">Η τράπουλα δεν ήταν δυνατό να φορτωθεί</string>
+  <string name="deckpicker_creating_backup">Δημιουργία αντιγράφου...</string>
   <string-array name="next_review_s">
-    <item>1 second</item>
-    <item>1 minute</item>
+    <item>1 δευτερόλεπτο</item>
+    <item>1 λεπτό</item>
     <item>1 ώρα</item>
     <item>1 ημέρα</item>
     <item>1 μήνας</item>
     <item>1 έτος</item>
   </string-array>
   <string-array name="next_review_p">
-    <item>%s seconds</item>
-    <item>%s minutes</item>
+    <item>%s δευτερόλεπτα</item>
+    <item>%s λεπτά</item>
     <item>%s ώρες</item>
     <item>%s μέρες</item>
     <item>%s μήνες</item>

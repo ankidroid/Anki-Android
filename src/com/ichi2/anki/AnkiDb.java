@@ -29,6 +29,8 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 
 import com.tomgibara.android.veecheck.util.PrefSettings;
+import com.ichi2.anki.Utils.SqlCommandType;
+import static com.ichi2.anki.Utils.SqlCommandType.*;
 
 /**
  * Database layer for AnkiDroid. Can read the native Anki format through Android's SQLite driver.

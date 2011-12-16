@@ -63,8 +63,19 @@
   <string name="card_editor_add_card">Añadir tarjeta</string>
   <string name="card_editor_reset">Restablecer</string>
   <string name="card_editor_copy_card">Copiar tarjeta</string>
-  <string name="card_editor_reset_card">Resetear cuenta de progreso</string>
+  <string name="card_editor_reset_card">Reiniciar cuenta de progreso</string>
   <string name="error_insufficient_memory">La operación no es posible debido a insuficiencia de memoria en tu dispositivo</string>
   <string name="tutorial_load">Creando mazo tutorial</string>
   <string name="tutorial_loading_error">No se pudo crear el mazo tutorial</string>
+  <string name="rename">Renombrar</string>
+  <string name="rename_error">El mazo %s no pudo ser renombrado</string>
+  <string name="help_title">Ayuda</string>
+  <string name="help_online">Ayuda en línea</string>
+  <string name="help_faq">Preguntas más frecuentes</string>
+  <string name="help_tutorial">Mazo tutorial</string>
+  <string name="simple_interface_hint">Empty %s. Bear in mind that simple interface cannot show pictures/sounds etc.</string>
+  <plurals name="factadder_cards_added">
+    <item quantity="one">Se ha añadido 1 tarjeta</item>
+    <item quantity="other">Se han añadido %d tarjetas</item>
+  </plurals>
 </resources>

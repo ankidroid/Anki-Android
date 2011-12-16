@@ -58,12 +58,12 @@
   <string name="menu_rotate">Rotate</string>
   <string name="undo">Undo</string>
   <string name="redo">Redo</string>
-  <string name="close_previous_deck">Closing previous deck.\nPlease wait...</string>
-  <string name="close_deck">Closing deck.\nPlease wait...</string>
+  <string name="finish_operation">Finishing previous operation.\nPlease wait...</string>
   <string name="contextmenu_deckpicker_download_missing_media">Download missing media</string>
   <string name="contextmenu_deckpicker_reset_language_assignments">Reset Language Assignments</string>
   <string name="contextmenu_deckpicker_reset_reset_message">Language reset</string>
   <string name="contextmenu_deckpicker_optimize_deck">Optimize database</string>
+  <string name="contextmenu_deckpicker_rename_deck">Rename deck</string>
   <string name="contextmenu_deckpicker_set_custom_dictionary">Set custom dictionary</string>
   <string name="begin_cram">Start Cram mode</string>
   <string name="cram">Cram</string>
@@ -96,6 +96,8 @@
   <string name="visit">Visit</string>
   <string name="later">Later</string>
   <string name="download">Download</string>
+  <string name="deckpicker_loading_error">Deck could not be loaded</string>
+  <string name="deckpicker_creating_backup">Creating backup...</string>
   <string-array name="next_review_s">
     <item>1 second</item>
     <item>1 minute</item>

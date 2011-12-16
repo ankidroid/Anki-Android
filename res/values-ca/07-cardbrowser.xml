@@ -42,7 +42,7 @@
   <string name="card_details_question">Pregunta</string>
   <string name="card_details_answer">Resposta</string>
   <string name="card_details_due">Pendents</string>
-  <string name="card_details_last_due">Last due</string>
+  <string name="card_details_last_due">Darrer vençut</string>
   <string name="card_details_now">Ara</string>
   <string name="card_details_interval">Interval</string>
   <string name="card_details_ease">Fàcil</string>
@@ -54,7 +54,7 @@
   <string name="card_details_changed">S\'ha canviat</string>
   <string name="card_details_tags">Etiquetes</string>
   <string name="card_details_model">Plantilla</string>
-  <string name="card_browser_sorting_cards">Sorting cards.\nPlease wait...</string>
+  <string name="card_browser_sorting_cards">S\'està classificant les fitxes. \nEspereu...</string>
   <string name="card_details_card_model">Plantilla de fitxa</string>
   <string-array name="card_browser_order_labels">
     <item>Per pregunta</item>

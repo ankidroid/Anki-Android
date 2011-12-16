@@ -49,7 +49,7 @@
   <string name="select">Ок</string>
   <string name="saving_changes">Сохранение изменений...</string>
   <string name="studyoptions_nodeck_title">Колоды не загружены</string>
-  <string name="studyoptions_nodeck_message">В данный момент не открыто ни одной колоды. Anki-колоды сохраняются в каталоге \"%s\" на SD-карте. Этот каталог может быть изменён в \"Настройках\" (нажмите на кнопку \"Menu\" (на аппарате) и выберете \"Настройки\").</string>
+  <string name="studyoptions_nodeck_message">В данный момент не открыто ни одной колоды. Anki-колоды сохраняются в каталоге \"%s\" на SD-карте. Этот путь может быть изменён в \"Настройках\" (нажмите на кнопку \"Menu\" (на аппарате) и выберете \"Настройки\").</string>
   <string name="studyoptions_welcome_title">Добро пожаловать в AnkiDroid</string>
   <string name="studyoptions_welcome_message">С AnkiDroid вы можете изучать большие объемы лексики или любого другого материала. AnkiDroid покажет вам карточки перед тем, как вы забудете их (по спец. алгоритму). Все карточки организованны в \"колоды\", их можно загрузить с сайта (общедоступные) или создать свою с AnkiDroid или Anki. Свои можно синхронизировать через AnkiWeb или копировать колоды в каталог %s.\nНажмите, чтобы узнать больше.</string>
   <string name="studyoptions_deck_not_loaded_title">Колода не может быть открыта</string>
@@ -67,4 +67,15 @@
   <string name="error_insufficient_memory">Операция не возможна из-за недостатка памяти на Вашем устройстве</string>
   <string name="tutorial_load">Создание учебной колоды</string>
   <string name="tutorial_loading_error">Учебная колода не может быть создана</string>
+  <string name="rename">Переименовать</string>
+  <string name="rename_error">Колода %s не может быть переименована</string>
+  <string name="help_title">Справка</string>
+  <string name="help_online">Онлайн помощь</string>
+  <string name="help_faq">Вопросы и ответы</string>
+  <string name="help_tutorial">Учебная колода</string>
+  <string name="simple_interface_hint">Пустой %s. Имейте в виду то, что простой интерфейс не может показывать фотографии/звуки и т.д.</string>
+  <plurals name="factadder_cards_added">
+    <item quantity="one">1 карта добавлена</item>
+    <item quantity="other">%d карт добавлено</item>
+  </plurals>
 </resources>

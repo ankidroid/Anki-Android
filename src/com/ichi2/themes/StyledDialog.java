@@ -21,9 +21,11 @@ package com.ichi2.themes;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup.LayoutParams;
+import android.view.WindowManager.BadTokenException;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
@@ -34,9 +36,9 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.R;
-import com.ichi2.anki.StudyOptions;
-
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
  
@@ -46,11 +48,10 @@ public class StyledDialog extends Dialog {
 	private Context mContext;
 	private List<String> mItemList;
 	private boolean[] mCheckedItems;
-	private ArrayAdapter mListAdapter;
+	private ArrayAdapter<String> mListAdapter;
 	private OnClickListener mListener;
 	private ListView mListView;
 	private boolean mDoNotShow = false;
-
 
     public StyledDialog(Context context) {
         super(context, R.style.StyledDialog);
@@ -59,6 +60,16 @@ public class StyledDialog extends Dialog {
 
 
     @Override
+    public void show() {
+    	try {
+    		super.show();
+    	} catch (BadTokenException e) {
+    		Log.e(AnkiDroidApp.TAG, "Could not show dialog: " + e);
+    	}
+    }
+
+
+    // @Override  On Android 1.5 this is not Override
     public void onAttachedToWindow() {
     	if (mDoNotShow) {
         	this.dismiss();
@@ -107,27 +118,27 @@ public class StyledDialog extends Dialog {
 			    });
     	} else {
 	        mListView.setOnItemClickListener(new OnItemClickListener() {
-    				@Override    
+    				@Override
     				public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
     						mListener.onClick(StyledDialog.this, position);
-						StyledDialog.this.dismiss();
+    						StyledDialog.this.dismiss();
     			    	}
 			    });
     	}
     	switch (type) {
     	case 1:
-    		mListAdapter = new ArrayAdapter(mContext, R.layout.select_dialog_nochoice, 0, mItemList);
+    		mListAdapter = new ArrayAdapter<String>(mContext, R.layout.select_dialog_nochoice, 0, mItemList);
     		mListView.setAdapter(mListAdapter);
     		mListView.setChoiceMode(ListView.CHOICE_MODE_NONE);
 	    	break;
     	case 2:
-    		mListAdapter = new ArrayAdapter(mContext, R.layout.select_dialog_singlechoice, 0, mItemList);
+    		mListAdapter = new ArrayAdapter<String>(mContext, R.layout.select_dialog_singlechoice, 0, mItemList);
     		mListView.setAdapter(mListAdapter);
     		mListView.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
     		mListView.setItemChecked(checkedItem, true);
         	break;
     	case 3:
-    		mListAdapter = new ArrayAdapter(mContext, R.layout.select_dialog_multichoice, 0, mItemList);
+    		mListAdapter = new ArrayAdapter<String>(mContext, R.layout.select_dialog_multichoice, 0, mItemList);
     		mListView.setAdapter(mListAdapter);
     		mListView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
 	    	for (int i = 0; i < checked.length; i++) {
@@ -187,6 +198,7 @@ public class StyledDialog extends Dialog {
         private Context context;
         private String title;
         private String message;
+        private int messageSize = 0;
         private String positiveButtonText;
         private String negativeButtonText;
         private String neutralButtonText;
@@ -221,6 +233,11 @@ public class StyledDialog extends Dialog {
          */
         public Builder setMessage(String message) {
             this.message = message;
+            return this;
+        }
+        public Builder setMessage(String message, int size) {
+            this.message = message;
+            this.messageSize = size;
             return this;
         }
 
@@ -442,6 +459,7 @@ public class StyledDialog extends Dialog {
                 }
             } else {
             	layout.findViewById(R.id.topPanel).setVisibility(View.GONE);
+            	layout.findViewById(R.id.titleDivider).setVisibility(View.GONE);
             }
 
             // set buttons
@@ -484,7 +502,11 @@ public class StyledDialog extends Dialog {
 
             // set the message
             if (message != null) {
-                ((TextView) layout.findViewById(R.id.message)).setText(message);
+                TextView tv = (TextView) layout.findViewById(R.id.message);
+                tv.setText(message);
+                if (messageSize != 0) {
+                    tv.setTextSize(messageSize * context.getResources().getDisplayMetrics().scaledDensity);
+                }
             } else {
             	((LinearLayout) layout.findViewById(R.id.contentPanel)).setVisibility(View.GONE);
             }
@@ -509,7 +531,13 @@ public class StyledDialog extends Dialog {
             }
 
             // set background
-            Themes.setStyledDialogBackgrounds(layout, numberOfButtons, brightViewBackground);
+            try {
+            	Themes.setStyledDialogBackgrounds(layout, numberOfButtons, brightViewBackground);
+            } catch (OutOfMemoryError e) {
+            	Log.e(AnkiDroidApp.TAG, "StyledDialog - Dialog could not be created: " + e);
+            	Themes.showThemedToast(context, context.getResources().getString(R.string.error_insufficient_memory), false);
+            	return null;
+            }
 
             dialog.setContentView(layout);
             return dialog;

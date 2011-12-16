@@ -23,90 +23,92 @@
   <string name="app_name">AnkiDroid</string>
   <string name="yes">예</string>
   <string name="no">아니오</string>
-  <string name="ok">OK</string>
-  <string name="studyoptions_deck_name">Deck name</string>
-  <string name="studyoptions_reviews_due">Reviews due:</string>
-  <string name="studyoptions_new_today">New today:</string>
-  <string name="studyoptions_new_total">New total:</string>
-  <string name="studyoptions_eta">Estimated time (min):</string>
-  <string name="studyoptions_start">Start Reviewing</string>
-  <string name="studyoptions_more">Study Options</string>
-  <string name="studyoptions_more_dialog_title">More Options</string>
-  <string name="deckpicker_title_nosdcard">SD card is unmounted</string>
+  <string name="ok">확인</string>
+  <string name="studyoptions_deck_name">덱 이름</string>
+  <string name="studyoptions_reviews_due">복습 예정:</string>
+  <string name="studyoptions_new_today">오늘 새 카드:</string>
+  <string name="studyoptions_new_total">전체 새 카드</string>
+  <string name="studyoptions_eta">예상 시간(분):</string>
+  <string name="studyoptions_start">공부하기</string>
+  <string name="studyoptions_more">학습 옵션</string>
+  <string name="studyoptions_more_dialog_title">더 많은 옵션</string>
+  <string name="deckpicker_title_nosdcard">SD 카드가 인식되지 않습니다.</string>
   <string name="deckpicker_new">%d new today</string>
-  <string name="deckpicker_loaddeck">Loading deck...</string>
-  <string name="deckpicker_nodeck">No decks found.</string>
-  <string name="show_answer">Show Answer</string>
-  <string name="ease1_learning">Again</string>
-  <string name="ease2_learning">Good</string>
-  <string name="ease3_learning">Easy</string>
-  <string name="ease4_learning">Very Easy</string>
-  <string name="ease1_successive">Again</string>
-  <string name="ease2_successive">Hard</string>
-  <string name="ease3_successive">Good</string>
-  <string name="ease4_successive">Easy</string>
-  <string name="loading">Loading...</string>
-  <string name="studyoptions_continue">Continue Reviewing</string>
-  <string name="studyoptions_congrats_title">Congratulations!</string>
+  <string name="deckpicker_loaddeck">덱을 로딩하고 있습니다...</string>
+  <string name="deckpicker_nodeck">아무런 덱도 찾을 수 없습니다.</string>
+  <string name="show_answer">답 보기</string>
+  <string name="ease1_learning">다시</string>
+  <string name="ease2_learning">괜찮음</string>
+  <string name="ease3_learning">쉬움</string>
+  <string name="ease4_learning">아주 쉬움</string>
+  <string name="ease1_successive">다시</string>
+  <string name="ease2_successive">어려움</string>
+  <string name="ease3_successive">괜찮음</string>
+  <string name="ease4_successive">쉬움</string>
+  <string name="loading">로드 중...</string>
+  <string name="studyoptions_continue">리뷰 계속하기</string>
+  <string name="studyoptions_congrats_title">축하합니다!</string>
   <string name="studyoptions_congrats_learnmore">더 배우기</string>
   <string name="studyoptions_congrats_reviewearly">Review Early</string>
-  <string name="studyoptions_congrats_syncdeck">Synchronize deck</string>
-  <string name="studyoptions_congrats_open_other_deck">Open Other Deck</string>
-  <string name="studyoptions_congrats_finish">Back to Study Screen</string>
-  <string name="card_unsuspended">Card suspension undone</string>
-  <string name="card_suspended">Card resuspended</string>
-  <string name="menu_rotate">Rotate</string>
-  <string name="undo">Undo</string>
-  <string name="redo">Redo</string>
-  <string name="close_previous_deck">Closing previous deck.\nPlease wait...</string>
-  <string name="close_deck">Closing deck.\nPlease wait...</string>
-  <string name="contextmenu_deckpicker_download_missing_media">Download missing media</string>
+  <string name="studyoptions_congrats_syncdeck">덱 동기화</string>
+  <string name="studyoptions_congrats_open_other_deck">다른 덱 열기</string>
+  <string name="studyoptions_congrats_finish">학습 화면으로 돌아가기</string>
+  <string name="card_unsuspended">카드 미결정 취소.</string>
+  <string name="card_suspended">카드를 미결정으로 돌려놓음.</string>
+  <string name="menu_rotate">회전</string>
+  <string name="undo">취소</string>
+  <string name="redo">다시 하기</string>
+  <string name="finish_operation">이전 작업 마무리 중. 기다려주세요...</string>
+  <string name="contextmenu_deckpicker_download_missing_media">누락된 미디어 다운로드</string>
   <string name="contextmenu_deckpicker_reset_language_assignments">Reset Language Assignments</string>
-  <string name="contextmenu_deckpicker_reset_reset_message">Language reset</string>
-  <string name="contextmenu_deckpicker_optimize_deck">Optimize database</string>
-  <string name="contextmenu_deckpicker_set_custom_dictionary">Set custom dictionary</string>
-  <string name="begin_cram">Start Cram mode</string>
-  <string name="cram">Cram</string>
+  <string name="contextmenu_deckpicker_reset_reset_message">언어 재설정</string>
+  <string name="contextmenu_deckpicker_optimize_deck">데이터베이스 최적화</string>
+  <string name="contextmenu_deckpicker_rename_deck">Rename deck</string>
+  <string name="contextmenu_deckpicker_set_custom_dictionary">사용자 정의 사전 설정</string>
+  <string name="begin_cram">벼락치기 모드 시작</string>
+  <string name="cram">벼락치기</string>
   <string name="menu_open_deck">모든 묶음</string>
-  <string name="menu_sync">Sync</string>
-  <string name="menu_download_deck">Download deck</string>
-  <string name="menu_download_shared_deck">Shared deck</string>
-  <string name="menu_download_personal_deck">Personal deck</string>
-  <string name="menu_my_account">My Account</string>
-  <string name="menu_preferences">Preferences</string>
+  <string name="menu_sync">동기화</string>
+  <string name="menu_download_deck">덱 다운로드</string>
+  <string name="menu_download_shared_deck">공유된 덱</string>
+  <string name="menu_download_personal_deck">개인 덱</string>
+  <string name="menu_my_account">내 계정</string>
+  <string name="menu_preferences">환경 설정</string>
   <string name="menu_zeemote">Zeemote</string>
-  <string name="menu_add_card">Add card</string>
+  <string name="menu_add_card">카드 추가</string>
   <string name="menu_about">About</string>
   <string name="menu_remove_card">Dismiss Card</string>
   <string name="menu_suspend_card">Suspend Card</string>
   <string name="menu_bury_card">Bury Card</string>
-  <string name="menu_edit_card">Edit Card</string>
-  <string name="menu_select">Select text</string>
+  <string name="menu_edit_card">카드 편집</string>
+  <string name="menu_select">텍스트 선택</string>
   <string name="menu_search">Lookup in %1$s</string>
   <string name="menu_mark_card">Mark Card</string>
-  <string name="menu_marked">Marked</string>
-  <string name="menu_create_deck">Create deck</string>
-  <string name="studyoptions_feedback">Feedback</string>
-  <string name="studyoptions_cram_dialog_title">Tags to cram</string>
-  <string name="statistics">Statistics</string>
-  <string name="studyoptions_load_other_deck">Load Other Deck</string>
-  <string name="studyoptions_load_tutorial_deck">Load Tutorial Deck</string>
-  <string name="studyoptions_night_mode">Night Mode</string>
-  <string name="studyoptions_swap_qa">Swap Q/A</string>
-  <string name="visit">Visit</string>
-  <string name="later">Later</string>
-  <string name="download">Download</string>
+  <string name="menu_marked">마크</string>
+  <string name="menu_create_deck">새로운 덱 만들기</string>
+  <string name="studyoptions_feedback">피드백</string>
+  <string name="studyoptions_cram_dialog_title">벼락치기할 태그</string>
+  <string name="statistics">통계</string>
+  <string name="studyoptions_load_other_deck">다른 덱 불러오기</string>
+  <string name="studyoptions_load_tutorial_deck">튜토리얼 덱 읽기</string>
+  <string name="studyoptions_night_mode">야간 모드</string>
+  <string name="studyoptions_swap_qa">질답 역순</string>
+  <string name="visit">방문</string>
+  <string name="later">나중에</string>
+  <string name="download">다운로드</string>
+  <string name="deckpicker_loading_error">덱을 로드 하지 못했습니다.</string>
+  <string name="deckpicker_creating_backup">백업 만드는 중...</string>
   <string-array name="next_review_s">
-    <item>1 second</item>
-    <item>1 minute</item>
+    <item>1초</item>
+    <item>1분</item>
     <item>1 시간</item>
     <item>1 일</item>
     <item>1 개</item>
     <item>1 년</item>
   </string-array>
   <string-array name="next_review_p">
-    <item>%s seconds</item>
-    <item>%s minutes</item>
+    <item>%s 초</item>
+    <item>%s 분</item>
     <item>%s 시간</item>
     <item>%s 일</item>
     <item>%s 개월</item>
@@ -121,7 +123,7 @@
     <item quantity="other">All decks: %1$d of %2$d due (%3$s)</item>
   </plurals>
   <plurals name="deckpicker_title_minutes">
-    <item quantity="one">1 min.</item>
+    <item quantity="one">1분</item>
     <item quantity="other">%d min.</item>
   </plurals>
   <plurals name="deckpicker_due">
@@ -130,7 +132,7 @@
   </plurals>
   <plurals name="reviewer_window_title">
     <item quantity="one">%1$s (1 min. left)</item>
-    <item quantity="other">%1$s (%2$d min. left)</item>
+    <item quantity="other">%1$S (%2$d 분 남음)</item>
   </plurals>
   <plurals name="studyoptions_congrats_message">
     <item quantity="one">You have finished for now.\nTomorrow there will be:\n1 card to review and %2$s.\n Estimated time: %3$s</item>
@@ -141,7 +143,7 @@
     <item quantity="other">%1$d new cards</item>
   </plurals>
   <plurals name="studyoptions_congrats_eta">
-    <item quantity="one">1 min.</item>
-    <item quantity="other">%1$d min.</item>
+    <item quantity="one">1분.</item>
+    <item quantity="other">%1$d 분.</item>
   </plurals>
 </resources>

@@ -35,7 +35,6 @@
   <string name="no_tts_available_title">Metin Okuma</string>
   <string name="no_tts_available_message">Mevcut metin okuma dili yok</string>
   <string name="tts_no_tts">Konuşma</string>
-  <string name="about_content">%1$s Android için Bilgi Kartları &lt;/h2&gt;&lt;p&gt; AnkiDroid masaüstü %2$s Anki&lt;/a&gt; yazılımı tarafından üretilen .anki dosyalarını okuyabilir. &lt;/p&gt;&lt;p&gt; AnkiDroid\'i iyileştirmemize yardımcı olmak için, lütfen karşılaştığınız hataları %3$s buradan&lt;/a&gt; bildirin; yeni özellik fikirlerinizi de bekliyoruz! Lütfen %4$s vikiyi&lt;/a&gt; kullanın ve %5$s forumda&lt;/a&gt; bir selam verin.&lt;/p&gt;&lt;p&gt; AnkiDroid %6$s açık kaynaklı bir yazılımdır&lt;/a&gt;, bu yüzden herkesin %8$s katkıda bulunanlar&lt;/a&gt; listemize %7$s katılmasını&lt;/a&gt; diliyoruz. :-) Geliştirici olmayanlar da vikiyi ve ekran görüntülerini güncelleyerek, Anki\'ye %9$s bağış yaparak&lt;/a&gt;, veya AnkiDroid\'i tanıtarak yardımcı olabilirler! &lt;/p&gt;&lt;p&gt; AnkiDroid %10$s GNU-GPL v3 lisansı&lt;/a&gt; altında yayınlanmaktadır ve kaynak kodu %11$s burada&lt;/a&gt; mevcuttur.</string>
   <string name="dont_show_again">Yeniden gösterme</string>
   <string name="deck_upgrade_too_old_version">39\'dan daha eski sürümlü desteler AnkiDroid tarafından desteklenmiyor. Lütfen son sürüme yükseltmek için desteyi Anki masaüstü ile açın.</string>
   <string name="deck_upgrade_version_61_has_latex">Deste LaTeX ifadeleri içerdiği için tamamen yükseltilemiyor. Lütfen son sürüme yükseltip LaTeX\'i yeniden oluşturmak için desteyi Anki masaüstü ile açın.</string>
@@ -58,4 +57,20 @@
   <string name="reset_card_dialog_title">Kart ilerlemesini sıfırla</string>
   <string name="reset_card_dialog_message">Bu işlem bu bilgideki bütün kartların öğrenim ilerlemelerini sıfırlar (yeni kart gibi gözükürler).\nGerçekten devam edilsin mi?</string>
   <string name="reset_card_dialog_confirmation">Bu bilginin tüm kartlarının sıfırlanması</string>
+  <string name="answering_error_title">Veritabanı hatası</string>
+  <string name="answering_error_message">Son kartı yanıtlarken veya desteyi değiştirirken bir hata meydana geldi. Bunun nedeni bozuk bir deste veya yetersiz disk alanı olabilir.\n\nEğer bununla sıklıkla karşılaşıyorsanız, lütfen desteyi onarmayı deneyin. Anki Masaüstü ile bir veritabanı kontrolü de yapabilirsiniz.\n\nBununla birlikte, bu bir AnkiDroid sorunu da olabilir; lütfen hatayı bildirin ki kontrol edebilelim.</string>
+  <string name="answering_error_report">Hatayı bildir</string>
+  <string name="repair_deck_dialog">\"%1$s\" destesini gerçekten onarmak istiyor musunuz?\n\nİşlem başlamadan önce \"%2$s\" altklasöründe destenin bir kopyası oluşturulacak.</string>
+  <string name="intent_add_save_for_later">Daha sonrası için kaydet</string>
+  <string name="intent_add_saved_information">Veri kaydedildi</string>
+  <string name="intent_add_clear_all">Hepsini temizle</string>
+  <string name="intent_aedict_empty">\"Varsayılan\" kategorisi boş</string>
+  <string name="intent_aedict_category">AnkiDroid\'e kart eklemek için bütün Not Defteri kategorilerini kaldırın veya \"varsayılan\" isminde bir tane ekleyin</string>
+  <string-array name="about_content">
+    <item><![CDATA[<h2>%1$s:<br/>Android için bilgi kartları</h2>AnkiDroid <a href="%2$s">Anki</a> masaüstü uygulamasıyla tamamen uyumlu bir bilgi kartı uygulamasıdır. İster AnkiDroid\'de ister Anki Masaüstünde içerikler oluşturabilir, indirebilir, öğrenebilir ve kolaylıkla eşitleyebilirsiniz.]]></item>
+    <item><![CDATA[AnkiDroid\'i geliştirmemize yardımcı olmak için, lütfen karşılaştığınız sorunları <a href="%1$s">buradan</a> bildirin; yeni özellik fikirleri de çok iyi olur! Lütfen <a href="%2$s">vikiyi</a> kullanın ve <a href="%3$s">forumda</a> bir selam verin.]]></item>
+    <item><![CDATA[AnkiDroid <a href="%1$s">açık kaynaklı bir yazılımdır<a/>, bu yüzden herkesin <a href="%3$s">katkı yapanlar listesine</a> <a href="%2$s">katılmasını</a> dileriz. :-)]]></item>
+    <item><![CDATA[Programcı olmayanlar da örneğin AnkiDroid\'i <a href="%1$s">çevirerek</a>, vikiyi ve ekran görüntülerini güncelleyerek, Anki Masaüstüne <a href="%2$s">bağış yaparak</a>, veya AnkiDroid hakkında bloglayarak yardımcı olabilir!]]></item>
+    <item><![CDATA[AnkiDroid <a href="%1$s">GNU-GPL 3 lisansı</a> altında yayınlanır ve kaynak kodu <a href="%2$s">burada</a> mevcuttur.]]></item>
+  </string-array>
 </resources>

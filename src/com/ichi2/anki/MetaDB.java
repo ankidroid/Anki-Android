@@ -1,9 +1,9 @@
 package com.ichi2.anki;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import com.tomgibara.android.veecheck.util.PrefSettings;
 
 import android.content.Context;
 import android.database.Cursor;
@@ -79,7 +79,12 @@ public class MetaDB {
                     + "failedCards INTEGER NOT NULL, "
             		+ "eta INTEGER NOT NULL, "
             		+ "time INTEGER NOT NULL)");
-        Log.i(AnkiDroidApp.TAG, "Opening MetaDB");
+            mMetaDb.execSQL(
+                    "CREATE TABLE IF NOT EXISTS intentInformation ("
+                    + "id INTEGER PRIMARY KEY AUTOINCREMENT, "
+                    + "source TEXT NOT NULL, "
+                    + "target INTEGER NOT NULL)");
+            Log.i(AnkiDroidApp.TAG, "Opening MetaDB");
         } catch(Exception e) {
             Log.e("Error", "Error opening MetaDB ", e);
         }
@@ -116,6 +121,8 @@ public class MetaDB {
             Log.i(AnkiDroidApp.TAG, "Resetting custom Dictionary");
             mMetaDb.execSQL("DROP TABLE IF EXISTS widgetStatus;");
             Log.i(AnkiDroidApp.TAG, "Resetting widget status");
+            mMetaDb.execSQL("DROP TABLE IF EXISTS intentInformation;");
+            Log.i(AnkiDroidApp.TAG, "Resetting intentInformation");
             return true;
         } catch(Exception e) {
             Log.e("Error", "Error resetting MetaDB ", e);
@@ -152,7 +159,24 @@ public class MetaDB {
             openDB(context);
             return true;
         } catch(Exception e) {
-            Log.e("Error", "Error resetting MetaDB ", e);
+            Log.e("Error", "Error resetting widgetStatus ", e);
+        }
+        return false;
+    }
+
+
+    /** Reset the intent information. */
+    public static boolean resetIntentInformation(Context context) {
+        if (mMetaDb == null || !mMetaDb.isOpen()) {
+            openDB(context);
+        }
+        try {
+            Log.i(AnkiDroidApp.TAG, "Resetting intent information");
+            mMetaDb.execSQL("DROP TABLE IF EXISTS intentInformation;");
+            openDB(context);
+            return true;
+        } catch(Exception e) {
+            Log.e("Error", "Error resetting intentInformation ", e);
         }
         return false;
     }
@@ -416,21 +440,18 @@ public class MetaDB {
         Cursor cursor = null;
         int due = 0;
         int eta = 0;
-        int currentDeckdue = 0;
         int time = 0;
-        String currentDeck = PrefSettings.getSharedPrefs(context).getString("deckFilename", "");
+        boolean noDeck = true;
         try {
             cursor = mMetaDb.query("widgetStatus",
-                    new String[]{"dueCards", "failedCards", "newCards", "time", "eta", "deckPath"},
+                    new String[]{"dueCards", "failedCards", "newCards", "time", "eta"},
                     null, null, null, null, null);
             while (cursor.moveToNext()) {
+            	noDeck = false;
             	int d = cursor.getInt(0) + cursor.getInt(1) + cursor.getInt(2);
             	due += d;
             	time += cursor.getInt(3);
             	eta += cursor.getInt(4);
-            	if (currentDeck.equals(cursor.getString(5))) {
-            		currentDeckdue = d;
-            	}
             }
         } catch (SQLiteException e) {
             Log.e(AnkiDroidApp.TAG, "Error while querying widgetStatus", e);
@@ -439,7 +460,29 @@ public class MetaDB {
                 cursor.close();
             }
         }
-        return new int[]{due, time, eta, currentDeckdue};
+        return new int[]{noDeck ? -1 : due, time, eta};
+    }
+
+
+    public static int getNotificationStatus(Context context) {
+        openDBIfClosed(context);
+        Cursor cursor = null;
+        int due = 0;
+        try {
+            cursor = mMetaDb.query("widgetStatus",
+                    new String[]{"dueCards", "failedCards", "newCards"},
+                    null, null, null, null, null);
+            while (cursor.moveToNext()) {
+            	due += cursor.getInt(0) + cursor.getInt(1) + cursor.getInt(2);
+            }
+        } catch (SQLiteException e) {
+            Log.e(AnkiDroidApp.TAG, "Error while querying widgetStatus", e);
+        } finally {
+            if (cursor != null && !cursor.isClosed()) {
+                cursor.close();
+            }
+        }
+        return due;
     }
 
 
@@ -471,5 +514,59 @@ public class MetaDB {
             closeDB();
             Log.i(AnkiDroidApp.TAG, "Trying to reset Widget: " + resetWidget(context));
         }
+    }
+
+
+    public static ArrayList<HashMap<String, String>> getIntentInformation(Context context) {
+        openDBIfClosed(context);
+        Cursor cursor = null;
+        ArrayList<HashMap<String, String>> list = new ArrayList<HashMap<String, String>>();
+        try {
+            cursor = mMetaDb.query("intentInformation",
+                    new String[]{"id", "source", "target"},
+                    null, null, null, null, "id");
+            while (cursor.moveToNext()) {
+            	HashMap<String, String> item = new HashMap<String, String>();
+            	item.put("id", Integer.toString(cursor.getInt(0)));
+            	item.put("source", cursor.getString(1));
+            	item.put("target", cursor.getString(2));
+            	list.add(item);
+            }
+        } catch (SQLiteException e) {
+            Log.e(AnkiDroidApp.TAG, "Error while querying intentInformation", e);
+        } finally {
+            if (cursor != null && !cursor.isClosed()) {
+                cursor.close();
+            }
+        }
+        return list;
+    }
+
+
+    public static void saveIntentInformation(Context context, String source, String target) {
+        openDBIfClosed(context);
+        try {
+            mMetaDb.execSQL("INSERT INTO intentInformation (source, target) "
+                            + " VALUES (?, ?);",
+                            new Object[]{source, target});
+            Log.i(AnkiDroidApp.TAG, "Store intentInformation: " + source + " - " + target);
+        } catch(Exception e) {
+            Log.e("Error", "Error storing intentInformation in MetaDB ", e);
+        }
+    }
+
+
+    public static boolean removeIntentInformation(Context context, String id) {
+        if (mMetaDb == null || !mMetaDb.isOpen()) {
+            openDB(context);
+        }
+        try {
+            Log.i(AnkiDroidApp.TAG, "Deleting intent information " + id);
+            mMetaDb.execSQL("DELETE FROM intentInformation WHERE id = " + id + ";");
+            return true;
+        } catch(Exception e) {
+            Log.e("Error", "Error deleting intentInformation " + id + ": ", e);
+        }
+        return false;
     }
 }

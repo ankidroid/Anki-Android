@@ -28,7 +28,7 @@
   <string name="studyoptions_reviews_due">Tekrarlanacak:</string>
   <string name="studyoptions_new_today">Bugün yeni:</string>
   <string name="studyoptions_new_total">Toplam yeni:</string>
-  <string name="studyoptions_eta">Tahmini süre (dk):</string>
+  <string name="studyoptions_eta">Tahminî süre (dk):</string>
   <string name="studyoptions_start">Gözden Geçirmeye Başla</string>
   <string name="studyoptions_more">Çalışma Seçenekleri</string>
   <string name="studyoptions_more_dialog_title">Daha Fazla Seçenek</string>
@@ -49,7 +49,7 @@
   <string name="studyoptions_continue">Gözden Geçirmeye Devam Et</string>
   <string name="studyoptions_congrats_title">Tebrikler!</string>
   <string name="studyoptions_congrats_learnmore">Daha Fazlasını Öğren</string>
-  <string name="studyoptions_congrats_reviewearly">Erkenden Gözden Geçirin</string>
+  <string name="studyoptions_congrats_reviewearly">Erkenden Gözden Geçir</string>
   <string name="studyoptions_congrats_syncdeck">Desteyi eşitle</string>
   <string name="studyoptions_congrats_open_other_deck">Başka Deste Aç</string>
   <string name="studyoptions_congrats_finish">Çalışma Ekranına Dön</string>
@@ -58,12 +58,12 @@
   <string name="menu_rotate">Çevir</string>
   <string name="undo">Geri Al</string>
   <string name="redo">Yeniden Yap</string>
-  <string name="close_previous_deck">Önceki deste kapatılıyor.\nLütfen bekleyin...</string>
-  <string name="close_deck">Deste kapatılıyor.\nLütfen bekleyin...</string>
+  <string name="finish_operation">Önceki işlem bitiriliyor.\nLütfen bekleyin...</string>
   <string name="contextmenu_deckpicker_download_missing_media">Eksik ortamı indir</string>
   <string name="contextmenu_deckpicker_reset_language_assignments">Dil Görevlerini Sıfırla</string>
   <string name="contextmenu_deckpicker_reset_reset_message">Dil sıfırlama</string>
   <string name="contextmenu_deckpicker_optimize_deck">Veritabanını iyileştir</string>
+  <string name="contextmenu_deckpicker_rename_deck">Destenin adını değiştir</string>
   <string name="contextmenu_deckpicker_set_custom_dictionary">Harici sözlük ayarla</string>
   <string name="begin_cram">Yoğun çalışma modunu başlat</string>
   <string name="cram">Yoğun Çalışma</string>
@@ -96,6 +96,8 @@
   <string name="visit">Ziyaret et</string>
   <string name="later">Daha sonra</string>
   <string name="download">İndir</string>
+  <string name="deckpicker_loading_error">Deste yüklenemedi</string>
+  <string name="deckpicker_creating_backup">Yedek oluşturuluyor...</string>
   <string-array name="next_review_s">
     <item>1 saniye</item>
     <item>1 dakika</item>
@@ -133,8 +135,8 @@
     <item quantity="other">%1$s (%2$d dk. kaldı)</item>
   </plurals>
   <plurals name="studyoptions_congrats_message">
-    <item quantity="one">Şimdilik bitirdiniz.\nYarın gözden geçirilecek\n%1$d kart ve %2$s var.\n Tahmini süre: %3$s</item>
-    <item quantity="other">Şimdilik bitirdiniz.\nYarın gözden geçirilecek\n%1$d kart ve %2$s var.\n Tahmini süre: %3$s</item>
+    <item quantity="one">Şimdilik bitirdiniz.\nYarın gözden geçirilecek\n%1$d kart ve %2$s var.\n Tahminî süre: %3$s</item>
+    <item quantity="other">Şimdilik bitirdiniz.\nYarın gözden geçirilecek\n%1$d kart ve %2$s var.\n Tahminî süre: %3$s</item>
   </plurals>
   <plurals name="studyoptions_congrats_new_cards">
     <item quantity="one">1 kart</item>

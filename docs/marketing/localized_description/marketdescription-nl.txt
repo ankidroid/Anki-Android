@@ -1,0 +1,39 @@
+Memoriseer om het even wat met AnkiDroid!
+
+AnkiDroid stelt u in staat zeer efficiënt flashcards te leren, door ze te tonen net voor u ze vergeet. Het is volledig compatibel met met de gespreide herhalingssoftware Anki (synchronisatie inbegrepen). Deze is beschikbaar voor Windows, Linux en Mac OS X.
+
+Leer van alles, waar en wanneer u maar wilt. Maak nuttig gebruik van uw tijd terwijl u op de bus zit, aanschuift aan de kassa, of elke andere situatie waarin u moet wachten.
+
+Voeg materiaal toe via de desktopapplicatie Anki of rechtstreeks via Ankidroid.
+
+Maak je eigen sets met flitskaart, of download gratis sets samengesteld voor vele talen en onderwerpen (meer dan 6000 beschikbaar). De toepassing biedt zelfs ondersteuning voor het automatisch toevoegen van materiaal uit een woordenboek!
+
+★ Belangrijkste functies:
+• ondersteunde inhoud voor flitskaarten: tekst, afbeeldingen, geluiden, LaTeX
+• gespreide herhaling (supermemo 2-algoritme)
+• tekst-naar-spraak-integratie
+• meer dan 6000 premade decks
+• gedetailleerde statistieken
+• drie widgets
+• synchronisatie met AnkiWeb
+• open source
+
+★ Extra functies:
+• schrijf antwoorden (optioneel)
+• whiteboard
+• kaartbrowser
+• kaarten bewerken/toevoegen
+• importeren van bestaande verzameling bestanden (via Anki Desktop)
+• kaarten via het intent-protocol toevoegen vanuit andere toepassingen zoals woordenboeken
+• Woordenboekintegratie (ColorDict, GoldenDict, Leo.org, Aedict, verscheidene webwoordenboeken)
+• ondersteuning voor aangepaste lettertypes
+• volledig backupsysteem
+• navigeren door vegen, tikken, schudden
+• overhoren met een widget
+• volledig aanpasbaar
+• blokmodus
+• beperk via tag, tijd of aantal kaarten
+• nachtmodus
+• ondersteuning voor zeemote
+• drie verschillende thema's
+• 27 talen

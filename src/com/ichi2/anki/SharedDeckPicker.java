@@ -15,7 +15,6 @@
 package com.ichi2.anki;
 
 import android.app.Activity;
-import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
 import android.content.ComponentName;
 import android.content.Context;
@@ -55,6 +54,7 @@ import com.ichi2.anki.services.ISharedDeckServiceCallback;
 import com.ichi2.async.Connection;
 import com.ichi2.async.Connection.Payload;
 import com.ichi2.themes.StyledDialog;
+import com.ichi2.themes.StyledProgressDialog;
 import com.ichi2.themes.Themes;
 
 import java.util.ArrayList;
@@ -72,7 +72,7 @@ public class SharedDeckPicker extends Activity {
      */
     private BroadcastReceiver mUnmountReceiver = null;
 
-    private ProgressDialog mProgressDialog;
+    private StyledProgressDialog mProgressDialog;
     private StyledDialog mNoConnectionAlert;
     private StyledDialog mConnectionErrorAlert;
 
@@ -510,7 +510,7 @@ public class SharedDeckPicker extends Activity {
         @Override
         public void onPreExecute() {
             if (mProgressDialog == null || !mProgressDialog.isShowing()) {
-                mProgressDialog = ProgressDialog.show(SharedDeckPicker.this, "",
+                mProgressDialog = StyledProgressDialog.show(SharedDeckPicker.this, "",
                         getResources().getString(R.string.loading_shared_decks), true, true, new DialogInterface.OnCancelListener() {
                     @Override
                     public void onCancel(DialogInterface dialog) {
