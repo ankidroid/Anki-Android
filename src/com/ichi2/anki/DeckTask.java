@@ -274,6 +274,7 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
 	            // Set modified also updates the text of cards and their modified flags
 	            editFact.setModified(true, deck, false);
 	            editFact.toDb();
+	            deck.updateFactTags(new long[] { editFact.getId() });
 
 	            deck.flushMod();
 
