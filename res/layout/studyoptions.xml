@@ -206,6 +206,7 @@
 					android:layout_height="wrap_content">
 					<ToggleButton
 						android:id="@+id/studyoptions_limit" 
+					android:singleLine="true"	
 						android:layout_height="0dip"
        		  			android:layout_width="fill_parent"
     			     	android:layout_weight="1"
@@ -215,6 +216,7 @@
 						android:id="@+id/studyoptions_cram" 
 						android:layout_height="0dip"
         	 			android:layout_width="fill_parent"
+					android:singleLine="true"	
     			     	android:layout_weight="1"
 						android:textOff="@string/cram"
 						android:textOn="@string/cram" />
@@ -226,7 +228,8 @@
 				<Button android:id="@+id/studyoptions_statistics"
    			     	android:layout_height="fill_parent"
 					android:drawableLeft="@drawable/ic_chart"
-					android:paddingLeft="10dip"	
+					android:paddingLeft="10dip"
+					android:singleLine="true"	
 					style="?android:attr/buttonStyleSmall"
    			     	android:layout_width="0dip"
    			     	android:layout_weight="1"
@@ -234,6 +237,7 @@
 				<Button
 					android:drawableLeft="@drawable/ic_cards"
 					android:paddingLeft="10dip"	
+					android:singleLine="true"	
 					android:id="@+id/studyoptions_card_browser"
 					android:layout_width="0dip" 
 					style="?android:attr/buttonStyleSmall"
