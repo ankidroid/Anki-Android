@@ -1825,10 +1825,9 @@ public class StudyOptions extends Activity implements IButtonListener {
             case CONTENT_STUDY_OPTIONS:
             case CONTENT_SESSION_COMPLETE:
                 // Enable timeboxing in case it was disabled from the previous deck
-                if ((DeckManager.getMainDeck() != null) && (DeckManager.getMainDeck().name().equals("cram"))) {
-                    mToggleCram.setChecked(false);
-                    mToggleLimit.setEnabled(true);
-                }
+                mToggleCram.setChecked(false);
+                mToggleLimit.setEnabled(true);
+                
                 if (mCurrentContentView == CONTENT_STUDY_OPTIONS) {
                     mButtonStart.setText(R.string.studyoptions_start);
                 } else {
@@ -1841,7 +1840,9 @@ public class StudyOptions extends Activity implements IButtonListener {
                 }
                 break;
             case CONTENT_CONGRATS:
-            	Deck deck = DeckManager.getMainDeck();
+                mToggleCram.setChecked(false);
+                mToggleLimit.setEnabled(true);
+                Deck deck = DeckManager.getMainDeck();
                 if (deck != null) {
             		int failedCards = deck.getFailedDelayedCount();
                     int revCards = deck.getNextDueCards(1);
