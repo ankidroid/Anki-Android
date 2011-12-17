@@ -1444,7 +1444,8 @@ public class Reviewer extends Activity implements IButtonListener{
 
 
     private void finishNoStorageAvailable() {
-        closeReviewer(StudyOptions.CONTENT_NO_EXTERNAL_STORAGE, false);
+    	Reviewer.this.setResult(StudyOptions.CONTENT_NO_EXTERNAL_STORAGE);
+    	finish();
     }
 
 
