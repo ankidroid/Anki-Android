@@ -6,11 +6,11 @@
 	android:layout_height="fill_parent"
 	android:gravity="center"
 	android:orientation="vertical">
-	<LinearLayout android:id="@+id/studyoptions_mainframe"
+    <LinearLayout android:id="@+id/studyoptions_mainframe"
 		android:orientation="vertical"
 		android:gravity="center"
 		android:layout_width="fill_parent"
-		android:layout_height="fill_parent">
+		android:layout_height="wrap_content">
 		<LinearLayout android:id="@+id/studyoptions_deckinformation"
 			android:orientation="vertical"
 			android:gravity="center"

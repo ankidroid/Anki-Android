@@ -157,7 +157,6 @@ public class Themes {
 			((View) view.findViewById(R.id.studyoptions_global_bar)).setBackgroundResource(mProgressbarsYoungColor);
 
 			if (mCurrentTheme == THEME_WHITE) {
-		        setMargins(view.findViewById(R.id.studyoptions_mainframe), LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT, 4f, 4f, 4f, 4f);
 				setMargins(view.findViewById(R.id.studyoptions_deck_name), LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT, 0, 6f, 0, 2f);
 		        setMargins(view.findViewById(R.id.studyoptions_statistic_field), LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT, 0, 2f, 0, 12f);
 				setMargins(view.findViewById(R.id.studyoptions_bottom), LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT, 0, 0, 0, 8f);
@@ -165,8 +164,10 @@ public class Themes {
 				((View) view.findViewById(R.id.studyoptions_statistic_field)).setBackgroundResource(R.color.transparent);
 				((View) view.findViewById(R.id.studyoptions_deckinformation)).setBackgroundResource(mTextViewStyle);
 				((View) view.findViewById(R.id.studyoptions_bottom)).setBackgroundResource(mTextViewStyle);
+				((View) view.findViewById(R.id.studyoptions_main)).setBackgroundResource(R.drawable.white_wallpaper_so);
 			} else {
 				((View) view.findViewById(R.id.studyoptions_statistic_field)).setBackgroundResource(mTextViewStyle);
+				((View) view.findViewById(R.id.studyoptions_main)).setBackgroundResource(mWallpaper);
 			}
 			break;
 
@@ -279,8 +280,8 @@ public class Themes {
 
 		case CALLER_CARD_EDITOR:
 			view.findViewById(R.id.CardEditorEditFieldsLayout).setBackgroundResource(mTextViewStyle);
-			int padding = (int) (4 * mContext.getResources().getDisplayMetrics().density);
-			view.findViewById(R.id.CardEditorScroll).setPadding(padding, padding, padding, padding);
+//			int padding = (int) (4 * mContext.getResources().getDisplayMetrics().density);
+//			view.findViewById(R.id.CardEditorScroll).setPadding(padding, padding, padding, padding);
 			break;
 
 		case CALLER_DOWNLOAD_DECK:
@@ -457,7 +458,7 @@ public class Themes {
 			mTitleStyle = R.drawable.flat_title;
 				mTitleTextColor = mContext.getResources().getColor(R.color.black);
 				mTextViewStyle = R.drawable.white_textview_padding;
-				mWallpaper = R.color.white_background;
+				mWallpaper = R.drawable.white_wallpaper;
 				mBackgroundColor = R.color.white_background;
 				mToastBackground = R.drawable.white_toast_frame;
 				mDialogBackgroundColor = mBackgroundColor;
