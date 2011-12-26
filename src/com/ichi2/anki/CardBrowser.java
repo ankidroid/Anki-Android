@@ -114,8 +114,8 @@ public class CardBrowser extends Activity {
 	private static final int ADD_FACT = 1;
 	private static final int DEFAULT_FONT_SIZE_RATIO = 100;
 
-	private static final int CARD_ORDER_ANSWER = 0;
-	private static final int CARD_ORDER_QUESTION = 1;
+	private static final int CARD_ORDER_ANSWER = 1;
+	private static final int CARD_ORDER_QUESTION = 0;
 	private static final int CARD_ORDER_DUE = 2;
 	private static final int CARD_ORDER_INTERVAL = 3;
 	private static final int CARD_ORDER_FACTOR = 4;
