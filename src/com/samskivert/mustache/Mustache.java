@@ -430,6 +430,10 @@ public class Mustache
                 if ((Boolean)value) {
                     executeSegs(tmpl, ctx, out);
                 }
+            } else if (value instanceof String) {
+                if (((String) value).length() > 0) {
+                    executeSegs(tmpl, ctx, out);
+                }
             } else if (value.getClass().isArray()) {
                 for (int ii = 0, ll = Array.getLength(value); ii < ll; ii++) {
                     Template.Mode mode = (ii == 0) ? Template.Mode.FIRST :
@@ -459,6 +463,10 @@ public class Mustache
                 }
             } else if (value instanceof Boolean) {
                 if (!(Boolean)value) {
+                    executeSegs(tmpl, ctx, out);
+                }
+            } else if (value instanceof String) {
+                if (((String) value).length() == 0) {
                     executeSegs(tmpl, ctx, out);
                 }
             } else if (value.getClass().isArray()) {
