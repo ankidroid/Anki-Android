@@ -1005,6 +1005,15 @@ public class Utils {
       return filename.substring(0, dotPosition);
     }
 
+
+    /** Removes any character that are not valid as deck names. */
+    public static String removeInvalidDeckNameCharacters(String name) {
+        // The only characters that we cannot absolutely allow to appear in the filename are the ones reserved in some
+        // file system. Currently these are \, /, and :, in order to cover Linux, OSX, and Windows.
+        return name.replaceAll("[:/\\\\]", "");
+    }
+
+
     /** Returns a list of files for the installed custom fonts. */
     public static String[] getCustomFonts(Context context) {
         SharedPreferences preferences = PrefSettings.getSharedPrefs(context);

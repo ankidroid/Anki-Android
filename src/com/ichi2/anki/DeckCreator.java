@@ -21,11 +21,14 @@ import android.app.Activity;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.os.Bundle;
+import android.text.InputFilter;
+import android.text.Spanned;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.ichi2.anim.ActivityTransitionAnimation;
 import com.ichi2.themes.Themes;
@@ -94,6 +97,23 @@ public class DeckCreator extends Activity {
                 closeDeckCreator();
             }
         });
+
+        // Limit deck name to not contain certain characters.
+        mFilename.setFilters(new InputFilter[]{
+                new InputFilter() {
+                    @Override
+                    public CharSequence filter(CharSequence source, int start, int end, Spanned dest, int dstart, int dend) {
+                        String newText = source.subSequence(start, end).toString();
+                        String filteredNewText = Utils.removeInvalidDeckNameCharacters(newText);
+                        if (filteredNewText.equals(newText)) {
+                            return null;
+                        } else {
+                            Toast.makeText(DeckCreator.this, R.string.deckcreator_invalid_character, Toast.LENGTH_SHORT)
+                                .show();
+                            return filteredNewText;
+                        }
+                    }
+                }});
     }
 
 
