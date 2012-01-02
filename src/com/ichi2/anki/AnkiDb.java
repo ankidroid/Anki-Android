@@ -1,7 +1,8 @@
 /****************************************************************************************
  * Copyright (c) 2009 Daniel Svärd <daniel.svard@gmail.com>                             *
  * Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com>                           *
- * Copyright (c) 2009 Andrew <andrewdubya@gmail.com>                                    *
+ * Copyright (c) 2009 Andrew <andrewdubya@gmail.com>									*
+ * Copyright (c) 2011 Norbert Nagold <norbert.nagold@gmail.com>                         *
  *                                                                                      *
  * This program is free software; you can redistribute it and/or modify it under        *
  * the terms of the GNU General Public License as published by the Free Software        *
@@ -18,7 +19,6 @@
 
 package com.ichi2.anki;
 
-import android.content.ContentValues;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.SQLException;
@@ -29,8 +29,6 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 
 import com.tomgibara.android.veecheck.util.PrefSettings;
-import com.ichi2.anki.Utils.SqlCommandType;
-import static com.ichi2.anki.Utils.SqlCommandType.*;
 
 /**
  * Database layer for AnkiDroid. Can read the native Anki format through Android's SQLite driver.
@@ -41,6 +39,7 @@ public class AnkiDb {
      * The deck, which is actually an SQLite database.
      */
     private SQLiteDatabase mDatabase;
+    private boolean mMod = false;
 
     /**
      * Open a database connection to an ".anki" SQLite file.
@@ -113,22 +112,39 @@ public class AnkiDb {
     }
 
 
+    public void setMod(boolean mod) {
+    	mMod = mod;
+    }
+
+
+    public boolean getMod() {
+    	return mMod;
+    }
+
+
     /**
      * Convenience method for querying the database for a single integer result.
      * 
      * @param query The raw SQL query to use.
      * @return The integer result of the query.
      */
-    public long queryScalar(String query) throws SQLException {
+    public int queryScalar(String query) throws SQLException {
+    	return queryScalar(query, true);
+    }
+    public int queryScalar(String query, boolean throwException) throws SQLException {
         Cursor cursor = null;
-        long scalar;
+        int scalar;
         try {
             cursor = mDatabase.rawQuery(query, null);
             if (!cursor.moveToNext()) {
-                throw new SQLException("No result for query: " + query);
+            	if (throwException) {
+                    throw new SQLException("No result for query: " + query);            		
+            	} else {
+            		return 0;
+            	}
             }
 
-            scalar = cursor.getLong(0);
+            scalar = cursor.getInt(0);
         } finally {
             if (cursor != null) {
                 cursor.close();
@@ -178,194 +194,6 @@ public class AnkiDb {
 
         return results;
     }
-
-
-//    /**
-//     * Method for executing db commands with simultaneous storing of undo information. This should only be called from undo method.
-//     */
-//    public void execSQL(Deck deck, String command, String table, ContentValues values, String whereClause) {
-//    	if (command.equals("INS")) {
-//			insert(deck, table, null, values);
-//    	} else if (command.equals("UPD")) {
-//			update(deck, table, values, whereClause, null);
-//    	} else if (command.equals("DEL")) {
-//    		delete(deck, table, whereClause, null);
-//    	} else {
-//    		Log.i(AnkiDroidApp.TAG, "wrong command. no action performed");
-//    	}
-//    }
-//
-//
-//    /**
-//     * Method for inserting rows into the db with simultaneous storing of undo information.
-//     * 
-//     * @return The id of the inserted row.
-//     */
-//    public long insert(Deck deck, String table, String nullColumnHack, ContentValues values) {
-//    	long rowid = mDatabase.insert(table, nullColumnHack, values);
-//    	if (rowid != -1 && deck.recordUndoInformation()) {
-//        	deck.addUndoCommand("DEL", table, null, "rowid = " + rowid);
-//    	}
-//    	return rowid;
-//    }
-//
-//
-//    /**
-//     * Method for updating rows of the database with simultaneous storing of undo information.
-//     * 
-//     * @param values A map from column names to new column values. Values must not contain sql code/variables. Otherwise use update(Deck deck, String table, ContentValues values, String whereClause, String[] whereArgs, boolean onlyFixedValues) with 'onlyFixedValues' = false.
-//     * @param whereClause The optional WHERE clause to apply when updating. Passing null will update all rows.
-//     * @param whereArgs Arguments which will replace all '?'s of the whereClause.
-//     */
-//    public void update(Deck deck, String table, ContentValues values, String whereClause, String[] whereArgs) {
-//    	update(deck, table, values, whereClause, whereArgs, true);
-//    }
-//    /**
-//     * Method for updating rows of the database with simultaneous storing of undo information.
-//     * 
-//     * @param values A map from column names to new column values. null is a valid value that will be translated to NULL.
-//     * @param whereClause The optional WHERE clause to apply when updating. Passing null will update all rows.
-//     * @param whereArgs Arguments which will replace all '?'s of the whereClause.
-//     * @param onlyFixedValues Set this to true, if 'values' contains only fixed values (no sql code). Otherwise, it must be set to false and fixed string values have to be extra quoted ("\'example-value\'").
-//     */
-//    public void update(Deck deck, String table, ContentValues values, String whereClause, String[] whereArgs, boolean onlyFixedValues) {
-//        update(deck, table, values, whereClause, whereArgs, onlyFixedValues, null, null);
-//    }
-//    public void update(Deck deck, String table, ContentValues values, String whereClause, String[] whereArgs, boolean onlyFixedValues, ContentValues[] oldValuesArray, String[] whereClauseArray) {
-//    	if (deck.recordUndoInformation()) {
-//        	if (oldValuesArray != null) {
-//                for (int i = 0; i < oldValuesArray.length; i++) {
-//                    deck.addUndoCommand("UPD", table, oldValuesArray[i], whereClauseArray[i]);
-//                }
-//        	} else {
-//        		ArrayList<String> ar = new ArrayList<String>();
-//                for (Entry<String, Object> entry : values.valueSet()) {
-//                	ar.add(entry.getKey());
-//                }
-//                int len = ar.size();
-//                String[] columns = new String[len + 1];
-//                ar.toArray(columns);
-//                columns[len] = "rowid";
-//
-//                Cursor cursor = null;
-//                try {
-//                    cursor = mDatabase.query(table, columns, whereClause, whereArgs, null, null, null);
-//                    while (cursor.moveToNext()) {
-//                        ContentValues oldvalues = new ContentValues();
-//                        for (int i = 0; i < len; i++) {
-////                        	String typeName;
-////                        	if (values.get(columns[i]) != null) {
-////                        		typeName = values.get(columns[i]).getClass().getSimpleName();
-////                        	} else {
-////                        		typeName = "String";
-////                        	}
-////                    		if (typeName.equals("String")) {
-////                    			oldvalues.put(columns[i], cursor.getString(i));
-////                            } else if (typeName.equals("Long")) {
-////                            	oldvalues.put(columns[i], cursor.getLong(i));
-////                            } else if (typeName.equals("Double")) {
-////                            	oldvalues.put(columns[i], cursor.getDouble(i));
-////                            } else if (typeName.equals("Integer")) {
-////                            	oldvalues.put(columns[i], cursor.getInt(i));
-////                            } else if (typeName.equals("Float")) {
-////                            	oldvalues.put(columns[i], cursor.getFloat(i));
-////                            } else {
-//                            	oldvalues.put(columns[i], cursor.getString(i));
-////                            }
-//                        }
-//                        deck.addUndoCommand("UPD", table, oldvalues, "rowid = " + cursor.getString(len));
-//                    }
-//                } finally {
-//                    if (cursor != null) {
-//                        cursor.close();
-//                    }
-//                }
-//        	}    		
-//    	}
-//    	if (onlyFixedValues) {
-//    		mDatabase.update(table, values, whereClause, whereArgs);
-//    	} else {
-//    		StringBuilder sb = new StringBuilder();
-//    		sb.append("UPDATE ").append(table).append(" SET ");
-//    		for (Entry<String, Object> entry : values.valueSet()) {
-//				sb.append(entry.getKey()).append(" = ").append(entry.getValue()).append(", ");
-//    		}
-//    		sb.deleteCharAt(sb.length() - 2);
-//    		if (whereArgs != null) {
-//        		for (int i = 0; i < whereArgs.length; i++) {
-//        			whereClause = whereClause.replaceFirst("?", whereArgs[i]);
-//        		}    			
-//    		}
-//    		sb.append("WHERE ").append(whereClause);
-//		    mDatabase.execSQL(sb.toString());
-//		}
-//    }
-//
-//
-//    /**
-//     * Method for deleting rows of the database with simultaneous storing of undo information.
-//     */
-//    public void delete(Deck deck, String table, String whereClause, String[] whereArgs) {
-//        if (deck.recordUndoInformation()) {
-//        	ArrayList<String> columnsNames = new ArrayList<String>();
-////        	ArrayList<String> columnTypes = new ArrayList<String>();
-//            Cursor cursor = null;
-//
-//            try {
-//                cursor = mDatabase.rawQuery("PRAGMA TABLE_INFO(" + table + ")", null);
-//                while (cursor.moveToNext()) {
-//                	columnsNames.add(cursor.getString(1));
-////                	String t = cursor.getString(2).toLowerCase();
-////                    String typeName = "";
-////                    if (t.subSequence(0, 3).equals("int")) {
-////                    	typeName = "Long";
-////                    } else if (t.equals("float")) {
-////                    	typeName = "Double";
-////                    } else {
-////                    	typeName = "String";
-////                    }
-////                    columnTypes.add(typeName);
-//                }
-//            } finally {
-//                if (cursor != null) {
-//                    cursor.close();
-//                }
-//            }
-//            
-//        	int len = columnsNames.size();
-//        	String[] columns = new String[len];
-//        	columnsNames.toArray(columns);
-//
-//            try {
-//                cursor = mDatabase.query(table, columns, whereClause, whereArgs, null, null, null);
-//                while (cursor.moveToNext()) {
-//                    ContentValues oldvalues = new ContentValues();
-//                    for (int i = 0; i < len; i++) {
-////                    	String typeName = columnTypes.get(i);
-////                		if (typeName.equals("String")) {
-////                			oldvalues.put(columns[i], cursor.getString(i));
-////                        } else if (typeName.equals("Long")) {
-////                        	oldvalues.put(columns[i], cursor.getLong(i));
-////                        } else if (typeName.equals("Double")) {
-////                        	oldvalues.put(columns[i], cursor.getDouble(i));
-////                        } else if (typeName.equals("Integer")) {
-////                        	oldvalues.put(columns[i], cursor.getInt(i));
-////                        } else if (typeName.equals("Float")) {
-////                        	oldvalues.put(columns[i], cursor.getFloat(i));
-////                        } else {
-//                        	oldvalues.put(columns[i], cursor.getString(i));
-////                        }
-//                    }
-//                    deck.addUndoCommand("INS", table, oldvalues, null);
-//                }
-//			} finally {
-//                if (cursor != null) {
-//                    cursor.close();
-//                }
-//            }
-//    	}
-//    	mDatabase.delete(table, whereClause, whereArgs);
-//    }
 
 
     /**

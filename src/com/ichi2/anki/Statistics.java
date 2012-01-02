@@ -18,6 +18,7 @@ package com.ichi2.anki;
 
 import java.util.Map.Entry;
 
+import com.ichi2.libanki.Decks;
 import com.ichi2.themes.Themes;
 
 import android.content.ContentValues;
@@ -32,7 +33,6 @@ public class Statistics {
     public static int[] xAxisData;
     public static double[][] sSeriesList;
 
-    private static Deck sDeck;
     private static ContentValues sDeckSummaryValues;
     public static int sType;
     public static int sStart = 0;
@@ -61,66 +61,66 @@ public class Statistics {
         sType = type;
         sTitle = title;
         sStart = 0;
-        if (period >= 365 * 2) {
-            sChunk = 30;
-            sEnd = period / 30;
-            axisLabels[0] = res.getString(R.string.statistics_period_x_axis_months);
-        } else if (period >= 180) {
-            sChunk = 7;
-            sEnd = period / 7;
-            axisLabels[0] = res.getString(R.string.statistics_period_x_axis_weeks);
-        } else {
-            sChunk = 1;
-            sEnd = period;
-            axisLabels[0] = res.getString(R.string.statistics_period_x_axis_days);
-        }
-        axisLabels[1] = context.getResources().getString(R.string.statistics_period_y_axis_cards);
-        if (type <= TYPE_CUMULATIVE_DUE) {
-            Titles = new String[4];
-            Titles[0] = res.getString(R.string.statistics_young_cards);
-            Titles[1] = res.getString(R.string.statistics_mature_cards);
-            Titles[2] = res.getString(R.string.statistics_failed_cards);
-            Titles[3] = ("average");
-        } else if (type <= TYPE_REVIEWING_TIME) {
-            Titles = new String[6];
-            Titles[0] = res.getString(R.string.statistics_cram_cards);
-            Titles[1] = res.getString(R.string.statistics_learn_cards);
-            Titles[2] = res.getString(R.string.statistics_relearn_cards);
-            Titles[3] = res.getString(R.string.statistics_young_cards);
-            Titles[4] = res.getString(R.string.statistics_mature_cards);
-            Titles[5] = res.getString(R.string.statistics_average);
-            int temp = sStart;
-            sStart = -sEnd;
-            sEnd = temp;
-            if (type == TYPE_REVIEWING_TIME) {
-                if (sChunk < 30) {
-                    axisLabels[1] = context.getResources().getString(R.string.statistics_period_y_axis_minutes);                    
-                } else {
-                    axisLabels[1] = context.getResources().getString(R.string.statistics_period_y_axis_hours);                    
-                }
-            }
-        } else {
-            Titles = new String[1];
-            sSeriesList = new double[1][period];
-            switch (type) {
-            	case TYPE_INTERVALS:
-                    xAxisData = xAxisData(period, false);
-            		break;
-            	case TYPE_REVIEWING_TIME:
-                    xAxisData = xAxisData(period, true);
-                    axisLabels[1] = context.getResources().getString(R.string.statistics_period_x_axis_minutes);
-            		break;
-            }
-        }
-        sZoom = 0;
+//        if (period >= 365 * 2) {
+//            sChunk = 30;
+//            sEnd = period / 30;
+//            axisLabels[0] = res.getString(R.string.statistics_period_x_axis_months);
+//        } else if (period >= 180) {
+//            sChunk = 7;
+//            sEnd = period / 7;
+//            axisLabels[0] = res.getString(R.string.statistics_period_x_axis_weeks);
+//        } else {
+//            sChunk = 1;
+//            sEnd = period;
+//            axisLabels[0] = res.getString(R.string.statistics_period_x_axis_days);
+//        }
+//        axisLabels[1] = context.getResources().getString(R.string.statistics_period_y_axis_cards);
+//        if (type <= TYPE_CUMULATIVE_DUE) {
+//            Titles = new String[4];
+//            Titles[0] = res.getString(R.string.statistics_young_cards);
+//            Titles[1] = res.getString(R.string.statistics_mature_cards);
+//            Titles[2] = res.getString(R.string.statistics_failed_cards);
+//            Titles[3] = ("average");
+//        } else if (type <= TYPE_REVIEWING_TIME) {
+//            Titles = new String[6];
+//            Titles[0] = res.getString(R.string.statistics_cram_cards);
+//            Titles[1] = res.getString(R.string.statistics_learn_cards);
+//            Titles[2] = res.getString(R.string.statistics_relearn_cards);
+//            Titles[3] = res.getString(R.string.statistics_young_cards);
+//            Titles[4] = res.getString(R.string.statistics_mature_cards);
+//            Titles[5] = res.getString(R.string.statistics_average);
+//            int temp = sStart;
+//            sStart = -sEnd;
+//            sEnd = temp;
+//            if (type == TYPE_REVIEWING_TIME) {
+//                if (sChunk < 30) {
+//                    axisLabels[1] = context.getResources().getString(R.string.statistics_period_y_axis_minutes);                    
+//                } else {
+//                    axisLabels[1] = context.getResources().getString(R.string.statistics_period_y_axis_hours);                    
+//                }
+//            }
+//        } else {
+//            Titles = new String[1];
+//            sSeriesList = new double[1][period];
+//            switch (type) {
+//            	case TYPE_INTERVALS:
+//                    xAxisData = xAxisData(period, false);
+//            		break;
+//            	case TYPE_REVIEWING_TIME:
+//                    xAxisData = xAxisData(period, true);
+//                    axisLabels[1] = context.getResources().getString(R.string.statistics_period_x_axis_minutes);
+//            		break;
+//            }
+//        }
+//        sZoom = 0;
     }
 
 
-    public static boolean refreshDeckStatistics(Context context, Deck deck, int type, int period, String title) {
+    public static boolean refreshDeckStatistics(Context context, Decks deck, int type, int period, String title) {
         initVariables(context, type, period, title);
-        sDeck = deck;
+//        sDeck = deck;
         if (type == TYPE_DECK_SUMMARY) {
-        	sDeckSummaryValues = sDeck.getDeckSummary();
+//        	sDeckSummaryValues = sDeck.getDeckSummary();
         	return sDeckSummaryValues != null ? true : false;
         } else {
             sSeriesList = getSeriesList();
@@ -133,41 +133,41 @@ public class Statistics {
             String title) {
         initVariables(context, type, period, title);
      	for (String dp : deckPaths) {
-    		sDeck = DeckManager.getDeck(dp, DeckManager.REQUESTING_ACTIVITY_STATISTICS);
-            if (sDeck == null) {
-                continue;
-            }
-    		if (type == TYPE_DECK_SUMMARY) {
-    			sDeckSummaryValues.put("title", context.getResources().getString(R.string.deck_summary_all_decks));
-    			ContentValues values = sDeck.getDeckSummary();
-    			if (values == null) {
-                    continue;
-                }
-    			for (Entry<String, Object> entry : values.valueSet()) {
-    				if (entry.getKey().equals("deckAge")) {
-    					if (sDeckSummaryValues.containsKey(entry.getKey())) {
-    						sDeckSummaryValues.put(entry.getKey(), Math.max(sDeckSummaryValues.getAsInteger(entry.getKey()), (Integer) entry.getValue()));
-    					} else {
-    						sDeckSummaryValues.put(entry.getKey(), (Integer) entry.getValue());   
-    					}
-    				} else {
-    					if (sDeckSummaryValues.containsKey(entry.getKey())) {
-    						sDeckSummaryValues.put(entry.getKey(), sDeckSummaryValues.getAsInteger(entry.getKey()) + (Integer) entry.getValue());
-    					} else {
-    						sDeckSummaryValues.put(entry.getKey(), (Integer) entry.getValue());   
-    					}    					
-    				}
-				}
-    		} else {
-                double[][] seriesList;
-                seriesList = getSeriesList(context, type, period);
-                for (int i = 0; i < sSeriesList.length; i++) {
-                    for (int j = 0; j < period; j++) {
-                    	sSeriesList[i][j] += seriesList[i][j];
-                    }        	
-                }    			
-    		}
-            DeckManager.closeDeck(dp, DeckManager.REQUESTING_ACTIVITY_STATISTICS, false);
+//    		sDeck = DeckManager.getDeck(dp, DeckManager.REQUESTING_ACTIVITY_STATISTICS);
+//            if (sDeck == null) {
+//                continue;
+//            }
+//    		if (type == TYPE_DECK_SUMMARY) {
+//    			sDeckSummaryValues.put("title", context.getResources().getString(R.string.deck_summary_all_decks));
+//    			ContentValues values = sDeck.getDeckSummary();
+//    			if (values == null) {
+//                    continue;
+//                }
+//    			for (Entry<String, Object> entry : values.valueSet()) {
+//    				if (entry.getKey().equals("deckAge")) {
+//    					if (sDeckSummaryValues.containsKey(entry.getKey())) {
+//    						sDeckSummaryValues.put(entry.getKey(), Math.max(sDeckSummaryValues.getAsInteger(entry.getKey()), (Integer) entry.getValue()));
+//    					} else {
+//    						sDeckSummaryValues.put(entry.getKey(), (Integer) entry.getValue());   
+//    					}
+//    				} else {
+//    					if (sDeckSummaryValues.containsKey(entry.getKey())) {
+//    						sDeckSummaryValues.put(entry.getKey(), sDeckSummaryValues.getAsInteger(entry.getKey()) + (Integer) entry.getValue());
+//    					} else {
+//    						sDeckSummaryValues.put(entry.getKey(), (Integer) entry.getValue());   
+//    					}    					
+//    				}
+//				}
+//    		} else {
+//                double[][] seriesList;
+//                seriesList = getSeriesList(context, type, period);
+//                for (int i = 0; i < sSeriesList.length; i++) {
+//                    for (int j = 0; j < period; j++) {
+//                    	sSeriesList[i][j] += seriesList[i][j];
+//                    }        	
+//                }    			
+//    		}
+//            DeckManager.closeDeck(dp, DeckManager.REQUESTING_ACTIVITY_STATISTICS, false);
     	}
         if (type == TYPE_DECK_SUMMARY) {
         	return (sDeckSummaryValues != null && sDeckSummaryValues.size() > 0) ? true : false;
@@ -179,67 +179,68 @@ public class Statistics {
 
     public static double[][] getSeriesList() {
         double[][] seriesList;
-        Stats stats = new Stats(mDeck);
-        AnkiDb ankiDB = AnkiDatabaseManager.getDatabase(mDeck.getDeckPath());
-        ankiDB.getDatabase().beginTransaction();
-        try {
-            switch (sType) {
-                case TYPE_DUE:
-                case TYPE_CUMULATIVE_DUE:
-                    seriesList = stripXAxisData(stats.due(sStart, sEnd * sChunk, sChunk), sType == TYPE_DUE ? 2 : 1);
-                    // add learn cards
-                    if (sChunk == 1) {
-                        seriesList[2][0] = mDeck.getSched().counts()[1];
-                        seriesList[0][0] += seriesList[2][0];
-                        seriesList[1][0] += seriesList[2][0];
-                        seriesList[2][1] = mDeck.getSched().lrnTomorrow() - seriesList[2][0];
-                        seriesList[0][1] += seriesList[2][1];
-                        seriesList[1][1] += seriesList[2][1];
-                    } else {
-                        seriesList[2][0] = mDeck.getSched().lrnTomorrow();
-                        seriesList[0][0] += seriesList[2][0];
-                        seriesList[1][0] += seriesList[2][0];
-                    }
-                    if (sType == TYPE_DUE) {
-                        double average = seriesList[2][0] + seriesList[2][1];
-                        for (double d : seriesList[0]) {
-                            average += d;
-                        }
-                        average /= seriesList[1].length;
-                        for (int i = 0; i < seriesList[3].length; i++) {
-                            seriesList[3][i] = average;
-                        }
-                    } else {
-                        for (int i = 1; i < seriesList[0].length; i++) {
-                            seriesList[0][i] += seriesList[0][i - 1];
-                            seriesList[1][i] += seriesList[1][i - 1];
-                            seriesList[2][i] += seriesList[2][i - 1];
-                        }
-                    }
-                    break;
-                case TYPE_INTERVALS:
-                    seriesList = stripXAxisData(stats.intervals(sEnd * sChunk, sChunk), 0);
-                    break;
-                case TYPE_REVIEWS:
-                case TYPE_REVIEWING_TIME:
-                    seriesList = stripXAxisData(stats.reps(-sStart, sChunk, sType == TYPE_REVIEWING_TIME), 1);
-                    double averageReps = 0;
-                    for (double d : seriesList[0]) {
-                        averageReps += d;
-                    }
-                    averageReps /= seriesList[0].length;
-                    for (int i = 0; i < seriesList[5].length; i++) {
-                        seriesList[5][i] = averageReps;
-                    }
-                    break;
-                default:
-                    seriesList = null;
-            }
-            ankiDB.getDatabase().setTransactionSuccessful();
-        } finally {
-            ankiDB.getDatabase().endTransaction();
-        }
-        return seriesList;
+//        Stats stats = new Stats(mDeck);
+//        AnkiDb ankiDB = AnkiDatabaseManager.getDatabase(mDeck.getDeckPath());
+//        ankiDB.getDatabase().beginTransaction();
+//        try {
+//            switch (sType) {
+//                case TYPE_DUE:
+//                case TYPE_CUMULATIVE_DUE:
+//                    seriesList = stripXAxisData(stats.due(sStart, sEnd * sChunk, sChunk), sType == TYPE_DUE ? 2 : 1);
+//                    // add learn cards
+//                    if (sChunk == 1) {
+//                        seriesList[2][0] = mDeck.getSched().counts()[1];
+//                        seriesList[0][0] += seriesList[2][0];
+//                        seriesList[1][0] += seriesList[2][0];
+//                        seriesList[2][1] = mDeck.getSched().lrnTomorrow() - seriesList[2][0];
+//                        seriesList[0][1] += seriesList[2][1];
+//                        seriesList[1][1] += seriesList[2][1];
+//                    } else {
+//                        seriesList[2][0] = mDeck.getSched().lrnTomorrow();
+//                        seriesList[0][0] += seriesList[2][0];
+//                        seriesList[1][0] += seriesList[2][0];
+//                    }
+//                    if (sType == TYPE_DUE) {
+//                        double average = seriesList[2][0] + seriesList[2][1];
+//                        for (double d : seriesList[0]) {
+//                            average += d;
+//                        }
+//                        average /= seriesList[1].length;
+//                        for (int i = 0; i < seriesList[3].length; i++) {
+//                            seriesList[3][i] = average;
+//                        }
+//                    } else {
+//                        for (int i = 1; i < seriesList[0].length; i++) {
+//                            seriesList[0][i] += seriesList[0][i - 1];
+//                            seriesList[1][i] += seriesList[1][i - 1];
+//                            seriesList[2][i] += seriesList[2][i - 1];
+//                        }
+//                    }
+//                    break;
+//                case TYPE_INTERVALS:
+//                    seriesList = stripXAxisData(stats.intervals(sEnd * sChunk, sChunk), 0);
+//                    break;
+//                case TYPE_REVIEWS:
+//                case TYPE_REVIEWING_TIME:
+//                    seriesList = stripXAxisData(stats.reps(-sStart, sChunk, sType == TYPE_REVIEWING_TIME), 1);
+//                    double averageReps = 0;
+//                    for (double d : seriesList[0]) {
+//                        averageReps += d;
+//                    }
+//                    averageReps /= seriesList[0].length;
+//                    for (int i = 0; i < seriesList[5].length; i++) {
+//                        seriesList[5][i] = averageReps;
+//                    }
+//                    break;
+//                default:
+//                    seriesList = null;
+//            }
+//            ankiDB.getDatabase().setTransactionSuccessful();
+//        } finally {
+//            ankiDB.getDatabase().endTransaction();
+//        }
+//        return seriesList;
+        return null;
     }
 
 
@@ -327,6 +328,6 @@ public class Statistics {
 
 
     public static void showDeckSummary(Context context) {
-        Themes.htmlOkDialog(context, sDeckSummaryValues.containsKey("title") ? sDeckSummaryValues.getAsString("title") : sDeck.getDeckName(), getHtmlDeckSummary(context)).show();
+//        Themes.htmlOkDialog(context, sDeckSummaryValues.containsKey("title") ? sDeckSummaryValues.getAsString("title") : sDeck.getDeckName(), getHtmlDeckSummary(context)).show();
     }
 }

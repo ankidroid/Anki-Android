@@ -1,5 +1,7 @@
 package com.ichi2.anki;
 
+import com.ichi2.libanki.Card;
+import com.ichi2.libanki.Utils;
 import com.ichi2.themes.StyledDialog;
 import com.tomgibara.android.veecheck.util.PrefSettings;
 
@@ -167,17 +169,17 @@ public class Lookup {
 
 
     private static String getLanguage(int questionAnswer) {
-    	if (mCurrentCard == null) {
+//    	if (mCurrentCard == null) {
     		return "";
-    	} else {
-        	return MetaDB.getLanguage(mContext, mDeckFilename, Model.getModel(DeckManager.getMainDeck(), mCurrentCard.getCardModelId(), false).getId(), mCurrentCard.getCardModelId(), questionAnswer);    		
-    	}
+//    	} else {
+//        	return MetaDB.getLanguage(mContext, mDeckFilename, Models.getModel(DeckManager.getMainDeck(), mCurrentCard.getCardModelId(), false).getId(), mCurrentCard.getCardModelId(), questionAnswer);    		
+//    	}
     }
     
     private static void storeLanguage(String language, int questionAnswer) {
-    	if (mCurrentCard != null) {
-        	MetaDB.storeLanguage(mContext, mDeckFilename,  Model.getModel(DeckManager.getMainDeck(), mCurrentCard.getCardModelId(), false).getId(), mCurrentCard.getCardModelId(), questionAnswer, language);    		
-    	}
+//    	if (mCurrentCard != null) {
+//        	MetaDB.storeLanguage(mContext, mDeckFilename,  Models.getModel(DeckManager.getMainDeck(), mCurrentCard.getCardModelId(), false).getId(), mCurrentCard.getCardModelId(), questionAnswer, language);    		
+//    	}
     }
 
 }

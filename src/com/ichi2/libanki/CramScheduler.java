@@ -20,7 +20,7 @@ import com.ichi2.anki.AnkiDb;
 
 public class CramScheduler {
 	
-	private Deck mDeck;
+	private Decks mDeck;
 	private AnkiDb mDb;
 	private String mName = "cram";
 	private int mOrder;
@@ -39,9 +39,8 @@ public class CramScheduler {
 	private int mDayCutoff;
 
 
-	public CramScheduler(Deck deck, int order, int min, int max) {
+	public CramScheduler(Decks deck, int order, int min, int max) {
 		mDeck = deck;
-		mDb = mDeck.getDB();
 		// should be the opposite order of what you want
 		mOrder = order;
 		// days to limit cram to, where tomorrow=0. Max is inclusive.

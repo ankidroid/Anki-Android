@@ -27,6 +27,7 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.UnknownFormatConversionException;
 
+import com.ichi2.libanki.Utils;
 import com.tomgibara.android.veecheck.util.PrefSettings;
 
 import android.content.SharedPreferences;
@@ -40,6 +41,8 @@ public class BackupManager {
 	static int mMaxBackups;
 	static File mLastCreatedBackup;
 	static File[] mLastDeckBackups;
+
+	private static final int MIN_FREE_SPACE = 10;
 
 	public final static int RETURN_BACKUP_CREATED = 0;
 	public final static int RETURN_ERROR = 1;
@@ -206,10 +209,19 @@ public class BackupManager {
 	}
 
 
-	public static long getFreeDiscSpace(String path) {
+	public static boolean enoughDiscSpace(String path) {
+		if (getFreeDiscSpace(path) >= (MIN_FREE_SPACE * 1024 * 1024)) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+
+	private static long getFreeDiscSpace(String path) {
 		return getFreeDiscSpace(new File(path));
 	}
-	public static long getFreeDiscSpace(File file) {
+	private static long getFreeDiscSpace(File file) {
 		try {
 			StatFs stat = new StatFs(file.getParentFile().getPath());
 	    	long blocks = stat.getAvailableBlocks();

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
 ~ Copyright (c) 2009 Daniel Svärd <daniel.svard@gmail.com>
+~ Copyright (c) 2011 Norbert Nagold <norbert.nagold@gmail.com>
 ~
 ~ This program is free software; you can redistribute it and/or modify it under
 ~ the terms of the GNU General Public License as published by the Free Software
@@ -36,32 +37,9 @@
 			android:lines="1"
 			android:textStyle="bold"
 			android:textSize="20sp"/>
-		<Button
-			android:id="@+id/DeckPickerUpgradeNotesButton"
-			android:layout_height="fill_parent"
-			android:layout_width="wrap_content"
-			android:layout_weight="4"
-			android:textSize="14sp"
-			android:focusable="false"
-			android:focusableInTouchMode="false"
-			android:text="@string/deckpicker_upgrade_notes_button"/>
-		<LinearLayout 
-			android:layout_height="fill_parent"
-			android:layout_width="wrap_content"
-			android:gravity="center"
-			android:layout_alignParentRight="true">
-			<ProgressBar
-				android:layout_height="wrap_content"
-				android:layout_width="wrap_content"
-				android:id="@+id/DeckPickerProgress"
-				android:layout_gravity="center_vertical"
-				android:indeterminate="true" 
-				style="?android:attr/progressBarStyleSmall"/>
-		</LinearLayout>
 	</LinearLayout>
 
 	<RelativeLayout 
-		android:id="@+id/DeckPickerHoriz" 
 		android:layout_height="wrap_content" 
 		android:paddingBottom="5dip"
 		android:orientation="horizontal" 
@@ -84,10 +62,11 @@
 			android:maxLines="2"
 			android:textSize="14sp"/>
 	</RelativeLayout>
+
 	<LinearLayout 
 		android:layout_height="wrap_content" 
-		android:orientation="horizontal" 
 		android:layout_width="fill_parent"
+		android:orientation="horizontal" 
 		android:layout_marginBottom="3dip">
 		<TextView
 			android:id="@+id/DeckPickerCompletionMat"

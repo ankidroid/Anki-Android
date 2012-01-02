@@ -116,13 +116,13 @@ public class ChartBuilder extends Activity {
                 renderer.setColor(res.getColor(R.color.statistics_due_mature_cards));
                 break;
         	case 2:
-                renderer.setColor(res.getColor(R.color.statistics_due_failed_cards));
+//                renderer.setColor(res.getColor(R.color.statistics_due_failed_cards));
         		break;
         	}
         } else if (type == Statistics.TYPE_REVIEWS) {
         	switch (row) {
         	case 0: 
-                renderer.setColor(res.getColor(R.color.statistics_reps_new_cards));
+//                renderer.setColor(res.getColor(R.color.statistics_reps_new_cards));
         		break;
         	case 1:
                 renderer.setColor(res.getColor(R.color.statistics_reps_young_cards));

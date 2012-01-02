@@ -1,5 +1,5 @@
 /****************************************************************************************
- * Copyright (c) 2009 Daniel Svärd <daniel.svard@gmail.com>                             *
+ * Copyright (c) 2011 Norbert Nagold <norbert.nagold@gmail.com>                         *
  *                                                                                      *
  * This program is free software; you can redistribute it and/or modify it under        *
  * the terms of the GNU General Public License as published by the Free Software        *
@@ -21,127 +21,114 @@ import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Map.Entry;
 import java.util.TreeMap;
 
 import org.json.JSONException;
+import org.json.JSONObject;
 
 import com.ichi2.anki.AnkiDroidApp;
 
-/**
- * Anki fact.
- * A fact is a single piece of information, made up of a number of fields.
- * See http://ichi2.net/anki/wiki/KeyTermsAndConcepts#Facts
- * 
- * Cache: a HTML-stripped amalgam of the field contents, so we can perform
- * searches of marked up text in a reasonable time.
- */
-public class Fact {
+public class Note {
+
+	private Collection mCol;
 
     private int mId;
-    private int mMId;
-    private int mGId;
-    private int mCrt;
+    private String mGuId;
+    private JSONObject mModel;
+    private int mDid;
+    private int mMid;
     private int mMod;
+    private int mUsn;
+    private boolean mNewlyAdded;
     private String[] mTags;
     private String[] mFields;
     private String mData = "";
+    private int mFlags;
     
-    private Model mModel;
-    private Deck mDeck;
-    private TreeMap<String, Integer> mFMap;
+    private TreeMap<String, Object[]> mFMap;
+    private int mScm;
 
 
-    public Fact(Deck deck, Model model) {
-    	this(deck, model, 0);
+    public Note(Collection col, int id) {
+    	this(col, null, id);
     }
-
-    public Fact(Deck deck, int id) {
-    	this(deck, null, id);
+    public Note(Collection col, JSONObject model) {
+    	this(col, model, 0);
     }
-
-    // Generate fact object from its ID
-    public Fact(Deck deck, Model model, int id) {
-        mDeck = deck;
-        mId = id;
-        if (mId != 0) {
-        	fromDb(id);
-        } else if (model != null) {
+    public Note(Collection col, JSONObject model, int id) {
+        mCol = col;
+        if (id != 0) {
+            mId = id;
+        	load();
+        } else {
+        	mId = Utils.timestampID(mCol.getDb(), "notes");
+        	mGuId = Utils.guid64();
         	mModel = model;
         	try {
-				mGId = mDeck.defaultGroup(model.getConf().getInt("gid"));
+            	mDid = model.getInt("did");
+            	mMid = model.getInt("id");
+    			mTags = new String[]{""};
+    			mFields = new String[model.getJSONArray("flds").length()];
 			} catch (JSONException e) {
 				throw new RuntimeException(e);
 			}
-			mMId = model.getId();
-			mCrt = Utils.intNow();
-			mMod = mCrt;
-			mTags = new String[]{""};
-	        mFMap = mModel.fieldMap();
-			mFields = new String[mFMap.size()];
 			for (int i = 0; i < mFields.length; i++) {
 				mFields[i] = "";
 			}
 			mData = "";
+			mFMap = mCol.getModels().fieldMap(mModel);
+			mScm = mCol.getScm();
         }
     }
 
 
-    private boolean fromDb(int id) {
+    private void load() {
        Cursor cursor = null;
         try {
-            cursor = mDeck.getDB().getDatabase().rawQuery(
-            		"SELECT mid, gid, crt, mod, tags, flds, data FROM facts WHERE id = " + id, null);
+            cursor = mCol.getDb().getDatabase().rawQuery(
+            		"SELECT guid, mid, did, mod, usn, tags, flds, flags, data FROM notes WHERE id = " + mId, null);
             if (!cursor.moveToFirst()) {
-                Log.w(AnkiDroidApp.TAG, "Fact.java (constructor): No result from query.");
-                return false;
+                Log.w(AnkiDroidApp.TAG, "Notes.load(): No result from query.");
+                return;
             }
-            mMId = cursor.getInt(0);
-            mGId = cursor.getInt(1);
-            mCrt = cursor.getInt(2);
-            mMod = cursor.getInt(3);
-            mTags = Utils.parseTags(cursor.getString(4));
-            mFields = Utils.splitFields(cursor.getString(5));
-            mData = cursor.getString(6);
+            mGuId = cursor.getString(0);
+            mMid = cursor.getInt(1);
+    		mDid = cursor.getInt(2); 
+    		mMod = cursor.getInt(3); 
+    		mUsn = cursor.getInt(4);
+            mTags = mCol.getTags().split(cursor.getString(5));
+            mFields = Utils.splitFields(cursor.getString(6));
+            mData = cursor.getString(7);
+            mScm = mCol.getScm();
         } finally {
             if (cursor != null) {
                 cursor.close();
             }
         }
-        mModel = mDeck.getModel(mMId);
-        mFMap = mModel.fieldMap();
-        return true;
-    }
+        mModel = mCol.getModels().get(mMid);
+        mFMap = mCol.getModels().fieldMap(mModel);
+   }
 
 
     public void flush() {
-    	mMod = Utils.intNow();
-    	// facts table
-    	StringBuilder sb = new StringBuilder();
-    	sb.append("INSERT OR REPLACE INTO facts VALUES (");
-    	sb.append(mId).append(", ");
-    	sb.append(mMId).append(", ");
-    	sb.append(mGId).append(", ");
-    	sb.append(mCrt).append(", ");
-    	sb.append(mMod).append(", ");
-    	sb.append("\"").append(stringTags()).append("\", ");
-    	sb.append("\"").append(joinedFields()).append("\", ");
-    	sb.append("\"").append(mFields[mModel.sortIdx()]).append("\", ");
-    	sb.append("\"").append(mData).append("\")");
-    	Cursor cur = null;
-        try {
-        	cur = mDeck.getDB().getDatabase().rawQuery(sb.toString(), null);
-        	if (cur.moveToFirst()) {
-        		mId = cur.getInt(0);    		
-        	}
-        } finally {
-            if (cur != null) {
-                cur.close();
-            }
-        }
-    	// updateFieldChecksums();
-    	// mDeck.registerTags(mTags);
+    	flush(0);
+    }
+    public void flush(int mod) {
+    	_preFlush();
+    	mMod = mod != 0 ? mod : Utils.intNow();
+    	mUsn = mCol.getUsn();
+    	String sfld = Utils.stripHTML(mFields[mCol.getModels().sortIdx(mModel)]);
+    	String tags = stringTags();
+    	int csum = Utils.fieldChecksum(mFields[0]);
+    	mCol.getDb().getDatabase().execSQL("INSERT OR REPLACE INTO notes VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+                new Object[]{mId, mGuId, mMid, mDid, mMod, mUsn, tags, joinedFields(), sfld, csum, mFlags, mData});
+    	mCol.getTags().register(mTags);
+    	_postFlush();
     }
 
 
@@ -150,13 +137,13 @@ public class Fact {
     }
 
 
-    public Card[] getCards() {
+    public Card[] cards() {
     	ArrayList<Card> cards = new ArrayList<Card>();
     	Cursor cur = null;
         try {
-        	cur = mDeck.getDB().getDatabase().rawQuery("SELECT id FROM cards WHERE fid = " + mId, null);
+        	cur = mCol.getDb().getDatabase().rawQuery("SELECT id FROM cards WHERE nid = " + mId + " ORDER BY ord", null);
         	while (cur.moveToNext()) {
-        		cards.add(mDeck.getCard(cur.getInt(0)));
+        		cards.add(mCol.getCard(cur.getInt(0)));
         	}
         } finally {
             if (cur != null) {
@@ -167,46 +154,51 @@ public class Fact {
     }
 
 
-    public Model getModel() {
+    public JSONObject model() {
     	return mModel;
     }
+
+    // updatecarddids
 
     /**
      * Dict interface
      * ***********************************************************************************************
      */
 
+    public HashSet<String> keys() {
+    	return (HashSet<String>) mFMap.keySet();
+    }
 
-    /**
-     * @return the fields
-     */
-    public String[] getFields() {
+
+    public String[] values() {
         return mFields;
     }
 
 
-    /**
-     * set the value of a field
-     */
-    public void setFields(String name, String value) {
-        mFields[_fieldOrd(name)] = value;
+    public HashMap<String, String> items() {
+    	HashMap<String, String> m = new HashMap<String, String>();
+		try {
+			for (Object[] e : mFMap.values()) {
+				m.put(((JSONObject)e[1]).getString("name"), mFields[(Integer)e[0]]);
+			}
+		} catch (JSONException e1) {
+			throw new RuntimeException(e1);
+    	}
+		return m;
     }
 
 
     public int _fieldOrd(String key) {
-        return mFMap.get(key);
+        return (Integer) mFMap.get(key)[0];
     }
 
 
-    public String fieldName(int ord) {
-    	for (Entry<String, Integer> e : mFMap.entrySet()) {
-    		if (e.getValue() == ord) {
-    			return e.getKey();
-    		}
-    	}
-    	return null;
+    public String _getitem__(String key) {
+    	return mFields[_fieldOrd(key)];
     }
 
+
+    //setitem
 
     /**
      * Tags
@@ -214,47 +206,94 @@ public class Fact {
      */
 
     public boolean hasTag(String tag) {
-    	return Utils.hasTag(tag, Arrays.asList(mTags));
+    	return mCol.getTags().inList(tag, mTags);
     }
 
 
     public String stringTags() {
-    	return Utils.canonifyTags(mTags);
+    	return mCol.getTags().join(mCol.getTags().canonify(mTags));
     }
 
 
     public void delTag(String tag) {
-    	List<String> other = new ArrayList<String>();
-    	for (String t : mTags) {
-    		if (!t.toLowerCase().equals(tag.toLowerCase())) {
-    			other.add(t);
-    		}
-    	}
-    	mTags = (String[]) other.toArray();
+    	//TODO
+//    	List<String> other = new ArrayList<String>();
+//    	for (String t : mTags) {
+//    		if (!t.toLowerCase().equals(tag.toLowerCase())) {
+//    			other.add(t);
+//    		}
+//    	}
+//    	mTags = (String[]) other.toArray();
     }
 
 
     public void addTag(String tag) {
+    	// TODO
     	// duplicates will be stripped on save
-    	String[] oldtags = mTags;
-    	mTags = new String[oldtags.length + 1];
-    	for (int i = 0; i < mTags.length - 1; i++) {
-    		mTags[i] = oldtags[i];
-    	}
-    	mTags[mTags.length - 1] = tag;
+//    	String[] oldtags = mTags;
+//    	mTags = new String[oldtags.length + 1];
+//    	for (int i = 0; i < mTags.length - 1; i++) {
+//    		mTags[i] = oldtags[i];
+//    	}
+//    	mTags[mTags.length - 1] = tag;
     }
 
 
-    public void setTags(String tags) {
-    	mTags = Utils.parseTags(tags);
-    }
+//    public void setTags(String tags) {
+//    	mTags = Utils.parseTags(tags);
+//    }
 
     /**
      * Unique/duplicate checks
      * ***********************************************************************************************
      */
 
-  
+    /** 1 if first is empty; 2 if first is duplicate, 0 otherwise */
+    public int dupeOrEmpty() {
+    	String val = mFields[0];
+    	if (val.trim().length() == 0) {
+    		return 1;
+    	}
+    	int csum = Utils.fieldChecksum(val);
+    	// find any matching csums and compare
+    	for (String flds : mCol.getDb().queryColumn(String.class, "SELECT flds FROM notes WHERE csum = " + csum + " AND id != " + (mId != 0 ? mId : 0) + " and mid = " + mMid, 0)) {
+    		if (Utils.splitFields(flds)[0].equals(mFields[0])) {
+    			return 2;
+    		}
+    	}
+    	return 0;
+    }
+   
+    /**
+     * Unique/duplicate checks
+     * ***********************************************************************************************
+     */
+
+    /** have we been added yet? */
+    public void _preFlush() {
+    	mNewlyAdded = mCol.getDb().queryScalar("SELECT 1 FROM cards WHERE nid = " + mId) == 0;
+    }
+
+
+    /** generate missing cards */
+    public void _postFlush() {
+    	//TODO
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+    public int getMid() {
+    	return mMid;
+    }
+    
     
     
     public void setId(int id) {
@@ -270,11 +309,13 @@ public class Fact {
     }
 
 
-    /**
-     * @return the mModelId
-     */
-    public int getMId() {
-        return mMId;
+    public int getDid() {
+        return mDid;
+    }
+
+
+    public String[] getFields() {
+    	return mFields;
     }
 
 

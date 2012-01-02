@@ -13,6 +13,7 @@ import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
+import com.ichi2.libanki.Utils;
 import com.ichi2.themes.StyledDialog;
 import com.ichi2.themes.Themes;
 import com.tomgibara.android.veecheck.util.PrefSettings;
@@ -49,9 +50,10 @@ public class BroadcastMessages {
 	public static void init(Context context, long lastTimeOpened) {
 		Log.d(AnkiDroidApp.TAG, "BroadcastMessages: init");
 		// retrieve messages on first start of the day
-		if (Utils.isNewDay(lastTimeOpened)) {
-			PrefSettings.getSharedPrefs(context).edit().putBoolean("showBroadcastMessageToday", true).commit();
-		}
+		// TODO: reactivate message activation
+//		if (Utils.isNewDay(lastTimeOpened)) {
+//			PrefSettings.getSharedPrefs(context).edit().putBoolean("showBroadcastMessageToday", true).commit();
+//		}
 	}
 
 

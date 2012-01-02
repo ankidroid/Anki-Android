@@ -94,12 +94,17 @@ import android.widget.TextView;
 import com.ichi2.anim.ActivityTransitionAnimation;
 import com.ichi2.anim.Animation3D;
 import com.ichi2.anim.ViewAnimation;
+import com.ichi2.async.DeckTask;
+import com.ichi2.libanki.Card;
+import com.ichi2.libanki.Collection;
+import com.ichi2.libanki.Sched;
+import com.ichi2.libanki.Sound;
+import com.ichi2.libanki.Utils;
 import com.ichi2.themes.StyledDialog;
 import com.ichi2.themes.StyledProgressDialog;
 import com.ichi2.themes.Themes;
 import com.ichi2.utils.DiffEngine;
 import com.ichi2.utils.RubyParser;
-import com.ichi2.widget.AnkiDroidWidgetBig;
 import com.ichi2.widget.WidgetStatus;
 import com.tomgibara.android.veecheck.util.PrefSettings;
 import com.zeemote.zc.event.ButtonEvent;
@@ -338,7 +343,7 @@ public class Reviewer extends Activity implements IButtonListener{
 
     private Card mCurrentCard;
     private int mCurrentEase;
-    private Scheduler mCurrentScheduler;
+    private Sched mCurrentScheduler;
 
     private long mSessionTimeLimit;
     private int mSessionCurrReps;
@@ -441,6 +446,8 @@ public class Reviewer extends Activity implements IButtonListener{
 	private Method mSetScrollbarBarFading = null;
 	private Method mSetTextIsSelectable = null;
 
+	private Sched mSched;
+
  	/**
  	 * Zeemote controller
  	 */
@@ -517,17 +524,17 @@ public class Reviewer extends Activity implements IButtonListener{
         public void onClick(View view) {
             Log.i(AnkiDroidApp.TAG, "Show card statistics");
             stopTimer();
-			Themes.htmlOkDialog(Reviewer.this, getResources().getString(R.string.card_browser_card_details), mCurrentCard.getCardDetails(Reviewer.this, false), new DialogInterface.OnClickListener() {
-				@Override
-				public void onClick(DialogInterface dialog, int which) {
-					restartTimer();
-				}
-			}, new OnCancelListener() {
-				@Override
-				public void onCancel(DialogInterface arg0) {
-					restartTimer();
-				}
-			}).show();
+//			Themes.htmlOkDialog(Reviewer.this, getResources().getString(R.string.card_browser_card_details), mCurrentCard.getCardDetails(Reviewer.this, false), new DialogInterface.OnClickListener() {
+//				@Override
+//				public void onClick(DialogInterface dialog, int which) {
+//					restartTimer();
+//				}
+//			}, new OnCancelListener() {
+//				@Override
+//				public void onCancel(DialogInterface arg0) {
+//					restartTimer();
+//				}
+//			}).show();
         }
     };
 
@@ -552,16 +559,16 @@ public class Reviewer extends Activity implements IButtonListener{
         	}
             switch (view.getId()) {
                 case R.id.flashcard_layout_ease1:
-                    answerCard(Card.EASE_FAILED);
+                    answerCard(1);
                     break;
                 case R.id.flashcard_layout_ease2:
-                	answerCard(Card.EASE_HARD);
+                	answerCard(2);
                     break;
                 case R.id.flashcard_layout_ease3:
-                	answerCard(Card.EASE_MID);
+                	answerCard(3);
                     break;
                 case R.id.flashcard_layout_ease4:
-                	answerCard(Card.EASE_EASY);
+                	answerCard(4);
                     break;
                 default:
                     mCurrentEase = 0;
@@ -742,11 +749,11 @@ public class Reviewer extends Activity implements IButtonListener{
             mShakeActionStarted = false;
             String str = result.getString();
             if (str != null) {
-                if (str.equals(Deck.UNDO_TYPE_SUSPEND_CARD)) {
-                	Themes.showThemedToast(Reviewer.this, getResources().getString(R.string.card_unsuspended), true);
-                } else if (str.equals("redo suspend")) {
-                	Themes.showThemedToast(Reviewer.this, getResources().getString(R.string.card_suspended), true);           	
-                }            	
+//                if (str.equals(Decks.UNDO_TYPE_SUSPEND_CARD)) {
+//                	Themes.showThemedToast(Reviewer.this, getResources().getString(R.string.card_unsuspended), true);
+//                } else if (str.equals("redo suspend")) {
+//                	Themes.showThemedToast(Reviewer.this, getResources().getString(R.string.card_suspended), true);           	
+//                }            	
             }
             mInEditor = false;
         }
@@ -846,22 +853,22 @@ public class Reviewer extends Activity implements IButtonListener{
 			switch(msg.what){
 			case MSG_ZEEMOTE_STICK_UP:
 				if (sDisplayAnswer) {
-   						answerCard(Card.EASE_EASY);
+   						answerCard(EASE_EASY);
 					} 			
 				break;
 			case MSG_ZEEMOTE_STICK_DOWN:
 				if (sDisplayAnswer) {
-   						answerCard(Card.EASE_FAILED);
+   						answerCard(EASE_FAILED);
 					} 			
 				break;
 			case MSG_ZEEMOTE_STICK_LEFT:
 				if (sDisplayAnswer) {
-   						answerCard(Card.EASE_HARD);
+   						answerCard(EASE_HARD);
 					} 			
 				break;
 			case MSG_ZEEMOTE_STICK_RIGHT:
 				if (sDisplayAnswer) {
-   						answerCard(Card.EASE_MID);
+   						answerCard(EASE_MID);
 					} 			
 				break;
 			case MSG_ZEEMOTE_BUTTON_A:
@@ -885,11 +892,11 @@ public class Reviewer extends Activity implements IButtonListener{
 				closeReviewer(RESULT_DEFAULT, false);
 				break;
 			case MSG_ZEEMOTE_BUTTON_C:
-				if (DeckManager.getMainDeck().undoAvailable()){
-            	setNextCardAnimation(true);
-            	DeckTask.launchDeckTask(DeckTask.TASK_TYPE_UNDO, mUpdateCardHandler, new DeckTask.TaskData(UPDATE_CARD_SHOW_QUESTION,
-                        DeckManager.getMainDeck(), mCurrentCard.getId(), false));
-				}
+//				if (DeckManager.getMainDeck().undoAvailable()){
+//            	setNextCardAnimation(true);
+//            	DeckTask.launchDeckTask(DeckTask.TASK_TYPE_UNDO, mUpdateCardHandler, new DeckTask.TaskData(UPDATE_CARD_SHOW_QUESTION,
+//                        DeckManager.getMainDeck(), mCurrentCard.getId(), false));
+//				}
 				break;
 			case MSG_ZEEMOTE_BUTTON_D:
 				if (!sDisplayAnswer) {
@@ -920,16 +927,17 @@ public class Reviewer extends Activity implements IButtonListener{
         setVolumeControlStream(AudioManager.STREAM_MUSIC);
 
         // Make sure a deck is loaded before continuing.
-        Deck deck = DeckManager.getMainDeck();
-        if (deck == null) {
+        Collection col = Collection.currentCollection();
+        if (col == null) {
         	finishNoStorageAvailable();
 			return;
         } else {
-            mCurrentScheduler = deck.getSched();
-            mMediaDir = setupMedia(deck);
+            mSched = new Sched(col);
+//            mMediaDir = setupMedia(deck);
             restorePreferences();
 
-            deck.resetUndo();
+            // TODO: reset undo?
+
             // Remove the status bar and title bar
             if (mPrefFullscreenReview) {
                 getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
@@ -987,8 +995,7 @@ public class Reviewer extends Activity implements IButtonListener{
             // Load the first card and start reviewing. Uses the answer card
             // task to load a card, but since we send null
             // as the card to answer, no card will be answered.
-            DeckTask.launchDeckTask(DeckTask.TASK_TYPE_ANSWER_CARD, mAnswerCardHandler, new DeckTask.TaskData(0,
-                    deck, null));
+            DeckTask.launchDeckTask(DeckTask.TASK_TYPE_ANSWER_CARD, mAnswerCardHandler, new DeckTask.TaskData(mSched, null, 0));
         }
     }
 
@@ -1027,23 +1034,23 @@ public class Reviewer extends Activity implements IButtonListener{
     protected void onResume() {
     	mInBackground = false;
       super.onResume();
-      Deck deck = DeckManager.getMainDeck();
-      if (deck == null) {
-    	  Log.e(AnkiDroidApp.TAG, "Reviewer: Deck already closed, returning to study options");
-    	  closeReviewer(RESULT_DECK_CLOSED, false);
-    	  return;
-      }
+//      Decks deck = DeckManager.getMainDeck();
+//      if (deck == null) {
+//    	  Log.e(AnkiDroidApp.TAG, "Reviewer: Deck already closed, returning to study options");
+//    	  closeReviewer(RESULT_DECK_CLOSED, false);
+//    	  return;
+//      }
 
       // check if deck is already opened in big widget. If yes, reload card (to make sure it's not answered yet)
-      if (DeckManager.deckIsOpenedInBigWidget(deck.getDeckPath()) && mCurrentCard != null && !mInEditor) {
-    	  Log.i(AnkiDroidApp.TAG, "Reviewer: onResume: get card from big widget");
-    	  blockControls();
-    	  AnkiDroidWidgetBig.updateWidget(AnkiDroidWidgetBig.UpdateService.VIEW_NOT_SPECIFIED, true);
-    	  DeckTask.launchDeckTask(DeckTask.TASK_TYPE_ANSWER_CARD, mAnswerCardHandler, new DeckTask.TaskData(0, deck, null));
-      } else {
-    	  restartTimer();
-      }
-
+//      if (DeckManager.deckIsOpenedInBigWidget(deck.getDeckPath()) && mCurrentCard != null && !mInEditor) {
+//    	  Log.i(AnkiDroidApp.TAG, "Reviewer: onResume: get card from big widget");
+//    	  blockControls();
+//    	  AnkiDroidWidgetBig.updateWidget(AnkiDroidWidgetBig.UpdateService.VIEW_NOT_SPECIFIED, true);
+//    	  DeckTask.launchDeckTask(DeckTask.TASK_TYPE_ANSWER_CARD, mAnswerCardHandler, new DeckTask.TaskData(0, deck, null));
+//      } else {
+//    	  restartTimer();
+//      }
+//
       if (mShakeEnabled) {
           mSensorManager.registerListener(mSensorListener, mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER), SensorManager.SENSOR_DELAY_NORMAL);    	  
       }
@@ -1065,16 +1072,16 @@ public class Reviewer extends Activity implements IButtonListener{
           mSensorManager.unregisterListener(mSensorListener);
       }
       super.onStop();
-      Deck deck = DeckManager.getMainDeck();
-      if (!isFinishing()) {
-          // Save changes
-          updateBigWidget(!mCardFrame.isEnabled());
-          DeckTask.waitToFinish();
-          if (deck != null) {
-	         	deck.commitToDB();
-          }
-      }
-    WidgetStatus.update(this, WidgetStatus.getDeckStatus(deck));
+//      Decks deck = DeckManager.getMainDeck();
+//      if (!isFinishing()) {
+//          // Save changes
+//          updateBigWidget(!mCardFrame.isEnabled());
+//          DeckTask.waitToFinish();
+//          if (deck != null) {
+//	         	deck.commitToDB();
+//          }
+//      }
+//    WidgetStatus.update(this, WidgetStatus.getDeckStatus(deck));
     }
 
 
@@ -1233,11 +1240,11 @@ public class Reviewer extends Activity implements IButtonListener{
 
 
     private void updateBigWidget(boolean showProgressDialog) {
-    	if (DeckManager.deckIsOpenedInBigWidget(DeckManager.getMainDeckPath())) {
-      	  	Log.i(AnkiDroidApp.TAG, "Reviewer: updateBigWidget");
-      	  	AnkiDroidWidgetBig.setCard(mCurrentCard);
-      	  	AnkiDroidWidgetBig.updateWidget(AnkiDroidWidgetBig.UpdateService.VIEW_SHOW_QUESTION, showProgressDialog);
-    	}
+//    	if (DeckManager.deckIsOpenedInBigWidget(DeckManager.getMainDeckPath())) {
+//      	  	Log.i(AnkiDroidApp.TAG, "Reviewer: updateBigWidget");
+//      	  	AnkiDroidWidgetBig.setCard(mCurrentCard);
+//      	  	AnkiDroidWidgetBig.updateWidget(AnkiDroidWidgetBig.UpdateService.VIEW_SHOW_QUESTION, showProgressDialog);
+//    	}
     }
 
 
@@ -1292,8 +1299,8 @@ public class Reviewer extends Activity implements IButtonListener{
 
             getWindow().setFlags(0, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         }
-        menu.findItem(MENU_UNDO).setEnabled(DeckManager.getMainDeck().undoAvailable());
-        menu.findItem(MENU_REDO).setEnabled(DeckManager.getMainDeck().redoAvailable());
+//        menu.findItem(MENU_UNDO).setEnabled(DeckManager.getMainDeck().undoAvailable());
+//        menu.findItem(MENU_REDO).setEnabled(DeckManager.getMainDeck().redoAvailable());
         return true;
     }
 
@@ -1347,17 +1354,17 @@ public class Reviewer extends Activity implements IButtonListener{
             case MENU_EDIT:
                 return editCard();
 
-            case MENU_REMOVE_BURY:
-            	setNextCardAnimation(false);
-                DeckTask.launchDeckTask(DeckTask.TASK_TYPE_BURY_CARD, mDismissCardHandler, new DeckTask.TaskData(0,
-                        DeckManager.getMainDeck(), mCurrentCard));
-                return true;
-
-            case MENU_REMOVE_SUSPEND:
-            	setNextCardAnimation(false);
-                DeckTask.launchDeckTask(DeckTask.TASK_TYPE_SUSPEND_CARD, mDismissCardHandler, new DeckTask.TaskData(0,
-                        DeckManager.getMainDeck(), mCurrentCard));
-                return true;
+//            case MENU_REMOVE_BURY:
+//            	setNextCardAnimation(false);
+//                DeckTask.launchDeckTask(DeckTask.TASK_TYPE_BURY_CARD, mDismissCardHandler, new DeckTask.TaskData(0,
+//                        DeckManager.getMainDeck(), mCurrentCard));
+//                return true;
+//
+//            case MENU_REMOVE_SUSPEND:
+//            	setNextCardAnimation(false);
+//                DeckTask.launchDeckTask(DeckTask.TASK_TYPE_SUSPEND_CARD, mDismissCardHandler, new DeckTask.TaskData(0,
+//                        DeckManager.getMainDeck(), mCurrentCard));
+//                return true;
 
             case MENU_REMOVE_DELETE:
                 showDeleteCardDialog();
@@ -1368,20 +1375,20 @@ public class Reviewer extends Activity implements IButtonListener{
                 return true;
 
             case MENU_MARK:
-                DeckTask.launchDeckTask(DeckTask.TASK_TYPE_MARK_CARD, mMarkCardHandler, new DeckTask.TaskData(0,
-                        DeckManager.getMainDeck(), mCurrentCard));
+//                DeckTask.launchDeckTask(DeckTask.TASK_TYPE_MARK_CARD, mMarkCardHandler, new DeckTask.TaskData(0,
+//                        DeckManager.getMainDeck(), mCurrentCard));
                 return true;
 
-            case MENU_UNDO:
-            	setNextCardAnimation(true);
-            	DeckTask.launchDeckTask(DeckTask.TASK_TYPE_UNDO, mUpdateCardHandler, new DeckTask.TaskData(UPDATE_CARD_SHOW_QUESTION,
-                        DeckManager.getMainDeck(), mCurrentCard.getId(), false));
-                return true;
-
-            case MENU_REDO:
-                DeckTask.launchDeckTask(DeckTask.TASK_TYPE_REDO, mUpdateCardHandler, new DeckTask.TaskData(UPDATE_CARD_SHOW_QUESTION,
-                        DeckManager.getMainDeck(), mCurrentCard.getId(), false));
-                return true;
+//            case MENU_UNDO:
+//            	setNextCardAnimation(true);
+//            	DeckTask.launchDeckTask(DeckTask.TASK_TYPE_UNDO, mUpdateCardHandler, new DeckTask.TaskData(UPDATE_CARD_SHOW_QUESTION,
+//                        DeckManager.getMainDeck(), mCurrentCard.getId(), false));
+//                return true;
+//
+//            case MENU_REDO:
+//                DeckTask.launchDeckTask(DeckTask.TASK_TYPE_REDO, mUpdateCardHandler, new DeckTask.TaskData(UPDATE_CARD_SHOW_QUESTION,
+//                        DeckManager.getMainDeck(), mCurrentCard.getId(), false));
+//                return true;
         }
         return false;
     }
@@ -1399,8 +1406,8 @@ public class Reviewer extends Activity implements IButtonListener{
                 if (resultCode == RESULT_EDIT_CARD_RESET) {
                 	showQuestion = UPDATE_CARD_NEW_CARD;
                 }
-                DeckTask.launchDeckTask(DeckTask.TASK_TYPE_UPDATE_FACT, mUpdateCardHandler, new DeckTask.TaskData(showQuestion,
-                        DeckManager.getMainDeck(), mCurrentCard));
+//                DeckTask.launchDeckTask(DeckTask.TASK_TYPE_UPDATE_FACT, mUpdateCardHandler, new DeckTask.TaskData(showQuestion,
+//                        DeckManager.getMainDeck(), mCurrentCard));
             } else if (resultCode == StudyOptions.CONTENT_NO_EXTERNAL_STORAGE) {
                 finishNoStorageAvailable();
             } else {
@@ -1415,7 +1422,8 @@ public class Reviewer extends Activity implements IButtonListener{
 
 
     private boolean isCramming() {
-        return (DeckManager.getMainDeck() != null) && (DeckManager.getMainDeck().name().compareTo("cram") == 0);
+//        return (DeckManager.getMainDeck() != null) && (DeckManager.getMainDeck().name().compareTo("cram") == 0);
+        return false;
     }
 
 
@@ -1455,14 +1463,14 @@ public class Reviewer extends Activity implements IButtonListener{
             mCardTimer.stop();
         }
         if (mCurrentCard != null) {
-           mCurrentCard.stopTimer();
+//           mCurrentCard.stopTimer();
         }
     }
 
 
     private void restartTimer() {
         if (mCurrentCard != null) {
-            mCurrentCard.resumeTimer();
+//            mCurrentCard.resumeTimer();
         }
         if (mPrefTimer && mSavedTimer != 0) {
             mCardTimer.setBase(SystemClock.elapsedRealtime() - mSavedTimer);
@@ -1497,8 +1505,8 @@ public class Reviewer extends Activity implements IButtonListener{
         } else {
         	mInEditor = true;
             Intent editCard = new Intent(Reviewer.this, CardEditor.class);
-            editCard.putExtra(CardEditor.EXTRA_CALLER, CardEditor.CALLER_REVIEWER);
-            editCard.putExtra(CardEditor.EXTRA_DECKPATH, DeckManager.getMainDeckPath());
+//            editCard.putExtra(CardEditor.EXTRA_CALLER, CardEditor.CALLER_REVIEWER);
+//            editCard.putExtra(CardEditor.EXTRA_DECKPATH, DeckManager.getMainDeckPath());
         	sEditorCard = mCurrentCard;
         	setOutAnimation(true);
             startActivityForResult(editCard, EDIT_CURRENT_CARD);
@@ -1536,13 +1544,13 @@ public class Reviewer extends Activity implements IButtonListener{
         StyledDialog.Builder builder = new StyledDialog.Builder(this);
         builder.setTitle(res.getString(R.string.delete_card_title));
         builder.setIcon(android.R.drawable.ic_dialog_alert);
-        builder.setMessage(String.format(res.getString(R.string.delete_card_message), Utils.stripHTML(mCurrentCard.getQuestion()), Utils.stripHTML(mCurrentCard.getAnswer())));
+//        builder.setMessage(String.format(res.getString(R.string.delete_card_message), Utils.stripHTML(mCurrentCard.getQuestion()), Utils.stripHTML(mCurrentCard.getAnswer())));
         builder.setPositiveButton(res.getString(R.string.yes),
                 new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                     	setNextCardAnimation(false);
-                        DeckTask.launchDeckTask(DeckTask.TASK_TYPE_DELETE_CARD, mDismissCardHandler, new DeckTask.TaskData(0, DeckManager.getMainDeck(), mCurrentCard));
+//                        DeckTask.launchDeckTask(DeckTask.TASK_TYPE_DELETE_CARD, mDismissCardHandler, new DeckTask.TaskData(0, DeckManager.getMainDeck(), mCurrentCard));
                     }
                 });
         builder.setNegativeButton(res.getString(R.string.no), null);
@@ -1561,14 +1569,14 @@ public class Reviewer extends Activity implements IButtonListener{
                 mLookUpIcon.setAnimation(ViewAnimation.fade(ViewAnimation.FADE_OUT, mFadeDuration, 0));        	
             }        	
         }
-        Deck deck = DeckManager.getMainDeck();
+//        Decks deck = DeckManager.getMainDeck();
     	switch (ease) {
-    		case Card.EASE_FAILED:
+    		case EASE_FAILED:
     		    mChosenAnswer.setText("\u2022");
     		    mChosenAnswer.setTextColor(mNext1.getTextColors());
-    	    	if ((deck.getDueCount() + deck.getNewCountToday()) == 1) {
-    	    		mIsLastCard  = true;
-                }
+//    	    	if ((deck.getDueCount() + deck.getNewCountToday()) == 1) {
+//    	    		mIsLastCard  = true;
+//                }
                 break;
             case EASE_HARD:
                 mChosenAnswer.setText("\u2022\u2022");
@@ -1584,9 +1592,9 @@ public class Reviewer extends Activity implements IButtonListener{
                 break;
         }
         mStatisticsTodaysCount++;
-        if (mature) {
-            mStatisticsMatureCount++;
-        }
+//        if (mature) {
+//            mStatisticsMatureCount++;
+//        }
         mTimerHandler.removeCallbacks(removeChosenAnswerText);
         mTimerHandler.postDelayed(removeChosenAnswerText, mShowChosenAnswerLength);
         Sound.stopSounds();
@@ -1594,8 +1602,8 @@ public class Reviewer extends Activity implements IButtonListener{
         // Increment number reps counter
         mSessionCurrReps++;
         setNextCardAnimation(false);
-        DeckTask.launchDeckTask(DeckTask.TASK_TYPE_ANSWER_CARD, mAnswerCardHandler, new DeckTask.TaskData(
-                mCurrentEase, deck, mCurrentCard));
+//        DeckTask.launchDeckTask(DeckTask.TASK_TYPE_ANSWER_CARD, mAnswerCardHandler, new DeckTask.TaskData(
+//                mCurrentEase, deck, mCurrentCard));
     }
 
     // Set the content view to the one provided and initialize accessors.
@@ -1850,12 +1858,12 @@ public class Reviewer extends Activity implements IButtonListener{
         }
 
         // Check to see if session rep or time limit has been reached
-        Deck deck = DeckManager.getMainDeck();
-        if (deck == null) {
-        	return new boolean[] {false, false};
-        }
-        long sessionRepLimit = deck.getSessionRepLimit();
-        long sessionTime = deck.getSessionTimeLimit();
+//        Decks deck = DeckManager.getMainDeck();
+//        if (deck == null) {
+//        	return new boolean[] {false, false};
+//        }
+        long sessionRepLimit = 0;//deck.getSessionRepLimit();
+        long sessionTime = 0;//deck.getSessionTimeLimit();
         String sessionMessage = null;
         String leechMessage;
         Log.i(AnkiDroidApp.TAG, "reviewer leech flag: " + values[0].isPreviousCardLeech() + " " + values[0].isPreviousCardSuspended());
@@ -1925,7 +1933,7 @@ public class Reviewer extends Activity implements IButtonListener{
         switchVisibility(mFlipCardLayout, View.GONE);
 
         // Set correct label for each button
-        if (mCurrentCard.isRev()) {
+        if (mSched.lrnButtons(mCurrentCard)) {
             mEase1.setText(res.getString(R.string.ease1_successive));
             mEase2.setText(res.getString(R.string.ease2_successive));
             mEase3.setText(res.getString(R.string.ease3_successive));
@@ -1944,7 +1952,7 @@ public class Reviewer extends Activity implements IButtonListener{
         switchVisibility(mEase4Layout, View.VISIBLE);
         
         // Focus default button
-        if (mCurrentCard.isRev()) {
+        if (mSched.lrnButtons(mCurrentCard)) {
             mEase3Layout.requestFocus();
             mNext2.setTextColor(mNextTimeTextColor);
             mEase2.setTextColor(mNextTimeTextColor);
@@ -2059,7 +2067,7 @@ public class Reviewer extends Activity implements IButtonListener{
         mshowNextReviewTime = preferences.getBoolean("showNextReviewTime", true);
         mZoomEnabled = preferences.getBoolean("zoom", false);
 //        mZeemoteEnabled = preferences.getBoolean("zeemote", false);
-        mDisplayFontSize = preferences.getInt("relativeDisplayFontSize", CardModel.DEFAULT_FONT_SIZE_RATIO);
+        mDisplayFontSize = preferences.getInt("relativeDisplayFontSize", 100);//Card.DEFAULT_FONT_SIZE_RATIO);
         mRelativeButtonSize = preferences.getInt("answerButtonSize", 100);
         mPrefHideQuestionInAnswer = Integer.parseInt(preferences.getString("hideQuestionInAnswer",
                 Integer.toString(HQIA_DO_SHOW)));
@@ -2121,11 +2129,11 @@ public class Reviewer extends Activity implements IButtonListener{
 
 
     private void setDueMessage() {
-    	Deck deck = DeckManager.getMainDeck();
-		if (mCurrentCard != null && deck != null && deck.getScheduler().equals("reviewEarly") && mCurrentCard.getType() != Card.TYPE_FAILED) {
-    		mChosenAnswer.setTextColor(mForegroundColor);
-    		mChosenAnswer.setText(Utils.fmtTimeSpan(mCurrentCard.getCombinedDue() - Utils.now(), Utils.TIME_FORMAT_IN));				
-		}
+//    	Decks deck = DeckManager.getMainDeck();
+//		if (mCurrentCard != null && deck != null && deck.getScheduler().equals("reviewEarly") && mCurrentCard.getType() != Card.TYPE_FAILED) {
+//    		mChosenAnswer.setTextColor(mForegroundColor);
+//    		mChosenAnswer.setText(Utils.fmtTimeSpan(mCurrentCard.getCombinedDue() - Utils.now(), Utils.TIME_FORMAT_IN));				
+//		}
     }
 
 
@@ -2155,54 +2163,54 @@ public class Reviewer extends Activity implements IButtonListener{
     	if (mCurrentCard == null) {
     		return;
     	}
-        Deck deck = DeckManager.getMainDeck();
-        int eta = mCurrentScheduler.eta() / 60;
-        if (deck.hasFinishScheduler() || eta < 1) {
-            setTitle(deck.getDeckName());
-        } else {
-            setTitle(getResources().getQuantityString(R.plurals.reviewer_window_title, eta, deck.getDeckName(), eta));
-        }
+//        Decks deck = DeckManager.getMainDeck();
+//        int eta = mCurrentScheduler.eta() / 60;
+//        if (deck.hasFinishScheduler() || eta < 1) {
+//            setTitle(deck.getDeckName());
+//        } else {
+//            setTitle(getResources().getQuantityString(R.plurals.reviewer_window_title, eta, deck.getDeckName(), eta));
+//        }
+//
+//        int[] counts = mCurrentScheduler.counts();
+//        SpannableString newCount = new SpannableString(String.valueOf(counts[Sched.COUNTS_NEW]));
+//        SpannableString lrnCount = new SpannableString(String.valueOf(counts[Sched.COUNTS_LRN]));
+//        SpannableString revCount = new SpannableString(String.valueOf(counts[Sched.COUNTS_REV]));
 
-        int[] counts = mCurrentScheduler.counts();
-        SpannableString newCount = new SpannableString(String.valueOf(counts[Scheduler.COUNTS_NEW]));
-        SpannableString lrnCount = new SpannableString(String.valueOf(counts[Scheduler.COUNTS_LRN]));
-        SpannableString revCount = new SpannableString(String.valueOf(counts[Scheduler.COUNTS_REV]));
+//        switch (mCurrentCard.getQueue()) {
+//            case Card.TYPE_NEW:
+//                newCount.setSpan(new UnderlineSpan(), 0, newCount.length(), 0);
+//                break;
+//            case Card.TYPE_LRN:
+//                lrnCount.setSpan(new UnderlineSpan(), 0, lrnCount.length(), 0);
+//                break;
+//            case Card.TYPE_REV:
+//                revCount.setSpan(new UnderlineSpan(), 0, revCount.length(), 0);
+//                break;
+//        }
 
-        switch (mCurrentCard.getQueue()) {
-            case Card.TYPE_NEW:
-                newCount.setSpan(new UnderlineSpan(), 0, newCount.length(), 0);
-                break;
-            case Card.TYPE_LRN:
-                lrnCount.setSpan(new UnderlineSpan(), 0, lrnCount.length(), 0);
-                break;
-            case Card.TYPE_REV:
-                revCount.setSpan(new UnderlineSpan(), 0, revCount.length(), 0);
-                break;
-        }
-
-        mTextBarRed.setText(newCount);
-        mTextBarBlack.setText(lrnCount);
-        mTextBarBlue.setText(revCount);
+//        mTextBarRed.setText(newCount);
+//        mTextBarBlack.setText(lrnCount);
+//        mTextBarBlue.setText(revCount);
     }
 
 
     private void updateStatisticBars() {
-    	if (mReloadStatistics) {
-            int[] counts = AnkiDroidApp.deck().yesCounts();
-            mStatisticsTodaysCount = counts[0];
-            mStatisticsTodaysNoCount = counts[1];
-            mStatisticsMatureCount = counts[2];
-            mStatisticsMatureNoCount = counts[3];
-            mReloadStatistics = false;
-    	}
-        if (mStatisticBarsMax == 0) {
-            View view = findViewById(R.id.progress_bars_back1);
-            mStatisticBarsMax = view.getWidth();
-            mStatisticBarsHeight = view.getHeight();
-        }
-        Deck deck = DeckManager.getMainDeck();
-        Utils.updateProgressBars(this, mSessionProgressBar, deck.getSessionProgress(), mStatisticBarsMax, mStatisticBarsHeight, true, false);
-        Utils.updateProgressBars(this, mSessionYesBar, deck.getProgress(false), mStatisticBarsMax, mStatisticBarsHeight, true);
+//    	if (mReloadStatistics) {
+//            int[] counts = AnkiDroidApp.deck().yesCounts();
+//            mStatisticsTodaysCount = counts[0];
+//            mStatisticsTodaysNoCount = counts[1];
+//            mStatisticsMatureCount = counts[2];
+//            mStatisticsMatureNoCount = counts[3];
+//            mReloadStatistics = false;
+//    	}
+//        if (mStatisticBarsMax == 0) {
+//            View view = findViewById(R.id.progress_bars_back1);
+//            mStatisticBarsMax = view.getWidth();
+//            mStatisticBarsHeight = view.getHeight();
+//        }
+//        Decks deck = DeckManager.getMainDeck();
+//        Utils.updateProgressBars(this, mSessionProgressBar, deck.getSessionProgress(), mStatisticBarsMax, mStatisticBarsHeight, true, false);
+//        Utils.updateProgressBars(this, mSessionYesBar, deck.getProgress(false), mStatisticBarsMax, mStatisticBarsHeight, true);
     }
 
     /* Handler for the delay in auto showing question and/or answer
@@ -2277,7 +2285,7 @@ public class Reviewer extends Activity implements IButtonListener{
             }
 
             if (mSpeakText && Integer.valueOf(android.os.Build.VERSION.SDK) > 3) {
-                ReadText.setLanguageInformation(Model.getModel(DeckManager.getMainDeck(), mCurrentCard.getCardModelId(), false).getId(), mCurrentCard.getCardModelId());          
+//                ReadText.setLanguageInformation(Models.getModel(DeckManager.getMainDeck(), mCurrentCard.getCardModelId(), false).getId(), mCurrentCard.getCardModelId());          
             }
         }
 
@@ -2411,17 +2419,17 @@ public class Reviewer extends Activity implements IButtonListener{
         if (mCurrentCard != null) {
         	final String japaneseModelTag = "Japanese";
         	
-            Deck currentDeck = DeckManager.getMainDeck();
-            Model myModel = Model.getModel(currentDeck, mCurrentCard.getCardModelId(), false);
-		if (myModel == null) {
-			Log.e(AnkiDroidApp.TAG, "updateCard - no Model could be fetched. Closing Reviewer and showing db-error dialog");
-	                closeReviewer(RESULT_ANSWERING_ERROR, true);			
-		}
-            mBaseUrl = Utils.getBaseUrl(mMediaDir, myModel, currentDeck);
+//            Decks currentDeck = DeckManager.getMainDeck();
+//            Models myModel = Models.getModel(currentDeck, mCurrentCard.getCardModelId(), false);
+//		if (myModel == null) {
+//			Log.e(AnkiDroidApp.TAG, "updateCard - no Model could be fetched. Closing Reviewer and showing db-error dialog");
+//	                closeReviewer(RESULT_ANSWERING_ERROR, true);			
+//		}
+            mBaseUrl = "";//Utils.getBaseUrl(mMediaDir, myModel, currentDeck);
             int nightBackground = Themes.getNightModeCardBackground(this);
-            content = myModel.getCSSForFontColorSize(mCurrentCard.getCardModelId(), mDisplayFontSize, mNightMode, nightBackground) + Model.invertColors(content, mNightMode);
-            isJapaneseModel = myModel.hasTag(japaneseModelTag);
-            mCurrentBackgroundColor = myModel.getBackgroundColor(mCurrentCard.getCardModelId());
+//            content = myModel.getCSSForFontColorSize(mCurrentCard.getCardModelId(), mDisplayFontSize, mNightMode, nightBackground) + Models.invertColors(content, mNightMode);
+//            isJapaneseModel = myModel.hasTag(japaneseModelTag);
+//            mCurrentBackgroundColor = myModel.getBackgroundColor(mCurrentCard.getCardModelId());
         } else {
         	mCard.getSettings().setDefaultFontSize(calculateDynamicFontSize(content));
             mBaseUrl = Utils.urlEncodeMediaDir(mDeckFilename.replace(".anki", ".media/"));
@@ -2452,8 +2460,8 @@ public class Reviewer extends Activity implements IButtonListener{
         }
 
         // Parse out the LaTeX images
-        question = LaTeX.parseLaTeX(DeckManager.getMainDeck(), question);
-        answer = LaTeX.parseLaTeX(DeckManager.getMainDeck(), answer);
+//        question = LaTeX.parseLaTeX(DeckManager.getMainDeck(), question);
+//        answer = LaTeX.parseLaTeX(DeckManager.getMainDeck(), answer);
 
         // If ruby annotation support is activated, then parse and handle:
         // Strip kanji in question, add furigana in answer
@@ -2475,7 +2483,7 @@ public class Reviewer extends Activity implements IButtonListener{
         Log.i(AnkiDroidApp.TAG, "content card = \n" + content);
         StringBuilder style = new StringBuilder();
         style.append(mCustomFontStyle);
-        style.append(getDeckStyle(mCurrentCard.mDeck.getDeckPath()));
+//        style.append(getDeckStyle(mCurrentCard.mDeck.getDeckPath()));
         Log.i(AnkiDroidApp.TAG, "::style::" + style);
         mCardContent = new SpannedString(mCardTemplate.replace("::content::", content).replace("::style::", style.toString()));
         // Log.i(AnkiDroidApp.TAG, "card html = \n" + card);
@@ -2714,8 +2722,8 @@ public class Reviewer extends Activity implements IButtonListener{
                 return true;
 
             case HQIA_CARD_MODEL:
-                return (Model.getModel(DeckManager.getMainDeck(), mCurrentCard.getCardModelId(), false).getCardModel(
-                        mCurrentCard.getCardModelId()).isQuestionInAnswer());
+//                return (Models.getModel(DeckManager.getMainDeck(), mCurrentCard.getCardModelId(), false).getCardModel(
+//                        mCurrentCard.getCardModelId()).isQuestionInAnswer());
 
             default:
                 return true;
@@ -2890,28 +2898,28 @@ public class Reviewer extends Activity implements IButtonListener{
         mFlipCardLayout.setEnabled(true);
 
         switch (mCurrentEase) {
-            case Card.EASE_FAILED:
+            case EASE_FAILED:
                 mEase1Layout.setClickable(true);
                 mEase2Layout.setEnabled(true);
                 mEase3Layout.setEnabled(true);
                 mEase4Layout.setEnabled(true);
                 break;
 
-            case Card.EASE_HARD:
+            case EASE_HARD:
                 mEase1Layout.setEnabled(true);
                 mEase2Layout.setClickable(true);
                 mEase3Layout.setEnabled(true);
                 mEase4Layout.setEnabled(true);
                 break;
 
-            case Card.EASE_MID:
+            case EASE_MID:
                 mEase1Layout.setEnabled(true);
                 mEase2Layout.setEnabled(true);
                 mEase3Layout.setClickable(true);
                 mEase4Layout.setEnabled(true);
                 break;
 
-            case Card.EASE_EASY:
+            case EASE_EASY:
                 mEase1Layout.setEnabled(true);
                 mEase2Layout.setEnabled(true);
                 mEase3Layout.setEnabled(true);
@@ -2947,28 +2955,28 @@ public class Reviewer extends Activity implements IButtonListener{
         mTouchLayer.setVisibility(View.INVISIBLE);
 
         switch (mCurrentEase) {
-            case Card.EASE_FAILED:
+            case EASE_FAILED:
                 mEase1Layout.setClickable(false);
                 mEase2Layout.setEnabled(false);
                 mEase3Layout.setEnabled(false);
                 mEase4Layout.setEnabled(false);
                 break;
 
-            case Card.EASE_HARD:
+            case EASE_HARD:
                 mEase1Layout.setEnabled(false);
                 mEase2Layout.setClickable(false);
                 mEase3Layout.setEnabled(false);
                 mEase4Layout.setEnabled(false);
                 break;
 
-            case Card.EASE_MID:
+            case EASE_MID:
                 mEase1Layout.setEnabled(false);
                 mEase2Layout.setEnabled(false);
                 mEase3Layout.setClickable(false);
                 mEase4Layout.setEnabled(false);
                 break;
 
-            case Card.EASE_EASY:
+            case EASE_EASY:
                 mEase1Layout.setEnabled(false);
                 mEase2Layout.setEnabled(false);
                 mEase3Layout.setEnabled(false);
@@ -3055,17 +3063,17 @@ public class Reviewer extends Activity implements IButtonListener{
      * 
      * @param deck The deck that we've just opened
      */
-    public static String setupMedia(Deck deck) {
-        String mediaLoc = deck.getStringVar("mediaURL");
-        if (mediaLoc != null) {
-            mediaLoc = mediaLoc.replace("\\", "/");
-            if (mediaLoc.contains("/Dropbox/Public/Anki")) {
-                // We're using dropbox
-                deck.setMediaPrefix(AnkiDroidApp.getDropboxDir());
-            }
-        }
-        return deck.mediaDir();
-    }
+//    public static String setupMedia(Decks deck) {
+//        String mediaLoc = deck.getStringVar("mediaURL");
+//        if (mediaLoc != null) {
+//            mediaLoc = mediaLoc.replace("\\", "/");
+//            if (mediaLoc.contains("/Dropbox/Public/Anki")) {
+//                // We're using dropbox
+//                deck.setMediaPrefix(AnkiDroidApp.getDropboxDir());
+//            }
+//        }
+//        return deck.mediaDir();
+//    }
 
 
     private String applyFixForHebrew(String text) {
@@ -3127,38 +3135,38 @@ public class Reviewer extends Activity implements IButtonListener{
     		break;
     	case GESTURE_ANSWER_EASE1:
 			if (sDisplayAnswer) {
-				answerCard(Card.EASE_FAILED);
+				answerCard(EASE_FAILED);
 			} else {
 		        displayCardAnswer();
 			}
     		break;
     	case GESTURE_ANSWER_EASE2:
 			if (sDisplayAnswer) {
-				answerCard(Card.EASE_HARD);
+				answerCard(EASE_HARD);
 			} else {
 		        displayCardAnswer();
 			}    		
     		break;
     	case GESTURE_ANSWER_EASE3:
 			if (sDisplayAnswer) {
-				answerCard(Card.EASE_MID);
+				answerCard(EASE_MID);
 			} else {
 		        displayCardAnswer();
 			}
     		break;
     	case GESTURE_ANSWER_EASE4:
 			if (sDisplayAnswer) {
-				answerCard(Card.EASE_EASY);
+				answerCard(EASE_EASY);
 			} else {
 		        displayCardAnswer();
 			}
     		break;
     	case GESTURE_ANSWER_RECOMMENDED:
 			if (sDisplayAnswer) {
-				if (mCurrentCard.isRev()) {
-					answerCard(Card.EASE_MID);
+				if (mSched.lrnButtons(mCurrentCard)) {
+					answerCard(EASE_MID);
 				} else {
-					answerCard(Card.EASE_HARD);
+					answerCard(EASE_HARD);
 				}
 			} else {
 				displayCardAnswer();
@@ -3166,49 +3174,49 @@ public class Reviewer extends Activity implements IButtonListener{
     		break;
     	case GESTURE_ANSWER_BETTER_THAN_RECOMMENDED:
 			if (sDisplayAnswer) {
-				if (mCurrentCard.isRev()) {
-					answerCard(Card.EASE_EASY);
+				if (mSched.lrnButtons(mCurrentCard)) {
+					answerCard(EASE_EASY);
 				} else {
-					answerCard(Card.EASE_MID);
+					answerCard(EASE_MID);
 				}
 			}
     		break;
     	case GESTURE_EXIT:
        	 	closeReviewer(RESULT_DEFAULT, false);
     		break;
-    	case GESTURE_UNDO:
-    		if (DeckManager.getMainDeck().undoAvailable()) {
-    			setNextCardAnimation(true);
-        		DeckTask.launchDeckTask(DeckTask.TASK_TYPE_UNDO, mUpdateCardHandler, new DeckTask.TaskData(UPDATE_CARD_SHOW_QUESTION,
-                        DeckManager.getMainDeck(), mCurrentCard.getId(), false));    			
-    		}
-    		break;
-    	case GESTURE_REDO:
-    		if (DeckManager.getMainDeck().redoAvailable()) {
-                DeckTask.launchDeckTask(DeckTask.TASK_TYPE_REDO, mUpdateCardHandler, new DeckTask.TaskData(UPDATE_CARD_SHOW_QUESTION,
-                        DeckManager.getMainDeck(), mCurrentCard.getId(), false));    			
-    		}
-    		break;
+//    	case GESTURE_UNDO:
+//    		if (DeckManager.getMainDeck().undoAvailable()) {
+//    			setNextCardAnimation(true);
+//        		DeckTask.launchDeckTask(DeckTask.TASK_TYPE_UNDO, mUpdateCardHandler, new DeckTask.TaskData(UPDATE_CARD_SHOW_QUESTION,
+//                        DeckManager.getMainDeck(), mCurrentCard.getId(), false));    			
+//    		}
+//    		break;
+//    	case GESTURE_REDO:
+//    		if (DeckManager.getMainDeck().redoAvailable()) {
+//                DeckTask.launchDeckTask(DeckTask.TASK_TYPE_REDO, mUpdateCardHandler, new DeckTask.TaskData(UPDATE_CARD_SHOW_QUESTION,
+//                        DeckManager.getMainDeck(), mCurrentCard.getId(), false));    			
+//    		}
+//    		break;
     	case GESTURE_EDIT:
         	editCard();
     		break;
-    	case GESTURE_MARK:
-            DeckTask.launchDeckTask(DeckTask.TASK_TYPE_MARK_CARD, mMarkCardHandler, new DeckTask.TaskData(0,
-                    DeckManager.getMainDeck(), mCurrentCard));
-    		break;
+//    	case GESTURE_MARK:
+//            DeckTask.launchDeckTask(DeckTask.TASK_TYPE_MARK_CARD, mMarkCardHandler, new DeckTask.TaskData(0,
+//                    DeckManager.getMainDeck(), mCurrentCard));
+//    		break;
     	case GESTURE_LOOKUP:
     		lookUpOrSelectText();
     		break;
-    	case GESTURE_BURY:
-        	setNextCardAnimation(false);
-            DeckTask.launchDeckTask(DeckTask.TASK_TYPE_BURY_CARD, mAnswerCardHandler, new DeckTask.TaskData(0,
-                    DeckManager.getMainDeck(), mCurrentCard));
-    		break;
-    	case GESTURE_SUSPEND:
-        	setNextCardAnimation(false);
-    		DeckTask.launchDeckTask(DeckTask.TASK_TYPE_SUSPEND_CARD, mAnswerCardHandler, new DeckTask.TaskData(0,
-                    DeckManager.getMainDeck(), mCurrentCard));
-    		break;
+//    	case GESTURE_BURY:
+//        	setNextCardAnimation(false);
+//            DeckTask.launchDeckTask(DeckTask.TASK_TYPE_BURY_CARD, mAnswerCardHandler, new DeckTask.TaskData(0,
+//                    DeckManager.getMainDeck(), mCurrentCard));
+//    		break;
+//    	case GESTURE_SUSPEND:
+//        	setNextCardAnimation(false);
+//    		DeckTask.launchDeckTask(DeckTask.TASK_TYPE_SUSPEND_CARD, mAnswerCardHandler, new DeckTask.TaskData(0,
+//                    DeckManager.getMainDeck(), mCurrentCard));
+//    		break;
     	case GESTURE_DELETE:
     		showDeleteCardDialog();
     		break;
@@ -3256,11 +3264,11 @@ public class Reviewer extends Activity implements IButtonListener{
     private String nextInterval(int ease) {
         Resources res = getResources();
 
-        if (ease == 1){
+//        if (ease == 1){
         	return res.getString(R.string.soon);
-        } else {
-        	return Utils.fmtTimeSpan(mCurrentCard.nextInterval(mCurrentCard, ease) * 86400, Utils.TIME_FORMAT_DEFAULT);
-        }
+//        } else {
+//        	return Utils.fmtTimeSpan(mCurrentCard.nextInterval(mCurrentCard, ease) * 86400, Utils.TIME_FORMAT_DEFAULT);
+//        }
     }
 
 
@@ -3278,7 +3286,7 @@ public class Reviewer extends Activity implements IButtonListener{
 		updateBigWidget(!mCardFrame.isEnabled());
 
         if (saveDeck) {
-            DeckTask.launchDeckTask(DeckTask.TASK_TYPE_SAVE_DECK, mSaveAndResetDeckHandler, new DeckTask.TaskData(DeckManager.getMainDeck(), 0));
+//            DeckTask.launchDeckTask(DeckTask.TASK_TYPE_SAVE_DECK, mSaveAndResetDeckHandler, new DeckTask.TaskData(DeckManager.getMainDeck(), 0));
     	} else {
     		finish();
     		ActivityTransitionAnimation.slide(Reviewer.this, ActivityTransitionAnimation.RIGHT);

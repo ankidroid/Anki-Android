@@ -27,10 +27,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import com.ichi2.anki.AnkiDroidApp;
-import com.ichi2.libanki.Deck.QAData;
 
 /**
- * A card is a presentation of a fact, and has two sides: a question and an answer. Any number of fields can appear on
+ * A card is a presentation of a note, and has two sides: a question and an answer. Any number of fields can appear on
  * each side. When you add a fact to Anki, cards which show that fact are generated. Some models generate one card,
  * others generate more than one.
  *
@@ -41,7 +40,7 @@ import com.ichi2.libanki.Deck.QAData;
  * Queue: same as above, and:
  *        -1=suspended, -2=user buried, -3=sched buried
  * Due is used differently for different queues.
- * - new queue: fact id or random int
+ * - new queue: note id or random int
  * - rev queue: integer day
  * - lrn queue: integer timestamp
  */
@@ -55,8 +54,8 @@ public class Card {
 
     // BEGIN SQL table entries
     private int mId = 0;
-    private int mFId;
-    private int mGId;
+    private int mNid;
+    private int mDid;
     private int mOrd;
     private int mCrt = Utils.intNow();
     private int mMod;
@@ -67,15 +66,15 @@ public class Card {
     private int mFactor = 0;
     private int mReps = 0;
     private int mLapses = 0;
-    private int mGrade = 0;
-    private int mCycles = 0;
+    private int mLeft = 0;
+    private int mUsn = 0;
+    private int mFlags = 0;
     private int mEDue = 0;
     private String mData = "";
     // END SQL table entries
 
-    private Deck mDeck;
     private HashMap<String, String> mQA;
-	private Fact mFact;
+	private Note mNote;
 
     private double mTimerStarted;
     private double mTimerStopped;
@@ -85,52 +84,52 @@ public class Card {
     private boolean mIsLeechTagged;
     private boolean mIsLeechSuspended;
 
-    public Card(Deck deck) {
-    	this(deck, 0);
+    private Collection mCol;
+
+    public Card(Collection col) {
+    	this(col, 0);
     }
-    public Card(Deck deck, Fact fact) {
-    	this(deck, fact, 0);
-    }
-    public Card(Deck deck, int id) {
-    	this(deck, null, id);
-    }
-    public Card(Deck deck, Fact fact, int id) {
-        mDeck = deck;
-        mFact = fact;
+    public Card(Collection col, int id) {
+        mCol = col;
         mTimerStarted = Double.NaN;
-        if (id != 0)  {
+        mQA = null;
+        mNote = null;
+        if (id != 0) {
         	mId = id;
-        	fromDB(id);
+        	load();
         } else {
-        	// to flush, set fid, ord and due
-        	mGId = 1;
+        	// to flush, set nid, ord, and due
+        	mId = Utils.timestampID(mCol.getDb(), "cards");
+        	mDid = 1;
+        	mCrt = Utils.intNow();
         	mType = 0;
         	mQueue = 0;
         	mIvl = 0;
         	mFactor = 0;
         	mReps = 0;
         	mLapses = 0;
-        	mCycles = 0;
+        	mLeft = 0;
         	mEDue = 0;
+        	mFlags = 0;
         	mData = "";
         }
     }
 
 
-	public boolean fromDB(long id) {
+	public void load() {
         Cursor cursor = null;
         try {
-            cursor = mDeck.getDB().getDatabase().rawQuery("SELECT * FROM cards WHERE id = " + id, null);
+            cursor = mCol.getDb().getDatabase().rawQuery("SELECT * FROM cards WHERE id = " + mId, null);
             if (!cursor.moveToFirst()) {
                 Log.w(AnkiDroidApp.TAG, "Card.java (fromDB(id)): No result from query.");
-                return false;
+                return;
             }
             mId = cursor.getInt(0);
-            mFId = cursor.getInt(1);
-            mGId = cursor.getInt(2);
+            mNid = cursor.getInt(1);
+            mDid = cursor.getInt(2);
             mOrd = cursor.getInt(3);
-            mCrt = cursor.getInt(4);
-            mMod = cursor.getInt(5);
+            mMod = cursor.getInt(4);
+            mUsn = cursor.getInt(5);
             mType = cursor.getInt(6);
             mQueue = cursor.getInt(7);
             mDue = cursor.getInt(8);
@@ -138,16 +137,17 @@ public class Card {
             mFactor = cursor.getInt(10);
             mReps = cursor.getInt(11);
             mLapses = cursor.getInt(12);
-            mGrade = cursor.getInt(13);
-            mCycles = cursor.getInt(14);
-            mEDue = cursor.getInt(15);
+            mLeft = cursor.getInt(13);
+            mEDue = cursor.getInt(14);
+            mFlags = cursor.getInt(15);
             mData = cursor.getString(16);
         } finally {
             if (cursor != null) {
                 cursor.close();
             }
         }
-        return true;
+        mQA = null;
+        mNote = null;
     }
 
 
@@ -157,11 +157,11 @@ public class Card {
     	StringBuilder sb = new StringBuilder();
     	sb.append("INSERT OR REPLACE INTO cards VALUES (");
     	sb.append(mId).append(", ");
-    	sb.append(mFId).append(", ");
-    	sb.append(mGId).append(", ");
+    	sb.append(mNid).append(", ");
+    	sb.append(mDid).append(", ");
     	sb.append(mOrd).append(", ");
-    	sb.append(mCrt).append(", ");
     	sb.append(mMod).append(", ");
+    	sb.append(mUsn).append(", ");
     	sb.append(mType).append(", ");
     	sb.append(mQueue).append(", ");
     	sb.append(mDue).append(", ");
@@ -169,17 +169,20 @@ public class Card {
     	sb.append(mFactor).append(", ");
     	sb.append(mReps).append(", ");
     	sb.append(mLapses).append(", ");
-    	sb.append(mGrade).append(", ");
-    	sb.append(mCycles).append(", ");
+    	sb.append(mLeft).append(", ");
     	sb.append(mEDue).append(", ");
+    	sb.append(mFlags).append(", ");
     	sb.append("\"").append(mData).append("\")");
-    	mDeck.getDB().getDatabase().execSQL(sb.toString());
+    	mCol.getDb().getDatabase().execSQL(sb.toString());
     }
 
 
-    public ContentValues getSchedValues() {
+    public void flushSched() {
+    	mMod = Utils.intNow();
+    	mUsn = mCol.getUsn();
     	ContentValues values = new ContentValues();
         values.put("mod", mMod);
+        values.put("usn", mUsn);
         values.put("type", mType);
         values.put("queue", mQueue);
         values.put("due", mDue);
@@ -187,84 +190,75 @@ public class Card {
         values.put("factor", mFactor);
         values.put("reps", mReps);
         values.put("lapses", mLapses);
-        values.put("grade", mGrade);
-        values.put("cycles", mCycles);
-        values.put("edue", mEDue);
-        return values;
-    }
-
-
-    public void flushSched() {
-    	mMod = Utils.intNow();
-        mDeck.getDB().getDatabase().update("cards", getSchedValues(), "id = " + mId, null);
+        values.put("left", mLeft);
+        values.put("edue", mEDue);      
+        mCol.getDb().getDatabase().update("cards", values, "id = " + mId, null);
     }
 
 
     public String getQuestion() {
-        return getQuestion("q", false);
+        return getQuestion(false);
     }
-    public String getQuestion(String classes, boolean reload) {
-        return _withClass(_getQA(reload).get("q"), classes);
+    public String getQuestion(boolean reload) {
+        return css() + _getQA(reload).get("q");
     }
 
 
     public String getAnswer() {
-        return getAnswer("a");
+        return css() + _getQA(false).get("a");
     }
-    public String getAnswer(String classes) {
-        return _withClass(_getQA(false).get("a"), classes);
+
+
+    public String css() {
+        try {
+			return (new StringBuilder()).append("<style>").append(template().get("css")).append("</style>").toString();
+		} catch (JSONException e) {
+			throw new RuntimeException(e);
+		}
     }
 
 
     public HashMap<String, String> _getQA(boolean reload) {
         if (mQA == null || reload) {
             mQA = new HashMap<String, String>();
-        	Cursor cursor = null;
-        	String gname = "";
-            try {
-                cursor = mDeck.getDB().getDatabase().rawQuery("SELECT name FROM groups WHERE id = " + mGId, null);
-                while (cursor.moveToNext()) {
-                	gname = cursor.getString(0);
-                }
-            } finally {
-                if (cursor != null) {
-                    cursor.close();
-                }
-            }
-            mQA = mDeck._renderQA(getModel(), gname, mDeck.new QAData(mId, mFId, getModel().getId(), mGId, mOrd, getFact().stringTags(), getFact().joinedFields()));
+            Note n = note();
+            JSONObject m = model();
+            Object[] data;
+			try {
+				data = new Object[] {mId, n.getId(), m.getInt("id"), mDid, mOrd, n.stringTags(), n.joinedFields()};
+			} catch (JSONException e) {
+				throw new RuntimeException(e);
+			}
+            mQA = mCol._renderQA(data);
         }
         return mQA;
     }
 
 
-    public String _withClass(String txt, String extra) {
-        return new StringBuilder().append("<div class=\"").append(cssClass())
-        	.append(" ").append(extra).append("\">").append(txt).append("</div>").toString();
+    public Note note() {
+    	return note(false);
     }
-
-
-    public Fact getFact() {
-        if (mFact == null) {
-            mFact = mDeck.getFact(mFId);
+    public Note note(boolean reload) {
+        if (mNote == null) {
+            mNote = mCol.getNote(mNid);
         }
-        return mFact;
+        return mNote;
     }
 
 
-    public Model getModel() {
-    	return mDeck.getModel(getFact().getMId());
+    public JSONObject model() {
+    	return mCol.getModels().get(mNote.getMid());
     }
 
 
-    public JSONObject getTemplate() {
-        return getModel().getTemplate(mOrd);
+    public JSONObject deckConf() {
+    	return mCol.getDecks().confForDid(mDid);
     }
 
 
-    public String cssClass() {
+    public JSONObject template() {
         try {
-			return new StringBuilder().append("cm").append(Utils.hexifyID(getModel().getId()))
-			.append("-").append(Utils.hexifyID(getTemplate().getInt("ord"))).toString();
+			return model().getJSONArray("tmpls").getJSONObject(mOrd);
 		} catch (JSONException e) {
 			throw new RuntimeException(e);
 		}
@@ -276,26 +270,31 @@ public class Card {
     }
 
 
-    public void stopTimer() {
-        mTimerStopped = Utils.now();
-    }
+//    public void stopTimer() {
+//        mTimerStopped = Utils.now();
+//    }
 
 
-    public void resumeTimer() {
-        if (!Double.isNaN(mTimerStarted) && !Double.isNaN(mTimerStopped)) {
-            mTimerStarted += Utils.now() - mTimerStopped;
-            mTimerStopped = Double.NaN;
-        } else {
-            Log.i(AnkiDroidApp.TAG, "Card Timer: nothing to resume");
-        }
-    }
+//    public void resumeTimer() {
+//        if (!Double.isNaN(mTimerStarted) && !Double.isNaN(mTimerStopped)) {
+//            mTimerStarted += Utils.now() - mTimerStopped;
+//            mTimerStopped = Double.NaN;
+//        } else {
+//            Log.i(AnkiDroidApp.TAG, "Card Timer: nothing to resume");
+//        }
+//    }
 
 
     /**
      * Time taken to answer card, in integer MS.
      */
     public int timeTaken() {
-    	return (int)((Utils.now() - mTimerStarted) * 1000);
+    	int total = (int)((Utils.now() - mTimerStarted) * 1000);
+    	try {
+			return Math.min(total, deckConf().getInt("maxTaken") * 1000);
+		} catch (JSONException e) {
+			throw new RuntimeException(e);
+		}
     }
 
     
@@ -490,46 +489,6 @@ public class Card {
     }
 
 
-    public int getFId() {
-    	return mFId;
-    }
-
-
-    public void setFId(int fid) {
-    	mFId = fid;
-    }
-
-
-    public int getGId() {
-    	return mGId;
-    }
-
-
-    public void setGId(int gid) {
-    	mGId = gid;
-    }
-
-
-    public int getOrd() {
-    	return mOrd;
-    }
-
-
-    public void setOrd(int ord) {
-    	mOrd = ord;
-    }
-
-
-    public int getCrt() {
-    	return mCrt;
-    }
-
-
-    public void setCrt(int crt) {
-    	mCrt = crt;
-    }
-
-
     public int getMod() {
     	return mMod;
     }
@@ -545,6 +504,16 @@ public class Card {
     }
 
 
+    public void setUsn(int usn) {
+    	mUsn = usn;
+    }
+
+
+    public int getNid() {
+    	return mNid;
+    }
+
+
     public int getType() {
     	return mType;
     }
@@ -552,6 +521,16 @@ public class Card {
 
     public void setType(int type) {
     	mType = type;
+    }
+
+
+    public void setLeft(int left) {
+    	mLeft = left;
+    }
+
+
+    public int getLeft() {
+    	return mLeft;
     }
 
 
@@ -565,6 +544,16 @@ public class Card {
     }
 
 
+    public int getEDue() {
+    	return mEDue;
+    }
+
+
+    public void setEDue(int edue) {
+    	mEDue = edue;
+    }
+
+
     public int getDue() {
     	return mDue;
     }
@@ -572,6 +561,12 @@ public class Card {
 
     public void setDue(int due) {
     	mDue = due;
+    }
+
+
+    public int getLastIvl() {
+    	//TODO
+    	return 0;
     }
 
 
@@ -610,55 +605,19 @@ public class Card {
     }
 
 
-    public void setLapses(int lapses) {
-        mLapses = lapses;
+    public Note getNote() {
+        return mNote;
     }
 
 
-    public int getLastIvl() {
-        return 0;//mLastIvl;
+    public void setLapses(int lapses) {
+        mLapses = lapses;
     }
 
 
     public void setLastIvl(int lastIvl) {
 //        mLastIvl = lastIvl;
     }
-
-
-    public int getGrade() {
-        return mGrade;
-    }
-
-
-    public void setGrade(int grade) {
-        mGrade = grade;
-    }
-
-
-    public int getCycles() {
-        return mCycles;
-    }
-
-
-    public void setCycles(int cycles) {
-        mCycles = cycles;
-    }
-
-
-    public int getEDue() {
-        return mEDue;
-    }
-
-
-    public void setEDue(int edue) {
-    	mEDue = edue;
-    }
-
-
-    public String getData() {
-        return mData;
-    }
-
 
     // Leech flag
     public boolean getLeechFlag() {
@@ -679,6 +638,26 @@ public class Card {
 
     public void setSuspendedFlag(boolean flag) {
         mIsLeechSuspended = flag;
+    }
+
+
+    public void setNid(int nid) {
+    	mNid = nid;
+    }
+
+
+    public void setOrd(int ord) {
+    	mOrd = ord;
+    }
+
+
+    public void setDid(int did) {
+    	mDid = did;
+    }
+
+
+    public int getDid() {
+    	return mDid;
     }
 
 }

@@ -16,11 +16,10 @@ package com.ichi2.widget;
 
 import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.BackupManager;
-import com.ichi2.anki.Deck;
-import com.ichi2.anki.DeckManager;
 import com.ichi2.anki.DeckStatus;
 import com.ichi2.anki.MetaDB;
 import com.ichi2.anki.services.NotificationService;
+import com.ichi2.libanki.Decks;
 import com.tomgibara.android.veecheck.util.PrefSettings;
 
 import android.content.Context;
@@ -107,23 +106,24 @@ public final class WidgetStatus {
         return MetaDB.getNotificationStatus(context);
     }
 
-    public static DeckStatus getDeckStatus(Deck deck) {
+    public static DeckStatus getDeckStatus(Decks deck) {
 		if (deck == null) {
 			return null;
 		}
         int dueCards = 0;
         int newCards = 0;
-        int failedCards = deck.getFailedSoonCount();
-        int eta = 0;
-        int reps = deck.getSessionFinishedCards();
-
-
-        if(!deck.hasFinishScheduler()) {
-            dueCards = deck.getRevCount();
-            newCards = deck.getNewCountToday();
-            eta = deck.getETA();
-        }
-        return new DeckStatus(deck.getDeckPath(), deck.getDeckName(), newCards, dueCards, failedCards, eta, reps);
+//        int failedCards = deck.getFailedSoonCount();
+//        int eta = 0;
+//        int reps = deck.getSessionFinishedCards();
+//
+//
+//        if(!deck.hasFinishScheduler()) {
+//            dueCards = deck.getRevCount();
+//            newCards = deck.getNewCountToday();
+//            eta = deck.getETA();
+//        }
+//        return new DeckStatus(deck.getDeckPath(), deck.getDeckName(), newCards, dueCards, failedCards, eta, reps);
+        return new DeckStatus("aaa", "aaa", 1, 1, 1, 1, 1);
     }
 
 
@@ -179,36 +179,36 @@ public final class WidgetStatus {
 
                         Log.i(AnkiDroidApp.TAG, "WidgetStatus: Found deck: " + absPath);
 
-                        Deck deck = DeckManager.getDeck(absPath, DeckManager.REQUESTING_ACTIVITY_WIDGETSTATUS, false);
-                        if (deck == null) {
-                            Log.e(AnkiDroidApp.TAG, "Widget: Skipping null deck: " + absPath);
-                            // Use the data from the last time we updated the deck, if available.
-//                            for (DeckStatus deckStatus : mDecks) {
-//                                if (absPath.equals(deckStatus.mDeckPath)) {
-//                                    Log.d(AnkiDroidApp.TAG, "Using previous value");
-//                                    decks.add(deckStatus);
-//                                    break;
-//                                }
-//                            }
-                            continue;
-                        }
-                        int dueCards = 0;
-                        int newCards = 0;
-                        int failedCards = deck.getFailedSoonCount();
-                        int eta = 0;
-                        int reps = deck.getSessionFinishedCards();
-
-
-                        if(!deck.hasFinishScheduler()) {
-        	                dueCards = deck.getRevCount();
-        	                newCards = deck.getNewCountToday();
-        	                eta = deck.getETA();
-                        }
-
-                        DeckManager.closeDeck(absPath, DeckManager.REQUESTING_ACTIVITY_WIDGETSTATUS);
+//                        Decks deck = DeckManager.getDeck(absPath, DeckManager.REQUESTING_ACTIVITY_WIDGETSTATUS, false);
+//                        if (deck == null) {
+//                            Log.e(AnkiDroidApp.TAG, "Widget: Skipping null deck: " + absPath);
+//                            // Use the data from the last time we updated the deck, if available.
+////                            for (DeckStatus deckStatus : mDecks) {
+////                                if (absPath.equals(deckStatus.mDeckPath)) {
+////                                    Log.d(AnkiDroidApp.TAG, "Using previous value");
+////                                    decks.add(deckStatus);
+////                                    break;
+////                                }
+////                            }
+//                            continue;
+//                        }
+//                        int dueCards = 0;
+//                        int newCards = 0;
+//                        int failedCards = deck.getFailedSoonCount();
+//                        int eta = 0;
+//                        int reps = deck.getSessionFinishedCards();
+//
+//
+//                        if(!deck.hasFinishScheduler()) {
+//        	                dueCards = deck.getRevCount();
+//        	                newCards = deck.getNewCountToday();
+//        	                eta = deck.getETA();
+//                        }
+//
+//                        DeckManager.closeDeck(absPath, DeckManager.REQUESTING_ACTIVITY_WIDGETSTATUS);
 
                         // Add the information about the deck
-                        decks.add(new DeckStatus(absPath, deckName, newCards, dueCards, failedCards, eta, reps));
+//                        decks.add(new DeckStatus(absPath, deckName, newCards, dueCards, failedCards, eta, reps));
                     } catch (SQLException e) {
                         Log.i(AnkiDroidApp.TAG, "Widget: Problems on retrieving deck information");
                         Log.e(AnkiDroidApp.TAG, e.toString());
@@ -247,10 +247,10 @@ public final class WidgetStatus {
                 context.startService(intent);
             }
             if (bigWidget) {
-            	Intent intent;
-                intent = new Intent(context, AnkiDroidWidgetBig.UpdateService.class);            	
-                intent.setAction(AnkiDroidWidgetBig.UpdateService.ACTION_UPDATE);
-                context.startService(intent);
+//            	Intent intent;
+//                intent = new Intent(context, AnkiDroidWidgetBig.UpdateService.class);            	
+//                intent.setAction(AnkiDroidWidgetBig.UpdateService.ACTION_UPDATE);
+//                context.startService(intent);
             }
             if (notification) {
             	Intent intent;

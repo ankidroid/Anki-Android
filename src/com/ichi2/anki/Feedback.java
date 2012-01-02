@@ -37,6 +37,7 @@ import android.widget.SimpleAdapter;
 import com.ichi2.anim.ActivityTransitionAnimation;
 import com.ichi2.async.Connection;
 import com.ichi2.async.Connection.Payload;
+import com.ichi2.libanki.Utils;
 import com.ichi2.themes.StyledDialog;
 import com.ichi2.themes.Themes;
 import com.tomgibara.android.veecheck.util.PrefSettings;
@@ -135,7 +136,7 @@ public class Feedback extends Activity {
 	private void closeFeedback() {
 	        setResult(RESULT_OK);
 			finish();
-                if (StudyOptions.getApiLevel() > 4) {
+                if (UIUtils.getApiLevel() > 4) {
                     ActivityTransitionAnimation.slide(Feedback.this, ActivityTransitionAnimation.FADE);
                 }
 	}

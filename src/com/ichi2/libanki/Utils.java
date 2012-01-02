@@ -1,6 +1,7 @@
 /****************************************************************************************
  * Copyright (c) 2009 Daniel Svärd <daniel.svard@gmail.com>                             *
  * Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com>                                   *
+ * Copyright (c) 2011 Norbert Nagold <norbert.nagold@gmail.com>						    *
  *                                                                                      *
  * This program is free software; you can redistribute it and/or modify it under        *
  * the terms of the GNU General Public License as published by the Free Software        *
@@ -33,6 +34,7 @@ import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 
+import com.ichi2.anki.AnkiDb;
 import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.R;
 import com.ichi2.anki.R.array;
@@ -73,8 +75,10 @@ import java.util.Calendar;
 import java.util.Collection;
 import java.util.GregorianCalendar;
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
+import java.util.Random;
 import java.util.TimeZone;
 import java.util.TreeSet;
 import java.util.UUID;
@@ -116,21 +120,40 @@ public class Utils {
     private Utils() { }
 
     // Regex pattern used in removing tags from text before diff
-    private static final Pattern imgPattern = Pattern.compile("<img src=[\"']?([^\"'>]+)[\"']? ?/?>");
     private static final Pattern stylePattern = Pattern.compile("(?s)<style.*?>.*?</style>");
     private static final Pattern scriptPattern = Pattern.compile("(?s)<script.*?>.*?</script>");
     private static final Pattern tagPattern = Pattern.compile("<.*?>");
+    private static final Pattern imgPattern = Pattern.compile("<img src=[\\\"']?([^\\\"'>]+)[\\\"']? ?/?>");
     private static final Pattern htmlEntitiesPattern = Pattern.compile("&#?\\w+;");
 
 
+    /**The time in integer seconds. Pass scale=1000 to get milliseconds. */
+    public static double now() {
+        return (System.currentTimeMillis() / 1000.0);
+    }
+
+
+    /**The time in integer seconds. Pass scale=1000 to get milliseconds. */
+    public static int intNow() {
+    	return intNow(1);
+    }
+	public static int intNow(int scale) {
+        return (int) (now() * scale);
+    }
+
+    // timetable
+    // aftertimetable
+    // shorttimetable
+    
     /**
      * Return a string representing a time span (eg '2 days').
      * @param inFormat: if true, return eg 'in 2 days'
      */
-    public static String fmtTimeSpan(double time, int format) {
-    	return fmtTimeSpan(time, format, false);
+    public static String fmtTimeSpan(int time) {
+    	return fmtTimeSpan(time, 0, false);
     }
     public static String fmtTimeSpan(double time, int format, boolean boldNumber) {
+    	// TODO: add short
     	int type;
     	int unit = 99;
     	int point = 0;
@@ -149,7 +172,7 @@ public class Utils {
     		type = TIME_YEARS;
     		point = 1;
     	}
-    	time = convertSecondsTo(time, type);
+    	time = convertSecondsTo((int)time, type);
 
     	int formatId;
     	switch (format) {
@@ -185,7 +208,7 @@ public class Utils {
     }
 
 
-    private static double convertSecondsTo(double seconds, int type) {
+    private static double convertSecondsTo(int seconds, int type) {
     	switch (type) {
     	case TIME_SECONDS:
     		return seconds;
@@ -203,92 +226,6 @@ public class Utils {
     		return 0;
     	}
     }
-
-
-    /**
-     * Locale
-     * ***********************************************************************************************
-     */
-
-    /**
-     * Get the current time in seconds since January 1, 1970 UTC.
-     * @return the local system time in seconds
-     */
-    public static double now() {
-        return (System.currentTimeMillis() / 1000.0);
-    }
-
-
-    /**
-     * Get the current time in integer seconds since January 1, 1970 UTC.
-     * @return the local system time in integer seconds
-     */
-    public static int intNow() {
-        return (int) now();
-    }
-
-
-    /**
-     * Return a string representing a time span (eg '2 days').
-     * @param inFormat: if true, return eg 'in 2 days'
-     */
-    public static String fmtTimeSpan(double time, boolean inFormat) {
-    	int type;
-    	int unit = 99;
-    	int point = 0;
-    	if (Math.abs(time) < 60 || unit < 1) {
-    		type = TIME_SECONDS;
-    	} else if (Math.abs(time) < 3599 || unit < 2) {
-    		type = TIME_MINUTES;
-    	} else if (Math.abs(time) < 60 * 60 * 24 || unit < 3) {
-    		type = TIME_HOURS;
-    	} else if (Math.abs(time) < 60 * 60 * 24 * 30 || unit < 4) {
-    		type = TIME_DAYS;
-    	} else if (Math.abs(time) < 60 * 60 * 24 * 365 || unit < 5) {
-    		type = TIME_MONTHS;
-    		point = 1;
-    	} else {
-    		type = TIME_YEARS;
-    		point = 1;
-    	}
-    	time = convertSecondsTo(time, type);
-
-    	Resources res = AnkiDroidApp.getAppResources();
-   		if (!inFormat) {
-   	    	if (time == 1){
-   	       		return res.getStringArray(R.array.next_review_s)[type];
-   	       	} else {
-   	       		return String.format(res.getStringArray(R.array.next_review_p)[type], fmtDouble(time, point));
-   	    	}   			
-   		} else {
-   	    	if (time == 1){
-   	       		return res.getStringArray(R.array.next_review_in_s)[type]; 			       			
-   	       	} else {
-   	       		return String.format(res.getStringArray(R.array.next_review_in_p)[type], fmtDouble(time, point));
-   	    	}   			
-   		}
-    }
-
-
-    private static double convertSecondsTo(double seconds, int type) {
-    	switch (type) {
-    	case TIME_SECONDS:
-    		return seconds;
-    	case TIME_MINUTES:
-    		return seconds / 60.0;
-    	case TIME_HOURS:
-    		return seconds / 3600.0;    		
-    	case TIME_DAYS:
-    		return seconds / 86400.0;    		
-    	case TIME_MONTHS:
-    		return seconds / 2592000.0;    		
-    	case TIME_YEARS:
-    		return seconds / 31536000.0;
-		default:
-    		return 0;
-    	}
-    }
-
 
     /**
      * Locale
@@ -331,15 +268,6 @@ public class Utils {
      * ***********************************************************************************************
      */
 
-    /**
-     * Strip HTML but keep media filenames
-     */
-    public static String stripHTMLMedia(String s) {
-        Matcher imgMatcher = imgPattern.matcher(s);
-        return stripHTML(imgMatcher.replaceAll(" $1 "));
-    }
-
-
     public static String stripHTML(String s) {
         Matcher styleMatcher = stylePattern.matcher(s);
         s = styleMatcher.replaceAll("");
@@ -351,17 +279,34 @@ public class Utils {
     }
 
 
-    private static String entsToTxt(String s) {
-        Matcher htmlEntities = htmlEntitiesPattern.matcher(s);
-        StringBuilder s2 = new StringBuilder(s);
-        while (htmlEntities.find()) {
-            String text = htmlEntities.group();
-            text = Html.fromHtml(text).toString();
-            // TODO: inefficiency below, can get rid of multiple regex searches
-            s2.replace(htmlEntities.start(), htmlEntities.end(), text);
-            htmlEntities = htmlEntitiesPattern.matcher(s2);
-        }
-        return s2.toString();
+    /**
+     * Strip HTML but keep media filenames
+     */
+    public static String stripHTMLMedia(String s) {
+        Matcher imgMatcher = imgPattern.matcher(s);
+        return stripHTML(imgMatcher.replaceAll(" $1 "));
+    }
+
+
+    private String minimizeHTML(String s) {
+    	// TODO
+    	return s;
+    }
+
+
+    private static String entsToTxt(String html) {
+    	// TODO
+//        Matcher htmlEntities = htmlEntitiesPattern.matcher(s);
+//        StringBuilder s2 = new StringBuilder(s);
+//        while (htmlEntities.find()) {
+//            String text = htmlEntities.group();
+//            text = Html.fromHtml(text).toString();
+//            // TODO: inefficiency below, can get rid of multiple regex searches
+//            s2.replace(htmlEntities.start(), htmlEntities.end(), text);
+//            htmlEntities = htmlEntitiesPattern.matcher(s2);
+//        }
+//        return s2.toString();
+    	return html;
     }
 
     /**
@@ -379,26 +324,34 @@ public class Utils {
     }
 
 
-    /**
-     * Returns a SQL string from an array of integers.
-     * @param ids The array of integers to include in the list.
-     * @return An SQL compatible string in the format (ids[0],ids[1],..).
-     */
+    /** Given a list of integers, return a string '(int1,int2,...)'. */
     public static String ids2str(int[] ids) {
-        String str = "()";
+    	StringBuilder sb = new StringBuilder();
+    	sb.append("(");
         if (ids != null) {
-            str = Arrays.toString(ids);
-            str = "(" + str.substring(1, str.length()-1) + ")";
+        	String s = Arrays.toString(ids);
+        	sb.append(s.substring(1, s.length() - 1));
         }
-        return str;
+        sb.append(")");
+        return sb.toString();
     }
 
 
-    /**
-     * Returns a SQL string from an array of integers.
-     * @param ids The array of integers to include in the list.
-     * @return An SQL compatible string in the format (ids[0],ids[1],..).
-     */
+    public static String ids2str(LinkedList<Long> ids) {
+    	StringBuilder sb = new StringBuilder();
+    	sb.append("(");
+    	while (!ids.isEmpty()) {
+			sb.append(ids.remove());
+    		if (ids.size() > 0) {
+    			sb.append(", ");
+    		}
+    	}
+    	sb.append(")");
+    	return sb.toString();
+    }
+
+
+    /** Given a list of integers, return a string '(int1,int2,...)'. */
     public static String ids2str(JSONArray ids) {
         StringBuilder str = new StringBuilder(512);
         str.append("(");
@@ -421,11 +374,7 @@ public class Utils {
     }
 
 
-    /**
-     * Returns a SQL string from an array of integers.
-     * @param ids The array of integers to include in the list.
-     * @return An SQL compatible string in the format (ids[0],ids[1],..).
-     */
+    /** Given a list of integers, return a string '(int1,int2,...)'. */
     public static String ids2str(List<String> ids) {
         StringBuilder str = new StringBuilder(512);
         str.append("(");
@@ -444,121 +393,68 @@ public class Utils {
     }
 
 
-    public static JSONArray listToJSONArray(List<Object> list) {
-        JSONArray jsonArray = new JSONArray();
-
-        for (Object o : list) {
-            jsonArray.put(o);
-        }
-
-        return jsonArray;
+    /** Return a non-conflicting timestamp for table. */
+    public static int timestampID(AnkiDb db, String table) {
+    	// be careful not to create multiple objects without flushing them, or they
+        // may share an ID.
+    	int t = intNow(1000);
+    	while (db.queryScalar("SELECT id FROM " + table + " WHERE id = " + t) == 0) {
+    		t += 1;
+    	}
+    	return t;
     }
 
 
-    public static List<String> jsonArrayToListString(JSONArray jsonArray) throws JSONException {
-        ArrayList<String> list = new ArrayList<String>();
-
-        int len = jsonArray.length();
-        for (int i = 0; i < len; i++) {
-            list.add(jsonArray.getString(i));
-        }
-
-        return list;
+    /** Return the first safe ID to use. */
+    public static int maxID(AnkiDb db) {
+    	int now = intNow(1000);
+    	now = Math.max(now, db.queryScalar("SELECT MAX(id) FROM cards"));
+    	now = Math.max(now, db.queryScalar("SELECT MAX(id) FROM cnotes"));
+    	return now + 1;
     }
+
+
+    // used in ankiweb
+    public static String base62(int num, String extra) {
+    	// TODO
+    	return Integer.toString(num);
+    }
+
+
+    // all printable characters minus quotes, backslash and separators
+    public static String base91(int num) {
+    	return base62(num, "!#$%&()*+,-./:;<=>?@[]^_`{|}~");
+    }
+
+
+    /** return a base91-encoded 64bit random number */
+    public static String guid64() {
+    	return base91((new Random()).nextInt(2^61 - 1));
+    }
+
+
+//    public static JSONArray listToJSONArray(List<Object> list) {
+//        JSONArray jsonArray = new JSONArray();
+//
+//        for (Object o : list) {
+//            jsonArray.put(o);
+//        }
+//
+//        return jsonArray;
+//    }
+//
+//
+//    public static List<String> jsonArrayToListString(JSONArray jsonArray) throws JSONException {
+//        ArrayList<String> list = new ArrayList<String>();
+//
+//        int len = jsonArray.length();
+//        for (int i = 0; i < len; i++) {
+//            list.add(jsonArray.getString(i));
+//        }
+//
+//        return list;
+//    }
         
-
-    /**
-     * Tags
-     * ***********************************************************************************************
-     */
-
-    /**
-     * Parse a string and return a list of tags.
-     * 
-     * @param tags A string containing tags separated by space or comma (optionally followed by space)
-     * @return An array of Strings containing the individual tags 
-     */
-    public static String[] parseTags(String tags) {
-        if (tags != null && tags.length() != 0) {
-            return tags.split("\\s");
-        } else {
-            return new String[] {};
-        }
-    }
-
-
-    /**
-     * Join tags into a single string, with leading and trailing spaces.
-     * 
-     * @param tags The list of tags to join
-     * @return The joined tags in a single string 
-     */
-    public static String joinTags(Collection<String> tags) {
-        if (tags == null || tags.size() == 0) {
-            return "";
-        } else {
-            StringBuilder result = new StringBuilder(128);
-            result.append(" ");
-            for (String tag : tags) {
-                result.append(tag).append(" ");
-            }
-            return result.toString();
-        }
-    }
-
-
-    /**
-     * Strip leading/trailing/superfluous spaces and duplicates.
-     * 
-     * @param tags The list of tags
-     * @return The canonified string, as described above
-     */
-    public static String canonifyTags(String[] tags) {
-        for (int i = 0; i < tags.length; i++) {
-            if (tags[i].startsWith(":")) {
-                tags[i].replace("^:+", "");
-            }
-        }
-        return joinTags(new TreeSet<String>(Arrays.asList(tags)));
-    }
-
-
-    /**
-     * Find if tag exists in a set of tags. The search is not case-sensitive
-     * 
-     * @param tag The tag to look for
-     * @param tags The set of tags
-     * @return True is the tag is found in the set, false otherwise
-     */
-    public static boolean hasTag(String tag, List<String> tags) {
-        String lowercase = tag.toLowerCase();
-        for (String t : tags) {
-            if (t.toLowerCase().compareTo(lowercase) == 0) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-
-    /**
-     * Add tags if they don't exist.
-     * Both parameters are in string format, the tags being separated by space or comma, as in parseTags
-     * 
-     * @param tagStr The new tag(s) that are to be added
-     * @param tags The set of tags where the new ones will be added
-     * @return A string containing the union of tags of the input parameters
-     */
-    public static String addTags(String addtags, String tags) {
-        ArrayList<String> currentTags = new ArrayList<String>(Arrays.asList(parseTags(tags)));
-        for (String tag : parseTags(addtags)) {
-            if (!hasTag(tag, currentTags)) {
-                currentTags.add(tag);
-            }
-        }
-        return canonifyTags((String[]) currentTags.toArray());
-    }
-
     /**
      * Fields
      * ***********************************************************************************************
@@ -577,7 +473,6 @@ public class Utils {
     public static String[] splitFields(String fields) {
     	return fields.split("\\x1f");
     }
-
 
     /**
      * Checksums
@@ -626,50 +521,49 @@ public class Utils {
     }
 
 
-    /**
-     * MD5 sum of file.
-     * Equivalent to checksum(open(os.path.join(mdir, file), "rb").read()))
-     *
-     * @param path The full path to the file
-     * @return A string of length 32 containing the hexadecimal representation of the MD5 checksum of the contents
-     * of the file
-     */
-    public static String fileChecksum(String path) {
-        byte[] bytes = null;
-        try {
-            File file = new File(path);
-            if (file != null && file.isFile()) {
-                bytes = new byte[(int)file.length()];
-                FileInputStream fin = new FileInputStream(file);
-                fin.read(bytes);
-            }
-        } catch (FileNotFoundException e) {
-            Log.e(AnkiDroidApp.TAG, "Can't find file " + path + " to calculate its checksum");
-        } catch (IOException e) {
-            Log.e(AnkiDroidApp.TAG, "Can't read file " + path + " to calculate its checksum");
-        }
-        if (bytes == null) {
-            Log.w(AnkiDroidApp.TAG, "File " + path + " appears to be empty");
-            return "";
-        }
-        MessageDigest md = null;
-        byte[] digest = null;
-        try {
-            md = MessageDigest.getInstance("MD5");
-            digest = md.digest(bytes);
-        } catch (NoSuchAlgorithmException e) {
-            Log.e(AnkiDroidApp.TAG, "Utils.checksum: No such algorithm. " + e.getMessage());
-            throw new RuntimeException(e);
-        }
-        BigInteger biginteger = new BigInteger(1, digest);
-        String result = biginteger.toString(16);
-        // pad with zeros to length of 32
-        if (result.length() < 32) {
-            result = "00000000000000000000000000000000".substring(0, 32 - result.length()) + result;
-        }
-        return result;
-    }
-
+//    /**
+//     * MD5 sum of file.
+//     * Equivalent to checksum(open(os.path.join(mdir, file), "rb").read()))
+//     *
+//     * @param path The full path to the file
+//     * @return A string of length 32 containing the hexadecimal representation of the MD5 checksum of the contents
+//     * of the file
+//     */
+//    public static String fileChecksum(String path) {
+//        byte[] bytes = null;
+//        try {
+//            File file = new File(path);
+//            if (file != null && file.isFile()) {
+//                bytes = new byte[(int)file.length()];
+//                FileInputStream fin = new FileInputStream(file);
+//                fin.read(bytes);
+//            }
+//        } catch (FileNotFoundException e) {
+//            Log.e(AnkiDroidApp.TAG, "Can't find file " + path + " to calculate its checksum");
+//        } catch (IOException e) {
+//            Log.e(AnkiDroidApp.TAG, "Can't read file " + path + " to calculate its checksum");
+//        }
+//        if (bytes == null) {
+//            Log.w(AnkiDroidApp.TAG, "File " + path + " appears to be empty");
+//            return "";
+//        }
+//        MessageDigest md = null;
+//        byte[] digest = null;
+//        try {
+//            md = MessageDigest.getInstance("MD5");
+//            digest = md.digest(bytes);
+//        } catch (NoSuchAlgorithmException e) {
+//            Log.e(AnkiDroidApp.TAG, "Utils.checksum: No such algorithm. " + e.getMessage());
+//            throw new RuntimeException(e);
+//        }
+//        BigInteger biginteger = new BigInteger(1, digest);
+//        String result = biginteger.toString(16);
+//        // pad with zeros to length of 32
+//        if (result.length() < 32) {
+//            result = "00000000000000000000000000000000".substring(0, 32 - result.length()) + result;
+//        }
+//        return result;
+//    }
 
     /**
      * 
@@ -937,26 +831,26 @@ public class Utils {
         return list.size() > 0;
     }
 
-
-    public static String getBaseUrl(String mediaDir, Model model, Deck deck) {
-        String base;
-		try {
-			base = deck.getConf().getString("mediaURL");
-		} catch (JSONException e) {
-			throw new RuntimeException(e);
-		}
-        if (base.length() != 0 && !base.equalsIgnoreCase("null")) {
-            return base;
-        } else {
-            // Anki desktop calls deck.mediaDir() here, but for efficiency reasons we only call it once in
-            // Reviewer.onCreate() and use the value from there            
-            if (mediaDir != null) {                              
-                base = urlEncodeMediaDir(mediaDir);
-            }
-      //  }
-        return base;
-    }
-
+//
+//    public static String getBaseUrl(String mediaDir, Model model, Deck deck) {
+//        String base;
+//		try {
+//			base = deck.getConf().getString("mediaURL");
+//		} catch (JSONException e) {
+//			throw new RuntimeException(e);
+//		}
+//        if (base.length() != 0 && !base.equalsIgnoreCase("null")) {
+//            return base;
+//        } else {
+//            // Anki desktop calls deck.mediaDir() here, but for efficiency reasons we only call it once in
+//            // Reviewer.onCreate() and use the value from there            
+//            if (mediaDir != null) {                              
+//                base = urlEncodeMediaDir(mediaDir);
+//            }
+//      //  }
+//        return base;
+//    }
+//
 
     /**
      * @param mediaDir media directory path on SD card

@@ -33,16 +33,15 @@ import android.util.Log;
 
 import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.AnkiDroidProxy;
-import com.ichi2.anki.DeckManager;
-import com.ichi2.anki.DeckTask;
 import com.ichi2.anki.Download;
 import com.ichi2.anki.R;
 import com.ichi2.anki.SharedDeckDownload;
 import com.ichi2.anki.StudyOptions;
 import com.ichi2.async.Connection;
+import com.ichi2.async.DeckTask;
 import com.ichi2.async.Connection.Payload;
 import com.ichi2.libanki.Card;
-import com.ichi2.libanki.Deck;
+import com.ichi2.libanki.Decks;
 import com.ichi2.libanki.Utils;
 import com.tomgibara.android.veecheck.util.PrefSettings;
 
@@ -936,7 +935,7 @@ public class DownloadManagerService extends Service {
             Payload data = doInBackgroundLoadDeck(args);
             if (data.returnType == DeckTask.DECK_LOADED) {
                 HashMap<String, Object> results = (HashMap<String, Object>) data.result;
-                Deck deck = (Deck) results.get("deck");
+                Decks deck = (Decks) results.get("deck");
 //                if (!deck.isUnpackNeeded()) {
 //                    data.success = true;
 //                    return data;
@@ -947,7 +946,7 @@ public class DownloadManagerService extends Service {
                 SharedPreferences pref = PrefSettings.getSharedPrefs(getBaseContext());
                 String updatedCardsPref = "numUpdatedCards:" + mDestination + "/tmp/" + download.getFilename()
                         + ".anki.updating";
-                long totalCards = deck.cardCount();
+                long totalCards = 0;//deck.cardCount();
                 download.setNumTotalCards((int) totalCards);
                 long updatedCards = pref.getLong(updatedCardsPref, 0);
                 download.setNumUpdatedCards((int) updatedCards);
@@ -1020,7 +1019,7 @@ public class DownloadManagerService extends Service {
             Log.i(AnkiDroidApp.TAG, "loadDeck - SD card mounted and existent file -> Loading deck...");
             try {
                 // Open the right deck.
-                Deck deck = DeckManager.getDeck(deckFilename, DeckManager.REQUESTING_ACTIVITY_DOWNLOADMANAGER);
+                Decks deck = null;//DeckManager.getDeck(deckFilename, DeckManager.REQUESTING_ACTIVITY_DOWNLOADMANAGER);
                 // Start by getting the first card and displaying it.
 //                Card card = deck.getCard();
                 Log.i(AnkiDroidApp.TAG, "Deck loaded!");
@@ -1054,9 +1053,9 @@ public class DownloadManagerService extends Service {
         protected void onPostExecute(Payload result) {
             super.onPostExecute(result);
             HashMap<String, Object> results = (HashMap<String, Object>) result.result;
-            Deck deck = (Deck) results.get("deck");
+            Decks deck = (Decks) results.get("deck");
             // Close the previously opened deck.
-            DeckManager.closeDeck(deck.getDeckPath());
+//            DeckManager.closeDeck(deck.getDeckPath());
 
             SharedDeckDownload download = (SharedDeckDownload) result.data[0];
             SharedPreferences pref = PrefSettings.getSharedPrefs(getBaseContext());

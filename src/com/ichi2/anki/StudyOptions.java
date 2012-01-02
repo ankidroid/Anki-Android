@@ -60,16 +60,19 @@ import android.widget.ToggleButton;
 
 import com.ichi2.anim.ActivityTransitionAnimation;
 import com.ichi2.anim.ViewAnimation;
-import com.ichi2.anki.DeckTask.TaskData;
 import com.ichi2.async.Connection;
+import com.ichi2.async.DeckTask;
 import com.ichi2.async.Connection.Payload;
+import com.ichi2.async.DeckTask.TaskData;
 import com.ichi2.compat.Compat;
 import com.ichi2.compat.CompatV11;
 import com.ichi2.compat.CompatV3;
+import com.ichi2.libanki.Collection;
+import com.ichi2.libanki.Sched;
+import com.ichi2.libanki.Utils;
 import com.ichi2.themes.StyledDialog;
 import com.ichi2.themes.StyledProgressDialog;
 import com.ichi2.themes.Themes;
-import com.ichi2.widget.AnkiDroidWidgetBig;
 import com.ichi2.widget.WidgetStatus;
 import com.tomgibara.android.veecheck.util.PrefSettings;
 import com.zeemote.zc.Controller;
@@ -134,12 +137,9 @@ public class StudyOptions extends Activity implements IButtonListener {
     /**
 * Constants for selecting which content view to display
 */
-    private static final int CONTENT_NO_DECK = 0;
-    private static final int CONTENT_STUDY_OPTIONS = 1;
-    private static final int CONTENT_CONGRATS = 2;
-    private static final int CONTENT_DECK_NOT_LOADED = 3;
-    private static final int CONTENT_SESSION_COMPLETE = 4;
-    public static final int CONTENT_NO_EXTERNAL_STORAGE = 5;
+    private static final int CONTENT_STUDY_OPTIONS = 0;
+    private static final int CONTENT_CONGRATS = 1;
+    public static final int CONTENT_NO_EXTERNAL_STORAGE = 2;
 
 
     /** Startup Mode choices */
@@ -155,32 +155,18 @@ public class StudyOptions extends Activity implements IButtonListener {
     public static final int EXTRA_START_DECKPICKER = 2;
     public static final int EXTRA_DB_ERROR = 3;
 
-    private static final int DIALOG_NO_CONNECTION = 0;
-    private static final int DIALOG_USER_NOT_LOGGED_IN = 1;
-    private static final int DIALOG_CONNECTION_ERROR = 2;
-    private static final int DIALOG_SYNC_LOG = 3;
-    private static final int DIALOG_NO_SPACE_LEFT = 4;
-    private static final int DIALOG_BACKUP_ERROR = 5;
-    private static final int DIALOG_DECK_NOT_LOADED = 6;
-    private static final int DIALOG_SYNC_CONFLICT_RESOLUTION = 7;
-    private static final int DIALOG_WELCOME = 8;
-    private static final int DIALOG_STATISTIC_TYPE = 9;
-    private static final int DIALOG_STATISTIC_PERIOD = 10;
-    private static final int DIALOG_SWAP_QA = 11;
-    private static final int DIALOG_MORE = 12;
-    private static final int DIALOG_TAGS = 13;
-    private static final int DIALOG_LIMIT_SESSION = 14;
-    private static final int DIALOG_DOWNLOAD_SELECTOR = 15;
-    private static final int DIALOG_CRAM = 16;
-    private static final int DIALOG_BACKUP_NO_SPACE_LEFT = 17;
-    private static final int DIALOG_DB_ERROR = 18;
-    private static final int DIALOG_SELECT_HELP = 19;
+    private static final int DIALOG_STATISTIC_TYPE = 0;
+    private static final int DIALOG_STATISTIC_PERIOD = 1;
+    private static final int DIALOG_SWAP_QA = 2;
+    private static final int DIALOG_MORE = 3;
+    private static final int DIALOG_TAGS = 4;
+    private static final int DIALOG_LIMIT_SESSION = 5;
+    private static final int DIALOG_CRAM = 6;
+    private static final int DIALOG_DB_ERROR = 7;
+    private static final int DIALOG_SELECT_HELP = 8;
 
     private String mCurrentDialogMessage;
 
-    private StyledDialog mNewVersionAlert;
-    private StyledDialog mWelcomeAlert;
-    
     /** Zeemote messages */
     private static final int MSG_ZEEMOTE_BUTTON_A = 0x110;
     private static final int MSG_ZEEMOTE_BUTTON_B = MSG_ZEEMOTE_BUTTON_A+1;
@@ -191,12 +177,6 @@ public class StudyOptions extends Activity implements IButtonListener {
     private static final int MSG_ZEEMOTE_STICK_LEFT = MSG_ZEEMOTE_BUTTON_A+6;
     private static final int MSG_ZEEMOTE_STICK_RIGHT = MSG_ZEEMOTE_BUTTON_A+7;
     
-
-    /**
-* Download Manager Service stub
-*/
-    // private IDownloadManagerService mService = null;
-
     /**
 * Broadcast that informs us when the sd card is about to be unmounted
 */
@@ -306,13 +286,6 @@ public class StudyOptions extends Activity implements IButtonListener {
     private CheckBox mCheckBoxSuspendLeeches;
 
     /**
-* UI elements for "No Deck" view
-*/
-    private View mNoDeckView;
-    private TextView mTextNoDeckTitle;
-    private TextView mTextNoDeckMessage;
-
-    /**
 * UI elements for "Congrats" view
 */
     private View mCongratsView;
@@ -340,19 +313,10 @@ public class StudyOptions extends Activity implements IButtonListener {
 	private GestureDetector gestureDetector;
 	View.OnTouchListener gestureListener;
 
-	private static final int SWIPE_MIN_DISTANCE_DIP = 65;
-    private static final int SWIPE_MAX_OFF_PATH_DIP = 120;
-    private static final int SWIPE_THRESHOLD_VELOCITY_DIP = 120;
-
-	public static int sSwipeMinDistance;
-	public static int sSwipeMaxOffPath;
-	public static int sSwipeThresholdVelocity;
-
     /**
 	* Backup
 	*/
 	File[] mBackups;
-	public static final int MIN_FREE_SPACE = 10;
 
 	/**
 	* Statistics
@@ -380,7 +344,9 @@ public class StudyOptions extends Activity implements IButtonListener {
 
     /** Used to perform operation in a platform specific way. */
     private Compat mCompat;
-    
+
+    private Collection mCol;
+
     /**
  	 * Zeemote controller
  	 */
@@ -419,9 +385,6 @@ public class StudyOptions extends Activity implements IButtonListener {
                 	return;
                 case R.id.studyoptions_congrats_reviewearly:
                 	startEarlyReview();
-                    return;
-                case R.id.studyoptions_congrats_syncdeck:
-                	syncDeck(null);
                     return;
                 case R.id.studyoptions_congrats_open_other_deck:
                     openDeckPicker();
@@ -463,12 +426,12 @@ public class StudyOptions extends Activity implements IButtonListener {
                     	}
                 	}
                 	return;
-                case R.id.studyoptions_limit_tag_tv2:
-                    if (mLimitTagNewActiveCheckBox.isChecked()) {
-                        mSelectedLimitTagText = LIMIT_NEW_ACTIVE;
-                        showDialog(DIALOG_TAGS);
-                    }
-                    return;
+//                case R.id.studyoptions_limit_tag_tv2:
+//                    if (mLimitTagNewActiveCheckBox.isChecked()) {
+//                        mSelectedLimitTagText = LIMIT_NEW_ACTIVE;
+//                        showDialog(DIALOG_TAGS);
+//                    }
+//                    return;
                 default:
                     return;
             }
@@ -535,17 +498,10 @@ public class StudyOptions extends Activity implements IButtonListener {
     private DialogInterface.OnClickListener mDialogSaveListener = new DialogInterface.OnClickListener() {
         @Override
         public void onClick(DialogInterface dialog, int which) {
-<<<<<<< HEAD
-            Deck deck = AnkiDroidApp.deck();
-            deck.setIntVar("newOrder", mSpinnerNewCardOrder.getSelectedItemPosition());
-            deck.setIntVar("newSpread", mSpinnerNewCardSchedule.getSelectedItemPosition());
-            deck.setIntVar("revOrder", mSpinnerRevCardOrder.getSelectedItemPosition());
-=======
-        	Deck deck = DeckManager.getMainDeck();
-            deck.setNewCardOrder(mSpinnerNewCardOrder.getSelectedItemPosition());
-            deck.setNewCardSpacing(mSpinnerNewCardSchedule.getSelectedItemPosition());
-            deck.setRevCardOrder(mSpinnerRevCardOrder.getSelectedItemPosition());
->>>>>>> master
+//        	Deck deck = DeckManager.getMainDeck();
+//            deck.setNewCardOrder(mSpinnerNewCardOrder.getSelectedItemPosition());
+//            deck.setNewCardSpacing(mSpinnerNewCardSchedule.getSelectedItemPosition());
+//            deck.setRevCardOrder(mSpinnerRevCardOrder.getSelectedItemPosition());
             // TODO: mSpinnerFailCardOption
             // FIXME: invalid entries set to zero(unlimited) for now, better to set to default?
             String maxFailText = mEditMaxFailCard.getText().toString();
@@ -558,111 +514,97 @@ public class StudyOptions extends Activity implements IButtonListener {
 //                        mEditMaxFailCard.setText("0");
 //                }
 //            }
-            String inputText = mEditNewPerDay.getText().toString();
-            if (!inputText.equals(Integer.toString(deck.getIntVar("newPerDay")))) {
-            	if (inputText.equals("")) {
-            		deck.setIntVar("newPerDay", 0);
-            	} else if (isValidInt(inputText)) {
-            		deck.setIntVar("newPerDay", Integer.parseInt(inputText));
-            	} else {
-            		mEditNewPerDay.setText("0");
-            	}
-            	updateValuesFromDeck();
-            }
-            boolean perDayChanged = deck.getPerDay() ^ mCheckBoxPerDay.isChecked();
-          	deck.setPerDay(mCheckBoxPerDay.isChecked());
-          	deck.setSuspendLeeches(mCheckBoxSuspendLeeches.isChecked());
-            dialog.dismiss();
-            if (perDayChanged){
-                deck.updateCutoff();
-                resetAndUpdateValuesFromDeck();
-            }
+//            String inputText = mEditNewPerDay.getText().toString();
+//            if (!inputText.equals(Integer.toString(deck.getIntVar("newPerDay")))) {
+//            	if (inputText.equals("")) {
+//            		deck.setIntVar("newPerDay", 0);
+//            	} else if (isValidInt(inputText)) {
+//            		deck.setIntVar("newPerDay", Integer.parseInt(inputText));
+//            	} else {
+//            		mEditNewPerDay.setText("0");
+//            	}
+//            	updateValuesFromDeck();
+//            }
+//            boolean perDayChanged = deck.getPerDay() ^ mCheckBoxPerDay.isChecked();
+//          	deck.setPerDay(mCheckBoxPerDay.isChecked());
+//          	deck.setSuspendLeeches(mCheckBoxSuspendLeeches.isChecked());
+//            dialog.dismiss();
+//            if (perDayChanged){
+//                deck.updateCutoff();
+//                resetAndUpdateValuesFromDeck();
+//            }
         }
     };
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-		if (!isTaskRoot()) {
-			Log.i(AnkiDroidApp.TAG, "StudyOptions - onCreate: Detected multiple instance of this activity, closing it and return to root activity");
-	        Intent reloadIntent = new Intent(StudyOptions.this, StudyOptions.class);
-	        reloadIntent.setAction(Intent.ACTION_MAIN);
-	        reloadIntent.putExtras(getIntent().getExtras());
-	        reloadIntent.addCategory(Intent.CATEGORY_LAUNCHER);
-	        reloadIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-			finish();
-			startActivityIfNeeded(reloadIntent, 0);
-		}
-
         Themes.applyTheme(this);
         super.onCreate(savedInstanceState);
 
         Log.i(AnkiDroidApp.TAG, "StudyOptions - OnCreate()");
 
-        Intent intent = getIntent();
-        mStartedByBigWidget = intent.getIntExtra(EXTRA_START, EXTRA_START_NOTHING);
-
-        if (hasErrorFiles() && mStartedByBigWidget == EXTRA_START_NOTHING) {
-            Intent i = new Intent(this, Feedback.class);
-            startActivityForResult(i, REPORT_ERROR);
-        }
 
         SharedPreferences preferences = restorePreferences();
-        BackupManager.initBackup();
+//        BackupManager.initBackup();
         registerExternalStorageListener();
+
+        mCol = Collection.currentCollection();
 
         activeCramTags = new HashSet<String>();
         mSelectedTags = new HashSet<String>();
 
         initAllContentViews();
 
-        if (Intent.ACTION_VIEW.equalsIgnoreCase(intent.getAction())
-                && intent.getDataString() != null) {
-            mDeckFilename = Uri.parse(intent.getDataString()).getPath();
-            Log.i(AnkiDroidApp.TAG, "onCreate - deckFilename from VIEW intent: " + mDeckFilename);
-        } else if (Intent.ACTION_MAIN.equalsIgnoreCase(intent.getAction()) && mStartedByBigWidget != EXTRA_START_NOTHING) {
-        		switch (intent.getIntExtra(EXTRA_START, EXTRA_START_NOTHING)) {
-        		case EXTRA_START_REVIEWER:
-                	openReviewer();
-                	break;
-        		case EXTRA_START_DECKPICKER:
-        			openDeckPicker(false);
-                	break;
-        		case EXTRA_DB_ERROR:
-        			mRepairFileName = intent.getStringExtra(EXTRA_DECK);
-        			onActivityResult(REQUEST_REVIEW, Reviewer.RESULT_ANSWERING_ERROR, null);
-        			break;
-        		}
-        } else if (Intent.ACTION_MAIN.equalsIgnoreCase(intent.getAction()) && intent.hasExtra(EXTRA_DECK)) {
-            mDeckFilename = intent.getStringExtra(EXTRA_DECK);
-            Log.i(AnkiDroidApp.TAG, "onCreate - deckFilename from MAIN intent: " + mDeckFilename);
-        } else if (savedInstanceState != null) {
-            // Use the same deck as last time Ankidroid was used.
-            mDeckFilename = savedInstanceState.getString("deckFilename");
-            Log.i(AnkiDroidApp.TAG, "onCreate - deckFilename from savedInstanceState: " + mDeckFilename);
-        } else {
-            // Log.i(AnkiDroidApp.TAG, "onCreate - " + preferences.getAll().toString());
-            mDeckFilename = preferences.getString("deckFilename", null);
-            Log.i(AnkiDroidApp.TAG, "onCreate - deckFilename from preferences: " + mDeckFilename);
-        }
+//        if (Intent.ACTION_VIEW.equalsIgnoreCase(intent.getAction())
+//                && intent.getDataString() != null) {
+//            mDeckFilename = Uri.parse(intent.getDataString()).getPath();
+//            Log.i(AnkiDroidApp.TAG, "onCreate - deckFilename from VIEW intent: " + mDeckFilename);
+//        } else if (Intent.ACTION_MAIN.equalsIgnoreCase(intent.getAction()) && mStartedByBigWidget != EXTRA_START_NOTHING) {
+//        		switch (intent.getIntExtra(EXTRA_START, EXTRA_START_NOTHING)) {
+//        		case EXTRA_START_REVIEWER:
+//                	openReviewer();
+//                	break;
+//        		case EXTRA_START_DECKPICKER:
+//        			openDeckPicker(false);
+//                	break;
+//        		case EXTRA_DB_ERROR:
+//        			mRepairFileName = intent.getStringExtra(EXTRA_DECK);
+//        			onActivityResult(REQUEST_REVIEW, Reviewer.RESULT_ANSWERING_ERROR, null);
+//        			break;
+//        		}
+//        } else if (Intent.ACTION_MAIN.equalsIgnoreCase(intent.getAction()) && intent.hasExtra(EXTRA_DECK)) {
+//            mDeckFilename = intent.getStringExtra(EXTRA_DECK);
+//            Log.i(AnkiDroidApp.TAG, "onCreate - deckFilename from MAIN intent: " + mDeckFilename);
+//        } else if (savedInstanceState != null) {
+//            // Use the same deck as last time Ankidroid was used.
+//            mDeckFilename = savedInstanceState.getString("deckFilename");
+//            Log.i(AnkiDroidApp.TAG, "onCreate - deckFilename from savedInstanceState: " + mDeckFilename);
+//        } else {
+//            // Log.i(AnkiDroidApp.TAG, "onCreate - " + preferences.getAll().toString());
+//            mDeckFilename = preferences.getString("deckFilename", null);
+//            Log.i(AnkiDroidApp.TAG, "onCreate - deckFilename from preferences: " + mDeckFilename);
+//        }
 
-        if (!mSdCardAvailable) {
-            showContentView(CONTENT_NO_EXTERNAL_STORAGE);
-        } else {
-        	if (mStartedByBigWidget == EXTRA_START_DECKPICKER || mStartedByBigWidget == EXTRA_START_REVIEWER) {
-        		showContentView(CONTENT_STUDY_OPTIONS);
-            	showDeckInformation(false);
-        	} else if (mDeckFilename == null || !new File(mDeckFilename).exists()) {
-                showContentView(CONTENT_NO_DECK);
-            } else if (mStartedByBigWidget == EXTRA_START_NOTHING) {
-            	if ((showDeckPickerOnStartup()) && (!hasErrorFiles())) {
-            		openDeckPicker();
-            	} else {
-            		// Load previous deck.
-            		loadPreviousDeck();
-            	}
-            }
-        }
+        showContentView(CONTENT_STUDY_OPTIONS);
+//        if (!mSdCardAvailable) {
+//        	// TODO
+//            showContentView(CONTENT_NO_EXTERNAL_STORAGE);
+//        } else {
+//        	if (mStartedByBigWidget == EXTRA_START_DECKPICKER || mStartedByBigWidget == EXTRA_START_REVIEWER) {
+//        		showContentView(CONTENT_STUDY_OPTIONS);
+//            	showDeckInformation(false);
+//        	} else if (mDeckFilename == null || !new File(mDeckFilename).exists()) {
+//                showContentView(CONTENT_NO_DECK);
+//            } else if (mStartedByBigWidget == EXTRA_START_NOTHING) {
+////            	if ((showDeckPickerOnStartup()) && (!hasErrorFiles())) {
+////            		openDeckPicker();
+////            	} else {
+////            		// Load previous deck.
+////            		loadPreviousDeck();
+////            	}
+//            }
+//        }
 
         gestureDetector = new GestureDetector(new MyGestureDetector());
        	gestureListener = new View.OnTouchListener() {
@@ -674,40 +616,32 @@ public class StudyOptions extends Activity implements IButtonListener {
        		}
        	};
 
-        if (getApiLevel() >= 11) {
+        if (UIUtils.getApiLevel() >= 11) {
             mCompat = new CompatV11();
         } else {
             mCompat = new CompatV3();
         }
-        //Zeemote controller initialization
-         
-		 if (AnkiDroidApp.zeemoteController() == null) AnkiDroidApp.setZeemoteController(new Controller(Controller.CONTROLLER_1));     
-		 controllerUi = new ControllerAndroidUi(this, AnkiDroidApp.zeemoteController());
-		 com.zeemote.util.Strings zstrings = com.zeemote.util.Strings.getStrings();
-		 if (zstrings.isLocaleAvailable(mLocale)){
-			 Log.d("Zeemote","Zeemote locale "+mLocale+" is available. Setting.");
-			 zstrings.setLocale(mLocale);
-		 } else {
-			 Log.d("Zeemote","Zeemote locale "+mLocale+" is not available.");
-		 }
-		 if (mZeemoteEnabled){
-		 if (!AnkiDroidApp.zeemoteController().isConnected())
-		 {
-    		 Log.d("Zeemote","starting connection in onCreate");
-			 controllerUi.startConnectionProcess();
-		 }
-		}
-    }
 
-
-    /** Returns the API level of this device. */
-    public static int getApiLevel() {
-        try {
-            return Integer.parseInt(Build.VERSION.SDK);
-        } catch (NumberFormatException e) {
-            // If there is an error, return the minimum supported version.
-            return 3;
-        }
+//        //Zeemote controller initialization
+//         
+//		 if (AnkiDroidApp.zeemoteController() == null) {
+//			 AnkiDroidApp.setZeemoteController(new Controller(Controller.CONTROLLER_1));     
+//		 }
+//		 controllerUi = new ControllerAndroidUi(this, AnkiDroidApp.zeemoteController());
+//		 com.zeemote.util.Strings zstrings = com.zeemote.util.Strings.getStrings();
+//		 if (zstrings.isLocaleAvailable(mLocale)){
+//			 Log.d("Zeemote","Zeemote locale "+mLocale+" is available. Setting.");
+//			 zstrings.setLocale(mLocale);
+//		 } else {
+//			 Log.d("Zeemote","Zeemote locale "+mLocale+" is not available.");
+//		 }
+//		 if (mZeemoteEnabled){
+//		 if (!AnkiDroidApp.zeemoteController().isConnected())
+//		 {
+//    		 Log.d("Zeemote","starting connection in onCreate");
+//			 controllerUi.startConnectionProcess();
+//		 }
+//		}
     }
 
 
@@ -755,7 +689,7 @@ public class StudyOptions extends Activity implements IButtonListener {
                     String action = intent.getAction();
                     if (action.equals(Intent.ACTION_MEDIA_EJECT)) {
                         Log.i(AnkiDroidApp.TAG, "mUnmountReceiver - Action = Media Eject");
-                        DeckManager.closeAllDecks();
+//                        DeckManager.closeAllDecks();
                         showContentView(CONTENT_NO_EXTERNAL_STORAGE);
                         mSdCardAvailable = false;
                     } else if (action.equals(Intent.ACTION_MEDIA_MOUNTED)) {
@@ -781,7 +715,7 @@ public class StudyOptions extends Activity implements IButtonListener {
     	super.onDestroy();
         Log.i(AnkiDroidApp.TAG, "StudyOptions - onDestroy()");
 		if (!isFinishing()) {
-            DeckManager.closeMainDeck(DeckManager.REQUESTING_ACTIVITY_STUDYOPTIONS);
+//            DeckManager.closeMainDeck(DeckManager.REQUESTING_ACTIVITY_STUDYOPTIONS);
             mCompat.invalidateOptionsMenu(StudyOptions.this);
 	        MetaDB.closeDB();
 		}
@@ -823,7 +757,7 @@ public class StudyOptions extends Activity implements IButtonListener {
         	if (isFinishing()) {
         		WidgetStatus.update(this, null);
         	} else {
-        		WidgetStatus.update(this, WidgetStatus.getDeckStatus(DeckManager.getMainDeck()));
+//        		WidgetStatus.update(this, WidgetStatus.getDeckStatus(DeckManager.getMainDeck()));
         	}
         }
     }
@@ -847,12 +781,12 @@ public class StudyOptions extends Activity implements IButtonListener {
 	    	  }
 	      }
 	      // check for new day and reset deck if yes
-	      if (Utils.isNewDay(PrefSettings.getSharedPrefs(getBaseContext()).getLong("lastTimeOpened", 0)) && (mCurrentContentView == CONTENT_STUDY_OPTIONS || mCurrentContentView == CONTENT_SESSION_COMPLETE)) {
-	    	  BackupManager.initBackup();
-	    	  if (!DeckTask.taskIsRunning()) {
-		    	  displayProgressDialogAndLoadDeck();
-	    	  }
-	      }
+//	      if (Utils.isNewDay(PrefSettings.getSharedPrefs(getBaseContext()).getLong("lastTimeOpened", 0)) && (mCurrentContentView == CONTENT_STUDY_OPTIONS || mCurrentContentView == CONTENT_SESSION_COMPLETE)) {
+//	    	  BackupManager.initBackup();
+//	    	  if (!DeckTask.taskIsRunning()) {
+//		    	  displayProgressDialogAndLoadDeck();
+//	    	  }
+//	      }
 	      BroadcastMessages.showDialog();
 	}
 
@@ -880,7 +814,7 @@ public class StudyOptions extends Activity implements IButtonListener {
     private void closeStudyOptions(boolean closeDeck) {
 		mIsClosing = true;
         MetaDB.closeDB();
-        DeckManager.closeMainDeck(DeckManager.REQUESTING_ACTIVITY_STUDYOPTIONS);
+//        DeckManager.closeMainDeck(DeckManager.REQUESTING_ACTIVITY_STUDYOPTIONS);
         mCompat.invalidateOptionsMenu(this);
         StudyOptions.this.finish();
     }
@@ -902,7 +836,7 @@ public class StudyOptions extends Activity implements IButtonListener {
     		Intent reviewer = new Intent(StudyOptions.this, Reviewer.class);
             reviewer.putExtra("deckFilename", mDeckFilename);
     		startActivityForResult(reviewer, REQUEST_REVIEW);
-        	if (getApiLevel() > 4 && mStartedByBigWidget == EXTRA_START_NOTHING) {
+        	if (UIUtils.getApiLevel() > 4 && mStartedByBigWidget == EXTRA_START_NOTHING) {
        			ActivityTransitionAnimation.slide(this, ActivityTransitionAnimation.LEFT);
         	}
     	} else if (mCurrentContentView == CONTENT_CONGRATS) {
@@ -912,34 +846,34 @@ public class StudyOptions extends Activity implements IButtonListener {
 
 
     private void startEarlyReview() {
-		Deck deck = DeckManager.getMainDeck();
-        if (deck != null) {
-    		mInReviewer = true;
-            deck.setupReviewEarlyScheduler();
-            deck.reset();
-    		Intent reviewer = new Intent(StudyOptions.this, Reviewer.class);
-            reviewer.putExtra("deckFilename", mDeckFilename);
-            startActivityForResult(reviewer, REQUEST_REVIEW);
-        	if (getApiLevel() > 4) {
-       			ActivityTransitionAnimation.slide(this, ActivityTransitionAnimation.LEFT);
-        	}
-        }
+//		Deck deck = DeckManager.getMainDeck();
+//        if (deck != null) {
+//    		mInReviewer = true;
+//            deck.setupReviewEarlyScheduler();
+//            deck.reset();
+//    		Intent reviewer = new Intent(StudyOptions.this, Reviewer.class);
+//            reviewer.putExtra("deckFilename", mDeckFilename);
+//            startActivityForResult(reviewer, REQUEST_REVIEW);
+//        	if (UIUtils.getApiLevel() > 4) {
+//       			ActivityTransitionAnimation.slide(this, ActivityTransitionAnimation.LEFT);
+//        	}
+//        }
     }
 
 
     private void startLearnMore() {
-		Deck deck = DeckManager.getMainDeck();
-        if (deck != null) {
-    		mInReviewer = true;
-            deck.setupLearnMoreScheduler();
-            deck.reset();
-    		Intent reviewer = new Intent(StudyOptions.this, Reviewer.class);
-    		reviewer.putExtra("deckFilename", mDeckFilename);
-        	startActivityForResult(reviewer, REQUEST_REVIEW);
-    		if (getApiLevel() > 4) {
-    			ActivityTransitionAnimation.slide(this, ActivityTransitionAnimation.LEFT);
-    		}
-        }
+//		Deck deck = DeckManager.getMainDeck();
+//        if (deck != null) {
+//    		mInReviewer = true;
+//            deck.setupLearnMoreScheduler();
+//            deck.reset();
+//    		Intent reviewer = new Intent(StudyOptions.this, Reviewer.class);
+//    		reviewer.putExtra("deckFilename", mDeckFilename);
+//        	startActivityForResult(reviewer, REQUEST_REVIEW);
+//    		if (UIUtils.getApiLevel() > 4) {
+//    			ActivityTransitionAnimation.slide(this, ActivityTransitionAnimation.LEFT);
+//    		}
+//        }
     }
 
 
@@ -947,17 +881,6 @@ public class StudyOptions extends Activity implements IButtonListener {
         Intent deckLoadIntent = new Intent();
         deckLoadIntent.putExtra(OPT_DB, mDeckFilename);
         onActivityResult(PICK_DECK_REQUEST, RESULT_OK, deckLoadIntent);
-    }
-
-
-    private boolean hasErrorFiles() {
-        for (String file : this.fileList()) {
-            if (file.endsWith(".stacktrace")) {
-                return true;
-            }
-        }
-
-        return false;
     }
 
 
@@ -1131,14 +1054,6 @@ public class StudyOptions extends Activity implements IButtonListener {
 			dialog = builder.create();
 			break;
 
-		case DIALOG_NO_SPACE_LEFT:
-	        builder.setNegativeButton(getResources().getString(R.string.dont_show_again), new OnClickListener() {
-
-	            @Override
-	            public void onClick(DialogInterface dialog, int which) {
-	            	PrefSettings.getSharedPrefs(getBaseContext()).edit().putBoolean("dontShowLowMemory", true).commit();
-	            }
-	        });
 		case DIALOG_BACKUP_NO_SPACE_LEFT:
 	        builder.setTitle(getResources().getString(R.string.backup_manager_title));
 	        builder.setIcon(android.R.drawable.ic_dialog_alert);
@@ -1173,7 +1088,7 @@ public class StudyOptions extends Activity implements IButtonListener {
 	                Intent myAccount = new Intent(StudyOptions.this, MyAccount.class);
 	                myAccount.putExtra("notLoggedIn", true);
 	                startActivityForResult(myAccount, LOG_IN);
-			        if (getApiLevel() > 4) {
+			        if (UIUtils.getApiLevel() > 4) {
 			            ActivityTransitionAnimation.slide(StudyOptions.this, ActivityTransitionAnimation.LEFT);
 			        }
 	            }
@@ -1285,7 +1200,7 @@ public class StudyOptions extends Activity implements IButtonListener {
 
 								@Override
 								public void onClick(DialogInterface dialog, int which) {
-									DeckTask.launchDeckTask(DeckTask.TASK_TYPE_RESTORE_DECK, mRestoreDeckHandler, new DeckTask.TaskData(null, new String[] {mDeckFilename, mBackups[which].getPath()}, 0, 0));
+//									DeckTask.launchDeckTask(DeckTask.TASK_TYPE_RESTORE_DECK, mRestoreDeckHandler, new DeckTask.TaskData(null, new String[] {mDeckFilename, mBackups[which].getPath()}, 0, 0));
 									dialog.dismiss();
 								}
 							}).setCancelable(true).setOnCancelListener(new OnCancelListener() {
@@ -1325,143 +1240,125 @@ public class StudyOptions extends Activity implements IButtonListener {
 	        dialog = builder.create();
 	        break;
 
-		case DIALOG_DOWNLOAD_SELECTOR:
-	        builder.setTitle(res.getString(R.string.menu_download_deck));
-	        String[] items;
-	    	items = new String[2];
-	    	items[0] = res.getString(R.string.menu_download_personal_deck);
-	    	items[1] = res.getString(R.string.menu_download_shared_deck);
-	        builder.setItems(items, new DialogInterface.OnClickListener() {
-				public void onClick(DialogInterface dialog, int item) {
-					if (item == 0) {
-		            	openPersonalDeckPicker();
-					} else {
-		            	openSharedDeckPicker();
-					}
-			    }
-			});
-	        dialog = builder.create();
-	        break;
-
 		case DIALOG_LIMIT_SESSION:
 	        // Custom view for the dialog content.
-	        View contentView = getLayoutInflater().inflate(R.layout.studyoptions_limit_dialog_contents, null);
-	        mEditSessionTime = (EditText) contentView.findViewById(R.id.studyoptions_session_minutes);
-	        mEditSessionQuestions = (EditText) contentView.findViewById(R.id.studyoptions_session_questions);
-	        mSessionLimitCheckBox = (CheckBox) contentView.findViewById(R.id.studyoptions_limit_session_check);
-	        mLimitTagsCheckBox = (CheckBox) contentView.findViewById(R.id.studyoptions_limit_tag_check);
-	        mLimitTagNewActiveCheckBox = (CheckBox) contentView.findViewById(R.id.studyoptions_limit_tag_new_active_check);
-	        mLimitTagNewInactiveCheckBox = (CheckBox) contentView.findViewById(R.id.studyoptions_limit_tag_new_inactive_check);
-	        mLimitTagRevActiveCheckBox = (CheckBox) contentView.findViewById(R.id.studyoptions_limit_tag_rev_active_check);
-	        mLimitTagRevInactiveCheckBox = (CheckBox) contentView.findViewById(R.id.studyoptions_limit_tag_rev_inactive_check);
-	        mLimitSessionTv1 = (TextView) contentView.findViewById(R.id.studyoptions_limit_session_tv1);
-	        mLimitSessionTv2 = (TextView) contentView.findViewById(R.id.studyoptions_limit_session_tv2);
-	        mLimitTagTv1 = (TextView) contentView.findViewById(R.id.studyoptions_limit_tag_tv1);
-	        mLimitTagTv2 = (TextView) contentView.findViewById(R.id.studyoptions_limit_tag_tv2);
-	        mLimitTagTv3 = (TextView) contentView.findViewById(R.id.studyoptions_limit_tag_tv3);
-	        mLimitTagTv4 = (TextView) contentView.findViewById(R.id.studyoptions_limit_tag_tv4);
-	        mLimitTagTv5 = (TextView) contentView.findViewById(R.id.studyoptions_limit_tag_tv5);
-	        mLimitTagTv6 = (TextView) contentView.findViewById(R.id.studyoptions_limit_tag_tv6);
-	        mLimitTagTv2.setOnClickListener(mButtonClickListener);
-	        mLimitTagTv3.setOnClickListener(mButtonClickListener);
-	        mLimitTagTv5.setOnClickListener(mButtonClickListener);
-	        mLimitTagTv6.setOnClickListener(mButtonClickListener);
-
-	        mSessionLimitCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener(){
-	            @Override
-	            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-	                mEditSessionTime.setEnabled(isChecked);
-	                mEditSessionQuestions.setEnabled(isChecked);
-	                if (!isChecked) {
-	                    mEditSessionTime.setText("");
-	                    mEditSessionQuestions.setText("");
-	                    mEditSessionTime.clearFocus();
-	                    mEditSessionQuestions.clearFocus();
-	                    ((InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE)).hideSoftInputFromWindow(mEditSessionTime.getWindowToken(), 0);
-	                }
-	                int color = getResources().getColor((isChecked) ? R.color.studyoptions_foreground : R.color.studyoptions_foreground_deactivated);
-	                mLimitSessionTv1.setTextColor(color);
-	                mLimitSessionTv2.setTextColor(color);
-	            }
-	            });
-
-	        mLimitTagsCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener(){
-	            @Override
-	            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-	                mLimitTagNewActiveCheckBox.setEnabled(isChecked);
-	                mLimitTagNewInactiveCheckBox.setEnabled(isChecked);
-	                mLimitTagRevActiveCheckBox.setEnabled(isChecked);
-	                mLimitTagRevInactiveCheckBox.setEnabled(isChecked);
-	                if (!isChecked) {
-	                    mLimitTagNewActiveCheckBox.setChecked(false);
-	                    mLimitTagNewInactiveCheckBox.setChecked(false);
-	                    mLimitTagRevActiveCheckBox.setChecked(false);
-	                    mLimitTagRevInactiveCheckBox.setChecked(false);
-	                }
-	                int color = getResources().getColor((isChecked) ? R.color.studyoptions_foreground : R.color.studyoptions_foreground_deactivated);
-	                mLimitTagTv1.setTextColor(color);
-	                mLimitTagTv2.setTextColor(color);
-	                mLimitTagTv3.setTextColor(color);
-	                mLimitTagTv4.setTextColor(color);
-	                mLimitTagTv5.setTextColor(color);
-	                mLimitTagTv6.setTextColor(color);
-	            }
-	            });
-
-	        mLimitTagNewActiveCheckBox.setOnCheckedChangeListener(mLimitTagCheckedChangeListener);
-	        mLimitTagNewInactiveCheckBox.setOnCheckedChangeListener(mLimitTagCheckedChangeListener);
-	        mLimitTagRevActiveCheckBox.setOnCheckedChangeListener(mLimitTagCheckedChangeListener);
-	        mLimitTagRevInactiveCheckBox.setOnCheckedChangeListener(mLimitTagCheckedChangeListener);
-
-	        builder.setTitle(R.string.studyoptions_limit_dialog_title);
-	        builder.setPositiveButton(R.string.studyoptions_more_save, new DialogInterface.OnClickListener() {
-
-	            @Override
-	            public void onClick(DialogInterface dialog, int which) {
-	                Deck deck = DeckManager.getMainDeck();
-	                boolean changed = false;
-	                String textTime = mEditSessionTime.getText().toString();
-	                if (!textTime.equals(Long.toString(deck.getSessionTimeLimit() / 60))) {
-	                  if (textTime.equals("")) {
-	                      deck.setSessionTimeLimit(0);
-	                  } else if (isValidLong(textTime)) {
-	                      deck.setSessionTimeLimit(Long.parseLong(textTime) * 60);
-	                  }
-	                }
-	                String textReps = mEditSessionQuestions.getText().toString();
-	                if (!textReps.equals(Long.toString(deck.getSessionRepLimit()))) {
-	                    if (textReps.equals("")) {
-	                        deck.setSessionRepLimit(0);
-	                    } else if (isValidLong(textReps)) {
-	                        deck.setSessionRepLimit(Long.parseLong(textReps));
-	                    }
-	                    changed = true;
-	                }
-	                if (!deck.getVar("newActive").equals(mLimitNewActive)) {
-	                    deck.setVar("newActive", mLimitNewActive);
-	                    changed = true;
-	                } 
-	                if (!deck.getVar("newInactive").equals(mLimitNewInactive)) {
-	                    deck.setVar("newInactive", mLimitNewInactive);
-	                    changed = true;
-	                } 
-	                if (!deck.getVar("revActive").equals(mLimitRevActive)) {
-	                    deck.setVar("revActive", mLimitRevActive);
-	                    changed = true;
-	                } 
-	                if (!deck.getVar("revInactive").equals(mLimitRevInactive)) {
-	                    deck.setVar("revInactive", mLimitRevInactive);
-	                    changed = true;
-	                }
-	                if (changed) {
-	                	resetAndUpdateValuesFromDeck();
-	                }
-	                mToggleLimit.setChecked((mSessionLimitCheckBox.isChecked() && !(textTime.length() == 0 && textReps.length() == 0)) || (mLimitTagsCheckBox.isChecked() && (mLimitTagNewActiveCheckBox.isChecked() || mLimitTagNewInactiveCheckBox.isChecked()
-	                        || mLimitTagRevActiveCheckBox.isChecked() || mLimitTagRevInactiveCheckBox.isChecked())));
-	            }
-	        });
-	        builder.setView(contentView, true);
-	        dialog = builder.create();
+//	        View contentView = getLayoutInflater().inflate(R.layout.studyoptions_limit_dialog_contents, null);
+//	        mEditSessionTime = (EditText) contentView.findViewById(R.id.studyoptions_session_minutes);
+//	        mEditSessionQuestions = (EditText) contentView.findViewById(R.id.studyoptions_session_questions);
+//	        mSessionLimitCheckBox = (CheckBox) contentView.findViewById(R.id.studyoptions_limit_session_check);
+//	        mLimitTagsCheckBox = (CheckBox) contentView.findViewById(R.id.studyoptions_limit_tag_check);
+//	        mLimitTagNewActiveCheckBox = (CheckBox) contentView.findViewById(R.id.studyoptions_limit_tag_new_active_check);
+//	        mLimitTagNewInactiveCheckBox = (CheckBox) contentView.findViewById(R.id.studyoptions_limit_tag_new_inactive_check);
+//	        mLimitTagRevActiveCheckBox = (CheckBox) contentView.findViewById(R.id.studyoptions_limit_tag_rev_active_check);
+//	        mLimitTagRevInactiveCheckBox = (CheckBox) contentView.findViewById(R.id.studyoptions_limit_tag_rev_inactive_check);
+//	        mLimitSessionTv1 = (TextView) contentView.findViewById(R.id.studyoptions_limit_session_tv1);
+//	        mLimitSessionTv2 = (TextView) contentView.findViewById(R.id.studyoptions_limit_session_tv2);
+//	        mLimitTagTv1 = (TextView) contentView.findViewById(R.id.studyoptions_limit_tag_tv1);
+//	        mLimitTagTv2 = (TextView) contentView.findViewById(R.id.studyoptions_limit_tag_tv2);
+//	        mLimitTagTv3 = (TextView) contentView.findViewById(R.id.studyoptions_limit_tag_tv3);
+//	        mLimitTagTv4 = (TextView) contentView.findViewById(R.id.studyoptions_limit_tag_tv4);
+//	        mLimitTagTv5 = (TextView) contentView.findViewById(R.id.studyoptions_limit_tag_tv5);
+//	        mLimitTagTv6 = (TextView) contentView.findViewById(R.id.studyoptions_limit_tag_tv6);
+//	        mLimitTagTv2.setOnClickListener(mButtonClickListener);
+//	        mLimitTagTv3.setOnClickListener(mButtonClickListener);
+//	        mLimitTagTv5.setOnClickListener(mButtonClickListener);
+//	        mLimitTagTv6.setOnClickListener(mButtonClickListener);
+//
+//	        mSessionLimitCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener(){
+//	            @Override
+//	            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+//	                mEditSessionTime.setEnabled(isChecked);
+//	                mEditSessionQuestions.setEnabled(isChecked);
+//	                if (!isChecked) {
+//	                    mEditSessionTime.setText("");
+//	                    mEditSessionQuestions.setText("");
+//	                    mEditSessionTime.clearFocus();
+//	                    mEditSessionQuestions.clearFocus();
+//	                    ((InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE)).hideSoftInputFromWindow(mEditSessionTime.getWindowToken(), 0);
+//	                }
+//	                int color = getResources().getColor((isChecked) ? R.color.studyoptions_foreground : R.color.studyoptions_foreground_deactivated);
+//	                mLimitSessionTv1.setTextColor(color);
+//	                mLimitSessionTv2.setTextColor(color);
+//	            }
+//	            });
+//
+//	        mLimitTagsCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener(){
+//	            @Override
+//	            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+//	                mLimitTagNewActiveCheckBox.setEnabled(isChecked);
+//	                mLimitTagNewInactiveCheckBox.setEnabled(isChecked);
+//	                mLimitTagRevActiveCheckBox.setEnabled(isChecked);
+//	                mLimitTagRevInactiveCheckBox.setEnabled(isChecked);
+//	                if (!isChecked) {
+//	                    mLimitTagNewActiveCheckBox.setChecked(false);
+//	                    mLimitTagNewInactiveCheckBox.setChecked(false);
+//	                    mLimitTagRevActiveCheckBox.setChecked(false);
+//	                    mLimitTagRevInactiveCheckBox.setChecked(false);
+//	                }
+//	                int color = getResources().getColor((isChecked) ? R.color.studyoptions_foreground : R.color.studyoptions_foreground_deactivated);
+//	                mLimitTagTv1.setTextColor(color);
+//	                mLimitTagTv2.setTextColor(color);
+//	                mLimitTagTv3.setTextColor(color);
+//	                mLimitTagTv4.setTextColor(color);
+//	                mLimitTagTv5.setTextColor(color);
+//	                mLimitTagTv6.setTextColor(color);
+//	            }
+//	            });
+//
+//	        mLimitTagNewActiveCheckBox.setOnCheckedChangeListener(mLimitTagCheckedChangeListener);
+//	        mLimitTagNewInactiveCheckBox.setOnCheckedChangeListener(mLimitTagCheckedChangeListener);
+//	        mLimitTagRevActiveCheckBox.setOnCheckedChangeListener(mLimitTagCheckedChangeListener);
+//	        mLimitTagRevInactiveCheckBox.setOnCheckedChangeListener(mLimitTagCheckedChangeListener);
+//
+//	        builder.setTitle(R.string.studyoptions_limit_dialog_title);
+//	        builder.setPositiveButton(R.string.studyoptions_more_save, new DialogInterface.OnClickListener() {
+//
+//	            @Override
+//	            public void onClick(DialogInterface dialog, int which) {
+//	                Deck deck = DeckManager.getMainDeck();
+//	                boolean changed = false;
+//	                String textTime = mEditSessionTime.getText().toString();
+//	                if (!textTime.equals(Long.toString(deck.getSessionTimeLimit() / 60))) {
+//	                  if (textTime.equals("")) {
+//	                      deck.setSessionTimeLimit(0);
+//	                  } else if (isValidLong(textTime)) {
+//	                      deck.setSessionTimeLimit(Long.parseLong(textTime) * 60);
+//	                  }
+//	                }
+//	                String textReps = mEditSessionQuestions.getText().toString();
+//	                if (!textReps.equals(Long.toString(deck.getSessionRepLimit()))) {
+//	                    if (textReps.equals("")) {
+//	                        deck.setSessionRepLimit(0);
+//	                    } else if (isValidLong(textReps)) {
+//	                        deck.setSessionRepLimit(Long.parseLong(textReps));
+//	                    }
+//	                    changed = true;
+//	                }
+//	                if (!deck.getVar("newActive").equals(mLimitNewActive)) {
+//	                    deck.setVar("newActive", mLimitNewActive);
+//	                    changed = true;
+//	                } 
+//	                if (!deck.getVar("newInactive").equals(mLimitNewInactive)) {
+//	                    deck.setVar("newInactive", mLimitNewInactive);
+//	                    changed = true;
+//	                } 
+//	                if (!deck.getVar("revActive").equals(mLimitRevActive)) {
+//	                    deck.setVar("revActive", mLimitRevActive);
+//	                    changed = true;
+//	                } 
+//	                if (!deck.getVar("revInactive").equals(mLimitRevInactive)) {
+//	                    deck.setVar("revInactive", mLimitRevInactive);
+//	                    changed = true;
+//	                }
+//	                if (changed) {
+//	                	resetAndUpdateValuesFromDeck();
+//	                }
+//	                mToggleLimit.setChecked((mSessionLimitCheckBox.isChecked() && !(textTime.length() == 0 && textReps.length() == 0)) || (mLimitTagsCheckBox.isChecked() && (mLimitTagNewActiveCheckBox.isChecked() || mLimitTagNewInactiveCheckBox.isChecked()
+//	                        || mLimitTagRevActiveCheckBox.isChecked() || mLimitTagRevInactiveCheckBox.isChecked())));
+//	            }
+//	        });
+//	        builder.setView(contentView, true);
+//	        dialog = builder.create();
 	        break;
 	        
 		case DIALOG_TAGS:
@@ -1470,19 +1367,19 @@ public class StudyOptions extends Activity implements IButtonListener {
 	            @Override
 	            public void onClick(DialogInterface dialog, int which) {
 	                String readableText = mSelectedTags.toString();
-	                updateLimitTagText(mSelectedLimitTagText, readableText.substring(1, readableText.length()-1));
+//	                updateLimitTagText(mSelectedLimitTagText, readableText.substring(1, readableText.length()-1));
 	            }
 	        });
 	        builder.setNegativeButton(res.getString(R.string.cancel),  new OnClickListener() {
 	            @Override
 	            public void onClick(DialogInterface dialog, int which) {
-	                updateLimitTagText(mSelectedLimitTagText, getSelectedTags(mSelectedLimitTagText));
+//	                updateLimitTagText(mSelectedLimitTagText, getSelectedTags(mSelectedLimitTagText));
 	            }
 	        });
 	        builder.setOnCancelListener(new OnCancelListener() {
 	            @Override
 	            public void onCancel(DialogInterface dialog) {
-	                updateLimitTagText(mSelectedLimitTagText, getSelectedTags(mSelectedLimitTagText));
+//	                updateLimitTagText(mSelectedLimitTagText, getSelectedTags(mSelectedLimitTagText));
 	            }
 
 	        });
@@ -1520,47 +1417,6 @@ public class StudyOptions extends Activity implements IButtonListener {
 	        dialog = builder.create();
 	        break;
 
-		case DIALOG_WELCOME:
-			builder.setTitle(R.string.studyoptions_welcome_title);
-	        WebView view = new WebView(this);
-	        view.setBackgroundColor(res.getColor(Themes.getDialogBackgroundColor()));
-	        view.loadDataWithBaseURL("", "<html><body text=\"#FFFFFF\" link=\"#E37068\" alink=\"#E37068\" vlink=\"#E37068\">" + res.getString(R.string.studyoptions_welcome_dialog).replace("\n", "<br>") + "</body></html>", "text/html", "UTF-8", "");
-	        builder.setView(view, true);
-    		builder.setCancelable(true);
-			builder.setPositiveButton(res.getString(R.string.yes), new OnClickListener() {
-	            @Override
-	            public void onClick(DialogInterface dialog, int which) {
-		        	PrefSettings.getSharedPrefs(StudyOptions.this.getBaseContext()).edit().putBoolean("firstStart", false).commit();
-		        	mNewVersionAlert = null;
-		        	loadSampleDeck();
-	            }
-	        });
-	        builder.setNegativeButton(res.getString(R.string.no),  new OnClickListener() {
-	            @Override
-	            public void onClick(DialogInterface dialog, int which) {
-		        	PrefSettings.getSharedPrefs(StudyOptions.this.getBaseContext()).edit().putBoolean("firstStart", false).commit();
-		        	if (mNewVersionAlert != null) {
-		        		mNewVersionAlert.show();
-		        	} else {
-		        		BroadcastMessages.checkForNewMessages(StudyOptions.this);
-		        	}
-	            }
-	        });
-	        builder.setOnCancelListener(new OnCancelListener() {
-	            @Override
-	            public void onCancel(DialogInterface dialog) {
-		        	if (mNewVersionAlert != null) {
-		        		mNewVersionAlert.show();
-		        	} else {
-		        		BroadcastMessages.checkForNewMessages(StudyOptions.this);
-		        	}
-	            }
-
-	        });
-	        dialog = builder.create();
-	        mWelcomeAlert = dialog;
-			break;
-
 		case DIALOG_DB_ERROR:
 			builder.setTitle(R.string.answering_error_title);
 	        builder.setIcon(android.R.drawable.ic_dialog_alert);
@@ -1578,7 +1434,7 @@ public class StudyOptions extends Activity implements IButtonListener {
 	                Intent i = new Intent(StudyOptions.this, Feedback.class);
 	                dialog.dismiss();
 	                startActivityForResult(i, REPORT_ERROR);
-	                if (getApiLevel() > 4) {
+	                if (UIUtils.getApiLevel() > 4) {
 	                	ActivityTransitionAnimation.slide(StudyOptions.this, ActivityTransitionAnimation.FADE);
 		        	}
 	            }
@@ -1636,105 +1492,105 @@ public class StudyOptions extends Activity implements IButtonListener {
 
 		case DIALOG_MORE:
 	        // Update spinner selections from deck prior to showing the dialog.
-	        Deck deck = DeckManager.getMainDeck();
-	        mSpinnerNewCardOrder.setSelection(deck.getNewCardOrder());
-	        mSpinnerNewCardSchedule.setSelection(deck.getNewCardSpacing());
-	        mSpinnerRevCardOrder.setSelection(deck.getRevCardOrder());
-	        mSpinnerFailCardOption.setVisibility(View.GONE); // TODO: Not implemented yet.
-	        mEditMaxFailCard.setText(String.valueOf(deck.getFailedCardMax()));
-	        mEditNewPerDay.setText(String.valueOf(deck.getNewCardsPerDay()));
-	        mCheckBoxPerDay.setChecked(deck.getPerDay());
-	        mCheckBoxSuspendLeeches.setChecked(deck.getSuspendLeeches());	        	
-			break;
+//	        Deck deck = DeckManager.getMainDeck();
+//	        mSpinnerNewCardOrder.setSelection(deck.getNewCardOrder());
+//	        mSpinnerNewCardSchedule.setSelection(deck.getNewCardSpacing());
+//	        mSpinnerRevCardOrder.setSelection(deck.getRevCardOrder());
+//	        mSpinnerFailCardOption.setVisibility(View.GONE); // TODO: Not implemented yet.
+//	        mEditMaxFailCard.setText(String.valueOf(deck.getFailedCardMax()));
+//	        mEditNewPerDay.setText(String.valueOf(deck.getNewCardsPerDay()));
+//	        mCheckBoxPerDay.setChecked(deck.getPerDay());
+//	        mCheckBoxSuspendLeeches.setChecked(deck.getSuspendLeeches());	        	
+//			break;
 			
 		case DIALOG_LIMIT_SESSION:
 	        // Update spinner selections from deck prior to showing the dialog.
-	        Deck deck2 = DeckManager.getMainDeck();
-	        long timeLimit = deck2.getSessionTimeLimit() / 60;
-	        long repLimit = deck2.getSessionRepLimit();
-	        mSessionLimitCheckBox.setChecked(timeLimit + repLimit > 0);
-	        if (timeLimit != 0) {
-	            mEditSessionTime.setText(String.valueOf(timeLimit));
-	        }
-	        if (repLimit != 0) {
-	            mEditSessionQuestions.setText(String.valueOf(repLimit));
-	        }
-
-	        updateLimitTagText(LIMIT_NEW_ACTIVE, deck2.getVar("newActive"));
-	        updateLimitTagText(LIMIT_NEW_INACTIVE, deck2.getVar("newInactive"));
-	        updateLimitTagText(LIMIT_REV_ACTIVE, deck2.getVar("revActive"));
-	        updateLimitTagText(LIMIT_REV_INACTIVE, deck2.getVar("revInactive"));
-
-	        mLimitTagsCheckBox.setChecked(mLimitTagNewActiveCheckBox.isChecked() || mLimitTagNewInactiveCheckBox.isChecked()
-	                || mLimitTagRevActiveCheckBox.isChecked() || mLimitTagRevInactiveCheckBox.isChecked());
-	        allTags = null;
+//	        Deck deck2 = DeckManager.getMainDeck();
+//	        long timeLimit = deck2.getSessionTimeLimit() / 60;
+//	        long repLimit = deck2.getSessionRepLimit();
+//	        mSessionLimitCheckBox.setChecked(timeLimit + repLimit > 0);
+//	        if (timeLimit != 0) {
+//	            mEditSessionTime.setText(String.valueOf(timeLimit));
+//	        }
+//	        if (repLimit != 0) {
+//	            mEditSessionQuestions.setText(String.valueOf(repLimit));
+//	        }
+//
+//	        updateLimitTagText(LIMIT_NEW_ACTIVE, deck2.getVar("newActive"));
+//	        updateLimitTagText(LIMIT_NEW_INACTIVE, deck2.getVar("newInactive"));
+//	        updateLimitTagText(LIMIT_REV_ACTIVE, deck2.getVar("revActive"));
+//	        updateLimitTagText(LIMIT_REV_INACTIVE, deck2.getVar("revInactive"));
+//
+//	        mLimitTagsCheckBox.setChecked(mLimitTagNewActiveCheckBox.isChecked() || mLimitTagNewInactiveCheckBox.isChecked()
+//	                || mLimitTagRevActiveCheckBox.isChecked() || mLimitTagRevInactiveCheckBox.isChecked());
+//	        allTags = null;
 	        break;
 
 		case DIALOG_TAGS:
-	        if (allTags == null) {
-	            allTags = DeckManager.getMainDeck().allTags_();
-	            Log.i(AnkiDroidApp.TAG, "all tags: " + Arrays.toString(allTags));
-		        if (allTags == null) {
-		        	Themes.showThemedToast(StudyOptions.this, getResources().getString(R.string.error_insufficient_memory), false);
-		        	ad.setEnabled(false);
-		        	return;
-		        }
-	        }
-	        mSelectedTags.clear();
-	        List<String> selectedList = Arrays.asList(Utils.parseTags(getSelectedTags(mSelectedLimitTagText)));
-	        int length = allTags.length;
-	        boolean[] checked = new boolean[length];
-	        for (int i = 0; i < length; i++) {
-	            String tag = allTags[i];
-	            if (selectedList.contains(tag)) {
-	                checked[i] = true;
-	                mSelectedTags.add(tag);
-	            }
-	        }
-	        ad.setMultiChoiceItems(allTags, checked,
-	                new DialogInterface.OnClickListener() {
-						@Override
-						public void onClick(DialogInterface dialog, int which) {
-				if (allTags == null) {
-					dialog.dismiss();
-					return;
-				}
-	                        String tag = allTags[which];
-	                        if (mSelectedTags.contains(tag)) {
-	                            Log.i(AnkiDroidApp.TAG, "unchecked tag: " + tag);
-	                            mSelectedTags.remove(tag);
-	                        } else {
-	                            Log.i(AnkiDroidApp.TAG, "checked tag: " + tag);
-	                            mSelectedTags.add(tag);
-	                        }							
-						}
-	                });
+//	        if (allTags == null) {
+//	            allTags = DeckManager.getMainDeck().allTags_();
+//	            Log.i(AnkiDroidApp.TAG, "all tags: " + Arrays.toString(allTags));
+//		        if (allTags == null) {
+//		        	Themes.showThemedToast(StudyOptions.this, getResources().getString(R.string.error_insufficient_memory), false);
+//		        	ad.setEnabled(false);
+//		        	return;
+//		        }
+//	        }
+//	        mSelectedTags.clear();
+//	        List<String> selectedList = Arrays.asList(Utils.parseTags(getSelectedTags(mSelectedLimitTagText)));
+//	        int length = allTags.length;
+//	        boolean[] checked = new boolean[length];
+//	        for (int i = 0; i < length; i++) {
+//	            String tag = allTags[i];
+//	            if (selectedList.contains(tag)) {
+//	                checked[i] = true;
+//	                mSelectedTags.add(tag);
+//	            }
+//	        }
+//	        ad.setMultiChoiceItems(allTags, checked,
+//	                new DialogInterface.OnClickListener() {
+//						@Override
+//						public void onClick(DialogInterface dialog, int which) {
+//				if (allTags == null) {
+//					dialog.dismiss();
+//					return;
+//				}
+//	                        String tag = allTags[which];
+//	                        if (mSelectedTags.contains(tag)) {
+//	                            Log.i(AnkiDroidApp.TAG, "unchecked tag: " + tag);
+//	                            mSelectedTags.remove(tag);
+//	                        } else {
+//	                            Log.i(AnkiDroidApp.TAG, "checked tag: " + tag);
+//	                            mSelectedTags.add(tag);
+//	                        }							
+//						}
+//	                });
 	        break;
 
 		case DIALOG_CRAM:
-	        allCramTags = DeckManager.getMainDeck().allTags_();
-	        if (allCramTags == null) {
-	        	Themes.showThemedToast(StudyOptions.this, getResources().getString(R.string.error_insufficient_memory), false);
-	        	ad.setEnabled(false);
-	        	return;
-	        }
-	        ad.setMultiChoiceItems(allCramTags, new boolean[allCramTags.length], 
-	        		new DialogInterface.OnClickListener() {
-				@Override
-				public void onClick(DialogInterface arg0, int which) {
-					String tag = allCramTags[which];
-					if (activeCramTags.contains(tag)) {
-	                    Log.i(AnkiDroidApp.TAG, "unchecked tag: " + tag);
-	                    activeCramTags.remove(tag);						
-					} else {
-	                    Log.i(AnkiDroidApp.TAG, "checked tag: " + tag);
-	                    activeCramTags.add(tag);						
-					}
-				}
-	        });
+//	        allCramTags = DeckManager.getMainDeck().allTags_();
+//	        if (allCramTags == null) {
+//	        	Themes.showThemedToast(StudyOptions.this, getResources().getString(R.string.error_insufficient_memory), false);
+//	        	ad.setEnabled(false);
+//	        	return;
+//	        }
+//	        ad.setMultiChoiceItems(allCramTags, new boolean[allCramTags.length], 
+//	        		new DialogInterface.OnClickListener() {
+//				@Override
+//				public void onClick(DialogInterface arg0, int which) {
+//					String tag = allCramTags[which];
+//					if (activeCramTags.contains(tag)) {
+//	                    Log.i(AnkiDroidApp.TAG, "unchecked tag: " + tag);
+//	                    activeCramTags.remove(tag);						
+//					} else {
+//	                    Log.i(AnkiDroidApp.TAG, "checked tag: " + tag);
+//	                    activeCramTags.add(tag);						
+//					}
+//				}
+//	        });
 			break;
 		case DIALOG_DB_ERROR:
-			ad.getButton(Dialog.BUTTON_NEUTRAL).setEnabled(hasErrorFiles() && !PrefSettings.getSharedPrefs(StudyOptions.this).getString("reportErrorMode", Feedback.REPORT_ASK).equals(Feedback.REPORT_NEVER));
+//			ad.getButton(Dialog.BUTTON_NEUTRAL).setEnabled(hasErrorFiles() && !PrefSettings.getSharedPrefs(StudyOptions.this).getString("reportErrorMode", Feedback.REPORT_ASK).equals(Feedback.REPORT_NEVER));
 			break;
 		}
 	}
@@ -1777,10 +1633,10 @@ public class StudyOptions extends Activity implements IButtonListener {
             case CONTENT_STUDY_OPTIONS:
             case CONTENT_SESSION_COMPLETE:
                 // Enable timeboxing in case it was disabled from the previous deck
-                if ((DeckManager.getMainDeck() != null) && (DeckManager.getMainDeck().name().equals("cram"))) {
-                    mToggleCram.setChecked(false);
-                    mToggleLimit.setEnabled(true);
-                }
+//                if ((DeckManager.getMainDeck() != null) && (DeckManager.getMainDeck().name().equals("cram"))) {
+//                    mToggleCram.setChecked(false);
+//                    mToggleLimit.setEnabled(true);
+//                }
                 if (mCurrentContentView == CONTENT_STUDY_OPTIONS) {
                     mButtonStart.setText(R.string.studyoptions_start);
                 } else {
@@ -1793,17 +1649,17 @@ public class StudyOptions extends Activity implements IButtonListener {
                 }
                 break;
             case CONTENT_CONGRATS:
-            	Deck deck = DeckManager.getMainDeck();
-                if (deck != null) {
-            		int failedCards = deck.getFailedDelayedCount();
-                    int revCards = deck.getNextDueCards(1);
-                    int newCards = deck.getNextNewCards();
-                    int eta = deck.getETA(failedCards, revCards, newCards, true);
-                	mTextCongratsMessage.setText(getCongratsMessage(this, failedCards, revCards, newCards, eta));
-                }
-                updateValuesFromDeck();
-                setContentView(mCongratsView);
-                break;
+//            	Deck deck = DeckManager.getMainDeck();
+//                if (deck != null) {
+//            		int failedCards = deck.getFailedDelayedCount();
+//                    int revCards = deck.getNextDueCards(1);
+//                    int newCards = deck.getNextNewCards();
+//                    int eta = deck.getETA(failedCards, revCards, newCards, true);
+//                	mTextCongratsMessage.setText(getCongratsMessage(this, failedCards, revCards, newCards, eta));
+//                }
+//                updateValuesFromDeck();
+//                setContentView(mCongratsView);
+//                break;
             case CONTENT_NO_EXTERNAL_STORAGE:
                 setTitle(R.string.app_name);
                 setContentView(mNoExternalStorageView);
@@ -1813,26 +1669,26 @@ public class StudyOptions extends Activity implements IButtonListener {
 
 
     private void setCongratsMessage() {
-    	Resources res = getResources();
-        Deck deck = AnkiDroidApp.deck();
-        if (deck != null) {
-    		int newCards = deck.getSched().newTomorrow();
-            int revCards = deck.getSched().revTomorrow() + deck.getSched().lrnTomorrow();
-            int eta = 0; // TODO
-            String newCardsText = res.getQuantityString(R.plurals.studyoptions_congrats_new_cards, newCards, newCards);
-            String etaText = res.getQuantityString(R.plurals.studyoptions_congrats_eta, eta, eta);
-            mTextCongratsMessage.setText(res.getQuantityString(R.plurals.studyoptions_congrats_message, revCards, revCards, newCardsText, etaText));
-        }
+//    	Resources res = getResources();
+//        Deck deck = AnkiDroidApp.deck();
+//        if (deck != null) {
+//    		int newCards = deck.getSched().newTomorrow();
+//            int revCards = deck.getSched().revTomorrow() + deck.getSched().lrnTomorrow();
+//            int eta = 0; // TODO
+//            String newCardsText = res.getQuantityString(R.plurals.studyoptions_congrats_new_cards, newCards, newCards);
+//            String etaText = res.getQuantityString(R.plurals.studyoptions_congrats_eta, eta, eta);
+//            mTextCongratsMessage.setText(res.getQuantityString(R.plurals.studyoptions_congrats_message, revCards, revCards, newCardsText, etaText));
+//        }
     }
 
 
     private void resetAndUpdateValuesFromDeck() {
-        Deck deck = DeckManager.getMainDeck();
-//        DeckTask.waitToFinish();
-        if (deck != null) {
-            deck.reset();
-        	updateValuesFromDeck();        	
-        }
+//        Deck deck = DeckManager.getMainDeck();
+////        DeckTask.waitToFinish();
+//        if (deck != null) {
+//            deck.reset();
+//        	updateValuesFromDeck();        	
+//        }
     }
 
 
@@ -1855,52 +1711,59 @@ public class StudyOptions extends Activity implements IButtonListener {
 
 
     private boolean updateValuesFromDeck() {
-        Deck deck = DeckManager.getMainDeck();
+    	Sched sched = mCol.getSched();
         Resources res = getResources();
-        if (deck != null) {
-        	int[] counts = deck.getSched().counts();
-        	int dueCount = counts[Scheduler.COUNTS_REV] + counts[Scheduler.COUNTS_LRN];
-            int cardsCount = deck.cardCount();
-            setTitle(res.getQuantityString(R.plurals.studyoptions_window_title, dueCount, deck.getDeckName(), dueCount, cardsCount));
+    	
+//    	int[] counts = sched.counts();
+    	int dueCount = 10;//counts[0] + counts[1];
+        int cardsCount = 0;
+        String name;
+		try {
+			name = mCol.getDecks().current().getString("name");
+		} catch (JSONException e) {
+			throw new RuntimeException(e);
+		}
 
-            mTextDeckName.setText(deck.getDeckName());
+        setTitle(res.getQuantityString(R.plurals.studyoptions_window_title, dueCount, name, dueCount, cardsCount));
 
-            mTextReviewsDue.setText(String.valueOf(dueCount));
-            mTextNewToday.setText(String.valueOf(counts[Scheduler.COUNTS_NEW]));
-            String etastr = "-";
-            int eta = deck.getSched().eta();
-            if (eta != -1) {
-            	etastr = Integer.toString(eta / 60);
-            }
-            mTextETA.setText(etastr);
+        mTextDeckName.setText(name);
+        mTextReviewsDue.setText(String.valueOf(dueCount));
+        mTextNewToday.setText(String.valueOf(10));//counts[2]));
 
-            boolean limited = deck.isLimitedByGroup();
-            StringBuilder sb = new StringBuilder();
-            if (limited) {
-            	sb.append(String.valueOf(deck.totalNewCardCount(true))).append("/");
-            }
-            sb.append(String.valueOf(deck.totalNewCardCount(false)));
-            mTextNewTotal.setText(sb.toString());
-
-            // Progress bars are not shown on small screens
-            if (mDailyBar != null) {
-            	double[] yesRates = deck.yesRates();
-                mProgressTodayYes = yesRates[0];
-                mProgressMatureYes = yesRates[1];
-                double[] completion = deck.completionRates(false);
-                mProgressMature = completion[0];
-                mProgressAll = completion[1];
-                if (limited) {
-                    mGlobalLimitFrame.setVisibility(View.VISIBLE);
-                    double[] completionLimit = deck.completionRates(true);
-                    mProgressMatureLimit = completionLimit[0];
-                    mProgressAllLimit = completionLimit[1];
-                } else {
-                    mGlobalLimitFrame.setVisibility(View.GONE);
-                }
-                updateStatisticBars();
-            }
-        }
+        //            String etastr = "-";
+//            int eta = deck.getSched().eta();
+//            if (eta != -1) {
+//            	etastr = Integer.toString(eta / 60);
+//            }
+//            mTextETA.setText(etastr);
+//
+//            boolean limited = deck.isLimitedByGroup();
+//            StringBuilder sb = new StringBuilder();
+//            if (limited) {
+//            	sb.append(String.valueOf(deck.totalNewCardCount(true))).append("/");
+//            }
+//            sb.append(String.valueOf(deck.totalNewCardCount(false)));
+//            mTextNewTotal.setText(sb.toString());
+//
+//            // Progress bars are not shown on small screens
+//            if (mDailyBar != null) {
+//            	double[] yesRates = deck.yesRates();
+//                mProgressTodayYes = yesRates[0];
+//                mProgressMatureYes = yesRates[1];
+//                double[] completion = deck.completionRates(false);
+//                mProgressMature = completion[0];
+//                mProgressAll = completion[1];
+//                if (limited) {
+//                    mGlobalLimitFrame.setVisibility(View.VISIBLE);
+//                    double[] completionLimit = deck.completionRates(true);
+//                    mProgressMatureLimit = completionLimit[0];
+//                    mProgressAllLimit = completionLimit[1];
+//                } else {
+//                    mGlobalLimitFrame.setVisibility(View.GONE);
+//                }
+//                updateStatisticBars();
+//            }
+//        }
         return true;
     }
 
@@ -1990,11 +1853,11 @@ public class StudyOptions extends Activity implements IButtonListener {
 
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
-        boolean deckChangeable = (DeckManager.getMainDeck() != null) && mSdCardAvailable && !mToggleCram.isChecked();
-        menu.findItem(MENU_OPEN).setEnabled(mSdCardAvailable);
-        menu.findItem(MENU_ADD_FACT).setEnabled(deckChangeable);
-        menu.findItem(MENU_MORE_OPTIONS).setEnabled(deckChangeable);
-		menu.findItem(MENU_SYNC).setEnabled(deckChangeable);        	
+//        boolean deckChangeable = (DeckManager.getMainDeck() != null) && mSdCardAvailable && !mToggleCram.isChecked();
+//        menu.findItem(MENU_OPEN).setEnabled(mSdCardAvailable);
+//        menu.findItem(MENU_ADD_FACT).setEnabled(deckChangeable);
+//        menu.findItem(MENU_MORE_OPTIONS).setEnabled(deckChangeable);
+//		menu.findItem(MENU_SYNC).setEnabled(deckChangeable);        	
         return true;
     }
 
@@ -2027,10 +1890,10 @@ public class StudyOptions extends Activity implements IButtonListener {
 
             case MENU_ADD_FACT:
             	Intent intent = new Intent(StudyOptions.this, CardEditor.class);
-            	intent.putExtra(CardEditor.EXTRA_CALLER, CardEditor.CALLER_STUDYOPTIONS);
-            	intent.putExtra(CardEditor.EXTRA_DECKPATH, DeckManager.getMainDeckPath());
+//            	intent.putExtra(CardEditor.EXTRA_CALLER, CardEditor.CALLER_STUDYOPTIONS);
+//            	intent.putExtra(CardEditor.EXTRA_DECKPATH, DeckManager.getMainDeckPath());
             	startActivityForResult(intent, ADD_FACT);
-                if (getApiLevel() > 4) {
+                if (UIUtils.getApiLevel() > 4) {
                     ActivityTransitionAnimation.slide(StudyOptions.this, ActivityTransitionAnimation.LEFT);
                 }
                 return true;
@@ -2060,13 +1923,13 @@ public class StudyOptions extends Activity implements IButtonListener {
     	openDeckPicker(true);
     }
     private void openDeckPicker(boolean showAnimation) {
-        Intent decksPicker = new Intent(StudyOptions.this, DeckPicker.class);
-        mInDeckPicker = true;
-    	decksPicker.putExtra("showAnimation", showAnimation);
-        startActivityForResult(decksPicker, PICK_DECK_REQUEST);
-    	if (showAnimation && getApiLevel() > 4) {
-    		ActivityTransitionAnimation.slide(this, ActivityTransitionAnimation.RIGHT);
-    	}
+//        Intent decksPicker = new Intent(StudyOptions.this, DeckPicker.class);
+//        mInDeckPicker = true;
+//    	decksPicker.putExtra("showAnimation", showAnimation);
+//        startActivityForResult(decksPicker, PICK_DECK_REQUEST);
+//    	if (showAnimation && UIUtils.getApiLevel() > 4) {
+//    		ActivityTransitionAnimation.slide(this, ActivityTransitionAnimation.RIGHT);
+//    	}
         // Log.i(AnkiDroidApp.TAG, "openDeckPicker - Ending");
     }
 
@@ -2083,52 +1946,28 @@ public class StudyOptions extends Activity implements IButtonListener {
 
 
     private void openCardBrowser() {
-        Intent cardBrowser = new Intent(StudyOptions.this, CardBrowser.class);
-        startActivityForResult(cardBrowser, BROWSE_CARDS);
-        if (getApiLevel() > 4) {
-            ActivityTransitionAnimation.slide(StudyOptions.this, ActivityTransitionAnimation.LEFT);
-        }
+//        Intent cardBrowser = new Intent(StudyOptions.this, CardBrowser.class);
+//        startActivityForResult(cardBrowser, BROWSE_CARDS);
+//        if (UIUtils.getApiLevel() > 4) {
+//            ActivityTransitionAnimation.slide(StudyOptions.this, ActivityTransitionAnimation.LEFT);
+//        }
     }
 
 
     private void openStatistics(int period) {
-        if (DeckManager.getMainDeck() != null) {
-            DeckTask.launchDeckTask(DeckTask.TASK_TYPE_LOAD_STATISTICS, mLoadStatisticsHandler, new DeckTask.TaskData(this, new String[]{""}, mStatisticType, period));
-        }
+//        if (DeckManager.getMainDeck() != null) {
+//            DeckTask.launchDeckTask(DeckTask.TASK_TYPE_LOAD_STATISTICS, mLoadStatisticsHandler, new DeckTask.TaskData(this, new String[]{""}, mStatisticType, period));
+//        }
     }
 
 
     private void openGroupSelection() {
-        startActivityForResult(
-                new Intent(StudyOptions.this, GroupSelector.class),
-                GROUP_SELECTOR);
-    	if (Integer.valueOf(android.os.Build.VERSION.SDK) > 4) {
-   			MyAnimation.slide(StudyOptions.this, MyAnimation.UP);
-    	}
-    }
-
-
-    public void openPersonalDeckPicker() {
-        if (AnkiDroidApp.isUserLoggedIn()) {
-            mCompat.invalidateOptionsMenu(this);
-            startActivityForResult(
-                    new Intent(StudyOptions.this, PersonalDeckPicker.class), DOWNLOAD_PERSONAL_DECK);
-        	if (getApiLevel() > 4) {
-        		ActivityTransitionAnimation.slide(this, ActivityTransitionAnimation.RIGHT);
-        	}
-        } else {
-        	showDialog(DIALOG_USER_NOT_LOGGED_IN);
-        }
-    }
-
-
-    public void openSharedDeckPicker() {
-        mCompat.invalidateOptionsMenu(this);
-        // deckLoaded = false;
-        startActivityForResult(new Intent(StudyOptions.this, SharedDeckPicker.class), DOWNLOAD_SHARED_DECK);
-    	if (getApiLevel() > 4) {
-    		ActivityTransitionAnimation.slide(this, ActivityTransitionAnimation.RIGHT);
-    	}
+//        startActivityForResult(
+//                new Intent(StudyOptions.this, GroupSelector.class),
+//                GROUP_SELECTOR);
+//    	if (Integer.valueOf(android.os.Build.VERSION.SDK) > 4) {
+//   			MyAnimation.slide(StudyOptions.this, MyAnimation.UP);
+//    	}
     }
 
 
@@ -2143,39 +1982,39 @@ public class StudyOptions extends Activity implements IButtonListener {
 
 
     private void syncDeckWithPrompt() {
-        if (AnkiDroidApp.isUserLoggedIn()) {
-            Deck deck = DeckManager.getMainDeck();
-            if (deck != null) {
-                // Close existing sync progress dialog
-                if (mProgressDialog != null && mProgressDialog.isShowing()) {
-                    mProgressDialog.dismiss();
-                }
-                // Prompt user for conflict resolution
-                mCurrentDialogMessage = String.format(getResources().getString(R.string.sync_conflict_message), deck.getDeckName());
-                showDialog(DIALOG_SYNC_CONFLICT_RESOLUTION);
-            }
-        } else {
-        	showDialog(DIALOG_USER_NOT_LOGGED_IN);
-        }
+//        if (AnkiDroidApp.isUserLoggedIn()) {
+//            Deck deck = DeckManager.getMainDeck();
+//            if (deck != null) {
+//                // Close existing sync progress dialog
+//                if (mProgressDialog != null && mProgressDialog.isShowing()) {
+//                    mProgressDialog.dismiss();
+//                }
+//                // Prompt user for conflict resolution
+//                mCurrentDialogMessage = String.format(getResources().getString(R.string.sync_conflict_message), deck.getDeckName());
+//                showDialog(DIALOG_SYNC_CONFLICT_RESOLUTION);
+//            }
+//        } else {
+//        	showDialog(DIALOG_USER_NOT_LOGGED_IN);
+//        }
     }
 
 
     private void syncDeck(String conflictResolution) {
-        SharedPreferences preferences = PrefSettings.getSharedPrefs(getBaseContext());
-
-        String username = preferences.getString("username", "");
-        String password = preferences.getString("password", "");
-
-        if (AnkiDroidApp.isUserLoggedIn()) {
-            Deck deck = DeckManager.getMainDeck();
-            if (deck != null) {
-                Log.i(AnkiDroidApp.TAG, "Synchronizing deck " + mDeckFilename + ", conflict resolution: " + conflictResolution);
-                Log.i(AnkiDroidApp.TAG, String.format(Utils.ENGLISH_LOCALE, "Before syncing - mod: %f, last sync: %f", deck.getModified(), deck.getLastSync()));
-                Connection.syncDeck(mSyncListener, new Connection.Payload(new Object[] { username, password, deck, conflictResolution, true }));
-            }
-        } else {
-        	showDialog(DIALOG_USER_NOT_LOGGED_IN);
-        }
+//        SharedPreferences preferences = PrefSettings.getSharedPrefs(getBaseContext());
+//
+//        String username = preferences.getString("username", "");
+//        String password = preferences.getString("password", "");
+//
+//        if (AnkiDroidApp.isUserLoggedIn()) {
+//            Deck deck = DeckManager.getMainDeck();
+//            if (deck != null) {
+//                Log.i(AnkiDroidApp.TAG, "Synchronizing deck " + mDeckFilename + ", conflict resolution: " + conflictResolution);
+//                Log.i(AnkiDroidApp.TAG, String.format(Utils.ENGLISH_LOCALE, "Before syncing - mod: %f, last sync: %f", deck.getModified(), deck.getLastSync()));
+//                Connection.syncDeck(mSyncListener, new Connection.Payload(new Object[] { username, password, deck, conflictResolution, true }));
+//            }
+//        } else {
+//        	showDialog(DIALOG_USER_NOT_LOGGED_IN);
+//        }
     }
 
 
@@ -2184,7 +2023,7 @@ public class StudyOptions extends Activity implements IButtonListener {
         super.onActivityResult(requestCode, resultCode, intent);
 
         if (mStartedByBigWidget != EXTRA_START_NOTHING && ((requestCode == REQUEST_REVIEW && resultCode == Reviewer.RESULT_DEFAULT) || (requestCode == PICK_DECK_REQUEST && resultCode != RESULT_OK))) {
-        	DeckManager.closeMainDeck(DeckManager.REQUESTING_ACTIVITY_STUDYOPTIONS);
+//        	DeckManager.closeMainDeck(DeckManager.REQUESTING_ACTIVITY_STUDYOPTIONS);
         	finish();
         	return;
         } else {
@@ -2219,16 +2058,16 @@ public class StudyOptions extends Activity implements IButtonListener {
                 // Make sure we open the database again in onResume() if user pressed "back"
                 // deckSelected = false;
             	if (mDeckFilename == null || !(new File(mDeckFilename).exists())) {
-                    DeckManager.closeMainDeck();
+//                    DeckManager.closeMainDeck();
                     mCompat.invalidateOptionsMenu(this);
                     showContentView(CONTENT_NO_DECK);
             	} else {
                 	showContentView(CONTENT_STUDY_OPTIONS);
-                    if (DeckManager.getMainDeck() == null || !DeckManager.getMainDeckPath().equals(mDeckFilename)) {
-                    	if (resultCode != RESULT_DONT_RELOAD_DECK) {
-                            displayProgressDialogAndLoadDeck();
-                        }
-                    }
+//                    if (DeckManager.getMainDeck() == null || !DeckManager.getMainDeckPath().equals(mDeckFilename)) {
+//                    	if (resultCode != RESULT_DONT_RELOAD_DECK) {
+//                            displayProgressDialogAndLoadDeck();
+//                        }
+//                    }
             	}
                 return;
             }
@@ -2248,10 +2087,10 @@ public class StudyOptions extends Activity implements IButtonListener {
             	showContentView(CONTENT_NO_DECK);
             }
             // Log.i(AnkiDroidApp.TAG, "onActivityResult - deckSelected = " + deckSelected);
-            if (DeckManager.getMainDeck() == null || !DeckManager.getMainDeckPath().equals(mDeckFilename)) {
-                boolean updateAllCards = (requestCode == DOWNLOAD_SHARED_DECK);
-                displayProgressDialogAndLoadDeck(updateAllCards);
-            }
+//            if (DeckManager.getMainDeck() == null || !DeckManager.getMainDeckPath().equals(mDeckFilename)) {
+//                boolean updateAllCards = (requestCode == DOWNLOAD_SHARED_DECK);
+//                displayProgressDialogAndLoadDeck(updateAllCards);
+//            }
         } else if (requestCode == PREFERENCES_UPDATE) {
             restorePreferences();
             BackupManager.initBackup();
@@ -2271,7 +2110,7 @@ public class StudyOptions extends Activity implements IButtonListener {
             Log.i(AnkiDroidApp.TAG, "Result code = " + resultCode);
             // Return to standard scheduler
     		mInReviewer = false;
-        	AnkiDroidWidgetBig.updateWidget(AnkiDroidWidgetBig.UpdateService.VIEW_NOT_SPECIFIED, false);
+//        	AnkiDroidWidgetBig.updateWidget(AnkiDroidWidgetBig.UpdateService.VIEW_NOT_SPECIFIED, false);
             switch (resultCode) {
                 case Reviewer.RESULT_SESSION_COMPLETED:
                 	showContentView(CONTENT_SESSION_COMPLETE);
@@ -2289,7 +2128,7 @@ public class StudyOptions extends Activity implements IButtonListener {
                 	displayProgressDialogAndLoadDeck();
                 	break;
                 case Reviewer.RESULT_DEFAULT:
-                    DeckTask.launchDeckTask(DeckTask.TASK_TYPE_SAVE_DECK, mSaveAndResetDeckHandler, new DeckTask.TaskData(DeckManager.getMainDeck(), 0));
+//                    DeckTask.launchDeckTask(DeckTask.TASK_TYPE_SAVE_DECK, mSaveAndResetDeckHandler, new DeckTask.TaskData(DeckManager.getMainDeck(), 0));
                 	showContentView(CONTENT_STUDY_OPTIONS);
                     break;
             }
@@ -2340,7 +2179,7 @@ public class StudyOptions extends Activity implements IButtonListener {
     		return true;
 
     	case SUM_DECKPICKER_ON_FIRST_START:
-    		return Utils.isNewDay(mLastTimeOpened);
+//    		return Utils.isNewDay(mLastTimeOpened);
 
     	default:
     		return false;
@@ -2373,25 +2212,25 @@ public class StudyOptions extends Activity implements IButtonListener {
         BroadcastMessages.init(this, mLastTimeOpened);
        	preferences.edit().putLong("lastTimeOpened", System.currentTimeMillis()).commit();
 
-        if (!preferences.getString("lastVersion", "").equals(getVersion())) {
-           	mNewVersionAlert = Themes.htmlOkDialog(this, getResources().getString(R.string.new_version_title) + " " + getVersion(), getVersionMessage(), new DialogInterface.OnClickListener() {
-    			@Override
-    			public void onClick(DialogInterface dialog, int which) {
-		        	PrefSettings.getSharedPrefs(StudyOptions.this.getBaseContext()).edit().putString("lastVersion", getVersion()).commit();
-		        	mNewVersionAlert = null;
-			        BroadcastMessages.checkForNewMessages(StudyOptions.this);
-    			}
-            }, new DialogInterface.OnCancelListener() {
-    			@Override
-    			public void onCancel(DialogInterface dialog) {
-		        	mNewVersionAlert = null;
-			        BroadcastMessages.checkForNewMessages(StudyOptions.this);
-    			}
-            }, true);
-           	AnkiDroidApp.createNoMediaFileIfMissing(new File(mPrefDeckPath));
-        } else if (!preferences.getBoolean("firstStart", true)) {
-        	BroadcastMessages.checkForNewMessages(this);        		
-        }
+//        if (!preferences.getString("lastVersion", "").equals(getVersion())) {
+//           	mNewVersionAlert = Themes.htmlOkDialog(this, getResources().getString(R.string.new_version_title) + " " + getVersion(), getVersionMessage(), new DialogInterface.OnClickListener() {
+//    			@Override
+//    			public void onClick(DialogInterface dialog, int which) {
+//		        	PrefSettings.getSharedPrefs(StudyOptions.this.getBaseContext()).edit().putString("lastVersion", getVersion()).commit();
+//		        	mNewVersionAlert = null;
+//			        BroadcastMessages.checkForNewMessages(StudyOptions.this);
+//    			}
+//            }, new DialogInterface.OnCancelListener() {
+//    			@Override
+//    			public void onCancel(DialogInterface dialog) {
+//		        	mNewVersionAlert = null;
+//			        BroadcastMessages.checkForNewMessages(StudyOptions.this);
+//    			}
+//            }, true);
+//           	AnkiDroidApp.createNoMediaFileIfMissing(new File(mPrefDeckPath));
+//        } else if (!preferences.getBoolean("firstStart", true)) {
+//        	BroadcastMessages.checkForNewMessages(this);        		
+//        }
 
         // Convert dip to pixel, code in parts from http://code.google.com/p/k9mail/
         final float gestureScale = getResources().getDisplayMetrics().density;
@@ -2429,23 +2268,6 @@ public class StudyOptions extends Activity implements IButtonListener {
         return versionNumber;
     }
 
-
-    private String getVersionMessage() {
-    	Resources res = getResources();
-        StringBuilder builder = new StringBuilder();
-        builder.append(res.getString(R.string.new_version_message));
-        builder.append("<ul>");
-        String[] features = res.getStringArray(R.array.new_version_features);
-        for (int i = 0; i < features.length; i++) {
-        	builder.append("<li>");
-        	builder.append(features[i]);
-        	builder.append("</li>");
-        }
-        builder.append("</ul>");
-    	return builder.toString();
-    }
-
-
     private void setLanguage(String language) {
     	Locale locale;
     	if (language.equals("")) {
@@ -2479,14 +2301,14 @@ public class StudyOptions extends Activity implements IButtonListener {
         	mToggleLimit.setEnabled(true);
 
         	// close previous deck
-        	DeckManager.closeMainDeck(DeckManager.REQUESTING_ACTIVITY_STUDYOPTIONS);
-
-            if (updateAllCards) {
-                DeckTask.launchDeckTask(DeckTask.TASK_TYPE_LOAD_DECK_AND_UPDATE_CARDS, mLoadDeckHandler,
-                        new DeckTask.TaskData(DeckManager.REQUESTING_ACTIVITY_STUDYOPTIONS, mDeckFilename));
-            } else {
-                DeckTask.launchDeckTask(DeckTask.TASK_TYPE_LOAD_DECK, mLoadDeckHandler, new DeckTask.TaskData(DeckManager.REQUESTING_ACTIVITY_STUDYOPTIONS, mDeckFilename));
-            }
+//        	DeckManager.closeMainDeck(DeckManager.REQUESTING_ACTIVITY_STUDYOPTIONS);
+//
+//            if (updateAllCards) {
+//                DeckTask.launchDeckTask(DeckTask.TASK_TYPE_LOAD_DECK_AND_UPDATE_CARDS, mLoadDeckHandler,
+//                        new DeckTask.TaskData(DeckManager.REQUESTING_ACTIVITY_STUDYOPTIONS, mDeckFilename));
+//            } else {
+//                DeckTask.launchDeckTask(DeckTask.TASK_TYPE_LOAD_DECK, mLoadDeckHandler, new DeckTask.TaskData(DeckManager.REQUESTING_ACTIVITY_STUDYOPTIONS, mDeckFilename));
+//            }
         } else {
             if (mDeckFilename == null) {
                 Log.i(AnkiDroidApp.TAG, "displayProgressDialogAndLoadDeck - SD card unmounted.");
@@ -2592,7 +2414,7 @@ public class StudyOptions extends Activity implements IButtonListener {
     						public void onCancel(DialogInterface dialog) {
     							mNewVersionAlert = null;
     							DeckTask.cancelTask();
-    				            DeckManager.closeMainDeck(DeckManager.REQUESTING_ACTIVITY_STUDYOPTIONS);
+//    				            DeckManager.closeMainDeck(DeckManager.REQUESTING_ACTIVITY_STUDYOPTIONS);
     				            mCompat.invalidateOptionsMenu(StudyOptions.this);
     				            MetaDB.closeDB();
     				            finish();
@@ -2627,12 +2449,12 @@ public class StudyOptions extends Activity implements IButtonListener {
                         startActivityForResult(new Intent(StudyOptions.this, Reviewer.class), REQUEST_REVIEW);
                     }
                     int lim;
-                    try {
-                    	lim = AnkiDroidApp.deck().getConf().getInt("sessionTimeLimit") + AnkiDroidApp.deck().getConf().getInt("sessionRepLimit");
-            		} catch (JSONException e) {
-            			lim = 0;
-            		}
-            		mToggleLimit.setChecked(AnkiDroidApp.deck().isLimitedByGroup() || lim > 0);
+//                    try {
+//                    	lim = AnkiDroidApp.deck().getConf().getInt("sessionTimeLimit") + AnkiDroidApp.deck().getConf().getInt("sessionRepLimit");
+//            		} catch (JSONException e) {
+//            			lim = 0;
+//            		}
+//            		mToggleLimit.setChecked(AnkiDroidApp.deck().isLimitedByGroup() || lim > 0);
                     break;
 
                 case DeckTask.DECK_NOT_LOADED:
@@ -2664,10 +2486,10 @@ public class StudyOptions extends Activity implements IButtonListener {
                 	}
                 }
             }
-            Deck deck = DeckManager.getMainDeck();
-            if (deck != null) {
-//                mToggleLimit.setChecked(deck.isLimitedByTag() || deck.getSessionRepLimit() + deck.getSessionTimeLimit() > 0);
-            }
+//            Deck deck = DeckManager.getMainDeck();
+//            if (deck != null) {
+////                mToggleLimit.setChecked(deck.isLimitedByTag() || deck.getSessionRepLimit() + deck.getSessionTimeLimit() > 0);
+//            }
         }
 
 
@@ -2695,7 +2517,7 @@ public class StudyOptions extends Activity implements IButtonListener {
         		case BackupManager.RETURN_LOW_SYSTEM_SPACE:
         			if (!PrefSettings.getSharedPrefs(getBaseContext()).getBoolean("dontShowLowMemory", false)) {
             			mCurrentDialogMessage = getResources().getString(R.string.sd_space_warning, MIN_FREE_SPACE);
-            			showDialog(DIALOG_NO_SPACE_LEFT);        				
+            			showDialog(DIALOG_NO_SPACE_LEFT);
         			}
         			break;
         		}
@@ -2723,7 +2545,7 @@ public class StudyOptions extends Activity implements IButtonListener {
             }
             if (data.success) {
             	mCurrentDialogMessage = ((HashMap<String, String>) data.result).get("message");
-            	DeckManager.getMainDeck().updateCutoff();
+//            	DeckManager.getMainDeck().updateCutoff();
                 resetAndUpdateValuesFromDeck();
                 showDialog(DIALOG_SYNC_LOG);
             } else {
@@ -2789,7 +2611,7 @@ public class StudyOptions extends Activity implements IButtonListener {
 		    	} else {
 	            	Intent intent = new Intent(StudyOptions.this, com.ichi2.charts.ChartBuilder.class);
 			    	startActivityForResult(intent, STATISTICS);
-			        if (getApiLevel() > 4) {
+			        if (UIUtils.getApiLevel() > 4) {
 			            ActivityTransitionAnimation.slide(StudyOptions.this, ActivityTransitionAnimation.DOWN);
 			        }
 		    	}
