@@ -48,6 +48,7 @@ import android.widget.TextView;
 
 import com.ichi2.anim.ActivityTransitionAnimation;
 import com.ichi2.anki.AnkiDroidApp;
+import com.ichi2.anki.DeckPicker;
 import com.ichi2.anki.R;
 import com.ichi2.anki.Statistics;
 import com.ichi2.anki.StudyOptions;
@@ -319,7 +320,7 @@ public class ChartBuilder extends Activity {
         public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
             if (mSwipeEnabled) {
                 try {
-                	if (e1.getY() - e2.getY() > StudyOptions.sSwipeMinDistance && Math.abs(velocityY) > StudyOptions.sSwipeThresholdVelocity && Math.abs(e1.getX() - e2.getX()) < StudyOptions.sSwipeMaxOffPath) {
+                	if (e1.getY() - e2.getY() > DeckPicker.sSwipeMinDistance && Math.abs(velocityY) > DeckPicker.sSwipeThresholdVelocity && Math.abs(e1.getX() - e2.getX()) < DeckPicker.sSwipeMaxOffPath) {
                 		closeChartBuilder();
                     }
        			}

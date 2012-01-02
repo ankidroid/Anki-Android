@@ -92,7 +92,7 @@
 				android:title="@string/select_theme"
 				android:key="theme"
 				android:summary=""
-				android:defaultValue="2"
+				android:defaultValue="3"
 				android:entries="@array/theme_labels"
 				android:entryValues="@array/theme_values" />
 			<CheckBoxPreference

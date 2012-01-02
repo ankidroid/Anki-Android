@@ -17,12 +17,20 @@
 
 package com.ichi2.anki;
 
+import com.ichi2.anim.ActivityTransitionAnimation;
 import com.ichi2.themes.Themes;
+import com.tomgibara.android.veecheck.util.PrefSettings;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.KeyEvent;
+import android.view.View;
+import android.view.View.OnClickListener;
 import android.webkit.WebView;
+import android.widget.Button;
 
 /**
  * Shows an about box, which is a small HTML page.
@@ -46,38 +54,38 @@ public class Info extends Activity {
 
     	Resources res = getResources();
 
-	mType = getIntent().getIntExtra(TYPE_EXTRA);
+    	mType = getIntent().getIntExtra(TYPE_EXTRA, TYPE_ABOUT);
 
-        setTitle(getTitle());
+        setTitle(getTitleString());
 
         setContentView(R.layout.info);
 
         WebView webview = (WebView) findViewById(R.id.info);
         webview.setBackgroundColor(res.getColor(Themes.getBackgroundColor()));
 
-	Button continueButton = (Button) findViewById(R.id.info_continue);
-	continueButton.setOnClickListener(new OnClickListener() {
-		@Override
-	            public void onClick(DialogInterface dialog, int which) {
-			setResult(RESULT_OK);
-			switch (mType) {
-			case TYPE_WELCOME:
-				PrefSettings.getSharedPrefs(Info.this.getBaseContext()).edit().putString("lastVersion", getVersion()).commit();
-				break;
-			case TYPE_NEW_VERSION:
-				PrefSettings.getSharedPrefs(Info.this.getBaseContext()).edit().putString("lastTimeOpened", System.currentTimeMillis()).commit();
-				break;
-			}
-	                finish();
-	                if (UIUtils.getApiLevel() > 4) {
-	                	ActivityTransitionAnimation.slide(StudyOptions.this, ActivityTransitionAnimation.LEFT);
-	        	}
-	            }
+        Button continueButton = (Button) findViewById(R.id.info_continue);
+        continueButton.setOnClickListener(new OnClickListener() {
+        	@Override
+        	public void onClick(View arg0) {
+        		setResult(RESULT_OK);
+        		switch (mType) {
+        		case TYPE_WELCOME:
+        			PrefSettings.getSharedPrefs(Info.this.getBaseContext()).edit().putLong("lastTimeOpened", System.currentTimeMillis()).commit();
+        			break;
+        		case TYPE_NEW_VERSION:
+        			PrefSettings.getSharedPrefs(Info.this.getBaseContext()).edit().putString("lastVersion", AnkiDroidApp.getPkgVersion()).commit();
+        			break;
+        		}
+        		finish();
+        		if (UIUtils.getApiLevel() > 4) {
+        			ActivityTransitionAnimation.slide(Info.this, ActivityTransitionAnimation.LEFT);
+        		}
+		}
 	});
 
 	String[] content = res.getStringArray(R.array.about_content);
 	StringBuilder sb = new StringBuilder();
-	sb.append("<html><body text=\"#FFFFFF\" link=\"#E37068\" alink=\"#E37068\" vlink=\"#E37068\">");
+	sb.append("<html><body text=\"#000000\" link=\"#E37068\" alink=\"#E37068\" vlink=\"#E37068\">");
 	switch (mType) {
 	case TYPE_ABOUT:
 		sb.append(String.format(content[0], res.getString(R.string.app_name), res.getString(R.string.link_anki))).append("<br/><br/>");
@@ -93,16 +101,15 @@ public class Info extends Activity {
 		break;
 
 	case TYPE_NEW_VERSION:
-	        builder.append(res.getString(R.string.new_version_message));
-	        builder.append("<ul>");
-	        String[] features = res.getStringArray(R.array.new_version_features);
-	        for (int i = 0; i < features.length; i++) {
-	        	builder.append("<li>");
-	        	builder.append(features[i]);
-	        	builder.append("</li>");
-	        }
-	        builder.append("</ul>");
-    	return builder.toString();
+		sb.append(res.getString(R.string.new_version_message));
+		sb.append("<ul>");
+		String[] features = res.getStringArray(R.array.new_version_features);
+		for (int i = 0; i < features.length; i++) {
+			sb.append("<li>");
+			sb.append(features[i]);
+			sb.append("</li>");
+        }
+		sb.append("</ul>");
 		break;
 	default:
 		finish();
@@ -118,10 +125,10 @@ public class Info extends Activity {
     public boolean onKeyDown(int keyCode, KeyEvent event)  {
         if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
         	Log.i(AnkiDroidApp.TAG, "Info - onBackPressed()");
-		setResult(RESULT_CANCEL);
-                finish();
-                if (UIUtils.getApiLevel() > 4) {
-	               	ActivityTransitionAnimation.slide(Info.this, ActivityTransitionAnimation.NONE);
+        	setResult(RESULT_CANCELED);
+        	finish();
+        	if (UIUtils.getApiLevel() > 4) {
+        		ActivityTransitionAnimation.slide(Info.this, ActivityTransitionAnimation.NONE);
         	}
         	return true;
         }
@@ -129,9 +136,9 @@ public class Info extends Activity {
     }
 
 
-    private String getTitle() {
+    private String getTitleString() {
         StringBuilder appName = new StringBuilder();
-	appName.append(AnkiDroidApp.getPkgName());
+        appName.append(AnkiDroidApp.getPkgName());
         appName.append(" v");
         appName.append(AnkiDroidApp.getPkgVersion());
         return appName.toString();

@@ -127,13 +127,13 @@
 					android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
 					android:layout_gravity="center_horizontal">
-					<TableRow>		
+					<TableRow>
 						<TextView
 							android:layout_width="wrap_content"
 							android:layout_height="wrap_content"
-							android:text="@string/studyoptions_reviews_due"/>
+							android:text="@string/studyoptions_new_today"/>
 						<TextView 
-							android:id="@+id/studyoptions_reviews_due"
+							android:id="@+id/studyoptions_today_new"
 							android:layout_width="fill_parent"
 							android:layout_height="wrap_content"
 							android:layout_marginLeft="4dp"
@@ -144,9 +144,22 @@
 						<TextView
 							android:layout_width="wrap_content"
 							android:layout_height="wrap_content"
-							android:text="@string/studyoptions_new_today"/>
+							android:text="XX to be learned today"/>
 						<TextView 
-							android:id="@+id/studyoptions_new_today"
+							android:id="@+id/studyoptions_today_lrn"
+							android:layout_width="fill_parent"
+							android:layout_height="wrap_content"
+							android:layout_marginLeft="4dp"
+							android:gravity="right"
+							android:text=""/>
+					</TableRow>
+   					<TableRow>
+						<TextView
+							android:layout_width="wrap_content"
+							android:layout_height="wrap_content"
+							android:text="XX to be revised today"/>
+						<TextView 
+							android:id="@+id/studyoptions_today_rev"
 							android:layout_width="fill_parent"
 							android:layout_height="wrap_content"
 							android:layout_marginLeft="4dp"
@@ -160,6 +173,19 @@
 							android:text="@string/studyoptions_new_total"/>
 						<TextView 
 							android:id="@+id/studyoptions_new_total"
+							android:layout_width="fill_parent"
+							android:layout_height="wrap_content"
+							android:layout_marginLeft="4dp"
+							android:gravity="right"
+							android:text=""/>
+					</TableRow>
+					<TableRow>
+						<TextView
+							android:layout_width="wrap_content"
+							android:layout_height="wrap_content"
+							android:text="XX total"/>
+						<TextView 
+							android:id="@+id/studyoptions_total"
 							android:layout_width="fill_parent"
 							android:layout_height="wrap_content"
 							android:layout_marginLeft="4dp"

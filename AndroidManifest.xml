@@ -66,7 +66,7 @@
 		<activity android:name="DeckPreferences" 
 			android:label="@string/deckpreferences_title" 
 			android:configChanges="locale"/>
-		<activity android:name="About" 
+		<activity android:name="Info" 
 			android:label="@string/about_title" 
 			android:configChanges="locale"/>
 		<activity android:name="CardEditor" 

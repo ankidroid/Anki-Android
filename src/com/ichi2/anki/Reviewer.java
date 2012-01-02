@@ -3319,25 +3319,25 @@ public class Reviewer extends Activity implements IButtonListener{
         public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
             if (mGesturesEnabled) {
                 try {
-                    if (e2.getY() - e1.getY() > StudyOptions.sSwipeMinDistance
-                            && Math.abs(velocityY) > StudyOptions.sSwipeThresholdVelocity
-                            && Math.abs(e1.getX() - e2.getX()) < StudyOptions.sSwipeMaxOffPath && !mIsYScrolling) {
+                    if (e2.getY() - e1.getY() > DeckPicker.sSwipeMinDistance
+                            && Math.abs(velocityY) > DeckPicker.sSwipeThresholdVelocity
+                            && Math.abs(e1.getX() - e2.getX()) < DeckPicker.sSwipeMaxOffPath && !mIsYScrolling) {
                         // down
                         executeCommand(mGestureSwipeDown);
-                    } else if (e1.getY() - e2.getY() > StudyOptions.sSwipeMinDistance
-                            && Math.abs(velocityY) > StudyOptions.sSwipeThresholdVelocity
-                            && Math.abs(e1.getX() - e2.getX()) < StudyOptions.sSwipeMaxOffPath && !mIsYScrolling) {
+                    } else if (e1.getY() - e2.getY() > DeckPicker.sSwipeMinDistance
+                            && Math.abs(velocityY) > DeckPicker.sSwipeThresholdVelocity
+                            && Math.abs(e1.getX() - e2.getX()) < DeckPicker.sSwipeMaxOffPath && !mIsYScrolling) {
                         // up
                         executeCommand(mGestureSwipeUp);
-                    } else if (e2.getX() - e1.getX() > StudyOptions.sSwipeMinDistance
-                            && Math.abs(velocityX) > StudyOptions.sSwipeThresholdVelocity
-                            && Math.abs(e1.getY() - e2.getY()) < StudyOptions.sSwipeMaxOffPath && !mIsXScrolling
+                    } else if (e2.getX() - e1.getX() > DeckPicker.sSwipeMinDistance
+                            && Math.abs(velocityX) > DeckPicker.sSwipeThresholdVelocity
+                            && Math.abs(e1.getY() - e2.getY()) < DeckPicker.sSwipeMaxOffPath && !mIsXScrolling
                             && !mIsSelecting) {
                         // right
                         executeCommand(mGestureSwipeRight);
-                    } else if (e1.getX() - e2.getX() > StudyOptions.sSwipeMinDistance
-                            && Math.abs(velocityX) > StudyOptions.sSwipeThresholdVelocity
-                            && Math.abs(e1.getY() - e2.getY()) < StudyOptions.sSwipeMaxOffPath && !mIsXScrolling
+                    } else if (e1.getX() - e2.getX() > DeckPicker.sSwipeMinDistance
+                            && Math.abs(velocityX) > DeckPicker.sSwipeThresholdVelocity
+                            && Math.abs(e1.getY() - e2.getY()) < DeckPicker.sSwipeMaxOffPath && !mIsXScrolling
                             && !mIsSelecting) {
                         // left
                         executeCommand(mGestureSwipeLeft);

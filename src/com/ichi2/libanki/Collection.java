@@ -317,12 +317,12 @@ public class Collection {
      * ***********************************************************************************************
      */
 
-    public Card getCard(int id) {
+    public Card getCard(long id) {
     	return new Card(this, id);
     }
 
 
-    public Note getNote(int id) {
+    public Note getNote(long id) {
     	return new Note(this, id);
     }
 
@@ -361,8 +361,8 @@ public class Collection {
      * ***********************************************************************************************
      */
 
-    private void _logRem(int[] ids, int type) {
-    	for (int id : ids) {
+    public void _logRem(long[] ids, int type) {
+    	for (long id : ids) {
     		ContentValues values = new ContentValues();
             values.put("usn", usn());
             values.put("oid", id);
@@ -384,7 +384,7 @@ public class Collection {
     /**
      * Return a new note with the current model.
      */
-    public Note newNote(int modelId) {
+    public Note newNote(long modelId) {
         return new Note(this, mModels.current());
     }
 
@@ -411,11 +411,11 @@ public class Collection {
     }
 
 
-    public void remNotes(int[] ids) {
-    	ArrayList<Integer> list = mDb.queryColumn(Integer.class, "SELECT id FROM cards WHERE nid in " + Utils.ids2str(ids), 0);
-    	int[] cids = new int[list.size()];
+    public void remNotes(long[] ids) {
+    	ArrayList<Long> list = mDb.queryColumn(long.class, "SELECT id FROM cards WHERE nid in " + Utils.ids2str(ids), 0);
+    	long[] cids = new long[list.size()];
     	int i = 0;
-    	for (int l : list) {
+    	for (long l : list) {
     		cids[i++] = l;
     	}
     	remCards(cids);
@@ -425,7 +425,7 @@ public class Collection {
     /**
      * Bulk delete facts by ID. Don't call this directly.
      */
-    private void _remNotes(int[] ids) {
+    private void _remNotes(long[] ids) {
     	if (ids.length == 0) {
     		return;
     	}
@@ -515,7 +515,7 @@ public class Collection {
     }
 
 
-    public int _dueForDid(int did, int due) {
+    public int _dueForDid(long did, int due) {
     	JSONObject conf = mDecks.confForDid(did);
     	// in order due?
     	try {
@@ -550,15 +550,15 @@ public class Collection {
     /**
      * Bulk delete cards by ID.
      */
-    public void remCards(int[] ids) {
+    public void remCards(long[] ids) {
     	if (ids.length == 0) {
     		return;
     	}
     	String sids = Utils.ids2str(ids);
-    	ArrayList<Integer> list = mDb.queryColumn(Integer.class, "SELECT nid FROM cards WHERE id in " + sids, 0);
-    	int[] nids = new int[list.size()];
+    	ArrayList<Long> list = mDb.queryColumn(long.class, "SELECT nid FROM cards WHERE id in " + sids, 0);
+    	long[] nids = new long[list.size()];
     	int i = 0;
-    	for (int l : list) {
+    	for (long l : list) {
     		nids[i++] = l;
     	}
     	// remove cards
@@ -566,8 +566,8 @@ public class Collection {
     	mDb.getDatabase().execSQL("DELETE FROM cards WHERE id IN " + sids);
         mDb.getDatabase().execSQL("DELETE FROM revlog WHERE cid IN " + sids);
         // then notes
-    	list = mDb.queryColumn(Integer.class, "SELECT nid FROM notes WHERE id IN " + Utils.ids2str(nids) + " AND id NOT IN (SELECT nid FROM cards)", 0);
-    	nids = new int[list.size()];
+    	list = mDb.queryColumn(long.class, "SELECT nid FROM notes WHERE id IN " + Utils.ids2str(nids) + " AND id NOT IN (SELECT nid FROM cards)", 0);
+    	nids = new long[list.size()];
     	_remNotes(nids);
     }
 

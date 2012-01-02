@@ -95,9 +95,9 @@ public class Sched {
     private int mNewCardModulus;
 
     // Queues
-    private LinkedList<int[]> mNewQueue;
-    private LinkedList<int[]> mLrnQueue;
-    private LinkedList<int[]> mRevQueue;
+    private LinkedList<long[]> mNewQueue;
+    private LinkedList<long[]> mLrnQueue;
+    private LinkedList<long[]> mRevQueue;
 
     private LinkedList<Long> mNewDids;
     private LinkedList<Long> mRevDids;
@@ -122,9 +122,9 @@ public class Sched {
         _updateCutoff();
 
         // Initialise queues
-        mNewQueue = new LinkedList<int[]>();
-        mLrnQueue = new LinkedList<int[]>();
-        mRevQueue = new LinkedList<int[]>();
+        mNewQueue = new LinkedList<long[]>();
+        mLrnQueue = new LinkedList<long[]>();
+        mRevQueue = new LinkedList<long[]>();
 
         // Initialise conf maps
 	// TODO: where are these used for?
@@ -300,10 +300,13 @@ public class Sched {
     private int _walkingCount(LinkedList<Long> dids) {
     	return _walkingCount(dids, null, null);
     }
+    private int _walkingCount(Method limFn, Method cntFn) {
+    	return _walkingCount(null, limFn, cntFn);
+    }
     private int _walkingCount(LinkedList<Long> dids, Method limFn, Method cntFn) {
-	if (dids == null) {
-		dids = mCol.getDecks().active();
-	}
+    	if (dids == null) {
+    		dids = mCol.getDecks().active();
+    	}
     	int tot = 0;
     	HashMap<Long, Integer> pcounts = new HashMap<Long, Integer>();
     	// for each of the active decks
@@ -312,7 +315,7 @@ public class Sched {
         		// get the individual deck's limit
         		int lim = 0;
         		if (limFn != null) {
-        			limFn.invoke(Sched.this, mCol.getDecks().get(did));
+        			lim = (Integer) limFn.invoke(Sched.this, mCol.getDecks().get(did));
         		} else {
         			continue;
         		}
@@ -322,7 +325,7 @@ public class Sched {
         			// add if missing
         			long id = p.getLong("id");
         			if (!pcounts.containsKey(id)) {
-        				pcounts.put(id, (Integer) cntFn.invoke(Sched.this, p));
+        				pcounts.put(id, (Integer) limFn.invoke(Sched.this, p));
         			}
         			// take minimum of child and parent
         			lim = Math.min(pcounts.get(id), lim);
@@ -409,12 +412,12 @@ public class Sched {
     	ArrayList<Object[]> dids = new ArrayList<Object[]>();
         for (JSONObject g : mCol.getDecks().all()) {
 			try {
-			long did = g.getLong("id");
-			LinkedList<Long> ldid = new LinkedList<Long>();
-			ldid.add(did);
-			int newCount = counts ? _walkingCount(ldid, Sched.class.getDeclaredMethod("_deckNewLimitSingle", JSONObject.class), Sched.class.getDeclaredMethod("_cntFnNew", Integer.class)) : -1;
-			int lrnCount = counts ? _cntFnLrn("(" + did + ")") : -1;
-			int revCount = counts ? _walkingCount(ldid, Sched.class.getDeclaredMethod("_deckRevLimitSingle", JSONObject.class), Sched.class.getDeclaredMethod("_cntFnRev", Integer.class)) : -1;
+				long did = g.getLong("id");
+				LinkedList<Long> ldid = new LinkedList<Long>();
+				ldid.add(did);
+				int newCount = counts ? _walkingCount(ldid, Sched.class.getDeclaredMethod("_deckNewLimitSingle", JSONObject.class), Sched.class.getDeclaredMethod("_cntFnNew", long.class, int.class)) : -1;
+				int lrnCount = counts ? _cntFnLrn("(" + did + ")") : -1;
+				int revCount = counts ? _walkingCount(ldid, Sched.class.getDeclaredMethod("_deckRevLimitSingle", JSONObject.class), Sched.class.getDeclaredMethod("_cntFnRev", long.class, int.class)) : -1;
 	        	dids.add(new Object[] {g.getString("name"), did, newCount, lrnCount, revCount});
 			} catch (JSONException e) {
 				throw new RuntimeException(e);
@@ -541,7 +544,7 @@ public class Sched {
 
     private void _resetNewCount() {
         try {
-			mNewCount = _walkingCount(Sched.class.getDeclaredMethod("_deckNewLimitSingle", JSONObject.class), Sched.class.getDeclaredMethod("_cntFnNew", Integer.class));
+			mNewCount = _walkingCount(Sched.class.getDeclaredMethod("_deckNewLimitSingle", JSONObject.class), Sched.class.getDeclaredMethod("_cntFnNew", long.class, int.class));
 		} catch (NoSuchMethodException e) {
 			throw new RuntimeException(e);
 		}
@@ -549,7 +552,7 @@ public class Sched {
 
 
     private int _cntFnNew(long did, int lim) {
-    	return mCol.getDb().queryScalar("SELECT count() FROM (SELECT 1 FROM cards WHERE did = " + did + " AND queue = 0 LIMIT " + lim);
+    	return mCol.getDb().queryScalar("SELECT count() FROM (SELECT 1 FROM cards WHERE did = " + did + " AND queue = 0 LIMIT " + lim + ")");
     }
 
 
@@ -578,7 +581,7 @@ public class Sched {
                     cur = mCol.getDb().getDatabase().rawQuery(
                             "SELECT id, due FROM cards WHERE did = " + did + " AND queue = 0 LIMIT " + lim, null);
                     while (cur.moveToNext()) {
-                        mNewQueue.add(new int[] { cur.getInt(0), cur.getInt(1) });
+                        mNewQueue.add(new long[] { cur.getInt(0), cur.getLong(1) });
                     }
                 } finally {
                     if (cur != null && !cur.isClosed()) {
@@ -602,7 +605,7 @@ public class Sched {
         if (mNewQueue.isEmpty()) {
         	return null;
         }
-        int[] item = mNewQueue.remove();
+        long[] item = mNewQueue.remove();
         // move any siblings to the end?
         try {
         	JSONObject conf = mCol.getDecks().confForDid(mNewDids.getFirst());
@@ -726,7 +729,7 @@ public class Sched {
 
 
     private int _cntFnLrn(String dids) {
-    	return (int) mCol.getDb().queryScalar("SELECT sum(left) FROM (SELECT left FROM cards WHERE did IN " + dids + " queue = 1 AND due < " + mDayCutoff + " LIMIT " + mReportLimit, false);
+    	return (int) mCol.getDb().queryScalar("SELECT sum(left) FROM (SELECT left FROM cards WHERE did IN " + dids + " AND queue = 1 AND due < " + mDayCutoff + " LIMIT " + mReportLimit + ")", false);
     }
 
 
@@ -751,7 +754,7 @@ public class Sched {
                             + " SORT BY due LIMIT " + mReportLimit, null);
             // TODO: check, if correctly sorted
             while (cur.moveToNext()) {
-                mLrnQueue.add(new int[] { cur.getInt(0), cur.getInt(1) });
+                mLrnQueue.add(new long[] { cur.getInt(0), cur.getLong(1) });
             }
             return !mLrnQueue.isEmpty();
         } finally {
@@ -778,7 +781,7 @@ public class Sched {
                 }
             }
             if (mLrnQueue.getFirst()[0] < cutoff) {
-                int id = mLrnQueue.remove()[1];
+            	long id = mLrnQueue.remove()[1];
                 Card card = mCol.getCard(id);
                 mLrnCount -= card.getLeft();
                 return card;
@@ -834,7 +837,7 @@ public class Sched {
      * Sorts a card into the lrn queue
      * LIBANKI: not in libanki
      */
-    private void _sortIntoLrn(int due, int id) {
+    private void _sortIntoLrn(int due, long id) {
         Iterator i = mLrnQueue.listIterator();
         int idx = 0;
         while (i.hasNext()) {
@@ -844,7 +847,7 @@ public class Sched {
                 idx++;
             }
         }
-        mLrnQueue.add(idx, new int[] { due, id });
+        mLrnQueue.add(idx, new long[] { due, id });
     }
 
 
@@ -947,7 +950,7 @@ public class Sched {
     }
 
 
-    private void log(int id, int usn, int ease, int ivl, int lastIvl, int factor, int timeTaken, int type) {
+    private void log(long id, int usn, int ease, int ivl, int lastIvl, int factor, int timeTaken, int type) {
         try {
             mCol.getDb().getDatabase().execSQL("INSERT INTO revlog VALUES (?,?,?,?,?,?,?,?,?)",
             		new Object[] {Utils.now() * 1000, id, usn, ease, ivl, lastIvl, factor, timeTaken, type});
@@ -968,7 +971,7 @@ public class Sched {
     /**
      * Remove failed cards from the learning queue.
      */
-    private void removeFailed(int[] ids) {
+    private void removeFailed(long[] ids) {
         String extra = "";
         if(ids != null && ids.length > 0) {
             extra = " AND id IN " + Utils.ids2str(ids);
@@ -1011,7 +1014,7 @@ public class Sched {
 
     private void _resetRevCount() {
         try {
-        	mRevCount = _walkingCount(Sched.class.getDeclaredMethod("__deckRevLimitSingle", JSONObject.class), Sched.class.getDeclaredMethod("_cntFnRev", Integer.class));
+        	mRevCount = _walkingCount(Sched.class.getDeclaredMethod("_deckRevLimitSingle", JSONObject.class), Sched.class.getDeclaredMethod("_cntFnRev", long.class, int.class));
 		} catch (NoSuchMethodException e) {
 			throw new RuntimeException(e);
 		}
@@ -1019,7 +1022,7 @@ public class Sched {
 
 
     private int _cntFnRev(long did, int lim) {
-    	return mCol.getDb().queryScalar("SELECT count() FROM (SELECT 1 FROM cards WHERE did = " + did + " AND queue = 2 and due <= " + mToday + " LIMIT " + lim);
+    	return mCol.getDb().queryScalar("SELECT count() FROM (SELECT 1 FROM cards WHERE did = " + did + " AND queue = 2 and due <= " + mToday + " LIMIT " + lim + ")");
     }
 
 
@@ -1049,7 +1052,7 @@ public class Sched {
                     cur = mCol.getDb().getDatabase().rawQuery(
                             "SELECT id FROM cards WHERE did = " + did + " AND queue = 2 AND due <= " + mToday + " " + order + "LIMIT " + lim, null);
                     while (cur.moveToNext()) {
-                        mRevQueue.add(new int[] { cur.getInt(0) });
+                        mRevQueue.add(new long[] { cur.getLong(0) });
                     }
                 } finally {
                     if (cur != null && !cur.isClosed()) {
@@ -1283,7 +1286,7 @@ public class Sched {
                 n.flush();
                 // handle
                 if (conf.getInt("leechAction") == 0) {
-                    suspendCards(new int[] { card.getId() });
+                    suspendCards(new long[] { card.getId() });
                     card.setQueue(-1);
                 }
                 // TODO: notify UI
@@ -1481,7 +1484,7 @@ public class Sched {
     /**
      * Suspend cards.
      */
-    private void suspendCards(int[] ids) {
+    private void suspendCards(long[] ids) {
         removeFailed(ids);
         mCol.getDb().getDatabase().execSQL(
                 "UPDATE cards SET queue = -1, mod = " + Utils.intNow() + ", usn = " + mCol.getUsn() + " WHERE id IN " + Utils.ids2str(ids));
@@ -1491,7 +1494,7 @@ public class Sched {
     /**
      * Unsuspend cards
      */
-    private void unsuspend(int[] ids) {
+    private void unsuspend(long[] ids) {
         mCol.getDb().getDatabase().execSQL(
                 "UPDATE cards SET queue = type, mod = " + Utils.intNow() + ", usn = " + mCol.getUsn() + " WHERE queue = -1 AND id IN "
                         + Utils.ids2str(ids));
@@ -1501,12 +1504,12 @@ public class Sched {
     /**
      * Bury all cards for note until next session.
      */
-    private void buryNote(int nid) {
+    private void buryNote(long nid) {
         mCol.setDirty();
-        ArrayList<Integer> cids = mCol.getDb().queryColumn(Integer.class, "SELECT id FROM card WHERE nid = " + nid, 0);
-        int[] ids = new int[cids.size()];
+        ArrayList<Long> cids = mCol.getDb().queryColumn(long.class, "SELECT id FROM card WHERE nid = " + nid, 0);
+        long[] ids = new long[cids.size()];
         int i = 0;
-        for (int c : cids) {
+        for (long c : cids) {
         	ids[i] = c;
         	i++;
         }
@@ -1515,9 +1518,21 @@ public class Sched {
     }
 
 
-//    /**
-//     * Counts ***********************************************************************************************
-//     */
+    /**
+     * Counts ***********************************************************************************************
+     */
+
+    /** LIBANKI: not in libanki */
+    public int cardCount() {
+    	return mCol.getDb().queryScalar("SELECT count() FROM cards WHERE did IN " + _deckLimit(), false);
+    }
+
+
+    /** LIBANKI: not in libanki */
+    public int newCount() {
+    	return mCol.getDb().queryScalar("SELECT count() FROM cards WHERE queue = 0 AND did IN " + _deckLimit(), false);
+    }
+
 //
 //    /**
 //     * Time spent learning today, in seconds.

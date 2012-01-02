@@ -142,6 +142,9 @@ public class Decks {
 	}
 
 
+	public void save() {
+		save(null);
+	}
 	public void save(JSONObject g) {
 		// TODO
 	}
@@ -160,12 +163,79 @@ public class Decks {
      * ***********************************************************************************************
      */
 
-	// TODO: id
-	// TODO: rem
+	public long id(String name) {
+		return id(name, true);
+	}
+    /** Add a deck with NAME. Reuse deck if already exists. Return id as int. */
+	public long id(String name, boolean create) {
+		name = name.replaceAll("\'", "").replace("\"", "");
+		for (Map.Entry<Long, JSONObject> g : mDecks.entrySet()) {
+			try {
+				if (g.getValue().getString("name").equalsIgnoreCase(name)) {
+					return g.getKey();
+				}
+			} catch (JSONException e) {
+				throw new RuntimeException(e);
+			}
+		}
+		if (!create) {
+			return 0;
+		}
+		if (name.split("::").length > 1) {
+			// not top level; ensure all parents exist
+			_ensureParents(name);
+		}
+		JSONObject g;
+		long id;
+		try {
+			g = new JSONObject(defaultDeck);
+			g.put("name", name);
+			id = Utils.intNow();
+			while (mDecks.containsKey(id)) {
+				id = Utils.intNow();
+			}
+			g.put("id", id);
+		} catch (JSONException e) {
+			throw new RuntimeException(e);
+		}
+		mDecks.put(id, g);
+		save(g);
+		maybeAddToActive();
+		return id;
+	}
 
-    /**
-     * An unsorted list of all deck names.
-     */
+
+	public void rem(long did) {
+		rem(did, false);
+	}
+	/** Remove the deck. If cardsToo, delete any cards inside. */
+	public void rem(long did, boolean cardsToo) {
+		if (did == 1) {
+			return;
+		}
+		if (!mDecks.containsKey(did)) {
+			return;
+		}
+		// delete children first
+		for (long chDid : mDecks.keySet()) {
+			rem(chDid, cardsToo);
+		}
+		// delete cards too?
+		if (cardsToo) {
+			mCol.remCards(cids(did));
+		}
+		// delete the deck and add a grave
+		mDecks.remove(did);
+		mCol._logRem(new long[]{did}, Sched.REM_DECK);
+		// ensure we have an active deck
+		if (active().contains(did)) {
+			select((long) (mDecks.keySet().iterator().next()));
+		}
+		save();
+	}
+
+	
+    /** An unsorted list of all deck names. */
 	public String[] allNames() {
 		ArrayList<String> list = new ArrayList<String>();
 		for (JSONObject o : mDecks.values()) {
@@ -213,8 +283,20 @@ public class Decks {
 
 	// TODO: update
 	// TODO: rename
-	// TODO: ensureparents
 
+
+	private void _ensureParents(String name) {
+		String[] path = name.split("::");
+		String s = "";
+		for (int i = 0; i < path.length - 1; i++) {
+			if (i == 0) {
+				s = path[0];
+			} else {
+				s = s + "::" + path[i];
+			}
+			id(s);
+		}
+	}
 
     /**
      * Deck configurations
@@ -261,9 +343,30 @@ public class Decks {
 	}
 
 	// setdeck
-	// maybeaddtoactive
+
+
+	private void maybeAddToActive() {
+		// reselect current deck, or default if current has disappeared
+		JSONObject c = current();
+		try {
+			select(c.getLong("id"));
+		} catch (JSONException e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+
 	//sendhome
-	//cids
+
+
+	private long[] cids(long did) {
+		ArrayList<Long> cids = mCol.getDb().queryColumn(long.class, "SELECT id FROM cards WHERE did = " + did, 0);
+		long[] result = new long[cids.size()];
+		for (int i = 0; i < cids.size(); i++) {
+			result[i] = cids.get(i);
+		}
+		return result;
+	}
 
     /**
      * Deck selection

@@ -37,7 +37,7 @@ public class Note {
 
 	private Collection mCol;
 
-    private int mId;
+    private long mId;
     private String mGuId;
     private JSONObject mModel;
     private int mDid;
@@ -54,13 +54,13 @@ public class Note {
     private int mScm;
 
 
-    public Note(Collection col, int id) {
+    public Note(Collection col, long id) {
     	this(col, null, id);
     }
     public Note(Collection col, JSONObject model) {
     	this(col, model, 0);
     }
-    public Note(Collection col, JSONObject model, int id) {
+    public Note(Collection col, JSONObject model, long id) {
         mCol = col;
         if (id != 0) {
             mId = id;
@@ -304,7 +304,7 @@ public class Note {
     /**
      * @return the mId
      */
-    public int getId() {
+    public long getId() {
         return mId;
     }
 

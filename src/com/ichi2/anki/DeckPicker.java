@@ -108,6 +108,7 @@ public class DeckPicker extends Activity {
 	private static final int DIALOG_DELETE_BACKUPS = 8;
 	private static final int DIALOG_CONTEXT_MENU = 9;
 	private static final int DIALOG_REPAIR_DECK = 10;
+	private static final int DIALOG_NO_SPACE_LEFT = 11;
 
 	/**
 	 * Menus
@@ -168,6 +169,7 @@ public class DeckPicker extends Activity {
     private static final int STUDYOPTIONS = 7;
     private static final int SHOW_INFO = 8;
     private static final int REPORT_ERROR = 9;
+    private static final int SHOW_STUDYOPTIONS = 10;
 
 	private Collection mCol;
 
@@ -198,6 +200,7 @@ public class DeckPicker extends Activity {
 	private BroadcastReceiver mUnmountReceiver = null;
 
 	private String mPrefDeckPath = null;
+	private long mLastTimeOpened;
 	private int mPrefDeckOrder = 0;
 	private boolean mPrefStartupDeckPicker = false;
 	private String mCurrentDeckFilename = null;
@@ -728,7 +731,7 @@ public class DeckPicker extends Activity {
 		mSyncAllButton.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				syncAllDecks();
+				//syncAllDecks();
 			}
 
 		});
@@ -744,22 +747,19 @@ public class DeckPicker extends Activity {
 		});
 
 		mDeckList = new ArrayList<HashMap<String, String>>();
-        mDeckListView = (ListView) findViewById(R.id.files);
+		mDeckListView = (ListView) findViewById(R.id.files);
 		mDeckListAdapter = new ThemedAdapter(this, mDeckList,
-				R.layout.deck_item, new String[] { "name", "due", "new", "complMat", "complAll" }, new int[] {
-						R.id.DeckPickerName, R.id.DeckPickerDue,
-						R.id.DeckPickerNew, R.id.DeckPickerCompletionMat, R.id.DeckPickerCompletionAll });
+				R.layout.deck_item, new String[] { "name", "new", "lrn", "rev", "complMat", "complAll" }, new int[] {
+						R.id.DeckPickerName, R.id.deckpicker_new, R.id.deckpicker_lrn, 
+						R.id.deckpicker_rev, R.id.DeckPickerCompletionMat, R.id.DeckPickerCompletionAll });
 		mDeckListAdapter.setViewBinder(new SimpleAdapter.ViewBinder() {
 			@Override
 			public boolean setViewValue(View view, Object data, String text) {
-//				if (view instanceof ProgressBar) {
-//					if (text.equals("true")) {
-//						view.setVisibility(View.VISIBLE);
-//					} else {
-//						view.setVisibility(View.GONE);
-//					}
-//					return true;
-//				}
+				if (!text.equals("-1") && view.getVisibility() == View.INVISIBLE) {
+					view.setVisibility(View.VISIBLE);
+					view.setAnimation(ViewAnimation.fade(ViewAnimation.FADE_IN, 500, 0));
+					return false;
+				}
 //				if (view.getId() == R.id.DeckPickerCompletionMat || view.getId() == R.id.DeckPickerCompletionAll) {
 //				    if (!text.equals("-1")) {
 ////	                    Utils.updateProgressBars(DeckPicker.this, view, Double.parseDouble(text) / 100.0, mDeckListView.getWidth(), 2, false); 				        
@@ -824,7 +824,7 @@ public class DeckPicker extends Activity {
 	private SharedPreferences restorePreferences() {
         SharedPreferences preferences = PrefSettings.getSharedPrefs(getBaseContext());
         mPrefDeckPath = preferences.getString("deckPath", AnkiDroidApp.getStorageDirectory());
-	mLastTimeOpened = preferences.getLong("lastTimeOpened", 0);
+        mLastTimeOpened = preferences.getLong("lastTimeOpened", 0);
 //        mStartupMode = Integer.parseInt(preferences.getString("startup_mode",
 //                Integer.toString(SUM_DECKPICKER_ON_FIRST_START)));
         mSwipeEnabled = preferences.getBoolean("swipe", false);
@@ -861,27 +861,28 @@ public class DeckPicker extends Activity {
 
 
 	private void showOtherScreensIfNecessary(SharedPreferences preferences) {
-		if (preferences.getLong("lastTimeOpened", 0) != 0) {
+		if (preferences.getLong("lastTimeOpened", 0) == 0) {
 			Intent infoIntent = new Intent(this, Info.class);
 			infoIntent.putExtra(Info.TYPE_EXTRA, Info.TYPE_WELCOME);
 			startActivityForResult(infoIntent, SHOW_INFO);
-	                if (UIUtils.getApiLevel() > 4) {
-	                    ActivityTransitionAnimation.slide(this, ActivityTransitionAnimation.NONE);
-	                }
-		} else if (!preferences.getString("lastVersion", "").equals(UIUtils.getVersion()) {
+			if (UIUtils.getApiLevel() > 4) {
+				ActivityTransitionAnimation.slide(this, ActivityTransitionAnimation.NONE);
+			}
+		} else if (!preferences.getString("lastVersion", "").equals(AnkiDroidApp.getPkgVersion())) {
 			Intent infoIntent = new Intent(this, Info.class);
 			infoIntent.putExtra(Info.TYPE_EXTRA, Info.TYPE_NEW_VERSION);
 			startActivityForResult(infoIntent, SHOW_INFO);
-	                if (UIUtils.getApiLevel() > 4) {
-	                    ActivityTransitionAnimation.slide(this, ActivityTransitionAnimation.NONE);
-	                }
+            if (UIUtils.getApiLevel() > 4) {
+            	ActivityTransitionAnimation.slide(this, ActivityTransitionAnimation.NONE);
+            }
 		} else if (hasErrorFiles()) {
 			Intent i = new Intent(this, Feedback.class);
 			startActivityForResult(i, REPORT_ERROR);
-	                if (UIUtils.getApiLevel() > 4) {
-	                    ActivityTransitionAnimation.slide(this, ActivityTransitionAnimation.NONE);
-	                }
-		} else if (BackupManager.enoughDiscSpace(mPrefDeckPath) && !preferences.getBoolean("dontShowLowMemory", false)) {
+			if (UIUtils.getApiLevel() > 4) {
+				ActivityTransitionAnimation.slide(this, ActivityTransitionAnimation.NONE);
+			}
+		} else if (!BackupManager.enoughDiscSpace(mPrefDeckPath) && !preferences.getBoolean("dontShowLowMemory", false)) {
+			// TODO: test
 			showDialog(DIALOG_NO_SPACE_LEFT);
 		}
 	}
@@ -938,46 +939,46 @@ public class DeckPicker extends Activity {
 			dialog = builder.create();
 			break;
 
-		case DIALOG_USER_NOT_LOGGED_IN_SYNC:
-		case DIALOG_USER_NOT_LOGGED_IN_DOWNLOAD:
-			builder.setTitle(res.getString(R.string.connection_error_title));
-			builder.setIcon(android.R.drawable.ic_dialog_alert);
-			builder.setMessage(res
-					.getString(R.string.no_user_password_error_message));
-			if (id == DIALOG_USER_NOT_LOGGED_IN_SYNC) {
-				builder.setPositiveButton(res.getString(R.string.log_in),
-						new DialogInterface.OnClickListener() {
-
-							@Override
-							public void onClick(DialogInterface dialog, int which) {
-								Intent myAccount = new Intent(DeckPicker.this,
-										MyAccount.class);
-								myAccount.putExtra("notLoggedIn", true);
-								startActivityForResult(myAccount, LOG_IN_FOR_SYNC);
-						        if (UIUtils.getApiLevel() > 4) {
-						            ActivityTransitionAnimation.slide(DeckPicker.this, ActivityTransitionAnimation.LEFT);
-						        }
-							}
-						});
-			} else {
-				builder.setPositiveButton(res.getString(R.string.log_in),
-						new DialogInterface.OnClickListener() {
-
-							@Override
-							public void onClick(DialogInterface dialog, int which) {
-								Intent myAccount = new Intent(DeckPicker.this,
-										MyAccount.class);
-								myAccount.putExtra("notLoggedIn", true);
-								startActivityForResult(myAccount, LOG_IN_FOR_DOWNLOAD);
-						        if (UIUtils.getApiLevel() > 4) {
-						            ActivityTransitionAnimation.slide(DeckPicker.this, ActivityTransitionAnimation.LEFT);
-						        }
-							}
-						});
-			}
-			builder.setNegativeButton(res.getString(R.string.cancel), null);
-			dialog = builder.create();
-			break;
+//		case DIALOG_USER_NOT_LOGGED_IN_SYNC:
+//		case DIALOG_USER_NOT_LOGGED_IN_DOWNLOAD:
+//			builder.setTitle(res.getString(R.string.connection_error_title));
+//			builder.setIcon(android.R.drawable.ic_dialog_alert);
+//			builder.setMessage(res
+//					.getString(R.string.no_user_password_error_message));
+//			if (id == DIALOG_USER_NOT_LOGGED_IN_SYNC) {
+//				builder.setPositiveButton(res.getString(R.string.log_in),
+//						new DialogInterface.OnClickListener() {
+//
+//							@Override
+//							public void onClick(DialogInterface dialog, int which) {
+//								Intent myAccount = new Intent(DeckPicker.this,
+//										MyAccount.class);
+//								myAccount.putExtra("notLoggedIn", true);
+//								startActivityForResult(myAccount, LOG_IN_FOR_SYNC);
+//						        if (UIUtils.getApiLevel() > 4) {
+//						            ActivityTransitionAnimation.slide(DeckPicker.this, ActivityTransitionAnimation.LEFT);
+//						        }
+//							}
+//						});
+//			} else {
+//				builder.setPositiveButton(res.getString(R.string.log_in),
+//						new DialogInterface.OnClickListener() {
+//
+//							@Override
+//							public void onClick(DialogInterface dialog, int which) {
+//								Intent myAccount = new Intent(DeckPicker.this,
+//										MyAccount.class);
+//								myAccount.putExtra("notLoggedIn", true);
+//								startActivityForResult(myAccount, LOG_IN_FOR_DOWNLOAD);
+//						        if (UIUtils.getApiLevel() > 4) {
+//						            ActivityTransitionAnimation.slide(DeckPicker.this, ActivityTransitionAnimation.LEFT);
+//						        }
+//							}
+//						});
+//			}
+//			builder.setNegativeButton(res.getString(R.string.cancel), null);
+//			dialog = builder.create();
+//			break;
 
 		case DIALOG_NO_CONNECTION:
 			builder.setTitle(res.getString(R.string.connection_error_title));
@@ -1268,17 +1269,19 @@ public class DeckPicker extends Activity {
 
 		case DIALOG_NO_SPACE_LEFT:
 			builder.setMessage(res.getString(R.string.sd_space_warning));
-	        	builder.setNegativeButton(res.getString(R.string.dont_show_again), new OnClickListener() {
-		            @Override
-		            public void onClick(DialogInterface dialog, int which) {
+	        	builder.setNegativeButton(res.getString(R.string.dont_show_again), new DialogInterface.OnClickListener() {
+					@Override
+					public void onClick(DialogInterface arg0, int arg1) {
 		            	PrefSettings.getSharedPrefs(getBaseContext()).edit().putBoolean("dontShowLowMemory", true).commit();
-		            }
+					}
 		        });
 
 		default:
 			dialog = null;
 		}
-		dialog.setOwnerActivity(this);
+		if (dialog != null) {
+			dialog.setOwnerActivity(this);			
+		}
 		return dialog;
 	}
 
@@ -1345,7 +1348,10 @@ public class DeckPicker extends Activity {
     public boolean onKeyDown(int keyCode, KeyEvent event)  {
         if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
         	Log.i(AnkiDroidApp.TAG, "DeckPicker - onBackPressed()");
-        	closeDeckPicker(true);
+        	finish();
+            if (UIUtils.getApiLevel() > 4) {
+                ActivityTransitionAnimation.slide(this, ActivityTransitionAnimation.NONE);
+            }
         	return true;
         }
         return super.onKeyDown(keyCode, event);
@@ -1395,18 +1401,11 @@ public class DeckPicker extends Activity {
 	}
 
 
-	private void closeDeckPicker() {
-		closeDeckPicker(false);
-	}
-	private void closeDeckPicker(boolean backPressed) {
-		if (mPrefStartupDeckPicker && backPressed) {
-			setResult(StudyOptions.RESULT_CLOSE);
-			finish();
-		} else {
-			finish();
-			if (getIntent().getBooleanExtra("showAnimation", false) && UIUtils.getApiLevel() > 4) {
-	    			ActivityTransitionAnimation.slide(this, ActivityTransitionAnimation.LEFT);
-    		}
+	private void openStudyOptions() {
+		Intent intent = new Intent(this, StudyOptions.class);
+		startActivityForResult(intent, SHOW_STUDYOPTIONS);
+		if (UIUtils.getApiLevel() > 4) {
+    			ActivityTransitionAnimation.slide(this, ActivityTransitionAnimation.LEFT);
 		}
 	}
 
@@ -1455,11 +1454,6 @@ public class DeckPicker extends Activity {
 			showDialog(DIALOG_USER_NOT_LOGGED_IN_SYNC);
 		}
 	}
-
-
-	private void initDialogs() {
-		Resources res = getResources();
-	}
 	
 	
     @Override
@@ -1507,7 +1501,7 @@ public class DeckPicker extends Activity {
 
             case MENU_ABOUT:
                 // int i = 123/0; // Intentional Exception for feedback testing purpose
-                startActivity(new Intent(DeckPicker.this, About.class));
+                startActivity(new Intent(DeckPicker.this, Info.class));
                 return true;
 
             case MENU_DOWNLOAD_PERSONAL_DECK:
@@ -1544,7 +1538,17 @@ public class DeckPicker extends Activity {
     protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
         super.onActivityResult(requestCode, resultCode, intent);
 
-        if (requestCode == SHOW_INFO) {
+	if (requestCode == SHOW_STUDYOPTIONS) {
+		if (resultCode == RESULT_OK) {
+			for (long did : mCol.getDecks().active()) {
+				HashMap<String, String> deck = getDeckFromDeckList(did);
+				deck.put("new", "-1");
+				deck.put("lrn", "-1");
+				deck.put("rev", "-1");
+			}
+			DeckTask.launchDeckTask(DeckTask.TASK_TYPE_LOAD_DECK_COUNTS, mLoadCountsHandler, new TaskData(mCol));
+		}
+        } else if (requestCode == SHOW_INFO) {
 		if (resultCode == RESULT_OK) {
 			showOtherScreensIfNecessary(PrefSettings.getSharedPrefs(getBaseContext()));
 		} else {
@@ -1561,7 +1565,7 @@ public class DeckPicker extends Activity {
 //                	populateDeckList(preferences.getString("deckPath", AnkiDroidApp.getStorageDirectory()));
                 }
             }
-        } else if ((requestCode == CREATE_DECK || requestCode == DOWNLOAD_PERSONAL_DECK || requestCode == DOWNLOAD_SHARED_DECK) && resultCode == RESULT_OK) {
+        } else if ((requestCode == CREATE_DECK || requestCode == DOWNLOAD_SHARED_DECK) && resultCode == RESULT_OK) {
 //        	populateDeckList(mPrefDeckPath);
         } else if (requestCode == REPORT_FEEDBACK && resultCode == RESULT_OK) {
         } else if (requestCode == LOG_IN_FOR_DOWNLOAD && resultCode == RESULT_OK) {
@@ -1579,6 +1583,16 @@ public class DeckPicker extends Activity {
 	}
 
 
+	private HashMap<String, String> getDeckFromDeckList(long did) {
+		for (HashMap<String, String> d : mDeckList) {
+			if (d.get("did").equals(Long.toString(did))) {
+				return d;
+			}
+		}
+		return null;
+	}
+
+
 	private void resetDeckLanguages(String deckPath) {
 		if (MetaDB.resetDeckLanguages(this, deckPath)) {
 			Themes.showThemedToast(this, getResources().getString(R.string.contextmenu_deckpicker_reset_reset_message), true);
@@ -1587,14 +1601,6 @@ public class DeckPicker extends Activity {
 
 
     public void openPersonalDeckPicker() {
-        if (AnkiDroidApp.isUserLoggedIn()) {
-            startActivityForResult(new Intent(this, PersonalDeckPicker.class), DOWNLOAD_PERSONAL_DECK);
-            if (UIUtils.getApiLevel() > 4) {
-                ActivityTransitionAnimation.slide(this, ActivityTransitionAnimation.RIGHT);
-            }
-        } else {
-            showDialog(DIALOG_USER_NOT_LOGGED_IN_DOWNLOAD);
-        }
     }
 
 
@@ -1614,12 +1620,8 @@ public class DeckPicker extends Activity {
 		HashMap<String, String> data = (HashMap<String, String>) mDeckListAdapter.getItem(id);
 		mCol.getDecks().select(Long.parseLong(data.get("did")));
 		Log.i(AnkiDroidApp.TAG, "Selected " + deckFilename);
-		Intent intent = new Intent(this, StudyOptions.class);
-		startActivityForResult(intent, STUDYOPTIONS);
-    	if (UIUtils.getApiLevel() > 4) {
-    		ActivityTransitionAnimation.slide(this, ActivityTransitionAnimation.LEFT);
-    	}
 
+		openStudyOptions();
 	}
 
 
@@ -1682,16 +1684,19 @@ public class DeckPicker extends Activity {
         	int len = name.length;
         	StringBuilder sb = new StringBuilder();
         	for (int i = 0; i < len; i++) {
-        		if (i < len - 1) {
-        			sb.append(" --> ");
-        		} else {
+        		if (i == len - 1) {
         			sb.append(name[i]);
+        		} else if (i == len - 2) {
+        			sb.append("\u21aa");
+        		} else {
+        			sb.append("    ");
         		}
         	}
         	m.put("name", sb.toString());
         	m.put("did", ((Long)d[1]).toString());
-        	m.put("due", ((Integer)d[2]).toString());
-        	m.put("new", ((Integer)d[3]).toString());
+        	m.put("new", ((Integer)d[2]).toString());
+        	m.put("lrn", ((Integer)d[3]).toString());
+        	m.put("rev", ((Integer)d[4]).toString());
         	m.put("complMat", "1");
         	m.put("complAll", "1");
         	mDeckList.add(m);
@@ -1724,8 +1729,8 @@ public class DeckPicker extends Activity {
         public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
             if (mSwipeEnabled) {
                 try {
-       				if (e1.getX() - e2.getX() > StudyOptions.sSwipeMinDistance && Math.abs(velocityX) > StudyOptions.sSwipeThresholdVelocity && Math.abs(e1.getY() - e2.getY()) < StudyOptions.sSwipeMaxOffPath) {
-       					closeDeckPicker(true);
+       				if (e1.getX() - e2.getX() > sSwipeMinDistance && Math.abs(velocityX) > sSwipeThresholdVelocity && Math.abs(e1.getY() - e2.getY()) < sSwipeMaxOffPath) {
+       					openStudyOptions();
                     }
        			}
                 catch (Exception e) {
@@ -1766,17 +1771,6 @@ public class DeckPicker extends Activity {
 //		}
 //	}
 
-	@Override
-	protected void onResume() {
-		super.onResume();
-		// workaround for hidden dialog when resuming
-		if (mSyncLogAlert != null && mSyncLogAlert.isShowing()) {
-			try {				
-				mSyncLogAlert.dismiss();
-				mSyncLogAlert.show();
-			} catch (Exception e) {
-			}
-		}
 //	      if ((AnkiDroidApp.zeemoteController() != null) && (AnkiDroidApp.zeemoteController().isConnected())){
 //	    	  Log.d("Zeemote","Adding listener in onResume");
 //	    	  AnkiDroidApp.zeemoteController().addButtonListener(this);
@@ -1784,5 +1778,5 @@ public class DeckPicker extends Activity {
 //	      	  AnkiDroidApp.zeemoteController().addJoystickListener(adapter);
 //	      	  adapter.addButtonListener(this);
 //	      }
-	}
+//	}
 }

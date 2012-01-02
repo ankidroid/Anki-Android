@@ -17,18 +17,17 @@
 -->
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
 	android:orientation="vertical"
-        android:layout_width="fill_parent"
+    android:layout_width="fill_parent"
 	android:layout_height="fill_parent">
 	<WebView
-        	android:id="@+id/info"
-        	android:layout_width="fill_parent"
+        android:id="@+id/info"
+        android:layout_width="fill_parent"
 		android:layout_height="fill_parent"
-		android:layout_parentTop="true"
-		android:layout_above="@+id/continue">
-	</WebView>
+		android:layout_alignParentTop="true"
+		android:layout_above="@+id/info_continue"/>
 	<Button android:id="@+id/info_continue"
 		android:text="XXcontinue"
-        	android:layout_width="fill_parent"
+        android:layout_width="fill_parent"
 		android:layout_height="wrap_content"
-		android:layout_parentBottom="true">		
+		android:layout_alignParentBottom="true"/>		
 </RelativeLayout>

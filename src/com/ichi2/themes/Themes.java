@@ -162,9 +162,10 @@ public class Themes {
 				setMargins(view.findViewById(R.id.studyoptions_bottom), LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT, 0, 0, 0, 8f);
 				((View) view.findViewById(R.id.studyoptions_deckinformation)).setBackgroundResource(R.drawable.white_textview);
 				((View) view.findViewById(R.id.studyoptions_statistic_field)).setBackgroundResource(R.color.transparent);
+				((View) view.findViewById(R.id.studyoptions_deck_name)).setVisibility(View.VISIBLE);
 				((View) view.findViewById(R.id.studyoptions_deckinformation)).setBackgroundResource(mTextViewStyle);
 				((View) view.findViewById(R.id.studyoptions_bottom)).setBackgroundResource(mTextViewStyle);
-				((View) view.findViewById(R.id.studyoptions_main)).setBackgroundResource(R.drawable.white_wallpaper_so);
+				((View) view.findViewById(R.id.studyoptions_main)).setBackgroundResource(R.drawable.white_wallpaper);
 			} else {
 				((View) view.findViewById(R.id.studyoptions_statistic_field)).setBackgroundResource(mTextViewStyle);
 				((View) view.findViewById(R.id.studyoptions_main)).setBackgroundResource(mWallpaper);
@@ -293,7 +294,7 @@ public class Themes {
 
 	public static void loadTheme(){
 			SharedPreferences preferences = PrefSettings.getSharedPrefs(mContext);
-			mCurrentTheme = Integer.parseInt(preferences.getString("theme", "2"));
+			mCurrentTheme = Integer.parseInt(preferences.getString("theme", "3"));
 			switch (mCurrentTheme) {
 			case THEME_ANDROID_DARK:
 				mDialogBackgroundColor = R.color.card_browser_background;

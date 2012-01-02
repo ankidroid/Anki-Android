@@ -53,9 +53,9 @@ public class Card {
     public static final int TYPE_REV = 2;    
 
     // BEGIN SQL table entries
-    private int mId = 0;
-    private int mNid;
-    private int mDid;
+    private long mId = 0;
+    private long mNid;
+    private long mDid;
     private int mOrd;
     private int mCrt = Utils.intNow();
     private int mMod;
@@ -89,7 +89,7 @@ public class Card {
     public Card(Collection col) {
     	this(col, 0);
     }
-    public Card(Collection col, int id) {
+    public Card(Collection col, long id) {
         mCol = col;
         mTimerStarted = Double.NaN;
         mQA = null;
@@ -479,12 +479,12 @@ public class Card {
 //        return builder.toString();
 //    }
 
-    public int getId() {
+    public long getId() {
     	return mId;
     }
 
 
-    public void setId(int id) {
+    public void setId(long id) {
     	mId = id;
     }
 
@@ -509,7 +509,7 @@ public class Card {
     }
 
 
-    public int getNid() {
+    public long getNid() {
     	return mNid;
     }
 
@@ -641,7 +641,7 @@ public class Card {
     }
 
 
-    public void setNid(int nid) {
+    public void setNid(long nid) {
     	mNid = nid;
     }
 
@@ -651,12 +651,12 @@ public class Card {
     }
 
 
-    public void setDid(int did) {
+    public void setDid(long did) {
     	mDid = did;
     }
 
 
-    public int getDid() {
+    public long getDid() {
     	return mDid;
     }
 
