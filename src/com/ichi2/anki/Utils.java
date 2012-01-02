@@ -1008,6 +1008,7 @@ public class Utils {
 
     /** Removes any character that are not valid as deck names. */
     public static String removeInvalidDeckNameCharacters(String name) {
+        if (name == null) { return null; }
         // The only characters that we cannot absolutely allow to appear in the filename are the ones reserved in some
         // file system. Currently these are \, /, and :, in order to cover Linux, OSX, and Windows.
         return name.replaceAll("[:/\\\\]", "");
