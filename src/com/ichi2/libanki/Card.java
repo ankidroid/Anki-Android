@@ -23,6 +23,7 @@ import android.util.Log;
 
 import java.util.HashMap;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -124,9 +125,9 @@ public class Card {
                 Log.w(AnkiDroidApp.TAG, "Card.java (fromDB(id)): No result from query.");
                 return;
             }
-            mId = cursor.getInt(0);
-            mNid = cursor.getInt(1);
-            mDid = cursor.getInt(2);
+            mId = cursor.getLong(0);
+            mNid = cursor.getLong(1);
+            mDid = cursor.getLong(2);
             mOrd = cursor.getInt(3);
             mMod = cursor.getInt(4);
             mUsn = cursor.getInt(5);
@@ -225,7 +226,7 @@ public class Card {
             JSONObject m = model();
             Object[] data;
 			try {
-				data = new Object[] {mId, n.getId(), m.getInt("id"), mDid, mOrd, n.stringTags(), n.joinedFields()};
+				data = new Object[] {mId, n.getId(), m.getLong("id"), mDid, mOrd, n.stringTags(), n.joinedFields()};
 			} catch (JSONException e) {
 				throw new RuntimeException(e);
 			}
@@ -239,6 +240,7 @@ public class Card {
     	return note(false);
     }
     public Note note(boolean reload) {
+    	// TODO: why reload?
         if (mNote == null) {
             mNote = mCol.getNote(mNid);
         }
@@ -247,7 +249,7 @@ public class Card {
 
 
     public JSONObject model() {
-    	return mCol.getModels().get(mNote.getMid());
+    	return mCol.getModels().get(note().getMid());
     }
 
 

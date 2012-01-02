@@ -152,9 +152,9 @@ public class Sched {
 
     public void reset() {
     	_updateCutoff();
+        _resetNew();
         _resetLrn();
         _resetRev();
-        _resetNew();
     }
 
 
@@ -751,7 +751,7 @@ public class Sched {
         try {
             cur = mCol.getDb().getDatabase().rawQuery(
                     "SELECT due, id FROM cards WHERE did IN " + _deckLimit() + " AND queue = 1 AND due < " + mDayCutoff
-                            + " SORT BY due LIMIT " + mReportLimit, null);
+                            + " ORDER BY due LIMIT " + mReportLimit, null);
             // TODO: check, if correctly sorted
             while (cur.moveToNext()) {
                 mLrnQueue.add(new long[] { cur.getInt(0), cur.getLong(1) });
@@ -771,7 +771,7 @@ public class Sched {
 
 
     private Card _getLrnCard(boolean collapse) {
-        if (!mLrnQueue.isEmpty()) {
+        if (_fillLrn()) {
             double cutoff = Utils.now();
             if (collapse) {
                 try {
@@ -1530,6 +1530,7 @@ public class Sched {
 
     /** LIBANKI: not in libanki */
     public int newCount() {
+    	// TODO: suspended?
     	return mCol.getDb().queryScalar("SELECT count() FROM cards WHERE queue = 0 AND did IN " + _deckLimit(), false);
     }
 

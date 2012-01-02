@@ -89,7 +89,7 @@ public class Models {
 
 	private Collection mCol;
 	private boolean mChanged;
-	private HashMap<String, JSONObject> mModels;
+	private HashMap<Long, JSONObject> mModels;
 
     // BEGIN SQL table entries
     private int mId;
@@ -106,7 +106,7 @@ public class Models {
 //    private AnkiDb mDb;
 //
     /** Map for compiled Mustache Templates */
-    private HashMap<Integer, HashMap<Integer, Template[]>> mCmpldTemplateMap = new HashMap<Integer, HashMap<Integer, Template[]>>();
+    private HashMap<Long, HashMap<Integer, Template[]>> mCmpldTemplateMap = new HashMap<Long, HashMap<Integer, Template[]>>();
 //
 //    /** Map for convenience and speed which contains FieldNames from current model */
 //    private TreeMap<String, Integer> mFieldMap = new TreeMap<String, Integer>();
@@ -143,13 +143,13 @@ public class Models {
      */
     public void load(String json) {
     	mChanged = false;
-    	mModels = new HashMap<String, JSONObject>();
+    	mModels = new HashMap<Long, JSONObject>();
         try {
         	JSONObject decksarray = new JSONObject(json);
         	JSONArray ids = decksarray.names();
         	for (int i = 0; i < ids.length(); i++) {
-        		String id = ids.getString(i);
-        		JSONObject o = decksarray.getJSONObject(id);
+        		long id = ids.getLong(i);
+        		JSONObject o = decksarray.getJSONObject(String.valueOf(id));
         		mModels.put(id, o);
         	}
  		} catch (JSONException e) {
@@ -214,10 +214,9 @@ public class Models {
 
 
     /** get model with ID, or none. */
-    public JSONObject get(int id) {
-    	String sid = Integer.toString(id);
-    	if (mModels.containsKey(sid)) {
-    		return mModels.get(sid);
+    public JSONObject get(long id) {
+    	if (mModels.containsKey(id)) {
+    		return mModels.get(id);
     	} else {
     		return null;
     	}
@@ -365,7 +364,7 @@ public class Models {
 
 
     // not in libanki
-    public Template[] getCmpldTemplate(int modelId, int ord) {
+    public Template[] getCmpldTemplate(long modelId, int ord) {
     	if (!mCmpldTemplateMap.containsKey(modelId)) {
     		mCmpldTemplateMap.put(modelId, new HashMap<Integer, Template[]>());
     	}
@@ -377,7 +376,7 @@ public class Models {
 
 
     // not in libanki
-    private Template[] compileTemplate(int modelId, int ord) {
+    private Template[] compileTemplate(long modelId, int ord) {
     	JSONObject model = mModels.get(modelId);
         JSONObject template;
         Template[] t = new Template[2];

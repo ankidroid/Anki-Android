@@ -625,7 +625,7 @@ public class Collection {
 		// unpack fields and create dict
     	String[] flist = Utils.splitFields((String)data[6]);
     	Map<String, String> fields = new HashMap<String, String>();
-    	int modelId = (Integer)data[2];
+    	long modelId = (Long)data[2];
     	JSONObject model = mModels.get(modelId);
     	for (Map.Entry<String, Object[]> f : mModels.fieldMap(model).entrySet()) {
         	fields.put(f.getKey(), flist[(Integer) f.getValue()[0]]);
@@ -633,12 +633,12 @@ public class Collection {
         fields.put("Tags", (String)data[5]);
         try {
 			fields.put("Type", (String)model.get("name"));
-	        fields.put("Deck", mDecks.name((Integer)data[3]));
+	        fields.put("Deck", mDecks.name((Long)data[3]));
             JSONObject template = model.getJSONArray("tmpls").getJSONObject((Integer)data[4]);
 			fields.put("Card", template.getString("name"));
 	        // render q & a
 	        HashMap<String, String> d = new HashMap<String, String>();
-	        d.put("id", (String) data[0]);
+	        d.put("id", Long.toString((Long) data[0]));
 	        d.put("q", mModels.getCmpldTemplate(modelId, (Integer)data[4])[0].execute(fields));
 	        d.put("a", mModels.getCmpldTemplate(modelId, (Integer)data[4])[1].execute(fields));
 	        // TODO: runfilter

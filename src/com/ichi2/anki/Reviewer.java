@@ -343,7 +343,6 @@ public class Reviewer extends Activity implements IButtonListener{
 
     private Card mCurrentCard;
     private int mCurrentEase;
-    private Sched mCurrentScheduler;
 
     private long mSessionTimeLimit;
     private int mSessionCurrReps;
@@ -932,7 +931,7 @@ public class Reviewer extends Activity implements IButtonListener{
         	finishNoStorageAvailable();
 			return;
         } else {
-            mSched = new Sched(col);
+            mSched = col.getSched();
 //            mMediaDir = setupMedia(deck);
             restorePreferences();
 
@@ -1862,8 +1861,8 @@ public class Reviewer extends Activity implements IButtonListener{
 //        if (deck == null) {
 //        	return new boolean[] {false, false};
 //        }
-        long sessionRepLimit = 0;//deck.getSessionRepLimit();
-        long sessionTime = 0;//deck.getSessionTimeLimit();
+        long sessionRepLimit = 100;//deck.getSessionRepLimit();
+        long sessionTime = 1000;//deck.getSessionTimeLimit();
         String sessionMessage = null;
         String leechMessage;
         Log.i(AnkiDroidApp.TAG, "reviewer leech flag: " + values[0].isPreviousCardLeech() + " " + values[0].isPreviousCardSuspended());
@@ -1877,44 +1876,44 @@ public class Reviewer extends Activity implements IButtonListener{
             Themes.showThemedToast(Reviewer.this, leechMessage, true);
         }
 
-        if ((sessionRepLimit > 0) && (mSessionCurrReps >= sessionRepLimit)) {
-        	sessionComplete = true;
-            sessionMessage = res.getString(R.string.session_question_limit_reached);
-        } else if ((sessionTime > 0) && (System.currentTimeMillis() >= mSessionTimeLimit)) {
-            // session time limit reached, flag for halt once async task has completed.
-        	sessionComplete = true;
-            sessionMessage = res.getString(R.string.session_time_limit_reached);
-        } else if (mIsLastCard) {
-        	noMoreCards = true;
-            mProgressDialog = StyledProgressDialog.show(Reviewer.this, "", getResources()
-                    .getString(R.string.saving_changes), true);
-            setOutAnimation(true);
-        } else {
+//        if ((sessionRepLimit > 0) && (mSessionCurrReps >= sessionRepLimit)) {
+//        	sessionComplete = true;
+//            sessionMessage = res.getString(R.string.session_question_limit_reached);
+//        } else if ((sessionTime > 0) && (System.currentTimeMillis() >= mSessionTimeLimit)) {
+//            // session time limit reached, flag for halt once async task has completed.
+//        	sessionComplete = true;
+//            sessionMessage = res.getString(R.string.session_time_limit_reached);
+//        } else if (mIsLastCard) {
+//        	noMoreCards = true;
+//            mProgressDialog = StyledProgressDialog.show(Reviewer.this, "", getResources()
+//                    .getString(R.string.saving_changes), true);
+//            setOutAnimation(true);
+//        } else {
             // session limits not reached, show next card
         	mCurrentCard = values[0].getCard();
 
             // If the card is null means that there are no more cards scheduled for review.
-            if (mCurrentCard == null) {
-            	noMoreCards = true;
-                mProgressDialog = StyledProgressDialog.show(Reviewer.this, "", getResources()
-                        .getString(R.string.saving_changes), true);
-                setOutAnimation(false);
-                return new boolean[] {sessionComplete, noMoreCards};
-            }
-
-            // Start reviewing next card
-            if (mPrefWriteAnswers) { //only bother query deck if needed
-            	String[] answer = mCurrentCard.getComparedFieldAnswer();
-            	comparedFieldAnswer = answer[0];
-            	comparedFieldClass = answer[1];
-            } else {
-            	comparedFieldAnswer = null;
-            }
+//            if (mCurrentCard == null) {
+//            	noMoreCards = true;
+//                mProgressDialog = StyledProgressDialog.show(Reviewer.this, "", getResources()
+//                        .getString(R.string.saving_changes), true);
+//                setOutAnimation(false);
+//                return new boolean[] {sessionComplete, noMoreCards};
+//            }
+//
+//            // Start reviewing next card
+//            if (mPrefWriteAnswers) { //only bother query deck if needed
+//            	String[] answer = mCurrentCard.getComparedFieldAnswer();
+//            	comparedFieldAnswer = answer[0];
+//            	comparedFieldClass = answer[1];
+//            } else {
+//            	comparedFieldAnswer = null;
+//            }
             Reviewer.this.setProgressBarIndeterminateVisibility(false);
             // Reviewer.this.enableControls();
             Reviewer.this.unblockControls();
             Reviewer.this.displayCardQuestion();
-        }
+//        }
         if (mChosenAnswer.getText().equals("")) {
             setDueMessage();
         }
@@ -1968,14 +1967,14 @@ public class Reviewer extends Activity implements IButtonListener{
 
         // Show next review time
         if (mshowNextReviewTime) {
-                mNext1.setText(mCurrentScheduler.nextIvlStr(mCurrentCard, 1));
-                mNext2.setText(mCurrentScheduler.nextIvlStr(mCurrentCard, 2));
-                mNext3.setText(mCurrentScheduler.nextIvlStr(mCurrentCard, 3));
-                mNext4.setText(mCurrentScheduler.nextIvlStr(mCurrentCard, 4));
-        switchVisibility(mNext1, View.VISIBLE);
-        switchVisibility(mNext2, View.VISIBLE);
-        switchVisibility(mNext3, View.VISIBLE);
-        switchVisibility(mNext4, View.VISIBLE);
+                mNext1.setText(mSched.nextIvlStr(mCurrentCard, 1));
+                mNext2.setText(mSched.nextIvlStr(mCurrentCard, 2));
+                mNext3.setText(mSched.nextIvlStr(mCurrentCard, 3));
+                mNext4.setText(mSched.nextIvlStr(mCurrentCard, 4));
+                switchVisibility(mNext1, View.VISIBLE);
+                switchVisibility(mNext2, View.VISIBLE);
+                switchVisibility(mNext3, View.VISIBLE);
+                switchVisibility(mNext4, View.VISIBLE);
         }
     }
 

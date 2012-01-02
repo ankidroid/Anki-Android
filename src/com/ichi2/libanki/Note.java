@@ -40,8 +40,8 @@ public class Note {
     private long mId;
     private String mGuId;
     private JSONObject mModel;
-    private int mDid;
-    private int mMid;
+    private long mDid;
+    private long mMid;
     private int mMod;
     private int mUsn;
     private boolean mNewlyAdded;
@@ -97,8 +97,8 @@ public class Note {
                 return;
             }
             mGuId = cursor.getString(0);
-            mMid = cursor.getInt(1);
-    		mDid = cursor.getInt(2); 
+            mMid = cursor.getLong(1);
+    		mDid = cursor.getLong(2); 
     		mMod = cursor.getInt(3); 
     		mUsn = cursor.getInt(4);
             mTags = mCol.getTags().split(cursor.getString(5));
@@ -290,13 +290,13 @@ public class Note {
     
     
 
-    public int getMid() {
+    public long getMid() {
     	return mMid;
     }
     
     
     
-    public void setId(int id) {
+    public void setId(long id) {
         mId = id;
     }
 
@@ -309,7 +309,7 @@ public class Note {
     }
 
 
-    public int getDid() {
+    public long getDid() {
         return mDid;
     }
 

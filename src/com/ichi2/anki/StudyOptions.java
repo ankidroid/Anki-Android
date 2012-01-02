@@ -1601,7 +1601,7 @@ public class StudyOptions extends Activity implements IButtonListener {
                     mButtonStart.setText(R.string.studyoptions_continue);
                 }
                 setContentView(mStudyOptionsView);
-                updateValuesFromDeck();
+                resetAndUpdateValuesFromDeck();
                 break;
             case CONTENT_CONGRATS:
 //            	Deck deck = DeckManager.getMainDeck();
@@ -1638,12 +1638,9 @@ public class StudyOptions extends Activity implements IButtonListener {
 
 
     private void resetAndUpdateValuesFromDeck() {
-//        Deck deck = DeckManager.getMainDeck();
-////        DeckTask.waitToFinish();
-//        if (deck != null) {
-//            deck.reset();
-//        	updateValuesFromDeck();        	
-//        }
+        Sched sched = mCol.getSched();
+    	sched.reset();
+    	updateValuesFromDeck();        	
     }
 
 
@@ -1669,7 +1666,6 @@ public class StudyOptions extends Activity implements IButtonListener {
         Resources res = getResources();
 
         Sched sched = mCol.getSched();
-    	sched.reset();
     	int[] counts = sched.counts();
         String name;
 		try {
