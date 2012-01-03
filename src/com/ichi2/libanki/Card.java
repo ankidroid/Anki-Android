@@ -212,6 +212,7 @@ public class Card {
 
     public String css() {
         try {
+//			return (new StringBuilder()).append("<style type=\"text/css\">").append(template().get("css")).append("</style>").toString();
 			return (new StringBuilder()).append("<style>").append(template().get("css")).append("</style>").toString();
 		} catch (JSONException e) {
 			throw new RuntimeException(e);

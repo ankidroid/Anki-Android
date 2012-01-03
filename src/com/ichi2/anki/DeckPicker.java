@@ -748,16 +748,38 @@ public class DeckPicker extends Activity {
 
 		mDeckList = new ArrayList<HashMap<String, String>>();
 		mDeckListView = (ListView) findViewById(R.id.files);
-		mDeckListAdapter = new ThemedAdapter(this, mDeckList,
-				R.layout.deck_item, new String[] { "name", "new", "lrn", "rev", "complMat", "complAll" }, new int[] {
+		mDeckListAdapter = new SimpleAdapter(this, mDeckList,
+				R.layout.deck_item, new String[] { "name", "new", "lrn", "rev", "complMat", "complAll", "sep" }, new int[] {
 						R.id.DeckPickerName, R.id.deckpicker_new, R.id.deckpicker_lrn, 
-						R.id.deckpicker_rev, R.id.DeckPickerCompletionMat, R.id.DeckPickerCompletionAll });
+						R.id.deckpicker_rev, R.id.DeckPickerCompletionMat, R.id.DeckPickerCompletionAll, R.id.DeckPickerName });
 		mDeckListAdapter.setViewBinder(new SimpleAdapter.ViewBinder() {
 			@Override
 			public boolean setViewValue(View view, Object data, String text) {
-				if (!text.equals("-1") && view.getVisibility() == View.INVISIBLE) {
-					view.setVisibility(View.VISIBLE);
-					view.setAnimation(ViewAnimation.fade(ViewAnimation.FADE_IN, 500, 0));
+				if (view.getVisibility() == View.INVISIBLE) {
+					if (!text.equals("-1")) {
+						view.setVisibility(View.VISIBLE);
+						view.setAnimation(ViewAnimation.fade(ViewAnimation.FADE_IN, 500, 0));
+						return false;						
+					} else {
+						view.setVisibility(View.INVISIBLE);
+						return false;
+					}
+				}
+				if (view.getId() == R.id.DeckPickerName) {
+					View parent = (View) view.getParent().getParent();
+					if (text.equals("top")) {
+						parent.setBackgroundResource(R.drawable.white_deckpicker_top);
+						return true;
+					} else if (text.equals("bot")) {
+						parent.setBackgroundResource(R.drawable.white_deckpicker_bottom);
+						return true;
+					} else if (text.equals("ful")) {
+						parent.setBackgroundResource(R.drawable.white_deckpicker_full);
+						return true;
+					} else if (text.equals("cen")) {
+						parent.setBackgroundResource(R.drawable.white_deckpicker_center);						
+						return true;
+					}
 					return false;
 				}
 //				if (view.getId() == R.id.DeckPickerCompletionMat || view.getId() == R.id.DeckPickerCompletionAll) {
@@ -1699,8 +1721,29 @@ public class DeckPicker extends Activity {
         	m.put("rev", ((Integer)d[4]).toString());
         	m.put("complMat", "1");
         	m.put("complAll", "1");
+        	if (name.length == 1) {
+            	m.put("sep", "top");
+            	if (mDeckList.size() > 0) {
+            		HashMap<String, String> map = mDeckList.get(mDeckList.size() - 1);
+            		if (map.get("sep").equals("top")) {
+            			map.put("sep", "ful");
+            		} else {
+                		map.put("sep", "bot");
+            		}
+            	}
+        	} else {
+            	m.put("sep", "cen");
+        	}
         	mDeckList.add(m);
         }
+    	if (mDeckList.size() > 0) {
+    		HashMap<String, String> map = mDeckList.get(mDeckList.size() - 1);
+    		if (map.get("sep").equals("top")) {
+        		map.put("sep", "ful");
+    		} else {
+        		map.put("sep", "bot");    			
+    		}
+    	}
 		mDeckListAdapter.notifyDataSetChanged();
 	}
 
@@ -1710,18 +1753,18 @@ public class DeckPicker extends Activity {
 	// ----------------------------------------------------------------------------
 
 
-    private class ThemedAdapter extends SimpleAdapter {
-    	    public ThemedAdapter(Context context, ArrayList<HashMap<String, String>> items, int resource, String[] from, int[] to) {
-    	        super(context, items, resource, from, to);
-    	    }
-
-    	    @Override
-    	    public View getView(int position, View convertView, ViewGroup parent) {
-	    	  View view = super.getView(position, convertView, parent);
-	    	  Themes.setContentStyle(view, Themes.CALLER_DECKPICKER_DECK);
-    	      return view;
-    	    }
-    }
+//    private class ThemedAdapter extends SimpleAdapter {
+//    	    public ThemedAdapter(Context context, ArrayList<HashMap<String, String>> items, int resource, String[] from, int[] to) {
+//    	        super(context, items, resource, from, to);
+//    	    }
+//
+////    	    @Override
+////    	    public View getView(int position, View convertView, ViewGroup parent) {
+////	    	  View view = super.getView(position, convertView, parent);
+////	    	  Themes.setContentStyle(view, Themes.CALLER_DECKPICKER_DECK);
+////    	      return view;
+////    	    }
+//    }
 
 
 	class MyGestureDetector extends SimpleOnGestureListener {	

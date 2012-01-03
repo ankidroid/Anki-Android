@@ -193,7 +193,6 @@ public class StudyOptions extends Activity implements IButtonListener {
     private boolean mInDeckPicker;
     private boolean mInReviewer;
     private int mStartedByBigWidget;
-    private String mDeckFilename;
     private int mStartupMode;
     private boolean mSwipeEnabled;
 
@@ -674,7 +673,7 @@ public class StudyOptions extends Activity implements IButtonListener {
                         Log.i(AnkiDroidApp.TAG, "mUnmountReceiver - Action = Media Mounted");
                         mSdCardAvailable = true;
                         if (!mInDeckPicker) {
-                            loadPreviousDeck();
+//                            loadPreviousDeck();
                         }
                     }
                 }
@@ -846,13 +845,6 @@ public class StudyOptions extends Activity implements IButtonListener {
 //    			ActivityTransitionAnimation.slide(this, ActivityTransitionAnimation.LEFT);
 //    		}
 //        }
-    }
-
-
-    private void loadPreviousDeck() {
-        Intent deckLoadIntent = new Intent();
-        deckLoadIntent.putExtra(OPT_DB, mDeckFilename);
-        onActivityResult(PICK_DECK_REQUEST, RESULT_OK, deckLoadIntent);
     }
 
 
@@ -1375,33 +1367,33 @@ public class StudyOptions extends Activity implements IButtonListener {
 	        dialog = builder.create();
 	        break;
 
-		case DIALOG_DB_ERROR:
-			builder.setTitle(R.string.answering_error_title);
-	        builder.setIcon(android.R.drawable.ic_dialog_alert);
-			builder.setMessage(R.string.answering_error_message);
-	        builder.setPositiveButton(res.getString(R.string.backup_repair_deck), new OnClickListener() {
-	            @Override
-	            public void onClick(DialogInterface dialog, int which) {
-	            	DeckTask.launchDeckTask(DeckTask.TASK_TYPE_REPAIR_DECK, mRepairDeckHandler, new DeckTask.TaskData(mDeckFilename != null ? mDeckFilename : mRepairFileName));
-	            }
-	        });
-	        builder.setNeutralButton(res.getString(R.string.answering_error_report), new OnClickListener() {
-	            @Override
-	            public void onClick(DialogInterface dialog, int which) {
-	                mShowRepairDialog = true;
-	                Intent i = new Intent(StudyOptions.this, Feedback.class);
-	                dialog.dismiss();
-	                startActivityForResult(i, REPORT_ERROR);
-	                if (UIUtils.getApiLevel() > 4) {
-	                	ActivityTransitionAnimation.slide(StudyOptions.this, ActivityTransitionAnimation.FADE);
-		        	}
-	            }
-	        });	        	
-			builder.setNegativeButton(res.getString(R.string.close), null);
-	        builder.setCancelable(true);
-		    dialog = builder.create();
-			break;
-
+//		case DIALOG_DB_ERROR:
+//			builder.setTitle(R.string.answering_error_title);
+//	        builder.setIcon(android.R.drawable.ic_dialog_alert);
+//			builder.setMessage(R.string.answering_error_message);
+//	        builder.setPositiveButton(res.getString(R.string.backup_repair_deck), new OnClickListener() {
+//	            @Override
+//	            public void onClick(DialogInterface dialog, int which) {
+//	            	DeckTask.launchDeckTask(DeckTask.TASK_TYPE_REPAIR_DECK, mRepairDeckHandler, new DeckTask.TaskData(mDeckFilename != null ? mDeckFilename : mRepairFileName));
+//	            }
+//	        });
+//	        builder.setNeutralButton(res.getString(R.string.answering_error_report), new OnClickListener() {
+//	            @Override
+//	            public void onClick(DialogInterface dialog, int which) {
+//	                mShowRepairDialog = true;
+//	                Intent i = new Intent(StudyOptions.this, Feedback.class);
+//	                dialog.dismiss();
+//	                startActivityForResult(i, REPORT_ERROR);
+//	                if (UIUtils.getApiLevel() > 4) {
+//	                	ActivityTransitionAnimation.slide(StudyOptions.this, ActivityTransitionAnimation.FADE);
+//		        	}
+//	            }
+//	        });	        	
+//			builder.setNegativeButton(res.getString(R.string.close), null);
+//	        builder.setCancelable(true);
+//		    dialog = builder.create();
+//			break;
+//
 		case DIALOG_SELECT_HELP:
 	        builder.setTitle(res.getString(R.string.help_title));
 	        builder.setItems(new String[] {res.getString(R.string.help_tutorial), res.getString(R.string.help_online), res.getString(R.string.help_faq)}, new OnClickListener() {
@@ -1667,17 +1659,28 @@ public class StudyOptions extends Activity implements IButtonListener {
 
         Sched sched = mCol.getSched();
     	int[] counts = sched.counts();
-        String name;
+        String[] name;
 		try {
-			name = mCol.getDecks().current().getString("name");
+			name = mCol.getDecks().current().getString("name").split("::");
 		} catch (JSONException e) {
 			throw new RuntimeException(e);
 		}
 
+		StringBuilder nameBuilder = new StringBuilder();
+		if (name.length > 0) {
+			nameBuilder.append(name[0]);
+		}
+		if (name.length > 2) {
+			nameBuilder.append("...");
+		}
+		if (name.length > 1) {
+			nameBuilder.append("\n").append(name[name.length - 1]);
+		}
+		
 		int dues = counts[0] + counts[1] + counts[2];
         setTitle(res.getQuantityString(R.plurals.studyoptions_window_title, dues, name, dues, 0));
 
-        mTextDeckName.setText(name);
+        mTextDeckName.setText(nameBuilder.toString());
         mTextTodayNew.setText(String.valueOf(counts[0]));
         mTextTodayLrn.setText(String.valueOf(counts[1]));
         mTextTodayRev.setText(String.valueOf(counts[2]));
@@ -1775,12 +1778,12 @@ public class StudyOptions extends Activity implements IButtonListener {
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
-        Log.i(AnkiDroidApp.TAG, "onSaveInstanceState: " + mDeckFilename);
-        // Remember current deck's filename.
-        if (mDeckFilename != null) {
-            outState.putString("deckFilename", mDeckFilename);
-        }
-        Log.i(AnkiDroidApp.TAG, "onSaveInstanceState - Ending");
+//        Log.i(AnkiDroidApp.TAG, "onSaveInstanceState: " + mDeckFilename);
+//        // Remember current deck's filename.
+//        if (mDeckFilename != null) {
+//            outState.putString("deckFilename", mDeckFilename);
+//        }
+//        Log.i(AnkiDroidApp.TAG, "onSaveInstanceState - Ending");
     }
 
 
@@ -1929,7 +1932,7 @@ public class StudyOptions extends Activity implements IButtonListener {
         // If decks directory does not exist, create it.
         File decksDirectory = new File(mPrefDeckPath);
         AnkiDroidApp.createDecksDirectoryIfMissing(decksDirectory);
-        mDeckFilename = mPrefDeckPath + "/" + SAMPLE_DECK_NAME;
+//        mDeckFilename = mPrefDeckPath + "/" + SAMPLE_DECK_NAME;
         savePreferences("deckFilename");
 //        DeckTask.launchDeckTask(DeckTask.TASK_TYPE_LOAD_TUTORIAL, mLoadDeckHandler, new DeckTask.TaskData(mDeckFilename));        	
     }
@@ -2011,18 +2014,18 @@ public class StudyOptions extends Activity implements IButtonListener {
                 Log.i(AnkiDroidApp.TAG, "onActivityResult - Deck browser returned without picking new deck");
                 // Make sure we open the database again in onResume() if user pressed "back"
                 // deckSelected = false;
-            	if (mDeckFilename == null || !(new File(mDeckFilename).exists())) {
-//                    DeckManager.closeMainDeck();
-                    mCompat.invalidateOptionsMenu(this);
-//                    showContentView(CONTENT_NO_DECK);
-            	} else {
-                	showContentView(CONTENT_STUDY_OPTIONS);
-//                    if (DeckManager.getMainDeck() == null || !DeckManager.getMainDeckPath().equals(mDeckFilename)) {
-//                    	if (resultCode != RESULT_DONT_RELOAD_DECK) {
-//                            displayProgressDialogAndLoadDeck();
-//                        }
-//                    }
-            	}
+//            	if (mDeckFilename == null || !(new File(mDeckFilename).exists())) {
+////                    DeckManager.closeMainDeck();
+//                    mCompat.invalidateOptionsMenu(this);
+////                    showContentView(CONTENT_NO_DECK);
+//            	} else {
+//                	showContentView(CONTENT_STUDY_OPTIONS);
+////                    if (DeckManager.getMainDeck() == null || !DeckManager.getMainDeckPath().equals(mDeckFilename)) {
+////                    	if (resultCode != RESULT_DONT_RELOAD_DECK) {
+////                            displayProgressDialogAndLoadDeck();
+////                        }
+////                    }
+//            	}
                 return;
             }
 
@@ -2030,16 +2033,15 @@ public class StudyOptions extends Activity implements IButtonListener {
                 Log.e(AnkiDroidApp.TAG, "onActivityResult - Deck browser returned null intent");
                 // Make sure we open the database again in onResume()
                 // deckSelected = false;
-                displayProgressDialogAndLoadDeck();
                 return;
             }
             // A deck was picked. Save it in preferences and use it.
             Log.i(AnkiDroidApp.TAG, "onActivityResult = OK");
-            mDeckFilename = intent.getExtras().getString(OPT_DB);
-            savePreferences("deckFilename");
-            if (mDeckFilename == null || !new File(mDeckFilename).exists()) {
-//            	showContentView(CONTENT_NO_DECK);
-            }
+//            mDeckFilename = intent.getExtras().getString(OPT_DB);
+//            savePreferences("deckFilename");
+//            if (mDeckFilename == null || !new File(mDeckFilename).exists()) {
+////            	showContentView(CONTENT_NO_DECK);
+//            }
             // Log.i(AnkiDroidApp.TAG, "onActivityResult - deckSelected = " + deckSelected);
 //            if (DeckManager.getMainDeck() == null || !DeckManager.getMainDeckPath().equals(mDeckFilename)) {
 //                boolean updateAllCards = (requestCode == DOWNLOAD_SHARED_DECK);
@@ -2052,7 +2054,6 @@ public class StudyOptions extends Activity implements IButtonListener {
             if (resultCode == RESULT_RESTART) {
             	restartApp();
             } else if (resultCode == RESULT_RELOAD_DECK) {
-            	displayProgressDialogAndLoadDeck();
             }
             // If there is no deck loaded the controls have not to be shown
             // if(deckLoaded && cardsToReview)
@@ -2078,8 +2079,7 @@ public class StudyOptions extends Activity implements IButtonListener {
                     break;
                 case Reviewer.RESULT_DECK_CLOSED:
                 	showContentView(CONTENT_STUDY_OPTIONS);
-                	mDeckFilename = PrefSettings.getSharedPrefs(getBaseContext()).getString("deckFilename", null);
-                	displayProgressDialogAndLoadDeck();
+//                	mDeckFilename = PrefSettings.getSharedPrefs(getBaseContext()).getString("deckFilename", null);
                 	break;
                 case Reviewer.RESULT_DEFAULT:
 //                    DeckTask.launchDeckTask(DeckTask.TASK_TYPE_SAVE_DECK, mSaveAndResetDeckHandler, new DeckTask.TaskData(DeckManager.getMainDeck(), 0));
@@ -2131,7 +2131,7 @@ public class StudyOptions extends Activity implements IButtonListener {
         SharedPreferences preferences = PrefSettings.getSharedPrefs(getBaseContext());
         Editor editor = preferences.edit();
         if (str.equals("deckFilename")) {
-            editor.putString("deckFilename", mDeckFilename);
+//            editor.putString("deckFilename", mDeckFilename);
         } else if (str.equals("invertedColors")) {
             editor.putBoolean("invertedColors", mInvertedColors);
         } else if (str.equals("swapqa")) {
@@ -2186,17 +2186,6 @@ public class StudyOptions extends Activity implements IButtonListener {
     }
 
 
-    private String getVersion() {
-    	String versionNumber;
-    	try {
-            String pkg = this.getPackageName();
-            versionNumber = this.getPackageManager().getPackageInfo(pkg, 0).versionName;
-        } catch (NameNotFoundException e) {
-            versionNumber = "?";
-        }
-        return versionNumber;
-    }
-
     private void setLanguage(String language) {
     	Locale locale;
     	if (language.equals("")) {
@@ -2207,54 +2196,6 @@ public class StudyOptions extends Activity implements IButtonListener {
         Configuration config = new Configuration();
         config.locale = locale;
         this.getResources().updateConfiguration(config, this.getResources().getDisplayMetrics());
-    }
-
-
-    private void displayProgressDialogAndLoadDeck() {
-        displayProgressDialogAndLoadDeck(false);
-    }
-
-
-    private void displayProgressDialogAndLoadDeck(boolean updateAllCards) {
-        Log.i(AnkiDroidApp.TAG, "displayProgressDialogAndLoadDeck - Loading deck " + mDeckFilename);
-
-        // Don't open database again in onResume() until we know for sure this attempt to load the deck is finished
-        // deckSelected = true;
-
-        // if(isSdCardMounted())
-        // {
-        if (mDeckFilename != null && new File(mDeckFilename).exists()) {
-            // showControls(false);
-
-        	mToggleCram.setChecked(false);
-        	mToggleLimit.setEnabled(true);
-
-        	// close previous deck
-//        	DeckManager.closeMainDeck(DeckManager.REQUESTING_ACTIVITY_STUDYOPTIONS);
-//
-//            if (updateAllCards) {
-//                DeckTask.launchDeckTask(DeckTask.TASK_TYPE_LOAD_DECK_AND_UPDATE_CARDS, mLoadDeckHandler,
-//                        new DeckTask.TaskData(DeckManager.REQUESTING_ACTIVITY_STUDYOPTIONS, mDeckFilename));
-//            } else {
-//                DeckTask.launchDeckTask(DeckTask.TASK_TYPE_LOAD_DECK, mLoadDeckHandler, new DeckTask.TaskData(DeckManager.REQUESTING_ACTIVITY_STUDYOPTIONS, mDeckFilename));
-//            }
-        } else {
-            if (mDeckFilename == null) {
-                Log.i(AnkiDroidApp.TAG, "displayProgressDialogAndLoadDeck - SD card unmounted.");
-            } else if (!new File(mDeckFilename).exists()) {
-                Log.i(AnkiDroidApp.TAG, "displayProgressDialogAndLoadDeck - The deck " + mDeckFilename + " does not exist.");
-            }
-
-            // Show message informing that no deck has been loaded
-            // displayDeckNotLoaded();
-        }
-        // } else
-        // {
-        // Log.i(AnkiDroidApp.TAG, "displayProgressDialogAndLoadDeck - SD card unmounted.");
-        // deckSelected = false;
-        // Log.i(AnkiDroidApp.TAG, "displayProgressDialogAndLoadDeck - deckSelected = " + deckSelected);
-        // displaySdError();
-        // }
     }
 
 
@@ -2270,7 +2211,7 @@ public class StudyOptions extends Activity implements IButtonListener {
         @Override
         public void onPostExecute(DeckTask.TaskData result) {
         	if (result.getBoolean()) {
-        		displayProgressDialogAndLoadDeck();
+//        		displayProgressDialogAndLoadDeck();
         	} else {
         		Themes.showThemedToast(StudyOptions.this, getResources().getString(R.string.deck_repair_error), true);
         	}
@@ -2303,7 +2244,7 @@ public class StudyOptions extends Activity implements IButtonListener {
         public void onPostExecute(DeckTask.TaskData result) {
 			switch (result.getInt()) {
     		case BackupManager.RETURN_DECK_RESTORED:
-    			displayProgressDialogAndLoadDeck();
+//    			displayProgressDialogAndLoadDeck();
     			return;    			
     		case BackupManager.RETURN_ERROR:
 //    			showDialog(DIALOG_DECK_NOT_LOADED);
@@ -2618,10 +2559,10 @@ public class StudyOptions extends Activity implements IButtonListener {
         super.onNewIntent(intent);
         String deck = intent.getStringExtra(EXTRA_DECK);
         Log.d(AnkiDroidApp.TAG, "StudyOptions.onNewIntent: " + intent + ", deck=" + deck);
-        if (deck != null && !deck.equals(mDeckFilename)) {
-            mDeckFilename = deck;
-            loadPreviousDeck();
-        }
+//        if (deck != null && !deck.equals(mDeckFilename)) {
+//            mDeckFilename = deck;
+////            loadPreviousDeck();
+//        }
     }
 
 

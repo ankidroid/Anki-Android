@@ -1601,8 +1601,7 @@ public class Reviewer extends Activity implements IButtonListener{
         // Increment number reps counter
         mSessionCurrReps++;
         setNextCardAnimation(false);
-//        DeckTask.launchDeckTask(DeckTask.TASK_TYPE_ANSWER_CARD, mAnswerCardHandler, new DeckTask.TaskData(
-//                mCurrentEase, deck, mCurrentCard));
+        DeckTask.launchDeckTask(DeckTask.TASK_TYPE_ANSWER_CARD, mAnswerCardHandler, new DeckTask.TaskData(mSched, mCurrentCard, mCurrentEase));
     }
 
     // Set the content view to the one provided and initialize accessors.
@@ -2278,10 +2277,6 @@ public class Reviewer extends Activity implements IButtonListener{
             }
 
             displayString = enrichWithQADiv(question, false);
-            // Show an horizontal line as separation when question is shown in answer
-            if (isQuestionDisplayed()) {
-                displayString = displayString + "<hr/>";
-            }
 
             if (mSpeakText && Integer.valueOf(android.os.Build.VERSION.SDK) > 3) {
 //                ReadText.setLanguageInformation(Models.getModel(DeckManager.getMainDeck(), mCurrentCard.getCardModelId(), false).getId(), mCurrentCard.getCardModelId());          
@@ -2310,22 +2305,12 @@ public class Reviewer extends Activity implements IButtonListener{
         sDisplayAnswer = true;
         setFlipCardAnimation();
 
-        String answer = getAnswer(), question = getQuestion();
+        String answer = getAnswer();
 
         String displayString = "";
         
         if (mSimpleInterface) {
         	SpannableStringBuilder sb = new SpannableStringBuilder();
-		if (isQuestionDisplayed()) {
-	        	Spanned ques = Html.fromHtml(question);
-	        	if (ques.length() == 0) {
-	        		ques = new SpannableString(getResources().getString(R.string.simple_interface_hint, R.string.card_details_question));
-	        		((SpannableString)ques).setSpan(new StyleSpan(Typeface.ITALIC), 0, mCardContent.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-			}
-	        	sb.append(ques);
-	        	sb.append("\n─────\n");
-        	}
-
         	Spanned ans = Html.fromHtml(answer);
         	if (ans.length() == 0) {
         		SpannableString hint = new SpannableString(getResources().getString(R.string.simple_interface_hint, R.string.card_details_answer));
@@ -2340,7 +2325,6 @@ public class Reviewer extends Activity implements IButtonListener{
             if(mPrefFixArabic) {
             	// reshape
             	answer = ArabicUtilities.reshapeSentence(answer, true);
-            	question = ArabicUtilities.reshapeSentence(question, true);
             }
 
             // If the user wrote an answer
@@ -2375,15 +2359,6 @@ public class Reviewer extends Activity implements IButtonListener{
                 inputMethodManager.hideSoftInputFromWindow(mAnswerField.getWindowToken(), 0);
             } else {
                 displayString = enrichWithQADiv(answer, true);
-            }
-
-            // Depending on preferences do or do not show the question
-            if (isQuestionDisplayed()) {
-                StringBuffer sb = new StringBuffer();
-                sb.append(enrichWithQADiv(question, false));
-                sb.append("<a name=\"question\"></a><hr/>");
-                sb.append(displayString);
-                displayString = sb.toString();
             }
         }
 
@@ -2443,20 +2418,12 @@ public class Reviewer extends Activity implements IButtonListener{
         int questionStartsAt = content.indexOf("<a name=\"question\"></a><hr/>");
         String question = "";
         String answer = "";
-        if (isQuestionDisplayed()) {
-        	if (sDisplayAnswer && (questionStartsAt != -1)) {
-                question = Sound.parseSounds(mBaseUrl, content.substring(0, questionStartsAt), mSpeakText, MetaDB.LANGUAGES_QA_QUESTION);
-                answer = Sound.parseSounds(mBaseUrl, content.substring(questionStartsAt, content.length()), mSpeakText, MetaDB.LANGUAGES_QA_ANSWER);
-        	} else {
-                question = Sound.parseSounds(mBaseUrl, content.substring(0, content.length() - 5), mSpeakText, MetaDB.LANGUAGES_QA_QUESTION) + "<hr/>";
-        	}
-        } else {
-            int qa = MetaDB.LANGUAGES_QA_QUESTION;
-        	if (sDisplayAnswer) {
-                qa = MetaDB.LANGUAGES_QA_ANSWER;
-        	}
-        	answer = Sound.parseSounds(mBaseUrl, content, mSpeakText, qa);
-        }
+
+        int qa = MetaDB.LANGUAGES_QA_QUESTION;
+    	if (sDisplayAnswer) {
+            qa = MetaDB.LANGUAGES_QA_ANSWER;
+    	}
+    	answer = Sound.parseSounds(mBaseUrl, content, mSpeakText, qa);
 
         // Parse out the LaTeX images
 //        question = LaTeX.parseLaTeX(DeckManager.getMainDeck(), question);
@@ -2709,24 +2676,6 @@ public class Reviewer extends Activity implements IButtonListener{
             }
     	}
     	return mCustomDefaultFontCss;
-    }
-
-
-    private boolean isQuestionDisplayed() {
-        switch (mPrefHideQuestionInAnswer) {
-            case HQIA_DO_HIDE:
-                return false;
-
-            case HQIA_DO_SHOW:
-                return true;
-
-            case HQIA_CARD_MODEL:
-//                return (Models.getModel(DeckManager.getMainDeck(), mCurrentCard.getCardModelId(), false).getCardModel(
-//                        mCurrentCard.getCardModelId()).isQuestionInAnswer());
-
-            default:
-                return true;
-        }
     }
 
 

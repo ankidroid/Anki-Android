@@ -21,13 +21,12 @@
 				android:textSize="28sp" 
 				android:textStyle="bold"
 				android:ellipsize="end"
-				android:maxLines="2"
 				android:minLines="1"
+				android:maxLines="2"
 				android:background="#000000"
 				android:gravity="center" 
 				android:layout_width="fill_parent" 
 				android:layout_height="wrap_content"
-				android:visibility="invisible"
 				android:layout_marginBottom="8dp" 
 				android:text=""/>
 			<LinearLayout
@@ -170,6 +169,19 @@
 						<TextView
 							android:layout_width="wrap_content"
 							android:layout_height="wrap_content"
+							android:text="@string/studyoptions_eta"/>
+						<TextView 
+							android:id="@+id/studyoptions_eta"
+							android:layout_width="fill_parent"
+							android:layout_height="wrap_content"
+							android:layout_marginLeft="4dp"
+							android:gravity="right"
+							android:text="-"/>
+					</TableRow>
+					<TableRow>
+						<TextView
+							android:layout_width="wrap_content"
+							android:layout_height="wrap_content"
 							android:text="@string/studyoptions_new_total"/>
 						<TextView 
 							android:id="@+id/studyoptions_new_total"
@@ -191,19 +203,6 @@
 							android:layout_marginLeft="4dp"
 							android:gravity="right"
 							android:text=""/>
-					</TableRow>
-					<TableRow>
-						<TextView
-							android:layout_width="wrap_content"
-							android:layout_height="wrap_content"
-							android:text="@string/studyoptions_eta"/>
-						<TextView 
-							android:id="@+id/studyoptions_eta"
-							android:layout_width="fill_parent"
-							android:layout_height="wrap_content"
-							android:layout_marginLeft="4dp"
-							android:gravity="right"
-							android:text="-"/>
 					</TableRow>
 				</TableLayout>
 			</LinearLayout>

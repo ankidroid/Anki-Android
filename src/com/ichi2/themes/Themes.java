@@ -184,10 +184,14 @@ public class Themes {
 				lv.setDividerHeight(0);
 				break;
 			case THEME_WHITE:
-				lv.setBackgroundResource(R.drawable.white_textview);
 				lv.setSelector(R.drawable.white_deckpicker_list_selector);
-				lv.setDivider(mContext.getResources().getDrawable(R.drawable.white_listdivider));
-		        setMargins(view, LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT, 4f, 4f, 4f, 4f);
+				lv.setOverScrollMode(View.OVER_SCROLL_NEVER);
+				lv.setFadingEdgeLength(15);
+				lv.setDividerHeight(0);
+				lv.setBackgroundResource(R.drawable.white_deckpicker_lv_background);
+				view.setBackgroundResource(mWallpaper);
+//				lv.setDivider(mContext.getResources().getDrawable(R.drawable.white_listdivider));
+//		        setMargins(view, LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT, 4f, 4f, 4f, 4f);
 				break;
 			default:
 				break;
