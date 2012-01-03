@@ -41,4 +41,26 @@ public class UtilsTest extends AndroidTestCase {
         assertEquals("appleorangepeach", Utils.removeInvalidDeckNameCharacters("apple:orange/peach\\"));
     }
 
+    
+    public void testJoin_VarArgs() {
+        assertEquals("", Utils.join(""));
+        assertEquals("", Utils.join("+"));
+        assertEquals("a", Utils.join("+", "a"));
+        assertEquals("a+b", Utils.join("+", "a", "b"));
+        assertEquals("a b", Utils.join(" ", "a", "b"));
+        assertEquals("a, b", Utils.join(", ", "a", "b"));
+        assertEquals("a, b, a, c", Utils.join(", ", "a", "b", "a", "c"));
+    }
+
+
+    public void testJoin_Array() {
+        assertEquals("", Utils.join("", new String[]{}));
+        assertEquals("", Utils.join("+", new String[]{}));
+        assertEquals("a", Utils.join("+", new String[]{ "a" }));
+        assertEquals("a+b", Utils.join("+", new String[]{ "a", "b" }));
+        assertEquals("a b", Utils.join(" ", new String[]{ "a", "b" }));
+        assertEquals("a, b", Utils.join(", ", new String[]{ "a", "b" }));
+        assertEquals("a, b, a, c", Utils.join(", ", new String[]{ "a", "b", "a", "c" }));
+    }
+
 }

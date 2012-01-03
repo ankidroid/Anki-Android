@@ -3261,51 +3261,25 @@ public class Deck {
     }
 
 
-    public ArrayList<HashMap<String, String>> getCards(int chunk, String startId) {
-    	ArrayList<HashMap<String, String>> cards = new ArrayList<HashMap<String, String>>();
+    public ArrayList<HashMap<String, String>> getCards(int chunkSize, String startId) {
+        ArrayList<HashMap<String, String>> cards = new ArrayList<HashMap<String, String>>();
 
-        Cursor cur = null;
+        Cursor cursor = null;
         try {
-        	cur = getDB().getDatabase().rawQuery("SELECT cards.id, cards.question, cards.answer, " +
-        			"facts.tags, models.tags, cardModels.name, cards.priority, cards.due, cards.interval, " +
-        			"cards.factor, cards.created FROM cards, facts, " +
-        			"models, cardModels WHERE cards.factId == facts.id AND facts.modelId == models.id " +
-        			"AND cards.cardModelId = cardModels.id " + (startId != "" ? ("AND cards.id > " + startId) : "") +
-        			" ORDER BY cards.id LIMIT " + chunk, null);
-            while (cur.moveToNext()) {
-            	HashMap<String, String> data = new HashMap<String, String>();
-            	data.put("id", Long.toString(cur.getLong(0)));
-            	data.put("question", Utils.stripHTML(cur.getString(1).replaceAll("<br(\\s*\\/*)>","\n")));
-            	data.put("answer", Utils.stripHTML(cur.getString(2).replaceAll("<br(\\s*\\/*)>","\n")));
-            	String tags = cur.getString(3);
-            	String flags = null;
-           	    if (tags.contains(TAG_MARKED)) {
-           	    	flags = "1";
-           	    } else {
-           	    	flags = "0";
-           	    }
-            	if (cur.getString(6).equals("-3")) {
-            		flags = flags + "1";
-                } else {
-                	flags = flags + "0";
-                }
-            	data.put("tags", tags + " " + cur.getString(4) + " " + cur.getString(5));
-            	data.put("flags", flags);
-            	data.put("due", Double.toString(cur.getDouble(6)));
-            	data.put("interval", Double.toString(cur.getDouble(7)));
-            	data.put("factor", Double.toString(cur.getDouble(8)));
-            	data.put("created", Double.toString(cur.getDouble(9)));
-            	cards.add(data);
+            cursor = getDB().getDatabase().rawQuery(CardsQuery.getRawQuery(chunkSize, startId), null);
+            while (cursor.moveToNext()) {
+                cards.add(CardsQuery.newCardFromCursor(cursor));
             }
         } catch (SQLException e) {
             Log.e(AnkiDroidApp.TAG, "getAllCards: " + e.toString());
-            return null;
+            // Remove any partially loaded cards.
+            cards.clear();
         } finally {
-            if (cur != null && !cur.isClosed()) {
-                cur.close();
+            if (cursor != null && !cursor.isClosed()) {
+                cursor.close();
             }
         }
-    	return cards;
+        return cards;
     }
 
 
