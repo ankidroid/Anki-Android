@@ -1929,18 +1929,22 @@ public class StudyOptions extends Activity implements IButtonListener {
 
     private void hideDeckInformation(boolean fade) {
     	setTitle(getResources().getString(R.string.app_name));
-        mDeckInformation.setVisibility(View.INVISIBLE);
-        if (fade) {
-        	mDeckInformation.setAnimation(ViewAnimation.fade(ViewAnimation.FADE_OUT, 500, 0));        	
+    	if(mDeckInformation != null) {
+            mDeckInformation.setVisibility(View.INVISIBLE);
+            if (fade) {
+            	mDeckInformation.setAnimation(ViewAnimation.fade(ViewAnimation.FADE_OUT, 500, 0));        	
+            }
         }
     }
 
 
     private void showDeckInformation(boolean fade) {
         mTextDeckName.setVisibility(View.VISIBLE);
-        mDeckInformation.setVisibility(View.VISIBLE);
-        if (fade) {
-        	mDeckInformation.setAnimation(ViewAnimation.fade(ViewAnimation.FADE_IN, 500, 0));
+        if(mDeckInformation != null) {
+            mDeckInformation.setVisibility(View.VISIBLE);
+            if (fade) {
+            	mDeckInformation.setAnimation(ViewAnimation.fade(ViewAnimation.FADE_IN, 500, 0));
+            }
         }
     }
 
