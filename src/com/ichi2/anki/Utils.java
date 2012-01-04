@@ -418,6 +418,11 @@ public class Utils {
     }
 
 
+    /** Replace HTML line break tags with new lines. */
+    public static String replaceLineBreak(String text) {
+        return text.replaceAll("<br(\\s*\\/*)>", "\n");
+    }
+
 
     /**
      * Converts an InputStream to a String.
@@ -774,13 +779,23 @@ public class Utils {
      * @return The joined tags in a single string 
      */
     public static String joinTags(Collection<String> tags) {
-        StringBuilder result = new StringBuilder(128);
-        for (String tag : tags) {
-            result.append(tag).append(" ");
-        }
-        return result.toString().trim();
+        return join(" ", tags.toArray(new String[0]));
     }
-    
+
+
+    /** Joins the given string values using the delimiter between them. */
+    public static String join(String delimiter, String... values) {
+        StringBuilder sb = new StringBuilder();
+        for (String value : values) {
+            if (sb.length() != 0) {
+                sb.append(delimiter);
+            }
+            sb.append(value);
+        }
+        return sb.toString();
+    }
+
+
     /**
      * Strip leading/trailing/superfluous spaces/commas from a tags string. Remove duplicates and sort.
      * 
@@ -1051,4 +1066,5 @@ public class Utils {
         	return new String[0];
         }
     }
+
 }
