@@ -1,8 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <style name="Theme_Base_Light" parent="@android:style/Theme.Light" />
+    <style name="Theme_Base_Dark" parent="@android:style/Theme" />
+    <style name="Theme_Base_Dialog" parent="@android:style/Theme.Dialog" />
+
     <!-- Blue Theme -->
-    <style name="Theme_Blue" parent="@android:Theme.Light">
+    <style name="Theme_Blue" parent="@style/Theme_Base_Light">
         <item name="android:buttonStyle">@style/Blue.Button</item>
         <item name="android:buttonStyleSmall">@style/Blue.Button.Small</item>
         <item name="android:buttonStyleToggle">@style/Blue.Button.Toggle</item>
@@ -12,7 +16,7 @@
         <item name="android:editTextStyle">@style/Blue.Edittext</item>
         <item name="android:radioButtonStyle">@style/Blue.CompoundButton.RadioButton</item>
 
-	<!-- Dialog styles -->
+        <!-- Dialog styles -->
         <item name="android:alertDialogStyle">@style/Blue.AlertDialog</item>
         <item name="android:listChoiceIndicatorSingle">@drawable/blue_btn_radio</item>
         <item name="android:listChoiceIndicatorMultiple">@drawable/blue_btn_check</item>
@@ -26,7 +30,7 @@
     </style>
 
     <!-- Flat Theme -->
-    <style name="Theme_Flat" parent="@android:Theme.Light">
+    <style name="Theme_Flat" parent="@style/Theme_Base_Light">
         <item name="android:buttonStyle">@style/Blue.Button</item>
         <item name="android:buttonStyleSmall">@style/Blue.Button.Small</item>
         <item name="android:buttonStyleToggle">@style/Blue.Button.Toggle</item>
@@ -36,7 +40,7 @@
         <item name="android:editTextStyle">@style/Blue.Edittext</item>
         <item name="android:radioButtonStyle">@style/Blue.CompoundButton.RadioButton</item>
 
-	<!-- Dialog styles -->
+        <!-- Dialog styles -->
         <item name="android:alertDialogStyle">@style/Blue.AlertDialog</item>
         <item name="android:listChoiceIndicatorSingle">@drawable/blue_btn_radio</item>
         <item name="android:listChoiceIndicatorMultiple">@drawable/blue_btn_check</item>
@@ -50,7 +54,7 @@
     </style>
 
     <!-- White Theme -->
-    <style name="Theme_White" parent="@android:Theme.Light">
+    <style name="Theme_White" parent="@style/Theme_Base_Light">
         <item name="android:buttonStyle">@style/White.Button</item>
         <item name="android:buttonStyleSmall">@style/White.Button.Small</item>
         <item name="android:buttonStyleToggle">@style/White.Button.Toggle</item>
@@ -60,7 +64,7 @@
         <item name="android:editTextStyle">@style/White.Edittext</item>
         <item name="android:radioButtonStyle">@style/White.CompoundButton.RadioButton</item>
 
-	<!-- Dialog styles -->
+        <!-- Dialog styles -->
         <item name="android:alertDialogStyle">@style/White.AlertDialog</item>
         <item name="android:listChoiceIndicatorSingle">@drawable/blue_btn_radio</item>
         <item name="android:listChoiceIndicatorMultiple">@drawable/blue_btn_check</item>
@@ -74,17 +78,17 @@
     </style>
 
     <!-- Android White Theme -->
-    <style name="Theme_Light" parent="@android:style/Theme.Light">
-	<item name="listItemBackgroundDrawable">@android:drawable/list_selector_background</item>
+    <style name="Theme_Light" parent="@style/Theme_Base_Light">
+        <item name="listItemBackgroundDrawable">@android:drawable/list_selector_background</item>
     </style>
 
     <!-- Android Black Theme -->
-    <style name="Theme_Black" parent="@android:style/Theme">
-	<item name="listItemBackgroundDrawable">@android:drawable/list_selector_background</item>
+    <style name="Theme_Black" parent="@style/Theme_Base_Dark">
+        <item name="listItemBackgroundDrawable">@android:drawable/list_selector_background</item>
     </style>
 
     <!-- Basic theme for dialogs -->
-    <style name="StyledDialog" parent="@android:style/Theme.Dialog">
+    <style name="StyledDialog" parent="@style/Theme_Base_Dialog">
         <item name="android:windowBackground">@color/transparent</item>
         <item name="android:windowNoTitle">true</item>
         <item name="android:windowIsFloating">true</item>
