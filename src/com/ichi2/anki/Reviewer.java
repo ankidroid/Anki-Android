@@ -201,6 +201,7 @@ public class Reviewer extends Activity implements IButtonListener{
             "[[\\u0591-\\u05BD][\\u05BF\\u05C1\\u05C2\\u05C4\\u05C5\\u05C7]]");
     // private static final Pattern sBracketsPattern = Pattern.compile("[()\\[\\]{}]");
     // private static final Pattern sNumeralsPattern = Pattern.compile("[0-9][0-9%]+");
+    private static final Pattern sFenPattern = Pattern.compile(	"\\[fen\\]([^\\[]+)\\[/fen\\]");
 
     /** Hide Question In Answer choices */
     private static final int HQIA_DO_HIDE = 0;
@@ -251,6 +252,7 @@ public class Reviewer extends Activity implements IButtonListener{
     private int mShakeIntensity;
     private boolean mShakeActionStarted = false;
     private boolean mPrefFixHebrew; // Apply manual RTL for hebrew text - bug in Android WebView
+    private boolean mPrefConvertFen;
     private boolean mPrefFixArabic;
     private boolean mSpeakText;
     private boolean mPlaySoundsAtStart;
@@ -2030,6 +2032,7 @@ public class Reviewer extends Activity implements IButtonListener{
         mInputWorkaround = preferences.getBoolean("inputWorkaround", false);
         mPrefFixHebrew = preferences.getBoolean("fixHebrewText", false);
         mPrefFixArabic = preferences.getBoolean("fixArabicText", false);
+        mPrefConvertFen = preferences.getBoolean("convertFenText", false);
         mSpeakText = preferences.getBoolean("tts", false);
         mPlaySoundsAtStart = preferences.getBoolean("playSoundsAtStart", true);
         mShowProgressBars = preferences.getBoolean("progressBars", true);
@@ -2431,6 +2434,11 @@ public class Reviewer extends Activity implements IButtonListener{
         if (isHebrewFixEnabled()) {
             content = applyFixForHebrew(content);
         }
+        
+        // Chess notation FEN handling
+        if (this.isFenConversionEnabled()) {
+        	content = fenToChessboard(content);
+        }
 		
         Log.i(AnkiDroidApp.TAG, "content card = \n" + content);
         StringBuilder style = new StringBuilder();
@@ -2690,6 +2698,10 @@ public class Reviewer extends Activity implements IButtonListener{
 
     private boolean isHebrewFixEnabled() {
         return mPrefFixHebrew;
+    }
+    
+    private boolean isFenConversionEnabled() {
+    	return mPrefConvertFen;
     }
 
 
@@ -3071,6 +3083,16 @@ public class Reviewer extends Activity implements IButtonListener{
             m.appendReplacement(sb, hebrewText); 
         }
         m.appendTail(sb);
+        return sb.toString();
+    }
+    
+    private String fenToChessboard(String text) {
+        Matcher mf = sFenPattern.matcher(text);
+        StringBuffer sb = new StringBuffer();
+        while (mf.find()) {
+            mf.appendReplacement(sb, "<script type=\"text/javascript\">document.write(renderFen('" + mf.group(1) + "'));</script>"); 
+        }
+        mf.appendTail(sb);
         return sb.toString();
     }
 

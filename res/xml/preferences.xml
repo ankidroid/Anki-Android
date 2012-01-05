@@ -496,6 +496,11 @@
 				android:defaultValue="false"
 				android:key="fixArabicText"/>
 			<CheckBoxPreference
+				android:title="@string/convert_fen_text"
+				android:summary="@string/convert_fen_text_summ"
+				android:defaultValue="false"
+				android:key="convertFenText"/>
+			<CheckBoxPreference
 				android:title="@string/pref_cache_cardbrowser"
 				android:summary="@string/pref_cache_cardbrowser_summ"
 				android:defaultValue="false"
