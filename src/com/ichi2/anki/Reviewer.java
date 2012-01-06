@@ -201,7 +201,8 @@ public class Reviewer extends Activity implements IButtonListener{
             "[[\\u0591-\\u05BD][\\u05BF\\u05C1\\u05C2\\u05C4\\u05C5\\u05C7]]");
     // private static final Pattern sBracketsPattern = Pattern.compile("[()\\[\\]{}]");
     // private static final Pattern sNumeralsPattern = Pattern.compile("[0-9][0-9%]+");
-    private static final Pattern sFenPattern = Pattern.compile(	"\\[fen\\]([^\\[]+)\\[/fen\\]");
+    private static final Pattern sFenPattern = Pattern.compile("\\[fen ?([^\\]]*)\\]([^\\[]+)\\[/fen\\]");
+    private static final Pattern sFenOrientationPattern = Pattern.compile("orientation *= *\"?(black|white)\"?");
 
     /** Hide Question In Answer choices */
     private static final int HQIA_DO_HIDE = 0;
@@ -3090,7 +3091,16 @@ public class Reviewer extends Activity implements IButtonListener{
         Matcher mf = sFenPattern.matcher(text);
         StringBuffer sb = new StringBuffer();
         while (mf.find()) {
-            mf.appendReplacement(sb, "<script type=\"text/javascript\">document.write(renderFen('" + mf.group(1) + "'));</script>"); 
+        	if (mf.group(1).isEmpty()) {
+        		mf.appendReplacement(sb, "<script type=\"text/javascript\">document.write(renderFen('" + mf.group(2) + "',false));</script>");
+        	} else {
+        		Matcher mo = sFenOrientationPattern.matcher(mf.group(1));
+        		if (mo.find() && mo.group(1).equalsIgnoreCase("black")) {
+            		mf.appendReplacement(sb, "<script type=\"text/javascript\">document.write(renderFen('" + mf.group(2) + "',1));</script>");
+        		} else {
+            		mf.appendReplacement(sb, "<script type=\"text/javascript\">document.write(renderFen('" + mf.group(2) + "',false));</script>");
+        		}
+        	}
         }
         mf.appendTail(sb);
         return sb.toString();

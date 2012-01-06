@@ -50,9 +50,12 @@
 				img.src = img.src;
 			}
 		}
-        function renderFen(fentxt)
+        function renderFen(fentxt, showBlack)
         {
             fentxt=fentxt.replace(/ .*/g,'');
+            if (showBlack) {
+            	fentxt = fentxt.split("").reverse().join("");
+            }
             fentxt=fentxt.replace(/r/g,'x');
             fentxt=fentxt.replace(/\//g,'</tr><tr>');
             fentxt=fentxt.replace(/1/g,'<td></td>');
