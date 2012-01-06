@@ -3091,7 +3091,7 @@ public class Reviewer extends Activity implements IButtonListener{
         Matcher mf = sFenPattern.matcher(text);
         StringBuffer sb = new StringBuffer();
         while (mf.find()) {
-        	if (mf.group(1).isEmpty()) {
+        	if (mf.group(1).length() == 0) {
         		mf.appendReplacement(sb, "<script type=\"text/javascript\">document.write(renderFen('" + mf.group(2) + "',false));</script>");
         	} else {
         		Matcher mo = sFenOrientationPattern.matcher(mf.group(1));
