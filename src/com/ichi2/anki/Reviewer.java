@@ -1782,6 +1782,24 @@ public class Reviewer extends Activity implements IButtonListener{
 			}
         	
         });
+        if (mButtonHeight == 0 && mRelativeButtonSize != 100) {
+            mButtonHeight = mFlipCard.getHeight() * mRelativeButtonSize / 100;
+            mFlipCard.setHeight(mButtonHeight);
+            mEase1.setHeight(mButtonHeight);
+            mEase2.setHeight(mButtonHeight);
+            mEase3.setHeight(mButtonHeight);
+            mEase4.setHeight(mButtonHeight);
+        }
+
+        if (mButtonHeight == 0 && mRelativeButtonSize != 100) {
+            mButtonHeight = mFlipCard.getHeight() * mRelativeButtonSize / 100;
+            mFlipCard.setHeight(mButtonHeight);
+            mEase1.setHeight(mButtonHeight);
+            mEase2.setHeight(mButtonHeight);
+            mEase3.setHeight(mButtonHeight);
+            mEase4.setHeight(mButtonHeight);
+        }
+
         initControls();
     }
 
@@ -1935,19 +1953,18 @@ public class Reviewer extends Activity implements IButtonListener{
             mEase1.setText(res.getString(R.string.ease1_successive));
             mEase2.setText(res.getString(R.string.ease2_successive));
             mEase3.setText(res.getString(R.string.ease3_successive));
-            mEase4.setText(res.getString(R.string.ease4_successive));
         } else {
             mEase1.setText(res.getString(R.string.ease1_learning));
             mEase2.setText(res.getString(R.string.ease2_learning));
             mEase3.setText(res.getString(R.string.ease3_learning));
             mEase4.setText(res.getString(R.string.ease4_learning));
+            switchVisibility(mEase4Layout, View.VISIBLE);
         }
 
         // Show buttons
         switchVisibility(mEase1Layout, View.VISIBLE);
         switchVisibility(mEase2Layout, View.VISIBLE);
         switchVisibility(mEase3Layout, View.VISIBLE);
-        switchVisibility(mEase4Layout, View.VISIBLE);
         
         // Focus default button
         if (mSched.lrnButtons(mCurrentCard)) {
@@ -1955,7 +1972,6 @@ public class Reviewer extends Activity implements IButtonListener{
             mNext2.setTextColor(mNextTimeTextColor);
             mEase2.setTextColor(mNextTimeTextColor);
             mNext3.setTextColor(mNextTimeTextRecomColor);
-            mEase3.setTextColor(mNextTimeTextRecomColor);
         } else {
             mEase2Layout.requestFocus();
             mNext2.setTextColor(mNextTimeTextRecomColor);
@@ -2237,35 +2253,29 @@ public class Reviewer extends Activity implements IButtonListener{
         }
     };
 
+
     private void displayCardQuestion() {
         sDisplayAnswer = false;
         mIsAnswering = false;
-
-        if (mButtonHeight == 0 && mRelativeButtonSize != 100) {
-            mButtonHeight = mFlipCard.getHeight() * mRelativeButtonSize / 100;
-            mFlipCard.setHeight(mButtonHeight);
-            mEase1.setHeight(mButtonHeight);
-            mEase2.setHeight(mButtonHeight);
-            mEase3.setHeight(mButtonHeight);
-            mEase4.setHeight(mButtonHeight);
-        }
 
         String question = getQuestion();
 
         if(mPrefFixArabic) {
         	question = ArabicUtilities.reshapeSentence(question, true);
         }
+
         Log.i(AnkiDroidApp.TAG, "question: '" + question + "'");
 
         String displayString = "";
 
         if (mSimpleInterface) {
-        	mCardContent = Html.fromHtml(question);
-        	if (mCardContent.length() == 0) {
-        		SpannableString hint = new SpannableString(getResources().getString(R.string.simple_interface_hint, R.string.card_details_question));
-        		hint.setSpan(new StyleSpan(Typeface.ITALIC), 0, mCardContent.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-        		mCardContent = hint;
-        	}
+        	// TODO
+//        	mCardContent = Html.fromHtml(question);
+//        	if (mCardContent.length() == 0) {
+//        		SpannableString hint = new SpannableString(getResources().getString(R.string.simple_interface_hint, R.string.card_details_question));
+//        		hint.setSpan(new StyleSpan(Typeface.ITALIC), 0, mCardContent.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+//        		mCardContent = hint;
+//        	}
         } else {
             // If the user wants to write the answer
             if (typeAnswer()) {
@@ -2310,15 +2320,15 @@ public class Reviewer extends Activity implements IButtonListener{
         String displayString = "";
         
         if (mSimpleInterface) {
-        	SpannableStringBuilder sb = new SpannableStringBuilder();
-        	Spanned ans = Html.fromHtml(answer);
-        	if (ans.length() == 0) {
-        		SpannableString hint = new SpannableString(getResources().getString(R.string.simple_interface_hint, R.string.card_details_answer));
-        		hint.setSpan(new StyleSpan(Typeface.ITALIC), 0, hint.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-        		ans = hint;
-        	}
-        	sb.append(ans);
-        	mCardContent = sb;
+//        	SpannableStringBuilder sb = new SpannableStringBuilder();
+//        	Spanned ans = Html.fromHtml(answer);
+//        	if (ans.length() == 0) {
+//        		SpannableString hint = new SpannableString(getResources().getString(R.string.simple_interface_hint, R.string.card_details_answer));
+//        		hint.setSpan(new StyleSpan(Typeface.ITALIC), 0, hint.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+//        		ans = hint;
+//        	}
+//        	sb.append(ans);
+//        	mCardContent = sb;
         } else {
             Sound.stopSounds();
 
@@ -2378,8 +2388,8 @@ public class Reviewer extends Activity implements IButtonListener{
         Log.i(AnkiDroidApp.TAG, "updateCard");
 
         if (mSimpleInterface) {
-        	fillFlashcard(mShowAnimations);
-        	return;
+//        	fillFlashcard(mShowAnimations);
+//        	return;
         }
 
         mBaseUrl = "";

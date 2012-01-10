@@ -841,7 +841,7 @@ public class Sched {
         Iterator i = mLrnQueue.listIterator();
         int idx = 0;
         while (i.hasNext()) {
-            if (((int[]) i.next())[0] > due) {
+            if (((long[]) i.next())[0] > due) {
                 break;
             } else {
                 idx++;

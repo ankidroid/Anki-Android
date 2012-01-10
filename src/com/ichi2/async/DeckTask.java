@@ -946,6 +946,7 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
 
         public TaskData(Sched sched, Card card, int value) {
         	mSched = sched;
+        	mCard = card;
             mInteger = value;
         }
 
