@@ -201,6 +201,8 @@ public class Card {
         return getQuestion(false);
     }
     public String getQuestion(boolean reload) {
+    	String css = css();
+    	String q = _getQA(reload).get("q");
         return css() + _getQA(reload).get("q");
     }
 

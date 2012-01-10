@@ -581,7 +581,7 @@ public class Sched {
                     cur = mCol.getDb().getDatabase().rawQuery(
                             "SELECT id, due FROM cards WHERE did = " + did + " AND queue = 0 LIMIT " + lim, null);
                     while (cur.moveToNext()) {
-                        mNewQueue.add(new long[] { cur.getInt(0), cur.getLong(1) });
+                        mNewQueue.add(new long[] { cur.getLong(0), cur.getLong(1) });
                     }
                 } finally {
                     if (cur != null && !cur.isClosed()) {
@@ -602,7 +602,7 @@ public class Sched {
 
 
     private Card _getNewCard() {
-        if (mNewQueue.isEmpty()) {
+        if (!_fillNew()) {
         	return null;
         }
         long[] item = mNewQueue.remove();
@@ -1655,6 +1655,11 @@ public class Sched {
 
     public int getDayCutoff() {
         return mDayCutoff;
+    }
+
+
+    public Collection getCol() {
+        return mCol;
     }
 
 

@@ -1909,6 +1909,10 @@ public class Reviewer extends Activity implements IButtonListener{
 //        } else {
             // session limits not reached, show next card
         	mCurrentCard = values[0].getCard();
+        	if (mCurrentCard == null) {
+        		closeReviewer(0, false);
+        		return new boolean[] {false, false};
+        	}
 
             // If the card is null means that there are no more cards scheduled for review.
 //            if (mCurrentCard == null) {

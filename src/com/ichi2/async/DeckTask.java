@@ -326,10 +326,10 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
         Card oldCard = params[0].getCard();
     	int ease = params[0].getInt();
         Card newCard = null;
-//        try {
-//	        AnkiDb ankiDB = AnkiDatabaseManager.getDatabase(deck.getDeckPath());
-//	        ankiDB.getDatabase().beginTransaction();
-//	        try {
+        try {
+	        AnkiDb ankiDB = AnkiDatabaseManager.getDatabase(sched.getCol().getPath());
+	        ankiDB.getDatabase().beginTransaction();
+	        try {
 	            if (oldCard != null) {
 	            	sched.answerCard(oldCard, ease);
 //	                Log.i(AnkiDroidApp.TAG, "leech flag: " + oldCard.getLeechFlag());
@@ -339,23 +339,25 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
 //                	newCard = AnkiDroidWidgetBig.getCard();
 	            }
 	            newCard = sched.getCard();
+//	            newCard._getQA(true);
 //	            if (newCard == null) {
 //		            newCard = deck.getCard();	            	
 //	            }
 //	            if (oldCard != null) {
 //	                publishProgress(new TaskData(newCard, oldCard.getLeechFlag(), oldCard.getSuspendedFlag()));
 //	            } else {
-	                publishProgress(new TaskData(newCard));
+	            	publishProgress(new TaskData(newCard));
 //	            }
-//	            ankiDB.getDatabase().setTransactionSuccessful();
-//	        } finally {
-//	            ankiDB.getDatabase().endTransaction();
-//	        }
-//		} catch (RuntimeException e) {
-//			Log.e(AnkiDroidApp.TAG, "doInBackgroundAnswerCard - RuntimeException on answering card: " + e);
-//			AnkiDroidApp.saveExceptionReportFile(e, "doInBackgroundAnswerCard");
-//			return new TaskData(false);
-//		}
+	            ankiDB.getDatabase().setTransactionSuccessful();
+	        } finally {
+	            ankiDB.getDatabase().endTransaction();
+	        }
+		} catch (RuntimeException e) {
+			// TODO: proper error handling
+			Log.e(AnkiDroidApp.TAG, "doInBackgroundAnswerCard - RuntimeException on answering card: " + e);
+			AnkiDroidApp.saveExceptionReportFile(e, "doInBackgroundAnswerCard");
+			return new TaskData(false);
+		}
         return new TaskData(true);
     }
 

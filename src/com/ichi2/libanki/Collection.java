@@ -70,6 +70,8 @@ public class Collection {
     private JSONObject mConf;
     // END: SQL table columns
 
+    private String mPath;
+
     // other options
     private static final String defaultConf = "{" +
     		// review options
@@ -91,6 +93,7 @@ public class Collection {
     public static synchronized Collection openCollection(String path) {
     	AnkiDb ankiDB = AnkiDatabaseManager.getDatabase(path);
     	sCurrentCollection = new Collection(ankiDB);
+    	sCurrentCollection.mPath = path; 
     	return sCurrentCollection;
     }
 
@@ -875,8 +878,11 @@ public class Collection {
     public Sched getSched() {
     	return mSched;
     }
-    
-    
+
+
+    public String getPath() {
+    	return mPath;
+    }
     
     
 //    
