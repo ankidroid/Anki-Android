@@ -25,7 +25,7 @@ import android.widget.Toast;
 
 import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.MetaDB;
-import com.ichi2.anki.R;
+import com.ichi2.anki2.R;
 import com.tomgibara.android.veecheck.util.PrefSettings;
 
 public class CustomDialogPreference extends DialogPreference implements DialogInterface.OnClickListener {

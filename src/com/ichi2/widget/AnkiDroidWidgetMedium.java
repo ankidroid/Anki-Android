@@ -16,13 +16,8 @@ package com.ichi2.widget;
 
 import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.DeckStatus;
-import com.ichi2.anki.R;
+import com.ichi2.anki2.R;
 import com.ichi2.anki.StudyOptions;
-import com.ichi2.anki.R.drawable;
-import com.ichi2.anki.R.id;
-import com.ichi2.anki.R.layout;
-import com.ichi2.anki.R.plurals;
-import com.ichi2.anki.R.string;
 import com.tomgibara.android.veecheck.util.PrefSettings;
 
 import android.app.PendingIntent;

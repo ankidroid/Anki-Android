@@ -32,7 +32,7 @@ import com.ichi2.anki.AnkiDb;
 import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.AnkiDroidProxy;
 import com.ichi2.anki.Feedback;
-import com.ichi2.anki.R;
+import com.ichi2.anki2.R;
 import com.ichi2.anki.Reviewer;
 import com.ichi2.libanki.Decks;
 import com.ichi2.libanki.SyncClient;

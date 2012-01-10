@@ -36,9 +36,7 @@ import android.widget.LinearLayout;
 
 import com.ichi2.anki.AnkiDb;
 import com.ichi2.anki.AnkiDroidApp;
-import com.ichi2.anki.R;
-import com.ichi2.anki.R.array;
-import com.ichi2.anki.R.color;
+import com.ichi2.anki2.R;
 import com.mindprod.common11.BigDate;
 import com.tomgibara.android.veecheck.util.PrefSettings;
 

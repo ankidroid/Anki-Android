@@ -34,7 +34,7 @@ import android.util.Log;
 import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.AnkiDroidProxy;
 import com.ichi2.anki.Download;
-import com.ichi2.anki.R;
+import com.ichi2.anki2.R;
 import com.ichi2.anki.SharedDeckDownload;
 import com.ichi2.anki.StudyOptions;
 import com.ichi2.async.Connection;

@@ -49,7 +49,7 @@ import android.widget.TextView;
 import com.ichi2.anim.ActivityTransitionAnimation;
 import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.DeckPicker;
-import com.ichi2.anki.R;
+import com.ichi2.anki2.R;
 import com.ichi2.anki.Statistics;
 import com.ichi2.anki.StudyOptions;
 import com.ichi2.themes.Themes;

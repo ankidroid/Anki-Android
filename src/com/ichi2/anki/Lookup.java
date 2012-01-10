@@ -1,4 +1,4 @@
-package com.ichi2.anki;
+package com.ichi2.anki;import com.ichi2.anki2.R;
 
 import com.ichi2.libanki.Card;
 import com.ichi2.libanki.Utils;

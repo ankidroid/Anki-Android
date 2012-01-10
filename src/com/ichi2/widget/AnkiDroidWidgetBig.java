@@ -25,7 +25,7 @@
 //import com.ichi2.anki.DeckManager;
 //import com.ichi2.anki.DeckStatus;
 //import com.ichi2.anki.DeckTask;
-//import com.ichi2.anki.R;
+//import com.ichi2.anki2.R;
 //import com.ichi2.anki.StudyOptions;
 //import com.ichi2.anki.Utils;
 //import com.tomgibara.android.veecheck.util.PrefSettings;

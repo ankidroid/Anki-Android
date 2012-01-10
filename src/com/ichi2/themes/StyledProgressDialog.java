@@ -29,7 +29,7 @@ import android.view.WindowManager.BadTokenException;
 import android.widget.TextView;
 
 import com.ichi2.anki.AnkiDroidApp;
-import com.ichi2.anki.R;
+import com.ichi2.anki2.R;
  
 
 public class StyledProgressDialog extends Dialog {

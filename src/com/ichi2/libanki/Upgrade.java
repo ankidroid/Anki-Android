@@ -18,7 +18,7 @@
 //
 //import java.util.ArrayList;
 //
-//import com.ichi2.anki.R;
+//import com.ichi2.anki2.R;
 //import com.ichi2.anki.R.string;
 //
 //import android.content.res.Resources;

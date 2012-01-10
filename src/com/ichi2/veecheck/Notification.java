@@ -20,7 +20,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Checkable;
 
-import com.ichi2.anki.R;
+import com.ichi2.anki2.R;
 import com.tomgibara.android.veecheck.VeecheckActivity;
 import com.tomgibara.android.veecheck.VeecheckState;
 import com.tomgibara.android.veecheck.util.PrefState;
