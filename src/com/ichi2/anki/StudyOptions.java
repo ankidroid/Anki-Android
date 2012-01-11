@@ -785,6 +785,7 @@ public class StudyOptions extends Activity implements IButtonListener {
 
     private void closeStudyOptions() {
         mCompat.invalidateOptionsMenu(this);
+        setResult(RESULT_OK);
     	finish();
     	if (UIUtils.getApiLevel() > 4) {
 			ActivityTransitionAnimation.slide(this, ActivityTransitionAnimation.RIGHT);

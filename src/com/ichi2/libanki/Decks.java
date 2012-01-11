@@ -152,8 +152,20 @@ public class Decks {
 
 	public void flush() {
         ContentValues values = new ContentValues();
-        values.put("decks", mDecks.toString());
-        values.put("dconf", mDconf.toString());
+    	try {
+    		JSONObject decksarray = new JSONObject();
+            for (Map.Entry<Long, JSONObject> d : mDecks.entrySet()) {
+            	decksarray.put(Long.toString(d.getKey()), d.getValue());
+            }
+            values.put("decks", decksarray.toString());
+    		JSONObject confarray = new JSONObject();
+            for (Map.Entry<Long, JSONObject> d : mDconf.entrySet()) {
+            	confarray.put(Long.toString(d.getKey()), d.getValue());
+            }
+            values.put("dconf", confarray.toString());
+		} catch (JSONException e) {
+			throw new RuntimeException(e);
+		}
 		mCol.getDb().getDatabase().update("col", values, null, null);
 		mChanged = false;
 	}
@@ -411,6 +423,7 @@ public class Decks {
 			// current deck
 			mCol.getConf().put("curDeck", Long.toString(did));
 			// and active decks (current + all children)
+			// TODO: test, if order is correct
 			TreeMap<String, Long> actv = children(did);
 			actv.put(name, did);
 			mCol.getConf().put("activeDecks", actv.values().toString());

@@ -265,8 +265,6 @@ public class Reviewer extends Activity implements IButtonListener{
 //    private boolean mZeemoteEnabled;    
     private boolean mPrefUseRubySupport; // Parse for ruby annotations
     private String mDeckFilename;
-    private int mPrefHideQuestionInAnswer; // Hide the question when showing the
-    // answer
     private int mRelativeButtonSize;
     private boolean mDoubleScrolling;
     private boolean mScrollingButtons;
@@ -293,7 +291,6 @@ public class Reviewer extends Activity implements IButtonListener{
 
     private boolean mIsSelecting = false;
     private boolean mTouchStarted = false;
-    private boolean mIsAnswering = false;
 
 //    @SuppressWarnings("unused")
 //    private boolean mUpdateNotifications; // TODO use Veecheck only if this is true
@@ -365,7 +362,6 @@ public class Reviewer extends Activity implements IButtonListener{
 
     private int mStatisticBarsMax;
     private int mStatisticBarsHeight;
-    private int mStatisticsTodaysCount;
     private int mStatisticsTodaysNoCount;
     private int mStatisticsMatureCount;
     private int mStatisticsMatureNoCount;
@@ -554,9 +550,6 @@ public class Reviewer extends Activity implements IButtonListener{
         @Override
         public void onClick(View view) {
         	mTimeoutHandler.removeCallbacks(mShowQuestionTask);
-        	if (mIsAnswering) {
-        		return;
-        	}
             switch (view.getId()) {
                 case R.id.flashcard_layout_ease1:
                     answerCard(1);
@@ -581,9 +574,6 @@ public class Reviewer extends Activity implements IButtonListener{
     private View.OnTouchListener mGestureListener = new View.OnTouchListener() {
         @Override
         public boolean onTouch(View v, MotionEvent event) {
-        	if (mIsAnswering) {
-        		return true;
-        	}
             if (gestureDetector.onTouchEvent(event)) {
                 return true;
             }
@@ -663,41 +653,41 @@ public class Reviewer extends Activity implements IButtonListener{
         }
     };
 
-    private DeckTask.TaskListener mDismissCardHandler = new DeckTask.TaskListener() {
-    	boolean mSessionComplete;
-    	boolean mNoMoreCards;
-
-        @Override
-        public void onPreExecute() {
-        }
-
-
-        @Override
-        public void onProgressUpdate(DeckTask.TaskData... values) {
-        	boolean[] results = postAnswerCard(values);
-        	mSessionComplete = results[0];
-        	mNoMoreCards = results[1];
-        }
-
-
-        @Override
-        public void onPostExecute(DeckTask.TaskData result) {
-            if (!result.getBoolean()) {
-            	// RuntimeException occured on dismissing cards
-                Reviewer.this.setResult(RESULT_ANSWERING_ERROR);
-                closeReviewer(RESULT_ANSWERING_ERROR, true);
-                return;
-            }
-            // Check for no more cards before session complete. If they are both true,
-            // no more cards will take precedence when returning to study options.
-            if (mNoMoreCards) {
-                mShowCongrats = true;
-                closeReviewer(RESULT_NO_MORE_CARDS, true);
-            } else if (mSessionComplete) {
-                closeReviewer(RESULT_SESSION_COMPLETED, true);
-            }
-        }
-    };
+//    private DeckTask.TaskListener mDismissCardHandler = new DeckTask.TaskListener() {
+//    	boolean mSessionComplete;
+//    	boolean mNoMoreCards;
+//
+//        @Override
+//        public void onPreExecute() {
+//        }
+//
+//
+//        @Override
+//        public void onProgressUpdate(DeckTask.TaskData... values) {
+////        	boolean[] results = postAnswerCard(values);
+////        	mSessionComplete = results[0];
+////        	mNoMoreCards = results[1];
+//        }
+//
+//
+//        @Override
+//        public void onPostExecute(DeckTask.TaskData result) {
+//            if (!result.getBoolean()) {
+//            	// RuntimeException occured on dismissing cards
+//                Reviewer.this.setResult(RESULT_ANSWERING_ERROR);
+//                closeReviewer(RESULT_ANSWERING_ERROR, true);
+//                return;
+//            }
+//            // Check for no more cards before session complete. If they are both true,
+//            // no more cards will take precedence when returning to study options.
+//            if (mNoMoreCards) {
+//                mShowCongrats = true;
+//                closeReviewer(RESULT_NO_MORE_CARDS, true);
+//            } else if (mSessionComplete) {
+//                closeReviewer(RESULT_SESSION_COMPLETED, true);
+//            }
+//        }
+//    };
 
     private DeckTask.TaskListener mUpdateCardHandler = new DeckTask.TaskListener() {
         @Override
@@ -759,38 +749,107 @@ public class Reviewer extends Activity implements IButtonListener{
         }
     };
 
+
     private DeckTask.TaskListener mAnswerCardHandler = new DeckTask.TaskListener() {
         private boolean mSessionComplete;
         private boolean mNoMoreCards;
-
 
         @Override
         public void onPreExecute() {
             Reviewer.this.setProgressBarIndeterminateVisibility(true);
             if (mPrefTimer) {
-                mCardTimer.stop();
+            	mCardTimer.stop();
             }
             blockControls();
         }
 
-
         @Override
         public void onProgressUpdate(DeckTask.TaskData... values) {
-        	boolean[] results = postAnswerCard(values);
-        	mSessionComplete = results[0];
-        	mNoMoreCards = results[1];
-        }
+            Resources res = getResources();
 
+            // if in background, actualise widget
+//        	if (mInBackground) {
+//        		updateBigWidget(false);
+//            }
+
+            if (mSched == null) {
+            	// TODO: proper testing for restored activity
+            	finish();
+            	return;
+            }
+
+            int leech = values[0].getInt();
+            // 0: normal; 1: leech; 2: leech & suspended
+            if (leech > 0) {
+                String leechMessage;
+                if (leech == 2) {
+                    leechMessage = res.getString(R.string.leech_suspend_notification);
+                } else {
+                    leechMessage = res.getString(R.string.leech_notification);
+                }
+                Themes.showThemedToast(Reviewer.this, leechMessage, true);
+            }
+
+//            // TODO: sessionLimithandling
+//            long sessionRepLimit = 100;//deck.getSessionRepLimit();
+//            long sessionTime = 1000;//deck.getSessionTimeLimit();
+            String sessionMessage = null;
+//            if ((sessionRepLimit > 0) && (mSessionCurrReps >= sessionRepLimit)) {
+//            	sessionComplete = true;
+//                sessionMessage = res.getString(R.string.session_question_limit_reached);
+//            } else if ((sessionTime > 0) && (System.currentTimeMillis() >= mSessionTimeLimit)) {
+//                // session time limit reached, flag for halt once async task has completed.
+//            	sessionComplete = true;
+//                sessionMessage = res.getString(R.string.session_time_limit_reached);
+//            } else if (mIsLastCard) {
+//            	noMoreCards = true;
+//                mProgressDialog = StyledProgressDialog.show(Reviewer.this, "", getResources()
+//                        .getString(R.string.saving_changes), true);
+//                setOutAnimation(true);
+//            } else {
+                // session limits not reached, show next card
+
+        	mCurrentCard = values[0].getCard();
+        	if (mCurrentCard == null) {
+                // If the card is null means that there are no more cards scheduled for review.
+        		mNoMoreCards = true;
+        		mProgressDialog = StyledProgressDialog.show(Reviewer.this, "", getResources()
+                      .getString(R.string.saving_changes), true);
+        		setOutAnimation(false);
+        	} else {
+              // Start reviewing next card
+              if (mPrefWriteAnswers) {
+            	  //only bother query deck if needed
+            	  // TODO
+            	  String[] answer = mCurrentCard.getComparedFieldAnswer();
+            	  comparedFieldAnswer = answer[0];
+            	  comparedFieldClass = answer[1];
+              } else {
+            	  comparedFieldAnswer = null;
+              }
+              Reviewer.this.setProgressBarIndeterminateVisibility(false);
+              Reviewer.this.unblockControls();
+              Reviewer.this.displayCardQuestion();
+    		}
+//            if (mChosenAnswer.getText().equals("")) {
+//                setDueMessage();
+//            }
+
+        	// Show a message to user if a session limit has been reached.
+            if (sessionMessage != null) {
+            	Themes.showThemedToast(Reviewer.this, sessionMessage, true);
+            }
+        }
 
         @Override
         public void onPostExecute(DeckTask.TaskData result) {
             if (!result.getBoolean()) {
             	// RuntimeException occured on answering cards
+            	// TODO: proper error handling on studyoptions
                 closeReviewer(RESULT_ANSWERING_ERROR, true);
                 return;
             }
-            // Check for no more cards before session complete. If they are both true,
-            // no more cards will take precedence when returning to study options.
+            // Check for no more cards before session complete. If they are both true, no more cards will take precedence when returning to study options.
             if (mNoMoreCards) {
                 mShowCongrats = true;
                 closeReviewer(RESULT_NO_MORE_CARDS, true);
@@ -800,43 +859,44 @@ public class Reviewer extends Activity implements IButtonListener{
         }
     };
 
-    DeckTask.TaskListener mSaveAndResetDeckHandler = new DeckTask.TaskListener() {
-        @Override
-        public void onPreExecute() {
-        	if (mProgressDialog != null && mProgressDialog.isShowing()) {
-        		mProgressDialog.setMessage(getResources().getString(R.string.saving_changes));
-        	} else {
-                mProgressDialog = StyledProgressDialog.show(Reviewer.this, "", getResources()
-                        .getString(R.string.saving_changes), true);
-        	}
-        }
 
-
-        @Override
-        public void onPostExecute(DeckTask.TaskData result) {
-            if (mProgressDialog.isShowing()) {
-                try {
-                    mProgressDialog.dismiss();
-                } catch (Exception e) {
-                    Log.e(AnkiDroidApp.TAG, "onPostExecute - Dialog dismiss Exception = " + e.getMessage());
-                }
-            }
-        	finish();
-        	if (Integer.valueOf(android.os.Build.VERSION.SDK) > 4) {
-        		if (mShowCongrats) {
-        			ActivityTransitionAnimation.slide(Reviewer.this, ActivityTransitionAnimation.FADE);
-        		} else {
-        			ActivityTransitionAnimation.slide(Reviewer.this, ActivityTransitionAnimation.RIGHT);
-        		}
-        	}
-        }
-
-
-        @Override
-        public void onProgressUpdate(DeckTask.TaskData... values) {
-            // Pass
-        }
-    };
+//    DeckTask.TaskListener mSaveAndResetDeckHandler = new DeckTask.TaskListener() {
+//        @Override
+//        public void onPreExecute() {
+//        	if (mProgressDialog != null && mProgressDialog.isShowing()) {
+//        		mProgressDialog.setMessage(getResources().getString(R.string.saving_changes));
+//        	} else {
+//                mProgressDialog = StyledProgressDialog.show(Reviewer.this, "", getResources()
+//                        .getString(R.string.saving_changes), true);
+//        	}
+//        }
+//
+//
+//        @Override
+//        public void onPostExecute(DeckTask.TaskData result) {
+//            if (mProgressDialog.isShowing()) {
+//                try {
+//                    mProgressDialog.dismiss();
+//                } catch (Exception e) {
+//                    Log.e(AnkiDroidApp.TAG, "onPostExecute - Dialog dismiss Exception = " + e.getMessage());
+//                }
+//            }
+//        	finish();
+//        	if (Integer.valueOf(android.os.Build.VERSION.SDK) > 4) {
+//        		if (mShowCongrats) {
+//        			ActivityTransitionAnimation.slide(Reviewer.this, ActivityTransitionAnimation.FADE);
+//        		} else {
+//        			ActivityTransitionAnimation.slide(Reviewer.this, ActivityTransitionAnimation.RIGHT);
+//        		}
+//        	}
+//        }
+//
+//
+//        @Override
+//        public void onProgressUpdate(DeckTask.TaskData... values) {
+//            // Pass
+//        }
+//    };
 
     private Handler mTimerHandler = new Handler();
 
@@ -926,7 +986,6 @@ public class Reviewer extends Activity implements IButtonListener{
         // The hardware buttons should control the music volume while reviewing.
         setVolumeControlStream(AudioManager.STREAM_MUSIC);
 
-        // Make sure a deck is loaded before continuing.
         Collection col = Collection.currentCollection();
         if (col == null) {
         	finishNoStorageAvailable();
@@ -1561,7 +1620,6 @@ public class Reviewer extends Activity implements IButtonListener{
 
     private void answerCard(int ease) {
         mIsSelecting = false;
-        mIsAnswering = true;
         if (mPrefTextSelection) {
             clipboardSetText("");
             if (mLookUpIcon.getVisibility() == View.VISIBLE) {
@@ -1569,7 +1627,6 @@ public class Reviewer extends Activity implements IButtonListener{
                 mLookUpIcon.setAnimation(ViewAnimation.fade(ViewAnimation.FADE_OUT, mFadeDuration, 0));        	
             }        	
         }
-//        Decks deck = DeckManager.getMainDeck();
     	switch (ease) {
     		case EASE_FAILED:
     		    mChosenAnswer.setText("\u2022");
@@ -1591,19 +1648,20 @@ public class Reviewer extends Activity implements IButtonListener{
                 mChosenAnswer.setTextColor(mNext4.getTextColors());
                 break;
         }
-        mStatisticsTodaysCount++;
-//        if (mature) {
-//            mStatisticsMatureCount++;
-//        }
+
+    	// remove chosen answer hint after a while
         mTimerHandler.removeCallbacks(removeChosenAnswerText);
         mTimerHandler.postDelayed(removeChosenAnswerText, mShowChosenAnswerLength);
         Sound.stopSounds();
         mCurrentEase = ease;
+
         // Increment number reps counter
         mSessionCurrReps++;
+
         setNextCardAnimation(false);
         DeckTask.launchDeckTask(DeckTask.TASK_TYPE_ANSWER_CARD, mAnswerCardHandler, new DeckTask.TaskData(mSched, mCurrentCard, mCurrentEase));
     }
+
 
     // Set the content view to the one provided and initialize accessors.
     private void initLayout(Integer layout) {
@@ -1864,97 +1922,16 @@ public class Reviewer extends Activity implements IButtonListener{
     }
 
 
-    private boolean[] postAnswerCard(DeckTask.TaskData... values) {
-        Resources res = getResources();
-        boolean sessionComplete = false;
-        boolean noMoreCards = false;
-
-        // if in background, actualise widget
-    	if (mInBackground) {
-    		updateBigWidget(false);
-        }
-
-        // Check to see if session rep or time limit has been reached
-//        Decks deck = DeckManager.getMainDeck();
-//        if (deck == null) {
-//        	return new boolean[] {false, false};
-//        }
-        long sessionRepLimit = 100;//deck.getSessionRepLimit();
-        long sessionTime = 1000;//deck.getSessionTimeLimit();
-        String sessionMessage = null;
-        String leechMessage;
-        Log.i(AnkiDroidApp.TAG, "reviewer leech flag: " + values[0].isPreviousCardLeech() + " " + values[0].isPreviousCardSuspended());
-
-        if (values[0].isPreviousCardLeech()) {
-            if (values[0].isPreviousCardSuspended()) {
-                leechMessage = res.getString(R.string.leech_suspend_notification);
-            } else {
-                leechMessage = res.getString(R.string.leech_notification);
-            }
-            Themes.showThemedToast(Reviewer.this, leechMessage, true);
-        }
-
-//        if ((sessionRepLimit > 0) && (mSessionCurrReps >= sessionRepLimit)) {
-//        	sessionComplete = true;
-//            sessionMessage = res.getString(R.string.session_question_limit_reached);
-//        } else if ((sessionTime > 0) && (System.currentTimeMillis() >= mSessionTimeLimit)) {
-//            // session time limit reached, flag for halt once async task has completed.
-//        	sessionComplete = true;
-//            sessionMessage = res.getString(R.string.session_time_limit_reached);
-//        } else if (mIsLastCard) {
-//        	noMoreCards = true;
-//            mProgressDialog = StyledProgressDialog.show(Reviewer.this, "", getResources()
-//                    .getString(R.string.saving_changes), true);
-//            setOutAnimation(true);
-//        } else {
-            // session limits not reached, show next card
-        	mCurrentCard = values[0].getCard();
-        	if (mCurrentCard == null) {
-        		closeReviewer(0, false);
-        		return new boolean[] {false, false};
-        	}
-
-            // If the card is null means that there are no more cards scheduled for review.
-//            if (mCurrentCard == null) {
-//            	noMoreCards = true;
-//                mProgressDialog = StyledProgressDialog.show(Reviewer.this, "", getResources()
-//                        .getString(R.string.saving_changes), true);
-//                setOutAnimation(false);
-//                return new boolean[] {sessionComplete, noMoreCards};
-//            }
-//
-//            // Start reviewing next card
-//            if (mPrefWriteAnswers) { //only bother query deck if needed
-//            	String[] answer = mCurrentCard.getComparedFieldAnswer();
-//            	comparedFieldAnswer = answer[0];
-//            	comparedFieldClass = answer[1];
-//            } else {
-//            	comparedFieldAnswer = null;
-//            }
-            Reviewer.this.setProgressBarIndeterminateVisibility(false);
-            // Reviewer.this.enableControls();
-            Reviewer.this.unblockControls();
-            Reviewer.this.displayCardQuestion();
-//        }
-        if (mChosenAnswer.getText().equals("")) {
-            setDueMessage();
-        }
-        // Show a message to user if a session limit has been reached.
-        if (sessionMessage != null) {
-        	Themes.showThemedToast(Reviewer.this, sessionMessage, true);
-        }
-        return new boolean[] {sessionComplete, noMoreCards};
-    }
-
-
     private void showEaseButtons() {
         Resources res = getResources();
 
         // hide flipcard button
         switchVisibility(mFlipCardLayout, View.GONE);
 
+        boolean lrnCard = mSched.lrnButtons(mCurrentCard);
+
         // Set correct label for each button
-        if (mSched.lrnButtons(mCurrentCard)) {
+        if (lrnCard) {
             mEase1.setText(res.getString(R.string.ease1_successive));
             mEase2.setText(res.getString(R.string.ease2_successive));
             mEase3.setText(res.getString(R.string.ease3_successive));
@@ -1972,7 +1949,7 @@ public class Reviewer extends Activity implements IButtonListener{
         switchVisibility(mEase3Layout, View.VISIBLE);
         
         // Focus default button
-        if (mSched.lrnButtons(mCurrentCard)) {
+        if (lrnCard) {
             mEase3Layout.requestFocus();
             mNext2.setTextColor(mNextTimeTextColor);
             mEase2.setTextColor(mNextTimeTextColor);
@@ -1990,7 +1967,7 @@ public class Reviewer extends Activity implements IButtonListener{
                 mNext1.setText(mSched.nextIvlStr(mCurrentCard, 1));
                 mNext2.setText(mSched.nextIvlStr(mCurrentCard, 2));
                 mNext3.setText(mSched.nextIvlStr(mCurrentCard, 3));
-                mNext4.setText(mSched.nextIvlStr(mCurrentCard, 4));
+                mNext4.setText(lrnCard ? "" : mSched.nextIvlStr(mCurrentCard, 4));                	
                 switchVisibility(mNext1, View.VISIBLE);
                 switchVisibility(mNext2, View.VISIBLE);
                 switchVisibility(mNext3, View.VISIBLE);
@@ -2004,6 +1981,7 @@ public class Reviewer extends Activity implements IButtonListener{
     	switchVisibility(mEase2Layout, View.GONE);
     	switchVisibility(mEase3Layout, View.GONE);
     	switchVisibility(mEase4Layout, View.GONE);
+
     	if (mshowNextReviewTime) {
     		int visibility = typeAnswer() ? View.GONE : View.INVISIBLE;
     		switchVisibility(mNext1, visibility);
@@ -2011,6 +1989,7 @@ public class Reviewer extends Activity implements IButtonListener{
     		switchVisibility(mNext3, visibility);
     		switchVisibility(mNext4, visibility);
     	}
+
     	if (mFlipCardLayout.getVisibility() != View.VISIBLE) {
     		switchVisibility(mFlipCardLayout, View.VISIBLE);
     		mFlipCardLayout.requestFocus();
@@ -2088,8 +2067,6 @@ public class Reviewer extends Activity implements IButtonListener{
 //        mZeemoteEnabled = preferences.getBoolean("zeemote", false);
         mDisplayFontSize = preferences.getInt("relativeDisplayFontSize", 100);//Card.DEFAULT_FONT_SIZE_RATIO);
         mRelativeButtonSize = preferences.getInt("answerButtonSize", 100);
-        mPrefHideQuestionInAnswer = Integer.parseInt(preferences.getString("hideQuestionInAnswer",
-                Integer.toString(HQIA_DO_SHOW)));
         mInputWorkaround = preferences.getBoolean("inputWorkaround", false);
         mPrefFixHebrew = preferences.getBoolean("fixHebrewText", false);
         mPrefFixArabic = preferences.getBoolean("fixArabicText", false);
@@ -2182,34 +2159,35 @@ public class Reviewer extends Activity implements IButtonListener{
     	if (mCurrentCard == null) {
     		return;
     	}
-//        Decks deck = DeckManager.getMainDeck();
+
+    	// TODO: ETA
 //        int eta = mCurrentScheduler.eta() / 60;
 //        if (deck.hasFinishScheduler() || eta < 1) {
 //            setTitle(deck.getDeckName());
 //        } else {
 //            setTitle(getResources().getQuantityString(R.plurals.reviewer_window_title, eta, deck.getDeckName(), eta));
 //        }
-//
-//        int[] counts = mCurrentScheduler.counts();
-//        SpannableString newCount = new SpannableString(String.valueOf(counts[Sched.COUNTS_NEW]));
-//        SpannableString lrnCount = new SpannableString(String.valueOf(counts[Sched.COUNTS_LRN]));
-//        SpannableString revCount = new SpannableString(String.valueOf(counts[Sched.COUNTS_REV]));
 
-//        switch (mCurrentCard.getQueue()) {
-//            case Card.TYPE_NEW:
-//                newCount.setSpan(new UnderlineSpan(), 0, newCount.length(), 0);
-//                break;
-//            case Card.TYPE_LRN:
-//                lrnCount.setSpan(new UnderlineSpan(), 0, lrnCount.length(), 0);
-//                break;
-//            case Card.TYPE_REV:
-//                revCount.setSpan(new UnderlineSpan(), 0, revCount.length(), 0);
-//                break;
-//        }
+    	int[] counts = mSched.counts(mCurrentCard);
+        SpannableString newCount = new SpannableString(String.valueOf(counts[0]));
+        SpannableString lrnCount = new SpannableString(String.valueOf(counts[1]));
+        SpannableString revCount = new SpannableString(String.valueOf(counts[2]));
 
-//        mTextBarRed.setText(newCount);
-//        mTextBarBlack.setText(lrnCount);
-//        mTextBarBlue.setText(revCount);
+        switch (mCurrentCard.getQueue()) {
+            case Card.TYPE_NEW:
+                newCount.setSpan(new UnderlineSpan(), 0, newCount.length(), 0);
+                break;
+            case Card.TYPE_LRN:
+                lrnCount.setSpan(new UnderlineSpan(), 0, lrnCount.length(), 0);
+                break;
+            case Card.TYPE_REV:
+                revCount.setSpan(new UnderlineSpan(), 0, revCount.length(), 0);
+                break;
+        }
+
+        mTextBarRed.setText(newCount);
+        mTextBarBlack.setText(lrnCount);
+        mTextBarBlue.setText(revCount);
     }
 
 
@@ -2252,8 +2230,8 @@ public class Reviewer extends Activity implements IButtonListener{
             if (mPrefTimer) {
                 mCardTimer.stop();
             }
-            if (mFlipCardLayout.isEnabled() == true && mFlipCardLayout.getVisibility() == View.VISIBLE && !mIsAnswering) {
-		mFlipCardLayout.performClick();
+            if (mFlipCardLayout.isEnabled() == true && mFlipCardLayout.getVisibility() == View.VISIBLE) {
+            	mFlipCardLayout.performClick();
             }
         }
     };
@@ -2261,7 +2239,12 @@ public class Reviewer extends Activity implements IButtonListener{
 
     private void displayCardQuestion() {
         sDisplayAnswer = false;
-        mIsAnswering = false;
+
+        // If the user want to show answer automatically
+        if (mPrefUseTimer) {
+            mTimeoutHandler.removeCallbacks(mShowAnswerTask);
+            mTimeoutHandler.postDelayed(mShowAnswerTask, mWaitAnswerSecond * 1000  );
+        }
 
         String question = getQuestion();
 
@@ -2293,24 +2276,24 @@ public class Reviewer extends Activity implements IButtonListener{
 
             displayString = enrichWithQADiv(question, false);
 
-            if (mSpeakText && Integer.valueOf(android.os.Build.VERSION.SDK) > 3) {
-//                ReadText.setLanguageInformation(Models.getModel(DeckManager.getMainDeck(), mCurrentCard.getCardModelId(), false).getId(), mCurrentCard.getCardModelId());          
-            }
+//            if (mSpeakText && Integer.valueOf(android.os.Build.VERSION.SDK) > 3) {
+////                ReadText.setLanguageInformation(Models.getModel(DeckManager.getMainDeck(), mCurrentCard.getCardModelId(), false).getId(), mCurrentCard.getCardModelId());          
+//            }
         }
 
         updateCard(displayString);
         hideEaseButtons();
-
-        // If the user want to show answer automatically
-        if (mPrefUseTimer) {
-            mTimeoutHandler.removeCallbacks(mShowAnswerTask);
-            mTimeoutHandler.postDelayed(mShowAnswerTask, mWaitAnswerSecond * 1000  );
-        }
     }
 
 
     private void displayCardAnswer() {
         Log.i(AnkiDroidApp.TAG, "displayCardAnswer");
+
+        // If the user want to show next question automatically
+        if (mPrefUseTimer) {
+            mTimeoutHandler.removeCallbacks(mShowQuestionTask);
+            mTimeoutHandler.postDelayed(mShowQuestionTask, mWaitQuestionSecond * 1000  );            
+        }
 
         // prevent answering (by e.g. gestures) before card is loaded
         if (mCurrentCard == null) {
@@ -2380,12 +2363,6 @@ public class Reviewer extends Activity implements IButtonListener{
         mIsSelecting = false;
         updateCard(displayString);
         showEaseButtons();
-
-        // If the user want to show next question automatically
-        if (mPrefUseTimer) {
-            mTimeoutHandler.removeCallbacks(mShowQuestionTask);
-            mTimeoutHandler.postDelayed(mShowQuestionTask, mWaitQuestionSecond * 1000  );            
-        }
     }
 
 
@@ -3246,14 +3223,14 @@ public class Reviewer extends Activity implements IButtonListener{
 
 		setOutAnimation(true);    		
 
-		updateBigWidget(!mCardFrame.isEnabled());
+//		updateBigWidget(!mCardFrame.isEnabled());
 
-        if (saveDeck) {
+//        if (saveDeck) {
 //            DeckTask.launchDeckTask(DeckTask.TASK_TYPE_SAVE_DECK, mSaveAndResetDeckHandler, new DeckTask.TaskData(DeckManager.getMainDeck(), 0));
-    	} else {
+//    	} else {
     		finish();
     		ActivityTransitionAnimation.slide(Reviewer.this, ActivityTransitionAnimation.RIGHT);
-    	}
+//    	}
     }
 
     /** Fixing bug 720: <input> focus, thanks to pablomouzo on android issue 7189*/

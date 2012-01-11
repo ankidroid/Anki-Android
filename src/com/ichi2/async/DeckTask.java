@@ -326,34 +326,35 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
         Card oldCard = params[0].getCard();
     	int ease = params[0].getInt();
         Card newCard = null;
+        int oldCardLeech = 0;
+        // 0: normal; 1: leech; 2: leech & suspended
         try {
-	        AnkiDb ankiDB = AnkiDatabaseManager.getDatabase(sched.getCol().getPath());
+	        AnkiDb ankiDB = sched.getCol().getDb();
 	        ankiDB.getDatabase().beginTransaction();
 	        try {
 	            if (oldCard != null) {
-	            	sched.answerCard(oldCard, ease);
-//	                Log.i(AnkiDroidApp.TAG, "leech flag: " + oldCard.getLeechFlag());
+	            	oldCardLeech = sched.answerCard(oldCard, ease) ? 1 : 0;
+	            	if (oldCardLeech != 0) {
+	            		oldCardLeech += sched.leechActionSuspend(oldCard) ? 1 : 0;
+	            	}
 //	            } else if (DeckManager.deckIsOpenedInBigWidget(deck.getDeckPath())) {
 //	                // first card in reviewer is retrieved
 //	            	Log.i(AnkiDroidApp.TAG, "doInBackgroundAnswerCard: get card from big widget");
 //                	newCard = AnkiDroidWidgetBig.getCard();
 	            }
-	            newCard = sched.getCard();
-//	            newCard._getQA(true);
-//	            if (newCard == null) {
-//		            newCard = deck.getCard();	            	
-//	            }
-//	            if (oldCard != null) {
-//	                publishProgress(new TaskData(newCard, oldCard.getLeechFlag(), oldCard.getSuspendedFlag()));
-//	            } else {
-	            	publishProgress(new TaskData(newCard));
-//	            }
+	            if (newCard == null) {
+		            newCard = sched.getCard();
+	            }
+	            if (newCard != null) {
+		            // render cards before locking database
+	            	newCard._getQA(true);
+	            }
+                publishProgress(new TaskData(newCard, oldCardLeech));
 	            ankiDB.getDatabase().setTransactionSuccessful();
 	        } finally {
 	            ankiDB.getDatabase().endTransaction();
 	        }
 		} catch (RuntimeException e) {
-			// TODO: proper error handling
 			Log.e(AnkiDroidApp.TAG, "doInBackgroundAnswerCard - RuntimeException on answering card: " + e);
 			AnkiDroidApp.saveExceptionReportFile(e, "doInBackgroundAnswerCard");
 			return new TaskData(false);
@@ -694,9 +695,9 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
 
 
     private TaskData doInBackgroundCloseDeck(TaskData... params) {
-	Log.i(AnkiDroidApp.TAG, "doInBackgroundCloseDeck");
-	// TODO: close deck
-	// TODO: make backup if there is no backup of today
+    	Log.i(AnkiDroidApp.TAG, "doInBackgroundCloseDeck");
+    	Collection col = params[0].getCollection();
+    	col.close(true);
     	return null;
     }
 
@@ -839,8 +840,6 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
         private Note mFact;
         private int mInteger;
         private String mMsg;
-        private boolean previousCardLeech;     // answer card resulted in card marked as leech
-        private boolean previousCardSuspended; // answer card resulted in card marked as leech and suspended
         private boolean mBool = false;
         private ArrayList<HashMap<String, String>> mCards;
         private long mLong;
@@ -868,8 +867,12 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
 
         public TaskData(Card card) {
             mCard = card;
-            previousCardLeech = false;
-            previousCardSuspended = false;
+        }
+
+
+        public TaskData(Card card, int integer) {
+            mCard = card;
+            mInteger = integer;
         }
 
 
@@ -1018,16 +1021,6 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
 
         public String getString() {
             return mMsg;
-        }
-
-
-        public boolean isPreviousCardLeech() {
-            return previousCardLeech;
-        }
-
-
-        public boolean isPreviousCardSuspended() {
-            return previousCardSuspended;
         }
 
 

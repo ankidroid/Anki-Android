@@ -36,7 +36,7 @@
 		android:layout_height="wrap_content"
 		android:text=""
 		android:textSize="14dip"
-		android:textColor="#ff0000" />
+		android:textColor="#000099" />
 	<TextView android:id="@+id/black_number"
 		android:layout_toRightOf="@+id/red_number"
 		android:layout_alignTop="@+id/red_number"
@@ -45,7 +45,7 @@
 		android:paddingLeft="8dp"
 		android:text=""
 		android:textSize="14dip"
-		android:textColor="#000000" />
+		android:textColor="#990000" />
 	<TextView android:id="@+id/blue_number"
 		android:layout_toRightOf="@+id/black_number"
 		android:layout_alignTop="@+id/red_number"
@@ -54,7 +54,7 @@
 		android:paddingLeft="8dp"
 		android:text=""
 		android:textSize="14dip"
-		android:textColor="@color/textbar_blue_color" />
+		android:textColor="#007700" />
 	<TextView android:id="@+id/choosen_answer"
 		android:layout_centerHorizontal="true"
 		android:layout_alignTop="@+id/red_number"

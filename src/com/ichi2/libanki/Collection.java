@@ -23,6 +23,7 @@ import android.util.Log;
 import com.ichi2.anki.AnkiDatabaseManager;
 import com.ichi2.anki.AnkiDb;
 import com.ichi2.anki.AnkiDroidApp;
+import com.ichi2.async.DeckTask;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -243,22 +244,28 @@ public class Collection {
     }
     public synchronized void close(boolean save) {
 //        if (wait) {
-//        	// Wait for any thread working on the deck to finish.
-//        	DeckTask.waitToFinish(); 
+        	// Wait for any thread working on the deck to finish.
+//    	DeckTask.waitToFinish(); 
 //        }
         if (mDb != null) {
             cleanup();
             if (save) {
-            	save();
+            	getDb().getDatabase().beginTransaction();
+            	try {
+                	save();
+                	getDb().getDatabase().setTransactionSuccessful();
+            	} finally {
+                	getDb().getDatabase().endTransaction();            		
+            	}
             } else {
             	rollback();
             }
             if (!mServer) {
             	// TODO:
             }
-//          AnkiDatabaseManager.closeDatabase();
-//            mDb.close();
-            mDb = null;
+          AnkiDatabaseManager.closeDatabase(mPath);
+          Log.i(AnkiDroidApp.TAG, "Collection closed");
+          mDb = null;
 //            mMedia.close();
         }
     }

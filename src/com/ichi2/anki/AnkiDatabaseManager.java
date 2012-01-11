@@ -12,7 +12,7 @@
  * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
  ****************************************************************************************/
 
-package com.ichi2.anki;import com.ichi2.anki2.R;
+package com.ichi2.anki;
 
 import java.util.HashMap;
 import java.util.Set;

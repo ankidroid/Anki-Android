@@ -351,11 +351,11 @@ public class Utils {
     public static String ids2str(LinkedList<Long> ids) {
     	StringBuilder sb = new StringBuilder();
     	sb.append("(");
-    	while (!ids.isEmpty()) {
-			sb.append(ids.remove());
-    		if (ids.size() > 0) {
+    	for (long id : ids) {
+    		if (sb.length() > 1) {
     			sb.append(", ");
     		}
+			sb.append(id);
     	}
     	sb.append(")");
     	return sb.toString();

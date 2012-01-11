@@ -523,6 +523,22 @@ public class DeckPicker extends Activity {
     };
 
 
+    DeckTask.TaskListener mCloseCollectionHandler = new DeckTask.TaskListener() {
+
+		@Override
+		public void onPostExecute(DeckTask.TaskData result) {
+		}
+
+		@Override
+		public void onPreExecute() {
+		}
+
+		@Override
+		public void onProgressUpdate(DeckTask.TaskData... values) {
+		}
+    };
+
+
     DeckTask.TaskListener mLoadStatisticsHandler = new DeckTask.TaskListener() {
 
 		@Override
@@ -759,9 +775,6 @@ public class DeckPicker extends Activity {
 					if (!text.equals("-1")) {
 						view.setVisibility(View.VISIBLE);
 						view.setAnimation(ViewAnimation.fade(ViewAnimation.FADE_IN, 500, 0));
-						return false;						
-					} else {
-						view.setVisibility(View.INVISIBLE);
 						return false;
 					}
 				}
@@ -1370,6 +1383,7 @@ public class DeckPicker extends Activity {
     public boolean onKeyDown(int keyCode, KeyEvent event)  {
         if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
         	Log.i(AnkiDroidApp.TAG, "DeckPicker - onBackPressed()");
+			DeckTask.launchDeckTask(DeckTask.TASK_TYPE_CLOSE_DECK, mCloseCollectionHandler, new TaskData(mCol));
         	finish();
             if (UIUtils.getApiLevel() > 4) {
                 ActivityTransitionAnimation.slide(this, ActivityTransitionAnimation.NONE);
@@ -1562,12 +1576,6 @@ public class DeckPicker extends Activity {
 
 	if (requestCode == SHOW_STUDYOPTIONS) {
 		if (resultCode == RESULT_OK) {
-			for (long did : mCol.getDecks().active()) {
-				HashMap<String, String> deck = getDeckFromDeckList(did);
-				deck.put("new", "-1");
-				deck.put("lrn", "-1");
-				deck.put("rev", "-1");
-			}
 			DeckTask.launchDeckTask(DeckTask.TASK_TYPE_LOAD_DECK_COUNTS, mLoadCountsHandler, new TaskData(mCol));
 		}
         } else if (requestCode == SHOW_INFO) {
