@@ -23,13 +23,101 @@
 				android:ellipsize="end"
 				android:minLines="1"
 				android:maxLines="2"
-				android:background="#000000"
 				android:gravity="center" 
 				android:layout_width="fill_parent" 
 				android:layout_height="wrap_content"
 				android:layout_marginBottom="8dp" 
 				android:text=""/>
-			<LinearLayout
+	    	<TextView
+				android:id="@+id/studyoptions_deck_description"
+				android:ellipsize="end"
+				android:maxLines="3"
+				android:gravity="center" 
+				android:layout_width="fill_parent" 
+				android:layout_height="wrap_content"
+				android:layout_marginBottom="8dp" 
+				android:text=""/>
+	    	<RelativeLayout	
+	    	    android:orientation="horizontal"
+				android:gravity="center"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content">
+    			<TextView
+			    	android:id="@+id/studyoptions_new"
+				    android:layout_width="wrap_content"
+					android:gravity="center"
+			    	android:layout_height="wrap_content"
+					android:layout_centerVertical="true"
+				    android:layout_toLeftOf="@+id/studyoptions_lrn"
+				    android:paddingRight="5dip"
+			    	android:textColor="#000099" />
+    			<TextView
+			    	android:layout_width="wrap_content"
+					android:gravity="center"
+			    	android:layout_height="wrap_content"
+					android:layout_centerVertical="true"
+				    android:layout_toLeftOf="@+id/studyoptions_lrn"
+				    android:paddingRight="15dip"
+				    android:text="Today:"
+			    	android:textColor="#000099" />
+				<TextView 
+					android:id="@+id/studyoptions_lrn" 
+					android:layout_gravity="center"
+					android:layout_height="wrap_content"
+					android:layout_width="wrap_content"
+					android:gravity="center"
+					android:layout_toLeftOf="@+id/studyoptions_rev" 
+					android:paddingRight="5dip"
+					android:textColor="#990000"
+					android:layout_centerVertical="true" />
+				<TextView 
+					android:id="@+id/studyoptions_rev" 
+					android:layout_gravity="center"
+					android:layout_height="wrap_content"
+					android:gravity="center"
+					android:layout_width="wrap_content"
+					android:layout_alignParentRight="true"
+					android:textColor="#007700"
+					android:layout_centerVertical="true" />
+			</RelativeLayout>
+	    	
+<!-- 	    	
+	    	<TableLayout
+					android:id="@+id/table"
+					android:layout_marginTop="10dp"		
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_gravity="center_horizontal">
+					<TableRow>
+						<TextView
+							android:layout_width="wrap_content"
+							android:layout_height="wrap_content"
+							android:text="@string/studyoptions_new_today"/>
+						<TextView 
+							android:id="@+id/studyoptions_today_new"
+							android:layout_width="fill_parent"
+							android:layout_height="wrap_content"
+							android:layout_marginLeft="4dp"
+							android:gravity="right"
+							android:text=""/>
+					</TableRow>
+					<TableRow>
+						<TextView
+							android:layout_width="wrap_content"
+							android:layout_height="wrap_content"
+							android:text="XX to be learned today"/>
+						<TextView 
+							android:id="@+id/studyoptions_today_lrn"
+							android:layout_width="fill_parent"
+							android:layout_height="wrap_content"
+							android:layout_marginLeft="4dp"
+							android:gravity="right"
+							android:text=""/>
+					</TableRow>
+	    	</TableLayout>
+	    	 -->
+	    	
+<!-- 			<LinearLayout
 				android:id="@+id/studyoptions_statistic_field" 
 				android:orientation="vertical"
 				android:gravity="center"
@@ -205,7 +293,7 @@
 							android:text=""/>
 					</TableRow>
 				</TableLayout>
-			</LinearLayout>
+			</LinearLayout> -->
 		</LinearLayout>
 		<LinearLayout
 			android:orientation="vertical"

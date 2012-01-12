@@ -261,7 +261,7 @@ public class StudyOptions extends Activity implements IButtonListener {
     private ToggleButton mToggleCram;
     private ToggleButton mToggleLimit;
     private TextView mTextDeckName;
-    private LinearLayout mDeckInformation;
+    private TextView mTextDeckDescription;
     private TextView mTextTodayNew;
     private TextView mTextTodayLrn;
     private TextView mTextTodayRev;
@@ -626,7 +626,6 @@ public class StudyOptions extends Activity implements IButtonListener {
     public void onConfigurationChanged(Configuration newConfig){
     	super.onConfigurationChanged(newConfig);
        	setLanguage(mLocale);
-    	hideDeckInformation(false);
         boolean cramChecked = mToggleCram.isChecked();
         boolean limitChecked = mToggleLimit.isChecked();
         boolean limitEnabled = mToggleLimit.isEnabled();
@@ -649,7 +648,6 @@ public class StudyOptions extends Activity implements IButtonListener {
         if (mDailyBar != null) {
             mGlobalLimitFrame.setVisibility(limitBarVisibility);
         }
-        showDeckInformation(false);
     }
 
 
@@ -859,7 +857,9 @@ public class StudyOptions extends Activity implements IButtonListener {
         mTextDeckName = (TextView) mStudyOptionsView.findViewById(R.id.studyoptions_deck_name);
         Themes.setTitleStyle(mTextDeckName);
 
-        mDeckInformation = (LinearLayout) mStudyOptionsView.findViewById(R.id.studyoptions_deckinformation);
+        mTextDeckDescription= (TextView) mStudyOptionsView.findViewById(R.id.studyoptions_deck_description);
+
+//        mDeckInformation = (LinearLayout) mStudyOptionsView.findViewById(R.id.studyoptions_deckinformation);
 
         mButtonStart = (Button) mStudyOptionsView.findViewById(R.id.studyoptions_start);
         mToggleCram = (ToggleButton) mStudyOptionsView.findViewById(R.id.studyoptions_cram);
@@ -888,13 +888,16 @@ public class StudyOptions extends Activity implements IButtonListener {
             });
         }
 
-        mTextTodayNew = (TextView) mStudyOptionsView.findViewById(R.id.studyoptions_today_new);
-        mTextTodayNew.setText("    ");
-        mTextTodayLrn = (TextView) mStudyOptionsView.findViewById(R.id.studyoptions_today_lrn);
-        mTextTodayRev = (TextView) mStudyOptionsView.findViewById(R.id.studyoptions_today_rev);
-        mTextNewTotal = (TextView) mStudyOptionsView.findViewById(R.id.studyoptions_new_total);
-        mTextTotal = (TextView) mStudyOptionsView.findViewById(R.id.studyoptions_total);
-        mTextETA = (TextView) mStudyOptionsView.findViewById(R.id.studyoptions_eta);
+        mTextTodayNew = (TextView) mStudyOptionsView.findViewById(R.id.studyoptions_new);
+        mTextTodayLrn = (TextView) mStudyOptionsView.findViewById(R.id.studyoptions_lrn);
+        mTextTodayRev = (TextView) mStudyOptionsView.findViewById(R.id.studyoptions_rev);
+
+        //        mTextTodayNew.setText("    ");
+//        mTextTodayLrn = (TextView) mStudyOptionsView.findViewById(R.id.studyoptions_today_lrn);
+//        mTextTodayRev = (TextView) mStudyOptionsView.findViewById(R.id.studyoptions_today_rev);
+//        mTextNewTotal = (TextView) mStudyOptionsView.findViewById(R.id.studyoptions_new_total);
+//        mTextTotal = (TextView) mStudyOptionsView.findViewById(R.id.studyoptions_total);
+//        mTextETA = (TextView) mStudyOptionsView.findViewById(R.id.studyoptions_eta);
         mNightMode = (CheckBox) mStudyOptionsView.findViewById(R.id.studyoptions_night_mode);
         mNightMode.setChecked(mInvertedColors);
         mNightMode.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -1637,24 +1640,6 @@ public class StudyOptions extends Activity implements IButtonListener {
     }
 
 
-    private void hideDeckInformation(boolean fade) {
-    	setTitle(getResources().getString(R.string.app_name));
-        mDeckInformation.setVisibility(View.INVISIBLE);
-        if (fade) {
-        	mDeckInformation.setAnimation(ViewAnimation.fade(ViewAnimation.FADE_OUT, 500, 0));        	
-        }
-    }
-
-
-    private void showDeckInformation(boolean fade) {
-        mTextDeckName.setVisibility(View.VISIBLE);
-        mDeckInformation.setVisibility(View.VISIBLE);
-        if (fade) {
-        	mDeckInformation.setAnimation(ViewAnimation.fade(ViewAnimation.FADE_IN, 500, 0));
-        }
-    }
-
-
     private boolean updateValuesFromDeck() {
         Resources res = getResources();
 
@@ -1682,11 +1667,14 @@ public class StudyOptions extends Activity implements IButtonListener {
         setTitle(res.getQuantityString(R.plurals.studyoptions_window_title, dues, name, dues, 0));
 
         mTextDeckName.setText(nameBuilder.toString());
+        mTextDeckDescription.setText(mCol.getDecks().getActualDescription());
         mTextTodayNew.setText(String.valueOf(counts[0]));
         mTextTodayLrn.setText(String.valueOf(counts[1]));
         mTextTodayRev.setText(String.valueOf(counts[2]));
-        mTextNewTotal.setText(String.valueOf(sched.newCount()));
-        mTextTotal.setText(String.valueOf(sched.cardCount()));
+
+        
+//        mTextNewTotal.setText(String.valueOf(sched.newCount()));
+//        mTextTotal.setText(String.valueOf(sched.cardCount()));
 
         //            String etastr = "-";
 //            int eta = deck.getSched().eta();

@@ -41,6 +41,7 @@ import com.ichi2.libanki.Card;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Note;
 import com.ichi2.libanki.Sched;
+import com.ichi2.libanki.Utils;
 import com.tomgibara.android.veecheck.util.PrefSettings;
 
 import android.content.Context;
@@ -331,6 +332,7 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
         try {
 	        AnkiDb ankiDB = sched.getCol().getDb();
 	        ankiDB.getDatabase().beginTransaction();
+	        double muh = Utils.now() * 1000;
 	        try {
 	            if (oldCard != null) {
 	            	oldCardLeech = sched.answerCard(oldCard, ease) ? 1 : 0;
@@ -342,18 +344,25 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
 //	            	Log.i(AnkiDroidApp.TAG, "doInBackgroundAnswerCard: get card from big widget");
 //                	newCard = AnkiDroidWidgetBig.getCard();
 	            }
+	            Log.e("antworten", "" + (Utils.now()* 1000 - muh));
+	            muh = Utils.now()* 1000;
 	            if (newCard == null) {
 		            newCard = sched.getCard();
 	            }
+	            Log.e("neue", "" + (Utils.now()* 1000 - muh));
+	            muh = Utils.now()* 1000;
 	            if (newCard != null) {
 		            // render cards before locking database
 	            	newCard._getQA(true);
 	            }
+	            Log.e("qa", "" + (Utils.now()* 1000 - muh));
+	            muh = Utils.now()* 1000;
                 publishProgress(new TaskData(newCard, oldCardLeech));
 	            ankiDB.getDatabase().setTransactionSuccessful();
 	        } finally {
 	            ankiDB.getDatabase().endTransaction();
 	        }
+            Log.e("write", "" + (Utils.now()* 1000 - muh));
 		} catch (RuntimeException e) {
 			Log.e(AnkiDroidApp.TAG, "doInBackgroundAnswerCard - RuntimeException on answering card: " + e);
 			AnkiDroidApp.saveExceptionReportFile(e, "doInBackgroundAnswerCard");
