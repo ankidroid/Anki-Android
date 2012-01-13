@@ -60,10 +60,8 @@ public class Decks {
     		"'timeToday': [0, 0], " + // time in ms
     		"'conf': 1, " +
     		"'usn': 0, " +
-    		"'desc': \"\", }";
+    		"'desc': \"\" }";
 
-
-	
     // default group conf
     private static final String defaultConf = "{" +
     		"'new': {" +
@@ -145,29 +143,40 @@ public class Decks {
 	public void save() {
 		save(null);
 	}
+	/** Can be called with either a deck or a deck configuration. */
 	public void save(JSONObject g) {
-		// TODO
+		if (g != null) {
+			try {
+				g.put("mod", Utils.intNow());
+				g.put("usn", mCol.getUsn());
+			} catch (JSONException e) {
+				throw new RuntimeException(e);
+			}
+		}
+		mChanged = true;
 	}
 
 
 	public void flush() {
         ContentValues values = new ContentValues();
-    	try {
-    		JSONObject decksarray = new JSONObject();
-            for (Map.Entry<Long, JSONObject> d : mDecks.entrySet()) {
-            	decksarray.put(Long.toString(d.getKey()), d.getValue());
-            }
-            values.put("decks", decksarray.toString());
-    		JSONObject confarray = new JSONObject();
-            for (Map.Entry<Long, JSONObject> d : mDconf.entrySet()) {
-            	confarray.put(Long.toString(d.getKey()), d.getValue());
-            }
-            values.put("dconf", confarray.toString());
-		} catch (JSONException e) {
-			throw new RuntimeException(e);
-		}
-		mCol.getDb().getDatabase().update("col", values, null, null);
-		mChanged = false;
+        if (mChanged) {
+        	try {
+        		JSONObject decksarray = new JSONObject();
+                for (Map.Entry<Long, JSONObject> d : mDecks.entrySet()) {
+                	decksarray.put(Long.toString(d.getKey()), d.getValue());
+                }
+                values.put("decks", decksarray.toString());
+        		JSONObject confarray = new JSONObject();
+                for (Map.Entry<Long, JSONObject> d : mDconf.entrySet()) {
+                	confarray.put(Long.toString(d.getKey()), d.getValue());
+                }
+                values.put("dconf", confarray.toString());
+    		} catch (JSONException e) {
+    			throw new RuntimeException(e);
+    		}
+    		mCol.getDb().getDatabase().update("col", values, null, null);
+    		mChanged = false;        	
+        }
 	}
 
     /**
@@ -202,15 +211,16 @@ public class Decks {
 		try {
 			g = new JSONObject(defaultDeck);
 			g.put("name", name);
-			id = Utils.intNow();
+			id = Utils.intNow(1000);
 			while (mDecks.containsKey(id)) {
 				id = Utils.intNow();
 			}
 			g.put("id", id);
+			mDecks.put(id, g);
+			mDeckIds.put(name, id);
 		} catch (JSONException e) {
 			throw new RuntimeException(e);
 		}
-		mDecks.put(id, g);
 		save(g);
 		maybeAddToActive();
 		return id;
@@ -248,7 +258,7 @@ public class Decks {
 
 	
     /** An unsorted list of all deck names. */
-	public String[] allNames() {
+	public ArrayList<String> allNames() {
 		ArrayList<String> list = new ArrayList<String>();
 		for (JSONObject o : mDecks.values()) {
 			try {
@@ -257,7 +267,7 @@ public class Decks {
 				throw new RuntimeException(e);
 			}
 		}
-		return (String[]) list.toArray();
+		return list;
 	}
 
 	
@@ -294,7 +304,36 @@ public class Decks {
 
 
 	// TODO: update
-	// TODO: rename
+
+
+	/** Rename deck prefix to NAME if not exists. Updates children. */
+	public void rename(JSONObject g, String newName) {
+		// make sure target node doesn't already exist
+		if (allNames().contains(newName) || newName.length() == 0) {
+			return;
+		}
+		// rename children
+		String oldName;
+		try {
+			oldName = g.getString("name");
+			for (JSONObject grp : all()) {
+				if (grp.getString("name").startsWith(oldName + "::")) {
+					String on = grp.getString("name");
+					String nn = on.replace(oldName + "::", newName + "::");
+					grp.put("name", nn);
+					mDeckIds.put(nn, mDeckIds.remove(on));
+				}
+			}
+			// adjust name and save
+			g.put("name", newName);
+			mDeckIds.put(newName, mDeckIds.remove(oldName));
+			save(g);
+			// finally, ensure we have parents
+			_ensureParents(newName);
+		} catch (JSONException e) {
+			throw new RuntimeException(e);
+		}
+	}
 
 
 	private void _ensureParents(String name) {
@@ -317,7 +356,11 @@ public class Decks {
 
     /** A list of all deck config. */
 	public ArrayList<JSONObject> allConf() {
-		return (ArrayList<JSONObject>) mDconf.values();
+		ArrayList<JSONObject> confs = new ArrayList<JSONObject>();
+		for (JSONObject c : mDconf.values()) {
+			confs.add(c);
+		}
+		return confs;
 	}
 
 

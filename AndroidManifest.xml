@@ -24,7 +24,10 @@
 	android:versionCode="25"
 	android:installLocation="auto">
     <instrumentation android:name="android.test.InstrumentationTestRunner" android:targetPackage="com.ichi2.anki2"></instrumentation>
-	<application android:label="@string/app_name" android:icon="@drawable/anki" android:name="com.ichi2.anki.AnkiDroidApp" android:debuggable="true">
+	<application 
+	    android:label="@string/app_name" 
+	    android:icon="@drawable/anki" 
+	    android:name="com.ichi2.anki.AnkiDroidApp" android:debuggable="true">
 	    <!-- android:label="@string/app_name" -->
 		<activity android:name="com.ichi2.anki.DeckPicker"
 		    android:label="AD2alpha"

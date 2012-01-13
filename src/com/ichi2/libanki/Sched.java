@@ -1648,7 +1648,7 @@ public class Sched {
 			String[] o1 = (String[]) lhs[0];
 			String[] o2 = (String[]) rhs[0];
 			for (int i = 0; i < Math.min(o1.length, o2.length); i++) {
-				int result = o1[i].compareTo(o2[i]);
+				int result = o1[i].compareToIgnoreCase(o2[i]);
 				if (result != 0) {
 					return result;
 				}

@@ -58,6 +58,7 @@ import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.SimpleAdapter;
@@ -179,8 +180,8 @@ public class DeckPicker extends Activity {
 	private StyledDialog mMissingMediaAlert;
 	private StyledDialog mDeckNotLoadedAlert;
 	private StyledDialog mNoSpaceLeftAlert;
-	private Button mSyncAllButton;
-	private Button mStatisticsAllButton;
+	private ImageButton mSyncAllButton;
+	private ImageButton mStatisticsAllButton;
 	private View mDeckpickerButtons;
 
 	private File[] mBackups;
@@ -746,7 +747,7 @@ public class DeckPicker extends Activity {
 		registerExternalStorageListener();
 
 		mDeckpickerButtons = (View) findViewById(R.id.deckpicker_buttons);
-		mSyncAllButton = (Button) findViewById(R.id.sync_all_button);
+		mSyncAllButton = (ImageButton) findViewById(R.id.sync_all_button);
 		mSyncAllButton.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -755,7 +756,7 @@ public class DeckPicker extends Activity {
 
 		});
 
-		mStatisticsAllButton = (Button) findViewById(R.id.statistics_all_button);
+		mStatisticsAllButton = (ImageButton) findViewById(R.id.statistics_all_button);
 		mStatisticsAllButton.setOnClickListener(new OnClickListener() {
 
 			@Override

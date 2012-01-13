@@ -53,6 +53,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -271,9 +272,9 @@ public class StudyOptions extends Activity implements IButtonListener {
     private TextView mTextETA;
     private CheckBox mNightMode;
     private CheckBox mSwapQA;
-    private Button mCardBrowser;
-    private Button mDeckOptions;
-    private Button mStatisticsButton;
+    private ImageButton mCardBrowser;
+    private ImageButton mDeckOptions;
+    private ImageButton mStatisticsButton;
 
     /**
 * UI elements for "More Options" dialog
@@ -875,9 +876,9 @@ public class StudyOptions extends Activity implements IButtonListener {
 
         mToggleLimit = (ToggleButton) mStudyOptionsView.findViewById(R.id.studyoptions_limit);
 
-        mStatisticsButton = (Button) mStudyOptionsView.findViewById(R.id.studyoptions_statistics);
-        mCardBrowser = (Button) mStudyOptionsView.findViewById(R.id.studyoptions_card_browser);
-        mDeckOptions = (Button) mStudyOptionsView.findViewById(R.id.studyoptions_options);
+        mStatisticsButton = (ImageButton) mStudyOptionsView.findViewById(R.id.studyoptions_statistics);
+        mCardBrowser = (ImageButton) mStudyOptionsView.findViewById(R.id.studyoptions_card_browser);
+        mDeckOptions = (ImageButton) mStudyOptionsView.findViewById(R.id.studyoptions_options);
 
 //        mDailyBar = (View) mStudyOptionsView.findViewById(R.id.studyoptions_daily_bar);
 //        mMatureBar = (View) mStudyOptionsView.findViewById(R.id.studyoptions_mature_bar);
@@ -1917,6 +1918,8 @@ public class StudyOptions extends Activity implements IButtonListener {
 
         if (resultCode == CONTENT_NO_EXTERNAL_STORAGE) {
             showContentView(CONTENT_NO_EXTERNAL_STORAGE);
+        } else if (requestCode == DECK_OPTIONS) {
+        	resetAndUpdateValuesFromDeck();
         } else if (requestCode == PICK_DECK_REQUEST || requestCode == DOWNLOAD_PERSONAL_DECK
                 || requestCode == DOWNLOAD_SHARED_DECK) {
             mInDeckPicker = false;
