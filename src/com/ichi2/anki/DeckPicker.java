@@ -485,6 +485,8 @@ public class DeckPicker extends Activity {
 				return;
 			}
 			updateDecksList(result.getDeckList());
+			mDeckListView.setVisibility(View.VISIBLE);
+			mDeckListView.setAnimation(ViewAnimation.fade(ViewAnimation.FADE_IN, 500, 0));
 			DeckTask.launchDeckTask(DeckTask.TASK_TYPE_LOAD_DECK_COUNTS, mLoadCountsHandler, new TaskData(mCol));
 			if (mProgressDialog.isShowing()) {
                 try {
@@ -498,6 +500,7 @@ public class DeckPicker extends Activity {
 		@Override
 		public void onPreExecute() {
             mProgressDialog = StyledProgressDialog.show(DeckPicker.this, "", "opening collection", true);
+			mDeckListView.setVisibility(View.INVISIBLE);
 		}
 
 		@Override
@@ -1465,17 +1468,6 @@ public class DeckPicker extends Activity {
 	}
 
 
-	private void enableButtons(boolean enabled) {
-		if (enabled) {
-			mSyncAllButton.setVisibility(View.VISIBLE);
-			mDeckpickerButtons.setVisibility(View.VISIBLE);
-			mDeckpickerButtons.setAnimation(ViewAnimation.fade(ViewAnimation.FADE_IN, 500, 0)); 
-		} else {
-			mDeckpickerButtons.setVisibility(View.INVISIBLE);
-		}
-	}
-
-
 	private void syncAllDecks() {
 		if (AnkiDroidApp.isUserLoggedIn()) {
             mSyncAllButton.setClickable(false);
@@ -1491,7 +1483,60 @@ public class DeckPicker extends Activity {
 		}
 	}
 	
-	
+//    private OnClickListener mSyncConflictResolutionListener = new OnClickListener() {
+//        @Override
+//        public void onClick(DialogInterface dialog, int which) {
+//            switch (which) {
+//                case DialogInterface.BUTTON_POSITIVE:
+//                    syncDeck("keepLocal");
+//                    break;
+//                case DialogInterface.BUTTON_NEUTRAL:
+//                    syncDeck("keepRemote");
+//                    break;
+//                case DialogInterface.BUTTON_NEGATIVE:
+//                default:
+//            }
+//        }
+//    };
+
+    private void syncDeckWithPrompt() {
+//        if (AnkiDroidApp.isUserLoggedIn()) {
+//            Deck deck = DeckManager.getMainDeck();
+//            if (deck != null) {
+//                // Close existing sync progress dialog
+//                if (mProgressDialog != null && mProgressDialog.isShowing()) {
+//                    mProgressDialog.dismiss();
+//                }
+//                // Prompt user for conflict resolution
+//                mCurrentDialogMessage = String.format(getResources().getString(R.string.sync_conflict_message), deck.getDeckName());
+//                showDialog(DIALOG_SYNC_CONFLICT_RESOLUTION);
+//            }
+//        } else {
+//        	showDialog(DIALOG_USER_NOT_LOGGED_IN);
+//        }
+    }
+
+
+    private void syncDeck(String conflictResolution) {
+//        SharedPreferences preferences = PrefSettings.getSharedPrefs(getBaseContext());
+//
+//        String username = preferences.getString("username", "");
+//        String password = preferences.getString("password", "");
+//
+//        if (AnkiDroidApp.isUserLoggedIn()) {
+//            Deck deck = DeckManager.getMainDeck();
+//            if (deck != null) {
+//                Log.i(AnkiDroidApp.TAG, "Synchronizing deck " + mDeckFilename + ", conflict resolution: " + conflictResolution);
+//                Log.i(AnkiDroidApp.TAG, String.format(Utils.ENGLISH_LOCALE, "Before syncing - mod: %f, last sync: %f", deck.getModified(), deck.getLastSync()));
+//                Connection.syncDeck(mSyncListener, new Connection.Payload(new Object[] { username, password, deck, conflictResolution, true }));
+//            }
+//        } else {
+//        	showDialog(DIALOG_USER_NOT_LOGGED_IN);
+//        }
+    }
+
+
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuItem item;

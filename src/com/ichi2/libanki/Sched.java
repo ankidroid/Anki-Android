@@ -1611,6 +1611,17 @@ public class Sched {
      * ***********************************************************************************************
      */
 
+    public int getTotalCount() {
+    	return mCol.getDb().queryScalar("SELECT count() FROM (SELECT 1 FROM cards WHERE did IN " + _deckLimit() + ")");    	
+    }
+
+
+    public int getTotalNewCount() {
+    	// TODO: check, if correct, type?
+    	return mCol.getDb().queryScalar("SELECT count() FROM (SELECT 1 FROM cards WHERE did IN " + _deckLimit() + " AND queue = 0)");    	
+    }
+
+
     public String getName() {
         return mName;
     }

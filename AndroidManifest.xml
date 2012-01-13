@@ -61,7 +61,7 @@
 		<activity android:name="com.ichi2.anki.Preferences" 
 			android:label="@string/preferences_title"
 			android:configChanges="keyboardHidden|orientation|locale"/>
-		<activity android:name="com.ichi2.anki.DeckPreferences" 
+		<activity android:name="com.ichi2.anki.DeckOptions" 
 			android:label="@string/deckpreferences_title" 
 			android:configChanges="locale"/>
 		<activity android:name="com.ichi2.anki.Info" 

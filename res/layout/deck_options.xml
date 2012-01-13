@@ -23,31 +23,20 @@
 		android:layout_alignParentBottom="true"
 		android:layout_height="wrap_content"
 		android:orientation="horizontal">
-		<Button
-			android:drawable="@drawable/studyoptions_add"
-			android:id="@+id/deckpicker_add"
-			android:layout_width="0dip" 
-			style="?android:attr/buttonStyleSmall"
-			android:layout_height="fill_parent"
-			android:layout_weight="1"/>
-		<Button
-			android:drawable="@drawable/studyoptions_cards"
-			android:id="@+id/deckpicker_card_browser"
-			android:layout_width="0dip" 
-			style="?android:attr/buttonStyleSmall"
-			android:layout_height="fill_parent"
-			android:layout_weight="1"/>
-		<Button android:id="@+id/statistics_all_button"
-			android:layout_height="fill_parent"
-			android:drawable="@drawable/studyoptions_stats"
-			style="?android:attr/buttonStyleSmall"
+
+		<Button	android:id="@+id/sync_all_button"
 			android:layout_width="0dip"
-			android:layout_weight="1"/>
-		<Button android:id="@+id/sync_all_button"
 			android:layout_height="fill_parent"
-			android:drawable="@drawable/deckpicker_sync"
-			style="?android:attr/buttonStyleSmall"
+			android:layout_weight="1"
+			android:enabled="true"
+			android:text="@string/sync_all"/>
+		
+		<Button	android:id="@+id/statistics_all_button"
 			android:layout_width="0dip"
-			android:layout_weight="1"/>
+			android:layout_height="fill_parent"
+			android:layout_weight="1"
+			android:enabled="true"
+			android:text="@string/statistics"/>
 	</LinearLayout>
+	
 </RelativeLayout>

@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+~ Copyright (c) 2012 Norbert Nagold <norbert.nagold@gmail.com>
+~
+~ This program is free software; you can redistribute it and/or modify it under
+~ the terms of the GNU General Public License as published by the Free Software
+~ Foundation; either version 3 of the License, or (at your option) any later
+~ version.
+~
+~ This program is distributed in the hope that it will be useful, but WITHOUT ANY
+~ WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+~ PARTICULAR PURPOSE. See the GNU General Public License for more details.
+~
+~ You should have received a copy of the GNU General Public License along with
+~ this program.  If not, see <http://www.gnu.org/licenses/>.
+-->
+
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+	<EditTextPreference
+            	android:title="Deck name"
+            	android:summary="deck name. Use \'::\' to seperate subdecks"
+            	android:key="name" />
+	<EditTextPreference
+            	android:title="Deck description"
+            	android:summary=".."
+		android:key="desc" />
+	<PreferenceCategory android:title="Options">
+	<ListPreference
+		android:title="Change conf"
+		android:summary="Choose configuration and/or change it below"
+		android:key="changeConf"/>
+	<PreferenceCategory android:title="General">
+		<EditTextPreference
+        	    	android:title="Maximal answer tiem"
+        	    	android:summary="Ignore answer times longer than XXX seconds"
+        	    	android:numeric="integer" 
+		    	android:key="maxAnswerTime" />
+		<CheckBoxPreference
+			android:title="Show answer timer"
+			android:summary=""
+			android:key="showAnswerTimer" />
+		<CheckBoxPreference
+			android:title="Automatically play audio"
+			android:summary=""
+			android:key="autoPlayAudio" />
+	</PreferenceCategory>
+	<PreferenceCategory android:title="New Cards">
+		<EditTextPreference
+        	    	android:title="Steps (in minutes)"
+        	    	android:summary=""
+        	    	android:numeric=""
+		 	android:key="newSteps" />
+		<ListPreference
+			android:title="Order"
+			android:summary=""
+			android:key="newOrder"/>
+		<EditTextPreference
+        	    	android:title="New cards/day"
+        	    	android:summary=""
+        	    	android:numeric=""
+		 	android:key="newPerDay" />
+		<EditTextPreference
+        	    	android:title="Graduating interval"
+        	    	android:summary=""
+        	    	android:numeric=""
+		 	android:key="newGradIvl" />
+		<EditTextPreference
+        	    	android:title="Easy"
+        	    	android:summary=""
+        	    	android:numeric=""
+		 	android:key="newEasy" />
+		<EditTextPreference
+        	    	android:title="Starting factor"
+        	    	android:summary=""
+        	    	android:numeric=""
+		 	android:key="newFactor" />
+		<CheckBoxPreference
+			android:title="Siblings"
+			android:defaultValue="true"
+			android:summary="Try not to show sibling cards next to each other"
+			android:key="newSeparate" />
+	</PreferenceCategory>
+	<PreferenceCategory android:title="Reviews">
+		<ListPreference
+			android:title="Order"
+			android:summary=""
+			android:key="revOrder"/>
+		<EditTextPreference
+        	    	android:title="Maximum reviews/day"
+        	    	android:summary=""
+        	    	android:numeric=""
+		 	android:key="revPerDay" />
+		<EditTextPreference
+        	    	android:title="Space siblings by up to 5 %"
+        	    	android:summary=""
+        	    	android:numeric=""
+		 	android:key="revSpaceMax" />
+		<EditTextPreference
+        	    	android:title="Minimum sibling range: XXX days"
+        	    	android:summary=""
+        	    	android:numeric=""
+		 	android:key="revSpaceMin" />
+		<EditTextPreference
+        	    	android:title="Easy bonus"
+        	    	android:summary=""
+        	    	android:numeric=""
+		 	android:key="easyBonus" />
+		<EditTextPreference
+        	    	android:title="Desired forgetting index: XX %"
+        	    	android:summary=""
+        	    	android:numeric=""
+		 	android:key="revDesForIdx" />
+		<EditTextPreference
+        	    	android:title="Assumed forgetting index: XX %"
+        	    	android:summary=""
+        	    	android:numeric=""
+		 	android:key="revAssForIdx" />
+	</PreferenceCategory>
+	<PreferenceCategory android:title="Lapses">
+		<EditTextPreference
+        	    	android:title="Steps (in minutes)"
+        	    	android:summary=""
+        	    	android:numeric=""
+		 	android:key="lapSteps" />
+		<EditTextPreference
+        	    	android:title="New interval: XX %"
+        	    	android:summary=""
+        	    	android:numeric=""
+		 	android:key="lapNewIvl" />
+		<EditTextPreference
+        	    	android:title="Minimum Interval: XXX days"
+        	    	android:summary=""
+        	    	android:numeric=""
+		 	android:key="lapMinIvl" />
+		<EditTextPreference
+        	    	android:title="Leech Threshold"
+        	    	android:summary=""
+        	    	android:numeric=""
+		 	android:key="lapLeechThres" />
+		<ListPreference
+			android:title="Leech Action"
+			android:summary=""
+			android:key="lapLeechAct"/>
+	</PreferenceCategory>
+	<PreferenceCategory android:title="Add/remove/Delete configuration">
+		<PreferenceScreen android:title="Add configuration"
+			android:key="confAdd"/>
+		<PreferenceScreen android:title="Rename configuration"
+			android:key="confRen"/>
+		<PreferenceScreen android:title="Remove configuration"
+			android:key="confRem"/>
+	</PreferenceCategory>
+	</PreferenceCategory>
+</PreferenceScreen>

@@ -128,6 +128,7 @@ public class StudyOptions extends Activity implements IButtonListener {
     private static final int STATISTICS = 8;
     private static final int GROUP_SELECTOR = 9;
     private static final int LOG_IN = 10;
+    private static final int DECK_OPTIONS = 11;
 
     public static final int RESULT_RESTART = 100;
     public static final int RESULT_CLOSE = 101;
@@ -271,6 +272,7 @@ public class StudyOptions extends Activity implements IButtonListener {
     private CheckBox mNightMode;
     private CheckBox mSwapQA;
     private Button mCardBrowser;
+    private Button mDeckOptions;
     private Button mStatisticsButton;
 
     /**
@@ -409,6 +411,13 @@ public class StudyOptions extends Activity implements IButtonListener {
                 case R.id.studyoptions_congrats_message:
                 	mStatisticType = 0;
                 	openStatistics(0);
+                	return;
+                case R.id.studyoptions_options:
+            		Intent i = new Intent(StudyOptions.this, DeckOptions.class);
+            		startActivityForResult(i, DECK_OPTIONS);
+                	if (UIUtils.getApiLevel() > 4) {
+               			ActivityTransitionAnimation.slide(StudyOptions.this, ActivityTransitionAnimation.UP);
+                	}
                 	return;
                 default:
                     return;
@@ -866,18 +875,16 @@ public class StudyOptions extends Activity implements IButtonListener {
 
         mToggleLimit = (ToggleButton) mStudyOptionsView.findViewById(R.id.studyoptions_limit);
 
-        mCardBrowser = (Button) mStudyOptionsView.findViewById(R.id.studyoptions_card_browser);
         mStatisticsButton = (Button) mStudyOptionsView.findViewById(R.id.studyoptions_statistics);
+        mCardBrowser = (Button) mStudyOptionsView.findViewById(R.id.studyoptions_card_browser);
+        mDeckOptions = (Button) mStudyOptionsView.findViewById(R.id.studyoptions_options);
 
-        mDailyBar = (View) mStudyOptionsView.findViewById(R.id.studyoptions_daily_bar);
-        mMatureBar = (View) mStudyOptionsView.findViewById(R.id.studyoptions_mature_bar);
-        mGlobalLimitFrame = (View) mStudyOptionsView.findViewById(R.id.studyoptions_global_limit_bars);
-        mGlobalLimitBar = (View) mStudyOptionsView.findViewById(R.id.studyoptions_global_limit_bar);
-        mGlobalMatLimitBar = (View) mStudyOptionsView.findViewById(R.id.studyoptions_global_mat_limit_bar);
+//        mDailyBar = (View) mStudyOptionsView.findViewById(R.id.studyoptions_daily_bar);
+//        mMatureBar = (View) mStudyOptionsView.findViewById(R.id.studyoptions_mature_bar);
         mGlobalBar = (View) mStudyOptionsView.findViewById(R.id.studyoptions_global_bar);
         mGlobalMatBar = (View) mStudyOptionsView.findViewById(R.id.studyoptions_global_mat_bar);
-        mBarsMax = (View) mStudyOptionsView.findViewById(R.id.studyoptions_bars_max);
-        if (mDailyBar != null) {
+        mBarsMax = (View) mStudyOptionsView.findViewById(R.id.studyoptions_progressbar_content);
+        if (mGlobalBar != null) {
             ViewTreeObserver vto = mBarsMax.getViewTreeObserver();
             vto.addOnGlobalLayoutListener(new OnGlobalLayoutListener() {
                 @Override
@@ -891,13 +898,10 @@ public class StudyOptions extends Activity implements IButtonListener {
         mTextTodayNew = (TextView) mStudyOptionsView.findViewById(R.id.studyoptions_new);
         mTextTodayLrn = (TextView) mStudyOptionsView.findViewById(R.id.studyoptions_lrn);
         mTextTodayRev = (TextView) mStudyOptionsView.findViewById(R.id.studyoptions_rev);
+        mTextNewTotal = (TextView) mStudyOptionsView.findViewById(R.id.studyoptions_total_new);
+        mTextTotal = (TextView) mStudyOptionsView.findViewById(R.id.studyoptions_total);
+        mTextETA = (TextView) mStudyOptionsView.findViewById(R.id.studyoptions_eta);
 
-        //        mTextTodayNew.setText("    ");
-//        mTextTodayLrn = (TextView) mStudyOptionsView.findViewById(R.id.studyoptions_today_lrn);
-//        mTextTodayRev = (TextView) mStudyOptionsView.findViewById(R.id.studyoptions_today_rev);
-//        mTextNewTotal = (TextView) mStudyOptionsView.findViewById(R.id.studyoptions_new_total);
-//        mTextTotal = (TextView) mStudyOptionsView.findViewById(R.id.studyoptions_total);
-//        mTextETA = (TextView) mStudyOptionsView.findViewById(R.id.studyoptions_eta);
         mNightMode = (CheckBox) mStudyOptionsView.findViewById(R.id.studyoptions_night_mode);
         mNightMode.setChecked(mInvertedColors);
         mNightMode.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -929,6 +933,7 @@ public class StudyOptions extends Activity implements IButtonListener {
         mToggleCram.setOnClickListener(mButtonClickListener);
         mToggleLimit.setOnClickListener(mButtonClickListener);
         mCardBrowser.setOnClickListener(mButtonClickListener);
+        mDeckOptions.setOnClickListener(mButtonClickListener);
         mStatisticsButton.setOnClickListener(mButtonClickListener);
 
         // The view that shows the congratulations view.
@@ -960,22 +965,6 @@ public class StudyOptions extends Activity implements IButtonListener {
         Themes.setTextViewStyle(mNoExternalStorageView.findViewById(R.id.studyoptions_nostorage_message));
     }
 
-
-    private OnClickListener mSyncConflictResolutionListener = new OnClickListener() {
-        @Override
-        public void onClick(DialogInterface dialog, int which) {
-            switch (which) {
-                case DialogInterface.BUTTON_POSITIVE:
-                    syncDeck("keepLocal");
-                    break;
-                case DialogInterface.BUTTON_NEUTRAL:
-                    syncDeck("keepRemote");
-                    break;
-                case DialogInterface.BUTTON_NEGATIVE:
-                default:
-            }
-        }
-    };
 
 
     private OnClickListener mStatisticListener = new OnClickListener() {
@@ -1667,11 +1656,20 @@ public class StudyOptions extends Activity implements IButtonListener {
         setTitle(res.getQuantityString(R.plurals.studyoptions_window_title, dues, name, dues, 0));
 
         mTextDeckName.setText(nameBuilder.toString());
-        mTextDeckDescription.setText(mCol.getDecks().getActualDescription());
+        String desc = mCol.getDecks().getActualDescription();
+        if (desc.length() > 0) {
+            mTextDeckDescription.setText(desc);        	
+        	mTextDeckDescription.setVisibility(View.VISIBLE);
+        } else {
+        	mTextDeckDescription.setVisibility(View.GONE);
+        }
         mTextTodayNew.setText(String.valueOf(counts[0]));
         mTextTodayLrn.setText(String.valueOf(counts[1]));
         mTextTodayRev.setText(String.valueOf(counts[2]));
-
+        mTextNewTotal.setText(String.valueOf(sched.getTotalNewCount()));
+        mTextTotal.setText(String.valueOf(sched.getTotalCount()));
+        mTextETA.setText("???");
+        updateStatisticBars();
         
 //        mTextNewTotal.setText(String.valueOf(sched.newCount()));
 //        mTextTotal.setText(String.valueOf(sched.cardCount()));
@@ -1719,12 +1717,10 @@ public class StudyOptions extends Activity implements IButtonListener {
             mStatisticBarsMax = mBarsMax.getWidth();
             mStatisticBarsHeight = mBarsMax.getHeight();
         }
-        Utils.updateProgressBars(this, mDailyBar, mProgressTodayYes, mStatisticBarsMax, mStatisticBarsHeight, true);
-        Utils.updateProgressBars(this, mMatureBar,mProgressMatureYes, mStatisticBarsMax, mStatisticBarsHeight, true);
-        Utils.updateProgressBars(this, mGlobalMatLimitBar, mProgressMatureLimit, mStatisticBarsMax, mStatisticBarsHeight, false);
-        Utils.updateProgressBars(this, mGlobalLimitBar, (mProgressAllLimit == 1.0) ? 1.0 : mProgressAllLimit - mProgressMatureLimit, mStatisticBarsMax, mStatisticBarsHeight, false);
-        Utils.updateProgressBars(this, mGlobalMatBar, mProgressMature, mStatisticBarsMax, mStatisticBarsHeight, false);
-        Utils.updateProgressBars(this, mGlobalBar, (mProgressAll == 1.0) ? 1.0 : mProgressAll - mProgressMature, mStatisticBarsMax, mStatisticBarsHeight, false);
+//        Utils.updateProgressBars(this, mDailyBar, mProgressTodayYes, mStatisticBarsMax, mStatisticBarsHeight, true);
+//        Utils.updateProgressBars(this, mMatureBar,mProgressMatureYes, mStatisticBarsMax, mStatisticBarsHeight, true);
+        Utils.updateProgressBars(this, mGlobalMatBar, 0.7, mStatisticBarsMax, mStatisticBarsHeight, false); // mProgressMature
+        Utils.updateProgressBars(this, mGlobalBar, (mProgressAll == 1.0) ? 1.0 : 0.1, mStatisticBarsMax, mStatisticBarsHeight, false); //mProgressAll - mProgressMature
     }
 
 
@@ -1778,16 +1774,8 @@ public class StudyOptions extends Activity implements IButtonListener {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-    	Utils.addMenuItemInActionBar(menu, Menu.NONE, MENU_OPEN, Menu.NONE, R.string.menu_open_deck,
-                R.drawable.ic_menu_manage);
-        Utils.addMenuItemInActionBar(menu, Menu.NONE, MENU_SYNC, Menu.NONE, R.string.menu_sync,
-                R.drawable.ic_menu_refresh);        	
-        Utils.addMenuItem(menu, Menu.NONE, MENU_ADD_FACT, Menu.NONE, R.string.menu_add_card,
-                R.drawable.ic_menu_add);
         Utils.addMenuItem(menu, Menu.NONE, MENU_PREFERENCES, Menu.NONE, R.string.menu_preferences,
                 R.drawable.ic_menu_preferences);
-        Utils.addMenuItem(menu, Menu.NONE, MENU_MORE_OPTIONS, Menu.NONE, R.string.studyoptions_more,
-                R.drawable.ic_menu_archive);
         Utils.addMenuItem(menu, Menu.NONE, MENU_ROTATE, Menu.NONE, R.string.menu_rotate,
                 android.R.drawable.ic_menu_always_landscape_portrait);        
         Utils.addMenuItem(menu, Menu.NONE, MENU_ZEEMOTE, Menu.NONE, R.string.menu_zeemote,
@@ -1816,18 +1804,6 @@ public class StudyOptions extends Activity implements IButtonListener {
         		showDialog(DIALOG_SELECT_HELP);
         		return true;
  
-            case MENU_OPEN:
-                openDeckPicker();
-                return true;
-
-            case MENU_SYNC:
-                syncDeck(null);
-                return true;
-
-            case MENU_MORE_OPTIONS:
-            	showDialog(DIALOG_MORE);
-                return true;
-
             case MENU_PREFERENCES:
                 startActivityForResult(
                         new Intent(StudyOptions.this, Preferences.class),
@@ -1924,43 +1900,6 @@ public class StudyOptions extends Activity implements IButtonListener {
 //        mDeckFilename = mPrefDeckPath + "/" + SAMPLE_DECK_NAME;
         savePreferences("deckFilename");
 //        DeckTask.launchDeckTask(DeckTask.TASK_TYPE_LOAD_TUTORIAL, mLoadDeckHandler, new DeckTask.TaskData(mDeckFilename));        	
-    }
-
-
-    private void syncDeckWithPrompt() {
-//        if (AnkiDroidApp.isUserLoggedIn()) {
-//            Deck deck = DeckManager.getMainDeck();
-//            if (deck != null) {
-//                // Close existing sync progress dialog
-//                if (mProgressDialog != null && mProgressDialog.isShowing()) {
-//                    mProgressDialog.dismiss();
-//                }
-//                // Prompt user for conflict resolution
-//                mCurrentDialogMessage = String.format(getResources().getString(R.string.sync_conflict_message), deck.getDeckName());
-//                showDialog(DIALOG_SYNC_CONFLICT_RESOLUTION);
-//            }
-//        } else {
-//        	showDialog(DIALOG_USER_NOT_LOGGED_IN);
-//        }
-    }
-
-
-    private void syncDeck(String conflictResolution) {
-//        SharedPreferences preferences = PrefSettings.getSharedPrefs(getBaseContext());
-//
-//        String username = preferences.getString("username", "");
-//        String password = preferences.getString("password", "");
-//
-//        if (AnkiDroidApp.isUserLoggedIn()) {
-//            Deck deck = DeckManager.getMainDeck();
-//            if (deck != null) {
-//                Log.i(AnkiDroidApp.TAG, "Synchronizing deck " + mDeckFilename + ", conflict resolution: " + conflictResolution);
-//                Log.i(AnkiDroidApp.TAG, String.format(Utils.ENGLISH_LOCALE, "Before syncing - mod: %f, last sync: %f", deck.getModified(), deck.getLastSync()));
-//                Connection.syncDeck(mSyncListener, new Connection.Payload(new Object[] { username, password, deck, conflictResolution, true }));
-//            }
-//        } else {
-//        	showDialog(DIALOG_USER_NOT_LOGGED_IN);
-//        }
     }
 
 
@@ -2079,8 +2018,8 @@ public class StudyOptions extends Activity implements IButtonListener {
         	resetAndUpdateValuesFromDeck();
         } else if (requestCode == BROWSE_CARDS && resultCode == RESULT_OK) {
         	resetAndUpdateValuesFromDeck();
-        } else if (requestCode == LOG_IN && resultCode == RESULT_OK) {
-        	syncDeck(null);
+//        } else if (requestCode == LOG_IN && resultCode == RESULT_OK) {
+//        	syncDeck(null);
         } else if (requestCode == STATISTICS && mCurrentContentView == CONTENT_CONGRATS) {
         	showContentView(CONTENT_STUDY_OPTIONS);
         } else if (requestCode == GROUP_SELECTOR) {
@@ -2410,9 +2349,9 @@ public class StudyOptions extends Activity implements IButtonListener {
             } else {
                 if (data.returnType == AnkiDroidProxy.DB_ERROR) {
                 	showDialog(DIALOG_DB_ERROR);
-                } else if (data.returnType == AnkiDroidProxy.SYNC_CONFLICT_RESOLUTION) {
-                    // Need to ask user for conflict resolution direction and re-run sync
-                    syncDeckWithPrompt();
+//                } else if (data.returnType == AnkiDroidProxy.SYNC_CONFLICT_RESOLUTION) {
+//                    // Need to ask user for conflict resolution direction and re-run sync
+//                    syncDeckWithPrompt();
                 } else {
                     String errorMessage = ((HashMap<String, String>) data.result).get("message");
                     if ((errorMessage != null) && (errorMessage.length() > 0)) {
