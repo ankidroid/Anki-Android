@@ -14,7 +14,11 @@
 // * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
 // ****************************************************************************************/
 //
-//package com.ichi2.anki;import com.ichi2.anki2.R;
+package com.ichi2.anki;
+
+import android.app.Activity;
+
+import com.ichi2.anki2.R;
 //
 //import android.app.Activity;
 //import android.app.Dialog;
@@ -64,7 +68,7 @@
 //
 //import org.amr.arabic.ArabicUtilities;
 //
-//public class CardBrowser extends Activity {
+public class CardBrowser extends Activity {
 //	private ArrayList<HashMap<String, String>> mCards;
 //	private ArrayList<HashMap<String, String>> mAllCards;
 //	private ArrayList<HashMap<String, String>> mDeletedCards;
@@ -1138,4 +1142,4 @@
 //		}
 //	}
 //
-//}
+}

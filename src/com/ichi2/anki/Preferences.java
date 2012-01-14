@@ -248,11 +248,11 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
             	keepScreenOnCheckBoxPreference.setChecked(showAnswerCheckBoxPreference.isChecked());
             } else if (key.equals("language")) {
     			Intent intent = this.getIntent();
-    			setResult(StudyOptions.RESULT_RESTART, intent);
+//    			setResult(DeckPicker.RESULT_RESTART, intent);
     			finish();
             } else if (key.equals("startup_mode")) {
     			Intent intent = this.getIntent();
-    			setResult(StudyOptions.RESULT_RESTART, intent);
+    			setResult(DeckPicker.RESULT_RESTART, intent);
     			finish();
             } else if (key.equals("theme")) {
             	if (!sharedPreferences.getString("theme", "2").equals("2")) {
@@ -276,7 +276,7 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
             		break;
             	}
     			Intent intent = this.getIntent();
-    			setResult(StudyOptions.RESULT_RESTART, intent);
+    			setResult(DeckPicker.RESULT_RESTART, intent);
     			finish();
             } else if (Arrays.asList(mShowValueInSummList).contains(key)) {
                 updateListPreference(key);
@@ -345,7 +345,7 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
 
     private void setReloadDeck() {
 //    	DeckManager.closeMainDeck();
-		setResult(StudyOptions.RESULT_RELOAD_DECK, getIntent());
+//		setResult(StudyOptions.RESULT_RELOAD_DECK, getIntent());
     }
 
 

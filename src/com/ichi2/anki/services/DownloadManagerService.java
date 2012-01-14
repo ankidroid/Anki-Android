@@ -395,12 +395,12 @@ public class DownloadManagerService extends Service {
                 System.currentTimeMillis());
 
         String deckPath = mDestination + "/" + deckFilename + ".anki";
-        Intent loadDeckIntent = StudyOptions.getLoadDeckIntent(this, deckPath);
+//        Intent loadDeckIntent = StudyOptions.getLoadDeckIntent(this, deckPath);
         // The PendingIntent to launch our activity if the user selects this notification
-        PendingIntent contentIntent = PendingIntent.getActivity(this, 0, loadDeckIntent, 0);
+//        PendingIntent contentIntent = PendingIntent.getActivity(this, 0, loadDeckIntent, 0);
 
         // Set the info for the views that show in the notification panel
-        notification.setLatestEventInfo(this, deckTitle, res.getString(R.string.deck_downloaded), contentIntent);
+//        notification.setLatestEventInfo(this, deckTitle, res.getString(R.string.deck_downloaded), contentIntent);
 
         // Clear the notification when the user selects it
         notification.flags |= Notification.FLAG_AUTO_CANCEL;

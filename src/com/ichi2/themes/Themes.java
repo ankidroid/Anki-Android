@@ -242,10 +242,10 @@ public class Themes {
 			break;
 
 		case CALLER_DECKPICKER_DECK:
-			if (view.getId() == R.id.DeckPickerCompletionMat) {
-				view.setBackgroundResource(mProgressbarsFrameColor);
-			} else if (view.getId() == R.id.DeckPickerCompletionAll) {
-				view.setBackgroundResource(mProgressbarsDeckpickerYoungColor);
+			if (view.getId() == R.id.deckpicker_bar_mat) {
+//				view.setBackgroundResource(mProgressbarsFrameColor);
+			} else if (view.getId() == R.id.deckpicker_bar_all) {
+//				view.setBackgroundResource(mProgressbarsDeckpickerYoungColor);
 			} else if (view.getId() == R.id.deckpicker_deck) {
 				view.setBackgroundResource(mDeckpickerItemBorder);
 			}

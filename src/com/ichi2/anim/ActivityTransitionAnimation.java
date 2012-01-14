@@ -1,11 +1,8 @@
 package com.ichi2.anim;
 
-
-import com.ichi2.anki.StudyOptions;
 import com.ichi2.anki2.R;
 
 import android.app.Activity;
-import android.util.Log;
 
 public class ActivityTransitionAnimation {
 	public static int LEFT = 0;

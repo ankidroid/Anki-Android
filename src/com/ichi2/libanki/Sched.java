@@ -375,15 +375,29 @@ public class Sched {
         for (JSONObject g : mCol.getDecks().all()) {
 			try {
 				long did = g.getLong("id");
-				LinkedList<Long> ldid = new LinkedList<Long>();
-				ldid.add(did);
-				for (Long c : mCol.getDecks().children(did).values()) {
-					ldid.add(c);
+				int newCount = -1;
+				int lrnCount = -1;
+				int revCount = -1;
+				float matProgress = -1.0f;
+				float allProgress = -1.0f;
+
+				if (counts) {
+					LinkedList<Long> ldid = new LinkedList<Long>();
+					ldid.add(did);
+					for (Long c : mCol.getDecks().children(did).values()) {
+						ldid.add(c);
+					}
+					String didLimit = Utils.ids2str(ldid);
+					newCount = _walkingCount(ldid, Sched.class.getDeclaredMethod("_deckNewLimitSingle", JSONObject.class), Sched.class.getDeclaredMethod("_cntFnNew", long.class, int.class));
+					lrnCount = _cntFnLrn(didLimit);
+					revCount = _walkingCount(ldid, Sched.class.getDeclaredMethod("_deckRevLimitSingle", JSONObject.class), Sched.class.getDeclaredMethod("_cntFnRev", long.class, int.class));
+//					float totalNewCount = newCount(didLimit);
+//					float totalCount = cardCount(didLimit);
+//					float matureCount = matureCount(didLimit);
+//					matProgress = matureCount / totalCount;
+//					allProgress = 1 - ((totalNewCount + lrnCount) / totalCount) - matProgress;
 				}
-				int newCount = counts ? _walkingCount(ldid, Sched.class.getDeclaredMethod("_deckNewLimitSingle", JSONObject.class), Sched.class.getDeclaredMethod("_cntFnNew", long.class, int.class)) : -1;
-				int lrnCount = counts ? _cntFnLrn(Utils.ids2str(ldid)) : -1;
-				int revCount = counts ? _walkingCount(ldid, Sched.class.getDeclaredMethod("_deckRevLimitSingle", JSONObject.class), Sched.class.getDeclaredMethod("_cntFnRev", long.class, int.class)) : -1;
-	        	dids.add(new Object[] {g.getString("name"), did, newCount, lrnCount, revCount});
+	        	dids.add(new Object[] {g.getString("name"), did, newCount, lrnCount, revCount, matProgress, allProgress});
 			} catch (JSONException e) {
 				throw new RuntimeException(e);
 			} catch (NoSuchMethodException e) {
@@ -409,7 +423,7 @@ public class Sched {
     	 TreeSet<Object[]> set = new TreeSet<Object[]>(new DeckNameCompare());
     	 // first, split the group names into components
     	 for (Object[] g : grps) {
-    		 set.add(new Object[]{((String)g[0]).split("::"), g[1], g[2], g[3], g[4]});
+    		 set.add(new Object[]{((String)g[0]).split("::"), g[1], g[2], g[3], g[4], g[5], g[6]});
     	 }
 //    	 if (counts) {
 //	    	 // then run main function
@@ -1492,14 +1506,28 @@ public class Sched {
 
     /** LIBANKI: not in libanki */
     public int cardCount() {
-    	return mCol.getDb().queryScalar("SELECT count() FROM cards WHERE did IN " + _deckLimit(), false);
+    	return cardCount(_deckLimit());
+    }
+    public int cardCount(String dids) {
+    	return mCol.getDb().queryScalar("SELECT count() FROM cards WHERE queue != -1 AND did IN " + dids, false);
     }
 
 
     /** LIBANKI: not in libanki */
     public int newCount() {
-    	// TODO: suspended?
-    	return mCol.getDb().queryScalar("SELECT count() FROM cards WHERE queue = 0 AND did IN " + _deckLimit(), false);
+    	return newCount(_deckLimit());
+    }
+    public int newCount(String dids) {
+    	return mCol.getDb().queryScalar("SELECT count() FROM cards WHERE queue = 0 AND did IN " + dids, false);
+    }
+
+
+    /** LIBANKI: not in libanki */
+    public int matureCount() {
+    	return matureCount(_deckLimit());
+    }
+	public int matureCount(String dids) {
+    	return mCol.getDb().queryScalar("SELECT count() FROM cards WHERE type = 2 AND ivl >= 21 AND did IN " + dids, false);
     }
 
 //
@@ -1610,17 +1638,6 @@ public class Sched {
     /**
      * ***********************************************************************************************
      */
-
-    public int getTotalCount() {
-    	return mCol.getDb().queryScalar("SELECT count() FROM (SELECT 1 FROM cards WHERE did IN " + _deckLimit() + ")");    	
-    }
-
-
-    public int getTotalNewCount() {
-    	// TODO: check, if correct, type?
-    	return mCol.getDb().queryScalar("SELECT count() FROM (SELECT 1 FROM cards WHERE did IN " + _deckLimit() + " AND queue = 0)");    	
-    }
-
 
     public String getName() {
         return mName;

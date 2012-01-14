@@ -30,6 +30,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.DialogInterface.OnCancelListener;
+import android.content.pm.ActivityInfo;
 import android.content.res.Resources;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteException;
@@ -148,6 +149,17 @@ public class DeckPicker extends Activity {
 	private static final int MSG_CREATING_BACKUP = 5;
 	private static final int MSG_BACKUP_ERROR = 6;
 
+	public static final String EXTRA_START = "start";
+	public static final int EXTRA_START_NOTHING = 0;
+	public static final int EXTRA_START_REVIEWER = 1;
+	public static final int EXTRA_START_DECKPICKER = 2;
+	public static final int EXTRA_DB_ERROR = 3;
+
+	public static final int RESULT_MEDIA_EJECTED = 202;
+	public static final int RESULT_DB_ERROR = 203;
+	public static final int RESULT_RESTART = 204;
+
+	
     /** Zeemote messages */
     private static final int MSG_ZEEMOTE_BUTTON_A = 0x110;
     private static final int MSG_ZEEMOTE_BUTTON_B = MSG_ZEEMOTE_BUTTON_A+1;
@@ -771,17 +783,10 @@ public class DeckPicker extends Activity {
 		mDeckListAdapter = new SimpleAdapter(this, mDeckList,
 				R.layout.deck_item, new String[] { "name", "new", "lrn", "rev", "complMat", "complAll", "sep" }, new int[] {
 						R.id.DeckPickerName, R.id.deckpicker_new, R.id.deckpicker_lrn, 
-						R.id.deckpicker_rev, R.id.DeckPickerCompletionMat, R.id.DeckPickerCompletionAll, R.id.DeckPickerName });
+						R.id.deckpicker_rev, R.id.deckpicker_bar_mat, R.id.deckpicker_bar_all, R.id.DeckPickerName });
 		mDeckListAdapter.setViewBinder(new SimpleAdapter.ViewBinder() {
 			@Override
 			public boolean setViewValue(View view, Object data, String text) {
-				if (view.getVisibility() == View.INVISIBLE) {
-					if (!text.equals("-1")) {
-						view.setVisibility(View.VISIBLE);
-						view.setAnimation(ViewAnimation.fade(ViewAnimation.FADE_IN, 500, 0));
-						return false;
-					}
-				}
 				if (view.getId() == R.id.DeckPickerName) {
 					View parent = (View) view.getParent().getParent();
 					if (text.equals("top")) {
@@ -798,6 +803,14 @@ public class DeckPicker extends Activity {
 						return true;
 					}
 					return false;
+//				} else if (view.getId() == R.id.deckpicker_bar_mat || view.getId() == R.id.deckpicker_bar_all) {
+//					Utils.updateProgressBars(DeckPicker.this, view, Double.parseDouble(text) / 100.0, mDeckListView.getWidth(), 1, false);
+				} else if (view.getVisibility() == View.INVISIBLE) {
+					if (!text.equals("-1")) {
+						view.setVisibility(View.VISIBLE);
+						view.setAnimation(ViewAnimation.fade(ViewAnimation.FADE_IN, 500, 0));
+						return false;						
+					}
 				}
 //				if (view.getId() == R.id.DeckPickerCompletionMat || view.getId() == R.id.DeckPickerCompletionAll) {
 //				    if (!text.equals("-1")) {
@@ -977,6 +990,195 @@ public class DeckPicker extends Activity {
 			builder.setPositiveButton("OK", null);
 			dialog = builder.create();
 			break;
+			// FROM STUDYOPTIONS
+			// case DIALOG_BACKUP_NO_SPACE_LEFT:
+			// builder.setTitle(getResources().getString(R.string.backup_manager_title));
+			// builder.setIcon(android.R.drawable.ic_dialog_alert);
+			// builder.setPositiveButton(getResources().getString(R.string.ok),
+			// null);
+			// dialog = builder.create();
+			// break;
+			//
+			// case DIALOG_BACKUP_ERROR:
+			// builder.setTitle(getResources().getString(R.string.backup_manager_title));
+			// builder.setIcon(android.R.drawable.ic_dialog_alert);
+			// builder.setMessage(getResources().getString(R.string.backup_deck_error));
+			// builder.setPositiveButton(getResources().getString(R.string.ok),
+			// null);
+			// dialog = builder.create();
+			// break;
+			//
+			// case DIALOG_NO_CONNECTION:
+			// builder.setTitle(res.getString(R.string.connection_error_title));
+			// builder.setIcon(android.R.drawable.ic_dialog_alert);
+			// builder.setMessage(res.getString(R.string.connection_needed));
+			// builder.setPositiveButton(res.getString(R.string.ok), null);
+			// dialog = builder.create();
+			// break;
+			//
+			// case DIALOG_USER_NOT_LOGGED_IN:
+			// builder.setTitle(res.getString(R.string.connection_error_title));
+			// builder.setIcon(android.R.drawable.ic_dialog_alert);
+			// builder.setMessage(res.getString(R.string.no_user_password_error_message));
+			// builder.setPositiveButton(res.getString(R.string.log_in), new
+			// OnClickListener() {
+			//
+			// @Override
+			// public void onClick(DialogInterface dialog, int which) {
+			// Intent myAccount = new Intent(StudyOptions.this, MyAccount.class);
+			// myAccount.putExtra("notLoggedIn", true);
+			// startActivityForResult(myAccount, LOG_IN);
+			// if (UIUtils.getApiLevel() > 4) {
+			// ActivityTransitionAnimation.slide(StudyOptions.this,
+			// ActivityTransitionAnimation.LEFT);
+			// }
+			// }
+			// });
+			// builder.setNegativeButton(res.getString(R.string.cancel), null);
+			// dialog = builder.create();
+			// break;
+			// case DIALOG_CONNECTION_ERROR:
+			// builder.setTitle(res.getString(R.string.connection_error_title));
+			// builder.setIcon(android.R.drawable.ic_dialog_alert);
+			// builder.setMessage(res.getString(R.string.connection_error_message));
+			// builder.setPositiveButton(res.getString(R.string.retry), new
+			// OnClickListener() {
+			//
+			// @Override
+			// public void onClick(DialogInterface dialog, int which) {
+			// syncDeck(null);
+			// }
+			// });
+			// builder.setNegativeButton(res.getString(R.string.cancel), null);
+			// dialog = builder.create();
+			// break;
+			//
+			// case DIALOG_SYNC_CONFLICT_RESOLUTION:
+			// builder.setTitle(res.getString(R.string.sync_conflict_title));
+			// builder.setIcon(android.R.drawable.ic_input_get);
+			// builder.setMessage(res.getString(R.string.sync_conflict_message));
+			// builder.setPositiveButton(res.getString(R.string.sync_conflict_local),
+			// mSyncConflictResolutionListener);
+			// builder.setNeutralButton(res.getString(R.string.sync_conflict_remote),
+			// mSyncConflictResolutionListener);
+			// builder.setNegativeButton(res.getString(R.string.sync_conflict_cancel),
+			// mSyncConflictResolutionListener);
+			// builder.setCancelable(false);
+			// dialog = builder.create();
+			// break;
+			// case DIALOG_DECK_NOT_LOADED:
+			// builder.setTitle(res.getString(R.string.backup_manager_title));
+			// builder.setIcon(android.R.drawable.ic_dialog_alert);
+			// builder.setPositiveButton(res.getString(R.string.retry), new
+			// OnClickListener() {
+			//
+			// @Override
+			// public void onClick(DialogInterface dialog, int which) {
+			// displayProgressDialogAndLoadDeck();
+			// }
+			// });
+			// builder.setNegativeButton(res.getString(R.string.backup_restore), new
+			// OnClickListener() {
+			//
+			// @Override
+			// public void onClick(DialogInterface dialog, int which) {
+			// Resources res = getResources();
+			// mBackups = BackupManager.getDeckBackups(new File(mDeckFilename));
+			// if (mBackups.length == 0) {
+			// StyledDialog.Builder builder = new
+			// StyledDialog.Builder(StudyOptions.this);
+			// builder.setTitle(res.getString(R.string.backup_manager_title))
+			// .setIcon(android.R.drawable.ic_dialog_alert)
+			// .setMessage(res.getString(R.string.backup_restore_no_backups))
+			// .setPositiveButton(res.getString(R.string.ok), new
+			// Dialog.OnClickListener() {
+			//
+			// @Override
+			// public void onClick(DialogInterface dialog, int which) {
+			// showDialog(DIALOG_DECK_NOT_LOADED);
+			// }
+			// }).setCancelable(true).setOnCancelListener(new OnCancelListener() {
+			//
+			// @Override
+			// public void onCancel(DialogInterface arg0) {
+			// showDialog(DIALOG_DECK_NOT_LOADED);
+			// }
+			// }).show();
+			// } else {
+			// String[] dates = new String[mBackups.length];
+			// for (int i = 0; i < mBackups.length; i++) {
+			// dates[i] =
+			// mBackups[i].getName().replaceAll(".*-(\\d{4}-\\d{2}-\\d{2}).anki",
+			// "$1");
+			// }
+			// StyledDialog.Builder builder = new
+			// StyledDialog.Builder(StudyOptions.this);
+			// builder.setTitle(res.getString(R.string.backup_restore_select_title))
+			// .setIcon(android.R.drawable.ic_input_get)
+			// .setSingleChoiceItems(dates, dates.length, new
+			// DialogInterface.OnClickListener(){
+			//
+			// @Override
+			// public void onClick(DialogInterface dialog, int which) {
+			// // DeckTask.launchDeckTask(DeckTask.TASK_TYPE_RESTORE_DECK,
+			// mRestoreDeckHandler, new DeckTask.TaskData(null, new String[]
+			// {mDeckFilename, mBackups[which].getPath()}, 0, 0));
+			// dialog.dismiss();
+			// }
+			// }).setCancelable(true).setOnCancelListener(new OnCancelListener() {
+			//
+			// @Override
+			// public void onCancel(DialogInterface arg0) {
+			// showDialog(DIALOG_DECK_NOT_LOADED);
+			// }
+			// }).show();
+			// }
+			// }
+			// });
+			// builder.setNeutralButton(res.getString(R.string.backup_repair_deck),
+			// new OnClickListener() {
+			//
+			// @Override
+			// public void onClick(DialogInterface dialog, int which) {
+			// DeckTask.launchDeckTask(DeckTask.TASK_TYPE_REPAIR_DECK,
+			// mRepairDeckHandler, new DeckTask.TaskData(mDeckFilename));
+			// }
+			// });
+			// builder.setCancelable(true);
+			// dialog = builder.create();
+			// break;
+			// case DIALOG_DB_ERROR:
+			// builder.setTitle(R.string.answering_error_title);
+			// builder.setIcon(android.R.drawable.ic_dialog_alert);
+			// builder.setMessage(R.string.answering_error_message);
+			// builder.setPositiveButton(res.getString(R.string.backup_repair_deck),
+			// new OnClickListener() {
+			// @Override
+			// public void onClick(DialogInterface dialog, int which) {
+			// DeckTask.launchDeckTask(DeckTask.TASK_TYPE_REPAIR_DECK,
+			// mRepairDeckHandler, new DeckTask.TaskData(mDeckFilename != null ?
+			// mDeckFilename : mRepairFileName));
+			// }
+			// });
+			// builder.setNeutralButton(res.getString(R.string.answering_error_report),
+			// new OnClickListener() {
+			// @Override
+			// public void onClick(DialogInterface dialog, int which) {
+			// mShowRepairDialog = true;
+			// Intent i = new Intent(StudyOptions.this, Feedback.class);
+			// dialog.dismiss();
+			// startActivityForResult(i, REPORT_ERROR);
+			// if (UIUtils.getApiLevel() > 4) {
+			// ActivityTransitionAnimation.slide(StudyOptions.this,
+			// ActivityTransitionAnimation.FADE);
+			// }
+			// }
+			// });
+			// builder.setNegativeButton(res.getString(R.string.close), null);
+			// builder.setCancelable(true);
+			// dialog = builder.create();
+			// break;
+			//
 
 //		case DIALOG_USER_NOT_LOGGED_IN_SYNC:
 //		case DIALOG_USER_NOT_LOGGED_IN_DOWNLOAD:
@@ -1631,16 +1833,16 @@ public class DeckPicker extends Activity {
 			finish();
 		}
         } else if (requestCode == PREFERENCES_UPDATE) {
-            if (resultCode == StudyOptions.RESULT_RESTART) {
-            	setResult(StudyOptions.RESULT_RESTART);
-            	finish();
-            } else {
-            	SharedPreferences preferences = PrefSettings.getSharedPrefs(getBaseContext());
-				BackupManager.initBackup();
-                if (!mPrefDeckPath.equals(preferences.getString("deckPath", AnkiDroidApp.getStorageDirectory())) || mPrefDeckOrder != Integer.parseInt(preferences.getString("deckOrder", "0"))) {
-//                	populateDeckList(preferences.getString("deckPath", AnkiDroidApp.getStorageDirectory()));
-                }
-            }
+//            if (resultCode == StudyOptions.RESULT_RESTART) {
+//            	setResult(StudyOptions.RESULT_RESTART);
+//            	finish();
+//            } else {
+//            	SharedPreferences preferences = PrefSettings.getSharedPrefs(getBaseContext());
+//				BackupManager.initBackup();
+//                if (!mPrefDeckPath.equals(preferences.getString("deckPath", AnkiDroidApp.getStorageDirectory())) || mPrefDeckOrder != Integer.parseInt(preferences.getString("deckOrder", "0"))) {
+////                	populateDeckList(preferences.getString("deckPath", AnkiDroidApp.getStorageDirectory()));
+//                }
+//            }
         } else if ((requestCode == CREATE_DECK || requestCode == DOWNLOAD_SHARED_DECK) && resultCode == RESULT_OK) {
 //        	populateDeckList(mPrefDeckPath);
         } else if (requestCode == REPORT_FEEDBACK && resultCode == RESULT_OK) {
@@ -1681,11 +1883,11 @@ public class DeckPicker extends Activity {
 
 
     public void openSharedDeckPicker() {
-        // deckLoaded = false;
-        startActivityForResult(new Intent(this, SharedDeckPicker.class), DOWNLOAD_SHARED_DECK);
-        if (UIUtils.getApiLevel() > 4) {
-            ActivityTransitionAnimation.slide(this, ActivityTransitionAnimation.RIGHT);
-        }
+//        // deckLoaded = false;
+//        startActivityForResult(new Intent(this, SharedDeckPicker.class), DOWNLOAD_SHARED_DECK);
+//        if (UIUtils.getApiLevel() > 4) {
+//            ActivityTransitionAnimation.slide(this, ActivityTransitionAnimation.RIGHT);
+//        }
     }
 
 
@@ -1773,8 +1975,8 @@ public class DeckPicker extends Activity {
         	m.put("new", ((Integer)d[2]).toString());
         	m.put("lrn", ((Integer)d[3]).toString());
         	m.put("rev", ((Integer)d[4]).toString());
-        	m.put("complMat", "1");
-        	m.put("complAll", "1");
+//        	m.put("complMat", ((Float)d[5]).toString());
+//        	m.put("complAll", ((Float)d[6]).toString());
         	if (name.length == 1) {
             	m.put("sep", "top");
             	if (mDeckList.size() > 0) {
@@ -1801,6 +2003,15 @@ public class DeckPicker extends Activity {
 		mDeckListAdapter.notifyDataSetChanged();
 	}
 
+//	private void restartApp() {
+//		// restarts application in order to apply new themes or localisations
+//		Intent i = getBaseContext().getPackageManager()
+//				.getLaunchIntentForPackage(getBaseContext().getPackageName());
+//		mCompat.invalidateOptionsMenu(this);
+//		MetaDB.closeDB();
+//		StudyOptions.this.finish();
+//		startActivity(i);
+//	}
 
     // ----------------------------------------------------------------------------
 	// INNER CLASSES
@@ -1876,4 +2087,90 @@ public class DeckPicker extends Activity {
 //	      	  adapter.addButtonListener(this);
 //	      }
 //	}
+
+    
+
+
+//	Connection.TaskListener mSyncListener = new Connection.TaskListener() {
+//
+//		@Override
+//		public void onDisconnected() {
+//			// showDialog(DIALOG_NO_CONNECTION);
+//		}
+//
+//		@Override
+//		public void onPostExecute(Payload data) {
+//			Log.i(AnkiDroidApp.TAG, "onPostExecute");
+//			if (mProgressDialog != null && mProgressDialog.isShowing()) {
+//				mProgressDialog.dismiss();
+//				setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR);
+//			}
+//			if (data.success) {
+//				mCurrentDialogMessage = ((HashMap<String, String>) data.result)
+//						.get("message");
+//				// DeckManager.getMainDeck().updateCutoff();
+//				resetAndUpdateValuesFromDeck();
+//				// showDialog(DIALOG_SYNC_LOG);
+//			} else {
+//				if (data.returnType == AnkiDroidProxy.DB_ERROR) {
+//					showDialog(DIALOG_DB_ERROR);
+//					// } else if (data.returnType ==
+//					// AnkiDroidProxy.SYNC_CONFLICT_RESOLUTION) {
+//					// // Need to ask user for conflict resolution direction and
+//					// re-run sync
+//					// syncDeckWithPrompt();
+//				} else {
+//					String errorMessage = ((HashMap<String, String>) data.result)
+//							.get("message");
+//					if ((errorMessage != null) && (errorMessage.length() > 0)) {
+//						mCurrentDialogMessage = errorMessage;
+//					}
+//					// showDialog(DIALOG_CONNECTION_ERROR);
+//				}
+//			}
+//		}
+//
+//		@Override
+//		public void onPreExecute() {
+//			// Pass
+//		}
+//
+//		@Override
+//		public void onProgressUpdate(Object... values) {
+//			if (values[0] instanceof Boolean) {
+//				// This is the part Download missing media of syncing
+//				Resources res = getResources();
+//				int total = ((Integer) values[1]).intValue();
+//				int done = ((Integer) values[2]).intValue();
+//				values[0] = ((String) values[3]);
+//				values[1] = res.getString(R.string.sync_downloading_media,
+//						done, total);
+//			}
+//			if (mProgressDialog == null || !mProgressDialog.isShowing()) {
+//				mProgressDialog = StyledProgressDialog.show(StudyOptions.this,
+//						(String) values[0], (String) values[1]);
+//				// Forbid orientation changes as long as progress dialog is
+//				// shown
+//				setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_NOSENSOR);
+//			} else {
+//				mProgressDialog.setTitle((String) values[0]);
+//				mProgressDialog.setMessage((String) values[1]);
+//			}
+//		}
+//
+//	};
+
+//	@Override
+//	protected void onNewIntent(Intent intent) {
+//		super.onNewIntent(intent);
+//		String deck = intent.getStringExtra(EXTRA_DECK);
+//		Log.d(AnkiDroidApp.TAG, "StudyOptions.onNewIntent: " + intent
+//				+ ", deck=" + deck);
+//		// if (deck != null && !deck.equals(mDeckFilename)) {
+//		// mDeckFilename = deck;
+//		// // loadPreviousDeck();
+//		// }
+//	}
+
 }
+

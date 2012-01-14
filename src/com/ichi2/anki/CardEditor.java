@@ -89,7 +89,7 @@ public class CardEditor extends Activity {
 //	public static final String SOURCE_TEXT = "SOURCE_TEXT";
 //	public static final String TARGET_TEXT = "TARGET_TEXT";
 //	public static final String EXTRA_DECKPATH = "DECKPATH";
-//	public static final String EXTRA_CALLER = "CALLER";
+	public static final String EXTRA_CALLER = "CALLER";
 //	public static final String EXTRA_CONTENTS = "CONTENTS";
 //	public static final String EXTRA_ID = "ID";
 //
@@ -112,7 +112,7 @@ public class CardEditor extends Activity {
 //
 //	public static final int CALLER_NOCALLER = 0;
 //	public static final int CALLER_REVIEWER = 1;
-//	public static final int CALLER_STUDYOPTIONS = 2;
+	public static final int CALLER_STUDYOPTIONS = 2;
 //	public static final int CALLER_BIGWIDGET_EDIT = 3;
 //	public static final int CALLER_BIGWIDGET_ADD = 4;
 //	public static final int CALLER_CARDBROWSER_EDIT = 5;

@@ -23,6 +23,7 @@ import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.os.Environment;
 import android.util.Log;
@@ -35,6 +36,7 @@ import com.tomgibara.android.veecheck.util.PrefSettings;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Locale;
 
 import com.zeemote.zc.Controller;
 
@@ -244,4 +246,17 @@ public class AnkiDroidApp extends Application {
     public static void saveExceptionReportFile(Throwable e, String origin) {
     	CustomExceptionHandler.getInstance().uncaughtException(null, e, origin);
     }
+
+	public void setLanguage(String language) {
+		Locale locale;
+		if (language.equals("")) {
+			locale = Locale.getDefault();
+		} else {
+			locale = new Locale(language);
+		}
+		Configuration config = new Configuration();
+		config.locale = locale;
+		this.getResources().updateConfiguration(config,
+				this.getResources().getDisplayMetrics());
+	}
 }

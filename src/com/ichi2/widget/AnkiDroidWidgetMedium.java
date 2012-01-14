@@ -158,7 +158,7 @@ public class AnkiDroidWidgetMedium extends AppWidgetProvider {
                 } else if (ACTION_IGNORE.equals(intent.getAction())) {
                     updateDueDecksNow = false;
                 } else if (ACTION_OPEN.equals(intent.getAction())) {
-                    startActivity(StudyOptions.getLoadDeckIntent(this, intent.getData().getPath()));
+//                    startActivity(StudyOptions.getLoadDeckIntent(this, intent.getData().getPath()));
                     updateDueDecksNow = false;
                 } else if (ACTION_UPDATE.equals(intent.getAction())) {
                     // Updating the widget is done below for all actions.

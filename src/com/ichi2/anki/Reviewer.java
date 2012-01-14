@@ -1467,7 +1467,7 @@ public class Reviewer extends Activity implements IButtonListener{
                 }
 //                DeckTask.launchDeckTask(DeckTask.TASK_TYPE_UPDATE_FACT, mUpdateCardHandler, new DeckTask.TaskData(showQuestion,
 //                        DeckManager.getMainDeck(), mCurrentCard));
-            } else if (resultCode == StudyOptions.CONTENT_NO_EXTERNAL_STORAGE) {
+            } else if (resultCode == DeckPicker.RESULT_MEDIA_EJECTED) {
                 finishNoStorageAvailable();
             } else {
             	mInEditor = false;
@@ -1552,7 +1552,7 @@ public class Reviewer extends Activity implements IButtonListener{
 
 
     private void finishNoStorageAvailable() {
-    	Reviewer.this.setResult(StudyOptions.CONTENT_NO_EXTERNAL_STORAGE);
+    	Reviewer.this.setResult(DeckPicker.RESULT_MEDIA_EJECTED);
     	finish();
     }
 
