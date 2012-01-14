@@ -19,8 +19,6 @@
 	xmlns:android="http://schemas.android.com/apk/res/android"
 	android:layout_height="wrap_content" 
 	android:layout_width="fill_parent" 
-	android:paddingLeft="5dip"
-	android:paddingRight="5dip"
 	android:orientation="vertical"
 	android:id="@+id/deckpicker_deck">
 
@@ -28,7 +26,10 @@
 		android:id="@+id/DeckPickerHoriz" 
 		android:layout_height="wrap_content" 
 		android:orientation="horizontal"
-		android:paddingBottom="5dip"
+		android:layout_marginTop="5dip"
+		android:layout_marginBottom="6dip"
+		android:layout_marginLeft="10dip"
+		android:layout_marginRight="10dip"
 		android:gravity="center_vertical"
 		android:layout_width="fill_parent">
 		<TextView 
@@ -80,22 +81,46 @@
 			android:textSize="14sp"/>
 	</RelativeLayout>
 
-	<LinearLayout 
+
+<!-- 			<FrameLayout
+				android:background="@color/studyoptions_progressbar_frame_default"
+				android:layout_width="fill_parent"
+		   		android:layout_margin="5dip"
+				android:layout_height="4dp"
+				android:padding="0.3dip">
+				<LinearLayout 
+					android:id="@+id/deckpicker_progressbar_content"
+					android:background="#ffffff"
+					android:layout_width="fill_parent"
+					android:layout_height="fill_parent">
+					<TextView android:id="@+id/deckpicker_bar_mat"
+						android:layout_width="0dip"
+						android:layout_height="fill_parent"
+						android:background="@color/studyoptions_progressbar_young_default"/>
+					<TextView android:id="@+id/deckpicker_bar_all"
+						android:layout_width="0dip"
+						android:layout_height="fill_parent"
+						android:background="@color/studyoptions_progressbar_mature_default" />
+				</LinearLayout>
+			</FrameLayout> -->
+
+	    
+	    
+	    
+<LinearLayout 
 		android:layout_height="wrap_content" 
 		android:layout_width="fill_parent"
 		android:orientation="horizontal" 
-		android:layout_marginBottom="3dip">
+		android:visibility="gone">
 		<TextView
-			android:id="@+id/DeckPickerCompletionMat"
-	    	android:layout_width="0dip"
-    		android:layout_height="2dip"
-    		android:background="#ffffff"
-			android:paddingBottom="5dip"/>
+			android:id="@+id/deckpicker_bar_mat"
+	    	android:layout_width="100dip"
+    		android:layout_height="1dip"
+    		android:background="@color/studyoptions_progressbar_young_default"/>
 		<TextView
-			android:id="@+id/DeckPickerCompletionAll"
-    		android:layout_width="0dip"
+			android:id="@+id/deckpicker_bar_all"
+    		android:layout_width="30dip"
 	    	android:layout_height="2dip"
-    		android:background="#808080"
-			android:paddingBottom="5dip"/>
+    		android:background="@color/studyoptions_progressbar_mature_default"/>
 	</LinearLayout>
 </LinearLayout>
