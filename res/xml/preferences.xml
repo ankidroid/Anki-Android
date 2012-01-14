@@ -495,6 +495,11 @@
 				android:summary="@string/fix_arabic_text_summ"
 				android:defaultValue="false"
 				android:key="fixArabicText"/>
+            <CheckBoxPreference
+                android:title="@string/filter_external_data"
+                android:summary="@string/filter_external_data_summ"
+                android:defaultValue="false"
+                android:key="fixExternalData"/>
 			<CheckBoxPreference
 				android:title="@string/convert_fen_text"
 				android:summary="@string/convert_fen_text_summ"

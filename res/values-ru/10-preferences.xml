@@ -179,6 +179,8 @@
   <string name="update_notification_summ">Сообщать, если есть для AnkiDroid обновление</string>
   <string name="fix_arabic_text">Улучшить вывод арабского</string>
   <string name="fix_arabic_text_summ">Включить ограниченную поддержку арабского для Android-платформы. Если активировано, то невозможна модификация карт.</string>
+  <string name="filter_external_data">Трансформация данных</string>
+  <string name="filter_external_data_summ">Улучшение вида сообщений, отправленных из некоторых внешних приложений.</string>
   <string name="wal_mode">режим \"WAL журнал\"</string>
   <string name="wal_mode_summ">Ускоряет AnkiDroid, но, если вы копируете колоды вручную, нарушает совместимость с Anki Desktop. Доступно только в новых версиях Android.</string>
   <string name="wal_mode_message">Помните, что после включения \"WAL журнал\" режима вы не можете больше копировать ваши колоды вручную, чтобы использовать их в Anki Desktop, пока не отключите \"WAL журнал\" режим. Синхронизация будет возможно только через AnkiDroid-синхронизацию.\n Продолжить всё равно?</string>
