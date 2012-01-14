@@ -335,7 +335,7 @@ public class StudyOptions extends Activity implements IButtonListener {
 
 		Log.i(AnkiDroidApp.TAG, "StudyOptions - OnCreate()");
 
-		SharedPreferences preferences = restorePreferences();
+		restorePreferences();
 
 		registerExternalStorageListener();
 
@@ -362,6 +362,8 @@ public class StudyOptions extends Activity implements IButtonListener {
 		} else {
 			mCompat = new CompatV3();
 		}
+
+		showContentView(CONTENT_STUDY_OPTIONS);
 
 		// Zeemote controller initialization
 		if (mZeemoteEnabled) {
@@ -1272,7 +1274,7 @@ public class StudyOptions extends Activity implements IButtonListener {
 
 	@Override
 	public boolean onTouchEvent(MotionEvent event) {
-		if (gestureDetector.onTouchEvent(event))
+		if (mSwipeEnabled && gestureDetector.onTouchEvent(event))
 			return true;
 		else
 			return false;

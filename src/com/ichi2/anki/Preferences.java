@@ -16,7 +16,8 @@
  * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
  ****************************************************************************************/
 
-package com.ichi2.anki;import com.ichi2.anki2.R;
+package com.ichi2.anki;import com.ichi2.anim.ActivityTransitionAnimation;
+import com.ichi2.anki2.R;
 
 import java.io.File;
 import java.util.Arrays;
@@ -40,6 +41,7 @@ import android.preference.ListPreference;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceManager;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.WindowManager.BadTokenException;
 
 import com.hlidskialf.android.preference.SeekBarPreference;
@@ -249,11 +251,11 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
             } else if (key.equals("language")) {
     			Intent intent = this.getIntent();
 //    			setResult(DeckPicker.RESULT_RESTART, intent);
-    			finish();
+    			closePreferences();
             } else if (key.equals("startup_mode")) {
     			Intent intent = this.getIntent();
-    			setResult(DeckPicker.RESULT_RESTART, intent);
-    			finish();
+//    			setResult(DeckPicker.RESULT_RESTART, intent);
+    			closePreferences();
             } else if (key.equals("theme")) {
             	if (!sharedPreferences.getString("theme", "2").equals("2")) {
             		animationsCheckboxPreference.setChecked(false);
@@ -277,7 +279,7 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
             	}
     			Intent intent = this.getIntent();
     			setResult(DeckPicker.RESULT_RESTART, intent);
-    			finish();
+    			closePreferences();
             } else if (Arrays.asList(mShowValueInSummList).contains(key)) {
                 updateListPreference(key);
             } else if (Arrays.asList(mShowValueInSummSeek).contains(key)) {
@@ -348,6 +350,23 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
 //		setResult(StudyOptions.RESULT_RELOAD_DECK, getIntent());
     }
 
+    @Override
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
+		if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
+			Log.i(AnkiDroidApp.TAG, "DeckOptions - onBackPressed()");
+			closePreferences();
+			return true;
+		}
+		return super.onKeyDown(keyCode, event);
+	}
+
+    private void closePreferences() {
+		finish();
+		if (UIUtils.getApiLevel() > 4) {
+			ActivityTransitionAnimation.slide(this,
+					ActivityTransitionAnimation.RIGHT);
+		}    	
+    }
 
     @Override
     protected Dialog onCreateDialog(int id) {
