@@ -183,6 +183,7 @@ public class DeckPicker extends Activity {
     private static final int SHOW_INFO = 8;
     private static final int REPORT_ERROR = 9;
     private static final int SHOW_STUDYOPTIONS = 10;
+    private static final int ADD_NOTE = 11;
 
 	private Collection mCol;
 
@@ -192,8 +193,10 @@ public class DeckPicker extends Activity {
 	private StyledDialog mMissingMediaAlert;
 	private StyledDialog mDeckNotLoadedAlert;
 	private StyledDialog mNoSpaceLeftAlert;
-	private ImageButton mSyncAllButton;
-	private ImageButton mStatisticsAllButton;
+	private ImageButton mAddButton;
+	private ImageButton mCardsButton;
+	private ImageButton mStatsButton;
+	private ImageButton mSyncButton;
 	private View mDeckpickerButtons;
 
 	private File[] mBackups;
@@ -425,7 +428,7 @@ public class DeckPicker extends Activity {
 			mSyncLogAlert.show();
 			mDeckIsSelected = false;
 //			populateDeckList(mPrefDeckPath);
-            mSyncAllButton.setClickable(true);
+            mSyncButton.setClickable(true);
 		}
 	};
 
@@ -758,26 +761,47 @@ public class DeckPicker extends Activity {
 
 		registerExternalStorageListener();
 
-		mDeckpickerButtons = (View) findViewById(R.id.deckpicker_buttons);
-		mSyncAllButton = (ImageButton) findViewById(R.id.sync_all_button);
-		mSyncAllButton.setOnClickListener(new OnClickListener() {
+		mAddButton = (ImageButton) findViewById(R.id.deckpicker_add);
+		mAddButton.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
+				Intent intent = new Intent(DeckPicker.this, CardEditor.class);
+				intent.putExtra(CardEditor.EXTRA_CALLER, CardEditor.CALLER_DECKPICKER);
+				startActivityForResult(intent, ADD_NOTE);
+				if (UIUtils.getApiLevel() > 4) {
+					ActivityTransitionAnimation.slide(DeckPicker.this,
+							ActivityTransitionAnimation.UP);
+				}
+			}
+		});
+
+		mCardsButton = (ImageButton) findViewById(R.id.deckpicker_card_browser);
+		mCardsButton.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				mCardsButton.setEnabled(false);
+			}
+		});
+
+		mStatsButton = (ImageButton) findViewById(R.id.statistics_all_button);
+		mStatsButton.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				mStatsButton.setEnabled(false);
+//				mStatisticType = -1;
+//				showDialog(DIALOG_SELECT_STATISTICS_TYPE);
+			}
+		});
+
+		mSyncButton = (ImageButton) findViewById(R.id.sync_all_button);
+		mSyncButton.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				mSyncButton.setEnabled(false);
 				//syncAllDecks();
 			}
-
 		});
-
-		mStatisticsAllButton = (ImageButton) findViewById(R.id.statistics_all_button);
-		mStatisticsAllButton.setOnClickListener(new OnClickListener() {
-
-			@Override
-			public void onClick(View v) {
-				mStatisticType = -1;
-				showDialog(DIALOG_SELECT_STATISTICS_TYPE);
-			}
-		});
-
+		
 		mDeckList = new ArrayList<HashMap<String, String>>();
 		mDeckListView = (ListView) findViewById(R.id.files);
 		mDeckListAdapter = new SimpleAdapter(this, mDeckList,
@@ -1681,7 +1705,7 @@ public class DeckPicker extends Activity {
 
 	private void syncAllDecks() {
 		if (AnkiDroidApp.isUserLoggedIn()) {
-            mSyncAllButton.setClickable(false);
+            mSyncButton.setClickable(false);
 			SharedPreferences preferences = PrefSettings
 					.getSharedPrefs(getBaseContext());
 			String username = preferences.getString("username", "");
@@ -1830,11 +1854,11 @@ public class DeckPicker extends Activity {
     protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
         super.onActivityResult(requestCode, resultCode, intent);
 
-	if (requestCode == SHOW_STUDYOPTIONS) {
-		if (resultCode == RESULT_OK) {
-			DeckTask.launchDeckTask(DeckTask.TASK_TYPE_LOAD_DECK_COUNTS, mLoadCountsHandler, new TaskData(mCol));
-		}
-        } else if (requestCode == SHOW_INFO) {
+	if (requestCode == SHOW_STUDYOPTIONS && resultCode == RESULT_OK) {
+		DeckTask.launchDeckTask(DeckTask.TASK_TYPE_LOAD_DECK_COUNTS, mLoadCountsHandler, new TaskData(mCol));
+	} else if (requestCode == ADD_NOTE && resultCode != RESULT_CANCELED) {
+		DeckTask.launchDeckTask(DeckTask.TASK_TYPE_LOAD_DECK_COUNTS, mLoadCountsHandler, new TaskData(mCol));
+    } else if (requestCode == SHOW_INFO) {
 		if (resultCode == RESULT_OK) {
 			showOtherScreensIfNecessary(PrefSettings.getSharedPrefs(getBaseContext()));
 		} else {
@@ -1966,19 +1990,8 @@ public class DeckPicker extends Activity {
 		mDeckList.clear();
         for (Object[] d : decks) {
         	HashMap<String, String> m = new HashMap<String, String>();
-        	String[] name = (String[]) d[0];
-        	int len = name.length;
-        	StringBuilder sb = new StringBuilder();
-        	for (int i = 0; i < len; i++) {
-        		if (i == len - 1) {
-        			sb.append(name[i]);
-        		} else if (i == len - 2) {
-        			sb.append("\u21aa");
-        		} else {
-        			sb.append("    ");
-        		}
-        	}
-        	m.put("name", sb.toString());
+        	String[] name = ((String)d[0]).split("::");
+        	m.put("name", readableName(name));
         	m.put("did", ((Long)d[1]).toString());
         	m.put("new", ((Integer)d[2]).toString());
         	m.put("lrn", ((Integer)d[3]).toString());
@@ -2179,6 +2192,21 @@ public class DeckPicker extends Activity {
 //		// // loadPreviousDeck();
 //		// }
 //	}
+
+    public static String readableName(String[] name) {
+    	int len = name.length;
+    	StringBuilder sb = new StringBuilder();
+    	for (int i = 0; i < len; i++) {
+    		if (i == len - 1) {
+    			sb.append(name[i]);
+    		} else if (i == len - 2) {
+    			sb.append("\u21aa");
+    		} else {
+    			sb.append("    ");
+    		}
+    	}
+    	return sb.toString();
+    }
 
 }
 

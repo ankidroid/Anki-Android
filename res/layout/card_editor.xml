@@ -23,63 +23,53 @@
 				android:layout_height="fill_parent" 
 				android:id="@+id/CardEditorSaveButton"
 				android:text="@string/CardEditorSaveButton"
+				style="?android:attr/buttonStyleSmall"
 				android:layout_gravity="center"
 				android:gravity="center"
 				android:layout_weight="1"/>
 			<Button android:layout_width="0dip"
 				android:layout_height="fill_parent" 
 				android:id="@+id/CardEditorCancelButton"
+				style="?android:attr/buttonStyleSmall"
 				android:text="@string/CardEditorCancelButton"
 				android:layout_gravity="center"
 				android:gravity="center"
 				android:layout_weight="1"/>
 		</LinearLayout>
-		
-        <LinearLayout
-	        android:id="@+id/CardEditorSelectModelLayout"
-	        android:visibility="gone"
-	        android:layout_width="fill_parent"
-	        android:layout_height="wrap_content">
-          <Button
-				android:id="@+id/CardEditorTemplateButton"
-				android:layout_height="fill_parent"
-				android:layout_width="0dip"
-				android:layout_weight="1"
-				style="?android:attr/buttonStyleSmall"
-				android:layout_gravity="center"
-				android:gravity="center"/>
-           <Button
-				android:id="@+id/CardEditorModelButton"
-				android:layout_height="fill_parent"
-				style="?android:attr/buttonStyleSmall"
-				android:layout_width="0dip"
-				android:layout_weight="1"
-				android:layout_gravity="center"
-				android:gravity="center"/>
-        </LinearLayout>
-		
  	    <LinearLayout
   		android:layout_height="wrap_content" 
        	android:layout_width="fill_parent"
-	  	android:orientation="horizontal"
-	  	android:layout_gravity="right" >
-		<Button android:layout_width="0dip"
+	  	android:orientation="vertical" >
+		<Button android:layout_width="fill_parent"
+			android:layout_height="wrap_content" 
+			android:id="@+id/CardEditorDeckButton"
+			style="?android:attr/buttonStyleSmall"
+			android:text="@string/CardEditorDeck"
+			android:layout_gravity="center"
+			android:gravity="left|center_vertical"/>
+		<Button android:layout_width="fill_parent"
+			android:layout_height="wrap_content" 
+			android:id="@+id/CardEditorModelButton"
+			style="?android:attr/buttonStyleSmall"
+			android:text="@string/CardEditorModel"
+			android:layout_gravity="center"
+			android:gravity="left|center_vertical"/>
+		<Button android:layout_width="fill_parent"
 			android:layout_height="wrap_content" 
 			android:id="@+id/CardEditorTagButton"
 			style="?android:attr/buttonStyleSmall"
 			android:text="@string/CardEditorTags"
 			android:layout_gravity="center"
-        	android:layout_weight="2"
 			android:gravity="left|center_vertical"/>
-		<Button android:layout_width="0dip"
-				android:layout_height="fill_parent" 
+		<Button android:layout_width="fill_parent"
+				android:layout_height="wrap_content" 
 				android:id="@+id/CardEditorSwapButton"
 				style="?android:attr/buttonStyleSmall"
 				android:layout_gravity="center"
-         		android:layout_weight="1"
          		android:text="@string/fact_adder_swap"
          		android:visibility="gone"
 				android:gravity="center"/>
-			        </LinearLayout>
+        </LinearLayout>
 	</LinearLayout>
+
 </ScrollView>

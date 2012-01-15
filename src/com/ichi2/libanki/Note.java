@@ -71,8 +71,8 @@ public class Note {
 			mGuId = Utils.guid64();
 			mModel = model;
 			try {
-				mDid = model.getInt("did");
-				mMid = model.getInt("id");
+				mDid = model.getLong("did");
+				mMid = model.getLong("id");
 				mTags = new String[] { "" };
 				mFields = new String[model.getJSONArray("flds").length()];
 			} catch (JSONException e) {
@@ -316,6 +316,10 @@ public class Note {
 
 	public long getDid() {
 		return mDid;
+	}
+
+	public void setDid(long did) {
+		mDid = did;
 	}
 
 }
