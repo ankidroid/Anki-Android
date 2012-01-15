@@ -201,6 +201,8 @@
 
 <string name="filter_external_data">Filter external data</string>
 <string name="filter_external_data_summ">Transform messages from external applications to a natty view.</string>
+<string name="filter_google_translate">From Google Translate</string>
+<string name="filter_google_translate_summ">Just save source word and translation</string>
 
 <string name="convert_fen_text_summ">Draw chessboard from Forsyth Edwards Notation. The notation must be enclosed in [fen][/fen] tag.</string><string name="wal_mode">WAL journal</string>
 <string name="wal_mode_summ">WAL journal-mode speeds up AnkiDroid but breaks compatibility to Anki Desktop if you copy your decks manually. Only available on newer Android systems.</string>

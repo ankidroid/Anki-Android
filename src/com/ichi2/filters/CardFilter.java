@@ -1,8 +1,7 @@
 package com.ichi2.filters;
 
+import android.content.SharedPreferences;
 import android.util.Pair;
-
-import java.util.List;
 
 /**
  * Card filter for garbage information. One card filter for one message type from one application.
@@ -19,8 +18,10 @@ public interface CardFilter {
      * @param  messages
      *      data, received from external application, where first attribute is the SUBJECT information and second
      *      attribute is the TEXT information.
+     * @param preferences
+     *      program settings.
      * @return clean for current filter data.
      * */
-    public Pair<String, String> filter(Pair<String, String> messages);
+    public Pair<String, String> filter(Pair<String, String> messages, SharedPreferences preferences);
     
 }

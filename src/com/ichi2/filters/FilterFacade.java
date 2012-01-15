@@ -1,7 +1,6 @@
 package com.ichi2.filters;
 
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.util.Pair;
 import com.tomgibara.android.veecheck.util.PrefSettings;
 
@@ -14,9 +13,6 @@ import java.util.List;
  * @author evgenij.kozhevnikov@gmail.com
  * */
 public class FilterFacade {
-
-    /* Setting name */
-    public static final String FIX_EXTERNAL_DATA = "fixExternalData";
 
     /* Context for checking preferences */
     private Context context;
@@ -39,23 +35,10 @@ public class FilterFacade {
      * */
     public Pair<String, String> filter(Pair<String, String> messages) {
         Pair<String, String> result = new Pair<String, String>(messages.first, messages.second);
-        if (useFilters()) {
-            for (CardFilter cardFilter : filters) {
-                result = cardFilter.filter(result);
-            }
+        for (CardFilter cardFilter : filters) {
+            result = cardFilter.filter(result,  PrefSettings.getSharedPrefs(context));
         }
         return result;
-    }
-
-    /**
-     * Check preferenses for fixExternalData option.
-     *
-     * @return true, if options is on, else - false.
-     * */
-    private boolean useFilters() {
-        SharedPreferences preferences = PrefSettings
-                .getSharedPrefs(context);
-        return preferences.getBoolean(FIX_EXTERNAL_DATA, false);
     }
 
 }
