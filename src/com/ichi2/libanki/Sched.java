@@ -1447,24 +1447,24 @@ public class Sched {
 		sb.append(context.getString(R.string.studyoptions_congrats_finished));
 		StyleSpan boldSpan = new StyleSpan(Typeface.BOLD);
 		sb.setSpan(boldSpan, 0, sb.length(), 0);
-		sb.append(_tomorrowDueMsg(context));
-		// sb.append("\n\n");
-		// sb.append(_nextDueMsg(context));
+		sb.append(_nextDueMsg(context));
+//		sb.append("\n\n");
+//		sb.append(_tomorrowDueMsg(context));
 		return sb;
 	}
 
-	public String _tomorrowDueMsg(Context context) {
-		int newCards = 12;// deck.getSched().newTomorrow();
-		int revCards = 1;// deck.getSched().revTomorrow() +
-		int eta = 0; // TODO
-		Resources res = context.getResources();
-		String newCardsText = res.getQuantityString(
-				R.plurals.studyoptions_congrats_new_cards, newCards, newCards);
-		String etaText = res.getQuantityString(
-				R.plurals.studyoptions_congrats_eta, eta, eta);
-		return res.getQuantityString(R.plurals.studyoptions_congrats_message,
-				revCards, revCards, newCardsText, etaText);
-	}
+//	public String _tomorrowDueMsg(Context context) {
+//		int newCards = 12;// deck.getSched().newTomorrow();
+//		int revCards = 1;// deck.getSched().revTomorrow() +
+//		int eta = 0; // TODO
+//		Resources res = context.getResources();
+//		String newCardsText = res.getQuantityString(
+//				R.plurals.studyoptions_congrats_new_cards, newCards, newCards);
+//		String etaText = res.getQuantityString(
+//				R.plurals.studyoptions_congrats_eta, eta, eta);
+//		return res.getQuantityString(R.plurals.studyoptions_congrats_message,
+//				revCards, revCards, newCardsText, etaText);
+//	}
 
 	public String _nextDueMsg(Context context) {
 		StringBuilder sb = new StringBuilder();
@@ -1558,7 +1558,7 @@ public class Sched {
 				// early removal
 				return _graduatingIvl(card, conf, true, false) * 86400;
 			} else {
-				int left = card.getLeft() + 1;
+				int left = card.getLeft() - 1;
 				if (left <= 0) {
 					// graduate
 					return _graduatingIvl(card, conf, false, false) * 86400;
