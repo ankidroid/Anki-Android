@@ -291,7 +291,7 @@ public class Reviewer extends Activity implements IButtonListener{
     private WebView mCard;
     private TextView mSimpleCard;
     private WebView mNextCard;
-    private LinearLayout mCardFrame;
+    private FrameLayout mCardFrame;
     private FrameLayout mTouchLayer;
     private TextView mTextBarRed;
     private TextView mTextBarBlack;
@@ -1578,7 +1578,7 @@ public class Reviewer extends Activity implements IButtonListener{
 
         findViewById(R.id.top_bar).setOnClickListener(mCardStatisticsListener);
 
-        mCardFrame = (LinearLayout) findViewById(R.id.flashcard);
+        mCardFrame = (FrameLayout) findViewById(R.id.flashcard);
         mTouchLayer = (FrameLayout) findViewById(R.id.touch_layer);
         mTouchLayer.setOnTouchListener(mGestureListener);
     	if (mPrefTextSelection && mLongClickWorkaround) {

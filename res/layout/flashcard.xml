@@ -125,9 +125,7 @@
 		android:layout_above="@+id/bottom_area_layout"
 		android:layout_width="fill_parent"
 		android:layout_height="fill_parent">
-		<LinearLayout android:id="@+id/flashcard"
-	    	android:padding="3.3333dip"
-    		android:gravity="center"
+		<FrameLayout android:id="@+id/flashcard"
 			android:layout_width="fill_parent"
 			android:layout_height="fill_parent"/>
 		<LinearLayout
