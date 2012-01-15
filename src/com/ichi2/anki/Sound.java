@@ -57,6 +57,10 @@ public class Sound {
     /* Prevent class from being instantiated */
     private Sound() { }
 
+    /// Clears current sound paths; call before parseSounds() calls
+    public static void resetSounds() {
+    	sSoundPaths = new ArrayList<String>();
+    }
 
     public static String parseSounds(String soundDir, String content, boolean ttsEnabled, int qa) {
     	boolean soundAvailable = false;
@@ -64,7 +68,7 @@ public class Sound {
         String contentLeft = content;
 
         Log.i(AnkiDroidApp.TAG, "parseSounds");
-        sSoundPaths = new ArrayList<String>();
+
         Matcher matcher = sSoundPattern.matcher(content);
         // While there is matches of the pattern for sound markers
         while (matcher.find()) {

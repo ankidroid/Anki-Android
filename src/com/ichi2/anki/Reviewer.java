@@ -2399,6 +2399,9 @@ public class Reviewer extends Activity implements IButtonListener{
         int questionStartsAt = content.indexOf("<a name=\"question\"></a><hr/>");
         String question = "";
         String answer = "";
+
+        Sound.resetSounds();
+
         if (isQuestionDisplayed()) {
         	if (sDisplayAnswer && (questionStartsAt != -1)) {
                 question = Sound.parseSounds(mBaseUrl, content.substring(0, questionStartsAt), mSpeakText, MetaDB.LANGUAGES_QA_QUESTION);
