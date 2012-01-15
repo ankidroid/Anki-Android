@@ -803,8 +803,16 @@ public class DeckPicker extends Activity {
 						return true;
 					}
 					return false;
-//				} else if (view.getId() == R.id.deckpicker_bar_mat || view.getId() == R.id.deckpicker_bar_all) {
-//					Utils.updateProgressBars(DeckPicker.this, view, Double.parseDouble(text) / 100.0, mDeckListView.getWidth(), 1, false);
+				} else if (view.getId() == R.id.deckpicker_bar_mat || view.getId() == R.id.deckpicker_bar_all) {
+					if (text.length() > 0 && !text.equals("-1.0")) {
+						Utils.updateProgressBars(DeckPicker.this, view, Double.parseDouble(text), ((View)view.getParent().getParent().getParent()).getHeight(), (int) UIUtils.getDensityAdjustedValue(DeckPicker.this, 3.4f), true);
+						View parent = (View)view.getParent().getParent();
+						if (parent.getVisibility() == View.INVISIBLE) {
+							parent.setVisibility(View.VISIBLE);
+							view.setAnimation(ViewAnimation.fade(ViewAnimation.FADE_IN, 500, 0));							
+						}
+					}
+					return true;
 				} else if (view.getVisibility() == View.INVISIBLE) {
 					if (!text.equals("-1")) {
 						view.setVisibility(View.VISIBLE);
@@ -1975,8 +1983,8 @@ public class DeckPicker extends Activity {
         	m.put("new", ((Integer)d[2]).toString());
         	m.put("lrn", ((Integer)d[3]).toString());
         	m.put("rev", ((Integer)d[4]).toString());
-//        	m.put("complMat", ((Float)d[5]).toString());
-//        	m.put("complAll", ((Float)d[6]).toString());
+        	m.put("complMat", ((Float)d[5]).toString());
+        	m.put("complAll", ((Float)d[6]).toString());
         	if (name.length == 1) {
             	m.put("sep", "top");
             	if (mDeckList.size() > 0) {

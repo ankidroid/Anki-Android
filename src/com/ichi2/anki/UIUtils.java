@@ -1,5 +1,6 @@
 package com.ichi2.anki;import com.ichi2.anki2.R;
 
+import android.content.Context;
 import android.os.Build;
 
 public class UIUtils {
@@ -12,6 +13,10 @@ public class UIUtils {
             // If there is an error, return the minimum supported version.
             return 3;
         }
+    }
+
+    public static float getDensityAdjustedValue(Context context, float value) {
+    	return context.getResources().getDisplayMetrics().density * value;
     }
 
 }

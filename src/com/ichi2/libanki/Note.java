@@ -37,43 +37,44 @@ public class Note {
 
 	private Collection mCol;
 
-    private long mId;
-    private String mGuId;
-    private JSONObject mModel;
-    private long mDid;
-    private long mMid;
-    private int mMod;
-    private int mUsn;
-    private boolean mNewlyAdded;
-    private String[] mTags;
-    private String[] mFields;
-    private String mData = "";
-    private int mFlags;
-    
-    private TreeMap<String, Object[]> mFMap;
-    private int mScm;
+	private long mId;
+	private String mGuId;
+	private JSONObject mModel;
+	private long mDid;
+	private long mMid;
+	private int mMod;
+	private int mUsn;
+	private boolean mNewlyAdded;
+	private String[] mTags;
+	private String[] mFields;
+	private String mData = "";
+	private int mFlags;
 
+	private TreeMap<String, Object[]> mFMap;
+	private int mScm;
 
-    public Note(Collection col, long id) {
-    	this(col, null, id);
-    }
-    public Note(Collection col, JSONObject model) {
-    	this(col, model, 0);
-    }
-    public Note(Collection col, JSONObject model, long id) {
-        mCol = col;
-        if (id != 0) {
-            mId = id;
-        	load();
-        } else {
-        	mId = Utils.timestampID(mCol.getDb(), "notes");
-        	mGuId = Utils.guid64();
-        	mModel = model;
-        	try {
-            	mDid = model.getInt("did");
-            	mMid = model.getInt("id");
-    			mTags = new String[]{""};
-    			mFields = new String[model.getJSONArray("flds").length()];
+	public Note(Collection col, long id) {
+		this(col, null, id);
+	}
+
+	public Note(Collection col, JSONObject model) {
+		this(col, model, 0);
+	}
+
+	public Note(Collection col, JSONObject model, long id) {
+		mCol = col;
+		if (id != 0) {
+			mId = id;
+			load();
+		} else {
+			mId = Utils.timestampID(mCol.getDb(), "notes");
+			mGuId = Utils.guid64();
+			mModel = model;
+			try {
+				mDid = model.getInt("did");
+				mMid = model.getInt("id");
+				mTags = new String[] { "" };
+				mFields = new String[model.getJSONArray("flds").length()];
 			} catch (JSONException e) {
 				throw new RuntimeException(e);
 			}
@@ -83,297 +84,238 @@ public class Note {
 			mData = "";
 			mFMap = mCol.getModels().fieldMap(mModel);
 			mScm = mCol.getScm();
-        }
-    }
+		}
+	}
 
+	private void load() {
+		Cursor cursor = null;
+		try {
+			cursor = mCol
+					.getDb()
+					.getDatabase()
+					.rawQuery(
+							"SELECT guid, mid, did, mod, usn, tags, flds, flags, data FROM notes WHERE id = "
+									+ mId, null);
+			if (!cursor.moveToFirst()) {
+				Log.w(AnkiDroidApp.TAG, "Notes.load(): No result from query.");
+				return;
+			}
+			mGuId = cursor.getString(0);
+			mMid = cursor.getLong(1);
+			mDid = cursor.getLong(2);
+			mMod = cursor.getInt(3);
+			mUsn = cursor.getInt(4);
+			mFields = Utils.splitFields(cursor.getString(6));
+			mTags = mCol.getTags().split(cursor.getString(5));
+			mData = cursor.getString(7);
+			mScm = mCol.getScm();
+		} finally {
+			if (cursor != null) {
+				cursor.close();
+			}
+		}
+		mModel = mCol.getModels().get(mMid);
+		mFMap = mCol.getModels().fieldMap(mModel);
+	}
 
-    private void load() {
-       Cursor cursor = null;
-        try {
-            cursor = mCol.getDb().getDatabase().rawQuery(
-            		"SELECT guid, mid, did, mod, usn, tags, flds, flags, data FROM notes WHERE id = " + mId, null);
-            if (!cursor.moveToFirst()) {
-                Log.w(AnkiDroidApp.TAG, "Notes.load(): No result from query.");
-                return;
-            }
-            mGuId = cursor.getString(0);
-            mMid = cursor.getLong(1);
-    		mDid = cursor.getLong(2); 
-    		mMod = cursor.getInt(3); 
-    		mUsn = cursor.getInt(4);
-            mTags = mCol.getTags().split(cursor.getString(5));
-            mFields = Utils.splitFields(cursor.getString(6));
-            mData = cursor.getString(7);
-            mScm = mCol.getScm();
-        } finally {
-            if (cursor != null) {
-                cursor.close();
-            }
-        }
-        mModel = mCol.getModels().get(mMid);
-        mFMap = mCol.getModels().fieldMap(mModel);
-   }
+	public void flush() {
+		flush(0);
+	}
 
+	public void flush(int mod) {
+		_preFlush();
+		mMod = mod != 0 ? mod : Utils.intNow();
+		mUsn = mCol.getUsn();
+		String sfld = Utils
+				.stripHTML(mFields[mCol.getModels().sortIdx(mModel)]);
+		String tags = stringTags();
+		int csum = Utils.fieldChecksum(mFields[0]);
+		mCol.getDb()
+				.getDatabase()
+				.execSQL(
+						"INSERT OR REPLACE INTO notes VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+						new Object[] { mId, mGuId, mMid, mDid, mMod, mUsn,
+								tags, joinedFields(), sfld, csum, mFlags, mData });
+		mCol.getTags().register(mTags);
+		_postFlush();
+	}
 
-    public void flush() {
-    	flush(0);
-    }
-    public void flush(int mod) {
-    	_preFlush();
-    	mMod = mod != 0 ? mod : Utils.intNow();
-    	mUsn = mCol.getUsn();
-    	String sfld = Utils.stripHTML(mFields[mCol.getModels().sortIdx(mModel)]);
-    	String tags = stringTags();
-    	int csum = Utils.fieldChecksum(mFields[0]);
-    	mCol.getDb().getDatabase().execSQL("INSERT OR REPLACE INTO notes VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
-                new Object[]{mId, mGuId, mMid, mDid, mMod, mUsn, tags, joinedFields(), sfld, csum, mFlags, mData});
-    	mCol.getTags().register(mTags);
-    	_postFlush();
-    }
+	public String joinedFields() {
+		return Utils.joinFields(mFields);
+	}
 
+	public ArrayList<Card> cards() {
+		ArrayList<Card> cards = new ArrayList<Card>();
+		Cursor cur = null;
+		try {
+			cur = mCol
+					.getDb()
+					.getDatabase()
+					.rawQuery(
+							"SELECT id FROM cards WHERE nid = " + mId
+									+ " ORDER BY ord", null);
+			while (cur.moveToNext()) {
+				cards.add(mCol.getCard(cur.getLong(0)));
+			}
+		} finally {
+			if (cur != null) {
+				cur.close();
+			}
+		}
+		return cards;
+	}
 
-    public String joinedFields() {
-    	return Utils.joinFields(mFields);
-    }
+	public JSONObject model() {
+		return mModel;
+	}
 
+	public void updateCardDids() {
+		for (Card c : cards()) {
+			if (c.getDid() != mDid && c.template().has("did")) {
+				c.setDid(mDid);
+				c.flush();
+			}
+		}
+	}
 
-    public Card[] cards() {
-    	ArrayList<Card> cards = new ArrayList<Card>();
-    	Cursor cur = null;
-        try {
-        	cur = mCol.getDb().getDatabase().rawQuery("SELECT id FROM cards WHERE nid = " + mId + " ORDER BY ord", null);
-        	while (cur.moveToNext()) {
-        		cards.add(mCol.getCard(cur.getInt(0)));
-        	}
-        } finally {
-            if (cur != null) {
-                cur.close();
-            }
-        }
-        return (Card[]) cards.toArray();
-    }
+	/**
+	 * Dict interface
+	 * ***********************************************************
+	 * ************************************
+	 */
 
+	public HashSet<String> keys() {
+		HashSet<String> keys = new HashSet<String>();
+		for (String s : mFMap.keySet()) {
+			keys.add(s);
+		}
+		return keys;
+	}
 
-    public JSONObject model() {
-    	return mModel;
-    }
+	public String[] values() {
+		return mFields;
+	}
 
-    // updatecarddids
-
-    /**
-     * Dict interface
-     * ***********************************************************************************************
-     */
-
-    public HashSet<String> keys() {
-    	return (HashSet<String>) mFMap.keySet();
-    }
-
-
-    public String[] values() {
-        return mFields;
-    }
-
-
-    public HashMap<String, String> items() {
-    	HashMap<String, String> m = new HashMap<String, String>();
+	public HashMap<String, String> items() {
+		HashMap<String, String> m = new HashMap<String, String>();
 		try {
 			for (Object[] e : mFMap.values()) {
-				m.put(((JSONObject)e[1]).getString("name"), mFields[(Integer)e[0]]);
+				m.put(((JSONObject) e[1]).getString("name"),
+						mFields[(Integer) e[0]]);
 			}
 		} catch (JSONException e1) {
 			throw new RuntimeException(e1);
-    	}
+		}
 		return m;
-    }
+	}
 
+	public int _fieldOrd(String key) {
+		return (Integer) mFMap.get(key)[0];
+	}
 
-    public int _fieldOrd(String key) {
-        return (Integer) mFMap.get(key)[0];
-    }
+	public String _getitem__(String key) {
+		return mFields[_fieldOrd(key)];
+	}
 
+	public void __setitem__(String key, String value) {
+		mFields[_fieldOrd(key)] = value;
+	}
 
-    public String _getitem__(String key) {
-    	return mFields[_fieldOrd(key)];
-    }
+	/**
+	 * Tags
+	 * *********************************************************************
+	 * **************************
+	 */
 
+	public boolean hasTag(String tag) {
+		return mCol.getTags().inList(tag, mTags);
+	}
 
-    //setitem
+	public String stringTags() {
+		return mCol.getTags().join(mCol.getTags().canonify(mTags));
+	}
 
-    /**
-     * Tags
-     * ***********************************************************************************************
-     */
+	public void setTagsFromStr(String str) {
+		mTags = mCol.getTags().split(str);
+	}
 
-    public boolean hasTag(String tag) {
-    	return mCol.getTags().inList(tag, mTags);
-    }
+	public void delTag(String tag) {
+		// TODO
+		// List<String> other = new ArrayList<String>();
+		// for (String t : mTags) {
+		// if (!t.toLowerCase().equals(tag.toLowerCase())) {
+		// other.add(t);
+		// }
+		// }
+		// mTags = (String[]) other.toArray();
+	}
 
+	public void addTag(String tag) {
+		// duplicates will be stripped on save
+		// TODO
+	}
 
-    public String stringTags() {
-    	return mCol.getTags().join(mCol.getTags().canonify(mTags));
-    }
+	/**
+	 * Unique/duplicate checks
+	 * **************************************************
+	 * *********************************************
+	 */
 
+	/** 1 if first is empty; 2 if first is duplicate, 0 otherwise */
+	public int dupeOrEmpty() {
+		String val = mFields[0];
+		if (val.trim().length() == 0) {
+			return 1;
+		}
+		int csum = Utils.fieldChecksum(val);
+		// find any matching csums and compare
+		for (String flds : mCol.getDb().queryColumn(
+				String.class,
+				"SELECT flds FROM notes WHERE csum = " + csum + " AND id != "
+						+ (mId != 0 ? mId : 0) + " AND mid = " + mMid, 0)) {
+			if (Utils.splitFields(flds)[0].equals(mFields[0])) {
+				return 2;
+			}
+		}
+		return 0;
+	}
 
-    public void delTag(String tag) {
-    	//TODO
-//    	List<String> other = new ArrayList<String>();
-//    	for (String t : mTags) {
-//    		if (!t.toLowerCase().equals(tag.toLowerCase())) {
-//    			other.add(t);
-//    		}
-//    	}
-//    	mTags = (String[]) other.toArray();
-    }
+	/**
+	 * Flushing cloze notes
+	 * **************************************************
+	 * *********************************************
+	 */
 
+	public void _preFlush() {
+		// have we been added yet?
+		mNewlyAdded = mCol.getDb().queryScalar(
+				"SELECT 1 FROM cards WHERE nid = " + mId) == 0;
+	}
 
-    public void addTag(String tag) {
-    	// TODO
-    	// duplicates will be stripped on save
-//    	String[] oldtags = mTags;
-//    	mTags = new String[oldtags.length + 1];
-//    	for (int i = 0; i < mTags.length - 1; i++) {
-//    		mTags[i] = oldtags[i];
-//    	}
-//    	mTags[mTags.length - 1] = tag;
-    }
+	public void _postFlush() {
+		// generate missing cards
+		if (!mNewlyAdded) {
+			// TODO
+		}
+	}
 
+	public long getMid() {
+		return mMid;
+	}
 
-//    public void setTags(String tags) {
-//    	mTags = Utils.parseTags(tags);
-//    }
+	public void setId(long id) {
+		mId = id;
+	}
 
-    /**
-     * Unique/duplicate checks
-     * ***********************************************************************************************
-     */
+	/**
+	 * @return the mId
+	 */
+	public long getId() {
+		return mId;
+	}
 
-    /** 1 if first is empty; 2 if first is duplicate, 0 otherwise */
-    public int dupeOrEmpty() {
-    	String val = mFields[0];
-    	if (val.trim().length() == 0) {
-    		return 1;
-    	}
-    	int csum = Utils.fieldChecksum(val);
-    	// find any matching csums and compare
-    	for (String flds : mCol.getDb().queryColumn(String.class, "SELECT flds FROM notes WHERE csum = " + csum + " AND id != " + (mId != 0 ? mId : 0) + " and mid = " + mMid, 0)) {
-    		if (Utils.splitFields(flds)[0].equals(mFields[0])) {
-    			return 2;
-    		}
-    	}
-    	return 0;
-    }
-   
-    /**
-     * Unique/duplicate checks
-     * ***********************************************************************************************
-     */
+	public long getDid() {
+		return mDid;
+	}
 
-    /** have we been added yet? */
-    public void _preFlush() {
-    	mNewlyAdded = mCol.getDb().queryScalar("SELECT 1 FROM cards WHERE nid = " + mId) == 0;
-    }
-
-
-    /** generate missing cards */
-    public void _postFlush() {
-    	//TODO
-    }
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-
-    public long getMid() {
-    	return mMid;
-    }
-    
-    
-    
-    public void setId(long id) {
-        mId = id;
-    }
-
-
-    /**
-     * @return the mId
-     */
-    public long getId() {
-        return mId;
-    }
-
-
-    public long getDid() {
-        return mDid;
-    }
-
-
-    public String[] getFields() {
-    	return mFields;
-    }
-
-
-
-
-//
-//    public LinkedList<Card> getUpdatedRelatedCards() {
-//        // TODO return instances of each card that is related to this fact
-//        LinkedList<Card> returnList = new LinkedList<Card>();
-//
-//        Cursor cardsCursor = AnkiDatabaseManager.getDatabase(mDeck.getDeckPath()).getDatabase().rawQuery(
-//                "SELECT id, factId FROM cards " + "WHERE factId = " + mId, null);
-//
-//        while (cardsCursor.moveToNext()) {
-//            Card newCard = new Card(mDeck);
-//            newCard.fromDB(cardsCursor.getLong(0));
-//            newCard.loadTags();
-//            HashMap<String, String> newQA = CardModel.formatQA(this, newCard.getCardModel(), newCard.splitTags());
-//            newCard.setQuestion(newQA.get("question"));
-//            newCard.setAnswer(newQA.get("answer"));
-//
-//            returnList.add(newCard);
-//        }
-//        if (cardsCursor != null) {
-//            cardsCursor.close();
-//        }
-//
-//        return returnList;
-//    }
-//
-//
-//    public void setModified() {
-//        setModified(false, null, true);
-//    }
-//    public void setModified(boolean textChanged) {
-//        setModified(textChanged, null, true);
-//    }
-//    public void setModified(boolean textChanged, Deck deck) {
-//        setModified(textChanged, deck, true);
-//    }
-//    public void setModified(boolean textChanged, Deck deck, boolean media) {
-//        mModified = Utils.now();
-//        if (textChanged) {
-//            assert (deck != null);
-//            mCache = "";
-//            StringBuilder str = new StringBuilder(1024);
-//            for (Field f : getFields()) {
-//                str.append(f.getValue()).append(" ");
-//            }
-//            mCache = str.toString();
-//            mCache.substring(0, mCache.length() - 1);
-//            mCache = Utils.stripHTMLMedia(mCache);
-//            Log.d(AnkiDroidApp.TAG, "cache = " + mCache);
-//            for (Card card : getUpdatedRelatedCards()) {
-//                card.setModified();
-//                card.toDB();
-//                // card.rebuildQA(deck);
-//            }
-//        }
-//    }
 }

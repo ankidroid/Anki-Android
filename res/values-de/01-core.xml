@@ -134,10 +134,6 @@
     <item quantity="one">%1$s (noch 1 Min.)</item>
     <item quantity="other">%1$s (noch %2$d Min.)</item>
   </plurals>
-  <plurals name="studyoptions_congrats_message">
-    <item quantity="one">Sie sind für heute fertig.\nMorgen gibt es 1 Karte zu wiederholen und %2$s.\nGeschätzte Zeit: %3$s</item>
-    <item quantity="other">Sie sind für heute fertig.\nMorgen gibt es %1$d Karten zu wiederholen und %2$s.\nGeschätzte Zeit: %3$s</item>
-  </plurals>
   <plurals name="studyoptions_congrats_new_cards">
     <item quantity="one">1 Karte neu zu lernen</item>
     <item quantity="other">%1$d Karten neu zu lernen</item>

@@ -144,10 +144,8 @@ public class DeckOptions extends PreferenceActivity implements
 						} else if (entry.getKey().equals("desc")) {
 							mDeck.put("desc", (String) entry.getValue());
 						} else if (entry.getKey().equals("deckConf")) {
-							mDeck.put("conf",
-									Long.parseLong((String) entry.getValue()));
-							mOptions = mCol.getDecks().confForDid(
-									mDeck.getLong("id"));
+							mCol.getDecks().setConf(mDeck, Long.parseLong((String) entry.getValue()));
+							mOptions = mCol.getDecks().confForDid(mDeck.getLong("id"));
 						} else if (entry.getKey().equals("maxAnswerTime")) {
 							mOptions.put("maxTaken",
 									Integer.parseInt((String) entry.getValue()));
@@ -440,7 +438,7 @@ public class DeckOptions extends PreferenceActivity implements
 			finish();
 			if (UIUtils.getApiLevel() > 4) {
 				ActivityTransitionAnimation.slide(this,
-						ActivityTransitionAnimation.RIGHT);
+						ActivityTransitionAnimation.FADE);
 			}
 			return true;
 		}

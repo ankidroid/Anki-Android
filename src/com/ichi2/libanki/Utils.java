@@ -31,7 +31,6 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 
 import com.ichi2.anki.AnkiDb;
@@ -403,13 +402,22 @@ public class Utils {
         return str.toString();
     }
 
+    /** LIBANKI: not in libanki */
+    public static long[] arrayList2array(ArrayList<Long> list) {
+    	long[] ar = new long[list.size()];
+    	int i = 0;
+    	for (long l : list) {
+    		ar[i++] = l;
+    	}
+    	return ar;
+    }
 
     /** Return a non-conflicting timestamp for table. */
     public static int timestampID(AnkiDb db, String table) {
     	// be careful not to create multiple objects without flushing them, or they
         // may share an ID.
     	int t = intNow(1000);
-    	while (db.queryScalar("SELECT id FROM " + table + " WHERE id = " + t) == 0) {
+    	while (db.queryScalar("SELECT id FROM " + table + " WHERE id = " + t, false) != 0) {
     		t += 1;
     	}
     	return t;
@@ -417,10 +425,10 @@ public class Utils {
 
 
     /** Return the first safe ID to use. */
-    public static int maxID(AnkiDb db) {
-    	int now = intNow(1000);
-    	now = Math.max(now, db.queryScalar("SELECT MAX(id) FROM cards"));
-    	now = Math.max(now, db.queryScalar("SELECT MAX(id) FROM cnotes"));
+    public static long maxID(AnkiDb db) {
+    	long now = intNow(1000);
+    	now = Math.max(now, db.queryLongScalar("SELECT MAX(id) FROM cards"));
+    	now = Math.max(now, db.queryLongScalar("SELECT MAX(id) FROM cnotes"));
     	return now + 1;
     }
 
@@ -908,28 +916,14 @@ public class Utils {
     }
   
 
-    public static void updateProgressBars(Context context, View view, double progress, int maxX, int y, boolean singleBar) {
-    	updateProgressBars(context, view, progress, maxX, y, singleBar, true);
-    }
-	public static void updateProgressBars(Context context, View view, double progress, int maxX, int y, boolean singleBar, boolean changeColor) {
+    public static void updateProgressBars(Context context, View view, double progress, int maxX, int y, boolean vertical) {
         if (view == null) {
             return;
         }
-        if (singleBar) {
-        	if (changeColor) {
-                if (progress < 0.5) {
-                    view.setBackgroundColor(context.getResources().getColor(R.color.progressbar_1));
-                } else if (progress < 0.65) {
-                    view.setBackgroundColor(context.getResources().getColor(R.color.progressbar_2));
-                } else if (progress < 0.75) {
-                    view.setBackgroundColor(context.getResources().getColor(R.color.progressbar_3));
-                } else {
-                    view.setBackgroundColor(context.getResources().getColor(R.color.progressbar_4));            
-                }        		
-        	}
-            FrameLayout.LayoutParams lparam = new FrameLayout.LayoutParams(0, 0);            
-            lparam.height = y;
-            lparam.width = (int) (maxX * progress);
+        if (vertical) {
+        	LinearLayout.LayoutParams lparam = new LinearLayout.LayoutParams(0, 0);            
+            lparam.height = (int) (maxX * progress);
+            lparam.width = y;
             view.setLayoutParams(lparam);
         } else {
             LinearLayout.LayoutParams lparam = new LinearLayout.LayoutParams(0, 0);            

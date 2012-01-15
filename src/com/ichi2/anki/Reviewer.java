@@ -179,7 +179,6 @@ public class Reviewer extends Activity implements IButtonListener{
     private static final int MENU_SEARCH = 4;
     private static final int MENU_MARK = 5;
     private static final int MENU_UNDO = 6;
-    private static final int MENU_REDO = 7;
 
     public static final int EASE_FAILED = 1;
     public static final int EASE_HARD = 2;
@@ -703,8 +702,7 @@ public class Reviewer extends Activity implements IButtonListener{
 
         @Override
         public void onProgressUpdate(DeckTask.TaskData... values) {
-            mCurrentCard = values[0].getCard();
-            int showQuestion = values[0].getInt();
+//            mCurrentCard = values[0].getCard();
             if (mPrefWhiteboard) {
                 mWhiteboard.clear();
             }
@@ -713,14 +711,10 @@ public class Reviewer extends Activity implements IButtonListener{
                 mCardTimer.setBase(SystemClock.elapsedRealtime());
                 mCardTimer.start();
             }
-            if (showQuestion == UPDATE_CARD_SHOW_ANSWER) {
-                displayCardAnswer();            	
-            } else {
-                displayCardQuestion();
-            }
+            displayCardQuestion();
             try {
                 if (mProgressDialog != null && mProgressDialog.isShowing()) {
-			mProgressDialog.dismiss();
+                	mProgressDialog.dismiss();
                 }
             } catch (IllegalArgumentException e) {
                 Log.e(AnkiDroidApp.TAG, "Reviewer: Error on dismissing progress dialog: " + e);
@@ -737,14 +731,14 @@ public class Reviewer extends Activity implements IButtonListener{
                 return;
             }
             mShakeActionStarted = false;
-            String str = result.getString();
-            if (str != null) {
+//            String str = result.getString();
+//            if (str != null) {
 //                if (str.equals(Decks.UNDO_TYPE_SUSPEND_CARD)) {
 //                	Themes.showThemedToast(Reviewer.this, getResources().getString(R.string.card_unsuspended), true);
 //                } else if (str.equals("redo suspend")) {
 //                	Themes.showThemedToast(Reviewer.this, getResources().getString(R.string.card_suspended), true);           	
 //                }            	
-            }
+//            }
             mInEditor = false;
         }
     };
@@ -1293,7 +1287,6 @@ public class Reviewer extends Activity implements IButtonListener{
         }
         item = menu.add(Menu.NONE, MENU_MARK, Menu.NONE, R.string.menu_mark_card);
         Utils.addMenuItemInActionBar(menu, Menu.NONE, MENU_UNDO, Menu.NONE, R.string.undo, R.drawable.ic_menu_revert);
-        Utils.addMenuItemInActionBar(menu, Menu.NONE, MENU_REDO, Menu.NONE, R.string.redo, R.drawable.ic_menu_redo);
         return true;
     }
 
@@ -1358,8 +1351,7 @@ public class Reviewer extends Activity implements IButtonListener{
 
             getWindow().setFlags(0, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         }
-//        menu.findItem(MENU_UNDO).setEnabled(DeckManager.getMainDeck().undoAvailable());
-//        menu.findItem(MENU_REDO).setEnabled(DeckManager.getMainDeck().redoAvailable());
+        menu.findItem(MENU_UNDO).setEnabled(mSched.getCol().undoAvailable());
         return true;
     }
 
@@ -1438,11 +1430,10 @@ public class Reviewer extends Activity implements IButtonListener{
 //                        DeckManager.getMainDeck(), mCurrentCard));
                 return true;
 
-//            case MENU_UNDO:
-//            	setNextCardAnimation(true);
-//            	DeckTask.launchDeckTask(DeckTask.TASK_TYPE_UNDO, mUpdateCardHandler, new DeckTask.TaskData(UPDATE_CARD_SHOW_QUESTION,
-//                        DeckManager.getMainDeck(), mCurrentCard.getId(), false));
-//                return true;
+            case MENU_UNDO:
+            	setNextCardAnimation(true);
+            	DeckTask.launchDeckTask(DeckTask.TASK_TYPE_UNDO, mUpdateCardHandler, new DeckTask.TaskData(mSched));
+                return true;
 //
 //            case MENU_REDO:
 //                DeckTask.launchDeckTask(DeckTask.TASK_TYPE_REDO, mUpdateCardHandler, new DeckTask.TaskData(UPDATE_CARD_SHOW_QUESTION,

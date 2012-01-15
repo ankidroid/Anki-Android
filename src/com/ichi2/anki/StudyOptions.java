@@ -515,9 +515,6 @@ public class StudyOptions extends Activity implements IButtonListener {
 		mCompat.invalidateOptionsMenu(this);
 		setResult(result);
 		finish();
-		if (mUnmountReceiver != null) {
-			unregisterReceiver(mUnmountReceiver);
-		}
 		if (UIUtils.getApiLevel() > 4) {
 			ActivityTransitionAnimation.slide(this,
 					ActivityTransitionAnimation.RIGHT);
@@ -674,8 +671,6 @@ public class StudyOptions extends Activity implements IButtonListener {
 				R.layout.studyoptions_congrats, null);
 
 		Themes.setWallpaper(mCongratsView);
-		Themes.setTitleStyle(mCongratsView
-				.findViewById(R.id.studyoptions_congrats_title));
 
 		mTextCongratsMessage = (TextView) mCongratsView
 				.findViewById(R.id.studyoptions_congrats_message);
@@ -937,9 +932,8 @@ public class StudyOptions extends Activity implements IButtonListener {
 			// String etaText =
 			// res.getQuantityString(R.plurals.studyoptions_congrats_eta, eta,
 			// eta);
-			// mTextCongratsMessage.setText(res.getQuantityString(R.plurals.studyoptions_congrats_message,
-			// revCards, revCards, newCardsText, etaText));
 			// }
+		 	mTextCongratsMessage.setText(mCol.getSched().finishedMsg(this));
 			updateValuesFromDeck();
 			setContentView(mCongratsView);
 			break;

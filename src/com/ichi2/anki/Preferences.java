@@ -364,7 +364,7 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
 		finish();
 		if (UIUtils.getApiLevel() > 4) {
 			ActivityTransitionAnimation.slide(this,
-					ActivityTransitionAnimation.RIGHT);
+					ActivityTransitionAnimation.FADE);
 		}    	
     }
 

@@ -8,19 +8,38 @@
 		android:orientation="vertical" 
 		android:layout_width="fill_parent"
 		android:layout_height="wrap_content">
+		<LinearLayout android:layout_width="fill_parent"
+			android:layout_height="wrap_content" 
+			android:id="@+id/CardEditorEditFieldsLayout"
+			android:padding="4dip"
+			android:orientation="vertical"/>
+
+		<LinearLayout android:layout_width="fill_parent"
+			android:layout_height="wrap_content" 
+			android:orientation="horizontal"
+			android:layout_gravity="right" 
+			android:id="@+id/CardEditorButtons">
+			<Button android:layout_width="0dip"
+				android:layout_height="fill_parent" 
+				android:id="@+id/CardEditorSaveButton"
+				android:text="@string/CardEditorSaveButton"
+				android:layout_gravity="center"
+				android:gravity="center"
+				android:layout_weight="1"/>
+			<Button android:layout_width="0dip"
+				android:layout_height="fill_parent" 
+				android:id="@+id/CardEditorCancelButton"
+				android:text="@string/CardEditorCancelButton"
+				android:layout_gravity="center"
+				android:gravity="center"
+				android:layout_weight="1"/>
+		</LinearLayout>
+		
         <LinearLayout
 	        android:id="@+id/CardEditorSelectModelLayout"
 	        android:visibility="gone"
 	        android:layout_width="fill_parent"
 	        android:layout_height="wrap_content">
-           <Button
-				android:id="@+id/CardEditorModelButton"
-				android:layout_height="fill_parent"
-				style="?android:attr/buttonStyleSmall"
-				android:layout_width="0dip"
-				android:layout_weight="1"
-				android:layout_gravity="center"
-				android:gravity="center"/>
           <Button
 				android:id="@+id/CardEditorTemplateButton"
 				android:layout_height="fill_parent"
@@ -29,12 +48,16 @@
 				style="?android:attr/buttonStyleSmall"
 				android:layout_gravity="center"
 				android:gravity="center"/>
+           <Button
+				android:id="@+id/CardEditorModelButton"
+				android:layout_height="fill_parent"
+				style="?android:attr/buttonStyleSmall"
+				android:layout_width="0dip"
+				android:layout_weight="1"
+				android:layout_gravity="center"
+				android:gravity="center"/>
         </LinearLayout>
-		<LinearLayout android:layout_width="fill_parent"
-			android:layout_height="wrap_content" 
-			android:id="@+id/CardEditorEditFieldsLayout"
-			android:padding="4dip"
-			android:orientation="vertical"/>
+		
  	    <LinearLayout
   		android:layout_height="wrap_content" 
        	android:layout_width="fill_parent"
@@ -58,25 +81,5 @@
          		android:visibility="gone"
 				android:gravity="center"/>
 			        </LinearLayout>
-		<LinearLayout android:layout_width="fill_parent"
-			android:layout_height="wrap_content" 
-			android:orientation="horizontal"
-			android:layout_gravity="right" 
-			android:id="@+id/CardEditorButtons">
-			<Button android:layout_width="0dip"
-				android:layout_height="fill_parent" 
-				android:id="@+id/CardEditorSaveButton"
-				android:text="@string/CardEditorSaveButton"
-				android:layout_gravity="center"
-				android:gravity="center"
-				android:layout_weight="1"/>
-			<Button android:layout_width="0dip"
-				android:layout_height="fill_parent" 
-				android:id="@+id/CardEditorCancelButton"
-				android:text="@string/CardEditorCancelButton"
-				android:layout_gravity="center"
-				android:gravity="center"
-				android:layout_weight="1"/>
-		</LinearLayout>
 	</LinearLayout>
 </ScrollView>

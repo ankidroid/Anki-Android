@@ -155,6 +155,32 @@ public class AnkiDb {
     }
 
 
+    public long queryLongScalar(String query) throws SQLException {
+    	return queryLongScalar(query, true);
+    }
+    public long queryLongScalar(String query, boolean throwException) throws SQLException {
+        Cursor cursor = null;
+        long scalar;
+        try {
+            cursor = mDatabase.rawQuery(query, null);
+            if (!cursor.moveToNext()) {
+            	if (throwException) {
+                    throw new SQLException("No result for query: " + query);            		
+            	} else {
+            		return 0;
+            	}
+            }
+            scalar = cursor.getLong(0);
+        } finally {
+            if (cursor != null) {
+                cursor.close();
+            }
+        }
+
+        return scalar;
+    }
+
+
     /**
      * Convenience method for querying the database for an entire column. The column will be returned as an ArrayList of
      * the specified class. See Deck.initUndo() for a usage example.

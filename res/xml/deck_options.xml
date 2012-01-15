@@ -24,10 +24,9 @@
 		android:key="desc" />
 	<PreferenceCategory android:title="Options">
 	<ListPreference
-		android:title="Change conf"
+		android:title="Configuration set"
 		android:key="deckConf"/>
-	</PreferenceCategory>
-	<PreferenceCategory android:title="New Cards">
+	<PreferenceScreen android:title="New Cards">
 		<EditTextPreference
         	    	android:title="Steps (in minutes)"
 		 	android:key="newSteps" />
@@ -58,8 +57,8 @@
 			android:defaultValue="true"
 			android:summary="Try not to show sibling cards next to each other"
 			android:key="newSeparate" />
-	</PreferenceCategory>
-	<PreferenceCategory android:title="Reviews">
+	</PreferenceScreen>
+	<PreferenceScreen android:title="Reviews">
 		<ListPreference
 			android:title="Order"
 			android:summary=""
@@ -93,8 +92,8 @@
         	    	android:summary="XXX \%%"
           	    	android:numeric="integer" 
 		 	android:key="revAssForIdx" />
-	</PreferenceCategory>
-	<PreferenceCategory android:title="Lapses">
+	</PreferenceScreen>
+	<PreferenceScreen android:title="Lapses">
 		<EditTextPreference
         	    	android:title="Steps (in minutes)"
 		 	android:key="lapSteps" />
@@ -117,8 +116,8 @@
 		<ListPreference
 			android:title="Leech Action"
 			android:key="lapLeechAct"/>
-	</PreferenceCategory>
-		<PreferenceCategory android:title="Other">
+	</PreferenceScreen>
+		<PreferenceScreen android:title="Other">
 		<EditTextPreference
         	    	android:title="Maximal answer time"
         	    	android:summary="XXX seconds"
@@ -130,8 +129,8 @@
 		<CheckBoxPreference
 			android:title="Automatically play audio"
 			android:key="autoPlayAudio" />
-	</PreferenceCategory>
-	    	<PreferenceCategory android:title="Add/remove/Delete configuration">
+	</PreferenceScreen>
+	    	<PreferenceScreen android:title="Add/remove/Delete configuration">
 		<PreferenceScreen android:title="Add configuration"
 		    android:enabled="false"
 			android:key="confAdd"/>
@@ -141,5 +140,6 @@
 		<PreferenceScreen android:title="Remove configuration"
 		    android:enabled="false"
 			android:key="confRem"/>
+		</PreferenceScreen>
 	</PreferenceCategory>
 </PreferenceScreen>

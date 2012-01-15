@@ -186,6 +186,7 @@ public class Themes {
 			case THEME_WHITE:
 				lv.setSelector(R.drawable.white_deckpicker_list_selector);
 				lv.setOverScrollMode(View.OVER_SCROLL_NEVER);
+				lv.setVerticalScrollBarEnabled(false);
 				lv.setFadingEdgeLength(15);
 				lv.setDividerHeight(0);
 				lv.setBackgroundResource(R.drawable.white_deckpicker_lv_background);
