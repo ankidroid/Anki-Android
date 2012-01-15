@@ -1990,7 +1990,7 @@ public class DeckPicker extends Activity {
 		mDeckList.clear();
         for (Object[] d : decks) {
         	HashMap<String, String> m = new HashMap<String, String>();
-        	String[] name = ((String)d[0]).split("::");
+        	String[] name = ((String[])d[0]);
         	m.put("name", readableName(name));
         	m.put("did", ((Long)d[1]).toString());
         	m.put("new", ((Integer)d[2]).toString());
