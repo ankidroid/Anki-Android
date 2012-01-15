@@ -451,7 +451,7 @@ public class Collection {
 		ArrayList<JSONObject> ok = new ArrayList<JSONObject>();
 		JSONObject model = note.model();
 		ArrayList<Integer> avail = mModels.availOrds(model,
-				Utils.joinFields(note.getFields()));
+				Utils.joinFields(note.values()));
 		JSONArray tmpls;
 		try {
 			tmpls = model.getJSONArray("tmpls");
@@ -864,14 +864,15 @@ public class Collection {
 	}
 
 	public boolean undoAvailable() {
-		return mUndo != null;
+		return mUndo[0] != null;
 	}
 
-	public void undo() {
+	public Card undo() {
 		if (((Integer) mUndo[0]) == 1) {
-			_undoReview();
+			return _undoReview();
 		} else {
 			_undoOp();
+			return null;
 		}
 	}
 
@@ -889,7 +890,7 @@ public class Collection {
 		mUndo[2] = old;
 	}
 
-	private void _undoReview() {
+	private Card _undoReview() {
 		LinkedList<Card> data = (LinkedList<Card>) mUndo[2];
 		Card c = data.removeLast();
 		if (data.size() == 0) {
@@ -901,6 +902,7 @@ public class Collection {
 		long last = mDb.queryLongScalar("SELECT id FROM revlog WHERE cid = "
 				+ c.getId() + " ORDER BY id DESC LIMIT 1");
 		mDb.getDatabase().execSQL("DELETE FROM revlog WHERE id = " + last);
+		return c;
 	}
 
 	/** Call via .save() */

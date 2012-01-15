@@ -331,7 +331,6 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
 	        double muh = Utils.now() * 1000;
 	        try {
 	            if (oldCard != null) {
-	            	sched.getCol().markReview(oldCard);
 	            	oldCardLeech = sched.answerCard(oldCard, ease) ? 1 : 0;
 	            	if (oldCardLeech != 0) {
 	            		oldCardLeech += sched.leechActionSuspend(oldCard) ? 1 : 0;
@@ -510,23 +509,24 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
 
 
     private TaskData doInBackgroundUndo(TaskData... params) {
-    	Collection col = params[0].getSched().getCol();
-//    	Card newCard;
+    	Sched sched = params[0].getSched();
+    	Collection col = sched.getCol();
         try {
             col.getDb().getDatabase().beginTransaction();
             try {
-            	col.undo();
-//            	oldCardId = deck.undo(currentCardId, inReview);
-//            	undoType = deck.getUndoType();
-//            	if (undoType == Decks.UNDO_TYPE_SUSPEND_CARD) {
-//            		oldCardId = currentCardId;
-//            	}
-//                newCard = deck.getCard();
-//                if (oldCardId != 0 && newCard != null && oldCardId != newCard.getId()) {
-//                	newCard = deck.cardFromId(oldCardId);
-//                }
+            	Card newCard = col.undo();
             	col.reset();
-                publishProgress(null);
+            	if (newCard != null) {
+            		// a review was undone, 
+                	if (!sched.removeCardFromQueues(newCard)) {
+                		// card was not found in queues
+                		newCard = sched.getCard();
+                	}
+            	} else {
+            		newCard = sched.getCard();
+            	}
+            	// TODO: handle leech undoing properly
+                publishProgress(new TaskData(newCard, 0));
                 col.getDb().getDatabase().setTransactionSuccessful();
             } finally {
             	col.getDb().getDatabase().endTransaction();

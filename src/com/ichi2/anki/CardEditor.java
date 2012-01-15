@@ -1269,7 +1269,7 @@ public class CardEditor extends Activity {
 			mContext = context;
             String content = null;
 			try {
-				content = mEditorNote.getFields()[mField.getInt("ord")];
+				content = mEditorNote.values()[mField.getInt("ord")];
 			} catch (JSONException e) {
 				throw new RuntimeException(e);
 			}
@@ -1421,8 +1421,8 @@ public class CardEditor extends Activity {
 			} catch (JSONException e) {
 				throw new RuntimeException(e);
 			}
-            if (!mEditorNote.getFields()[ord].equals(newValue)) {
-            	mEditorNote.getFields()[ord] = newValue;
+            if (!mEditorNote.values()[ord].equals(newValue)) {
+            	mEditorNote.values()[ord] = newValue;
                 return true;
             }
             return false;

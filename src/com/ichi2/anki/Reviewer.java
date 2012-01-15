@@ -850,6 +850,9 @@ public class Reviewer extends Activity implements IButtonListener{
             } else if (mSessionComplete) {
                 closeReviewer(RESULT_SESSION_COMPLETED, true);
             }
+            if (mProgressDialog != null && mProgressDialog.isShowing()) {
+            	mProgressDialog.dismiss();
+            }
         }
     };
 
@@ -1431,8 +1434,7 @@ public class Reviewer extends Activity implements IButtonListener{
                 return true;
 
             case MENU_UNDO:
-            	setNextCardAnimation(true);
-            	DeckTask.launchDeckTask(DeckTask.TASK_TYPE_UNDO, mUpdateCardHandler, new DeckTask.TaskData(mSched));
+            	undo();
                 return true;
 //
 //            case MENU_REDO:
@@ -1526,6 +1528,18 @@ public class Reviewer extends Activity implements IButtonListener{
             mCardTimer.setBase(SystemClock.elapsedRealtime() - mSavedTimer);
             mCardTimer.start();
         }
+    }
+
+
+    private void undo() {
+    	setNextCardAnimation(true);
+    	if (mProgressDialog != null && mProgressDialog.isShowing()) {
+    		mProgressDialog.setMessage(getResources().getString(R.string.saving_changes));
+    	} else {
+            mProgressDialog = StyledProgressDialog.show(Reviewer.this, "", getResources()
+                    .getString(R.string.saving_changes), true);
+    	}
+    	DeckTask.launchDeckTask(DeckTask.TASK_TYPE_UNDO, mAnswerCardHandler, new DeckTask.TaskData(mSched));
     }
 
 

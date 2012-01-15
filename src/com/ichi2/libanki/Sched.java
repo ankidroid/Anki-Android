@@ -21,14 +21,12 @@ import com.ichi2.anki2.R;
 import android.content.Context;
 import android.content.res.Resources;
 import android.database.Cursor;
-import android.database.SQLException;
 import android.database.sqlite.SQLiteConstraintException;
 import android.graphics.Typeface;
 import android.text.SpannableStringBuilder;
 import android.text.style.StyleSpan;
 import android.util.Log;
 
-import com.ichi2.anki.AnkiDb;
 import com.ichi2.anki.AnkiDroidApp;
 
 import org.json.JSONArray;
@@ -513,7 +511,7 @@ public class Sched {
 	 */
 
 	/**
-	 * Return the next due card id, or None.
+	 * Return the next due card, or None.
 	 */
 	private Card _getCard() {
 		// learning card due?
@@ -537,6 +535,39 @@ public class Sched {
 		}
 		// collapse or finish
 		return _getLrnCard(true);
+	}
+
+	/** LIBANKI: not in libanki */
+	public boolean removeCardFromQueues(Card card) {
+		long id = card.getId();
+		Iterator<long[]> i = mNewQueue.iterator();
+		while (i.hasNext()) {
+			long cid = i.next()[0];
+			if (cid == id) {
+				i.remove();
+				mNewCount -= 1;
+				return true;
+			}
+		}
+		i = mLrnQueue.iterator();
+		while (i.hasNext()) {
+			long cid = i.next()[1];
+			if (cid == id) {
+				i.remove();
+				mLrnCount -= card.getLeft();
+				return true;
+			}
+		}
+		i = mRevQueue.iterator();
+		while (i.hasNext()) {
+			long cid = i.next()[0];
+			if (cid == id) {
+				i.remove();
+				mRevCount -= 1;
+				return true;
+			}
+		}
+		return false;
 	}
 
 	/**
