@@ -585,10 +585,13 @@ public class Utils {
 //    }
 
     /**
-     * 
+     *  Tempo files
      * ***********************************************************************************************
      */
 
+    // tmpdir
+    // tmpfile
+    // namedtmp
     /**
      * Converts an InputStream to a String.
      * @param is InputStream to convert

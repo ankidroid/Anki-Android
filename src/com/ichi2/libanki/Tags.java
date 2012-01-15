@@ -16,8 +16,13 @@
 
 package com.ichi2.libanki;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
 import java.util.TreeSet;
 
 import org.json.JSONException;
@@ -26,7 +31,7 @@ import org.json.JSONObject;
 public class Tags {
 
 	private Collection mCol;
-	private JSONObject mTags;
+	private TreeMap<String, Integer> mTags = new TreeMap<String, Integer>();
 	private boolean mChanged;
 
     /**
@@ -41,7 +46,12 @@ public class Tags {
 
 	public void load(String json) {
         try {
-        	mTags = new JSONObject(json);
+        	JSONObject tags = new JSONObject(json);
+        	Iterator i = tags.keys();
+        	while (i.hasNext()) {
+        		String t = (String) i.next();
+        		mTags.put(t, tags.getInt(t));
+        	}
 		} catch (JSONException e) {
 			throw new RuntimeException(e);
 		}
@@ -51,7 +61,15 @@ public class Tags {
 
     public void flush() {
     	if (mChanged) {
-    		mCol.getDb().getDatabase().execSQL("UPDATE col SET tags = " + mTags.toString());
+    		JSONObject tags = new JSONObject();
+    		for (Map.Entry<String, Integer> t : mTags.entrySet()) {
+    			try {
+					tags.put(t.getKey(), t.getValue());
+				} catch (JSONException e) {
+					throw new RuntimeException(e);
+				}
+    		}
+    		mCol.getDb().getDatabase().execSQL("UPDATE col SET tags = " + tags.toString());
     		mChanged = false;
     	}
     }
@@ -61,19 +79,57 @@ public class Tags {
      * ***********************************************************************************************
      */
 
+    /** Given a list of tags, add any missing ones to tag registry. */
     public void register(String[] tags) {
     	register(tags, 0);
     }
     public void register(String[] tags, int usn) {
-    	// TODO
+    	// case is stored as received, so user can create different case
+    	// versions of the same tag if they ignore the qt autocomplete.
+    	for (String t : tags) {
+    		if (mTags.containsKey(t)) {
+    			mTags.put(t, usn == 0 ? mCol.usn() : usn);
+    			mChanged = true;
+    		}
+    	}
     }
 
+    public String[] all() {
+    	String[] tags = new String[mTags.size()];
+    	int i = -1;
+    	for (String t : mTags.keySet()) {
+    		tags[i++] = t;
+    	}
+    	return tags;
+    }
 
-    // all
-    //registernotes
+    public void registerNotes() {
+    	registerNotes(null);
+    }
+    /** Add any missing tags from notes to the tags list. */
+    public void registerNotes(long[] nids) {
+    	// when called without an argument, the old list is cleared first.
+    	String lim;
+    	if (nids != null) {
+    		lim = " WHERE id IN " + Utils.ids2str(nids);
+    	} else {
+    		lim = "";
+    		mTags.clear();
+    		mChanged = true;
+    	}
+		ArrayList<String> tags = mCol.getDb().queryColumn(String.class, "SELECT DISTINCT FROM notes" + lim, 0);
+		StringBuilder sb = new StringBuilder();
+		for (String t : tags) {
+			sb.append(t).append(" ");
+		}
+		register(sb.toString().split(" "));
+    }
+
     //allitems
-    //save
 
+    public void save() {
+    	mChanged = true;
+    }
 
     /**
      * Bulk addition/removal from notes
