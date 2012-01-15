@@ -129,7 +129,7 @@ public class Note {
 		String sfld = Utils
 				.stripHTML(mFields[mCol.getModels().sortIdx(mModel)]);
 		String tags = stringTags();
-		int csum = Utils.fieldChecksum(mFields[0]);
+		long csum = Utils.fieldChecksum(mFields[0]);
 		mCol.getDb()
 				.getDatabase()
 				.execSQL(
@@ -263,17 +263,19 @@ public class Note {
 
 	/** 1 if first is empty; 2 if first is duplicate, 0 otherwise */
 	public int dupeOrEmpty() {
-		String val = mFields[0];
+		return dupeOrEmpty(mFields[0]);
+	}
+	public int dupeOrEmpty(String val) {
 		if (val.trim().length() == 0) {
 			return 1;
 		}
-		int csum = Utils.fieldChecksum(val);
+		long csum = Utils.fieldChecksum(val);
 		// find any matching csums and compare
 		for (String flds : mCol.getDb().queryColumn(
 				String.class,
 				"SELECT flds FROM notes WHERE csum = " + csum + " AND id != "
 						+ (mId != 0 ? mId : 0) + " AND mid = " + mMid, 0)) {
-			if (Utils.splitFields(flds)[0].equals(mFields[0])) {
+			if (Utils.splitFields(flds)[0].equals(val)) {
 				return 2;
 			}
 		}

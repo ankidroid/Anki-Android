@@ -27,6 +27,7 @@ import android.content.SharedPreferences;
 import android.content.DialogInterface.OnClickListener;
 import android.content.res.Resources;
 import android.content.res.Resources.NotFoundException;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.InputFilter;
@@ -1292,16 +1293,20 @@ public class CardEditor extends Activity {
 		private KeyListener mKeyListener;
 		private Context mContext;
 
+		private boolean create = true;
+
 		public FieldEditText(Context context, JSONObject field) {
 			super(context);
 			mField = field;
 			mContext = context;
 			String content = null;
+			int ord;
 			try {
-				content = mEditorNote.values()[mField.getInt("ord")];
+				ord = mField.getInt("ord");
 			} catch (JSONException e) {
 				throw new RuntimeException(e);
 			}
+			content = mEditorNote.values()[ord];
 			if (content == null) {
 				content = "";
 			} else {
@@ -1314,7 +1319,6 @@ public class CardEditor extends Activity {
 			}
 			this.setMinimumWidth(400);
 			this.setOnClickListener(new View.OnClickListener() {
-
 				@Override
 				public void onClick(View v) {
 					if (mCutMode) {
@@ -1322,6 +1326,25 @@ public class CardEditor extends Activity {
 					}
 				}
 			});
+			if (ord == 0) {
+				this.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+					@Override
+					public void onFocusChange(View arg0, boolean arg1) {
+						if (create) {
+							create = false;
+							return;
+						}
+						if (mEditorNote.dupeOrEmpty(FieldEditText.this.getText().toString()) != 0) {
+							// TODO: theme backgrounds
+							FieldEditText.this.setBackgroundResource(R.drawable.blue_edit_text_dupe);
+							mSave.setEnabled(false);
+						} else {
+							FieldEditText.this.setBackgroundResource(R.drawable.blue_edit_text);
+							mSave.setEnabled(true);
+						}
+					}
+				});				
+			}
 		}
 
 		@Override

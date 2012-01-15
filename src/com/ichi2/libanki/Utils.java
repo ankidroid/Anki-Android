@@ -501,7 +501,7 @@ public class Utils {
 
     /**
      * MD5 checksum.
-     * Equivalent to python md5.hexdigest()
+     * Equivalent to python sha1.hexdigest()
      *
      * @param data the string to generate hash from
      * @return A string of length 32 containing the hexadecimal representation of the MD5 checksum of data.
@@ -512,7 +512,7 @@ public class Utils {
             MessageDigest md = null;
             byte[] digest = null;
             try {
-                md = MessageDigest.getInstance("MD5");
+                md = MessageDigest.getInstance("SHA");
                 digest = md.digest(data.getBytes("UTF-8"));
             } catch (NoSuchAlgorithmException e) {
                 Log.e(AnkiDroidApp.TAG, "Utils.checksum: No such algorithm. " + e.getMessage());
@@ -536,8 +536,9 @@ public class Utils {
      * @param data the string to generate hash from
      * @return 32 bit unsigned number from first 8 digits of md5 hash
      */
-    public static int fieldChecksum(String data) {
-	return Integer.valueOf(checksum(data).substring(0, 8), 16);
+    public static long fieldChecksum(String data) {
+    	Log.e("asdf", ""+ Long.valueOf(checksum(data).substring(0, 8), 16));
+    	return Long.valueOf(checksum(data).substring(0, 8), 16);
     }
 
 
