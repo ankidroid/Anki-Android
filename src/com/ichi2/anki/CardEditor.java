@@ -29,9 +29,11 @@ import android.content.res.Resources;
 import android.content.res.Resources.NotFoundException;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Handler;
 import android.text.Editable;
 import android.text.InputFilter;
 import android.text.Spanned;
+import android.text.TextWatcher;
 import android.text.method.KeyListener;
 import android.text.style.StrikethroughSpan;
 import android.util.Log;
@@ -474,7 +476,7 @@ public class CardEditor extends Activity {
 			@Override
 			public void onClick(View v) {
 				if (mAddNote) {
-					if (mEditFields.get(0).duplicateCheck()) {
+					if (duplicateCheck()) {
 						return;
 					}
 					boolean empty = true;
@@ -1286,6 +1288,29 @@ public class CardEditor extends Activity {
 		}
 	}
 
+	private boolean duplicateCheck() {
+		FieldEditText field = mEditFields.get(0);
+		if (mEditorNote.dupeOrEmpty(field.getText().toString()) != 0) {
+			// TODO: theme backgrounds
+			field.setBackgroundResource(R.drawable.blue_edit_text_dupe);
+			mSave.setEnabled(false);
+			return true;
+		} else {
+			field.setBackgroundResource(R.drawable.blue_edit_text);
+			mSave.setEnabled(true);
+			return false;
+		}
+	}
+
+	private Handler mTimerHandler = new Handler();
+	private static final int WAIT_TIME_UNTIL_UPDATE = 1000;
+
+	private Runnable checkDuplicatesRunnable = new Runnable() {
+		public void run() {
+			duplicateCheck();
+  		}
+	};
+
 	// ----------------------------------------------------------------------------
 	// INNER CLASSES
 	// ----------------------------------------------------------------------------
@@ -1303,7 +1328,7 @@ public class CardEditor extends Activity {
 		private KeyListener mKeyListener;
 		private Context mContext;
 
-		private boolean create = true;
+		private int mJustCreated = 2;
 
 		public FieldEditText(Context context, JSONObject field) {
 			super(context);
@@ -1337,16 +1362,25 @@ public class CardEditor extends Activity {
 				}
 			});
 			if (ord == 0) {
-				this.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+				this.addTextChangedListener(new TextWatcher() {
 					@Override
-					public void onFocusChange(View arg0, boolean arg1) {
-						if (create) {
-							create = false;
+					public void afterTextChanged(Editable arg0) {
+						if (mJustCreated > 0) {
+							mJustCreated--;
 							return;
 						}
-						duplicateCheck();
+						mTimerHandler.removeCallbacks(checkDuplicatesRunnable);
+				    	mTimerHandler.postDelayed(checkDuplicatesRunnable, WAIT_TIME_UNTIL_UPDATE);
 					}
-				});				
+					@Override
+					public void beforeTextChanged(CharSequence arg0, int arg1,
+							int arg2, int arg3) {
+					}
+					@Override
+					public void onTextChanged(CharSequence arg0, int arg1,
+							int arg2, int arg3) {
+					}					
+				});
 			}
 		}
 
@@ -1540,19 +1574,6 @@ public class CardEditor extends Activity {
 					}
 				}
 				this.setText(cleanText(sb.toString()));
-			}
-		}
-
-		private boolean duplicateCheck() {
-			if (mEditorNote.dupeOrEmpty(FieldEditText.this.getText().toString()) != 0) {
-				// TODO: theme backgrounds
-				FieldEditText.this.setBackgroundResource(R.drawable.blue_edit_text_dupe);
-				mSave.setEnabled(false);
-				return true;
-			} else {
-				FieldEditText.this.setBackgroundResource(R.drawable.blue_edit_text);
-				mSave.setEnabled(true);
-				return false;
 			}
 		}
 
