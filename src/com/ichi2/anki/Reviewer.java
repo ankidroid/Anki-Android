@@ -308,7 +308,7 @@ public class Reviewer extends Activity implements IButtonListener{
     private WebView mCard;
     private TextView mSimpleCard;
     private WebView mNextCard;
-    private LinearLayout mCardFrame;
+    private FrameLayout mCardFrame;
     private FrameLayout mTouchLayer;
     private TextView mTextBarRed;
     private TextView mTextBarBlack;
@@ -492,7 +492,7 @@ public class Reviewer extends Activity implements IButtonListener{
         @Override
         public void handleMessage(Message msg) {
             Sound.stopSounds();
-            Sound.playSound((String) msg.obj, false);
+            Sound.playSound((String) msg.obj, null);
         }
     };
 
@@ -928,22 +928,9 @@ public class Reviewer extends Activity implements IButtonListener{
 					} 			
 				break;
 			case MSG_ZEEMOTE_BUTTON_A:
-				if (!sDisplayAnswer) {
-					try {
-	                Sound.playSounds(Utils.stripHTML(getQuestion()), MetaDB.LANGUAGES_QA_QUESTION);
-					}
-					catch (Exception ex){
-		        		Log.e("Zeemote","Error on playing question audio: "+ex.getMessage());
-		        	}
-	            } else {
-	            	try {
-	            	Sound.playSounds(Utils.stripHTML(getAnswer()), MetaDB.LANGUAGES_QA_ANSWER);
-	            	}
-					catch (Exception ex){
-		        		Log.e("Zeemote","Error on playing answer audio: "+ex.getMessage());
-		        	}
-	            }
-				break;
+                playSounds();
+                break;
+
 			case MSG_ZEEMOTE_BUTTON_B:
 				closeReviewer(RESULT_DEFAULT, false);
 				break;
@@ -1679,7 +1666,7 @@ public class Reviewer extends Activity implements IButtonListener{
 
         findViewById(R.id.top_bar).setOnClickListener(mCardStatisticsListener);
 
-        mCardFrame = (LinearLayout) findViewById(R.id.flashcard);
+        mCardFrame = (FrameLayout) findViewById(R.id.flashcard);
         mTouchLayer = (FrameLayout) findViewById(R.id.touch_layer);
         mTouchLayer.setOnTouchListener(mGestureListener);
     	if (mPrefTextSelection && mLongClickWorkaround) {
@@ -2416,6 +2403,8 @@ public class Reviewer extends Activity implements IButtonListener{
         String question = "";
         String answer = "";
 
+        Sound.resetSounds();
+
         int qa = MetaDB.LANGUAGES_QA_QUESTION;
     	if (sDisplayAnswer) {
             qa = MetaDB.LANGUAGES_QA_ANSWER;
@@ -2459,17 +2448,26 @@ public class Reviewer extends Activity implements IButtonListener{
 
     	fillFlashcard(mShowAnimations);
 
-        if (!mConfigurationChanged && mPlaySoundsAtStart) {
-            if (!mSpeakText) {
-                Sound.playSounds(null, 0);
-            } else if (!sDisplayAnswer) {
-                Sound.playSounds(Utils.stripHTML(getQuestion()), MetaDB.LANGUAGES_QA_QUESTION);
-            } else {
-                Sound.playSounds(Utils.stripHTML(getAnswer()), MetaDB.LANGUAGES_QA_ANSWER);
-            }
-        }
+        if (!mConfigurationChanged && mPlaySoundsAtStart)
+            playSounds();
     }
 
+    /**
+     * Plays sounds (or TTS, if configured) for current shown side of card 
+     */
+    private void playSounds() {
+        int qa = sDisplayAnswer ? MetaDB.LANGUAGES_QA_ANSWER : MetaDB.LANGUAGES_QA_QUESTION;
+
+        // We need to play the sounds from the proper side of the card
+        if (!mSpeakText)
+            Sound.playSounds(qa);
+        else {
+            if (sDisplayAnswer)
+                ReadText.textToSpeech(Utils.stripHTML(getAnswer()), qa);
+            else
+                ReadText.textToSpeech(Utils.stripHTML(getQuestion()), qa);
+        }
+    }
 
     private void setFlipCardAnimation() {
     	mNextAnimation = ANIMATION_TURN;

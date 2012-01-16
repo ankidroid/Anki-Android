@@ -18,6 +18,7 @@ package com.ichi2.libanki;
 
 import java.io.File;
 import java.net.URI;
+import java.util.HashMap;
 
 import android.media.AudioManager;
 import android.media.MediaPlayer;
@@ -37,7 +38,7 @@ import com.ichi2.anki.ReadText;
  */
 public class Sound {
 
-    /**
+	/**
      * Pattern used to identify the markers for sound files
      */
     public static Pattern sSoundPattern = Pattern.compile("\\[sound\\:([^\\[\\]]*)\\]");
@@ -48,18 +49,17 @@ public class Sound {
     private static MediaPlayer sMediaPlayer;
 
     /**
-     * ArrayList to store the current sound paths
+     * Stores sounds for the current card, key is for question/answer
      */
-    private static ArrayList<String> sSoundPaths;
-
-    /**
-     * Counter of the number of sounds played out of the total number of sounds in soundPaths
-     */
-    private static int sNumSoundsPlayed;
+    private static HashMap<Integer, ArrayList<String> >  sSoundPaths = new HashMap<Integer, ArrayList<String> >();
 
     /* Prevent class from being instantiated */
     private Sound() { }
 
+    /// Clears current sound paths; call before parseSounds() calls
+    public static void resetSounds() {
+    	sSoundPaths.clear();
+    }
 
     public static String parseSounds(String soundDir, String content, boolean ttsEnabled, int qa) {
     	boolean soundAvailable = false;
@@ -67,7 +67,7 @@ public class Sound {
         String contentLeft = content;
 
         Log.i(AnkiDroidApp.TAG, "parseSounds");
-        sSoundPaths = new ArrayList<String>();
+
         Matcher matcher = sSoundPattern.matcher(content);
         // While there is matches of the pattern for sound markers
         while (matcher.find()) {
@@ -77,7 +77,12 @@ public class Sound {
 
             // Construct the sound path and store it
             String soundPath = soundDir + Uri.encode(sound);
-            sSoundPaths.add(soundPath);
+            
+            // Create appropiate list if needed
+            if (!sSoundPaths.containsKey(qa))
+                sSoundPaths.put(qa, new ArrayList<String>());
+
+            sSoundPaths.get(qa).add(soundPath);
 
             // Construct the new content, appending the substring from the beginning of the content left until the
             // beginning of the sound marker
@@ -108,33 +113,29 @@ public class Sound {
 
 
     /**
-     * Plays the sounds stored on the paths indicated by mSoundPaths.
+     * Plays the sounds for the given card side
      */
-    public static void playSounds(String text, int qa) {
-        // If there are sounds to play for the current card, play the first one
-    	if (sSoundPaths != null && sSoundPaths.size() > 0) {
-            sNumSoundsPlayed = 0;
-            playSound(sNumSoundsPlayed);
-        } else if (text != null && Integer.valueOf(android.os.Build.VERSION.SDK) > 3) {
-        	ReadText.textToSpeech(text, qa);
-        }
+    public static void playSounds(int qa) {
+        // If there are sounds to play for the current card, start with the first one
+        if (sSoundPaths != null && sSoundPaths.containsKey(qa))
+            playSound(sSoundPaths.get(qa).get(0),
+                    new PlayAllCompletionListener(qa));
     }
-
 
     /**
-     * Play the sound indicated by the path stored on the position soundToPlayIndex of the mSoundPaths array.
-     *
-     * @param soundToPlayIndex
+     * Plays the given sound, sets playAllListener if available on media player to start next sound
      */
-    private static void playSound(int soundToPlayIndex) {
-        playSound(sSoundPaths.get(soundToPlayIndex), true);
-    }
-
-    public static void playSound(String soundPath, boolean playAll) {
+    public static void playSound(String soundPath, OnCompletionListener playAllListener) {
+        Log.i(AnkiDroidApp.TAG, "Playing " + soundPath + " has listener? " + Boolean.toString(playAllListener != null));
+        
         if (soundPath.substring(0, 3).equals("tts")) {
         	ReadText.textToSpeech(soundPath.substring(4, soundPath.length()), Integer.parseInt(soundPath.substring(3, 4)));
-        } else if (sSoundPaths.contains(soundPath)) {
-    	    sMediaPlayer = new MediaPlayer();
+        } else {
+            if (sMediaPlayer == null)
+                sMediaPlayer = new MediaPlayer();
+            else
+                sMediaPlayer.reset();
+
     	    try {
     	        // soundPath is usually an URI, but Media player requires a path not url encoded
                 URI soundURI = new URI(soundPath);
@@ -142,21 +143,9 @@ public class Sound {
                 sMediaPlayer.setDataSource(soundPath);
                 sMediaPlayer.setVolume(AudioManager.STREAM_MUSIC, AudioManager.STREAM_MUSIC);
                 sMediaPlayer.prepare();
-                if (playAll) {
-                    sMediaPlayer.setOnCompletionListener(new OnCompletionListener() {
+                if (playAllListener != null)
+                    sMediaPlayer.setOnCompletionListener(playAllListener);
 
-                        @Override
-                        public void onCompletion(MediaPlayer mp) {
-                            releaseSound();
-                            sNumSoundsPlayed++;
-
-                            // If there is still more sounds to play for the current card, play the next one
-                            if (sNumSoundsPlayed < sSoundPaths.size()) {
-                                playSound(sNumSoundsPlayed);
-                            }
-                        }
-                    });
-                }
                 sMediaPlayer.start();
             } catch (Exception e) {
                 Log.e(AnkiDroidApp.TAG, "playSounds - Error reproducing sound " + soundPath + " = " + e.getMessage());
@@ -164,7 +153,35 @@ public class Sound {
             }
         }
     }
+    
+    /**
+     * Class used to play all sounds for a given card side
+     */
+    private static final class PlayAllCompletionListener implements OnCompletionListener {
 
+        /**
+         * Question/Answer
+         */
+        private final int mQa;
+
+        /**
+         * next sound to play (onCompletion() is first called after the first (0) has been played)
+         */
+        private int mNextToPlay = 1;
+
+        private PlayAllCompletionListener(int qa) {
+            mQa = qa;
+        }
+
+        @Override
+        public void onCompletion(MediaPlayer mp) {
+            // If there is still more sounds to play for the current card, play the next one
+            if (mNextToPlay < sSoundPaths.get(mQa).size())
+                playSound(sSoundPaths.get(mQa).get(mNextToPlay++), this);
+            else
+                releaseSound();
+        }
+    }
 
     /**
      * Releases the sound.

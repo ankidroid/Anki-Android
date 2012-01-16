@@ -35,6 +35,7 @@ import android.text.Spanned;
 import android.text.method.KeyListener;
 import android.text.style.StrikethroughSpan;
 import android.util.Log;
+import android.util.Pair;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.Menu;
@@ -367,8 +368,13 @@ public class CardEditor extends Activity {
 				mSourceText = extras.getString(SOURCE_TEXT);
 				mTargetText = extras.getString(TARGET_TEXT);
 			} else {
-				mSourceText = extras.getString(Intent.EXTRA_SUBJECT);
-				mTargetText = extras.getString(Intent.EXTRA_TEXT);
+                Pair<String, String> messages = new Pair<String, String>(extras.getString(Intent.EXTRA_SUBJECT), extras.getString(Intent.EXTRA_TEXT));
+
+                /* Filter garbage information */
+                Pair<String, String> cleanMessages = new FilterFacade(getBaseContext()).filter(messages);
+
+				mSourceText = cleanMessages.first;
+				mTargetText = cleanMessages.second;
 			}
 			if (mSourceText == null && mTargetText == null) {
 				finish();
