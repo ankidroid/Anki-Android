@@ -541,6 +541,12 @@ public class Utils {
     }
 
 
+    /** Replace HTML line break tags with new lines. */
+    public static String replaceLineBreak(String text) {
+        return text.replaceAll("<br(\\s*\\/*)>", "\n");
+	}
+
+
 //    /**
 //     * MD5 sum of file.
 //     * Equivalent to checksum(open(os.path.join(mdir, file), "rb").read()))
@@ -996,6 +1002,16 @@ public class Utils {
       }
       return filename.substring(0, dotPosition);
     }
+
+
+    /** Removes any character that are not valid as deck names. */
+    public static String removeInvalidDeckNameCharacters(String name) {
+        if (name == null) { return null; }
+        // The only characters that we cannot absolutely allow to appear in the filename are the ones reserved in some
+        // file system. Currently these are \, /, and :, in order to cover Linux, OSX, and Windows.
+        return name.replaceAll("[:/\\\\]", "");
+    }
+
 
     /** Returns a list of files for the installed custom fonts. */
     public static String[] getCustomFonts(Context context) {
