@@ -833,7 +833,7 @@ public class DeckPicker extends Activity {
 						View parent = (View)view.getParent().getParent();
 						if (parent.getVisibility() == View.INVISIBLE) {
 							parent.setVisibility(View.VISIBLE);
-							view.setAnimation(ViewAnimation.fade(ViewAnimation.FADE_IN, 500, 0));							
+							parent.setAnimation(ViewAnimation.fade(ViewAnimation.FADE_IN, 500, 0));							
 						}
 					}
 					return true;

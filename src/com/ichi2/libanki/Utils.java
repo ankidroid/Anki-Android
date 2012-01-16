@@ -537,7 +537,6 @@ public class Utils {
      * @return 32 bit unsigned number from first 8 digits of md5 hash
      */
     public static long fieldChecksum(String data) {
-    	Log.e("asdf", ""+ Long.valueOf(checksum(data).substring(0, 8), 16));
     	return Long.valueOf(checksum(data).substring(0, 8), 16);
     }
 

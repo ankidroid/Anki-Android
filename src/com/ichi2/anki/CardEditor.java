@@ -145,9 +145,9 @@ public class CardEditor extends Activity {
 
 	private Button mSave;
 	private Button mCancel;
-	private Button mTagsButton;
-	private Button mModelButton;
-	private Button mDeckButton;
+	private TextView mTagsButton;
+	private TextView mModelButton;
+	private TextView mDeckButton;
 	private Button mSwapButton;
 
 	private Note mEditorNote;
@@ -271,9 +271,9 @@ public class CardEditor extends Activity {
 		setTitle(R.string.cardeditor_title);
 		mSave = (Button) findViewById(R.id.CardEditorSaveButton);
 		mCancel = (Button) findViewById(R.id.CardEditorCancelButton);
-		mDeckButton = (Button) findViewById(R.id.CardEditorDeckButton);
-		mModelButton = (Button) findViewById(R.id.CardEditorModelButton);
-		mTagsButton = (Button) findViewById(R.id.CardEditorTagButton);
+		mDeckButton = (TextView) findViewById(R.id.CardEditorDeckText);
+		mModelButton = (TextView) findViewById(R.id.CardEditorModelText);
+		mTagsButton = (TextView) findViewById(R.id.CardEditorTagText);
 		mSwapButton = (Button) findViewById(R.id.CardEditorSwapButton);
 
 		mAedictIntent = false;
@@ -419,7 +419,7 @@ public class CardEditor extends Activity {
 			}
 
 			mSave.setEnabled(false);
-			mModelButton.setOnClickListener(new View.OnClickListener() {
+			((LinearLayout)findViewById(R.id.CardEditorModelButton)).setOnClickListener(new View.OnClickListener() {
 				public void onClick(View v) {
 					showDialog(DIALOG_MODEL_SELECT);
 				}
@@ -434,7 +434,7 @@ public class CardEditor extends Activity {
 			}			
 		}
 
-		mDeckButton.setOnClickListener(new View.OnClickListener() {
+		((LinearLayout)findViewById(R.id.CardEditorDeckButton)).setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
 				showDialog(DIALOG_DECK_SELECT);
 			}
@@ -452,7 +452,7 @@ public class CardEditor extends Activity {
 			mSave.setEnabled(false);
 		}
 
-		mTagsButton.setOnClickListener(new View.OnClickListener() {
+		((LinearLayout)findViewById(R.id.CardEditorTagButton)).setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				showDialog(DIALOG_TAGS_SELECT);
@@ -467,6 +467,9 @@ public class CardEditor extends Activity {
 			@Override
 			public void onClick(View v) {
 				if (mAddNote) {
+					if (mEditFields.get(0).duplicateCheck()) {
+						return;
+					}
 					boolean empty = true;
 					for (FieldEditText current : mEditFields) {
 						current.updateField();
@@ -1334,14 +1337,7 @@ public class CardEditor extends Activity {
 							create = false;
 							return;
 						}
-						if (mEditorNote.dupeOrEmpty(FieldEditText.this.getText().toString()) != 0) {
-							// TODO: theme backgrounds
-							FieldEditText.this.setBackgroundResource(R.drawable.blue_edit_text_dupe);
-							mSave.setEnabled(false);
-						} else {
-							FieldEditText.this.setBackgroundResource(R.drawable.blue_edit_text);
-							mSave.setEnabled(true);
-						}
+						duplicateCheck();
 					}
 				});				
 			}
@@ -1469,7 +1465,7 @@ public class CardEditor extends Activity {
 			String newValue = this.getText().toString();
 			int ord;
 			try {
-				ord = mField.getInt("id");
+				ord = mField.getInt("ord");
 			} catch (JSONException e) {
 				throw new RuntimeException(e);
 			}
@@ -1537,6 +1533,19 @@ public class CardEditor extends Activity {
 					}
 				}
 				this.setText(cleanText(sb.toString()));
+			}
+		}
+
+		private boolean duplicateCheck() {
+			if (mEditorNote.dupeOrEmpty(FieldEditText.this.getText().toString()) != 0) {
+				// TODO: theme backgrounds
+				FieldEditText.this.setBackgroundResource(R.drawable.blue_edit_text_dupe);
+				mSave.setEnabled(false);
+				return true;
+			} else {
+				FieldEditText.this.setBackgroundResource(R.drawable.blue_edit_text);
+				mSave.setEnabled(true);
+				return false;
 			}
 		}
 

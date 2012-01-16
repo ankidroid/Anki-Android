@@ -22,6 +22,7 @@
 
 <string name="CardEditorCancelButton">Cancel</string>
 <string name="CardEditorSaveButton">Save</string>
+<string name="CardEditorLaterButton">Later</string>
 <string name="CardEditorDeck">Deck: %s</string>
 <string name="CardEditorModel">Model: %s</string>
 <string name="CardEditorTags">Tags: %1$s</string>
