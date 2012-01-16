@@ -29,6 +29,8 @@ import android.util.Log;
 import android.view.KeyEvent;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -478,6 +480,7 @@ public class DeckOptions extends PreferenceActivity implements
 	protected void buildLists() {
 		ListPreference deckConfPref = (ListPreference) findPreference("deckConf");
 		ArrayList<JSONObject> confs = mCol.getDecks().allConf();
+		Collections.sort(confs, new JSONNameComparator());
 		String[] confValues = new String[confs.size()];
 		String[] confLabels = new String[confs.size()];
 		try {
@@ -528,5 +531,21 @@ public class DeckOptions extends PreferenceActivity implements
 		}
 		return ja;
 	}
+
+
+	public class JSONNameComparator implements Comparator<JSONObject> {
+		@Override
+		public int compare(JSONObject lhs, JSONObject rhs) {
+			String o1;
+			String o2;
+			try {
+				o1 = lhs.getString("name");
+				o2 = rhs.getString("name");
+			} catch (JSONException e) {
+				throw new RuntimeException(e);
+			}
+			return o1.compareToIgnoreCase(o2);
+		}
+	}	
 
 }

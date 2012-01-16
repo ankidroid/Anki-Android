@@ -1050,4 +1050,18 @@ public class Utils {
         }
     }
 
+
+    /** Joins the given string values using the delimiter between them. */
+    public static String join(String delimiter, String... values) {
+        StringBuilder sb = new StringBuilder();
+        for (String value : values) {
+            if (sb.length() != 0) {
+                sb.append(delimiter);
+            }
+            sb.append(value);
+        }
+        return sb.toString();
+    }
+
+
 }

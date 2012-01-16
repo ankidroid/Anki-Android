@@ -13,6 +13,7 @@
  ****************************************************************************************/
 
 package com.ichi2.anki;import com.ichi2.anki2.R;
+import com.ichi2.libanki.Utils;
 
 import android.os.Parcel;
 import android.os.Parcelable;
