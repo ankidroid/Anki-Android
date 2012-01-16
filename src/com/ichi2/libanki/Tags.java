@@ -18,6 +18,7 @@ package com.ichi2.libanki;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -80,10 +81,10 @@ public class Tags {
      */
 
     /** Given a list of tags, add any missing ones to tag registry. */
-    public void register(String[] tags) {
+    public void register(ArrayList<String> tags) {
     	register(tags, 0);
     }
-    public void register(String[] tags, int usn) {
+    public void register(ArrayList<String> tags, int usn) {
     	// case is stored as received, so user can create different case
     	// versions of the same tag if they ignore the qt autocomplete.
     	for (String t : tags) {
@@ -96,7 +97,7 @@ public class Tags {
 
     public String[] all() {
     	String[] tags = new String[mTags.size()];
-    	int i = -1;
+    	int i = 0;
     	for (String t : mTags.keySet()) {
     		tags[i++] = t;
     	}
@@ -117,12 +118,7 @@ public class Tags {
     		mTags.clear();
     		mChanged = true;
     	}
-		ArrayList<String> tags = mCol.getDb().queryColumn(String.class, "SELECT DISTINCT FROM notes" + lim, 0);
-		StringBuilder sb = new StringBuilder();
-		for (String t : tags) {
-			sb.append(t).append(" ");
-		}
-		register(sb.toString().split(" "));
+		register(mCol.getDb().queryColumn(String.class, "SELECT DISTINCT FROM notes" + lim, 0));
     }
 
     //allitems
@@ -146,17 +142,21 @@ public class Tags {
      */
 
     /** Parse a string and return a list of tags. */
-    public static String[] split(String tags) {
+    public ArrayList<String> split(String tags) {
+    	ArrayList<String> list = new ArrayList<String>();
         if (tags != null && tags.length() != 0) {
-            return tags.split("\\s");
-        } else {
-            return new String[] {};
+        	for (String s : tags.split("\\s")) {
+        		if (s.length() > 0) {
+            		list.add(s);        			
+        		}
+        	}
         }
+        return list;
     }
 
 
     /** Join tags into a single string, with leading and trailing spaces. */
-    public static String join(java.util.Collection<String> tags) {
+    public String join(java.util.Collection<String> tags) {
         if (tags == null || tags.size() == 0) {
             return "";
         } else {
@@ -185,16 +185,15 @@ public class Tags {
      */
 
     /** Strip duplicates and sort. */
-    public static TreeSet<String> canonify(String[] tagList) {
-    	TreeSet<String> tree = new TreeSet<String>(Arrays.asList(tagList));
+    public TreeSet<String> canonify(ArrayList<String> tagList) {
+    	TreeSet<String> tree = new TreeSet<String>(String.CASE_INSENSITIVE_ORDER);
+    	tree.addAll(tagList);
     	return tree;
-//    	return tree.toArray(new String[tree.size()]);
-//        return joinTags(new TreeSet<String>(Arrays.asList(tags)));
     }
 
 
     /** True if TAG is in TAGS. Ignore case. */
-    public static boolean inList(String tag, List<String> tags) {
+    public boolean inList(String tag, List<String> tags) {
         for (String t : tags) {
             if (t.equalsIgnoreCase(tag)) {
                 return true;
@@ -205,7 +204,7 @@ public class Tags {
 
 
     /** True if TAG is in TAGS. Ignore case. */
-    public static boolean inList(String tag, String[] tags) {
+    public boolean inList(String tag, String[] tags) {
         for (String t : tags) {
             if (t.equalsIgnoreCase(tag)) {
                 return true;
@@ -248,4 +247,5 @@ public class Tags {
      */
 
     // before upload
+
 }

@@ -45,7 +45,7 @@ public class Note {
 	private int mMod;
 	private int mUsn;
 	private boolean mNewlyAdded;
-	private String[] mTags;
+	private ArrayList<String> mTags;
 	private String[] mFields;
 	private String mData = "";
 	private int mFlags;
@@ -73,7 +73,7 @@ public class Note {
 			try {
 				mDid = model.getLong("did");
 				mMid = model.getLong("id");
-				mTags = new String[] { "" };
+				mTags = new ArrayList<String>();
 				mFields = new String[model.getJSONArray("flds").length()];
 			} catch (JSONException e) {
 				throw new RuntimeException(e);
@@ -240,19 +240,25 @@ public class Note {
 	}
 
 	public void delTag(String tag) {
-		// TODO
-		// List<String> other = new ArrayList<String>();
-		// for (String t : mTags) {
-		// if (!t.toLowerCase().equals(tag.toLowerCase())) {
-		// other.add(t);
-		// }
-		// }
-		// mTags = (String[]) other.toArray();
+		for (int i = 0; i < mTags.size(); i++) {
+			if (mTags.get(i).equalsIgnoreCase(tag)) {
+				mTags.remove(i);
+			}
+		}
 	}
 
 	public void addTag(String tag) {
-		// duplicates will be stripped on save
-		// TODO
+		mTags.add(tag);
+	}
+
+	/** LIBANKI: not in libanki */
+	public ArrayList<String> getTags() {
+		return mTags;
+	}
+
+	/** LIBANKI: not in libanki */
+	public void clearTags() {
+		mTags.clear();
 	}
 
 	/**

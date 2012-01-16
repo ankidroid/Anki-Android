@@ -26,8 +26,6 @@ import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.DialogInterface.OnClickListener;
 import android.content.res.Resources;
-import android.content.res.Resources.NotFoundException;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.Editable;
@@ -63,7 +61,6 @@ import com.ichi2.filters.FilterFacade;
 import com.ichi2.libanki.Card;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Note;
-import com.ichi2.libanki.Utils;
 import com.ichi2.themes.StyledDialog;
 import com.ichi2.themes.StyledDialog.Builder;
 import com.ichi2.themes.StyledProgressDialog;
@@ -74,9 +71,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedList;
+import java.util.TreeSet;
 
 import org.amr.arabic.ArabicUtilities;
 import org.json.JSONArray;
@@ -179,7 +176,7 @@ public class CardEditor extends Activity {
 	private boolean mModified;
 
 	private String[] allTags;
-	private HashSet<String> mSelectedTags;
+	private ArrayList<String> selectedTags;
 	private EditText mNewTagEditText;
 	private StyledDialog mTagsDialog;
 
@@ -402,10 +399,9 @@ public class CardEditor extends Activity {
 		if (mAddNote) {
 			try {
 				mDeckButton.setText(getResources().getString(R.string.CardEditorDeck, mCol.getDecks().current().getString("name")));
-				mModelButton.setText(getResources().getString(R.string.CardEditorDeck, mCol.getModels().current().getString("name")));
+				mModelButton.setText(getResources().getString(R.string.CardEditorModel, mCol.getModels().current().getString("name")));
 				modelChanged();
 				// TODO: save tags for next addition?
-				mTagsButton.setText(getResources().getString(R.string.CardEditorTags, ""));
 			} catch (JSONException e) {
 				throw new RuntimeException(e);
 			}
@@ -428,16 +424,21 @@ public class CardEditor extends Activity {
 			}
 
 			mSave.setEnabled(false);
-			((LinearLayout)findViewById(R.id.CardEditorModelButton)).setOnClickListener(new View.OnClickListener() {
+			LinearLayout modelButton = ((LinearLayout)findViewById(R.id.CardEditorModelButton));
+			modelButton.setOnClickListener(new View.OnClickListener() {
 				public void onClick(View v) {
 					showDialog(DIALOG_MODEL_SELECT);
 				}
 			});
+			modelButton.setVisibility(View.VISIBLE);
 			mSave.setText(getResources().getString(R.string.add));
 			mCancel.setText(getResources().getString(R.string.close));
 		} else {
 			try {
-				mModelButton.setText(getResources().getString(R.string.CardEditorDeck, mCol.getDecks().get(mEditorNote.getDid()).getString("name")));
+				Long id = mEditorNote.getDid();
+				JSONObject d = mCol.getDecks().get(id);
+				mDeckButton.setText(getResources().getString(R.string.CardEditorDeck, mCol.getDecks().get(mEditorNote.getDid()).getString("name")));
+				
 			} catch (JSONException e) {
 				throw new RuntimeException(e);
 			}			
@@ -449,7 +450,7 @@ public class CardEditor extends Activity {
 			}
 		});
 
-		mTagsButton.setText(getResources().getString(R.string.CardEditorTags, mEditorNote.stringTags()));
+		updateTagsButton();
 		mModified = false;
 
 		SharedPreferences preferences = PrefSettings
@@ -467,9 +468,6 @@ public class CardEditor extends Activity {
 				showDialog(DIALOG_TAGS_SELECT);
 			}
 		});
-
-		allTags = null;
-		mSelectedTags = new HashSet<String>();
 
 		mSave.setOnClickListener(new View.OnClickListener() {
 
@@ -806,7 +804,67 @@ public class CardEditor extends Activity {
 
 		switch (id) {
 		case DIALOG_TAGS_SELECT:
-			dialog = createDialogTags(builder, res);
+			builder.setTitle(R.string.studyoptions_limit_select_tags);
+			builder.setPositiveButton(res.getString(R.string.select),
+					new OnClickListener() {
+						@Override
+						public void onClick(DialogInterface dialog, int which) {
+							mEditorNote.clearTags();
+							for (String s : selectedTags) {
+								mEditorNote.addTag(s);
+							}
+							updateTagsButton();
+						}
+					});
+			builder.setNegativeButton(res.getString(R.string.cancel), null);
+
+			mNewTagEditText = (EditText) new EditText(this);
+			mNewTagEditText.setHint(R.string.add_new_tag);
+
+			InputFilter filter = new InputFilter() {
+				public CharSequence filter(CharSequence source, int start, int end,
+						Spanned dest, int dstart, int dend) {
+					for (int i = start; i < end; i++) {
+						if (source.charAt(i) == ' ' || source.charAt(i) == ',') {
+							return "";
+						}
+					}
+					return null;
+				}
+			};
+			mNewTagEditText.setFilters(new InputFilter[] { filter });
+
+			ImageView mAddTextButton = new ImageView(this);
+			mAddTextButton.setImageResource(R.drawable.ic_addtag);
+			mAddTextButton.setOnClickListener(new View.OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					String tag = mNewTagEditText.getText().toString();
+					if (tag.length() != 0) {
+						if (mEditorNote.hasTag(tag)) {
+							mNewTagEditText.setText("");
+							return;
+						}
+						selectedTags.add(tag);
+						actualizeTagDialog(mTagsDialog);
+						mNewTagEditText.setText("");
+					}
+				}
+			});
+
+			FrameLayout frame = new FrameLayout(this);
+			FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(
+					ViewGroup.LayoutParams.WRAP_CONTENT,
+					ViewGroup.LayoutParams.WRAP_CONTENT, Gravity.RIGHT
+							| Gravity.CENTER_VERTICAL);
+			params.rightMargin = 10;
+			mAddTextButton.setLayoutParams(params);
+			frame.addView(mNewTagEditText);
+			frame.addView(mAddTextButton);
+
+			builder.setView(frame, false, true);
+			dialog = builder.create();
+			mTagsDialog = dialog;
 			break;
 
 		case DIALOG_DECK_SELECT:
@@ -932,80 +990,6 @@ public class CardEditor extends Activity {
 		return dialog;
 	}
 
-	private StyledDialog createDialogTags(Builder builder, Resources res) {
-		StyledDialog dialog = null;
-		builder.setTitle(R.string.studyoptions_limit_select_tags);
-		builder.setPositiveButton(res.getString(R.string.select),
-				new OnClickListener() {
-					@Override
-					public void onClick(DialogInterface dialog, int which) {
-						String tags = mSelectedTags.toString();
-//						mFactTags = tags.substring(1, tags.length() - 1);
-//						mTags.setText(getResources().getString(
-//								R.string.CardEditorTags, mFactTags));
-					}
-				});
-		builder.setNegativeButton(res.getString(R.string.cancel), null);
-
-		mNewTagEditText = (EditText) new EditText(this);
-		mNewTagEditText.setHint(R.string.add_new_tag);
-
-		InputFilter filter = new InputFilter() {
-			public CharSequence filter(CharSequence source, int start, int end,
-					Spanned dest, int dstart, int dend) {
-				for (int i = start; i < end; i++) {
-					if (source.charAt(i) == ' ' || source.charAt(i) == ',') {
-						return "";
-					}
-				}
-				return null;
-			}
-		};
-		mNewTagEditText.setFilters(new InputFilter[] { filter });
-
-		ImageView mAddTextButton = new ImageView(this);
-		mAddTextButton.setImageResource(R.drawable.ic_addtag);
-		mAddTextButton.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				String tag = mNewTagEditText.getText().toString();
-				if (tag.length() != 0) {
-					for (int i = 0; i < allTags.length; i++) {
-						if (allTags[i].equalsIgnoreCase(tag)) {
-							mNewTagEditText.setText("");
-							return;
-						}
-					}
-					mSelectedTags.add(tag);
-					String[] oldTags = allTags;
-					allTags = new String[oldTags.length + 1];
-					allTags[0] = tag;
-					for (int j = 1; j < allTags.length; j++) {
-						allTags[j] = oldTags[j - 1];
-					}
-					mTagsDialog.addMultiChoiceItems(tag, true);
-					mNewTagEditText.setText("");
-				}
-			}
-		});
-
-		FrameLayout frame = new FrameLayout(this);
-		FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(
-				ViewGroup.LayoutParams.WRAP_CONTENT,
-				ViewGroup.LayoutParams.WRAP_CONTENT, Gravity.RIGHT
-						| Gravity.CENTER_VERTICAL);
-		params.rightMargin = 10;
-		mAddTextButton.setLayoutParams(params);
-		frame.addView(mNewTagEditText);
-		frame.addView(mAddTextButton);
-
-		builder.setView(frame, false, true);
-		dialog = builder.create();
-		mTagsDialog = dialog;
-		return dialog;
-	}
-
-
 	private StyledDialog createDialogIntentInformation(Builder builder,
 			Resources res) {
 		builder.setTitle(res.getString(R.string.intent_add_saved_information));
@@ -1072,49 +1056,11 @@ public class CardEditor extends Activity {
 		StyledDialog ad = (StyledDialog) dialog;
 		switch (id) {
 		case DIALOG_TAGS_SELECT:
-			// if (allTags == null) {
-			// String[] oldTags = mDeck.allUserTags();
-			// if (oldTags == null) {
-			// Themes.showThemedToast(CardEditor.this,
-			// getResources().getString(R.string.error_insufficient_memory),
-			// false);
-			// ad.setEnabled(false);
-			// return;
-			// }
-			// Log.i(AnkiDroidApp.TAG, "all tags: " + Arrays.toString(oldTags));
-			// allTags = new String[oldTags.length];
-			// for (int i = 0; i < oldTags.length; i++) {
-			// allTags[i] = oldTags[i];
-			// }
-			// }
-			// mSelectedTags.clear();
-			// List<String> selectedList = Arrays.asList(Utils
-			// .parseTags(mFactTags));
-			// int length = allTags.length;
-			// boolean[] checked = new boolean[length];
-			// for (int i = 0; i < length; i++) {
-			// String tag = allTags[i];
-			// if (selectedList.contains(tag)) {
-			// checked[i] = true;
-			// mSelectedTags.add(tag);
-			// }
-			// }
-			// ad.setMultiChoiceItems(allTags, checked,
-			// new DialogInterface.OnClickListener() {
-			// @Override
-			// public void onClick(DialogInterface arg0, int which) {
-			// String tag = allTags[which];
-			// if (mSelectedTags.contains(tag)) {
-			// Log
-			// .i(AnkiDroidApp.TAG, "unchecked tag: "
-			// + tag);
-			// mSelectedTags.remove(tag);
-			// } else {
-			// Log.i(AnkiDroidApp.TAG, "checked tag: " + tag);
-			// mSelectedTags.add(tag);
-			// }
-			// }
-			// });
+			selectedTags = new ArrayList<String>();
+			for (String s : mEditorNote.getTags()) {
+				selectedTags.add(s);
+			}
+			actualizeTagDialog(ad);
 			break;
 
 		case DIALOG_INTENT_INFORMATION:
@@ -1168,25 +1114,35 @@ public class CardEditor extends Activity {
 		swapText(true);
 	}
 
-	private void loadDeck(int item) {
-		// mDeckPath = DeckManager.getDeckPathAfterDeckSelectionDialog(item);
-		// mDeck = DeckManager.getDeck(mDeckPath,
-		// DeckManager.REQUESTING_ACTIVITY_CARDEDITOR);
-		// if (mDeck == null) {
-		// Log.e(AnkiDroidApp.TAG, "CardEditor: error on opening deck");
-		// Themes.showThemedToast(CardEditor.this, getResources().getString(
-		// R.string.fact_adder_deck_not_loaded), true);
-		// BackupManager.restoreDeckIfMissing(mDeckPath);
-		// return;
-		// }
-		// mModelButtons.setVisibility(View.VISIBLE);
-		// mSave.setVisibility(View.VISIBLE);
-		// mCancel.setVisibility(View.VISIBLE);
-		// mTags.setVisibility(View.VISIBLE);
-		// mFieldsLayoutContainer.setVisibility(View.VISIBLE);
-		// mSwapButton.setVisibility(View.VISIBLE);
-		// setTitle(mDeck.getDeckName());
-		// loadContents();
+	private void actualizeTagDialog(StyledDialog ad) {
+		TreeSet<String> tags = new TreeSet<String>(String.CASE_INSENSITIVE_ORDER);
+		for (String tag : mCol.getTags().all()) {
+			tags.add(tag);
+		}
+		tags.addAll(selectedTags);
+		int len = tags.size();
+		allTags = new String[len];
+		boolean[] checked = new boolean[len];
+		int i = 0;
+		for (String t : tags) {
+			allTags[i++] = t;
+			if (selectedTags.contains(t)) {
+				checked[i-1] = true;
+			}
+		}
+		ad.setMultiChoiceItems(allTags, checked, new DialogInterface.OnClickListener() {
+			 @Override
+			 public void onClick(DialogInterface arg0, int which) {
+				 String tag = allTags[which];
+				 if (selectedTags.contains(tag)) {
+					 Log.i(AnkiDroidApp.TAG, "unchecked tag: " + tag);
+					 selectedTags.remove(tag);
+				 } else {
+					 Log.i(AnkiDroidApp.TAG, "checked tag: " + tag);
+					 selectedTags.add(tag);
+				 }
+			 }
+	 	});		
 	}
 
 	private void swapText(boolean reset) {
@@ -1300,6 +1256,10 @@ public class CardEditor extends Activity {
 			mSave.setEnabled(true);
 			return false;
 		}
+	}
+
+	private void updateTagsButton() {
+		mTagsButton.setText(getResources().getString(R.string.CardEditorTags, mEditorNote.stringTags().trim().replace(" ", ", ")));		
 	}
 
 	private Handler mTimerHandler = new Handler();
