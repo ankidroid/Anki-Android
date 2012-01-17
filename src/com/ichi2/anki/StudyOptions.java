@@ -48,6 +48,7 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.ToggleButton;
 
@@ -165,6 +166,7 @@ public class StudyOptions extends Activity implements IButtonListener {
 	private TextView mTextNewTotal;
 	private TextView mTextTotal;
 	private TextView mTextETA;
+	private LinearLayout mDeckCounts;
 	private CheckBox mNightMode;
 	private CheckBox mSwapQA;
 	private ImageButton mAddNote;
@@ -627,6 +629,8 @@ public class StudyOptions extends Activity implements IButtonListener {
 		mTextETA = (TextView) mStudyOptionsView
 				.findViewById(R.id.studyoptions_eta);
 
+		mDeckCounts = (LinearLayout) mStudyOptionsView.findViewById(R.id.studyoptions_deckcounts);
+		
 		mNightMode = (CheckBox) mStudyOptionsView
 				.findViewById(R.id.studyoptions_night_mode);
 		mNightMode.setChecked(mInvertedColors);
@@ -941,21 +945,14 @@ public class StudyOptions extends Activity implements IButtonListener {
 	}
 
 	private void resetAndUpdateValuesFromDeck() {
-		Sched sched = mCol.getSched();
-		sched.reset();
-		updateValuesFromDeck();
+		updateValuesFromDeck(true);
 	}
 
-	private boolean updateValuesFromDeck() {
+	private void updateValuesFromDeck() {
+		updateValuesFromDeck(false);
+	}
+	private void updateValuesFromDeck(boolean reset) {
 		Resources res = getResources();
-
-		Sched sched = mCol.getSched();
-		int[] counts = sched.counts();
-		int totalNewCount = sched.newCount();
-		int totalCount = sched.cardCount();
-		mProgressMature = ((double) sched.matureCount())
-				/ ((double) totalCount);
-		mProgressAll = 1 - (((double) (totalNewCount + counts[1])) / ((double) totalCount));
 
 		String[] name;
 		try {
@@ -974,11 +971,6 @@ public class StudyOptions extends Activity implements IButtonListener {
 		if (name.length > 1) {
 			nameBuilder.append("\n").append(name[name.length - 1]);
 		}
-
-		int dues = counts[0] + counts[1] + counts[2];
-		setTitle(res.getQuantityString(R.plurals.studyoptions_window_title,
-				dues, name, dues, 0));
-
 		mTextDeckName.setText(nameBuilder.toString());
 		String desc = mCol.getDecks().getActualDescription();
 		if (desc.length() > 0) {
@@ -987,16 +979,8 @@ public class StudyOptions extends Activity implements IButtonListener {
 		} else {
 			mTextDeckDescription.setVisibility(View.GONE);
 		}
-		mTextTodayNew.setText(String.valueOf(counts[0]));
-		mTextTodayLrn.setText(String.valueOf(counts[1]));
-		mTextTodayRev.setText(String.valueOf(counts[2]));
-		mTextNewTotal.setText(String.valueOf(totalNewCount));
-		mTextTotal.setText(String.valueOf(totalCount));
-		mTextETA.setText("???");
 
-		updateStatisticBars();
-
-		return true;
+	 	DeckTask.launchDeckTask(DeckTask.TASK_TYPE_UPDATE_VALUES_FROM_DECK, mUpdateValuesFromDeckListener, new DeckTask.TaskData(mCol.getSched(), reset));
 	}
 
 	private void updateStatisticBars() {
@@ -1187,6 +1171,41 @@ public class StudyOptions extends Activity implements IButtonListener {
 		return preferences;
 	}
 
+	DeckTask.TaskListener mUpdateValuesFromDeckListener = new DeckTask.TaskListener() {
+		@Override
+		public void onPostExecute(DeckTask.TaskData result) {
+			Object[] obj = result.getObjArray();
+			int newCards = (Integer) obj[0]; 
+			int lrnCards = (Integer) obj[1]; 
+			int revCards = (Integer) obj[2]; 
+			int totalNew = (Integer) obj[3]; 
+			int totalCards = (Integer) obj[4];
+			mProgressMature = (Double) obj[5];
+			mProgressAll = (Double) obj[6];
+			
+			int dues = newCards + lrnCards + revCards;
+			setTitle(getResources().getQuantityString(R.plurals.studyoptions_window_title, dues, "asdf", dues, 0));
+			mTextTodayNew.setText(String.valueOf(newCards));
+			mTextTodayLrn.setText(String.valueOf(lrnCards));
+			mTextTodayRev.setText(String.valueOf(revCards));
+			mTextNewTotal.setText(String.valueOf(totalNew));
+			mTextTotal.setText(String.valueOf(totalCards));
+			mTextETA.setText("???");
+			updateStatisticBars();
+
+			if(mDeckCounts.getVisibility() == View.INVISIBLE) {
+				mDeckCounts.setVisibility(View.VISIBLE);
+				mDeckCounts.setAnimation(ViewAnimation.fade(ViewAnimation.FADE_IN, 500, 0));
+			}
+		}
+		@Override
+		public void onPreExecute() {
+		}
+		@Override
+		public void onProgressUpdate(DeckTask.TaskData... values) {
+		}
+	};
+
 	DeckTask.TaskListener mLoadStatisticsHandler = new DeckTask.TaskListener() {
 
 		@Override
@@ -1227,6 +1246,7 @@ public class StudyOptions extends Activity implements IButtonListener {
 		}
 
 	};
+
 
 	class MyGestureDetector extends SimpleOnGestureListener {
 		@Override

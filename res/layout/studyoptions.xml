@@ -38,7 +38,8 @@
 				android:layout_marginLeft="5dp" 
 				android:layout_marginRight="5dp" 
 				android:text=""/>
-	    	<LinearLayout
+	    	<LinearLayout android:id="@+id/studyoptions_deckcounts"
+	    	    android:visibility="invisible"
 		    android:layout_marginLeft="5dip"
 		    android:layout_marginRight="3dip"
 		    android:layout_marginBottom="5dip"

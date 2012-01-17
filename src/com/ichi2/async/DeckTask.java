@@ -77,6 +77,7 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
     public static final int TASK_TYPE_REPAIR_DECK = 20;
     public static final int TASK_TYPE_CLOSE_DECK = 21;
     public static final int TASK_TYPE_LOAD_DECK_COUNTS = 22;
+    public static final int TASK_TYPE_UPDATE_VALUES_FROM_DECK = 23;
 
 
     /**
@@ -227,7 +228,10 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
 
             case TASK_TYPE_CLOSE_DECK:
                 return doInBackgroundCloseDeck(params);
-            	
+
+            case TASK_TYPE_UPDATE_VALUES_FROM_DECK:
+            	return doInBackgroundUpdateValuesFromDeck(params);
+
             default:
                 return null;
         }
@@ -696,6 +700,24 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
     }
 
     
+    private TaskData doInBackgroundUpdateValuesFromDeck(TaskData... params) {
+        Log.i(AnkiDroidApp.TAG, "doInBackgroundUpdateValuesFromDeck");
+        boolean reset = params[0].getBoolean();
+        Sched sched = params[0].getSched();
+        if (reset) {
+    		sched.reset();        	
+        }
+		int[] counts = sched.counts();
+		int totalNewCount = sched.newCount();
+		int totalCount = sched.cardCount();
+		double progressMature= ((double) sched.matureCount())
+				/ ((double) totalCount);
+		double progressAll = 1 - (((double) (totalNewCount + counts[1])) / ((double) totalCount));
+
+		return new TaskData(new Object[]{counts[0], counts[1], counts[2], totalNewCount, totalCount, progressMature, progressAll});
+    }
+
+
     private TaskData doInBackgroundDeleteBackups() {
         Log.i(AnkiDroidApp.TAG, "doInBackgroundDeleteBackups");
     	return new TaskData(BackupManager.deleteAllBackups());
@@ -816,6 +838,12 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
         private Collection mCol;
         private Sched mSched;
         private TreeSet<Object[]> mDeckList;
+        private Object[] mObjects;
+
+        public TaskData(Object[] obj) {
+        	mObjects = obj;
+        }
+
 
         public TaskData(int value, Card card) {
             this(value);
@@ -921,6 +949,12 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
 
         public TaskData(Sched sched) {
         	mSched = sched;
+        }
+
+
+        public TaskData(Sched sched, boolean bool) {
+        	mSched = sched;
+        	mBool = bool;
         }
 
 
@@ -1031,6 +1065,11 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
 
         public TreeSet<Object[]> getDeckList() {
         	return mDeckList;
+        }
+
+
+        public Object[] getObjArray() {
+        	return mObjects;
         }
     }
 
