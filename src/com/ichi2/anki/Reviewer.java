@@ -1608,6 +1608,15 @@ public class Reviewer extends Activity implements IButtonListener{
     }
 
 
+    private int getRecommendedEase() {
+		if (mSched.lrnButtons(mCurrentCard)) {
+			return EASE_HARD;
+		} else {
+			return EASE_MID;
+		}
+    }
+
+
     private void answerCard(int ease) {
         mIsSelecting = false;
         if (mPrefTextSelection) {
@@ -1940,16 +1949,17 @@ public class Reviewer extends Activity implements IButtonListener{
         
         // Focus default button
         if (lrnCard) {
-            mEase3Layout.requestFocus();
-            mNext2.setTextColor(mNextTimeTextColor);
-            mEase2.setTextColor(mNextTimeTextColor);
-            mNext3.setTextColor(mNextTimeTextRecomColor);
-        } else {
             mEase2Layout.requestFocus();
             mNext2.setTextColor(mNextTimeTextRecomColor);
             mEase2.setTextColor(mNextTimeTextRecomColor);
             mNext3.setTextColor(mNextTimeTextColor);
             mEase3.setTextColor(mNextTimeTextColor);
+        } else {
+            mEase3Layout.requestFocus();
+            mNext2.setTextColor(mNextTimeTextColor);
+            mEase2.setTextColor(mNextTimeTextColor);
+            mNext3.setTextColor(mNextTimeTextRecomColor);
+            mEase4.setTextColor(mNextTimeTextRecomColor);
         }
 
         // Show next review time
@@ -3133,22 +3143,14 @@ public class Reviewer extends Activity implements IButtonListener{
     		break;
     	case GESTURE_ANSWER_RECOMMENDED:
 			if (sDisplayAnswer) {
-				if (mSched.lrnButtons(mCurrentCard)) {
-					answerCard(EASE_MID);
-				} else {
-					answerCard(EASE_HARD);
-				}
+				answerCard(getRecommendedEase());
 			} else {
 				displayCardAnswer();
 			}
     		break;
     	case GESTURE_ANSWER_BETTER_THAN_RECOMMENDED:
 			if (sDisplayAnswer) {
-				if (mSched.lrnButtons(mCurrentCard)) {
-					answerCard(EASE_EASY);
-				} else {
-					answerCard(EASE_MID);
-				}
+				answerCard(getRecommendedEase() + 1);
 			}
     		break;
     	case GESTURE_EXIT:
@@ -3228,17 +3230,6 @@ public class Reviewer extends Activity implements IButtonListener{
             msg.obj = soundPath;
             mHandler.sendMessage(msg);
         }
-    }
-
-
-    private String nextInterval(int ease) {
-        Resources res = getResources();
-
-//        if (ease == 1){
-        	return res.getString(R.string.soon);
-//        } else {
-//        	return Utils.fmtTimeSpan(mCurrentCard.nextInterval(mCurrentCard, ease) * 86400, Utils.TIME_FORMAT_DEFAULT);
-//        }
     }
 
 
