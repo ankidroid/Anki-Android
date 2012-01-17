@@ -538,7 +538,7 @@ public class StudyOptions extends Activity implements IButtonListener {
 		startActivityForResult(intent, ADD_NOTE);
 		if (UIUtils.getApiLevel() > 4) {
 			ActivityTransitionAnimation.slide(StudyOptions.this,
-					ActivityTransitionAnimation.UP);
+					ActivityTransitionAnimation.LEFT);
 		}
 	}
 

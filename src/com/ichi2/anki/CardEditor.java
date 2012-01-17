@@ -136,7 +136,7 @@ public class CardEditor extends Activity {
 	public static final int REQUEST_ADD = 0;
 	public static final int REQUEST_INTENT_ADD = 1;
 
-	private static final int WAIT_TIME_UNTIL_UPDATE = 800;
+	private static final int WAIT_TIME_UNTIL_UPDATE = 1000;
 
 	/**
 	 * Broadcast that informs us when the sd card is about to be unmounted
@@ -211,7 +211,7 @@ public class CardEditor extends Activity {
 				// AnkiDroidWidgetBig.setCard(values[0].getCard());
 				// AnkiDroidWidgetBig.updateWidget(AnkiDroidWidgetBig.UpdateService.VIEW_NOT_SPECIFIED);
 			} else if (count > 0) {
-				 mEditorNote = mCol.newNote();
+				 getNewNote();
 				 populateEditFields();
 				 mSave.setEnabled(false);
 				 mSourceText = null;
@@ -477,7 +477,7 @@ public class CardEditor extends Activity {
 			@Override
 			public void onClick(View v) {
 				if (mAddNote) {
-					if (duplicateCheck()) {
+					if (duplicateCheck(true)) {
 						return;
 					}
 					for (FieldEditText f : mEditFields) {
@@ -781,7 +781,7 @@ public class CardEditor extends Activity {
 		} else {
 			if (Integer.valueOf(android.os.Build.VERSION.SDK) > 4) {
 				ActivityTransitionAnimation.slide(CardEditor.this,
-						ActivityTransitionAnimation.DOWN);
+						ActivityTransitionAnimation.RIGHT);
 			}
 		}
 	}
@@ -1249,9 +1249,9 @@ public class CardEditor extends Activity {
 		}
 	}
 
-	private boolean duplicateCheck() {
+	private boolean duplicateCheck(boolean checkEmptyToo) {
 		FieldEditText field = mEditFields.get(0);
-		if (mEditorNote.dupeOrEmpty(field.getText().toString()) != 0) {
+		if (mEditorNote.dupeOrEmpty(field.getText().toString()) > (checkEmptyToo ? 0 : 1)) {
 			// TODO: theme backgrounds
 			field.setBackgroundResource(R.drawable.blue_edit_text_dupe);
 			mSave.setEnabled(false);
@@ -1271,7 +1271,7 @@ public class CardEditor extends Activity {
 
 	private Runnable checkDuplicatesRunnable = new Runnable() {
 		public void run() {
-			duplicateCheck();
+			duplicateCheck(false);
   		}
 	};
 
@@ -1291,8 +1291,6 @@ public class CardEditor extends Activity {
 		private ImageView mCircle;
 		private KeyListener mKeyListener;
 		private Context mContext;
-
-		private int mJustCreated = 2;
 
 		public FieldEditText(Context context, JSONObject field) {
 			super(context);
@@ -1329,10 +1327,6 @@ public class CardEditor extends Activity {
 				this.addTextChangedListener(new TextWatcher() {
 					@Override
 					public void afterTextChanged(Editable arg0) {
-						if (mJustCreated > 0) {
-							mJustCreated--;
-							return;
-						}
 						mTimerHandler.removeCallbacks(checkDuplicatesRunnable);
 				    	mTimerHandler.postDelayed(checkDuplicatesRunnable, WAIT_TIME_UNTIL_UPDATE);
 					}

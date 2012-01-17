@@ -770,7 +770,7 @@ public class DeckPicker extends Activity {
 				startActivityForResult(intent, ADD_NOTE);
 				if (UIUtils.getApiLevel() > 4) {
 					ActivityTransitionAnimation.slide(DeckPicker.this,
-							ActivityTransitionAnimation.UP);
+							ActivityTransitionAnimation.LEFT);
 				}
 			}
 		});
