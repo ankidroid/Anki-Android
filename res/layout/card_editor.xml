@@ -42,6 +42,7 @@
 				android:text="@string/CardEditorLaterButton"
 				android:layout_gravity="center"
 				android:gravity="center"
+				android:visibility="gone"
 				android:layout_weight="1"/>
 		</LinearLayout>
  	    <LinearLayout
