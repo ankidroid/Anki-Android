@@ -1,4 +1,5 @@
 package com.ichi2.anki;import com.ichi2.anki2.R;
+import com.ichi2.libanki.Utils;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -82,8 +83,7 @@ public class MetaDB {
             mMetaDb.execSQL(
                     "CREATE TABLE IF NOT EXISTS intentInformation ("
                     + "id INTEGER PRIMARY KEY AUTOINCREMENT, "
-                    + "source TEXT NOT NULL, "
-                    + "target INTEGER NOT NULL)");
+                    + "fields TEXT NOT NULL)");
             Log.i(AnkiDroidApp.TAG, "Opening MetaDB");
         } catch(Exception e) {
             Log.e("Error", "Error opening MetaDB ", e);
@@ -523,13 +523,16 @@ public class MetaDB {
         ArrayList<HashMap<String, String>> list = new ArrayList<HashMap<String, String>>();
         try {
             cursor = mMetaDb.query("intentInformation",
-                    new String[]{"id", "source", "target"},
+                    new String[]{"id", "fields"},
                     null, null, null, null, "id");
             while (cursor.moveToNext()) {
             	HashMap<String, String> item = new HashMap<String, String>();
             	item.put("id", Integer.toString(cursor.getInt(0)));
-            	item.put("source", cursor.getString(1));
-            	item.put("target", cursor.getString(2));
+            	String fields = cursor.getString(1);
+            	String[] split = Utils.splitFields(fields);
+            	item.put("source", split[0]);
+            	item.put("target", split[1]);
+            	item.put("fields", cursor.getString(1));
             	list.add(item);
             }
         } catch (SQLiteException e) {
@@ -543,13 +546,13 @@ public class MetaDB {
     }
 
 
-    public static void saveIntentInformation(Context context, String source, String target) {
+    public static void saveIntentInformation(Context context, String fields) {
         openDBIfClosed(context);
         try {
-            mMetaDb.execSQL("INSERT INTO intentInformation (source, target) "
-                            + " VALUES (?, ?);",
-                            new Object[]{source, target});
-            Log.i(AnkiDroidApp.TAG, "Store intentInformation: " + source + " - " + target);
+            mMetaDb.execSQL("INSERT INTO intentInformation (fields) "
+                            + " VALUES (?);",
+                            new Object[]{fields});
+            Log.i(AnkiDroidApp.TAG, "Store intentInformation: " + fields);
         } catch(Exception e) {
             Log.e("Error", "Error storing intentInformation in MetaDB ", e);
         }

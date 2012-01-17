@@ -61,6 +61,7 @@ import com.ichi2.filters.FilterFacade;
 import com.ichi2.libanki.Card;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Note;
+import com.ichi2.libanki.Utils;
 import com.ichi2.themes.StyledDialog;
 import com.ichi2.themes.StyledDialog.Builder;
 import com.ichi2.themes.StyledProgressDialog;
@@ -146,8 +147,9 @@ public class CardEditor extends Activity {
 	private LinearLayout mFieldsLayoutContainer;
 	// private HashMap<Long, Model> mModels;
 
-	private Button mSave;
+	private Button mSave;	
 	private Button mCancel;
+	private Button mLater;
 	private TextView mTagsButton;
 	private TextView mModelButton;
 	private TextView mDeckButton;
@@ -275,6 +277,7 @@ public class CardEditor extends Activity {
 		setTitle(R.string.cardeditor_title);
 		mSave = (Button) findViewById(R.id.CardEditorSaveButton);
 		mCancel = (Button) findViewById(R.id.CardEditorCancelButton);
+		mLater = (Button) findViewById(R.id.CardEditorLaterButton);
 		mDeckButton = (TextView) findViewById(R.id.CardEditorDeckText);
 		mModelButton = (TextView) findViewById(R.id.CardEditorModelText);
 		mTagsButton = (TextView) findViewById(R.id.CardEditorTagText);
@@ -357,8 +360,7 @@ public class CardEditor extends Activity {
 		case CALLER_CARDEDITOR_INTENT_ADD:
 //			prepareForIntentAddition();
 			mAddNote = true;
-			String[] fields = intent.getStringExtra(EXTRA_CONTENTS).split(
-					"\\x1f");
+			String[] fields = Utils.splitFields(intent.getStringExtra(EXTRA_CONTENTS));
 			mSourceText = fields[0];
 			mTargetText = fields[1];
 			break;
@@ -436,6 +438,18 @@ public class CardEditor extends Activity {
 			modelButton.setVisibility(View.VISIBLE);
 			mSave.setText(getResources().getString(R.string.add));
 			mCancel.setText(getResources().getString(R.string.close));
+
+			mLater.setVisibility(View.VISIBLE);
+			mLater.setOnClickListener(new View.OnClickListener() {
+				@Override
+				public void onClick(View v) {
+		             MetaDB.saveIntentInformation(CardEditor.this, getFieldsText());
+					 populateEditFields();
+					 mSave.setEnabled(false);
+					 mSourceText = null;
+					 mTargetText = null;
+				}				
+			});
 		} else {
 			try {
 				Long id = mEditorNote.getDid();
@@ -604,10 +618,10 @@ public class CardEditor extends Activity {
 		MenuItem item;
 		Resources res = getResources();
 		// Lookup.initialize(this, mDeck.getDeckPath());
-		item = menu.add(Menu.NONE, MENU_LOOKUP, Menu.NONE,
-				Lookup.getSearchStringTitle());
-		item.setIcon(R.drawable.ic_menu_search);
-		item.setEnabled(Lookup.isAvailable());
+//		item = menu.add(Menu.NONE, MENU_LOOKUP, Menu.NONE,
+//				Lookup.getSearchStringTitle());
+//		item.setIcon(R.drawable.ic_menu_search);
+//		item.setEnabled(Lookup.isAvailable());
 		item = menu.add(Menu.NONE, MENU_RESET, Menu.NONE,
 				res.getString(R.string.card_editor_reset));
 		item.setIcon(R.drawable.ic_menu_revert);
@@ -636,10 +650,10 @@ public class CardEditor extends Activity {
 	@Override
 	public boolean onPrepareOptionsMenu(Menu menu) {
 		View focus = this.getWindow().getCurrentFocus();
-		menu.findItem(MENU_LOOKUP).setEnabled(
-				focus instanceof FieldEditText
-						&& ((TextView) focus).getText().length() > 0
-						&& Lookup.isAvailable());
+//		menu.findItem(MENU_LOOKUP).setEnabled(
+//				focus instanceof FieldEditText
+//						&& ((TextView) focus).getText().length() > 0
+//						&& Lookup.isAvailable());
 
 		for (int i = 0; i < mEditFields.size(); i++) {
 			if (mEditFields.get(i).getText().length() > 0) {
@@ -667,12 +681,7 @@ public class CardEditor extends Activity {
 			intent.putExtra(EXTRA_CALLER, CALLER_CARDEDITOR);
 			// intent.putExtra(EXTRA_DECKPATH, mDeckPath);
 			if (item.getItemId() == MENU_COPY_CARD) {
-				StringBuilder contents = new StringBuilder();
-				for (FieldEditText current : mEditFields) {
-					contents.append(current.getText().toString()).append(
-							"\u001f");
-				}
-				intent.putExtra(EXTRA_CONTENTS, contents.toString());
+				intent.putExtra(EXTRA_CONTENTS, getFieldsText());
 			}
 			startActivityForResult(intent, REQUEST_ADD);
 			if (Integer.valueOf(android.os.Build.VERSION.SDK) > 4) {
@@ -997,10 +1006,7 @@ public class CardEditor extends Activity {
 				Intent intent = new Intent(CardEditor.this, CardEditor.class);
 				intent.putExtra(EXTRA_CALLER, CALLER_CARDEDITOR_INTENT_ADD);
 				HashMap<String, String> map = mIntentInformation.get(position);
-				StringBuilder contents = new StringBuilder();
-				contents.append(map.get("source")).append("\u001f")
-						.append(map.get("target"));
-				intent.putExtra(EXTRA_CONTENTS, contents.toString());
+				intent.putExtra(EXTRA_CONTENTS, map.get("fields"));
 				intent.putExtra(EXTRA_ID, map.get("id"));
 				startActivityForResult(intent, REQUEST_INTENT_ADD);
 				if (Integer.valueOf(android.os.Build.VERSION.SDK) > 4) {
@@ -1234,7 +1240,7 @@ public class CardEditor extends Activity {
 		if (contents == null) {
 			len = 0;
 		} else {
-			fields = contents.split("\\x1f");
+			fields = Utils.splitFields(contents);
 			len = fields.length;
 		}
 		for (int i = 0; i < mEditFields.size(); i++) {
@@ -1274,6 +1280,14 @@ public class CardEditor extends Activity {
 			duplicateCheck(false);
   		}
 	};
+
+	private String getFieldsText() {
+		String[] fields = new String[mEditFields.size()];
+		for (int i = 0; i < mEditFields.size(); i++) {
+			fields[i] = mEditFields.get(i).getText().toString();
+		}
+		return Utils.joinFields(fields);
+	}
 
 	// ----------------------------------------------------------------------------
 	// INNER CLASSES
