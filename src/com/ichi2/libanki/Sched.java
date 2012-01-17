@@ -623,7 +623,7 @@ public class Sched {
 											+ lim, null);
 					while (cur.moveToNext()) {
 						mNewQueue.add(new long[] { cur.getLong(0),
-								cur.getInt(1) });
+								cur.getLong(1) });
 					}
 				} finally {
 					if (cur != null && !cur.isClosed()) {
@@ -631,8 +631,6 @@ public class Sched {
 					}
 				}
 				if (!mNewQueue.isEmpty()) {
-					// Collections.reverse(mNewQueue);
-					// TODO: check, if order is correct for all queues
 					return true;
 				}
 			}
@@ -796,9 +794,8 @@ public class Sched {
 							"SELECT due, id FROM cards WHERE did IN "
 									+ _deckLimit()
 									+ " AND queue = 1 AND due < " + mDayCutoff
-									+ " ORDER BY due LIMIT " + mReportLimit,
+									+ " LIMIT " + mReportLimit,
 							null);
-			// TODO: check, if correctly sorted
 			while (cur.moveToNext()) {
 				mLrnQueue.add(new long[] { cur.getLong(0), cur.getLong(1) });
 			}
@@ -825,7 +822,6 @@ public class Sched {
 				}
 			}
 			if (mLrnQueue.getFirst()[0] < cutoff) {
-				// TODO: check, if correct card is fetched
 				long id = mLrnQueue.remove()[1];
 				Card card = mCol.getCard(id);
 				mLrnCount -= card.getLeft();
@@ -1107,7 +1103,6 @@ public class Sched {
 											+ lim, null);
 					while (cur.moveToNext()) {
 						mRevQueue.add(new long[] { cur.getLong(0) });
-						// TODO: check correct order
 					}
 				} finally {
 					if (cur != null && !cur.isClosed()) {
@@ -1125,9 +1120,6 @@ public class Sched {
 			Random r = new Random();
 			r.setSeed(mToday);
 			Collections.shuffle(mRevQueue, r);
-		} else {
-			// TODO: check correct order
-			Collections.reverse(mRevQueue);
 		}
 		return true;
 	}

@@ -823,7 +823,7 @@ public class DeckPicker extends Activity {
 						parent.setBackgroundResource(R.drawable.white_deckpicker_full);
 						return true;
 					} else if (text.equals("cen")) {
-						parent.setBackgroundResource(R.drawable.white_deckpicker_center);						
+						parent.setBackgroundResource(R.drawable.white_deckpicker_center);
 						return true;
 					}
 					return false;
@@ -1999,29 +1999,31 @@ public class DeckPicker extends Activity {
         	m.put("complMat", ((Float)d[5]).toString());
         	m.put("complAll", ((Float)d[6]).toString());
         	if (name.length == 1) {
-            	m.put("sep", "top");
-            	if (mDeckList.size() > 0) {
-            		HashMap<String, String> map = mDeckList.get(mDeckList.size() - 1);
-            		if (map.get("sep").equals("top")) {
-            			map.put("sep", "ful");
-            		} else {
-                		map.put("sep", "bot");
-            		}
-            	}
+        		// top position
+        		m.put("sep", "top");
+        		// correct previous deck
+        		if (mDeckList.size() > 0) {
+        			HashMap<String, String> map = mDeckList.get(mDeckList.size() - 1);
+        			if (map.get("sep").equals("top")) {
+        				map.put("sep", "ful");
+        			} else {
+        				map.put("sep", "bot");
+        			}
+        		}
+        	} else if (mDeckList.size() > 0 && mDeckList.size() == decks.size() - 1) {
+        		// bottom position
+        		if (name.length == 1) {
+        			m.put("sep", "ful");
+	    		} else {
+	    			m.put("sep", "bot");    			
+	    		}
         	} else {
-            	m.put("sep", "cen");
+        		// center position
+        		m.put("sep", "cen");
         	}
         	mDeckList.add(m);
         }
-    	if (mDeckList.size() > 0) {
-    		HashMap<String, String> map = mDeckList.get(mDeckList.size() - 1);
-    		if (map.get("sep").equals("top")) {
-        		map.put("sep", "ful");
-    		} else {
-        		map.put("sep", "bot");    			
-    		}
-    	}
-		mDeckListAdapter.notifyDataSetChanged();
+        mDeckListAdapter.notifyDataSetChanged();
 	}
 
 //	private void restartApp() {

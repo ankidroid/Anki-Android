@@ -750,8 +750,8 @@ public class Collection {
 									+ "n.tags, n.flds FROM cards c, notes n WHERE c.nid == n.id "
 									+ where, null);
 			while (cur.moveToNext()) {
-				data.add(new Object[] { cur.getInt(0), cur.getInt(1),
-						cur.getInt(2), cur.getInt(3), cur.getInt(4),
+				data.add(new Object[] { cur.getLong(0), cur.getLong(1),
+						cur.getLong(2), cur.getLong(3), cur.getInt(4),
 						cur.getString(5), cur.getString(6) });
 			}
 		} finally {
