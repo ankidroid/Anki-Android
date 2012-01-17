@@ -130,11 +130,6 @@ public class Sched {
 		mNewQueue = new LinkedList<long[]>();
 		mLrnQueue = new LinkedList<long[]>();
 		mRevQueue = new LinkedList<long[]>();
-
-		// Initialise conf maps
-		// TODO: where are these used for?
-		mGroupConfs = new TreeMap<Integer, Integer>();
-		mConfCache = new TreeMap<Integer, JSONObject>();
 	}
 
 	/**
@@ -653,7 +648,6 @@ public class Sched {
 				while (!mNewQueue.isEmpty()
 						&& mNewQueue.getFirst()[1] == item[1]) {
 					mNewQueue.add(mNewQueue.remove());
-					// TODO: check order
 					n -= 1;
 					if (n == 0) {
 						// we only have one fact in the queue; stop rotating
@@ -799,6 +793,8 @@ public class Sched {
 			while (cur.moveToNext()) {
 				mLrnQueue.add(new long[] { cur.getLong(0), cur.getLong(1) });
 			}
+			// as it arrives sorted by did first, we need to sort it
+			Collections.sort(mLrnQueue, new DueComparator());
 			return !mLrnQueue.isEmpty();
 		} finally {
 			if (cur != null && !cur.isClosed()) {
@@ -1110,18 +1106,18 @@ public class Sched {
 					}
 				}
 				if (!mRevQueue.isEmpty()) {
+					if (order.length() == 0) {
+						Random r = new Random();
+						r.setSeed(mToday);
+						Collections.shuffle(mRevQueue, r);
+					}
 					return true;
 				}
 			}
 			// nothing left in the deck; move to next
 			mRevDids.remove();
 		}
-		if (order.length() == 0) {
-			Random r = new Random();
-			r.setSeed(mToday);
-			Collections.shuffle(mRevQueue, r);
-		}
-		return true;
+		return false;
 	}
 
 	private Card _getRevCard() {
@@ -1803,6 +1799,13 @@ public class Sched {
 			} else {
 				return 0;
 			}
+		}
+	}
+
+	private class DueComparator implements Comparator<long[]> {
+		@Override
+		public int compare(long[] lhs, long[] rhs) {
+			return new Long(lhs[0]).compareTo(rhs[0]);
 		}
 	}
 
