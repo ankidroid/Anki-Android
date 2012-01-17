@@ -136,6 +136,8 @@ public class CardEditor extends Activity {
 	public static final int REQUEST_ADD = 0;
 	public static final int REQUEST_INTENT_ADD = 1;
 
+	private static final int WAIT_TIME_UNTIL_UPDATE = 800;
+
 	/**
 	 * Broadcast that informs us when the sd card is about to be unmounted
 	 */
@@ -209,18 +211,15 @@ public class CardEditor extends Activity {
 				// AnkiDroidWidgetBig.setCard(values[0].getCard());
 				// AnkiDroidWidgetBig.updateWidget(AnkiDroidWidgetBig.UpdateService.VIEW_NOT_SPECIFIED);
 			} else if (count > 0) {
-				// mEditorNote = mDeck.newFact(mCurrentSelectedModelId);
-				// populateEditFields();
-				// mSave.setEnabled(false);
-				// mSourceText = null;
-				// mTargetText = null;
-				// mSwapButton.setVisibility(View.GONE);
-				// Themes.showThemedToast(CardEditor.this, getResources()
-				// .getQuantityString(R.plurals.factadder_cards_added, count,
-				// count), true);
+				 mEditorNote = mCol.newNote();
+				 populateEditFields();
+				 mSave.setEnabled(false);
+				 mSourceText = null;
+				 mTargetText = null;
+				 mSwapButton.setVisibility(View.GONE);
+				 Themes.showThemedToast(CardEditor.this, getResources().getQuantityString(R.plurals.factadder_cards_added, count, count), true);
 			} else {
-				Themes.showThemedToast(CardEditor.this, getResources()
-						.getString(R.string.factadder_saving_error), true);
+				Themes.showThemedToast(CardEditor.this, getResources().getString(R.string.factadder_saving_error), true);
 			}
 			if (mProgressDialog != null && mProgressDialog.isShowing()) {
 				try {
@@ -231,22 +230,26 @@ public class CardEditor extends Activity {
 									+ e);
 				}
 			}
-			if (!mAddNote || mCaller == CALLER_CARDEDITOR
-					|| mCaller == CALLER_BIGWIDGET_EDIT || mAedictIntent) {
-				closeCardEditor();
-			} else if (mCaller == CALLER_CARDEDITOR_INTENT_ADD) {
-				if (count > 0) {
-					Intent intent = new Intent();
-					intent.putExtra(EXTRA_ID,
-							getIntent().getStringExtra(EXTRA_ID));
-					setResult(RESULT_OK, intent);
-					closeCardEditor();
-				}
-			}
+//			if (!mAddNote || mCaller == CALLER_CARDEDITOR
+//					|| mCaller == CALLER_BIGWIDGET_EDIT || mAedictIntent) {
+//				closeCardEditor();
+//			} else if (mCaller == CALLER_CARDEDITOR_INTENT_ADD) {
+//				if (count > 0) {
+//					Intent intent = new Intent();
+//					intent.putExtra(EXTRA_ID,
+//							getIntent().getStringExtra(EXTRA_ID));
+//					setResult(RESULT_OK, intent);
+//					closeCardEditor();
+//				}
+//			}
 		}
 
 		@Override
 		public void onPostExecute(DeckTask.TaskData result) {
+            if (!result.getBoolean()) {
+            	// RuntimeException occured on marking cards
+            	// TODO: close and give note of db error
+            }
 		}
 	};
 
@@ -477,24 +480,11 @@ public class CardEditor extends Activity {
 					if (duplicateCheck()) {
 						return;
 					}
-					boolean empty = true;
-					for (FieldEditText current : mEditFields) {
-						current.updateField();
-						if (current.getText().length() != 0) {
-							empty = false;
-						}
+					for (FieldEditText f : mEditFields) {
+						f.updateField();
 					}
-					if (!empty) {
-						// setResult(Reviewer.RESULT_EDIT_CARD_RESET);
-						// mEditorNote.setTags(mFactTags);
-						// DeckTask.launchDeckTask(DeckTask.TASK_TYPE_ADD_FACT,
-						// mSaveFactHandler, new DeckTask.TaskData(mDeck,
-						// mEditorNote, mSelectedCardModels));
-					} else {
-						if (!mCardReset) {
-							setResult(RESULT_CANCELED);
-						}
-					}
+//					setResult(Reviewer.RESULT_EDIT_CARD_RESET);
+					DeckTask.launchDeckTask(DeckTask.TASK_TYPE_ADD_FACT, mSaveFactHandler, new DeckTask.TaskData(mEditorNote));
 				} else {
 					Iterator<FieldEditText> iter = mEditFields.iterator();
 					while (iter.hasNext()) {
@@ -1104,7 +1094,7 @@ public class CardEditor extends Activity {
 	}
 
 	private void modelChanged() {
-    	mEditorNote = mCol.newNote(); 
+		getNewNote();
 		try {
 			mModelButton.setText(getResources().getString(R.string.model) + " " + mCol.getModels().current().getString("name"));
 		} catch (JSONException e) {
@@ -1112,6 +1102,21 @@ public class CardEditor extends Activity {
 		}
 		populateEditFields();
 		swapText(true);
+	}
+
+	private void getNewNote() {
+		long did;
+		if (mEditorNote != null) {
+			did = mEditorNote.getDid();
+		} else {
+			try {
+				did = mCol.getDecks().current().getLong("id");
+			} catch (JSONException e) {
+				throw new RuntimeException(e);
+			}
+		}
+		mEditorNote = mCol.newNote();
+    	mEditorNote.setDid(did);
 	}
 
 	private void actualizeTagDialog(StyledDialog ad) {
@@ -1263,7 +1268,6 @@ public class CardEditor extends Activity {
 	}
 
 	private Handler mTimerHandler = new Handler();
-	private static final int WAIT_TIME_UNTIL_UPDATE = 1000;
 
 	private Runnable checkDuplicatesRunnable = new Runnable() {
 		public void run() {

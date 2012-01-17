@@ -257,20 +257,26 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
 
 
     private TaskData doInBackgroundAddFact(TaskData[] params) {
-        // Save the fact
-//        Decks deck = params[0].getDeck();
-//        Notes editFact = params[0].getFact();
-//        LinkedHashMap<Long, CardModel> cardModels = params[0].getCardModels();
-//
-//        AnkiDb ankiDB = AnkiDatabaseManager.getDatabase(deck.getDeckPath());
-//        ankiDB.getDatabase().beginTransaction();
-//        try {
-//        	publishProgress(new TaskData(deck.addFact(editFact, cardModels, false)));
-//            ankiDB.getDatabase().setTransactionSuccessful();
-//        } finally {
-//            ankiDB.getDatabase().endTransaction();
-//        }
-        return null;
+    	Log.i(AnkiDroidApp.TAG, "doInBackgroundAddFact");
+    	Note note = params[0].getNote();
+    	Collection col = note.getCol();
+
+    	try {
+        	AnkiDb ankiDB = col.getDb();
+            ankiDB.getDatabase().beginTransaction();
+            try {
+            	publishProgress(new TaskData(col.addNote(note)));
+                ankiDB.getDatabase().setTransactionSuccessful();
+            } finally {
+                ankiDB.getDatabase().endTransaction();
+            }
+    	} catch (RuntimeException e) {
+    		throw new RuntimeException(e);
+//    		Log.e(AnkiDroidApp.TAG, "doInBackgroundAddFact - RuntimeException on adding fact: " + e);
+//    		AnkiDroidApp.saveExceptionReportFile(e, "doInBackgroundAddFact");
+//            return new TaskData(false);
+        }
+    	return new TaskData(true);
     }
 
 
@@ -824,7 +830,7 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
 
     public static class TaskData {
         private Card mCard;
-        private Note mFact;
+        private Note mNote;
         private int mInteger;
         private String mMsg;
         private boolean mBool = false;
@@ -975,6 +981,11 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
         }
 
 
+        public TaskData(Note note) {
+            mNote = note;
+        }
+
+
         public TaskData(int value, String msg) {
             mMsg = msg;
             mInteger = value;
@@ -1008,8 +1019,8 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
         }
 
 
-        public Note getFact() {
-            return mFact;
+        public Note getNote() {
+            return mNote;
         }
 
 

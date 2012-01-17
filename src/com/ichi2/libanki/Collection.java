@@ -560,11 +560,16 @@ public class Collection {
 		card.setNid(note.getId());
 		try {
 			card.setOrd(template.getInt("ord"));
-			long did = template.getLong("did");
-			card.setDid(did != 0 ? did : note.getDid());
 		} catch (JSONException e) {
 			new RuntimeException(e);
 		}
+		long did;
+		try {
+			did = template.getLong("did");
+		} catch (JSONException e) {
+			did = 0;
+		}
+		card.setDid(did != 0 ? did : note.getDid());
 		card.setDue(_dueForDid(card.getDid(), due));
 		if (flush) {
 			card.flush();

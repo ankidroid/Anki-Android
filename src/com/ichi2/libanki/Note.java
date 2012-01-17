@@ -297,7 +297,7 @@ public class Note {
 	public void _preFlush() {
 		// have we been added yet?
 		mNewlyAdded = mCol.getDb().queryScalar(
-				"SELECT 1 FROM cards WHERE nid = " + mId) == 0;
+				"SELECT 1 FROM cards WHERE nid = " + mId, false) == 0;
 	}
 
 	public void _postFlush() {
@@ -328,6 +328,10 @@ public class Note {
 
 	public void setDid(long did) {
 		mDid = did;
+	}
+
+	public Collection getCol() {
+		return mCol;
 	}
 
 }
