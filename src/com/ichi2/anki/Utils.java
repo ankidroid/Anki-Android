@@ -441,7 +441,7 @@ public class Utils {
             rd.close();
             contentOfMyInputStream = sb.toString();
         } catch (Exception e) {
-            e.printStackTrace();
+        	Log.e(AnkiDroidApp.TAG, Log.getStackTraceString(e));
         }
 
         return contentOfMyInputStream;

@@ -18,6 +18,7 @@ package com.ichi2.anki;
 
 import android.util.Log;
 
+import com.google.gson.stream.JsonReader;
 import com.ichi2.async.Connection.Payload;
 import com.ichi2.utils.Base64;
 
@@ -32,8 +33,10 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.ArrayList;
@@ -72,21 +75,6 @@ public class AnkiDroidProxy {
     /** The server is too busy to serve the request. */
     public static final int LOGIN_TOO_BUSY = 5;
     public static final int DB_ERROR = 6;
-
-    /**
-     * Shared deck's fields
-     */
-    private static final int SD_ID = 0;
-    private static final int SD_USERNAME = 1;
-    private static final int SD_TITLE = 2;
-    private static final int SD_DESCRIPTION = 3;
-    private static final int SD_TAGS = 4;
-    private static final int SD_VERSION = 5;
-    private static final int SD_FACTS = 6;
-    private static final int SD_SIZE = 7;
-    private static final int SD_COUNT = 8;
-    private static final int SD_MODIFIED = 9;
-    private static final int SD_FNAME = 10;
 
     /**
      * List to hold the shared decks
@@ -489,6 +477,49 @@ public class AnkiDroidProxy {
         return payloadReply;
     }
 
+    /**
+     * Parses a JSON InputStream to a list of SharedDecks efficiently 
+     * @param is InputStream to parse and convert. It only works with the reply from
+     *        getSharedDecks request
+     * @return List of SharedDecks that were parsed
+     * @throws Exception 
+     */
+    public static List<SharedDeck> parseGetSharedDecksResponce(InputStream is) throws Exception {
+        BufferedReader rd = new BufferedReader(new InputStreamReader(is), 409600);
+    	JsonReader reader = new JsonReader(rd);
+    	List<SharedDeck> sharedDecks = new ArrayList<SharedDeck>();
+        try {
+        	reader.beginArray();
+        	int count = 0;
+        	while (reader.hasNext()) {
+        		SharedDeck sd = new SharedDeck();
+        		reader.beginArray();
+       			sd.setId(reader.nextInt());			// SD_ID
+       			reader.skipValue();					// SD_USERNAME
+        		sd.setTitle(reader.nextString());	// SD_TITLE
+       			reader.skipValue();					// SD_DESCRIPTION
+       			reader.skipValue();					// SD_TAGS
+       			reader.skipValue();					// SD_VERSION
+       			sd.setFacts(reader.nextInt());		// SD_FACTS
+       			sd.setSize(reader.nextInt());		// SD_SIZE
+       			reader.skipValue();					// SD_COUNT
+       			reader.skipValue();					// SD_MODIFIED
+       			reader.skipValue();					// SD_FNAME
+       			reader.endArray();
+       			sharedDecks.add(sd);
+       			count++;
+        	}
+        	reader.endArray();
+        	reader.close();
+        	Log.d(AnkiDroidApp.TAG, "parseGetSharedDecksResponce: found " + count + " shared decks");
+        } catch (Exception e) {
+            Log.e(AnkiDroidApp.TAG, Log.getStackTraceString(e));
+            sharedDecks.clear();
+            throw e;
+        }
+
+        return sharedDecks;
+    }
 
     /**
      * Get shared decks.
@@ -505,13 +536,13 @@ public class AnkiDroidProxy {
                 DefaultHttpClient defaultHttpClient = new DefaultHttpClient();
 
                 HttpResponse httpResponse = defaultHttpClient.execute(httpGet);
-                String response = Utils.convertStreamToString(httpResponse.getEntity().getContent());
-                // Log.i(AnkiDroidApp.TAG, "Content = " + response);
-                sSharedDecks.addAll(getSharedDecksListFromJSONArray(new JSONArray(response)));
+                HttpEntity ent = httpResponse.getEntity();
+                InputStream inpStream = ent.getContent();
+                sSharedDecks.addAll(parseGetSharedDecksResponce(inpStream));
             }
         } catch (Exception e) {
             sSharedDecks = null;
-            throw new Exception();
+            throw e;
         }
 
         return sSharedDecks;
@@ -520,39 +551,6 @@ public class AnkiDroidProxy {
 
     public static void resetSharedDecks() {
     	sSharedDecks = null;
-    }
-
-
-    private static List<SharedDeck> getSharedDecksListFromJSONArray(JSONArray jsonSharedDecks) throws JSONException {
-        List<SharedDeck> sharedDecks = new ArrayList<SharedDeck>();
-
-        if (jsonSharedDecks != null) {
-            // Log.i(AnkiDroidApp.TAG, "Number of shared decks = " + jsonSharedDecks.length());
-
-            int nbDecks = jsonSharedDecks.length();
-            for (int i = 0; i < nbDecks; i++) {
-                JSONArray jsonSharedDeck = jsonSharedDecks.getJSONArray(i);
-
-                SharedDeck sharedDeck = new SharedDeck();
-                sharedDeck.setId(jsonSharedDeck.getInt(SD_ID));
-                sharedDeck.setUsername(jsonSharedDeck.getString(SD_USERNAME));
-                sharedDeck.setTitle(jsonSharedDeck.getString(SD_TITLE));
-                sharedDeck.setDescription(jsonSharedDeck.getString(SD_DESCRIPTION));
-                sharedDeck.setTags(jsonSharedDeck.getString(SD_TAGS));
-                sharedDeck.setVersion(jsonSharedDeck.getInt(SD_VERSION));
-                sharedDeck.setFacts(jsonSharedDeck.getInt(SD_FACTS));
-                sharedDeck.setSize(jsonSharedDeck.getInt(SD_SIZE));
-                sharedDeck.setCount(jsonSharedDeck.getInt(SD_COUNT));
-                sharedDeck.setModified(jsonSharedDeck.getDouble(SD_MODIFIED));
-                sharedDeck.setFileName(jsonSharedDeck.getString(SD_FNAME));
-
-                // sharedDeck.prettyLog();
-
-                sharedDecks.add(sharedDeck);
-            }
-        }
-
-        return sharedDecks;
     }
 
 }
