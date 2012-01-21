@@ -67,10 +67,10 @@ public class Collection {
 	// BEGIN: SQL table columns
 	private int mCrt;
 	private long mMod;
-	private int mScm;
+	private long mScm;
 	private boolean mDty;
 	private int mUsn;
-	private int mLs;
+	private long mLs;
 	private JSONObject mConf;
 	// END: SQL table columns
 
@@ -190,7 +190,7 @@ public class Collection {
 	/**
 	 * Flush state to DB, updating mod time.
 	 */
-	public void flush(int mod) {
+	public void flush(long mod) {
 		Log.i(AnkiDroidApp.TAG, "flush - Saving information to DB...");
 		mMod = (mod == 0 ? Utils.intNow(1000) : mod);
 		ContentValues values = new ContentValues();
@@ -211,7 +211,7 @@ public class Collection {
 		save(null, 0);
 	}
 
-	public synchronized void save(String name, int mod) {
+	public synchronized void save(String name, long mod) {
 		// let the managers conditionally flush
 		mModels.flush();
 		mDecks.flush();
@@ -279,12 +279,17 @@ public class Collection {
 		// TODO:
 	}
 
+	/** Mark schema modified. Call this first so user can abort if necessary. */
 	public void modSchema() {
-		// TODO:
+		if (!schemaChanged()) {
+			// TODO
+		}
+		mScm = Utils.intNow(1000);
 	}
 
-	public void schemaChanged() {
-		// TODO:
+	/** True if schema changed since last sync. */
+	public boolean schemaChanged() {
+		return mScm > mLs;
 	}
 
 	/**
@@ -312,8 +317,19 @@ public class Collection {
 		}
 	}
 
+	/** called before a full upload */
 	public void beforeUpload() {
-		// TODO:
+		String[] tables = new String[]{"notes", "cards", "revlog", "graves"};
+		for (String t : tables) {
+			mDb.getDatabase().execSQL("UPDATE " + t + " SET usn=0 WHERE usn=-1");
+		}
+		mUsn += 1;
+		mModels.beforeUpload();
+		mTags.beforeUpload();
+		mDecks.beforeUpload();
+		modSchema();
+		mLs = mScm;
+		close();
 	}
 
 	/**
@@ -414,7 +430,7 @@ public class Collection {
 	}
 
 	public void remNotes(long[] ids) {
-		ArrayList<Long> list = mDb.queryColumn(long.class,
+		ArrayList<Long> list = mDb.queryColumn(Long.class,
 				"SELECT id FROM cards WHERE nid IN " + Utils.ids2str(ids), 0);
 		long[] cids = new long[list.size()];
 		int i = 0;
@@ -427,7 +443,7 @@ public class Collection {
 	/**
 	 * Bulk delete facts by ID. Don't call this directly.
 	 */
-	private void _remNotes(long[] ids) {
+	public void _remNotes(long[] ids) {
 		if (ids.length == 0) {
 			return;
 		}
@@ -617,15 +633,15 @@ public class Collection {
 			return;
 		}
 		String sids = Utils.ids2str(ids);
-		long[] nids = Utils.arrayList2array(mDb.queryColumn(long.class,
+		long[] nids = Utils.arrayList2array(mDb.queryColumn(Long.class,
 				"SELECT nid FROM cards WHERE id IN " + sids, 0));
 		// remove cards
 		_logRem(ids, Sched.REM_CARD);
 		mDb.getDatabase().execSQL("DELETE FROM cards WHERE id IN " + sids);
 		mDb.getDatabase().execSQL("DELETE FROM revlog WHERE cid IN " + sids);
 		// then notes
-		nids = Utils.arrayList2array(mDb.queryColumn(long.class,
-				"SELECT nid FROM notes WHERE id IN " + Utils.ids2str(nids)
+		nids = Utils.arrayList2array(mDb.queryColumn(Long.class,
+				"SELECT id FROM notes WHERE id IN " + Utils.ids2str(nids)
 						+ " AND id NOT IN (SELECT nid FROM cards)", 0));
 		_remNotes(nids);
 	}
@@ -970,8 +986,28 @@ public class Collection {
 		return mConf;
 	}
 
-	public int getScm() {
+	public void setConf(JSONObject conf) {
+		mConf = conf;
+	}
+
+	public long getScm() {
 		return mScm;
+	}
+
+	public boolean getServer() {
+		return mServer;
+	}
+
+	public void setLs(long ls) {
+		mLs = ls;
+	}
+
+	public void setUsn(int usn) {
+		mUsn = usn;
+	}
+
+	public long getMod() {
+		return mMod;
 	}
 
 	public int getUsn() {
@@ -992,6 +1028,10 @@ public class Collection {
 
 	public String getPath() {
 		return mPath;
+	}
+
+	public void setServer(boolean server) {
+		mServer = server;
 	}
 
 }

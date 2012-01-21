@@ -46,6 +46,7 @@ import org.json.JSONObject;
 import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
@@ -83,6 +84,7 @@ import java.util.UUID;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.zip.Deflater;
+import java.util.zip.GZIPOutputStream;
 
 /**
  * TODO comments
@@ -474,6 +476,14 @@ public class Utils {
 //
 //        return list;
 //    }
+
+    public static long[] jsonArrayToLongArray(JSONArray jsonArray) throws JSONException {
+    	long[] ar = new long[jsonArray.length()];
+        for (int i = 0; i < jsonArray.length(); i++) {
+        	ar[i] = jsonArray.getLong(i);
+        }
+        return ar;
+    }
         
     /**
      * Fields
@@ -638,9 +648,9 @@ public class Utils {
      * @return a compressed byte array.
      * @throws java.io.IOException
      */
-    public static byte[] compress(byte[] bytesToCompress) throws IOException {
+    public static byte[] compress(byte[] bytesToCompress, int comp) throws IOException {
         // Compressor with highest level of compression.
-        Deflater compressor = new Deflater(Deflater.BEST_COMPRESSION);
+        Deflater compressor = new Deflater(comp, true);
         // Give the compressor the data to compress.
         compressor.setInput(bytesToCompress);
         compressor.finish();
@@ -651,7 +661,7 @@ public class Utils {
         ByteArrayOutputStream bos = new ByteArrayOutputStream(bytesToCompress.length);
 
         // Compress the data
-        byte[] buf = new byte[bytesToCompress.length + 100];
+        byte[] buf = new byte[65536];
         while (!compressor.finished()) {
             bos.write(buf, 0, compressor.deflate(buf));
         }

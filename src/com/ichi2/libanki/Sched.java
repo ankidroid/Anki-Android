@@ -1596,7 +1596,7 @@ public class Sched {
 	 */
 	private void buryNote(long nid) {
 		mCol.setDirty();
-		ArrayList<Long> cids = mCol.getDb().queryColumn(long.class,
+		ArrayList<Long> cids = mCol.getDb().queryColumn(Long.class,
 				"SELECT id FROM card WHERE nid = " + nid, 0);
 		long[] ids = new long[cids.size()];
 		int i = 0;

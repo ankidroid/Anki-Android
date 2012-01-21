@@ -42,7 +42,7 @@ public class Note {
 	private JSONObject mModel;
 	private long mDid;
 	private long mMid;
-	private int mMod;
+	private long mMod;
 	private int mUsn;
 	private boolean mNewlyAdded;
 	private ArrayList<String> mTags;
@@ -51,7 +51,7 @@ public class Note {
 	private int mFlags;
 
 	private TreeMap<String, Object[]> mFMap;
-	private int mScm;
+	private long mScm;
 
 	public Note(Collection col, long id) {
 		this(col, null, id);

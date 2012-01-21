@@ -302,7 +302,17 @@ public class Decks {
 		}
 	}
 
-	// TODO: update
+	/** Add or update an existing deck. Used for syncing and merging. */
+	public void update(JSONObject g) {
+		try {
+			mDecks.put(g.getLong("id"), g);
+		} catch (JSONException e) {
+			throw new RuntimeException(e);
+		}
+		maybeAddToActive();
+		// mark registry changed, but don't bump mod time
+		save();
+	}
 
 	/** Rename deck prefix to NAME if not exists. Updates children. */
 	public void rename(JSONObject g, String newName) {
@@ -431,10 +441,8 @@ public class Decks {
 		}
 	}
 
-	// sendhome
-
 	private long[] cids(long did) {
-		ArrayList<Long> cids = mCol.getDb().queryColumn(long.class,
+		ArrayList<Long> cids = mCol.getDb().queryColumn(Long.class,
 				"SELECT id FROM cards WHERE did = " + did, 0);
 		long[] result = new long[cids.size()];
 		for (int i = 0; i < cids.size(); i++) {
@@ -484,7 +492,6 @@ public class Decks {
 			// current deck
 			mCol.getConf().put("curDeck", Long.toString(did));
 			// and active decks (current + all children)
-			// TODO: test, if order is correct
 			TreeMap<String, Long> actv = children(did);
 			actv.put(name, did);
 			mCol.getConf().put("activeDecks", actv.values().toString());
@@ -537,7 +544,19 @@ public class Decks {
 	 * ***********************************
 	 */
 
-	// TODO: beforeUpload
+	public void beforeUpload() {
+		try {
+			for (JSONObject d : all()) {
+				d.put("usn", 0);
+			}
+			for (JSONObject c : allConf()) {
+				c.put("usn", 0);
+			}
+		} catch (JSONException e) {
+			throw new RuntimeException(e);
+		}
+		save();
+	}
 
 	public String getActualDescription() {
 		try {

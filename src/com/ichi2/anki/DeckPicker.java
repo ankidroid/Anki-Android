@@ -111,6 +111,12 @@ public class DeckPicker extends Activity {
 	private static final int DIALOG_CONTEXT_MENU = 9;
 	private static final int DIALOG_REPAIR_DECK = 10;
 	private static final int DIALOG_NO_SPACE_LEFT = 11;
+	private static final int DIALOG_SYNC_CONFLICT_RESOLUTION = 12;
+	private static final int DIALOG_CONNECTION_ERROR = 13;
+	private static final int DIALOG_USER_NOT_LOGGED_IN = 14;
+	private static final int DIALOG_SYNC_LOG = 15;
+
+	private String mDialogMessage;
 
 	/**
 	 * Menus
@@ -184,11 +190,11 @@ public class DeckPicker extends Activity {
     private static final int REPORT_ERROR = 9;
     private static final int SHOW_STUDYOPTIONS = 10;
     private static final int ADD_NOTE = 11;
+    private static final int LOG_IN = 12;
 
 	private Collection mCol;
 
 	private StyledProgressDialog mProgressDialog;
-	private StyledDialog mSyncLogAlert;
 	private StyledDialog mUpgradeNotesAlert;
 	private StyledDialog mMissingMediaAlert;
 	private StyledDialog mDeckNotLoadedAlert;
@@ -386,7 +392,7 @@ public class DeckPicker extends Activity {
 	};
 
 
-	private Connection.TaskListener mSyncAllDecksListener = new Connection.TaskListener() {
+	private Connection.TaskListener mSyncListener = new Connection.TaskListener() {
 
 		@Override
 		public void onDisconnected() {
@@ -396,7 +402,7 @@ public class DeckPicker extends Activity {
 		@Override
 		public void onPreExecute() {
 			if (mProgressDialog == null || !mProgressDialog.isShowing()) {
-				mProgressDialog = StyledProgressDialog.show(DeckPicker.this, getResources().getString(R.string.sync_all_title), getResources().getString(R.string.sync_prepare_syncing), true);
+				mProgressDialog = StyledProgressDialog.show(DeckPicker.this, null, getResources().getString(R.string.sync_prepare_syncing), true);
 			}
 		}
 
@@ -411,8 +417,8 @@ public class DeckPicker extends Activity {
                 values[1] = res.getString(R.string.sync_downloading_media, done, total);
             }
 			if (mProgressDialog != null && mProgressDialog.isShowing()) {
-				mProgressDialog.setTitle((String) values[0]);
-				mProgressDialog.setMessage((String) values[1]);
+//				mProgressDialog.setTitle((String) values[0]);
+				mProgressDialog.setMessage((String) values[0]);
 			}
 		}
 
@@ -422,12 +428,32 @@ public class DeckPicker extends Activity {
 			if (mProgressDialog != null) {
 				mProgressDialog.dismiss();
 			}
-
-			mSyncLogAlert
-					.setMessage(getSyncLogMessage((ArrayList<HashMap<String, String>>) data.result));
-			mSyncLogAlert.show();
-			mDeckIsSelected = false;
-//			populateDeckList(mPrefDeckPath);
+			if (!data.success) {
+				if (data.result instanceof String) {
+					String result = (String) data.result;
+					if (result.equals("badAuth")) {
+						showDialog(DIALOG_USER_NOT_LOGGED_IN);
+					} else if (result.equals("clockOff")) {
+						// TODO
+						mDialogMessage = "XXX" + result;
+						showDialog(DIALOG_SYNC_LOG);
+					} else if (result.equals("fullSync")) {
+						showDialog(DIALOG_SYNC_CONFLICT_RESOLUTION);
+					} else {
+						mDialogMessage = "XXX" + result;
+						showDialog(DIALOG_SYNC_LOG);
+					}
+				}
+			} else {
+				updateDecksList((TreeSet<Object[]>) data.result);
+				mDialogMessage = "XXX erfolg";
+				showDialog(DIALOG_SYNC_LOG);
+			}
+//			mSyncLogAlert
+//					.setMessage(getSyncLogMessage((ArrayList<HashMap<String, String>>) data.result));
+//			mSyncLogAlert.show();
+//			mDeckIsSelected = false;
+////			populateDeckList(mPrefDeckPath);
             mSyncButton.setClickable(true);
 		}
 	};
@@ -797,8 +823,7 @@ public class DeckPicker extends Activity {
 		mSyncButton.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				mSyncButton.setEnabled(false);
-				//syncAllDecks();
+				sync();
 			}
 		});
 		
@@ -1040,65 +1065,56 @@ public class DeckPicker extends Activity {
 			// dialog = builder.create();
 			// break;
 			//
-			// case DIALOG_NO_CONNECTION:
-			// builder.setTitle(res.getString(R.string.connection_error_title));
-			// builder.setIcon(android.R.drawable.ic_dialog_alert);
-			// builder.setMessage(res.getString(R.string.connection_needed));
-			// builder.setPositiveButton(res.getString(R.string.ok), null);
-			// dialog = builder.create();
-			// break;
-			//
-			// case DIALOG_USER_NOT_LOGGED_IN:
-			// builder.setTitle(res.getString(R.string.connection_error_title));
-			// builder.setIcon(android.R.drawable.ic_dialog_alert);
-			// builder.setMessage(res.getString(R.string.no_user_password_error_message));
-			// builder.setPositiveButton(res.getString(R.string.log_in), new
-			// OnClickListener() {
-			//
-			// @Override
-			// public void onClick(DialogInterface dialog, int which) {
-			// Intent myAccount = new Intent(StudyOptions.this, MyAccount.class);
-			// myAccount.putExtra("notLoggedIn", true);
-			// startActivityForResult(myAccount, LOG_IN);
-			// if (UIUtils.getApiLevel() > 4) {
-			// ActivityTransitionAnimation.slide(StudyOptions.this,
-			// ActivityTransitionAnimation.LEFT);
-			// }
-			// }
-			// });
-			// builder.setNegativeButton(res.getString(R.string.cancel), null);
-			// dialog = builder.create();
-			// break;
-			// case DIALOG_CONNECTION_ERROR:
-			// builder.setTitle(res.getString(R.string.connection_error_title));
-			// builder.setIcon(android.R.drawable.ic_dialog_alert);
-			// builder.setMessage(res.getString(R.string.connection_error_message));
-			// builder.setPositiveButton(res.getString(R.string.retry), new
-			// OnClickListener() {
-			//
-			// @Override
-			// public void onClick(DialogInterface dialog, int which) {
-			// syncDeck(null);
-			// }
-			// });
-			// builder.setNegativeButton(res.getString(R.string.cancel), null);
-			// dialog = builder.create();
-			// break;
-			//
-			// case DIALOG_SYNC_CONFLICT_RESOLUTION:
-			// builder.setTitle(res.getString(R.string.sync_conflict_title));
-			// builder.setIcon(android.R.drawable.ic_input_get);
-			// builder.setMessage(res.getString(R.string.sync_conflict_message));
-			// builder.setPositiveButton(res.getString(R.string.sync_conflict_local),
-			// mSyncConflictResolutionListener);
-			// builder.setNeutralButton(res.getString(R.string.sync_conflict_remote),
-			// mSyncConflictResolutionListener);
-			// builder.setNegativeButton(res.getString(R.string.sync_conflict_cancel),
-			// mSyncConflictResolutionListener);
-			// builder.setCancelable(false);
-			// dialog = builder.create();
-			// break;
-			// case DIALOG_DECK_NOT_LOADED:
+
+	 	case DIALOG_USER_NOT_LOGGED_IN:
+	 		builder.setTitle(res.getString(R.string.connection_error_title));
+	 		builder.setIcon(android.R.drawable.ic_dialog_alert);
+	 		builder.setMessage(res.getString(R.string.no_user_password_error_message));
+	 		builder.setPositiveButton(res.getString(R.string.log_in), new
+	 				DialogInterface.OnClickListener() {
+	 			@Override
+	 			public void onClick(DialogInterface dialog, int which) {
+	 				Intent myAccount = new Intent(DeckPicker.this, MyAccount.class);
+	 				myAccount.putExtra("notLoggedIn", true);
+	 				startActivityForResult(myAccount, LOG_IN);
+	 				if (UIUtils.getApiLevel() > 4) {
+	 					ActivityTransitionAnimation.slide(DeckPicker.this, ActivityTransitionAnimation.FADE);
+	 				}
+	 			}
+			 });
+			 builder.setNegativeButton(res.getString(R.string.cancel), null);
+			 dialog = builder.create();
+			 break;
+
+	 	case DIALOG_CONNECTION_ERROR:
+			 builder.setTitle(res.getString(R.string.connection_error_title));
+			 builder.setIcon(android.R.drawable.ic_dialog_alert);
+			 builder.setMessage(res.getString(R.string.connection_error_message));
+			 builder.setPositiveButton(res.getString(R.string.retry), new DialogInterface.OnClickListener() {
+				 @Override
+				 public void onClick(DialogInterface dialog, int which) {
+					 sync(null);
+				 }
+			 });
+			 builder.setNegativeButton(res.getString(R.string.cancel), null);
+			 dialog = builder.create();
+			 break;
+			
+		case DIALOG_SYNC_CONFLICT_RESOLUTION:
+			builder.setTitle(res.getString(R.string.sync_conflict_title));
+			builder.setIcon(android.R.drawable.ic_input_get);
+			builder.setMessage(res.getString(R.string.sync_conflict_message));
+			builder.setPositiveButton(res.getString(R.string.sync_conflict_local),
+					mSyncConflictResolutionListener);
+		 	builder.setNeutralButton(res.getString(R.string.sync_conflict_remote),
+		 			mSyncConflictResolutionListener);
+		 	builder.setNegativeButton(res.getString(R.string.sync_conflict_cancel),
+		 			mSyncConflictResolutionListener);
+		 	builder.setCancelable(false);
+		 	dialog = builder.create();
+		 	break;
+
+		 	// case DIALOG_DECK_NOT_LOADED:
 			// builder.setTitle(res.getString(R.string.backup_manager_title));
 			// builder.setIcon(android.R.drawable.ic_dialog_alert);
 			// builder.setPositiveButton(res.getString(R.string.retry), new
@@ -1212,27 +1228,31 @@ public class DeckPicker extends Activity {
 			// break;
 			//
 
-//		case DIALOG_USER_NOT_LOGGED_IN_SYNC:
 //		case DIALOG_USER_NOT_LOGGED_IN_DOWNLOAD:
-//			builder.setTitle(res.getString(R.string.connection_error_title));
-//			builder.setIcon(android.R.drawable.ic_dialog_alert);
-//			builder.setMessage(res
-//					.getString(R.string.no_user_password_error_message));
+
+		case DIALOG_USER_NOT_LOGGED_IN_SYNC:
+			builder.setTitle(res.getString(R.string.connection_error_title));
+			builder.setIcon(android.R.drawable.ic_dialog_alert);
+			builder.setMessage(res.getString(R.string.no_user_password_error_message));
+			builder.setNegativeButton(res.getString(R.string.cancel), null);
+			builder.setPositiveButton(res.getString(R.string.log_in),
+					new DialogInterface.OnClickListener() {
+						@Override
+						public void onClick(DialogInterface dialog, int which) {
+							Intent myAccount = new Intent(DeckPicker.this, MyAccount.class);
+							myAccount.putExtra("notLoggedIn", true);
+							startActivityForResult(myAccount, LOG_IN_FOR_SYNC);
+					        if (UIUtils.getApiLevel() > 4) {
+					            ActivityTransitionAnimation.slide(DeckPicker.this, ActivityTransitionAnimation.FADE);
+					        }
+						}
+					});
+			dialog = builder.create();			
+			break;
+
+
+//		case DIALOG_USER_NOT_LOGGED_IN_DOWNLOAD:
 //			if (id == DIALOG_USER_NOT_LOGGED_IN_SYNC) {
-//				builder.setPositiveButton(res.getString(R.string.log_in),
-//						new DialogInterface.OnClickListener() {
-//
-//							@Override
-//							public void onClick(DialogInterface dialog, int which) {
-//								Intent myAccount = new Intent(DeckPicker.this,
-//										MyAccount.class);
-//								myAccount.putExtra("notLoggedIn", true);
-//								startActivityForResult(myAccount, LOG_IN_FOR_SYNC);
-//						        if (UIUtils.getApiLevel() > 4) {
-//						            ActivityTransitionAnimation.slide(DeckPicker.this, ActivityTransitionAnimation.LEFT);
-//						        }
-//							}
-//						});
 //			} else {
 //				builder.setPositiveButton(res.getString(R.string.log_in),
 //						new DialogInterface.OnClickListener() {
@@ -1406,14 +1426,12 @@ public class DeckPicker extends Activity {
 			dialog = builder.create();
 			break;
 
-//		case DIALOG_SYNC_LOG:
-//			builder.setTitle(res.getString(R.string.sync_log_title));
-//			builder.setPositiveButton(res.getString(R.string.ok), null);
-//			dialog = builder.create();
-//			mSyncLogAlert.setOwnerActivity(DeckPicker.this);
-//			mSyncLogAlert = dialog;
-//			break;
-//
+		case DIALOG_SYNC_LOG:
+			builder.setTitle(res.getString(R.string.sync_log_title));
+			builder.setPositiveButton(res.getString(R.string.ok), null);
+			dialog = builder.create();
+			break;
+
 //			// Upgrade notes dialog
 //			builder = new StyledDialog.Builder(this);
 //			builder.setTitle(res.getString(
@@ -1580,6 +1598,9 @@ public class DeckPicker extends Activity {
 			mCurrentDeckFilename = mDeckList.get(mContextMenuPosition).get("name");
 			ad.setMessage(String.format(res.getString(R.string.repair_deck_dialog), mCurrentDeckFilename, BackupManager.BROKEN_DECKS_SUFFIX.replace("/", "")));
 			break;
+		case DIALOG_SYNC_LOG:
+			ad.setMessage(mDialogMessage);
+			break;
 		}
 	}
 
@@ -1703,73 +1724,35 @@ public class DeckPicker extends Activity {
 	}
 
 
-	private void syncAllDecks() {
-		if (AnkiDroidApp.isUserLoggedIn()) {
-            mSyncButton.setClickable(false);
-			SharedPreferences preferences = PrefSettings
-					.getSharedPrefs(getBaseContext());
-			String username = preferences.getString("username", "");
-			String password = preferences.getString("password", "");
-			Connection.syncAllDecks(mSyncAllDecksListener,
-					new Connection.Payload(new Object[] { username,
-							password, mDeckList }));
-		} else {
+	private void sync() {
+		sync(null);
+	}
+	private void sync(String syncConflictResolution) {
+		SharedPreferences preferences = PrefSettings.getSharedPrefs(getBaseContext());
+		String hkey = preferences.getString("hkey", "");
+		if (hkey.length() == 0) {
 			showDialog(DIALOG_USER_NOT_LOGGED_IN_SYNC);
+		} else {
+			mSyncButton.setClickable(false);
+			Connection.sync(mSyncListener, new Connection.Payload(new Object[] { hkey, false, syncConflictResolution }));
 		}
 	}
 	
-//    private OnClickListener mSyncConflictResolutionListener = new OnClickListener() {
-//        @Override
-//        public void onClick(DialogInterface dialog, int which) {
-//            switch (which) {
-//                case DialogInterface.BUTTON_POSITIVE:
-//                    syncDeck("keepLocal");
-//                    break;
-//                case DialogInterface.BUTTON_NEUTRAL:
-//                    syncDeck("keepRemote");
-//                    break;
-//                case DialogInterface.BUTTON_NEGATIVE:
-//                default:
-//            }
-//        }
-//    };
-
-    private void syncDeckWithPrompt() {
-//        if (AnkiDroidApp.isUserLoggedIn()) {
-//            Deck deck = DeckManager.getMainDeck();
-//            if (deck != null) {
-//                // Close existing sync progress dialog
-//                if (mProgressDialog != null && mProgressDialog.isShowing()) {
-//                    mProgressDialog.dismiss();
-//                }
-//                // Prompt user for conflict resolution
-//                mCurrentDialogMessage = String.format(getResources().getString(R.string.sync_conflict_message), deck.getDeckName());
-//                showDialog(DIALOG_SYNC_CONFLICT_RESOLUTION);
-//            }
-//        } else {
-//        	showDialog(DIALOG_USER_NOT_LOGGED_IN);
-//        }
-    }
-
-
-    private void syncDeck(String conflictResolution) {
-//        SharedPreferences preferences = PrefSettings.getSharedPrefs(getBaseContext());
-//
-//        String username = preferences.getString("username", "");
-//        String password = preferences.getString("password", "");
-//
-//        if (AnkiDroidApp.isUserLoggedIn()) {
-//            Deck deck = DeckManager.getMainDeck();
-//            if (deck != null) {
-//                Log.i(AnkiDroidApp.TAG, "Synchronizing deck " + mDeckFilename + ", conflict resolution: " + conflictResolution);
-//                Log.i(AnkiDroidApp.TAG, String.format(Utils.ENGLISH_LOCALE, "Before syncing - mod: %f, last sync: %f", deck.getModified(), deck.getLastSync()));
-//                Connection.syncDeck(mSyncListener, new Connection.Payload(new Object[] { username, password, deck, conflictResolution, true }));
-//            }
-//        } else {
-//        	showDialog(DIALOG_USER_NOT_LOGGED_IN);
-//        }
-    }
-
+    private DialogInterface.OnClickListener mSyncConflictResolutionListener = new DialogInterface.OnClickListener() {
+        @Override
+        public void onClick(DialogInterface dialog, int which) {
+            switch (which) {
+                case DialogInterface.BUTTON_POSITIVE:
+                    sync("upload");
+                    break;
+                case DialogInterface.BUTTON_NEUTRAL:
+                    sync("download");
+                    break;
+                case DialogInterface.BUTTON_NEGATIVE:
+                default:
+            }
+        }
+    };
 
 
     @Override
@@ -1881,7 +1864,7 @@ public class DeckPicker extends Activity {
         } else if (requestCode == LOG_IN_FOR_DOWNLOAD && resultCode == RESULT_OK) {
         	openPersonalDeckPicker();
         } else if (requestCode == LOG_IN_FOR_SYNC && resultCode == RESULT_OK) {
-        	syncAllDecks();
+        	sync();
         }
     }
 

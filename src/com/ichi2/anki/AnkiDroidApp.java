@@ -167,19 +167,6 @@ public class AnkiDroidApp extends Application {
     }
 
 
-    public static boolean isUserLoggedIn() {
-        SharedPreferences preferences = PrefSettings.getSharedPrefs(sInstance);
-        String username = preferences.getString("username", "");
-        String password = preferences.getString("password", "");
-
-        if (!username.equalsIgnoreCase("") && !password.equalsIgnoreCase("")) {
-            return true;
-        }
-
-        return false;
-    }
-
-
     public static int getDisplayHeight() {
         Display display = ((WindowManager) sInstance.getApplicationContext().getSystemService(Context.WINDOW_SERVICE))
                 .getDefaultDisplay();

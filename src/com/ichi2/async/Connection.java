@@ -1,5 +1,6 @@
 /***************************************************************************************
  * Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com>                                   *
+ * Copyright (c) 2012 Norbert Nagold <norbert.nagold@gmail.com>                         *
  *                                                                                      *
  * This program is free software; you can redistribute it and/or modify it under        *
  * the terms of the GNU General Public License as published by the Free Software        *
@@ -30,15 +31,19 @@ import android.util.Log;
 import com.ichi2.anki.AnkiDatabaseManager;
 import com.ichi2.anki.AnkiDb;
 import com.ichi2.anki.AnkiDroidApp;
-import com.ichi2.anki.AnkiDroidProxy;
 import com.ichi2.anki.Feedback;
 import com.ichi2.anki2.R;
 import com.ichi2.anki.Reviewer;
+import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Decks;
-import com.ichi2.libanki.SyncClient;
 import com.ichi2.libanki.Utils;
+import com.ichi2.sync.FullSyncer;
+import com.ichi2.sync.HttpSyncer;
+import com.ichi2.sync.RemoteServer;
+import com.ichi2.sync.Syncer;
 import com.tomgibara.android.veecheck.util.PrefSettings;
 
+import org.apache.http.HttpResponse;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -58,14 +63,15 @@ import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.TreeSet;
 
 public class Connection extends AsyncTask<Connection.Payload, Object, Connection.Payload> {
 
     public static final int TASK_TYPE_LOGIN = 0;
-    public static final int TASK_TYPE_GET_SHARED_DECKS = 1;
+    public static final int TASK_TYPE_SYNC = 1;
+    public static final int TASK_TYPE_GET_SHARED_DECKS = 4;
     public static final int TASK_TYPE_GET_PERSONAL_DECKS = 2;
     public static final int TASK_TYPE_SYNC_ALL_DECKS = 3;
-    public static final int TASK_TYPE_SYNC_DECK = 4;
     public static final int TASK_TYPE_SYNC_DECK_FROM_PAYLOAD = 5;
     public static final int TASK_TYPE_SEND_CRASH_REPORT = 6;
     public static final int TASK_TYPE_DOWNLOAD_MEDIA = 7;
@@ -161,8 +167,8 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
     }
 
 
-    public static Connection syncDeck(TaskListener listener, Payload data) {
-        data.taskType = TASK_TYPE_SYNC_DECK;
+    public static Connection sync(TaskListener listener, Payload data) {
+        data.taskType = TASK_TYPE_SYNC;
         return launchConnectionTask(listener, data);
     }
 
@@ -196,17 +202,17 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
             case TASK_TYPE_LOGIN:
                 return doInBackgroundLogin(data);
 
-            case TASK_TYPE_GET_SHARED_DECKS:
-                return doInBackgroundGetSharedDecks(data);
+//            case TASK_TYPE_GET_SHARED_DECKS:
+//                return doInBackgroundGetSharedDecks(data);
+//
+//            case TASK_TYPE_GET_PERSONAL_DECKS:
+//                return doInBackgroundGetPersonalDecks(data);
+//
+//            case TASK_TYPE_SYNC_ALL_DECKS:
+//                return doInBackgroundSyncAllDecks(data);
 
-            case TASK_TYPE_GET_PERSONAL_DECKS:
-                return doInBackgroundGetPersonalDecks(data);
-
-            case TASK_TYPE_SYNC_ALL_DECKS:
-                return doInBackgroundSyncAllDecks(data);
-
-            case TASK_TYPE_SYNC_DECK:
-                return doInBackgroundSyncDeck(data);
+            case TASK_TYPE_SYNC:
+                return doInBackgroundSync(data);
 
             case TASK_TYPE_SYNC_DECK_FROM_PAYLOAD:
                 return doInBackgroundSyncDeckFromPayload(data);
@@ -223,139 +229,121 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
     }
 
 
-    public static void cancelGetSharedDecks() {
-       	AnkiDroidProxy.resetSharedDecks();
-    	sInstance.cancel(true);
-    }
-
-
     private Payload doInBackgroundLogin(Payload data) {
-        try {
-            String username = (String) data.data[0];
-            String password = (String) data.data[1];
-            AnkiDroidProxy server = new AnkiDroidProxy(username, password);
-
-            int status = server.connect(false);
-            if (status != AnkiDroidProxy.LOGIN_OK) {
-                data.success = false;
-                data.returnType = status;
-            }
-        } catch (Exception e) {
-            data.success = false;
-            data.exception = e;
-            Log.e(AnkiDroidApp.TAG, "Error trying to log in");
-        }
-        return data;
-    }
-
-
-    private Payload doInBackgroundGetSharedDecks(Payload data) {
-//    	DeckManager.closeMainDeck();
-        try {
-            data.result = AnkiDroidProxy.getSharedDecks();
-        } catch (OutOfMemoryError e) {
-            data.success = false;
-            data.returnType = RETURN_TYPE_OUT_OF_MEMORY;
-	    	Log.e(AnkiDroidApp.TAG, "doInBackgroundGetSharedDecks: OutOfMemoryError: " + e);
-        } catch (Exception e) {
-            data.success = false;
-            data.exception = e;
-            Log.e(AnkiDroidApp.TAG, "doInBackgroundGetSharedDecks - Error getting shared decks = " + e.getMessage());
-            Log.e(AnkiDroidApp.TAG, Log.getStackTraceString(e));
-        }
-        return data;
-    }
-
-
-    private Payload doInBackgroundGetPersonalDecks(Payload data) {
-        Resources res = sContext.getResources();
-//    	DeckManager.closeMainDeck();
-        try {
-            String username = (String) data.data[0];
-            String password = (String) data.data[1];
-            AnkiDroidProxy server = new AnkiDroidProxy(username, password);
-
-            int connectResult = server.connect(false);
-            if (connectResult != AnkiDroidProxy.LOGIN_OK) {
-                if (connectResult == AnkiDroidProxy.LOGIN_INVALID_USER_PASS) {
-                    data.result = res.getString(R.string.invalid_username_password);
-                } else if (connectResult == AnkiDroidProxy.LOGIN_OLD_VERSION) {
-                    data.result = String.format(res.getString(R.string.sync_log_old_version), res.getString(R.string.link_ankidroid));
-                } else if (connectResult == AnkiDroidProxy.LOGIN_TOO_BUSY) {
-                    data.result = res.getString(R.string.sync_too_busy);
-                } else {
-                    data.result = res.getString(R.string.login_generic_error);
-                }
-                data.success = false;
-                return data;
-            }
-
-            data.result = server.getPersonalDecks();
-        } catch (Exception e) {
-            data.success = false;
-            data.result = null;
-            data.exception = e;
-            Log.e(AnkiDroidApp.TAG, "doInBackgroundGetPersonalDecks - Error getting personal decks = " + e.getMessage());
-            Log.e(AnkiDroidApp.TAG, Log.getStackTraceString(e));
-        }
-        return data;
-    }
-
-
-    private Payload doInBackgroundSyncAllDecks(Payload data) {
-        Log.i(AnkiDroidApp.TAG, "doInBackgroundSyncAllDecks");
-        ArrayList<HashMap<String, String>> decksChangelogs = new ArrayList<HashMap<String, String>>();
-
         String username = (String) data.data[0];
         String password = (String) data.data[1];
-        //Log.i(AnkiDroidApp.TAG, "username = " + username);
-        //Log.i(AnkiDroidApp.TAG, "password = " + password);
-
-//        DeckManager.closeAllDecks();
-
-        ArrayList<HashMap<String, String>> decksToSync = (ArrayList<HashMap<String, String>>) data.data[2];
-        for (HashMap<String, String> deckToSync : decksToSync) {
-            Log.i(AnkiDroidApp.TAG, "Synchronizing deck");
-            String deckPath = deckToSync.get("filepath");
-            try {
-                Decks deck = null;//DeckManager.getDeck(deckPath, DeckManager.REQUESTING_ACTIVITY_SYNCCLIENT, true);
-
-                Payload syncDeckData = new Payload(new Object[] { username, password, deck, null, false });
-                syncDeckData = doInBackgroundSyncDeck(syncDeckData);
-
-//                DeckManager.closeDeck(deckPath);
-
-                decksChangelogs.add((HashMap<String, String>) syncDeckData.result);
-            } catch (Exception e) {
-                Log.e(AnkiDroidApp.TAG, "Exception e = " + e.getMessage());
-                // Probably, there was an error trying to open the deck, so we can not retrieve the deck name from it
-                String deckName = deckPath.substring(deckPath.lastIndexOf("/") + 1);
-                deckName = deckName.substring(0, deckName.length() - ".anki".length());
-
-                // Create sync changelog and add it to the list
-                HashMap<String, String> deckChangelog = new HashMap<String, String>();
-                deckChangelog.put("deckName", deckName);
-                deckChangelog.put("message", sContext.getResources().getString(R.string.sync_log_error_message));
-
-                decksChangelogs.add(deckChangelog);
-            }
+        HttpSyncer server = new RemoteServer(null);
+        HttpResponse ret = server.hostKey(username, password);
+        String hostkey = null;
+        boolean valid = false;
+        data.returnType = HttpSyncer.getReturnType(ret);
+        if (data.returnType == 200) {
+			try {
+				hostkey = HttpSyncer.getDataJSONObject(ret).getString("key");
+				valid = (hostkey != null) && (hostkey.length() > 0);
+			} catch (JSONException e) {
+				valid = false;
+			}            	
         }
-
-        data.result = decksChangelogs;
+        if (valid) {
+        	data.success = true;
+        	data.data = new String[] {username, hostkey};
+        } else {
+        	data.success = false;
+        }
         return data;
     }
 
-    
+    private Payload doInBackgroundSync(Payload data) {
+    	String hkey = (String)data.data[0];
+    	boolean media = (Boolean) data.data[1];
+    	String conflictResolution = (String) data.data[2];
 
-    private Payload doInBackgroundSyncDeck(Payload data) {
-//        Resources res = sContext.getResources();
+    	Collection col = Collection.currentCollection();
+    	String path = col.getPath();
+
+    	HttpSyncer server = new RemoteServer(hkey);
+    	Syncer client = new Syncer(col, server);
+    	long sentTotal = 0;
+    	long recvTotal = 0;
+    	
+    	// TODO...
+
+    	// note mediaUSN for later
+    	//mMediaUsn = client.getMediaUsn();
+
+    	// run sync and check state
+    	if (conflictResolution == null) {
+			Log.i(AnkiDroidApp.TAG, "Sync - starting sync");
+			publishProgress(R.string.sync_prepare_syncing);
+    		String ret = client.sync(this);
+    		if (ret.equals("badAuth") || ret.equals("clockOff") || ret.equals("fullSync") || ret.equals("error")) {
+    			data.success = false;
+    			data.result = ret;
+    			return data;
+    		}
+    		// save and note success state
+    		col.save();
+    		if (ret.equals("noChanges")) {
+    			publishProgress("XXX nochanges");
+    		} else {
+    			publishProgress("XXX success");
+    		}
+    	} else {
+			publishProgress(R.string.sync_preparing_full_sync_message);
+    		server = new FullSyncer(col, hkey);
+    		if (conflictResolution.equals("upload")) {
+    			Log.i(AnkiDroidApp.TAG, "Sync - fullsync - upload collection");
+    			HttpResponse ret = server.upload(this);
+    			if (ret == null || !HttpSyncer.getDataString(ret).equals(HttpSyncer.ANKIWEB_STATUS_OK)) {
+        			data.success = false;
+        			data.result = HttpSyncer.getReturnType(ret);
+        			return data;
+    			}
+    		} else if (conflictResolution.equals("download")) {
+    			Log.i(AnkiDroidApp.TAG, "Sync - fullsync - download collection");
+    			publishProgress(R.string.sync_downloading_message);
+    			HttpResponse ret = server.download(this);
+    			if (ret == null) {
+        			data.success = false;
+//        			data.result = HttpSyncer.getReturnType(ret);
+        			return data;
+    			}
+    		}
+    		col = Collection.openCollection(path);
+    	}
+    	// then move on to media sync
+		TreeSet<Object[]> decks = col.getSched().deckDueTree(true);
+		data.result = decks;
+
+    	if (media) {
+//		server = new RemoteMediaServer(hkey);
+//		client = MediaSyncer(mCol, server);
+//		ret = client.sync(mediaUsn);
+//		if (ret.equals("noMediaChanges") {
+//			publishProgress("XXX noMediachanges");
+//		} else {
+//			publishProgress("XXX mediaSuccess");
+//		}
+    	}
+    	data.success = true;
+    	return data;
+    }
+
+
+    public void publishProgress(int id) {
+    	super.publishProgress(sContext.getResources().getString(id));
+    }
+
+
+
+   	
 //        HashMap<String, String> syncChangelog = new HashMap<String, String>();
 //        String username = (String) data.data[0];
 //        String password = (String) data.data[1];
 //        Decks deck = (Decks) data.data[2];
 //        String deckPath = "";//deck.getDeckPath();
 //        String syncName = deckPath.substring(deckPath.lastIndexOf("/") + 1, deckPath.length() - 5);
-//        String conflictResolution = (String) data.data[3];
 //        boolean singleDeckSync = (Boolean) data.data[4];
 //
 //        try {
@@ -607,14 +595,13 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
 //
 //        data.result = syncChangelog;
 //        return data;
-        return null;
-    }
 
 
-    private Payload doInBackgroundSyncDeckFromPayload(Payload data) {
+
+	private Payload doInBackgroundSyncDeckFromPayload(Payload data) {
         Log.i(AnkiDroidApp.TAG, "SyncDeckFromPayload");
         Decks deck = (Decks) data.data[0];
-        SyncClient client = null;//new SyncClient(deck);
+        Syncer client = null;//new SyncClient(deck);
         BufferedReader bufPython;
         try {
             bufPython = new BufferedReader(new FileReader("/sdcard/jsonObjectPython.txt"));
@@ -887,4 +874,64 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
             success = true;
         }
     }
+
+
+
+//    public static void cancelGetSharedDecks() {
+//       	HttpSyncer.resetSharedDecks();
+//    	sInstance.cancel(true);
+//    }
+
+
+//    private Payload doInBackgroundGetSharedDecks(Payload data) {
+////    	DeckManager.closeMainDeck();
+//        try {
+//            data.result = HttpSyncer.getSharedDecks();
+//        } catch (OutOfMemoryError e) {
+//            data.success = false;
+//            data.returnType = RETURN_TYPE_OUT_OF_MEMORY;
+//	    	Log.e(AnkiDroidApp.TAG, "doInBackgroundGetSharedDecks: OutOfMemoryError: " + e);
+//        } catch (Exception e) {
+//            data.success = false;
+//            data.exception = e;
+//            Log.e(AnkiDroidApp.TAG, "doInBackgroundGetSharedDecks - Error getting shared decks = " + e.getMessage());
+//            Log.e(AnkiDroidApp.TAG, Log.getStackTraceString(e));
+//        }
+//        return data;
+//    }
+//
+//
+//    private Payload doInBackgroundGetPersonalDecks(Payload data) {
+//        Resources res = sContext.getResources();
+////    	DeckManager.closeMainDeck();
+//        try {
+//            String username = (String) data.data[0];
+//            String password = (String) data.data[1];
+//            HttpSyncer server = new HttpSyncer(username, password);
+//
+//            int connectResult = server.connect(false);
+//            if (connectResult != HttpSyncer.LOGIN_OK) {
+//                if (connectResult == HttpSyncer.LOGIN_INVALID_USER_PASS) {
+//                    data.result = res.getString(R.string.invalid_username_password);
+//                } else if (connectResult == HttpSyncer.LOGIN_OLD_VERSION) {
+//                    data.result = String.format(res.getString(R.string.sync_log_old_version), res.getString(R.string.link_ankidroid));
+//                } else if (connectResult == HttpSyncer.LOGIN_TOO_BUSY) {
+//                    data.result = res.getString(R.string.sync_too_busy);
+//                } else {
+//                    data.result = res.getString(R.string.login_generic_error);
+//                }
+//                data.success = false;
+//                return data;
+//            }
+//
+//            data.result = server.getPersonalDecks();
+//        } catch (Exception e) {
+//            data.success = false;
+//            data.result = null;
+//            data.exception = e;
+//            Log.e(AnkiDroidApp.TAG, "doInBackgroundGetPersonalDecks - Error getting personal decks = " + e.getMessage());
+//            Log.e(AnkiDroidApp.TAG, Log.getStackTraceString(e));
+//        }
+//        return data;
+//    }
 }

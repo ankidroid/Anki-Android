@@ -31,6 +31,7 @@ import com.samskivert.mustache.Template;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Map;
 import java.util.TreeMap;
 
 import org.json.JSONArray;
@@ -175,7 +176,17 @@ public class Models {
      */
     public void flush() {
     	if (mChanged) {
-    		mCol.getDb().getDatabase().execSQL("UPDATE col SET models = " + mModels.toString());
+    		JSONObject array = new JSONObject();
+			try {
+	    		for (Map.Entry<Long, JSONObject> o : mModels.entrySet()) {
+					array.put(Long.toString(o.getKey()), o.getValue());
+	    		}
+			} catch (JSONException e) {
+				throw new RuntimeException(e);
+			}
+    		ContentValues val = new ContentValues();  		
+    		val.put("models", array.toString());
+    		mCol.getDb().getDatabase().update("col", val, null, null);
     		mChanged = false;
     	}
     }
@@ -256,7 +267,18 @@ public class Models {
     // new
     // rem
     // add
-    // update
+
+    /** Add or update an existing model. Used for syncing and merging. */
+    public void update(JSONObject m) {
+    	try {
+			mModels.put(m.getLong("id"), m);
+		} catch (JSONException e) {
+			throw new RuntimeException(e);
+		}
+    	// mark registry changed, but don't bump mod time
+    	save();
+    }
+
     // _setid
 
     public boolean have(long id) {
@@ -530,7 +552,16 @@ public class Models {
      * ***********************************************************************************************
      */
 
-    // beforeupload
+    public void beforeUpload() {
+		try {
+	    	for (JSONObject m : all()) {
+				m.put("usn", 0);
+	    	}
+		} catch (JSONException e) {
+			throw new RuntimeException(e);
+		}
+    	save();
+    }
     
     
     /**

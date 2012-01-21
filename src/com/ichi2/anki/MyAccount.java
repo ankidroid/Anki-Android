@@ -24,6 +24,7 @@ import android.content.res.Resources;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.inputmethod.InputMethodManager;
@@ -34,6 +35,7 @@ import android.widget.TextView;
 import com.ichi2.anim.ActivityTransitionAnimation;
 import com.ichi2.async.Connection;
 import com.ichi2.async.Connection.Payload;
+import com.ichi2.sync.HttpSyncer;
 import com.ichi2.themes.StyledDialog;
 import com.ichi2.themes.StyledProgressDialog;
 import com.ichi2.themes.Themes;
@@ -63,8 +65,8 @@ public class MyAccount extends Activity {
         initAllContentViews();
         initAllAlertDialogs();
 
-        if (AnkiDroidApp.isUserLoggedIn()) {
-            SharedPreferences preferences = PrefSettings.getSharedPrefs(getBaseContext());
+        SharedPreferences preferences = PrefSettings.getSharedPrefs(getBaseContext());
+        if (preferences.getString("hkey", "").length() > 0) {
             String username = preferences.getString("username", "");
             mUsernameLoggedIn.setText(username);
             setContentView(mLoggedIntoMyAccountView);
@@ -92,11 +94,11 @@ public class MyAccount extends Activity {
 //    }
 
 
-    private void saveUserInformation(String username, String password) {
+    private void saveUserInformation(String username, String hkey) {
         SharedPreferences preferences = PrefSettings.getSharedPrefs(getBaseContext());
         Editor editor = preferences.edit();
         editor.putString("username", username);
-        editor.putString("password", password);
+        editor.putString("hkey", hkey);
         editor.commit();
     }
 
@@ -108,9 +110,6 @@ public class MyAccount extends Activity {
 
         String username = mUsername.getText().toString();
         String password = mPassword.getText().toString();
-
-        // Log.i(AnkiDroidApp.TAG, "Username = " + username);
-        // Log.i(AnkiDroidApp.TAG, "Password = " + password);
 
         /*
          * Commented awaiting the resolution of the next issue: http://code.google.com/p/anki/issues/detail?id=1932
@@ -130,7 +129,7 @@ public class MyAccount extends Activity {
         SharedPreferences preferences = PrefSettings.getSharedPrefs(getBaseContext());
         Editor editor = preferences.edit();
         editor.putString("username", "");
-        editor.putString("password", "");
+        editor.putString("hkey", "");
         editor.commit();
 
         setContentView(mLoginToMyAccountView);
@@ -196,13 +195,14 @@ public class MyAccount extends Activity {
         builder.setPositiveButton(res.getString(R.string.ok), null);
         mNoConnectionAlert = builder.create();
 
-	builder = new StyledDialog.Builder(this);
+        builder = new StyledDialog.Builder(this);
         builder.setTitle(res.getString(R.string.log_in));
         builder.setIcon(android.R.drawable.ic_dialog_alert);
         builder.setMessage(res.getString(R.string.invalid_username_password));
+        builder.setPositiveButton(res.getString(R.string.ok), null);
         mInvalidUserPassAlert = builder.create();
 
-	builder = new StyledDialog.Builder(this);
+        builder = new StyledDialog.Builder(this);
         builder.setTitle(res.getString(R.string.connection_error_title));
         builder.setIcon(android.R.drawable.ic_dialog_alert);
         builder.setMessage(res.getString(R.string.connection_error_message));
@@ -230,7 +230,7 @@ public class MyAccount extends Activity {
 
         @Override
         public void onPreExecute() {
-            Log.i(AnkiDroidApp.TAG, "onPreExcecute");
+            Log.i(AnkiDroidApp.TAG, "MyAccount - onPreExcecute");
             if (mProgressDialog == null || !mProgressDialog.isShowing()) {
                 mProgressDialog = StyledProgressDialog.show(MyAccount.this, "",
                         getResources().getString(R.string.alert_logging_message), true);
@@ -240,22 +240,21 @@ public class MyAccount extends Activity {
 
         @Override
         public void onPostExecute(Payload data) {
-            Log.i(AnkiDroidApp.TAG, "onPostExecute, succes = " + data.success);
+            Log.i(AnkiDroidApp.TAG, "MyAccount - onPostExecute, succes = " + data.success);
             if (mProgressDialog != null) {
                 mProgressDialog.dismiss();
             }
 
             if (data.success) {
+                Log.i(AnkiDroidApp.TAG, "User successfully logged in!");
                 saveUserInformation((String) data.data[0], (String) data.data[1]);
-
-                Log.i(AnkiDroidApp.TAG, "User successfully logged!");
 
                 Intent i = MyAccount.this.getIntent();
                 if (i.hasExtra("notLoggedIn") && i.getExtras().getBoolean("notLoggedIn", false)) {
                 	MyAccount.this.setResult(RESULT_OK, i);
                 	finish();
 			        if (UIUtils.getApiLevel() > 4) {
-			            ActivityTransitionAnimation.slide(MyAccount.this, ActivityTransitionAnimation.RIGHT);
+			            ActivityTransitionAnimation.slide(MyAccount.this, ActivityTransitionAnimation.FADE);
 			        }
                 } else {
                     // Show logged view
@@ -263,7 +262,7 @@ public class MyAccount extends Activity {
                     setContentView(mLoggedIntoMyAccountView);
                 }
             } else {
-                if (data.returnType == AnkiDroidProxy.LOGIN_INVALID_USER_PASS) {
+                if (data.returnType == 403) {
                     if (mInvalidUserPassAlert != null) {
                         mInvalidUserPassAlert.show();
                     }
@@ -283,5 +282,19 @@ public class MyAccount extends Activity {
             }
         }
     };
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event)  {
+        if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
+        	Log.i(AnkiDroidApp.TAG, "MyAccount - onBackPressed()");
+        	finish();
+            if (UIUtils.getApiLevel() > 4) {
+                ActivityTransitionAnimation.slide(this, ActivityTransitionAnimation.FADE);
+            }
+        	return true;
+        }
+        return super.onKeyDown(keyCode, event);
+    }
+
 
 }

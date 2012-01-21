@@ -29,6 +29,8 @@ import java.util.TreeSet;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.content.ContentValues;
+
 public class Tags {
 
 	private Collection mCol;
@@ -70,7 +72,9 @@ public class Tags {
 					throw new RuntimeException(e);
 				}
     		}
-    		mCol.getDb().getDatabase().execSQL("UPDATE col SET tags = " + tags.toString());
+    		ContentValues val = new ContentValues();
+    		val.put("tags", tags.toString());
+    		mCol.getDb().getDatabase().update("col", val, null, null);
     		mChanged = false;
     	}
     }
@@ -121,7 +125,9 @@ public class Tags {
 		register(mCol.getDb().queryColumn(String.class, "SELECT DISTINCT FROM notes" + lim, 0));
     }
 
-    //allitems
+    public TreeMap<String, Integer> allItems() {
+    	return mTags;
+    }
 
     public void save() {
     	mChanged = true;
@@ -246,6 +252,11 @@ public class Tags {
      * ***********************************************************************************************
      */
 
-    // before upload
+	public void beforeUpload() {
+		for (String k : mTags.keySet()) {
+			mTags.put(k, 0);
+		}
+		save();
+	}
 
 }
