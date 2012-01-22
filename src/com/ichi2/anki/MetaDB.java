@@ -98,10 +98,10 @@ public class MetaDB {
             if (columnNumber > 0) {
                 if (columnNumber < 7) {
                     mMetaDb.execSQL(
-                            "ALTER TABLE widgetStatus"
+                            "ALTER TABLE widgetStatus "
                                     + "ADD COLUMN eta INTEGER NOT NULL DEFAULT '0'");
                     mMetaDb.execSQL(
-                            "ALTER TABLE widgetStatus"
+                            "ALTER TABLE widgetStatus "
                                     + "ADD COLUMN time INTEGER NOT NULL DEFAULT '0'");
                 }
             } else {
