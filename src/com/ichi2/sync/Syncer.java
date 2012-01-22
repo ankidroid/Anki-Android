@@ -38,26 +38,20 @@ import com.ichi2.utils.ConvUtils;
 
 public class Syncer {
 
-	/* Constants used on the multipart message */
-	private static final String MIME_BOUNDARY = "Anki-sync-boundary";
-//    private static final String END = "\r\n";
-//    private static final String TWO_HYPHENS = "--";
-//
 	Collection mCol;
 	HttpSyncer mServer;
 	long mRMod;
-	int mRScm;
+	long mRScm;
 	int mMaxUsn;
 	int mMediaUsn;
 	long mLMod;
-	int mLScm;
+	long mLScm;
 	int mMinUsn;
 	boolean mLNewer;
 	JSONObject mRChg;
 
 	private LinkedList<String> mTablesLeft;
 	private Cursor mCursor;
-	
 
     public Syncer (Collection col, HttpSyncer server) {
     	mCol = col;
@@ -70,29 +64,34 @@ public class Syncer {
     	mCol.save();
     	// step 1: login & metadata
     	HttpResponse ret = mServer.meta();
-    	if (ret == null || HttpSyncer.getReturnType(ret) == 403) {
+    	int returntype = ret.getStatusLine().getStatusCode();
+    	if (ret == null || returntype == 403){
     		return "badAuth";
+    	} else if (returntype == 503) {
+    		return "serverNotAvailable";
+    	} else if (returntype != 200) {
+    		return "error";
     	}
-    	int rts;
-    	int lts;
+    	long rts;
+    	long lts;
     	try {
         	JSONArray ra = HttpSyncer.getDataJSONArray(ret);
 			mRMod = ra.getLong(0);
-	    	mRScm = ra.getInt(1);
+	    	mRScm = ra.getLong(1);
 	    	mMaxUsn = ra.getInt(2);
-	    	rts = ra.getInt(3);
+	    	rts = ra.getLong(3);
 	    	mMediaUsn = ra.getInt(4);
 
 	    	JSONArray la = meta();
 			mLMod = la.getLong(0);
-	    	mLScm = la.getInt(1);
+	    	mLScm = la.getLong(1);
 	    	mMinUsn = la.getInt(2);
-	    	lts = la.getInt(3);
+	    	lts = la.getLong(3);
 	    	if (Math.abs(rts - lts) > 300) {
 	    		return "clockOff";
 	    	}
 	    	if (mLMod == mRMod) {
-	    		return "noChanges";
+//	    		return "noChanges";
 	    	} else if (mLScm != mRScm) {
 	    		return "fullSync";
 	    	}
@@ -106,13 +105,14 @@ public class Syncer {
 	    	o.put("graves", lrem);
 	    	JSONObject rrem = mServer.start(o);
 	    	if (rrem == null) {
-//	    		return "error";
+	    		return "error";
 	    	}
-//	    	remove(rrem);
+	    	remove(rrem);
 	    	// ... and small objects
-	    	// TODO
 	    	JSONObject lchg = changes();
-	    	JSONObject rchg = mServer.applyChanges(lchg);
+	    	JSONObject sch = new JSONObject();
+	    	sch.put("changes", lchg);
+	    	JSONObject rchg = mServer.applyChanges(sch);
 	    	if (rchg == null) {
 	    		return "error";
 	    	}
@@ -120,10 +120,12 @@ public class Syncer {
 	    	// step 3: stream large tables from server
 	    	while (true) {
 	    		JSONObject chunk = mServer.chunk();
-		    	if (chunk == null) {
+	    		if (chunk == null) {
 		    		return "error";
 		    	}
-	    		applyChunk(chunk);
+	    		JSONObject pch = new JSONObject();
+	    		pch.put("chunk", chunk);
+	    		applyChunk(pch);
 	    		if (chunk.getBoolean("done")) {
 	    			break;
 	    		}
@@ -131,21 +133,24 @@ public class Syncer {
 	    	// step 4: stream to server
 	    	while (true) {
 	    		JSONObject chunk = chunk();
-	    		mServer.applyChunk(chunk);
+	    		JSONObject sech = new JSONObject();
+	    		sech.put("chunk", chunk);
+	    		mServer.applyChunk(sech);
 	    		if (chunk.getBoolean("done")) {
 	    			break;
 	    		}
 	    	}
 		} catch (JSONException e) {
 			throw new RuntimeException(e);
+		} catch (IllegalStateException e) {
+			throw new RuntimeException(e);
 		}
     	// finalize
-    	// TODO
-//    	long mod = mServer.finish();
+    	long mod = mServer.finish();
 //    	if (mod == 0) {
 //    		return "error";
 //    	}
-//    	finish(mod);
+    	finish(mod);
     	return "success";
     }
 
@@ -280,7 +285,7 @@ public class Syncer {
         			mCursor = null;
         			// if we're the client, mark the objects as having been sent
         			if (!mCol.getServer()) {
-        				mCol.getDb().getDatabase().execSQL("UPDATE " + curTable + " SET usn=" + mMaxUsn + " WHERE usn=-1", null);
+        				mCol.getDb().getDatabase().execSQL("UPDATE " + curTable + " SET usn=" + mMaxUsn + " WHERE usn=-1");
         			}
         		}
         		buf.put(curTable, rows);
@@ -552,13 +557,12 @@ public class Syncer {
     private void mergeRevlog(JSONArray logs) {
     	for (int i = 0; i < logs.length(); i++) {
     		try {
-				mCol.getDb().getDatabase().execSQL("INSERT OR IGNORE INTO revlog VALUES (?,?,?,?,?,?,?,?,?)", ConvUtils.jsonArray2Objects(logs.getJSONArray(i)));
+				mCol.getDb().getDatabase().execSQL("INSERT OR IGNORE INTO revlog VALUES (?,?,?,?,?,?,?,?,?)", ConvUtils.jsonArray2Objects(logs.getJSONArray(i)));    				
 			} catch (SQLException e) {
 				throw new RuntimeException(e);
 			} catch (JSONException e) {
 				throw new RuntimeException(e);
 			}
-	// TODO: SQLiteStatement statement = ankiDB.getDatabase().compileStatemen
     	}
     	
     }
@@ -597,15 +601,13 @@ public class Syncer {
     private void mergeCards(JSONArray cards) {
     	for (Object[] r : newerRows(cards, "cards", 4)) {
     		mCol.getDb().getDatabase().execSQL("INSERT OR REPLACE INTO cards VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)", r);
-	// TODO: SQLiteStatement statement = ankiDB.getDatabase().compileStatemen
     	}
     }
    
     private void mergeNotes(JSONArray notes) {
     	for (Object[] n : newerRows(notes, "notes", 4)) {
     		mCol.getDb().getDatabase().execSQL("INSERT OR REPLACE INTO notes VALUES (?,?,?,?,?,?,?,?,?,?,?,?)", n);
-    		mCol.updateFieldCachel(new long[]{(Long) n[0]});
-	// TODO: SQLiteStatement statement = ankiDB.getDatabase().compileStatemen
+    		mCol.updateFieldCache(new long[]{(Long) n[0]});
     	}
     }
    

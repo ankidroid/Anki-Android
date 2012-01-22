@@ -101,7 +101,6 @@ public class DeckPicker extends Activity {
 	 */
 	private static final int DIALOG_NO_SDCARD = 0;
 	private static final int DIALOG_USER_NOT_LOGGED_IN_SYNC = 1;
-	private static final int DIALOG_USER_NOT_LOGGED_IN_DOWNLOAD = 2;
 	private static final int DIALOG_NO_CONNECTION = 3;
 	private static final int DIALOG_DELETE_DECK = 4;
 	private static final int DIALOG_SELECT_STATISTICS_TYPE = 5;
@@ -113,7 +112,6 @@ public class DeckPicker extends Activity {
 	private static final int DIALOG_NO_SPACE_LEFT = 11;
 	private static final int DIALOG_SYNC_CONFLICT_RESOLUTION = 12;
 	private static final int DIALOG_CONNECTION_ERROR = 13;
-	private static final int DIALOG_USER_NOT_LOGGED_IN = 14;
 	private static final int DIALOG_SYNC_LOG = 15;
 
 	private String mDialogMessage;
@@ -432,7 +430,7 @@ public class DeckPicker extends Activity {
 				if (data.result instanceof String) {
 					String result = (String) data.result;
 					if (result.equals("badAuth")) {
-						showDialog(DIALOG_USER_NOT_LOGGED_IN);
+						showDialog(DIALOG_USER_NOT_LOGGED_IN_SYNC);
 					} else if (result.equals("clockOff")) {
 						// TODO
 						mDialogMessage = "XXX" + result;
@@ -1065,26 +1063,6 @@ public class DeckPicker extends Activity {
 			// dialog = builder.create();
 			// break;
 			//
-
-	 	case DIALOG_USER_NOT_LOGGED_IN:
-	 		builder.setTitle(res.getString(R.string.connection_error_title));
-	 		builder.setIcon(android.R.drawable.ic_dialog_alert);
-	 		builder.setMessage(res.getString(R.string.no_user_password_error_message));
-	 		builder.setPositiveButton(res.getString(R.string.log_in), new
-	 				DialogInterface.OnClickListener() {
-	 			@Override
-	 			public void onClick(DialogInterface dialog, int which) {
-	 				Intent myAccount = new Intent(DeckPicker.this, MyAccount.class);
-	 				myAccount.putExtra("notLoggedIn", true);
-	 				startActivityForResult(myAccount, LOG_IN);
-	 				if (UIUtils.getApiLevel() > 4) {
-	 					ActivityTransitionAnimation.slide(DeckPicker.this, ActivityTransitionAnimation.FADE);
-	 				}
-	 			}
-			 });
-			 builder.setNegativeButton(res.getString(R.string.cancel), null);
-			 dialog = builder.create();
-			 break;
 
 	 	case DIALOG_CONNECTION_ERROR:
 			 builder.setTitle(res.getString(R.string.connection_error_title));

@@ -55,8 +55,8 @@ public class Card implements Cloneable {
 	private long mNid;
 	private long mDid;
 	private int mOrd;
-	private int mCrt = Utils.intNow();
-	private int mMod;
+	private long mCrt = Utils.intNow();
+	private long mMod;
 	private int mType = 0;
 	private int mQueue = 0;
 	private int mDue = 0;
@@ -129,7 +129,7 @@ public class Card implements Cloneable {
 			mNid = cursor.getLong(1);
 			mDid = cursor.getLong(2);
 			mOrd = cursor.getInt(3);
-			mMod = cursor.getInt(4);
+			mMod = cursor.getLong(4);
 			mUsn = cursor.getInt(5);
 			mType = cursor.getInt(6);
 			mQueue = cursor.getInt(7);
@@ -492,7 +492,7 @@ public class Card implements Cloneable {
 		mId = id;
 	}
 
-	public int getMod() {
+	public long getMod() {
 		return mMod;
 	}
 
@@ -500,7 +500,7 @@ public class Card implements Cloneable {
 		mMod = Utils.intNow();
 	}
 
-	public void setMod(int mod) {
+	public void setMod(long mod) {
 		mMod = mod;
 	}
 

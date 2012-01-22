@@ -91,7 +91,7 @@ public class Sched {
 	private int mReportLimit;
 	private int mReps;
 	private int mToday;
-	public int mDayCutoff;
+	public long mDayCutoff;
 
 	private int mNewCount;
 	private int mLrnCount;
@@ -1773,7 +1773,7 @@ public class Sched {
 		return mToday;
 	}
 
-	public int getDayCutoff() {
+	public long getDayCutoff() {
 		return mDayCutoff;
 	}
 

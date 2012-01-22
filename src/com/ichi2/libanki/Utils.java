@@ -134,11 +134,11 @@ public class Utils {
 
 
     /**The time in integer seconds. Pass scale=1000 to get milliseconds. */
-    public static int intNow() {
+    public static long intNow() {
     	return intNow(1);
     }
-	public static int intNow(int scale) {
-        return (int) (now() * scale);
+	public static long intNow(int scale) {
+        return (long) (now() * scale);
     }
 
     // timetable
@@ -416,10 +416,10 @@ public class Utils {
     }
 
     /** Return a non-conflicting timestamp for table. */
-    public static int timestampID(AnkiDb db, String table) {
+    public static long timestampID(AnkiDb db, String table) {
     	// be careful not to create multiple objects without flushing them, or they
         // may share an ID.
-    	int t = intNow(1000);
+    	long t = intNow(1000);
     	while (db.queryScalar("SELECT id FROM " + table + " WHERE id = " + t, false) != 0) {
     		t += 1;
     	}

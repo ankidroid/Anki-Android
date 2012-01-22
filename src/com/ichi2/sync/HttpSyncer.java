@@ -56,7 +56,7 @@ public class HttpSyncer {
      * Connection settings
      */
     public static final String SYNC_HOST = "beta.ankiweb.net";
-    public static final String SYNC_URL = "http://" + SYNC_HOST + "/sync/";
+    public static final String SYNC_URL = "http://" + SYNC_HOST + "/sync/"; // "http://219.108.60.108:6500/sync/";//
     public static final String SYNC_SEARCH = "http://" + SYNC_HOST + "/file/search";
     public static final int SYNC_VER = 0;
     
@@ -222,15 +222,9 @@ public class HttpSyncer {
 	}
 
 
-	public JSONObject finish() {
+	public long finish() {
 		// TODO Auto-generated method stub
-		return null;
-	}
-
-
-	public JSONObject finish(long kw) {
-		// TODO Auto-generated method stub
-		return null;
+		return 0;
 	}
 
 }

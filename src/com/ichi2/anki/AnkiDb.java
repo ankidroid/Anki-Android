@@ -155,6 +155,22 @@ public class AnkiDb {
     }
 
 
+    public String queryString(String query) throws SQLException {
+        Cursor cursor = null;
+        try {
+            cursor = mDatabase.rawQuery(query, null);
+            if (!cursor.moveToNext()) {
+                throw new SQLException("No result for query: " + query);            		
+            }
+            return cursor.getString(0);
+        } finally {
+            if (cursor != null) {
+                cursor.close();
+            }
+        }
+    }
+
+
     public long queryLongScalar(String query) throws SQLException {
     	return queryLongScalar(query, true);
     }
@@ -243,4 +259,17 @@ public class AnkiDb {
             return null;
         }
     }
+
+
+	public void executeMany(String sql, ArrayList<Object[]> list) {
+		mDatabase.beginTransaction();
+		try {
+			for (Object[] o : list) {
+				mDatabase.execSQL(sql, o);
+			}
+			mDatabase.setTransactionSuccessful();
+		} finally {
+			mDatabase.endTransaction();
+		}
+	}
 }

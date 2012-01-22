@@ -16,6 +16,7 @@
 
 package com.ichi2.sync;
 
+import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -48,7 +49,8 @@ public class FullSyncer extends HttpSyncer {
 
 	@Override
 	public HttpResponse download(Connection connection) {
-		HttpResponse ret = super.req("download");
+		HttpResponse ret = super.req("download", new ByteArrayInputStream("{}".toString()
+				.getBytes()));
 		InputStream cont;
 		try {
 			cont = ret.getEntity().getContent();

@@ -19,32 +19,23 @@ package com.ichi2.async;
 
 import android.app.Application;
 import android.content.Context;
-import android.content.SharedPreferences;
-import android.content.res.Resources;
 import android.database.Cursor;
-import android.database.SQLException;
 import android.net.ConnectivityManager;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.util.Log;
 
-import com.ichi2.anki.AnkiDatabaseManager;
-import com.ichi2.anki.AnkiDb;
 import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.Feedback;
 import com.ichi2.anki2.R;
-import com.ichi2.anki.Reviewer;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Decks;
-import com.ichi2.libanki.Utils;
 import com.ichi2.sync.FullSyncer;
 import com.ichi2.sync.HttpSyncer;
 import com.ichi2.sync.RemoteServer;
 import com.ichi2.sync.Syncer;
-import com.tomgibara.android.veecheck.util.PrefSettings;
 
 import org.apache.http.HttpResponse;
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -277,7 +268,7 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
 			Log.i(AnkiDroidApp.TAG, "Sync - starting sync");
 			publishProgress(R.string.sync_prepare_syncing);
     		String ret = client.sync(this);
-    		if (ret.equals("badAuth") || ret.equals("clockOff") || ret.equals("fullSync") || ret.equals("error")) {
+    		if (ret.equals("badAuth") || ret.equals("clockOff") || ret.equals("fullSync") || ret.equals("error") || ret.equals("serverNotAvailable")) {
     			data.success = false;
     			data.result = ret;
     			return data;
@@ -304,6 +295,7 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
     			Log.i(AnkiDroidApp.TAG, "Sync - fullsync - download collection");
     			publishProgress(R.string.sync_downloading_message);
     			HttpResponse ret = server.download(this);
+    			// todo: catch failure
     			if (ret == null) {
         			data.success = false;
 //        			data.result = HttpSyncer.getReturnType(ret);

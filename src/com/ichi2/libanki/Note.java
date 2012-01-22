@@ -103,7 +103,7 @@ public class Note {
 			mGuId = cursor.getString(0);
 			mMid = cursor.getLong(1);
 			mDid = cursor.getLong(2);
-			mMod = cursor.getInt(3);
+			mMod = cursor.getLong(3);
 			mUsn = cursor.getInt(4);
 			mFields = Utils.splitFields(cursor.getString(6));
 			mTags = mCol.getTags().split(cursor.getString(5));

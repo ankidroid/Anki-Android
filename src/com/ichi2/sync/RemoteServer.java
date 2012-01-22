@@ -26,12 +26,11 @@ import org.json.JSONObject;
 
 import com.ichi2.libanki.Utils;
 
-
 public class RemoteServer extends HttpSyncer {
 
 	public RemoteServer(String hkey) {
 		super(hkey);
-	} 
+	}
 
 	/** Returns hkey or none if user/pw incorrect. */
 	@Override
@@ -40,7 +39,8 @@ public class RemoteServer extends HttpSyncer {
 			JSONObject jo = new JSONObject();
 			jo.put("u", user);
 			jo.put("p", pw);
-			return super.req("hostKey", new ByteArrayInputStream(jo.toString().getBytes()), false);
+			return super.req("hostKey", new ByteArrayInputStream(jo.toString()
+					.getBytes()), false);
 		} catch (JSONException e) {
 			return null;
 		}
@@ -51,7 +51,8 @@ public class RemoteServer extends HttpSyncer {
 		try {
 			JSONObject jo = new JSONObject();
 			jo.put("v", SYNC_VER);
-			return super.req("meta", new ByteArrayInputStream(jo.toString().getBytes()));
+			return super.req("meta", new ByteArrayInputStream(jo.toString()
+					.getBytes()));
 		} catch (JSONException e) {
 			throw new RuntimeException(e);
 		}
@@ -69,7 +70,8 @@ public class RemoteServer extends HttpSyncer {
 
 	@Override
 	public JSONObject chunk() {
-		return _run("chunk", null);
+		JSONObject co = new JSONObject();
+		return _run("chunk", co);
 	}
 
 	@Override
@@ -82,20 +84,35 @@ public class RemoteServer extends HttpSyncer {
 		return _run("applyChunk", kw);
 	}
 
-//	@Override
-//	public JSONObject finish() {
-//		return _run("finish", 0);
-//	}
-//
-//	@Override
-//	public JSONObject finish(long kw) {
-//		return _run("finish", kw);
-//	}
+	@Override
+	public long finish() {
+		try {
+			HttpResponse ret = super.req("finish", new ByteArrayInputStream(
+					"{}".getBytes()));
+			if (HttpSyncer.getReturnType(ret) == 200) {
+				InputStream content;
+				content = ret.getEntity().getContent();
+				String s = Utils.convertStreamToString(content);
+				if (s == null || s.equalsIgnoreCase("null") || s.length() == 0) {
+					return 0;
+				} else {
+					return Long.parseLong(s);
+				}
+			} else {
+				return 0;
+			}
+		} catch (IllegalStateException e) {
+			throw new RuntimeException(e);
+		} catch (IOException e) {
+			throw new RuntimeException(e);
+		}
+	}
 
 	private JSONObject _run(String cmd, JSONObject data) {
 		HttpResponse ret;
 		if (data != null) {
-			ret = super.req(cmd, new ByteArrayInputStream(data.toString().getBytes()));
+			ret = super.req(cmd, new ByteArrayInputStream(data.toString()
+					.getBytes()));
 		} else {
 			ret = super.req(cmd);
 		}

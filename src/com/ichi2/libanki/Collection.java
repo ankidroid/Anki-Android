@@ -65,7 +65,7 @@ public class Collection {
 	private int mRepsToday;
 
 	// BEGIN: SQL table columns
-	private int mCrt;
+	private long mCrt;
 	private long mMod;
 	private long mScm;
 	private boolean mDty;
@@ -131,7 +131,7 @@ public class Collection {
 	}
 
 	public String name() {
-		String n = "";
+		String n = (new File(mPath)).getName().replace(".anki2", "");
 		// TODO:
 		return n;
 	}
@@ -152,12 +152,12 @@ public class Collection {
 			if (!cursor.moveToFirst()) {
 				return false;
 			}
-			mCrt = cursor.getInt(0);
-			mMod = cursor.getInt(1);
-			mScm = cursor.getInt(2);
+			mCrt = cursor.getLong(0);
+			mMod = cursor.getLong(1);
+			mScm = cursor.getLong(2);
 			mDty = cursor.getInt(3) == 1;
 			mUsn = cursor.getInt(4);
-			mLs = cursor.getInt(5);
+			mLs = cursor.getLong(5);
 			try {
 				mConf = new JSONObject(cursor.getString(6));
 			} catch (JSONException e) {
@@ -220,17 +220,26 @@ public class Collection {
 		if (mDb.getMod()) {
 			flush(mod);
 			// mDb.commit();
-			// TODO:
+			// mDb.lock()
 			mDb.setMod(false);
 		}
-		// TODO:
+		_markOp(name);
+		mLastSave = Utils.now();
 	}
 
-	// autosave?
+	/** Save if 5 minutes has passed since last save. */
+	public void autosave() {
+		if ((Utils.now() - mLastSave) > 300) {
+			save();
+		}
+	}
 
 	/** make sure we don't accidentally bump mod time */
 	public void lock() {
+		// make sure we don't accidentally bump mod time
+		boolean mod = mDb.getMod();
 		// TODO
+		mDb.setMod(mod);
 	}
 
 	/**
@@ -259,12 +268,12 @@ public class Collection {
 				rollback();
 			}
 			if (!mServer) {
-				// TODO:
+//				mDb.getDatabase().execSQL("PRAGMA journal_mode = delete");
 			}
 			AnkiDatabaseManager.closeDatabase(mPath);
-			Log.i(AnkiDroidApp.TAG, "Collection closed");
 			mDb = null;
 			// mMedia.close();
+			Log.i(AnkiDroidApp.TAG, "Collection closed");
 		}
 	}
 
@@ -281,8 +290,13 @@ public class Collection {
 
 	/** Mark schema modified. Call this first so user can abort if necessary. */
 	public void modSchema() {
+		modSchema(true);
+	}
+	public void modSchema(boolean check) {
 		if (!schemaChanged()) {
-			// TODO
+			if (check) {
+				// TODO: ask user
+			}
 		}
 		mScm = Utils.intNow(1000);
 	}
@@ -553,12 +567,7 @@ public class Collection {
 			}
 		}
 		// bulk update
-		for (Object[] d : data) {
-			mDb.getDatabase()
-					.execSQL(
-							"INSERT INTO cards VALUES (?, ?, ?, ?, ?, ?, 0, 0, ?, 0, 0, 0, 0, 0, 0, 0)",
-							d);
-		}
+		mDb.executeMany("INSERT INTO cards VALUES (?, ?, ?, ?, ?, ?, 0, 0, ?, 0, 0, 0, 0, 0, 0, 0)", data);
 		return rem;
 	}
 
@@ -679,9 +688,16 @@ public class Collection {
 	}
 
 	/** Update field checksums and sort cache, after find&replace, etc. */
-	public void updateFieldCachel(long[] nids) {
+	public void updateFieldCache(long[] nids) {
 		String snids = Utils.ids2str(nids);
-		// TODO
+		ArrayList<Object[]> r = new ArrayList<Object[]>();
+		for (Object[] o : _fieldData(snids)) {
+			String[] fields = Utils.splitFields((String) o[2]);
+			JSONObject model = mModels.get((Long) o[1]);
+			// apply, relying on calling code to bump usn+mod
+			r.add(new Object[]{Utils.stripHTML(fields[mModels.sortIdx(model)]), Utils.fieldChecksum(fields[0]), o[0]});
+		}
+		mDb.executeMany("UPDATE notes SET sflds=?, csum=?, WHERE id=?", r);
 	}
 
 	/**
@@ -940,7 +956,8 @@ public class Collection {
 	}
 
 	private void _undoOp() {
-		// TODO
+		rollback();
+		clearUndo();
 	}
 
 	/**
@@ -949,19 +966,35 @@ public class Collection {
 	 * ************************************
 	 */
 
-	// fix integrity
-
-	public long optimize() {
-		File file = new File(mPath);
-		long size = file.length();
+	/** Fix possible problems and rebuild caches. */
+	public long fixIntegrity() {
 		save();
+		File file = new File(mPath);
+		long oldSize = file.length();
+		if (!mDb.queryString("PRAGMA integrity_check").equals("ok")) {
+			return -1;
+		}
+		// delete any notes with missing cards
+		ArrayList<Long> ids = mDb.queryColumn(Long.class, "SELECT id FROM notes WHERE id NOT IN (SELECT DISTINCT nid FROM cards)", 0);
+		_remNotes(Utils.arrayList2array(ids));
+		// tags
+		mTags.registerNotes();
+		// field cache
+		for (JSONObject m : mModels.all()) {
+			updateFieldCache(Utils.arrayList2array(mModels.nids(m)));
+		}
+		// and finally, optimize
+		optimize();
+		file = new File(mPath);
+		long newSize = file.length();
+		return (long)((oldSize - newSize) / 1024);
+	}
+
+	public void optimize() {
 		Log.i(AnkiDroidApp.TAG, "executing VACUUM statement");
 		mDb.getDatabase().execSQL("VACUUM");
 		Log.i(AnkiDroidApp.TAG, "executing ANALYZE statement");
 		mDb.getDatabase().execSQL("ANALYZE");
-		file = new File(mPath);
-		size -= file.length();
-		return size;
 	}
 
 	/**
@@ -1018,7 +1051,7 @@ public class Collection {
 		return mTags;
 	}
 
-	public int getCrt() {
+	public long getCrt() {
 		return mCrt;
 	}
 

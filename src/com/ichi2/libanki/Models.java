@@ -96,8 +96,8 @@ public class Models {
     // BEGIN SQL table entries
     private int mId;
     private String mName = "";
-    private int mCrt = Utils.intNow();
-    private int mMod = Utils.intNow();
+    private long mCrt = Utils.intNow();
+    private long mMod = Utils.intNow();
     private JSONObject mConf;
     private String mCss = "";
     private JSONArray mFields;
@@ -290,7 +290,15 @@ public class Models {
      * ***********************************************************************************************
      */
 
-    // nids
+    /** Note ids for M */
+    public ArrayList<Long> nids(JSONObject m) {
+    	try {
+			return mCol.getDb().queryColumn(Long.class, "SELECT id FROM notes WHERE mid = " + m.getLong("id"), 0);
+		} catch (JSONException e) {
+			throw new RuntimeException(e);
+		}
+    }
+    
     // usecounts
     
     /**
