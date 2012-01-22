@@ -282,7 +282,7 @@ public class MetaDB {
             if (cur.moveToNext()) {
                 return cur.getInt(0);
             } else {
-                return 0;
+                return 1;
             }
         } catch(Exception e) {
             Log.e("Error", "Error retrieving whiteboard state from MetaDB ", e);
