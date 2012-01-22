@@ -201,7 +201,7 @@ public class Collection {
 		values.put("usn", mUsn);
 		values.put("ls", mLs);
 		values.put("conf", mConf.toString());
-		mDb.getDatabase().update("col", values, null, null);
+		mDb.update("col", values);
 	}
 
 	/**
@@ -401,7 +401,7 @@ public class Collection {
 			values.put("usn", usn());
 			values.put("oid", id);
 			values.put("type", type);
-			mDb.getDatabase().insert("graves", null, values);
+			mDb.insert("graves", null, values);
 		}
 	}
 
@@ -500,7 +500,7 @@ public class Collection {
 	/**
 	 * Generate cards for non-empty templates, return ids to remove.
 	 */
-	public ArrayList<Long> genCards(int[] nids) {
+	public ArrayList<Long> genCards(long[] nids) {
 		// build map of (nid,ord) so we don't create dupes
 		String snids = Utils.ids2str(nids);
 		HashMap<Long, HashMap<Integer, Long>> have = new HashMap<Long, HashMap<Integer, Long>>();
@@ -655,11 +655,14 @@ public class Collection {
 		_remNotes(nids);
 	}
 
-	public void remEmptyCards(int[] ids) {
+	public void remEmptyCards(long[] ids) {
 		if (ids.length == 0) {
 			return;
 		}
-		// TODO
+		// TODO: ask user
+		if (true) {
+			remCards(ids);
+		}
 	}
 
 	/**

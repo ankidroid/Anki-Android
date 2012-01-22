@@ -490,8 +490,8 @@ public class DeckPicker extends Activity {
 				} else {
 					mDialogMessage = res.getString(R.string.sync_database_success);
 				}
+				showDialog(DIALOG_SYNC_LOG);
 			}
-			showDialog(DIALOG_SYNC_LOG);
             mSyncButton.setClickable(true);
 		}
 	};

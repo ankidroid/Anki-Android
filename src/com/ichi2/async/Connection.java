@@ -30,10 +30,10 @@ import com.ichi2.anki.Feedback;
 import com.ichi2.anki2.R;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Decks;
-import com.ichi2.sync.FullSyncer;
-import com.ichi2.sync.HttpSyncer;
-import com.ichi2.sync.RemoteServer;
-import com.ichi2.sync.Syncer;
+import com.ichi2.libanki.sync.FullSyncer;
+import com.ichi2.libanki.sync.HttpSyncer;
+import com.ichi2.libanki.sync.RemoteServer;
+import com.ichi2.libanki.sync.Syncer;
 
 import org.apache.http.HttpResponse;
 import org.json.JSONException;
@@ -231,7 +231,7 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
     private Payload doInBackgroundSync(Payload data) {
     	String hkey = (String)data.data[0];
     	boolean media = (Boolean) data.data[1];
-    	String conflictResolution = (String) data.data[2];
+    	String conflictResolution = "upload";//(String) data.data[2];
 
     	Collection col = Collection.currentCollection();
     	String path = col.getPath();
@@ -257,10 +257,10 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
     		// save and note success state
     		col.save();
     		if (retCode.equals("noChanges")) {
-    			publishProgress(R.string.sync_no_changes_message);
+//    			publishProgress(R.string.sync_no_changes_message);
     			noChanges = true;
     		} else {
-    			publishProgress(R.string.sync_database_success);
+//    			publishProgress(R.string.sync_database_success);
     		}
     	} else {
     		try {

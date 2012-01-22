@@ -191,7 +191,7 @@ public class Card implements Cloneable {
 		values.put("lapses", mLapses);
 		values.put("left", mLeft);
 		values.put("edue", mEDue);
-		mCol.getDb().getDatabase().update("cards", values, "id = " + mId, null);
+		mCol.getDb().update("cards", values, "id = " + mId, null);
 	}
 
 	public String getQuestion() {

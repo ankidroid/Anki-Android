@@ -166,8 +166,20 @@ public class Models {
     public void save() {
     	save(null, false);
     }
-    public void save(String m, boolean templates) {
-    	// TODO
+    public void save(JSONObject m, boolean templates) {
+    	if (m != null && m.has("id")) {
+    		try {
+				m.put("mod", Utils.intNow());
+	    		m.put("usn", mCol.getUsn());
+	    		_updateRequired(m);
+	    		if (templates) {
+	    			_syncTemplates(m);
+	    		}
+			} catch (JSONException e) {
+				throw new RuntimeException(e);
+			}
+    	}
+    	mChanged = true;
     }
 
     
@@ -186,7 +198,7 @@ public class Models {
 			}
     		ContentValues val = new ContentValues();  		
     		val.put("models", array.toString());
-    		mCol.getDb().getDatabase().update("col", val, null, null);
+    		mCol.getDb().update("col", val);
     		mChanged = false;
     	}
     }
@@ -389,7 +401,11 @@ public class Models {
     //remtemplate
     //_updatetemplords
     //movetemplate
-    //_syncTemplates
+
+    private void _syncTemplates(JSONObject m) {
+    	ArrayList<Long> rem = mCol.genCards(Utils.arrayList2array(nids(m)));
+    	mCol.remEmptyCards(Utils.arrayList2array(rem));
+    }
 
     
 //    public TreeMap<Integer, JSONObject> getTemplates() {
@@ -483,8 +499,41 @@ public class Models {
      * ***********************************************************************************************
      */
 
-    //_updaterequired
-    // _reqfortemplate
+    private void _updateRequired(JSONObject m) {
+    	JSONArray req = new JSONArray();
+    	ArrayList<String> flds = new ArrayList<String>();
+    	JSONArray fields;
+		try {
+			fields = m.getJSONArray("flds");
+	    	for (int i = 0; i < fields.length(); i++) {
+	    		flds.add(fields.getJSONObject(i).getString("name"));
+	    	}
+			boolean cloze = false;
+	    	JSONArray templates = m.getJSONArray("tmpls");
+	    	for (int i = 0; i < templates.length(); i++) {
+	    		JSONObject t = templates.getJSONObject(i);
+	    		Object[] ret = _reqForTemplate(m, flds, t);
+	    		if ((Boolean) ret[2]) {
+	    			cloze = true;
+	    		}
+	    		JSONArray r = new JSONArray();
+	    		r.put(t.getInt("ord"));
+	    		r.put(ret[0]);
+	    		r.put(ret[1]);
+	    		r.put(ret[2]);
+	    		req.put(r);
+	    	}
+	    	m.put("req", req);
+	    	m.put("cloze", cloze);
+		} catch (JSONException e) {
+			throw new RuntimeException(e);
+		}
+    }
+
+    private Object[] _reqForTemplate(JSONObject m, ArrayList<String> flds, JSONObject t) {
+    	// TODO
+    	return null;
+    }
 
 
     /** Given a joined field string, return available template ordinals */

@@ -15,7 +15,7 @@
  * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
  ****************************************************************************************/
 //
-package com.ichi2.sync;
+package com.ichi2.libanki.sync;
 
 import java.io.ByteArrayInputStream;
 import java.util.ArrayList;

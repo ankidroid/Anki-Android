@@ -14,7 +14,7 @@
  * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
  ****************************************************************************************/
 
-package com.ichi2.sync;
+package com.ichi2.libanki.sync;
 
 import com.byarger.exchangeit.EasySSLSocketFactory;
 import com.ichi2.async.Connection;

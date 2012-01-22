@@ -19,6 +19,7 @@
 
 package com.ichi2.anki;import com.ichi2.anki2.R;
 
+import android.content.ContentValues;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.SQLException;
@@ -282,6 +283,22 @@ public class AnkiDb {
 		} else {
 			this.getDatabase().execSQL(sql, object);
 		}
+	}
+
+	/** update must always be called via AnkiDb in order to mark the db as changed */
+	public int update(String table, ContentValues values) {
+		return update(table, values, null, null);
+	}
+	/** update must always be called via AnkiDb in order to mark the db as changed */
+	public int update(String table, ContentValues values, String whereClause, String[] whereArgs) {
+		mMod = true;
+		return getDatabase().update(table, values, whereClause, whereArgs);
+	}
+
+	/** insert must always be called via AnkiDb in order to mark the db as changed */
+	public long insert(String table, String nullColumnHack, ContentValues values) {
+		mMod = true;
+		return getDatabase().insert(table, nullColumnHack, values);
 	}
 
 

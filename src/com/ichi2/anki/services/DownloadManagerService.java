@@ -42,7 +42,7 @@ import com.ichi2.async.Connection.Payload;
 import com.ichi2.libanki.Card;
 import com.ichi2.libanki.Decks;
 import com.ichi2.libanki.Utils;
-import com.ichi2.sync.HttpSyncer;
+import com.ichi2.libanki.sync.HttpSyncer;
 import com.tomgibara.android.veecheck.util.PrefSettings;
 
 import java.io.DataOutputStream;

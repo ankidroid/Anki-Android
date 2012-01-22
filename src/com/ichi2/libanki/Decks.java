@@ -175,7 +175,7 @@ public class Decks {
 			} catch (JSONException e) {
 				throw new RuntimeException(e);
 			}
-			mCol.getDb().getDatabase().update("col", values, null, null);
+			mCol.getDb().update("col", values);
 			mChanged = false;
 		}
 	}

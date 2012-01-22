@@ -1,4 +1,4 @@
-package com.ichi2.sync;
+package com.ichi2.libanki.sync;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
@@ -8,6 +8,7 @@ import java.io.InputStream;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
 
 
 public class RemoteMediaServer extends HttpSyncer {

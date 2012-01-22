@@ -74,7 +74,7 @@ public class Tags {
     		}
     		ContentValues val = new ContentValues();
     		val.put("tags", tags.toString());
-    		mCol.getDb().getDatabase().update("col", val, null, null);
+    		mCol.getDb().update("col", val);
     		mChanged = false;
     	}
     }
