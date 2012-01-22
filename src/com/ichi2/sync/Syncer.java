@@ -17,6 +17,7 @@
 //
 package com.ichi2.sync;
 
+import java.io.ByteArrayInputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -30,6 +31,7 @@ import org.json.JSONObject;
 import android.database.Cursor;
 import android.database.SQLException;
 
+import com.ichi2.anki2.R;
 import com.ichi2.async.Connection;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Sched;
@@ -59,18 +61,16 @@ public class Syncer {
     }
 
     /** Returns 'noChanges', 'fullSync', or 'success'. */
-    public String sync(Connection con) {
+    public Object[] sync(Connection con) {
     	// if the deck has any pending changes, flush them first and bump mod time
     	mCol.save();
     	// step 1: login & metadata
     	HttpResponse ret = mServer.meta();
-    	int returntype = ret.getStatusLine().getStatusCode();
-    	if (ret == null || returntype == 403){
-    		return "badAuth";
-    	} else if (returntype == 503) {
-    		return "serverNotAvailable";
+    	int returntype = HttpSyncer.getReturnType(ret);
+    	if (returntype == 403){
+    		return new Object[] {"badAuth"};
     	} else if (returntype != 200) {
-    		return "error";
+    		return new Object[] {"error", returntype, HttpSyncer.getReason(ret)};
     	}
     	long rts;
     	long lts;
@@ -87,42 +87,51 @@ public class Syncer {
 	    	mLScm = la.getLong(1);
 	    	mMinUsn = la.getInt(2);
 	    	lts = la.getLong(3);
-	    	if (Math.abs(rts - lts) > 300) {
-	    		return "clockOff";
+	    	long diff = Math.abs(rts - lts);
+	    	if (diff > 300) {
+	    		return new Object[]{"clockOff", diff};
 	    	}
 	    	if (mLMod == mRMod) {
-	    		return "noChanges";
+	    		return new Object[]{"noChanges"};
 	    	} else if (mLScm != mRScm) {
-	    		return "fullSync";
+	    		return new Object[]{"fullSync"};
 	    	}
 	    	mLNewer = mLMod > mRMod;
 	    	// step 2: deletions
-//	    	con.publishProgress(R.string.);
+	    	con.publishProgress(R.string.sync_deletions_message);
 	    	JSONObject lrem = removed();
 	    	JSONObject o = new JSONObject();
 	    	o.put("minUsn", mMinUsn);
 	    	o.put("lnewer", mLNewer);
 	    	o.put("graves", lrem);
 	    	JSONObject rrem = mServer.start(o);
-	    	if (rrem == null) {
-	    		return "error";
+	    	if (rrem.has("errorType")) {
+	    		return new Object[]{"error", rrem.get("errorType"), rrem.get("errorReason")};
 	    	}
 	    	remove(rrem);
 	    	// ... and small objects
+	    	con.publishProgress(R.string.sync_small_objects_message);
 	    	JSONObject lchg = changes();
 	    	JSONObject sch = new JSONObject();
 	    	sch.put("changes", lchg);
 	    	JSONObject rchg = mServer.applyChanges(sch);
-	    	if (rchg == null) {
-	    		return "error";
+	    	if (rchg.has("errorType")) {
+	    		return new Object[]{"error", rchg.get("errorType"), rchg.get("errorReason")};
 	    	}
 	    	mergeChanges(lchg, rchg);
 	    	// step 3: stream large tables from server
+    		con.publishProgress(R.string.sync_downloading_message);
+	    	long size = 0;
 	    	while (true) {
 	    		JSONObject chunk = mServer.chunk();
-	    		if (chunk == null) {
-		    		return "error";
+		    	if (chunk.has("errorType")) {
+		    		return new Object[]{"error", chunk.get("errorType"), chunk.get("errorReason")};
 		    	}
+		    	size += chunk.getLong("rSize");
+		    	chunk.remove("rSize");
+	    		if (size > 512) {
+		    		con.publishProgress(R.string.sync_download_size, size / 1024);	    			
+	    		}
 	    		JSONObject pch = new JSONObject();
 	    		pch.put("chunk", chunk);
 	    		applyChunk(pch);
@@ -131,11 +140,18 @@ public class Syncer {
 	    		}
 	    	}
 	    	// step 4: stream to server
+    		con.publishProgress(R.string.sync_uploading_message);
+	    	size = 0;
 	    	while (true) {
 	    		JSONObject chunk = chunk();
 	    		JSONObject sech = new JSONObject();
 	    		sech.put("chunk", chunk);
-	    		mServer.applyChunk(sech);
+	    		byte[] b = sech.toString().getBytes();
+	    		size += b.length;
+	    		if (size > 512) {
+		    		con.publishProgress(R.string.sync_upload_size, size / 1024);	    			
+	    		}
+	    		mServer.applyChunk(new ByteArrayInputStream(b));
 	    		if (chunk.getBoolean("done")) {
 	    			break;
 	    		}
@@ -146,12 +162,13 @@ public class Syncer {
 			throw new RuntimeException(e);
 		}
     	// finalize
+    	con.publishProgress(R.string.sync_finish_message);
     	long mod = mServer.finish();
-//    	if (mod == 0) {
-//    		return "error";
-//    	}
+    	if (mod == 0) {
+    		return new Object[]{"finishError"};
+    	}
     	finish(mod);
-    	return "success";
+    	return new Object[]{"success"};
     }
 
 	private JSONArray meta() {
@@ -258,12 +275,11 @@ public class Syncer {
         			mCursor = cursorForTable(curTable);
         		}
         		JSONArray rows = new JSONArray();
-        		while (mCursor.moveToNext()) {
+        		while (mCursor.moveToNext() && mCursor.getPosition() <= lim) {
         			JSONArray r = new JSONArray();
         			int count = mCursor.getColumnCount(); 
         			for (int i = 0; i < count; i++) {
-        				int type = mCursor.getType(i);
-        				switch (type) {
+        				switch (mCursor.getType(i)) {
         				case Cursor.FIELD_TYPE_STRING:
             				r.put(mCursor.getString(i));
             				break;

@@ -15,7 +15,6 @@
  ****************************************************************************************/
 
 package com.ichi2.sync;
-import android.content.Context;
 
 import com.byarger.exchangeit.EasySSLSocketFactory;
 import com.ichi2.async.Connection;
@@ -31,9 +30,7 @@ import org.apache.http.conn.params.ConnPerRouteBean;
 import org.apache.http.conn.scheme.PlainSocketFactory;
 import org.apache.http.conn.scheme.Scheme;
 import org.apache.http.conn.scheme.SchemeRegistry;
-import org.apache.http.conn.ssl.SSLSocketFactory;
 import org.apache.http.entity.ByteArrayEntity;
-import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.impl.conn.SingleClientConnManager;
 import org.apache.http.params.BasicHttpParams;
@@ -45,17 +42,13 @@ import org.json.JSONObject;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
+import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.StringWriter;
 import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
-import java.security.KeyStore;
-import java.util.zip.Deflater;
 import java.util.zip.GZIPOutputStream;
-import java.util.zip.InflaterInputStream;
 
 public class HttpSyncer {
 
@@ -67,8 +60,8 @@ public class HttpSyncer {
      * Connection settings
      */
     public static final String SYNC_HOST = "beta.ankiweb.net";
+    // TODO: correct https-address
     public static final String SYNC_URL = "http://" + SYNC_HOST + "/sync/"; // "http://219.108.60.108:6500/sync/";//
-    public static final String SYNC_SEARCH = "http://" + SYNC_HOST + "/file/search";
     public static final int SYNC_VER = 0;
 
     /**
@@ -219,25 +212,7 @@ public class HttpSyncer {
 	}
 
 
-	public JSONObject applyChunk(JSONObject kw) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-
-	public HttpResponse meta() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-
-	public HttpResponse upload(Connection connection) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-
-	public HttpResponse download(Connection connection) {
+	public Object[] upload(Connection connection) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -252,6 +227,24 @@ public class HttpSyncer {
 	public long finish() {
 		// TODO Auto-generated method stub
 		return 0;
+	}
+
+
+	public HttpResponse meta() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	public Object[] download() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	public JSONObject applyChunk(ByteArrayInputStream kw) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

@@ -16,7 +16,6 @@
 
 package com.ichi2.sync;
 
-import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -25,7 +24,6 @@ import java.io.InputStream;
 
 import org.apache.http.HttpResponse;
 
-import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabaseCorruptException;
 import android.util.Log;
 
@@ -48,9 +46,8 @@ public class FullSyncer extends HttpSyncer {
 	} 
 
 	@Override
-	public HttpResponse download(Connection connection) {
-		HttpResponse ret = super.req("download", new ByteArrayInputStream("{}".toString()
-				.getBytes()));
+	public Object[] download() {
+		HttpResponse ret = super.req("download");
 		InputStream cont;
 		try {
 			cont = ret.getEntity().getContent();
@@ -71,45 +68,30 @@ public class FullSyncer extends HttpSyncer {
 		// check the received file is ok
 		try {
 			AnkiDb d = AnkiDatabaseManager.getDatabase(tpath);
-			Cursor cur = null;
-			try {
-				cur = d.getDatabase().rawQuery("PRAGMA integrity_check", null);
-				if (!cur.moveToFirst() || !cur.getString(0).equals("ok")) {
-					Log.e(AnkiDroidApp.TAG, "Full sync - downloaded file corrupt");
-					return null;
-				}
-			} finally {
-				if (cur != null && !cur.isClosed()) {
-					cur.close();
-				}
+			if (!d.queryString("PRAGMA integrity_check").equalsIgnoreCase("ok")) {
+				Log.e(AnkiDroidApp.TAG, "Full sync - downloaded file corrupt");
+				return new Object[]{"remoteDbError"};
 			}
-			AnkiDatabaseManager.closeDatabase(tpath);			
 		} catch (SQLiteDatabaseCorruptException e) {
-			return null;
+			Log.e(AnkiDroidApp.TAG, "Full sync - downloaded file corrupt");
+			return new Object[]{"remoteDbError"};
+		} finally {
+			AnkiDatabaseManager.closeDatabase(tpath);
 		}
-		connection.publishProgress(R.string.sync_complete_message);
 		// overwrite existing collection
 		File newFile = new File(tpath);
 		if (newFile.renameTo(new File(path))) {
-			return ret;
+			return new Object[]{"success"};
 		} else {
-			return null;
+			return new Object[]{"overwriteError"};
 		}
 	}
 
 	@Override
-	public HttpResponse upload(Connection connection) {
+	public Object[] upload(Connection connection) {
 		// make sure it's ok before we try to upload
-		Cursor cur = null;
-		try {
-			cur = mCol.getDb().getDatabase().rawQuery("PRAGMA integrity_check", null);
-			if (!cur.moveToFirst() || !cur.getString(0).equals("ok")) {
-				return null;
-			}
-		} finally {
-			if (cur != null && !cur.isClosed()) {
-				cur.close();
-			}
+		if (!mCol.getDb().queryString("PRAGMA integrity_check").equalsIgnoreCase("ok")) {
+			return new Object[]{"dbError"};
 		}
 		// apply some adjustments, then upload
 		mCol.beforeUpload();
@@ -118,10 +100,12 @@ public class FullSyncer extends HttpSyncer {
 		HttpResponse ret;
 		connection.publishProgress(R.string.sync_uploading_message);
 		try {
+			// TODO: fix error
 			ret = super.req("upload", new FileInputStream(filePath));
 		} catch (FileNotFoundException e) {
 			throw new RuntimeException(e);
 		}
-		return ret;
+		String result = HttpSyncer.getDataString(ret);
+		return new Object[]{result.equalsIgnoreCase(HttpSyncer.ANKIWEB_STATUS_OK) ? result : "error", HttpSyncer.getReturnType(ret), HttpSyncer.getReason(ret)};
 	}
 }

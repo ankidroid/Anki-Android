@@ -423,35 +423,75 @@ public class DeckPicker extends Activity {
 		@Override
 		public void onPostExecute(Payload data) {
 			Log.i(AnkiDroidApp.TAG, "onPostExecute");
+			Resources res = DeckPicker.this.getResources();
 			if (mProgressDialog != null) {
 				mProgressDialog.dismiss();
 			}
 			if (!data.success) {
-				if (data.result instanceof String) {
-					String result = (String) data.result;
-					if (result.equals("badAuth")) {
+				Object[] result = (Object[]) data.result;
+				if (result[0] instanceof String) {
+					String resultType = (String) result[0];
+					if (resultType.equals("badAuth")) {
 						showDialog(DIALOG_USER_NOT_LOGGED_IN_SYNC);
-					} else if (result.equals("clockOff")) {
-						// TODO
-						mDialogMessage = "XXX" + result;
+					} else if (resultType.equals("noChanges")) {
+						mDialogMessage = res.getString(R.string.sync_no_changes_message);
 						showDialog(DIALOG_SYNC_LOG);
-					} else if (result.equals("fullSync")) {
+					} else if (resultType.equals("clockOff")) {
+                        long diff = (Long) result[1];
+                        if (diff >= 86400) {
+                            // The difference if more than a day
+                        	mDialogMessage = res.getString(R.string.sync_log_clocks_unsynchronized, diff, res.getString(R.string.sync_log_clocks_unsynchronized_date));
+                        } else if (Math.abs((diff % 3600.0) - 1800.0) >= 1500.0) {
+                            // The difference would be within limit if we adjusted the time by few hours
+                            // It doesn't work for all timezones, but it covers most and it's a guess anyway
+                        	mDialogMessage = res.getString(R.string.sync_log_clocks_unsynchronized, diff, res.getString(R.string.sync_log_clocks_unsynchronized_tz));
+                        } else {
+                            mDialogMessage = res.getString(R.string.sync_log_clocks_unsynchronized, diff, "");
+                        }
+						showDialog(DIALOG_SYNC_LOG);
+					} else if (resultType.equals("fullSync")) {
 						showDialog(DIALOG_SYNC_CONFLICT_RESOLUTION);
+					} else if (resultType.equals("dbError")) {
+						mDialogMessage = res.getString(R.string.sync_corrupt_database, R.string.repair_deck);
+						showDialog(DIALOG_SYNC_LOG);
+					} else if (resultType.equals("overwriteError")) {
+						mDialogMessage = res.getString(R.string.sync_overwrite_error);
+						showDialog(DIALOG_SYNC_LOG);
+					} else if (resultType.equals("remoteDbError")) {
+						mDialogMessage = res.getString(R.string.sync_remote_db_error);
+						showDialog(DIALOG_SYNC_LOG);					
+					} else if (resultType.equals("finishError")) {
+						mDialogMessage = res.getString(R.string.sync_log_finish_error);
+						showDialog(DIALOG_SYNC_LOG);					
 					} else {
-						mDialogMessage = "XXX" + result;
+						int type = (Integer) result[1];
+						switch (type) {
+						case 503:
+	                        mDialogMessage = res.getString(R.string.sync_too_busy);
+							break;
+						default:
+							mDialogMessage = res.getString(R.string.sync_log_error_specific, Integer.toString(type), (String)result[2]);
+							break;
+						}
 						showDialog(DIALOG_SYNC_LOG);
 					}
 				}
 			} else {
 				updateDecksList((TreeSet<Object[]>) data.result);
-				mDialogMessage = "XXX erfolg";
-				showDialog(DIALOG_SYNC_LOG);
+				if (data.data.length > 0 && data.data[0] instanceof String && ((String)data.data[0]).length() > 0) {
+					String dataString = (String) data.data[0];
+					if (dataString.equals("upload")) {
+						mDialogMessage = res.getString(R.string.sync_log_uploading_message);
+					} else if (dataString.equals("download")) {
+						mDialogMessage = res.getString(R.string.sync_log_downloading_message);
+					} else {
+						mDialogMessage = res.getString(R.string.sync_database_success);
+					}
+				} else {
+					mDialogMessage = res.getString(R.string.sync_database_success);
+				}
 			}
-//			mSyncLogAlert
-//					.setMessage(getSyncLogMessage((ArrayList<HashMap<String, String>>) data.result));
-//			mSyncLogAlert.show();
-//			mDeckIsSelected = false;
-////			populateDeckList(mPrefDeckPath);
+			showDialog(DIALOG_SYNC_LOG);
             mSyncButton.setClickable(true);
 		}
 	};
@@ -1077,7 +1117,7 @@ public class DeckPicker extends Activity {
 			 builder.setNegativeButton(res.getString(R.string.cancel), null);
 			 dialog = builder.create();
 			 break;
-			
+
 		case DIALOG_SYNC_CONFLICT_RESOLUTION:
 			builder.setTitle(res.getString(R.string.sync_conflict_title));
 			builder.setIcon(android.R.drawable.ic_input_get);

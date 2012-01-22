@@ -16,9 +16,11 @@
 
 package com.ichi2.sync;
 
+import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 
 import org.apache.http.HttpResponse;
 import org.json.JSONException;
@@ -80,7 +82,7 @@ public class RemoteServer extends HttpSyncer {
 	}
 
 	@Override
-	public JSONObject applyChunk(JSONObject kw) {
+	public JSONObject applyChunk(ByteArrayInputStream kw) {
 		return _run("applyChunk", kw);
 	}
 
@@ -109,32 +111,47 @@ public class RemoteServer extends HttpSyncer {
 	}
 
 	private JSONObject _run(String cmd, JSONObject data) {
+		return _run(cmd, new ByteArrayInputStream(data.toString().getBytes()));
+	}
+	private JSONObject _run(String cmd, ByteArrayInputStream data) {
 		HttpResponse ret;
 		if (data != null) {
-			ret = super.req(cmd, new ByteArrayInputStream(data.toString()
-					.getBytes()));
+			ret = super.req(cmd, data);
 		} else {
 			ret = super.req(cmd);
 		}
-		if (HttpSyncer.getReturnType(ret) == 200) {
-			InputStream content;
-			try {
-				content = ret.getEntity().getContent();
-				String s = Utils.convertStreamToString(content);
-				if (s == null || s.equalsIgnoreCase("null") || s.length() == 0) {
-					return null;
-				} else {
-					return new JSONObject(s);
+		try {
+			int resultType = HttpSyncer.getReturnType(ret);
+			String s = "";
+			if (resultType == 200) {
+	            BufferedReader rd = new BufferedReader(new InputStreamReader(ret.getEntity().getContent(), "UTF-8"), 4096);
+	            String line;
+	            StringBuilder sb = new StringBuilder();
+	            long size = 0;
+	            while ((line = rd.readLine()) != null) {
+	                sb.append(line);
+	                size += line.length();
+	            }
+	            rd.close();
+	            s = sb.toString();
+				if (!s.equalsIgnoreCase("null") && s.length() != 0) {
+					JSONObject o = new JSONObject(s);
+					if (cmd.equals("chunk")) {
+						o.put("rSize", size);						
+					}
+					return o;
 				}
-			} catch (IllegalStateException e) {
-				throw new RuntimeException(e);
-			} catch (IOException e) {
-				throw new RuntimeException(e);
-			} catch (JSONException e) {
-				throw new RuntimeException(e);
 			}
-		} else {
-			return null;
+			JSONObject o = new JSONObject();
+			o.put("errorType", HttpSyncer.getReturnType(ret));
+			o.put("errorReason", s.equals("null") ? "null result" : HttpSyncer.getReason(ret));
+			return o;
+		} catch (IllegalStateException e) {
+			throw new RuntimeException(e);
+		} catch (IOException e) {
+			throw new RuntimeException(e);
+		} catch (JSONException e) {
+			throw new RuntimeException(e);
 		}
 	}
 }
