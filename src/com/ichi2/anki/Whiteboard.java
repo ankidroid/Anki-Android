@@ -24,6 +24,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 
@@ -134,6 +135,9 @@ public class Whiteboard extends View {
                     invalidate();
                     break;
                 case MotionEvent.ACTION_MOVE:
+                    for (int i = 0; i < event.getHistorySize(); i++) {
+                        touchMove(event.getHistoricalX(i), event.getHistoricalY(i));
+                    }
                     touchMove(x, y);
                     invalidate();
                     break;
