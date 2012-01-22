@@ -67,8 +67,9 @@ public class MetaDB {
 
     /** Creating any table that missing and upgrading necessary tables. */
     private static SQLiteDatabase upgradeDB(SQLiteDatabase mMetaDb, int databaseVersion) {
+        Log.i(AnkiDroidApp.TAG, "Upgrading Internal Database..");
         if (mMetaDb.getVersion() == 0) {
-            Log.i(AnkiDroidApp.TAG, "Upgrade Internal Database from version: " + 0 + " to: " + databaseVersion);
+            Log.i(AnkiDroidApp.TAG, "Applying changes for version: 0");
             // Create tables if not exist
             mMetaDb.execSQL(
                     "CREATE TABLE IF NOT EXISTS languages ("
@@ -117,6 +118,7 @@ public class MetaDB {
             }
         }
         mMetaDb.setVersion(databaseVersion);
+        Log.i(AnkiDroidApp.TAG, "Upgrading Internal Database finished. New version: " + databaseVersion);
         return mMetaDb;
     }
 
