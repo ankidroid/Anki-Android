@@ -91,7 +91,7 @@ public class Syncer {
 	    		return "clockOff";
 	    	}
 	    	if (mLMod == mRMod) {
-//	    		return "noChanges";
+	    		return "noChanges";
 	    	} else if (mLScm != mRScm) {
 	    		return "fullSync";
 	    	}

@@ -1,5 +1,4 @@
 /***************************************************************************************
- * Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com>                                   *
  * Copyright (c) 2012 Norbert Nagold <norbert.nagold@gmail.com>                         *
  *                                                                                      *
  * This program is free software; you can redistribute it and/or modify it under        *
@@ -16,15 +15,30 @@
  ****************************************************************************************/
 
 package com.ichi2.sync;
+import android.content.Context;
+
+import com.byarger.exchangeit.EasySSLSocketFactory;
 import com.ichi2.async.Connection;
 import com.ichi2.libanki.Utils;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
+import org.apache.http.HttpVersion;
 import org.apache.http.client.methods.HttpPost;
+import org.apache.http.conn.ClientConnectionManager;
+import org.apache.http.conn.params.ConnManagerPNames;
+import org.apache.http.conn.params.ConnPerRouteBean;
+import org.apache.http.conn.scheme.PlainSocketFactory;
+import org.apache.http.conn.scheme.Scheme;
+import org.apache.http.conn.scheme.SchemeRegistry;
+import org.apache.http.conn.ssl.SSLSocketFactory;
 import org.apache.http.entity.ByteArrayEntity;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.impl.conn.SingleClientConnManager;
+import org.apache.http.params.BasicHttpParams;
+import org.apache.http.params.HttpParams;
+import org.apache.http.params.HttpProtocolParams;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -38,6 +52,7 @@ import java.io.InputStream;
 import java.io.StringWriter;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.security.KeyStore;
 import java.util.zip.Deflater;
 import java.util.zip.GZIPOutputStream;
 import java.util.zip.InflaterInputStream;
@@ -45,13 +60,9 @@ import java.util.zip.InflaterInputStream;
 public class HttpSyncer {
 
 	private static final String BOUNDARY = "Anki-sync-boundary";
-	
-    // The possible values for the status response from the AnkiWeb server.
+
     public static final String ANKIWEB_STATUS_OK = "OK";
-//    private static final String ANKIWEB_STATUS_INVALID_USER_PASS = "invalidUserPass";
-//    private static final String ANKIWEB_STATUS_OLD_VERSION = "oldVersion";
-//    private static final String ANKIWEB_STATUS_TOO_BUSY =
-//        "AnkiWeb is too busy right now. Please try again later.";
+
     /**
      * Connection settings
      */
@@ -59,7 +70,7 @@ public class HttpSyncer {
     public static final String SYNC_URL = "http://" + SYNC_HOST + "/sync/"; // "http://219.108.60.108:6500/sync/";//
     public static final String SYNC_SEARCH = "http://" + SYNC_HOST + "/file/search";
     public static final int SYNC_VER = 0;
-    
+
     /**
      * Synchronization.
      */
@@ -125,9 +136,23 @@ public class HttpSyncer {
             // connection headers
 	        HttpPost httpPost = new HttpPost(SYNC_URL + method);
 	        HttpEntity entity = new ByteArrayEntity(bos.toByteArray());
+
+	        // body
 	        httpPost.setEntity(entity);
 	        httpPost.setHeader("Content-type", "multipart/form-data; boundary=" + BOUNDARY);
-	        DefaultHttpClient httpClient = new DefaultHttpClient();
+
+	        // https
+	        SchemeRegistry schemeRegistry = new SchemeRegistry();
+	        schemeRegistry.register(new Scheme("http", PlainSocketFactory.getSocketFactory(), 80));
+	        schemeRegistry.register(new Scheme("https", new EasySSLSocketFactory(), 443));
+	        HttpParams params = new BasicHttpParams();
+	        params.setParameter(ConnManagerPNames.MAX_TOTAL_CONNECTIONS, 30);
+	        params.setParameter(ConnManagerPNames.MAX_CONNECTIONS_PER_ROUTE, new ConnPerRouteBean(30));
+	        params.setParameter(HttpProtocolParams.USE_EXPECT_CONTINUE, false);
+	        HttpProtocolParams.setVersion(params, HttpVersion.HTTP_1_1);	         
+	        ClientConnectionManager cm = new SingleClientConnManager(params, schemeRegistry);
+
+	        DefaultHttpClient httpClient = new DefaultHttpClient(cm, params);
 	        return httpClient.execute(httpPost);
 		} catch (UnsupportedEncodingException e) {
 			throw new RuntimeException(e);
@@ -167,12 +192,14 @@ public class HttpSyncer {
     	return response.getStatusLine().getStatusCode();
     }
 
+    public static String getReason(HttpResponse response) {
+    	return response.getStatusLine().getReasonPhrase();
+    }
 
 	public HttpResponse hostKey(String arg1, String arg2) {
 		// TODO Auto-generated method stub
 		return null;
 	}
-
 
 	public JSONObject applyChanges(JSONObject kw) {
 		// TODO Auto-generated method stub
