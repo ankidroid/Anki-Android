@@ -35,6 +35,8 @@ import com.tomgibara.android.veecheck.util.PrefSettings;
  */
 public class AnkiDb {
 
+	private static final String[] MOD_SQLS = new String[] {"insert, update, delete"};
+
     /**
      * The deck, which is actually an SQLite database.
      */
@@ -92,6 +94,7 @@ public class AnkiDb {
                 }
             }
         }
+        mMod = false;
     }
 
 
@@ -261,7 +264,29 @@ public class AnkiDb {
     }
 
 
+	public void execute(String sql) {
+		execute(sql, null);
+	}
+	public void execute(String sql, Object[] object) {
+		String s = sql.trim().toLowerCase();
+		mMod = true;
+		// mark modified?
+		for (String mo : MOD_SQLS) {
+			if (s.startsWith(mo)) {
+				mMod = true;
+				break;
+			}
+		}
+		if (object == null) {
+			this.getDatabase().execSQL(sql);			
+		} else {
+			this.getDatabase().execSQL(sql, object);
+		}
+	}
+
+
 	public void executeMany(String sql, ArrayList<Object[]> list) {
+		mMod = true;
 		mDatabase.beginTransaction();
 		try {
 			for (Object[] o : list) {

@@ -1722,7 +1722,7 @@ public class Sched {
 	// // cursor = getDB().getDatabase().rawQuery(
 	// // "SELECT 1 FROM sqlite_master WHERE name = '" + indexName + "'", null);
 	// // if ((!cursor.moveToNext()) || (cursor.getInt(0) != 1)) {
-	// // getDB().getDatabase().execSQL("CREATE INDEX " + indexName +
+	// // getDB().execute("CREATE INDEX " + indexName +
 	// " ON cards " + entry.getValue());
 	// // analyze = true;
 	// // }
@@ -1732,11 +1732,11 @@ public class Sched {
 	// // }
 	// // }
 	// // } else {
-	// // getDB().getDatabase().execSQL("DROP INDEX IF EXISTS " + indexName);
+	// // getDB().execute("DROP INDEX IF EXISTS " + indexName);
 	// // }
 	// // }
 	// // if (analyze) {
-	// // getDB().getDatabase().execSQL("ANALYZE");
+	// // getDB().execute("ANALYZE");
 	// // }
 	// }
 

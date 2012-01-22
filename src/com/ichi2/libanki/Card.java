@@ -173,7 +173,7 @@ public class Card implements Cloneable {
 		sb.append(mEDue).append(", ");
 		sb.append(mFlags).append(", ");
 		sb.append("\"").append(mData).append("\")");
-		mCol.getDb().getDatabase().execSQL(sb.toString());
+		mCol.getDb().execute(sb.toString());
 	}
 
 	public void flushSched() {

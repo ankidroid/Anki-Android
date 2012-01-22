@@ -285,7 +285,7 @@ public class Syncer {
         			mCursor = null;
         			// if we're the client, mark the objects as having been sent
         			if (!mCol.getServer()) {
-        				mCol.getDb().getDatabase().execSQL("UPDATE " + curTable + " SET usn=" + mMaxUsn + " WHERE usn=-1");
+        				mCol.getDb().execute("UPDATE " + curTable + " SET usn=" + mMaxUsn + " WHERE usn=-1");
         			}
         		}
         		buf.put(curTable, rows);
@@ -347,7 +347,7 @@ public class Syncer {
     		}
     	}
     	if (!mCol.getServer()) {
-    		mCol.getDb().getDatabase().execSQL("UPDATE graves SET usn=" + mMaxUsn + " WHERE usn=-1");
+    		mCol.getDb().execute("UPDATE graves SET usn=" + mMaxUsn + " WHERE usn=-1");
     	}
     	JSONObject o = new JSONObject();
     	try {
@@ -557,7 +557,7 @@ public class Syncer {
     private void mergeRevlog(JSONArray logs) {
     	for (int i = 0; i < logs.length(); i++) {
     		try {
-				mCol.getDb().getDatabase().execSQL("INSERT OR IGNORE INTO revlog VALUES (?,?,?,?,?,?,?,?,?)", ConvUtils.jsonArray2Objects(logs.getJSONArray(i)));    				
+				mCol.getDb().execute("INSERT OR IGNORE INTO revlog VALUES (?,?,?,?,?,?,?,?,?)", ConvUtils.jsonArray2Objects(logs.getJSONArray(i)));    				
 			} catch (SQLException e) {
 				throw new RuntimeException(e);
 			} catch (JSONException e) {
@@ -600,13 +600,13 @@ public class Syncer {
    
     private void mergeCards(JSONArray cards) {
     	for (Object[] r : newerRows(cards, "cards", 4)) {
-    		mCol.getDb().getDatabase().execSQL("INSERT OR REPLACE INTO cards VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)", r);
+    		mCol.getDb().execute("INSERT OR REPLACE INTO cards VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)", r);
     	}
     }
    
     private void mergeNotes(JSONArray notes) {
     	for (Object[] n : newerRows(notes, "notes", 4)) {
-    		mCol.getDb().getDatabase().execSQL("INSERT OR REPLACE INTO notes VALUES (?,?,?,?,?,?,?,?,?,?,?,?)", n);
+    		mCol.getDb().execute("INSERT OR REPLACE INTO notes VALUES (?,?,?,?,?,?,?,?,?,?,?,?)", n);
     		mCol.updateFieldCache(new long[]{(Long) n[0]});
     	}
     }
@@ -669,7 +669,7 @@ public class Syncer {
 //        statement.close();
 //
 //        // Delete inserted models from modelsDeleted
-//        ankiDB.getDatabase().execSQL("DELETE FROM modelsDeleted WHERE modelId IN " + Utils.ids2str(insertedModelsIds));
+//        ankiDB.execute("DELETE FROM modelsDeleted WHERE modelId IN " + Utils.ids2str(insertedModelsIds));
 //    }
 //
 

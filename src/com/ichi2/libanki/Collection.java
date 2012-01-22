@@ -268,7 +268,7 @@ public class Collection {
 				rollback();
 			}
 			if (!mServer) {
-//				mDb.getDatabase().execSQL("PRAGMA journal_mode = delete");
+//				mDb.execute("PRAGMA journal_mode = delete");
 			}
 			AnkiDatabaseManager.closeDatabase(mPath);
 			mDb = null;
@@ -335,7 +335,7 @@ public class Collection {
 	public void beforeUpload() {
 		String[] tables = new String[]{"notes", "cards", "revlog", "graves"};
 		for (String t : tables) {
-			mDb.getDatabase().execSQL("UPDATE " + t + " SET usn=0 WHERE usn=-1");
+			mDb.execute("UPDATE " + t + " SET usn=0 WHERE usn=-1");
 		}
 		mUsn += 1;
 		mModels.beforeUpload();
@@ -465,7 +465,7 @@ public class Collection {
 		// we need to log these independently of cards, as one side may have
 		// more card templates
 		_logRem(ids, Sched.REM_NOTE);
-		mDb.getDatabase().execSQL("DELETE FROM notes WHERE id IN " + strids);
+		mDb.execute("DELETE FROM notes WHERE id IN " + strids);
 	}
 
 	/**
@@ -646,8 +646,8 @@ public class Collection {
 				"SELECT nid FROM cards WHERE id IN " + sids, 0));
 		// remove cards
 		_logRem(ids, Sched.REM_CARD);
-		mDb.getDatabase().execSQL("DELETE FROM cards WHERE id IN " + sids);
-		mDb.getDatabase().execSQL("DELETE FROM revlog WHERE cid IN " + sids);
+		mDb.execute("DELETE FROM cards WHERE id IN " + sids);
+		mDb.execute("DELETE FROM revlog WHERE cid IN " + sids);
 		// then notes
 		nids = Utils.arrayList2array(mDb.queryColumn(Long.class,
 				"SELECT id FROM notes WHERE id IN " + Utils.ids2str(nids)
@@ -938,7 +938,7 @@ public class Collection {
 		// and delete revlog entry
 		long last = mDb.queryLongScalar("SELECT id FROM revlog WHERE cid = "
 				+ c.getId() + " ORDER BY id DESC LIMIT 1");
-		mDb.getDatabase().execSQL("DELETE FROM revlog WHERE id = " + last);
+		mDb.execute("DELETE FROM revlog WHERE id = " + last);
 		return c;
 	}
 
@@ -992,9 +992,9 @@ public class Collection {
 
 	public void optimize() {
 		Log.i(AnkiDroidApp.TAG, "executing VACUUM statement");
-		mDb.getDatabase().execSQL("VACUUM");
+		mDb.execute("VACUUM");
 		Log.i(AnkiDroidApp.TAG, "executing ANALYZE statement");
-		mDb.getDatabase().execSQL("ANALYZE");
+		mDb.execute("ANALYZE");
 	}
 
 	/**
