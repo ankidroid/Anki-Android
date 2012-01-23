@@ -100,7 +100,6 @@ public class FullSyncer extends HttpSyncer {
 		HttpResponse ret;
 		connection.publishProgress(R.string.sync_uploading_message);
 		try {
-			// TODO: fix error
 			ret = super.req("upload", new FileInputStream(filePath));
 		} catch (FileNotFoundException e) {
 			throw new RuntimeException(e);

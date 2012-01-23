@@ -231,7 +231,7 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
     private Payload doInBackgroundSync(Payload data) {
     	String hkey = (String)data.data[0];
     	boolean media = (Boolean) data.data[1];
-    	String conflictResolution = "upload";//(String) data.data[2];
+    	String conflictResolution = (String) data.data[2];
 
     	Collection col = Collection.currentCollection();
     	String path = col.getPath();
