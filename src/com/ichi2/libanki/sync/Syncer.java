@@ -18,6 +18,7 @@
 package com.ichi2.libanki.sync;
 
 import java.io.ByteArrayInputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -66,16 +67,19 @@ public class Syncer {
     	mCol.save();
     	// step 1: login & metadata
     	HttpResponse ret = mServer.meta();
-    	int returntype = HttpSyncer.getReturnType(ret);
+    	if (ret == null) {
+    		return null;
+    	}
+    	int returntype = ret.getStatusLine().getStatusCode();
     	if (returntype == 403){
     		return new Object[] {"badAuth"};
     	} else if (returntype != 200) {
-    		return new Object[] {"error", returntype, HttpSyncer.getReason(ret)};
+    		return new Object[] {"error", returntype, ret.getStatusLine().getReasonPhrase()};
     	}
     	long rts;
     	long lts;
     	try {
-        	JSONArray ra = HttpSyncer.getDataJSONArray(ret);
+        	JSONArray ra = new JSONArray(mServer.stream2String(ret.getEntity().getContent()));
 			mRMod = ra.getLong(0);
 	    	mRScm = ra.getLong(1);
 	    	mMaxUsn = ra.getInt(2);
@@ -105,6 +109,9 @@ public class Syncer {
 	    	o.put("lnewer", mLNewer);
 	    	o.put("graves", lrem);
 	    	JSONObject rrem = mServer.start(o);
+	    	if (ret == null) {
+	    		return null;
+	    	}
 	    	if (rrem.has("errorType")) {
 	    		return new Object[]{"error", rrem.get("errorType"), rrem.get("errorReason")};
 	    	}
@@ -115,23 +122,23 @@ public class Syncer {
 	    	JSONObject sch = new JSONObject();
 	    	sch.put("changes", lchg);
 	    	JSONObject rchg = mServer.applyChanges(sch);
+	    	if (ret == null) {
+	    		return null;
+	    	}
 	    	if (rchg.has("errorType")) {
 	    		return new Object[]{"error", rchg.get("errorType"), rchg.get("errorReason")};
 	    	}
 	    	mergeChanges(lchg, rchg);
 	    	// step 3: stream large tables from server
-    		con.publishProgress(R.string.sync_downloading_message);
-	    	long size = 0;
+    		con.publishProgress(R.string.sync_download_chunk);
 	    	while (true) {
 	    		JSONObject chunk = mServer.chunk();
+	        	if (ret == null) {
+	        		return null;
+	        	}
 		    	if (chunk.has("errorType")) {
 		    		return new Object[]{"error", chunk.get("errorType"), chunk.get("errorReason")};
 		    	}
-		    	size += chunk.getLong("rSize");
-		    	chunk.remove("rSize");
-	    		if (size > 512) {
-		    		con.publishProgress(R.string.sync_download_size, size / 1024);	    			
-	    		}
 	    		JSONObject pch = new JSONObject();
 	    		pch.put("chunk", chunk);
 	    		applyChunk(pch);
@@ -140,18 +147,15 @@ public class Syncer {
 	    		}
 	    	}
 	    	// step 4: stream to server
-    		con.publishProgress(R.string.sync_uploading_message);
-	    	size = 0;
+    		con.publishProgress(R.string.sync_upload_chunk);
 	    	while (true) {
 	    		JSONObject chunk = chunk();
 	    		JSONObject sech = new JSONObject();
 	    		sech.put("chunk", chunk);
-	    		byte[] b = sech.toString().getBytes();
-	    		size += b.length;
-	    		if (size > 512) {
-		    		con.publishProgress(R.string.sync_upload_size, size / 1024);	    			
-	    		}
-	    		mServer.applyChunk(new ByteArrayInputStream(b));
+	    		mServer.applyChunk(sech);
+	        	if (ret == null) {
+	        		return null;
+	        	}
 	    		if (chunk.getBoolean("done")) {
 	    			break;
 	    		}
@@ -159,6 +163,8 @@ public class Syncer {
 		} catch (JSONException e) {
 			throw new RuntimeException(e);
 		} catch (IllegalStateException e) {
+			throw new RuntimeException(e);
+		} catch (IOException e) {
 			throw new RuntimeException(e);
 		}
     	// finalize

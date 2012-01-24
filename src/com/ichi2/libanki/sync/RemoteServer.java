@@ -16,22 +16,19 @@
 
 package com.ichi2.libanki.sync;
 
-import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 
 import org.apache.http.HttpResponse;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import com.ichi2.libanki.Utils;
+import com.ichi2.async.Connection;
 
 public class RemoteServer extends HttpSyncer {
 
-	public RemoteServer(String hkey) {
-		super(hkey);
+	public RemoteServer(Connection con, String hkey) {
+		super(hkey, con);
 	}
 
 	/** Returns hkey or none if user/pw incorrect. */
@@ -41,8 +38,7 @@ public class RemoteServer extends HttpSyncer {
 			JSONObject jo = new JSONObject();
 			jo.put("u", user);
 			jo.put("p", pw);
-			return super.req("hostKey", new ByteArrayInputStream(jo.toString()
-					.getBytes()), false);
+			return super.req("hostKey", new ByteArrayInputStream(jo.toString().getBytes()), false);
 		} catch (JSONException e) {
 			return null;
 		}
@@ -53,8 +49,7 @@ public class RemoteServer extends HttpSyncer {
 		try {
 			JSONObject jo = new JSONObject();
 			jo.put("v", SYNC_VER);
-			return super.req("meta", new ByteArrayInputStream(jo.toString()
-					.getBytes()));
+			return super.req("meta", new ByteArrayInputStream(jo.toString().getBytes()));
 		} catch (JSONException e) {
 			throw new RuntimeException(e);
 		}
@@ -82,27 +77,16 @@ public class RemoteServer extends HttpSyncer {
 	}
 
 	@Override
-	public JSONObject applyChunk(ByteArrayInputStream kw) {
-		return _run("applyChunk", kw);
-	}
-
-	@Override
 	public long finish() {
 		try {
-			HttpResponse ret = super.req("finish", new ByteArrayInputStream(
-					"{}".getBytes()));
-			if (HttpSyncer.getReturnType(ret) == 200) {
-				InputStream content;
-				content = ret.getEntity().getContent();
-				String s = Utils.convertStreamToString(content);
-				if (s == null || s.equalsIgnoreCase("null") || s.length() == 0) {
-					return 0;
-				} else {
-					return Long.parseLong(s);
-				}
-			} else {
+			HttpResponse ret = super.req("finish", new ByteArrayInputStream("{}".getBytes()));
+			if (ret == null) {
 				return 0;
 			}
+			String s = super.stream2String(ret.getEntity().getContent());
+			return Long.parseLong(s);
+		} catch (NumberFormatException e) {
+			return 0;
 		} catch (IllegalStateException e) {
 			throw new RuntimeException(e);
 		} catch (IOException e) {
@@ -111,40 +95,22 @@ public class RemoteServer extends HttpSyncer {
 	}
 
 	private JSONObject _run(String cmd, JSONObject data) {
-		return _run(cmd, new ByteArrayInputStream(data.toString().getBytes()));
-	}
-	private JSONObject _run(String cmd, ByteArrayInputStream data) {
-		HttpResponse ret;
-		if (data != null) {
-			ret = super.req(cmd, data);
-		} else {
-			ret = super.req(cmd);
+		HttpResponse ret = super.req(cmd, new ByteArrayInputStream(data.toString().getBytes()));
+		if (ret == null) {
+			return null;
 		}
+		String s = "";
 		try {
-			int resultType = HttpSyncer.getReturnType(ret);
-			String s = "";
+			int resultType = ret.getStatusLine().getStatusCode();
 			if (resultType == 200) {
-	            BufferedReader rd = new BufferedReader(new InputStreamReader(ret.getEntity().getContent(), "UTF-8"), 4096);
-	            String line;
-	            StringBuilder sb = new StringBuilder();
-	            long size = 0;
-	            while ((line = rd.readLine()) != null) {
-	                sb.append(line);
-	                size += line.length();
-	            }
-	            rd.close();
-	            s = sb.toString();
+				s = super.stream2String(ret.getEntity().getContent());
 				if (!s.equalsIgnoreCase("null") && s.length() != 0) {
-					JSONObject o = new JSONObject(s);
-					if (cmd.equals("chunk")) {
-						o.put("rSize", size);						
-					}
-					return o;
+					return new JSONObject(s);
 				}
 			}
 			JSONObject o = new JSONObject();
-			o.put("errorType", HttpSyncer.getReturnType(ret));
-			o.put("errorReason", s.equals("null") ? "null result" : HttpSyncer.getReason(ret));
+			o.put("errorType", resultType);
+			o.put("errorReason", s.equals("null") ? "null result" : ret.getStatusLine().getReasonPhrase());
 			return o;
 		} catch (IllegalStateException e) {
 			throw new RuntimeException(e);

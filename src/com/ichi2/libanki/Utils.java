@@ -680,9 +680,6 @@ public class Utils {
      * @throws IOException 
      */
     public static void writeToFile(InputStream source, String destination) throws IOException {
-    	writeToFile(source, destination, null);
-    }
-    public static void writeToFile(InputStream source, String destination, Connection con) throws IOException {
         Log.i(AnkiDroidApp.TAG, "Creating new file... = " + destination);
         new File(destination).createNewFile();
 
@@ -699,9 +696,6 @@ public class Utils {
         while ((len = source.read(buf)) > 0) {
             output.write(buf, 0, len);
             sizeBytes += len;
-            if (con != null && sizeBytes > 512) {
-	    		con.publishProgress(R.string.sync_download_size, sizeBytes / 1024);	    			
-            }
         }
         long endTimeMillis = System.currentTimeMillis();
 

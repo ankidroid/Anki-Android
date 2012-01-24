@@ -392,6 +392,10 @@ public class DeckPicker extends Activity {
 
 	private Connection.TaskListener mSyncListener = new Connection.TaskListener() {
 
+		String currentMessage;
+		long countUp;
+		long countDown;
+
 		@Override
 		public void onDisconnected() {
 			showDialog(DIALOG_NO_CONNECTION);
@@ -400,23 +404,32 @@ public class DeckPicker extends Activity {
 		@Override
 		public void onPreExecute() {
 			if (mProgressDialog == null || !mProgressDialog.isShowing()) {
-				mProgressDialog = StyledProgressDialog.show(DeckPicker.this, null, getResources().getString(R.string.sync_prepare_syncing), true);
+				mProgressDialog = StyledProgressDialog.show(DeckPicker.this, getResources().getString(R.string.sync_title), getResources().getString(R.string.sync_prepare_syncing) + "\n" + getResources().getString(R.string.sync_up_down_size, countUp, countDown), false);
 			}
 		}
 
 		@Override
 		public void onProgressUpdate(Object... values) {
+            Resources res = getResources();
             if (values[0] instanceof Boolean) {
                 // This is the part Download missing media of syncing
-                Resources res = getResources();
                 int total = ((Integer)values[1]).intValue();
                 int done = ((Integer)values[2]).intValue();
                 values[0] = ((String)values[3]);
                 values[1] = res.getString(R.string.sync_downloading_media, done, total);
+            } else if (values[0] instanceof Integer) {
+    			int id = (Integer) values[0];
+    			if (id != 0) {
+    				currentMessage = res.getString(id);
+    			}
+    			if (values.length >= 3) {
+    				countUp = (Long) values[1];
+    				countDown = (Long) values[2];
+    			}            	
             }
 			if (mProgressDialog != null && mProgressDialog.isShowing()) {
 //				mProgressDialog.setTitle((String) values[0]);
-				mProgressDialog.setMessage((String) values[0]);
+				mProgressDialog.setMessage(currentMessage + "\n" + res.getString(R.string.sync_up_down_size, countUp, countDown));
 			}
 		}
 
@@ -459,10 +472,13 @@ public class DeckPicker extends Activity {
 						showDialog(DIALOG_SYNC_LOG);
 					} else if (resultType.equals("remoteDbError")) {
 						mDialogMessage = res.getString(R.string.sync_remote_db_error);
-						showDialog(DIALOG_SYNC_LOG);					
+						showDialog(DIALOG_SYNC_LOG);
 					} else if (resultType.equals("finishError")) {
 						mDialogMessage = res.getString(R.string.sync_log_finish_error);
-						showDialog(DIALOG_SYNC_LOG);					
+						showDialog(DIALOG_SYNC_LOG);
+					} else if (resultType.equals("genericError")) {
+						mDialogMessage = res.getString(R.string.sync_generic_error);
+						showDialog(DIALOG_SYNC_LOG);
 					} else {
 						int type = (Integer) result[1];
 						switch (type) {
@@ -581,7 +597,14 @@ public class DeckPicker extends Activity {
 
 		@Override
 		public void onPreExecute() {
-            mProgressDialog = StyledProgressDialog.show(DeckPicker.this, "", "opening collection", true);
+            mProgressDialog = StyledProgressDialog.show(DeckPicker.this, "", "opening collection", true, true, new OnCancelListener() {
+
+				@Override
+				public void onCancel(DialogInterface arg0) {
+					// TODO: close dbs?
+					finish();
+				}
+			});
 			mDeckListView.setVisibility(View.INVISIBLE);
 		}
 

@@ -66,31 +66,18 @@
 <string name="resume_download">Resume Download</string>
 <string name="pause_download">Pause Download</string>
 <string name="duplicate_download">This deck is already downloading</string>
-<string name="sync_all_title">Sync all decks</string>
-<string name="sync_all">Sync all</string>
 
 <string name="connection_error_message">A network error has occurred.</string>
 <string name="sync_log_db_error">A database error has occurred.</string>
 <string name="no_user_password_error_message">In order to proceed with this operation, you need to have an AnkiOnline account and be logged in.</string>
-<!-- <string name="sync_progress_bar_title">Syncing %s</string> -->
 
 <!-- SharedDeck.java -->
 <string name="fact">fact</string>
 <string name="facts">facts</string>
 
-<!-- Sync Change Report, not needed by now -->
-<!--<string name=change_report_title">Added/Changed</string>
-<string name=change_report_here">Here</string>
-<string name=change_report_server">Server</string>
-<string name=change_report_cards">Cards</string>
-<string name=change_report_facts">Facts</string>
-<string name=change_report_models">Models</string>
-<string name=change_report_stats">Stats</string>-->
-
 <!-- MyAccount.java -->
 <string name="username">Username</string>
 <string name="password">Password</string>
-<string name="password_warning">Note: Will be sent in clear text</string>
 <string name="log_in">Log in</string>
 <string name="sign_up_description">Don\'t have an AnkiOnline account? It\'s free!</string>
 <string name="sign_up">Sign up</string>
@@ -126,8 +113,7 @@
 <string name="sync_reload_message">Reloading collection...</string>
 
 <string name="sync_connecting_message">Connecting...</string>
-<string name="sync_syncing_message">Syncing %s</string>
-<string name="sync_summary_from_server_message">Fetching summary from server...</string>
+<string name="sync_title">Synchronization</string>
 <string name="sync_determining_differences_message">Determining differences...</string>
 <string name="sync_transferring_payload_message">Transferring payload...</string>
 <string name="sync_applying_reply_message">Applying reply...</string>
@@ -160,7 +146,9 @@
 <string name="sync_small_objects_message">Syncing small objects...</string>
 <string name="sync_finish_message">Finishing syncing...</string>
 <string name="sync_log_finish_error">Error while sending finish direction to server</string>
-<string name="sync_download_size">Downloading (%d kb)...</string>
-<string name="sync_upload_size">Uploading (%d kb)...</string>
+<string name="sync_download_chunk">Downloading changes from server...</string>
+<string name="sync_upload_chunk">Uploading changes to server...</string>
+<string name="sync_up_down_size">Up: %1$d kb, Down: %2$d kb</string>
+<string name="sync_generic_error">An error has occurred. Please try again later.</string>
 </resources>
 

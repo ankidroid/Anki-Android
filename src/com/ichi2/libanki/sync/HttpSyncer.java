@@ -36,25 +36,30 @@ import org.apache.http.impl.conn.SingleClientConnManager;
 import org.apache.http.params.BasicHttpParams;
 import org.apache.http.params.HttpParams;
 import org.apache.http.params.HttpProtocolParams;
-import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
-import java.io.ByteArrayInputStream;
+import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.io.StringWriter;
 import java.io.UnsupportedEncodingException;
 import java.util.zip.GZIPOutputStream;
 
 public class HttpSyncer {
 
-	private static final String BOUNDARY = "Anki-sync-boundary";
-
+    private static final String BOUNDARY = "Anki-sync-boundary";
     public static final String ANKIWEB_STATUS_OK = "OK";
+
+    public volatile long bytesSent=0;
+    public volatile long bytesReceived=0;
+    public volatile long mNextSend = 0;
 
     /**
      * Connection settings
@@ -69,9 +74,11 @@ public class HttpSyncer {
      */
 
     private String mHKey;
+    private Connection mCon;
 
-    public HttpSyncer(String hkey) {
+    public HttpSyncer(String hkey, Connection con) {
     	mHKey = hkey;
+    	mCon = con;
     }
 
 
@@ -95,7 +102,7 @@ public class HttpSyncer {
 	            buf.write(bdry + "\r\n");
 	            buf.write("Content-Disposition: form-data; name=\"k\"\r\n\r\n" + mHKey + "\r\n");        	
 	        }
-	        ByteArrayOutputStream bos = new ByteArrayOutputStream();
+	        OutputStreamProgress bos = new OutputStreamProgress(new ByteArrayOutputStream());
 	        // payload as raw data or json
 	        if (fobj != null) {
 	        	// header
@@ -150,101 +157,128 @@ public class HttpSyncer {
 		} catch (UnsupportedEncodingException e) {
 			throw new RuntimeException(e);
 		} catch (IOException e) {
-			throw new RuntimeException(e);
+			return null;
 		}
     }
 
 
-    public static String getDataString(HttpResponse response) {
-    	try {
-			return Utils.convertStreamToString(response.getEntity().getContent());
-		} catch (IllegalStateException e) {
+    public void writeToFile(InputStream source, String destination) throws IOException {
+        new File(destination).createNewFile();
+
+        OutputStream output = new BufferedOutputStream(new FileOutputStream(destination));
+
+        byte[] buf = new byte[Utils.CHUNK_SIZE];
+        int len;
+        while ((len = source.read(buf)) > 0) {
+            output.write(buf, 0, len);
+            bytesReceived += len;
+            publishProgress();
+        }
+        output.close();
+    }
+
+    public String stream2String(InputStream stream) {
+        BufferedReader rd;
+		try {
+			rd = new BufferedReader(new InputStreamReader(stream, "UTF-8"), 4096);
+	        String line;
+	        StringBuilder sb = new StringBuilder();
+	        while ((line = rd.readLine()) != null) {
+	            sb.append(line);
+	            bytesReceived += line.length();
+	            publishProgress();
+	        }
+	        rd.close();
+	        return sb.toString();
+		} catch (UnsupportedEncodingException e) {
 			throw new RuntimeException(e);
 		} catch (IOException e) {
 			throw new RuntimeException(e);
 		}
     }
 
-    public static JSONObject getDataJSONObject(HttpResponse response) {
-    	try {
-			return new JSONObject(getDataString(response));
-		} catch (JSONException e) {
-			throw new RuntimeException(e);
+	private void publishProgress() {
+		if (mNextSend <=  bytesSent + bytesReceived) {
+			mNextSend = bytesSent + bytesReceived + 1024;
+			mCon.publishProgress(0, bytesSent / 1024, bytesReceived / 1024);
 		}
-    }
-
-    public static JSONArray getDataJSONArray(HttpResponse response) {
-    	try {
-			return new JSONArray(getDataString(response));
-		} catch (JSONException e) {
-			throw new RuntimeException(e);
-		}
-    }
-
-    public static int getReturnType(HttpResponse response) {
-    	return response.getStatusLine().getStatusCode();
-    }
-
-    public static String getReason(HttpResponse response) {
-    	return response.getStatusLine().getReasonPhrase();
-    }
+	}
 
 	public HttpResponse hostKey(String arg1, String arg2) {
-		// TODO Auto-generated method stub
 		return null;
 	}
-
 	public JSONObject applyChanges(JSONObject kw) {
-		// TODO Auto-generated method stub
 		return null;
 	}
-
-
 	public JSONObject start(JSONObject kw) {
-		// TODO Auto-generated method stub
 		return null;
 	}
-
-
 	public JSONObject chunk(JSONObject kw) {
-		// TODO Auto-generated method stub
 		return null;
 	}
-
-
-	public Object[] upload(Connection connection) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-
 	public JSONObject chunk() {
-		// TODO Auto-generated method stub
 		return null;
 	}
-
-
 	public long finish() {
-		// TODO Auto-generated method stub
 		return 0;
 	}
-
-
 	public HttpResponse meta() {
-		// TODO Auto-generated method stub
+		return null;
+	}
+	public JSONObject applyChunk(JSONObject kw) {
+		return null;
+	}
+	public Object[] download() {
+		return null;
+	}
+	public Object[] upload() {
 		return null;
 	}
 
+	/*http://stackoverflow.com/questions/7057342/how-to-get-a-progress-bar-for-a-file-upload-with-apache-httpclient-4*/
+	private class OutputStreamProgress extends OutputStream {
 
-	public JSONObject applyChunk(ByteArrayInputStream kw) {
-		// TODO Auto-generated method stub
-		return null;
+	    private final ByteArrayOutputStream outstream;
+
+	    public OutputStreamProgress(ByteArrayOutputStream outstream) {
+	        this.outstream = outstream;
+	    }
+
+	    @Override
+	    public void write(int b) throws IOException {
+	        outstream.write(b);
+	        count(1);
+	    }
+
+	    @Override
+	    public void write(byte[] b) throws IOException {
+	        outstream.write(b);
+	        count(b.length);
+	    }
+
+	    @Override
+	    public void write(byte[] b, int off, int len) throws IOException {
+	        outstream.write(b, off, len);
+	        count(len);
+	    }
+
+	    @Override
+	    public void flush() throws IOException {
+	        outstream.flush();
+	    }
+
+	    @Override
+	    public void close() throws IOException {
+	        outstream.close();
+	    }
+
+	    public byte[] toByteArray() throws IOException {
+	    	return outstream.toByteArray();
+	    }
+
+	    public void count(long count) throws IOException {
+	        bytesSent += count;
+	        publishProgress();
+	    }
 	}
-
-
-	public Object[] download(Connection con) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 }

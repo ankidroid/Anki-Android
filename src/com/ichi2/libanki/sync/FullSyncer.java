@@ -23,6 +23,8 @@ import java.io.IOException;
 import java.io.InputStream;
 
 import org.apache.http.HttpResponse;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import android.database.sqlite.SQLiteDatabaseCorruptException;
 import android.util.Log;
@@ -33,35 +35,39 @@ import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki2.R;
 import com.ichi2.async.Connection;
 import com.ichi2.libanki.Collection;
-import com.ichi2.libanki.Utils;
 
 
 public class FullSyncer extends HttpSyncer {
 
 	Collection mCol;
+	Connection mCon;
 
-	public FullSyncer(Collection col, String hkey) {
-		super(hkey);
+	public FullSyncer(Collection col, String hkey, Connection con) {
+		super(hkey, con);
 		mCol = col;
+		mCon = con;
 	} 
 
 	@Override
-	public Object[] download(Connection con) {
-		HttpResponse ret = super.req("download");
+	public Object[] download() {
 		InputStream cont;
 		try {
+			HttpResponse ret = super.req("download");
+			if (ret == null) {
+				return null;
+			}			
 			cont = ret.getEntity().getContent();
 		} catch (IllegalStateException e1) {
 			throw new RuntimeException(e1);
 		} catch (IOException e1) {
-			throw new RuntimeException(e1);
+			return null;
 		}
 		String path = mCol.getPath();
 		mCol.close(false);
 		mCol = null;
 		String tpath = path + ".tmp";
 		try {
-			Utils.writeToFile(cont, tpath, con);
+			super.writeToFile(cont, tpath);
 		} catch (IOException e) {
 			throw new RuntimeException(e);
 		}
@@ -88,7 +94,7 @@ public class FullSyncer extends HttpSyncer {
 	}
 
 	@Override
-	public Object[] upload(Connection connection) {
+	public Object[] upload() {
 		// make sure it's ok before we try to upload
 		if (!mCol.getDb().queryString("PRAGMA integrity_check").equalsIgnoreCase("ok")) {
 			return new Object[]{"dbError"};
@@ -98,13 +104,25 @@ public class FullSyncer extends HttpSyncer {
 		String filePath = mCol.getPath();
 		mCol.close();
 		HttpResponse ret;
-		connection.publishProgress(R.string.sync_uploading_message);
+		mCon.publishProgress(R.string.sync_uploading_message);
 		try {
 			ret = super.req("upload", new FileInputStream(filePath));
+			if (ret == null) {
+				return null;
+			}
+			int status = ret.getStatusLine().getStatusCode();
+			if (status != 200) {
+				// error occurred
+				return new Object[]{"error", status, ret.getStatusLine().getReasonPhrase()};
+			} else {
+				return new Object[]{super.stream2String(ret.getEntity().getContent())};
+			}
 		} catch (FileNotFoundException e) {
 			throw new RuntimeException(e);
+		} catch (IllegalStateException e) {
+			throw new RuntimeException(e);
+		} catch (IOException e) {
+			throw new RuntimeException(e);
 		}
-		String result = HttpSyncer.getDataString(ret);
-		return new Object[]{result.equalsIgnoreCase(HttpSyncer.ANKIWEB_STATUS_OK) ? result : "error", HttpSyncer.getReturnType(ret), HttpSyncer.getReason(ret)};
 	}
 }

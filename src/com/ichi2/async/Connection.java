@@ -206,17 +206,21 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
     private Payload doInBackgroundLogin(Payload data) {
         String username = (String) data.data[0];
         String password = (String) data.data[1];
-        HttpSyncer server = new RemoteServer(null);
+        HttpSyncer server = new RemoteServer(this, null);
         HttpResponse ret = server.hostKey(username, password);
         String hostkey = null;
         boolean valid = false;
-        data.returnType = HttpSyncer.getReturnType(ret);
+        data.returnType = ret.getStatusLine().getStatusCode();
         if (data.returnType == 200) {
 			try {
-				hostkey = HttpSyncer.getDataJSONObject(ret).getString("key");
+				hostkey = (new JSONObject(server.stream2String(ret.getEntity().getContent()))).getString("key");
 				valid = (hostkey != null) && (hostkey.length() > 0);
 			} catch (JSONException e) {
 				valid = false;
+			} catch (IllegalStateException e) {
+				throw new RuntimeException(e);
+			} catch (IOException e) {
+				throw new RuntimeException(e);
 			}            	
         }
         if (valid) {
@@ -236,7 +240,7 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
     	Collection col = Collection.currentCollection();
     	String path = col.getPath();
 
-    	HttpSyncer server = new RemoteServer(hkey);
+    	HttpSyncer server = new RemoteServer(this, hkey);
     	Syncer client = new Syncer(col, server);
 
     	// note mediaUSN for later
@@ -248,6 +252,11 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
 			Log.i(AnkiDroidApp.TAG, "Sync - starting sync");
 			publishProgress(R.string.sync_prepare_syncing);
     		Object[] ret = client.sync(this);
+			if (ret == null) {
+    			data.success = false;
+    			data.result = new Object[]{"genericError"};
+    			return data;        				
+			}
     		String retCode = (String)ret[0];
     		if (!retCode.equals("noChanges") && !retCode.equals("success")) {
     			data.success = false;
@@ -264,11 +273,16 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
     		}
     	} else {
     		try {
-        		server = new FullSyncer(col, hkey);
+        		server = new FullSyncer(col, hkey, this);
         		if (conflictResolution.equals("upload")) {
         			Log.i(AnkiDroidApp.TAG, "Sync - fullsync - upload collection");
         			publishProgress(R.string.sync_preparing_full_sync_message);
-        			Object[] ret = server.upload(this);
+        			Object[] ret = server.upload();
+        			if (ret == null) {
+            			data.success = false;
+            			data.result = new Object[]{"genericError"};
+            			return data;        				
+        			}
         			if (!((String) ret[0]).equals(HttpSyncer.ANKIWEB_STATUS_OK)) {
             			data.success = false;
             			data.result = ret;
@@ -277,7 +291,12 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
         		} else if (conflictResolution.equals("download")) {
         			Log.i(AnkiDroidApp.TAG, "Sync - fullsync - download collection");
         			publishProgress(R.string.sync_downloading_message);
-        			Object[] ret = server.download(this);
+        			Object[] ret = server.download();
+        			if (ret == null) {
+            			data.success = false;
+            			data.result = new Object[]{"genericError"};
+            			return data;        				
+        			}
         			if (!((String)ret[0]).equals("success")) {
             			data.success = false;
             			data.result = ret;
@@ -318,12 +337,12 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
 
 
     public void publishProgress(int id) {
-    	super.publishProgress(sContext.getResources().getString(id));
+    	super.publishProgress(id);
     }
 
 
-    public void publishProgress(int id, long progress) {
-    	super.publishProgress(sContext.getResources().getString(id, progress));
+    public void publishProgress(int id, long up, long down) {
+    	super.publishProgress(id, up, down);
     }
 
 

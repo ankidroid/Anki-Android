@@ -9,11 +9,13 @@ import java.io.InputStream;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import com.ichi2.async.Connection;
+
 
 
 public class RemoteMediaServer extends HttpSyncer {
 
-	public RemoteMediaServer(String hkey) {
-		super(hkey);
+	public RemoteMediaServer(String hkey, Connection con) {
+		super(hkey, con);
 	} 
 }
