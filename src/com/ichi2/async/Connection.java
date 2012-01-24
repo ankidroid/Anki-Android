@@ -311,7 +311,7 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
         	data.success = true;
     		TreeSet<Object[]> decks = col.getSched().deckDueTree(true);
     		data.result = decks;
-    		data.data = new Object[]{conflictResolution};
+    		data.data = new Object[]{conflictResolution, col};
         	return data;
     	}
     }
