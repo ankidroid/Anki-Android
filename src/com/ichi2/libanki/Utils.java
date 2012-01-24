@@ -36,6 +36,7 @@ import android.widget.LinearLayout;
 import com.ichi2.anki.AnkiDb;
 import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki2.R;
+import com.ichi2.async.Connection;
 import com.mindprod.common11.BigDate;
 import com.tomgibara.android.veecheck.util.PrefSettings;
 
@@ -679,6 +680,9 @@ public class Utils {
      * @throws IOException 
      */
     public static void writeToFile(InputStream source, String destination) throws IOException {
+    	writeToFile(source, destination, null);
+    }
+    public static void writeToFile(InputStream source, String destination, Connection con) throws IOException {
         Log.i(AnkiDroidApp.TAG, "Creating new file... = " + destination);
         new File(destination).createNewFile();
 
@@ -695,7 +699,9 @@ public class Utils {
         while ((len = source.read(buf)) > 0) {
             output.write(buf, 0, len);
             sizeBytes += len;
-            // Log.i(AnkiDroidApp.TAG, "Write...");
+            if (con != null && sizeBytes > 512) {
+	    		con.publishProgress(R.string.sync_download_size, sizeBytes / 1024);	    			
+            }
         }
         long endTimeMillis = System.currentTimeMillis();
 

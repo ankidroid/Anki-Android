@@ -46,7 +46,7 @@ public class FullSyncer extends HttpSyncer {
 	} 
 
 	@Override
-	public Object[] download() {
+	public Object[] download(Connection con) {
 		HttpResponse ret = super.req("download");
 		InputStream cont;
 		try {
@@ -57,11 +57,11 @@ public class FullSyncer extends HttpSyncer {
 			throw new RuntimeException(e1);
 		}
 		String path = mCol.getPath();
-		mCol.close();
+		mCol.close(false);
 		mCol = null;
 		String tpath = path + ".tmp";
 		try {
-			Utils.writeToFile(cont, tpath);
+			Utils.writeToFile(cont, tpath, con);
 		} catch (IOException e) {
 			throw new RuntimeException(e);
 		}

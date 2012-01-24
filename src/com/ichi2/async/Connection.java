@@ -277,7 +277,7 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
         		} else if (conflictResolution.equals("download")) {
         			Log.i(AnkiDroidApp.TAG, "Sync - fullsync - download collection");
         			publishProgress(R.string.sync_downloading_message);
-        			Object[] ret = server.download();
+        			Object[] ret = server.download(this);
         			if (!((String)ret[0]).equals("success")) {
             			data.success = false;
             			data.result = ret;

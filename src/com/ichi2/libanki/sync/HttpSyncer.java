@@ -236,13 +236,13 @@ public class HttpSyncer {
 	}
 
 
-	public Object[] download() {
+	public JSONObject applyChunk(ByteArrayInputStream kw) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 
-	public JSONObject applyChunk(ByteArrayInputStream kw) {
+	public Object[] download(Connection con) {
 		// TODO Auto-generated method stub
 		return null;
 	}
