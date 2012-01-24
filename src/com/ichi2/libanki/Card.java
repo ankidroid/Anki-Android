@@ -59,7 +59,7 @@ public class Card implements Cloneable {
 	private long mMod;
 	private int mType = 0;
 	private int mQueue = 0;
-	private int mDue = 0;
+	private long mDue = 0;
 	private int mIvl = 0;
 	private int mFactor = 0;
 	private int mReps = 0;
@@ -67,7 +67,7 @@ public class Card implements Cloneable {
 	private int mLeft = 0;
 	private int mUsn = 0;
 	private int mFlags = 0;
-	private int mEDue = 0;
+	private long mEDue = 0;
 	private String mData = "";
 	// END SQL table entries
 
@@ -536,19 +536,19 @@ public class Card implements Cloneable {
 		mQueue = queue;
 	}
 
-	public int getEDue() {
+	public long getEDue() {
 		return mEDue;
 	}
 
-	public void setEDue(int edue) {
+	public void setEDue(long edue) {
 		mEDue = edue;
 	}
 
-	public int getDue() {
+	public long getDue() {
 		return mDue;
 	}
 
-	public void setDue(int due) {
+	public void setDue(long due) {
 		mDue = due;
 	}
 

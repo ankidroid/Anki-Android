@@ -520,6 +520,7 @@ public class Decks {
 
 	/* all parents of did */
 	public ArrayList<JSONObject> parents(long did) {
+		// get parent and grandparent names
 		ArrayList<JSONObject> list = new ArrayList<JSONObject>();
 		try {
 			String[] path = get(did).getString("name").split("::");

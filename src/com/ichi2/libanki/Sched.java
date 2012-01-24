@@ -275,7 +275,7 @@ public class Sched {
 		_updateStats(card, type, 1);
 	}
 
-	private void _updateStats(Card card, String type, int cnt) {
+	public void _updateStats(Card card, String type, int cnt) {
 		String key = type + "Today";
 		long did = card.getDid();
 		ArrayList<JSONObject> list = mCol.getDecks().parents(did);
@@ -866,6 +866,13 @@ public class Sched {
 			}
 			// TODO: check, if type for second due is correct
 			card.setDue((int) (Utils.now() + delay));
+			// if the queue is not empty and there's nothing else to do, make
+			// sure we don't put it at the head of the queue and end up showing
+			// it twice in a row
+			if (!mLrnQueue.isEmpty() && mRevCount == 0 && mNewCount == 0) {
+				long smallestDue = mLrnQueue.getFirst()[0];
+				card.setDue(Math.max(card.getDue(), smallestDue + 1));
+			}
 			_sortIntoLrn(card.getDue(), card.getId());
 		}
 		_logLrn(card, ease, conf, leaving, type, lastLeft);
@@ -874,7 +881,7 @@ public class Sched {
 	/**
 	 * Sorts a card into the lrn queue LIBANKI: not in libanki
 	 */
-	private void _sortIntoLrn(int due, long id) {
+	private void _sortIntoLrn(long due, long id) {
 		Iterator i = mLrnQueue.listIterator();
 		int idx = 0;
 		while (i.hasNext()) {
@@ -1222,7 +1229,7 @@ public class Sched {
 	 * Ideal next interval for CARD, given EASE.
 	 */
 	private int _nextRevIvl(Card card, int ease) {
-		int delay = _daysLate(card);
+		long delay = _daysLate(card);
 		double interval = 0;
 		JSONObject conf = _cardConf(card);
 		double fct = card.getFactor() / 1000.0;
@@ -1258,7 +1265,7 @@ public class Sched {
 	/**
 	 * Number of days later than scheduled.
 	 */
-	private int _daysLate(Card card) {
+	private long _daysLate(Card card) {
 		return Math.max(0, mToday - card.getDue());
 	}
 
@@ -1335,7 +1342,7 @@ public class Sched {
 				// handle
 				if (conf.getInt("leechAction") == 0) {
 					suspendCards(new long[] { card.getId() });
-					card.setQueue(-1);
+					card.load();
 				}
 				return true;
 			}

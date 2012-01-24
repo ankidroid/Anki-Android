@@ -23,7 +23,6 @@ import android.util.Log;
 import com.ichi2.anki.AnkiDatabaseManager;
 import com.ichi2.anki.AnkiDb;
 import com.ichi2.anki.AnkiDroidApp;
-import com.ichi2.async.DeckTask;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -942,6 +941,10 @@ public class Collection {
 		long last = mDb.queryLongScalar("SELECT id FROM revlog WHERE cid = "
 				+ c.getId() + " ORDER BY id DESC LIMIT 1");
 		mDb.execute("DELETE FROM revlog WHERE id = " + last);
+		// and finally, update daily count
+		// FIXME: what to do in cramming cas?
+		String type = (new String[]{"new", "lrn", "rev"})[c.getQueue()];
+		mSched._updateStats(c, type, -1);
 		return c;
 	}
 
