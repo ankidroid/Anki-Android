@@ -150,7 +150,7 @@ public class Decks {
 		if (g != null) {
 			try {
 				g.put("mod", Utils.intNow());
-				g.put("usn", mCol.getUsn());
+				g.put("usn", mCol.usn());
 			} catch (JSONException e) {
 				throw new RuntimeException(e);
 			}
@@ -428,7 +428,7 @@ public class Decks {
 				.execSQL(
 						"UPDATE cards SET did = ?, usn = ?, mod = ? WHERE id IN "
 								+ Utils.ids2str(cids),
-						new Object[] { did, mCol.getUsn(), Utils.intNow() });
+						new Object[] { did, mCol.usn(), Utils.intNow() });
 	}
 
 	private void maybeAddToActive() {

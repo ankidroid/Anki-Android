@@ -178,7 +178,7 @@ public class Syncer {
     	JSONArray o = new JSONArray();
     	o.put(mCol.getMod());
     	o.put(mCol.getScm());
-    	o.put(mCol.getUsn());
+    	o.put(mCol.getUsnForSync());
     	o.put(Utils.intNow());
     	return o;
     }
@@ -239,7 +239,7 @@ public class Syncer {
     		mod = Utils.intNow(1000);
     	}
     	mCol.setLs(mod);
-    	mCol.setUsn(mMaxUsn + 1);
+    	mCol.setUsnAfterSync(mMaxUsn + 1);
     	mCol.save(null, mod);
     	return mod;
     }
@@ -380,7 +380,7 @@ public class Syncer {
     }
 
     private JSONObject start(int minUsn, boolean lnewer, JSONObject graves) {
-	mMaxUsn = mCol.getUsn();
+	mMaxUsn = mCol.getUsnForSync();
 	mMinUsn = minUsn;
 	mLNewer = !lnewer;
 	JSONObject lgraves = removed();
@@ -607,7 +607,7 @@ public class Syncer {
 	    	ArrayList<Object[]> update = new ArrayList<Object[]>();
 	    	for (int i = 0; i < data.length(); i++) {
 	    		JSONArray r = data.getJSONArray(i);
-	    		if (!lmods.containsKey(r.getLong(0)) || lmods.get(i) < r.getLong(modIdx)) {
+	    		if (!lmods.containsKey(r.getLong(0)) || lmods.get(r.getLong(0)) < r.getLong(modIdx)) {
 	    			update.add(ConvUtils.jsonArray2Objects(r));
 	    		}
 	    	}

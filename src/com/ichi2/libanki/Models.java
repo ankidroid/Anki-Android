@@ -170,7 +170,7 @@ public class Models {
     	if (m != null && m.has("id")) {
     		try {
 				m.put("mod", Utils.intNow());
-	    		m.put("usn", mCol.getUsn());
+	    		m.put("usn", mCol.usn());
 	    		_updateRequired(m);
 	    		if (templates) {
 	    			_syncTemplates(m);

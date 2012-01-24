@@ -219,7 +219,7 @@ public class Collection {
 		if (mDb.getMod()) {
 			flush(mod);
 			// mDb.commit();
-			// mDb.lock()
+			lock();
 			mDb.setMod(false);
 		}
 		_markOp(name);
@@ -237,7 +237,7 @@ public class Collection {
 	public void lock() {
 		// make sure we don't accidentally bump mod time
 		boolean mod = mDb.getMod();
-		// TODO
+		mDb.execute("UPDATE col SET mod=mod");
 		mDb.setMod(mod);
 	}
 
@@ -1041,7 +1041,7 @@ public class Collection {
 		mLs = ls;
 	}
 
-	public void setUsn(int usn) {
+	public void setUsnAfterSync(int usn) {
 		mUsn = usn;
 	}
 
@@ -1049,7 +1049,8 @@ public class Collection {
 		return mMod;
 	}
 
-	public int getUsn() {
+	/* this getter is only for syncing routines, use usn() instead elsewhere */
+	public int getUsnForSync() {
 		return mUsn;
 	}
 

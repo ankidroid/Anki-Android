@@ -178,7 +178,7 @@ public class Card implements Cloneable {
 
 	public void flushSched() {
 		mMod = Utils.intNow();
-		mUsn = mCol.getUsn();
+		mUsn = mCol.usn();
 		ContentValues values = new ContentValues();
 		values.put("mod", mMod);
 		values.put("usn", mUsn);

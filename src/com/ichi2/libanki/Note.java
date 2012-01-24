@@ -125,7 +125,7 @@ public class Note {
 	public void flush(int mod) {
 		_preFlush();
 		mMod = mod != 0 ? mod : Utils.intNow();
-		mUsn = mCol.getUsn();
+		mUsn = mCol.usn();
 		String sfld = Utils
 				.stripHTML(mFields[mCol.getModels().sortIdx(mModel)]);
 		String tags = stringTags();

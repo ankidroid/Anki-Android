@@ -988,7 +988,7 @@ public class Sched {
 		int lastIvl = -(_delayForGrade(conf, lastLeft));
 		int ivl = leaving ? card.getIvl() : -(_delayForGrade(conf,
 				card.getLeft()));
-		log(card.getId(), mCol.getUsn(), ease, ivl, lastIvl, card.getFactor(),
+		log(card.getId(), mCol.usn(), ease, ivl, lastIvl, card.getFactor(),
 				card.timeTaken(), type);
 	}
 
@@ -1027,7 +1027,7 @@ public class Sched {
 				.getDatabase()
 				.execSQL(
 						"UPDATE cards SET due = edue, queue = 2, mod = "
-								+ Utils.intNow() + ", usn = " + mCol.getUsn()
+								+ Utils.intNow() + ", usn = " + mCol.usn()
 								+ " WHERE queue = 1 AND type = 2 " + extra);
 	}
 
@@ -1215,7 +1215,7 @@ public class Sched {
 	}
 
 	private void _logRev(Card card, int ease) {
-		log(card.getId(), mCol.getUsn(), ease, card.getIvl(),
+		log(card.getId(), mCol.usn(), ease, card.getIvl(),
 				card.getLastIvl(), card.getFactor(), card.timeTaken(), 1);
 	}
 
@@ -1581,7 +1581,7 @@ public class Sched {
 				.getDatabase()
 				.execSQL(
 						"UPDATE cards SET queue = -1, mod = " + Utils.intNow()
-								+ ", usn = " + mCol.getUsn() + " WHERE id IN "
+								+ ", usn = " + mCol.usn() + " WHERE id IN "
 								+ Utils.ids2str(ids));
 	}
 
@@ -1593,7 +1593,7 @@ public class Sched {
 				.getDatabase()
 				.execSQL(
 						"UPDATE cards SET queue = type, mod = "
-								+ Utils.intNow() + ", usn = " + mCol.getUsn()
+								+ Utils.intNow() + ", usn = " + mCol.usn()
 								+ " WHERE queue = -1 AND id IN "
 								+ Utils.ids2str(ids));
 	}
