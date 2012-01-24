@@ -14,10 +14,9 @@
  * You should have received a copy of the GNU General Public License along with         *
  * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
  ****************************************************************************************/
-//
+
 package com.ichi2.libanki.sync;
 
-import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -109,7 +108,7 @@ public class Syncer {
 	    	o.put("lnewer", mLNewer);
 	    	o.put("graves", lrem);
 	    	JSONObject rrem = mServer.start(o);
-	    	if (ret == null) {
+	    	if (rrem == null) {
 	    		return null;
 	    	}
 	    	if (rrem.has("errorType")) {
@@ -122,7 +121,7 @@ public class Syncer {
 	    	JSONObject sch = new JSONObject();
 	    	sch.put("changes", lchg);
 	    	JSONObject rchg = mServer.applyChanges(sch);
-	    	if (ret == null) {
+	    	if (rchg == null) {
 	    		return null;
 	    	}
 	    	if (rchg.has("errorType")) {
@@ -133,15 +132,13 @@ public class Syncer {
     		con.publishProgress(R.string.sync_download_chunk);
 	    	while (true) {
 	    		JSONObject chunk = mServer.chunk();
-	        	if (ret == null) {
+	        	if (chunk == null) {
 	        		return null;
 	        	}
 		    	if (chunk.has("errorType")) {
 		    		return new Object[]{"error", chunk.get("errorType"), chunk.get("errorReason")};
 		    	}
-	    		JSONObject pch = new JSONObject();
-	    		pch.put("chunk", chunk);
-	    		applyChunk(pch);
+	    		applyChunk(chunk);
 	    		if (chunk.getBoolean("done")) {
 	    			break;
 	    		}
@@ -598,7 +595,7 @@ public class Syncer {
 	    	HashMap<Long, Long> lmods = new HashMap<Long, Long>();
 	    	Cursor cur = null;
 	    	try {
-	    		cur = mCol.getDb().getDatabase().rawQuery("SELECT id, mod FROM " + table + "WHERE id IN " + Utils.ids2str(ids) + " AND " + usnLim(), null);
+	    		cur = mCol.getDb().getDatabase().rawQuery("SELECT id, mod FROM " + table + " WHERE id IN " + Utils.ids2str(ids) + " AND " + usnLim(), null);
 	    		while (cur.moveToNext()) {
 	    			lmods.put(cur.getLong(0), cur.getLong(1));
 	    		}

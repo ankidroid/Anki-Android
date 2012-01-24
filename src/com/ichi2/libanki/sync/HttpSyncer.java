@@ -59,7 +59,8 @@ public class HttpSyncer {
 
     public volatile long bytesSent=0;
     public volatile long bytesReceived=0;
-    public volatile long mNextSend = 0;
+    public volatile long mNextSendS = 1024;
+    public volatile long mNextSendR = 1024;
 
     /**
      * Connection settings
@@ -198,9 +199,12 @@ public class HttpSyncer {
     }
 
 	private void publishProgress() {
-		if (mNextSend <=  bytesSent + bytesReceived) {
-			mNextSend = bytesSent + bytesReceived + 1024;
-			mCon.publishProgress(0, bytesSent / 1024, bytesReceived / 1024);
+		if (mNextSendR <=  bytesReceived || mNextSendS <= bytesReceived) {
+			long bR = bytesReceived / 1024;
+			long bS = bytesSent / 1024;
+			mNextSendR = (bR + 1) * 1024;
+			mNextSendS = (bS / 1024 + 1) * 1024;
+			mCon.publishProgress(0, bS, bR);
 		}
 	}
 
