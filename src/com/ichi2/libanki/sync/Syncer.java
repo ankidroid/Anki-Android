@@ -164,6 +164,8 @@ public class Syncer {
 		} catch (IOException e) {
 			throw new RuntimeException(e);
 		}
+	// reset counts
+	mCol.getSched().reset();
     	// finalize
     	con.publishProgress(R.string.sync_finish_message);
     	long mod = mServer.finish();
