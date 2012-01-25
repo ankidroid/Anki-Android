@@ -73,7 +73,7 @@
   <string name="help_online">Onlinehjälp</string>
   <string name="help_faq">FAQ</string>
   <string name="help_tutorial">Övningskortlek</string>
-  <string name="simple_interface_hint">Empty %s. Bear in mind that simple interface cannot show pictures/sounds etc.</string>
+  <string name="simple_interface_hint">Tom %s. Tänk på att det enkla gränssnittet inte kan visa bilder/ljud m.m.</string>
   <plurals name="factadder_cards_added">
     <item quantity="one">1 kort har lagts till</item>
     <item quantity="other">%d kort har lagts till</item>

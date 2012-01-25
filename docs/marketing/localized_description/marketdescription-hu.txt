@@ -1,0 +1,39 @@
+Memorize anything with AnkiDroid!
+
+AnkiDroid lets you learn flashcards very efficiently by showing them just before you will forget. It is fully compatible with the spaced repetition software Anki (including synchronization), which is available for Windows, Linux and MacOS.
+
+Study all sorts of things wherever and whenever you want. Make good use of idle times on bus trips, in supermarket queues or any other waiting situation!
+
+Add material through the desktop application Anki or directly through Ankidroid.
+
+Create your own flashcard decks or download free decks compiled for many languages and topics (more than 6000 available). Az alkalmazás támogatja az anyagok automatikus hozzáadását a szótárból!
+
+★ Fő funkciók:
+• támogatott szókártya tartalmak: szöveg, kép, hang, LaTeX
+• késleltetett ismétlés (supermemo 2 algoritmus)
+• szöveg-beszéd integráció
+• több mint 6000 előre elkészített pakli
+• részletes statisztikák
+• 3 widget
+• AnkiWeb szinkronizálás
+• nyílt forráskódú
+
+★ További funkciók:
+• válaszok beírása (lehetőség)
+• whiteboard
+• kártya böngésző
+• kártya szerkesztő/hozzáadó
+• importáld a meglévő gyűjtemény fájlokat (Anki Desktop-pal)
+• add cards by intent from other applications like dictionaries
+• dictionary integration (ColorDict, GoldenDict, Leo.org, Aedict, diverse web dictionaries)
+• egyéni betűtípus-támogatás
+• teljes biztonsági másolat rendszer
+• navigáció simítással, érintéssel, rázással
+• átnézés a widgetben
+• teljesen testreszabható
+• magolás mód
+• limit studying by tag, time or cards
+• éjszakai mód
+• zeemote-támogatás
+• three different ui-themes
+• 27 lokalizáció

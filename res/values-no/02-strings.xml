@@ -57,7 +57,7 @@
   <string name="studyoptions_no_external_storage_title">Ingen ekstern lagringsplass tilgjengelig</string>
   <string name="studyoptions_no_external_storage_message">Ingen ekstern lagring er tilgjengelig for øyeblikket. AnkiDroid må ha tilgang til SD-kortet for å kunne lese og laste dine Anki-kortstokker. Kontroller at SD-kortet er montert, og prøv på nytt.</string>
   <string name="fact_adder_intent_title">AnkiDroid kort</string>
-  <string name="fact_adder_swap">Bytt</string>
+  <string name="fact_adder_swap">Bytt om</string>
   <string name="deckpicker_select_dictionary_title">Velg ordliste</string>
   <string name="deckpicker_select_dictionary_default">Standard</string>
   <string name="card_editor_add_card">Legg til kort</string>
@@ -67,15 +67,15 @@
   <string name="error_insufficient_memory">Operasjonen ikke mulig på grunn av for lite minne på enheten</string>
   <string name="tutorial_load">Oppretter opplæringskortstokk</string>
   <string name="tutorial_loading_error">Opplæringskortstokk kunne ikke opprettes</string>
-  <string name="rename">Rename</string>
-  <string name="rename_error">Deck %s could not be renamed</string>
+  <string name="rename">Omdøpe</string>
+  <string name="rename_error">Kortstokk %s kan ikke omdøpes</string>
   <string name="help_title">Hjelp</string>
   <string name="help_online">Online hjelp</string>
   <string name="help_faq">FAQ</string>
   <string name="help_tutorial">Opplæringskortstokk</string>
-  <string name="simple_interface_hint">Empty %s. Bear in mind that simple interface cannot show pictures/sounds etc.</string>
+  <string name="simple_interface_hint">Tom %s. Husk at at enkelt grensesnitt ikke kan vise bilder/lyder osv.</string>
   <plurals name="factadder_cards_added">
-    <item quantity="one">1 card added</item>
-    <item quantity="other">%d cards added</item>
+    <item quantity="one">Ett kort lagt til</item>
+    <item quantity="other">%d kort lagt til</item>
   </plurals>
 </resources>

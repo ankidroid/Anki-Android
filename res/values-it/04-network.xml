@@ -45,9 +45,9 @@
   <string name="resume_download">Riprendi il download</string>
   <string name="pause_download">Download in pausa</string>
   <string name="duplicate_download">Mazzo già scaricato</string>
-  <string name="sync_all_title">Sync all decks</string>
+  <string name="sync_all_title">Sincronizza tutti mazzi</string>
   <string name="sync_all">Sincronizza tutto</string>
-  <string name="sync_prepare_syncing">Preparing syncing...</string>
+  <string name="sync_prepare_syncing">Preparazione sincronizzazione...</string>
   <string name="connection_error_message">Problemi di connessione.</string>
   <string name="sync_log_db_error">A database error has occurred.</string>
   <string name="no_user_password_error_message">Occorre autenticarsi a AnkiOnline per fare questa operazione.</string>
@@ -63,7 +63,7 @@
   <string name="log_out">Esci</string>
   <string name="alert_logging_message">Attendere prego, login in corso...</string>
   <string name="invalid_username_password">Username o password invalidi.</string>
-  <string name="sync_too_busy">Server too busy. Try again later.</string>
+  <string name="sync_too_busy">Server sovraccarico. Provare più tardi.</string>
   <string name="login_generic_error">Impossibile effettuare il login.</string>
   <string name="download_finished">Download finito</string>
   <string name="deck_downloaded">Mazzo scaricato</string>

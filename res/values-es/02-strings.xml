@@ -73,7 +73,7 @@
   <string name="help_online">Ayuda en línea</string>
   <string name="help_faq">Preguntas más frecuentes</string>
   <string name="help_tutorial">Mazo tutorial</string>
-  <string name="simple_interface_hint">Empty %s. Bear in mind that simple interface cannot show pictures/sounds etc.</string>
+  <string name="simple_interface_hint">Vaciar %s. Ten en cuenta que la interfaz simple no puede mostrar imágenes/sonidos etc.</string>
   <plurals name="factadder_cards_added">
     <item quantity="one">Se ha añadido 1 tarjeta</item>
     <item quantity="other">Se han añadido %d tarjetas</item>

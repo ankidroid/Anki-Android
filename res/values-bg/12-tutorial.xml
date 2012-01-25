@@ -23,11 +23,11 @@
     <item><![CDATA[Above every answer buttons, you find information about the time, after which the card will be shown again when answered by this button.]]></item> 
     <item><![CDATA[The intention is to show you the card again, immediately before you would forget it. Empirical studies have shown that by this means information can be learned most efficiently.]]></item> 
     <item><![CDATA[Some words about the organisation in AnkiDroid:<br /><br>All information has to be put into pairs of question and answer. If you want to learn in the other direction, you should create another card with swapped information.]]></item> 
-    <item><![CDATA[Cards are put together in decks and can there be organised by help of all sorts of tags.]]></item> 
+    <item><![CDATA[Картите са поставени заедно в колоди и там може да бъдат организирани с помощта на всички видове етикети.]]></item> 
     <item><![CDATA[There are mainly two ways of getting new cards:<br /><br />You either download premade decks of other users (choose &quot;download deck&quot; in the deck summary\'s options menu) or create them by yourself. ]]></item> 
     <item><![CDATA[But anyway, creating own decks is essential to suit your needs perfectly. You can do this directly in AnkiDroid...]]></item> 
     <item><![CDATA[Let\'s have a look on the top bar:<br /><br />In the left top corner you find some numbers. The red one counts the failed cards (answered by &quot;again&quot;),]]></item> 
-    <item><![CDATA[On the right corner you find information about your thinking time of this card and about your performance.]]></item> 
+    <item><![CDATA[В десния ъгъл ще намерите информация за времето за мислене на тази карта и за производителността.]]></item> 
     <item><![CDATA[These have been the main points of AnkiDroid usage.<br /><br>For more information about the key concept of Anki, visit http://ankisrs.net/]]></item> 
  </string-array>
  <string-array name="tutorial_answers">
@@ -37,11 +37,11 @@
     <item><![CDATA[This time period is calculated of the last time you answered the card, the current ease choice and ease choices of previous answers of that card.]]></item> 
     <item><![CDATA[If you want to learn more about spaced repetition, visit:<br>http://en.wikipedia.org/wiki/Spaced_repetition_system]]></item> 
     <item><![CDATA[Don\'t worry, this can be done automatically. There is no need of inserting the same information twice.]]></item> 
-    <item><![CDATA[You will learn about that quickly when you start to use AnkiDroid.]]></item> 
+    <item><![CDATA[Ще научите за това бързо когато започнете да използвате AnkiDroid.]]></item> 
     <item><![CDATA[You\'ll find thousands of premade decks to download and there are probably some which are useful for you.]]></item> 
     <item><![CDATA[... or (a bit more convenient) with the desktop application Anki (downloadable for free under http://ankisrs.net/).<br><br>You can sync your decks with the desktop application very easily, so transfering the data is not a problem.]]></item> 
     <item><![CDATA[the black one shows the number of cards you\'ve already learned before and which are due to review today, and the blue number tells you, how many new cards are projected for today. <br /><br />The type of the actual cards is specified by an underline.]]></item> 
-    <item><![CDATA[The upper bar shows your progress, the lower one indicates the percentage of yes answers.]]></item> 
+    <item><![CDATA[Горната лента ви показва напредъка, по-ниско ниво показва процента на да отговори.]]></item> 
     <item><![CDATA[Just try it a bit out now and see, if it fits your needs.<br><br>Maybe start with the deck overview (hit menu on the main screen and choose &quot;all decks&quot;), where you can download premade decks or create your own (just use the menu there).]]></item> 
  </string-array>
 </resources>

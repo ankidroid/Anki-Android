@@ -24,10 +24,10 @@
     <item><![CDATA[The intention is to show you the card again, immediately before you would forget it. Empirical studies have shown that by this means information can be learned most efficiently.]]></item> 
     <item><![CDATA[Some words about the organisation in AnkiDroid:<br /><br>All information has to be put into pairs of question and answer. If you want to learn in the other direction, you should create another card with swapped information.]]></item> 
     <item><![CDATA[Cards are put together in decks and can there be organised by help of all sorts of tags.]]></item> 
-    <item><![CDATA[There are mainly two ways of getting new cards:<br /><br />You either download premade decks of other users (choose &quot;download deck&quot; in the deck summary\'s options menu) or create them by yourself. ]]></item> 
-    <item><![CDATA[But anyway, creating own decks is essential to suit your needs perfectly. You can do this directly in AnkiDroid...]]></item> 
-    <item><![CDATA[Let\'s have a look on the top bar:<br /><br />In the left top corner you find some numbers. The red one counts the failed cards (answered by &quot;again&quot;),]]></item> 
-    <item><![CDATA[On the right corner you find information about your thinking time of this card and about your performance.]]></item> 
+    <item><![CDATA[新しいカードを取得するには、主に 2 つの方法があります: <br/><br/> あらかじめ作られた他のユーザーの単語帳をダウンロードする ([すべての単語帳] のオプションメニューで [単語帳をダウンロード] を選択)か、自分で作成します。]]></item> 
+    <item><![CDATA[しかし、とにかく、自身の単語帳をつくることは、あなたのニーズを完全に満たすためには必須です。 AnkiDroidで直接単語帳を作成できます。...]]></item> 
+    <item><![CDATA[一番上にあるバーを見てみましょう。: <br/><br/> 左上隅にいくつかの数字があります。赤い数字は (「もう一度」と答えた) 失敗したカード、]]></item> 
+    <item><![CDATA[右隅にはあなたがこの問題で考えた時間とパフォーマンスについて表示されています。]]></item> 
     <item><![CDATA[These have been the main points of AnkiDroid usage.<br /><br>For more information about the key concept of Anki, visit http://ankisrs.net/]]></item> 
  </string-array>
  <string-array name="tutorial_answers">
@@ -38,10 +38,10 @@
     <item><![CDATA[If you want to learn more about spaced repetition, visit:<br>http://en.wikipedia.org/wiki/Spaced_repetition_system]]></item> 
     <item><![CDATA[Don\'t worry, this can be done automatically. There is no need of inserting the same information twice.]]></item> 
     <item><![CDATA[You will learn about that quickly when you start to use AnkiDroid.]]></item> 
-    <item><![CDATA[You\'ll find thousands of premade decks to download and there are probably some which are useful for you.]]></item> 
-    <item><![CDATA[... or (a bit more convenient) with the desktop application Anki (downloadable for free under http://ankisrs.net/).<br><br>You can sync your decks with the desktop application very easily, so transfering the data is not a problem.]]></item> 
-    <item><![CDATA[the black one shows the number of cards you\'ve already learned before and which are due to review today, and the blue number tells you, how many new cards are projected for today. <br /><br />The type of the actual cards is specified by an underline.]]></item> 
-    <item><![CDATA[The upper bar shows your progress, the lower one indicates the percentage of yes answers.]]></item> 
+    <item><![CDATA[ あらかじめ作られた、ダウンロードできる何千もの単語帳があり、おそらくいくつかは、あなたにとって便利なものがあるでしょう。]]></item> 
+    <item><![CDATA[... また、もう少し便利なデスクトップ・アプリケーション Anki（http://ankisrs.net/ から無料でダウンロード可能）でも作成できます。 <br><br> デスクトップ・アプリケーションであなたの単語帳を非常に簡単に同期させることができるので、データを送るのは問題ではありません。]]></item> 
+    <item><![CDATA[ 黒い数字は、すでに学んだカードの数を示します。これは今日復習するカードの数です。そして、青い数字は今日計画されている新しいカードがいくつあるかを表しています。 <br/><br/> 下線はカードがどの種類かを示しています。]]></item> 
+    <item><![CDATA[上のバーはあなたの進行状況を、下のバーは正解できた回答の割合を示しています。]]></item> 
     <item><![CDATA[Just try it a bit out now and see, if it fits your needs.<br><br>Maybe start with the deck overview (hit menu on the main screen and choose &quot;all decks&quot;), where you can download premade decks or create your own (just use the menu there).]]></item> 
  </string-array>
 </resources>

@@ -204,6 +204,6 @@
   <string name="pref_cache_cardbrowser_reload">¿Volver a cargar todas las tarjetas?</string>
   <string name="pref_keep_screen_on">Mantener encendida la pantalla</string>
   <string name="pref_keep_screen_on_summ">Impedir que la pantalla se apague mientras estás repasando</string>
-  <string name="pref_simple_interface">Simple Interface</string>
-  <string name="pref_simple_interface_summ">Speeds up card showing but does only support text (no pictures, sounds etc.)</string>
+  <string name="pref_simple_interface">Interfaz sencilla</string>
+  <string name="pref_simple_interface_summ">Acelera la visualización de las tarjetas pero sólo admite texto (sin imágenes, sonidos, etc.)</string>
 </resources>

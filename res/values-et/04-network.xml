@@ -92,11 +92,11 @@
   <string name="sync_log_conflict_resolution_required">The deck has been changed on both local and remote side. Please open the deck and perform Sync from there to resolve the conflict.</string>
   <string name="sync_log_create_deck_failed">Failed to create deck on server: %1$s</string>
   <string name="sync_log_finish_error">Error while sending finish direction to server</string>
-  <string name="sync_conflict_title">Syncing conflict</string>
-  <string name="sync_conflict_message">Deck %s has been changed on both the local and remote side. Which side should be kept?</string>
-  <string name="sync_conflict_local">Keep Local</string>
-  <string name="sync_conflict_remote">Keep Remote</string>
-  <string name="sync_conflict_cancel">Cancel Syncing</string>
+  <string name="sync_conflict_title">Sünkroonimise konflikt</string>
+  <string name="sync_conflict_message">Kaardipakk %s on muudetud nii kohalike ning kaugarvutite pool. Kumb versioon säilitada?</string>
+  <string name="sync_conflict_local">Säilita kohalik</string>
+  <string name="sync_conflict_remote">Säilita kaug</string>
+  <string name="sync_conflict_cancel">Katkesta sünkroonimine</string>
   <string name="personaldeckpicker_title">Open Online Deck</string>
   <string name="shareddeckpicker_title">Select the deck you want to download</string>
   <string name="downloaddeck_search">Search</string>

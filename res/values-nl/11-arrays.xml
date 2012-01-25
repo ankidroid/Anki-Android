@@ -87,7 +87,7 @@
     <item>Toon niet-gelukte kaarten op het einde</item>
     <item>Toon niet-gelukte kaarten binnen 10 minuten</item>
     <item>Toon niet-gelukte kaarten binnen 8 uur</item>
-    <item>Toon niet-gelukte kaarten binnen 3 dagen</item>
+    <item>Toon vragen die je niet weet binnen 3 dagen opnieuw</item>
   </string-array>
   <string-array name="deck_order_labels">
     <item>Op laatst toegang</item>
@@ -119,6 +119,6 @@
     <item>Android Donker</item>
     <item>Android (klein)</item>
     <item>Blauw</item>
-    <item>White</item>
+    <item>Wit</item>
   </string-array>
 </resources>

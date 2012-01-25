@@ -31,7 +31,7 @@
     <item><![CDATA[Dit waren de belangrijkste punten om AnkiDroid te gebruiken.<br /><br>Voor meer informatie over het basisidee van Anki, bezoek http://ankisrs.net/]]></item> 
  </string-array>
  <string-array name="tutorial_answers">
-    <item><![CDATA[... om de kant met het <span style=\'font-weight:600;\'>antwoord</span> te zien (beneden de lijn).<br /><br /><br />Klik op de juiste van de vier knoppen.]]></item> 
+    <item><![CDATA[... om de kant met het <span style=\'font-weight:600;\'>antwoord</span> te zien (beneden de lijn).<br /><br /><br />Klik op de meest rechtste van de vier knoppen]]></item> 
     <item><![CDATA[Stel, je wilt \'s-werelds hoofdsteden leren. Laat de vraag zijn...<br /><br />(klik op een van de knoppen voor de volgende kaart)]]></item> 
     <item><![CDATA[&quot;Ouagadougou&quot; is het juiste antwoord. <br /><br />Je wist het niet? Klik &quot;Opnieuw&quot; om de kaart binnen een paar minuten opnieuw te zien. Anders, klik op de andere knoppen, afhankelijk van je herkenning van het antwoord.]]></item> 
     <item><![CDATA[Deze tijdsperiode is berekend vanaf de laatste keer dat je deze kaart beantwoordde, de huidige gemakkelijkheid en hoe makkelijk je de kaart eerder vond.]]></item> 

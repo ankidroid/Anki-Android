@@ -1,0 +1,39 @@
+Memorize anything with AnkiDroid!
+
+AnkiDroid lets you learn flashcards very efficiently by showing them just before you will forget. It is fully compatible with the spaced repetition software Anki (including synchronization), which is available for Windows, Linux and MacOS.
+
+Study all sorts of things wherever and whenever you want. Make good use of idle times on bus trips, in supermarket queues or any other waiting situation!
+
+Add material through the desktop application Anki or directly through Ankidroid.
+
+Create your own flashcard decks or download free decks compiled for many languages and topics (more than 6000 available). The application even supports adding material automatically from a dictionary!
+
+★ Ключови характеристики:
+• supported flashcard contents: text, images, sounds, LaTeX
+• spaced repetition (supermemo 2 algorithm)
+• текст-към-говор обединяване
+• повече от 6000 предварително направени колоди
+• подробна статистика
+• три джаджи
+синхронизиране с AnkiWeb
+• с отворен код
+
+★ Допълнителни функции:
+• запис отговори (по избор)
+бяла дъска
+• card browser
+• card editor/adder
+• import existing collection files (via Anki Desktop)
+• add cards by intent from other applications like dictionaries
+• речник интеграция (ColorDict, GoldenDict, Leo.org, Aedict, разнообразни web речници)
+• поддръжка на шрифт по избор
+• пълно архивиране на системата
+• navigation by swipe, tap, shake
+• review in widget
+• напълно приспособима
+• cram mode
+• limit studying by tag, time or cards
+• нощен режим
+• zeemote support
+• three different ui-themes
+• 27 localisations

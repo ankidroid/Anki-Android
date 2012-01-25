@@ -14,7 +14,7 @@ Créez vos propres paquets de cartes à mémoriser ou téléchargez des paquets 
 • intégration de la synthèse vocale
 • plus de 6000 paquets de cartes téléchargeables
 • statistiques détaillées
-• three widgets
+• trois widgets
 • synchronisation avec AnkiWeb
 • open source
 
@@ -23,13 +23,13 @@ Créez vos propres paquets de cartes à mémoriser ou téléchargez des paquets 
 • tableau blanc
 • navigateur de cartes
 • éditeur de cartes
-• importation des collections existantes (via Anki Desktop)
+• import des collections existantes (via Anki Desktop)
 • ajout de cartes par "intent" depuis d'autres applications comme des dictionnaires
 • intégration avec des dictionnaires (ColorDict, GoldenDict, Leo.org, Aedict, divers dictionnaires web)
 • prise en charge de polices personnalisées
 • système de sauvegarde 
 • navigation par swipe, tap, shake
-• review in widget
+• révisions dans le widget
 • entièrement personnalisable
 • mode bachottage
 • possibilité d'étudier par tag, temps ou cartes

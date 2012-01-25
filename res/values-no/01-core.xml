@@ -63,7 +63,7 @@
   <string name="contextmenu_deckpicker_reset_language_assignments">Tilbakestill språkinnstillinger</string>
   <string name="contextmenu_deckpicker_reset_reset_message">Tilbakestill språk</string>
   <string name="contextmenu_deckpicker_optimize_deck">Optimaliser database</string>
-  <string name="contextmenu_deckpicker_rename_deck">Rename deck</string>
+  <string name="contextmenu_deckpicker_rename_deck">Omdøp kortstokk</string>
   <string name="contextmenu_deckpicker_set_custom_dictionary">Sett egendefinert ordliste</string>
   <string name="begin_cram">Start pugging</string>
   <string name="cram">Pugg</string>
