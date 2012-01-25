@@ -17,127 +17,126 @@
 
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 	<EditTextPreference
-            	android:title="Deck name"
+            	android:title="@string/deck_conf_deck_name"
             	android:key="name" />
 	<EditTextPreference
-            	android:title="Deck description"
+            	android:title="@string/deck_conf_deck_description"
 		android:key="desc" />
-	<PreferenceCategory android:title="Options">
+	<PreferenceCategory android:title="@string/deck_conf_pref_cat_options">
 	<ListPreference
-		android:title="Configuration set"
+            	android:title="@string/deck_conf_conf_set"
 		android:key="deckConf"/>
-	<PreferenceScreen android:title="New Cards">
+	<PreferenceScreen android:title="@string/deck_conf_new_cards">
 		<EditTextPreference
-        	    	android:title="Steps (in minutes)"
+        	    	android:title="@string/deck_conf_steps"
 		 	android:key="newSteps" />
 		<ListPreference
-			android:title="Order"
+			android:title="@string/deck_conf_order"
 			android:summary=""
 			android:key="newOrder"/>
 		<EditTextPreference
-        	    	android:title="New cards/day"
+        	    	android:title="@string/deck_conf_new_cards_day"
         	    	android:numeric="integer" 
 		 	android:key="newPerDay" />
 		<EditTextPreference
-        	    	android:title="Graduating interval"
-        	    	android:summary="XXX day(s)"
+        	    	android:title="@string/deck_conf_graduating_ivl"
+        	    	android:summary="@string/deck_conf_days"
         	    	android:numeric="integer"
 		 	android:key="newGradIvl" />
 		<EditTextPreference
-        	    	android:title="Easy"
-        	    	android:summary="XXX day(s)"
+        	    	android:title="@string/deck_conf_easy"
+        	    	android:summary="@string/deck_conf_days"
         	    	android:numeric="integer" 
 		 	android:key="newEasy" />
 		<EditTextPreference
-        	    	android:title="Starting factor"
+        	    	android:title="@string/deck_conf_start_factor"
         	    	android:numeric="integer" 
 		 	android:key="newFactor" />
 		<CheckBoxPreference
-			android:title="Siblings"
+			android:title="@string/deck_conf_separate"
 			android:defaultValue="true"
-			android:summary="Try not to show sibling cards next to each other"
+			android:summary="@string/deck_conf_separate_summ"
 			android:key="newSeparate" />
 	</PreferenceScreen>
-	<PreferenceScreen android:title="Reviews">
+	<PreferenceScreen android:title="@string/deck_conf_rev_cards">
 		<ListPreference
-			android:title="Order"
+			android:title="@string/deck_conf_order"
 			android:summary=""
 			android:key="revOrder"/>
 		<EditTextPreference
-        	    	android:title="Maximum reviews/day"
+        	    	android:title="@string/deck_conf_max_rev"
         	    	android:numeric="integer" 
 		 	android:key="revPerDay" />
 		<EditTextPreference
-        	    	android:title="Space siblings by up to"
-        	    	android:summary="XXX \%%"
+        	    	android:title="@string/deck_conf_sibl_space"
+        	    	android:summary="@string/deck_conf_percent"
         	    	android:numeric="integer" 
 		 	android:key="revSpaceMax" />
 		<EditTextPreference
-        	    	android:title="Minimum sibling range"
-        	    	android:summary="XXX day(s)"
+        	    	android:title="@string/deck_conf_min_range"
+        	    	android:summary="@string/deck_conf_days"
         	    	android:numeric="integer" 
 		 	android:key="revSpaceMin" />
 		<EditTextPreference
-        	    	android:title="Easy bonus"
+        	    	android:title="@string/deck_conf_easy_bonus"
         	    	android:numeric="integer" 
-    	    	    android:summary="XXX \%%"
+    	    	    android:summary="@string/deck_conf_percent"
 		 	android:key="easyBonus" />
 		<EditTextPreference
-        	    	android:title="Desired forgetting index"
+        	    	android:title="@string/deck_conf_des_fi"
         	    	android:numeric="integer" 
-    	    	    android:summary="XXX \%%"
+    	    	    android:summary="@string/deck_conf_percent"
 		 	android:key="revDesForIdx" />
 		<EditTextPreference
-        	    	android:title="Assumed forgetting index"
-        	    	android:summary="XXX \%%"
+        	    	android:title="@string/deck_conf_ass_fi"
+        	    	android:summary="@string/deck_conf_percent"
           	    	android:numeric="integer" 
 		 	android:key="revAssForIdx" />
 	</PreferenceScreen>
-	<PreferenceScreen android:title="Lapses">
+	<PreferenceScreen android:title="@string/deck_conf_lps_cards">
 		<EditTextPreference
-        	    	android:title="Steps (in minutes)"
+        	    	android:title="@string/deck_conf_steps"
 		 	android:key="lapSteps" />
 		<EditTextPreference
-        	    	android:title="New interval"
-        	    	android:summary="XXX \%%"
+        	    	android:title="@string/deck_conf_new_lps_ivl"
+        	    	android:summary="@string/deck_conf_percent"
         	    	android:numeric="integer" 
 		 	android:key="lapNewIvl" />
 		<EditTextPreference
-        	    	android:title="Minimum Interval"
-        	    	android:summary="XXX day(s)"
+        	    	android:title="@string/deck_conf_min_ivl"
+        	    	android:summary="@string/deck_conf_days"
         	    	android:numeric="integer" 
 		 	android:key="lapMinIvl" />
 		<EditTextPreference
-        	    	android:title="Leech Threshold"
+        	    	android:title="@string/deck_conf_leech_thres"
         	    	android:numeric="integer"
-        	    	        	    	android:summary="XXX fails"
-        	    	
-		 	android:key="lapLeechThres" />
+        	    	android:summary="@string/deck_conf_fails"
+ 		 	android:key="lapLeechThres" />
 		<ListPreference
-			android:title="Leech Action"
+			android:title="@string/deck_conf_leech_action"
 			android:key="lapLeechAct"/>
 	</PreferenceScreen>
-		<PreferenceScreen android:title="Other">
+	<PreferenceScreen android:title="@string/deck_conf_other">
 		<EditTextPreference
-        	    	android:title="Maximal answer time"
-        	    	android:summary="XXX seconds"
+        	    	android:title="@string/deck_conf_max_time"
+        	    	android:summary="@string/deck_conf_seconds"
         	    	android:numeric="integer" 
 		    	android:key="maxAnswerTime" />
 		<CheckBoxPreference
-			android:title="Show answer timer"
+			android:title="@string/deck_conf_timer"
 			android:key="showAnswerTimer" />
 		<CheckBoxPreference
 			android:title="Automatically play audio"
 			android:key="autoPlayAudio" />
 	</PreferenceScreen>
-	    	<PreferenceScreen android:title="Add/remove/Delete configuration">
-		<PreferenceScreen android:title="Add configuration"
+    	<PreferenceScreen android:title="@string/deck_conf_add_conf">
+		<PreferenceScreen android:title="@string/deck_conf_add"
 		    android:enabled="false"
 			android:key="confAdd"/>
-		<PreferenceScreen android:title="Rename configuration"
+		<PreferenceScreen android:title="@string/deck_conf_ren"
 		    android:enabled="false"
 			android:key="confRen"/>
-		<PreferenceScreen android:title="Remove configuration"
+		<PreferenceScreen android:title="@string/deck_conf_rem"
 		    android:enabled="false"
 			android:key="confRem"/>
 		</PreferenceScreen>

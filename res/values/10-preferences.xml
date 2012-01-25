@@ -243,5 +243,53 @@
 <string name="pref_simple_interface_summ">Speeds up card showing but does only support text (no pictures, sounds etc.)</string>
 
 
+<!-- Deck configurations -->
+<string name="deck_conf_deck_name">Deck name</string>
+<string name="deck_conf_deck_description">Deck description</string>
+<string name="deck_conf_conf_set">Configuration set</string>
+<string name="deck_conf_pref_cat_options">Options</string>
+<string name="deck_conf_new_cards">New cards</string>
+<string name="deck_conf_rev_cards">Reviews</string>
+<string name="deck_conf_lsp_cards">Lapses</string>
+<string name="deck_conf_other">Other</string>
+<string name="deck_conf_add_conf">Add/delete configurations</string>
+<string name="deck_conf_steps">Steps (in minutes)</string>
+<string name="deck_conf_order">Order</string>
+<string name="deck_conf_new_cards_day">New cards/day</string>
+<string name="deck_conf_graduating_ivl">Graduating interval</string>
+<string name="deck_conf_days">XXX day(s)</string>
+<string name="deck_conf_easy">Easy</string>
+<string name="deck_conf_start_factor">Starting factor</string>
+<string name="deck_conf_separate">Siblings</string>
+<string name="deck_conf_separate_summ">Try not to show sibling cards next to each other</string>
+<string name="deck_conf_max_rev">Maximum reviews/day</string>
+<string name="deck_conf_sibl_space">Space siblings by up to</string>
+<string name="deck_conf_easy_bonus">Easy bonus</string>
+<string name="deck_conf_min_range">Minimum sibling range</string>
+<string name="deck_conf_des_fi">Desired forgetting index</string>
+<string name="deck_conf_ass_fi">Assumed forgetting index</string>
+<string name="deck_conf_new_lps_ivl">New interval</string>
+<string name="deck_conf_min_ivl">Minimum Interval</string>
+<string name="deck_conf_leech_thres">Leech Threshold</string>
+<string name="deck_conf_fails">XXX fails</string>
+<string name="deck_conf_leech_action">Leech Action</string>
+<string name="deck_conf_max_time">Maximal answer time</string>
+<string name="deck_conf_seconds">XXX seconds</string>
+<string name="deck_conf_timer">Show answer timer</string>
+<string name="deck_conf_autoplay">Automatically play audio</string>
+<string name="deck_conf_add">Add configuration</string>
+<string name="deck_conf_ren">Rename configuration</string>
+<string name="deck_conf_rem">Remove configuration</string>
+
+
+
+
+
+
+
+
+
+
+
     
 </resources>
