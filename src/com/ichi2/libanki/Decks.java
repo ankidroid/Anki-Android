@@ -494,7 +494,11 @@ public class Decks {
 			// and active decks (current + all children)
 			TreeMap<String, Long> actv = children(did);
 			actv.put(name, did);
-			mCol.getConf().put("activeDecks", actv.values().toString());
+			JSONArray ja = new JSONArray();
+			for (Long n : actv.values()) {
+				ja.put(n);
+			}
+			mCol.getConf().put("activeDecks", ja);
 			mChanged = true;
 		} catch (JSONException e) {
 			throw new RuntimeException(e);

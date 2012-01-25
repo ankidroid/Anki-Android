@@ -250,7 +250,7 @@
 <string name="deck_conf_pref_cat_options">Options</string>
 <string name="deck_conf_new_cards">New cards</string>
 <string name="deck_conf_rev_cards">Reviews</string>
-<string name="deck_conf_lsp_cards">Lapses</string>
+<string name="deck_conf_lps_cards">Lapses</string>
 <string name="deck_conf_other">Other</string>
 <string name="deck_conf_add_conf">Add/delete configurations</string>
 <string name="deck_conf_steps">Steps (in minutes)</string>

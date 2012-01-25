@@ -699,7 +699,7 @@ public class Collection {
 			// apply, relying on calling code to bump usn+mod
 			r.add(new Object[]{Utils.stripHTML(fields[mModels.sortIdx(model)]), Utils.fieldChecksum(fields[0]), o[0]});
 		}
-		mDb.executeMany("UPDATE notes SET sflds=?, csum=?, WHERE id=?", r);
+		mDb.executeMany("UPDATE notes SET sfld=?, csum=? WHERE id=?", r);
 	}
 
 	/**
