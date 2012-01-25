@@ -2799,7 +2799,7 @@ public class StudyOptions extends Activity implements IButtonListener {
             Log.i(AnkiDroidApp.TAG, "onPostExecute");
             if (mProgressDialog != null && mProgressDialog.isShowing()) {
                 mProgressDialog.dismiss();
-                setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR);
+                setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_USER);
             }
             if (data.success) {
             	mCurrentDialogMessage = ((HashMap<String, String>) data.result).get("message");

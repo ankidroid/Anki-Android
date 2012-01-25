@@ -1,15 +1,15 @@
 package com.ichi2.anki;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.util.Log;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 
 /**
@@ -25,6 +25,9 @@ import android.util.Log;
 public class MetaDB {
     /** The name of the file storing the meta-db. */
     private static final String DATABASE_NAME = "ankidroid.db";
+
+    /** The Database Version, increase if you want updates to happen on next upgrade. */
+    private static final int DATABASE_VERSION = 1;
 
     // Possible values for the qa column of the languages table.
     /** The language refers to the question. */
@@ -49,10 +52,25 @@ public class MetaDB {
     }
 
 
-    /** Open the meta-db and creates any table that is missing. */
+    /** Open the meta-db */
     private static void openDB(Context context) {
         try {
-            mMetaDb = context.openOrCreateDatabase(DATABASE_NAME,  0, null);
+            mMetaDb = context.openOrCreateDatabase(DATABASE_NAME, 0, null);
+            if (mMetaDb.needUpgrade(DATABASE_VERSION)) {
+                mMetaDb = upgradeDB(mMetaDb, DATABASE_VERSION);
+            }
+            Log.i(AnkiDroidApp.TAG, "Opening MetaDB");
+        } catch (Exception e) {
+            Log.e("Error", "Error opening MetaDB ", e);
+        }
+    }
+
+    /** Creating any table that missing and upgrading necessary tables. */
+    private static SQLiteDatabase upgradeDB(SQLiteDatabase mMetaDb, int databaseVersion) {
+        Log.i(AnkiDroidApp.TAG, "Upgrading Internal Database..");
+        if (mMetaDb.getVersion() == 0) {
+            Log.i(AnkiDroidApp.TAG, "Applying changes for version: 0");
+            // Create tables if not exist
             mMetaDb.execSQL(
                     "CREATE TABLE IF NOT EXISTS languages ("
                             + " _id INTEGER PRIMARY KEY AUTOINCREMENT, "
@@ -71,25 +89,38 @@ public class MetaDB {
                             + "deckpath TEXT NOT NULL, "
                             + "dictionary INTEGER)");
             mMetaDb.execSQL(
-                    "CREATE TABLE IF NOT EXISTS widgetStatus ("
-                    + "deckPath TEXT NOT NULL PRIMARY KEY, "
-                    + "deckName TEXT NOT NULL, "
-                    + "newCards INTEGER NOT NULL, "
-                    + "dueCards INTEGER NOT NULL, "
-                    + "failedCards INTEGER NOT NULL, "
-            		+ "eta INTEGER NOT NULL, "
-            		+ "time INTEGER NOT NULL)");
-            mMetaDb.execSQL(
                     "CREATE TABLE IF NOT EXISTS intentInformation ("
-                    + "id INTEGER PRIMARY KEY AUTOINCREMENT, "
-                    + "source TEXT NOT NULL, "
-                    + "target INTEGER NOT NULL)");
-            Log.i(AnkiDroidApp.TAG, "Opening MetaDB");
-        } catch(Exception e) {
-            Log.e("Error", "Error opening MetaDB ", e);
+                            + "id INTEGER PRIMARY KEY AUTOINCREMENT, "
+                            + "source TEXT NOT NULL, "
+                            + "target INTEGER NOT NULL)");
+            // Use pragma to get info about widgetStatus.
+            Cursor c = mMetaDb.rawQuery("PRAGMA table_info(widgetStatus)", null);
+            int columnNumber = c.getCount();
+            if (columnNumber > 0) {
+                if (columnNumber < 7) {
+                    mMetaDb.execSQL(
+                            "ALTER TABLE widgetStatus "
+                                    + "ADD COLUMN eta INTEGER NOT NULL DEFAULT '0'");
+                    mMetaDb.execSQL(
+                            "ALTER TABLE widgetStatus "
+                                    + "ADD COLUMN time INTEGER NOT NULL DEFAULT '0'");
+                }
+            } else {
+                mMetaDb.execSQL(
+                        "CREATE TABLE IF NOT EXISTS widgetStatus ("
+                                + "deckPath TEXT NOT NULL PRIMARY KEY, "
+                                + "deckName TEXT NOT NULL, "
+                                + "newCards INTEGER NOT NULL, "
+                                + "dueCards INTEGER NOT NULL, "
+                                + "failedCards INTEGER NOT NULL, "
+                                + "eta INTEGER NOT NULL, "
+                                + "time INTEGER NOT NULL)");
+            }
         }
+        mMetaDb.setVersion(databaseVersion);
+        Log.i(AnkiDroidApp.TAG, "Upgrading Internal Database finished. New version: " + databaseVersion);
+        return mMetaDb;
     }
-
 
     /** Open the meta-db but only if it currently closed. */
     private static void openDBIfClosed(Context context) {
@@ -282,7 +313,7 @@ public class MetaDB {
             if (cur.moveToNext()) {
                 return cur.getInt(0);
             } else {
-                return 0;
+                return 1;
             }
         } catch(Exception e) {
             Log.e("Error", "Error retrieving whiteboard state from MetaDB ", e);

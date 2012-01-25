@@ -208,7 +208,7 @@
             <CheckBoxPreference
                     android:title="@string/whiteboard_black"
                     android:summary="@string/whiteboard_black_summ"
-                    android:defaultValue="false"
+                    android:defaultValue="true"
                     android:dependency="whiteboard"
                     android:key="blackWhiteboard" />
         </PreferenceCategory>

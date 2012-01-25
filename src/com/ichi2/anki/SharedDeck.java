@@ -14,8 +14,6 @@
 
 package com.ichi2.anki;
 
-import android.util.Log;
-
 import java.util.HashMap;
 
 public class SharedDeck extends HashMap<String, Object> {
@@ -23,16 +21,16 @@ public class SharedDeck extends HashMap<String, Object> {
     private static final long serialVersionUID = 1L;
 
     private int mId;
-    private String mUsername;
+    //private String mUsername;
     private String mTitle;
-    private String mDescription;
-    private String mTags;
-    private int mVersion;
+    //private String mDescription;
+    //private String mTags;
+    //private int mVersion;
     private int mFacts;
     private int mSize;
-    private int mCount;
-    private double mModified;
-    private String mFileName;
+    //private int mCount;
+    //private double mModified;
+    //private String mFileName;
     /**
      * on demand cache for filtering only
      */
@@ -49,9 +47,9 @@ public class SharedDeck extends HashMap<String, Object> {
     }
 
 
-    public void setUsername(String username) {
-        mUsername = username;
-    }
+    //public void setUsername(String username) {
+    //    mUsername = username;
+    //}
 
 
     public String getTitle() {
@@ -65,19 +63,19 @@ public class SharedDeck extends HashMap<String, Object> {
     }
 
 
-    public void setDescription(String description) {
-        mDescription = description;
-    }
+    //public void setDescription(String description) {
+    //    mDescription = description;
+    //}
 
 
-    public void setTags(String tags) {
-        mTags = tags;
-    }
+    //public void setTags(String tags) {
+    //    mTags = tags;
+    //}
 
 
-    public void setVersion(int version) {
-        mVersion = version;
-    }
+    //public void setVersion(int version) {
+    //    mVersion = version;
+    //}
 
 
     public int getFacts() {
@@ -105,21 +103,21 @@ public class SharedDeck extends HashMap<String, Object> {
     }
 
 
-    public void setCount(int count) {
-        mCount = count;
-    }
+    //public void setCount(int count) {
+    //    mCount = count;
+    //}
 
 
-    public void setModified(double modified) {
-        mModified = modified;
-    }
+    //public void setModified(double modified) {
+    //    mModified = modified;
+    //}
 
 
-    public void setFileName(String fileName) {
-        mFileName = fileName;
-    }
+    //public void setFileName(String fileName) {
+    //    mFileName = fileName;
+    //}
 
-
+/*
     public void prettyLog() {
         Log.i(AnkiDroidApp.TAG, "SHARED DECK:");
         Log.i(AnkiDroidApp.TAG, "        username = " + mUsername);
@@ -133,7 +131,7 @@ public class SharedDeck extends HashMap<String, Object> {
         Log.i(AnkiDroidApp.TAG, "        modified = " + mModified);
         Log.i(AnkiDroidApp.TAG, "        fileName = " + mFileName);
     }
-
+*/
 
 	public boolean matchesLowerCaseFilter(String searchText) {
 		// cache our own lower case title, so the next letters in the filter string will be faster

@@ -6,6 +6,7 @@
 	<classpathentry kind="lib" path="libs/ZControllerLib-android-1.5.1.jar"/>
 	<classpathentry kind="lib" path="libs/ZControllerLib-android-ui-1.5.1.jar"/>
 	<classpathentry kind="lib" path="libs/ZControllerLib-common-1.5.1.jar"/>
+	<classpathentry kind="lib" path="libs/google-gson-stream-2.1.jar"/>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="src" path="gen"/>
 	<classpathentry kind="src" path="test"/>
