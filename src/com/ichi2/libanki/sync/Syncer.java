@@ -150,11 +150,24 @@ public class Syncer {
 	    		JSONObject sech = new JSONObject();
 	    		sech.put("chunk", chunk);
 	    		mServer.applyChunk(sech);
-	        	if (ret == null) {
-	        		return null;
-	        	}
 	    		if (chunk.getBoolean("done")) {
 	    			break;
+	    		}
+	    	}
+	    	// step 5: sanity check during beta testing
+	    	JSONArray c = sanityCheck();
+	    	JSONArray s = mServer.sanityCheck();
+	    	if (s.getString(0).equals("error")) {
+	    		return new Object[]{"error", 200, "sanity check error on server"};
+	    	}
+	    	for (int i = 0; i < s.getJSONArray(0).length(); i++) {
+	    		if (c.getJSONArray(0).getLong(i) != s.getJSONArray(0).getLong(i)) {
+	    			return new Object[]{"error", 200, "sanity check failed: 1/" + i};
+	    		}
+	    	}
+	    	for (int i = 1; i < s.length(); i++) {
+	    		if (c.getLong(i) != s.getLong(i)) {
+	    			return new Object[]{"error", 200, "sanity check failed: " + i};
 	    		}
 	    	}
 		} catch (JSONException e) {
@@ -164,8 +177,6 @@ public class Syncer {
 		} catch (IOException e) {
 			throw new RuntimeException(e);
 		}
-    	// reset counts
-    	mCol.getSched().reset();
     	// finalize
     	con.publishProgress(R.string.sync_finish_message);
     	long mod = mServer.finish();
@@ -222,6 +233,24 @@ public class Syncer {
 			throw new RuntimeException(e);
 		}
     	prepareToChunk();
+    }
+
+    private JSONArray sanityCheck() {
+    	mCol.getSched().reset();
+    	JSONArray ja = new JSONArray();
+    	JSONArray sa = new JSONArray();
+    	for (int c : mCol.getSched().counts()) {
+    		sa.put(c);
+    	}
+    	ja.put(sa);
+    	ja.put(mCol.getDb().queryScalar("SELECT count() FROM cards"));
+    	ja.put(mCol.getDb().queryScalar("SELECT count() FROM notes"));
+    	ja.put(mCol.getDb().queryScalar("SELECT count() FROM revlog"));
+    	ja.put(mCol.getDb().queryScalar("SELECT count() FROM graves"));
+    	ja.put(mCol.getModels().all().size());
+    	ja.put(mCol.getDecks().all().size());
+    	ja.put(mCol.getDecks().allConf().size());
+    	return ja;
     }
 
     private String usnLim() {

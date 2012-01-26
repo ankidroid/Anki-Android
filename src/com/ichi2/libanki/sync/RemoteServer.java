@@ -20,6 +20,7 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 
 import org.apache.http.HttpResponse;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -72,8 +73,31 @@ public class RemoteServer extends HttpSyncer {
 	}
 
 	@Override
-	public JSONObject chunk(JSONObject kw) {
-		return _run("chunk", kw);
+	public void applyChunk(JSONObject sech) {
+		_run("applyChunk", sech);
+	}
+
+	@Override
+	public JSONArray sanityCheck() {
+		try {
+			JSONObject jo = new JSONObject();
+			jo.put("v", SYNC_VER);
+			HttpResponse ret = super.req("sanityCheck", new ByteArrayInputStream("{}".getBytes()));
+			if (ret == null) {
+				return null;
+			}
+			String s = super.stream2String(ret.getEntity().getContent());
+			if (s.equals("null")) {
+				return new JSONArray("[\"error\"]");
+			}
+			return new JSONArray(s);
+		} catch (IllegalStateException e) {
+			throw new RuntimeException(e);
+		} catch (IOException e) {
+			throw new RuntimeException(e);
+		} catch (JSONException e) {
+			throw new RuntimeException(e);
+		}
 	}
 
 	@Override

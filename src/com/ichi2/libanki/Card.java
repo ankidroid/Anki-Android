@@ -153,7 +153,7 @@ public class Card implements Cloneable {
 
 	public void flush() {
 		mMod = Utils.intNow();
-		// facts table
+		mUsn = mCol.usn();
 		StringBuilder sb = new StringBuilder();
 		sb.append("INSERT OR REPLACE INTO cards VALUES (");
 		sb.append(mId).append(", ");

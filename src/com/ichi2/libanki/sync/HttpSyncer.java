@@ -36,6 +36,7 @@ import org.apache.http.impl.conn.SingleClientConnManager;
 import org.apache.http.params.BasicHttpParams;
 import org.apache.http.params.HttpParams;
 import org.apache.http.params.HttpProtocolParams;
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.BufferedInputStream;
@@ -67,7 +68,7 @@ public class HttpSyncer {
      */
     public static final String SYNC_HOST = "beta.ankiweb.net";
     // TODO: correct https-address
-    public static final String SYNC_URL = "http://" + SYNC_HOST + "/sync/"; // "http://219.108.60.108:6500/sync/";//
+    public static final String SYNC_URL = "http://" + SYNC_HOST + "/sync/"; // "http://219.108.60.108:6500/sync/";//kVq7dAnh
     public static final int SYNC_VER = 0;
 
     /**
@@ -229,15 +230,19 @@ public class HttpSyncer {
 	public HttpResponse meta() {
 		return null;
 	}
-	public JSONObject applyChunk(JSONObject kw) {
-		return null;
-	}
 	public Object[] download() {
 		return null;
 	}
 	public Object[] upload() {
 		return null;
 	}
+	public JSONArray sanityCheck() {
+		return null;
+	}
+
+	public void applyChunk(JSONObject sech) {
+	}
+
 
 	/*http://stackoverflow.com/questions/7057342/how-to-get-a-progress-bar-for-a-file-upload-with-apache-httpclient-4*/
 	private class OutputStreamProgress extends OutputStream {
@@ -285,4 +290,6 @@ public class HttpSyncer {
 	        publishProgress();
 	    }
 	}
+
+
 }
