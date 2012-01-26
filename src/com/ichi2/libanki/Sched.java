@@ -1629,8 +1629,7 @@ public class Sched {
 
 	public int cardCount(String dids) {
 		return mCol.getDb().queryScalar(
-				"SELECT count() FROM cards WHERE queue != -1 AND did IN "
-						+ dids, false);
+				"SELECT count() FROM cards WHERE did IN " + dids, false);
 	}
 
 	/** LIBANKI: not in libanki */
@@ -1640,7 +1639,7 @@ public class Sched {
 
 	public int newCount(String dids) {
 		return mCol.getDb().queryScalar(
-				"SELECT count() FROM cards WHERE queue = 0 AND did IN " + dids,
+				"SELECT count() FROM cards WHERE type = 0 AND did IN " + dids,
 				false);
 	}
 
