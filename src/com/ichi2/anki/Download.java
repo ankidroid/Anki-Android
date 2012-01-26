@@ -54,9 +54,9 @@ public class Download extends HashMap<String, Object> implements Parcelable {
         // The deck file name should match the deck title, but some characters are invalid in it,
         // so they need to be replaced.
         mFilename = Utils.removeInvalidDeckNameCharacters(mTitle);
-//        if (mFilename.length() > 40) {
-//            mFilename = mFilename.substring(0, 40);
-//        }
+        if (mFilename.length() > 40) {
+            mFilename = mFilename.substring(0, 40);
+        }
     }
 
 
