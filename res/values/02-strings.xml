@@ -24,9 +24,10 @@
 <string name="CardEditorSaveButton">Save</string>
 <string name="CardEditorLaterButton">Later</string>
 <string name="CardEditorDeck">Deck: %s</string>
-<string name="CardEditorModel">Model: %s</string>
+<string name="CardEditorModel">Note type: %s</string>
 <string name="CardEditorTags">Tags: %1$s</string>
 <string name="add_new_tag">Add new tag</string>
+<string name="card_type">Card type</string>
 
 <string name="sdcard_missing_message">SD card is unavailable because it is being used as USB storage. Disconnect USB to access your decks.</string>
 
@@ -49,13 +50,11 @@
 <string name="factadder_saving_error">Error saving fact</string>
 <string name="saving_facts">Saving facts</string>
 <string name="deckcreator_title">Deck Creator</string>
-<string name="model">Model</string>
 <string name="deck">Deck</string>
 <string name="card">Card:</string>
 <string name="cards">Cards:</string>
 <string name="add">Add</string>
 <string name="close">Close</string>
-<string name="select_card_model">Select Card Model</string>
 <string name="select">Select</string>
 
 <string name="saving_changes">Saving changes...</string>

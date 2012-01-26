@@ -39,8 +39,6 @@
   <string name="factadder_saving_error">Fehler beim Speichern des Fakts</string>
   <string name="saving_facts">Fakt wird gespeichert</string>
   <string name="deckcreator_title">Stapel erstellen</string>
-  <string name="model">Modell:</string>
-  <string name="select_model">Modell</string>
   <string name="card">Karte:</string>
   <string name="cards">Karten:</string>
   <string name="add">Hinzufügen</string>

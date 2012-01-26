@@ -80,7 +80,6 @@
 				android:layout_marginRight="5dip"
 				android:layout_marginLeft="5dip"
 				android:id="@+id/CardEditorModelText"
-				android:text="@string/CardEditorDeck"
 				android:clickable="false"
 				android:layout_gravity="center"
 				android:gravity="left|center_vertical"/>				
@@ -98,7 +97,6 @@
 				android:layout_marginLeft="5dip"
 				android:id="@+id/CardEditorTagText"
 				android:clickable="false"
-				android:text="@string/CardEditorDeck"
 				android:layout_gravity="center"
 				android:gravity="left|center_vertical"/>				
 		</LinearLayout>

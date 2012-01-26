@@ -404,7 +404,6 @@ public class CardEditor extends Activity {
 		if (mAddNote) {
 			try {
 				mDeckButton.setText(getResources().getString(R.string.CardEditorDeck, mCol.getDecks().current().getString("name")));
-				mModelButton.setText(getResources().getString(R.string.CardEditorModel, mCol.getModels().current().getString("name")));
 				modelChanged();
 				// TODO: save tags for next addition?
 			} catch (JSONException e) {
@@ -915,7 +914,7 @@ public class CardEditor extends Activity {
 
 			ArrayList<JSONObject> models = mCol.getModels().all();
 			Collections.sort(models, new JSONNameComparator());
-			builder.setTitle(R.string.model);
+			builder.setTitle(R.string.card_type);
 			for (JSONObject m : models) {
 				try {
 					dialogItems.add(m.getString("name"));
@@ -1102,7 +1101,7 @@ public class CardEditor extends Activity {
 	private void modelChanged() {
 		getNewNote();
 		try {
-			mModelButton.setText(getResources().getString(R.string.model) + " " + mCol.getModels().current().getString("name"));
+			mModelButton.setText(getResources().getString(R.string.CardEditorModel, mCol.getModels().current().getString("name")));
 		} catch (JSONException e) {
 			throw new RuntimeException(e);
 		}
