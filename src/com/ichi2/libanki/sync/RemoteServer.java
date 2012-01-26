@@ -134,7 +134,7 @@ public class RemoteServer extends HttpSyncer {
 			}
 			JSONObject o = new JSONObject();
 			o.put("errorType", resultType);
-			o.put("errorReason", s.equals("null") ? "null result" : ret.getStatusLine().getReasonPhrase());
+			o.put("errorReason", s.equals("null") ? "null result (" + cmd + ")" : ret.getStatusLine().getReasonPhrase());
 			return o;
 		} catch (IllegalStateException e) {
 			throw new RuntimeException(e);

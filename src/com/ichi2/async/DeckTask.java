@@ -28,6 +28,10 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.TreeSet;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import com.ichi2.anki.AnkiDatabaseManager;
 import com.ichi2.anki.AnkiDb;
 import com.ichi2.anki.AnkiDroidApp;

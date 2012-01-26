@@ -239,6 +239,10 @@ public class Note {
 		mTags = mCol.getTags().split(str);
 	}
 
+	public void setTags(ArrayList<String> tags) {
+		mTags = tags;
+	}
+
 	public void delTag(String tag) {
 		for (int i = 0; i < mTags.size(); i++) {
 			if (mTags.get(i).equalsIgnoreCase(tag)) {

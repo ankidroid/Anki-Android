@@ -488,40 +488,16 @@ public class CardEditor extends Activity {
 
 			@Override
 			public void onClick(View v) {
+				saveNow();
 				if (mAddNote) {
 					if (duplicateCheck(true)) {
 						return;
 					}
+					
 					for (FieldEditText f : mEditFields) {
 						f.updateField();
 					}
-//					setResult(Reviewer.RESULT_EDIT_CARD_RESET);
-					DeckTask.launchDeckTask(DeckTask.TASK_TYPE_ADD_FACT, mSaveFactHandler, new DeckTask.TaskData(mEditorNote));
-				} else {
-					Iterator<FieldEditText> iter = mEditFields.iterator();
-					while (iter.hasNext()) {
-						FieldEditText current = iter.next();
-						mModified |= current.updateField();
-					}
-					// if (!mEditorNote.getTags().equals(mFactTags)) {
-					// mEditorNote.setTags(mFactTags);
-					// mModified = true;
-					// }
-					if (mCaller == CALLER_BIGWIDGET_EDIT) {
-						// DeckTask.launchDeckTask(DeckTask.TASK_TYPE_UPDATE_FACT,
-						// mSaveFactHandler, new
-						// DeckTask.TaskData(Reviewer.UPDATE_CARD_SHOW_QUESTION,
-						// mDeck, AnkiDroidWidgetBig.getCard()));
-					} else if (!mCardReset) {
-						// Only send result to save if something was actually
-						// changed
-						if (mModified) {
-							setResult(RESULT_OK);
-						} else {
-							setResult(RESULT_CANCELED);
-						}
-						closeCardEditor();
-					}
+					DeckTask.launchDeckTask(DeckTask.TASK_TYPE_ADD_FACT, mSaveFactHandler, new DeckTask.TaskData(mEditorNote));	
 				}
 			}
 
@@ -770,6 +746,7 @@ public class CardEditor extends Activity {
 	}
 
 	private void closeCardEditor(int result) {
+		saveNow();
 		// TODO: proper result handling
 		setResult(result);
 		finish();
@@ -806,11 +783,7 @@ public class CardEditor extends Activity {
 					new OnClickListener() {
 						@Override
 						public void onClick(DialogInterface dialog, int which) {
-							mEditorNote.clearTags();
-							for (String s : selectedTags) {
-								mEditorNote.addTag(s);
-							}
-							PrefSettings.getSharedPrefs(getBaseContext()).edit().putStringSet("card_editor_tags", new HashSet<String>(selectedTags)).commit();
+							mEditorNote.setTags(selectedTags);
 							updateTagsButton();
 						}
 					});
@@ -1111,22 +1084,25 @@ public class CardEditor extends Activity {
 
 	private void getNewNote() {
 		long did;
-		ArrayList<String> tags = null;
 		if (mEditorNote != null) {
 			did = mEditorNote.getDid();
-			tags = mEditorNote.getTags();
 		} else {
 			try {
 				did = mCol.getDecks().current().getLong("id");
 			} catch (JSONException e) {
 				throw new RuntimeException(e);
 			}
-			tags = new ArrayList<String>(PrefSettings.getSharedPrefs(getBaseContext()).getStringSet("card_editor_tags", new HashSet<String>()));
 		}
 		mEditorNote = mCol.newNote();
     	mEditorNote.setDid(did);
-		for (String t : tags) {
-			mEditorNote.addTag(t);
+    	JSONArray ja;
+		try {
+			ja = mCol.getModels().current().getJSONArray("tags");
+			for (int i = 0; i < ja.length(); i++) {
+				mEditorNote.addTag(ja.getString(i));
+			}
+		} catch (JSONException e) {
+			throw new RuntimeException(e);
 		}
 	}
 
@@ -1294,6 +1270,59 @@ public class CardEditor extends Activity {
 		return Utils.joinFields(fields);
 	}
 
+	/** Must call this before adding cards, closing dialog, etc. */
+	private void saveNow() {
+		saveTagsAndDeck();
+	}
+
+	private void saveTagsAndDeck() {
+		if (mEditorNote == null) {
+			return;
+		}
+		if (mAddNote) {
+			// save group and tags to model
+			JSONObject m = mEditorNote.model();
+			try {
+				m.put("did", mEditorNote.getDid());
+				JSONArray ja = new JSONArray();
+				for (String t : mEditorNote.getTags()) {
+					ja.put(t);
+				}
+				m.put("tags", ja.toString());
+			} catch (JSONException e) {
+				throw new RuntimeException(e);
+			}
+			mCol.getModels().save();
+		} else {
+			mEditorNote.flush();
+//			Iterator<FieldEditText> iter = mEditFields.iterator();
+//			while (iter.hasNext()) {
+//				FieldEditText current = iter.next();
+//				mModified |= current.updateField();
+//			}
+//			// if (!mEditorNote.getTags().equals(mFactTags)) {
+//			// mEditorNote.setTags(mFactTags);
+//			// mModified = true;
+//			// }
+//			if (mCaller == CALLER_BIGWIDGET_EDIT) {
+//				// DeckTask.launchDeckTask(DeckTask.TASK_TYPE_UPDATE_FACT,
+//				// mSaveFactHandler, new
+//				// DeckTask.TaskData(Reviewer.UPDATE_CARD_SHOW_QUESTION,
+//				// mDeck, AnkiDroidWidgetBig.getCard()));
+//			} else if (!mCardReset) {
+//				// Only send result to save if something was actually
+//				// changed
+//				if (mModified) {
+//					setResult(RESULT_OK);
+//				} else {
+//					setResult(RESULT_CANCELED);
+//				}
+//				closeCardEditor();
+//			}
+		}
+	}
+
+	
 	// ----------------------------------------------------------------------------
 	// INNER CLASSES
 	// ----------------------------------------------------------------------------
