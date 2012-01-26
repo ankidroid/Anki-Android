@@ -72,6 +72,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.TreeSet;
@@ -809,6 +810,7 @@ public class CardEditor extends Activity {
 							for (String s : selectedTags) {
 								mEditorNote.addTag(s);
 							}
+							PrefSettings.getSharedPrefs(getBaseContext()).edit().putStringSet("card_editor_tags", new HashSet<String>(selectedTags)).commit();
 							updateTagsButton();
 						}
 					});
@@ -1119,7 +1121,7 @@ public class CardEditor extends Activity {
 			} catch (JSONException e) {
 				throw new RuntimeException(e);
 			}
-			tags = new ArrayList<String>();
+			tags = new ArrayList<String>(PrefSettings.getSharedPrefs(getBaseContext()).getStringSet("card_editor_tags", new HashSet<String>()));
 		}
 		mEditorNote = mCol.newNote();
     	mEditorNote.setDid(did);
