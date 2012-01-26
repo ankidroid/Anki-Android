@@ -30,6 +30,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.DialogInterface.OnCancelListener;
+import android.content.SharedPreferences.Editor;
 import android.content.pm.ActivityInfo;
 import android.content.res.Resources;
 import android.database.SQLException;
@@ -447,6 +448,13 @@ public class DeckPicker extends Activity {
 				if (result[0] instanceof String) {
 					String resultType = (String) result[0];
 					if (resultType.equals("badAuth")) {
+						// delete old auth information
+						SharedPreferences preferences = PrefSettings.getSharedPrefs(getBaseContext());
+				        Editor editor = preferences.edit();
+				        editor.putString("username", "");
+				        editor.putString("hkey", "");
+				        editor.commit();
+				        // then show 
 						showDialog(DIALOG_USER_NOT_LOGGED_IN_SYNC);
 					} else if (resultType.equals("noChanges")) {
 						mDialogMessage = res.getString(R.string.sync_no_changes_message);
