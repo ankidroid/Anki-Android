@@ -147,7 +147,7 @@ public class ChartBuilder extends Activity {
                 mRenderer.setXAxisMin(mPan[0]);
                 mRenderer.setXAxisMax(mPan[1]);
             }
-            mChartView = ChartFactory.getBarChartView(this, mDataset, mRenderer, BarChart.Type.STACKED);
+//            mChartView = ChartFactory.getBarChartView(this, mDataset, mRenderer, BarChart.Type.STACKED);
             LinearLayout layout = (LinearLayout) findViewById(R.id.chart);
             layout.addView(mChartView, new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT));
         }
@@ -283,7 +283,7 @@ public class ChartBuilder extends Activity {
             mRenderer.setPanLimits(mPan);
             mRenderer.setXLabelsAlign(Align.CENTER);
             mRenderer.setYLabelsAlign(Align.RIGHT);
-            mChartView = ChartFactory.getBarChartView(this, mDataset, mRenderer, BarChart.Type.STACKED);
+//            mChartView = ChartFactory.getBarChartView(this, mDataset, mRenderer, BarChart.Type.STACKED);
             LinearLayout layout = (LinearLayout) findViewById(R.id.chart);
             layout.addView(mChartView, new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT));
         } else {

@@ -451,8 +451,6 @@ public class CardEditor extends Activity {
 			});
 		} else {
 			try {
-				Long id = mEditorNote.getDid();
-				JSONObject d = mCol.getDecks().get(id);
 				mDeckButton.setText(getResources().getString(R.string.CardEditorDeck, mCol.getDecks().get(mEditorNote.getDid()).getString("name")));
 				
 			} catch (JSONException e) {
@@ -1111,17 +1109,23 @@ public class CardEditor extends Activity {
 
 	private void getNewNote() {
 		long did;
+		ArrayList<String> tags = null;
 		if (mEditorNote != null) {
 			did = mEditorNote.getDid();
+			tags = mEditorNote.getTags();
 		} else {
 			try {
 				did = mCol.getDecks().current().getLong("id");
 			} catch (JSONException e) {
 				throw new RuntimeException(e);
 			}
+			tags = new ArrayList<String>();
 		}
 		mEditorNote = mCol.newNote();
     	mEditorNote.setDid(did);
+		for (String t : tags) {
+			mEditorNote.addTag(t);
+		}
 	}
 
 	private void actualizeTagDialog(StyledDialog ad) {
