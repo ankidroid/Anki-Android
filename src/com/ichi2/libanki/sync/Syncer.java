@@ -236,6 +236,29 @@ public class Syncer {
     }
 
     private JSONArray sanityCheck() {
+    	boolean ok = true;
+    	ok = ok && mCol.getDb().queryScalar("SELECT count() FROM cards WHERE nid NOT IN (SELECT id FROM notes)", false) == 0;
+    	ok = ok && mCol.getDb().queryScalar("SELECT count() FROM notes WHERE id NOT IN (SELECT DISTINCT nid FROM cards)", false) == 0;
+    	ok = ok && mCol.getDb().queryScalar("SELECT count() FROM cards WHERE usn = -1", false) == 0;
+    	ok = ok && mCol.getDb().queryScalar("SELECT count() FROM notes WHERE usn = -1", false) == 0;
+    	ok = ok && mCol.getDb().queryScalar("SELECT count() FROM revlog WHERE usn = -1", false) == 0;
+    	ok = ok && mCol.getDb().queryScalar("SELECT count() FROM graves WHERE usn = -1", false) == 0;
+		try {
+	    	for (JSONObject g : mCol.getDecks().all()) {
+				ok = ok && g.getInt("usn") != -1;
+	    	}
+	    	for (Integer usn : mCol.getTags().allItems().values()) {
+				ok = ok && usn != -1;
+	    	}
+	    	for (JSONObject m : mCol.getModels().all()) {
+				ok = ok && m.getInt("usn") != -1;
+	    	}
+		} catch (JSONException e) {
+			throw new RuntimeException(e);
+		}
+    	if (!ok) {
+    		return null;
+    	}
     	mCol.getSched().reset();
     	JSONArray ja = new JSONArray();
     	JSONArray sa = new JSONArray();
