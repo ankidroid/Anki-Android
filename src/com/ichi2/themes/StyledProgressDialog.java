@@ -100,6 +100,8 @@ public class StyledProgressDialog extends Dialog {
             }
 
             dialog.setContentView(layout);
+            dialog.setCancelable(cancelable);
+            dialog.setOnCancelListener(cancelListener);
             dialog.show();
             return dialog;
 
