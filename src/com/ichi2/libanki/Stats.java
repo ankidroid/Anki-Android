@@ -28,56 +28,98 @@ import android.database.Cursor;
  */
 public class Stats {
 
-    private boolean mSelective = true;
+    public static final int TYPE_MONTH = 0;
+    public static final int TYPE_YEAR = 1;
+    public static final int TYPE_LIFE = 2;
 
+    private static Collection mCol;
+    private static Object mStats;
+    private static int mType;
+    private static boolean mWholeCollection;
 
-    public Stats(Decks deck) {
+    public Stats(Collection col) {
+	mCol = col;
+	mStats = null;
+	mWholeCollection = false;
     }
 
-//
-//    /**
-//     * Due and cumulative due
-//     * ***********************************************************************************************
-//     */
-//    public int[][] due(int start, int end, int chunk) {
-//        String lim = " AND due - " + mDeck.getSched().getToday() + " >= " + start;
-//        if (end != 10000) {
-//            lim += " AND day < " + end;
-//        }
-//
-//        ArrayList<int[]> dues = new ArrayList<int[]>();
-//        Cursor cur = null;
-//        try {
-//            String sql = "SELECT (due - " + mDeck.getSched().getToday() + ")/" + chunk + " AS day, " // day
-//                    + "count(), " // all cards
-//                    + "sum(CASE WHEN ivl >= 21 THEN 1 ELSE 0 END) " // mature cards
-//                    + "FROM cards WHERE queue = 2 " + _limit() + lim + " GROUP BY day ORDER BY day";
-//            cur = mDeck.getDB().getDatabase().rawQuery(
-//                    "SELECT (due - " + mDeck.getSched().getToday() + ")/" + chunk + " AS day, " // day
-//                            + "count(), " // all cards
-//                            + "sum(CASE WHEN ivl >= 21 THEN 1 ELSE 0 END) " // mature cards
-//                            + "FROM cards WHERE queue = 2 " + _limit() + lim + " GROUP BY day ORDER BY day", null);
-//            while (cur.moveToNext()) {
-//                dues.add(new int[] { cur.getInt(0), cur.getInt(1), cur.getInt(2) });
-//            }
-//        } finally {
-//            if (cur != null && !cur.isClosed()) {
-//                cur.close();
-//            }
-//        }
-//        return (int[][]) dues.toArray(new int[dues.size()][dues.get(0).length]);
-//    }
-//
-//
-//    /**
-//     * Reps and time spent
-//     * ***********************************************************************************************
-//     */
-//
-//    public int[][] reps(int num, int chunk, boolean time) {
-//        long interval = (mDeck.getSched().getDayCutoff() - (num * chunk * 86400));
-//        interval *= 1000;
-//        String lim = "WHERE time > " + interval + _revlogLimit();
+
+    /**
+     * Due and cumulative due
+     * ***********************************************************************************************
+     */
+    public int[][] due(Collection col, int type) {
+    	mCol = col;
+    	mType = type;
+    	int start = 0;
+    	int end = 0;
+    	int chunk = 0;
+    	switch (type) {
+    	case TYPE_MONTH:
+    		end = 31;
+    		chunk = 1;
+    		break;
+    	case TYPE_YEAR:
+    		end = 52;
+    		chunk = 7;
+    		break;
+    	case TYPE_LIFE:
+    		end = -1;
+    		chunk = 30;
+    		break;
+    	}
+            String lim = " AND due - " + mCol.getSched().getToday() + " >= " + start;
+            if (end != -1) {
+                lim += " AND day < " + end;
+            }
+
+            ArrayList<int[]> dues = new ArrayList<int[]>();
+            Cursor cur = null;
+            try {
+                cur = mCol.getDb().getDatabase().rawQuery(
+                        "SELECT (due - " + mCol.getSched().getToday() + ")/" + chunk + " AS day, " // day
+                                + "count(), " // all cards
+                                + "sum(CASE WHEN ivl >= 21 THEN 1 ELSE 0 END) " // mature cards
+                                + "FROM cards WHERE did IN " + _limit() + " AND queue = 2" + lim + " GROUP BY day ORDER BY day", null);
+                while (cur.moveToNext()) {
+                    dues.add(new int[] { cur.getInt(0), cur.getInt(1), cur.getInt(2) });
+                }
+            } finally {
+                if (cur != null && !cur.isClosed()) {
+                    cur.close();
+                }
+            }
+            return (int[][]) dues.toArray(new int[dues.size()][dues.get(0).length]);
+    }
+
+
+    /**
+     * Reps and time spent
+     * ***********************************************************************************************
+     */
+
+    public static int[][] reps(Collection col, int type) {
+    	mCol = col;
+    	mType = type;
+    	int days;
+    	int chunk;
+    	switch (type) {
+    	case TYPE_MONTH:
+    		days = 30;
+    		chunk = 1;
+    		break;
+    	case TYPE_YEAR:
+    		days = 52;
+    		chunk = 7;
+    		break;
+    	case TYPE_LIFE:
+    		days = -1;
+    		chunk = 30;
+    		break;
+    	}
+
+//            long interval = (mCol.getSched().getDayCutoff() - (num * chunk * 86400)) * 1000;
+//            String lim = "WHERE time > " + interval + _revlogLimit();
 //        String tk;
 //        String td;
 //        if (time) {
@@ -117,13 +159,14 @@ public class Stats {
 //            }
 //        }
 //        return (int[][]) reps.toArray(new int[reps.size()][reps.get(0).length]);
-//    }
-//
-//
-//    /**
-//     * Intervals ***********************************************************************************************
-//     */
-//
+    	return null;
+    }
+
+
+    /**
+     * Intervals ***********************************************************************************************
+     */
+
 //    public int[][] intervals(int limit, int chunk) {
 //        ArrayList<int[]> ivls = new ArrayList<int[]>();
 //        Cursor cur = null;
@@ -143,28 +186,28 @@ public class Stats {
 //    }
 //
 //
-//    /**
-//     * Tools ***********************************************************************************************
-//     */
-//
-//    private String _limit() {
-//        if (mSelective) {
-//            return mDeck.getSched()._groupLimit();
-//        } else {
-//            return "";
-//        }
-//    }
-//
-//
-//    private String _revlogLimit() {
+    /**
+     * Tools ***********************************************************************************************
+     */
+
+    private String _limit() {
+        if (mWholeCollection) {
+            return mCol.getSched()._deckLimit();
+        } else {
+            return "";
+        }
+    }
+
+
+    private static String _revlogLimit() {
 //        try {
-//            JSONArray lim = mDeck.getQconf().getJSONArray("groups");
+//            JSONArray lim = mCol.getQconf().getJSONArray("groups");
 //            if (mSelective && lim.length() != 0) {
 //                return " AND cid IN (SELECT id FROM cards WHERE gid in " + Utils.ids2str(lim) + ")";
 //            }
 //        } catch (JSONException e) {
 //            throw new RuntimeException(e);
 //        }
-//        return "";
-//    }
+        return "";
+    }
 }
