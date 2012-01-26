@@ -127,6 +127,7 @@ public class Utils {
     private static final Pattern imgPattern = Pattern.compile("<img src=[\\\"']?([^\\\"'>]+)[\\\"']? ?/?>");
     private static final Pattern htmlEntitiesPattern = Pattern.compile("&#?\\w+;");
 
+    private static final String ALL_CHARACTERS = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
 
     /**The time in integer seconds. Pass scale=1000 to get milliseconds. */
     public static double now() {
@@ -439,10 +440,17 @@ public class Utils {
 
     // used in ankiweb
     public static String base62(int num, String extra) {
-    	// TODO
-    	return Integer.toString(num);
+    	String table = ALL_CHARACTERS + extra;
+    	int len = table.length();
+    	String buf = "";
+    	int mod = 0;
+    	while (num != 0) {
+    		mod = num % len;
+    		buf = buf + table.substring(mod, mod + 1);
+    		num = num / len;
+    	}
+        return buf;
     }
-
 
     // all printable characters minus quotes, backslash and separators
     public static String base91(int num) {
@@ -452,7 +460,7 @@ public class Utils {
 
     /** return a base91-encoded 64bit random number */
     public static String guid64() {
-    	return base91((new Random()).nextInt(2^61 - 1));
+    	return base91((new Random()).nextInt((int) (Math.pow(2, 61) - 1)));
     }
 
 

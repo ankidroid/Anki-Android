@@ -612,7 +612,7 @@ public class Collection {
 				// the same random number
 				Random r = new Random();
 				r.setSeed(due);
-				return r.nextInt(2 ^ 32) + 1;
+				return r.nextInt((int) Math.pow(2, 32) - 2) + 1;
 			}
 		} catch (JSONException e) {
 			throw new RuntimeException(e);
