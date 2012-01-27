@@ -218,7 +218,7 @@ public class Collection {
 		// and flush deck + bump mod if db has been changed
 		if (mDb.getMod()) {
 			flush(mod);
-			// mDb.commit();
+			mDb.commit();
 			lock();
 			mDb.setMod(false);
 		}
@@ -942,7 +942,7 @@ public class Collection {
 				+ c.getId() + " ORDER BY id DESC LIMIT 1");
 		mDb.execute("DELETE FROM revlog WHERE id = " + last);
 		// and finally, update daily count
-		// FIXME: what to do in cramming cas?
+		// FIXME: what to do in cramming case?
 		String type = (new String[]{"new", "lrn", "rev"})[c.getQueue()];
 		mSched._updateStats(c, type, -1);
 		return c;

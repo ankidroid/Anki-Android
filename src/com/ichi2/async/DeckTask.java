@@ -116,7 +116,7 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
     public static void waitToFinish() {
         try {
             if ((sInstance != null) && (sInstance.getStatus() != AsyncTask.Status.FINISHED)) {
-		Log.i(AnkiDroidApp.TAG, "DeckTask: wait to finish");
+            	Log.i(AnkiDroidApp.TAG, "DeckTask: wait to finish");
                 sInstance.get();
             }
         } catch (Exception e) {

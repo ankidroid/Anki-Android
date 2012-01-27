@@ -1,4 +1,7 @@
 /***************************************************************************************
+ *                                                                                      *
+ * Copyright (c) 2012 Norbert Nagold <norbert.nagold@gmail.com>                         *
+ *                                                                                      *
  * This program is free software; you can redistribute it and/or modify it under        *
  * the terms of the GNU General Public License as published by the Free Software        *
  * Foundation; either version 3 of the License, or (at your option) any later           *
@@ -26,6 +29,7 @@ import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.DialogInterface.OnClickListener;
 import android.content.res.Resources;
+import android.content.res.Resources.NotFoundException;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.Editable;
@@ -146,7 +150,6 @@ public class CardEditor extends Activity {
 	private BroadcastReceiver mUnmountReceiver = null;
 
 	private LinearLayout mFieldsLayoutContainer;
-	// private HashMap<Long, Model> mModels;
 
 	private Button mSave;	
 	private Button mCancel;
@@ -214,12 +217,9 @@ public class CardEditor extends Activity {
 				// AnkiDroidWidgetBig.setCard(values[0].getCard());
 				// AnkiDroidWidgetBig.updateWidget(AnkiDroidWidgetBig.UpdateService.VIEW_NOT_SPECIFIED);
 			} else if (count > 0) {
-				 getNewNote();
-				 populateEditFields();
-				 mSave.setEnabled(false);
 				 mSourceText = null;
 				 mTargetText = null;
-				 mSwapButton.setVisibility(View.GONE);
+				 setNote();
 				 Themes.showThemedToast(CardEditor.this, getResources().getQuantityString(R.plurals.factadder_cards_added, count, count), true);
 			} else {
 				Themes.showThemedToast(CardEditor.this, getResources().getString(R.string.factadder_saving_error), true);
@@ -291,6 +291,10 @@ public class CardEditor extends Activity {
 			mCaller = savedInstanceState.getInt("caller");
 			mAddNote = savedInstanceState.getBoolean("addFact");
 			// TODO: reload col if necessary
+			if (mCol == null) {
+				finish();
+				return;
+			}
 		} else {
 			mCaller = intent.getIntExtra(EXTRA_CALLER, CALLER_NOCALLER);
 			if (mCaller == CALLER_NOCALLER) {
@@ -302,7 +306,7 @@ public class CardEditor extends Activity {
 				}
 			}
 		}
-		Log.i(AnkiDroidApp.TAG, "Caller: " + mCaller);
+		Log.i(AnkiDroidApp.TAG, "CardEditor: caller: " + mCaller);
 
 		switch (mCaller) {
 		case CALLER_NOCALLER:
@@ -359,7 +363,6 @@ public class CardEditor extends Activity {
 			break;
 
 		case CALLER_CARDEDITOR_INTENT_ADD:
-//			prepareForIntentAddition();
 			mAddNote = true;
 			String[] fields = Utils.splitFields(intent.getStringExtra(EXTRA_CONTENTS));
 			mSourceText = fields[0];
@@ -391,7 +394,6 @@ public class CardEditor extends Activity {
 				finish();
 				return;
 			}
-//			prepareForIntentAddition();
 			mAddNote = true;
 			break;
 		}
@@ -402,15 +404,9 @@ public class CardEditor extends Activity {
 			return;
 		}
 
-		if (mAddNote) {
-			try {
-				mDeckButton.setText(getResources().getString(R.string.CardEditorDeck, mCol.getDecks().current().getString("name")));
-				modelChanged();
-				// TODO: save tags for next addition?
-			} catch (JSONException e) {
-				throw new RuntimeException(e);
-			}
+		setNote(mEditorNote);
 
+		if (mAddNote) {
 			// set information transferred by intent
 			String contents = null;
 			if (mSourceText != null) {
@@ -428,7 +424,6 @@ public class CardEditor extends Activity {
 				setEditFieldTexts(contents);				
 			}
 
-			mSave.setEnabled(false);
 			LinearLayout modelButton = ((LinearLayout)findViewById(R.id.CardEditorModelButton));
 			modelButton.setOnClickListener(new View.OnClickListener() {
 				public void onClick(View v) {
@@ -445,18 +440,10 @@ public class CardEditor extends Activity {
 				public void onClick(View v) {
 		             MetaDB.saveIntentInformation(CardEditor.this, getFieldsText());
 					 populateEditFields();
-					 mSave.setEnabled(false);
 					 mSourceText = null;
 					 mTargetText = null;
 				}				
 			});
-		} else {
-			try {
-				mDeckButton.setText(getResources().getString(R.string.CardEditorDeck, mCol.getDecks().get(mEditorNote.getDid()).getString("name")));
-				
-			} catch (JSONException e) {
-				throw new RuntimeException(e);
-			}			
 		}
 
 		((LinearLayout)findViewById(R.id.CardEditorDeckButton)).setOnClickListener(new View.OnClickListener() {
@@ -465,7 +452,6 @@ public class CardEditor extends Activity {
 			}
 		});
 
-		updateTagsButton();
 		mModified = false;
 
 		SharedPreferences preferences = PrefSettings
@@ -488,16 +474,39 @@ public class CardEditor extends Activity {
 
 			@Override
 			public void onClick(View v) {
-				saveNow();
 				if (mAddNote) {
 					if (duplicateCheck(true)) {
 						return;
 					}
-					
 					for (FieldEditText f : mEditFields) {
 						f.updateField();
 					}
 					DeckTask.launchDeckTask(DeckTask.TASK_TYPE_ADD_FACT, mSaveFactHandler, new DeckTask.TaskData(mEditorNote));	
+				} else {
+//					Iterator<FieldEditText> iter = mEditFields.iterator();
+//					while (iter.hasNext()) {
+//						FieldEditText current = iter.next();
+//						mModified |= current.updateField();
+//					}
+//					// if (!mEditorNote.getTags().equals(mFactTags)) {
+//					// mEditorNote.setTags(mFactTags);
+//					// mModified = true;
+//					// }
+//					if (mCaller == CALLER_BIGWIDGET_EDIT) {
+//						// DeckTask.launchDeckTask(DeckTask.TASK_TYPE_UPDATE_FACT,
+//						// mSaveFactHandler, new
+//						// DeckTask.TaskData(Reviewer.UPDATE_CARD_SHOW_QUESTION,
+//						// mDeck, AnkiDroidWidgetBig.getCard()));
+//					} else if (!mCardReset) {
+//						// Only send result to save if something was actually
+//						// changed
+//						if (mModified) {
+//							setResult(RESULT_OK);
+//						} else {
+//							setResult(RESULT_CANCELED);
+//						}
+//						closeCardEditor();
+//					}
 				}
 			}
 
@@ -514,10 +523,6 @@ public class CardEditor extends Activity {
 			}
 
 		});
-
-		if (!mAddNote) {
-			populateEditFields();
-		}
 	}
 
 	private boolean addFromAedict(String extra_text) {
@@ -746,7 +751,6 @@ public class CardEditor extends Activity {
 	}
 
 	private void closeCardEditor(int result) {
-		saveNow();
 		// TODO: proper result handling
 		setResult(result);
 		finish();
@@ -784,7 +788,17 @@ public class CardEditor extends Activity {
 						@Override
 						public void onClick(DialogInterface dialog, int which) {
 							mEditorNote.setTags(selectedTags);
-							updateTagsButton();
+							try {
+								JSONArray ja = new JSONArray();
+								for (String t : selectedTags) {
+									ja.put(t);
+								}
+								mEditorNote.model().put("tags", ja);
+							} catch (JSONException e) {
+								throw new RuntimeException(e);
+							}
+							updateTags();
+							mCol.getModels().setChanged();
 						}
 					});
 			builder.setNegativeButton(res.getString(R.string.cancel), null);
@@ -865,11 +879,10 @@ public class CardEditor extends Activity {
 						long oldDid = mCol.getDecks().get(mEditorNote.getDid()).getLong("id");
 						long newId = dialogDeckIds.get(item);
 						if (oldDid != newId) {
-							if (mCaller == CALLER_DECKPICKER) {
-								mCol.getDecks().select(newId);
-							}
 							mEditorNote.setDid(newId);
-							mDeckButton.setText(getResources().getString(R.string.CardEditorDeck, mCol.getDecks().get(newId).getString("name")));
+							mEditorNote.model().put("did", newId);
+							updateDeck();
+							mCol.getModels().setChanged();
 						}
 					} catch (JSONException e) {
 						throw new RuntimeException(e);
@@ -916,7 +929,7 @@ public class CardEditor extends Activity {
 						for (int i = 0; i < size; i++) {
 							oldValues[i] = mEditFields.get(i).getText().toString();
 						}
-						modelChanged();
+						setNote();
 						if ((mSourceText == null || mSourceText.length() == 0)
 								&& (mTargetText == null || mTargetText.length() == 0)) {
 							for (int i = 0; i < Math.min(size, mEditFields.size()); i++) {
@@ -1071,41 +1084,6 @@ public class CardEditor extends Activity {
 		}
 	}
 
-	private void modelChanged() {
-		getNewNote();
-		try {
-			mModelButton.setText(getResources().getString(R.string.CardEditorModel, mCol.getModels().current().getString("name")));
-		} catch (JSONException e) {
-			throw new RuntimeException(e);
-		}
-		populateEditFields();
-		swapText(true);
-	}
-
-	private void getNewNote() {
-		long did;
-		if (mEditorNote != null) {
-			did = mEditorNote.getDid();
-		} else {
-			try {
-				did = mCol.getDecks().current().getLong("id");
-			} catch (JSONException e) {
-				throw new RuntimeException(e);
-			}
-		}
-		mEditorNote = mCol.newNote();
-    	mEditorNote.setDid(did);
-    	JSONArray ja;
-		try {
-			ja = mCol.getModels().current().getJSONArray("tags");
-			for (int i = 0; i < ja.length(); i++) {
-				mEditorNote.addTag(ja.getString(i));
-			}
-		} catch (JSONException e) {
-			throw new RuntimeException(e);
-		}
-	}
-
 	private void actualizeTagDialog(StyledDialog ad) {
 		TreeSet<String> tags = new TreeSet<String>(String.CASE_INSENSITIVE_ORDER);
 		for (String tag : mCol.getTags().all()) {
@@ -1250,10 +1228,6 @@ public class CardEditor extends Activity {
 		}
 	}
 
-	private void updateTagsButton() {
-		mTagsButton.setText(getResources().getString(R.string.CardEditorTags, mEditorNote.stringTags().trim().replace(" ", ", ")));		
-	}
-
 	private Handler mTimerHandler = new Handler();
 
 	private Runnable checkDuplicatesRunnable = new Runnable() {
@@ -1270,59 +1244,45 @@ public class CardEditor extends Activity {
 		return Utils.joinFields(fields);
 	}
 
-	/** Must call this before adding cards, closing dialog, etc. */
-	private void saveNow() {
-		saveTagsAndDeck();
+	/** Make NOTE the current note. */
+	private void setNote() {
+		setNote(null);
 	}
-
-	private void saveTagsAndDeck() {
-		if (mEditorNote == null) {
-			return;
-		}
-		if (mAddNote) {
-			// save group and tags to model
-			JSONObject m = mEditorNote.model();
-			try {
-				m.put("did", mEditorNote.getDid());
-				JSONArray ja = new JSONArray();
-				for (String t : mEditorNote.getTags()) {
-					ja.put(t);
+	private void setNote(Note note) {
+		try {
+			if (note == null) {
+				mEditorNote = mCol.newNote();			
+				mModelButton.setText(getResources().getString(R.string.CardEditorModel, mCol.getModels().current().getString("name")));
+				JSONArray tags = mEditorNote.model().getJSONArray("tags");
+				for (int i = 0; i < tags.length(); i++) {
+					mEditorNote.addTag(tags.getString(i));
 				}
-				m.put("tags", ja.toString());
-			} catch (JSONException e) {
-				throw new RuntimeException(e);
+			} else {
+				mEditorNote = note;
 			}
-			mCol.getModels().save();
-		} else {
-			mEditorNote.flush();
-//			Iterator<FieldEditText> iter = mEditFields.iterator();
-//			while (iter.hasNext()) {
-//				FieldEditText current = iter.next();
-//				mModified |= current.updateField();
-//			}
-//			// if (!mEditorNote.getTags().equals(mFactTags)) {
-//			// mEditorNote.setTags(mFactTags);
-//			// mModified = true;
-//			// }
-//			if (mCaller == CALLER_BIGWIDGET_EDIT) {
-//				// DeckTask.launchDeckTask(DeckTask.TASK_TYPE_UPDATE_FACT,
-//				// mSaveFactHandler, new
-//				// DeckTask.TaskData(Reviewer.UPDATE_CARD_SHOW_QUESTION,
-//				// mDeck, AnkiDroidWidgetBig.getCard()));
-//			} else if (!mCardReset) {
-//				// Only send result to save if something was actually
-//				// changed
-//				if (mModified) {
-//					setResult(RESULT_OK);
-//				} else {
-//					setResult(RESULT_CANCELED);
-//				}
-//				closeCardEditor();
-//			}
+		} catch (JSONException e) {
+			throw new RuntimeException(e);
+		}
+		updateDeck();
+		updateTags();
+		populateEditFields();
+		swapText(true);
+	}
+
+	private void updateDeck() {
+		try {
+			mDeckButton.setText(getResources().getString(R.string.CardEditorDeck, mCol.getDecks().get(mEditorNote.getDid()).getString("name")));
+		} catch (NotFoundException e) {
+			throw new RuntimeException(e);
+		} catch (JSONException e) {
+			throw new RuntimeException(e);
 		}
 	}
 
-	
+	private void updateTags() {
+		mTagsButton.setText(getResources().getString(R.string.CardEditorTags, mEditorNote.stringTags().trim().replace(" ", ", ")));
+	}
+
 	// ----------------------------------------------------------------------------
 	// INNER CLASSES
 	// ----------------------------------------------------------------------------

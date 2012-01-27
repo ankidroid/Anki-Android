@@ -432,7 +432,7 @@ public class DeckPicker extends Activity {
             }
 			if (mProgressDialog != null && mProgressDialog.isShowing()) {
 //				mProgressDialog.setTitle((String) values[0]);
-				mProgressDialog.setMessage(currentMessage + "\n" + res.getString(R.string.sync_up_down_size, countUp, countDown));
+				mProgressDialog.setMessage(currentMessage + "\n" + res.getString(R.string.sync_up_down_size, countUp / 1024, countDown / 1024));
 			}
 		}
 

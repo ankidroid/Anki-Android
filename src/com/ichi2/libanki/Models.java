@@ -682,6 +682,10 @@ public class Models {
      * ***********************************************************************************************
      */
 
+    public void setChanged() {
+    	mChanged = true;
+    }
+
   
     /**
      * Css generation

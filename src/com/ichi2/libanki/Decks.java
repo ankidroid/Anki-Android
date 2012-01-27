@@ -296,7 +296,11 @@ public class Decks {
 		if (mDecks.containsKey(did)) {
 			return mDecks.get(did);
 		} else if (defaultvalue) {
-			return mDecks.get(1);
+			JSONObject d = mDecks.get(1);
+			if (d == null) {
+				d = mDecks.values().iterator().next();
+			}
+			return d;
 		} else {
 			return null;
 		}

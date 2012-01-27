@@ -49,6 +49,23 @@
   		android:layout_height="wrap_content" 
   		android:layout_width="fill_parent"
 	  	android:orientation="vertical" >
+		<LinearLayout android:layout_width="fill_parent"
+			android:layout_height="wrap_content" 
+			android:id="@+id/CardEditorModelButton"
+			android:visibility="gone"
+			style="?android:attr/buttonStyleSmall"
+			android:layout_gravity="center"
+			android:gravity="center">
+			<TextView
+				android:layout_width="fill_parent"
+				android:layout_height="wrap_content" 
+				android:layout_marginRight="5dip"
+				android:layout_marginLeft="5dip"
+				android:id="@+id/CardEditorModelText"
+				android:clickable="false"
+				android:layout_gravity="center"
+				android:gravity="left|center_vertical"/>				
+		</LinearLayout>
 		<LinearLayout 
 			android:layout_width="fill_parent"
 			android:layout_height="wrap_content" 
@@ -64,23 +81,6 @@
 				android:id="@+id/CardEditorDeckText"
 				android:clickable="false"
 				android:text="@string/CardEditorDeck"
-				android:layout_gravity="center"
-				android:gravity="left|center_vertical"/>				
-		</LinearLayout>
-		<LinearLayout android:layout_width="fill_parent"
-			android:layout_height="wrap_content" 
-			android:id="@+id/CardEditorModelButton"
-			android:visibility="gone"
-			style="?android:attr/buttonStyleSmall"
-			android:layout_gravity="center"
-			android:gravity="center">
-			<TextView
-				android:layout_width="fill_parent"
-				android:layout_height="wrap_content" 
-				android:layout_marginRight="5dip"
-				android:layout_marginLeft="5dip"
-				android:id="@+id/CardEditorModelText"
-				android:clickable="false"
 				android:layout_gravity="center"
 				android:gravity="left|center_vertical"/>				
 		</LinearLayout>

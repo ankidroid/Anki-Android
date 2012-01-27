@@ -1,7 +1,7 @@
 /****************************************************************************************
  * Copyright (c) 2009 Daniel Svärd <daniel.svard@gmail.com>                             *
  * Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com>                           *
- * Copyright (c) 2009 Andrew <andrewdubya@gmail.com>									*
+ * Copyright (c) 2009 Andrew <andrewdubya@gmail.com>                                    *
  * Copyright (c) 2011 Norbert Nagold <norbert.nagold@gmail.com>                         *
  *                                                                                      *
  * This program is free software; you can redistribute it and/or modify it under        *
@@ -20,7 +20,6 @@
 package com.ichi2.anki;import com.ichi2.anki2.R;
 
 import android.content.ContentValues;
-import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
@@ -51,18 +50,18 @@ public class AnkiDb {
         mDatabase = SQLiteDatabase.openDatabase(ankiFilename, null, SQLiteDatabase.OPEN_READWRITE
                 | SQLiteDatabase.NO_LOCALIZED_COLLATORS);
         if (mDatabase != null) {
-        	SharedPreferences prefs = PrefSettings.getSharedPrefs(AnkiDroidApp.getInstance().getBaseContext());
-        	if (prefs.getBoolean("walMode", false)) {
+        	if (UIUtils.getApiLevel() >= 11) {
         		queryString("PRAGMA journal_mode = WAL");
         	} else {
         		queryString("PRAGMA journal_mode = DELETE");
         	}
-            if (prefs.getBoolean("asyncMode", false)) {
+            if (PrefSettings.getSharedPrefs(AnkiDroidApp.getInstance().getBaseContext()).getBoolean("asyncMode", false)) {
             	mDatabase.rawQuery("PRAGMA synchronous = 0", null);
             } else {
             	mDatabase.rawQuery("PRAGMA synchronous = 2", null);
             }
         }
+//        getDatabase().beginTransactionNonExclusive();
         mMod = false;
     }
 
@@ -80,6 +79,14 @@ public class AnkiDb {
         }
     }
 
+    public void commit() {
+//    	SQLiteDatabase db = getDatabase();
+//    	while (db.inTransaction()) {
+//    		db.setTransactionSuccessful();
+//    		db.endTransaction();
+//    	}
+//    	db.beginTransactionNonExclusive();
+    }
 
     public SQLiteDatabase getDatabase() {
         return mDatabase;
