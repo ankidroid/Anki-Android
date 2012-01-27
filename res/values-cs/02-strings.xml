@@ -73,7 +73,7 @@
   <string name="help_online">Online nápověda</string>
   <string name="help_faq">Nejčastější dotazy</string>
   <string name="help_tutorial">Výukový balíček</string>
-  <string name="simple_interface_hint">Empty %s. Bear in mind that simple interface cannot show pictures/sounds etc.</string>
+  <string name="simple_interface_hint">Prázdné %s. Mějte na paměti, že jednoduché rozhraní nemůže zobrazit obrázky/zvuky atd.</string>
   <plurals name="factadder_cards_added">
     <item quantity="one">1 karta přidána</item>
     <item quantity="other">přidáno %d karet</item>

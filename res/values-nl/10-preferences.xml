@@ -112,7 +112,7 @@
   <string name="more_scrolling_buttons">eReader</string>
   <string name="more_scrolling_buttons_summ">Gebruik ook Kanji/Katakana, Emoji/Kao-Moji knoppen om te bladeren.</string>
   <string name="double_scrolling_gap">Sneller scrollen</string>
-  <string name="double_scrolling_gap_summ">Zet dit aan als u versnelt wilt scrollen</string>
+  <string name="double_scrolling_gap_summ">Zet dit aan als u versneld wilt scrollen.</string>
   <string name="swipe_sensibility">Swipe Gevoeligheid</string>
   <string name="swipe_sensibility_summ">Gevoeligheid voor veegbewegingen: XXX</string>
   <string name="tts">Tekst-naar-spraak</string>
@@ -204,6 +204,6 @@
   <string name="pref_cache_cardbrowser_reload">Alle kaarten opnieuw laden?</string>
   <string name="pref_keep_screen_on">Zorg dat scherm aan blijft</string>
   <string name="pref_keep_screen_on_summ">Voorkom dat scherm uitgeschakeld wordt tijdens herhalen</string>
-  <string name="pref_simple_interface">Simple Interface</string>
-  <string name="pref_simple_interface_summ">Speeds up card showing but does only support text (no pictures, sounds etc.)</string>
+  <string name="pref_simple_interface">Eenvoudige interface</string>
+  <string name="pref_simple_interface_summ">Toont kaarten sneller, maar ondersteunt enkel tekst (geen afbeeldingen, geluiden, etc.)</string>
 </resources>

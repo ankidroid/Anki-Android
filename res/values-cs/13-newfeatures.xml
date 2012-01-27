@@ -26,8 +26,8 @@
     <item>vyrovnávací paměť pro prohlížeč karet</item>
     <item>konfigurovatelný dlouhý klik</item>
     <item>zpětná vazba pro přidaná fakta</item>
-    <item>deck summary in deckpicker</item>
-    <item>temporary storage for intent add information</item>
-    <item>new theme: white</item>
+    <item>Shrnutí balíčků ve výběru balíčků</item>
+    <item>dočasné úložiště pro přidání informací z jiných aplikací</item>
+    <item>nový motiv: bílá</item>
   </string-array>
 </resources>

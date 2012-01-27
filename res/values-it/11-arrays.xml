@@ -97,28 +97,28 @@
     <item>By number of total new cards</item>
   </string-array>
   <string-array name="gestures_labels">
-    <item>No action</item>
-    <item>Answer button 1</item>
-    <item>Answer button 2</item>
-    <item>Answer button 3</item>
-    <item>Answer button 4</item>
-    <item>Answer recommended (green)</item>
-    <item>Answer better than recommended</item>
+    <item>Nessuna azione</item>
+    <item>Pulsante risposta 1</item>
+    <item>Pulsante risposta 2</item>
+    <item>Pulsante risposta 3</item>
+    <item>Pulsante risposta 4</item>
+    <item>Risposta raccomandato (verde)</item>
+    <item>Risposta più che raccomandata</item>
     <item>Undo</item>
     <item>Redo</item>
-    <item>Edit card</item>
+    <item>Modifica carta</item>
     <item>Mark card</item>
     <item>Lookup expression</item>
     <item>Bury card</item>
-    <item>Suspend card</item>
-    <item>Delete card</item>
-    <item>Clear Whiteboard</item>
+    <item>Sospendi carta</item>
+    <item>Cancella carta</item>
+    <item>Pulisci lavagna</item>
     <item>Abort learning</item>
   </string-array>
   <string-array name="theme_labels">
-    <item>Android Dark</item>
-    <item>Android Light</item>
-    <item>Blue</item>
-    <item>White</item>
+    <item>Android scuro</item>
+    <item>Android chiaro</item>
+    <item>Blu</item>
+    <item>Bianco</item>
   </string-array>
 </resources>

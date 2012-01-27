@@ -22,7 +22,7 @@
 <resources>
   <string-array name="new_version_features">
     <item>review widget</item>
-    <item>rename decks</item>
+    <item>単語帳の名前変更</item>
     <item>cached list in card browser</item>
     <item>long click configurable</item>
     <item>feedback for added facts</item>

@@ -35,7 +35,7 @@
   <string name="card_browser_search">Cerca</string>
   <string name="card_browser_search_suspended">Cerca sospese</string>
   <string name="card_browser_search_by_tag">Cerca per tag</string>
-  <string name="card_browser_tags_shown">Tags: %1$s</string>
+  <string name="card_browser_tags_shown">Etichette: %1$s</string>
   <string name="card_browser_change_display_order">Modifica ordine visualizzazione</string>
   <string name="card_browser_change_display_order_title">Scegli ordine visualizzazione</string>
   <string name="card_browser_card_details">Dettagli carta</string>
@@ -52,9 +52,9 @@
   <string name="card_details_no_count">Nessun conteggio</string>
   <string name="card_details_added">Aggiunto</string>
   <string name="card_details_changed">Cambiato</string>
-  <string name="card_details_tags">Tags</string>
+  <string name="card_details_tags">Etichette</string>
   <string name="card_details_model">Modello</string>
-  <string name="card_browser_sorting_cards">Sorting cards.\nPlease wait...</string>
+  <string name="card_browser_sorting_cards">Sto ordinando le carte.\nSi prega di attendere...</string>
   <string name="card_details_card_model">Modello di carta</string>
   <string-array name="card_browser_order_labels">
     <item>Per domanda</item>
@@ -62,7 +62,7 @@
     <item>Per tempo scaduto</item>
     <item>Per intervallo</item>
     <item>Per facilità</item>
-    <item>Date created</item>
+    <item>Data creata</item>
   </string-array>
   <plurals name="card_browser_title">
     <item quantity="one">%1$s: 1 of %3$d schede mostrate</item>

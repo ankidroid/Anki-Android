@@ -37,7 +37,7 @@
   <string name="pref_cat_reset">リセット</string>
   <string name="pref_cat_other">その他</string>
   <string name="pref_cat_experimental">編集中の設定（バグを含む）</string>
-  <string name="pref_cat_themes">Themes</string>
+  <string name="pref_cat_themes">テーマ</string>
   <string name="pref_cat_flashcard">Reviewing screen</string>
   <string name="show_study_options_on_deck_load">ロード時に学習設定を表示</string>
   <string name="show_study_options_on_deck_load_summ">単語帳を読み込むときに学習のオプション画面を表示する</string>
@@ -50,7 +50,7 @@
   <string name="show_whiteboard_summ">画面上に書き込むことができます。</string>
   <string name="whiteboard_stroke_width">ホワイトボードの線幅</string>
   <string name="whiteboard_stroke_width_summ">線幅: XXX</string>
-  <string name="whiteboard_black">Monochrome</string>
+  <string name="whiteboard_black">モノクロ</string>
   <string name="whiteboard_black_summ">Use monochrome instead of colored stroke (for devices with lower memory, does not work in night mode)</string>
   <string name="write_answers">答えを書いて下さい。</string>
   <string name="write_answers_summ">解答を書いて正解と比較します</string>
@@ -133,9 +133,9 @@
   <string name="timeout_answer_text">答えを自動的に表示</string>
   <string name="timeout_answer_summ">質問が表示されたあと指定時間が経過すると、答えを自動的に表示する</string>
   <string name="timeout_answer_seconds">答えが表示されるまでの秒数</string>
-  <string name="timeout_question_seconds">Seconds before the next question is shown</string>
+  <string name="timeout_question_seconds">次の問題が表示されるまでの秒数</string>
   <string name="select_locale_title">言語を選択</string>
-  <string name="select_theme">Theme</string>
+  <string name="select_theme">テーマ</string>
   <string name="theme_animations">Animations</string>
   <string name="theme_animations_summ">Show animations when flipping cards</string>
   <string name="animation_speed">Animation Duration</string>
@@ -187,7 +187,7 @@
   <string name="async_mode">Synchronous off</string>
   <string name="async_mode_summ">This speeds AnkiDroid up but can corrupt databases when the whole Android system crashes. So use backups</string>
   <string name="async_mode_message">Be aware that this option is less safe and can cause deck corruptions when Android crashes (e.g. due to power shortage).\nIt is HIGHLY recommended to use the backup system if this option is set.\nEnable it anyway?</string>
-  <string name="fix_orientation">Fix orientation</string>
+  <string name="fix_orientation">向きを固定する</string>
   <string name="fix_orientation_summ">Do not allow orientation change when reviewing</string>
   <string name="per_day">１日あたり</string>
   <string name="wal_warning">Your device\'s sqlite implementation does not allow to set the proper anki journal mode.\nTherefore you will not be able to sync your decks via AnkiDroid\'s syncing feature until we find a solution for that.\nApart from that, AnkiDroid should work fine.\nPlease help us solving this issue by sending an error report.\n Visit http://bit.ly/n5MaOF for more information.</string>

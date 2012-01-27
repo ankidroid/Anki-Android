@@ -29,7 +29,7 @@
   <string name="studyoptions_new_today">Nouvelles aujourd\'hui :</string>
   <string name="studyoptions_new_total">Nouvelles total :</string>
   <string name="studyoptions_eta">Temps estimé (min):</string>
-  <string name="studyoptions_start">Démarrer l\'apprentisage</string>
+  <string name="studyoptions_start">Démarrer l\'apprentissage</string>
   <string name="studyoptions_more">Options d\'étude</string>
   <string name="studyoptions_more_dialog_title">Plus d\'options</string>
   <string name="deckpicker_title_nosdcard">La carte SD n\'est pas montée</string>

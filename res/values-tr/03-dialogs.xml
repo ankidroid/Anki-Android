@@ -65,7 +65,7 @@
   <string name="intent_add_saved_information">Veri kaydedildi</string>
   <string name="intent_add_clear_all">Hepsini temizle</string>
   <string name="intent_aedict_empty">\"Varsayılan\" kategorisi boş</string>
-  <string name="intent_aedict_category">AnkiDroid\'e kart eklemek için bütün Not Defteri kategorilerini kaldırın veya \"varsayılan\" isminde bir tane ekleyin</string>
+  <string name="intent_aedict_category">AnkiDroid\'e kart eklemek için bütün Not Defteri kategorilerini kaldırın veya \"default\" isminde bir tane ekleyin</string>
   <string-array name="about_content">
     <item><![CDATA[<h2>%1$s:<br/>Android için bilgi kartları</h2>AnkiDroid <a href="%2$s">Anki</a> masaüstü uygulamasıyla tamamen uyumlu bir bilgi kartı uygulamasıdır. İster AnkiDroid\'de ister Anki Masaüstünde içerikler oluşturabilir, indirebilir, öğrenebilir ve kolaylıkla eşitleyebilirsiniz.]]></item>
     <item><![CDATA[AnkiDroid\'i geliştirmemize yardımcı olmak için, lütfen karşılaştığınız sorunları <a href="%1$s">buradan</a> bildirin; yeni özellik fikirleri de çok iyi olur! Lütfen <a href="%2$s">vikiyi</a> kullanın ve <a href="%3$s">forumda</a> bir selam verin.]]></item>

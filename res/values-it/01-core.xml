@@ -23,7 +23,7 @@
   <string name="app_name">AnkiDroid</string>
   <string name="yes">Sì</string>
   <string name="no">No</string>
-  <string name="ok">OK</string>
+  <string name="ok">Ok</string>
   <string name="studyoptions_deck_name">Nome del mazzo</string>
   <string name="studyoptions_reviews_due">Da ripetere:</string>
   <string name="studyoptions_new_today">Nuove oggi:</string>
@@ -36,7 +36,7 @@
   <string name="deckpicker_new">%d nuove oggi</string>
   <string name="deckpicker_loaddeck">Caricamento mazzo...</string>
   <string name="deckpicker_nodeck">Nessun mazzo trovato.</string>
-  <string name="show_answer">Mostra la risposta</string>
+  <string name="show_answer">Mostra risposta</string>
   <string name="ease1_learning">Ancora</string>
   <string name="ease2_learning">Buono</string>
   <string name="ease3_learning">Facile</string>
@@ -50,21 +50,21 @@
   <string name="studyoptions_congrats_title">Congratulazioni!</string>
   <string name="studyoptions_congrats_learnmore">Impara ancora</string>
   <string name="studyoptions_congrats_reviewearly">Rivedere presto</string>
-  <string name="studyoptions_congrats_syncdeck">Synchronize deck</string>
+  <string name="studyoptions_congrats_syncdeck">Sincronizzare il ponte</string>
   <string name="studyoptions_congrats_open_other_deck">Apri un altro mazzo</string>
   <string name="studyoptions_congrats_finish">Tornare alla schermata di studio</string>
   <string name="card_unsuspended">Card suspension undone</string>
-  <string name="card_suspended">Card resuspended</string>
-  <string name="menu_rotate">Rotate</string>
+  <string name="card_suspended">Carta risospesa</string>
+  <string name="menu_rotate">Ruotare</string>
   <string name="undo">Annullare</string>
   <string name="redo">Ripristinare</string>
-  <string name="finish_operation">Finishing previous operation.\nPlease wait...</string>
+  <string name="finish_operation">Sto terminando operazione precedente.\nPrego attendere...</string>
   <string name="contextmenu_deckpicker_download_missing_media">Download media mancante</string>
-  <string name="contextmenu_deckpicker_reset_language_assignments">Reimpostare le assegnazioni della lingua</string>
+  <string name="contextmenu_deckpicker_reset_language_assignments">Reset assegnazioni lingua</string>
   <string name="contextmenu_deckpicker_reset_reset_message">Reset lingua</string>
   <string name="contextmenu_deckpicker_optimize_deck">Ottimizzare database</string>
-  <string name="contextmenu_deckpicker_rename_deck">Rename deck</string>
-  <string name="contextmenu_deckpicker_set_custom_dictionary">Set custom dictionary</string>
+  <string name="contextmenu_deckpicker_rename_deck">Rinomina mazzo</string>
+  <string name="contextmenu_deckpicker_set_custom_dictionary">Imposta dizionario personalizzato</string>
   <string name="begin_cram">Inizia studio focalizzato</string>
   <string name="cram">Studio di massa</string>
   <string name="menu_open_deck">Tutti i corsi</string>
@@ -81,7 +81,7 @@
   <string name="menu_suspend_card">Sospendi carta</string>
   <string name="menu_bury_card">Nascondere scheda</string>
   <string name="menu_edit_card">Modifica la carta</string>
-  <string name="menu_select">Select text</string>
+  <string name="menu_select">Seleziona testo</string>
   <string name="menu_search">Ricerca in %1$s</string>
   <string name="menu_mark_card">Etichetta la carta</string>
   <string name="menu_marked">Etichettata</string>
@@ -90,29 +90,29 @@
   <string name="studyoptions_cram_dialog_title">Etichette per lo studio focalizzato</string>
   <string name="statistics">Statistiche</string>
   <string name="studyoptions_load_other_deck">Carica un altro mazzo</string>
-  <string name="studyoptions_load_tutorial_deck">Load Tutorial Deck</string>
+  <string name="studyoptions_load_tutorial_deck">Carica mazzo di prova</string>
   <string name="studyoptions_night_mode">Modalità notturna</string>
   <string name="studyoptions_swap_qa">Swap Q/A</string>
-  <string name="visit">Visit</string>
-  <string name="later">Later</string>
+  <string name="visit">Visita</string>
+  <string name="later">Più tardi</string>
   <string name="download">Download</string>
-  <string name="deckpicker_loading_error">Deck could not be loaded</string>
-  <string name="deckpicker_creating_backup">Creating backup...</string>
+  <string name="deckpicker_loading_error">Il mazzo non può essere caricato</string>
+  <string name="deckpicker_creating_backup">Backup in corso...</string>
   <string-array name="next_review_s">
-    <item>1 second</item>
-    <item>1 minute</item>
-    <item>1 hour</item>
-    <item>1 day</item>
-    <item>1 month</item>
-    <item>1 year</item>
+    <item>1 secondo</item>
+    <item>1 minuto</item>
+    <item>1 ora</item>
+    <item>1 giorno</item>
+    <item>1 mese</item>
+    <item>1 anno</item>
   </string-array>
   <string-array name="next_review_p">
-    <item>%s seconds</item>
-    <item>%s minutes</item>
-    <item>%s hours</item>
-    <item>%s days</item>
-    <item>%s months</item>
-    <item>%s years</item>
+    <item>%s secondi</item>
+    <item>%s minuti</item>
+    <item>%s ore</item>
+    <item>%s giorni</item>
+    <item>%s mesi</item>
+    <item>%s anni</item>
   </string-array>
   <plurals name="studyoptions_window_title">
     <item quantity="one">%1$s (1 di %3$d scadute)</item>
@@ -131,16 +131,16 @@
     <item quantity="other">%1$d di %2$d da ripetere</item>
   </plurals>
   <plurals name="reviewer_window_title">
-    <item quantity="one">%1$s (1 min. left)</item>
-    <item quantity="other">%1$s (%2$d min. left)</item>
+    <item quantity="one">%1$s (1 min. rimasto)</item>
+    <item quantity="other">%1$s (%2$d min. rimasti)</item>
   </plurals>
   <plurals name="studyoptions_congrats_message">
-    <item quantity="one">You have finished for now.\nTomorrow there will be:\n1 card to review and %2$s.\n Estimated time: %3$s</item>
-    <item quantity="other">You have finished for now.\nTomorrow there will be:\n%1$d cards to review and %2$s.\n Estimated time: %3$s</item>
+    <item quantity="one">Hai terminato per il momento.\nDomani ci saranno:\n1 carte da rivedere e %2$s.\n Tempo stimato: %3$s</item>
+    <item quantity="other">Hai terminato per il momento.\nDomani ci saranno:\n%1$d carte da rivedere e %2$s.\n Tempo stimato: %3$s</item>
   </plurals>
   <plurals name="studyoptions_congrats_new_cards">
-    <item quantity="one">1 card</item>
-    <item quantity="other">%1$d new cards</item>
+    <item quantity="one">﻿1 carta</item>
+    <item quantity="other">﻿%1$d nuove carte</item>
   </plurals>
   <plurals name="studyoptions_congrats_eta">
     <item quantity="one">1 min.</item>
