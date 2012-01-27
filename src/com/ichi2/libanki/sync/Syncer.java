@@ -159,16 +159,20 @@ public class Syncer {
 	    	if (s.getString(0).equals("error")) {
 	    		return new Object[]{"error", 200, "sanity check error on server"};
 	    	}
+		boolean error = false;
 	    	for (int i = 0; i < s.getJSONArray(0).length(); i++) {
 	    		if (c.getJSONArray(0).getLong(i) != s.getJSONArray(0).getLong(i)) {
-	    			return new Object[]{"error", 200, "sanity check failed: 1/" + i};
+	    			error = true;
 	    		}
 	    	}
 	    	for (int i = 1; i < s.length(); i++) {
 	    		if (c.getLong(i) != s.getLong(i)) {
-	    			return new Object[]{"error", 200, "sanity check failed: " + i};
+	    			error = true;
 	    		}
 	    	}
+		if (error) {
+	    			return new Object[]{"error", 200, "sanity check failed:\nl: " + c.toString() + "\nr: " + l.toString()};
+		}
 		} catch (JSONException e) {
 			throw new RuntimeException(e);
 		} catch (IllegalStateException e) {
