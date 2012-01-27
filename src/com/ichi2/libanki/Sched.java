@@ -899,10 +899,10 @@ public class Sched {
 			int delay;
 			JSONArray ja = conf.getJSONArray("delays");
 			int len = ja.length();
-			if (len < left) {
-				delay = ja.getInt(0);
-			} else {
+			try {
 				delay = conf.getJSONArray("delays").getInt(len - left);
+			} catch (JSONException e) {
+				delay = conf.getJSONArray("delays").getInt(0);
 			}
 			return delay * 60;
 		} catch (JSONException e) {
