@@ -16,7 +16,6 @@
 
 package com.ichi2.anki;
 
-import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -63,7 +62,7 @@ import java.util.Map;
 
 import org.amr.arabic.ArabicUtilities;
 
-public class CardBrowser extends Activity {
+public class CardBrowser extends AnkiActivity {
 	private ArrayList<HashMap<String, String>> mCards;
 	private ArrayList<HashMap<String, String>> mAllCards;
 	private ArrayList<HashMap<String, String>> mDeletedCards;
@@ -207,7 +206,7 @@ public class CardBrowser extends Activity {
 
 		mDeck = DeckManager.getMainDeck();
 		if (mDeck == null) {
-			finish();
+			finishWithoutAnimation();
 			return;
 		}
 		mDeck.resetUndo();
@@ -266,11 +265,7 @@ public class CardBrowser extends Activity {
 				}
 				sEditorCard = mSelectedCard;
 				editCard.putExtra("callfromcardbrowser", true);
-				startActivityForResult(editCard, EDIT_CARD);
-				if (Integer.valueOf(android.os.Build.VERSION.SDK) > 4) {
-					ActivityTransitionAnimation.slide(CardBrowser.this,
-							ActivityTransitionAnimation.LEFT);
-				}
+				startActivityForResultWithAnimation(editCard, EDIT_CARD, ActivityTransitionAnimation.LEFT);
 			}
 		});
 		registerForContextMenu(mCardsListView);
@@ -322,11 +317,7 @@ public class CardBrowser extends Activity {
 					sAllCardsCache.addAll(mAllCards);					
 				}
 				setResult(RESULT_OK);
-				finish();
-				if (Integer.valueOf(android.os.Build.VERSION.SDK) > 4) {
-					ActivityTransitionAnimation.slide(CardBrowser.this,
-							ActivityTransitionAnimation.RIGHT);
-				}
+				finishWithAnimation(ActivityTransitionAnimation.RIGHT);
 			} else {
 				mSearchEditText.setText("");
 				mSearchEditText.setHint(R.string.downloaddeck_search);
@@ -389,11 +380,7 @@ public class CardBrowser extends Activity {
 			Intent intent = new Intent(CardBrowser.this, CardEditor.class);
 			intent.putExtra(CardEditor.EXTRA_CALLER, CardEditor.CALLER_CARDBROWSER_ADD);
 			intent.putExtra(CardEditor.EXTRA_DECKPATH, DeckManager.getMainDeckPath());
-			startActivityForResult(intent, ADD_FACT);
-			if (Integer.valueOf(android.os.Build.VERSION.SDK) > 4) {
-				ActivityTransitionAnimation.slide(CardBrowser.this,
-						ActivityTransitionAnimation.LEFT);
-			}
+			startActivityForResultWithAnimation(intent, ADD_FACT, ActivityTransitionAnimation.LEFT);
 			return true;
 		case MENU_SHOW_MARKED:
 			mShowOnlyMarSus = true;
@@ -822,13 +809,13 @@ public class CardBrowser extends Activity {
 							@Override
 							public void onClick(DialogInterface dialog,
 									int which) {
-								CardBrowser.this.finish();
+								CardBrowser.this.finishWithoutAnimation();
 							}
 						});
 				builder.setOnCancelListener(new OnCancelListener() {
 					@Override
 					public void onCancel(DialogInterface dialog) {
-						CardBrowser.this.finish();
+						CardBrowser.this.finishWithoutAnimation();
 					}
 				});
 				builder.create().show();
@@ -845,7 +832,7 @@ public class CardBrowser extends Activity {
 				} catch (OutOfMemoryError e) {
 			    	Log.e(AnkiDroidApp.TAG, "CardBrowser: mLoadCardsHandler: OutOfMemoryError: " + e);
 					Themes.showThemedToast(CardBrowser.this, getResources().getString(R.string.error_insufficient_memory), false);
-			    	finish();
+			    	finishWithoutAnimation();
 				}
 				updateList();
 			}

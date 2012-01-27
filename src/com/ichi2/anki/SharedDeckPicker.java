@@ -14,7 +14,6 @@
 
 package com.ichi2.anki;
 
-import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.ComponentName;
 import android.content.Context;
@@ -60,7 +59,7 @@ import com.ichi2.themes.Themes;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SharedDeckPicker extends Activity {
+public class SharedDeckPicker extends AnkiActivity {
 
     // Context menu options
     private static final int MENU_CANCEL = Menu.FIRST + 1;
@@ -427,10 +426,7 @@ public class SharedDeckPicker extends Activity {
     		Intent intent = SharedDeckPicker.this.getIntent();
     		setResult(RESULT_OK, intent);
     	}
-        finish();
-        if (Integer.valueOf(android.os.Build.VERSION.SDK) > 4) {
-            ActivityTransitionAnimation.slide(this, ActivityTransitionAnimation.LEFT);
-        }           
+        finishWithAnimation(ActivityTransitionAnimation.LEFT);
     }
 
     /********************************************************************
@@ -499,7 +495,7 @@ public class SharedDeckPicker extends Activity {
             } else {
             	if (data.returnType == Connection.RETURN_TYPE_OUT_OF_MEMORY) {
     				Themes.showThemedToast(SharedDeckPicker.this, getResources().getString(R.string.error_insufficient_memory), false);
-    		    	finish();            		
+    		    	finishWithoutAnimation();            		
             	} else if (mConnectionErrorAlert != null) {
                     mConnectionErrorAlert.show();
                 }

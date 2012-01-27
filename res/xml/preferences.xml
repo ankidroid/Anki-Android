@@ -111,7 +111,13 @@
                     app:min="100"
                     android:max="2000"
                     app:interval="50" />
-        </PreferenceCategory>
+            <CheckBoxPreference
+                    android:title="@string/eink_display"
+                    android:defaultValue="false"
+                    android:summary="@string/eink_display_summ"
+                    android:disableDependentsState="false"
+                    android:key="eInkDisplay" />
+            </PreferenceCategory>
         <PreferenceCategory android:title="@string/pref_cat_flashcard">
             <CheckBoxPreference
                     android:title="@string/fullscreen_review"

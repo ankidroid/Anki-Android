@@ -14,7 +14,6 @@
 
 package com.ichi2.anki;
 
-import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.ComponentName;
 import android.content.Context;
@@ -58,7 +57,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PersonalDeckPicker extends Activity {
+public class PersonalDeckPicker extends AnkiActivity {
 
     /**
      * Broadcast that informs us when the sd card is about to be unmounted
@@ -394,10 +393,7 @@ public class PersonalDeckPicker extends Activity {
     		Intent intent = PersonalDeckPicker.this.getIntent();
     		setResult(RESULT_OK, intent);
     	}
-        finish();
-        if (Integer.valueOf(android.os.Build.VERSION.SDK) > 4) {
-            ActivityTransitionAnimation.slide(this, ActivityTransitionAnimation.LEFT);
-        }
+        finishWithAnimation(ActivityTransitionAnimation.LEFT);
     }
 
     /********************************************************************

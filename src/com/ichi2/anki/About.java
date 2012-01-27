@@ -19,7 +19,6 @@ package com.ichi2.anki;
 
 import com.ichi2.themes.Themes;
 
-import android.app.Activity;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.webkit.WebView;
@@ -28,7 +27,7 @@ import android.webkit.WebView;
  * Shows an about box, which is a small HTML page.
  */
 
-public class About extends Activity {
+public class About extends AnkiActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

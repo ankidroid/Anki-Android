@@ -14,7 +14,6 @@
 
 package com.ichi2.anki;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -39,7 +38,7 @@ import com.ichi2.themes.StyledProgressDialog;
 import com.ichi2.themes.Themes;
 import com.tomgibara.android.veecheck.util.PrefSettings;
 
-public class MyAccount extends Activity {
+public class MyAccount extends AnkiActivity {
 
     private View mLoginToMyAccountView;
     private View mLoggedIntoMyAccountView;
@@ -160,7 +159,7 @@ public class MyAccount extends Activity {
 
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(getResources().getString(
+                startActivityWithoutAnimation(new Intent(Intent.ACTION_VIEW, Uri.parse(getResources().getString(
                         R.string.ankionline_sign_up_url))));
             }
 
@@ -253,10 +252,7 @@ public class MyAccount extends Activity {
                 Intent i = MyAccount.this.getIntent();
                 if (i.hasExtra("notLoggedIn") && i.getExtras().getBoolean("notLoggedIn", false)) {
                 	MyAccount.this.setResult(RESULT_OK, i);
-                	finish();
-			        if (StudyOptions.getApiLevel() > 4) {
-			            ActivityTransitionAnimation.slide(MyAccount.this, ActivityTransitionAnimation.RIGHT);
-			        }
+                	finishWithAnimation(ActivityTransitionAnimation.RIGHT);
                 } else {
                     // Show logged view
                     mUsernameLoggedIn.setText((String) data.data[0]);

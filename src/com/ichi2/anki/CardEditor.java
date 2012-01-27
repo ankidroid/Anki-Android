@@ -14,7 +14,6 @@
 
 package com.ichi2.anki;
 
-import android.app.Activity;
 import android.app.Dialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -86,7 +85,7 @@ import org.amr.arabic.ArabicUtilities;
  * 
  * @see http://ichi2.net/anki/wiki/KeyTermsAndConcepts#Cards
  */
-public class CardEditor extends Activity {
+public class CardEditor extends AnkiActivity {
 
 	public static final String SOURCE_LANGUAGE = "SOURCE_LANGUAGE";
 	public static final String TARGET_LANGUAGE = "TARGET_LANGUAGE";
@@ -302,13 +301,13 @@ public class CardEditor extends Activity {
 		switch (mCaller) {
 		case CALLER_NOCALLER:
 			Log.i(AnkiDroidApp.TAG, "CardEditor: no caller could be identified, closing");
-			finish();
+			finishWithoutAnimation();
 			return;
 
 		case CALLER_REVIEWER:
 			Card revCard = Reviewer.getEditorCard();
 			if (revCard == null) {
-				finish();
+				finishWithoutAnimation();
 				return;
 			}
 			mEditorFact = revCard.getFact();
@@ -322,7 +321,7 @@ public class CardEditor extends Activity {
 		case CALLER_BIGWIDGET_EDIT:
 			Card widgetCard = AnkiDroidWidgetBig.getCard();
 			if (widgetCard == null) {
-				finish();
+				finishWithoutAnimation();
 				return;
 			}
 			mEditorFact = widgetCard.getFact();
@@ -336,7 +335,7 @@ public class CardEditor extends Activity {
 		case CALLER_CARDBROWSER_EDIT:
 			Card browCard = CardBrowser.getEditorCard();
 			if (browCard == null) {
-				finish();
+				finishWithoutAnimation();
 				return;
 			}
 			mEditorFact = browCard.getFact();
@@ -376,11 +375,11 @@ public class CardEditor extends Activity {
 				mTargetText = cleanMessages.second;
 			}
 			if (mSourceText == null && mTargetText == null) {
-				finish();
+				finishWithoutAnimation();
 				return;
 			}
 			if (mSourceText.equals("Aedict Notepad") && addFromAedict(mTargetText)) {
-		          finish();
+		          finishWithoutAnimation();
 		          return;
 		        }
 			prepareForIntentAddition(); 
@@ -392,7 +391,7 @@ public class CardEditor extends Activity {
 			mDeckPath = intent.getStringExtra(EXTRA_DECKPATH);
 			mDeck = DeckManager.getDeck(mDeckPath, DeckManager.REQUESTING_ACTIVITY_CARDEDITOR, false);
 			if (mDeck == null) {
-				finish();
+				finishWithoutAnimation();
 				return;
 			}
 		}
@@ -653,11 +652,7 @@ public class CardEditor extends Activity {
 				}
 				intent.putExtra(EXTRA_CONTENTS, contents.toString());
 			}
-			startActivityForResult(intent, REQUEST_ADD);
-			if (Integer.valueOf(android.os.Build.VERSION.SDK) > 4) {
-				ActivityTransitionAnimation.slide(CardEditor.this,
-						ActivityTransitionAnimation.LEFT);
-			}
+			startActivityForResultWithAnimation(intent, REQUEST_ADD, ActivityTransitionAnimation.LEFT);
 			return true;
 
 		case MENU_RESET:
@@ -757,27 +752,17 @@ public class CardEditor extends Activity {
 
 	private void finishNoStorageAvailable() {
 		setResult(StudyOptions.CONTENT_NO_EXTERNAL_STORAGE);
-		finish();
+		finishWithoutAnimation();
 	}
 
 	private void closeCardEditor() {
 		DeckManager.closeDeck(mDeck.getDeckPath(), DeckManager.REQUESTING_ACTIVITY_CARDEDITOR);
-		finish();
 		if (mCaller == CALLER_CARDEDITOR_INTENT_ADD || mCaller == CALLER_BIGWIDGET_EDIT || mCaller == CALLER_BIGWIDGET_ADD) {
-			if (Integer.valueOf(android.os.Build.VERSION.SDK) > 4) { 
-				ActivityTransitionAnimation.slide(CardEditor.this,
-						ActivityTransitionAnimation.FADE);
-			}
+			finishWithAnimation(ActivityTransitionAnimation.FADE);
 		} else if (mCaller == CALLER_INDICLASH) {
-			if (Integer.valueOf(android.os.Build.VERSION.SDK) > 4) {
-				ActivityTransitionAnimation.slide(CardEditor.this,
-						ActivityTransitionAnimation.NONE);
-			}
+			finishWithAnimation(ActivityTransitionAnimation.NONE);
 		} else {
-			if (Integer.valueOf(android.os.Build.VERSION.SDK) > 4) {
-				ActivityTransitionAnimation.slide(CardEditor.this,
-						ActivityTransitionAnimation.RIGHT);
-			}
+			finishWithAnimation(ActivityTransitionAnimation.RIGHT);
 		}
 	}
 
@@ -937,11 +922,7 @@ public class CardEditor extends Activity {
             @Override
             public void onDismiss(DialogInterface arg0) {
                 if (mCancelled == true) {
-                    finish();
-                    if (Integer.valueOf(android.os.Build.VERSION.SDK) > 4) {
-                        ActivityTransitionAnimation.slide(CardEditor.this,
-                                ActivityTransitionAnimation.FADE);
-                    }           
+                    finishWithAnimation(ActivityTransitionAnimation.FADE);
                 } else if (mDeck == null) {
                     showDialog(DIALOG_DECK_SELECT);
                 }
@@ -952,7 +933,7 @@ public class CardEditor extends Activity {
             public void onClick(View v) {
                 MetaDB.saveIntentInformation(CardEditor.this, mSourceText, mTargetText);
                 mCancelled = true;
-                finish();
+                finishWithoutAnimation();
             }               
         });
         return dialog;
@@ -1019,11 +1000,7 @@ public class CardEditor extends Activity {
                     .append(map.get("target"));
                 intent.putExtra(EXTRA_CONTENTS, contents.toString());
                 intent.putExtra(EXTRA_ID, map.get("id"));
-                startActivityForResult(intent, REQUEST_INTENT_ADD);
-                if (Integer.valueOf(android.os.Build.VERSION.SDK) > 4) {
-                    ActivityTransitionAnimation.slide(CardEditor.this,
-                            ActivityTransitionAnimation.FADE);
-                }
+                startActivityForResultWithAnimation(intent, REQUEST_INTENT_ADD, ActivityTransitionAnimation.FADE);
                 mIntentInformationDialog.dismiss();
             }
         });
@@ -1371,14 +1348,12 @@ public class CardEditor extends Activity {
 					if (visibility == View.VISIBLE) {
 						mFilledFields--;
 						mCircle.setVisibility(View.GONE);
-						mCircle.setAnimation(ViewAnimation.fade(
-								ViewAnimation.FADE_OUT, 300, 0));
+						enableViewAnimation(mCircle, ViewAnimation.fade(ViewAnimation.FADE_OUT, 300, 0));
 					}
 				} else if (visibility == View.GONE) {
 					mFilledFields++;
 					mCircle.setVisibility(View.VISIBLE);
-					mCircle.setAnimation(ViewAnimation.fade(
-							ViewAnimation.FADE_IN, 300, 0));
+					enableViewAnimation(mCircle, ViewAnimation.fade(ViewAnimation.FADE_IN, 300, 0));
 				}
 				mSave.setEnabled(mFilledFields != 0 && (!mPrefFixArabic || mAddFact));
 			}

@@ -17,12 +17,12 @@
 
 package com.ichi2.widget;
 
+import com.ichi2.anki.AnkiActivity;
 import com.ichi2.anki.DeckManager;
 import com.ichi2.anki.R;
 import com.ichi2.themes.StyledDialog;
 import com.ichi2.themes.Themes;
 
-import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
 import android.content.DialogInterface.OnDismissListener;
@@ -30,7 +30,7 @@ import android.content.res.Resources;
 import android.content.Intent;
 import android.os.Bundle;
 
-public class WidgetDialog extends Activity {
+public class WidgetDialog extends AnkiActivity {
 
 	public static final String ACTION_SHOW_DECK_SELECTION_DIALOG = "org.ichi2.WidgetDialog.SHOWDECKSELECTIONDIALOG";
 	public static final String ACTION_SHOW_RESTRICTIONS_DIALOG = "org.ichi2.WidgetDialog.SHOWRESTRICTIONSDIALOG";
@@ -57,7 +57,7 @@ public class WidgetDialog extends Activity {
 
 						@Override
 						public void onDismiss(DialogInterface arg0) {
-		            		WidgetDialog.this.finish();
+		            		WidgetDialog.this.finishWithoutAnimation();
 						}
     					
     				}).show();
@@ -70,7 +70,7 @@ public class WidgetDialog extends Activity {
 
     						@Override
     						public void onDismiss(DialogInterface arg0) {
-    							WidgetDialog.this.finish();
+    							WidgetDialog.this.finishWithoutAnimation();
     						}
     					}).setPositiveButton(res.getString(R.string.ok), null);
 					builder.show();
