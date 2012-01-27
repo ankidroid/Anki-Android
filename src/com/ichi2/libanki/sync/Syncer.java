@@ -155,11 +155,14 @@ public class Syncer {
 	    	}
 	    	// step 5: sanity check during beta testing
 	    	JSONArray c = sanityCheck();
+	    	if (c == null) {
+	    		return new Object[]{"error", 200, "sanity check error on local"};	    		
+	    	}
 	    	JSONArray s = mServer.sanityCheck();
 	    	if (s.getString(0).equals("error")) {
 	    		return new Object[]{"error", 200, "sanity check error on server"};
 	    	}
-		boolean error = false;
+	    	boolean error = false;
 	    	for (int i = 0; i < s.getJSONArray(0).length(); i++) {
 	    		if (c.getJSONArray(0).getLong(i) != s.getJSONArray(0).getLong(i)) {
 	    			error = true;
@@ -171,7 +174,7 @@ public class Syncer {
 	    		}
 	    	}
 		if (error) {
-	    			return new Object[]{"error", 200, "sanity check failed:\nl: " + c.toString() + "\nr: " + l.toString()};
+			return new Object[]{"error", 200, "sanity check failed:\nlocal: " + c.toString() + "\nremote: " + s.toString()};
 		}
 		} catch (JSONException e) {
 			throw new RuntimeException(e);
@@ -603,10 +606,7 @@ public class Syncer {
     				ArrayList<String> tag = new ArrayList<String>();
 					tag.add(t.getKey());
 					mCol.getTags().register(tag, mMaxUsn);
-					JSONArray ta = new JSONArray();
-					ta.put(t.getKey());
-					ta.put(t.getValue());
-					result.put(ta);
+					result.put(t.getKey());
 				}
 			}
 			mCol.getTags().save();
