@@ -513,7 +513,7 @@ public class Models {
 	    	for (int i = 0; i < templates.length(); i++) {
 	    		JSONObject t = templates.getJSONObject(i);
 	    		Object[] ret = _reqForTemplate(m, flds, t);
-	    		if ((Boolean) ret[2]) {
+	    		if (((JSONArray)ret[2]).length() > 0) {
 	    			cloze = true;
 	    		}
 	    		JSONArray r = new JSONArray();
@@ -531,8 +531,63 @@ public class Models {
     }
 
     private Object[] _reqForTemplate(JSONObject m, ArrayList<String> flds, JSONObject t) {
-    	// TODO
-    	return null;
+		try {
+	    	ArrayList<String> a = new ArrayList<String> ();
+	    	ArrayList<String> b = new ArrayList<String> ();
+	    	String cloze = "";
+	    	JSONArray reqstrs = new JSONArray();
+	    	if (t.has("cloze")) {
+	    		// need a cloze-specific filler
+	    		// TODO
+	    	}
+	    	for (String f : flds) {
+	    		a.add(cloze.length() > 0 ? cloze : "1");
+	    		b.add("");
+	    	}
+	    	Object[] data;
+			data = new Object[]{1l, 1l, m.getLong("id"), 1l, t.getInt("ord"), "", Utils.joinFields(a.toArray(new String[a.size()]))};
+	    	String full = mCol._renderQA(data).get("q");
+	    	data = new Object[]{1l, 1l, m.getLong("id"), 1l, t.getInt("ord"), "", Utils.joinFields(b.toArray(new String[b.size()]))};
+	    	String empty = mCol._renderQA(data).get("q");
+	    	// if full and empty are the same, the template is invalid and there is no way to satisfy it
+	    	if (full.equals(empty)) {
+	    		return new Object[] {"none", new JSONArray(), new JSONArray()};
+	    	}
+	    	String type = "all";
+	    	JSONArray req = new JSONArray();
+	    	ArrayList<String> tmp = new ArrayList<String>();
+	    	for (int i = 0; i < flds.size(); i++) {
+	    		tmp.clear();
+	    		tmp.addAll(a);
+	    		tmp.remove(i);
+	    		tmp.add(i, "");
+	    		data[6] = Utils.joinFields(tmp.toArray(new String[tmp.size()]));
+	    		// if the result is same as empty, field is required
+	    		if (mCol._renderQA(data).get("q").equals(empty)) {
+	    			req.put(i);
+	    		}
+	    	}
+	    	if (req.length() > 0) {
+	    		return new Object[] {type, req, reqstrs};
+	    	}
+	    	// if there are no required fields, switch to any mode
+	    	type = "any";
+	    	req = new JSONArray();
+	    	for (int i = 0; i < flds.size(); i++) {
+	    		tmp.clear();
+	    		tmp.addAll(b);
+	    		tmp.remove(i);
+	    		tmp.add(i, "1");
+	    		data[6] = Utils.joinFields(tmp.toArray(new String[tmp.size()]));
+	    		// if not the same as empty, this field can make the card non-blank
+	    		if (mCol._renderQA(data).get("q").equals(empty)) {
+	    			req.put(i);
+	    		}
+	    	}
+	    	return new Object[]{ type, req, reqstrs};
+		} catch (JSONException e) {
+			throw new RuntimeException(e);
+		}
     }
 
 
