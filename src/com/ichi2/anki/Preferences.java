@@ -56,7 +56,6 @@ import com.tomgibara.android.veecheck.util.PrefSettings;
  */
 public class Preferences extends PreferenceActivity implements OnSharedPreferenceChangeListener {
 
-	private static final int DIALOG_WAL = 0;
 	private static final int DIALOG_ASYNC = 1;
 	private static final int DIALOG_BACKUP = 2;
 	private static final int DIALOG_WRITE_ANSWERS = 4;
@@ -68,7 +67,6 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
     private CheckBoxPreference showAnswerCheckBoxPreference;
     private CheckBoxPreference swipeCheckboxPreference;
     private CheckBoxPreference animationsCheckboxPreference;
-    private CheckBoxPreference walModePreference;
     private CheckBoxPreference useBackupPreference;
     private CheckBoxPreference asyncModePreference;
     private ListPreference mLanguageSelection;
@@ -80,7 +78,6 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
     private TreeMap<String, String> mListsToUpdate = new TreeMap<String, String>();
     private StyledProgressDialog mProgressDialog;
     private boolean lockCheckAction = false;
-    private boolean walModeInitiallySet = false;
     private String dialogMessage;
 
     @Override
@@ -100,10 +97,8 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
         keepScreenOnCheckBoxPreference = (CheckBoxPreference) getPreferenceScreen().findPreference("keepScreenOn");
         showAnswerCheckBoxPreference = (CheckBoxPreference) getPreferenceScreen().findPreference("timeoutAnswer");
         animationsCheckboxPreference = (CheckBoxPreference) getPreferenceScreen().findPreference("themeAnimations");
-        walModePreference = (CheckBoxPreference) getPreferenceScreen().findPreference("walMode");
         useBackupPreference = (CheckBoxPreference) getPreferenceScreen().findPreference("useBackup");
         asyncModePreference = (CheckBoxPreference) getPreferenceScreen().findPreference("asyncMode");
-        walModeInitiallySet = mPrefMan.getSharedPreferences().getBoolean("walMode", false);
         ListPreference listpref = (ListPreference) getPreferenceScreen().findPreference("theme");
         animationsCheckboxPreference.setEnabled(listpref.getValue().equals("2"));
         zoomCheckboxPreference.setEnabled(!swipeCheckboxPreference.isChecked());
@@ -115,7 +110,6 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
         for (String key : mShowValueInSummSeek) {
             updateSeekBarPreference(key);
         }
-        enableWalSupport();
     }
 
 
@@ -162,29 +156,29 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
     }
 
 
-    private void enableWalSupport() {
-    	Cursor cursor = null;
-    	String sqliteVersion = "";
-    	SQLiteDatabase database = null;
-        try {
-        	database = SQLiteDatabase.openOrCreateDatabase(":memory:", null);
-        	cursor = database.rawQuery("select sqlite_version() AS sqlite_version", null);
-        	while(cursor.moveToNext()){
-        	   sqliteVersion = cursor.getString(0);
-        	}
-        } finally {
-        	database.close();
-            if (cursor != null) {
-            	cursor.close();
-            }
-        }
-        if (sqliteVersion.length() >= 3 && Double.parseDouble(sqliteVersion.subSequence(0, 3).toString()) >= 3.7) {
-        	walModePreference.setEnabled(true);
-        } else {
-        	Log.e(AnkiDroidApp.TAG, "WAL mode not available due to a SQLite version lower than 3.7.0");
-        	walModePreference.setChecked(false);
-        }
-    }
+//    private void enableWalSupport() {
+//    	Cursor cursor = null;
+//    	String sqliteVersion = "";
+//    	SQLiteDatabase database = null;
+//        try {
+//        	database = SQLiteDatabase.openOrCreateDatabase(":memory:", null);
+//        	cursor = database.rawQuery("select sqlite_version() AS sqlite_version", null);
+//        	while(cursor.moveToNext()){
+//        	   sqliteVersion = cursor.getString(0);
+//        	}
+//        } finally {
+//        	database.close();
+//            if (cursor != null) {
+//            	cursor.close();
+//            }
+//        }
+//        if (sqliteVersion.length() >= 3 && Double.parseDouble(sqliteVersion.subSequence(0, 3).toString()) >= 3.7) {
+//        	walModePreference.setEnabled(true);
+//        } else {
+//        	Log.e(AnkiDroidApp.TAG, "WAL mode not available due to a SQLite version lower than 3.7.0");
+//        	walModePreference.setChecked(false);
+//        }
+//    }
 
 
     private String replaceString(String str, String value) {
@@ -286,18 +280,6 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
                 updateSeekBarPreference(key);
             } else if (key.equals("writeAnswers") && sharedPreferences.getBoolean("writeAnswers", false)) {
                 showDialog(DIALOG_WRITE_ANSWERS);
-            } else if (key.equals("walMode") && !lockCheckAction) {
-            	lockCheckAction = true;
-            	if (sharedPreferences.getBoolean("walMode", false)) {
-            		showDialog(DIALOG_WAL);
-            	} else if (walModeInitiallySet) {
-            		walModeInitiallySet = false;
-            		dialogMessage = getResources().getString(R.string.wal_mode_set_message);
-            		// TODO: reactivate
-//                	DeckTask.launchDeckTask(DeckTask.TASK_TYPE_SET_ALL_DECKS_JOURNAL_MODE, mDeckOperationHandler, new DeckTask.TaskData(DeckManager.getMainDeck(), PrefSettings.getSharedPrefs(getBaseContext()).getString("deckPath", AnkiDroidApp.getStorageDirectory())));
-            	} else {
-            		lockCheckAction = false;        		
-            	}
             } else if (key.equals("useBackup")) {
             	if (lockCheckAction)  {
             		lockCheckAction = false;
@@ -373,28 +355,6 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
 		Resources res = getResources();
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         switch (id) {
-        case DIALOG_WAL:
-    		builder.setTitle(res.getString(R.string.wal_mode));
-    		builder.setCancelable(false);
-    		builder.setMessage(res.getString(R.string.wal_mode_message));
-    		builder.setPositiveButton(res.getString(R.string.yes), new OnClickListener() {
-
-    			@Override
-    			public void onClick(DialogInterface arg0, int arg1) {
-    				walModePreference.setChecked(true);
-    	        	lockCheckAction = false;
-    				setReloadDeck();
-    			}
-    		});
-    		builder.setNegativeButton(res.getString(R.string.no), new OnClickListener() {
-
-    			@Override
-    			public void onClick(DialogInterface arg0, int arg1) {
-    				walModePreference.setChecked(false);
-    				lockCheckAction = false;
-    			}
-    		});
-    		break;
         case DIALOG_BACKUP:
     		builder.setTitle(res.getString(R.string.backup_manager_title));
     		builder.setCancelable(false);

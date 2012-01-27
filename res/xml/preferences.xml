@@ -475,12 +475,6 @@
         </PreferenceCategory>
         <PreferenceCategory android:title="@string/pref_cat_experimental">
             <CheckBoxPreference
-                    android:title="@string/wal_mode"
-                    android:summary="@string/wal_mode_summ"
-                    android:defaultValue="false"
-                    android:enabled="false"
-                    android:key="walMode"/>
-            <CheckBoxPreference
                     android:title="@string/async_mode"
                     android:summary="@string/async_mode_summ"
                     android:defaultValue="false"
