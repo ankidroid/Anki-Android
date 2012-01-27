@@ -92,7 +92,7 @@ public class Tags {
     	// case is stored as received, so user can create different case
     	// versions of the same tag if they ignore the qt autocomplete.
     	for (String t : tags) {
-    		if (mTags.containsKey(t)) {
+    		if (!mTags.containsKey(t)) {
     			mTags.put(t, usn == 0 ? mCol.usn() : usn);
     			mChanged = true;
     		}
