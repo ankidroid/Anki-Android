@@ -160,6 +160,7 @@ public class CardEditor extends Activity {
 	private Button mSwapButton;
 
 	private Note mEditorNote;
+	private Card mCurrentEditedCard;
 	private ArrayList<String> mCurrentTags;
 	private long mCurrentDid;
 
@@ -316,12 +317,12 @@ public class CardEditor extends Activity {
 			return;
 
 		case CALLER_REVIEWER:
-			Card revCard = Reviewer.getEditorCard();
-			if (revCard == null) {
+			mCurrentEditedCard = Reviewer.getEditorCard();
+			if (mCurrentEditedCard == null) {
 				finish();
 				return;
 			}
-			mEditorNote = revCard.getNote();
+			mEditorNote = mCurrentEditedCard.getNote();
 			mAddNote = false;
 			break;
 
@@ -489,11 +490,11 @@ public class CardEditor extends Activity {
 					// removed tag?
 					modified = modified || mEditorNote.getTags().size() > mCurrentTags.size();
 					// changed did?
-					modified = modified || mEditorNote.getDid() != mCurrentDid;
+					modified = modified || (mAddNote ? mEditorNote.getDid() : mCurrentEditedCard.getDid()) != mCurrentDid;
 					if (modified) {
 						mEditorNote.setTags(mCurrentTags);
 						// set did for card
-						Reviewer.getEditorCard().setDid(mCurrentDid);
+						mCurrentEditedCard.setDid(mCurrentDid);
 						closeCardEditor(RESULT_OK);
 					} else {
 						closeCardEditor(RESULT_CANCELED);
@@ -1209,9 +1210,6 @@ public class CardEditor extends Activity {
 		for (int i = 0; i < mEditFields.size(); i++) {
 			if (i < len) {
 				mEditFields.get(i).setText(fields[i]);
-				if (fields[i].length() > 0) {
-					mSave.setEnabled(true);
-				}
 			} else {
 				mEditFields.get(i).setText("");
 			}
@@ -1261,14 +1259,15 @@ public class CardEditor extends Activity {
 				for (int i = 0; i < tags.length(); i++) {
 					mEditorNote.addTag(tags.getString(i));
 				}
+				mCurrentDid = mEditorNote.getDid();
 			} else {
 				mEditorNote = note;
+				mCurrentDid = mCurrentEditedCard.getDid();
 			}
 		} catch (JSONException e) {
 			throw new RuntimeException(e);
 		}
 		mCurrentTags = mEditorNote.getTags();
-		mCurrentDid = mEditorNote.getDid();
 		updateDeck();
 		updateTags();
 		populateEditFields();
@@ -1370,8 +1369,6 @@ public class CardEditor extends Activity {
 					mCircle.setAnimation(ViewAnimation.fade(
 							ViewAnimation.FADE_IN, 300, 0));
 				}
-				mSave.setEnabled(mFilledFields != 0
-						&& (!mPrefFixArabic || mAddNote));
 			}
 		}
 

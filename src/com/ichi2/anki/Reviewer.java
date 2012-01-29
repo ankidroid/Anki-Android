@@ -688,6 +688,8 @@ public class Reviewer extends Activity implements IButtonListener{
 //    };
 
     private DeckTask.TaskListener mUpdateCardHandler = new DeckTask.TaskListener() {
+    	private boolean mNoMoreCards;
+    	
         @Override
         public void onPreExecute() {
         	Resources res = getResources();
@@ -702,6 +704,13 @@ public class Reviewer extends Activity implements IButtonListener{
         @Override
         public void onProgressUpdate(DeckTask.TaskData... values) {
             mCurrentCard = values[0].getCard();
+        	if (mCurrentCard == null) {
+                // If the card is null means that there are no more cards scheduled for review.
+        		mNoMoreCards = true;
+        		mProgressDialog = StyledProgressDialog.show(Reviewer.this, "", getResources()
+                      .getString(R.string.saving_changes), true);
+        		setOutAnimation(false);
+        	}
             if (mPrefWhiteboard) {
                 mWhiteboard.clear();
             }
@@ -732,6 +741,10 @@ public class Reviewer extends Activity implements IButtonListener{
             	// RuntimeException occured on update cards
                 closeReviewer(RESULT_ANSWERING_ERROR, true);
                 return;
+            }
+            if (mNoMoreCards) {
+                mShowCongrats = true;
+                closeReviewer(RESULT_NO_MORE_CARDS, true);
             }
             mShakeActionStarted = false;
 //            String str = result.getString();
