@@ -132,7 +132,7 @@ public class AnkiActivity extends Activity {
 		if (animationDisabled()) {
 			disableActivityAnimation();
 		} else {
-			if (Integer.valueOf(android.os.Build.VERSION.SDK) > 4) {
+			if (AnkiDroidApp.isEclairOrLater()) {
             	ActivityTransitionAnimation.slide(this, animation);
 			}
 		}

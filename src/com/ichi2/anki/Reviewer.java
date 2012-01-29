@@ -772,11 +772,11 @@ public class Reviewer extends AnkiActivity implements IButtonListener{
                     Log.e(AnkiDroidApp.TAG, "onPostExecute - Dialog dismiss Exception = " + e.getMessage());
                 }
             }
-        	if (mShowCongrats) {
+            if (mShowCongrats) {
             	finishWithAnimation(ActivityTransitionAnimation.FADE);
-       		} else {
+            } else {
             	finishWithAnimation(ActivityTransitionAnimation.RIGHT);
-       		}
+            }
         }
         @Override
         public void onProgressUpdate(DeckTask.TaskData... values) {
@@ -876,7 +876,7 @@ public class Reviewer extends AnkiActivity implements IButtonListener{
                 getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                         WindowManager.LayoutParams.FLAG_FULLSCREEN);
                 // Do not hide the title bar in Honeycomb, since it contains the action bar.
-                if (Integer.valueOf(android.os.Build.VERSION.SDK) < 11) {
+                if (!AnkiDroidApp.isHoneycombOrLater()) {
                     requestWindowFeature(Window.FEATURE_NO_TITLE);
                 }
             }
@@ -915,7 +915,7 @@ public class Reviewer extends AnkiActivity implements IButtonListener{
             mSessionCurrReps = 0;
 
             // Initialize text-to-speech. This is an asynchronous operation.
-            if (mSpeakText && Integer.valueOf(android.os.Build.VERSION.SDK) > 3) {
+            if (mSpeakText && AnkiDroidApp.isDonutOrLater()) {
             	ReadText.initializeTts(this, mDeckFilename);
             }
 
@@ -1022,7 +1022,7 @@ public class Reviewer extends AnkiActivity implements IButtonListener{
         if (mUnmountReceiver != null) {
             unregisterReceiver(mUnmountReceiver);
         }
-        if (mSpeakText && Integer.valueOf(android.os.Build.VERSION.SDK) > 3) {
+        if (mSpeakText && AnkiDroidApp.isDonutOrLater()) {
             ReadText.releaseTts();        	
         }
     }
@@ -1586,7 +1586,7 @@ public class Reviewer extends AnkiActivity implements IButtonListener{
         }
 
         // hunt for input issue 720, like android issue 3341
-        if (Integer.parseInt(android.os.Build.VERSION.SDK) < 8 && !mSimpleInterface) {
+        if (!AnkiDroidApp.isFroyoOrLater() && !mSimpleInterface) {
             mCard.setFocusableInTouchMode(true);
         }
         
@@ -1718,7 +1718,7 @@ public class Reviewer extends AnkiActivity implements IButtonListener{
         webView.getSettings().setJavaScriptEnabled(true);
         webView.setWebChromeClient(new AnkiDroidWebChromeClient());
         webView.addJavascriptInterface(new JavaScriptInterface(), "interface");
-        if (Integer.parseInt(android.os.Build.VERSION.SDK) > 7) {
+        if (AnkiDroidApp.isFroyoOrLater()) {
             webView.setFocusableInTouchMode(false);
         }
         Log.i(AnkiDroidApp.TAG, "Focusable = " + webView.isFocusable() + ", Focusable in touch mode = " + webView.isFocusableInTouchMode());
@@ -2201,7 +2201,7 @@ public class Reviewer extends AnkiActivity implements IButtonListener{
                 displayString = displayString + "<hr/>";
             }
 
-            if (mSpeakText && Integer.valueOf(android.os.Build.VERSION.SDK) > 3) {
+            if (mSpeakText && AnkiDroidApp.isDonutOrLater()) {
                 ReadText.setLanguageInformation(Model.getModel(DeckManager.getMainDeck(), mCurrentCard.getCardModelId(), false).getId(), mCurrentCard.getCardModelId());          
             }
         }
@@ -2474,7 +2474,7 @@ public class Reviewer extends AnkiActivity implements IButtonListener{
 	            mNextCard.setVisibility(View.GONE);
 	            mCardFrame.addView(mNextCard, 0);
 	            // hunt for input issue 720, like android issue 3341
-	            if (Integer.parseInt(android.os.Build.VERSION.SDK) < 8) {
+	            if (!AnkiDroidApp.isFroyoOrLater()) {
 	            	mCard.setFocusableInTouchMode(true);
 	            }
 	        } else {
