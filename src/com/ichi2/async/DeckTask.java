@@ -297,7 +297,7 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
 	        try {
 	        	// TODO: undo integration
 	        	editNote.flush();
-	        	// flush card too, if did has been changed
+	        	// flush card too, in case, did has been changed
 	        	editCard.flush();
 	        	Card newCard;
 	        	if (col.getDecks().active().contains(editCard.getDid())) {

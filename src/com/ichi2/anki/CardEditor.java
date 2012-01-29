@@ -1277,7 +1277,7 @@ public class CardEditor extends Activity {
 
 	private void updateDeck() {
 		try {
-			mDeckButton.setText(getResources().getString(R.string.CardEditorDeck, mCol.getDecks().get(mCurrentDid).getString("name")));
+			mDeckButton.setText(getResources().getString(mAddNote ? R.string.CardEditorNoteDeck : R.string.CardEditorCardDeck, mCol.getDecks().get(mCurrentDid).getString("name")));
 		} catch (NotFoundException e) {
 			throw new RuntimeException(e);
 		} catch (JSONException e) {
