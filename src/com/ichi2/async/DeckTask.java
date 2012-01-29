@@ -775,15 +775,11 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
         	int len = Math.min(questions.length, answers.length);
         	for (int i = 0; i < len + Math.min(sampleQuestions.length, sampleAnswers.length); i++) {
         		Note note = col.newNote();
-        		int fidx = 0;
-        		for (String f : note.values()) {
-        			if (fidx == 0) {
-        				f = (i < len) ? questions[i] : sampleQuestions[i - len];
-        			} else if (fidx == 1) {
-        				f = (i < len) ? answers[i] : sampleAnswers[i - len];
-        			}
-        			fidx++;
+        		if (note.values().length < 2) {
+        			return new TaskData(false);
         		}
+        		note.values()[0] = (i < len) ? questions[i] : sampleQuestions[i - len];
+        		note.values()[1] = (i < len) ? answers[i] : sampleAnswers[i - len];
         		note.setDid(did);
         		col.addNote(note);
         	}
@@ -794,6 +790,7 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
         		return new TaskData(false);
         	} else {
             	col.save();
+            	col.getDecks().select(did);
             	col.getDb().getDatabase().setTransactionSuccessful();
         		return new TaskData(true);
         	}
