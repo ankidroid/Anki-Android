@@ -1043,8 +1043,7 @@ public class Utils {
     /** Returns a list of files for the installed custom fonts. */
     public static String[] getCustomFonts(Context context) {
         SharedPreferences preferences = PrefSettings.getSharedPrefs(context);
-        String deckPath = preferences.getString("deckPath",
-                AnkiDroidApp.getStorageDirectory() + "/AnkiDroid");
+        String deckPath = preferences.getString("deckPath", AnkiDroidApp.getDefaultAnkiDroidDirectory());
         String fontsPath = deckPath + "/fonts/";
         File fontsDir = new File(fontsPath);
         int fontsCount = 0;

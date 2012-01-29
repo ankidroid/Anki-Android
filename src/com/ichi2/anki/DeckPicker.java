@@ -976,7 +976,8 @@ public class DeckPicker extends Activity {
 		mDeckListView.setAdapter(mDeckListAdapter);
 		registerForContextMenu(mDeckListView);
 
-		DeckTask.launchDeckTask(DeckTask.TASK_TYPE_OPEN_COLLECTION, mOpenCollectionHandler, null);
+		String deckPath = preferences.getString("deckPath", AnkiDroidApp.getDefaultAnkiDroidDirectory());
+		DeckTask.launchDeckTask(DeckTask.TASK_TYPE_OPEN_COLLECTION, mOpenCollectionHandler, new DeckTask.TaskData(deckPath + "/collection.anki2"));
 		
 		if (mSwipeEnabled) {
 			gestureDetector = new GestureDetector(new MyGestureDetector());
@@ -1005,7 +1006,7 @@ public class DeckPicker extends Activity {
 
 	private SharedPreferences restorePreferences() {
         SharedPreferences preferences = PrefSettings.getSharedPrefs(getBaseContext());
-        mPrefDeckPath = preferences.getString("deckPath", AnkiDroidApp.getStorageDirectory());
+        mPrefDeckPath = preferences.getString("deckPath", AnkiDroidApp.getDefaultAnkiDroidDirectory());
         mLastTimeOpened = preferences.getLong("lastTimeOpened", 0);
 //        mStartupMode = Integer.parseInt(preferences.getString("startup_mode",
 //                Integer.toString(SUM_DECKPICKER_ON_FIRST_START)));
@@ -1723,17 +1724,13 @@ public class DeckPicker extends Activity {
 					String action = intent.getAction();
 					if (action.equals(Intent.ACTION_MEDIA_UNMOUNTED)) {
 						Log.i(AnkiDroidApp.TAG, "DeckPicker - mUnmountReceiver, Action = Media Unmounted");
-						SharedPreferences preferences = PrefSettings
-								.getSharedPrefs(getBaseContext());
-						String deckPath = preferences.getString("deckPath",
-								AnkiDroidApp.getStorageDirectory());
+//						SharedPreferences preferences = PrefSettings .getSharedPrefs(getBaseContext());
+//						String deckPath = preferences.getString("deckPath", AnkiDroidApp.getStorageDirectory());
 //						populateDeckList(deckPath);
 					} else if (action.equals(Intent.ACTION_MEDIA_MOUNTED)) {
 						Log.i(AnkiDroidApp.TAG, "DeckPicker - mUnmountReceiver, Action = Media Mounted");
-						SharedPreferences preferences = PrefSettings
-								.getSharedPrefs(getBaseContext());
-						String deckPath = preferences.getString("deckPath",
-								AnkiDroidApp.getStorageDirectory());
+//						SharedPreferences preferences = PrefSettings.getSharedPrefs(getBaseContext());
+//						String deckPath = preferences.getString("deckPath", AnkiDroidApp.getStorageDirectory());
 						mDeckIsSelected = false;
 						setTitleText();
 //						populateDeckList(deckPath);

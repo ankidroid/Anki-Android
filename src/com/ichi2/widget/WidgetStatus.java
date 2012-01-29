@@ -157,8 +157,7 @@ public final class WidgetStatus {
             		}
             } else {
                 SharedPreferences preferences = PrefSettings.getSharedPrefs(context);
-                String deckPath = preferences.getString("deckPath",
-                        AnkiDroidApp.getStorageDirectory() + "/AnkiDroid");
+                String deckPath = preferences.getString("deckPath", AnkiDroidApp.getDefaultAnkiDroidDirectory());
 
                 File dir = new File(deckPath);
 

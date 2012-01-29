@@ -49,6 +49,7 @@ import com.ichi2.libanki.Utils;
 import com.tomgibara.android.veecheck.util.PrefSettings;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.database.sqlite.SQLiteDiskIOException;
 import android.os.AsyncTask;
@@ -383,7 +384,7 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
 
 
     private TaskData doInBackgroundOpenCollection(TaskData... params) {
-//        String deckFilename = params[0].getString();
+        String collectionFile = params[0].getString();
 //        int requestingActivity = params[0].getInt();
 
 //        Log.i(AnkiDroidApp.TAG, "doInBackgroundLoadDeck - deckFilename = " + deckFilename + ", requesting activity = " + requestingActivity);
@@ -406,7 +407,7 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
 
     	// load deck and set it as main deck
     	publishProgress(new TaskData(res.getString(R.string.loading_deck)));
-    	Collection col = Collection.openCollection("/emmc/AnkiDroid/collection.anki2");
+        Collection col = Collection.openCollection(collectionFile);
 //        Decks deck = DeckManager.getDeck(deckFilename, requestingActivity == DeckManager.REQUESTING_ACTIVITY_STUDYOPTIONS, requestingActivity);
 //        if (deck == null) {
 //            Log.i(AnkiDroidApp.TAG, "The database " + deckFilename + " could not be opened");

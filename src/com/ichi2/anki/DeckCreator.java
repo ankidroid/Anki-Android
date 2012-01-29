@@ -66,7 +66,7 @@ public class DeckCreator extends Activity {
 
         // Get decks path
         SharedPreferences preferences = PrefSettings.getSharedPrefs(getBaseContext());
-        mPrefDeckPath = preferences.getString("deckPath", AnkiDroidApp.getStorageDirectory());
+        mPrefDeckPath = preferences.getString("deckPath", AnkiDroidApp.getDefaultAnkiDroidDirectory());
         
         View mainView = getLayoutInflater().inflate(R.layout.deck_creator, null);
         setContentView(mainView);
