@@ -93,21 +93,21 @@ public class Collection {
 
 	public static synchronized Collection openCollection(String path) {
 		AnkiDb ankiDB = AnkiDatabaseManager.getDatabase(path);
-		sCurrentCollection = new Collection(ankiDB);
-		sCurrentCollection.mPath = path;
+		sCurrentCollection = new Collection(ankiDB, path);
 		return sCurrentCollection;
 	}
 
-	public Collection(AnkiDb db) {
-		this(db, false);
+	public Collection(AnkiDb db, String path) {
+		this(db, path, false);
 	}
 
-	public Collection(AnkiDb db, boolean server) {
+	public Collection(AnkiDb db, String path, boolean server) {
 		mDb = db;
 		mServer = server;
 		mLastSave = Utils.now();
 		clearUndo();
-		// mMedia = new Media(this);
+		mPath = path;
+		mMedia = new Media(this);
 		mModels = new Models(this);
 		mDecks = new Decks(this);
 		mTags = new Tags(this);
@@ -1018,6 +1018,10 @@ public class Collection {
 		return mDecks;
 	}
 
+	public Media getMedia() {
+	    return mMedia;
+	}
+	
 	public Models getModels() {
 		return mModels;
 	}

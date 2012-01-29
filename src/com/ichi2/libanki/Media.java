@@ -38,11 +38,35 @@ import com.ichi2.anki.AnkiDroidApp;
 public class Media {
 //    // TODO: Javadoc.
 //
-//    private static final Pattern mMediaRegexps[] = {
-//        Pattern.compile("(?i)(\\[sound:([^]]+)\\])"),
-//        Pattern.compile("(?i)(<img[^>]+src=[\"']?([^\"'>]+)[\"']?[^>]*>)")
-//    };
-//    private static final Pattern regPattern = Pattern.compile("\\((\\d+)\\)$");
+    private static final Pattern mMediaRegexps[] = {
+        Pattern.compile("(?i)(\\[sound:([^]]+)\\])"),
+        Pattern.compile("(?i)(<img[^>]+src=[\"']?([^\"'>]+)[\"']?[^>]*>)")
+    };
+    
+    private String mDir;
+    
+    public Media(Collection col) {
+        mDir = col.getPath().replaceFirst("\\.anki2$", ".media");
+        File fd = new File(mDir);
+        if (!fd.exists()) {
+            if (fd.mkdir()) {
+                Log.e(AnkiDroidApp.TAG, "Cannot create media directory: " + mDir);
+            }
+        }
+        
+        connect();
+    }
+
+    private void connect() {
+        String path = mDir + ".db";
+        // TODO: media db methods
+    }
+    
+    public String getDir() {
+        return mDir;
+    }
+
+    //    private static final Pattern regPattern = Pattern.compile("\\((\\d+)\\)$");
 //
 //    // File Handling
 //    // *************

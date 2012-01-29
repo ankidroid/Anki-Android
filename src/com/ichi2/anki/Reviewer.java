@@ -261,7 +261,7 @@ public class Reviewer extends Activity implements IButtonListener{
     private boolean mZoomEnabled;    
 //    private boolean mZeemoteEnabled;    
     private boolean mPrefUseRubySupport; // Parse for ruby annotations
-    private String mDeckFilename;
+    private String mCollectionFilename;
     private int mRelativeButtonSize;
     private boolean mDoubleScrolling;
     private boolean mScrollingButtons;
@@ -993,7 +993,8 @@ public class Reviewer extends Activity implements IButtonListener{
 			return;
         } else {
             mSched = col.getSched();
-//            mMediaDir = setupMedia(deck);
+            mCollectionFilename = col.getPath();
+            mBaseUrl = Utils.getBaseUrl(col.getMedia().getDir());
             restorePreferences();
 
             // TODO: reset undo?
@@ -1023,7 +1024,7 @@ public class Reviewer extends Activity implements IButtonListener{
             initLayout(R.layout.flashcard);
             if (mPrefTextSelection) {
                 clipboardSetText("");
-                Lookup.initialize(this, mDeckFilename);
+                Lookup.initialize(this, mCollectionFilename);
             }
 
             // Load the template for the card and set on it the available width for images
@@ -1043,11 +1044,11 @@ public class Reviewer extends Activity implements IButtonListener{
 
             // Initialize text-to-speech. This is an asynchronous operation.
             if (mSpeakText && Integer.valueOf(android.os.Build.VERSION.SDK) > 3) {
-                ReadText.initializeTts(this, mDeckFilename);
+                ReadText.initializeTts(this, mCollectionFilename);
             }
 
             // Get last whiteboard state
-            if (mPrefWhiteboard && MetaDB.getWhiteboardState(this, mDeckFilename) == 1) {
+            if (mPrefWhiteboard && MetaDB.getWhiteboardState(this, mCollectionFilename) == 1) {
                 mShowWhiteboard = true;
                 mWhiteboard.setVisibility(View.VISIBLE);
             }
@@ -1094,6 +1095,7 @@ public class Reviewer extends Activity implements IButtonListener{
     protected void onResume() {
     	mInBackground = false;
       super.onResume();
+      mCollectionFilename = Collection.currentCollection().getPath();
 //      Decks deck = DeckManager.getMainDeck();
 //      if (deck == null) {
 //    	  Log.e(AnkiDroidApp.TAG, "Reviewer: Deck already closed, returning to study options");
@@ -1396,12 +1398,12 @@ public class Reviewer extends Activity implements IButtonListener{
                     // Show whiteboard
                     mWhiteboard.setVisibility(View.VISIBLE);
                     item.setTitle(R.string.hide_whiteboard);
-                    MetaDB.storeWhiteboardState(this, mDeckFilename, 1);
+                    MetaDB.storeWhiteboardState(this, mCollectionFilename, 1);
                 } else {
                     // Hide whiteboard
                     mWhiteboard.setVisibility(View.GONE);
                     item.setTitle(R.string.show_whiteboard);
-                    MetaDB.storeWhiteboardState(this, mDeckFilename, 0);
+                    MetaDB.storeWhiteboardState(this, mCollectionFilename, 0);
                 }
                 return true;
 
@@ -2068,7 +2070,7 @@ public class Reviewer extends Activity implements IButtonListener{
         mPrefWriteAnswers = preferences.getBoolean("writeAnswers", false);
         mPrefTextSelection = preferences.getBoolean("textSelection", true);
         mLongClickWorkaround = preferences.getBoolean("textSelectionLongclickWorkaround", false);
-        mDeckFilename = preferences.getString("deckFilename", "");
+        //mDeckFilename = preferences.getString("deckFilename", "");
         mNightMode = preferences.getBoolean("invertedColors", false);
     	mInvertedColors = mNightMode;
         mBlackWhiteboard = preferences.getBoolean("blackWhiteboard", true);
@@ -2388,7 +2390,7 @@ public class Reviewer extends Activity implements IButtonListener{
 //        	return;
         }
 
-        mBaseUrl = "";
+        //mBaseUrl = Utils.getBaseUrl();
         Boolean isJapaneseModel = false;
         
         //Check whether there is a hard coded font-size in the content and apply the relative font size
@@ -2405,14 +2407,12 @@ public class Reviewer extends Activity implements IButtonListener{
 //			Log.e(AnkiDroidApp.TAG, "updateCard - no Model could be fetched. Closing Reviewer and showing db-error dialog");
 //	                closeReviewer(RESULT_ANSWERING_ERROR, true);			
 //		}
-            mBaseUrl = "";//Utils.getBaseUrl(mMediaDir, myModel, currentDeck);
             int nightBackground = Themes.getNightModeCardBackground(this);
 //            content = myModel.getCSSForFontColorSize(mCurrentCard.getCardModelId(), mDisplayFontSize, mNightMode, nightBackground) + Models.invertColors(content, mNightMode);
 //            isJapaneseModel = myModel.hasTag(japaneseModelTag);
 //            mCurrentBackgroundColor = myModel.getBackgroundColor(mCurrentCard.getCardModelId());
         } else {
         	mCard.getSettings().setDefaultFontSize(calculateDynamicFontSize(content));
-            mBaseUrl = Utils.urlEncodeMediaDir(mDeckFilename.replace(".anki", ".media/"));
         }
 
         // Log.i(AnkiDroidApp.TAG, "Initial content card = \n" + content);

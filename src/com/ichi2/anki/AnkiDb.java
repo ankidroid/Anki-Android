@@ -17,7 +17,7 @@
  * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
  ****************************************************************************************/
 
-package com.ichi2.anki;import com.ichi2.anki2.R;
+package com.ichi2.anki;
 
 import android.content.ContentValues;
 import android.database.Cursor;
@@ -25,10 +25,10 @@ import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
+import com.tomgibara.android.veecheck.util.PrefSettings;
+
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
-
-import com.tomgibara.android.veecheck.util.PrefSettings;
 
 /**
  * Database layer for AnkiDroid. Can read the native Anki format through Android's SQLite driver.
