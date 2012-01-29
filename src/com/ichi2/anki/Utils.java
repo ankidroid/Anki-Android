@@ -24,6 +24,7 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.net.Uri;
+import android.os.Build;
 import android.text.Html;
 import android.util.Log;
 import android.view.Menu;
@@ -32,6 +33,9 @@ import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 
+import com.ichi2.compat.Compat;
+import com.ichi2.compat.CompatV11;
+import com.ichi2.compat.CompatV3;
 import com.mindprod.common11.BigDate;
 import com.tomgibara.android.veecheck.util.PrefSettings;
 
@@ -1011,7 +1015,31 @@ public class Utils {
         }
     }
 
-    /** Returns the filename without the extension. */
+
+    /**
+     * Creates a {@link Compat} object adequate to the device version.
+     */
+    public static Compat createCompat() {
+        if (getApiLevel() >= 11) {
+            return new CompatV11();
+        } else {
+        	return new CompatV3();
+        }
+    }
+
+
+	/** Returns the API level of this device. */
+	public static int getApiLevel() {
+	    try {
+	        return Integer.parseInt(Build.VERSION.SDK);
+	    } catch (NumberFormatException e) {
+	        // If there is an error, return the minimum supported version.
+	        return 3;
+	    }
+	}
+
+
+	/** Returns the filename without the extension. */
     public static String removeExtension(String filename) {
       int dotPosition = filename.lastIndexOf('.');
       if (dotPosition == -1) {
