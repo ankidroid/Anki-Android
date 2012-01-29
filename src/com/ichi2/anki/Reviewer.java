@@ -710,6 +710,7 @@ public class Reviewer extends Activity implements IButtonListener{
         		mProgressDialog = StyledProgressDialog.show(Reviewer.this, "", getResources()
                       .getString(R.string.saving_changes), true);
         		setOutAnimation(false);
+        		return;
         	}
             if (mPrefWhiteboard) {
                 mWhiteboard.clear();
