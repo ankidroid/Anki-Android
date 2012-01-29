@@ -36,7 +36,6 @@ import android.database.sqlite.SQLiteException;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.preference.PreferenceManager;
 import android.text.InputFilter;
 import android.text.SpannableStringBuilder;
 import android.text.Spanned;
@@ -1477,9 +1476,7 @@ public class DeckPicker extends Activity implements Runnable, IButtonListener {
 				Log.i(AnkiDroidApp.TAG, "Thread run - Inside lock");
 
 				mIsFinished = false;
-				int i = 0;
 				for (File file : mFileList) {
-				    i++;
 					// Don't load any more decks if one has already been
 					// selected.
 					Log.i(AnkiDroidApp.TAG, "Thread run - Before break mDeckIsSelected = " + mDeckIsSelected);

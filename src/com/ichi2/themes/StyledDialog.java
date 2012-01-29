@@ -38,7 +38,6 @@ import android.widget.TextView;
 
 import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.R;
-import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
  

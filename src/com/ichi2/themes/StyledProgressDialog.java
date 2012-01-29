@@ -34,11 +34,8 @@ import com.ichi2.anki.R;
 
 public class StyledProgressDialog extends Dialog {
 
-	private Context mContext;
-
     public StyledProgressDialog(Context context) {
         super(context, R.style.StyledDialog);
-        mContext = context;
     }
 
 

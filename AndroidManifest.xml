@@ -23,8 +23,22 @@
 	android:versionName="1.1beta10"
 	android:versionCode="24"
 	android:installLocation="auto">
-    <instrumentation android:name="android.test.InstrumentationTestRunner" android:targetPackage="com.ichi2.anki"></instrumentation>
-	<application android:label="@string/app_name" android:icon="@drawable/anki" android:name="AnkiDroidApp" android:debuggable="true">
+	<uses-sdk  android:minSdkVersion="3" android:targetSdkVersion="11"/>
+	<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+	<uses-permission android:name="android.permission.VIBRATE" android:required="false" />
+	<uses-permission android:name="android.permission.INTERNET" android:required="false" />
+	<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" android:required="false" />
+	<uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" android:required="false" />
+	<uses-permission android:name="android.permission.BLUETOOTH" android:required="false" />
+	<uses-permission android:name="android.permission.BLUETOOTH_ADMIN" android:required="false" />
+	<instrumentation android:name="android.test.InstrumentationTestRunner" android:targetPackage="com.ichi2.anki"></instrumentation>
+	<supports-screens
+		android:resizeable="true"
+		android:largeScreens="true" 
+		android:normalScreens="true" 
+		android:smallScreens="true" 
+		android:anyDensity="true"/>
+		<application android:label="@string/app_name" android:icon="@drawable/anki" android:name="AnkiDroidApp" android:debuggable="true">
 		<activity android:name="StudyOptions"
 				android:configChanges="keyboardHidden|orientation|locale">
 			<intent-filter>
@@ -158,21 +172,5 @@
 		<service android:name="com.ichi2.widget.AnkiDroidWidgetBig$UpdateService" />
 
 		<service android:name="com.ichi2.widget.WidgetContentService" />
-
-</application>
-	<uses-sdk  android:minSdkVersion="3"
-		android:targetSdkVersion="11"/>
-	<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-	<uses-permission android:name="android.permission.VIBRATE" android:required="false" />
-	<uses-permission android:name="android.permission.INTERNET" android:required="false" />
-	<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" android:required="false" />
-	<uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" android:required="false" />
-	<uses-permission android:name="android.permission.BLUETOOTH" android:required="false" />
-	<uses-permission android:name="android.permission.BLUETOOTH_ADMIN" android:required="false" />
-	<supports-screens
-		android:resizeable="true"
-		android:largeScreens="true" 
-		android:normalScreens="true" 
-		android:smallScreens="true" 
-		android:anyDensity="true"/>
+	</application>
 </manifest>

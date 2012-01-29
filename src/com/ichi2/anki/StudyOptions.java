@@ -275,7 +275,6 @@ public class StudyOptions extends Activity implements IButtonListener {
 * UI elements for "Study Options" view
 */
     private View mStudyOptionsView;
-    private View mStudyOptionsMain;
     private Button mButtonStart;
     private ToggleButton mToggleCram;
     private ToggleButton mToggleLimit;
@@ -1013,8 +1012,6 @@ public class StudyOptions extends Activity implements IButtonListener {
         // The main study options view that will be used when there are reviews left.
         mStudyOptionsView = getLayoutInflater().inflate(R.layout.studyoptions, null);
         Themes.setContentStyle(mStudyOptionsView, Themes.CALLER_STUDYOPTIONS);
-
-        mStudyOptionsMain = (View) mStudyOptionsView.findViewById(R.id.studyoptions_main);
 
         mTextDeckName = (TextView) mStudyOptionsView.findViewById(R.id.studyoptions_deck_name);
         Themes.setTitleStyle(mTextDeckName);

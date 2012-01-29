@@ -914,7 +914,6 @@ public class DownloadManagerService extends Service {
 
         private static final int sRunningAvgLength = 5;
         private long[] mRecentBatchTimings;
-        private long mElapsedTime;
         private double mTotalBatches;
 
         @Override
@@ -957,7 +956,6 @@ public class DownloadManagerService extends Service {
                 int currentBatch = (int) (updatedCards / batchSize);
                 long runningAvgCount = 0;
                 long batchStart;
-                mElapsedTime = 0;
                 while (updatedCards < totalCards && download.getStatus() == SharedDeckDownload.STATUS_UPDATING) {
                     batchStart = System.currentTimeMillis();
                     updatedCards = deck.updateAllCardsFromPosition(updatedCards, batchSize);
@@ -997,7 +995,6 @@ public class DownloadManagerService extends Service {
             double avgBatchTime = 0.0;
             avgBatchTime = 0;
             mRecentBatchTimings[((int) runningAvgCount) % sRunningAvgLength] = lastBatchTime;
-            mElapsedTime += lastBatchTime;
             int usedForAvg = Math.min(((int) runningAvgCount) + 1, sRunningAvgLength);
             for (int i = 0; i < usedForAvg; i++) {
                 avgBatchTime += mRecentBatchTimings[i];
