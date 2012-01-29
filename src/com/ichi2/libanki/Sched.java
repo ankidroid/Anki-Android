@@ -1180,6 +1180,7 @@ public class Sched {
 			if (conf.getJSONArray("delays").length() > 0) {
 				card.setEDue(card.getDue());
 				card.setDue((int) (_delayForGrade(conf, 0) + Utils.now()));
+				card.setLeft(conf.getJSONArray("delays").length());
 				card.setQueue(1);
 				mLrnCount += card.getLeft();
 			}

@@ -1959,7 +1959,7 @@ public class Reviewer extends Activity implements IButtonListener{
             mNext2.setTextColor(mNextTimeTextColor);
             mEase2.setTextColor(mNextTimeTextColor);
             mNext3.setTextColor(mNextTimeTextRecomColor);
-            mEase4.setTextColor(mNextTimeTextRecomColor);
+            mEase3.setTextColor(mNextTimeTextRecomColor);
         }
 
         // Show next review time
