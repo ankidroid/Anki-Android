@@ -887,42 +887,20 @@ public class Utils {
         return list.size() > 0;
     }
 
-//
-//    public static String getBaseUrl(String mediaDir, Model model, Deck deck) {
-//        String base;
-//		try {
-//			base = deck.getConf().getString("mediaURL");
-//		} catch (JSONException e) {
-//			throw new RuntimeException(e);
-//		}
-//        if (base.length() != 0 && !base.equalsIgnoreCase("null")) {
-//            return base;
-//        } else {
-//            // Anki desktop calls deck.mediaDir() here, but for efficiency reasons we only call it once in
-//            // Reviewer.onCreate() and use the value from there            
-//            if (mediaDir != null) {                              
-//                base = urlEncodeMediaDir(mediaDir);
-//            }
-//      //  }
-//        return base;
-//    }
-//
-
     /**
      * @param mediaDir media directory path on SD card
      * @return path converted to file URL, properly UTF-8 URL encoded
      */
-    public static String urlEncodeMediaDir(String mediaDir) {
-        String base;
+    public static String getBaseUrl(String mediaDir) {
         // Use android.net.Uri class to ensure whole path is properly encoded
         // File.toURL() does not work here, and URLEncoder class is not directly usable
         // with existing slashes
-        Uri mediaDirUri = Uri.fromFile(new File(mediaDir));
+        if (mediaDir.length() != 0 && !mediaDir.equalsIgnoreCase("null")) {
+            Uri mediaDirUri = Uri.fromFile(new File(mediaDir));
 
-        // Build complete URL
-        base = mediaDirUri.toString() +"/";
-
-        return base;
+            return mediaDirUri.toString() +"/";
+        }
+        return "";
     }
 
 
