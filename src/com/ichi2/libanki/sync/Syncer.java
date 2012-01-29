@@ -16,17 +16,6 @@
 
 package com.ichi2.libanki.sync;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.Map;
-
-import org.apache.http.HttpResponse;
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import android.database.Cursor;
 import android.database.SQLException;
 
@@ -37,7 +26,26 @@ import com.ichi2.libanki.Sched;
 import com.ichi2.libanki.Utils;
 import com.ichi2.utils.ConvUtils;
 
+import org.apache.http.HttpResponse;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
+
 public class Syncer {
+    // Mapping of column type names to Cursor types for API < 11
+    public static final int TYPE_NULL = 0;
+    public static final int TYPE_INTEGER = 1;
+    public static final int TYPE_FLOAT = 2;
+    public static final int TYPE_STRING = 3;
+    public static final int TYPE_BLOB = 4;
 
 	Collection mCol;
 	HttpSyncer mServer;
@@ -327,29 +335,43 @@ public class Syncer {
     	}
     }
 
+    private List<Integer> columnTypesForQuery(String table) {
+        if (table.equals("revlog")) {
+            return Arrays.asList(TYPE_INTEGER, TYPE_INTEGER, TYPE_INTEGER, TYPE_INTEGER, TYPE_INTEGER, TYPE_INTEGER, TYPE_INTEGER, TYPE_INTEGER, TYPE_INTEGER);
+        } else if (table.equals("cards")) {
+            return Arrays.asList(TYPE_INTEGER, TYPE_INTEGER, TYPE_INTEGER, TYPE_INTEGER, TYPE_INTEGER, TYPE_INTEGER, TYPE_INTEGER, TYPE_INTEGER, TYPE_INTEGER,
+                    TYPE_INTEGER, TYPE_INTEGER, TYPE_INTEGER, TYPE_INTEGER, TYPE_INTEGER, TYPE_INTEGER, TYPE_INTEGER, TYPE_STRING);
+        } else {
+            return Arrays.asList(TYPE_INTEGER, TYPE_STRING, TYPE_INTEGER, TYPE_INTEGER, TYPE_INTEGER, TYPE_INTEGER, TYPE_STRING, TYPE_STRING, TYPE_INTEGER,
+                    TYPE_INTEGER, TYPE_INTEGER, TYPE_STRING);
+        }
+    }
+
     private JSONObject chunk() {
     	JSONObject buf = new JSONObject();
     	try {
     		buf.put("done", false);
         	int lim = 2500;
+            List<Integer> colTypes = null;
         	while (!mTablesLeft.isEmpty() && lim > 0) {
         		String curTable = mTablesLeft.getFirst();
         		if (mCursor == null) {
         			mCursor = cursorForTable(curTable);
+                    colTypes = columnTypesForQuery(curTable);
         		}
         		JSONArray rows = new JSONArray();
+                int count = mCursor.getColumnCount();
         		while (mCursor.moveToNext() && mCursor.getPosition() <= lim) {
         			JSONArray r = new JSONArray();
-        			int count = mCursor.getColumnCount(); 
         			for (int i = 0; i < count; i++) {
-        				switch (mCursor.getType(i)) {
-        				case Cursor.FIELD_TYPE_STRING:
-            				r.put(mCursor.getString(i));
+                        switch (colTypes.get(i).intValue()) {
+                        case TYPE_STRING:
+                            r.put(mCursor.getString(i));
             				break;
-        				case Cursor.FIELD_TYPE_FLOAT:
+                        case TYPE_FLOAT:
             				r.put(mCursor.getDouble(i));
             				break;
-        				case Cursor.FIELD_TYPE_INTEGER:
+                        case TYPE_INTEGER:
             				r.put(mCursor.getLong(i));
             				break;
         				}
