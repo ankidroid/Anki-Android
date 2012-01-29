@@ -741,74 +741,44 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
 
 
     private TaskData doInBackgroundLoadTutorial(TaskData... params) {
-//        Log.i(AnkiDroidApp.TAG, "doInBackgroundLoadTutorial");
-//        Resources res = AnkiDroidApp.getInstance().getBaseContext().getResources();
-//        File sampleDeckFile = new File(params[0].getString());
-//    	publishProgress(new TaskData(res.getString(R.string.tutorial_load)));
-//    	AnkiDb ankiDB = null;
-//    	try{
-//    		// close open deck
-//    		DeckManager.closeMainDeck(false);
-//
-//    		// delete any existing tutorial file
-//            if (!sampleDeckFile.exists()) {
-//            	sampleDeckFile.delete();
-//            }
-//    		// copy the empty deck from the assets to the SD card.
-//    		InputStream stream = res.getAssets().open(DeckCreator.EMPTY_DECK_NAME);
-//    		Utils.writeToFile(stream, sampleDeckFile.getAbsolutePath());
-//    		stream.close();
-//        	Decks.initializeEmptyDeck(sampleDeckFile.getAbsolutePath());
-//    		String[] questions = res.getStringArray(R.array.tutorial_questions);
-//    		String[] answers = res.getStringArray(R.array.tutorial_answers);
-//    		String[] sampleQuestions = res.getStringArray(R.array.tutorial_capitals_questions);
-//    		String[] sampleAnswers = res.getStringArray(R.array.tutorial_capitals_answers);
-//    		Decks deck = DeckManager.getDeck(sampleDeckFile.getAbsolutePath(), DeckManager.REQUESTING_ACTIVITY_STUDYOPTIONS, true);
-//            ankiDB = AnkiDatabaseManager.getDatabase(deck.getDeckPath());
-//            ankiDB.getDatabase().beginTransaction();
-//            try {
-//            	CardModel cardModel = null;
-//            	int len = Math.min(questions.length, answers.length);
-//            	for (int i = 0; i < len + Math.min(sampleQuestions.length, sampleAnswers.length); i++) {
-//            		Notes fact = deck.newFact();
-//            		if (cardModel == null) {
-//            			cardModel = deck.activeCardModels(fact).entrySet().iterator().next().getValue();
-//            		}
-//            		int fidx = 0;
-//            		for (Notes.Field f : fact.getFields()) {
-//            			if (fidx == 0) {
-//            				f.setValue((i < len) ? questions[i] : sampleQuestions[i - len]);
-//            			} else if (fidx == 1) {
-//            				f.setValue((i < len) ? answers[i] : sampleAnswers[i - len]);
-//            			}
-//            			fidx++;
-//            		}
-//            		if (!deck.importFact(fact, cardModel)) {
-//            			sampleDeckFile.delete();
-//            			return new TaskData(TUTORIAL_NOT_CREATED);
-//            		}
-//            	}
-//            	deck.setSessionTimeLimit(0);
-//            	deck.flushMod();
-//            	deck.reset();
-//            	ankiDB.getDatabase().setTransactionSuccessful();
-//            } finally {
-//        		ankiDB.getDatabase().endTransaction();
-//        	}
-//        	return new TaskData(DECK_LOADED, deck, null);
-//        } catch (IOException e) {
-//        	Log.e(AnkiDroidApp.TAG, Log.getStackTraceString(e));
-//        	Log.e(AnkiDroidApp.TAG, "Empty deck could not be copied to the sd card.");
-//        	DeckManager.closeMainDeck(false);
-//        	sampleDeckFile.delete();
-//        	return new TaskData(TUTORIAL_NOT_CREATED);
-//    	} catch (RuntimeException e) {
-//        	Log.e(AnkiDroidApp.TAG, "Error on creating tutorial deck: " + e);
-//        	DeckManager.closeMainDeck(false);
-//        	sampleDeckFile.delete();
-//        	return new TaskData(TUTORIAL_NOT_CREATED);
-//    	}
-    	return null;
+        Log.i(AnkiDroidApp.TAG, "doInBackgroundLoadTutorial");
+        Resources res = AnkiDroidApp.getInstance().getBaseContext().getResources();
+        Collection col = params[0].getCollection();
+		String[] questions = res.getStringArray(R.array.tutorial_questions);
+		String[] answers = res.getStringArray(R.array.tutorial_answers);
+		String[] sampleQuestions = res.getStringArray(R.array.tutorial_capitals_questions);
+		String[] sampleAnswers = res.getStringArray(R.array.tutorial_capitals_answers);
+        col.getDb().getDatabase().beginTransaction();
+        try {
+        	long did = col.getDecks().id(res.getString(R.string.tutorial_title));
+        	int len = Math.min(questions.length, answers.length);
+        	for (int i = 0; i < len + Math.min(sampleQuestions.length, sampleAnswers.length); i++) {
+        		Note note = col.newNote();
+        		int fidx = 0;
+        		for (String f : note.values()) {
+        			if (fidx == 0) {
+        				f = (i < len) ? questions[i] : sampleQuestions[i - len];
+        			} else if (fidx == 1) {
+        				f = (i < len) ? answers[i] : sampleAnswers[i - len];
+        			}
+        			fidx++;
+        		}
+        		note.setDid(did);
+        		col.addNote(note);
+        	}
+//        	deck.setSessionTimeLimit(0);
+        	if (col.getSched().cardCount("(" + did + ")") == 0) {
+        		// error, delete deck
+        		col.getDecks().rem(did, true);
+        		return new TaskData(false);
+        	} else {
+            	col.save();
+            	col.getDb().getDatabase().setTransactionSuccessful();
+        		return new TaskData(true);
+        	}
+        } finally {
+        	col.getDb().getDatabase().endTransaction();
+    	}
     }
 
 

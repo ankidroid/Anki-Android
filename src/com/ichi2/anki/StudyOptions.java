@@ -55,6 +55,7 @@ import android.widget.ToggleButton;
 import com.ichi2.anim.ActivityTransitionAnimation;
 import com.ichi2.anim.ViewAnimation;
 import com.ichi2.async.DeckTask;
+import com.ichi2.async.DeckTask.TaskData;
 import com.ichi2.compat.Compat;
 import com.ichi2.compat.CompatV11;
 import com.ichi2.compat.CompatV3;
@@ -818,7 +819,7 @@ public class StudyOptions extends Activity implements IButtonListener {
 						@Override
 						public void onClick(DialogInterface arg0, int arg1) {
 							if (arg1 == 0) {
-								createSampleDeck();
+								createTutorialDeck();
 							} else {
 								if (Utils.isIntentAvailable(StudyOptions.this,
 										"android.intent.action.VIEW")) {
@@ -1098,15 +1099,35 @@ public class StudyOptions extends Activity implements IButtonListener {
 		// }
 	}
 
-	private void createSampleDeck() {
-		// TODO
-		// If decks directory does not exist, create it.
-		// File decksDirectory = new File(mPrefDeckPath);
-		// AnkiDroidApp.createDecksDirectoryIfMissing(decksDirectory);
-		// // mDeckFilename = mPrefDeckPath + "/" + SAMPLE_DECK_NAME;
-		// savePreferences("deckFilename");
-		// DeckTask.launchDeckTask(DeckTask.TASK_TYPE_LOAD_TUTORIAL,
-		// mLoadDeckHandler, new DeckTask.TaskData(mDeckFilename));
+	private void createTutorialDeck() {
+		DeckTask.launchDeckTask(DeckTask.TASK_TYPE_LOAD_TUTORIAL, new DeckTask.TaskListener() {
+			@Override
+			public void onPreExecute() {
+				mProgressDialog = StyledProgressDialog.show(StudyOptions.this, "",
+						getResources().getString(R.string.tutorial_load),
+						true);
+			}
+			@Override
+			public void onPostExecute(TaskData result) {
+				if (result.getBoolean()) {
+					resetAndUpdateValuesFromDeck();
+				} else {
+					Themes.showThemedToast(StudyOptions.this, getResources().getString(R.string.tutorial_loading_error), false);
+				}
+				if (mProgressDialog.isShowing()) {
+					try {
+						mProgressDialog.dismiss();
+					} catch (Exception e) {
+						Log.e(AnkiDroidApp.TAG,
+								"onPostExecute - Dialog dismiss Exception = "
+										+ e.getMessage());
+					}
+				}					
+			}
+			@Override
+			public void onProgressUpdate(TaskData... values) {
+			}
+		}, new DeckTask.TaskData(mCol));
 	}
 
 	@Override
