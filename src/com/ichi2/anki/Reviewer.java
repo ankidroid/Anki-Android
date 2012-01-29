@@ -1234,47 +1234,9 @@ public class Reviewer extends Activity implements IButtonListener{
         		item.setEnabled(true);
             }
         }
-        if (mPrefFullscreenReview) {
-            // Temporarily remove top bar to avoid annoying screen flickering
-            mTextBarRed.setVisibility(View.GONE);
-            mTextBarBlack.setVisibility(View.GONE);
-            mTextBarBlue.setVisibility(View.GONE);
-            mChosenAnswer.setVisibility(View.GONE);
-            if (mPrefTimer) {
-                mCardTimer.setVisibility(View.GONE);
-            }
-            if (mShowProgressBars) {
-                mProgressBars.setVisibility(View.GONE);
-            }
-
-            getWindow().setFlags(0, WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        }
         menu.findItem(MENU_UNDO).setEnabled(DeckManager.getMainDeck().undoAvailable());
         menu.findItem(MENU_REDO).setEnabled(DeckManager.getMainDeck().redoAvailable());
         return true;
-    }
-
-
-    @Override
-    public void onOptionsMenuClosed(Menu menu) {
-        if (mPrefFullscreenReview) {
-            // Restore top bar
-            mTextBarRed.setVisibility(View.VISIBLE);
-            mTextBarBlack.setVisibility(View.VISIBLE);
-            mTextBarBlue.setVisibility(View.VISIBLE);
-            mChosenAnswer.setVisibility(View.VISIBLE);
-            if (mPrefTimer) {
-                mCardTimer.setVisibility(View.VISIBLE);
-            }
-            if (mShowProgressBars) {
-                mProgressBars.setVisibility(View.VISIBLE);
-            }
-
-            // Restore fullscreen preference
-            getWindow().setFlags(
-                    WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                    WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        }
     }
 
 
