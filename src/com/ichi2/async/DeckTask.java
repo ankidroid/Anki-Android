@@ -392,8 +392,29 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
 //        	backupResult = BackupManager.RETURN_LOW_SYSTEM_SPACE;
 //        }
 
-        Log.i(AnkiDroidApp.TAG, "loadDeck - SD card mounted and existent file -> Loading collection...");
 
+        File dbFile = new File(collectionFile);
+        if (!dbFile.exists()) {
+            Log.i(AnkiDroidApp.TAG, "LoadDeck: db file does not exist. Creating it...");
+            // If decks directory does not exist, create it.
+            AnkiDroidApp.createDecksDirectoryIfMissing(dbFile.getParentFile());
+        	// create file           
+            try {
+                // Copy an empty collection file from the assets to the SD card.
+                InputStream stream = res.getAssets().open("collection.anki2");
+                Utils.writeToFile(stream, dbFile.getAbsolutePath());
+                stream.close();
+            } catch (IOException e) {
+                Log.e(AnkiDroidApp.TAG, Log.getStackTraceString(e));
+                Log.e(AnkiDroidApp.TAG, "onCreate - The copy of empty.anki to the SD card failed.");
+                // TODO: proper error handling
+                Collection col = null;
+                return new TaskData(col);
+            }
+        }
+
+        Log.i(AnkiDroidApp.TAG, "loadDeck - SD card mounted and existent file -> Loading collection...");
+        
     	// load deck and set it as main deck
     	publishProgress(new TaskData(res.getString(R.string.loading_deck)));
         Collection col = Collection.openCollection(collectionFile);

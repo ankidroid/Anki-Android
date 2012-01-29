@@ -126,7 +126,6 @@ public class AnkiDroidApp extends Application {
         return getStorageDirectory() + "/AnkiDroid";
     }
 
-
     public static void createDecksDirectoryIfMissing(File decksDirectory) {
     	if (!decksDirectory.isDirectory()) {
     		decksDirectory.mkdirs();
