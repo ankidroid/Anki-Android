@@ -160,6 +160,8 @@ public class CardEditor extends Activity {
 	private Button mSwapButton;
 
 	private Note mEditorNote;
+	private ArrayList<String> mCurrentTags;
+	private long mCurrentDid;
 
 	/* indicates if a new fact is added or a card is edited */
 	private boolean mAddNote;
@@ -180,8 +182,6 @@ public class CardEditor extends Activity {
 	private ArrayList<HashMap<String, String>> mIntentInformation;
 	private SimpleAdapter mIntentInformationAdapter;
 	private StyledDialog mIntentInformationDialog;
-
-	private boolean mModified;
 
 	private String[] allTags;
 	private ArrayList<String> selectedTags;
@@ -452,8 +452,6 @@ public class CardEditor extends Activity {
 			}
 		});
 
-		mModified = false;
-
 		SharedPreferences preferences = PrefSettings
 				.getSharedPrefs(getBaseContext());
 		mPrefFixArabic = preferences.getBoolean("fixArabicText", false);
@@ -474,24 +472,32 @@ public class CardEditor extends Activity {
 
 			@Override
 			public void onClick(View v) {
+				if (duplicateCheck(true)) {
+					return;
+				}
+				boolean modified = false;
+				for (FieldEditText f : mEditFields) {
+					modified = modified || f.updateField();
+				}
 				if (mAddNote) {
-					if (duplicateCheck(true)) {
-						return;
-					}
-					for (FieldEditText f : mEditFields) {
-						f.updateField();
-					}
 					DeckTask.launchDeckTask(DeckTask.TASK_TYPE_ADD_FACT, mSaveFactHandler, new DeckTask.TaskData(mEditorNote));	
 				} else {
-//					Iterator<FieldEditText> iter = mEditFields.iterator();
-//					while (iter.hasNext()) {
-//						FieldEditText current = iter.next();
-//						mModified |= current.updateField();
-//					}
-//					// if (!mEditorNote.getTags().equals(mFactTags)) {
-//					// mEditorNote.setTags(mFactTags);
-//					// mModified = true;
-//					// }
+					// added tag?
+					for (String t : mCurrentTags) {
+						modified = modified || !mEditorNote.hasTag(t);
+					}
+					// removed tag?
+					modified = modified || mEditorNote.getTags().size() > mCurrentTags.size();
+					// changed did?
+					modified = modified || mEditorNote.getDid() != mCurrentDid;
+					if (modified) {
+						mEditorNote.setTags(mCurrentTags);
+						// set did for card
+						Reviewer.getEditorCard().setDid(mCurrentDid);
+						closeCardEditor(RESULT_OK);
+					} else {
+						closeCardEditor(RESULT_CANCELED);
+					}
 //					if (mCaller == CALLER_BIGWIDGET_EDIT) {
 //						// DeckTask.launchDeckTask(DeckTask.TASK_TYPE_UPDATE_FACT,
 //						// mSaveFactHandler, new
@@ -507,9 +513,9 @@ public class CardEditor extends Activity {
 //						}
 //						closeCardEditor();
 //					}
+					
 				}
 			}
-
 		});
 
 		mCancel.setOnClickListener(new View.OnClickListener() {
@@ -787,18 +793,21 @@ public class CardEditor extends Activity {
 					new OnClickListener() {
 						@Override
 						public void onClick(DialogInterface dialog, int which) {
-							mEditorNote.setTags(selectedTags);
-							try {
-								JSONArray ja = new JSONArray();
-								for (String t : selectedTags) {
-									ja.put(t);
+							if (mAddNote) {
+								try {
+									JSONArray ja = new JSONArray();
+									for (String t : selectedTags) {
+										ja.put(t);
+									}
+									mCol.getModels().current().put("tags", ja);
+									mCol.getModels().setChanged();
+								} catch (JSONException e) {
+									throw new RuntimeException(e);
 								}
-								mEditorNote.model().put("tags", ja);
-							} catch (JSONException e) {
-								throw new RuntimeException(e);
+								mEditorNote.setTags(selectedTags);
 							}
+							mCurrentTags = selectedTags;
 							updateTags();
-							mCol.getModels().setChanged();
 						}
 					});
 			builder.setNegativeButton(res.getString(R.string.cancel), null);
@@ -875,17 +884,19 @@ public class CardEditor extends Activity {
 
 			builder.setItems(items, new DialogInterface.OnClickListener() {
 				public void onClick(DialogInterface dialog, int item) {
-					try {
-						long oldDid = mCol.getDecks().get(mEditorNote.getDid()).getLong("id");
-						long newId = dialogDeckIds.get(item);
-						if (oldDid != newId) {
-							mEditorNote.setDid(newId);
-							mEditorNote.model().put("did", newId);
-							updateDeck();
-							mCol.getModels().setChanged();
+					long newId = dialogDeckIds.get(item);
+					if (mCurrentDid != newId) {
+						if (mAddNote) {
+							try {
+								mEditorNote.setDid(newId);
+								mEditorNote.model().put("did", newId);
+								mCol.getModels().setChanged();
+							} catch (JSONException e) {
+								throw new RuntimeException(e);
+							}						
 						}
-					} catch (JSONException e) {
-						throw new RuntimeException(e);
+						mCurrentDid = newId;
+						updateDeck();						
 					}
 				}
 			});
@@ -923,7 +934,7 @@ public class CardEditor extends Activity {
 					}
 					long newId = dialogIds.get(item);
 					if (oldModelId != newId) {
-						mCol.getModels().setCurrent(mCol.getModels().get(newId));
+						mCol.getModels().setCurrent( mCol.getModels().get(newId));
 						int size = mEditFields.size();
 						String[] oldValues = new String[size];
 						for (int i = 0; i < size; i++) {
@@ -1166,30 +1177,23 @@ public class CardEditor extends Activity {
 	private void populateEditFields() {
 		mFieldsLayoutContainer.removeAllViews();
 		mEditFields = new LinkedList<FieldEditText>();
-		// TODO: use native functions
-		JSONArray fields;
-		try {
-			fields = mCol.getModels().current().getJSONArray("flds");
-			for (int i = 0; i < fields.length(); i++) {
-				FieldEditText newTextbox = new FieldEditText(this,
-						fields.getJSONObject(i));
-				TextView label = newTextbox.getLabel();
-				ImageView circle = newTextbox.getCircle();
-				mEditFields.add(newTextbox);
-				FrameLayout frame = new FrameLayout(this);
-				FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(
-						ViewGroup.LayoutParams.WRAP_CONTENT,
-						ViewGroup.LayoutParams.WRAP_CONTENT, Gravity.RIGHT
-								| Gravity.CENTER_VERTICAL);
-				params.rightMargin = 10;
-				circle.setLayoutParams(params);
-				frame.addView(newTextbox);
-				frame.addView(circle);
-				mFieldsLayoutContainer.addView(label);
-				mFieldsLayoutContainer.addView(frame);
-			}
-		} catch (JSONException e) {
-			throw new RuntimeException(e);
+		String[][] fields = mEditorNote.items();
+		for (int i = 0; i < fields.length; i++) {
+			FieldEditText newTextbox = new FieldEditText(this, i, fields[i]);
+			TextView label = newTextbox.getLabel();
+			ImageView circle = newTextbox.getCircle();
+			mEditFields.add(newTextbox);
+			FrameLayout frame = new FrameLayout(this);
+			FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(
+					ViewGroup.LayoutParams.WRAP_CONTENT,
+					ViewGroup.LayoutParams.WRAP_CONTENT, Gravity.RIGHT
+							| Gravity.CENTER_VERTICAL);
+			params.rightMargin = 10;
+			circle.setLayoutParams(params);
+			frame.addView(newTextbox);
+			frame.addView(circle);
+			mFieldsLayoutContainer.addView(label);
+			mFieldsLayoutContainer.addView(frame);
 		}
 	}
 
@@ -1263,6 +1267,8 @@ public class CardEditor extends Activity {
 		} catch (JSONException e) {
 			throw new RuntimeException(e);
 		}
+		mCurrentTags = mEditorNote.getTags();
+		mCurrentDid = mEditorNote.getDid();
 		updateDeck();
 		updateTags();
 		populateEditFields();
@@ -1271,7 +1277,7 @@ public class CardEditor extends Activity {
 
 	private void updateDeck() {
 		try {
-			mDeckButton.setText(getResources().getString(R.string.CardEditorDeck, mCol.getDecks().get(mEditorNote.getDid()).getString("name")));
+			mDeckButton.setText(getResources().getString(R.string.CardEditorDeck, mCol.getDecks().get(mCurrentDid).getString("name")));
 		} catch (NotFoundException e) {
 			throw new RuntimeException(e);
 		} catch (JSONException e) {
@@ -1280,7 +1286,7 @@ public class CardEditor extends Activity {
 	}
 
 	private void updateTags() {
-		mTagsButton.setText(getResources().getString(R.string.CardEditorTags, mEditorNote.stringTags().trim().replace(" ", ", ")));
+		mTagsButton.setText(getResources().getString(R.string.CardEditorTags, mCol.getTags().join(mCol.getTags().canonify(mCurrentTags)).trim().replace(" ", ", ")));
 	}
 
 	// ----------------------------------------------------------------------------
@@ -1292,26 +1298,21 @@ public class CardEditor extends Activity {
 		public final String NEW_LINE = System.getProperty("line.separator");
 		public final String NL_MARK = "newLineMark";
 
-		private JSONObject mField;
-
 		private WordRow mCutString[];
 		private boolean mCutMode = false;
 		private ImageView mCircle;
 		private KeyListener mKeyListener;
 		private Context mContext;
 
-		public FieldEditText(Context context, JSONObject field) {
+		private String mName;
+		private int mOrd;
+
+		public FieldEditText(Context context, int ord, String[] value) {
 			super(context);
-			mField = field;
+			mOrd = ord;
+			mName = value[0];
 			mContext = context;
-			String content = null;
-			int ord;
-			try {
-				ord = mField.getInt("ord");
-			} catch (JSONException e) {
-				throw new RuntimeException(e);
-			}
-			content = mEditorNote.values()[ord];
+			String content = value[1];
 			if (content == null) {
 				content = "";
 			} else {
@@ -1388,11 +1389,7 @@ public class CardEditor extends Activity {
 
 		public TextView getLabel() {
 			TextView label = new TextView(this.getContext());
-			try {
-				label.setText(mField.getString("name"));
-			} catch (JSONException e) {
-				throw new RuntimeException(e);
-			}
+			label.setText(mName);
 			return label;
 		}
 
@@ -1470,14 +1467,8 @@ public class CardEditor extends Activity {
 				updateContentAfterWordSelection(FieldEditText.this.getText());
 			}
 			String newValue = this.getText().toString();
-			int ord;
-			try {
-				ord = mField.getInt("ord");
-			} catch (JSONException e) {
-				throw new RuntimeException(e);
-			}
-			if (!mEditorNote.values()[ord].equals(newValue)) {
-				mEditorNote.values()[ord] = newValue;
+			if (!mEditorNote.values()[mOrd].equals(newValue)) {
+				mEditorNote.values()[mOrd] = newValue;
 				return true;
 			}
 			return false;
@@ -1580,5 +1571,5 @@ public class CardEditor extends Activity {
 				return 0;
 			}
 		}
-	}	
+	}
 }

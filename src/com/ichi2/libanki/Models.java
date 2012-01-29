@@ -328,17 +328,37 @@ public class Models {
     // new fields
 
 
-    /** Mapping of field name --> (ord, field). */
-    public TreeMap<String, Object[]> fieldMap(JSONObject m) {
+//    /** Mapping of field name --> (ord, field). */
+//    public TreeMap<String, Object[]> fieldMap(JSONObject m) {
+//    	JSONArray ja;
+//		try {
+//			ja = m.getJSONArray("flds");
+//			TreeMap<String, Object[]> map = new TreeMap<String, Object[]>();
+//	    	for (int i = 0; i < ja.length(); i++) {
+//	    		JSONObject f = ja.getJSONObject(i);
+//	    		map.put(f.getString("name"), new Object[]{f.getInt("ord"), f});
+//	    	}
+//	    	return map;
+//		} catch (JSONException e) {
+//			throw new RuntimeException(e);
+//		}
+//    }
+
+
+    public String[] orderedFields(JSONObject m) {
     	JSONArray ja;
 		try {
 			ja = m.getJSONArray("flds");
-			TreeMap<String, Object[]> map = new TreeMap<String, Object[]>();
+			TreeMap<Integer, String> map = new TreeMap<Integer, String>();
 	    	for (int i = 0; i < ja.length(); i++) {
 	    		JSONObject f = ja.getJSONObject(i);
-	    		map.put(f.getString("name"), new Object[]{f.getInt("ord"), f});
+	    		map.put(f.getInt("ord"), f.getString("name"));
 	    	}
-	    	return map;
+	    	String[] result = new String[map.size()];
+	    	for (int i = 0; i < map.size(); i++) {
+	    		result[i] = map.get(i);
+	    	}
+	    	return result;
 		} catch (JSONException e) {
 			throw new RuntimeException(e);
 		}

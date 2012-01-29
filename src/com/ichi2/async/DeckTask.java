@@ -285,49 +285,38 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
 
 
     private TaskData doInBackgroundUpdateFact(TaskData[] params) {
-//        // Save the fact
-//        Decks deck = params[0].getDeck();
-//        Card editCard = params[0].getCard();
-//        Notes editFact = editCard.getFact();
-//        int showQuestion = params[0].getInt();
-//
-//        try {
-//	        AnkiDb ankiDB = AnkiDatabaseManager.getDatabase(deck.getDeckPath());
-//	        ankiDB.getDatabase().beginTransaction();
-//	        try {
-//	            // Start undo routine
-//	            String undoName = Decks.UNDO_TYPE_EDIT_CARD;
-//	            deck.setUndoStart(undoName, editCard.getId());
-//
-//	            // Set modified also updates the text of cards and their modified flags
-//	            editFact.setModified(true, deck, false);
-//	            editFact.toDb();
-//	            deck.updateFactTags(new long[] { editFact.getId() });
-//
-//	            deck.flushMod();
-//
-//	            // Find all cards based on this fact and update them with the updateCard method.
-//	            // for (Card modifyCard : editFact.getUpdatedRelatedCards()) {
-//	            //     modifyCard.updateQAfields();
-//	            // }
-//
-//	            // deck.reset();
-//	            deck.setUndoEnd(undoName);
-//	            if (showQuestion == Reviewer.UPDATE_CARD_NEW_CARD) {
-//	                publishProgress(new TaskData(showQuestion, null, deck.getCard()));
-//	            } else {
-//	                publishProgress(new TaskData(showQuestion, null, deck.cardFromId(editCard.getId())));        	
-//	            }
-//
-//	        	ankiDB.getDatabase().setTransactionSuccessful();
-//	        } finally {
-//	            ankiDB.getDatabase().endTransaction();
-//	        }
-//		} catch (RuntimeException e) {
-//			Log.e(AnkiDroidApp.TAG, "doInBackgroundUpdateFact - RuntimeException on updating fact: " + e);
-//			AnkiDroidApp.saveExceptionReportFile(e, "doInBackgroundUpdateFact");
-//			return new TaskData(false);
-//		}
+        // Save the fact
+    	Sched sched = params[0].getSched();
+    	Collection col = sched.getCol();
+        Card editCard = params[0].getCard();
+        Note editNote = editCard.getNote();
+        boolean showQuestion = params[0].getBoolean();
+
+        try {
+	        col.getDb().getDatabase().beginTransaction();
+	        try {
+	        	// TODO: undo integration
+	        	editNote.flush();
+	        	// flush card too, if did has been changed
+	        	editCard.flush();
+	        	Card newCard;
+	        	if (col.getDecks().active().contains(editCard.getDid())) {
+	        		newCard = editCard;
+		        	// reload qa-cache
+	        		newCard.getQuestion(true);
+	        	} else {
+	        		newCard = sched.getCard();
+	        	}
+	        	publishProgress(new TaskData(null, newCard, showQuestion));
+	            col.getDb().getDatabase().setTransactionSuccessful();
+	        } finally {
+	        	col.getDb().getDatabase().endTransaction();
+	        }
+		} catch (RuntimeException e) {
+			Log.e(AnkiDroidApp.TAG, "doInBackgroundUpdateFact - RuntimeException on updating fact: " + e);
+			AnkiDroidApp.saveExceptionReportFile(e, "doInBackgroundUpdateFact");
+			return new TaskData(false);
+		}
         return new TaskData(true);
     }
 
@@ -965,6 +954,13 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
         public TaskData(Sched sched, boolean bool) {
         	mSched = sched;
         	mBool = bool;
+        }
+
+
+        public TaskData(Sched sched, Card card, boolean bool) {
+        	mSched = sched;
+        	mBool = bool;
+        	mCard = card;
         }
 
 

@@ -701,7 +701,7 @@ public class Reviewer extends Activity implements IButtonListener{
 
         @Override
         public void onProgressUpdate(DeckTask.TaskData... values) {
-//            mCurrentCard = values[0].getCard();
+            mCurrentCard = values[0].getCard();
             if (mPrefWhiteboard) {
                 mWhiteboard.clear();
             }
@@ -710,7 +710,11 @@ public class Reviewer extends Activity implements IButtonListener{
                 mCardTimer.setBase(SystemClock.elapsedRealtime());
                 mCardTimer.start();
             }
-            displayCardQuestion();
+            if (values[0].getBoolean()) {
+                displayCardAnswer();
+            } else {
+                displayCardQuestion();            	
+            }
             try {
                 if (mProgressDialog != null && mProgressDialog.isShowing()) {
                 	mProgressDialog.dismiss();
@@ -1440,12 +1444,7 @@ public class Reviewer extends Activity implements IButtonListener{
         	setInAnimation(true);
             if (resultCode == RESULT_OK || resultCode == RESULT_EDIT_CARD_RESET) {
                 Log.i(AnkiDroidApp.TAG, "Saving card...");
-                int showQuestion = sDisplayAnswer ? UPDATE_CARD_SHOW_ANSWER : UPDATE_CARD_SHOW_QUESTION;
-                if (resultCode == RESULT_EDIT_CARD_RESET) {
-                	showQuestion = UPDATE_CARD_NEW_CARD;
-                }
-//                DeckTask.launchDeckTask(DeckTask.TASK_TYPE_UPDATE_FACT, mUpdateCardHandler, new DeckTask.TaskData(showQuestion,
-//                        DeckManager.getMainDeck(), mCurrentCard));
+                DeckTask.launchDeckTask(DeckTask.TASK_TYPE_UPDATE_FACT, mUpdateCardHandler, new DeckTask.TaskData(mSched, mCurrentCard, sDisplayAnswer));
             } else if (resultCode == DeckPicker.RESULT_MEDIA_EJECTED) {
                 finishNoStorageAvailable();
             } else {

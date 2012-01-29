@@ -21,6 +21,7 @@ import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -50,7 +51,7 @@ public class Note {
 	private String mData = "";
 	private int mFlags;
 
-	private TreeMap<String, Object[]> mFMap;
+	private String[] mFMap;
 	private long mScm;
 
 	public Note(Collection col, long id) {
@@ -82,7 +83,7 @@ public class Note {
 				mFields[i] = "";
 			}
 			mData = "";
-			mFMap = mCol.getModels().fieldMap(mModel);
+			mFMap = mCol.getModels().orderedFields(mModel);
 			mScm = mCol.getScm();
 		}
 	}
@@ -115,7 +116,7 @@ public class Note {
 			}
 		}
 		mModel = mCol.getModels().get(mMid);
-		mFMap = mCol.getModels().fieldMap(mModel);
+		mFMap = mCol.getModels().orderedFields(mModel);
 	}
 
 	public void flush() {
@@ -184,42 +185,31 @@ public class Note {
 	 * ************************************
 	 */
 
-	public HashSet<String> keys() {
-		HashSet<String> keys = new HashSet<String>();
-		for (String s : mFMap.keySet()) {
-			keys.add(s);
-		}
-		return keys;
+	public String[] keys() {
+		return mFMap;
 	}
 
 	public String[] values() {
 		return mFields;
 	}
 
-	public HashMap<String, String> items() {
-		HashMap<String, String> m = new HashMap<String, String>();
-		try {
-			for (Object[] e : mFMap.values()) {
-				m.put(((JSONObject) e[1]).getString("name"),
-						mFields[(Integer) e[0]]);
-			}
-		} catch (JSONException e1) {
-			throw new RuntimeException(e1);
+	public String[][] items() {
+		String[][] result = new String[mFMap.length][2];
+		for (int i = 0; i < mFMap.length; i++) {
+			result[i][0] = mFMap[i]; 
+			result[i][1] = mFields[i]; 
 		}
-		return m;
+		return result;
 	}
 
-	public int _fieldOrd(String key) {
-		return (Integer) mFMap.get(key)[0];
-	}
 
-	public String _getitem__(String key) {
-		return mFields[_fieldOrd(key)];
-	}
-
-	public void __setitem__(String key, String value) {
-		mFields[_fieldOrd(key)] = value;
-	}
+//	public String _getitem__(String key) {
+//		return mFields[_fieldOrd(key)];
+//	}
+//
+//	public void __setitem__(String key, String value) {
+//		mFields[_fieldOrd(key)] = value;
+//	}
 
 	/**
 	 * Tags
@@ -298,13 +288,13 @@ public class Note {
 	 * *********************************************
 	 */
 
-	public void _preFlush() {
+	private void _preFlush() {
 		// have we been added yet?
 		mNewlyAdded = mCol.getDb().queryScalar(
 				"SELECT 1 FROM cards WHERE nid = " + mId, false) == 0;
 	}
 
-	public void _postFlush() {
+	private void _postFlush() {
 		// generate missing cards
 		if (!mNewlyAdded) {
 			// TODO
@@ -337,5 +327,4 @@ public class Note {
 	public Collection getCol() {
 		return mCol;
 	}
-
 }
