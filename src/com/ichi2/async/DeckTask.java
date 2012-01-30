@@ -402,8 +402,11 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
             try {
                 // Copy an empty collection file from the assets to the SD card.
                 InputStream stream = res.getAssets().open("collection.anki2");
-                Utils.writeToFile(stream, dbFile.getAbsolutePath());
+                Utils.writeToFile(stream, collectionFile);
                 stream.close();
+                AnkiDb ankiDB = AnkiDatabaseManager.getDatabase(collectionFile);
+                ankiDB.getDatabase().execSQL("UPDATE col SET crt = " + Utils.intNow());
+                ankiDB.closeDatabase();
             } catch (IOException e) {
                 Log.e(AnkiDroidApp.TAG, Log.getStackTraceString(e));
                 Log.e(AnkiDroidApp.TAG, "onCreate - The copy of empty.anki to the SD card failed.");
