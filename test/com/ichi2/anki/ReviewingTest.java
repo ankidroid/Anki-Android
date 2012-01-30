@@ -59,8 +59,8 @@ public class ReviewingTest extends
 	
 
 	private void answerACard(){
-		solo.sendKey(solo.DOWN);
-		solo.sendKey(solo.ENTER);
+		solo.sendKey(Solo.DOWN);
+		solo.sendKey(Solo.ENTER);
 		solo.sleep(SLEEP_TIME);
 		
 		if (finished())
@@ -70,12 +70,12 @@ public class ReviewingTest extends
 		//Assume that the current pointer is at the second button from the left
 		int r = rd.nextInt(4);
 		if (  r == 0)
-			solo.sendKey(solo.LEFT);
+			solo.sendKey(Solo.LEFT);
 		else 
 			for (int i = 0; i < (r-1); i++)
-				solo.sendKey(solo.RIGHT);
+				solo.sendKey(Solo.RIGHT);
 		
-		solo.sendKey(solo.ENTER);
+		solo.sendKey(Solo.ENTER);
 	}
 	
 	/**
@@ -110,7 +110,7 @@ public class ReviewingTest extends
 		logCurrentActivity("After loaded");
 		
 		// Select "Start reviewing"
-		solo.sendKey(solo.ENTER);
+		solo.sendKey(Solo.ENTER);
 		solo.sleep(SLEEP_TIME);
 		
 		//Wait for the Reviewer to load

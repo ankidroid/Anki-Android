@@ -583,7 +583,7 @@ public class Themes {
 	public static void setMargins(View view, int width, int height, float dipLeft, float dipTop, float dipRight, float dipBottom) {
 		View parent = (View) view.getParent();
 		parent.setBackgroundResource(mBackgroundColor);
-		Class c = view.getParent().getClass();
+		Class<?> c = view.getParent().getClass();
     	float factor = mContext.getResources().getDisplayMetrics().density;
 		if (c == LinearLayout.class) {
 			LinearLayout.LayoutParams llp = new LinearLayout.LayoutParams(width, height);

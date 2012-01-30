@@ -1197,10 +1197,7 @@ public class Reviewer extends AnkiActivity implements IButtonListener{
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
         MenuItem item = menu.findItem(MENU_MARK);
-        if (mCurrentCard == null){
-        	return false;
-        }
-        if (mCurrentCard.isMarked()) {
+        if (mCurrentCard != null && mCurrentCard.isMarked()){
             item.setTitle(R.string.menu_marked);
             item.setIcon(R.drawable.ic_menu_star_on);
         } else {
