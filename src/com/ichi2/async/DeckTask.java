@@ -405,7 +405,7 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
                 Utils.writeToFile(stream, collectionFile);
                 stream.close();
                 AnkiDb ankiDB = AnkiDatabaseManager.getDatabase(collectionFile);
-                ankiDB.getDatabase().execSQL("UPDATE col SET crt = " + Utils.intNow());
+                ankiDB.exec("UPDATE col SET crt = " + Utils.intNow());
                 ankiDB.closeDatabase();
             } catch (IOException e) {
                 Log.e(AnkiDroidApp.TAG, Log.getStackTraceString(e));
