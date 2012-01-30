@@ -3262,8 +3262,10 @@ public class Reviewer extends Activity implements IButtonListener{
             DeckTask.launchDeckTask(DeckTask.TASK_TYPE_SAVE_DECK, mSaveAndResetDeckHandler, new DeckTask.TaskData(DeckManager.getMainDeck(), 0));
     	} else {
     		finish();
-    		ActivityTransitionAnimation.slide(Reviewer.this, ActivityTransitionAnimation.RIGHT);
-    	}
+                if (Integer.valueOf(android.os.Build.VERSION.SDK) > 4) {
+                    ActivityTransitionAnimation.slide(Reviewer.this, ActivityTransitionAnimation.RIGHT);
+                }
+        }
     }
 
     /** Fixing bug 720: <input> focus, thanks to pablomouzo on android issue 7189*/
