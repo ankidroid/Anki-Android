@@ -31,7 +31,6 @@ import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.database.sqlite.SQLiteException;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -64,8 +63,6 @@ import com.ichi2.anki.DeckTask.TaskData;
 import com.ichi2.async.Connection;
 import com.ichi2.async.Connection.Payload;
 import com.ichi2.compat.Compat;
-import com.ichi2.compat.CompatV11;
-import com.ichi2.compat.CompatV3;
 import com.ichi2.themes.StyledDialog;
 import com.ichi2.themes.StyledProgressDialog;
 import com.ichi2.themes.Themes;
@@ -722,11 +719,7 @@ public class StudyOptions extends Activity implements IButtonListener {
        		}
        	};
 
-        if (getApiLevel() >= 11) {
-            mCompat = new CompatV11();
-        } else {
-            mCompat = new CompatV3();
-        }
+       	mCompat = Utils.createCompat();
         //Zeemote controller initialization
          
 		 if (AnkiDroidApp.zeemoteController() == null) AnkiDroidApp.setZeemoteController(new Controller(Controller.CONTROLLER_1));     
@@ -745,17 +738,6 @@ public class StudyOptions extends Activity implements IButtonListener {
 			 controllerUi.startConnectionProcess();
 		 }
 		}
-    }
-
-
-    /** Returns the API level of this device. */
-    public static int getApiLevel() {
-        try {
-            return Integer.parseInt(Build.VERSION.SDK);
-        } catch (NumberFormatException e) {
-            // If there is an error, return the minimum supported version.
-            return 3;
-        }
     }
 
 
@@ -950,7 +932,7 @@ public class StudyOptions extends Activity implements IButtonListener {
     		Intent reviewer = new Intent(StudyOptions.this, Reviewer.class);
             reviewer.putExtra("deckFilename", mDeckFilename);
     		startActivityForResult(reviewer, REQUEST_REVIEW);
-        	if (getApiLevel() > 4 && mStartedByBigWidget == EXTRA_START_NOTHING) {
+        	if (Utils.getApiLevel() > 4 && mStartedByBigWidget == EXTRA_START_NOTHING) {
        			ActivityTransitionAnimation.slide(this, ActivityTransitionAnimation.LEFT);
         	}
     	} else if (mCurrentContentView == CONTENT_CONGRATS) {
@@ -968,7 +950,7 @@ public class StudyOptions extends Activity implements IButtonListener {
     		Intent reviewer = new Intent(StudyOptions.this, Reviewer.class);
             reviewer.putExtra("deckFilename", mDeckFilename);
             startActivityForResult(reviewer, REQUEST_REVIEW);
-        	if (getApiLevel() > 4) {
+        	if (Utils.getApiLevel() > 4) {
        			ActivityTransitionAnimation.slide(this, ActivityTransitionAnimation.LEFT);
         	}
         }
@@ -984,7 +966,7 @@ public class StudyOptions extends Activity implements IButtonListener {
     		Intent reviewer = new Intent(StudyOptions.this, Reviewer.class);
     		reviewer.putExtra("deckFilename", mDeckFilename);
         	startActivityForResult(reviewer, REQUEST_REVIEW);
-    		if (getApiLevel() > 4) {
+    		if (Utils.getApiLevel() > 4) {
     			ActivityTransitionAnimation.slide(this, ActivityTransitionAnimation.LEFT);
     		}
         }
@@ -1221,7 +1203,7 @@ public class StudyOptions extends Activity implements IButtonListener {
 	                Intent myAccount = new Intent(StudyOptions.this, MyAccount.class);
 	                myAccount.putExtra("notLoggedIn", true);
 	                startActivityForResult(myAccount, LOG_IN);
-			        if (getApiLevel() > 4) {
+			        if (Utils.getApiLevel() > 4) {
 			            ActivityTransitionAnimation.slide(StudyOptions.this, ActivityTransitionAnimation.LEFT);
 			        }
 	            }
@@ -1626,7 +1608,7 @@ public class StudyOptions extends Activity implements IButtonListener {
 	                Intent i = new Intent(StudyOptions.this, Feedback.class);
 	                dialog.dismiss();
 	                startActivityForResult(i, REPORT_ERROR);
-	                if (getApiLevel() > 4) {
+	                if (Utils.getApiLevel() > 4) {
 	                	ActivityTransitionAnimation.slide(StudyOptions.this, ActivityTransitionAnimation.FADE);
 		        	}
 	            }
@@ -2133,7 +2115,7 @@ public class StudyOptions extends Activity implements IButtonListener {
             	intent.putExtra(CardEditor.EXTRA_CALLER, CardEditor.CALLER_STUDYOPTIONS);
             	intent.putExtra(CardEditor.EXTRA_DECKPATH, DeckManager.getMainDeckPath());
             	startActivityForResult(intent, ADD_FACT);
-                if (getApiLevel() > 4) {
+                if (Utils.getApiLevel() > 4) {
                     ActivityTransitionAnimation.slide(StudyOptions.this, ActivityTransitionAnimation.LEFT);
                 }
                 return true;
@@ -2167,7 +2149,7 @@ public class StudyOptions extends Activity implements IButtonListener {
         mInDeckPicker = true;
     	decksPicker.putExtra("showAnimation", showAnimation);
         startActivityForResult(decksPicker, PICK_DECK_REQUEST);
-    	if (showAnimation && getApiLevel() > 4) {
+    	if (showAnimation && Utils.getApiLevel() > 4) {
     		ActivityTransitionAnimation.slide(this, ActivityTransitionAnimation.RIGHT);
     	}
         // Log.i(AnkiDroidApp.TAG, "openDeckPicker - Ending");
@@ -2188,7 +2170,7 @@ public class StudyOptions extends Activity implements IButtonListener {
     private void openCardBrowser() {
         Intent cardBrowser = new Intent(StudyOptions.this, CardBrowser.class);
         startActivityForResult(cardBrowser, BROWSE_CARDS);
-        if (getApiLevel() > 4) {
+        if (Utils.getApiLevel() > 4) {
             ActivityTransitionAnimation.slide(StudyOptions.this, ActivityTransitionAnimation.LEFT);
         }
     }
@@ -2206,7 +2188,7 @@ public class StudyOptions extends Activity implements IButtonListener {
             mCompat.invalidateOptionsMenu(this);
             startActivityForResult(
                     new Intent(StudyOptions.this, PersonalDeckPicker.class), DOWNLOAD_PERSONAL_DECK);
-        	if (getApiLevel() > 4) {
+        	if (Utils.getApiLevel() > 4) {
         		ActivityTransitionAnimation.slide(this, ActivityTransitionAnimation.RIGHT);
         	}
         } else {
@@ -2219,7 +2201,7 @@ public class StudyOptions extends Activity implements IButtonListener {
         mCompat.invalidateOptionsMenu(this);
         // deckLoaded = false;
         startActivityForResult(new Intent(StudyOptions.this, SharedDeckPicker.class), DOWNLOAD_SHARED_DECK);
-    	if (getApiLevel() > 4) {
+    	if (Utils.getApiLevel() > 4) {
     		ActivityTransitionAnimation.slide(this, ActivityTransitionAnimation.RIGHT);
     	}
     }
@@ -2869,7 +2851,7 @@ public class StudyOptions extends Activity implements IButtonListener {
 		    	} else {
 	            	Intent intent = new Intent(StudyOptions.this, com.ichi2.charts.ChartBuilder.class);
 			    	startActivityForResult(intent, STATISTICS);
-			        if (getApiLevel() > 4) {
+			        if (Utils.getApiLevel() > 4) {
 			            ActivityTransitionAnimation.slide(StudyOptions.this, ActivityTransitionAnimation.DOWN);
 			        }
 		    	}

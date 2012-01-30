@@ -254,7 +254,7 @@ public class MyAccount extends Activity {
                 if (i.hasExtra("notLoggedIn") && i.getExtras().getBoolean("notLoggedIn", false)) {
                 	MyAccount.this.setResult(RESULT_OK, i);
                 	finish();
-			        if (StudyOptions.getApiLevel() > 4) {
+			        if (Utils.getApiLevel() > 4) {
 			            ActivityTransitionAnimation.slide(MyAccount.this, ActivityTransitionAnimation.RIGHT);
 			        }
                 } else {

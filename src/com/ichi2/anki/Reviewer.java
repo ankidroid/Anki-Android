@@ -91,6 +91,7 @@ import android.widget.TextView;
 import com.ichi2.anim.ActivityTransitionAnimation;
 import com.ichi2.anim.Animation3D;
 import com.ichi2.anim.ViewAnimation;
+import com.ichi2.compat.Compat;
 import com.ichi2.themes.StyledDialog;
 import com.ichi2.themes.StyledProgressDialog;
 import com.ichi2.themes.Themes;
@@ -433,6 +434,8 @@ public class Reviewer extends Activity implements IButtonListener{
     /** The class attribute of the comparedField for formatting */
     private String comparedFieldClass = null;
 
+    /** Used to perform operation in a platform specific way. */
+    private Compat mCompat;
 
     // ----------------------------------------------------------------------------
     // LISTENERS
@@ -619,6 +622,7 @@ public class Reviewer extends Activity implements IButtonListener{
         @Override
         public void onProgressUpdate(DeckTask.TaskData... values) {
             mCurrentCard = values[0].getCard();
+            mCompat.invalidateOptionsMenu(Reviewer.this);
         }
 
 
@@ -683,6 +687,7 @@ public class Reviewer extends Activity implements IButtonListener{
         @Override
         public void onProgressUpdate(DeckTask.TaskData... values) {
             mCurrentCard = values[0].getCard();
+            mCompat.invalidateOptionsMenu(Reviewer.this);
             int showQuestion = values[0].getInt();
             if (mPrefWhiteboard) {
                 mWhiteboard.clear();
@@ -877,6 +882,7 @@ public class Reviewer extends Activity implements IButtonListener{
         Log.i(AnkiDroidApp.TAG, "Reviewer - onCreate");
 
         mChangeBorderStyle = Themes.getTheme() == Themes.THEME_ANDROID_LIGHT || Themes.getTheme() == Themes.THEME_ANDROID_DARK;
+        mCompat = Utils.createCompat();
 
         // The hardware buttons should control the music volume while reviewing.
         setVolumeControlStream(AudioManager.STREAM_MUSIC);
@@ -1214,10 +1220,15 @@ public class Reviewer extends Activity implements IButtonListener{
         return mClipboard.getText();
     }
 
+
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
         MenuItem item = menu.findItem(MENU_MARK);
-        if (mCurrentCard != null && mCurrentCard.isMarked()){
+        // No options menu while the card is loading.
+        if (mCurrentCard == null) {
+        	return false;
+        }
+        if (mCurrentCard.isMarked()){
             item.setTitle(R.string.menu_marked);
             item.setIcon(R.drawable.ic_menu_star_on);
         } else {
@@ -1797,6 +1808,7 @@ public class Reviewer extends Activity implements IButtonListener{
         } else {
             // session limits not reached, show next card
         	mCurrentCard = values[0].getCard();
+            mCompat.invalidateOptionsMenu(Reviewer.this);
 
             // If the card is null means that there are no more cards scheduled for review.
             if (mCurrentCard == null) {

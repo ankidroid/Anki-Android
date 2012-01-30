@@ -788,7 +788,7 @@ public class DeckPicker extends Activity implements Runnable, IButtonListener {
 										MyAccount.class);
 								myAccount.putExtra("notLoggedIn", true);
 								startActivityForResult(myAccount, LOG_IN_FOR_SYNC);
-						        if (StudyOptions.getApiLevel() > 4) {
+						        if (Utils.getApiLevel() > 4) {
 						            ActivityTransitionAnimation.slide(DeckPicker.this, ActivityTransitionAnimation.LEFT);
 						        }
 							}
@@ -803,7 +803,7 @@ public class DeckPicker extends Activity implements Runnable, IButtonListener {
 										MyAccount.class);
 								myAccount.putExtra("notLoggedIn", true);
 								startActivityForResult(myAccount, LOG_IN_FOR_DOWNLOAD);
-						        if (StudyOptions.getApiLevel() > 4) {
+						        if (Utils.getApiLevel() > 4) {
 						            ActivityTransitionAnimation.slide(DeckPicker.this, ActivityTransitionAnimation.LEFT);
 						        }
 							}
@@ -1089,7 +1089,7 @@ public class DeckPicker extends Activity implements Runnable, IButtonListener {
 			finish();
 		} else {
 			finish();
-			if (getIntent().getBooleanExtra("showAnimation", false) && StudyOptions.getApiLevel() > 4) {
+			if (getIntent().getBooleanExtra("showAnimation", false) && Utils.getApiLevel() > 4) {
 	    			ActivityTransitionAnimation.slide(this, ActivityTransitionAnimation.LEFT);
     		}
 		}
@@ -1316,7 +1316,7 @@ public class DeckPicker extends Activity implements Runnable, IButtonListener {
         switch (item.getItemId()) {
             case MENU_CREATE_DECK:
                 startActivityForResult(new Intent(DeckPicker.this, DeckCreator.class), CREATE_DECK);
-                if (StudyOptions.getApiLevel() > 4) {
+                if (Utils.getApiLevel() > 4) {
                     ActivityTransitionAnimation.slide(DeckPicker.this, ActivityTransitionAnimation.RIGHT);
                 }
                 return true;
@@ -1650,7 +1650,7 @@ public class DeckPicker extends Activity implements Runnable, IButtonListener {
     public void openPersonalDeckPicker() {
         if (AnkiDroidApp.isUserLoggedIn()) {
             startActivityForResult(new Intent(this, PersonalDeckPicker.class), DOWNLOAD_PERSONAL_DECK);
-            if (StudyOptions.getApiLevel() > 4) {
+            if (Utils.getApiLevel() > 4) {
                 ActivityTransitionAnimation.slide(this, ActivityTransitionAnimation.RIGHT);
             }
         } else {
@@ -1662,7 +1662,7 @@ public class DeckPicker extends Activity implements Runnable, IButtonListener {
     public void openSharedDeckPicker() {
         // deckLoaded = false;
         startActivityForResult(new Intent(this, SharedDeckPicker.class), DOWNLOAD_SHARED_DECK);
-        if (StudyOptions.getApiLevel() > 4) {
+        if (Utils.getApiLevel() > 4) {
             ActivityTransitionAnimation.slide(this, ActivityTransitionAnimation.RIGHT);
         }
     }
@@ -1783,7 +1783,7 @@ public class DeckPicker extends Activity implements Runnable, IButtonListener {
 		    	} else {
 			    	Intent intent = new Intent(DeckPicker.this, com.ichi2.charts.ChartBuilder.class);
 			    	startActivity(intent);
-			        if (StudyOptions.getApiLevel() > 4) {
+			        if (Utils.getApiLevel() > 4) {
 			            ActivityTransitionAnimation.slide(DeckPicker.this, ActivityTransitionAnimation.DOWN);
 			        }	
 		    	}
