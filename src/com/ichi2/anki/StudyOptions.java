@@ -955,13 +955,13 @@ public class StudyOptions extends Activity implements IButtonListener {
 	private void updateValuesFromDeck(boolean reset) {
 		Resources res = getResources();
 
-		String[] name;
+		String fullName;
 		try {
-			name = mCol.getDecks().current().getString("name").split("::");
+			fullName = mCol.getDecks().current().getString("name");
 		} catch (JSONException e) {
 			throw new RuntimeException(e);
 		}
-
+		String[] name = fullName.split("::");
 		StringBuilder nameBuilder = new StringBuilder();
 		if (name.length > 0) {
 			nameBuilder.append(name[0]);
@@ -973,6 +973,7 @@ public class StudyOptions extends Activity implements IButtonListener {
 			nameBuilder.append("\n").append(name[name.length - 1]);
 		}
 		mTextDeckName.setText(nameBuilder.toString());
+		setTitle(fullName);
 		String desc = mCol.getDecks().getActualDescription();
 		if (desc.length() > 0) {
 			mTextDeckDescription.setText(desc);
@@ -1203,15 +1204,19 @@ public class StudyOptions extends Activity implements IButtonListener {
 			int totalCards = (Integer) obj[4];
 			mProgressMature = (Double) obj[5];
 			mProgressAll = (Double) obj[6];
+			int eta = (Integer) obj[7];
 			
 			int dues = newCards + lrnCards + revCards;
-			setTitle(getResources().getQuantityString(R.plurals.studyoptions_window_title, dues, "asdf", dues, 0));
 			mTextTodayNew.setText(String.valueOf(newCards));
 			mTextTodayLrn.setText(String.valueOf(lrnCards));
 			mTextTodayRev.setText(String.valueOf(revCards));
 			mTextNewTotal.setText(String.valueOf(totalNew));
 			mTextTotal.setText(String.valueOf(totalCards));
-			mTextETA.setText("???");
+			if (eta != -1) {
+				mTextETA.setText(Integer.toString(eta / 60));				
+			} else {
+				mTextETA.setText("-1");
+			}
 			updateStatisticBars();
 
 			if(mDeckCounts.getVisibility() == View.INVISIBLE) {

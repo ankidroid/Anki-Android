@@ -326,8 +326,16 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
     	} else {
         	data.success = true;
     		TreeSet<Object[]> decks = col.getSched().deckDueTree(true);
+        	int[] counts = new int[]{0, 0, 0};
+        	for (Object[] deck : decks) {
+        		if (((String[])deck[0]).length == 1) {
+        			counts[0] += (Integer) deck[2];
+        			counts[1] += (Integer) deck[3];
+        			counts[2] += (Integer) deck[4];
+        		}
+        	}
     		data.result = decks;
-    		data.data = new Object[]{conflictResolution, col};
+    		data.data = new Object[]{conflictResolution, col, col.getSched().eta(counts), col.cardCount()};
         	return data;
     	}
     }

@@ -29,22 +29,18 @@
 
 <!--<string name="studyoptions_title">Study Options</string>
 --><string name="studyoptions_deck_name">Deck name</string>
-<string name="studyoptions_reviews_due">Reviews due:</string>
-<string name="studyoptions_new_today">New today:</string>
-<string name="studyoptions_new_total">New total:</string>
+<string name="studyoptions_due_today">Due today:</string>
+<string name="studyoptions_new_total">Total new cards:</string>
+<string name="studyoptions_total_cards">Total cards:</string>
 <string name="studyoptions_eta">Estimated time (min):</string>
 <string name="studyoptions_start">Start Reviewing</string>
 <string name="studyoptions_more">Study Options</string>
-<plurals name="studyoptions_window_title">
-  <item quantity="one">%1$s (1 of %3$d due)</item>
-  <item quantity="other">%1$s (%2$d of %3$d due)</item>
-</plurals>
 <string name="studyoptions_more_dialog_title">More Options</string>
 
 <!-- DeckPicker.java -->
 <plurals name="deckpicker_title">
-  <item quantity="one">All decks: 1 of %2$d due (%3$s)</item>
-  <item quantity="other">All decks: %1$d of %2$d due (%3$s)</item>
+  <item quantity="one">AnkiDroid: 1 of %2$d due (%3$s)</item>
+  <item quantity="other">AnkiDroid: %1$d of %2$d due (%3$s)</item>
 </plurals>
 <plurals name="deckpicker_title_minutes">
   <item quantity="one">1 min.</item>

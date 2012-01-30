@@ -445,7 +445,7 @@ public class Decks {
 		}
 	}
 
-	private long[] cids(long did) {
+	public long[] cids(long did) {
 		ArrayList<Long> cids = mCol.getDb().queryColumn(Long.class,
 				"SELECT id FROM cards WHERE did = " + did, 0);
 		long[] result = new long[cids.size()];

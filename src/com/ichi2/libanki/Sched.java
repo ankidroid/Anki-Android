@@ -289,6 +289,40 @@ public class Sched {
 		}
 	}
 
+	/** LIBANKI: not in libanki */
+	public int eta(int[] counts) {
+		double revYesRate;
+		double revTime;
+		double lrnYesRate;
+		double lrnTime;
+		Cursor cur = null;
+		try {
+			cur = mCol.getDb().getDatabase().rawQuery("SELECT avg(CASE WHEN ease > 1 THEN 1 ELSE 0 END), avg(time) FROM revlog WHERE type = 1", null);
+			if (!cur.moveToFirst()) {
+				return -1;
+			}
+			revYesRate = cur.getDouble(0);
+			revTime = cur.getDouble(1);
+			cur = mCol.getDb().getDatabase().rawQuery("SELECT avg(CASE WHEN ease = 3 THEN 1 ELSE 0 END), avg(time) FROM revlog WHERE type != 1", null);
+			if (!cur.moveToFirst()) {
+				return -1;
+			}
+			lrnYesRate = cur.getDouble(0);
+			lrnTime = cur.getDouble(1);
+		} finally {
+			if (cur != null && !cur.isClosed()) {
+				cur.close();
+			}
+		}
+		// rev cards
+		double eta = revTime * counts[2];
+		// lrn cards
+		double factor = Math.min(1/(1 - lrnYesRate), 10);
+		double lrnAnswers = (counts[0] + counts[1] + counts[2] * (1 - revYesRate)) * factor;
+		eta += lrnAnswers * lrnTime;
+		return (int) (eta / 1000);
+	}
+
 	private int _walkingCount() {
 		return _walkingCount(null, null, null);
 	}
@@ -1764,7 +1798,7 @@ public class Sched {
  	public void sortCards(long[] cids, int start, int step, boolean shuffle, boolean shift) {
 		String scids = Utils.ids2str(cids);
 		long now = Utils.intNow();
-		ArrayList<Long> nids = mCol.getDb().queryColumn("SELECT DISTINCT nid FROM cards WHERE type = 0 AND id IN " + scids + " ORDER BY nid", 0);
+		ArrayList<Long> nids = mCol.getDb().queryColumn(Long.class, "SELECT DISTINCT nid FROM cards WHERE type = 0 AND id IN " + scids + " ORDER BY nid", 0);
 		if (nids.size() == 0) {
 			// no new cards
 			return;
@@ -1772,12 +1806,12 @@ public class Sched {
 		// determine nid ordering
 		HashMap<Long, Long> due = new HashMap<Long, Long>();
 		if (shuffle) {
-			Collection.shuffle(nids);
+			Collections.shuffle(nids);
 		}
 		for (int c = 0; c < nids.size(); c++) {
-			due.put(nids.get(i), start + c * step);
+			due.put(nids.get(c), (long) (start + c * step));
 		}
-		int high = start + c * nids.size();
+		int high = start + step * nids.size();
 		// shift
 		if (shift) {
 			int low = mCol.getDb().queryScalar("SELECT min(due) FROM cards WHERE due >= " + start + " AND type = 0 AND id NOT IN " + scids, false);
@@ -1800,7 +1834,7 @@ public class Sched {
 				cur.close();
 			}
 		}
-		mCol.getDb().executeMany("UPDATE cards SET due = ?, mod = ?, usn = ? WHERE id = ?"), d);
+		mCol.getDb().executeMany("UPDATE cards SET due = ?, mod = ?, usn = ? WHERE id = ?", d);
 	}
 
 	// randomizecards

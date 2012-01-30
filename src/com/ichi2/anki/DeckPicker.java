@@ -227,10 +227,6 @@ public class DeckPicker extends Activity {
 	private String mCurrentDeckFilename = null;
 	private String mCurrentDeckPath = null;
 
-	private int mTotalDueCards = 0;
-	private int mTotalCards = 0;
-	private int mTotalTime = 0;
-
 	private EditText mRenameDeckEditText;
 
 	int mStatisticType;
@@ -503,7 +499,7 @@ public class DeckPicker extends Activity {
 					}
 				}
 			} else {
-				updateDecksList((TreeSet<Object[]>) data.result);
+				updateDecksList((TreeSet<Object[]>) data.result, (Integer)data.data[2], (Integer)data.data[3]);
 				if (data.data.length > 0 && data.data[0] instanceof String && ((String)data.data[0]).length() > 0) {
 					String dataString = (String) data.data[0];
 					if (dataString.equals("upload")) {
@@ -592,7 +588,7 @@ public class DeckPicker extends Activity {
 			if (mCol == null) {
 				return;
 			}
-			updateDecksList(result.getDeckList());
+			updateDecksList(result.getDeckList(), -1, -1);
 			mDeckListView.setVisibility(View.VISIBLE);
 			mDeckListView.setAnimation(ViewAnimation.fade(ViewAnimation.FADE_IN, 500, 0));
 			DeckTask.launchDeckTask(DeckTask.TASK_TYPE_LOAD_DECK_COUNTS, mLoadCountsHandler, new TaskData(mCol));
@@ -628,7 +624,8 @@ public class DeckPicker extends Activity {
 
 		@Override
 		public void onPostExecute(DeckTask.TaskData result) {
-			updateDecksList(result.getDeckList());
+			Object[] res = result.getObjArray();
+			updateDecksList((TreeSet<Object[]>) res[0], (Integer)res[1], (Integer)res[2]);
 		}
 
 		@Override
@@ -1732,7 +1729,6 @@ public class DeckPicker extends Activity {
 //						SharedPreferences preferences = PrefSettings.getSharedPrefs(getBaseContext());
 //						String deckPath = preferences.getString("deckPath", AnkiDroidApp.getStorageDirectory());
 						mDeckIsSelected = false;
-						setTitleText();
 //						populateDeckList(deckPath);
 					}
 				}
@@ -1919,13 +1915,6 @@ public class DeckPicker extends Activity {
     }
 
 
-	private void setTitleText(){
-		Resources res = getResources();
-		String time = res.getQuantityString(R.plurals.deckpicker_title_minutes, mTotalTime, mTotalTime);
-		setTitle(res.getQuantityString(R.plurals.deckpicker_title, mTotalDueCards, mTotalDueCards, mTotalCards, time));
-	}
-
-
 	private HashMap<String, String> getDeckFromDeckList(long did) {
 		for (HashMap<String, String> d : mDeckList) {
 			if (d.get("did").equals(Long.toString(did))) {
@@ -2019,8 +2008,9 @@ public class DeckPicker extends Activity {
 	}
 
 
-	private void updateDecksList(TreeSet<Object[]> decks) {
+	private void updateDecksList(TreeSet<Object[]> decks, int eta, int count) {
 		mDeckList.clear();
+		int due = 0;
         for (Object[] d : decks) {
         	HashMap<String, String> m = new HashMap<String, String>();
         	String[] name = ((String[])d[0]);
@@ -2032,6 +2022,7 @@ public class DeckPicker extends Activity {
         	m.put("complMat", ((Float)d[5]).toString());
         	m.put("complAll", ((Float)d[6]).toString());
         	if (name.length == 1) {
+        		due += Integer.parseInt(m.get("new")) + Integer.parseInt(m.get("lrn")) + Integer.parseInt(m.get("rev"));
         		// top position
         		m.put("sep", "top");
         		// correct previous deck
@@ -2048,7 +2039,7 @@ public class DeckPicker extends Activity {
         		if (name.length == 1) {
         			m.put("sep", "ful");
 	    		} else {
-	    			m.put("sep", "bot");    			
+	    			m.put("sep", "bot");
 	    		}
         	} else {
         		// center position
@@ -2057,6 +2048,16 @@ public class DeckPicker extends Activity {
         	mDeckList.add(m);
         }
         mDeckListAdapter.notifyDataSetChanged();
+
+        // set title
+        Resources res = getResources();
+        if (eta != -1) {
+        	eta /= 60;
+            String time = res.getQuantityString(R.plurals.deckpicker_title_minutes, eta, eta);
+    		setTitle(res.getQuantityString(R.plurals.deckpicker_title, due, due, count, time));
+        } else {
+    		setTitle(res.getString(R.string.app_name));
+        }
 	}
 
 //	private void restartApp() {

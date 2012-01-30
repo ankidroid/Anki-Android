@@ -405,7 +405,7 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
                 Utils.writeToFile(stream, collectionFile);
                 stream.close();
                 AnkiDb ankiDB = AnkiDatabaseManager.getDatabase(collectionFile);
-                ankiDB.exec("UPDATE col SET crt = " + Utils.intNow());
+                ankiDB.execute("UPDATE col SET crt = " + Utils.intNow());
                 ankiDB.closeDatabase();
             } catch (IOException e) {
                 Log.e(AnkiDroidApp.TAG, Log.getStackTraceString(e));
@@ -431,7 +431,15 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
     private TaskData doInBackgroundLoadDeckCounts(TaskData... params) {
     	Collection col = params[0].getCollection();
     	TreeSet<Object[]> decks = col.getSched().deckDueTree(true);
-    	return new TaskData(decks);
+    	int[] counts = new int[]{0, 0, 0};
+    	for (Object[] deck : decks) {
+    		if (((String[])deck[0]).length == 1) {
+    			counts[0] += (Integer) deck[2];
+    			counts[1] += (Integer) deck[3];
+    			counts[2] += (Integer) deck[4];
+    		}
+    	}
+    	return new TaskData(new Object[]{decks, col.getSched().eta(counts), col.cardCount()});
     }
 
 
@@ -728,7 +736,7 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
 				/ ((double) totalCount);
 		double progressAll = 1 - (((double) (totalNewCount + counts[1])) / ((double) totalCount));
 
-		return new TaskData(new Object[]{counts[0], counts[1], counts[2], totalNewCount, totalCount, progressMature, progressAll});
+		return new TaskData(new Object[]{counts[0], counts[1], counts[2], totalNewCount, totalCount, progressMature, progressAll, sched.eta(counts)});
     }
 
 

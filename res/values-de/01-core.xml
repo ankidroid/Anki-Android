@@ -114,32 +114,4 @@
     <item>%s Monate</item>
     <item>%s Jahre</item>
   </string-array>
-  <plurals name="studyoptions_window_title">
-    <item quantity="one">%1$s (1 von %3$d fällig)</item>
-    <item quantity="other">%1$s (%2$d von %3$d fällig)</item>
-  </plurals>
-  <plurals name="deckpicker_title">
-    <item quantity="one">Alle Stapel: 1 von %2$d fällig (%3$s)</item>
-    <item quantity="other">Alle Stapel: %1$d von %2$d fällig (%3$s)</item>
-  </plurals>
-  <plurals name="deckpicker_title_minutes">
-    <item quantity="one">1 Min.</item>
-    <item quantity="other">%d Min.</item>
-  </plurals>
-  <plurals name="deckpicker_due">
-    <item quantity="one">1 von %2$d fällig</item>
-    <item quantity="other">%1$d von %2$d fällig</item>
-  </plurals>
-  <plurals name="reviewer_window_title">
-    <item quantity="one">%1$s (noch 1 Min.)</item>
-    <item quantity="other">%1$s (noch %2$d Min.)</item>
-  </plurals>
-  <plurals name="studyoptions_congrats_new_cards">
-    <item quantity="one">1 Karte neu zu lernen</item>
-    <item quantity="other">%1$d Karten neu zu lernen</item>
-  </plurals>
-  <plurals name="studyoptions_congrats_eta">
-    <item quantity="one">1 Min.</item>
-    <item quantity="other">%1$d Min.</item>
-  </plurals>
 </resources>
