@@ -19,8 +19,10 @@ package com.ichi2.charts;
 
 import org.achartengine.ChartFactory;
 import org.achartengine.GraphicalView;
+import org.achartengine.chart.BarChart;
 import org.achartengine.model.XYMultipleSeriesDataset;
 import org.achartengine.model.XYSeries;
+import org.achartengine.renderer.BasicStroke;
 import org.achartengine.renderer.XYMultipleSeriesRenderer;
 import org.achartengine.renderer.XYSeriesRenderer;
 
@@ -49,8 +51,7 @@ import com.ichi2.anim.ActivityTransitionAnimation;
 import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.DeckPicker;
 import com.ichi2.anki2.R;
-import com.ichi2.anki.Statistics;
-import com.ichi2.anki.StudyOptions;
+import com.ichi2.libanki.Stats;
 import com.ichi2.themes.Themes;
 import com.tomgibara.android.veecheck.util.PrefSettings;
 
@@ -67,6 +68,10 @@ public class ChartBuilder extends Activity {
     private int zoom = 0;
 
     private boolean mFullScreen;
+
+    private Stats mStats;
+    private double[][] mSeriesList;
+    private int[] mXAxisList;
 
     private static final int MENU_FULLSCREEN = 0;
     private static final int MENU_ZOOM_IN = 1;
@@ -96,9 +101,9 @@ public class ChartBuilder extends Activity {
 
 
     public void setDataset(int row) {
-        XYSeries series = new XYSeries(Statistics.Titles[row]);
-        for (int i = 0; i < Statistics.xAxisData.length; i++) {
-            series.add(Statistics.xAxisData[i], Statistics.sSeriesList[row][i]);
+        XYSeries series = new XYSeries("a");//Statistics.Titles[row]);
+        for (int i = 0; i < mSeriesList[row].length; i++) {//mStatistics.xAxisData.length; i++) {
+            series.add(i, mSeriesList[row][i]);
         }
         mDataset.addSeries(series);
     }
@@ -107,7 +112,7 @@ public class ChartBuilder extends Activity {
     public void setRenderer(int type, int row) {
         Resources res = getResources();
         XYSeriesRenderer renderer = new XYSeriesRenderer();
-        if (type <= Statistics.TYPE_CUMULATIVE_DUE) {
+        if (type <= 2) {
         	switch (row) {
         	case 0: 
                 renderer.setColor(res.getColor(R.color.statistics_due_young_cards));
@@ -119,7 +124,7 @@ public class ChartBuilder extends Activity {
 //                renderer.setColor(res.getColor(R.color.statistics_due_failed_cards));
         		break;
         	}
-        } else if (type == Statistics.TYPE_REVIEWS) {
+        } else if (type == 3) {
         	switch (row) {
         	case 0: 
 //                renderer.setColor(res.getColor(R.color.statistics_reps_new_cards));
@@ -198,7 +203,7 @@ public class ChartBuilder extends Activity {
                 SharedPreferences preferences = PrefSettings.getSharedPrefs(getBaseContext());
                 Editor editor = preferences.edit();
                 editor.putBoolean("fullScreen", !mFullScreen);
-                Statistics.sZoom = zoom;
+//                Statistics.sZoom = zoom;
                 editor.commit();
                 finish();
                 Intent intent = new Intent(this, com.ichi2.charts.ChartBuilder.class);
@@ -228,7 +233,10 @@ public class ChartBuilder extends Activity {
     	Themes.applyTheme(this);
         super.onCreate(savedInstanceState);
         restorePreferences();
-        if (Statistics.sSeriesList == null) {
+        mStats = Stats.currentStats();
+        mSeriesList = mStats.getSeriesList();
+        mXAxisList = mStats.getXAxisList();
+        if (mSeriesList == null) {
             Log.i(AnkiDroidApp.TAG, "ChartBuilder - Data variable empty, closing chartbuilder");
         	finish();
         	return;
@@ -245,45 +253,45 @@ public class ChartBuilder extends Activity {
         mTitle = (TextView) findViewById(R.id.statistics_title);
         if (mChartView == null) {
             if (mFullScreen) {
-                mTitle.setText(Statistics.sTitle);
+                mTitle.setText("due");//Statistics.sTitle);
                 mTitle.setTextColor(colors[0]);
             } else {
-                setTitle(Statistics.sTitle);
+                //setTitle(Statistics.sTitle);
                 mTitle.setVisibility(View.GONE);
             }
-            for (int i = 0; i < Statistics.sSeriesList.length; i++) {
+            for (int i = 0; i < mSeriesList.length; i++) {
                 setDataset(i);
-                setRenderer(Statistics.sType, i);
+                setRenderer(0, i);//Statistics.sType, i);
             }
-            if (Statistics.sSeriesList.length == 1) {
+            if (mSeriesList.length == 1) {
                 mRenderer.setShowLegend(false);
             }
-            mPan = new double[] { Statistics.xAxisData[0] - 1,
-                    Statistics.xAxisData[Statistics.xAxisData.length - 1] + 1 };
+            mPan = new double[] { mXAxisList[0] - 1, mXAxisList[mXAxisList.length - 1] + 1 };
             mRenderer.setLegendTextSize(17);
+            mRenderer.setBarSpacing(0.2);
             mRenderer.setLegendHeight(60);
             mRenderer.setAxisTitleTextSize(17);
             mRenderer.setLabelsTextSize(17);
             mRenderer.setXAxisMin(mPan[0]);
             mRenderer.setXAxisMax(mPan[1]);
             mRenderer.setYAxisMin(0);
-            mRenderer.setXTitle(Statistics.axisLabels[0]);
-            mRenderer.setYTitle(Statistics.axisLabels[1]);
+//            mRenderer.setXTitle(Statistics.axisLabels[0]);
+//            mRenderer.setYTitle(Statistics.axisLabels[1]);
             mRenderer.setBackgroundColor(colors[1]);
             mRenderer.setMarginsColor(colors[1]);
             mRenderer.setAxesColor(colors[0]);
             mRenderer.setLabelsColor(colors[0]);
             mRenderer.setZoomEnabled(false, false);
-            if (Statistics.sSeriesList[0][0] > 100 || Statistics.sSeriesList[0][1] > 100 || Statistics.sSeriesList[0][Statistics.sSeriesList[0].length - 1] > 100) {
-                mRenderer.setMargins(new int[] { 15, 50, 25, 0 });
-            } else {
+//            if (Statistics.sSeriesList[0][0] > 100 || Statistics.sSeriesList[0][1] > 100 || Statistics.sSeriesList[0][Statistics.sSeriesList[0].length - 1] > 100) {
+//                mRenderer.setMargins(new int[] { 15, 50, 25, 0 });
+//            } else {
                 mRenderer.setMargins(new int[] { 15, 42, 25, 0 });
-            }
+//            }
             mRenderer.setPanEnabled(true, false);
             mRenderer.setPanLimits(mPan);
             mRenderer.setXLabelsAlign(Align.CENTER);
             mRenderer.setYLabelsAlign(Align.RIGHT);
-//            mChartView = ChartFactory.getBarChartView(this, mDataset, mRenderer, BarChart.Type.STACKED);
+            mChartView = ChartFactory.getBarChartView(this, mDataset, mRenderer, BarChart.Type.STACKED);
             LinearLayout layout = (LinearLayout) findViewById(R.id.chart);
             layout.addView(mChartView, new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT));
         } else {
@@ -298,7 +306,7 @@ public class ChartBuilder extends Activity {
         		return false;
         		}
         	});
-		zoom = Statistics.sZoom;
+//		zoom = Statistics.sZoom;
         if (zoom > 0) {
         	zoom();
         }

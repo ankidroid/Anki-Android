@@ -669,15 +669,15 @@ public class DeckPicker extends Activity {
             	return;
             }
             if (result.getBoolean()) {
-		    	if (mStatisticType == Statistics.TYPE_DECK_SUMMARY) {
-		    		Statistics.showDeckSummary(DeckPicker.this);
-		    	} else {
-			    	Intent intent = new Intent(DeckPicker.this, com.ichi2.charts.ChartBuilder.class);
-			    	startActivity(intent);
-			        if (UIUtils.getApiLevel() > 4) {
-			            ActivityTransitionAnimation.slide(DeckPicker.this, ActivityTransitionAnimation.DOWN);
-			        }	
-		    	}
+//		    	if (mStatisticType == Statistics.TYPE_DECK_SUMMARY) {
+//		    		Statistics.showDeckSummary(DeckPicker.this);
+//		    	} else {
+//			    	Intent intent = new Intent(DeckPicker.this, com.ichi2.charts.ChartBuilder.class);
+//			    	startActivity(intent);
+//			        if (UIUtils.getApiLevel() > 4) {
+//			            ActivityTransitionAnimation.slide(DeckPicker.this, ActivityTransitionAnimation.DOWN);
+//			        }	
+//		    	}
 			}
 		}
 
@@ -1407,7 +1407,7 @@ public class DeckPicker extends Activity {
 		case DIALOG_SELECT_STATISTICS_TYPE:
 	        builder.setTitle(res.getString(R.string.statistics_type_title));
 	        builder.setIcon(android.R.drawable.ic_menu_sort_by_size);
-	        builder.setSingleChoiceItems(getResources().getStringArray(R.array.statistics_type_labels), Statistics.TYPE_DUE, mStatisticListener);
+//	        builder.setSingleChoiceItems(getResources().getStringArray(R.array.statistics_type_labels), Statistics.TYPE_DUE, mStatisticListener);
 	        dialog = builder.create();
 			break;
 
@@ -1441,7 +1441,7 @@ public class DeckPicker extends Activity {
 			entries[CONTEXT_MENU_REMOVE_BACKUPS] = res.getString(R.string.contextmenu_deckpicker_remove_backups);
 			entries[CONTEXT_MENU_RENAME_DECK] = res.getString(R.string.contextmenu_deckpicker_rename_deck);
 			entries[CONTEXT_MENU_DELETE_DECK] = res.getString(R.string.contextmenu_deckpicker_delete_deck);
-			entries[CONTEXT_MENU_DECK_SUMMARY] = res.getStringArray(R.array.statistics_type_labels)[Statistics.TYPE_DECK_SUMMARY];
+//			entries[CONTEXT_MENU_DECK_SUMMARY] = res.getStringArray(R.array.statistics_type_labels)[Statistics.TYPE_DECK_SUMMARY];
 
 			builder.setTitle("Context Menu");
 	        builder.setIcon(R.drawable.ic_menu_manage);
@@ -1659,25 +1659,25 @@ public class DeckPicker extends Activity {
     private DialogInterface.OnClickListener mStatisticListener = new DialogInterface.OnClickListener() {
         @Override
         public void onClick(DialogInterface dialog, int which) {
-			if (mStatisticType == -1 && which != Statistics.TYPE_DECK_SUMMARY) {
-				mStatisticType = which;
-           		showDialog(DIALOG_SELECT_STATISTICS_PERIOD);
-        	} else {
-		    	if (mFileList != null && mFileList.length > 0) {
-					String[] deckPaths = new String[mFileList.length];
-					int i = 0;
-			    	for (File file : mFileList) {
-			    		deckPaths[i] = file.getAbsolutePath();
-			    		i++;
-					}
-//			    	if (mStatisticType == -1) {
-//			    		mStatisticType = Statistics.TYPE_DECK_SUMMARY;
-//				    	DeckTask.launchDeckTask(DeckTask.TASK_TYPE_LOAD_STATISTICS, mLoadStatisticsHandler, new DeckTask.TaskData(DeckPicker.this, deckPaths, mStatisticType, 0));			    		
-//			    	} else {
-//				    	DeckTask.launchDeckTask(DeckTask.TASK_TYPE_LOAD_STATISTICS, mLoadStatisticsHandler, new DeckTask.TaskData(DeckPicker.this, deckPaths, mStatisticType, which));
-//			    	}
-		    	}
-        	}
+//			if (mStatisticType == -1 && which != Statistics.TYPE_DECK_SUMMARY) {
+//				mStatisticType = which;
+//           		showDialog(DIALOG_SELECT_STATISTICS_PERIOD);
+//        	} else {
+//		    	if (mFileList != null && mFileList.length > 0) {
+//					String[] deckPaths = new String[mFileList.length];
+//					int i = 0;
+//			    	for (File file : mFileList) {
+//			    		deckPaths[i] = file.getAbsolutePath();
+//			    		i++;
+//					}
+////			    	if (mStatisticType == -1) {
+////			    		mStatisticType = Statistics.TYPE_DECK_SUMMARY;
+////				    	DeckTask.launchDeckTask(DeckTask.TASK_TYPE_LOAD_STATISTICS, mLoadStatisticsHandler, new DeckTask.TaskData(DeckPicker.this, deckPaths, mStatisticType, 0));			    		
+////			    	} else {
+////				    	DeckTask.launchDeckTask(DeckTask.TASK_TYPE_LOAD_STATISTICS, mLoadStatisticsHandler, new DeckTask.TaskData(DeckPicker.this, deckPaths, mStatisticType, which));
+////			    	}
+//		    	}
+//        	}
         }
     };
 

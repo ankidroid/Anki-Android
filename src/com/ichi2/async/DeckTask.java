@@ -39,12 +39,12 @@ import com.ichi2.anki.BackupManager;
 import com.ichi2.anki.DeckCreator;
 import com.ichi2.anki2.R;
 import com.ichi2.anki.Reviewer;
-import com.ichi2.anki.Statistics;
 import com.ichi2.anki.StudyOptions;
 import com.ichi2.libanki.Card;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Note;
 import com.ichi2.libanki.Sched;
+import com.ichi2.libanki.Stats;
 import com.ichi2.libanki.Utils;
 import com.tomgibara.android.veecheck.util.PrefSettings;
 
@@ -644,21 +644,18 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
 
 
     private TaskData doInBackgroundLoadStatistics(TaskData... params) {
-//        Log.i(AnkiDroidApp.TAG, "doInBackgroundLoadStatistics");
+        Log.i(AnkiDroidApp.TAG, "doInBackgroundLoadStatistics");
 //        int type = params[0].getType();
 //        int period = params[0].getInt();
 //        Context context = params[0].getContext();
-//        String[] deckList = params[0].getDeckList();;
 //        boolean result = false;
-//
-//        Resources res = context.getResources();
-//        if (deckList.length == 1) {
-//        	if (deckList[0].length() == 0) {
-//            	result = Statistics.refreshDeckStatistics(context, DeckManager.getMainDeck(DeckManager.REQUESTING_ACTIVITY_STUDYOPTIONS), type, Integer.parseInt(res.getStringArray(R.array.statistics_period_values)[period]), res.getStringArray(R.array.statistics_type_labels)[type]);        		
-//        	}
-//        } else {
-//        	result = Statistics.refreshAllDeckStatistics(context, deckList, type, Integer.parseInt(res.getStringArray(R.array.statistics_period_values)[period]), res.getStringArray(R.array.statistics_type_labels)[type] + " " + res.getString(R.string.statistics_all_decks));        	
-//        }
+
+        Collection col = Collection.currentCollection();
+
+        Stats stats = new Stats(col);
+        stats.calculateDue(Stats.TYPE_MONTH);
+
+//    	result = Statistics.refreshDeckStatistics(context, , type, Integer.parseInt(res.getStringArray(R.array.statistics_period_values)[period]), res.getStringArray(R.array.statistics_type_labels)[type]);        		
 //       	publishProgress(new TaskData(result));
 //        return new TaskData(result);
     	return null;

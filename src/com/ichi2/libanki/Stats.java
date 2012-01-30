@@ -18,9 +18,6 @@ package com.ichi2.libanki;
 
 import java.util.ArrayList;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-
 import android.database.Cursor;
 
 /**
@@ -32,24 +29,48 @@ public class Stats {
     public static final int TYPE_YEAR = 1;
     public static final int TYPE_LIFE = 2;
 
-    private static Collection mCol;
-    private static Object mStats;
-    private static int mType;
-    private static boolean mWholeCollection;
+    private static Stats sCurrentInstance;
+
+    private Collection mCol;
+    private Object mStats;
+    private int mType;
+    private boolean mWholeCollection;
+    public double[][] mSeriesList;
+    public int[] mXAxisList;
 
     public Stats(Collection col) {
-	mCol = col;
-	mStats = null;
-	mWholeCollection = false;
+    	mCol = col;
+    	mStats = null;
+    	mWholeCollection = false;
+    	sCurrentInstance = this;
     }
 
+    public static Stats currentStats() {
+    	return sCurrentInstance;
+    }
+
+    public double[][] getSeriesList() {
+    	return mSeriesList;
+    }
+
+    public int[] getXAxisList() {
+    	return mXAxisList;
+    }
+
+    public void prepareSeriesList() {
+    	int[][] dues = (int[][]) mStats;
+    	mSeriesList = new double[dues.length][2];
+    	for (int i = 0; i < dues.length; i++) {
+    		mSeriesList[i][0] = dues[i][0];
+    		mSeriesList[i][1] = dues[i][1];
+    	}
+    }
 
     /**
      * Due and cumulative due
      * ***********************************************************************************************
      */
-    public int[][] due(Collection col, int type) {
-    	mCol = col;
+    public void calculateDue(int type) {
     	mType = type;
     	int start = 0;
     	int end = 0;
@@ -80,7 +101,8 @@ public class Stats {
                         "SELECT (due - " + mCol.getSched().getToday() + ")/" + chunk + " AS day, " // day
                                 + "count(), " // all cards
                                 + "sum(CASE WHEN ivl >= 21 THEN 1 ELSE 0 END) " // mature cards
-                                + "FROM cards WHERE did IN " + _limit() + " AND queue = 2" + lim + " GROUP BY day ORDER BY day", null);
+                                //+ "FROM cards WHERE did IN " + _limit() + " AND queue = 2" + lim + " GROUP BY day ORDER BY day", null);
+                				+ "FROM cards WHERE queue = 2" + lim + " GROUP BY day ORDER BY day", null);
                 while (cur.moveToNext()) {
                     dues.add(new int[] { cur.getInt(0), cur.getInt(1), cur.getInt(2) });
                 }
@@ -89,7 +111,14 @@ public class Stats {
                     cur.close();
                 }
             }
-            return (int[][]) dues.toArray(new int[dues.size()][dues.get(0).length]);
+            mSeriesList = new double[2][dues.size()];
+            mXAxisList = new int[dues.size()];
+            for (int i = 0; i < dues.size(); i++) {
+            	int[] data = dues.get(i);
+            	mXAxisList[i] = data[0];
+            	mSeriesList[0][i] = data[1];
+            	mSeriesList[1][i] = data[2];
+            }
     }
 
 
@@ -98,8 +127,7 @@ public class Stats {
      * ***********************************************************************************************
      */
 
-    public static int[][] reps(Collection col, int type) {
-    	mCol = col;
+    public int[][] reps(int type) {
     	mType = type;
     	int days;
     	int chunk;

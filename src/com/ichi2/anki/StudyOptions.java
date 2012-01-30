@@ -42,6 +42,7 @@ import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewTreeObserver;
+import android.view.ViewGroup.LayoutParams;
 import android.view.ViewTreeObserver.OnGlobalLayoutListener;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -49,6 +50,8 @@ import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.ToggleButton;
 
@@ -60,7 +63,6 @@ import com.ichi2.compat.Compat;
 import com.ichi2.compat.CompatV11;
 import com.ichi2.compat.CompatV3;
 import com.ichi2.libanki.Collection;
-import com.ichi2.libanki.Sched;
 import com.ichi2.libanki.Utils;
 import com.ichi2.themes.StyledDialog;
 import com.ichi2.themes.StyledProgressDialog;
@@ -263,9 +265,7 @@ public class StudyOptions extends Activity implements IButtonListener {
 				// openCardBrowser();
 				return;
 			case R.id.studyoptions_statistics:
-				v.setEnabled(false);
-				// mStatisticType = -1;
-				// showDialog(DIALOG_STATISTIC_TYPE);
+				 showDialog(DIALOG_STATISTIC_TYPE);
 				return;
 			case R.id.studyoptions_congrats_message:
 				// mStatisticType = 0;
@@ -700,16 +700,17 @@ public class StudyOptions extends Activity implements IButtonListener {
 	private OnClickListener mStatisticListener = new OnClickListener() {
 		@Override
 		public void onClick(DialogInterface dialog, int which) {
-			if (mStatisticType == -1) {
-				mStatisticType = which;
-				if (mStatisticType != Statistics.TYPE_DECK_SUMMARY) {
-					showDialog(DIALOG_STATISTIC_PERIOD);
-				} else {
-					openStatistics(0);
-				}
-			} else {
-				openStatistics(which);
-			}
+			 DeckTask.launchDeckTask(DeckTask.TASK_TYPE_LOAD_STATISTICS, mLoadStatisticsHandler, null);//new DeckTask.TaskData(this, new String[]{""}, mStatisticType, period));
+//			if (mStatisticType == -1) {
+//				mStatisticType = which;
+//				if (mStatisticType != Statistics.TYPE_DECK_SUMMARY) {
+//					showDialog(DIALOG_STATISTIC_PERIOD);
+//				} else {
+//					openStatistics(0);
+//				}
+//			} else {
+//				openStatistics(which);
+//			}
 		}
 	};
 
@@ -755,7 +756,23 @@ public class StudyOptions extends Activity implements IButtonListener {
 			builder.setSingleChoiceItems(
 					getResources().getStringArray(
 							R.array.statistics_type_labels),
-					Statistics.TYPE_DUE, mStatisticListener);
+					0, mStatisticListener);
+			RadioGroup rg = new RadioGroup(this);
+			rg.setOrientation(LinearLayout.HORIZONTAL);
+			RadioButton rb1 = new RadioButton(this);
+			rb1.setText("1 month");
+//			rb1.setSingleLine(true);
+			RadioButton rb2 = new RadioButton(this);
+			rb2.setText("1 year");
+//			rb2.setSingleLine(true);
+			RadioButton rb3 = new RadioButton(this);
+			rb3.setText("all");
+//			rb3.setSingleLine(true);
+			LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+			rg.addView(rb1, lp);
+			rg.addView(rb2, lp);
+			rg.addView(rb3, lp);
+			builder.setView(rg,  false, false);
 			dialog = builder.create();
 			break;
 
@@ -1092,14 +1109,6 @@ public class StudyOptions extends Activity implements IButtonListener {
 		}
 	}
 
-	private void openStatistics(int period) {
-		// if (DeckManager.getMainDeck() != null) {
-		// DeckTask.launchDeckTask(DeckTask.TASK_TYPE_LOAD_STATISTICS,
-		// mLoadStatisticsHandler, new DeckTask.TaskData(this, new String[]{""},
-		// mStatisticType, period));
-		// }
-	}
-
 	private void createTutorialDeck() {
 		DeckTask.launchDeckTask(DeckTask.TASK_TYPE_LOAD_TUTORIAL, new DeckTask.TaskListener() {
 			@Override
@@ -1245,19 +1254,17 @@ public class StudyOptions extends Activity implements IButtonListener {
 									+ e.getMessage());
 				}
 			}
-			if (result.getBoolean()) {
-				if (mStatisticType == Statistics.TYPE_DECK_SUMMARY) {
-					Statistics.showDeckSummary(StudyOptions.this);
-				} else {
-					Intent intent = new Intent(StudyOptions.this,
-							com.ichi2.charts.ChartBuilder.class);
+//			if (result.getBoolean()) {
+//				if (mStatisticType == Statistics.TYPE_DECK_SUMMARY) {
+//					Statistics.showDeckSummary(StudyOptions.this);
+//				} else {
+					Intent intent = new Intent(StudyOptions.this, com.ichi2.charts.ChartBuilder.class);
 					startActivityForResult(intent, STATISTICS);
 					if (UIUtils.getApiLevel() > 4) {
-						ActivityTransitionAnimation.slide(StudyOptions.this,
-								ActivityTransitionAnimation.DOWN);
+						ActivityTransitionAnimation.slide(StudyOptions.this, ActivityTransitionAnimation.DOWN);
 					}
-				}
-			}
+//				}
+//			}
 		}
 
 		@Override
@@ -1295,7 +1302,7 @@ public class StudyOptions extends Activity implements IButtonListener {
 							&& Math.abs(e1.getX() - e2.getX()) < DeckPicker.sSwipeMaxOffPath) {
 						// down
 						mStatisticType = 0;
-						openStatistics(0);
+//						openStatistics(0);
 					} else if (e1.getY() - e2.getY() > DeckPicker.sSwipeMinDistance
 							&& Math.abs(velocityY) > DeckPicker.sSwipeThresholdVelocity
 							&& Math.abs(e1.getX() - e2.getX()) < DeckPicker.sSwipeMaxOffPath) {
