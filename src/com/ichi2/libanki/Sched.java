@@ -231,10 +231,7 @@ public class Sched {
 	 * Unbury and remove temporary suspends on close.
 	 */
 	public void onClose() {
-		mCol.getDb()
-				.getDatabase()
-				.execSQL(
-						"UPDATE cards SET queue = type WHERE queue BETWEEN -3 AND -2");
+		mCol.getDb().execute("UPDATE cards SET queue = type WHERE queue BETWEEN -3 AND -2");
 	}
 
 	// /**
@@ -1023,9 +1020,7 @@ public class Sched {
 		if (ids != null && ids.length > 0) {
 			extra = " AND id IN " + Utils.ids2str(ids);
 		}
-		mCol.getDb()
-				.getDatabase()
-				.execSQL(
+		mCol.getDb().execute(
 						"UPDATE cards SET due = edue, queue = 2, mod = "
 								+ Utils.intNow() + ", usn = " + mCol.usn()
 								+ " WHERE queue = 1 AND type = 2 " + extra);
@@ -1578,10 +1573,7 @@ public class Sched {
 	 */
 	private void suspendCards(long[] ids) {
 		removeFailed(ids);
-		mCol.getDb()
-				.getDatabase()
-				.execSQL(
-						"UPDATE cards SET queue = -1, mod = " + Utils.intNow()
+		mCol.getDb().execute("UPDATE cards SET queue = -1, mod = " + Utils.intNow()
 								+ ", usn = " + mCol.usn() + " WHERE id IN "
 								+ Utils.ids2str(ids));
 	}
@@ -1590,9 +1582,7 @@ public class Sched {
 	 * Unsuspend cards
 	 */
 	private void unsuspend(long[] ids) {
-		mCol.getDb()
-				.getDatabase()
-				.execSQL(
+		mCol.getDb().execute(
 						"UPDATE cards SET queue = type, mod = "
 								+ Utils.intNow() + ", usn = " + mCol.usn()
 								+ " WHERE queue = -1 AND id IN "
@@ -1613,8 +1603,7 @@ public class Sched {
 			i++;
 		}
 		removeFailed(ids);
-		mCol.getDb().getDatabase()
-				.execSQL("UPDATE cards SET queue = -2 WHERE nid = " + nid);
+		mCol.getDb().execute("UPDATE cards SET queue = -2 WHERE nid = " + nid);
 	}
 
 	/**
@@ -1753,7 +1742,14 @@ public class Sched {
 	 * *******************************
 	 */
 
-	// forgetCards
+	/** Put cards at the end of the new queue. */
+	public void forgetCards(long[] ids) {
+		mCol.getDb().execute("UPDATE cards SET type=0, ivl=0 WHERE id IN " + Utils.ids2str(ids));
+		int pmax = mCol.getDb().queryScalar("SELECT max(due) FROM cards WHERE type=0", false);
+		// takes care of mod + usn
+		sortCards(ids, pmax + 1);
+	}
+
 	// reschedcards
 
 	/**
@@ -1762,7 +1758,51 @@ public class Sched {
 	 * *********************************************
 	 */
 
-	// sortcards
+	public void sortCards(long[] cids, int start) {
+		sortCards(cids, start, 1, false, false);
+	}
+ 	public void sortCards(long[] cids, int start, int step, boolean shuffle, boolean shift) {
+		String scids = Utils.ids2str(cids);
+		long now = Utils.intNow();
+		ArrayList<Long> nids = mCol.getDb().queryColumn("SELECT DISTINCT nid FROM cards WHERE type = 0 AND id IN " + scids + " ORDER BY nid", 0);
+		if (nids.size() == 0) {
+			// no new cards
+			return;
+		}
+		// determine nid ordering
+		HashMap<Long, Long> due = new HashMap<Long, Long>();
+		if (shuffle) {
+			Collection.shuffle(nids);
+		}
+		for (int c = 0; c < nids.size(); c++) {
+			due.put(nids.get(i), start + c * step);
+		}
+		int high = start + c * nids.size();
+		// shift
+		if (shift) {
+			int low = mCol.getDb().queryScalar("SELECT min(due) FROM cards WHERE due >= " + start + " AND type = 0 AND id NOT IN " + scids, false);
+			if (low != 0) {
+				int shiftby = high - low + 1;
+				mCol.getDb().execute("UPDATE cards SET mod = " + now + ", usn = " + mCol.usn() + ", due = due + " + shiftby + " WHERE id NOT IN " + scids + " AND due >= " + low);
+			}
+		}
+		// reorder cards
+		ArrayList<Object[]> d = new ArrayList<Object[]>();
+		Cursor cur = null;
+		try {
+			cur = mCol.getDb().getDatabase().rawQuery("SELECT id, nid FROM cards WHERE type = 0 AND id IN " + scids, null);
+			while (cur.moveToNext()) {
+				long nid = cur.getLong(1);
+				d.add(new Object[]{due.get(nid), now, mCol.usn(), cur.getLong(0)});
+			}
+		} finally {
+			if (cur != null && !cur.isClosed()) {
+				cur.close();
+			}
+		}
+		mCol.getDb().executeMany("UPDATE cards SET due = ?, mod = ?, usn = ? WHERE id = ?"), d);
+	}
+
 	// randomizecards
 	// ordercards
 	// resortconf

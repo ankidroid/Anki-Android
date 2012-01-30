@@ -395,7 +395,7 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
 
         File dbFile = new File(collectionFile);
         if (!dbFile.exists()) {
-            Log.i(AnkiDroidApp.TAG, "LoadDeck: db file does not exist. Creating it...");
+            Log.i(AnkiDroidApp.TAG, "doInBackgroundOpenCollection: db file does not exist. Creating it...");
             // If decks directory does not exist, create it.
             AnkiDroidApp.createDecksDirectoryIfMissing(dbFile.getParentFile());
         	// create file           
@@ -409,29 +409,18 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
                 ankiDB.closeDatabase();
             } catch (IOException e) {
                 Log.e(AnkiDroidApp.TAG, Log.getStackTraceString(e));
-                Log.e(AnkiDroidApp.TAG, "onCreate - The copy of empty.anki to the SD card failed.");
+                Log.e(AnkiDroidApp.TAG, "doInBackgroundOpenCollection - The copy of collection.anki2 to the SD card failed.");
                 // TODO: proper error handling
                 Collection col = null;
                 return new TaskData(col);
             }
         }
 
-        Log.i(AnkiDroidApp.TAG, "loadDeck - SD card mounted and existent file -> Loading collection...");
+        Log.i(AnkiDroidApp.TAG, "doInBackgroundOpenCollection - SD card mounted and existent file -> Loading collection...");
         
     	// load deck and set it as main deck
     	publishProgress(new TaskData(res.getString(R.string.loading_deck)));
         Collection col = Collection.openCollection(collectionFile);
-//        Decks deck = DeckManager.getDeck(deckFilename, requestingActivity == DeckManager.REQUESTING_ACTIVITY_STUDYOPTIONS, requestingActivity);
-//        if (deck == null) {
-//            Log.i(AnkiDroidApp.TAG, "The database " + deckFilename + " could not be opened");
-//            BackupManager.cleanUpAfterBackupCreation(false);
-//            return new TaskData(DECK_NOT_LOADED, deckFilename);            	
-//        }
-//        BackupManager.cleanUpAfterBackupCreation(true);
-//        if (deck.hasFinishScheduler()) {
-//        	deck.finishScheduler();
-//        }
-//        publishProgress(new TaskData(backupResult));
 
     	// load decks
     	TreeSet<Object[]> decks = col.getSched().deckDueTree(false);
@@ -691,6 +680,7 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
     	Log.i(AnkiDroidApp.TAG, "doInBackgroundCloseDeck");
     	Collection col = params[0].getCollection();
     	col.close(true);
+	// TODO: backup integration
     	return null;
     }
 
@@ -768,13 +758,17 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
         Log.i(AnkiDroidApp.TAG, "doInBackgroundLoadTutorial");
         Resources res = AnkiDroidApp.getInstance().getBaseContext().getResources();
         Collection col = params[0].getCollection();
+        col.getDb().getDatabase().beginTransaction();
+        try {
+		long did = col.getDecks().id(res.getString(R.string.tutorial_title));
+	       	if (col.getSched().cardCount("(" + did + ")") > 0) {
+			// deck does already exist. Remove all cards and recreate them to ensure the correct order
+			col.remCards(col.getDecks().cids(did));
+		}
 		String[] questions = res.getStringArray(R.array.tutorial_questions);
 		String[] answers = res.getStringArray(R.array.tutorial_answers);
 		String[] sampleQuestions = res.getStringArray(R.array.tutorial_capitals_questions);
 		String[] sampleAnswers = res.getStringArray(R.array.tutorial_capitals_answers);
-        col.getDb().getDatabase().beginTransaction();
-        try {
-        	long did = col.getDecks().id(res.getString(R.string.tutorial_title));
         	int len = Math.min(questions.length, answers.length);
         	for (int i = 0; i < len + Math.min(sampleQuestions.length, sampleAnswers.length); i++) {
         		Note note = col.newNote();
@@ -867,49 +861,6 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
         }
 
 
-//        public TaskData(Notes fact, LinkedHashMap<Long, CardModel> cardModels) {
-//        	mDeck = deck;
-//        	mFact = fact;
-//        	mCardModels = cardModels;
-//        }
-//
-//
-//        public TaskData(ArrayList<HashMap<String, String>> cards) {
-//        	mCards = cards;
-//        }
-//
-//
-//        public TaskData(ArrayList<HashMap<String, String>> cards, Comparator<? super HashMap<String, String>> comparator) {
-//        	mCards = cards;
-//        	mComparator = comparator;
-//        }
-//
-//
-//        public TaskData(Card card, boolean markedLeech, boolean suspendedLeech) {
-//            mCard = card;
-//            previousCardLeech = markedLeech;
-//            previousCardSuspended = suspendedLeech;
-//        }
-//
-//
-//        public TaskData(Decks deck, String order) {
-//            mDeck = deck;
-//            mMsg = order;
-//        }
-//
-// 
-//        public TaskData(Decks deck, int chunk) {
-//            mDeck = deck;
-//            mInteger = chunk;
-//        }
-//
-// 
-//        public TaskData(Decks deck, long value) {
-//            mDeck = deck;
-//            mLong = value;
-//        }
-
- 
         public TaskData(boolean bool) {
             mBool = bool;
         }
