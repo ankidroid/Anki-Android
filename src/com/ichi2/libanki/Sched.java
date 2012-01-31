@@ -297,13 +297,13 @@ public class Sched {
 		double lrnTime;
 		Cursor cur = null;
 		try {
-			cur = mCol.getDb().getDatabase().rawQuery("SELECT avg(CASE WHEN ease > 1 THEN 1 ELSE 0 END), avg(time) FROM revlog WHERE type = 1", null);
+			cur = mCol.getDb().getDatabase().rawQuery("SELECT avg(CASE WHEN ease > 1 THEN 1 ELSE 0 END), avg(time) FROM revlog WHERE type = 1 AND id > " + ((mCol.getSched().getDayCutoff() - (7 * 86400)) * 1000), null);
 			if (!cur.moveToFirst()) {
 				return -1;
 			}
 			revYesRate = cur.getDouble(0);
 			revTime = cur.getDouble(1);
-			cur = mCol.getDb().getDatabase().rawQuery("SELECT avg(CASE WHEN ease = 3 THEN 1 ELSE 0 END), avg(time) FROM revlog WHERE type != 1", null);
+			cur = mCol.getDb().getDatabase().rawQuery("SELECT avg(CASE WHEN ease = 3 THEN 1 ELSE 0 END), avg(time) FROM revlog WHERE type != 1 AND id > " + ((mCol.getSched().getDayCutoff() - (7 * 86400)) * 1000), null);
 			if (!cur.moveToFirst()) {
 				return -1;
 			}

@@ -78,6 +78,7 @@ import com.ichi2.async.Connection;
 import com.ichi2.async.DeckTask;
 import com.ichi2.async.Connection.Payload;
 import com.ichi2.async.DeckTask.TaskData;
+import com.ichi2.charts.ChartBuilder;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Stats;
 import com.ichi2.libanki.Utils;
@@ -1411,49 +1412,12 @@ public class DeckPicker extends Activity {
 			break;
 
 		case DIALOG_SELECT_STATISTICS_TYPE:
-			builder.setTitle(res.getString(R.string.statistics_type_title));
-			builder.setIcon(android.R.drawable.ic_menu_sort_by_size);
-			builder.setItems(
-					getResources().getStringArray(
-							R.array.statistics_type_labels),
-					new DialogInterface.OnClickListener() {
-						@Override
-						public void onClick(DialogInterface dialog, int which) {
-							DeckTask.launchDeckTask(DeckTask.TASK_TYPE_LOAD_STATISTICS, mLoadStatisticsHandler, new DeckTask.TaskData(mCol, which));
-						}
-					});
-			final RadioButton[] statisticRadioButtons = new RadioButton[3];
-		    RadioGroup rg = new RadioGroup(this);
-		    rg.setOrientation(RadioGroup.HORIZONTAL);
-		    RadioGroup.LayoutParams lp = new RadioGroup.LayoutParams(0, LayoutParams.MATCH_PARENT, 1);
-		    String[] text = new String[]{"1 month", "1 year", "all"};
-		    int height = getResources().getDrawable(R.drawable.blue_btn_radio).getIntrinsicHeight();
-		    for (int i = 0; i < statisticRadioButtons.length; i++){
-		    	statisticRadioButtons[i] = new RadioButton(this);
-		    	statisticRadioButtons[i].setClickable(true);
-		    	statisticRadioButtons[i].setText("         " + text[i]);
-		    	statisticRadioButtons[i].setHeight(height * 2);
-		    	statisticRadioButtons[i].setSingleLine();
-		    	statisticRadioButtons[i].setBackgroundDrawable(null);
-		    	statisticRadioButtons[i].setGravity(Gravity.CENTER_VERTICAL);
-		        rg.addView(statisticRadioButtons[i], lp);
-		    }
-		    rg.setOnCheckedChangeListener(new OnCheckedChangeListener () {
+			dialog = ChartBuilder.getStatisticsDialog(this, new DialogInterface.OnClickListener() {
 				@Override
-				public void onCheckedChanged(RadioGroup arg0, int arg1) {
-					int checked = arg0.getCheckedRadioButtonId();
-					for (int i = 0; i < 3; i++) {
-						if (arg0.getChildAt(i).getId() == checked) {
-							PrefSettings.getSharedPrefs(getBaseContext()).edit().putInt("statsType", i).commit();
-							break;
-						}
-					}
+				public void onClick(DialogInterface dialog, int which) {
+					DeckTask.launchDeckTask(DeckTask.TASK_TYPE_LOAD_STATISTICS, mLoadStatisticsHandler, new DeckTask.TaskData(mCol, which, true));
 				}
 				});
-		    rg.setLayoutParams(new LinearLayout.LayoutParams(LayoutParams.FILL_PARENT, height));
-		    statisticRadioButtons[Math.min(PrefSettings.getSharedPrefs(getBaseContext()).getInt("statsType", Stats.TYPE_MONTH), Stats.TYPE_LIFE)].setChecked(true);
-			builder.setView(rg,  false, true);
-			dialog = builder.create();
 			break;
 
 		case DIALOG_OPTIMIZE_DATABASE:

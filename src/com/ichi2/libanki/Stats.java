@@ -18,6 +18,9 @@ package com.ichi2.libanki;
 
 import java.util.ArrayList;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import android.database.Cursor;
 
 /**
@@ -38,10 +41,10 @@ public class Stats {
     public double[][] mSeriesList;
     public int[] mXAxisList;
 
-    public Stats(Collection col) {
+    public Stats(Collection col, boolean wholeCollection) {
     	mCol = col;
     	mStats = null;
-    	mWholeCollection = false;
+    	mWholeCollection = wholeCollection;
     	sCurrentInstance = this;
     }
 
@@ -101,8 +104,7 @@ public class Stats {
                         "SELECT (due - " + mCol.getSched().getToday() + ")/" + chunk + " AS day, " // day
                                 + "count(), " // all cards
                                 + "sum(CASE WHEN ivl >= 21 THEN 1 ELSE 0 END) " // mature cards
-                                //+ "FROM cards WHERE did IN " + _limit() + " AND queue = 2" + lim + " GROUP BY day ORDER BY day", null);
-                				+ "FROM cards WHERE queue = 2" + lim + " GROUP BY day ORDER BY day", null);
+                                + "FROM cards WHERE did IN " + _limit() + " AND queue = 2" + lim + " GROUP BY day ORDER BY day", null);
                 while (cur.moveToNext()) {
                     dues.add(new int[] { cur.getInt(0), cur.getInt(1), cur.getInt(2) });
                 }
@@ -220,22 +222,26 @@ public class Stats {
 
     private String _limit() {
         if (mWholeCollection) {
-            return mCol.getSched()._deckLimit();
+            ArrayList<Long> ids = new ArrayList<Long>();
+            for (JSONObject d : mCol.getDecks().all()) {
+            	try {
+            		ids.add(d.getLong("id"));
+            	} catch (JSONException e) {
+            		throw new RuntimeException(e);
+            	}
+            }
+            return Utils.ids2str(Utils.arrayList2array(ids));
         } else {
-            return "";
+            return mCol.getSched()._deckLimit();
         }
     }
 
 
-    private static String _revlogLimit() {
-//        try {
-//            JSONArray lim = mCol.getQconf().getJSONArray("groups");
-//            if (mSelective && lim.length() != 0) {
-//                return " AND cid IN (SELECT id FROM cards WHERE gid in " + Utils.ids2str(lim) + ")";
-//            }
-//        } catch (JSONException e) {
-//            throw new RuntimeException(e);
-//        }
-        return "";
+    private String _revlogLimit() {
+        if (mWholeCollection) {
+            return "";
+        } else {
+            return "cid IN (SELECT id FROM cards WHERE did IN " + Utils.ids2str(mCol.getDecks().active()) + ")";
+        }
     }
 }

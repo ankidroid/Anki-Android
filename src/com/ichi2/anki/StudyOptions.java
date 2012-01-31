@@ -59,6 +59,7 @@ import com.ichi2.anim.ActivityTransitionAnimation;
 import com.ichi2.anim.ViewAnimation;
 import com.ichi2.async.DeckTask;
 import com.ichi2.async.DeckTask.TaskData;
+import com.ichi2.charts.ChartBuilder;
 import com.ichi2.compat.Compat;
 import com.ichi2.compat.CompatV11;
 import com.ichi2.compat.CompatV3;
@@ -724,54 +725,13 @@ public class StudyOptions extends Activity implements IButtonListener {
 			dialog = builder.create();
 			break;
 
-//		case DIALOG_STATISTIC_PERIOD:
-//			builder.setTitle(res.getString(R.string.statistics_period_title));
-//			builder.setIcon(android.R.drawable.ic_menu_sort_by_size);
-//			builder.setSingleChoiceItems(
-//					getResources().getStringArray(
-//							R.array.statistics_period_labels), 0, 
-//			dialog = builder.create();
-//			break;
-//
 		case DIALOG_STATISTIC_TYPE:
-			builder.setTitle(res.getString(R.string.statistics_type_title));
-			builder.setIcon(android.R.drawable.ic_menu_sort_by_size);
-			builder.setSingleChoiceItems(
-					getResources().getStringArray(
-							R.array.statistics_type_labels),
-					0, new OnClickListener() {
-						@Override
-						public void onClick(DialogInterface dialog, int which) {
-							 DeckTask.launchDeckTask(DeckTask.TASK_TYPE_LOAD_STATISTICS, mLoadStatisticsHandler, null);//new DeckTask.TaskData(this, new String[]{""}, mStatisticType, period));
-//							if (mStatisticType == -1) {
-//								mStatisticType = which;
-//								if (mStatisticType != Statistics.TYPE_DECK_SUMMARY) {
-//									showDialog(DIALOG_STATISTIC_PERIOD);
-//								} else {
-//									openStatistics(0);
-//								}
-//							} else {
-//								openStatistics(which);
-//							}
-						}
-					});
-			RadioGroup rg = new RadioGroup(this);
-			rg.setOrientation(LinearLayout.HORIZONTAL);
-			RadioButton rb1 = new RadioButton(this);
-			rb1.setText("1 month");
-//			rb1.setSingleLine(true);
-			RadioButton rb2 = new RadioButton(this);
-			rb2.setText("1 year");
-//			rb2.setSingleLine(true);
-			RadioButton rb3 = new RadioButton(this);
-			rb3.setText("all");
-//			rb3.setSingleLine(true);
-			LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
-			rg.addView(rb1, lp);
-			rg.addView(rb2, lp);
-			rg.addView(rb3, lp);
-			builder.setView(rg,  false, false);
-			dialog = builder.create();
+			dialog = ChartBuilder.getStatisticsDialog(this, new DialogInterface.OnClickListener() {
+				@Override
+				public void onClick(DialogInterface dialog, int which) {
+					DeckTask.launchDeckTask(DeckTask.TASK_TYPE_LOAD_STATISTICS, mLoadStatisticsHandler, new DeckTask.TaskData(mCol, which, false));
+				}
+				});
 			break;
 
 		case DIALOG_LIMIT_SESSION:

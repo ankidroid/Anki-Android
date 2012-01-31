@@ -22,11 +22,12 @@ import org.achartengine.GraphicalView;
 import org.achartengine.chart.BarChart;
 import org.achartengine.model.XYMultipleSeriesDataset;
 import org.achartengine.model.XYSeries;
-import org.achartengine.renderer.BasicStroke;
 import org.achartengine.renderer.XYMultipleSeriesRenderer;
 import org.achartengine.renderer.XYSeriesRenderer;
 
 import android.app.Activity;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
@@ -35,6 +36,7 @@ import android.graphics.Paint.Align;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.GestureDetector;
+import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -45,13 +47,20 @@ import android.view.WindowManager;
 import android.view.GestureDetector.SimpleOnGestureListener;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.LinearLayout;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
+import android.widget.RadioGroup.OnCheckedChangeListener;
 
 import com.ichi2.anim.ActivityTransitionAnimation;
 import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.DeckPicker;
 import com.ichi2.anki2.R;
+import com.ichi2.async.DeckTask;
+import com.ichi2.async.DeckTask.TaskListener;
+import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Stats;
+import com.ichi2.themes.StyledDialog;
 import com.ichi2.themes.Themes;
 import com.tomgibara.android.veecheck.util.PrefSettings;
 
@@ -344,5 +353,47 @@ public class ChartBuilder extends Activity {
 	        return true;
 	    else
 	    	return false;
+    }
+
+
+    public static StyledDialog getStatisticsDialog(Context context, DialogInterface.OnClickListener listener) {
+    	StyledDialog.Builder builder = new StyledDialog.Builder(context);
+		builder.setTitle(context.getString(R.string.statistics_type_title));
+		builder.setIcon(android.R.drawable.ic_menu_sort_by_size);
+		builder.setItems(
+				context.getResources().getStringArray(
+						R.array.statistics_type_labels), listener);
+		final RadioButton[] statisticRadioButtons = new RadioButton[3];
+	    RadioGroup rg = new RadioGroup(context);
+	    rg.setOrientation(RadioGroup.HORIZONTAL);
+	    RadioGroup.LayoutParams lp = new RadioGroup.LayoutParams(0, LayoutParams.MATCH_PARENT, 1);
+	    String[] text = new String[]{"1 month", "1 year", "all"};
+	    int height = context.getResources().getDrawable(R.drawable.blue_btn_radio).getIntrinsicHeight();
+	    for (int i = 0; i < statisticRadioButtons.length; i++){
+	    	statisticRadioButtons[i] = new RadioButton(context);
+	    	statisticRadioButtons[i].setClickable(true);
+	    	statisticRadioButtons[i].setText("         " + text[i]);
+	    	statisticRadioButtons[i].setHeight(height * 2);
+	    	statisticRadioButtons[i].setSingleLine();
+	    	statisticRadioButtons[i].setBackgroundDrawable(null);
+	    	statisticRadioButtons[i].setGravity(Gravity.CENTER_VERTICAL);
+	        rg.addView(statisticRadioButtons[i], lp);
+	    }
+	    rg.setOnCheckedChangeListener(new OnCheckedChangeListener () {
+			@Override
+			public void onCheckedChanged(RadioGroup arg0, int arg1) {
+				int checked = arg0.getCheckedRadioButtonId();
+				for (int i = 0; i < 3; i++) {
+					if (arg0.getChildAt(i).getId() == checked) {
+						PrefSettings.getSharedPrefs(AnkiDroidApp.getInstance().getBaseContext()).edit().putInt("statsType", i).commit();
+						break;
+					}
+				}
+			}
+			});
+	    rg.setLayoutParams(new LinearLayout.LayoutParams(LayoutParams.FILL_PARENT, height));
+	    statisticRadioButtons[Math.min(PrefSettings.getSharedPrefs(AnkiDroidApp.getInstance().getBaseContext()).getInt("statsType", Stats.TYPE_MONTH), Stats.TYPE_LIFE)].setChecked(true);
+		builder.setView(rg,  false, true);
+		return builder.create();
     }
 }
