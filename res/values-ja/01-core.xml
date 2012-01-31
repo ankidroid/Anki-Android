@@ -53,8 +53,8 @@
   <string name="studyoptions_congrats_syncdeck">単語帳を同期</string>
   <string name="studyoptions_congrats_open_other_deck">他の単語帳を開く</string>
   <string name="studyoptions_congrats_finish">戻る</string>
-  <string name="card_unsuspended">Card suspension undone</string>
-  <string name="card_suspended">Card resuspended</string>
+  <string name="card_unsuspended">カードの停止解除</string>
+  <string name="card_suspended">カードが再停止されました</string>
   <string name="menu_rotate">回転</string>
   <string name="undo">元に戻す</string>
   <string name="redo">再実行</string>
@@ -63,10 +63,10 @@
   <string name="contextmenu_deckpicker_reset_language_assignments">言語設定のリセット</string>
   <string name="contextmenu_deckpicker_reset_reset_message">言語設定のリセット</string>
   <string name="contextmenu_deckpicker_optimize_deck">データベースを最適化します</string>
-  <string name="contextmenu_deckpicker_rename_deck">Rename deck</string>
+  <string name="contextmenu_deckpicker_rename_deck">単語帳の名前の変更</string>
   <string name="contextmenu_deckpicker_set_custom_dictionary">カスタム辞書設定</string>
-  <string name="begin_cram">総復習を始める</string>
-  <string name="cram">総復習</string>
+  <string name="begin_cram">詰め込み勉強を始める</string>
+  <string name="cram">詰め込み勉強</string>
   <string name="menu_open_deck">すべての単語帳</string>
   <string name="menu_sync">同期</string>
   <string name="menu_download_deck">単語帳をダウンロード</string>
@@ -92,8 +92,8 @@
   <string name="studyoptions_load_other_deck">他の単語帳を開く</string>
   <string name="studyoptions_load_tutorial_deck">チュートリアル単語帳</string>
   <string name="studyoptions_night_mode">ナイトモード</string>
-  <string name="studyoptions_swap_qa">Swap Q/A</string>
-  <string name="visit">Visit</string>
+  <string name="studyoptions_swap_qa">問/答 反転</string>
+  <string name="visit">訪問</string>
   <string name="later">後で</string>
   <string name="download">ダウンロード</string>
   <string name="deckpicker_loading_error">単語帳を開けませんでした</string>
