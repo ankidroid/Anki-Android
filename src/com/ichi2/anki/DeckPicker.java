@@ -68,6 +68,7 @@ import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.RadioGroup.OnCheckedChangeListener;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
 
@@ -78,6 +79,7 @@ import com.ichi2.async.DeckTask;
 import com.ichi2.async.Connection.Payload;
 import com.ichi2.async.DeckTask.TaskData;
 import com.ichi2.libanki.Collection;
+import com.ichi2.libanki.Stats;
 import com.ichi2.libanki.Utils;
 import com.ichi2.themes.StyledDialog;
 import com.ichi2.themes.StyledProgressDialog;
@@ -1411,62 +1413,48 @@ public class DeckPicker extends Activity {
 		case DIALOG_SELECT_STATISTICS_TYPE:
 			builder.setTitle(res.getString(R.string.statistics_type_title));
 			builder.setIcon(android.R.drawable.ic_menu_sort_by_size);
-			builder.setSingleChoiceItems(
+			builder.setItems(
 					getResources().getStringArray(
 							R.array.statistics_type_labels),
-					0, new DialogInterface.OnClickListener() {
+					new DialogInterface.OnClickListener() {
 						@Override
 						public void onClick(DialogInterface dialog, int which) {
-							 DeckTask.launchDeckTask(DeckTask.TASK_TYPE_LOAD_STATISTICS, mLoadStatisticsHandler, null);//new DeckTask.TaskData(this, new String[]{""}, mStatisticType, period));
-//							if (mStatisticType == -1) {
-//								mStatisticType = which;
-//								if (mStatisticType != Statistics.TYPE_DECK_SUMMARY) {
-//									showDialog(DIALOG_STATISTIC_PERIOD);
-//								} else {
-//									openStatistics(0);
-//								}
-//							} else {
-//								openStatistics(which);
-//							}
+							DeckTask.launchDeckTask(DeckTask.TASK_TYPE_LOAD_STATISTICS, mLoadStatisticsHandler, new DeckTask.TaskData(mCol, which));
 						}
 					});
-//			LinearLayout parentlayout = new LinearLayout(this);
-//			parentlayout.setOrientation(LinearLayout.VERTICAL);
 			final RadioButton[] statisticRadioButtons = new RadioButton[3];
-//			TextView[] tvs = new TextView[3];
 		    RadioGroup rg = new RadioGroup(this);
 		    rg.setOrientation(RadioGroup.HORIZONTAL);
 		    RadioGroup.LayoutParams lp = new RadioGroup.LayoutParams(0, LayoutParams.MATCH_PARENT, 1);
-//		    LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(0, LayoutParams.WRAP_CONTENT, 1);
+		    String[] text = new String[]{"1 month", "1 year", "all"};
+		    int height = getResources().getDrawable(R.drawable.blue_btn_radio).getIntrinsicHeight();
 		    for (int i = 0; i < statisticRadioButtons.length; i++){
 		    	statisticRadioButtons[i] = new RadioButton(this);
-		    	statisticRadioButtons[1].setClickable(true);
-		    	statisticRadioButtons[i].setText("asdf");
-		    	statisticRadioButtons[i].setGravity(Gravity.CENTER);
+		    	statisticRadioButtons[i].setClickable(true);
+		    	statisticRadioButtons[i].setText("         " + text[i]);
+		    	statisticRadioButtons[i].setHeight(height * 2);
+		    	statisticRadioButtons[i].setSingleLine();
+		    	statisticRadioButtons[i].setBackgroundDrawable(null);
+		    	statisticRadioButtons[i].setGravity(Gravity.CENTER_VERTICAL);
 		        rg.addView(statisticRadioButtons[i], lp);
 		    }
-		    statisticRadioButtons[1].setChecked(true);
-//		    LinearLayout ll = new LinearLayout(this);
-//		    ll.setOrientation(LinearLayout.HORIZONTAL);
-//		    String[] text = new String[]{"1 month", "1 year", "all"};
-//		    for (int i = 0; i < tvs.length; i++){
-//		    	tvs[i] = new TextView(this);
-//		        tvs[i].setText(text[i]);
-//		        tvs[i].setGravity(Gravity.CENTER);
-//		        ll.addView(tvs[i], lp);
-//		    }
-//		    parentlayout.addView(rg);
-//		    parentlayout.addView(ll);
-			builder.setView(rg,  false, false);
+		    rg.setOnCheckedChangeListener(new OnCheckedChangeListener () {
+				@Override
+				public void onCheckedChanged(RadioGroup arg0, int arg1) {
+					int checked = arg0.getCheckedRadioButtonId();
+					for (int i = 0; i < 3; i++) {
+						if (arg0.getChildAt(i).getId() == checked) {
+							PrefSettings.getSharedPrefs(getBaseContext()).edit().putInt("statsType", i).commit();
+							break;
+						}
+					}
+				}
+				});
+		    rg.setLayoutParams(new LinearLayout.LayoutParams(LayoutParams.FILL_PARENT, height));
+		    statisticRadioButtons[Math.min(PrefSettings.getSharedPrefs(getBaseContext()).getInt("statsType", Stats.TYPE_MONTH), Stats.TYPE_LIFE)].setChecked(true);
+			builder.setView(rg,  false, true);
 			dialog = builder.create();
 			break;
-
-//		case DIALOG_SELECT_STATISTICS_PERIOD:
-//	        builder.setTitle(res.getString(R.string.statistics_period_title));
-//	        builder.setIcon(android.R.drawable.ic_menu_sort_by_size);
-//	        builder.setSingleChoiceItems(getResources().getStringArray(R.array.statistics_period_labels), 0, mStatisticListener);
-//	        dialog = builder.create();
-//			break;
 
 		case DIALOG_OPTIMIZE_DATABASE:
     		builder.setTitle(res.getString(R.string.optimize_deck_title));

@@ -645,19 +645,13 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
 
     private TaskData doInBackgroundLoadStatistics(TaskData... params) {
         Log.i(AnkiDroidApp.TAG, "doInBackgroundLoadStatistics");
-//        int type = params[0].getType();
-//        int period = params[0].getInt();
-//        Context context = params[0].getContext();
-//        boolean result = false;
-
-        Collection col = Collection.currentCollection();
+        Collection col = params[0].getCollection();
+        int type = params[0].getInt();
 
         Stats stats = new Stats(col);
-        stats.calculateDue(Stats.TYPE_MONTH);
+        stats.calculateDue(PrefSettings.getSharedPrefs(AnkiDroidApp.getInstance().getBaseContext()).getInt("statsType", Stats.TYPE_MONTH));
 
-//    	result = Statistics.refreshDeckStatistics(context, , type, Integer.parseInt(res.getStringArray(R.array.statistics_period_values)[period]), res.getStringArray(R.array.statistics_type_labels)[type]);        		
-//       	publishProgress(new TaskData(result));
-//        return new TaskData(result);
+        //        return new TaskData(result);
     	return null;
     }
 
