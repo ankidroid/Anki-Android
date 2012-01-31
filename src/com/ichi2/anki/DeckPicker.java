@@ -47,6 +47,7 @@ import android.text.style.UnderlineSpan;
 import android.util.Log;
 import android.view.ContextMenu;
 import android.view.GestureDetector;
+import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -57,13 +58,18 @@ import android.view.ViewGroup;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.view.GestureDetector.SimpleOnGestureListener;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup.LayoutParams;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ProgressBar;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.SimpleAdapter;
+import android.widget.TextView;
 
 import com.ichi2.anim.ActivityTransitionAnimation;
 import com.ichi2.anim.ViewAnimation;
@@ -665,20 +671,20 @@ public class DeckPicker extends Activity {
                     Log.e(AnkiDroidApp.TAG, "onPostExecute - Dialog dismiss Exception = " + e.getMessage());
                 }
             }
-            if (result == null) {
-            	return;
-            }
-            if (result.getBoolean()) {
+//            if (result == null) {
+//            	return;
+//            }
+//            if (result.getBoolean()) {
 //		    	if (mStatisticType == Statistics.TYPE_DECK_SUMMARY) {
 //		    		Statistics.showDeckSummary(DeckPicker.this);
 //		    	} else {
-//			    	Intent intent = new Intent(DeckPicker.this, com.ichi2.charts.ChartBuilder.class);
-//			    	startActivity(intent);
-//			        if (UIUtils.getApiLevel() > 4) {
-//			            ActivityTransitionAnimation.slide(DeckPicker.this, ActivityTransitionAnimation.DOWN);
-//			        }	
+			    	Intent intent = new Intent(DeckPicker.this, com.ichi2.charts.ChartBuilder.class);
+			    	startActivity(intent);
+			        if (UIUtils.getApiLevel() > 4) {
+			            ActivityTransitionAnimation.slide(DeckPicker.this, ActivityTransitionAnimation.DOWN);
+			        }	
 //		    	}
-			}
+//			}
 		}
 
 		@Override
@@ -883,9 +889,7 @@ public class DeckPicker extends Activity {
 		mStatsButton.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				mStatsButton.setEnabled(false);
-//				mStatisticType = -1;
-//				showDialog(DIALOG_SELECT_STATISTICS_TYPE);
+				showDialog(DIALOG_SELECT_STATISTICS_TYPE);
 			}
 		});
 
@@ -1405,18 +1409,64 @@ public class DeckPicker extends Activity {
 			break;
 
 		case DIALOG_SELECT_STATISTICS_TYPE:
-	        builder.setTitle(res.getString(R.string.statistics_type_title));
-	        builder.setIcon(android.R.drawable.ic_menu_sort_by_size);
-//	        builder.setSingleChoiceItems(getResources().getStringArray(R.array.statistics_type_labels), Statistics.TYPE_DUE, mStatisticListener);
-	        dialog = builder.create();
+			builder.setTitle(res.getString(R.string.statistics_type_title));
+			builder.setIcon(android.R.drawable.ic_menu_sort_by_size);
+			builder.setSingleChoiceItems(
+					getResources().getStringArray(
+							R.array.statistics_type_labels),
+					0, new DialogInterface.OnClickListener() {
+						@Override
+						public void onClick(DialogInterface dialog, int which) {
+							 DeckTask.launchDeckTask(DeckTask.TASK_TYPE_LOAD_STATISTICS, mLoadStatisticsHandler, null);//new DeckTask.TaskData(this, new String[]{""}, mStatisticType, period));
+//							if (mStatisticType == -1) {
+//								mStatisticType = which;
+//								if (mStatisticType != Statistics.TYPE_DECK_SUMMARY) {
+//									showDialog(DIALOG_STATISTIC_PERIOD);
+//								} else {
+//									openStatistics(0);
+//								}
+//							} else {
+//								openStatistics(which);
+//							}
+						}
+					});
+//			LinearLayout parentlayout = new LinearLayout(this);
+//			parentlayout.setOrientation(LinearLayout.VERTICAL);
+			final RadioButton[] statisticRadioButtons = new RadioButton[3];
+//			TextView[] tvs = new TextView[3];
+		    RadioGroup rg = new RadioGroup(this);
+		    rg.setOrientation(RadioGroup.HORIZONTAL);
+		    RadioGroup.LayoutParams lp = new RadioGroup.LayoutParams(0, LayoutParams.MATCH_PARENT, 1);
+//		    LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(0, LayoutParams.WRAP_CONTENT, 1);
+		    for (int i = 0; i < statisticRadioButtons.length; i++){
+		    	statisticRadioButtons[i] = new RadioButton(this);
+		    	statisticRadioButtons[1].setClickable(true);
+		    	statisticRadioButtons[i].setText("asdf");
+		    	statisticRadioButtons[i].setGravity(Gravity.CENTER);
+		        rg.addView(statisticRadioButtons[i], lp);
+		    }
+		    statisticRadioButtons[1].setChecked(true);
+//		    LinearLayout ll = new LinearLayout(this);
+//		    ll.setOrientation(LinearLayout.HORIZONTAL);
+//		    String[] text = new String[]{"1 month", "1 year", "all"};
+//		    for (int i = 0; i < tvs.length; i++){
+//		    	tvs[i] = new TextView(this);
+//		        tvs[i].setText(text[i]);
+//		        tvs[i].setGravity(Gravity.CENTER);
+//		        ll.addView(tvs[i], lp);
+//		    }
+//		    parentlayout.addView(rg);
+//		    parentlayout.addView(ll);
+			builder.setView(rg,  false, false);
+			dialog = builder.create();
 			break;
 
-		case DIALOG_SELECT_STATISTICS_PERIOD:
-	        builder.setTitle(res.getString(R.string.statistics_period_title));
-	        builder.setIcon(android.R.drawable.ic_menu_sort_by_size);
-	        builder.setSingleChoiceItems(getResources().getStringArray(R.array.statistics_period_labels), 0, mStatisticListener);
-	        dialog = builder.create();
-			break;
+//		case DIALOG_SELECT_STATISTICS_PERIOD:
+//	        builder.setTitle(res.getString(R.string.statistics_period_title));
+//	        builder.setIcon(android.R.drawable.ic_menu_sort_by_size);
+//	        builder.setSingleChoiceItems(getResources().getStringArray(R.array.statistics_period_labels), 0, mStatisticListener);
+//	        dialog = builder.create();
+//			break;
 
 		case DIALOG_OPTIMIZE_DATABASE:
     		builder.setTitle(res.getString(R.string.optimize_deck_title));

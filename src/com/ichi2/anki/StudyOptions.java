@@ -697,22 +697,6 @@ public class StudyOptions extends Activity implements IButtonListener {
 		mButtonCongratsFinish.setOnClickListener(mButtonClickListener);
 	}
 
-	private OnClickListener mStatisticListener = new OnClickListener() {
-		@Override
-		public void onClick(DialogInterface dialog, int which) {
-			 DeckTask.launchDeckTask(DeckTask.TASK_TYPE_LOAD_STATISTICS, mLoadStatisticsHandler, null);//new DeckTask.TaskData(this, new String[]{""}, mStatisticType, period));
-//			if (mStatisticType == -1) {
-//				mStatisticType = which;
-//				if (mStatisticType != Statistics.TYPE_DECK_SUMMARY) {
-//					showDialog(DIALOG_STATISTIC_PERIOD);
-//				} else {
-//					openStatistics(0);
-//				}
-//			} else {
-//				openStatistics(which);
-//			}
-		}
-	};
 
 	@Override
 	protected Dialog onCreateDialog(int id) {
@@ -740,23 +724,37 @@ public class StudyOptions extends Activity implements IButtonListener {
 			dialog = builder.create();
 			break;
 
-		case DIALOG_STATISTIC_PERIOD:
-			builder.setTitle(res.getString(R.string.statistics_period_title));
-			builder.setIcon(android.R.drawable.ic_menu_sort_by_size);
-			builder.setSingleChoiceItems(
-					getResources().getStringArray(
-							R.array.statistics_period_labels), 0,
-					mStatisticListener);
-			dialog = builder.create();
-			break;
-
+//		case DIALOG_STATISTIC_PERIOD:
+//			builder.setTitle(res.getString(R.string.statistics_period_title));
+//			builder.setIcon(android.R.drawable.ic_menu_sort_by_size);
+//			builder.setSingleChoiceItems(
+//					getResources().getStringArray(
+//							R.array.statistics_period_labels), 0, 
+//			dialog = builder.create();
+//			break;
+//
 		case DIALOG_STATISTIC_TYPE:
 			builder.setTitle(res.getString(R.string.statistics_type_title));
 			builder.setIcon(android.R.drawable.ic_menu_sort_by_size);
 			builder.setSingleChoiceItems(
 					getResources().getStringArray(
 							R.array.statistics_type_labels),
-					0, mStatisticListener);
+					0, new OnClickListener() {
+						@Override
+						public void onClick(DialogInterface dialog, int which) {
+							 DeckTask.launchDeckTask(DeckTask.TASK_TYPE_LOAD_STATISTICS, mLoadStatisticsHandler, null);//new DeckTask.TaskData(this, new String[]{""}, mStatisticType, period));
+//							if (mStatisticType == -1) {
+//								mStatisticType = which;
+//								if (mStatisticType != Statistics.TYPE_DECK_SUMMARY) {
+//									showDialog(DIALOG_STATISTIC_PERIOD);
+//								} else {
+//									openStatistics(0);
+//								}
+//							} else {
+//								openStatistics(which);
+//							}
+						}
+					});
 			RadioGroup rg = new RadioGroup(this);
 			rg.setOrientation(LinearLayout.HORIZONTAL);
 			RadioButton rb1 = new RadioButton(this);

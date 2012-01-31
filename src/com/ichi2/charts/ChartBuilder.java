@@ -268,7 +268,7 @@ public class ChartBuilder extends Activity {
             }
             mPan = new double[] { mXAxisList[0] - 1, mXAxisList[mXAxisList.length - 1] + 1 };
             mRenderer.setLegendTextSize(17);
-            mRenderer.setBarSpacing(0.2);
+            mRenderer.setBarSpacing(0.3);
             mRenderer.setLegendHeight(60);
             mRenderer.setAxisTitleTextSize(17);
             mRenderer.setLabelsTextSize(17);
