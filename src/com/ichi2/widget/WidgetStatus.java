@@ -212,7 +212,7 @@ public final class WidgetStatus {
                         Log.i(AnkiDroidApp.TAG, "Widget: Problems on retrieving deck information");
                         Log.e(AnkiDroidApp.TAG, e.toString());
                         if (absPath != null) {
-                            BackupManager.restoreDeckIfMissing(absPath);                    	
+//                            BackupManager.restoreDeckIfMissing(absPath);                    	
                         }
                     }
                 }

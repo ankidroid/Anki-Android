@@ -1069,7 +1069,6 @@ public class DeckPicker extends Activity {
 				ActivityTransitionAnimation.slide(this, ActivityTransitionAnimation.NONE);
 			}
 		} else if (!BackupManager.enoughDiscSpace(mPrefDeckPath) && !preferences.getBoolean("dontShowLowMemory", false)) {
-			// TODO: test
 			showDialog(DIALOG_NO_SPACE_LEFT);
 		}
 	}
@@ -1383,11 +1382,11 @@ public class DeckPicker extends Activity {
 
 						@Override
 						public void onClick(DialogInterface dialog, int which) {
-							if (BackupManager.deleteDeckBackups(mCurrentDeckPath, 0)) {
-								Themes.showThemedToast(DeckPicker.this, getResources().getString(R.string.backup_delete_deck_backups, "\'" + mCurrentDeckFilename + "\'"), true);
-							}
-							mCurrentDeckPath = null;
-							mCurrentDeckFilename = null;
+//							if (BackupManager.deleteDeckBackups(mCurrentDeckPath, 0)) {
+//								Themes.showThemedToast(DeckPicker.this, getResources().getString(R.string.backup_delete_deck_backups, "\'" + mCurrentDeckFilename + "\'"), true);
+//							}
+//							mCurrentDeckPath = null;
+//							mCurrentDeckFilename = null;
 						}
 					});
 			builder.setNegativeButton(res.getString(R.string.cancel),
