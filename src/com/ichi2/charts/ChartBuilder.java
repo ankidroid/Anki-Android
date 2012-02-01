@@ -80,7 +80,6 @@ public class ChartBuilder extends Activity {
 
     private Stats mStats;
     private double[][] mSeriesList;
-    private int[] mXAxisList;
 
     private static final int MENU_FULLSCREEN = 0;
     private static final int MENU_ZOOM_IN = 1;
@@ -107,16 +106,6 @@ public class ChartBuilder extends Activity {
         outState.putSerializable("dataset", mDataset);
         outState.putSerializable("renderer", mRenderer);
     }
-
-
-    public void setDataset(int row) {
-        XYSeries series = new XYSeries("a");//Statistics.Titles[row]);
-        for (int i = 0; i < mSeriesList[row].length; i++) {//mStatistics.xAxisData.length; i++) {
-            series.add(i, mSeriesList[row][i]);
-        }
-        mDataset.addSeries(series);
-    }
-
 
     public void setRenderer(int type, int row) {
         Resources res = getResources();
@@ -244,8 +233,7 @@ public class ChartBuilder extends Activity {
         restorePreferences();
         mStats = Stats.currentStats();
         mSeriesList = mStats.getSeriesList();
-        mXAxisList = mStats.getXAxisList();
-        if (mSeriesList == null) {
+        if (mSeriesList == null || mSeriesList[0].length < 2) {
             Log.i(AnkiDroidApp.TAG, "ChartBuilder - Data variable empty, closing chartbuilder");
         	finish();
         	return;
@@ -268,14 +256,18 @@ public class ChartBuilder extends Activity {
                 //setTitle(Statistics.sTitle);
                 mTitle.setVisibility(View.GONE);
             }
-            for (int i = 0; i < mSeriesList.length; i++) {
-                setDataset(i);
-                setRenderer(0, i);//Statistics.sType, i);
+            for (int i = 1; i < mSeriesList.length; i++) {
+            	XYSeries series = new XYSeries("a (" + i + ")");//Statistics.Titles[row]);
+            	for (int j = 0; j < mSeriesList[i].length; j++) {
+            		series.add(mSeriesList[0][j], mSeriesList[i][j]);
+            	}
+            	mDataset.addSeries(series);
+                setRenderer(0, i - 1);//Statistics.sType, i);
             }
             if (mSeriesList.length == 1) {
                 mRenderer.setShowLegend(false);
             }
-            mPan = new double[] { mXAxisList[0] - 1, mXAxisList[mXAxisList.length - 1] + 1 };
+            mPan = new double[] { mSeriesList[0][0] - 1, mSeriesList[0][mSeriesList[0].length - 1] + 1 };
             mRenderer.setLegendTextSize(17);
             mRenderer.setBarSpacing(0.3);
             mRenderer.setLegendHeight(60);

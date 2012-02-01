@@ -39,7 +39,6 @@ public class Stats {
     private int mType;
     private boolean mWholeCollection;
     public double[][] mSeriesList;
-    public int[] mXAxisList;
 
     public Stats(Collection col, boolean wholeCollection) {
     	mCol = col;
@@ -54,19 +53,6 @@ public class Stats {
 
     public double[][] getSeriesList() {
     	return mSeriesList;
-    }
-
-    public int[] getXAxisList() {
-    	return mXAxisList;
-    }
-
-    public void prepareSeriesList() {
-    	int[][] dues = (int[][]) mStats;
-    	mSeriesList = new double[dues.length][2];
-    	for (int i = 0; i < dues.length; i++) {
-    		mSeriesList[i][0] = dues[i][0];
-    		mSeriesList[i][1] = dues[i][1];
-    	}
     }
 
     /**
@@ -100,6 +86,10 @@ public class Stats {
             ArrayList<int[]> dues = new ArrayList<int[]>();
             Cursor cur = null;
             try {
+            	String s = "SELECT (due - " + mCol.getSched().getToday() + ")/" + chunk + " AS day, " // day
+                        + "count(), " // all cards
+                        + "sum(CASE WHEN ivl >= 21 THEN 1 ELSE 0 END) " // mature cards
+                        + "FROM cards WHERE did IN " + _limit() + " AND queue = 2" + lim + " GROUP BY day ORDER BY day";
                 cur = mCol.getDb().getDatabase().rawQuery(
                         "SELECT (due - " + mCol.getSched().getToday() + ")/" + chunk + " AS day, " // day
                                 + "count(), " // all cards
@@ -113,13 +103,12 @@ public class Stats {
                     cur.close();
                 }
             }
-            mSeriesList = new double[2][dues.size()];
-            mXAxisList = new int[dues.size()];
+            mSeriesList = new double[3][dues.size()];
             for (int i = 0; i < dues.size(); i++) {
             	int[] data = dues.get(i);
-            	mXAxisList[i] = data[0];
-            	mSeriesList[0][i] = data[1];
-            	mSeriesList[1][i] = data[2];
+            	mSeriesList[0][i] = data[0];
+            	mSeriesList[1][i] = data[1];
+            	mSeriesList[2][i] = data[2];
             }
     }
 
