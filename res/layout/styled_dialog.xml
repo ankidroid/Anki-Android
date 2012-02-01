@@ -100,7 +100,13 @@
             android:paddingTop="0dip"
             android:paddingBottom="0dip" />
     </FrameLayout>
-
+        <ImageView android:id="@+id/bottomDivider"
+            android:layout_width="fill_parent"
+            android:layout_height="1dip"
+            android:scaleType="fitXY"
+            android:visibility="invisible"
+            android:gravity="fill_horizontal"/> 
+        
     <FrameLayout android:id="@+id/customPanel"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
@@ -122,11 +128,7 @@
         <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:paddingTop="3dip"
-            android:paddingBottom="0dip"
-            android:paddingLeft="2dip"
-            android:paddingRight="2dip">
+            android:orientation="horizontal">
             <!-- android:useLargestChild="true"-->
             <LinearLayout android:id="@+id/leftSpacer"
                 android:layout_weight="0.25"

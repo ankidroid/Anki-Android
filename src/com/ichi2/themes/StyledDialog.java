@@ -493,6 +493,8 @@ public class StyledDialog extends Dialog {
             }
             if (numberOfButtons == 0) {
             	layout.findViewById(R.id.buttonPanel).setVisibility(View.GONE);
+            } else {
+            	layout.findViewById(R.id.bottomDivider).setVisibility(View.VISIBLE);
             }
 
             dialog.setCancelable(cancelable);
@@ -526,6 +528,7 @@ public class StyledDialog extends Dialog {
         		frame.setPadding((int)(2 * factor), (int)((5  - bottomMargin) * factor), (int)(2 * factor), (int)(bottomMargin * factor));
             	frame.removeAllViews();
             	frame.addView(contentView);
+            	layout.findViewById(R.id.bottomDivider).setVisibility(View.VISIBLE);
             } else {
             	((View) layout.findViewById(R.id.customPanel)).setVisibility(View.GONE);
             }

@@ -128,9 +128,9 @@ public class Info extends Activity {
         	Log.i(AnkiDroidApp.TAG, "Info - onBackPressed()");
         	setResult(RESULT_CANCELED);
         	finish();
-        	if (UIUtils.getApiLevel() > 4) {
-        		ActivityTransitionAnimation.slide(Info.this, ActivityTransitionAnimation.NONE);
-        	}
+    		if (UIUtils.getApiLevel() > 4) {
+    			ActivityTransitionAnimation.slide(Info.this, ActivityTransitionAnimation.LEFT);
+    		}
         	return true;
         }
         return super.onKeyDown(keyCode, event);
