@@ -128,7 +128,11 @@
         <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:paddingTop="1dip"
+            android:paddingBottom="1dip"
+            android:paddingLeft="2dip"
+            android:paddingRight="2dip">
             <!-- android:useLargestChild="true"-->
             <LinearLayout android:id="@+id/leftSpacer"
                 android:layout_weight="0.25"
