@@ -30,6 +30,8 @@ import org.json.JSONObject;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Map;
@@ -112,8 +114,16 @@ public class Collection {
 		mDecks = new Decks(this);
 		mTags = new Tags(this);
 		load();
-		if (mCrt != 0) {
-			// TODO:
+		if (mCrt == 0) {
+			Calendar cal = GregorianCalendar.getInstance();
+			if (cal.get(Calendar.HOUR_OF_DAY) < 4) {
+				cal.roll(Calendar.DAY_OF_YEAR, -1);
+			}
+			cal.set(Calendar.HOUR_OF_DAY, 4);
+			cal.set(Calendar.MINUTE, 0);
+			cal.set(Calendar.SECOND, 0);
+			cal.set(Calendar.MILLISECOND, 0);
+			mCrt = cal.getTimeInMillis() / 1000;
 		}
 		mUndoEnabled = false;
 		mSessionStartReps = 0;
