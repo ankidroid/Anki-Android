@@ -679,8 +679,9 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
     private TaskData doInBackgroundCloseDeck(TaskData... params) {
     	Log.i(AnkiDroidApp.TAG, "doInBackgroundCloseDeck");
     	Collection col = params[0].getCollection();
+    	String path = col.getPath();
     	col.close(true);
-	// TODO: backup integration
+    	BackupManager.performBackup(path);
     	return null;
     }
 
@@ -765,6 +766,7 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
 			// deck does already exist. Remove all cards and recreate them to ensure the correct order
 			col.remCards(col.getDecks().cids(did));
 		}
+       	// TODO: add tutorial model
 		String[] questions = res.getStringArray(R.array.tutorial_questions);
 		String[] answers = res.getStringArray(R.array.tutorial_answers);
 		String[] sampleQuestions = res.getStringArray(R.array.tutorial_capitals_questions);

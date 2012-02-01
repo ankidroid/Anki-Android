@@ -204,8 +204,6 @@ public class StudyOptions extends Activity implements IButtonListener {
 	 * Statistics
 	 */
 	public static int mStatisticType;
-	private int mStatisticBarsMax = 0;
-	private int mStatisticBarsHeight;
 	private View mBarsMax;
 	private View mGlobalBar;
 	private View mGlobalMatBar;
@@ -961,15 +959,14 @@ public class StudyOptions extends Activity implements IButtonListener {
 	}
 
 	private void updateStatisticBars() {
-		if (mStatisticBarsMax == 0) {
-			mStatisticBarsMax = mBarsMax.getWidth();
-			mStatisticBarsHeight = mBarsMax.getHeight();
-		}
+		// TODO: fix correct setting
+		int maxWidth = mBarsMax.getWidth();
+		int maxHeight = mBarsMax.getHeight();
 		Utils.updateProgressBars(this, mGlobalMatBar, mProgressMature,
-				mStatisticBarsMax, mStatisticBarsHeight, false);
+				maxWidth, maxHeight, false);
 		Utils.updateProgressBars(this, mGlobalBar, (mProgressAll == 1.0) ? 1.0
-				: mProgressAll - mProgressMature, mStatisticBarsMax,
-				mStatisticBarsHeight, false);
+				: mProgressAll - mProgressMature, maxWidth,
+				maxHeight, false);
 	}
 
 	// /**
@@ -1172,8 +1169,7 @@ public class StudyOptions extends Activity implements IButtonListener {
 			mProgressMature = (Double) obj[5];
 			mProgressAll = (Double) obj[6];
 			int eta = (Integer) obj[7];
-			
-			int dues = newCards + lrnCards + revCards;
+
 			mTextTodayNew.setText(String.valueOf(newCards));
 			mTextTodayLrn.setText(String.valueOf(lrnCards));
 			mTextTodayRev.setText(String.valueOf(revCards));
