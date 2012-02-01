@@ -111,5 +111,10 @@
 		<item>%s months before</item>
 		<item>%s years before</item>
 	</string-array>
-
+	<string-array name="due_x_axis_title">
+		<item>Days</item>
+		<item>Weeks</item>
+		<item>Months</item>
+	</string-array>
+	    
 </resources>

@@ -43,7 +43,8 @@ public class Stats {
     private int mType;
     private int mOrigin;
     private int[] mValueLabels;
-    private int[] mColors;;
+    private int[] mColors;
+    private int[] mAxisTitles;
 
     public Stats(Collection col, boolean wholeCollection) {
     	mCol = col;
@@ -60,7 +61,7 @@ public class Stats {
     }
 
     public Object[] getMetaInfo() {
-    	return new Object[] {mType, mOrigin, mValueLabels, mColors};
+    	return new Object[] {mType, mOrigin, mValueLabels, mColors, mAxisTitles};
     }
 
     /** 
@@ -69,9 +70,10 @@ public class Stats {
      */
     public void calculateDue(int type) {
     	mType = type;
-    	mOrigin = - 1;
+    	mOrigin = 0;
     	mValueLabels = new int[]{R.string.statistics_young_cards, R.string.statistics_mature_cards};
     	mColors = new int[]{R.color.statistics_due_young_cards, R.color.statistics_due_mature_cards};
+    	mAxisTitles = new int[]{type, R.string.statistics_period_y_axis};
     	int end = 0;
     	int chunk = 0;
     	switch (type) {

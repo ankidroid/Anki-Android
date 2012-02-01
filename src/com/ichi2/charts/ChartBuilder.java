@@ -32,6 +32,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.content.res.Resources;
+import android.graphics.Color;
 import android.graphics.Paint.Align;
 import android.os.Bundle;
 import android.util.Log;
@@ -240,6 +241,7 @@ public class ChartBuilder extends Activity {
         int origin = (Integer)ob[1];
         int[] valueLabels = (int[])ob[2];
         int[] barColors = (int[])ob[3];
+        int[] axisTitles = (int[])ob[4];
 
         if (mSeriesList == null || mSeriesList[0].length < 2) {
             Log.i(AnkiDroidApp.TAG, "ChartBuilder - Data variable empty, closing chartbuilder");
@@ -253,13 +255,12 @@ public class ChartBuilder extends Activity {
         }
         View mainView = getLayoutInflater().inflate(R.layout.statistics, null);
         setContentView(mainView);
-        int[] colors = Themes.getChartColors();
-        mainView.setBackgroundColor(colors[1]);
+        mainView.setBackgroundColor(Color.WHITE);
         mTitle = (TextView) findViewById(R.id.statistics_title);
         if (mChartView == null) {
             if (mFullScreen) {
                 mTitle.setText(title);
-                mTitle.setTextColor(colors[0]);
+                mTitle.setTextColor(Color.BLACK);
             } else {
                 setTitle(title);
                 mTitle.setVisibility(View.GONE);
@@ -277,31 +278,33 @@ public class ChartBuilder extends Activity {
             if (mSeriesList.length == 1) {
                 mRenderer.setShowLegend(false);
             }
-            mPan = new double[] { origin, mSeriesList[0][mSeriesList[0].length - 1] + 1 };
+            mPan = new double[] { origin - 0.5, mSeriesList[0][mSeriesList[0].length - 1] + 0.5 };
             mRenderer.setLegendTextSize(17);
-            mRenderer.setBarSpacing(0.3);
+            mRenderer.setBarSpacing(0.4);
             mRenderer.setLegendHeight(60);
             mRenderer.setAxisTitleTextSize(17);
             mRenderer.setLabelsTextSize(17);
             mRenderer.setXAxisMin(mPan[0]);
             mRenderer.setXAxisMax(mPan[1]);
             mRenderer.setYAxisMin(0);
-//            mRenderer.setXTitle(Statistics.axisLabels[0]);
-//            mRenderer.setYTitle(Statistics.axisLabels[1]);
-            mRenderer.setBackgroundColor(colors[1]);
-            mRenderer.setMarginsColor(colors[1]);
-            mRenderer.setAxesColor(colors[0]);
-            mRenderer.setLabelsColor(colors[0]);
+            mRenderer.setGridColor(Color.LTGRAY);
+            mRenderer.setShowGrid(true);
+            mRenderer.setXTitle(res.getStringArray(R.array.due_x_axis_title)[axisTitles[0]]);
+            mRenderer.setYTitle(res.getString(axisTitles[1]));
+            mRenderer.setBackgroundColor(Color.WHITE);
+            mRenderer.setMarginsColor(Color.WHITE);
+            mRenderer.setAxesColor(Color.BLACK);
+            mRenderer.setLabelsColor(Color.BLACK);
+            mRenderer.setYLabelsColor(0, Color.BLACK);
+            mRenderer.setYLabelsAngle(-90);
+            mRenderer.setXLabelsColor(Color.BLACK);
+            mRenderer.setXLabelsAlign(Align.CENTER);
+            mRenderer.setYLabelsAlign(Align.CENTER);
             mRenderer.setZoomEnabled(false, false);
-//            if (Statistics.sSeriesList[0][0] > 100 || Statistics.sSeriesList[0][1] > 100 || Statistics.sSeriesList[0][Statistics.sSeriesList[0].length - 1] > 100) {
-//                mRenderer.setMargins(new int[] { 15, 50, 25, 0 });
-//            } else {
-                mRenderer.setMargins(new int[] { 15, 42, 25, 0 });
-//            }
+            mRenderer.setMargins(new int[] { 15, 40, 30, 10 });
+            mRenderer.setAntialiasing(true);
             mRenderer.setPanEnabled(true, false);
             mRenderer.setPanLimits(mPan);
-            mRenderer.setXLabelsAlign(Align.CENTER);
-            mRenderer.setYLabelsAlign(Align.RIGHT);
             mChartView = ChartFactory.getBarChartView(this, mDataset, mRenderer, BarChart.Type.STACKED);
             LinearLayout layout = (LinearLayout) findViewById(R.id.chart);
             layout.addView(mChartView, new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT));
@@ -317,7 +320,7 @@ public class ChartBuilder extends Activity {
         		return false;
         		}
         	});
-//		zoom = Statistics.sZoom;
+		zoom = 0;
         if (zoom > 0) {
         	zoom();
         }
