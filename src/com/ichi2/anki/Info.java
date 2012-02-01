@@ -62,6 +62,7 @@ public class Info extends Activity {
 
         WebView webview = (WebView) findViewById(R.id.info);
         webview.setBackgroundColor(res.getColor(Themes.getBackgroundColor()));
+        ((View)webview.getParent()).setBackgroundColor(res.getColor(Themes.getBackgroundColor()));
 
         Button continueButton = (Button) findViewById(R.id.info_continue);
         continueButton.setOnClickListener(new OnClickListener() {

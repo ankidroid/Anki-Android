@@ -668,9 +668,11 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
     private TaskData doInBackgroundCloseDeck(TaskData... params) {
     	Log.i(AnkiDroidApp.TAG, "doInBackgroundCloseDeck");
     	Collection col = params[0].getCollection();
-    	String path = col.getPath();
-    	col.close(true);
-    	BackupManager.performBackup(path);
+    	if (col != null) {
+        	String path = col.getPath();
+        	col.close(true);
+        	BackupManager.performBackup(path);    		
+    	}
     	return null;
     }
 

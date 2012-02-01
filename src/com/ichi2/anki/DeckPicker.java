@@ -858,8 +858,6 @@ public class DeckPicker extends Activity {
 
 		SharedPreferences preferences = restorePreferences();
 
-		showOtherScreensIfNecessary(preferences);
-
 		View mainView = getLayoutInflater().inflate(R.layout.deck_picker, null);
 		setContentView(mainView);
 		Themes.setContentStyle(mainView, Themes.CALLER_DECKPICKER);
@@ -980,9 +978,8 @@ public class DeckPicker extends Activity {
 		mDeckListView.setAdapter(mDeckListAdapter);
 		registerForContextMenu(mDeckListView);
 
-		String deckPath = preferences.getString("deckPath", AnkiDroidApp.getDefaultAnkiDroidDirectory());
-		DeckTask.launchDeckTask(DeckTask.TASK_TYPE_OPEN_COLLECTION, mOpenCollectionHandler, new DeckTask.TaskData(deckPath + "/collection.anki2"));
-		
+		showOtherScreensIfNecessary(preferences);
+
 		if (mSwipeEnabled) {
 			gestureDetector = new GestureDetector(new MyGestureDetector());
 	        mDeckListView.setOnTouchListener(new View.OnTouchListener() {
@@ -996,6 +993,10 @@ public class DeckPicker extends Activity {
 		}
 	}
 
+	private void loadCollection() {
+		String deckPath = PrefSettings.getSharedPrefs(getBaseContext()).getString("deckPath", AnkiDroidApp.getDefaultAnkiDroidDirectory());
+		DeckTask.launchDeckTask(DeckTask.TASK_TYPE_OPEN_COLLECTION, mOpenCollectionHandler, new DeckTask.TaskData(deckPath + "/collection.anki2"));
+	}
 
 	private boolean hasErrorFiles() {
         for (String file : this.fileList()) {
@@ -1070,6 +1071,8 @@ public class DeckPicker extends Activity {
 			}
 		} else if (!BackupManager.enoughDiscSpace(mPrefDeckPath) && !preferences.getBoolean("dontShowLowMemory", false)) {
 			showDialog(DIALOG_NO_SPACE_LEFT);
+		} else {
+			loadCollection();
 		}
 	}
 
@@ -1611,13 +1614,29 @@ public class DeckPicker extends Activity {
 //	        mDeckNotLoadedAlert = builder.create();
 
 		case DIALOG_NO_SPACE_LEFT:
-			builder.setMessage(res.getString(R.string.sd_space_warning));
-	        	builder.setNegativeButton(res.getString(R.string.dont_show_again), new DialogInterface.OnClickListener() {
-					@Override
-					public void onClick(DialogInterface arg0, int arg1) {
-		            	PrefSettings.getSharedPrefs(getBaseContext()).edit().putBoolean("dontShowLowMemory", true).commit();
-					}
-		        });
+			builder.setMessage(res.getString(R.string.sd_space_warning, BackupManager.MIN_FREE_SPACE));
+			builder.setPositiveButton(res.getString(R.string.ok), new DialogInterface.OnClickListener() {
+				@Override
+				public void onClick(DialogInterface dialog, int which) {
+					loadCollection();
+				}
+			});
+//        	builder.setNegativeButton(res.getString(R.string.dont_show_again), new DialogInterface.OnClickListener() {
+//					@Override
+//					public void onClick(DialogInterface arg0, int arg1) {
+//		            	PrefSettings.getSharedPrefs(getBaseContext()).edit().putBoolean("dontShowLowMemory", true).commit();
+//					}
+//		        });
+			builder.setCancelable(true);
+			builder.setOnCancelListener(new OnCancelListener() {
+				@Override
+				public void onCancel(DialogInterface arg0) {
+					loadCollection();
+				}				
+			});
+			dialog = builder.create();
+			break;
+
 
 		default:
 			dialog = null;
@@ -1848,6 +1867,9 @@ public class DeckPicker extends Activity {
             case MENU_ABOUT:
                 // int i = 123/0; // Intentional Exception for feedback testing purpose
                 startActivity(new Intent(DeckPicker.this, Info.class));
+                if (UIUtils.getApiLevel() > 4) {
+                    ActivityTransitionAnimation.slide(DeckPicker.this, ActivityTransitionAnimation.RIGHT);
+                }
                 return true;
 
             case MENU_DOWNLOAD_PERSONAL_DECK:
@@ -1888,6 +1910,8 @@ public class DeckPicker extends Activity {
 		DeckTask.launchDeckTask(DeckTask.TASK_TYPE_LOAD_DECK_COUNTS, mLoadCountsHandler, new TaskData(mCol));
 	} else if (requestCode == ADD_NOTE && resultCode != RESULT_CANCELED) {
 		DeckTask.launchDeckTask(DeckTask.TASK_TYPE_LOAD_DECK_COUNTS, mLoadCountsHandler, new TaskData(mCol));
+    } else if (requestCode == REPORT_ERROR) {
+		showOtherScreensIfNecessary(PrefSettings.getSharedPrefs(getBaseContext()));
     } else if (requestCode == SHOW_INFO) {
 		if (resultCode == RESULT_OK) {
 			showOtherScreensIfNecessary(PrefSettings.getSharedPrefs(getBaseContext()));

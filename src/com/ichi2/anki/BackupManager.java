@@ -45,7 +45,7 @@ public class BackupManager {
 	static File mLastCreatedBackup;
 	static File[] mLastDeckBackups;
 
-	private static final int MIN_FREE_SPACE = 1000;
+	public static final int MIN_FREE_SPACE = 10;
 
 	public final static int RETURN_BACKUP_CREATED = 0;
 	public final static int RETURN_ERROR = 1;
@@ -246,7 +246,6 @@ public class BackupManager {
 			StatFs stat = new StatFs(file.getParentFile().getPath());
 	    	long blocks = stat.getAvailableBlocks();
 	    	long blocksize = stat.getBlockSize();
-	    	long muh = blocks * blocksize;
 	    	return blocks * blocksize;
 		} catch (IllegalArgumentException e) {
 			Log.e(AnkiDroidApp.TAG, "Free space could not be retrieved: " + e);

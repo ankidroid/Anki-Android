@@ -26,7 +26,7 @@
 		android:layout_alignParentTop="true"
 		android:layout_above="@+id/info_continue"/>
 	<Button android:id="@+id/info_continue"
-		android:text="XXcontinue"
+		android:text="@string/btn_continue"
         android:layout_width="fill_parent"
 		android:layout_height="wrap_content"
 		android:layout_alignParentBottom="true"/>		
