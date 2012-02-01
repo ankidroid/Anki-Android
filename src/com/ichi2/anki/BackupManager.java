@@ -159,18 +159,31 @@ public class BackupManager {
         File[] deckBackups = getBackups(collectionFile);
         int len = deckBackups.length;
         if (len > 0 && deckBackups[len - 1].lastModified() == collectionFile.lastModified()) {
+        	Log.i(AnkiDroidApp.TAG, "performBackup: No backup necessary due to no collection changes");
         	return;
         }
 
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd-HH-mm");
-        df.setTimeZone(TimeZone.getTimeZone("GMT"));
-        Calendar cal = new GregorianCalendar(TimeZone.getTimeZone("GMT"));
+        Calendar cal = new GregorianCalendar();
         cal.setTimeInMillis(System.currentTimeMillis());
-        String value = df.format(cal.getTime());
+
+        Date lastBackupDate = null;
+        while (lastBackupDate == null && len > 0) {
+        	try {
+        		len--;
+        		lastBackupDate = df.parse(deckBackups[len].getName().replaceAll("^.*-(\\d{4}-\\d{2}-\\d{2}-\\d{2}-\\d{2}).anki2$", "$1"));
+        	} catch (ParseException e) {
+        		lastBackupDate = null;
+        	}
+        }
+        if (lastBackupDate != null && lastBackupDate.getTime() + 5 * 3600000 > Utils.intNow(1000)) {
+        	Log.i(AnkiDroidApp.TAG, "performBackup: No backup created. Last backup younger than 5 hours");
+        	return;
+        }
 
         String backupFilename;
         try {
-        	backupFilename = String.format(Utils.ENGLISH_LOCALE, collectionFile.getName().replace(".anki2", "") + "-%s.anki2", value);
+        	backupFilename = String.format(Utils.ENGLISH_LOCALE, collectionFile.getName().replace(".anki2", "") + "-%s.anki2", df.format(cal.getTime()));
         } catch (UnknownFormatConversionException e) {
         	Log.e(AnkiDroidApp.TAG, "performBackup: error on creating backup filename: " + e);
         	return;
@@ -183,7 +196,7 @@ public class BackupManager {
         }
 
         if (getFreeDiscSpace(collectionFile) < collectionFile.length() + (MIN_FREE_SPACE * 1024 * 1024)) {
-            Log.e(AnkiDroidApp.TAG, "Not enough space on sd card to backup.");
+            Log.e(AnkiDroidApp.TAG, "performBackup: Not enough space on sd card to backup.");
         	return;
         }
 
@@ -196,7 +209,7 @@ public class BackupManager {
             backupFile.setLastModified(collectionFile.lastModified());
         } catch (IOException e) {
             Log.e(AnkiDroidApp.TAG, Log.getStackTraceString(e));
-            Log.e(AnkiDroidApp.TAG, "Backup - Copying of file failed.");
+            Log.e(AnkiDroidApp.TAG, "performBackup: Copying of file failed.");
             return;
         }
 	}
