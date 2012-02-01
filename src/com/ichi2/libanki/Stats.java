@@ -21,6 +21,8 @@ import java.util.ArrayList;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import com.ichi2.anki2.R;
+
 import android.database.Cursor;
 
 /**
@@ -35,14 +37,16 @@ public class Stats {
     private static Stats sCurrentInstance;
 
     private Collection mCol;
-    private Object mStats;
-    private int mType;
     private boolean mWholeCollection;
-    public double[][] mSeriesList;
+    private double[][] mSeriesList;
+
+    private int mType;
+    private int mOrigin;
+    private int[] mValueLabels;
+    private int[] mColors;;
 
     public Stats(Collection col, boolean wholeCollection) {
     	mCol = col;
-    	mStats = null;
     	mWholeCollection = wholeCollection;
     	sCurrentInstance = this;
     }
@@ -55,13 +59,19 @@ public class Stats {
     	return mSeriesList;
     }
 
-    /**
+    public Object[] getMetaInfo() {
+    	return new Object[] {mType, mOrigin, mValueLabels, mColors};
+    }
+
+    /** 
      * Due and cumulative due
      * ***********************************************************************************************
      */
     public void calculateDue(int type) {
     	mType = type;
-    	int start = 0;
+    	mOrigin = - 1;
+    	mValueLabels = new int[]{R.string.statistics_young_cards, R.string.statistics_mature_cards};
+    	mColors = new int[]{R.color.statistics_due_young_cards, R.color.statistics_due_mature_cards};
     	int end = 0;
     	int chunk = 0;
     	switch (type) {
@@ -78,38 +88,35 @@ public class Stats {
     		chunk = 30;
     		break;
     	}
-            String lim = " AND due - " + mCol.getSched().getToday() + " >= " + start;
-            if (end != -1) {
-                lim += " AND day < " + end;
-            }
+        String lim = "";// AND due - " + mCol.getSched().getToday() + " >= " + start; // leave this out in order to show card too which were due the days before
+        if (end != -1) {
+            lim += " AND day < " + end;
+        }
 
-            ArrayList<int[]> dues = new ArrayList<int[]>();
-            Cursor cur = null;
-            try {
-            	String s = "SELECT (due - " + mCol.getSched().getToday() + ")/" + chunk + " AS day, " // day
-                        + "count(), " // all cards
-                        + "sum(CASE WHEN ivl >= 21 THEN 1 ELSE 0 END) " // mature cards
-                        + "FROM cards WHERE did IN " + _limit() + " AND queue = 2" + lim + " GROUP BY day ORDER BY day";
-                cur = mCol.getDb().getDatabase().rawQuery(
-                        "SELECT (due - " + mCol.getSched().getToday() + ")/" + chunk + " AS day, " // day
-                                + "count(), " // all cards
-                                + "sum(CASE WHEN ivl >= 21 THEN 1 ELSE 0 END) " // mature cards
-                                + "FROM cards WHERE did IN " + _limit() + " AND queue = 2" + lim + " GROUP BY day ORDER BY day", null);
-                while (cur.moveToNext()) {
-                    dues.add(new int[] { cur.getInt(0), cur.getInt(1), cur.getInt(2) });
-                }
-            } finally {
-                if (cur != null && !cur.isClosed()) {
-                    cur.close();
-                }
+        ArrayList<int[]> dues = new ArrayList<int[]>();
+        Cursor cur = null;
+        try {
+            cur = mCol.getDb().getDatabase().rawQuery(
+                    "SELECT (due - " + mCol.getSched().getToday() + ")/" + chunk + " AS day, " // day
+                            + "count(), " // all cards
+                            + "sum(CASE WHEN ivl >= 21 THEN 1 ELSE 0 END) " // mature cards
+                            + "FROM cards WHERE did IN " + _limit() + " AND queue = 2" + lim + " GROUP BY day ORDER BY day", null);
+            while (cur.moveToNext()) {
+                dues.add(new int[] { cur.getInt(0), cur.getInt(1), cur.getInt(2) });
             }
-            mSeriesList = new double[3][dues.size()];
-            for (int i = 0; i < dues.size(); i++) {
-            	int[] data = dues.get(i);
-            	mSeriesList[0][i] = data[0];
-            	mSeriesList[1][i] = data[1];
-            	mSeriesList[2][i] = data[2];
+        } finally {
+            if (cur != null && !cur.isClosed()) {
+                cur.close();
             }
+        }
+        mSeriesList = new double[3][dues.size()];
+        for (int i = 0; i < dues.size(); i++) {
+        	int[] data = dues.get(i);
+        	mSeriesList[0][i] = data[0];
+        	mSeriesList[1][i] = data[1];
+        	mSeriesList[2][i] = data[2];
+        }
+        
     }
 
 

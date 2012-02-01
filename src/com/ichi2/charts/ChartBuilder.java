@@ -107,40 +107,6 @@ public class ChartBuilder extends Activity {
         outState.putSerializable("renderer", mRenderer);
     }
 
-    public void setRenderer(int type, int row) {
-        Resources res = getResources();
-        XYSeriesRenderer renderer = new XYSeriesRenderer();
-        if (type <= 2) {
-        	switch (row) {
-        	case 0: 
-                renderer.setColor(res.getColor(R.color.statistics_due_young_cards));
-        		break;
-        	case 1:
-                renderer.setColor(res.getColor(R.color.statistics_due_mature_cards));
-                break;
-        	case 2:
-//                renderer.setColor(res.getColor(R.color.statistics_due_failed_cards));
-        		break;
-        	}
-        } else if (type == 3) {
-        	switch (row) {
-        	case 0: 
-//                renderer.setColor(res.getColor(R.color.statistics_reps_new_cards));
-        		break;
-        	case 1:
-                renderer.setColor(res.getColor(R.color.statistics_reps_young_cards));
-                break;
-        	case 2:
-                renderer.setColor(res.getColor(R.color.statistics_reps_mature_cards));
-        		break;
-        	}
-        } else {
-            renderer.setColor(res.getColor(R.color.statistics_default));        	
-        }
-        mRenderer.addSeriesRenderer(renderer);
-    }
-
-
     private void zoom() {
         if (mChartView != null) {
             if (zoom > 0) {
@@ -226,13 +192,55 @@ public class ChartBuilder extends Activity {
     }
 
     
+//    public void setRenderer(int type, int row) {
+//        Resources res = getResources();
+//        XYSeriesRenderer renderer = new XYSeriesRenderer();
+//        if (type <= 2) {
+//        	switch (row) {
+//        	case 0: 
+//                renderer.setColor(res.getColor(R.color.statistics_due_young_cards));
+//        		break;
+//        	case 1:
+//                renderer.setColor(res.getColor(R.color.statistics_due_mature_cards));
+//                break;
+//        	case 2:
+////                renderer.setColor(res.getColor(R.color.statistics_due_failed_cards));
+//        		break;
+//        	}
+//        } else if (type == 3) {
+//        	switch (row) {
+//        	case 0: 
+////                renderer.setColor(res.getColor(R.color.statistics_reps_new_cards));
+//        		break;
+//        	case 1:
+//                renderer.setColor(res.getColor(R.color.statistics_reps_young_cards));
+//                break;
+//        	case 2:
+//                renderer.setColor(res.getColor(R.color.statistics_reps_mature_cards));
+//        		break;
+//        	}
+//        } else {
+//            renderer.setColor(res.getColor(R.color.statistics_default));        	
+//        }
+//        mRenderer.addSeriesRenderer(renderer);
+//    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
     	Themes.applyTheme(this);
         super.onCreate(savedInstanceState);
         restorePreferences();
+        Resources res = getResources();
+
         mStats = Stats.currentStats();
         mSeriesList = mStats.getSeriesList();
+        Object[] ob = mStats.getMetaInfo();
+        int type = (Integer)ob[0];
+        String title = res.getStringArray(R.array.statistics_type_labels)[type];
+        int origin = (Integer)ob[1];
+        int[] valueLabels = (int[])ob[2];
+        int[] barColors = (int[])ob[3];
+
         if (mSeriesList == null || mSeriesList[0].length < 2) {
             Log.i(AnkiDroidApp.TAG, "ChartBuilder - Data variable empty, closing chartbuilder");
         	finish();
@@ -250,24 +258,26 @@ public class ChartBuilder extends Activity {
         mTitle = (TextView) findViewById(R.id.statistics_title);
         if (mChartView == null) {
             if (mFullScreen) {
-                mTitle.setText("due");//Statistics.sTitle);
+                mTitle.setText(title);
                 mTitle.setTextColor(colors[0]);
             } else {
-                //setTitle(Statistics.sTitle);
+                setTitle(title);
                 mTitle.setVisibility(View.GONE);
             }
             for (int i = 1; i < mSeriesList.length; i++) {
-            	XYSeries series = new XYSeries("a (" + i + ")");//Statistics.Titles[row]);
+            	XYSeries series = new XYSeries(res.getString(valueLabels[i - 1]));
             	for (int j = 0; j < mSeriesList[i].length; j++) {
             		series.add(mSeriesList[0][j], mSeriesList[i][j]);
             	}
             	mDataset.addSeries(series);
-                setRenderer(0, i - 1);//Statistics.sType, i);
+                XYSeriesRenderer renderer = new XYSeriesRenderer();
+                renderer.setColor(res.getColor(barColors[i - 1]));
+                mRenderer.addSeriesRenderer(renderer);
             }
             if (mSeriesList.length == 1) {
                 mRenderer.setShowLegend(false);
             }
-            mPan = new double[] { mSeriesList[0][0] - 1, mSeriesList[0][mSeriesList[0].length - 1] + 1 };
+            mPan = new double[] { origin, mSeriesList[0][mSeriesList[0].length - 1] + 1 };
             mRenderer.setLegendTextSize(17);
             mRenderer.setBarSpacing(0.3);
             mRenderer.setLegendHeight(60);

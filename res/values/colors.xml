@@ -25,9 +25,13 @@
 	<color name="card_browser_marked">#5E5A80</color>
 	<color name="card_browser_suspended">#646D7E</color>
 
+	    
+   	<color name="statistics_due_young_cards">#7c7</color>
+	<color name="statistics_due_mature_cards">#070</color>
+	    
+
+	    
 	<color name="statistics_default">#FBB117</color>
-	<color name="statistics_due_young_cards">#FBB117</color>
-	<color name="statistics_due_mature_cards">#F88017</color>
 	<color name="statistics_due_learn_cards">#FF0000</color>
 	<color name="statistics_due_average_line">#FFFFFF</color>
 	<color name="statistics_reps_cram_cards">#5CB3FF</color>
