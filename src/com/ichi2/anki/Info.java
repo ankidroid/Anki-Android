@@ -22,7 +22,6 @@ import com.ichi2.themes.Themes;
 import com.tomgibara.android.veecheck.util.PrefSettings;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.util.Log;
@@ -62,7 +61,7 @@ public class Info extends Activity {
 
         WebView webview = (WebView) findViewById(R.id.info);
         webview.setBackgroundColor(res.getColor(Themes.getBackgroundColor()));
-        ((View)webview.getParent()).setBackgroundColor(res.getColor(Themes.getBackgroundColor()));
+        Themes.setWallpaper((View)webview.getParent());
 
         Button continueButton = (Button) findViewById(R.id.info_continue);
         continueButton.setOnClickListener(new OnClickListener() {

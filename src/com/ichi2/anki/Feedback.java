@@ -137,7 +137,7 @@ public class Feedback extends Activity {
 	        setResult(RESULT_OK);
 			finish();
                 if (UIUtils.getApiLevel() > 4) {
-                    ActivityTransitionAnimation.slide(Feedback.this, ActivityTransitionAnimation.FADE);
+                    ActivityTransitionAnimation.slide(Feedback.this, ActivityTransitionAnimation.LEFT);
                 }
 	}
 
