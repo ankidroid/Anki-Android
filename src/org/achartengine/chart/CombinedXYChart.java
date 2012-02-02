@@ -115,29 +115,29 @@ public class CombinedXYChart extends XYChart {
    * @param startIndex the start index of the rendering points
    */
   public void drawSeries(Canvas canvas, Paint paint, float[] points,
-      SimpleSeriesRenderer seriesRenderer, float yAxisValue, int seriesIndex, int startIndex) {
+      SimpleSeriesRenderer seriesRenderer, float yAxisValue, int seriesIndex, int startIndex, int range) {
     mCharts[seriesIndex].setScreenR(getScreenR());
     mCharts[seriesIndex].setCalcRange(getCalcRange(mDataset.getSeriesAt(seriesIndex)
         .getScaleNumber()), 0);
     mCharts[seriesIndex].drawSeries(canvas, paint, points, seriesRenderer, yAxisValue, 0,
-        startIndex);
+        startIndex, range);
   }
 
   @Override
   protected ClickableArea[] clickableAreasForPoints(float[] points, double[] values,
-      float yAxisValue, int seriesIndex, int startIndex) {
-    return mCharts[seriesIndex].clickableAreasForPoints(points, values, yAxisValue, 0, startIndex);
+      float yAxisValue, int seriesIndex, int startIndex, int range) {
+    return mCharts[seriesIndex].clickableAreasForPoints(points, values, yAxisValue, 0, startIndex, range);
   }
 
   @Override
   protected void drawSeries(XYSeries series, Canvas canvas, Paint paint, List<Float> pointsList,
       SimpleSeriesRenderer seriesRenderer, float yAxisValue, int seriesIndex, Orientation or,
-      int startIndex) {
+      int startIndex, int range) {
     mCharts[seriesIndex].setScreenR(getScreenR());
     mCharts[seriesIndex].setCalcRange(getCalcRange(mDataset.getSeriesAt(seriesIndex)
         .getScaleNumber()), 0);
     mCharts[seriesIndex].drawSeries(series, canvas, paint, pointsList, seriesRenderer, yAxisValue,
-        0, or, startIndex);
+        0, or, startIndex, range);
   }
 
   /**

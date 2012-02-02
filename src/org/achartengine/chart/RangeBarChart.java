@@ -57,12 +57,12 @@ public class RangeBarChart extends BarChart {
    * @param startIndex the start index of the rendering points
    */
   public void drawSeries(Canvas canvas, Paint paint, float[] points,
-      SimpleSeriesRenderer seriesRenderer, float yAxisValue, int seriesIndex, int startIndex) {
+      SimpleSeriesRenderer seriesRenderer, float yAxisValue, int seriesIndex, int startIndex, int range) {
     int seriesNr = mDataset.getSeriesCount();
     int length = points.length;
     paint.setColor(seriesRenderer.getColor());
     paint.setStyle(Style.FILL);
-    float halfDiffX = getHalfDiffX(points, length, seriesNr);
+    float halfDiffX = getHalfDiffX(points, length, seriesNr, range);
     int start = 0;
     if (startIndex > 0) {
       start = 2;
@@ -94,7 +94,7 @@ public class RangeBarChart extends BarChart {
   protected void drawChartValuesText(Canvas canvas, XYSeries series, SimpleSeriesRenderer renderer,
       Paint paint, float[] points, int seriesIndex, int startIndex) {
     int seriesNr = mDataset.getSeriesCount();
-    float halfDiffX = getHalfDiffX(points, points.length, seriesNr);
+    float halfDiffX = getHalfDiffX(points, points.length, seriesNr, 0);
     int start = 0;
     if (startIndex > 0) {
       start = 2;

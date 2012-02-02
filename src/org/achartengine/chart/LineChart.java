@@ -74,7 +74,7 @@ public class LineChart extends XYChart {
    * @param startIndex the start index of the rendering points
    */
   public void drawSeries(Canvas canvas, Paint paint, float[] points,
-      SimpleSeriesRenderer seriesRenderer, float yAxisValue, int seriesIndex, int startIndex) {
+      SimpleSeriesRenderer seriesRenderer, float yAxisValue, int seriesIndex, int startIndex, int range) {
     int length = points.length;
     XYSeriesRenderer renderer = (XYSeriesRenderer) seriesRenderer;
     float lineWidth = paint.getStrokeWidth();
@@ -100,7 +100,7 @@ public class LineChart extends XYChart {
 
   @Override
   protected ClickableArea[] clickableAreasForPoints(float[] points, double[] values,
-      float yAxisValue, int seriesIndex, int startIndex) {
+      float yAxisValue, int seriesIndex, int startIndex, int range) {
     int length = points.length;
     ClickableArea[] ret = new ClickableArea[length / 2];
     for (int i = 0; i < length; i += 2) {

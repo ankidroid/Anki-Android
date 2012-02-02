@@ -63,11 +63,11 @@ public class BarChart extends XYChart {
 
   @Override
   protected ClickableArea[] clickableAreasForPoints(float[] points, double[] values,
-      float yAxisValue, int seriesIndex, int startIndex) {
+      float yAxisValue, int seriesIndex, int startIndex, int range) {
     int seriesNr = mDataset.getSeriesCount();
     int length = points.length;
     ClickableArea[] ret = new ClickableArea[length / 2];
-    float halfDiffX = getHalfDiffX(points, length, seriesNr);
+    float halfDiffX = getHalfDiffX(points, length, seriesNr, range);
     for (int i = 0; i < length; i += 2) {
       float x = points[i];
       float y = points[i + 1];
@@ -95,12 +95,12 @@ public class BarChart extends XYChart {
    * @param startIndex the start index of the rendering points
    */
   public void drawSeries(Canvas canvas, Paint paint, float[] points,
-      SimpleSeriesRenderer seriesRenderer, float yAxisValue, int seriesIndex, int startIndex) {
+      SimpleSeriesRenderer seriesRenderer, float yAxisValue, int seriesIndex, int startIndex, int range) {
     int seriesNr = mDataset.getSeriesCount();
     int length = points.length;
     paint.setColor(seriesRenderer.getColor());
     paint.setStyle(Style.FILL);
-    float halfDiffX = getHalfDiffX(points, length, seriesNr);
+    float halfDiffX = getHalfDiffX(points, length, seriesNr, range);
     for (int i = 0; i < length; i += 2) {
       float x = points[i];
       float y = points[i + 1];
@@ -214,9 +214,9 @@ public class BarChart extends XYChart {
    * @param startIndex the start index of the rendering points
    */
   protected void drawChartValuesText(Canvas canvas, XYSeries series, SimpleSeriesRenderer renderer,
-      Paint paint, float[] points, int seriesIndex, int startIndex) {
+      Paint paint, float[] points, int seriesIndex, int startIndex, int range) {
     int seriesNr = mDataset.getSeriesCount();
-    float halfDiffX = getHalfDiffX(points, points.length, seriesNr);
+    float halfDiffX = getHalfDiffX(points, points.length, seriesNr, range);
     for (int i = 0; i < points.length; i += 2) {
       int index = startIndex + i / 2;
       if (!isNullValue(series.getY(index))) {
@@ -265,11 +265,8 @@ public class BarChart extends XYChart {
    * @param seriesNr the series number
    * @return the calculated half-distance value
    */
-  protected float getHalfDiffX(float[] points, int length, int seriesNr) {
-    int div = length;
-    if (length > 2) {
-      div = length - 2;
-    }
+  protected float getHalfDiffX(float[] points, int length, int seriesNr, int range) {
+    int div = range * 2;
     float halfDiffX = (points[length - 2] - points[0]) / div;
     if (halfDiffX == 0) {
       halfDiffX = 10;

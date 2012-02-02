@@ -64,7 +64,7 @@ public class BubbleChart extends XYChart {
    * @param startIndex the start index of the rendering points
    */
   public void drawSeries(Canvas canvas, Paint paint, float[] points,
-      SimpleSeriesRenderer seriesRenderer, float yAxisValue, int seriesIndex, int startIndex) {
+      SimpleSeriesRenderer seriesRenderer, float yAxisValue, int seriesIndex, int startIndex, int range) {
     XYSeriesRenderer renderer = (XYSeriesRenderer) seriesRenderer;
     paint.setColor(renderer.getColor());
     paint.setStyle(Style.FILL);
@@ -80,7 +80,7 @@ public class BubbleChart extends XYChart {
 
   @Override
   protected ClickableArea[] clickableAreasForPoints(float[] points, double[] values,
-      float yAxisValue, int seriesIndex, int startIndex) {
+      float yAxisValue, int seriesIndex, int startIndex, int range) {
     int length = points.length;
     XYValueSeries series = (XYValueSeries) mDataset.getSeriesAt(seriesIndex);
     double max = series.getMaxValue();
