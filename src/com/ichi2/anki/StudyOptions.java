@@ -619,6 +619,9 @@ public class StudyOptions extends Activity implements IButtonListener {
 		mTextETA = (TextView) mStudyOptionsView
 				.findViewById(R.id.studyoptions_eta);
 
+		mGlobalMatBar.setVisibility(View.INVISIBLE);
+		mGlobalBar.setVisibility(View.INVISIBLE);
+
 		mDeckCounts = (LinearLayout) mStudyOptionsView.findViewById(R.id.studyoptions_deckcounts);
 		
 		mNightMode = (CheckBox) mStudyOptionsView
@@ -949,8 +952,6 @@ public class StudyOptions extends Activity implements IButtonListener {
 	}
 
 	private void updateStatisticBars() {
-		mGlobalMatBar.setVisibility(View.INVISIBLE);
-		mGlobalBar.setVisibility(View.INVISIBLE);
 		mBarsMax.getViewTreeObserver().addOnGlobalLayoutListener(new OnGlobalLayoutListener() {
 			@Override
 			public void onGlobalLayout() {
@@ -960,8 +961,12 @@ public class StudyOptions extends Activity implements IButtonListener {
 				int mat = (int) (mProgressMature * maxWidth);
 				Utils.updateProgressBars(mGlobalMatBar, mat, height);
 				Utils.updateProgressBars(mGlobalBar, (int)(mProgressAll * maxWidth) - mat, height);
-				mGlobalMatBar.setVisibility(View.VISIBLE);
-				mGlobalBar.setVisibility(View.VISIBLE);
+				if (mGlobalMatBar.getVisibility() == View.INVISIBLE) {
+					mGlobalMatBar.setVisibility(View.VISIBLE);
+					mGlobalMatBar.setAnimation(ViewAnimation.fade(ViewAnimation.FADE_IN, 100, 0));
+					mGlobalBar.setVisibility(View.VISIBLE);
+					mGlobalBar.setAnimation(ViewAnimation.fade(ViewAnimation.FADE_IN, 100, 0));					
+				}
 			}
 		});
 	}
@@ -1167,6 +1172,8 @@ public class StudyOptions extends Activity implements IButtonListener {
 			mProgressAll = (Double) obj[6];
 			int eta = (Integer) obj[7];
 
+			updateStatisticBars();
+
 			mTextTodayNew.setText(String.valueOf(newCards));
 			mTextTodayLrn.setText(String.valueOf(lrnCards));
 			mTextTodayRev.setText(String.valueOf(revCards));
@@ -1177,7 +1184,6 @@ public class StudyOptions extends Activity implements IButtonListener {
 			} else {
 				mTextETA.setText("-1");
 			}
-			updateStatisticBars();
 
 			if(mDeckCounts.getVisibility() == View.INVISIBLE) {
 				mDeckCounts.setVisibility(View.VISIBLE);
