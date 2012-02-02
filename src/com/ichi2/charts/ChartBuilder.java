@@ -301,7 +301,7 @@ public class ChartBuilder extends Activity {
             mRenderer.setXLabelsAlign(Align.CENTER);
             mRenderer.setYLabelsAlign(Align.CENTER);
             mRenderer.setZoomEnabled(false, false);
-            mRenderer.setMargins(new int[] { 15, 40, 30, 10 });
+            mRenderer.setMargins(new int[] { 15, 48, 30, 10 });
             mRenderer.setAntialiasing(true);
             mRenderer.setPanEnabled(true, false);
             mRenderer.setPanLimits(mPan);
