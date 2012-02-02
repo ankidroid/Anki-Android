@@ -932,21 +932,14 @@ public class Utils {
     }
   
 
-    public static void updateProgressBars(Context context, View view, double progress, int maxX, int y, boolean vertical) {
+    public static void updateProgressBars(View view, int x, int y) {
         if (view == null) {
             return;
         }
-        if (vertical) {
-        	LinearLayout.LayoutParams lparam = new LinearLayout.LayoutParams(0, 0);            
-            lparam.height = (int) (maxX * progress);
-            lparam.width = y;
-            view.setLayoutParams(lparam);
-        } else {
-            LinearLayout.LayoutParams lparam = new LinearLayout.LayoutParams(0, 0);            
-            lparam.height = y;
-            lparam.width = (int) (maxX * progress);
-            view.setLayoutParams(lparam);
-        }
+        LinearLayout.LayoutParams lparam = new LinearLayout.LayoutParams(0, 0);            
+        lparam.height = y;
+        lparam.width = x;
+        view.setLayoutParams(lparam);
     }  
 
 

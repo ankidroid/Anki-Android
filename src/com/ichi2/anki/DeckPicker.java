@@ -929,7 +929,7 @@ public class DeckPicker extends Activity {
 					return false;
 				} else if (view.getId() == R.id.deckpicker_bar_mat || view.getId() == R.id.deckpicker_bar_all) {
 					if (text.length() > 0 && !text.equals("-1.0")) {
-						Utils.updateProgressBars(DeckPicker.this, view, Double.parseDouble(text), ((View)view.getParent().getParent().getParent()).getHeight(), (int) UIUtils.getDensityAdjustedValue(DeckPicker.this, 3.4f), true);
+						Utils.updateProgressBars(view, (int) UIUtils.getDensityAdjustedValue(DeckPicker.this, 3.4f), (int) (Double.parseDouble(text) * ((View)view.getParent().getParent().getParent()).getHeight()));
 						View parent = (View)view.getParent().getParent();
 						if (parent.getVisibility() == View.INVISIBLE) {
 							parent.setVisibility(View.VISIBLE);
