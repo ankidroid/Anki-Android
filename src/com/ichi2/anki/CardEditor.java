@@ -789,7 +789,7 @@ public class CardEditor extends Activity {
 
 		switch (id) {
 		case DIALOG_TAGS_SELECT:
-			builder.setTitle(R.string.studyoptions_limit_select_tags);
+			builder.setTitle(R.string.card_details_tags);
 			builder.setPositiveButton(res.getString(R.string.select),
 					new OnClickListener() {
 						@Override
@@ -912,7 +912,7 @@ public class CardEditor extends Activity {
 
 			ArrayList<JSONObject> models = mCol.getModels().all();
 			Collections.sort(models, new JSONNameComparator());
-			builder.setTitle(R.string.card_type);
+			builder.setTitle(R.string.note_type);
 			for (JSONObject m : models) {
 				try {
 					dialogItems.add(m.getString("name"));
@@ -1128,6 +1128,13 @@ public class CardEditor extends Activity {
 	}
 
 	private void swapText(boolean reset) {
+		int len = mEditFields.size();
+		if (len < 2) {
+			return;
+		}
+		mSourcePosition = Math.min(mSourcePosition, len - 1);
+		mTargetPosition = Math.min(mTargetPosition, len - 1);
+
 		// get source text
 		FieldEditText field = mEditFields.get(mSourcePosition);
 		Editable sourceText = field.getText();
@@ -1140,10 +1147,10 @@ public class CardEditor extends Activity {
 		boolean targetCutMode = field.getCutMode();
 		FieldEditText.WordRow[] targetCutString = field.getCutString();
 
-		if (mEditFields.size() > mSourcePosition) {
+		if (len > mSourcePosition) {
 			mEditFields.get(mSourcePosition).setText("");
 		}
-		if (mEditFields.size() > mTargetPosition) {
+		if (len > mTargetPosition) {
 			mEditFields.get(mTargetPosition).setText("");
 		}
 		if (reset) {
@@ -1253,13 +1260,32 @@ public class CardEditor extends Activity {
 	private void setNote(Note note) {
 		try {
 			if (note == null) {
-				mEditorNote = mCol.newNote();			
-				mModelButton.setText(getResources().getString(R.string.CardEditorModel, mCol.getModels().current().getString("name")));
+				boolean firstCard = mEditorNote == null;
+				mEditorNote = mCol.newNote();
+				mCurrentDid = mEditorNote.getDid();
+				if (firstCard && mCaller == CALLER_STUDYOPTIONS && mCurrentDid != mCol.getDecks().current().getLong("id")) {
+					mCurrentDid = mCol.getDecks().current().getLong("id");
+					// if called from studyoptions, try to set the decks model
+					ArrayList<JSONObject> models = mCol.getModels().all();
+					boolean found = false;
+					for (int i = 0; i < models.size(); i++) {
+						JSONObject m = models.get(i);
+						if (m.getLong("did") == mCurrentDid) {
+							mEditorNote = new Note(mCol, m);
+							found = true;
+							break;
+						}
+					}
+					if (!found) {
+						// set current deck to current model
+						mEditorNote.model().put("did", mCurrentDid);
+					}
+				}
+				mModelButton.setText(getResources().getString(R.string.CardEditorModel, mEditorNote.model().getString("name")));
 				JSONArray tags = mEditorNote.model().getJSONArray("tags");
 				for (int i = 0; i < tags.length(); i++) {
 					mEditorNote.addTag(tags.getString(i));
 				}
-				mCurrentDid = mEditorNote.getDid();
 			} else {
 				mEditorNote = note;
 				mCurrentDid = mCurrentEditedCard.getDid();
