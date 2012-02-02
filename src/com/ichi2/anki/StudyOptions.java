@@ -606,18 +606,6 @@ public class StudyOptions extends Activity implements IButtonListener {
 				.findViewById(R.id.studyoptions_global_mat_bar);
 		mBarsMax = (View) mStudyOptionsView
 				.findViewById(R.id.studyoptions_progressbar_content);
-//		if (mGlobalBar != null) {
-//			ViewTreeObserver vto = mBarsMax.getViewTreeObserver();
-//			vto.addOnGlobalLayoutListener(new OnGlobalLayoutListener() {
-//				@Override
-//				public void onGlobalLayout() {
-//					mBarsMax.getViewTreeObserver()
-//							.removeGlobalOnLayoutListener(this);
-//					updateStatisticBars();
-//				}
-//			});
-//		}
-
 		mTextTodayNew = (TextView) mStudyOptionsView
 				.findViewById(R.id.studyoptions_new);
 		mTextTodayLrn = (TextView) mStudyOptionsView
@@ -961,23 +949,21 @@ public class StudyOptions extends Activity implements IButtonListener {
 	}
 
 	private void updateStatisticBars() {
-		int maxWidth = mBarsMax.getWidth() + 1;
-		int height = mBarsMax.getHeight();
-		int mat = (int) (mProgressMature * maxWidth);
-		Utils.updateProgressBars(mGlobalMatBar, mat, height);
-		Utils.updateProgressBars(mGlobalBar, (int)(mProgressAll * maxWidth) - mat, height);
-//		mBarsMax.addOnLayoutChangeListener(new OnLayoutChangeListener() {
-//			@Override
-//			public void onLayoutChange(View arg0, int arg1, int arg2, int arg3,
-//					int arg4, int arg5, int arg6, int arg7, int arg8) {
-//				int maxWidth = mBarsMax.getWidth() + 1;
-//				int height = mBarsMax.getHeight();
-//				int mat = (int) (mProgressMature * maxWidth);
-//				Utils.updateProgressBars(mGlobalMatBar, mat, height);
-//				Utils.updateProgressBars(mGlobalBar, (int)(mProgressAll * maxWidth) - mat, height);
-//				arg0.removeOnLayoutChangeListener(this);
-//			}
-//		});
+		mGlobalMatBar.setVisibility(View.INVISIBLE);
+		mGlobalBar.setVisibility(View.INVISIBLE);
+		mBarsMax.getViewTreeObserver().addOnGlobalLayoutListener(new OnGlobalLayoutListener() {
+			@Override
+			public void onGlobalLayout() {
+				mBarsMax.getViewTreeObserver().removeGlobalOnLayoutListener(this);
+				int maxWidth = mBarsMax.getWidth() + 1;
+				int height = mBarsMax.getHeight();
+				int mat = (int) (mProgressMature * maxWidth);
+				Utils.updateProgressBars(mGlobalMatBar, mat, height);
+				Utils.updateProgressBars(mGlobalBar, (int)(mProgressAll * maxWidth) - mat, height);
+				mGlobalMatBar.setVisibility(View.VISIBLE);
+				mGlobalBar.setVisibility(View.VISIBLE);
+			}
+		});
 	}
 
 	// /**
