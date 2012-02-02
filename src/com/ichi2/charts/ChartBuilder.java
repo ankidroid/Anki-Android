@@ -348,7 +348,7 @@ public class ChartBuilder extends Activity {
                 catch (Exception e) {
                   	Log.e(AnkiDroidApp.TAG, "onFling Exception = " + e.getMessage());
                 }
-            }	            	
+            }
             return false;
     	}
     }
