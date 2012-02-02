@@ -235,15 +235,24 @@ public class Decks {
 
 	/** Remove the deck. If cardsToo, delete any cards inside. */
 	public void rem(long did, boolean cardsToo) {
+		rem(did, cardsToo, true);
+	}
+	public void rem(long did, boolean cardsToo, boolean childrenToo) {
 		if (did == 1) {
 			return;
 		}
+		// log the removal regardless of whether we have the deck or not
+		mCol._logRem(new long[] { did }, Sched.REM_DECK);
+		// do nothing else if doesn't exist
 		if (!mDecks.containsKey(did)) {
 			return;
 		}
 		// delete children first
-		for (long id : children(did).values()) {
-			rem(id, cardsToo);
+		if (childrenToo) {
+			// we don't want to delete children when syncing
+			for (long id : children(did).values()) {
+				rem(id, cardsToo);
+			}
 		}
 		// delete cards too?
 		if (cardsToo) {
@@ -251,7 +260,6 @@ public class Decks {
 		}
 		// delete the deck and add a grave
 		mDecks.remove(did);
-		mCol._logRem(new long[] { did }, Sched.REM_DECK);
 		// ensure we have an active deck
 		if (active().contains(did)) {
 			select((long) (mDecks.keySet().iterator().next()));

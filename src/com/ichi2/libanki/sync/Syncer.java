@@ -481,10 +481,10 @@ public class Syncer {
 			mCol._remNotes(Utils.jsonArrayToLongArray(graves.getJSONArray("notes")));
 			// then cards
 			mCol.remCards(Utils.jsonArrayToLongArray(graves.getJSONArray("cards")));
-			// and deck
+			// and decks
 			JSONArray decks = graves.getJSONArray("decks");
 			for (int i = 0; i < decks.length(); i++) {
-				mCol.getDecks().rem(decks.getLong(i));
+				mCol.getDecks().rem(decks.getLong(i), false, false);
 			}
 		} catch (JSONException e) {
 			throw new RuntimeException(e);
