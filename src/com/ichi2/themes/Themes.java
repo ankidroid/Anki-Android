@@ -298,8 +298,12 @@ public class Themes {
 
 
 	public static void loadTheme(){
-			SharedPreferences preferences = PrefSettings.getSharedPrefs(mContext);
-			mCurrentTheme = Integer.parseInt(preferences.getString("theme", "3"));
+//			SharedPreferences preferences = PrefSettings.getSharedPrefs(mContext);
+//			mCurrentTheme = Integer.parseInt(preferences.getString("theme", "3"));
+			
+			// set theme always to "white" until theming is properly reimplemented
+			mCurrentTheme = 3;
+
 			switch (mCurrentTheme) {
 			case THEME_ANDROID_DARK:
 				mDialogBackgroundColor = R.color.card_browser_background;
