@@ -142,15 +142,10 @@ public class DeckPicker extends Activity {
 	 * Context Menus
 	 */
     private static final int CONTEXT_MENU_DECK_SUMMARY = 0;
-    private static final int CONTEXT_MENU_OPTIMIZE = 1;
-    private static final int CONTEXT_MENU_CUSTOM_DICTIONARY = 2;
-    private static final int CONTEXT_MENU_RESET_LANGUAGE = 3;
-    private static final int CONTEXT_MENU_REMOVE_BACKUPS = 4;
-    private static final int CONTEXT_MENU_RENAME_DECK = 5;
-    private static final int CONTEXT_MENU_REPAIR_DECK = 6;
-    private static final int CONTEXT_MENU_DELETE_DECK = 7;
-    private static final int CONTEXT_MENU_DOWNLOAD_MEDIA = 8;
-//  private static final int CONTEXT_MENU_RESTORE_BACKUPS = 9;
+    private static final int CONTEXT_MENU_CUSTOM_DICTIONARY = 1;
+    private static final int CONTEXT_MENU_RESET_LANGUAGE = 2;
+    private static final int CONTEXT_MENU_RENAME_DECK = 3;
+    private static final int CONTEXT_MENU_DELETE_DECK = 4;
     
 	/**
 	 * Message types
@@ -284,22 +279,15 @@ public class DeckPicker extends Activity {
 
 			@SuppressWarnings("unchecked")
 			HashMap<String, String> data = (HashMap<String, String>) mDeckListAdapter.getItem(mContextMenuPosition);
-			String deckPath = null;
-//			Deck deck = null;
-//			switch (item) {
-//			case CONTEXT_MENU_DELETE_DECK:
-//				mCurrentDeckPath = data.get("filepath");
-//				showDialog(DIALOG_DELETE_DECK);
-//				return;
-//			case CONTEXT_MENU_RESET_LANGUAGE:
+			switch (item) {
+			case CONTEXT_MENU_DELETE_DECK:
+				mCurrentDeckPath = data.get("filepath");
+				showDialog(DIALOG_DELETE_DECK);
+				return;
+			case CONTEXT_MENU_RESET_LANGUAGE:
 //				resetDeckLanguages(data.get("filepath"));
-//				return;
-//			case CONTEXT_MENU_OPTIMIZE:
-//				deckPath = data.get("filepath");
-//				deck = DeckManager.getDeck(deckPath, DeckManager.REQUESTING_ACTIVITY_DECKPICKER, false);
-//		    	DeckTask.launchDeckTask(DeckTask.TASK_TYPE_OPTIMIZE_DECK, mOptimizeDeckHandler, new DeckTask.TaskData(deck, 0));
-//				return;
-//			case CONTEXT_MENU_CUSTOM_DICTIONARY:
+				return;
+			case CONTEXT_MENU_CUSTOM_DICTIONARY:
 //				String[] dicts = res.getStringArray(R.array.dictionary_labels);
 //				String[] vals = res.getStringArray(R.array.dictionary_values);
 //				int currentSet = MetaDB.getLookupDictionary(DeckPicker.this, data.get("filepath"));
@@ -326,14 +314,8 @@ public class DeckPicker extends Activity {
 //				});
 //				StyledDialog alert = builder.create();
 //				alert.show();
-//				return;
-//			case CONTEXT_MENU_DOWNLOAD_MEDIA:
-//			    deckPath = data.get("filepath");
-//				deck = DeckManager.getDeck(deckPath, DeckManager.REQUESTING_ACTIVITY_DECKPICKER);
-//			    Reviewer.setupMedia(deck);
-//			    Connection.downloadMissingMedia(mDownloadMediaListener, new Connection.Payload(new Object[] {deck}));
-//				return;
-//			case CONTEXT_MENU_RENAME_DECK:
+				return;
+			case CONTEXT_MENU_RENAME_DECK:
 //				StyledDialog.Builder builder2 = new StyledDialog.Builder(DeckPicker.this);
 //				builder2.setTitle(res.getString(R.string.contextmenu_deckpicker_rename_deck));
 //
@@ -374,25 +356,12 @@ public class DeckPicker extends Activity {
 //						});
 //				builder2.setNegativeButton(res.getString(R.string.cancel), null);
 //				builder2.create().show();
-//				return;
-//			case CONTEXT_MENU_REMOVE_BACKUPS:
-//				mCurrentDeckPath = null;
-//				mCurrentDeckPath = data.get("filepath");
-//				showDialog(DIALOG_DELETE_BACKUPS);
-//				return;
-//			case CONTEXT_MENU_REPAIR_DECK:
-//				mCurrentDeckPath = null;
-//				mCurrentDeckPath = data.get("filepath");
-//				showDialog(DIALOG_REPAIR_DECK);
-//				return;
-////			case CONTEXT_MENU_RESTORE_BACKUPS:
-////				BackupManager.restoreDeckBackup(DeckPicker.this, data.get("filepath"));
-////				return true;
-//			case CONTEXT_MENU_DECK_SUMMARY:
-//				mStatisticType = Statistics.TYPE_DECK_SUMMARY;
+				return;
+			case CONTEXT_MENU_DECK_SUMMARY:
+//				mStatisticType = 0;
 //				DeckTask.launchDeckTask(DeckTask.TASK_TYPE_LOAD_STATISTICS, mLoadStatisticsHandler, new DeckTask.TaskData(DeckPicker.this, new String[]{data.get("filepath")}, mStatisticType, 0));
-//				return;
-//			}
+				return;
+			}
 		}
 	};
 
@@ -1431,23 +1400,12 @@ public class DeckPicker extends Activity {
 			break;
 
 		case DIALOG_CONTEXT_MENU:
-			mCurrentDeckFilename = mDeckList.get(mContextMenuPosition).get("name");
-			if (mCurrentDeckFilename == null || mCurrentDeckFilename.equalsIgnoreCase(getResources().getString(R.string.deckpicker_nodeck))) {
-				dialog = null;
-				break;
-			}
-			String[] entries = new String[9];
-			entries[CONTEXT_MENU_OPTIMIZE] = res.getString(R.string.contextmenu_deckpicker_optimize_deck);
+			String[] entries = new String[5];
+			entries[CONTEXT_MENU_DECK_SUMMARY] = res.getStringArray(R.array.statistics_type_labels)[0];
 			entries[CONTEXT_MENU_CUSTOM_DICTIONARY] = res.getString(R.string.contextmenu_deckpicker_set_custom_dictionary);
-			entries[CONTEXT_MENU_DOWNLOAD_MEDIA] = res.getString(R.string.contextmenu_deckpicker_download_missing_media);
 			entries[CONTEXT_MENU_RESET_LANGUAGE] = res.getString(R.string.contextmenu_deckpicker_reset_language_assignments);
-			entries[CONTEXT_MENU_REPAIR_DECK] = res.getString(R.string.backup_repair_deck);
-//			entries[CONTEXT_MENU_RESTORE_BACKUPS] = res.getString(R.string.R.string.contextmenu_deckpicker_restore_backups);
-			entries[CONTEXT_MENU_REMOVE_BACKUPS] = res.getString(R.string.contextmenu_deckpicker_remove_backups);
 			entries[CONTEXT_MENU_RENAME_DECK] = res.getString(R.string.contextmenu_deckpicker_rename_deck);
 			entries[CONTEXT_MENU_DELETE_DECK] = res.getString(R.string.contextmenu_deckpicker_delete_deck);
-//			entries[CONTEXT_MENU_DECK_SUMMARY] = res.getStringArray(R.array.statistics_type_labels)[Statistics.TYPE_DECK_SUMMARY];
-
 			builder.setTitle("Context Menu");
 	        builder.setIcon(R.drawable.ic_menu_manage);
 	        builder.setItems(entries, mContextMenuListener);
