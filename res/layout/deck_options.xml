@@ -28,15 +28,13 @@
 			android:layout_width="0dip"
 			android:layout_height="fill_parent"
 			android:layout_weight="1"
-			android:enabled="true"
-			android:text="@string/sync_all"/>
+			android:enabled="true"/>
 		
 		<Button	android:id="@+id/statistics_all_button"
 			android:layout_width="0dip"
 			android:layout_height="fill_parent"
 			android:layout_weight="1"
-			android:enabled="true"
-			android:text="@string/statistics"/>
+			android:enabled="true"/>
 	</LinearLayout>
 	
 </RelativeLayout>
