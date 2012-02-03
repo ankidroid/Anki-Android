@@ -234,18 +234,19 @@ public class CardEditor extends Activity {
 									+ e);
 				}
 			}
-//			if (!mAddNote || mCaller == CALLER_CARDEDITOR
-//					|| mCaller == CALLER_BIGWIDGET_EDIT || mAedictIntent) {
-//				closeCardEditor();
-//			} else if (mCaller == CALLER_CARDEDITOR_INTENT_ADD) {
-//				if (count > 0) {
-//					Intent intent = new Intent();
-//					intent.putExtra(EXTRA_ID,
-//							getIntent().getStringExtra(EXTRA_ID));
-//					setResult(RESULT_OK, intent);
-//					closeCardEditor();
-//				}
-//			}
+			if (!mAddNote || mCaller == CALLER_CARDEDITOR
+					|| mCaller == CALLER_BIGWIDGET_EDIT || mAedictIntent) {
+				closeCardEditor();
+			} else if (mCaller == CALLER_CARDEDITOR_INTENT_ADD) {
+				if (count > 0) {
+					Intent intent = new Intent();
+					intent.putExtra(EXTRA_ID, getIntent().getStringExtra(EXTRA_ID));
+					setResult(RESULT_OK, intent);
+					finishCardEditor();
+				} else {
+					closeCardEditor(RESULT_CANCELED);
+				}
+			}
 		}
 
 		@Override
@@ -365,9 +366,6 @@ public class CardEditor extends Activity {
 
 		case CALLER_CARDEDITOR_INTENT_ADD:
 			mAddNote = true;
-			String[] fields = Utils.splitFields(intent.getStringExtra(EXTRA_CONTENTS));
-			mSourceText = fields[0];
-			mTargetText = fields[1];
 			break;
 
 		case CALLER_INDICLASH:
@@ -417,7 +415,7 @@ public class CardEditor extends Activity {
 				} else {
 					mEditFields.get(0).setText(mSourceText);
 					mEditFields.get(1).setText(mTargetText);
-				}				
+				}
 			} else {
 				contents = intent.getStringExtra(EXTRA_CONTENTS);				
 			}
@@ -526,10 +524,7 @@ public class CardEditor extends Activity {
 
 			@Override
 			public void onClick(View v) {
-				if (!mCardReset) {
-					setResult(RESULT_CANCELED);
-				}
-				closeCardEditor();
+				closeCardEditor(RESULT_CANCELED);
 			}
 
 		});
@@ -577,7 +572,7 @@ public class CardEditor extends Activity {
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
 		if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
 			Log.i(AnkiDroidApp.TAG, "CardEditor - onBackPressed()");
-			closeCardEditor();
+			closeCardEditor(RESULT_CANCELED);
 			return true;
 		}
 
@@ -611,9 +606,9 @@ public class CardEditor extends Activity {
 //				Lookup.getSearchStringTitle());
 //		item.setIcon(R.drawable.ic_menu_search);
 //		item.setEnabled(Lookup.isAvailable());
-		item = menu.add(Menu.NONE, MENU_RESET, Menu.NONE,
-				res.getString(R.string.card_editor_reset));
-		item.setIcon(R.drawable.ic_menu_revert);
+//		item = menu.add(Menu.NONE, MENU_RESET, Menu.NONE,
+//				res.getString(R.string.card_editor_reset));
+//		item.setIcon(R.drawable.ic_menu_revert);
 		if (!mAddNote) {
 			item = menu.add(Menu.NONE, MENU_ADD_CARD, Menu.NONE,
 					res.getString(R.string.card_editor_add_card));
@@ -638,7 +633,7 @@ public class CardEditor extends Activity {
 
 	@Override
 	public boolean onPrepareOptionsMenu(Menu menu) {
-		View focus = this.getWindow().getCurrentFocus();
+//		View focus = this.getWindow().getCurrentFocus();
 //		menu.findItem(MENU_LOOKUP).setEnabled(
 //				focus instanceof FieldEditText
 //						&& ((TextView) focus).getText().length() > 0
@@ -761,8 +756,10 @@ public class CardEditor extends Activity {
 	}
 
 	private void closeCardEditor(int result) {
-		// TODO: proper result handling
 		setResult(result);
+		finishCardEditor();
+	}
+	private void finishCardEditor() {
 		finish();
 		if (mCaller == CALLER_CARDEDITOR_INTENT_ADD
 				|| mCaller == CALLER_BIGWIDGET_EDIT
@@ -1060,6 +1057,7 @@ public class CardEditor extends Activity {
 			break;
 
 		case DIALOG_INTENT_INFORMATION:
+			// dirty fix for dialog listview not being actualized
 			mIntentInformationDialog = createDialogIntentInformation(new StyledDialog.Builder(this), getResources());
 			ad = mIntentInformationDialog;
 			break;
