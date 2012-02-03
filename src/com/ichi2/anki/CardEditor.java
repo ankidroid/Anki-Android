@@ -248,6 +248,8 @@ public class CardEditor extends Activity {
 				} else {
 					closeCardEditor(RESULT_CANCELED);
 				}
+			} else if (!mEditFields.isEmpty()) {
+				mEditFields.getFirst().requestFocus();
 			}
 		}
 
