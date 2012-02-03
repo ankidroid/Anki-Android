@@ -222,11 +222,11 @@ public class Feedback extends Activity {
             } catch (Exception e) {
                 Log.e(AnkiDroidApp.TAG, e.toString());
             }
-            closeFeedback();
+            finish();
             return;
         } else if (mReportErrorMode.equals(REPORT_NEVER)) { // Never report
             deleteFiles(false, false);
-            closeFeedback();
+            finish();
         }
 
         View mainView = getLayoutInflater().inflate(R.layout.feedback, null);
