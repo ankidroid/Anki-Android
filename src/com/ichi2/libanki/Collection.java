@@ -17,6 +17,7 @@
 package com.ichi2.libanki;
 
 import android.content.ContentValues;
+import android.content.Context;
 import android.database.Cursor;
 import android.util.Log;
 
@@ -78,6 +79,7 @@ public class Collection {
 	private Object[] mUndo;
 
 	private String mPath;
+	private boolean mClosing = false;
 
 	// other options
 	private static final String defaultConf = "{"
@@ -136,7 +138,11 @@ public class Collection {
 	}
 
 	public static Collection currentCollection() {
-		return sCurrentCollection;
+		if (sCurrentCollection == null || sCurrentCollection.mClosing || sCurrentCollection.mDb == null) {
+			return null;
+		} else {
+			return sCurrentCollection;
+		}
 	}
 
 	public String name() {
@@ -263,6 +269,7 @@ public class Collection {
 		// Wait for any thread working on the deck to finish.
 		// DeckTask.waitToFinish();
 		// }
+		mClosing = true;
 		if (mDb != null) {
 			cleanup();
 			if (save) {
@@ -275,9 +282,6 @@ public class Collection {
 				}
 			} else {
 				rollback();
-			}
-			if (!mServer) {
-//				mDb.execute("PRAGMA journal_mode = delete");
 			}
 			AnkiDatabaseManager.closeDatabase(mPath);
 			mDb = null;
@@ -1088,5 +1092,4 @@ public class Collection {
 	public void setServer(boolean server) {
 		mServer = server;
 	}
-
 }

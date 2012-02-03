@@ -27,6 +27,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.content.DialogInterface.OnCancelListener;
 import android.content.DialogInterface.OnClickListener;
 import android.content.res.Resources;
 import android.content.res.Resources.NotFoundException;
@@ -61,6 +62,7 @@ import android.widget.AdapterView.OnItemClickListener;
 import com.ichi2.anim.ActivityTransitionAnimation;
 import com.ichi2.anim.ViewAnimation;
 import com.ichi2.async.DeckTask;
+import com.ichi2.async.DeckTask.TaskData;
 import com.ichi2.filters.FilterFacade;
 import com.ichi2.libanki.Card;
 import com.ichi2.libanki.Collection;
@@ -268,6 +270,28 @@ public class CardEditor extends Activity {
 		Themes.applyTheme(this);
 		super.onCreate(savedInstanceState);
 
+		Intent intent = getIntent();
+		if (savedInstanceState != null) {
+			mCaller = savedInstanceState.getInt("caller");
+			mAddNote = savedInstanceState.getBoolean("addFact");
+		} else {
+			mCaller = intent.getIntExtra(EXTRA_CALLER, CALLER_NOCALLER);
+			if (mCaller == CALLER_NOCALLER) {
+				String action = intent.getAction();
+				if (action != null
+						&& (ACTION_CREATE_FLASHCARD.equals(action) || ACTION_CREATE_FLASHCARD_SEND
+								.equals(action))) {
+					mCaller = CALLER_INDICLASH;
+				}
+			}
+		}
+		Log.i(AnkiDroidApp.TAG, "CardEditor: caller: " + mCaller);
+		mCol = Collection.currentCollection();
+		if (mCol == null) {
+			reloadCollection(savedInstanceState);
+			return;
+		}
+
 		registerExternalStorageListener();
 
 		View mainView = getLayoutInflater().inflate(R.layout.card_editor, null);
@@ -287,28 +311,6 @@ public class CardEditor extends Activity {
 		mSwapButton = (Button) findViewById(R.id.CardEditorSwapButton);
 
 		mAedictIntent = false;
-
-		Intent intent = getIntent();
-		if (savedInstanceState != null) {
-			mCaller = savedInstanceState.getInt("caller");
-			mAddNote = savedInstanceState.getBoolean("addFact");
-			// TODO: reload col if necessary
-			if (mCol == null) {
-				finish();
-				return;
-			}
-		} else {
-			mCaller = intent.getIntExtra(EXTRA_CALLER, CALLER_NOCALLER);
-			if (mCaller == CALLER_NOCALLER) {
-				String action = intent.getAction();
-				if (action != null
-						&& (ACTION_CREATE_FLASHCARD.equals(action) || ACTION_CREATE_FLASHCARD_SEND
-								.equals(action))) {
-					mCaller = CALLER_INDICLASH;
-				}
-			}
-		}
-		Log.i(AnkiDroidApp.TAG, "CardEditor: caller: " + mCaller);
 
 		switch (mCaller) {
 		case CALLER_NOCALLER:
@@ -395,12 +397,6 @@ public class CardEditor extends Activity {
 			}
 			mAddNote = true;
 			break;
-		}
-
-		mCol = Collection.currentCollection();
-		if (mCol == null) {
-			finish();
-			return;
 		}
 
 		setNote(mEditorNote);
@@ -530,6 +526,42 @@ public class CardEditor extends Activity {
 		});
 	}
 
+	private void reloadCollection(final Bundle savedInstanceState) {
+		DeckTask.launchDeckTask(DeckTask.TASK_TYPE_OPEN_COLLECTION, new DeckTask.TaskListener() {
+
+			@Override
+			public void onPostExecute(DeckTask.TaskData result) {
+				mCol = result.getCollection();
+				if (mCol == null) {
+					finish();
+				} else {
+					onCreate(savedInstanceState);
+				}
+				if (mProgressDialog.isShowing()) {
+	                try {
+	                    mProgressDialog.dismiss();
+	                } catch (Exception e) {
+	                    Log.e(AnkiDroidApp.TAG, "onPostExecute - Dialog dismiss Exception = " + e.getMessage());
+	                }
+	            }
+			}
+
+			@Override
+			public void onPreExecute() {
+	            mProgressDialog = StyledProgressDialog.show(CardEditor.this, "", getResources().getString(R.string.open_collection), true, true, new OnCancelListener() {
+					@Override
+					public void onCancel(DialogInterface arg0) {
+						finish();
+					}
+				});
+			}
+
+			@Override
+			public void onProgressUpdate(DeckTask.TaskData... values) {
+			}
+	    }, new DeckTask.TaskData(PrefSettings.getSharedPrefs(getBaseContext()).getString("deckPath", AnkiDroidApp.getDefaultAnkiDroidDirectory()) + "/collection.anki2"));
+	}
+	
 	private boolean addFromAedict(String extra_text) {
 		String category = "";
 		String[] notepad_lines = extra_text.split("\n");
