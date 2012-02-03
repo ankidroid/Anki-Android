@@ -439,11 +439,14 @@ public class CardEditor extends Activity {
 			mLater.setOnClickListener(new View.OnClickListener() {
 				@Override
 				public void onClick(View v) {
-		             MetaDB.saveIntentInformation(CardEditor.this, getFieldsText());
-					 populateEditFields();
-					 mSourceText = null;
-					 mTargetText = null;
-				}				
+					String content = getFieldsText();
+					if (content.length() > mEditFields.size() - 1) {
+			             MetaDB.saveIntentInformation(CardEditor.this, content);
+						 populateEditFields();
+						 mSourceText = null;
+						 mTargetText = null;						
+					}
+				}
 			});
 		}
 
