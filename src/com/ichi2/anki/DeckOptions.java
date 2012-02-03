@@ -145,6 +145,7 @@ public class DeckOptions extends PreferenceActivity implements
 									(String) entry.getValue());
 						} else if (entry.getKey().equals("desc")) {
 							mDeck.put("desc", (String) entry.getValue());
+							mCol.getDecks().save(mDeck);
 						} else if (entry.getKey().equals("deckConf")) {
 							mCol.getDecks().setConf(mDeck, Long.parseLong((String) entry.getValue()));
 							mOptions = mCol.getDecks().confForDid(mDeck.getLong("id"));
@@ -262,6 +263,9 @@ public class DeckOptions extends PreferenceActivity implements
 				} catch (JSONException e) {
 					throw new RuntimeException(e);
 				}
+
+				// save conf
+				mCol.getDecks().save(mOptions);
 
 				// make sure we refresh the parent cached values
 				cacheValues();

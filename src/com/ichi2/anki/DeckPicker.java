@@ -486,6 +486,7 @@ public class DeckPicker extends Activity {
 					String dataString = (String) data.data[0];
 					if (dataString.equals("upload")) {
 						mDialogMessage = res.getString(R.string.sync_log_uploading_message);
+						mCol = (Collection) data.data[1];
 					} else if (dataString.equals("download")) {
 						mDialogMessage = res.getString(R.string.sync_log_downloading_message);
 						// set downloaded collection as current one

@@ -23,8 +23,6 @@ import java.io.IOException;
 import java.io.InputStream;
 
 import org.apache.http.HttpResponse;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import android.database.sqlite.SQLiteDatabaseCorruptException;
 import android.util.Log;
