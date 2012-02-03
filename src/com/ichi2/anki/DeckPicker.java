@@ -613,7 +613,7 @@ public class DeckPicker extends Activity {
 
 		@Override
 		public void onPreExecute() {
-            mProgressDialog = StyledProgressDialog.show(DeckPicker.this, "", "opening collection", true, true, new OnCancelListener() {
+            mProgressDialog = StyledProgressDialog.show(DeckPicker.this, "", getResources().getString(R.string.open_collection), true, true, new OnCancelListener() {
 
 				@Override
 				public void onCancel(DialogInterface arg0) {
