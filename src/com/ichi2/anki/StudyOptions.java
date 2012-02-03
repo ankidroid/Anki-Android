@@ -84,7 +84,6 @@ import org.json.JSONException;
 public class StudyOptions extends Activity implements IButtonListener {
 
 	/** Menus */
-	private static final int MENU_HELP = 0;
 	private static final int MENU_PREFERENCES = 1;
 	private static final int MENU_ROTATE = 2;
 	private static final int MENU_ZEEMOTE = 3;
@@ -110,7 +109,6 @@ public class StudyOptions extends Activity implements IButtonListener {
 	private static final int DIALOG_SWAP_QA = 2;
 	private static final int DIALOG_LIMIT_SESSION = 3;
 	private static final int DIALOG_CRAM = 4;
-	private static final int DIALOG_SELECT_HELP = 5;
 
 	/** Zeemote messages */
 	private static final int MSG_ZEEMOTE_BUTTON_A = 0x110;
@@ -774,39 +772,6 @@ public class StudyOptions extends Activity implements IButtonListener {
 			// dialog = builder.create();
 			// break;
 
-		case DIALOG_SELECT_HELP:
-			builder.setTitle(res.getString(R.string.help_title));
-			builder.setItems(
-					new String[] { res.getString(R.string.help_tutorial),
-							res.getString(R.string.help_online),
-							res.getString(R.string.help_faq) },
-					new OnClickListener() {
-
-						@Override
-						public void onClick(DialogInterface arg0, int arg1) {
-							if (arg1 == 0) {
-								createTutorialDeck();
-							} else {
-								if (Utils.isIntentAvailable(StudyOptions.this,
-										"android.intent.action.VIEW")) {
-									Intent intent = new Intent(
-											"android.intent.action.VIEW",
-											Uri.parse(getResources()
-													.getString(
-															arg1 == 0 ? R.string.link_help
-																	: R.string.link_faq)));
-									startActivity(intent);
-								} else {
-									startActivity(new Intent(StudyOptions.this,
-											Info.class));
-								}
-							}
-						}
-
-					});
-			dialog = builder.create();
-			break;
-
 		default:
 			dialog = null;
 		}
@@ -1003,8 +968,6 @@ public class StudyOptions extends Activity implements IButtonListener {
 			Utils.addMenuItem(menu, Menu.NONE, MENU_ZEEMOTE, Menu.NONE,
 					R.string.menu_zeemote, R.drawable.ic_menu_zeemote);			
 		}
-		Utils.addMenuItemInActionBar(menu, Menu.NONE, MENU_HELP, Menu.NONE,
-				R.string.help_title, 0);
 		return true;
 	}
 
@@ -1012,10 +975,6 @@ public class StudyOptions extends Activity implements IButtonListener {
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
-		case MENU_HELP:
-			showDialog(DIALOG_SELECT_HELP);
-			return true;
-
 		case MENU_PREFERENCES:
 			startActivityForResult(new Intent(StudyOptions.this,
 					Preferences.class), PREFERENCES_UPDATE);
@@ -1066,36 +1025,6 @@ public class StudyOptions extends Activity implements IButtonListener {
 		}
 	}
 
-	private void createTutorialDeck() {
-		DeckTask.launchDeckTask(DeckTask.TASK_TYPE_LOAD_TUTORIAL, new DeckTask.TaskListener() {
-			@Override
-			public void onPreExecute() {
-				mProgressDialog = StyledProgressDialog.show(StudyOptions.this, "",
-						getResources().getString(R.string.tutorial_load),
-						true);
-			}
-			@Override
-			public void onPostExecute(TaskData result) {
-				if (result.getBoolean()) {
-					resetAndUpdateValuesFromDeck();
-				} else {
-					Themes.showThemedToast(StudyOptions.this, getResources().getString(R.string.tutorial_loading_error), false);
-				}
-				if (mProgressDialog.isShowing()) {
-					try {
-						mProgressDialog.dismiss();
-					} catch (Exception e) {
-						Log.e(AnkiDroidApp.TAG,
-								"onPostExecute - Dialog dismiss Exception = "
-										+ e.getMessage());
-					}
-				}					
-			}
-			@Override
-			public void onProgressUpdate(TaskData... values) {
-			}
-		}, new DeckTask.TaskData(mCol));
-	}
 
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode,

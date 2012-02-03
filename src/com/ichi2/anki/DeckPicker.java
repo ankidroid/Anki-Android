@@ -35,6 +35,7 @@ import android.content.pm.ActivityInfo;
 import android.content.res.Resources;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteException;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -123,6 +124,7 @@ public class DeckPicker extends Activity {
 	private static final int DIALOG_SYNC_CONFLICT_RESOLUTION = 12;
 	private static final int DIALOG_CONNECTION_ERROR = 13;
 	private static final int DIALOG_SYNC_LOG = 15;
+	private static final int DIALOG_SELECT_HELP = 16;
 
 	private String mDialogMessage;
 
@@ -137,6 +139,7 @@ public class DeckPicker extends Activity {
     private static final int MENU_PREFERENCES = 3;
     private static final int MENU_MY_ACCOUNT = 4;
     private static final int MENU_FEEDBACK = 5;
+	private static final int MENU_HELP = 6;
 
 	/**
 	 * Context Menus
@@ -1116,6 +1119,39 @@ public class DeckPicker extends Activity {
 			// break;
 			//
 
+		case DIALOG_SELECT_HELP:
+			builder.setTitle(res.getString(R.string.help_title));
+			builder.setItems(
+					new String[] { res.getString(R.string.help_tutorial),
+							res.getString(R.string.help_online),
+							res.getString(R.string.help_faq) },
+					new DialogInterface.OnClickListener() {
+
+						@Override
+						public void onClick(DialogInterface arg0, int arg1) {
+							if (arg1 == 0) {
+								createTutorialDeck();
+							} else {
+								if (Utils.isIntentAvailable(DeckPicker.this,
+										"android.intent.action.VIEW")) {
+									Intent intent = new Intent(
+											"android.intent.action.VIEW",
+											Uri.parse(getResources()
+													.getString(
+															arg1 == 0 ? R.string.link_help
+																	: R.string.link_faq)));
+									startActivity(intent);
+								} else {
+									startActivity(new Intent(DeckPicker.this,
+											Info.class));
+								}
+							}
+						}
+
+					});
+			dialog = builder.create();
+			break;
+
 	 	case DIALOG_CONNECTION_ERROR:
 			 builder.setTitle(res.getString(R.string.connection_error_title));
 			 builder.setIcon(android.R.drawable.ic_dialog_alert);
@@ -1799,6 +1835,8 @@ public class DeckPicker extends Activity {
         item.setIcon(R.drawable.ic_menu_info_details);
         item = menu.add(Menu.NONE, MENU_FEEDBACK, Menu.NONE, R.string.studyoptions_feedback);
         item.setIcon(R.drawable.ic_menu_send);
+		Utils.addMenuItemInActionBar(menu, Menu.NONE, MENU_HELP, Menu.NONE,
+				R.string.help_title, 0);
         return true;
     }
 
@@ -1816,6 +1854,11 @@ public class DeckPicker extends Activity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
+
+        	case MENU_HELP:
+        		showDialog(DIALOG_SELECT_HELP);
+        		return true;
+
             case MENU_CREATE_DECK:
                 startActivityForResult(new Intent(DeckPicker.this, DeckCreator.class), CREATE_DECK);
                 if (UIUtils.getApiLevel() > 4) {
@@ -1941,6 +1984,36 @@ public class DeckPicker extends Activity {
 //		}
 	}
 
+	private void createTutorialDeck() {
+		DeckTask.launchDeckTask(DeckTask.TASK_TYPE_LOAD_TUTORIAL, new DeckTask.TaskListener() {
+			@Override
+			public void onPreExecute() {
+				mProgressDialog = StyledProgressDialog.show(DeckPicker.this, "",
+						getResources().getString(R.string.tutorial_load),
+						true);
+			}
+			@Override
+			public void onPostExecute(TaskData result) {
+				if (result.getBoolean()) {
+					openStudyOptions();
+				} else {
+					Themes.showThemedToast(DeckPicker.this, getResources().getString(R.string.tutorial_loading_error), false);
+				}
+				if (mProgressDialog.isShowing()) {
+					try {
+						mProgressDialog.dismiss();
+					} catch (Exception e) {
+						Log.e(AnkiDroidApp.TAG,
+								"onPostExecute - Dialog dismiss Exception = "
+										+ e.getMessage());
+					}
+				}					
+			}
+			@Override
+			public void onProgressUpdate(TaskData... values) {
+			}
+		}, new DeckTask.TaskData(mCol));
+	}
 
 	private CharSequence getSyncLogMessage(
 			ArrayList<HashMap<String, String>> decksChangelogs) {

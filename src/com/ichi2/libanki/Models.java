@@ -43,7 +43,7 @@ public class Models {
 	private static final String defaultModel = 
 		"{'sortf': 0, " +
 		"'did': 1, " +
-		"'latexPre': \"\"\"\\ " +
+		"'latexPre': \"" +
 		"\\\\documentclass[12pt]{article} " +
 		"\\\\special{papersize=3in,5in} " +
 		"\\\\usepackage[utf8]{inputenc} " +
@@ -51,7 +51,7 @@ public class Models {
 		"\\\\pagestyle{empty} " +
 		"\\\\setlength{\\\\parindent}{0in} " +
 		"\\\\begin{document} " +
-		"\"\"\", " +
+		"\", " +
 		"'latexPost': \"\\\\end{document}\", " +
 		"'mod': 9, " +
 		"'usn': 9, " +
@@ -74,15 +74,14 @@ public class Models {
 		"'qfmt': \"\", " +
 		"'afmt': \"\", " +
 		"'did': None, " +
-		"'css': \"\"\"\\ " +
-		".card { " +
+		"'css': \".card { " +
 		" font-family: arial;" +
 		" font-size: 20px;" +
 		" text-align: center;" +
 		" color: black;" +
 		" background-color: white;" +
 		" }" +
-		"\"\"\"}";
+		"\"}";
 	
 //    /** Regex pattern used in removing tags from text before diff */
 //    private static final Pattern sFactPattern = Pattern.compile("%\\([tT]ags\\)s");
@@ -166,12 +165,18 @@ public class Models {
     public void save() {
     	save(null, false);
     }
+    public void save(JSONObject m) {
+    	save(m, false);
+    }
     public void save(JSONObject m, boolean templates) {
     	if (m != null && m.has("id")) {
     		try {
 				m.put("mod", Utils.intNow());
 	    		m.put("usn", mCol.usn());
-	    		_updateRequired(m);
+	    		// TODO: fix empty id problem on _updaterequired (needed for model adding)
+	    		if (m.getLong("id") != 0) {
+		    		_updateRequired(m);	    			
+	    		}
 	    		if (templates) {
 	    			_syncTemplates(m);
 	    		}
@@ -275,10 +280,52 @@ public class Models {
     	return null;
     }
 
+    /** Create a new model, save it in the registry, and return it. */
+    public JSONObject newModel(String name) {
+    	// caller should call save() after modifying
+    	JSONObject m;
+		try {
+			m = new JSONObject(defaultModel);
+	    	m.put("name", name);
+	    	m.put("mod", Utils.intNow());
+	    	m.put("flds", new JSONArray());
+	    	m.put("tmpls", new JSONArray());
+	    	m.put("tags", new JSONArray());
+	    	m.put("id", 0);
+		} catch (JSONException e) {
+			throw new RuntimeException(e);
+		}
+    	return m;
+    }
 
-    // new
-    // rem
-    // add
+    /** Delete model, and all its cards/notes. */
+    public void rem(JSONObject m) {
+    	mCol.modSchema();
+    	try {
+    		long id = m.getLong("id");
+			boolean current = current().getLong("id") == id;
+			// delete notes/cards
+			mCol.remCards(Utils.arrayList2array(mCol.getDb().queryColumn(Long.class, "SELECT id FROM cards WHERE nid IN (SELECT id FROM notes WHERE mid = " + id + ")", 0)));
+			// then the model
+			mModels.remove(id);
+			save();
+			// GUI should ensure last model is not deleted
+			if (current) {
+				setCurrent(mModels.values().iterator().next());
+			}
+		} catch (JSONException e) {
+			throw new RuntimeException(e);
+		}
+    }
+
+	public void add(JSONObject m, boolean setCurrent) {
+    	_setID(m);
+    	update(m);
+    	if (setCurrent) {
+        	setCurrent(m);    		
+    	}
+    	save(m);
+    }
 
     /** Add or update an existing model. Used for syncing and merging. */
     public void update(JSONObject m) {
@@ -291,7 +338,17 @@ public class Models {
     	save();
     }
 
-    // _setid
+    private void _setID(JSONObject m) {
+    	long id = Utils.intNow();
+    	while (mModels.containsKey(id)) {
+    		id = Utils.intNow();
+    	}
+    	try {
+			m.put("id", id);
+		} catch (JSONException e) {
+			throw new RuntimeException(e);
+		}
+    }
 
     public boolean have(long id) {
     	return mModels.containsKey(id);
@@ -325,7 +382,16 @@ public class Models {
      * ***********************************************************************************************
      */
 
-    // new fields
+    public JSONObject newField(String name) {
+    	JSONObject f;
+		try {
+			f = new JSONObject(defaultField);
+	    	f.put("name", name);
+		} catch (JSONException e) {
+			throw new RuntimeException(e);
+		}
+    	return f;
+    }
 
 
 //    /** Mapping of field name --> (ord, field). */
@@ -402,24 +468,100 @@ public class Models {
 //    }
 
 
-    //addfield
+    public void addField(JSONObject m, JSONObject field) {
+    	// only mod schema if model isn't new
+    	try {
+			if (m.getLong("id") != 0) {
+				mCol.modSchema();
+			}
+			JSONArray ja = m.getJSONArray("flds");
+			ja.put(field);
+			m.put("flds", ja);
+			_updateFieldOrds(m);
+			save(m);
+			_transformFields(m); //, Method add);
+		} catch (JSONException e) {
+			throw new RuntimeException(e);
+		}
+    	
+    }
+
     //remfield
     //movefield
     //renamefield
-    //updatefieldords
-    //transformfields
 
+    public void _updateFieldOrds(JSONObject m) {
+    	JSONArray ja;
+		try {
+			ja = m.getJSONArray("flds");
+	    	for (int i = 0; i < ja.length(); i++) {
+	    		JSONObject f = ja.getJSONObject(i);
+	    		f.put("ord", i);
+	    	}
+		} catch (JSONException e) {
+			throw new RuntimeException(e);
+		}
+    }
 
+    public void _transformFields(JSONObject m) { // Method fn) {
+    	// model hasn't been added yet?
+    	try {
+			if (m.getLong("id") == 0) {
+				return;
+			}
+		} catch (JSONException e) {
+			throw new RuntimeException(e);
+		}
+    	// TODO
+    }
 
     /**
      * Templates
      * ***********************************************************************************************
      */
 
-    //newtemplate
-    //addtemplate
+    public JSONObject newTemplate(String name) {
+    	JSONObject t;
+		try {
+			t = new JSONObject(defaultTemplate);
+	    	t.put("name", name);
+		} catch (JSONException e) {
+			throw new RuntimeException(e);
+		}
+    	return t;
+    }
+
+    /** Note: should col.genCards() afterwards. */
+    public void addTemplate(JSONObject m, JSONObject template) {
+    	try {
+			if (m.getLong("id") != 0) {
+				mCol.modSchema();
+			}
+	    	JSONArray ja = m.getJSONArray("tmpls");
+	    	ja.put(template);
+	    	m.put("tmpls", ja);
+	    	_updateTemplOrds(m);
+	    	save(m);
+		} catch (JSONException e) {
+			throw new RuntimeException(e);
+		}
+    }
+
     //remtemplate
-    //_updatetemplords
+
+    public void _updateTemplOrds(JSONObject m) {
+    	JSONArray ja;
+		try {
+			ja = m.getJSONArray("tmpls");
+	    	for (int i = 0; i < ja.length(); i++) {
+	    		JSONObject f = ja.getJSONObject(i);
+	    		f.put("ord", i);
+	    	}
+		} catch (JSONException e) {
+			throw new RuntimeException(e);
+		}
+    }
+
     //movetemplate
 
     private void _syncTemplates(JSONObject m) {
@@ -694,7 +836,31 @@ public class Models {
 		}
     	save();
     }
-    
+
+    /**
+     * Routines from Stdmodels.py
+     * ***********************************************************************************************
+     */
+
+    public JSONObject addBasicModel(String name, boolean setCurrent) {
+    	JSONObject m = newModel(name);
+    	JSONObject fm = newField("Front");
+    	addField(m, fm);
+    	fm = newField("Back");
+    	addField(m, fm);
+    	JSONObject t = newTemplate("Forward");
+    	try {
+			t.put("qfmt", "{{Front}}");
+	    	t.put("afmt", t.getString("qfmt") + "\n\n<hr id=answer>\n\n{{Back}}");
+		} catch (JSONException e) {
+			throw new RuntimeException(e);
+		}
+    	addTemplate(m, t);
+    	add(m, setCurrent);
+    	return m;
+    }
+
+    // addClozeModel
     
     /**
      * Other stuff

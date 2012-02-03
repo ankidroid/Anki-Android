@@ -25,7 +25,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.TreeSet;
 
 import org.json.JSONArray;
@@ -51,6 +50,7 @@ import com.tomgibara.android.veecheck.util.PrefSettings;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
+import android.database.SQLException;
 import android.database.sqlite.SQLiteDiskIOException;
 import android.os.AsyncTask;
 import android.util.Log;
@@ -751,20 +751,33 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
         Resources res = AnkiDroidApp.getInstance().getBaseContext().getResources();
         Collection col = params[0].getCollection();
         col.getDb().getDatabase().beginTransaction();
+        String title = res.getString(R.string.tutorial_title);
         try {
-		long did = col.getDecks().id(res.getString(R.string.tutorial_title));
+        	long did = col.getDecks().id(title);
 	       	if (col.getSched().cardCount("(" + did + ")") > 0) {
-			// deck does already exist. Remove all cards and recreate them to ensure the correct order
-			col.remCards(col.getDecks().cids(did));
-		}
-       	// TODO: add tutorial model
-		String[] questions = res.getStringArray(R.array.tutorial_questions);
-		String[] answers = res.getStringArray(R.array.tutorial_answers);
-		String[] sampleQuestions = res.getStringArray(R.array.tutorial_capitals_questions);
-		String[] sampleAnswers = res.getStringArray(R.array.tutorial_capitals_answers);
+	       		// deck does already exist. Remove all cards and recreate them to ensure the correct order
+	       		col.remCards(col.getDecks().cids(did));
+	       	}
+	       	// create model (remove old ones first)
+	       	while (col.getModels().byName(title) != null) {
+	       		JSONObject m = col.getModels().byName(title);
+	       		// rename old tutorial model if there are some non tutorial cards in it
+	       		if (col.getDb().queryScalar("SELECT id FROM cards WHERE nid IN (SELECT id FROM notes WHERE mid = " + m.getLong("id") + ")", false) == 0) {
+		       		col.getModels().rem(m);
+	       		} else {
+	       			m.put("name", title + " (renamed)");
+	       			col.getModels().save(m);
+	       		}
+	       	}
+	       	JSONObject model = col.getModels().addBasicModel(title, false);
+	       	model.put("did", did);
+			String[] questions = res.getStringArray(R.array.tutorial_questions);
+			String[] answers = res.getStringArray(R.array.tutorial_answers);
+			String[] sampleQuestions = res.getStringArray(R.array.tutorial_capitals_questions);
+			String[] sampleAnswers = res.getStringArray(R.array.tutorial_capitals_answers);
         	int len = Math.min(questions.length, answers.length);
         	for (int i = 0; i < len + Math.min(sampleQuestions.length, sampleAnswers.length); i++) {
-        		Note note = col.newNote();
+        		Note note = col.newNote(model);
         		if (note.values().length < 2) {
         			return new TaskData(false);
         		}
@@ -784,7 +797,11 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
             	col.getDb().getDatabase().setTransactionSuccessful();
         		return new TaskData(true);
         	}
-        } finally {
+        } catch (SQLException e) {
+			throw new RuntimeException(e);
+		} catch (JSONException e) {
+			throw new RuntimeException(e);
+		} finally {
         	col.getDb().getDatabase().endTransaction();
     	}
     }

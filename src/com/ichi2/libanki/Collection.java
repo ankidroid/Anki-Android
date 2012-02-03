@@ -428,11 +428,14 @@ public class Collection {
 		return (int) mDb.queryScalar("SELECT count() FROM notes");
 	}
 
+	public Note newNote() {
+		return newNote(mModels.current());
+	}
 	/**
 	 * Return a new note with the current model.
 	 */
-	public Note newNote() {
-		return new Note(this, mModels.current());
+	public Note newNote(JSONObject m) {
+		return new Note(this, m);
 	}
 
 	/**
