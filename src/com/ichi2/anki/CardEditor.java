@@ -1060,7 +1060,8 @@ public class CardEditor extends Activity {
 			break;
 
 		case DIALOG_INTENT_INFORMATION:
-			mIntentInformationAdapter.notifyDataSetChanged();
+			mIntentInformationDialog = createDialogIntentInformation(new StyledDialog.Builder(this), getResources());
+			ad = mIntentInformationDialog;
 			break;
 		}
 	}

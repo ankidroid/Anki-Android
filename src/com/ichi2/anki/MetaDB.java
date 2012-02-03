@@ -530,9 +530,22 @@ public class MetaDB {
             	item.put("id", Integer.toString(cursor.getInt(0)));
             	String fields = cursor.getString(1);
             	String[] split = Utils.splitFields(fields);
-            	item.put("source", split[0]);
-            	item.put("target", split[1]);
-            	item.put("fields", cursor.getString(1));
+            	String source = "";
+            	String target = "";
+            	for (String s : split) {
+            		if (s.length() > 0) {
+            			if (source.length() == 0) {
+            				source = s;
+            			} else if (target.length() == 0) {
+            				target = s;
+            			} else {
+            				break;
+            			}
+            		}
+            	}
+            	item.put("source", source);
+            	item.put("target", target);
+            	item.put("fields", fields);
             	list.add(item);
             }
         } catch (SQLiteException e) {
