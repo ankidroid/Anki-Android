@@ -22,6 +22,7 @@ import com.ichi2.themes.Themes;
 import com.tomgibara.android.veecheck.util.PrefSettings;
 
 import android.app.Activity;
+import android.content.SharedPreferences.Editor;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.util.Log;
@@ -81,7 +82,7 @@ public class Info extends Activity {
         			ActivityTransitionAnimation.slide(Info.this, ActivityTransitionAnimation.LEFT);
         		}
 		}
-	});
+        });
 
 	String[] content = res.getStringArray(R.array.about_content);
 	StringBuilder sb = new StringBuilder();
@@ -97,7 +98,30 @@ public class Info extends Activity {
 		break;
 
 	case TYPE_WELCOME:
-		sb.append(res.getString(R.string.studyoptions_welcome_dialog).replace("\n", "<br>"));
+		// title
+		sb.append("<big><b>");
+		sb.append(res.getString(R.string.studyoptions_welcome_title));
+		sb.append("</big></b><br><br>");
+		// message
+		sb.append(res.getString(R.string.welcome_message).replace("\n", "<br>"));
+
+		// add tutorial button
+		Button tutBut = (Button) findViewById(R.id.info_tutorial);
+		tutBut.setVisibility(View.VISIBLE);
+		tutBut.setOnClickListener(new OnClickListener() {
+        	@Override
+        	public void onClick(View arg0) {
+        		setResult(RESULT_OK);
+    			Editor edit = PrefSettings.getSharedPrefs(Info.this.getBaseContext()).edit();
+    			edit.putLong("lastTimeOpened", System.currentTimeMillis());
+    			edit.putBoolean("createTutorial", true);
+    			edit.commit();
+        		finish();
+        		if (UIUtils.getApiLevel() > 4) {
+        			ActivityTransitionAnimation.slide(Info.this, ActivityTransitionAnimation.LEFT);
+        		}
+        	}
+        });
 		break;
 
 	case TYPE_NEW_VERSION:

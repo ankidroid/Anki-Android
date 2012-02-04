@@ -26,10 +26,21 @@
 		android:layout_alignParentTop="true"
 		android:layout_marginBottom="4dip"
 		android:requiresFadingEdge="vertical"
-		android:layout_above="@+id/info_continue"/>
+		android:layout_above="@+id/info_buttons"/>
+	<LinearLayout  android:id="@+id/info_buttons"
+	    android:layout_width="fill_parent"
+	    android:layout_height="wrap_content"
+		android:layout_alignParentBottom="true">
+   	<Button android:id="@+id/info_tutorial"
+		android:text="@string/studyoptions_load_tutorial_deck"
+        android:layout_width="0dip"
+        android:layout_weight="1"
+		android:layout_height="wrap_content"
+		android:visibility="gone"/>		
 	<Button android:id="@+id/info_continue"
 		android:text="@string/btn_continue"
-        android:layout_width="fill_parent"
-		android:layout_height="wrap_content"
-		android:layout_alignParentBottom="true"/>		
+        android:layout_width="0dip"
+        android:layout_weight="1"
+		android:layout_height="wrap_content"/>		
+	</LinearLayout>
 </RelativeLayout>

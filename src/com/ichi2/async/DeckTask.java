@@ -36,6 +36,7 @@ import com.ichi2.anki.AnkiDb;
 import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.BackupManager;
 import com.ichi2.anki.DeckCreator;
+import com.ichi2.anki.Info;
 import com.ichi2.anki2.R;
 import com.ichi2.anki.Reviewer;
 import com.ichi2.anki.StudyOptions;
@@ -412,6 +413,14 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
     	// load collection
         Log.i(AnkiDroidApp.TAG, "doInBackgroundOpenCollection - File exists -> Loading collection...");
         Collection col = Collection.openCollection(collectionFile);
+
+        // create tutorial deck if needed
+        SharedPreferences prefs = PrefSettings.getSharedPrefs(AnkiDroidApp.getInstance().getBaseContext());
+        if (prefs.contains("createTutorial") && prefs.getBoolean("createTutorial", false)) {
+        	prefs.edit().remove("createTutorial").commit();
+        	publishProgress(new TaskData(res.getString(R.string.tutorial_load)));
+        	doInBackgroundLoadTutorial(new TaskData(col));
+        }
 
     	// load decks
     	TreeSet<Object[]> decks = col.getSched().deckDueTree(false);

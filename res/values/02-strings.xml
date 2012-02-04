@@ -63,7 +63,6 @@
 <string name="studyoptions_nodeck_title">No Deck Loaded</string>
 <string name="studyoptions_nodeck_message">No deck is currently loaded. Anki decks are stored in the directory \"%s\" on your SD card. This location can be specified in the preferences (press your device\'s \&quot;Menu\&quot; button and select \&quot;Preferences\&quot;).</string>
 <string name="studyoptions_welcome_title">Welcome to AnkiDroid</string>
-<string name="studyoptions_welcome_message">With AnkiDroid, you can efficiently learn large amounts of vocabulary or any other material. AnkiDroid shows you the things to learn just before you forget them.\nAll information is organized in decks which you can either download from other users (shared decks) or create on your own with AnkiDroid or Anki Desktop. In the latter case you can sync your deck via AnkiWeb or copy it into directory %s.\nClick on this text to learn more.</string>
 <string name="studyoptions_deck_not_loaded_title">Deck Could Not Be Loaded</string>
 <string name="studyoptions_deck_not_loaded_message">The deck you selected is not a valid Anki deck. Please use the Anki desktop application to create a valid deck before loading it in AnkiDroid.\n\nIn the meantime, you can select another deck or load the sample deck with the buttons below.</string>
 <string name="studyoptions_no_external_storage_title">No External Storage Available</string>
