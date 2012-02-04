@@ -188,7 +188,7 @@ public class DeckPicker extends Activity {
     private static final int PREFERENCES_UPDATE = 0;
     private static final int CREATE_DECK = 1;
     private static final int DOWNLOAD_SHARED_DECK = 3;
-    private static final int REPORT_FEEDBACK = 4;
+    public static final int REPORT_FEEDBACK = 4;
     private static final int LOG_IN_FOR_DOWNLOAD = 5;
     private static final int LOG_IN_FOR_SYNC = 6;
     private static final int STUDYOPTIONS = 7;
@@ -1890,9 +1890,9 @@ public class DeckPicker extends Activity {
                 return true;
 
             case MENU_FEEDBACK:
-                startActivityForResult(
-                        new Intent(DeckPicker.this, Feedback.class),
-                        REPORT_FEEDBACK);
+            	Intent i = new Intent(DeckPicker.this, Feedback.class);
+            	i.putExtra("request", REPORT_FEEDBACK);
+                startActivityForResult(i, REPORT_FEEDBACK);
     			if (UIUtils.getApiLevel() > 4) {
     				ActivityTransitionAnimation.slide(this, ActivityTransitionAnimation.RIGHT);
     			}

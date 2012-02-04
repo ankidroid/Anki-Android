@@ -18,6 +18,7 @@ import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.os.Bundle;
@@ -208,25 +209,28 @@ public class Feedback extends Activity {
         initAllAlertDialogs();
 
         getErrorFiles();
-        if (mReportErrorMode.equals(REPORT_ALWAYS)) { // Always report
-            try {
-                String feedback = "Automatically sent";
-                Connection.sendFeedback(mSendListener, new Payload(new Object[] {
-                        mFeedbackUrl, mErrorUrl, feedback, mErrorReports, mNonce, getApplication(), true}));
-                if (mErrorReports.size() > 0) {
-                    mPostingFeedback = true;
+        Intent i = getIntent();
+        if (!i.hasExtra("request") || i.getIntExtra("request", 0) != DeckPicker.REPORT_FEEDBACK) {
+            if (mReportErrorMode.equals(REPORT_ALWAYS)) { // Always report
+                try {
+                    String feedback = "Automatically sent";
+                    Connection.sendFeedback(mSendListener, new Payload(new Object[] {
+                            mFeedbackUrl, mErrorUrl, feedback, mErrorReports, mNonce, getApplication(), true}));
+                    if (mErrorReports.size() > 0) {
+                        mPostingFeedback = true;
+                    }
+                    if (feedback.length() > 0) {
+                        mPostingFeedback = true;
+                    }
+                } catch (Exception e) {
+                    Log.e(AnkiDroidApp.TAG, e.toString());
                 }
-                if (feedback.length() > 0) {
-                    mPostingFeedback = true;
-                }
-            } catch (Exception e) {
-                Log.e(AnkiDroidApp.TAG, e.toString());
-            }
-            finish();
-            return;
-        } else if (mReportErrorMode.equals(REPORT_NEVER)) { // Never report
-            deleteFiles(false, false);
-            finish();
+                finish();
+                return;
+            } else if (mReportErrorMode.equals(REPORT_NEVER)) { // Never report
+                deleteFiles(false, false);
+                finish();
+            }        	
         }
 
         View mainView = getLayoutInflater().inflate(R.layout.feedback, null);
