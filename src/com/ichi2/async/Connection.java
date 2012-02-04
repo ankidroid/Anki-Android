@@ -230,6 +230,9 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
     }
 
     private Payload doInBackgroundSync(Payload data) {
+    	// for for doInBackgroundLoadDeckCounts if any
+    	DeckTask.waitToFinish();
+
     	String hkey = (String)data.data[0];
     	boolean media = (Boolean) data.data[1];
     	String conflictResolution = (String) data.data[2];
