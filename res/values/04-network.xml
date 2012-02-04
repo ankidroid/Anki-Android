@@ -22,7 +22,6 @@
 
 <!-- AnkiDroid.java -->
 <!--<string name="loading_new_card">Loading new card...</string>-->
-<string name="loading_deck">Loading deck. Please wait...</string>
 <!--<string name="connection_unsuccessful">The connection was unsuccessful. Check your connection settings and try again, please.</string>-->
 <string name="connection_needed">You are currently offline.</string>
 <!--<string name="study_options">Study Options</string>-->

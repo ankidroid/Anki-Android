@@ -92,7 +92,7 @@ public class AnkiDroidApp extends Application {
             // Create the folder "AnkiDroid", if not exists, where the decks
             // will be stored by default
             String deckPath = getDefaultAnkiDroidDirectory();
-            createDecksDirectoryIfMissing(new File(deckPath));
+            createDirectoryIfMissing(new File(deckPath));
 
             // Put the base path in preferences pointing to the default
             // "AnkiDroid" folder
@@ -126,7 +126,7 @@ public class AnkiDroidApp extends Application {
         return getStorageDirectory() + "/AnkiDroid";
     }
 
-    public static void createDecksDirectoryIfMissing(File decksDirectory) {
+    public static void createDirectoryIfMissing(File decksDirectory) {
     	if (!decksDirectory.isDirectory()) {
     		decksDirectory.mkdirs();
         }

@@ -125,6 +125,7 @@ public class DeckPicker extends Activity {
 	private static final int DIALOG_CONNECTION_ERROR = 13;
 	private static final int DIALOG_SYNC_LOG = 15;
 	private static final int DIALOG_SELECT_HELP = 16;
+	private static final int DIALOG_BACKUP_NO_SPACE_LEFT = 17;
 
 	private String mDialogMessage;
 
@@ -599,6 +600,10 @@ public class DeckPicker extends Activity {
 
 		@Override
 		public void onProgressUpdate(DeckTask.TaskData... values) {
+			String message = values[0].getString();
+			if (message != null) {
+				mProgressDialog.setMessage(message);
+			}
 		}
     };
 
@@ -952,7 +957,7 @@ public class DeckPicker extends Activity {
 		mDeckListView.setAdapter(mDeckListAdapter);
 		registerForContextMenu(mDeckListView);
 
-		showOtherScreensIfNecessary(preferences, 0);
+		showStartupScreensAndDialogs(preferences, 0);
 
 		if (mSwipeEnabled) {
 			gestureDetector = new GestureDetector(new MyGestureDetector());
@@ -1022,7 +1027,7 @@ public class DeckPicker extends Activity {
     }
 
 
-	private void showOtherScreensIfNecessary(SharedPreferences preferences, int skip) {
+	private void showStartupScreensAndDialogs(SharedPreferences preferences, int skip) {
 		if (skip < 1 && preferences.getLong("lastTimeOpened", 0) == 0) {
 			Intent infoIntent = new Intent(this, Info.class);
 			infoIntent.putExtra(Info.TYPE_EXTRA, Info.TYPE_WELCOME);
@@ -1045,6 +1050,8 @@ public class DeckPicker extends Activity {
 			}
 		} else if (!BackupManager.enoughDiscSpace(mPrefDeckPath) && !preferences.getBoolean("dontShowLowMemory", false)) {
 			showDialog(DIALOG_NO_SPACE_LEFT);
+		} else if (preferences.getBoolean("noSpaceLeft", false)) {
+			showDialog(DIALOG_BACKUP_NO_SPACE_LEFT);
 		} else {
 			loadCollection();
 		}
@@ -1609,8 +1616,9 @@ public class DeckPicker extends Activity {
 //			});
 //	        mDeckNotLoadedAlert = builder.create();
 
+		case DIALOG_BACKUP_NO_SPACE_LEFT:
 		case DIALOG_NO_SPACE_LEFT:
-			builder.setMessage(res.getString(R.string.sd_space_warning, BackupManager.MIN_FREE_SPACE));
+			builder.setMessage(id == DIALOG_NO_SPACE_LEFT ? res.getString(R.string.sd_space_warning, BackupManager.MIN_FREE_SPACE) : res.getString(R.string.backup_deck_no_space_left));
 			builder.setPositiveButton(res.getString(R.string.ok), new DialogInterface.OnClickListener() {
 				@Override
 				public void onClick(DialogInterface dialog, int which) {
@@ -1632,7 +1640,6 @@ public class DeckPicker extends Activity {
 			});
 			dialog = builder.create();
 			break;
-
 
 		default:
 			dialog = null;
@@ -1913,10 +1920,10 @@ public class DeckPicker extends Activity {
 	} else if (requestCode == ADD_NOTE && resultCode != RESULT_CANCELED) {
 		DeckTask.launchDeckTask(DeckTask.TASK_TYPE_LOAD_DECK_COUNTS, mLoadCountsHandler, new TaskData(mCol));
     } else if (requestCode == REPORT_ERROR) {
-		showOtherScreensIfNecessary(PrefSettings.getSharedPrefs(getBaseContext()), 3);
+    	showStartupScreensAndDialogs(PrefSettings.getSharedPrefs(getBaseContext()), 3);
     } else if (requestCode == SHOW_INFO_WELCOME || requestCode == SHOW_INFO_NEW_VERSION) {
 		if (resultCode == RESULT_OK) {
-			showOtherScreensIfNecessary(PrefSettings.getSharedPrefs(getBaseContext()), requestCode == SHOW_INFO_WELCOME ? 1 : 2);
+			showStartupScreensAndDialogs(PrefSettings.getSharedPrefs(getBaseContext()), requestCode == SHOW_INFO_WELCOME ? 1 : 2);
 		} else {
 			finish();
 		}

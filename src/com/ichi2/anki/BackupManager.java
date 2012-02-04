@@ -27,7 +27,6 @@ import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
 import java.util.GregorianCalendar;
-import java.util.TimeZone;
 import java.util.UnknownFormatConversionException;
 
 import com.ichi2.libanki.Utils;
@@ -38,12 +37,6 @@ import android.os.StatFs;
 import android.util.Log;
 
 public class BackupManager {
-
-	static String mBackupDirectoryPath;
-	static String mBrokenDirectoryPath;
-	static int mMaxBackups;
-	static File mLastCreatedBackup;
-	static File[] mLastDeckBackups;
 
 	public static final int MIN_FREE_SPACE = 10;
 
@@ -80,12 +73,8 @@ public class BackupManager {
 
 
 	private static File getBackupDirectory() {
-        if (mBackupDirectoryPath == null) {
-        	SharedPreferences prefs = PrefSettings.getSharedPrefs(AnkiDroidApp.getInstance().getBaseContext());
-    		mBackupDirectoryPath = prefs.getString("deckPath", AnkiDroidApp.getStorageDirectory()) + BACKUP_SUFFIX;
-        	mMaxBackups = prefs.getInt("backupMax", 3);
-        }
-        File directory = new File(mBackupDirectoryPath);
+    	SharedPreferences prefs = PrefSettings.getSharedPrefs(AnkiDroidApp.getInstance().getBaseContext());
+        File directory = new File(prefs.getString("deckPath", AnkiDroidApp.getStorageDirectory()) + BACKUP_SUFFIX);
         if (!directory.isDirectory()) {
         	directory.mkdirs();
         }
@@ -166,7 +155,8 @@ public class BackupManager {
 		performBackup(path, BACKUP_INTERVAL);
 	}
 	public static void performBackup(String path, int interval) {
-		if (!PrefSettings.getSharedPrefs(AnkiDroidApp.getInstance().getBaseContext()).getBoolean("useBackup", true)) {
+		SharedPreferences prefs = PrefSettings.getSharedPrefs(AnkiDroidApp.getInstance().getBaseContext());
+		if (!prefs.getBoolean("useBackup", true)) {
 			return;
 		}
         File collectionFile = new File(path);
@@ -205,13 +195,16 @@ public class BackupManager {
 
         File backupFile = new File(getBackupDirectory().getPath(), backupFilename);
         if (backupFile.exists()) {
-            Log.i(AnkiDroidApp.TAG, "performBackup: No new backup created. Already made one today");
+            Log.i(AnkiDroidApp.TAG, "performBackup: No new backup created. File already exists");
             return;
         }
 
         if (getFreeDiscSpace(collectionFile) < collectionFile.length() + (MIN_FREE_SPACE * 1024 * 1024)) {
             Log.e(AnkiDroidApp.TAG, "performBackup: Not enough space on sd card to backup.");
+            prefs.edit().putBoolean("noSpaceLeft", true).commit();
         	return;
+        } else {
+            prefs.edit().putBoolean("noSpaceLeft", false).commit();        	
         }
 
         try {
@@ -226,6 +219,9 @@ public class BackupManager {
             Log.e(AnkiDroidApp.TAG, "performBackup: Copying of file failed.");
             return;
         }
+
+        // delete old backups
+        deleteDeckBackups(path, prefs.getInt("backupMax", 3));
 	}
 
 
@@ -383,23 +379,23 @@ public class BackupManager {
 //	}
 //
 //
-//	public static boolean deleteDeckBackups(String deckpath, int keepNumber) {
-//		return deleteDeckBackups(getBackups(new File(deckpath)), keepNumber);
-//	}
-//	public static boolean deleteDeckBackups(File deckFile, int keepNumber) {
-//		return deleteDeckBackups(getBackups(deckFile), keepNumber);
-//	}
-//	public static boolean deleteDeckBackups(File[] deckBackups, int keepNumber) {
-//    	if (deckBackups == null) {
-//    		return false;
-//    	}
-//		for (int i = 0; i < deckBackups.length - keepNumber; i++) {
-//    		deckBackups[i].delete();
-//    	}
-//		return true;
-//	}
-//
-//
+	public static boolean deleteDeckBackups(String colFile, int keepNumber) {
+		return deleteDeckBackups(getBackups(new File(colFile)), keepNumber);
+	}
+	public static boolean deleteDeckBackups(File colFile, int keepNumber) {
+		return deleteDeckBackups(getBackups(colFile), keepNumber);
+	}
+	public static boolean deleteDeckBackups(File[] backups, int keepNumber) {
+    	if (backups == null) {
+    		return false;
+    	}
+		for (int i = 0; i < backups.length - keepNumber; i++) {
+			backups[i].delete();
+    	}
+		return true;
+	}
+
+
 //	public static boolean deleteAllBackups() {
 //		return removeDir(getBackupDirectory());
 //	}

@@ -161,6 +161,7 @@
 <string name="deckcreator_invalid_character">Invalid symbol in deck name</string>
 
 <string name="open_collection">Opening collection.\nPlease wait...</string>
+<string name="create_collection">Creating collection.\nPlease wait...</string>
     
 <string name="studyoptions_congrats_finished">Congratulations! You have finished for now.</string>
 <string name="studyoptions_congrats_more_rev">Today\'s review limit has been reached, but there are still cards waiting to be reviewed. For optimum memory, consider increasing the daily limit in the options.</string>

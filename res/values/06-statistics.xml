@@ -33,7 +33,7 @@
 <string name="statistics_zoom_in">Zoom in</string>
 <string name="statistics_zoom_out">Zoom out</string>
 <string name="statistics_all_decks">(all decks)</string>
-<string name="calculating_statistics">Calculating statistics</string>
+<string name="calculating_statistics">Calculating statistics.\nPlease wait...</string>
 
 <string name="deck_summary_cards">Number of cards:</string>
 <string name="deck_summary_facts">Number of facts:</string>

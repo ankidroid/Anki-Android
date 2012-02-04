@@ -130,7 +130,7 @@ public class DeckCreator extends Activity {
 
         // If decks directory does not exist, create it.
         File decksDirectory = new File(mPrefDeckPath);
-        AnkiDroidApp.createDecksDirectoryIfMissing(decksDirectory);
+        AnkiDroidApp.createDirectoryIfMissing(decksDirectory);
 
         File destinationFile = new File(mPrefDeckPath, filename);
         if (destinationFile.exists()) {
