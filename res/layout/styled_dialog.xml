@@ -88,7 +88,7 @@
         </ScrollView>
     </LinearLayout>
 
-    <FrameLayout android:id="@+id/listViewPanel"
+        <FrameLayout android:id="@+id/listViewPanel"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_weight="100">
@@ -104,7 +104,7 @@
             android:layout_width="fill_parent"
             android:layout_height="1dip"
             android:scaleType="fitXY"
-            android:visibility="invisible"
+            android:visibility="gone"
             android:gravity="fill_horizontal"/> 
         
     <FrameLayout android:id="@+id/customPanel"
@@ -119,7 +119,14 @@
             android:paddingLeft="2dip"
             android:paddingRight="2dip"/>
     </FrameLayout>
-
+        <ImageView android:id="@+id/bottomButtonDivider"
+            android:layout_width="fill_parent"
+            android:layout_height="1dip"
+            android:scaleType="fitXY"
+            android:visibility="gone"
+            android:gravity="fill_horizontal"/> 
+        
+        
     <LinearLayout android:id="@+id/buttonPanel"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"

@@ -471,7 +471,7 @@ public class Themes {
 				mWallpaper = R.drawable.white_wallpaper;
 				mBackgroundColor = R.color.white_background;
 				mToastBackground = R.drawable.white_toast_frame;
-				mDialogBackgroundColor = mBackgroundColor;
+				mDialogBackgroundColor = R.color.white;
 			mBackgroundDarkColor = R.color.background_dark_blue;
 			mReviewerProgressbar = R.color.reviewer_progressbar_session_blue;
 				mCardbrowserItemBorder = new int[] {R.drawable.white_bg_cardbrowser, R.drawable.white_bg_cardbrowser_marked, R.drawable.white_bg_cardbrowser_suspended, R.drawable.white_bg_cardbrowser_marked_suspended};
@@ -747,7 +747,6 @@ public class Themes {
         	LinearLayout buttonPanel = (LinearLayout) main.findViewById(R.id.buttonPanel);
 			try {
 	        	buttonPanel.setBackgroundResource(mPopupBottomMedium);
-				((View) main.findViewById(R.id.bottomDivider)).setBackgroundResource(mDividerHorizontalBright);
 			} catch (OutOfMemoryError e) {
 				Log.e(AnkiDroidApp.TAG, "setStyledDialogBackgrounds - OutOfMemoryError occured: " + e);
 				buttonPanel.setBackgroundResource(R.color.white);
@@ -816,10 +815,18 @@ public class Themes {
 		}
 		try {
 			customPanel.setBackgroundResource(res);
-			((View) main.findViewById(R.id.bottomDivider)).setBackgroundResource(mDividerHorizontalBright);
 		} catch (OutOfMemoryError e) {
 			Log.e(AnkiDroidApp.TAG, "setStyledDialogBackgrounds - OutOfMemoryError occured: " + e);
 			customPanel.setBackgroundResource(brightCustomPanelBackground ? R.color.white : R.color.black);
+		}
+
+		// set divider
+		if (visibility[3] && brightCustomPanelBackground) {
+			((View) main.findViewById(R.id.bottomDivider)).setBackgroundResource(mDividerHorizontalBright);	        		
+			((View) main.findViewById(R.id.bottomDivider)).setVisibility(View.VISIBLE);
+		} else if (visibility[4]) {
+			((View) main.findViewById(R.id.bottomButtonDivider)).setBackgroundResource(mDividerHorizontalBright);	        		
+			((View) main.findViewById(R.id.bottomButtonDivider)).setVisibility(View.VISIBLE);
 		}
 	}
 
