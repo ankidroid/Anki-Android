@@ -62,7 +62,6 @@ import android.widget.AdapterView.OnItemClickListener;
 import com.ichi2.anim.ActivityTransitionAnimation;
 import com.ichi2.anim.ViewAnimation;
 import com.ichi2.async.DeckTask;
-import com.ichi2.async.DeckTask.TaskData;
 import com.ichi2.filters.FilterFacade;
 import com.ichi2.libanki.Card;
 import com.ichi2.libanki.Collection;
@@ -440,7 +439,10 @@ public class CardEditor extends Activity {
 			             MetaDB.saveIntentInformation(CardEditor.this, content);
 						 populateEditFields();
 						 mSourceText = null;
-						 mTargetText = null;						
+						 mTargetText = null;
+						 if (mCaller == CALLER_INDICLASH || mCaller == CALLER_CARDEDITOR_INTENT_ADD) {
+							 closeCardEditor();
+						 }
 					}
 				}
 			});
