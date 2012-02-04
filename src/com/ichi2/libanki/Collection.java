@@ -24,6 +24,7 @@ import android.util.Log;
 import com.ichi2.anki.AnkiDatabaseManager;
 import com.ichi2.anki.AnkiDb;
 import com.ichi2.anki.AnkiDroidApp;
+import com.ichi2.anki.UIUtils;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -117,15 +118,7 @@ public class Collection {
 		mTags = new Tags(this);
 		load();
 		if (mCrt == 0) {
-			Calendar cal = GregorianCalendar.getInstance();
-			if (cal.get(Calendar.HOUR_OF_DAY) < 4) {
-				cal.roll(Calendar.DAY_OF_YEAR, -1);
-			}
-			cal.set(Calendar.HOUR_OF_DAY, 4);
-			cal.set(Calendar.MINUTE, 0);
-			cal.set(Calendar.SECOND, 0);
-			cal.set(Calendar.MILLISECOND, 0);
-			mCrt = cal.getTimeInMillis() / 1000;
+			mCrt = UIUtils.getDayStart() / 1000;
 		}
 		mUndoEnabled = false;
 		mSessionStartReps = 0;

@@ -129,8 +129,6 @@ public class StudyOptions extends Activity implements IButtonListener {
 	private int mStartedByBigWidget;
 	private boolean mSwipeEnabled;
 	private int mCurrentContentView;
-	public static int mNewDayStartsAt = 4;
-	private long mLastTimeOpened;
 	boolean mInvertedColors = false;
 	boolean mSwap = false;
 	String mLocale;

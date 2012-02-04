@@ -834,8 +834,15 @@ public class DeckPicker extends Activity {
         Intent intent = getIntent();
 //        mStartedByBigWidget = intent.getIntExtra(EXTRA_START, EXTRA_START_NOTHING);
 
-
 		SharedPreferences preferences = restorePreferences();
+
+		// activate broadcast messages if first start of a day
+		if (mLastTimeOpened < UIUtils.getDayStart()) {
+			preferences.edit().putBoolean("showBroadcastMessageToday", true).commit();			
+		}
+		preferences.edit().putLong("lastTimeOpened", System.currentTimeMillis()).commit();
+
+		BroadcastMessages.checkForNewMessages(this);
 
 		View mainView = getLayoutInflater().inflate(R.layout.deck_picker, null);
 		setContentView(mainView);
@@ -992,15 +999,8 @@ public class DeckPicker extends Activity {
         SharedPreferences preferences = PrefSettings.getSharedPrefs(getBaseContext());
         mPrefDeckPath = preferences.getString("deckPath", AnkiDroidApp.getDefaultAnkiDroidDirectory());
         mLastTimeOpened = preferences.getLong("lastTimeOpened", 0);
-//        mStartupMode = Integer.parseInt(preferences.getString("startup_mode",
-//                Integer.toString(SUM_DECKPICKER_ON_FIRST_START)));
         mSwipeEnabled = preferences.getBoolean("swipe", false);
 
-//        mLastTimeOpened = preferences.getLong("lastTimeOpened", 0);
-//        BroadcastMessages.init(this, mLastTimeOpened);
-//       	preferences.edit().putLong("lastTimeOpened", System.currentTimeMillis()).commit();
-
-//
         // Convert dip to pixel, code in parts from http://code.google.com/p/k9mail/
         final float gestureScale = getResources().getDisplayMetrics().density;
         int sensibility = preferences.getInt("swipeSensibility", 100);
@@ -1915,35 +1915,38 @@ public class DeckPicker extends Activity {
     protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
         super.onActivityResult(requestCode, resultCode, intent);
 
-	if (requestCode == SHOW_STUDYOPTIONS && resultCode == RESULT_OK) {
-		DeckTask.launchDeckTask(DeckTask.TASK_TYPE_LOAD_DECK_COUNTS, mLoadCountsHandler, new TaskData(mCol));
-	} else if (requestCode == ADD_NOTE && resultCode != RESULT_CANCELED) {
-		DeckTask.launchDeckTask(DeckTask.TASK_TYPE_LOAD_DECK_COUNTS, mLoadCountsHandler, new TaskData(mCol));
-    } else if (requestCode == REPORT_ERROR) {
-    	showStartupScreensAndDialogs(PrefSettings.getSharedPrefs(getBaseContext()), 3);
-    } else if (requestCode == SHOW_INFO_WELCOME || requestCode == SHOW_INFO_NEW_VERSION) {
-		if (resultCode == RESULT_OK) {
-			showStartupScreensAndDialogs(PrefSettings.getSharedPrefs(getBaseContext()), requestCode == SHOW_INFO_WELCOME ? 1 : 2);
-		} else {
-			finish();
-		}
+    	if (requestCode == SHOW_STUDYOPTIONS && resultCode == RESULT_OK) {
+    		DeckTask.launchDeckTask(DeckTask.TASK_TYPE_LOAD_DECK_COUNTS, mLoadCountsHandler, new TaskData(mCol));
+    	} else if (requestCode == ADD_NOTE && resultCode != RESULT_CANCELED) {
+    		DeckTask.launchDeckTask(DeckTask.TASK_TYPE_LOAD_DECK_COUNTS, mLoadCountsHandler, new TaskData(mCol));
+        } else if (requestCode == REPORT_ERROR) {
+        	showStartupScreensAndDialogs(PrefSettings.getSharedPrefs(getBaseContext()), 3);
+        } else if (requestCode == SHOW_INFO_WELCOME || requestCode == SHOW_INFO_NEW_VERSION) {
+    		if (resultCode == RESULT_OK) {
+    			showStartupScreensAndDialogs(PrefSettings.getSharedPrefs(getBaseContext()), requestCode == SHOW_INFO_WELCOME ? 1 : 2);
+    		} else {
+    			finish();
+    		}
         } else if (requestCode == PREFERENCES_UPDATE) {
-//            if (resultCode == StudyOptions.RESULT_RESTART) {
-//            	setResult(StudyOptions.RESULT_RESTART);
-//            	finish();
-//            } else {
-//            	SharedPreferences preferences = PrefSettings.getSharedPrefs(getBaseContext());
-//				BackupManager.initBackup();
-//                if (!mPrefDeckPath.equals(preferences.getString("deckPath", AnkiDroidApp.getStorageDirectory())) || mPrefDeckOrder != Integer.parseInt(preferences.getString("deckOrder", "0"))) {
-////                	populateDeckList(preferences.getString("deckPath", AnkiDroidApp.getStorageDirectory()));
+//                if (resultCode == StudyOptions.RESULT_RESTART) {
+//                	setResult(StudyOptions.RESULT_RESTART);
+//                	finish();
+//                } else {
+//                	SharedPreferences preferences = PrefSettings.getSharedPrefs(getBaseContext());
+//    				BackupManager.initBackup();
+//                    if (!mPrefDeckPath.equals(preferences.getString("deckPath", AnkiDroidApp.getStorageDirectory())) || mPrefDeckOrder != Integer.parseInt(preferences.getString("deckOrder", "0"))) {
+////                    	populateDeckList(preferences.getString("deckPath", AnkiDroidApp.getStorageDirectory()));
+//                    }
 //                }
-//            }
         } else if ((requestCode == CREATE_DECK || requestCode == DOWNLOAD_SHARED_DECK) && resultCode == RESULT_OK) {
-//        	populateDeckList(mPrefDeckPath);
+//            	populateDeckList(mPrefDeckPath);
         } else if (requestCode == REPORT_FEEDBACK && resultCode == RESULT_OK) {
         } else if (requestCode == LOG_IN_FOR_SYNC && resultCode == RESULT_OK) {
         	sync();
         }
+
+    	// workaround for hidden dialog on return
+		BroadcastMessages.showDialog();
     }
 
 

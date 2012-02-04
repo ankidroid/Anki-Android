@@ -46,27 +46,16 @@ public class BroadcastMessages {
 
 	private static final int TIMEOUT = 30000;
 
-
-	public static void init(Context context, long lastTimeOpened) {
-		Log.d(AnkiDroidApp.TAG, "BroadcastMessages: init");
-		// retrieve messages on first start of the day
-		// TODO: reactivate message activation
-//		if (Utils.isNewDay(lastTimeOpened)) {
-//			PrefSettings.getSharedPrefs(context).edit().putBoolean("showBroadcastMessageToday", true).commit();
-//		}
-	}
-
-
 	public static void checkForNewMessages(Activity activity) {
-		Log.d(AnkiDroidApp.TAG, "BroadcastMessages: checkForNewMessages");
 		SharedPreferences prefs = PrefSettings.getSharedPrefs(activity);
 		// don't retrieve messages, if option in preferences is not set
 		if (!prefs.getBoolean("showBroadcastMessages", true)) {
 			return;
 		}
+		Log.i(AnkiDroidApp.TAG, "BroadcastMessages: checkForNewMessages");
 		// don't proceed if messages were already shown today
 		if (!prefs.getBoolean("showBroadcastMessageToday", true)) {
-			Log.d(AnkiDroidApp.TAG, "BroadcastMessages: already shown today");
+			Log.i(AnkiDroidApp.TAG, "BroadcastMessages: already shown today");
 			return;
 		}
         AsyncTask<Activity,Void,Context> checkForNewMessage = new DownloadBroadcastMessage();
@@ -141,19 +130,19 @@ public class BroadcastMessages {
 
         @Override
         protected Context doInBackground(Activity... params) {
-            Log.d(AnkiDroidApp.TAG, "BroadcastMessage.DownloadBroadcastMessage.doInBackground()");
+            Log.i(AnkiDroidApp.TAG, "BroadcastMessage.DownloadBroadcastMessage.doInBackground()");
 
             Activity activity = params[0];
             mActivity = activity;
 
     		SharedPreferences prefs = PrefSettings.getSharedPrefs(activity);
     		int lastNum = prefs.getInt("lastMessageNum", -1);
-		if (lastNum == -1) {
-			// first start of AnkiDroid ever (or at least of a version which supports broadcast messages).
-			// do nothing yet but retrieve message the next time, AD is started
-			prefs.edit().putInt("lastMessageNum", 0).commit();
-			return activity;
-		}
+    		if (lastNum == -1) {
+    			// first start of AnkiDroid ever (or at least of a version which supports broadcast messages).
+    			// do nothing yet but retrieve message the next time, AD is started
+    			prefs.edit().putInt("lastMessageNum", 0).commit();
+    			return activity;
+    		}
     		try {
         		Log.i(AnkiDroidApp.TAG, "BroadcastMessage: download file " + FILE_URL);
     			URL fileUrl;
@@ -174,19 +163,19 @@ public class BroadcastMessages {
     					// get message number
     					mNum = Integer.parseInt(getXmlValue(el, NUM));
     					if (mNum <= lastNum) {
-    			            		Log.d(AnkiDroidApp.TAG, "BroadcastMessage - message " + mNum + " already shown");
+    			            		Log.i(AnkiDroidApp.TAG, "BroadcastMessage - message " + mNum + " already shown");
     						continue;
     					}
 
     					// get message version info
     					mMinVersion = getXmlValue(el, MIN_VERSION);
     					if (mMinVersion != null && mMinVersion.length() > 0 && compareVersions(mMinVersion, currentVersion) > 0) {
-        			            Log.d(AnkiDroidApp.TAG, "BroadcastMessage - too low AnkiDroid version (" + currentVersion + "), message " + mNum + " only for >= " + mMinVersion);
+        			            Log.i(AnkiDroidApp.TAG, "BroadcastMessage - too low AnkiDroid version (" + currentVersion + "), message " + mNum + " only for >= " + mMinVersion);
         			            continue;
     					}
     					mMaxVersion = getXmlValue(el, MAX_VERSION);
     					if (mMaxVersion != null && mMaxVersion.length() > 0 && compareVersions(mMaxVersion, currentVersion) < 0) {
-        			            Log.d(AnkiDroidApp.TAG, "BroadcastMessage - too high AnkiDroid version (" + currentVersion + "), message " + mNum + " only for <= " + mMaxVersion);
+        			            Log.i(AnkiDroidApp.TAG, "BroadcastMessage - too high AnkiDroid version (" + currentVersion + "), message " + mNum + " only for <= " + mMaxVersion);
         			            continue;
     					}
 
@@ -232,7 +221,7 @@ public class BroadcastMessages {
 	    	if (mText != null && mText.length() > 0) {
 		        WebView view = new WebView(context);
 		        view.setBackgroundColor(res.getColor(Themes.getDialogBackgroundColor()));
-		        view.loadDataWithBaseURL("", "<html><body text=\"#FFFFFF\" link=\"#E37068\" alink=\"#E37068\" vlink=\"#E37068\">" + mText + "<br></body></html>", "text/html", "UTF-8", "");
+		        view.loadDataWithBaseURL("", "<html><body text=\"#000000\" link=\"#E37068\" alink=\"#E37068\" vlink=\"#E37068\">" + mText + "<br></body></html>", "text/html", "UTF-8", "");
 		        builder.setView(view, true);
 	    		builder.setCancelable(true);
 	    		builder.setNegativeButton(res.getString(R.string.close),  new DialogInterface.OnClickListener() {

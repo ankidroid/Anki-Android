@@ -1,4 +1,7 @@
-package com.ichi2.anki;import com.ichi2.anki2.R;
+package com.ichi2.anki;import java.util.Calendar;
+import java.util.GregorianCalendar;
+
+import com.ichi2.anki2.R;
 
 import android.content.Context;
 import android.os.Build;
@@ -19,4 +22,15 @@ public class UIUtils {
     	return context.getResources().getDisplayMetrics().density * value;
     }
 
+    public static long getDayStart() {
+		Calendar cal = GregorianCalendar.getInstance();
+		if (cal.get(Calendar.HOUR_OF_DAY) < 4) {
+			cal.roll(Calendar.DAY_OF_YEAR, -1);
+		}
+		cal.set(Calendar.HOUR_OF_DAY, 4);
+		cal.set(Calendar.MINUTE, 0);
+		cal.set(Calendar.SECOND, 0);
+		cal.set(Calendar.MILLISECOND, 0);
+		return cal.getTimeInMillis();
+    }
 }
