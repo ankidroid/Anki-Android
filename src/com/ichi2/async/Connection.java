@@ -281,11 +281,13 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
         			if (ret == null) {
             			data.success = false;
             			data.result = new Object[]{"genericError"};
+            			data.data = new Object[]{Collection.openCollection(path)};
             			return data;        				
         			}
         			if (!((String) ret[0]).equals(HttpSyncer.ANKIWEB_STATUS_OK)) {
             			data.success = false;
             			data.result = ret;
+            			data.data = new Object[]{Collection.openCollection(path)};
             			return data;
         			}
         		} else if (conflictResolution.equals("download")) {
@@ -295,11 +297,13 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
         			if (ret == null) {
             			data.success = false;
             			data.result = new Object[]{"genericError"};
+            			data.data = new Object[]{Collection.openCollection(path)};
             			return data;        				
         			}
         			if (!((String)ret[0]).equals("success")) {
             			data.success = false;
             			data.result = ret;
+            			data.data = new Object[]{Collection.openCollection(path)};
             			return data;
         			}
         		}

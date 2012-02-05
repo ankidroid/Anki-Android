@@ -483,6 +483,9 @@ public class DeckPicker extends Activity {
 						}
 						showDialog(DIALOG_SYNC_LOG);
 					}
+					if (data.data != null && data.data.length >= 1 && data.data[0] instanceof Collection) {
+						mCol = (Collection) data.data[0];
+					}
 				}
 			} else {
 				updateDecksList((TreeSet<Object[]>) data.result, (Integer)data.data[2], (Integer)data.data[3]);
