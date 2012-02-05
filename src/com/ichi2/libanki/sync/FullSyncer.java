@@ -70,6 +70,7 @@ public class FullSyncer extends HttpSyncer {
 			throw new RuntimeException(e);
 		}
 		// check the received file is ok
+		mCon.publishProgress(R.string.sync_check_download_file);
 		try {
 			AnkiDb d = AnkiDatabaseManager.getDatabase(tpath);
 			if (!d.queryString("PRAGMA integrity_check").equalsIgnoreCase("ok")) {
@@ -94,6 +95,7 @@ public class FullSyncer extends HttpSyncer {
 	@Override
 	public Object[] upload() {
 		// make sure it's ok before we try to upload
+		mCon.publishProgress(R.string.sync_check_upload_file);
 		if (!mCol.getDb().queryString("PRAGMA integrity_check").equalsIgnoreCase("ok")) {
 			return new Object[]{"dbError"};
 		}

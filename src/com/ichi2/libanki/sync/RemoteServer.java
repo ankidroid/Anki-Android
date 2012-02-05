@@ -39,7 +39,7 @@ public class RemoteServer extends HttpSyncer {
 			JSONObject jo = new JSONObject();
 			jo.put("u", user);
 			jo.put("p", pw);
-			return super.req("hostKey", new ByteArrayInputStream(jo.toString().getBytes()), false);
+			return super.req("hostKey", super.getInputStream(jo.toString()), false);
 		} catch (JSONException e) {
 			return null;
 		}
@@ -50,7 +50,7 @@ public class RemoteServer extends HttpSyncer {
 		try {
 			JSONObject jo = new JSONObject();
 			jo.put("v", SYNC_VER);
-			return super.req("meta", new ByteArrayInputStream(jo.toString().getBytes()));
+			return super.req("meta", super.getInputStream(jo.toString()));
 		} catch (JSONException e) {
 			throw new RuntimeException(e);
 		}
@@ -82,7 +82,7 @@ public class RemoteServer extends HttpSyncer {
 		try {
 			JSONObject jo = new JSONObject();
 			jo.put("v", SYNC_VER);
-			HttpResponse ret = super.req("sanityCheck", new ByteArrayInputStream("{}".getBytes()));
+			HttpResponse ret = super.req("sanityCheck", super.getInputStream("{}"));
 			if (ret == null) {
 				return null;
 			}
@@ -103,7 +103,7 @@ public class RemoteServer extends HttpSyncer {
 	@Override
 	public long finish() {
 		try {
-			HttpResponse ret = super.req("finish", new ByteArrayInputStream("{}".getBytes()));
+			HttpResponse ret = super.req("finish", super.getInputStream("{}"));
 			if (ret == null) {
 				return 0;
 			}
@@ -119,7 +119,7 @@ public class RemoteServer extends HttpSyncer {
 	}
 
 	private JSONObject _run(String cmd, JSONObject data) {
-		HttpResponse ret = super.req(cmd, new ByteArrayInputStream(data.toString().getBytes()));
+		HttpResponse ret = super.req(cmd, super.getInputStream(data.toString()));
 		if (ret == null) {
 			return null;
 		}

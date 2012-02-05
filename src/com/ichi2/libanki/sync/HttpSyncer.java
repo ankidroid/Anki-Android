@@ -53,6 +53,7 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.StringWriter;
 import java.io.UnsupportedEncodingException;
+import java.nio.charset.Charset;
 import java.util.zip.GZIPOutputStream;
 
 public class HttpSyncer {
@@ -113,7 +114,7 @@ public class HttpSyncer {
 	        	buf.write(bdry + "\r\n");
 	        	buf.write("Content-Disposition: form-data; name=\"data\"; filename=\"data\"\r\nContent-Type: application/octet-stream\r\n\r\n");
 		        buf.close();
-		        bos.write(buf.toString().getBytes());
+		        bos.write(buf.toString().getBytes(Charset.forName("UTF-8")));
 	        	// write file into buffer, optionally compressing
 	        	int len;
 	        	BufferedInputStream bfobj = new BufferedInputStream(fobj);
@@ -131,10 +132,10 @@ public class HttpSyncer {
 		            }
 		            tgt.close();
 	        	}
-	            bos.write(("\r\n" + bdry + "--\r\n").getBytes());
+	            bos.write(("\r\n" + bdry + "--\r\n").getBytes(Charset.forName("UTF-8")));
 	        } else {
 	        	buf.close();
-	        	bos.write(buf.toString().getBytes());	        	
+	        	bos.write(buf.toString().getBytes(Charset.forName("UTF-8")));	        	
 	        }
 	        bos.close();
             // connection headers
@@ -292,5 +293,9 @@ public class HttpSyncer {
 		public boolean isStreaming() {
 			return false;
 		}
+	}
+
+	public static ByteArrayInputStream getInputStream(String string) {
+		return new ByteArrayInputStream(string.getBytes(Charset.forName("UTF-8")));
 	}
 }
