@@ -194,16 +194,24 @@ public class Card implements Cloneable {
 		mCol.getDb().update("cards", values, "id = " + mId, null);
 	}
 
-	public String getQuestion() {
-		return getQuestion(false);
+	public String getQuestion(boolean simple) {
+		return getQuestion(false, simple);
 	}
 
-	public String getQuestion(boolean reload) {
-		return css() + _getQA(reload).get("q");
+	public String getQuestion(boolean reload, boolean simple) {
+		if (simple) {
+			return _getQA(reload).get("q");
+		} else {
+			return css() + _getQA(reload).get("q");
+		}
 	}
 
-	public String getAnswer() {
-		return css() + _getQA(false).get("a");
+	public String getAnswer(boolean simple) {
+		if (simple) {
+			return _getQA(false).get("a").replaceAll("<hr[^>]*>", "<br>─────<br>");
+		} else {
+			return css() + _getQA(false).get("a");
+		}
 	}
 
 	public String css() {

@@ -20,7 +20,6 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
@@ -29,14 +28,11 @@ import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.json.JSONException;
-
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.DialogInterface.OnCancelListener;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
@@ -45,7 +41,6 @@ import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.Typeface;
-import android.graphics.drawable.Drawable;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
@@ -95,7 +90,6 @@ import android.widget.TextView;
 import com.ichi2.anim.ActivityTransitionAnimation;
 import com.ichi2.anim.Animation3D;
 import com.ichi2.anim.ViewAnimation;
-import com.ichi2.anki2.R;
 import com.ichi2.async.DeckTask;
 import com.ichi2.libanki.Card;
 import com.ichi2.libanki.Collection;
@@ -107,27 +101,12 @@ import com.ichi2.themes.StyledProgressDialog;
 import com.ichi2.themes.Themes;
 import com.ichi2.utils.DiffEngine;
 import com.ichi2.utils.RubyParser;
-import com.ichi2.widget.WidgetStatus;
 import com.tomgibara.android.veecheck.util.PrefSettings;
 import com.zeemote.zc.event.ButtonEvent;
 import com.zeemote.zc.event.IButtonListener;
 import com.zeemote.zc.util.JoystickToButtonAdapter;
 
 import org.amr.arabic.ArabicUtilities;
-
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-import java.text.DecimalFormat;
-import java.text.DecimalFormatSymbols;
-import java.text.ParseException;
-import java.util.Locale;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public class Reviewer extends Activity implements IButtonListener{
     /**
@@ -139,14 +118,7 @@ public class Reviewer extends Activity implements IButtonListener{
     public static final int RESULT_EDIT_CARD_RESET = 53;
     public static final int RESULT_ANSWERING_ERROR = 54;
     public static final int RESULT_DECK_CLOSED = 55;
-
-    /**
-     * Possible values for update card handler
-     */
-    public static final int UPDATE_CARD_NEW_CARD = 0;
-    public static final int UPDATE_CARD_SHOW_QUESTION = 1;
-    public static final int UPDATE_CARD_SHOW_ANSWER = 2;
-    
+   
     /**
      * Available options performed by other activities.
      */
@@ -220,17 +192,10 @@ public class Reviewer extends Activity implements IButtonListener{
     private static final Pattern sFenPattern = Pattern.compile("\\[fen ?([^\\]]*)\\]([^\\[]+)\\[/fen\\]");
     private static final Pattern sFenOrientationPattern = Pattern.compile("orientation *= *\"?(black|white)\"?");
 
-    /** Hide Question In Answer choices */
-    private static final int HQIA_DO_HIDE = 0;
-    private static final int HQIA_DO_SHOW = 1;
-    private static final int HQIA_CARD_MODEL = 2;
+    /** to be sento to and from the card editor */
+    private static Card sEditorCard;
 
-    private static Card sEditorCard; // To be assigned as the currentCard or a
-    // new card to be sent to and from
-    // editor
-
-    private static boolean sDisplayAnswer = false; // Indicate if "show answer"
-    // button has been pressed
+    private static boolean sDisplayAnswer = false;
 
     /** The percentage of the absolute font size specified in the deck. */
     private int mDisplayFontSize = 100;
@@ -290,9 +255,6 @@ public class Reviewer extends Activity implements IButtonListener{
 
     private boolean mIsSelecting = false;
     private boolean mTouchStarted = false;
-
-//    @SuppressWarnings("unused")
-//    private boolean mUpdateNotifications; // TODO use Veecheck only if this is true
 
     private String mCardTemplate;
 
@@ -2274,13 +2236,12 @@ public class Reviewer extends Activity implements IButtonListener{
         String displayString = "";
 
         if (mSimpleInterface) {
-        	// TODO
-//        	mCardContent = Html.fromHtml(question);
-//        	if (mCardContent.length() == 0) {
-//        		SpannableString hint = new SpannableString(getResources().getString(R.string.simple_interface_hint, R.string.card_details_question));
-//        		hint.setSpan(new StyleSpan(Typeface.ITALIC), 0, mCardContent.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-//        		mCardContent = hint;
-//        	}
+        	mCardContent = Html.fromHtml(question);
+        	if (mCardContent.length() == 0) {
+        		SpannableString hint = new SpannableString(getResources().getString(R.string.simple_interface_hint, R.string.card_details_question));
+        		hint.setSpan(new StyleSpan(Typeface.ITALIC), 0, mCardContent.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        		mCardContent = hint;
+        	}
         } else {
             // If the user wants to write the answer
             if (typeAnswer()) {
@@ -2325,15 +2286,12 @@ public class Reviewer extends Activity implements IButtonListener{
         String displayString = "";
         
         if (mSimpleInterface) {
-//        	SpannableStringBuilder sb = new SpannableStringBuilder();
-//        	Spanned ans = Html.fromHtml(answer);
-//        	if (ans.length() == 0) {
-//        		SpannableString hint = new SpannableString(getResources().getString(R.string.simple_interface_hint, R.string.card_details_answer));
-//        		hint.setSpan(new StyleSpan(Typeface.ITALIC), 0, hint.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-//        		ans = hint;
-//        	}
-//        	sb.append(ans);
-//        	mCardContent = sb;
+        	mCardContent = Html.fromHtml(answer);
+        	if (mCardContent.length() == 0) {
+        		SpannableString hint = new SpannableString(getResources().getString(R.string.simple_interface_hint, R.string.card_details_answer));
+        		hint.setSpan(new StyleSpan(Typeface.ITALIC), 0, mCardContent.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        		mCardContent = hint;
+        	}
         } else {
             Sound.stopSounds();
 
@@ -2387,8 +2345,8 @@ public class Reviewer extends Activity implements IButtonListener{
         Log.i(AnkiDroidApp.TAG, "updateCard");
 
         if (mSimpleInterface) {
-//        	fillFlashcard(mShowAnimations);
-//        	return;
+        	fillFlashcard(mShowAnimations);
+        	return;
         }
 
         //mBaseUrl = Utils.getBaseUrl();
@@ -2625,18 +2583,18 @@ public class Reviewer extends Activity implements IButtonListener{
 
     private String getQuestion() {
     	if (mSwapQA) {
-    		return mCurrentCard.getAnswer();
+    		return mCurrentCard.getAnswer(mSimpleInterface);
     	} else {
-    		return mCurrentCard.getQuestion();
+    		return mCurrentCard.getQuestion(mSimpleInterface);
     	}
     }
 
 
     private String getAnswer() {
     	if (mSwapQA) {
-    		return mCurrentCard.getQuestion();
+    		return mCurrentCard.getQuestion(mSimpleInterface);
     	} else {
-    		return mCurrentCard.getAnswer();
+    		return mCurrentCard.getAnswer(mSimpleInterface);
     	}
     }
 
