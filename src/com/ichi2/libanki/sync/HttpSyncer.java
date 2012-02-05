@@ -169,10 +169,10 @@ public class HttpSyncer {
 
     public boolean writeToFile(InputStream source, String destination) {
     	File file = new File(destination);
+        OutputStream output = null;
         try {
         	file.createNewFile();
-	        OutputStream output = new BufferedOutputStream(new FileOutputStream(file));
-
+        	output = new BufferedOutputStream(new FileOutputStream(file));
 	        byte[] buf = new byte[Utils.CHUNK_SIZE];
 	        int len;
 	        while ((len = source.read(buf)) > 0) {
@@ -183,6 +183,11 @@ public class HttpSyncer {
 	        output.close();
 	        return true;
 		} catch (IOException e) {
+			try {
+				output.close();
+			} catch (IOException e1) {
+				// do nothing
+			}
 			// no write access or sd card full
 			file.delete();
 			return false;
