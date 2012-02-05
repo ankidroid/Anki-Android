@@ -167,19 +167,26 @@ public class HttpSyncer {
     }
 
 
-    public void writeToFile(InputStream source, String destination) throws IOException {
-        new File(destination).createNewFile();
+    public boolean writeToFile(InputStream source, String destination) {
+    	File file = new File(destination);
+        try {
+        	file.createNewFile();
+	        OutputStream output = new BufferedOutputStream(new FileOutputStream(file));
 
-        OutputStream output = new BufferedOutputStream(new FileOutputStream(destination));
-
-        byte[] buf = new byte[Utils.CHUNK_SIZE];
-        int len;
-        while ((len = source.read(buf)) > 0) {
-            output.write(buf, 0, len);
-            bytesReceived += len;
-            publishProgress();
-        }
-        output.close();
+	        byte[] buf = new byte[Utils.CHUNK_SIZE];
+	        int len;
+	        while ((len = source.read(buf)) > 0) {
+	            output.write(buf, 0, len);
+	            bytesReceived += len;
+	            publishProgress();
+	        }
+	        output.close();
+	        return true;
+		} catch (IOException e) {
+			// no write access or sd card full
+			file.delete();
+			return false;
+		}
     }
 
     public String stream2String(InputStream stream) {

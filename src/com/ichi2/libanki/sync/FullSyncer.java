@@ -64,10 +64,8 @@ public class FullSyncer extends HttpSyncer {
 		mCol.close(false);
 		mCol = null;
 		String tpath = path + ".tmp";
-		try {
-			super.writeToFile(cont, tpath);
-		} catch (IOException e) {
-			throw new RuntimeException(e);
+		if (!super.writeToFile(cont, tpath)) {
+			return new Object[]{"sdAccessError"};
 		}
 		// check the received file is ok
 		mCon.publishProgress(R.string.sync_check_download_file);

@@ -302,7 +302,7 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
             			data.result = ret;
             			return data;
         			}
-        		}    			
+        		}
     		} finally {
     			publishProgress(R.string.sync_reload_message);
         		col = Collection.openCollection(path);

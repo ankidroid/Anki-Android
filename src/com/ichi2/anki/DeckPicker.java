@@ -462,6 +462,9 @@ public class DeckPicker extends Activity {
 					} else if (resultType.equals("remoteDbError")) {
 						mDialogMessage = res.getString(R.string.sync_remote_db_error);
 						showDialog(DIALOG_SYNC_LOG);
+					} else if (resultType.equals("sdAccessError")) {
+						mDialogMessage = res.getString(R.string.sync_write_access_error);
+						showDialog(DIALOG_SYNC_LOG);
 					} else if (resultType.equals("finishError")) {
 						mDialogMessage = res.getString(R.string.sync_log_finish_error);
 						showDialog(DIALOG_SYNC_LOG);
@@ -1048,7 +1051,7 @@ public class DeckPicker extends Activity {
 			if (skip != 0 && UIUtils.getApiLevel() > 4) {
 				ActivityTransitionAnimation.slide(this, ActivityTransitionAnimation.LEFT);
 			}
-		} else if (!BackupManager.enoughDiscSpace(mPrefDeckPath) && !preferences.getBoolean("dontShowLowMemory", false)) {
+		} else if (!BackupManager.enoughDiscSpace(mPrefDeckPath)) {// && !preferences.getBoolean("dontShowLowMemory", false)) {
 			showDialog(DIALOG_NO_SPACE_LEFT);
 		} else if (preferences.getBoolean("noSpaceLeft", false)) {
 			showDialog(DIALOG_BACKUP_NO_SPACE_LEFT);
@@ -1617,8 +1620,8 @@ public class DeckPicker extends Activity {
 //	        mDeckNotLoadedAlert = builder.create();
 
 		case DIALOG_BACKUP_NO_SPACE_LEFT:
-		case DIALOG_NO_SPACE_LEFT:
-			builder.setMessage(id == DIALOG_NO_SPACE_LEFT ? res.getString(R.string.sd_space_warning, BackupManager.MIN_FREE_SPACE) : res.getString(R.string.backup_deck_no_space_left));
+			builder.setTitle(res.getString(R.string.attention));
+			builder.setMessage(res.getString(R.string.backup_deck_no_space_left));
 			builder.setPositiveButton(res.getString(R.string.ok), new DialogInterface.OnClickListener() {
 				@Override
 				public void onClick(DialogInterface dialog, int which) {
@@ -1636,6 +1639,31 @@ public class DeckPicker extends Activity {
 				@Override
 				public void onCancel(DialogInterface arg0) {
 					loadCollection();
+				}				
+			});
+			dialog = builder.create();
+			break;
+
+		case DIALOG_NO_SPACE_LEFT:
+			builder.setTitle(res.getString(R.string.attention));
+			builder.setMessage(res.getString(R.string.sd_space_warning, BackupManager.MIN_FREE_SPACE));
+			builder.setPositiveButton(res.getString(R.string.ok), new DialogInterface.OnClickListener() {
+				@Override
+				public void onClick(DialogInterface dialog, int which) {
+					finish();
+				}
+			});
+//        	builder.setNegativeButton(res.getString(R.string.dont_show_again), new DialogInterface.OnClickListener() {
+//					@Override
+//					public void onClick(DialogInterface arg0, int arg1) {
+//		            	PrefSettings.getSharedPrefs(getBaseContext()).edit().putBoolean("dontShowLowMemory", true).commit();
+//					}
+//		        });
+			builder.setCancelable(true);
+			builder.setOnCancelListener(new OnCancelListener() {
+				@Override
+				public void onCancel(DialogInterface arg0) {
+					finish();
 				}				
 			});
 			dialog = builder.create();
