@@ -30,6 +30,7 @@ import org.apache.http.conn.params.ConnPerRouteBean;
 import org.apache.http.conn.scheme.PlainSocketFactory;
 import org.apache.http.conn.scheme.Scheme;
 import org.apache.http.conn.scheme.SchemeRegistry;
+import org.apache.http.entity.AbstractHttpEntity;
 import org.apache.http.entity.ByteArrayEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.impl.conn.SingleClientConnManager;
@@ -42,6 +43,7 @@ import org.json.JSONObject;
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
+import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -104,7 +106,7 @@ public class HttpSyncer {
 	            buf.write(bdry + "\r\n");
 	            buf.write("Content-Disposition: form-data; name=\"k\"\r\n\r\n" + mHKey + "\r\n");        	
 	        }
-	        OutputStreamProgress bos = new OutputStreamProgress(new ByteArrayOutputStream());
+	        ByteArrayOutputStream bos = new ByteArrayOutputStream();
 	        // payload as raw data or json
 	        if (fobj != null) {
 	        	// header
@@ -114,7 +116,7 @@ public class HttpSyncer {
 		        bos.write(buf.toString().getBytes());
 	        	// write file into buffer, optionally compressing
 	        	int len;
-	        	BufferedInputStream bfobj = new BufferedInputStream (fobj);
+	        	BufferedInputStream bfobj = new BufferedInputStream(fobj);
 		        byte[] chunk = new byte[65536];
 	        	if (comp != 0) {
 	        		GZIPOutputStream tgt = new GZIPOutputStream(new BufferedOutputStream(bos));
@@ -125,19 +127,19 @@ public class HttpSyncer {
 	        	} else {
 	        		BufferedOutputStream tgt = new BufferedOutputStream(bos);
 		            while ((len = bfobj.read(chunk)) > 0) {
-		               	tgt.write(chunk, 0, len);
+		            	tgt.write(chunk, 0, len);
 		            }
+		            tgt.close();
 	        	}
 	            bos.write(("\r\n" + bdry + "--\r\n").getBytes());
 	        } else {
 	        	buf.close();
 	        	bos.write(buf.toString().getBytes());	        	
 	        }
-            bos.close();
-
+	        bos.close();
             // connection headers
 	        HttpPost httpPost = new HttpPost(SYNC_URL + method);
-	        HttpEntity entity = new ByteArrayEntity(bos.toByteArray());
+	        HttpEntity entity = new ProgressByteEntity(bos.toByteArray());
 
 	        // body
 	        httpPost.setEntity(entity);
@@ -200,7 +202,7 @@ public class HttpSyncer {
     }
 
 	private void publishProgress() {
-		if (mNextSendR <=  bytesReceived || mNextSendS <= bytesReceived) {
+		if (mNextSendR <=  bytesReceived || mNextSendS <= bytesSent) {
 			long bR = bytesReceived;
 			long bS = bytesSent;
 			mNextSendR = (bR / 1024 + 1) * 1024;
@@ -243,53 +245,52 @@ public class HttpSyncer {
 	public void applyChunk(JSONObject sech) {
 	}
 
+	
+	public class ProgressByteEntity extends AbstractHttpEntity {
 
-	/*http://stackoverflow.com/questions/7057342/how-to-get-a-progress-bar-for-a-file-upload-with-apache-httpclient-4*/
-	private class OutputStreamProgress extends OutputStream {
+		private InputStream mInputStream;
+		private long mLength;
 
-	    private final ByteArrayOutputStream outstream;
-
-	    public OutputStreamProgress(ByteArrayOutputStream outstream) {
-	        this.outstream = outstream;
-	    }
-
-	    @Override
-	    public void write(int b) throws IOException {
-	        outstream.write(b);
-	        count(1);
-	    }
+		public ProgressByteEntity(byte[] byteArray) {
+			super();
+			mLength = byteArray.length;
+			mInputStream = new ByteArrayInputStream(byteArray);
+		}
 
 	    @Override
-	    public void write(byte[] b) throws IOException {
-	        outstream.write(b);
-	        count(b.length);
+	    public void writeTo(OutputStream outstream) throws IOException {
+	        try {
+		          byte[] tmp = new byte[4096];
+		          int len;
+		          while ((len = mInputStream.read(tmp)) != -1) {
+	        	  		outstream.write(tmp, 0, len);
+	        	  		bytesSent += len;
+	        	  		publishProgress();
+		          }
+		          outstream.flush();
+	        } finally {
+	        	mInputStream.close();
+	        }
 	    }
 
-	    @Override
-	    public void write(byte[] b, int off, int len) throws IOException {
-	        outstream.write(b, off, len);
-	        count(len);
-	    }
+		@Override
+		public InputStream getContent() throws IOException, IllegalStateException {
+			return mInputStream;
+		}
 
-	    @Override
-	    public void flush() throws IOException {
-	        outstream.flush();
-	    }
+		@Override
+		public long getContentLength() {
+			return  mLength;
+		}
 
-	    @Override
-	    public void close() throws IOException {
-	        outstream.close();
-	    }
+		@Override
+		public boolean isRepeatable() {
+			return false;
+		}
 
-	    public byte[] toByteArray() throws IOException {
-	    	return outstream.toByteArray();
-	    }
-
-	    public void count(long count) throws IOException {
-	        bytesSent += count;
-	        publishProgress();
-	    }
+		@Override
+		public boolean isStreaming() {
+			return false;
+		}
 	}
-
-
 }
