@@ -145,6 +145,8 @@ public class CardEditor extends Activity {
 
 	private static final int WAIT_TIME_UNTIL_UPDATE = 1000;
 
+	private static boolean mChanged = false;
+
 	/**
 	 * Broadcast that informs us when the sd card is about to be unmounted
 	 */
@@ -172,8 +174,6 @@ public class CardEditor extends Activity {
 
 	/* indicates which activity called card editor */
 	private int mCaller;
-
-	private boolean mCardReset = false;
 
 	private Collection mCol;
 	private long mDeckId;
@@ -218,7 +218,9 @@ public class CardEditor extends Activity {
 			if (mCaller == CALLER_BIGWIDGET_EDIT) {
 				// AnkiDroidWidgetBig.setCard(values[0].getCard());
 				// AnkiDroidWidgetBig.updateWidget(AnkiDroidWidgetBig.UpdateService.VIEW_NOT_SPECIFIED);
+				mChanged = true;
 			} else if (count > 0) {
+				 mChanged = true;
 				 mSourceText = null;
 				 mTargetText = null;
 				 setNote();
@@ -237,16 +239,15 @@ public class CardEditor extends Activity {
 			}
 			if (!mAddNote || mCaller == CALLER_CARDEDITOR
 					|| mCaller == CALLER_BIGWIDGET_EDIT || mAedictIntent) {
+				mChanged = true;
 				closeCardEditor();
 			} else if (mCaller == CALLER_CARDEDITOR_INTENT_ADD) {
 				if (count > 0) {
-					Intent intent = new Intent();
-					intent.putExtra(EXTRA_ID, getIntent().getStringExtra(EXTRA_ID));
-					setResult(RESULT_OK, intent);
-					finishCardEditor();
-				} else {
-					closeCardEditor(RESULT_CANCELED);
+					mChanged = true;
 				}
+				Intent intent = new Intent();
+				intent.putExtra(EXTRA_ID, getIntent().getStringExtra(EXTRA_ID));
+				closeCardEditor(intent);
 			} else if (!mEditFields.isEmpty()) {
 				mEditFields.getFirst().requestFocus();
 			}
@@ -496,10 +497,9 @@ public class CardEditor extends Activity {
 						mEditorNote.setTags(mCurrentTags);
 						// set did for card
 						mCurrentEditedCard.setDid(mCurrentDid);
-						closeCardEditor(RESULT_OK);
-					} else {
-						closeCardEditor(RESULT_CANCELED);
+						mChanged = true;
 					}
+					closeCardEditor();
 //					if (mCaller == CALLER_BIGWIDGET_EDIT) {
 //						// DeckTask.launchDeckTask(DeckTask.TASK_TYPE_UPDATE_FACT,
 //						// mSaveFactHandler, new
@@ -524,7 +524,7 @@ public class CardEditor extends Activity {
 
 			@Override
 			public void onClick(View v) {
-				closeCardEditor(RESULT_CANCELED);
+				closeCardEditor();
 			}
 
 		});
@@ -608,7 +608,7 @@ public class CardEditor extends Activity {
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
 		if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
 			Log.i(AnkiDroidApp.TAG, "CardEditor - onBackPressed()");
-			closeCardEditor(RESULT_CANCELED);
+			closeCardEditor();
 			return true;
 		}
 
@@ -788,14 +788,26 @@ public class CardEditor extends Activity {
 	}
 
 	private void closeCardEditor() {
-		closeCardEditor(RESULT_OK);
+		closeCardEditor(null);
 	}
-
+	private void closeCardEditor(Intent intent) {
+		int result;
+		if (mChanged) {
+			result = RESULT_OK;
+		} else {
+			result = RESULT_CANCELED;
+		}
+		closeCardEditor(result, intent);
+	}
 	private void closeCardEditor(int result) {
-		setResult(result);
-		finishCardEditor();
+		closeCardEditor(result, null);
 	}
-	private void finishCardEditor() {
+	private void closeCardEditor(int result, Intent intent) {
+		if (intent != null) {
+			setResult(result, intent);
+		} else {
+			setResult(result);
+		}
 		finish();
 		if (mCaller == CALLER_CARDEDITOR_INTENT_ADD
 				|| mCaller == CALLER_BIGWIDGET_EDIT
@@ -1106,6 +1118,7 @@ public class CardEditor extends Activity {
 		switch (requestCode) {
 		case REQUEST_INTENT_ADD:
 			if (resultCode != RESULT_CANCELED) {
+				mChanged = true;
 				String id = data.getStringExtra(EXTRA_ID);
 				if (id != null) {
 					for (int i = 0; i < mIntentInformation.size(); i++) {
@@ -1126,9 +1139,9 @@ public class CardEditor extends Activity {
 			}
 			break;
 		case REQUEST_ADD:
-			if (resultCode == Reviewer.RESULT_EDIT_CARD_RESET) {
-				mCardReset = true;
-				setResult(Reviewer.RESULT_EDIT_CARD_RESET);
+			mChanged = true;
+			if (resultCode != RESULT_CANCELED) {
+				mChanged = true;
 			}
 			break;
 		}
