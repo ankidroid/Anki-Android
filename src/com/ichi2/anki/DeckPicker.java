@@ -1202,7 +1202,7 @@ public class DeckPicker extends Activity {
 		 			mSyncConflictResolutionListener);
 		 	builder.setNegativeButton(res.getString(R.string.sync_conflict_cancel),
 		 			mSyncConflictResolutionListener);
-		 	builder.setCancelable(false);
+		 	builder.setCancelable(true);
 		 	dialog = builder.create();
 		 	break;
 
