@@ -233,7 +233,7 @@ public class DeckPicker extends Activity {
 	private long mLastTimeOpened;
 	private int mPrefDeckOrder = 0;
 	private boolean mPrefStartupDeckPicker = false;
-	private String mCurrentDeckFilename = null;
+	private long mCurrentDid;
 	private String mCurrentDeckPath = null;
 
 	private EditText mDialogEditText;
@@ -320,46 +320,24 @@ public class DeckPicker extends Activity {
 //				alert.show();
 				return;
 			case CONTEXT_MENU_RENAME_DECK:
-//				StyledDialog.Builder builder2 = new StyledDialog.Builder(DeckPicker.this);
-//				builder2.setTitle(res.getString(R.string.contextmenu_deckpicker_rename_deck));
-//
-//				mCurrentDeckPath = null;
-//				mCurrentDeckPath = data.get("filepath");
-//
-//				mRenameDeckEditText = (EditText) new EditText(DeckPicker.this);
-//				mRenameDeckEditText.setText(mCurrentDeckFilename.replace(".anki", ""));
-//				InputFilter filter = new InputFilter() {
-//					public CharSequence filter(CharSequence source, int start,
-//							int end, Spanned dest, int dstart, int dend) {
-//						for (int i = start; i < end; i++) {
-//							if (!Character.isLetterOrDigit(source.charAt(i))) {
-//								return "";
-//							}
-//						}
-//						return null;
-//					}
-//				};
-//				mRenameDeckEditText.setFilters(new InputFilter[] { filter });
-//				builder2.setView(mRenameDeckEditText, false, true);
-//				builder2.setPositiveButton(res.getString(R.string.rename),
-//						new DialogInterface.OnClickListener() {
-//
-//							@Override
-//							public void onClick(DialogInterface dialog, int which) {
-//								Log.i(AnkiDroidApp.TAG, "Renaming file " + mCurrentDeckFilename + " to " + mRenameDeckEditText.getText().toString());
-//								File file = new File(mCurrentDeckPath);
-//								String newFilename = file.getParentFile().getAbsolutePath() + "/" + mRenameDeckEditText.getText().toString().replace("[:\\/]", "") + ".anki";
-//								File newFile = new File(newFilename);
-//								if (newFile.exists() || !file.renameTo(newFile)) {
-//									Themes.showThemedToast(DeckPicker.this, getResources().getString(R.string.rename_error, mCurrentDeckFilename), true);
-//								} else {
-//									populateDeckList(mPrefDeckPath);
-//								}
-//								mCurrentDeckPath = null;
-//							}
-//						});
-//				builder2.setNegativeButton(res.getString(R.string.cancel), null);
-//				builder2.create().show();
+				StyledDialog.Builder builder2 = new StyledDialog.Builder(DeckPicker.this);
+				builder2.setTitle(res.getString(R.string.contextmenu_deckpicker_rename_deck));
+
+				mDialogEditText = (EditText) new EditText(DeckPicker.this);
+				mDialogEditText.setText(mCol.getDecks().name(mCurrentDid));
+//				mDialogEditText.setFilters(new InputFilter[] { mDeckNameFilter });
+				builder2.setView(mDialogEditText, false, false);
+				builder2.setPositiveButton(res.getString(R.string.rename),
+						new DialogInterface.OnClickListener() {
+
+							@Override
+							public void onClick(DialogInterface dialog, int which) {
+								mCol.getDecks().rename(mCol.getDecks().get(mCurrentDid), mDialogEditText.getText().toString().replaceAll("[\'\"\\s\\n\\r\\[\\]\\(\\)]", ""));
+								loadCounts();
+							}
+						});
+				builder2.setNegativeButton(res.getString(R.string.cancel), null);
+				builder2.create().show();
 				return;
 			case CONTEXT_MENU_DECK_SUMMARY:
 //				mStatisticType = 0;
@@ -1380,72 +1358,17 @@ public class DeckPicker extends Activity {
 		case DIALOG_DELETE_DECK:
 			builder.setTitle(res.getString(R.string.delete_deck_title));
 			builder.setIcon(android.R.drawable.ic_dialog_alert);
-			builder.setMessage(String.format(res.getString(R.string.delete_deck_message), "\'" + mCurrentDeckFilename + "\'"));
+			builder.setMessage(String.format(res.getString(R.string.delete_deck_message), "\'" + mCol.getDecks().name(mCurrentDid) + "\'"));
 			builder.setPositiveButton(res.getString(R.string.delete_deck_confirm),
 					new DialogInterface.OnClickListener() {
 
 						@Override
 						public void onClick(DialogInterface dialog, int which) {
-							removeDeck(mCurrentDeckPath);
-							mCurrentDeckPath = null;
-							mCurrentDeckFilename = null;
+							mCol.getDecks().rem(mCurrentDid, true);
+							loadCounts();
 						}
 					});
-			builder.setNegativeButton(res.getString(R.string.cancel),
-				new DialogInterface.OnClickListener() {
-
-					@Override
-					public void onClick(DialogInterface dialog, int which) {
-						mCurrentDeckPath = null;
-						mCurrentDeckFilename = null;
-					}
-				});
-			builder.setOnCancelListener(
-					new DialogInterface.OnCancelListener() {
-
-						@Override
-						public void onCancel(DialogInterface dialog) {
-							mCurrentDeckPath = null;
-							mCurrentDeckFilename = null;
-						}
-					});					
-			dialog = builder.create();
-			break;
-
-		case DIALOG_DELETE_BACKUPS:
-			builder.setTitle(res.getString(R.string.backup_manager_title));
-			builder.setIcon(android.R.drawable.ic_dialog_alert);
-			builder.setMessage(String.format(res.getString(R.string.backup_delete_deck_backups_alert), "\'" + mCurrentDeckFilename + "\'"));
-			builder.setPositiveButton(res.getString(R.string.delete_deck_confirm),
-					new DialogInterface.OnClickListener() {
-
-						@Override
-						public void onClick(DialogInterface dialog, int which) {
-//							if (BackupManager.deleteDeckBackups(mCurrentDeckPath, 0)) {
-//								Themes.showThemedToast(DeckPicker.this, getResources().getString(R.string.backup_delete_deck_backups, "\'" + mCurrentDeckFilename + "\'"), true);
-//							}
-//							mCurrentDeckPath = null;
-//							mCurrentDeckFilename = null;
-						}
-					});
-			builder.setNegativeButton(res.getString(R.string.cancel),
-				new DialogInterface.OnClickListener() {
-
-					@Override
-					public void onClick(DialogInterface dialog, int which) {
-						mCurrentDeckPath = null;
-						mCurrentDeckFilename = null;
-					}
-				});
-			builder.setOnCancelListener(
-					new DialogInterface.OnCancelListener() {
-
-						@Override
-						public void onCancel(DialogInterface dialog) {
-							mCurrentDeckPath = null;
-							mCurrentDeckFilename = null;
-						}
-					});					
+			builder.setNegativeButton(res.getString(R.string.cancel), null);
 			dialog = builder.create();
 			break;
 
@@ -1458,16 +1381,9 @@ public class DeckPicker extends Activity {
 				});
 			break;
 
-		case DIALOG_OPTIMIZE_DATABASE:
-    		builder.setTitle(res.getString(R.string.optimize_deck_title));
-    		builder.setPositiveButton(res.getString(R.string.ok), null);
-			builder.setIcon(android.R.drawable.ic_dialog_alert);
-			dialog = builder.create();
-			break;
-
 		case DIALOG_CONTEXT_MENU:
 			String[] entries = new String[5];
-			entries[CONTEXT_MENU_DECK_SUMMARY] = "";//res.getStringArray(R.array.statistics_type_labels)[0];
+			entries[CONTEXT_MENU_DECK_SUMMARY] = "XXXsum";//res.getStringArray(R.array.statistics_type_labels)[0];
 			entries[CONTEXT_MENU_CUSTOM_DICTIONARY] = res.getString(R.string.contextmenu_deckpicker_set_custom_dictionary);
 			entries[CONTEXT_MENU_RESET_LANGUAGE] = res.getString(R.string.contextmenu_deckpicker_reset_language_assignments);
 			entries[CONTEXT_MENU_RENAME_DECK] = res.getString(R.string.contextmenu_deckpicker_rename_deck);
@@ -1478,33 +1394,33 @@ public class DeckPicker extends Activity {
 	        dialog = builder.create();
 			break;
 
-		case DIALOG_REPAIR_DECK:
-    		builder.setTitle(res.getString(R.string.backup_repair_deck));
-			builder.setIcon(android.R.drawable.ic_dialog_alert);
-    		builder.setPositiveButton(res.getString(R.string.yes), new DialogInterface.OnClickListener() {
-				@Override
-				public void onClick(DialogInterface dialog, int which) {
-	            	DeckTask.launchDeckTask(DeckTask.TASK_TYPE_REPAIR_DECK, mRepairDeckHandler, new DeckTask.TaskData(mCurrentDeckPath));
-					mCurrentDeckPath = null;
-					mCurrentDeckFilename = null;
-				}
-    		});
-    		builder.setNegativeButton(res.getString(R.string.no), new DialogInterface.OnClickListener() {
-				@Override
-				public void onClick(DialogInterface dialog, int which) {
-					mCurrentDeckPath = null;
-					mCurrentDeckFilename = null;
-				}
-    		});
-    		builder.setOnCancelListener(new DialogInterface.OnCancelListener() {
-				@Override
-				public void onCancel(DialogInterface dialog) {
-					mCurrentDeckPath = null;
-					mCurrentDeckFilename = null;
-				}
-    		});
-			dialog = builder.create();
-			break;
+//		case DIALOG_REPAIR_DECK:
+//    		builder.setTitle(res.getString(R.string.backup_repair_deck));
+//			builder.setIcon(android.R.drawable.ic_dialog_alert);
+//    		builder.setPositiveButton(res.getString(R.string.yes), new DialogInterface.OnClickListener() {
+//				@Override
+//				public void onClick(DialogInterface dialog, int which) {
+//	            	DeckTask.launchDeckTask(DeckTask.TASK_TYPE_REPAIR_DECK, mRepairDeckHandler, new DeckTask.TaskData(mCurrentDeckPath));
+//					mCurrentDeckPath = null;
+//					mCurrentDeckFilename = null;
+//				}
+//    		});
+//    		builder.setNegativeButton(res.getString(R.string.no), new DialogInterface.OnClickListener() {
+//				@Override
+//				public void onClick(DialogInterface dialog, int which) {
+//					mCurrentDeckPath = null;
+//					mCurrentDeckFilename = null;
+//				}
+//    		});
+//    		builder.setOnCancelListener(new DialogInterface.OnCancelListener() {
+//				@Override
+//				public void onCancel(DialogInterface dialog) {
+//					mCurrentDeckPath = null;
+//					mCurrentDeckFilename = null;
+//				}
+//    		});
+//			dialog = builder.create();
+//			break;
 
 		case DIALOG_SYNC_LOG:
 			builder.setTitle(res.getString(R.string.sync_log_title));
@@ -1704,20 +1620,12 @@ public class DeckPicker extends Activity {
 		StyledDialog ad = (StyledDialog)dialog;
 		switch (id) {
 		case DIALOG_DELETE_DECK:
-			mCurrentDeckFilename = mDeckList.get(mContextMenuPosition).get("name");
-			ad.setMessage(String.format(res.getString(R.string.delete_deck_message), "\'" + mCurrentDeckFilename + "\'"));
-			break;
-		case DIALOG_DELETE_BACKUPS:
-			mCurrentDeckFilename = mDeckList.get(mContextMenuPosition).get("name");
-			ad.setMessage(String.format(res.getString(R.string.backup_delete_deck_backups_alert), "\'" +mCurrentDeckFilename + "\'"));
+			mCurrentDid = Long.parseLong(mDeckList.get(mContextMenuPosition).get("did"));
+			ad.setMessage(String.format(res.getString(R.string.delete_deck_message), "\'" + mCol.getDecks().name(mCurrentDid) + "\'"));
 			break;
 		case DIALOG_CONTEXT_MENU:
-			mCurrentDeckFilename = mDeckList.get(mContextMenuPosition).get("name");
-			ad.setTitle(mCurrentDeckFilename);
-			break;
-		case DIALOG_REPAIR_DECK:
-			mCurrentDeckFilename = mDeckList.get(mContextMenuPosition).get("name");
-			ad.setMessage(String.format(res.getString(R.string.repair_deck_dialog), mCurrentDeckFilename, BackupManager.BROKEN_DECKS_SUFFIX.replace("/", "")));
+			mCurrentDid = Long.parseLong(mDeckList.get(mContextMenuPosition).get("did"));
+			ad.setTitle(mCol.getDecks().name(mCurrentDid));
 			break;
 		case DIALOG_SYNC_LOG:
 			ad.setMessage(mDialogMessage);
@@ -1921,27 +1829,14 @@ public class DeckPicker extends Activity {
 				builder2.setTitle(res.getString(R.string.new_deck));
 
 				mDialogEditText = (EditText) new EditText(DeckPicker.this);
-				InputFilter filter = new InputFilter() {
-					public CharSequence filter(CharSequence source, int start,
-							int end, Spanned dest, int dstart, int dend) {
-						for (int i = start; i < end; i++) {
-							if (!Character.isLetterOrDigit(source.charAt(i))) {
-								if (source.charAt(i) != ':') {
-									return "";
-								}
-							}
-						}
-						return null;
-					}
-				};
-				mDialogEditText.setFilters(new InputFilter[] { filter });
+//				mDialogEditText.setFilters(new InputFilter[] { mDeckNameFilter });
 				builder2.setView(mDialogEditText, false, false);
 				builder2.setPositiveButton(res.getString(R.string.create),
 						new DialogInterface.OnClickListener() {
 
 							@Override
 							public void onClick(DialogInterface dialog, int which) {
-								String deckName = mDialogEditText.getText().toString();
+								String deckName = mDialogEditText.getText().toString().replaceAll("[\'\"\\s\\n\\r\\[\\]\\(\\)]", "");
 								Log.i(AnkiDroidApp.TAG, "Creating deck: " + deckName);
 								mCol.getDecks().id(deckName, true);
 								loadCounts();
@@ -2054,23 +1949,6 @@ public class DeckPicker extends Activity {
 		openStudyOptions();
 	}
 
-
-	private void removeDeck(String deckFilename) {
-//		if (deckFilename != null) {
-//			DeckManager.closeDeck(deckFilename);
-//			File file = new File(deckFilename);
-//			boolean deleted = BackupManager.removeDeck(file);
-//			if (deleted) {
-//				Log.i(AnkiDroidApp.TAG, "DeckPicker - " + deckFilename + " deleted");
-//				mDeckIsSelected = false;
-//				DeckManager.closeDeck(deckFilename);		
-//				populateDeckList(mPrefDeckPath);
-//			} else {
-//				Log.e(AnkiDroidApp.TAG, "Error: Could not delete "
-//						+ deckFilename);
-//			}
-//		}
-	}
 
 	private void createTutorialDeck() {
 		DeckTask.launchDeckTask(DeckTask.TASK_TYPE_LOAD_TUTORIAL, new DeckTask.TaskListener() {
@@ -2371,6 +2249,32 @@ public class DeckPicker extends Activity {
     	}
     	return sb.toString();
     }
+
+
+//    private InputFilter mDeckNameFilter = new InputFilter() {
+//		public CharSequence filter(CharSequence source, int start,
+//				int end, Spanned dest, int dstart, int dend) {
+//			for (int i = start; i < end; i++) {
+//				if (!Character.isLetterOrDigit(source.charAt(i))) {
+//					char comp = source.charAt(i);
+//					if (comp == ' ') {
+//						return "";
+//					}
+//					boolean forbidden = true;
+//					for (char c : new char[]{':', '+', '-', '!', '_'}) {
+//						if (c == comp) {
+//							forbidden = false;
+//							break;
+//						}
+//					}
+//					if (forbidden) {
+//						return "";						
+//					}
+//				}
+//			}
+//			return null;
+//		}
+//	};
 
 }
 

@@ -31,7 +31,7 @@
 
 <string name="contextmenu_deckpicker_delete_deck">Delete Deck</string>
 <string name="delete_deck_title">Delete Deck</string>
-<string name="delete_deck_message">Do you really want to delete deck %s?</string>
+<string name="delete_deck_message">Are you sure you wish to delete all cards in %s?</string>
 <string name="delete_deck_confirm">Delete it</string>
 
 <string name="new_version_title">New Version:</string>
