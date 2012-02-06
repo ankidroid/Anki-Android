@@ -69,7 +69,7 @@
 
 <string name="connection_error_message">A network error has occurred.</string>
 <string name="sync_log_db_error">A database error has occurred.</string>
-<string name="no_user_password_error_message">In order to proceed with this operation, you need to have an AnkiOnline account and be logged in.</string>
+<string name="no_user_password_error_message">In order to proceed with this operation, you need to have an AnkiWeb account and be logged in.</string>
 
 <!-- SharedDeck.java -->
 <string name="fact">fact</string>
@@ -79,7 +79,7 @@
 <string name="username">Username</string>
 <string name="password">Password</string>
 <string name="log_in">Log in</string>
-<string name="sign_up_description">Don\'t have an AnkiOnline account? It\'s free!</string>
+<string name="sign_up_description">Don\'t have an AnkiWeb account? It\'s free!</string>
 <string name="sign_up">Sign up</string>
 
 <string name="logged_as">Logged in as</string>
