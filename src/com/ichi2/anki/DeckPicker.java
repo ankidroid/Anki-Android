@@ -1451,7 +1451,7 @@ public class DeckPicker extends Activity {
 
 		case DIALOG_CONTEXT_MENU:
 			String[] entries = new String[5];
-			entries[CONTEXT_MENU_DECK_SUMMARY] = res.getStringArray(R.array.statistics_type_labels)[0];
+			entries[CONTEXT_MENU_DECK_SUMMARY] = "";//res.getStringArray(R.array.statistics_type_labels)[0];
 			entries[CONTEXT_MENU_CUSTOM_DICTIONARY] = res.getString(R.string.contextmenu_deckpicker_set_custom_dictionary);
 			entries[CONTEXT_MENU_RESET_LANGUAGE] = res.getString(R.string.contextmenu_deckpicker_reset_language_assignments);
 			entries[CONTEXT_MENU_RENAME_DECK] = res.getString(R.string.contextmenu_deckpicker_rename_deck);

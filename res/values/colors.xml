@@ -31,16 +31,12 @@
 	    
 
 	    
-	<color name="statistics_default">#FBB117</color>
-	<color name="statistics_due_learn_cards">#FF0000</color>
-	<color name="statistics_due_average_line">#FFFFFF</color>
-	<color name="statistics_reps_cram_cards">#5CB3FF</color>
-	<color name="statistics_reps_learn_cards">#4AA1F1</color>
-	<color name="statistics_reps_relearn_cards">#398EE3</color>
-	<color name="statistics_reps_young_cards">#277CD5</color>
-	<color name="statistics_reps_mature_cards">#1569C7</color>
+	<color name="stats_young">#7c7</color>
+	<color name="stats_mature">#070</color>
+	<color name="stats_learn">#00F</color>
+	<color name="stats_relearn">#c00</color>
+	<color name="stats_cram">#ff0</color>
 	
-	<color name="progressbar_1">#ff0000</color>	
 	<color name="progressbar_2">#ff9100</color>	
 	<color name="progressbar_3">#ffbe00</color>	
 	<color name="progressbar_4">#4aa02c</color>	

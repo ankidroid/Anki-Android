@@ -236,12 +236,11 @@ public class ChartBuilder extends Activity {
         mStats = Stats.currentStats();
         mSeriesList = mStats.getSeriesList();
         Object[] ob = mStats.getMetaInfo();
-        int type = (Integer)ob[0];
-        String title = res.getStringArray(R.array.statistics_type_labels)[type];
-        int origin = (Integer)ob[1];
-        int[] valueLabels = (int[])ob[2];
-        int[] barColors = (int[])ob[3];
-        int[] axisTitles = (int[])ob[4];
+        String title = res.getString((Integer)ob[1]);
+        boolean backwards = (Boolean)ob[2];
+        int[] valueLabels = (int[])ob[3];
+        int[] barColors = (int[])ob[4];
+        int[] axisTitles = (int[])ob[5];
 
         if (mSeriesList == null || mSeriesList[0].length < 2) {
             Log.i(AnkiDroidApp.TAG, "ChartBuilder - Data variable empty, closing chartbuilder");
@@ -278,7 +277,11 @@ public class ChartBuilder extends Activity {
             if (mSeriesList.length == 1) {
                 mRenderer.setShowLegend(false);
             }
-            mPan = new double[] { origin - 0.5, mSeriesList[0][mSeriesList[0].length - 1] + 0.5 };
+            if (backwards) {
+                mPan = new double[] { mSeriesList[0][0] - 0.5, 0.5 };            	
+            } else {
+                mPan = new double[] { -0.5, mSeriesList[0][mSeriesList[0].length - 1] + 0.5 };
+            }
             mRenderer.setLegendTextSize(17);
             mRenderer.setBarSpacing(0.4);
             mRenderer.setLegendHeight(60);
@@ -365,9 +368,14 @@ public class ChartBuilder extends Activity {
     	StyledDialog.Builder builder = new StyledDialog.Builder(context);
 		builder.setTitle(context.getString(R.string.statistics_type_title));
 		builder.setIcon(android.R.drawable.ic_menu_sort_by_size);
-		builder.setItems(
-				context.getResources().getStringArray(
-						R.array.statistics_type_labels), listener);
+
+		// set items
+		String[] items = new String[3];
+		items[0] = context.getResources().getString(R.string.stats_forecast);
+		items[1] = context.getResources().getString(R.string.stats_review_count);
+		items[2] = context.getResources().getString(R.string.stats_review_time);
+
+		builder.setItems(items, listener);
 		final RadioButton[] statisticRadioButtons = new RadioButton[3];
 	    RadioGroup rg = new RadioGroup(context);
 	    rg.setOrientation(RadioGroup.HORIZONTAL);

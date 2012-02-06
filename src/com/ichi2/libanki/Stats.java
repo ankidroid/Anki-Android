@@ -34,6 +34,14 @@ public class Stats {
     public static final int TYPE_YEAR = 1;
     public static final int TYPE_LIFE = 2;
 
+	public static final int TYPE_FORECAST = 0;
+	public static final int TYPE_REVIEW_COUNT = 1;
+	public static final int TYPE_REVIEW_TIME = 2;
+//	public static final int TYPE_INTERVALS = 2; 
+//	public static final int TYPE_REVIEWS = 3;
+//	public static final int TYPE_REVIEWING_TIME = 4;
+//	public static final int TYPE_DECK_SUMMARY = 5;
+
     private static Stats sCurrentInstance;
 
     private Collection mCol;
@@ -41,7 +49,8 @@ public class Stats {
     private double[][] mSeriesList;
 
     private int mType;
-    private int mOrigin;
+    private int mTitle;
+    private boolean mBackwards;
     private int[] mValueLabels;
     private int[] mColors;
     private int[] mAxisTitles;
@@ -61,19 +70,20 @@ public class Stats {
     }
 
     public Object[] getMetaInfo() {
-    	return new Object[] {mType, mOrigin, mValueLabels, mColors, mAxisTitles};
+    	return new Object[] {mType, mTitle, mBackwards, mValueLabels, mColors, mAxisTitles};
     }
 
     /** 
      * Due and cumulative due
      * ***********************************************************************************************
      */
-    public void calculateDue(int type) {
+    public boolean calculateDue(int type) {
     	mType = type;
-    	mOrigin = 0;
-    	mValueLabels = new int[]{R.string.statistics_young_cards, R.string.statistics_mature_cards};
-    	mColors = new int[]{R.color.statistics_due_young_cards, R.color.statistics_due_mature_cards};
-    	mAxisTitles = new int[]{type, R.string.statistics_period_y_axis};
+    	mBackwards = false;
+    	mTitle = R.string.stats_forecast;
+    	mValueLabels = new int[]{R.string.statistics_young, R.string.statistics_mature};
+    	mColors = new int[]{R.color.stats_young, R.color.stats_mature};
+    	mAxisTitles = new int[]{type, R.string.stats_cards};
     	int end = 0;
     	int chunk = 0;
     	switch (type) {
@@ -103,6 +113,9 @@ public class Stats {
                             + "count(), " // all cards
                             + "sum(CASE WHEN ivl >= 21 THEN 1 ELSE 0 END) " // mature cards
                             + "FROM cards WHERE did IN " + _limit() + " AND queue = 2" + lim + " GROUP BY day ORDER BY day", null);
+            if (!cur.moveToFirst()) {
+            	return false;
+            }
             while (cur.moveToNext()) {
                 dues.add(new int[] { cur.getInt(0), cur.getInt(1), cur.getInt(2) });
             }
@@ -118,7 +131,7 @@ public class Stats {
         	mSeriesList[1][i] = data[1];
         	mSeriesList[2][i] = data[2];
         }
-        
+        return true;
     }
 
 
@@ -127,67 +140,94 @@ public class Stats {
      * ***********************************************************************************************
      */
 
-    public int[][] reps(int type) {
+    public boolean calculateDone(int type, boolean reps) {
     	mType = type;
-    	int days;
-    	int chunk;
+    	mBackwards = true;
+    	if (reps) {
+        	mTitle = R.string.stats_review_count;    		
+        	mAxisTitles = new int[]{type, R.string.stats_answers};
+    	} else {
+        	mTitle = R.string.stats_review_time;	
+    	}
+    	mValueLabels = new int[]{R.string.statistics_learn, R.string.statistics_relearn, R.string.statistics_young, R.string.statistics_mature, R.string.statistics_cram};
+    	mColors = new int[]{R.color.stats_learn, R.color.stats_relearn, R.color.stats_young, R.color.stats_mature, R.color.stats_cram };
+    	int num = 0;
+    	int chunk = 0;
     	switch (type) {
     	case TYPE_MONTH:
-    		days = 30;
+    		num = 30;
     		chunk = 1;
     		break;
     	case TYPE_YEAR:
-    		days = 52;
+    		num = 52;
     		chunk = 7;
     		break;
     	case TYPE_LIFE:
-    		days = -1;
+    		num = -1;
     		chunk = 30;
     		break;
     	}
-
-//            long interval = (mCol.getSched().getDayCutoff() - (num * chunk * 86400)) * 1000;
-//            String lim = "WHERE time > " + interval + _revlogLimit();
-//        String tk;
-//        String td;
-//        if (time) {
-//            tk = "taken/1000";
-//            if (chunk < 30) {
-//                td = "/60.0"; // minutes
-//            } else {
-//                td = "/3600.0"; // hours
-//            }
-//        } else {
-//            tk = "1";
-//            td = "";
-//        }
-//        ArrayList<int[]> reps = new ArrayList<int[]>();
-//        Cursor cur = null;
-//        try {
-//            cur = mDeck.getDB().getDatabase().rawQuery(
-//                    "SELECT (cast((time/1000 - " + mDeck.getSched().getDayCutoff() + ") / 86400.0 AS INT))/" + chunk
-//                            + " AS day, " + "sum(" + tk + ")" + td + ", " // all --> cram
-//                            + "sum(CASE WHEN type < 3 THEN " + tk + " ELSE 0 END)" + td + ", " // all but cram count -->
-//                            // lrn
-//                            + "sum(CASE WHEN type BETWEEN 1 AND 2 THEN " + tk + " ELSE 0 END)" + td + ", " // all but
-//                                                                                                           // count -->
-//                                                                                                           // relrn
-//                            + "sum(CASE WHEN type = 1 THEN " + tk + " ELSE 0 END)" + td + ", " // mtr + yng count -->
-//                            // yng
-//                            + "sum(CASE WHEN type = 1 AND lastIvl >= 21 THEN " + tk + " ELSE 0 END)" + td // mtr
-//                                                                                                                // count
-//                            + " FROM revlog " + lim + " GROUP BY day ORDER BY day", null);
-//            while (cur.moveToNext()) {
-//                reps.add(new int[] { cur.getInt(0), cur.getInt(1), cur.getInt(2), cur.getInt(3), cur.getInt(4),
-//                        cur.getInt(5) });
-//            }
-//        } finally {
-//            if (cur != null && !cur.isClosed()) {
-//                cur.close();
-//            }
-//        }
-//        return (int[][]) reps.toArray(new int[reps.size()][reps.get(0).length]);
-    	return null;
+    	ArrayList<String> lims = new ArrayList<String>();
+    	if (num != -1) {
+    		lims.add("id > " + ((mCol.getSched().getDayCutoff() - (num*chunk*86400)) * 1000));
+    	}
+    	String lim = _revlogLimit();
+    	if (lim.length() > 0) {
+    		lims.add(lim);
+    	}
+    	if (lims.size() > 0) {
+    		lim = "WHERE " + lims.toString().replace(",", " AND ").replaceAll("[\\[\\]]", "");
+    	} else {
+    		lim = "";
+    	}
+    	String ti;
+    	String tf;
+    	if (!reps) {
+    		ti = "time/1000";
+        	if (mType == 0) {
+        		tf = "/60.0"; // minutes
+            	mAxisTitles = new int[]{type, R.string.stats_minutes};
+        	} else {
+        		tf = "/3600.0"; // hours
+            	mAxisTitles = new int[]{type, R.string.stats_hours};
+        	}    		
+    	} else {
+    		ti = "1";
+    		tf = "";
+    	}
+        ArrayList<double[]> list = new ArrayList<double[]>();
+        Cursor cur = null;
+        try {
+            cur = mCol.getDb().getDatabase().rawQuery(
+                    "SELECT (cast((id/1000 - " + mCol.getSched().getDayCutoff() + ") / 86400.0 AS INT))/" + chunk + " AS day, "
+                    		+ "sum(CASE WHEN type = 0 THEN " + ti + " ELSE 0 END)" + tf + ", " // lrn
+                    		+ "sum(CASE WHEN type = 1 AND lastIvl < 21 THEN " + ti + " ELSE 0 END)" + tf + ", " // yng
+                    		+ "sum(CASE WHEN type = 1 AND lastIvl >= 21 THEN " + ti + " ELSE 0 END)" + tf + ", " // mtr
+                    		+ "sum(CASE WHEN type = 2 THEN " + ti + " ELSE 0 END)" + tf + ", " // lapse
+                    		+ "sum(CASE WHEN type = 3 THEN " + ti + " ELSE 0 END)" + tf // cram
+                            + " FROM revlog " + lim + " GROUP BY day ORDER BY day", null);
+            if (!cur.moveToFirst()) {
+            	return false;
+            }
+            while (cur.moveToNext()) {
+            	list.add(new double[] { cur.getDouble(0), cur.getDouble(1), cur.getDouble(4), cur.getDouble(2), cur.getDouble(3), cur.getDouble(5) });
+            }
+        } finally {
+            if (cur != null && !cur.isClosed()) {
+                cur.close();
+            }
+        }
+        mSeriesList = new double[6][list.size()];
+        for (int i = 0; i < list.size(); i++) {
+        	double[] data = list.get(i);
+        	mSeriesList[0][i] = data[0]; // day
+        	mSeriesList[1][i] = data[1] + data[2] + data[3] + data[4] + data[5]; // lrn
+        	mSeriesList[2][i] = data[2] + data[3] + data[4] + data[5]; // relearn
+        	mSeriesList[3][i] = data[3] + data[4] + data[5]; // young
+        	mSeriesList[4][i] = data[4] + data[5]; // mature
+        	mSeriesList[5][i] = data[5]; // cram
+        }
+        return true;
     }
 
 

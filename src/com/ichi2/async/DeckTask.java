@@ -650,10 +650,15 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
         boolean wholeCollection = params[0].getBoolean();
 
         Stats stats = new Stats(col, wholeCollection);
-        stats.calculateDue(PrefSettings.getSharedPrefs(AnkiDroidApp.getInstance().getBaseContext()).getInt("statsType", Stats.TYPE_MONTH));
-
-        //        return new TaskData(result);
-    	return null;
+        switch(type) {
+        default:
+        case Stats.TYPE_FORECAST:
+        	return new TaskData(stats.calculateDue(PrefSettings.getSharedPrefs(AnkiDroidApp.getInstance().getBaseContext()).getInt("statsType", Stats.TYPE_MONTH)));
+        case Stats.TYPE_REVIEW_COUNT:
+        	return new TaskData(stats.calculateDone(PrefSettings.getSharedPrefs(AnkiDroidApp.getInstance().getBaseContext()).getInt("statsType", Stats.TYPE_MONTH), true));
+        case Stats.TYPE_REVIEW_TIME:
+        	return new TaskData(stats.calculateDone(PrefSettings.getSharedPrefs(AnkiDroidApp.getInstance().getBaseContext()).getInt("statsType", Stats.TYPE_MONTH), false));
+        }
     }
 
 
