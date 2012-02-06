@@ -6,16 +6,26 @@
 	android:layout_height="fill_parent"
 	android:gravity="center"
 	android:orientation="vertical">
-    <LinearLayout android:id="@+id/studyoptions_mainframe"
-		android:orientation="vertical"
+	
+    <LinearLayout
+		android:orientation="horizontal"
 		android:gravity="center"
 		android:layout_width="fill_parent"
 		android:layout_height="wrap_content">
-		<LinearLayout android:id="@+id/studyoptions_deckinformation"
-			android:orientation="vertical"
-			android:gravity="center"
-			android:layout_width="fill_parent"
-			android:layout_height="wrap_content">
+    <LinearLayout android:id="@+id/studyoptions_mainframe"
+		android:orientation="vertical"
+		android:gravity="center"
+		android:layout_width="0dip"
+		android:layout_weight="1"
+		android:layout_height="fill_parent">
+
+		<LinearLayout
+		    android:id="@+id/studyoptions_deckinformation"
+		    android:layout_width="fill_parent"
+		    android:layout_height="fill_parent"
+		    android:gravity="center"
+		    android:orientation="vertical" >
+
 	    	<TextView
 				android:id="@+id/studyoptions_deck_name"
 				android:textSize="28sp" 
@@ -30,13 +40,13 @@
 	    	<TextView
 				android:id="@+id/studyoptions_deck_description"
 				android:ellipsize="end"
-				android:maxLines="3"
+				android:maxLines="1"
 				android:gravity="center" 
 				android:layout_width="fill_parent" 
 				android:layout_height="wrap_content" 
 				android:layout_marginBottom="5dp" 
 				android:layout_marginLeft="5dp" 
-				android:layout_marginRight="5dp" 
+				android:layout_marginRight="5dp"
 				android:text=""/>
 	    	<LinearLayout android:id="@+id/studyoptions_deckcounts"
 	    	    android:visibility="invisible"
@@ -147,47 +157,48 @@
 			</TableLayout>
 			</LinearLayout>
 		</LinearLayout>
-		<LinearLayout
+					</LinearLayout>
+        
+		<RelativeLayout
 			android:orientation="vertical"
 			android:gravity="center"
-			android:layout_width="fill_parent"
-			android:layout_height="wrap_content">
-			<LinearLayout
-				android:layout_width="fill_parent"
-				android:layout_height="wrap_content">
+android:layout_width="0dip"
+		android:layout_weight="1"
+					android:layout_height="fill_parent">
 				<Button 
 					android:id="@+id/studyoptions_start"
-   	    	  		android:layout_height="fill_parent"
+   	    	  		android:layout_height="wrap_content"
 					android:paddingLeft="15dip"	
-		         	android:layout_width="0dip"
+		         	android:layout_width="fill_parent"
 		         	android:textStyle="bold"
-   		 	     	android:layout_weight="3"
+		         	android:layout_alignParentTop="false"
+				    android:layout_above="@+id/studyoptions_middle_buttons"
 					android:text="@string/studyoptions_start"
 					android:drawableLeft="@drawable/ic_start"/>	
-				<LinearLayout
-					android:layout_weight="1"
-					android:orientation="vertical"
-					android:layout_width="0dip"
+				<LinearLayout android:id="@+id/studyoptions_middle_buttons"
+				    android:layout_above="@+id/studyoptions_bottom_buttons"
+		         	android:layout_width="fill_parent"
+					android:orientation="horizontal"
 					android:layout_height="wrap_content">
 					<ToggleButton
 						android:id="@+id/studyoptions_night" 
 					android:singleLine="true"	
-						android:layout_height="0dip"
-       		  			android:layout_width="fill_parent"
+						android:layout_height="wrap_content"
+       		  			android:layout_width="0dip"
     			     	android:layout_weight="1"
 						android:textOff="@string/studyoptions_night_mode"
 						android:textOn="@string/studyoptions_night_mode" />
 					<ToggleButton
 						android:id="@+id/studyoptions_cram" 
-						android:layout_height="0dip"
-        	 			android:layout_width="fill_parent"
-					android:singleLine="true"	
+						android:layout_height="wrap_content"
+       		  			android:layout_width="0dip"
     			     	android:layout_weight="1"
+					android:singleLine="true"	
 						android:textOff="@string/cram"
 						android:textOn="@string/cram" />
-				</LinearLayout>
 			</LinearLayout>
-			<LinearLayout
+			<LinearLayout android:id="@+id/studyoptions_bottom_buttons"
+			    android:layout_alignParentBottom="true"
 				android:layout_width="fill_parent"
 				android:layout_height="wrap_content">
 				<ImageButton
@@ -217,6 +228,6 @@
 					android:layout_width="0dip"
 					android:layout_weight="1"/>
 			</LinearLayout>
-		</LinearLayout>
-	</LinearLayout>
+	</RelativeLayout>
+</LinearLayout>
 </LinearLayout>

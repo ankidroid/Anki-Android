@@ -45,7 +45,7 @@
 		</activity>
 		<activity android:name="com.ichi2.anki.StudyOptions" 
 			android:label="StudyOptions"
-			android:configChanges="keyboardHidden|orientation|locale"/>
+			android:configChanges="keyboardHidden|locale"/>
 		<activity android:name="com.ichi2.anki.CardBrowser" 
 			android:label="Card Browser"
 			android:configChanges="keyboardHidden|orientation|locale"/>	

@@ -806,10 +806,13 @@ public class StudyOptions extends Activity implements IButtonListener {
 		if (name.length > 0) {
 			nameBuilder.append(name[0]);
 		}
-		if (name.length > 2) {
+		if (name.length > 1) {
+			nameBuilder.append("\n").append(name[1]);
+		}
+		if (name.length > 3) {
 			nameBuilder.append("...");
 		}
-		if (name.length > 1) {
+		if (name.length > 2) {
 			nameBuilder.append("\n").append(name[name.length - 1]);
 		}
 		mTextDeckName.setText(nameBuilder.toString());
