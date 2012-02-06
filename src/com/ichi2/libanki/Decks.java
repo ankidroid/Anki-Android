@@ -205,7 +205,7 @@ public class Decks {
 		if (!create) {
 			return 0;
 		}
-		if (name.matches("::")) {
+		if (name.matches(".*::.*")) {
 			// not top level; ensure all parents exist
 			_ensureParents(name);
 		}

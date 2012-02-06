@@ -236,7 +236,7 @@ public class DeckPicker extends Activity {
 	private String mCurrentDeckFilename = null;
 	private String mCurrentDeckPath = null;
 
-	private EditText mRenameDeckEditText;
+	private EditText mDialogEditText;
 
 	int mStatisticType;
 
@@ -581,7 +581,7 @@ public class DeckPicker extends Activity {
 			updateDecksList(result.getDeckList(), -1, -1);
 			mDeckListView.setVisibility(View.VISIBLE);
 			mDeckListView.setAnimation(ViewAnimation.fade(ViewAnimation.FADE_IN, 500, 0));
-			DeckTask.launchDeckTask(DeckTask.TASK_TYPE_LOAD_DECK_COUNTS, mLoadCountsHandler, new TaskData(mCol));
+			loadCounts();
 			if (mProgressDialog.isShowing()) {
                 try {
                     mProgressDialog.dismiss();
@@ -990,7 +990,7 @@ public class DeckPicker extends Activity {
 		super.onResume();
 		if (mCol != null) {
 			if (mCol.getSched()._checkDay()) {
-				DeckTask.launchDeckTask(DeckTask.TASK_TYPE_LOAD_DECK_COUNTS, mLoadCountsHandler, new TaskData(mCol));
+				loadCounts();
 			}
 		}
 	}
@@ -998,6 +998,10 @@ public class DeckPicker extends Activity {
 	private void loadCollection() {
 		String deckPath = PrefSettings.getSharedPrefs(getBaseContext()).getString("deckPath", AnkiDroidApp.getDefaultAnkiDroidDirectory());
 		DeckTask.launchDeckTask(DeckTask.TASK_TYPE_OPEN_COLLECTION, mOpenCollectionHandler, new DeckTask.TaskData(deckPath + "/collection.anki2"));
+	}
+
+	private void loadCounts() {
+		DeckTask.launchDeckTask(DeckTask.TASK_TYPE_LOAD_DECK_COUNTS, mLoadCountsHandler, new TaskData(mCol));
 	}
 
 	private boolean hasErrorFiles() {
@@ -1876,7 +1880,7 @@ public class DeckPicker extends Activity {
         downloadDeckSubMenu.add(
                 Menu.NONE, MENU_DOWNLOAD_PERSONAL_DECK, Menu.NONE, R.string.menu_download_personal_deck);
         downloadDeckSubMenu.add(Menu.NONE, MENU_DOWNLOAD_SHARED_DECK, Menu.NONE, R.string.menu_download_shared_deck);
-        item = menu.add(Menu.NONE, MENU_CREATE_DECK, Menu.NONE, R.string.menu_create_deck);
+        item = menu.add(Menu.NONE, MENU_CREATE_DECK, Menu.NONE, R.string.new_deck);
         item.setIcon(R.drawable.ic_menu_add);
         item = menu.add(Menu.NONE, MENU_PREFERENCES, Menu.NONE, R.string.menu_preferences);
         item.setIcon(R.drawable.ic_menu_preferences);
@@ -1904,6 +1908,8 @@ public class DeckPicker extends Activity {
     /** Handles item selections */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+    	Resources res = getResources();
+
         switch (item.getItemId()) {
 
         	case MENU_HELP:
@@ -1911,10 +1917,38 @@ public class DeckPicker extends Activity {
         		return true;
 
             case MENU_CREATE_DECK:
-                startActivityForResult(new Intent(DeckPicker.this, DeckCreator.class), CREATE_DECK);
-                if (UIUtils.getApiLevel() > 4) {
-                    ActivityTransitionAnimation.slide(DeckPicker.this, ActivityTransitionAnimation.RIGHT);
-                }
+				StyledDialog.Builder builder2 = new StyledDialog.Builder(DeckPicker.this);
+				builder2.setTitle(res.getString(R.string.new_deck));
+
+				mDialogEditText = (EditText) new EditText(DeckPicker.this);
+				InputFilter filter = new InputFilter() {
+					public CharSequence filter(CharSequence source, int start,
+							int end, Spanned dest, int dstart, int dend) {
+						for (int i = start; i < end; i++) {
+							if (!Character.isLetterOrDigit(source.charAt(i))) {
+								if (source.charAt(i) != ':') {
+									return "";
+								}
+							}
+						}
+						return null;
+					}
+				};
+				mDialogEditText.setFilters(new InputFilter[] { filter });
+				builder2.setView(mDialogEditText, false, false);
+				builder2.setPositiveButton(res.getString(R.string.create),
+						new DialogInterface.OnClickListener() {
+
+							@Override
+							public void onClick(DialogInterface dialog, int which) {
+								String deckName = mDialogEditText.getText().toString();
+								Log.i(AnkiDroidApp.TAG, "Creating deck: " + deckName);
+								mCol.getDecks().id(deckName, true);
+								loadCounts();
+							}
+						});
+				builder2.setNegativeButton(res.getString(R.string.cancel), null);
+				builder2.create().show();
                 return true;
 
             case MENU_ABOUT:
@@ -1959,9 +1993,9 @@ public class DeckPicker extends Activity {
         super.onActivityResult(requestCode, resultCode, intent);
 
     	if (requestCode == SHOW_STUDYOPTIONS && resultCode == RESULT_OK) {
-    		DeckTask.launchDeckTask(DeckTask.TASK_TYPE_LOAD_DECK_COUNTS, mLoadCountsHandler, new TaskData(mCol));
+    		loadCounts();
     	} else if (requestCode == ADD_NOTE && resultCode != RESULT_CANCELED) {
-    		DeckTask.launchDeckTask(DeckTask.TASK_TYPE_LOAD_DECK_COUNTS, mLoadCountsHandler, new TaskData(mCol));
+    		loadCounts();
         } else if (requestCode == REPORT_ERROR) {
         	showStartupScreensAndDialogs(PrefSettings.getSharedPrefs(getBaseContext()), 3);
         } else if (requestCode == SHOW_INFO_WELCOME || requestCode == SHOW_INFO_NEW_VERSION) {

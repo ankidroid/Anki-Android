@@ -123,8 +123,10 @@
 <string name="menu_search">Lookup in %1$s</string>
 <string name="menu_mark_card">Mark Card</string>
 <string name="menu_marked">Marked</string>
-<string name="menu_create_deck">Create deck</string>
 
+<string name="new_deck">New deck</string>
+<string name="create">Create</string>
+    
 <string name="studyoptions_feedback">Feedback</string>
 
 <string name="studyoptions_cram_dialog_title">Tags to cram</string>

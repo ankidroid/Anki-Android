@@ -27,7 +27,6 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.TreeSet;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -35,11 +34,7 @@ import com.ichi2.anki.AnkiDatabaseManager;
 import com.ichi2.anki.AnkiDb;
 import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.BackupManager;
-import com.ichi2.anki.DeckCreator;
-import com.ichi2.anki.Info;
 import com.ichi2.anki2.R;
-import com.ichi2.anki.Reviewer;
-import com.ichi2.anki.StudyOptions;
 import com.ichi2.libanki.Card;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Note;
@@ -52,7 +47,6 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.database.SQLException;
-import android.database.sqlite.SQLiteDiskIOException;
 import android.os.AsyncTask;
 import android.util.Log;
 
