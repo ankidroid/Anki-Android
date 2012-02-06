@@ -1042,6 +1042,7 @@ public class DeckPicker extends Activity {
 				ActivityTransitionAnimation.slide(this, ActivityTransitionAnimation.LEFT);
 			}
 		} else if (skip < 2 && !preferences.getString("lastVersion", "").equals(AnkiDroidApp.getPkgVersion())) {
+			preferences.edit().putBoolean("showBroadcastMessageToday", true).commit();
 			Intent infoIntent = new Intent(this, Info.class);
 			infoIntent.putExtra(Info.TYPE_EXTRA, Info.TYPE_NEW_VERSION);
 			startActivityForResult(infoIntent, SHOW_INFO_NEW_VERSION);
