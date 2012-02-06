@@ -381,20 +381,6 @@ public class StudyOptions extends Activity implements IButtonListener {
 		}
 	}
 
-	@Override
-	public void onConfigurationChanged(Configuration newConfig) {
-		super.onConfigurationChanged(newConfig);
-//		AnkiDroidApp.setLanguage(mLocale);
-		boolean cramChecked = mToggleCram.isChecked();
-		boolean limitChecked = mToggleNight.isChecked();
-
-		initAllContentViews();
-
-		updateValuesFromDeck();
-		showContentView();
-		mToggleCram.setChecked(cramChecked);
-		mToggleNight.setChecked(limitChecked);
-	}
 
 	/**
 	 * Registers an intent to listen for ACTION_MEDIA_EJECT notifications. The

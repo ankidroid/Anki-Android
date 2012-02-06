@@ -73,7 +73,7 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
     private CharSequence[] mLanguageDialogLabels;
     private CharSequence[] mLanguageDialogValues;
     private static String[] mAppLanguages = {"ar", "ca", "cs", "de", "el", "es_ES", "fi", "fr", "hu", "id", "it", "ja", "ko", "nl", "no", "pl", "pt_PT", "ro", "ru", "sr", "sv-SE", "th", "tr", "vi", "zh-CN", "zh-TW", "en"};
-    private static String[] mShowValueInSummList = {"language", "dictionary", "reportErrorMode", "minimumCardsDueForNotification", "gestureShake", "gestureSwipeUp", "gestureSwipeDown", "gestureSwipeLeft", "gestureSwipeRight", "gestureDoubleTap", "gestureTapTop", "gestureTapBottom", "gestureTapRight", "gestureTapLeft", "theme"};
+    private static String[] mShowValueInSummList = {"language", "dictionary", "reportErrorMode", "minimumCardsDueForNotification", "gestureShake", "gestureSwipeUp", "gestureSwipeDown", "gestureSwipeLeft", "gestureSwipeRight", "gestureDoubleTap", "gestureTapTop", "gestureTapBottom", "gestureTapRight", "gestureLongclick", "gestureTapLeft", "theme"};
     private static String[] mShowValueInSummSeek = {"relativeDisplayFontSize", "relativeCardBrowserFontSize", "answerButtonSize", "whiteBoardStrokeWidth", "minShakeIntensity", "swipeSensibility", "timeoutAnswerSeconds", "timeoutQuestionSeconds", "animationDuration", "backupMax"};
     private TreeMap<String, String> mListsToUpdate = new TreeMap<String, String>();
     private StyledProgressDialog mProgressDialog;
