@@ -203,8 +203,6 @@ public class BackupManager {
             Log.e(AnkiDroidApp.TAG, "performBackup: Not enough space on sd card to backup.");
             prefs.edit().putBoolean("noSpaceLeft", true).commit();
         	return;
-        } else {
-            prefs.edit().putBoolean("noSpaceLeft", false).commit();        	
         }
 
         try {

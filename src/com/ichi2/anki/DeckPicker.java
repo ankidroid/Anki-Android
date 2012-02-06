@@ -1059,6 +1059,7 @@ public class DeckPicker extends Activity {
 			showDialog(DIALOG_NO_SPACE_LEFT);
 		} else if (preferences.getBoolean("noSpaceLeft", false)) {
 			showDialog(DIALOG_BACKUP_NO_SPACE_LEFT);
+			preferences.edit().putBoolean("noSpaceLeft", false).commit();
 		} else {
 			loadCollection();
 		}
