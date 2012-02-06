@@ -1454,11 +1454,13 @@ public class Sched {
 		}
 	}
 
-	private void _checkDay() {
+	public boolean _checkDay() {
 		// check if the day has rolled over
 		if (Utils.now() > mDayCutoff) {
 			reset();
+			return true;
 		}
+		return false;
 	}
 
 	/**

@@ -459,8 +459,11 @@ public class StudyOptions extends Activity implements IButtonListener {
 			AnkiDroidApp.zeemoteController().addJoystickListener(adapter);
 			adapter.addButtonListener(this);
 		}
-
-		// TODO: check for new day and reset deck if yes
+		if (mCol != null) {
+			if (mCol.getSched()._checkDay()) {
+				updateValuesFromDeck(true);
+			}
+		}
 	}
 
 	@Override
