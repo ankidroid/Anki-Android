@@ -105,10 +105,7 @@ public class StudyOptions extends Activity implements IButtonListener {
 	private static final int CONTENT_CONGRATS = 1;
 
 	private static final int DIALOG_STATISTIC_TYPE = 0;
-	private static final int DIALOG_STATISTIC_PERIOD = 1;
-	private static final int DIALOG_SWAP_QA = 2;
-	private static final int DIALOG_LIMIT_SESSION = 3;
-	private static final int DIALOG_CRAM = 4;
+	private static final int DIALOG_CRAM = 1;
 
 	/** Zeemote messages */
 	private static final int MSG_ZEEMOTE_BUTTON_A = 0x110;
@@ -130,18 +127,11 @@ public class StudyOptions extends Activity implements IButtonListener {
 	private boolean mSwipeEnabled;
 	private int mCurrentContentView;
 	boolean mInvertedColors = false;
-	boolean mSwap = false;
 	String mLocale;
 	private boolean mZeemoteEnabled;
 
 	/** Alerts to inform the user about different situations */
 	private StyledProgressDialog mProgressDialog;
-
-	/*
-	 * Limit session dialog
-	 */
-	private EditText mEditSessionTime;
-	private EditText mEditSessionQuestions;
 
 	// /*
 	// * Cram related
@@ -158,8 +148,8 @@ public class StudyOptions extends Activity implements IButtonListener {
 	 */
 	private View mStudyOptionsView;
 	private Button mButtonStart;
+	private ToggleButton mToggleNight;
 	private ToggleButton mToggleCram;
-	private ToggleButton mToggleLimit;
 	private TextView mTextDeckName;
 	private TextView mTextDeckDescription;
 	private TextView mTextTodayNew;
@@ -169,8 +159,6 @@ public class StudyOptions extends Activity implements IButtonListener {
 	private TextView mTextTotal;
 	private TextView mTextETA;
 	private LinearLayout mDeckCounts;
-	private CheckBox mNightMode;
-	private CheckBox mSwapQA;
 	private ImageButton mAddNote;
 	private ImageButton mCardBrowser;
 	private ImageButton mDeckOptions;
@@ -241,9 +229,11 @@ public class StudyOptions extends Activity implements IButtonListener {
 				// resetAndUpdateValuesFromDeck();
 				// }
 				return;
-			case R.id.studyoptions_limit:
-				v.setEnabled(false);
-				// mToggleLimit.setChecked(!mToggleLimit.isChecked());
+			case R.id.studyoptions_night:
+				if (mInvertedColors != mToggleNight.isChecked()) {
+					mInvertedColors = mToggleNight.isChecked();
+					savePreferences("invertedColors", mInvertedColors);
+				}
 				return;
 				// case R.id.studyoptions_congrats_learnmore:
 				// startLearnMore();
@@ -396,20 +386,14 @@ public class StudyOptions extends Activity implements IButtonListener {
 		super.onConfigurationChanged(newConfig);
 //		AnkiDroidApp.setLanguage(mLocale);
 		boolean cramChecked = mToggleCram.isChecked();
-		boolean limitChecked = mToggleLimit.isChecked();
-		boolean limitEnabled = mToggleLimit.isEnabled();
-		boolean nightModeChecekd = mNightMode.isChecked();
-		boolean swapQA = mSwapQA.isChecked();
+		boolean limitChecked = mToggleNight.isChecked();
 
 		initAllContentViews();
 
 		updateValuesFromDeck();
 		showContentView();
 		mToggleCram.setChecked(cramChecked);
-		mToggleLimit.setChecked(limitChecked);
-		mToggleLimit.setEnabled(limitEnabled);
-		mNightMode.setChecked(nightModeChecekd);
-		mSwapQA.setChecked(swapQA);
+		mToggleNight.setChecked(limitChecked);
 	}
 
 	/**
@@ -584,8 +568,9 @@ public class StudyOptions extends Activity implements IButtonListener {
 				.findViewById(R.id.studyoptions_start);
 		mToggleCram = (ToggleButton) mStudyOptionsView
 				.findViewById(R.id.studyoptions_cram);
-		mToggleLimit = (ToggleButton) mStudyOptionsView
-				.findViewById(R.id.studyoptions_limit);
+		mToggleNight = (ToggleButton) mStudyOptionsView
+				.findViewById(R.id.studyoptions_night);
+		mToggleNight.setChecked(mInvertedColors);
 
 		mAddNote = (ImageButton) mStudyOptionsView
 				.findViewById(R.id.studyoptions_add);
@@ -620,40 +605,9 @@ public class StudyOptions extends Activity implements IButtonListener {
 
 		mDeckCounts = (LinearLayout) mStudyOptionsView.findViewById(R.id.studyoptions_deckcounts);
 		
-		mNightMode = (CheckBox) mStudyOptionsView
-				.findViewById(R.id.studyoptions_night_mode);
-		mNightMode.setChecked(mInvertedColors);
-		mNightMode
-				.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-					@Override
-					public void onCheckedChanged(CompoundButton buttonView,
-							boolean isChecked) {
-						if (mInvertedColors != isChecked) {
-							mInvertedColors = isChecked;
-							savePreferences("invertedColors", mInvertedColors);
-						}
-					}
-				});
-		mSwapQA = (CheckBox) mStudyOptionsView
-				.findViewById(R.id.studyoptions_swap);
-		mSwapQA.setChecked(mSwap);
-		mSwapQA.setOnClickListener(new View.OnClickListener() {
-
-			@Override
-			public void onClick(View view) {
-				if (mSwapQA.isChecked()) {
-					showDialog(DIALOG_SWAP_QA);
-				} else if (mSwap) {
-					mSwap = false;
-					savePreferences("swapqa", mSwap);
-				}
-				mSwapQA.setChecked(false);
-			}
-		});
-
 		mButtonStart.setOnClickListener(mButtonClickListener);
 		mToggleCram.setOnClickListener(mButtonClickListener);
-		mToggleLimit.setOnClickListener(mButtonClickListener);
+		mToggleNight.setOnClickListener(mButtonClickListener);
 		mAddNote.setOnClickListener(mButtonClickListener);
 		mCardBrowser.setOnClickListener(mButtonClickListener);
 		mStatisticsButton.setOnClickListener(mButtonClickListener);
@@ -694,24 +648,6 @@ public class StudyOptions extends Activity implements IButtonListener {
 
 		switch (id) {
 
-		case DIALOG_SWAP_QA:
-			builder.setTitle(getResources().getString(R.string.swap_qa_title));
-			builder.setMessage(getResources().getString(R.string.swap_qa_text));
-			builder.setIcon(android.R.drawable.ic_dialog_alert);
-			builder.setPositiveButton(res.getString(R.string.yes),
-					new OnClickListener() {
-
-						@Override
-						public void onClick(DialogInterface dialog, int which) {
-							mSwapQA.setChecked(true);
-							mSwap = true;
-							savePreferences("swapqa", mSwap);
-						}
-					});
-			builder.setNegativeButton(res.getString(R.string.cancel), null);
-			dialog = builder.create();
-			break;
-
 		case DIALOG_STATISTIC_TYPE:
 			dialog = ChartBuilder.getStatisticsDialog(this, new DialogInterface.OnClickListener() {
 				@Override
@@ -720,17 +656,6 @@ public class StudyOptions extends Activity implements IButtonListener {
 				}
 				});
 			break;
-
-		case DIALOG_LIMIT_SESSION:
-			// Custom view for the dialog content.
-			// View contentView =
-			// getLayoutInflater().inflate(R.layout.studyoptions_limit_dialog_contents,
-			// null);
-			// mEditSessionTime = (EditText)
-			// contentView.findViewById(R.id.studyoptions_session_minutes);
-			// mEditSessionQuestions = (EditText)
-			// contentView.findViewById(R.id.studyoptions_session_questions);
-			// break;
 
 		case DIALOG_CRAM:
 			// builder.setTitle(R.string.studyoptions_cram_dialog_title);
@@ -787,20 +712,6 @@ public class StudyOptions extends Activity implements IButtonListener {
 		DeckTask.waitToFinish();
 
 		switch (id) {
-
-		case DIALOG_LIMIT_SESSION:
-			// Update spinner selections from deck prior to showing the dialog.
-			// Deck deck2 = DeckManager.getMainDeck();
-			// long timeLimit = deck2.getSessionTimeLimit() / 60;
-			// long repLimit = deck2.getSessionRepLimit();
-			// mSessionLimitCheckBox.setChecked(timeLimit + repLimit > 0);
-			// if (timeLimit != 0) {
-			// mEditSessionTime.setText(String.valueOf(timeLimit));
-			// }
-			// if (repLimit != 0) {
-			// mEditSessionQuestions.setText(String.valueOf(repLimit));
-			// }
-			break;
 
 		case DIALOG_CRAM:
 			// allCramTags = DeckManager.getMainDeck().allTags_();
@@ -1075,7 +986,6 @@ public class StudyOptions extends Activity implements IButtonListener {
 
 		mSwipeEnabled = preferences.getBoolean("swipe", false);
 		mInvertedColors = preferences.getBoolean("invertedColors", false);
-		mSwap = preferences.getBoolean("swapqa", false);
 
 		mZeemoteEnabled = preferences.getBoolean("zeemote", false);
 

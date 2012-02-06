@@ -159,12 +159,10 @@ public class Themes {
 			if (mCurrentTheme == THEME_WHITE) {
 				setMargins(view.findViewById(R.id.studyoptions_deck_name), LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT, 0, 6f, 0, 2f);
 //		        setMargins(view.findViewById(R.id.studyoptions_statistic_field), LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT, 0, 2f, 0, 12f);
-				setMargins(view.findViewById(R.id.studyoptions_bottom), LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT, 0, 0, 0, 8f);
 				((View) view.findViewById(R.id.studyoptions_deckinformation)).setBackgroundResource(R.drawable.white_textview);
 //				((View) view.findViewById(R.id.studyoptions_statistic_field)).setBackgroundResource(R.color.transparent);
 				((View) view.findViewById(R.id.studyoptions_deck_name)).setVisibility(View.VISIBLE);
 //				((View) view.findViewById(R.id.studyoptions_deckinformation)).setBackgroundResource(mTextViewStyle);
-				((View) view.findViewById(R.id.studyoptions_bottom)).setBackgroundResource(mTextViewStyle);
 				((View) view.findViewById(R.id.studyoptions_main)).setBackgroundResource(R.drawable.white_wallpaper);
 			} else {
 //				((View) view.findViewById(R.id.studyoptions_statistic_field)).setBackgroundResource(mTextViewStyle);
