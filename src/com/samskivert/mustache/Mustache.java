@@ -62,6 +62,13 @@ public class Mustache
         }
     }
 
+    /** Used to read variables from values. */
+    public interface VariableFetcher
+    {
+        /** Reads the so-named variable from the supplied context object. */
+        Object get (Object ctx, String name) throws Exception;
+    }
+
     /**
      * Returns a compiler that escapes HTML by default.
      */
@@ -366,7 +373,7 @@ public class Mustache
     /** A helper class for named segments. */
     protected static abstract class NamedSegment extends Template.Segment {
         protected NamedSegment (String name, int line) {
-            _name = name.intern();
+            _name = name;
             _line = line;
         }
         protected final String _name;

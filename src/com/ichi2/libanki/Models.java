@@ -599,7 +599,7 @@ public class Models {
         Template[] t = new Template[2];
 		try {
 			template = model.getJSONArray("tmpls").getJSONObject(ord);
-			String format = template.getString("qfmt").replace("cloze", "cq:");
+			String format = template.getString("qfmt").replace("cloze:", "cq:");
             Log.i(AnkiDroidApp.TAG, "Compiling question template \"" + format + "\"");
             t[0] = Mustache.compiler().compile(format);
             format = template.getString("afmt").replace("cloze:", "ca:");
@@ -609,6 +609,73 @@ public class Models {
 			throw new RuntimeException(e);
 		}
 		return t;
+    }
+
+    // not in libanki
+    // Handle fields fetched from templates and any anki-specific formatting
+    protected static class fieldParser implements Mustache.VariableFetcher {
+        private Map <String, String> _fields;
+        private String rubyr = " ?([^ ]+?)\\[(.+?)\\]";
+        public fieldParser (Map<String, String> fields) {
+            _fields = fields;
+        }
+
+        public Object get (Object ctx, String name) throws Exception {
+            if (name.length() == 0) {
+                return null;
+            }
+            String txt = _fields.get(name);
+            if (txt != null) {
+                return txt;
+            }
+            // field modifier handling as taken from template.py
+            String[] parts = name.split(":", 3);
+            String mod = null, extra = null, tag = null;
+            if (parts.length == 1 || parts[0].length() == 0) {
+                return null;
+            } else if (parts.length == 2) {
+                mod = parts[0];
+                tag = parts[1];
+            } else if (parts.length == 3) {
+                mod = parts[0];
+                extra = parts[1];
+                tag = parts[2];
+            }
+
+            txt = _fields.get(tag);
+
+            Log.d(AnkiDroidApp.TAG, "Processing field modifier " + mod + ": extra = " + extra + ", field " + tag + " = " + txt);
+
+            // built-in modifiers
+            // including furigana/ruby text handling
+            if (mod.equals("text")) {
+                // strip html
+                if (txt != null) {
+                    return Utils.stripHTML(txt);
+                }
+                return "";
+            } else if (mod.equals("type")) {
+                // TODO: handle type field modifier
+                Log.e(AnkiDroidApp.TAG, "Unimplemented field modifier: " + mod);
+                return null;
+            } else if (mod.equals("cq") || mod.equals("ca")) {
+                // TODO: handle cq and ca type field modifier
+                Log.e(AnkiDroidApp.TAG, "Unimplemented field modifier: " + mod);
+                return null;
+            } else if (mod.equals("kanjionly")) {
+                if (txt == null) return txt;
+                return txt.replaceAll(rubyr, "$1");
+            } else if (mod.equals("readingonly")) {
+                if (txt == null) return txt;
+                return txt.replaceAll(rubyr, "$2");
+            } else if (mod.equals("furigana")) {
+                if (txt == null) return txt;
+                return txt.replaceAll(rubyr, "<ruby><rb>$1</rb><rt>$2</rt></ruby>");
+            } else {
+                Log.w(AnkiDroidApp.TAG, "Unknown field modifier: " + mod);
+                return txt;
+            }
+        }
     }
 
 //    /**
