@@ -620,7 +620,50 @@ public class Models {
         }
 
         public Object get (Object ctx, String name) throws Exception {
-            return _fields.get(name);
+            if (name.length() == 0) {
+                return null;
+            }
+            String txt = _fields.get(name);
+            if (txt != null) {
+                return txt;
+            }
+            // field modifier handling as taken from template.py
+            String[] parts = name.split(":", 3);
+            String mod = null, extra = null, tag = null;
+            if (parts.length == 1 || parts[0].length() == 0) {
+                return null;
+            } else if (parts.length == 2) {
+                mod = parts[0];
+                tag = parts[1];
+            } else if (parts.length == 3) {
+                mod = parts[0];
+                extra = parts[1];
+                tag = parts[2];
+            }
+
+            txt = _fields.get(tag);
+
+            Log.d(AnkiDroidApp.TAG, "Processing field modifier " + mod + ": extra = " + extra + ", field " + tag + " = " + txt);
+
+            // built-in modifiers
+            if (mod.equals("text")) {
+                // strip html
+                if (txt != null) {
+                    return Utils.stripHTML(txt);
+                }
+                return "";
+            } else if (mod.equals("type")) {
+                // TODO: handle type field modifier
+                Log.e(AnkiDroidApp.TAG, "Unimplemented field modifier: " + mod);
+                return null;
+            } else if (mod.equals("cq") || mod.equals("ca")) {
+                // TODO: handle cq and ca type field modifier
+                Log.e(AnkiDroidApp.TAG, "Unimplemented field modifier: " + mod);
+                return null;
+            } else {
+                Log.w(AnkiDroidApp.TAG, "Unknown field modifier: " + mod);
+                return txt;
+            }
         }
     }
 
