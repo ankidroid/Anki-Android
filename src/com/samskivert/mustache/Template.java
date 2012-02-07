@@ -81,15 +81,6 @@ public class Template
         // anki - we don't use any compound keys
         // if (name.indexOf(".") != -1) { ... }
 
-        // handle our special variables
-        if (name == FIRST_NAME) {
-            return ctx.mode == Mode.FIRST;
-        } else if (name == LAST_NAME) {
-            return ctx.mode == Mode.LAST;
-        } else if (name == INDEX_NAME) {
-            return ctx.index;
-        }
-
         while (ctx != null) {
             Object value = getValueIn(ctx.data, name, line);
             if (value != null) {
@@ -144,14 +135,12 @@ public class Template
 
     protected static VariableFetcher createFetcher (Key key)
     {
-        if (key.name == THIS_NAME) {
-            return THIS_FETCHER;
-        }
 
         if (Map.class.isAssignableFrom(key.cclass)) {
             return MAP_FETCHER;
         }
 
+        /* anki - we don't need this:
         final Method m = getMethod(key.cclass, key.name);
         if (m != null) {
             return new VariableFetcher() {
@@ -169,6 +158,7 @@ public class Template
                 }
             };
         }
+        */
 
         return null;
     }
@@ -298,9 +288,4 @@ public class Template
             return ctx;
         }
     };
-
-    protected static final String THIS_NAME = "this".intern();
-    protected static final String FIRST_NAME = "-first".intern();
-    protected static final String LAST_NAME = "-last".intern();
-    protected static final String INDEX_NAME = "-index".intern();
 }
