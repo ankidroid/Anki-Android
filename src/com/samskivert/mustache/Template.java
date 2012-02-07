@@ -11,32 +11,12 @@ import com.ichi2.anki.AnkiDroidApp;
 import java.io.IOException;
 import java.io.StringWriter;
 import java.io.Writer;
-import java.lang.reflect.Field;
-import java.lang.reflect.Method;
-import java.util.Iterator;
 import java.util.Map;
 
 /**
  * Represents a compiled template. Templates are executed with a <em>context</em> to generate
  * output. The context can be any tree of objects. Variables are resolved against the context.
- * Given a name {@code foo}, the following mechanisms are supported for resolving its value
- * (and are sought in this order):
- * <ul>
- * <li>If the variable has the special name {@code this} the context object itself will be
- * returned. This is useful when iterating over lists.
- * <li>If the object is a {@link Map}, {@link Map#get} will be called with the string {@code foo}
- * as the key.
- * <li>A method named {@code foo} in the supplied object (with non-void return value).
- * <li>A method named {@code getFoo} in the supplied object (with non-void return value).
- * <li>A field named {@code foo} in the supplied object.
- * </ul>
- * <p> The field type, method return type, or map value type should correspond to the desired
- * behavior if the resolved name corresponds to a section. {@link Boolean} is used for showing or
- * hiding sections without binding a sub-context. Arrays, {@link Iterator} and {@link Iterable}
- * implementations are used for sections that repeat, with the context bound to the elements of the
- * array, iterator or iterable. Lambdas are current unsupported, though they would be easy enough
- * to add if desire exists. See the <a href="http://mustache.github.com/mustache.5.html">Mustache
- * documentation</a> for more details on section behavior. </p>
+ * For anki, we only support the case where context is a Map interface
  */
 public class Template
 {
@@ -125,80 +105,6 @@ public class Template
             return MAP_FETCHER;
         }
 
-        /* anki - we don't need this:
-        final Method m = getMethod(cclass, name);
-        if (m != null) {
-            return new VariableFetcher() {
-                public Object get (Object ctx, String name) throws Exception {
-                    return m.invoke(ctx);
-                }
-            };
-        }
-
-        final Field f = getField(cclass, name);
-        if (f != null) {
-            return new VariableFetcher() {
-                public Object get (Object ctx, String name) throws Exception {
-                    return f.get(ctx);
-                }
-            };
-        }
-        */
-
-        return null;
-    }
-
-    protected static Method getMethod (Class<?> clazz, String name)
-    {
-        Method m;
-        try {
-            m = clazz.getDeclaredMethod(name);
-            if (!m.getReturnType().equals(void.class)) {
-                if (!m.isAccessible()) {
-                    m.setAccessible(true);
-                }
-                return m;
-            }
-        } catch (Exception e) {
-            // fall through
-        }
-        try {
-            m = clazz.getDeclaredMethod(
-                "get" + Character.toUpperCase(name.charAt(0)) + name.substring(1));
-            if (!m.getReturnType().equals(void.class)) {
-                if (!m.isAccessible()) {
-                    m.setAccessible(true);
-                }
-                return m;
-            }
-        } catch (Exception e) {
-            // fall through
-        }
-
-        Class<?> sclass = clazz.getSuperclass();
-        if (sclass != Object.class && sclass != null) {
-            return getMethod(clazz.getSuperclass(), name);
-        }
-        return null;
-    }
-
-    protected static Field getField (Class<?> clazz, String name)
-    {
-        Field f;
-        try {
-            f = clazz.getDeclaredField(name);
-            if (!f.isAccessible()) {
-                f.setAccessible(true);
-            }
-            return f;
-        } catch (Exception e) {
-            // fall through
-        }
-
-        Class<?> sclass = clazz.getSuperclass();
-        if (sclass != Object.class && sclass != null) {
-            return getField(clazz.getSuperclass(), name);
-        }
         return null;
     }
 
@@ -244,12 +150,6 @@ public class Template
     protected static final VariableFetcher MAP_FETCHER = new VariableFetcher() {
         public Object get (Object ctx, String name) throws Exception {
             return ((Map<?,?>)ctx).get(name);
-        }
-    };
-
-    protected static final VariableFetcher THIS_FETCHER = new VariableFetcher() {
-        public Object get (Object ctx, String name) throws Exception {
-            return ctx;
         }
     };
 }
