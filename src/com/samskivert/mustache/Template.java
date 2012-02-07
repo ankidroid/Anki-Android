@@ -16,7 +16,8 @@ import java.util.Map;
 /**
  * Represents a compiled template. Templates are executed with a <em>context</em> to generate
  * output. The context can be any tree of objects. Variables are resolved against the context.
- * For anki, we only support the case where context is a Map interface
+ * For anki, we only support the case where context is either a Map, or just an object that
+ * implements Mustache.VariableFetcher.
  */
 public class Template
 {
@@ -57,9 +58,6 @@ public class Template
      */
     protected Object getValue (Context ctx, String name, int line)
     {
-        // anki - we don't use any compound keys
-        // if (name.indexOf(".") != -1) { ... }
-
         while (ctx != null) {
             Object value = getValueIn(ctx.data, name, line);
             if (value != null) {
@@ -68,7 +66,7 @@ public class Template
             ctx = ctx.parent;
         }
         // Graceful failing, no need to throw exception
-        Log.e(AnkiDroidApp.TAG, "No key, method or field with name '" + name + "' on line " + line);
+        Log.e(AnkiDroidApp.TAG, "Could not retrieve from context name '" + name + "' on line " + line);
         return new String("{unknown field " + name + "}");
     }
 
@@ -79,7 +77,12 @@ public class Template
                 "Null context for variable '" + name + "' on line " + line);
         }
 
-        VariableFetcher fetcher = createFetcher(data.getClass(), name);
+        Mustache.VariableFetcher fetcher;
+        if (Mustache.VariableFetcher.class.isInstance(data)) {
+            fetcher = Mustache.VariableFetcher.class.cast(data);
+        } else {
+            fetcher = createFetcher(data.getClass(), name);
+        }
 
         // if we were unable to create a fetcher, just return null and our caller can either try
         // the parent context, or do le freak out
@@ -98,7 +101,7 @@ public class Template
 
     protected final Segment[] _segs;
 
-    protected static VariableFetcher createFetcher (Class<?> cclass, String name)
+    protected static Mustache.VariableFetcher createFetcher (Class<?> cclass, String name)
     {
 
         if (Map.class.isAssignableFrom(cclass)) {
@@ -143,13 +146,10 @@ public class Template
         }
     }
 
-    protected static abstract class VariableFetcher {
-        abstract Object get (Object ctx, String name) throws Exception;
-    }
-
-    protected static final VariableFetcher MAP_FETCHER = new VariableFetcher() {
-        public Object get (Object ctx, String name) throws Exception {
-            return ((Map<?,?>)ctx).get(name);
-        }
-    };
+    protected static final Mustache.VariableFetcher MAP_FETCHER =
+        new Mustache.VariableFetcher() {
+            public Object get (Object ctx, String name) throws Exception {
+                return ((Map<?,?>)ctx).get(name);
+            }
+        };
 }

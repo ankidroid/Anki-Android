@@ -62,6 +62,13 @@ public class Mustache
         }
     }
 
+    /** Used to read variables from values. */
+    public interface VariableFetcher
+    {
+        /** Reads the so-named variable from the supplied context object. */
+        Object get (Object ctx, String name) throws Exception;
+    }
+
     /**
      * Returns a compiler that escapes HTML by default.
      */
