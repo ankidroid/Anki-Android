@@ -599,7 +599,7 @@ public class Models {
         Template[] t = new Template[2];
 		try {
 			template = model.getJSONArray("tmpls").getJSONObject(ord);
-			String format = template.getString("qfmt").replace("cloze", "cq:");
+			String format = template.getString("qfmt").replace("cloze:", "cq:");
             Log.i(AnkiDroidApp.TAG, "Compiling question template \"" + format + "\"");
             t[0] = Mustache.compiler().compile(format);
             format = template.getString("afmt").replace("cloze:", "ca:");
