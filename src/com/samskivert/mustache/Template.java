@@ -15,7 +15,6 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.Iterator;
 import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * Represents a compiled template. Templates are executed with a <em>context</em> to generate
@@ -100,18 +99,7 @@ public class Template
                 "Null context for variable '" + name + "' on line " + line);
         }
 
-        Key key = new Key(data.getClass(), name);
-        VariableFetcher fetcher = _fcache.get(key);
-        if (fetcher != null) {
-            try {
-                return fetcher.get(data, name);
-            } catch (Exception e) {
-                // zoiks! non-monomorphic call site, update the cache and try again
-                fetcher = createFetcher(key);
-            }
-        } else {
-            fetcher = createFetcher(key);
-        }
+        VariableFetcher fetcher = createFetcher(data.getClass(), name);
 
         // if we were unable to create a fetcher, just return null and our caller can either try
         // the parent context, or do le freak out
@@ -121,7 +109,6 @@ public class Template
 
         try {
             Object value = fetcher.get(data, name);
-            _fcache.put(key, fetcher);
             return value;
         } catch (Exception e) {
             throw new MustacheException(
@@ -130,18 +117,16 @@ public class Template
     }
 
     protected final Segment[] _segs;
-    protected final Map<Key, VariableFetcher> _fcache =
-        new ConcurrentHashMap<Key, VariableFetcher>();
 
-    protected static VariableFetcher createFetcher (Key key)
+    protected static VariableFetcher createFetcher (Class<?> cclass, String name)
     {
 
-        if (Map.class.isAssignableFrom(key.cclass)) {
+        if (Map.class.isAssignableFrom(cclass)) {
             return MAP_FETCHER;
         }
 
         /* anki - we don't need this:
-        final Method m = getMethod(key.cclass, key.name);
+        final Method m = getMethod(cclass, name);
         if (m != null) {
             return new VariableFetcher() {
                 public Object get (Object ctx, String name) throws Exception {
@@ -150,7 +135,7 @@ public class Template
             };
         }
 
-        final Field f = getField(key.cclass, key.name);
+        final Field f = getField(cclass, name);
         if (f != null) {
             return new VariableFetcher() {
                 public Object get (Object ctx, String name) throws Exception {
@@ -249,27 +234,6 @@ public class Template
             } catch (IOException ioe) {
                 throw new MustacheException(ioe);
             }
-        }
-    }
-
-    /** Used to cache variable fetchers for a given context class, name combination. */
-    protected static class Key
-    {
-        public final Class<?> cclass;
-        public final String name;
-
-        public Key (Class<?> cclass, String name) {
-            this.cclass = cclass;
-            this.name = name;
-        }
-
-        @Override public int hashCode () {
-            return cclass.hashCode() * 31 + name.hashCode();
-        }
-
-        @Override public boolean equals (Object other) {
-            Key okey = (Key)other;
-            return okey.cclass == cclass && okey.name == name;
         }
     }
 
