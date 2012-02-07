@@ -615,6 +615,7 @@ public class Models {
     // Handle fields fetched from templates and any anki-specific formatting
     protected static class fieldParser implements Mustache.VariableFetcher {
         private Map <String, String> _fields;
+        private String rubyr = " ?([^ ]+?)\\[(.+?)\\]";
         public fieldParser (Map<String, String> fields) {
             _fields = fields;
         }
@@ -646,6 +647,7 @@ public class Models {
             Log.d(AnkiDroidApp.TAG, "Processing field modifier " + mod + ": extra = " + extra + ", field " + tag + " = " + txt);
 
             // built-in modifiers
+            // including furigana/ruby text handling
             if (mod.equals("text")) {
                 // strip html
                 if (txt != null) {
@@ -660,6 +662,15 @@ public class Models {
                 // TODO: handle cq and ca type field modifier
                 Log.e(AnkiDroidApp.TAG, "Unimplemented field modifier: " + mod);
                 return null;
+            } else if (mod.equals("kanjionly")) {
+                if (txt == null) return txt;
+                return txt.replaceAll(rubyr, "$1");
+            } else if (mod.equals("readingonly")) {
+                if (txt == null) return txt;
+                return txt.replaceAll(rubyr, "$2");
+            } else if (mod.equals("furigana")) {
+                if (txt == null) return txt;
+                return txt.replaceAll(rubyr, "<ruby><rb>$1</rb><rt>$2</rt></ruby>");
             } else {
                 Log.w(AnkiDroidApp.TAG, "Unknown field modifier: " + mod);
                 return txt;
