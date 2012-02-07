@@ -611,6 +611,19 @@ public class Models {
 		return t;
     }
 
+    // not in libanki
+    // Handle fields fetched from templates and any anki-specific formatting
+    protected static class fieldParser implements Mustache.VariableFetcher {
+        private Map <String, String> _fields;
+        public fieldParser (Map<String, String> fields) {
+            _fields = fields;
+        }
+
+        public Object get (Object ctx, String name) throws Exception {
+            return _fields.get(name);
+        }
+    }
+
 //    /**
 //     * This function recompiles the templates for question and answer. It should be called everytime we change mQformat
 //     * or mAformat, so if in the future we create set(Q|A)Format setters, we should include a call to this.

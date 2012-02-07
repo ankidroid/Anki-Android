@@ -763,13 +763,14 @@ public class Collection {
 			JSONObject template = model.getJSONArray("tmpls").getJSONObject(
 					(Integer) data[4]);
 			fields.put("Card", template.getString("name"));
+            Models.fieldParser fparser = new Models.fieldParser(fields);
 			// render q & a
 			HashMap<String, String> d = new HashMap<String, String>();
 			d.put("id", Long.toString((Long) data[0]));
 			d.put("q", mModels.getCmpldTemplate(modelId, (Integer) data[4])[0]
-					.execute(fields));
+					.execute(fparser));
 			d.put("a", mModels.getCmpldTemplate(modelId, (Integer) data[4])[1]
-					.execute(fields));
+					.execute(fparser));
 			// TODO: runfilter
 			return d;
 		} catch (JSONException e) {
