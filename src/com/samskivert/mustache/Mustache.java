@@ -366,7 +366,7 @@ public class Mustache
     /** A helper class for named segments. */
     protected static abstract class NamedSegment extends Template.Segment {
         protected NamedSegment (String name, int line) {
-            _name = name.intern();
+            _name = name;
             _line = line;
         }
         protected final String _name;

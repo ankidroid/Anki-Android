@@ -53,7 +53,7 @@ public class Template
      * context.
      *
      * @param ctx the context in which to look up the variable.
-     * @param name the name of the variable to be resolved, which must be an interned string.
+     * @param name the name of the variable to be resolved
      */
     protected Object getValue (Context ctx, String name, int line)
     {
