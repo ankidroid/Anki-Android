@@ -113,9 +113,6 @@ public class Stats {
                             + "count(), " // all cards
                             + "sum(CASE WHEN ivl >= 21 THEN 1 ELSE 0 END) " // mature cards
                             + "FROM cards WHERE did IN " + _limit() + " AND queue = 2" + lim + " GROUP BY day ORDER BY day", null);
-            if (!cur.moveToFirst()) {
-            	return false;
-            }
             while (cur.moveToNext()) {
                 dues.add(new int[] { cur.getInt(0), cur.getInt(1), cur.getInt(2) });
             }
@@ -124,6 +121,11 @@ public class Stats {
                 cur.close();
             }
         }
+        // small adjustment for a proper chartbuilding with achartengine
+        if (end != -1 && dues.get(dues.size() - 1)[0] != end) {
+        	dues.add(new int[]{end, 0, 0});
+        }
+
         mSeriesList = new double[3][dues.size()];
         for (int i = 0; i < dues.size(); i++) {
         	int[] data = dues.get(i);
@@ -131,7 +133,7 @@ public class Stats {
         	mSeriesList[1][i] = data[1];
         	mSeriesList[2][i] = data[2];
         }
-        return true;
+        return dues.size() > 0;
     }
 
 
@@ -206,9 +208,6 @@ public class Stats {
                     		+ "sum(CASE WHEN type = 2 THEN " + ti + " ELSE 0 END)" + tf + ", " // lapse
                     		+ "sum(CASE WHEN type = 3 THEN " + ti + " ELSE 0 END)" + tf // cram
                             + " FROM revlog " + lim + " GROUP BY day ORDER BY day", null);
-            if (!cur.moveToFirst()) {
-            	return false;
-            }
             while (cur.moveToNext()) {
             	list.add(new double[] { cur.getDouble(0), cur.getDouble(1), cur.getDouble(4), cur.getDouble(2), cur.getDouble(3), cur.getDouble(5) });
             }
@@ -217,6 +216,12 @@ public class Stats {
                 cur.close();
             }
         }
+
+        // small adjustment for a proper chartbuilding with achartengine
+        if (num != -1 && list.get(0)[0] != num) {
+        	list.add(new double[]{num, 0, 0, 0, 0, 0});
+        }
+
         mSeriesList = new double[6][list.size()];
         for (int i = 0; i < list.size(); i++) {
         	double[] data = list.get(i);
@@ -227,7 +232,7 @@ public class Stats {
         	mSeriesList[4][i] = data[4] + data[5]; // mature
         	mSeriesList[5][i] = data[5]; // cram
         }
-        return true;
+        return list.size() > 0;
     }
 
 

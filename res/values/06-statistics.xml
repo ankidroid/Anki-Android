@@ -24,12 +24,14 @@
 <string name="statistics_relearn">Relearn</string>
 <string name="statistics_learn">Learn</string>
 <string name="statistics_cram">Cram</string>
-
+    
 <string name="statistics_type_title">Statistics</string>
 <string name="stats_cards">Cards</string>
 <string name="stats_answers">Answers</string>
 <string name="stats_minutes">Minutes</string>
 <string name="stats_hours">Hours</string>
+
+<string name="stats_empty_result">Statistics still empty</string>
 
 <string name="statistics_period_x_axis">Days</string>
 <string name="statistics_period_x_axis_minutes">Minutes</string>

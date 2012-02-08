@@ -1049,7 +1049,7 @@ public class StudyOptions extends Activity implements IButtonListener {
 									+ e.getMessage());
 				}
 			}
-//			if (result.getBoolean()) {
+			if (result.getBoolean()) {
 //				if (mStatisticType == Statistics.TYPE_DECK_SUMMARY) {
 //					Statistics.showDeckSummary(StudyOptions.this);
 //				} else {
@@ -1059,7 +1059,9 @@ public class StudyOptions extends Activity implements IButtonListener {
 						ActivityTransitionAnimation.slide(StudyOptions.this, ActivityTransitionAnimation.DOWN);
 					}
 //				}
-//			}
+			} else {
+				Themes.showThemedToast(StudyOptions.this, getResources().getString(R.string.stats_empty_result), true);
+			}
 		}
 
 		@Override

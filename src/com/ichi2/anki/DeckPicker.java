@@ -22,7 +22,6 @@ package com.ichi2.anki;import com.ichi2.anki2.R;
 
 import android.app.Activity;
 import android.app.Dialog;
-import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -31,47 +30,31 @@ import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.DialogInterface.OnCancelListener;
 import android.content.SharedPreferences.Editor;
-import android.content.pm.ActivityInfo;
 import android.content.res.Resources;
 import android.database.SQLException;
-import android.database.sqlite.SQLiteException;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.preference.PreferenceManager;
-import android.text.InputFilter;
 import android.text.SpannableStringBuilder;
-import android.text.Spanned;
 import android.text.style.StyleSpan;
 import android.text.style.UnderlineSpan;
 import android.util.Log;
 import android.view.ContextMenu;
 import android.view.GestureDetector;
-import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
-import android.view.SubMenu;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.view.GestureDetector.SimpleOnGestureListener;
 import android.view.View.OnClickListener;
-import android.view.ViewGroup.LayoutParams;
 import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.ProgressBar;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
-import android.widget.RadioGroup.OnCheckedChangeListener;
 import android.widget.SimpleAdapter;
-import android.widget.TextView;
 
 import com.ichi2.anim.ActivityTransitionAnimation;
 import com.ichi2.anim.ViewAnimation;
@@ -90,14 +73,9 @@ import com.ichi2.widget.WidgetStatus;
 import com.tomgibara.android.veecheck.util.PrefSettings;
 
 import java.io.File;
-import java.io.FileFilter;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.HashMap;
 import java.util.TreeSet;
-import java.util.concurrent.locks.Condition;
-import java.util.concurrent.locks.ReentrantLock;
 
 //zeemote imports
 import com.zeemote.zc.event.ButtonEvent;
@@ -637,10 +615,7 @@ public class DeckPicker extends Activity {
                     Log.e(AnkiDroidApp.TAG, "onPostExecute - Dialog dismiss Exception = " + e.getMessage());
                 }
             }
-//            if (result == null) {
-//            	return;
-//            }
-//            if (result.getBoolean()) {
+            if (result.getBoolean()) {
 //		    	if (mStatisticType == Statistics.TYPE_DECK_SUMMARY) {
 //		    		Statistics.showDeckSummary(DeckPicker.this);
 //		    	} else {
@@ -650,7 +625,9 @@ public class DeckPicker extends Activity {
 			            ActivityTransitionAnimation.slide(DeckPicker.this, ActivityTransitionAnimation.DOWN);
 			        }	
 //		    	}
-//			}
+			} else {
+				Themes.showThemedToast(DeckPicker.this, getResources().getString(R.string.stats_empty_result), true);
+			}
 		}
 
 		@Override
@@ -1812,7 +1789,7 @@ public class DeckPicker extends Activity {
         return true;
     }
 
-    
+
     /** Handles item selections */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
