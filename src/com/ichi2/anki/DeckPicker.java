@@ -1807,8 +1807,8 @@ public class DeckPicker extends Activity {
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
         boolean sdCardAvailable = AnkiDroidApp.isSdCardMounted();
-        menu.findItem(SUBMENU_DOWNLOAD).setEnabled(sdCardAvailable);
-        menu.findItem(MENU_DOWNLOAD_PERSONAL_DECK).setVisible(sdCardAvailable);
+//        menu.findItem(SUBMENU_DOWNLOAD).setEnabled(sdCardAvailable);
+//        menu.findItem(MENU_DOWNLOAD_PERSONAL_DECK).setVisible(sdCardAvailable);
         return true;
     }
 
