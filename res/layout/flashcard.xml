@@ -132,6 +132,7 @@
 			android:layout_height="fill_parent">			
 			<FrameLayout android:id="@+id/touch_layer"
 				android:layout_marginTop="20dip"
+				android:layout_marginBottom="20dip"
 				android:longClickable="true"
 				android:layout_width="fill_parent"
 				android:layout_height="fill_parent"/>

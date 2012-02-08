@@ -155,7 +155,7 @@ public class Sched {
 	}
 
 	public boolean answerCard(Card card, int ease) {
-		Log.i(AnkiDroidApp.TAG, "answerCard");
+		Log.i(AnkiDroidApp.TAG, "answerCard - ease:" + ease);
 		boolean isLeech = false;
 		mCol.markReview(card);
 		mReps += 1;

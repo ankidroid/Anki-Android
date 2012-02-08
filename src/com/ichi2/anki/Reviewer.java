@@ -509,16 +509,16 @@ public class Reviewer extends Activity implements IButtonListener{
         	mTimeoutHandler.removeCallbacks(mShowQuestionTask);
             switch (view.getId()) {
                 case R.id.flashcard_layout_ease1:
-                    answerCard(1);
+                    answerCard(EASE_FAILED);
                     break;
                 case R.id.flashcard_layout_ease2:
-                	answerCard(2);
+                	answerCard(EASE_HARD);
                     break;
                 case R.id.flashcard_layout_ease3:
-                	answerCard(3);
+                	answerCard(EASE_MID);
                     break;
                 case R.id.flashcard_layout_ease4:
-                	answerCard(4);
+                	answerCard(EASE_EASY);
                     break;
                 default:
                     mCurrentEase = 0;
