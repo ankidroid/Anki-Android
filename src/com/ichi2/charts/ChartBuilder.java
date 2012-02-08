@@ -278,7 +278,7 @@ public class ChartBuilder extends Activity {
                 mRenderer.setShowLegend(false);
             }
             if (backwards) {
-                mPan = new double[] { mSeriesList[0][0] - 0.5, 0.5 };            	
+                mPan = new double[] { mSeriesList[0][0] - 0.5, 0.5 };
             } else {
                 mPan = new double[] { -0.5, mSeriesList[0][mSeriesList[0].length - 1] + 0.5 };
             }

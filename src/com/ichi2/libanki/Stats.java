@@ -219,7 +219,7 @@ public class Stats {
 
         // small adjustment for a proper chartbuilding with achartengine
         if (num != -1 && list.get(0)[0] != num) {
-        	list.add(new double[]{num, 0, 0, 0, 0, 0});
+        	list.add(0, new double[]{-num, 0, 0, 0, 0, 0});
         }
 
         mSeriesList = new double[6][list.size()];
