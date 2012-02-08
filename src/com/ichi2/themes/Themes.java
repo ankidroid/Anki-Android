@@ -464,7 +464,7 @@ public class Themes {
 				mReviewerBackground = R.color.white_background;
 				mFlashcardBorder = R.drawable.white_bg_webview;
 				mDeckpickerItemBorder = R.drawable.white_bg_deckpicker;
-			mTitleStyle = R.drawable.flat_title;
+				mTitleStyle = R.drawable.white_btn_default_normal;
 				mTitleTextColor = mContext.getResources().getColor(R.color.black);
 				mTextViewStyle = R.drawable.white_textview_padding;
 				mWallpaper = R.drawable.white_wallpaper;
