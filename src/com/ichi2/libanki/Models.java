@@ -33,6 +33,8 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.TreeMap;
+import java.util.regex.Pattern;
+import java.util.regex.Matcher;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -659,9 +661,44 @@ public class Models {
                 Log.e(AnkiDroidApp.TAG, "Unimplemented field modifier: " + mod);
                 return null;
             } else if (mod.equals("cq") || mod.equals("ca")) {
-                // TODO: handle cq and ca type field modifier
-                Log.e(AnkiDroidApp.TAG, "Unimplemented field modifier: " + mod);
-                return null;
+                // cloze handling
+                if (txt == null || extra == null) return "";
+                int ord;
+                try {
+                    ord = Integer.parseInt(extra);
+                } catch (NumberFormatException e) {
+                    return "";
+                }
+                if (ord < 0) return "";
+                String rx = "\\{\\{c"+ord+"::(.*?)(?:::(.*?))?\\}\\}";
+                Matcher m = Pattern.compile(rx).matcher(txt);
+                String clozetxt = null;
+                if (mod.equals("ca")) {
+                    // in answer
+                    clozetxt = m.replaceAll("<span class=\"cloze\">$1</span>");
+                } else {
+                    // in question
+                    // unfortunately, Android's java implementation replaces
+                    // non-matching captures with "null", requiring this ugly little loop
+                    StringBuffer sb = new StringBuffer();
+                    while (m.find()) {
+                        if (m.group(2) != null) {
+                            m.appendReplacement(sb, "<span class=\"cloze\">[...$2]</span>");
+                        } else {
+                            m.appendReplacement(sb, "<span class=\"cloze\">[...]</span>");
+                        }
+                    }
+                    m.appendTail(sb);
+                    clozetxt = sb.toString();
+                }
+                if (clozetxt.equals(txt)) {
+                    // cloze wasn't found; return empty
+                    return "";
+                }
+                // display any other clozes normally
+                clozetxt = clozetxt.replaceAll("\\{\\{c[0-9]+::(.*?)(?:::(.*?))?\\}\\}", "$1");
+                Log.d(AnkiDroidApp.TAG, "Cloze: ord=" + ord + ", txt=" + clozetxt);
+                return clozetxt;
             } else if (mod.equals("kanjionly")) {
                 if (txt == null) return txt;
                 return txt.replaceAll(rubyr, "$1");
