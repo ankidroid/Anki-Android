@@ -65,6 +65,9 @@
         <item name="android:radioButtonStyle">@style/White.CompoundButton.RadioButton</item>
 
         <!-- Dialog styles -->
+        <item name="android:actionBarStyle">@style/White.ActionBarStyle</item>
+
+        <!-- Dialog styles -->
         <item name="android:alertDialogStyle">@style/White.AlertDialog</item>
         <item name="android:listChoiceIndicatorSingle">@drawable/blue_btn_radio</item>
         <item name="android:listChoiceIndicatorMultiple">@drawable/blue_btn_check</item>
