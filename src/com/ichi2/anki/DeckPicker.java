@@ -944,7 +944,7 @@ public class DeckPicker extends Activity {
 	protected void onResume() {
 		super.onResume();
 		if (mCol != null) {
-			if (mCol.getSched()._checkDay()) {
+			if (Utils.now() > mCol.getSched().getDayCutoff()) {
 				loadCounts();
 			}
 		}

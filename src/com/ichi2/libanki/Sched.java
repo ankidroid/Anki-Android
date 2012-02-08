@@ -1420,20 +1420,25 @@ public class Sched {
 	 * **********************************
 	 */
 
-	private void _updateCutoff() {
+	public void _updateCutoff() {
 		// days since col created
 		mToday = (int) ((Utils.now() - mCol.getCrt()) / 86400);
 		// end of day cutoff
 		mDayCutoff = mCol.getCrt() + ((mToday + 1) * 86400);
-		// update all selected decks
-		for (long did : mCol.getDecks().active()) {
-			update(mCol.getDecks().get(did));
+
+		// this differs from libanki: updates all decks
+		for (JSONObject d : mCol.getDecks().all()) {
+			update(d);
 		}
-		// update parents too
-		for (JSONObject grp : mCol.getDecks().parents(
-				mCol.getDecks().selected())) {
-			update(grp);
-		}
+//		// update all selected decks
+//		for (long did : mCol.getDecks().active()) {
+//			update(mCol.getDecks().get(did));
+//		}
+//		// update parents too
+//		for (JSONObject grp : mCol.getDecks().parents(
+//				mCol.getDecks().selected())) {
+//			update(grp);
+//		}
 	}
 
 	private void update(JSONObject g) {

@@ -460,7 +460,7 @@ public class StudyOptions extends Activity implements IButtonListener {
 			adapter.addButtonListener(this);
 		}
 		if (mCol != null) {
-			if (mCol.getSched()._checkDay()) {
+			if (Utils.now() > mCol.getSched().getDayCutoff()) {
 				updateValuesFromDeck(true);
 			}
 		}
@@ -782,8 +782,6 @@ public class StudyOptions extends Activity implements IButtonListener {
 		updateValuesFromDeck(false);
 	}
 	private void updateValuesFromDeck(boolean reset) {
-		Resources res = getResources();
-
 		String fullName;
 		try {
 			fullName = mCol.getDecks().current().getString("name");
@@ -1060,7 +1058,7 @@ public class StudyOptions extends Activity implements IButtonListener {
 					}
 //				}
 			} else {
-				// TODO: db errro handling
+				// TODO: db error handling
 			}
 		}
 

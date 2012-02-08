@@ -424,9 +424,11 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
 
     private TaskData doInBackgroundLoadDeckCounts(TaskData... params) {
     	Collection col = params[0].getCollection();
-	Sched sched = col.getSched();
-	// check if new day has rolled over and reset counts if yes
-	sched._checkDay();
+    	Sched sched = col.getSched();
+    	// check if new day has rolled over and reset counts if yes
+    	if (Utils.now() > sched.getDayCutoff()) {
+    		sched._updateCutoff();
+    	}
     	TreeSet<Object[]> decks = sched.deckDueTree(true);
     	int[] counts = new int[]{0, 0, 0};
     	for (Object[] deck : decks) {
