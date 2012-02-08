@@ -1782,24 +1782,24 @@ public class DeckPicker extends Activity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuItem item;
-        SubMenu downloadDeckSubMenu = menu.addSubMenu(Menu.NONE, SUBMENU_DOWNLOAD, Menu.NONE,
-                R.string.menu_download_deck);
-        downloadDeckSubMenu.setIcon(R.drawable.ic_menu_download);
-        downloadDeckSubMenu.add(
-                Menu.NONE, MENU_DOWNLOAD_PERSONAL_DECK, Menu.NONE, R.string.menu_download_personal_deck);
-        downloadDeckSubMenu.add(Menu.NONE, MENU_DOWNLOAD_SHARED_DECK, Menu.NONE, R.string.menu_download_shared_deck);
+//        SubMenu downloadDeckSubMenu = menu.addSubMenu(Menu.NONE, SUBMENU_DOWNLOAD, Menu.NONE,
+//                R.string.menu_download_deck);
+//        downloadDeckSubMenu.setIcon(R.drawable.ic_menu_download);
+//        downloadDeckSubMenu.add(
+//                Menu.NONE, MENU_DOWNLOAD_PERSONAL_DECK, Menu.NONE, R.string.menu_download_personal_deck);
+//        downloadDeckSubMenu.add(Menu.NONE, MENU_DOWNLOAD_SHARED_DECK, Menu.NONE, R.string.menu_download_shared_deck);
+		UIUtils.addMenuItemInActionBar(menu, Menu.NONE, MENU_HELP, Menu.NONE,
+				R.string.help_title, R.drawable.ic_menu_help);
         item = menu.add(Menu.NONE, MENU_CREATE_DECK, Menu.NONE, R.string.new_deck);
         item.setIcon(R.drawable.ic_menu_add);
         item = menu.add(Menu.NONE, MENU_PREFERENCES, Menu.NONE, R.string.menu_preferences);
         item.setIcon(R.drawable.ic_menu_preferences);
         item = menu.add(Menu.NONE, MENU_MY_ACCOUNT, Menu.NONE, R.string.menu_my_account);
         item.setIcon(R.drawable.ic_menu_home);
-        item = menu.add(Menu.NONE, MENU_ABOUT, Menu.NONE, R.string.menu_about);
-        item.setIcon(R.drawable.ic_menu_info_details);
         item = menu.add(Menu.NONE, MENU_FEEDBACK, Menu.NONE, R.string.studyoptions_feedback);
         item.setIcon(R.drawable.ic_menu_send);
-		UIUtils.addMenuItemInActionBar(menu, Menu.NONE, MENU_HELP, Menu.NONE,
-				R.string.help_title, R.drawable.ic_menu_help);
+        item = menu.add(Menu.NONE, MENU_ABOUT, Menu.NONE, R.string.menu_about);
+        item.setIcon(R.drawable.ic_menu_info_details);
         return true;
     }
 
