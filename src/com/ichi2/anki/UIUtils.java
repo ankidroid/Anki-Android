@@ -7,6 +7,7 @@ import java.util.GregorianCalendar;
 import com.ichi2.anki2.R;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Build;
 import android.view.Menu;
 import android.view.MenuItem;

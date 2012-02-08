@@ -48,6 +48,8 @@ public class AnkiDroidApp extends Application {
 	public static final String LIBANKI_VERSION = "1.2.5";
 	public static final String DROPBOX_PUBLIC_DIR = "/dropbox/Public/Anki";
 
+	public static final int RESULT_TO_HOME = 501;
+
     /**
      * Tag for logging messages.
      */

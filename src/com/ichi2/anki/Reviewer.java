@@ -1350,6 +1350,11 @@ public class Reviewer extends Activity implements IButtonListener{
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
+
+        case android.R.id.home:
+			closeReviewer(AnkiDroidApp.RESULT_TO_HOME, true);
+			return true;
+
             case MENU_WHITEBOARD:
                 // Toggle mShowWhiteboard value
                 mShowWhiteboard = !mShowWhiteboard;

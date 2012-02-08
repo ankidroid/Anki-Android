@@ -936,6 +936,11 @@ public class StudyOptions extends Activity implements IButtonListener {
 			Intent intent) {
 		super.onActivityResult(requestCode, resultCode, intent);
 
+		if (resultCode == AnkiDroidApp.RESULT_TO_HOME) {
+			closeStudyOptions();
+			return;
+		}
+
 		// TODO: proper integration of big widget
 		if (resultCode == DeckPicker.RESULT_MEDIA_EJECTED) {
 			closeStudyOptions(DeckPicker.RESULT_MEDIA_EJECTED);

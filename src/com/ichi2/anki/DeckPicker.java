@@ -1799,7 +1799,7 @@ public class DeckPicker extends Activity {
         item = menu.add(Menu.NONE, MENU_FEEDBACK, Menu.NONE, R.string.studyoptions_feedback);
         item.setIcon(R.drawable.ic_menu_send);
 		UIUtils.addMenuItemInActionBar(menu, Menu.NONE, MENU_HELP, Menu.NONE,
-				R.string.help_title, 0);
+				R.string.help_title, R.drawable.ic_menu_help);
         return true;
     }
 
