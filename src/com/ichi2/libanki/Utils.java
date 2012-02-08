@@ -32,6 +32,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 
 import com.ichi2.anki.AnkiDb;
@@ -936,10 +937,17 @@ public class Utils {
         if (view == null) {
             return;
         }
-        LinearLayout.LayoutParams lparam = new LinearLayout.LayoutParams(0, 0);            
-        lparam.height = y;
-        lparam.width = x;
-        view.setLayoutParams(lparam);
+        if (view.getParent() instanceof LinearLayout) {
+            LinearLayout.LayoutParams lparam = new LinearLayout.LayoutParams(0, 0);            
+            lparam.height = y;
+            lparam.width = x;
+            view.setLayoutParams(lparam);
+        } else if (view.getParent() instanceof FrameLayout) {
+        	FrameLayout.LayoutParams lparam = new FrameLayout.LayoutParams(0, 0);            
+            lparam.height = y;
+            lparam.width = x;
+            view.setLayoutParams(lparam);
+        }
     }  
 
 

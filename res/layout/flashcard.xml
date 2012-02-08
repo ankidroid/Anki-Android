@@ -104,8 +104,9 @@
 					android:layout_height="fill_parent">
 					<View android:id="@+id/daily_bar"
 						android:layout_width="0dip"
-						android:layout_height="fill_parent"/>
-				</FrameLayout>
+						android:layout_height="fill_parent"
+						android:background="#323232"/>
+									</FrameLayout>
 			</FrameLayout>
 		</LinearLayout>
 		<Chronometer android:id="@+id/card_time"

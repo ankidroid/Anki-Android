@@ -278,7 +278,7 @@ public class Reviewer extends Activity implements IButtonListener{
     private TextView mTextBarBlue;
     private TextView mChosenAnswer;
     private LinearLayout mProgressBars;
-    private View mSessionYesBar;
+    private View mSessionProgressTotalBar;
     private View mSessionProgressBar;
     private TextView mNext1;
     private TextView mNext2;
@@ -323,10 +323,6 @@ public class Reviewer extends Activity implements IButtonListener{
 
     private int mStatisticBarsMax;
     private int mStatisticBarsHeight;
-    private int mStatisticsTodaysNoCount;
-    private int mStatisticsMatureCount;
-    private int mStatisticsMatureNoCount;
-    private boolean mReloadStatistics = true;
 
     private long mSavedTimer = 0;
 
@@ -1762,7 +1758,7 @@ public class Reviewer extends Activity implements IButtonListener{
         mTextBarBlue = (TextView) findViewById(R.id.blue_number);
 
         if (mShowProgressBars) {
-        	mSessionYesBar = (View) findViewById(R.id.daily_bar);
+        	mSessionProgressTotalBar = (View) findViewById(R.id.daily_bar);
             mSessionProgressBar = (View) findViewById(R.id.session_progress);
             mProgressBars = (LinearLayout) findViewById(R.id.progress_bars);
         }
@@ -2171,22 +2167,13 @@ public class Reviewer extends Activity implements IButtonListener{
 
 
     private void updateStatisticBars() {
-//    	if (mReloadStatistics) {
-//            int[] counts = AnkiDroidApp.deck().yesCounts();
-//            mStatisticsTodaysCount = counts[0];
-//            mStatisticsTodaysNoCount = counts[1];
-//            mStatisticsMatureCount = counts[2];
-//            mStatisticsMatureNoCount = counts[3];
-//            mReloadStatistics = false;
-//    	}
-//        if (mStatisticBarsMax == 0) {
-//            View view = findViewById(R.id.progress_bars_back1);
-//            mStatisticBarsMax = view.getWidth();
-//            mStatisticBarsHeight = view.getHeight();
-//        }
-//        Decks deck = DeckManager.getMainDeck();
-//        Utils.updateProgressBars(this, mSessionProgressBar, deck.getSessionProgress(), mStatisticBarsMax, mStatisticBarsHeight, true, false);
-//        Utils.updateProgressBars(this, mSessionYesBar, deck.getProgress(false), mStatisticBarsMax, mStatisticBarsHeight, true);
+        if (mStatisticBarsMax == 0) {
+            View view = findViewById(R.id.progress_bars_back1);
+            mStatisticBarsMax = view.getWidth();
+            mStatisticBarsHeight = view.getHeight();
+        }
+        Utils.updateProgressBars(mSessionProgressBar,(int)(mStatisticBarsMax * mSched.todaysProgress(mCurrentCard, false)), mStatisticBarsHeight);
+        Utils.updateProgressBars(mSessionProgressTotalBar, (int)(mStatisticBarsMax * mSched.todaysProgress(mCurrentCard, true)), mStatisticBarsHeight);
     }
 
     /* Handler for the delay in auto showing question and/or answer

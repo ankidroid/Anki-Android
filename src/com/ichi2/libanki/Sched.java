@@ -110,6 +110,9 @@ public class Sched {
 	private TreeMap<Integer, Integer> mGroupConfs;
 	private TreeMap<Integer, JSONObject> mConfCache;
 
+	/** all due cards which are not in the current deck selection */
+	private int mNonselectedDues;
+
 	/**
 	 * revlog: types: 0=lrn, 1=rev, 2=relrn, 3=cram positive intervals are in
 	 * days (rev), negative intervals in seconds (lrn)
@@ -1678,6 +1681,70 @@ public class Sched {
 		return mCol.getDb().queryScalar(
 				"SELECT count() FROM cards WHERE type = 2 AND ivl >= 21 AND did IN "
 						+ dids, false);
+	}
+
+	/** NOT IN LIBANKI: cache, needed for total progress calculation */
+	public void loadNonSelectedDues() {
+		mNonselectedDues = 0;
+		for (JSONObject g : mCol.getDecks().all()) {
+			try {
+				if (!g.getString("name").matches(".*::.*")) {
+					long did = g.getLong("id");
+					LinkedList<Long> ldid = new LinkedList<Long>();
+					ldid.add(did);
+					for (Long c : mCol.getDecks().children(did).values()) {
+						ldid.add(c);
+					}
+					String didLimit = Utils.ids2str(ldid);
+					mNonselectedDues += _walkingCount(ldid,
+							Sched.class.getDeclaredMethod(
+									"_deckNewLimitSingle", JSONObject.class),
+							Sched.class.getDeclaredMethod("_cntFnNew",
+									long.class, int.class));
+					mNonselectedDues += _cntFnLrn(didLimit);
+					mNonselectedDues += _walkingCount(ldid,
+							Sched.class.getDeclaredMethod(
+									"_deckRevLimitSingle", JSONObject.class),
+							Sched.class.getDeclaredMethod("_cntFnRev",
+									long.class, int.class));
+				}
+			} catch (JSONException e) {
+				throw new RuntimeException(e);
+			} catch (NoSuchMethodException e) {
+				throw new RuntimeException(e);
+			}
+		}
+		mNonselectedDues -= mNewCount + mLrnCount + mRevCount;
+	}
+
+	/** NOT IN LIBANKI */
+	public float todaysProgress(Card card, boolean allDecks) {
+		int counts = mNewCount + mLrnCount + mRevCount;
+		if (card != null) {
+			int idx = countIdx(card);
+			if (idx == 1) {
+				counts += card.getLeft();
+			} else {
+				counts += 1;
+			}
+		}
+		try {
+			float done = 0;
+			if (allDecks) {
+				counts += mNonselectedDues;
+				for (JSONObject d : mCol.getDecks().all()) {
+					if (!d.getString("name").matches(".*::.*")) {
+						done += d.getJSONArray("newToday").getInt(1) + d.getJSONArray("lrnToday").getInt(1) + d.getJSONArray("revToday").getInt(1);
+					}
+				}
+			} else {
+				JSONObject c = mCol.getDecks().current();
+				done = c.getJSONArray("newToday").getInt(1) + c.getJSONArray("lrnToday").getInt(1) + c.getJSONArray("revToday").getInt(1);
+			}
+			return done / (done + counts);
+		} catch (JSONException e) {
+			throw new RuntimeException(e);
+		}
 	}
 
 	//

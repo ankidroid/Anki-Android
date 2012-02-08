@@ -276,6 +276,7 @@ public class Themes {
 				break;
 			}
 	        ((View)view.findViewById(R.id.session_progress)).setBackgroundResource(mReviewerProgressbar);
+	        ((View)view.findViewById(R.id.daily_bar)).setBackgroundResource(mReviewerProgressbar);
 			break;
 
 		case CALLER_FEEDBACK:

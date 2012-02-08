@@ -724,6 +724,7 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
     		sched.reset();        	
         }
 		int[] counts = sched.counts();
+		sched.loadNonSelectedDues();
 		int totalNewCount = sched.newCount();
 		int totalCount = sched.cardCount();
 		double progressMature= ((double) sched.matureCount())
