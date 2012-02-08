@@ -860,13 +860,13 @@ public class StudyOptions extends Activity implements IButtonListener {
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		Utils.addMenuItem(menu, Menu.NONE, MENU_PREFERENCES, Menu.NONE,
+		UIUtils.addMenuItem(menu, Menu.NONE, MENU_PREFERENCES, Menu.NONE,
 				R.string.menu_preferences, R.drawable.ic_menu_preferences);
-		Utils.addMenuItem(menu, Menu.NONE, MENU_ROTATE, Menu.NONE,
+		UIUtils.addMenuItem(menu, Menu.NONE, MENU_ROTATE, Menu.NONE,
 				R.string.menu_rotate,
 				android.R.drawable.ic_menu_always_landscape_portrait);
 		if (mZeemoteEnabled) {
-			Utils.addMenuItem(menu, Menu.NONE, MENU_ZEEMOTE, Menu.NONE,
+			UIUtils.addMenuItem(menu, Menu.NONE, MENU_ZEEMOTE, Menu.NONE,
 					R.string.menu_zeemote, R.drawable.ic_menu_zeemote);			
 		}
 		return true;
@@ -876,6 +876,10 @@ public class StudyOptions extends Activity implements IButtonListener {
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
+		case android.R.id.home:
+			closeStudyOptions();
+			return true;
+
 		case MENU_PREFERENCES:
 			startActivityForResult(new Intent(StudyOptions.this,
 					Preferences.class), PREFERENCES_UPDATE);

@@ -1233,16 +1233,16 @@ public class Reviewer extends Activity implements IButtonListener{
         Resources res = getResources();
         if (mPrefWhiteboard) {
             if (mShowWhiteboard) {
-                Utils.addMenuItemInActionBar(menu, Menu.NONE, MENU_WHITEBOARD, Menu.NONE, R.string.hide_whiteboard,
+            	UIUtils.addMenuItemInActionBar(menu, Menu.NONE, MENU_WHITEBOARD, Menu.NONE, R.string.hide_whiteboard,
                         R.drawable.ic_menu_compose);
             } else {
-                Utils.addMenuItemInActionBar(menu, Menu.NONE, MENU_WHITEBOARD, Menu.NONE, R.string.show_whiteboard,
+            	UIUtils.addMenuItemInActionBar(menu, Menu.NONE, MENU_WHITEBOARD, Menu.NONE, R.string.show_whiteboard,
                         R.drawable.ic_menu_compose);
             }
-            Utils.addMenuItemInActionBar(menu, Menu.NONE, MENU_CLEAR_WHITEBOARD, Menu.NONE, R.string.clear_whiteboard,
+            UIUtils.addMenuItemInActionBar(menu, Menu.NONE, MENU_CLEAR_WHITEBOARD, Menu.NONE, R.string.clear_whiteboard,
                     R.drawable.ic_menu_clear_playlist);
         }
-        Utils.addMenuItem(menu, Menu.NONE, MENU_EDIT, Menu.NONE, R.string.menu_edit_card, R.drawable.ic_menu_edit);
+        UIUtils.addMenuItem(menu, Menu.NONE, MENU_EDIT, Menu.NONE, R.string.menu_edit_card, R.drawable.ic_menu_edit);
 
         SubMenu removeDeckSubMenu = menu.addSubMenu(Menu.NONE, MENU_REMOVE, Menu.NONE, R.string.menu_remove_card);
         removeDeckSubMenu.setIcon(R.drawable.ic_menu_stop);
@@ -1254,7 +1254,7 @@ public class Reviewer extends Activity implements IButtonListener{
             item.setIcon(R.drawable.ic_menu_search);
         }
         item = menu.add(Menu.NONE, MENU_MARK, Menu.NONE, R.string.menu_mark_card);
-        Utils.addMenuItemInActionBar(menu, Menu.NONE, MENU_UNDO, Menu.NONE, R.string.undo, R.drawable.ic_menu_revert);
+        UIUtils.addMenuItemInActionBar(menu, Menu.NONE, MENU_UNDO, Menu.NONE, R.string.undo, R.drawable.ic_menu_revert);
         return true;
     }
 
