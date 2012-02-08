@@ -626,7 +626,7 @@ public class DeckPicker extends Activity {
 			        }	
 //		    	}
 			} else {
-				Themes.showThemedToast(DeckPicker.this, getResources().getString(R.string.stats_empty_result), true);
+				// TODO: db errro handling
 			}
 		}
 

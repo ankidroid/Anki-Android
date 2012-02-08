@@ -122,7 +122,13 @@ public class Stats {
             }
         }
         // small adjustment for a proper chartbuilding with achartengine
-        if (end != -1 && dues.get(dues.size() - 1)[0] != end) {
+        if (dues.size() == 0 || dues.get(0)[0] > 0) {
+        	dues.add(0, new int[]{0, 0, 0});
+        }
+        if (end == -1) {
+        	end = 31;
+        }
+        if (dues.get(dues.size() - 1)[0] < end) {
         	dues.add(new int[]{end, 0, 0});
         }
 
@@ -157,7 +163,7 @@ public class Stats {
     	int chunk = 0;
     	switch (type) {
     	case TYPE_MONTH:
-    		num = 30;
+    		num = 31;
     		chunk = 1;
     		break;
     	case TYPE_YEAR:
@@ -218,8 +224,15 @@ public class Stats {
         }
 
         // small adjustment for a proper chartbuilding with achartengine
-        if (num != -1 && list.get(0)[0] != num) {
+        // small adjustment for a proper chartbuilding with achartengine
+        if (num == -1) {
+        	num = 31;
+        }
+        if (list.size() == 0 || list.get(0)[0] > -num) {
         	list.add(0, new double[]{-num, 0, 0, 0, 0, 0});
+        }
+        if (list.get(list.size() - 1)[0] < 0) {
+        	list.add(new double[]{0, 0, 0, 0, 0, 0});
         }
 
         mSeriesList = new double[6][list.size()];

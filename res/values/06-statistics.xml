@@ -31,8 +31,6 @@
 <string name="stats_minutes">Minutes</string>
 <string name="stats_hours">Hours</string>
 
-<string name="stats_empty_result">Statistics still empty</string>
-
 <string name="statistics_period_x_axis">Days</string>
 <string name="statistics_period_x_axis_minutes">Minutes</string>
 <string name="statistics_new_cards">New cards</string>

@@ -1060,7 +1060,7 @@ public class StudyOptions extends Activity implements IButtonListener {
 					}
 //				}
 			} else {
-				Themes.showThemedToast(StudyOptions.this, getResources().getString(R.string.stats_empty_result), true);
+				// TODO: db errro handling
 			}
 		}
 
