@@ -66,6 +66,7 @@ import com.ichi2.compat.Compat;
 import com.ichi2.compat.CompatV11;
 import com.ichi2.compat.CompatV3;
 import com.ichi2.libanki.Collection;
+import com.ichi2.libanki.Stats;
 import com.ichi2.libanki.Utils;
 import com.ichi2.themes.StyledDialog;
 import com.ichi2.themes.StyledProgressDialog;
@@ -1096,8 +1097,7 @@ public class StudyOptions extends Activity implements IButtonListener {
 							&& Math.abs(velocityY) > DeckPicker.sSwipeThresholdVelocity
 							&& Math.abs(e1.getX() - e2.getX()) < DeckPicker.sSwipeMaxOffPath) {
 						// down
-						mStatisticType = 0;
-//						openStatistics(0);
+						DeckTask.launchDeckTask(DeckTask.TASK_TYPE_LOAD_STATISTICS, mLoadStatisticsHandler, new DeckTask.TaskData(mCol, Stats.TYPE_FORECAST, false));
 					} else if (e1.getY() - e2.getY() > DeckPicker.sSwipeMinDistance
 							&& Math.abs(velocityY) > DeckPicker.sSwipeThresholdVelocity
 							&& Math.abs(e1.getX() - e2.getX()) < DeckPicker.sSwipeMaxOffPath) {
