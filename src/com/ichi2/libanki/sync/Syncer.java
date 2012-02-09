@@ -627,10 +627,9 @@ public class Syncer {
     	} else {
     		for (Map.Entry<String, Integer> t : mCol.getTags().allItems().entrySet()) {
     			if (t.getValue() == -1) {
-    				ArrayList<String> tag = new ArrayList<String>();
-					tag.add(t.getKey());
-					mCol.getTags().register(tag, mMaxUsn);
-					result.put(t.getKey());
+    				String tag = t.getKey();
+    				mCol.getTags().allItems().put(tag, mMaxUsn);
+					result.put(tag);
 				}
 			}
 			mCol.getTags().save();
