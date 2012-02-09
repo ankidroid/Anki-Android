@@ -162,7 +162,7 @@
         <item name="android:textSize">30sp</item>
     </style>
     <style name="White.Edittext" parent="@android:style/Widget.EditText">
-        <item name="android:background">@drawable/blue_edit_text</item>
+        <item name="android:background">@drawable/white_edit_text</item>
     </style>
     <style name="White.Widget.ListView" parent="@android:Widget.ListView">
         <item name="android:listSelector">@drawable/white_list_selector_background</item>

@@ -80,7 +80,7 @@
    		    android:baselineAligned="false">
         
         <ProgressBar android:id="@android:id/progress"
-            style="?android:attr/progressBarStyle"
+            style="?android:attr/progressBarStyleInverse"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:max="10000"

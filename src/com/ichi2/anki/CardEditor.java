@@ -77,8 +77,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.TreeSet;
 
@@ -1278,11 +1276,11 @@ public class CardEditor extends Activity {
 		FieldEditText field = mEditFields.get(0);
 		if (mEditorNote.dupeOrEmpty(field.getText().toString()) > (checkEmptyToo ? 0 : 1)) {
 			// TODO: theme backgrounds
-			field.setBackgroundResource(R.drawable.blue_edit_text_dupe);
+			field.setBackgroundResource(R.drawable.white_edit_text_dupe);
 			mSave.setEnabled(false);
 			return true;
 		} else {
-			field.setBackgroundResource(R.drawable.blue_edit_text);
+			field.setBackgroundResource(R.drawable.white_edit_text);
 			mSave.setEnabled(true);
 			return false;
 		}
