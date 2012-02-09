@@ -21,7 +21,24 @@
 <resources>
 <!-- Be careful with a reordering. It will probably lead to a deletion of already translated strings on crowdin and should therefore only be done only immediately before release -->
 	<string-array name="new_version_features">
-		<item>new learning mode</item>
-		<item>complete </item>
-		</string-array>
+	   	<item>Libanki2.0 scheduling</item>
+	   	<item>new learning mode</item>
+		<item>new layout</item>
+		<item>incremental sync</item>
+		<item>better statistics</item>
+		<item>decks are now all saved in one collection</item>
+		<item>options shareble</item>
+	   	<item></item>
+		<item></item>
+		<item></item>
+		<item></item>
+		<item></item>
+		<item></item>
+	   	<item></item>
+		<item></item>
+		<item></item>
+		<item></item>
+		<item></item>
+		<item></item>
+	</string-array>
 </resources>
