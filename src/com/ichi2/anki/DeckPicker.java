@@ -1849,7 +1849,7 @@ public class DeckPicker extends Activity {
         				}
         	    		StyledDialog dialog = (StyledDialog) onCreateDialog(DIALOG_OK);
         	    		dialog.setTitle(getResources().getString(R.string.check_db_title));
-        	    		dialog.setMessage(String.format(Utils.ENGLISH_LOCALE, getResources().getString(R.string.check_db_message), Math.round(result.getLong() / 1024)));
+        	    		dialog.setMessage(String.format(Utils.ENGLISH_LOCALE, getResources().getString(R.string.check_db_result_message), Math.round(result.getLong() / 1024)));
         	    		dialog.show();
         			}
         			@Override
