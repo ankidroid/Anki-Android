@@ -84,9 +84,6 @@
                 <data android:mimeType="text/plain" />
             </intent-filter>
         </activity>
-		<activity android:name="com.ichi2.anki.DeckCreator" 
-			android:label="@string/deckcreator_title"
-			android:configChanges="keyboardHidden|orientation|locale"/>
 		<activity android:name="com.ichi2.anki.Feedback" 
 			android:label="@string/feedback_title"
 			android:configChanges="locale"/>

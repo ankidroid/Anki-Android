@@ -46,11 +46,14 @@
 
 <!--Card Editor-->
 <string name="about_title">About</string>
-<string name="cardeditor_title">Fact Editor</string>
+<string name="cardeditor_title_add_note">Add Note</string>
+<string name="cardeditor_title_edit_card">Edit Note</string>
 <!-- <string name="factadder_title">Card Adder</string> -->
-<string name="factadder_saving_error">Error saving fact</string>
-<string name="saving_facts">Saving facts</string>
-<string name="deckcreator_title">Deck Creator</string>
+<string name="factadder_saving_error">Error saving note</string>
+<string name="cardeditor_move_note_too">Move note too</string>
+<string name="cardeditor_move_to_notes_deck">To note\'s deck</string>
+    
+<string name="saving_facts">Saving note</string>
 <string name="deck">Deck</string>
 <string name="card">Card:</string>
 <string name="cards">Cards:</string>

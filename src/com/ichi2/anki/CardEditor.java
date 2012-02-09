@@ -47,9 +47,11 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewGroup.LayoutParams;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -58,6 +60,7 @@ import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.ToggleButton;
 
 import com.ichi2.anim.ActivityTransitionAnimation;
 import com.ichi2.anim.ViewAnimation;
@@ -159,6 +162,7 @@ public class CardEditor extends Activity {
 	private TextView mModelButton;
 	private TextView mDeckButton;
 	private Button mSwapButton;
+	private ToggleButton mMoveNoteTooToggle;
 
 	private Note mEditorNote;
 	private Card mCurrentEditedCard;
@@ -182,6 +186,7 @@ public class CardEditor extends Activity {
 	private ArrayList<HashMap<String, String>> mIntentInformation;
 	private SimpleAdapter mIntentInformationAdapter;
 	private StyledDialog mIntentInformationDialog;
+	private StyledDialog mDeckSelectDialog;
 
 	private String[] allTags;
 	private ArrayList<String> selectedTags;
@@ -301,7 +306,6 @@ public class CardEditor extends Activity {
 
 		mFieldsLayoutContainer = (LinearLayout) findViewById(R.id.CardEditorEditFieldsLayout);
 
-		setTitle(R.string.cardeditor_title);
 		mSave = (Button) findViewById(R.id.CardEditorSaveButton);
 		mCancel = (Button) findViewById(R.id.CardEditorCancelButton);
 		mLater = (Button) findViewById(R.id.CardEditorLaterButton);
@@ -402,6 +406,7 @@ public class CardEditor extends Activity {
 		setNote(mEditorNote);
 
 		if (mAddNote) {
+			setTitle(R.string.cardeditor_title_add_note);
 			// set information transferred by intent
 			String contents = null;
 			if (mSourceText != null) {
@@ -445,6 +450,8 @@ public class CardEditor extends Activity {
 					}
 				}
 			});
+		} else {
+			setTitle(R.string.cardeditor_title_edit_card);
 		}
 
 		((LinearLayout)findViewById(R.id.CardEditorDeckButton)).setOnClickListener(new View.OnClickListener() {
@@ -490,11 +497,17 @@ public class CardEditor extends Activity {
 					// removed tag?
 					modified = modified || mEditorNote.getTags().size() > mCurrentTags.size();
 					// changed did?
-					modified = modified || (mAddNote ? mEditorNote.getDid() : mCurrentEditedCard.getDid()) != mCurrentDid;
+					boolean changedDid = mCurrentEditedCard.getDid() != mCurrentDid;
+					modified = modified || changedDid;
 					if (modified) {
 						mEditorNote.setTags(mCurrentTags);
 						// set did for card
-						mCurrentEditedCard.setDid(mCurrentDid);
+						if (changedDid) {
+							mCurrentEditedCard.setDid(mCurrentDid);
+							if (mMoveNoteTooToggle.isChecked()) {
+								mEditorNote.setDid(mCurrentDid);
+							}
+						}
 						mChanged = true;
 					}
 					closeCardEditor();
@@ -947,7 +960,34 @@ public class CardEditor extends Activity {
 					}
 				}
 			});
+
+			if (!mAddNote) {
+				LinearLayout ll = new LinearLayout(this);
+				ll.setLayoutParams(new LinearLayout.LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT));
+				LayoutParams lp = new LinearLayout.LayoutParams(0, LayoutParams.WRAP_CONTENT, 1);
+				mMoveNoteTooToggle = new ToggleButton(this);
+				mMoveNoteTooToggle.setSingleLine();
+				mMoveNoteTooToggle.setLayoutParams(lp);
+				mMoveNoteTooToggle.setText(R.string.cardeditor_move_note_too);
+				ll.addView(mMoveNoteTooToggle);
+				Button origButton = new Button(this);
+				origButton.setSingleLine();
+				origButton.setText(R.string.cardeditor_move_to_notes_deck);
+				origButton.setBackgroundResource(R.drawable.white_btn_small);
+				origButton.setLayoutParams(lp);
+				origButton.setOnClickListener(new View.OnClickListener() {
+					@Override
+					public void onClick(View v) {
+						mCurrentDid = mEditorNote.getDid();
+						updateDeck();
+						mDeckSelectDialog.dismiss();
+					}
+				});
+				ll.addView(origButton);
+				builder.setView(ll, false, true);
+			}
 			dialog = builder.create();
+			mDeckSelectDialog = dialog;
 			break;
 
 		case DIALOG_MODEL_SELECT:
