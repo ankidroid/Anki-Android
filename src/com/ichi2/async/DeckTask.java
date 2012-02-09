@@ -69,7 +69,7 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
     public static final int TASK_TYPE_BURY_CARD = 11;
     public static final int TASK_TYPE_DELETE_CARD = 12;
     public static final int TASK_TYPE_LOAD_STATISTICS = 13;
-    public static final int TASK_TYPE_OPTIMIZE_DECK = 14;
+    public static final int TASK_TYPE_CHECK_DATABASE = 14;
     public static final int TASK_TYPE_SET_ALL_DECKS_JOURNAL_MODE = 15;
     public static final int TASK_TYPE_DELETE_BACKUPS = 16;
     public static final int TASK_TYPE_RESTORE_DECK = 17;
@@ -206,8 +206,8 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
             case TASK_TYPE_LOAD_STATISTICS:
                 return doInBackgroundLoadStatistics(params);
 
-            case TASK_TYPE_OPTIMIZE_DECK:
-                return doInBackgroundOptimizeDeck(params);
+            case TASK_TYPE_CHECK_DATABASE:
+                return doInBackgroundCheckDatabase(params);
 
             case TASK_TYPE_SET_ALL_DECKS_JOURNAL_MODE:
                 return doInBackgroundSetJournalMode(params);
@@ -662,13 +662,10 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
     }
 
 
-    private TaskData doInBackgroundOptimizeDeck(TaskData... params) {
-//        Log.i(AnkiDroidApp.TAG, "doInBackgroundOptimizeDeck");
-//    	Collection col = params[0].getDeck();
-//        long result = 0;
-//    	result = deck.optimize();
-//        return new TaskData(deck, result);
-    	return null;
+    private TaskData doInBackgroundCheckDatabase(TaskData... params) {
+        Log.i(AnkiDroidApp.TAG, "doInBackgroundCheckDatabase");
+    	Collection col = params[0].getCollection();
+    	return new TaskData(col.fixIntegrity());
     }
 
 
@@ -962,6 +959,11 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
 
         public TaskData(int value) {
             mInteger = value;
+        }
+
+
+        public TaskData(long l) {
+            mLong = l;
         }
 
 

@@ -84,7 +84,7 @@
 
 <string name="error_insufficient_memory">Operation not possible due to insufficient memory on your device</string>
 
-<string name="tutorial_load">Creating tutorial deck...</string>
+<string name="tutorial_load">Creating tutorial deck.\nPlease wait...</string>
 <string name="tutorial_loading_error">Tutorial deck could not be created</string>
 
 <string name="rename">Rename</string>
@@ -100,6 +100,9 @@
 <string name="help_faq">FAQ</string>
 <string name="help_tutorial">Tutorial deck</string>
 
+<string name="check_db">Check database</string>
+<string name="check_db_message">Checking database.\nPlease wait...</string>
+    
 <string name="simple_interface_hint">Empty %s. Bear in mind that simple interface cannot show pictures/sounds etc.</string>
 
 </resources>

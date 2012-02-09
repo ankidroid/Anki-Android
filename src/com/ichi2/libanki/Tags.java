@@ -122,7 +122,7 @@ public class Tags {
     		mTags.clear();
     		mChanged = true;
     	}
-		register(mCol.getDb().queryColumn(String.class, "SELECT DISTINCT FROM notes" + lim, 0));
+		register(mCol.getDb().queryColumn(String.class, "SELECT DISTINCT tags FROM notes" + lim, 0));
     }
 
     public TreeMap<String, Integer> allItems() {

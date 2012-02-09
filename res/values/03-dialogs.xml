@@ -22,13 +22,9 @@
 
 <string name="welcome_message">With AnkiDroid, you can efficiently learn large amounts of vocabulary or any other material. AnkiDroid shows you the things to learn just before you forget them.\n\nTo get a first impression of how everything works, we recommend to start with a tutorial deck, which will give you some initial information, and try a bit out. Just just click on \"Start Reviewing\" after having opened it.\n\nCreate the tutorial deck now?</string>
     
-<string name="fact_adder_select_deck">Select deck</string>
-<string name="fact_adder_deck_not_loaded">Deck could not be loaded.\nPlease selected another one</string>
-
-<string name="optimize_deck_title">Optimize database</string>
-<string name="optimize_deck_dialog">Optimizing database</string>
-<string name="optimize_deck_message">Database optimized.\nShrunk by %d kb</string>
-
+<string name="check_db_title">Check database</string>
+<string name="check_db_message">Database checked and optimized.\nShrunk by %d kb</string>
+    
 <string name="contextmenu_deckpicker_delete_deck">Delete Deck</string>
 <string name="delete_deck_title">Delete Deck</string>
 <string name="delete_deck_message">Are you sure you wish to delete all cards in %s?</string>

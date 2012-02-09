@@ -94,7 +94,6 @@ public class DeckPicker extends Activity {
 	private static final int DIALOG_DELETE_DECK = 4;
 	private static final int DIALOG_SELECT_STATISTICS_TYPE = 5;
 	private static final int DIALOG_SELECT_STATISTICS_PERIOD = 6;	
-	private static final int DIALOG_OPTIMIZE_DATABASE = 7;
 	private static final int DIALOG_DELETE_BACKUPS = 8;
 	private static final int DIALOG_CONTEXT_MENU = 9;
 	private static final int DIALOG_REPAIR_DECK = 10;
@@ -104,6 +103,7 @@ public class DeckPicker extends Activity {
 	private static final int DIALOG_SYNC_LOG = 15;
 	private static final int DIALOG_SELECT_HELP = 16;
 	private static final int DIALOG_BACKUP_NO_SPACE_LEFT = 17;
+	private static final int DIALOG_OK = 18;
 
 	private String mDialogMessage;
 
@@ -119,6 +119,7 @@ public class DeckPicker extends Activity {
     private static final int MENU_MY_ACCOUNT = 4;
     private static final int MENU_FEEDBACK = 5;
 	private static final int MENU_HELP = 6;
+    private static final int CHECK_DATABASE = 7;
 
 	/**
 	 * Context Menus
@@ -707,37 +708,6 @@ public class DeckPicker extends Activity {
 
     };
 
-
-    DeckTask.TaskListener mOptimizeDeckHandler = new DeckTask.TaskListener() {
-
-		@Override
-		public void onPostExecute(DeckTask.TaskData result) {
-            if (mProgressDialog.isShowing()) {
-                try {
-                    mProgressDialog.dismiss();
-                } catch (Exception e) {
-                    Log.e(AnkiDroidApp.TAG, "onPostExecute - Dialog dismiss Exception = " + e.getMessage());
-                }
-            }
-//			DeckManager.closeDeck(result.getDeck().getDeckPath(), DeckManager.REQUESTING_ACTIVITY_DECKPICKER);
-    		StyledDialog dialog = (StyledDialog) onCreateDialog(DIALOG_OPTIMIZE_DATABASE);
-    		dialog.setMessage(String.format(Utils.ENGLISH_LOCALE, getResources().getString(R.string.optimize_deck_message), Math.round(result.getLong() / 1024)));
-    		dialog.show();
-		}
-
-		@Override
-		public void onPreExecute() {
-            mProgressDialog = StyledProgressDialog.show(DeckPicker.this, "", getResources()
-                    .getString(R.string.optimize_deck_dialog), true);
-		}
-
-		@Override
-		public void onProgressUpdate(DeckTask.TaskData... values) {
-		}
-    	
-    };
-
-
     //Zeemote handler
 	Handler ZeemoteHandler = new Handler() {
 		public void handleMessage(Message msg){
@@ -1080,9 +1050,14 @@ public class DeckPicker extends Activity {
 		StyledDialog.Builder builder = new StyledDialog.Builder(this);
 
 		switch (id) {
+		case DIALOG_OK:
+			builder.setPositiveButton(R.string.ok, null);
+			dialog = builder.create();
+			break;
+
 		case DIALOG_NO_SDCARD:
 			builder.setMessage("The SD card could not be read. Please, turn off USB storage.");
-			builder.setPositiveButton("OK", null);
+			builder.setPositiveButton(R.string.ok, null);
 			dialog = builder.create();
 			break;
 			// FROM STUDYOPTIONS
@@ -1777,6 +1752,7 @@ public class DeckPicker extends Activity {
         item.setIcon(R.drawable.ic_menu_send);
         item = menu.add(Menu.NONE, MENU_ABOUT, Menu.NONE, R.string.menu_about);
         item.setIcon(R.drawable.ic_menu_info_details);
+        UIUtils.addMenuItem(menu, Menu.NONE, CHECK_DATABASE, Menu.NONE, R.string.check_db, R.drawable.ic_menu_search);
         return true;
     }
 
@@ -1853,6 +1829,34 @@ public class DeckPicker extends Activity {
     				ActivityTransitionAnimation.slide(this, ActivityTransitionAnimation.RIGHT);
     			}
                 return true;
+
+            case CHECK_DATABASE:
+        		DeckTask.launchDeckTask(DeckTask.TASK_TYPE_CHECK_DATABASE, new DeckTask.TaskListener() {
+        			@Override
+        			public void onPreExecute() {
+        				mProgressDialog = StyledProgressDialog.show(DeckPicker.this, "",
+        						getResources().getString(R.string.check_db_message),
+        						true);
+        			}
+        			@Override
+        			public void onPostExecute(TaskData result) {
+        				long val = result.getLong();
+        				if (val == -1) {
+        					// TODO: db error handling
+        				}
+        				if (mProgressDialog.isShowing()) {
+        					mProgressDialog.dismiss();
+        				}
+        	    		StyledDialog dialog = (StyledDialog) onCreateDialog(DIALOG_OK);
+        	    		dialog.setTitle(getResources().getString(R.string.check_db_title));
+        	    		dialog.setMessage(String.format(Utils.ENGLISH_LOCALE, getResources().getString(R.string.check_db_message), Math.round(result.getLong() / 1024)));
+        	    		dialog.show();
+        			}
+        			@Override
+        			public void onProgressUpdate(TaskData... values) {
+        			}
+        		}, new DeckTask.TaskData(mCol));
+            	return true;
 
             default:
                 return super.onOptionsItemSelected(item);
