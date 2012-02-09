@@ -27,6 +27,7 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.TreeSet;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -769,7 +770,19 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
         col.getDb().getDatabase().beginTransaction();
         String title = res.getString(R.string.tutorial_title);
         try {
+        	// get deck or create it
         	long did = col.getDecks().id(title);
+        	// reset todays counts
+        	JSONObject d = col.getDecks().get(did);
+    		for (String t : new String[] { "new", "rev", "lrn", "time" }) {
+    			String k = t + "Today";
+				JSONArray ja = new JSONArray();
+				ja.put(col.getSched().getToday());
+				ja.put(0);
+				d.put(k, ja);
+    		}
+    		// save deck
+    		col.getDecks().save(d);
 	       	if (col.getSched().cardCount("(" + did + ")") > 0) {
 	       		// deck does already exist. Remove all cards and recreate them to ensure the correct order
 	       		col.remCards(col.getDecks().cids(did));
