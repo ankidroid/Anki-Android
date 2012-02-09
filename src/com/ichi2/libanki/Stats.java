@@ -102,7 +102,7 @@ public class Stats {
     	}
         String lim = "";// AND due - " + mCol.getSched().getToday() + " >= " + start; // leave this out in order to show card too which were due the days before
         if (end != -1) {
-            lim += " AND day < " + end;
+            lim += " AND day <= " + end;
         }
 
         ArrayList<int[]> dues = new ArrayList<int[]>();
@@ -125,11 +125,13 @@ public class Stats {
         if (dues.size() == 0 || dues.get(0)[0] > 0) {
         	dues.add(0, new int[]{0, 0, 0});
         }
-        if (end == -1) {
+        if (end == -1 && dues.size() < 2) {
         	end = 31;
         }
-        if (dues.get(dues.size() - 1)[0] < end) {
+        if (type != TYPE_LIFE && dues.get(dues.size() - 1)[0] < end) {
         	dues.add(new int[]{end, 0, 0});
+        } else if (type == TYPE_LIFE && dues.size() < 2) {
+        	dues.add(new int[]{Math.max(12, dues.get(dues.size() - 1)[0] + 1), 0, 0});
         }
 
         mSeriesList = new double[3][dues.size()];
@@ -177,7 +179,7 @@ public class Stats {
     	}
     	ArrayList<String> lims = new ArrayList<String>();
     	if (num != -1) {
-    		lims.add("id > " + ((mCol.getSched().getDayCutoff() - (num*chunk*86400)) * 1000));
+    		lims.add("id > " + ((mCol.getSched().getDayCutoff() - ((num + 1)*chunk*86400)) * 1000));
     	}
     	String lim = _revlogLimit();
     	if (lim.length() > 0) {
@@ -225,11 +227,10 @@ public class Stats {
 
         // small adjustment for a proper chartbuilding with achartengine
         // small adjustment for a proper chartbuilding with achartengine
-        if (num == -1) {
-        	num = 31;
-        }
-        if (list.size() == 0 || list.get(0)[0] > -num) {
+        if (type != TYPE_LIFE && (list.size() == 0 || list.get(0)[0] > -num)) {
         	list.add(0, new double[]{-num, 0, 0, 0, 0, 0});
+        } else if (type == TYPE_LIFE && list.size() == 0) {
+        	list.add(0, new double[]{Math.min(-12, list.get(0)[0] - 1), 0, 0, 0, 0, 0});
         }
         if (list.get(list.size() - 1)[0] < 0) {
         	list.add(new double[]{0, 0, 0, 0, 0, 0});
