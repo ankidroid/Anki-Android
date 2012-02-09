@@ -1748,11 +1748,11 @@ public class DeckPicker extends Activity {
         item.setIcon(R.drawable.ic_menu_preferences);
         item = menu.add(Menu.NONE, MENU_MY_ACCOUNT, Menu.NONE, R.string.menu_my_account);
         item.setIcon(R.drawable.ic_menu_home);
+        UIUtils.addMenuItem(menu, Menu.NONE, CHECK_DATABASE, Menu.NONE, R.string.check_db, R.drawable.ic_menu_search);
         item = menu.add(Menu.NONE, MENU_FEEDBACK, Menu.NONE, R.string.studyoptions_feedback);
         item.setIcon(R.drawable.ic_menu_send);
         item = menu.add(Menu.NONE, MENU_ABOUT, Menu.NONE, R.string.menu_about);
         item.setIcon(R.drawable.ic_menu_info_details);
-        UIUtils.addMenuItem(menu, Menu.NONE, CHECK_DATABASE, Menu.NONE, R.string.check_db, R.drawable.ic_menu_search);
         return true;
     }
 

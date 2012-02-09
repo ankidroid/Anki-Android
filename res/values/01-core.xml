@@ -122,7 +122,7 @@
 <string name="menu_select">Select text</string>
 <string name="menu_search">Lookup in %1$s</string>
 <string name="menu_mark_card">Mark Card</string>
-<string name="menu_marked">Marked</string>
+<string name="menu_unmark_card">Unmark Card</string>
 
 <string name="new_deck">New deck</string>
 <string name="create">Create</string>

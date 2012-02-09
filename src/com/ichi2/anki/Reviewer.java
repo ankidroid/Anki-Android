@@ -300,6 +300,7 @@ public class Reviewer extends Activity implements IButtonListener{
     private Whiteboard mWhiteboard;
 	private ClipboardManager mClipboard;
     private StyledProgressDialog mProgressDialog;
+    private Menu mOptionsMenu;
 
     private Card mCurrentCard;
     private int mCurrentEase;
@@ -597,7 +598,10 @@ public class Reviewer extends Activity implements IButtonListener{
 
         @Override
         public void onProgressUpdate(DeckTask.TaskData... values) {
-            mCurrentCard = values[0].getCard();
+        	updateMenuItems();
+            if (mProgressDialog.isShowing()) {
+                mProgressDialog.dismiss();            	
+            }
         }
 
 
@@ -607,7 +611,6 @@ public class Reviewer extends Activity implements IButtonListener{
             	// RuntimeException occured on marking cards
                 closeReviewer(RESULT_ANSWERING_ERROR, true);
             }
-            mProgressDialog.dismiss();
         }
     };
 
@@ -727,7 +730,7 @@ public class Reviewer extends Activity implements IButtonListener{
 
         @Override
         public void onPreExecute() {
-            Reviewer.this.setProgressBarIndeterminateVisibility(true);
+//            Reviewer.this.setProgressBarIndeterminateVisibility(true);
             if (mPrefTimer) {
             	mCardTimer.stop();
             }
@@ -798,7 +801,7 @@ public class Reviewer extends Activity implements IButtonListener{
               } else {
             	  comparedFieldAnswer = null;
               }
-              Reviewer.this.setProgressBarIndeterminateVisibility(false);
+//              Reviewer.this.setProgressBarIndeterminateVisibility(false);
               Reviewer.this.unblockControls();
               Reviewer.this.displayCardQuestion();
     		}
@@ -970,7 +973,7 @@ public class Reviewer extends Activity implements IButtonListener{
                 }
             }
 
-            requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
+//            requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
 
             registerExternalStorageListener();
 
@@ -1228,11 +1231,34 @@ public class Reviewer extends Activity implements IButtonListener{
         mConfigurationChanged = false;
     }
 
+    private void updateMenuItems() {
+    	MenuItem item = mOptionsMenu.findItem(MENU_MARK);
+        if (mCurrentCard.note().hasTag("marked")) {
+            item.setTitle(R.string.menu_unmark_card);
+            item.setIcon(R.drawable.ic_menu_marked);
+        } else {
+            item.setTitle(R.string.menu_mark_card);
+            item.setIcon(R.drawable.ic_menu_mark);        	
+        }
+        item = mOptionsMenu.findItem(MENU_UNDO);
+        if (mSched.getCol().undoAvailable()) {
+            item.setEnabled(true);
+            item.setIcon(R.drawable.ic_menu_revert);
+        } else {
+            item.setEnabled(false);
+            item.setIcon(R.drawable.ic_menu_revert_disabled);
+        }
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+    	mOptionsMenu = menu;
         MenuItem item;
         Resources res = getResources();
+
+        UIUtils.addMenuItemInActionBar(menu, Menu.NONE, MENU_MARK, Menu.NONE, R.string.menu_mark_card, R.drawable.ic_menu_mark);
+        UIUtils.addMenuItemInActionBar(menu, Menu.NONE, MENU_UNDO, Menu.NONE, R.string.undo, R.drawable.ic_menu_revert);
+        UIUtils.addMenuItemInActionBar(menu, Menu.NONE, MENU_EDIT, Menu.NONE, R.string.menu_edit_card, R.drawable.ic_menu_edit);
         if (mPrefWhiteboard) {
             if (mShowWhiteboard) {
             	UIUtils.addMenuItemInActionBar(menu, Menu.NONE, MENU_WHITEBOARD, Menu.NONE, R.string.hide_whiteboard,
@@ -1244,7 +1270,6 @@ public class Reviewer extends Activity implements IButtonListener{
             UIUtils.addMenuItemInActionBar(menu, Menu.NONE, MENU_CLEAR_WHITEBOARD, Menu.NONE, R.string.clear_whiteboard,
                     R.drawable.ic_menu_clear_playlist);
         }
-        UIUtils.addMenuItem(menu, Menu.NONE, MENU_EDIT, Menu.NONE, R.string.menu_edit_card, R.drawable.ic_menu_edit);
 
         SubMenu removeDeckSubMenu = menu.addSubMenu(Menu.NONE, MENU_REMOVE, Menu.NONE, R.string.menu_remove_card);
         removeDeckSubMenu.setIcon(R.drawable.ic_menu_stop);
@@ -1255,8 +1280,6 @@ public class Reviewer extends Activity implements IButtonListener{
             item = menu.add(Menu.NONE, MENU_SEARCH, Menu.NONE, res.getString(R.string.menu_select));
             item.setIcon(R.drawable.ic_menu_search);
         }
-        item = menu.add(Menu.NONE, MENU_MARK, Menu.NONE, R.string.menu_mark_card);
-        UIUtils.addMenuItemInActionBar(menu, Menu.NONE, MENU_UNDO, Menu.NONE, R.string.undo, R.drawable.ic_menu_revert);
         return true;
     }
 
@@ -1283,47 +1306,54 @@ public class Reviewer extends Activity implements IButtonListener{
         return mClipboard.getText();
     }
 
-    @Override
-    public boolean onPrepareOptionsMenu(Menu menu) {
-        MenuItem item = menu.findItem(MENU_MARK);
-        if (mCurrentCard == null) {
-            return false;
-        }
-        // if (mCurrentCard.isMarked()) {
-        // item.setTitle(R.string.menu_marked);
-        // item.setIcon(R.drawable.ic_menu_star_on);
-        // } else {
-        // item.setTitle(R.string.menu_mark_card);
-        // item.setIcon(R.drawable.ic_menu_star_off);
-        // }
-        if (mPrefTextSelection) {
-            item = menu.findItem(MENU_SEARCH);
-            if (clipboardHasText()) {
-            	item.setTitle(Lookup.getSearchStringTitle());
-        		item.setEnabled(Lookup.isAvailable());
-            } else {
-            	item.setTitle(getResources().getString(R.string.menu_select));
-        		item.setEnabled(true);
-            }
-        }
-        if (mPrefFullscreenReview) {
-            // Temporarily remove top bar to avoid annoying screen flickering
-            mTextBarRed.setVisibility(View.GONE);
-            mTextBarBlack.setVisibility(View.GONE);
-            mTextBarBlue.setVisibility(View.GONE);
-            mChosenAnswer.setVisibility(View.GONE);
-            if (mPrefTimer) {
-                mCardTimer.setVisibility(View.GONE);
-            }
-            if (mShowProgressBars) {
-                mProgressBars.setVisibility(View.GONE);
-            }
-
-            getWindow().setFlags(0, WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        }
-        menu.findItem(MENU_UNDO).setEnabled(mSched.getCol().undoAvailable());
-        return true;
-    }
+//    @Override
+//    public boolean onPrepareOptionsMenu(Menu menu) {
+//        MenuItem item = menu.findItem(MENU_MARK);
+//        if (mCurrentCard == null) {
+//            return false;
+//        }
+//        if (mCurrentCard.note().hasTag("marked")) {
+//            item.setTitle(R.string.menu_unmark_card);
+//            item.setIcon(R.drawable.ic_menu_marked);
+//        } else {
+//            item.setTitle(R.string.menu_mark_card);
+//            item.setIcon(R.drawable.ic_menu_mark);        	
+//        }
+//        // if (mCurrentCard.isMarked()) {
+//        // item.setTitle(R.string.menu_marked);
+//        // item.setIcon(R.drawable.ic_menu_star_on);
+//        // } else {
+//        // item.setTitle(R.string.menu_mark_card);
+//        // item.setIcon(R.drawable.ic_menu_star_off);
+//        // }
+//        if (mPrefTextSelection) {
+//            item = menu.findItem(MENU_SEARCH);
+//            if (clipboardHasText()) {
+//            	item.setTitle(Lookup.getSearchStringTitle());
+//        		item.setEnabled(Lookup.isAvailable());
+//            } else {
+//            	item.setTitle(getResources().getString(R.string.menu_select));
+//        		item.setEnabled(true);
+//            }
+//        }
+//        if (mPrefFullscreenReview) {
+//            // Temporarily remove top bar to avoid annoying screen flickering
+//            mTextBarRed.setVisibility(View.GONE);
+//            mTextBarBlack.setVisibility(View.GONE);
+//            mTextBarBlue.setVisibility(View.GONE);
+//            mChosenAnswer.setVisibility(View.GONE);
+//            if (mPrefTimer) {
+//                mCardTimer.setVisibility(View.GONE);
+//            }
+//            if (mShowProgressBars) {
+//                mProgressBars.setVisibility(View.GONE);
+//            }
+//
+//            getWindow().setFlags(0, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+//        }
+//        menu.findItem(MENU_UNDO).setEnabled(mSched.getCol().undoAvailable());
+//        return true;
+//    }
 
 
     @Override
@@ -1401,20 +1431,16 @@ public class Reviewer extends Activity implements IButtonListener{
                 return true;
 
             case MENU_MARK:
-//                DeckTask.launchDeckTask(DeckTask.TASK_TYPE_MARK_CARD, mMarkCardHandler, new DeckTask.TaskData(0,
-//                        DeckManager.getMainDeck(), mCurrentCard));
+                DeckTask.launchDeckTask(DeckTask.TASK_TYPE_MARK_CARD, mMarkCardHandler, new DeckTask.TaskData(mSched, mCurrentCard, 0));
                 return true;
 
             case MENU_UNDO:
             	undo();
                 return true;
-//
-//            case MENU_REDO:
-//                DeckTask.launchDeckTask(DeckTask.TASK_TYPE_REDO, mUpdateCardHandler, new DeckTask.TaskData(UPDATE_CARD_SHOW_QUESTION,
-//                        DeckManager.getMainDeck(), mCurrentCard.getId(), false));
-//                return true;
+
+            default:
+                return super.onOptionsItemSelected(item);
         }
-        return false;
     }
 
 
@@ -2046,7 +2072,7 @@ public class Reviewer extends Activity implements IButtonListener{
         mBlackWhiteboard = preferences.getBoolean("blackWhiteboard", true);
         mSwapQA = preferences.getBoolean("swapqa", false);
         mPrefUseRubySupport = preferences.getBoolean("useRubySupport", false);
-        mPrefFullscreenReview = preferences.getBoolean("fullscreenReview", true);
+        mPrefFullscreenReview = preferences.getBoolean("fullscreenReview", false);
         mshowNextReviewTime = preferences.getBoolean("showNextReviewTime", true);
         mZoomEnabled = preferences.getBoolean("zoom", false);
 //        mZeemoteEnabled = preferences.getBoolean("zeemote", false);
@@ -2146,6 +2172,7 @@ public class Reviewer extends Activity implements IButtonListener{
     		return;
     	}
 
+    	setTitle("aaa");
     	// TODO: ETA
 //        int eta = mCurrentScheduler.eta() / 60;
 //        if (deck.hasFinishScheduler() || eta < 1) {
@@ -2223,7 +2250,8 @@ public class Reviewer extends Activity implements IButtonListener{
             mTimeoutHandler.postDelayed(mShowAnswerTask, mWaitAnswerSecond * 1000  );
         }
 
-        String question = getQuestion();
+        String question = mCurrentCard.getQuestion(mSimpleInterface);
+        updateMenuItems();
 
         if(mPrefFixArabic) {
         	question = ArabicUtilities.reshapeSentence(question, true);
@@ -2279,7 +2307,7 @@ public class Reviewer extends Activity implements IButtonListener{
         sDisplayAnswer = true;
         setFlipCardAnimation();
 
-        String answer = getAnswer();
+        String answer = mCurrentCard.getAnswer(mSimpleInterface);
 
         String displayString = "";
         
@@ -2435,17 +2463,17 @@ public class Reviewer extends Activity implements IButtonListener{
      * Plays sounds (or TTS, if configured) for current shown side of card 
      */
     private void playSounds() {
-        int qa = sDisplayAnswer ? MetaDB.LANGUAGES_QA_ANSWER : MetaDB.LANGUAGES_QA_QUESTION;
-
-        // We need to play the sounds from the proper side of the card
-        if (!mSpeakText)
-            Sound.playSounds(qa);
-        else {
-            if (sDisplayAnswer)
-                ReadText.textToSpeech(Utils.stripHTML(getAnswer()), qa);
-            else
-                ReadText.textToSpeech(Utils.stripHTML(getQuestion()), qa);
-        }
+//        int qa = sDisplayAnswer ? MetaDB.LANGUAGES_QA_ANSWER : MetaDB.LANGUAGES_QA_QUESTION;
+//
+//        // We need to play the sounds from the proper side of the card
+//        if (!mSpeakText)
+//            Sound.playSounds(qa);
+//        else {
+//            if (sDisplayAnswer)
+//                ReadText.textToSpeech(Utils.stripHTML(getAnswer()), qa);
+//            else
+//                ReadText.textToSpeech(Utils.stripHTML(getQuestion()), qa);
+//        }
     }
 
     private void setFlipCardAnimation() {
@@ -2576,24 +2604,6 @@ public class Reviewer extends Activity implements IButtonListener{
 
     public void showFlashcard(boolean visible) {
     	mCardContainer.setVisibility(visible ? View.VISIBLE : View.INVISIBLE); 
-    }
-
-
-    private String getQuestion() {
-    	if (mSwapQA) {
-    		return mCurrentCard.getAnswer(mSimpleInterface);
-    	} else {
-    		return mCurrentCard.getQuestion(mSimpleInterface);
-    	}
-    }
-
-
-    private String getAnswer() {
-    	if (mSwapQA) {
-    		return mCurrentCard.getQuestion(mSimpleInterface);
-    	} else {
-    		return mCurrentCard.getAnswer(mSimpleInterface);
-    	}
     }
 
 

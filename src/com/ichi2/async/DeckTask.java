@@ -500,35 +500,31 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
 
 
     private TaskData doInBackgroundMarkCard(TaskData... params) {
-//        Decks deck = params[0].getDeck();
-//        Card currentCard = params[0].getCard();
-//
-//        try {
-//            AnkiDb ankiDB = AnkiDatabaseManager.getDatabase(deck.getDeckPath());
-//            ankiDB.getDatabase().beginTransaction();
-//            try {
-//                if (currentCard != null) {
-//                    String undoName = Decks.UNDO_TYPE_MARK_CARD;
-//                    deck.setUndoStart(undoName, currentCard.getId());
-//                	if (currentCard.isMarked()) {
-//                        deck.deleteTag(currentCard.getFactId(), Decks.TAG_MARKED);
-//                    } else {
-//                        deck.addTag(currentCard.getFactId(), Decks.TAG_MARKED);
-//                    }
-//                	deck.resetMarkedTagId();
-//                	deck.setUndoEnd(undoName);
-//                }
-//
-//                publishProgress(new TaskData(currentCard));
-//                ankiDB.getDatabase().setTransactionSuccessful();
-//            } finally {
-//                ankiDB.getDatabase().endTransaction();
-//            }
-//    	} catch (RuntimeException e) {
-//    		Log.e(AnkiDroidApp.TAG, "doInBackgroundMarkCard - RuntimeException on marking card: " + e);
-//			AnkiDroidApp.saveExceptionReportFile(e, "doInBackgroundMarkCard");
-//    		return new TaskData(false);
-//        }
+    	Card card = params[0].getCard();
+    	Sched sched = params[0].getSched();
+        try {
+            AnkiDb ankiDB = sched.getCol().getDb();
+            ankiDB.getDatabase().beginTransaction();
+            try {
+                if (card != null) {
+                	Note note = card.note();
+                	if (note.hasTag("marked")) {
+                		note.delTag("marked");
+                	} else {
+                		note.addTag("marked");
+                	}
+                	note.flush();
+                }
+                publishProgress(null);
+                ankiDB.getDatabase().setTransactionSuccessful();
+            } finally {
+                ankiDB.getDatabase().endTransaction();
+            }
+    	} catch (RuntimeException e) {
+    		Log.e(AnkiDroidApp.TAG, "doInBackgroundMarkCard - RuntimeException on marking card: " + e);
+			AnkiDroidApp.saveExceptionReportFile(e, "doInBackgroundMarkCard");
+    		return new TaskData(false);
+        }
 		return new TaskData(true);
     }
 

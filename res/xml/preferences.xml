@@ -98,7 +98,7 @@
         <PreferenceCategory android:title="@string/pref_cat_flashcard">
             <CheckBoxPreference
                     android:title="@string/fullscreen_review"
-                    android:defaultValue="true"
+                    android:defaultValue="false"
                     android:summary="@string/fullscreen_review_summ"
                     android:key="fullscreenReview" />
             <CheckBoxPreference
