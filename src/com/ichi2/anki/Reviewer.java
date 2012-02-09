@@ -255,6 +255,7 @@ public class Reviewer extends Activity implements IButtonListener{
 
     private boolean mIsSelecting = false;
     private boolean mTouchStarted = false;
+    private boolean mInAnswer = false;
 
     private String mCardTemplate;
 
@@ -829,6 +830,7 @@ public class Reviewer extends Activity implements IButtonListener{
             if (mProgressDialog != null && mProgressDialog.isShowing()) {
             	mProgressDialog.dismiss();
             }
+            mInAnswer = false;
         }
     };
 
@@ -1597,6 +1599,10 @@ public class Reviewer extends Activity implements IButtonListener{
 
 
     private void answerCard(int ease) {
+    	if (mInAnswer) {
+    		return;
+    	}
+    	mInAnswer = true;
         mIsSelecting = false;
         if (mPrefTextSelection) {
             clipboardSetText("");
