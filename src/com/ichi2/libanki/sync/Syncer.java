@@ -225,7 +225,7 @@ public class Syncer {
 
     	    	mCol.getDb().getDatabase().setTransactionSuccessful();
         	} finally {
-    	    	mCol.getDb().getDatabase().setTransactionSuccessful();	
+    	    	mCol.getDb().getDatabase().endTransaction();	
     		}
 		} catch (JSONException e) {
 			throw new RuntimeException(e);
