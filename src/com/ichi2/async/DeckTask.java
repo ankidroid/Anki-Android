@@ -564,16 +564,19 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
 
 
     private TaskData doInBackgroundLoadCards(TaskData... params) {
-//        Decks deck = params[0].getDeck();
-//        int chunk = params[0].getInt();
-//    	Log.i(AnkiDroidApp.TAG, "doInBackgroundLoadCards");
-//    	String startId = "";
+    	Log.i(AnkiDroidApp.TAG, "doInBackgroundLoadCards");
+
+    	Collection col = params[0].getCollection();
+    	boolean wholeCollection = params[0].getBoolean();
+        int chunk = params[0].getInt();
+
+    	String startId = "";
 //    	while (!this.isCancelled()) {
-//    		ArrayList<HashMap<String, String>> cards = deck.getCards(chunk, startId);
+    		ArrayList<HashMap<String, String>> cards = col.findCards(wholeCollection);
 //    		if (cards.size() == 0) {
 //    			break;
 //    		} else {
-//               	publishProgress(new TaskData(cards));
+               	publishProgress(new TaskData(cards));
 //               	startId = cards.get(cards.size() - 1).get("id");    			
 //    		}
 //    	}
@@ -834,6 +837,9 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
         	mInteger = period;
         }
 
+        public TaskData(ArrayList<HashMap<String, String>> cards) {
+        	mCards = cards;
+        }
 
         public TaskData(boolean bool) {
             mBool = bool;

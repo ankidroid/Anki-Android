@@ -179,6 +179,7 @@ public class DeckPicker extends Activity {
     private static final int SHOW_STUDYOPTIONS = 11;
     private static final int ADD_NOTE = 12;
     private static final int LOG_IN = 13;
+    private static final int BROWSE_CARDS = 14;
 
 	private Collection mCol;
 
@@ -800,7 +801,12 @@ public class DeckPicker extends Activity {
 		mCardsButton.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				mCardsButton.setEnabled(false);
+				Intent cardBrowser = new Intent(DeckPicker.this, CardBrowser.class);
+				cardBrowser.putExtra("fromDeckpicker", true);
+				startActivityForResult(cardBrowser, BROWSE_CARDS);
+				if (UIUtils.getApiLevel() > 4) {
+					ActivityTransitionAnimation.slide(DeckPicker.this, ActivityTransitionAnimation.LEFT);
+				}
 			}
 		});
 

@@ -814,7 +814,35 @@ public class Collection {
 	 * ***********************************
 	 */
 
-	// findcards
+	/** Return a list of card ids */
+	public ArrayList<HashMap<String, String>> findCards(boolean wholeCollection) {
+		ArrayList<HashMap<String, String>> data = new ArrayList<HashMap<String, String>>();
+		Cursor cur = null;
+		String lim = "";
+		if (!wholeCollection) {
+			lim = " AND c.did IN " + mSched._deckLimit();
+		}
+		HashMap<Long, HashMap<Integer, String>> templates = mModels.getTemplateNames();
+		try {
+			cur = mDb.getDatabase().rawQuery("SELECT c.id, n.sfld, n.mid, c.ord, c.did, c.queue, n.tags FROM cards c, notes n WHERE c.nid = n.id" + lim, null);
+			while (cur.moveToNext()) {
+				HashMap<String, String> map = new HashMap<String, String>();
+				map.put("id", cur.getString(0));
+				map.put("sfld", cur.getString(1));
+				map.put("tmpl", templates.get(cur.getLong(2)).get(cur.getInt(3)));
+				map.put("did", cur.getString(4));
+				map.put("queue", cur.getString(5));
+				map.put("tags", cur.getString(6));
+				data.add(map);
+			}
+		} finally {
+			if (cur != null && !cur.isClosed()) {
+				cur.close();
+			}
+		}
+		return data;
+	}
+
 	// findreplace
 	// findduplicates
 

@@ -1079,7 +1079,7 @@ public class CardEditor extends Activity {
 
 		mIntentInformationAdapter = new SimpleAdapter(this, mIntentInformation,
 				R.layout.card_item, new String[] { "source", "target", "id" },
-				new int[] { R.id.card_question, R.id.card_answer,
+				new int[] { R.id.card_sfld, R.id.card_tmpl,
 						R.id.card_item });
 		listView.setAdapter(mIntentInformationAdapter);
 		listView.setOnItemClickListener(new OnItemClickListener() {

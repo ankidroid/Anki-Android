@@ -237,8 +237,7 @@ public class StudyOptions extends Activity implements IButtonListener {
 				finishCongrats();
 				return;
 			case R.id.studyoptions_card_browser:
-				v.setEnabled(false);
-				// openCardBrowser();
+				openCardBrowser();
 				return;
 			case R.id.studyoptions_statistics:
 				 showDialog(DIALOG_STATISTIC_TYPE);

@@ -1213,6 +1213,25 @@ public class Models {
 //    }
 
 
+    public HashMap<Long, HashMap<Integer, String>> getTemplateNames() {
+    	HashMap<Long, HashMap<Integer, String>> result = new HashMap<Long, HashMap<Integer, String>>();
+    	for (JSONObject m : mModels.values()) {
+    		JSONArray templates;
+			try {
+				templates = m.getJSONArray("tmpls");
+	    		HashMap<Integer, String> names = new HashMap<Integer, String>();
+	    		for (int i = 0; i < templates.length(); i++) {
+	    			JSONObject t = templates.getJSONObject(i);
+	    			names.put(t.getInt("ord"), t.getString("name"));
+	    		}
+	    		result.put(m.getLong("id"), names);
+			} catch (JSONException e) {
+				throw new RuntimeException(e);
+			}
+    	}
+    	return result;
+    }
+
 
     /**
      * @return the ID

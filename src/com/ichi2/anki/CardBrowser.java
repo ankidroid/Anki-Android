@@ -1,155 +1,160 @@
-///****************************************************************************************
-// * Copyright (c) 2010 Norbert Nagold <norbert.nagold@gmail.com>                         *
-// *                                                                                      *
-// * This program is free software; you can redistribute it and/or modify it under        *
-// * the terms of the GNU General Public License as published by the Free Software        *
-// * Foundation; either version 3 of the License, or (at your option) any later           *
-// * version.                                                                             *
-// *                                                                                      *
-// * This program is distributed in the hope that it will be useful, but WITHOUT ANY      *
-// * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A      *
-// * PARTICULAR PURPOSE. See the GNU General Public License for more details.             *
-// *                                                                                      *
-// * You should have received a copy of the GNU General Public License along with         *
-// * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
-// ****************************************************************************************/
-//
+/****************************************************************************************
+ * Copyright (c) 2010 Norbert Nagold <norbert.nagold@gmail.com>                         *
+ *                                                                                      *
+ * This program is free software; you can redistribute it and/or modify it under        *
+ * the terms of the GNU General Public License as published by the Free Software        *
+ * Foundation; either version 3 of the License, or (at your option) any later           *
+ * version.                                                                             *
+ *                                                                                      *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY      *
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A      *
+ * PARTICULAR PURPOSE. See the GNU General Public License for more details.             *
+ *                                                                                      *
+ * You should have received a copy of the GNU General Public License along with         *
+ * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
+ ****************************************************************************************/
+
 package com.ichi2.anki;
 
 import android.app.Activity;
 
 import com.ichi2.anki2.R;
-//
-//import android.app.Activity;
-//import android.app.Dialog;
-//import android.content.Context;
-//import android.content.DialogInterface;
-//import android.content.DialogInterface.OnCancelListener;
-//import android.content.DialogInterface.OnClickListener;
-//import android.content.Intent;
-//import android.content.SharedPreferences;
-//import android.content.res.Resources;
-//import android.os.Bundle;
-//import android.os.Handler;
-//import android.text.Editable;
-//import android.text.TextWatcher;
-//import android.util.Log;
-//import android.util.TypedValue;
-//import android.view.ContextMenu;
-//import android.view.ContextMenu.ContextMenuInfo;
-//import android.view.KeyEvent;
-//import android.view.Menu;
-//import android.view.MenuItem;
-//import android.view.SubMenu;
-//import android.view.View;
-//import android.view.ViewGroup;
-//import android.view.WindowManager;
-//import android.widget.AdapterView;
-//import android.widget.AdapterView.OnItemClickListener;
-//import android.widget.EditText;
-//import android.widget.ListView;
-//import android.widget.SimpleAdapter;
-//import android.widget.TextView;
-//
-//import com.ichi2.anim.ActivityTransitionAnimation;
-//import com.ichi2.libanki.Card;
-//import com.ichi2.themes.StyledDialog;
-//import com.ichi2.themes.StyledProgressDialog;
-//import com.ichi2.themes.Themes;
-//import com.tomgibara.android.veecheck.util.PrefSettings;
-//
-//import java.util.ArrayList;
-//import java.util.Arrays;
-//import java.util.Comparator;
-//import java.util.HashMap;
-//import java.util.HashSet;
-//import java.util.List;
-//import java.util.Map;
-//
-//import org.amr.arabic.ArabicUtilities;
-//
+
+import android.app.Dialog;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.content.DialogInterface.OnCancelListener;
+import android.content.DialogInterface.OnClickListener;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.res.Resources;
+import android.os.Bundle;
+import android.os.Handler;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.util.Log;
+import android.util.TypedValue;
+import android.view.ContextMenu;
+import android.view.ContextMenu.ContextMenuInfo;
+import android.view.KeyEvent;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.SubMenu;
+import android.view.View;
+import android.view.ViewGroup;
+import android.view.WindowManager;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
+import android.widget.EditText;
+import android.widget.ListView;
+import android.widget.SimpleAdapter;
+import android.widget.TextView;
+
+import com.ichi2.anim.ActivityTransitionAnimation;
+import com.ichi2.async.DeckTask;
+import com.ichi2.libanki.Card;
+import com.ichi2.libanki.Collection;
+import com.ichi2.themes.StyledDialog;
+import com.ichi2.themes.StyledProgressDialog;
+import com.ichi2.themes.Themes;
+import com.tomgibara.android.veecheck.util.PrefSettings;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+
+import org.amr.arabic.ArabicUtilities;
+
 public class CardBrowser extends Activity {
-//	private ArrayList<HashMap<String, String>> mCards;
-//	private ArrayList<HashMap<String, String>> mAllCards;
-//	private ArrayList<HashMap<String, String>> mDeletedCards;
-//	private ListView mCardsListView;
-//	private SimpleAdapter mCardsAdapter;
-//	private EditText mSearchEditText;
-//
-//	private StyledProgressDialog mProgressDialog;
-//	private boolean mUndoRedoDialogShowing = false;
-//	private Card mSelectedCard;
-//	private Card mUndoRedoCard;
-//	private long mUndoRedoCardId;
-//	private static Card sEditorCard;
-//	private boolean mIsSuspended;
-//	private boolean mIsMarked;
-//	private int mPositionInCardsList;
-//
-//	/** Modifier of percentage of the font size of the card browser */
-//	private int mrelativeBrowserFontSize = DEFAULT_FONT_SIZE_RATIO;
-//
-//	public static final int LOAD_CHUNK = 200;
-//
-//	private static final int CONTEXT_MENU_MARK = 0;
-//	private static final int CONTEXT_MENU_SUSPEND = 1;
-//	private static final int CONTEXT_MENU_DELETE = 2;
-//	private static final int CONTEXT_MENU_DETAILS = 3;
-//
-//	private static final int DIALOG_ORDER = 0;
-//	private static final int DIALOG_CONTEXT_MENU = 1;
-//	private static final int DIALOG_RELOAD_CARDS = 2;
-//
-//	private static final int BACKGROUND_NORMAL = 0;
-//	private static final int BACKGROUND_MARKED = 1;
-//	private static final int BACKGROUND_SUSPENDED = 2;
-//	private static final int BACKGROUND_MARKED_SUSPENDED = 3;
-//
-//	private static final int MENU_UNDO = 0;
-//	private static final int MENU_REDO = 1;
-//	private static final int MENU_ADD_FACT = 2;
-//	private static final int MENU_SHOW_MARKED = 3;
-//	private static final int MENU_SELECT = 4;
-//	private static final int MENU_SELECT_SUSPENDED = 41;
-//	private static final int MENU_SELECT_TAG = 42;
-//	private static final int MENU_CHANGE_ORDER = 5;
-//
-//	private static final int EDIT_CARD = 0;
-//	private static final int ADD_FACT = 1;
-//	private static final int DEFAULT_FONT_SIZE_RATIO = 100;
-//
-//	private static final int CARD_ORDER_ANSWER = 0;
-//	private static final int CARD_ORDER_QUESTION = 1;
-//	private static final int CARD_ORDER_DUE = 2;
-//	private static final int CARD_ORDER_INTERVAL = 3;
-//	private static final int CARD_ORDER_FACTOR = 4;
-//	private static final int CARD_ORDER_CREATED = 5;
-//
-//	private int[] mBackground;
-//
-//	private boolean mShowOnlyMarSus = false;
-//
-//	private int mSelectedOrder = CARD_ORDER_CREATED;
-//	
-//	private String[] allTags;
-//	private HashSet<String> mSelectedTags;
-//	private StyledDialog mTagsDialog;
-//
-//	private boolean mPrefFixArabic;
-//
-//	private boolean mPrefCacheCardBrowser;
+	private ArrayList<HashMap<String, String>> mCards;
+	private ArrayList<HashMap<String, String>> mAllCards;
+	private ArrayList<HashMap<String, String>> mDeletedCards;
+	private ListView mCardsListView;
+	private SimpleAdapter mCardsAdapter;
+	private EditText mSearchEditText;
+
+	private StyledProgressDialog mProgressDialog;
+	private boolean mUndoRedoDialogShowing = false;
+	private Card mSelectedCard;
+	private Card mUndoRedoCard;
+	private long mUndoRedoCardId;
+	private static Card sEditorCard;
+	private boolean mIsSuspended;
+	private boolean mIsMarked;
+	private int mPositionInCardsList;
+
+	/** Modifier of percentage of the font size of the card browser */
+	private int mrelativeBrowserFontSize = DEFAULT_FONT_SIZE_RATIO;
+
+	public static final int LOAD_CHUNK = 200;
+
+	private static final int CONTEXT_MENU_MARK = 0;
+	private static final int CONTEXT_MENU_SUSPEND = 1;
+	private static final int CONTEXT_MENU_DELETE = 2;
+	private static final int CONTEXT_MENU_DETAILS = 3;
+
+	private static final int DIALOG_ORDER = 0;
+	private static final int DIALOG_CONTEXT_MENU = 1;
+	private static final int DIALOG_RELOAD_CARDS = 2;
+
+	private static final int BACKGROUND_NORMAL = 0;
+	private static final int BACKGROUND_MARKED = 1;
+	private static final int BACKGROUND_SUSPENDED = 2;
+	private static final int BACKGROUND_MARKED_SUSPENDED = 3;
+
+	private static final int MENU_UNDO = 0;
+	private static final int MENU_REDO = 1;
+	private static final int MENU_ADD_FACT = 2;
+	private static final int MENU_SHOW_MARKED = 3;
+	private static final int MENU_SELECT = 4;
+	private static final int MENU_SELECT_SUSPENDED = 41;
+	private static final int MENU_SELECT_TAG = 42;
+	private static final int MENU_CHANGE_ORDER = 5;
+
+	private static final int EDIT_CARD = 0;
+	private static final int ADD_FACT = 1;
+	private static final int DEFAULT_FONT_SIZE_RATIO = 100;
+
+	private static final int CARD_ORDER_ANSWER = 0;
+	private static final int CARD_ORDER_QUESTION = 1;
+	private static final int CARD_ORDER_DUE = 2;
+	private static final int CARD_ORDER_INTERVAL = 3;
+	private static final int CARD_ORDER_FACTOR = 4;
+	private static final int CARD_ORDER_CREATED = 5;
+
+	private int[] mBackground;
+
+	private boolean mWholeCollection;
+
+	private boolean mShowOnlyMarSus = false;
+
+	private int mSelectedOrder = CARD_ORDER_CREATED;
+	
+	private String[] allTags;
+	private HashSet<String> mSelectedTags;
+	private StyledDialog mTagsDialog;
+
+	private boolean mPrefFixArabic;
+
+	private boolean mPrefCacheCardBrowser;
 //	private static ArrayList<HashMap<String, String>> sAllCardsCache;
-//	private static String sCachedDeckPath;
-//
-//    private Handler mTimerHandler = new Handler();
-//    private static final int WAIT_TIME_UNTIL_UPDATE = 500;
-//
-//	private Runnable updateList = new Runnable() {
-//    	public void run() {
-//    		updateCardsList();
-//    	}
-//    };
-//
+
+    private Handler mTimerHandler = new Handler();
+    private static final int WAIT_TIME_UNTIL_UPDATE = 500;
+
+    private Collection mCol;
+    private HashMap<Long, HashMap<Integer, String>> mTemplates;
+
+	private Runnable updateList = new Runnable() {
+    	public void run() {
+    		updateCardsList();
+    	}
+    };
+
 //    private DeckTask.TaskListener mUndoRedoHandler = new DeckTask.TaskListener() {
 //        @Override
 //        public void onPreExecute() {
@@ -204,47 +209,49 @@ public class CardBrowser extends Activity {
 //		}
 //    	
 //    };
-//
-//
-//
-//	@Override
-//	protected void onCreate(Bundle savedInstanceState) {
-//		Themes.applyTheme(this);
-//		super.onCreate(savedInstanceState);
-//
-//		View mainView = getLayoutInflater().inflate(R.layout.card_browser, null);
-//		setContentView(mainView);
-//		Themes.setContentStyle(mainView, Themes.CALLER_CARDBROWSER);
-//
-//		mDeck = DeckManager.getMainDeck();
-//		if (mDeck == null) {
-//			finish();
-//			return;
-//		}
-//		mDeck.resetUndo();
-//
-//		mBackground = Themes.getCardBrowserBackground();
-//
-//		SharedPreferences preferences = PrefSettings
-//				.getSharedPrefs(getBaseContext());
-//		mrelativeBrowserFontSize = preferences.getInt(
-//				"relativeCardBrowserFontSize", DEFAULT_FONT_SIZE_RATIO);
-//		mPrefFixArabic = preferences.getBoolean("fixArabicText", false);
-//		mPrefCacheCardBrowser = preferences.getBoolean("cardBrowserCache", false);
-//
-//		mCards = new ArrayList<HashMap<String, String>>();
-//		mAllCards = new ArrayList<HashMap<String, String>>();
-//		mCardsListView = (ListView) findViewById(R.id.card_browser_list);
-//
-//		mCardsAdapter = new SizeControlledListAdapter(this, mCards,
-//				R.layout.card_item, new String[] { "question", "answer",
-//						"flags" }, new int[] { R.id.card_question,
-//						R.id.card_answer, R.id.card_item },
-//				mrelativeBrowserFontSize);
-//		mCardsAdapter.setViewBinder(new SimpleAdapter.ViewBinder() {
-//			@Override
-//			public boolean setViewValue(View view, Object arg1, String text) {
-//				if (view.getId() == R.id.card_item) {
+
+
+
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		Themes.applyTheme(this);
+		super.onCreate(savedInstanceState);
+
+		View mainView = getLayoutInflater().inflate(R.layout.card_browser, null);
+		setContentView(mainView);
+		Themes.setContentStyle(mainView, Themes.CALLER_CARDBROWSER);
+
+		mCol = Collection.currentCollection();
+		if (mCol == null) {
+			finish();
+			return;
+		}
+
+		Intent i = getIntent();
+		mWholeCollection = i.hasExtra("fromDeckpicker") && i.getBooleanExtra("fromDeckpicker", false);
+
+		mBackground = Themes.getCardBrowserBackground();
+
+		SharedPreferences preferences = PrefSettings
+				.getSharedPrefs(getBaseContext());
+		mrelativeBrowserFontSize = preferences.getInt(
+				"relativeCardBrowserFontSize", DEFAULT_FONT_SIZE_RATIO);
+		mPrefFixArabic = preferences.getBoolean("fixArabicText", false);
+		mPrefCacheCardBrowser = preferences.getBoolean("cardBrowserCache", false);
+
+		mCards = new ArrayList<HashMap<String, String>>();
+		mAllCards = new ArrayList<HashMap<String, String>>();
+		mCardsListView = (ListView) findViewById(R.id.card_browser_list);
+
+		mCardsAdapter = new SizeControlledListAdapter(this, mCards,
+				R.layout.card_item, new String[] { "sfld", "tmpl",
+						"flags" }, new int[] { R.id.card_sfld,
+						R.id.card_tmpl, R.id.card_item },
+				mrelativeBrowserFontSize);
+		mCardsAdapter.setViewBinder(new SimpleAdapter.ViewBinder() {
+			@Override
+			public boolean setViewValue(View view, Object arg1, String text) {
+				if (view.getId() == R.id.card_item) {
 //					int which = BACKGROUND_NORMAL;
 //					if (text.equals("11")) {
 //						which = BACKGROUND_MARKED_SUSPENDED;
@@ -254,13 +261,15 @@ public class CardBrowser extends Activity {
 //						which = BACKGROUND_MARKED;
 //					}
 //					view.setBackgroundResource(mBackground[which]);
-//					return true;
-//				}
-//				return false;
-//			}
-//		});
-//
-//		mCardsListView.setAdapter(mCardsAdapter);
+					return true;
+				} else if (view.getId() == R.id.card_tmpl) {
+					
+				}
+				return false;
+			}
+		});
+
+		mCardsListView.setAdapter(mCardsAdapter);
 //		mCardsListView.setOnItemClickListener(new OnItemClickListener() {
 //			@Override
 //			public void onItemClick(AdapterView<?> parent, View view,
@@ -284,74 +293,68 @@ public class CardBrowser extends Activity {
 //				}
 //			}
 //		});
-//		registerForContextMenu(mCardsListView);
-//
-//		mSearchEditText = (EditText) findViewById(R.id.card_browser_search);
-//		mSearchEditText.addTextChangedListener(new TextWatcher() {
-//			public void afterTextChanged(Editable s) {
-//		    	mTimerHandler.removeCallbacks(updateList);
-//		    	mTimerHandler.postDelayed(updateList, WAIT_TIME_UNTIL_UPDATE);
-//			}
-//
-//			public void beforeTextChanged(CharSequence s, int start, int count,
-//					int after) {
-//			}
-//
-//			public void onTextChanged(CharSequence s, int start, int before,
-//					int count) {
-//			}
-//		});
-//		getWindow().setSoftInputMode(
-//				WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
-//
+		registerForContextMenu(mCardsListView);
+
+		mSearchEditText = (EditText) findViewById(R.id.card_browser_search);
+		mSearchEditText.addTextChangedListener(new TextWatcher() {
+			public void afterTextChanged(Editable s) {
+		    	mTimerHandler.removeCallbacks(updateList);
+		    	mTimerHandler.postDelayed(updateList, WAIT_TIME_UNTIL_UPDATE);
+			}
+
+			public void beforeTextChanged(CharSequence s, int start, int count,
+					int after) {
+			}
+
+			public void onTextChanged(CharSequence s, int start, int before,
+					int count) {
+			}
+		});
+		getWindow().setSoftInputMode(
+				WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+
 //		setTitle(mDeck.getDeckName());
-//
-//		allTags = null;
-//		mSelectedTags = new HashSet<String>();
-//
-//		getCards();
-//	}
-//
-//
+
+		allTags = null;
+		mSelectedTags = new HashSet<String>();
+
+		getCards();
+	}
+
 //	@Override
 //	public void onCreateContextMenu(ContextMenu menu, View v,
 //			ContextMenuInfo menuInfo) {
 //		mPositionInCardsList = ((AdapterView.AdapterContextMenuInfo) menuInfo).position;
 //		showDialog(DIALOG_CONTEXT_MENU);
 //	}
-//
-//
-//	@Override
-//	public boolean onKeyDown(int keyCode, KeyEvent event) {
-//		if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
-//			Log.i(AnkiDroidApp.TAG, "CardBrowser - onBackPressed()");
-//			if (mSearchEditText.getText().length() == 0 && !mShowOnlyMarSus
-//					&& mSelectedTags.size() == 0) {
+
+
+	@Override
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
+		if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
+			Log.i(AnkiDroidApp.TAG, "CardBrowser - onBackPressed()");
+			if (mSearchEditText.getText().length() == 0 && !mShowOnlyMarSus
+					&& mSelectedTags.size() == 0) {
 //				if (mPrefCacheCardBrowser) {
 //					sCachedDeckPath = mDeck.getDeckPath();
 //					sAllCardsCache = new ArrayList<HashMap<String, String>>();
 //					sAllCardsCache.addAll(mAllCards);					
 //				}
-//				setResult(RESULT_OK);
-//				finish();
-//				if (Integer.valueOf(android.os.Build.VERSION.SDK) > 4) {
-//					ActivityTransitionAnimation.slide(CardBrowser.this,
-//							ActivityTransitionAnimation.RIGHT);
-//				}
-//			} else {
-//				mSearchEditText.setText("");
-//				mSearchEditText.setHint(R.string.downloaddeck_search);
-//				mSelectedTags.clear();
-//				mCards.clear();
-//				mCards.addAll(mAllCards);
-//				updateList();
-//			}
-//			return true;
-//		}
-//
-//		return super.onKeyDown(keyCode, event);
-//	}
-//
+				closeCardBrowser();
+			} else {
+				mSearchEditText.setText("");
+				mSearchEditText.setHint(R.string.downloaddeck_search);
+				mSelectedTags.clear();
+				mCards.clear();
+				mCards.addAll(mAllCards);
+				updateList();
+			}
+			return true;
+		}
+
+		return super.onKeyDown(keyCode, event);
+	}
+
 //	@Override
 //	public boolean onCreateOptionsMenu(Menu menu) {
 //		MenuItem item;
@@ -628,7 +631,7 @@ public class CardBrowser extends Activity {
 //		mTagsDialog = builder.create();
 //	}
 //
-//	private void updateCardsList() {
+	private void updateCardsList() {
 //		mShowOnlyMarSus = false;
 //		if (mSelectedTags.size() == 0) {
 //			mSearchEditText.setHint(R.string.downloaddeck_search);
@@ -657,9 +660,9 @@ public class CardBrowser extends Activity {
 //			}
 //		}
 //		updateList();
-//	}
-//
-//	private void getCards() {
+	}
+
+	private void getCards() {
 //		if ((sCachedDeckPath != null && !sCachedDeckPath.equals(mDeck.getDeckPath())) || !mPrefCacheCardBrowser) {
 //			sCachedDeckPath = null;
 //			sAllCardsCache = null;
@@ -667,22 +670,20 @@ public class CardBrowser extends Activity {
 //		if (mPrefCacheCardBrowser && sAllCardsCache != null && !sAllCardsCache.isEmpty()) {
 //			showDialog(DIALOG_RELOAD_CARDS);
 //		} else {
-//			DeckTask.launchDeckTask(DeckTask.TASK_TYPE_LOAD_CARDS,
-//					mLoadCardsHandler,
-//					new DeckTask.TaskData(mDeck, LOAD_CHUNK));
+			DeckTask.launchDeckTask(DeckTask.TASK_TYPE_LOAD_CARDS, mLoadCardsHandler, new DeckTask.TaskData(mCol, LOAD_CHUNK, mWholeCollection));
 //		}
-//	}
-//
+	}
+
 //	public static Card getEditorCard() {
 //		return sEditorCard;
 //	}
 //
-//	private void updateList() {
-//		mCardsAdapter.notifyDataSetChanged();
-//		int count = mCards.size();
-//		setTitle(getResources().getQuantityString(R.plurals.card_browser_title,
-//				count, mDeck.getDeckName(), count, mAllCards.size()));
-//	}
+	private void updateList() {
+		mCardsAdapter.notifyDataSetChanged();
+		int count = mCards.size();
+		setTitle(getResources().getQuantityString(R.plurals.card_browser_title,
+				count, "XXXX", count, mAllCards.size()));
+	}
 //
 //	private int getPosition(ArrayList<HashMap<String, String>> list, long cardId) {
 //		String cardid = Long.toString(cardId);
@@ -777,92 +778,92 @@ public class CardBrowser extends Activity {
 //		mCards.remove(position);
 //		updateList();
 //	}
-//
-//	private DeckTask.TaskListener mLoadCardsHandler = new DeckTask.TaskListener() {
-//
-//		@Override
-//		public void onPreExecute() {
-//			if (!mUndoRedoDialogShowing) {
-//				mProgressDialog = StyledProgressDialog.show(CardBrowser.this, "",
-//						getResources().getString(R.string.card_browser_load),
-//						true, true, new OnCancelListener() {
-//
-//							@Override
-//							public void onCancel(DialogInterface arg0) {
-//								DeckTask.cancelTask();
-//							}
-//					
-//				});
-//			} else {
-//				mProgressDialog.setMessage(getResources().getString(
-//						R.string.card_browser_load));
-//				mUndoRedoDialogShowing = false;
-//			}
-//		}
-//
-//		@Override
-//		public void onPostExecute(DeckTask.TaskData result) {
-//			// This verification would not be necessary if
-//			// onConfigurationChanged it's executed correctly (which seems
-//			// that emulator does not do)
-////			DeckTask.launchDeckTask(DeckTask.TASK_TYPE_SORT_CARDS, mSortCardsHandler, new DeckTask.TaskData(mAllCards, new HashMapCompare()));
-//			if (mProgressDialog.isShowing()) {
-//				try {
-//					mProgressDialog.dismiss();
-//				} catch (Exception e) {
-//					Log.e(AnkiDroidApp.TAG,
-//							"onPostExecute - Dialog dismiss Exception = "
-//									+ e.getMessage());
-//				}
-//			}
-//		}
-//
-//		@Override
-//		public void onProgressUpdate(DeckTask.TaskData... values) {
-//			ArrayList<HashMap<String, String>> cards = values[0].getCards();
-//			if (cards == null) {
-//				Resources res = getResources();
-//				StyledDialog.Builder builder = new StyledDialog.Builder(
-//						CardBrowser.this);
-//				builder.setTitle(res.getString(R.string.error));
-//				builder.setIcon(android.R.drawable.ic_dialog_alert);
-//				builder.setMessage(res
-//						.getString(R.string.card_browser_cardloading_error));
-//				builder.setPositiveButton(res.getString(R.string.ok),
-//						new DialogInterface.OnClickListener() {
-//							@Override
-//							public void onClick(DialogInterface dialog,
-//									int which) {
-//								CardBrowser.this.finish();
-//							}
-//						});
-//				builder.setOnCancelListener(new OnCancelListener() {
-//					@Override
-//					public void onCancel(DialogInterface dialog) {
-//						CardBrowser.this.finish();
-//					}
-//				});
-//				builder.create().show();
-//			} else {
+
+	private DeckTask.TaskListener mLoadCardsHandler = new DeckTask.TaskListener() {
+
+		@Override
+		public void onPreExecute() {
+			if (!mUndoRedoDialogShowing) {
+				mProgressDialog = StyledProgressDialog.show(CardBrowser.this, "",
+						getResources().getString(R.string.card_browser_load),
+						true, true, new OnCancelListener() {
+
+							@Override
+							public void onCancel(DialogInterface arg0) {
+								DeckTask.cancelTask();
+							}
+					
+				});
+			} else {
+				mProgressDialog.setMessage(getResources().getString(
+						R.string.card_browser_load));
+				mUndoRedoDialogShowing = false;
+			}
+		}
+
+		@Override
+		public void onPostExecute(DeckTask.TaskData result) {
+			// This verification would not be necessary if
+			// onConfigurationChanged it's executed correctly (which seems
+			// that emulator does not do)
+//			DeckTask.launchDeckTask(DeckTask.TASK_TYPE_SORT_CARDS, mSortCardsHandler, new DeckTask.TaskData(mAllCards, new HashMapCompare()));
+			if (mProgressDialog.isShowing()) {
+				try {
+					mProgressDialog.dismiss();
+				} catch (Exception e) {
+					Log.e(AnkiDroidApp.TAG,
+							"onPostExecute - Dialog dismiss Exception = "
+									+ e.getMessage());
+				}
+			}
+		}
+
+		@Override
+		public void onProgressUpdate(DeckTask.TaskData... values) {
+			ArrayList<HashMap<String, String>> cards = values[0].getCards();
+			if (cards == null) {
+				Resources res = getResources();
+				StyledDialog.Builder builder = new StyledDialog.Builder(
+						CardBrowser.this);
+				builder.setTitle(res.getString(R.string.error));
+				builder.setIcon(android.R.drawable.ic_dialog_alert);
+				builder.setMessage(res
+						.getString(R.string.card_browser_cardloading_error));
+				builder.setPositiveButton(res.getString(R.string.ok),
+						new DialogInterface.OnClickListener() {
+							@Override
+							public void onClick(DialogInterface dialog,
+									int which) {
+								CardBrowser.this.finish();
+							}
+						});
+				builder.setOnCancelListener(new OnCancelListener() {
+					@Override
+					public void onCancel(DialogInterface dialog) {
+						CardBrowser.this.finish();
+					}
+				});
+				builder.create().show();
+			} else {
 //				if (mPrefFixArabic) {
 //					for (HashMap<String, String> entry : cards) {
 //						entry.put("question", ArabicUtilities.reshapeSentence(entry.get("question")));
 //						entry.put("answer", ArabicUtilities.reshapeSentence(entry.get("answer")));
 //					}
 //				}
-//				try {
-//					mAllCards.addAll(cards);
-//					mCards.addAll(cards);					
-//				} catch (OutOfMemoryError e) {
-//			    	Log.e(AnkiDroidApp.TAG, "CardBrowser: mLoadCardsHandler: OutOfMemoryError: " + e);
-//					Themes.showThemedToast(CardBrowser.this, getResources().getString(R.string.error_insufficient_memory), false);
-//			    	finish();
-//				}
-//				updateList();
-//			}
-//		}
-//	};
-//
+				try {
+					mAllCards.addAll(cards);
+					mCards.addAll(cards);					
+				} catch (OutOfMemoryError e) {
+			    	Log.e(AnkiDroidApp.TAG, "CardBrowser: mLoadCardsHandler: OutOfMemoryError: " + e);
+					Themes.showThemedToast(CardBrowser.this, getResources().getString(R.string.error_insufficient_memory), false);
+			    	finish();
+				}
+				updateList();
+			}
+		}
+	};
+
 //	private DeckTask.TaskListener mMarkCardHandler = new DeckTask.TaskListener() {
 //		@Override
 //		public void onPreExecute() {
@@ -1038,56 +1039,68 @@ public class CardBrowser extends Activity {
 //			mProgressDialog.dismiss();
 //		}
 //	};
-//
-//	public class SizeControlledListAdapter extends SimpleAdapter {
-//
-//		private int fontSizeScalePcent;
-//		private float originalTextSize = -1.0f;
-//
-//		public SizeControlledListAdapter(Context context,
-//				List<? extends Map<String, ?>> data, int resource,
-//				String[] from, int[] to, int fontSizeScalePcent) {
-//			super(context, data, resource, from, to);
-//			this.fontSizeScalePcent = fontSizeScalePcent;
-//
-//		}
-//
-//		public View getView(int position, View convertView, ViewGroup parent) {
-//			View view = super.getView(position, convertView, parent);
-//
-//			// Iterate on all first level children
-//			if (view instanceof ViewGroup) {
-//				ViewGroup group = ((ViewGroup) view);
-//				View child;
-//				for (int i = 0; i < group.getChildCount(); i++) {
-//					child = group.getChildAt(i);
-//					// and set text size on all TextViews found
-//					if (child instanceof TextView) {
-//						// mBrowserFontSize
-//						float currentSize = ((TextView) child).getTextSize();
-//						if (originalTextSize < 0) {
-//							originalTextSize = ((TextView) child).getTextSize();
-//						}
-//						// do nothing when pref is 100% and apply scaling only
-//						// once
-//						if ((fontSizeScalePcent < 99 || fontSizeScalePcent > 101)
-//								&& (Math.abs(originalTextSize - currentSize) < 0.1)) {
-//							((TextView) child).setTextSize(
-//									TypedValue.COMPLEX_UNIT_SP,
-//									originalTextSize
-//											* (fontSizeScalePcent / 100.0f));
-//						}
-//					}
-//
-//				}
-//
-//			}
-//
-//			return view;
-//		}
-//	}
-//
-//
+
+	private void closeCardBrowser() {
+		closeCardBrowser(RESULT_CANCELED);
+	}
+
+	private void closeCardBrowser(int result) {
+		setResult(result);
+		finish();
+		if (UIUtils.getApiLevel() > 4) {
+			ActivityTransitionAnimation.slide(this, ActivityTransitionAnimation.RIGHT);
+		}
+	}
+
+	public class SizeControlledListAdapter extends SimpleAdapter {
+
+		private int fontSizeScalePcent;
+		private float originalTextSize = -1.0f;
+
+		public SizeControlledListAdapter(Context context,
+				List<? extends Map<String, ?>> data, int resource,
+				String[] from, int[] to, int fontSizeScalePcent) {
+			super(context, data, resource, from, to);
+			this.fontSizeScalePcent = fontSizeScalePcent;
+
+		}
+
+		public View getView(int position, View convertView, ViewGroup parent) {
+			View view = super.getView(position, convertView, parent);
+
+			// Iterate on all first level children
+			if (view instanceof ViewGroup) {
+				ViewGroup group = ((ViewGroup) view);
+				View child;
+				for (int i = 0; i < group.getChildCount(); i++) {
+					child = group.getChildAt(i);
+					// and set text size on all TextViews found
+					if (child instanceof TextView) {
+						// mBrowserFontSize
+						float currentSize = ((TextView) child).getTextSize();
+						if (originalTextSize < 0) {
+							originalTextSize = ((TextView) child).getTextSize();
+						}
+						// do nothing when pref is 100% and apply scaling only
+						// once
+						if ((fontSizeScalePcent < 99 || fontSizeScalePcent > 101)
+								&& (Math.abs(originalTextSize - currentSize) < 0.1)) {
+							((TextView) child).setTextSize(
+									TypedValue.COMPLEX_UNIT_SP,
+									originalTextSize
+											* (fontSizeScalePcent / 100.0f));
+						}
+					}
+
+				}
+
+			}
+
+			return view;
+		}
+	}
+
+
 //	private class HashMapCompare implements
 //	Comparator<HashMap<String, String>> {
 //		@Override
@@ -1141,5 +1154,5 @@ public class CardBrowser extends Activity {
 //		    }
 //		}
 //	}
-//
+//}
 }
