@@ -149,7 +149,8 @@
 <string name="sync_small_objects_message">Syncing small objects...</string>
 <string name="sync_finish_message">Finishing syncing...</string>
 <string name="sync_log_finish_error">Error while sending finish direction to server</string>
-
+<string name="sync_writing_db">Writing changes into database...</string>
+    
 <string name="sync_download_chunk">Downloading changes...</string>
 <string name="sync_upload_chunk">Uploading changes...</string>
 <string name="sync_up_down_size">Up: %1$d kb, Down: %2$d kb</string>

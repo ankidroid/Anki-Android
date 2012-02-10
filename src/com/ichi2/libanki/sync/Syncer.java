@@ -223,6 +223,7 @@ public class Syncer {
     	    	Log.i(AnkiDroidApp.TAG, "Sync: finishing");
     	    	finish(mod);
 
+    	    	con.publishProgress(R.string.sync_writing_db);
     	    	mCol.getDb().getDatabase().setTransactionSuccessful();
         	} finally {
     	    	mCol.getDb().getDatabase().endTransaction();	
