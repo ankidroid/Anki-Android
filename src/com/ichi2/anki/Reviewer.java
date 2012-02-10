@@ -964,7 +964,13 @@ public class Reviewer extends Activity implements IButtonListener{
             mBaseUrl = Utils.getBaseUrl(col.getMedia().getDir());
             restorePreferences();
 
-            // TODO: reset undo?
+        	try {
+        		String[] title = mSched.getCol().getDecks().current().getString("name").split("::");
+    			setTitle(title[title.length - 1]);
+    		} catch (JSONException e) {
+    			throw new RuntimeException(e);
+    		}
+        	UIUtils.setActionBarSubtitle(this, "");
 
             // Remove the status bar and title bar
             if (mPrefFullscreenReview) {
@@ -2181,6 +2187,7 @@ public class Reviewer extends Activity implements IButtonListener{
 		} catch (JSONException e) {
 			throw new RuntimeException(e);
 		}
+
     	int[] counts = mSched.counts(mCurrentCard);
 
     	int eta = mSched.eta(counts, false);
@@ -2206,7 +2213,6 @@ public class Reviewer extends Activity implements IButtonListener{
         mTextBarBlack.setText(lrnCount);
         mTextBarBlue.setText(revCount);
     }
-
 
     private void updateStatisticBars() {
         if (mStatisticBarsMax == 0) {
