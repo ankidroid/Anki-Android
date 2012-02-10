@@ -680,7 +680,7 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
     	if (col != null) {
         	String path = col.getPath();
         	col.close(true);
-        	BackupManager.performBackup(path);    		
+        	BackupManager.performBackup(path);
     	}
     	return null;
     }

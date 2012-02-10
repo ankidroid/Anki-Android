@@ -18,7 +18,9 @@ package com.ichi2.libanki.sync;
 
 import android.database.Cursor;
 import android.database.SQLException;
+import android.util.Log;
 
+import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki2.R;
 import com.ichi2.async.Connection;
 import com.ichi2.libanki.Collection;
@@ -85,105 +87,146 @@ public class Syncer {
     	long rts;
     	long lts;
     	try {
-        	JSONArray ra = new JSONArray(mServer.stream2String(ret.getEntity().getContent()));
-			mRMod = ra.getLong(0);
-	    	mRScm = ra.getLong(1);
-	    	mMaxUsn = ra.getInt(2);
-	    	rts = ra.getLong(3);
-	    	mMediaUsn = ra.getInt(4);
+        	mCol.getDb().getDatabase().beginTransaction();
+    		try {
+            	JSONArray ra = new JSONArray(mServer.stream2String(ret.getEntity().getContent()));
+    			mRMod = ra.getLong(0);
+    	    	mRScm = ra.getLong(1);
+    	    	mMaxUsn = ra.getInt(2);
+    	    	rts = ra.getLong(3);
+    	    	mMediaUsn = ra.getInt(4);
 
-	    	JSONArray la = meta();
-			mLMod = la.getLong(0);
-	    	mLScm = la.getLong(1);
-	    	mMinUsn = la.getInt(2);
-	    	lts = la.getLong(3);
-	    	long diff = Math.abs(rts - lts);
-	    	if (diff > 300) {
-	    		return new Object[]{"clockOff", diff};
-	    	}
-	    	if (mLMod == mRMod) {
-	    		return new Object[]{"noChanges"};
-	    	} else if (mLScm != mRScm) {
-	    		return new Object[]{"fullSync"};
-	    	}
-	    	mLNewer = mLMod > mRMod;
-	    	// step 2: deletions
-	    	con.publishProgress(R.string.sync_deletions_message);
-	    	JSONObject lrem = removed();
-	    	JSONObject o = new JSONObject();
-	    	o.put("minUsn", mMinUsn);
-	    	o.put("lnewer", mLNewer);
-	    	o.put("graves", lrem);
-	    	JSONObject rrem = mServer.start(o);
-	    	if (rrem == null) {
-	    		return null;
-	    	}
-	    	if (rrem.has("errorType")) {
-	    		return new Object[]{"error", rrem.get("errorType"), rrem.get("errorReason")};
-	    	}
-	    	remove(rrem);
-	    	// ... and small objects
-	    	con.publishProgress(R.string.sync_small_objects_message);
-	    	JSONObject lchg = changes();
-	    	JSONObject sch = new JSONObject();
-	    	sch.put("changes", lchg);
-	    	JSONObject rchg = mServer.applyChanges(sch);
-	    	if (rchg == null) {
-	    		return null;
-	    	}
-	    	if (rchg.has("errorType")) {
-	    		return new Object[]{"error", rchg.get("errorType"), rchg.get("errorReason")};
-	    	}
-	    	mergeChanges(lchg, rchg);
-	    	// step 3: stream large tables from server
-    		con.publishProgress(R.string.sync_download_chunk);
-	    	while (true) {
-	    		JSONObject chunk = mServer.chunk();
-	        	if (chunk == null) {
-	        		return null;
-	        	}
-		    	if (chunk.has("errorType")) {
-		    		return new Object[]{"error", chunk.get("errorType"), chunk.get("errorReason")};
-		    	}
-	    		applyChunk(chunk);
-	    		if (chunk.getBoolean("done")) {
-	    			break;
-	    		}
-	    	}
-	    	// step 4: stream to server
-    		con.publishProgress(R.string.sync_upload_chunk);
-	    	while (true) {
-	    		JSONObject chunk = chunk();
-	    		JSONObject sech = new JSONObject();
-	    		sech.put("chunk", chunk);
-	    		mServer.applyChunk(sech);
-	    		if (chunk.getBoolean("done")) {
-	    			break;
-	    		}
-	    	}
-	    	// step 5: sanity check during beta testing
-	    	JSONArray c = sanityCheck();
-	    	if (c == null) {
-	    		return new Object[]{"error", 200, "sanity check error on local"};	    		
-	    	}
-	    	JSONArray s = mServer.sanityCheck();
-	    	if (s.getString(0).equals("error")) {
-	    		return new Object[]{"error", 200, "sanity check error on server"};
-	    	}
-	    	boolean error = false;
-	    	for (int i = 0; i < s.getJSONArray(0).length(); i++) {
-	    		if (c.getJSONArray(0).getLong(i) != s.getJSONArray(0).getLong(i)) {
-	    			error = true;
-	    		}
-	    	}
-	    	for (int i = 1; i < s.length(); i++) {
-	    		if (c.getLong(i) != s.getLong(i)) {
-	    			error = true;
-	    		}
-	    	}
-		if (error) {
-			return new Object[]{"error", 200, "sanity check failed:\nlocal: " + c.toString() + "\nremote: " + s.toString()};
-		}
+    			Log.i(AnkiDroidApp.TAG, "Sync: getting meta data");
+    	    	JSONArray la = meta();
+    			mLMod = la.getLong(0);
+    	    	mLScm = la.getLong(1);
+    	    	mMinUsn = la.getInt(2);
+    	    	lts = la.getLong(3);
+    	    	long diff = Math.abs(rts - lts);
+    	    	if (diff > 300) {
+    	    		return new Object[]{"clockOff", diff};
+    	    	}
+    	    	if (mLMod == mRMod) {
+        			Log.i(AnkiDroidApp.TAG, "Sync: no changes - returning");
+    	    		return new Object[]{"noChanges"};
+    	    	} else if (mLScm != mRScm) {
+        			Log.i(AnkiDroidApp.TAG, "Sync: full sync necessary - returning");
+    	    		return new Object[]{"fullSync"};
+    	    	}
+    	    	mLNewer = mLMod > mRMod;
+    	    	// step 2: deletions
+    	    	con.publishProgress(R.string.sync_deletions_message);
+
+    	    	Log.i(AnkiDroidApp.TAG, "Sync: collection removed data");
+    	    	JSONObject lrem = removed();
+    	    	JSONObject o = new JSONObject();
+    	    	o.put("minUsn", mMinUsn);
+    	    	o.put("lnewer", mLNewer);
+    	    	o.put("graves", lrem);
+
+    	    	Log.i(AnkiDroidApp.TAG, "Sync: sending and receiving removed data");
+    	    	JSONObject rrem = mServer.start(o);
+    	    	if (rrem == null) {
+        	    	Log.i(AnkiDroidApp.TAG, "Sync: error - returning");
+    	    		return null;
+    	    	}
+    	    	if (rrem.has("errorType")) {
+        	    	Log.i(AnkiDroidApp.TAG, "Sync: error - returning");
+    	    		return new Object[]{"error", rrem.get("errorType"), rrem.get("errorReason")};
+    	    	}
+
+    	    	Log.i(AnkiDroidApp.TAG, "Sync: applying removed data");
+    	    	remove(rrem);
+    	    	// ... and small objects
+    	    	con.publishProgress(R.string.sync_small_objects_message);
+
+    	    	Log.i(AnkiDroidApp.TAG, "Sync: collection small changes");
+    	    	JSONObject lchg = changes();
+    	    	JSONObject sch = new JSONObject();
+    	    	sch.put("changes", lchg);
+
+    	    	Log.i(AnkiDroidApp.TAG, "Sync: sending and receiving small changes");
+    	    	JSONObject rchg = mServer.applyChanges(sch);
+    	    	if (rchg == null) {
+        	    	Log.i(AnkiDroidApp.TAG, "Sync: error - returning");
+    	    		return null;
+    	    	}
+    	    	if (rchg.has("errorType")) {
+        	    	Log.i(AnkiDroidApp.TAG, "Sync: error - returning");
+    	    		return new Object[]{"error", rchg.get("errorType"), rchg.get("errorReason")};
+    	    	}
+
+    	    	Log.i(AnkiDroidApp.TAG, "Sync: mergin small changes");
+    	    	mergeChanges(lchg, rchg);
+    	    	// step 3: stream large tables from server
+        		con.publishProgress(R.string.sync_download_chunk);
+    	    	while (true) {
+        	    	Log.i(AnkiDroidApp.TAG, "Sync: downloading chunked data");
+    	    		JSONObject chunk = mServer.chunk();
+    	        	if (chunk == null) {
+            	    	Log.i(AnkiDroidApp.TAG, "Sync: error - returning");
+    	        		return null;
+    	        	}
+    		    	if (chunk.has("errorType")) {
+            	    	Log.i(AnkiDroidApp.TAG, "Sync: error - returning");
+    		    		return new Object[]{"error", chunk.get("errorType"), chunk.get("errorReason")};
+    		    	}
+        	    	Log.i(AnkiDroidApp.TAG, "Sync: applying chunked data");
+    	    		applyChunk(chunk);
+    	    		if (chunk.getBoolean("done")) {
+    	    			break;
+    	    		}
+    	    	}
+    	    	// step 4: stream to server
+        		con.publishProgress(R.string.sync_upload_chunk);
+    	    	while (true) {
+        	    	Log.i(AnkiDroidApp.TAG, "Sync: collecting chunked data");
+    	    		JSONObject chunk = chunk();
+    	    		JSONObject sech = new JSONObject();
+    	    		sech.put("chunk", chunk);
+        	    	Log.i(AnkiDroidApp.TAG, "Sync: sending chunked data");
+    	    		mServer.applyChunk(sech);
+    	    		if (chunk.getBoolean("done")) {
+    	    			break;
+    	    		}
+    	    	}
+    	    	// step 5: sanity check during beta testing
+    	    	JSONArray c = sanityCheck();
+    	    	if (c == null) {
+    	    		return new Object[]{"error", 200, "sanity check error on local"};	    		
+    	    	}
+    	    	JSONArray s = mServer.sanityCheck();
+    	    	if (s.getString(0).equals("error")) {
+    	    		return new Object[]{"error", 200, "sanity check error on server"};
+    	    	}
+    	    	boolean error = false;
+    	    	for (int i = 0; i < s.getJSONArray(0).length(); i++) {
+    	    		if (c.getJSONArray(0).getLong(i) != s.getJSONArray(0).getLong(i)) {
+    	    			error = true;
+    	    		}
+    	    	}
+    	    	for (int i = 1; i < s.length(); i++) {
+    	    		if (c.getLong(i) != s.getLong(i)) {
+    	    			error = true;
+    	    		}
+    	    	}
+    			if (error) {
+    				return new Object[]{"error", 200, "sanity check failed:\nlocal: " + c.toString() + "\nremote: " + s.toString()};
+    			}
+    	    	// finalize
+    	    	con.publishProgress(R.string.sync_finish_message);
+    	    	Log.i(AnkiDroidApp.TAG, "Sync: sending finish command");
+    	    	long mod = mServer.finish();
+    	    	if (mod == 0) {
+    	    		return new Object[]{"finishError"};
+    	    	}
+    	    	Log.i(AnkiDroidApp.TAG, "Sync: finishing");
+    	    	finish(mod);
+
+    	    	mCol.getDb().getDatabase().setTransactionSuccessful();
+        	} finally {
+    	    	mCol.getDb().getDatabase().setTransactionSuccessful();	
+    		}
 		} catch (JSONException e) {
 			throw new RuntimeException(e);
 		} catch (IllegalStateException e) {
@@ -191,13 +234,6 @@ public class Syncer {
 		} catch (IOException e) {
 			throw new RuntimeException(e);
 		}
-    	// finalize
-    	con.publishProgress(R.string.sync_finish_message);
-    	long mod = mServer.finish();
-    	if (mod == 0) {
-    		return new Object[]{"finishError"};
-    	}
-    	finish(mod);
     	return new Object[]{"success"};
     }
 
