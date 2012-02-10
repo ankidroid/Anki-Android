@@ -108,6 +108,7 @@ import com.zeemote.zc.event.IButtonListener;
 import com.zeemote.zc.util.JoystickToButtonAdapter;
 
 import org.amr.arabic.ArabicUtilities;
+import org.json.JSONException;
 
 public class Reviewer extends Activity implements IButtonListener{
     /**
@@ -2174,16 +2175,17 @@ public class Reviewer extends Activity implements IButtonListener{
     		return;
     	}
 
-    	setTitle("aaa");
-    	// TODO: ETA
-//        int eta = mCurrentScheduler.eta() / 60;
-//        if (deck.hasFinishScheduler() || eta < 1) {
-//            setTitle(deck.getDeckName());
-//        } else {
-//            setTitle(getResources().getQuantityString(R.plurals.reviewer_window_title, eta, deck.getDeckName(), eta));
-//        }
-
+    	try {
+    		String[] title = mSched.getCol().getDecks().get(mCurrentCard.getDid()).getString("name").split("::");
+			setTitle(title[title.length - 1]);
+		} catch (JSONException e) {
+			throw new RuntimeException(e);
+		}
     	int[] counts = mSched.counts(mCurrentCard);
+
+    	int eta = mSched.eta(counts, false);
+    	UIUtils.setActionBarSubtitle(this, getResources().getQuantityString(R.plurals.reviewer_window_title, eta, eta));
+
         SpannableString newCount = new SpannableString(String.valueOf(counts[0]));
         SpannableString lrnCount = new SpannableString(String.valueOf(counts[1]));
         SpannableString revCount = new SpannableString(String.valueOf(counts[2]));

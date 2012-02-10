@@ -57,8 +57,8 @@
 <string name="deckpicker_loaddeck">Loading deck...</string>
 <string name="deckpicker_nodeck">No decks found.</string>
 <plurals name="reviewer_window_title">
-  <item quantity="one">%1$s (1 min. left)</item>
-  <item quantity="other">%1$s (%2$d min. left)</item>
+  <item quantity="one">1 minute left)</item>
+  <item quantity="other">%d minutes left</item>
 </plurals>
 
 <!-- flashcard_portrait.xml -->

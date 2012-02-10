@@ -20,6 +20,7 @@
 
 package com.ichi2.anki;import com.ichi2.anki2.R;
 
+import android.app.ActionBar;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.BroadcastReceiver;
@@ -2038,10 +2039,12 @@ public class DeckPicker extends Activity {
 
         // set title
         Resources res = getResources();
-        if (eta != -1) {
-        	eta /= 60;
-            String time = res.getQuantityString(R.plurals.deckpicker_title_minutes, eta, eta);
-    		setTitle(res.getQuantityString(R.plurals.deckpicker_title, due, due, count, time));
+        if (count != -1) {
+            String time = "-"; 
+        	if (eta != -1) {
+        		time = res.getQuantityString(R.plurals.deckpicker_title_minutes, eta, eta);	
+        	}
+            UIUtils.setActionBarSubtitle(this, res.getQuantityString(R.plurals.deckpicker_title, due, due, count, time));
         } else {
     		setTitle(res.getString(R.string.app_name));
         }

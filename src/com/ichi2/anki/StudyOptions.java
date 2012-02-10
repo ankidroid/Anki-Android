@@ -1005,9 +1005,9 @@ public class StudyOptions extends Activity implements IButtonListener {
 			mTextNewTotal.setText(String.valueOf(totalNew));
 			mTextTotal.setText(String.valueOf(totalCards));
 			if (eta != -1) {
-				mTextETA.setText(Integer.toString(eta / 60));				
+				mTextETA.setText(Integer.toString(eta));				
 			} else {
-				mTextETA.setText("-1");
+				mTextETA.setText("-");
 			}
 
 			if(mDeckCounts.getVisibility() == View.INVISIBLE) {

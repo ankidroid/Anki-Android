@@ -1,4 +1,5 @@
 package com.ichi2.anki;import java.lang.reflect.Field;
+import java.lang.Object;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.Calendar;
@@ -6,6 +7,7 @@ import java.util.GregorianCalendar;
 
 import com.ichi2.anki2.R;
 
+import android.app.ActionBar;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
@@ -80,4 +82,20 @@ public class UIUtils {
         } catch (NullPointerException e) {
         }
     }
+    
+    
+    public static void setActionBarSubtitle(Context context, String text) {
+        try {
+        	Method getActionBar = context.getClass().getMethod("getActionBar");
+    		ActionBar actionBar = (ActionBar) getActionBar.invoke(context);
+    		actionBar.setSubtitle(text);
+        } catch (SecurityException e) {
+        } catch (NoSuchMethodException e) {
+        } catch (IllegalArgumentException e) {
+        } catch (IllegalAccessException e) {
+        } catch (InvocationTargetException e) {
+        } catch (NullPointerException e) {
+        }
+    }
+
 }

@@ -99,6 +99,8 @@ public class Sched {
 
 	private int mNewCardModulus;
 
+	private double[] mEtaCache = new double[]{-1, -1, -1, -1};
+
 	// Queues
 	private LinkedList<long[]> mNewQueue;
 	private LinkedList<long[]> mLrnQueue;
@@ -294,28 +296,42 @@ public class Sched {
 
 	/** LIBANKI: not in libanki */
 	public int eta(int[] counts) {
+		return eta(counts, true);
+	}
+	public int eta(int[] counts, boolean reload) {
 		double revYesRate;
 		double revTime;
 		double lrnYesRate;
 		double lrnTime;
-		Cursor cur = null;
-		try {
-			cur = mCol.getDb().getDatabase().rawQuery("SELECT avg(CASE WHEN ease > 1 THEN 1 ELSE 0 END), avg(time) FROM revlog WHERE type = 1 AND id > " + ((mCol.getSched().getDayCutoff() - (7 * 86400)) * 1000), null);
-			if (!cur.moveToFirst()) {
-				return -1;
+		if (reload || mEtaCache[0] == -1) {
+			Cursor cur = null;
+			try {
+				cur = mCol.getDb().getDatabase().rawQuery("SELECT avg(CASE WHEN ease > 1 THEN 1 ELSE 0 END), avg(time) FROM revlog WHERE type = 1 AND id > " + ((mCol.getSched().getDayCutoff() - (7 * 86400)) * 1000), null);
+				if (!cur.moveToFirst()) {
+					return -1;
+				}
+				revYesRate = cur.getDouble(0);
+				revTime = cur.getDouble(1);
+				cur = mCol.getDb().getDatabase().rawQuery("SELECT avg(CASE WHEN ease = 3 THEN 1 ELSE 0 END), avg(time) FROM revlog WHERE type != 1 AND id > " + ((mCol.getSched().getDayCutoff() - (7 * 86400)) * 1000), null);
+				if (!cur.moveToFirst()) {
+					return -1;
+				}
+				lrnYesRate = cur.getDouble(0);
+				lrnTime = cur.getDouble(1);
+			} finally {
+				if (cur != null && !cur.isClosed()) {
+					cur.close();
+				}
 			}
-			revYesRate = cur.getDouble(0);
-			revTime = cur.getDouble(1);
-			cur = mCol.getDb().getDatabase().rawQuery("SELECT avg(CASE WHEN ease = 3 THEN 1 ELSE 0 END), avg(time) FROM revlog WHERE type != 1 AND id > " + ((mCol.getSched().getDayCutoff() - (7 * 86400)) * 1000), null);
-			if (!cur.moveToFirst()) {
-				return -1;
-			}
-			lrnYesRate = cur.getDouble(0);
-			lrnTime = cur.getDouble(1);
-		} finally {
-			if (cur != null && !cur.isClosed()) {
-				cur.close();
-			}
+			mEtaCache[0] = revYesRate;
+			mEtaCache[1] = revTime;
+			mEtaCache[2] = lrnYesRate;
+			mEtaCache[3] = lrnTime;
+		} else {
+			revYesRate = mEtaCache[0];
+			revTime = mEtaCache[1];
+			lrnYesRate = mEtaCache[2];
+			lrnTime = mEtaCache[3];			
 		}
 		// rev cards
 		double eta = revTime * counts[2];
@@ -323,7 +339,7 @@ public class Sched {
 		double factor = Math.min(1/(1 - lrnYesRate), 10);
 		double lrnAnswers = (counts[0] + counts[1] + counts[2] * (1 - revYesRate)) * factor;
 		eta += lrnAnswers * lrnTime;
-		return (int) (eta / 1000);
+		return (int) (eta / 60000);
 	}
 
 	private int _walkingCount() {
