@@ -85,6 +85,7 @@ import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.FrameLayout.LayoutParams;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.ichi2.anim.ActivityTransitionAnimation;
@@ -301,6 +302,7 @@ public class Reviewer extends Activity implements IButtonListener{
 	private ClipboardManager mClipboard;
     private StyledProgressDialog mProgressDialog;
     private Menu mOptionsMenu;
+    private ProgressBar mProgressBar;
 
     private Card mCurrentCard;
     private int mCurrentEase;
@@ -730,7 +732,7 @@ public class Reviewer extends Activity implements IButtonListener{
 
         @Override
         public void onPreExecute() {
-//            Reviewer.this.setProgressBarIndeterminateVisibility(true);
+            mProgressBar.setVisibility(View.VISIBLE);
             if (mPrefTimer) {
             	mCardTimer.stop();
             }
@@ -801,7 +803,7 @@ public class Reviewer extends Activity implements IButtonListener{
               } else {
             	  comparedFieldAnswer = null;
               }
-//              Reviewer.this.setProgressBarIndeterminateVisibility(false);
+              mProgressBar.setVisibility(View.INVISIBLE);
               Reviewer.this.unblockControls();
               Reviewer.this.displayCardQuestion();
     		}
@@ -972,8 +974,6 @@ public class Reviewer extends Activity implements IButtonListener{
                     requestWindowFeature(Window.FEATURE_NO_TITLE);
                 }
             }
-
-//            requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
 
             registerExternalStorageListener();
 
@@ -1257,7 +1257,7 @@ public class Reviewer extends Activity implements IButtonListener{
         Resources res = getResources();
 
         UIUtils.addMenuItemInActionBar(menu, Menu.NONE, MENU_MARK, Menu.NONE, R.string.menu_mark_card, R.drawable.ic_menu_mark);
-        UIUtils.addMenuItemInActionBar(menu, Menu.NONE, MENU_UNDO, Menu.NONE, R.string.undo, R.drawable.ic_menu_revert);
+        UIUtils.addMenuItemInActionBar(menu, Menu.NONE, MENU_UNDO, Menu.NONE, R.string.undo, R.drawable.ic_menu_revert_disabled);
         UIUtils.addMenuItemInActionBar(menu, Menu.NONE, MENU_EDIT, Menu.NONE, R.string.menu_edit_card, R.drawable.ic_menu_edit);
         if (mPrefWhiteboard) {
             if (mShowWhiteboard) {
@@ -1738,6 +1738,8 @@ public class Reviewer extends Activity implements IButtonListener{
         
         // Initialize swipe
         gestureDetector = new GestureDetector(new MyGestureDetector());
+
+	mProgressBar = (ProgressBar) findViewById(R.id.flashcard_progressbar);
 
         // initialise shake detection
         if (mShakeEnabled) {

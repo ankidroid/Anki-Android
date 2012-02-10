@@ -128,7 +128,7 @@
 			android:padding="4.6667dip"
 			android:layout_width="fill_parent"
 			android:layout_height="fill_parent"/>
-		<LinearLayout
+		<RelativeLayout
 			android:layout_width="fill_parent"
 			android:layout_height="fill_parent">			
 			<FrameLayout android:id="@+id/touch_layer"
@@ -137,7 +137,17 @@
 				android:longClickable="true"
 				android:layout_width="fill_parent"
 				android:layout_height="fill_parent"/>
-		</LinearLayout>
+		    	<ProgressBar android:id="@+id/flashcard_progressbar"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_margin="9.3333dip"
+				android:layout_alignParentRight="true"
+	    			android:indeterminate="true"
+				android:focusable="false"
+				android:visibility="invisible"
+				style="@android:style/Widget.ProgressBar.Small"
+			    	android:clickable="false"/>
+		</RelativeLayout>
 		<FrameLayout android:id="@+id/whiteboard"
 			android:layout_width="fill_parent"
 			android:layout_height="fill_parent"/>
