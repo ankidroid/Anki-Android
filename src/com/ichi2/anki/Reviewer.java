@@ -149,8 +149,9 @@ public class Reviewer extends Activity implements IButtonListener{
     private static final int MENU_EDIT = 2;
     private static final int MENU_REMOVE = 3;
     private static final int MENU_REMOVE_BURY = 31;
-    private static final int MENU_REMOVE_SUSPEND = 32;
-    private static final int MENU_REMOVE_DELETE = 33;
+    private static final int MENU_REMOVE_SUSPEND_CARD = 32;
+    private static final int MENU_REMOVE_SUSPEND_NOTE = 33;
+    private static final int MENU_REMOVE_DELETE = 34;
     private static final int MENU_SEARCH = 4;
     private static final int MENU_MARK = 5;
     private static final int MENU_UNDO = 6;
@@ -617,41 +618,19 @@ public class Reviewer extends Activity implements IButtonListener{
         }
     };
 
-//    private DeckTask.TaskListener mDismissCardHandler = new DeckTask.TaskListener() {
-//    	boolean mSessionComplete;
-//    	boolean mNoMoreCards;
-//
-//        @Override
-//        public void onPreExecute() {
-//        }
-//
-//
-//        @Override
-//        public void onProgressUpdate(DeckTask.TaskData... values) {
-////        	boolean[] results = postAnswerCard(values);
-////        	mSessionComplete = results[0];
-////        	mNoMoreCards = results[1];
-//        }
-//
-//
-//        @Override
-//        public void onPostExecute(DeckTask.TaskData result) {
-//            if (!result.getBoolean()) {
-//            	// RuntimeException occured on dismissing cards
-//                Reviewer.this.setResult(RESULT_ANSWERING_ERROR);
-//                closeReviewer(RESULT_ANSWERING_ERROR, true);
-//                return;
-//            }
-//            // Check for no more cards before session complete. If they are both true,
-//            // no more cards will take precedence when returning to study options.
-//            if (mNoMoreCards) {
-//                mShowCongrats = true;
-//                closeReviewer(RESULT_NO_MORE_CARDS, true);
-//            } else if (mSessionComplete) {
-//                closeReviewer(RESULT_SESSION_COMPLETED, true);
-//            }
-//        }
-//    };
+    private DeckTask.TaskListener mDismissCardHandler = new DeckTask.TaskListener() {
+        @Override
+        public void onPreExecute() {
+        }
+        @Override
+        public void onProgressUpdate(DeckTask.TaskData... values) {
+        	mAnswerCardHandler.onProgressUpdate(values);
+        }
+        @Override
+        public void onPostExecute(DeckTask.TaskData result) {
+        	mAnswerCardHandler.onPostExecute(result);
+        }
+    };
 
     private DeckTask.TaskListener mUpdateCardHandler = new DeckTask.TaskListener() {
     	private boolean mNoMoreCards;
@@ -1281,11 +1260,12 @@ public class Reviewer extends Activity implements IButtonListener{
                     R.drawable.ic_menu_clear_playlist);
         }
 
-        SubMenu removeDeckSubMenu = menu.addSubMenu(Menu.NONE, MENU_REMOVE, Menu.NONE, R.string.menu_remove_card);
+        SubMenu removeDeckSubMenu = menu.addSubMenu(Menu.NONE, MENU_REMOVE, Menu.NONE, R.string.menu_dismiss_note);
         removeDeckSubMenu.setIcon(R.drawable.ic_menu_stop);
-        removeDeckSubMenu.add(Menu.NONE, MENU_REMOVE_BURY, Menu.NONE, R.string.menu_bury_card);
-        removeDeckSubMenu.add(Menu.NONE, MENU_REMOVE_SUSPEND, Menu.NONE, R.string.menu_suspend_card);
-        removeDeckSubMenu.add(Menu.NONE, MENU_REMOVE_DELETE, Menu.NONE, R.string.card_browser_delete_card);
+        removeDeckSubMenu.add(Menu.NONE, MENU_REMOVE_BURY, Menu.NONE, R.string.menu_bury_note);
+        removeDeckSubMenu.add(Menu.NONE, MENU_REMOVE_SUSPEND_CARD, Menu.NONE, R.string.menu_suspend_card);
+        removeDeckSubMenu.add(Menu.NONE, MENU_REMOVE_SUSPEND_NOTE, Menu.NONE, R.string.menu_suspend_note);
+        removeDeckSubMenu.add(Menu.NONE, MENU_REMOVE_DELETE, Menu.NONE, R.string.menu_delete_note);
         if (mPrefTextSelection) {
             item = menu.add(Menu.NONE, MENU_SEARCH, Menu.NONE, res.getString(R.string.menu_select));
             item.setIcon(R.drawable.ic_menu_search);
@@ -1420,20 +1400,23 @@ public class Reviewer extends Activity implements IButtonListener{
             case MENU_EDIT:
                 return editCard();
 
-//            case MENU_REMOVE_BURY:
-//            	setNextCardAnimation(false);
-//                DeckTask.launchDeckTask(DeckTask.TASK_TYPE_BURY_CARD, mDismissCardHandler, new DeckTask.TaskData(0,
-//                        DeckManager.getMainDeck(), mCurrentCard));
-//                return true;
-//
-//            case MENU_REMOVE_SUSPEND:
-//            	setNextCardAnimation(false);
-//                DeckTask.launchDeckTask(DeckTask.TASK_TYPE_SUSPEND_CARD, mDismissCardHandler, new DeckTask.TaskData(0,
-//                        DeckManager.getMainDeck(), mCurrentCard));
-//                return true;
+            case MENU_REMOVE_BURY:
+            	setNextCardAnimation(false);
+                DeckTask.launchDeckTask(DeckTask.TASK_TYPE_DISMISS_NOTE, mDismissCardHandler, new DeckTask.TaskData(mSched, mCurrentCard, 0));
+                return true;
+
+            case MENU_REMOVE_SUSPEND_CARD:
+            	setNextCardAnimation(false);
+                DeckTask.launchDeckTask(DeckTask.TASK_TYPE_DISMISS_NOTE, mDismissCardHandler, new DeckTask.TaskData(mSched, mCurrentCard, 1));
+                return true;
+
+            case MENU_REMOVE_SUSPEND_NOTE:
+            	setNextCardAnimation(false);
+                DeckTask.launchDeckTask(DeckTask.TASK_TYPE_DISMISS_NOTE, mDismissCardHandler, new DeckTask.TaskData(mSched, mCurrentCard, 2));
+                return true;
 
             case MENU_REMOVE_DELETE:
-                showDeleteCardDialog();
+            	showDeleteNoteDialog();
                 return true;
 
             case MENU_SEARCH:
@@ -1604,19 +1587,19 @@ public class Reviewer extends Activity implements IButtonListener{
     }
 
 
-    private void showDeleteCardDialog() {
+    private void showDeleteNoteDialog() {
         Dialog dialog;
         Resources res = getResources();
         StyledDialog.Builder builder = new StyledDialog.Builder(this);
         builder.setTitle(res.getString(R.string.delete_card_title));
         builder.setIcon(android.R.drawable.ic_dialog_alert);
-//        builder.setMessage(String.format(res.getString(R.string.delete_card_message), Utils.stripHTML(mCurrentCard.getQuestion()), Utils.stripHTML(mCurrentCard.getAnswer())));
+        builder.setMessage(String.format(res.getString(R.string.delete_note_message), Utils.stripHTML(mCurrentCard.getQuestion(true))));
         builder.setPositiveButton(res.getString(R.string.yes),
                 new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                     	setNextCardAnimation(false);
-//                        DeckTask.launchDeckTask(DeckTask.TASK_TYPE_DELETE_CARD, mDismissCardHandler, new DeckTask.TaskData(0, DeckManager.getMainDeck(), mCurrentCard));
+                        DeckTask.launchDeckTask(DeckTask.TASK_TYPE_DISMISS_NOTE, mDismissCardHandler, new DeckTask.TaskData(mSched, mCurrentCard, 3));
                     }
                 });
         builder.setNegativeButton(res.getString(R.string.no), null);
@@ -3183,7 +3166,7 @@ public class Reviewer extends Activity implements IButtonListener{
 //                    DeckManager.getMainDeck(), mCurrentCard));
 //    		break;
     	case GESTURE_DELETE:
-    		showDeleteCardDialog();
+    		showDeleteNoteDialog();
     		break;
     	case GESTURE_CLEAR_WHITEBOARD:
             if (mPrefWhiteboard) {            	

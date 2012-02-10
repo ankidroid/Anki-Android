@@ -60,14 +60,12 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
     public static final int TASK_TYPE_OPEN_COLLECTION_AND_UPDATE_CARDS = 1;
     public static final int TASK_TYPE_SAVE_DECK = 2;
     public static final int TASK_TYPE_ANSWER_CARD = 3;
-    public static final int TASK_TYPE_SUSPEND_CARD = 4;
     public static final int TASK_TYPE_MARK_CARD = 5;
     public static final int TASK_TYPE_ADD_FACT = 6;
     public static final int TASK_TYPE_UPDATE_FACT = 7;
     public static final int TASK_TYPE_UNDO = 8;
     public static final int TASK_TYPE_LOAD_CARDS = 10;
-    public static final int TASK_TYPE_BURY_CARD = 11;
-    public static final int TASK_TYPE_DELETE_CARD = 12;
+    public static final int TASK_TYPE_DISMISS_NOTE = 11;
     public static final int TASK_TYPE_LOAD_STATISTICS = 13;
     public static final int TASK_TYPE_CHECK_DATABASE = 14;
     public static final int TASK_TYPE_SET_ALL_DECKS_JOURNAL_MODE = 15;
@@ -179,9 +177,6 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
             case TASK_TYPE_ANSWER_CARD:
                 return doInBackgroundAnswerCard(params);
 
-            case TASK_TYPE_SUSPEND_CARD:
-                return doInBackgroundSuspendCard(params);
-
             case TASK_TYPE_MARK_CARD:
                 return doInBackgroundMarkCard(params);
 
@@ -197,11 +192,8 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
             case TASK_TYPE_LOAD_CARDS:
                 return doInBackgroundLoadCards(params);
 
-            case TASK_TYPE_BURY_CARD:
-                return doInBackgroundBuryCard(params);
-
-            case TASK_TYPE_DELETE_CARD:
-                return doInBackgroundDeleteCard(params);
+            case TASK_TYPE_DISMISS_NOTE:
+                return doInBackgroundDismissNote(params);
 
             case TASK_TYPE_LOAD_STATISTICS:
                 return doInBackgroundLoadStatistics(params);
@@ -286,7 +278,7 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
     	Sched sched = params[0].getSched();
     	Collection col = sched.getCol();
         Card editCard = params[0].getCard();
-        Note editNote = editCard.getNote();
+        Note editNote = editCard.note();
         boolean showQuestion = params[0].getBoolean();
 
         try {
@@ -462,33 +454,43 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
     }
 
 
-    private TaskData doInBackgroundSuspendCard(TaskData... params) {
-//        Decks deck = params[0].getDeck();
-//        Card oldCard = params[0].getCard();
-//        Card newCard = null;
-//
+    private TaskData doInBackgroundDismissNote(TaskData... params) {
+    	Sched sched = params[0].getSched();
+    	Collection col = sched.getCol();
+    	Card card = params[0].getCard();
+    	Note note = card.note();
+    	int type = params[0].getInt();
 //        try {
-//            AnkiDb ankiDB = AnkiDatabaseManager.getDatabase(deck.getDeckPath());
-//            ankiDB.getDatabase().beginTransaction();
-//            try {
-//                if (oldCard != null) {
-//                    String undoName = Decks.UNDO_TYPE_SUSPEND_CARD;
-//                    deck.setUndoStart(undoName, oldCard.getId());
-//                    if (oldCard.getSuspendedState()) {
-//                        oldCard.unsuspend();
-//                        newCard = oldCard;
-//                    } else {
-//                        oldCard.suspend();
-//                        newCard = deck.getCard();
-//                    }
-//                    deck.setUndoEnd(undoName);
-//                }
-//                
-//                publishProgress(new TaskData(newCard));
-//                ankiDB.getDatabase().setTransactionSuccessful();
-//            } finally {
-//                ankiDB.getDatabase().endTransaction();
-//            }
+            col.getDb().getDatabase().beginTransaction();
+            try {
+            	switch (type) {
+            	case 0:
+            		// bury note
+            		sched.buryNote(note.getId());
+            		break;
+            	case 1:
+            		// suspend card
+            		sched.suspendCards(new long[]{card.getId()});
+            		break;
+            	case 2:
+            		// suspend note
+            		ArrayList<Card> cards = note.cards();
+            		long[] cids = new long[cards.size()];
+            		for (int i = 0; i < cards.size(); i++) {
+            			cids[i] = cards.get(i).getId();
+            		}
+            		sched.suspendCards(cids);
+            		break;
+            	case 3:
+            		// delete note
+            		col.remNotes(new long[]{note.getId()});
+            		break;
+            	}              
+                publishProgress(new TaskData(col.getSched().getCard(), 0));
+                col.getDb().getDatabase().setTransactionSuccessful();
+            } finally {
+            	col.getDb().getDatabase().endTransaction();
+            }
 //    	} catch (RuntimeException e) {
 //    		Log.e(AnkiDroidApp.TAG, "doInBackgroundSuspendCard - RuntimeException on suspending card: " + e);
 //			AnkiDroidApp.saveExceptionReportFile(e, "doInBackgroundSuspendCard");
@@ -575,66 +577,6 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
 //               	startId = cards.get(cards.size() - 1).get("id");    			
 //    		}
 //    	}
-    	return null;
-    }
-
-
-    private TaskData doInBackgroundDeleteCard(TaskData... params) {
-//        Decks deck = params[0].getDeck();
-//        Card card = params[0].getCard();
-//        Card newCard = null;
-//        Long id = 0l;
-//        Log.i(AnkiDroidApp.TAG, "doInBackgroundDeleteCard");
-//
-//        try {
-//            AnkiDb ankiDB = AnkiDatabaseManager.getDatabase(deck.getDeckPath());
-//            ankiDB.getDatabase().beginTransaction();
-//            try {
-//                id = card.getId();
-//                card.delete();
-//                deck.reset();
-//                newCard = deck.getCard();
-//                publishProgress(new TaskData(newCard));
-//                ankiDB.getDatabase().setTransactionSuccessful();
-//            } finally {
-//                ankiDB.getDatabase().endTransaction();
-//            }
-//    	} catch (RuntimeException e) {
-//    		Log.e(AnkiDroidApp.TAG, "doInBackgroundDeleteCard - RuntimeException on deleting card: " + e);
-//			AnkiDroidApp.saveExceptionReportFile(e, "doInBackgroundDeleteCard");
-//            return new TaskData(String.valueOf(id), 0, false);
-//    	}
-//        return new TaskData(String.valueOf(id), 0, true);
-    	return null;
-    }
-
-
-    private TaskData doInBackgroundBuryCard(TaskData... params) {
-////        Deck deck = params[0].getDeck();
-////        Card card = params[0].getCard();
-////        Card newCard = null;
-//        Long id = 0l;
-//        Log.i(AnkiDroidApp.TAG, "doInBackgroundBuryCard");
-//
-//        try {
-//            AnkiDb ankiDB = AnkiDatabaseManager.getDatabase(deck.getDeckPath());
-//            ankiDB.getDatabase().beginTransaction();
-//            try {
-//                id = card.getId();
-//                deck.buryFact(card.getFactId(), id);
-//                deck.reset();
-//                newCard = deck.getCard();
-//                publishProgress(new TaskData(newCard));
-//                ankiDB.getDatabase().setTransactionSuccessful();
-//            } finally {
-//                ankiDB.getDatabase().endTransaction();
-//            }
-//    	} catch (RuntimeException e) {
-//    		Log.e(AnkiDroidApp.TAG, "doInBackgroundSuspendCard - RuntimeException on suspending card: " + e);
-//			AnkiDroidApp.saveExceptionReportFile(e, "doInBackgroundBuryCard");
-//            return new TaskData(String.valueOf(id), 0, false);
-//    	}
-//        return new TaskData(String.valueOf(id), 0, true);
     	return null;
     }
 

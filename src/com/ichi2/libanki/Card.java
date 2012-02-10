@@ -593,10 +593,6 @@ public class Card implements Cloneable {
 		return mLapses;
 	}
 
-	public Note getNote() {
-		return mNote;
-	}
-
 	public void setLapses(int lapses) {
 		mLapses = lapses;
 	}

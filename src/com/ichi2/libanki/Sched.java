@@ -1385,7 +1385,7 @@ public class Sched {
 			if (lf >= card.getLapses()
 					&& (card.getLapses() - lf) % Math.max(lf / 2, 1) == 0) {
 				// add a leech tag
-				Note n = card.getNote();
+				Note n = card.note();
 				n.addTag("leech");
 				n.flush();
 				// handle
@@ -1631,7 +1631,7 @@ public class Sched {
 	/**
 	 * Suspend cards.
 	 */
-	private void suspendCards(long[] ids) {
+	public void suspendCards(long[] ids) {
 		removeFailed(ids);
 		mCol.getDb().execute("UPDATE cards SET queue = -1, mod = " + Utils.intNow()
 								+ ", usn = " + mCol.usn() + " WHERE id IN "
@@ -1652,10 +1652,10 @@ public class Sched {
 	/**
 	 * Bury all cards for note until next session.
 	 */
-	private void buryNote(long nid) {
+	public void buryNote(long nid) {
 		mCol.setDirty();
 		ArrayList<Long> cids = mCol.getDb().queryColumn(Long.class,
-				"SELECT id FROM card WHERE nid = " + nid, 0);
+				"SELECT id FROM cards WHERE nid = " + nid, 0);
 		long[] ids = new long[cids.size()];
 		int i = 0;
 		for (long c : cids) {

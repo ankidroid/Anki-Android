@@ -329,7 +329,7 @@ public class CardEditor extends Activity {
 				finish();
 				return;
 			}
-			mEditorNote = mCurrentEditedCard.getNote();
+			mEditorNote = mCurrentEditedCard.note();
 			mAddNote = false;
 			break;
 
