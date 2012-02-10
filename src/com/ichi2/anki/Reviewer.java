@@ -1239,6 +1239,9 @@ public class Reviewer extends Activity implements IButtonListener{
     }
 
     private void updateMenuItems() {
+    	if (mOptionsMenu == null) {
+    		return;
+    	}
     	MenuItem item = mOptionsMenu.findItem(MENU_MARK);
         if (mCurrentCard.note().hasTag("marked")) {
             item.setTitle(R.string.menu_unmark_card);
@@ -1265,7 +1268,7 @@ public class Reviewer extends Activity implements IButtonListener{
 
         UIUtils.addMenuItemInActionBar(menu, Menu.NONE, MENU_MARK, Menu.NONE, R.string.menu_mark_card, R.drawable.ic_menu_mark);
         UIUtils.addMenuItemInActionBar(menu, Menu.NONE, MENU_UNDO, Menu.NONE, R.string.undo, R.drawable.ic_menu_revert_disabled);
-        UIUtils.addMenuItemInActionBar(menu, Menu.NONE, MENU_EDIT, Menu.NONE, R.string.menu_edit_card, R.drawable.ic_menu_edit);
+        UIUtils.addMenuItem(menu, Menu.NONE, MENU_EDIT, Menu.NONE, R.string.menu_edit_card, R.drawable.ic_menu_edit);
         if (mPrefWhiteboard) {
             if (mShowWhiteboard) {
             	UIUtils.addMenuItemInActionBar(menu, Menu.NONE, MENU_WHITEBOARD, Menu.NONE, R.string.hide_whiteboard,
