@@ -16,10 +16,15 @@
 
 package com.ichi2.themes;
 
+import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+
 import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki2.R;
 import com.tomgibara.android.veecheck.util.PrefSettings;
 
+import android.app.ActionBar;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.DialogInterface.OnCancelListener;
@@ -184,10 +189,21 @@ public class Themes {
 			case THEME_WHITE:
 				lv.setSelector(R.drawable.white_deckpicker_list_selector);
 		        try {
-					lv.setOverScrollMode(View.OVER_SCROLL_NEVER);
-		        } catch (Throwable e) {
-		        	// do nothing
-		        }
+		        	Field f = View.class.getField("OVER_SCROLL_NEVER");
+		        	int overScrollNever = f.getInt(f);
+		        	Method overScrollMethod = lv.getClass().getMethod("setOverScrollMode", int.class);
+			        if (overScrollMethod != null) {
+			        	overScrollMethod.invoke(lv, overScrollNever);
+			        }
+		        } catch (SecurityException e) {
+		        } catch (NoSuchMethodException e) {
+		        } catch (IllegalArgumentException e) {
+		        } catch (IllegalAccessException e) {
+		        } catch (InvocationTargetException e) {
+		        } catch (NullPointerException e) {
+		        } catch (NoSuchFieldException e) {
+					throw new RuntimeException(e);
+				}
 				lv.setVerticalScrollBarEnabled(false);
 				lv.setFadingEdgeLength(15);
 				lv.setDividerHeight(0);

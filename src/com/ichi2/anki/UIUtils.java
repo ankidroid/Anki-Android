@@ -82,13 +82,15 @@ public class UIUtils {
         } catch (NullPointerException e) {
         }
     }
-    
-    
+
+
     public static void setActionBarSubtitle(Context context, String text) {
         try {
         	Method getActionBar = context.getClass().getMethod("getActionBar");
-    		ActionBar actionBar = (ActionBar) getActionBar.invoke(context);
-    		actionBar.setSubtitle(text);
+        	if (getActionBar != null) {
+        		Object o = getActionBar.invoke(context);
+        		o.getClass().getMethod("setSubtitle", CharSequence.class).invoke(o, text);
+        	}
         } catch (SecurityException e) {
         } catch (NoSuchMethodException e) {
         } catch (IllegalArgumentException e) {
