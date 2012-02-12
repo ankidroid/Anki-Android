@@ -9,7 +9,7 @@
 		android:layout_width="0dip"
 		android:layout_height="fill_parent"
 		android:maxLines="3"
-		android:layout_weight="1"
+		android:layout_weight="2"
 		android:gravity="center_vertical"
 		android:layout_marginRight="0.5dip"/>
   	<TextView 
@@ -17,6 +17,15 @@
 		android:layout_width="0dip"
 		android:layout_height="fill_parent"
 		android:maxLines="3"
+		android:layout_weight="1"
+		android:gravity="center_vertical"
+		android:layout_marginLeft="0.5dip"/>
+  	<TextView 
+  		android:id="@+id/card_deck"
+		android:layout_width="0dip"
+		android:layout_height="fill_parent"
+		android:maxLines="3"
+		android:visibility="gone"
 		android:layout_weight="1"
 		android:gravity="center_vertical"
 		android:layout_marginLeft="0.5dip"/>

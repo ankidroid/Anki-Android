@@ -97,11 +97,11 @@
 					android:layout_height="fill_parent">
 			    <TextView android:id="@+id/deckpicker_bar_all"
 						android:layout_width="fill_parent"
-						android:layout_height="20dip"
+						android:layout_height="0dip"
 						android:background="@color/studyoptions_progressbar_mature_default"/>
 				<TextView android:id="@+id/deckpicker_bar_mat"
 						android:layout_width="fill_parent"
-						android:layout_height="15dip"
+						android:layout_height="0dip"
 						android:background="@color/studyoptions_progressbar_young_default"/>
 				</LinearLayout>
 			</FrameLayout> 

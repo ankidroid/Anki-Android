@@ -20,7 +20,6 @@
 
 package com.ichi2.anki;import com.ichi2.anki2.R;
 
-import android.app.ActionBar;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.BroadcastReceiver;
@@ -65,7 +64,6 @@ import com.ichi2.async.Connection.Payload;
 import com.ichi2.async.DeckTask.TaskData;
 import com.ichi2.charts.ChartBuilder;
 import com.ichi2.libanki.Collection;
-import com.ichi2.libanki.Stats;
 import com.ichi2.libanki.Utils;
 import com.ichi2.themes.StyledDialog;
 import com.ichi2.themes.StyledProgressDialog;
