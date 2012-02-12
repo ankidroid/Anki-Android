@@ -24,9 +24,7 @@ import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki2.R;
 import com.tomgibara.android.veecheck.util.PrefSettings;
 
-import android.app.ActionBar;
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.content.DialogInterface.OnCancelListener;
 import android.content.DialogInterface.OnClickListener;
 import android.content.res.Resources;
