@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <style name="Theme_Base_Light" parent="@android:style/Theme.Holo.Light" />
-    <style name="Theme_Base_Dark" parent="@android:style/Theme.Holo" />
-    <style name="Theme_Base_Dialog" parent="@android:style/Theme.Holo.Dialog" />
+    <style name="Theme_Base_Light" parent="@android:style/Theme.Light" />
+    <style name="Theme_Base_Dark" parent="@android:style/Theme" />
+    <style name="Theme_Base_Dialog" parent="@android:style/Theme.Dialog" />
 
     <!-- Blue Theme -->
     <style name="Theme_Blue" parent="@style/Theme_Base_Light">
