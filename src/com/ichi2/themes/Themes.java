@@ -114,11 +114,11 @@ public class Themes {
 		}
 		switch (theme == -1 ? mCurrentTheme : theme) {
 		case THEME_ANDROID_DARK:
-			context.setTheme(R.style.Theme_Black);
+			context.setTheme(android.R.style.Theme_Black);
 			Log.i(AnkiDroidApp.TAG, "Set theme: dark");
 			break;
 		case THEME_ANDROID_LIGHT:
-			context.setTheme(R.style.Theme_Light);
+			context.setTheme(android.R.style.Theme_Light);
 			Log.i(AnkiDroidApp.TAG, "Set theme: light");
 			break;
 		case THEME_BLUE:
@@ -180,7 +180,7 @@ public class Themes {
 				lv.setSelector(R.drawable.blue_deckpicker_list_selector);
 				lv.setDividerHeight(0);
 				break;
-			case THEME_FLAT:
+			case THEME_FLAT: 
 				lv.setSelector(R.drawable.blue_deckpicker_list_selector);
 				lv.setDividerHeight(0);
 				break;

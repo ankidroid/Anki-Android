@@ -244,9 +244,9 @@ public class CardBrowser extends Activity {
 		mCardsListView = (ListView) findViewById(R.id.card_browser_list);
 
 		mCardsAdapter = new SizeControlledListAdapter(this, mCards,
-				R.layout.card_item, new String[] { "sfld", "tmpl",
+				R.layout.card_item, new String[] { "sfld", "tmpl", "deck",
 						"flags" }, new int[] { R.id.card_sfld,
-						R.id.card_tmpl, R.id.card_item },
+						R.id.card_tmpl, R.id.card_deck, R.id.card_item },
 				mrelativeBrowserFontSize);
 		mCardsAdapter.setViewBinder(new SimpleAdapter.ViewBinder() {
 			@Override
@@ -262,8 +262,8 @@ public class CardBrowser extends Activity {
 //					}
 //					view.setBackgroundResource(mBackground[which]);
 					return true;
-				} else if (view.getId() == R.id.card_tmpl) {
-					
+				} else if (view.getId() == R.id.card_deck && text.length() > 0) {
+					view.setVisibility(View.VISIBLE);
 				}
 				return false;
 			}

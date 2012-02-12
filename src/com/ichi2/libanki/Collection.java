@@ -823,6 +823,17 @@ public class Collection {
 			lim = " AND c.did IN " + mSched._deckLimit();
 		}
 		HashMap<Long, HashMap<Integer, String>> templates = mModels.getTemplateNames();
+		HashMap<Long, String> decks = null; 
+		if (wholeCollection) {
+			decks = new HashMap<Long, String>(); 
+			try {
+				for (JSONObject o : mDecks.all()) {
+					decks.put(o.getLong("id"), o.getString("name"));
+				}
+			} catch (JSONException e) {
+				throw new RuntimeException(e);
+			}
+		}
 		try {
 			cur = mDb.getDatabase().rawQuery("SELECT c.id, n.sfld, n.mid, c.ord, c.did, c.queue, n.tags FROM cards c, notes n WHERE c.nid = n.id" + lim, null);
 			while (cur.moveToNext()) {
@@ -830,7 +841,7 @@ public class Collection {
 				map.put("id", cur.getString(0));
 				map.put("sfld", cur.getString(1));
 				map.put("tmpl", templates.get(cur.getLong(2)).get(cur.getInt(3)));
-				map.put("did", cur.getString(4));
+				map.put("deck", wholeCollection ? decks.get(cur.getLong(4)) : "");
 				map.put("queue", cur.getString(5));
 				map.put("tags", cur.getString(6));
 				data.add(map);

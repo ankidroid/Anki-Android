@@ -378,7 +378,7 @@ public class ChartBuilder extends Activity {
 	    rg.setOrientation(RadioGroup.HORIZONTAL);
 	    RadioGroup.LayoutParams lp = new RadioGroup.LayoutParams(0, LayoutParams.MATCH_PARENT, 1);
 	    String[] text = new String[]{"1 month", "1 year", "all"};
-	    int height = context.getResources().getDrawable(R.drawable.blue_btn_radio).getIntrinsicHeight();
+	    int height = context.getResources().getDrawable(R.drawable.white_btn_radio).getIntrinsicHeight();
 	    for (int i = 0; i < statisticRadioButtons.length; i++){
 	    	statisticRadioButtons[i] = new RadioButton(context);
 	    	statisticRadioButtons[i].setClickable(true);

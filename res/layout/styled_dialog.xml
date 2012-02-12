@@ -96,7 +96,12 @@
             android:layout_width="fill_parent"
             android:background="#ffffff"
             android:cacheColorHint="#ffffff"
+            android:focusableInTouchMode="true"
+            android:drawSelectorOnTop="true"
+            android:listSelector="@drawable/white_list_selector_background"
+            android:divider="#dfdfdf"
             android:layout_height="wrap_content"
+            android:dividerHeight="1dip"
             android:paddingTop="0dip"
             android:paddingBottom="0dip" />
     </FrameLayout>

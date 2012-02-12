@@ -136,12 +136,12 @@
     <style name="White.CompoundButton">
     </style>
     <style name="White.CompoundButton.CheckBox" parent="@android:style/Widget.CompoundButton.CheckBox">
-	    <item name="android:button">@drawable/blue_btn_check</item>
+	    <item name="android:button">@drawable/white_btn_check</item>
     </style>
     <style name="White.CompoundButton.RadioButton">
-        <item name="android:background">@android:drawable/btn_radio</item>
         <item name="android:button">?android:attr/listChoiceIndicatorSingle</item>
-    </style>
+        <item name="android:background">@drawable/white_btn_radio</item>
+        </style>
     <style name="White.AlertDialog">
         <item name="android:fullDark">@drawable/white_popup_full_bright</item>
         <item name="android:topDark">@drawable/white_popup_top_bright</item>
