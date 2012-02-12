@@ -187,10 +187,10 @@ public class Themes {
 			case THEME_WHITE:
 				lv.setSelector(R.drawable.white_deckpicker_list_selector);
 		        try {
-		        	Field f = View.class.getField("OVER_SCROLL_NEVER");
-		        	int overScrollNever = f.getInt(f);
 		        	Method overScrollMethod = lv.getClass().getMethod("setOverScrollMode", int.class);
 			        if (overScrollMethod != null) {
+			        	Field f = View.class.getField("OVER_SCROLL_NEVER");
+			        	int overScrollNever = f.getInt(f);
 			        	overScrollMethod.invoke(lv, overScrollNever);
 			        }
 		        } catch (SecurityException e) {
@@ -200,7 +200,6 @@ public class Themes {
 		        } catch (InvocationTargetException e) {
 		        } catch (NullPointerException e) {
 		        } catch (NoSuchFieldException e) {
-					throw new RuntimeException(e);
 				}
 				lv.setVerticalScrollBarEnabled(false);
 				lv.setFadingEdgeLength(15);
