@@ -3226,7 +3226,9 @@ public class Reviewer extends Activity implements IButtonListener{
 //            DeckTask.launchDeckTask(DeckTask.TASK_TYPE_SAVE_DECK, mSaveAndResetDeckHandler, new DeckTask.TaskData(DeckManager.getMainDeck(), 0));
 //    	} else {
     		finish();
-    		ActivityTransitionAnimation.slide(Reviewer.this, ActivityTransitionAnimation.RIGHT);
+    		if (UIUtils.getApiLevel() > 4) {
+        		ActivityTransitionAnimation.slide(Reviewer.this, ActivityTransitionAnimation.RIGHT);    			
+    		}
 //    	}
     }
 
