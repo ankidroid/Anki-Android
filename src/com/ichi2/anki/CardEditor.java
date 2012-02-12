@@ -31,6 +31,7 @@ import android.content.DialogInterface.OnCancelListener;
 import android.content.DialogInterface.OnClickListener;
 import android.content.res.Resources;
 import android.content.res.Resources.NotFoundException;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.Editable;
@@ -51,7 +52,6 @@ import android.view.ViewGroup.LayoutParams;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.Button;
-import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -1278,6 +1278,8 @@ public class CardEditor extends Activity {
 		for (int i = 0; i < fields.length; i++) {
 			FieldEditText newTextbox = new FieldEditText(this, i, fields[i]);
 			TextView label = newTextbox.getLabel();
+			label.setTextColor(Color.BLACK);
+			label.setPadding((int)UIUtils.getDensityAdjustedValue(this, 3.4f), 0, 0, 0);
 			ImageView circle = newTextbox.getCircle();
 			mEditFields.add(newTextbox);
 			FrameLayout frame = new FrameLayout(this);

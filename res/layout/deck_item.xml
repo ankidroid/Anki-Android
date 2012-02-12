@@ -37,6 +37,7 @@
 			android:layout_width="wrap_content"
 			android:gravity="left"
 			android:layout_centerVertical="true"
+			android:textColor="#000000"
 			android:maxLines="2"
 			android:layout_alignParentLeft="true"
 			android:layout_toLeftOf="@+id/deckpicker_new"

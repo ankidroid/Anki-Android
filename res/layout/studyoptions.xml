@@ -21,6 +21,7 @@
 				android:textSize="28sp" 
 				android:textStyle="bold"
 				android:ellipsize="end"
+				android:textColor="#000000"
 				android:maxLines="3"
 				android:gravity="center" 
 				android:layout_width="fill_parent" 
@@ -32,6 +33,7 @@
 				android:ellipsize="end"
 				android:maxLines="3"
 				android:gravity="center" 
+				android:textColor="#000000"
 				android:layout_width="fill_parent" 
 				android:layout_height="wrap_content" 
 				android:layout_marginBottom="5dp" 
@@ -82,6 +84,7 @@
 			    	android:layout_height="wrap_content"
 					android:layout_centerVertical="true"
 				    android:paddingRight="5dip"
+					android:textColor="#000000"
 				    android:text="@string/studyoptions_due_today" />
 				    	    	<LinearLayout	
 	    	    android:orientation="horizontal"
@@ -111,24 +114,28 @@
 			<TableRow>
 				<TextView 
 					android:layout_height="wrap_content"
+					android:textColor="#000000"
 					android:layout_width="wrap_content"
 					android:text="@string/studyoptions_new_total"
 				    android:paddingRight="5dip"/>
 				<TextView 
 					android:id="@+id/studyoptions_total_new"
 					android:layout_height="wrap_content"
+					android:textColor="#000000"
 					android:layout_width="wrap_content"
 					android:gravity="right"/>
 			</TableRow>
 			<TableRow>
 				<TextView 
 					android:layout_height="wrap_content"
+					android:textColor="#000000"
 					android:layout_width="wrap_content"
 					android:text="@string/studyoptions_total_cards"
 				    android:paddingRight="5dip"/>
 				<TextView 
 					android:id="@+id/studyoptions_total"
 					android:layout_height="wrap_content"
+					android:textColor="#000000"
 					android:layout_width="wrap_content"
 					android:gravity="right"/>
 			</TableRow>
@@ -136,11 +143,13 @@
 				<TextView 
 					android:layout_height="wrap_content"
 					android:layout_width="wrap_content"
+					android:textColor="#000000"
 					android:text="@string/studyoptions_eta"
 				    android:paddingRight="5dip"/>
 				<TextView 
 					android:id="@+id/studyoptions_eta" 
 					android:layout_height="wrap_content"
+					android:textColor="#000000"
 					android:layout_width="wrap_content"
 					android:gravity="right"/>
    			</TableRow>
