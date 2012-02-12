@@ -842,8 +842,10 @@ public class Collection {
 				map.put("sfld", cur.getString(1));
 				map.put("tmpl", templates.get(cur.getLong(2)).get(cur.getInt(3)));
 				map.put("deck", wholeCollection ? decks.get(cur.getLong(4)) : "");
-				map.put("queue", cur.getString(5));
-				map.put("tags", cur.getString(6));
+				int queue = cur.getInt(5);
+				String tags = cur.getString(6);
+				map.put("flags", Integer.toString((queue == -1 ? 1 : 0) + (tags.contains("marked") ? 2 : 0)));
+				map.put("tags", tags);
 				data.add(map);
 			}
 		} finally {

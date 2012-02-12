@@ -252,15 +252,15 @@ public class CardBrowser extends Activity {
 			@Override
 			public boolean setViewValue(View view, Object arg1, String text) {
 				if (view.getId() == R.id.card_item) {
-//					int which = BACKGROUND_NORMAL;
-//					if (text.equals("11")) {
-//						which = BACKGROUND_MARKED_SUSPENDED;
-//					} else if (text.substring(1, 2).equals("1")) {
-//						which = BACKGROUND_SUSPENDED;
-//					} else if (text.substring(0, 1).equals("1")) {
-//						which = BACKGROUND_MARKED;
-//					}
-//					view.setBackgroundResource(mBackground[which]);
+					int which = BACKGROUND_NORMAL;
+					if (text.equals("1")) {
+						which = BACKGROUND_SUSPENDED;
+					} else if (text.equals("2")) {
+						which = BACKGROUND_MARKED;
+					} else if (text.equals("3")) {
+						which = BACKGROUND_MARKED_SUSPENDED;
+					}
+					view.setBackgroundResource(mBackground[which]);
 					return true;
 				} else if (view.getId() == R.id.card_deck && text.length() > 0) {
 					view.setVisibility(View.VISIBLE);
