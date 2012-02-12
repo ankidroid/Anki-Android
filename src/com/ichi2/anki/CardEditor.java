@@ -105,6 +105,7 @@ public class CardEditor extends Activity {
 	public static final String SOURCE_TEXT = "SOURCE_TEXT";
 	public static final String TARGET_TEXT = "TARGET_TEXT";
 	public static final String EXTRA_CALLER = "CALLER";
+	public static final String EXTRA_CARD_ID = "CARD_ID";
 	public static final String EXTRA_CONTENTS = "CONTENTS";
 	public static final String EXTRA_ID = "ID";
 
@@ -353,13 +354,13 @@ public class CardEditor extends Activity {
 			break;
 
 		case CALLER_CARDBROWSER_EDIT:
-			// Card browCard = CardBrowser.getEditorCard();
-			// if (browCard == null) {
-			// finish();
-			// return;
-			// }
-			// mEditorNote = browCard.getFact();
-			// mAddNote = false;
+			mCurrentEditedCard = mCol.getCard(intent.getLongExtra(EXTRA_CARD_ID, 0));
+			if (mCurrentEditedCard == null) {
+				finish();
+				return;
+			}
+			mEditorNote = mCurrentEditedCard.note();
+			mAddNote = false;
 			break;
 
 		case CALLER_CARDBROWSER_ADD:

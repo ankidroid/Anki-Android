@@ -82,10 +82,8 @@ public class CardBrowser extends Activity {
 	private Card mSelectedCard;
 	private Card mUndoRedoCard;
 	private long mUndoRedoCardId;
-	private static Card sEditorCard;
 	private boolean mIsSuspended;
 	private boolean mIsMarked;
-	private int mPositionInCardsList;
 
 	/** Modifier of percentage of the font size of the card browser */
 	private int mrelativeBrowserFontSize = DEFAULT_FONT_SIZE_RATIO;
@@ -270,29 +268,24 @@ public class CardBrowser extends Activity {
 		});
 
 		mCardsListView.setAdapter(mCardsAdapter);
-//		mCardsListView.setOnItemClickListener(new OnItemClickListener() {
-//			@Override
-//			public void onItemClick(AdapterView<?> parent, View view,
-//					int position, long id) {
-//				Intent editCard = new Intent(CardBrowser.this, CardEditor.class);
-//	            editCard.putExtra(CardEditor.EXTRA_CALLER, CardEditor.CALLER_CARDBROWSER_EDIT);
-//	            editCard.putExtra(CardEditor.EXTRA_DECKPATH, DeckManager.getMainDeckPath());
-//				mPositionInCardsList = position;
-//				mSelectedCard = mDeck.cardFromId(Long.parseLong(mCards.get(
-//						mPositionInCardsList).get("id")));
+		mCardsListView.setOnItemClickListener(new OnItemClickListener() {
+			@Override
+			public void onItemClick(AdapterView<?> parent, View view,
+					int position, long id) {
+				Intent editCard = new Intent(CardBrowser.this, CardEditor.class);
+	            editCard.putExtra(CardEditor.EXTRA_CALLER, CardEditor.CALLER_CARDBROWSER_EDIT);
+	            editCard.putExtra(CardEditor.EXTRA_CARD_ID, Long.parseLong(mCards.get(position).get("id")));
 //				if (mSelectedCard == null) {
 //					deleteCard(mCards.get(mPositionInCardsList).get("id"), mPositionInCardsList);
 //					return;
 //				}
-//				sEditorCard = mSelectedCard;
-//				editCard.putExtra("callfromcardbrowser", true);
-//				startActivityForResult(editCard, EDIT_CARD);
-//				if (Integer.valueOf(android.os.Build.VERSION.SDK) > 4) {
-//					ActivityTransitionAnimation.slide(CardBrowser.this,
-//							ActivityTransitionAnimation.LEFT);
-//				}
-//			}
-//		});
+				startActivityForResult(editCard, EDIT_CARD);
+				if (Integer.valueOf(android.os.Build.VERSION.SDK) > 4) {
+					ActivityTransitionAnimation.slide(CardBrowser.this,
+							ActivityTransitionAnimation.LEFT);
+				}
+			}
+		});
 		registerForContextMenu(mCardsListView);
 
 		mSearchEditText = (EditText) findViewById(R.id.card_browser_search);
