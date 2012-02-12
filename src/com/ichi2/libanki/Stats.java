@@ -226,11 +226,10 @@ public class Stats {
         }
 
         // small adjustment for a proper chartbuilding with achartengine
-        // small adjustment for a proper chartbuilding with achartengine
         if (type != TYPE_LIFE && (list.size() == 0 || list.get(0)[0] > -num)) {
         	list.add(0, new double[]{-num, 0, 0, 0, 0, 0});
         } else if (type == TYPE_LIFE && list.size() == 0) {
-        	list.add(0, new double[]{Math.min(-12, list.get(0)[0] - 1), 0, 0, 0, 0, 0});
+        	list.add(0, new double[]{-12, 0, 0, 0, 0, 0});
         }
         if (list.get(list.size() - 1)[0] < 0) {
         	list.add(new double[]{0, 0, 0, 0, 0, 0});
