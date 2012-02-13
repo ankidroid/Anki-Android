@@ -354,7 +354,7 @@ public class CardEditor extends Activity {
 			break;
 
 		case CALLER_CARDBROWSER_EDIT:
-			mCurrentEditedCard = mCol.getCard(intent.getLongExtra(EXTRA_CARD_ID, 0));
+			mCurrentEditedCard = CardBrowser.sCardBrowserCard;
 			if (mCurrentEditedCard == null) {
 				finish();
 				return;

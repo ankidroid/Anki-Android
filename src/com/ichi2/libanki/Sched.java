@@ -1633,6 +1633,9 @@ public class Sched {
 	 */
 	public void suspendCards(long[] ids) {
 		removeFailed(ids);
+		String muh = "UPDATE cards SET queue = -1, mod = " + Utils.intNow()
+								+ ", usn = " + mCol.usn() + " WHERE id IN "
+								+ Utils.ids2str(ids);
 		mCol.getDb().execute("UPDATE cards SET queue = -1, mod = " + Utils.intNow()
 								+ ", usn = " + mCol.usn() + " WHERE id IN "
 								+ Utils.ids2str(ids));
@@ -1641,7 +1644,7 @@ public class Sched {
 	/**
 	 * Unsuspend cards
 	 */
-	private void unsuspend(long[] ids) {
+	public void unsuspendCards(long[] ids) {
 		mCol.getDb().execute(
 						"UPDATE cards SET queue = type, mod = "
 								+ Utils.intNow() + ", usn = " + mCol.usn()

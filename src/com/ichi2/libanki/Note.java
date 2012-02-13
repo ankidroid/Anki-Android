@@ -327,4 +327,8 @@ public class Note {
 	public Collection getCol() {
 		return mCol;
 	}
+
+	public String getSFld() {
+		return mCol.getDb().queryString("SELECT sfld FROM notes WHERE id = " + mId);
+	}
 }

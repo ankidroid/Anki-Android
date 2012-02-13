@@ -92,7 +92,7 @@ public class DeckPicker extends Activity {
 	private static final int DIALOG_NO_CONNECTION = 3;
 	private static final int DIALOG_DELETE_DECK = 4;
 	private static final int DIALOG_SELECT_STATISTICS_TYPE = 5;
-	private static final int DIALOG_SELECT_STATISTICS_PERIOD = 6;	
+	private static final int DIALOG_SELECT_STATISTICS_PERIOD = 6;
 	private static final int DIALOG_DELETE_BACKUPS = 8;
 	private static final int DIALOG_CONTEXT_MENU = 9;
 	private static final int DIALOG_REPAIR_DECK = 10;

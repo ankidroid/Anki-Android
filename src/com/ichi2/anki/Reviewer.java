@@ -665,7 +665,7 @@ public class Reviewer extends Activity implements IButtonListener{
                 mCardTimer.setBase(SystemClock.elapsedRealtime());
                 mCardTimer.start();
             }
-            if (values[0].getBoolean()) {
+            if (sDisplayAnswer) {
                 displayCardAnswer();
             } else {
                 displayCardQuestion();            	
@@ -1445,7 +1445,7 @@ public class Reviewer extends Activity implements IButtonListener{
         	setInAnimation(true);
             if (resultCode == RESULT_OK || resultCode == RESULT_EDIT_CARD_RESET) {
                 Log.i(AnkiDroidApp.TAG, "Saving card...");
-                DeckTask.launchDeckTask(DeckTask.TASK_TYPE_UPDATE_FACT, mUpdateCardHandler, new DeckTask.TaskData(mSched, mCurrentCard, sDisplayAnswer));
+                DeckTask.launchDeckTask(DeckTask.TASK_TYPE_UPDATE_FACT, mUpdateCardHandler, new DeckTask.TaskData(mSched, mCurrentCard, true));
             } else if (resultCode == DeckPicker.RESULT_MEDIA_EJECTED) {
                 finishNoStorageAvailable();
             } else {

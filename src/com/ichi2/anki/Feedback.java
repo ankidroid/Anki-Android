@@ -140,9 +140,9 @@ public class Feedback extends Activity {
 	private void closeFeedback() {
 	        setResult(RESULT_OK);
 			finish();
-                if (UIUtils.getApiLevel() > 4) {
-                    ActivityTransitionAnimation.slide(Feedback.this, ActivityTransitionAnimation.LEFT);
-                }
+            if (UIUtils.getApiLevel() > 4) {
+                ActivityTransitionAnimation.slide(Feedback.this, ActivityTransitionAnimation.LEFT);
+            }
 	}
 
 
@@ -230,10 +230,17 @@ public class Feedback extends Activity {
                     Log.e(AnkiDroidApp.TAG, e.toString());
                 }
                 finish();
+                if (UIUtils.getApiLevel() > 4) {
+                    ActivityTransitionAnimation.slide(Feedback.this, ActivityTransitionAnimation.NONE);
+                }
                 return;
             } else if (mReportErrorMode.equals(REPORT_NEVER)) { // Never report
                 deleteFiles(false, false);
                 finish();
+                if (UIUtils.getApiLevel() > 4) {
+                    ActivityTransitionAnimation.slide(Feedback.this, ActivityTransitionAnimation.NONE);
+                }
+                return;
             }
         }
 

@@ -279,7 +279,7 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
     	Collection col = sched.getCol();
         Card editCard = params[0].getCard();
         Note editNote = editCard.note();
-        boolean showQuestion = params[0].getBoolean();
+        boolean fromReviewer = params[0].getBoolean();
 
         try {
 	        col.getDb().getDatabase().beginTransaction();
@@ -288,15 +288,19 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
 	        	editNote.flush();
 	        	// flush card too, in case, did has been changed
 	        	editCard.flush();
-	        	Card newCard;
-	        	if (col.getDecks().active().contains(editCard.getDid())) {
-	        		newCard = editCard;
-		        	// reload qa-cache
-	        		newCard.getQuestion(true);
+	        	if (fromReviewer) {
+		        	Card newCard;
+		        	if (col.getDecks().active().contains(editCard.getDid())) {
+		        		newCard = editCard;
+			        	// reload qa-cache
+		        		newCard.getQuestion(true);
+		        	} else {
+		        		newCard = sched.getCard();
+		        	}
+		        	publishProgress(new TaskData(newCard));	        		
 	        	} else {
-	        		newCard = sched.getCard();
+		        	publishProgress(new TaskData(editCard));	        		
 	        	}
-	        	publishProgress(new TaskData(null, newCard, showQuestion));
 	            col.getDb().getDatabase().setTransactionSuccessful();
 	        } finally {
 	        	col.getDb().getDatabase().endTransaction();
@@ -470,7 +474,11 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
             		break;
             	case 1:
             		// suspend card
-            		sched.suspendCards(new long[]{card.getId()});
+            		if (card.getQueue() == -1) {
+            			sched.unsuspendCards(new long[]{card.getId()});
+            		} else {
+                		sched.suspendCards(new long[]{card.getId()});
+            		}
             		break;
             	case 2:
             		// suspend note
@@ -517,7 +525,7 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
                 	}
                 	note.flush();
                 }
-                publishProgress(null);
+                publishProgress(new TaskData(card));
                 ankiDB.getDatabase().setTransactionSuccessful();
             } finally {
                 ankiDB.getDatabase().endTransaction();

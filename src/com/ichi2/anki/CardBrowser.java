@@ -54,6 +54,8 @@ import com.ichi2.anim.ActivityTransitionAnimation;
 import com.ichi2.async.DeckTask;
 import com.ichi2.libanki.Card;
 import com.ichi2.libanki.Collection;
+import com.ichi2.libanki.Note;
+import com.ichi2.libanki.Utils;
 import com.ichi2.themes.StyledDialog;
 import com.ichi2.themes.StyledProgressDialog;
 import com.ichi2.themes.Themes;
@@ -68,6 +70,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.amr.arabic.ArabicUtilities;
+import org.json.JSONException;
 
 public class CardBrowser extends Activity {
 	private ArrayList<HashMap<String, String>> mCards;
@@ -79,11 +82,14 @@ public class CardBrowser extends Activity {
 
 	private StyledProgressDialog mProgressDialog;
 	private boolean mUndoRedoDialogShowing = false;
-	private Card mSelectedCard;
 	private Card mUndoRedoCard;
 	private long mUndoRedoCardId;
 	private boolean mIsSuspended;
 	private boolean mIsMarked;
+
+	public static Card sCardBrowserCard;
+
+	private int mPositionInCardsList;
 
 	/** Modifier of percentage of the font size of the card browser */
 	private int mrelativeBrowserFontSize = DEFAULT_FONT_SIZE_RATIO;
@@ -142,7 +148,7 @@ public class CardBrowser extends Activity {
 //	private static ArrayList<HashMap<String, String>> sAllCardsCache;
 
     private Handler mTimerHandler = new Handler();
-    private static final int WAIT_TIME_UNTIL_UPDATE = 500;
+    private static final int WAIT_TIME_UNTIL_UPDATE = 800;
 
     private Collection mCol;
     private HashMap<Long, HashMap<Integer, String>> mTemplates;
@@ -159,56 +165,45 @@ public class CardBrowser extends Activity {
 //            Resources res = getResources();
 //            mProgressDialog = ProgressDialog.show(CardBrowser.this, "", res.getString(R.string.saving_changes), true);
 //        }
-//
-//    private DialogInterface.OnClickListener mContextMenuListener = new DialogInterface.OnClickListener() {
-//
-//		@Override
-//		public void onClick(DialogInterface dialog, int which) {
-//			if (mSelectedCard == null) {
-//				return;
-//			}
-//			switch (which) {
-//			case CONTEXT_MENU_MARK:
-//				DeckTask.launchDeckTask(DeckTask.TASK_TYPE_MARK_CARD,
-//						mMarkCardHandler, new DeckTask.TaskData(0, mDeck,
-//								mSelectedCard));
-//				return;
-//			case CONTEXT_MENU_SUSPEND:
-//				DeckTask.launchDeckTask(DeckTask.TASK_TYPE_SUSPEND_CARD,
-//						mSuspendCardHandler, new DeckTask.TaskData(0, mDeck,
-//								mSelectedCard));
-//				return;
-//			case CONTEXT_MENU_DELETE:
-//				Resources res = getResources();
-//				StyledDialog.Builder builder = new StyledDialog.Builder(CardBrowser.this);
-//				builder.setTitle(res.getString(R.string.delete_card_title));
-//				builder.setIcon(android.R.drawable.ic_dialog_alert);
-//				builder.setMessage(String.format(res
-//						.getString(R.string.delete_card_message), mCards.get(
-//						mPositionInCardsList).get("question"), mCards.get(
-//						mPositionInCardsList).get("answer")));
-//				builder.setPositiveButton(res.getString(R.string.yes),
-//						new DialogInterface.OnClickListener() {
-//							@Override
-//							public void onClick(DialogInterface dialog, int which) {
-//								DeckTask.launchDeckTask(
-//										DeckTask.TASK_TYPE_DELETE_CARD,
-//										mDeleteCardHandler, new DeckTask.TaskData(
-//												0, mDeck, mSelectedCard));
-//							}
-//						});
-//				builder.setNegativeButton(res.getString(R.string.no), null);
-//				builder.create().show();
-//				return;
-//			case CONTEXT_MENU_DETAILS:
+
+    private DialogInterface.OnClickListener mContextMenuListener = new DialogInterface.OnClickListener() {
+
+		@Override
+		public void onClick(DialogInterface dialog, int which) {
+			switch (which) {
+			case CONTEXT_MENU_MARK:
+                DeckTask.launchDeckTask(DeckTask.TASK_TYPE_MARK_CARD, mUpdateCardHandler, new DeckTask.TaskData(mCol.getSched(), mCol.getCard(Long.parseLong(mCards.get(mPositionInCardsList).get("id"))), 0));
+				return;
+
+			case CONTEXT_MENU_SUSPEND:
+                DeckTask.launchDeckTask(DeckTask.TASK_TYPE_DISMISS_NOTE, mSuspendCardHandler, new DeckTask.TaskData(mCol.getSched(), mCol.getCard(Long.parseLong(mCards.get(mPositionInCardsList).get("id"))), 1));
+				return;
+
+			case CONTEXT_MENU_DELETE:
+				Resources res = getResources();
+				StyledDialog.Builder builder = new StyledDialog.Builder(CardBrowser.this);
+				builder.setTitle(res.getString(R.string.delete_card_title));
+				builder.setIcon(android.R.drawable.ic_dialog_alert);
+				builder.setMessage(res.getString(R.string.delete_card_message, mCards.get(mPositionInCardsList).get("sfld")));
+				builder.setPositiveButton(res.getString(R.string.yes),
+						new DialogInterface.OnClickListener() {
+							@Override
+							public void onClick(DialogInterface dialog, int which) {
+								deleteCard(mPositionInCardsList);
+		                        DeckTask.launchDeckTask(DeckTask.TASK_TYPE_DISMISS_NOTE, mDeleteNoteHandler, new DeckTask.TaskData(mCol.getSched(), mCol.getCard(Long.parseLong(mCards.get(mPositionInCardsList).get("id"))), 3));
+							}
+						});
+				builder.setNegativeButton(res.getString(R.string.no), null);
+				builder.create().show();
+				return;
+
+			case CONTEXT_MENU_DETAILS:
 //				Themes.htmlOkDialog(CardBrowser.this, getResources().getString(R.string.card_browser_card_details), mSelectedCard.getCardDetails(CardBrowser.this, true)).show();
-//				return;
-//			}
-//		}
-//    	
-//    };
-
-
+				return;
+			}
+		}
+    	
+    };
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -274,7 +269,9 @@ public class CardBrowser extends Activity {
 					int position, long id) {
 				Intent editCard = new Intent(CardBrowser.this, CardEditor.class);
 	            editCard.putExtra(CardEditor.EXTRA_CALLER, CardEditor.CALLER_CARDBROWSER_EDIT);
-	            editCard.putExtra(CardEditor.EXTRA_CARD_ID, Long.parseLong(mCards.get(position).get("id")));
+	            mPositionInCardsList = position;
+	            long cardId = Long.parseLong(mCards.get(mPositionInCardsList).get("id"));
+	            sCardBrowserCard = mCol.getCard(cardId);
 //				if (mSelectedCard == null) {
 //					deleteCard(mCards.get(mPositionInCardsList).get("id"), mPositionInCardsList);
 //					return;
@@ -306,7 +303,15 @@ public class CardBrowser extends Activity {
 		getWindow().setSoftInputMode(
 				WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 
-//		setTitle(mDeck.getDeckName());
+		if (mWholeCollection) {
+			setTitle(getResources().getString(R.string.card_browser_all_decks));			
+		} else {
+			try {
+				setTitle(mCol.getDecks().current().getString("name"));
+			} catch (JSONException e) {
+				throw new RuntimeException(e);
+			}
+		}
 
 		allTags = null;
 		mSelectedTags = new HashSet<String>();
@@ -314,12 +319,12 @@ public class CardBrowser extends Activity {
 		getCards();
 	}
 
-//	@Override
-//	public void onCreateContextMenu(ContextMenu menu, View v,
-//			ContextMenuInfo menuInfo) {
-//		mPositionInCardsList = ((AdapterView.AdapterContextMenuInfo) menuInfo).position;
-//		showDialog(DIALOG_CONTEXT_MENU);
-//	}
+	@Override
+	public void onCreateContextMenu(ContextMenu menu, View v,
+			ContextMenuInfo menuInfo) {
+		mPositionInCardsList = ((AdapterView.AdapterContextMenuInfo) menuInfo).position;
+		showDialog(DIALOG_CONTEXT_MENU);
+	}
 
 
 	@Override
@@ -447,28 +452,26 @@ public class CardBrowser extends Activity {
 //		return false;
 //	}
 //
-//	@Override
-//	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-//		super.onActivityResult(requestCode, resultCode, data);
-//
-//		if (requestCode == EDIT_CARD && resultCode == RESULT_OK) {
-//			Log.i(AnkiDroidApp.TAG, "Saving card...");
-//			DeckTask.launchDeckTask(DeckTask.TASK_TYPE_UPDATE_FACT,
-//					mUpdateCardHandler, new DeckTask.TaskData(0, mDeck,
-//							mSelectedCard));
-//		} else if (requestCode == ADD_FACT && resultCode == RESULT_OK) {
-//			getCards();
-//		}
-//	}
-//
-//	
-//	@Override
-//	protected Dialog onCreateDialog(int id) {
-//		StyledDialog dialog = null;
-//		Resources res = getResources();
-//		StyledDialog.Builder builder = new StyledDialog.Builder(this);
-//
-//		switch (id) {
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		super.onActivityResult(requestCode, resultCode, data);
+
+		if (requestCode == EDIT_CARD && resultCode != RESULT_CANCELED) {
+			Log.i(AnkiDroidApp.TAG, "Saving card...");
+			DeckTask.launchDeckTask(DeckTask.TASK_TYPE_UPDATE_FACT, mUpdateCardHandler, new DeckTask.TaskData(mCol.getSched(), sCardBrowserCard, false));
+		} else if (requestCode == ADD_FACT && resultCode == RESULT_OK) {
+			getCards();
+		}
+	}
+
+	
+	@Override
+	protected Dialog onCreateDialog(int id) {
+		StyledDialog dialog = null;
+		Resources res = getResources();
+		StyledDialog.Builder builder = new StyledDialog.Builder(this);
+
+		switch (id) {
 //		case DIALOG_ORDER:
 //			builder.setTitle(res
 //					.getString(R.string.card_browser_change_display_order_title));
@@ -484,19 +487,21 @@ public class CardBrowser extends Activity {
 //	        });
 //			dialog = builder.create();
 //			break;
-//		case DIALOG_CONTEXT_MENU:
-//			String[] entries = new String[4];
-//			@SuppressWarnings("unused")
-//			MenuItem item;
-//			entries[CONTEXT_MENU_MARK] = res.getString(R.string.card_browser_mark_card);
-//			entries[CONTEXT_MENU_SUSPEND] = res.getString(R.string.card_browser_suspend_card);
-//			entries[CONTEXT_MENU_DELETE] = res.getString(R.string.card_browser_delete_card);
-//			entries[CONTEXT_MENU_DETAILS] = res.getString(R.string.card_browser_card_details);
-//	        builder.setTitle("contextmenu");
-//	        builder.setIcon(R.drawable.ic_menu_manage);
-//	        builder.setItems(entries, mContextMenuListener);
-//	        dialog = builder.create();
-//			break;
+
+		case DIALOG_CONTEXT_MENU:
+			String[] entries = new String[4];
+			@SuppressWarnings("unused")
+			MenuItem item;
+			entries[CONTEXT_MENU_MARK] = res.getString(R.string.card_browser_mark_card);
+			entries[CONTEXT_MENU_SUSPEND] = res.getString(R.string.card_browser_suspend_card);
+			entries[CONTEXT_MENU_DELETE] = res.getString(R.string.card_browser_delete_card);
+			entries[CONTEXT_MENU_DETAILS] = res.getString(R.string.card_browser_card_details);
+	        builder.setTitle("contextmenu");
+	        builder.setIcon(R.drawable.ic_menu_manage);
+	        builder.setItems(entries, mContextMenuListener);
+	        dialog = builder.create();
+			break;
+
 //		case DIALOG_RELOAD_CARDS:
 //			builder.setTitle(res.getString(R.string.pref_cache_cardbrowser));
 //			builder.setMessage(res.getString(R.string.pref_cache_cardbrowser_reload));
@@ -533,45 +538,41 @@ public class CardBrowser extends Activity {
 //			});
 //			dialog = builder.create();
 //			break;
-//		}
-//		return dialog;
-//	}
-//
-//
-//	@Override
-//	protected void onPrepareDialog(int id, Dialog dialog) {
-//		Resources res = getResources();
-//		StyledDialog ad = (StyledDialog)dialog;
-//		switch (id) {
-//		case DIALOG_CONTEXT_MENU:
-//			mSelectedCard = mDeck.cardFromId(Long.parseLong(mCards.get(mPositionInCardsList).get("id")));
-//			if (mSelectedCard == null) {
-//				deleteCard(mCards.get(mPositionInCardsList).get("id"), mPositionInCardsList);
-//				ad.setEnabled(false);
-//				return;
-//			}
-//			if (mSelectedCard.isMarked()) {
-//				ad.changeListItem(CONTEXT_MENU_MARK, res.getString(R.string.card_browser_unmark_card));
-//				mIsMarked = true;
-//				Log.i(AnkiDroidApp.TAG, "Selected Card is currently marked");
-//			} else {
-//				ad.changeListItem(CONTEXT_MENU_MARK, res.getString(R.string.card_browser_mark_card));
-//				mIsMarked = false;
-//			}
-//			if (mSelectedCard.getSuspendedState()) {
-//				ad.changeListItem(CONTEXT_MENU_SUSPEND, res.getString(R.string.card_browser_unsuspend_card));
-//				mIsSuspended = true;
-//				Log.i(AnkiDroidApp.TAG, "Selected Card is currently suspended");
-//			} else {
-//				ad.changeListItem(CONTEXT_MENU_SUSPEND, res.getString(R.string.card_browser_suspend_card));
-//				mIsSuspended = false;
-//			}
-//			ad.setTitle(mCards.get(mPositionInCardsList).get("question"));
-//			break;
-//		}		
-//	}
-//
-//
+		}
+		return dialog;
+	}
+
+
+	@Override
+	protected void onPrepareDialog(int id, Dialog dialog) {
+		Resources res = getResources();
+		StyledDialog ad = (StyledDialog)dialog;
+		switch (id) {
+		case DIALOG_CONTEXT_MENU:
+			HashMap<String, String> card = mCards.get(mPositionInCardsList);
+			int flags = Integer.parseInt(card.get("flags"));
+			if (flags == 2 || flags == 3) {
+				ad.changeListItem(CONTEXT_MENU_MARK, res.getString(R.string.card_browser_unmark_card));
+				mIsMarked = true;
+				Log.i(AnkiDroidApp.TAG, "Selected Card is currently marked");
+			} else {
+				ad.changeListItem(CONTEXT_MENU_MARK, res.getString(R.string.card_browser_mark_card));
+				mIsMarked = false;
+			}
+			if (flags == 1 || flags == 3) {
+				ad.changeListItem(CONTEXT_MENU_SUSPEND, res.getString(R.string.card_browser_unsuspend_card));
+				mIsSuspended = true;
+				Log.i(AnkiDroidApp.TAG, "Selected Card is currently suspended");
+			} else {
+				ad.changeListItem(CONTEXT_MENU_SUSPEND, res.getString(R.string.card_browser_suspend_card));
+				mIsSuspended = false;
+			}
+			ad.setTitle(card.get("sfld"));
+			break;
+		}		
+	}
+
+
 //	private void recreateTagsDialog() {
 //		Resources res = getResources();
 //		if (allTags == null) {
@@ -623,36 +624,30 @@ public class CardBrowser extends Activity {
 //		});
 //		mTagsDialog = builder.create();
 //	}
-//
+
 	private void updateCardsList() {
-//		mShowOnlyMarSus = false;
-//		if (mSelectedTags.size() == 0) {
-//			mSearchEditText.setHint(R.string.downloaddeck_search);
-//		} else {
-//			String tags = mSelectedTags.toString();
-//			mSearchEditText.setHint(getResources().getString(
-//					R.string.card_browser_tags_shown,
-//					tags.substring(1, tags.length() - 1)));
-//		}
-//		mCards.clear();
-//		if (mSearchEditText.getText().length() == 0
-//				&& mSelectedTags.size() == 0 && mSelectedTags.size() == 0) {
-//			mCards.addAll(mAllCards);
-//		} else {
-//			for (int i = 0; i < mAllCards.size(); i++) {
-//				if ((mAllCards.get(i).get("question").toLowerCase().indexOf(
-//						mSearchEditText.getText().toString().toLowerCase()) != -1 || mAllCards
-//						.get(i).get("answer").toLowerCase().indexOf(
-//								mSearchEditText.getText().toString()
-//										.toLowerCase()) != -1)
-//						&& Arrays.asList(
-//								Utils.parseTags(mAllCards.get(i).get("tags")))
-//								.containsAll(mSelectedTags)) {
-//					mCards.add(mAllCards.get(i));
-//				}
-//			}
-//		}
-//		updateList();
+		String searchText = mSearchEditText.getText().toString().toLowerCase();
+		mShowOnlyMarSus = false;
+		if (mSelectedTags.size() == 0) {
+			mSearchEditText.setHint(R.string.downloaddeck_search);
+		} else {
+			String tags = mSelectedTags.toString();
+			mSearchEditText.setHint(getResources().getString(
+					R.string.card_browser_tags_shown,
+					tags.substring(1, tags.length() - 1)));
+		}
+		mCards.clear();
+		if (searchText.length() == 0 && mSelectedTags.size() == 0 && mSelectedTags.size() == 0) {
+			mCards.addAll(mAllCards);
+		} else {
+			for (int i = 0; i < mAllCards.size(); i++) {
+				HashMap<String, String> card = mAllCards.get(i);
+				if (card.get("sfld").toLowerCase().indexOf(searchText) != -1 && Arrays.asList(card.get("tags").split("\\s")).containsAll(mSelectedTags)) {
+					mCards.add(mAllCards.get(i));
+				}
+			}
+		}
+		updateList();
 	}
 
 	private void getCards() {
@@ -674,103 +669,56 @@ public class CardBrowser extends Activity {
 	private void updateList() {
 		mCardsAdapter.notifyDataSetChanged();
 		int count = mCards.size();
-		setTitle(getResources().getQuantityString(R.plurals.card_browser_title,
-				count, "XXXX", count, mAllCards.size()));
+		UIUtils.setActionBarSubtitle(this, getResources().getQuantityString(R.plurals.card_browser_subtitle,
+				count, count, mAllCards.size()));
 	}
-//
-//	private int getPosition(ArrayList<HashMap<String, String>> list, long cardId) {
-//		String cardid = Long.toString(cardId);
-//		for (int i = 0; i < list.size(); i++) {
-//			if (list.get(i).get("id").equals(cardid)) {
-//				return i;
-//			}
-//		}
-//		return -1;
-//	}
-//
-//	private void updateCard(Card card, ArrayList<HashMap<String, String>> list,
-//			int position) {
-//		list.get(position).put("question", Utils.stripHTML(card.getQuestion().replaceAll("<br(\\s*\\/*)>","\n")));
-//		list.get(position).put("answer", Utils.stripHTML(card.getAnswer().replaceAll("<br(\\s*\\/*)>","\n")));
-//		for (long cardId : mDeck.getCardsFromFactId(card.getFactId())) {
-//			if (cardId != card.getId()) {
-//				int positionC = getPosition(mCards, cardId);
-//				int positionA = getPosition(mAllCards, cardId);
-//				Card c = mDeck.cardFromId(cardId);
-//				String question = Utils.stripHTML(c.getQuestion().replaceAll("<br(\\s*\\/*)>","\n"));
-//				String answer = Utils.stripHTML(c.getAnswer().replaceAll("<br(\\s*\\/*)>","\n"));
-//				if (positionC != -1) {
-//					mCards.get(positionC).put("question", question);
-//					mCards.get(positionC).put("answer", answer);
-//				}
-//				mAllCards.get(positionA).put("question", question);
-//				mAllCards.get(positionA).put("answer", answer);
-//			}
-//		}
-//	}
-//
-//	private void markCards(long factId, boolean mark) {
-//		for (long cardId : mDeck.getCardsFromFactId(factId)) {
-//			int positionC = getPosition(mCards, cardId);
-//			int positionA = getPosition(mAllCards, cardId);
-//			String marSus = mAllCards.get(positionA).get("flags");
-//			if (mark) {
-//				marSus = "1" + marSus.substring(1, 2);
-//				if (positionC != -1) {
-//					mCards.get(positionC).put("flags", marSus);
-//				}
-//				mAllCards.get(positionA).put("flags", marSus);
-//			} else {
-//				marSus = "0" + marSus.substring(1, 2);
-//				if (positionC != -1) {
-//					mCards.get(positionC).put("flags", marSus);
-//				}
-//				mAllCards.get(positionA).put("flags", marSus);
-//			}
-//		}
-//		updateList();
-//	}
-//
-//	private void suspendCard(Card card, int position, boolean suspend) {
-//		int posA = getPosition(mAllCards, card.getId());
-//		String marSus = mAllCards.get(posA).remove("flags");
-//		if (suspend) {
-//			marSus = marSus.substring(0, 1) + "1";
-//			if (position != -1) {
-//				mCards.get(position).put("flags", marSus);
-//			}
-//			mAllCards.get(posA).put("flags", marSus);
-//		} else {
-//			marSus = marSus.substring(0, 1) + "0";
-//			if (position != -1) {
-//				mCards.get(position).put("flags", marSus);
-//			}
-//			mAllCards.get(posA).put("flags", marSus);
-//		}
-//		updateList();
-//	}
-//
-//	private void deleteCard(String cardId, int position) {
-//		if (mDeletedCards == null) {
-//			mDeletedCards = new ArrayList<HashMap<String, String>>();
-//		}
-//		HashMap<String, String> data = new HashMap<String, String>();
-//		for (int i = 0; i < mAllCards.size(); i++) {
-//			if (mAllCards.get(i).get("id").equals(cardId)) {
-//				data.put("id", mAllCards.get(i).get("id"));
-//				data.put("question", mAllCards.get(i).get("question"));
-//				data.put("answer", mAllCards.get(i).get("answer"));
-//				data.put("flags", mAllCards.get(i).get("flags"));
-//				data.put("allCardPos", Integer.toString(i));
-//				mDeletedCards.add(data);
-//				mAllCards.remove(i);
-//				Log.i(AnkiDroidApp.TAG, "Remove card from list");
-//				break;
-//			}
-//		}
-//		mCards.remove(position);
-//		updateList();
-//	}
+
+	private int getPosition(ArrayList<HashMap<String, String>> list, long cardId) {
+		String cardid = Long.toString(cardId);
+		for (int i = 0; i < list.size(); i++) {
+			if (list.get(i).get("id").equals(cardid)) {
+				return i;
+			}
+		}
+		return -1;
+	}
+
+	private void updateCardInList(Card card) {
+		Note note = card.note();
+		for (Card c : note.cards()) {
+			int aPos = getPosition(mAllCards, c.getId());
+			int pos = getPosition(mCards, c.getId());
+
+			String sfld = note.getSFld();
+			mAllCards.get(aPos).put("sfld", sfld);
+			mCards.get(pos).put("sfld", sfld);
+
+			if (mWholeCollection) {
+				String deckName;
+				try {
+					deckName = mCol.getDecks().get(card.getDid()).getString("name");
+				} catch (JSONException e) {
+					throw new RuntimeException(e);
+				}
+				mAllCards.get(aPos).put("deck", deckName);
+				mCards.get(pos).put("deck", deckName);				
+			}
+
+			String flags = Integer.toString((c.getQueue() == -1 ? 1 : 0) + (note.hasTag("marked") ? 2 : 0));
+			mAllCards.get(aPos).put("flags", flags);
+			mCards.get(pos).put("flags", flags);
+		}
+		updateList();
+	}
+
+	private void deleteCard(int position) {
+		ArrayList<Card> cards = mCol.getCard(Long.parseLong(mCards.get(position).get("id"))).note().cards();
+		for (Card c : cards) {
+			mCards.remove(getPosition(mCards, c.getId()));
+			mAllCards.remove(getPosition(mAllCards, c.getId()));
+		}
+		updateList();
+	}
 
 	private DeckTask.TaskListener mLoadCardsHandler = new DeckTask.TaskListener() {
 
@@ -779,14 +727,14 @@ public class CardBrowser extends Activity {
 			if (!mUndoRedoDialogShowing) {
 				mProgressDialog = StyledProgressDialog.show(CardBrowser.this, "",
 						getResources().getString(R.string.card_browser_load),
-						true, true, new OnCancelListener() {
-
-							@Override
-							public void onCancel(DialogInterface arg0) {
-								DeckTask.cancelTask();
-							}
-					
-				});
+						true);//, true, new OnCancelListener() {
+//
+//							@Override
+//							public void onCancel(DialogInterface arg0) {
+//								DeckTask.cancelTask();
+//							}
+//					
+//				});
 			} else {
 				mProgressDialog.setMessage(getResources().getString(
 						R.string.card_browser_load));
@@ -857,67 +805,66 @@ public class CardBrowser extends Activity {
 		}
 	};
 
-//	private DeckTask.TaskListener mMarkCardHandler = new DeckTask.TaskListener() {
-//		@Override
-//		public void onPreExecute() {
-//			Resources res = getResources();
-//			mProgressDialog = StyledProgressDialog.show(CardBrowser.this, "", res
-//					.getString(R.string.saving_changes), true);
-//		}
-//
-//		@Override
-//		public void onProgressUpdate(DeckTask.TaskData... values) {
-//			mSelectedCard = values[0].getCard();
-//			markCards(mSelectedCard.getFactId(), !mIsMarked);
-//		}
-//
-//		@Override
-//		public void onPostExecute(DeckTask.TaskData result) {
-//			mProgressDialog.dismiss();
-//
-//		}
-//	};
-//
-//	private DeckTask.TaskListener mSuspendCardHandler = new DeckTask.TaskListener() {
-//		@Override
-//		public void onPreExecute() {
-//			Resources res = getResources();
-//			mProgressDialog = StyledProgressDialog.show(CardBrowser.this, "", res
-//					.getString(R.string.saving_changes), true);
-//		}
-//
-//		@Override
-//		public void onProgressUpdate(DeckTask.TaskData... values) {
-//			suspendCard(mSelectedCard, mPositionInCardsList, !mIsSuspended);
-//		}
-//
-//		@Override
-//		public void onPostExecute(DeckTask.TaskData result) {
-//			mProgressDialog.dismiss();
-//		}
-//	};
-//
-//	private DeckTask.TaskListener mDeleteCardHandler = new DeckTask.TaskListener() {
-//		@Override
-//		public void onPreExecute() {
-//			Resources res = getResources();
-//			mProgressDialog = StyledProgressDialog.show(CardBrowser.this, "", res
-//					.getString(R.string.saving_changes), true);
-//		}
-//
-//		@Override
-//		public void onProgressUpdate(DeckTask.TaskData... values) {
-//		}
-//
-//		@Override
-//		public void onPostExecute(DeckTask.TaskData result) {
-//			deleteCard(result.getString(), mPositionInCardsList);
-//			mProgressDialog.dismiss();
-//
-//		}
-//	};
-//
-//
+	private DeckTask.TaskListener mUpdateCardHandler = new DeckTask.TaskListener() {
+		@Override
+		public void onPreExecute() {
+			Resources res = getResources();
+			mProgressDialog = StyledProgressDialog.show(CardBrowser.this, "", res
+					.getString(R.string.saving_changes), true);
+		}
+
+		@Override
+		public void onProgressUpdate(DeckTask.TaskData... values) {
+			updateCardInList(values[0].getCard());
+		}
+
+		@Override
+		public void onPostExecute(DeckTask.TaskData result) {
+			mProgressDialog.dismiss();
+
+		}
+	};
+
+	private DeckTask.TaskListener mSuspendCardHandler = new DeckTask.TaskListener() {
+		@Override
+		public void onPreExecute() {
+			Resources res = getResources();
+			mProgressDialog = StyledProgressDialog.show(CardBrowser.this, "", res
+					.getString(R.string.saving_changes), true);
+		}
+
+		@Override
+		public void onProgressUpdate(DeckTask.TaskData... values) {
+		}
+
+		@Override
+		public void onPostExecute(DeckTask.TaskData result) {
+			updateCardInList(mCol.getCard(Long.parseLong(mCards.get(mPositionInCardsList).get("id"))));
+			mProgressDialog.dismiss();
+
+		}
+	};
+
+	private DeckTask.TaskListener mDeleteNoteHandler = new DeckTask.TaskListener() {
+		@Override
+		public void onPreExecute() {
+			Resources res = getResources();
+			mProgressDialog = StyledProgressDialog.show(CardBrowser.this, "", res
+					.getString(R.string.saving_changes), true);
+		}
+
+		@Override
+		public void onProgressUpdate(DeckTask.TaskData... values) {
+		}
+
+		@Override
+		public void onPostExecute(DeckTask.TaskData result) {
+			mProgressDialog.dismiss();
+
+		}
+	};
+
+
 //	private DeckTask.TaskListener mSortCardsHandler = new DeckTask.TaskListener() {
 //		@Override
 //		public void onPreExecute() {
@@ -1005,31 +952,6 @@ public class CardBrowser extends Activity {
 //					getCards();
 //				}
 //			}
-//		}
-//	};
-//
-//	private DeckTask.TaskListener mUpdateCardHandler = new DeckTask.TaskListener() {
-//		@Override
-//		public void onPreExecute() {
-//			mProgressDialog = StyledProgressDialog.show(CardBrowser.this, "",
-//					getResources().getString(R.string.saving_changes), true);
-//		}
-//
-//		@Override
-//		public void onProgressUpdate(DeckTask.TaskData... values) {
-//			mSelectedCard.fromDB(mSelectedCard.getId());
-//			int pos = getPosition(mAllCards, mSelectedCard.getId());
-//			updateCard(mSelectedCard, mAllCards, pos);
-//			pos = getPosition(mCards, mSelectedCard.getId());
-//			if (pos != -1) {
-//				updateCard(mSelectedCard, mCards, pos);
-//			}
-//			updateList();
-//		}
-//
-//		@Override
-//		public void onPostExecute(DeckTask.TaskData result) {
-//			mProgressDialog.dismiss();
 //		}
 //	};
 
