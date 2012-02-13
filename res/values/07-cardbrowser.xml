@@ -26,7 +26,7 @@
   <item quantity="other">%1$d of %2$d cards shown</item>
 </plurals>
 <string name="card_browser_all_decks">All decks</string>
-<string name="card_browser_load">Loading cards</string>
+<string name="card_browser_load">Loading cards.\nPlease wait...</string>
 <string name="card_browser_cardloading_error">Error on loading cards. This is probably related to your device\'s memory restrictions. Try again with a smaller deck</string>
 <string name="card_browser_delete_card">Delete note</string>
 <string name="card_browser_suspend_card">Suspend card</string>

@@ -573,21 +573,9 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
 
     private TaskData doInBackgroundLoadCards(TaskData... params) {
     	Log.i(AnkiDroidApp.TAG, "doInBackgroundLoadCards");
-
     	Collection col = params[0].getCollection();
     	boolean wholeCollection = params[0].getBoolean();
-        int chunk = params[0].getInt();
-
-    	String startId = "";
-//    	while (!this.isCancelled()) {
-    		ArrayList<HashMap<String, String>> cards = col.findCards(wholeCollection);
-//    		if (cards.size() == 0) {
-//    			break;
-//    		} else {
-               	publishProgress(new TaskData(cards));
-//               	startId = cards.get(cards.size() - 1).get("id");    			
-//    		}
-//    	}
+    	publishProgress(new TaskData(col.findCards(wholeCollection)));
     	return null;
     }
 

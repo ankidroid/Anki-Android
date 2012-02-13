@@ -94,8 +94,6 @@ public class CardBrowser extends Activity {
 	/** Modifier of percentage of the font size of the card browser */
 	private int mrelativeBrowserFontSize = DEFAULT_FONT_SIZE_RATIO;
 
-	public static final int LOAD_CHUNK = 200;
-
 	private static final int CONTEXT_MENU_MARK = 0;
 	private static final int CONTEXT_MENU_SUSPEND = 1;
 	private static final int CONTEXT_MENU_DELETE = 2;
@@ -659,7 +657,7 @@ public class CardBrowser extends Activity {
 //		if (mPrefCacheCardBrowser && sAllCardsCache != null && !sAllCardsCache.isEmpty()) {
 //			showDialog(DIALOG_RELOAD_CARDS);
 //		} else {
-			DeckTask.launchDeckTask(DeckTask.TASK_TYPE_LOAD_CARDS, mLoadCardsHandler, new DeckTask.TaskData(mCol, LOAD_CHUNK, mWholeCollection));
+			DeckTask.launchDeckTask(DeckTask.TASK_TYPE_LOAD_CARDS, mLoadCardsHandler, new DeckTask.TaskData(mCol, 0, mWholeCollection));
 //		}
 	}
 
@@ -728,14 +726,13 @@ public class CardBrowser extends Activity {
 			if (!mUndoRedoDialogShowing) {
 				mProgressDialog = StyledProgressDialog.show(CardBrowser.this, "",
 						getResources().getString(R.string.card_browser_load),
-						true);//, true, new OnCancelListener() {
-//
-//							@Override
-//							public void onCancel(DialogInterface arg0) {
-//								DeckTask.cancelTask();
-//							}
-//					
-//				});
+						true, true, new OnCancelListener() {
+
+							@Override
+							public void onCancel(DialogInterface arg0) {
+								closeCardBrowser();
+							}
+				});
 			} else {
 				mProgressDialog.setMessage(getResources().getString(
 						R.string.card_browser_load));
@@ -776,30 +773,29 @@ public class CardBrowser extends Activity {
 							@Override
 							public void onClick(DialogInterface dialog,
 									int which) {
-								CardBrowser.this.finish();
+								closeCardBrowser();
 							}
 						});
 				builder.setOnCancelListener(new OnCancelListener() {
 					@Override
 					public void onCancel(DialogInterface dialog) {
-						CardBrowser.this.finish();
+						closeCardBrowser();
 					}
 				});
 				builder.create().show();
 			} else {
-//				if (mPrefFixArabic) {
-//					for (HashMap<String, String> entry : cards) {
-//						entry.put("question", ArabicUtilities.reshapeSentence(entry.get("question")));
-//						entry.put("answer", ArabicUtilities.reshapeSentence(entry.get("answer")));
-//					}
-//				}
+				if (mPrefFixArabic) {
+					for (HashMap<String, String> entry : cards) {
+						entry.put("sfld", ArabicUtilities.reshapeSentence(entry.get("sfld")));
+					}
+				}
 				try {
 					mAllCards.addAll(cards);
 					mCards.addAll(cards);					
 				} catch (OutOfMemoryError e) {
 			    	Log.e(AnkiDroidApp.TAG, "CardBrowser: mLoadCardsHandler: OutOfMemoryError: " + e);
 					Themes.showThemedToast(CardBrowser.this, getResources().getString(R.string.error_insufficient_memory), false);
-			    	finish();
+					closeCardBrowser();
 				}
 				updateList();
 			}

@@ -54,8 +54,6 @@
   <item quantity="other">%1$d of %2$d due</item>
 </plurals>
 <string name="deckpicker_new">%d new today</string>
-<string name="deckpicker_loaddeck">Loading deck...</string>
-<string name="deckpicker_nodeck">No decks found.</string>
 <plurals name="reviewer_window_title">
   <item quantity="one">1 minute left)</item>
   <item quantity="other">%d minutes left</item>
