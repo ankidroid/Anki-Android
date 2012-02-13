@@ -22,9 +22,11 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.TreeSet;
 
 import org.json.JSONArray;
@@ -71,7 +73,7 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
     public static final int TASK_TYPE_SET_ALL_DECKS_JOURNAL_MODE = 15;
     public static final int TASK_TYPE_DELETE_BACKUPS = 16;
     public static final int TASK_TYPE_RESTORE_DECK = 17;
-    public static final int TASK_TYPE_SORT_CARDS = 18;
+    public static final int TASK_TYPE_UPDATE_CARD_BROWSER_LIST = 18;
     public static final int TASK_TYPE_LOAD_TUTORIAL = 19;
     public static final int TASK_TYPE_REPAIR_DECK = 20;
     public static final int TASK_TYPE_CLOSE_DECK = 21;
@@ -210,8 +212,8 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
             case TASK_TYPE_RESTORE_DECK:
                 return doInBackgroundRestoreDeck(params);
 
-            case TASK_TYPE_SORT_CARDS:
-                return doInBackgroundSortCards(params);
+            case TASK_TYPE_UPDATE_CARD_BROWSER_LIST:
+                return doInBackgroundUpdateCardBrowserList(params);
 
             case TASK_TYPE_LOAD_TUTORIAL:
                 return doInBackgroundLoadTutorial(params);
@@ -689,10 +691,24 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
     }
 
 
-    private TaskData doInBackgroundSortCards(TaskData... params) {
+    private TaskData doInBackgroundUpdateCardBrowserList(TaskData... params) {
         Log.i(AnkiDroidApp.TAG, "doInBackgroundSortCards");
-        Comparator<? super HashMap<String, String>> comparator = params[0].getComparator();
-		Collections.sort(params[0].getCards(), comparator);
+        if (params.length == 1) {
+            Comparator comparator = params[0].getComparator();
+            ArrayList<HashMap<String,String>> card = params[0].getCards(); 
+    		Collections.sort(card, comparator);        	
+        } else {
+            ArrayList<HashMap<String,String>> allCard = params[0].getCards(); 
+            ArrayList<HashMap<String,String>> cards = params[1].getCards(); 
+        	HashSet<String> tags = (HashSet<String>) params[2].getObjArray()[0];
+        	cards.clear();
+			for (int i = 0; i < allCard.size(); i++) {
+				HashMap<String, String> card = allCard.get(i);
+				if (Arrays.asList(card.get("tags").split("\\s")).containsAll(tags)) {
+					cards.add(allCard.get(i));
+				}
+			}
+        }
 		return null;
     }
 
@@ -790,8 +806,7 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
         private long mLong;
         private Context mContext;
         private int mType;
-//        private LinkedHashMap<Long, CardModel> mCardModels;
-        private Comparator<? super HashMap<String, String>> mComparator;
+        private Comparator mComparator;
         private int[] mIntList;
         private Collection mCol;
         private Sched mSched;
@@ -835,6 +850,11 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
 
         public TaskData(ArrayList<HashMap<String, String>> cards) {
         	mCards = cards;
+        }
+
+        public TaskData(ArrayList<HashMap<String, String>> cards, Comparator comparator) {
+        	mCards = cards;
+        	mComparator = comparator;
         }
 
         public TaskData(boolean bool) {
@@ -940,7 +960,7 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
         }
 
 
-        public Comparator<? super HashMap<String, String>> getComparator() {
+        public Comparator getComparator() {
         	return mComparator;
         }
 

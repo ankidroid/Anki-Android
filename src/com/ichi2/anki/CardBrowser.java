@@ -39,7 +39,6 @@ import android.view.ContextMenu.ContextMenuInfo;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.SubMenu;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
@@ -55,14 +54,12 @@ import com.ichi2.async.DeckTask;
 import com.ichi2.libanki.Card;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Note;
-import com.ichi2.libanki.Utils;
 import com.ichi2.themes.StyledDialog;
 import com.ichi2.themes.StyledProgressDialog;
 import com.ichi2.themes.Themes;
 import com.tomgibara.android.veecheck.util.PrefSettings;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -82,14 +79,12 @@ public class CardBrowser extends Activity {
 
 	private StyledProgressDialog mProgressDialog;
 	private boolean mUndoRedoDialogShowing = false;
-	private Card mUndoRedoCard;
-	private long mUndoRedoCardId;
-	private boolean mIsSuspended;
-	private boolean mIsMarked;
 
 	public static Card sCardBrowserCard;
 
 	private int mPositionInCardsList;
+
+	private int mOrder;
 
 	/** Modifier of percentage of the font size of the card browser */
 	private int mrelativeBrowserFontSize = DEFAULT_FONT_SIZE_RATIO;
@@ -102,6 +97,7 @@ public class CardBrowser extends Activity {
 	private static final int DIALOG_ORDER = 0;
 	private static final int DIALOG_CONTEXT_MENU = 1;
 	private static final int DIALOG_RELOAD_CARDS = 2;
+	private static final int DIALOG_TAGS = 3;
 
 	private static final int BACKGROUND_NORMAL = 0;
 	private static final int BACKGROUND_MARKED = 1;
@@ -109,24 +105,20 @@ public class CardBrowser extends Activity {
 	private static final int BACKGROUND_MARKED_SUSPENDED = 3;
 
 	private static final int MENU_UNDO = 0;
-	private static final int MENU_REDO = 1;
-	private static final int MENU_ADD_FACT = 2;
-	private static final int MENU_SHOW_MARKED = 3;
-	private static final int MENU_SELECT = 4;
-	private static final int MENU_SELECT_SUSPENDED = 41;
-	private static final int MENU_SELECT_TAG = 42;
+	private static final int MENU_ADD_NOTE = 1;
+	private static final int MENU_SHOW_MARKED = 2;
+	private static final int MENU_SELECT = 3;
+	private static final int MENU_SELECT_SUSPENDED = 31;
+	private static final int MENU_SELECT_TAG = 32;
 	private static final int MENU_CHANGE_ORDER = 5;
 
 	private static final int EDIT_CARD = 0;
-	private static final int ADD_FACT = 1;
+	private static final int ADD_NOTE = 1;
 	private static final int DEFAULT_FONT_SIZE_RATIO = 100;
 
-	private static final int CARD_ORDER_ANSWER = 0;
-	private static final int CARD_ORDER_QUESTION = 1;
+	private static final int CARD_ORDER_NONE = 0;
+	private static final int CARD_ORDER_SFLD = 1;
 	private static final int CARD_ORDER_DUE = 2;
-	private static final int CARD_ORDER_INTERVAL = 3;
-	private static final int CARD_ORDER_FACTOR = 4;
-	private static final int CARD_ORDER_CREATED = 5;
 
 	private int[] mBackground;
 
@@ -134,11 +126,8 @@ public class CardBrowser extends Activity {
 
 	private boolean mShowOnlyMarSus = false;
 
-	private int mSelectedOrder = CARD_ORDER_CREATED;
-	
 	private String[] allTags;
 	private HashSet<String> mSelectedTags;
-	private StyledDialog mTagsDialog;
 
 	private boolean mPrefFixArabic;
 
@@ -230,7 +219,8 @@ public class CardBrowser extends Activity {
 				"relativeCardBrowserFontSize", DEFAULT_FONT_SIZE_RATIO);
 		mPrefFixArabic = preferences.getBoolean("fixArabicText", false);
 		mPrefCacheCardBrowser = preferences.getBoolean("cardBrowserCache", false);
-
+		mOrder = preferences.getInt("cardBrowserOrder", CARD_ORDER_NONE);
+		
 		mCards = new ArrayList<HashMap<String, String>>();
 		mAllCards = new ArrayList<HashMap<String, String>>();
 		mCardsListView = (ListView) findViewById(R.id.card_browser_list);
@@ -312,7 +302,6 @@ public class CardBrowser extends Activity {
 			}
 		}
 
-		allTags = null;
 		mSelectedTags = new HashSet<String>();
 
 		getCards();
@@ -352,105 +341,89 @@ public class CardBrowser extends Activity {
 		return super.onKeyDown(keyCode, event);
 	}
 
-//	@Override
-//	public boolean onCreateOptionsMenu(Menu menu) {
-//		MenuItem item;
-//		item = menu.add(Menu.NONE, MENU_UNDO, Menu.NONE, R.string.undo);
-//		item.setIcon(R.drawable.ic_menu_revert);
-//		item = menu.add(Menu.NONE, MENU_REDO, Menu.NONE, R.string.redo);
-//		item.setIcon(R.drawable.ic_menu_redo);
-//		item = menu.add(Menu.NONE, MENU_ADD_FACT, Menu.NONE, R.string.add);
-//		item.setIcon(R.drawable.ic_menu_add);
-//		item = menu.add(Menu.NONE, MENU_CHANGE_ORDER, Menu.NONE,
-//				R.string.card_browser_change_display_order);
-//		item.setIcon(R.drawable.ic_menu_sort_by_size);
-//		item = menu.add(Menu.NONE, MENU_SHOW_MARKED, Menu.NONE,
-//				R.string.card_browser_show_marked);
-//		item.setIcon(R.drawable.ic_menu_star_on);
-//		SubMenu selectSubMenu = menu.addSubMenu(Menu.NONE, MENU_SELECT,
-//				Menu.NONE, R.string.card_browser_search);
-//		selectSubMenu.setIcon(R.drawable.ic_menu_search);
-//		selectSubMenu.add(Menu.NONE, MENU_SELECT_SUSPENDED, Menu.NONE,
-//				R.string.card_browser_search_suspended);
-//		selectSubMenu.add(Menu.NONE, MENU_SELECT_TAG, Menu.NONE,
-//				R.string.card_browser_search_by_tag);
-//		item.setIcon(R.drawable.ic_menu_close_clear_cancel);
-//		return true;
-//	}
-//
-//	@Override
-//	public boolean onPrepareOptionsMenu(Menu menu) {
-//		menu.findItem(MENU_UNDO).setEnabled(mDeck.undoAvailable());
-//		menu.findItem(MENU_REDO).setEnabled(mDeck.redoAvailable());
-//		return true;
-//	}
-//
-//	@Override
-//	public boolean onOptionsItemSelected(MenuItem item) {
-//		switch (item.getItemId()) {
-//		case MENU_UNDO:
-//			DeckTask.launchDeckTask(DeckTask.TASK_TYPE_UNDO, mUndoRedoHandler,
-//					new DeckTask.TaskData(0, mDeck, 0, true));
-//			return true;
-//		case MENU_REDO:
-//			DeckTask.launchDeckTask(DeckTask.TASK_TYPE_REDO, mUndoRedoHandler,
-//					new DeckTask.TaskData(0, mDeck, 0, true));
-//			return true;
-//		case MENU_ADD_FACT:
-//			Intent intent = new Intent(CardBrowser.this, CardEditor.class);
-//			intent.putExtra(CardEditor.EXTRA_CALLER, CardEditor.CALLER_CARDBROWSER_ADD);
-//			intent.putExtra(CardEditor.EXTRA_DECKPATH, DeckManager.getMainDeckPath());
-//			startActivityForResult(intent, ADD_FACT);
-//			if (Integer.valueOf(android.os.Build.VERSION.SDK) > 4) {
-//				ActivityTransitionAnimation.slide(CardBrowser.this,
-//						ActivityTransitionAnimation.LEFT);
-//			}
-//			return true;
-//		case MENU_SHOW_MARKED:
-//			mShowOnlyMarSus = true;
-//			mSearchEditText.setHint(R.string.card_browser_show_marked);
-//			mCards.clear();
-//			for (int i = 0; i < mAllCards.size(); i++) {
-//				if ((mAllCards.get(i).get("question").toLowerCase().indexOf(
-//						mSearchEditText.getText().toString().toLowerCase()) != -1 || mAllCards
-//						.get(i).get("answer").toLowerCase().indexOf(
-//								mSearchEditText.getText().toString()
-//										.toLowerCase()) != -1)
-//						&& mAllCards.get(i).get("flags").subSequence(0, 1)
-//								.equals("1")) {
-//					mCards.add(mAllCards.get(i));
-//				}
-//			}
-//			updateList();
-//			return true;
-//		case MENU_SELECT_SUSPENDED:
-//			mShowOnlyMarSus = true;
-//			mSearchEditText.setHint(R.string.card_browser_show_suspended);
-//			mCards.clear();
-//			for (int i = 0; i < mAllCards.size(); i++) {
-//				if ((mAllCards.get(i).get("question").toLowerCase().indexOf(
-//						mSearchEditText.getText().toString().toLowerCase()) != -1 || mAllCards
-//						.get(i).get("answer").toLowerCase().indexOf(
-//								mSearchEditText.getText().toString()
-//										.toLowerCase()) != -1)
-//						&& mAllCards.get(i).get("flags").subSequence(1, 2)
-//								.equals("1")) {
-//					mCards.add(mAllCards.get(i));
-//				}
-//			}
-//			updateList();
-//			return true;
-//		case MENU_SELECT_TAG:
-//			recreateTagsDialog();
-//			mTagsDialog.show();
-//			return true;
-//		case MENU_CHANGE_ORDER:
-//			showDialog(DIALOG_ORDER);
-//			return true;
-//		}
-//		return false;
-//	}
-//
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		MenuItem item;
+		item = menu.add(Menu.NONE, MENU_UNDO, Menu.NONE, R.string.undo);
+		item.setIcon(R.drawable.ic_menu_revert);
+		item = menu.add(Menu.NONE, MENU_ADD_NOTE, Menu.NONE, R.string.card_editor_add_card);
+		item.setIcon(R.drawable.ic_menu_add);
+		item = menu.add(Menu.NONE, MENU_CHANGE_ORDER, Menu.NONE,
+				R.string.card_browser_change_display_order);
+		item.setIcon(R.drawable.ic_menu_sort_by_size);
+		item = menu.add(Menu.NONE, MENU_SHOW_MARKED, Menu.NONE,
+				R.string.card_browser_show_marked);
+		item.setIcon(R.drawable.ic_menu_star_on);
+		item = menu.add(Menu.NONE, MENU_SELECT_SUSPENDED, Menu.NONE,
+				R.string.card_browser_show_suspended);
+		item.setIcon(R.drawable.ic_menu_search);
+		item = menu.add(Menu.NONE, MENU_SELECT_TAG, Menu.NONE,
+				R.string.card_browser_search_by_tag);
+		item.setIcon(R.drawable.ic_menu_close_clear_cancel);
+		return true;
+	}
+
+	@Override
+	public boolean onPrepareOptionsMenu(Menu menu) {
+		menu.findItem(MENU_UNDO).setEnabled(mCol.undoAvailable());
+		return true;
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+
+		case MENU_UNDO:
+//			DeckTask.launchDeckTask(DeckTask.TASK_TYPE_UNDO, mUndoRedoHandler, new DeckTask.TaskData(0, mDeck, 0, true));
+			return true;
+
+		case MENU_ADD_NOTE:
+			Intent intent = new Intent(CardBrowser.this, CardEditor.class);
+			intent.putExtra(CardEditor.EXTRA_CALLER, CardEditor.CALLER_CARDBROWSER_ADD);
+			startActivityForResult(intent, ADD_NOTE);
+			if (UIUtils.getApiLevel() > 4) {
+				ActivityTransitionAnimation.slide(CardBrowser.this, ActivityTransitionAnimation.LEFT);
+			}
+			return true;
+
+		case MENU_SHOW_MARKED:
+			mShowOnlyMarSus = true;
+			mSearchEditText.setHint(R.string.card_browser_show_marked);
+			mCards.clear();
+			for (int i = 0; i < mAllCards.size(); i++) {
+				int flags = Integer.parseInt(mAllCards.get(i).get("flags"));
+				if (flags == 2 || flags == 3) {
+					mCards.add(mAllCards.get(i));
+				}
+			}
+			updateList();
+			return true;
+
+		case MENU_SELECT_SUSPENDED:
+			mShowOnlyMarSus = true;
+			mSearchEditText.setHint(R.string.card_browser_show_suspended);
+			mCards.clear();
+			for (int i = 0; i < mAllCards.size(); i++) {
+				int flags = Integer.parseInt(mAllCards.get(i).get("flags"));
+				if (flags == 1 || flags == 3) {
+					mCards.add(mAllCards.get(i));
+				}
+			}
+			updateList();
+			return true;
+
+		case MENU_SELECT_TAG:
+			showDialog(DIALOG_TAGS);
+			return true;
+
+		case MENU_CHANGE_ORDER:
+			showDialog(DIALOG_ORDER);
+			return true;
+		}
+
+		return false;
+	}
+
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
@@ -458,12 +431,12 @@ public class CardBrowser extends Activity {
 		if (requestCode == EDIT_CARD && resultCode != RESULT_CANCELED) {
 			Log.i(AnkiDroidApp.TAG, "Saving card...");
 			DeckTask.launchDeckTask(DeckTask.TASK_TYPE_UPDATE_FACT, mUpdateCardHandler, new DeckTask.TaskData(mCol.getSched(), sCardBrowserCard, false));
-		} else if (requestCode == ADD_FACT && resultCode == RESULT_OK) {
+		} else if (requestCode == ADD_NOTE && resultCode == RESULT_OK) {
 			getCards();
 		}
 	}
 
-	
+
 	@Override
 	protected Dialog onCreateDialog(int id) {
 		StyledDialog dialog = null;
@@ -471,21 +444,24 @@ public class CardBrowser extends Activity {
 		StyledDialog.Builder builder = new StyledDialog.Builder(this);
 
 		switch (id) {
-//		case DIALOG_ORDER:
-//			builder.setTitle(res
-//					.getString(R.string.card_browser_change_display_order_title));
-//			builder.setIcon(android.R.drawable.ic_menu_sort_by_size);
-//	        builder.setSingleChoiceItems(getResources().getStringArray(R.array.card_browser_order_labels), mSelectedOrder, new DialogInterface.OnClickListener() {
-//				@Override
-//				public void onClick(DialogInterface arg0, int which) {
-//					if (which != mSelectedOrder) {
-//						mSelectedOrder = which;
-//						DeckTask.launchDeckTask(DeckTask.TASK_TYPE_SORT_CARDS, mSortCardsHandler, new DeckTask.TaskData(mAllCards, new HashMapCompare()));
-//					}
-//				}
-//	        });
-//			dialog = builder.create();
-//			break;
+		case DIALOG_ORDER:
+			builder.setTitle(res
+					.getString(R.string.card_browser_change_display_order_title));
+			builder.setIcon(android.R.drawable.ic_menu_sort_by_size);
+	        builder.setSingleChoiceItems(getResources().getStringArray(R.array.card_browser_order_labels), mOrder, new DialogInterface.OnClickListener() {
+				@Override
+				public void onClick(DialogInterface arg0, int which) {
+					if (which != mOrder) {
+						mOrder = which;
+						PrefSettings.getSharedPrefs(AnkiDroidApp.getInstance().getBaseContext()).edit().putInt("cardBrowserOrder", mOrder).commit();
+						if (mOrder != CARD_ORDER_NONE) {
+							DeckTask.launchDeckTask(DeckTask.TASK_TYPE_UPDATE_CARD_BROWSER_LIST, mSortCardsHandler, new DeckTask.TaskData(mAllCards, new HashMapCompare()));							
+						}
+					}
+				}
+	        });
+			dialog = builder.create();
+			break;
 
 		case DIALOG_CONTEXT_MENU:
 			String[] entries = new String[4];
@@ -499,6 +475,69 @@ public class CardBrowser extends Activity {
 	        builder.setIcon(R.drawable.ic_menu_manage);
 	        builder.setItems(entries, mContextMenuListener);
 	        dialog = builder.create();
+			break;
+
+		case DIALOG_TAGS:
+			allTags = mCol.getTags().all();
+			builder.setTitle(R.string.studyoptions_limit_select_tags);
+			builder.setMultiChoiceItems(allTags, new boolean[allTags.length],
+					new DialogInterface.OnClickListener() {
+						@Override
+						public void onClick(DialogInterface dialog, int which) {
+							String tag = allTags[which];
+							if (mSelectedTags.contains(tag)) {
+								Log.i(AnkiDroidApp.TAG, "unchecked tag: " + tag);
+								mSelectedTags.remove(tag);
+							} else {
+								Log.i(AnkiDroidApp.TAG, "checked tag: " + tag);
+								mSelectedTags.add(tag);
+							}
+						}
+					});
+			builder.setPositiveButton(res.getString(R.string.select),
+					new OnClickListener() {
+						@Override
+						public void onClick(DialogInterface dialog, int which) {
+							mSearchEditText.setText("");
+							mTimerHandler.removeCallbacks(updateList);
+							String tags = mSelectedTags.toString();
+							mSearchEditText.setHint(getResources().getString(
+									R.string.card_browser_tags_shown,
+									tags.substring(1, tags.length() - 1)));
+							DeckTask.launchDeckTask(DeckTask.TASK_TYPE_UPDATE_CARD_BROWSER_LIST, new DeckTask.TaskListener() {
+								@Override
+								public void onPreExecute() {
+									mProgressDialog = StyledProgressDialog.show(CardBrowser.this, "",
+											getResources().getString(R.string.card_browser_filtering_cards), true);				
+								}
+								@Override
+								public void onProgressUpdate(DeckTask.TaskData... values) {
+								}
+								@Override
+								public void onPostExecute(DeckTask.TaskData result) {
+									updateList();
+									if (mProgressDialog != null && mProgressDialog.isShowing()) {
+										mProgressDialog.dismiss();
+									}
+								}
+							}, new DeckTask.TaskData(mAllCards), new DeckTask.TaskData(mCards), new DeckTask.TaskData(new Object[]{mSelectedTags}));
+						}
+					});
+			builder.setNegativeButton(res.getString(R.string.cancel),
+					new OnClickListener() {
+						@Override
+						public void onClick(DialogInterface dialog, int which) {
+							mSelectedTags.clear();
+						}
+					});
+			builder.setOnCancelListener(new OnCancelListener() {
+	
+				@Override
+				public void onCancel(DialogInterface dialog) {
+					mSelectedTags.clear();
+				}
+			});
+			dialog = builder.create();
 			break;
 
 //		case DIALOG_RELOAD_CARDS:
@@ -552,99 +591,54 @@ public class CardBrowser extends Activity {
 			int flags = Integer.parseInt(card.get("flags"));
 			if (flags == 2 || flags == 3) {
 				ad.changeListItem(CONTEXT_MENU_MARK, res.getString(R.string.card_browser_unmark_card));
-				mIsMarked = true;
 				Log.i(AnkiDroidApp.TAG, "Selected Card is currently marked");
 			} else {
 				ad.changeListItem(CONTEXT_MENU_MARK, res.getString(R.string.card_browser_mark_card));
-				mIsMarked = false;
 			}
 			if (flags == 1 || flags == 3) {
 				ad.changeListItem(CONTEXT_MENU_SUSPEND, res.getString(R.string.card_browser_unsuspend_card));
-				mIsSuspended = true;
 				Log.i(AnkiDroidApp.TAG, "Selected Card is currently suspended");
 			} else {
 				ad.changeListItem(CONTEXT_MENU_SUSPEND, res.getString(R.string.card_browser_suspend_card));
-				mIsSuspended = false;
 			}
 			ad.setTitle(card.get("sfld"));
+			break;
+		case DIALOG_TAGS:
+			mSelectedTags.clear();
+			ad.setMultiChoiceItems(allTags, new boolean[allTags.length],
+					new DialogInterface.OnClickListener() {
+						@Override
+						public void onClick(DialogInterface dialog, int which) {
+							String tag = allTags[which];
+							if (mSelectedTags.contains(tag)) {
+								Log.i(AnkiDroidApp.TAG, "unchecked tag: " + tag);
+								mSelectedTags.remove(tag);
+							} else {
+								Log.i(AnkiDroidApp.TAG, "checked tag: " + tag);
+								mSelectedTags.add(tag);
+							}
+						}
+					});
 			break;
 		}		
 	}
 
 
-//	private void recreateTagsDialog() {
-//		Resources res = getResources();
-//		if (allTags == null) {
-//			String[] oldTags = DeckManager.getMainDeck().allTags_();
-//			Log.i(AnkiDroidApp.TAG, "all tags: " + Arrays.toString(oldTags));
-//			allTags = new String[oldTags.length];
-//			for (int i = 0; i < oldTags.length; i++) {
-//				allTags[i] = oldTags[i];
-//			}
-//		}
-//		mSelectedTags.clear();
-//
-//		StyledDialog.Builder builder = new StyledDialog.Builder(this);
-//		builder.setTitle(R.string.studyoptions_limit_select_tags);
-//		builder.setMultiChoiceItems(allTags, new boolean[0],
-//				new DialogInterface.OnClickListener() {
-//					@Override
-//					public void onClick(DialogInterface dialog, int which) {
-//						String tag = allTags[which];
-//						if (mSelectedTags.contains(tag)) {
-//							Log.i(AnkiDroidApp.TAG, "unchecked tag: " + tag);
-//							mSelectedTags.remove(tag);
-//						} else {
-//							Log.i(AnkiDroidApp.TAG, "checked tag: " + tag);
-//							mSelectedTags.add(tag);
-//						}
-//					}
-//				});
-//		builder.setPositiveButton(res.getString(R.string.select),
-//				new OnClickListener() {
-//					@Override
-//					public void onClick(DialogInterface dialog, int which) {
-//						updateCardsList();
-//					}
-//				});
-//		builder.setNegativeButton(res.getString(R.string.cancel),
-//				new OnClickListener() {
-//					@Override
-//					public void onClick(DialogInterface dialog, int which) {
-//						mSelectedTags.clear();
-//					}
-//				});
-//		builder.setOnCancelListener(new OnCancelListener() {
-//
-//			@Override
-//			public void onCancel(DialogInterface dialog) {
-//				mSelectedTags.clear();
-//			}
-//		});
-//		mTagsDialog = builder.create();
-//	}
-
 	private void updateCardsList() {
 		String searchText = mSearchEditText.getText().toString().toLowerCase();
 		mShowOnlyMarSus = false;
-		if (mSelectedTags.size() == 0) {
-			mSearchEditText.setHint(R.string.downloaddeck_search);
-		} else {
-			String tags = mSelectedTags.toString();
-			mSearchEditText.setHint(getResources().getString(
-					R.string.card_browser_tags_shown,
-					tags.substring(1, tags.length() - 1)));
-		}
+		
+		mSearchEditText.setHint(R.string.downloaddeck_search);
 		mCards.clear();
-		if (searchText.length() == 0 && mSelectedTags.size() == 0 && mSelectedTags.size() == 0) {
+		if (searchText.length() == 0 && mSelectedTags.size() == 0) {
 			mCards.addAll(mAllCards);
 		} else {
 			for (int i = 0; i < mAllCards.size(); i++) {
 				HashMap<String, String> card = mAllCards.get(i);
-				if (card.get("sfld").toLowerCase().indexOf(searchText) != -1 && Arrays.asList(card.get("tags").split("\\s")).containsAll(mSelectedTags)) {
+				if (card.get("sfld").toLowerCase().indexOf(searchText) != -1) {
 					mCards.add(mAllCards.get(i));
 				}
-			}
+			}			
 		}
 		updateList();
 	}
@@ -745,16 +739,6 @@ public class CardBrowser extends Activity {
 			// This verification would not be necessary if
 			// onConfigurationChanged it's executed correctly (which seems
 			// that emulator does not do)
-//			DeckTask.launchDeckTask(DeckTask.TASK_TYPE_SORT_CARDS, mSortCardsHandler, new DeckTask.TaskData(mAllCards, new HashMapCompare()));
-			if (mProgressDialog.isShowing()) {
-				try {
-					mProgressDialog.dismiss();
-				} catch (Exception e) {
-					Log.e(AnkiDroidApp.TAG,
-							"onPostExecute - Dialog dismiss Exception = "
-									+ e.getMessage());
-				}
-			}
 		}
 
 		@Override
@@ -791,13 +775,18 @@ public class CardBrowser extends Activity {
 				}
 				try {
 					mAllCards.addAll(cards);
-					mCards.addAll(cards);					
+					mCards.addAll(cards);
+					if (mOrder == CARD_ORDER_NONE) {
+						updateCardsList();
+						mProgressDialog.dismiss();
+					} else {
+						DeckTask.launchDeckTask(DeckTask.TASK_TYPE_UPDATE_CARD_BROWSER_LIST, mSortCardsHandler, new DeckTask.TaskData(mAllCards, new HashMapCompare()));						
+					}
 				} catch (OutOfMemoryError e) {
 			    	Log.e(AnkiDroidApp.TAG, "CardBrowser: mLoadCardsHandler: OutOfMemoryError: " + e);
 					Themes.showThemedToast(CardBrowser.this, getResources().getString(R.string.error_insufficient_memory), false);
 					closeCardBrowser();
 				}
-				updateList();
 			}
 		}
 	};
@@ -862,32 +851,31 @@ public class CardBrowser extends Activity {
 	};
 
 
-//	private DeckTask.TaskListener mSortCardsHandler = new DeckTask.TaskListener() {
-//		@Override
-//		public void onPreExecute() {
-//			Resources res = getResources();
-//			if (mProgressDialog != null && mProgressDialog.isShowing()) {
-//				mProgressDialog.setMessage(res.getString(R.string.card_browser_sorting_cards));
-//			} else {
-//				mProgressDialog = StyledProgressDialog.show(CardBrowser.this, "", res
-//						.getString(R.string.card_browser_sorting_cards), true);				
-//			}
-//		}
-//
-//		@Override
-//		public void onProgressUpdate(DeckTask.TaskData... values) {
-//		}
-//
-//		@Override
-//		public void onPostExecute(DeckTask.TaskData result) {
-//			updateCardsList();
-//			if (mProgressDialog != null && mProgressDialog.isShowing()) {
-//				mProgressDialog.dismiss();
-//			}
-//		}
-//	};
-//
-//
+	private DeckTask.TaskListener mSortCardsHandler = new DeckTask.TaskListener() {
+		@Override
+		public void onPreExecute() {
+			Resources res = getResources();
+			if (mProgressDialog != null && mProgressDialog.isShowing()) {
+				mProgressDialog.setMessage(res.getString(R.string.card_browser_sorting_cards));
+			} else {
+				mProgressDialog = StyledProgressDialog.show(CardBrowser.this, "", res
+						.getString(R.string.card_browser_sorting_cards), true);				
+			}
+		}
+
+		@Override
+		public void onProgressUpdate(DeckTask.TaskData... values) {
+		}
+
+		@Override
+		public void onPostExecute(DeckTask.TaskData result) {
+			updateCardsList();
+			if (mProgressDialog != null && mProgressDialog.isShowing()) {
+				mProgressDialog.dismiss();
+			}
+		}
+	};
+
 //	private DeckTask.TaskListener mUndoRedoHandler = new DeckTask.TaskListener() {
 //		@Override
 //		public void onPreExecute() {
@@ -1013,58 +1001,32 @@ public class CardBrowser extends Activity {
 	}
 
 
-//	private class HashMapCompare implements
-//	Comparator<HashMap<String, String>> {
-//		@Override
-//		public int compare(HashMap<String, String> object1,
-//				HashMap<String, String> object2) {
-//		    try {
-//		    	int result;
-//		    	switch (mSelectedOrder) {
-//		    	case CARD_ORDER_ANSWER:
-//		    		result = object1.get("answer").compareToIgnoreCase(object2.get("answer"));
-//		    		if (result == 0) {
-//		    			result = object1.get("question").compareToIgnoreCase(object2.get("question"));
-//		    		}
-//		    		return result;
-//		    	case CARD_ORDER_QUESTION:
-//		    		result = object1.get("question").compareToIgnoreCase(object2.get("question"));
-//		    		if (result == 0) {
-//		    			result = object1.get("answer").compareToIgnoreCase(object2.get("answer"));
-//		    		}
-//		    		return result;
-//		    	case CARD_ORDER_DUE:
-//		    		result = Double.valueOf(object1.get("due")).compareTo(Double.valueOf(object2.get("due")));
-//		    		if (result == 0) {
-//		    			Long.valueOf(object1.get("id")).compareTo(Long.valueOf(object2.get("id")));
-//		    		}
-//		    		return result;
-//		    	case CARD_ORDER_INTERVAL:
-//		    		result = Double.valueOf(object1.get("interval")).compareTo(Double.valueOf(object2.get("interval")));
-//		    		if (result == 0) {
-//		    			Long.valueOf(object1.get("id")).compareTo(Long.valueOf(object2.get("id")));
-//		    		}
-//		    		return result;
-//		    	case CARD_ORDER_FACTOR:
-//		    		result = Double.valueOf(object1.get("factor")).compareTo(Double.valueOf(object2.get("factor")));
-//		    		if (result == 0) {
-//		    			Long.valueOf(object1.get("id")).compareTo(Long.valueOf(object2.get("id")));
-//		    		}
-//		    		return result;
-//		    	case CARD_ORDER_CREATED:
-//		    		result = Double.valueOf(object1.get("created")).compareTo(Double.valueOf(object2.get("created")));
-//		    		if (result == 0) {
-//		    			Long.valueOf(object1.get("id")).compareTo(Long.valueOf(object2.get("id")));
-//		    		}
-//		    		return result;
-//		    	}
-//		    	return 0;
-//		    }
-//		    catch (Exception e) {
-//		    	Log.e(AnkiDroidApp.TAG, "Error on sorting cards: " + e);
-//		        return 0;
-//		    }
-//		}
-//	}
-//}
+	private class HashMapCompare implements Comparator<HashMap<String, String>> {
+		@Override
+		public int compare(HashMap<String, String> object1, HashMap<String, String> object2) {
+		    try {
+		    	int result = 0;
+		    	switch (mOrder) {
+		    	case CARD_ORDER_SFLD:
+		    		result = object1.get("sfld").compareToIgnoreCase(object2.get("sfld"));
+		    		if (result == 0) {
+		    			result = object1.get("tmpl").compareToIgnoreCase(object2.get("tmpl"));
+		    		}
+		    		break;
+
+		    	case CARD_ORDER_DUE:
+		    		result = Long.valueOf(object1.get("due")).compareTo(Long.valueOf(object2.get("due")));
+		    		if (result == 0) {
+		    			result = object1.get("sfld").compareToIgnoreCase(object2.get("sfld"));
+		    		}
+		    		break;
+		    	}
+		    	return result;
+		    }
+		    catch (Exception e) {
+		    	Log.e(AnkiDroidApp.TAG, "Error on sorting cards: " + e);
+		        return 0;
+		    }
+		}
+	}
 }

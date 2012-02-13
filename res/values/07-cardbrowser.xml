@@ -35,11 +35,9 @@
 <string name="card_browser_unmark_card">Unmark note</string>
 <string name="delete_card_title">Delete note</string>
 <string name="delete_card_message">Really delete all cards of this note?\nSearch field: %s</string>
-<string name="card_browser_show_marked">Show marked cards</string>
-<string name="card_browser_show_suspended">Show suspended cards</string>
-<string name="card_browser_search">Search</string>
-<string name="card_browser_search_suspended">Search suspended</string>
-<string name="card_browser_search_by_tag">Search by tag</string>
+<string name="card_browser_show_marked">Filter marked</string>
+<string name="card_browser_show_suspended">Filter suspended</string>
+<string name="card_browser_search_by_tag">Filter by tag</string>
 <string name="card_browser_tags_shown">Tags: %1$s</string>
 <string name="card_browser_change_display_order">Change display order</string>
 <string name="card_browser_change_display_order_title">Choose display order</string>
@@ -60,15 +58,13 @@
 <string name="card_details_tags">Tags</string>
 <string name="card_details_model">Model</string>
 <string name="card_browser_sorting_cards">Sorting cards.\nPlease wait...</string>
+<string name="card_browser_filtering_cards">Filtering cards.\nPlease wait...</string>
 <string name="card_details_card_model">Card model</string>
 
 	<string-array name="card_browser_order_labels">
-		<item>By question</item>
-		<item>By answer</item>
+		<item>No sorting (faster)</item>
+		<item>By search field</item>
 		<item>By due time</item>
-		<item>By interval</item>
-		<item>By ease</item>
-		<item>Date created</item>
 	</string-array>	
 
 </resources>

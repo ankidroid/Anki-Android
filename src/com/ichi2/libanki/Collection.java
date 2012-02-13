@@ -833,7 +833,7 @@ public class Collection {
 			}
 		}
 		try {
-			cur = mDb.getDatabase().rawQuery("SELECT c.id, n.sfld, n.mid, c.ord, c.did, c.queue, n.tags FROM cards c, notes n WHERE c.nid = n.id" + lim, null);
+			cur = mDb.getDatabase().rawQuery("SELECT c.id, n.sfld, n.mid, c.ord, c.did, c.queue, n.tags, c.due, c.type FROM cards c, notes n WHERE c.nid = n.id" + lim, null);
 			while (cur.moveToNext()) {
 				HashMap<String, String> map = new HashMap<String, String>();
 				map.put("id", cur.getString(0));
@@ -844,6 +844,11 @@ public class Collection {
 				String tags = cur.getString(6);
 				map.put("flags", Integer.toString((queue == -1 ? 1 : 0) + (tags.contains("marked") ? 2 : 0)));
 				map.put("tags", tags);
+				String due = cur.getString(7);
+				if (cur.getInt(8) == 1) {
+					due = Integer.toString(mSched.getToday());
+				}
+				map.put("due", due);
 				data.add(map);
 			}
 		} finally {
