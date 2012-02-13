@@ -189,8 +189,9 @@ public class CardBrowser extends Activity {
 						new DialogInterface.OnClickListener() {
 							@Override
 							public void onClick(DialogInterface dialog, int which) {
-								deleteCard(mPositionInCardsList);
-		                        DeckTask.launchDeckTask(DeckTask.TASK_TYPE_DISMISS_NOTE, mDeleteNoteHandler, new DeckTask.TaskData(mCol.getSched(), mCol.getCard(Long.parseLong(mCards.get(mPositionInCardsList).get("id"))), 3));
+								Card card = mCol.getCard(Long.parseLong(mCards.get(mPositionInCardsList).get("id")));
+								deleteNote(card);
+		                        DeckTask.launchDeckTask(DeckTask.TASK_TYPE_DISMISS_NOTE, mDeleteNoteHandler, new DeckTask.TaskData(mCol.getSched(), card, 3));
 							}
 						});
 				builder.setNegativeButton(res.getString(R.string.no), null);
@@ -711,8 +712,8 @@ public class CardBrowser extends Activity {
 		updateList();
 	}
 
-	private void deleteCard(int position) {
-		ArrayList<Card> cards = mCol.getCard(Long.parseLong(mCards.get(position).get("id"))).note().cards();
+	private void deleteNote(Card card) {
+		ArrayList<Card> cards = card.note().cards();
 		for (Card c : cards) {
 			mCards.remove(getPosition(mCards, c.getId()));
 			mAllCards.remove(getPosition(mAllCards, c.getId()));
