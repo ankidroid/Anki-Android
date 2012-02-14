@@ -725,6 +725,7 @@ public class CardBrowser extends Activity {
 
 							@Override
 							public void onCancel(DialogInterface arg0) {
+								DeckTask.cancelTask();
 								closeCardBrowser();
 							}
 				});

@@ -132,6 +132,10 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
         }
     }
 
+    public static boolean taskIsCancelled() {
+    	return sInstance.isCancelled();
+    }
+
 
     public static boolean taskIsRunning() {
         try {
@@ -186,7 +190,7 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
                 return doInBackgroundAddFact(params);
 
             case TASK_TYPE_UPDATE_FACT:
-                return doInBackgroundUpdateFact(params);
+                return doInBackgroundUpdateNote(params);
                 
             case TASK_TYPE_UNDO:
                 return doInBackgroundUndo(params);                
@@ -275,7 +279,7 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
     }
 
 
-    private TaskData doInBackgroundUpdateFact(TaskData[] params) {
+    private TaskData doInBackgroundUpdateNote(TaskData[] params) {
         // Save the fact
     	Sched sched = params[0].getSched();
     	Collection col = sched.getCol();

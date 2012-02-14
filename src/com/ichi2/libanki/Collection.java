@@ -850,6 +850,9 @@ public class Collection {
 				}
 				map.put("due", due);
 				data.add(map);
+				if (DeckTask.taskIsCancelled()) {
+					return null;
+				}
 			}
 		} finally {
 			if (cur != null && !cur.isClosed()) {
