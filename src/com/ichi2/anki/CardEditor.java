@@ -486,7 +486,7 @@ public class CardEditor extends Activity {
 				}
 				boolean modified = false;
 				for (FieldEditText f : mEditFields) {
-					modified = modified || f.updateField();
+					modified = modified | f.updateField();
 				}
 				if (mAddNote) {
 					DeckTask.launchDeckTask(DeckTask.TASK_TYPE_ADD_FACT, mSaveFactHandler, new DeckTask.TaskData(mEditorNote));	
@@ -1214,7 +1214,7 @@ public class CardEditor extends Activity {
 					 selectedTags.add(tag);
 				 }
 			 }
-	 	});		
+	 	});
 	}
 
 	private void swapText(boolean reset) {
