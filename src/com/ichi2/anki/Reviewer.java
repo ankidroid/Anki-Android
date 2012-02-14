@@ -1442,14 +1442,14 @@ public class Reviewer extends Activity implements IButtonListener{
         super.onActivityResult(requestCode, resultCode, data);
 		if (resultCode == AnkiDroidApp.RESULT_TO_HOME) {
 			closeReviewer(AnkiDroidApp.RESULT_TO_HOME, true);
+        } else if (resultCode == DeckPicker.RESULT_MEDIA_EJECTED) {
+            finishNoStorageAvailable();
 		}
         if (requestCode == EDIT_CURRENT_CARD) {
         	setInAnimation(true);
-            if (resultCode == RESULT_OK || resultCode == RESULT_EDIT_CARD_RESET) {
+            if (resultCode != RESULT_CANCELED) {
                 Log.i(AnkiDroidApp.TAG, "Saving card...");
                 DeckTask.launchDeckTask(DeckTask.TASK_TYPE_UPDATE_FACT, mUpdateCardHandler, new DeckTask.TaskData(mSched, mCurrentCard, true));
-            } else if (resultCode == DeckPicker.RESULT_MEDIA_EJECTED) {
-                finishNoStorageAvailable();
             } else {
             	mInEditor = false;
             	fillFlashcard(mShowAnimations);
