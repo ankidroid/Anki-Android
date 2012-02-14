@@ -49,6 +49,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
+import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -276,6 +277,8 @@ public class CardEditor extends Activity {
 		Themes.applyTheme(this);
 		super.onCreate(savedInstanceState);
 
+		this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+		
 		Intent intent = getIntent();
 		if (savedInstanceState != null) {
 			mCaller = savedInstanceState.getInt("caller");
