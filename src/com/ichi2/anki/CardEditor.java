@@ -1035,6 +1035,8 @@ public class CardEditor extends Activity {
 								mEditFields.get(i).setText(oldValues[i]);
 							}
 						}
+						mTimerHandler.removeCallbacks(checkDuplicatesRunnable);
+						duplicateCheck(false);
 					}
 				}
 			});
