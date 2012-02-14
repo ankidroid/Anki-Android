@@ -56,6 +56,7 @@ import android.widget.RadioGroup.OnCheckedChangeListener;
 import com.ichi2.anim.ActivityTransitionAnimation;
 import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.DeckPicker;
+import com.ichi2.anki.UIUtils;
 import com.ichi2.anki2.R;
 import com.ichi2.libanki.Stats;
 import com.ichi2.themes.StyledDialog;
@@ -196,6 +197,7 @@ public class ChartBuilder extends Activity {
         int[] valueLabels = (int[])ob[3];
         int[] barColors = (int[])ob[4];
         int[] axisTitles = (int[])ob[5];
+        String subTitle = (String) ob[6];
 
         if (mSeriesList == null || mSeriesList[0].length < 2) {
             Log.i(AnkiDroidApp.TAG, "ChartBuilder - Data variable empty, closing chartbuilder");
@@ -217,6 +219,7 @@ public class ChartBuilder extends Activity {
                 mTitle.setTextColor(Color.BLACK);
             } else {
                 setTitle(title);
+            	UIUtils.setActionBarSubtitle(this, subTitle);
                 mTitle.setVisibility(View.GONE);
             }
             for (int i = 1; i < mSeriesList.length; i++) {

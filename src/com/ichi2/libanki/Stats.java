@@ -21,6 +21,7 @@ import java.util.ArrayList;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki2.R;
 
 import android.database.Cursor;
@@ -70,7 +71,17 @@ public class Stats {
     }
 
     public Object[] getMetaInfo() {
-    	return new Object[] {mType, mTitle, mBackwards, mValueLabels, mColors, mAxisTitles};
+    	String title;
+    	if (mWholeCollection) {
+    		title = AnkiDroidApp.getInstance().getResources().getString(R.string.card_browser_all_decks);
+    	} else {
+    		try {
+				title = mCol.getDecks().current().getString("name");
+			} catch (JSONException e) {
+				throw new RuntimeException(e);
+			}
+    	}
+    	return new Object[] {mType, mTitle, mBackwards, mValueLabels, mColors, mAxisTitles, title};
     }
 
     /** 
