@@ -298,6 +298,7 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
 		        	Card newCard;
 		        	if (col.getDecks().active().contains(editCard.getDid())) {
 		        		newCard = editCard;
+		        		newCard.load();
 			        	// reload qa-cache
 		        		newCard.getQuestion(true);
 		        	} else {
