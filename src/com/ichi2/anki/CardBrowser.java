@@ -72,7 +72,6 @@ import org.json.JSONException;
 public class CardBrowser extends Activity {
 	private ArrayList<HashMap<String, String>> mCards;
 	private ArrayList<HashMap<String, String>> mAllCards;
-	private ArrayList<HashMap<String, String>> mDeletedCards;
 	private ListView mCardsListView;
 	private SimpleAdapter mCardsAdapter;
 	private EditText mSearchEditText;
@@ -429,7 +428,7 @@ public class CardBrowser extends Activity {
 		super.onActivityResult(requestCode, resultCode, data);
 
 		if (requestCode == EDIT_CARD && resultCode != RESULT_CANCELED) {
-			Log.i(AnkiDroidApp.TAG, "Saving card...");
+			Log.i(AnkiDroidApp.TAG, "CardBrowser: Saving card...");
 			DeckTask.launchDeckTask(DeckTask.TASK_TYPE_UPDATE_FACT, mUpdateCardHandler, new DeckTask.TaskData(mCol.getSched(), sCardBrowserCard, false));
 		} else if (requestCode == ADD_NOTE && resultCode == RESULT_OK) {
 			getCards();

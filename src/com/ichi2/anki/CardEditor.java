@@ -1180,7 +1180,6 @@ public class CardEditor extends Activity {
 			}
 			break;
 		case REQUEST_ADD:
-			mChanged = true;
 			if (resultCode != RESULT_CANCELED) {
 				mChanged = true;
 			}
@@ -1583,7 +1582,7 @@ public class CardEditor extends Activity {
 			if (mCutMode) {
 				updateContentAfterWordSelection(FieldEditText.this.getText());
 			}
-			String newValue = this.getText().toString();
+			String newValue = this.getText().toString().replace(NEW_LINE, "<br>");;
 			if (!mEditorNote.values()[mOrd].equals(newValue)) {
 				mEditorNote.values()[mOrd] = newValue;
 				return true;
