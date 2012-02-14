@@ -842,7 +842,7 @@ public class Collection {
 				map.put("deck", wholeCollection ? decks.get(cur.getLong(4)) : "");
 				int queue = cur.getInt(5);
 				String tags = cur.getString(6);
-				map.put("flags", Integer.toString((queue == -1 ? 1 : 0) + (tags.contains("marked") ? 2 : 0)));
+				map.put("flags", Integer.toString((queue == -1 ? 1 : 0) + (tags.matches(".*[Mm]arked.*") ? 2 : 0)));
 				map.put("tags", tags);
 				String due = cur.getString(7);
 				if (cur.getInt(8) == 1) {
