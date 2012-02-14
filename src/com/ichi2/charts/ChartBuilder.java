@@ -64,7 +64,6 @@ import com.tomgibara.android.veecheck.util.PrefSettings;
 
 public class ChartBuilder extends Activity {
     public static final String TYPE = "type";
-    public static final int ZOOM_MAX = 20;
 
     private XYMultipleSeriesDataset mDataset = new XYMultipleSeriesDataset();
     private XYMultipleSeriesRenderer mRenderer = new XYMultipleSeriesRenderer();
@@ -72,7 +71,6 @@ public class ChartBuilder extends Activity {
     private GraphicalView mChartView;
     private TextView mTitle;
     private double[] mPan;
-    private int zoom = 0;
 
     private boolean mFullScreen;
 
@@ -80,8 +78,6 @@ public class ChartBuilder extends Activity {
     private double[][] mSeriesList;
 
     private static final int MENU_FULLSCREEN = 0;
-    private static final int MENU_ZOOM_IN = 1;
-    private static final int MENU_ZOOM_OUT = 2;
 
 	/**
      * Swipe Detection
@@ -105,22 +101,6 @@ public class ChartBuilder extends Activity {
         outState.putSerializable("renderer", mRenderer);
     }
 
-    private void zoom() {
-        if (mChartView != null) {
-            if (zoom > 0) {
-                mRenderer.setXAxisMin(mPan[0] / (zoom + 1));
-                mRenderer.setXAxisMax(mPan[1] / (zoom + 1));
-            } else {
-                mRenderer.setXAxisMin(mPan[0]);
-                mRenderer.setXAxisMax(mPan[1]);
-            }
-//            mChartView = ChartFactory.getBarChartView(this, mDataset, mRenderer, BarChart.Type.STACKED);
-            LinearLayout layout = (LinearLayout) findViewById(R.id.chart);
-            layout.addView(mChartView, new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT));
-        }
-    }
-
-
     public void closeChartBuilder() {
         finish();
         if (Integer.valueOf(android.os.Build.VERSION.SDK) > 4) {
@@ -142,18 +122,6 @@ public class ChartBuilder extends Activity {
         MenuItem item;
         item = menu.add(Menu.NONE, MENU_FULLSCREEN, Menu.NONE, R.string.statistics_fullscreen);
         item.setIcon(R.drawable.ic_menu_manage);
-        item = menu.add(Menu.NONE, MENU_ZOOM_IN, Menu.NONE, R.string.statistics_zoom_in);
-        item.setIcon(R.drawable.ic_menu_zoom_in);
-        item = menu.add(Menu.NONE, MENU_ZOOM_OUT, Menu.NONE, R.string.statistics_zoom_out);
-        item.setIcon(R.drawable.ic_menu_zoom_out);
-        return true;
-    }
-
-
-    @Override
-    public boolean onPrepareOptionsMenu(Menu menu) {
-        menu.findItem(MENU_ZOOM_IN).setEnabled(zoom < ZOOM_MAX);
-        menu.findItem(MENU_ZOOM_OUT).setEnabled(zoom > 0);
         return true;
     }
 
@@ -173,16 +141,6 @@ public class ChartBuilder extends Activity {
                 if (Integer.valueOf(android.os.Build.VERSION.SDK) > 4) {
                     ActivityTransitionAnimation.slide(this, ActivityTransitionAnimation.FADE);
                 }
-                return true;
-            case MENU_ZOOM_IN:
-                zoom += 1;
-                zoom();
-                return true;
-            case MENU_ZOOM_OUT:
-                if (zoom > 0) {
-                    zoom -= 1;
-                }
-                zoom();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -320,10 +278,6 @@ public class ChartBuilder extends Activity {
         		return false;
         		}
         	});
-		zoom = 0;
-        if (zoom > 0) {
-        	zoom();
-        }
     }
 
 
