@@ -651,6 +651,7 @@ public class CardBrowser extends Activity {
 //		if (mPrefCacheCardBrowser && sAllCardsCache != null && !sAllCardsCache.isEmpty()) {
 //			showDialog(DIALOG_RELOAD_CARDS);
 //		} else {
+			mAllCards.clear();
 			DeckTask.launchDeckTask(DeckTask.TASK_TYPE_LOAD_CARDS, mLoadCardsHandler, new DeckTask.TaskData(mCol, 0, mWholeCollection));
 //		}
 	}
