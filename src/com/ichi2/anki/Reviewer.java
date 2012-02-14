@@ -1440,7 +1440,9 @@ public class Reviewer extends Activity implements IButtonListener{
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-
+		if (resultCode == AnkiDroidApp.RESULT_TO_HOME) {
+			closeReviewer(AnkiDroidApp.RESULT_TO_HOME, true);
+		}
         if (requestCode == EDIT_CURRENT_CARD) {
         	setInAnimation(true);
             if (resultCode == RESULT_OK || resultCode == RESULT_EDIT_CARD_RESET) {

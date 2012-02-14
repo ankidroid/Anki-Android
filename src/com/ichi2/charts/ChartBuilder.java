@@ -143,6 +143,10 @@ public class ChartBuilder extends Activity {
                     ActivityTransitionAnimation.slide(this, ActivityTransitionAnimation.FADE);
                 }
                 return true;
+    		case android.R.id.home:
+    			setResult(AnkiDroidApp.RESULT_TO_HOME);
+    			closeChartBuilder();
+    			return true;
             default:
                 return super.onOptionsItemSelected(item);
         }

@@ -766,6 +766,10 @@ public class CardEditor extends Activity {
 		case MENU_SAVED_INTENT:
 			showDialog(DIALOG_INTENT_INFORMATION);
 			return true;
+
+		case android.R.id.home:
+			closeCardEditor(AnkiDroidApp.RESULT_TO_HOME);
+			return true;
 		}
 		return false;
 	}
@@ -1156,6 +1160,9 @@ public class CardEditor extends Activity {
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
+		if (resultCode == AnkiDroidApp.RESULT_TO_HOME) {
+			closeCardEditor(AnkiDroidApp.RESULT_TO_HOME);
+		}
 		switch (requestCode) {
 		case REQUEST_INTENT_ADD:
 			if (resultCode != RESULT_CANCELED) {
