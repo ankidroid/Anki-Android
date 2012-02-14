@@ -742,18 +742,23 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
 	       		// deck does already exist. Remove all cards and recreate them to ensure the correct order
 	       		col.remCards(col.getDecks().cids(did));
 	       	}
+	       	JSONObject model = col.getModels().byName(title);
+	       	// TODO: check, if model is valid or delete and recreate it
+	       	// TODO: deactivated at the moment as if forces a schema change
 	       	// create model (remove old ones first)
-	       	while (col.getModels().byName(title) != null) {
-	       		JSONObject m = col.getModels().byName(title);
-	       		// rename old tutorial model if there are some non tutorial cards in it
-	       		if (col.getDb().queryScalar("SELECT id FROM cards WHERE nid IN (SELECT id FROM notes WHERE mid = " + m.getLong("id") + ")", false) == 0) {
-		       		col.getModels().rem(m);
-	       		} else {
-	       			m.put("name", title + " (renamed)");
-	       			col.getModels().save(m);
-	       		}
+//	       	while (model != null) {
+//	       		JSONObject m = col.getModels().byName(title);
+//	       		// rename old tutorial model if there are some non tutorial cards in it
+//	       		if (col.getDb().queryScalar("SELECT id FROM cards WHERE nid IN (SELECT id FROM notes WHERE mid = " + m.getLong("id") + ")", false) == 0) {
+//		       		col.getModels().rem(m);
+//	       		} else {
+//	       			m.put("name", title + " (renamed)");
+//	       			col.getModels().save(m);
+//	       		}
+//	       	}
+	       	if (model == null) {
+	       		model = col.getModels().addBasicModel(title, false);	       		
 	       	}
-	       	JSONObject model = col.getModels().addBasicModel(title, false);
 	       	model.put("did", did);
 			String[] questions = res.getStringArray(R.array.tutorial_questions);
 			String[] answers = res.getStringArray(R.array.tutorial_answers);
