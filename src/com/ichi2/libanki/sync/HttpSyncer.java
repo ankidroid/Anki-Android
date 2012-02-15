@@ -16,7 +16,10 @@
 
 package com.ichi2.libanki.sync;
 
+import android.util.Log;
+
 import com.byarger.exchangeit.EasySSLSocketFactory;
+import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.async.Connection;
 import com.ichi2.libanki.Utils;
 
@@ -308,6 +311,11 @@ public class HttpSyncer {
 	}
 
 	public static ByteArrayInputStream getInputStream(String string) {
-		return new ByteArrayInputStream(string.getBytes(Charset.forName("UTF-8")));
+		try {
+			return new ByteArrayInputStream(string.getBytes("UTF-8"));
+		} catch (UnsupportedEncodingException e) {
+			Log.e(AnkiDroidApp.TAG, "HttpSyncer: error on getting bytes from string: " + e);
+			return null;
+		}
 	}
 }
