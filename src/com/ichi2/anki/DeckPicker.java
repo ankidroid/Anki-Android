@@ -2086,7 +2086,7 @@ public class DeckPicker extends Activity {
     }
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        if (gestureDetector.onTouchEvent(event))
+        if (this.onTouchEvent(event))
 	        return true;
 	    else
 	    	return false;

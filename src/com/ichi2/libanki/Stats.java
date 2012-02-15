@@ -192,12 +192,16 @@ public class Stats {
     	if (num != -1) {
     		lims.add("id > " + ((mCol.getSched().getDayCutoff() - ((num + 1)*chunk*86400)) * 1000));
     	}
-    	String lim = _revlogLimit();
+    	String lim = _revlogLimit().replaceAll("[\\[\\]]", "");
     	if (lim.length() > 0) {
     		lims.add(lim);
     	}
     	if (lims.size() > 0) {
-    		lim = "WHERE " + lims.toString().replace(",", " AND ").replaceAll("[\\[\\]]", "");
+    		lim = "WHERE ";
+    		while (lims.size() > 1) {
+    			lim += lims.remove(0) + " AND ";
+    		}
+    		lim += lims.remove(0);
     	} else {
     		lim = "";
     	}
