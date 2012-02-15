@@ -1602,7 +1602,7 @@ public class Reviewer extends Activity implements IButtonListener{
             Intent editCard = new Intent(Reviewer.this, CardEditor.class);
             editCard.putExtra(CardEditor.EXTRA_CALLER, CardEditor.CALLER_REVIEWER);
         	sEditorCard = mCurrentCard;
-        	setOutAnimation(true);
+        	setOutAnimation(false);
             startActivityForResult(editCard, EDIT_CURRENT_CARD);
             if (Integer.valueOf(android.os.Build.VERSION.SDK) > 4) {
                 ActivityTransitionAnimation.slide(Reviewer.this, ActivityTransitionAnimation.LEFT);
