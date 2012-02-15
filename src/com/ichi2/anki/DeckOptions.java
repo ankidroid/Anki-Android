@@ -265,7 +265,14 @@ public class DeckOptions extends PreferenceActivity implements
 				}
 
 				// save conf
-				mCol.getDecks().save(mOptions);
+				try {
+					mCol.getDecks().save(mOptions);
+		    	} catch (RuntimeException e) {
+		    		Log.e(AnkiDroidApp.TAG, "DeckOptions - RuntimeException on saving conf: " + e);
+					AnkiDroidApp.saveExceptionReportFile(e, "DeckOptionsSaveConf");
+					setResult(DeckPicker.RESULT_DB_ERROR);
+					finish();
+				}
 
 				// make sure we refresh the parent cached values
 				cacheValues();

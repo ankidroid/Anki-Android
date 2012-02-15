@@ -103,6 +103,7 @@ public class DeckPicker extends Activity {
 	private static final int DIALOG_SELECT_HELP = 16;
 	private static final int DIALOG_BACKUP_NO_SPACE_LEFT = 17;
 	private static final int DIALOG_OK = 18;
+	private static final int DIALOG_DB_ERROR = 19;
 
 	private String mDialogMessage;
 
@@ -580,7 +581,7 @@ public class DeckPicker extends Activity {
 			if ((Boolean)res[0]) {
 				updateDecksList((TreeSet<Object[]>) res[1], (Integer)res[2], (Integer)res[3]);				
 			} else {
-				// TODO: db error handling
+				showDialog(DIALOG_DB_ERROR);
 			}
 		}
 
@@ -660,13 +661,13 @@ public class DeckPicker extends Activity {
 
         @Override
         public void onPostExecute(DeckTask.TaskData result) {
-        	if (result.getBoolean()) {
-//        		populateDeckList(mPrefDeckPath);
-        	} else {
-        		Themes.showThemedToast(DeckPicker.this, getResources().getString(R.string.deck_repair_error), true);
-        	}
         	if (mProgressDialog != null && mProgressDialog.isShowing()) {
         		mProgressDialog.dismiss();
+        	}
+        	if (result.getBoolean()) {
+        		loadCollection();
+        	} else {
+        		Themes.showThemedToast(DeckPicker.this, getResources().getString(R.string.deck_repair_error), true);
         	}
         }
  
@@ -984,7 +985,7 @@ public class DeckPicker extends Activity {
 		} else if (preferences.getBoolean("noSpaceLeft", false)) {
 			showDialog(DIALOG_BACKUP_NO_SPACE_LEFT);
 			preferences.edit().putBoolean("noSpaceLeft", false).commit();
-		} else {
+		} else if (mCol == null){
 			loadCollection();
 		}
 	}
@@ -1207,40 +1208,37 @@ public class DeckPicker extends Activity {
 			// builder.setCancelable(true);
 			// dialog = builder.create();
 			// break;
-			// case DIALOG_DB_ERROR:
-			// builder.setTitle(R.string.answering_error_title);
-			// builder.setIcon(android.R.drawable.ic_dialog_alert);
-			// builder.setMessage(R.string.answering_error_message);
-			// builder.setPositiveButton(res.getString(R.string.backup_repair_deck),
-			// new OnClickListener() {
-			// @Override
-			// public void onClick(DialogInterface dialog, int which) {
-			// DeckTask.launchDeckTask(DeckTask.TASK_TYPE_REPAIR_DECK,
-			// mRepairDeckHandler, new DeckTask.TaskData(mDeckFilename != null ?
-			// mDeckFilename : mRepairFileName));
-			// }
-			// });
-			// builder.setNeutralButton(res.getString(R.string.answering_error_report),
-			// new OnClickListener() {
-			// @Override
-			// public void onClick(DialogInterface dialog, int which) {
-			// mShowRepairDialog = true;
-			// Intent i = new Intent(StudyOptions.this, Feedback.class);
-			// dialog.dismiss();
-			// startActivityForResult(i, REPORT_ERROR);
-			// if (UIUtils.getApiLevel() > 4) {
-			// ActivityTransitionAnimation.slide(StudyOptions.this,
-			// ActivityTransitionAnimation.FADE);
-			// }
-			// }
-			// });
-			// builder.setNegativeButton(res.getString(R.string.close), null);
-			// builder.setCancelable(true);
-			// dialog = builder.create();
-			// break;
-			//
 
-//		case DIALOG_USER_NOT_LOGGED_IN_DOWNLOAD:
+			 case DIALOG_DB_ERROR:
+				 builder.setTitle(R.string.answering_error_title);
+				 builder.setIcon(android.R.drawable.ic_dialog_alert);
+				 builder.setMessage(R.string.answering_error_message);
+				 builder.setPositiveButton("XXXCheckcolXXX",//res.getString(R.string.backup_repair_deck),
+					 new DialogInterface.OnClickListener() {
+					 	@Override
+					 	public void onClick(DialogInterface dialog, int which) {
+					 		// TODO: add dialog with check options
+//					 		String fileName = mCol.getPath();
+//					 		DeckTask.launchDeckTask(DeckTask.TASK_TYPE_REPAIR_DECK, mRepairDeckHandler, new DeckTask.TaskData(mCol, fileName));
+					 	}
+				 	});
+				 builder.setNeutralButton(res.getString(R.string.answering_error_report),
+				    new DialogInterface.OnClickListener() {
+					 	@Override
+					 	public void onClick(DialogInterface dialog, int which) {
+					 		Intent i = new Intent(DeckPicker.this, Feedback.class);
+			            	i.putExtra("request", RESULT_DB_ERROR);
+					 		dialog.dismiss();
+					 		startActivityForResult(i, REPORT_ERROR);
+					 		if (UIUtils.getApiLevel() > 4) {
+					 			ActivityTransitionAnimation.slide(DeckPicker.this, ActivityTransitionAnimation.RIGHT);
+					 		}
+					 	}
+				 	});
+				 builder.setNegativeButton(res.getString(R.string.close), null);
+				 builder.setCancelable(true);
+				 dialog = builder.create();
+			 break;
 
 		case DIALOG_USER_NOT_LOGGED_IN_SYNC:
 			builder.setTitle(res.getString(R.string.connection_error_title));
@@ -1561,41 +1559,21 @@ public class DeckPicker extends Activity {
 			mCurrentDid = Long.parseLong(mDeckList.get(mContextMenuPosition).get("did"));
 			ad.setMessage(String.format(res.getString(R.string.delete_deck_message), "\'" + mCol.getDecks().name(mCurrentDid) + "\'"));
 			break;
+
 		case DIALOG_CONTEXT_MENU:
 			mCurrentDid = Long.parseLong(mDeckList.get(mContextMenuPosition).get("did"));
 			ad.setTitle(mCol.getDecks().name(mCurrentDid));
 			break;
+
 		case DIALOG_SYNC_LOG:
 			ad.setMessage(mDialogMessage);
 			break;
+
+		case DIALOG_DB_ERROR:
+			ad.getButton(Dialog.BUTTON3).setEnabled(hasErrorFiles());
+			break;
 		}
 	}
-
-
-    private DialogInterface.OnClickListener mStatisticListener = new DialogInterface.OnClickListener() {
-        @Override
-        public void onClick(DialogInterface dialog, int which) {
-//			if (mStatisticType == -1 && which != Statistics.TYPE_DECK_SUMMARY) {
-//				mStatisticType = which;
-//           		showDialog(DIALOG_SELECT_STATISTICS_PERIOD);
-//        	} else {
-//		    	if (mFileList != null && mFileList.length > 0) {
-//					String[] deckPaths = new String[mFileList.length];
-//					int i = 0;
-//			    	for (File file : mFileList) {
-//			    		deckPaths[i] = file.getAbsolutePath();
-//			    		i++;
-//					}
-////			    	if (mStatisticType == -1) {
-////			    		mStatisticType = Statistics.TYPE_DECK_SUMMARY;
-////				    	DeckTask.launchDeckTask(DeckTask.TASK_TYPE_LOAD_STATISTICS, mLoadStatisticsHandler, new DeckTask.TaskData(DeckPicker.this, deckPaths, mStatisticType, 0));			    		
-////			    	} else {
-////				    	DeckTask.launchDeckTask(DeckTask.TASK_TYPE_LOAD_STATISTICS, mLoadStatisticsHandler, new DeckTask.TaskData(DeckPicker.this, deckPaths, mStatisticType, which));
-////			    	}
-//		    	}
-//        	}
-        }
-    };
 
 
     @Override
@@ -1829,17 +1807,17 @@ public class DeckPicker extends Activity {
         			}
         			@Override
         			public void onPostExecute(TaskData result) {
-        				long val = result.getLong();
-        				if (val == -1) {
-        					// TODO: db error handling
-        				}
         				if (mProgressDialog.isShowing()) {
         					mProgressDialog.dismiss();
         				}
-        	    		StyledDialog dialog = (StyledDialog) onCreateDialog(DIALOG_OK);
-        	    		dialog.setTitle(getResources().getString(R.string.check_db_title));
-        	    		dialog.setMessage(String.format(Utils.ENGLISH_LOCALE, getResources().getString(R.string.check_db_result_message), Math.round(result.getLong() / 1024)));
-        	    		dialog.show();
+        				if (result.getBoolean()) {
+            	    		StyledDialog dialog = (StyledDialog) onCreateDialog(DIALOG_OK);
+            	    		dialog.setTitle(getResources().getString(R.string.check_db_title));
+            	    		dialog.setMessage(String.format(Utils.ENGLISH_LOCALE, getResources().getString(R.string.check_db_result_message), Math.round(result.getLong() / 1024)));
+            	    		dialog.show();
+        				} else {
+        					showDialog(DIALOG_DB_ERROR);
+        				}
         			}
         			@Override
         			public void onProgressUpdate(TaskData... values) {
@@ -1857,6 +1835,9 @@ public class DeckPicker extends Activity {
     protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
         super.onActivityResult(requestCode, resultCode, intent);
 
+        if (resultCode == RESULT_DB_ERROR) {
+        	showDialog(DIALOG_DB_ERROR);
+        }
     	if (requestCode == SHOW_STUDYOPTIONS && resultCode == RESULT_OK) {
     		mDontSaveOnStop = false;
     		loadCounts();
@@ -2123,78 +2104,6 @@ public class DeckPicker extends Activity {
 //	      	  adapter.addButtonListener(this);
 //	      }
 //	}
-
-    
-
-
-//	Connection.TaskListener mSyncListener = new Connection.TaskListener() {
-//
-//		@Override
-//		public void onDisconnected() {
-//			// showDialog(DIALOG_NO_CONNECTION);
-//		}
-//
-//		@Override
-//		public void onPostExecute(Payload data) {
-//			Log.i(AnkiDroidApp.TAG, "onPostExecute");
-//			if (mProgressDialog != null && mProgressDialog.isShowing()) {
-//				mProgressDialog.dismiss();
-//				setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR);
-//			}
-//			if (data.success) {
-//				mCurrentDialogMessage = ((HashMap<String, String>) data.result)
-//						.get("message");
-//				// DeckManager.getMainDeck().updateCutoff();
-//				resetAndUpdateValuesFromDeck();
-//				// showDialog(DIALOG_SYNC_LOG);
-//			} else {
-//				if (data.returnType == AnkiDroidProxy.DB_ERROR) {
-//					showDialog(DIALOG_DB_ERROR);
-//					// } else if (data.returnType ==
-//					// AnkiDroidProxy.SYNC_CONFLICT_RESOLUTION) {
-//					// // Need to ask user for conflict resolution direction and
-//					// re-run sync
-//					// syncDeckWithPrompt();
-//				} else {
-//					String errorMessage = ((HashMap<String, String>) data.result)
-//							.get("message");
-//					if ((errorMessage != null) && (errorMessage.length() > 0)) {
-//						mCurrentDialogMessage = errorMessage;
-//					}
-//					// showDialog(DIALOG_CONNECTION_ERROR);
-//				}
-//			}
-//		}
-//
-//		@Override
-//		public void onPreExecute() {
-//			// Pass
-//		}
-//
-//		@Override
-//		public void onProgressUpdate(Object... values) {
-//			if (values[0] instanceof Boolean) {
-//				// This is the part Download missing media of syncing
-//				Resources res = getResources();
-//				int total = ((Integer) values[1]).intValue();
-//				int done = ((Integer) values[2]).intValue();
-//				values[0] = ((String) values[3]);
-//				values[1] = res.getString(R.string.sync_downloading_media,
-//						done, total);
-//			}
-//			if (mProgressDialog == null || !mProgressDialog.isShowing()) {
-//				mProgressDialog = StyledProgressDialog.show(StudyOptions.this,
-//						(String) values[0], (String) values[1]);
-//				// Forbid orientation changes as long as progress dialog is
-//				// shown
-//				setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_NOSENSOR);
-//			} else {
-//				mProgressDialog.setTitle((String) values[0]);
-//				mProgressDialog.setMessage((String) values[1]);
-//			}
-//		}
-//
-//	};
 
 //	@Override
 //	protected void onNewIntent(Intent intent) {

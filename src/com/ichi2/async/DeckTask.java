@@ -71,7 +71,6 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
     public static final int TASK_TYPE_DISMISS_NOTE = 11;
     public static final int TASK_TYPE_LOAD_STATISTICS = 13;
     public static final int TASK_TYPE_CHECK_DATABASE = 14;
-    public static final int TASK_TYPE_SET_ALL_DECKS_JOURNAL_MODE = 15;
     public static final int TASK_TYPE_DELETE_BACKUPS = 16;
     public static final int TASK_TYPE_RESTORE_DECK = 17;
     public static final int TASK_TYPE_UPDATE_CARD_BROWSER_LIST = 18;
@@ -187,7 +186,7 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
                 return doInBackgroundMarkCard(params);
 
             case TASK_TYPE_ADD_FACT:
-                return doInBackgroundAddFact(params);
+                return doInBackgroundAddNote(params);
 
             case TASK_TYPE_UPDATE_FACT:
                 return doInBackgroundUpdateNote(params);
@@ -207,9 +206,6 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
             case TASK_TYPE_CHECK_DATABASE:
                 return doInBackgroundCheckDatabase(params);
 
-            case TASK_TYPE_SET_ALL_DECKS_JOURNAL_MODE:
-                return doInBackgroundSetJournalMode(params);
-                
             case TASK_TYPE_DELETE_BACKUPS:
                 return doInBackgroundDeleteBackups();
                 
@@ -255,8 +251,8 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
     }
 
 
-    private TaskData doInBackgroundAddFact(TaskData[] params) {
-    	Log.i(AnkiDroidApp.TAG, "doInBackgroundAddFact");
+    private TaskData doInBackgroundAddNote(TaskData[] params) {
+    	Log.i(AnkiDroidApp.TAG, "doInBackgroundAddNote");
     	Note note = params[0].getNote();
     	Collection col = note.getCol();
 
@@ -270,17 +266,17 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
                 ankiDB.getDatabase().endTransaction();
             }
     	} catch (RuntimeException e) {
-    		throw new RuntimeException(e);
-//    		Log.e(AnkiDroidApp.TAG, "doInBackgroundAddFact - RuntimeException on adding fact: " + e);
-//    		AnkiDroidApp.saveExceptionReportFile(e, "doInBackgroundAddFact");
-//            return new TaskData(false);
+    		Log.e(AnkiDroidApp.TAG, "doInBackgroundAddNote - RuntimeException on adding fact: " + e);
+    		AnkiDroidApp.saveExceptionReportFile(e, "doInBackgroundAddNote");
+            return new TaskData(false);
         }
     	return new TaskData(true);
     }
 
 
     private TaskData doInBackgroundUpdateNote(TaskData[] params) {
-        // Save the fact
+    	Log.i(AnkiDroidApp.TAG, "doInBackgroundUpdateNote");
+        // Save the note
     	Sched sched = params[0].getSched();
     	Collection col = sched.getCol();
         Card editCard = params[0].getCard();
@@ -313,8 +309,8 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
 	        	col.getDb().getDatabase().endTransaction();
 	        }
 		} catch (RuntimeException e) {
-			Log.e(AnkiDroidApp.TAG, "doInBackgroundUpdateFact - RuntimeException on updating fact: " + e);
-			AnkiDroidApp.saveExceptionReportFile(e, "doInBackgroundUpdateFact");
+			Log.e(AnkiDroidApp.TAG, "doInBackgroundUpdateNote - RuntimeException on updating fact: " + e);
+			AnkiDroidApp.saveExceptionReportFile(e, "doInBackgroundUpdateNote");
 			return new TaskData(false);
 		}
         return new TaskData(true);
@@ -328,7 +324,7 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
         Card newCard = null;
         int oldCardLeech = 0;
         // 0: normal; 1: leech; 2: leech & suspended
-//        try {
+        try {
 	        AnkiDb ankiDB = sched.getCol().getDb();
 	        ankiDB.getDatabase().beginTransaction();
 	        try {
@@ -354,11 +350,11 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
 	        } finally {
 	            ankiDB.getDatabase().endTransaction();
 	        }
-//		} catch (RuntimeException e) {
-//			Log.e(AnkiDroidApp.TAG, "doInBackgroundAnswerCard - RuntimeException on answering card: " + e);
-//			AnkiDroidApp.saveExceptionReportFile(e, "doInBackgroundAnswerCard");
-//			return new TaskData(false);
-//		}
+		} catch (RuntimeException e) {
+			Log.e(AnkiDroidApp.TAG, "doInBackgroundAnswerCard - RuntimeException on answering card: " + e);
+			AnkiDroidApp.saveExceptionReportFile(e, "doInBackgroundAnswerCard");
+			return new TaskData(false);
+		}
         return new TaskData(true);
     }
 
@@ -472,7 +468,7 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
     	Card card = params[0].getCard();
     	Note note = card.note();
     	int type = params[0].getInt();
-//        try {
+        try {
             col.getDb().getDatabase().beginTransaction();
             try {
             	switch (type) {
@@ -507,11 +503,11 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
             } finally {
             	col.getDb().getDatabase().endTransaction();
             }
-//    	} catch (RuntimeException e) {
-//    		Log.e(AnkiDroidApp.TAG, "doInBackgroundSuspendCard - RuntimeException on suspending card: " + e);
-//			AnkiDroidApp.saveExceptionReportFile(e, "doInBackgroundSuspendCard");
-//    		return new TaskData(false);
-//    	}
+    	} catch (RuntimeException e) {
+    		Log.e(AnkiDroidApp.TAG, "doInBackgroundSuspendCard - RuntimeException on suspending card: " + e);
+			AnkiDroidApp.saveExceptionReportFile(e, "doInBackgroundSuspendCard");
+    		return new TaskData(false);
+    	}
         return new TaskData(true);
     }
         	
@@ -610,16 +606,36 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
     private TaskData doInBackgroundCheckDatabase(TaskData... params) {
         Log.i(AnkiDroidApp.TAG, "doInBackgroundCheckDatabase");
     	Collection col = params[0].getCollection();
-    	return new TaskData(col.fixIntegrity());
+    	long result;
+    	try {
+            col.getDb().getDatabase().beginTransaction();
+            try {
+        		result = col.fixIntegrity();
+	            col.getDb().getDatabase().setTransactionSuccessful();
+	        } finally {
+	        	col.getDb().getDatabase().endTransaction();
+	        }
+    	} catch (RuntimeException e) {
+    		Log.e(AnkiDroidApp.TAG, "doInBackgroundCheckDatabase - RuntimeException on marking card: " + e);
+			AnkiDroidApp.saveExceptionReportFile(e, "doInBackgroundCheckDatabase");
+    		return new TaskData(false);
+    	}
+    	if (result == -1) {
+        	return new TaskData(false);    		
+    	} else {
+        	return new TaskData(0, result, true);
+    	}
     }
 
 
     private TaskData doInBackgroundRepairDeck(TaskData... params) {
-//    	Log.i(AnkiDroidApp.TAG, "doInBackgroundRepairDeck");
-//    	String deckPath = params[0].getString();
-//    	DeckManager.closeDeck(deckPath, false);
-//    	return new TaskData(BackupManager.repairDeck(deckPath));
-    	return null;
+    	Log.i(AnkiDroidApp.TAG, "doInBackgroundRepairDeck");
+    	String deckPath = params[0].getString();
+    	Collection col = params[0].getCollection();
+    	if (col != null) {
+    		col.close(false);
+    	}
+    	return new TaskData(BackupManager.repairDeck(deckPath));
     }
 
 
@@ -632,35 +648,6 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
         	BackupManager.performBackup(path);
     	}
     	return null;
-    }
-
-
-    private TaskData doInBackgroundSetJournalMode(TaskData... params) {
-//        Log.i(AnkiDroidApp.TAG, "doInBackgroundSetJournalMode");
-//        String path = params[0].getString();
-//
-//        int len = 0;
-//		File[] fileList;
-//
-//		File dir = new File(path);
-//		fileList = dir.listFiles(new AnkiFilter());
-//
-//		if (dir.exists() && dir.isDirectory() && fileList != null) {
-//			len = fileList.length;
-//		} else {
-//			return null;
-//		}
-//
-//		if (len > 0 && fileList != null) {
-//			Log.i(AnkiDroidApp.TAG, "Set journal mode: number of anki files = " + len);
-//			for (File file : fileList) {
-//				// on deck open, journal mode will be automatically set, set requesting activity to syncclient to force delete journal mode
-//				String filePath = file.getAbsolutePath();
-//				DeckManager.getDeck(filePath, DeckManager.REQUESTING_ACTIVITY_SYNCCLIENT);
-//				DeckManager.closeDeck(filePath, false);
-//			}
-//		}
-        return null;
     }
 
     

@@ -210,6 +210,9 @@ public class CardEditor extends Activity {
 	private int mFilledFields = 0;
 
 	private DeckTask.TaskListener mSaveFactHandler = new DeckTask.TaskListener() {
+		private boolean mCloseAfter = false;
+		private Intent mIntent;
+
 		@Override
 		public void onPreExecute() {
 			Resources res = getResources();
@@ -233,36 +236,53 @@ public class CardEditor extends Activity {
 			} else {
 				Themes.showThemedToast(CardEditor.this, getResources().getString(R.string.factadder_saving_error), true);
 			}
-			if (mProgressDialog != null && mProgressDialog.isShowing()) {
-				try {
-					mProgressDialog.dismiss();
-				} catch (IllegalArgumentException e) {
-					Log.e(AnkiDroidApp.TAG,
-							"Card Editor: Error on dismissing progress dialog: "
-									+ e);
-				}
-			}
 			if (!mAddNote || mCaller == CALLER_CARDEDITOR
 					|| mCaller == CALLER_BIGWIDGET_EDIT || mAedictIntent) {
 				mChanged = true;
-				closeCardEditor();
+				mCloseAfter = true;
 			} else if (mCaller == CALLER_CARDEDITOR_INTENT_ADD) {
 				if (count > 0) {
 					mChanged = true;
 				}
-				Intent intent = new Intent();
-				intent.putExtra(EXTRA_ID, getIntent().getStringExtra(EXTRA_ID));
-				closeCardEditor(intent);
+				mCloseAfter = true;
+				mIntent = new Intent();
+				mIntent.putExtra(EXTRA_ID, getIntent().getStringExtra(EXTRA_ID));
 			} else if (!mEditFields.isEmpty()) {
 				mEditFields.getFirst().requestFocus();
+			}
+			if (!mCloseAfter) {
+				if (mProgressDialog != null && mProgressDialog.isShowing()) {
+					try {
+						mProgressDialog.dismiss();
+					} catch (IllegalArgumentException e) {
+						Log.e(AnkiDroidApp.TAG,
+								"Card Editor: Error on dismissing progress dialog: "
+										+ e);
+					}
+				}				
 			}
 		}
 
 		@Override
 		public void onPostExecute(DeckTask.TaskData result) {
-            if (!result.getBoolean()) {
-            	// RuntimeException occured on marking cards
-            	// TODO: close and give note of db error
+            if (result.getBoolean()) {
+				if (mProgressDialog != null && mProgressDialog.isShowing()) {
+					try {
+						mProgressDialog.dismiss();
+					} catch (IllegalArgumentException e) {
+						Log.e(AnkiDroidApp.TAG,
+								"Card Editor: Error on dismissing progress dialog: "
+										+ e);
+					}
+				}				
+            	if (mIntent != null) {
+    				closeCardEditor(mIntent);
+            	} else {
+    				closeCardEditor();            		
+            	}
+            } else {
+            	// RuntimeException occured on adding note
+            	closeCardEditor(DeckPicker.RESULT_DB_ERROR);
             }
 		}
 	};
@@ -1167,6 +1187,11 @@ public class CardEditor extends Activity {
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
+
+		if (resultCode == DeckPicker.RESULT_DB_ERROR) {
+			closeCardEditor(DeckPicker.RESULT_DB_ERROR);
+        }
+
 		if (resultCode == AnkiDroidApp.RESULT_TO_HOME) {
 			closeCardEditor(AnkiDroidApp.RESULT_TO_HOME);
 		}

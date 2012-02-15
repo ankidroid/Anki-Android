@@ -438,6 +438,10 @@ public class CardBrowser extends Activity {
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
 
+		if (resultCode == DeckPicker.RESULT_DB_ERROR) {
+			closeCardBrowser(DeckPicker.RESULT_DB_ERROR);
+        }
+
 		if (requestCode == EDIT_CARD && resultCode != RESULT_CANCELED) {
 			Log.i(AnkiDroidApp.TAG, "CardBrowser: Saving card...");
 			DeckTask.launchDeckTask(DeckTask.TASK_TYPE_UPDATE_FACT, mUpdateCardHandler, new DeckTask.TaskData(mCol.getSched(), sCardBrowserCard, false));
@@ -863,6 +867,9 @@ public class CardBrowser extends Activity {
 
 		@Override
 		public void onPostExecute(DeckTask.TaskData result) {
+			if (!result.getBoolean()) {
+				closeCardBrowser(DeckPicker.RESULT_DB_ERROR);
+			}
 			mProgressDialog.dismiss();
 
 		}
@@ -882,7 +889,11 @@ public class CardBrowser extends Activity {
 
 		@Override
 		public void onPostExecute(DeckTask.TaskData result) {
-			updateCardInList(mCol.getCard(Long.parseLong(mCards.get(mPositionInCardsList).get("id"))));
+			if (result.getBoolean()) {
+				updateCardInList(mCol.getCard(Long.parseLong(mCards.get(mPositionInCardsList).get("id"))));
+			} else {
+				closeCardBrowser(DeckPicker.RESULT_DB_ERROR);
+			}
 			mProgressDialog.dismiss();
 
 		}

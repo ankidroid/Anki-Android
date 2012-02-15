@@ -120,7 +120,6 @@ public class Reviewer extends Activity implements IButtonListener{
     public static final int RESULT_SESSION_COMPLETED = 51;
     public static final int RESULT_NO_MORE_CARDS = 52;
     public static final int RESULT_EDIT_CARD_RESET = 53;
-    public static final int RESULT_ANSWERING_ERROR = 54;
     public static final int RESULT_DECK_CLOSED = 55;
    
     /**
@@ -615,7 +614,7 @@ public class Reviewer extends Activity implements IButtonListener{
         public void onPostExecute(DeckTask.TaskData result) {
             if (!result.getBoolean()) {
             	// RuntimeException occured on marking cards
-                closeReviewer(RESULT_ANSWERING_ERROR, true);
+                closeReviewer(DeckPicker.RESULT_DB_ERROR, true);
             }
         }
     };
@@ -630,6 +629,9 @@ public class Reviewer extends Activity implements IButtonListener{
         }
         @Override
         public void onPostExecute(DeckTask.TaskData result) {
+        	if (!result.getBoolean()) {
+        		closeReviewer(DeckPicker.RESULT_DB_ERROR, false);
+        	}
         	mAnswerCardHandler.onPostExecute(result);
         }
     };
@@ -687,7 +689,7 @@ public class Reviewer extends Activity implements IButtonListener{
         public void onPostExecute(DeckTask.TaskData result) {
             if (!result.getBoolean()) {
             	// RuntimeException occured on update cards
-                closeReviewer(RESULT_ANSWERING_ERROR, true);
+                closeReviewer(DeckPicker.RESULT_DB_ERROR, false);
                 return;
             }
             if (mNoMoreCards) {
@@ -803,8 +805,7 @@ public class Reviewer extends Activity implements IButtonListener{
         public void onPostExecute(DeckTask.TaskData result) {
             if (!result.getBoolean()) {
             	// RuntimeException occured on answering cards
-            	// TODO: proper error handling on studyoptions
-                closeReviewer(RESULT_ANSWERING_ERROR, true);
+                closeReviewer(DeckPicker.RESULT_DB_ERROR, false);
                 return;
             }
             // Check for no more cards before session complete. If they are both true, no more cards will take precedence when returning to study options.
@@ -1483,6 +1484,11 @@ public class Reviewer extends Activity implements IButtonListener{
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+
+		if (resultCode == DeckPicker.RESULT_DB_ERROR) {
+			closeReviewer(DeckPicker.RESULT_DB_ERROR, false);
+        }
+
 		if (resultCode == AnkiDroidApp.RESULT_TO_HOME) {
 			closeReviewer(AnkiDroidApp.RESULT_TO_HOME, true);
         } else if (resultCode == DeckPicker.RESULT_MEDIA_EJECTED) {
@@ -2431,7 +2437,7 @@ public class Reviewer extends Activity implements IButtonListener{
 //            Models myModel = Models.getModel(currentDeck, mCurrentCard.getCardModelId(), false);
 //		if (myModel == null) {
 //			Log.e(AnkiDroidApp.TAG, "updateCard - no Model could be fetched. Closing Reviewer and showing db-error dialog");
-//	                closeReviewer(RESULT_ANSWERING_ERROR, true);			
+//	                closeReviewer(DeckPicker.RESULT_DB_ERROR, true);			
 //		}
             int nightBackground = Themes.getNightModeCardBackground(this);
 //            content = myModel.getCSSForFontColorSize(mCurrentCard.getCardModelId(), mDisplayFontSize, mNightMode, nightBackground) + Models.invertColors(content, mNightMode);

@@ -82,17 +82,14 @@ public class BackupManager {
 	}
 
 
-//	private static File getBrokenDirectory() {
-//        if (mBrokenDirectoryPath == null) {
-//        	SharedPreferences prefs = PrefSettings.getSharedPrefs(AnkiDroidApp.getInstance().getBaseContext());
-//        	mBrokenDirectoryPath = prefs.getString("deckPath", AnkiDroidApp.getStorageDirectory()) + BROKEN_DECKS_SUFFIX;
-//        }
-//        File directory = new File(mBrokenDirectoryPath);
-//        if (!directory.isDirectory()) {
-//        	directory.mkdirs();
-//        }
-//        return directory;
-//	}
+	private static File getBrokenDirectory() {
+    	SharedPreferences prefs = PrefSettings.getSharedPrefs(AnkiDroidApp.getInstance().getBaseContext());
+        File directory = new File(prefs.getString("deckPath", AnkiDroidApp.getStorageDirectory()) + BROKEN_DECKS_SUFFIX);
+        if (!directory.isDirectory()) {
+        	directory.mkdirs();
+        }
+        return directory;
+	}
 
 	public static boolean safetyBackupNeeded(String path) {
 		return safetyBackupNeeded(path, SAFETY_BACKUP_THRESHOLD);
@@ -275,49 +272,49 @@ public class BackupManager {
 //        }
 //		return RETURN_DECK_RESTORED;
 //	}
-//
-//
-//	public static boolean repairDeck(String deckPath) {
-//		File deckFile = new File(deckPath);
-//		AnkiDatabaseManager.closeDatabase(deckPath);
-//
-//    	// repair file
-//    	String execString = "sqlite3 " + deckPath + " .dump | sqlite3 " + deckPath + ".tmp";
-//    	Log.i(AnkiDroidApp.TAG, "repairDeck - Execute: " + execString);
-//    	try {
-//    		String[] cmd = {"/system/bin/sh", "-c", execString };
-//    	    Process process = Runtime.getRuntime().exec(cmd);
-//    	    process.waitFor();
-//
-//    		// move deck to broken folder
-//    		String brokenDirectory = getBrokenDirectory().getPath();
-//    		Date value = Utils.genToday(Utils.utcOffset());
-//            String movedFilename = String.format(Utils.ENGLISH_LOCALE, deckFile.getName().replace(".anki", "") + "-corrupt-%tF.anki", value);
-//            File movedFile = new File(brokenDirectory, movedFilename);
-//            int i = 1;
-//            while (movedFile.exists()) {
-//            	movedFile = new File(brokenDirectory, movedFilename.replace(".anki", "-" + Integer.toString(i) + ".anki"));
-//            	i++;
-//            }
-//            movedFilename = movedFile.getName();
-//        	if (!deckFile.renameTo(movedFile)) {
-//        		return false;
-//        	}
-//        	Log.i(AnkiDroidApp.TAG, "repairDeck - moved corrupt file to " + movedFile.getAbsolutePath());
-//        	File repairedFile = new File(deckPath + ".tmp");
-//        	if (!repairedFile.renameTo(deckFile)) {
-//        		return false;
-//        	}
-//        	return true;
-//    	} catch (IOException e) {
-//    		Log.e("AnkiDroidApp.TAG", "repairDeck - error: " + e);
-//    	} catch (InterruptedException e) {
-//    		Log.e("AnkiDroidApp.TAG", "repairDeck - error: " + e);
-//    	}
-//    	return false;
-//	}
-//
-//
+
+
+	public static boolean repairDeck(String deckPath) {
+		File deckFile = new File(deckPath);
+		AnkiDatabaseManager.closeDatabase(deckPath);
+
+    	// repair file
+    	String execString = "sqlite3 " + deckPath + " .dump | sqlite3 " + deckPath + ".tmp";
+    	Log.i(AnkiDroidApp.TAG, "repairDeck - Execute: " + execString);
+    	try {
+    		String[] cmd = {"/system/bin/sh", "-c", execString };
+    	    Process process = Runtime.getRuntime().exec(cmd);
+    	    process.waitFor();
+
+    		// move deck to broken folder
+    		String brokenDirectory = getBrokenDirectory().getPath();
+    		Date value = Utils.genToday(Utils.utcOffset());
+            String movedFilename = String.format(Utils.ENGLISH_LOCALE, deckFile.getName().replace(".anki2", "") + "-corrupt-%tF.anki2", value);
+            File movedFile = new File(brokenDirectory, movedFilename);
+            int i = 1;
+            while (movedFile.exists()) {
+            	movedFile = new File(brokenDirectory, movedFilename.replace(".anki2", "-" + Integer.toString(i) + ".anki2"));
+            	i++;
+            }
+            movedFilename = movedFile.getName();
+        	if (!deckFile.renameTo(movedFile)) {
+        		return false;
+        	}
+        	Log.i(AnkiDroidApp.TAG, "repairDeck - moved corrupt file to " + movedFile.getAbsolutePath());
+        	File repairedFile = new File(deckPath + ".tmp");
+        	if (!repairedFile.renameTo(deckFile)) {
+        		return false;
+        	}
+        	return true;
+    	} catch (IOException e) {
+    		Log.e("AnkiDroidApp.TAG", "repairDeck - error: " + e);
+    	} catch (InterruptedException e) {
+    		Log.e("AnkiDroidApp.TAG", "repairDeck - error: " + e);
+    	}
+    	return false;
+	}
+
+
 //	public static boolean moveDeckToBrokenFolder(String deckPath) {
 //		File deckFile = new File(deckPath);
 //		AnkiDatabaseManager.closeDatabase(deckPath);

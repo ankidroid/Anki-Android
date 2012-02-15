@@ -977,6 +977,10 @@ public class StudyOptions extends Activity implements IButtonListener {
 		super.onActivityResult(requestCode, resultCode, intent);
 		Log.i(AnkiDroidApp.TAG, "StudyOptions: onActivityResult");
 
+		if (resultCode == DeckPicker.RESULT_DB_ERROR) {
+			closeStudyOptions(DeckPicker.RESULT_DB_ERROR);
+        }
+
 		if (resultCode == AnkiDroidApp.RESULT_TO_HOME) {
 			closeStudyOptions();
 			return;
@@ -1003,9 +1007,6 @@ public class StudyOptions extends Activity implements IButtonListener {
 				break;
 			case Reviewer.RESULT_NO_MORE_CARDS:
 				showContentView(CONTENT_CONGRATS, mDontSaveOnStop);
-				break;
-			case Reviewer.RESULT_ANSWERING_ERROR:
-				closeStudyOptions(DeckPicker.RESULT_DB_ERROR);
 				break;
 			}
 			mDontSaveOnStop = false;

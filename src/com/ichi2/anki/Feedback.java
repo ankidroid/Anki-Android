@@ -138,7 +138,11 @@ public class Feedback extends Activity {
 
 
 	private void closeFeedback() {
-	        setResult(RESULT_OK);
+	        if (getIntent().getIntExtra("request", 0) == DeckPicker.RESULT_DB_ERROR) {
+	        	setResult(DeckPicker.RESULT_DB_ERROR);
+	        } else {
+		        setResult(RESULT_OK);
+	        }
 			finish();
             if (UIUtils.getApiLevel() > 4) {
                 ActivityTransitionAnimation.slide(Feedback.this, ActivityTransitionAnimation.LEFT);
@@ -213,7 +217,7 @@ public class Feedback extends Activity {
 
         getErrorFiles();
         Intent i = getIntent();
-        mAllowFeedback = (i.hasExtra("request") && i.getIntExtra("request", 0) == DeckPicker.REPORT_FEEDBACK) || mReportErrorMode.equals(REPORT_ASK);
+        mAllowFeedback = (i.hasExtra("request") && (i.getIntExtra("request", 0) == DeckPicker.REPORT_FEEDBACK || i.getIntExtra("request", 0) == DeckPicker.RESULT_DB_ERROR)) || mReportErrorMode.equals(REPORT_ASK);
         if (!mAllowFeedback) {
             if (mReportErrorMode.equals(REPORT_ALWAYS)) { // Always report
                 try {
