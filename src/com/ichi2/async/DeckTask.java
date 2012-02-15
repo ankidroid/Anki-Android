@@ -445,9 +445,9 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
         			counts[2] += (Integer) deck[4];
         		}
         	}
-        	return new TaskData(new Object[]{decks, sched.eta(counts), col.cardCount()});    		
+        	return new TaskData(new Object[]{true, decks, sched.eta(counts), col.cardCount()});    		
     	} catch (RuntimeException e) {
-    		return null;
+    		return new TaskData(new Object[]{false});
     	}
     }
 

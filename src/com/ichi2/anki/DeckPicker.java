@@ -577,8 +577,10 @@ public class DeckPicker extends Activity {
 		@Override
 		public void onPostExecute(DeckTask.TaskData result) {
 			Object[] res = result.getObjArray();
-			if (result != null) {
-				updateDecksList((TreeSet<Object[]>) res[0], (Integer)res[1], (Integer)res[2]);				
+			if ((Boolean)res[0]) {
+				updateDecksList((TreeSet<Object[]>) res[1], (Integer)res[2], (Integer)res[3]);				
+			} else {
+				// TODO: db error handling
 			}
 		}
 
@@ -907,7 +909,9 @@ public class DeckPicker extends Activity {
 	}
 
 	private void loadCounts() {
-		DeckTask.launchDeckTask(DeckTask.TASK_TYPE_LOAD_DECK_COUNTS, mLoadCountsHandler, new TaskData(mCol));
+		if (mCol != null) {
+			DeckTask.launchDeckTask(DeckTask.TASK_TYPE_LOAD_DECK_COUNTS, mLoadCountsHandler, new TaskData(mCol));
+		}
 	}
 
 	private boolean hasErrorFiles() {
