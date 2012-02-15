@@ -203,7 +203,7 @@ public class CardBrowser extends Activity {
 
 		mCol = Collection.currentCollection();
 		if (mCol == null) {
-			finish();
+			reloadCollection(savedInstanceState);
 			return;
 		}
 
@@ -307,6 +307,14 @@ public class CardBrowser extends Activity {
 	}
 
 	@Override
+	protected void onStop() {
+		super.onStop();
+		if (!isFinishing()) {
+	        UIUtils.saveCollectionInBackground(mCol);			
+		}
+	}
+
+	@Override
 	public void onCreateContextMenu(ContextMenu menu, View v,
 			ContextMenuInfo menuInfo) {
 		mPositionInCardsList = ((AdapterView.AdapterContextMenuInfo) menuInfo).position;
@@ -364,6 +372,9 @@ public class CardBrowser extends Activity {
 
 	@Override
 	public boolean onPrepareOptionsMenu(Menu menu) {
+		if (mCol == null) {
+			return false;
+		}
 		menu.findItem(MENU_UNDO).setEnabled(mCol.undoAvailable());
 		return true;
 	}
@@ -655,10 +666,36 @@ public class CardBrowser extends Activity {
 //		}
 	}
 
-//	public static Card getEditorCard() {
-//		return sEditorCard;
-//	}
-//
+	private void reloadCollection(final Bundle savedInstanceState) {
+		DeckTask.launchDeckTask(DeckTask.TASK_TYPE_OPEN_COLLECTION, new DeckTask.TaskListener() {
+
+			@Override
+			public void onPostExecute(DeckTask.TaskData result) {
+				mCol = result.getCollection();
+				Collection.putCurrentCollection(mCol);
+				if (mCol == null) {
+					finish();
+				} else {
+					onCreate(savedInstanceState);
+				}
+			}
+
+			@Override
+			public void onPreExecute() {
+	            mProgressDialog = StyledProgressDialog.show(CardBrowser.this, "", getResources().getString(R.string.open_collection), true, true, new OnCancelListener() {
+					@Override
+					public void onCancel(DialogInterface arg0) {
+						finish();
+					}
+				});
+			}
+
+			@Override
+			public void onProgressUpdate(DeckTask.TaskData... values) {
+			}
+	    }, new DeckTask.TaskData(PrefSettings.getSharedPrefs(getBaseContext()).getString("deckPath", AnkiDroidApp.getDefaultAnkiDroidDirectory()) + AnkiDroidApp.COLLECTION_PATH));
+	}
+
 	private void updateList() {
 		mCardsAdapter.notifyDataSetChanged();
 		int count = mCards.size();
@@ -718,16 +755,29 @@ public class CardBrowser extends Activity {
 		@Override
 		public void onPreExecute() {
 			if (!mUndoRedoDialogShowing) {
-				mProgressDialog = StyledProgressDialog.show(CardBrowser.this, "",
-						getResources().getString(R.string.card_browser_load),
-						true, true, new OnCancelListener() {
+				if (mProgressDialog != null && mProgressDialog.isShowing()) {
+					mProgressDialog.setMessage(getResources().getString(
+							R.string.card_browser_load));
+					mProgressDialog.setOnCancelListener(new OnCancelListener() {
 
-							@Override
-							public void onCancel(DialogInterface arg0) {
-								DeckTask.cancelTask();
-								closeCardBrowser();
-							}
-				});
+								@Override
+								public void onCancel(DialogInterface arg0) {
+									DeckTask.cancelTask();
+									closeCardBrowser();
+								}
+					});
+				} else {
+					mProgressDialog = StyledProgressDialog.show(CardBrowser.this, "",
+							getResources().getString(R.string.card_browser_load),
+							true, true, new OnCancelListener() {
+
+								@Override
+								public void onCancel(DialogInterface arg0) {
+									DeckTask.cancelTask();
+									closeCardBrowser();
+								}
+					});					
+				}
 			} else {
 				mProgressDialog.setMessage(getResources().getString(
 						R.string.card_browser_load));

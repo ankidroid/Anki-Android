@@ -55,6 +55,8 @@ public class AnkiDroidApp extends Application {
      */
     public static final String TAG = "AnkiDroid";
 
+	public static final String COLLECTION_PATH = "/collection.anki2";
+
     /**
      * Singleton instance of this class.
      */

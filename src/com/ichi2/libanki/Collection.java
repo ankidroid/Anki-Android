@@ -136,6 +136,10 @@ public class Collection {
 		}
 	}
 
+	public static void putCurrentCollection(Collection col) {
+		sCurrentCollection = col;
+	}
+
 	public String name() {
 		String n = (new File(mPath)).getName().replace(".anki2", "");
 		// TODO:

@@ -75,8 +75,8 @@ public class ChartBuilder extends Activity {
 
     private boolean mFullScreen;
 
-    private Stats mStats;
     private double[][] mSeriesList;
+    private Object[] mMeta; 
 
     private static final int MENU_FULLSCREEN = 0;
 
@@ -88,18 +88,14 @@ public class ChartBuilder extends Activity {
  	private boolean mSwipeEnabled;
 
     @Override
-    protected void onRestoreInstanceState(Bundle savedState) {
-        super.onRestoreInstanceState(savedState);
-        mDataset = (XYMultipleSeriesDataset) savedState.getSerializable("dataset");
-        mRenderer = (XYMultipleSeriesRenderer) savedState.getSerializable("renderer");
-    }
-
-
-    @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        outState.putSerializable("dataset", mDataset);
-        outState.putSerializable("renderer", mRenderer);
+        int len = mSeriesList.length;
+        outState.putInt("seriesListLen", len);
+        for (int i = 0; i < len; i++) {
+            outState.putSerializable("seriesList" + i, mSeriesList[i]);
+        }
+        outState.putSerializable("meta", mMeta);
     }
 
     public void closeChartBuilder() {
@@ -188,20 +184,32 @@ public class ChartBuilder extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+    	Log.i(AnkiDroidApp.TAG, "ChartBuilder.OnCreate");
     	Themes.applyTheme(this);
         super.onCreate(savedInstanceState);
         restorePreferences();
         Resources res = getResources();
 
-        mStats = Stats.currentStats();
-        mSeriesList = mStats.getSeriesList();
-        Object[] ob = mStats.getMetaInfo();
-        String title = res.getString((Integer)ob[1]);
-        boolean backwards = (Boolean)ob[2];
-        int[] valueLabels = (int[])ob[3];
-        int[] barColors = (int[])ob[4];
-        int[] axisTitles = (int[])ob[5];
-        String subTitle = (String) ob[6];
+        Stats stats = Stats.currentStats();
+        if (stats != null) {
+            mSeriesList = stats.getSeriesList();
+            mMeta = stats.getMetaInfo();
+        } else if (savedInstanceState != null) {
+        	int len = savedInstanceState.getInt("seriesListLen");
+        	mSeriesList = new double[len][];
+        	for (int i = 0; i < len; i++) {
+                mSeriesList[i] = (double[]) savedInstanceState.getSerializable("seriesList" + i);
+        	}
+            mMeta = (Object[]) savedInstanceState.getSerializable("meta");
+        } else {
+        	finish();
+        }
+        String title = res.getString((Integer)mMeta[1]);
+        boolean backwards = (Boolean)mMeta[2];
+        int[] valueLabels = (int[])mMeta[3];
+        int[] barColors = (int[])mMeta[4];
+        int[] axisTitles = (int[])mMeta[5];
+        String subTitle = (String) mMeta[6];
 
         if (mSeriesList == null || mSeriesList[0].length < 2) {
             Log.i(AnkiDroidApp.TAG, "ChartBuilder - Data variable empty, closing chartbuilder");

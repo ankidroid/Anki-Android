@@ -24,6 +24,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.content.DialogInterface.OnCancelListener;
 import android.content.SharedPreferences.Editor;
 import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
@@ -118,6 +119,8 @@ public class StudyOptions extends Activity implements IButtonListener {
 	boolean mInvertedColors = false;
 	String mLocale;
 	private boolean mZeemoteEnabled;
+
+	private boolean mDontSaveOnStop = false;
 
 	/** Alerts to inform the user about different situations */
 	private StyledProgressDialog mProgressDialog;
@@ -318,6 +321,10 @@ public class StudyOptions extends Activity implements IButtonListener {
 		registerExternalStorageListener();
 
 		mCol = Collection.currentCollection();
+		if (mCol == null) {
+			reloadCollection(savedInstanceState);
+			return;
+		}
 
 		// activeCramTags = new HashSet<String>();
 
@@ -434,6 +441,9 @@ public class StudyOptions extends Activity implements IButtonListener {
 	protected void onStop() {
 		super.onStop();
 		// TODO: update Widget
+		if (!isFinishing() && !mDontSaveOnStop) {
+	        UIUtils.saveCollectionInBackground(mCol);			
+		}
 	}
 
 	@Override
@@ -483,6 +493,7 @@ public class StudyOptions extends Activity implements IButtonListener {
 	}
 
 	private void openReviewer() {
+		mDontSaveOnStop = true;
 		Intent reviewer = new Intent(StudyOptions.this, Reviewer.class);
 		startActivityForResult(reviewer, REQUEST_REVIEW);
 		if (UIUtils.getApiLevel() > 4) {
@@ -532,6 +543,43 @@ public class StudyOptions extends Activity implements IButtonListener {
 	// // }
 	// // }
 	// }
+
+	private void reloadCollection(final Bundle savedInstanceState) {
+		DeckTask.launchDeckTask(DeckTask.TASK_TYPE_OPEN_COLLECTION, new DeckTask.TaskListener() {
+
+			@Override
+			public void onPostExecute(DeckTask.TaskData result) {
+				if (mProgressDialog.isShowing()) {
+	                try {
+	                    mProgressDialog.dismiss();
+	                } catch (Exception e) {
+	                    Log.e(AnkiDroidApp.TAG, "onPostExecute - Dialog dismiss Exception = " + e.getMessage());
+	                }
+	            }
+				mCol = result.getCollection();
+				Collection.putCurrentCollection(mCol);
+				if (mCol == null) {
+					finish();
+				} else {
+					onCreate(savedInstanceState);
+				}
+			}
+
+			@Override
+			public void onPreExecute() {
+	            mProgressDialog = StyledProgressDialog.show(StudyOptions.this, "", getResources().getString(R.string.open_collection), true, true, new OnCancelListener() {
+					@Override
+					public void onCancel(DialogInterface arg0) {
+						finish();
+					}
+				});
+			}
+
+			@Override
+			public void onProgressUpdate(DeckTask.TaskData... values) {
+			}
+	    }, new DeckTask.TaskData(PrefSettings.getSharedPrefs(getBaseContext()).getString("deckPath", AnkiDroidApp.getDefaultAnkiDroidDirectory()) + AnkiDroidApp.COLLECTION_PATH));
+	}
 
 	private void initAllContentViews() {
 		mStudyOptionsView = getLayoutInflater().inflate(R.layout.studyoptions,
@@ -686,7 +734,9 @@ public class StudyOptions extends Activity implements IButtonListener {
 
 		// wait for deck loading thread (to avoid problems with resuming
 		// destroyed activities)
-		DeckTask.waitToFinish();
+		if (mCol == null) {
+			return;
+		}
 
 		switch (id) {
 
@@ -719,11 +769,10 @@ public class StudyOptions extends Activity implements IButtonListener {
 	}
 
 	private void showContentView(int which) {
-		mCurrentContentView = which;
-		showContentView();
+		showContentView(which, true);
 	}
-
-	private void showContentView() {
+	private void showContentView(int which, boolean reload) {
+		mCurrentContentView = which;
 
 		switch (mCurrentContentView) {
 
@@ -736,7 +785,9 @@ public class StudyOptions extends Activity implements IButtonListener {
 			// mToggleLimit.setEnabled(true);
 			// }
 			setContentView(mStudyOptionsView);
-			resetAndUpdateValuesFromDeck();
+			if (reload) {
+				resetAndUpdateValuesFromDeck();				
+			}
 			break;
 
 		case CONTENT_CONGRATS:
@@ -756,7 +807,9 @@ public class StudyOptions extends Activity implements IButtonListener {
 			// eta);
 			// }
 		 	mTextCongratsMessage.setText(mCol.getSched().finishedMsg(this));
-			updateValuesFromDeck();
+			if (reload) {
+				updateValuesFromDeck();				
+			}
 			setContentView(mCongratsView);
 			break;
 		}
@@ -908,6 +961,7 @@ public class StudyOptions extends Activity implements IButtonListener {
 	}
 
 	private void openCardBrowser() {
+		mDontSaveOnStop = true;
 		Intent cardBrowser = new Intent(StudyOptions.this, CardBrowser.class);
 		startActivityForResult(cardBrowser, BROWSE_CARDS);
 		if (UIUtils.getApiLevel() > 4) {
@@ -921,6 +975,7 @@ public class StudyOptions extends Activity implements IButtonListener {
 	protected void onActivityResult(int requestCode, int resultCode,
 			Intent intent) {
 		super.onActivityResult(requestCode, resultCode, intent);
+		Log.i(AnkiDroidApp.TAG, "StudyOptions: onActivityResult");
 
 		if (resultCode == AnkiDroidApp.RESULT_TO_HOME) {
 			closeStudyOptions();
@@ -942,17 +997,20 @@ public class StudyOptions extends Activity implements IButtonListener {
 			// TODO: handle big widget
 			switch (resultCode) {
 			case Reviewer.RESULT_SESSION_COMPLETED:
-			default: 
-				 showContentView(CONTENT_STUDY_OPTIONS);
+			default:
+				// do not reload counts, if activity is created anew because it has been before destroyed by android
+				 showContentView(CONTENT_STUDY_OPTIONS, mDontSaveOnStop);
 				break;
 			case Reviewer.RESULT_NO_MORE_CARDS:
-				showContentView(CONTENT_CONGRATS);
+				showContentView(CONTENT_CONGRATS, mDontSaveOnStop);
 				break;
 			case Reviewer.RESULT_ANSWERING_ERROR:
 				closeStudyOptions(DeckPicker.RESULT_DB_ERROR);
 				break;
 			}
+			mDontSaveOnStop = false;
 		} else if (requestCode == BROWSE_CARDS && resultCode == RESULT_OK) {
+			mDontSaveOnStop = false;
 			resetAndUpdateValuesFromDeck();
 		} else if (requestCode == STATISTICS && mCurrentContentView == CONTENT_CONGRATS) {
 			showContentView(CONTENT_STUDY_OPTIONS);

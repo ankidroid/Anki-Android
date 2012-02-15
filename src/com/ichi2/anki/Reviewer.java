@@ -36,6 +36,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.content.DialogInterface.OnCancelListener;
 import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
 import android.content.res.Resources;
@@ -92,6 +93,7 @@ import com.ichi2.anim.ActivityTransitionAnimation;
 import com.ichi2.anim.Animation3D;
 import com.ichi2.anim.ViewAnimation;
 import com.ichi2.async.DeckTask;
+import com.ichi2.async.DeckTask.TaskData;
 import com.ichi2.libanki.Card;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Sched;
@@ -935,11 +937,12 @@ public class Reviewer extends Activity implements IButtonListener{
 
         Collection col = Collection.currentCollection();
         if (col == null) {
-        	finishNoStorageAvailable();
+        	reloadCollection(savedInstanceState);
 			return;
         } else {
             mSched = col.getSched();
             mCollectionFilename = col.getPath();
+
             mBaseUrl = Utils.getBaseUrl(col.getMedia().getDir());
             restorePreferences();
 
@@ -1044,8 +1047,7 @@ public class Reviewer extends Activity implements IButtonListener{
     @Override
     protected void onResume() {
     	mInBackground = false;
-      super.onResume();
-      mCollectionFilename = Collection.currentCollection().getPath();
+    	super.onResume();
 //      Decks deck = DeckManager.getMainDeck();
 //      if (deck == null) {
 //    	  Log.e(AnkiDroidApp.TAG, "Reviewer: Deck already closed, returning to study options");
@@ -1094,6 +1096,10 @@ public class Reviewer extends Activity implements IButtonListener{
 //          }
 //      }
 //    WidgetStatus.update(this, WidgetStatus.getDeckStatus(deck));
+
+      if (!isFinishing()) {
+          UIUtils.saveCollectionInBackground(mSched.getCol());    	  
+      }
     }
 
 
@@ -1282,6 +1288,43 @@ public class Reviewer extends Activity implements IButtonListener{
 //    	}
     }
 
+	private void reloadCollection(final Bundle savedInstanceState) {
+		DeckTask.launchDeckTask(DeckTask.TASK_TYPE_OPEN_COLLECTION, new DeckTask.TaskListener() {
+
+			@Override
+			public void onPostExecute(DeckTask.TaskData result) {
+				if (mProgressDialog.isShowing()) {
+	                try {
+	                    mProgressDialog.dismiss();
+	                } catch (Exception e) {
+	                    Log.e(AnkiDroidApp.TAG, "onPostExecute - Dialog dismiss Exception = " + e.getMessage());
+	                }
+	            }
+				Collection col = result.getCollection();
+				Collection.putCurrentCollection(col);
+				if (col == null) {
+					finish();
+//		        	finishNoStorageAvailable();
+				} else {
+					onCreate(savedInstanceState);
+				}
+			}
+
+			@Override
+			public void onPreExecute() {
+	            mProgressDialog = StyledProgressDialog.show(Reviewer.this, "", getResources().getString(R.string.open_collection), true, true, new OnCancelListener() {
+					@Override
+					public void onCancel(DialogInterface arg0) {
+						finish();
+					}
+				});
+			}
+
+			@Override
+			public void onProgressUpdate(DeckTask.TaskData... values) {
+			}
+	    }, new DeckTask.TaskData(PrefSettings.getSharedPrefs(getBaseContext()).getString("deckPath", AnkiDroidApp.getDefaultAnkiDroidDirectory()) + AnkiDroidApp.COLLECTION_PATH, 0, true));
+	}
 
     //These three methods use a deprecated API - they should be updated to possibly use its more modern version.
     private boolean clipboardHasText() {
@@ -3227,10 +3270,13 @@ public class Reviewer extends Activity implements IButtonListener{
 //        if (saveDeck) {
 //            DeckTask.launchDeckTask(DeckTask.TASK_TYPE_SAVE_DECK, mSaveAndResetDeckHandler, new DeckTask.TaskData(DeckManager.getMainDeck(), 0));
 //    	} else {
-    		finish();
-    		if (UIUtils.getApiLevel() > 4) {
-        		ActivityTransitionAnimation.slide(Reviewer.this, ActivityTransitionAnimation.RIGHT);    			
-    		}
+		if (saveDeck) {
+			UIUtils.saveCollectionInBackground(mSched.getCol());
+		}
+		finish();
+		if (UIUtils.getApiLevel() > 4) {
+    		ActivityTransitionAnimation.slide(Reviewer.this, ActivityTransitionAnimation.RIGHT);    			
+		}
 //    	}
     }
 

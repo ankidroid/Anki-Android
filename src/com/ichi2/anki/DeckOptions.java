@@ -414,6 +414,10 @@ public class DeckOptions extends PreferenceActivity implements
 		super.onCreate(icicle);
 
 		mCol = Collection.currentCollection();
+		if (mCol == null) {
+			finish();
+			return;
+		}
 		mDeck = mCol.getDecks().current();
 
 		if (mCol == null) {

@@ -50,6 +50,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.database.SQLException;
+import android.database.sqlite.SQLiteDiskIOException;
 import android.os.AsyncTask;
 import android.util.Log;
 
@@ -60,7 +61,7 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
 
     public static final int TASK_TYPE_OPEN_COLLECTION = 0;
     public static final int TASK_TYPE_OPEN_COLLECTION_AND_UPDATE_CARDS = 1;
-    public static final int TASK_TYPE_SAVE_DECK = 2;
+    public static final int TASK_TYPE_SAVE_COLLECTION = 2;
     public static final int TASK_TYPE_ANSWER_CARD = 3;
     public static final int TASK_TYPE_MARK_CARD = 5;
     public static final int TASK_TYPE_ADD_FACT = 6;
@@ -79,7 +80,6 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
     public static final int TASK_TYPE_CLOSE_DECK = 21;
     public static final int TASK_TYPE_LOAD_DECK_COUNTS = 22;
     public static final int TASK_TYPE_UPDATE_VALUES_FROM_DECK = 23;
-
 
     /**
      * Possible outputs trying to load a deck.
@@ -154,7 +154,7 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
         // Wait for previous thread (if any) to finish before continuing
         try {
             if ((sOldInstance != null) && (sOldInstance.getStatus() != AsyncTask.Status.FINISHED)) {
-            	Log.i(AnkiDroidApp.TAG, "Waiting for " + sOldInstance.mType + " to finish");
+            	Log.i(AnkiDroidApp.TAG, "Waiting for " + sOldInstance.mType + " to finish before starting " + sInstance.mType);
                 sOldInstance.get();
             }
         } catch (Exception e) {
@@ -177,8 +177,8 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
 //                }
                 return taskData;
 
-            case TASK_TYPE_SAVE_DECK:
-                return doInBackgroundSaveDeck(params);
+            case TASK_TYPE_SAVE_COLLECTION:
+                return doInBackgroundSaveCollection(params);
 
             case TASK_TYPE_ANSWER_CARD:
                 return doInBackgroundAnswerCard(params);
@@ -331,7 +331,6 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
 //        try {
 	        AnkiDb ankiDB = sched.getCol().getDb();
 	        ankiDB.getDatabase().beginTransaction();
-	        double muh = Utils.now() * 1000;
 	        try {
 	            if (oldCard != null) {
 	            	oldCardLeech = sched.answerCard(oldCard, ease) ? 1 : 0;
@@ -343,25 +342,18 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
 //	            	Log.i(AnkiDroidApp.TAG, "doInBackgroundAnswerCard: get card from big widget");
 //                	newCard = AnkiDroidWidgetBig.getCard();
 	            }
-	            Log.e("antworten", "" + (Utils.now()* 1000 - muh));
-	            muh = Utils.now()* 1000;
 	            if (newCard == null) {
 		            newCard = sched.getCard();
 	            }
-	            Log.e("neue", "" + (Utils.now()* 1000 - muh));
-	            muh = Utils.now()* 1000;
 	            if (newCard != null) {
 		            // render cards before locking database
 	            	newCard._getQA(true);
 	            }
-	            Log.e("qa", "" + (Utils.now()* 1000 - muh));
-	            muh = Utils.now()* 1000;
                 publishProgress(new TaskData(newCard, oldCardLeech));
 	            ankiDB.getDatabase().setTransactionSuccessful();
 	        } finally {
 	            ankiDB.getDatabase().endTransaction();
 	        }
-            Log.e("write", "" + (Utils.now()* 1000 - muh));
 //		} catch (RuntimeException e) {
 //			Log.e(AnkiDroidApp.TAG, "doInBackgroundAnswerCard - RuntimeException on answering card: " + e);
 //			AnkiDroidApp.saveExceptionReportFile(e, "doInBackgroundAnswerCard");
@@ -374,52 +366,62 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
     private TaskData doInBackgroundOpenCollection(TaskData... params) {
         Resources res = AnkiDroidApp.getInstance().getBaseContext().getResources();
         String collectionFile = params[0].getString();
+        Collection oldCol = params[0].getCollection();
+        boolean reset = params[0].getBoolean();
+
+        Collection col;
 
 //        publishProgress(new TaskData(AnkiDroidApp.getInstance().getBaseContext().getResources().getString(R.string.finish_operation)));
 //        DeckManager.waitForDeckClosingThread(deckFilename);
 
-        File dbFile = new File(collectionFile);
-        if (!dbFile.exists()) {
-            Log.i(AnkiDroidApp.TAG, "doInBackgroundOpenCollection: db file does not exist. Creating it...");
-        	publishProgress(new TaskData(res.getString(R.string.create_collection)));
-            // If decks directory does not exist, create it.
-            AnkiDroidApp.createDirectoryIfMissing(dbFile.getParentFile());
-        	// create file
-            try {
-                // Copy an empty collection file from the assets to the SD card.
-                InputStream stream = res.getAssets().open("collection.anki2");
-                Utils.writeToFile(stream, collectionFile);
-                stream.close();
-                AnkiDb ankiDB = AnkiDatabaseManager.getDatabase(collectionFile);
-                // set create time to 0 in order to let it be set later by the collection constructor
-                ankiDB.execute("UPDATE col SET crt = 0");
-                AnkiDatabaseManager.closeDatabase(collectionFile);
-            } catch (IOException e) {
-                Log.e(AnkiDroidApp.TAG, Log.getStackTraceString(e));
-                Log.e(AnkiDroidApp.TAG, "doInBackgroundOpenCollection - The copy of collection.anki2 to the SD card failed.");
-                // TODO: proper error handling
-                Collection col = null;
-                return new TaskData(col);
+        if (oldCol == null || !oldCol.getPath().equals(collectionFile)) {
+            File dbFile = new File(collectionFile);
+            if (!dbFile.exists()) {
+                Log.i(AnkiDroidApp.TAG, "doInBackgroundOpenCollection: db file does not exist. Creating it...");
+            	publishProgress(new TaskData(res.getString(R.string.create_collection)));
+                // If decks directory does not exist, create it.
+                AnkiDroidApp.createDirectoryIfMissing(dbFile.getParentFile());
+            	// create file
+                try {
+                    // Copy an empty collection file from the assets to the SD card.
+                    InputStream stream = res.getAssets().open("collection.anki2");
+                    Utils.writeToFile(stream, collectionFile);
+                    stream.close();
+                    AnkiDb ankiDB = AnkiDatabaseManager.getDatabase(collectionFile);
+                    // set create time to 0 in order to let it be set later by the collection constructor
+                    ankiDB.execute("UPDATE col SET crt = 0");
+                    AnkiDatabaseManager.closeDatabase(collectionFile);
+                } catch (IOException e) {
+                    Log.e(AnkiDroidApp.TAG, Log.getStackTraceString(e));
+                    Log.e(AnkiDroidApp.TAG, "doInBackgroundOpenCollection - The copy of collection.anki2 to the SD card failed.");
+                    // TODO: proper error handling
+                    col = null;
+                    return new TaskData(col);
+                }
+            	publishProgress(new TaskData(res.getString(R.string.open_collection)));
+            } else if (BackupManager.safetyBackupNeeded(collectionFile)) {
+            	publishProgress(new TaskData(res.getString(R.string.backup_collection)));
+            	BackupManager.performBackup(collectionFile);
+            	publishProgress(new TaskData(res.getString(R.string.open_collection)));
             }
-        	publishProgress(new TaskData(res.getString(R.string.open_collection)));
-        } else if (BackupManager.safetyBackupNeeded(collectionFile)) {
-        	publishProgress(new TaskData(res.getString(R.string.backup_collection)));
-        	BackupManager.performBackup(collectionFile);
-        	publishProgress(new TaskData(res.getString(R.string.open_collection)));
+
+        	// load collection
+            Log.i(AnkiDroidApp.TAG, "doInBackgroundOpenCollection - File exists -> Loading collection...");
+            col = Collection.openCollection(collectionFile);
+
+            // create tutorial deck if needed
+            SharedPreferences prefs = PrefSettings.getSharedPrefs(AnkiDroidApp.getInstance().getBaseContext());
+            if (prefs.contains("createTutorial") && prefs.getBoolean("createTutorial", false)) {
+            	prefs.edit().remove("createTutorial").commit();
+            	publishProgress(new TaskData(res.getString(R.string.tutorial_load)));
+            	doInBackgroundLoadTutorial(new TaskData(col));
+            }	
+        } else {
+        	col = oldCol;
         }
-
-    	// load collection
-        Log.i(AnkiDroidApp.TAG, "doInBackgroundOpenCollection - File exists -> Loading collection...");
-        Collection col = Collection.openCollection(collectionFile);
-
-        // create tutorial deck if needed
-        SharedPreferences prefs = PrefSettings.getSharedPrefs(AnkiDroidApp.getInstance().getBaseContext());
-        if (prefs.contains("createTutorial") && prefs.getBoolean("createTutorial", false)) {
-        	prefs.edit().remove("createTutorial").commit();
-        	publishProgress(new TaskData(res.getString(R.string.tutorial_load)));
-        	doInBackgroundLoadTutorial(new TaskData(col));
+        if (reset) {
+        	col.getSched().reset();
         }
-
     	// load decks
     	TreeSet<Object[]> decks = col.getSched().deckDueTree(false);
         return new TaskData(col, decks, DECK_LOADED);
@@ -433,34 +435,33 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
     	if (Utils.now() > sched.getDayCutoff()) {
     		sched._updateCutoff();
     	}
-    	TreeSet<Object[]> decks = sched.deckDueTree(true);
-    	int[] counts = new int[]{0, 0, 0};
-    	for (Object[] deck : decks) {
-    		if (((String[])deck[0]).length == 1) {
-    			counts[0] += (Integer) deck[2];
-    			counts[1] += (Integer) deck[3];
-    			counts[2] += (Integer) deck[4];
-    		}
+    	try {
+        	TreeSet<Object[]> decks = sched.deckDueTree(true);
+        	int[] counts = new int[]{0, 0, 0};
+        	for (Object[] deck : decks) {
+        		if (((String[])deck[0]).length == 1) {
+        			counts[0] += (Integer) deck[2];
+        			counts[1] += (Integer) deck[3];
+        			counts[2] += (Integer) deck[4];
+        		}
+        	}
+        	return new TaskData(new Object[]{decks, sched.eta(counts), col.cardCount()});    		
+    	} catch (RuntimeException e) {
+    		return null;
     	}
-    	return new TaskData(new Object[]{decks, sched.eta(counts), col.cardCount()});
     }
 
 
-    private TaskData doInBackgroundSaveDeck(TaskData... params) {
-//    	Decks deck = params[0].getDeck();
-//        Log.i(AnkiDroidApp.TAG, "doInBackgroundSaveAndResetDeck");
-//        if (deck != null) {
-//            try {
-//            	deck.commitToDB();
-//            	deck.updateCutoff();
-//            	if (deck.hasFinishScheduler()) {
-//            		deck.finishScheduler();
-//            	}
-//            	deck.reset();
-//            } catch (SQLiteDiskIOException e) {
-//            	Log.e(AnkiDroidApp.TAG, "Error on saving deck in background: " + e);
-//            }
-//        }
+    private TaskData doInBackgroundSaveCollection(TaskData... params) {
+        Log.i(AnkiDroidApp.TAG, "doInBackgroundSaveCollection");
+    	Collection col = params[0].getCollection();
+        if (col != null) {
+            try {
+            	col.save();
+            } catch (SQLiteDiskIOException e) {
+            	Log.e(AnkiDroidApp.TAG, "Error on saving deck in background: " + e);
+            }
+        }
         return null;
     }
 
@@ -879,6 +880,12 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
 
         public TaskData(Collection col) {
         	mCol = col;
+        }
+
+
+        public TaskData(Collection col, String string) {
+        	mCol = col;
+        	mMsg = string;
         }
 
 

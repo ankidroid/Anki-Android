@@ -203,7 +203,7 @@ public class DeckPicker extends Activity {
 
 	private File[] mFileList;
 
-	private boolean mIsFinished = true;
+	private boolean mDontSaveOnStop = false;
 	private boolean mDeckIsSelected = false;
 
 	private BroadcastReceiver mUnmountReceiver = null;
@@ -555,6 +555,7 @@ public class DeckPicker extends Activity {
 				@Override
 				public void onCancel(DialogInterface arg0) {
 					// TODO: close dbs?
+					DeckTask.cancelTask();
 					finish();
 				}
 			});
@@ -576,7 +577,9 @@ public class DeckPicker extends Activity {
 		@Override
 		public void onPostExecute(DeckTask.TaskData result) {
 			Object[] res = result.getObjArray();
-			updateDecksList((TreeSet<Object[]>) res[0], (Integer)res[1], (Integer)res[2]);
+			if (result != null) {
+				updateDecksList((TreeSet<Object[]>) res[0], (Integer)res[1], (Integer)res[2]);				
+			}
 		}
 
 		@Override
@@ -866,33 +869,6 @@ public class DeckPicker extends Activity {
 						return false;						
 					}
 				}
-//				if (view.getId() == R.id.DeckPickerCompletionMat || view.getId() == R.id.DeckPickerCompletionAll) {
-//				    if (!text.equals("-1")) {
-////	                    Utils.updateProgressBars(DeckPicker.this, view, Double.parseDouble(text) / 100.0, mDeckListView.getWidth(), 2, false); 				        
-//				    } else {
-//				    	Themes.setContentStyle(view, Themes.CALLER_DECKPICKER_DECK);
-//				    }
-//                }
-//				if (view.getId() == R.id.DeckPickerUpgradeNotesButton) {
-//					if (text.equals("")) {
-//						view.setVisibility(View.GONE);
-//					} else {
-//						view.setVisibility(View.VISIBLE);
-//						view.setTag(text);
-//						view.setOnClickListener(new OnClickListener() {
-//							@Override
-//							public void onClick(View v) {
-//								String tag = (String) v.getTag();
-//								if (tag == null) {
-//									tag = "";
-//								}
-//								mUpgradeNotesAlert.setMessage(tag);
-//								mUpgradeNotesAlert.show();
-//							}
-//						});
-//					}
-//					return true;
-//				}
 				return false;
 			}
 		});
@@ -927,7 +903,7 @@ public class DeckPicker extends Activity {
 
 	private void loadCollection() {
 		String deckPath = PrefSettings.getSharedPrefs(getBaseContext()).getString("deckPath", AnkiDroidApp.getDefaultAnkiDroidDirectory());
-		DeckTask.launchDeckTask(DeckTask.TASK_TYPE_OPEN_COLLECTION, mOpenCollectionHandler, new DeckTask.TaskData(deckPath + "/collection.anki2"));
+		DeckTask.launchDeckTask(DeckTask.TASK_TYPE_OPEN_COLLECTION, mOpenCollectionHandler, new DeckTask.TaskData(Collection.currentCollection(), deckPath + AnkiDroidApp.COLLECTION_PATH));
 	}
 
 	private void loadCounts() {
@@ -1034,8 +1010,9 @@ public class DeckPicker extends Activity {
 	protected void onStop() {
 		Log.i(AnkiDroidApp.TAG, "DeckPicker - onStop");
 		super.onStop();
-		if (!isFinishing() && mIsFinished) {
+		if (!isFinishing() && !mDontSaveOnStop) {
 			WidgetStatus.update(this);
+	        UIUtils.saveCollectionInBackground(mCol);
 		}
 	}
 
@@ -1678,6 +1655,7 @@ public class DeckPicker extends Activity {
 
 
 	private void openStudyOptions() {
+		mDontSaveOnStop = true;
 		Intent intent = new Intent(this, StudyOptions.class);
 		startActivityForResult(intent, SHOW_STUDYOPTIONS);
 		if (UIUtils.getApiLevel() > 4) {
@@ -1709,13 +1687,15 @@ public class DeckPicker extends Activity {
 		sync(null);
 	}
 	private void sync(String syncConflictResolution) {
-		SharedPreferences preferences = PrefSettings.getSharedPrefs(getBaseContext());
-		String hkey = preferences.getString("hkey", "");
-		if (hkey.length() == 0) {
-			showDialog(DIALOG_USER_NOT_LOGGED_IN_SYNC);
-		} else {
-			mSyncButton.setClickable(false);
-			Connection.sync(mSyncListener, new Connection.Payload(new Object[] { hkey, false, syncConflictResolution }));
+		if (mCol != null) {
+			SharedPreferences preferences = PrefSettings.getSharedPrefs(getBaseContext());
+			String hkey = preferences.getString("hkey", "");
+			if (hkey.length() == 0) {
+				showDialog(DIALOG_USER_NOT_LOGGED_IN_SYNC);
+			} else {
+				mSyncButton.setClickable(false);
+				Connection.sync(mSyncListener, new Connection.Payload(new Object[] { hkey, false, syncConflictResolution }));
+			}
 		}
 	}
 	
@@ -1873,7 +1853,12 @@ public class DeckPicker extends Activity {
     protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
         super.onActivityResult(requestCode, resultCode, intent);
 
+        if (mCol == null) {
+			return;
+        }
+
     	if (requestCode == SHOW_STUDYOPTIONS && resultCode == RESULT_OK) {
+    		mDontSaveOnStop = false;
     		loadCounts();
     	} else if (requestCode == ADD_NOTE && resultCode != RESULT_CANCELED) {
     		loadCounts();

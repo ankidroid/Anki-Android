@@ -5,8 +5,13 @@ import java.lang.reflect.Method;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
+import com.ichi2.async.DeckTask;
+import com.ichi2.async.DeckTask.TaskData;
+import com.ichi2.libanki.Collection;
+
 import android.content.Context;
 import android.os.Build;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -96,4 +101,18 @@ public class UIUtils {
         }
     }
 
+    public static void saveCollectionInBackground(Collection col) {
+		DeckTask.launchDeckTask(DeckTask.TASK_TYPE_SAVE_COLLECTION, new DeckTask.TaskListener() {
+			@Override
+			public void onPreExecute() {
+				Log.i(AnkiDroidApp.TAG, "saveCollectionInBackground: start");
+			}
+			@Override
+			public void onPostExecute(TaskData result) {
+				Log.i(AnkiDroidApp.TAG, "saveCollectionInBackground: finished");
+			}
+			@Override
+			public void onProgressUpdate(TaskData... values) {
+			}}, new DeckTask.TaskData(col));
+    }
 }

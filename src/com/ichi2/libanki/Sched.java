@@ -19,7 +19,6 @@ package com.ichi2.libanki;
 import com.ichi2.anki2.R;
 
 import android.content.Context;
-import android.content.res.Resources;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteConstraintException;
 import android.graphics.Typeface;
@@ -41,9 +40,7 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
-import java.util.Map;
 import java.util.Random;
-import java.util.SortedSet;
 import java.util.TreeMap;
 import java.util.TreeSet;
 

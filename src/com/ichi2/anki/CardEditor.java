@@ -550,12 +550,6 @@ public class CardEditor extends Activity {
 
 			@Override
 			public void onPostExecute(DeckTask.TaskData result) {
-				mCol = result.getCollection();
-				if (mCol == null) {
-					finish();
-				} else {
-					onCreate(savedInstanceState);
-				}
 				if (mProgressDialog.isShowing()) {
 	                try {
 	                    mProgressDialog.dismiss();
@@ -563,6 +557,13 @@ public class CardEditor extends Activity {
 	                    Log.e(AnkiDroidApp.TAG, "onPostExecute - Dialog dismiss Exception = " + e.getMessage());
 	                }
 	            }
+				mCol = result.getCollection();
+				Collection.putCurrentCollection(mCol);
+				if (mCol == null) {
+					finish();
+				} else {
+					onCreate(savedInstanceState);
+				}
 			}
 
 			@Override
@@ -578,7 +579,7 @@ public class CardEditor extends Activity {
 			@Override
 			public void onProgressUpdate(DeckTask.TaskData... values) {
 			}
-	    }, new DeckTask.TaskData(PrefSettings.getSharedPrefs(getBaseContext()).getString("deckPath", AnkiDroidApp.getDefaultAnkiDroidDirectory()) + "/collection.anki2"));
+	    }, new DeckTask.TaskData(PrefSettings.getSharedPrefs(getBaseContext()).getString("deckPath", AnkiDroidApp.getDefaultAnkiDroidDirectory()) + AnkiDroidApp.COLLECTION_PATH));
 	}
 	
 	private boolean addFromAedict(String extra_text) {
@@ -690,6 +691,9 @@ public class CardEditor extends Activity {
 //						&& ((TextView) focus).getText().length() > 0
 //						&& Lookup.isAvailable());
 
+		if (mEditFields == null) {
+			return false;
+		}
 		for (int i = 0; i < mEditFields.size(); i++) {
 			if (mEditFields.get(i).getText().length() > 0) {
 				menu.findItem(MENU_COPY_CARD).setEnabled(true);
