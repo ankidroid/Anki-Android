@@ -104,6 +104,8 @@ public class DeckPicker extends Activity {
 	private static final int DIALOG_BACKUP_NO_SPACE_LEFT = 17;
 	private static final int DIALOG_OK = 18;
 	private static final int DIALOG_DB_ERROR = 19;
+	private static final int DIALOG_ERROR_HANDLING = 20;
+	private static final int DIALOG_LOAD_FAILED = 21;
 
 	private String mDialogMessage;
 
@@ -532,14 +534,6 @@ public class DeckPicker extends Activity {
 
 		@Override
 		public void onPostExecute(DeckTask.TaskData result) {
-			mCol = result.getCollection();
-			if (mCol == null) {
-				return;
-			}
-			updateDecksList(result.getDeckList(), -1, -1);
-			mDeckListView.setVisibility(View.VISIBLE);
-			mDeckListView.setAnimation(ViewAnimation.fade(ViewAnimation.FADE_IN, 500, 0));
-			loadCounts();
 			if (mProgressDialog.isShowing()) {
                 try {
                     mProgressDialog.dismiss();
@@ -547,6 +541,15 @@ public class DeckPicker extends Activity {
                     Log.e(AnkiDroidApp.TAG, "onPostExecute - Dialog dismiss Exception = " + e.getMessage());
                 }
             }
+			mCol = result.getCollection();
+			if (mCol == null) {
+				showDialog(DIALOG_LOAD_FAILED);
+				return;
+			}
+			updateDecksList(result.getDeckList(), -1, -1);
+			mDeckListView.setVisibility(View.VISIBLE);
+			mDeckListView.setAnimation(ViewAnimation.fade(ViewAnimation.FADE_IN, 500, 0));
+			loadCounts();
 		}
 
 		@Override
@@ -892,6 +895,7 @@ public class DeckPicker extends Activity {
 	        		}
 	        	});			
 		}
+		showDialog(DIALOG_DB_ERROR);
 	}
 
 	@Override
@@ -1047,24 +1051,6 @@ public class DeckPicker extends Activity {
 			builder.setPositiveButton(R.string.ok, null);
 			dialog = builder.create();
 			break;
-			// FROM STUDYOPTIONS
-			// case DIALOG_BACKUP_NO_SPACE_LEFT:
-			// builder.setTitle(getResources().getString(R.string.backup_manager_title));
-			// builder.setIcon(android.R.drawable.ic_dialog_alert);
-			// builder.setPositiveButton(getResources().getString(R.string.ok),
-			// null);
-			// dialog = builder.create();
-			// break;
-			//
-			// case DIALOG_BACKUP_ERROR:
-			// builder.setTitle(getResources().getString(R.string.backup_manager_title));
-			// builder.setIcon(android.R.drawable.ic_dialog_alert);
-			// builder.setMessage(getResources().getString(R.string.backup_deck_error));
-			// builder.setPositiveButton(getResources().getString(R.string.ok),
-			// null);
-			// dialog = builder.create();
-			// break;
-			//
 
 		case DIALOG_SELECT_HELP:
 			builder.setTitle(res.getString(R.string.help_title));
@@ -1127,7 +1113,7 @@ public class DeckPicker extends Activity {
 		 	dialog = builder.create();
 		 	break;
 
-		 	// case DIALOG_DECK_NOT_LOADED:
+		case DIALOG_LOAD_FAILED:
 			// builder.setTitle(res.getString(R.string.backup_manager_title));
 			// builder.setIcon(android.R.drawable.ic_dialog_alert);
 			// builder.setPositiveButton(res.getString(R.string.retry), new
@@ -1206,20 +1192,18 @@ public class DeckPicker extends Activity {
 			// }
 			// });
 			// builder.setCancelable(true);
-			// dialog = builder.create();
-			// break;
+			 	dialog = builder.create();
+			 	break;
 
 			 case DIALOG_DB_ERROR:
 				 builder.setTitle(R.string.answering_error_title);
 				 builder.setIcon(android.R.drawable.ic_dialog_alert);
 				 builder.setMessage(R.string.answering_error_message);
-				 builder.setPositiveButton("XXXCheckcolXXX",//res.getString(R.string.backup_repair_deck),
+				 builder.setPositiveButton(res.getString(R.string.backup_error_menu_repair),
 					 new DialogInterface.OnClickListener() {
 					 	@Override
 					 	public void onClick(DialogInterface dialog, int which) {
-					 		// TODO: add dialog with check options
-//					 		String fileName = mCol.getPath();
-//					 		DeckTask.launchDeckTask(DeckTask.TASK_TYPE_REPAIR_DECK, mRepairDeckHandler, new DeckTask.TaskData(mCol, fileName));
+					 		showDialog(DIALOG_ERROR_HANDLING);
 					 	}
 				 	});
 				 builder.setNeutralButton(res.getString(R.string.answering_error_report),
@@ -1239,6 +1223,14 @@ public class DeckPicker extends Activity {
 				 builder.setCancelable(true);
 				 dialog = builder.create();
 			 break;
+
+	 	case DIALOG_ERROR_HANDLING:
+	 		// TODO: add dialog with check options
+//	 		String fileName = mCol.getPath();
+//	 		DeckTask.launchDeckTask(DeckTask.TASK_TYPE_REPAIR_DECK, mRepairDeckHandler, new DeckTask.TaskData(mCol, fileName));
+	 		builder.setMessage("TODO");
+	 		dialog = builder.create();
+	 		break;
 
 		case DIALOG_USER_NOT_LOGGED_IN_SYNC:
 			builder.setTitle(res.getString(R.string.connection_error_title));

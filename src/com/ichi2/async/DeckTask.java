@@ -415,6 +415,9 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
         } else {
         	col = oldCol;
         }
+        if (col == null) {
+        	return new TaskData(col);
+        }
         if (reset) {
         	col.getSched().reset();
         }

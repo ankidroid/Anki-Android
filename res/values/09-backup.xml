@@ -29,6 +29,8 @@
 <string name="backup_delete">Deleting backups.\nPlease wait...</string>
 <string name="contextmenu_deckpicker_remove_backups">Remove backups</string>
 <string name="backup_restore">Restore backup</string>
+
+<string name="backup_error_menu_repair">Repair</string>
 <string name="backup_repair_deck">Repair deck</string>
 <string name="backup_repair_deck_progress">Repairing deck.\nPlease wait...</string>
 <string name="backup_restore_error">Deck could not be restored</string>
