@@ -751,6 +751,7 @@ public class CardBrowser extends Activity {
 	}
 
 	private DeckTask.TaskListener mLoadCardsHandler = new DeckTask.TaskListener() {
+		boolean canceled = false;
 
 		@Override
 		public void onPreExecute() {
@@ -762,6 +763,7 @@ public class CardBrowser extends Activity {
 
 								@Override
 								public void onCancel(DialogInterface arg0) {
+									canceled = true;
 									DeckTask.cancelTask();
 									closeCardBrowser();
 								}
@@ -773,6 +775,7 @@ public class CardBrowser extends Activity {
 
 								@Override
 								public void onCancel(DialogInterface arg0) {
+									canceled = true;
 									DeckTask.cancelTask();
 									closeCardBrowser();
 								}
@@ -794,6 +797,9 @@ public class CardBrowser extends Activity {
 
 		@Override
 		public void onProgressUpdate(DeckTask.TaskData... values) {
+			if (canceled) {
+				return;
+			}
 			ArrayList<HashMap<String, String>> cards = values[0].getCards();
 			if (cards == null) {
 				Resources res = getResources();
