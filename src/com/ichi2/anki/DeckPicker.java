@@ -1853,10 +1853,6 @@ public class DeckPicker extends Activity {
     protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
         super.onActivityResult(requestCode, resultCode, intent);
 
-        if (mCol == null) {
-			return;
-        }
-
     	if (requestCode == SHOW_STUDYOPTIONS && resultCode == RESULT_OK) {
     		mDontSaveOnStop = false;
     		loadCounts();
