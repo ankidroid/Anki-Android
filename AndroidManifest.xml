@@ -20,7 +20,7 @@
 -->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
 	package="com.ichi2.anki2"
-	android:versionName="2.0alpha7"
+	android:versionName="2.0alpha8"
 	android:versionCode="25"
 	android:installLocation="auto">
     <instrumentation android:name="android.test.InstrumentationTestRunner" android:targetPackage="com.ichi2.anki2"></instrumentation>
