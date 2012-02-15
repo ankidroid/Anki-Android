@@ -100,7 +100,8 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
         useBackupPreference = (CheckBoxPreference) getPreferenceScreen().findPreference("useBackup");
         asyncModePreference = (CheckBoxPreference) getPreferenceScreen().findPreference("asyncMode");
         ListPreference listpref = (ListPreference) getPreferenceScreen().findPreference("theme");
-        animationsCheckboxPreference.setEnabled(listpref.getValue().equals("2"));
+        String theme = listpref.getValue();
+        animationsCheckboxPreference.setEnabled(theme.equals("2") || theme.equals("3"));
         zoomCheckboxPreference.setEnabled(!swipeCheckboxPreference.isChecked());
         initializeLanguageDialog();
         initializeCustomFontsDialog();
@@ -251,14 +252,15 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
 //    			setResult(DeckPicker.RESULT_RESTART, intent);
     			closePreferences();
             } else if (key.equals("theme")) {
-            	if (!sharedPreferences.getString("theme", "2").equals("2")) {
+            	String theme = sharedPreferences.getString("theme", "3");
+            	if (theme.equals("2") || theme.equals("3")) {
             		animationsCheckboxPreference.setChecked(false);
             		animationsCheckboxPreference.setEnabled(false);
             	} else {
             		animationsCheckboxPreference.setEnabled(true);
             	}
             	Themes.loadTheme();
-            	switch (Integer.parseInt(sharedPreferences.getString("theme", "2"))) {
+            	switch (Integer.parseInt(sharedPreferences.getString("theme", "3"))) {
             	case Themes.THEME_ANDROID_DARK:
             	case Themes.THEME_ANDROID_LIGHT:
             	case Themes.THEME_BLUE:
