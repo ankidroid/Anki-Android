@@ -222,7 +222,7 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
                 return doInBackgroundRepairDeck(params);
 
             case TASK_TYPE_CLOSE_DECK:
-                return doInBackgroundCloseDeck(params);
+                return doInBackgroundCloseCollection(params);
 
             case TASK_TYPE_UPDATE_VALUES_FROM_DECK:
             	return doInBackgroundUpdateValuesFromDeck(params);
@@ -434,20 +434,16 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
     	if (Utils.now() > sched.getDayCutoff()) {
     		sched._updateCutoff();
     	}
-    	try {
-        	TreeSet<Object[]> decks = sched.deckDueTree(true);
-        	int[] counts = new int[]{0, 0, 0};
-        	for (Object[] deck : decks) {
-        		if (((String[])deck[0]).length == 1) {
-        			counts[0] += (Integer) deck[2];
-        			counts[1] += (Integer) deck[3];
-        			counts[2] += (Integer) deck[4];
-        		}
-        	}
-        	return new TaskData(new Object[]{true, decks, sched.eta(counts), col.cardCount()});    		
-    	} catch (RuntimeException e) {
-    		return new TaskData(new Object[]{false});
-    	}
+       	TreeSet<Object[]> decks = sched.deckDueTree(true);
+       	int[] counts = new int[]{0, 0, 0};
+       	for (Object[] deck : decks) {
+       		if (((String[])deck[0]).length == 1) {
+       			counts[0] += (Integer) deck[2];
+       			counts[1] += (Integer) deck[3];
+       			counts[2] += (Integer) deck[4];
+       		}
+       	}
+       	return new TaskData(new Object[]{decks, sched.eta(counts), col.cardCount()});    		
     }
 
 
@@ -642,13 +638,17 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
     }
 
 
-    private TaskData doInBackgroundCloseDeck(TaskData... params) {
-    	Log.i(AnkiDroidApp.TAG, "doInBackgroundCloseDeck");
+    private TaskData doInBackgroundCloseCollection(TaskData... params) {
+    	Log.i(AnkiDroidApp.TAG, "doInBackgroundCloseCollection");
     	Collection col = params[0].getCollection();
     	if (col != null) {
-        	String path = col.getPath();
-        	col.close(true);
-        	BackupManager.performBackup(path);
+		try {
+	        	String path = col.getPath();
+        		col.close(true);
+        		BackupManager.performBackup(path);
+		} catch (RuntimeException e) {
+			Log.i(AnkiDroidApp.TAG, "doInBackgroundCloseCollection: error occurred - collection not properly closed");
+		}
     	}
     	return null;
     }
