@@ -895,7 +895,7 @@ public class DeckPicker extends Activity {
 	        		}
 	        	});			
 		}
-		showDialog(DIALOG_DB_ERROR);
+
 	}
 
 	@Override
