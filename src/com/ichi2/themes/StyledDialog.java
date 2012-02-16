@@ -185,6 +185,13 @@ public class StyledDialog extends Dialog {
 	}
 
 
+    public void setSingleChoiceItems(String[] values, int checked, DialogInterface.OnClickListener listener) {
+    	View main = super.getWindow().getDecorView();
+        ((View) main.findViewById(R.id.listViewPanel)).setVisibility(View.VISIBLE);
+    	setItems(2, (ListView) super.getWindow().getDecorView().findViewById(R.id.listview), values, 0, null, listener);
+	}
+
+
     public void changeListItem(int position, String text) {
     	mItemList.remove(position);
     	mItemList.add(position, text);

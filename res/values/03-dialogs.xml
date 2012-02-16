@@ -79,10 +79,10 @@
 <string name="reset_card_dialog_confirmation">All cards of this fact reset</string>
 
 <string name="answering_error_title">Database error</string>
-<string name="answering_error_message">An error occurred while writing to the collection. This could be related to a corrupt database or to insufficient disc space.\n\nIf it happens more often, please try a to repair the collection. You can try a db check too.\n\nNevertheless, it could be an AnkiDroid bug as well; please report the error that we can check this.</string>
+<string name="answering_error_message">An error occurred while writing to the collection. This could be related to a corrupt database or to insufficient disc space.\n\nIf it happens more often, please try to check the database, repair the collection or restoring it from a backup. Click on \'options\' for that.\n\nNevertheless, it could be an AnkiDroid bug as well; please report the error that we can check this.</string>
 <string name="answering_error_report">Report error</string>
 
-<string name="repair_deck_dialog">Do you really want to try to repair deck \'%1$s\'?\n\nBefore starting the attempt, a copy of the deck will be created in subfolder \'%2$s\'.</string>
+<string name="repair_deck_dialog">Do you really want to try to repair the database?\n\nBefore starting the attempt, a copy will be created in subfolder \'%s\'.</string>
 
 <string name="intent_add_save_for_later">Save for later</string>
 <string name="intent_add_saved_information">Saved data</string>

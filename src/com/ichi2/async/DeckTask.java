@@ -80,14 +80,6 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
     public static final int TASK_TYPE_LOAD_DECK_COUNTS = 22;
     public static final int TASK_TYPE_UPDATE_VALUES_FROM_DECK = 23;
 
-    /**
-     * Possible outputs trying to load a deck.
-     */
-    public static final int DECK_LOADED = 0;
-    public static final int DECK_NOT_LOADED = 1;
-    public static final int DECK_EMPTY = 2;
-    public static final int TUTORIAL_NOT_CREATED = 3;
-
     private static DeckTask sInstance;
     private static DeckTask sOldInstance;
 
@@ -422,8 +414,8 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
         	col.getSched().reset();
         }
     	// load decks
-    	TreeSet<Object[]> decks = col.getSched().deckDueTree(false);
-        return new TaskData(col, decks, DECK_LOADED);
+        TreeSet<Object[]> decks = col.getSched().deckDueTree(false);
+        return new TaskData(col, decks, 0);
     }
 
 

@@ -933,7 +933,7 @@ public class DownloadManagerService extends Service {
         protected Payload doInBackground(Payload... args) {
 
             Payload data = doInBackgroundLoadDeck(args);
-            if (data.returnType == DeckTask.DECK_LOADED) {
+            if (data.returnType == 0){//DeckTask.DECK_LOADED) {
                 HashMap<String, Object> results = (HashMap<String, Object>) data.result;
                 Decks deck = (Decks) results.get("deck");
 //                if (!deck.isUnpackNeeded()) {
@@ -1025,7 +1025,7 @@ public class DownloadManagerService extends Service {
                 Log.i(AnkiDroidApp.TAG, "Deck loaded!");
 
                 // Set the result
-                data.returnType = DeckTask.DECK_LOADED;
+//                data.returnType = DeckTask.DECK_LOADED;
                 HashMap<String, Object> results = new HashMap<String, Object>();
                 results.put("deck", deck);
 //                results.put("card", card);
@@ -1035,14 +1035,14 @@ public class DownloadManagerService extends Service {
             } catch (SQLException e) {
                 Log.i(AnkiDroidApp.TAG, "The database " + deckFilename + " could not be opened = " + e.getMessage());
                 data.success = false;
-                data.returnType = DeckTask.DECK_NOT_LOADED;
+//                data.returnType = DeckTask.DECK_NOT_LOADED;
                 data.exception = e;
                 return data;
             } catch (CursorIndexOutOfBoundsException e) {
                 // XXX: Where is this exception thrown?
                 Log.i(AnkiDroidApp.TAG, "The deck has no cards = " + e.getMessage());
                 data.success = false;
-                data.returnType = DeckTask.DECK_EMPTY;
+//                data.returnType = DeckTask.DECK_EMPTY;
                 data.exception = e;
                 return data;
             }

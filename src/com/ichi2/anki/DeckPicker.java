@@ -95,7 +95,7 @@ public class DeckPicker extends Activity {
 	private static final int DIALOG_SELECT_STATISTICS_PERIOD = 6;
 	private static final int DIALOG_DELETE_BACKUPS = 8;
 	private static final int DIALOG_CONTEXT_MENU = 9;
-	private static final int DIALOG_REPAIR_DECK = 10;
+	private static final int DIALOG_REPAIR_COLLECTION = 10;
 	private static final int DIALOG_NO_SPACE_LEFT = 11;
 	private static final int DIALOG_SYNC_CONFLICT_RESOLUTION = 12;
 	private static final int DIALOG_CONNECTION_ERROR = 13;
@@ -108,6 +108,7 @@ public class DeckPicker extends Activity {
 	private static final int DIALOG_LOAD_FAILED = 21;
 
 	private String mDialogMessage;
+	private int[] mRepairValues;
 
 	/**
 	 * Menus
@@ -564,6 +565,7 @@ public class DeckPicker extends Activity {
 				}
 			});
 			mDeckListView.setVisibility(View.INVISIBLE);
+			mDeckListView.setAnimation(ViewAnimation.fade(ViewAnimation.FADE_OUT, 500, 0));
 		}
 
 		@Override
@@ -691,7 +693,7 @@ public class DeckPicker extends Activity {
 			switch (result.getInt()) {
     		case BackupManager.RETURN_DECK_RESTORED:
     			mRestoredOrDeleted = true;
-                handleRestoreDecks(true);
+//                handleRestoreDecks(true);
                 break;    			
     		case BackupManager.RETURN_ERROR:
         		mDeckNotLoadedAlert.show();
@@ -870,6 +872,9 @@ public class DeckPicker extends Activity {
 						view.setAnimation(ViewAnimation.fade(ViewAnimation.FADE_IN, 500, 0));
 						return false;						
 					}
+				} else if (text.equals("-1")){
+					view.setVisibility(View.INVISIBLE);
+					return false;					
 				}
 				return false;
 			}
@@ -891,7 +896,6 @@ public class DeckPicker extends Activity {
 	        		}
 	        	});			
 		}
-
 	}
 
 	@Override
@@ -1109,7 +1113,6 @@ public class DeckPicker extends Activity {
 		 	dialog = builder.create();
 		 	break;
 
-		case DIALOG_LOAD_FAILED:
 			// builder.setTitle(res.getString(R.string.backup_manager_title));
 			// builder.setIcon(android.R.drawable.ic_dialog_alert);
 			// builder.setPositiveButton(res.getString(R.string.retry), new
@@ -1188,14 +1191,38 @@ public class DeckPicker extends Activity {
 			// }
 			// });
 			// builder.setCancelable(true);
-			 	dialog = builder.create();
-			 	break;
 
-			 case DIALOG_DB_ERROR:
+			case DIALOG_LOAD_FAILED:
+				 builder.setMessage(res.getString(R.string.open_collection_failed_message, BackupManager.BROKEN_DECKS_SUFFIX, res.getString(R.string.repair_deck)));
+				 builder.setTitle(R.string.open_collection_failed_title);
+				 builder.setIcon(android.R.drawable.ic_dialog_alert);
+				 builder.setPositiveButton(res.getString(R.string.error_handling_options),
+					 new DialogInterface.OnClickListener() {
+					 	@Override
+					 	public void onClick(DialogInterface dialog, int which) {
+					 		showDialog(DIALOG_ERROR_HANDLING);
+					 	}
+				 	});
+				 builder.setNegativeButton(res.getString(R.string.close), new DialogInterface.OnClickListener() {
+					 	@Override
+					 	public void onClick(DialogInterface dialog, int which) {
+					 		finish();
+					 	}
+				 	});
+				 builder.setOnCancelListener(new OnCancelListener() {
+						@Override
+						public void onCancel(DialogInterface dialog) {
+							finish();
+						}
+				 });
+				 dialog = builder.create();
+				break;
+
+			case DIALOG_DB_ERROR:
+				 builder.setMessage(R.string.answering_error_message);
 				 builder.setTitle(R.string.answering_error_title);
 				 builder.setIcon(android.R.drawable.ic_dialog_alert);
-				 builder.setMessage(R.string.answering_error_message);
-				 builder.setPositiveButton(res.getString(R.string.backup_error_menu_repair),
+				 builder.setPositiveButton(res.getString(R.string.error_handling_options),
 					 new DialogInterface.OnClickListener() {
 					 	@Override
 					 	public void onClick(DialogInterface dialog, int which) {
@@ -1221,10 +1248,29 @@ public class DeckPicker extends Activity {
 			 break;
 
 	 	case DIALOG_ERROR_HANDLING:
-	 		// TODO: add dialog with check options
-//	 		String fileName = mCol.getPath();
-//	 		DeckTask.launchDeckTask(DeckTask.TASK_TYPE_REPAIR_DECK, mRepairDeckHandler, new DeckTask.TaskData(mCol, fileName));
-	 		builder.setMessage("TODO");
+	 		builder.setTitle(res.getString(R.string.error_handling_title));
+	 		builder.setIcon(android.R.drawable.ic_dialog_alert);
+			builder.setSingleChoiceItems(new String[]{"1"}, 0, null);
+			builder.setOnCancelListener(new OnCancelListener() {
+				@Override
+				public void onCancel(DialogInterface dialog) {
+					if (mCol == null) {
+						showDialog(DIALOG_LOAD_FAILED);
+					} else {
+						showDialog(DIALOG_DB_ERROR);
+					}
+				}
+			});
+			builder.setNegativeButton(res.getString(R.string.cancel), new DialogInterface.OnClickListener() {
+				 	@Override
+				 	public void onClick(DialogInterface dialog, int which) {
+						if (mCol == null) {
+							showDialog(DIALOG_LOAD_FAILED);
+						} else {
+							showDialog(DIALOG_DB_ERROR);
+						}
+				 	}
+			 	});
 	 		dialog = builder.create();
 	 		break;
 
@@ -1318,33 +1364,32 @@ public class DeckPicker extends Activity {
 	        dialog = builder.create();
 			break;
 
-//		case DIALOG_REPAIR_DECK:
-//    		builder.setTitle(res.getString(R.string.backup_repair_deck));
-//			builder.setIcon(android.R.drawable.ic_dialog_alert);
-//    		builder.setPositiveButton(res.getString(R.string.yes), new DialogInterface.OnClickListener() {
-//				@Override
-//				public void onClick(DialogInterface dialog, int which) {
-//	            	DeckTask.launchDeckTask(DeckTask.TASK_TYPE_REPAIR_DECK, mRepairDeckHandler, new DeckTask.TaskData(mCurrentDeckPath));
-//					mCurrentDeckPath = null;
-//					mCurrentDeckFilename = null;
-//				}
-//    		});
-//    		builder.setNegativeButton(res.getString(R.string.no), new DialogInterface.OnClickListener() {
-//				@Override
-//				public void onClick(DialogInterface dialog, int which) {
-//					mCurrentDeckPath = null;
-//					mCurrentDeckFilename = null;
-//				}
-//    		});
-//    		builder.setOnCancelListener(new DialogInterface.OnCancelListener() {
-//				@Override
-//				public void onCancel(DialogInterface dialog) {
-//					mCurrentDeckPath = null;
-//					mCurrentDeckFilename = null;
-//				}
-//    		});
-//			dialog = builder.create();
-//			break;
+		case DIALOG_REPAIR_COLLECTION:
+    		builder.setTitle(res.getString(R.string.backup_repair_deck));
+    		builder.setMessage(res.getString(R.string.repair_deck_dialog, BackupManager.BROKEN_DECKS_SUFFIX));
+			builder.setIcon(android.R.drawable.ic_dialog_alert);
+    		builder.setPositiveButton(res.getString(R.string.yes), new DialogInterface.OnClickListener() {
+				@Override
+				public void onClick(DialogInterface dialog, int which) {
+			 		DeckTask.launchDeckTask(DeckTask.TASK_TYPE_REPAIR_DECK, mRepairDeckHandler, new DeckTask.TaskData(mCol, mCol.getPath()));
+				}
+    		});
+    		builder.setNegativeButton(res.getString(R.string.no), new DialogInterface.OnClickListener() {
+				@Override
+				public void onClick(DialogInterface dialog, int which) {
+			 		showDialog(DIALOG_ERROR_HANDLING);
+				}
+    		});
+    		builder.setOnCancelListener(new OnCancelListener() {
+
+				@Override
+				public void onCancel(DialogInterface arg0) {
+			 		showDialog(DIALOG_ERROR_HANDLING);
+				}
+    			
+    		});
+			dialog = builder.create();
+			break;
 
 		case DIALOG_SYNC_LOG:
 			builder.setTitle(res.getString(R.string.sync_log_title));
@@ -1560,6 +1605,58 @@ public class DeckPicker extends Activity {
 		case DIALOG_DB_ERROR:
 			ad.getButton(Dialog.BUTTON3).setEnabled(hasErrorFiles());
 			break;
+
+		case DIALOG_ERROR_HANDLING:
+	 		ArrayList<String> options = new ArrayList<String>();
+	 		ArrayList<Integer> values = new ArrayList<Integer>();
+	 		if (mCol == null) {
+		 		// retry
+		 		options.add(res.getString(R.string.backup_retry_opening));
+		 		values.add(0);
+	 		} else {
+		 		// fix integrity
+		 		options.add(res.getString(R.string.check_db));
+		 		values.add(1);
+	 		}
+	 		// repair db with sqlite
+	 		options.add(res.getString(R.string.backup_error_menu_repair));
+	 		values.add(2);
+	 		// restore from backup
+	 		options.add(res.getString(R.string.backup_restore));
+	 		values.add(3);
+	 		// delete old collection and build new one
+	 		options.add(res.getString(R.string.backup_new_collection));
+	 		values.add(4);
+
+	 		String[] titles = new String[options.size()];
+	 		mRepairValues = new int[options.size()];
+	 		for (int i = 0; i < options.size(); i++) {
+	 			titles[i] = options.get(i);
+	 			mRepairValues[i] = values.get(i);
+	 		}
+	 		ad.setSingleChoiceItems(titles, 0, new DialogInterface.OnClickListener() {
+				@Override
+				public void onClick(DialogInterface dialog, int which) {
+					switch (mRepairValues[which]) {
+					case 0:
+						loadCollection();
+						return;
+					case 1:
+						integrityCheck();
+						return;
+					case 2:
+						showDialog(DIALOG_REPAIR_COLLECTION);
+						return;
+					case 3:
+//						TODO: restore
+						return;
+					case 4:
+//						TODO: asdf
+						return;
+					}
+				}
+			});
+	 		break;
 		}
 	}
 
@@ -1633,24 +1730,24 @@ public class DeckPicker extends Activity {
 		}
 	}
 
-
-	private void handleRestoreDecks(boolean reloadIfEmpty) {
-		if (mBrokenDecks.size() != 0) {
-			while (true) {
-				mCurrentDeckPath = mBrokenDecks.remove(0);
-				if (!mAlreadyDealtWith.contains(mCurrentDeckPath) || mBrokenDecks.size() == 0) {
-					break;
-				}
-			}
-        	mDeckNotLoadedAlert.setMessage(getResources().getString(R.string.open_deck_failed, "\'" + new File(mCurrentDeckPath).getName() + "\'", BackupManager.BROKEN_DECKS_SUFFIX.replace("/", ""), getResources().getString(R.string.repair_deck)));
-			mDeckNotLoadedAlert.show();
-		} else if (reloadIfEmpty) {
-			if (mRestoredOrDeleted) {
-				mBrokenDecks = new ArrayList<String>();
-//				populateDeckList(mPrefDeckPath);
-			}
-		}
-	}
+//
+//	private void handleRestoreDecks(boolean reloadIfEmpty) {
+//		if (mBrokenDecks.size() != 0) {
+//			while (true) {
+//				mCurrentDeckPath = mBrokenDecks.remove(0);
+//				if (!mAlreadyDealtWith.contains(mCurrentDeckPath) || mBrokenDecks.size() == 0) {
+//					break;
+//				}
+//			}
+//        	mDeckNotLoadedAlert.setMessage(getResources().getString(R.string.open_deck_failed, "\'" + new File(mCurrentDeckPath).getName() + "\'", BackupManager.BROKEN_DECKS_SUFFIX.replace("/", ""), getResources().getString(R.string.repair_deck)));
+//			mDeckNotLoadedAlert.show();
+//		} else if (reloadIfEmpty) {
+//			if (mRestoredOrDeleted) {
+//				mBrokenDecks = new ArrayList<String>();
+////				populateDeckList(mPrefDeckPath);
+//			}
+//		}
+//	}
 
 
 	private void sync() {
@@ -1786,31 +1883,7 @@ public class DeckPicker extends Activity {
                 return true;
 
             case CHECK_DATABASE:
-        		DeckTask.launchDeckTask(DeckTask.TASK_TYPE_CHECK_DATABASE, new DeckTask.TaskListener() {
-        			@Override
-        			public void onPreExecute() {
-        				mProgressDialog = StyledProgressDialog.show(DeckPicker.this, "",
-        						getResources().getString(R.string.check_db_message),
-        						true);
-        			}
-        			@Override
-        			public void onPostExecute(TaskData result) {
-        				if (mProgressDialog.isShowing()) {
-        					mProgressDialog.dismiss();
-        				}
-        				if (result.getBoolean()) {
-            	    		StyledDialog dialog = (StyledDialog) onCreateDialog(DIALOG_OK);
-            	    		dialog.setTitle(getResources().getString(R.string.check_db_title));
-            	    		dialog.setMessage(String.format(Utils.ENGLISH_LOCALE, getResources().getString(R.string.check_db_result_message), Math.round(result.getLong() / 1024)));
-            	    		dialog.show();
-        				} else {
-        					showDialog(DIALOG_DB_ERROR);
-        				}
-        			}
-        			@Override
-        			public void onProgressUpdate(TaskData... values) {
-        			}
-        		}, new DeckTask.TaskData(mCol));
+            	integrityCheck();
             	return true;
 
             default:
@@ -1861,6 +1934,33 @@ public class DeckPicker extends Activity {
 		BroadcastMessages.showDialog();
     }
 
+    private void integrityCheck() {
+		DeckTask.launchDeckTask(DeckTask.TASK_TYPE_CHECK_DATABASE, new DeckTask.TaskListener() {
+			@Override
+			public void onPreExecute() {
+				mProgressDialog = StyledProgressDialog.show(DeckPicker.this, "",
+						getResources().getString(R.string.check_db_message),
+						true);
+			}
+			@Override
+			public void onPostExecute(TaskData result) {
+				if (mProgressDialog.isShowing()) {
+					mProgressDialog.dismiss();
+				}
+				if (result.getBoolean()) {
+    	    		StyledDialog dialog = (StyledDialog) onCreateDialog(DIALOG_OK);
+    	    		dialog.setTitle(getResources().getString(R.string.check_db_title));
+    	    		dialog.setMessage(String.format(Utils.ENGLISH_LOCALE, getResources().getString(R.string.check_db_result_message), Math.round(result.getLong() / 1024)));
+    	    		dialog.show();
+				} else {
+					showDialog(DIALOG_DB_ERROR);
+				}
+			}
+			@Override
+			public void onProgressUpdate(TaskData... values) {
+			}
+		}, new DeckTask.TaskData(mCol));
+    }
 
 	private void resetDeckLanguages(String deckPath) {
 		if (MetaDB.resetDeckLanguages(this, deckPath)) {
