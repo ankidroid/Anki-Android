@@ -106,6 +106,7 @@ public class DeckPicker extends Activity {
 	private static final int DIALOG_DB_ERROR = 19;
 	private static final int DIALOG_ERROR_HANDLING = 20;
 	private static final int DIALOG_LOAD_FAILED = 21;
+	private static final int DIALOG_RESTORE_BACKUP = 22;
 
 	private String mDialogMessage;
 	private int[] mRepairValues;
@@ -1573,6 +1574,55 @@ public class DeckPicker extends Activity {
 			dialog = builder.create();
 			break;
 
+//		case DIALOG_RESTORE_BACKUP:
+//			 mBackups = BackupManager.getDeckBackups(new File(mDeckFilename));
+//			 if (mBackups.length == 0) {
+//	 	    		StyledDialog d = (StyledDialog) onCreateDialog(DIALOG_OK);
+//	 	    		d.setTitle(getResources().getString(R.string.backup_restore));
+//	 	    		d.setMessage(res.getString(R.string.backup_restore_no_backups));
+//	 	    		d.setPositiveButton(res.getString(R.string.ok), new
+//	 						 Dialog.OnClickListener() {
+//	 					 		@Override
+//	 					 		public void onClick(DialogInterface dialog, int which) {
+//	 					 			showDialog(DIALOG_ERROR_HANDLING);
+//	 					 		}
+//	 			 			});
+//	 	    		d.setCancelable(true).setOnCancelListener(new OnCancelListener() {
+//	 			 				@Override
+//	 			 				public void onCancel(DialogInterface arg0) {
+//	 			 					showDialog(DIALOG_ERROR_HANDLING);
+//	 			 				}
+//	 			 			});
+//	 	    		d.show();
+//			 } else {
+//				 String[] dates = new String[mBackups.length];
+//				 for (int i = 0; i < mBackups.length; i++) {
+//					 dates[i] = mBackups[i].getName().replaceAll(".*-(\\d{4}-\\d{2}-\\d{2}).anki2", "$1");
+//				 }
+//			 StyledDialog.Builder builder = new
+//			 StyledDialog.Builder(StudyOptions.this);
+//			 builder.setTitle(res.getString(R.string.backup_restore_select_title))
+//			 .setIcon(android.R.drawable.ic_input_get)
+//			 .setSingleChoiceItems(dates, dates.length, new
+//			 DialogInterface.OnClickListener(){
+//			
+//			 @Override
+//			 public void onClick(DialogInterface dialog, int which) {
+//			 // DeckTask.launchDeckTask(DeckTask.TASK_TYPE_RESTORE_DECK,
+//			 mRestoreDeckHandler, new DeckTask.TaskData(null, new String[]
+//			 {mDeckFilename, mBackups[which].getPath()}, 0, 0));
+//			 dialog.dismiss();
+//			 }
+//			 }).setCancelable(true).setOnCancelListener(new OnCancelListener() {
+//			
+//			 @Override
+//			 public void onCancel(DialogInterface arg0) {
+//			 showDialog(DIALOG_DECK_NOT_LOADED);
+//			 }
+//			 }).show();
+//			 }
+//			break;
+
 		default:
 			dialog = null;
 		}
@@ -1648,7 +1698,7 @@ public class DeckPicker extends Activity {
 						showDialog(DIALOG_REPAIR_COLLECTION);
 						return;
 					case 3:
-//						TODO: restore
+						showDialog(DIALOG_RESTORE_BACKUP);
 						return;
 					case 4:
 //						TODO: asdf
