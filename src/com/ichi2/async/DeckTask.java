@@ -696,11 +696,14 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
         } else {
             ArrayList<HashMap<String,String>> allCard = params[0].getCards(); 
             ArrayList<HashMap<String,String>> cards = params[1].getCards(); 
-        	HashSet<String> tags = (HashSet<String>) params[2].getObjArray()[0];
         	cards.clear();
+        	HashSet<String> tags = new HashSet<String>();
+        	for (String s : (HashSet<String>) params[2].getObjArray()[0]) {
+        		tags.add(s.toLowerCase());
+        	}
 			for (int i = 0; i < allCard.size(); i++) {
 				HashMap<String, String> card = allCard.get(i);
-				if (Arrays.asList(card.get("tags").split("\\s")).containsAll(tags)) {
+				if (Arrays.asList(card.get("tags").toLowerCase().trim().split("\\s")).containsAll(tags)) {
 					cards.add(allCard.get(i));
 				}
 			}
