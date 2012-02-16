@@ -29,6 +29,7 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.UnknownFormatConversionException;
 
+import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Utils;
 import com.tomgibara.android.veecheck.util.PrefSettings;
 
@@ -276,6 +277,10 @@ public class BackupManager {
 
 	public static boolean repairDeck(String deckPath) {
 		File deckFile = new File(deckPath);
+		Collection col = Collection.currentCollection();
+		if (col != null) {
+			col.close();
+		}
 		AnkiDatabaseManager.closeDatabase(deckPath);
 
     	// repair file
@@ -286,64 +291,56 @@ public class BackupManager {
     	    Process process = Runtime.getRuntime().exec(cmd);
     	    process.waitFor();
 
-    		// move deck to broken folder
-    		String brokenDirectory = getBrokenDirectory().getPath();
-    		Date value = Utils.genToday(Utils.utcOffset());
-            String movedFilename = String.format(Utils.ENGLISH_LOCALE, deckFile.getName().replace(".anki2", "") + "-corrupt-%tF.anki2", value);
-            File movedFile = new File(brokenDirectory, movedFilename);
-            int i = 1;
-            while (movedFile.exists()) {
-            	movedFile = new File(brokenDirectory, movedFilename.replace(".anki2", "-" + Integer.toString(i) + ".anki2"));
-            	i++;
-            }
-            movedFilename = movedFile.getName();
-        	if (!deckFile.renameTo(movedFile)) {
+        	if (!moveDatabaseToBrokenFolder(deckPath, false)) {
         		return false;
         	}
-        	Log.i(AnkiDroidApp.TAG, "repairDeck - moved corrupt file to " + movedFile.getAbsolutePath());
+        	Log.i(AnkiDroidApp.TAG, "repairDeck - moved corrupt file to broken folder");
         	File repairedFile = new File(deckPath + ".tmp");
         	if (!repairedFile.renameTo(deckFile)) {
         		return false;
         	}
         	return true;
     	} catch (IOException e) {
-    		Log.e("AnkiDroidApp.TAG", "repairDeck - error: " + e);
+    		Log.e("AnkiDroidApp.TAG", "repairCollection - error: " + e);
     	} catch (InterruptedException e) {
-    		Log.e("AnkiDroidApp.TAG", "repairDeck - error: " + e);
+    		Log.e("AnkiDroidApp.TAG", "repairCollection - error: " + e);
     	}
     	return false;
 	}
 
 
-//	public static boolean moveDeckToBrokenFolder(String deckPath) {
-//		File deckFile = new File(deckPath);
-//		AnkiDatabaseManager.closeDatabase(deckPath);
-//        Date value = Utils.genToday(Utils.utcOffset());
-//        String movedFilename = String.format(Utils.ENGLISH_LOCALE, deckFile.getName().replace(".anki", "") + "-corrupt-%tF.anki", value);
-//        File movedFile = new File(getBrokenDirectory().getPath(), movedFilename);
-//        int i = 1;
-//        while (movedFile.exists()) {
-//        	movedFile = new File(getBrokenDirectory().getPath(), movedFilename.replace(".anki", "-" + Integer.toString(i) + ".anki"));
-//        	i++;
-//        }
-//        movedFilename = movedFile.getName();
-//    	if (!deckFile.renameTo(movedFile)) {
-//    		return false;
-//    	}
-//    	
-//    	// move all connected files (like journals, directories...) too
-//    	String deckName = deckFile.getName();
-//    	File directory = new File(deckFile.getParent());
-//    	for (File f : directory.listFiles()) {
-//    		if (f.getName().startsWith(deckName)) {
-//    			if (!f.renameTo(new File(getBrokenDirectory().getPath(), f.getName().replace(deckName, movedFilename)))) {
-//    				return false;
-//    			}
-//    		}
-//    	}
-//    	return true;
-//	}
-//
+	public static boolean moveDatabaseToBrokenFolder(String colPath, boolean moveConnectedFilesToo) {
+		File colFile = new File(colPath);
+
+		// move file
+		Date value = Utils.genToday(Utils.utcOffset());
+        String movedFilename = String.format(Utils.ENGLISH_LOCALE, colFile.getName().replace(".anki2", "") + "-corrupt-%tF.anki2", value);
+        File movedFile = new File(getBrokenDirectory().getPath(), movedFilename);
+        int i = 1;
+        while (movedFile.exists()) {
+        	movedFile = new File(getBrokenDirectory().getPath(), movedFilename.replace(".anki2", "-" + Integer.toString(i) + ".anki2"));
+        	i++;
+        }
+        movedFilename = movedFile.getName();
+    	if (!colFile.renameTo(movedFile)) {
+    		return false;
+    	}
+
+    	if (moveConnectedFilesToo) {
+        	// move all connected files (like journals, directories...) too
+        	String deckName = colFile.getName();
+        	File directory = new File(colFile.getParent());
+        	for (File f : directory.listFiles()) {
+        		if (f.getName().startsWith(deckName)) {
+        			if (!f.renameTo(new File(getBrokenDirectory().getPath(), f.getName().replace(deckName, movedFilename)))) {
+        				return false;
+        			}
+        		}
+        	}    		
+    	}
+    	return true;
+	}
+
 
 	public static File[] getBackups(File colFile) {
 		File[] files = getBackupDirectory().listFiles();

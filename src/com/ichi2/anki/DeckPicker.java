@@ -1671,12 +1671,12 @@ public class DeckPicker extends Activity {
 	 		// repair db with sqlite
 	 		options.add(res.getString(R.string.backup_error_menu_repair));
 	 		values.add(2);
-	 		// restore from backup
-	 		options.add(res.getString(R.string.backup_restore));
-	 		values.add(3);
-	 		// delete old collection and build new one
-	 		options.add(res.getString(R.string.backup_new_collection));
-	 		values.add(4);
+//	 		// restore from backup
+//	 		options.add(res.getString(R.string.backup_restore));
+//	 		values.add(3);
+//	 		// delete old collection and build new one
+//	 		options.add(res.getString(R.string.backup_new_collection));
+//	 		values.add(4);
 
 	 		String[] titles = new String[options.size()];
 	 		mRepairValues = new int[options.size()];
