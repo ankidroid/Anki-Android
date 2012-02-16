@@ -274,12 +274,14 @@ public class CardEditor extends Activity {
 								"Card Editor: Error on dismissing progress dialog: "
 										+ e);
 					}
-				}				
-            	if (mIntent != null) {
-    				closeCardEditor(mIntent);
-            	} else {
-    				closeCardEditor();            		
-            	}
+				}
+		if (mCloseAfter) {			
+	            	if (mIntent != null) {
+    					closeCardEditor(mIntent);
+        	    	} else {
+    					closeCardEditor();            		
+        	    	}
+		}
             } else {
             	// RuntimeException occured on adding note
             	closeCardEditor(DeckPicker.RESULT_DB_ERROR);
