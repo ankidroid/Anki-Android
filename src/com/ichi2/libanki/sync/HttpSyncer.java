@@ -117,7 +117,7 @@ public class HttpSyncer {
 	        	buf.write(bdry + "\r\n");
 	        	buf.write("Content-Disposition: form-data; name=\"data\"; filename=\"data\"\r\nContent-Type: application/octet-stream\r\n\r\n");
 		        buf.close();
-		        bos.write(buf.toString().getBytes(Charset.forName("UTF-8")));
+		        bos.write(buf.toString().getBytes("UTF-8"));
 	        	// write file into buffer, optionally compressing
 	        	int len;
 	        	BufferedInputStream bfobj = new BufferedInputStream(fobj);
@@ -135,10 +135,10 @@ public class HttpSyncer {
 		            }
 		            tgt.close();
 	        	}
-	            bos.write(("\r\n" + bdry + "--\r\n").getBytes(Charset.forName("UTF-8")));
+	            bos.write(("\r\n" + bdry + "--\r\n").getBytes("UTF-8"));
 	        } else {
 	        	buf.close();
-	        	bos.write(buf.toString().getBytes(Charset.forName("UTF-8")));	        	
+	        	bos.write(buf.toString().getBytes("UTF-8"));	        	
 	        }
 	        bos.close();
             // connection headers
