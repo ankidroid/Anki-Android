@@ -55,7 +55,8 @@
 	<color name="studyoptions_progressbar_background_nightmode">#d7d7d7</color>
 
 	<color name="deckpicker_progressbar_young_light">#999999</color>
-
+	<color name="deckpicker_progressbar_young_dark">#B0B0B0</color>
+	
 	<color name="reviewer_background">#c6cfd6</color>
 	<color name="reviewer_background_night">#19242e</color>	
 	<color name="reviewer_night_card_background">#0c1217</color>	
