@@ -25,6 +25,7 @@ import com.ichi2.anki.AnkiDb;
 import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.UIUtils;
 import com.ichi2.async.DeckTask;
+import com.ichi2.async.DeckTask.TaskData;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -1037,21 +1038,33 @@ public class Collection {
 
 	/** Fix possible problems and rebuild caches. */
 	public long fixIntegrity() {
-		save();
 		File file = new File(mPath);
 		long oldSize = file.length();
-		if (!mDb.queryString("PRAGMA integrity_check").equals("ok")) {
-			return -1;
-		}
-		// delete any notes with missing cards
-		ArrayList<Long> ids = mDb.queryColumn(Long.class, "SELECT id FROM notes WHERE id NOT IN (SELECT DISTINCT nid FROM cards)", 0);
-		_remNotes(Utils.arrayList2array(ids));
-		// tags
-		mTags.registerNotes();
-		// field cache
-		for (JSONObject m : mModels.all()) {
-			updateFieldCache(Utils.arrayList2array(mModels.nids(m)));
-		}
+    	try {
+            mDb.getDatabase().beginTransaction();
+            try {
+        		save();
+        		if (!mDb.queryString("PRAGMA integrity_check").equals("ok")) {
+        			return -1;
+        		}
+        		// delete any notes with missing cards
+        		ArrayList<Long> ids = mDb.queryColumn(Long.class, "SELECT id FROM notes WHERE id NOT IN (SELECT DISTINCT nid FROM cards)", 0);
+        		_remNotes(Utils.arrayList2array(ids));
+        		// tags
+        		mTags.registerNotes();
+        		// field cache
+        		for (JSONObject m : mModels.all()) {
+        			updateFieldCache(Utils.arrayList2array(mModels.nids(m)));
+        		}
+        		mDb.getDatabase().setTransactionSuccessful();
+	        } finally {
+	        	mDb.getDatabase().endTransaction();
+	        }
+    	} catch (RuntimeException e) {
+    		Log.e(AnkiDroidApp.TAG, "doInBackgroundCheckDatabase - RuntimeException on marking card: " + e);
+			AnkiDroidApp.saveExceptionReportFile(e, "doInBackgroundCheckDatabase");
+    		return -1;
+    	}
 		// and finally, optimize
 		optimize();
 		file = new File(mPath);

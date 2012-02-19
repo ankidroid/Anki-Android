@@ -597,20 +597,7 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
     private TaskData doInBackgroundCheckDatabase(TaskData... params) {
         Log.i(AnkiDroidApp.TAG, "doInBackgroundCheckDatabase");
     	Collection col = params[0].getCollection();
-    	long result;
-    	try {
-            col.getDb().getDatabase().beginTransaction();
-            try {
-        		result = col.fixIntegrity();
-	            col.getDb().getDatabase().setTransactionSuccessful();
-	        } finally {
-	        	col.getDb().getDatabase().endTransaction();
-	        }
-    	} catch (RuntimeException e) {
-    		Log.e(AnkiDroidApp.TAG, "doInBackgroundCheckDatabase - RuntimeException on marking card: " + e);
-			AnkiDroidApp.saveExceptionReportFile(e, "doInBackgroundCheckDatabase");
-    		return new TaskData(false);
-    	}
+    	long result = col.fixIntegrity();
     	if (result == -1) {
         	return new TaskData(false);    		
     	} else {
