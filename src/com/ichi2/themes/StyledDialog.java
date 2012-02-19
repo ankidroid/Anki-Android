@@ -80,12 +80,14 @@ public class StyledDialog extends Dialog {
     	View main = super.getWindow().getDecorView();
     	((TextView) main.findViewById(R.id.message)).setText(message);
         ((View) main.findViewById(R.id.contentPanel)).setVisibility(View.VISIBLE);
+        Themes.setStyledDialogBackgrounds(main);
     }
 
 
     public void setTitle(String message) {
     	View main = super.getWindow().getDecorView();
     	((TextView) main.findViewById(R.id.alertTitle)).setText(message);
+        Themes.setStyledDialogBackgrounds(main);
     }
 
 
@@ -93,6 +95,7 @@ public class StyledDialog extends Dialog {
     	View main = super.getWindow().getDecorView();
     	((TextView) main.findViewById(R.id.message)).setText(message);
         ((View) main.findViewById(R.id.contentPanel)).setVisibility(View.VISIBLE);
+        Themes.setStyledDialogBackgrounds(main);
     }
 
 

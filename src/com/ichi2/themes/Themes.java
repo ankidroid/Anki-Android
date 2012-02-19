@@ -737,6 +737,15 @@ public class Themes {
 	}
 
 
+	public static void setStyledDialogBackgrounds(View main) {
+		int buttonCount = 0;
+		for (int id : new int[]{R.id.button1, R.id.button2, R.id.button3}) {
+			if (main.findViewById(id).getVisibility() == View.VISIBLE) {
+				buttonCount++;
+			}			
+		}
+		setStyledDialogBackgrounds(main, buttonCount);
+	}
 	public static void setStyledDialogBackgrounds(View main, int buttonNumbers) {
 		setStyledDialogBackgrounds(main, buttonNumbers, false);
 	}
