@@ -909,9 +909,13 @@ public class DeckPicker extends Activity {
 		}
 	}
 
-	private void loadCollection() {
+	private String getCollectionPath() {
 		String deckPath = PrefSettings.getSharedPrefs(getBaseContext()).getString("deckPath", AnkiDroidApp.getDefaultAnkiDroidDirectory());
-		DeckTask.launchDeckTask(DeckTask.TASK_TYPE_OPEN_COLLECTION, mOpenCollectionHandler, new DeckTask.TaskData(Collection.currentCollection(), deckPath + AnkiDroidApp.COLLECTION_PATH));
+		return deckPath + AnkiDroidApp.COLLECTION_PATH;
+	}
+
+	private void loadCollection() {
+		DeckTask.launchDeckTask(DeckTask.TASK_TYPE_OPEN_COLLECTION, mOpenCollectionHandler, new DeckTask.TaskData(Collection.currentCollection(), getCollectionPath()));
 	}
 
 	private void loadCounts() {
@@ -1947,7 +1951,7 @@ public class DeckPicker extends Activity {
         super.onActivityResult(requestCode, resultCode, intent);
 
         if (resultCode == RESULT_DB_ERROR) {
-        	showDialog(DIALOG_DB_ERROR);
+        	handleDbError();
         }
     	if (requestCode == SHOW_STUDYOPTIONS && resultCode == RESULT_OK) {
     		mDontSaveOnStop = false;
@@ -2025,6 +2029,34 @@ public class DeckPicker extends Activity {
 //        if (UIUtils.getApiLevel() > 4) {
 //            ActivityTransitionAnimation.slide(this, ActivityTransitionAnimation.RIGHT);
 //        }
+    }
+
+
+    public void handleDbError() {
+    	DeckTask.launchDeckTask(DeckTask.TASK_TYPE_RESTORE_IF_MISSING, new DeckTask.TaskListener() {
+			@Override
+			public void onPreExecute() {
+				mProgressDialog = StyledProgressDialog.show(DeckPicker.this, "",
+						getResources().getString(R.string.backup_restore_if_missing),
+						true);
+			}
+			@Override
+			public void onPostExecute(TaskData result) {
+				if (mProgressDialog.isShowing()) {
+					try {
+						mProgressDialog.dismiss();
+					} catch (Exception e) {
+						Log.e(AnkiDroidApp.TAG,
+								"onPostExecute - Dialog dismiss Exception = "
+										+ e.getMessage());
+					}
+				}					
+		    	showDialog(DIALOG_DB_ERROR);
+			}
+			@Override
+			public void onProgressUpdate(TaskData... values) {
+			}
+		}, new DeckTask.TaskData(getCollectionPath()));
     }
 
 

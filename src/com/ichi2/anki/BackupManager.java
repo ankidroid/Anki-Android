@@ -136,16 +136,16 @@ public class BackupManager {
 
 	/** Restores the collection from backup if Android deleted it */
 	public static void restoreCollectionIfMissing(String path) {
-//		if (mUseBackups && !(new File(deckpath)).exists()) {
-//			Log.e(AnkiDroidApp.TAG, "BackupManager: Deck " + deckpath + " has been deleted by Android. Restoring it:");
-//			File[] fl = BackupManager.getDeckBackups(new File(deckpath));
-//			if (fl.length > 0) {
-//				Log.e(AnkiDroidApp.TAG, "BackupManager: Deck " + deckpath + " successfully restored");
-//				BackupManager.restoreDeckBackup(deckpath, fl[fl.length - 1].getAbsolutePath());					
-//			} else {
-//				Log.e(AnkiDroidApp.TAG, "BackupManager: Deck " + deckpath + " could not be restored");
-//			}
-//		}
+		if (mUseBackups && !(new File(path)).exists()) {
+			Log.e(AnkiDroidApp.TAG, "BackupManager: Collection " + path + " has been deleted by Android. Restoring it:");
+			File[] fl = BackupManager.getBackups(new File(path));
+			if (fl.length > 0) {
+				BackupManager.restoreBackup(path, fl[fl.length - 1].getAbsolutePath());					
+				Log.e(AnkiDroidApp.TAG, "BackupManager: Collection " + path + " successfully restored");
+			} else {
+				Log.e(AnkiDroidApp.TAG, "BackupManager: Collection " + path + " could not be restored");
+			}
+		}
 	}
 
 
@@ -244,35 +244,35 @@ public class BackupManager {
 			return MIN_FREE_SPACE * 1024 * 1024;
 		}	
 	}
-//
-//
-//	public static int restoreDeckBackup(String deckpath, String backupPath) {
-//        // rename old file and move it to subdirectory
-//    	if ((new File(deckpath)).exists() && !moveDeckToBrokenFolder(deckpath)) {
-//    		return RETURN_ERROR;
-//    	}
-//
-//    	// copy backup to new position and rename it
-//    	File backupFile = new File(backupPath);
-//    	File deckFile = new File(deckpath);
-//        if (getFreeDiscSpace(deckFile) < deckFile.length() + (MIN_FREE_SPACE * 1024 * 1024)) {
-//            Log.e(AnkiDroidApp.TAG, "Not enough space on sd card to restore " + deckFile.getName() + ".");
-//        	return RETURN_NOT_ENOUGH_SPACE;
-//        }
-//        try {
-//            InputStream stream = new FileInputStream(backupFile);
-//            Utils.writeToFile(stream, deckFile.getAbsolutePath());
-//            stream.close();
-//
-//            // set timestamp of file in order to avoid creating a new backup unless its changed
-//            deckFile.setLastModified(backupFile.lastModified());
-//        } catch (IOException e) {
-//            Log.e(AnkiDroidApp.TAG, Log.getStackTraceString(e));
-//            Log.e(AnkiDroidApp.TAG, "Restore of file " + deckFile.getName() + " failed.");
-//            return RETURN_ERROR;
-//        }
-//		return RETURN_DECK_RESTORED;
-//	}
+
+
+	public static int restoreBackup(String path, String backupPath) {
+        // rename old file and move it to subdirectory
+    	if ((new File(path)).exists() && !moveDatabaseToBrokenFolder(path, false)) {
+    		return RETURN_ERROR;
+    	}
+
+    	// copy backup to new position and rename it
+    	File backupFile = new File(backupPath);
+    	File colFile = new File(path);
+        if (getFreeDiscSpace(colFile) < colFile.length() + (MIN_FREE_SPACE * 1024 * 1024)) {
+            Log.e(AnkiDroidApp.TAG, "Not enough space on sd card to restore " + colFile.getName() + ".");
+        	return RETURN_NOT_ENOUGH_SPACE;
+        }
+        try {
+            InputStream stream = new FileInputStream(backupFile);
+            Utils.writeToFile(stream, colFile.getAbsolutePath());
+            stream.close();
+
+            // set timestamp of file in order to avoid creating a new backup unless its changed
+            colFile.setLastModified(backupFile.lastModified());
+        } catch (IOException e) {
+            Log.e(AnkiDroidApp.TAG, Log.getStackTraceString(e));
+            Log.e(AnkiDroidApp.TAG, "Restore of file " + colFile.getName() + " failed.");
+            return RETURN_ERROR;
+        }
+		return RETURN_DECK_RESTORED;
+	}
 
 
 	public static boolean repairDeck(String deckPath) {
