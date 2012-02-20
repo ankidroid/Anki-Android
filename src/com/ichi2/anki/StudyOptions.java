@@ -30,7 +30,6 @@ import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.database.sqlite.SQLiteException;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -63,8 +62,6 @@ import com.ichi2.anki.DeckTask.TaskData;
 import com.ichi2.async.Connection;
 import com.ichi2.async.Connection.Payload;
 import com.ichi2.compat.Compat;
-import com.ichi2.compat.CompatV11;
-import com.ichi2.compat.CompatV3;
 import com.ichi2.themes.StyledDialog;
 import com.ichi2.themes.StyledProgressDialog;
 import com.ichi2.themes.Themes;
@@ -720,11 +717,7 @@ public class StudyOptions extends AnkiActivity implements IButtonListener {
        		}
        	};
 
-        if (getApiLevel() >= 11) {
-            mCompat = new CompatV11();
-        } else {
-            mCompat = new CompatV3();
-        }
+       	mCompat = Utils.createCompat();
         //Zeemote controller initialization
          
 		 if (AnkiDroidApp.zeemoteController() == null) AnkiDroidApp.setZeemoteController(new Controller(Controller.CONTROLLER_1));     
@@ -743,17 +736,6 @@ public class StudyOptions extends AnkiActivity implements IButtonListener {
 			 controllerUi.startConnectionProcess();
 		 }
 		}
-    }
-
-
-    /** Returns the API level of this device. */
-    public static int getApiLevel() {
-        try {
-            return Integer.parseInt(Build.VERSION.SDK);
-        } catch (NumberFormatException e) {
-            // If there is an error, return the minimum supported version.
-            return 3;
-        }
     }
 
 

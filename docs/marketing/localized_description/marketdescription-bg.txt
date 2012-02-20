@@ -29,11 +29,11 @@ Create your own flashcard decks or download free decks compiled for many languag
 • поддръжка на шрифт по избор
 • пълно архивиране на системата
 • navigation by swipe, tap, shake
-• review in widget
+• преглед в джаджа
 • напълно приспособима
-• cram mode
+•Зубрене режим
 • limit studying by tag, time or cards
 • нощен режим
-• zeemote support
+• zeemote поддръжка
 • three different ui-themes
-• 27 localisations
+• 27 локализации

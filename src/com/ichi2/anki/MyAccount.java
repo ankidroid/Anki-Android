@@ -159,7 +159,7 @@ public class MyAccount extends AnkiActivity {
 
             @Override
             public void onClick(View v) {
-                startActivityWithoutAnimation(new Intent(Intent.ACTION_VIEW, Uri.parse(getResources().getString(
+                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(getResources().getString(
                         R.string.ankionline_sign_up_url))));
             }
 

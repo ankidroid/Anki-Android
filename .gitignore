@@ -19,3 +19,6 @@ coverage.em
 .idea/
 out/
 *.iml
+
+# Temporary file by update-localizations.py
+ankidroid.zip

@@ -35,7 +35,7 @@
   <string name="statistics_all_decks">(minden pakli)</string>
   <string name="calculating_statistics">Statisztikák számítása</string>
   <string name="deck_summary_cards">Kártyák száma:</string>
-  <string name="deck_summary_facts">Number of facts:</string>
+  <string name="deck_summary_facts">Kártyák száma:</string>
   <string name="deck_summary_cards_mature">Régi kártyák:</string>
   <string name="deck_summary_cards_young">Fiatal kártyák:</string>
   <string name="deck_summary_cards_unseen">Nem látott kártyák:</string>
@@ -47,17 +47,17 @@
   <string name="deck_summary_answers_firstseen">Először feltűnt: &lt;b&gt;%1$.1f %2$s&lt;/b&gt; (%3$d of %4$d)</string>
   <string name="deck_summary_reviews">\'>Átnézendő:</string>
   <string name="deck_summary_news">Új kártyák:</string>
-  <string name="deck_summary_average_week">Average seen last week</string>
-  <string name="deck_summary_average_month">Average seen last month</string>
-  <string name="deck_summary_average_year">Average seen last year</string>
-  <string name="deck_summary_average_total">Average seen ever</string>
+  <string name="deck_summary_average_week">Átalg múlt héten látott</string>
+  <string name="deck_summary_average_month">Átalg múlt hónapban látott</string>
+  <string name="deck_summary_average_year">Átalg tavaly látott</string>
+  <string name="deck_summary_average_total">Átlag valaha is látott</string>
   <string name="deck_summary_forecast">Előrejelzés</string>
-  <string name="deck_summary_tomorrow_due">Tomorrow due: &lt;b&gt;%d&lt;/b&gt; cards</string>
-  <string name="deck_summary_tomorrow_new">Tomorrow new: &lt;b&gt;%d&lt;/b&gt; cards</string>
+  <string name="deck_summary_tomorrow_due">Soronkövetkezők holnap: &lt;b&gt;%d&lt;/b&gt; kártya</string>
+  <string name="deck_summary_tomorrow_new">Újak holnap: &lt;b&gt;%d&lt;/b&gt; kártya</string>
   <string name="deck_summary_tomorrow_time">Becsült idő holnap: &lt;b&gt;%d&lt;/b&gt; perc</string>
-  <string name="deck_summary_finished_in">New cards finished in: &lt;b&gt;%d&lt;/b&gt; days</string>
-  <string name="deck_summary_cards_per_day">&lt;b&gt;%.1f&lt;/b&gt; cards/day</string>
-  <string name="deck_summary_deck_age">Deck age: &lt;b&gt;%d&lt;/b&gt; days</string>
+  <string name="deck_summary_finished_in">Új kártyák befejezése: &lt;b&gt;%d&lt;/b&gt; nap</string>
+  <string name="deck_summary_cards_per_day">&lt;b&gt;%.1f&lt;/b&gt; kártya/nap</string>
+  <string name="deck_summary_deck_age">Pakli kora: &lt;b&gt;%d&lt;/b&gt; nap</string>
   <string name="deck_summary_all_decks">Összes pakli</string>
   <string-array name="statistics_type_labels">
     <item>Esedékes</item>
