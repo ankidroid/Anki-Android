@@ -583,6 +583,9 @@ public class DeckPicker extends Activity {
 
 		@Override
 		public void onPostExecute(DeckTask.TaskData result) {
+			if (result == null) {
+				return;
+			}
 			Object[] res = result.getObjArray();
 			updateDecksList((TreeSet<Object[]>) res[0], (Integer)res[1], (Integer)res[2]);
 		}

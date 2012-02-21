@@ -417,12 +417,17 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
         if (col == null) {
         	return new TaskData(col);
         }
-        if (reset) {
-        	col.getSched().reset();
-        }
-    	// load decks
-        TreeSet<Object[]> decks = col.getSched().deckDueTree(false);
-        return new TaskData(col, decks, 0);
+	try {
+	        if (reset) {
+        		col.getSched().reset();
+        	}
+	    	// load decks
+        	TreeSet<Object[]> decks = col.getSched().deckDueTree(false);
+        	return new TaskData(col, decks, 0);
+	} catch (RuntimeException e) {
+		col = null;
+        	return new TaskData(col);
+	}
     }
 
 
@@ -442,7 +447,11 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
        			counts[2] += (Integer) deck[4];
        		}
        	}
-       	return new TaskData(new Object[]{decks, sched.eta(counts), col.cardCount()});    		
+	try {
+	       	return new TaskData(new Object[]{decks, sched.eta(counts), col.cardCount()});
+	} catch (RuntimeException e) {
+		return null;
+	}
     }
 
 
