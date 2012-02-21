@@ -119,7 +119,23 @@ public class Tags {
     		mTags.clear();
     		mChanged = true;
     	}
-		register(mCol.getDb().queryColumn(String.class, "SELECT DISTINCT tags FROM notes" + lim, 0));
+	ArrayList<String> tags = new ArrayList<String>();
+	Cursor cursor = null;
+	try {
+		cursor = mCol.getDb().getDatabase().rawQuery("SELECT DISTINCT tags FROM notes", null);
+		while (cursor.moveToNext()) {
+			for (String t : cursor.getString(0).split("\\s")) {
+				if (t.length > 0) {
+					tags.add(t);
+				}
+			}
+		}
+	} finally {
+		if (cursor != null) {
+			cursor.close();
+		}
+	}
+	register(tags);
     }
 
     public TreeMap<String, Integer> allItems() {
