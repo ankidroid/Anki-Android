@@ -27,6 +27,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.content.ContentValues;
+import android.database.Cursor;
 
 public class Tags {
 
@@ -119,23 +120,23 @@ public class Tags {
     		mTags.clear();
     		mChanged = true;
     	}
-	ArrayList<String> tags = new ArrayList<String>();
-	Cursor cursor = null;
-	try {
-		cursor = mCol.getDb().getDatabase().rawQuery("SELECT DISTINCT tags FROM notes", null);
-		while (cursor.moveToNext()) {
-			for (String t : cursor.getString(0).split("\\s")) {
-				if (t.length > 0) {
-					tags.add(t);
-				}
-			}
-		}
-	} finally {
-		if (cursor != null) {
-			cursor.close();
-		}
-	}
-	register(tags);
+    	ArrayList<String> tags = new ArrayList<String>();
+    	Cursor cursor = null;
+    	try {
+    		cursor = mCol.getDb().getDatabase().rawQuery("SELECT DISTINCT tags FROM notes", null);
+    		while (cursor.moveToNext()) {
+    			for (String t : cursor.getString(0).split("\\s")) {
+    				if (t.length() > 0) {
+    					tags.add(t);
+    				}
+    			}
+    		}
+    	} finally {
+    		if (cursor != null) {
+    			cursor.close();
+    		}
+    	}
+    	register(tags);
     }
 
     public TreeMap<String, Integer> allItems() {
