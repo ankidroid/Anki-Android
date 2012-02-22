@@ -63,13 +63,6 @@
 		<item>Show failed cards in 8 hours</item>
 		<item>Show failed cards in 3 days</item>
 	</string-array>
-	<string-array name="deck_order_labels">
-		<item>By last access</item>
-		<item>Alphabetical</item>
-		<item>By number of due cards</item>
-		<item>By number of total cards</item>
-		<item>By number of total new cards</item>
-	</string-array>
 	<string-array name="gestures_labels">
 		<item>No action</item>
 		<item>Answer button 1</item>

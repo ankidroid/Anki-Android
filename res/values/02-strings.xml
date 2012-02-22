@@ -55,19 +55,13 @@
     
 <string name="saving_facts">Saving note</string>
 <string name="deck">Deck</string>
-<string name="card">Card:</string>
-<string name="cards">Cards:</string>
 <string name="add">Add</string>
 <string name="close">Close</string>
 <string name="select">Select</string>
 
 <string name="saving_changes">Saving changes...</string>
 
-<string name="studyoptions_nodeck_title">No Deck Loaded</string>
-<string name="studyoptions_nodeck_message">No deck is currently loaded. Anki decks are stored in the directory \"%s\" on your SD card. This location can be specified in the preferences (press your device\'s \&quot;Menu\&quot; button and select \&quot;Preferences\&quot;).</string>
 <string name="studyoptions_welcome_title">Welcome to AnkiDroid</string>
-<string name="studyoptions_deck_not_loaded_title">Deck Could Not Be Loaded</string>
-<string name="studyoptions_deck_not_loaded_message">The deck you selected is not a valid Anki deck. Please use the Anki desktop application to create a valid deck before loading it in AnkiDroid.\n\nIn the meantime, you can select another deck or load the sample deck with the buttons below.</string>
 <string name="studyoptions_no_external_storage_title">No External Storage Available</string>
 <string name="studyoptions_no_external_storage_message">No external storage is currently available. AnkiDroid needs to have access to the SD card in order to read and load your Anki decks. Check that your SD card is mounted and try again.</string>
 

@@ -42,8 +42,6 @@
 <string name="pref_cat_flashcard">Reviewing screen</string>
 <string name="show_study_options_on_deck_load">Study options on load</string>
 <string name="show_study_options_on_deck_load_summ">Shows study options screen when loading a deck</string>
-<string name="startup_mode">Startup Mode</string>
-<string name="startup_mode_summ">Choose if you want to start with study options or deck picker:</string>
 <string name="show_timer">Show timer</string>
 <string name="show_timer_summ">Timer showing the time it is taking you to answer</string>
 <string name="show_progress_bars">Show progress bars</string>
@@ -87,12 +85,8 @@
 <string name="card_browser_font_size_summ">The font size to use in the card browser. At the moment: XXX %</string>
 <string name="button_size">Relative button size</string>
 <string name="button_size_summ">Relative size of the buttons on the reviewing screen. At the moment: XXX %</string>
-<string name="hide_question_in_answer">Hide question in answer?</string>
-<string name="hide_question_in_answer_summ">Determines whether the question should be hidden when the answer is shown</string>
 <string name="deck_path">Deck path</string>
 <string name="deck_path_summ">Path to where your decks are stored</string>
-<string name="deck_order">Deck order</string>
-<string name="deck_order_summ">Order in which decks are listed in deck picker: XXX</string>
 <string name="fullscreen_review">Review in fullscreen</string>
 <string name="fullscreen_review_summ">You can decide if you want to use all available screen space during card reviewing</string>
 <string name="zoom">Enable Zoom</string>
@@ -161,10 +155,6 @@
 <string name="pref_backup_warning">Disabling backups will delete all current backup files. Proceed anyway?</string>
 
 
-<!-- deck_preferences.xml -->
-<string name="newcards_day_summ">The maximum number of new cards shown per day.</string>
-<string name="newcards_day">New Cards / Day</string>
-
 <string name="studyoptions_limit_select_tags">Select Tags</string>
 <string name="studyoptions_limit_tags_active">With: %1$s</string>
 <string name="studyoptions_limit_tags_inactive">Without: %1$s</string>
@@ -186,11 +176,7 @@
 <string name="new_card_spacing">New Card Spacing</string>
 <string name="new_card_spacing_summ">Where to distribute new cards during the review.</string>
 <string name="show_new_cards">Show new cards...</string>
-<string name="review_cards_order">Review Cards Order</string>
-<string name="review_cards_in">Review cards in...</string>
-<string name="review_cards_order_summ">The order in which to show review cards.</string>
 
-<string name="soon">Soon</string>
 <string name="show_next_review_time">Next review time</string>
 <string name="show_next_review_time_summ">Shows the next review time depending on your choice</string>
 <string name="update_notification">Update notifications</string>
@@ -217,7 +203,6 @@
 
 <string name="studyoptions_new_cards_per_day">New cards per day</string>
 <string name="studyoptions_max_fail_card">Max fail cards</string>
-<string name="studyoptions_more_save">Save</string>
 
 <string name="show_broadcast_messages">Show Current Messages</string>
 <string name="show_broadcast_messages_summ">Show AnkiDroid notifications like new version updates or important other news</string>
@@ -276,15 +261,4 @@
 <string name="deck_conf_ren">Rename configuration</string>
 <string name="deck_conf_rem">Remove configuration</string>
 
-
-
-
-
-
-
-
-
-
-
-    
 </resources>

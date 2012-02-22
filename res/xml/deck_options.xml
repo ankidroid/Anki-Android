@@ -126,7 +126,7 @@
 			android:title="@string/deck_conf_timer"
 			android:key="showAnswerTimer" />
 		<CheckBoxPreference
-			android:title="Automatically play audio"
+			android:title="@string/deck_conf_autoplay"
 			android:key="autoPlayAudio" />
 	</PreferenceScreen>
     	<PreferenceScreen android:title="@string/deck_conf_add_conf">

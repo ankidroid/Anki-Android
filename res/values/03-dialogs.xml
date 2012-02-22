@@ -30,7 +30,6 @@
 <string name="delete_deck_message">Are you sure you wish to delete all cards in %s?</string>
 <string name="delete_deck_confirm">Delete it</string>
 
-<string name="new_version_title">New Version:</string>
 <string name="new_version_message">New Features:</string>
 
 <string name="no_tts_available_title">Text-to-Speech</string>
@@ -52,7 +51,6 @@
 <!--<string name="deck_not_loaded_detail">Please, press menu and select one of the decks stored in your SD card.</string>-->
 <!--<string name="deck_empty">Deck is empty.</string>-->
 <string name="deck_upgrade_too_old_version">Decks with versions older than 39 are not supported by AnkiDroid; please open the deck with Anki desktop to upgrade it to the latest version.</string>
-<string name="deck_upgrade_version_61_has_latex">The deck can\'t be fully upgraded, because it contains LaTeX expressions; please open the deck with Anki desktop to upgrade it to the latest version and regenerate LaTeX.</string>
 
 <string name="sync_log_title">Sync Log</string>
 <string name="deckpicker_upgrading">Upgrading deck...</string>
@@ -71,9 +69,6 @@
 <string name="notification_message">A new version of AnkiDroid is available in Android Market.\n\nWould you like to install it?</string>
 <string name="notification_stop">Don\'t notify me of this update again</string>
 
-<string name="swap_qa_title">Swap Q/A</string>
-<string name="swap_qa_text">Be aware that simply swapping question and answer runs contrary to the concept of spaced repetition. Ideally you should create new cards for the reversed learning direction. You can do this easily with Anki Desktop.\nSwap Q/A anyway?</string>
-
 <string name="reset_card_dialog_title">Reset card progress</string>
 <string name="reset_card_dialog_message">This resets the learning progress for all cards of this fact (they will look like new cards).\nReally continue?</string>
 <string name="reset_card_dialog_confirmation">All cards of this fact reset</string>
@@ -84,7 +79,6 @@
 
 <string name="repair_deck_dialog">Do you really want to try to repair the database?\n\nBefore starting the attempt, a copy will be created in subfolder \'%s\'.</string>
 
-<string name="intent_add_save_for_later">Save for later</string>
 <string name="intent_add_saved_information">Saved data</string>
 <string name="intent_add_clear_all">Clear all</string>
 <string name="intent_aedict_empty">Category \'default\' is empty</string>
