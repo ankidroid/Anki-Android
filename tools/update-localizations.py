@@ -160,12 +160,10 @@ t.write(titleString)
 t.close()
 
 for language in languages:
-	if language == 'zh-TW':
-		androidLanguage = 'zh-rTW'
-	elif language == 'zh-CN':
-		androidLanguage = 'zh-rCN'
+	if language[:2] in ('zh', 'pt'):
+		androidLanguage = language[:3] + "r" + language[3:]
 	else:
-		androidLanguage = language[:2] # Example: pt-PT becomes pt
+		androidLanguage = language[:2] # Example: es-ES becomes es
 
 	print "\ncopying language files for: " + androidLanguage
 	valuesDirectory = "../res/values-" + androidLanguage + "/"
