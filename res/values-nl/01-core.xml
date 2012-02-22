@@ -24,7 +24,7 @@
   <string name="yes">Ja</string>
   <string name="no">Nee</string>
   <string name="ok">OK</string>
-  <string name="studyoptions_deck_name">setnaam</string>
+  <string name="studyoptions_deck_name">Setnaam</string>
   <string name="studyoptions_reviews_due">Nog te overhoren:</string>
   <string name="studyoptions_new_today">Nieuw vandaag:</string>
   <string name="studyoptions_new_total">Nieuw totaal:</string>
@@ -34,21 +34,21 @@
   <string name="studyoptions_more_dialog_title">Meer opties</string>
   <string name="deckpicker_title_nosdcard">SD-kaart is ontkoppeld</string>
   <string name="deckpicker_new">%d nieuw vandaag</string>
-  <string name="deckpicker_loaddeck">Bezig met laden set...</string>
+  <string name="deckpicker_loaddeck">Bezig met laden van set...</string>
   <string name="deckpicker_nodeck">Geen set gevonden.</string>
   <string name="show_answer">Toon Antwoord</string>
-  <string name="ease1_learning">Weer</string>
+  <string name="ease1_learning">Nogmaals</string>
   <string name="ease2_learning">Goed</string>
-  <string name="ease3_learning">Simpel</string>
-  <string name="ease4_learning">Heel simpel</string>
+  <string name="ease3_learning">Makkelijk</string>
+  <string name="ease4_learning">Heel makkelijk</string>
   <string name="ease1_successive">Opnieuw</string>
   <string name="ease2_successive">Moeilijk</string>
   <string name="ease3_successive">Goed</string>
-  <string name="ease4_successive">Simpel</string>
+  <string name="ease4_successive">Makkelijk</string>
   <string name="loading">Laden...</string>
   <string name="studyoptions_continue">Doorgaan met overhoren</string>
   <string name="studyoptions_congrats_title">Gefeliciteerd!</string>
-  <string name="studyoptions_congrats_learnmore">Leer meer</string>
+  <string name="studyoptions_congrats_learnmore">Meer leren</string>
   <string name="studyoptions_congrats_reviewearly">Vervroegd overhoren</string>
   <string name="studyoptions_congrats_syncdeck">Synchroniseer set</string>
   <string name="studyoptions_congrats_open_other_deck">Laad een andere set</string>
@@ -58,18 +58,18 @@
   <string name="menu_rotate">Omkeren</string>
   <string name="undo">Ongedaan maken</string>
   <string name="redo">Opnieuw uitvoeren</string>
-  <string name="finish_operation">Vorige bewerking wordt voltooid.\nGelieve te wachten...</string>
+  <string name="finish_operation">Vorige bewerking wordt voltooid.\nEven wachten a.u.b...</string>
   <string name="contextmenu_deckpicker_download_missing_media">Download ontbrekende media</string>
-  <string name="contextmenu_deckpicker_reset_language_assignments">Taalopdrachten opnieuw instellen</string>
+  <string name="contextmenu_deckpicker_reset_language_assignments">Taaltoewijzingen opnieuw instellen</string>
   <string name="contextmenu_deckpicker_reset_reset_message">Taal opnieuw instellen</string>
   <string name="contextmenu_deckpicker_optimize_deck">Optimaliseer database</string>
-  <string name="contextmenu_deckpicker_rename_deck">Leerset hernoemen</string>
+  <string name="contextmenu_deckpicker_rename_deck">Nogmaals</string>
   <string name="contextmenu_deckpicker_set_custom_dictionary">Instellen van de aangepaste woordenlijst</string>
-  <string name="begin_cram">Start stampen</string>
+  <string name="begin_cram">Start Stamp modus</string>
   <string name="cram">Stampen</string>
   <string name="menu_open_deck">Alle sets</string>
   <string name="menu_sync">Synchroniseren</string>
-  <string name="menu_download_deck">set downloaden</string>
+  <string name="menu_download_deck">Set downloaden</string>
   <string name="menu_download_shared_deck">Gedeelde set</string>
   <string name="menu_download_personal_deck">Persoonlijke set</string>
   <string name="menu_my_account">Mijn Account</string>
@@ -85,7 +85,7 @@
   <string name="menu_search">Opzoeken in %1$s</string>
   <string name="menu_mark_card">Markeer kaart</string>
   <string name="menu_marked">Gemarkeerd</string>
-  <string name="menu_create_deck">Maak een set</string>
+  <string name="menu_create_deck">Creëer een set</string>
   <string name="studyoptions_feedback">Terugkoppeling</string>
   <string name="studyoptions_cram_dialog_title">Tags om te stampen</string>
   <string name="statistics">Statistieken</string>
@@ -97,7 +97,7 @@
   <string name="later">Later</string>
   <string name="download">Downloaden</string>
   <string name="deckpicker_loading_error">Kan set niet laden</string>
-  <string name="deckpicker_creating_backup">Backup maken</string>
+  <string name="deckpicker_creating_backup">Backup maken...</string>
   <string-array name="next_review_s">
     <item>1 seconde</item>
     <item>1 minuut</item>
@@ -135,8 +135,8 @@
     <item quantity="other">%1$s (%2$d min. over)</item>
   </plurals>
   <plurals name="studyoptions_congrats_message">
-    <item quantity="one">Je bent klaar voor nu.\nMorgen is er:\n1 kaart om te herhalen en %2$s.\n Geschatte tijd: %3$s</item>
-    <item quantity="other">Je bent klaar voor nu.\nMorgen zijn er:\n%1$d kaarten om te herhalen en %2$s.\n Geschatte tijd: %3$s</item>
+    <item quantity="one">Je bent voorlopig klaar.\nMorgen is er:\n1 kaart om te herhalen en %2$s.\n Geschatte tijd: %3$s</item>
+    <item quantity="other">Je bent voorlopig klaar.\nMorgen zijn er:\n%1$d kaarten om te herhalen en %2$s.\n Geschatte tijd: %3$s</item>
   </plurals>
   <plurals name="studyoptions_congrats_new_cards">
     <item quantity="one">1 kaart</item>

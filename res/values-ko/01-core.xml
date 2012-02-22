@@ -56,18 +56,18 @@
   <string name="card_unsuspended">카드 미결정 취소.</string>
   <string name="card_suspended">카드를 미결정으로 돌려놓음.</string>
   <string name="menu_rotate">회전</string>
-  <string name="undo">취소</string>
+  <string name="undo">실행 취소</string>
   <string name="redo">다시 하기</string>
-  <string name="finish_operation">이전 작업 마무리 중. 기다려주세요...</string>
+  <string name="finish_operation">이전 작업 마무리 중.\n기다려주세요...</string>
   <string name="contextmenu_deckpicker_download_missing_media">누락된 미디어 다운로드</string>
   <string name="contextmenu_deckpicker_reset_language_assignments">Reset Language Assignments</string>
   <string name="contextmenu_deckpicker_reset_reset_message">언어 재설정</string>
   <string name="contextmenu_deckpicker_optimize_deck">데이터베이스 최적화</string>
-  <string name="contextmenu_deckpicker_rename_deck">Rename deck</string>
+  <string name="contextmenu_deckpicker_rename_deck">덱 이름 바꾸기</string>
   <string name="contextmenu_deckpicker_set_custom_dictionary">사용자 정의 사전 설정</string>
   <string name="begin_cram">벼락치기 모드 시작</string>
   <string name="cram">벼락치기</string>
-  <string name="menu_open_deck">모든 묶음</string>
+  <string name="menu_open_deck">모든 덱</string>
   <string name="menu_sync">동기화</string>
   <string name="menu_download_deck">덱 다운로드</string>
   <string name="menu_download_shared_deck">공유된 덱</string>
@@ -76,34 +76,34 @@
   <string name="menu_preferences">환경 설정</string>
   <string name="menu_zeemote">Zeemote</string>
   <string name="menu_add_card">카드 추가</string>
-  <string name="menu_about">About</string>
+  <string name="menu_about">대하여</string>
   <string name="menu_remove_card">Dismiss Card</string>
   <string name="menu_suspend_card">Suspend Card</string>
   <string name="menu_bury_card">Bury Card</string>
   <string name="menu_edit_card">카드 편집</string>
   <string name="menu_select">텍스트 선택</string>
   <string name="menu_search">Lookup in %1$s</string>
-  <string name="menu_mark_card">Mark Card</string>
+  <string name="menu_mark_card">카드 마크하기</string>
   <string name="menu_marked">마크</string>
   <string name="menu_create_deck">새로운 덱 만들기</string>
   <string name="studyoptions_feedback">피드백</string>
   <string name="studyoptions_cram_dialog_title">벼락치기할 태그</string>
   <string name="statistics">통계</string>
   <string name="studyoptions_load_other_deck">다른 덱 불러오기</string>
-  <string name="studyoptions_load_tutorial_deck">튜토리얼 덱 읽기</string>
+  <string name="studyoptions_load_tutorial_deck">튜토리얼 덱 불러오기</string>
   <string name="studyoptions_night_mode">야간 모드</string>
   <string name="studyoptions_swap_qa">질답 역순</string>
   <string name="visit">방문</string>
   <string name="later">나중에</string>
   <string name="download">다운로드</string>
-  <string name="deckpicker_loading_error">덱을 로드 하지 못했습니다.</string>
+  <string name="deckpicker_loading_error">덱을 불러올 수 없습니다</string>
   <string name="deckpicker_creating_backup">백업 만드는 중...</string>
   <string-array name="next_review_s">
     <item>1초</item>
     <item>1분</item>
     <item>1 시간</item>
     <item>1 일</item>
-    <item>1 개</item>
+    <item>1 개월</item>
     <item>1 년</item>
   </string-array>
   <string-array name="next_review_p">
@@ -124,7 +124,7 @@
   </plurals>
   <plurals name="deckpicker_title_minutes">
     <item quantity="one">1분</item>
-    <item quantity="other">%d min.</item>
+    <item quantity="other">%d 분.</item>
   </plurals>
   <plurals name="deckpicker_due">
     <item quantity="one">1 of %2$d due</item>

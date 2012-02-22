@@ -53,7 +53,7 @@
   <string name="studyoptions_congrats_syncdeck">Sincronizzare il ponte</string>
   <string name="studyoptions_congrats_open_other_deck">Apri un altro mazzo</string>
   <string name="studyoptions_congrats_finish">Tornare alla schermata di studio</string>
-  <string name="card_unsuspended">Card suspension undone</string>
+  <string name="card_unsuspended">Annulla la sospensione della carta</string>
   <string name="card_suspended">Carta risospesa</string>
   <string name="menu_rotate">Ruotare</string>
   <string name="undo">Annullare</string>

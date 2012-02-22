@@ -24,10 +24,10 @@
     <item><![CDATA[The intention is to show you the card again, immediately before you would forget it. Empirical studies have shown that by this means information can be learned most efficiently.]]></item> 
     <item><![CDATA[Some words about the organisation in AnkiDroid:<br /><br>All information has to be put into pairs of question and answer. If you want to learn in the other direction, you should create another card with swapped information.]]></item> 
     <item><![CDATA[Cards are put together in decks and can there be organised by help of all sorts of tags.]]></item> 
-    <item><![CDATA[Ci sono principalmente due modi per aggiungere nuove carte:<br /><br />Puoi scaricare dei mazzi già creati da altri utenti (scegli&quot;scarica mazzo&quot;nel menu opzioni dell\'indice dei mazzi) o crearli da solo.]]></item> 
-    <item><![CDATA[Ma ad ogni modo, la creazione di mazzi personali è essenziale per soddisfare a pieno le tue esigenze. Puoi farlo direttamente con AnkiDroid...]]></item> 
-    <item><![CDATA[Diamo uno sguardo alla barra superiore<br /><br />Nell\'angolo superiore a sinistra ci sono alcune cifre. Quelle rosse indicano le carte sbagliate (a cui hai risposto&quot;ancora&quot;)]]></item> 
-    <item><![CDATA[Nell\'angolo destro trovi le informazioni sul tempo a disposizione e sulla tua performance.]]></item> 
+    <item><![CDATA[There are mainly two ways of getting new cards:<br /><br />You either download premade decks of other users (choose &quot;download deck&quot; in the deck summary\'s options menu) or create them by yourself. ]]></item> 
+    <item><![CDATA[But anyway, creating own decks is essential to suit your needs perfectly. You can do this directly in AnkiDroid...]]></item> 
+    <item><![CDATA[Let\'s have a look on the top bar:<br /><br />In the left top corner you find some numbers. The red one counts the failed cards (answered by &quot;again&quot;),]]></item> 
+    <item><![CDATA[On the right corner you find information about your thinking time of this card and about your performance.]]></item> 
     <item><![CDATA[These have been the main points of AnkiDroid usage.<br /><br>For more information about the key concept of Anki, visit http://ankisrs.net/]]></item> 
  </string-array>
  <string-array name="tutorial_answers">
@@ -38,10 +38,10 @@
     <item><![CDATA[If you want to learn more about spaced repetition, visit:<br>http://en.wikipedia.org/wiki/Spaced_repetition_system]]></item> 
     <item><![CDATA[Don\'t worry, this can be done automatically. There is no need of inserting the same information twice.]]></item> 
     <item><![CDATA[You will learn about that quickly when you start to use AnkiDroid.]]></item> 
-    <item><![CDATA[Troverai migliaia di mazzi già pronti da scaricare e probabilmente ce ne sono alcuni che potranno esserti utili.]]></item> 
-    <item><![CDATA[...o (più facilmente) con l\'applicazione Anki per pc (scaricabile gratuitamente sul sito http://ankisrs.net/).<br><br>La sincronizzazione dei tuoi mazzi con l\'applicazione per pc è semplicissima, quindi trasferire i dati non sarà un problema.]]></item> 
-    <item><![CDATA[quelle nere mostrano il numero di carte che hai già imparato e che dovresti ripetere oggi ed i numeri blu indicano quante carte sono in programma per oggi.<br /><br />La tipologia delle carte correnti è specificata da una sottolineatura.]]></item> 
-    <item><![CDATA[Nella barra superiore ci sono i tuoi progressi, quella inferiore indica la percentuale di risposte positive.]]></item> 
+    <item><![CDATA[You\'ll find thousands of premade decks to download and there are probably some which are useful for you.]]></item> 
+    <item><![CDATA[... or (a bit more convenient) with the desktop application Anki (downloadable for free under http://ankisrs.net/).<br><br>You can sync your decks with the desktop application very easily, so transfering the data is not a problem.]]></item> 
+    <item><![CDATA[the black one shows the number of cards you\'ve already learned before and which are due to review today, and the blue number tells you, how many new cards are projected for today. <br /><br />The type of the actual cards is specified by an underline.]]></item> 
+    <item><![CDATA[The upper bar shows your progress, the lower one indicates the percentage of yes answers.]]></item> 
     <item><![CDATA[Just try it a bit out now and see, if it fits your needs.<br><br>Maybe start with the deck overview (hit menu on the main screen and choose &quot;all decks&quot;), where you can download premade decks or create your own (just use the menu there).]]></item> 
  </string-array>
 </resources>

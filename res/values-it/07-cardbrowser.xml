@@ -42,7 +42,7 @@
   <string name="card_details_question">Domanda</string>
   <string name="card_details_answer">Risposta</string>
   <string name="card_details_due">Scadute</string>
-  <string name="card_details_last_due">Last due</string>
+  <string name="card_details_last_due">Ultime scadute</string>
   <string name="card_details_now">Ora</string>
   <string name="card_details_interval">Intervallo</string>
   <string name="card_details_ease">Facilità</string>
