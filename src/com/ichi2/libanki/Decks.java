@@ -327,10 +327,10 @@ public class Decks {
 	}
 
 	/** Rename deck prefix to NAME if not exists. Updates children. */
-	public void rename(JSONObject g, String newName) {
+	public boolean rename(JSONObject g, String newName) {
 		// make sure target node doesn't already exist
 		if (allNames().contains(newName) || newName.length() == 0) {
-			return;
+			return false;
 		}
 		// rename children
 		String oldName;
@@ -353,6 +353,7 @@ public class Decks {
 		} catch (JSONException e) {
 			throw new RuntimeException(e);
 		}
+		return true;
 	}
 
 	private void _ensureParents(String name) {

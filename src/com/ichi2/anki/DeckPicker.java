@@ -31,6 +31,7 @@ import android.content.SharedPreferences;
 import android.content.DialogInterface.OnCancelListener;
 import android.content.SharedPreferences.Editor;
 import android.content.res.Resources;
+import android.content.res.Resources.NotFoundException;
 import android.database.SQLException;
 import android.net.Uri;
 import android.os.Bundle;
@@ -75,6 +76,8 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.TreeSet;
+
+import org.json.JSONException;
 
 //zeemote imports
 import com.zeemote.zc.event.ButtonEvent;
@@ -316,8 +319,22 @@ public class DeckPicker extends Activity {
 
 							@Override
 							public void onClick(DialogInterface dialog, int which) {
-								mCol.getDecks().rename(mCol.getDecks().get(mCurrentDid), mDialogEditText.getText().toString().replaceAll("[\'\"\\s\\n\\r\\[\\]\\(\\)]", ""));
-								loadCounts();
+								String newName = mDialogEditText.getText().toString().replaceAll("[\'\"\\s\\n\\r\\[\\]\\(\\)]", "");
+								if (mCol.getDecks().rename(mCol.getDecks().get(mCurrentDid), newName)) {
+									for (HashMap<String, String> d : mDeckList) {
+										if (d.get("did").equals(Long.toString(mCurrentDid))) {
+											d.put("name", newName);
+										}
+									}
+									mDeckListAdapter.notifyDataSetChanged();
+									loadCounts();
+								} else {
+									try {
+										Themes.showThemedToast(DeckPicker.this, getResources().getString(R.string.rename_error, mCol.getDecks().get(mCurrentDid).get("name")), false);
+									} catch (JSONException e) {
+										throw new RuntimeException(e);
+									}
+								}
 							}
 						});
 				builder2.setNegativeButton(res.getString(R.string.cancel), null);

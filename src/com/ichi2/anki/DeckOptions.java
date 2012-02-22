@@ -45,6 +45,7 @@ import org.json.JSONObject;
 import com.ichi2.anim.ActivityTransitionAnimation;
 import com.ichi2.anki2.R;
 import com.ichi2.libanki.Collection;
+import com.ichi2.themes.Themes;
 
 /**
  * Preferences for the current deck.
@@ -141,8 +142,9 @@ public class DeckOptions extends PreferenceActivity implements
 						Log.i(AnkiDroidApp.TAG, "Change value for key '"
 								+ entry.getKey() + "': " + entry.getValue());
 						if (entry.getKey().equals("name")) {
-							mCol.getDecks().rename(mDeck,
-									(String) entry.getValue());
+							if (!mCol.getDecks().rename(mDeck, (String) entry.getValue())) {
+								Themes.showThemedToast(DeckOptions.this, getResources().getString(R.string.rename_error, mDeck.get("name")), false);
+							}
 						} else if (entry.getKey().equals("desc")) {
 							mDeck.put("desc", (String) entry.getValue());
 							mCol.getDecks().save(mDeck);
