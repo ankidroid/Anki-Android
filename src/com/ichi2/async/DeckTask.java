@@ -437,21 +437,21 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
 
     private TaskData doInBackgroundLoadDeckCounts(TaskData... params) {
     	Collection col = params[0].getCollection();
-    	Sched sched = col.getSched();
-    	// check if new day has rolled over and reset counts if yes
-    	if (Utils.now() > sched.getDayCutoff()) {
-    		sched._updateCutoff();
-    	}
-       	TreeSet<Object[]> decks = sched.deckDueTree(true);
-       	int[] counts = new int[]{0, 0, 0};
-       	for (Object[] deck : decks) {
-       		if (((String[])deck[0]).length == 1) {
-       			counts[0] += (Integer) deck[2];
-       			counts[1] += (Integer) deck[3];
-       			counts[2] += (Integer) deck[4];
-       		}
-       	}
        	try {
+	    	Sched sched = col.getSched();
+	    	// check if new day has rolled over and reset counts if yes
+	    	if (Utils.now() > sched.getDayCutoff()) {
+	    		sched._updateCutoff();
+	    	}
+	       	TreeSet<Object[]> decks = sched.deckDueTree(true);
+	       	int[] counts = new int[]{0, 0, 0};
+	       	for (Object[] deck : decks) {
+	       		if (((String[])deck[0]).length == 1) {
+	       			counts[0] += (Integer) deck[2];
+	       			counts[1] += (Integer) deck[3];
+	       			counts[2] += (Integer) deck[4];
+	       		}
+	       	}
        		return new TaskData(new Object[]{decks, sched.eta(counts), col.cardCount()});
        	} catch (RuntimeException e) {
        		return null;
