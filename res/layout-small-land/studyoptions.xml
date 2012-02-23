@@ -6,7 +6,7 @@
 	android:layout_height="fill_parent"
 	android:gravity="center"
 	android:orientation="vertical">
-	<LinearLayout
+	<LinearLayout android:id="@+id/studyoptions_deckinformation"
 		android:orientation="vertical"
 		android:gravity="center"
 		android:layout_width="fill_parent"
