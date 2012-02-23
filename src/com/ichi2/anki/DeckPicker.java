@@ -1359,8 +1359,34 @@ public class DeckPicker extends Activity {
 
 						@Override
 						public void onClick(DialogInterface dialog, int which) {
-							mCol.getDecks().rem(mCurrentDid, true);
-							loadCounts();
+							DeckTask.launchDeckTask(DeckTask.TASK_TYPE_DELETE_DECK, new DeckTask.TaskListener() {
+								@Override
+								public void onPreExecute() {
+									mProgressDialog = StyledProgressDialog.show(DeckPicker.this, "",
+											getResources().getString(R.string.delete_deck),
+											true);
+								}
+								@Override
+								public void onPostExecute(TaskData result) {
+									if (result == null) {
+										return;
+									}
+									Object[] res = result.getObjArray();
+									updateDecksList((TreeSet<Object[]>) res[0], (Integer)res[1], (Integer)res[2]);
+									if (mProgressDialog.isShowing()) {
+										try {
+											mProgressDialog.dismiss();
+										} catch (Exception e) {
+											Log.e(AnkiDroidApp.TAG,
+													"onPostExecute - Dialog dismiss Exception = "
+															+ e.getMessage());
+										}
+									}
+								}
+								@Override
+								public void onProgressUpdate(TaskData... values) {
+								}
+							}, new TaskData(mCol, mCurrentDid));
 						}
 					});
 			builder.setNegativeButton(res.getString(R.string.cancel), null);

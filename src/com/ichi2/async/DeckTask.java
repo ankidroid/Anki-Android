@@ -80,6 +80,7 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
     public static final int TASK_TYPE_LOAD_DECK_COUNTS = 22;
     public static final int TASK_TYPE_UPDATE_VALUES_FROM_DECK = 23;
     public static final int TASK_TYPE_RESTORE_IF_MISSING = 24;
+    public static final int TASK_TYPE_DELETE_DECK = 25;
 
     private static DeckTask sInstance;
     private static DeckTask sOldInstance;
@@ -222,6 +223,9 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
 
             case TASK_TYPE_RESTORE_IF_MISSING:
             	return doInBackgroundRestoreIfMissing(params);
+
+            case TASK_TYPE_DELETE_DECK:
+            	return doInBackgroundDeleteDeck(params);
 
             default:
                 return null;
@@ -447,11 +451,11 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
        			counts[2] += (Integer) deck[4];
        		}
        	}
-	try {
-	       	return new TaskData(new Object[]{decks, sched.eta(counts), col.cardCount()});
-	} catch (RuntimeException e) {
-		return null;
-	}
+       	try {
+       		return new TaskData(new Object[]{decks, sched.eta(counts), col.cardCount()});
+       	} catch (RuntimeException e) {
+       		return null;
+       	}
     }
 
 
@@ -682,6 +686,15 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
     }
 
 
+    private TaskData doInBackgroundDeleteDeck(TaskData... params) {
+        Log.i(AnkiDroidApp.TAG, "doInBackgroundDeleteDeck");
+        Collection col = params[0].getCollection();
+        long did = params[0].getLong();
+		col.getDecks().rem(did, true);
+		return doInBackgroundLoadDeckCounts(new TaskData(col));
+    }
+
+
     private TaskData doInBackgroundRestoreDeck(TaskData... params) {
 //        Log.i(AnkiDroidApp.TAG, "doInBackgroundRestoreDeck");
 //        String[] paths = params[0].getDeckList();
@@ -888,6 +901,12 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
         public TaskData(Collection col, int value) {
         	mCol = col;
             mInteger = value;
+        }
+
+
+        public TaskData(Collection col, long value) {
+        	mCol = col;
+            mLong = value;
         }
 
 

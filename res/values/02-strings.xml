@@ -99,4 +99,6 @@
     
 <string name="simple_interface_hint">Empty %s. Bear in mind that simple interface cannot show pictures/sounds etc.</string>
 
+<string name="delete_deck">Deleting deck...\nPlease wait.</string>
+
 </resources>
