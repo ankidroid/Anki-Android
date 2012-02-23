@@ -2281,13 +2281,6 @@ public class DeckPicker extends Activity {
             return false;
     	}
     }
-    @Override
-    public boolean onTouchEvent(MotionEvent event) {
-        if (this.onTouchEvent(event))
-	        return true;
-	    else
-	    	return false;
-    }
 
 //	@Override
 //	public void buttonPressed(ButtonEvent arg0) {
