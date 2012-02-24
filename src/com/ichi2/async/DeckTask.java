@@ -465,7 +465,7 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
         if (col != null) {
             try {
             	col.save();
-            } catch (SQLiteDiskIOException e) {
+            } catch (RuntimeException e) {
             	Log.e(AnkiDroidApp.TAG, "Error on saving deck in background: " + e);
             }
         }

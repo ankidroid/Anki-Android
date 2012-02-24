@@ -376,6 +376,36 @@ public class StudyOptions extends Activity implements IButtonListener {
 		}
 	}
 
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        Log.i(AnkiDroidApp.TAG, "onConfigurationChanged");
+    	mDontSaveOnStop = true;
+    	CharSequence title = mTextDeckName.getText();
+    	CharSequence desc = mTextDeckDescription.getText();
+    	int descVisibility = mTextDeckDescription.getVisibility();
+    	CharSequence newToday = mTextTodayNew.getText();
+    	CharSequence lrnToday = mTextTodayLrn.getText();
+		CharSequence revToday = mTextTodayRev.getText();
+		CharSequence newTotal = mTextNewTotal.getText();
+		CharSequence total = mTextTotal.getText();
+		CharSequence eta = mTextETA.getText();
+        super.onConfigurationChanged(newConfig);
+        mDontSaveOnStop = false;
+		initAllContentViews();
+		showContentView(mCurrentContentView, false);
+		mTextDeckName.setText(title);
+		mTextDeckName.setVisibility(View.VISIBLE);
+		mTextDeckDescription.setText(desc);
+		mTextDeckDescription.setVisibility(descVisibility);
+		mDeckCounts.setVisibility(View.VISIBLE);
+		mTextTodayNew.setText(newToday);
+		mTextTodayLrn.setText(lrnToday);
+		mTextTodayRev.setText(revToday);
+		mTextNewTotal.setText(newTotal);
+		mTextTotal.setText(total);
+		mTextETA.setText(eta);
+		updateStatisticBars();
+    }
 
 	/**
 	 * Registers an intent to listen for ACTION_MEDIA_EJECT notifications. The
@@ -808,7 +838,7 @@ public class StudyOptions extends Activity implements IButtonListener {
 			// }
 		 	mTextCongratsMessage.setText(mCol.getSched().finishedMsg(this));
 			if (reload) {
-				updateValuesFromDeck();				
+				updateValuesFromDeck();
 			}
 			setContentView(mCongratsView);
 			break;

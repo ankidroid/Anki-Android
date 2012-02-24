@@ -1046,9 +1046,11 @@ public class DeckPicker extends Activity {
 	protected void onStop() {
 		Log.i(AnkiDroidApp.TAG, "DeckPicker - onStop");
 		super.onStop();
-		if (!isFinishing() && !mDontSaveOnStop) {
+		if (!mDontSaveOnStop) {
 			WidgetStatus.update(this);
-	        UIUtils.saveCollectionInBackground(mCol);
+			if (isFinishing()) {
+		        UIUtils.saveCollectionInBackground(mCol);
+			}
 		}
 	}
 
@@ -1998,11 +2000,11 @@ public class DeckPicker extends Activity {
     protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
         super.onActivityResult(requestCode, resultCode, intent);
 
+		mDontSaveOnStop = false;
         if (resultCode == RESULT_DB_ERROR) {
         	handleDbError();
         }
     	if (requestCode == SHOW_STUDYOPTIONS && resultCode == RESULT_OK) {
-    		mDontSaveOnStop = false;
     		loadCounts();
     	} else if (requestCode == ADD_NOTE && resultCode != RESULT_CANCELED) {
     		loadCounts();
