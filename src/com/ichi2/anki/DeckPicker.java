@@ -780,7 +780,9 @@ public class DeckPicker extends Activity {
 			Log.i(AnkiDroidApp.TAG, "DeckPicker - onCreate: Detected multiple instance of this activity, closing it and return to root activity");
 	        Intent reloadIntent = new Intent(DeckPicker.this, DeckPicker.class);
 	        reloadIntent.setAction(Intent.ACTION_MAIN);
-	        reloadIntent.putExtras(getIntent().getExtras());
+	        if (getIntent() != null && getIntent().getExtras() != null) {
+		        reloadIntent.putExtras(getIntent().getExtras());	        	
+	        }
 	        reloadIntent.addCategory(Intent.CATEGORY_LAUNCHER);
 	        reloadIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 			finish();
