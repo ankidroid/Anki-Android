@@ -238,6 +238,11 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
     	String conflictResolution = (String) data.data[2];
 
     	Collection col = Collection.currentCollection();
+    	if (col == null) {
+			data.success = false;
+			data.result = new Object[]{"genericError"};
+			return data;
+    	}
     	String path = col.getPath();
 
     	HttpSyncer server = new RemoteServer(this, hkey);
