@@ -718,7 +718,7 @@ public class Themes {
 			try {
 				topPanel.setBackgroundResource(mPopupTopDark);
 				((View) main.findViewById(R.id.titleDivider)).setBackgroundResource(mDividerHorizontalBright);
-				contentPanel.setBackgroundResource(mPopupBottomMedium);
+				contentPanel.setBackgroundResource(mPopupBottomBright);
 			} catch (OutOfMemoryError e) {
 				Log.e(AnkiDroidApp.TAG, "setStyledDialogBackgrounds - OutOfMemoryError occured: " + e);
 				topPanel.setBackgroundResource(R.color.black);
