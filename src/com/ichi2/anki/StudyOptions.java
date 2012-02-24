@@ -632,7 +632,9 @@ public class StudyOptions extends Activity implements IButtonListener {
 			Log.i(AnkiDroidApp.TAG, "StudyOptions - onCreate: Detected multiple instance of this activity, closing it and return to root activity");
 	        Intent reloadIntent = new Intent(StudyOptions.this, StudyOptions.class);
 	        reloadIntent.setAction(Intent.ACTION_MAIN);
-	        reloadIntent.putExtras(getIntent().getExtras());
+	        if (getIntent() != null && getIntent().getExtras() != null) {
+		        reloadIntent.putExtras(getIntent().getExtras());	        	
+	        }
 	        reloadIntent.addCategory(Intent.CATEGORY_LAUNCHER);
 	        reloadIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 			finish();
@@ -2785,6 +2787,11 @@ public class StudyOptions extends Activity implements IButtonListener {
             }
             if (data.success) {
             	mCurrentDialogMessage = ((HashMap<String, String>) data.result).get("message");
+            	Deck deck = DeckManager.getMainDeck();
+            	if (deck == null) {
+            		finish();
+            		return;
+            	}
             	DeckManager.getMainDeck().updateCutoff();
                 resetAndUpdateValuesFromDeck();
                 showDialog(DIALOG_SYNC_LOG);
