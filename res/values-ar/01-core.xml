@@ -24,17 +24,17 @@
   <string name="yes">نعم</string>
   <string name="no">لا</string>
   <string name="ok">موافق</string>
-  <string name="studyoptions_deck_name">Deck name</string>
-  <string name="studyoptions_reviews_due">Reviews due:</string>
-  <string name="studyoptions_new_today">New today:</string>
-  <string name="studyoptions_new_total">New total:</string>
+  <string name="studyoptions_deck_name">اسم مجموعة البطاقات</string>
+  <string name="studyoptions_reviews_due">عدد البطاقات الواجب مراجعتها:</string>
+  <string name="studyoptions_new_today">جديد اليوم:</string>
+  <string name="studyoptions_new_total">مجموع البطاقات الجديدة:</string>
   <string name="studyoptions_eta">الوقت المقدر (دقيقة):</string>
   <string name="studyoptions_start">بدء المراجعة</string>
   <string name="studyoptions_more">خيارات الدراسة</string>
   <string name="studyoptions_more_dialog_title">المزيد من الخيارات</string>
-  <string name="deckpicker_title_nosdcard">SD card is unmounted</string>
+  <string name="deckpicker_title_nosdcard">تم إزالة بطاقة الـ SD</string>
   <string name="deckpicker_new">%d new today</string>
-  <string name="deckpicker_loaddeck">Loading deck...</string>
+  <string name="deckpicker_loaddeck">تحميل مجموعة البطاقات...</string>
   <string name="deckpicker_nodeck">لم يتم العثور على مجموعات ورق</string>
   <string name="show_answer">اظهار الإجابة</string>
   <string name="ease1_learning">مرة أخرى</string>
@@ -93,8 +93,8 @@
   <string name="studyoptions_load_tutorial_deck">Load Tutorial Deck</string>
   <string name="studyoptions_night_mode">وضع ليلي</string>
   <string name="studyoptions_swap_qa">Swap Q/A</string>
-  <string name="visit">Visit</string>
-  <string name="later">Later</string>
+  <string name="visit">قم بزيارة</string>
+  <string name="later">في وقت لاحق</string>
   <string name="download">Download</string>
   <string name="deckpicker_loading_error">Deck could not be loaded</string>
   <string name="deckpicker_creating_backup">Creating backup...</string>
@@ -139,11 +139,11 @@
     <item quantity="other">You have finished for now.\nTomorrow there will be:\n%1$d cards to review and %2$s.\n Estimated time: %3$s</item>
   </plurals>
   <plurals name="studyoptions_congrats_new_cards">
-    <item quantity="one">1 card</item>
-    <item quantity="other">%1$d new cards</item>
+    <item quantity="one">بطاقة واحدة</item>
+    <item quantity="other">$% 1 d بطاقات جديدة</item>
   </plurals>
   <plurals name="studyoptions_congrats_eta">
-    <item quantity="one">1 min.</item>
-    <item quantity="other">%1$d min.</item>
+    <item quantity="one">دقيقة واحدة</item>
+    <item quantity="other">٪ 1دقيقة $ d.</item>
   </plurals>
 </resources>
