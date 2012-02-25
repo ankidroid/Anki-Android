@@ -361,6 +361,7 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
 
 
     private TaskData doInBackgroundOpenCollection(TaskData... params) {
+        Log.i(AnkiDroidApp.TAG, "doInBackgroundOpenCollection");
         Resources res = AnkiDroidApp.getInstance().getBaseContext().getResources();
         String collectionFile = params[0].getString();
         Collection oldCol = params[0].getCollection();
@@ -437,11 +438,13 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
 
 
     private TaskData doInBackgroundLoadDeckCounts(TaskData... params) {
+        Log.i(AnkiDroidApp.TAG, "doInBackgroundLoadDeckCounts");
     	Collection col = params[0].getCollection();
        	try {
 	    	Sched sched = col.getSched();
        		return new TaskData(sched.deckCounts());
        	} catch (RuntimeException e) {
+       		Log.e(AnkiDroidApp.TAG, "doInBackgroundLoadDeckCounts - error: " + e);
        		return null;
        	}
     }
