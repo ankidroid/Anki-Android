@@ -162,15 +162,18 @@ public final class WidgetStatus {
 
 //            if (sDeckStatus != null && mDecks != null && mDecks.length > 0) {
 //            	decks = new ArrayList<DeckStatus>(mDecks.length);
-//            		for (DeckStatus m : mDecks) {
-//            			if (m.mDeckPath.equals(sDeckStatus.mDeckPath)) {
-//            				Log.i(AnkiDroidApp.TAG, "UpdateWidget - update information for deck " + sDeckStatus.mDeckPath);
-//            				decks.add(sDeckStatus);
-//            			} else {
-//            				Log.i(AnkiDroidApp.TAG, "UpdateWidget - copy information for deck " + m.mDeckPath);
-//            				decks.add(m);
-//            			}
-//            		}
+//            	int dues = 0;
+//        		for (DeckStatus m : mDecks) {
+//        			if (m.mDeckId == sDeckStatus.mDeckId) {
+//        				Log.i(AnkiDroidApp.TAG, "UpdateWidget - update information for deck " + sDeckStatus.mDeckName);
+//        				sDeckStatus.mDeckName = m.mDeckName;
+//        				sDeckStatus.mDepth = m.mDepth;
+//        				decks.add(sDeckStatus);
+//        			} else {
+//        				Log.i(AnkiDroidApp.TAG, "UpdateWidget - copy information for deck " + m.mDeckName);
+//        				decks.add(m);
+//        			}
+//        		}
 //            } else {
             	try {
             		Collection col = Collection.currentCollection();
@@ -179,11 +182,11 @@ public final class WidgetStatus {
             		if (col == null) {
             			col = Collection.openCollection(AnkiDroidApp.getCollectionPath());
                    		di = col.getSched().deckCounts();
-                   		progress = col.getSched().todaysProgress(null, true);
+                   		progress = col.getSched().todaysProgress(null, true, true);
                    		col.close(false);
             		} else {
-                   		di = col.getSched().deckCounts();            			
-                   		progress = col.getSched().todaysProgress(null, true);
+                   		di = col.getSched().deckCounts();
+                   		progress = col.getSched().todaysProgress(null, true, true);
             		}
             		int eta = (Integer) di[1];
                     for (Object[] d : (TreeSet<Object[]>) di[0]) {

@@ -513,6 +513,9 @@ public class Decks {
 			}
 			mCol.getConf().put("activeDecks", ja);
 			mChanged = true;
+
+			// reset total progress count (not in libanki)
+			mCol.getSched().resetTotalProgress();
 		} catch (JSONException e) {
 			throw new RuntimeException(e);
 		}

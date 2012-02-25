@@ -60,6 +60,7 @@ import com.ichi2.libanki.Utils;
 import com.ichi2.themes.StyledDialog;
 import com.ichi2.themes.StyledProgressDialog;
 import com.ichi2.themes.Themes;
+import com.ichi2.widget.WidgetStatus;
 import com.tomgibara.android.veecheck.util.PrefSettings;
 import com.zeemote.zc.Controller;
 import com.zeemote.zc.event.ButtonEvent;
@@ -468,8 +469,8 @@ public class StudyOptions extends Activity implements IButtonListener {
 	@Override
 	protected void onStop() {
 		super.onStop();
-		// TODO: update Widget
 		if (!isFinishing() && !mDontSaveOnStop) {
+			WidgetStatus.update(this);
 	        UIUtils.saveCollectionInBackground(mCol);			
 		}
 	}

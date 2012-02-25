@@ -75,6 +75,7 @@ import com.ichi2.themes.StyledDialog;
 import com.ichi2.themes.StyledDialog.Builder;
 import com.ichi2.themes.StyledProgressDialog;
 import com.ichi2.themes.Themes;
+import com.ichi2.widget.WidgetStatus;
 import com.tomgibara.android.veecheck.util.PrefSettings;
 
 import java.util.ArrayList;
@@ -565,6 +566,15 @@ public class CardEditor extends Activity {
 			}
 
 		});
+	}
+
+	@Override
+	protected void onStop() {
+		super.onStop();
+		if (!isFinishing()) {
+			WidgetStatus.update(this);
+	        UIUtils.saveCollectionInBackground(mCol);
+		}
 	}
 
 	private void reloadCollection(final Bundle savedInstanceState) {

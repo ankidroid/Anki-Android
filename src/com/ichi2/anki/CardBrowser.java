@@ -57,6 +57,7 @@ import com.ichi2.libanki.Note;
 import com.ichi2.themes.StyledDialog;
 import com.ichi2.themes.StyledProgressDialog;
 import com.ichi2.themes.Themes;
+import com.ichi2.widget.WidgetStatus;
 import com.tomgibara.android.veecheck.util.PrefSettings;
 
 import java.util.ArrayList;
@@ -310,6 +311,7 @@ public class CardBrowser extends Activity {
 	protected void onStop() {
 		super.onStop();
 		if (!isFinishing()) {
+			WidgetStatus.update(this);
 	        UIUtils.saveCollectionInBackground(mCol);			
 		}
 	}

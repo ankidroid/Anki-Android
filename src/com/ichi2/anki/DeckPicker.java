@@ -1036,7 +1036,7 @@ public class DeckPicker extends Activity {
 //    		adapter.removeButtonListener(this);
     		adapter = null;
         }
-        
+
 		super.onPause();
 	}
 

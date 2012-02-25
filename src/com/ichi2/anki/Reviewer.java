@@ -104,6 +104,8 @@ import com.ichi2.themes.StyledProgressDialog;
 import com.ichi2.themes.Themes;
 import com.ichi2.utils.DiffEngine;
 import com.ichi2.utils.RubyParser;
+import com.ichi2.widget.DeckStatus;
+import com.ichi2.widget.WidgetStatus;
 import com.tomgibara.android.veecheck.util.PrefSettings;
 import com.zeemote.zc.event.ButtonEvent;
 import com.zeemote.zc.event.IButtonListener;
@@ -1096,10 +1098,15 @@ public class Reviewer extends Activity implements IButtonListener{
 //	         	deck.commitToDB();
 //          }
 //      }
-//    WidgetStatus.update(this, WidgetStatus.getDeckStatus(deck));
 
       if (!isFinishing()) {
-          UIUtils.saveCollectionInBackground(mSched.getCol());    	  
+    	  int[] counts = mSched.counts(mCurrentCard);
+//          try {
+        	  WidgetStatus.update(this);//, new DeckStatus(mSched.getCol().getDecks().current().getLong("id"), -1, "", counts[0], counts[1], counts[2], -1, -1));
+//          } catch (JSONException e) {
+//        	  throw new RuntimeException(e);
+//          }
+          UIUtils.saveCollectionInBackground(mSched.getCol());
       }
     }
 
@@ -2257,8 +2264,8 @@ public class Reviewer extends Activity implements IButtonListener{
             mStatisticBarsMax = view.getWidth();
             mStatisticBarsHeight = view.getHeight();
         }
-        Utils.updateProgressBars(mSessionProgressBar,(int)(mStatisticBarsMax * mSched.todaysProgress(mCurrentCard, false)), mStatisticBarsHeight);
-        Utils.updateProgressBars(mSessionProgressTotalBar, (int)(mStatisticBarsMax * mSched.todaysProgress(mCurrentCard, true)), mStatisticBarsHeight);
+        Utils.updateProgressBars(mSessionProgressBar,(int)(mStatisticBarsMax * mSched.todaysProgress(mCurrentCard, false, false)), mStatisticBarsHeight);
+        Utils.updateProgressBars(mSessionProgressTotalBar, (int)(mStatisticBarsMax * mSched.todaysProgress(mCurrentCard, true, false)), mStatisticBarsHeight);
     }
 
     /* Handler for the delay in auto showing question and/or answer
