@@ -35,13 +35,13 @@
   <string name="deckpicker_title_nosdcard">Cartão SD está desmontado</string>
   <string name="deckpicker_new">%d novos hoje</string>
   <string name="deckpicker_loaddeck">Carregando deck...</string>
-  <string name="deckpicker_nodeck">Nenhum decks encontrado.</string>
+  <string name="deckpicker_nodeck">Nenhum deck encontrado.</string>
   <string name="show_answer">Mostrar Resposta</string>
-  <string name="ease1_learning">Novamente</string>
+  <string name="ease1_learning">Repetir</string>
   <string name="ease2_learning">Bom</string>
   <string name="ease3_learning">Fácil</string>
   <string name="ease4_learning">Muito fácil</string>
-  <string name="ease1_successive">Novamente</string>
+  <string name="ease1_successive">Repetir</string>
   <string name="ease2_successive">Difícil</string>
   <string name="ease3_successive">Bom</string>
   <string name="ease4_successive">Fácil</string>
@@ -96,7 +96,7 @@
   <string name="visit">Visitar</string>
   <string name="later">Mais tarde</string>
   <string name="download">Baixar</string>
-  <string name="deckpicker_loading_error">Deck não pode ser carregado</string>
+  <string name="deckpicker_loading_error">Deck não pôde ser carregado</string>
   <string name="deckpicker_creating_backup">Criando backup...</string>
   <string-array name="next_review_s">
     <item>1 segundo</item>
@@ -112,7 +112,7 @@
     <item>%s horas</item>
     <item>%s dias</item>
     <item>%s meses</item>
-    <item>%s Anos</item>
+    <item>%s anos</item>
   </string-array>
   <plurals name="studyoptions_window_title">
     <item quantity="one">%1$s (1 de %3$d devido)</item>
