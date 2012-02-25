@@ -364,7 +364,10 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
         Log.i(AnkiDroidApp.TAG, "doInBackgroundOpenCollection");
         Resources res = AnkiDroidApp.getInstance().getBaseContext().getResources();
         String collectionFile = params[0].getString();
-        Collection oldCol = params[0].getCollection();
+
+        // see, if a collection is still opened
+
+        Collection oldCol = Collection.currentCollection();
         boolean reset = params[0].getBoolean();
 
         Collection col = null;
@@ -418,6 +421,7 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
                 BackupManager.restoreCollectionIfMissing(collectionFile);            	
             }
         } else {
+            Log.i(AnkiDroidApp.TAG, "doInBackgroundOpenCollection: collection still open - reusing it");
         	col = oldCol;
         }
         if (col == null) {

@@ -933,7 +933,7 @@ public class DeckPicker extends Activity {
 	}
 
 	private void loadCollection() {
-		DeckTask.launchDeckTask(DeckTask.TASK_TYPE_OPEN_COLLECTION, mOpenCollectionHandler, new DeckTask.TaskData(Collection.currentCollection(), AnkiDroidApp.getCollectionPath()));
+		DeckTask.launchDeckTask(DeckTask.TASK_TYPE_OPEN_COLLECTION, mOpenCollectionHandler, new DeckTask.TaskData(AnkiDroidApp.getCollectionPath()));
 	}
 
 	private void loadCounts() {
