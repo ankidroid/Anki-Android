@@ -126,6 +126,12 @@ public class AnkiDroidApp extends Application {
         return Environment.getExternalStorageDirectory().getAbsolutePath();
     }
 
+
+    public static String getCollectionPath() {
+		String deckPath = PrefSettings.getSharedPrefs(sInstance.getApplicationContext()).getString("deckPath", AnkiDroidApp.getDefaultAnkiDroidDirectory());
+		return deckPath + AnkiDroidApp.COLLECTION_PATH;
+	}
+
     public static String getDefaultAnkiDroidDirectory() {
         return getStorageDirectory() + "/AnkiDroid";
     }

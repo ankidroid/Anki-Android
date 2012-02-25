@@ -44,6 +44,7 @@ import com.ichi2.libanki.Note;
 import com.ichi2.libanki.Sched;
 import com.ichi2.libanki.Stats;
 import com.ichi2.libanki.Utils;
+import com.ichi2.widget.WidgetStatus;
 import com.tomgibara.android.veecheck.util.PrefSettings;
 
 import android.content.Context;
@@ -421,17 +422,17 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
         if (col == null) {
         	return new TaskData(col);
         }
-	try {
+        try {
 	        if (reset) {
         		col.getSched().reset();
         	}
 	    	// load decks
         	TreeSet<Object[]> decks = col.getSched().deckDueTree(false);
         	return new TaskData(col, decks, 0);
-	} catch (RuntimeException e) {
+        } catch (RuntimeException e) {
 		col = null;
         	return new TaskData(col);
-	}
+        }
     }
 
 
@@ -439,20 +440,7 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
     	Collection col = params[0].getCollection();
        	try {
 	    	Sched sched = col.getSched();
-	    	// check if new day has rolled over and reset counts if yes
-	    	if (Utils.now() > sched.getDayCutoff()) {
-	    		sched._updateCutoff();
-	    	}
-	       	TreeSet<Object[]> decks = sched.deckDueTree(true);
-	       	int[] counts = new int[]{0, 0, 0};
-	       	for (Object[] deck : decks) {
-	       		if (((String[])deck[0]).length == 1) {
-	       			counts[0] += (Integer) deck[2];
-	       			counts[1] += (Integer) deck[3];
-	       			counts[2] += (Integer) deck[4];
-	       		}
-	       	}
-       		return new TaskData(new Object[]{decks, sched.eta(counts), col.cardCount()});
+       		return new TaskData(sched.deckCounts());
        	} catch (RuntimeException e) {
        		return null;
        	}
@@ -641,13 +629,14 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
     	Log.i(AnkiDroidApp.TAG, "doInBackgroundCloseCollection");
     	Collection col = params[0].getCollection();
     	if (col != null) {
-		try {
-	        	String path = col.getPath();
+    		WidgetStatus.waitToFinish();
+    		try {
+            	String path = col.getPath();
         		col.close(true);
         		BackupManager.performBackup(path);
-		} catch (RuntimeException e) {
-			Log.i(AnkiDroidApp.TAG, "doInBackgroundCloseCollection: error occurred - collection not properly closed");
-		}
+    		} catch (RuntimeException e) {
+    			Log.i(AnkiDroidApp.TAG, "doInBackgroundCloseCollection: error occurred - collection not properly closed");
+    		}
     	}
     	return null;
     }

@@ -15,7 +15,6 @@
 package com.ichi2.widget;
 
 import com.ichi2.anki.AnkiDroidApp;
-import com.ichi2.anki.DeckStatus;
 import com.ichi2.anki2.R;
 import com.ichi2.anki.StudyOptions;
 import com.tomgibara.android.veecheck.util.PrefSettings;
@@ -116,7 +115,7 @@ public class AnkiDroidWidgetMedium extends AppWidgetProvider {
         private CharSequence getDeckStatusString(DeckStatus deck) {
             SpannableStringBuilder sb = new SpannableStringBuilder();
 
-            SpannableString red = new SpannableString(Integer.toString(deck.mFailedCards));
+            SpannableString red = new SpannableString(Integer.toString(deck.mLrnCards));
             red.setSpan(new ForegroundColorSpan(Color.RED), 0, red.length(),
                     Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
 
@@ -244,7 +243,7 @@ public class AnkiDroidWidgetMedium extends AppWidgetProvider {
                 updateViews.setTextViewText(R.id.anki_droid_status,
                     getDeckStatusString(deckStatus));
                 PendingIntent openPendingIntent = getOpenPendingIntent(context,
-                    deckStatus.mDeckPath);
+                    "");//deckStatus.mDeckPath);
                 updateViews.setOnClickPendingIntent(R.id.anki_droid_name, openPendingIntent);
                 updateViews.setOnClickPendingIntent(R.id.anki_droid_status, openPendingIntent);
                 // Enable or disable the prev and next buttons.
@@ -293,8 +292,8 @@ public class AnkiDroidWidgetMedium extends AppWidgetProvider {
             }
             dueCardsCount = 0;
             for (DeckStatus deck : decks) {
-                if (deck.mDueCards + deck.mFailedCards + deck.mNewCards > 0) {
-                  dueCardsCount += deck.mDueCards + deck.mFailedCards + deck.mNewCards;
+                if (deck.mDueCards + deck.mLrnCards + deck.mNewCards > 0) {
+                  dueCardsCount += deck.mDueCards + deck.mLrnCards + deck.mNewCards;
                   dueDecks.add(deck);
                 }
             }

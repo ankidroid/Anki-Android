@@ -966,7 +966,7 @@ public class CardEditor extends Activity {
 			builder.setTitle(R.string.deck);
 			for (JSONObject d : decks) {
 				try {
-					dialogDeckItems.add(DeckPicker.readableName(d.getString("name").split("::")));
+					dialogDeckItems.add(DeckPicker.readableDeckName(d.getString("name").split("::")));
 					dialogDeckIds.add(d.getLong("id"));
 				} catch (JSONException e) {
 					throw new RuntimeException(e);

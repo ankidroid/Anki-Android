@@ -932,13 +932,8 @@ public class DeckPicker extends Activity {
 		}
 	}
 
-	private String getCollectionPath() {
-		String deckPath = PrefSettings.getSharedPrefs(getBaseContext()).getString("deckPath", AnkiDroidApp.getDefaultAnkiDroidDirectory());
-		return deckPath + AnkiDroidApp.COLLECTION_PATH;
-	}
-
 	private void loadCollection() {
-		DeckTask.launchDeckTask(DeckTask.TASK_TYPE_OPEN_COLLECTION, mOpenCollectionHandler, new DeckTask.TaskData(Collection.currentCollection(), getCollectionPath()));
+		DeckTask.launchDeckTask(DeckTask.TASK_TYPE_OPEN_COLLECTION, mOpenCollectionHandler, new DeckTask.TaskData(Collection.currentCollection(), AnkiDroidApp.getCollectionPath()));
 	}
 
 	private void loadCounts() {
@@ -1052,7 +1047,7 @@ public class DeckPicker extends Activity {
 		if (!mDontSaveOnStop) {
 			WidgetStatus.update(this);
 			if (isFinishing()) {
-		        UIUtils.saveCollectionInBackground(mCol);
+				DeckTask.launchDeckTask(DeckTask.TASK_TYPE_CLOSE_DECK, mCloseCollectionHandler, new TaskData(mCol));
 			}
 		}
 	}
@@ -1784,7 +1779,6 @@ public class DeckPicker extends Activity {
     public boolean onKeyDown(int keyCode, KeyEvent event)  {
         if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
         	Log.i(AnkiDroidApp.TAG, "DeckPicker - onBackPressed()");
-			DeckTask.launchDeckTask(DeckTask.TASK_TYPE_CLOSE_DECK, mCloseCollectionHandler, new TaskData(mCol));
         	finish();
             if (UIUtils.getApiLevel() > 4) {
                 ActivityTransitionAnimation.slide(this, ActivityTransitionAnimation.NONE);
@@ -1809,14 +1803,23 @@ public class DeckPicker extends Activity {
 			mUnmountReceiver = new BroadcastReceiver() {
 				@Override
 				public void onReceive(Context context, Intent intent) {
+					if (intent.getAction().equals(Intent.ACTION_MEDIA_EJECT)) {
+						if (mCol != null) {
+							mCol.close();
+						}
+			        	showDialog(DIALOG_SD_CARD_NOT_MOUNTED);
+					} else if (intent.getAction().equals(Intent.ACTION_MEDIA_UNMOUNTED)) {
+			        	showDialog(DIALOG_LOAD_FAILED);
+					}
+
 		        	showDialog(DIALOG_SD_CARD_NOT_MOUNTED);
 				}
 			};
 			IntentFilter iFilter = new IntentFilter();
-			iFilter.addAction(Intent.ACTION_MEDIA_UNMOUNTED);
 
 			// ACTION_MEDIA_EJECT is never invoked (probably due to an android bug
-//			iFilter.addAction(Intent.ACTION_MEDIA_EJECT);
+			iFilter.addAction(Intent.ACTION_MEDIA_EJECT);
+			iFilter.addAction(Intent.ACTION_MEDIA_UNMOUNTED);
 			iFilter.addDataScheme("file");
 			registerReceiver(mUnmountReceiver, iFilter);
 		}
@@ -2108,7 +2111,7 @@ public class DeckPicker extends Activity {
 			@Override
 			public void onProgressUpdate(TaskData... values) {
 			}
-		}, new DeckTask.TaskData(getCollectionPath()));
+		}, new DeckTask.TaskData(AnkiDroidApp.getCollectionPath()));
     }
 
 
@@ -2194,7 +2197,7 @@ public class DeckPicker extends Activity {
         for (Object[] d : decks) {
         	HashMap<String, String> m = new HashMap<String, String>();
         	String[] name = ((String[])d[0]);
-        	m.put("name", readableName(name));
+        	m.put("name", readableDeckName(name));
         	m.put("did", ((Long)d[1]).toString());
         	m.put("new", ((Integer)d[2]).toString());
         	m.put("lrn", ((Integer)d[3]).toString());
@@ -2332,7 +2335,7 @@ public class DeckPicker extends Activity {
 //		// }
 //	}
 
-    public static String readableName(String[] name) {
+    public static String readableDeckName(String[] name) {
     	int len = name.length;
     	StringBuilder sb = new StringBuilder();
     	for (int i = 0; i < len; i++) {

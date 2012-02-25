@@ -27,6 +27,7 @@ import android.text.style.StyleSpan;
 import android.util.Log;
 
 import com.ichi2.anki.AnkiDroidApp;
+import com.ichi2.async.DeckTask.TaskData;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -410,6 +411,24 @@ public class Sched {
 	 * ****************************************************************
 	 * *******************************
 	 */
+
+	/** LIBANKI: not in libanki */
+	public Object[] deckCounts() {
+    	// check if new day has rolled over and reset counts if yes
+    	if (Utils.now() > mDayCutoff) {
+    		_updateCutoff();
+    	}
+       	TreeSet<Object[]> decks = deckDueTree(true);
+       	int[] counts = new int[]{0, 0, 0};
+       	for (Object[] deck : decks) {
+       		if (((String[])deck[0]).length == 1) {
+       			counts[0] += (Integer) deck[2];
+       			counts[1] += (Integer) deck[3];
+       			counts[2] += (Integer) deck[4];
+       		}
+       	}
+   		return new Object[]{decks, eta(counts), mCol.cardCount()};
+	}
 
 	/**
 	 * Returns [deckname, did, new, lrn, rev]
