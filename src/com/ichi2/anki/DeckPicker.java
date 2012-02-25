@@ -110,6 +110,7 @@ public class DeckPicker extends Activity {
 	private static final int DIALOG_ERROR_HANDLING = 20;
 	private static final int DIALOG_LOAD_FAILED = 21;
 	private static final int DIALOG_RESTORE_BACKUP = 22;
+	private static final int DIALOG_SD_CARD_NOT_MOUNTED = 23;
 
 	private String mDialogMessage;
 	private int[] mRepairValues;
@@ -776,12 +777,13 @@ public class DeckPicker extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) throws SQLException {
 		Log.i(AnkiDroidApp.TAG, "DeckPicker - onCreate");
+        Intent intent = getIntent();
 		if (!isTaskRoot()) {
 			Log.i(AnkiDroidApp.TAG, "DeckPicker - onCreate: Detected multiple instance of this activity, closing it and return to root activity");
 	        Intent reloadIntent = new Intent(DeckPicker.this, DeckPicker.class);
 	        reloadIntent.setAction(Intent.ACTION_MAIN);
-	        if (getIntent() != null && getIntent().getExtras() != null) {
-		        reloadIntent.putExtras(getIntent().getExtras());	        	
+	        if (intent != null && intent.getExtras() != null) {
+		        reloadIntent.putExtras(intent.getExtras());	        	
 	        }
 	        reloadIntent.addCategory(Intent.CATEGORY_LAUNCHER);
 	        reloadIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -792,7 +794,6 @@ public class DeckPicker extends Activity {
 		Themes.applyTheme(this);
 		super.onCreate(savedInstanceState);
 
-        Intent intent = getIntent();
 //        mStartedByBigWidget = intent.getIntExtra(EXTRA_START, EXTRA_START_NOTHING);
 
 		SharedPreferences preferences = restorePreferences();
@@ -925,7 +926,7 @@ public class DeckPicker extends Activity {
 	protected void onResume() {
 		super.onResume();
 		if (mCol != null) {
-			if (Utils.now() > mCol.getSched().getDayCutoff()) {
+			if (Utils.now() > mCol.getSched().getDayCutoff() && AnkiDroidApp.isSdCardMounted()) {
 				loadCounts();
 			}
 		}
@@ -1011,6 +1012,8 @@ public class DeckPicker extends Activity {
 			if (skip != 0 && UIUtils.getApiLevel() > 4) {
 				ActivityTransitionAnimation.slide(this, ActivityTransitionAnimation.LEFT);
 			}
+		} else if (!AnkiDroidApp.isSdCardMounted()) {
+			showDialog(DIALOG_SD_CARD_NOT_MOUNTED);			
 		} else if (!BackupManager.enoughDiscSpace(mPrefDeckPath)) {// && !preferences.getBoolean("dontShowLowMemory", false)) {
 			showDialog(DIALOG_NO_SPACE_LEFT);
 		} else if (preferences.getBoolean("noSpaceLeft", false)) {
@@ -1603,9 +1606,14 @@ public class DeckPicker extends Activity {
 			dialog = builder.create();
 			break;
 
+		case DIALOG_SD_CARD_NOT_MOUNTED:
 		case DIALOG_NO_SPACE_LEFT:
 			builder.setTitle(res.getString(R.string.attention));
-			builder.setMessage(res.getString(R.string.sd_space_warning, BackupManager.MIN_FREE_SPACE));
+			if (id == DIALOG_NO_SPACE_LEFT) {
+				builder.setMessage(res.getString(R.string.sd_space_warning, BackupManager.MIN_FREE_SPACE));				
+			} else {
+				builder.setMessage(res.getString(R.string.sd_card_not_mounted));
+			}
 			builder.setPositiveButton(res.getString(R.string.ok), new DialogInterface.OnClickListener() {
 				@Override
 				public void onClick(DialogInterface dialog, int which) {
@@ -1623,7 +1631,7 @@ public class DeckPicker extends Activity {
 				@Override
 				public void onCancel(DialogInterface arg0) {
 					finish();
-				}				
+				}
 			});
 			dialog = builder.create();
 			break;
@@ -1801,24 +1809,14 @@ public class DeckPicker extends Activity {
 			mUnmountReceiver = new BroadcastReceiver() {
 				@Override
 				public void onReceive(Context context, Intent intent) {
-					String action = intent.getAction();
-					if (action.equals(Intent.ACTION_MEDIA_UNMOUNTED)) {
-						Log.i(AnkiDroidApp.TAG, "DeckPicker - mUnmountReceiver, Action = Media Unmounted");
-//						SharedPreferences preferences = PrefSettings .getSharedPrefs(getBaseContext());
-//						String deckPath = preferences.getString("deckPath", AnkiDroidApp.getStorageDirectory());
-//						populateDeckList(deckPath);
-					} else if (action.equals(Intent.ACTION_MEDIA_MOUNTED)) {
-						Log.i(AnkiDroidApp.TAG, "DeckPicker - mUnmountReceiver, Action = Media Mounted");
-//						SharedPreferences preferences = PrefSettings.getSharedPrefs(getBaseContext());
-//						String deckPath = preferences.getString("deckPath", AnkiDroidApp.getStorageDirectory());
-						mDeckIsSelected = false;
-//						populateDeckList(deckPath);
-					}
+		        	showDialog(DIALOG_SD_CARD_NOT_MOUNTED);
 				}
 			};
 			IntentFilter iFilter = new IntentFilter();
 			iFilter.addAction(Intent.ACTION_MEDIA_UNMOUNTED);
-			iFilter.addAction(Intent.ACTION_MEDIA_MOUNTED);
+
+			// ACTION_MEDIA_EJECT is never invoked (probably due to an android bug
+//			iFilter.addAction(Intent.ACTION_MEDIA_EJECT);
 			iFilter.addDataScheme("file");
 			registerReceiver(mUnmountReceiver, iFilter);
 		}
@@ -2001,8 +1999,12 @@ public class DeckPicker extends Activity {
         super.onActivityResult(requestCode, resultCode, intent);
 
 		mDontSaveOnStop = false;
-        if (resultCode == RESULT_DB_ERROR) {
+		if (resultCode == RESULT_MEDIA_EJECTED) {
+			showDialog(DIALOG_SD_CARD_NOT_MOUNTED);
+			return;
+		} else if (resultCode == RESULT_DB_ERROR) {
         	handleDbError();
+        	return;
         }
     	if (requestCode == SHOW_STUDYOPTIONS && resultCode == RESULT_OK) {
     		loadCounts();

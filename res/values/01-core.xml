@@ -167,4 +167,6 @@
   <item quantity="one">Estimated time: 1 min.</item>
   <item quantity="other">Estimated time: %1$d min.</item>
 </plurals>
+
+<string name="sd_card_not_mounted">SD card is not mounted.</string>
 </resources>

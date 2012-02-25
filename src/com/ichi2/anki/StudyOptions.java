@@ -418,16 +418,14 @@ public class StudyOptions extends Activity implements IButtonListener {
 			mUnmountReceiver = new BroadcastReceiver() {
 				@Override
 				public void onReceive(Context context, Intent intent) {
-					String action = intent.getAction();
-					if (action.equals(Intent.ACTION_MEDIA_EJECT)) {
-						Log.i(AnkiDroidApp.TAG,
-								"StudyOptions: mUnmountReceiver - Action = Media Eject");
-						closeStudyOptions(DeckPicker.RESULT_MEDIA_EJECTED);
-					}
+					closeStudyOptions(DeckPicker.RESULT_MEDIA_EJECTED);
 				}
 			};
 			IntentFilter iFilter = new IntentFilter();
-			iFilter.addAction(Intent.ACTION_MEDIA_EJECT);
+			iFilter.addAction(Intent.ACTION_MEDIA_UNMOUNTED);
+
+			// ACTION_MEDIA_EJECT is never invoked (probably due to an android bug
+//			iFilter.addAction(Intent.ACTION_MEDIA_EJECT);
 			iFilter.addDataScheme("file");
 			registerReceiver(mUnmountReceiver, iFilter);
 		}
