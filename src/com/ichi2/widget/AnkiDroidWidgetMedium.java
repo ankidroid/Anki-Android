@@ -15,6 +15,7 @@
 package com.ichi2.widget;
 
 import com.ichi2.anki.AnkiDroidApp;
+import com.ichi2.anki.DeckPicker;
 import com.ichi2.anki2.R;
 import com.ichi2.anki.StudyOptions;
 import com.tomgibara.android.veecheck.util.PrefSettings;
@@ -157,7 +158,7 @@ public class AnkiDroidWidgetMedium extends AppWidgetProvider {
                 } else if (ACTION_IGNORE.equals(intent.getAction())) {
                     updateDueDecksNow = false;
                 } else if (ACTION_OPEN.equals(intent.getAction())) {
-//                    startActivity(StudyOptions.getLoadDeckIntent(this, intent.getData().getPath()));
+                    startActivity(DeckPicker.getLoadDeckIntent(this, intent.getLongExtra(DeckPicker.EXTRA_DECK_ID, 1)));
                     updateDueDecksNow = false;
                 } else if (ACTION_UPDATE.equals(intent.getAction())) {
                     // Updating the widget is done below for all actions.
@@ -172,14 +173,14 @@ public class AnkiDroidWidgetMedium extends AppWidgetProvider {
         }
 
         private RemoteViews buildUpdate(Context context, boolean updateDueDecksNow) {
-            Log.i(AnkiDroidApp.TAG, "buildUpdate");
+            Log.i(AnkiDroidApp.TAG, "MediumWidget: buildUpdate");
 
             // Resources res = context.getResources();
             RemoteViews updateViews = new RemoteViews(context.getPackageName(), R.layout.widget);
 
             // Add a click listener to open Anki from the icon.
             // This should be always there, whether there are due cards or not.
-            Intent ankiDroidIntent = new Intent(context, StudyOptions.class);
+            Intent ankiDroidIntent = new Intent(context, DeckPicker.class);
             ankiDroidIntent.setAction(Intent.ACTION_MAIN);
             ankiDroidIntent.addCategory(Intent.CATEGORY_LAUNCHER);
             PendingIntent pendingAnkiDroidIntent =
@@ -242,8 +243,7 @@ public class AnkiDroidWidgetMedium extends AppWidgetProvider {
                 updateViews.setTextViewText(R.id.anki_droid_name, deckStatus.mDeckName);
                 updateViews.setTextViewText(R.id.anki_droid_status,
                     getDeckStatusString(deckStatus));
-                PendingIntent openPendingIntent = getOpenPendingIntent(context,
-                    "");//deckStatus.mDeckPath);
+                PendingIntent openPendingIntent = getOpenPendingIntent(context, deckStatus.mDeckId);
                 updateViews.setOnClickPendingIntent(R.id.anki_droid_name, openPendingIntent);
                 updateViews.setOnClickPendingIntent(R.id.anki_droid_status, openPendingIntent);
                 // Enable or disable the prev and next buttons.
@@ -329,11 +329,11 @@ public class AnkiDroidWidgetMedium extends AppWidgetProvider {
         /**
          * Returns a pending intent that opens the current deck.
          */
-        private PendingIntent getOpenPendingIntent(Context context, String deckPath) {
+        private PendingIntent getOpenPendingIntent(Context context, long deckId) {
             Intent ankiDroidIntent = new Intent(context, UpdateService.class);
             ankiDroidIntent.setAction(ACTION_OPEN);
-            ankiDroidIntent.setData(Uri.parse("file://" + deckPath));
-            return PendingIntent.getService(context, 0, ankiDroidIntent, 0);
+            ankiDroidIntent.putExtra(DeckPicker.EXTRA_DECK_ID, deckId);
+            return PendingIntent.getService(context, 0, ankiDroidIntent, PendingIntent.FLAG_CANCEL_CURRENT);
         }
 
         @Override

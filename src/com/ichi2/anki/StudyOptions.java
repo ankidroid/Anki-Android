@@ -327,6 +327,11 @@ public class StudyOptions extends Activity implements IButtonListener {
 			return;
 		}
 
+		Intent intent = getIntent();
+		if (intent != null && intent.hasExtra(DeckPicker.EXTRA_DECK_ID)) {
+			mCol.getDecks().select(intent.getLongExtra(DeckPicker.EXTRA_DECK_ID, 1));
+		}
+
 		// activeCramTags = new HashSet<String>();
 
 		initAllContentViews();

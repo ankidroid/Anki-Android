@@ -150,6 +150,7 @@ public class DeckPicker extends Activity {
 	private static final int MSG_BACKUP_ERROR = 6;
 
 	public static final String EXTRA_START = "start";
+	public static final String EXTRA_DECK_ID = "deckId";
 	public static final int EXTRA_START_NOTHING = 0;
 	public static final int EXTRA_START_REVIEWER = 1;
 	public static final int EXTRA_START_DECKPICKER = 2;
@@ -804,6 +805,10 @@ public class DeckPicker extends Activity {
 		}
 		preferences.edit().putLong("lastTimeOpened", System.currentTimeMillis()).commit();
 
+		if (intent != null && intent.hasExtra(EXTRA_DECK_ID)) {
+			openStudyOptions(intent.getLongExtra(EXTRA_DECK_ID, 1));
+		}
+
 		BroadcastMessages.checkForNewMessages(this);
 
 		View mainView = getLayoutInflater().inflate(R.layout.deck_picker, null);
@@ -918,7 +923,7 @@ public class DeckPicker extends Activity {
 	        		}
 	        		return false;
 	        		}
-	        	});			
+	        	});
 		}
 	}
 
@@ -948,7 +953,6 @@ public class DeckPicker extends Activity {
                 return true;
             }
         }
-
         return false;
     }
 
@@ -1827,15 +1831,42 @@ public class DeckPicker extends Activity {
 
 
 	private void openStudyOptions() {
+		openStudyOptions(0);
+	}
+	private void openStudyOptions(long deckId) {
 		mDontSaveOnStop = true;
 		Intent intent = new Intent(this, StudyOptions.class);
+		if (deckId != 0) {
+			intent.putExtra(EXTRA_DECK_ID, deckId);
+		}
 		startActivityForResult(intent, SHOW_STUDYOPTIONS);
-		if (UIUtils.getApiLevel() > 4) {
+		if (deckId != 0) {
+			if (UIUtils.getApiLevel() > 4) {
+    			ActivityTransitionAnimation.slide(this, ActivityTransitionAnimation.NONE);
+			}
+		} else {
+			if (UIUtils.getApiLevel() > 4) {
     			ActivityTransitionAnimation.slide(this, ActivityTransitionAnimation.LEFT);
+			}			
 		}
 	}
 
-//
+    /**
+     * Creates an intent to load a deck given the full pathname of it.
+     * The constructed intent is equivalent (modulo the extras) to the open used by the launcher
+     * shortcut, which means it will not open a new study options window but bring the existing one
+     * to the front.
+     */
+    public static Intent getLoadDeckIntent(Context context, long deckId) {
+        Intent loadDeckIntent = new Intent(context, DeckPicker.class);
+        loadDeckIntent.setAction(Intent.ACTION_MAIN);
+        loadDeckIntent.addCategory(Intent.CATEGORY_LAUNCHER);
+        loadDeckIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        loadDeckIntent.putExtra(EXTRA_DECK_ID, deckId);
+        return loadDeckIntent;
+    }
+
+
 //	private void handleRestoreDecks(boolean reloadIfEmpty) {
 //		if (mBrokenDecks.size() != 0) {
 //			while (true) {

@@ -366,7 +366,6 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
         String collectionFile = params[0].getString();
 
         // see, if a collection is still opened
-
         Collection oldCol = Collection.currentCollection();
         boolean reset = params[0].getBoolean();
 

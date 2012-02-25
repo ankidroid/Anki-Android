@@ -11,12 +11,10 @@ public class DeckStatus {
     public int mDueCards;
     public int mProgress;
     public int mEta;
-    public int mDepth;
 
-    public DeckStatus(long deckId, int depth, String deckName, int newCards, int lrnCards, int dueCards, int progress, int eta) {
+    public DeckStatus(long deckId, String deckName, int newCards, int lrnCards, int dueCards, int progress, int eta) {
     	mDeckId = deckId;
         mDeckName = deckName;
-        mDepth = depth;
         mNewCards = newCards;
         mLrnCards = lrnCards;
         mDueCards = dueCards;

@@ -75,7 +75,6 @@ public class MetaDB {
             mMetaDb.execSQL(
                     "CREATE TABLE IF NOT EXISTS widgetStatus ("
                     + "deckId INTEGER NOT NULL PRIMARY KEY, "
-                    + "depth INTEGER NOT NULL, "
                     + "deckName TEXT NOT NULL, "
                     + "newCards INTEGER NOT NULL, "
                     + "lrnCards INTEGER NOT NULL, "
@@ -399,35 +398,35 @@ public class MetaDB {
      * @return an array of {@link DeckStatus} objects, each representing the status of one of the known decks
      */
     public static DeckStatus[] getWidgetStatus(Context context) {
-//        openDBIfClosed(context);
-//        Cursor cursor = null;
-//        try {
-//            cursor = mMetaDb.query("widgetStatus",
-//                    new String[]{"deckPath", "deckName", "newCards", "dueCards", "failedCards", "eta", "time"},
-//                    null, null, null, null, "deckName");
-//            int count = cursor.getCount();
-//            DeckStatus[] decks = new DeckStatus[count];
-//            for(int index = 0; index < count; ++index) {
-//                if (!cursor.moveToNext()) {
-//                    throw new SQLiteException("cursor count was incorrect");
-//                }
-//                decks[index] = new DeckStatus(
-//                        cursor.getString(cursor.getColumnIndexOrThrow("deckPath")),
-//                        cursor.getString(cursor.getColumnIndexOrThrow("deckName")),
-//                        cursor.getInt(cursor.getColumnIndexOrThrow("newCards")),
-//                        cursor.getInt(cursor.getColumnIndexOrThrow("dueCards")),
-//                        cursor.getInt(cursor.getColumnIndexOrThrow("failedCards")),
-//                        cursor.getInt(cursor.getColumnIndexOrThrow("eta")),
-//                		cursor.getInt(cursor.getColumnIndexOrThrow("time")));
-//            }
-//            return decks;
-//        } catch (SQLiteException e) {
-//            Log.e(AnkiDroidApp.TAG, "Error while querying widgetStatus", e);
-//        } finally {
-//            if (cursor != null && !cursor.isClosed()) {
-//                cursor.close();
-//            }
-//        }
+        openDBIfClosed(context);
+        Cursor cursor = null;
+        try {
+            cursor = mMetaDb.query("widgetStatus",
+                    new String[]{"deckId", "deckName", "newCards", "lrnCards", "dueCards", "progress", "eta"},
+                    null, null, null, null, "deckName");
+            int count = cursor.getCount();
+            DeckStatus[] decks = new DeckStatus[count];
+            for(int index = 0; index < count; ++index) {
+                if (!cursor.moveToNext()) {
+                    throw new SQLiteException("cursor count was incorrect");
+                }
+                decks[index] = new DeckStatus(
+                        cursor.getLong(cursor.getColumnIndexOrThrow("deckId")),
+                        cursor.getString(cursor.getColumnIndexOrThrow("deckName")),
+                        cursor.getInt(cursor.getColumnIndexOrThrow("newCards")),
+                        cursor.getInt(cursor.getColumnIndexOrThrow("lrnCards")),
+                        cursor.getInt(cursor.getColumnIndexOrThrow("dueCards")),
+                        cursor.getInt(cursor.getColumnIndexOrThrow("progress")),
+                		cursor.getInt(cursor.getColumnIndexOrThrow("eta")));
+            }
+            return decks;
+        } catch (SQLiteException e) {
+            Log.e(AnkiDroidApp.TAG, "Error while querying widgetStatus", e);
+        } finally {
+            if (cursor != null && !cursor.isClosed()) {
+                cursor.close();
+            }
+        }
         return new DeckStatus[0];
     }
 
@@ -446,11 +445,11 @@ public class MetaDB {
         boolean noDeck = true;
         try {
             cursor = mMetaDb.query("widgetStatus",
-                    new String[]{"depth", "newCards", "lrnCards", "dueCards", "progress", "eta"},
+                    new String[]{"deckName", "newCards", "lrnCards", "dueCards", "progress", "eta"},
                     null, null, null, null, null);
             while (cursor.moveToNext()) {
             	noDeck = false;
-            	if (cursor.getInt(0) == 1) {
+            	if (cursor.getString(0).split("::").length == 1) {
                 	due += cursor.getInt(1) + cursor.getInt(2) + cursor.getInt(3);
                 	progress = cursor.getInt(4);
                 	eta = cursor.getInt(5);            		
@@ -504,9 +503,9 @@ public class MetaDB {
                 // First clear all the existing content.
                 mMetaDb.execSQL("DELETE FROM widgetStatus");
                 for (DeckStatus deck : decks) {
-                    mMetaDb.execSQL("INSERT INTO widgetStatus(deckId, depth, deckName, newCards, lrnCards, dueCards, progress, eta) "
-                            + "VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
-                            new Object[]{deck.mDeckId, deck.mDepth, deck.mDeckName, deck.mNewCards, deck.mLrnCards, deck.mDueCards, deck.mProgress, deck.mEta}
+                    mMetaDb.execSQL("INSERT INTO widgetStatus(deckId, deckName, newCards, lrnCards, dueCards, progress, eta) "
+                            + "VALUES (?, ?, ?, ?, ?, ?, ?)",
+                            new Object[]{deck.mDeckId, deck.mDeckName, deck.mNewCards, deck.mLrnCards, deck.mDueCards, deck.mProgress, deck.mEta}
                             );
                 }
                 mMetaDb.setTransactionSuccessful();

@@ -190,13 +190,13 @@ public final class WidgetStatus {
             		}
             		int eta = (Integer) di[1];
                     for (Object[] d : (TreeSet<Object[]>) di[0]) {
-                    	String[] name = ((String[])d[0]);
-                    	int newCount = (Integer) d[2];
-                    	int lrnCount = (Integer) d[3];
-                    	int revCount = (Integer) d[4];
-//                    	if (name.length == 1) {
-//                    	}
-                        decks.add(new DeckStatus((Long) d[1], name.length, DeckPicker.readableDeckName(name), newCount, lrnCount, revCount, (int) (progress * 100), eta));            			
+                    	String[] sname = (String[]) d[0];
+                    	StringBuilder name = new StringBuilder();
+                    	name.append(sname[0]);
+                    	for (int i = 1; i < sname.length; i++) {
+                    		name.append("::").append(sname[i]);
+                    	}
+                        decks.add(new DeckStatus((Long) d[1], name.toString(), (Integer) d[2], (Integer) d[3], (Integer) d[4], (int) (progress * 100), eta));            			
             		}
                 } catch (SQLException e) {
                     Log.i(AnkiDroidApp.TAG, "Widget: Problems on retrieving deck information");

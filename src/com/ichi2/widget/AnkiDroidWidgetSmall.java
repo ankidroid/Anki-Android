@@ -15,8 +15,8 @@
 package com.ichi2.widget;
 
 import com.ichi2.anki.AnkiDroidApp;
+import com.ichi2.anki.DeckPicker;
 import com.ichi2.anki2.R;
-import com.ichi2.anki.StudyOptions;
 import com.tomgibara.android.veecheck.util.PrefSettings;
 
 import android.app.PendingIntent;
@@ -90,14 +90,6 @@ public class AnkiDroidWidgetSmall extends AppWidgetProvider {
             // Resources res = context.getResources();
             RemoteViews updateViews = new RemoteViews(context.getPackageName(), R.layout.widget_small);
 
-            // Add a click listener to open Anki from the icon.
-            // This should be always there, whether there are due cards or not.
-            Intent ankiDroidIntent = new Intent(context, StudyOptions.class);
-            ankiDroidIntent.setAction(Intent.ACTION_MAIN);
-            ankiDroidIntent.addCategory(Intent.CATEGORY_LAUNCHER);
-            PendingIntent pendingAnkiDroidIntent = PendingIntent.getActivity(context, 0, ankiDroidIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-            updateViews.setOnClickPendingIntent(R.id.ankidroid_widget_small_layout, pendingAnkiDroidIntent);
-
             boolean mounted = AnkiDroidApp.isSdCardMounted();
             if (!mounted) {
                 updateViews.setViewVisibility(R.id.widget_due, View.INVISIBLE);
@@ -162,6 +154,14 @@ public class AnkiDroidWidgetSmall extends AppWidgetProvider {
         			}
                 }
             }
+
+            // Add a click listener to open Anki from the icon.
+            // This should be always there, whether there are due cards or not.
+            Intent ankiDroidIntent = new Intent(context, DeckPicker.class);
+            ankiDroidIntent.setAction(Intent.ACTION_MAIN);
+            ankiDroidIntent.addCategory(Intent.CATEGORY_LAUNCHER);
+            PendingIntent pendingAnkiDroidIntent = PendingIntent.getActivity(context, 0, ankiDroidIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+            updateViews.setOnClickPendingIntent(R.id.ankidroid_widget_small_layout, pendingAnkiDroidIntent);
 
             return updateViews;
         }
