@@ -274,6 +274,10 @@ public class Card implements Cloneable {
 		mTimerStarted = Utils.now();
 	}
 
+	public void setTimer(double time) {
+		mTimerStarted = time;
+	}
+
 	// public void stopTimer() {
 	// mTimerStopped = Utils.now();
 	// }

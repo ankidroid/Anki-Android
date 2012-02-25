@@ -219,14 +219,14 @@ public final class WidgetStatus {
             }
             if (smallWidget) {
             	Intent intent;
-                intent = new Intent(context, AnkiDroidWidgetSmall.UpdateService.class);            	
+                intent = new Intent(context, AnkiDroidWidgetSmall.UpdateService.class);
                 context.startService(intent);
             }
             if (bigWidget) {
-//            	Intent intent;
-//                intent = new Intent(context, AnkiDroidWidgetBig.UpdateService.class);            	
-//                intent.setAction(AnkiDroidWidgetBig.UpdateService.ACTION_UPDATE);
-//                context.startService(intent);
+            	Intent intent;
+                intent = new Intent(context, AnkiDroidWidgetBig.UpdateService.class);
+                intent.setAction(AnkiDroidWidgetBig.UpdateService.ACTION_UPDATE);
+                context.startService(intent);
             }
             if (notification) {
             	Intent intent;
