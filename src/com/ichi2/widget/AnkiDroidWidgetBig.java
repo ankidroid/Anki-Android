@@ -35,6 +35,7 @@ import android.content.Intent;
 import android.content.ServiceConnection;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
+import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.IBinder;
 import android.text.Html;
@@ -194,6 +195,10 @@ public class AnkiDroidWidgetBig extends AppWidgetProvider {
         public static final int VIEW_SHOW_ANSWER = 4;
         public static final int VIEW_NOTHING_DUE = 5;
         public static final int VIEW_SHOW_HELP = 6;
+
+        private static final int sColorBlue = Color.parseColor("#000099");
+        private static final int sColorRed = Color.parseColor("#990000");
+        private static final int sColorGreen = Color.parseColor("#007700");
         
 
         private CharSequence getDeckStatusString(Card card) {
@@ -204,23 +209,23 @@ public class AnkiDroidWidgetBig extends AppWidgetProvider {
             SpannableStringBuilder sb = new SpannableStringBuilder();
 
             SpannableString red = new SpannableString(Integer.toString(newCount));
-            red.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.widget_big_font_color_red)), 0, red.length(),
+            red.setSpan(new ForegroundColorSpan(sColorBlue), 0, red.length(),
                     Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-            if (card != null && card.getType() == Card.TYPE_LRN) {
+            if (card != null && card.getType() == Card.TYPE_NEW) {
             	red.setSpan(new UnderlineSpan(), 0, red.length(), 0);
             }
 
             SpannableString black = new SpannableString(Integer.toString(lrnCount));
-            black.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.widget_big_font_color)), 0, black.length(),
+            black.setSpan(new ForegroundColorSpan(sColorRed), 0, black.length(),
                     Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-            if (card != null && card.getType() == Card.TYPE_REV) {
+            if (card != null && card.getType() == Card.TYPE_LRN) {
             	black.setSpan(new UnderlineSpan(), 0, black.length(), 0);
             }
 
             SpannableString blue = new SpannableString(Integer.toString(dueCount));
-            blue.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.widget_big_font_color_blue)), 0, blue.length(),
+            blue.setSpan(new ForegroundColorSpan(sColorGreen), 0, blue.length(),
                     Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-            if (card != null && card.getType() == Card.TYPE_NEW) {
+            if (card != null && card.getType() == Card.TYPE_REV) {
             	blue.setSpan(new UnderlineSpan(), 0, blue.length(), 0);
             }
 
@@ -237,20 +242,33 @@ public class AnkiDroidWidgetBig extends AppWidgetProvider {
     	private CharSequence getNextTimeString(Card card) {
             SpannableStringBuilder sb = new SpannableStringBuilder();
 
+            SpannableString again = new SpannableString(contentService.mCol.getSched().nextIvlStr(card, 1));
             SpannableString hard = new SpannableString(contentService.mCol.getSched().nextIvlStr(card, 2));
-            hard.setSpan(new ForegroundColorSpan(getResources().getColor(contentService.mCol.getSched().lrnButtons(card) ? R.color.widget_big_font_color : R.color.widget_big_font_color_green)), 0, hard.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-
             SpannableString easy = new SpannableString(contentService.mCol.getSched().nextIvlStr(card, 3));
-            easy.setSpan(new ForegroundColorSpan(getResources().getColor(contentService.mCol.getSched().lrnButtons(card) ? R.color.widget_big_font_color_green : R.color.widget_big_font_color)), 0, easy.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+            SpannableString veryEasy = null;
 
-            SpannableString veryEasy = new SpannableString(contentService.mCol.getSched().nextIvlStr(card, 4));
-            veryEasy.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.widget_big_font_color)), 0, veryEasy.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+            again.setSpan(new ForegroundColorSpan(sColorRed), 0, again.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
 
+            if (contentService.mCol.getSched().lrnButtons(card)) {
+                hard.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.widget_big_font_color_green)), 0, hard.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);            	
+                easy.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.widget_big_font_color)), 0, easy.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+            } else {
+                hard.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.widget_big_font_color)), 0, hard.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                easy.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.widget_big_font_color_green)), 0, easy.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+                veryEasy = new SpannableString(contentService.mCol.getSched().nextIvlStr(card, 4));
+                veryEasy.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.widget_big_font_color)), 0, veryEasy.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);            	
+            }
+
+            sb.append(again);
+            sb.append(" \u2027 ");
             sb.append(hard);
             sb.append(" \u2027 ");
             sb.append(easy);
-            sb.append(" \u2027 ");
-            sb.append(veryEasy);
+            if (!contentService.mCol.getSched().lrnButtons(card)) {
+                sb.append(" \u2027 ");
+                sb.append(veryEasy);            	
+            }
 
             return sb;
         }
@@ -791,22 +809,9 @@ public class AnkiDroidWidgetBig extends AppWidgetProvider {
 
 
     	private void updateCounts(RemoteViews updateViews, int view) {
-    		DeckStatus[] decks = WidgetStatus.fetch(this);
-        	int eta = 0;
-        	int reps = 0;
-        	int due = 0;
-
-        	// determine total progress
-        	for (DeckStatus d : decks) {
-//        		eta += d.mEta;
-//        		reps += d.mTime;
-//        		due += d.mFailedCards + d.mNewCards + d.mDueCards;
-        	}
-        	int totalreps = reps + due;
-        	int progressTotal = 0;
-        	if (totalreps != 0) {
-        		progressTotal = (int) Math.round((100.0d * reps) / totalreps);
-        	}
+        	int[] counts = WidgetStatus.fetchSmall(this);
+        	int progressTotal = counts[1];
+        	int eta = counts[2];
     		updateViews.setProgressBar(R.id.widget_big_progress_total, 100, progressTotal, false);
     		if (eta == 0) {
     			updateViews.setViewVisibility(R.id.widget_big_eta, View.INVISIBLE);
@@ -818,8 +823,8 @@ public class AnkiDroidWidgetBig extends AppWidgetProvider {
     		switch (view) {
     		case VIEW_SHOW_QUESTION:
     		case VIEW_NOTHING_DUE:
-//    			updateViews.setTextViewText(R.id.widget_big_counts, getDeckStatusString(contentService.mCol, contentService.mCurrentCard));
-    			double sessionProgress = contentService.mCol.getSched().todaysProgress(null, false, false);
+    			updateViews.setTextViewText(R.id.widget_big_counts, getDeckStatusString(contentService.mCurrentCard));
+    			double sessionProgress = contentService.mCol.getSched().todaysProgress(contentService.mCurrentCard, false, false);
     			if (sessionProgress == -1) {
 	        		updateViews.setViewVisibility(R.id.widget_big_progress_frame_deck, View.INVISIBLE);
     			} else {
@@ -843,7 +848,7 @@ public class AnkiDroidWidgetBig extends AppWidgetProvider {
 				updateViews.setViewVisibility(R.id.widget_big_deckfield, View.VISIBLE);
 				updateViews.setViewVisibility(R.id.widget_big_nothing_due, View.INVISIBLE);
 
-				setDeckCounts(updateViews, decks);
+				setDeckCounts(updateViews, WidgetStatus.fetch(this));
 
 				updateViews.setViewVisibility(R.id.widget_big_totalcongrats, View.GONE);
     			updateViews.setViewVisibility(R.id.widget_big_decketa, View.VISIBLE);
@@ -882,7 +887,7 @@ public class AnkiDroidWidgetBig extends AppWidgetProvider {
        	int eta = 0;
        	for (DeckStatus d : decks) {
        		namesSb.append(d.mDeckName).append("  \n");
-       		duesSb.append(getDeckStatusString(d.mLrnCards, d.mDueCards, d.mNewCards, null)).append("\n");
+       		duesSb.append(getDeckStatusString(d.mNewCards, d.mLrnCards, d.mDueCards, null)).append("\n");
        		eta += d.mEta;
        	}
        	int pos = namesSb.length() - 1;

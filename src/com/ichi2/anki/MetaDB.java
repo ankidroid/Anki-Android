@@ -452,7 +452,7 @@ public class MetaDB {
             	if (cursor.getString(0).split("::").length == 1) {
                 	due += cursor.getInt(1) + cursor.getInt(2) + cursor.getInt(3);
                 	progress = cursor.getInt(4);
-                	eta = cursor.getInt(5);            		
+                	eta = cursor.getInt(5);
             	}
             }
         } catch (SQLiteException e) {
