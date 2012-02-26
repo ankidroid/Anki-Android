@@ -1,12 +1,12 @@
-Memorize anything with AnkiDroid!
+Memorizálj bármit az AnkiDroiddal!
 
-AnkiDroid lets you learn flashcards very efficiently by showing them just before you will forget. It is fully compatible with the spaced repetition software Anki (including synchronization), which is available for Windows, Linux and MacOS.
+Az AnkiDroid segítségével hatékonyan tanulhatsz szókártyákat, mert akkor szedi elő újra őket, mielőtt elfelejtenéd. Teljen kompatibilis és szinkronizálható az Anki nevű késleltetett ismétléses programmal, amely elérhető Windowson, Linuxon és MaxOS-en is.
 
-Study all sorts of things wherever and whenever you want. Make good use of idle times on bus trips, in supermarket queues or any other waiting situation!
+Tanulj meg akármit, bármikor, bárhol, ha rád tör a tanulhatnék! Használd ki jól a buszozás, sorban állás, vagy másféle várakozás miatt kieső időt!
 
-Add material through the desktop application Anki or directly through Ankidroid.
+Hozz létre új anyagot az asztali Anki-val, vagy rögtön az AnkiDroiddal!
 
-Create your own flashcard decks or download free decks compiled for many languages and topics (more than 6000 available). Az alkalmazás támogatja az anyagok automatikus hozzáadását a szótárból!
+Készíts saját tanulókártya paklit, vagy tölts le ingyeneseket a több, mint 6000, különböző témájú és nyelvű elérhető pakli közül! Az alkalmazás támogatja az anyagok automatikus hozzáadását a szótárból!
 
 ★ Fő funkciók:
 • támogatott szókártya tartalmak: szöveg, kép, hang, LaTeX
@@ -20,20 +20,20 @@ Create your own flashcard decks or download free decks compiled for many languag
 
 ★ További funkciók:
 • válaszok beírása (lehetőség)
-• whiteboard
+• tábla
 • kártya böngésző
 • kártya szerkesztő/hozzáadó
 • importáld a meglévő gyűjtemény fájlokat (Anki Desktop-pal)
-• add cards by intent from other applications like dictionaries
-• dictionary integration (ColorDict, GoldenDict, Leo.org, Aedict, diverse web dictionaries)
+• kártyák hozzáadása más programokból (pl. szótárak)
+• szótár-integráció (ColorDict, GoldenDict, Leo.org, Aedict, különböző webes szótárak)
 • egyéni betűtípus-támogatás
 • teljes biztonsági másolat rendszer
-• navigáció simítással, érintéssel, rázással
+• navigáció elhúzással, érintéssel, rázással
 • átnézés a widgetben
 • teljesen testreszabható
 • magolás mód
-• limit studying by tag, time or cards
+• tanulás korlátozása címke, idő, vagy kártya alapján
 • éjszakai mód
-• zeemote-támogatás
-• three different ui-themes
+• zeemote támogatás
+• három különböző mejelnés
 • 27 lokalizáció
