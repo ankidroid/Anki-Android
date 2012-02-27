@@ -96,6 +96,7 @@ import com.ichi2.async.DeckTask;
 import com.ichi2.async.DeckTask.TaskData;
 import com.ichi2.libanki.Card;
 import com.ichi2.libanki.Collection;
+import com.ichi2.libanki.Models;
 import com.ichi2.libanki.Sched;
 import com.ichi2.libanki.Sound;
 import com.ichi2.libanki.Utils;
@@ -2503,6 +2504,11 @@ public class Reviewer extends Activity implements IButtonListener{
         style.append(mCustomFontStyle);
 //        style.append(getDeckStyle(mCurrentCard.mDeck.getDeckPath()));
         Log.i(AnkiDroidApp.TAG, "::style::" + style);
+
+        if (mNightMode) {
+        	content = Models.invertColors(content);
+        }
+
         mCardContent = new SpannedString(mCardTemplate.replace("::content::", content).replace("::style::", style.toString()));
         // Log.i(AnkiDroidApp.TAG, "card html = \n" + card);
         Log.i(AnkiDroidApp.TAG, "base url = " + mBaseUrl );

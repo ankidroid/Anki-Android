@@ -976,93 +976,6 @@ public class Models {
     	mChanged = true;
     }
 
-  
-    /**
-     * Css generation
-     * ***********************************************************************************************
-     */
-
-    /**
-     * Returns a cached CSS for the font color and font size of a given Template taking into account the included
-     * fields
-     *
-     * @param ord - number of template
-     * @param percentage the preference factor to use for calculating the display font size from the cardmodel and
-     *            fontmodel font size
-     * @return the html contents surrounded by a css style which contains class styles for answer/question and fields
-     */
-//	public String getCSSForFontColorSize(int ord, int percentage, boolean night) {
-//        // check whether the percentage is this the same as last time
-//        if (mDisplayPercentage != percentage || mNightMode != night || !mCssTemplateMap.containsKey(ord)) {
-//            mDisplayPercentage = percentage;
-//            mNightMode = night;
-//            mCssTemplateMap.put(ord, createCSSForFontColorSize(ord, percentage, night));
-//        }
-//        return mCssTemplateMap.get(ord);
-//    }
-//
-//
-//    /**
-//     * @param ord - number of template
-//     * @param percentage the factor to apply to the font size in card model to the display size (in %)
-//     * @param nightmode boolean
-//     * @return the html contents surrounded by a css style which contains class styles for answer/question and fields
-//     */
-//    private String createCSSForFontColorSize(int ord, int percentage, boolean night) {
-//        StringBuffer sb = new StringBuffer();
-//        sb.append("<!-- ").append(percentage).append(" % display font size-->");
-//        sb.append("<style type=\"text/css\">\n");
-//
-//        JSONObject template = getTemplate(ord);
-//
-//		try {
-//	        // fields
-//			for (int i = 0; i < mFields.length(); i++) {
-//				JSONObject fconf = mFields.getJSONObject(i);
-//	        	sb.append(_fieldCSS(percentage, 
-//	        			String.format(".fm%s-%s", Utils.hexifyID(mId), Utils.hexifyID(fconf.getInt("ord"))), 
-//	        			fconf.getString("font"), fconf.getInt("qsize"), 
-//	        			invertColor(fconf.getString("qcol"), night),
-//	        			fconf.getString("rtl").equals("True"), fconf.getString("pre").equals("True")));
-//	        }
-//
-//	        // templates
-//	        for (int i = 0; i < mTemplates.length(); i++) {
-//	        	JSONObject tmpl = mTemplates.getJSONObject(i);
-//	        	sb.append(String.format(".cm%s-%s {text-align:%s;background:%s;", Utils.hexifyID(mId), Utils.hexifyID(tmpl.getInt("ord")),
-//	        			align_text[template.getInt("align")], invertColor(tmpl.getString("bg"), night)));
-//	            sb.append("padding-left:5px;");
-//	            sb.append("padding-right:5px;}\n");
-//	        }
-//		} catch (JSONException e) {
-//			throw new RuntimeException(e);
-//		}
-//
-//        // finish
-//        sb.append("</style>");
-//        return sb.toString();
-//    }
-//
-//
-//    private static String invertColor(String color, boolean invert) {
-//    	if (invert) {
-//    	    if (color.length() != 0) {
-//    	        color = StringTools.toUpperCase(color);
-//    	    }
-//            final char[] items = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F'};
-//            final char[] tmpItems = {'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v'};
-//            for (int i = 0; i < 16; i++) {
-//                color = color.replace(items[i], tmpItems[15-i]);
-//            }
-//            for (int i = 0; i < 16; i++) {
-//                color = color.replace(tmpItems[i], items[i]);
-//            }
-//		}
-//		return color;		
-//    }
-
-
-    // TODO: implement call
     /**
      * Returns a string where all colors have been inverted.
      * It applies to anything that is in a tag and looks like #FFFFFF
@@ -1074,143 +987,46 @@ public class Models {
      *  - 0: within content
      *  - 1: within a tag
      */
-//    public static String invertColors(String text, boolean invert) {
-//        if (invert) {
-//            int state = 0;
-//            StringBuffer inverted = new StringBuffer(text.length());
-//            for(int i=0; i<text.length(); i++) {
-//                char character = text.charAt(i);
-//                if (state == 1 && character == '#') {
-//                    inverted.append(invertColor(text.substring(i+1, i+7), true));
-//                }
-//                else {
-//                    if (character == '<') {
-//                        state = 1;
-//                    }
-//                    if (character == '>') {
-//                        state = 0;
-//                    }
-//                    inverted.append(character);
-//                }
-//            }
-//            return inverted.toString();
-//        }
-//        else {
-//            return text;
-//        }
-//    }
-//
-//    private static String _fieldCSS(int percentage, String prefix, String fontFamily, int fontSize, String fontColour, boolean rtl, boolean pre) {
-//        StringBuffer sb = new StringBuffer();
-//        sb.append(prefix).append(" {");
-//        if (null != fontFamily && 0 < fontFamily.trim().length()) {
-//            sb.append("font-family:\"").append(fontFamily).append("\";\n");
-//        }
-//        if (0 < fontSize) {
-//            sb.append("font-size:");
-//            sb.append((percentage * fontSize) / 100);
-//            sb.append("px;\n");
-//        }
-//        if (null != fontColour && 0 < fontColour.trim().length()) {
-//            sb.append("color:").append(fontColour).append(";\n");
-//        }
-//        if (rtl) {
-//            sb.append("direction:rtl;unicode-bidi:embed;\n");
-//        }
-//        if (rtl) {
-//            sb.append("white-space:pre-wrap;\n");
-//        }
-//        sb.append("}\n");
-//        return sb.toString();
-//    }
+    public static String invertColors(String text) {
+        final String[] colors = {"white", "black"};
+        final String[] htmlColors = {"#000000", "#ffffff"};
+        for (int i = 0; i < colors.length; i++) {
+        	text = text.replace(colors[i], htmlColors[i]);
+        }
+        int state = 0;
+        StringBuffer inverted = new StringBuffer(text.length());
+        for(int i=0; i<text.length(); i++) {
+            char character = text.charAt(i);
+            if (state == 1 && character == '#') {
+                inverted.append(invertColor(text.substring(i+1, i+7)));
+            }
+            else {
+                if (character == '<') {
+                    state = 1;
+                }
+                if (character == '>') {
+                    state = 0;
+                }
+                inverted.append(character);
+            }
+        }
+        return inverted.toString();
+    }
 
-
-//    /**
-//     * Prepares the Background Colors for all CardModels in this Model
-//     */
-//    private void prepareColorForCardModels(boolean invertedColors) {
-//        CardModel myCardModel = null;
-//        String color = null;
-//        for (Map.Entry<Long, CardModel> entry : mCardModelsMap.entrySet()) {
-//            myCardModel = entry.getValue();
-//            color = invertColor(myCardModel.getLastFontColour(), invertedColors);
-//            mColorCardModelMap.put(myCardModel.getId(), color);
-//        }
-//    }
-//
-//    protected final String getBackgroundColor(long myCardModelId, boolean invertedColors) {
-//    	if (mColorCardModelMap.size() == 0) {
-//    		prepareColorForCardModels(invertedColors);
-//    	}
-//		String color = mColorCardModelMap.get(myCardModelId);
-//		if (color != null) {
-//			return color;
-//		} else {
-//			return "#FFFFFF";
-//        }
-//    }
-
-
-
-    /**
-     * ***********************************************************************************************
-     */
-
-//
-//    public static HashMap<Long, Model> getModels(Deck deck) {
-//        Model mModel;
-//        HashMap<Long, Model> mModels = new HashMap<Long, Model>();
-//
-//        Cursor mCursor = null;
-//        try {
-//            mCursor = deck.getDB().getDatabase().rawQuery("SELECT id FROM models", null);
-//            if (!mCursor.moveToFirst()) {
-//                return mModels;
-//            }
-//            do {
-//                Long id = mCursor.getLong(0);
-//                mModel = getModel(deck, id, true);
-//                mModels.put(id, mModel);
-//
-//            } while (mCursor.moveToNext());
-//
-//        } finally {
-//            if (mCursor != null) {
-//                mCursor.close();
-//            }
-//        }
-//        return mModels;
-//    }
-//
-//    
-//    
-//    private static String replaceField(String replaceFrom, Fact fact, int replaceAt, boolean isQuestion) {
-//        int endIndex = replaceFrom.indexOf(")", replaceAt);
-//        String fieldName = replaceFrom.substring(replaceAt + 2, endIndex);
-//        char fieldType = replaceFrom.charAt(endIndex + 1);
-//        if (isQuestion) {
-//            String replace = "%(" + fieldName + ")" + fieldType;
-//            String with = "<span class=\"fm" + Long.toHexString(fact.getFieldModelId(fieldName)) + "\">"
-//                    + fact.getFieldValue(fieldName) + "</span>";
-//            replaceFrom = replaceFrom.replace(replace, with);
-//        } else {
-//            replaceFrom.replace("%(" + fieldName + ")" + fieldType, "<span class=\"fma"
-//                    + Long.toHexString(fact.getFieldModelId(fieldName)) + "\">" + fact.getFieldValue(fieldName)
-//                    + "</span");
-//        }
-//        return replaceFrom;
-//    }
-//
-//
-//    private static String replaceHtmlField(String replaceFrom, Fact fact, int replaceAt) {
-//        int endIndex = replaceFrom.indexOf(")", replaceAt);
-//        String fieldName = replaceFrom.substring(replaceAt + 7, endIndex);
-//        char fieldType = replaceFrom.charAt(endIndex + 1);
-//        String replace = "%(text:" + fieldName + ")" + fieldType;
-//        String with = fact.getFieldValue(fieldName);
-//        replaceFrom = replaceFrom.replace(replace, with);
-//        return replaceFrom;
-//    }
+    private static String invertColor(String color) {
+	    if (color.length() != 0) {
+	        color = StringTools.toUpperCase(color);
+	    }
+        final char[] items = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F'};
+        final char[] tmpItems = {'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v'};
+        for (int i = 0; i < 16; i++) {
+            color = color.replace(items[i], tmpItems[15-i]);
+        }
+        for (int i = 0; i < 16; i++) {
+            color = color.replace(tmpItems[i], items[i]);
+        }
+    	return color;		
+    }
 
 
     public HashMap<Long, HashMap<Integer, String>> getTemplateNames() {
