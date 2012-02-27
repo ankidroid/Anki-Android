@@ -397,8 +397,8 @@ public class Reviewer extends Activity implements IButtonListener{
  	private static final int GESTURE_CLEAR_WHITEBOARD = 15;
  	private static final int GESTURE_EXIT = 16;
 
- 	private Spanned mCardContent;
- 	private String mBaseUrl;
+ 	private Spanned mCardContent = "";
+ 	private String mBaseUrl = "";
 
  	private static final int ANIMATION_NO_ANIMATION = 0;
  	private static final int ANIMATION_TURN = 1;
