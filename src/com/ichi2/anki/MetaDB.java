@@ -68,7 +68,7 @@ public class MetaDB {
     /** Creating any table that missing and upgrading necessary tables. */
     private static SQLiteDatabase upgradeDB(SQLiteDatabase mMetaDb, int databaseVersion) {
         Log.i(AnkiDroidApp.TAG, "Upgrading Internal Database..");
-        if (mMetaDb.getVersion() == 0) {
+//        if (mMetaDb.getVersion() == 0) {
             Log.i(AnkiDroidApp.TAG, "Applying changes for version: 0");
             // Create tables if not exist
             mMetaDb.execSQL(
@@ -116,7 +116,7 @@ public class MetaDB {
                                 + "eta INTEGER NOT NULL, "
                                 + "time INTEGER NOT NULL)");
             }
-        }
+//        }
         mMetaDb.setVersion(databaseVersion);
         Log.i(AnkiDroidApp.TAG, "Upgrading Internal Database finished. New version: " + databaseVersion);
         return mMetaDb;
@@ -154,6 +154,7 @@ public class MetaDB {
             Log.i(AnkiDroidApp.TAG, "Resetting widget status");
             mMetaDb.execSQL("DROP TABLE IF EXISTS intentInformation;");
             Log.i(AnkiDroidApp.TAG, "Resetting intentInformation");
+            upgradeDB(mMetaDb, DATABASE_VERSION);
             return true;
         } catch(Exception e) {
             Log.e("Error", "Error resetting MetaDB ", e);
