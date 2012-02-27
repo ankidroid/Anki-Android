@@ -109,10 +109,10 @@
   <string-array name="next_review_p">
     <item>%s seconds</item>
     <item>%s minutes</item>
-    <item>ساعات% s</item>
-    <item>أيام% s</item>
-    <item>أشهر% s</item>
-    <item>سنوات% s</item>
+    <item>ساعات%s</item>
+    <item>أيام%s</item>
+    <item>أشهر%s</item>
+    <item>سنوات%s</item>
   </string-array>
   <plurals name="studyoptions_window_title">
     <item quantity="one">%1$s (1 of %3$d due)</item>
@@ -140,10 +140,10 @@
   </plurals>
   <plurals name="studyoptions_congrats_new_cards">
     <item quantity="one">بطاقة واحدة</item>
-    <item quantity="other">$% 1 d بطاقات جديدة</item>
+    <item quantity="other">%1$d بطاقات جديدة</item>
   </plurals>
   <plurals name="studyoptions_congrats_eta">
     <item quantity="one">دقيقة واحدة</item>
-    <item quantity="other">٪ 1دقيقة $ d.</item>
+    <item quantity="other">دقيقة%1$d</item>
   </plurals>
 </resources>
