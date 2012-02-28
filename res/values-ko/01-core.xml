@@ -132,7 +132,7 @@
   </plurals>
   <plurals name="reviewer_window_title">
     <item quantity="one">%1$s (1 min. left)</item>
-    <item quantity="other">%1$S (%2$d 분 남음)</item>
+    <item quantity="other">%1$s (%2$d 분 남음)</item>
   </plurals>
   <plurals name="studyoptions_congrats_message">
     <item quantity="one">You have finished for now.\nTomorrow there will be:\n1 card to review and %2$s.\n Estimated time: %3$s</item>
