@@ -74,7 +74,7 @@
   <string name="reset_all_question">Alle Sprachzuordnungen, Widget-, Whiteboard- und Wörterbuch-Speicherzustände zurücksetzen?</string>
   <string name="reset_confirmation">Alle Zustände zurücksetzen</string>
   <string name="use_ruby_support">Ruby-Anmerkungen</string>
-  <string name="use_ruby_support_summ">Wenn die Zeichen \'[\' und \']\' gefunden werden, wird der enthaltene Text als eine Ruby Anmerkung behandelt</string>
+  <string name="use_ruby_support_summ">Wenn die Zeichen ‚[‘ und ‚]‘ gefunden werden, wird der enthaltene Text als eine Ruby-Anmerkung behandelt</string>
   <string name="display_font_size">Relative Schriftgröße</string>
   <string name="display_font_size_summ">Schriftgröße im Lernbildschirm relativ zu der im Stapel definierten Schriftgröße. Im Moment: XXX %</string>
   <string name="card_browser_font_size">Schriftgröße Kartenübersicht</string>
@@ -91,8 +91,8 @@
   <string name="fullscreen_review_summ">Nutzt sämtlichen vorhandenen Platz auf dem Bildschirm</string>
   <string name="zoom">Zoom aktivieren</string>
   <string name="zoom_summ">Zoom-Schaltflächen beim Lernen anzeigen</string>
-  <string name="zeemote">Zeemote JS1 Unterstützung</string>
-  <string name="zeemote_summ">Zeemote JS1 Steuerung zum Navigieren benutzen</string>
+  <string name="zeemote">Zeemote-JS1-Unterstützung</string>
+  <string name="zeemote_summ">Zeemote-JS1-Steuerung zum Navigieren benutzen.</string>
   <string name="swipe">Gesten aktivieren</string>
   <string name="swipe_summ_off">Verwenden Sie Gesten, um zwischen Fenstern zu wechseln und Karten zu beantworten. Nicht kompatibel mit den Zoom-Schaltflächen</string>
   <string name="swipe_summ_on">Fensterwechsel mit horizontalem Wischen. Konfigurieren Sie zusätzliche Aktionen weiter unten</string>
@@ -108,9 +108,9 @@
   <string name="gestures_tap_left">Links antippen</string>
   <string name="gestures_tap_right">Rechts antippen</string>
   <string name="gestures_longclick">Langklick</string>
-  <string name="pref_cat_scrolling">Hoch/Runter-Tasten</string>
+  <string name="pref_cat_scrolling">Hardware-Hoch-/Runter-Tasten</string>
   <string name="more_scrolling_buttons">eReader</string>
-  <string name="more_scrolling_buttons_summ">Kanji/Katakana- und Emoji/Kao-moji-Tasten ebenfalls zum Scrollen benutzen.</string>
+  <string name="more_scrolling_buttons_summ">Kanji-/Katakana- und Emoji-/Kao-moji-Tasten ebenfalls zum Scrollen benutzen.</string>
   <string name="double_scrolling_gap">Doppeltes scrollen</string>
   <string name="double_scrolling_gap_summ">Verdoppelt die Scroll-Schrittweite.</string>
   <string name="swipe_sensibility">Wischempfindlichkeit</string>
@@ -126,7 +126,7 @@
   <string name="fix_hebrew_text">Umgekehrte Textrichtung für Hebräisch</string>
   <string name="fix_hebrew_text_summ">Erzwingt umgekehrte Textrichtung, um Hebräisch auf dem Android-System darzustellen. Vokale werden nicht unterstützt</string>
   <string name="default_font">Standardschrift</string>
-  <string name="default_font_summ">Standardschrift zum Kartenrendern. Benutzerdefinierte Schriften müssen im Unterordner \'fonts\' im Anki-Ordner liegen.</string>
+  <string name="default_font_summ">Standardschrift zum Kartenrendern. Benutzerdefinierte Schriften müssen im Unterordner „fonts“ im Anki-Ordner liegen.</string>
   <string name="language">Sprache</string>
   <string name="language_summ">Wählen Sie die Sprache, mit der AnkiDroid angezeigt werden soll. Aktuell: XXX</string>
   <string name="language_system">System-Sprache</string>
@@ -177,7 +177,7 @@
   <string name="show_next_review_time_summ">Zeigt während des Lernens die Zeit bis zur nächsten Fälligkeit der Karte abhängig von der Wahl des Schwierigkeitsgrades</string>
   <string name="update_notification">Aktualisierungsbenachrichtigung</string>
   <string name="update_notification_summ">Benachrichtigung, wenn es Aktualisierungen von AnkiDroid gibt</string>
-  <string name="fix_arabic_text">Arabisch verbessern</string>
+  <string name="fix_arabic_text">Anzeige von Arabisch verbessern</string>
   <string name="fix_arabic_text_summ">Provisorische Lösung für Arabisch-Unterstützung unter Android. Falls aktiviert, ist keine Kartenänderung möglich.</string>
   <string name="wal_mode">WAL-Journal</string>
   <string name="wal_mode_summ">WAL-Journal-Modus beschleunigt AnkiDroid, ist aber nicht mit Anki-Desktop kompatibel, wenn Stapel manuell kopiert werden. Nur verfügbar auf neuen Android-Systemen. </string>
