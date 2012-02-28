@@ -49,7 +49,7 @@
   <string name="select">Auswählen</string>
   <string name="saving_changes">Änderungen werden gespeichert...</string>
   <string name="studyoptions_nodeck_title">Kein Stapel geladen</string>
-  <string name="studyoptions_nodeck_message">Momentan ist kein Stapel geladen. Anki-Stapel werden im Verzeichnis \"%s\" auf der SD-Karte gespeichert. Dieses Verzeichnis kann in den Einstellungen geändert werden (drücken Sie die \"Menu\"-Taste und wählen Sie \"Einstellungen\").</string>
+  <string name="studyoptions_nodeck_message">Momentan ist kein Stapel geladen. Anki-Stapel werden im Verzeichnis „%s“ auf der SD-Karte gespeichert. Dieses Verzeichnis kann in den Einstellungen geändert werden (drücken Sie die „Menü“-Taste und wählen Sie „Einstellungen“).</string>
   <string name="studyoptions_welcome_title">Willkommen in AnkiDroid!</string>
   <string name="studyoptions_welcome_message">Mit AnkiDroid können Sie effizient große Mengen an Vokabeln oder anderen Dingen lernen. AnkiDroid präsentiert das Lernmaterial stets kurz vor dem Vergessen.\nInformationen sind in Stapeln organisiert, die Sie entweder von anderen Nutzern herunterladen können (öffentliche Stapel) oder selbst mit AnkiDroid oder Anki Desktop erstellen können. In letzterem Fall können Sie die Stapel entweder über AnkiWeb synchronisieren oder in das Verzeichnis %s kopieren.\nKlicken Sie auf diesen Text, um mehr zu erfahren.</string>
   <string name="studyoptions_deck_not_loaded_title">Stapel konnte nicht geladen werden</string>
