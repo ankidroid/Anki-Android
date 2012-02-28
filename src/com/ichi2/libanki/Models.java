@@ -998,6 +998,7 @@ public class Models {
         for(int i=0; i<text.length(); i++) {
             char character = text.charAt(i);
             if (state == 1 && character == '#') {
+            	// TODO: handle shorter html-colors too (e.g. #0000)
                 inverted.append(invertColor(text.substring(i+1, i+7)));
             }
             else {
