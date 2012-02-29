@@ -2521,9 +2521,13 @@ public class StudyOptions extends Activity implements IButtonListener {
     	if (language.equals("")) {
         	locale = Locale.getDefault();
     	} else {
-        	locale = new Locale(language);
+    		if (language.length() == 5) {
+            	locale = new Locale(language.substring(0, 2), language.substring(3, 5));    			
+    		} else {
+            	locale = new Locale(language);    			
+    		}
     	}
-        Configuration config = new Configuration();
+    	Configuration config = new Configuration();
         config.locale = locale;
         this.getResources().updateConfiguration(config, this.getResources().getDisplayMetrics());
     }

@@ -1,12 +1,12 @@
-Memorize anything with AnkiDroid!
+Memorize qualquer coisa com AnkiDroid!
 
-AnkiDroid lets you learn flashcards very efficiently by showing them just before you will forget. It is fully compatible with the spaced repetition software Anki (including synchronization), which is available for Windows, Linux and MacOS.
+AnkiDroid permite que você aprenda usando cartões de estudo de forma muito eficiente, mostrando-os imediatamente antes que você os esqueça. Ele é totalmente compatível com o Anki para desktop (incluindo sincronização), que está disponível para Windows, Linux e MacOS.
 
-Study all sorts of things wherever and whenever you want. Make good use of idle times on bus trips, in supermarket queues or any other waiting situation!
+Estude qualquer coisa, onde e quando quiser. Faça bom uso do tempo livre em viagens de ônibus, filas de supermercado ou qualquer outra situação de espera!
 
-Add material through the desktop application Anki or directly through Ankidroid.
+Adicione material através do Anki desktop ou diretamente pelo Ankidroid.
 
-Create your own flashcard decks or download free decks compiled for many languages and topics (more than 6000 available). The application even supports adding material automatically from a dictionary!
+Cria seus próprios decks de cartões de estudo ou baixa decks prontos para muitas línguas e tópicos (mais de 6000 disponíveis). O aplicativo ainda suporta adicionar material automaticamente a partir de um dicionário!
 
 ★ Principais recursos:
 • cartões de estudo com suporte para: texto, imagens, sons, LaTeX
@@ -14,7 +14,7 @@ Create your own flashcard decks or download free decks compiled for many languag
 • integração de reconhecimento de voz
 • mais de 6000 decks disponíves
 • estatísticas detalhadas
-• three widgets
+• três widgets
 • sincronização com AnkiWeb
 • código aberto
 
@@ -24,16 +24,16 @@ Create your own flashcard decks or download free decks compiled for many languag
 • navegador de cartões
 • editor/criador de cartões
 • importa arquivos de coleções existentes (do Anki Desktop)
-• add cards by intent from other applications like dictionaries
-• dictionary integration (ColorDict, GoldenDict, Leo.org, Aedict, diverse web dictionaries)
+• Adiciona cartões pela interação com outros aplicativos, como dicionários
+• integração com dicionários (ColorDict, GoldenDict, Leo.org, Aedict, diversos dicionários on-line)
 • suporte a fonte personalizada
 • sistema de backup completo
 • navegação por toque, deslizar, chacoalhar
 • revisão no widget
 • totalmente configurável
 • modo de cursinho
-• limit studying by tag, time or cards
+• Estudo pode ser limitado por tag, tempo ou cartões
 • modo noturno
 • suporte a zeemote
-• three different ui-themes
+• três temas diferentes
 • 27 línguas
