@@ -24,7 +24,7 @@
   <string name="CardEditorSaveButton">保存する</string>
   <string name="CardEditorTags">タグ: %1$s</string>
   <string name="add_new_tag">新しいタグを追加する</string>
-  <string name="sdcard_missing_message">これはUSBストレージとして使用されているので、SDカードは使用できません。USBを切断したら、単語帳にアクセスできます。</string>
+  <string name="sdcard_missing_message">これはUSBストレージとして使用されているので、SDカードは使用できません。USBを切断すれば、単語帳にアクセスできます。</string>
   <string name="show_whiteboard">ホワイトボード</string>
   <string name="hide_whiteboard">ホワイトボードを隠す</string>
   <string name="clear_whiteboard">ホワイトボードをクリア</string>
