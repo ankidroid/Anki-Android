@@ -33,7 +33,9 @@ alllang = ['ar', 'ca', 'cs', 'de', 'el', 'es-ES', 'fi', 'fr', 'hu', 'id', 'it', 
 
 def uploadtranslation(language, filename, sourcefile):
 	if len(language) > 2:
-		pathlan = language[:3] + "r" + language[3:]
+		pathlan = string.replace(language, '-', '_')
+	else:
+		pathlan = language
 	path = '../res/values-' + pathlan + '/'
 	filename = filename + '.xml'
 #	if selu == 's':
