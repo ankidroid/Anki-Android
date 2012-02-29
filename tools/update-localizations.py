@@ -163,7 +163,7 @@ t.close()
 
 for language in languages:
 	if language[:2] in localizedRegions:
-		androidLanguage = string.replace(language, '-', '_')
+		androidLanguage = string.replace(language, '-', '-r')
 	else:
 		androidLanguage = language[:2] # Example: es-ES becomes es
 
