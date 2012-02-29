@@ -73,7 +73,7 @@
   <string name="help_online">Online βοήθεια</string>
   <string name="help_faq">Συχνές ερωτήσεις</string>
   <string name="help_tutorial">Τράπουλα δείγμα</string>
-  <string name="simple_interface_hint">Empty %s. Bear in mind that simple interface cannot show pictures/sounds etc.</string>
+  <string name="simple_interface_hint">Κενό %s. Έχετε το νου σας ότι το απλό interface δεν υποστηρίζει εικόνες/ήχους κτλ.</string>
   <plurals name="factadder_cards_added">
     <item quantity="one">1 κάρτα προστέθηκε</item>
     <item quantity="other">%d κάρτες προστέθηκαν</item>

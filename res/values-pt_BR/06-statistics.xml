@@ -29,7 +29,7 @@
   <string name="statistics_young_cards">Cartões jovens</string>
   <string name="statistics_mature_cards">Cartões maduros</string>
   <string name="statistics_failed_cards">Cartões falhados</string>
-  <string name="statistics_fullscreen">Toggle Fullscreen</string>
+  <string name="statistics_fullscreen">Usar Tela Inteira</string>
   <string name="statistics_zoom_in">Aumentar zoom</string>
   <string name="statistics_zoom_out">Diminuir zoom</string>
   <string name="statistics_all_decks">(todos os decks)</string>
@@ -39,29 +39,29 @@
   <string name="deck_summary_cards_mature">Cartões maduros:</string>
   <string name="deck_summary_cards_young">Cartões jovens:</string>
   <string name="deck_summary_cards_unseen">Cartões não vistos:</string>
-  <string name="deck_summary_card_age">Card age</string>
-  <string name="deck_summary_average_interval">Average interval: &lt;b&gt;%.1f&lt;/b&gt; days</string>
+  <string name="deck_summary_card_age">Idades dos cartões</string>
+  <string name="deck_summary_average_interval">Intervalo médio: &lt;b&gt;%.1f&lt;/b&gt; dias</string>
   <string name="deck_summary_answers_correct">Respostas Corretas</string>
-  <string name="deck_summary_answers_mature">Mature cards: &lt;b&gt;%1$.1f %2$s&lt;/b&gt; %2$s (%3$d of %4$d)</string>
-  <string name="deck_summary_answers_young">Young cards: &lt;b&gt;%1$.1f %2$s&lt;/b&gt; (%3$d of %4$d)</string>
-  <string name="deck_summary_answers_firstseen">Seen the first time: &lt;b&gt;%1$.1f %2$s&lt;/b&gt; (%3$d of %4$d)</string>
+  <string name="deck_summary_answers_mature">Cartões maduros: &lt;b&gt;%1$.1f %2$s&lt;/b&gt; %2$s (%3$d de %4$d)</string>
+  <string name="deck_summary_answers_young">Cartões jovens: &lt;b&gt;%1$.1f %2$s&lt;/b&gt; (%3$d de %4$d)</string>
+  <string name="deck_summary_answers_firstseen">Vistos uma vez: &lt;b&gt;%1$.1f %2$s&lt;/b&gt; (%3$d de %4$d)</string>
   <string name="deck_summary_reviews">Revisões:</string>
   <string name="deck_summary_news">Novos cartões:</string>
   <string name="deck_summary_average_week">Média de vistos na semana passada</string>
   <string name="deck_summary_average_month">Média de vistos no mês passado</string>
-  <string name="deck_summary_average_year">Average seen last year</string>
+  <string name="deck_summary_average_year">Média vistos ano passado</string>
   <string name="deck_summary_average_total">Média de vistos sempre</string>
-  <string name="deck_summary_forecast">Forecast</string>
-  <string name="deck_summary_tomorrow_due">Tomorrow due: &lt;b&gt;%d&lt;/b&gt; cards</string>
+  <string name="deck_summary_forecast">Previsão</string>
+  <string name="deck_summary_tomorrow_due">Devidos Amanhã: &lt;b&gt;%d&lt;/b&gt; cartões</string>
   <string name="deck_summary_tomorrow_new">Novos amanhã: &lt;b&gt;%d&lt;/b&gt; cartões</string>
-  <string name="deck_summary_tomorrow_time">Tempo estimado para amanhã: &lt;b&gt;%d&lt;/b&gt; min.</string>
+  <string name="deck_summary_tomorrow_time">Tempo para amanhã: &lt;b&gt;%d&lt;/b&gt; min.</string>
   <string name="deck_summary_finished_in">Cartões novos terminam em: &lt;b&gt;%d&lt;/b&gt; dias</string>
   <string name="deck_summary_cards_per_day">&lt;b&gt;%.1f&lt;/b&gt; cartões/dia</string>
   <string name="deck_summary_deck_age">Idade do deck: &lt;b&gt;%d&lt;/b&gt; dias</string>
   <string name="deck_summary_all_decks">Todos decks</string>
   <string-array name="statistics_type_labels">
-    <item>Due</item>
-    <item>Cumulative due</item>
+    <item>Devidos</item>
+    <item>Acúmulo de devidos</item>
     <item>Intervalos</item>
     <item>Revisões</item>
     <item>Tempo de revisão</item>

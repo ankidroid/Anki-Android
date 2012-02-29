@@ -1,0 +1,39 @@
+Memorize anything with AnkiDroid!
+
+AnkiDroid lets you learn flashcards very efficiently by showing them just before you will forget. It is fully compatible with the spaced repetition software Anki (including synchronization), which is available for Windows, Linux and MacOS.
+
+Study all sorts of things wherever and whenever you want. Make good use of idle times on bus trips, in supermarket queues or any other waiting situation!
+
+Add material through the desktop application Anki or directly through Ankidroid.
+
+Create your own flashcard decks or download free decks compiled for many languages and topics (more than 6000 available). The application even supports adding material automatically from a dictionary!
+
+★ Principais recursos:
+• cartões de estudo com suporte para: texto, imagens, sons, LaTeX
+• repetição espaçada (algoritmo do supermemo 2)
+• integração de reconhecimento de voz
+• mais de 6000 decks disponíves
+• estatísticas detalhadas
+• three widgets
+• sincronização com AnkiWeb
+• código aberto
+
+★ Recursos adicionais:
+• gravar respostas (opcional)
+• whiteboard
+• navegador de cartões
+• editor/criador de cartões
+• importa arquivos de coleções existentes (do Anki Desktop)
+• add cards by intent from other applications like dictionaries
+• dictionary integration (ColorDict, GoldenDict, Leo.org, Aedict, diverse web dictionaries)
+• suporte a fonte personalizada
+• sistema de backup completo
+• navegação por toque, deslizar, chacoalhar
+• revisão no widget
+• totalmente configurável
+• modo de cursinho
+• limit studying by tag, time or cards
+• modo noturno
+• suporte a zeemote
+• three different ui-themes
+• 27 línguas

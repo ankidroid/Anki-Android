@@ -1,39 +1,39 @@
-Memorize anything with AnkiDroid!
+Απομνημονεύσετε οτιδήποτε με το AnkiDroid!
 
-AnkiDroid lets you learn flashcards very efficiently by showing them just before you will forget. It is fully compatible with the spaced repetition software Anki (including synchronization), which is available for Windows, Linux and MacOS.
+Το AnkiDroid σας επιτρέπει να μάθετε κάρτες πολύ αποτελεσματικά παρουσιάζοντάς τες λίγο πριν τις ξεχάσετε. Είναι πλήρως συμβατό με το λογισμικό επαναλήψεων με διαστήματα Anki (συμπεριλαμβανομένου και του συγχρονισμού), το οποίο είναι διαθέσιμο για Windows, Linux και MacOS.
 
-Study all sorts of things wherever and whenever you want. Make good use of idle times on bus trips, in supermarket queues or any other waiting situation!
+Μελετήστε όλα τα είδη πραγμάτων, όπου και όποτε θέλετε. Κάντε καλή χρήση του αδρανούς χρόνου στο λεωφορείο, στις ουρές σε σούπερ μάρκετ ή σε οποιαδήποτε άλλη κατάσταση αναμονής!
 
-Add material through the desktop application Anki or directly through Ankidroid.
+Προσθέστε υλικού μέσω της εφαρμογής desktop Anki ή απευθείας μέσω του Ankidroid.
 
-Create your own flashcard decks or download free decks compiled for many languages and topics (more than 6000 available). The application even supports adding material automatically from a dictionary!
+Δημιουργήστε τις δικές σας τράπουλες εκμάθησης ή κατεβάστε δωρεάν τράπουλες για πολλές γλώσσες και θέματα (πάνω από 6000 διαθέσιμες). Η εφαρμογή υποστηρίζει και την αυτόματη προσθήκη υλικού από λεξικό!
 
-★ Key features:
+★ Κυρίως χαρακτηριστικά:
 • υποστήριζόμενοι τύποι δεδομένων για κάρτες: κέιμενο, εικόνες, ήχοι, LaTeX
-• spaced repetition (supermemo 2 algorithm)
-• text-to-speech integration
-• more than 6000 premade decks
-• detailed statistics
-• three widgets
-• syncing with AnkiWeb
-• open source
+• επανάληψη με διαστήματα (αλγόριθμος supermemo 2)
+• ενοποίηση μετατροπής κειμένου σε ομιλία
+• πάνω από 6000 έτοιμες τράπουλες
+• λεπτομερή στατιστικά
+• τρία widgets
+• συγχρονισμός με το AnkiWeb
+• ανοικτός κώδικας
 
-★ Additional features:
-• write answers (optional)
-• whiteboard
-• card browser
-• card editor/adder
+★ Πρόσθετα χαρακτηριστικά:
+• εγγραφή απαντήσεων (προαιρετικά)
+• πίνακας σχεδιασμού
+• ευρετήριο καρτών
+• εργαλεία δημιουργίας/προσθήκης καρτών
 • εισαγωγή υπάρχουσας συλλογής αρχείων (μέσω Anki Desktop)
-• add cards by intent from other applications like dictionaries
-• dictionary integration (ColorDict, GoldenDict, Leo.org, Aedict, diverse web dictionaries)
-• custom font support
-• full backup system
+• προσθέστε κάρτες από άλλες εφαρμογές όπως λεξικά
+• ενοποίηση λεξικών (ColorDict, GoldenDict, Leo.org, Aedict, ποικίλα web λεξικά)
+• υποστήριξη προσαρμοσμένης γραμματοσειράς
+• πλήρες σύστημα αντιγράφων
 • πλοήγηση με σάρωμα, χτύπημα, ανακίνηση
 • επανάληψη στο widget
 • πλήρως παραμετροποιήσιμο
 • κατάσταση εντατικής επανάληψης
-• limit studying by tag, time or cards
+• περιορίστε τη μελέτη με βάση ετικέτες, το χρόνο ή τις κάρτες
 • Λειτουργία νυκτός
 • υποστήριξη zeemote
-• three different ui-themes
+• τρία διαφορετικά θέματα διεπαφής
 • 27 μεταφράσεις
