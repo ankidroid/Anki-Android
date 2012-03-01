@@ -455,13 +455,26 @@ public class Decks {
 	}
 
 	public long[] cids(long did) {
-		ArrayList<Long> cids = mCol.getDb().queryColumn(Long.class,
-				"SELECT id FROM cards WHERE did = " + did, 0);
+		return cids(did, false);
+	}
+	public long[] cids(long did, boolean children) {
+		String sql;
+		if (children) {
+			ArrayList<Long> dids = new ArrayList<Long>();
+			dids.add(did);
+			for (long id : children(did).values()) {
+				dids.add(id);
+			}
+			sql = "SELECT id FROM cards WHERE did IN " + Utils.ids2str(Utils.arrayList2array(dids));
+		} else {
+			sql = "SELECT id FROM cards WHERE did = " + did;
+		}
+		ArrayList<Long> cids = mCol.getDb().queryColumn(Long.class, sql, 0);
 		long[] result = new long[cids.size()];
 		for (int i = 0; i < cids.size(); i++) {
 			result[i] = cids.get(i);
 		}
-		return result;
+		return result;		
 	}
 
 	/**

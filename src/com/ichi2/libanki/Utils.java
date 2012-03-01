@@ -564,7 +564,7 @@ public class Utils {
 
     /**
      * @param data the string to generate hash from
-     * @return 32 bit unsigned number from first 8 digits of md5 hash
+     * @return 32 bit unsigned number from first 8 digits of sha1 hash
      */
     public static long fieldChecksum(String data) {
     	return Long.valueOf(checksum(data).substring(0, 8), 16);
