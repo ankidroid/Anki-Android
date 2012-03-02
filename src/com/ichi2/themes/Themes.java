@@ -566,6 +566,15 @@ public class Themes {
 		}
 	}
 
+	public static String getReviewerFontName() {
+		switch (mCurrentTheme) {
+		case THEME_WHITE:
+			return "OpenSans-Regular";
+		default:
+			return null;
+		}
+	}
+
 	public static void setTextColor(View view, int color) {
 		if (view instanceof ViewGroup) {
 			ViewGroup vg = (ViewGroup) view;

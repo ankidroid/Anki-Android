@@ -55,7 +55,6 @@ import android.os.Vibrator;
 import android.text.ClipboardManager;
 import android.text.Html;
 import android.text.SpannableString;
-import android.text.SpannableStringBuilder;
 import android.text.Spanned;
 import android.text.SpannedString;
 import android.text.style.StyleSpan;
@@ -2719,7 +2718,12 @@ public class Reviewer extends Activity implements IButtonListener{
             SharedPreferences preferences = PrefSettings.getSharedPrefs(getBaseContext());
             String defaultFont = preferences.getString("defaultFont", null);
             if (defaultFont == null || "".equals(defaultFont)) {
-            	mCustomDefaultFontCss = "";
+            	defaultFont = Themes.getReviewerFontName();
+            	if (defaultFont == null || "".equals(defaultFont)) {
+                	mCustomDefaultFontCss = "";            		
+            	} else {
+                    mCustomDefaultFontCss = "BODY .question, BODY .answer { font-family: '" + defaultFont + "' }\n";            		
+            	}
             } else {
                 mCustomDefaultFontCss = "BODY .question, BODY .answer { font-family: '" + defaultFont + "' }\n";            	
             }
