@@ -64,6 +64,8 @@
 <string name="resume_download">Resume Download</string>
 <string name="pause_download">Pause Download</string>
 <string name="duplicate_download">This deck is already downloading</string>
+<string name="menu_get_shared_decks">Get shared decks</string>
+<string name="download_button_return">Return</string>
 
 <string name="connection_error_message">A network error has occurred.</string>
 <string name="sync_log_db_error">A database error has occurred.</string>

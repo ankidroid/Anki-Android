@@ -677,6 +677,9 @@ public class Themes {
 		return mCardbrowserItemBorder;
 	}
 
+	public static void setTextViewBackground(View view) {
+		view.setBackgroundResource(mTextViewStyle);
+	}
 
 	public static void showThemedToast(Context context, String text, boolean shortLength) {
 		Toast result = Toast.makeText(context, text, shortLength ? Toast.LENGTH_SHORT : Toast.LENGTH_LONG);

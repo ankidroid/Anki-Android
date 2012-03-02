@@ -159,8 +159,12 @@ public class MyAccount extends Activity {
 
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(getResources().getString(
-                        R.string.ankionline_sign_up_url))));
+            	Intent intent = new Intent(MyAccount.this, Info.class);
+            	intent.putExtra(Info.TYPE_EXTRA, Info.TYPE_CREATE_ACCOUNT);
+                startActivity(intent);
+                if (UIUtils.getApiLevel() > 4) {
+                    ActivityTransitionAnimation.slide(MyAccount.this, ActivityTransitionAnimation.RIGHT);
+                }
             }
 
         });

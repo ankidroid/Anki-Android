@@ -92,6 +92,7 @@ public class DeckPicker extends Activity {
 	 */
 	private static final int DIALOG_NO_SDCARD = 0;
 	private static final int DIALOG_USER_NOT_LOGGED_IN_SYNC = 1;
+	private static final int DIALOG_USER_NOT_LOGGED_IN_ADD_SHARED_DECK = 2;
 	private static final int DIALOG_NO_CONNECTION = 3;
 	private static final int DIALOG_DELETE_DECK = 4;
 	private static final int DIALOG_SELECT_STATISTICS_TYPE = 5;
@@ -119,10 +120,8 @@ public class DeckPicker extends Activity {
 	 * Menus
 	 */
     private static final int MENU_ABOUT = 0;
-    private static final int SUBMENU_DOWNLOAD = 1;
-    private static final int MENU_CREATE_DECK = 2;
-    private static final int MENU_DOWNLOAD_PERSONAL_DECK = 21;
-    private static final int MENU_DOWNLOAD_SHARED_DECK = 22;
+    private static final int MENU_CREATE_DECK = 1;
+    private static final int MENU_ADD_SHARED_DECK = 2;
     private static final int MENU_PREFERENCES = 3;
     private static final int MENU_MY_ACCOUNT = 4;
     private static final int MENU_FEEDBACK = 5;
@@ -188,6 +187,8 @@ public class DeckPicker extends Activity {
     private static final int ADD_NOTE = 12;
     private static final int LOG_IN = 13;
     private static final int BROWSE_CARDS = 14;
+    private static final int ADD_SHARED_DECKS = 15;
+    private static final int LOG_IN_FOR_SHARED_DECK = 16;
 
 	private Collection mCol;
 
@@ -1305,7 +1306,27 @@ public class DeckPicker extends Activity {
 	 		dialog = builder.create();
 	 		break;
 
-		case DIALOG_USER_NOT_LOGGED_IN_SYNC:
+	 	case DIALOG_USER_NOT_LOGGED_IN_ADD_SHARED_DECK:
+			builder.setTitle(res.getString(R.string.connection_error_title));
+			builder.setIcon(android.R.drawable.ic_dialog_alert);
+			builder.setMessage(res.getString(R.string.no_user_password_error_message));
+			builder.setNegativeButton(res.getString(R.string.cancel), null);
+			builder.setPositiveButton(res.getString(R.string.log_in),
+					new DialogInterface.OnClickListener() {
+						@Override
+						public void onClick(DialogInterface dialog, int which) {
+							Intent myAccount = new Intent(DeckPicker.this, MyAccount.class);
+							myAccount.putExtra("notLoggedIn", true);
+							startActivityForResult(myAccount, LOG_IN_FOR_SHARED_DECK);
+					        if (UIUtils.getApiLevel() > 4) {
+					            ActivityTransitionAnimation.slide(DeckPicker.this, ActivityTransitionAnimation.FADE);
+					        }
+						}
+					});
+			dialog = builder.create();			
+			break;
+
+	 	case DIALOG_USER_NOT_LOGGED_IN_SYNC:
 			builder.setTitle(res.getString(R.string.connection_error_title));
 			builder.setIcon(android.R.drawable.ic_dialog_alert);
 			builder.setMessage(res.getString(R.string.no_user_password_error_message));
@@ -1901,7 +1922,16 @@ public class DeckPicker extends Activity {
 			}
 		}
 	}
-	
+
+	private void addSharedDeck() {
+		Intent intent = new Intent(DeckPicker.this, Info.class);
+		intent.putExtra(Info.TYPE_EXTRA, Info.TYPE_SHARED_DECKS);
+	    startActivityForResult(intent, ADD_SHARED_DECKS);
+	    if (UIUtils.getApiLevel() > 4) {
+	        ActivityTransitionAnimation.slide(DeckPicker.this, ActivityTransitionAnimation.RIGHT);
+	    }		
+	}
+
     private DialogInterface.OnClickListener mSyncConflictResolutionListener = new DialogInterface.OnClickListener() {
         @Override
         public void onClick(DialogInterface dialog, int which) {
@@ -1922,16 +1952,12 @@ public class DeckPicker extends Activity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuItem item;
-//        SubMenu downloadDeckSubMenu = menu.addSubMenu(Menu.NONE, SUBMENU_DOWNLOAD, Menu.NONE,
-//                R.string.menu_download_deck);
-//        downloadDeckSubMenu.setIcon(R.drawable.ic_menu_download);
-//        downloadDeckSubMenu.add(
-//                Menu.NONE, MENU_DOWNLOAD_PERSONAL_DECK, Menu.NONE, R.string.menu_download_personal_deck);
-//        downloadDeckSubMenu.add(Menu.NONE, MENU_DOWNLOAD_SHARED_DECK, Menu.NONE, R.string.menu_download_shared_deck);
 		UIUtils.addMenuItemInActionBar(menu, Menu.NONE, MENU_HELP, Menu.NONE,
 				R.string.help_title, R.drawable.ic_menu_help);
         item = menu.add(Menu.NONE, MENU_CREATE_DECK, Menu.NONE, R.string.new_deck);
         item.setIcon(R.drawable.ic_menu_add);
+        item = menu.add(Menu.NONE, MENU_ADD_SHARED_DECK, Menu.NONE, R.string.menu_get_shared_decks);
+        item.setIcon(R.drawable.ic_menu_download);
         item = menu.add(Menu.NONE, MENU_PREFERENCES, Menu.NONE, R.string.menu_preferences);
         item.setIcon(R.drawable.ic_menu_preferences);
         item = menu.add(Menu.NONE, MENU_MY_ACCOUNT, Menu.NONE, R.string.menu_my_account);
@@ -1988,15 +2014,22 @@ public class DeckPicker extends Activity {
                 return true;
 
             case MENU_ABOUT:
-                // int i = 123/0; // Intentional Exception for feedback testing purpose
                 startActivity(new Intent(DeckPicker.this, Info.class));
                 if (UIUtils.getApiLevel() > 4) {
                     ActivityTransitionAnimation.slide(DeckPicker.this, ActivityTransitionAnimation.RIGHT);
                 }
                 return true;
 
-            case MENU_DOWNLOAD_SHARED_DECK:
-                openSharedDeckPicker();
+            case MENU_ADD_SHARED_DECK:
+        		if (mCol != null) {
+        			SharedPreferences preferences = PrefSettings.getSharedPrefs(getBaseContext());
+        			String hkey = preferences.getString("hkey", "");
+        			if (hkey.length() == 0) {
+        				showDialog(DIALOG_USER_NOT_LOGGED_IN_ADD_SHARED_DECK);
+        			} else {
+        				addSharedDeck();
+        			}
+        		}
                 return true;
 
             case MENU_MY_ACCOUNT:
@@ -2067,6 +2100,10 @@ public class DeckPicker extends Activity {
 //            	populateDeckList(mPrefDeckPath);
         } else if (requestCode == REPORT_FEEDBACK && resultCode == RESULT_OK) {
         } else if (requestCode == LOG_IN_FOR_SYNC && resultCode == RESULT_OK) {
+        	sync();
+        } else if (requestCode == LOG_IN_FOR_SHARED_DECK && resultCode == RESULT_OK) {
+        	addSharedDeck();
+        } else if (requestCode == ADD_SHARED_DECKS) {
         	sync();
         }
 
