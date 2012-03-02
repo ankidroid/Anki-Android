@@ -38,7 +38,7 @@
 <string name="calculating_statistics">Calculating statistics.\nPlease wait...</string>
 
 <string name="deck_summary_cards">Number of cards:</string>
-<string name="deck_summary_facts">Number of facts:</string>
+<string name="deck_summary_notes">Number of notes:</string>
 <string name="deck_summary_cards_mature">Mature cards:</string>
 <string name="deck_summary_cards_young">Young cards:</string>
 <string name="deck_summary_cards_unseen">Unseen cards:</string>

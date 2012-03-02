@@ -69,10 +69,6 @@
 <string name="sync_log_db_error">A database error has occurred.</string>
 <string name="no_user_password_error_message">In order to proceed with this operation, you need to have an AnkiWeb account and be logged in.</string>
 
-<!-- SharedDeck.java -->
-<string name="fact">fact</string>
-<string name="facts">facts</string>
-
 <!-- MyAccount.java -->
 <string name="username">Username</string>
 <string name="password">Password</string>
@@ -114,14 +110,6 @@
 <string name="sync_downloading_media">Downloading media %1$d/%2$d...</string>
 <string name="sync_log_uploading_message">Full sync from local</string>
 <string name="sync_log_downloading_message">Full sync from server</string>
-<plurals name="sync_log_facts_to_server_message">
-	<item quantity="one">1 card to server</item>
-	<item quantity="other">%1$d cards to server</item>
-</plurals>
-<plurals name="sync_log_facts_from_server_message">
-	<item quantity="one">1 card from server</item>
-	<item quantity="other">%1$d cards from server</item>
-</plurals>
 <string name="sync_log_clocks_unsynchronized">The time of your device is different than that of the server by %1$d sec%2$s; unable to sync.</string>
 <string name="sync_log_clocks_unsynchronized_tz">, the device\'s time zone is possibly wrong</string>
 <string name="sync_log_clocks_unsynchronized_date">, the device\'s date is possibly wrong</string>
