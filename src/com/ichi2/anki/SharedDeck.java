@@ -86,12 +86,12 @@ public class SharedDeck extends HashMap<String, Object> {
 
 
     public void setFacts(int facts) {
-        mFacts = facts;
-        if (facts == 1) {
-            put("facts", mFacts + " " + AnkiDroidApp.getAppResources().getString(R.string.fact));
-        } else {
-            put("facts", mFacts + " " + AnkiDroidApp.getAppResources().getString(R.string.facts));
-        }
+//        mFacts = facts;
+//        if (facts == 1) {
+//            put("facts", mFacts + " " + AnkiDroidApp.getAppResources().getString(R.string.fact));
+//        } else {
+//            put("facts", mFacts + " " + AnkiDroidApp.getAppResources().getString(R.string.facts));
+//        }
     }
 
 
