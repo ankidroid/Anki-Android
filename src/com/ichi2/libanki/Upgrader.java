@@ -1,31 +1,92 @@
-///***************************************************************************************
-// * Copyright (c) 2011 Norbert Nagold <norbert.ngaold@gmail.com>                         *
-// *                                                                                      *
-// * This program is free software; you can redistribute it and/or modify it under        *
-// * the terms of the GNU General Public License as published by the Free Software        *
-// * Foundation; either version 3 of the License, or (at your option) any later           *
-// * version.                                                                             *
-// *                                                                                      *
-// * This program is distributed in the hope that it will be useful, but WITHOUT ANY      *
-// * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A      *
-// * PARTICULAR PURPOSE. See the GNU General Public License for more details.             *
-// *                                                                                      *
-// * You should have received a copy of the GNU General Public License along with         *
-// * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
-// ****************************************************************************************/
-//
-//package com.ichi2.libanki;
-//
-//import java.util.ArrayList;
-//
-//import com.ichi2.anki2.R;
-//import com.ichi2.anki.R.string;
-//
-//import android.content.res.Resources;
-//import android.database.Cursor;
-//import android.database.SQLException;
-//
-//public class Upgrade {
+/***************************************************************************************
+ * Copyright (c) 2011 Norbert Nagold <norbert.ngaold@gmail.com>                         *
+ *                                                                                      *
+ * This program is free software; you can redistribute it and/or modify it under        *
+ * the terms of the GNU General Public License as published by the Free Software        *
+ * Foundation; either version 3 of the License, or (at your option) any later           *
+ * version.                                                                             *
+ *                                                                                      *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY      *
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A      *
+ * PARTICULAR PURPOSE. See the GNU General Public License for more details.             *
+ *                                                                                      *
+ * You should have received a copy of the GNU General Public License along with         *
+ * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
+ ****************************************************************************************/
+
+package com.ichi2.libanki;
+
+import java.util.ArrayList;
+
+import com.ichi2.anki.AnkiDatabaseManager;
+import com.ichi2.anki.AnkiDb;
+import com.ichi2.anki2.R;
+
+import android.content.res.Resources;
+import android.database.Cursor;
+import android.database.SQLException;
+
+public class Upgrader {
+	String mPath;
+
+	/* Upgrading 
+	 * *************************************************************/
+
+	public void upgrade(String path) {
+//		mPath = path;
+//		_openDB(path);
+//		upgradeSchema();
+//		_openCol();
+//		_upgradeRest();
+//		return mCol;
+	}
+
+	/* Integrity checking
+	 * *************************************************************/
+
+	public boolean check(String path) {
+		AnkiDb db = AnkiDatabaseManager.getDatabase(path);
+		// corrupt?
+		if (!db.queryString("PRAGMA integrity_check").equalsIgnoreCase("ok")) {
+			return false;
+		}
+		// old version?
+		if (db.queryScalar("SELECT version FROM decks") < 65) {
+			return false;
+		}
+		// ensure we have indices for checks below
+		// TODO
+		return true;
+	}
+
+	/* DB/Deck opening
+	 * *************************************************************/
+
+	/* Schema upgrade
+	 * *************************************************************/
+
+	/* Field munging
+	 * *************************************************************/
+
+	/* Template upgrading
+	 * *************************************************************/
+
+	/* Media references
+	 * *************************************************************/
+
+	/* Inactive templates
+	 * *************************************************************/
+
+	/* Conditional templates
+	 * *************************************************************/
+
+	/* New due times
+	 * *************************************************************/
+
+	/* Post-schema upgrade
+	 * *************************************************************/
+
+}
 //
 //	public static final int DECK_VERSION = 100;
 //
