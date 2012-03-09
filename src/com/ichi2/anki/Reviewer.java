@@ -242,7 +242,6 @@ public class Reviewer extends Activity implements IButtonListener{
     private boolean mPrefFullscreenReview;
     private boolean mshowNextReviewTime;
     private boolean mZoomEnabled;    
-//    private boolean mZeemoteEnabled;    
     private boolean mPrefUseRubySupport; // Parse for ruby annotations
     private String mDeckFilename;
     private int mPrefHideQuestionInAnswer; // Hide the question when showing the answer
@@ -422,6 +421,31 @@ public class Reviewer extends Activity implements IButtonListener{
  	 * Zeemote controller
  	 */
 	protected JoystickToButtonAdapter adapter;
+	private int mZeemoteA;
+	private int mZeemoteB;
+	private int mZeemoteC;
+	private int mZeemoteD;
+	private int mZeemoteUp;
+	private int mZeemoteDown;
+	private int mZeemoteLeft;
+	private int mZeemoteRight;
+	private boolean mZeemoteShowAnswer;
+	
+	private static final int ZEEMOTE_ACTION_NONE = 0;
+	private static final int ZEEMOTE_ACTION_SHOW_ANSWER = 1;
+	private static final int ZEEMOTE_ACTION_ANSWER1 = 2;
+	private static final int ZEEMOTE_ACTION_ANSWER2 = 3;
+	private static final int ZEEMOTE_ACTION_ANSWER3 = 4;
+	private static final int ZEEMOTE_ACTION_ANSWER4 = 5;
+	private static final int ZEEMOTE_ACTION_ANSWER_RECOMMENDED = 6;
+	private static final int ZEEMOTE_ACTION_ANSWER_BETTER = 7;
+	private static final int ZEEMOTE_ACTION_UNDO = 8;
+	private static final int ZEEMOTE_ACTION_REDO = 9;
+	private static final int ZEEMOTE_ACTION_MARK = 10;
+	private static final int ZEEMOTE_ACTION_BURY = 11;
+	private static final int ZEEMOTE_ACTION_SUSPEND = 12;
+	private static final int ZEEMOTE_ACTION_EXIT = 13;
+	private static final int ZEEMOTE_ACTION_PLAY = 14;
 
 //    private int zEase;
     
@@ -819,48 +843,35 @@ public class Reviewer extends Activity implements IButtonListener{
     	}
     };
     
+    
+    
     //Zeemote handler
 	Handler ZeemoteHandler = new Handler() {
 		public void handleMessage(Message msg){
 			switch(msg.what){
 			case MSG_ZEEMOTE_STICK_UP:
-				if (sDisplayAnswer) {
-   						answerCard(Card.EASE_EASY);
-					} 			
+				executeZeemoteCommand(mZeemoteUp);
 				break;
 			case MSG_ZEEMOTE_STICK_DOWN:
-				if (sDisplayAnswer) {
-   						answerCard(Card.EASE_FAILED);
-					} 			
+				executeZeemoteCommand(mZeemoteDown);
 				break;
 			case MSG_ZEEMOTE_STICK_LEFT:
-				if (sDisplayAnswer) {
-   						answerCard(Card.EASE_HARD);
-					} 			
+				executeZeemoteCommand(mZeemoteLeft);
 				break;
 			case MSG_ZEEMOTE_STICK_RIGHT:
-				if (sDisplayAnswer) {
-   						answerCard(Card.EASE_MID);
-					} 			
+				executeZeemoteCommand(mZeemoteRight);
 				break;
 			case MSG_ZEEMOTE_BUTTON_A:
-                playSounds();
+				executeZeemoteCommand(mZeemoteA);
                 break;
-
 			case MSG_ZEEMOTE_BUTTON_B:
-				closeReviewer(RESULT_DEFAULT, false);
+				executeZeemoteCommand(mZeemoteB);
 				break;
 			case MSG_ZEEMOTE_BUTTON_C:
-				if (DeckManager.getMainDeck().undoAvailable()){
-            	setNextCardAnimation(true);
-            	DeckTask.launchDeckTask(DeckTask.TASK_TYPE_UNDO, mUpdateCardHandler, new DeckTask.TaskData(UPDATE_CARD_SHOW_QUESTION,
-                        DeckManager.getMainDeck(), mCurrentCard.getId(), false));
-				}
+				executeZeemoteCommand(mZeemoteC);
 				break;
 			case MSG_ZEEMOTE_BUTTON_D:
-				if (!sDisplayAnswer) {
-						displayCardAnswer(); 
-					}				
+				executeZeemoteCommand(mZeemoteD);
 				break;
 			}
 			super.handleMessage(msg);
@@ -1983,7 +1994,6 @@ public class Reviewer extends Activity implements IButtonListener{
         mPrefFullscreenReview = preferences.getBoolean("fullscreenReview", true);
         mshowNextReviewTime = preferences.getBoolean("showNextReviewTime", true);
         mZoomEnabled = preferences.getBoolean("zoom", false);
-//        mZeemoteEnabled = preferences.getBoolean("zeemote", false);
         mDisplayFontSize = preferences.getInt("relativeDisplayFontSize", CardModel.DEFAULT_FONT_SIZE_RATIO);
         mRelativeButtonSize = preferences.getInt("answerButtonSize", 100);
         mPrefHideQuestionInAnswer = Integer.parseInt(preferences.getString("hideQuestionInAnswer",
@@ -2041,6 +2051,16 @@ public class Reviewer extends Activity implements IButtonListener{
         }
 
         mSimpleInterface = preferences.getBoolean("simpleInterface", false);
+        
+        mZeemoteA = Integer.parseInt(preferences.getString("zeemoteActionA", "14"));
+        mZeemoteB = Integer.parseInt(preferences.getString("zeemoteActionB", "13"));
+        mZeemoteC = Integer.parseInt(preferences.getString("zeemoteActionC", "8"));
+        mZeemoteD = Integer.parseInt(preferences.getString("zeemoteActionD", "1"));
+        mZeemoteUp = Integer.parseInt(preferences.getString("zeemoteActionUp", "5"));
+        mZeemoteDown = Integer.parseInt(preferences.getString("zeemoteActionDown", "2"));
+        mZeemoteLeft = Integer.parseInt(preferences.getString("zeemoteActionLeft", "3"));
+        mZeemoteRight = Integer.parseInt(preferences.getString("zeemoteActionRight", "4"));
+        mZeemoteShowAnswer = preferences.getBoolean("zeemoteShowAnswer", false);
 
         return preferences;
     }
@@ -3076,6 +3096,88 @@ public class Reviewer extends Activity implements IButtonListener{
         return sb.toString();
     }
 
+    private void executeZeemoteCommand(int which){
+    	switch(which) {
+    	case ZEEMOTE_ACTION_NONE : 
+    		break;
+    	case ZEEMOTE_ACTION_SHOW_ANSWER :
+				if (!sDisplayAnswer) {
+					displayCardAnswer(); 
+				}				
+    		break;
+    	case ZEEMOTE_ACTION_ANSWER1 : 
+    			if (sDisplayAnswer) {
+    				answerCard(Card.EASE_FAILED);
+    			} else {
+    				if (mZeemoteShowAnswer) displayCardAnswer();
+    			}
+    			break;
+    	case ZEEMOTE_ACTION_ANSWER2 : 
+    			if (sDisplayAnswer) {
+    				answerCard(Card.EASE_HARD);
+    			} else {
+    				if (mZeemoteShowAnswer) displayCardAnswer();
+    			}
+    		break;
+    	case ZEEMOTE_ACTION_ANSWER3 : 
+    			if (sDisplayAnswer) {
+    				answerCard(Card.EASE_MID);
+    			} else {
+    				if (mZeemoteShowAnswer) displayCardAnswer();
+    			}
+    		break;
+    	case ZEEMOTE_ACTION_ANSWER4 : 
+    			if (sDisplayAnswer) {
+    				answerCard(Card.EASE_EASY);
+    			} else {
+    				if (mZeemoteShowAnswer) displayCardAnswer();
+    			}
+    		break;
+    	case ZEEMOTE_ACTION_ANSWER_RECOMMENDED : 
+    			if (sDisplayAnswer) {
+    				if (mCurrentCard.isRev()) {
+    					answerCard(Card.EASE_MID);
+    				} else {
+    					answerCard(Card.EASE_HARD);
+    				}
+    			} else {
+    				if (mZeemoteShowAnswer) displayCardAnswer();
+    			}
+    		break;
+    	case ZEEMOTE_ACTION_ANSWER_BETTER : 
+    			if (sDisplayAnswer) {
+    				if (mCurrentCard.isRev()) {
+    					answerCard(Card.EASE_EASY);
+    				} else {
+    					answerCard(Card.EASE_MID);
+    				}
+    			} else {
+    				if (mZeemoteShowAnswer) displayCardAnswer();
+    			}
+    		break;
+    	case ZEEMOTE_ACTION_UNDO :
+    			executeCommand(GESTURE_UNDO);
+    		break;
+    	case ZEEMOTE_ACTION_REDO : 
+    			executeCommand(GESTURE_REDO);
+    		break;
+    	case ZEEMOTE_ACTION_MARK : 
+    			executeCommand(GESTURE_MARK);
+    		break;
+    	case ZEEMOTE_ACTION_BURY : 
+    			executeCommand(GESTURE_BURY);
+    		break;
+    	case ZEEMOTE_ACTION_SUSPEND : 
+    			executeCommand(GESTURE_SUSPEND);
+    		break;
+    	case ZEEMOTE_ACTION_EXIT : 
+    			executeCommand(GESTURE_EXIT);
+    		break;
+    	case ZEEMOTE_ACTION_PLAY : 
+            playSounds();
+    		break;
+    	}
+    }
 
     private void executeCommand(int which) {
     	switch(which) {

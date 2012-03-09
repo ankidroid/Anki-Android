@@ -116,4 +116,21 @@
 		<item>Blue</item>
 		<item>White</item>
 	</string-array>
+	<string-array name="zeemote_action_labels">
+		<item>No action</item>
+		<item>Show answer</item>
+		<item>Answer button 1</item>
+		<item>Answer button 2</item>
+		<item>Answer button 3</item>
+		<item>Answer button 4</item>
+		<item>Answer recommended (green)</item>
+		<item>Answer better than recommended</item>
+		<item>Undo</item>
+		<item>Redo</item>
+		<item>Mark card</item>
+		<item>Bury card</item>
+		<item>Suspend card</item>
+		<item>Abort learning</item>
+		<item>Play media</item>
+	</string-array>
 </resources>
