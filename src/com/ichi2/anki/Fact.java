@@ -266,7 +266,7 @@ public class Fact {
             mSpaceUntil = str.toString();
             mSpaceUntil.substring(0, mSpaceUntil.length() - 1);
             mSpaceUntil = Utils.stripHTMLMedia(mSpaceUntil);
-            // Log.d(AnkiDroidApp.TAG, "spaceUntil = " + mSpaceUntil);
+            Log.d(AnkiDroidApp.TAG, "spaceUntil = " + mSpaceUntil);
             for (Card card : getUpdatedRelatedCards()) {
                 card.setModified();
                 card.toDB();

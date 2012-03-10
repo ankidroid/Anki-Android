@@ -223,7 +223,7 @@ public class CardModel implements Comparator<CardModel> {
             m.appendReplacement(sb, "{{" + m.group(1) + "}}");
         }
         m.appendTail(sb);
-        // Log.i(AnkiDroidApp.TAG, "Compiling question template \"" + sb.toString() + "\"");
+        Log.i(AnkiDroidApp.TAG, "Compiling question template \"" + sb.toString() + "\"");
         mQTemplate = Mustache.compiler().compile(sb.toString());
 
         // Answer template
@@ -234,7 +234,7 @@ public class CardModel implements Comparator<CardModel> {
             m.appendReplacement(sb, "{{" + m.group(1) + "}}");
         }
         m.appendTail(sb);
-        // Log.i(AnkiDroidApp.TAG, "Compiling answer template \"" + sb.toString() + "\"");
+        Log.i(AnkiDroidApp.TAG, "Compiling answer template \"" + sb.toString() + "\"");
         mATemplate = Mustache.compiler().compile(sb.toString());
     }
 
