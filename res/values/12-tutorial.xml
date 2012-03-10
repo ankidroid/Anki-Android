@@ -16,6 +16,7 @@
  
  
 <resources> 
+ <string name="tutorial_title">Tutorial</string>
  <string-array name="tutorial_questions"> 
     <item><![CDATA[Thanks for installing AnkiDroid!<br />This is a short introduction.<br /><br />What you see now is the <span style=\'font-weight:600;\'>question</span> part of a flashcard.<br />Please click on the large button below...]]></item> 
     <item><![CDATA[The next card is shown now.<br /><br />The idea is straightforward: Just like in &quot;real world&quot; paper flashcards, you write a question on the front and the answer on the back side of your cards.<br /><br />(click the button to show the back side)]]></item> 

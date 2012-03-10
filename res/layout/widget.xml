@@ -71,7 +71,7 @@
                     android:layout_marginBottom="1dip"
                     android:includeFontPadding="false"
                     android:singleLine="true"
-                    android:ellipsize="end"
+                    android:ellipsize="middle"
                     android:textColor="#000000"
                     android:textSize="18dip"
                     android:text=""

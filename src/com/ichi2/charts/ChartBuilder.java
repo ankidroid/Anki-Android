@@ -25,14 +25,19 @@ import org.achartengine.model.XYSeries;
 import org.achartengine.renderer.XYMultipleSeriesRenderer;
 import org.achartengine.renderer.XYSeriesRenderer;
 
+import android.app.Activity;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.content.res.Resources;
+import android.graphics.Color;
 import android.graphics.Paint.Align;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.GestureDetector;
+import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -43,20 +48,23 @@ import android.view.WindowManager;
 import android.view.GestureDetector.SimpleOnGestureListener;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.LinearLayout;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
+import android.widget.RadioGroup.OnCheckedChangeListener;
 
 import com.ichi2.anim.ActivityTransitionAnimation;
-import com.ichi2.anki.AnkiActivity;
 import com.ichi2.anki.AnkiDroidApp;
-import com.ichi2.anki.R;
-import com.ichi2.anki.Statistics;
-import com.ichi2.anki.StudyOptions;
+import com.ichi2.anki.DeckPicker;
+import com.ichi2.anki.UIUtils;
+import com.ichi2.anki2.R;
+import com.ichi2.libanki.Stats;
+import com.ichi2.themes.StyledDialog;
 import com.ichi2.themes.Themes;
 import com.tomgibara.android.veecheck.util.PrefSettings;
 
-public class ChartBuilder extends AnkiActivity {
+public class ChartBuilder extends Activity {
     public static final String TYPE = "type";
-    public static final int ZOOM_MAX = 20;
 
     private XYMultipleSeriesDataset mDataset = new XYMultipleSeriesDataset();
     private XYMultipleSeriesRenderer mRenderer = new XYMultipleSeriesRenderer();
@@ -64,13 +72,13 @@ public class ChartBuilder extends AnkiActivity {
     private GraphicalView mChartView;
     private TextView mTitle;
     private double[] mPan;
-    private int zoom = 0;
 
     private boolean mFullScreen;
 
+    private double[][] mSeriesList;
+    private Object[] mMeta; 
+
     private static final int MENU_FULLSCREEN = 0;
-    private static final int MENU_ZOOM_IN = 1;
-    private static final int MENU_ZOOM_OUT = 2;
 
 	/**
      * Swipe Detection
@@ -80,82 +88,21 @@ public class ChartBuilder extends AnkiActivity {
  	private boolean mSwipeEnabled;
 
     @Override
-    protected void onRestoreInstanceState(Bundle savedState) {
-        super.onRestoreInstanceState(savedState);
-        mDataset = (XYMultipleSeriesDataset) savedState.getSerializable("dataset");
-        mRenderer = (XYMultipleSeriesRenderer) savedState.getSerializable("renderer");
-    }
-
-
-    @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        outState.putSerializable("dataset", mDataset);
-        outState.putSerializable("renderer", mRenderer);
-    }
-
-
-    public void setDataset(int row) {
-        XYSeries series = new XYSeries(Statistics.Titles[row]);
-        for (int i = 0; i < Statistics.xAxisData.length; i++) {
-            series.add(Statistics.xAxisData[i], Statistics.sSeriesList[row][i]);
+        int len = mSeriesList.length;
+        outState.putInt("seriesListLen", len);
+        for (int i = 0; i < len; i++) {
+            outState.putSerializable("seriesList" + i, mSeriesList[i]);
         }
-        mDataset.addSeries(series);
+        outState.putSerializable("meta", mMeta);
     }
-
-
-    public void setRenderer(int type, int row) {
-        Resources res = getResources();
-        XYSeriesRenderer renderer = new XYSeriesRenderer();
-        if (type <= Statistics.TYPE_CUMULATIVE_DUE) {
-        	switch (row) {
-        	case 0: 
-                renderer.setColor(res.getColor(R.color.statistics_due_young_cards));
-        		break;
-        	case 1:
-                renderer.setColor(res.getColor(R.color.statistics_due_mature_cards));
-                break;
-        	case 2:
-                renderer.setColor(res.getColor(R.color.statistics_due_failed_cards));
-        		break;
-        	}
-        } else if (type == Statistics.TYPE_REVIEWS) {
-        	switch (row) {
-        	case 0: 
-                renderer.setColor(res.getColor(R.color.statistics_reps_new_cards));
-        		break;
-        	case 1:
-                renderer.setColor(res.getColor(R.color.statistics_reps_young_cards));
-                break;
-        	case 2:
-                renderer.setColor(res.getColor(R.color.statistics_reps_mature_cards));
-        		break;
-        	}
-        } else {
-            renderer.setColor(res.getColor(R.color.statistics_default));        	
-        }
-        mRenderer.addSeriesRenderer(renderer);
-    }
-
-
-    private void zoom() {
-        if (mChartView != null) {
-            if (zoom > 0) {
-                mRenderer.setXAxisMin(mPan[0] / (zoom + 1));
-                mRenderer.setXAxisMax(mPan[1] / (zoom + 1));
-            } else {
-                mRenderer.setXAxisMin(mPan[0]);
-                mRenderer.setXAxisMax(mPan[1]);
-            }
-            mChartView = ChartFactory.getBarChartView(this, mDataset, mRenderer, BarChart.Type.STACKED);
-            LinearLayout layout = (LinearLayout) findViewById(R.id.chart);
-            layout.addView(mChartView, new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT));
-        }
-    }
-
 
     public void closeChartBuilder() {
-        finishWithAnimation(ActivityTransitionAnimation.UP);
+        finish();
+        if (Integer.valueOf(android.os.Build.VERSION.SDK) > 4) {
+            ActivityTransitionAnimation.slide(this, ActivityTransitionAnimation.UP);
+        }
     }
 
 
@@ -172,18 +119,6 @@ public class ChartBuilder extends AnkiActivity {
         MenuItem item;
         item = menu.add(Menu.NONE, MENU_FULLSCREEN, Menu.NONE, R.string.statistics_fullscreen);
         item.setIcon(R.drawable.ic_menu_manage);
-        item = menu.add(Menu.NONE, MENU_ZOOM_IN, Menu.NONE, R.string.statistics_zoom_in);
-        item.setIcon(R.drawable.ic_menu_zoom_in);
-        item = menu.add(Menu.NONE, MENU_ZOOM_OUT, Menu.NONE, R.string.statistics_zoom_out);
-        item.setIcon(R.drawable.ic_menu_zoom_out);
-        return true;
-    }
-
-
-    @Override
-    public boolean onPrepareOptionsMenu(Menu menu) {
-        menu.findItem(MENU_ZOOM_IN).setEnabled(zoom < ZOOM_MAX);
-        menu.findItem(MENU_ZOOM_OUT).setEnabled(zoom > 0);
         return true;
     }
 
@@ -195,36 +130,90 @@ public class ChartBuilder extends AnkiActivity {
                 SharedPreferences preferences = PrefSettings.getSharedPrefs(getBaseContext());
                 Editor editor = preferences.edit();
                 editor.putBoolean("fullScreen", !mFullScreen);
-                Statistics.sZoom = zoom;
+//                Statistics.sZoom = zoom;
                 editor.commit();
-                finishWithoutAnimation();
+                finish();
                 Intent intent = new Intent(this, com.ichi2.charts.ChartBuilder.class);
-                startActivityWithAnimation(intent, ActivityTransitionAnimation.FADE);
-                return true;
-            case MENU_ZOOM_IN:
-                zoom += 1;
-                zoom();
-                return true;
-            case MENU_ZOOM_OUT:
-                if (zoom > 0) {
-                    zoom -= 1;
+                startActivity(intent);
+                if (Integer.valueOf(android.os.Build.VERSION.SDK) > 4) {
+                    ActivityTransitionAnimation.slide(this, ActivityTransitionAnimation.FADE);
                 }
-                zoom();
                 return true;
+    		case android.R.id.home:
+    			setResult(AnkiDroidApp.RESULT_TO_HOME);
+    			closeChartBuilder();
+    			return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
     }
 
     
+//    public void setRenderer(int type, int row) {
+//        Resources res = getResources();
+//        XYSeriesRenderer renderer = new XYSeriesRenderer();
+//        if (type <= 2) {
+//        	switch (row) {
+//        	case 0: 
+//                renderer.setColor(res.getColor(R.color.statistics_due_young_cards));
+//        		break;
+//        	case 1:
+//                renderer.setColor(res.getColor(R.color.statistics_due_mature_cards));
+//                break;
+//        	case 2:
+////                renderer.setColor(res.getColor(R.color.statistics_due_failed_cards));
+//        		break;
+//        	}
+//        } else if (type == 3) {
+//        	switch (row) {
+//        	case 0: 
+////                renderer.setColor(res.getColor(R.color.statistics_reps_new_cards));
+//        		break;
+//        	case 1:
+//                renderer.setColor(res.getColor(R.color.statistics_reps_young_cards));
+//                break;
+//        	case 2:
+//                renderer.setColor(res.getColor(R.color.statistics_reps_mature_cards));
+//        		break;
+//        	}
+//        } else {
+//            renderer.setColor(res.getColor(R.color.statistics_default));        	
+//        }
+//        mRenderer.addSeriesRenderer(renderer);
+//    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+    	Log.i(AnkiDroidApp.TAG, "ChartBuilder.OnCreate");
     	Themes.applyTheme(this);
         super.onCreate(savedInstanceState);
         restorePreferences();
-        if (Statistics.sSeriesList == null) {
+        Resources res = getResources();
+
+        Stats stats = Stats.currentStats();
+        if (stats != null) {
+            mSeriesList = stats.getSeriesList();
+            mMeta = stats.getMetaInfo();
+        } else if (savedInstanceState != null) {
+        	int len = savedInstanceState.getInt("seriesListLen");
+        	mSeriesList = new double[len][];
+        	for (int i = 0; i < len; i++) {
+                mSeriesList[i] = (double[]) savedInstanceState.getSerializable("seriesList" + i);
+        	}
+            mMeta = (Object[]) savedInstanceState.getSerializable("meta");
+        } else {
+        	finish();
+        }
+        String title = res.getString((Integer)mMeta[1]);
+        boolean backwards = (Boolean)mMeta[2];
+        int[] valueLabels = (int[])mMeta[3];
+        int[] barColors = (int[])mMeta[4];
+        int[] axisTitles = (int[])mMeta[5];
+        String subTitle = (String) mMeta[6];
+
+        if (mSeriesList == null || mSeriesList[0].length < 2) {
             Log.i(AnkiDroidApp.TAG, "ChartBuilder - Data variable empty, closing chartbuilder");
-        	finishWithoutAnimation();
+        	finish();
         	return;
         }
         if (mFullScreen) {
@@ -234,49 +223,61 @@ public class ChartBuilder extends AnkiActivity {
         }
         View mainView = getLayoutInflater().inflate(R.layout.statistics, null);
         setContentView(mainView);
-        int[] colors = Themes.getChartColors();
-        mainView.setBackgroundColor(colors[1]);
+        mainView.setBackgroundColor(Color.WHITE);
         mTitle = (TextView) findViewById(R.id.statistics_title);
         if (mChartView == null) {
             if (mFullScreen) {
-                mTitle.setText(Statistics.sTitle);
-                mTitle.setTextColor(colors[0]);
+                mTitle.setText(title);
+                mTitle.setTextColor(Color.BLACK);
             } else {
-                setTitle(Statistics.sTitle);
+                setTitle(title);
+            	UIUtils.setActionBarSubtitle(this, subTitle);
                 mTitle.setVisibility(View.GONE);
             }
-            for (int i = 0; i < Statistics.sSeriesList.length; i++) {
-                setDataset(i);
-                setRenderer(Statistics.sType, i);
+            for (int i = 1; i < mSeriesList.length; i++) {
+            	XYSeries series = new XYSeries(res.getString(valueLabels[i - 1]));
+            	for (int j = 0; j < mSeriesList[i].length; j++) {
+            		series.add(mSeriesList[0][j], mSeriesList[i][j]);
+            	}
+            	mDataset.addSeries(series);
+                XYSeriesRenderer renderer = new XYSeriesRenderer();
+                renderer.setColor(res.getColor(barColors[i - 1]));
+                mRenderer.addSeriesRenderer(renderer);
             }
-            if (Statistics.sSeriesList.length == 1) {
+            if (mSeriesList.length == 1) {
                 mRenderer.setShowLegend(false);
             }
-            mPan = new double[] { Statistics.xAxisData[0] - 1,
-                    Statistics.xAxisData[Statistics.xAxisData.length - 1] + 1 };
+            if (backwards) {
+                mPan = new double[] { mSeriesList[0][0] - 0.5, 0.5 };
+            } else {
+                mPan = new double[] { -0.5, mSeriesList[0][mSeriesList[0].length - 1] + 0.5 };
+            }
             mRenderer.setLegendTextSize(17);
+            mRenderer.setBarSpacing(0.4);
             mRenderer.setLegendHeight(60);
             mRenderer.setAxisTitleTextSize(17);
             mRenderer.setLabelsTextSize(17);
             mRenderer.setXAxisMin(mPan[0]);
             mRenderer.setXAxisMax(mPan[1]);
             mRenderer.setYAxisMin(0);
-            mRenderer.setXTitle(Statistics.axisLabels[0]);
-            mRenderer.setYTitle(Statistics.axisLabels[1]);
-            mRenderer.setBackgroundColor(colors[1]);
-            mRenderer.setMarginsColor(colors[1]);
-            mRenderer.setAxesColor(colors[0]);
-            mRenderer.setLabelsColor(colors[0]);
+            mRenderer.setGridColor(Color.LTGRAY);
+            mRenderer.setShowGrid(true);
+            mRenderer.setXTitle(res.getStringArray(R.array.due_x_axis_title)[axisTitles[0]]);
+            mRenderer.setYTitle(res.getString(axisTitles[1]));
+            mRenderer.setBackgroundColor(Color.WHITE);
+            mRenderer.setMarginsColor(Color.WHITE);
+            mRenderer.setAxesColor(Color.BLACK);
+            mRenderer.setLabelsColor(Color.BLACK);
+            mRenderer.setYLabelsColor(0, Color.BLACK);
+            mRenderer.setYLabelsAngle(-90);
+            mRenderer.setXLabelsColor(Color.BLACK);
+            mRenderer.setXLabelsAlign(Align.CENTER);
+            mRenderer.setYLabelsAlign(Align.CENTER);
             mRenderer.setZoomEnabled(false, false);
-            if (Statistics.sSeriesList[0][0] > 100 || Statistics.sSeriesList[0][1] > 100 || Statistics.sSeriesList[0][Statistics.sSeriesList[0].length - 1] > 100) {
-                mRenderer.setMargins(new int[] { 15, 50, 25, 0 });
-            } else {
-                mRenderer.setMargins(new int[] { 15, 42, 25, 0 });
-            }
+            mRenderer.setMargins(new int[] { 15, 48, 30, 10 });
+            mRenderer.setAntialiasing(true);
             mRenderer.setPanEnabled(true, false);
             mRenderer.setPanLimits(mPan);
-            mRenderer.setXLabelsAlign(Align.CENTER);
-            mRenderer.setYLabelsAlign(Align.RIGHT);
             mChartView = ChartFactory.getBarChartView(this, mDataset, mRenderer, BarChart.Type.STACKED);
             LinearLayout layout = (LinearLayout) findViewById(R.id.chart);
             layout.addView(mChartView, new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT));
@@ -292,10 +293,6 @@ public class ChartBuilder extends AnkiActivity {
         		return false;
         		}
         	});
-		zoom = Statistics.sZoom;
-        if (zoom > 0) {
-        	zoom();
-        }
     }
 
 
@@ -313,14 +310,14 @@ public class ChartBuilder extends AnkiActivity {
         public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
             if (mSwipeEnabled) {
                 try {
-                	if (e1.getY() - e2.getY() > StudyOptions.sSwipeMinDistance && Math.abs(velocityY) > StudyOptions.sSwipeThresholdVelocity && Math.abs(e1.getX() - e2.getX()) < StudyOptions.sSwipeMaxOffPath) {
+                	if (e1.getY() - e2.getY() > DeckPicker.sSwipeMinDistance && Math.abs(velocityY) > DeckPicker.sSwipeThresholdVelocity && Math.abs(e1.getX() - e2.getX()) < DeckPicker.sSwipeMaxOffPath) {
                 		closeChartBuilder();
                     }
        			}
                 catch (Exception e) {
                   	Log.e(AnkiDroidApp.TAG, "onFling Exception = " + e.getMessage());
                 }
-            }	            	
+            }
             return false;
     	}
     }
@@ -330,5 +327,52 @@ public class ChartBuilder extends AnkiActivity {
 	        return true;
 	    else
 	    	return false;
+    }
+
+
+    public static StyledDialog getStatisticsDialog(Context context, DialogInterface.OnClickListener listener) {
+    	StyledDialog.Builder builder = new StyledDialog.Builder(context);
+		builder.setTitle(context.getString(R.string.statistics_type_title));
+		builder.setIcon(android.R.drawable.ic_menu_sort_by_size);
+
+		// set items
+		String[] items = new String[3];
+		items[0] = context.getResources().getString(R.string.stats_forecast);
+		items[1] = context.getResources().getString(R.string.stats_review_count);
+		items[2] = context.getResources().getString(R.string.stats_review_time);
+
+		builder.setItems(items, listener);
+		final RadioButton[] statisticRadioButtons = new RadioButton[3];
+	    RadioGroup rg = new RadioGroup(context);
+	    rg.setOrientation(RadioGroup.HORIZONTAL);
+	    RadioGroup.LayoutParams lp = new RadioGroup.LayoutParams(0, LayoutParams.MATCH_PARENT, 1);
+	    String[] text = new String[]{"1 month", "1 year", "all"};
+	    int height = context.getResources().getDrawable(R.drawable.white_btn_radio).getIntrinsicHeight();
+	    for (int i = 0; i < statisticRadioButtons.length; i++){
+	    	statisticRadioButtons[i] = new RadioButton(context);
+	    	statisticRadioButtons[i].setClickable(true);
+	    	statisticRadioButtons[i].setText("         " + text[i]);
+	    	statisticRadioButtons[i].setHeight(height * 2);
+	    	statisticRadioButtons[i].setSingleLine();
+	    	statisticRadioButtons[i].setBackgroundDrawable(null);
+	    	statisticRadioButtons[i].setGravity(Gravity.CENTER_VERTICAL);
+	        rg.addView(statisticRadioButtons[i], lp);
+	    }
+	    rg.setOnCheckedChangeListener(new OnCheckedChangeListener () {
+			@Override
+			public void onCheckedChanged(RadioGroup arg0, int arg1) {
+				int checked = arg0.getCheckedRadioButtonId();
+				for (int i = 0; i < 3; i++) {
+					if (arg0.getChildAt(i).getId() == checked) {
+						PrefSettings.getSharedPrefs(AnkiDroidApp.getInstance().getBaseContext()).edit().putInt("statsType", i).commit();
+						break;
+					}
+				}
+			}
+			});
+	    rg.setLayoutParams(new LinearLayout.LayoutParams(LayoutParams.FILL_PARENT, height));
+	    statisticRadioButtons[Math.min(PrefSettings.getSharedPrefs(AnkiDroidApp.getInstance().getBaseContext()).getInt("statsType", Stats.TYPE_MONTH), Stats.TYPE_LIFE)].setChecked(true);
+		builder.setView(rg,  false, true);
+		return builder.create();
     }
 }

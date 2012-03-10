@@ -5,29 +5,18 @@
 	android:gravity="center"
 	android:layout_width="wrap_content">
 	<TextView
+		android:layout_height="wrap_content"
 		android:layout_width="fill_parent"
-		android:layout_height="wrap_content"
-		android:layout_gravity="center"
-		android:gravity="center"
-		android:textSize="26dip"
-		android:textStyle="bold"
-		android:text="@string/studyoptions_congrats_title"
-		android:id="@+id/studyoptions_congrats_title" />
-	<TextView
-		android:layout_height="wrap_content"
-		android:layout_width="wrap_content"
 		android:gravity="center"
 		android:text=""
-		android:layout_margin="10dip"
 		android:id="@+id/studyoptions_congrats_message" />
 	<Button
 		android:layout_height="wrap_content"
 		android:layout_width="fill_parent"
 		android:gravity="center"
-		android:layout_marginBottom="8dip"
 		android:id="@+id/studyoptions_congrats_open_other_deck"
 		android:text="@string/studyoptions_congrats_open_other_deck" />
-	<Button
+<!-- 	<Button
 		android:layout_height="wrap_content"
 		android:layout_width="fill_parent"
 		android:gravity="center"
@@ -38,13 +27,7 @@
 		android:layout_width="fill_parent"
 		android:gravity="center"
 		android:id="@+id/studyoptions_congrats_reviewearly"
-		android:text="@string/studyoptions_congrats_reviewearly" />
-	<Button
-		android:layout_height="wrap_content"
-		android:layout_width="fill_parent"
-		android:gravity="center"
-		android:id="@+id/studyoptions_congrats_syncdeck"
-		android:text="@string/studyoptions_congrats_syncdeck" />
+ 		android:text="@string/studyoptions_congrats_reviewearly" />-->
 	<Button
 		android:layout_height="wrap_content"
 		android:layout_width="fill_parent"

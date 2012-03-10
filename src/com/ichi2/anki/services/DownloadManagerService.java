@@ -32,18 +32,17 @@ import android.os.RemoteException;
 import android.util.Log;
 
 import com.ichi2.anki.AnkiDroidApp;
-import com.ichi2.anki.AnkiDroidProxy;
-import com.ichi2.anki.Card;
-import com.ichi2.anki.Deck;
-import com.ichi2.anki.DeckManager;
-import com.ichi2.anki.DeckTask;
 import com.ichi2.anki.Download;
-import com.ichi2.anki.R;
+import com.ichi2.anki2.R;
 import com.ichi2.anki.SharedDeckDownload;
 import com.ichi2.anki.StudyOptions;
-import com.ichi2.anki.Utils;
 import com.ichi2.async.Connection;
+import com.ichi2.async.DeckTask;
 import com.ichi2.async.Connection.Payload;
+import com.ichi2.libanki.Card;
+import com.ichi2.libanki.Decks;
+import com.ichi2.libanki.Utils;
+import com.ichi2.libanki.sync.HttpSyncer;
 import com.tomgibara.android.veecheck.util.PrefSettings;
 
 import java.io.DataOutputStream;
@@ -169,7 +168,7 @@ public class DownloadManagerService extends Service {
         SharedPreferences pref = PrefSettings.getSharedPrefs(getBaseContext());
         mUsername = pref.getString("username", "");
         mPassword = pref.getString("password", "");
-        mDestination = pref.getString("deckPath", AnkiDroidApp.getStorageDirectory());
+        mDestination = pref.getString("deckPath", AnkiDroidApp.getDefaultAnkiDroidDirectory());
     }
 
 
@@ -396,12 +395,12 @@ public class DownloadManagerService extends Service {
                 System.currentTimeMillis());
 
         String deckPath = mDestination + "/" + deckFilename + ".anki";
-        Intent loadDeckIntent = StudyOptions.getLoadDeckIntent(this, deckPath);
+//        Intent loadDeckIntent = StudyOptions.getLoadDeckIntent(this, deckPath);
         // The PendingIntent to launch our activity if the user selects this notification
-        PendingIntent contentIntent = PendingIntent.getActivity(this, 0, loadDeckIntent, 0);
+//        PendingIntent contentIntent = PendingIntent.getActivity(this, 0, loadDeckIntent, 0);
 
         // Set the info for the views that show in the notification panel
-        notification.setLatestEventInfo(this, deckTitle, res.getString(R.string.deck_downloaded), contentIntent);
+//        notification.setLatestEventInfo(this, deckTitle, res.getString(R.string.deck_downloaded), contentIntent);
 
         // Clear the notification when the user selects it
         notification.flags |= Notification.FLAG_AUTO_CANCEL;
@@ -590,7 +589,7 @@ public class DownloadManagerService extends Service {
             InflaterInputStream iis = null;
 
             try {
-                url = new URL(AnkiDroidProxy.SYNC_URL + "fulldown");
+                url = new URL(HttpSyncer.SYNC_URL + "fulldown");
                 HttpURLConnection connection = (HttpURLConnection) url.openConnection();
 
                 connection.setDoInput(true);
@@ -760,7 +759,7 @@ public class DownloadManagerService extends Service {
             InputStream is = null;
 
             try {
-                url = new URL("http://" + AnkiDroidProxy.SYNC_HOST + "/file/get?id=" + download.getId());
+                url = new URL("http://" + HttpSyncer.SYNC_HOST + "/file/get?id=" + download.getId());
                 HttpURLConnection connection = (HttpURLConnection) url.openConnection();
 
                 connection.setDoInput(true);
@@ -771,7 +770,7 @@ public class DownloadManagerService extends Service {
                 // FIXME: Seems that Range property is also not working well here -> TEST IT!
                 // connection.setRequestProperty("Range","bytes=" + download.getDownloaded() + "-");
                 connection.setRequestProperty("Accept-Encoding", "identity");
-                connection.setRequestProperty("Host", AnkiDroidProxy.SYNC_HOST);
+                connection.setRequestProperty("Host", HttpSyncer.SYNC_HOST);
                 connection.setRequestProperty("Connection", "close");
 
                 connection.connect();
@@ -933,20 +932,20 @@ public class DownloadManagerService extends Service {
         protected Payload doInBackground(Payload... args) {
 
             Payload data = doInBackgroundLoadDeck(args);
-            if (data.returnType == DeckTask.DECK_LOADED) {
+            if (data.returnType == 0){//DeckTask.DECK_LOADED) {
                 HashMap<String, Object> results = (HashMap<String, Object>) data.result;
-                Deck deck = (Deck) results.get("deck");
-                if (!deck.isUnpackNeeded()) {
-                    data.success = true;
-                    return data;
-                }
+                Decks deck = (Decks) results.get("deck");
+//                if (!deck.isUnpackNeeded()) {
+//                    data.success = true;
+//                    return data;
+//                }
                 // deck.beforeUpdateCards();
                 // deck.updateAllCards();
                 SharedDeckDownload download = (SharedDeckDownload) args[0].data[0];
                 SharedPreferences pref = PrefSettings.getSharedPrefs(getBaseContext());
                 String updatedCardsPref = "numUpdatedCards:" + mDestination + "/tmp/" + download.getFilename()
                         + ".anki.updating";
-                long totalCards = deck.retrieveCardCount();
+                long totalCards = 0;//deck.cardCount();
                 download.setNumTotalCards((int) totalCards);
                 long updatedCards = pref.getLong(updatedCardsPref, 0);
                 download.setNumUpdatedCards((int) updatedCards);
@@ -958,7 +957,7 @@ public class DownloadManagerService extends Service {
                 long batchStart;
                 while (updatedCards < totalCards && download.getStatus() == SharedDeckDownload.STATUS_UPDATING) {
                     batchStart = System.currentTimeMillis();
-                    updatedCards = deck.updateAllCardsFromPosition(updatedCards, batchSize);
+//                    updatedCards = deck.updateAllCardsFromPosition(updatedCards, batchSize);
                     Editor editor = pref.edit();
                     editor.putLong(updatedCardsPref, updatedCards);
                     editor.commit();
@@ -1017,30 +1016,30 @@ public class DownloadManagerService extends Service {
             Log.i(AnkiDroidApp.TAG, "loadDeck - SD card mounted and existent file -> Loading deck...");
             try {
                 // Open the right deck.
-                Deck deck = DeckManager.getDeck(deckFilename, DeckManager.REQUESTING_ACTIVITY_DOWNLOADMANAGER);
+                Decks deck = null;//DeckManager.getDeck(deckFilename, DeckManager.REQUESTING_ACTIVITY_DOWNLOADMANAGER);
                 // Start by getting the first card and displaying it.
-                Card card = deck.getCard();
+//                Card card = deck.getCard();
                 Log.i(AnkiDroidApp.TAG, "Deck loaded!");
 
                 // Set the result
-                data.returnType = DeckTask.DECK_LOADED;
+//                data.returnType = DeckTask.DECK_LOADED;
                 HashMap<String, Object> results = new HashMap<String, Object>();
                 results.put("deck", deck);
-                results.put("card", card);
+//                results.put("card", card);
                 results.put("position", download.getNumUpdatedCards());
                 data.result = results;
                 return data;
             } catch (SQLException e) {
                 Log.i(AnkiDroidApp.TAG, "The database " + deckFilename + " could not be opened = " + e.getMessage());
                 data.success = false;
-                data.returnType = DeckTask.DECK_NOT_LOADED;
+//                data.returnType = DeckTask.DECK_NOT_LOADED;
                 data.exception = e;
                 return data;
             } catch (CursorIndexOutOfBoundsException e) {
                 // XXX: Where is this exception thrown?
                 Log.i(AnkiDroidApp.TAG, "The deck has no cards = " + e.getMessage());
                 data.success = false;
-                data.returnType = DeckTask.DECK_EMPTY;
+//                data.returnType = DeckTask.DECK_EMPTY;
                 data.exception = e;
                 return data;
             }
@@ -1051,9 +1050,9 @@ public class DownloadManagerService extends Service {
         protected void onPostExecute(Payload result) {
             super.onPostExecute(result);
             HashMap<String, Object> results = (HashMap<String, Object>) result.result;
-            Deck deck = (Deck) results.get("deck");
+            Decks deck = (Decks) results.get("deck");
             // Close the previously opened deck.
-            DeckManager.closeDeck(deck.getDeckPath());
+//            DeckManager.closeDeck(deck.getDeckPath());
 
             SharedDeckDownload download = (SharedDeckDownload) result.data[0];
             SharedPreferences pref = PrefSettings.getSharedPrefs(getBaseContext());

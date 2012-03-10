@@ -16,11 +16,12 @@ package com.ichi2.widget;
 
 import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.BackupManager;
-import com.ichi2.anki.Deck;
-import com.ichi2.anki.DeckManager;
-import com.ichi2.anki.DeckStatus;
+import com.ichi2.anki.DeckPicker;
 import com.ichi2.anki.MetaDB;
 import com.ichi2.anki.services.NotificationService;
+import com.ichi2.async.DeckTask.TaskData;
+import com.ichi2.libanki.Collection;
+import com.ichi2.libanki.Decks;
 import com.tomgibara.android.veecheck.util.PrefSettings;
 
 import android.content.Context;
@@ -34,6 +35,8 @@ import java.io.File;
 import java.io.FileFilter;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
+import java.util.TreeSet;
 
 /**
  * The status of the widget.
@@ -46,6 +49,7 @@ public final class WidgetStatus {
 	private static boolean smallWidget = false;
 	private static boolean bigWidget = false;
 	private static boolean notification = false;
+
 	private static DeckStatus sDeckStatus;
 	private static AsyncTask<Context,Void,Context> sUpdateDeckStatusAsyncTask;
 
@@ -88,10 +92,20 @@ public final class WidgetStatus {
             sUpdateDeckStatusAsyncTask = new UpdateDeckStatusAsyncTask();
             sUpdateDeckStatusAsyncTask.execute(context);
         } else {
-            Log.d(AnkiDroidApp.TAG, "WidgetStatus.update(): not enabled");
+            Log.d(AnkiDroidApp.TAG, "WidgetStatus.update(): already running or not enabled");
         }
     }
 
+    public static void waitToFinish() {
+        try {
+            if ((sUpdateDeckStatusAsyncTask != null) && (sUpdateDeckStatusAsyncTask.getStatus() != AsyncTask.Status.FINISHED)) {
+            	Log.i(AnkiDroidApp.TAG, "WidgetStatus: wait to finish");
+            	sUpdateDeckStatusAsyncTask.get();
+            }
+        } catch (Exception e) {
+            return;
+        }
+    }
 
     /** Returns the status of each of the decks. */
     public static DeckStatus[] fetch(Context context) {
@@ -107,23 +121,25 @@ public final class WidgetStatus {
         return MetaDB.getNotificationStatus(context);
     }
 
-    public static DeckStatus getDeckStatus(Deck deck) {
+    public static DeckStatus getDeckStatus(Decks deck) {
 		if (deck == null) {
 			return null;
 		}
         int dueCards = 0;
         int newCards = 0;
-        int failedCards = deck.getFailedSoonCount();
-        int eta = 0;
-        int reps = deck.getSessionFinishedCards();
-
-
-        if(!deck.hasFinishScheduler()) {
-            dueCards = deck.getRevCount();
-            newCards = deck.getNewCountToday();
-            eta = deck.getETA();
-        }
-        return new DeckStatus(deck.getDeckPath(), deck.getDeckName(), newCards, dueCards, failedCards, eta, reps);
+//        int failedCards = deck.getFailedSoonCount();
+//        int eta = 0;
+//        int reps = deck.getSessionFinishedCards();
+//
+//
+//        if(!deck.hasFinishScheduler()) {
+//            dueCards = deck.getRevCount();
+//            newCards = deck.getNewCountToday();
+//            eta = deck.getETA();
+//        }
+//        return new DeckStatus(deck.getDeckPath(), deck.getDeckName(), newCards, dueCards, failedCards, eta, reps);
+//        return new DeckStatus("aaa", "aaa", 1, 1, 1, 1, 1);
+        return null;
     }
 
 
@@ -142,90 +158,50 @@ public final class WidgetStatus {
             }
 
             // For the deck information
-            ArrayList<DeckStatus> decks;
+            ArrayList<DeckStatus> decks = new ArrayList<DeckStatus>();
 
-            if (sDeckStatus != null && mDecks != null && mDecks.length > 0) {
-            	decks = new ArrayList<DeckStatus>(mDecks.length);
-            		for (DeckStatus m : mDecks) {
-            			if (m.mDeckPath.equals(sDeckStatus.mDeckPath)) {
-            				Log.i(AnkiDroidApp.TAG, "UpdateWidget - update information for deck " + sDeckStatus.mDeckPath);
-            				decks.add(sDeckStatus);
-            			} else {
-            				Log.i(AnkiDroidApp.TAG, "UpdateWidget - copy information for deck " + m.mDeckPath);
-            				decks.add(m);
-            			}
+//            if (sDeckStatus != null && mDecks != null && mDecks.length > 0) {
+//            	decks = new ArrayList<DeckStatus>(mDecks.length);
+//            	int dues = 0;
+//        		for (DeckStatus m : mDecks) {
+//        			if (m.mDeckId == sDeckStatus.mDeckId) {
+//        				Log.i(AnkiDroidApp.TAG, "UpdateWidget - update information for deck " + sDeckStatus.mDeckName);
+//        				sDeckStatus.mDeckName = m.mDeckName;
+//        				sDeckStatus.mDepth = m.mDepth;
+//        				decks.add(sDeckStatus);
+//        			} else {
+//        				Log.i(AnkiDroidApp.TAG, "UpdateWidget - copy information for deck " + m.mDeckName);
+//        				decks.add(m);
+//        			}
+//        		}
+//            } else {
+            	try {
+            		Collection col = Collection.currentCollection();
+            		Object[] di;
+            		float progress;
+            		if (col == null) {
+            			col = Collection.openCollection(AnkiDroidApp.getCollectionPath());
+                   		di = col.getSched().deckCounts();
+                   		progress = col.getSched().todaysProgress(null, true, true);
+                   		col.close(false);
+            		} else {
+                   		di = col.getSched().deckCounts();
+                   		progress = col.getSched().todaysProgress(null, true, true);
             		}
-            } else {
-                SharedPreferences preferences = PrefSettings.getSharedPrefs(context);
-                String deckPath = preferences.getString("deckPath",
-                        AnkiDroidApp.getStorageDirectory() + "/AnkiDroid");
-
-                File dir = new File(deckPath);
-
-                File[] fileList = dir.listFiles(new AnkiFileFilter());
-                if (fileList == null || fileList.length == 0) {
-                    mDecks = EMPTY_DECK_STATUS;
-                    return context;
+            		int eta = (Integer) di[1];
+                    for (Object[] d : (TreeSet<Object[]>) di[0]) {
+                    	String[] sname = (String[]) d[0];
+                    	StringBuilder name = new StringBuilder();
+                    	name.append(sname[0]);
+                    	for (int i = 1; i < sname.length; i++) {
+                    		name.append("::").append(sname[i]);
+                    	}
+                        decks.add(new DeckStatus((Long) d[1], name.toString(), (Integer) d[2], (Integer) d[3], (Integer) d[4], (int) (progress * 100), eta));            			
+            		}
+                } catch (SQLException e) {
+                    Log.i(AnkiDroidApp.TAG, "Widget: Problems on retrieving deck information");
                 }
-
-                decks = new ArrayList<DeckStatus>(fileList.length);
-
-                for (File file : fileList) {
-                	String absPath = null;
-                    try {
-                        // Run through the decks and get the information
-                        absPath = file.getAbsolutePath();
-                        String deckName = file.getName().replaceAll(".anki", "");
-
-                        Log.i(AnkiDroidApp.TAG, "WidgetStatus: Found deck: " + absPath);
-
-                        Deck deck = DeckManager.getDeck(absPath, DeckManager.REQUESTING_ACTIVITY_WIDGETSTATUS, false);
-                        if (deck == null) {
-                            Log.e(AnkiDroidApp.TAG, "Widget: Skipping null deck: " + absPath);
-                            // Use the data from the last time we updated the deck, if available.
-//                            for (DeckStatus deckStatus : mDecks) {
-//                                if (absPath.equals(deckStatus.mDeckPath)) {
-//                                    Log.d(AnkiDroidApp.TAG, "Using previous value");
-//                                    decks.add(deckStatus);
-//                                    break;
-//                                }
-//                            }
-                            continue;
-                        }
-                        int dueCards = 0;
-                        int newCards = 0;
-                        int failedCards = deck.getFailedSoonCount();
-                        int eta = 0;
-                        int reps = deck.getSessionFinishedCards();
-
-
-                        if(!deck.hasFinishScheduler()) {
-        	                dueCards = deck.getRevCount();
-        	                newCards = deck.getNewCountToday();
-        	                eta = deck.getETA();
-                        }
-
-                        DeckManager.closeDeck(absPath, DeckManager.REQUESTING_ACTIVITY_WIDGETSTATUS);
-
-                        // Add the information about the deck
-                        decks.add(new DeckStatus(absPath, deckName, newCards, dueCards, failedCards, eta, reps));
-                    } catch (SQLException e) {
-                        Log.i(AnkiDroidApp.TAG, "Widget: Problems on retrieving deck information");
-                        Log.e(AnkiDroidApp.TAG, e.toString());
-                        if (absPath != null) {
-                            BackupManager.restoreDeckIfMissing(absPath);                    	
-                        }
-                    }
-                }
-            }
-
-            if (!decks.isEmpty() && decks.size() > 1) {
-                // Sort and reverse the list if there are decks
-                Log.i(AnkiDroidApp.TAG, "Sorting deck");
-
-                // Ordered by deck name
-                Collections.sort(decks, new ByNameComparator());
-            }
+//            }
 
             mDecks = decks.toArray(EMPTY_DECK_STATUS);
             return context;
@@ -243,12 +219,12 @@ public final class WidgetStatus {
             }
             if (smallWidget) {
             	Intent intent;
-                intent = new Intent(context, AnkiDroidWidgetSmall.UpdateService.class);            	
+                intent = new Intent(context, AnkiDroidWidgetSmall.UpdateService.class);
                 context.startService(intent);
             }
             if (bigWidget) {
             	Intent intent;
-                intent = new Intent(context, AnkiDroidWidgetBig.UpdateService.class);            	
+                intent = new Intent(context, AnkiDroidWidgetBig.UpdateService.class);
                 intent.setAction(AnkiDroidWidgetBig.UpdateService.ACTION_UPDATE);
                 context.startService(intent);
             }
@@ -258,32 +234,31 @@ public final class WidgetStatus {
                 context.startService(intent);
             }
         }
-
     }
 
-    /** Comparator that sorts instances of {@link DeckStatus} based on number of due cards. */
-    public static class ByDueComparator implements java.util.Comparator<DeckStatus> {
-        @Override
-        public int compare(DeckStatus deck1, DeckStatus deck2) {
-            // Reverse due cards number order
-            return deck2.mDueCards - deck1.mDueCards;
-        }
-    }
-
-
-    /** Comparator that sorts instances of {@link DeckStatus} based on number of due cards. */
-    public static class ByNameComparator implements java.util.Comparator<DeckStatus> {
-        @Override
-        public int compare(DeckStatus deck1, DeckStatus deck2) {
-            return - deck2.mDeckName.compareTo(deck1.mDeckName);
-        }
-    }
-
-    /** Filter for Anki files. */
-    public static final class AnkiFileFilter implements FileFilter {
-        @Override
-        public boolean accept(File pathname) {
-            return pathname.isFile() && pathname.getName().endsWith(".anki");
-        }
-    }
+//    /** Comparator that sorts instances of {@link DeckStatus} based on number of due cards. */
+//    public static class ByDueComparator implements java.util.Comparator<DeckStatus> {
+//        @Override
+//        public int compare(DeckStatus deck1, DeckStatus deck2) {
+//            // Reverse due cards number order
+//            return deck2.mDueCards - deck1.mDueCards;
+//        }
+//    }
+//
+//
+//    /** Comparator that sorts instances of {@link DeckStatus} based on number of due cards. */
+//    public static class ByNameComparator implements java.util.Comparator<DeckStatus> {
+//        @Override
+//        public int compare(DeckStatus deck1, DeckStatus deck2) {
+//            return - deck2.mDeckName.compareTo(deck1.mDeckName);
+//        }
+//    }
+//
+//    /** Filter for Anki files. */
+//    public static final class AnkiFileFilter implements FileFilter {
+//        @Override
+//        public boolean accept(File pathname) {
+//            return pathname.isFile() && pathname.getName().endsWith(".anki");
+//        }
+//    }
 }

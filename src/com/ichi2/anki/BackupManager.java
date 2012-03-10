@@ -14,7 +14,7 @@
  * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
  ****************************************************************************************/
 
-package com.ichi2.anki;
+package com.ichi2.anki;import com.ichi2.anki2.R;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -23,10 +23,14 @@ import java.io.InputStream;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.UnknownFormatConversionException;
 
+import com.ichi2.libanki.Collection;
+import com.ichi2.libanki.Utils;
 import com.tomgibara.android.veecheck.util.PrefSettings;
 
 import android.content.SharedPreferences;
@@ -35,11 +39,7 @@ import android.util.Log;
 
 public class BackupManager {
 
-	static String mBackupDirectoryPath;
-	static String mBrokenDirectoryPath;
-	static int mMaxBackups;
-	static File mLastCreatedBackup;
-	static File[] mLastDeckBackups;
+	public static final int MIN_FREE_SPACE = 10;
 
 	public final static int RETURN_BACKUP_CREATED = 0;
 	public final static int RETURN_ERROR = 1;
@@ -54,21 +54,17 @@ public class BackupManager {
 	public final static String BACKUP_SUFFIX = "/backup";
 	public final static String BROKEN_DECKS_SUFFIX = "/broken";
 
-	private static ArrayList<String> mDeckPickerDecks;
 	private static boolean mUseBackups = true;
 
- 	/** Number of day, after which a backup is done on first non-studyoptions-opening (for safety reasons) */
+ 	/** Number of day after which a backup is done on first non-studyoptions-opening (for safety reasons) */
 	public static final int SAFETY_BACKUP_THRESHOLD = 3;
+
+	/** Number of hours after which a backup new backup is created */
+	public static final int BACKUP_INTERVAL = 5;
 
 	
     /* Prevent class from being instantiated */
 	private BackupManager() {
-	}
-
-
-	public static void initBackup() {
-		mUseBackups = PrefSettings.getSharedPrefs(AnkiDroidApp.getInstance().getBaseContext()).getBoolean("useBackup", true);
-		mDeckPickerDecks = new ArrayList<String>();
 	}
 
 
@@ -78,12 +74,8 @@ public class BackupManager {
 
 
 	private static File getBackupDirectory() {
-        if (mBackupDirectoryPath == null) {
-        	SharedPreferences prefs = PrefSettings.getSharedPrefs(AnkiDroidApp.getInstance().getBaseContext());
-    		mBackupDirectoryPath = prefs.getString("deckPath", AnkiDroidApp.getStorageDirectory()) + BACKUP_SUFFIX;
-        	mMaxBackups = prefs.getInt("backupMax", 3);
-        }
-        File directory = new File(mBackupDirectoryPath);
+    	SharedPreferences prefs = PrefSettings.getSharedPrefs(AnkiDroidApp.getInstance().getBaseContext());
+        File directory = new File(prefs.getString("deckPath", AnkiDroidApp.getStorageDirectory()) + BACKUP_SUFFIX);
         if (!directory.isDirectory()) {
         	directory.mkdirs();
         }
@@ -92,124 +84,156 @@ public class BackupManager {
 
 
 	private static File getBrokenDirectory() {
-        if (mBrokenDirectoryPath == null) {
-        	SharedPreferences prefs = PrefSettings.getSharedPrefs(AnkiDroidApp.getInstance().getBaseContext());
-        	mBrokenDirectoryPath = prefs.getString("deckPath", AnkiDroidApp.getStorageDirectory()) + BROKEN_DECKS_SUFFIX;
-        }
-        File directory = new File(mBrokenDirectoryPath);
+    	SharedPreferences prefs = PrefSettings.getSharedPrefs(AnkiDroidApp.getInstance().getBaseContext());
+        File directory = new File(prefs.getString("deckPath", AnkiDroidApp.getStorageDirectory()) + BROKEN_DECKS_SUFFIX);
         if (!directory.isDirectory()) {
         	directory.mkdirs();
         }
         return directory;
 	}
 
-
-	/** If deck has not been opened for a long time, we perform a backup here because Android deleted sometimes corrupted decks */
-	public static boolean safetyBackupNeeded(String deckpath, int days) {
-		if (mDeckPickerDecks == null) {
-			initBackup();
-		}
-		if (!mUseBackups || mDeckPickerDecks.contains(deckpath)) {
+	public static boolean safetyBackupNeeded(String path) {
+		return safetyBackupNeeded(path, SAFETY_BACKUP_THRESHOLD);
+	}
+	/** If collection has not been opened for a long time, we perform a backup here because Android deleted sometimes corrupted decks */
+	public static boolean safetyBackupNeeded(String path, int days) {
+		if (!PrefSettings.getSharedPrefs(AnkiDroidApp.getInstance().getBaseContext()).getBoolean("useBackup", true)) {
 			return false;
 		}
-	        File[] deckBackups = getDeckBackups(new File(deckpath));
-	        int len = deckBackups.length;
+
+        File collectionFile = new File(path);
+        File[] deckBackups = getBackups(collectionFile);
+        int len = deckBackups.length;
 		if (len == 0) {
 			// no backup available
 			return true;
-		}
-		String backupDateString = deckBackups[len - 1].getName().replaceAll("^.*-(\\d{4}-\\d{2}-\\d{2}).anki$", "$1");
-		Date backupDate;
-		try {
-			backupDate = new SimpleDateFormat("yyyy-MM-dd").parse(backupDateString);
-		} catch (ParseException e) {
-			Log.e(AnkiDroidApp.TAG, "BackupManager - safetyBackupNeeded - Error on parsing backups: " + e);
-			return true;
-		}
-        Date target = Utils.genToday(Utils.utcOffset() + (days * 86400));
-		if (backupDate.before(target)) {
-			return true;
-		} else {
-			mDeckPickerDecks.add(deckpath);
-			return false;
-		}
+		} else if (deckBackups[len - 1].lastModified() == collectionFile.lastModified()) {
+        	return false;
+        }
+
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd-HH-mm");
+        Calendar cal = new GregorianCalendar();
+        cal.setTimeInMillis(System.currentTimeMillis());
+
+        Date lastBackupDate = null;
+        while (lastBackupDate == null && len > 0) {
+        	try {
+        		len--;
+        		lastBackupDate = df.parse(deckBackups[len].getName().replaceAll("^.*-(\\d{4}-\\d{2}-\\d{2}-\\d{2}-\\d{2}).anki2$", "$1"));
+        	} catch (ParseException e) {
+        		lastBackupDate = null;
+        	}
+        }
+        if (lastBackupDate == null) {
+        	return true;
+        } else if (lastBackupDate.getTime() + days * 24 * 3600000 < Utils.intNow(1000)) {
+        	return true;
+        } else {
+        	return false;
+        }
 	}
 
 
-	/** Restores the current deck from backup if Android deleted it */
-	public static void restoreDeckIfMissing(String deckpath) {
-		if (mUseBackups && !(new File(deckpath)).exists()) {
-			Log.e(AnkiDroidApp.TAG, "BackupManager: Deck " + deckpath + " has been deleted by Android. Restoring it:");
-			File[] fl = BackupManager.getDeckBackups(new File(deckpath));
+	/** Restores the collection from backup if Android deleted it */
+	public static void restoreCollectionIfMissing(String path) {
+		if (mUseBackups && !(new File(path)).exists()) {
+			Log.e(AnkiDroidApp.TAG, "BackupManager: Collection " + path + " has been deleted by Android. Restoring it:");
+			File[] fl = BackupManager.getBackups(new File(path));
 			if (fl.length > 0) {
-				Log.e(AnkiDroidApp.TAG, "BackupManager: Deck " + deckpath + " successfully restored");
-				BackupManager.restoreDeckBackup(deckpath, fl[fl.length - 1].getAbsolutePath());					
+				BackupManager.restoreBackup(path, fl[fl.length - 1].getAbsolutePath());					
+				Log.e(AnkiDroidApp.TAG, "BackupManager: Collection " + path + " successfully restored");
 			} else {
-				Log.e(AnkiDroidApp.TAG, "BackupManager: Deck " + deckpath + " could not be restored");
+				Log.e(AnkiDroidApp.TAG, "BackupManager: Collection " + path + " could not be restored");
 			}
 		}
 	}
 
 
-	public static int backupDeck(String deckpath) {
-		if (mDeckPickerDecks == null) {
-			initBackup();
+	public static void performBackup(String path) {
+		performBackup(path, BACKUP_INTERVAL);
+	}
+	public static void performBackup(String path, int interval) {
+		SharedPreferences prefs = PrefSettings.getSharedPrefs(AnkiDroidApp.getInstance().getBaseContext());
+		if (!prefs.getBoolean("useBackup", true)) {
+			return;
 		}
-		mDeckPickerDecks.add(deckpath);
-		mLastCreatedBackup = null;
-		mLastDeckBackups = null;
-        File deckFile = new File(deckpath);
-        File[] deckBackups = getDeckBackups(deckFile);
+        File collectionFile = new File(path);
+        File[] deckBackups = getBackups(collectionFile);
         int len = deckBackups.length;
-        if (len > 0 && deckBackups[len - 1].lastModified() == deckFile.lastModified()) {
-    		deleteDeckBackups(deckBackups, mMaxBackups);
-        	return RETURN_DECK_NOT_CHANGED;
+        if (len > 0 && deckBackups[len - 1].lastModified() == collectionFile.lastModified()) {
+        	Log.i(AnkiDroidApp.TAG, "performBackup: No backup necessary due to no collection changes");
+        	return;
         }
-        Date value = Utils.genToday(Utils.utcOffset());
+
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd-HH-mm");
+        Calendar cal = new GregorianCalendar();
+        cal.setTimeInMillis(System.currentTimeMillis());
+
+        Date lastBackupDate = null;
+        while (lastBackupDate == null && len > 0) {
+        	try {
+        		len--;
+        		lastBackupDate = df.parse(deckBackups[len].getName().replaceAll("^.*-(\\d{4}-\\d{2}-\\d{2}-\\d{2}-\\d{2}).anki2$", "$1"));
+        	} catch (ParseException e) {
+        		lastBackupDate = null;
+        	}
+        }
+        if (lastBackupDate != null && lastBackupDate.getTime() + interval * 3600000 > Utils.intNow(1000)) {
+        	Log.i(AnkiDroidApp.TAG, "performBackup: No backup created. Last backup younger than 5 hours");
+        	return;
+        }
 
         String backupFilename;
         try {
-        	backupFilename = String.format(Utils.ENGLISH_LOCALE, deckFile.getName().replace(".anki", "") + "-%tF.anki", value);        	
+        	backupFilename = String.format(Utils.ENGLISH_LOCALE, collectionFile.getName().replace(".anki2", "") + "-%s.anki2", df.format(cal.getTime()));
         } catch (UnknownFormatConversionException e) {
-        	Log.e(AnkiDroidApp.TAG, "backupDeck: error on creating backup filename: " + e);
-        	return RETURN_ERROR;
+        	Log.e(AnkiDroidApp.TAG, "performBackup: error on creating backup filename: " + e);
+        	return;
         }
 
         File backupFile = new File(getBackupDirectory().getPath(), backupFilename);
         if (backupFile.exists()) {
-            Log.i(AnkiDroidApp.TAG, "No new backup of " + deckFile.getName() + " created. Already made one today");
-    		deleteDeckBackups(deckBackups, mMaxBackups);
-            return RETURN_TODAY_ALREADY_BACKUP_DONE;
+            Log.i(AnkiDroidApp.TAG, "performBackup: No new backup created. File already exists");
+            return;
         }
 
-        if (getFreeDiscSpace(deckFile) < deckFile.length() + (StudyOptions.MIN_FREE_SPACE * 1024 * 1024)) {
-            Log.e(AnkiDroidApp.TAG, "Not enough space on sd card to backup " + deckFile.getName() + ".");
-        	return RETURN_NOT_ENOUGH_SPACE;
+        if (getFreeDiscSpace(collectionFile) < collectionFile.length() + (MIN_FREE_SPACE * 1024 * 1024)) {
+            Log.e(AnkiDroidApp.TAG, "performBackup: Not enough space on sd card to backup.");
+            prefs.edit().putBoolean("noSpaceLeft", true).commit();
+        	return;
         }
 
         try {
-            InputStream stream = new FileInputStream(deckFile);
+            InputStream stream = new FileInputStream(collectionFile);
             Utils.writeToFile(stream, backupFile.getAbsolutePath());
             stream.close();
 
             // set timestamp of file in order to avoid creating a new backup unless its changed
-            backupFile.setLastModified(deckFile.lastModified());
+            backupFile.setLastModified(collectionFile.lastModified());
         } catch (IOException e) {
             Log.e(AnkiDroidApp.TAG, Log.getStackTraceString(e));
-            Log.e(AnkiDroidApp.TAG, "Backup file " + deckFile.getName() + " - Copying of file failed.");
-            return RETURN_ERROR;
+            Log.e(AnkiDroidApp.TAG, "performBackup: Copying of file failed.");
+            return;
         }
 
-        mLastCreatedBackup = backupFile;
-        mLastDeckBackups = deckBackups;
-        return RETURN_BACKUP_CREATED;
+        // delete old backups
+        deleteDeckBackups(path, prefs.getInt("backupMax", 3));
 	}
 
 
-	public static long getFreeDiscSpace(String path) {
+	public static boolean enoughDiscSpace(String path) {
+		if (getFreeDiscSpace(path) >= (MIN_FREE_SPACE * 1024 * 1024)) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+
+	private static long getFreeDiscSpace(String path) {
 		return getFreeDiscSpace(new File(path));
 	}
-	public static long getFreeDiscSpace(File file) {
+	private static long getFreeDiscSpace(File file) {
 		try {
 			StatFs stat = new StatFs(file.getParentFile().getPath());
 	    	long blocks = stat.getAvailableBlocks();
@@ -217,44 +241,34 @@ public class BackupManager {
 	    	return blocks * blocksize;
 		} catch (IllegalArgumentException e) {
 			Log.e(AnkiDroidApp.TAG, "Free space could not be retrieved: " + e);
-			return StudyOptions.MIN_FREE_SPACE * 1024 * 1024;
+			return MIN_FREE_SPACE * 1024 * 1024;
 		}	
 	}
 
 
-	public static boolean cleanUpAfterBackupCreation(boolean deckLoaded) {
-		if (deckLoaded) {
-			return deleteDeckBackups(mLastDeckBackups, mMaxBackups - 1);
-		} else if (mLastCreatedBackup != null) {
-			return mLastCreatedBackup.delete();
-		}
-		return false;
-	}
-
-
-	public static int restoreDeckBackup(String deckpath, String backupPath) {
+	public static int restoreBackup(String path, String backupPath) {
         // rename old file and move it to subdirectory
-    	if ((new File(deckpath)).exists() && !moveDeckToBrokenFolder(deckpath)) {
+    	if ((new File(path)).exists() && !moveDatabaseToBrokenFolder(path, false)) {
     		return RETURN_ERROR;
     	}
 
     	// copy backup to new position and rename it
     	File backupFile = new File(backupPath);
-    	File deckFile = new File(deckpath);
-        if (getFreeDiscSpace(deckFile) < deckFile.length() + (StudyOptions.MIN_FREE_SPACE * 1024 * 1024)) {
-            Log.e(AnkiDroidApp.TAG, "Not enough space on sd card to restore " + deckFile.getName() + ".");
+    	File colFile = new File(path);
+        if (getFreeDiscSpace(colFile) < colFile.length() + (MIN_FREE_SPACE * 1024 * 1024)) {
+            Log.e(AnkiDroidApp.TAG, "Not enough space on sd card to restore " + colFile.getName() + ".");
         	return RETURN_NOT_ENOUGH_SPACE;
         }
         try {
             InputStream stream = new FileInputStream(backupFile);
-            Utils.writeToFile(stream, deckFile.getAbsolutePath());
+            Utils.writeToFile(stream, colFile.getAbsolutePath());
             stream.close();
 
             // set timestamp of file in order to avoid creating a new backup unless its changed
-            deckFile.setLastModified(backupFile.lastModified());
+            colFile.setLastModified(backupFile.lastModified());
         } catch (IOException e) {
             Log.e(AnkiDroidApp.TAG, Log.getStackTraceString(e));
-            Log.e(AnkiDroidApp.TAG, "Restore of file " + deckFile.getName() + " failed.");
+            Log.e(AnkiDroidApp.TAG, "Restore of file " + colFile.getName() + " failed.");
             return RETURN_ERROR;
         }
 		return RETURN_DECK_RESTORED;
@@ -263,6 +277,10 @@ public class BackupManager {
 
 	public static boolean repairDeck(String deckPath) {
 		File deckFile = new File(deckPath);
+		Collection col = Collection.currentCollection();
+		if (col != null) {
+			col.close();
+		}
 		AnkiDatabaseManager.closeDatabase(deckPath);
 
     	// repair file
@@ -273,70 +291,62 @@ public class BackupManager {
     	    Process process = Runtime.getRuntime().exec(cmd);
     	    process.waitFor();
 
-    		// move deck to broken folder
-    		String brokenDirectory = getBrokenDirectory().getPath();
-    		Date value = Utils.genToday(Utils.utcOffset());
-            String movedFilename = String.format(Utils.ENGLISH_LOCALE, deckFile.getName().replace(".anki", "") + "-corrupt-%tF.anki", value);
-            File movedFile = new File(brokenDirectory, movedFilename);
-            int i = 1;
-            while (movedFile.exists()) {
-            	movedFile = new File(brokenDirectory, movedFilename.replace(".anki", "-" + Integer.toString(i) + ".anki"));
-            	i++;
-            }
-            movedFilename = movedFile.getName();
-        	if (!deckFile.renameTo(movedFile)) {
+        	if (!moveDatabaseToBrokenFolder(deckPath, false)) {
         		return false;
         	}
-        	Log.i(AnkiDroidApp.TAG, "repairDeck - moved corrupt file to " + movedFile.getAbsolutePath());
+        	Log.i(AnkiDroidApp.TAG, "repairDeck - moved corrupt file to broken folder");
         	File repairedFile = new File(deckPath + ".tmp");
         	if (!repairedFile.renameTo(deckFile)) {
         		return false;
         	}
         	return true;
     	} catch (IOException e) {
-    		Log.e("AnkiDroidApp.TAG", "repairDeck - error: " + e);
+    		Log.e("AnkiDroidApp.TAG", "repairCollection - error: " + e);
     	} catch (InterruptedException e) {
-    		Log.e("AnkiDroidApp.TAG", "repairDeck - error: " + e);
+    		Log.e("AnkiDroidApp.TAG", "repairCollection - error: " + e);
     	}
     	return false;
 	}
 
 
-	public static boolean moveDeckToBrokenFolder(String deckPath) {
-		File deckFile = new File(deckPath);
-		AnkiDatabaseManager.closeDatabase(deckPath);
-        Date value = Utils.genToday(Utils.utcOffset());
-        String movedFilename = String.format(Utils.ENGLISH_LOCALE, deckFile.getName().replace(".anki", "") + "-corrupt-%tF.anki", value);
+	public static boolean moveDatabaseToBrokenFolder(String colPath, boolean moveConnectedFilesToo) {
+		File colFile = new File(colPath);
+
+		// move file
+		Date value = Utils.genToday(Utils.utcOffset());
+        String movedFilename = String.format(Utils.ENGLISH_LOCALE, colFile.getName().replace(".anki2", "") + "-corrupt-%tF.anki2", value);
         File movedFile = new File(getBrokenDirectory().getPath(), movedFilename);
         int i = 1;
         while (movedFile.exists()) {
-        	movedFile = new File(getBrokenDirectory().getPath(), movedFilename.replace(".anki", "-" + Integer.toString(i) + ".anki"));
+        	movedFile = new File(getBrokenDirectory().getPath(), movedFilename.replace(".anki2", "-" + Integer.toString(i) + ".anki2"));
         	i++;
         }
         movedFilename = movedFile.getName();
-    	if (!deckFile.renameTo(movedFile)) {
+    	if (!colFile.renameTo(movedFile)) {
     		return false;
     	}
-    	
-    	// move all connected files (like journals, directories...) too
-    	String deckName = deckFile.getName();
-    	File directory = new File(deckFile.getParent());
-    	for (File f : directory.listFiles()) {
-    		if (f.getName().startsWith(deckName)) {
-    			if (!f.renameTo(new File(getBrokenDirectory().getPath(), f.getName().replace(deckName, movedFilename)))) {
-    				return false;
-    			}
-    		}
+
+    	if (moveConnectedFilesToo) {
+        	// move all connected files (like journals, directories...) too
+        	String deckName = colFile.getName();
+        	File directory = new File(colFile.getParent());
+        	for (File f : directory.listFiles()) {
+        		if (f.getName().startsWith(deckName)) {
+        			if (!f.renameTo(new File(getBrokenDirectory().getPath(), f.getName().replace(deckName, movedFilename)))) {
+        				return false;
+        			}
+        		}
+        	}    		
     	}
     	return true;
 	}
 
 
-	public static File[] getDeckBackups(File deckFile) {
+	public static File[] getBackups(File colFile) {
 		File[] files = getBackupDirectory().listFiles();
 		ArrayList<File> deckBackups = new ArrayList<File>();
 		for (File aktFile : files){
-			if (aktFile.getName().replaceAll("^(.*)-\\d{4}-\\d{2}-\\d{2}.anki$", "$1.anki").equals(deckFile.getName())) {
+			if (aktFile.getName().replaceAll("^(.*)-\\d{4}-\\d{2}-\\d{2}-\\d{2}-\\d{2}.anki2$", "$1.anki2").equals(colFile.getName())) {
 				deckBackups.add(aktFile);
 			}
 		}
@@ -345,43 +355,43 @@ public class BackupManager {
 		deckBackups.toArray(fileList);
 		return fileList;
 	}
-
-
-	public static boolean removeDeck(File deckFile) {
-    	String deckName = deckFile.getName();
-    	File directory = new File(deckFile.getParent());
-    	for (File f : directory.listFiles()) {
-    		if (f.getName().startsWith(deckName)) {
-    			if (!removeDir(f)) {
-    				return false;
-    			}
-    		}
-    	}
-    	return true;
+//
+//
+//	public static boolean removeDeck(File deckFile) {
+//    	String deckName = deckFile.getName();
+//    	File directory = new File(deckFile.getParent());
+//    	for (File f : directory.listFiles()) {
+//    		if (f.getName().startsWith(deckName)) {
+//    			if (!removeDir(f)) {
+//    				return false;
+//    			}
+//    		}
+//    	}
+//    	return true;
+//	}
+//
+//
+	public static boolean deleteDeckBackups(String colFile, int keepNumber) {
+		return deleteDeckBackups(getBackups(new File(colFile)), keepNumber);
 	}
-
-
-	public static boolean deleteDeckBackups(String deckpath, int keepNumber) {
-		return deleteDeckBackups(getDeckBackups(new File(deckpath)), keepNumber);
+	public static boolean deleteDeckBackups(File colFile, int keepNumber) {
+		return deleteDeckBackups(getBackups(colFile), keepNumber);
 	}
-	public static boolean deleteDeckBackups(File deckFile, int keepNumber) {
-		return deleteDeckBackups(getDeckBackups(deckFile), keepNumber);
-	}
-	public static boolean deleteDeckBackups(File[] deckBackups, int keepNumber) {
-    	if (deckBackups == null) {
+	public static boolean deleteDeckBackups(File[] backups, int keepNumber) {
+    	if (backups == null) {
     		return false;
     	}
-		for (int i = 0; i < deckBackups.length - keepNumber; i++) {
-    		deckBackups[i].delete();
+		for (int i = 0; i < backups.length - keepNumber; i++) {
+			backups[i].delete();
     	}
 		return true;
 	}
 
 
-	public static boolean deleteAllBackups() {
-		return removeDir(getBackupDirectory());
-	}
-
+//	public static boolean deleteAllBackups() {
+//		return removeDir(getBackupDirectory());
+//	}
+//
 
 	public static boolean removeDir(File dir){
 		if (dir.isDirectory()){

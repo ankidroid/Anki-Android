@@ -19,24 +19,26 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
+<string name="statistics_young">Young</string>
+<string name="statistics_mature">Mature</string>
+<string name="statistics_relearn">Relearn</string>
+<string name="statistics_learn">Learn</string>
+<string name="statistics_cram">Cram</string>
+    
+<string name="statistics_type_title">Statistics</string>
+<string name="stats_cards">Cards</string>
+<string name="stats_answers">Answers</string>
+<string name="stats_minutes">Minutes</string>
+<string name="stats_hours">Hours</string>
 
-<string name="statistics_type_title">Choose statistic type</string>
-<string name="statistics_period_title">Choose report period</string>
-<string name="statistics_period_y_axis">Cards</string>
-<string name="statistics_period_x_axis">Days</string>
 <string name="statistics_period_x_axis_minutes">Minutes</string>
 <string name="statistics_new_cards">New cards</string>
-<string name="statistics_young_cards">Young cards</string>
-<string name="statistics_mature_cards">Mature cards</string>
 <string name="statistics_failed_cards">Failed cards</string>
 <string name="statistics_fullscreen">Toggle Fullscreen</string>
-<string name="statistics_zoom_in">Zoom in</string>
-<string name="statistics_zoom_out">Zoom out</string>
-<string name="statistics_all_decks">(all decks)</string>
-<string name="calculating_statistics">Calculating statistics</string>
+<string name="calculating_statistics">Calculating statistics.\nPlease wait...</string>
 
 <string name="deck_summary_cards">Number of cards:</string>
-<string name="deck_summary_facts">Number of facts:</string>
+<string name="deck_summary_notes">Number of notes:</string>
 <string name="deck_summary_cards_mature">Mature cards:</string>
 <string name="deck_summary_cards_young">Young cards:</string>
 <string name="deck_summary_cards_unseen">Unseen cards:</string>
@@ -61,23 +63,6 @@
 <string name="deck_summary_cards_per_day">&lt;b&gt;%.1f&lt;/b&gt; cards/day</string>
 <string name="deck_summary_deck_age">Deck age: &lt;b&gt;%d&lt;/b&gt; days</string>
 <string name="deck_summary_all_decks">All decks</string>
-
-	<string-array name="statistics_type_labels">
-		<item>Due</item>
-		<item>Cumulative due</item>
-		<item>Intervals</item>
-		<item>Reviews</item>
-		<item>Reviewing time</item>
-		<item>Deck Summary</item>
-	</string-array>	
-	<string-array name="statistics_period_labels">
-		<item>1 week</item>
-		<item>1 month</item>
-		<item>3 months</item>
-		<item>6 months</item>
-		<item>1 year</item>
-	</string-array>
-
 
 	<string-array name="next_review_in_s">
 		<item>in 1 second</item>
@@ -111,5 +96,13 @@
 		<item>%s months before</item>
 		<item>%s years before</item>
 	</string-array>
-
+	<string-array name="due_x_axis_title">
+		<item>Days</item>
+		<item>Weeks</item>
+		<item>Months</item>
+	</string-array>
+	<string name="stats_forecast">Forecast</string>
+	<string name="stats_review_count">Review count</string>
+	<string name="stats_review_time">Review time</string>
+	    	    	    	    	    
 </resources>

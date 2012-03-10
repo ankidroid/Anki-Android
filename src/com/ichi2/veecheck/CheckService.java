@@ -19,7 +19,7 @@ package com.ichi2.veecheck;
 import android.content.Intent;
 import android.content.IntentFilter;
 
-import com.ichi2.anki.R;
+import com.ichi2.anki2.R;
 import com.tomgibara.android.veecheck.VeecheckNotifier;
 import com.tomgibara.android.veecheck.VeecheckService;
 import com.tomgibara.android.veecheck.VeecheckState;

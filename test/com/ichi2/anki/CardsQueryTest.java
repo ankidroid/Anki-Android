@@ -22,6 +22,8 @@ import android.test.AndroidTestCase;
 import java.lang.reflect.Field;
 import java.util.HashMap;
 
+import com.ichi2.libanki.Utils;
+
 /**
  * Unit tests for {@link CardsQuery}.
  */

@@ -88,7 +88,7 @@
         </ScrollView>
     </LinearLayout>
 
-    <FrameLayout android:id="@+id/listViewPanel"
+        <FrameLayout android:id="@+id/listViewPanel"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_weight="100">
@@ -96,11 +96,22 @@
             android:layout_width="fill_parent"
             android:background="#ffffff"
             android:cacheColorHint="#ffffff"
+            android:focusableInTouchMode="true"
+            android:drawSelectorOnTop="true"
+            android:listSelector="@drawable/white_list_selector_background"
+            android:divider="#dfdfdf"
             android:layout_height="wrap_content"
+            android:dividerHeight="1dip"
             android:paddingTop="0dip"
             android:paddingBottom="0dip" />
     </FrameLayout>
-
+        <ImageView android:id="@+id/bottomDivider"
+            android:layout_width="fill_parent"
+            android:layout_height="1dip"
+            android:scaleType="fitXY"
+            android:visibility="gone"
+            android:gravity="fill_horizontal"/> 
+        
     <FrameLayout android:id="@+id/customPanel"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
@@ -113,7 +124,14 @@
             android:paddingLeft="2dip"
             android:paddingRight="2dip"/>
     </FrameLayout>
-
+        <ImageView android:id="@+id/bottomButtonDivider"
+            android:layout_width="fill_parent"
+            android:layout_height="1dip"
+            android:scaleType="fitXY"
+            android:visibility="gone"
+            android:gravity="fill_horizontal"/> 
+        
+        
     <LinearLayout android:id="@+id/buttonPanel"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
@@ -123,8 +141,8 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:paddingTop="3dip"
-            android:paddingBottom="0dip"
+            android:paddingTop="1dip"
+            android:paddingBottom="1dip"
             android:paddingLeft="2dip"
             android:paddingRight="2dip">
             <!-- android:useLargestChild="true"-->

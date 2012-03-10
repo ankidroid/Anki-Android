@@ -15,6 +15,12 @@
 -->
 
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
-﻿    <item android:state_pressed="false" android:drawable="@drawable/blue_list_selector_background_normal" />
-    <item android:state_pressed="true" android:drawable="@drawable/white_list_selector_background_pressed" />
+  <!-- Selected -->
+  <item
+    android:drawable="@drawable/white_list_selector_background_focused"
+  	android:state_focused="true"
+    android:state_pressed="false" />
+  <item
+    android:drawable="@drawable/white_list_selector_background_pressed"
+    android:state_pressed="true" />
 </selector>

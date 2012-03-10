@@ -14,20 +14,14 @@
 
 package com.ichi2.widget;
 
-import java.io.File;
-import java.util.ArrayList;
+import org.json.JSONException;
 
 import com.ichi2.anki.AnkiDroidApp;
-import com.ichi2.anki.BackupManager;
-import com.ichi2.anki.Card;
-import com.ichi2.anki.CardEditor;
-import com.ichi2.anki.Deck;
-import com.ichi2.anki.DeckManager;
-import com.ichi2.anki.DeckStatus;
-import com.ichi2.anki.DeckTask;
-import com.ichi2.anki.R;
-import com.ichi2.anki.StudyOptions;
-import com.ichi2.anki.Utils;
+import com.ichi2.anki.DeckPicker;
+import com.ichi2.anki2.R;
+import com.ichi2.async.DeckTask;
+import com.ichi2.libanki.Card;
+import com.ichi2.libanki.Utils;
 import com.tomgibara.android.veecheck.util.PrefSettings;
 
 import android.app.PendingIntent;
@@ -40,6 +34,7 @@ import android.content.Intent;
 import android.content.ServiceConnection;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
+import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.IBinder;
 import android.text.Html;
@@ -104,7 +99,7 @@ public class AnkiDroidWidgetBig extends AppWidgetProvider {
         preferences.edit().putBoolean("widgetBigEnabled", true).commit();
         if (contentService != null) {
     		contentService.mBigCurrentView = UpdateService.VIEW_NOT_SPECIFIED;
-    		contentService.mLoadedDeck = null;
+    		contentService.mCol = null;
 		PrefSettings.getSharedPrefs(AnkiDroidApp.getInstance().getBaseContext()).edit().putString("lastWidgetDeck", "").commit();
     		contentService.setCard(null);
     		contentService.mBigCurrentMessage = null;
@@ -123,16 +118,16 @@ public class AnkiDroidWidgetBig extends AppWidgetProvider {
     }
 
 
-    public static void setDeck(Deck deck) {
-    	if (contentService != null) {
-    		contentService.mLoadedDeck = deck;
-    	}
-    	updateWidget(UpdateService.VIEW_NOT_SPECIFIED);
-    }
+//    public static void setDeck(Decks deck) {
+//    	if (contentService != null) {
+//    		contentService.mCol = deck;
+//    	}
+//    	updateWidget(UpdateService.VIEW_NOT_SPECIFIED);
+//    }
 
 
     public static void setCard(Card card) {
-    	if (contentService != null && contentService.mLoadedDeck != null) {
+    	if (contentService != null && contentService.mCol != null) {
     		contentService.setCard(card);
     	}
     }
@@ -165,6 +160,7 @@ public class AnkiDroidWidgetBig extends AppWidgetProvider {
     public static class UpdateService extends Service {
     	public static final String ACTION_NOTHING = "org.ichi2.anki.AnkiDroidWidgetBig.NOTHING";
     	public static final String ACTION_OPENDECK = "org.ichi2.anki.AnkiDroidWidgetBig.OPENDECK";
+    	public static final String ACTION_OPENCOLLECTION = "org.ichi2.anki.AnkiDroidWidgetBig.OPENCOLLECTION";
         public static final String ACTION_CLOSEDECK = "org.ichi2.anki.AnkiDroidWidgetBig.CLOSEDECK";
         public static final String ACTION_ANSWER = "org.ichi2.anki.AnkiDroidWidgetBig.ANSWER";
         public static final String ACTION_OPEN = "org.ichi2.anki.AnkiDroidWidgetBig.OPEN";
@@ -180,7 +176,6 @@ public class AnkiDroidWidgetBig extends AppWidgetProvider {
         public static final String ACTION_SHOW_TOMORROW_DUES = "org.ichi2.anki.AnkiDroidWidgetBig.TOMORROWDUES";
 
 
-        public static final String EXTRA_DECK_PATH = "deckPath";
         public static final String EXTRA_EASE = "ease";
         public static final String EXTRA_VIEW = "view";
         public static final String EXTRA_PROGRESSDIALOG = "progressDialog";
@@ -197,32 +192,37 @@ public class AnkiDroidWidgetBig extends AppWidgetProvider {
         public static final int VIEW_SHOW_ANSWER = 4;
         public static final int VIEW_NOTHING_DUE = 5;
         public static final int VIEW_SHOW_HELP = 6;
+
+        private static final int sColorBlue = Color.parseColor("#000099");
+        private static final int sColorRed = Color.parseColor("#990000");
+        private static final int sColorGreen = Color.parseColor("#007700");
         
 
-        private CharSequence getDeckStatusString(Deck deck, Card card) {
-        	return getDeckStatusString(deck.getFailedSoonCount(), deck.getRevCount(), deck.getNewCountToday(), card);
+        private CharSequence getDeckStatusString(Card card) {
+        	int[] counts = contentService.mCol.getSched().counts(card);
+        	return getDeckStatusString(counts[0], counts[1], counts[2], card);
         }
-    	private CharSequence getDeckStatusString(int failed, int rev, int newCount, Card card) {
+    	private CharSequence getDeckStatusString(int newCount, int lrnCount, int dueCount, Card card) {
             SpannableStringBuilder sb = new SpannableStringBuilder();
 
-            SpannableString red = new SpannableString(Integer.toString(failed));
-            red.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.widget_big_font_color_red)), 0, red.length(),
+            SpannableString red = new SpannableString(Integer.toString(newCount));
+            red.setSpan(new ForegroundColorSpan(sColorBlue), 0, red.length(),
                     Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-            if (card != null && card.getType() == Card.TYPE_FAILED) {
+            if (card != null && card.getType() == Card.TYPE_NEW) {
             	red.setSpan(new UnderlineSpan(), 0, red.length(), 0);
             }
 
-            SpannableString black = new SpannableString(Integer.toString(rev));
-            black.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.widget_big_font_color)), 0, black.length(),
+            SpannableString black = new SpannableString(Integer.toString(lrnCount));
+            black.setSpan(new ForegroundColorSpan(sColorRed), 0, black.length(),
                     Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-            if (card != null && card.getType() == Card.TYPE_REV) {
+            if (card != null && card.getType() == Card.TYPE_LRN) {
             	black.setSpan(new UnderlineSpan(), 0, black.length(), 0);
             }
 
-            SpannableString blue = new SpannableString(Integer.toString(newCount));
-            blue.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.widget_big_font_color_blue)), 0, blue.length(),
+            SpannableString blue = new SpannableString(Integer.toString(dueCount));
+            blue.setSpan(new ForegroundColorSpan(sColorGreen), 0, blue.length(),
                     Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-            if (card != null && card.getType() == Card.TYPE_NEW) {
+            if (card != null && card.getType() == Card.TYPE_REV) {
             	blue.setSpan(new UnderlineSpan(), 0, blue.length(), 0);
             }
 
@@ -239,23 +239,62 @@ public class AnkiDroidWidgetBig extends AppWidgetProvider {
     	private CharSequence getNextTimeString(Card card) {
             SpannableStringBuilder sb = new SpannableStringBuilder();
 
-            SpannableString hard = new SpannableString(Utils.fmtTimeSpan(card.nextInterval(card, 2) * 86400, Utils.TIME_FORMAT_DEFAULT));
-            hard.setSpan(new ForegroundColorSpan(getResources().getColor(card.isRev() ? R.color.widget_big_font_color : R.color.widget_big_font_color_green)), 0, hard.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+            SpannableString again = new SpannableString(contentService.mCol.getSched().nextIvlStr(card, 1));
+            SpannableString hard = new SpannableString(contentService.mCol.getSched().nextIvlStr(card, 2));
+            SpannableString easy = new SpannableString(contentService.mCol.getSched().nextIvlStr(card, 3));
+            SpannableString veryEasy = null;
 
-            SpannableString easy = new SpannableString(Utils.fmtTimeSpan(card.nextInterval(card, 3) * 86400, Utils.TIME_FORMAT_DEFAULT));
-            easy.setSpan(new ForegroundColorSpan(getResources().getColor(card.isRev() ? R.color.widget_big_font_color_green : R.color.widget_big_font_color)), 0, easy.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+            again.setSpan(new ForegroundColorSpan(sColorRed), 0, again.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
 
-            SpannableString veryEasy = new SpannableString(Utils.fmtTimeSpan(card.nextInterval(card, 4) * 86400, Utils.TIME_FORMAT_DEFAULT));
-            veryEasy.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.widget_big_font_color)), 0, veryEasy.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+            if (contentService.mCol.getSched().lrnButtons(card)) {
+                hard.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.widget_big_font_color_green)), 0, hard.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);            	
+                easy.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.widget_big_font_color)), 0, easy.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+            } else {
+                hard.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.widget_big_font_color)), 0, hard.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                easy.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.widget_big_font_color_green)), 0, easy.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
 
+                veryEasy = new SpannableString(contentService.mCol.getSched().nextIvlStr(card, 4));
+                veryEasy.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.widget_big_font_color)), 0, veryEasy.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);            	
+            }
+
+            sb.append(again);
+            sb.append(" \u2027 ");
             sb.append(hard);
             sb.append(" \u2027 ");
             sb.append(easy);
-            sb.append(" \u2027 ");
-            sb.append(veryEasy);
+            if (!contentService.mCol.getSched().lrnButtons(card)) {
+                sb.append(" \u2027 ");
+                sb.append(veryEasy);            	
+            }
 
             return sb;
         }
+
+
+        private DeckTask.TaskListener mOpenCollectionHandler = new DeckTask.TaskListener() {
+            @Override
+            public void onPreExecute() {
+            	showProgressDialog();
+            }
+            @Override
+            public void onProgressUpdate(DeckTask.TaskData... values) {
+            	String message = values[0].getString();
+            	if (message != null) {
+            		contentService.mBigCurrentMessage = message;
+            	}
+            	updateViews();
+            }
+
+            @Override
+            public void onPostExecute(DeckTask.TaskData result) {
+            	contentService.mCol = result.getCollection();
+            	if (contentService.mCol != null) {
+            		showDeckSelectionDialog();
+            	} else {
+            		handleError();
+            	}
+            }
+        };
 
 
         private DeckTask.TaskListener mOpenDeckHandler = new DeckTask.TaskListener() {
@@ -265,47 +304,14 @@ public class AnkiDroidWidgetBig extends AppWidgetProvider {
             }
             @Override
             public void onProgressUpdate(DeckTask.TaskData... values) {
-            	Resources res = getResources();
-            	String message = values[0].getString();
-            	if (message == null) {
-    				switch (values[0].getInt()) {
-            		case BackupManager.RETURN_BACKUP_CREATED:
-                		contentService.mBigCurrentMessage = res.getString(R.string.backup_deck_success);
-                		break;
-            		case BackupManager.RETURN_TODAY_ALREADY_BACKUP_DONE:
-            		case BackupManager.RETURN_DECK_NOT_CHANGED:
-            			contentService.mBigCurrentMessage = res.getString(R.string.loading_deck);
-            			break;
-            		case BackupManager.RETURN_ERROR:
-            			contentService.mBigCurrentMessage = "backup error";
-            			break;
-            		case BackupManager.RETURN_NOT_ENOUGH_SPACE:
-            			contentService.mBigCurrentMessage = "not enough space";
-            			break;
-            		case BackupManager.RETURN_LOW_SYSTEM_SPACE:
-            			contentService.mBigCurrentMessage = "low system space";
-            			break;
-            		}
-            	} else {
-            		contentService.mBigCurrentMessage = message;
-            	}
-            	updateViews();
             }
 
             @Override
             public void onPostExecute(DeckTask.TaskData result) {
-            	if (result.getInt() == DeckTask.DECK_LOADED) {
-                	contentService.mLoadedDeck = result.getDeck();
-                	if (contentService.mLoadedDeck != null) {
-						PrefSettings.getSharedPrefs(UpdateService.this.getBaseContext()).edit().putString("lastWidgetDeck", contentService.mLoadedDeck.getDeckPath()).commit();
-                    	contentService.setCard();
-                	}
-                	contentService.mBigShowProgressDialog = false;
-                	contentService.mBigCurrentMessage = null;
-                	updateViews(VIEW_SHOW_QUESTION);            		
-            	} else {
-            		handleError(result.getString());
-            	}
+            	contentService.setCard();
+            	contentService.mBigShowProgressDialog = false;
+            	contentService.mBigCurrentMessage = null;
+            	updateViews(VIEW_SHOW_QUESTION);
             }
         };
 
@@ -318,8 +324,10 @@ public class AnkiDroidWidgetBig extends AppWidgetProvider {
             @Override
             public void onProgressUpdate(DeckTask.TaskData... values) {
             	contentService.setCard(values[0].getCard());
-                if (values[0].isPreviousCardLeech()) {
-                    if (values[0].isPreviousCardSuspended()) {
+            	int leech = values[0].getInt();
+                if (leech > 0) {
+                    String leechMessage;
+                    if (leech == 2) {
                     	contentService.mBigCurrentMessage = getResources().getString(R.string.leech_suspend_notification);
                     } else {
                     	contentService.mBigCurrentMessage = getResources().getString(R.string.leech_notification);
@@ -329,12 +337,13 @@ public class AnkiDroidWidgetBig extends AppWidgetProvider {
                 }
             	contentService.mBigShowProgressDialog = false;
             	updateViews(VIEW_SHOW_QUESTION);
-            	WidgetStatus.update(UpdateService.this, WidgetStatus.getDeckStatus(contentService.mLoadedDeck), false);
+            	// TODO: do not reload all counts
+            	WidgetStatus.update(UpdateService.this);
             }
             @Override
             public void onPostExecute(DeckTask.TaskData result) {
             	if (!result.getBoolean()) {
-            		handleError(contentService.mLoadedDeck.getDeckPath());
+            		handleError();
             	}
             }
         };
@@ -355,19 +364,19 @@ public class AnkiDroidWidgetBig extends AppWidgetProvider {
             @Override
             public void onPostExecute(DeckTask.TaskData result) {
             	if (!result.getBoolean()) {
-            		handleError(contentService.mLoadedDeck.getDeckPath());
+            		handleError();
             		return;
             	}
                 String str = result.getString();
                 if (str != null) {
-                    if (str.equals(Deck.UNDO_TYPE_SUSPEND_CARD)) {
-                    	contentService.mBigCurrentMessage = getResources().getString(R.string.card_unsuspended);
-                    } else if (str.equals("redo suspend")) {
-                    	contentService.mBigCurrentMessage = getResources().getString(R.string.card_suspended);
-                    }
+//                    if (str.equals(Decks.UNDO_TYPE_SUSPEND_CARD)) {
+//                    	contentService.mBigCurrentMessage = getResources().getString(R.string.card_unsuspended);
+//                    } else if (str.equals("redo suspend")) {
+//                    	contentService.mBigCurrentMessage = getResources().getString(R.string.card_suspended);
+//                    }
                 }
                 updateViews();
-                WidgetStatus.update(UpdateService.this, WidgetStatus.getDeckStatus(contentService.mLoadedDeck), false);
+//                WidgetStatus.update(UpdateService.this, WidgetStatus.getDeckStatus(contentService.mCol), false);
             }
         };
 
@@ -382,7 +391,7 @@ public class AnkiDroidWidgetBig extends AppWidgetProvider {
             }
             @Override
             public void onPostExecute(DeckTask.TaskData result) {
-            	contentService.mLoadedDeck = null;
+            	contentService.mCol = null;
 				PrefSettings.getSharedPrefs(UpdateService.this.getBaseContext()).edit().putString("lastWidgetDeck", "").commit();
             	contentService.setCard(null);
             	contentService.mBigShowProgressDialog = false;
@@ -397,10 +406,10 @@ public class AnkiDroidWidgetBig extends AppWidgetProvider {
             Log.i(AnkiDroidApp.TAG, "BigWidget: OnStart");
 
             if (intent == null) {
-		// do nothing
+            	// do nothing
             } else if (contentService == null) {
             	Log.i(AnkiDroidApp.TAG, "binding content service");
-		updateViews();
+            	updateViews();
             	tempIntent = intent;
             	sContext = this;
                 Intent contentIntent = new Intent(this,	WidgetContentService.class);
@@ -418,26 +427,38 @@ public class AnkiDroidWidgetBig extends AppWidgetProvider {
             				showProgressDialog();
             			}
             		}
+            	} else if (ACTION_OPENCOLLECTION.equals(action)) {
+            		showProgressDialog();
+            		if (contentService.mCol == null) {
+            			contentService.mBigCurrentMessage = getResources().getString(R.string.open_collection);
+            			DeckTask.launchDeckTask(DeckTask.TASK_TYPE_OPEN_COLLECTION, mOpenCollectionHandler, new DeckTask.TaskData(AnkiDroidApp.getCollectionPath()));
+            			updateViews();
+            		} else {
+            			showDeckSelectionDialog();
+            		}
             	} else if (ACTION_OPENDECK.equals(action)) {
             		showProgressDialog();
-            		DeckTask.launchDeckTask(DeckTask.TASK_TYPE_LOAD_DECK, mOpenDeckHandler, new DeckTask.TaskData(DeckManager.REQUESTING_ACTIVITY_BIGWIDGET, intent.getStringExtra(EXTRA_DECK_PATH)));
+            		if (contentService != null) {
+                		contentService.mCol.getDecks().select(intent.getLongExtra(DeckPicker.EXTRA_DECK_ID, 1));
+            			DeckTask.launchDeckTask(DeckTask.TASK_TYPE_UPDATE_VALUES_FROM_DECK, mOpenDeckHandler, new DeckTask.TaskData(contentService.mCol.getSched(), true));            			
+            		}
                 } else if (ACTION_CLOSEDECK.equals(action)) {
-                	if (contentService.mLoadedDeck != null) {
-                		DeckTask.launchDeckTask(DeckTask.TASK_TYPE_CLOSE_DECK, mCloseDeckHandler, new DeckTask.TaskData(contentService.mLoadedDeck.getDeckPath()));                		
-                	} else {
+//                	if (contentService.mCol != null) {
+//                		DeckTask.launchDeckTask(DeckTask.TASK_TYPE_CLOSE_DECK, mCloseDeckHandler, new DeckTask.TaskData(contentService.mCol.getDeckPath()));                		
+//                	} else {
                 		updateViews(VIEW_DECKS);
-                	}
+//                	}
                 } else if (ACTION_UNDO.equals(action)) {
-                	if (contentService.mLoadedDeck != null) {
-                    	if (contentService.mLoadedDeck.undoAvailable()) {
-                    		DeckTask.launchDeckTask(DeckTask.TASK_TYPE_UNDO, mUpdateCardHandler, new DeckTask.TaskData(0, contentService.mLoadedDeck, contentService.mCurrentCard != null ? contentService.mCurrentCard.getId() : 0, true));                		
+                	if (contentService.mCol != null) {
+                    	if (contentService.mCol.undoAvailable()) {
+//                    		DeckTask.launchDeckTask(DeckTask.TASK_TYPE_UNDO, mUpdateCardHandler, new DeckTask.TaskData(0, contentService.mCol, contentService.mCurrentCard != null ? contentService.mCurrentCard.getId() : 0, true));                		
                     	}
                 	} else {
                 		updateViews(VIEW_DECKS);
                 	}
                 } else if (ACTION_BURY_CARD.equals(action)) {
-                	if (contentService.mLoadedDeck != null) {
-                		DeckTask.launchDeckTask(DeckTask.TASK_TYPE_BURY_CARD, mUpdateCardHandler, new DeckTask.TaskData(0, contentService.mLoadedDeck, contentService.mCurrentCard));                		
+                	if (contentService.mCol != null) {
+//                		DeckTask.launchDeckTask(DeckTask.TASK_TYPE_BURY_CARD, mUpdateCardHandler, new DeckTask.TaskData(0, contentService.mCol, contentService.mCurrentCard));                		
                 	} else {
                 		updateViews(VIEW_DECKS);
                 	}
@@ -446,12 +467,12 @@ public class AnkiDroidWidgetBig extends AppWidgetProvider {
                 	if (ease == 0) {
                 		updateViews(VIEW_SHOW_ANSWER);
                 	} else {
-                    	if (contentService.mLoadedDeck != null) {
-                    		if (contentService.mCurrentCard.thinkingTime() > 12) {
+                    	if (contentService.mCol != null) {
+                    		if (contentService.mCurrentCard.timeTaken() > 12) {
                     			// assume, user was not learning
-                    			contentService.mCurrentCard.setTimerStart(Utils.now() - 6);
+                    			contentService.mCurrentCard.setTimer(Utils.now() - 6);
                     		}
-                    		DeckTask.launchDeckTask(DeckTask.TASK_TYPE_ANSWER_CARD, mAnswerCardHandler, new DeckTask.TaskData(ease, contentService.mLoadedDeck, contentService.mCurrentCard));
+                    		DeckTask.launchDeckTask(DeckTask.TASK_TYPE_ANSWER_CARD, mAnswerCardHandler, new DeckTask.TaskData(contentService.mCol.getSched(), contentService.mCurrentCard, ease));
                     	} else {
                     		updateViews(VIEW_DECKS);
                     	}
@@ -462,33 +483,33 @@ public class AnkiDroidWidgetBig extends AppWidgetProvider {
                     dialogIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     this.startActivity(dialogIntent);
                 } else if (ACTION_OPEN.equals(action)) {
-                	String deckpath = intent.getStringExtra(EXTRA_DECK_PATH);
-                	Intent newIntent = StudyOptions.getLoadDeckIntent(this, deckpath);
-                	if (deckpath != null) {
-                    	DeckManager.getDeck(deckpath, true, DeckManager.REQUESTING_ACTIVITY_STUDYOPTIONS);                			
-                		if (contentService.mBigCurrentView != VIEW_NOTHING_DUE) {
-                        	newIntent.putExtra(StudyOptions.EXTRA_START, StudyOptions.EXTRA_START_REVIEWER);
-                        	startActivity(newIntent);
-                    		showProgressDialog();
-                		} else {
-                        	startActivity(newIntent);                			
-                		}
-                	} else {
-                		newIntent.putExtra(StudyOptions.EXTRA_START, StudyOptions.EXTRA_START_DECKPICKER);                		
-                    	startActivity(newIntent);
-                	}
+//                	String deckpath = intent.getStringExtra(EXTRA_DECK_PATH);
+//                	Intent newIntent = StudyOptions.getLoadDeckIntent(this, deckpath);
+//                	if (deckpath != null) {
+//                    	DeckManager.getDeck(deckpath, true, DeckManager.REQUESTING_ACTIVITY_STUDYOPTIONS);                			
+//                		if (contentService.mBigCurrentView != VIEW_NOTHING_DUE) {
+//                        	newIntent.putExtra(StudyOptions.EXTRA_START, StudyOptions.EXTRA_START_REVIEWER);
+//                        	startActivity(newIntent);
+//                    		showProgressDialog();
+//                		} else {
+//                        	startActivity(newIntent);                			
+//                		}
+//                	} else {
+//                		newIntent.putExtra(StudyOptions.EXTRA_START, StudyOptions.EXTRA_START_DECKPICKER);                		
+//                    	startActivity(newIntent);
+//                	}
                 } else if (ACTION_CARDEDITOR.equals(action)) {
-                    Intent editIntent = new Intent(this, CardEditor.class);
-                    editIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    editIntent.putExtra(CardEditor.EXTRA_CALLER, CardEditor.CALLER_BIGWIDGET_EDIT);
-                    editIntent.putExtra(CardEditor.EXTRA_DECKPATH, contentService.mLoadedDeck.getDeckPath());
-                    this.startActivity(editIntent);
+//                    Intent editIntent = new Intent(this, CardEditor.class);
+//                    editIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//                    editIntent.putExtra(CardEditor.EXTRA_CALLER, CardEditor.CALLER_BIGWIDGET_EDIT);
+////                    editIntent.putExtra(CardEditor.EXTRA_DECKPATH, contentService.mCol.getDeckPath());
+//                    this.startActivity(editIntent);
                 } else if (ACTION_FACTADDER.equals(action)) {
-                    Intent editIntent = new Intent(this, CardEditor.class);
-                    editIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    editIntent.putExtra(CardEditor.EXTRA_CALLER, CardEditor.CALLER_BIGWIDGET_ADD);
-                    editIntent.putExtra(CardEditor.EXTRA_DECKPATH, contentService.mLoadedDeck.getDeckPath());
-                    this.startActivity(editIntent);
+//                    Intent editIntent = new Intent(this, CardEditor.class);
+//                    editIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//                    editIntent.putExtra(CardEditor.EXTRA_CALLER, CardEditor.CALLER_BIGWIDGET_ADD);
+//                    editIntent.putExtra(CardEditor.EXTRA_DECKPATH, contentService.mCol.getDeckPath());
+//                    this.startActivity(editIntent);
                 } else if (ACTION_HELP.equals(action)) {
                 	if (contentService.mBigShowProgressDialog) {
                 		contentService.mBigShowProgressDialog = false;
@@ -498,27 +519,27 @@ public class AnkiDroidWidgetBig extends AppWidgetProvider {
                     	updateViews(VIEW_SHOW_HELP);                		
                 	}
                 } else if (ACTION_LEARN_MORE.equals(action)) {
-                	if (contentService.mLoadedDeck != null) {
-                		contentService.mLoadedDeck.setupLearnMoreScheduler();
-                		contentService.mLoadedDeck.reset();
-	                    contentService.setCard();
-	                	contentService.mBigShowProgressDialog = false;
-	                	contentService.mBigCurrentMessage = null;
-        	        	updateViews(VIEW_SHOW_QUESTION); 
-                	} else {
-                		updateViews(VIEW_DECKS);
-                	}
+//                	if (contentService.mCol != null) {
+//                		contentService.mCol.setupLearnMoreScheduler();
+//                		contentService.mCol.reset();
+//	                    contentService.setCard();
+//	                	contentService.mBigShowProgressDialog = false;
+//	                	contentService.mBigCurrentMessage = null;
+//        	        	updateViews(VIEW_SHOW_QUESTION); 
+//                	} else {
+//                		updateViews(VIEW_DECKS);
+//                	}
                 } else if (ACTION_REVIEW_EARLY.equals(action)) {
-                	if (contentService.mLoadedDeck != null) {
-                		contentService.mLoadedDeck.setupReviewEarlyScheduler();
-                		contentService.mLoadedDeck.reset();
-	                    contentService.setCard();
-	                	contentService.mBigShowProgressDialog = false;
-	                	contentService.mBigCurrentMessage = null;
-        	        	updateViews(VIEW_SHOW_QUESTION); 
-                	} else {
-                		updateViews(VIEW_DECKS);
-                	}			
+//                	if (contentService.mCol != null) {
+//                		contentService.mCol.setupReviewEarlyScheduler();
+//                		contentService.mCol.reset();
+//	                    contentService.setCard();
+//	                	contentService.mBigShowProgressDialog = false;
+//	                	contentService.mBigCurrentMessage = null;
+//        	        	updateViews(VIEW_SHOW_QUESTION); 
+//                	} else {
+//                		updateViews(VIEW_DECKS);
+//                	}			
                 } else if (ACTION_SHOW_TOMORROW_DUES.equals(action)) {
                 	if (contentService.mTomorrowDues == null) {
                 		showProgressDialog();
@@ -533,16 +554,17 @@ public class AnkiDroidWidgetBig extends AppWidgetProvider {
         }
 
 
-        private void handleError(String deckPath) {
-        	Intent newIntent = StudyOptions.getLoadDeckIntent(AnkiDroidWidgetBig.UpdateService.this, deckPath);
-        	newIntent.putExtra(StudyOptions.EXTRA_START, StudyOptions.EXTRA_DB_ERROR);
-        	startActivity(newIntent);
-    		contentService.mBigCurrentMessage = null;
-    		DeckManager.closeDeck(deckPath);    			
-    		contentService.mLoadedDeck = null;
-            contentService.setCard(null);
-    		contentService.mBigShowProgressDialog = false;
-    		updateViews(VIEW_DECKS);
+        private void handleError() {
+        	// TODO
+//        	Intent newIntent = DeckPicker.getLoadDeckIntent(AnkiDroidWidgetBig.UpdateService.this, 0);
+//        	newIntent.putExtra(StudyOptions.EXTRA_START, StudyOptions.EXTRA_DB_ERROR);
+//        	startActivity(newIntent);
+//    		contentService.mBigCurrentMessage = null;
+//    		DeckManager.closeDeck(deckPath);    			
+//    		contentService.mCol = null;
+//            contentService.setCard(null);
+//    		contentService.mBigShowProgressDialog = false;
+//    		updateViews(VIEW_DECKS);
         }
 
 
@@ -582,7 +604,7 @@ public class AnkiDroidWidgetBig extends AppWidgetProvider {
             Log.i(AnkiDroidApp.TAG, "BigWidget: buildUpdate (" + contentService.mBigCurrentView + ")");
 
             if (contentService.mBigCurrentView == VIEW_DECKS || contentService.mBigCurrentView == VIEW_SHOW_HELP || contentService.mBigCurrentView == VIEW_CONGRATS) {
-            } else if (contentService.mLoadedDeck == null) {
+            } else if (contentService.mCol == null) {
             	contentService.mBigCurrentView = VIEW_DECKS;
             } else if (contentService.mCurrentCard == null) {
             	contentService.mBigCurrentView = VIEW_NOTHING_DUE;
@@ -628,7 +650,7 @@ public class AnkiDroidWidgetBig extends AppWidgetProvider {
 
        			updateViews.setViewVisibility(R.id.widget_big_add, View.INVISIBLE);
        			updateViews.setViewVisibility(R.id.widget_big_star, View.VISIBLE);
-       			updateViews.setOnClickPendingIntent(R.id.widget_big_bottom_right, getOpenPendingIntent(this, null));
+       			updateViews.setOnClickPendingIntent(R.id.widget_big_bottom_right, getOpenPendingIntent(this, 0));
        			break;
 
             case VIEW_SHOW_HELP:
@@ -649,7 +671,11 @@ public class AnkiDroidWidgetBig extends AppWidgetProvider {
 				break;
 
             case VIEW_SHOW_QUESTION:
-        		updateViews.setTextViewText(R.id.widget_big_deckname, contentService.mLoadedDeck.getDeckName());
+        		try {
+					updateViews.setTextViewText(R.id.widget_big_deckname, contentService.mCol.getDecks().current().getString("name"));
+				} catch (JSONException e1) {
+					throw new RuntimeException(e1);
+				}
         		updateCounts(updateViews, contentService.mBigCurrentView);
 
         		updateViews.setOnClickPendingIntent(R.id.widget_big_openclose, getCloseDeckPendingIntent(context));
@@ -662,7 +688,7 @@ public class AnkiDroidWidgetBig extends AppWidgetProvider {
         		updateViews.setOnClickPendingIntent(R.id.widget_big_empty, getAnswerPendingIntent(context, 0));
 
         		updateViews.setViewVisibility(R.id.widget_big_card_areas, View.VISIBLE);
-        		updateViews.setOnClickPendingIntent(R.id.widget_big_topleft, getOpenPendingIntent(this, contentService.mLoadedDeck.getDeckPath()));
+        		updateViews.setOnClickPendingIntent(R.id.widget_big_topleft, getOpenPendingIntent(this, contentService.mCol.getDecks().selected()));
         		updateViews.setOnClickPendingIntent(R.id.widget_big_middleleft, getBuryCardPendingIntent(this));
         		updateViews.setOnClickPendingIntent(R.id.widget_big_bottomleft, getAnswerPendingIntent(this, 0));
         		updateViews.setOnClickPendingIntent(R.id.widget_big_topright, getCardEditorPendingIntent(this));
@@ -674,7 +700,7 @@ public class AnkiDroidWidgetBig extends AppWidgetProvider {
         		updateViews.setViewVisibility(R.id.widget_big_deckfield, View.INVISIBLE);
         		updateViews.setViewVisibility(R.id.widget_big_cardbackgroundstar, View.INVISIBLE);
 
-        		updateViews.setTextViewText(R.id.widget_big_cardcontent,  Html.fromHtml(contentService.mCurrentCard.getQuestion())); 
+        		updateViews.setTextViewText(R.id.widget_big_cardcontent,  Html.fromHtml(contentService.mCurrentCard.getQuestion(true))); 
 
         		updateViews.setViewVisibility(R.id.widget_big_add, View.VISIBLE);
        			updateViews.setViewVisibility(R.id.widget_big_star, View.INVISIBLE);
@@ -692,7 +718,7 @@ public class AnkiDroidWidgetBig extends AppWidgetProvider {
 
 				updateViews.setOnClickPendingIntent(R.id.widget_big_bottomleft, getAnswerPendingIntent(this, 1));
 
-				if (contentService.mCurrentCard.isRev()) {
+				if (!contentService.mCol.getSched().lrnButtons(contentService.mCurrentCard)) {
 					updateViews.setViewVisibility(R.id.widget_big_ease2_normal, View.INVISIBLE);
 					updateViews.setViewVisibility(R.id.widget_big_ease2_rec, View.VISIBLE);
 					updateViews.setViewVisibility(R.id.widget_big_ease3_normal, View.INVISIBLE);
@@ -706,13 +732,15 @@ public class AnkiDroidWidgetBig extends AppWidgetProvider {
 					updateViews.setOnClickPendingIntent(R.id.widget_big_bottomright, getAnswerPendingIntent(this, 2));
 				}
 
-				updateViews.setTextViewText(R.id.widget_big_cardcontent,  Html.fromHtml(contentService.mCurrentCard.getQuestion() 
-            			+ "<br>─────<br>" 
-            			+ contentService.mCurrentCard.getAnswer()));
+				updateViews.setTextViewText(R.id.widget_big_cardcontent,  Html.fromHtml(contentService.mCurrentCard.getAnswer(true)));
 				break;
 
             case VIEW_NOTHING_DUE:
-        		updateViews.setTextViewText(R.id.widget_big_deckname, contentService.mLoadedDeck.getDeckName());
+        		try {
+					updateViews.setTextViewText(R.id.widget_big_deckname, contentService.mCol.getDecks().current().getString("name"));
+				} catch (JSONException e) {
+					throw new RuntimeException(e);
+				}
             	updateCounts(updateViews, contentService.mBigCurrentView);
 
             	updateViews.setOnClickPendingIntent(R.id.widget_big_openclose, getCloseDeckPendingIntent(context));
@@ -726,7 +754,7 @@ public class AnkiDroidWidgetBig extends AppWidgetProvider {
             	getUpdatePendingIntent(this, VIEW_DECKS).cancel();
 
             	updateViews.setViewVisibility(R.id.widget_big_card_areas, View.VISIBLE);
-            	updateViews.setOnClickPendingIntent(R.id.widget_big_topleft, getOpenPendingIntent(this, contentService.mLoadedDeck.getDeckPath()));
+            	updateViews.setOnClickPendingIntent(R.id.widget_big_topleft, getOpenPendingIntent(this, contentService.mCol.getDecks().selected()));
             	removeAreaListeners(this, false);
             	updateViews.setOnClickPendingIntent(R.id.widget_big_middleright, getUndoPendingIntent(this));
             	emptyCardAreaTexts(updateViews);
@@ -736,11 +764,12 @@ public class AnkiDroidWidgetBig extends AppWidgetProvider {
        			updateViews.setViewVisibility(R.id.widget_big_nothing_due, View.VISIBLE);
        			updateViews.setViewVisibility(R.id.widget_big_deckfield, View.INVISIBLE);
 
-       			int failedCards = contentService.mLoadedDeck.getFailedDelayedCount();
-       			int revCards = contentService.mLoadedDeck.getNextDueCards(1);
-       			int newCards = contentService.mLoadedDeck.getNextNewCards();
-       			int eta = contentService.mLoadedDeck.getETA(failedCards, revCards, newCards, true);
-       			updateViews.setTextViewText(R.id.widget_big_congrats, StudyOptions.getCongratsMessage(this, failedCards, revCards, newCards, eta));
+       			// TODO
+//       			int failedCards = contentService.mCol.getFailedDelayedCount();
+//       			int revCards = contentService.mCol.getNextDueCards(1);
+//       			int newCards = contentService.mCol.getNextNewCards();
+//       			int eta = contentService.mCol.getETA(failedCards, revCards, newCards, true);
+//       			updateViews.setTextViewText(R.id.widget_big_congrats, StudyOptions.getCongratsMessage(this, failedCards, revCards, newCards, eta));
 
        			updateViews.setOnClickPendingIntent(R.id.widget_big_review_early, getReviewEarlyPendingIntent(context));
        			updateViews.setOnClickPendingIntent(R.id.widget_big_learn_more, getLearnMorePendingIntent(context));
@@ -777,22 +806,9 @@ public class AnkiDroidWidgetBig extends AppWidgetProvider {
 
 
     	private void updateCounts(RemoteViews updateViews, int view) {
-    		DeckStatus[] decks = WidgetStatus.fetch(this);
-        	int eta = 0;
-        	int reps = 0;
-        	int due = 0;
-
-        	// determine total progress
-        	for (DeckStatus d : decks) {
-        		eta += d.mEta;
-        		reps += d.mTime;
-        		due += d.mFailedCards + d.mNewCards + d.mDueCards;
-        	}
-        	int totalreps = reps + due;
-        	int progressTotal = 0;
-        	if (totalreps != 0) {
-        		progressTotal = (int) Math.round((100.0d * reps) / totalreps);
-        	}
+        	int[] counts = WidgetStatus.fetchSmall(this);
+        	int progressTotal = counts[1];
+        	int eta = counts[2];
     		updateViews.setProgressBar(R.id.widget_big_progress_total, 100, progressTotal, false);
     		if (eta == 0) {
     			updateViews.setViewVisibility(R.id.widget_big_eta, View.INVISIBLE);
@@ -804,8 +820,8 @@ public class AnkiDroidWidgetBig extends AppWidgetProvider {
     		switch (view) {
     		case VIEW_SHOW_QUESTION:
     		case VIEW_NOTHING_DUE:
-    			updateViews.setTextViewText(R.id.widget_big_counts, getDeckStatusString(contentService.mLoadedDeck, contentService.mCurrentCard));
-    			double sessionProgress = contentService.mLoadedDeck.getSessionProgress(true);
+    			updateViews.setTextViewText(R.id.widget_big_counts, getDeckStatusString(contentService.mCurrentCard));
+    			double sessionProgress = contentService.mCol.getSched().todaysProgress(contentService.mCurrentCard, false, false);
     			if (sessionProgress == -1) {
 	        		updateViews.setViewVisibility(R.id.widget_big_progress_frame_deck, View.INVISIBLE);
     			} else {
@@ -829,7 +845,7 @@ public class AnkiDroidWidgetBig extends AppWidgetProvider {
 				updateViews.setViewVisibility(R.id.widget_big_deckfield, View.VISIBLE);
 				updateViews.setViewVisibility(R.id.widget_big_nothing_due, View.INVISIBLE);
 
-				setDeckCounts(updateViews, decks);
+				setDeckCounts(updateViews, WidgetStatus.fetch(this));
 
 				updateViews.setViewVisibility(R.id.widget_big_totalcongrats, View.GONE);
     			updateViews.setViewVisibility(R.id.widget_big_decketa, View.VISIBLE);
@@ -856,7 +872,7 @@ public class AnkiDroidWidgetBig extends AppWidgetProvider {
 		getAnswerPendingIntent(context, 3).cancel();
 		getCardEditorPendingIntent(context).cancel();
 		if (all) {
-			getOpenPendingIntent(context, null).cancel();
+			getOpenPendingIntent(context, 0).cancel();
 			getUndoPendingIntent(context).cancel();
 		}
 	}
@@ -868,7 +884,7 @@ public class AnkiDroidWidgetBig extends AppWidgetProvider {
        	int eta = 0;
        	for (DeckStatus d : decks) {
        		namesSb.append(d.mDeckName).append("  \n");
-       		duesSb.append(getDeckStatusString(d.mFailedCards, d.mDueCards, d.mNewCards, null)).append("\n");
+       		duesSb.append(getDeckStatusString(d.mNewCards, d.mLrnCards, d.mDueCards, null)).append("\n");
        		eta += d.mEta;
        	}
        	int pos = namesSb.length() - 1;
@@ -902,10 +918,9 @@ public class AnkiDroidWidgetBig extends AppWidgetProvider {
         }
 
         private PendingIntent getShowDeckSelectionPendingIntent(Context context) {
-            Intent ankiDroidIntent = new Intent(context, WidgetDialog.class);
-            ankiDroidIntent.setAction(WidgetDialog.ACTION_SHOW_DECK_SELECTION_DIALOG);
-            ankiDroidIntent.setFlags(Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS);
-            return PendingIntent.getActivity(context, 0, ankiDroidIntent, 0);
+            Intent ankiDroidIntent = new Intent(context, UpdateService.class);
+            ankiDroidIntent.setAction(ACTION_OPENCOLLECTION);
+            return PendingIntent.getService(context, 0, ankiDroidIntent, 0);
         }
 
         private PendingIntent getCloseDeckPendingIntent(Context context) {
@@ -926,10 +941,10 @@ public class AnkiDroidWidgetBig extends AppWidgetProvider {
             return PendingIntent.getService(context, 0, ankiDroidIntent, 0);
         }
 
-        private PendingIntent getOpenPendingIntent(Context context, String deckPath) {
+        private PendingIntent getOpenPendingIntent(Context context, long deckId) {
             Intent ankiDroidIntent = new Intent(context, UpdateService.class);
             ankiDroidIntent.setAction(ACTION_OPEN);
-            ankiDroidIntent.putExtra(EXTRA_DECK_PATH, deckPath);
+            ankiDroidIntent.putExtra(DeckPicker.EXTRA_DECK_ID, deckId);
             return PendingIntent.getService(context, 0, ankiDroidIntent, PendingIntent.FLAG_CANCEL_CURRENT);
         }
 
@@ -976,6 +991,13 @@ public class AnkiDroidWidgetBig extends AppWidgetProvider {
             return PendingIntent.getService(context, 0, ankiDroidIntent, PendingIntent.FLAG_CANCEL_CURRENT);
         }
 
+        private void showDeckSelectionDialog() {
+            Intent ankiDroidIntent = new Intent(UpdateService.this, WidgetDialog.class);
+            ankiDroidIntent.setAction(WidgetDialog.ACTION_SHOW_DECK_SELECTION_DIALOG);
+            ankiDroidIntent.setFlags(Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS|Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(ankiDroidIntent);
+        }
+
         @Override
         public IBinder onBind(Intent arg0) {
             Log.i(AnkiDroidApp.TAG, "onBind");
@@ -988,35 +1010,36 @@ public class AnkiDroidWidgetBig extends AppWidgetProvider {
         	@Override
             protected DeckStatus[] doInBackground(String... params) {
                 Log.i(AnkiDroidApp.TAG, "doInBackgroundGetTomorrowDue");
-
-                File dir = new File(params[0]);
-                File[] fileList = dir.listFiles(new WidgetStatus.AnkiFileFilter());
-
-                DeckStatus[] todayDues = WidgetStatus.fetch(sContext);
-
-                ArrayList<DeckStatus> decks = new ArrayList<DeckStatus>(fileList.length);
-
-                for (DeckStatus s : todayDues) {
-                	try {
-                		Deck deck = DeckManager.getDeck(s.mDeckPath, DeckManager.REQUESTING_ACTIVITY_BIGWIDGET, false);
-                		if (deck != null) {
-                			int failedCards = deck.getFailedDelayedCount() + s.mFailedCards;
-                			int dueCards = deck.getNextDueCards(1) + s.mDueCards;
-                			int newCards = deck.getNextNewCards() + s.mNewCards;
-                			decks.add(new DeckStatus(null, deck.getDeckName(), newCards, dueCards, failedCards, deck.getETA(failedCards, dueCards, newCards, true), 0));
-                		}
-                		DeckManager.closeDeck(s.mDeckPath, DeckManager.REQUESTING_ACTIVITY_BIGWIDGET);
-                	} catch (RuntimeException e) {
-                		Log.e(AnkiDroidApp.TAG, "doInBackgroundGetTomorrowDue: an error occurred: " + e);
-                	}
-                }
-                return decks.toArray(new DeckStatus[0]);
+//
+//                File dir = new File(params[0]);
+//                File[] fileList = dir.listFiles(new WidgetStatus.AnkiFileFilter());
+//
+//                DeckStatus[] todayDues = WidgetStatus.fetch(sContext);
+//
+//                ArrayList<DeckStatus> decks = new ArrayList<DeckStatus>(fileList.length);
+//
+//                for (DeckStatus s : todayDues) {
+//                	try {
+//                		Decks deck = DeckManager.getDeck(s.mDeckPath, DeckManager.REQUESTING_ACTIVITY_BIGWIDGET, false);
+//                		if (deck != null) {
+//                			int failedCards = deck.getFailedDelayedCount() + s.mFailedCards;
+//                			int dueCards = deck.getNextDueCards(1) + s.mDueCards;
+//                			int newCards = deck.getNextNewCards() + s.mNewCards;
+//                			decks.add(new DeckStatus(null, deck.getDeckName(), newCards, dueCards, failedCards, deck.getETA(failedCards, dueCards, newCards, true), 0));
+//                		}
+//                		DeckManager.closeDeck(s.mDeckPath, DeckManager.REQUESTING_ACTIVITY_BIGWIDGET);
+//                	} catch (RuntimeException e) {
+//                		Log.e(AnkiDroidApp.TAG, "doInBackgroundGetTomorrowDue: an error occurred: " + e);
+//                	}
+//                }
+//                return decks.toArray(new DeckStatus[0]);
+                return null;
             }
 
             @Override
             protected void onPostExecute(DeckStatus[] status) {
                 Log.d(AnkiDroidApp.TAG, "DeckManager.CloseDeckAsyncTask.onPostExecute()");
-                contentService.mLoadedDeck = null;
+                contentService.mCol = null;
                 contentService.mCurrentCard = null;
                 contentService.mBigCurrentMessage = null;
                 contentService.mWaitForAsyncTask = false;

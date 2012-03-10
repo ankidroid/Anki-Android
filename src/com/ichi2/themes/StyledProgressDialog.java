@@ -28,15 +28,17 @@ import android.view.ViewGroup.LayoutParams;
 import android.view.WindowManager.BadTokenException;
 import android.widget.TextView;
 
-import com.ichi2.anki.AnkiActivity;
 import com.ichi2.anki.AnkiDroidApp;
-import com.ichi2.anki.R;
+import com.ichi2.anki2.R;
  
 
 public class StyledProgressDialog extends Dialog {
 
+	private Context mContext;
+
     public StyledProgressDialog(Context context) {
         super(context, R.style.StyledDialog);
+        mContext = context;
     }
 
 
@@ -98,6 +100,8 @@ public class StyledProgressDialog extends Dialog {
             }
 
             dialog.setContentView(layout);
+            dialog.setCancelable(cancelable);
+            dialog.setOnCancelListener(cancelListener);
             if (animationEnabled(context)) {
             	dialog.show();
             }

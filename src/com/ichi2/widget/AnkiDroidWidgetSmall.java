@@ -15,8 +15,8 @@
 package com.ichi2.widget;
 
 import com.ichi2.anki.AnkiDroidApp;
-import com.ichi2.anki.R;
-import com.ichi2.anki.StudyOptions;
+import com.ichi2.anki.DeckPicker;
+import com.ichi2.anki2.R;
 import com.tomgibara.android.veecheck.util.PrefSettings;
 
 import android.app.PendingIntent;
@@ -66,8 +66,8 @@ public class AnkiDroidWidgetSmall extends AppWidgetProvider {
         /** The cached number of total due cards. */
         private int dueCardsCount;
 
-        /** The cached amount of today's yes reps. */
-        private int reps;
+        /** Today's total progress */
+        private int progress;
 
         /** The cached estimated reviewing time. */
         private int eta;
@@ -89,14 +89,6 @@ public class AnkiDroidWidgetSmall extends AppWidgetProvider {
 
             // Resources res = context.getResources();
             RemoteViews updateViews = new RemoteViews(context.getPackageName(), R.layout.widget_small);
-
-            // Add a click listener to open Anki from the icon.
-            // This should be always there, whether there are due cards or not.
-            Intent ankiDroidIntent = new Intent(context, StudyOptions.class);
-            ankiDroidIntent.setAction(Intent.ACTION_MAIN);
-            ankiDroidIntent.addCategory(Intent.CATEGORY_LAUNCHER);
-            PendingIntent pendingAnkiDroidIntent = PendingIntent.getActivity(context, 0, ankiDroidIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-            updateViews.setOnClickPendingIntent(R.id.ankidroid_widget_small_layout, pendingAnkiDroidIntent);
 
             boolean mounted = AnkiDroidApp.isSdCardMounted();
             if (!mounted) {
@@ -137,13 +129,8 @@ public class AnkiDroidWidgetSmall extends AppWidgetProvider {
                 	int[] counts = WidgetStatus.fetchSmall(context);
                 	
                 	dueCardsCount = counts[0];
-                	reps = counts[1];
+                	progress = counts[1];
                 	eta = counts[2];
-                	int totalreps = reps + dueCardsCount;
-                	int progress = 0;
-                	if (totalreps != 0) {
-                		progress = (int) Math.round((100.0d * reps) / totalreps);
-                	}
         			if (dueCardsCount <= 0) {
         				if (dueCardsCount == 0) {
     		                updateViews.setViewVisibility(R.id.ankidroid_widget_small_finish_layout, View.VISIBLE);        					
@@ -167,6 +154,14 @@ public class AnkiDroidWidgetSmall extends AppWidgetProvider {
         			}
                 }
             }
+
+            // Add a click listener to open Anki from the icon.
+            // This should be always there, whether there are due cards or not.
+            Intent ankiDroidIntent = new Intent(context, DeckPicker.class);
+            ankiDroidIntent.setAction(Intent.ACTION_MAIN);
+            ankiDroidIntent.addCategory(Intent.CATEGORY_LAUNCHER);
+            PendingIntent pendingAnkiDroidIntent = PendingIntent.getActivity(context, 0, ankiDroidIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+            updateViews.setOnClickPendingIntent(R.id.ankidroid_widget_small_layout, pendingAnkiDroidIntent);
 
             return updateViews;
         }

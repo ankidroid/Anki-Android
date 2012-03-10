@@ -20,32 +20,6 @@
 		NOT edit them, unless you change their corresponding values
 	-->
 	<!-- Used in deck preferences -->
-	<string-array name="newCardOrderVals">
-		<item>0</item>
-		<item>1</item>
-		<item>2</item>
-	</string-array>
-	<string-array name="newCardSchedulingVals">
-		<item>0</item>
-		<item>1</item>
-		<item>2</item>
-	</string-array>
-	<string-array name="revCardOrderVals">
-		<item>0</item>
-		<item>1</item>
-		<item>2</item>
-		<item>3</item>
-	</string-array>
-	<string-array name="hideQuestionInAnswerVals">
-		<item>0</item>
-		<item>1</item>
-		<item>2</item>
-	</string-array>
-	<string-array name="startup_mode_values">
-		<item>0</item>
-		<item>1</item>
-		<item>2</item>
-	</string-array>
 	<string-array name="dictionary_labels">
 		<item>Aedict</item>
 		<item>Eijiro (Web)</item>
@@ -78,28 +52,6 @@
 		<item>150</item>
 		<item>200</item>
 		<item>1000000</item>
-	</string-array>
-	<string-array name="statistics_type_values">
-		<item>0</item>
-		<item>1</item>
-		<item>2</item>
-		<item>3</item>
-		<item>4</item>
-		<item>5</item>
-	</string-array>
-	<string-array name="statistics_period_values">
-		<item>8</item>
-		<item>32</item>
-		<item>93</item>
-		<item>184</item>
-		<item>366</item>
-	</string-array>
-	<string-array name="deck_order_values">
-		<item>0</item>
-		<item>1</item>
-		<item>2</item>
-		<item>3</item>
-		<item>4</item>
 	</string-array>
 	<string-array name="gestures_values">
 		<item>0</item>
@@ -145,11 +97,8 @@
 	<string name="error_post_url">http://ankidroid-triage.appspot.com/crash_receiver</string>		
 	<string name="ankionline_sign_up_url">http://ankiweb.net/</string>
 	<string name="feedback_post_url">http://ankidroid-triage.appspot.com/feedback_receiver</string>
-	<string name="repair_deck">http://ankisrs.net/docs/DeckErrors.html</string>
-	<!--change report: not needed by now-->
-	<string name="change_report_format">&lt;table&gt;&lt;tr&gt;&lt;td&gt;&lt;b&gt;Added/Changed&lt;/b&gt;&lt;/td&gt;&lt;td&gt;&lt;b&gt;Here&lt;/b&gt;&lt;/td&gt;&lt;td&gt;&lt;b&gt;Server&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Cards&lt;/td&gt;&lt;td&gt;%1$s&lt;/td&gt;&lt;td&gt;%2$s&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Facts&lt;/td&gt;&lt;td&gt;%3$s&lt;/td>&lt;td&gt;%4$s&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Models&lt;/td&gt;&lt;td&gt;%5$s&lt;/td&gt;&lt;td&gt;%6$s&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Stats&lt;/td&gt;&lt;td&gt;%7$s&lt;/td&gt;&lt;td&gt;%8$s&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;</string>
-	<!--<string name="change_report_format">&lt;table&gt;&lt;tr&gt;&lt;td&gt;&lt;b&gt;%1$s&lt;/b&gt;&lt;/td&gt;&lt;td&gt;&lt;b&gt;%2$s&lt;/b&gt;&lt;/td&gt;&lt;td&gt;&lt;b&gt;%3$s&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;%4$s&lt;/td&gt;&lt;td&gt;%5$s&lt;/td&gt;&lt;td&gt;%6$s&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;%7$s&lt;/td&gt;&lt;td&gt;%8$s&lt;/td>&lt;td&gt;9$s&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;%10$s&lt;/td&gt;&lt;td&gt;%11$s&lt;/td&gt;&lt;td&gt;%12$s&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;%13$s&lt;/td&gt;&lt;td&gt;%14$s&lt;/td&gt;&lt;td&gt;%15$s&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;</string>-->
-
+	<string name="shared_decks_url">http://beta.ankiweb.net/shared/decks/</string>
+		<string name="repair_deck">http://ankisrs.net/docs/DeckErrors.html</string>
 	<string-array name="tutorial_capitals_questions">
 		<item>Cambodia</item>
 		<item>Chile</item>
@@ -170,6 +119,22 @@
 		<item>Bamako</item>
 		<item>Victoria</item>
 	</string-array>
+	<string-array name="leech_action_values">
+		<item>0</item>
+		<item>1</item>
+		<item>2</item>
+	</string-array>
+	<string-array name="new_order_values">
+		<item>0</item>
+		<item>1</item>
+	</string-array>
+	<string-array name="rev_order_values">
+		<item>0</item>
+		<item>1</item>
+		<item>2</item>
+	</string-array>
+
+<string name="deck_conf_percent">XXX \%%</string>
 	<string-array name="zeemote_action_values">
 		<item>0</item>
 		<item>1</item>
@@ -187,4 +152,6 @@
 		<item>13</item>
 		<item>14</item>
 	</string-array>
+
+
 </resources>

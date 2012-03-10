@@ -12,7 +12,7 @@
  * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
  ****************************************************************************************/
 
-package com.ichi2.anki;
+package com.ichi2.anki;import com.ichi2.anki2.R;
 
 import java.util.HashMap;
 
@@ -84,12 +84,12 @@ public class SharedDeck extends HashMap<String, Object> {
 
 
     public void setFacts(int facts) {
-        mFacts = facts;
-        if (facts == 1) {
-            put("facts", mFacts + " " + AnkiDroidApp.getAppResources().getString(R.string.fact));
-        } else {
-            put("facts", mFacts + " " + AnkiDroidApp.getAppResources().getString(R.string.facts));
-        }
+//        mFacts = facts;
+//        if (facts == 1) {
+//            put("facts", mFacts + " " + AnkiDroidApp.getAppResources().getString(R.string.fact));
+//        } else {
+//            put("facts", mFacts + " " + AnkiDroidApp.getAppResources().getString(R.string.facts));
+//        }
     }
 
 

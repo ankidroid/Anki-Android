@@ -19,27 +19,20 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-	package="com.ichi2.anki"
-	android:versionName="1.1"
-	android:versionCode="24"
+	package="com.ichi2.anki2"
+	android:versionName="2.0alpha13"
+	android:versionCode="25"
 	android:installLocation="auto">
-	<uses-sdk  android:minSdkVersion="3" android:targetSdkVersion="11"/>
-	<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-	<uses-permission android:name="android.permission.VIBRATE" android:required="false" />
-	<uses-permission android:name="android.permission.INTERNET" android:required="false" />
-	<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" android:required="false" />
-	<uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" android:required="false" />
-	<uses-permission android:name="android.permission.BLUETOOTH" android:required="false" />
-	<uses-permission android:name="android.permission.BLUETOOTH_ADMIN" android:required="false" />
-	<instrumentation android:name="android.test.InstrumentationTestRunner" android:targetPackage="com.ichi2.anki"></instrumentation>
-	<supports-screens
-		android:resizeable="true"
-		android:largeScreens="true" 
-		android:normalScreens="true" 
-		android:smallScreens="true" 
-		android:anyDensity="true"/>
-		<application android:label="@string/app_name" android:icon="@drawable/anki" android:name="AnkiDroidApp" android:debuggable="true">
-		<activity android:name="StudyOptions"
+    <instrumentation android:name="android.test.InstrumentationTestRunner" android:targetPackage="com.ichi2.anki2"></instrumentation>
+	<application 
+	    android:label="@string/app_name" 
+	    android:icon="@drawable/anki" 
+  	    android:theme="@style/Theme_White"
+  	    android:windowSoftInputMode="adjustResize"
+	    android:name="com.ichi2.anki.AnkiDroidApp" android:debuggable="true">
+	    <!-- android:label="@string/app_name" -->
+		<activity android:name="com.ichi2.anki.DeckPicker"
+		    android:label="@string/app_name"
 				android:configChanges="keyboardHidden|orientation|locale">
 			<intent-filter>
 				<action android:name="android.intent.action.MAIN" />
@@ -52,34 +45,33 @@
 				<data android:mimeType="application/vnd.anki" />
 			</intent-filter>
 		</activity>
-		<activity android:name="DeckPicker" 
-			android:label="DeckPicker"
-			android:configChanges="keyboardHidden|orientation|locale"/>
-		<activity android:name="CardBrowser" 
+		<activity android:name="com.ichi2.anki.StudyOptions" 
+			android:label="StudyOptions"
+			android:configChanges="keyboardHidden|locale|orientation"/>
+		<activity android:name="com.ichi2.anki.CardBrowser" 
 			android:label="Card Browser"
-			android:configChanges="keyboardHidden|orientation|locale"/>
-		<activity android:name="PersonalDeckPicker" 
+			android:configChanges="keyboardHidden|orientation|locale"/>	
+		<activity android:name="com.ichi2.anki.PersonalDeckPicker" 
 			android:label="@string/personaldeckpicker_title"
 			android:configChanges="keyboardHidden|orientation|locale"/>
-		<activity android:name="SharedDeckPicker" 
+		<activity android:name="com.ichi2.anki.SharedDeckPicker" 
 			android:label="@string/shareddeckpicker_title"
 			android:configChanges="keyboardHidden|orientation|locale"/>
-		<activity android:name="Reviewer" 
-			android:label="Reviewer"	
+		<activity android:name="com.ichi2.anki.Reviewer" 
 			android:configChanges="keyboardHidden|orientation|locale"/>
-		<activity android:name="MyAccount" 
+		<activity android:name="com.ichi2.anki.MyAccount" 
 			android:label="@string/menu_my_account"
 			android:configChanges="keyboardHidden|orientation|locale"/>
-		<activity android:name="Preferences" 
+		<activity android:name="com.ichi2.anki.Preferences" 
 			android:label="@string/preferences_title"
 			android:configChanges="keyboardHidden|orientation|locale"/>
-		<activity android:name="DeckPreferences" 
+		<activity android:name="com.ichi2.anki.DeckOptions" 
 			android:label="@string/deckpreferences_title" 
 			android:configChanges="locale"/>
-		<activity android:name="About" 
+		<activity android:name="com.ichi2.anki.Info" 
 			android:label="@string/about_title" 
 			android:configChanges="locale"/>
-		<activity android:name="CardEditor" 
+		<activity android:name="com.ichi2.anki.CardEditor" 
 			android:label="@string/fact_adder_intent_title"
 			android:configChanges="keyboardHidden|orientation|locale">
             <intent-filter>
@@ -92,13 +84,7 @@
                 <data android:mimeType="text/plain" />
             </intent-filter>
         </activity>
-		<activity android:name="DeckCreator" 
-			android:label="@string/deckcreator_title"
-			android:configChanges="keyboardHidden|orientation|locale"/>
-		<activity android:name="Feedback" 
-			android:label="@string/feedback_title"
-			android:configChanges="locale"/>
-		<activity android:name="Feedback" 
+		<activity android:name="com.ichi2.anki.Feedback" 
 			android:label="@string/feedback_title"
 			android:configChanges="locale"/>
 		<activity android:name="com.ichi2.charts.ChartBuilder"

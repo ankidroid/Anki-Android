@@ -26,7 +26,6 @@
         <item name="android:listPreferredItemHeight">56dip</item>
         <item name="android:spinnerStyle">@style/Blue.Widget.Spinner</item>
         <item name="android:spinnerDropDownItemStyle">@style/Blue.Widget.DropDownItem.Spinner</item>
-        <item name="listItemBackgroundDrawable">@drawable/blue_list_selector_background</item>
     </style>
 
     <!-- Flat Theme -->
@@ -50,7 +49,6 @@
         <item name="android:listPreferredItemHeight">56dip</item>
         <item name="android:spinnerStyle">@style/Blue.Widget.Spinner</item>
         <item name="android:spinnerDropDownItemStyle">@style/Blue.Widget.DropDownItem.Spinner</item>
-        <item name="listItemBackgroundDrawable">@drawable/blue_list_selector_background</item>
     </style>
 
     <!-- White Theme -->
@@ -65,6 +63,9 @@
         <item name="android:radioButtonStyle">@style/White.CompoundButton.RadioButton</item>
 
         <!-- Dialog styles -->
+        <item name="android:actionBarStyle">@style/White.ActionBarStyle</item>
+
+        <!-- Dialog styles -->
         <item name="android:alertDialogStyle">@style/White.AlertDialog</item>
         <item name="android:listChoiceIndicatorSingle">@drawable/blue_btn_radio</item>
         <item name="android:listChoiceIndicatorMultiple">@drawable/blue_btn_check</item>
@@ -74,17 +75,6 @@
         <item name="android:listPreferredItemHeight">56dip</item>
         <item name="android:spinnerStyle">@style/White.Widget.Spinner</item>
         <item name="android:spinnerDropDownItemStyle">@style/White.Widget.DropDownItem.Spinner</item>
-        <item name="listItemBackgroundDrawable">@drawable/white_list_selector_background</item>
-    </style>
-
-    <!-- Android White Theme -->
-    <style name="Theme_Light" parent="@style/Theme_Base_Light">
-        <item name="listItemBackgroundDrawable">@android:drawable/list_selector_background</item>
-    </style>
-
-    <!-- Android Black Theme -->
-    <style name="Theme_Black" parent="@style/Theme_Base_Dark">
-        <item name="listItemBackgroundDrawable">@android:drawable/list_selector_background</item>
     </style>
 
     <!-- Basic theme for dialogs -->

@@ -14,7 +14,7 @@
  * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
  ****************************************************************************************/
 
-package com.ichi2.anki;
+package com.ichi2.anki;import com.ichi2.anki2.R;
 
 import java.util.ArrayList;
 import java.util.Locale;
@@ -33,8 +33,8 @@ public class ReadText {
     private static String mTextToSpeak;
     private static Context mReviewer;
     private static String mDeckFilename;
-    private static long mModelId;
-    private static long mCardModelId;
+    private static int mModelId;
+    private static int mTemplate;
     private static int mQuestionAnswer;
     public static final String NO_TTS = "0";
 
@@ -51,14 +51,14 @@ public class ReadText {
     }
 
 
-    public static void setLanguageInformation(long modelId, long cardModelId) {
+    public static void setLanguageInformation(int modelId, int template) {
     	mModelId = modelId;
-    	mCardModelId = cardModelId;    	
+    	mTemplate = template;    	
     }
 
 
     public static String getLanguage(int qa) {
-        return MetaDB.getLanguage(mReviewer, mDeckFilename,  mModelId, mCardModelId, qa);
+        return MetaDB.getLanguage(mReviewer, mDeckFilename,  mModelId, mTemplate, qa);
     }
 
 
@@ -111,7 +111,7 @@ public class ReadText {
             builder.setItems(items, new DialogInterface.OnClickListener() {
     			@Override
     			public void onClick(DialogInterface dialog, int which) {
-    				MetaDB.storeLanguage(mReviewer, mDeckFilename,  mModelId, mCardModelId, mQuestionAnswer, dialogIds.get(which));
+    				MetaDB.storeLanguage(mReviewer, mDeckFilename,  mModelId, mTemplate, mQuestionAnswer, dialogIds.get(which));
     				speak(dialogIds.get(which));
     			}
             });        	

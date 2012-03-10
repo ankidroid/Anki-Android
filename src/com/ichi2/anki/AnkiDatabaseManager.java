@@ -30,20 +30,14 @@ public class AnkiDatabaseManager {
      * @return the Anki database.
      */
     public static AnkiDb getDatabase(String pathDB) {
-    	return getDatabase(pathDB, false);
-    }
-    public static AnkiDb getDatabase(String pathDB, boolean forceDeleteJournalMode) {
-    	if (forceDeleteJournalMode) {
-    		closeDatabase(pathDB);
-    	}
 
-        // If the DB is already opened
+    	// If the DB is already opened
         if (sAnkiDatabases.containsKey(pathDB)) {
             return sAnkiDatabases.get(pathDB);
         }
 
         // If a connection to the desired DB does not exist, we create it
-        AnkiDb ankiDB = new AnkiDb(pathDB, forceDeleteJournalMode);
+        AnkiDb ankiDB = new AnkiDb(pathDB);
 
         // Insert the new DB to the map of opened DBs
         sAnkiDatabases.put(pathDB, ankiDB);

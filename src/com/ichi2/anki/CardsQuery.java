@@ -21,6 +21,8 @@ import android.text.TextUtils;
 
 import java.util.HashMap;
 
+import com.ichi2.libanki.Utils;
+
 /**
  * Class to handle queries for a set of cards.
  */
@@ -83,7 +85,7 @@ public final class CardsQuery {
         String cardsPriority = cursor.getString(CardsQuery.CARDS_PRIORITY);
 
         String flags = null;
-        if (factTags.contains(Deck.TAG_MARKED)) {
+        if (factTags.contains("Marked")) {
             flags = "1";
         } else {
             flags = "0";
