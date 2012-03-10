@@ -255,7 +255,7 @@ public class CardEditor extends Activity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		Log.i(AnkiDroidApp.TAG, "CardEditor: onCreate");
+		// Log.i(AnkiDroidApp.TAG, "CardEditor: onCreate");
 		Themes.applyTheme(this);
 		super.onCreate(savedInstanceState);
 
@@ -286,7 +286,7 @@ public class CardEditor extends Activity {
 			mDeckPath = savedInstanceState.getString("deckFilename");
 			mCaller = savedInstanceState.getInt("caller");
 			mAddFact = savedInstanceState.getBoolean("addFact");
-			Log.i(AnkiDroidApp.TAG, "onCreate - deckFilename from savedInstanceState: " + mDeckPath);
+			// Log.i(AnkiDroidApp.TAG, "onCreate - deckFilename from savedInstanceState: " + mDeckPath);
 			DeckManager.getDeck(mDeckPath, DeckManager.REQUESTING_ACTIVITY_CARDEDITOR);
 		} else {
 			mCaller = intent.getIntExtra(EXTRA_CALLER, CALLER_NOCALLER);
@@ -297,11 +297,11 @@ public class CardEditor extends Activity {
 				}
 			}
 		}
-		Log.i(AnkiDroidApp.TAG, "Caller: " + mCaller);
+		// Log.i(AnkiDroidApp.TAG, "Caller: " + mCaller);
 
 		switch (mCaller) {
 		case CALLER_NOCALLER:
-			Log.i(AnkiDroidApp.TAG, "CardEditor: no caller could be identified, closing");
+			// Log.i(AnkiDroidApp.TAG, "CardEditor: no caller could be identified, closing");
 			finish();
 			return;
 
@@ -554,7 +554,7 @@ public class CardEditor extends Activity {
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
 		if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
-			Log.i(AnkiDroidApp.TAG, "CardEditor - onBackPressed()");
+			// Log.i(AnkiDroidApp.TAG, "CardEditor - onBackPressed()");
 			closeCardEditor();
 			return true;
 		}
@@ -577,11 +577,11 @@ public class CardEditor extends Activity {
 			String path = mDeck.getDeckPath();
 	        // Remember current deck's filename.
 	        if (path != null) {
-	            Log.i(AnkiDroidApp.TAG, "onSaveInstanceState: " + path);
+	            // Log.i(AnkiDroidApp.TAG, "onSaveInstanceState: " + path);
 	            outState.putString("deckFilename", path);
 	            outState.putBoolean("addFact", mAddFact);
 	            outState.putInt("caller", mCaller);
-	            Log.i(AnkiDroidApp.TAG, "onSaveInstanceState - Ending");
+	            // Log.i(AnkiDroidApp.TAG, "onSaveInstanceState - Ending");
 	        }			
 		}
     }
@@ -1068,7 +1068,7 @@ public class CardEditor extends Activity {
 		        	ad.setEnabled(false);
 		        	return;
 		        }
-				Log.i(AnkiDroidApp.TAG, "all tags: " + Arrays.toString(oldTags));
+				// Log.i(AnkiDroidApp.TAG, "all tags: " + Arrays.toString(oldTags));
 				allTags = new String[oldTags.length];
 				for (int i = 0; i < oldTags.length; i++) {
 					allTags[i] = oldTags[i];
@@ -1097,7 +1097,7 @@ public class CardEditor extends Activity {
 												+ tag);
 								mSelectedTags.remove(tag);
 							} else {
-								Log.i(AnkiDroidApp.TAG, "checked tag: " + tag);
+								// Log.i(AnkiDroidApp.TAG, "checked tag: " + tag);
 								mSelectedTags.add(tag);
 							}
 						}

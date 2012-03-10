@@ -68,7 +68,7 @@ public class AnkiDroidWidgetBig extends AppWidgetProvider {
 
     	@Override
     	public void onServiceConnected(ComponentName className, IBinder binder) {
-		Log.i(AnkiDroidApp.TAG, "binding content service - success");
+		// Log.i(AnkiDroidApp.TAG, "binding content service - success");
     		contentServiceBinder = (WidgetContentService.WidgetContentBinder) binder;
     		contentService = contentServiceBinder.getService();
 		// check, if card is still the same after reloading the deck. If not, show question instead of answering
@@ -88,14 +88,14 @@ public class AnkiDroidWidgetBig extends AppWidgetProvider {
 
     @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
-        Log.i(AnkiDroidApp.TAG, "BigWidget: onUpdate");
+        // Log.i(AnkiDroidApp.TAG, "BigWidget: onUpdate");
         WidgetStatus.update(context);
     }
 
     @Override
     public void onEnabled(Context context) {
         super.onEnabled(context);
-        Log.i(AnkiDroidApp.TAG, "BigWidget: Widget enabled");
+        // Log.i(AnkiDroidApp.TAG, "BigWidget: Widget enabled");
         SharedPreferences preferences = PrefSettings.getSharedPrefs(context);
         if (!preferences.getBoolean("widgetBigEnabled", false)) {
             // show info dialog
@@ -120,7 +120,7 @@ public class AnkiDroidWidgetBig extends AppWidgetProvider {
     @Override
     public void onDisabled(Context context) {
         super.onDisabled(context);
-        Log.i(AnkiDroidApp.TAG, "BigWidget: Widget disabled");
+        // Log.i(AnkiDroidApp.TAG, "BigWidget: Widget disabled");
         SharedPreferences preferences = PrefSettings.getSharedPrefs(context);
         preferences.edit().putBoolean("widgetBigEnabled", false).commit();
     }
@@ -397,12 +397,12 @@ public class AnkiDroidWidgetBig extends AppWidgetProvider {
 
         @Override
         public void onStart(Intent intent, int startId) {
-            Log.i(AnkiDroidApp.TAG, "BigWidget: OnStart");
+            // Log.i(AnkiDroidApp.TAG, "BigWidget: OnStart");
 
             if (intent == null) {
 		// do nothing
             } else if (contentService == null) {
-            	Log.i(AnkiDroidApp.TAG, "binding content service");
+            	// Log.i(AnkiDroidApp.TAG, "binding content service");
 		updateViews();
             	tempIntent = intent;
             	sContext = this;
@@ -550,7 +550,7 @@ public class AnkiDroidWidgetBig extends AppWidgetProvider {
 
 
         private void showProgressDialog() {
-        	Log.i(AnkiDroidApp.TAG, "BigWidget: show progress dialog");
+        	// Log.i(AnkiDroidApp.TAG, "BigWidget: show progress dialog");
         	contentService.mBigShowProgressDialog = true;
         	updateViews();
         }
@@ -582,7 +582,7 @@ public class AnkiDroidWidgetBig extends AppWidgetProvider {
             	contentService.mBigCurrentView = VIEW_DECKS;
             }
 
-            Log.i(AnkiDroidApp.TAG, "BigWidget: buildUpdate (" + contentService.mBigCurrentView + ")");
+            // Log.i(AnkiDroidApp.TAG, "BigWidget: buildUpdate (" + contentService.mBigCurrentView + ")");
 
             if (contentService.mBigCurrentView == VIEW_DECKS || contentService.mBigCurrentView == VIEW_SHOW_HELP || contentService.mBigCurrentView == VIEW_CONGRATS) {
             } else if (contentService.mLoadedDeck == null) {
@@ -981,7 +981,7 @@ public class AnkiDroidWidgetBig extends AppWidgetProvider {
 
         @Override
         public IBinder onBind(Intent arg0) {
-            Log.i(AnkiDroidApp.TAG, "onBind");
+            // Log.i(AnkiDroidApp.TAG, "onBind");
             return null;
         }
 
@@ -990,7 +990,7 @@ public class AnkiDroidWidgetBig extends AppWidgetProvider {
 
         	@Override
             protected DeckStatus[] doInBackground(String... params) {
-                Log.i(AnkiDroidApp.TAG, "doInBackgroundGetTomorrowDue");
+                // Log.i(AnkiDroidApp.TAG, "doInBackgroundGetTomorrowDue");
 
                 File dir = new File(params[0]);
                 File[] fileList = dir.listFiles(new WidgetStatus.AnkiFileFilter());
@@ -1018,7 +1018,7 @@ public class AnkiDroidWidgetBig extends AppWidgetProvider {
 
             @Override
             protected void onPostExecute(DeckStatus[] status) {
-                Log.d(AnkiDroidApp.TAG, "DeckManager.CloseDeckAsyncTask.onPostExecute()");
+                // Log.d(AnkiDroidApp.TAG, "DeckManager.CloseDeckAsyncTask.onPostExecute()");
                 contentService.mLoadedDeck = null;
                 contentService.mCurrentCard = null;
                 contentService.mBigCurrentMessage = null;
