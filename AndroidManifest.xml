@@ -20,8 +20,8 @@
 -->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
 	package="com.ichi2.anki"
-	android:versionName="1.1"
-	android:versionCode="24"
+	android:versionName="2.0alpha14-EXPERIMENTAL"
+	android:versionCode="26"
 	android:installLocation="auto">
     <instrumentation android:name="android.test.InstrumentationTestRunner" android:targetPackage="com.ichi2.anki"></instrumentation>
 	<application android:label="@string/app_name" android:icon="@drawable/anki" android:name="AnkiDroidApp" android:debuggable="true">
