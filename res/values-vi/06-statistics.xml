@@ -56,7 +56,7 @@
   <string name="deck_summary_tomorrow_new">Mới ngày mai: &lt;b&gt;%d &lt;/ b&gt; thẻ</string>
   <string name="deck_summary_tomorrow_time">Thời gian dự kiến ​​vào ngày mai: &lt;b&gt;%d &lt;/ b&gt; min.</string>
   <string name="deck_summary_finished_in">Thẻ mới hoàn thành trong: &lt;b&gt;%d &lt;/ b&gt; ngày</string>
-  <string name="deck_summary_cards_per_day">&lt;b&gt;%.1 f &lt;/ b&gt; thẻ / ngày</string>
+  <string name="deck_summary_cards_per_day">&lt;b&gt;%.1f&lt;/b&gt; thẻ / ngày</string>
   <string name="deck_summary_deck_age">Tuổi bài: &lt;b&gt;%d &lt;/ b&gt; ngày</string>
   <string name="deck_summary_all_decks">Tất cả các bài</string>
   <string-array name="statistics_type_labels">

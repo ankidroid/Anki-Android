@@ -35,9 +35,9 @@
   <string name="leech_suspend_notification">Carta contrassegnata come sanguisuga e sospesa</string>
   <string name="leech_notification">Carta contrassegnata come sanguisuga</string>
   <string name="about_title">Informazioni</string>
-  <string name="cardeditor_title">Modica la carta</string>
-  <string name="factadder_saving_error">Error saving fact</string>
-  <string name="saving_facts">Saving facts</string>
+  <string name="cardeditor_title">Modifica la carta</string>
+  <string name="factadder_saving_error">Errore salvataggio fatto</string>
+  <string name="saving_facts">Salvataggio fatti</string>
   <string name="deckcreator_title">Creatore mazzo</string>
   <string name="model">Modello:</string>
   <string name="select_model">Modello</string>

@@ -26,7 +26,7 @@
     <item>Обратен ред на добавени</item>
   </string-array>
   <string-array name="newCardSchedulingLabels">
-    <item>Spread out through reviews</item>
+    <item>Раздели чрез отзивите</item>
     <item>След отзива</item>
     <item>Преди отзива</item>
   </string-array>
@@ -62,7 +62,7 @@
     <item>Никога</item>
   </string-array>
   <string-array name="cram_review_order_labels">
-    <item>Show oldest modified first</item>
+    <item>Покажи последно модифицираните първи</item>
     <item>Покажи в ред, добавени</item>
     <item>Покажи в случаен ред</item>
   </string-array>
@@ -72,29 +72,29 @@
     <item>Нови карти, които са добавени в обратен ред</item>
   </string-array>
   <string-array name="studyoptions_more_new_card_schedule">
-    <item>Spread new cards through reviews</item>
+    <item>Раздели нови карти според отзива</item>
     <item>Нови карти след отзивите</item>
-    <item>New cards before reviews</item>
+    <item>Нови карти преди прегледи</item>
   </string-array>
   <string-array name="studyoptions_more_rev_card_order">
-    <item>Review cards from largest interval</item>
-    <item>Review cards from smallest interval</item>
-    <item>Review cards in order due</item>
-    <item>Review cards in random order</item>
+    <item>Преглед на карти от най-големия интервал</item>
+    <item>Преглед на картите от най-малък интервал</item>
+    <item>Преглед на картите в ред поради</item>
+    <item>Преглед на картите в случаен ред</item>
   </string-array>
   <string-array name="studyoptions_more_fail_card_option">
-    <item>Show failed cards soon</item>
+    <item>Покажи неуспешни карти скоро</item>
     <item>Покажи сбърканите карти в края</item>
     <item>Покажи сбърканите карти в 10 минути</item>
-    <item>Show failed cards in 8 hours</item>
+    <item>Покажи неуспешни карти след осем часа</item>
     <item>Покажи неуспешни карти в 3 дни</item>
   </string-array>
   <string-array name="deck_order_labels">
     <item>По последен достъп</item>
     <item>Азбучен</item>
-    <item>By number of due cards</item>
-    <item>By number of total cards</item>
-    <item>By number of total new cards</item>
+    <item>По номер на изтекли карти</item>
+    <item>По номер на общо карти</item>
+    <item>По номер на нови карти</item>
   </string-array>
   <string-array name="gestures_labels">
     <item>Няма действие</item>
@@ -103,7 +103,7 @@
     <item>Бутон за отговор 3</item>
     <item>Бутон за отговор 4</item>
     <item>Препоръчан отговор (зелен)</item>
-    <item>Answer better than recommended</item>
+    <item>Отговор по-добре, отколкото е препоръчано</item>
     <item>Отмени</item>
     <item>Върни</item>
     <item>Редактиране на карта</item>

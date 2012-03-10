@@ -35,7 +35,7 @@
   <string name="statistics_all_decks">(Tutti mazzi)</string>
   <string name="calculating_statistics">Calcolo statistiche</string>
   <string name="deck_summary_cards">Numero delle carte:</string>
-  <string name="deck_summary_facts">Number of facts:</string>
+  <string name="deck_summary_facts">Numero di fatti:</string>
   <string name="deck_summary_cards_mature">Carte mature:</string>
   <string name="deck_summary_cards_young">Carte giovani:</string>
   <string name="deck_summary_cards_unseen">Carte non viste:</string>

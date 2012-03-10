@@ -51,8 +51,8 @@
   <string name="connection_error_message">Một lỗi mạng đã xảy ra.</string>
   <string name="sync_log_db_error">A database error has occurred.</string>
   <string name="no_user_password_error_message">Để tiếp tục thao tác này, bạn cần phải có một tài khoản AnkiOnline và đăng nhập.</string>
-  <string name="fact">fact</string>
-  <string name="facts">facts</string>
+  <string name="fact">dữ kiện</string>
+  <string name="facts">các dữ kiện</string>
   <string name="username">Tên người dùng</string>
   <string name="password">Mật khẩu</string>
   <string name="password_warning">Note: Will be sent in clear text</string>
@@ -84,7 +84,7 @@
   <string name="sync_log_no_changes_message">Không có thay đổi nào</string>
   <string name="sync_log_uploading_message">Đồng bộ hoàn toàn từ máy tính này</string>
   <string name="sync_log_downloading_message">Đồng bộ hoàn toàn từ máy chủ</string>
-  <string name="sync_log_zero_facts">Completed, no cards changed</string>
+  <string name="sync_log_zero_facts">Đã hoàn thành, không thay đổi thẻ nào</string>
   <string name="sync_log_clocks_unsynchronized">The time of your device is different than that of the server by %1$d sec%2$s; unable to sync.</string>
   <string name="sync_log_clocks_unsynchronized_tz">, the device\'s time zone is possibly wrong</string>
   <string name="sync_log_clocks_unsynchronized_date">, the device\'s date is possibly wrong</string>
@@ -100,14 +100,14 @@
   <string name="personaldeckpicker_title">Mở tập thẻ trực tuyến</string>
   <string name="shareddeckpicker_title">Chọn bài mà bạn muốn tải về</string>
   <string name="downloaddeck_search">Tìm kiếm</string>
-  <string name="preferences_title">Tham khảo</string>
+  <string name="preferences_title">Tuỳ chọn</string>
   <string name="deckpreferences_title">Tùy chọn Tập thẻ</string>
   <plurals name="sync_log_facts_to_server_message">
-    <item quantity="one">1 card to server</item>
-    <item quantity="other">%1$d cards to server</item>
+    <item quantity="one">1 thẻ vào máy chủ</item>
+    <item quantity="other">%1$d thẻ vào máy chủ</item>
   </plurals>
   <plurals name="sync_log_facts_from_server_message">
-    <item quantity="one">1 card from server</item>
-    <item quantity="other">%1$d cards from server</item>
+    <item quantity="one">1 thẻ từ máy chủ</item>
+    <item quantity="other">%1$d thẻ từ máy chủ</item>
   </plurals>
 </resources>

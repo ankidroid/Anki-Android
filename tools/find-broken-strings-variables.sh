@@ -17,6 +17,8 @@ grep -R '%' values* |
  grep -v '%s'       | # Single string variable
  grep -v '%d'       | # Single decimal variable
  grep -v '%[0-9][0-9]\?$s' | # Multiple string variable
- grep -v '%[0-9][0-9]\?$d'   # Multiple decimal variable
+ grep -v '%[0-9][0-9]\?$d' |  # Multiple decimal variable
+ grep -v '%1$.1f'   | # ?
+ grep -v '%.1f'
 
 grep -R '％' values*

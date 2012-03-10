@@ -6,12 +6,12 @@
 	android:layout_height="fill_parent"
 	android:gravity="center"
 	android:orientation="vertical">
-	<LinearLayout
+	<LinearLayout android:id="@+id/studyoptions_deckinformation"
 		android:orientation="vertical"
 		android:gravity="center"
 		android:layout_width="fill_parent"
 		android:layout_height="fill_parent">
-		<TextView
+		<TextView 
 			android:id="@+id/studyoptions_deck_name"
 			android:textSize="26sp" 
 			android:textStyle="bold"

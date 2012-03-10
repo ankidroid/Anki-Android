@@ -49,13 +49,13 @@
   <string name="sync_all">Sincronizza tutto</string>
   <string name="sync_prepare_syncing">Preparazione sincronizzazione...</string>
   <string name="connection_error_message">Problemi di connessione.</string>
-  <string name="sync_log_db_error">A database error has occurred.</string>
+  <string name="sync_log_db_error">Si è verificato un errore nel database.</string>
   <string name="no_user_password_error_message">Occorre autenticarsi a AnkiOnline per fare questa operazione.</string>
   <string name="fact">fatto</string>
   <string name="facts">fatti</string>
   <string name="username">Nome utente</string>
   <string name="password">Password</string>
-  <string name="password_warning">Note: Will be sent in clear text</string>
+  <string name="password_warning">Nota: Verrà inviato come testo in chiaro</string>
   <string name="log_in">Entra</string>
   <string name="sign_up_description">Non hai un AnkiOnline account? E\' gratis!</string>
   <string name="sign_up">Registrati</string>
@@ -77,7 +77,7 @@
   <string name="sync_determining_differences_message">Determinazione delle differenze ...</string>
   <string name="sync_transferring_payload_message">Trasferimento di carico utile ...</string>
   <string name="sync_applying_reply_message">Applicando la risposta...</string>
-  <string name="sync_downloading_media">Downloading media %1$d/%2$d...</string>
+  <string name="sync_downloading_media">Scaricando il media %1$d/%2$d...</string>
   <string name="sync_no_changes_message">Nessuna modifica trovata.</string>
   <string name="sync_log_error_message">Errore: il mazzo non è stato sincronizzato</string>
   <string name="sync_log_error_specific">Errore sincronizzazione, tipo: %1$s, messaggio: %2$s</string>

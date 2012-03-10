@@ -90,11 +90,11 @@
     <item>Mostra le carte sbagliate tra 3 giorni</item>
   </string-array>
   <string-array name="deck_order_labels">
-    <item>By last access</item>
-    <item>Alphabetical</item>
-    <item>By number of due cards</item>
-    <item>By number of total cards</item>
-    <item>By number of total new cards</item>
+    <item>Per ultima visita</item>
+    <item>Alfabetico</item>
+    <item>Per numero di carte scadute</item>
+    <item>Per numero di carte complessive</item>
+    <item>Per numero di nuove carte complessive</item>
   </string-array>
   <string-array name="gestures_labels">
     <item>Nessuna azione</item>
@@ -104,16 +104,16 @@
     <item>Pulsante risposta 4</item>
     <item>Risposta raccomandato (verde)</item>
     <item>Risposta più che raccomandata</item>
-    <item>Undo</item>
-    <item>Redo</item>
+    <item>Cancella</item>
+    <item>Ripeti</item>
     <item>Modifica carta</item>
-    <item>Mark card</item>
-    <item>Lookup expression</item>
+    <item>Segna carta</item>
+    <item>Controlla espressione</item>
     <item>Bury card</item>
     <item>Sospendi carta</item>
     <item>Cancella carta</item>
     <item>Pulisci lavagna</item>
-    <item>Abort learning</item>
+    <item>Termina apprendimento</item>
   </string-array>
   <string-array name="theme_labels">
     <item>Android scuro</item>

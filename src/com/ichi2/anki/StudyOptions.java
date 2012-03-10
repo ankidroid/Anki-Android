@@ -630,7 +630,9 @@ public class StudyOptions extends AnkiActivity implements IButtonListener {
 			Log.i(AnkiDroidApp.TAG, "StudyOptions - onCreate: Detected multiple instance of this activity, closing it and return to root activity");
 	        Intent reloadIntent = new Intent(StudyOptions.this, StudyOptions.class);
 	        reloadIntent.setAction(Intent.ACTION_MAIN);
-	        reloadIntent.putExtras(getIntent().getExtras());
+	        if (getIntent() != null && getIntent().getExtras() != null) {
+		        reloadIntent.putExtras(getIntent().getExtras());	        	
+	        }
 	        reloadIntent.addCategory(Intent.CATEGORY_LAUNCHER);
 	        reloadIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 			finishWithoutAnimation();
@@ -2492,9 +2494,13 @@ public class StudyOptions extends AnkiActivity implements IButtonListener {
     	if (language.equals("")) {
         	locale = Locale.getDefault();
     	} else {
-        	locale = new Locale(language);
+    		if (language.length() == 5) {
+            	locale = new Locale(language.substring(0, 2), language.substring(3, 5));    			
+    		} else {
+            	locale = new Locale(language);    			
+    		}
     	}
-        Configuration config = new Configuration();
+    	Configuration config = new Configuration();
         config.locale = locale;
         this.getResources().updateConfiguration(config, this.getResources().getDisplayMetrics());
     }
@@ -2758,6 +2764,11 @@ public class StudyOptions extends AnkiActivity implements IButtonListener {
             }
             if (data.success) {
             	mCurrentDialogMessage = ((HashMap<String, String>) data.result).get("message");
+            	Deck deck = DeckManager.getMainDeck();
+            	if (deck == null) {
+            		finish();
+            		return;
+            	}
             	DeckManager.getMainDeck().updateCutoff();
                 resetAndUpdateValuesFromDeck();
                 showDialog(DIALOG_SYNC_LOG);

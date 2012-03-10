@@ -35,29 +35,29 @@
   <string name="statistics_all_decks">(すべての単語帳)</string>
   <string name="calculating_statistics">統計を計算しています</string>
   <string name="deck_summary_cards">カードの数:</string>
-  <string name="deck_summary_facts">Number of facts:</string>
+  <string name="deck_summary_facts">ファクトの数:</string>
   <string name="deck_summary_cards_mature">習熟したカード:</string>
   <string name="deck_summary_cards_young">未習熟のカード:</string>
   <string name="deck_summary_cards_unseen">未着手のカード</string>
-  <string name="deck_summary_card_age">Card age</string>
-  <string name="deck_summary_average_interval">Average interval: &lt;b&gt;%.1f&lt;/b&gt; days</string>
+  <string name="deck_summary_card_age">カードの古さ</string>
+  <string name="deck_summary_average_interval">平均間隔: &lt;b&gt;%.1f&lt;/b&gt; 日</string>
   <string name="deck_summary_answers_correct">正しい答え</string>
-  <string name="deck_summary_answers_mature">Mature cards: &lt;b&gt;%1$.1f %2$s&lt;/b&gt; %2$s (%3$d of %4$d)</string>
-  <string name="deck_summary_answers_young">Young cards: &lt;b&gt;%1$.1f %2$s&lt;/b&gt; (%3$d of %4$d)</string>
-  <string name="deck_summary_answers_firstseen">Seen the first time: &lt;b&gt;%1$.1f %2$s&lt;/b&gt; (%3$d of %4$d)</string>
-  <string name="deck_summary_reviews">Reviews:</string>
+  <string name="deck_summary_answers_mature">復習期間が長いカード: &lt;b&gt;%1$.1f %2$s&lt;/b&gt; %2$s (%4$dの内%3$d)</string>
+  <string name="deck_summary_answers_young">復習期間の短いカード: &lt;b&gt;%1$.1f %2$s&lt;/b&gt; (%4$dの内%3$d)</string>
+  <string name="deck_summary_answers_firstseen">初めて表示されたカード: &lt;b&gt;%1$.1f %2$s&lt;/b&gt; (%4$dの内%3$d)</string>
+  <string name="deck_summary_reviews">レビュー:</string>
   <string name="deck_summary_news">新しいカード:</string>
   <string name="deck_summary_average_week">先週の平均</string>
   <string name="deck_summary_average_month">先月の平均</string>
   <string name="deck_summary_average_year">昨年の平均</string>
   <string name="deck_summary_average_total">今までの平均</string>
-  <string name="deck_summary_forecast">Forecast</string>
-  <string name="deck_summary_tomorrow_due">Tomorrow due: &lt;b&gt;%d&lt;/b&gt; cards</string>
-  <string name="deck_summary_tomorrow_new">Tomorrow new: &lt;b&gt;%d&lt;/b&gt; cards</string>
-  <string name="deck_summary_tomorrow_time">Estimated time tomorrow: &lt;b&gt;%d&lt;/b&gt; min.</string>
-  <string name="deck_summary_finished_in">New cards finished in: &lt;b&gt;%d&lt;/b&gt; days</string>
-  <string name="deck_summary_cards_per_day">&lt;b&gt;%.1f&lt;/b&gt; cards/day</string>
-  <string name="deck_summary_deck_age">Deck age: &lt;b&gt;%d&lt;/b&gt; days</string>
+  <string name="deck_summary_forecast">予定</string>
+  <string name="deck_summary_tomorrow_due">明日の期限切れカード: &lt;b&gt;%d&lt;/b&gt;枚</string>
+  <string name="deck_summary_tomorrow_new">明日の新しいカード: &lt;b&gt;%d&lt;/b&gt;枚</string>
+  <string name="deck_summary_tomorrow_time">明日の推定必要時間: &lt;b&gt;%d&lt;/b&gt; 分.</string>
+  <string name="deck_summary_finished_in">新しいカードの終了: &lt;b&gt;%d&lt;/b&gt; 日</string>
+  <string name="deck_summary_cards_per_day">&lt;b&gt;%.1f&lt;/b&gt; 枚/日</string>
+  <string name="deck_summary_deck_age">単語帳作成日: &lt;b&gt;%d&lt;/b&gt; 日前</string>
   <string name="deck_summary_all_decks">すべての単語帳</string>
   <string-array name="statistics_type_labels">
     <item>期限</item>
@@ -75,16 +75,16 @@
     <item>1年</item>
   </string-array>
   <string-array name="next_review_in_s">
-    <item>in 1 second</item>
-    <item>in 1 minute</item>
+    <item>1秒で内</item>
+    <item>1分内</item>
     <item>1時間で</item>
     <item>1日後</item>
     <item>1ヶ月後</item>
     <item>1年後</item>
   </string-array>
   <string-array name="next_review_in_p">
-    <item>in %s seconds</item>
-    <item>in %s minutes</item>
+    <item>%s秒内</item>
+    <item>%s分内</item>
     <item>%s時間後</item>
     <item>%s日後</item>
     <item>%sヶ月後</item>
@@ -99,11 +99,11 @@
     <item>1年前</item>
   </string-array>
   <string-array name="next_review_before_p">
-    <item>%s seconds before</item>
-    <item>%s minutes before</item>
-    <item>%s hours before</item>
-    <item>%s days before</item>
-    <item>%s months before</item>
-    <item>%s years before</item>
+    <item>%s秒前</item>
+    <item>%s分前</item>
+    <item>%s時間前</item>
+    <item>%s日前</item>
+    <item>%sヶ月前</item>
+    <item>%s年前</item>
   </string-array>
 </resources>

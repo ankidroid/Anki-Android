@@ -63,9 +63,9 @@
   <string name="contextmenu_deckpicker_reset_language_assignments">Đặt lại ngôn ngữ phân công</string>
   <string name="contextmenu_deckpicker_reset_reset_message">Đặt lại ngôn ngữ</string>
   <string name="contextmenu_deckpicker_optimize_deck">Tối ưu hóa cơ sở dữ liệu</string>
-  <string name="contextmenu_deckpicker_rename_deck">Rename deck</string>
+  <string name="contextmenu_deckpicker_rename_deck">Đổi tên tập thẻ</string>
   <string name="contextmenu_deckpicker_set_custom_dictionary">Thiết lập từ điển riêng</string>
-  <string name="begin_cram">Bắt đầu chế độ nhồi</string>
+  <string name="begin_cram">Bắt đầu chế độ Ôn thi</string>
   <string name="cram">Nhồi nhét</string>
   <string name="menu_open_deck">Tất cả các tập thẻ</string>
   <string name="menu_sync">Đồng bộ</string>
