@@ -123,7 +123,7 @@ public class DeckCreator extends Activity {
      * @return success or not
      */
     private boolean createDeck(String filename) {
-        // Log.d(AnkiDroidApp.TAG, "Creating deck: " + filename);
+        Log.d(AnkiDroidApp.TAG, "Creating deck: " + filename);
 
         filename = filename + ".anki";
 
@@ -164,7 +164,7 @@ public class DeckCreator extends Activity {
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event)  {
         if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
-            // Log.i(AnkiDroidApp.TAG, "DeckCreator - onBackPressed()");
+            Log.i(AnkiDroidApp.TAG, "DeckCreator - onBackPressed()");
             closeDeckCreator();
             MetaDB.closeDB();
         }

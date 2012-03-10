@@ -55,18 +55,18 @@ public abstract class VeecheckService extends Service {
     @Override
     public void onStart(Intent intent, int startId) {
         super.onStart(intent, startId);
-        // Log.d(LOG_TAG, "Service started");
+        Log.d(LOG_TAG, "Service started");
 
         String action = intent.getAction();
         Uri data = intent.getData();
 
-        // Log.v(LOG_TAG, "Service received action: " + action);
+        Log.v(LOG_TAG, "Service received action: " + action);
         // stop ourselves if this wasn't the right action and we're not busy
         String checkAction = Veecheck.getCheckAction(this);
         if (!checkAction.equals(action) || data == null) {
             synchronized (this) {
                 if (thread == null) {
-                    // Log.d(LOG_TAG, "Stopping service due to invalid action.");
+                    Log.d(LOG_TAG, "Stopping service due to invalid action.");
                     stopSelf(startId);
                 }
             }
@@ -75,11 +75,11 @@ public abstract class VeecheckService extends Service {
 
         synchronized (this) {
             if (thread == null) {
-                // Log.d(LOG_TAG, "Starting service thread.");
+                Log.d(LOG_TAG, "Starting service thread.");
                 thread = new VeecheckThread(this, data);
                 thread.start();
             } else {
-                // Log.d(LOG_TAG, "Not checking due to check in progress.");
+                Log.d(LOG_TAG, "Not checking due to check in progress.");
             }
         }
     }
@@ -125,7 +125,7 @@ public abstract class VeecheckService extends Service {
         handler.post(new Runnable() {
             @Override
             public void run() {
-                // Log.d(LOG_TAG, "Service thread reports completion.");
+                Log.d(LOG_TAG, "Service thread reports completion.");
                 try {
                     notifyOfResult(result);
                 } finally {
@@ -133,7 +133,7 @@ public abstract class VeecheckService extends Service {
                         thread = null;
                         stopSelf();
                     }
-                    // Log.d(LOG_TAG, "Service stopping.");
+                    Log.d(LOG_TAG, "Service stopping.");
                 }
             }
         });
@@ -155,25 +155,25 @@ public abstract class VeecheckService extends Service {
         Intent intent = notifier.createIntent(result.action, result.data, result.type, result.extras);
 
         if (intent == null) {
-            // Log.d(LOG_TAG, "No intent generated.");
+            Log.d(LOG_TAG, "No intent generated.");
             return;
         }
 
         if (createState().isIgnoredIntent(intent)) {
-            // Log.d(LOG_TAG, "User ignoring intent.");
+            Log.d(LOG_TAG, "User ignoring intent.");
             return;
         }
 
         Notification notification = notifier.createNotification(intent);
         if (notification == null) {
-            // Log.d(LOG_TAG, "Notification declined.");
+            Log.d(LOG_TAG, "Notification declined.");
             return;
         }
 
         int id = notifier.getNotificationId();
         NotificationManager manager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
         manager.notify(id, notification);
-        // Log.d(LOG_TAG, "Notification issued.");
+        Log.d(LOG_TAG, "Notification issued.");
     }
 
 }

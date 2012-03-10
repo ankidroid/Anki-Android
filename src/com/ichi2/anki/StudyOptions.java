@@ -570,7 +570,7 @@ public class StudyOptions extends Activity implements IButtonListener {
 	    
     	this.dispatchKeyEvent(new KeyEvent(KeyEvent.ACTION_DOWN,keycode));
 		this.dispatchKeyEvent(new KeyEvent(KeyEvent.ACTION_UP,keycode));
-		// Log.d("Zeemote","dispatched key "+keycode);
+		Log.d("Zeemote","dispatched key "+keycode);
 	}
 
 
@@ -629,7 +629,7 @@ public class StudyOptions extends Activity implements IButtonListener {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 		if (!isTaskRoot()) {
-			// Log.i(AnkiDroidApp.TAG, "StudyOptions - onCreate: Detected multiple instance of this activity, closing it and return to root activity");
+			Log.i(AnkiDroidApp.TAG, "StudyOptions - onCreate: Detected multiple instance of this activity, closing it and return to root activity");
 	        Intent reloadIntent = new Intent(StudyOptions.this, StudyOptions.class);
 	        reloadIntent.setAction(Intent.ACTION_MAIN);
 	        if (getIntent() != null && getIntent().getExtras() != null) {
@@ -644,7 +644,7 @@ public class StudyOptions extends Activity implements IButtonListener {
         Themes.applyTheme(this);
         super.onCreate(savedInstanceState);
 
-        // Log.i(AnkiDroidApp.TAG, "StudyOptions - OnCreate()");
+        Log.i(AnkiDroidApp.TAG, "StudyOptions - OnCreate()");
 
         Intent intent = getIntent();
         mStartedByBigWidget = intent.getIntExtra(EXTRA_START, EXTRA_START_NOTHING);
@@ -666,7 +666,7 @@ public class StudyOptions extends Activity implements IButtonListener {
         if (Intent.ACTION_VIEW.equalsIgnoreCase(intent.getAction())
                 && intent.getDataString() != null) {
             mDeckFilename = Uri.parse(intent.getDataString()).getPath();
-            // Log.i(AnkiDroidApp.TAG, "onCreate - deckFilename from VIEW intent: " + mDeckFilename);
+            Log.i(AnkiDroidApp.TAG, "onCreate - deckFilename from VIEW intent: " + mDeckFilename);
         } else if (Intent.ACTION_MAIN.equalsIgnoreCase(intent.getAction()) && mStartedByBigWidget != EXTRA_START_NOTHING) {
         		switch (intent.getIntExtra(EXTRA_START, EXTRA_START_NOTHING)) {
         		case EXTRA_START_REVIEWER:
@@ -682,15 +682,15 @@ public class StudyOptions extends Activity implements IButtonListener {
         		}
         } else if (Intent.ACTION_MAIN.equalsIgnoreCase(intent.getAction()) && intent.hasExtra(EXTRA_DECK)) {
             mDeckFilename = intent.getStringExtra(EXTRA_DECK);
-            // Log.i(AnkiDroidApp.TAG, "onCreate - deckFilename from MAIN intent: " + mDeckFilename);
+            Log.i(AnkiDroidApp.TAG, "onCreate - deckFilename from MAIN intent: " + mDeckFilename);
         } else if (savedInstanceState != null) {
             // Use the same deck as last time Ankidroid was used.
             mDeckFilename = savedInstanceState.getString("deckFilename");
-            // Log.i(AnkiDroidApp.TAG, "onCreate - deckFilename from savedInstanceState: " + mDeckFilename);
+            Log.i(AnkiDroidApp.TAG, "onCreate - deckFilename from savedInstanceState: " + mDeckFilename);
         } else {
-            // // Log.i(AnkiDroidApp.TAG, "onCreate - " + preferences.getAll().toString());
+            // Log.i(AnkiDroidApp.TAG, "onCreate - " + preferences.getAll().toString());
             mDeckFilename = preferences.getString("deckFilename", null);
-            // Log.i(AnkiDroidApp.TAG, "onCreate - deckFilename from preferences: " + mDeckFilename);
+            Log.i(AnkiDroidApp.TAG, "onCreate - deckFilename from preferences: " + mDeckFilename);
         }
 
         if (!mSdCardAvailable) {
@@ -728,15 +728,15 @@ public class StudyOptions extends Activity implements IButtonListener {
 		 controllerUi = new ControllerAndroidUi(this, AnkiDroidApp.zeemoteController());
 		 com.zeemote.util.Strings zstrings = com.zeemote.util.Strings.getStrings();
 		 if (zstrings.isLocaleAvailable(mLocale)){
-			 // Log.d("Zeemote","Zeemote locale "+mLocale+" is available. Setting.");
+			 Log.d("Zeemote","Zeemote locale "+mLocale+" is available. Setting.");
 			 zstrings.setLocale(mLocale);
 		 } else {
-			 // Log.d("Zeemote","Zeemote locale "+mLocale+" is not available.");
+			 Log.d("Zeemote","Zeemote locale "+mLocale+" is not available.");
 		 }
 		 if (mZeemoteEnabled){
 		 if (!AnkiDroidApp.zeemoteController().isConnected())
 		 {
-    		 // Log.d("Zeemote","starting connection in onCreate");
+    		 Log.d("Zeemote","starting connection in onCreate");
 			 controllerUi.startConnectionProcess();
 		 }
 		}
@@ -786,12 +786,12 @@ public class StudyOptions extends Activity implements IButtonListener {
                 public void onReceive(Context context, Intent intent) {
                     String action = intent.getAction();
                     if (action.equals(Intent.ACTION_MEDIA_EJECT)) {
-                        // Log.i(AnkiDroidApp.TAG, "mUnmountReceiver - Action = Media Eject");
+                        Log.i(AnkiDroidApp.TAG, "mUnmountReceiver - Action = Media Eject");
                         DeckManager.closeAllDecks();
                         showContentView(CONTENT_NO_EXTERNAL_STORAGE);
                         mSdCardAvailable = false;
                     } else if (action.equals(Intent.ACTION_MEDIA_MOUNTED)) {
-                        // Log.i(AnkiDroidApp.TAG, "mUnmountReceiver - Action = Media Mounted");
+                        Log.i(AnkiDroidApp.TAG, "mUnmountReceiver - Action = Media Mounted");
                         mSdCardAvailable = true;
                         if (!mInDeckPicker) {
                             loadPreviousDeck();
@@ -811,7 +811,7 @@ public class StudyOptions extends Activity implements IButtonListener {
     @Override
     protected void onDestroy() {
     	super.onDestroy();
-        // Log.i(AnkiDroidApp.TAG, "StudyOptions - onDestroy()");
+        Log.i(AnkiDroidApp.TAG, "StudyOptions - onDestroy()");
 		if (!isFinishing()) {
             DeckManager.closeMainDeck(DeckManager.REQUESTING_ACTIVITY_STUDYOPTIONS);
             mCompat.invalidateOptionsMenu(StudyOptions.this);
@@ -823,7 +823,7 @@ public class StudyOptions extends Activity implements IButtonListener {
         //Disconnect Zeemote if connected
         if ((AnkiDroidApp.zeemoteController() != null) && (AnkiDroidApp.zeemoteController().isConnected())){
         	try {
-        		// Log.d("Zeemote","trying to disconnect in onDestroy...");
+        		Log.d("Zeemote","trying to disconnect in onDestroy...");
         		AnkiDroidApp.zeemoteController().disconnect();
         	}
         	catch (IOException ex){
@@ -836,7 +836,7 @@ public class StudyOptions extends Activity implements IButtonListener {
     @Override
     protected void onPause() {
         if ((AnkiDroidApp.zeemoteController() != null) && (AnkiDroidApp.zeemoteController().isConnected())){ 
-        	// Log.d("Zeemote","Removing listener in onPause");
+        	Log.d("Zeemote","Removing listener in onPause");
         	AnkiDroidApp.zeemoteController().removeButtonListener(this);
         	AnkiDroidApp.zeemoteController().removeJoystickListener(adapter);
     		adapter.removeButtonListener(this);
@@ -865,7 +865,7 @@ public class StudyOptions extends Activity implements IButtonListener {
 	protected void onResume() {
     	super.onResume();
 	      if ((AnkiDroidApp.zeemoteController() != null) && (AnkiDroidApp.zeemoteController().isConnected())){
-	    	  // Log.d("Zeemote","Adding listener in onResume");
+	    	  Log.d("Zeemote","Adding listener in onResume");
 	    	  AnkiDroidApp.zeemoteController().addButtonListener(this);
 	      	  adapter = new JoystickToButtonAdapter();
 	      	  AnkiDroidApp.zeemoteController().addJoystickListener(adapter);
@@ -892,7 +892,7 @@ public class StudyOptions extends Activity implements IButtonListener {
 	@Override
     public boolean onKeyDown(int keyCode, KeyEvent event)  {
         if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
-            // Log.i(AnkiDroidApp.TAG, "StudyOptions - onBackPressed()");
+            Log.i(AnkiDroidApp.TAG, "StudyOptions - onBackPressed()");
             if (mCurrentContentView == CONTENT_CONGRATS) {
             	finishCongrats();
             } else if (mStartupMode == SUM_DECKPICKER) {
@@ -1705,7 +1705,7 @@ public class StudyOptions extends Activity implements IButtonListener {
 		case DIALOG_TAGS:
 	        if (allTags == null) {
 	            allTags = DeckManager.getMainDeck().allTags_();
-	            // Log.i(AnkiDroidApp.TAG, "all tags: " + Arrays.toString(allTags));
+	            Log.i(AnkiDroidApp.TAG, "all tags: " + Arrays.toString(allTags));
 		        if (allTags == null) {
 		        	Themes.showThemedToast(StudyOptions.this, getResources().getString(R.string.error_insufficient_memory), false);
 		        	ad.setEnabled(false);
@@ -1733,10 +1733,10 @@ public class StudyOptions extends Activity implements IButtonListener {
 				}
 	                        String tag = allTags[which];
 	                        if (mSelectedTags.contains(tag)) {
-	                            // Log.i(AnkiDroidApp.TAG, "unchecked tag: " + tag);
+	                            Log.i(AnkiDroidApp.TAG, "unchecked tag: " + tag);
 	                            mSelectedTags.remove(tag);
 	                        } else {
-	                            // Log.i(AnkiDroidApp.TAG, "checked tag: " + tag);
+	                            Log.i(AnkiDroidApp.TAG, "checked tag: " + tag);
 	                            mSelectedTags.add(tag);
 	                        }							
 						}
@@ -1756,10 +1756,10 @@ public class StudyOptions extends Activity implements IButtonListener {
 				public void onClick(DialogInterface arg0, int which) {
 					String tag = allCramTags[which];
 					if (activeCramTags.contains(tag)) {
-	                    // Log.i(AnkiDroidApp.TAG, "unchecked tag: " + tag);
+	                    Log.i(AnkiDroidApp.TAG, "unchecked tag: " + tag);
 	                    activeCramTags.remove(tag);						
 					} else {
-	                    // Log.i(AnkiDroidApp.TAG, "checked tag: " + tag);
+	                    Log.i(AnkiDroidApp.TAG, "checked tag: " + tag);
 	                    activeCramTags.add(tag);						
 					}
 				}
@@ -2045,12 +2045,12 @@ public class StudyOptions extends Activity implements IButtonListener {
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
-        // Log.i(AnkiDroidApp.TAG, "onSaveInstanceState: " + mDeckFilename);
+        Log.i(AnkiDroidApp.TAG, "onSaveInstanceState: " + mDeckFilename);
         // Remember current deck's filename.
         if (mDeckFilename != null) {
             outState.putString("deckFilename", mDeckFilename);
         }
-        // Log.i(AnkiDroidApp.TAG, "onSaveInstanceState - Ending");
+        Log.i(AnkiDroidApp.TAG, "onSaveInstanceState - Ending");
     }
 
 
@@ -2131,7 +2131,7 @@ public class StudyOptions extends Activity implements IButtonListener {
                 return true;
             case MENU_ZEEMOTE:
             	
-            	// Log.d("Zeemote","Locale: "+mLocale);
+            	Log.d("Zeemote","Locale: "+mLocale);
             	if ((AnkiDroidApp.zeemoteController() != null)) {
             		controllerUi.showControllerMenu();
             	}
@@ -2154,7 +2154,7 @@ public class StudyOptions extends Activity implements IButtonListener {
     	if (showAnimation && Utils.getApiLevel() > 4) {
     		ActivityTransitionAnimation.slide(this, ActivityTransitionAnimation.RIGHT);
     	}
-        // // Log.i(AnkiDroidApp.TAG, "openDeckPicker - Ending");
+        // Log.i(AnkiDroidApp.TAG, "openDeckPicker - Ending");
     }
 
 
@@ -2246,8 +2246,8 @@ public class StudyOptions extends Activity implements IButtonListener {
         if (AnkiDroidApp.isUserLoggedIn()) {
             Deck deck = DeckManager.getMainDeck();
             if (deck != null) {
-                // Log.i(AnkiDroidApp.TAG, "Synchronizing deck " + mDeckFilename + ", conflict resolution: " + conflictResolution);
-                // Log.i(AnkiDroidApp.TAG, String.format(Utils.ENGLISH_LOCALE, "Before syncing - mod: %f, last sync: %f", deck.getModified(), deck.getLastSync()));
+                Log.i(AnkiDroidApp.TAG, "Synchronizing deck " + mDeckFilename + ", conflict resolution: " + conflictResolution);
+                Log.i(AnkiDroidApp.TAG, String.format(Utils.ENGLISH_LOCALE, "Before syncing - mod: %f, last sync: %f", deck.getModified(), deck.getLastSync()));
                 Connection.syncDeck(mSyncListener, new Connection.Payload(new Object[] { username, password, deck, conflictResolution, true }));
             }
         } else {
@@ -2292,7 +2292,7 @@ public class StudyOptions extends Activity implements IButtonListener {
             	return;
             }
             if (resultCode != RESULT_OK) {
-                // Log.i(AnkiDroidApp.TAG, "onActivityResult - Deck browser returned without picking new deck");
+                Log.i(AnkiDroidApp.TAG, "onActivityResult - Deck browser returned without picking new deck");
                 // Make sure we open the database again in onResume() if user pressed "back"
                 // deckSelected = false;
             	if (mDeckFilename == null || !(new File(mDeckFilename).exists())) {
@@ -2318,13 +2318,13 @@ public class StudyOptions extends Activity implements IButtonListener {
                 return;
             }
             // A deck was picked. Save it in preferences and use it.
-            // Log.i(AnkiDroidApp.TAG, "onActivityResult = OK");
+            Log.i(AnkiDroidApp.TAG, "onActivityResult = OK");
             mDeckFilename = intent.getExtras().getString(OPT_DB);
             savePreferences("deckFilename");
             if (mDeckFilename == null || !new File(mDeckFilename).exists()) {
             	showContentView(CONTENT_NO_DECK);
             }
-            // // Log.i(AnkiDroidApp.TAG, "onActivityResult - deckSelected = " + deckSelected);
+            // Log.i(AnkiDroidApp.TAG, "onActivityResult - deckSelected = " + deckSelected);
             if (DeckManager.getMainDeck() == null || !DeckManager.getMainDeckPath().equals(mDeckFilename)) {
                 boolean updateAllCards = (requestCode == DOWNLOAD_SHARED_DECK);
                 displayProgressDialogAndLoadDeck(updateAllCards);
@@ -2345,7 +2345,7 @@ public class StudyOptions extends Activity implements IButtonListener {
             // showOrHideAnswerField();
             // }
         } else if (requestCode == REQUEST_REVIEW) {
-            // Log.i(AnkiDroidApp.TAG, "Result code = " + resultCode);
+            Log.i(AnkiDroidApp.TAG, "Result code = " + resultCode);
             // Return to standard scheduler
     		mInReviewer = false;
         	AnkiDroidWidgetBig.updateWidget(AnkiDroidWidgetBig.UpdateService.VIEW_NOT_SPECIFIED, false);
@@ -2539,7 +2539,7 @@ public class StudyOptions extends Activity implements IButtonListener {
 
 
     private void displayProgressDialogAndLoadDeck(boolean updateAllCards) {
-        // Log.i(AnkiDroidApp.TAG, "displayProgressDialogAndLoadDeck - Loading deck " + mDeckFilename);
+        Log.i(AnkiDroidApp.TAG, "displayProgressDialogAndLoadDeck - Loading deck " + mDeckFilename);
 
         // Don't open database again in onResume() until we know for sure this attempt to load the deck is finished
         // deckSelected = true;
@@ -2563,9 +2563,9 @@ public class StudyOptions extends Activity implements IButtonListener {
             }
         } else {
             if (mDeckFilename == null) {
-                // Log.i(AnkiDroidApp.TAG, "displayProgressDialogAndLoadDeck - SD card unmounted.");
+                Log.i(AnkiDroidApp.TAG, "displayProgressDialogAndLoadDeck - SD card unmounted.");
             } else if (!new File(mDeckFilename).exists()) {
-                // Log.i(AnkiDroidApp.TAG, "displayProgressDialogAndLoadDeck - The deck " + mDeckFilename + " does not exist.");
+                Log.i(AnkiDroidApp.TAG, "displayProgressDialogAndLoadDeck - The deck " + mDeckFilename + " does not exist.");
             }
 
             // Show message informing that no deck has been loaded
@@ -2573,9 +2573,9 @@ public class StudyOptions extends Activity implements IButtonListener {
         }
         // } else
         // {
-        // // Log.i(AnkiDroidApp.TAG, "displayProgressDialogAndLoadDeck - SD card unmounted.");
+        // Log.i(AnkiDroidApp.TAG, "displayProgressDialogAndLoadDeck - SD card unmounted.");
         // deckSelected = false;
-        // // Log.i(AnkiDroidApp.TAG, "displayProgressDialogAndLoadDeck - deckSelected = " + deckSelected);
+        // Log.i(AnkiDroidApp.TAG, "displayProgressDialogAndLoadDeck - deckSelected = " + deckSelected);
         // displaySdError();
         // }
     }
@@ -2784,7 +2784,7 @@ public class StudyOptions extends Activity implements IButtonListener {
 
         @Override
         public void onPostExecute(Payload data) {
-            // Log.i(AnkiDroidApp.TAG, "onPostExecute");
+            Log.i(AnkiDroidApp.TAG, "onPostExecute");
             if (mProgressDialog != null && mProgressDialog.isShowing()) {
                 mProgressDialog.dismiss();
                 setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_USER);
@@ -2936,7 +2936,7 @@ public class StudyOptions extends Activity implements IButtonListener {
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
         String deck = intent.getStringExtra(EXTRA_DECK);
-        // Log.d(AnkiDroidApp.TAG, "StudyOptions.onNewIntent: " + intent + ", deck=" + deck);
+        Log.d(AnkiDroidApp.TAG, "StudyOptions.onNewIntent: " + intent + ", deck=" + deck);
         if (deck != null && !deck.equals(mDeckFilename)) {
             mDeckFilename = deck;
             loadPreviousDeck();
@@ -2970,7 +2970,7 @@ public class StudyOptions extends Activity implements IButtonListener {
 
 	@Override
 	public void buttonReleased(ButtonEvent arg0) {
-		// Log.d("Zeemote","Button released, id: "+arg0.getButtonID());
+		Log.d("Zeemote","Button released, id: "+arg0.getButtonID());
 		Message msg = Message.obtain();
 		msg.what = MSG_ZEEMOTE_BUTTON_A + arg0.getButtonID(); //Button A = 0, Button B = 1...
 		if ((msg.what >= MSG_ZEEMOTE_BUTTON_A) && (msg.what <= MSG_ZEEMOTE_BUTTON_D)) { //make sure messages from future buttons don't get throug
