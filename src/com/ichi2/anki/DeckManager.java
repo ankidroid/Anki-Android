@@ -391,8 +391,7 @@ public class DeckManager {
 		sDeckPaths = new HashMap<String, String>();
 
 		if (len > 0 && fileList != null) {
-			Log.i(AnkiDroidApp.TAG,
-					"DeckManager - getSelectDeckDialog, number of anki files = " + len);
+			Log.i(AnkiDroidApp.TAG, "DeckManager - getSelectDeckDialog, number of anki files = " + len);
 			for (File file : fileList) {
 				String name = file.getName().replaceAll(".anki", "");
 				tree.add(name);
