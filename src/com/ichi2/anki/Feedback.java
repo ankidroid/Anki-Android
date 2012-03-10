@@ -14,7 +14,6 @@
 
 package com.ichi2.anki;
 
-import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -63,7 +62,7 @@ import java.util.Locale;
 import java.util.TimeZone;
 import java.util.UUID;
 
-public class Feedback extends Activity {
+public class Feedback extends AnkiActivity {
     public static String REPORT_ASK = "2";
     public static String REPORT_NEVER = "1";
     public static String REPORT_ALWAYS = "0";
@@ -134,10 +133,7 @@ public class Feedback extends Activity {
 
 	private void closeFeedback() {
 	        setResult(RESULT_OK);
-			finish();
-                if (Utils.getApiLevel() > 4) {
-                    ActivityTransitionAnimation.slide(Feedback.this, ActivityTransitionAnimation.FADE);
-                }
+			finishWithAnimation(ActivityTransitionAnimation.FADE);
 	}
 
 

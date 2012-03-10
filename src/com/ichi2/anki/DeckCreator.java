@@ -17,7 +17,6 @@
 
 package com.ichi2.anki;
 
-import android.app.Activity;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.os.Bundle;
@@ -44,7 +43,7 @@ import java.io.InputStream;
  * We just copy empty.anki to the decks directory under the specified name.
  */
 
-public class DeckCreator extends Activity {
+public class DeckCreator extends AnkiActivity {
 
     public final static String EMPTY_DECK_NAME = "empty.anki";
     
@@ -154,10 +153,7 @@ public class DeckCreator extends Activity {
     
     
     private void closeDeckCreator() {
-        finish();
-        if (Integer.valueOf(android.os.Build.VERSION.SDK) > 4) {
-            ActivityTransitionAnimation.slide(DeckCreator.this, ActivityTransitionAnimation.LEFT);
-        }    
+        finishWithAnimation(ActivityTransitionAnimation.LEFT);
     }
 
 

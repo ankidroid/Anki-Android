@@ -99,6 +99,17 @@
 <string name="zoom_summ">Show zoom controls when reviewing</string>
 <string name="zeemote">Zeemote JS1 support</string>
 <string name="zeemote_summ">Use Zeemote JS1 controller to navigate reviews.</string>
+<string name="zeemote_actions">Zeemote actions in Reviewer</string>
+<string name="zeemote_a">Button A</string>
+<string name="zeemote_b">Button B</string>
+<string name="zeemote_c">Button C</string>
+<string name="zeemote_d">Button D</string>
+<string name="zeemote_up">Stick up</string>
+<string name="zeemote_down">Stick down</string>
+<string name="zeemote_left">Stick left</string>
+<string name="zeemote_right">Stick right</string>
+<string name="zeemote_show_answer">Show answers with mark actions</string>
+<string name="zeemote_show_answer_summ">Actions assigned to marks 1-4 also show answer.</string>
 <string name="swipe">Enable Gestures</string>
 <string name="swipe_summ_off">Use gestures to switch between screens and answer cards. This option is not compatible with zoom controls</string>
 <string name="swipe_summ_on">Swipe horizontally to switch between screens. Configure other actions below</string>
@@ -148,6 +159,8 @@
 <string name="theme_animations_summ">Show animations when flipping cards</string>
 <string name="animation_speed">Animation Duration</string>
 <string name="animation_speed_summ">Duration of transition animations: XXX ms</string>
+<string name="eink_display">E-Ink Display Optimization</string>
+<string name="eink_display_summ">Disable all animations and do some optimization for E-Ink Display</string>
 <!-- deck_properties.xml -->
 <!--<string name="deck_properties">Deck properties</string>-->
 <!--<string name="sync_on">Synchronize this deck</string>-->

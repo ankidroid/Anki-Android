@@ -243,4 +243,24 @@ public class AnkiDroidApp extends Application {
     public static void saveExceptionReportFile(Throwable e, String origin) {
     	CustomExceptionHandler.getInstance().uncaughtException(null, e, origin);
     }
+
+    public static boolean isDonutOrLater() {
+        return getSdkVersion() > 3;
+    }
+
+    public static boolean isEclairOrLater() {
+        return getSdkVersion() > 4;
+    }
+
+    public static boolean isFroyoOrLater() {
+        return getSdkVersion() > 7;
+    }
+
+    public static boolean isHoneycombOrLater() {
+        return getSdkVersion() > 11;
+    }
+
+    public static int getSdkVersion() {
+        return Integer.valueOf(android.os.Build.VERSION.SDK);
+    }
 }

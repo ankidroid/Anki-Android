@@ -1077,7 +1077,6 @@ public class DiffEngine {
      */
     public String diff_prettyHtml(LinkedList<DiffAction> diffs) {
         StringBuilder html = new StringBuilder();
-        int i = 0;
         for (DiffAction aDiff : diffs) {
             String text = aDiff.text.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;")
                     .replace("\n", "<br>");
@@ -1096,9 +1095,6 @@ public class DiffEngine {
                 case EQUAL:
                     html.append("<span style=\"background:" + RIGHT_COLOR + ";\">").append(text).append("</span>");
                     break;
-            }
-            if (aDiff.operation != Operation.DELETE) {
-                i += aDiff.text.length();
             }
         }
         return html.toString();

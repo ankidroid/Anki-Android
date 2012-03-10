@@ -14,7 +14,6 @@
 
 package com.ichi2.anki;
 
-import android.app.Activity;
 import android.app.Dialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -83,7 +82,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 
-public class StudyOptions extends Activity implements IButtonListener {
+public class StudyOptions extends AnkiActivity implements IButtonListener {
 	
     /**
 * Default database.
@@ -272,7 +271,6 @@ public class StudyOptions extends Activity implements IButtonListener {
 * UI elements for "Study Options" view
 */
     private View mStudyOptionsView;
-    private View mStudyOptionsMain;
     private Button mButtonStart;
     private ToggleButton mToggleCram;
     private ToggleButton mToggleLimit;
@@ -446,15 +444,15 @@ public class StudyOptions extends Activity implements IButtonListener {
                 	return;
                 case R.id.studyoptions_nodeck_message:
                 	if (!mTextNoDeckTitle.getText().equals(getResources().getString(R.string.studyoptions_welcome_title))) {
-                        startActivityForResult(
+                        startActivityForResultWithoutAnimation(
                                 new Intent(StudyOptions.this, Preferences.class),
                                 PREFERENCES_UPDATE);
                 	} else {
                     	if (Utils.isIntentAvailable(StudyOptions.this, "android.intent.action.VIEW")) {
                     		Intent intent = new Intent("android.intent.action.VIEW", Uri.parse(getResources().getString(R.string.link_help)));
-                    		startActivity(intent);
+                    		startActivityWithoutAnimation(intent);
                     	} else {
-                    		startActivity(new Intent(StudyOptions.this, About.class));
+                    		startActivityWithoutAnimation(new Intent(StudyOptions.this, About.class));
                     	}
                 	}
                 	return;
@@ -637,7 +635,7 @@ public class StudyOptions extends Activity implements IButtonListener {
 	        }
 	        reloadIntent.addCategory(Intent.CATEGORY_LAUNCHER);
 	        reloadIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-			finish();
+			finishWithoutAnimation();
 			startActivityIfNeeded(reloadIntent, 0);
 		}
 
@@ -651,7 +649,7 @@ public class StudyOptions extends Activity implements IButtonListener {
 
         if (hasErrorFiles() && mStartedByBigWidget == EXTRA_START_NOTHING) {
             Intent i = new Intent(this, Feedback.class);
-            startActivityForResult(i, REPORT_ERROR);
+            startActivityForResultWithoutAnimation(i, REPORT_ERROR);
         }
 
         SharedPreferences preferences = restorePreferences();
@@ -914,7 +912,7 @@ public class StudyOptions extends Activity implements IButtonListener {
         MetaDB.closeDB();
         DeckManager.closeMainDeck(DeckManager.REQUESTING_ACTIVITY_STUDYOPTIONS);
         mCompat.invalidateOptionsMenu(this);
-        StudyOptions.this.finish();
+        StudyOptions.this.finishWithoutAnimation();
     }
 
 
@@ -923,8 +921,8 @@ public class StudyOptions extends Activity implements IButtonListener {
     	Intent i = getBaseContext().getPackageManager().getLaunchIntentForPackage(getBaseContext().getPackageName());
         mCompat.invalidateOptionsMenu(this);
         MetaDB.closeDB();
-        StudyOptions.this.finish();
-    	startActivity(i);
+        StudyOptions.this.finishWithoutAnimation();
+    	startActivityWithoutAnimation(i);
     }
 
 
@@ -933,9 +931,10 @@ public class StudyOptions extends Activity implements IButtonListener {
     		mInReviewer = true;
     		Intent reviewer = new Intent(StudyOptions.this, Reviewer.class);
             reviewer.putExtra("deckFilename", mDeckFilename);
-    		startActivityForResult(reviewer, REQUEST_REVIEW);
-        	if (Utils.getApiLevel() > 4 && mStartedByBigWidget == EXTRA_START_NOTHING) {
-       			ActivityTransitionAnimation.slide(this, ActivityTransitionAnimation.LEFT);
+        	if (mStartedByBigWidget == EXTRA_START_NOTHING) {
+        		startActivityForResultWithAnimation(reviewer, REQUEST_REVIEW, ActivityTransitionAnimation.LEFT);
+        	} else {
+        		startActivityForResultWithoutAnimation(reviewer, REQUEST_REVIEW);
         	}
     	} else if (mCurrentContentView == CONTENT_CONGRATS) {
     		startEarlyReview();
@@ -951,10 +950,7 @@ public class StudyOptions extends Activity implements IButtonListener {
             deck.reset();
     		Intent reviewer = new Intent(StudyOptions.this, Reviewer.class);
             reviewer.putExtra("deckFilename", mDeckFilename);
-            startActivityForResult(reviewer, REQUEST_REVIEW);
-        	if (Utils.getApiLevel() > 4) {
-       			ActivityTransitionAnimation.slide(this, ActivityTransitionAnimation.LEFT);
-        	}
+            startActivityForResultWithAnimation(reviewer, REQUEST_REVIEW, ActivityTransitionAnimation.LEFT);
         }
     }
 
@@ -967,10 +963,7 @@ public class StudyOptions extends Activity implements IButtonListener {
             deck.reset();
     		Intent reviewer = new Intent(StudyOptions.this, Reviewer.class);
     		reviewer.putExtra("deckFilename", mDeckFilename);
-        	startActivityForResult(reviewer, REQUEST_REVIEW);
-    		if (Utils.getApiLevel() > 4) {
-    			ActivityTransitionAnimation.slide(this, ActivityTransitionAnimation.LEFT);
-    		}
+        	startActivityForResultWithAnimation(reviewer, REQUEST_REVIEW, ActivityTransitionAnimation.LEFT);
         }
     }
 
@@ -997,8 +990,6 @@ public class StudyOptions extends Activity implements IButtonListener {
         // The main study options view that will be used when there are reviews left.
         mStudyOptionsView = getLayoutInflater().inflate(R.layout.studyoptions, null);
         Themes.setContentStyle(mStudyOptionsView, Themes.CALLER_STUDYOPTIONS);
-
-        mStudyOptionsMain = (View) mStudyOptionsView.findViewById(R.id.studyoptions_main);
 
         mTextDeckName = (TextView) mStudyOptionsView.findViewById(R.id.studyoptions_deck_name);
         Themes.setTitleStyle(mTextDeckName);
@@ -1204,10 +1195,7 @@ public class StudyOptions extends Activity implements IButtonListener {
 	            public void onClick(DialogInterface dialog, int which) {
 	                Intent myAccount = new Intent(StudyOptions.this, MyAccount.class);
 	                myAccount.putExtra("notLoggedIn", true);
-	                startActivityForResult(myAccount, LOG_IN);
-			        if (Utils.getApiLevel() > 4) {
-			            ActivityTransitionAnimation.slide(StudyOptions.this, ActivityTransitionAnimation.LEFT);
-			        }
+	                startActivityForResultWithAnimation(myAccount, LOG_IN, ActivityTransitionAnimation.LEFT);
 	            }
 	        });
 	        builder.setNegativeButton(res.getString(R.string.cancel), null);
@@ -1609,10 +1597,7 @@ public class StudyOptions extends Activity implements IButtonListener {
 	                mShowRepairDialog = true;
 	                Intent i = new Intent(StudyOptions.this, Feedback.class);
 	                dialog.dismiss();
-	                startActivityForResult(i, REPORT_ERROR);
-	                if (Utils.getApiLevel() > 4) {
-	                	ActivityTransitionAnimation.slide(StudyOptions.this, ActivityTransitionAnimation.FADE);
-		        	}
+	                startActivityForResultWithAnimation(i, REPORT_ERROR, ActivityTransitionAnimation.FADE);
 	            }
 	        });	        	
 			builder.setNegativeButton(res.getString(R.string.close), null);
@@ -1631,9 +1616,9 @@ public class StudyOptions extends Activity implements IButtonListener {
 					} else {
 			            if (Utils.isIntentAvailable(StudyOptions.this, "android.intent.action.VIEW")) {
 			                Intent intent = new Intent("android.intent.action.VIEW", Uri.parse(getResources().getString(arg1 == 0 ? R.string.link_help : R.string.link_faq)));
-			                startActivity(intent);
+			                startActivityWithoutAnimation(intent);
 			            } else {
-			                startActivity(new Intent(StudyOptions.this, About.class));
+			                startActivityWithoutAnimation(new Intent(StudyOptions.this, About.class));
 			            }						
 					}
 				}
@@ -1916,7 +1901,7 @@ public class StudyOptions extends Activity implements IButtonListener {
     	if(mDeckInformation != null) {
             mDeckInformation.setVisibility(View.INVISIBLE);
             if (fade) {
-            	mDeckInformation.setAnimation(ViewAnimation.fade(ViewAnimation.FADE_OUT, 500, 0));        	
+            	enableViewAnimation(mDeckInformation, ViewAnimation.fade(ViewAnimation.FADE_OUT, 500, 0));        	
             }
         }
     }
@@ -1927,7 +1912,7 @@ public class StudyOptions extends Activity implements IButtonListener {
         if(mDeckInformation != null) {
             mDeckInformation.setVisibility(View.VISIBLE);
             if (fade) {
-            	mDeckInformation.setAnimation(ViewAnimation.fade(ViewAnimation.FADE_IN, 500, 0));
+            	enableViewAnimation(mDeckInformation, ViewAnimation.fade(ViewAnimation.FADE_IN, 500, 0));
             }
         }
     }
@@ -2107,7 +2092,7 @@ public class StudyOptions extends Activity implements IButtonListener {
                 return true;
 
             case MENU_PREFERENCES:
-                startActivityForResult(
+                startActivityForResultWithoutAnimation(
                         new Intent(StudyOptions.this, Preferences.class),
                         PREFERENCES_UPDATE);
                 return true;
@@ -2116,10 +2101,7 @@ public class StudyOptions extends Activity implements IButtonListener {
             	Intent intent = new Intent(StudyOptions.this, CardEditor.class);
             	intent.putExtra(CardEditor.EXTRA_CALLER, CardEditor.CALLER_STUDYOPTIONS);
             	intent.putExtra(CardEditor.EXTRA_DECKPATH, DeckManager.getMainDeckPath());
-            	startActivityForResult(intent, ADD_FACT);
-                if (Utils.getApiLevel() > 4) {
-                    ActivityTransitionAnimation.slide(StudyOptions.this, ActivityTransitionAnimation.LEFT);
-                }
+            	startActivityForResultWithAnimation(intent, ADD_FACT, ActivityTransitionAnimation.LEFT);
                 return true;
 
             case MENU_ROTATE:
@@ -2150,31 +2132,25 @@ public class StudyOptions extends Activity implements IButtonListener {
         Intent decksPicker = new Intent(StudyOptions.this, DeckPicker.class);
         mInDeckPicker = true;
     	decksPicker.putExtra("showAnimation", showAnimation);
-        startActivityForResult(decksPicker, PICK_DECK_REQUEST);
-    	if (showAnimation && Utils.getApiLevel() > 4) {
-    		ActivityTransitionAnimation.slide(this, ActivityTransitionAnimation.RIGHT);
-    	}
-        Log.i(AnkiDroidApp.TAG, "openDeckPicker - Ending");
+        startActivityForResultWithAnimation(decksPicker, PICK_DECK_REQUEST, ActivityTransitionAnimation.RIGHT);
+        // Log.i(AnkiDroidApp.TAG, "openDeckPicker - Ending");
     }
 
 
     private void finishCongrats() {
         mStudyOptionsView.setVisibility(View.INVISIBLE);
         mCongratsView.setVisibility(View.INVISIBLE);
-        mCongratsView.setAnimation(ViewAnimation.fade(ViewAnimation.FADE_OUT, 500, 0));
+        enableViewAnimation(mCongratsView, ViewAnimation.fade(ViewAnimation.FADE_OUT, 500, 0));
         showContentView(CONTENT_SESSION_COMPLETE);
         mCongratsView.setVisibility(View.VISIBLE);
         mStudyOptionsView.setVisibility(View.VISIBLE);
-        mStudyOptionsView.setAnimation(ViewAnimation.fade(ViewAnimation.FADE_IN, 500, 0));
+        enableViewAnimation(mStudyOptionsView, ViewAnimation.fade(ViewAnimation.FADE_IN, 500, 0));
     }
 
 
     private void openCardBrowser() {
         Intent cardBrowser = new Intent(StudyOptions.this, CardBrowser.class);
-        startActivityForResult(cardBrowser, BROWSE_CARDS);
-        if (Utils.getApiLevel() > 4) {
-            ActivityTransitionAnimation.slide(StudyOptions.this, ActivityTransitionAnimation.LEFT);
-        }
+        startActivityForResultWithAnimation(cardBrowser, BROWSE_CARDS, ActivityTransitionAnimation.LEFT);
     }
 
 
@@ -2188,11 +2164,9 @@ public class StudyOptions extends Activity implements IButtonListener {
     public void openPersonalDeckPicker() {
         if (AnkiDroidApp.isUserLoggedIn()) {
             mCompat.invalidateOptionsMenu(this);
-            startActivityForResult(
-                    new Intent(StudyOptions.this, PersonalDeckPicker.class), DOWNLOAD_PERSONAL_DECK);
-        	if (Utils.getApiLevel() > 4) {
-        		ActivityTransitionAnimation.slide(this, ActivityTransitionAnimation.RIGHT);
-        	}
+            startActivityForResultWithAnimation(
+                    new Intent(StudyOptions.this, PersonalDeckPicker.class), 
+                    DOWNLOAD_PERSONAL_DECK, ActivityTransitionAnimation.RIGHT);
         } else {
         	showDialog(DIALOG_USER_NOT_LOGGED_IN);
         }
@@ -2202,10 +2176,9 @@ public class StudyOptions extends Activity implements IButtonListener {
     public void openSharedDeckPicker() {
         mCompat.invalidateOptionsMenu(this);
         // deckLoaded = false;
-        startActivityForResult(new Intent(StudyOptions.this, SharedDeckPicker.class), DOWNLOAD_SHARED_DECK);
-    	if (Utils.getApiLevel() > 4) {
-    		ActivityTransitionAnimation.slide(this, ActivityTransitionAnimation.RIGHT);
-    	}
+        startActivityForResultWithAnimation(
+        		new Intent(StudyOptions.this, SharedDeckPicker.class), 
+        		DOWNLOAD_SHARED_DECK, ActivityTransitionAnimation.RIGHT);
     }
 
 
@@ -2262,7 +2235,7 @@ public class StudyOptions extends Activity implements IButtonListener {
 
         if (mStartedByBigWidget != EXTRA_START_NOTHING && ((requestCode == REQUEST_REVIEW && resultCode == Reviewer.RESULT_DEFAULT) || (requestCode == PICK_DECK_REQUEST && resultCode != RESULT_OK))) {
         	DeckManager.closeMainDeck(DeckManager.REQUESTING_ACTIVITY_STUDYOPTIONS);
-        	finish();
+        	finishWithoutAnimation();
         	return;
         } else {
         	mStartedByBigWidget = EXTRA_START_NOTHING;
@@ -2438,7 +2411,7 @@ public class StudyOptions extends Activity implements IButtonListener {
         mStartupMode = Integer.parseInt(preferences.getString("startup_mode",
                 Integer.toString(SUM_DECKPICKER_ON_FIRST_START)));
         mSwipeEnabled = preferences.getBoolean("swipe", false);
-
+        
         mLastTimeOpened = preferences.getLong("lastTimeOpened", 0);
         BroadcastMessages.init(this, mLastTimeOpened);
        	preferences.edit().putLong("lastTimeOpened", System.currentTimeMillis()).commit();
@@ -2602,7 +2575,7 @@ public class StudyOptions extends Activity implements IButtonListener {
         	}
         	if (mRepairFileName != null) {
             	mRepairFileName = null;
-        		finish();
+        		finishWithoutAnimation();
         	}
         }
  
@@ -2669,7 +2642,7 @@ public class StudyOptions extends Activity implements IButtonListener {
     				            DeckManager.closeMainDeck(DeckManager.REQUESTING_ACTIVITY_STUDYOPTIONS);
     				            mCompat.invalidateOptionsMenu(StudyOptions.this);
     				            MetaDB.closeDB();
-    				            finish();
+    				            finishWithoutAnimation();
     						}
                 });
         	}
@@ -2698,7 +2671,7 @@ public class StudyOptions extends Activity implements IButtonListener {
 
                     if (!mPrefStudyOptions) {
                 		mInReviewer = true;
-                        startActivityForResult(new Intent(StudyOptions.this, Reviewer.class), REQUEST_REVIEW);
+                        startActivityForResultWithoutAnimation(new Intent(StudyOptions.this, Reviewer.class), REQUEST_REVIEW);
                     }
 
                     break;
@@ -2861,10 +2834,7 @@ public class StudyOptions extends Activity implements IButtonListener {
 		    		Statistics.showDeckSummary(StudyOptions.this);
 		    	} else {
 	            	Intent intent = new Intent(StudyOptions.this, com.ichi2.charts.ChartBuilder.class);
-			    	startActivityForResult(intent, STATISTICS);
-			        if (Utils.getApiLevel() > 4) {
-			            ActivityTransitionAnimation.slide(StudyOptions.this, ActivityTransitionAnimation.DOWN);
-			        }
+			    	startActivityForResultWithAnimation(intent, STATISTICS, ActivityTransitionAnimation.DOWN);
 		    	}
 			}
 		}

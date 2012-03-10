@@ -43,6 +43,8 @@ import android.util.Log;
 import android.view.WindowManager.BadTokenException;
 
 import com.hlidskialf.android.preference.SeekBarPreference;
+import com.ichi2.anim.ActivityTransitionAnimation;
+import com.ichi2.anim.ViewAnimation;
 import com.ichi2.themes.StyledProgressDialog;
 import com.ichi2.themes.Themes;
 import com.tomgibara.android.veecheck.util.PrefSettings;
@@ -67,11 +69,12 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
     private CheckBoxPreference walModePreference;
     private CheckBoxPreference useBackupPreference;
     private CheckBoxPreference asyncModePreference;
+    private CheckBoxPreference eInkDisplayPreference;
     private ListPreference mLanguageSelection;
     private CharSequence[] mLanguageDialogLabels;
     private CharSequence[] mLanguageDialogValues;
     private static String[] mAppLanguages = {"ar", "bg", "ca", "cs", "de", "el", "es", "et", "fi", "fr", "hu", "id", "it", "ja", "ko", "nl", "no", "pl", "pt_PT", "pt_BR", "ro", "ru", "sr", "sv", "th", "tr", "vi", "zh_CN", "zh_TW", "en"};
-    private static String[] mShowValueInSummList = {"language", "startup_mode", "hideQuestionInAnswer", "dictionary", "reportErrorMode", "minimumCardsDueForNotification", "deckOrder", "gestureShake", "gestureSwipeUp", "gestureSwipeDown", "gestureSwipeLeft", "gestureSwipeRight", "gestureDoubleTap", "gestureTapTop", "gestureTapBottom", "gestureTapRight", "gestureTapLeft", "theme"};
+    private static String[] mShowValueInSummList = {"language", "startup_mode", "hideQuestionInAnswer", "dictionary", "reportErrorMode", "minimumCardsDueForNotification", "deckOrder", "gestureShake", "gestureSwipeUp", "gestureSwipeDown", "gestureSwipeLeft", "gestureSwipeRight", "gestureDoubleTap", "gestureTapTop", "gestureTapBottom", "gestureTapRight", "gestureTapLeft", "theme","zeemoteActionA","zeemoteActionB","zeemoteActionC","zeemoteActionD","zeemoteActionUp","zeemoteActionDown","zeemoteActionLeft","zeemoteActionRight"};
     private static String[] mShowValueInSummSeek = {"relativeDisplayFontSize", "relativeCardBrowserFontSize", "answerButtonSize", "whiteBoardStrokeWidth", "minShakeIntensity", "swipeSensibility", "timeoutAnswerSeconds", "timeoutQuestionSeconds", "animationDuration", "backupMax"};
     private TreeMap<String, String> mListsToUpdate = new TreeMap<String, String>();
     private StyledProgressDialog mProgressDialog;
@@ -99,6 +102,7 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
         walModePreference = (CheckBoxPreference) getPreferenceScreen().findPreference("walMode");
         useBackupPreference = (CheckBoxPreference) getPreferenceScreen().findPreference("useBackup");
         asyncModePreference = (CheckBoxPreference) getPreferenceScreen().findPreference("asyncMode");
+        eInkDisplayPreference = (CheckBoxPreference) getPreferenceScreen().findPreference("eInkDisplay");
         walModeInitiallySet = mPrefMan.getSharedPreferences().getBoolean("walMode", false);
         ListPreference listpref = (ListPreference) getPreferenceScreen().findPreference("theme");
         animationsCheckboxPreference.setEnabled(listpref.getValue().equals("2"));
@@ -318,6 +322,8 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
             	if (decksDirectory.exists()) {
             		AnkiDroidApp.createNoMediaFileIfMissing(decksDirectory);
             	}
+            } else if (key.equals("eInkDisplay")) {
+            	boolean enableAnimation = !eInkDisplayPreference.isChecked();
             }
         } catch (BadTokenException e) {
         	Log.e(AnkiDroidApp.TAG, "Preferences: BadTokenException on showDialog: " + e);

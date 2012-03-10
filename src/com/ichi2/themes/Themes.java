@@ -297,11 +297,11 @@ public class Themes {
 			switch (mCurrentTheme) {
 			case THEME_ANDROID_DARK:
 				mDialogBackgroundColor = R.color.card_browser_background;
-				mProgressbarsBackgroundColor = 0;
-				mProgressbarsFrameColor = 0;
-				mProgressbarsMatureColor = 0;
-				mProgressbarsYoungColor = 0;
-				mProgressbarsDeckpickerYoungColor = 0;
+				mProgressbarsBackgroundColor = R.color.studyoptions_progressbar_background_default;
+				mProgressbarsFrameColor = R.color.studyoptions_progressbar_frame_default;
+				mProgressbarsMatureColor = R.color.studyoptions_progressbar_mature_default;
+				mProgressbarsYoungColor = R.color.studyoptions_progressbar_young_default;
+				mProgressbarsDeckpickerYoungColor = R.color.deckpicker_progressbar_young_dark;
 				mReviewerBackground = 0;
 				mFlashcardBorder = 0;
 				mDeckpickerItemBorder = 0;
@@ -583,7 +583,7 @@ public class Themes {
 	public static void setMargins(View view, int width, int height, float dipLeft, float dipTop, float dipRight, float dipBottom) {
 		View parent = (View) view.getParent();
 		parent.setBackgroundResource(mBackgroundColor);
-		Class c = view.getParent().getClass();
+		Class<?> c = view.getParent().getClass();
     	float factor = mContext.getResources().getDisplayMetrics().density;
 		if (c == LinearLayout.class) {
 			LinearLayout.LayoutParams llp = new LinearLayout.LayoutParams(width, height);

@@ -25,7 +25,6 @@ import org.achartengine.model.XYSeries;
 import org.achartengine.renderer.XYMultipleSeriesRenderer;
 import org.achartengine.renderer.XYSeriesRenderer;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
@@ -47,6 +46,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.ichi2.anim.ActivityTransitionAnimation;
+import com.ichi2.anki.AnkiActivity;
 import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.R;
 import com.ichi2.anki.Statistics;
@@ -54,7 +54,7 @@ import com.ichi2.anki.StudyOptions;
 import com.ichi2.themes.Themes;
 import com.tomgibara.android.veecheck.util.PrefSettings;
 
-public class ChartBuilder extends Activity {
+public class ChartBuilder extends AnkiActivity {
     public static final String TYPE = "type";
     public static final int ZOOM_MAX = 20;
 
@@ -155,10 +155,7 @@ public class ChartBuilder extends Activity {
 
 
     public void closeChartBuilder() {
-        finish();
-        if (Integer.valueOf(android.os.Build.VERSION.SDK) > 4) {
-            ActivityTransitionAnimation.slide(this, ActivityTransitionAnimation.UP);
-        }
+        finishWithAnimation(ActivityTransitionAnimation.UP);
     }
 
 
@@ -200,12 +197,9 @@ public class ChartBuilder extends Activity {
                 editor.putBoolean("fullScreen", !mFullScreen);
                 Statistics.sZoom = zoom;
                 editor.commit();
-                finish();
+                finishWithoutAnimation();
                 Intent intent = new Intent(this, com.ichi2.charts.ChartBuilder.class);
-                startActivity(intent);
-                if (Integer.valueOf(android.os.Build.VERSION.SDK) > 4) {
-                    ActivityTransitionAnimation.slide(this, ActivityTransitionAnimation.FADE);
-                }
+                startActivityWithAnimation(intent, ActivityTransitionAnimation.FADE);
                 return true;
             case MENU_ZOOM_IN:
                 zoom += 1;
@@ -230,7 +224,7 @@ public class ChartBuilder extends Activity {
         restorePreferences();
         if (Statistics.sSeriesList == null) {
             Log.i(AnkiDroidApp.TAG, "ChartBuilder - Data variable empty, closing chartbuilder");
-        	finish();
+        	finishWithoutAnimation();
         	return;
         }
         if (mFullScreen) {

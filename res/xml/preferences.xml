@@ -111,7 +111,13 @@
                     app:min="100"
                     android:max="2000"
                     app:interval="50" />
-        </PreferenceCategory>
+            <CheckBoxPreference
+                    android:title="@string/eink_display"
+                    android:defaultValue="false"
+                    android:summary="@string/eink_display_summ"
+                    android:disableDependentsState="false"
+                    android:key="eInkDisplay" />
+            </PreferenceCategory>
         <PreferenceCategory android:title="@string/pref_cat_flashcard">
             <CheckBoxPreference
                     android:title="@string/fullscreen_review"
@@ -400,6 +406,79 @@
                     android:defaultValue="false"
                     android:summary="@string/zeemote_summ"
                     android:key="zeemote"/>
+        </PreferenceCategory>
+        <PreferenceCategory android:title="@string/zeemote_actions">
+            <ListPreference
+                    android:title="@string/zeemote_a"
+                    android:summary=""
+                    android:key="zeemoteActionA"
+                    android:defaultValue="14"
+                    android:dependency="zeemote"
+                    android:entries="@array/zeemote_action_labels"
+                    android:entryValues="@array/zeemote_action_values" />
+            <ListPreference
+                    android:title="@string/zeemote_b"
+                    android:summary=""
+                    android:key="zeemoteActionB"
+                    android:defaultValue="13"
+                    android:dependency="zeemote"
+                    android:entries="@array/zeemote_action_labels"
+                    android:entryValues="@array/zeemote_action_values" />
+            <ListPreference
+                    android:title="@string/zeemote_c"
+                    android:summary=""
+                    android:key="zeemoteActionC"
+                    android:defaultValue="8"
+                    android:dependency="zeemote"
+                    android:entries="@array/zeemote_action_labels"
+                    android:entryValues="@array/zeemote_action_values" />
+            <ListPreference
+                    android:title="@string/zeemote_d"
+                    android:summary=""
+                    android:key="zeemoteActionD"
+                    android:defaultValue="1"
+                    android:dependency="zeemote"
+                    android:entries="@array/zeemote_action_labels"
+                    android:entryValues="@array/zeemote_action_values" />
+            <ListPreference
+                    android:title="@string/zeemote_up"
+                    android:summary=""
+                    android:key="zeemoteActionUp"
+                    android:defaultValue="5"
+                    android:dependency="zeemote"
+                    android:entries="@array/zeemote_action_labels"
+                    android:entryValues="@array/zeemote_action_values" />
+            <ListPreference
+                    android:title="@string/zeemote_down"
+                    android:summary=""
+                    android:key="zeemoteActionDown"
+                    android:defaultValue="2"
+                    android:dependency="zeemote"
+                    android:entries="@array/zeemote_action_labels"
+                    android:entryValues="@array/zeemote_action_values" />
+            <ListPreference
+                    android:title="@string/zeemote_left"
+                    android:summary=""
+                    android:key="zeemoteActionLeft"
+                    android:defaultValue="3"
+                    android:dependency="zeemote"
+                    android:entries="@array/zeemote_action_labels"
+                    android:entryValues="@array/zeemote_action_values" />
+            <ListPreference
+                    android:title="@string/zeemote_right"
+                    android:summary=""
+                    android:key="zeemoteActionRight"
+                    android:defaultValue="4"
+                    android:dependency="zeemote"
+                    android:entries="@array/zeemote_action_labels"
+                    android:entryValues="@array/zeemote_action_values" />
+            <CheckBoxPreference
+                    android:id="@+id/zeemote_show_action_checkbox"
+                    android:title="@string/zeemote_show_answer"
+                    android:defaultValue="false"
+                    android:summary="@string/zeemote_show_answer_summ"
+                    android:dependency="zeemote"
+                    android:key="zeemoteShowAnswer"/>
         </PreferenceCategory>
     </PreferenceScreen>
     <PreferenceScreen android:title="@string/widget_pref">

@@ -20,7 +20,6 @@
 
 package com.ichi2.anki;
 
-import android.app.Activity;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
@@ -36,7 +35,6 @@ import android.database.sqlite.SQLiteException;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.preference.PreferenceManager;
 import android.text.InputFilter;
 import android.text.SpannableStringBuilder;
 import android.text.Spanned;
@@ -92,7 +90,7 @@ import com.zeemote.zc.util.JoystickToButtonAdapter;
 /**
  * Allows the user to choose a deck from the filesystem.
  */
-public class DeckPicker extends Activity implements Runnable, IButtonListener {
+public class DeckPicker extends AnkiActivity implements Runnable, IButtonListener {
 
 	/**
 	 * Dialogs
@@ -787,10 +785,7 @@ public class DeckPicker extends Activity implements Runnable, IButtonListener {
 								Intent myAccount = new Intent(DeckPicker.this,
 										MyAccount.class);
 								myAccount.putExtra("notLoggedIn", true);
-								startActivityForResult(myAccount, LOG_IN_FOR_SYNC);
-						        if (Utils.getApiLevel() > 4) {
-						            ActivityTransitionAnimation.slide(DeckPicker.this, ActivityTransitionAnimation.LEFT);
-						        }
+								startActivityForResultWithAnimation(myAccount, LOG_IN_FOR_SYNC, ActivityTransitionAnimation.LEFT);
 							}
 						});
 			} else {
@@ -802,10 +797,7 @@ public class DeckPicker extends Activity implements Runnable, IButtonListener {
 								Intent myAccount = new Intent(DeckPicker.this,
 										MyAccount.class);
 								myAccount.putExtra("notLoggedIn", true);
-								startActivityForResult(myAccount, LOG_IN_FOR_DOWNLOAD);
-						        if (Utils.getApiLevel() > 4) {
-						            ActivityTransitionAnimation.slide(DeckPicker.this, ActivityTransitionAnimation.LEFT);
-						        }
+								startActivityForResultWithAnimation(myAccount, LOG_IN_FOR_DOWNLOAD, ActivityTransitionAnimation.LEFT);
 							}
 						});
 			}
@@ -1086,12 +1078,9 @@ public class DeckPicker extends Activity implements Runnable, IButtonListener {
 	private void closeDeckPicker(boolean backPressed) {
 		if (mPrefStartupDeckPicker && backPressed) {
 			setResult(StudyOptions.RESULT_CLOSE);
-			finish();
+			finishWithoutAnimation();
 		} else {
-			finish();
-			if (getIntent().getBooleanExtra("showAnimation", false) && Utils.getApiLevel() > 4) {
-	    			ActivityTransitionAnimation.slide(this, ActivityTransitionAnimation.LEFT);
-    		}
+			finishWithAnimation(ActivityTransitionAnimation.LEFT);
 		}
 	}
 
@@ -1119,7 +1108,7 @@ public class DeckPicker extends Activity implements Runnable, IButtonListener {
 		if (enabled) {
 			mSyncAllButton.setVisibility(View.VISIBLE);
 			mDeckpickerButtons.setVisibility(View.VISIBLE);
-			mDeckpickerButtons.setAnimation(ViewAnimation.fade(ViewAnimation.FADE_IN, 500, 0)); 
+			enableViewAnimation(mDeckListView, ViewAnimation.fade(ViewAnimation.FADE_IN, 500, 0));
 		} else {
 			mDeckpickerButtons.setVisibility(View.INVISIBLE);
 		}
@@ -1315,15 +1304,12 @@ public class DeckPicker extends Activity implements Runnable, IButtonListener {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case MENU_CREATE_DECK:
-                startActivityForResult(new Intent(DeckPicker.this, DeckCreator.class), CREATE_DECK);
-                if (Utils.getApiLevel() > 4) {
-                    ActivityTransitionAnimation.slide(DeckPicker.this, ActivityTransitionAnimation.RIGHT);
-                }
+                startActivityForResultWithAnimation(new Intent(DeckPicker.this, DeckCreator.class), CREATE_DECK, ActivityTransitionAnimation.RIGHT);
                 return true;
 
             case MENU_ABOUT:
                 // int i = 123/0; // Intentional Exception for feedback testing purpose
-                startActivity(new Intent(DeckPicker.this, About.class));
+                startActivityWithoutAnimation(new Intent(DeckPicker.this, About.class));
                 return true;
 
             case MENU_DOWNLOAD_PERSONAL_DECK:
@@ -1335,17 +1321,17 @@ public class DeckPicker extends Activity implements Runnable, IButtonListener {
                 return true;
 
             case MENU_MY_ACCOUNT:
-                startActivity(new Intent(DeckPicker.this, MyAccount.class));
+                startActivityWithoutAnimation(new Intent(DeckPicker.this, MyAccount.class));
                 return true;
 
             case MENU_PREFERENCES:
-                startActivityForResult(
+                startActivityForResultWithoutAnimation(
                         new Intent(DeckPicker.this, Preferences.class),
                         PREFERENCES_UPDATE);
                 return true;
 
             case MENU_FEEDBACK:
-                startActivityForResult(
+                startActivityForResultWithoutAnimation(
                         new Intent(DeckPicker.this, Feedback.class),
                         REPORT_FEEDBACK);
                 return true;
@@ -1363,7 +1349,7 @@ public class DeckPicker extends Activity implements Runnable, IButtonListener {
         if (requestCode == PREFERENCES_UPDATE) {
             if (resultCode == StudyOptions.RESULT_RESTART) {
             	setResult(StudyOptions.RESULT_RESTART);
-            	finish();
+            	finishWithoutAnimation();
             } else {
             	SharedPreferences preferences = PrefSettings.getSharedPrefs(getBaseContext());
 				BackupManager.initBackup();
@@ -1477,9 +1463,7 @@ public class DeckPicker extends Activity implements Runnable, IButtonListener {
 				Log.i(AnkiDroidApp.TAG, "Thread run - Inside lock");
 
 				mIsFinished = false;
-				int i = 0;
 				for (File file : mFileList) {
-				    i++;
 					// Don't load any more decks if one has already been
 					// selected.
 					Log.i(AnkiDroidApp.TAG, "Thread run - Before break mDeckIsSelected = " + mDeckIsSelected);
@@ -1649,10 +1633,7 @@ public class DeckPicker extends Activity implements Runnable, IButtonListener {
 
     public void openPersonalDeckPicker() {
         if (AnkiDroidApp.isUserLoggedIn()) {
-            startActivityForResult(new Intent(this, PersonalDeckPicker.class), DOWNLOAD_PERSONAL_DECK);
-            if (Utils.getApiLevel() > 4) {
-                ActivityTransitionAnimation.slide(this, ActivityTransitionAnimation.RIGHT);
-            }
+            startActivityForResultWithAnimation(new Intent(this, PersonalDeckPicker.class), DOWNLOAD_PERSONAL_DECK, ActivityTransitionAnimation.RIGHT);
         } else {
             showDialog(DIALOG_USER_NOT_LOGGED_IN_DOWNLOAD);
         }
@@ -1661,10 +1642,7 @@ public class DeckPicker extends Activity implements Runnable, IButtonListener {
 
     public void openSharedDeckPicker() {
         // deckLoaded = false;
-        startActivityForResult(new Intent(this, SharedDeckPicker.class), DOWNLOAD_SHARED_DECK);
-        if (Utils.getApiLevel() > 4) {
-            ActivityTransitionAnimation.slide(this, ActivityTransitionAnimation.RIGHT);
-        }
+        startActivityForResultWithAnimation(new Intent(this, SharedDeckPicker.class), DOWNLOAD_SHARED_DECK, ActivityTransitionAnimation.RIGHT);
     }
 
 
@@ -1782,10 +1760,7 @@ public class DeckPicker extends Activity implements Runnable, IButtonListener {
 		    		Statistics.showDeckSummary(DeckPicker.this);
 		    	} else {
 			    	Intent intent = new Intent(DeckPicker.this, com.ichi2.charts.ChartBuilder.class);
-			    	startActivity(intent);
-			        if (Utils.getApiLevel() > 4) {
-			            ActivityTransitionAnimation.slide(DeckPicker.this, ActivityTransitionAnimation.DOWN);
-			        }	
+			    	startActivityWithAnimation(intent, ActivityTransitionAnimation.DOWN);
 		    	}
 			}
 		}

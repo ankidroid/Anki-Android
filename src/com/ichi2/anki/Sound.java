@@ -199,7 +199,7 @@ public class Sound {
             sMediaPlayer.stop();
             releaseSound();
         }
-        if (Integer.valueOf(android.os.Build.VERSION.SDK) > 3) {
+        if (AnkiDroidApp.isDonutOrLater()) {
         	ReadText.stopTts();
         }
     }
