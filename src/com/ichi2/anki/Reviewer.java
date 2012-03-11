@@ -114,7 +114,7 @@ import com.zeemote.zc.util.JoystickToButtonAdapter;
 import org.amr.arabic.ArabicUtilities;
 import org.json.JSONException;
 
-public class Reviewer extends Activity implements IButtonListener{
+public class Reviewer extends AnkiActivity implements IButtonListener{
     /**
      * Result codes that are returned when this activity finishes.
      */
@@ -370,14 +370,14 @@ public class Reviewer extends Activity implements IButtonListener{
  	private int mGestureLongclick;
 
  	private static final int GESTURE_NOTHING = 0;
- 	private static final int GESTURE_ANSWER_EASE1 = 1;
- 	private static final int GESTURE_ANSWER_EASE2 = 2;
- 	private static final int GESTURE_ANSWER_EASE3 = 3;
- 	private static final int GESTURE_ANSWER_EASE4 = 4;
- 	private static final int GESTURE_ANSWER_RECOMMENDED = 5;
- 	private static final int GESTURE_ANSWER_BETTER_THAN_RECOMMENDED = 6;
- 	private static final int GESTURE_UNDO = 7;
- 	private static final int GESTURE_REDO = 8;
+ 	private static final int GESTURE_SHOW_ANSWER = 1;
+ 	private static final int GESTURE_ANSWER_EASE1 = 2;
+ 	private static final int GESTURE_ANSWER_EASE2 = 3;
+ 	private static final int GESTURE_ANSWER_EASE3 = 4;
+ 	private static final int GESTURE_ANSWER_EASE4 = 5;
+ 	private static final int GESTURE_ANSWER_RECOMMENDED = 6;
+ 	private static final int GESTURE_ANSWER_BETTER_THAN_RECOMMENDED = 7;
+ 	private static final int GESTURE_UNDO = 8;
  	private static final int GESTURE_EDIT = 9;
  	private static final int GESTURE_MARK = 10;
  	private static final int GESTURE_LOOKUP = 11;
@@ -385,7 +385,18 @@ public class Reviewer extends Activity implements IButtonListener{
  	private static final int GESTURE_SUSPEND = 13;
  	private static final int GESTURE_DELETE = 14;
  	private static final int GESTURE_CLEAR_WHITEBOARD = 15;
- 	private static final int GESTURE_EXIT = 16;
+ 	private static final int GESTURE_PLAY_MEDIA = 16;
+ 	private static final int GESTURE_EXIT = 17;
+ 	
+ 	private int mZeemoteGestureA;
+ 	private int mZeemoteGestureB;
+ 	private int mZeemoteGestureC;
+ 	private int mZeemoteGestureD;
+ 	private int mZeemoteGestureUp;
+ 	private int mZeemoteGestureDown;
+ 	private int mZeemoteGestureLeft;
+ 	private int mZeemoteGestureRight;
+ 	private boolean mZeemoteGestureShowAnswer;
 
  	private Spanned mCardContent;
  	private String mBaseUrl;
@@ -571,7 +582,7 @@ public class Reviewer extends Activity implements IButtonListener{
             	if (mInputWorkaround) {
                 	Log.e(AnkiDroidApp.TAG, "Error on using InputWorkaround: " + e + " --> disabled");
                 	PrefSettings.getSharedPrefs(getBaseContext()).edit().putBoolean("inputWorkaround", false).commit();            		
-                	finishWithoutAnimation();
+                	Reviewer.this.finishWithoutAnimation();
             	}
             }
             return false;
@@ -934,7 +945,6 @@ public class Reviewer extends Activity implements IButtonListener{
         Log.i(AnkiDroidApp.TAG, "Reviewer - onCreate");
 
         mChangeBorderStyle = Themes.getTheme() == Themes.THEME_ANDROID_LIGHT || Themes.getTheme() == Themes.THEME_ANDROID_DARK;
-        mCompat = Utils.createCompat();
 
         // The hardware buttons should control the music volume while reviewing.
         setVolumeControlStream(AudioManager.STREAM_MUSIC);
@@ -2165,15 +2175,15 @@ public class Reviewer extends Activity implements IButtonListener{
 
         mSimpleInterface = preferences.getBoolean("simpleInterface", false);
         
-        mZeemoteA = Integer.parseInt(preferences.getString("zeemoteActionA", "14"));
-        mZeemoteB = Integer.parseInt(preferences.getString("zeemoteActionB", "13"));
-        mZeemoteC = Integer.parseInt(preferences.getString("zeemoteActionC", "8"));
-        mZeemoteD = Integer.parseInt(preferences.getString("zeemoteActionD", "1"));
-        mZeemoteUp = Integer.parseInt(preferences.getString("zeemoteActionUp", "5"));
-        mZeemoteDown = Integer.parseInt(preferences.getString("zeemoteActionDown", "2"));
-        mZeemoteLeft = Integer.parseInt(preferences.getString("zeemoteActionLeft", "3"));
-        mZeemoteRight = Integer.parseInt(preferences.getString("zeemoteActionRight", "4"));
-        mZeemoteShowAnswer = preferences.getBoolean("zeemoteShowAnswer", false);
+        mZeemoteGestureA = Integer.parseInt(preferences.getString("zeemoteActionA", "14"));
+        mZeemoteGestureB = Integer.parseInt(preferences.getString("zeemoteActionB", "13"));
+        mZeemoteGestureC = Integer.parseInt(preferences.getString("zeemoteActionC", "8"));
+        mZeemoteGestureD = Integer.parseInt(preferences.getString("zeemoteActionD", "1"));
+        mZeemoteGestureUp = Integer.parseInt(preferences.getString("zeemoteActionUp", "5"));
+        mZeemoteGestureDown = Integer.parseInt(preferences.getString("zeemoteActionDown", "2"));
+        mZeemoteGestureLeft = Integer.parseInt(preferences.getString("zeemoteActionLeft", "3"));
+        mZeemoteGestureRight = Integer.parseInt(preferences.getString("zeemoteActionRight", "4"));
+        mZeemoteGestureShowAnswer = preferences.getBoolean("zeemoteShowAnswer", false);
 
         return preferences;
     }
@@ -2278,7 +2288,7 @@ public class Reviewer extends Activity implements IButtonListener{
             if (mPrefTimer) {
                 mCardTimer.stop();
             }
-            if (mFlipCardLayout.isEnabled() == true && mFlipCardLayout.getVisibility() == View.VISIBLE && !mIsAnswering) {
+            if (mFlipCardLayout.isEnabled() == true && mFlipCardLayout.getVisibility() == View.VISIBLE) {
 		mFlipCardLayout.performClick();
             }
         }
@@ -2328,7 +2338,7 @@ public class Reviewer extends Activity implements IButtonListener{
             displayString = enrichWithQADiv(question, false);
 
             if (mSpeakText && AnkiDroidApp.isDonutOrLater()) {
-                ReadText.setLanguageInformation(Model.getModel(DeckManager.getMainDeck(), mCurrentCard.getCardModelId(), false).getId(), mCurrentCard.getCardModelId());          
+//                ReadText.setLanguageInformation(Model.getModel(DeckManager.getMainDeck(), mCurrentCard.getCardModelId(), false).getId(), mCurrentCard.getCardModelId());          
             }
         }
 
@@ -3151,93 +3161,16 @@ public class Reviewer extends Activity implements IButtonListener{
         return sb.toString();
     }
 
-    private void executeZeemoteCommand(int which){
-    	switch(which) {
-    	case ZEEMOTE_ACTION_NONE : 
-    		break;
-    	case ZEEMOTE_ACTION_SHOW_ANSWER :
-				if (!sDisplayAnswer) {
-					displayCardAnswer(); 
-				}				
-    		break;
-    	case ZEEMOTE_ACTION_ANSWER1 : 
-    			if (sDisplayAnswer) {
-    				answerCard(Card.EASE_FAILED);
-    			} else {
-    				if (mZeemoteShowAnswer) displayCardAnswer();
-    			}
-    			break;
-    	case ZEEMOTE_ACTION_ANSWER2 : 
-    			if (sDisplayAnswer) {
-    				answerCard(Card.EASE_HARD);
-    			} else {
-    				if (mZeemoteShowAnswer) displayCardAnswer();
-    			}
-    		break;
-    	case ZEEMOTE_ACTION_ANSWER3 : 
-    			if (sDisplayAnswer) {
-    				answerCard(Card.EASE_MID);
-    			} else {
-    				if (mZeemoteShowAnswer) displayCardAnswer();
-    			}
-    		break;
-    	case ZEEMOTE_ACTION_ANSWER4 : 
-    			if (sDisplayAnswer) {
-    				answerCard(Card.EASE_EASY);
-    			} else {
-    				if (mZeemoteShowAnswer) displayCardAnswer();
-    			}
-    		break;
-    	case ZEEMOTE_ACTION_ANSWER_RECOMMENDED : 
-    			if (sDisplayAnswer) {
-    				if (mCurrentCard.isRev()) {
-    					answerCard(Card.EASE_MID);
-    				} else {
-    					answerCard(Card.EASE_HARD);
-    				}
-    			} else {
-    				if (mZeemoteShowAnswer) displayCardAnswer();
-    			}
-    		break;
-    	case ZEEMOTE_ACTION_ANSWER_BETTER : 
-    			if (sDisplayAnswer) {
-    				if (mCurrentCard.isRev()) {
-    					answerCard(Card.EASE_EASY);
-    				} else {
-    					answerCard(Card.EASE_MID);
-    				}
-    			} else {
-    				if (mZeemoteShowAnswer) displayCardAnswer();
-    			}
-    		break;
-    	case ZEEMOTE_ACTION_UNDO :
-    			executeCommand(GESTURE_UNDO);
-    		break;
-    	case ZEEMOTE_ACTION_REDO : 
-    			executeCommand(GESTURE_REDO);
-    		break;
-    	case ZEEMOTE_ACTION_MARK : 
-    			executeCommand(GESTURE_MARK);
-    		break;
-    	case ZEEMOTE_ACTION_BURY : 
-    			executeCommand(GESTURE_BURY);
-    		break;
-    	case ZEEMOTE_ACTION_SUSPEND : 
-    			executeCommand(GESTURE_SUSPEND);
-    		break;
-    	case ZEEMOTE_ACTION_EXIT : 
-    			executeCommand(GESTURE_EXIT);
-    		break;
-    	case ZEEMOTE_ACTION_PLAY : 
-            playSounds();
-    		break;
-    	}
-    }
 
     private void executeCommand(int which) {
     	switch(which) {
     	case GESTURE_NOTHING:
     		break;
+    	case GESTURE_SHOW_ANSWER:
+			if (!sDisplayAnswer) {
+				displayCardAnswer(); 
+			}				
+			break;
     	case GESTURE_ANSWER_EASE1:
 			if (sDisplayAnswer) {
 				answerCard(EASE_FAILED);
@@ -3321,6 +3254,9 @@ public class Reviewer extends Activity implements IButtonListener{
             if (mPrefWhiteboard) {            	
         		mWhiteboard.clear();
             }
+    		break;
+    	case GESTURE_PLAY_MEDIA:
+    		playSounds();
     		break;
     	}
     }

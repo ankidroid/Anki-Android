@@ -390,7 +390,7 @@
                     android:key="zeemoteActionA"
                     android:defaultValue="14"
                     android:dependency="zeemote"
-                    android:entries="@array/zeemote_action_labels"
+                    android:entries="@array/gestures_labels"
                     android:entryValues="@array/zeemote_action_values" />
             <ListPreference
                     android:title="@string/zeemote_b"
@@ -398,7 +398,7 @@
                     android:key="zeemoteActionB"
                     android:defaultValue="13"
                     android:dependency="zeemote"
-                    android:entries="@array/zeemote_action_labels"
+                    android:entries="@array/gestures_labels"
                     android:entryValues="@array/zeemote_action_values" />
             <ListPreference
                     android:title="@string/zeemote_c"
@@ -406,7 +406,7 @@
                     android:key="zeemoteActionC"
                     android:defaultValue="8"
                     android:dependency="zeemote"
-                    android:entries="@array/zeemote_action_labels"
+                    android:entries="@array/gestures_labels"
                     android:entryValues="@array/zeemote_action_values" />
             <ListPreference
                     android:title="@string/zeemote_d"
@@ -414,7 +414,7 @@
                     android:key="zeemoteActionD"
                     android:defaultValue="1"
                     android:dependency="zeemote"
-                    android:entries="@array/zeemote_action_labels"
+                    android:entries="@array/gestures_labels"
                     android:entryValues="@array/zeemote_action_values" />
             <ListPreference
                     android:title="@string/zeemote_up"
@@ -422,7 +422,7 @@
                     android:key="zeemoteActionUp"
                     android:defaultValue="5"
                     android:dependency="zeemote"
-                    android:entries="@array/zeemote_action_labels"
+                    android:entries="@array/gestures_labels"
                     android:entryValues="@array/zeemote_action_values" />
             <ListPreference
                     android:title="@string/zeemote_down"
@@ -430,7 +430,7 @@
                     android:key="zeemoteActionDown"
                     android:defaultValue="2"
                     android:dependency="zeemote"
-                    android:entries="@array/zeemote_action_labels"
+                    android:entries="@array/gestures_labels"
                     android:entryValues="@array/zeemote_action_values" />
             <ListPreference
                     android:title="@string/zeemote_left"
@@ -438,7 +438,7 @@
                     android:key="zeemoteActionLeft"
                     android:defaultValue="3"
                     android:dependency="zeemote"
-                    android:entries="@array/zeemote_action_labels"
+                    android:entries="@array/gestures_labels"
                     android:entryValues="@array/zeemote_action_values" />
             <ListPreference
                     android:title="@string/zeemote_right"
@@ -446,7 +446,7 @@
                     android:key="zeemoteActionRight"
                     android:defaultValue="4"
                     android:dependency="zeemote"
-                    android:entries="@array/zeemote_action_labels"
+                    android:entries="@array/gestures_labels"
                     android:entryValues="@array/zeemote_action_values" />
             <CheckBoxPreference
                     android:id="@+id/zeemote_show_action_checkbox"
