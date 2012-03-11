@@ -727,7 +727,7 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
         Resources res = AnkiDroidApp.getInstance().getBaseContext().getResources();
         Collection col = params[0].getCollection();
         col.getDb().getDatabase().beginTransaction();
-        String title = res.getString(R.string.tutorial_title);
+        String title = res.getString(R.string.help_tutorial);
         try {
         	// get deck or create it
         	long did = col.getDecks().id(title);
