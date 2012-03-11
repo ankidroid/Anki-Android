@@ -159,4 +159,21 @@
 
 		<service android:name="com.ichi2.widget.WidgetContentService" />
 	</application>
+	
+	<uses-sdk android:minSdkVersion="3"
+android:targetSdkVersion="11"/>
+<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+<uses-permission android:name="android.permission.VIBRATE" android:required="false" />
+<uses-permission android:name="android.permission.INTERNET" android:required="false" />
+<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" android:required="false" />
+<uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" android:required="false" />
+<uses-permission android:name="android.permission.BLUETOOTH" android:required="false" />
+<uses-permission android:name="android.permission.BLUETOOTH_ADMIN" android:required="false" />
+<supports-screens
+android:resizeable="true"
+android:largeScreens="true"
+android:xlargeScreens="true"
+android:normalScreens="true"
+android:smallScreens="true"
+android:anyDensity="true"/>
 </manifest>
