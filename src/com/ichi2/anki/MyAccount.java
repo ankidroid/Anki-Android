@@ -110,12 +110,6 @@ public class MyAccount extends AnkiActivity {
         String username = mUsername.getText().toString();
         String password = mPassword.getText().toString();
 
-<<<<<<< HEAD
-        Log.i(AnkiDroidApp.TAG, "Username = " + username);
-        Log.i(AnkiDroidApp.TAG, "Password = " + password);
-
-=======
->>>>>>> libanki2.0
         /*
          * Commented awaiting the resolution of the next issue: http://code.google.com/p/anki/issues/detail?id=1932
          * if(isUsernameAndPasswordValid(username, password)) { Connection.login(loginListener, new

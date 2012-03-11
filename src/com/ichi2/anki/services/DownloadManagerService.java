@@ -1000,7 +1000,7 @@ public class DownloadManagerService extends Service {
             }
             avgBatchTime /= usedForAvg;
             download.setEstTimeToCompletion(Math.max(0, mTotalBatches - currentBatch - 1) * avgBatchTime / 1000.0);
-            Log.i(AnkiDroidApp.TAG, "TotalBatches: " + totalBatches + " Current: " + currentBatch + " LastBatch: " +
+//            Log.i(AnkiDroidApp.TAG, "TotalBatches: " + totalBatches + " Current: " + currentBatch + " LastBatch: " +
             // lastBatchTime/1000.0 + " RunningAvg: " + avgBatchTime/1000.0 + " Elapsed: " + elapsedTime/1000.0 +
             // " TotalEstimated: " + (elapsedTime + Math.max(0, totalBatches - currentBatch - 1) * avgBatchTime) /
             // 1000.0 + " sec");

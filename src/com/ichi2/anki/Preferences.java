@@ -101,7 +101,6 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
         useBackupPreference = (CheckBoxPreference) getPreferenceScreen().findPreference("useBackup");
         asyncModePreference = (CheckBoxPreference) getPreferenceScreen().findPreference("asyncMode");
         eInkDisplayPreference = (CheckBoxPreference) getPreferenceScreen().findPreference("eInkDisplay");
-        walModeInitiallySet = mPrefMan.getSharedPreferences().getBoolean("walMode", false);
         ListPreference listpref = (ListPreference) getPreferenceScreen().findPreference("theme");
         String theme = listpref.getValue();
         animationsCheckboxPreference.setEnabled(theme.equals("2") || theme.equals("3"));

@@ -23,6 +23,7 @@ import java.util.Comparator;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import com.ichi2.anki.AnkiActivity;
 import com.ichi2.anki.DeckPicker;
 import com.ichi2.anki.CardEditor.JSONNameComparator;
 import com.ichi2.anki2.R;
