@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?> 
+ <!-- 
+ ~ Copyright (c) 2011 Norbert Nagold <norbert.nagold@gmail.com> 
+ ~ This program is free software; you can redistribute it and/or modify it under 
+ ~ the terms of the GNU General Public License as published by the Free Software 
+ ~ Foundation; either version 3 of the License, or (at your option) any later 
+ ~ version. 
+ ~ 
+ ~ This program is distributed in the hope that it will be useful, but WITHOUT ANY 
+ ~ WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A 
+ ~ PARTICULAR PURPOSE. See the GNU General Public License for more details. 
+ ~ 
+ ~ You should have received a copy of the GNU General Public License along with 
+ ~ this program.  If not, see <http://www.gnu.org/licenses/>. 
+ --> 
+ 
+ 
+<resources> 
+ <string-array name="tutorial_questions"> 
+    <item><![CDATA[Thanks for installing AnkiDroid!<br />This is a short introduction.<br />What you see now is the <span style=\'font-weight:600;\'>question</span> part of a flashcard.<br />Please click on the large button below...]]></item> 
+    <item><![CDATA[The next card is shown now.<br />The idea is straightforward: Just like in &quot;real world&quot; paper flashcards, you write a question on the front and the answer on the back side of your cards.<br />(click the button to show the back side)]]></item> 
+    <item><![CDATA[&quot;What is the capital of Burkina Faso?&quot;<br />Think a bit about the answer and click then &quot;show answer&quot;]]></item> 
+    <item><![CDATA[Por encima de cada botón de respuesta, encontrarás información sobre el tiempo que pasará antes de que la tarjeta se vuelva a mostrar en caso de responder con ese botón.]]></item> 
+    <item><![CDATA[La intención es mostrarte la tarjeta de nuevo, inmediatamente antes de que la olvides. Estudios empíricos han mostrado que de este modo la información se puede aprender más eficientemente.]]></item> 
+    <item><![CDATA[Algunas palabras acerca de la organización en AnkiDroid:<br /><br>Toda la información tiene que ser presentada en pares de preguntas y respuestas. Si quieres aprender en la dirección inversa, debes crear otra tarjeta con la información intercambiada.]]></item> 
+    <item><![CDATA[Las tarjetas se agrupan en mazos y se pueden organizar con la ayuda de todo tipo de etiquetas.]]></item> 
+    <item><![CDATA[There are mainly two ways of getting new cards:<br />You either add premade decks of other users (choose &quot;shared decks&quot; in the decks summary) or create them by yourself.]]></item> 
+    <item><![CDATA[En cualquier caso, crear tus propios mazos es esencial para cubrir tus necesidades a la perfección. Puedes hacerlo directamente en AnkiDroid...]]></item> 
+    <item><![CDATA[Let\'s have a look on the top bar:<br />In the left top corner you find some numbers. The red one counts the failed cards (answered by &quot;again&quot;),]]></item> 
+    <item><![CDATA[En la esquina derecha se encuentra información acerca de tu tiempo de reflexion con esta tarjeta, y sobre tu rendimiento.]]></item> 
+    <item><![CDATA[Albeit you can use AnkiDroid stand alone, it is fully connected to AnkiWeb, the syncing server of Anki Desktop (available for Linux, Windows, Mac).]]></item> 
+    <item><![CDATA[Estos han sido los principales puntos sobre el uso de AnkiDroid.<br /><br>Para más información sobre el concepto clave de Anki, visita http://ankisrs.net/]]></item> 
+ </string-array>
+ <string-array name="tutorial_answers">
+    <item><![CDATA[... in order to see the <span style=\'font-weight:600;\'>answer</span> part of the flashcard (below the line).<br />Click on the button on the right]]></item> 
+    <item><![CDATA[Let\'s assume you want to learn the world\'s capitals. Let the question be...<br />(click on one of the buttons to show the next card)]]></item> 
+    <item><![CDATA[&quot;Ouagadougou&quot; is the right answer. <br />You didn\'t know it? Click &quot;again&quot; to see the card again in a couple of minutes. Otherwise, click on the other buttons, depending on the easiness of the answer.]]></item> 
+    <item><![CDATA[Este período de tiempo se calcula en base a la última vez que respondiste a la tarjeta, la facilidad de repuesta actual y facilidad de repuestas anteriores de la tarjeta.]]></item> 
+    <item><![CDATA[Si quieres aprender más sobre el repaso espaciado, visita:<br>http://en.wikipedia.org/wiki/Spaced_repetition_system]]></item> 
+    <item><![CDATA[No te preocupes, esto se puede hacer de forma automática. No es necesario introducir la misma información dos veces.]]></item> 
+    <item><![CDATA[Aprenderás rápidamente acerca de esto cuando empieces a utilizar AnkiDroid.]]></item> 
+    <item><![CDATA[You\'ll find thousands of premade decks to download and there are probably some which are useful for you.]]></item> 
+    <item><![CDATA[... o (un poco más cómodo) con la aplicación de escritorio Anki (descargable gratuitamente en http://ankisrs.net/).<br><br>Puedes sincronizar tus mazos con la aplicación de escritorio muy fácilmente, por lo que transferir los datos no es un problema.]]></item> 
+    <item><![CDATA[the black one shows the number of cards you\'ve already learned before and which are due to review today, and the blue number tells you, how many new cards are projected for today. <br />The type of the actual cards is specified by an underline.]]></item> 
+    <item><![CDATA[La barra superior muestra tu progreso sobre el total de fichas programadas para hoy, la inferior indica el porcentaje de respuestas afirmativas (que son cualquiera excepto \"Otra vez\").]]></item> 
+    <item><![CDATA[Thus, you can easily sync your collection between AnkiDroid and Anki Desktop and use the latter for a more convenient card adding and managing.]]></item> 
+    <item><![CDATA[Pruébalo un poco ahora y comprueba si se ajusta a tus necesidades.<br><br>Tal vez puedas comenzar con el resumen de mazos (pulsa el botón menu en la pantalla principal y selecciona \"Todos los mazos\"), donde puedes descargar mazos prefabricados o crear los tuyos propios (sólo tienes que utilizar el menú de allí).]]></item> 
+ </string-array>
+</resources>

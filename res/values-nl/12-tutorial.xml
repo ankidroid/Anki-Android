@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?> 
+ <!-- 
+ ~ Copyright (c) 2011 Norbert Nagold <norbert.nagold@gmail.com> 
+ ~ This program is free software; you can redistribute it and/or modify it under 
+ ~ the terms of the GNU General Public License as published by the Free Software 
+ ~ Foundation; either version 3 of the License, or (at your option) any later 
+ ~ version. 
+ ~ 
+ ~ This program is distributed in the hope that it will be useful, but WITHOUT ANY 
+ ~ WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A 
+ ~ PARTICULAR PURPOSE. See the GNU General Public License for more details. 
+ ~ 
+ ~ You should have received a copy of the GNU General Public License along with 
+ ~ this program.  If not, see <http://www.gnu.org/licenses/>. 
+ --> 
+ 
+ 
+<resources> 
+ <string-array name="tutorial_questions"> 
+    <item><![CDATA[Thanks for installing AnkiDroid!<br />This is a short introduction.<br />What you see now is the <span style=\'font-weight:600;\'>question</span> part of a flashcard.<br />Please click on the large button below...]]></item> 
+    <item><![CDATA[The next card is shown now.<br />The idea is straightforward: Just like in &quot;real world&quot; paper flashcards, you write a question on the front and the answer on the back side of your cards.<br />(click the button to show the back side)]]></item> 
+    <item><![CDATA[&quot;What is the capital of Burkina Faso?&quot;<br />Think a bit about the answer and click then &quot;show answer&quot;]]></item> 
+    <item><![CDATA[boven elke antwoord-knop, vind je de tijd waarna de kaart vertoont zal worden, wanneer met deze knop beantwoord.]]></item> 
+    <item><![CDATA[Het is de bedoeling de kaart te tonen, vlak voordat je het zou vergeten. Empirische studies hebben aangetoond dat op deze manier informatie het meest efficiënt wordt geleerd. ]]></item> 
+    <item><![CDATA[Een aantal woorden over de organisatie van AnkiDroid:<br /><br>Alle informatie moet in paren van vraag en antwoord worden ingevoerd. Als je wilt leren in de andere richting, zal je een andere kaart moeten maken met de gegevens op de andere zijde.]]></item> 
+    <item><![CDATA[Kaarten worden bewaard in leersets en kan vandaaruit worden georganiseerd met allerlei tags.]]></item> 
+    <item><![CDATA[There are mainly two ways of getting new cards:<br />You either add premade decks of other users (choose &quot;shared decks&quot; in the decks summary) or create them by yourself.]]></item> 
+    <item><![CDATA[Maar, het maken van eigen leersets past het beste bij je eigen leerwensen. Je kan dit doen vanuit AnkiDroid...]]></item> 
+    <item><![CDATA[Let\'s have a look on the top bar:<br />In the left top corner you find some numbers. The red one counts the failed cards (answered by &quot;again&quot;),]]></item> 
+    <item><![CDATA[In de rechterhoek zie je informatie over je denktijd voor deze kaart en over je prestatie.]]></item> 
+    <item><![CDATA[Albeit you can use AnkiDroid stand alone, it is fully connected to AnkiWeb, the syncing server of Anki Desktop (available for Linux, Windows, Mac).]]></item> 
+    <item><![CDATA[Dit waren de belangrijkste punten om AnkiDroid te gebruiken.<br /><br>Voor meer informatie over het basisidee van Anki, bezoek http://ankisrs.net/]]></item> 
+ </string-array>
+ <string-array name="tutorial_answers">
+    <item><![CDATA[... in order to see the <span style=\'font-weight:600;\'>answer</span> part of the flashcard (below the line).<br />Click on the button on the right]]></item> 
+    <item><![CDATA[Let\'s assume you want to learn the world\'s capitals. Let the question be...<br />(click on one of the buttons to show the next card)]]></item> 
+    <item><![CDATA[&quot;Ouagadougou&quot; is the right answer. <br />You didn\'t know it? Click &quot;again&quot; to see the card again in a couple of minutes. Otherwise, click on the other buttons, depending on the easiness of the answer.]]></item> 
+    <item><![CDATA[Deze tijdsperiode is berekend vanaf de laatste keer dat je deze kaart beantwoordde, de huidige gemakkelijkheid en hoe makkelijk je de kaart eerder vond.]]></item> 
+    <item><![CDATA[Als je meer wilt weten over de leermethode \'Gespreide herhaling\' bezoek: <br> http://nl.wikipedia.org/wiki/Gespreide_herhaling]]></item> 
+    <item><![CDATA[Maak je geen zorgen, dit kan ook automatisch. Het is niet nodig om dezelfde informatie twee keer in te voeren.]]></item> 
+    <item><![CDATA[Je zal daar snel over leren zodra je AnkiDroid gebruikt.]]></item> 
+    <item><![CDATA[You\'ll find thousands of premade decks to download and there are probably some which are useful for you.]]></item> 
+    <item><![CDATA[... of (iets gemakkelijker) met de desktop applicatie Anki (gratis te downloaden van http://ankisrs.net/).<br><br>Je kan je leersets zeer eenvoudig synchroniseren met de desktop applicatie, dus het overzetten van de data is geen enkel probleem.]]></item> 
+    <item><![CDATA[the black one shows the number of cards you\'ve already learned before and which are due to review today, and the blue number tells you, how many new cards are projected for today. <br />The type of the actual cards is specified by an underline.]]></item> 
+    <item><![CDATA[De bovenste balk laat je vooruitgang zien, de onderste laat het percentage Ja-antwoorden zien.]]></item> 
+    <item><![CDATA[Thus, you can easily sync your collection between AnkiDroid and Anki Desktop and use the latter for a more convenient card adding and managing.]]></item> 
+    <item><![CDATA[Probeer nu gewoon en bekijk of het overeenkomt met je wensen.<br><br>Misschien wil je starten met het overzicht van leersets (druk op menu in het beginscherm en kies  &quot;alle leersets&quot;), waar je ook kant-en-klare leersets kan downloaden of zelf maken (gebruik het menu daar).]]></item> 
+ </string-array>
+</resources>

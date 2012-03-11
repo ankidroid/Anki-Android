@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?> 
+ <!-- 
+ ~ Copyright (c) 2011 Norbert Nagold <norbert.nagold@gmail.com> 
+ ~ This program is free software; you can redistribute it and/or modify it under 
+ ~ the terms of the GNU General Public License as published by the Free Software 
+ ~ Foundation; either version 3 of the License, or (at your option) any later 
+ ~ version. 
+ ~ 
+ ~ This program is distributed in the hope that it will be useful, but WITHOUT ANY 
+ ~ WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A 
+ ~ PARTICULAR PURPOSE. See the GNU General Public License for more details. 
+ ~ 
+ ~ You should have received a copy of the GNU General Public License along with 
+ ~ this program.  If not, see <http://www.gnu.org/licenses/>. 
+ --> 
+ 
+ 
+<resources> 
+ <string-array name="tutorial_questions"> 
+    <item><![CDATA[Thanks for installing AnkiDroid!<br />This is a short introduction.<br />What you see now is the <span style=\'font-weight:600;\'>question</span> part of a flashcard.<br />Please click on the large button below...]]></item> 
+    <item><![CDATA[The next card is shown now.<br />The idea is straightforward: Just like in &quot;real world&quot; paper flashcards, you write a question on the front and the answer on the back side of your cards.<br />(click the button to show the back side)]]></item> 
+    <item><![CDATA[&quot;What is the capital of Burkina Faso?&quot;<br />Think a bit about the answer and click then &quot;show answer&quot;]]></item> 
+    <item><![CDATA[Her yanıt düğmesinin üzerinde, bu düğme tarafından yanıtlandığında kartın ne kadar süre sonra yeniden gösterileceği hakkında bilgi bulunur.]]></item> 
+    <item><![CDATA[Amaç, kartı size siz unutmadan hemen önce göstermektir. Deneysel çalışmalar bilginin en verimli bu şekilde öğrenilebildiğini göstermiştir.]]></item> 
+    <item><![CDATA[AnkiDroid\'deki düzenleme hakkında birkaç şey:<br /><br>Tüm bilgi soru ve yanıt eşleri hâline getirilmelidir. Ters yönde öğrenmek istiyorsanız, bilgilerin yerleri değiştirilmiş başka kartlar oluşturmalısınız.]]></item> 
+    <item><![CDATA[Kartlar destelerde toplanmıştır ve her çeşit etiket yardımıyla düzenlenebilir.]]></item> 
+    <item><![CDATA[There are mainly two ways of getting new cards:<br />You either add premade decks of other users (choose &quot;shared decks&quot; in the decks summary) or create them by yourself.]]></item> 
+    <item><![CDATA[Yine de, ihtiyaçlarınızla tam olarak uyuşması için kendi destelerinizi oluşturmanız önemlidir. Bunu doğrudan AnkiDroid\'de...]]></item> 
+    <item><![CDATA[Let\'s have a look on the top bar:<br />In the left top corner you find some numbers. The red one counts the failed cards (answered by &quot;again&quot;),]]></item> 
+    <item><![CDATA[Sağ köşede bu kartı düşünme süreniz ve başarımınız hakkında bilgiler bulunuyor.]]></item> 
+    <item><![CDATA[Albeit you can use AnkiDroid stand alone, it is fully connected to AnkiWeb, the syncing server of Anki Desktop (available for Linux, Windows, Mac).]]></item> 
+    <item><![CDATA[Bunlar AnkiDroid kullanımının temel noktalarıydı.<br /><br>Anki\'nin anafikri hakkında daha fazla bilgi için, http://ankisrs.net/ adresini ziyaret edin.]]></item> 
+ </string-array>
+ <string-array name="tutorial_answers">
+    <item><![CDATA[... in order to see the <span style=\'font-weight:600;\'>answer</span> part of the flashcard (below the line).<br />Click on the button on the right]]></item> 
+    <item><![CDATA[Let\'s assume you want to learn the world\'s capitals. Let the question be...<br />(click on one of the buttons to show the next card)]]></item> 
+    <item><![CDATA[&quot;Ouagadougou&quot; is the right answer. <br />You didn\'t know it? Click &quot;again&quot; to see the card again in a couple of minutes. Otherwise, click on the other buttons, depending on the easiness of the answer.]]></item> 
+    <item><![CDATA[Bu zaman aralığı; kartı son yanıtladığınız zamana, seçtiğiniz kolaylığa ve o kartı önceki yanıtlayışlarınızda seçtiğiniz kolaylıklara bağlı olarak hesaplanır.]]></item> 
+    <item><![CDATA[Aralıklı yineleme hakkında daha fazlasını öğrenmek istiyorsanız, http://en.wikipedia.org/wiki/Spaced_repetition_system adresini ziyaret edin.]]></item> 
+    <item><![CDATA[Endişelenmeyin, AnkiDroid bunu kendisi yapabilir. Aynı bilgiyi iki kere girmeye gerek yok.]]></item> 
+    <item><![CDATA[AnkiDroid\'i kullanmaya başladığınızda bunu kısa sürede öğreneceksiniz.]]></item> 
+    <item><![CDATA[You\'ll find thousands of premade decks to download and there are probably some which are useful for you.]]></item> 
+    <item><![CDATA[... veya (biraz daha pratik) Anki masaüstü uygulamasıyla yapabilirsiniz (http://ankisrs.net/ adresinden ücretsiz indirilebilir).<br><br>Destelerinizi masaüstü uygulamasıyla çok kolay bir şekilde eşitleyebilirsiniz, yani veriyi aktarmak sorun değil.]]></item> 
+    <item><![CDATA[the black one shows the number of cards you\'ve already learned before and which are due to review today, and the blue number tells you, how many new cards are projected for today. <br />The type of the actual cards is specified by an underline.]]></item> 
+    <item><![CDATA[Üstteki çubuk ilerlemenizi gösterir, alttaki ise evet yanıtlarının yüzdesini belirtir.]]></item> 
+    <item><![CDATA[Thus, you can easily sync your collection between AnkiDroid and Anki Desktop and use the latter for a more convenient card adding and managing.]]></item> 
+    <item><![CDATA[Şimdi biraz deneyip ihtiyaçlarınıza uyup uymadığına bakın.<br><br>Deste genel bakışıyla başlamak iyi bir fikir olabilir (ana ekranda menüye basıp &quot;tüm desteler&quot;i seçin), orada hazır desteler indirebilir veya kendinizinkini oluşturabilirsiniz (menüyü kullanmanız yeterli).]]></item> 
+ </string-array>
+</resources>

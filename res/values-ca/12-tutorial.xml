@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?> 
+ <!-- 
+ ~ Copyright (c) 2011 Norbert Nagold <norbert.nagold@gmail.com> 
+ ~ This program is free software; you can redistribute it and/or modify it under 
+ ~ the terms of the GNU General Public License as published by the Free Software 
+ ~ Foundation; either version 3 of the License, or (at your option) any later 
+ ~ version. 
+ ~ 
+ ~ This program is distributed in the hope that it will be useful, but WITHOUT ANY 
+ ~ WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A 
+ ~ PARTICULAR PURPOSE. See the GNU General Public License for more details. 
+ ~ 
+ ~ You should have received a copy of the GNU General Public License along with 
+ ~ this program.  If not, see <http://www.gnu.org/licenses/>. 
+ --> 
+ 
+ 
+<resources> 
+ <string-array name="tutorial_questions"> 
+    <item><![CDATA[Thanks for installing AnkiDroid!<br />This is a short introduction.<br />What you see now is the <span style=\'font-weight:600;\'>question</span> part of a flashcard.<br />Please click on the large button below...]]></item> 
+    <item><![CDATA[The next card is shown now.<br />The idea is straightforward: Just like in &quot;real world&quot; paper flashcards, you write a question on the front and the answer on the back side of your cards.<br />(click the button to show the back side)]]></item> 
+    <item><![CDATA[&quot;What is the capital of Burkina Faso?&quot;<br />Think a bit about the answer and click then &quot;show answer&quot;]]></item> 
+    <item><![CDATA[Per sobre de cada botó de resposta, trobareu informació sobre el temps, després del qual la targeta es mostrarà de nou en respondre amb aquest botó. ]]></item> 
+    <item><![CDATA[La idea és mostrar-vos de nou la fitxa, just abans que la oblideu. Els estudis empírics han demostrat que d\'aquesta forma la informació significativa es pot aprendre més eficientment. ]]></item> 
+    <item><![CDATA[Ara sobre la organització i AnkiDroid:<br/><br>Tota la informació ha d\'estar en parelles de preguntes i respostes. Si voleu aprendre en la direcció contrària, heu de crear una altra fitxa amb la informació intercanviada. ]]></item> 
+    <item><![CDATA[Les fitxes s\'agrupen en paquets i es poden organitzar amb l&#39;ajuda de tot tipus d&#39;etiquetes.]]></item> 
+    <item><![CDATA[There are mainly two ways of getting new cards:<br />You either add premade decks of other users (choose &quot;shared decks&quot; in the decks summary) or create them by yourself.]]></item> 
+    <item><![CDATA[Però de tota manera, la creació de paquets pròpis és essencial per satisfer les vostres necessitats a la perfecció. Podeu fer això directament a AnkiDroid ... ]]></item> 
+    <item><![CDATA[Let\'s have a look on the top bar:<br />In the left top corner you find some numbers. The red one counts the failed cards (answered by &quot;again&quot;),]]></item> 
+    <item><![CDATA[A la cantonada dreta trobareu informació sobre el temps que heu estat pensant en aquesta fitxa i sobre el vostre rendiment.]]></item> 
+    <item><![CDATA[Albeit you can use AnkiDroid stand alone, it is fully connected to AnkiWeb, the syncing server of Anki Desktop (available for Linux, Windows, Mac).]]></item> 
+    <item><![CDATA[Aquests han estat els principals punts d\'ús AnkiDroid. <br/><br> Per més informació sobre el concepte clau de Anki, visiteu http://ankisrs.net/ ]]></item> 
+ </string-array>
+ <string-array name="tutorial_answers">
+    <item><![CDATA[... in order to see the <span style=\'font-weight:600;\'>answer</span> part of the flashcard (below the line).<br />Click on the button on the right]]></item> 
+    <item><![CDATA[Let\'s assume you want to learn the world\'s capitals. Let the question be...<br />(click on one of the buttons to show the next card)]]></item> 
+    <item><![CDATA[&quot;Ouagadougou&quot; is the right answer. <br />You didn\'t know it? Click &quot;again&quot; to see the card again in a couple of minutes. Otherwise, click on the other buttons, depending on the easiness of the answer.]]></item> 
+    <item><![CDATA[ Aquest període de temps es calcula a partir de l\'última vegada que vàreu respondre la fitxa, l&#39;elecció de la facilitat actual i la facilitat de triar les respostes anteriors de la fitxa.]]></item> 
+    <item><![CDATA[ Per obtenir més informació sobre la repetició espaiada, visiteu: <br> http://en.wikipedia.org/wiki/Spaced_repetition_system]]></item> 
+    <item><![CDATA[ No us preocupeu, això es pot fer de forma automàtica. No cal introduir la mateixa informació dos cops.]]></item> 
+    <item><![CDATA[ Ho aprendreu de seguida quan començeu a utilitzar AnkiDroid.]]></item> 
+    <item><![CDATA[You\'ll find thousands of premade decks to download and there are probably some which are useful for you.]]></item> 
+    <item><![CDATA[ ... o (una mica més còmode), amb la aplicació Anki d\'escriptori (que es pot descarregar de forma gratuïta a http://ankisrs.net/). <br><br> Podeu sincronitzar els vostres paquets amb l&#39;aplicació d&#39;escriptori molt fàcilment, de manera que la transferència de dades no és cap problema.]]></item> 
+    <item><![CDATA[the black one shows the number of cards you\'ve already learned before and which are due to review today, and the blue number tells you, how many new cards are projected for today. <br />The type of the actual cards is specified by an underline.]]></item> 
+    <item><![CDATA[ La barra superior mostra el progrés, la inferior indica el percentatge de respostes afirmatives.]]></item> 
+    <item><![CDATA[Thus, you can easily sync your collection between AnkiDroid and Anki Desktop and use the latter for a more convenient card adding and managing.]]></item> 
+    <item><![CDATA[ Proveu-hp una mica ara i veieu si s&#39;ajusta a les vostres necessitats. <br><br> Podeu començar amb el paquet de presentació (premeu menú a la pantalla principal i trieu l&#39;opció \"tots els paquets\"), on es poden descarregar paquets prefabricats o generar els vostres propis (amb el menú que trobareu allà).]]></item> 
+ </string-array>
+</resources>
