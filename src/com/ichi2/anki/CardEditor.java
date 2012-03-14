@@ -532,7 +532,7 @@ public class CardEditor extends Activity {
 						if (changedDid) {
 							mCurrentEditedCard.setDid(mCurrentDid);
 							if (mMoveNoteTooToggle.isChecked()) {
-								mEditorNote.setDid(mCurrentDid);
+//								TODO: mEditorNote.setDid(mCurrentDid);
 							}
 						}
 						mChanged = true;
@@ -992,7 +992,7 @@ public class CardEditor extends Activity {
 					if (mCurrentDid != newId) {
 						if (mAddNote) {
 							try {
-								mEditorNote.setDid(newId);
+//								TODO: mEditorNote.setDid(newId);
 								mEditorNote.model().put("did", newId);
 								mCol.getModels().setChanged();
 							} catch (JSONException e) {
@@ -1022,7 +1022,7 @@ public class CardEditor extends Activity {
 				origButton.setOnClickListener(new View.OnClickListener() {
 					@Override
 					public void onClick(View v) {
-						mCurrentDid = mEditorNote.getDid();
+//						TODO: mCurrentDid = mEditorNote.getDid();
 						updateDeck();
 						mDeckSelectDialog.dismiss();
 					}
@@ -1406,7 +1406,7 @@ public class CardEditor extends Activity {
 			if (note == null) {
 				boolean firstCard = mEditorNote == null;
 				mEditorNote = mCol.newNote();
-				mCurrentDid = mEditorNote.getDid();
+//				TODO: mCurrentDid = mEditorNote.getDid();
 				if (firstCard && mCaller == CALLER_STUDYOPTIONS && mCurrentDid != mCol.getDecks().current().getLong("id")) {
 					mCurrentDid = mCol.getDecks().current().getLong("id");
 					// if called from studyoptions, try to set the decks model

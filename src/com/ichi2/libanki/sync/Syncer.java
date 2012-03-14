@@ -368,9 +368,9 @@ public class Syncer {
     	if (table.equals("revlog")) {
     		return mCol.getDb().getDatabase().rawQuery(String.format("SELECT id, cid, %d, ease, ivl, lastIvl, factor, time, type FROM revlog WHERE %s", mMaxUsn, lim), null);
     	} else if (table.equals("cards")) {
-    		return mCol.getDb().getDatabase().rawQuery(String.format("SELECT id, nid, did, ord, mod, %d, type, queue, due, ivl, factor, reps, lapses, left, edue, flags, data FROM cards WHERE %s", mMaxUsn, lim), null);
+    		return mCol.getDb().getDatabase().rawQuery(String.format("SELECT id, nid, did, ord, mod, %d, type, queue, due, ivl, factor, reps, lapses, left, odue, odid, flags, data FROM cards WHERE %s", mMaxUsn, lim), null);
     	} else {
-    		return mCol.getDb().getDatabase().rawQuery(String.format("SELECT id, guid, mid, did, mod, %d, tags, flds, '', '', flags, data FROM notes WHERE %s", mMaxUsn, lim), null);
+    		return mCol.getDb().getDatabase().rawQuery(String.format("SELECT id, guid, mid, mod, %d, tags, flds, '', '', flags, data FROM notes WHERE %s", mMaxUsn, lim), null);
     	}
     }
 
@@ -736,13 +736,13 @@ public class Syncer {
    
     private void mergeCards(JSONArray cards) {
     	for (Object[] r : newerRows(cards, "cards", 4)) {
-    		mCol.getDb().execute("INSERT OR REPLACE INTO cards VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)", r);
+    		mCol.getDb().execute("INSERT OR REPLACE INTO cards VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)", r);
     	}
     }
    
     private void mergeNotes(JSONArray notes) {
     	for (Object[] n : newerRows(notes, "notes", 4)) {
-    		mCol.getDb().execute("INSERT OR REPLACE INTO notes VALUES (?,?,?,?,?,?,?,?,?,?,?,?)", n);
+    		mCol.getDb().execute("INSERT OR REPLACE INTO notes VALUES (?,?,?,?,?,?,?,?,?,?,?)", n);
     		mCol.updateFieldCache(new long[]{(Long) n[0]});
     	}
     }

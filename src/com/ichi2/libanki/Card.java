@@ -67,7 +67,8 @@ public class Card implements Cloneable {
 	private int mLeft = 0;
 	private int mUsn = 0;
 	private int mFlags = 0;
-	private long mEDue = 0;
+	private long mODue = 0;
+	private long mODid = 0;
 	private String mData = "";
 	// END SQL table entries
 
@@ -109,7 +110,7 @@ public class Card implements Cloneable {
 			mReps = 0;
 			mLapses = 0;
 			mLeft = 0;
-			mEDue = 0;
+			mODue = 0;
 			mFlags = 0;
 			mData = "";
 		}
@@ -139,9 +140,10 @@ public class Card implements Cloneable {
 			mReps = cursor.getInt(11);
 			mLapses = cursor.getInt(12);
 			mLeft = cursor.getInt(13);
-			mEDue = cursor.getInt(14);
-			mFlags = cursor.getInt(15);
-			mData = cursor.getString(16);
+			mODue = cursor.getInt(14);
+			mODid = cursor.getInt(15);
+			mFlags = cursor.getInt(16);
+			mData = cursor.getString(17);
 		} finally {
 			if (cursor != null) {
 				cursor.close();
@@ -170,7 +172,8 @@ public class Card implements Cloneable {
 		sb.append(mReps).append(", ");
 		sb.append(mLapses).append(", ");
 		sb.append(mLeft).append(", ");
-		sb.append(mEDue).append(", ");
+		sb.append(mODue).append(", ");
+		sb.append(mODid).append(", ");
 		sb.append(mFlags).append(", ");
 		sb.append("\"").append(mData).append("\")");
 		mCol.getDb().execute(sb.toString());
@@ -190,7 +193,8 @@ public class Card implements Cloneable {
 		values.put("reps", mReps);
 		values.put("lapses", mLapses);
 		values.put("left", mLeft);
-		values.put("edue", mEDue);
+		values.put("odue", mODue);
+		values.put("odid", mODid);
 		mCol.getDb().update("cards", values, "id = " + mId, null);
 	}
 
@@ -258,10 +262,6 @@ public class Card implements Cloneable {
 		return mCol.getModels().get(note().getMid());
 	}
 
-	public JSONObject deckConf() {
-		return mCol.getDecks().confForDid(mDid);
-	}
-
 	public JSONObject template() {
 		try {
 			return model().getJSONArray("tmpls").getJSONObject(mOrd);
@@ -294,13 +294,19 @@ public class Card implements Cloneable {
 	/**
 	 * Time taken to answer card, in integer MS.
 	 */
-	public int timeTaken() {
+	public int timeLimit() {
+		JSONObject conf = mCol.getDecks().confForDid(mODid == 0 ? mDid : mODid);
 		int total = (int) ((Utils.now() - mTimerStarted) * 1000);
 		try {
-			return Math.min(total, deckConf().getInt("maxTaken") * 1000);
+			return conf.getInt("maxTaken") * 1000;
 		} catch (JSONException e) {
 			throw new RuntimeException(e);
 		}
+	}
+
+	public int timeTaken() {
+		int total = (int) ((Utils.now() - mTimerStarted) * 1000);
+		return Math.min(total, timeLimit());
 	}
 
 	/**
@@ -548,12 +554,20 @@ public class Card implements Cloneable {
 		mQueue = queue;
 	}
 
-	public long getEDue() {
-		return mEDue;
+	public long getODue() {
+		return mODue;
 	}
 
-	public void setEDue(long edue) {
-		mEDue = edue;
+	public void setODid(long odid) {
+		mODid = odid;
+	}
+
+	public long getODid() {
+		return mODid;
+	}
+
+	public void setODue(long odue) {
+		mODue = odue;
 	}
 
 	public long getDue() {

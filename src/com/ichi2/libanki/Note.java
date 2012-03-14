@@ -41,7 +41,6 @@ public class Note {
 	private long mId;
 	private String mGuId;
 	private JSONObject mModel;
-	private long mDid;
 	private long mMid;
 	private long mMod;
 	private int mUsn;
@@ -72,7 +71,6 @@ public class Note {
 			mGuId = Utils.guid64();
 			mModel = model;
 			try {
-				mDid = model.getLong("did");
 				mMid = model.getLong("id");
 				mTags = new ArrayList<String>();
 				mFields = new String[model.getJSONArray("flds").length()];
@@ -95,7 +93,7 @@ public class Note {
 					.getDb()
 					.getDatabase()
 					.rawQuery(
-							"SELECT guid, mid, did, mod, usn, tags, flds, flags, data FROM notes WHERE id = "
+							"SELECT guid, mid, mod, usn, tags, flds, flags, data FROM notes WHERE id = "
 									+ mId, null);
 			if (!cursor.moveToFirst()) {
 				Log.w(AnkiDroidApp.TAG, "Notes.load(): No result from query.");
@@ -103,12 +101,11 @@ public class Note {
 			}
 			mGuId = cursor.getString(0);
 			mMid = cursor.getLong(1);
-			mDid = cursor.getLong(2);
-			mMod = cursor.getLong(3);
-			mUsn = cursor.getInt(4);
-			mFields = Utils.splitFields(cursor.getString(6));
-			mTags = mCol.getTags().split(cursor.getString(5));
-			mData = cursor.getString(7);
+			mMod = cursor.getLong(2);
+			mUsn = cursor.getInt(3);
+			mFields = Utils.splitFields(cursor.getString(5));
+			mTags = mCol.getTags().split(cursor.getString(4));
+			mData = cursor.getString(6);
 			mScm = mCol.getScm();
 		} finally {
 			if (cursor != null) {
@@ -134,8 +131,8 @@ public class Note {
 		mCol.getDb()
 				.getDatabase()
 				.execSQL(
-						"INSERT OR REPLACE INTO notes VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
-						new Object[] { mId, mGuId, mMid, mDid, mMod, mUsn,
+						"INSERT OR REPLACE INTO notes VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+						new Object[] { mId, mGuId, mMid, mMod, mUsn,
 								tags, joinedFields(), sfld, csum, mFlags, mData });
 		mCol.getTags().register(mTags);
 		_postFlush();
@@ -168,15 +165,6 @@ public class Note {
 
 	public JSONObject model() {
 		return mModel;
-	}
-
-	public void updateCardDids() {
-		for (Card c : cards()) {
-			if (c.getDid() != mDid && c.template().has("did")) {
-				c.setDid(mDid);
-				c.flush();
-			}
-		}
 	}
 
 	/**
@@ -314,14 +302,6 @@ public class Note {
 	 */
 	public long getId() {
 		return mId;
-	}
-
-	public long getDid() {
-		return mDid;
-	}
-
-	public void setDid(long did) {
-		mDid = did;
 	}
 
 	public Collection getCol() {

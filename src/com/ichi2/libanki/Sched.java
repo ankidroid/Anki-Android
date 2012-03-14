@@ -74,11 +74,21 @@ public class Sched {
 	public static final int MEDIA_ADD = 0;
 	public static final int MEDIA_REM = 1;
 
+	// dynamic deck order
+	public static final int DYN_OLDEST = 0;
+	public static final int DYN_RANDOM = 1;
+	public static final int DYN_SMALLINT = 2;
+	public static final int DYN_BIGINT = 3;
+	public static final int DYN_LAPSES = 4;
+	public static final int DYN_FAILED = 5;
+	public static final int DYN_ADDED = 6;
+	public static final int DYN_DUE = 7;
+
 	// deck schema & syncing vars
-	public static final int SCHEMA_VERSION = 0;
+	public static final int SCHEMA_VERSION = 3;
 	public static final int SYNC_ZIP_SIZE = (int) (2.5 * 1024 * 1024);
 	public static final String SYNC_URL = "https://beta.ankiweb.net/sync/";
-	public static final int SYNC_VER = 0;
+	public static final int SYNC_VER = 1;
 
 	private static final String[] REV_ORDER_STRINGS = { "ivl DESC", "ivl" };
 	private static final int[] FACTOR_ADDITION_VALUES = { -150, 0, 150 };
@@ -114,13 +124,12 @@ public class Sched {
 	private int mNonselectedDues;
 
 	/**
-	 * revlog: types: 0=lrn, 1=rev, 2=relrn, 3=cram positive intervals are in
+	 * revlog types: 0=lrn, 1=rev, 2=relrn, 3=cram positive intervals are in
+	 * queue types: 0=new/cram, 1=lrn, 2=rev, -1=suspended, -2=buried
 	 * days (rev), negative intervals in seconds (lrn)
 	 */
 
-	/**
-	 * the standard Anki scheduler
-	 */
+	// FIXME: should log cram reps as cramming
 	public Sched(Collection col) {
 		mCol = col;
 		mQueueLimit = 50;
@@ -160,12 +169,22 @@ public class Sched {
 		mCol.markReview(card);
 		mReps += 1;
 		card.setReps(card.getReps() + 1);
-		boolean wasNew = (card.getQueue() == 0) && (card.getType() != 2);
+		boolean wasNew = (card.getQueue() == 0);
 		if (wasNew) {
-			// put it in the learn queue
+			// came from the new queue, move to learning
 			card.setQueue(1);
-			card.setType(1);
+			// if it was a new card, it's now a learning card
+			if (card.getType() == 0) {
+				card.setType(1);
+			}
+			// init reps to graduation
 			card.setLeft(_startingLeft(card));
+			// dynamic?
+			if (card.getODid() != 0 && card.getType() == 2) {
+				// reviews get their ivl boosted on first sight
+				card.setIvl(_dynIvlBoost(card));
+				card.setODue(mToday + card.getIvl());
+			}
 			_updateStats(card, "new");
 		}
 		if (card.getQueue() == 1) {
@@ -231,10 +250,10 @@ public class Sched {
 	}
 
 	/**
-	 * Unbury and remove temporary suspends on close.
+	 * Unbury cards when closing.
 	 */
 	public void onClose() {
-		mCol.getDb().execute("UPDATE cards SET queue = type WHERE queue BETWEEN -3 AND -2");
+		mCol.getDb().execute("UPDATE cards SET queue = type WHERE queue = -2");
 	}
 
 	// /**
@@ -709,7 +728,7 @@ public class Sched {
 		// move any siblings to the end?
 		try {
 			JSONObject conf = mCol.getDecks().confForDid(mNewDids.getFirst());
-			if (conf.getJSONObject("new").getBoolean("separate")) {
+			if (conf.getBoolean("dyn") || conf.getJSONObject("new").getBoolean("separate")) {
 				int n = mNewQueue.size();
 				while (!mNewQueue.isEmpty()
 						&& mNewQueue.getFirst()[1] == item[1]) {
@@ -805,8 +824,12 @@ public class Sched {
 		}
 	}
 
+	/* Limit for deck without parent limits. */
 	public int _deckNewLimitSingle(JSONObject g) {
 		try {
+			if (g.getBoolean("dyn")) {
+				return mReportLimit;
+			}
 			JSONObject c = mCol.getDecks().confForDid(g.getLong("id"));
 			return Math.max(0, c.getJSONObject("new").getInt("perDay")
 					- g.getJSONArray("newToday").getInt(1));
@@ -900,7 +923,9 @@ public class Sched {
 	private void _answerLrnCard(Card card, int ease) {
 		JSONObject conf = _lrnConf(card);
 		int type;
-		if (card.getType() == 2) {
+		if (card.getODid() != 0) {
+			type = 3;
+		} else if (card.getType() == 2) {
 			type = 2;
 		} else {
 			type = 0;
@@ -923,6 +948,11 @@ public class Sched {
 				// failed
 			} else {
 				card.setLeft(_startingLeft(card));
+				if (card.getODid() != 0) {
+					Log.e(AnkiDroidApp.TAG, "fixme: configurable failure handling");
+					card.setIvl(1);
+					card.setODue(mToday + 1);
+				}
 			}
 			mLrnCount += card.getLeft();
 			int delay = _delayForGrade(conf, card.getLeft());
@@ -978,32 +1008,33 @@ public class Sched {
 
 	private JSONObject _lrnConf(Card card) {
 		JSONObject conf = _cardConf(card);
-		try {
-			if (card.getType() == 2) {
-				return conf.getJSONObject("lapse");
-			} else {
-				return conf.getJSONObject("new");
-			}
-		} catch (JSONException e) {
-			throw new RuntimeException(e);
+		if (card.getType() == 2) {
+			return _lapseConf(card);
+		} else {
+			return _newConf(card);
 		}
 	}
 
 	private void _rescheduleAsRev(Card card, JSONObject conf, boolean early) {
 		if (card.getType() == 2) {
-			// failed; put back entry due
-			card.setDue(card.getEDue());
+			card.setDue(card.getODue());
 		} else {
 			_rescheduleNew(card, conf, early);
 		}
 		card.setQueue(2);
 		card.setType(2);
+		// if we were dynamic, graduating means moving back to the old deck
+		if (card.getODid() != 0) {
+			card.setDid(card.getODid());
+			card.setODue(0);
+			card.setODid(0);
+		}
 	}
 
 	private int _startingLeft(Card card) {
 		try {
-			return _cardConf(card).getJSONObject("new").getJSONArray("delays")
-					.length();
+			JSONObject conf = _newConf(card);
+			return conf.getJSONArray("delays").length();
 		} catch (JSONException e) {
 			throw new RuntimeException(e);
 		}
@@ -1017,6 +1048,9 @@ public class Sched {
 			boolean adj) {
 		if (card.getType() == 2) {
 			// lapsed card being relearnt
+			if (card.getODid() != 0) {
+				return _dynIvlBoost(card);
+			}
 			return card.getIvl();
 		}
 		int ideal;
@@ -1039,6 +1073,7 @@ public class Sched {
 		}
 	}
 
+	/* Reschedule a new card that's graduated for the first time. */
 	private void _rescheduleNew(Card card, JSONObject conf, boolean early) {
 		card.setIvl(_graduatingIvl(card, conf, early));
 		card.setDue(mToday + card.getIvl());
@@ -1090,7 +1125,7 @@ public class Sched {
 			extra = " AND id IN " + Utils.ids2str(ids);
 		}
 		mCol.getDb().execute(
-						"UPDATE cards SET due = edue, queue = 2, mod = "
+						"UPDATE cards SET due = odue, queue = 2, mod = "
 								+ Utils.intNow() + ", usn = " + mCol.usn()
 								+ " WHERE queue = 1 AND type = 2 " + extra);
 	}
@@ -1112,6 +1147,9 @@ public class Sched {
 
 	private int _deckRevLimitSingle(JSONObject d) {
 		try {
+			if (d.getBoolean("dyn")) {
+				return mReportLimit;
+			}
 			JSONObject c = mCol.getDecks().confForDid(d.getLong("id"));
 			return Math.max(0, c.getJSONObject("rev").getInt("perDay")
 					- d.getJSONArray("revToday").getInt(1));
@@ -1151,14 +1189,13 @@ public class Sched {
 		if (mRevCount == 0) {
 			return false;
 		}
-		String order = null;
 		while (mRevDids.size() > 0) {
 			long did = mRevDids.getFirst();
 			int lim = Math.min(mQueueLimit, _deckRevLimit(did));
-			order = _revOrder(did);
 			mRevQueue.clear();
 			Cursor cur = null;
 			if (lim != 0) {
+				// fill the queue with the current did
 				try {
 					cur = mCol
 							.getDb()
@@ -1166,7 +1203,7 @@ public class Sched {
 							.rawQuery(
 									"SELECT id FROM cards WHERE did = " + did
 											+ " AND queue = 2 AND due <= "
-											+ mToday + " " + order + " LIMIT "
+											+ mToday + " LIMIT "
 											+ lim, null);
 					while (cur.moveToNext()) {
 						mRevQueue.add(new long[] { cur.getLong(0) });
@@ -1177,10 +1214,16 @@ public class Sched {
 					}
 				}
 				if (!mRevQueue.isEmpty()) {
-					if (order.length() == 0) {
-						Random r = new Random();
-						r.setSeed(mToday);
-						Collections.shuffle(mRevQueue, r);
+					try {
+						if (mCol.getDecks().get(did).getBoolean("dyn")) {
+							// dynamic decks need due order preserved
+						} else {
+							Random r = new Random();
+							r.setSeed(mToday);
+							Collections.shuffle(mRevQueue, r);
+						}
+					} catch (JSONException e) {
+						throw new RuntimeException(e);
 					}
 					return true;
 				}
@@ -1198,20 +1241,6 @@ public class Sched {
 		} else {
 			return null;
 		}
-	}
-
-	private String _revOrder(long did) {
-		JSONObject d = mCol.getDecks().confForDid(did);
-		int o;
-		try {
-			o = d.getJSONObject("rev").getInt("order");
-			if (o != 0) {
-				return "ORDER BY " + REV_ORDER_STRINGS[o - 1];
-			}
-		} catch (JSONException e) {
-			throw new RuntimeException(e);
-		}
-		return "";
 	}
 
 	/**
@@ -1234,7 +1263,7 @@ public class Sched {
 	private boolean _rescheduleLapse(Card card) {
 		JSONObject conf;
 		try {
-			conf = _cardConf(card).getJSONObject("lapse");
+			conf = _lapseConf(card);
 			card.setLapses(card.getLapses() + 1);
 			card.setLastIvl(card.getIvl());
 			card.setIvl(_nextLapseIvl(card, conf));
@@ -1242,7 +1271,7 @@ public class Sched {
 			card.setDue(mToday + card.getIvl());
 			// put back in learn queue?
 			if (conf.getJSONArray("delays").length() > 0) {
-				card.setEDue(card.getDue());
+				card.setODue(card.getDue());
 				card.setDue((int) (_delayForGrade(conf, 0) + Utils.now()));
 				card.setLeft(conf.getJSONArray("delays").length());
 				card.setQueue(1);
@@ -1277,6 +1306,11 @@ public class Sched {
 		card.setFactor(Math.max(1300, card.getFactor()
 				+ FACTOR_ADDITION_VALUES[ease - 2]));
 		card.setDue(mToday + card.getIvl());
+		if (card.getODid() != 0) {
+			card.setDid(card.getODid());
+			card.setODid(0);
+			card.setODue(0);
+		}
 	}
 
 	private void _logRev(Card card, int ease) {
@@ -1296,7 +1330,7 @@ public class Sched {
 	private int _nextRevIvl(Card card, int ease) {
 		long delay = _daysLate(card);
 		double interval = 0;
-		JSONObject conf = _cardConf(card);
+		JSONObject conf = _revConf(card);
 		double fct = card.getFactor() / 1000.0;
 		if (ease == 2) {
 			interval = (card.getIvl() + delay / 4) * 1.2;
@@ -1305,7 +1339,7 @@ public class Sched {
 		} else if (ease == 4) {
 			try {
 				interval = (card.getIvl() + delay) * fct
-						* conf.getJSONObject("rev").getDouble("ease4");
+						* conf.getDouble("ease4");
 			} catch (JSONException e) {
 				throw new RuntimeException(e);
 			}
@@ -1319,7 +1353,7 @@ public class Sched {
 	private int _ivlForFI(JSONObject conf, double ivl) {
 		JSONArray fi;
 		try {
-			fi = conf.getJSONObject("rev").getJSONArray("fi");
+			fi = conf.getJSONArray("fi");
 			return (int) (ivl * Math.log(1 - (fi.getInt(0) / 100.0)) / Math
 					.log(1 - (fi.getInt(1) / 100.0)));
 		} catch (JSONException e) {
@@ -1349,12 +1383,12 @@ public class Sched {
 		int idealDue = mToday + idealIvl;
 		JSONObject conf;
 		try {
-			conf = _cardConf(card).getJSONObject("rev");
+			conf = _revConf(card);
 			// find sibling positions
 			ArrayList<Integer> dues = mCol.getDb().queryColumn(
 					Integer.class,
 					"SELECT due FROM cards WHERE nid = " + card.getNid()
-							+ " AND queue = 2 AND id != " + card.getId(), 0);
+							+ " AND type = 2 AND id != " + card.getId(), 0);
 			if (dues.size() == 0 || !dues.contains(idealDue)) {
 				return idealIvl;
 			} else {
@@ -1382,7 +1416,94 @@ public class Sched {
 			throw new RuntimeException(e);
 		}
 	}
+	
+	/**
+	 * Dynamic deck handling
+	 * ******************************************************************
+	 * *****************************
+	 */
 
+	/* Rebuild a dynamic deck. */
+	private void rebuildDyn() {
+		rebuildDyn(0);
+	}
+	private void rebuildDyn(long did) {
+		if (did == 0) {
+			did = mCol.getDecks().selected();
+		}
+		JSONObject deck = mCol.getDecks().get(did);
+		if (!deck.has("dyn")) {
+			Log.e(AnkiDroidApp.TAG, "error: deck is not a dynamic deck");
+			return;
+		}
+		// move any existing cards back first
+		remDyn(did);
+		// gather card ids and sort
+		String order = _dynOrder(deck);
+		String limit;
+		try {
+			limit = " LIMIT " + deck.getInt("limit");
+		} catch (JSONException e) {
+			throw new RuntimeException(e);
+		}
+		ArrayList<Long> ids = mCol.findCards(deck.getInt("search"), order + limit);
+		// move the cards over
+		_moveToDyn(did, ids);
+		// and change to our new deck
+		mCol.getDecks().select(did);
+	}
+
+	public void remDyn(long did) {
+		mCol.getDb().execute("UPDATE cards SET did = odid, queue = type, odue = 0, odid = 0, usn = " + mCol.usn() + ", mod = " + Utils.intNow() + " WHERE did = " + did);
+	}
+
+	private String _dynOrder(JSONObject deck) {
+		int o;
+		try {
+			o = deck.getInt("order");
+		} catch (JSONException e) {
+			throw new RuntimeException(e);
+		}
+		switch (o) {
+		case DYN_OLDEST: 
+			return "order by c.mod";
+		case DYN_RANDOM: 
+			return "order by random()";
+		case DYN_SMALLINT: 
+			return "order by ivl";
+		case DYN_BIGINT: 
+			return "order by ivl desc";
+		case DYN_LAPSES:
+			return "order by lapses desc";
+		case DYN_FAILED: 
+			return "AND c.id IN (SELECT cid FROM revlog WHERE ease = 1 AND time > " + ((mDayCutoff - 86400) * 1000) + ") order by c.mod";
+		case DYN_ADDED: 
+			return "order by n.id";
+		case DYN_DUE:
+			return "order by c.due";
+		default:
+			return "";
+		}
+	}
+
+	private void _moveToDyn(long did, ArrayList<Long> ids) {
+//		JSONObject deck = mCol.getDecks().get(did);
+//		data;
+//		int t = Utils.intNow();
+//		int u = mCol.usn();
+//		for 
+	}
+
+	private int _dynIvlBoost(Card card) {
+		if (card.getODid() == 0 || card.getType() != 2 || card.getFactor() == 0) {
+			Log.e(AnkiDroidApp.TAG, "error: deck is not a dynamic deck");
+			return 0;
+		}
+		long elapsed = card.getIvl() - card.getODue() - mToday;
+		double factor = ((card.getFactor() / 1000.0) + 1.2) / 2.0;
+		return Math.max(1, Math.max(card.getIvl(), (int)(elapsed * factor)));
+	}
+	
 	/**
 	 * Leeches
 	 * ******************************************************************
@@ -1440,6 +1561,71 @@ public class Sched {
 
 	private JSONObject _cardConf(Card card) {
 		return mCol.getDecks().confForDid(card.getDid());
+	}
+
+	private JSONObject _newConf(Card card) {
+		try {
+			JSONObject conf = _cardConf(card);
+			if (card.getODid() == 0) {
+				return conf.getJSONObject("new");
+			} 
+			// dynamic deck; override some attributes, use original deck for others
+			JSONObject oconf = mCol.getDecks().confForDid(card.getODid());
+			JSONObject dict = new JSONObject();
+			// original deck
+			dict.put("ints", oconf.getJSONObject("new").getJSONArray("ints"));
+			dict.put("initialFactor", oconf.getJSONObject("new").getInt("initialFactor"));
+			// overrides
+			dict.put("delays", conf.getJSONArray("delays"));
+			dict.put("separate", conf.getBoolean("separate"));
+			dict.put("order", NEW_CARDS_DUE);
+			dict.put("perDay", mReportLimit);
+			return dict;
+		} catch (JSONException e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	private JSONObject _lapseConf(Card card) {
+		try {
+			JSONObject conf = _cardConf(card);
+			if (card.getODid() == 0) {
+				return conf.getJSONObject("lapse");
+			} 
+			// dynamic deck; override some attributes, use original deck for others
+			JSONObject oconf = mCol.getDecks().confForDid(card.getODid());
+			JSONObject dict = new JSONObject();
+			// original deck
+			dict.put("minInt", oconf.getJSONObject("lapse").getInt("minInt"));
+			dict.put("leechFails", oconf.getJSONObject("lapse").getInt("leechFails"));
+			dict.put("leechAction", oconf.getJSONObject("lapse").getInt("leechAction"));
+			// overrides
+			dict.put("delays", conf.getJSONArray("delays"));
+			dict.put("mult", conf.getInt("mult"));
+			return dict;
+		} catch (JSONException e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	private JSONObject _revConf(Card card) {
+		try {
+			JSONObject conf = _cardConf(card);
+			if (card.getODid() == 0) {
+				return conf.getJSONObject("rev");
+			} 
+			// dynamic deck; override some attributes, use original deck for others
+			JSONObject oconf = mCol.getDecks().confForDid(card.getODid());
+			JSONObject dict = new JSONObject();
+			// original deck
+			dict.put("ease4", oconf.getJSONObject("rev").getDouble("ease4"));
+			dict.put("fi", oconf.getJSONObject("rev").getJSONArray("fi"));
+			dict.put("minSpace", oconf.getJSONObject("rev").getInt("minSpace"));
+			dict.put("fuzz", oconf.getJSONObject("rev").getInt("fuzz"));
+			return dict;
+		} catch (JSONException e) {
+			throw new RuntimeException(e);
+		}
 	}
 
 	public String _deckLimit() {
@@ -1595,7 +1781,7 @@ public class Sched {
 				return _nextLrnIvl(card, ease);
 			} else if (ease == 1) {
 				// lapsed
-				JSONObject conf = _cardConf(card).getJSONObject("lapse");
+				JSONObject conf = _lapseConf(card);
 				if (conf.getJSONArray("delays").length() > 0) {
 					return conf.getJSONArray("delays").getInt(0) * 60;
 				}
@@ -1612,15 +1798,13 @@ public class Sched {
 	private int _nextLrnIvl(Card card, int ease) {
 		// this isn't easily extracted from the learn code
 		if (card.getQueue() == 0) {
-			card.setType(1);
 			card.setLeft(_startingLeft(card));
 		}
 		JSONObject conf = _lrnConf(card);
 		try {
 			if (ease == 1) {
 				// fail
-				return _delayForGrade(conf, conf.getJSONArray("delays")
-						.length());
+				return _delayForGrade(conf, conf.getJSONArray("delays").length());
 			} else if (ease == 3) {
 				// early removal
 				return _graduatingIvl(card, conf, true, false) * 86400;
@@ -1648,10 +1832,6 @@ public class Sched {
 	 * Suspend cards.
 	 */
 	public void suspendCards(long[] ids) {
-		removeFailed(ids);
-		String muh = "UPDATE cards SET queue = -1, mod = " + Utils.intNow()
-								+ ", usn = " + mCol.usn() + " WHERE id IN "
-								+ Utils.ids2str(ids);
 		mCol.getDb().execute("UPDATE cards SET queue = -1, mod = " + Utils.intNow()
 								+ ", usn = " + mCol.usn() + " WHERE id IN "
 								+ Utils.ids2str(ids));
@@ -1673,15 +1853,6 @@ public class Sched {
 	 */
 	public void buryNote(long nid) {
 		mCol.setDirty();
-		ArrayList<Long> cids = mCol.getDb().queryColumn(Long.class,
-				"SELECT id FROM cards WHERE nid = " + nid, 0);
-		long[] ids = new long[cids.size()];
-		int i = 0;
-		for (long c : cids) {
-			ids[i] = c;
-			i++;
-		}
-		removeFailed(ids);
 		mCol.getDb().execute("UPDATE cards SET queue = -2 WHERE nid = " + nid);
 	}
 

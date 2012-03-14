@@ -54,7 +54,6 @@ public class Collection {
 	private Models mModels;
 	private Tags mTags;
 
-	private Sched mStdSched;
 	private Sched mSched;
 
 	private int mSessionStartReps;
@@ -123,8 +122,7 @@ public class Collection {
 		mSessionStartReps = 0;
 		mSessionStartTime = 0;
 		mLastSessionStart = 0;
-		mStdSched = new Sched(this);
-		mSched = mStdSched;
+		mSched = new Sched(this);
 		// check for improper shutdown
 		cleanup();
 	}
@@ -327,7 +325,7 @@ public class Collection {
 	 */
 	private void cleanup() {
 		if (mDty) {
-			mStdSched.onClose();
+			mSched.onClose();
 			mDty = false;
 		}
 	}
@@ -543,7 +541,7 @@ public class Collection {
 		try {
 			cur = mDb.getDatabase()
 					.rawQuery(
-							"SELECT id, mid, did, flds FROM notes WHERE id IN "
+							"SELECT id, mid, flds FROM notes WHERE id IN "
 									+ snids, null);
 			while (cur.moveToNext()) {
 				JSONObject model = mModels.get(cur.getLong(1));
@@ -563,9 +561,7 @@ public class Collection {
 					}
 					// if missing ord and is available, generate
 					if (!doHave && avail.contains(tord)) {
-						long did = t.getLong("did");
-						data.add(new Object[] { ts, nid,
-								did != 0 ? did : cur.getLong(2), tord, now,
+						data.add(new Object[] { ts, nid, cur.getLong(2), tord, now,
 								usn, cur.getLong(0) });
 						ts += 1;
 					}
@@ -579,7 +575,7 @@ public class Collection {
 			}
 		}
 		// bulk update
-		mDb.executeMany("INSERT INTO cards VALUES (?, ?, ?, ?, ?, ?, 0, 0, ?, 0, 0, 0, 0, 0, 0, 0)", data);
+		mDb.executeMany("INSERT INTO cards VALUES (?, ?, ?, ?, ?, ?, 0, 0, ?, 0, 0, 0, 0, 0, 0)", data);
 		return rem;
 	}
 
@@ -606,7 +602,11 @@ public class Collection {
 		} catch (JSONException e) {
 			did = 0;
 		}
-		card.setDid(did != 0 ? did : note.getDid());
+		try {
+			card.setDid(did != 0 ? did : note.model().getLong("did"));
+		} catch (JSONException e) {
+			throw new RuntimeException(e);
+		}
 		card.setDue(_dueForDid(card.getDid(), due));
 		if (flush) {
 			card.flush();
@@ -913,35 +913,6 @@ public class Collection {
 			return true;
 		}
 		return false;
-	}
-
-	/**
-	 * Schedulers and cramming
-	 * **************************************************
-	 * *********************************************
-	 */
-
-	/**
-	 * True if scheduler changed.
-	 */
-	public boolean stdSched() {
-		if (!mSched.getName().equals("std")) {
-			cleanup();
-			mSched = mStdSched;
-			return true;
-		} else {
-			return false;
-		}
-	}
-
-	public void cramDecks() {
-		cramDecks("mod DESC", 0, 0);
-	}
-
-	public void cramDecks(String order, int min, int max) {
-		stdSched();
-		// TODO
-		// mSched = new CramScheduler(this, order, min, max);
 	}
 
 	/**
