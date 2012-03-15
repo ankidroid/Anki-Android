@@ -33,7 +33,7 @@ public class WidgetContentService extends Service{
 		SharedPreferences prefs = PrefSettings.getSharedPrefs(AnkiDroidApp.getInstance().getBaseContext());
 		String path = prefs.getString("lastWidgetDeck", "");
 		if (path != null && path.length() > 0 && AnkiDroidApp.isSdCardMounted()) {
-			Log.i(AnkiDroidApp.TAG, "BigWidget: reloading deck " + path);
+			// Log.i(AnkiDroidApp.TAG, "BigWidget: reloading deck " + path);
 			mLoadedDeck = DeckManager.getDeck(path, DeckManager.REQUESTING_ACTIVITY_BIGWIDGET, true);
 			if (mLoadedDeck != null) {
 				mCurrentCard = mLoadedDeck.getCard();				

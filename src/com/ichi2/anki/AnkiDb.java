@@ -103,7 +103,7 @@ public class AnkiDb {
     public void closeDatabase() {
         if (mDatabase != null) {
             mDatabase.close();
-            Log.i(AnkiDroidApp.TAG, "AnkiDb - closeDatabase, database " + mDatabase.getPath() + " closed = " + !mDatabase.isOpen());
+            // Log.i(AnkiDroidApp.TAG, "AnkiDb - closeDatabase, database " + mDatabase.getPath() + " closed = " + !mDatabase.isOpen());
             mDatabase = null;
         }
     }
@@ -192,7 +192,7 @@ public class AnkiDb {
     	} else if (command == SQL_DEL) {
     		delete(deck, table, whereClause, null);
     	} else {
-    		Log.i(AnkiDroidApp.TAG, "wrong command. no action performed");
+    		// Log.i(AnkiDroidApp.TAG, "wrong command. no action performed");
     	}
     }
 

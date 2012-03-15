@@ -84,11 +84,11 @@ public final class WidgetStatus {
         	notification = false;
         }
         if ((mediumWidget || smallWidget || bigWidget || notification) && ((sUpdateDeckStatusAsyncTask == null) || (sUpdateDeckStatusAsyncTask.getStatus() == AsyncTask.Status.FINISHED))) {
-            Log.d(AnkiDroidApp.TAG, "WidgetStatus.update(): updating");
+            // Log.d(AnkiDroidApp.TAG, "WidgetStatus.update(): updating");
             sUpdateDeckStatusAsyncTask = new UpdateDeckStatusAsyncTask();
             sUpdateDeckStatusAsyncTask.execute(context);
         } else {
-            Log.d(AnkiDroidApp.TAG, "WidgetStatus.update(): not enabled");
+            // Log.d(AnkiDroidApp.TAG, "WidgetStatus.update(): not enabled");
         }
     }
 
@@ -134,7 +134,7 @@ public final class WidgetStatus {
 
         @Override
         protected Context doInBackground(Context... params) {
-            Log.d(AnkiDroidApp.TAG, "WidgetStatus.UpdateDeckStatusAsyncTask.doInBackground()");
+            // Log.d(AnkiDroidApp.TAG, "WidgetStatus.UpdateDeckStatusAsyncTask.doInBackground()");
             Context context = params[0];
 
             if (!AnkiDroidApp.isSdCardMounted()) {
@@ -148,10 +148,10 @@ public final class WidgetStatus {
             	decks = new ArrayList<DeckStatus>(mDecks.length);
             		for (DeckStatus m : mDecks) {
             			if (m.mDeckPath.equals(sDeckStatus.mDeckPath)) {
-            				Log.i(AnkiDroidApp.TAG, "UpdateWidget - update information for deck " + sDeckStatus.mDeckPath);
+            				// Log.i(AnkiDroidApp.TAG, "UpdateWidget - update information for deck " + sDeckStatus.mDeckPath);
             				decks.add(sDeckStatus);
             			} else {
-            				Log.i(AnkiDroidApp.TAG, "UpdateWidget - copy information for deck " + m.mDeckPath);
+            				// Log.i(AnkiDroidApp.TAG, "UpdateWidget - copy information for deck " + m.mDeckPath);
             				decks.add(m);
             			}
             		}
@@ -177,7 +177,7 @@ public final class WidgetStatus {
                         absPath = file.getAbsolutePath();
                         String deckName = file.getName().replaceAll(".anki", "");
 
-                        Log.i(AnkiDroidApp.TAG, "WidgetStatus: Found deck: " + absPath);
+                        // Log.i(AnkiDroidApp.TAG, "WidgetStatus: Found deck: " + absPath);
 
                         Deck deck = DeckManager.getDeck(absPath, DeckManager.REQUESTING_ACTIVITY_WIDGETSTATUS, false);
                         if (deck == null) {
@@ -185,7 +185,7 @@ public final class WidgetStatus {
                             // Use the data from the last time we updated the deck, if available.
 //                            for (DeckStatus deckStatus : mDecks) {
 //                                if (absPath.equals(deckStatus.mDeckPath)) {
-//                                    Log.d(AnkiDroidApp.TAG, "Using previous value");
+//                                    // Log.d(AnkiDroidApp.TAG, "Using previous value");
 //                                    decks.add(deckStatus);
 //                                    break;
 //                                }
@@ -210,7 +210,7 @@ public final class WidgetStatus {
                         // Add the information about the deck
                         decks.add(new DeckStatus(absPath, deckName, newCards, dueCards, failedCards, eta, reps));
                     } catch (SQLException e) {
-                        Log.i(AnkiDroidApp.TAG, "Widget: Problems on retrieving deck information");
+                        // Log.i(AnkiDroidApp.TAG, "Widget: Problems on retrieving deck information");
                         Log.e(AnkiDroidApp.TAG, e.toString());
                         if (absPath != null) {
                             BackupManager.restoreDeckIfMissing(absPath);                    	
@@ -221,7 +221,7 @@ public final class WidgetStatus {
 
             if (!decks.isEmpty() && decks.size() > 1) {
                 // Sort and reverse the list if there are decks
-                Log.i(AnkiDroidApp.TAG, "Sorting deck");
+                // Log.i(AnkiDroidApp.TAG, "Sorting deck");
 
                 // Ordered by deck name
                 Collections.sort(decks, new ByNameComparator());
@@ -233,7 +233,7 @@ public final class WidgetStatus {
 
         @Override
         protected void onPostExecute(Context context) {
-            Log.d(AnkiDroidApp.TAG, "WidgetStatus.UpdateDeckStatusAsyncTask.onPostExecute()");
+            // Log.d(AnkiDroidApp.TAG, "WidgetStatus.UpdateDeckStatusAsyncTask.onPostExecute()");
             MetaDB.storeWidgetStatus(context, mDecks);
             if (mediumWidget) {
             	Intent intent;
