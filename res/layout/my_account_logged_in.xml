@@ -7,6 +7,7 @@
 		android:layout_above="@+id/logout_button"
 		android:layout_width="fill_parent"
 		android:layout_height="wrap_content"
+		style="?android:attr/buttonStyleSmall"
 		android:layout_marginBottom="15dp"
 		android:gravity="center"
 		android:layout_centerHorizontal="true"
@@ -15,11 +16,13 @@
 		<TextView
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
+			android:textColor="#000000"
 			android:text="@string/logged_as"
 			android:textSize="20dp"/>
 	
 		<TextView android:id="@+id/username_logged_in"
 			android:layout_width="wrap_content"
+			android:textColor="#000000"
 			android:layout_height="wrap_content"
 			android:layout_marginLeft="6dp"
 			android:textSize="20dp"
@@ -27,7 +30,7 @@
 	</LinearLayout>
 	
 	<Button android:id="@+id/logout_button"
-		android:layout_width="wrap_content"
+		android:layout_width="fill_parent"
 		android:layout_height="wrap_content"
 		android:layout_centerInParent="true"
 		android:text="@string/log_out"/>

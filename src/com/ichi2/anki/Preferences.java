@@ -16,7 +16,8 @@
  * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
  ****************************************************************************************/
 
-package com.ichi2.anki;
+package com.ichi2.anki;import com.ichi2.anim.ActivityTransitionAnimation;
+import com.ichi2.anki2.R;
 
 import java.io.File;
 import java.util.Arrays;
@@ -40,9 +41,12 @@ import android.preference.ListPreference;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceManager;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.WindowManager.BadTokenException;
 
 import com.hlidskialf.android.preference.SeekBarPreference;
+import com.ichi2.async.DeckTask;
+import com.ichi2.libanki.Utils;
 import com.ichi2.themes.StyledProgressDialog;
 import com.ichi2.themes.Themes;
 import com.tomgibara.android.veecheck.util.PrefSettings;
@@ -52,7 +56,6 @@ import com.tomgibara.android.veecheck.util.PrefSettings;
  */
 public class Preferences extends PreferenceActivity implements OnSharedPreferenceChangeListener {
 
-	private static final int DIALOG_WAL = 0;
 	private static final int DIALOG_ASYNC = 1;
 	private static final int DIALOG_BACKUP = 2;
 	private static final int DIALOG_WRITE_ANSWERS = 4;
@@ -64,19 +67,18 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
     private CheckBoxPreference showAnswerCheckBoxPreference;
     private CheckBoxPreference swipeCheckboxPreference;
     private CheckBoxPreference animationsCheckboxPreference;
-    private CheckBoxPreference walModePreference;
     private CheckBoxPreference useBackupPreference;
     private CheckBoxPreference asyncModePreference;
+    private CheckBoxPreference eInkDisplayPreference;
     private ListPreference mLanguageSelection;
     private CharSequence[] mLanguageDialogLabels;
     private CharSequence[] mLanguageDialogValues;
     private static String[] mAppLanguages = {"ar", "bg", "ca", "cs", "de", "el", "es", "et", "fi", "fr", "hu", "id", "it", "ja", "ko", "nl", "no", "pl", "pt_PT", "pt_BR", "ro", "ru", "sr", "sv", "th", "tr", "vi", "zh_CN", "zh_TW", "en"};
-    private static String[] mShowValueInSummList = {"language", "startup_mode", "hideQuestionInAnswer", "dictionary", "reportErrorMode", "minimumCardsDueForNotification", "deckOrder", "gestureShake", "gestureSwipeUp", "gestureSwipeDown", "gestureSwipeLeft", "gestureSwipeRight", "gestureDoubleTap", "gestureTapTop", "gestureTapBottom", "gestureTapRight", "gestureTapLeft", "theme"};
+    private static String[] mShowValueInSummList = {"language", "dictionary", "reportErrorMode", "minimumCardsDueForNotification", "gestureShake", "gestureSwipeUp", "gestureSwipeDown", "gestureSwipeLeft", "gestureSwipeRight", "gestureDoubleTap", "gestureTapTop", "gestureTapBottom", "gestureTapRight", "gestureLongclick", "gestureTapLeft", "theme"};
     private static String[] mShowValueInSummSeek = {"relativeDisplayFontSize", "relativeCardBrowserFontSize", "answerButtonSize", "whiteBoardStrokeWidth", "minShakeIntensity", "swipeSensibility", "timeoutAnswerSeconds", "timeoutQuestionSeconds", "animationDuration", "backupMax"};
     private TreeMap<String, String> mListsToUpdate = new TreeMap<String, String>();
     private StyledProgressDialog mProgressDialog;
     private boolean lockCheckAction = false;
-    private boolean walModeInitiallySet = false;
     private String dialogMessage;
 
     @Override
@@ -96,12 +98,12 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
         keepScreenOnCheckBoxPreference = (CheckBoxPreference) getPreferenceScreen().findPreference("keepScreenOn");
         showAnswerCheckBoxPreference = (CheckBoxPreference) getPreferenceScreen().findPreference("timeoutAnswer");
         animationsCheckboxPreference = (CheckBoxPreference) getPreferenceScreen().findPreference("themeAnimations");
-        walModePreference = (CheckBoxPreference) getPreferenceScreen().findPreference("walMode");
         useBackupPreference = (CheckBoxPreference) getPreferenceScreen().findPreference("useBackup");
         asyncModePreference = (CheckBoxPreference) getPreferenceScreen().findPreference("asyncMode");
-        walModeInitiallySet = mPrefMan.getSharedPreferences().getBoolean("walMode", false);
+        eInkDisplayPreference = (CheckBoxPreference) getPreferenceScreen().findPreference("eInkDisplay");
         ListPreference listpref = (ListPreference) getPreferenceScreen().findPreference("theme");
-        animationsCheckboxPreference.setEnabled(listpref.getValue().equals("2"));
+        String theme = listpref.getValue();
+        animationsCheckboxPreference.setEnabled(theme.equals("2") || theme.equals("3"));
         zoomCheckboxPreference.setEnabled(!swipeCheckboxPreference.isChecked());
         initializeLanguageDialog();
         initializeCustomFontsDialog();
@@ -111,7 +113,6 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
         for (String key : mShowValueInSummSeek) {
             updateSeekBarPreference(key);
         }
-        enableWalSupport();
     }
 
 
@@ -158,29 +159,29 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
     }
 
 
-    private void enableWalSupport() {
-    	Cursor cursor = null;
-    	String sqliteVersion = "";
-    	SQLiteDatabase database = null;
-        try {
-        	database = SQLiteDatabase.openOrCreateDatabase(":memory:", null);
-        	cursor = database.rawQuery("select sqlite_version() AS sqlite_version", null);
-        	while(cursor.moveToNext()){
-        	   sqliteVersion = cursor.getString(0);
-        	}
-        } finally {
-        	database.close();
-            if (cursor != null) {
-            	cursor.close();
-            }
-        }
-        if (sqliteVersion.length() >= 3 && Double.parseDouble(sqliteVersion.subSequence(0, 3).toString()) >= 3.7) {
-        	walModePreference.setEnabled(true);
-        } else {
-        	Log.e(AnkiDroidApp.TAG, "WAL mode not available due to a SQLite version lower than 3.7.0");
-        	walModePreference.setChecked(false);
-        }
-    }
+//    private void enableWalSupport() {
+//    	Cursor cursor = null;
+//    	String sqliteVersion = "";
+//    	SQLiteDatabase database = null;
+//        try {
+//        	database = SQLiteDatabase.openOrCreateDatabase(":memory:", null);
+//        	cursor = database.rawQuery("select sqlite_version() AS sqlite_version", null);
+//        	while(cursor.moveToNext()){
+//        	   sqliteVersion = cursor.getString(0);
+//        	}
+//        } finally {
+//        	database.close();
+//            if (cursor != null) {
+//            	cursor.close();
+//            }
+//        }
+//        if (sqliteVersion.length() >= 3 && Double.parseDouble(sqliteVersion.subSequence(0, 3).toString()) >= 3.7) {
+//        	walModePreference.setEnabled(true);
+//        } else {
+//        	Log.e(AnkiDroidApp.TAG, "WAL mode not available due to a SQLite version lower than 3.7.0");
+//        	walModePreference.setChecked(false);
+//        }
+//    }
 
 
     private String replaceString(String str, String value) {
@@ -246,21 +247,22 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
             	keepScreenOnCheckBoxPreference.setChecked(showAnswerCheckBoxPreference.isChecked());
             } else if (key.equals("language")) {
     			Intent intent = this.getIntent();
-    			setResult(StudyOptions.RESULT_RESTART, intent);
-    			finish();
+//    			setResult(DeckPicker.RESULT_RESTART, intent);
+    			closePreferences();
             } else if (key.equals("startup_mode")) {
     			Intent intent = this.getIntent();
-    			setResult(StudyOptions.RESULT_RESTART, intent);
-    			finish();
+//    			setResult(DeckPicker.RESULT_RESTART, intent);
+    			closePreferences();
             } else if (key.equals("theme")) {
-            	if (!sharedPreferences.getString("theme", "2").equals("2")) {
+            	String theme = sharedPreferences.getString("theme", "3");
+            	if (theme.equals("2") || theme.equals("3")) {
             		animationsCheckboxPreference.setChecked(false);
             		animationsCheckboxPreference.setEnabled(false);
             	} else {
             		animationsCheckboxPreference.setEnabled(true);
             	}
             	Themes.loadTheme();
-            	switch (Integer.parseInt(sharedPreferences.getString("theme", "2"))) {
+            	switch (Integer.parseInt(sharedPreferences.getString("theme", "3"))) {
             	case Themes.THEME_ANDROID_DARK:
             	case Themes.THEME_ANDROID_LIGHT:
             	case Themes.THEME_BLUE:
@@ -274,25 +276,14 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
             		break;
             	}
     			Intent intent = this.getIntent();
-    			setResult(StudyOptions.RESULT_RESTART, intent);
-    			finish();
+    			setResult(DeckPicker.RESULT_RESTART, intent);
+    			closePreferences();
             } else if (Arrays.asList(mShowValueInSummList).contains(key)) {
                 updateListPreference(key);
             } else if (Arrays.asList(mShowValueInSummSeek).contains(key)) {
                 updateSeekBarPreference(key);
             } else if (key.equals("writeAnswers") && sharedPreferences.getBoolean("writeAnswers", false)) {
                 showDialog(DIALOG_WRITE_ANSWERS);
-            } else if (key.equals("walMode") && !lockCheckAction) {
-            	lockCheckAction = true;
-            	if (sharedPreferences.getBoolean("walMode", false)) {
-            		showDialog(DIALOG_WAL);
-            	} else if (walModeInitiallySet) {
-            		walModeInitiallySet = false;
-            		dialogMessage = getResources().getString(R.string.wal_mode_set_message);
-                	DeckTask.launchDeckTask(DeckTask.TASK_TYPE_SET_ALL_DECKS_JOURNAL_MODE, mDeckOperationHandler, new DeckTask.TaskData(DeckManager.getMainDeck(), PrefSettings.getSharedPrefs(getBaseContext()).getString("deckPath", AnkiDroidApp.getStorageDirectory())));
-            	} else {
-            		lockCheckAction = false;        		
-            	}
             } else if (key.equals("useBackup")) {
             	if (lockCheckAction)  {
             		lockCheckAction = false;
@@ -314,10 +305,12 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
             		setReloadDeck();
             	}
             } else if (key.equals("deckPath")) {
-            	File decksDirectory = new File(sharedPreferences.getString("deckPath", AnkiDroidApp.getStorageDirectory()));
+                File decksDirectory = new File(sharedPreferences.getString("deckPath", AnkiDroidApp.getDefaultAnkiDroidDirectory()));
             	if (decksDirectory.exists()) {
             		AnkiDroidApp.createNoMediaFileIfMissing(decksDirectory);
             	}
+            } else if (key.equals("eInkDisplay")) {
+            	boolean enableAnimation = !eInkDisplayPreference.isChecked();
             }
         } catch (BadTokenException e) {
         	Log.e(AnkiDroidApp.TAG, "Preferences: BadTokenException on showDialog: " + e);
@@ -329,50 +322,45 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
     private String[] getCustomFonts(String defaultValue) {
         String[] files = Utils.getCustomFonts(this);
         int count = files.length;
-        // Log.d(AnkiDroidApp.TAG, "There are " + count + " custom fonts");
+        Log.d(AnkiDroidApp.TAG, "There are " + count + " custom fonts");
         String[] names = new String[count + 1];
         names[0] = defaultValue;
         for (int index = 1; index < count + 1; ++index) {
             names[index] =  Utils.removeExtension((new File(files[index - 1])).getName());
-            // Log.d(AnkiDroidApp.TAG, "Adding custom font: " + names[index]);
+            Log.d(AnkiDroidApp.TAG, "Adding custom font: " + names[index]);
         }
         return names;
     }
 
 
     private void setReloadDeck() {
-    	DeckManager.closeMainDeck();
-		setResult(StudyOptions.RESULT_RELOAD_DECK, getIntent());
+//    	DeckManager.closeMainDeck();
+//		setResult(StudyOptions.RESULT_RELOAD_DECK, getIntent());
     }
 
+    @Override
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
+		if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
+			Log.i(AnkiDroidApp.TAG, "DeckOptions - onBackPressed()");
+			closePreferences();
+			return true;
+		}
+		return super.onKeyDown(keyCode, event);
+	}
+
+    private void closePreferences() {
+		finish();
+		if (UIUtils.getApiLevel() > 4) {
+			ActivityTransitionAnimation.slide(this,
+					ActivityTransitionAnimation.FADE);
+		}    	
+    }
 
     @Override
     protected Dialog onCreateDialog(int id) {
 		Resources res = getResources();
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         switch (id) {
-        case DIALOG_WAL:
-    		builder.setTitle(res.getString(R.string.wal_mode));
-    		builder.setCancelable(false);
-    		builder.setMessage(res.getString(R.string.wal_mode_message));
-    		builder.setPositiveButton(res.getString(R.string.yes), new OnClickListener() {
-
-    			@Override
-    			public void onClick(DialogInterface arg0, int arg1) {
-    				walModePreference.setChecked(true);
-    	        	lockCheckAction = false;
-    				setReloadDeck();
-    			}
-    		});
-    		builder.setNegativeButton(res.getString(R.string.no), new OnClickListener() {
-
-    			@Override
-    			public void onClick(DialogInterface arg0, int arg1) {
-    				walModePreference.setChecked(false);
-    				lockCheckAction = false;
-    			}
-    		});
-    		break;
         case DIALOG_BACKUP:
     		builder.setTitle(res.getString(R.string.backup_manager_title));
     		builder.setCancelable(false);

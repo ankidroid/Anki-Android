@@ -17,7 +17,7 @@
 ~ You should have received a copy of the GNU General Public License along with
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res/com.ichi2.anki">
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res/com.ichi2.anki2">
     <PreferenceScreen android:title="@string/pref_cat_general">
         <PreferenceCategory android:title="@string/language">
             <ListPreference
@@ -27,37 +27,19 @@
                     android:defaultValue=""/>
         </PreferenceCategory>
         <PreferenceCategory android:title="@string/pref_cat_start">
-            <ListPreference
-                    android:title="@string/startup_mode"
-                    android:summary="@string/startup_mode_summ"
-                    android:key="startup_mode"
-                    android:defaultValue="2"
-                    android:entries="@array/startup_mode_labels"
-                    android:entryValues="@array/startup_mode_values" />
             <CheckBoxPreference
                     android:title="@string/show_study_options_on_deck_load"
                     android:defaultValue="true"
                     android:summary="@string/show_study_options_on_deck_load_summ"
+                    android:enabled="false"
                     android:key="study_options" />
         </PreferenceCategory>
         <PreferenceCategory android:title="@string/pref_cat_decks">
-            <!--		<CheckBoxPreference
-                   android:title="@string/sample_deck"
-                   android:defaultValue="true"
-                   android:summary="@string/sample_deck_summ"
-                   android:key="generateSampleDeck" />-->
             <EditTextPreference
                     android:title="@string/deck_path"
                     android:defaultValue="/sdcard/AnkiDroid"
                     android:summary="@string/deck_path_summ"
                     android:key="deckPath" />
-            <ListPreference
-                    android:title="@string/deck_order"
-                    android:summary="@string/deck_order_summ"
-                    android:key="deckOrder"
-                    android:defaultValue="1"
-                    android:entries="@array/deck_order_labels"
-                    android:entryValues="@array/deck_order_values" />
         </PreferenceCategory>
         <PreferenceCategory android:title="@string/pref_cat_backup">
             <CheckBoxPreference
@@ -92,6 +74,7 @@
                     android:title="@string/select_theme"
                     android:key="theme"
                     android:summary=""
+                    android:enabled="false"
                     android:defaultValue="2"
                     android:entries="@array/theme_labels"
                     android:entryValues="@array/theme_values" />
@@ -111,11 +94,17 @@
                     app:min="100"
                     android:max="2000"
                     app:interval="50" />
-        </PreferenceCategory>
+            <CheckBoxPreference
+                    android:title="@string/eink_display"
+                    android:defaultValue="false"
+                    android:summary="@string/eink_display_summ"
+                    android:disableDependentsState="false"
+                    android:key="eInkDisplay" />
+            </PreferenceCategory>
         <PreferenceCategory android:title="@string/pref_cat_flashcard">
             <CheckBoxPreference
                     android:title="@string/fullscreen_review"
-                    android:defaultValue="true"
+                    android:defaultValue="false"
                     android:summary="@string/fullscreen_review_summ"
                     android:key="fullscreenReview" />
             <CheckBoxPreference
@@ -143,13 +132,6 @@
                     android:defaultValue="false"
                     android:summary="@string/pref_keep_screen_on_summ"
                     android:key="keepScreenOn" />
-            <ListPreference
-                    android:title="@string/hide_question_in_answer"
-                    android:summary="@string/hide_question_in_answer_summ"
-                    android:key="hideQuestionInAnswer"
-                    android:defaultValue="1"
-                    android:entries="@array/hideQuestionInAnswerLabels"
-                    android:entryValues="@array/hideQuestionInAnswerVals" />
             <CheckBoxPreference
                     android:title="@string/use_ruby_support"
                     android:defaultValue="false"
@@ -401,6 +383,79 @@
                     android:summary="@string/zeemote_summ"
                     android:key="zeemote"/>
         </PreferenceCategory>
+        <PreferenceCategory android:title="@string/zeemote_actions">
+            <ListPreference
+                    android:title="@string/zeemote_a"
+                    android:summary=""
+                    android:key="zeemoteActionA"
+                    android:defaultValue="14"
+                    android:dependency="zeemote"
+                    android:entries="@array/gestures_labels"
+                    android:entryValues="@array/zeemote_action_values" />
+            <ListPreference
+                    android:title="@string/zeemote_b"
+                    android:summary=""
+                    android:key="zeemoteActionB"
+                    android:defaultValue="13"
+                    android:dependency="zeemote"
+                    android:entries="@array/gestures_labels"
+                    android:entryValues="@array/zeemote_action_values" />
+            <ListPreference
+                    android:title="@string/zeemote_c"
+                    android:summary=""
+                    android:key="zeemoteActionC"
+                    android:defaultValue="8"
+                    android:dependency="zeemote"
+                    android:entries="@array/gestures_labels"
+                    android:entryValues="@array/zeemote_action_values" />
+            <ListPreference
+                    android:title="@string/zeemote_d"
+                    android:summary=""
+                    android:key="zeemoteActionD"
+                    android:defaultValue="1"
+                    android:dependency="zeemote"
+                    android:entries="@array/gestures_labels"
+                    android:entryValues="@array/zeemote_action_values" />
+            <ListPreference
+                    android:title="@string/zeemote_up"
+                    android:summary=""
+                    android:key="zeemoteActionUp"
+                    android:defaultValue="5"
+                    android:dependency="zeemote"
+                    android:entries="@array/gestures_labels"
+                    android:entryValues="@array/zeemote_action_values" />
+            <ListPreference
+                    android:title="@string/zeemote_down"
+                    android:summary=""
+                    android:key="zeemoteActionDown"
+                    android:defaultValue="2"
+                    android:dependency="zeemote"
+                    android:entries="@array/gestures_labels"
+                    android:entryValues="@array/zeemote_action_values" />
+            <ListPreference
+                    android:title="@string/zeemote_left"
+                    android:summary=""
+                    android:key="zeemoteActionLeft"
+                    android:defaultValue="3"
+                    android:dependency="zeemote"
+                    android:entries="@array/gestures_labels"
+                    android:entryValues="@array/zeemote_action_values" />
+            <ListPreference
+                    android:title="@string/zeemote_right"
+                    android:summary=""
+                    android:key="zeemoteActionRight"
+                    android:defaultValue="4"
+                    android:dependency="zeemote"
+                    android:entries="@array/gestures_labels"
+                    android:entryValues="@array/zeemote_action_values" />
+            <CheckBoxPreference
+                    android:id="@+id/zeemote_show_action_checkbox"
+                    android:title="@string/zeemote_show_answer"
+                    android:defaultValue="false"
+                    android:summary="@string/zeemote_show_answer_summ"
+                    android:dependency="zeemote"
+                    android:key="zeemoteShowAnswer"/>
+        </PreferenceCategory>
     </PreferenceScreen>
     <PreferenceScreen android:title="@string/widget_pref">
         <ListPreference
@@ -474,12 +529,6 @@
                     android:summary="@string/reset_all_summ" />
         </PreferenceCategory>
         <PreferenceCategory android:title="@string/pref_cat_experimental">
-            <CheckBoxPreference
-                    android:title="@string/wal_mode"
-                    android:summary="@string/wal_mode_summ"
-                    android:defaultValue="false"
-                    android:enabled="false"
-                    android:key="walMode"/>
             <CheckBoxPreference
                     android:title="@string/async_mode"
                     android:summary="@string/async_mode_summ"

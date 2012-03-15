@@ -136,12 +136,12 @@
     <style name="White.CompoundButton">
     </style>
     <style name="White.CompoundButton.CheckBox" parent="@android:style/Widget.CompoundButton.CheckBox">
-	    <item name="android:button">@drawable/blue_btn_check</item>
+	    <item name="android:button">@drawable/white_btn_check</item>
     </style>
     <style name="White.CompoundButton.RadioButton">
-        <item name="android:background">@android:drawable/btn_radio</item>
         <item name="android:button">?android:attr/listChoiceIndicatorSingle</item>
-    </style>
+        <item name="android:background">@drawable/white_btn_radio</item>
+        </style>
     <style name="White.AlertDialog">
         <item name="android:fullDark">@drawable/white_popup_full_bright</item>
         <item name="android:topDark">@drawable/white_popup_top_bright</item>
@@ -162,7 +162,7 @@
         <item name="android:textSize">30sp</item>
     </style>
     <style name="White.Edittext" parent="@android:style/Widget.EditText">
-        <item name="android:background">@drawable/blue_edit_text</item>
+        <item name="android:background">@drawable/white_edit_text</item>
     </style>
     <style name="White.Widget.ListView" parent="@android:Widget.ListView">
         <item name="android:listSelector">@drawable/white_list_selector_background</item>
@@ -178,6 +178,10 @@
     </style>
     <style name="White.Widget.DropDownItem.Spinner" parent="@android:style/Widget.DropDownItem.Spinner">
         <item name="android:checkMark">@drawable/blue_btn_radio</item>
+    </style>
+
+    <style name="White.ActionBarStyle" parent="android:style/Widget.Holo.ActionBar">
+       <item name="android:background">#f5f5f5</item>
     </style>
 
     <!-- Widget Elements -->

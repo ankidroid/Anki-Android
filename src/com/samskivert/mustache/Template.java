@@ -11,33 +11,13 @@ import com.ichi2.anki.AnkiDroidApp;
 import java.io.IOException;
 import java.io.StringWriter;
 import java.io.Writer;
-import java.lang.reflect.Field;
-import java.lang.reflect.Method;
-import java.util.Iterator;
 import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * Represents a compiled template. Templates are executed with a <em>context</em> to generate
  * output. The context can be any tree of objects. Variables are resolved against the context.
- * Given a name {@code foo}, the following mechanisms are supported for resolving its value
- * (and are sought in this order):
- * <ul>
- * <li>If the variable has the special name {@code this} the context object itself will be
- * returned. This is useful when iterating over lists.
- * <li>If the object is a {@link Map}, {@link Map#get} will be called with the string {@code foo}
- * as the key.
- * <li>A method named {@code foo} in the supplied object (with non-void return value).
- * <li>A method named {@code getFoo} in the supplied object (with non-void return value).
- * <li>A field named {@code foo} in the supplied object.
- * </ul>
- * <p> The field type, method return type, or map value type should correspond to the desired
- * behavior if the resolved name corresponds to a section. {@link Boolean} is used for showing or
- * hiding sections without binding a sub-context. Arrays, {@link Iterator} and {@link Iterable}
- * implementations are used for sections that repeat, with the context bound to the elements of the
- * array, iterator or iterable. Lambdas are current unsupported, though they would be easy enough
- * to add if desire exists. See the <a href="http://mustache.github.com/mustache.5.html">Mustache
- * documentation</a> for more details on section behavior. </p>
+ * For anki, we only support the case where context is either a Map, or just an object that
+ * implements Mustache.VariableFetcher.
  */
 public class Template
 {
@@ -74,41 +54,10 @@ public class Template
      * context.
      *
      * @param ctx the context in which to look up the variable.
-     * @param name the name of the variable to be resolved, which must be an interned string.
+     * @param name the name of the variable to be resolved
      */
     protected Object getValue (Context ctx, String name, int line)
     {
-        // if we're dealing with a compound key, resolve each component and use the result to
-        // resolve the subsequent component and so forth
-        if (name.indexOf(".") != -1) {
-            String[] comps = name.split("\\.");
-            // we want to allow the first component of a compound key to be located in a parent
-            // context, but once we're selecting sub-components, they must only be resolved in the
-            // object that represents that component
-            Object data = getValue(ctx, comps[0].intern(), line);
-            for (int ii = 1; ii < comps.length; ii++) {
-                // generate more helpful error message
-                if (data == null) {
-                    throw new NullPointerException(
-                        "Null context for compound variable '" + name + "' on line " + line +
-                        ". '" + comps[ii - 1] + "' resolved to null.");
-                }
-                // once we step into a composite key, we drop the ability to query our parent
-                // contexts; that would be weird and confusing
-                data = getValueIn(data, comps[ii].intern(), line);
-            }
-            return data;
-        }
-
-        // handle our special variables
-        if (name == FIRST_NAME) {
-            return ctx.mode == Mode.FIRST;
-        } else if (name == LAST_NAME) {
-            return ctx.mode == Mode.LAST;
-        } else if (name == INDEX_NAME) {
-            return ctx.index;
-        }
-
         while (ctx != null) {
             Object value = getValueIn(ctx.data, name, line);
             if (value != null) {
@@ -117,7 +66,7 @@ public class Template
             ctx = ctx.parent;
         }
         // Graceful failing, no need to throw exception
-        Log.e(AnkiDroidApp.TAG, "No key, method or field with name '" + name + "' on line " + line);
+        Log.e(AnkiDroidApp.TAG, "Could not retrieve from context name '" + name + "' on line " + line);
         return new String("{unknown field " + name + "}");
     }
 
@@ -128,17 +77,11 @@ public class Template
                 "Null context for variable '" + name + "' on line " + line);
         }
 
-        Key key = new Key(data.getClass(), name);
-        VariableFetcher fetcher = _fcache.get(key);
-        if (fetcher != null) {
-            try {
-                return fetcher.get(data, name);
-            } catch (Exception e) {
-                // zoiks! non-monomorphic call site, update the cache and try again
-                fetcher = createFetcher(key);
-            }
+        Mustache.VariableFetcher fetcher;
+        if (Mustache.VariableFetcher.class.isInstance(data)) {
+            fetcher = Mustache.VariableFetcher.class.cast(data);
         } else {
-            fetcher = createFetcher(key);
+            fetcher = createFetcher(data.getClass(), name);
         }
 
         // if we were unable to create a fetcher, just return null and our caller can either try
@@ -149,7 +92,6 @@ public class Template
 
         try {
             Object value = fetcher.get(data, name);
-            _fcache.put(key, fetcher);
             return value;
         } catch (Exception e) {
             throw new MustacheException(
@@ -158,91 +100,14 @@ public class Template
     }
 
     protected final Segment[] _segs;
-    protected final Map<Key, VariableFetcher> _fcache =
-        new ConcurrentHashMap<Key, VariableFetcher>();
 
-    protected static VariableFetcher createFetcher (Key key)
+    protected static Mustache.VariableFetcher createFetcher (Class<?> cclass, String name)
     {
-        if (key.name == THIS_NAME) {
-            return THIS_FETCHER;
-        }
 
-        if (Map.class.isAssignableFrom(key.cclass)) {
+        if (Map.class.isAssignableFrom(cclass)) {
             return MAP_FETCHER;
         }
 
-        final Method m = getMethod(key.cclass, key.name);
-        if (m != null) {
-            return new VariableFetcher() {
-                public Object get (Object ctx, String name) throws Exception {
-                    return m.invoke(ctx);
-                }
-            };
-        }
-
-        final Field f = getField(key.cclass, key.name);
-        if (f != null) {
-            return new VariableFetcher() {
-                public Object get (Object ctx, String name) throws Exception {
-                    return f.get(ctx);
-                }
-            };
-        }
-
-        return null;
-    }
-
-    protected static Method getMethod (Class<?> clazz, String name)
-    {
-        Method m;
-        try {
-            m = clazz.getDeclaredMethod(name);
-            if (!m.getReturnType().equals(void.class)) {
-                if (!m.isAccessible()) {
-                    m.setAccessible(true);
-                }
-                return m;
-            }
-        } catch (Exception e) {
-            // fall through
-        }
-        try {
-            m = clazz.getDeclaredMethod(
-                "get" + Character.toUpperCase(name.charAt(0)) + name.substring(1));
-            if (!m.getReturnType().equals(void.class)) {
-                if (!m.isAccessible()) {
-                    m.setAccessible(true);
-                }
-                return m;
-            }
-        } catch (Exception e) {
-            // fall through
-        }
-
-        Class<?> sclass = clazz.getSuperclass();
-        if (sclass != Object.class && sclass != null) {
-            return getMethod(clazz.getSuperclass(), name);
-        }
-        return null;
-    }
-
-    protected static Field getField (Class<?> clazz, String name)
-    {
-        Field f;
-        try {
-            f = clazz.getDeclaredField(name);
-            if (!f.isAccessible()) {
-                f.setAccessible(true);
-            }
-            return f;
-        } catch (Exception e) {
-            // fall through
-        }
-
-        Class<?> sclass = clazz.getSuperclass();
-        if (sclass != Object.class && sclass != null) {
-            return getField(clazz.getSuperclass(), name);
-        }
         return null;
     }
 
@@ -281,45 +146,10 @@ public class Template
         }
     }
 
-    /** Used to cache variable fetchers for a given context class, name combination. */
-    protected static class Key
-    {
-        public final Class<?> cclass;
-        public final String name;
-
-        public Key (Class<?> cclass, String name) {
-            this.cclass = cclass;
-            this.name = name;
-        }
-
-        @Override public int hashCode () {
-            return cclass.hashCode() * 31 + name.hashCode();
-        }
-
-        @Override public boolean equals (Object other) {
-            Key okey = (Key)other;
-            return okey.cclass == cclass && okey.name == name;
-        }
-    }
-
-    protected static abstract class VariableFetcher {
-        abstract Object get (Object ctx, String name) throws Exception;
-    }
-
-    protected static final VariableFetcher MAP_FETCHER = new VariableFetcher() {
-        public Object get (Object ctx, String name) throws Exception {
-            return ((Map<?,?>)ctx).get(name);
-        }
-    };
-
-    protected static final VariableFetcher THIS_FETCHER = new VariableFetcher() {
-        public Object get (Object ctx, String name) throws Exception {
-            return ctx;
-        }
-    };
-
-    protected static final String THIS_NAME = "this".intern();
-    protected static final String FIRST_NAME = "-first".intern();
-    protected static final String LAST_NAME = "-last".intern();
-    protected static final String INDEX_NAME = "-index".intern();
+    protected static final Mustache.VariableFetcher MAP_FETCHER =
+        new Mustache.VariableFetcher() {
+            public Object get (Object ctx, String name) throws Exception {
+                return ((Map<?,?>)ctx).get(name);
+            }
+        };
 }

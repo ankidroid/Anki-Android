@@ -20,7 +20,4 @@
         <attr name="interval" format="integer" />
         <attr name="min" format="integer" />
     </declare-styleable>
-    <declare-styleable name="customDialog">
-        <attr name="listItemBackgroundDrawable" format="integer" />
-    </declare-styleable>
 </resources>

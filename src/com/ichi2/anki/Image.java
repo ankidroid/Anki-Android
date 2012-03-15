@@ -14,7 +14,7 @@
  * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
  ****************************************************************************************/
 
-package com.ichi2.anki;
+package com.ichi2.anki;import com.ichi2.anki2.R;
 
 import android.util.Log;
 
@@ -50,11 +50,11 @@ public class Image {
         StringBuilder stringBuilder = new StringBuilder();
         String contentLeft = content;
 
-        // Log.i(AnkiDroidApp.TAG, "parseImages");
+        Log.i(AnkiDroidApp.TAG, "parseImages");
         Matcher matcher = sImagePattern.matcher(content);
         while (matcher.find()) {
             String img = matcher.group(1);
-            // // Log.i(AnkiDroidApp.TAG, "Image " + matcher.groupCount() + ": " + img);
+            Log.i(AnkiDroidApp.TAG, "Image " + matcher.groupCount() + ": " + img);
 
             String imgTag = matcher.group();
             int markerStart = contentLeft.indexOf(imgTag);
@@ -62,7 +62,7 @@ public class Image {
             stringBuilder.append("<img src=" + img + " onload=\"resizeImage();\">");
 
             contentLeft = contentLeft.substring(markerStart + imgTag.length());
-            // // Log.i(AnkiDroidApp.TAG, "Content left = " + contentLeft);
+            Log.i(AnkiDroidApp.TAG, "Content left = " + contentLeft);
         }
 
         stringBuilder.append(contentLeft);

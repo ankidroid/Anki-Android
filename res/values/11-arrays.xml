@@ -15,31 +15,10 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-	<string-array name="newCardOrderLabels">
-		<item>Random order</item>
-		<item>Order added</item>
-		<item>Reverse order added</item>
-	</string-array>
 	<string-array name="newCardSchedulingLabels">
 		<item>Spread out through reviews</item>
 		<item>After reviews</item>
 		<item>Before reviews</item>
-	</string-array>
-	<string-array name="revCardOrderLabels">
-		<item>Largest interval first</item>
-		<item>Smallest interval first</item>
-		<item>Order due</item>
-		<item>Random order</item>
-	</string-array>
-	<string-array name="hideQuestionInAnswerLabels">
-		<item>Hide the question in answer</item>
-		<item>Show the question in answer</item>
-		<item>As defined in CardModel</item>
-	</string-array>
-	<string-array name="startup_mode_labels">
-		<item>Show study options</item>
-		<item>Show deck picker</item>
-		<item>Show deck picker on first start of the day</item>
 	</string-array>
 	<string-array name="error_reporting_choice_labels">
 		<item>Always report</item>
@@ -84,15 +63,9 @@
 		<item>Show failed cards in 8 hours</item>
 		<item>Show failed cards in 3 days</item>
 	</string-array>
-		<string-array name="deck_order_labels">
-		<item>By last access</item>
-		<item>Alphabetical</item>
-		<item>By number of due cards</item>
-		<item>By number of total cards</item>
-		<item>By number of total new cards</item>
-	</string-array>
 	<string-array name="gestures_labels">
 		<item>No action</item>
+		<item>Show answer</item>
 		<item>Answer button 1</item>
 		<item>Answer button 2</item>
 		<item>Answer button 3</item>
@@ -100,7 +73,6 @@
 		<item>Answer recommended (green)</item>
 		<item>Answer better than recommended</item>
 		<item>Undo</item>
-		<item>Redo</item>
 		<item>Edit card</item>
 		<item>Mark card</item>
 		<item>Lookup expression</item>
@@ -108,6 +80,7 @@
 		<item>Suspend card</item>
 		<item>Delete card</item>
 		<item>Clear Whiteboard</item>
+		<item>Play media</item>
 		<item>Abort learning</item>
 	</string-array>
 	<string-array name="theme_labels">
@@ -116,4 +89,13 @@
 		<item>Blue</item>
 		<item>White</item>
 	</string-array>
-</resources>
+	<string-array name="leech_action_labels">
+		<item>Suspend card</item>
+		<item>Tag only</item>
+		<item>Reset as new</item>
+	</string-array>
+   	<string-array name="new_order_labels">
+		<item>New cards in random order</item>
+		<item>New cards in order added</item>
+	</string-array>
+	</resources>

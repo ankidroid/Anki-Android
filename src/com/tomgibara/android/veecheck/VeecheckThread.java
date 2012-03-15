@@ -102,10 +102,10 @@ public class VeecheckThread extends Thread {
             }
 
             if (result.matched) {
-                // Log.d(LOG_TAG, "Matching intent found.");
+                Log.d(LOG_TAG, "Matching intent found.");
             } else {
                 result = null;
-                // Log.d(LOG_TAG, "No matching intent found.");
+                Log.d(LOG_TAG, "No matching intent found.");
             }
 
         } finally {

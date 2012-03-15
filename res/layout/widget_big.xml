@@ -51,24 +51,27 @@
 				 	android:visibility="gone"
 				 	android:text="@string/widget_big_tomorrow_due"
 				 	android:gravity="center"/>
-				<LinearLayout
+				<RelativeLayout
 				    android:layout_width="wrap_content"
 				    android:layout_height="wrap_content"
 				    android:orientation="horizontal"
 				    android:layout_gravity="center"
 				    android:clickable="false">
 					<TextView android:id="@+id/widget_big_decknames"
-					    android:layout_width="wrap_content"
+					    android:layout_width="fill_parent"
+					    android:layout_alignParentLeft="true"
 				    	android:lineSpacingMultiplier="1.2"
 					    android:layout_height="fill_parent"
 					    android:textColor="@color/widget_big_font_color"
+					    android:layout_toLeftOf="@+id/widget_big_deckdues"
 					    android:gravity="left"/>
 					<TextView android:id="@+id/widget_big_deckdues"
 					    android:layout_width="wrap_content"
 				    	android:lineSpacingMultiplier="1.2"
 					    android:layout_height="fill_parent"
+					    android:layout_alignParentRight="true"
 					    android:gravity="right"/>
-			    </LinearLayout>
+			    </RelativeLayout>
 				<TextView android:id="@+id/widget_big_decketa"
 				    android:layout_width="fill_parent"
 				    android:layout_height="fill_parent"
@@ -437,15 +440,16 @@
 	    	android:layout_height="22dip"
 		    android:focusable="false"
 	    	android:singleLine="true"
+	    	android:ellipsize="start"
 	        android:textColor="@color/widget_big_font_color"
 			android:gravity="center"
 		    android:layout_marginBottom="8.6667dip"
 		 	android:layout_marginLeft="16dip"
-	    	    android:layout_marginRight="4.6667dip"
+    	    android:layout_marginRight="4.6667dip"
 		    android:orientation="horizontal"
 		    android:clickable="false"
 		    android:textSize="13sp"
-		android:layout_toLeftOf="@+id/widget_big_bottom_right"
+			android:layout_toLeftOf="@+id/widget_big_bottom_right"
 		    android:layout_alignParentBottom="true"/>
 	</RelativeLayout>
     <FrameLayout android:id="@+id/widget_big_noclicks"

@@ -1,6 +1,5 @@
 /***************************************************************************************
- * Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com>                           *
- * Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com>                                   *
+ * Copyright (c) 2011 Norbert Nagold <norbert.nagold@gmail.com>                         *
  *                                                                                      *
  * This program is free software; you can redistribute it and/or modify it under        *
  * the terms of the GNU General Public License as published by the Free Software        *
@@ -17,8 +16,18 @@
 
 package com.ichi2.widget;
 
-import com.ichi2.anki.DeckManager;
-import com.ichi2.anki.R;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import com.ichi2.anki.AnkiActivity;
+import com.ichi2.anki.DeckPicker;
+import com.ichi2.anki.CardEditor.JSONNameComparator;
+import com.ichi2.anki2.R;
+import com.ichi2.libanki.Collection;
 import com.ichi2.themes.StyledDialog;
 import com.ichi2.themes.Themes;
 
@@ -30,7 +39,7 @@ import android.content.res.Resources;
 import android.content.Intent;
 import android.os.Bundle;
 
-public class WidgetDialog extends Activity {
+public class WidgetDialog extends AnkiActivity {
 
 	public static final String ACTION_SHOW_DECK_SELECTION_DIALOG = "org.ichi2.WidgetDialog.SHOWDECKSELECTIONDIALOG";
 	public static final String ACTION_SHOW_RESTRICTIONS_DIALOG = "org.ichi2.WidgetDialog.SHOWRESTRICTIONSDIALOG";
@@ -44,23 +53,48 @@ public class WidgetDialog extends Activity {
     		String action = intent.getAction();
     		if (action != null) {
     			if (ACTION_SHOW_DECK_SELECTION_DIALOG.equals(action)) {
-    				DeckManager.getSelectDeckDialog(this, new OnClickListener() {
+    				Collection col = Collection.currentCollection();
+    				if (col == null) {
+    					return;
+    				}
+    				ArrayList<CharSequence> dialogDeckItems = new ArrayList<CharSequence>();
+    				// Use this array to know which ID is associated with each
+    				// Item(name)
+    				final ArrayList<Long> dialogDeckIds = new ArrayList<Long>();
 
-						@Override
-						public void onClick(DialogInterface dialog, int which) {
+    				ArrayList<JSONObject> decks = col.getDecks().all();
+    				Collections.sort(decks, new JSONNameComparator());
+    				StyledDialog.Builder builder = new StyledDialog.Builder(this);
+    				builder.setTitle(R.string.deck);
+    				for (JSONObject d : decks) {
+    					try {
+    						dialogDeckItems.add(DeckPicker.readableDeckName(d.getString("name").split("::")));
+    						dialogDeckIds.add(d.getLong("id"));
+    					} catch (JSONException e) {
+    						throw new RuntimeException(e);
+    					}
+    				}
+    				// Convert to Array
+    				String[] items = new String[dialogDeckItems.size()];
+    				dialogDeckItems.toArray(items);
+
+    				builder.setItems(items, new DialogInterface.OnClickListener() {
+    					public void onClick(DialogInterface dialog, int item) {   						
 		            		Intent newIntent = new Intent(WidgetDialog.this, AnkiDroidWidgetBig.UpdateService.class);
+		            		newIntent.putExtra(DeckPicker.EXTRA_DECK_ID, dialogDeckIds.get(item));
 		            		newIntent.setAction(AnkiDroidWidgetBig.UpdateService.ACTION_OPENDECK);
-		            		newIntent.putExtra(AnkiDroidWidgetBig.UpdateService.EXTRA_DECK_PATH, DeckManager.getDeckPathAfterDeckSelectionDialog(which));
 		            		startService(newIntent);
-						}
-    				}, null, new OnDismissListener() {
+    					}
+    				});
+    				builder.setOnDismissListener(new OnDismissListener() {
 
 						@Override
 						public void onDismiss(DialogInterface arg0) {
-		            		WidgetDialog.this.finish();
+		            		WidgetDialog.this.finishWithoutAnimation();
 						}
     					
-    				}).show();
+    				});
+    				builder.show();
     			} else if (ACTION_SHOW_RESTRICTIONS_DIALOG.equals(action)) {
     				Resources res = getResources();
     				StyledDialog.Builder builder = new StyledDialog.Builder(this);
@@ -70,7 +104,7 @@ public class WidgetDialog extends Activity {
 
     						@Override
     						public void onDismiss(DialogInterface arg0) {
-    							WidgetDialog.this.finish();
+    							WidgetDialog.this.finishWithoutAnimation();
     						}
     					}).setPositiveButton(res.getString(R.string.ok), null);
 					builder.show();
@@ -78,4 +112,31 @@ public class WidgetDialog extends Activity {
     		}
     	}
     }
+
+    public class JSONNameComparator implements Comparator<JSONObject> {
+		@Override
+		public int compare(JSONObject lhs, JSONObject rhs) {
+			String[] o1;
+			String[] o2;
+			try {
+				o1 = lhs.getString("name").split("::");
+				o2 = rhs.getString("name").split("::");
+			} catch (JSONException e) {
+				throw new RuntimeException(e);
+			}
+			for (int i = 0; i < Math.min(o1.length, o2.length); i++) {
+				int result = o1[i].compareToIgnoreCase(o2[i]);
+				if (result != 0) {
+					return result;
+				}
+			}
+			if (o1.length < o2.length) {
+				return -1;
+			} else if (o1.length > o2.length) {
+				return 1;
+			} else {
+				return 0;
+			}
+		}
+	}
 }

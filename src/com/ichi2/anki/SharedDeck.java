@@ -12,7 +12,7 @@
  * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
  ****************************************************************************************/
 
-package com.ichi2.anki;
+package com.ichi2.anki;import com.ichi2.anki2.R;
 
 import java.util.HashMap;
 
@@ -84,12 +84,12 @@ public class SharedDeck extends HashMap<String, Object> {
 
 
     public void setFacts(int facts) {
-        mFacts = facts;
-        if (facts == 1) {
-            put("facts", mFacts + " " + AnkiDroidApp.getAppResources().getString(R.string.fact));
-        } else {
-            put("facts", mFacts + " " + AnkiDroidApp.getAppResources().getString(R.string.facts));
-        }
+//        mFacts = facts;
+//        if (facts == 1) {
+//            put("facts", mFacts + " " + AnkiDroidApp.getAppResources().getString(R.string.fact));
+//        } else {
+//            put("facts", mFacts + " " + AnkiDroidApp.getAppResources().getString(R.string.facts));
+//        }
     }
 
 
@@ -119,17 +119,17 @@ public class SharedDeck extends HashMap<String, Object> {
 
 /*
     public void prettyLog() {
-        // Log.i(AnkiDroidApp.TAG, "SHARED DECK:");
-        // Log.i(AnkiDroidApp.TAG, "        username = " + mUsername);
-        // Log.i(AnkiDroidApp.TAG, "        title = " + mTitle);
-        // Log.i(AnkiDroidApp.TAG, "        description = " + mDescription);
-        // Log.i(AnkiDroidApp.TAG, "        tags = " + mTags);
-        // Log.i(AnkiDroidApp.TAG, "        version = " + mVersion);
-        // Log.i(AnkiDroidApp.TAG, "        facts = " + mFacts);
-        // Log.i(AnkiDroidApp.TAG, "        size = " + mSize);
-        // Log.i(AnkiDroidApp.TAG, "        count = " + mCount);
-        // Log.i(AnkiDroidApp.TAG, "        modified = " + mModified);
-        // Log.i(AnkiDroidApp.TAG, "        fileName = " + mFileName);
+        Log.i(AnkiDroidApp.TAG, "SHARED DECK:");
+        Log.i(AnkiDroidApp.TAG, "        username = " + mUsername);
+        Log.i(AnkiDroidApp.TAG, "        title = " + mTitle);
+        Log.i(AnkiDroidApp.TAG, "        description = " + mDescription);
+        Log.i(AnkiDroidApp.TAG, "        tags = " + mTags);
+        Log.i(AnkiDroidApp.TAG, "        version = " + mVersion);
+        Log.i(AnkiDroidApp.TAG, "        facts = " + mFacts);
+        Log.i(AnkiDroidApp.TAG, "        size = " + mSize);
+        Log.i(AnkiDroidApp.TAG, "        count = " + mCount);
+        Log.i(AnkiDroidApp.TAG, "        modified = " + mModified);
+        Log.i(AnkiDroidApp.TAG, "        fileName = " + mFileName);
     }
 */
 

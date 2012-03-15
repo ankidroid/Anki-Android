@@ -12,17 +12,18 @@
  * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
  ****************************************************************************************/
 
-package com.ichi2.anki;
+package com.ichi2.anki;import com.ichi2.anki2.R;
 
-import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.KeyEvent;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.WindowManager;
@@ -37,6 +38,7 @@ import android.widget.SimpleAdapter;
 import com.ichi2.anim.ActivityTransitionAnimation;
 import com.ichi2.async.Connection;
 import com.ichi2.async.Connection.Payload;
+import com.ichi2.libanki.Utils;
 import com.ichi2.themes.StyledDialog;
 import com.ichi2.themes.Themes;
 import com.tomgibara.android.veecheck.util.PrefSettings;
@@ -63,7 +65,7 @@ import java.util.Locale;
 import java.util.TimeZone;
 import java.util.UUID;
 
-public class Feedback extends Activity {
+public class Feedback extends AnkiActivity {
     public static String REPORT_ASK = "2";
     public static String REPORT_NEVER = "1";
     public static String REPORT_ALWAYS = "0";
@@ -96,6 +98,8 @@ public class Feedback extends Activity {
     protected String mReportErrorMode;
     protected String mFeedbackUrl;
     protected String mErrorUrl;
+
+    private boolean mAllowFeedback;
 
     private boolean mErrorsSent = false;
 
@@ -133,16 +137,20 @@ public class Feedback extends Activity {
 
 
 	private void closeFeedback() {
-	        setResult(RESULT_OK);
+	        if (getIntent().getIntExtra("request", 0) == DeckPicker.RESULT_DB_ERROR) {
+	        	setResult(DeckPicker.RESULT_DB_ERROR);
+	        } else {
+		        setResult(RESULT_OK);
+	        }
 			finish();
-                if (Utils.getApiLevel() > 4) {
-                    ActivityTransitionAnimation.slide(Feedback.this, ActivityTransitionAnimation.FADE);
-                }
+            if (UIUtils.getApiLevel() > 4) {
+                ActivityTransitionAnimation.slide(Feedback.this, ActivityTransitionAnimation.LEFT);
+            }
 	}
 
 
     private void refreshInterface() {
-        if (mReportErrorMode.equals(REPORT_ASK)) {
+        if (mAllowFeedback) {
             Resources res = getResources();
             Button btnSend = (Button) findViewById(R.id.btnFeedbackSend);
             Button btnKeepLatest = (Button) findViewById(R.id.btnFeedbackKeepLatest);
@@ -207,25 +215,36 @@ public class Feedback extends Activity {
         initAllAlertDialogs();
 
         getErrorFiles();
-        if (mReportErrorMode.equals(REPORT_ALWAYS)) { // Always report
-            try {
-                String feedback = "Automatically sent";
-                Connection.sendFeedback(mSendListener, new Payload(new Object[] {
-                        mFeedbackUrl, mErrorUrl, feedback, mErrorReports, mNonce, getApplication(), true}));
-                if (mErrorReports.size() > 0) {
-                    mPostingFeedback = true;
+        Intent i = getIntent();
+        mAllowFeedback = (i.hasExtra("request") && (i.getIntExtra("request", 0) == DeckPicker.REPORT_FEEDBACK || i.getIntExtra("request", 0) == DeckPicker.RESULT_DB_ERROR)) || mReportErrorMode.equals(REPORT_ASK);
+        if (!mAllowFeedback) {
+            if (mReportErrorMode.equals(REPORT_ALWAYS)) { // Always report
+                try {
+                    String feedback = "Automatically sent";
+                    Connection.sendFeedback(mSendListener, new Payload(new Object[] {
+                            mFeedbackUrl, mErrorUrl, feedback, mErrorReports, mNonce, getApplication(), true}));
+                    if (mErrorReports.size() > 0) {
+                        mPostingFeedback = true;
+                    }
+                    if (feedback.length() > 0) {
+                        mPostingFeedback = true;
+                    }
+                } catch (Exception e) {
+                    Log.e(AnkiDroidApp.TAG, e.toString());
                 }
-                if (feedback.length() > 0) {
-                    mPostingFeedback = true;
+                finish();
+                if (UIUtils.getApiLevel() > 4) {
+                    ActivityTransitionAnimation.slide(Feedback.this, ActivityTransitionAnimation.NONE);
                 }
-            } catch (Exception e) {
-                Log.e(AnkiDroidApp.TAG, e.toString());
+                return;
+            } else if (mReportErrorMode.equals(REPORT_NEVER)) { // Never report
+                deleteFiles(false, false);
+                finish();
+                if (UIUtils.getApiLevel() > 4) {
+                    ActivityTransitionAnimation.slide(Feedback.this, ActivityTransitionAnimation.NONE);
+                }
+                return;
             }
-            closeFeedback();
-            return;
-        } else if (mReportErrorMode.equals(REPORT_NEVER)) { // Never report
-            deleteFiles(false, false);
-            closeFeedback();
         }
 
         View mainView = getLayoutInflater().inflate(R.layout.feedback, null);
@@ -312,8 +331,21 @@ public class Feedback extends Activity {
 
     }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+
+        case android.R.id.home:
+        	closeFeedback();
+			return true;
+
+		default:
+			return super.onOptionsItemSelected(item);
+        }
+    }
+
     private void refreshErrorListView() {
-        if (mReportErrorMode.equals(REPORT_ASK)) {
+        if (mAllowFeedback) {
             mErrorAdapter.notifyDataSetChanged();
         }
     }
@@ -437,7 +469,7 @@ public class Feedback extends Activity {
                 }
                 refreshErrorListView();
             } else {
-                if (mReportErrorMode.equals(REPORT_ASK)) {
+                if (mAllowFeedback) {
                     if (state.equals(STATE_SUCCESSFUL)) {
                         mEtFeedbackText.setText("");
                         Themes.showThemedToast(Feedback.this, res.getString(R.string.feedback_message_sent_success), false);
@@ -557,7 +589,7 @@ public class Feedback extends Activity {
                     result.success = true;
                     result.returnType = respCode;
                     result.result = Utils.convertStreamToString(response.getEntity().getContent());
-                    // Log.i(AnkiDroidApp.TAG, String.format("postFeedback OK: %s", result.result));
+                    Log.i(AnkiDroidApp.TAG, String.format("postFeedback OK: %s", result.result));
                     break;
 
                 default:

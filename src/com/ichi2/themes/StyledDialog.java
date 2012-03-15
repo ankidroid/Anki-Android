@@ -37,8 +37,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.ichi2.anki.AnkiDroidApp;
-import com.ichi2.anki.R;
-import java.lang.reflect.Method;
+import com.ichi2.anki2.R;
 import java.util.ArrayList;
 import java.util.List;
  
@@ -81,12 +80,14 @@ public class StyledDialog extends Dialog {
     	View main = super.getWindow().getDecorView();
     	((TextView) main.findViewById(R.id.message)).setText(message);
         ((View) main.findViewById(R.id.contentPanel)).setVisibility(View.VISIBLE);
+        Themes.setStyledDialogBackgrounds(main);
     }
 
 
     public void setTitle(String message) {
     	View main = super.getWindow().getDecorView();
     	((TextView) main.findViewById(R.id.alertTitle)).setText(message);
+        Themes.setStyledDialogBackgrounds(main);
     }
 
 
@@ -94,6 +95,7 @@ public class StyledDialog extends Dialog {
     	View main = super.getWindow().getDecorView();
     	((TextView) main.findViewById(R.id.message)).setText(message);
         ((View) main.findViewById(R.id.contentPanel)).setVisibility(View.VISIBLE);
+        Themes.setStyledDialogBackgrounds(main);
     }
 
 
@@ -183,6 +185,13 @@ public class StyledDialog extends Dialog {
     	mCheckedItems = checked;
         ((View) main.findViewById(R.id.listViewPanel)).setVisibility(View.VISIBLE);
     	setItems(3, (ListView) super.getWindow().getDecorView().findViewById(R.id.listview), values, 0, mCheckedItems, listener);
+	}
+
+
+    public void setSingleChoiceItems(String[] values, int checked, DialogInterface.OnClickListener listener) {
+    	View main = super.getWindow().getDecorView();
+        ((View) main.findViewById(R.id.listViewPanel)).setVisibility(View.VISIBLE);
+    	setItems(2, (ListView) super.getWindow().getDecorView().findViewById(R.id.listview), values, 0, null, listener);
 	}
 
 

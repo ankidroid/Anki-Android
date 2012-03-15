@@ -22,7 +22,7 @@
 <resources>
   <string name="widget_pref">ウィジェット</string>
   <string name="widget_minimum_cards_due">ウィジェットの通知のしきい値</string>
-  <string name="widget_minimum_cards_due_summary">通知を行う期限に切れカード数</string>
+  <string name="widget_minimum_cards_due_summary">通知を行う期限切れカード数: XXX</string>
   <string name="widget_minimum_cards_due_vibrate">バイブ</string>
   <string name="widget_minimum_cards_due_blink">ライトの点滅</string>
   <string name="widget_minimum_cards_due_notification_ticker_title">残り</string>
@@ -36,8 +36,8 @@
   <string name="open_in_reviewer">AnkiDroidで単語帳を開く</string>
   <string name="widget_big_tomorrow_due">明日の期限切れ予定:</string>
   <plurals name="widget_cards_in_decks_due">
-    <item quantity="one">残り%2$s枚中1枚</item>
-    <item quantity="other">%2$s枚中%1$d枚期限切れ</item>
+    <item quantity="one">%2$s中1枚が期限です</item>
+    <item quantity="other">%2$s中%1$d枚が期限です</item>
   </plurals>
   <plurals name="widget_decks">
     <item quantity="one">1つの単語帳</item>

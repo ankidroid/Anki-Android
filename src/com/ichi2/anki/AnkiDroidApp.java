@@ -15,7 +15,7 @@
  * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
  ****************************************************************************************/
 
-package com.ichi2.anki;
+package com.ichi2.anki;import com.ichi2.anki2.R;
 
 import android.app.Application;
 import android.content.Context;
@@ -23,6 +23,7 @@ import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.os.Environment;
 import android.util.Log;
@@ -30,10 +31,12 @@ import android.view.Display;
 import android.view.WindowManager;
 
 import com.ichi2.async.Connection;
+import com.tomgibara.android.veecheck.Veecheck;
 import com.tomgibara.android.veecheck.util.PrefSettings;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Locale;
 
 import com.zeemote.zc.Controller;
 
@@ -45,10 +48,14 @@ public class AnkiDroidApp extends Application {
 	public static final String LIBANKI_VERSION = "1.2.5";
 	public static final String DROPBOX_PUBLIC_DIR = "/dropbox/Public/Anki";
 
+	public static final int RESULT_TO_HOME = 501;
+
     /**
      * Tag for logging messages.
      */
     public static final String TAG = "AnkiDroid";
+
+	public static final String COLLECTION_PATH = "/collection.anki2";
 
     /**
      * Singleton instance of this class.
@@ -88,8 +95,8 @@ public class AnkiDroidApp extends Application {
 
             // Create the folder "AnkiDroid", if not exists, where the decks
             // will be stored by default
-            String deckPath = getStorageDirectory() + "/AnkiDroid";
-            createDecksDirectoryIfMissing(new File(deckPath));
+            String deckPath = getDefaultAnkiDroidDirectory();
+            createDirectoryIfMissing(new File(deckPath));
 
             // Put the base path in preferences pointing to the default
             // "AnkiDroid" folder
@@ -120,7 +127,16 @@ public class AnkiDroidApp extends Application {
     }
 
 
-    public static void createDecksDirectoryIfMissing(File decksDirectory) {
+    public static String getCollectionPath() {
+		String deckPath = PrefSettings.getSharedPrefs(sInstance.getApplicationContext()).getString("deckPath", AnkiDroidApp.getDefaultAnkiDroidDirectory());
+		return deckPath + AnkiDroidApp.COLLECTION_PATH;
+	}
+
+    public static String getDefaultAnkiDroidDirectory() {
+        return getStorageDirectory() + "/AnkiDroid";
+    }
+
+    public static void createDirectoryIfMissing(File decksDirectory) {
     	if (!decksDirectory.isDirectory()) {
     		decksDirectory.mkdirs();
         }
@@ -161,19 +177,6 @@ public class AnkiDroidApp extends Application {
 
     public static boolean isSdCardMounted() {
         return Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState());
-    }
-
-
-    public static boolean isUserLoggedIn() {
-        SharedPreferences preferences = PrefSettings.getSharedPrefs(sInstance);
-        String username = preferences.getString("username", "");
-        String password = preferences.getString("password", "");
-
-        if (!username.equalsIgnoreCase("") && !password.equalsIgnoreCase("")) {
-            return true;
-        }
-
-        return false;
     }
 
 
@@ -243,4 +246,38 @@ public class AnkiDroidApp extends Application {
     public static void saveExceptionReportFile(Throwable e, String origin) {
     	CustomExceptionHandler.getInstance().uncaughtException(null, e, origin);
     }
+
+    public static boolean isDonutOrLater() {
+        return getSdkVersion() > 3;
+    }
+
+    public static boolean isEclairOrLater() {
+        return getSdkVersion() > 4;
+    }
+
+    public static boolean isFroyoOrLater() {
+        return getSdkVersion() > 7;
+    }
+
+    public static boolean isHoneycombOrLater() {
+        return getSdkVersion() > 11;
+    }
+
+    public static int getSdkVersion() {
+        return Integer.valueOf(android.os.Build.VERSION.SDK);
+    }
+
+
+	public void setLanguage(String language) {
+		Locale locale;
+		if (language.equals("")) {
+			locale = Locale.getDefault();
+		} else {
+			locale = new Locale(language);
+		}
+		Configuration config = new Configuration();
+		config.locale = locale;
+		this.getResources().updateConfiguration(config,
+				this.getResources().getDisplayMetrics());
+	}
 }

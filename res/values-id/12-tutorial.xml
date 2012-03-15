@@ -17,31 +17,33 @@
  
 <resources> 
  <string-array name="tutorial_questions"> 
-    <item><![CDATA[Terima kasih kerana menggunakan AnkiDroid!<br />Ini pengenalan awal.<br /><br />Bahagian yang kelihatan ini ialah bahagian <span style=\'font-weight:600;\'>soalan</span> kad imbas ini.<br />Sila klik butang di bawah...]]></item> 
-    <item><![CDATA[Kad  berikut akan ditunjukkan.<br /><br />Tekniknya mudah: Seperti &quot;kad biasa&quot; anda menulis di depan dan belakang kad soalan dan jawapan.<br /><br />(klik butang untuk melihat jawapan)]]></item> 
-    <item><![CDATA[&quot;Apa ibu negeri Burkina Faso?&quot;<br /><br />Fikir dan kemudian klik &quot;tunjuk jawapan&quot;]]></item> 
+    <item><![CDATA[Thanks for installing AnkiDroid!<br />This is a short introduction.<br />What you see now is the <span style=\'font-weight:600;\'>question</span> part of a flashcard.<br />Please click on the large button below...]]></item> 
+    <item><![CDATA[The next card is shown now.<br />The idea is straightforward: Just like in &quot;real world&quot; paper flashcards, you write a question on the front and the answer on the back side of your cards.<br />(click the button to show the back side)]]></item> 
+    <item><![CDATA[&quot;What is the capital of Burkina Faso?&quot;<br />Think a bit about the answer and click then &quot;show answer&quot;]]></item> 
     <item><![CDATA[Di atas setiap butang jawapan, ada maklumat masa untuk kad ini ditunjukkan lagi.]]></item> 
     <item><![CDATA[Tujuannya ialah untuk menunjukkan kad ini semula sebelum anda lupa. Kajian menunjukkan ini cara berkesan.]]></item> 
     <item><![CDATA[Penyusunan perkatan dalam AnkiDroid:<br /><br>Semua fakta perlu dibuat berpasangan soal-jawab. Jika anda mahu terbalikkan, sila buat kad baru yang terbalik.]]></item> 
     <item><![CDATA[Kad-kad dikumpul sebagai dek dan ditanda dengan pelbagai tag.]]></item> 
-    <item><![CDATA[Dua cara mendapatkan kad baru:<br /><br />Muat turun orang punya (choose &quot;muat turun&quot; dalam menu opsyen) atau mereka sendiri.]]></item> 
+    <item><![CDATA[There are mainly two ways of getting new cards:<br />You either add premade decks of other users (choose &quot;shared decks&quot; in the decks summary) or create them by yourself.]]></item> 
     <item><![CDATA[Mereka kad sendiri penting untuk memenuhi kehendak sendiri. Gunakan AnkiDroid...]]></item> 
-    <item><![CDATA[Lihat bar atas:<br /><br />Ada nombor-nombor pada sudut kiri. Warna merah ialah kad gagal (cuba &quot;lagi&quot;),]]></item> 
+    <item><![CDATA[Let\'s have a look on the top bar:<br />In the left top corner you find some numbers. The red one counts the failed cards (answered by &quot;again&quot;),]]></item> 
     <item><![CDATA[Sudut kanan atas menunjuk masa berfikir dan kemajuan.]]></item> 
+    <item><![CDATA[Albeit you can use AnkiDroid stand alone, it is fully connected to AnkiWeb, the syncing server of Anki Desktop (available for Linux, Windows, Mac).]]></item> 
     <item><![CDATA[Ini inti utama pengguanan AnkiDroid.<br /><br>Untuk maklumat tambahan konsep Anki, lawat http://ankisrs.net/]]></item> 
  </string-array>
  <string-array name="tutorial_answers">
-    <item><![CDATA[... untuk melihat bahagian <span style=\'font-weight:600;\'>jawapan</span> kad (bawah barisan).<br /><br /><br />Klik satu antara empat butang yang sesuai]]></item> 
-    <item><![CDATA[Katakan anda mahu mengingat nama ibu negeri. Soalan diberi ialah...<br /><br />(tekan mana-mana butang untuk kad berikut)]]></item> 
-    <item><![CDATA[&quot;Ouagadougou&quot; ialah betul. <br /><br />Anda tak tahu? Klik &quot;lagi&quot; supaya kad dipapar dalam beberapa minit lagi. Jika tahu,klik berdasar kepayahan jawapan tadi.]]></item> 
+    <item><![CDATA[... in order to see the <span style=\'font-weight:600;\'>answer</span> part of the flashcard (below the line).<br />Click on the button on the right]]></item> 
+    <item><![CDATA[Let\'s assume you want to learn the world\'s capitals. Let the question be...<br />(click on one of the buttons to show the next card)]]></item> 
+    <item><![CDATA[&quot;Ouagadougou&quot; is the right answer. <br />You didn\'t know it? Click &quot;again&quot; to see the card again in a couple of minutes. Otherwise, click on the other buttons, depending on the easiness of the answer.]]></item> 
     <item><![CDATA[Tempoh ini bergantung kepada masa terakhir kad dilihat, kepayahan kad dan jawapan terakhir.]]></item> 
     <item><![CDATA[Jika anda ingin tahu lebih lanjut berkenaan spaced repetition,rujuk :<br>http://en.wikipedia.org/wiki/Spaced_repetition_system]]></item> 
     <item><![CDATA[Boleh dibuat secara automatik.]]></item> 
     <item><![CDATA[Anda akan belajar lagi bila anda mula menggunakan AnkiDroid.]]></item> 
-    <item><![CDATA[Beribu dek sedia dimuat turun yang mana mungkin berguna untuk anda.]]></item> 
+    <item><![CDATA[You\'ll find thousands of premade decks to download and there are probably some which are useful for you.]]></item> 
     <item><![CDATA[... atau (lebih mudah) dengan aplikasi destop Anki (muat turun percuma  http://ankisrs.net/).<br><br>Anda boleh sync dek dengan mudah, jadi memindahkannya bukan satu masalah.]]></item> 
-    <item><![CDATA[warna hitam ialah kad yang sudah dilihat dan perlu direviu hari ini,dan warna biru ialah anggaran kad reviu untuk hari ini. <br /><br />Jenis kad ditanda dengan garis bawah.]]></item> 
+    <item><![CDATA[the black one shows the number of cards you\'ve already learned before and which are due to review today, and the blue number tells you, how many new cards are projected for today. <br />The type of the actual cards is specified by an underline.]]></item> 
     <item><![CDATA[Bar atas ialah kemajuan, bar bawah ialah peratusan menjawab ya.]]></item> 
+    <item><![CDATA[Thus, you can easily sync your collection between AnkiDroid and Anki Desktop and use the latter for a more convenient card adding and managing.]]></item> 
     <item><![CDATA[Sila cuba dan rasa kesesuaiannya.<br><br>Boleh mulakan dengan overviu dek (tekan menu dan pilih&quot;semua dek&quot;), di situ anda boleh muat turun dek atau buat satu (gunakan saja menu).]]></item> 
  </string-array>
 </resources>
