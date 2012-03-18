@@ -134,7 +134,6 @@ public class Sched {
 		mCol = col;
 		mQueueLimit = 50;
 		mReportLimit = 1000;
-		// FIXME: replace reps with deck based counts
 		mReps = 0;
 		_updateCutoff();
 
@@ -1365,7 +1364,8 @@ public class Sched {
 	 * Number of days later than scheduled.
 	 */
 	private long _daysLate(Card card) {
-		return Math.max(0, mToday - card.getDue());
+		long due = card.getODid() != 0 ? card.getODue() : card.getDue();
+		return Math.max(0, mToday - due);
 	}
 
 	/**
@@ -1441,12 +1441,13 @@ public class Sched {
 		// gather card ids and sort
 		String order = _dynOrder(deck);
 		String limit;
+		ArrayList<Long> ids;
 		try {
 			limit = " LIMIT " + deck.getInt("limit");
+			ids = mCol.findCards(deck.getInt("search"), order + limit);
 		} catch (JSONException e) {
 			throw new RuntimeException(e);
 		}
-		ArrayList<Long> ids = mCol.findCards(deck.getInt("search"), order + limit);
 		// move the cards over
 		_moveToDyn(did, ids);
 		// and change to our new deck
@@ -1487,11 +1488,27 @@ public class Sched {
 	}
 
 	private void _moveToDyn(long did, ArrayList<Long> ids) {
-//		JSONObject deck = mCol.getDecks().get(did);
-//		data;
-//		int t = Utils.intNow();
-//		int u = mCol.usn();
-//		for 
+		JSONObject deck = mCol.getDecks().get(did);
+		ArrayList<Object[]> data = new ArrayList<Object[]>();
+		long t = Utils.intNow();
+		int u = mCol.usn();
+		for (long c = 0; c < ids.size(); c++) {
+			// start at -1000 so that reviews are all due
+			data.add(new Object[]{did, -1000 + c, t, u, ids.get((int)c)});
+		}
+		String queue;
+		try {
+			if (deck.getBoolean("cramRev")) {
+				// everything in the new queue
+				queue = "0";
+			} else {
+				// due reviews stay in the review queue
+				queue = "(CASE WHEN type = 2 AND (odue OR due) <= " + mToday + " THEN 2 ELSE 0 END)";
+			}
+		} catch (JSONException e) {
+			throw new RuntimeException(e);
+		}
+		mCol.getDb().executeMany("UPDATE cards SET odid = (CASE WHEN odid THEN odid ELSE did END), odue = (CASE WHEN odue THEN odue ELSE due END), did = ?, queue = " + queue + ", due = ?, mod = ?, usn = ? WHERE id = ?", data);
 	}
 
 	private int _dynIvlBoost(Card card) {

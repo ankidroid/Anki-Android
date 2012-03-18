@@ -584,7 +584,7 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
     	Log.i(AnkiDroidApp.TAG, "doInBackgroundLoadCards");
     	Collection col = params[0].getCollection();
     	boolean wholeCollection = params[0].getBoolean();
-    	publishProgress(new TaskData(col.findCards(wholeCollection)));
+    	publishProgress(new TaskData(col.findCardsForCardBrowser(wholeCollection)));
     	return null;
     }
 
