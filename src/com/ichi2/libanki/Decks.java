@@ -58,16 +58,7 @@ public class Decks {
 			+ // currentDay, count
 			"'revToday': [0, 0], " + "'lrnToday': [0, 0], "
 			+ "'timeToday': [0, 0], " + // time in ms
-			"'conf': 1, " + "'usn': 0, " + "'desc': \"\", 'dyn': 0, 'collapsed': False }";
-
-	private static final String defaultDynamicDeck = "{" + "'newToday': [0, 0], "
-			+ // currentDay, count
-			"'revToday': [0, 0], " + "'lrnToday': [0, 0], "
-			+ "'timeToday': [0, 0], " + // time in ms
-			"'collapsed': False, 'dyn': 0, 'desc': \"\", 'usn': 0, 'delays' [1, 10], 'separate': True, 'fmult': 0, " +
-			"'cramRev': False, 'search': \"\", 'limit': 100, 'order': 0, 'shift': True }";
-	
-	
+			"'conf': 1, " + "'usn': 0, " + "'desc': \"\" }";
 
 	// default group conf
 	private static final String defaultConf = "{" + "'name': \"Default\""
@@ -86,13 +77,21 @@ public class Decks {
 			+ "'minInt': 1, "
 			+ "'leechFails': 8, "
 			+ "'leechAction': 0, }, "
-			// type 0=suspend, 1=tagonly
+			+ // type 0=suspend, 1=tagonly
+			"'cram': { "
+			+ "'delays': [1, 5, 10], "
+			+ "'resched': True, "
+			+ "'reset': True, "
+			+ "'mult': 0, "
+			+ "'minInt': 1, }, "
 			+ "'rev': { "
 			+ "'perDay': 100"
 			+ "'ease4': 1.3, "
 			+ "'fuzz': 0.05, "
 			+ "'minSpace': 1, "
 			+ "'fi': [10, 10], "
+			+ "'order': "
+			+ Sched.REV_CARDS_RANDOM
 			+ "}, "
 			+ "'maxTaken': 60, "
 			+ "'timer': 0, "
@@ -193,9 +192,6 @@ public class Decks {
 
 	/** Add a deck with NAME. Reuse deck if already exists. Return id as int. */
 	public long id(String name, boolean create) {
-		return id(name, create, defaultDeck);
-	}
-	public long id(String name, boolean create, String type) {
 		name = name.replace("\'", "").replace("\"", "");
 		for (Map.Entry<Long, JSONObject> g : mDecks.entrySet()) {
 			try {
@@ -251,26 +247,16 @@ public class Decks {
 		if (!mDecks.containsKey(did)) {
 			return;
 		}
-		JSONObject deck = get(did);
-		try {
-			if (deck.getBoolean("dyn")) {
-				// deleting a cramming deck returns cards to their previous deck rather than deleting the cards
-				mCol.getSched().remDyn(did);
-			} else {
-				// delete children first
-				if (childrenToo) {
-					// we don't want to delete children when syncing
-					for (long id : children(did).values()) {
-						rem(id, cardsToo);
-					}
-				}
-				// delete cards too?
-				if (cardsToo) {
-					mCol.remCards(cids(did));
-				}			
+		// delete children first
+		if (childrenToo) {
+			// we don't want to delete children when syncing
+			for (long id : children(did).values()) {
+				rem(id, cardsToo);
 			}
-		} catch (JSONException e) {
-			throw new RuntimeException(e);
+		}
+		// delete cards too?
+		if (cardsToo) {
+			mCol.remCards(cids(did));
 		}
 		// delete the deck and add a grave
 		mDecks.remove(did);
@@ -399,18 +385,11 @@ public class Decks {
 	}
 
 	public JSONObject confForDid(long did) {
-		JSONObject deck = get(did);
-		if (deck.has("conf")) {
-			try {
-				JSONObject conf = getConf(deck.getLong("conf"));
-				conf.put("dyn", false);
-				return conf;
-			} catch (JSONException e) {
-				throw new RuntimeException(e);
-			}
+		try {
+			return getConf(get(did).getLong("conf"));
+		} catch (JSONException e) {
+			throw new RuntimeException(e);
 		}
-		// dynamic decks have embedded conf
-		return deck;
 	}
 
 	public JSONObject getConf(long confId) {
@@ -612,18 +591,6 @@ public class Decks {
 		}
 		save();
 	}
-
-	/**
-	 * Deck utils
-	 * ***************************************************************/
-
-	/* Return a new dynamic deck and set it as the current deck. */
-	public long newDyn(String name) {
-		long did = id(name, true, defaultDynamicDeck);
-		select(did);
-		return did;
-	}
-
 
 	public String getActualDescription() {
 		try {

@@ -776,6 +776,7 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
         		}
         		note.values()[0] = (i < len) ? questions[i] : sampleQuestions[i - len];
         		note.values()[1] = (i < len) ? answers[i] : sampleAnswers[i - len];
+        		note.setDid(did);
         		col.addNote(note);
         	}
 //        	deck.setSessionTimeLimit(0);
