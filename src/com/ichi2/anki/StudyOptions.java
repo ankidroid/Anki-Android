@@ -790,10 +790,10 @@ public class StudyOptions extends Activity implements IButtonListener {
 			// public void onClick(DialogInterface arg0, int which) {
 			// String tag = allCramTags[which];
 			// if (activeCramTags.contains(tag)) {
-			Log.i(AnkiDroidApp.TAG, "unchecked tag: " + tag);
+			// Log.i(AnkiDroidApp.TAG, "unchecked tag: " + tag);
 			// activeCramTags.remove(tag);
 			// } else {
-			Log.i(AnkiDroidApp.TAG, "checked tag: " + tag);
+			// Log.i(AnkiDroidApp.TAG, "checked tag: " + tag);
 			// activeCramTags.add(tag);
 			// }
 			// }

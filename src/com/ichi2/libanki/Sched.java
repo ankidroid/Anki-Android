@@ -1816,7 +1816,7 @@ public class Sched {
 	// */
 	//
 	// private void updateDynamicIndices() {
-	// Log.i(AnkiDroidApp.TAG, "updateDynamicIndices - Updating indices...");
+	// // Log.i(AnkiDroidApp.TAG, "updateDynamicIndices - Updating indices...");
 	// // // determine required columns
 	// // if (mDeck.getQconf().getInt("revOrder")) {
 	// //

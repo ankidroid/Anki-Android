@@ -674,7 +674,7 @@ public class CardEditor extends Activity {
 	@Override
 	protected void onSaveInstanceState(Bundle outState) {
 		// TODO
-		Log.i(AnkiDroidApp.TAG, "onSaveInstanceState: " + path);
+		// Log.i(AnkiDroidApp.TAG, "onSaveInstanceState: " + path);
 		// outState.putString("deckFilename", path);
 		outState.putBoolean("addFact", mAddNote);
 		outState.putInt("caller", mCaller);

@@ -2463,9 +2463,9 @@ public class Reviewer extends AnkiActivity implements IButtonListener{
         	mCard.getSettings().setDefaultFontSize(calculateDynamicFontSize(content));
         }
 
-        Log.i(AnkiDroidApp.TAG, "Initial content card = \n" + content);
+        // Log.i(AnkiDroidApp.TAG, "Initial content card = \n" + content);
         // content = Image.parseImages(deckFilename, content);
-        Log.i(AnkiDroidApp.TAG, "content after parsing images = \n" +
+        // Log.i(AnkiDroidApp.TAG, "content after parsing images = \n" +
         // content);
 
         // don't play question sound again when displaying answer
@@ -2518,7 +2518,7 @@ public class Reviewer extends AnkiActivity implements IButtonListener{
         }
 
         mCardContent = new SpannedString(mCardTemplate.replace("::content::", content).replace("::style::", style.toString()));
-        Log.i(AnkiDroidApp.TAG, "card html = \n" + card);
+        // Log.i(AnkiDroidApp.TAG, "card html = \n" + card);
         Log.i(AnkiDroidApp.TAG, "base url = " + mBaseUrl );
 
     	fillFlashcard(mShowAnimations);
@@ -3119,7 +3119,7 @@ public class Reviewer extends AnkiActivity implements IButtonListener{
             // mp.appendTail(sbg);
             // hebrewText = sbg.toString();
             // for (int i = 0; i < hebrewText.length(); i++) {
-            Log.i(AnkiDroidApp.TAG, "flipped brackets: " +
+            // Log.i(AnkiDroidApp.TAG, "flipped brackets: " +
             // hebrewText.codePointAt(i));
             // }
             // 3. Reverse all numerical groups (so when they get reversed again
@@ -3133,7 +3133,7 @@ public class Reviewer extends AnkiActivity implements IButtonListener{
             // mn.appendTail(sbg);
 
             // for (int i = 0; i < sbg.length(); i++) {
-            Log.i(AnkiDroidApp.TAG, "LTR numerals: " + sbg.codePointAt(i));
+            // Log.i(AnkiDroidApp.TAG, "LTR numerals: " + sbg.codePointAt(i));
             // }
             // hebrewText = sbg.toString();//reverse().toString();
             m.appendReplacement(sb, hebrewText);
