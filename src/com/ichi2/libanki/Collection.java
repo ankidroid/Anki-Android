@@ -47,9 +47,8 @@ import java.util.Random;
 public class Collection {
 
 	// collection schema & syncing vars
-	public static final int SCHEMA_VERSION = 3;
-	public static final int SYNC_ZIP_SIZE = (int) (2.5 * 1024 * 1024);
-	public static final String SYNC_URL = "https://beta.ankiweb.net/sync/";
+	public static final int SCHEMA_VERSION = 2;
+	public static final String SYNC_URL = "http://beta.ankiweb.net/sync/";
 	public static final int SYNC_VER = 1;
 
 	private AnkiDb mDb;
