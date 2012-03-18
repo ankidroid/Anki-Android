@@ -25,7 +25,7 @@
 		android:layout_height="fill_parent"
 		android:layout_alignParentTop="true"
 		android:layout_marginBottom="4dip"
-		android:requiresFadingEdge="vertical"
+		android:fadingEdge="vertical"
 		android:layout_above="@+id/info_buttons"/>
 	<LinearLayout  android:id="@+id/info_buttons"
 	    android:layout_width="fill_parent"
