@@ -40,6 +40,7 @@ import com.ichi2.async.Connection;
 import com.ichi2.async.DeckTask;
 import com.ichi2.async.Connection.Payload;
 import com.ichi2.libanki.Card;
+import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Decks;
 import com.ichi2.libanki.Utils;
 import com.ichi2.libanki.sync.HttpSyncer;
@@ -589,7 +590,7 @@ public class DownloadManagerService extends Service {
             InflaterInputStream iis = null;
 
             try {
-                url = new URL(HttpSyncer.SYNC_URL + "fulldown");
+                url = new URL(Collection.SYNC_URL + "fulldown");
                 HttpURLConnection connection = (HttpURLConnection) url.openConnection();
 
                 connection.setDoInput(true);
@@ -752,126 +753,127 @@ public class DownloadManagerService extends Service {
 
         @Override
         protected SharedDeckDownload doInBackground(Download... downloads) {
-            SharedDeckDownload download = (SharedDeckDownload) downloads[0];
+//            SharedDeckDownload download = (SharedDeckDownload) downloads[0];
+//
+//            URL url;
+//            RandomAccessFile file = null;
+//            InputStream is = null;
+//
+//            try {
+//                url = new URL("http://" + Collection.SYNC_HOST + "/file/get?id=" + download.getId());
+//                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+//
+//                connection.setDoInput(true);
+//                connection.setDoOutput(true);
+//                connection.setUseCaches(false);
+//                connection.setRequestMethod("GET");
+//                Log.i(AnkiDroidApp.TAG, "Range = " + download.getDownloaded());
+//                // FIXME: Seems that Range property is also not working well here -> TEST IT!
+//                // connection.setRequestProperty("Range","bytes=" + download.getDownloaded() + "-");
+//                connection.setRequestProperty("Accept-Encoding", "identity");
+////                connection.setRequestProperty("Host", Collection.SYNC_HOST);
+//                connection.setRequestProperty("Connection", "close");
+//
+//                connection.connect();
+//
+//                long startTime = System.currentTimeMillis();
+//
+//                // Make sure response code is in the 200 range.
+//                if (connection.getResponseCode() / 100 != 2) {
+//                    download.setStatus(Download.STATUS_ERROR);
+//                    publishProgress();
+//                } else {
+//                    download.setStatus(Download.STATUS_DOWNLOADING);
+//                    publishProgress();
+//                }
+//
+//                Log.i(AnkiDroidApp.TAG, "Response code = " + connection.getResponseCode());
+//
+//                // Check for valid content length.
+//                Log.i(AnkiDroidApp.TAG, "Connection length = " + connection.getContentLength());
+//                int contentLength = connection.getContentLength();
+//                if (contentLength < 1) {
+//                    Log.i(AnkiDroidApp.TAG, "Content Length = -1");
+//                    // download.setStatus(Download.ERROR);
+//                }
+//
+//                // Set the size for this download if it hasn't been already set
+//                if (download.getSize() == -1 && contentLength != -1) {
+//                    download.setSize(contentLength);
+//                    Log.i(AnkiDroidApp.TAG, "File size = " + contentLength);
+//                    // TODO: NOTIFY???
+//                }
+//
+//                // Open file
+//                file = new RandomAccessFile(mDestination + "/tmp/" + download.getFilename() + "." + download.getId()
+//                        + ".shared.zip.tmp", "rw");
+//                // FIXME: Uncomment next line when the connection is fixed on AnkiOnline (= when the connection only
+//                // returns the bytes specified on the range property)
+//                // file.seek(download.getDownloaded());
+//
+//                is = connection.getInputStream();
+//
+//                while (download.getStatus() == Download.STATUS_DOWNLOADING) {
+//                    Log.i(AnkiDroidApp.TAG, "Downloading... " + download.getDownloaded());
+//                    byte[] buffer;
+//                    // if (size - downloaded > MAX_BUFFER_SIZE) {
+//                    buffer = new byte[MAX_BUFFER_SIZE];
+//                    // } else {
+//                    // buffer = new byte[size - downloaded];
+//                    // }
+//
+//                    // Read from server into buffer.
+//                    int read = is.read(buffer);
+//                    if (read == -1) {
+//                        break;
+//                    }
+//
+//                    // Write buffer to file.
+//                    file.write(buffer, 0, read);
+//                    download.setDownloaded(download.getDownloaded() + read);
+//                    publishProgress();
+//                }
+//
+//                if (download.getStatus() == Download.STATUS_DOWNLOADING) {
+//                    // Change status to complete if this point was reached because downloading has finished
+//                    download.setStatus(Download.STATUS_COMPLETE);
+//                    new File(mDestination + "/tmp/" + download.getFilename() + "." + download.getId() + ".shared.zip.tmp")
+//                            .renameTo(new File(mDestination + "/tmp/" + download.getFilename() + ".zip"));
+//                    long finishTime = System.currentTimeMillis();
+//                    Log.i(AnkiDroidApp.TAG, "Finished in " + ((finishTime - startTime) / 1000) + " seconds!");
+//                    Log.i(AnkiDroidApp.TAG, "Downloaded = " + download.getDownloaded());
+//                } else if (download.getStatus() == Download.STATUS_CANCELLED) {
+//                    // Cancelled download, clean up
+//                    new File(mDestination + "/tmp/" + download.getFilename() + "." + download.getId()
+//                            + ".shared.zip.tmp").delete();
+//                    Log.i(AnkiDroidApp.TAG, "Download cancelled.");
+//                }
+//                publishProgress();
+//                connection.disconnect();
+//            } catch (Exception e) {
+//                e.printStackTrace();
+//                Log.i(AnkiDroidApp.TAG, "Exception Error = " + e.getMessage());
+//                download.setStatus(Download.STATUS_ERROR);
+//                publishProgress();
+//            } finally {
+//                // Close file
+//                if (file != null) {
+//                    try {
+//                        file.close();
+//                    } catch (Exception e) {
+//                    }
+//                }
+//                // Close connection to server
+//                if (is != null) {
+//                    try {
+//                        is.close();
+//                    } catch (Exception e) {
+//                    }
+//                }
+//            }
 
-            URL url;
-            RandomAccessFile file = null;
-            InputStream is = null;
-
-            try {
-                url = new URL("http://" + HttpSyncer.SYNC_HOST + "/file/get?id=" + download.getId());
-                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-
-                connection.setDoInput(true);
-                connection.setDoOutput(true);
-                connection.setUseCaches(false);
-                connection.setRequestMethod("GET");
-                Log.i(AnkiDroidApp.TAG, "Range = " + download.getDownloaded());
-                // FIXME: Seems that Range property is also not working well here -> TEST IT!
-                // connection.setRequestProperty("Range","bytes=" + download.getDownloaded() + "-");
-                connection.setRequestProperty("Accept-Encoding", "identity");
-                connection.setRequestProperty("Host", HttpSyncer.SYNC_HOST);
-                connection.setRequestProperty("Connection", "close");
-
-                connection.connect();
-
-                long startTime = System.currentTimeMillis();
-
-                // Make sure response code is in the 200 range.
-                if (connection.getResponseCode() / 100 != 2) {
-                    download.setStatus(Download.STATUS_ERROR);
-                    publishProgress();
-                } else {
-                    download.setStatus(Download.STATUS_DOWNLOADING);
-                    publishProgress();
-                }
-
-                Log.i(AnkiDroidApp.TAG, "Response code = " + connection.getResponseCode());
-
-                // Check for valid content length.
-                Log.i(AnkiDroidApp.TAG, "Connection length = " + connection.getContentLength());
-                int contentLength = connection.getContentLength();
-                if (contentLength < 1) {
-                    Log.i(AnkiDroidApp.TAG, "Content Length = -1");
-                    // download.setStatus(Download.ERROR);
-                }
-
-                // Set the size for this download if it hasn't been already set
-                if (download.getSize() == -1 && contentLength != -1) {
-                    download.setSize(contentLength);
-                    Log.i(AnkiDroidApp.TAG, "File size = " + contentLength);
-                    // TODO: NOTIFY???
-                }
-
-                // Open file
-                file = new RandomAccessFile(mDestination + "/tmp/" + download.getFilename() + "." + download.getId()
-                        + ".shared.zip.tmp", "rw");
-                // FIXME: Uncomment next line when the connection is fixed on AnkiOnline (= when the connection only
-                // returns the bytes specified on the range property)
-                // file.seek(download.getDownloaded());
-
-                is = connection.getInputStream();
-
-                while (download.getStatus() == Download.STATUS_DOWNLOADING) {
-                    Log.i(AnkiDroidApp.TAG, "Downloading... " + download.getDownloaded());
-                    byte[] buffer;
-                    // if (size - downloaded > MAX_BUFFER_SIZE) {
-                    buffer = new byte[MAX_BUFFER_SIZE];
-                    // } else {
-                    // buffer = new byte[size - downloaded];
-                    // }
-
-                    // Read from server into buffer.
-                    int read = is.read(buffer);
-                    if (read == -1) {
-                        break;
-                    }
-
-                    // Write buffer to file.
-                    file.write(buffer, 0, read);
-                    download.setDownloaded(download.getDownloaded() + read);
-                    publishProgress();
-                }
-
-                if (download.getStatus() == Download.STATUS_DOWNLOADING) {
-                    // Change status to complete if this point was reached because downloading has finished
-                    download.setStatus(Download.STATUS_COMPLETE);
-                    new File(mDestination + "/tmp/" + download.getFilename() + "." + download.getId() + ".shared.zip.tmp")
-                            .renameTo(new File(mDestination + "/tmp/" + download.getFilename() + ".zip"));
-                    long finishTime = System.currentTimeMillis();
-                    Log.i(AnkiDroidApp.TAG, "Finished in " + ((finishTime - startTime) / 1000) + " seconds!");
-                    Log.i(AnkiDroidApp.TAG, "Downloaded = " + download.getDownloaded());
-                } else if (download.getStatus() == Download.STATUS_CANCELLED) {
-                    // Cancelled download, clean up
-                    new File(mDestination + "/tmp/" + download.getFilename() + "." + download.getId()
-                            + ".shared.zip.tmp").delete();
-                    Log.i(AnkiDroidApp.TAG, "Download cancelled.");
-                }
-                publishProgress();
-                connection.disconnect();
-            } catch (Exception e) {
-                e.printStackTrace();
-                Log.i(AnkiDroidApp.TAG, "Exception Error = " + e.getMessage());
-                download.setStatus(Download.STATUS_ERROR);
-                publishProgress();
-            } finally {
-                // Close file
-                if (file != null) {
-                    try {
-                        file.close();
-                    } catch (Exception e) {
-                    }
-                }
-                // Close connection to server
-                if (is != null) {
-                    try {
-                        is.close();
-                    } catch (Exception e) {
-                    }
-                }
-            }
-
-            return download;
+//            return download;
+        	return null;
         }
 
 

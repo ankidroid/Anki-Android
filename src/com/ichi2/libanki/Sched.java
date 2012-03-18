@@ -84,12 +84,6 @@ public class Sched {
 	public static final int DYN_ADDED = 6;
 	public static final int DYN_DUE = 7;
 
-	// deck schema & syncing vars
-	public static final int SCHEMA_VERSION = 3;
-	public static final int SYNC_ZIP_SIZE = (int) (2.5 * 1024 * 1024);
-	public static final String SYNC_URL = "https://beta.ankiweb.net/sync/";
-	public static final int SYNC_VER = 1;
-
 	private static final String[] REV_ORDER_STRINGS = { "ivl DESC", "ivl" };
 	private static final int[] FACTOR_ADDITION_VALUES = { -150, 0, 150 };
 

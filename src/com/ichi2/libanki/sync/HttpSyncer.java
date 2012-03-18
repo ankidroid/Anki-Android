@@ -21,6 +21,7 @@ import android.util.Log;
 import com.byarger.exchangeit.EasySSLSocketFactory;
 import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.async.Connection;
+import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Utils;
 
 import org.apache.http.HttpEntity;
@@ -68,14 +69,6 @@ public class HttpSyncer {
     public volatile long bytesReceived=0;
     public volatile long mNextSendS = 1024;
     public volatile long mNextSendR = 1024;
-
-    /**
-     * Connection settings
-     */
-    public static final String SYNC_HOST = "beta.ankiweb.net";
-    // TODO: correct https-address
-    public static final String SYNC_URL = "http://" + SYNC_HOST + "/sync/"; // "http://219.108.60.108:6500/sync/";//kVq7dAnh
-    public static final int SYNC_VER = 0;
 
     /**
      * Synchronization.
@@ -142,7 +135,7 @@ public class HttpSyncer {
 	        }
 	        bos.close();
             // connection headers
-	        HttpPost httpPost = new HttpPost(SYNC_URL + method);
+	        HttpPost httpPost = new HttpPost(Collection.SYNC_URL + method);
 	        HttpEntity entity = new ProgressByteEntity(bos.toByteArray());
 
 	        // body
