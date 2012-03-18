@@ -721,7 +721,7 @@ public class Sched {
 		// move any siblings to the end?
 		try {
 			JSONObject conf = mCol.getDecks().confForDid(mNewDids.getFirst());
-			if (conf.getBoolean("dyn") || conf.getJSONObject("new").getBoolean("separate")) {
+			if (conf.getInt("dyn") != 0 || conf.getJSONObject("new").getBoolean("separate")) {
 				int n = mNewQueue.size();
 				while (!mNewQueue.isEmpty()
 						&& mNewQueue.getFirst()[1] == item[1]) {
@@ -820,7 +820,7 @@ public class Sched {
 	/* Limit for deck without parent limits. */
 	public int _deckNewLimitSingle(JSONObject g) {
 		try {
-			if (g.getBoolean("dyn")) {
+			if (g.getInt("dyn") != 0) {
 				return mReportLimit;
 			}
 			JSONObject c = mCol.getDecks().confForDid(g.getLong("id"));
@@ -1140,7 +1140,7 @@ public class Sched {
 
 	private int _deckRevLimitSingle(JSONObject d) {
 		try {
-			if (d.getBoolean("dyn")) {
+			if (d.getInt("dyn") != 0) {
 				return mReportLimit;
 			}
 			JSONObject c = mCol.getDecks().confForDid(d.getLong("id"));
@@ -1208,7 +1208,7 @@ public class Sched {
 				}
 				if (!mRevQueue.isEmpty()) {
 					try {
-						if (mCol.getDecks().get(did).getBoolean("dyn")) {
+						if (mCol.getDecks().get(did).getInt("dyn") != 0) {
 							// dynamic decks need due order preserved
 						} else {
 							Random r = new Random();
@@ -1426,9 +1426,13 @@ public class Sched {
 			did = mCol.getDecks().selected();
 		}
 		JSONObject deck = mCol.getDecks().get(did);
-		if (!deck.has("dyn")) {
-			Log.e(AnkiDroidApp.TAG, "error: deck is not a dynamic deck");
-			return;
+		try {
+			if (deck.getInt("dyn") == 0) {
+				Log.e(AnkiDroidApp.TAG, "error: deck is not a dynamic deck");
+				return;
+			}
+		} catch (JSONException e1) {
+			throw new RuntimeException(e1);
 		}
 		// move any existing cards back first
 		remDyn(did);
@@ -1612,7 +1616,7 @@ public class Sched {
 			dict.put("leechAction", oconf.getJSONObject("lapse").getInt("leechAction"));
 			// overrides
 			dict.put("delays", conf.getJSONArray("delays"));
-			dict.put("mult", conf.getInt("mult"));
+			dict.put("mult", conf.getInt("fmult"));
 			return dict;
 		} catch (JSONException e) {
 			throw new RuntimeException(e);

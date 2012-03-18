@@ -140,8 +140,8 @@ public class Card implements Cloneable {
 			mReps = cursor.getInt(11);
 			mLapses = cursor.getInt(12);
 			mLeft = cursor.getInt(13);
-			mODue = cursor.getInt(14);
-			mODid = cursor.getInt(15);
+			mODue = cursor.getLong(14);
+			mODid = cursor.getLong(15);
 			mFlags = cursor.getInt(16);
 			mData = cursor.getString(17);
 		} finally {
