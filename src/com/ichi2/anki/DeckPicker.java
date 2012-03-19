@@ -37,6 +37,9 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentTransaction;
 import android.text.SpannableStringBuilder;
 import android.text.style.StyleSpan;
 import android.text.style.UnderlineSpan;
@@ -54,6 +57,7 @@ import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 
@@ -85,7 +89,7 @@ import com.zeemote.zc.event.IButtonListener;
 import com.zeemote.zc.util.JoystickToButtonAdapter;
 
 
-public class DeckPicker extends Activity {
+public class DeckPicker extends FragmentActivity {
 
 	/**
 	 * Dialogs
@@ -229,6 +233,8 @@ public class DeckPicker extends Activity {
 	private EditText mDialogEditText;
 
 	int mStatisticType;
+
+	public boolean mFragmented;
 
 	boolean mCompletionBarRestrictToActive = false; // set this to true in order to calculate completion bar only for active cards
 
@@ -571,6 +577,7 @@ public class DeckPicker extends Activity {
 			updateDecksList(result.getDeckList(), -1, -1);
 			mDeckListView.setVisibility(View.VISIBLE);
 			mDeckListView.setAnimation(ViewAnimation.fade(ViewAnimation.FADE_IN, 500, 0));
+			// TODO: load last collection in fragment
 			loadCounts();
 		}
 
@@ -806,14 +813,19 @@ public class DeckPicker extends Activity {
 		}
 		preferences.edit().putLong("lastTimeOpened", System.currentTimeMillis()).commit();
 
-		if (intent != null && intent.hasExtra(EXTRA_DECK_ID)) {
-			openStudyOptions(intent.getLongExtra(EXTRA_DECK_ID, 1));
-		}
+//		if (intent != null && intent.hasExtra(EXTRA_DECK_ID)) {
+//			openStudyOptions(intent.getLongExtra(EXTRA_DECK_ID, 1));
+//		}
 
 		BroadcastMessages.checkForNewMessages(this);
 
 		View mainView = getLayoutInflater().inflate(R.layout.deck_picker, null);
 		setContentView(mainView);
+
+		// check, if tablet layout
+		View studyoptionsFrame = findViewById(R.id.studyoptions_fragment);
+		mFragmented = studyoptionsFrame != null && studyoptionsFrame.getVisibility() == View.VISIBLE;
+        
 		Themes.setContentStyle(mainView, Themes.CALLER_DECKPICKER);
 
 		registerExternalStorageListener();
@@ -1850,28 +1862,6 @@ public class DeckPicker extends Activity {
 		}
 	}
 
-
-	private void openStudyOptions() {
-		openStudyOptions(0);
-	}
-	private void openStudyOptions(long deckId) {
-		mDontSaveOnStop = true;
-		Intent intent = new Intent(this, StudyOptions.class);
-		if (deckId != 0) {
-			intent.putExtra(EXTRA_DECK_ID, deckId);
-		}
-		startActivityForResult(intent, SHOW_STUDYOPTIONS);
-		if (deckId != 0) {
-			if (UIUtils.getApiLevel() > 4) {
-    			ActivityTransitionAnimation.slide(this, ActivityTransitionAnimation.NONE);
-			}
-		} else {
-			if (UIUtils.getApiLevel() > 4) {
-    			ActivityTransitionAnimation.slide(this, ActivityTransitionAnimation.LEFT);
-			}			
-		}
-	}
-
     /**
      * Creates an intent to load a deck given the full pathname of it.
      * The constructed intent is equivalent (modulo the extras) to the open used by the launcher
@@ -2183,15 +2173,52 @@ public class DeckPicker extends Activity {
     }
 
 
+    private void openStudyOptions() {
+		openStudyOptions(-1, 0);
+	}
+	private void openStudyOptions(int id, long deckId) {
+		if (deckId != 0) {
+			mCol.getDecks().select(deckId);			
+		}
+        if (mFragmented) {
+//          getListView().setItemChecked(index, true);
+			StudyOptionsFragment details = (StudyOptionsFragment) getSupportFragmentManager().findFragmentById(R.id.studyoptions_fragment);
+			if (details == null || details.getShownIndex() != id) {
+				details = StudyOptionsFragment.newInstance(id);
+				FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+				ft.replace(R.id.studyoptions_fragment, details);
+				ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
+				ft.commit();
+			}
+        } else {
+    		mDontSaveOnStop = true;
+        	Intent intent = new Intent();
+        	intent.putExtra("index", id);
+        	intent.setClass(this, StudyOptionsActivity.class);
+    		if (deckId != 0) {
+    			intent.putExtra(EXTRA_DECK_ID, deckId);
+    		}
+    		startActivityForResult(intent, SHOW_STUDYOPTIONS);
+    		if (deckId != 0) {
+    			if (UIUtils.getApiLevel() > 4) {
+        			ActivityTransitionAnimation.slide(this, ActivityTransitionAnimation.NONE);
+    			}
+    		} else {
+    			if (UIUtils.getApiLevel() > 4) {
+        			ActivityTransitionAnimation.slide(this, ActivityTransitionAnimation.LEFT);
+    			}			
+    		}
+        }
+	}
+
+	
 	private void handleDeckSelection(int id) {
 		String deckFilename = null;
 
 		@SuppressWarnings("unchecked")
 		HashMap<String, String> data = (HashMap<String, String>) mDeckListAdapter.getItem(id);
-		mCol.getDecks().select(Long.parseLong(data.get("did")));
 		Log.i(AnkiDroidApp.TAG, "Selected " + deckFilename);
-
-		openStudyOptions();
+		openStudyOptions(id, Long.parseLong(data.get("did")));
 	}
 
 

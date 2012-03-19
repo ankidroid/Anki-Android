@@ -18,6 +18,7 @@ import com.ichi2.anki2.R;
 
 import android.app.Activity;
 import android.app.Dialog;
+import android.support.v4.app.Fragment;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -36,14 +37,17 @@ import android.util.Log;
 import android.view.GestureDetector;
 import android.view.GestureDetector.SimpleOnGestureListener;
 import android.view.KeyEvent;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.ViewTreeObserver.OnGlobalLayoutListener;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.ToggleButton;
 
@@ -69,10 +73,11 @@ import com.zeemote.zc.ui.android.ControllerAndroidUi;
 import com.zeemote.zc.util.JoystickToButtonAdapter;
 
 import java.io.IOException;
+import java.util.HashMap;
 
 import org.json.JSONException;
 
-public class StudyOptions extends Activity implements IButtonListener {
+public class StudyOptionsFragment extends Fragment implements IButtonListener {
 
 	/** Menus */
 	private static final int MENU_PREFERENCES = 1;
@@ -97,6 +102,8 @@ public class StudyOptions extends Activity implements IButtonListener {
 
 	private static final int DIALOG_STATISTIC_TYPE = 0;
 	private static final int DIALOG_CRAM = 1;
+
+	private HashMap<Integer, StyledDialog> mDialogs = new HashMap<Integer, StyledDialog>();
 
 	/** Zeemote messages */
 	private static final int MSG_ZEEMOTE_BUTTON_A = 0x110;
@@ -251,10 +258,10 @@ public class StudyOptions extends Activity implements IButtonListener {
 				// openStatistics(0);
 				return;
 			case R.id.studyoptions_options:
-				Intent i = new Intent(StudyOptions.this, DeckOptions.class);
+				Intent i = new Intent(getActivity(), DeckOptions.class);
 				startActivityForResult(i, DECK_OPTIONS);
 				if (UIUtils.getApiLevel() > 4) {
-					ActivityTransitionAnimation.slide(StudyOptions.this,
+					ActivityTransitionAnimation.slide(getActivity(),
 							ActivityTransitionAnimation.FADE);
 				}
 				return;
@@ -305,36 +312,68 @@ public class StudyOptions extends Activity implements IButtonListener {
 	};
 
 	protected void sendKey(int keycode) {
-		this.dispatchKeyEvent(new KeyEvent(KeyEvent.ACTION_DOWN, keycode));
-		this.dispatchKeyEvent(new KeyEvent(KeyEvent.ACTION_UP, keycode));
+//		this.dispatchKeyEvent(new KeyEvent(KeyEvent.ACTION_DOWN, keycode));
+//		this.dispatchKeyEvent(new KeyEvent(KeyEvent.ACTION_UP, keycode));
 		Log.d("Zeemote", "dispatched key " + keycode);
 	}
 
+    public static StudyOptionsFragment newInstance(int index) {
+    	StudyOptionsFragment f = new StudyOptionsFragment();
+
+        // Supply index input as an argument.
+        Bundle args = new Bundle();
+        args.putInt("index", index);
+        f.setArguments(args);
+
+        return f;
+    }
+
+    public int getShownIndex() {
+        return getArguments().getInt("index", 0);
+    }
+
 	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-		Themes.applyTheme(this);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        if (container == null) {
+            // Currently in a layout without a container, so no
+            // reason to create our view.
+            return null;
+        }
+
+//        ScrollView scroller = new ScrollView(getActivity());
+//        TextView text = new TextView(getActivity());
+//        int padding = (int)TypedValue.applyDimension(
+//                TypedValue.COMPLEX_UNIT_DIP,
+//                4, getActivity().getResources().getDisplayMetrics());
+//        text.setPadding(padding, padding, padding, padding);
+//        scroller.addView();
+        return createView(inflater, savedInstanceState);
+    }
+
+	protected View createView(LayoutInflater inflater, Bundle savedInstanceState) {
+//		Themes.applyTheme(this);
 		super.onCreate(savedInstanceState);
 
 		Log.i(AnkiDroidApp.TAG, "StudyOptions - OnCreate()");
 
 		restorePreferences();
 
-		registerExternalStorageListener();
+//		registerExternalStorageListener();
 
 		mCol = Collection.currentCollection();
 		if (mCol == null) {
 			reloadCollection(savedInstanceState);
-			return;
+			return null;
 		}
 
-		Intent intent = getIntent();
+		Intent intent = getActivity().getIntent();
 		if (intent != null && intent.hasExtra(DeckPicker.EXTRA_DECK_ID)) {
 			mCol.getDecks().select(intent.getLongExtra(DeckPicker.EXTRA_DECK_ID, 1));
 		}
 
 		// activeCramTags = new HashSet<String>();
 
-		initAllContentViews();
+		initAllContentViews(inflater);
 
 		if (mSwipeEnabled) {			
 			gestureDetector = new GestureDetector(new MyGestureDetector());
@@ -354,7 +393,7 @@ public class StudyOptions extends Activity implements IButtonListener {
 			mCompat = new CompatV3();
 		}
 
-		showContentView(CONTENT_STUDY_OPTIONS);
+		View view = showContentView(CONTENT_STUDY_OPTIONS);
 
 		// Zeemote controller initialization
 		if (mZeemoteEnabled) {
@@ -362,8 +401,8 @@ public class StudyOptions extends Activity implements IButtonListener {
 				AnkiDroidApp.setZeemoteController(new Controller(
 						Controller.CONTROLLER_1));
 			}
-			controllerUi = new ControllerAndroidUi(this,
-					AnkiDroidApp.zeemoteController());
+//			controllerUi = new ControllerAndroidUi(this,
+//					AnkiDroidApp.zeemoteController());
 			com.zeemote.util.Strings zstrings = com.zeemote.util.Strings
 					.getStrings();
 			if (zstrings.isLocaleAvailable(mLocale)) {
@@ -380,6 +419,7 @@ public class StudyOptions extends Activity implements IButtonListener {
 				}
 			}			
 		}
+		return view;
 	}
 
     @Override
@@ -397,7 +437,7 @@ public class StudyOptions extends Activity implements IButtonListener {
 		CharSequence eta = mTextETA.getText();
         super.onConfigurationChanged(newConfig);
         mDontSaveOnStop = false;
-		initAllContentViews();
+//		initAllContentViews();
 		showContentView(mCurrentContentView, false);
 		mTextDeckName.setText(title);
 		mTextDeckName.setVisibility(View.VISIBLE);
@@ -413,135 +453,135 @@ public class StudyOptions extends Activity implements IButtonListener {
 		updateStatisticBars();
     }
 
-	/**
-	 * Registers an intent to listen for ACTION_MEDIA_EJECT notifications. The
-	 * intent will call closeExternalStorageFiles() if the external media is
-	 * going to be ejected, so applications can clean up any files they have
-	 * open.
-	 */
-	public void registerExternalStorageListener() {
-		if (mUnmountReceiver == null) {
-			mUnmountReceiver = new BroadcastReceiver() {
-				@Override
-				public void onReceive(Context context, Intent intent) {
-					closeStudyOptions(DeckPicker.RESULT_MEDIA_EJECTED);
-				}
-			};
-			IntentFilter iFilter = new IntentFilter();
-			iFilter.addAction(Intent.ACTION_MEDIA_UNMOUNTED);
+//	/**
+//	 * Registers an intent to listen for ACTION_MEDIA_EJECT notifications. The
+//	 * intent will call closeExternalStorageFiles() if the external media is
+//	 * going to be ejected, so applications can clean up any files they have
+//	 * open.
+//	 */
+//	public void registerExternalStorageListener() {
+//		if (mUnmountReceiver == null) {
+//			mUnmountReceiver = new BroadcastReceiver() {
+//				@Override
+//				public void onReceive(Context context, Intent intent) {
+//					closeStudyOptions(DeckPicker.RESULT_MEDIA_EJECTED);
+//				}
+//			};
+//			IntentFilter iFilter = new IntentFilter();
+//			iFilter.addAction(Intent.ACTION_MEDIA_UNMOUNTED);
+//
+//			// ACTION_MEDIA_EJECT is never invoked (probably due to an android bug
+////			iFilter.addAction(Intent.ACTION_MEDIA_EJECT);
+//			iFilter.addDataScheme("file");
+//			registerReceiver(mUnmountReceiver, iFilter);
+//		}
+//	}
 
-			// ACTION_MEDIA_EJECT is never invoked (probably due to an android bug
-//			iFilter.addAction(Intent.ACTION_MEDIA_EJECT);
-			iFilter.addDataScheme("file");
-			registerReceiver(mUnmountReceiver, iFilter);
-		}
-	}
-
-	@Override
-	protected void onDestroy() {
-		super.onDestroy();
-		Log.i(AnkiDroidApp.TAG, "StudyOptions - onDestroy()");
-		if (mUnmountReceiver != null) {
-			unregisterReceiver(mUnmountReceiver);
-		}
-		// Disconnect Zeemote if connected
-		if (mZeemoteEnabled && (AnkiDroidApp.zeemoteController() != null)
-				&& (AnkiDroidApp.zeemoteController().isConnected())) {
-			try {
-				Log.d("Zeemote", "trying to disconnect in onDestroy...");
-				AnkiDroidApp.zeemoteController().disconnect();
-			} catch (IOException ex) {
-				Log.e("Zeemote",
-						"Error on zeemote disconnection in onDestroy: "
-								+ ex.getMessage());
-			}
-		}
-	}
-
-	@Override
-	protected void onPause() {
-		if (mZeemoteEnabled && (AnkiDroidApp.zeemoteController() != null)
-				&& (AnkiDroidApp.zeemoteController().isConnected())) {
-			Log.d(AnkiDroidApp.TAG, "Zeemote: Removing listener in onPause");
-			AnkiDroidApp.zeemoteController().removeButtonListener(this);
-			AnkiDroidApp.zeemoteController().removeJoystickListener(adapter);
-			adapter.removeButtonListener(this);
-			adapter = null;
-		}
-		super.onPause();
-	}
-
-	@Override
-	protected void onStop() {
-		super.onStop();
-		if (!isFinishing() && !mDontSaveOnStop) {
-			WidgetStatus.update(this);
-	        UIUtils.saveCollectionInBackground(mCol);			
-		}
-	}
-
-	@Override
-	protected void onResume() {
-		super.onResume();
-		if (mZeemoteEnabled && (AnkiDroidApp.zeemoteController() != null)
-				&& (AnkiDroidApp.zeemoteController().isConnected())) {
-			Log.d("Zeemote", "Adding listener in onResume");
-			AnkiDroidApp.zeemoteController().addButtonListener(this);
-			adapter = new JoystickToButtonAdapter();
-			AnkiDroidApp.zeemoteController().addJoystickListener(adapter);
-			adapter.addButtonListener(this);
-		}
-		if (mCol != null) {
-			if (Utils.now() > mCol.getSched().getDayCutoff()) {
-				updateValuesFromDeck(true);
-			}
-		}
-	}
-
-	@Override
-	public boolean onKeyDown(int keyCode, KeyEvent event) {
-		if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
-			Log.i(AnkiDroidApp.TAG, "StudyOptions - onBackPressed()");
-			if (mCurrentContentView == CONTENT_CONGRATS) {
-				finishCongrats();
-			} else {
-				closeStudyOptions();
-			}
-			return true;
-		}
-		return super.onKeyDown(keyCode, event);
-	}
-
+//	@Override
+//	protected void onDestroy() {
+//		super.onDestroy();
+//		Log.i(AnkiDroidApp.TAG, "StudyOptions - onDestroy()");
+//		if (mUnmountReceiver != null) {
+//			unregisterReceiver(mUnmountReceiver);
+//		}
+//		// Disconnect Zeemote if connected
+//		if (mZeemoteEnabled && (AnkiDroidApp.zeemoteController() != null)
+//				&& (AnkiDroidApp.zeemoteController().isConnected())) {
+//			try {
+//				Log.d("Zeemote", "trying to disconnect in onDestroy...");
+//				AnkiDroidApp.zeemoteController().disconnect();
+//			} catch (IOException ex) {
+//				Log.e("Zeemote",
+//						"Error on zeemote disconnection in onDestroy: "
+//								+ ex.getMessage());
+//			}
+//		}
+//	}
+//
+//	@Override
+//	protected void onPause() {
+//		if (mZeemoteEnabled && (AnkiDroidApp.zeemoteController() != null)
+//				&& (AnkiDroidApp.zeemoteController().isConnected())) {
+//			Log.d(AnkiDroidApp.TAG, "Zeemote: Removing listener in onPause");
+//			AnkiDroidApp.zeemoteController().removeButtonListener(this);
+//			AnkiDroidApp.zeemoteController().removeJoystickListener(adapter);
+//			adapter.removeButtonListener(this);
+//			adapter = null;
+//		}
+//		super.onPause();
+//	}
+//
+//	@Override
+//	protected void onStop() {
+//		super.onStop();
+//		if (!isFinishing() && !mDontSaveOnStop) {
+//			WidgetStatus.update(this);
+//	        UIUtils.saveCollectionInBackground(mCol);			
+//		}
+//	}
+//
+//	@Override
+//	protected void onResume() {
+//		super.onResume();
+//		if (mZeemoteEnabled && (AnkiDroidApp.zeemoteController() != null)
+//				&& (AnkiDroidApp.zeemoteController().isConnected())) {
+//			Log.d("Zeemote", "Adding listener in onResume");
+//			AnkiDroidApp.zeemoteController().addButtonListener(this);
+//			adapter = new JoystickToButtonAdapter();
+//			AnkiDroidApp.zeemoteController().addJoystickListener(adapter);
+//			adapter.addButtonListener(this);
+//		}
+//		if (mCol != null) {
+//			if (Utils.now() > mCol.getSched().getDayCutoff()) {
+//				updateValuesFromDeck(true);
+//			}
+//		}
+//	}
+//
+//	@Override
+//	public boolean onKeyDown(int keyCode, KeyEvent event) {
+//		if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
+//			Log.i(AnkiDroidApp.TAG, "StudyOptions - onBackPressed()");
+//			if (mCurrentContentView == CONTENT_CONGRATS) {
+//				finishCongrats();
+//			} else {
+//				closeStudyOptions();
+//			}
+//			return true;
+//		}
+//		return super.onKeyDown(keyCode, event);
+//	}
+//
 	private void closeStudyOptions() {
-		closeStudyOptions(RESULT_OK);
+		closeStudyOptions(getActivity().RESULT_OK);
 	}
 
 	private void closeStudyOptions(int result) {
-		mCompat.invalidateOptionsMenu(this);
-		setResult(result);
-		finish();
-		if (UIUtils.getApiLevel() > 4) {
-			ActivityTransitionAnimation.slide(this,
-					ActivityTransitionAnimation.RIGHT);
-		}
+//		mCompat.invalidateOptionsMenu(this);
+//		setResult(result);
+//		finish();
+//		if (UIUtils.getApiLevel() > 4) {
+//			ActivityTransitionAnimation.slide(getActivity(),
+//					ActivityTransitionAnimation.RIGHT);
+//		}
 	}
 
 	private void openReviewer() {
 		mDontSaveOnStop = true;
-		Intent reviewer = new Intent(StudyOptions.this, Reviewer.class);
+		Intent reviewer = new Intent(getActivity(), Reviewer.class);
 		startActivityForResult(reviewer, REQUEST_REVIEW);
 		if (UIUtils.getApiLevel() > 4) {
-			ActivityTransitionAnimation.slide(this,
+			ActivityTransitionAnimation.slide(getActivity(),
 					ActivityTransitionAnimation.LEFT);
 		}
 	}
 
 	private void addNote() {
-		Intent intent = new Intent(StudyOptions.this, CardEditor.class);
+		Intent intent = new Intent(getActivity(), CardEditor.class);
 		intent.putExtra(CardEditor.EXTRA_CALLER, CardEditor.CALLER_STUDYOPTIONS);
 		startActivityForResult(intent, ADD_NOTE);
 		if (UIUtils.getApiLevel() > 4) {
-			ActivityTransitionAnimation.slide(StudyOptions.this,
+			ActivityTransitionAnimation.slide(getActivity(),
 					ActivityTransitionAnimation.LEFT);
 		}
 	}
@@ -552,11 +592,11 @@ public class StudyOptions extends Activity implements IButtonListener {
 	// // mInReviewer = true;
 	// // deck.setupReviewEarlyScheduler();
 	// // deck.reset();
-	// // Intent reviewer = new Intent(StudyOptions.this, Reviewer.class);
+	// // Intent reviewer = new Intent(getActivity(), Reviewer.class);
 	// // reviewer.putExtra("deckFilename", mDeckFilename);
 	// // startActivityForResult(reviewer, REQUEST_REVIEW);
 	// // if (UIUtils.getApiLevel() > 4) {
-	// // ActivityTransitionAnimation.slide(this,
+	// // ActivityTransitionAnimation.slide(getActivity(),
 	// // ActivityTransitionAnimation.LEFT);
 	// // }
 	// // }
@@ -568,11 +608,11 @@ public class StudyOptions extends Activity implements IButtonListener {
 	// // mInReviewer = true;
 	// // deck.setupLearnMoreScheduler();
 	// // deck.reset();
-	// // Intent reviewer = new Intent(StudyOptions.this, Reviewer.class);
+	// // Intent reviewer = new Intent(getActivity(), Reviewer.class);
 	// // reviewer.putExtra("deckFilename", mDeckFilename);
 	// // startActivityForResult(reviewer, REQUEST_REVIEW);
 	// // if (UIUtils.getApiLevel() > 4) {
-	// // ActivityTransitionAnimation.slide(this,
+	// // ActivityTransitionAnimation.slide(getActivity(),
 	// // ActivityTransitionAnimation.LEFT);
 	// // }
 	// // }
@@ -593,7 +633,7 @@ public class StudyOptions extends Activity implements IButtonListener {
 				mCol = result.getCollection();
 				Collection.putCurrentCollection(mCol);
 				if (mCol == null) {
-					finish();
+//					finish();
 				} else {
 					onCreate(savedInstanceState);
 				}
@@ -601,10 +641,10 @@ public class StudyOptions extends Activity implements IButtonListener {
 
 			@Override
 			public void onPreExecute() {
-	            mProgressDialog = StyledProgressDialog.show(StudyOptions.this, "", getResources().getString(R.string.open_collection), true, true, new OnCancelListener() {
+	            mProgressDialog = StyledProgressDialog.show(getActivity(), "", getResources().getString(R.string.open_collection), true, true, new OnCancelListener() {
 					@Override
 					public void onCancel(DialogInterface arg0) {
-						finish();
+//						finish();
 					}
 				});
 			}
@@ -612,11 +652,11 @@ public class StudyOptions extends Activity implements IButtonListener {
 			@Override
 			public void onProgressUpdate(DeckTask.TaskData... values) {
 			}
-	    }, new DeckTask.TaskData(PrefSettings.getSharedPrefs(getBaseContext()).getString("deckPath", AnkiDroidApp.getDefaultAnkiDroidDirectory()) + AnkiDroidApp.COLLECTION_PATH));
+	    }, new DeckTask.TaskData(PrefSettings.getSharedPrefs(getActivity().getBaseContext()).getString("deckPath", AnkiDroidApp.getDefaultAnkiDroidDirectory()) + AnkiDroidApp.COLLECTION_PATH));
 	}
 
-	private void initAllContentViews() {
-		mStudyOptionsView = getLayoutInflater().inflate(R.layout.studyoptions,
+	private void initAllContentViews(LayoutInflater inflater) {
+		mStudyOptionsView = inflater.inflate(R.layout.studyoptions,
 				null);
 		Themes.setContentStyle(mStudyOptionsView, Themes.CALLER_STUDYOPTIONS);
 		mTextDeckName = (TextView) mStudyOptionsView
@@ -673,7 +713,7 @@ public class StudyOptions extends Activity implements IButtonListener {
 		mDeckOptions.setOnClickListener(mButtonClickListener);
 
 		// The view that shows the congratulations view.
-		mCongratsView = getLayoutInflater().inflate(
+		mCongratsView = inflater.inflate(
 				R.layout.studyoptions_congrats, null);
 
 		Themes.setWallpaper(mCongratsView);
@@ -698,17 +738,23 @@ public class StudyOptions extends Activity implements IButtonListener {
 		mButtonCongratsFinish.setOnClickListener(mButtonClickListener);
 	}
 
+	private void showDialog(int id) {
+		if (!mDialogs.containsKey(id)) {
+			mDialogs.put(id, onCreateDialog(id));
+		}
+		onPrepareDialog(id, mDialogs.get(id));
+		mDialogs.get(id).show();
+	}
 
-	@Override
-	protected Dialog onCreateDialog(int id) {
+	protected StyledDialog onCreateDialog(int id) {
 		StyledDialog dialog = null;
 		Resources res = getResources();
-		StyledDialog.Builder builder = new StyledDialog.Builder(this);
+		StyledDialog.Builder builder = new StyledDialog.Builder(getActivity());
 
 		switch (id) {
 
 		case DIALOG_STATISTIC_TYPE:
-			dialog = ChartBuilder.getStatisticsDialog(this, new DialogInterface.OnClickListener() {
+			dialog = ChartBuilder.getStatisticsDialog(getActivity(), new DialogInterface.OnClickListener() {
 				@Override
 				public void onClick(DialogInterface dialog, int which) {
 					DeckTask.launchDeckTask(DeckTask.TASK_TYPE_LOAD_STATISTICS, mLoadStatisticsHandler, new DeckTask.TaskData(mCol, which, false));
@@ -758,12 +804,12 @@ public class StudyOptions extends Activity implements IButtonListener {
 			dialog = null;
 		}
 
-		dialog.setOwnerActivity(StudyOptions.this);
+		dialog.setOwnerActivity(getActivity());
 		return dialog;
 	}
 
-	@Override
-	protected void onPrepareDialog(int id, Dialog dialog) {
+
+	protected void onPrepareDialog(int id, StyledDialog dialog) {
 		StyledDialog ad = (StyledDialog) dialog;
 
 		// wait for deck loading thread (to avoid problems with resuming
@@ -777,7 +823,7 @@ public class StudyOptions extends Activity implements IButtonListener {
 		case DIALOG_CRAM:
 			// allCramTags = DeckManager.getMainDeck().allTags_();
 			// if (allCramTags == null) {
-			// Themes.showThemedToast(StudyOptions.this,
+			// Themes.showThemedToast(getActivity(),
 			// getResources().getString(R.string.error_insufficient_memory),
 			// false);
 			// ad.setEnabled(false);
@@ -802,10 +848,10 @@ public class StudyOptions extends Activity implements IButtonListener {
 		}
 	}
 
-	private void showContentView(int which) {
-		showContentView(which, true);
+	private View showContentView(int which) {
+		return showContentView(which, true);
 	}
-	private void showContentView(int which, boolean reload) {
+	private View showContentView(int which, boolean reload) {
 		mCurrentContentView = which;
 
 		switch (mCurrentContentView) {
@@ -818,11 +864,11 @@ public class StudyOptions extends Activity implements IButtonListener {
 			// mToggleCram.setChecked(false);
 			// mToggleLimit.setEnabled(true);
 			// }
-			setContentView(mStudyOptionsView);
+//			setContentView(mStudyOptionsView);
 			if (reload) {
 				resetAndUpdateValuesFromDeck();				
 			}
-			break;
+			return mStudyOptionsView;
 
 		case CONTENT_CONGRATS:
 			// TODO: mTextCongratsMessage.setText(getCongratsMessage(this)
@@ -840,13 +886,13 @@ public class StudyOptions extends Activity implements IButtonListener {
 			// res.getQuantityString(R.plurals.studyoptions_congrats_eta, eta,
 			// eta);
 			// }
-		 	mTextCongratsMessage.setText(mCol.getSched().finishedMsg(this));
+		 	mTextCongratsMessage.setText(mCol.getSched().finishedMsg(getActivity()));
 			if (reload) {
 				updateValuesFromDeck();
 			}
-			setContentView(mCongratsView);
-			break;
+			return mCongratsView;
 		}
+		return null;
 	}
 
 	private void resetAndUpdateValuesFromDeck() {
@@ -878,7 +924,7 @@ public class StudyOptions extends Activity implements IButtonListener {
 			nameBuilder.append("\n").append(name[name.length - 1]);
 		}
 		mTextDeckName.setText(nameBuilder.toString());
-		setTitle(fullName);
+		getActivity().setTitle(fullName);
 		String desc = mCol.getDecks().getActualDescription();
 		if (desc.length() > 0) {
 			mTextDeckDescription.setText(desc);
@@ -931,19 +977,19 @@ public class StudyOptions extends Activity implements IButtonListener {
 	// // mToggleLimit.setEnabled(true);
 	// }
 
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		UIUtils.addMenuItem(menu, Menu.NONE, MENU_PREFERENCES, Menu.NONE,
-				R.string.menu_preferences, R.drawable.ic_menu_preferences);
-		UIUtils.addMenuItem(menu, Menu.NONE, MENU_ROTATE, Menu.NONE,
-				R.string.menu_rotate,
-				android.R.drawable.ic_menu_always_landscape_portrait);
-		if (mZeemoteEnabled) {
-			UIUtils.addMenuItem(menu, Menu.NONE, MENU_ZEEMOTE, Menu.NONE,
-					R.string.menu_zeemote, R.drawable.ic_menu_zeemote);			
-		}
-		return true;
-	}
+//	@Override
+//	public boolean onCreateOptionsMenu(Menu menu) {
+//		UIUtils.addMenuItem(menu, Menu.NONE, MENU_PREFERENCES, Menu.NONE,
+//				R.string.menu_preferences, R.drawable.ic_menu_preferences);
+//		UIUtils.addMenuItem(menu, Menu.NONE, MENU_ROTATE, Menu.NONE,
+//				R.string.menu_rotate,
+//				android.R.drawable.ic_menu_always_landscape_portrait);
+//		if (mZeemoteEnabled) {
+//			UIUtils.addMenuItem(menu, Menu.NONE, MENU_ZEEMOTE, Menu.NONE,
+//					R.string.menu_zeemote, R.drawable.ic_menu_zeemote);			
+//		}
+//		return true;
+//	}
 
 	/** Handles item selections */
 	@Override
@@ -954,19 +1000,19 @@ public class StudyOptions extends Activity implements IButtonListener {
 			return true;
 
 		case MENU_PREFERENCES:
-			startActivityForResult(new Intent(StudyOptions.this,
+			startActivityForResult(new Intent(getActivity(),
 					Preferences.class), PREFERENCES_UPDATE);
 			if (UIUtils.getApiLevel() > 4) {
-				ActivityTransitionAnimation.slide(this,
+				ActivityTransitionAnimation.slide(getActivity(),
 						ActivityTransitionAnimation.FADE);
 			}
 			return true;
 
 		case MENU_ROTATE:
 			if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
-				setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+				getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
 			} else {
-				setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+				getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 			}
 			return true;
 
@@ -996,17 +1042,17 @@ public class StudyOptions extends Activity implements IButtonListener {
 
 	private void openCardBrowser() {
 		mDontSaveOnStop = true;
-		Intent cardBrowser = new Intent(StudyOptions.this, CardBrowser.class);
+		Intent cardBrowser = new Intent(getActivity(), CardBrowser.class);
 		startActivityForResult(cardBrowser, BROWSE_CARDS);
 		if (UIUtils.getApiLevel() > 4) {
-			ActivityTransitionAnimation.slide(StudyOptions.this,
+			ActivityTransitionAnimation.slide(getActivity(),
 					ActivityTransitionAnimation.LEFT);
 		}
 	}
 
 
 	@Override
-	protected void onActivityResult(int requestCode, int resultCode,
+	public void onActivityResult(int requestCode, int resultCode,
 			Intent intent) {
 		super.onActivityResult(requestCode, resultCode, intent);
 		Log.i(AnkiDroidApp.TAG, "StudyOptions: onActivityResult");
@@ -1025,7 +1071,7 @@ public class StudyOptions extends Activity implements IButtonListener {
 			closeStudyOptions(DeckPicker.RESULT_MEDIA_EJECTED);
 		} else if (requestCode == DECK_OPTIONS) {
 			resetAndUpdateValuesFromDeck();
-		} else if (requestCode == ADD_NOTE && resultCode != RESULT_CANCELED) {
+		} else if (requestCode == ADD_NOTE && resultCode != getActivity().RESULT_CANCELED) {
 			resetAndUpdateValuesFromDeck();
 		} else if (requestCode == PREFERENCES_UPDATE) {
 			restorePreferences();
@@ -1044,7 +1090,7 @@ public class StudyOptions extends Activity implements IButtonListener {
 				break;
 			}
 			mDontSaveOnStop = false;
-		} else if (requestCode == BROWSE_CARDS && resultCode == RESULT_OK) {
+		} else if (requestCode == BROWSE_CARDS && resultCode == getActivity().RESULT_OK) {
 			mDontSaveOnStop = false;
 			resetAndUpdateValuesFromDeck();
 		} else if (requestCode == STATISTICS && mCurrentContentView == CONTENT_CONGRATS) {
@@ -1054,7 +1100,7 @@ public class StudyOptions extends Activity implements IButtonListener {
 
 	private void savePreferences(String name, boolean value) {
 		SharedPreferences preferences = PrefSettings
-				.getSharedPrefs(getBaseContext());
+				.getSharedPrefs(getActivity().getBaseContext());
 		Editor editor = preferences.edit();
 		editor.putBoolean(name, value);
 		editor.commit();
@@ -1062,7 +1108,7 @@ public class StudyOptions extends Activity implements IButtonListener {
 
 	private SharedPreferences restorePreferences() {
 		SharedPreferences preferences = PrefSettings
-				.getSharedPrefs(getBaseContext());
+				.getSharedPrefs(getActivity().getBaseContext());
 
 		mSwipeEnabled = preferences.getBoolean("swipe", false);
 		mInvertedColors = preferences.getBoolean("invertedColors", false);
@@ -1130,12 +1176,12 @@ public class StudyOptions extends Activity implements IButtonListener {
 			}
 			if (result.getBoolean()) {
 //				if (mStatisticType == Statistics.TYPE_DECK_SUMMARY) {
-//					Statistics.showDeckSummary(StudyOptions.this);
+//					Statistics.showDeckSummary(getActivity());
 //				} else {
-					Intent intent = new Intent(StudyOptions.this, com.ichi2.charts.ChartBuilder.class);
+					Intent intent = new Intent(getActivity(), com.ichi2.charts.ChartBuilder.class);
 					startActivityForResult(intent, STATISTICS);
 					if (UIUtils.getApiLevel() > 4) {
-						ActivityTransitionAnimation.slide(StudyOptions.this, ActivityTransitionAnimation.DOWN);
+						ActivityTransitionAnimation.slide(getActivity(), ActivityTransitionAnimation.DOWN);
 					}
 //				}
 			} else {
@@ -1145,7 +1191,7 @@ public class StudyOptions extends Activity implements IButtonListener {
 
 		@Override
 		public void onPreExecute() {
-			mProgressDialog = StyledProgressDialog.show(StudyOptions.this, "",
+			mProgressDialog = StyledProgressDialog.show(getActivity(), "",
 					getResources().getString(R.string.calculating_statistics),
 					true);
 		}
@@ -1194,13 +1240,13 @@ public class StudyOptions extends Activity implements IButtonListener {
 		}
 	}
 
-	@Override
-	public boolean onTouchEvent(MotionEvent event) {
-		if (mSwipeEnabled && gestureDetector.onTouchEvent(event))
-			return true;
-		else
-			return false;
-	}
+//	@Override
+//	public boolean onTouchEvent(MotionEvent event) {
+//		if (mSwipeEnabled && gestureDetector.onTouchEvent(event))
+//			return true;
+//		else
+//			return false;
+//	}
 
 	@Override
 	public void buttonPressed(ButtonEvent arg0) {

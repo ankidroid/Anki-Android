@@ -35,7 +35,7 @@ import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.Download;
 import com.ichi2.anki2.R;
 import com.ichi2.anki.SharedDeckDownload;
-import com.ichi2.anki.StudyOptions;
+import com.ichi2.anki.StudyOptionsFragment;
 import com.ichi2.async.Connection;
 import com.ichi2.async.DeckTask;
 import com.ichi2.async.Connection.Payload;

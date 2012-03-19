@@ -45,7 +45,7 @@
 				<data android:mimeType="application/vnd.anki" />
 			</intent-filter>
 		</activity>
-		<activity android:name="com.ichi2.anki.StudyOptions" 
+		<activity android:name="com.ichi2.anki.StudyOptionsActivity" 
 			android:label="StudyOptions"
 			android:configChanges="keyboardHidden|locale|orientation"/>
 		<activity android:name="com.ichi2.anki.CardBrowser" 
