@@ -827,6 +827,9 @@ public class DeckPicker extends FragmentActivity {
 		mFragmented = studyoptionsFrame != null && studyoptionsFrame.getVisibility() == View.VISIBLE;
         
 		Themes.setContentStyle(mainView, Themes.CALLER_DECKPICKER);
+		if (mFragmented) {
+			mainView.setBackgroundResource(R.drawable.white_wallpaper_deckpicker_fragments);
+		}
 
 		registerExternalStorageListener();
 

@@ -7,7 +7,7 @@
 	android:background="#ff0000"
 	android:id="@+id/deckpicker_view">
 
-    	<RelativeLayout
+   	<RelativeLayout
 		android:layout_width="0dip"
 		android:layout_weight="1"
 		android:layout_height="fill_parent"
