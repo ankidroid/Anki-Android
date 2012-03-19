@@ -942,8 +942,11 @@ public class Sched {
 			} else {
 				card.setLeft(_startingLeft(card));
 				if (card.getODid() != 0) {
-					Log.e(AnkiDroidApp.TAG, "fixme: configurable failure handling");
-					card.setIvl(1);
+					try {
+						card.setIvl(Math.max(1, card.getIvl() * conf.getInt("mult")));
+					} catch (JSONException e) {
+						throw new RuntimeException(e);
+					}
 					card.setODue(mToday + 1);
 				}
 			}

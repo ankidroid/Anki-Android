@@ -504,7 +504,7 @@ public class Decks {
 	 * ************************************
 	 */
 
-	/* The currrently active dids. */
+	/* The currrently active dids. MAke sure to copy before modifying */
 	public LinkedList<Long> active() {
 		try {
 			String actv = mCol.getConf().getString("activeDecks");
