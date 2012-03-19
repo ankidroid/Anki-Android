@@ -30,6 +30,8 @@ import android.content.SharedPreferences.Editor;
 import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
 import android.content.res.Resources;
+import android.graphics.Color;
+import android.graphics.Paint.Align;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -43,6 +45,7 @@ import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewGroup.LayoutParams;
 import android.view.ViewTreeObserver.OnGlobalLayoutListener;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -75,6 +78,13 @@ import com.zeemote.zc.util.JoystickToButtonAdapter;
 import java.io.IOException;
 import java.util.HashMap;
 
+import org.achartengine.ChartFactory;
+import org.achartengine.GraphicalView;
+import org.achartengine.chart.BarChart;
+import org.achartengine.model.XYMultipleSeriesDataset;
+import org.achartengine.model.XYSeries;
+import org.achartengine.renderer.XYMultipleSeriesRenderer;
+import org.achartengine.renderer.XYSeriesRenderer;
 import org.json.JSONException;
 
 public class StudyOptionsFragment extends Fragment implements IButtonListener {
@@ -158,6 +168,7 @@ public class StudyOptionsFragment extends Fragment implements IButtonListener {
 	private TextView mTextNewTotal;
 	private TextView mTextTotal;
 	private TextView mTextETA;
+	private LinearLayout mSmallChart;
 	private LinearLayout mDeckCounts;
 	private ImageButton mAddNote;
 	private ImageButton mCardBrowser;
@@ -698,6 +709,8 @@ public class StudyOptionsFragment extends Fragment implements IButtonListener {
 				.findViewById(R.id.studyoptions_total);
 		mTextETA = (TextView) mStudyOptionsView
 				.findViewById(R.id.studyoptions_eta);
+		mSmallChart = (LinearLayout) mStudyOptionsView
+				.findViewById(R.id.studyoptions_mall_chart);
 
 		mGlobalMatBar.setVisibility(View.INVISIBLE);
 		mGlobalBar.setVisibility(View.INVISIBLE);
@@ -956,6 +969,54 @@ public class StudyOptionsFragment extends Fragment implements IButtonListener {
 		});
 	}
 
+	private void updateChart() {
+		if (mSmallChart != null) {
+			Resources res = getResources();
+		    XYMultipleSeriesDataset dataset = new XYMultipleSeriesDataset();
+		    XYMultipleSeriesRenderer renderer = new XYMultipleSeriesRenderer();
+		    XYSeriesRenderer r = new XYSeriesRenderer();
+            r.setColor(res.getColor(R.color.stats_young));
+            renderer.addSeriesRenderer(r);
+		    r = new XYSeriesRenderer();
+            r.setColor(res.getColor(R.color.stats_mature));
+            renderer.addSeriesRenderer(r);
+
+            // TODO: move this into async task
+			double[][] serieslist = Stats.getSmallDueStats(mCol);
+
+			for (int i = 1; i < serieslist.length; i++) {
+				XYSeries series = new XYSeries("");
+	        	for (int j = 0; j < serieslist[i].length; j++) {
+	        		series.add(serieslist[0][j], serieslist[i][j]);
+	        	}
+	        	dataset.addSeries(series);				
+			}
+			renderer.setBarSpacing(0.4);
+			renderer.setShowLegend(false);
+			renderer.setLabelsTextSize(13);
+			renderer.setXAxisMin(-0.5);
+			renderer.setXAxisMax(7.5);
+			renderer.setYAxisMin(0);
+			renderer.setGridColor(Color.LTGRAY);
+			renderer.setShowGrid(true);
+			renderer.setBackgroundColor(Color.WHITE);
+            renderer.setMarginsColor(Color.WHITE);
+			renderer.setAxesColor(Color.BLACK);
+			renderer.setLabelsColor(Color.BLACK);
+			renderer.setYLabelsColor(0, Color.BLACK);
+			renderer.setYLabelsAngle(-90);
+			renderer.setXLabelsColor(Color.BLACK);
+			renderer.setXLabelsAlign(Align.CENTER);
+			renderer.setYLabelsAlign(Align.CENTER);
+			renderer.setZoomEnabled(false, false);
+//            mRenderer.setMargins(new int[] { 15, 48, 30, 10 });
+			renderer.setAntialiasing(true);
+			renderer.setPanEnabled(true, false);
+			GraphicalView chartView = ChartFactory.getBarChartView(getActivity(), dataset, renderer, BarChart.Type.STACKED);
+            mSmallChart.addView(chartView, new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT));
+		}
+	}
+
 	// /**
 	// * Enter cramming mode. Currently not supporting cramming from selection
 	// of
@@ -1136,6 +1197,7 @@ public class StudyOptionsFragment extends Fragment implements IButtonListener {
 			int eta = (Integer) obj[7];
 
 			updateStatisticBars();
+			updateChart();
 
 			mTextTodayNew.setText(String.valueOf(newCards));
 			mTextTodayLrn.setText(String.valueOf(lrnCards));

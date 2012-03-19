@@ -152,6 +152,25 @@
    			</TableRow>
 			</TableLayout>
 			</LinearLayout>
+							<LinearLayout
+				    android:orientation="horizontal"
+					android:layout_width="fill_parent" 
+					android:layout_height="wrap_content" >
+				<LinearLayout
+					android:layout_weight="1"
+					android:layout_width="0dip" 
+					android:layout_height="wrap_content" />
+				<LinearLayout
+					android:id="@+id/studyoptions_mall_chart"
+					android:layout_weight="2"
+					android:layout_width="0dip" 
+					android:layout_height="200dip" />
+								<LinearLayout
+					android:layout_weight="1"
+					android:layout_width="0dip" 
+					android:layout_height="wrap_content" />
+												</LinearLayout>
+	    	
 		</LinearLayout>
 		<LinearLayout android:id="@+id/studyoptions_bottom_buttons" 
     		android:layout_alignParentBottom="true"
