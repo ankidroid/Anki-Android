@@ -23,8 +23,8 @@
   <string-array name="new_version_features">
     <item>complete revision</item>
     <item>libanki2.0 scheduling</item>
-    <item>new learning mode</item>
-    <item>new layout</item>
+    <item>新しい学習モード</item>
+    <item>新しいレイアウト</item>
     <item>merge syncing possible now</item>
     <item>better statistics</item>
     <item>decks are now saved in a single collection</item>

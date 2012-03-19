@@ -22,7 +22,7 @@
 <resources>
   <string name="CardEditorCancelButton">Avbryt</string>
   <string name="CardEditorSaveButton">Spara</string>
-  <string name="CardEditorLaterButton">Later</string>
+  <string name="CardEditorLaterButton">Senare</string>
   <string name="CardEditorCardDeck">Card deck: %s</string>
   <string name="CardEditorNoteDeck">Note deck: %s</string>
   <string name="CardEditorModel">Note type: %s</string>
@@ -40,13 +40,13 @@
   <string name="leech_suspend_notification">Markerat som utsugarkort och åsidosatt</string>
   <string name="leech_notification">Markerat som utsugarkort</string>
   <string name="about_title">Om</string>
-  <string name="cardeditor_title_add_note">Add Note</string>
-  <string name="cardeditor_title_edit_card">Edit Note</string>
+  <string name="cardeditor_title_add_note">Lägg till anteckning</string>
+  <string name="cardeditor_title_edit_card">Redigera anteckning</string>
   <string name="factadder_saving_error">Error saving note</string>
-  <string name="cardeditor_move_note_too">Move note too</string>
+  <string name="cardeditor_move_note_too">Flytta även anteckning</string>
   <string name="cardeditor_move_to_notes_deck">To note\'s deck</string>
-  <string name="saving_facts">Saving note</string>
-  <string name="deck">Deck</string>
+  <string name="saving_facts">Sparar anteckning</string>
+  <string name="deck">Kortlek</string>
   <string name="add">Lägg till</string>
   <string name="close">Stäng</string>
   <string name="select">Välj</string>
@@ -58,7 +58,7 @@
   <string name="fact_adder_swap">Byt riktning</string>
   <string name="deckpicker_select_dictionary_title">Välj ordlista</string>
   <string name="deckpicker_select_dictionary_default">Standard</string>
-  <string name="card_editor_add_card">Add note</string>
+  <string name="card_editor_add_card">Lägg till anteckning</string>
   <string name="card_editor_reset">Återställ</string>
   <string name="card_editor_copy_card">Kopiera kort</string>
   <string name="card_editor_reset_card">Återställ framsteg</string>
@@ -71,10 +71,10 @@
   <string name="help_online">Onlinehjälp</string>
   <string name="help_faq">FAQ</string>
   <string name="help_tutorial">Övningskortlek</string>
-  <string name="check_db">Check database</string>
-  <string name="check_db_message">Checking database.\nPlease wait...</string>
+  <string name="check_db">Kontrollera databas</string>
+  <string name="check_db_message">Kontrollerar databasen. \nVänligen vänta...</string>
   <string name="simple_interface_hint">Tom %s. Tänk på att det enkla gränssnittet inte kan visa bilder/ljud m.m.</string>
-  <string name="delete_deck">Deleting deck...\nPlease wait.</string>
+  <string name="delete_deck">Tar bort kortlek...\nVänligen vänta.</string>
   <plurals name="factadder_cards_added">
     <item quantity="one">1 kort har lagts till</item>
     <item quantity="other">%d kort har lagts till</item>

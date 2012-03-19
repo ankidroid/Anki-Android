@@ -210,14 +210,14 @@
   <string name="deck_conf_deck_name">Deck name</string>
   <string name="deck_conf_deck_description">Deck description</string>
   <string name="deck_conf_conf_set">Configuration set</string>
-  <string name="deck_conf_pref_cat_options">Options</string>
+  <string name="deck_conf_pref_cat_options">オプション</string>
   <string name="deck_conf_new_cards">New cards</string>
   <string name="deck_conf_rev_cards">Reviews</string>
   <string name="deck_conf_lps_cards">Lapses</string>
   <string name="deck_conf_other">Other</string>
   <string name="deck_conf_add_conf">Add/delete configurations</string>
   <string name="deck_conf_steps">Steps (in minutes)</string>
-  <string name="deck_conf_order">Order</string>
+  <string name="deck_conf_order">順序</string>
   <string name="deck_conf_new_cards_day">New cards/day</string>
   <string name="deck_conf_graduating_ivl">Graduating interval</string>
   <string name="deck_conf_days">XXX day(s)</string>

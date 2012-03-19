@@ -70,14 +70,14 @@
   </string-array>
   <string-array name="gestures_labels">
     <item>Ingen åtgärd</item>
-    <item>Show answer</item>
-    <item>Answer button 1</item>
-    <item>Answer button 2</item>
-    <item>Answer button 3</item>
-    <item>Answer button 4</item>
-    <item>Answer recommended (green)</item>
-    <item>Answer better than recommended</item>
-    <item>Undo</item>
+    <item>Visa svar</item>
+    <item>Svarsknapp 1</item>
+    <item>Svarsknapp 2</item>
+    <item>Svarsknapp 3</item>
+    <item>Svarsknapp 4</item>
+    <item>Svara rekommenderat (grön)</item>
+    <item>Svara bättre än rekommenderat</item>
+    <item>Ångra</item>
     <item>Redigera kort</item>
     <item>Markera kort</item>
     <item>Sök på uttryck</item>
@@ -85,8 +85,8 @@
     <item>Åsidosätt kort</item>
     <item>Radera kort</item>
     <item>Rensa Whiteboard</item>
-    <item>Play media</item>
-    <item>Abort learning</item>
+    <item>Spela upp media</item>
+    <item>Avbryt inlärning</item>
   </string-array>
   <string-array name="theme_labels">
     <item>Android Mörk</item>
@@ -95,13 +95,13 @@
     <item>Vit</item>
   </string-array>
   <string-array name="leech_action_labels">
-    <item>Suspend card</item>
+    <item>Åsidosätt kort</item>
     <item>Tag only</item>
     <item>Reset as new</item>
   </string-array>
   <string-array name="new_order_labels">
-    <item>New cards in random order</item>
-    <item>New cards in order added</item>
+    <item>Nya kort i slumpmässig ordning</item>
+    <item>Nya kort i ordningen de lades till</item>
   </string-array>
   <string-array name="rev_order_labels">
     <item>Sort by due date</item>

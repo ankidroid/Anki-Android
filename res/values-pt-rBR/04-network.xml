@@ -43,7 +43,7 @@
   <string name="resume_download">Resumo do download</string>
   <string name="pause_download">Pausar Download</string>
   <string name="duplicate_download">Este deck já está sendo baixado</string>
-  <string name="menu_get_shared_decks">Get shared decks</string>
+  <string name="menu_get_shared_decks">Obter decks compartilhados</string>
   <string name="download_button_return">Return</string>
   <string name="connection_error_message">Ocorreu um erro de rede.</string>
   <string name="sync_log_db_error">Ocorreu um erro de banco de dados.</string>
@@ -51,7 +51,7 @@
   <string name="username">Nome de usuário</string>
   <string name="password">Senha</string>
   <string name="log_in">Logar</string>
-  <string name="sign_up_description">Don\'t have an AnkiWeb account? It\'s free!</string>
+  <string name="sign_up_description">Não tem uma conta AnkiWeb? É grátis!</string>
   <string name="sign_up">Inscreva se</string>
   <string name="logged_as">Logado como</string>
   <string name="log_out">Sair</string>
@@ -74,7 +74,7 @@
   <string name="sync_uploading_message">Fazendo upload...</string>
   <string name="sync_downloading_message">Baixando...</string>
   <string name="sync_reload_message">Reloading collection...</string>
-  <string name="sync_title">Synchronization</string>
+  <string name="sync_title">Sincronização</string>
   <string name="sync_downloading_media">Baixando mídia %1$d/%2$d...</string>
   <string name="sync_log_uploading_message">Sincronização completa do local</string>
   <string name="sync_log_downloading_message">Sincronização completa do servidor</string>
@@ -93,13 +93,13 @@
   <string name="sync_write_access_error">The downloaded file could not be saved to the sd card. Either your sd card is mounted read-only or there is not enough space.</string>
   <string name="sync_deletions_message">Syncing deletions...</string>
   <string name="sync_small_objects_message">Syncing small objects...</string>
-  <string name="sync_finish_message">Finishing syncing...</string>
+  <string name="sync_finish_message">Finalizando sincronização...</string>
   <string name="sync_log_finish_error">Erro ao enviar a conclusão de direção ao servidor</string>
-  <string name="sync_writing_db">Writing changes into database...</string>
-  <string name="sync_download_chunk">Downloading changes...</string>
+  <string name="sync_writing_db">Gravando alterações no banco de dados...</string>
+  <string name="sync_download_chunk">Baixando alterações...</string>
   <string name="sync_upload_chunk">Uploading changes...</string>
   <string name="sync_up_down_size">Up: %1$d kb, Down: %2$d kb</string>
-  <string name="sync_generic_error">An error has occurred. Please try again later.</string>
+  <string name="sync_generic_error">Ocorreu um erro. Por favor, tente novamente mais tarde.</string>
   <string name="sync_check_upload_file">Checking file before upload...</string>
   <string name="sync_check_download_file">Checking downloaded file...</string>
 </resources>

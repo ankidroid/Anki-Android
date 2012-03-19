@@ -25,18 +25,18 @@
   <string name="statistics_relearn">Relearn</string>
   <string name="statistics_learn">Learn</string>
   <string name="statistics_cram">Cram</string>
-  <string name="statistics_type_title">Statistics</string>
-  <string name="stats_cards">Cards</string>
-  <string name="stats_answers">Answers</string>
+  <string name="statistics_type_title">Estatísticas</string>
+  <string name="stats_cards">Cartões</string>
+  <string name="stats_answers">Respostas</string>
   <string name="stats_minutes">Minutes</string>
-  <string name="stats_hours">Hours</string>
+  <string name="stats_hours">Horas</string>
   <string name="statistics_period_x_axis_minutes">Minutos</string>
   <string name="statistics_new_cards">Novos cartões</string>
   <string name="statistics_failed_cards">Cartões falhados</string>
   <string name="statistics_fullscreen">Usar Tela Inteira</string>
   <string name="calculating_statistics">Calculating statistics.\nPlease wait...</string>
   <string name="deck_summary_cards">Número de cartões:</string>
-  <string name="deck_summary_notes">Number of notes:</string>
+  <string name="deck_summary_notes">Número de notas:</string>
   <string name="deck_summary_cards_mature">Cartões maduros:</string>
   <string name="deck_summary_cards_young">Cartões jovens:</string>
   <string name="deck_summary_cards_unseen">Cartões não vistos:</string>
@@ -60,9 +60,9 @@
   <string name="deck_summary_cards_per_day">&lt;b&gt;%.1f&lt;/b&gt; cartões/dia</string>
   <string name="deck_summary_deck_age">Idade do deck: &lt;b&gt;%d&lt;/b&gt; dias</string>
   <string name="deck_summary_all_decks">Todos decks</string>
-  <string name="stats_forecast">Forecast</string>
+  <string name="stats_forecast">Previsão</string>
   <string name="stats_review_count">Review count</string>
-  <string name="stats_review_time">Review time</string>
+  <string name="stats_review_time">Tempo de revisão</string>
   <string-array name="next_review_in_s">
     <item>em 1 segundo</item>
     <item>em 1 minuto</item>
@@ -96,8 +96,8 @@
     <item>%s anos antes</item>
   </string-array>
   <string-array name="due_x_axis_title">
-    <item>Days</item>
-    <item>Weeks</item>
-    <item>Months</item>
+    <item>Dias</item>
+    <item>Semanas</item>
+    <item>Meses</item>
   </string-array>
 </resources>

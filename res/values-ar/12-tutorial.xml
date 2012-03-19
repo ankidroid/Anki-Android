@@ -17,33 +17,33 @@
  
 <resources> 
  <string-array name="tutorial_questions"> 
-    <item><![CDATA[Thanks for installing AnkiDroid!<br />This is a short introduction.<br />What you see now is the <span style=\'font-weight:600;\'>question</span> part of a flashcard.<br />Please click on the large button below...]]></item> 
-    <item><![CDATA[The next card is shown now.<br />The idea is straightforward: Just like in &quot;real world&quot; paper flashcards, you write a question on the front and the answer on the back side of your cards.<br />(click the button to show the back side)]]></item> 
-    <item><![CDATA[&quot;What is the capital of Burkina Faso?&quot;<br />Think a bit about the answer and click then &quot;show answer&quot;]]></item> 
-    <item><![CDATA[Above every answer buttons, you find information about the time, after which the card will be shown again when answered by this button.]]></item> 
-    <item><![CDATA[The intention is to show you the card again, immediately before you would forget it. Empirical studies have shown that by this means information can be learned most efficiently.]]></item> 
-    <item><![CDATA[Some words about the organisation in AnkiDroid:<br /><br>All information has to be put into pairs of question and answer. If you want to learn in the other direction, you should create another card with swapped information.]]></item> 
-    <item><![CDATA[Cards are put together in decks and can there be organised by help of all sorts of tags.]]></item> 
-    <item><![CDATA[There are mainly two ways of getting new cards:<br />You either add premade decks of other users (choose &quot;shared decks&quot; in the decks summary) or create them by yourself.]]></item> 
-    <item><![CDATA[But anyway, creating own decks is essential to suit your needs perfectly. You can do this directly in AnkiDroid...]]></item> 
-    <item><![CDATA[Let\'s have a look on the top bar:<br />In the left top corner you find some numbers. The red one counts the failed cards (answered by &quot;again&quot;),]]></item> 
-    <item><![CDATA[On the right corner you find information about your thinking time of this card and about your performance.]]></item> 
-    <item><![CDATA[Albeit you can use AnkiDroid stand alone, it is fully connected to AnkiWeb, the syncing server of Anki Desktop (available for Linux, Windows, Mac).]]></item> 
-    <item><![CDATA[These have been the main points of AnkiDroid usage.<br /><br>For more information about the key concept of Anki, visit http://ankisrs.net/]]></item> 
+    <item><![CDATA[شكرا لتثبيت أنكيدرويد! <br/>هذه مقدمة قصيرة.<br/> ما تراه الآن هو <span style=\'font-weight:600;\'> السؤال</span> وهو جزء من البطاقة التعليمية. <br/> يرجى الضغط على الزر الكبير أدناه...]]></item> 
+    <item><![CDATA[تعرض البطاقة التالية الآن.<br/> الفكرة بسيط جدا: تماما مثل ورق البطاقات التعليمية في &quot;العالم الحقيقي&quot;، أنت تكتب سؤالاً على الواجهة، والإجابة في الجانب الخلفي من بطاقاتك. <br/>(اضغط على الزر لعرض الجانب الخلفي) ]]></item> 
+    <item><![CDATA[&quot;ما هي عاصمة بوركينا فاسو؟&quot;<br/> فكر قليلاً في الإجابة،ثم انقر فوق  &quot;أظهر الإجابة&quot; ]]></item> 
+    <item><![CDATA[فوق كل أزرار الإجابات، ستجد معلومات عن الوقت الذي ستظهر فيه البطاقة مرة أخرى عندما تضغط على ذلك الزر.]]></item> 
+    <item><![CDATA[القصد هو إظهار البطاقة لك مرة أخرى، بالضبط قبل أن تنساها. فقد أظهرت الدراسات التجريبية أن بهذه الطرق يمكن أن تتعلم المعلومات بأكثر كفاءة.]]></item> 
+    <item><![CDATA[بعض الكلمات حول التنظيم في أنكيدرويد: <br/><br>جميع المعلومات يجب أن توضع في أزواج من سؤال وجواب. إذا كنت تريد أن تتعلم في بطريقة أخرى، ينبغي أن تقوم بإنشاء بطاقة أخرى بمعلومات مبادلة.]]></item> 
+    <item><![CDATA[بطاقات توضع معا في رزم ويمكن أن تنظمها هناك بشتى أنواع أنواع الوسوم.]]></item> 
+    <item><![CDATA[هناك طريقتان أساسيتان للحصول على البطاقات الجديدة: <br/> إما بإضافة رزم معدة من قبل مستخدمين آخرين (اختر &quot;رزم مشاركة&quot; في ملخص الرزم) أو تقوم بإنشائها بنفسك.]]></item> 
+    <item><![CDATA[ولكن على أية حال، إنشاء رزمك الخاصة ضروري لتلبية حاجاتك بالتمام. يمكنك القيام بذلك مباشرة في أنكيدرويد...]]></item> 
+    <item><![CDATA[دعنا نلق نظرة على الشريط العلوي: <br/> في الركن العلوي الأيسر يمكنك العثور على بعض الأرقام. اللون الأحمر عدد البطاقات الفاشلة (أجيب عليها &quot;مرة أخرى&quot;)، ]]></item> 
+    <item><![CDATA[في الزاوية اليمنى تجد معلومات عن وقتك في التفكير في هذه البطاقة وحول أدائك. ]]></item> 
+    <item><![CDATA[بالرغم من أنه يمكنك استخدام أنكيدرويد باستقلال، إلا أنه متصل بالكامل بـ أنكي ويب، خادم المزامنة لبرنامج سطح المكتب أنكي (المتاح لمنصة لينكس، ويندوز، ماك).]]></item> 
+    <item><![CDATA[لقد كانت هذه النقاط الرئيسية للاستخدام أنكيدرويد. <br/> <br>للمزيد من المعلومات حول المفهوم الرئيسي لبرنامج أنكي، قم بزيارة http://ankisrs.net/]]></item> 
  </string-array>
  <string-array name="tutorial_answers">
-    <item><![CDATA[... in order to see the <span style=\'font-weight:600;\'>answer</span> part of the flashcard (below the line).<br />Click on the button on the right]]></item> 
-    <item><![CDATA[Let\'s assume you want to learn the world\'s capitals. Let the question be...<br />(click on one of the buttons to show the next card)]]></item> 
-    <item><![CDATA[&quot;Ouagadougou&quot; is the right answer. <br />You didn\'t know it? Click &quot;again&quot; to see the card again in a couple of minutes. Otherwise, click on the other buttons, depending on the easiness of the answer.]]></item> 
-    <item><![CDATA[This time period is calculated of the last time you answered the card, the current ease choice and ease choices of previous answers of that card.]]></item> 
-    <item><![CDATA[If you want to learn more about spaced repetition, visit:<br>http://en.wikipedia.org/wiki/Spaced_repetition_system]]></item> 
-    <item><![CDATA[Don\'t worry, this can be done automatically. There is no need of inserting the same information twice.]]></item> 
-    <item><![CDATA[You will learn about that quickly when you start to use AnkiDroid.]]></item> 
-    <item><![CDATA[You\'ll find thousands of premade decks to download and there are probably some which are useful for you.]]></item> 
-    <item><![CDATA[... or (a bit more convenient) with the desktop application Anki (downloadable for free under http://ankisrs.net/).<br><br>You can sync your decks with the desktop application very easily, so transfering the data is not a problem.]]></item> 
-    <item><![CDATA[the black one shows the number of cards you\'ve already learned before and which are due to review today, and the blue number tells you, how many new cards are projected for today. <br />The type of the actual cards is specified by an underline.]]></item> 
-    <item><![CDATA[The upper bar shows your progress, the lower one indicates the percentage of yes answers.]]></item> 
-    <item><![CDATA[Thus, you can easily sync your collection between AnkiDroid and Anki Desktop and use the latter for a more convenient card adding and managing.]]></item> 
-    <item><![CDATA[Just try it a bit out now and see, if it fits your needs.<br><br>Maybe start with the deck overview (hit menu on the main screen and choose &quot;all decks&quot;), where you can download premade decks or create your own (just use the menu there).]]></item> 
+    <item><![CDATA[... حتى تتمكن من رؤية الجزء <span style=\'font-weight:600;\'> الجواب</span> من البطاقة التعليمية (أسفل الخط)-<br/> اضغط على الزر على اليمين]]></item> 
+    <item><![CDATA[لنفترض أنك تريد تعلم عواصم العالم. لنفترض أن السؤال يكون... <br/>(اضغط على أحد الأزرار لعرض البطاقة التالية)]]></item> 
+    <item><![CDATA[&quot;واغادوغو&quot; هو الجواب الصحيح. <br/>لم تكن تعرف ذلك؟ انقر فوق &quot;مجددا&quot; لمشاهدة البطاقة مرة أخرى في بضع دقائق. وإلا، انقر على الأزرار الأخرى، اعتماداً على سهولة الإجابة.]]></item> 
+    <item><![CDATA[تحسب هذه الفترة الزمنية بناء على آخر إجابة لك لهذه البطاقة، و اختيار السهولة الحالية، و اختيار السهولة للأجوبة السابقة لهذه البطاقة.]]></item> 
+    <item><![CDATA[إذا كنت تريد معرفة المزيد عن تكرار المتباعد، قم بزيارة:<br>http://en.wikipedia.org/wiki/Spaced_repetition_system]]></item> 
+    <item><![CDATA[لا تقلق، يمكنك القيام بذلك تلقائياً. ليس هناك حاجة لإدخال نفس المعلومات مرتين.]]></item> 
+    <item><![CDATA[سوف تتعلم عن ذلك بسرعة عند البدء في استخدام أنكيدرويد.]]></item> 
+    <item><![CDATA[ستجد آلاف الرزم الجاهزة للتحميل، وربما يكون هناك بعض الرزم المفيدة لك.]]></item> 
+    <item><![CDATA[... أو ( أكثر ملاءمة) مع تطبيقات سطح المكتب أنكي (يمكن تنزيله مجاناً من http://ankisrs.net/).<br><br>يمكنك مزامنة رزمك مع تطبيق سطح المكتب بسهولة بالغة، حيث نقل البيانات ليست مشكلة.]]></item> 
+    <item><![CDATA[ اللون الأسود يظهر عدد بطاقات تعلمتها من قبل، والتي من المقرر أن تراجعها اليوم، ويخبرك اللون الأزرق، بعدد بطاقات جديدة متوقعة لليوم. <br/> نوع بطاقات الفعلي محدد بواسطة تسطير.]]></item> 
+    <item><![CDATA[ الشريط العلوي يبين تقدمك المحرز ، والشريط السفلي يشير إلى النسبة المئوية للإجابات نعم.]]></item> 
+    <item><![CDATA[هكذا، يمكنك بسهولة مزامنة مجموعتك بين أنكيدرويد وأنكي سطح المكتب واستخدام الأخيرة لأكثر ملاءمة في إضافة وإدارة البطاقات.]]></item> 
+    <item><![CDATA[قم بتجربته قليلا الآن وانظر، إذا كان يناسب اجتياجاتك.<br><br> ربما تريد البدء بإلقاء نظرة عامة حول الرزم(انقر على زر القائمة في الشاشة الرئيسية، واختر &quot;كل الرزم&quot;) حيث يمكنك تنزيل رزم جاهزة أو إنشاء رزمك الخاصة ( فقط قم باستخدام القائمة هناك).]]></item> 
  </string-array>
 </resources>

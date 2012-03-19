@@ -70,14 +70,14 @@
   </string-array>
   <string-array name="gestures_labels">
     <item>Geen actie</item>
-    <item>Show answer</item>
-    <item>Answer button 1</item>
-    <item>Answer button 2</item>
-    <item>Answer button 3</item>
-    <item>Answer button 4</item>
-    <item>Answer recommended (green)</item>
-    <item>Answer better than recommended</item>
-    <item>Undo</item>
+    <item>Toon Antwoord</item>
+    <item>Antwoordknop 1</item>
+    <item>Antwoordknop 2</item>
+    <item>Antwoordknop 3</item>
+    <item>Antwoordknop 4</item>
+    <item>Aanbevolen antwoord (groen)</item>
+    <item>Antwoord beter dan aangeraden</item>
+    <item>Ongedaan maken</item>
     <item>Kaart bewerken</item>
     <item>Markeer kaart</item>
     <item>Uitdrukking opzoeken</item>
@@ -85,8 +85,8 @@
     <item>Kaart uitstellen</item>
     <item>Kaart verwijderen</item>
     <item>Wis Whiteboard</item>
-    <item>Play media</item>
-    <item>Abort learning</item>
+    <item>Media afspelen</item>
+    <item>Het leren afbreken</item>
   </string-array>
   <string-array name="theme_labels">
     <item>Android Donker</item>
@@ -95,17 +95,17 @@
     <item>Wit</item>
   </string-array>
   <string-array name="leech_action_labels">
-    <item>Suspend card</item>
-    <item>Tag only</item>
-    <item>Reset as new</item>
+    <item>Kaart uitstellen</item>
+    <item>Alleen tags</item>
+    <item>Instellen als nieuw</item>
   </string-array>
   <string-array name="new_order_labels">
-    <item>New cards in random order</item>
-    <item>New cards in order added</item>
+    <item>Nieuwe kaarten in willekeurige volgorde</item>
+    <item>Nieuwe kaarten in volgorde van toevoeging</item>
   </string-array>
   <string-array name="rev_order_labels">
-    <item>Sort by due date</item>
-    <item>Sort by decreasing interval (slower)</item>
-    <item>Sort by increasing interval (slower)</item>
+    <item>op prioriteit sorteren</item>
+    <item>Op afnemende interval sorteren (langzamer)</item>
+    <item>Op toenemende interval sorteren (langzamer)</item>
   </string-array>
 </resources>

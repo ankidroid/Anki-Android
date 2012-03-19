@@ -74,7 +74,7 @@
   <string name="sync_uploading_message">Laddar upp...</string>
   <string name="sync_downloading_message">Hämtar...</string>
   <string name="sync_reload_message">Reloading collection...</string>
-  <string name="sync_title">Synchronization</string>
+  <string name="sync_title">Synkronisering</string>
   <string name="sync_downloading_media">Hämtar media %1$d/%2$d...</string>
   <string name="sync_log_uploading_message">Full synk från lokal sida</string>
   <string name="sync_log_downloading_message">Full synk från servern</string>
@@ -92,14 +92,14 @@
   <string name="sync_overwrite_error">Your current collection could not be overwritten by the downloaded file.</string>
   <string name="sync_write_access_error">The downloaded file could not be saved to the sd card. Either your sd card is mounted read-only or there is not enough space.</string>
   <string name="sync_deletions_message">Syncing deletions...</string>
-  <string name="sync_small_objects_message">Syncing small objects...</string>
-  <string name="sync_finish_message">Finishing syncing...</string>
+  <string name="sync_small_objects_message">Synkar små objekt...</string>
+  <string name="sync_finish_message">Avslutar synkronisering...</string>
   <string name="sync_log_finish_error">Fel vid sändning av slutförandedirektiv till server</string>
-  <string name="sync_writing_db">Writing changes into database...</string>
-  <string name="sync_download_chunk">Downloading changes...</string>
+  <string name="sync_writing_db">Skriver ändringar till databas...</string>
+  <string name="sync_download_chunk">Hämtar ändringar...</string>
   <string name="sync_upload_chunk">Uploading changes...</string>
-  <string name="sync_up_down_size">Up: %1$d kb, Down: %2$d kb</string>
-  <string name="sync_generic_error">An error has occurred. Please try again later.</string>
+  <string name="sync_up_down_size">Upp: %1$d kb, Ner: %2$d kb</string>
+  <string name="sync_generic_error">Ett fel har uppstått. Försök igen senare.</string>
   <string name="sync_check_upload_file">Checking file before upload...</string>
-  <string name="sync_check_download_file">Checking downloaded file...</string>
+  <string name="sync_check_download_file">Kontrollerar hämtad fil...</string>
 </resources>
