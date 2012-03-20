@@ -196,6 +196,7 @@ public class DeckPicker extends FragmentActivity {
     private static final int BROWSE_CARDS = 14;
     private static final int ADD_SHARED_DECKS = 15;
     private static final int LOG_IN_FOR_SHARED_DECK = 16;
+    private static final int ADD_CRAM_DECK = 17;
 
 	private Collection mCol;
 
@@ -1940,20 +1941,20 @@ public class DeckPicker extends FragmentActivity {
 				ft.commit();
 			}
         } else {
-//    		mDontSaveOnStop = true;
-//        	Intent intent = new Intent();
-//        	intent.putExtra("index", id);
-//        	intent.setClass(this, StudyOptionsActivity.class);
-//    		startActivityForResult(intent, SHOW_STUDYOPTIONS);
-////    		if (deckId != 0) {
-////    			if (UIUtils.getApiLevel() > 4) {
-////        			ActivityTransitionAnimation.slide(this, ActivityTransitionAnimation.NONE);
-////    			}
-////    		} else {
+    		mDontSaveOnStop = true;
+        	Intent intent = new Intent();
+        	intent.putExtra("index", CRAM_DECK_FRAGMENT);
+        	intent.setClass(this, CramDeckActivity.class);
+    		startActivityForResult(intent, ADD_CRAM_DECK);
+//    		if (deckId != 0) {
 //    			if (UIUtils.getApiLevel() > 4) {
-//        			ActivityTransitionAnimation.slide(this, ActivityTransitionAnimation.LEFT);
-//    			}			
-////    		}
+//        			ActivityTransitionAnimation.slide(this, ActivityTransitionAnimation.NONE);
+//    			}
+//    		} else {
+    			if (UIUtils.getApiLevel() > 4) {
+        			ActivityTransitionAnimation.slide(this, ActivityTransitionAnimation.LEFT);
+    			}			
+//    		}
         }
 	}
 

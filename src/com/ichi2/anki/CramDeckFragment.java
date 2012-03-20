@@ -118,20 +118,14 @@ public class CramDeckFragment extends Fragment {
 				} catch (JSONException e) {
 					throw new RuntimeException(e);
 				}
-				FragmentTransaction ft = getFragmentManager().beginTransaction();
-				ft.remove(CramDeckFragment.this);
-				ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
-				ft.commit();
+				closeCramDeckAdder();
 			}
         });
         mCancelButton = (Button) main.findViewById(R.id.cram_deck_cancel);
         mCancelButton.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				FragmentTransaction ft = getFragmentManager().beginTransaction();
-				ft.remove(CramDeckFragment.this);
-				ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
-				ft.commit();
+				closeCramDeckAdder();
 			}
         });
 
@@ -140,17 +134,30 @@ public class CramDeckFragment extends Fragment {
         	return null;
         }
         mDeck = mCol.getDecks().current();
-		try {
-//	       TODO: mDeckLabel.setText(mDeck.getString("search"));
-	        mSteps.setText(DeckOptions.getDelays(mDeck.getJSONArray("delays")));
-//	        mOrder
-	        mLimit.setText(mDeck.getInt("limit"));
-	        mInterval.setText((int)(mDeck.getDouble("fmult") * 100));
-		} catch (JSONException e) {
-			throw new RuntimeException(e);
-		}
+//		try {
+////	       TODO: mDeckLabel.setText(mDeck.getString("search"));
+////	        mSteps.setText(DeckOptions.getDelays(mDeck.getJSONArray("delays")));
+////	        mOrder
+////	        mLimit.setText(mDeck.getInt("limit"));
+////	        mInterval.setText((int)(mDeck.getDouble("fmult") * 100));
+//		} catch (JSONException e) {
+//			throw new RuntimeException(e);
+//		}
+
+        if (getActivity().getClass() == CramDeckActivity.class) {
+        	main.setBackgroundResource(R.drawable.white_wallpaper);
+        }
         return main;
     }
 
-
+	private void closeCramDeckAdder() {
+		if (getActivity().getClass() == CramDeckActivity.class) {
+			((CramDeckActivity)getActivity()).closeCramDeckAdder();
+		} else {
+			FragmentTransaction ft = getFragmentManager().beginTransaction();
+			ft.remove(CramDeckFragment.this);
+			ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
+			ft.commit();
+		}
+	}
 }
