@@ -89,15 +89,10 @@ import org.json.JSONException;
 
 public class StudyOptionsFragment extends Fragment implements IButtonListener {
 
-	/** Menus */
-	private static final int MENU_PREFERENCES = 1;
-	private static final int MENU_ROTATE = 2;
-	private static final int MENU_ZEEMOTE = 3;
-
 	/**
 	 * Available options performed by other activities
 	 */
-	private static final int PREFERENCES_UPDATE = 0;
+	public static final int PREFERENCES_UPDATE = 0;
 	private static final int REQUEST_REVIEW = 1;
 	private static final int ADD_NOTE = 2;
 	private static final int BROWSE_CARDS = 3;
@@ -488,81 +483,60 @@ public class StudyOptionsFragment extends Fragment implements IButtonListener {
 //		}
 //	}
 
-//	@Override
-//	protected void onDestroy() {
-//		super.onDestroy();
-//		Log.i(AnkiDroidApp.TAG, "StudyOptions - onDestroy()");
+	@Override
+	public void onDestroy() {
+		super.onDestroy();
+		Log.i(AnkiDroidApp.TAG, "StudyOptions - onDestroy()");
 //		if (mUnmountReceiver != null) {
 //			unregisterReceiver(mUnmountReceiver);
 //		}
-//		// Disconnect Zeemote if connected
-//		if (mZeemoteEnabled && (AnkiDroidApp.zeemoteController() != null)
-//				&& (AnkiDroidApp.zeemoteController().isConnected())) {
-//			try {
-//				Log.d("Zeemote", "trying to disconnect in onDestroy...");
-//				AnkiDroidApp.zeemoteController().disconnect();
-//			} catch (IOException ex) {
-//				Log.e("Zeemote",
-//						"Error on zeemote disconnection in onDestroy: "
-//								+ ex.getMessage());
-//			}
-//		}
-//	}
-//
-//	@Override
-//	protected void onPause() {
-//		if (mZeemoteEnabled && (AnkiDroidApp.zeemoteController() != null)
-//				&& (AnkiDroidApp.zeemoteController().isConnected())) {
-//			Log.d(AnkiDroidApp.TAG, "Zeemote: Removing listener in onPause");
-//			AnkiDroidApp.zeemoteController().removeButtonListener(this);
-//			AnkiDroidApp.zeemoteController().removeJoystickListener(adapter);
-//			adapter.removeButtonListener(this);
-//			adapter = null;
-//		}
-//		super.onPause();
-//	}
-//
-//	@Override
-//	protected void onStop() {
-//		super.onStop();
-//		if (!isFinishing() && !mDontSaveOnStop) {
-//			WidgetStatus.update(this);
-//	        UIUtils.saveCollectionInBackground(mCol);			
-//		}
-//	}
-//
-//	@Override
-//	protected void onResume() {
-//		super.onResume();
-//		if (mZeemoteEnabled && (AnkiDroidApp.zeemoteController() != null)
-//				&& (AnkiDroidApp.zeemoteController().isConnected())) {
-//			Log.d("Zeemote", "Adding listener in onResume");
-//			AnkiDroidApp.zeemoteController().addButtonListener(this);
-//			adapter = new JoystickToButtonAdapter();
-//			AnkiDroidApp.zeemoteController().addJoystickListener(adapter);
-//			adapter.addButtonListener(this);
-//		}
-//		if (mCol != null) {
-//			if (Utils.now() > mCol.getSched().getDayCutoff()) {
-//				updateValuesFromDeck(true);
-//			}
-//		}
-//	}
-//
-//	@Override
-//	public boolean onKeyDown(int keyCode, KeyEvent event) {
-//		if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
-//			Log.i(AnkiDroidApp.TAG, "StudyOptions - onBackPressed()");
-//			if (mCurrentContentView == CONTENT_CONGRATS) {
-//				finishCongrats();
-//			} else {
-//				closeStudyOptions();
-//			}
-//			return true;
-//		}
-//		return super.onKeyDown(keyCode, event);
-//	}
-//
+		// Disconnect Zeemote if connected
+		if (mZeemoteEnabled && (AnkiDroidApp.zeemoteController() != null)
+				&& (AnkiDroidApp.zeemoteController().isConnected())) {
+			try {
+				Log.d("Zeemote", "trying to disconnect in onDestroy...");
+				AnkiDroidApp.zeemoteController().disconnect();
+			} catch (IOException ex) {
+				Log.e("Zeemote",
+						"Error on zeemote disconnection in onDestroy: "
+								+ ex.getMessage());
+			}
+		}
+	}
+
+	@Override
+	public void onPause() {
+		if (mZeemoteEnabled && (AnkiDroidApp.zeemoteController() != null)
+				&& (AnkiDroidApp.zeemoteController().isConnected())) {
+			Log.d(AnkiDroidApp.TAG, "Zeemote: Removing listener in onPause");
+			AnkiDroidApp.zeemoteController().removeButtonListener(this);
+			AnkiDroidApp.zeemoteController().removeJoystickListener(adapter);
+			adapter.removeButtonListener(this);
+			adapter = null;
+		}
+		super.onPause();
+	}
+
+
+
+	@Override
+	public void onResume() {
+		super.onResume();
+		if (mZeemoteEnabled && (AnkiDroidApp.zeemoteController() != null)
+				&& (AnkiDroidApp.zeemoteController().isConnected())) {
+			Log.d("Zeemote", "Adding listener in onResume");
+			AnkiDroidApp.zeemoteController().addButtonListener(this);
+			adapter = new JoystickToButtonAdapter();
+			AnkiDroidApp.zeemoteController().addJoystickListener(adapter);
+			adapter.addButtonListener(this);
+		}
+		if (mCol != null) {
+			if (Utils.now() > mCol.getSched().getDayCutoff()) {
+				updateValuesFromDeck(true);
+			}
+		}
+	}
+
 	private void closeStudyOptions() {
 		closeStudyOptions(getActivity().RESULT_OK);
 	}
@@ -1017,77 +991,6 @@ public class StudyOptionsFragment extends Fragment implements IButtonListener {
 		}
 	}
 
-	// /**
-	// * Enter cramming mode. Currently not supporting cramming from selection
-	// of
-	// * cards, as we don't have a card list view anyway.
-	// */
-	// private void onCram() {
-	// // AnkiDroidApp.deck().setupCramScheduler(activeCramTags.toArray(new
-	// // String[activeCramTags.size()]), cramOrder);
-	// // // Timeboxing only supported using the standard scheduler
-	// // mToggleLimit.setEnabled(false);
-	// // resetAndUpdateValuesFromDeck();
-	// }
-	//
-	// /**
-	// * Exit cramming mode.
-	// */
-	// private void onCramStop() {
-	// // AnkiDroidApp.deck().setupStandardScheduler();
-	// // mToggleLimit.setEnabled(true);
-	// }
-
-//	@Override
-//	public boolean onCreateOptionsMenu(Menu menu) {
-//		UIUtils.addMenuItem(menu, Menu.NONE, MENU_PREFERENCES, Menu.NONE,
-//				R.string.menu_preferences, R.drawable.ic_menu_preferences);
-//		UIUtils.addMenuItem(menu, Menu.NONE, MENU_ROTATE, Menu.NONE,
-//				R.string.menu_rotate,
-//				android.R.drawable.ic_menu_always_landscape_portrait);
-//		if (mZeemoteEnabled) {
-//			UIUtils.addMenuItem(menu, Menu.NONE, MENU_ZEEMOTE, Menu.NONE,
-//					R.string.menu_zeemote, R.drawable.ic_menu_zeemote);			
-//		}
-//		return true;
-//	}
-
-	/** Handles item selections */
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		switch (item.getItemId()) {
-		case android.R.id.home:
-			closeStudyOptions();
-			return true;
-
-		case MENU_PREFERENCES:
-			startActivityForResult(new Intent(getActivity(),
-					Preferences.class), PREFERENCES_UPDATE);
-			if (UIUtils.getApiLevel() > 4) {
-				ActivityTransitionAnimation.slide(getActivity(),
-						ActivityTransitionAnimation.FADE);
-			}
-			return true;
-
-		case MENU_ROTATE:
-			if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
-				getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
-			} else {
-				getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-			}
-			return true;
-
-		case MENU_ZEEMOTE:
-			Log.d(AnkiDroidApp.TAG, "Zeemote: Locale: " + mLocale);
-			if ((AnkiDroidApp.zeemoteController() != null)) {
-				controllerUi.showControllerMenu();
-			}
-			return true;
-
-		default:
-			return super.onOptionsItemSelected(item);
-		}
-	}
 
 	private void finishCongrats() {
 		mStudyOptionsView.setVisibility(View.INVISIBLE);

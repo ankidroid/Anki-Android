@@ -30,6 +30,8 @@ import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.DialogInterface.OnCancelListener;
 import android.content.SharedPreferences.Editor;
+import android.content.pm.ActivityInfo;
+import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.content.res.Resources.NotFoundException;
 import android.database.SQLException;
@@ -1960,6 +1962,9 @@ public class DeckPicker extends FragmentActivity {
         item.setIcon(R.drawable.ic_menu_send);
         item = menu.add(Menu.NONE, MENU_ABOUT, Menu.NONE, R.string.menu_about);
         item.setIcon(R.drawable.ic_menu_info_details);
+        item = menu.add(Menu.NONE, StudyOptionsActivity.MENU_ROTATE, Menu.NONE, R.string.menu_about);
+        item.setIcon(R.drawable.ic_menu_always_landscape_portrait);
+        
         return true;
     }
 
@@ -2046,6 +2051,14 @@ public class DeckPicker extends FragmentActivity {
 
             case CHECK_DATABASE:
             	integrityCheck();
+            	return true;
+
+            case StudyOptionsActivity.MENU_ROTATE:
+            	if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
+    				this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+    			} else {
+    				this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+    			}
             	return true;
 
             default:
@@ -2202,15 +2215,15 @@ public class DeckPicker extends FragmentActivity {
     			intent.putExtra(EXTRA_DECK_ID, deckId);
     		}
     		startActivityForResult(intent, SHOW_STUDYOPTIONS);
-    		if (deckId != 0) {
-    			if (UIUtils.getApiLevel() > 4) {
-        			ActivityTransitionAnimation.slide(this, ActivityTransitionAnimation.NONE);
-    			}
-    		} else {
+//    		if (deckId != 0) {
+//    			if (UIUtils.getApiLevel() > 4) {
+//        			ActivityTransitionAnimation.slide(this, ActivityTransitionAnimation.NONE);
+//    			}
+//    		} else {
     			if (UIUtils.getApiLevel() > 4) {
         			ActivityTransitionAnimation.slide(this, ActivityTransitionAnimation.LEFT);
     			}			
-    		}
+//    		}
         }
 	}
 
