@@ -52,6 +52,8 @@ public class CramDeckFragment extends Fragment {
 	private Collection mCol;
 	private JSONObject mDeck;
 
+	private boolean mFragmented;
+
     public static CramDeckFragment newInstance(int index) {
     	CramDeckFragment f = new CramDeckFragment();
         Bundle args = new Bundle();
@@ -72,6 +74,8 @@ public class CramDeckFragment extends Fragment {
             // reason to create our view.
             return null;
         }
+
+        mFragmented = getActivity().getClass() != CramDeckActivity.class;
 
         View main = inflater.inflate(R.layout.cram_deck, null);
         mCramDeckName = (EditText) main.findViewById(R.id.cram_deck_name);
@@ -144,20 +148,20 @@ public class CramDeckFragment extends Fragment {
 //			throw new RuntimeException(e);
 //		}
 
-        if (getActivity().getClass() == CramDeckActivity.class) {
+        if (!mFragmented) {
         	main.setBackgroundResource(R.drawable.white_wallpaper);
         }
         return main;
     }
 
 	private void closeCramDeckAdder() {
-		if (getActivity().getClass() == CramDeckActivity.class) {
-			((CramDeckActivity)getActivity()).closeCramDeckAdder();
-		} else {
+		if (mFragmented) {
 			FragmentTransaction ft = getFragmentManager().beginTransaction();
 			ft.remove(CramDeckFragment.this);
 			ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
 			ft.commit();
+		} else {
+			((CramDeckActivity)getActivity()).closeCramDeckAdder();
 		}
 	}
 }

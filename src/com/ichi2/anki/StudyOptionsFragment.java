@@ -208,6 +208,8 @@ public class StudyOptionsFragment extends Fragment implements IButtonListener {
 
 	private Collection mCol;
 
+	private boolean mFragmented;
+
 	/**
 	 * Zeemote controller
 	 */
@@ -379,6 +381,7 @@ public class StudyOptionsFragment extends Fragment implements IButtonListener {
 		}
 
 		// activeCramTags = new HashSet<String>();
+        mFragmented = getActivity().getClass() != StudyOptionsActivity.class;
 
 		initAllContentViews(inflater);
 
@@ -913,7 +916,11 @@ public class StudyOptionsFragment extends Fragment implements IButtonListener {
 			nameBuilder.append("\n").append(name[name.length - 1]);
 		}
 		mTextDeckName.setText(nameBuilder.toString());
-		getActivity().setTitle(fullName);
+
+		if (!mFragmented) {
+			getActivity().setTitle(fullName);			
+		}
+
 		String desc = mCol.getDecks().getActualDescription();
 		if (desc.length() > 0) {
 			mTextDeckDescription.setText(desc);
