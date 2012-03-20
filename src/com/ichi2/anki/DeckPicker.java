@@ -1416,6 +1416,15 @@ public class DeckPicker extends FragmentActivity {
 
 						@Override
 						public void onClick(DialogInterface dialog, int which) {
+							if (mCol.getDecks().selected() == mCurrentDid) {
+								Fragment frag = (Fragment) getSupportFragmentManager().findFragmentById(R.id.studyoptions_fragment);
+								if (frag != null && frag instanceof StudyOptionsFragment) {
+									FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+									ft.remove(frag);
+									ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
+									ft.commit();
+								}
+							}
 							DeckTask.launchDeckTask(DeckTask.TASK_TYPE_DELETE_DECK, new DeckTask.TaskListener() {
 								@Override
 								public void onPreExecute() {
