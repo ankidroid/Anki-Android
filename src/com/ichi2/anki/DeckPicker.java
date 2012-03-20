@@ -584,6 +584,9 @@ public class DeckPicker extends FragmentActivity {
 			mDeckListView.setAnimation(ViewAnimation.fade(ViewAnimation.FADE_IN, 500, 0));
 			// TODO: load last collection in fragment
 			loadCounts();
+			if (mFragmented) {
+				openStudyOptions();				
+			}
 		}
 
 		@Override
@@ -2230,12 +2233,9 @@ public class DeckPicker extends FragmentActivity {
 
 
     private void openStudyOptions() {
-		openStudyOptions(-1, 0);
+		openStudyOptions(-1);
 	}
-	private void openStudyOptions(int id, long deckId) {
-		if (deckId != 0) {
-			mCol.getDecks().select(deckId);			
-		}
+	private void openStudyOptions(int id) {
         if (mFragmented) {
 //          getListView().setItemChecked(index, true);
 			Fragment frag = (Fragment) getSupportFragmentManager().findFragmentById(R.id.studyoptions_fragment);
@@ -2251,9 +2251,9 @@ public class DeckPicker extends FragmentActivity {
         	Intent intent = new Intent();
         	intent.putExtra("index", id);
         	intent.setClass(this, StudyOptionsActivity.class);
-    		if (deckId != 0) {
-    			intent.putExtra(EXTRA_DECK_ID, deckId);
-    		}
+//    		if (deckId != 0) {
+//    			intent.putExtra(EXTRA_DECK_ID, deckId);
+//    		}
     		startActivityForResult(intent, SHOW_STUDYOPTIONS);
 //    		if (deckId != 0) {
 //    			if (UIUtils.getApiLevel() > 4) {
@@ -2267,14 +2267,14 @@ public class DeckPicker extends FragmentActivity {
         }
 	}
 
-	
 	private void handleDeckSelection(int id) {
 		String deckFilename = null;
 
 		@SuppressWarnings("unchecked")
 		HashMap<String, String> data = (HashMap<String, String>) mDeckListAdapter.getItem(id);
 		Log.i(AnkiDroidApp.TAG, "Selected " + deckFilename);
-		openStudyOptions(id, Long.parseLong(data.get("did")));
+		mCol.getDecks().select(Long.parseLong(data.get("did")));
+		openStudyOptions(id);
 	}
 
 

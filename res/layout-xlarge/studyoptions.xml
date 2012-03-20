@@ -152,9 +152,10 @@
    			</TableRow>
 			</TableLayout>
 			</LinearLayout>
-							<LinearLayout
+							<LinearLayout android:id="@+id/studyoptions_chart" 
 				    android:orientation="horizontal"
 					android:layout_width="fill_parent" 
+					android:visibility="invisible"
 					android:layout_height="wrap_content" >
 				<LinearLayout
 					android:layout_weight="1"

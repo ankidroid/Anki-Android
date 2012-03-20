@@ -165,6 +165,7 @@ public class StudyOptionsFragment extends Fragment implements IButtonListener {
 	private TextView mTextETA;
 	private LinearLayout mSmallChart;
 	private LinearLayout mDeckCounts;
+	private LinearLayout mDeckChart;
 	private ImageButton mAddNote;
 	private ImageButton mCardBrowser;
 	private ImageButton mDeckOptions;
@@ -690,6 +691,7 @@ public class StudyOptionsFragment extends Fragment implements IButtonListener {
 		mGlobalBar.setVisibility(View.INVISIBLE);
 
 		mDeckCounts = (LinearLayout) mStudyOptionsView.findViewById(R.id.studyoptions_deckcounts);
+		mDeckChart = (LinearLayout) mStudyOptionsView.findViewById(R.id.studyoptions_chart);
 		
 		mButtonStart.setOnClickListener(mButtonClickListener);
 		mToggleCram.setOnClickListener(mButtonClickListener);
@@ -943,7 +945,7 @@ public class StudyOptionsFragment extends Fragment implements IButtonListener {
 		});
 	}
 
-	private void updateChart() {
+	private void updateChart(double[][] serieslist) {
 		if (mSmallChart != null) {
 			Resources res = getResources();
 		    XYMultipleSeriesDataset dataset = new XYMultipleSeriesDataset();
@@ -954,9 +956,6 @@ public class StudyOptionsFragment extends Fragment implements IButtonListener {
 		    r = new XYSeriesRenderer();
             r.setColor(res.getColor(R.color.stats_mature));
             renderer.addSeriesRenderer(r);
-
-            // TODO: move this into async task
-			double[][] serieslist = Stats.getSmallDueStats(mCol);
 
 			for (int i = 1; i < serieslist.length; i++) {
 				XYSeries series = new XYSeries("");
@@ -988,6 +987,10 @@ public class StudyOptionsFragment extends Fragment implements IButtonListener {
 			renderer.setPanEnabled(true, false);
 			GraphicalView chartView = ChartFactory.getBarChartView(getActivity(), dataset, renderer, BarChart.Type.STACKED);
             mSmallChart.addView(chartView, new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT));
+			if(mDeckChart.getVisibility() == View.INVISIBLE) {
+				mDeckChart.setVisibility(View.VISIBLE);
+				mDeckChart.setAnimation(ViewAnimation.fade(ViewAnimation.FADE_IN, 500, 0));
+			}
 		}
 	}
 
@@ -1098,9 +1101,10 @@ public class StudyOptionsFragment extends Fragment implements IButtonListener {
 			mProgressMature = (Double) obj[5];
 			mProgressAll = (Double) obj[6];
 			int eta = (Integer) obj[7];
+			double[][] serieslist = (double[][]) obj[8];
 
 			updateStatisticBars();
-			updateChart();
+			updateChart(serieslist);
 
 			mTextTodayNew.setText(String.valueOf(newCards));
 			mTextTodayLrn.setText(String.valueOf(lrnCards));
