@@ -582,7 +582,7 @@ public class DeckPicker extends FragmentActivity {
 			updateDecksList(result.getDeckList(), -1, -1);
 			mDeckListView.setVisibility(View.VISIBLE);
 			mDeckListView.setAnimation(ViewAnimation.fade(ViewAnimation.FADE_IN, 500, 0));
-			// TODO: load last collection in fragment
+
 			loadCounts();
 			if (mFragmented) {
 				openStudyOptions();				
@@ -2289,6 +2289,7 @@ public class DeckPicker extends FragmentActivity {
 			@Override
 			public void onPostExecute(TaskData result) {
 				if (result.getBoolean()) {
+					loadCounts();
 					openStudyOptions();
 				} else {
 					Themes.showThemedToast(DeckPicker.this, getResources().getString(R.string.tutorial_loading_error), false);
