@@ -529,7 +529,7 @@ public class DeckOptions extends PreferenceActivity implements
 		leechActPref.setValue(mPref.getString("lapLeechAct", "0"));
 	}
 
-	private static String getDelays(JSONArray a) {
+	public static String getDelays(JSONArray a) {
 		StringBuilder sb = new StringBuilder();
 		try {
 			for (int i = 0; i < a.length(); i++) {
@@ -541,7 +541,7 @@ public class DeckOptions extends PreferenceActivity implements
 		return sb.toString().trim();
 	}
 
-	private static JSONArray getDelays(String delays) {
+	public static JSONArray getDelays(String delays) {
 		JSONArray ja = new JSONArray();
 		for (String s : delays.split(" ")) {
 			ja.put(Integer.parseInt(s));

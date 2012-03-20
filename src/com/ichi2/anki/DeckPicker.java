@@ -93,6 +93,7 @@ import com.zeemote.zc.util.JoystickToButtonAdapter;
 
 public class DeckPicker extends FragmentActivity {
 
+	public static final int CRAM_DECK_FRAGMENT = -1;
 	/**
 	 * Dialogs
 	 */
@@ -207,6 +208,7 @@ public class DeckPicker extends FragmentActivity {
 	private ImageButton mCardsButton;
 	private ImageButton mStatsButton;
 	private ImageButton mSyncButton;
+	private ImageButton mCramButton;
 	private View mDeckpickerButtons;
 
 	private File[] mBackups;
@@ -875,6 +877,13 @@ public class DeckPicker extends FragmentActivity {
 			@Override
 			public void onClick(View v) {
 				sync();
+			}
+		});
+		mCramButton = (ImageButton) findViewById(R.id.cram_deck_button);
+		mCramButton.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				addCramDeck();
 			}
 		});
 		
@@ -1918,6 +1927,36 @@ public class DeckPicker extends FragmentActivity {
 		}
 	}
 
+	private void addCramDeck() {
+        if (mFragmented) {
+//          getListView().setItemChecked(index, true);
+        	
+			Fragment frag = (Fragment) getSupportFragmentManager().findFragmentById(R.id.studyoptions_fragment);
+			if (!(frag instanceof CramDeckFragment)) {
+				CramDeckFragment details = CramDeckFragment.newInstance(CRAM_DECK_FRAGMENT);
+				FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+				ft.replace(R.id.studyoptions_fragment, details);
+				ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
+				ft.commit();
+			}
+        } else {
+//    		mDontSaveOnStop = true;
+//        	Intent intent = new Intent();
+//        	intent.putExtra("index", id);
+//        	intent.setClass(this, StudyOptionsActivity.class);
+//    		startActivityForResult(intent, SHOW_STUDYOPTIONS);
+////    		if (deckId != 0) {
+////    			if (UIUtils.getApiLevel() > 4) {
+////        			ActivityTransitionAnimation.slide(this, ActivityTransitionAnimation.NONE);
+////    			}
+////    		} else {
+//    			if (UIUtils.getApiLevel() > 4) {
+//        			ActivityTransitionAnimation.slide(this, ActivityTransitionAnimation.LEFT);
+//    			}			
+////    		}
+        }
+	}
+
 	private void addSharedDeck() {
 		Intent intent = new Intent(DeckPicker.this, Info.class);
 		intent.putExtra(Info.TYPE_EXTRA, Info.TYPE_SHARED_DECKS);
@@ -2198,9 +2237,9 @@ public class DeckPicker extends FragmentActivity {
 		}
         if (mFragmented) {
 //          getListView().setItemChecked(index, true);
-			StudyOptionsFragment details = (StudyOptionsFragment) getSupportFragmentManager().findFragmentById(R.id.studyoptions_fragment);
-			if (details == null || details.getShownIndex() != id) {
-				details = StudyOptionsFragment.newInstance(id);
+			Fragment frag = (Fragment) getSupportFragmentManager().findFragmentById(R.id.studyoptions_fragment);
+			if (frag == null || !(frag instanceof StudyOptionsFragment) || ((StudyOptionsFragment) frag).getShownIndex() != id) {
+				StudyOptionsFragment details = StudyOptionsFragment.newInstance(id);
 				FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
 				ft.replace(R.id.studyoptions_fragment, details);
 				ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
