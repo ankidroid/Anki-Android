@@ -97,7 +97,6 @@ public class DeckOptions extends PreferenceActivity implements
 				// rev
 				JSONObject revOptions = mOptions.getJSONObject("rev");
 				mValues.put("revPerDay", revOptions.getString("perDay"));
-				mValues.put("revOrder", revOptions.getString("order"));
 				mValues.put("revSpaceMax", Integer.toString((int) (revOptions
 						.getDouble("fuzz") * 100)));
 				mValues.put("revSpaceMin", revOptions.getString("minSpace"));
@@ -198,11 +197,6 @@ public class DeckOptions extends PreferenceActivity implements
 						} else if (entry.getKey().equals("revPerDay")) {
 							mOptions.getJSONObject("rev")
 									.put("perDay",
-											Integer.parseInt((String) entry
-													.getValue()));
-						} else if (entry.getKey().equals("revOrder")) {
-							mOptions.getJSONObject("rev")
-									.put("order",
 											Integer.parseInt((String) entry
 													.getValue()));
 						} else if (entry.getKey().equals("revSpaceMax")) {
@@ -517,11 +511,6 @@ public class DeckOptions extends PreferenceActivity implements
 		newOrderPref.setEntries(R.array.new_order_labels);
 		newOrderPref.setEntryValues(R.array.new_order_values);
 		newOrderPref.setValue(mPref.getString("newOrder", "0"));
-
-		ListPreference revOrderPref = (ListPreference) findPreference("revOrder");
-		revOrderPref.setEntries(R.array.rev_order_labels);
-		revOrderPref.setEntryValues(R.array.rev_order_values);
-		revOrderPref.setValue(mPref.getString("revOrder", "0"));
 
 		ListPreference leechActPref = (ListPreference) findPreference("lapLeechAct");
 		leechActPref.setEntries(R.array.leech_action_labels);

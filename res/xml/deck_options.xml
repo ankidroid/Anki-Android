@@ -59,10 +59,6 @@
 			android:key="newSeparate" />
 	</PreferenceScreen>
 	<PreferenceScreen android:title="@string/deck_conf_rev_cards">
-		<ListPreference
-			android:title="@string/deck_conf_order"
-			android:summary=""
-			android:key="revOrder"/>
 		<EditTextPreference
         	    	android:title="@string/deck_conf_max_rev"
         	    	android:numeric="integer" 
