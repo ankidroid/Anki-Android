@@ -36,6 +36,7 @@ import android.widget.TextView;
 
 import com.ichi2.anki2.R;
 import com.ichi2.libanki.Collection;
+import com.ichi2.themes.Themes;
 
 public class CramDeckFragment extends Fragment {
 
@@ -151,6 +152,7 @@ public class CramDeckFragment extends Fragment {
         if (!mFragmented) {
         	main.setBackgroundResource(R.drawable.white_wallpaper);
         }
+        Themes.showThemedToast(this.getActivity(), "not yet implemented", false);
         return main;
     }
 
@@ -163,5 +165,9 @@ public class CramDeckFragment extends Fragment {
 		} else {
 			((CramDeckActivity)getActivity()).closeCramDeckAdder();
 		}
+	}
+
+	private void showDecksDialog() {
+		
 	}
 }
