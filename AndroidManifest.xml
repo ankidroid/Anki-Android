@@ -20,7 +20,7 @@
 -->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
 	package="com.ichi2.anki2"
-	android:versionName="2.0alpha14-EXPERIMENTAL"
+	android:versionName="2.0alpha15-EXPERIMENTAL"
 	android:versionCode="26"
 	android:installLocation="auto">
     <instrumentation android:name="android.test.InstrumentationTestRunner" android:targetPackage="com.ichi2.anki2"></instrumentation>
@@ -45,7 +45,10 @@
 				<data android:mimeType="application/vnd.anki" />
 			</intent-filter>
 		</activity>
-		<activity android:name="com.ichi2.anki.StudyOptions" 
+		<activity android:name="com.ichi2.anki.StudyOptionsActivity" 
+			android:label="StudyOptions"
+			android:configChanges="keyboardHidden|locale|orientation"/>
+		<activity android:name="com.ichi2.anki.CramDeckActivity" 
 			android:label="StudyOptions"
 			android:configChanges="keyboardHidden|locale|orientation"/>
 		<activity android:name="com.ichi2.anki.CardBrowser" 

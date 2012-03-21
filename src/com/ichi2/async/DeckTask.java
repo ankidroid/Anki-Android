@@ -584,7 +584,7 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
     	Log.i(AnkiDroidApp.TAG, "doInBackgroundLoadCards");
     	Collection col = params[0].getCollection();
     	boolean wholeCollection = params[0].getBoolean();
-    	publishProgress(new TaskData(col.findCards(wholeCollection)));
+    	publishProgress(new TaskData(col.findCardsForCardBrowser(wholeCollection)));
     	return null;
     }
 
@@ -661,8 +661,8 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
 		double progressMature= ((double) sched.matureCount())
 				/ ((double) totalCount);
 		double progressAll = 1 - (((double) (totalNewCount + counts[1])) / ((double) totalCount));
-
-		return new TaskData(new Object[]{counts[0], counts[1], counts[2], totalNewCount, totalCount, progressMature, progressAll, sched.eta(counts)});
+		double[][] serieslist = Stats.getSmallDueStats(sched.getCol());
+		return new TaskData(new Object[]{counts[0], counts[1], counts[2], totalNewCount, totalCount, progressMature, progressAll, sched.eta(counts), serieslist});
     }
 
     

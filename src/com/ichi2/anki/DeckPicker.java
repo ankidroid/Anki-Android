@@ -30,6 +30,8 @@ import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.DialogInterface.OnCancelListener;
 import android.content.SharedPreferences.Editor;
+import android.content.pm.ActivityInfo;
+import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.content.res.Resources.NotFoundException;
 import android.database.SQLException;
@@ -37,6 +39,9 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentTransaction;
 import android.text.SpannableStringBuilder;
 import android.text.style.StyleSpan;
 import android.text.style.UnderlineSpan;
@@ -54,6 +59,7 @@ import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 
@@ -85,8 +91,9 @@ import com.zeemote.zc.event.IButtonListener;
 import com.zeemote.zc.util.JoystickToButtonAdapter;
 
 
-public class DeckPicker extends Activity {
+public class DeckPicker extends FragmentActivity {
 
+	public static final int CRAM_DECK_FRAGMENT = -1;
 	/**
 	 * Dialogs
 	 */
@@ -189,6 +196,7 @@ public class DeckPicker extends Activity {
     private static final int BROWSE_CARDS = 14;
     private static final int ADD_SHARED_DECKS = 15;
     private static final int LOG_IN_FOR_SHARED_DECK = 16;
+    private static final int ADD_CRAM_DECK = 17;
 
 	private Collection mCol;
 
@@ -201,6 +209,7 @@ public class DeckPicker extends Activity {
 	private ImageButton mCardsButton;
 	private ImageButton mStatsButton;
 	private ImageButton mSyncButton;
+	private ImageButton mCramButton;
 	private View mDeckpickerButtons;
 
 	private File[] mBackups;
@@ -229,6 +238,8 @@ public class DeckPicker extends Activity {
 	private EditText mDialogEditText;
 
 	int mStatisticType;
+
+	public boolean mFragmented;
 
 	boolean mCompletionBarRestrictToActive = false; // set this to true in order to calculate completion bar only for active cards
 
@@ -571,7 +582,11 @@ public class DeckPicker extends Activity {
 			updateDecksList(result.getDeckList(), -1, -1);
 			mDeckListView.setVisibility(View.VISIBLE);
 			mDeckListView.setAnimation(ViewAnimation.fade(ViewAnimation.FADE_IN, 500, 0));
+
 			loadCounts();
+			if (mFragmented) {
+				openStudyOptions();				
+			}
 		}
 
 		@Override
@@ -806,15 +821,23 @@ public class DeckPicker extends Activity {
 		}
 		preferences.edit().putLong("lastTimeOpened", System.currentTimeMillis()).commit();
 
-		if (intent != null && intent.hasExtra(EXTRA_DECK_ID)) {
-			openStudyOptions(intent.getLongExtra(EXTRA_DECK_ID, 1));
-		}
+//		if (intent != null && intent.hasExtra(EXTRA_DECK_ID)) {
+//			openStudyOptions(intent.getLongExtra(EXTRA_DECK_ID, 1));
+//		}
 
 		BroadcastMessages.checkForNewMessages(this);
 
 		View mainView = getLayoutInflater().inflate(R.layout.deck_picker, null);
 		setContentView(mainView);
+
+		// check, if tablet layout
+		View studyoptionsFrame = findViewById(R.id.studyoptions_fragment);
+		mFragmented = studyoptionsFrame != null && studyoptionsFrame.getVisibility() == View.VISIBLE;
+        
 		Themes.setContentStyle(mainView, Themes.CALLER_DECKPICKER);
+		if (mFragmented) {
+			mainView.setBackgroundResource(R.drawable.white_wallpaper_deckpicker_fragments);
+		}
 
 		registerExternalStorageListener();
 
@@ -858,6 +881,13 @@ public class DeckPicker extends Activity {
 			@Override
 			public void onClick(View v) {
 				sync();
+			}
+		});
+		mCramButton = (ImageButton) findViewById(R.id.cram_deck_button);
+		mCramButton.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				addCramDeck();
 			}
 		});
 		
@@ -1386,6 +1416,15 @@ public class DeckPicker extends Activity {
 
 						@Override
 						public void onClick(DialogInterface dialog, int which) {
+							if (mCol.getDecks().selected() == mCurrentDid) {
+								Fragment frag = (Fragment) getSupportFragmentManager().findFragmentById(R.id.studyoptions_fragment);
+								if (frag != null && frag instanceof StudyOptionsFragment) {
+									FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+									ft.remove(frag);
+									ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
+									ft.commit();
+								}
+							}
 							DeckTask.launchDeckTask(DeckTask.TASK_TYPE_DELETE_DECK, new DeckTask.TaskListener() {
 								@Override
 								public void onPreExecute() {
@@ -1850,28 +1889,6 @@ public class DeckPicker extends Activity {
 		}
 	}
 
-
-	private void openStudyOptions() {
-		openStudyOptions(0);
-	}
-	private void openStudyOptions(long deckId) {
-		mDontSaveOnStop = true;
-		Intent intent = new Intent(this, StudyOptions.class);
-		if (deckId != 0) {
-			intent.putExtra(EXTRA_DECK_ID, deckId);
-		}
-		startActivityForResult(intent, SHOW_STUDYOPTIONS);
-		if (deckId != 0) {
-			if (UIUtils.getApiLevel() > 4) {
-    			ActivityTransitionAnimation.slide(this, ActivityTransitionAnimation.NONE);
-			}
-		} else {
-			if (UIUtils.getApiLevel() > 4) {
-    			ActivityTransitionAnimation.slide(this, ActivityTransitionAnimation.LEFT);
-			}			
-		}
-	}
-
     /**
      * Creates an intent to load a deck given the full pathname of it.
      * The constructed intent is equivalent (modulo the extras) to the open used by the launcher
@@ -1923,6 +1940,36 @@ public class DeckPicker extends Activity {
 		}
 	}
 
+	private void addCramDeck() {
+        if (mFragmented) {
+//          getListView().setItemChecked(index, true);
+        	
+			Fragment frag = (Fragment) getSupportFragmentManager().findFragmentById(R.id.studyoptions_fragment);
+			if (!(frag instanceof CramDeckFragment)) {
+				CramDeckFragment details = CramDeckFragment.newInstance(CRAM_DECK_FRAGMENT);
+				FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+				ft.replace(R.id.studyoptions_fragment, details);
+				ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
+				ft.commit();
+			}
+        } else {
+    		mDontSaveOnStop = true;
+        	Intent intent = new Intent();
+        	intent.putExtra("index", CRAM_DECK_FRAGMENT);
+        	intent.setClass(this, CramDeckActivity.class);
+    		startActivityForResult(intent, ADD_CRAM_DECK);
+//    		if (deckId != 0) {
+//    			if (UIUtils.getApiLevel() > 4) {
+//        			ActivityTransitionAnimation.slide(this, ActivityTransitionAnimation.NONE);
+//    			}
+//    		} else {
+    			if (UIUtils.getApiLevel() > 4) {
+        			ActivityTransitionAnimation.slide(this, ActivityTransitionAnimation.LEFT);
+    			}			
+//    		}
+        }
+	}
+
 	private void addSharedDeck() {
 		Intent intent = new Intent(DeckPicker.this, Info.class);
 		intent.putExtra(Info.TYPE_EXTRA, Info.TYPE_SHARED_DECKS);
@@ -1967,6 +2014,9 @@ public class DeckPicker extends Activity {
         item.setIcon(R.drawable.ic_menu_send);
         item = menu.add(Menu.NONE, MENU_ABOUT, Menu.NONE, R.string.menu_about);
         item.setIcon(R.drawable.ic_menu_info_details);
+        item = menu.add(Menu.NONE, StudyOptionsActivity.MENU_ROTATE, Menu.NONE, R.string.menu_about);
+        item.setIcon(R.drawable.ic_menu_always_landscape_portrait);
+        
         return true;
     }
 
@@ -2053,6 +2103,14 @@ public class DeckPicker extends Activity {
 
             case CHECK_DATABASE:
             	integrityCheck();
+            	return true;
+
+            case StudyOptionsActivity.MENU_ROTATE:
+            	if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
+    				this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+    			} else {
+    				this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+    			}
             	return true;
 
             default:
@@ -2183,15 +2241,49 @@ public class DeckPicker extends Activity {
     }
 
 
+    private void openStudyOptions() {
+		openStudyOptions(-1);
+	}
+	private void openStudyOptions(int id) {
+        if (mFragmented) {
+//          getListView().setItemChecked(index, true);
+			Fragment frag = (Fragment) getSupportFragmentManager().findFragmentById(R.id.studyoptions_fragment);
+			if (frag == null || !(frag instanceof StudyOptionsFragment) || ((StudyOptionsFragment) frag).getShownIndex() != id) {
+				StudyOptionsFragment details = StudyOptionsFragment.newInstance(id);
+				FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+				ft.replace(R.id.studyoptions_fragment, details);
+				ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
+				ft.commit();
+			}
+        } else {
+    		mDontSaveOnStop = true;
+        	Intent intent = new Intent();
+        	intent.putExtra("index", id);
+        	intent.setClass(this, StudyOptionsActivity.class);
+//    		if (deckId != 0) {
+//    			intent.putExtra(EXTRA_DECK_ID, deckId);
+//    		}
+    		startActivityForResult(intent, SHOW_STUDYOPTIONS);
+//    		if (deckId != 0) {
+//    			if (UIUtils.getApiLevel() > 4) {
+//        			ActivityTransitionAnimation.slide(this, ActivityTransitionAnimation.NONE);
+//    			}
+//    		} else {
+    			if (UIUtils.getApiLevel() > 4) {
+        			ActivityTransitionAnimation.slide(this, ActivityTransitionAnimation.LEFT);
+    			}			
+//    		}
+        }
+	}
+
 	private void handleDeckSelection(int id) {
 		String deckFilename = null;
 
 		@SuppressWarnings("unchecked")
 		HashMap<String, String> data = (HashMap<String, String>) mDeckListAdapter.getItem(id);
-		mCol.getDecks().select(Long.parseLong(data.get("did")));
 		Log.i(AnkiDroidApp.TAG, "Selected " + deckFilename);
-
-		openStudyOptions();
+		mCol.getDecks().select(Long.parseLong(data.get("did")));
+		openStudyOptions(id);
 	}
 
 
@@ -2206,6 +2298,7 @@ public class DeckPicker extends Activity {
 			@Override
 			public void onPostExecute(TaskData result) {
 				if (result.getBoolean()) {
+					loadCounts();
 					openStudyOptions();
 				} else {
 					Themes.showThemedToast(DeckPicker.this, getResources().getString(R.string.tutorial_loading_error), false);

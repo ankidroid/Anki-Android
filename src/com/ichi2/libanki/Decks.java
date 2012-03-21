@@ -253,7 +253,7 @@ public class Decks {
 		}
 		JSONObject deck = get(did);
 		try {
-			if (deck.getBoolean("dyn")) {
+			if (deck.getInt("dyn") != 0) {
 				// deleting a cramming deck returns cards to their previous deck rather than deleting the cards
 				mCol.getSched().remDyn(did);
 			} else {
@@ -403,7 +403,7 @@ public class Decks {
 		if (deck.has("conf")) {
 			try {
 				JSONObject conf = getConf(deck.getLong("conf"));
-				conf.put("dyn", false);
+				conf.put("dyn", 0);
 				return conf;
 			} catch (JSONException e) {
 				throw new RuntimeException(e);
@@ -504,7 +504,7 @@ public class Decks {
 	 * ************************************
 	 */
 
-	/* The currrently active dids. */
+	/* The currrently active dids. MAke sure to copy before modifying */
 	public LinkedList<Long> active() {
 		try {
 			String actv = mCol.getConf().getString("activeDecks");

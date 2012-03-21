@@ -49,5 +49,11 @@
 			style="?android:attr/buttonStyleSmall"
 			android:layout_width="0dip"
 			android:layout_weight="1"/>
-	</LinearLayout>
+		<ImageButton android:id="@+id/cram_deck_button"
+			android:layout_height="fill_parent"
+			android:src="@drawable/deckpicker_cram"
+			style="?android:attr/buttonStyleSmall"
+			android:layout_width="0dip"
+			android:layout_weight="1"/>
+			</LinearLayout>
 </RelativeLayout>

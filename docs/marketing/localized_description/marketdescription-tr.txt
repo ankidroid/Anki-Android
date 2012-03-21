@@ -31,7 +31,7 @@ Kendi bilgi kartı destelerinizi oluşturun veya birçok dil ve konu için hazı
 • sürükleme, dokunma, sallama yoluyla komut verme
 • bileşende gözden geçirme
 • tamamen kişiselleştirilebilir
-• yoğun çalışma modu
+• inekleme modu
 • çalışmayı etikete, süreye veya kart sayısına göre sınırlama
 • gece modu
 • zeemote desteği

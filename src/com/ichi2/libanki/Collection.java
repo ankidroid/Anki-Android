@@ -46,6 +46,11 @@ import java.util.Random;
 
 public class Collection {
 
+	// collection schema & syncing vars
+	public static final int SCHEMA_VERSION = 2;
+	public static final String SYNC_URL = "http://beta.ankiweb.net/sync/";
+	public static final int SYNC_VER = 1;
+
 	private AnkiDb mDb;
 	private boolean mServer;
 	private double mLastSave;
@@ -56,9 +61,10 @@ public class Collection {
 
 	private Sched mSched;
 
-	private int mSessionStartReps;
+	private double mStartTime;
+	private int mStartReps;
+
 	private int mSessionRepLimit;
-	private double mSessionStartTime;
 	private double mLastSessionStart;
 	private double mSessionTimeLimit;
 	private boolean mUndoEnabled;
@@ -119,8 +125,8 @@ public class Collection {
 			mCrt = UIUtils.getDayStart() / 1000;
 		}
 		mUndoEnabled = false;
-		mSessionStartReps = 0;
-		mSessionStartTime = 0;
+		mStartReps = 0;
+		mStartTime = 0;
 		mLastSessionStart = 0;
 		mSched = new Sched(this);
 		// check for improper shutdown
@@ -818,7 +824,20 @@ public class Collection {
 	 */
 
 	/** Return a list of card ids */
-	public ArrayList<HashMap<String, String>> findCards(boolean wholeCollection) {
+	public ArrayList<Long> findCards(int search, String order) {
+		String q = "1 = 1";
+		String query;
+		if (false) {
+			// TODO
+		} else {
+			query = "SELECT c.id FROM cards c, notes n WHERE " + q + " AND c.nid=n.id " + order;
+		}
+		ArrayList<Long> res = mDb.queryColumn(Long.class, query, 0);
+		return res;
+	}
+	
+	/** Return a list of card ids */
+	public ArrayList<HashMap<String, String>> findCardsForCardBrowser(boolean wholeCollection) {
 		ArrayList<HashMap<String, String>> data = new ArrayList<HashMap<String, String>>();
 		Cursor cur = null;
 		String lim = "";
@@ -886,33 +905,25 @@ public class Collection {
 	 */
 
 	public void startTimebox() {
-		mLastSessionStart = mSessionStartTime;
-		mSessionStartTime = Utils.now();
-		mSessionStartReps = mRepsToday;
+		mStartTime = Utils.now();
+		mStartReps = mRepsToday;
 	}
 
-	public void stopTimebox() {
-		mSessionStartTime = 0;
-	}
-
-	public double timeboxStarted() {
-		return mSessionStartTime;
-	}
-
-	public boolean timeboxReached() {
-		if (mSessionStartTime == 0) {
-			// not started
-			return false;
+	/* Return (elapsedTime, reps) if timebox reached, or null. */
+	public Long[] timeboxReached() {
+		try {
+			if (mConf.getLong("timeLim") != 0) {
+				// timeboxing disabled
+				return null;
+			}
+			double elapsed = Utils.now() - mStartTime;
+			if (elapsed > mConf.getLong("timeLim")) {
+				return new Long[]{mConf.getLong("timeLim"), (long) (mRepsToday - mStartReps)};
+			}
+		} catch (JSONException e) {
+			throw new RuntimeException(e);
 		}
-		if (mSessionTimeLimit != 0
-				&& Utils.now() > (mSessionStartTime + mSessionTimeLimit)) {
-			return true;
-		}
-		if (mSessionRepLimit != 0
-				&& mSessionRepLimit <= mRepsToday - mSessionStartReps) {
-			return true;
-		}
-		return false;
+		return null;
 	}
 
 	/**

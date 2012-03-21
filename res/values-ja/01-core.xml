@@ -27,8 +27,8 @@
   <string name="no">いいえ</string>
   <string name="ok">はい</string>
   <string name="studyoptions_deck_name">単語帳名</string>
-  <string name="studyoptions_due_today">Due today:</string>
-  <string name="studyoptions_new_total">Total new cards:</string>
+  <string name="studyoptions_due_today">今日が期限:</string>
+  <string name="studyoptions_new_total">新しいカードの合計:</string>
   <string name="studyoptions_total_cards">Total cards:</string>
   <string name="studyoptions_eta">推定時間 (分):</string>
   <string name="studyoptions_start">スタート</string>
@@ -75,7 +75,7 @@
   <string name="menu_search">%1$sで探す</string>
   <string name="menu_mark_card">マークをつける</string>
   <string name="menu_unmark_card">Unmark Card</string>
-  <string name="new_deck">New deck</string>
+  <string name="new_deck">新しい単語帳</string>
   <string name="create">Create</string>
   <string name="studyoptions_feedback">フィードバック</string>
   <string name="studyoptions_cram_dialog_title">このタグがついているカードを総復習する</string>

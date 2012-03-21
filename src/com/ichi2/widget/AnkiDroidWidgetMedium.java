@@ -17,7 +17,7 @@ package com.ichi2.widget;
 import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.DeckPicker;
 import com.ichi2.anki2.R;
-import com.ichi2.anki.StudyOptions;
+import com.ichi2.anki.StudyOptionsFragment;
 import com.tomgibara.android.veecheck.util.PrefSettings;
 
 import android.app.PendingIntent;

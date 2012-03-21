@@ -119,7 +119,9 @@ public class AnkiActivity extends Activity {
 		intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
 	}
 	private void disableActivityAnimation() {
-		overridePendingTransition(R.anim.none, R.anim.none);
+		if (AnkiDroidApp.isEclairOrLater()) {
+        	ActivityTransitionAnimation.slide(this, ActivityTransitionAnimation.NONE);
+		}
 	}
 	private void enableIntentAnimation(Intent intent) {
 		if (animationDisabled()) {

@@ -27,13 +27,13 @@
   <string name="backup_manager_title">バックアップマネージャ</string>
   <string name="backup_delete">バックアップ削除中。\nしばらくお待ちください...</string>
   <string name="contextmenu_deckpicker_remove_backups">バックアップを削除します。</string>
-  <string name="backup_restore">Restore from backup</string>
+  <string name="backup_restore">バックアップから復元</string>
   <string name="backup_new_collection">New collection</string>
   <string name="error_handling_title">Error handling</string>
-  <string name="error_handling_options">Options</string>
+  <string name="error_handling_options">オプション</string>
   <string name="backup_retry_opening">Retry opening</string>
   <string name="backup_error_menu_repair">Repair database</string>
-  <string name="backup_repair_deck">Repair</string>
+  <string name="backup_repair_deck">修復</string>
   <string name="backup_repair_deck_progress">Repairing database.\nPlease wait...</string>
   <string name="backup_restore_error">単語帳を復元できませんでした。</string>
   <string name="backup_restore_if_missing">Restoring collection if missing...</string>

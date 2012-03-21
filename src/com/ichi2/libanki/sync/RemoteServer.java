@@ -25,6 +25,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import com.ichi2.async.Connection;
+import com.ichi2.libanki.Collection;
 
 public class RemoteServer extends HttpSyncer {
 
@@ -49,7 +50,7 @@ public class RemoteServer extends HttpSyncer {
 	public HttpResponse meta() {
 		try {
 			JSONObject jo = new JSONObject();
-			jo.put("v", SYNC_VER);
+			jo.put("v", Collection.SYNC_VER);
 			return super.req("meta", super.getInputStream(jo.toString()));
 		} catch (JSONException e) {
 			throw new RuntimeException(e);
@@ -80,8 +81,6 @@ public class RemoteServer extends HttpSyncer {
 	@Override
 	public JSONArray sanityCheck() {
 		try {
-			JSONObject jo = new JSONObject();
-			jo.put("v", SYNC_VER);
 			HttpResponse ret = super.req("sanityCheck", super.getInputStream("{}"));
 			if (ret == null) {
 				return null;

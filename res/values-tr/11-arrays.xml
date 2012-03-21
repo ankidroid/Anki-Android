@@ -70,14 +70,14 @@
   </string-array>
   <string-array name="gestures_labels">
     <item>Eylem yok</item>
-    <item>Show answer</item>
-    <item>Answer button 1</item>
-    <item>Answer button 2</item>
-    <item>Answer button 3</item>
-    <item>Answer button 4</item>
-    <item>Answer recommended (green)</item>
-    <item>Answer better than recommended</item>
-    <item>Undo</item>
+    <item>Yanıtı göster</item>
+    <item>1. yanıt düğmesi</item>
+    <item>2. yanıt düğmesi</item>
+    <item>3. yanıt düğmesi</item>
+    <item>4. yanıt düğmesi</item>
+    <item>Önerileni yanıtla (yeşil)</item>
+    <item>Önerilenden daha iyisini yanıtla</item>
+    <item>Geri al</item>
     <item>Kartı düzenle</item>
     <item>Kartı işaretle</item>
     <item>İfadeyi ara</item>
@@ -85,8 +85,8 @@
     <item>Kartı askıya al</item>
     <item>Kartı sil</item>
     <item>Yazı tahtasını temizle</item>
-    <item>Play media</item>
-    <item>Abort learning</item>
+    <item>Ortamı oynat</item>
+    <item>Öğrenmeyi durdur</item>
   </string-array>
   <string-array name="theme_labels">
     <item>Android Koyu</item>
@@ -95,17 +95,17 @@
     <item>Beyaz</item>
   </string-array>
   <string-array name="leech_action_labels">
-    <item>Suspend card</item>
-    <item>Tag only</item>
-    <item>Reset as new</item>
+    <item>Kartı askıya al</item>
+    <item>Yalnızca etiket</item>
+    <item>Yeni olarak sıfırla</item>
   </string-array>
   <string-array name="new_order_labels">
-    <item>New cards in random order</item>
-    <item>New cards in order added</item>
+    <item>Yeni kartlar rastgele sırada</item>
+    <item>Yeni kartlar ekleniş sırasına göre</item>
   </string-array>
   <string-array name="rev_order_labels">
-    <item>Sort by due date</item>
-    <item>Sort by decreasing interval (slower)</item>
-    <item>Sort by increasing interval (slower)</item>
+    <item>Çalışma tarihine göre sırala</item>
+    <item>Giderek azalan aralıkta sırala (daha yavaş)</item>
+    <item>Giderek artan aralıkta sırala (daha yavaş)</item>
   </string-array>
 </resources>

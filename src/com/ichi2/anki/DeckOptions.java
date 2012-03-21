@@ -97,7 +97,6 @@ public class DeckOptions extends PreferenceActivity implements
 				// rev
 				JSONObject revOptions = mOptions.getJSONObject("rev");
 				mValues.put("revPerDay", revOptions.getString("perDay"));
-				mValues.put("revOrder", revOptions.getString("order"));
 				mValues.put("revSpaceMax", Integer.toString((int) (revOptions
 						.getDouble("fuzz") * 100)));
 				mValues.put("revSpaceMin", revOptions.getString("minSpace"));
@@ -198,11 +197,6 @@ public class DeckOptions extends PreferenceActivity implements
 						} else if (entry.getKey().equals("revPerDay")) {
 							mOptions.getJSONObject("rev")
 									.put("perDay",
-											Integer.parseInt((String) entry
-													.getValue()));
-						} else if (entry.getKey().equals("revOrder")) {
-							mOptions.getJSONObject("rev")
-									.put("order",
 											Integer.parseInt((String) entry
 													.getValue()));
 						} else if (entry.getKey().equals("revSpaceMax")) {
@@ -518,18 +512,13 @@ public class DeckOptions extends PreferenceActivity implements
 		newOrderPref.setEntryValues(R.array.new_order_values);
 		newOrderPref.setValue(mPref.getString("newOrder", "0"));
 
-		ListPreference revOrderPref = (ListPreference) findPreference("revOrder");
-		revOrderPref.setEntries(R.array.rev_order_labels);
-		revOrderPref.setEntryValues(R.array.rev_order_values);
-		revOrderPref.setValue(mPref.getString("revOrder", "0"));
-
 		ListPreference leechActPref = (ListPreference) findPreference("lapLeechAct");
 		leechActPref.setEntries(R.array.leech_action_labels);
 		leechActPref.setEntryValues(R.array.leech_action_values);
 		leechActPref.setValue(mPref.getString("lapLeechAct", "0"));
 	}
 
-	private static String getDelays(JSONArray a) {
+	public static String getDelays(JSONArray a) {
 		StringBuilder sb = new StringBuilder();
 		try {
 			for (int i = 0; i < a.length(); i++) {
@@ -541,7 +530,7 @@ public class DeckOptions extends PreferenceActivity implements
 		return sb.toString().trim();
 	}
 
-	private static JSONArray getDelays(String delays) {
+	public static JSONArray getDelays(String delays) {
 		JSONArray ja = new JSONArray();
 		for (String s : delays.split(" ")) {
 			ja.put(Integer.parseInt(s));

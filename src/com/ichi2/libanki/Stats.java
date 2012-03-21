@@ -155,7 +155,40 @@ public class Stats {
         return dues.size() > 0;
     }
 
-
+    /* only needed for studyoptions small chart */
+    public static double[][] getSmallDueStats(Collection col) {
+        ArrayList<int[]> dues = new ArrayList<int[]>();
+        Cursor cur = null;
+        try {
+            cur = col.getDb().getDatabase().rawQuery(
+                    "SELECT (due - " + col.getSched().getToday() + ") AS day, " // day
+                            + "count(), " // all cards
+                            + "sum(CASE WHEN ivl >= 21 THEN 1 ELSE 0 END) " // mature cards
+                            + "FROM cards WHERE did IN " + col.getSched()._deckLimit() + " AND queue = 2 AND day <= 7 GROUP BY day ORDER BY day", null);
+            while (cur.moveToNext()) {
+                dues.add(new int[] { cur.getInt(0), cur.getInt(1), cur.getInt(2) });
+            }
+        } finally {
+            if (cur != null && !cur.isClosed()) {
+                cur.close();
+            }
+        }
+        // small adjustment for a proper chartbuilding with achartengine
+        if (dues.size() == 0 || dues.get(0)[0] > 0) {
+        	dues.add(0, new int[]{0, 0, 0});
+        }
+        if (dues.get(dues.size() - 1)[0] < 7) {
+        	dues.add(new int[]{7, 0, 0});
+        }
+        double[][] serieslist = new double[3][dues.size()];
+        for (int i = 0; i < dues.size(); i++) {
+        	int[] data = dues.get(i);
+        	serieslist[0][i] = data[0];
+        	serieslist[1][i] = data[1];
+        	serieslist[2][i] = data[2];
+        }
+        return serieslist;
+    }
     /**
      * Reps and time spent
      * ***********************************************************************************************
