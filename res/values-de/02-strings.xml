@@ -22,13 +22,13 @@
 <resources>
   <string name="CardEditorCancelButton">Abbrechen</string>
   <string name="CardEditorSaveButton">Speichern</string>
-  <string name="CardEditorLaterButton">Later</string>
-  <string name="CardEditorCardDeck">Card deck: %s</string>
-  <string name="CardEditorNoteDeck">Note deck: %s</string>
-  <string name="CardEditorModel">Note type: %s</string>
+  <string name="CardEditorLaterButton">Später</string>
+  <string name="CardEditorCardDeck">Karten-Stapel: %s</string>
+  <string name="CardEditorNoteDeck">Notiz-Stapel: %s</string>
+  <string name="CardEditorModel">Notiz-Typ: %s</string>
   <string name="CardEditorTags">Schlagworte: %1$s</string>
   <string name="add_new_tag">Neues Schlagwort</string>
-  <string name="note_type">Note type</string>
+  <string name="note_type">Notiz-Typ</string>
   <string name="sdcard_missing_message">SD-Karte ist nicht verfügbar, da sie als USB-Speicher verwendet wird. Trennen Sie die Verbindung, um auf Ihre Stapel zuzugreifen.</string>
   <string name="show_whiteboard">Whiteboard an</string>
   <string name="hide_whiteboard">Whiteboard aus</string>
@@ -40,13 +40,13 @@
   <string name="leech_suspend_notification">Karte als Lernbremse markiert und ausgesetzt</string>
   <string name="leech_notification">Karte als Lernbremse markiert</string>
   <string name="about_title">Über</string>
-  <string name="cardeditor_title_add_note">Add Note</string>
-  <string name="cardeditor_title_edit_card">Edit Note</string>
+  <string name="cardeditor_title_add_note">Notiz hinzufügen</string>
+  <string name="cardeditor_title_edit_card">Notiz bearbeiten</string>
   <string name="factadder_saving_error">Error saving note</string>
   <string name="cardeditor_move_note_too">Move note too</string>
   <string name="cardeditor_move_to_notes_deck">To note\'s deck</string>
-  <string name="saving_facts">Saving note</string>
-  <string name="deck">Deck</string>
+  <string name="saving_facts">Notiz speichern</string>
+  <string name="deck">Stapel</string>
   <string name="add">Hinzufügen</string>
   <string name="close">Schließen</string>
   <string name="select">Auswählen</string>
@@ -58,7 +58,7 @@
   <string name="fact_adder_swap">Tauschen</string>
   <string name="deckpicker_select_dictionary_title">Wörterbuch wählen</string>
   <string name="deckpicker_select_dictionary_default">Standard</string>
-  <string name="card_editor_add_card">Add note</string>
+  <string name="card_editor_add_card">Notiz hinzufügen</string>
   <string name="card_editor_reset">Zurücksetzen</string>
   <string name="card_editor_copy_card">Karte kopieren</string>
   <string name="card_editor_reset_card">Fortschritt zurücksetzen</string>
@@ -74,7 +74,7 @@
   <string name="check_db">Check database</string>
   <string name="check_db_message">Checking database.\nPlease wait...</string>
   <string name="simple_interface_hint">Leere %s. Beachten Sie, dass die einfache Oberfläche keine Bilder/Sounds etc. anzeigen kann.</string>
-  <string name="delete_deck">Deleting deck...\nPlease wait.</string>
+  <string name="delete_deck">Lösche Stapel...\nBitte warten.</string>
   <plurals name="factadder_cards_added">
     <item quantity="one">1 Karte hinzugefügt</item>
     <item quantity="other">%d Karten hinzugefügt</item>

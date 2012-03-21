@@ -120,7 +120,7 @@
     <item quantity="other">%2$d張中的%1$d張待複習</item>
   </plurals>
   <plurals name="reviewer_window_title">
-    <item quantity="one">1 minute left)</item>
+    <item quantity="one">1 minute left</item>
     <item quantity="other">還有 %d 分鐘</item>
   </plurals>
   <plurals name="studyoptions_congrats_message">

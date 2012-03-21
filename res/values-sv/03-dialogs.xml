@@ -53,7 +53,7 @@
   <string name="answering_error_title">Databasfel</string>
   <string name="answering_error_message">An error occurred while writing to the collection. This could be related to a corrupt database or to insufficient disc space.\n\nIf it happens more often, please try to check the database, repair the collection or restoring it from a backup. Click on \'options\' for that.\n\nNevertheless, it could be an AnkiDroid bug as well; please report the error that we can check this.</string>
   <string name="answering_error_report">Rapportera fel</string>
-  <string name="repair_deck_dialog">Do you really want to try to repair the database?\n\nBefore starting the attempt, a copy will be created in subfolder \'%s\'.</string>
+  <string name="repair_deck_dialog">Vill du verkligen försöka reparera databasen?\n\nEn kopia kommer att skapas i mappen \'%s\' innan.</string>
   <string name="intent_add_saved_information">Sparad data</string>
   <string name="intent_add_clear_all">Rensa allt</string>
   <string name="intent_aedict_empty">Kategori \'default\' är tom</string>

@@ -120,7 +120,7 @@
     <item quantity="other">تنتظر المراجعة%1$d من أصل %2$d</item>
   </plurals>
   <plurals name="reviewer_window_title">
-    <item quantity="one">بقيت دقيقة واحدة)</item>
+    <item quantity="one">1 minute left</item>
     <item quantity="other">%d دقائق بقيت</item>
   </plurals>
   <plurals name="studyoptions_congrats_message">

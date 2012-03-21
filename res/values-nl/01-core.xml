@@ -120,7 +120,7 @@
     <item quantity="other">%1$d van %2$d te doen</item>
   </plurals>
   <plurals name="reviewer_window_title">
-    <item quantity="one">nog 1 minuut)</item>
+    <item quantity="one">1 minute left</item>
     <item quantity="other">%d minuten over</item>
   </plurals>
   <plurals name="studyoptions_congrats_message">

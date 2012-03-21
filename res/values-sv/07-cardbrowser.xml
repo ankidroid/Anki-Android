@@ -32,8 +32,8 @@
   <string name="delete_card_message">Really delete all cards of this note?\nSearch field: %s</string>
   <string name="card_browser_show_marked">Filter marked</string>
   <string name="card_browser_show_suspended">Filter suspended</string>
-  <string name="card_browser_search_by_tag">Filter by tag</string>
-  <string name="card_browser_tags_shown">Taggar: %1$s</string>
+  <string name="card_browser_search_by_tag">Filtrera efter etikett</string>
+  <string name="card_browser_tags_shown">Etiketter: %1$s</string>
   <string name="card_browser_change_display_order">Ändra visningsordning</string>
   <string name="card_browser_change_display_order_title">Välj visningsordning</string>
   <string name="card_browser_card_details">Kortdetaljer</string>
@@ -50,7 +50,7 @@
   <string name="card_details_no_count">Antal nej</string>
   <string name="card_details_added">Tillagt</string>
   <string name="card_details_changed">Ändrat</string>
-  <string name="card_details_tags">Taggar</string>
+  <string name="card_details_tags">Etiketter</string>
   <string name="card_details_model">Note type</string>
   <string name="card_browser_sorting_cards">Sorterar kort.\nVar god vänta...</string>
   <string name="card_browser_filtering_cards">Filtering cards.\nPlease wait...</string>

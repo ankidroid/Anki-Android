@@ -43,7 +43,7 @@
   <string name="resume_download">Återuppta hämtningen</string>
   <string name="pause_download">Pausa hämtning</string>
   <string name="duplicate_download">Denna kortlek hämtas redan</string>
-  <string name="menu_get_shared_decks">Get shared decks</string>
+  <string name="menu_get_shared_decks">Hämta delade kortlekar</string>
   <string name="download_button_return">Return</string>
   <string name="connection_error_message">Ett nätverksfel har uppstått.</string>
   <string name="sync_log_db_error">Ett databasfel har inträffat.</string>
@@ -66,8 +66,8 @@
   <string name="preferences_title">Inställningar</string>
   <string name="deckpreferences_title">Kortleksinställningar</string>
   <string name="sync_conflict_message">Your decks here and on AnkiWeb differ in such a way that they can\'t be merged together, so it\'s necessary to overwrite the decks on one side with the decks from the other.\n\nDo you want to upload the decks from here, or download the decks from AnkiWeb?</string>
-  <string name="sync_conflict_local">Upload</string>
-  <string name="sync_conflict_remote">Download</string>
+  <string name="sync_conflict_local">Ladda upp</string>
+  <string name="sync_conflict_remote">Hämta</string>
   <string name="sync_conflict_cancel">Avbryt synkning</string>
   <string name="sync_prepare_syncing">Förbereder synkning ...</string>
   <string name="sync_preparing_full_sync_message">Förbereder fullständig synkronisering...</string>
@@ -91,15 +91,15 @@
   <string name="sync_remote_db_error">The downloaded database was corrupt. Please try again.</string>
   <string name="sync_overwrite_error">Your current collection could not be overwritten by the downloaded file.</string>
   <string name="sync_write_access_error">The downloaded file could not be saved to the sd card. Either your sd card is mounted read-only or there is not enough space.</string>
-  <string name="sync_deletions_message">Syncing deletions...</string>
+  <string name="sync_deletions_message">Synkroniserar borttagningar...</string>
   <string name="sync_small_objects_message">Synkar små objekt...</string>
   <string name="sync_finish_message">Avslutar synkronisering...</string>
   <string name="sync_log_finish_error">Fel vid sändning av slutförandedirektiv till server</string>
   <string name="sync_writing_db">Skriver ändringar till databas...</string>
   <string name="sync_download_chunk">Hämtar ändringar...</string>
-  <string name="sync_upload_chunk">Uploading changes...</string>
+  <string name="sync_upload_chunk">Överför ändringar...</string>
   <string name="sync_up_down_size">Upp: %1$d kb, Ner: %2$d kb</string>
   <string name="sync_generic_error">Ett fel har uppstått. Försök igen senare.</string>
-  <string name="sync_check_upload_file">Checking file before upload...</string>
+  <string name="sync_check_upload_file">Kontrollerar filen innan överföring...</string>
   <string name="sync_check_download_file">Kontrollerar hämtad fil...</string>
 </resources>

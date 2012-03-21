@@ -120,7 +120,7 @@
     <item quantity="other">%1$d trong số %2$d tới hạn</item>
   </plurals>
   <plurals name="reviewer_window_title">
-    <item quantity="one">1 minute left)</item>
+    <item quantity="one">1 minute left</item>
     <item quantity="other">%d minutes left</item>
   </plurals>
   <plurals name="studyoptions_congrats_message">

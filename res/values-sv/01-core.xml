@@ -28,8 +28,8 @@
   <string name="ok">Ok</string>
   <string name="studyoptions_deck_name">Kortleksnamn</string>
   <string name="studyoptions_due_today">I kö idag:</string>
-  <string name="studyoptions_new_total">Total new cards:</string>
-  <string name="studyoptions_total_cards">Total cards:</string>
+  <string name="studyoptions_new_total">Nya kort totalt:</string>
+  <string name="studyoptions_total_cards">Kort totalt:</string>
   <string name="studyoptions_eta">Beräknad tid (min):</string>
   <string name="studyoptions_start">Börja repetera</string>
   <string name="show_answer">Visa Svar</string>
@@ -60,14 +60,14 @@
   <string name="menu_download_deck">Hämta kortlek</string>
   <string name="menu_download_shared_deck">Delad kortlek</string>
   <string name="menu_download_personal_deck">Egen kortlek</string>
-  <string name="menu_my_account">Sync account</string>
+  <string name="menu_my_account">Synkronisera konto</string>
   <string name="menu_preferences">Inställningar</string>
   <string name="menu_zeemote">Zeemote</string>
   <string name="menu_about">Om</string>
-  <string name="menu_dismiss_note">Dismiss Note...</string>
-  <string name="menu_bury_note">Bury Note</string>
+  <string name="menu_dismiss_note">Ta bort anteckning...</string>
+  <string name="menu_bury_note">Begrav anteckning tillfälligt</string>
   <string name="menu_suspend_card">Åsidosätt kort</string>
-  <string name="menu_suspend_note">Suspend Note</string>
+  <string name="menu_suspend_note">Åsidosätt anteckning</string>
   <string name="menu_delete_note">Ta bort anteckning</string>
   <string name="delete_note_message">Really delete this note and all it\'s cards?\n%s</string>
   <string name="menu_edit_card">Redigera kort</string>
@@ -80,7 +80,7 @@
   <string name="studyoptions_feedback">Feedback</string>
   <string name="studyoptions_cram_dialog_title">Taggar att råplugga</string>
   <string name="studyoptions_load_other_deck">Ladda annan kortlek</string>
-  <string name="studyoptions_load_tutorial_deck">Create tutorial</string>
+  <string name="studyoptions_load_tutorial_deck">Skapa övningskortlek</string>
   <string name="studyoptions_night_mode">Natt</string>
   <string name="visit">Besök</string>
   <string name="later">Senare</string>
@@ -120,7 +120,7 @@
     <item quantity="other">%1$d av %2$d i kö</item>
   </plurals>
   <plurals name="reviewer_window_title">
-    <item quantity="one">1 minut kvar)</item>
+    <item quantity="one">1 minute left</item>
     <item quantity="other">%d minuter kvar</item>
   </plurals>
   <plurals name="studyoptions_congrats_message">
