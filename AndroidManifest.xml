@@ -19,7 +19,7 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-	package="com.ichi2.anki"
+	package="com.ichi2.anki2"
 	android:versionName="2.0alpha14-EXPERIMENTAL"
 	android:versionCode="26"
 	android:installLocation="auto">
