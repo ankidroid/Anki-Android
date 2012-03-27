@@ -28,6 +28,7 @@ import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.Editable;
@@ -1026,12 +1027,22 @@ public class CardBrowser extends Activity {
 
 		private int fontSizeScalePcent;
 		private float originalTextSize = -1.0f;
+		private boolean mTibetan;
+		private Typeface mTibTypeface;
 
 		public SizeControlledListAdapter(Context context,
 				List<? extends Map<String, ?>> data, int resource,
 				String[] from, int[] to, int fontSizeScalePcent) {
 			super(context, data, resource, from, to);
 			this.fontSizeScalePcent = fontSizeScalePcent;
+			
+			mTibetan = AnkiDroidApp.isTibetan();
+			
+			mTibTypeface = null;
+			
+			if (mTibetan) {
+				mTibTypeface = AnkiDroidApp.getTibetanTypeface();
+			}
 
 		}
 
@@ -1060,6 +1071,11 @@ public class CardBrowser extends Activity {
 									originalTextSize
 											* (fontSizeScalePcent / 100.0f));
 						}
+						
+						if (mTibetan) {
+							((TextView) child).setTypeface(mTibTypeface);
+						}
+						
 					}
 
 				}
