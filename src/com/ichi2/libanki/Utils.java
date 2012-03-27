@@ -65,6 +65,7 @@ import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.math.BigInteger;
+import java.nio.channels.FileChannel;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.sql.Date;
@@ -569,6 +570,42 @@ public class Utils {
     public static long fieldChecksum(String data) {
     	return Long.valueOf(checksum(data).substring(0, 8), 16);
     }
+    
+    /**
+     * Generate the SHA1 checksum of a file.
+     * @param file The file to be checked
+     * @return A string of length 32 containing the hexadecimal representation of the SHA1 checksum of the file's contents. 
+     */
+    public static String fileChecksum(String file) {
+        byte[] buffer = new byte[1024];
+        byte[] digest = null;
+        try {
+            InputStream fis = new FileInputStream(file);
+            MessageDigest md = MessageDigest.getInstance("SHA1");
+            int numRead = 0;
+            do {
+                numRead = fis.read(buffer);
+                if (numRead > 0) {
+                    md.update(buffer, 0, numRead);
+                }
+            } while (numRead != -1);
+            fis.close();
+            digest = md.digest();
+        } catch (FileNotFoundException e) {
+            Log.e(AnkiDroidApp.TAG, "Utils.fileChecksum: File not found.", e);
+        } catch (NoSuchAlgorithmException e) {
+            Log.e(AnkiDroidApp.TAG, "Utils.fileChecksum: No such algorithm.", e);
+        } catch (IOException e) {
+            Log.e(AnkiDroidApp.TAG, "Utils.fileChecksum: IO exception.", e);
+        }
+        BigInteger biginteger = new BigInteger(1, digest);
+        String result = biginteger.toString(16);
+        // pad with zeros to length of 40 - SHA1 is 160bit long
+        if (result.length() < 40) {
+            result = "0000000000000000000000000000000000000000".substring(0, 40 - result.length()) + result;
+        }
+        return result;
+    }
 
 
     /** Replace HTML line break tags with new lines. */
@@ -1028,5 +1065,32 @@ public class Utils {
         return sb.toString();
     }
 
+    /**
+     * Simply copy a file to another location
+     * @param sourceFile The source file
+     * @param destFile The destination file, doesn't need to exist yet.
+     * @throws IOException
+     */
+    public static void copyFile(File sourceFile, File destFile) throws IOException {
+        if(!destFile.exists()) {
+            destFile.createNewFile();
+        }
+
+        FileChannel source = null;
+        FileChannel destination = null;
+
+        try {
+            source = new FileInputStream(sourceFile).getChannel();
+            destination = new FileOutputStream(destFile).getChannel();
+            destination.transferFrom(source, 0, source.size());
+        } finally {
+            if (source != null) {
+                source.close();
+            }
+            if (destination != null) {
+                destination.close();
+            }
+        }
+    }
 
 }
