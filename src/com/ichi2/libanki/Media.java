@@ -24,6 +24,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.nio.channels.FileChannel;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -66,16 +67,26 @@ public class Media {
 
     private void connect() {
         String path = mDir + ".db";
-        File file = new File(path);
-        mMediaDb = AnkiDatabaseManager.getDatabase(path);
-        if (!file.exists()) {
-            _initDB();
+        File mediaDbFile = new File(path);
+        if (!mediaDbFile.exists()) {
+            // Copy an empty collection file from the assets to the SD card.
+            InputStream stream;
+            try {
+                stream = AnkiDroidApp.getAppResources().getAssets().open("collection.media.db");
+                Utils.writeToFile(stream, path);
+                stream.close();
+            } catch (IOException e) {
+                Log.e(AnkiDroidApp.TAG, "Error initialising " + path, e);
+            }
         }
+        mMediaDb = AnkiDatabaseManager.getDatabase(path);
     }
+    
     private void close() {
         mMediaDb.closeDatabase();
         mMediaDb = null;
     }
+    
     public String getDir() {
         return mDir;
     }
@@ -144,25 +155,6 @@ public class Media {
     private boolean filesIdentical(String filepath1, String filepath2) {
         return (Utils.fileChecksum(filepath1) == Utils.fileChecksum(filepath2));
     }
-    
-
-    
-    
-    
-    
-    
-    
-    
-    private void _initDB() {
-        if (mMediaDb != null) {
-            mMediaDb.execute("create table media (fname text primary key, csum text, mod int)");
-            mMediaDb.execute("create table meta (dirMod int, usn int); insert into meta values (0, 0)");
-            mMediaDb.execute("create table log (fname text primary key, type int)");
-        }
-    }
-    
-    
-    
     
     //    private static final Pattern regPattern = Pattern.compile("\\((\\d+)\\)$");
 //
