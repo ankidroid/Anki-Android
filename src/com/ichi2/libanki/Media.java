@@ -21,17 +21,25 @@ import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.channels.FileChannel;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
+import java.io.InputStream;mport java.util.HashSet;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 import java.util.regex.Pattern;
 import java.util.regex.Matcher;
 
+import com.ichi2.anki.AnkiDatabaseManager;
+import com.ichi2.anki.AnkiDb;
 import com.ichi2.anki.AnkiDroidApp;
 
+/**
 /**
  * Class with static functions related with media handling (images and sounds).
  */
@@ -44,6 +52,7 @@ public class Media {
     };
     
     private String mDir;
+    private AnkiDb mMediaDb;
     
     public Media(Collection col) {
         mDir = col.getPath().replaceFirst("\\.anki2$", ".media");
@@ -59,13 +68,95 @@ public class Media {
 
     private void connect() {
         String path = mDir + ".db";
-        // TODO: media db methods
+        File mediaDbFile = new File(path);
+        if (!mediaDbFile.exists()) {
+            // Copy an empty collection file from the assets to the SD card.
+            InputStream stream;
+            try {
+                stream = AnkiDroidApp.getAppResources().getAssets().open("collection.media.db");
+                Utils.writeToFile(stream, path);
+                stream.close();
+            } catch (IOException e) {
+                Log.e(AnkiDroidApp.TAG, "Error initialising " + path, e);
+            }
+        }
+        mMediaDb = AnkiDatabaseManager.getDatabase(path);
+    }
+    private void close() {
+    
+        mMediaDb.closeDatabase();
+        mMediaDb = null;
     }
     
     public String getDir() {
         return mDir;
     }
 
+    // Adding media
+    ///////////////
+    
+    /**
+     * Copy PATH to MEDIADIR and return new filename.
+     * If the same name exists, compare checksums.
+     * 
+     * @param opath The path where the media file exists before adding it.
+     * @return The filename of the resulting file.
+     */
+    private String addFile(String opath) {
+        String mdir = getDir();
+        // remove any dangerous characters
+        String base = new File(opath).getName().replaceAll("[][<>:/\\&]", "");
+        String dst = mdir + base;
+        // if it doesn't exist, copy it directly
+        File newMediaFile = new File(dst);
+        if (!newMediaFile.exists()) {
+            try {
+                Utils.copyFile(new File(opath), newMediaFile);
+            } catch (IOException e) {
+                Log.e(AnkiDroidApp.TAG, "Could not copy file " + opath + " to location " + dst, e);
+            }
+            return base;
+        }
+        if (filesIdentical(opath, dst)) {
+            return base;
+        }
+        // otherwise, find a unique name
+        String root, ext;
+        int extIndex = base.lastIndexOf('.');
+        if (extIndex == 0 || extIndex == -1) {
+            root = base;
+            ext = "";
+        } else {
+            root = base.substring(0, extIndex);
+            ext = base.substring(extIndex);
+        }
+        int num = 1;
+        StringBuilder sb = new StringBuilder(mdir);
+        sb.append("/").append(root).append(" (");
+        do {
+            StringBuilder sb2 = new StringBuilder(sb);
+            sb2.append(num).append(ext);
+            newMediaFile = new File(sb2.toString());
+            num += 1;
+        } while (newMediaFile.exists());
+        try {
+            Utils.copyFile(new File(opath), newMediaFile);
+        } catch (IOException e) {
+            Log.e(AnkiDroidApp.TAG, "Could not copy file " + opath + " to location " + newMediaFile.getAbsolutePath(), e);
+        }
+        return newMediaFile.getName();
+    }
+    
+    /**
+     * Checks if two files are identical
+     * @param filepath1 The path of the first file to be checked
+     * @param filepath2 The path of the second file to be checked
+     * @return True if both files have the same contents
+     */
+    private boolean filesIdentical(String filepath1, String filepath2) {
+        return (Utils.fileChecksum(filepath1) == Utils.fileChecksum(filepath2));
+    }
+    
     //    private static final Pattern regPattern = Pattern.compile("\\((\\d+)\\)$");
 //
 //    // File Handling
