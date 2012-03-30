@@ -25,6 +25,7 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.content.res.Resources;
+import android.graphics.Typeface;
 import android.os.Environment;
 import android.util.Log;
 import android.view.Display;
@@ -61,6 +62,8 @@ public class AnkiDroidApp extends Application {
      * Singleton instance of this class.
      */
     private static AnkiDroidApp sInstance;
+    private static Typeface     mTibTypeface;
+    private static boolean bTibetan;
 
    
     private Controller mZeemoteController;
@@ -106,6 +109,9 @@ public class AnkiDroidApp extends Application {
             // Reason: apply() not available on Android 1.5
             editor.commit();
         }
+        
+        
+        
 
         // Reschedule the checks - we need to do this if the settings have
         // changed (as above)
@@ -114,6 +120,30 @@ public class AnkiDroidApp extends Application {
         // Here for simplicity, we do it every time the application is launched
         // Intent intent = new Intent(Veecheck.getRescheduleAction(this));
         // sendBroadcast(intent);
+    }
+    
+    public static boolean isTibetan() {
+    	
+    	SharedPreferences preferences = PrefSettings.getSharedPrefs(getInstance());
+    	
+    	//check for Tibetan support & Typeface initialisation
+        if (preferences.getBoolean("enableTibetan", false)) {
+			bTibetan = true;
+		} else {
+			bTibetan = false;
+		}
+        
+    	
+    	if (bTibetan && mTibTypeface == null) {
+        	String fileName = "fonts/DDC_Uchen.ttf";
+        	mTibTypeface = Typeface.createFromAsset(getInstance().getAssets(), fileName);
+        }
+    	
+    	return bTibetan;
+    }
+    
+    public static Typeface getTibetanTypeface() {
+    	return mTibTypeface;
     }
 
 

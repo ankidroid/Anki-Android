@@ -5,16 +5,20 @@
 # Usage from AnkiDroid's root directory: tools/release.sh 1.0beta21
 # If no option given, will guess the next version number.
 
+# Suffix configuration
+#SUFFIX=""
+SUFFIX="-EXPERIMENTAL"
+
 set -x
 
 # Version number to use
-PREVIOUS_VERSION=`grep android:versionName AndroidManifest.xml | sed -e 's/.*="//' | sed -e 's/".*//'`
+PREVIOUS_VERSION=`grep android:versionName AndroidManifest.xml | sed -e 's/.*="//' | sed -e 's/".*//' | sed -e "s/$SUFFIX//g"`
 GUESSED_VERSION=`echo $PREVIOUS_VERSION | gawk -f tools/lib/increase-version.awk`
-VERSION=${1:-$GUESSED_VERSION}
+VERSION=${1:-$GUESSED_VERSION$SUFFIX}
 
 # Edit AndroidManifest.xml to bump version string
-echo "Bumping version from $PREVIOUS_VERSION to $VERSION"
-sed -i -e s/$PREVIOUS_VERSION/$VERSION/g AndroidManifest.xml
+echo "Bumping version from $PREVIOUS_VERSION$SUFFIX to $VERSION"
+sed -i -e s/$PREVIOUS_VERSION$SUFFIX/$VERSION/g AndroidManifest.xml
 
 # Generate signed APK
 ant clean release

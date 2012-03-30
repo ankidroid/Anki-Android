@@ -32,6 +32,7 @@ import android.content.DialogInterface.OnClickListener;
 import android.content.res.Resources;
 import android.content.res.Resources.NotFoundException;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.Editable;
@@ -1328,8 +1329,22 @@ public class CardEditor extends Activity {
 		mFieldsLayoutContainer.removeAllViews();
 		mEditFields = new LinkedList<FieldEditText>();
 		String[][] fields = mEditorNote.items();
+		
+		boolean mTibetan = AnkiDroidApp.isTibetan();
+		
+		Typeface mTibTypeface = null;
+		
+		if (mTibetan) {
+			mTibTypeface = AnkiDroidApp.getTibetanTypeface();
+		}
+		
 		for (int i = 0; i < fields.length; i++) {
 			FieldEditText newTextbox = new FieldEditText(this, i, fields[i]);
+			
+			if (mTibetan) {
+				newTextbox.setTypeface(mTibTypeface);
+			}
+			
 			TextView label = newTextbox.getLabel();
 			label.setTextColor(Color.BLACK);
 			label.setPadding((int)UIUtils.getDensityAdjustedValue(this, 3.4f), 0, 0, 0);
