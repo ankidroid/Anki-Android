@@ -1445,7 +1445,8 @@ public class Sched {
 		ArrayList<Long> ids;
 		try {
 			limit = " LIMIT " + deck.getInt("limit");
-			ids = mCol.findCards(deck.getInt("search"), order + limit);
+			String search = deck.getInt("search") + " -is:suspended";
+			ids = mCol.findCards(search, order + limit);
 		} catch (JSONException e) {
 			throw new RuntimeException(e);
 		}

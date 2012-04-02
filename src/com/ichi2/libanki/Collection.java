@@ -64,11 +64,6 @@ public class Collection {
 	private double mStartTime;
 	private int mStartReps;
 
-	private int mSessionRepLimit;
-	private double mLastSessionStart;
-	private double mSessionTimeLimit;
-	private boolean mUndoEnabled;
-
 	private int mRepsToday;
 
 	// BEGIN: SQL table columns
@@ -824,7 +819,7 @@ public class Collection {
 	 */
 
 	/** Return a list of card ids */
-	public ArrayList<Long> findCards(int search, String order) {
+	public ArrayList<Long> findCards(String search, String order) {
 		String q = "1 = 1";
 		String query;
 		if (false) {
