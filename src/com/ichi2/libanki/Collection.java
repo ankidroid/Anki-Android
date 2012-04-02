@@ -119,10 +119,8 @@ public class Collection {
 		if (mCrt == 0) {
 			mCrt = UIUtils.getDayStart() / 1000;
 		}
-		mUndoEnabled = false;
 		mStartReps = 0;
 		mStartTime = 0;
-		mLastSessionStart = 0;
 		mSched = new Sched(this);
 		// check for improper shutdown
 		cleanup();
