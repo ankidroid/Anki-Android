@@ -17,31 +17,89 @@
 package com.ichi2.libanki;
 
 import android.text.Html;
-import android.util.Log;
 
-import java.lang.StringBuilder;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import org.json.JSONException;
-
-import com.ichi2.anki.AnkiDroidApp;
 
 /**
  * Class used to display and handle correctly LaTeX.
  */
 public class LaTeX {
-//
-//    /**
-//     * Patterns used to identify LaTeX tags
-//     */
-//    public static Pattern sStandardPattern = Pattern
-//            .compile("\\[latex\\](.+?)\\[/latex\\]");
-//    public static Pattern sExpressionPattern = Pattern
-//            .compile("\\[\\$\\](.+?)\\[/\\$\\]");
-//    public static Pattern sMathPattern = Pattern
-//            .compile("\\[\\$\\$\\](.+?)\\[/\\$\\$\\]"); 
-//
+    /**
+     * Patterns used to identify LaTeX tags
+     */
+    public static Pattern sStandardPattern = Pattern.compile("\\[latex\\](.+?)\\[/latex\\]");
+    public static Pattern sExpressionPattern = Pattern.compile("\\[\\$\\](.+?)\\[/\\$\\]");
+    public static Pattern sMathPattern = Pattern.compile("\\[\\$\\$\\](.+?)\\[/\\$\\$\\]");
+    public static Pattern sEntityPattern = Pattern.compile("(&[a-z]+;)");
+
+    /**
+     * Convert TEXT with embedded latex tags to image links.
+     * @param html The content to search for embedded latex tags.
+     * @param col The related collection.
+     * @return The content with the tags converted to links.
+     */
+    public static String mungeQA(String html, Collection col) {
+        StringBuffer sb = new StringBuffer();
+        String contentLeft = html;
+
+        Matcher matcher = sStandardPattern.matcher(contentLeft);
+        while (matcher.find()) {
+            matcher.appendReplacement(sb, _imgLink(col, matcher.group(1)));
+        }
+        matcher.appendTail(sb);
+        
+        contentLeft = html;
+        matcher = sExpressionPattern.matcher(contentLeft);
+        while (matcher.find()) {
+            matcher.appendReplacement(sb, _imgLink(col, "$" + matcher.group(1) + "$"));
+        }
+        matcher.appendTail(sb);
+        
+        contentLeft = html;
+        matcher = sMathPattern.matcher(contentLeft);
+        while (matcher.find()) {
+            matcher.appendReplacement(sb, _imgLink(col,
+                    "\\begin{displaymath}" + matcher.group(1) + "\\end{displaymath}"));
+        }
+        matcher.appendTail(sb);
+        
+        return sb.toString();
+    }
+
+    /**
+     * Return an img link for LATEX, creating it if necessary.
+     * @param col The associated Collection object.
+     * @param latex The LATEX expression to be replaced
+     * @return A string with the link to the image that is the representation
+     * of the LATEX expression.
+     */
+    private static String _imgLink(Collection col, String latex) {
+        String txt = _latexFromHtml(col, latex);
+        String fname = "latex-" + Utils.checksum(txt) + ".png";
+        String link = "<img src=\"" + fname + "\">";
+        return link;
+    }
+    
+    /**
+     * Convert entities and fix newlines.
+     * @param col The associated Collection where the LATEX is found
+     * @param latex The 
+     * @return
+     */
+    private static String _latexFromHtml(Collection col, String latex) {
+        StringBuffer sb = new StringBuffer();
+        Matcher matcher = sEntityPattern.matcher(latex);
+        while (matcher.find()) {
+            // libanki avoids unescaping &nbsp; here, but converts it anyway few lines later with stripHTML, probably a python quirk.
+            matcher.appendReplacement(sb, Html.fromHtml(matcher.group(1)).toString());
+        }
+        matcher.appendTail(sb);
+        latex = sb.toString().replaceAll("<br( /)?>", "\n");
+        latex = Utils.stripHTML(latex);
+        return latex;
+    }
+    
 //    ///Use this to replace <br> tags
 //    private static Pattern sBRPattern = Pattern
 //            .compile("<br( /)?>");

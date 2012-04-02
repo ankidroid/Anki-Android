@@ -16,44 +16,41 @@
 
 package com.ichi2.libanki;
 
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
+import android.net.Uri;
 import android.util.Log;
-
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.nio.channels.FileChannel;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Map.Entry;
-import java.util.Set;
-import java.util.regex.Pattern;
-import java.util.regex.Matcher;
 
 import com.ichi2.anki.AnkiDatabaseManager;
 import com.ichi2.anki.AnkiDb;
 import com.ichi2.anki.AnkiDroidApp;
 
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.text.Normalizer;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 /**
  * Class with static functions related with media handling (images and sounds).
  */
 public class Media {
-//    // TODO: Javadoc.
-//
-    private static final Pattern mMediaRegexps[] = {
+    
+    private static final Pattern sMediaRegexps[] = {
         Pattern.compile("(?i)(\\[sound:([^]]+)\\])"),
         Pattern.compile("(?i)(<img[^>]+src=[\"']?([^\"'>]+)[\"']?[^>]*>)")
     };
+    private static final Pattern sRemoteFilePattern = Pattern.compile("(https?|ftp)://");
     
+    private Collection mCol;
     private String mDir;
     private AnkiDb mMediaDb;
     
     public Media(Collection col) {
+        mCol = col;
         mDir = col.getPath().replaceFirst("\\.anki2$", ".media");
         File fd = new File(mDir);
         if (!fd.exists()) {
@@ -85,6 +82,7 @@ public class Media {
     private void close() {
         mMediaDb.closeDatabase();
         mMediaDb = null;
+        mCol = null;
     }
     
     public String getDir() {
@@ -156,7 +154,128 @@ public class Media {
         return (Utils.fileChecksum(filepath1) == Utils.fileChecksum(filepath2));
     }
     
-    //    private static final Pattern regPattern = Pattern.compile("\\((\\d+)\\)$");
+    // String manipulation
+    //////////////////////
+    
+    /**
+     * Extract media filenames from an HTML string.
+     * @param string The string to scan for media filenames ([sound:...] or <img...>).
+     * @param includeRemote If true will also include external http/https/ftp urls.
+     * @return A list containing all the sound and image filenames found in the input string.
+     */
+    public List<String> filesInStr(String string, boolean includeRemote) {
+        List<String> l = new ArrayList<String>();
+        // Convert latex first
+        string = LaTeX.mungeQA(string, mCol);
+        // Extract filenames
+        Matcher m = null;
+        for (Pattern p : sMediaRegexps) {
+            m = p.matcher(string);
+            while (m.find()) {
+                String fname = m.group(2);
+                if (includeRemote || (!sRemoteFilePattern.matcher(fname.toLowerCase()).find())) {
+                    l.add(fname);
+                }
+            }
+        }
+        return l;
+    }
+    
+    /**
+     * Strips a string from media references.
+     * @param txt The string to be cleared of media references.
+     * @return The media-free string.
+     */
+    public String strip(String txt) {
+        Matcher m = null;
+        for (Pattern p : sMediaRegexps) {
+            m = p.matcher(txt);
+            txt = m.replaceAll("");
+        }
+        return txt;
+    }
+    
+    /**
+     * Percent-escape UTF-8 characters in local image filenames.
+     * @param string The string to search for image references and escape the filenames.
+     * @return The string with the filenames of any local images percent-escaped as UTF-8.
+     */
+    public String escapeImages(String string) {
+        Matcher m = sMediaRegexps[1].matcher(string);
+        StringBuffer sb = new StringBuffer();
+        while (m.find()) {
+            if (sRemoteFilePattern.matcher(m.group(2)).find()) {
+                m.appendReplacement(sb, m.group());
+            } else {
+                String tagBegin = m.group(1).substring(0, m.start(2));
+                String fname = m.group(2);
+                String tagEnd = m.group(1).substring(m.end(2));
+                String tag = tagBegin + Uri.encode(fname) + tagEnd;
+                m.appendReplacement(sb, tag);
+            }
+        }
+        m.appendTail(sb);
+        return sb.toString();
+    }
+    
+    // Rebuilding DB
+    ////////////////
+    
+    /**
+     * Finds missing and unused media files 
+     * @return A list containing two lists of filenames (missingList, unusedList)
+     */
+    public List<List<String>> check() {
+        File mdir = new File(getDir());
+        List<List<String>> result = new ArrayList<List<String>>();
+        List<String> unused = new ArrayList<String>();
+        Normalizer.Form form = Normalizer.Form.NFD;
+        
+        Set<String> normrefs = new HashSet<String>();
+        for (String f : allMedia()) {
+            if (Normalizer.isNormalized(f, form)) {
+                f = Normalizer.normalize(f, form);
+            }
+            normrefs.add(f);
+        }
+        for (File file : mdir.listFiles()) {
+            if (file.isDirectory()) {
+                continue;
+            }
+            String nfile = file.getName();
+            if (!Normalizer.isNormalized(nfile, form)) {
+                nfile = Normalizer.normalize(nfile, form);
+            }
+            if (!normrefs.contains(nfile)) {
+                unused.add(file.getName());
+            } else {
+                normrefs.remove(nfile);
+            }
+        }
+        List<String> nohave = new ArrayList<String>(normrefs);
+        result.add(nohave);
+        result.add(unused);
+        
+        return result;        
+    }
+    
+    /**
+     * Return a list of all referenced filenames.
+     * @return The list of all media references found in the media database.
+     */
+    private List<String> allMedia() {
+        Set<String> files = new HashSet<String>();
+        List<String> fldsList = mMediaDb.queryColumn(String.class, "select flds from notes", 0);
+        for (String flds : fldsList) {
+            List<String> fList = filesInStr(flds, false);
+            for (String f : fList) {
+                files.add(f);
+            }
+        }
+        return new ArrayList<String>(files);
+    }
+    
+//    private static final Pattern regPattern = Pattern.compile("\\((\\d+)\\)$");
 //
 //    // File Handling
 //    // *************
@@ -272,42 +391,6 @@ public class Media {
 //                        "VALUES (%d, %f)", id.longValue(), Utils.now()));
 //        }
 //        deck.getDB().getDatabase().execSQL("DELETE FROM media WHERE size = 0");
-//    }
-//
-//    // String manipulation
-//    // *******************
-//
-//    public static ArrayList<String> mediaFiles(String string) {
-//        return mediaFiles(string, false);
-//    }
-//    public static ArrayList<String> mediaFiles(String string, boolean remote) {
-//        boolean isLocal = false;
-//        ArrayList<String> l = new ArrayList<String>();
-//        for (Pattern reg : mMediaRegexps) {
-//            Matcher m = reg.matcher(string);
-//            while (m.find()) {
-//                isLocal = !m.group(2).toLowerCase().matches("(https?|ftp)://");
-//                if (!remote && isLocal) {
-//                    l.add(m.group(2));
-//                } else if (remote && !isLocal) {
-//                    l.add(m.group(2));
-//                }
-//            }
-//        }
-//        return l;
-//    }
-//
-//    /**
-//     * Removes references of media from a string.
-//     *
-//     * @param txt The string to be cleared of any media references
-//     * @return The cleared string without any media references
-//     */
-//    public static String stripMedia(String txt) {
-//        for (Pattern reg : mMediaRegexps) {
-//            txt = reg.matcher(txt).replaceAll("");
-//        }
-//        return txt;
 //    }
 //
 //    // Rebuilding DB

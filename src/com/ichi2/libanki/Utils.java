@@ -273,13 +273,18 @@ public class Utils {
      * ***********************************************************************************************
      */
 
+    /**
+     * Strips a text from <style>...</style>, <script>...</script> and <_any_tag_> HTML tags.
+     * @param The HTML text to be cleaned.
+     * @return The text without the aforementioned tags.
+     */
     public static String stripHTML(String s) {
-        Matcher styleMatcher = stylePattern.matcher(s);
-        s = styleMatcher.replaceAll("");
-        Matcher scriptMatcher = scriptPattern.matcher(s);
-        s = scriptMatcher.replaceAll("");
-        Matcher tagMatcher = tagPattern.matcher(s);
-        s = tagMatcher.replaceAll("");
+        Matcher htmlMatcher = stylePattern.matcher(s);
+        s = htmlMatcher.replaceAll("");
+        htmlMatcher = scriptPattern.matcher(s);
+        s = htmlMatcher.replaceAll("");
+        htmlMatcher = tagPattern.matcher(s);
+        s = htmlMatcher.replaceAll("");
         return entsToTxt(s);
     }
 
@@ -299,19 +304,22 @@ public class Utils {
     }
 
 
+    /**
+     * Takes a string and replaces all the HTML symbols in it with their unescaped representation.
+     * This should only affect substrings of the form &something; and not tags.
+     * Internet rumour says that Html.fromHtml() doesn't cover all cases, but it doesn't get less
+     * vague than that.
+     * @param html The HTML escaped text
+     * @return The text with its HTML entities unescaped.
+     */
     private static String entsToTxt(String html) {
-    	// TODO
-//        Matcher htmlEntities = htmlEntitiesPattern.matcher(s);
-//        StringBuilder s2 = new StringBuilder(s);
-//        while (htmlEntities.find()) {
-//            String text = htmlEntities.group();
-//            text = Html.fromHtml(text).toString();
-//            // TODO: inefficiency below, can get rid of multiple regex searches
-//            s2.replace(htmlEntities.start(), htmlEntities.end(), text);
-//            htmlEntities = htmlEntitiesPattern.matcher(s2);
-//        }
-//        return s2.toString();
-    	return html;
+        Matcher htmlEntities = htmlEntitiesPattern.matcher(html);
+        StringBuffer sb = new StringBuffer();
+        while (htmlEntities.find()) {
+            htmlEntities.appendReplacement(sb, Html.fromHtml(htmlEntities.group()).toString());
+        }
+        htmlEntities.appendTail(sb);
+        return sb.toString();
     }
 
     /**
