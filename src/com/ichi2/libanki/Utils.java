@@ -1,5 +1,5 @@
 /****************************************************************************************
- * Copyright (c) 2009 Daniel Sv√§rd <daniel.svard@gmail.com>                             *
+ * Copyright (c) 2009 Daniel Sv‰rd <daniel.svard@gmail.com>                             *
  * Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com>                                   *
  * Copyright (c) 2011 Norbert Nagold <norbert.nagold@gmail.com>						    *
  *                                                                                      *

@@ -589,4 +589,7 @@
                     android:key="com.ichi2.filters.GoogleTranslaterFilter"/>
         </PreferenceCategory>
     </PreferenceScreen>
+    <PreferenceScreen android:title="@string/pref_cat_tibetan">
+        <CheckBoxPreference android:title="@string/pref_enable_tibetan" android:key="enableTibetan"/>
+    </PreferenceScreen>
 </PreferenceScreen>

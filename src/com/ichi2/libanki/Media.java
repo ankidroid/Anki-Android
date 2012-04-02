@@ -78,8 +78,8 @@ public class Media {
         }
         mMediaDb = AnkiDatabaseManager.getDatabase(path);
     }
-    
     private void close() {
+    
         mMediaDb.closeDatabase();
         mMediaDb = null;
         mCol = null;
