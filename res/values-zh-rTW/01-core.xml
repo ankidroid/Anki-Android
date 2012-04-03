@@ -69,7 +69,7 @@
   <string name="menu_suspend_card">暫停卡片</string>
   <string name="menu_suspend_note">暫停註解</string>
   <string name="menu_delete_note">刪除註解</string>
-  <string name="delete_note_message">你確定要刪掉這個註解跟卡片嗎?</string>
+  <string name="delete_note_message">Really delete this note and all its cards?\n%s</string>
   <string name="menu_edit_card">編輯卡片</string>
   <string name="menu_select">選擇文字</string>
   <string name="menu_search">在%1$s中查詢</string>
@@ -83,7 +83,7 @@
   <string name="studyoptions_load_tutorial_deck">建立操作手冊</string>
   <string name="studyoptions_night_mode">夜晚模式</string>
   <string name="visit">參觀</string>
-  <string name="later">Later</string>
+  <string name="later">晚點</string>
   <string name="download">下載</string>
   <string name="open_collection">開啟集合中。請稍後...</string>
   <string name="create_collection">建立集合中。請稍後...</string>

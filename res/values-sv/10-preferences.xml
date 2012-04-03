@@ -217,7 +217,7 @@
   <string name="deck_conf_other">Other</string>
   <string name="deck_conf_add_conf">Add/delete configurations</string>
   <string name="deck_conf_steps">Steps (in minutes)</string>
-  <string name="deck_conf_order">Order</string>
+  <string name="deck_conf_order">Ordning</string>
   <string name="deck_conf_new_cards_day">Nya kort/dag</string>
   <string name="deck_conf_graduating_ivl">Graduating interval</string>
   <string name="deck_conf_days">XXX dag(ar)</string>
@@ -243,4 +243,6 @@
   <string name="deck_conf_add">Add configuration</string>
   <string name="deck_conf_ren">Rename configuration</string>
   <string name="deck_conf_rem">Remove configuration</string>
+  <string name="pref_cat_tibetan">Tibetan Support</string>
+  <string name="pref_enable_tibetan">Enable Tibetan Support</string>
 </resources>

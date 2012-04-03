@@ -78,19 +78,19 @@
     <item>Answer recommended (green)</item>
     <item>Answer better than recommended</item>
     <item>Undo</item>
-    <item>Edit card</item>
-    <item>Mark card</item>
+    <item>編輯卡片</item>
+    <item>標記卡片</item>
     <item>Lookup expression</item>
     <item>Bury card</item>
     <item>Suspend card</item>
-    <item>Delete card</item>
+    <item>刪除卡片</item>
     <item>Clear Whiteboard</item>
     <item>Play media</item>
     <item>Abort learning</item>
   </string-array>
   <string-array name="theme_labels">
     <item>Android Dark</item>
-    <item>Android Light</item>
+    <item>Android Dark</item>
     <item>Blue</item>
     <item>White</item>
   </string-array>
@@ -102,10 +102,5 @@
   <string-array name="new_order_labels">
     <item>New cards in random order</item>
     <item>New cards in order added</item>
-  </string-array>
-  <string-array name="rev_order_labels">
-    <item>Sort by due date</item>
-    <item>Sort by decreasing interval (slower)</item>
-    <item>Sort by increasing interval (slower)</item>
   </string-array>
 </resources>

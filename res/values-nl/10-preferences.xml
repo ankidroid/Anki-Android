@@ -243,4 +243,6 @@
   <string name="deck_conf_add">Configuratie toevoegen</string>
   <string name="deck_conf_ren">Naam wijzigen van configuratie</string>
   <string name="deck_conf_rem">Configuratie verwijderen</string>
+  <string name="pref_cat_tibetan">Tibetan Support</string>
+  <string name="pref_enable_tibetan">Enable Tibetan Support</string>
 </resources>

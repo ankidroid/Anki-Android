@@ -103,9 +103,4 @@
     <item>New cards in random order</item>
     <item>New cards in order added</item>
   </string-array>
-  <string-array name="rev_order_labels">
-    <item>Sort by due date</item>
-    <item>Sort by decreasing interval (slower)</item>
-    <item>Sort by increasing interval (slower)</item>
-  </string-array>
 </resources>

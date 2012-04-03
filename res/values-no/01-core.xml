@@ -69,7 +69,7 @@
   <string name="menu_suspend_card">Suspender kort</string>
   <string name="menu_suspend_note">Suspend Note</string>
   <string name="menu_delete_note">Delete Note</string>
-  <string name="delete_note_message">Really delete this note and all it\'s cards?\n%s</string>
+  <string name="delete_note_message">Really delete this note and all its cards?\n%s</string>
   <string name="menu_edit_card">Rediger kort</string>
   <string name="menu_select">Merk tekst</string>
   <string name="menu_search">Oppslag i %1$s</string>

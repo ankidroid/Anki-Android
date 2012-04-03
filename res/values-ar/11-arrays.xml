@@ -103,9 +103,4 @@
     <item>البطاقات الجديدة في ترتيب عشوائي</item>
     <item>البطاقات الجديدة في ترتيب إضافتها</item>
   </string-array>
-  <string-array name="rev_order_labels">
-    <item>افرز على حسب تاريخ الاستحقاق</item>
-    <item>فرز حسب نقصان الفاصل الزمني (أبطأ)</item>
-    <item>فرز حسب زيادة الفاصل الزمني (أبطأ)</item>
-  </string-array>
 </resources>

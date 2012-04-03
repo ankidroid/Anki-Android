@@ -70,14 +70,14 @@
   </string-array>
   <string-array name="gestures_labels">
     <item>Ninguna acción</item>
-    <item>Show answer</item>
-    <item>Answer button 1</item>
-    <item>Answer button 2</item>
-    <item>Answer button 3</item>
-    <item>Answer button 4</item>
-    <item>Answer recommended (green)</item>
-    <item>Answer better than recommended</item>
-    <item>Undo</item>
+    <item>Mostrar respuesta</item>
+    <item>Botón de respuesta 1</item>
+    <item>Botón de respuesta 2</item>
+    <item>Botón de respuesta 3</item>
+    <item>Botón de respuesta 4</item>
+    <item>Respuesta recomendada (verde)</item>
+    <item>Respuesta mejor de lo recomendado</item>
+    <item>Deshacer</item>
     <item>Editar tarjeta</item>
     <item>Marcar tarjeta</item>
     <item>Consultar expresión</item>
@@ -85,8 +85,8 @@
     <item>Suspender tarjeta</item>
     <item>Eliminar tarjeta</item>
     <item>Limpiar Pizarra</item>
-    <item>Play media</item>
-    <item>Abort learning</item>
+    <item>Reproducir multimedia</item>
+    <item>Interrumpir aprendizaje</item>
   </string-array>
   <string-array name="theme_labels">
     <item>Android Oscuro</item>
@@ -95,17 +95,12 @@
     <item>Blanco</item>
   </string-array>
   <string-array name="leech_action_labels">
-    <item>Suspend card</item>
-    <item>Tag only</item>
-    <item>Reset as new</item>
+    <item>Suspender tarjeta</item>
+    <item>Sólo etiquetar</item>
+    <item>Restablecer como nueva</item>
   </string-array>
   <string-array name="new_order_labels">
-    <item>New cards in random order</item>
-    <item>New cards in order added</item>
-  </string-array>
-  <string-array name="rev_order_labels">
-    <item>Sort by due date</item>
-    <item>Sort by decreasing interval (slower)</item>
-    <item>Sort by increasing interval (slower)</item>
+    <item>Tarjetas nuevas en orden aleatorio</item>
+    <item>Tarjetas nuevas en orden añadido</item>
   </string-array>
 </resources>

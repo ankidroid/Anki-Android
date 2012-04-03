@@ -22,13 +22,13 @@
 <resources>
   <string name="CardEditorCancelButton">Annulla</string>
   <string name="CardEditorSaveButton">Salva</string>
-  <string name="CardEditorLaterButton">Later</string>
-  <string name="CardEditorCardDeck">Card deck: %s</string>
-  <string name="CardEditorNoteDeck">Note deck: %s</string>
-  <string name="CardEditorModel">Note type: %s</string>
+  <string name="CardEditorLaterButton">In seguito</string>
+  <string name="CardEditorCardDeck">Mazzo carte: %s</string>
+  <string name="CardEditorNoteDeck">Mazzo carta: %s</string>
+  <string name="CardEditorModel">Tipo carta: %s</string>
   <string name="CardEditorTags">Etichette: %1$s</string>
   <string name="add_new_tag">Aggiungi nuovo tag</string>
-  <string name="note_type">Note type</string>
+  <string name="note_type">Tipologia scheda</string>
   <string name="sdcard_missing_message">La scheda SD non è disponibile, perché è usata come unità USB. Scollegare l\'USB per accedere ai mazzi.</string>
   <string name="show_whiteboard">Mostra lavagna</string>
   <string name="hide_whiteboard">Nascondi lavagna</string>
@@ -40,13 +40,13 @@
   <string name="leech_suspend_notification">Carta contrassegnata come sanguisuga e sospesa</string>
   <string name="leech_notification">Carta contrassegnata come sanguisuga</string>
   <string name="about_title">Informazioni</string>
-  <string name="cardeditor_title_add_note">Add Note</string>
-  <string name="cardeditor_title_edit_card">Edit Note</string>
-  <string name="factadder_saving_error">Error saving note</string>
-  <string name="cardeditor_move_note_too">Move note too</string>
-  <string name="cardeditor_move_to_notes_deck">To note\'s deck</string>
-  <string name="saving_facts">Saving note</string>
-  <string name="deck">Deck</string>
+  <string name="cardeditor_title_add_note">Aggiungi Scheda</string>
+  <string name="cardeditor_title_edit_card">Modifica Scheda</string>
+  <string name="factadder_saving_error">Errore salvataggio scheda</string>
+  <string name="cardeditor_move_note_too">Sposta anche la scheda</string>
+  <string name="cardeditor_move_to_notes_deck">Vai al mazzo</string>
+  <string name="saving_facts">Salvataggio scheda</string>
+  <string name="deck">Mazzo</string>
   <string name="add">Aggiungi</string>
   <string name="close">Chiudi</string>
   <string name="select">Seleziona</string>
@@ -58,12 +58,12 @@
   <string name="fact_adder_swap">Swap</string>
   <string name="deckpicker_select_dictionary_title">Seleziona dizionario</string>
   <string name="deckpicker_select_dictionary_default">Preimpostato</string>
-  <string name="card_editor_add_card">Add note</string>
+  <string name="card_editor_add_card">Aggiungi scheda</string>
   <string name="card_editor_reset">Reset</string>
   <string name="card_editor_copy_card">Copia carta</string>
   <string name="card_editor_reset_card">Reset progresso</string>
   <string name="error_insufficient_memory">Operazione non possibile a causa di memoria insufficiente sul tuo apparecchio</string>
-  <string name="tutorial_load">Creating tutorial deck.\nPlease wait...</string>
+  <string name="tutorial_load">Creazione del mazzo tutorial.\nAttendere...</string>
   <string name="tutorial_loading_error">Mazzo tutorial non può essere creato</string>
   <string name="rename">Rinomina</string>
   <string name="rename_error">Mazzo %s potrebbe non essere rinominato</string>
@@ -71,10 +71,20 @@
   <string name="help_online">Aiuto online</string>
   <string name="help_faq">FAQ</string>
   <string name="help_tutorial">Mazzo tutorial</string>
-  <string name="check_db">Check database</string>
-  <string name="check_db_message">Checking database.\nPlease wait...</string>
+  <string name="check_db">Controllo database</string>
+  <string name="check_db_message">Controllo database.\nAttendere...</string>
   <string name="simple_interface_hint">Vuoto %s. Tieni presente che la semplice interfaccia non può mostrare immagini/suoni ecc.</string>
-  <string name="delete_deck">Deleting deck...\nPlease wait.</string>
+  <string name="delete_deck">Cancellazione mazzo...\nAttendere.</string>
+  <string-array name="dynOrderLabels">
+    <item>Oldest seen first</item>
+    <item>Random</item>
+    <item>Increasing intervals</item>
+    <item>Decreasing intervals</item>
+    <item>Most lapses</item>
+    <item>Failed today</item>
+    <item>Order added</item>
+    <item>Order due</item>
+  </string-array>
   <plurals name="factadder_cards_added">
     <item quantity="one">1 carta aggiunta</item>
     <item quantity="other">%d carte aggiunte</item>

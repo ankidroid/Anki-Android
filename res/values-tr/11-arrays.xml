@@ -103,9 +103,4 @@
     <item>Yeni kartlar rastgele sırada</item>
     <item>Yeni kartlar ekleniş sırasına göre</item>
   </string-array>
-  <string-array name="rev_order_labels">
-    <item>Çalışma tarihine göre sırala</item>
-    <item>Giderek azalan aralıkta sırala (daha yavaş)</item>
-    <item>Giderek artan aralıkta sırala (daha yavaş)</item>
-  </string-array>
 </resources>

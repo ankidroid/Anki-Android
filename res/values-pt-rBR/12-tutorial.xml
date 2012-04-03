@@ -24,11 +24,11 @@
     <item><![CDATA[A intenção é mostrar-lhe novamente o cartão imediatamente antes que você o esqueceria. Estudos empíricos demonstraram que por esta via informações podem ser aprendidas com a maior eficiência.]]></item> 
     <item><![CDATA[Algumas palavras sobre a organização em AnkiDroid:<br/><br>Todas as informações tem de ser colocada em pares de pergunta e resposta. Se você quer aprender em outra direção, você deveria criar outro cartão com as informações trocadas.]]></item> 
     <item><![CDATA[Cartões são postos junto em decks e lá podem ser organizados com a ajuda de todos os tipos de tags.]]></item> 
-    <item><![CDATA[There are mainly two ways of getting new cards:<br />You either add premade decks of other users (choose &quot;shared decks&quot; in the decks summary) or create them by yourself.]]></item> 
+    <item><![CDATA[Existem principalmente duas formas de pegar novos cartõess:<br />Você pode adicionar cartões pre-feitos de outros usuários (escolha &quot;decks compartilhados&quot; no resumo dos decks) ou crie-os por si mesmo.]]></item> 
     <item><![CDATA[De qualquer forma, criar seus próprios decks é essencial para atender perfeitamente às suas necessidades. Você pode fazer isso diretamente no AnkiDroid...]]></item> 
-    <item><![CDATA[Let\'s have a look on the top bar:<br />In the left top corner you find some numbers. The red one counts the failed cards (answered by &quot;again&quot;),]]></item> 
+    <item><![CDATA[Vamos dar uma  olhada na barra superior<br />No canto superior esquerdo você acha alguns numeros. O vermelho conta os cartões errados(respondidos por &quot;again&quot;),]]></item> 
     <item><![CDATA[No canto direito, você encontra informações sobre seu tempo de pensando neste cartão e sobre seu desempenho.]]></item> 
-    <item><![CDATA[Albeit you can use AnkiDroid stand alone, it is fully connected to AnkiWeb, the syncing server of Anki Desktop (available for Linux, Windows, Mac).]]></item> 
+    <item><![CDATA[Embora você possa usar o AnkiDroid sozinho, ele é totalmente conectado a internet, o servidor de Anki Desktop (disponivel para Linux, Windows, Mac)]]></item> 
     <item><![CDATA[Estes têm sido os principais pontos de uso do AnkiDroid.<br/><br>Para obter mais informações sobre o conceito chave do Anki, visite http://ankisrs.net/]]></item> 
  </string-array>
  <string-array name="tutorial_answers">
@@ -39,11 +39,11 @@
     <item><![CDATA[Se você quiser saber mais sobre repetições espaçadas, visite:<br>http://en.wikipedia.org/wiki/Spaced_repetition_system]]></item> 
     <item><![CDATA[Não se preocupe, isso pode ser feito automaticamente. Não há necessidade de inserir a mesma informação duas vezes.]]></item> 
     <item><![CDATA[Você vai aprender isso rapidamente quando você começar a usar o AnkiDroid.]]></item> 
-    <item><![CDATA[You\'ll find thousands of premade decks to download and there are probably some which are useful for you.]]></item> 
+    <item><![CDATA[Você vai encontrar milhares de decks pre-feitos para baixar e provavelmente alguns lhe são uteis.]]></item> 
     <item><![CDATA[...ou(um pouco mais conveniente) com o aplicativo de desktop Anki(disponível gratuitamente em http://ankisrs.net/).<br><br>Você pode sincronizar seus decks com o aplicativo de desktop facilmente, então transferir os dados não é um problema.]]></item> 
-    <item><![CDATA[the black one shows the number of cards you\'ve already learned before and which are due to review today, and the blue number tells you, how many new cards are projected for today. <br />The type of the actual cards is specified by an underline.]]></item> 
+    <item><![CDATA[o preto mostra o numero de cartões que você já aprendeu antes e são devidos hoje, e o azul lhe diz quantos cartões novos estão projetados para hoje.<br />O tipo de cartões atuais está especificado por um sublinhado.]]></item> 
     <item><![CDATA[A barra superior mostra seu progresso, a inferior indica o percentual de respostas Sim.]]></item> 
-    <item><![CDATA[Thus, you can easily sync your collection between AnkiDroid and Anki Desktop and use the latter for a more convenient card adding and managing.]]></item> 
+    <item><![CDATA[Enfim, você pode sincronizar sua coleção entre AnkiDroid e Anki Desktop e usar este ultimo para uma adição mais conveniente e gerenciavel.]]></item> 
     <item><![CDATA[Experimente-o um pouco agora e veja se ele se encaixa às suas necessidades.<br><br>Que tal começar com a visão geral de decks(aperte menu na tela principal e escolha &quot;todos os pavimentos&quot;)onde você pode baixar decks prontos ou criar seu próprio(basta usar o menu de lá).]]></item> 
  </string-array>
 </resources>
