@@ -18,26 +18,46 @@ package com.ichi2.libanki;
 
 import android.net.Uri;
 import android.util.Log;
+import android.util.Pair;
 
 import com.ichi2.anki.AnkiDatabaseManager;
 import com.ichi2.anki.AnkiDb;
 import com.ichi2.anki.AnkiDroidApp;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.text.Normalizer;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipException;
+import java.util.zip.ZipFile;
+import java.util.zip.ZipInputStream;
+import java.util.zip.ZipOutputStream;
 
 /**
  * Class with static functions related with media handling (images and sounds).
  */
 public class Media {
+    public static final int MEDIA_ADD = 0;
+    public static final int MEDIA_REM = 1;
+    public static final long SYNC_ZIP_SIZE = 2560 * 1024;
     
     private static final Pattern sMediaRegexps[] = {
         Pattern.compile("(?i)(\\[sound:([^]]+)\\])"),
@@ -273,6 +293,246 @@ public class Media {
             }
         }
         return new ArrayList<String>(files);
+    }
+    
+    // Media syncing - changes and removal
+    //////////////////////////////////////
+    
+    public boolean hasChanged() {
+        return (mMediaDb != null && mMediaDb.queryLongScalar("select 1 from log limit 1") == 1);
+    }
+    
+    public List<String> removed() {
+        String sql = "select fname from log where type = " + Integer.toString(MEDIA_REM);
+        return mMediaDb.queryColumn(String.class, sql, 0);
+    }
+    
+    /**
+     * Remove provided deletions and all locally-logged deletions, as server has acked them
+     * @param fnames The list of filenames to be deleted.
+     */
+    public void syncRemove(List<String> fnames) {
+        for (String f : fnames) {
+            File file = new File(f);
+            if (file.exists()) {
+                file.delete();
+            }
+            mMediaDb.execute("delete from log where fname = ?", new String[]{f});
+            mMediaDb.execute("delete from media where fname = ?", new String[]{f});
+        }
+        mMediaDb.execute("delete from log where type = ?", new String[]{Integer.toString(MEDIA_REM)});
+    }
+    
+    // Media syncing - unbundling zip files from server
+    ///////////////////////////////////////////////////
+    
+    /**
+     * Extract zip data.
+     * @param zipData An input stream that represents a zipped file.
+     * @return True if finished.
+     */
+    public boolean syncAdd(File zipData) {
+        boolean finished = false;
+        ZipFile z = null;
+        try {
+            z = new ZipFile(zipData, ZipFile.OPEN_READ);
+        } catch (ZipException e) {
+            Log.e(AnkiDroidApp.TAG, "Error opening " + zipData.getAbsolutePath() + " as a zip file.", e);
+            return false;
+        } catch (IOException e) {
+            Log.e(AnkiDroidApp.TAG, "Error accessing " + zipData.getAbsolutePath(), e);
+        }
+        ArrayList<Object[]> media = new ArrayList<Object[]>();
+        long sizecnt = 0;
+        
+        // get meta info first
+        ZipEntry metaEntry = z.getEntry("_meta");
+        if (metaEntry.getSize() >= 100000) {
+            Log.e(AnkiDroidApp.TAG, "Size for _meta entry found too big (" + z.getEntry("_meta").getSize() + ")");
+            return false;
+        }
+        byte buffer[] = new byte[100000];
+        try {
+            z.getInputStream(metaEntry).read(buffer);
+        } catch (IOException e) {
+            Log.e(AnkiDroidApp.TAG, "Error accessing _meta file in zip " + zipData.getAbsolutePath(), e);
+        }
+        JSONObject meta = null;
+        try {
+            meta = new JSONObject(buffer.toString());
+        } catch (JSONException e) {
+            Log.e(AnkiDroidApp.TAG, "Error constructing JSONObject for meta entry", e);
+            return false;
+        }
+        ZipEntry usnEntry = z.getEntry("_usn");
+        try {
+            z.getInputStream(usnEntry).read(buffer);
+        } catch (IOException e) {
+            Log.e(AnkiDroidApp.TAG, "Error accessing _usn file in zip " + zipData.getAbsolutePath(), e);
+        }
+        int nextUsn = Integer.parseInt(buffer.toString());
+
+        // Then loop through all files
+        for (ZipEntry zentry : Collections.list(z.entries())) {
+            // Check for zip bombs
+            sizecnt += zentry.getSize();
+            if (sizecnt > 100 * 1024 * 1024) {
+                Log.e(AnkiDroidApp.TAG, "Media zip file exceeds 100MB uncompressed, aborting unzipping");
+                return false;
+            }
+            if (zentry.getName() == "_meta" || zentry.getName() == "_usn") {
+                // Ignore previously retrieved meta
+                continue;
+            } else if (zentry.getName() == "_finished") {
+                finished = true;
+            } else {
+                String name = meta.optString(zentry.getName());
+                if (illegal(name)) {
+                    continue;
+                }
+                try {
+                    Utils.writeToFile(z.getInputStream(zentry), name);
+                } catch (IOException e1) {
+                    Log.e(AnkiDroidApp.TAG, "Error writing synced media file " + name, e1);
+                }
+                String csum = Utils.fileChecksum(name);
+                // append db
+                media.add(new Object[]{name, csum, _mtime(name)});
+                mMediaDb.execute("delete from log where fname = ?", new String[]{name});
+            }
+        }
+        
+        // update media db and note new starting usn
+        if (!media.isEmpty()) {
+            mMediaDb.executeMany("insert or replace into media values (?,?,?)", media);
+        }
+        setUsn(nextUsn); // commits
+        // if we have finished adding, we need to record the new folder mtime
+        // so that we don't trigger a needless scan
+        if (finished) {
+            syncMod();
+        }
+        return finished;
+    }
+
+    
+    /**
+     * Check if the file name has illegal for the OS characters.
+     * @param f The filename to be checked.
+     * @return Returns true if at least an illegal character is found.
+     */
+    private boolean illegal(String f) {
+        if (f.contains("/")) {
+            return true;
+        }
+        return false;        
+    }
+    
+    // Media syncing - bundling zip files to send to server
+    // Because there's no standard filename encoding for zips, and because not
+    // all zip clients support retrieving mtime, we store the files as ascii
+    // and place a json file in the zip with the necessary information.
+    ///////////////////////////////////////////////////////
+    
+    /**
+     * Add files to a zip until over SYNC_ZIP_SIZE. Return zip data.
+     * @return Returns a tuple with two objects. The first one is the zip file contents, the second a list
+     * with the filenames of the files inside the zip.
+     */
+    public Pair<File, List<String>> zipAdded() {
+        File f = new File(mCol.getPath().replaceFirst("collection\\.anki2$", "tmpsync.zip"));
+        
+        String sql = "select fname from log where type = " + Integer.toString(MEDIA_ADD);
+        List<String> filenames = mMediaDb.queryColumn(String.class, sql, 0);
+        List<String> fnames = new ArrayList<String>();
+        
+        try {
+            ZipOutputStream zos = new ZipOutputStream(new BufferedOutputStream(new FileOutputStream(f)));
+            
+            JSONObject files = new JSONObject();
+            int cnt = 0;
+            long sz = 0;
+            byte buffer[] = new byte[2048];
+            boolean finished = true;
+            for (String fname : filenames) {
+                fnames.add(fname);
+                BufferedInputStream bis = new BufferedInputStream(new FileInputStream(fname), 2048);
+                ZipEntry entry = new ZipEntry(Integer.toString(cnt));
+                zos.putNextEntry(entry);
+                int count = 0;
+                while((count = bis.read(buffer, 0, 2048)) != -1) {
+                    zos.write(buffer, 0, count);
+                }
+                bis.close();
+                files.put(Integer.toString(cnt), fname);
+                File file = new File(fname);
+                sz += file.length();
+                if (sz > SYNC_ZIP_SIZE) {
+                    finished = false;
+                    break;
+                }
+                cnt += 1;
+            }
+            if (finished) {
+                zos.putNextEntry(new ZipEntry("_finished"));
+            }
+            zos.putNextEntry(new ZipEntry("_meta"));
+            zos.write(files.toString().getBytes());
+            zos.close();
+        } catch (FileNotFoundException e) {
+            Log.e(AnkiDroidApp.TAG, Log.getStackTraceString(e));
+            return null;
+        } catch (IOException e) {
+            Log.e(AnkiDroidApp.TAG, Log.getStackTraceString(e));
+            return null;
+        } catch (JSONException e) {
+            Log.e(AnkiDroidApp.TAG, Log.getStackTraceString(e));
+            return null;
+        }
+        
+        return new Pair<File, List<String>>(f, fnames);
+    }
+    
+    /**
+     * Remove records from log table in media DB for a list or files.
+     * @param fnames A list containing the list of filenames to be removed from log table.
+     */
+    public void forgetAdded(List<String> fnames) {
+        if (!fnames.isEmpty()) {
+            ArrayList<Object[]> args = new ArrayList<Object[]>();
+            for (String fname : fnames) {
+                args.add(new Object[]{fname});
+            }
+            mMediaDb.executeMany("delete from log where fname = ?", args);
+        }
+    }
+    
+    
+    // Tracking changes (private)
+    /////////////////////////////
+    
+    /**
+     * Returns the number of seconds from epoch, since the last modification to the file in path.
+     * @param path The path to the file we are checking.
+     * @return The number of seconds (rounded down).
+     */
+    private long _mtime(String path) {
+        File f = new File(path);
+        return f.lastModified() / 1000;
+    }
+    
+    private String _checksum(String path) {
+        return Utils.fileChecksum(path);
+    }
+    
+    private long usn() {
+        return mMediaDb.queryScalar("select usn from meta");
+    }
+    private void setUsn(int usn) {
+        mMediaDb.execute("update meta set usn = ?", new Object[]{usn});
+    }
+    private void syncMod() {
+        mMediaDb.execute("update meta set dirMod = ?", new Object[]{_mtime(mDir)});
     }
     
 //    private static final Pattern regPattern = Pattern.compile("\\((\\d+)\\)$");
