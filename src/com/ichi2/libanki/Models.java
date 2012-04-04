@@ -988,8 +988,8 @@ public class Models {
      *  - 1: within a tag
      */
     public static String invertColors(String text) {
-        final String[] colors = {"white", "black"};
-        final String[] htmlColors = {"#000000", "#ffffff"};
+        final String[] colors = {"color=\"white\"", "color=\"black\""};
+        final String[] htmlColors = {"color=\"#000000\"", "color=\"#ffffff\""};
         for (int i = 0; i < colors.length; i++) {
         	text = text.replace(colors[i], htmlColors[i]);
         }
