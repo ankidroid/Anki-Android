@@ -79,8 +79,9 @@ public class Sound {
             String soundPath = soundDir + Uri.encode(sound);
             
             // Create appropiate list if needed
-            if (!sSoundPaths.containsKey(qa))
+            if (!sSoundPaths.containsKey(qa)) {
                 sSoundPaths.put(qa, new ArrayList<String>());
+            }
 
             sSoundPaths.get(qa).add(soundPath);
 
@@ -117,9 +118,9 @@ public class Sound {
      */
     public static void playSounds(int qa) {
         // If there are sounds to play for the current card, start with the first one
-        if (sSoundPaths != null && sSoundPaths.containsKey(qa))
-            playSound(sSoundPaths.get(qa).get(0),
-                    new PlayAllCompletionListener(qa));
+        if (sSoundPaths != null && sSoundPaths.containsKey(qa)) {
+            playSound(sSoundPaths.get(qa).get(0), new PlayAllCompletionListener(qa));
+        }
     }
 
     /**

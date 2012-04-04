@@ -2531,17 +2531,18 @@ public class Reviewer extends AnkiActivity implements IButtonListener{
      * Plays sounds (or TTS, if configured) for current shown side of card 
      */
     private void playSounds() {
-//        int qa = sDisplayAnswer ? MetaDB.LANGUAGES_QA_ANSWER : MetaDB.LANGUAGES_QA_QUESTION;
-//
-//        // We need to play the sounds from the proper side of the card
-//        if (!mSpeakText)
-//            Sound.playSounds(qa);
-//        else {
-//            if (sDisplayAnswer)
-//                ReadText.textToSpeech(Utils.stripHTML(getAnswer()), qa);
-//            else
-//                ReadText.textToSpeech(Utils.stripHTML(getQuestion()), qa);
-//        }
+        int qa = sDisplayAnswer ? MetaDB.LANGUAGES_QA_ANSWER : MetaDB.LANGUAGES_QA_QUESTION;
+
+        // We need to play the sounds from the proper side of the card
+        if (!mSpeakText) {
+            Sound.playSounds(qa);
+        } else {
+            if (sDisplayAnswer) {
+                ReadText.textToSpeech(Utils.stripHTML(mCurrentCard.getAnswer(mSimpleInterface)), qa);
+            } else {
+                ReadText.textToSpeech(Utils.stripHTML(mCurrentCard.getQuestion(mSimpleInterface)), qa);
+            }
+        }
     }
 
     private void setFlipCardAnimation() {
