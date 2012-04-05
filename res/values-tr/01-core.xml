@@ -69,7 +69,7 @@
   <string name="menu_suspend_card">Kartı Askıya Al</string>
   <string name="menu_suspend_note">Notu Askıya Al</string>
   <string name="menu_delete_note">Notu Sil</string>
-  <string name="delete_note_message">Bu not ve bütün kartları gerçekten silinsin mi?\n%s</string>
+  <string name="delete_note_message">Really delete this note and all its cards?\n%s</string>
   <string name="menu_edit_card">Kartı Düzenle</string>
   <string name="menu_select">Metni seç</string>
   <string name="menu_search">%1$s\'de Ara</string>
@@ -120,7 +120,7 @@
     <item quantity="other">%2$d\'in %1$d\'i</item>
   </plurals>
   <plurals name="reviewer_window_title">
-    <item quantity="one">1 minute left</item>
+    <item quantity="one">1 dakika kaldı</item>
     <item quantity="other">%d dakika kaldı</item>
   </plurals>
   <plurals name="studyoptions_congrats_message">

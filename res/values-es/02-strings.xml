@@ -22,13 +22,13 @@
 <resources>
   <string name="CardEditorCancelButton">Cancelar</string>
   <string name="CardEditorSaveButton">Guardar</string>
-  <string name="CardEditorLaterButton">Later</string>
-  <string name="CardEditorCardDeck">Card deck: %s</string>
-  <string name="CardEditorNoteDeck">Note deck: %s</string>
-  <string name="CardEditorModel">Note type: %s</string>
+  <string name="CardEditorLaterButton">Más tarde</string>
+  <string name="CardEditorCardDeck">Mazo de la Tarjeta: %s</string>
+  <string name="CardEditorNoteDeck">Mazo de la Nota: %s</string>
+  <string name="CardEditorModel">Tipo de Nota: %s</string>
   <string name="CardEditorTags">Etiquetas: %1$s</string>
   <string name="add_new_tag">Añadir nueva etiqueta</string>
-  <string name="note_type">Note type</string>
+  <string name="note_type">Tipo de Nota</string>
   <string name="sdcard_missing_message">La tarjeta SD no se encuentra disponible porque está siendo usada como almacenamiento via USB. Desconecta el USB para acceder a tus mazos.</string>
   <string name="show_whiteboard">Mostrar pizarra</string>
   <string name="hide_whiteboard">Ocultar Pizarra</string>
@@ -40,13 +40,13 @@
   <string name="leech_suspend_notification">Tarjeta marcada como sanguijuela y suspendida</string>
   <string name="leech_notification">Tarjeta marcada como sanguijuela</string>
   <string name="about_title">Acerca de</string>
-  <string name="cardeditor_title_add_note">Add Note</string>
-  <string name="cardeditor_title_edit_card">Edit Note</string>
-  <string name="factadder_saving_error">Error saving note</string>
-  <string name="cardeditor_move_note_too">Move note too</string>
-  <string name="cardeditor_move_to_notes_deck">To note\'s deck</string>
-  <string name="saving_facts">Saving note</string>
-  <string name="deck">Deck</string>
+  <string name="cardeditor_title_add_note">Añadir Nota</string>
+  <string name="cardeditor_title_edit_card">Editar Nota</string>
+  <string name="factadder_saving_error">Error al guardar la nota</string>
+  <string name="cardeditor_move_note_too">Mover también la nota</string>
+  <string name="cardeditor_move_to_notes_deck">Al mazo de la nota</string>
+  <string name="saving_facts">Guardando nota</string>
+  <string name="deck">Mazo</string>
   <string name="add">Añadir</string>
   <string name="close">Cerrar</string>
   <string name="select">Seleccionar</string>
@@ -58,12 +58,12 @@
   <string name="fact_adder_swap">nome</string>
   <string name="deckpicker_select_dictionary_title">Seleccionar diccionario</string>
   <string name="deckpicker_select_dictionary_default">Por defecto</string>
-  <string name="card_editor_add_card">Add note</string>
+  <string name="card_editor_add_card">Añadir nota</string>
   <string name="card_editor_reset">Restablecer</string>
   <string name="card_editor_copy_card">Copiar tarjeta</string>
   <string name="card_editor_reset_card">Reiniciar cuenta de progreso</string>
   <string name="error_insufficient_memory">La operación no es posible debido a insuficiencia de memoria en tu dispositivo</string>
-  <string name="tutorial_load">Creating tutorial deck.\nPlease wait...</string>
+  <string name="tutorial_load">Creando mazo tutorial.\nPor favor, espera...</string>
   <string name="tutorial_loading_error">No se pudo crear el mazo tutorial</string>
   <string name="rename">Renombrar</string>
   <string name="rename_error">El mazo %s no pudo ser renombrado</string>
@@ -71,10 +71,20 @@
   <string name="help_online">Ayuda en línea</string>
   <string name="help_faq">Preguntas más frecuentes</string>
   <string name="help_tutorial">Mazo tutorial</string>
-  <string name="check_db">Check database</string>
-  <string name="check_db_message">Checking database.\nPlease wait...</string>
+  <string name="check_db">Comprobar base de datos</string>
+  <string name="check_db_message">Comprobando base de datos.\nPor favor, espera...</string>
   <string name="simple_interface_hint">Vaciar %s. Ten en cuenta que la interfaz simple no puede mostrar imágenes/sonidos etc.</string>
-  <string name="delete_deck">Deleting deck...\nPlease wait.</string>
+  <string name="delete_deck">Eliminando mazo...\nPor favor, espera.</string>
+  <string-array name="dynOrderLabels">
+    <item>Oldest seen first</item>
+    <item>Random</item>
+    <item>Increasing intervals</item>
+    <item>Decreasing intervals</item>
+    <item>Most lapses</item>
+    <item>Failed today</item>
+    <item>Order added</item>
+    <item>Order due</item>
+  </string-array>
   <plurals name="factadder_cards_added">
     <item quantity="one">Se ha añadido 1 tarjeta</item>
     <item quantity="other">Se han añadido %d tarjetas</item>

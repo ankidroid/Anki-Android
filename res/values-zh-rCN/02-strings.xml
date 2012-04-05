@@ -75,6 +75,16 @@
   <string name="check_db_message">Checking database.\nPlease wait...</string>
   <string name="simple_interface_hint">Empty %s. Bear in mind that simple interface cannot show pictures/sounds etc.</string>
   <string name="delete_deck">Deleting deck...\nPlease wait.</string>
+  <string-array name="dynOrderLabels">
+    <item>Oldest seen first</item>
+    <item>Random</item>
+    <item>Increasing intervals</item>
+    <item>Decreasing intervals</item>
+    <item>Most lapses</item>
+    <item>Failed today</item>
+    <item>Order added</item>
+    <item>Order due</item>
+  </string-array>
   <plurals name="factadder_cards_added">
     <item quantity="one">添加一张卡片</item>
     <item quantity="other">%d cards added</item>

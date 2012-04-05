@@ -29,5 +29,6 @@
     <item>лучшая статистика</item>
     <item>колоды теперь сохраняются в одной коллекции</item>
     <item>Параметры теперь могут быть совместно используемыми</item>
+    <item>tablet layout</item>
   </string-array>
 </resources>

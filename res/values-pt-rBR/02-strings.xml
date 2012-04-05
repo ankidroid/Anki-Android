@@ -22,13 +22,13 @@
 <resources>
   <string name="CardEditorCancelButton">Cancelar</string>
   <string name="CardEditorSaveButton">Salvar</string>
-  <string name="CardEditorLaterButton">Later</string>
-  <string name="CardEditorCardDeck">Card deck: %s</string>
-  <string name="CardEditorNoteDeck">Note deck: %s</string>
-  <string name="CardEditorModel">Note type: %s</string>
+  <string name="CardEditorLaterButton">Mais Tarde</string>
+  <string name="CardEditorCardDeck">Deck de Cartões: %s</string>
+  <string name="CardEditorNoteDeck">Deck de Notas: %s</string>
+  <string name="CardEditorModel">Tipo de Nota: %s</string>
   <string name="CardEditorTags">Tags: %1$s</string>
   <string name="add_new_tag">Adicionar nova tag</string>
-  <string name="note_type">Note type</string>
+  <string name="note_type">Tipo de nota</string>
   <string name="sdcard_missing_message">Cartão SD não está disponível porque ele está sendo usado em armazenamento USB. Desconecte o USB para acessar seus decks.</string>
   <string name="show_whiteboard">Mostrar Quadro</string>
   <string name="hide_whiteboard">Esconder Quadro</string>
@@ -43,8 +43,8 @@
   <string name="cardeditor_title_add_note">Adicionar nota</string>
   <string name="cardeditor_title_edit_card">Editar nota</string>
   <string name="factadder_saving_error">Erro ao salvar nota</string>
-  <string name="cardeditor_move_note_too">Move note too</string>
-  <string name="cardeditor_move_to_notes_deck">To note\'s deck</string>
+  <string name="cardeditor_move_note_too">Mover nota também</string>
+  <string name="cardeditor_move_to_notes_deck">Para deck de notas</string>
   <string name="saving_facts">Salvando nota</string>
   <string name="deck">Deck</string>
   <string name="add">Adicionar</string>
@@ -63,7 +63,7 @@
   <string name="card_editor_copy_card">Copiar cartão</string>
   <string name="card_editor_reset_card">Redefinir progresso</string>
   <string name="error_insufficient_memory">Operação impossível devido a memória insuficiente no dispositivo</string>
-  <string name="tutorial_load">Creating tutorial deck.\nPlease wait...</string>
+  <string name="tutorial_load">Criando deck tutorial. \nPor favor aguarde...</string>
   <string name="tutorial_loading_error">Deck tutorial não pôde ser criado</string>
   <string name="rename">Renomear</string>
   <string name="rename_error">Deck %s não pôde ser renomeado</string>
@@ -75,6 +75,16 @@
   <string name="check_db_message">Verificando banco de dados.\nEspere um momento...</string>
   <string name="simple_interface_hint">%s Vazio. Tenha em mente que nessa simples interface não é possível visualizar imagens/sons etc.</string>
   <string name="delete_deck">Deletando deck...\nEspere um momento.</string>
+  <string-array name="dynOrderLabels">
+    <item>Oldest seen first</item>
+    <item>Random</item>
+    <item>Increasing intervals</item>
+    <item>Decreasing intervals</item>
+    <item>Most lapses</item>
+    <item>Failed today</item>
+    <item>Order added</item>
+    <item>Order due</item>
+  </string-array>
   <plurals name="factadder_cards_added">
     <item quantity="one">1 cartão adicionado</item>
     <item quantity="other">%d cartões adicionados</item>

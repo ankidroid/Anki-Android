@@ -69,7 +69,7 @@
   <string name="menu_suspend_card">Åsidosätt kort</string>
   <string name="menu_suspend_note">Åsidosätt anteckning</string>
   <string name="menu_delete_note">Ta bort anteckning</string>
-  <string name="delete_note_message">Really delete this note and all it\'s cards?\n%s</string>
+  <string name="delete_note_message">Really delete this note and all its cards?\n%s</string>
   <string name="menu_edit_card">Redigera kort</string>
   <string name="menu_select">Markera text</string>
   <string name="menu_search">Sökning i %1$s</string>
@@ -120,7 +120,7 @@
     <item quantity="other">%1$d av %2$d i kö</item>
   </plurals>
   <plurals name="reviewer_window_title">
-    <item quantity="one">1 minute left</item>
+    <item quantity="one">1 minut kvar</item>
     <item quantity="other">%d minuter kvar</item>
   </plurals>
   <plurals name="studyoptions_congrats_message">

@@ -70,14 +70,14 @@
   </string-array>
   <string-array name="gestures_labels">
     <item>Žádná akce</item>
-    <item>Show answer</item>
-    <item>Answer button 1</item>
-    <item>Answer button 2</item>
-    <item>Answer button 3</item>
-    <item>Answer button 4</item>
-    <item>Answer recommended (green)</item>
-    <item>Answer better than recommended</item>
-    <item>Undo</item>
+    <item>Zobrazit odpověď</item>
+    <item>Odpovědní tlačítko 1</item>
+    <item>Odpovědní tlačítko 2</item>
+    <item>Odpovědní tlačítko 3</item>
+    <item>Odpovědní tlačítko 4</item>
+    <item>Doporučená odpověď (zelená)</item>
+    <item>Odpovědět lépe, než bylo doporučeno</item>
+    <item>Zpět</item>
     <item>Upravit kartu</item>
     <item>Označit kartu</item>
     <item>Vyhledávání výrazu</item>
@@ -85,8 +85,8 @@
     <item>Odložit kartu</item>
     <item>Smazat kartu</item>
     <item>Vymazat tabuli</item>
-    <item>Play media</item>
-    <item>Abort learning</item>
+    <item>Přehrávat média</item>
+    <item>Přerušit učení</item>
   </string-array>
   <string-array name="theme_labels">
     <item>Android Tmavé</item>
@@ -95,17 +95,12 @@
     <item>Bílé</item>
   </string-array>
   <string-array name="leech_action_labels">
-    <item>Suspend card</item>
+    <item>Odložit kartu</item>
     <item>Tag only</item>
-    <item>Reset as new</item>
+    <item>Obnovit jako nové</item>
   </string-array>
   <string-array name="new_order_labels">
-    <item>New cards in random order</item>
-    <item>New cards in order added</item>
-  </string-array>
-  <string-array name="rev_order_labels">
-    <item>Sort by due date</item>
-    <item>Sort by decreasing interval (slower)</item>
-    <item>Sort by increasing interval (slower)</item>
+    <item>Nové karty v náhodném pořadí</item>
+    <item>Nové karty v pořadí přidání</item>
   </string-array>
 </resources>

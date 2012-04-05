@@ -69,7 +69,7 @@
   <string name="menu_suspend_card">Sospendi carta</string>
   <string name="menu_suspend_note">Sospendi nota</string>
   <string name="menu_delete_note">Elimina nota</string>
-  <string name="delete_note_message">Vuoi cancellare questa nota e tutte le sue carte?\n%s</string>
+  <string name="delete_note_message">Really delete this note and all its cards?\n%s</string>
   <string name="menu_edit_card">Modifica la carta</string>
   <string name="menu_select">Seleziona testo</string>
   <string name="menu_search">Ricerca in %1$s</string>

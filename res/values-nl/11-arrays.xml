@@ -103,9 +103,4 @@
     <item>Nieuwe kaarten in willekeurige volgorde</item>
     <item>Nieuwe kaarten in volgorde van toevoeging</item>
   </string-array>
-  <string-array name="rev_order_labels">
-    <item>op prioriteit sorteren</item>
-    <item>Op afnemende interval sorteren (langzamer)</item>
-    <item>Op toenemende interval sorteren (langzamer)</item>
-  </string-array>
 </resources>

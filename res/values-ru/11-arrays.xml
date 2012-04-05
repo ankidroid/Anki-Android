@@ -103,9 +103,4 @@
     <item>Новые в случайном порядке</item>
     <item>Новые в порядке их добавления</item>
   </string-array>
-  <string-array name="rev_order_labels">
-    <item>Сортировать по дате</item>
-    <item>Сортировка по убывающемуся интервалу (медленнее)</item>
-    <item>Сортировка по увеличивающемуся интервалу (медленнее)</item>
-  </string-array>
 </resources>

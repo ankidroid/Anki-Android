@@ -243,4 +243,6 @@
   <string name="deck_conf_add">Yapılandırma ekle</string>
   <string name="deck_conf_ren">Yapılandırma adını değiştir</string>
   <string name="deck_conf_rem">Yapılandırmayı kaldır</string>
+  <string name="pref_cat_tibetan">Tibetan Support</string>
+  <string name="pref_enable_tibetan">Enable Tibetan Support</string>
 </resources>
