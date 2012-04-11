@@ -32,6 +32,8 @@ import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Decks;
 import com.ichi2.libanki.sync.FullSyncer;
 import com.ichi2.libanki.sync.HttpSyncer;
+import com.ichi2.libanki.sync.MediaSyncer;
+import com.ichi2.libanki.sync.RemoteMediaServer;
 import com.ichi2.libanki.sync.RemoteServer;
 import com.ichi2.libanki.sync.Syncer;
 
@@ -236,6 +238,7 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
     	String hkey = (String)data.data[0];
     	boolean media = (Boolean) data.data[1];
     	String conflictResolution = (String) data.data[2];
+    	int mediaUsn = (Integer) data.data[3];
 
     	Collection col = Collection.currentCollection();
     	if (col == null) {
@@ -248,15 +251,13 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
     	HttpSyncer server = new RemoteServer(this, hkey);
     	Syncer client = new Syncer(col, server);
 
-    	// note mediaUSN for later
-    	//mMediaUsn = client.getMediaUsn();
-
     	// run sync and check state
     	boolean noChanges = false;
     	if (conflictResolution == null) {
 			Log.i(AnkiDroidApp.TAG, "Sync - starting sync");
 			publishProgress(R.string.sync_prepare_syncing);
     		Object[] ret = client.sync(this);
+    		mediaUsn = client.getmMediaUsn();
 			if (ret == null) {
     			data.success = false;
     			data.result = new Object[]{"genericError"};
@@ -266,6 +267,8 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
     		if (!retCode.equals("noChanges") && !retCode.equals("success")) {
     			data.success = false;
     			data.result = ret;
+    			// note mediaUSN for later
+    			data.data = new Object[]{mediaUsn};
     			return data;
     		}
     		// save and note success state
@@ -277,6 +280,7 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
 //    			publishProgress(R.string.sync_database_success);
     		}
     	} else {
+    	    mediaUsn = (Integer)data.data[0];
     		try {
         		server = new FullSyncer(col, hkey, this);
         		if (conflictResolution.equals("upload")) {
@@ -319,17 +323,17 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
     	}
 
     	// then move on to media sync
-    	boolean noMediaChanges = true;//false;
+    	boolean noMediaChanges = false;
     	if (media) {
-//		server = new RemoteMediaServer(hkey);
-//		client = MediaSyncer(mCol, server);
-//		ret = client.sync(mediaUsn);
-//		if (ret.equals("noMediaChanges") {
-//			publishProgress("XXX noMediachanges");
-//			noMediaChanges = true;
-//		} else {
-//			publishProgress("XXX mediaSuccess");
-//		}
+    	    server = new RemoteMediaServer(hkey, this);
+    	    MediaSyncer mediaClient = new MediaSyncer(col, (RemoteMediaServer) server);
+    	    String ret = mediaClient.sync(mediaUsn, this);
+    	    if (ret.equals("noChanges")) {
+    	        publishProgress(R.string.sync_media_no_changes);
+    	        noMediaChanges = true;
+    	    } else {
+    	        publishProgress(R.string.sync_media_success);
+    	    }
     	}
     	if (noChanges && noMediaChanges) {
         	data.success = false;

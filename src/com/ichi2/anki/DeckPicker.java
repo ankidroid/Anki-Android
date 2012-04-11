@@ -234,6 +234,7 @@ public class DeckPicker extends FragmentActivity {
 	private boolean mPrefStartupDeckPicker = false;
 	private long mCurrentDid;
 	private String mCurrentDeckPath = null;
+	private int mSyncMediaUsn = 0;
 
 	private EditText mDialogEditText;
 
@@ -445,6 +446,9 @@ public class DeckPicker extends FragmentActivity {
                         }
 						showDialog(DIALOG_SYNC_LOG);
 					} else if (resultType.equals("fullSync")) {
+					    if (data.data != null && data.data.length >= 1 && data.data[0] instanceof Integer) {
+	                        mSyncMediaUsn = (Integer) data.data[0];
+	                    }
 						showDialog(DIALOG_SYNC_CONFLICT_RESOLUTION);
 					} else if (resultType.equals("dbError")) {
 						mDialogMessage = res.getString(R.string.sync_corrupt_database, R.string.repair_deck);
@@ -1154,7 +1158,7 @@ public class DeckPicker extends FragmentActivity {
 			 builder.setPositiveButton(res.getString(R.string.retry), new DialogInterface.OnClickListener() {
 				 @Override
 				 public void onClick(DialogInterface dialog, int which) {
-					 sync(null);
+					 sync();
 				 }
 			 });
 			 builder.setNegativeButton(res.getString(R.string.cancel), null);
@@ -1925,9 +1929,19 @@ public class DeckPicker extends FragmentActivity {
 
 
 	private void sync() {
-		sync(null);
+		sync(null, 0);
 	}
-	private void sync(String syncConflictResolution) {
+	/**
+	 * The mother of all syncing attempts.
+	 * This might be called from sync() as first attempt to sync a collection OR from
+	 * the mSyncConflictResolutionListener if the first attempt determines that a full-sync
+	 * is required. In the second case, we have passed the mediaUsn that was obtained during
+	 * the first attempt.
+	 * @param syncConflictResolution Either "upload" or "download", depending on the user's choice.
+	 * @param syncMediaUsn The media Usn, as determined during the prior sync() attempt that
+	 * determined that full syncing was required.
+	 */
+	private void sync(String syncConflictResolution, int syncMediaUsn) {
 		if (mCol != null) {
 			SharedPreferences preferences = PrefSettings.getSharedPrefs(getBaseContext());
 			String hkey = preferences.getString("hkey", "");
@@ -1935,7 +1949,7 @@ public class DeckPicker extends FragmentActivity {
 				showDialog(DIALOG_USER_NOT_LOGGED_IN_SYNC);
 			} else {
 				mSyncButton.setClickable(false);
-				Connection.sync(mSyncListener, new Connection.Payload(new Object[] { hkey, false, syncConflictResolution }));
+				Connection.sync(mSyncListener, new Connection.Payload(new Object[] { hkey, false, syncConflictResolution, syncMediaUsn}));
 			}
 		}
 	}
@@ -1984,10 +1998,10 @@ public class DeckPicker extends FragmentActivity {
         public void onClick(DialogInterface dialog, int which) {
             switch (which) {
                 case DialogInterface.BUTTON_POSITIVE:
-                    sync("upload");
+                    sync("upload", mSyncMediaUsn);
                     break;
                 case DialogInterface.BUTTON_NEUTRAL:
-                    sync("download");
+                    sync("download", mSyncMediaUsn);
                     break;
                 case DialogInterface.BUTTON_NEGATIVE:
                 default:

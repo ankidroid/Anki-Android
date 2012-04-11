@@ -758,5 +758,9 @@ public class Syncer {
     private void mergeConf(JSONObject conf) {
     	mCol.setConf(conf);
     }
+
+    public int getmMediaUsn() {
+        return mMediaUsn;
+    }
    
 }
