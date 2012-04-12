@@ -95,13 +95,13 @@ public class Media {
                 Utils.writeToFile(stream, path);
                 stream.close();
             } catch (IOException e) {
-                Log.e(AnkiDroidApp.TAG, "Error initialising " + path, e);
+                throw new RuntimeException(e);
             }
         }
         mMediaDb = AnkiDatabaseManager.getDatabase(path);
     }
     
-    private void close() {
+    public void close() {
         mMediaDb.closeDatabase();
         mMediaDb = null;
         mCol = null;
@@ -132,7 +132,7 @@ public class Media {
             try {
                 Utils.copyFile(new File(opath), newMediaFile);
             } catch (IOException e) {
-                Log.e(AnkiDroidApp.TAG, "Could not copy file " + opath + " to location " + dst, e);
+                throw new RuntimeException(e);
             }
             return base;
         }
@@ -161,7 +161,7 @@ public class Media {
         try {
             Utils.copyFile(new File(opath), newMediaFile);
         } catch (IOException e) {
-            Log.e(AnkiDroidApp.TAG, "Could not copy file " + opath + " to location " + newMediaFile.getAbsolutePath(), e);
+            throw new RuntimeException(e);
         }
         return newMediaFile.getName();
     }
@@ -340,41 +340,30 @@ public class Media {
     public boolean syncAdd(File zipData) {
         boolean finished = false;
         ZipFile z = null;
-        try {
-            z = new ZipFile(zipData, ZipFile.OPEN_READ);
-        } catch (ZipException e) {
-            Log.e(AnkiDroidApp.TAG, "Error opening " + zipData.getAbsolutePath() + " as a zip file.", e);
-            return false;
-        } catch (IOException e) {
-            Log.e(AnkiDroidApp.TAG, "Error accessing " + zipData.getAbsolutePath(), e);
-        }
         ArrayList<Object[]> media = new ArrayList<Object[]>();
         long sizecnt = 0;
-        
-        // get meta info first
-        ZipEntry metaEntry = z.getEntry("_meta");
-        if (metaEntry.getSize() >= 100000) {
-            Log.e(AnkiDroidApp.TAG, "Size for _meta entry found too big (" + z.getEntry("_meta").getSize() + ")");
-            return false;
-        }
         byte buffer[] = new byte[100000];
-        try {
-            z.getInputStream(metaEntry).read(buffer);
-        } catch (IOException e) {
-            Log.e(AnkiDroidApp.TAG, "Error accessing _meta file in zip " + zipData.getAbsolutePath(), e);
-        }
         JSONObject meta = null;
+        
         try {
+            z = new ZipFile(zipData, ZipFile.OPEN_READ);
+            // get meta info first
+            ZipEntry metaEntry = z.getEntry("_meta");
+            if (metaEntry.getSize() >= 100000) {
+                Log.e(AnkiDroidApp.TAG, "Size for _meta entry found too big (" + z.getEntry("_meta").getSize() + ")");
+                return false;
+            }
+
+            z.getInputStream(metaEntry).read(buffer);
             meta = new JSONObject(buffer.toString());
-        } catch (JSONException e) {
-            Log.e(AnkiDroidApp.TAG, "Error constructing JSONObject for meta entry", e);
-            return false;
-        }
-        ZipEntry usnEntry = z.getEntry("_usn");
-        try {
+            ZipEntry usnEntry = z.getEntry("_usn");
             z.getInputStream(usnEntry).read(buffer);
+        } catch (JSONException e) {
+            throw new RuntimeException(e);
+        } catch (ZipException e) {
+            throw new RuntimeException(e);
         } catch (IOException e) {
-            Log.e(AnkiDroidApp.TAG, "Error accessing _usn file in zip " + zipData.getAbsolutePath(), e);
+            throw new RuntimeException(e);
         }
         int nextUsn = Integer.parseInt(buffer.toString());
 
@@ -398,8 +387,8 @@ public class Media {
                 }
                 try {
                     Utils.writeToFile(z.getInputStream(zentry), name);
-                } catch (IOException e1) {
-                    Log.e(AnkiDroidApp.TAG, "Error writing synced media file " + name, e1);
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
                 }
                 String csum = Utils.fileChecksum(name);
                 // append db
@@ -486,14 +475,11 @@ public class Media {
             zos.write(files.toString().getBytes());
             zos.close();
         } catch (FileNotFoundException e) {
-            Log.e(AnkiDroidApp.TAG, Log.getStackTraceString(e));
-            return null;
+            throw new RuntimeException(e);
         } catch (IOException e) {
-            Log.e(AnkiDroidApp.TAG, Log.getStackTraceString(e));
-            return null;
+            throw new RuntimeException(e);
         } catch (JSONException e) {
-            Log.e(AnkiDroidApp.TAG, Log.getStackTraceString(e));
-            return null;
+            throw new RuntimeException(e);
         }
         
         return new Pair<File, List<String>>(f, fnames);
@@ -573,7 +559,7 @@ public class Media {
         
         for (String f : result.first) {
             long mt = _mtime(f);
-            String csum = Utils.fileChecksum(getDir() + "/" + f);
+            String csum = _checksum(getDir() + "/" + f);
             media.add(new Object[]{f, csum, mt});
             log.add(new Object[]{f, MEDIA_ADD});
         }
@@ -603,7 +589,7 @@ public class Media {
                 used.put(cur.getString(0), false);
             }
         } catch (SQLException e) {
-            Log.e(AnkiDroidApp.TAG, "Error when checking for changed media", e);
+            throw new RuntimeException(e);
         } finally {
             if (cur != null) {
                 cur.close();
@@ -630,7 +616,7 @@ public class Media {
                 // modified since last time?
                 if ((f.lastModified() / 1000) != cache.get(fname).second) {
                     // and has different checksum?
-                    if (Utils.fileChecksum(f.getAbsolutePath()).compareTo(cache.get(fname).first) != 0) {
+                    if (_checksum(f.getAbsolutePath()).compareTo(cache.get(fname).first) != 0) {
                         added.add(fname);
                     }
                 }
