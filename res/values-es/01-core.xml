@@ -69,7 +69,7 @@
   <string name="menu_suspend_card">Suspender Tarjeta</string>
   <string name="menu_suspend_note">Suspender Nota</string>
   <string name="menu_delete_note">Eliminar Nota</string>
-  <string name="delete_note_message">Really delete this note and all its cards?\n%s</string>
+  <string name="delete_note_message">¿Realmente deseas eliminar esta nota y todas sus tarjetas?\n%s</string>
   <string name="menu_edit_card">Editar tarjeta</string>
   <string name="menu_select">Seleccionar texto</string>
   <string name="menu_search">Búsqueda en %1$s</string>
@@ -90,7 +90,7 @@
   <string name="studyoptions_congrats_finished">¡Felicidades! Has terminado por ahora.</string>
   <string name="studyoptions_congrats_more_rev">Se ha alcanzado el límite de repasos de hoy, pero todavía hay tarjetas a la espera de ser repasadas. Para una memorización óptima, considera la posibilidad de aumentar el límite diario en las opciones.</string>
   <string name="studyoptions_congrats_more_new">Hay más tarjetas nuevas disponibles, pero se ha alcanzado el límite diario. Puedes aumentar el límite en las opciones, pero ten en cuenta que cuantas más tarjetas nuevas introduzcas, mayor será la carga de trabajo de revisión a corto plazo.</string>
-  <string name="sd_card_not_mounted">SD card is not mounted.</string>
+  <string name="sd_card_not_mounted">La tarjeta SD no está preparada.</string>
   <string-array name="next_review_s">
     <item>1 segundo</item>
     <item>1 minuto</item>

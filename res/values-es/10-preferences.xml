@@ -243,6 +243,6 @@
   <string name="deck_conf_add">Agregar configuración</string>
   <string name="deck_conf_ren">Cambiar el nombre de la configuración</string>
   <string name="deck_conf_rem">Borrar configuración</string>
-  <string name="pref_cat_tibetan">Tibetan Support</string>
-  <string name="pref_enable_tibetan">Enable Tibetan Support</string>
+  <string name="pref_cat_tibetan">Soporte para Tibetano</string>
+  <string name="pref_enable_tibetan">Habilitar la compatibilidad con Tibetano</string>
 </resources>

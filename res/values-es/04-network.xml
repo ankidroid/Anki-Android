@@ -90,7 +90,7 @@
   <string name="sync_too_busy">Servidor demasiado ocupado. Inténtelo de nuevo más tarde.</string>
   <string name="sync_remote_db_error">La base de datos descargada estaba dañada. Por favor, inténtalo de nuevo.</string>
   <string name="sync_overwrite_error">Tu colección actual no pudo ser sobrescrita por el archivo descargado.</string>
-  <string name="sync_write_access_error">The downloaded file could not be saved to the sd card. Either your sd card is mounted read-only or there is not enough space.</string>
+  <string name="sync_write_access_error">No se pudo guardar el archivo descargado en la tarjeta sd. O bien la tarjeta sd está montada como de sólo lectura, o bien no hay suficiente espacio.</string>
   <string name="sync_deletions_message">Sincronizando elementos eliminados...</string>
   <string name="sync_small_objects_message">Sincronizando objetos pequeños ...</string>
   <string name="sync_finish_message">Finalizando la sincronización...</string>
