@@ -73,28 +73,28 @@
   <string-array name="deck_order_labels">
     <item>بآخر وصول</item>
     <item>أبجدي</item>
-    <item>بعدد البطاقات المستحقة</item>
+    <item>بعدد البطاقات للمراجعة</item>
     <item>بعدد البطاقات الكلي</item>
     <item>بعدد البطاقات الجديدة الكلي</item>
   </string-array>
   <string-array name="gestures_labels">
     <item>بدون اجراء</item>
-    <item>أظهر الإجابة</item>
     <item>زر الإجابة 1</item>
     <item>زر الإجابة 2</item>
     <item>زر الإجابة 3</item>
     <item>زر الإجابة 4</item>
     <item>الإجابة الموصى بها (أخضر)</item>
-    <item>الإجابة أفضل مما أوصى بها</item>
+    <item>الإجابة على نحو أفضل مما أوصى</item>
     <item>تراجع</item>
+    <item>إعادة</item>
     <item>حرر البطاقة</item>
     <item>علم البطاقة</item>
     <item>تعبير البحث</item>
-    <item>أخف البطاقة</item>
+    <item>اخف البطاقة</item>
     <item>علق البطاقة</item>
     <item>احذف البطاقة</item>
     <item>امسح السبورة</item>
-    <item>شغل الوسائط</item>
+    <item>إحباط التعلم</item>
   </string-array>
   <string-array name="theme_labels">
     <item>أندرويد داكن</item>

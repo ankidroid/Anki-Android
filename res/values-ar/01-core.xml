@@ -5,10 +5,10 @@
   <string name="yes">نعم</string>
   <string name="no">لا</string>
   <string name="ok">موافق</string>
-  <string name="studyoptions_deck_name">اسم مجموعة البطاقات</string>
+  <string name="studyoptions_deck_name">اسم الرزمة</string>
   <string name="studyoptions_reviews_due">للمراجعة:</string>
   <string name="studyoptions_new_today">جديد اليوم:</string>
-  <string name="studyoptions_new_total">مجموع البطاقات الجديدة:</string>
+  <string name="studyoptions_new_total">كل الجديد:</string>
   <string name="studyoptions_eta">الوقت المقدر (دقيقة):</string>
   <string name="studyoptions_start">بدء المراجعة</string>
   <string name="studyoptions_more">خيارات الدراسة</string>
@@ -30,7 +30,7 @@
   <string name="studyoptions_continue">مواصلة المراجعة</string>
   <string name="studyoptions_congrats_title">تهانينا!</string>
   <string name="studyoptions_congrats_learnmore">تعلم المزيد</string>
-  <string name="studyoptions_congrats_reviewearly">استعراض مبكر</string>
+  <string name="studyoptions_congrats_reviewearly">مراجعة مبكرة</string>
   <string name="studyoptions_congrats_syncdeck">مزامنة الرزمة</string>
   <string name="studyoptions_congrats_open_other_deck">افتح رزمة أخرى</string>
   <string name="studyoptions_congrats_finish">العودة إلى شاشة الدراسة</string>
@@ -50,10 +50,10 @@
   <string name="cram">مركّز</string>
   <string name="menu_open_deck">كل الرزم</string>
   <string name="menu_sync">مزامنة</string>
-  <string name="menu_download_deck">حمل رزمة</string>
+  <string name="menu_download_deck">تنزيل رزمة</string>
   <string name="menu_download_shared_deck">رزمة مشتركة</string>
   <string name="menu_download_personal_deck">رزمة شخصية</string>
-  <string name="menu_my_account">حساب المزامنة</string>
+  <string name="menu_my_account">حسابي</string>
   <string name="menu_preferences">تفضيلات</string>
   <string name="menu_zeemote">استخدمZeemote</string>
   <string name="menu_add_card">أضف بطاقة</string>
@@ -68,21 +68,21 @@
   <string name="menu_marked">معلمة</string>
   <string name="menu_create_deck">إنشاء رزمة</string>
   <string name="studyoptions_feedback">مرئياتك</string>
-  <string name="studyoptions_cram_dialog_title">وسوم للتركيز عليها</string>
+  <string name="studyoptions_cram_dialog_title">وسوم للتركيز</string>
   <string name="statistics">إحصائيات</string>
   <string name="studyoptions_load_other_deck">تحميل رزمة أخرى</string>
-  <string name="studyoptions_load_tutorial_deck">إنشاء الرزمة التعليمية</string>
+  <string name="studyoptions_load_tutorial_deck">تحميل الرزمة التعليمية</string>
   <string name="studyoptions_night_mode">ليلي</string>
   <string name="studyoptions_swap_qa">مبادلة س/ج</string>
   <string name="visit">قم بزيارة</string>
-  <string name="later">في وقت لاحق</string>
-  <string name="download">تحميل</string>
+  <string name="later">لاحقا</string>
+  <string name="download">تنزيل</string>
   <string name="deckpicker_loading_error">تعذر تحميل الرزمة</string>
   <string name="deckpicker_creating_backup">إنشاء النسخ الاحتياطي...</string>
   <string name="deckcreator_invalid_character">رمز غير صالح في اسم الرزمة</string>
   <string-array name="next_review_s">
-    <item>ثانية واحدة</item>
-    <item>دقيقة واحدة</item>
+    <item>1 ثانية</item>
+    <item>1 دقيقة</item>
     <item>1 ساعة</item>
     <item>1 يوم</item>
     <item>1 شهر</item>
@@ -97,20 +97,20 @@
     <item>سنوات%s</item>
   </string-array>
   <plurals name="studyoptions_window_title">
-    <item quantity="one">%1$s(1 من %3$d مستحق)</item>
-    <item quantity="other">%1$s(%2$d من %3$d مستحق)</item>
+    <item quantity="one">%1$s(1 من %3$d للمراجعة)</item>
+    <item quantity="other">%1$s(%2$d من %3$d للمراجعة)</item>
   </plurals>
   <plurals name="deckpicker_title">
-    <item quantity="one">كل الرزم: 1 من %2$d مستحقة (%3$s)</item>
-    <item quantity="other">كل الرزم: %1$d من %2$d مستحقة (%3$s)</item>
+    <item quantity="one">كل الرزم: 1 من %2$d للمراجعة (%3$s)</item>
+    <item quantity="other">كل الرزم: %1$d من %2$d للمراجعة (%3$s)</item>
   </plurals>
   <plurals name="deckpicker_title_minutes">
     <item quantity="one">دقيقة.</item>
     <item quantity="other">%d دقيقة.</item>
   </plurals>
   <plurals name="deckpicker_due">
-    <item quantity="one">1 من %2$d مستحقة</item>
-    <item quantity="other">%1$d من %2$d مستحقة</item>
+    <item quantity="one">1 من %2$d للمراجعة</item>
+    <item quantity="other">%1$d من %2$d للمراجعة</item>
   </plurals>
   <plurals name="reviewer_window_title">
     <item quantity="one">%1$s (بقيت دقيقة)</item>
@@ -121,7 +121,7 @@
     <item quantity="other">لقد انتهيت الآن.\nغدا سيكون هناك:\n%1$d بطاقات للمراجعة و %2$s.\n الوقت المقدر: %3$s</item>
   </plurals>
   <plurals name="studyoptions_congrats_new_cards">
-    <item quantity="one">بطاقة واحدة</item>
+    <item quantity="one">بطاقة</item>
     <item quantity="other">%1$d بطاقات جديدة</item>
   </plurals>
   <plurals name="studyoptions_congrats_eta">

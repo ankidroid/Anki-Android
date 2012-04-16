@@ -3,22 +3,22 @@
 <resources>
   <string name="widget_pref">ودجة</string>
   <string name="widget_minimum_cards_due">عتبة ودجة التنبيهات</string>
-  <string name="widget_minimum_cards_due_summary">الحد الأدنى من البطاقات التي تنتظر المراجعة في كل تنبيه زاد بمقدار:XXX</string>
+  <string name="widget_minimum_cards_due_summary">زاد الحد الأدنى من البطاقات المستحقة في كل تنبيه بمقدار:XXX</string>
   <string name="widget_minimum_cards_due_vibrate">اهتزاز</string>
-  <string name="widget_minimum_cards_due_blink">وميض الضوء</string>
-  <string name="widget_minimum_cards_due_notification_ticker_title">بطاقات تنتظر المراجعة</string>
-  <string name="widget_minimum_cards_due_notification_ticker_text">%d بطاقات آنكيدرويد تنتظر المراجعة</string>
-  <string name="widget_no_cards_due">لا شيء للمراجعة</string>
+  <string name="widget_minimum_cards_due_blink">وميض الإضاءة</string>
+  <string name="widget_minimum_cards_due_notification_ticker_title">بطاقات مستحقة</string>
+  <string name="widget_minimum_cards_due_notification_ticker_text">%d بطاقات آنكيدرويد مستحقة</string>
+  <string name="widget_no_cards_due">لا شيء مستحق</string>
   <string name="widget_loading">تحميل الودجة...</string>
   <string name="widget_medium">آنكيدرويد متوسط</string>
   <string name="widget_small">آنكيدرويد صغير</string>
   <string name="widget_big">آنكيدرويد كبير</string>
   <string name="widget_big_restrictions_dialog">نظرا لبعض القيود في إطار ودجات أندرويد فإن هذه الودجة يمكنها عرض النص فقط وليس الصور/الأصوات إلخ.</string>
   <string name="open_in_reviewer">افتح الرزمة في آنكيدرويد</string>
-  <string name="widget_big_tomorrow_due">ينتظر المراجعة غدا:</string>
+  <string name="widget_big_tomorrow_due">المستحق غدا:</string>
   <plurals name="widget_cards_in_decks_due">
-    <item quantity="one">بطاقة واحدة تنتظر المراجعة في %2$s</item>
-    <item quantity="other">%1$d بطاقة تنتظر المراجعة في %2$s</item>
+    <item quantity="one">بطاقة واحدة مستحقة في %2$s</item>
+    <item quantity="other">%1$d بطاقة مستحقة في %2$s</item>
   </plurals>
   <plurals name="widget_decks">
     <item quantity="one">رزمة واحدة</item>
