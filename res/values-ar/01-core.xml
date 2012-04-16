@@ -33,11 +33,11 @@
   <string name="studyoptions_eta">الوقت المقدر (دقيقة):</string>
   <string name="studyoptions_start">بدء المراجعة</string>
   <string name="show_answer">أظهر الإجابة</string>
-  <string name="ease1_learning">مرة أخرى</string>
+  <string name="ease1_learning">مجددا</string>
   <string name="ease2_learning">جيد</string>
   <string name="ease3_learning">سهل</string>
   <string name="ease4_learning">سهل جداُ</string>
-  <string name="ease1_successive">مرة أخرى</string>
+  <string name="ease1_successive">مجددا</string>
   <string name="ease2_successive">صعب</string>
   <string name="ease3_successive">جيد</string>
   <string name="studyoptions_congrats_learnmore">تعلم المزيد</string>

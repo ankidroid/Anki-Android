@@ -22,8 +22,8 @@
 <resources>
   <string name="pref_cat_decks">الرزم</string>
   <string name="pref_cat_sync">المزامنة</string>
-  <string name="pref_cat_qadisplay">العرض</string>
-  <string name="pref_cat_general">العام</string>
+  <string name="pref_cat_qadisplay">عرض</string>
+  <string name="pref_cat_general">عام</string>
   <string name="pref_cat_start">بدء التشغيل</string>
   <string name="pref_cat_extras">إضافات</string>
   <string name="pref_cat_whiteboard">السبورة</string>
@@ -156,7 +156,7 @@
   <string name="studyoptions_limit_select_tags">اختر الوسوم</string>
   <string name="studyoptions_limit_tags_active">مع: %1$s</string>
   <string name="studyoptions_limit_tags_inactive">من دون: %1$s</string>
-  <string name="studyoptions_limit_button_text">الحد الأقصى</string>
+  <string name="studyoptions_limit_button_text">حد</string>
   <string name="studyoptions_limit_dialog_title">حد التعلم</string>
   <string name="studyoptions_session">الجلسة</string>
   <string name="studyoptions_tag">بالوسم</string>

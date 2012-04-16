@@ -27,7 +27,7 @@
     <item><![CDATA[There are mainly two ways of getting new cards:<br />You either add premade decks of other users (choose &quot;shared decks&quot; in the decks summary) or create them by yourself.]]></item> 
     <item><![CDATA[But anyway, creating own decks is essential to suit your needs perfectly. You can do this directly in AnkiDroid...]]></item> 
     <item><![CDATA[Let\'s have a look on the top bar:<br />In the left top corner you find some numbers. The red one counts the failed cards (answered by &quot;again&quot;),]]></item> 
-    <item><![CDATA[On the right corner you find information about your thinking time of this card and about your performance.]]></item> 
+    <item><![CDATA[A jobb sarokban láthatod, hogy mennyi ideje gondolkodsz ezen a kártyán és hogy hogyan teljesítesz.]]></item> 
     <item><![CDATA[Albeit you can use AnkiDroid stand alone, it is fully connected to AnkiWeb, the syncing server of Anki Desktop (available for Linux, Windows, Mac).]]></item> 
     <item><![CDATA[These have been the main points of AnkiDroid usage.<br /><br>For more information about the key concept of Anki, visit http://ankisrs.net/]]></item> 
  </string-array>
@@ -42,7 +42,7 @@
     <item><![CDATA[You\'ll find thousands of premade decks to download and there are probably some which are useful for you.]]></item> 
     <item><![CDATA[... or (a bit more convenient) with the desktop application Anki (downloadable for free under http://ankisrs.net/).<br><br>You can sync your decks with the desktop application very easily, so transfering the data is not a problem.]]></item> 
     <item><![CDATA[the black one shows the number of cards you\'ve already learned before and which are due to review today, and the blue number tells you, how many new cards are projected for today. <br />The type of the actual cards is specified by an underline.]]></item> 
-    <item><![CDATA[The upper bar shows your progress, the lower one indicates the percentage of yes answers.]]></item> 
+    <item><![CDATA[A felső csík mutatja az előrehaladásod, az alsó az igen válaszok százalékát.]]></item> 
     <item><![CDATA[Thus, you can easily sync your collection between AnkiDroid and Anki Desktop and use the latter for a more convenient card adding and managing.]]></item> 
     <item><![CDATA[Just try it a bit out now and see, if it fits your needs.<br><br>Maybe start with the deck overview (hit menu on the main screen and choose &quot;all decks&quot;), where you can download premade decks or create your own (just use the menu there).]]></item> 
  </string-array>
