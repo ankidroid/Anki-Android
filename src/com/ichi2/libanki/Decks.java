@@ -81,7 +81,7 @@ public class Decks {
 			+ ", "
 			+ "'perDay': 20, }, "
 			+ "'lapse': {"
-			+ "'delays': [1, 10], "
+			+ "'delays': [10], "
 			+ "'mult': 0, "
 			+ "'minInt': 1, "
 			+ "'leechFails': 8, "
@@ -211,7 +211,7 @@ public class Decks {
 		}
 		if (name.matches(".*::.*")) {
 			// not top level; ensure all parents exist
-			_ensureParents(name);
+			name = _ensureParents(name);
 		}
 		JSONObject g;
 		long id;
@@ -370,17 +370,23 @@ public class Decks {
 		return true;
 	}
 
-	private void _ensureParents(String name) {
-		String[] path = name.split("::");
+	/** Ensure parents exist, and return name with case matching parents. */
+	private String _ensureParents(String name) {
 		String s = "";
+		String[] path = name.split("::");
 		for (int i = 0; i < path.length - 1; i++) {
 			if (i == 0) {
 				s = path[0];
 			} else {
 				s = s + "::" + path[i];
 			}
-			id(s);
+			// fetch or create
+			long did = id(s);
+			// get original case
+			s = name(did);
 		}
+		name = s + "::" + path[path.length - 1];
+		return name;
 	}
 
 	/**

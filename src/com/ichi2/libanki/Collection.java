@@ -560,8 +560,9 @@ public class Collection {
 					}
 					// if missing ord and is available, generate
 					if (!doHave && avail.contains(tord)) {
+						// we'd like to use the same due# as sibling cards, but we can't retrieve that quickly, so we give it a new id instead
 						data.add(new Object[] { ts, nid, cur.getLong(2), tord, now,
-								usn, cur.getLong(0) });
+								usn, nextID("pos") });
 						ts += 1;
 					}
 				}
@@ -1031,8 +1032,12 @@ public class Collection {
         		for (JSONObject m : mModels.all()) {
         			updateFieldCache(Utils.arrayList2array(mModels.nids(m)));
         		}
+        		// new card position
+        		mConf.put("nextPos", mDb.queryScalar("SELECT max(due) + 1 FROM cards WHERE type = 0", false));
         		mDb.getDatabase().setTransactionSuccessful();
-	        } finally {
+	        } catch (JSONException e) {
+				throw new RuntimeException(e);
+			} finally {
 	        	mDb.getDatabase().endTransaction();
 	        }
     	} catch (RuntimeException e) {

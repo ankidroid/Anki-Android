@@ -1003,7 +1003,6 @@ public class Sched {
 	}
 
 	private JSONObject _lrnConf(Card card) {
-		JSONObject conf = _cardConf(card);
 		if (card.getType() == 2) {
 			return _lapseConf(card);
 		} else {
@@ -1013,7 +1012,8 @@ public class Sched {
 
 	private void _rescheduleAsRev(Card card, JSONObject conf, boolean early) {
 		if (card.getType() == 2) {
-			card.setDue(card.getODue());
+			card.setDue(Math.max(mToday + 1, card.getODue()));
+			card.setODue(0);
 		} else {
 			_rescheduleNew(card, conf, early);
 		}
@@ -2118,7 +2118,7 @@ public class Sched {
 			int low = mCol.getDb().queryScalar("SELECT min(due) FROM cards WHERE due >= " + start + " AND type = 0 AND id NOT IN " + scids, false);
 			if (low != 0) {
 				int shiftby = high - low + 1;
-				mCol.getDb().execute("UPDATE cards SET mod = " + now + ", usn = " + mCol.usn() + ", due = due + " + shiftby + " WHERE id NOT IN " + scids + " AND due >= " + low);
+				mCol.getDb().execute("UPDATE cards SET mod = " + now + ", usn = " + mCol.usn() + ", due = due + " + shiftby + " WHERE id NOT IN " + scids + " AND due >= " + low + " AND queue = 0");
 			}
 		}
 		// reorder cards
