@@ -176,6 +176,12 @@ for language in languages:
 		fileExt = fileExtFor(f)
 		anyError = not(update(valuesDirectory, f, zip.read(language + "/" + f + fileExt), fileExt, True, language)) or anyError
 
+	if anyError:
+		if raw_input("At least one file of the last handled language contains an error. Please check\nContinue anyway? (y/n)") != 'y':
+			break
+		else:
+			anyError = False
+
 # Special case: English tutorial.
 valuesDirectory = "../res/values/"
 createIfNotExisting(valuesDirectory)
@@ -188,10 +194,6 @@ print
 update(valuesDirectory, f, source.read(), fileExt, False)
 
 print "\nremoving crowdin-file\n"
-os.remove(zipname)
-
-if anyError:
-	print "At least one file contained an error\nPlease check!\n"
-	
+os.remove(zipname)	
 
 
