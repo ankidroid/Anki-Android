@@ -941,6 +941,8 @@ public class DeckPicker extends FragmentActivity {
 		});
 		mDeckListView.setOnItemClickListener(mDeckSelHandler);
 		mDeckListView.setAdapter(mDeckListAdapter);
+		mDeckListView.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
+
 		registerForContextMenu(mDeckListView);
 
 		showStartupScreensAndDialogs(preferences, 0);

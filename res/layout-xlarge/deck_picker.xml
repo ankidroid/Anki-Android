@@ -4,7 +4,7 @@
 	android:layout_width="fill_parent"
 	android:layout_height="fill_parent"
 	android:orientation="horizontal"
-	android:background="#ff0000"
+	android:background="#000000"
 	android:id="@+id/deckpicker_view">
 
    	<RelativeLayout
