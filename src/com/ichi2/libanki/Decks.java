@@ -64,7 +64,7 @@ public class Decks {
 			+ // currentDay, count
 			"'revToday': [0, 0], " + "'lrnToday': [0, 0], "
 			+ "'timeToday': [0, 0], " + // time in ms
-			"'collapsed': False, 'dyn': 0, 'desc': \"\", 'usn': 0, 'delays' [1, 10], 'separate': True, 'fmult': 0, " +
+			"'collapsed': False, 'dyn': 1, 'desc': \"\", 'usn': 0, 'delays': [1, 10], 'separate': True, 'fmult': 0, " +
 			"'cramRev': False, 'search': \"\", 'limit': 100, 'order': 0, 'shift': True }";
 	
 	
@@ -216,7 +216,7 @@ public class Decks {
 		JSONObject g;
 		long id;
 		try {
-			g = new JSONObject(defaultDeck);
+			g = new JSONObject(type);
 			g.put("name", name);
 			id = Utils.intNow(1000);
 			while (mDecks.containsKey(id)) {
