@@ -1,4 +1,4 @@
-/***************************************************************************************
+/****************************************************************************************
  * Copyright (c) 2012 Kostas Spyropoulos <inigo.aldana@gmail.com>                       *
  *                                                                                      *
  * This program is free software; you can redistribute it and/or modify it under        *
@@ -129,7 +129,7 @@ public class RemoteMediaServer extends HttpSyncer {
                 throw new RuntimeException(e);
             }
             if (!s.equalsIgnoreCase("null") && s.length() != 0) {
-                return Long.getLong(s);
+                return Long.parseLong(s);
             }
         }
         Log.e(AnkiDroidApp.TAG, "Error in RemoteMediaServer.mediaSanity(): " + ret.getStatusLine().getReasonPhrase());

@@ -1,4 +1,4 @@
-/***************************************************************************************
+/****************************************************************************************
  * Copyright (c) 2012 Kostas Spyropoulos <inigo.aldana@gmail.com>                       *
  *                                                                                      *
  * This program is free software; you can redistribute it and/or modify it under        *
@@ -69,6 +69,7 @@ public class MediaSyncer {
         while (true) {
             Pair<File, List<String>> zipAdded = files();
             if (zipAdded.second == null || zipAdded.second.size() == 0) {
+                zipAdded.first.delete();
                 // finished
                 break;
             }

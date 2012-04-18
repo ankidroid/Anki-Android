@@ -1949,7 +1949,7 @@ public class DeckPicker extends FragmentActivity {
 				showDialog(DIALOG_USER_NOT_LOGGED_IN_SYNC);
 			} else {
 				mSyncButton.setClickable(false);
-				Connection.sync(mSyncListener, new Connection.Payload(new Object[] { hkey, false, syncConflictResolution, syncMediaUsn}));
+				Connection.sync(mSyncListener, new Connection.Payload(new Object[] { hkey, true, syncConflictResolution, syncMediaUsn}));
 			}
 		}
 	}

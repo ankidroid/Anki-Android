@@ -301,7 +301,7 @@ public class Media {
     //////////////////////////////////////
     
     public boolean hasChanged() {
-        return (mMediaDb != null && mMediaDb.queryLongScalar("select 1 from log limit 1") == 1);
+        return (mMediaDb != null && mMediaDb.queryLongScalar("select 1 from log limit 1", false) == 1);
     }
     
     public List<String> removed() {
@@ -319,7 +319,7 @@ public class Media {
             if (f == "") {
                 continue;
             }
-            File file = new File(f);
+            File file = new File(getDir() + "/" + f);
             if (file.exists()) {
                 file.delete();
             }
@@ -344,20 +344,19 @@ public class Media {
         long sizecnt = 0;
         byte buffer[] = new byte[100000];
         JSONObject meta = null;
-        
+        int nextUsn = 0;
         try {
             z = new ZipFile(zipData, ZipFile.OPEN_READ);
             // get meta info first
             ZipEntry metaEntry = z.getEntry("_meta");
-            if (metaEntry.getSize() >= 100000) {
-                Log.e(AnkiDroidApp.TAG, "Size for _meta entry found too big (" + z.getEntry("_meta").getSize() + ")");
-                return false;
-            }
-
-            z.getInputStream(metaEntry).read(buffer);
-            meta = new JSONObject(buffer.toString());
+            //if (metaEntry.getSize() >= 100000) {
+            //    Log.e(AnkiDroidApp.TAG, "Size for _meta entry found too big (" + z.getEntry("_meta").getSize() + ")");
+            //    return false;
+            //}
+            meta = new JSONObject(Utils.convertStreamToString(z.getInputStream(metaEntry)));
             ZipEntry usnEntry = z.getEntry("_usn");
-            z.getInputStream(usnEntry).read(buffer);
+            String usnstr = Utils.convertStreamToString(z.getInputStream(usnEntry));
+            nextUsn = Integer.parseInt(usnstr);
         } catch (JSONException e) {
             throw new RuntimeException(e);
         } catch (ZipException e) {
@@ -365,7 +364,6 @@ public class Media {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        int nextUsn = Integer.parseInt(buffer.toString());
 
         // Then loop through all files
         for (ZipEntry zentry : Collections.list(z.entries())) {
@@ -375,10 +373,10 @@ public class Media {
                 Log.e(AnkiDroidApp.TAG, "Media zip file exceeds 100MB uncompressed, aborting unzipping");
                 return false;
             }
-            if (zentry.getName() == "_meta" || zentry.getName() == "_usn") {
+            if (zentry.getName().compareTo("_meta") == 0 || zentry.getName().compareTo("_usn") == 0) {
                 // Ignore previously retrieved meta
                 continue;
-            } else if (zentry.getName() == "_finished") {
+            } else if (zentry.getName().compareTo("_finished") == 0) {
                 finished = true;
             } else {
                 String name = meta.optString(zentry.getName());
@@ -386,11 +384,11 @@ public class Media {
                     continue;
                 }
                 try {
-                    Utils.writeToFile(z.getInputStream(zentry), name);
+                    Utils.writeToFile(z.getInputStream(zentry), getDir() + "/" + name);
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
-                String csum = Utils.fileChecksum(name);
+                String csum = Utils.fileChecksum(getDir() + "/" + name);
                 // append db
                 media.add(new Object[]{name, csum, _mtime(name)});
                 mMediaDb.execute("delete from log where fname = ?", new String[]{name});
@@ -583,7 +581,7 @@ public class Media {
         Map<String, Boolean> used = new HashMap<String, Boolean>();
         Cursor cur = null;
         try {
-            cur = mMediaDb.getDatabase().query("media", new String[]{"name", "csum", "mod"}, null, null, null, null, null);
+            cur = mMediaDb.getDatabase().query("media", new String[]{"fname", "csum", "mod"}, null, null, null, null, null);
             while (cur.moveToNext()) {
                 cache.put(cur.getString(0), new Pair<String, Long>(cur.getString(1), cur.getLong(1)));
                 used.put(cur.getString(0), false);

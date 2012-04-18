@@ -1,4 +1,4 @@
-/***************************************************************************************
+/****************************************************************************************
  * Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com>                                   *
  * Copyright (c) 2011 Kostas Spyropoulos <inigo.aldana@gmail.com>                       *
  * Copyright (c) 2012 Norbert Nagold <norbert.nagold@gmail.com>                         *
