@@ -33,11 +33,11 @@
   <string name="studyoptions_eta">الوقت المقدر (دقيقة):</string>
   <string name="studyoptions_start">بدء المراجعة</string>
   <string name="show_answer">أظهر الإجابة</string>
-  <string name="ease1_learning">مرة أخرى</string>
+  <string name="ease1_learning">مجددا</string>
   <string name="ease2_learning">جيد</string>
   <string name="ease3_learning">سهل</string>
   <string name="ease4_learning">سهل جداُ</string>
-  <string name="ease1_successive">مرة أخرى</string>
+  <string name="ease1_successive">مجددا</string>
   <string name="ease2_successive">صعب</string>
   <string name="ease3_successive">جيد</string>
   <string name="studyoptions_congrats_learnmore">تعلم المزيد</string>
@@ -69,7 +69,7 @@
   <string name="menu_suspend_card">علق البطاقة</string>
   <string name="menu_suspend_note">ملاحظة التعليق</string>
   <string name="menu_delete_note">ملاحظة الحذف</string>
-  <string name="delete_note_message">Really delete this note and all its cards?\n%s</string>
+  <string name="delete_note_message">هل تريد حقا حذف هذه الملاحظة و جميع بطاقاتها؟\n%s</string>
   <string name="menu_edit_card">حرر البطاقة</string>
   <string name="menu_select">حدد نصا</string>
   <string name="menu_search">البحث في %1$s</string>

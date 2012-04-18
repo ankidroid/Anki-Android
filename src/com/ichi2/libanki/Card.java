@@ -233,7 +233,7 @@ public class Card implements Cloneable {
 	public HashMap<String, String> _getQA(boolean reload) {
 		if (mQA == null || reload) {
 			mQA = new HashMap<String, String>();
-			Note n = note();
+			Note n = note(reload);
 			JSONObject m = model();
 			Object[] data;
 			try {

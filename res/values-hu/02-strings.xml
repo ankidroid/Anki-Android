@@ -22,13 +22,13 @@
 <resources>
   <string name="CardEditorCancelButton">Mégse</string>
   <string name="CardEditorSaveButton">Mentés</string>
-  <string name="CardEditorLaterButton">Later</string>
-  <string name="CardEditorCardDeck">Card deck: %s</string>
-  <string name="CardEditorNoteDeck">Note deck: %s</string>
-  <string name="CardEditorModel">Note type: %s</string>
+  <string name="CardEditorLaterButton">Később</string>
+  <string name="CardEditorCardDeck">Kártya pakli: %s</string>
+  <string name="CardEditorNoteDeck">Jegyzet pakli: %s</string>
+  <string name="CardEditorModel">Jegyzet típusa: %s</string>
   <string name="CardEditorTags">Címkék: %1$s</string>
   <string name="add_new_tag">Új címke hozzáadása</string>
-  <string name="note_type">Note type</string>
+  <string name="note_type">Jegyzet típus</string>
   <string name="sdcard_missing_message">Az SD kártya nem elérhető, mert USB háttérként van használatban. Válaszd le az USB-ről a készüléket, hogy hozzáférhess a paklikhoz.</string>
   <string name="show_whiteboard">Tábla mutatása</string>
   <string name="hide_whiteboard">Tábla elrejtése</string>
@@ -40,13 +40,13 @@
   <string name="leech_suspend_notification">Kártya megjelölve piócaként és felfüggesztésre került</string>
   <string name="leech_notification">Kártya megjelölve piócaként</string>
   <string name="about_title">Névjegy</string>
-  <string name="cardeditor_title_add_note">Add Note</string>
-  <string name="cardeditor_title_edit_card">Edit Note</string>
-  <string name="factadder_saving_error">Error saving note</string>
-  <string name="cardeditor_move_note_too">Move note too</string>
-  <string name="cardeditor_move_to_notes_deck">To note\'s deck</string>
-  <string name="saving_facts">Saving note</string>
-  <string name="deck">Deck</string>
+  <string name="cardeditor_title_add_note">Jegyzet hozzáadása</string>
+  <string name="cardeditor_title_edit_card">Jegyzet szerkesztése</string>
+  <string name="factadder_saving_error">Hiba a jegyzet mentése közben</string>
+  <string name="cardeditor_move_note_too">Jegyzet mozgatása felfelé</string>
+  <string name="cardeditor_move_to_notes_deck">Jegyzet paklijához</string>
+  <string name="saving_facts">Jegyzet mentése</string>
+  <string name="deck">Pakli</string>
   <string name="add">Hozzáadás</string>
   <string name="close">Bezárás</string>
   <string name="select">Kiválasztás</string>
@@ -58,12 +58,12 @@
   <string name="fact_adder_swap">Csere</string>
   <string name="deckpicker_select_dictionary_title">Szótár kiválasztása</string>
   <string name="deckpicker_select_dictionary_default">Alap</string>
-  <string name="card_editor_add_card">Add note</string>
+  <string name="card_editor_add_card">Jegyzet hozzáadása</string>
   <string name="card_editor_reset">Reset</string>
   <string name="card_editor_copy_card">Kártya másolása</string>
   <string name="card_editor_reset_card">Reset folyamat</string>
   <string name="error_insufficient_memory">A művelet nem végrhajtható:  a készülék nem rendelkezik elég memóriával</string>
-  <string name="tutorial_load">Creating tutorial deck.\nPlease wait...</string>
+  <string name="tutorial_load">Bemutató pakli létrehozása.\nKérlek, várj...</string>
   <string name="tutorial_loading_error">Az oktató paklit nem sikerült létrehozni</string>
   <string name="rename">Átnevezés</string>
   <string name="rename_error">A %s paklit nem lehetett átnevezni</string>
@@ -71,19 +71,19 @@
   <string name="help_online">Online segítség</string>
   <string name="help_faq">GYIK</string>
   <string name="help_tutorial">Oktató pakli</string>
-  <string name="check_db">Check database</string>
-  <string name="check_db_message">Checking database.\nPlease wait...</string>
+  <string name="check_db">Adatbázis ellenőrzése</string>
+  <string name="check_db_message">Adatbázis ellenőrzése.\nKérlek, várj...</string>
   <string name="simple_interface_hint">Üres %s. Tarsd szem előtt, hogy az egyszerű felület nem tud képeket/hangokat/stb. megjeleníteni.</string>
-  <string name="delete_deck">Deleting deck...\nPlease wait.</string>
+  <string name="delete_deck">Pakli törlése...\nKérlek, várj...</string>
   <string-array name="dynOrderLabels">
-    <item>Oldest seen first</item>
-    <item>Random</item>
-    <item>Increasing intervals</item>
-    <item>Decreasing intervals</item>
-    <item>Most lapses</item>
-    <item>Failed today</item>
-    <item>Order added</item>
-    <item>Order due</item>
+    <item>Legrégebbi látott először</item>
+    <item>Véletlenszerű</item>
+    <item>Növekvő időközök</item>
+    <item>Csökkenő időközök</item>
+    <item>Legtöbb hiba</item>
+    <item>Ma nem sikerült</item>
+    <item>Rendelés hozzáadva</item>
+    <item>Rendelés</item>
   </string-array>
   <plurals name="factadder_cards_added">
     <item quantity="one">1 kártya hozzáadva</item>

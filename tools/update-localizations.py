@@ -23,7 +23,7 @@
 # Do not remove languages.
 # When you add a language, please also add it to mAppLanguages in Preferences.java
 
-languages = ['ar', 'bg', 'ca', 'cs', 'de', 'el', 'es-ES', 'et', 'fi', 'fr', 'hu', 'id', 'it', 'ja', 'ko', 'nl', 'no', 'pl', 'pt-PT', 'pt-BR', 'ro', 'ru', 'sr', 'sv-SE', 'th', 'tr', 'vi', 'zh-CN', 'zh-TW'];
+languages = ['ar', 'bg', 'ca', 'cs', 'de', 'el', 'es-ES', 'et', 'fi', 'fr', 'hu', 'id', 'it', 'ja', 'ko', 'nl', 'no', 'pl', 'pt-PT', 'pt-BR', 'ro', 'ru', 'sr', 'sv-SE', 'th', 'tr', 'uk', 'vi', 'zh-CN', 'zh-TW'];
 # languages which are localized for more than one region
 localizedRegions = ['pt', 'zh']
 #languages = ['ar', 'ca', 'cs', 'de', 'el', 'es-ES', 'fi', 'fr', 'hu', 'it', 'ja', 'ko', 'nl', 'pl', 'pt-PT', 'ro', 'ru', 'sr', 'sv-SE', 'vi', 'zh-CN', 'zh-TW', 'th', 'sk', 'da', 'ko', 'he', 'uk'];
@@ -176,6 +176,12 @@ for language in languages:
 		fileExt = fileExtFor(f)
 		anyError = not(update(valuesDirectory, f, zip.read(language + "/" + f + fileExt), fileExt, True, language)) or anyError
 
+	if anyError:
+		if raw_input("At least one file of the last handled language contains an error. Please check\nContinue anyway? (y/n)") != 'y':
+			break
+		else:
+			anyError = False
+
 # Special case: English tutorial.
 valuesDirectory = "../res/values/"
 createIfNotExisting(valuesDirectory)
@@ -188,10 +194,6 @@ print
 update(valuesDirectory, f, source.read(), fileExt, False)
 
 print "\nremoving crowdin-file\n"
-os.remove(zipname)
-
-if anyError:
-	print "At least one file contained an error\nPlease check!\n"
-	
+os.remove(zipname)	
 
 

@@ -19,10 +19,8 @@
 package com.ichi2.libanki;
 
 import android.content.ContentValues;
-import android.database.Cursor;
 import android.util.Log;
 
-import com.ichi2.anki.AnkiDb;
 import com.ichi2.anki.AnkiDroidApp;
 import com.mindprod.common11.StringTools;
 import com.samskivert.mustache.Mustache;

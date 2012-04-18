@@ -23,12 +23,12 @@
   <string name="card_browser_all_decks">كل الرزم</string>
   <string name="card_browser_load">تحميل بطاقات.\nالرجاء الانتظار...</string>
   <string name="card_browser_cardloading_error">حدث خطأ في تحميل البطاقات. يرتبط هذه على الأرجح بقيود على ذاكرة جهازك. حاول مرة أخرى برزمة أصغر</string>
-  <string name="card_browser_delete_card">احدف الملاحظة</string>
+  <string name="card_browser_delete_card">احذف الملاحظة</string>
   <string name="card_browser_suspend_card">علق البطاقة</string>
   <string name="card_browser_unsuspend_card">ألغ تعليق البطاقة</string>
   <string name="card_browser_mark_card">علم الملاحظة</string>
   <string name="card_browser_unmark_card">ألغي تعليم الملاحظة</string>
-  <string name="delete_card_title">احدف الملاحظة</string>
+  <string name="delete_card_title">احذف الملاحظة</string>
   <string name="delete_card_message">حقا تريد حذف كل البطاقات في هذه الملاحظة؟\nحقل البحث: %s</string>
   <string name="card_browser_show_marked">تصفية معلمة</string>
   <string name="card_browser_show_suspended">تصفية معلقة</string>

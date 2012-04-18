@@ -76,14 +76,14 @@
   <string name="simple_interface_hint">Vaciar %s. Ten en cuenta que la interfaz simple no puede mostrar imágenes/sonidos etc.</string>
   <string name="delete_deck">Eliminando mazo...\nPor favor, espera.</string>
   <string-array name="dynOrderLabels">
-    <item>Oldest seen first</item>
-    <item>Random</item>
-    <item>Increasing intervals</item>
-    <item>Decreasing intervals</item>
-    <item>Most lapses</item>
-    <item>Failed today</item>
-    <item>Order added</item>
-    <item>Order due</item>
+    <item>Vistas más antiguamente primero</item>
+    <item>Aleatorio</item>
+    <item>Intervalos crecientes</item>
+    <item>Intervalos decrecientes</item>
+    <item>Mayores lapsos</item>
+    <item>Falladas hoy</item>
+    <item>Orden de añadidas</item>
+    <item>Orden de programadas</item>
   </string-array>
   <plurals name="factadder_cards_added">
     <item quantity="one">Se ha añadido 1 tarjeta</item>

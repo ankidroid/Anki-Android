@@ -311,6 +311,9 @@ public class Syncer {
     		return null;
     	}
     	mCol.getSched().reset();
+    	// check for missing parent decks
+    	mCol.getSched().deckDueList();
+    	// return summary of deck
     	JSONArray ja = new JSONArray();
     	JSONArray sa = new JSONArray();
     	for (int c : mCol.getSched().counts()) {
