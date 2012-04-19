@@ -29,7 +29,7 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:paddingLeft="5dip"
-            android:text="Card from:" />
+            android:text="Search for:" />
 
         <LinearLayout
             android:id="@+id/cram_deck_decks_button"
