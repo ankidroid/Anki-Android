@@ -466,6 +466,7 @@ public class Sched {
 
 	public ArrayList<Object[]> deckDueList(boolean counts) {
 		// DIFFERS FROM LIBANKI: finds all decks
+		_checkDay();
 		ArrayList<Object[]> dids = new ArrayList<Object[]>();
 		for (JSONObject g : mCol.getDecks().all()) {
 			try {

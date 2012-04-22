@@ -469,6 +469,18 @@ public class Decks {
 		}
 	}
 
+	public String nameOrNone(long did) {
+		JSONObject deck = get(did, false);
+		if (deck != null) {
+			try {
+				return deck.getString("name");
+			} catch (JSONException e) {
+				throw new RuntimeException(e);
+			}
+		}
+		return null;
+	}
+
 	public void setDeck(long[] cids, long did) {
 		mCol.getDb()
 				.getDatabase()
@@ -635,6 +647,14 @@ public class Decks {
 		long did = id(name, true, defaultDynamicDeck);
 		select(did);
 		return did;
+	}
+
+	public boolean isDyn(long did) {
+		try {
+			return get(did).getInt("dyn") != 0;
+		} catch (JSONException e) {
+			throw new RuntimeException(e);
+		}
 	}
 
 

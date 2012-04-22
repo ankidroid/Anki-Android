@@ -47,7 +47,7 @@ import java.util.Random;
 public class Collection {
 
 	// collection schema & syncing vars
-	public static final int SCHEMA_VERSION = 4;
+	public static final int SCHEMA_VERSION = 5;
 	public static final String SYNC_URL = "http://beta.ankiweb.net/sync/";
 	public static final int SYNC_VER = 2;
 
@@ -582,6 +582,13 @@ public class Collection {
 					int tord = t.getInt("ord");
 					boolean doHave = have.containsKey(nid) && have.get(nid).containsKey(tord);
 					if (!doHave) {
+						// check deck is not a cram deck
+						long ndid = t.getLong("did");
+						if (ndid != 0) {
+							did = ndid;
+						}
+						if (getDecks().isDyn(did)) {
+						}
 						// we'd like to use the same due# as sibling cards, but we can't retrieve that quickly, so we give it a new id instead
 						data.add(new Object[] { ts, nid, cur.getLong(2), tord, now,
 								usn, nextID("pos") });
@@ -655,7 +662,7 @@ public class Collection {
 				// the same random number
 				Random r = new Random();
 				r.setSeed(due);
-				return r.nextInt((int) Math.pow(2, 32) - 2) + 1;
+				return r.nextInt(Math.max(due,  1000) - 1) + 1;
 			}
 		} catch (JSONException e) {
 			throw new RuntimeException(e);
