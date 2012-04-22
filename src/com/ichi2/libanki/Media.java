@@ -16,6 +16,8 @@
 
 package com.ichi2.libanki;
 
+import android.database.Cursor;
+import android.database.SQLException;
 import android.net.Uri;
 import android.util.Log;
 import android.util.Pair;
@@ -24,6 +26,7 @@ import com.ichi2.anki.AnkiDatabaseManager;
 import com.ichi2.anki.AnkiDb;
 import com.ichi2.anki.AnkiDroidApp;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -35,20 +38,19 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.OutputStream;
 import java.text.Normalizer;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipException;
 import java.util.zip.ZipFile;
-import java.util.zip.ZipInputStream;
 import java.util.zip.ZipOutputStream;
 
 /**
@@ -93,13 +95,13 @@ public class Media {
                 Utils.writeToFile(stream, path);
                 stream.close();
             } catch (IOException e) {
-                Log.e(AnkiDroidApp.TAG, "Error initialising " + path, e);
+                throw new RuntimeException(e);
             }
         }
         mMediaDb = AnkiDatabaseManager.getDatabase(path);
     }
-    private void close() {
     
+    public void close() {
         mMediaDb.closeDatabase();
         mMediaDb = null;
         mCol = null;
@@ -130,7 +132,7 @@ public class Media {
             try {
                 Utils.copyFile(new File(opath), newMediaFile);
             } catch (IOException e) {
-                Log.e(AnkiDroidApp.TAG, "Could not copy file " + opath + " to location " + dst, e);
+                throw new RuntimeException(e);
             }
             return base;
         }
@@ -159,7 +161,7 @@ public class Media {
         try {
             Utils.copyFile(new File(opath), newMediaFile);
         } catch (IOException e) {
-            Log.e(AnkiDroidApp.TAG, "Could not copy file " + opath + " to location " + newMediaFile.getAbsolutePath(), e);
+            throw new RuntimeException(e);
         }
         return newMediaFile.getName();
     }
@@ -299,7 +301,7 @@ public class Media {
     //////////////////////////////////////
     
     public boolean hasChanged() {
-        return (mMediaDb != null && mMediaDb.queryLongScalar("select 1 from log limit 1") == 1);
+        return (mMediaDb != null && mMediaDb.queryLongScalar("select 1 from log limit 1", false) == 1);
     }
     
     public List<String> removed() {
@@ -311,9 +313,13 @@ public class Media {
      * Remove provided deletions and all locally-logged deletions, as server has acked them
      * @param fnames The list of filenames to be deleted.
      */
-    public void syncRemove(List<String> fnames) {
-        for (String f : fnames) {
-            File file = new File(f);
+    public void syncRemove(JSONArray fnames) {
+        for (int i = 0; i < fnames.length(); ++i) {
+            String f = fnames.optString(i);
+            if (f == "") {
+                continue;
+            }
+            File file = new File(getDir() + "/" + f);
             if (file.exists()) {
                 file.delete();
             }
@@ -334,43 +340,30 @@ public class Media {
     public boolean syncAdd(File zipData) {
         boolean finished = false;
         ZipFile z = null;
-        try {
-            z = new ZipFile(zipData, ZipFile.OPEN_READ);
-        } catch (ZipException e) {
-            Log.e(AnkiDroidApp.TAG, "Error opening " + zipData.getAbsolutePath() + " as a zip file.", e);
-            return false;
-        } catch (IOException e) {
-            Log.e(AnkiDroidApp.TAG, "Error accessing " + zipData.getAbsolutePath(), e);
-        }
         ArrayList<Object[]> media = new ArrayList<Object[]>();
         long sizecnt = 0;
-        
-        // get meta info first
-        ZipEntry metaEntry = z.getEntry("_meta");
-        if (metaEntry.getSize() >= 100000) {
-            Log.e(AnkiDroidApp.TAG, "Size for _meta entry found too big (" + z.getEntry("_meta").getSize() + ")");
-            return false;
-        }
         byte buffer[] = new byte[100000];
-        try {
-            z.getInputStream(metaEntry).read(buffer);
-        } catch (IOException e) {
-            Log.e(AnkiDroidApp.TAG, "Error accessing _meta file in zip " + zipData.getAbsolutePath(), e);
-        }
         JSONObject meta = null;
+        int nextUsn = 0;
         try {
-            meta = new JSONObject(buffer.toString());
+            z = new ZipFile(zipData, ZipFile.OPEN_READ);
+            // get meta info first
+            ZipEntry metaEntry = z.getEntry("_meta");
+            //if (metaEntry.getSize() >= 100000) {
+            //    Log.e(AnkiDroidApp.TAG, "Size for _meta entry found too big (" + z.getEntry("_meta").getSize() + ")");
+            //    return false;
+            //}
+            meta = new JSONObject(Utils.convertStreamToString(z.getInputStream(metaEntry)));
+            ZipEntry usnEntry = z.getEntry("_usn");
+            String usnstr = Utils.convertStreamToString(z.getInputStream(usnEntry));
+            nextUsn = Integer.parseInt(usnstr);
         } catch (JSONException e) {
-            Log.e(AnkiDroidApp.TAG, "Error constructing JSONObject for meta entry", e);
-            return false;
-        }
-        ZipEntry usnEntry = z.getEntry("_usn");
-        try {
-            z.getInputStream(usnEntry).read(buffer);
+            throw new RuntimeException(e);
+        } catch (ZipException e) {
+            throw new RuntimeException(e);
         } catch (IOException e) {
-            Log.e(AnkiDroidApp.TAG, "Error accessing _usn file in zip " + zipData.getAbsolutePath(), e);
+            throw new RuntimeException(e);
         }
-        int nextUsn = Integer.parseInt(buffer.toString());
 
         // Then loop through all files
         for (ZipEntry zentry : Collections.list(z.entries())) {
@@ -380,10 +373,10 @@ public class Media {
                 Log.e(AnkiDroidApp.TAG, "Media zip file exceeds 100MB uncompressed, aborting unzipping");
                 return false;
             }
-            if (zentry.getName() == "_meta" || zentry.getName() == "_usn") {
+            if (zentry.getName().compareTo("_meta") == 0 || zentry.getName().compareTo("_usn") == 0) {
                 // Ignore previously retrieved meta
                 continue;
-            } else if (zentry.getName() == "_finished") {
+            } else if (zentry.getName().compareTo("_finished") == 0) {
                 finished = true;
             } else {
                 String name = meta.optString(zentry.getName());
@@ -391,11 +384,11 @@ public class Media {
                     continue;
                 }
                 try {
-                    Utils.writeToFile(z.getInputStream(zentry), name);
-                } catch (IOException e1) {
-                    Log.e(AnkiDroidApp.TAG, "Error writing synced media file " + name, e1);
+                    Utils.writeToFile(z.getInputStream(zentry), getDir() + "/" + name);
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
                 }
-                String csum = Utils.fileChecksum(name);
+                String csum = Utils.fileChecksum(getDir() + "/" + name);
                 // append db
                 media.add(new Object[]{name, csum, _mtime(name)});
                 mMediaDb.execute("delete from log where fname = ?", new String[]{name});
@@ -440,7 +433,7 @@ public class Media {
      * with the filenames of the files inside the zip.
      */
     public Pair<File, List<String>> zipAdded() {
-        File f = new File(mCol.getPath().replaceFirst("collection\\.anki2$", "tmpsync.zip"));
+        File f = new File(mCol.getPath().replaceFirst("collection\\.anki2$", "tmpSyncToServer.zip"));
         
         String sql = "select fname from log where type = " + Integer.toString(MEDIA_ADD);
         List<String> filenames = mMediaDb.queryColumn(String.class, sql, 0);
@@ -480,14 +473,11 @@ public class Media {
             zos.write(files.toString().getBytes());
             zos.close();
         } catch (FileNotFoundException e) {
-            Log.e(AnkiDroidApp.TAG, Log.getStackTraceString(e));
-            return null;
+            throw new RuntimeException(e);
         } catch (IOException e) {
-            Log.e(AnkiDroidApp.TAG, Log.getStackTraceString(e));
-            return null;
+            throw new RuntimeException(e);
         } catch (JSONException e) {
-            Log.e(AnkiDroidApp.TAG, Log.getStackTraceString(e));
-            return null;
+            throw new RuntimeException(e);
         }
         
         return new Pair<File, List<String>>(f, fnames);
@@ -525,271 +515,127 @@ public class Media {
         return Utils.fileChecksum(path);
     }
     
-    private long usn() {
-        return mMediaDb.queryScalar("select usn from meta");
+    public long usn() {
+        return mMediaDb.queryLongScalar("select usn from meta");
     }
-    private void setUsn(int usn) {
+    public void setUsn(long usn) {
         mMediaDb.execute("update meta set usn = ?", new Object[]{usn});
     }
     private void syncMod() {
         mMediaDb.execute("update meta set dirMod = ?", new Object[]{_mtime(mDir)});
     }
     
-//    private static final Pattern regPattern = Pattern.compile("\\((\\d+)\\)$");
-//
-//    // File Handling
-//    // *************
-//
-//    /**
-//     * Copy PATH to MEDIADIR, and return new filename.
-//     * If a file with the same md5sum exists in the DB, return that.
-//     * If a file with the same name exists, return a unique name.
-//     * This does not modify the media table.
-//     *
-//     * @param deck The deck whose media we are dealing with
-//     * @param path The path and filename of the media file we are adding
-//     * @return The new filename.
-//     */
-//    public static String copyToMedia(Decks deck, String path) {
-//        // See if have duplicate contents
-//        String newpath = null;
-//        Cursor cursor = null;
-//        try {
-//            cursor = deck.getDB().getDatabase().rawQuery("SELECT filename FROM media WHERE originalPath = '" +
-//                    Utils.fileChecksum(path) + "'", null);
-//            if (cursor.moveToNext()) {
-//                newpath = cursor.getString(0);
-//            }
-//        } finally {
-//            if (cursor != null) {
-//                cursor.close();
-//            }
-//        }
-//        if (newpath == null) {
-//            File file = new File(path);
-//            String base = file.getName();
-//            String mdir = deck.mediaDir(true);
-//            newpath = uniquePath(mdir, base);
-//            if (!file.renameTo(new File(newpath))) {
-//                Log.e(AnkiDroidApp.TAG, "Couldn't move media file " + path + " to " + newpath);
-//            }
-//        }
-//        return newpath.substring(newpath.lastIndexOf("/") + 1);
-//    }
-//
-//
-//    /**
-//     * Makes sure the filename of the media is unique.
-//     * If the filename matches an existing file, then a counter of the form " (x)" is appended before the media file
-//     * extension, where x = 1, 2, 3... as needed so that the filename is unique.
-//     *
-//     * @param dir The path to the media file, excluding the filename
-//     * @param base The filename of the file without the path
-//     */
-//    private static String uniquePath(String dir, String base) {
-//        // Remove any dangerous characters
-//        base = base.replaceAll("[][<>:/\\&", "");
-//        // Find a unique name
-//        int extensionOffset = base.lastIndexOf(".");
-//        String root = base.substring(0, extensionOffset);
-//        String ext = base.substring(extensionOffset);
-//        File file = null;
-//        while (true) {
-//            file = new File(dir, root + ext);
-//            if (!file.exists()) {
-//                break;
-//            }
-//            Matcher regMatcher = regPattern.matcher(root);
-//            if (!regMatcher.find()) {
-//                root = root + " (1)";
-//            } else {
-//                int num = Integer.parseInt(regMatcher.group(1));
-//                root = root.substring(regMatcher.start()) + " (" + num + ")";
-//            }
-//        }
-//        return dir + "/" + root + ext;
-//    }
-//
-//
-//    // DB Routines
-//    // ***********
-//
-//    /**
-//     * Updates the field size of a media record.
-//     * The field size is used to store the count of how many times is this media referenced in question and answer
-//     * fields of the cards in the deck.
-//     *
-//     * @param deck The deck that contains the media we are dealing with
-//     * @param file The full path of the media in question
-//     */
-//    public static void updateMediaCount(Decks deck, String file) {
-//        updateMediaCount(deck, file, 1);
-//    }
-//    public static void updateMediaCount(Decks deck, String file, int count) {
-//        if (deck.getDB().queryScalar("SELECT 1 FROM media WHERE filename = '" + file + "'") == 1l) {
-//            deck.getDB().getDatabase().execSQL(String.format(Utils.ENGLISH_LOCALE,
-//                        "UPDATE media SET size = size + %d, created = %f WHERE filename = '%s'",
-//                        count, Utils.now(), file));
-//        } else if (count > 0) {
-//            String sum = Utils.fileChecksum(file);
-////            deck.getDB().getDatabase().execSQL(String.format(Utils.ENGLISH_LOCALE, "INSERT INTO media " +
-////                    "(id, filename, size, created, originalPath, description) " +
-////                    "VALUES (%d, '%s', %d, %f, '%s', '')", Utils.genID(), file, count, Utils.now(), sum));
-//        }
-//    }
-//
-//
-//    /**
-//     * Deletes from media table any entries that are not referenced in question or answer of any card.
-//     *
-//     * @param deck The deck that this operation will be performed on
-//     */
-//    public static void removeUnusedMedia(Decks deck) {
-//        ArrayList<Long> ids = deck.getDB().queryColumn(Long.class, "SELECT id FROM media WHERE size = 0", 0);
-//        for (Long id : ids) {
-//            deck.getDB().getDatabase().execSQL(String.format(Utils.ENGLISH_LOCALE, "INSERT INTO mediaDeleted " +
-//                        "VALUES (%d, %f)", id.longValue(), Utils.now()));
-//        }
-//        deck.getDB().getDatabase().execSQL("DELETE FROM media WHERE size = 0");
-//    }
-//
-//    // Rebuilding DB
-//    // *************
-//
-//    /**
-//     * Rebuilds the reference counts, potentially deletes unused media files,
-//     *
-//     * @param deck The deck to perform the operation on
-//     * @param delete If true, then unused (unreferenced in question/answer fields) media files will be deleted
-//     * @param dirty If true, then the modified field of deck will be updated
-//     * @return Nothing, but the original python code returns a list of unreferenced media files and a list
-//     * of missing media files (referenced in question/answer fields, but with the actual files missing)
-//     */
-//    public static void rebuildMediaDir(Decks deck) {
-//        rebuildMediaDir(deck, false, true);
-//    }
-//    public static void rebuildMediaDir(Decks deck, boolean delete) {
-//        rebuildMediaDir(deck, delete, true);
-//    }
-//    public static void rebuildMediaDir(Decks deck, boolean delete, boolean dirty) {
-//        String mdir = deck.mediaDir();
-//        if (mdir == null) {
-//            return;
-//        }
-//        //Set all ref counts to 0
-//        deck.getDB().getDatabase().execSQL("UPDATE media SET size = 0");
-//
-//        // Look through the cards for media references
-//        Cursor cursor = null;
-//        String txt = null;
-//        Map<String, Integer> refs = new HashMap<String, Integer>();
-//        Set<String> normrefs = new HashSet<String>();
-//        try {
-//            cursor = deck.getDB().getDatabase().rawQuery("SELECT question, answer FROM cards", null);
-//            while (cursor.moveToNext()) {
-//                for (int i = 0; i < 2; i++) {
-//                    txt = cursor.getString(i);
-//                    for (String f : mediaFiles(txt)) {
-//                        if (refs.containsKey(f)) {
-//                            refs.put(f, refs.get(f) + 1);
-//                        } else {
-//                            refs.put(f, 1);
-//                            // normrefs.add(Normalizer.normalize(f, Normalizer.Form.NFC));
-//                            normrefs.add(f);
-//                        }
-//                    }
-//                }
-//            }
-//        } finally {
-//            if (cursor != null) {
-//                cursor.close();
-//            }
-//        }
-//
-//        // Update ref counts
-//        for (Entry<String, Integer> entry : refs.entrySet()) {
-//            updateMediaCount(deck, entry.getKey(), entry.getValue());
-//        }
-//        String fname = null;
-//
-//        //If there is no media dir, then there is nothing to find.
-//        if(mdir != null) {
-//            // Find unused media
-//            Set<String> unused = new HashSet<String>();
-//            File mdirfile = new File(mdir);
-//            if (mdirfile.exists()) {
-//                fname = null;
-//                for (File f : mdirfile.listFiles()) {
-//                    if (!f.isFile()) {
-//                        // Ignore directories
-//                        continue;
-//                    }
-//                    // fname = Normalizer.normalize(f.getName(), Normalizer.Form.NFC);
-//                    fname = f.getName();
-//                    if (!normrefs.contains(fname)) {
-//                        unused.add(fname);
-//                    }
-//                }
-//            }
-//            // Optionally delete
-//            if (delete) {
-//                for (String fn : unused) {
-//                    File file = new File(mdir + "/" + fn);
-//                    try {
-//                        if (!file.delete()) {
-//                            Log.e(AnkiDroidApp.TAG, "Couldn't delete unused media file " + mdir + "/" + fn);
-//                        }
-//                    } catch (SecurityException e) {
-//                        Log.e(AnkiDroidApp.TAG, "Security exception while deleting unused media file " + mdir + "/" + fn);
-//                    }
-//                }
-//            }
-//        }
-//        // Remove entries in db for unused media
-//        removeUnusedMedia(deck);
-//
-//        // Check md5s are up to date
-//        cursor = null;
-//        String path = null;
-//        fname = null;
-//        String md5 = null;
-//        SQLiteDatabase db = deck.getDB().getDatabase();
-//        db.beginTransaction();
-//        try {
-//            cursor = db.query("media", new String[] {"filename", "created", "originalPath"}, null, null, null, null, null);
-//            while (cursor.moveToNext()) {
-//                fname = cursor.getString(0);
-//                md5 = cursor.getString(2);
-//                path = mdir + "/" + fname;
-//                File file = new File(path);
-//                if (!file.exists()) {
-//                   if (!md5.equals("")) {
-//                       db.execSQL(String.format(Utils.ENGLISH_LOCALE,
-//                               "UPDATE media SET originalPath = '', created = %f where filename = '%s'",
-//                               Utils.now(), fname));
-//                   }
-//                } else {
-//                    String sum = Utils.fileChecksum(path);
-//                    if (!md5.equals(sum)) {
-//                       db.execSQL(String.format(Utils.ENGLISH_LOCALE,
-//                               "UPDATE media SET originalPath = '%s', created = %f where filename = '%s'",
-//                               sum, Utils.now(), fname));
-//                    }
-//                }
-//            }
-//        } finally {
-//            if (cursor != null) {
-//                cursor.close();
-//            }
-//        }
-//        db.setTransactionSuccessful();
-//        db.endTransaction();
-//
-//        // Update deck and get return info
-//        if (dirty) {
-//            deck.flushMod();
-//        }
-//        // In contrast to the python code we don't return anything. In the original python code, the return
-//        // values are used in a function (media.onCheckMediaDB()) that we don't have in AnkiDroid.
-//    }
+    /**
+     * Return dir mtime if it has changed since the last findChanges()
+     * Doesn't track edits, but user can add or remove a file to update
+     * @return The modification time of the media directory, if it has changed since the last call
+     * of findChanges(). If it hasn't, it returns 0.
+     */
+    private long _changed() {
+        long mod = mMediaDb.queryLongScalar("select dirMod from meta");
+        long mtime = _mtime(getDir());
+        if (mod != 0 && mod == mtime) {
+            return 0;
+        }
+        return mtime;        
+    }
+    
+    /**
+     * Scan the media folder if it's changed, and note any changes.
+     */
+    public void findChanges() {
+        if (_changed() != 0) {
+            _logChanges();
+        }
+    }
+    
+    private void _logChanges() {
+        Pair<List<String>, List<String>> result = _changes();
+        ArrayList<Object[]> log = new ArrayList<Object[]>();
+        ArrayList<Object[]> media = new ArrayList<Object[]>();
+        ArrayList<Object[]> mediaRem = new ArrayList<Object[]>();
+        
+        for (String f : result.first) {
+            long mt = _mtime(f);
+            String csum = _checksum(getDir() + "/" + f);
+            media.add(new Object[]{f, csum, mt});
+            log.add(new Object[]{f, MEDIA_ADD});
+        }
+        for (String f : result.second) {
+            mediaRem.add(new Object[]{f});
+            log.add(new Object[]{f, MEDIA_REM});
+        }
+        
+        // update media db
+        mMediaDb.executeMany("insert or replace into media values (?, ?, ?)", media);
+        if (mediaRem.size() > 0) {
+            mMediaDb.executeMany("delete from media where fname = ?", mediaRem);
+        }
+        mMediaDb.execute("update meta set dirMod = ?", new Object[]{getDir()});
+        // and logs
+        mMediaDb.executeMany("insert or replace into log values (?, ?)", log);
+    }
+    
+    private Pair<List<String>, List<String>> _changes() {
+        Map<String, Pair<String, Long>> cache = new HashMap<String, Pair<String, Long>>();
+        Map<String, Boolean> used = new HashMap<String, Boolean>();
+        Cursor cur = null;
+        try {
+            cur = mMediaDb.getDatabase().query("media", new String[]{"fname", "csum", "mod"}, null, null, null, null, null);
+            while (cur.moveToNext()) {
+                cache.put(cur.getString(0), new Pair<String, Long>(cur.getString(1), cur.getLong(1)));
+                used.put(cur.getString(0), false);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } finally {
+            if (cur != null) {
+                cur.close();
+            }
+        }
+        
+        List<String> added = new ArrayList<String>();
+        List<String> removed = new ArrayList<String>();
+        
+        File mediaDir = new File(getDir());
+        for (File f : mediaDir.listFiles()) {
+            // ignore folders and thumbs.db
+            if (f.isDirectory()) {
+                continue;
+            }
+            String fname = f.getName();
+            if (fname.compareTo("thumbs.db") == 0) {
+                continue;
+            }
+            // newly added?
+            if (!cache.containsKey(fname)) {
+                added.add(fname);
+            } else {
+                // modified since last time?
+                if ((f.lastModified() / 1000) != cache.get(fname).second) {
+                    // and has different checksum?
+                    if (_checksum(f.getAbsolutePath()).compareTo(cache.get(fname).first) != 0) {
+                        added.add(fname);
+                    }
+                }
+                // mark as used
+                used.put(fname, true);
+            }
+        }
+        
+        // look for any entries in the cache that no longer exist on disk
+        for (String fname : used.keySet()) {
+            if (!used.get(fname)) {
+                removed.add(fname);
+            }
+        }
+        return new Pair<List<String>, List<String>>(added, removed);
+    }
+    
+    public long sanityCheck() {
+        // TODO: Remove the assert
+        assert mMediaDb.queryLongScalar("select count() from log") == 0;
+        return mMediaDb.queryLongScalar("select count() from media");
+    }
+    
 }

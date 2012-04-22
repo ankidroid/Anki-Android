@@ -278,7 +278,7 @@ public class Collection {
 			}
 			AnkiDatabaseManager.closeDatabase(mPath);
 			mDb = null;
-			// mMedia.close();
+			mMedia.close();
 			Log.i(AnkiDroidApp.TAG, "Collection closed");
 		}
 	}
