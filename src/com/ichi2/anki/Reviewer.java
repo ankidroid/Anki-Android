@@ -1675,7 +1675,7 @@ public class Reviewer extends AnkiActivity implements IButtonListener{
 
 
     private int getRecommendedEase() {
-		if (mSched.lrnButtons(mCurrentCard)) {
+		if (mSched.answerButtons(mCurrentCard) == 3) {
 			return EASE_HARD;
 		} else {
 			return EASE_MID;
@@ -1981,7 +1981,7 @@ public class Reviewer extends AnkiActivity implements IButtonListener{
         // hide flipcard button
         switchVisibility(mFlipCardLayout, View.GONE);
 
-        boolean lrnCard = mSched.lrnButtons(mCurrentCard);
+        boolean lrnCard = mSched.answerButtons(mCurrentCard) == 3;
 
         // Set correct label for each button
         if (lrnCard) {

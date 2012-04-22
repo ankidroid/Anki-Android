@@ -246,7 +246,7 @@ public class AnkiDroidWidgetBig extends AppWidgetProvider {
 
             again.setSpan(new ForegroundColorSpan(sColorRed), 0, again.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
 
-            if (contentService.mCol.getSched().lrnButtons(card)) {
+            if (contentService.mCol.getSched().answerButtons(card) == 3) {
                 hard.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.widget_big_font_color_green)), 0, hard.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);            	
                 easy.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.widget_big_font_color)), 0, easy.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
             } else {
@@ -262,7 +262,7 @@ public class AnkiDroidWidgetBig extends AppWidgetProvider {
             sb.append(hard);
             sb.append(" \u2027 ");
             sb.append(easy);
-            if (!contentService.mCol.getSched().lrnButtons(card)) {
+            if (contentService.mCol.getSched().answerButtons(card) == 4) {
                 sb.append(" \u2027 ");
                 sb.append(veryEasy);            	
             }
@@ -718,7 +718,7 @@ public class AnkiDroidWidgetBig extends AppWidgetProvider {
 
 				updateViews.setOnClickPendingIntent(R.id.widget_big_bottomleft, getAnswerPendingIntent(this, 1));
 
-				if (!contentService.mCol.getSched().lrnButtons(contentService.mCurrentCard)) {
+				if (contentService.mCol.getSched().answerButtons(contentService.mCurrentCard) == 4) {
 					updateViews.setViewVisibility(R.id.widget_big_ease2_normal, View.INVISIBLE);
 					updateViews.setViewVisibility(R.id.widget_big_ease2_rec, View.VISIBLE);
 					updateViews.setViewVisibility(R.id.widget_big_ease3_normal, View.INVISIBLE);

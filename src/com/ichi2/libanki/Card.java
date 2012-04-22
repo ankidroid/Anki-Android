@@ -263,8 +263,13 @@ public class Card implements Cloneable {
 	}
 
 	public JSONObject template() {
+		JSONObject m = model();
 		try {
-			return model().getJSONArray("tmpls").getJSONObject(mOrd);
+			if (m.getInt("type") == Sched.MODEL_STD) {
+				return m.getJSONArray("tmpls").getJSONObject(mOrd);
+			} else {
+				return model().getJSONArray("tmpls").getJSONObject(0);
+			}
 		} catch (JSONException e) {
 			throw new RuntimeException(e);
 		}

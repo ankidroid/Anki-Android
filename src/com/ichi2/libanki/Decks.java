@@ -455,8 +455,15 @@ public class Decks {
 	 */
 
 	public String name(long did) {
+		return name(did, false);
+	}
+	public String name(long did, boolean def) {
 		try {
-			return get(did).getString("name");
+			JSONObject deck = get(did, def);
+			if (deck != null) {
+				return deck.getString("name");
+			}
+			return "[no deck]";
 		} catch (JSONException e) {
 			throw new RuntimeException(e);
 		}
