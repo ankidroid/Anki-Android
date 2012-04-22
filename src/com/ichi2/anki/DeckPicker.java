@@ -623,6 +623,7 @@ public class DeckPicker extends FragmentActivity {
 		@Override
 		public void onPostExecute(DeckTask.TaskData result) {
 			if (result == null) {
+				// TODO: error handling
 				return;
 			}
 			Object[] res = result.getObjArray();
