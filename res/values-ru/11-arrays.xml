@@ -48,12 +48,12 @@
   <string-array name="studyoptions_more_new_card_order">
     <item>Новые в случайном порядке</item>
     <item>Новые в порядке их добавления</item>
-    <item>Новые, в обрат.порядке их добавления</item>
+    <item>Новые в обрат.порядке их добавления</item>
   </string-array>
   <string-array name="studyoptions_more_new_card_schedule">
-    <item>Новые и просмотренные вперемешку</item>
+    <item>Новые и повторяемые вперемешку</item>
     <item>Новые после всех других</item>
-    <item>Новые до пересматриваемых</item>
+    <item>Новые до повторяемых</item>
   </string-array>
   <string-array name="studyoptions_more_rev_card_order">
     <item>Просмотр карт с наибол. интервалом</item>
