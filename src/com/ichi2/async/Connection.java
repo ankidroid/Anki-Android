@@ -281,7 +281,6 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
 //    			publishProgress(R.string.sync_database_success);
     		}
     	} else {
-    	    mediaUsn = (Integer)data.data[0];
     		try {
         		server = new FullSyncer(col, hkey, this);
         		if (conflictResolution.equals("upload")) {

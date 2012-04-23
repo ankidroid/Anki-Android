@@ -96,6 +96,7 @@ public class Sched {
 	private int mQueueLimit;
 	private int mReportLimit;
 	private int mReps;
+	private boolean mHaveQueues;
 	private int mToday;
 	public long mDayCutoff;
 
@@ -133,6 +134,7 @@ public class Sched {
 		mQueueLimit = 50;
 		mReportLimit = 1000;
 		mReps = 0;
+		mHaveQueues = false;
 		_updateCutoff();
 
 		// Initialise queues
@@ -146,6 +148,9 @@ public class Sched {
 	 */
 	public Card getCard() {
 		_checkDay();
+		if (!mHaveQueues) {
+			reset();
+		}
 		Card card = _getCard();
 		if (card != null) {
 			card.startTimer();
@@ -158,6 +163,7 @@ public class Sched {
 		_resetLrn();
 		_resetRev();
 		_resetNew();
+		mHaveQueues = true;
 	}
 
 	public boolean answerCard(Card card, int ease) {
@@ -1544,7 +1550,7 @@ public class Sched {
 			Log.e(AnkiDroidApp.TAG, "error: deck is not a dynamic deck");
 			return 0;
 		}
-		long elapsed = card.getIvl() - card.getODue() - mToday;
+		long elapsed = card.getIvl() - (card.getODue() - mToday);
 		double factor = ((card.getFactor() / 1000.0) + 1.2) / 2.0;
 		return Math.max(1, Math.max(card.getIvl(), (int)(elapsed * factor)));
 	}

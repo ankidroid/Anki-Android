@@ -91,7 +91,7 @@ public class Collection {
 			+
 			// other config
 			"'curModel': None, " + "'nextPos': 1, "
-			+ "'sortType': \"noteFld\", " + "'sortBackwards': False, }";
+			+ "'sortType': \"noteFld\", " + "'sortBackwards': False, 'addToCur': True, }";
 
 	private static Collection sCurrentCollection;
 
