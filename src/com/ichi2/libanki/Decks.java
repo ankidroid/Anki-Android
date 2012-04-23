@@ -306,6 +306,17 @@ public class Decks {
 		return decks;
 	}
 
+	public long[] allIds() {
+		Iterator<Long> it = mDecks.keySet().iterator();
+		long[] ids = new long[mDecks.size()];
+		int i = 0;
+		while (it.hasNext()) {
+			ids[i] = it.next();
+			i++;
+		}
+		return ids;
+	}
+
 	public int count() {
 		return mDecks.size();
 	}

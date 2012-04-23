@@ -97,6 +97,7 @@ public class Sched {
 	private int mReportLimit;
 	private int mReps;
 	private boolean mHaveQueues;
+	private boolean mClearOverdue;
 	private int mToday;
 	public long mDayCutoff;
 
@@ -135,6 +136,7 @@ public class Sched {
 		mReportLimit = 1000;
 		mReps = 0;
 		mHaveQueues = false;
+		mClearOverdue = true;
 		_updateCutoff();
 
 		// Initialise queues
@@ -160,6 +162,9 @@ public class Sched {
 
 	public void reset() {
 		_updateCutoff();
+		if (mClearOverdue) {
+			removeFailed(true);
+		}
 		_resetLrn();
 		_resetRev();
 		_resetNew();
@@ -473,6 +478,9 @@ public class Sched {
 	public ArrayList<Object[]> deckDueList(boolean counts) {
 		// DIFFERS FROM LIBANKI: finds all decks
 		_checkDay();
+		if (mClearOverdue) {
+			removeFailed(true);
+		}
 		ArrayList<Object[]> dids = new ArrayList<Object[]>();
 		for (JSONObject g : mCol.getDecks().all()) {
 			try {
@@ -1134,13 +1142,25 @@ public class Sched {
 		removeFailed(null);
 	}
 
+	private void removeFailed(long[] ids) {
+		removeFailed(ids, true);
+	}
+	private void removeFailed(boolean expiredOnly) {
+		removeFailed(null, expiredOnly);
+	}
 	/**
 	 * Remove failed cards from the learning queue.
 	 */
-	private void removeFailed(long[] ids) {
-		String extra = "";
+	private void removeFailed(long[] ids, boolean expiredOnly) {
+		String extra;
 		if (ids != null && ids.length > 0) {
 			extra = " AND id IN " + Utils.ids2str(ids);
+		} else {
+			// benchmarks indicate it's about 10x faster to search all decks with the index than scan the table
+			extra = " AND did IN " + Utils.ids2str(mCol.getDecks().allIds());
+		}
+		if (expiredOnly) {
+			extra += " AND odue <= " + mToday;
 		}
 		mCol.getDb().execute(
 						"UPDATE cards SET due = odue, queue = 2, mod = "
