@@ -455,11 +455,30 @@ public class Decks {
 	 */
 
 	public String name(long did) {
+		return name(did, false);
+	}
+	public String name(long did, boolean def) {
 		try {
-			return get(did).getString("name");
+			JSONObject deck = get(did, def);
+			if (deck != null) {
+				return deck.getString("name");
+			}
+			return "[no deck]";
 		} catch (JSONException e) {
 			throw new RuntimeException(e);
 		}
+	}
+
+	public String nameOrNone(long did) {
+		JSONObject deck = get(did, false);
+		if (deck != null) {
+			try {
+				return deck.getString("name");
+			} catch (JSONException e) {
+				throw new RuntimeException(e);
+			}
+		}
+		return null;
 	}
 
 	public void setDeck(long[] cids, long did) {
@@ -628,6 +647,14 @@ public class Decks {
 		long did = id(name, true, defaultDynamicDeck);
 		select(did);
 		return did;
+	}
+
+	public boolean isDyn(long did) {
+		try {
+			return get(did).getInt("dyn") != 0;
+		} catch (JSONException e) {
+			throw new RuntimeException(e);
+		}
 	}
 
 

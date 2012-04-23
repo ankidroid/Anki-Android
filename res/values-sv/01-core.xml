@@ -22,7 +22,7 @@
 <resources>
   <string name="btn_continue">Fortsätt</string>
   <string name="app_name">AnkiDroid</string>
-  <string name="attention">Attention</string>
+  <string name="attention">Observera</string>
   <string name="yes">Ja</string>
   <string name="no">Nej</string>
   <string name="ok">Ok</string>
@@ -69,7 +69,7 @@
   <string name="menu_suspend_card">Åsidosätt kort</string>
   <string name="menu_suspend_note">Åsidosätt anteckning</string>
   <string name="menu_delete_note">Ta bort anteckning</string>
-  <string name="delete_note_message">Really delete this note and all its cards?\n%s</string>
+  <string name="delete_note_message">Vill du verkligen ta bort den här anteckningen och dess kort?\n%s</string>
   <string name="menu_edit_card">Redigera kort</string>
   <string name="menu_select">Markera text</string>
   <string name="menu_search">Sökning i %1$s</string>
@@ -85,8 +85,8 @@
   <string name="visit">Besök</string>
   <string name="later">Senare</string>
   <string name="download">Hämta</string>
-  <string name="open_collection">Opening collection.\nPlease wait...</string>
-  <string name="create_collection">Creating collection.\nPlease wait...</string>
+  <string name="open_collection">Öppnar samling.\nVar vänlig vänta...</string>
+  <string name="create_collection">Skapar samling.\nVar vänlig vänta...</string>
   <string name="studyoptions_congrats_finished">Grattis! Du är klar nu.</string>
   <string name="studyoptions_congrats_more_rev">Today\'s review limit has been reached, but there are still cards waiting to be reviewed. For optimum memory, consider increasing the daily limit in the options.</string>
   <string name="studyoptions_congrats_more_new">There are more new cards available, but the daily limit has been reached. You can increase the limit in the options, but please bear in mind that the more new cards you introduce, the higher your short-term review workload will become.</string>
