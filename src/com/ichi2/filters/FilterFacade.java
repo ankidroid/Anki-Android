@@ -1,7 +1,6 @@
 package com.ichi2.filters;
 
 import android.content.Context;
-import android.util.Pair;
 import com.tomgibara.android.veecheck.util.PrefSettings;
 
 import java.util.ArrayList;
@@ -18,27 +17,24 @@ public class FilterFacade {
     private Context context;
 
     /* All filters, that are will running */
-    private final List<CardFilter> filters = new ArrayList<CardFilter>() {{
-        add(new GoogleTranslaterFilter());
-    }};
+    private final List<CardFilter> filters = new ArrayList<CardFilter>();
 
     public FilterFacade(Context context) {
         this.context = context;
+        
+        filters.add(new GoogleTranslaterFilter());
     }
 
     /**
-     * Run all filters processes. Messages in params will be updated.
+     * Run all filters processes.
      *
-     * @param  messages
-     *      data, received from external application, where first attribute is the SUBJECT information and second
-     *      attribute is the TEXT information.
-     * */
-    public Pair<String, String> filter(Pair<String, String> messages) {
-        Pair<String, String> result = new Pair<String, String>(messages.first, messages.second);
+     * @param  message subject and text received from external application
+     */
+    public CardFilterMessage filter(CardFilterMessage message) {
         for (CardFilter cardFilter : filters) {
-            result = cardFilter.filter(result,  PrefSettings.getSharedPrefs(context));
+            message = cardFilter.filter(message,  PrefSettings.getSharedPrefs(context));
         }
-        return result;
+        return message;
     }
 
 }
