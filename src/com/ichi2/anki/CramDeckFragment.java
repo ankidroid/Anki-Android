@@ -203,9 +203,10 @@ public class CramDeckFragment extends Fragment {
 			String currentName;
 			try {
 				currentName = mDeck.getString("name");
-				for (JSONObject d : decks) {
+				for (int i = 0; i < decks.size(); i++) {
+					JSONObject d = decks.get(i);
 					if (d.getString("name").equals(currentName)) {
-						decks.remove(d);
+						decks.remove(i);
 					}
 				}
 			} catch (JSONException e1) {
