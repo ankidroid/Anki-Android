@@ -28,7 +28,6 @@ import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import android.app.Activity;
 import android.app.Dialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -92,7 +91,6 @@ import com.ichi2.anim.ActivityTransitionAnimation;
 import com.ichi2.anim.Animation3D;
 import com.ichi2.anim.ViewAnimation;
 import com.ichi2.async.DeckTask;
-import com.ichi2.async.DeckTask.TaskData;
 import com.ichi2.libanki.Card;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Models;
@@ -104,7 +102,6 @@ import com.ichi2.themes.StyledProgressDialog;
 import com.ichi2.themes.Themes;
 import com.ichi2.utils.DiffEngine;
 import com.ichi2.utils.RubyParser;
-import com.ichi2.widget.DeckStatus;
 import com.ichi2.widget.WidgetStatus;
 import com.tomgibara.android.veecheck.util.PrefSettings;
 import com.zeemote.zc.event.ButtonEvent;
@@ -2685,13 +2682,17 @@ public class Reviewer extends AnkiActivity implements IButtonListener{
       try {
         BufferedReader styleReader =
           new BufferedReader(new InputStreamReader(new FileInputStream(styleFile)));
-        while (true) {
-          String line = styleReader.readLine();
-          if (line == null) {
-            break;
-          }
-          style.append(line);
-          style.append('\n');
+        try {
+            while (true) {
+              String line = styleReader.readLine();
+              if (line == null) {
+                break;
+              }
+              style.append(line);
+              style.append('\n');
+            }
+        } finally {
+            styleReader.close();
         }
       } catch (IOException e) {
         Log.e(AnkiDroidApp.TAG, "Error reading style file: " + styleFile.getAbsolutePath(), e);
