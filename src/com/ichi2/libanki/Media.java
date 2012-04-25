@@ -69,11 +69,13 @@ public class Media {
     
     private Collection mCol;
     private String mDir;
+    private String mMediaDbFilename;
     private AnkiDb mMediaDb;
     
     public Media(Collection col) {
         mCol = col;
         mDir = col.getPath().replaceFirst("\\.anki2$", ".media");
+        mMediaDbFilename = mDir + ".db";
         File fd = new File(mDir);
         if (!fd.exists()) {
             if (fd.mkdir()) {
@@ -85,24 +87,23 @@ public class Media {
     }
 
     private void connect() {
-        String path = mDir + ".db";
-        File mediaDbFile = new File(path);
+        File mediaDbFile = new File(mMediaDbFilename);
         if (!mediaDbFile.exists()) {
             // Copy an empty collection file from the assets to the SD card.
             InputStream stream;
             try {
                 stream = AnkiDroidApp.getAppResources().getAssets().open("collection.media.db");
-                Utils.writeToFile(stream, path);
+                Utils.writeToFile(stream, mMediaDbFilename);
                 stream.close();
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
         }
-        mMediaDb = AnkiDatabaseManager.getDatabase(path);
+        mMediaDb = AnkiDatabaseManager.getDatabase(mMediaDbFilename);
     }
     
     public void close() {
-        mMediaDb.closeDatabase();
+        AnkiDatabaseManager.closeDatabase(mMediaDbFilename);
         mMediaDb = null;
         mCol = null;
     }
@@ -110,7 +111,7 @@ public class Media {
     public String getDir() {
         return mDir;
     }
-
+    
     // Adding media
     ///////////////
     
@@ -342,7 +343,6 @@ public class Media {
         ZipFile z = null;
         ArrayList<Object[]> media = new ArrayList<Object[]>();
         long sizecnt = 0;
-        byte buffer[] = new byte[100000];
         JSONObject meta = null;
         int nextUsn = 0;
         try {
