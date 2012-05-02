@@ -479,7 +479,7 @@ public class Reviewer extends Activity implements IButtonListener{
     private final Handler longClickHandler = new Handler();
     private final Runnable longClickTestRunnable = new Runnable() {
         public void run() {
-    		// Log.i(AnkiDroidApp.TAG, "onEmulatedLongClick");
+    		// // Log.i(AnkiDroidApp.TAG, "onEmulatedLongClick");
         	Vibrator vibratorManager = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
             vibratorManager.vibrate(50);
             longClickHandler.postDelayed(startLongClickAction, 300);
@@ -495,7 +495,7 @@ public class Reviewer extends Activity implements IButtonListener{
     private View.OnClickListener mCardStatisticsListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            // Log.i(AnkiDroidApp.TAG, "Show card statistics");
+            // // Log.i(AnkiDroidApp.TAG, "Show card statistics");
             stopTimer();
 			Themes.htmlOkDialog(Reviewer.this, getResources().getString(R.string.card_browser_card_details), mCurrentCard.getCardDetails(Reviewer.this, false), new DialogInterface.OnClickListener() {
 				@Override
@@ -516,7 +516,7 @@ public class Reviewer extends Activity implements IButtonListener{
     private View.OnClickListener mFlipCardListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            // Log.i(AnkiDroidApp.TAG, "Flip card changed:");
+            // // Log.i(AnkiDroidApp.TAG, "Flip card changed:");
             mTimeoutHandler.removeCallbacks(mShowAnswerTask);
             displayCardAnswer();
         }
@@ -603,7 +603,7 @@ public class Reviewer extends Activity implements IButtonListener{
     		if (mIsSelecting) {
     			return false;
     		}
-    		// Log.i(AnkiDroidApp.TAG, "onLongClick");
+    		// // Log.i(AnkiDroidApp.TAG, "onLongClick");
     		Vibrator vibratorManager = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
     		vibratorManager.vibrate(50);
             longClickHandler.postDelayed(startLongClickAction, 300);
@@ -879,7 +879,7 @@ public class Reviewer extends Activity implements IButtonListener{
     protected void onCreate(Bundle savedInstanceState) {
     	Themes.applyTheme(this);
         super.onCreate(savedInstanceState);
-        // Log.i(AnkiDroidApp.TAG, "Reviewer - onCreate");
+        // // Log.i(AnkiDroidApp.TAG, "Reviewer - onCreate");
 
         mChangeBorderStyle = Themes.getTheme() == Themes.THEME_ANDROID_LIGHT || Themes.getTheme() == Themes.THEME_ANDROID_DARK;
         mCompat = Utils.createCompat();
@@ -936,7 +936,7 @@ public class Reviewer extends Activity implements IButtonListener{
 
             // Initialize session limits
             long timelimit = deck.getSessionTimeLimit() * 1000;
-            // Log.i(AnkiDroidApp.TAG, "SessionTimeLimit: " + timelimit + " ms.");
+            // // Log.i(AnkiDroidApp.TAG, "SessionTimeLimit: " + timelimit + " ms.");
             mSessionTimeLimit = System.currentTimeMillis() + timelimit;
             mSessionCurrReps = 0;
 
@@ -963,7 +963,7 @@ public class Reviewer extends Activity implements IButtonListener{
     @Override
     protected void onPause() {
         super.onPause();
-        // Log.i(AnkiDroidApp.TAG, "Reviewer - onPause()");
+        // // Log.i(AnkiDroidApp.TAG, "Reviewer - onPause()");
 
     	mTimeoutHandler.removeCallbacks(mShowAnswerTask);
     	mTimeoutHandler.removeCallbacks(mShowQuestionTask);
@@ -979,7 +979,7 @@ public class Reviewer extends Activity implements IButtonListener{
         Sound.stopSounds();
 
         if ((AnkiDroidApp.zeemoteController() != null) && (AnkiDroidApp.zeemoteController().isConnected())){ 
-        	// Log.d("Zeemote","Removing listener in onPause");
+        	// // Log.d("Zeemote","Removing listener in onPause");
         	AnkiDroidApp.zeemoteController().removeButtonListener(this);
         	AnkiDroidApp.zeemoteController().removeJoystickListener(adapter);
     		adapter.removeButtonListener(this);
@@ -1001,7 +1001,7 @@ public class Reviewer extends Activity implements IButtonListener{
 
       // check if deck is already opened in big widget. If yes, reload card (to make sure it's not answered yet)
       if (DeckManager.deckIsOpenedInBigWidget(deck.getDeckPath()) && mCurrentCard != null && !mInEditor) {
-    	  // Log.i(AnkiDroidApp.TAG, "Reviewer: onResume: get card from big widget");
+    	  // // Log.i(AnkiDroidApp.TAG, "Reviewer: onResume: get card from big widget");
     	  blockControls();
     	  AnkiDroidWidgetBig.updateWidget(AnkiDroidWidgetBig.UpdateService.VIEW_NOT_SPECIFIED, true);
     	  DeckTask.launchDeckTask(DeckTask.TASK_TYPE_ANSWER_CARD, mAnswerCardHandler, new DeckTask.TaskData(0, deck, null));
@@ -1013,7 +1013,7 @@ public class Reviewer extends Activity implements IButtonListener{
           mSensorManager.registerListener(mSensorListener, mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER), SensorManager.SENSOR_DELAY_NORMAL);    	  
       }
       if ((AnkiDroidApp.zeemoteController() != null) && (AnkiDroidApp.zeemoteController().isConnected())){
-    	  // Log.d("Zeemote","Adding listener in onResume");
+    	  // // Log.d("Zeemote","Adding listener in onResume");
     	  AnkiDroidApp.zeemoteController().addButtonListener(this);
       	  adapter = new JoystickToButtonAdapter();
       	  AnkiDroidApp.zeemoteController().addJoystickListener(adapter);
@@ -1044,7 +1044,7 @@ public class Reviewer extends Activity implements IButtonListener{
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        // Log.i(AnkiDroidApp.TAG, "Reviewer - onDestroy()");
+        // // Log.i(AnkiDroidApp.TAG, "Reviewer - onDestroy()");
         if (mUnmountReceiver != null) {
             unregisterReceiver(mUnmountReceiver);
         }
@@ -1057,7 +1057,7 @@ public class Reviewer extends Activity implements IButtonListener{
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event)  {
         if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
-        	// Log.i(AnkiDroidApp.TAG, "Reviewer - onBackPressed()");
+        	// // Log.i(AnkiDroidApp.TAG, "Reviewer - onBackPressed()");
         	closeReviewer(RESULT_DEFAULT, false);
         	return true;
         }
@@ -1101,7 +1101,7 @@ public class Reviewer extends Activity implements IButtonListener{
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
         setLanguage(mLocale);
-        // Log.i(AnkiDroidApp.TAG, "onConfigurationChanged");
+        // // Log.i(AnkiDroidApp.TAG, "onConfigurationChanged");
 
         mConfigurationChanged = true;
 
@@ -1200,7 +1200,7 @@ public class Reviewer extends Activity implements IButtonListener{
 
     private void updateBigWidget(boolean showProgressDialog) {
     	if (DeckManager.deckIsOpenedInBigWidget(DeckManager.getMainDeckPath())) {
-      	  	// Log.i(AnkiDroidApp.TAG, "Reviewer: updateBigWidget");
+      	  	// // Log.i(AnkiDroidApp.TAG, "Reviewer: updateBigWidget");
       	  	AnkiDroidWidgetBig.setCard(mCurrentCard);
       	  	AnkiDroidWidgetBig.updateWidget(AnkiDroidWidgetBig.UpdateService.VIEW_SHOW_QUESTION, showProgressDialog);
     	}
@@ -1325,7 +1325,7 @@ public class Reviewer extends Activity implements IButtonListener{
         if (requestCode == EDIT_CURRENT_CARD) {
         	setInAnimation(true);
             if (resultCode == RESULT_OK || resultCode == RESULT_EDIT_CARD_RESET) {
-                // Log.i(AnkiDroidApp.TAG, "Saving card...");
+                // // Log.i(AnkiDroidApp.TAG, "Saving card...");
                 int showQuestion = sDisplayAnswer ? UPDATE_CARD_SHOW_ANSWER : UPDATE_CARD_SHOW_QUESTION;
                 if (resultCode == RESULT_EDIT_CARD_RESET) {
                 	showQuestion = UPDATE_CARD_NEW_CARD;
@@ -1364,7 +1364,7 @@ public class Reviewer extends Activity implements IButtonListener{
                 public void onReceive(Context context, Intent intent) {
                     String action = intent.getAction();
                     if (action.equals(Intent.ACTION_MEDIA_EJECT)) {
-                        // Log.i(AnkiDroidApp.TAG, "mUnmountReceiver - Action = Media Eject");
+                        // // Log.i(AnkiDroidApp.TAG, "mUnmountReceiver - Action = Media Eject");
                         finishNoStorageAvailable();
                     }
                 }
@@ -1441,7 +1441,7 @@ public class Reviewer extends Activity implements IButtonListener{
 
     private void lookUpOrSelectText() {
         if (clipboardHasText()) {
-            // Log.i(AnkiDroidApp.TAG, "Clipboard has text = " + clipboardHasText());
+            // // Log.i(AnkiDroidApp.TAG, "Clipboard has text = " + clipboardHasText());
             lookUp();
     	} else {
         	selectAndCopyText();
@@ -1553,7 +1553,7 @@ public class Reviewer extends Activity implements IButtonListener{
 	        try {
 	        	mSetTextIsSelectable = TextView.class.getMethod("setTextIsSelectable", boolean.class);
 	        } catch (Throwable e) {
-	        	// Log.i(AnkiDroidApp.TAG, "mSetTextIsSelectable could not be found due to a too low Android version (< 3.0)");
+	        	// // Log.i(AnkiDroidApp.TAG, "mSetTextIsSelectable could not be found due to a too low Android version (< 3.0)");
 	        	mSetTextIsSelectable = null;
 	        }
         	if (mSetTextIsSelectable != null) {
@@ -1717,12 +1717,12 @@ public class Reviewer extends Activity implements IButtonListener{
         if (Integer.parseInt(android.os.Build.VERSION.SDK) > 7) {
             webView.setFocusableInTouchMode(false);
         }
-        // Log.i(AnkiDroidApp.TAG, "Focusable = " + webView.isFocusable() + ", Focusable in touch mode = " + webView.isFocusableInTouchMode());
+        // // Log.i(AnkiDroidApp.TAG, "Focusable = " + webView.isFocusable() + ", Focusable in touch mode = " + webView.isFocusableInTouchMode());
         if (mSetScrollbarBarFading != null) {
             try {
             	mSetScrollbarBarFading.invoke(webView, false);
             } catch (Throwable e) {
-            	// Log.i(AnkiDroidApp.TAG, "setScrollbarFadingEnabled could not be set due to a too low Android version (< 2.1)");
+            	// // Log.i(AnkiDroidApp.TAG, "setScrollbarFadingEnabled could not be set due to a too low Android version (< 2.1)");
             	mSetScrollbarBarFading = null;
             }
         }
@@ -1782,7 +1782,7 @@ public class Reviewer extends Activity implements IButtonListener{
         long sessionTime = deck.getSessionTimeLimit();
         String sessionMessage = null;
         String leechMessage;
-        // Log.i(AnkiDroidApp.TAG, "reviewer leech flag: " + values[0].isPreviousCardLeech() + " " + values[0].isPreviousCardSuspended());
+        // // Log.i(AnkiDroidApp.TAG, "reviewer leech flag: " + values[0].isPreviousCardLeech() + " " + values[0].isPreviousCardSuspended());
 
         if (values[0].isPreviousCardLeech()) {
             if (values[0].isPreviousCardSuspended()) {
@@ -2171,7 +2171,7 @@ public class Reviewer extends Activity implements IButtonListener{
         if(mPrefFixArabic) {
         	question = ArabicUtilities.reshapeSentence(question, true);
         }
-        // Log.i(AnkiDroidApp.TAG, "question: '" + question + "'");
+        // // Log.i(AnkiDroidApp.TAG, "question: '" + question + "'");
 
         String displayString = "";
 
@@ -2215,7 +2215,7 @@ public class Reviewer extends Activity implements IButtonListener{
 
 
     private void displayCardAnswer() {
-        // Log.i(AnkiDroidApp.TAG, "displayCardAnswer");
+        // // Log.i(AnkiDroidApp.TAG, "displayCardAnswer");
 
         // prevent answering (by e.g. gestures) before card is loaded
         if (mCurrentCard == null) {
@@ -2272,7 +2272,7 @@ public class Reviewer extends Activity implements IButtonListener{
                     correctAnswer = matcher.replaceAll("");
                     matcher = Image.sImagePattern.matcher(correctAnswer);
                     correctAnswer = matcher.replaceAll("");
-                    // Log.i(AnkiDroidApp.TAG, "correct answer = " + correctAnswer);
+                    // // Log.i(AnkiDroidApp.TAG, "correct answer = " + correctAnswer);
 
                     // Obtain the diff and send it to updateCard
                     DiffEngine diff = new DiffEngine();
@@ -2315,7 +2315,7 @@ public class Reviewer extends Activity implements IButtonListener{
 
 
     private void updateCard(String content) {
-        // Log.i(AnkiDroidApp.TAG, "updateCard");
+        // // Log.i(AnkiDroidApp.TAG, "updateCard");
 
         if (mSimpleInterface) {
         	fillFlashcard(mShowAnimations);
@@ -2349,9 +2349,9 @@ public class Reviewer extends Activity implements IButtonListener{
             mBaseUrl = Utils.urlEncodeMediaDir(mDeckFilename.replace(".anki", ".media/"));
         }
 
-        // // Log.i(AnkiDroidApp.TAG, "Initial content card = \n" + content);
+        // // // Log.i(AnkiDroidApp.TAG, "Initial content card = \n" + content);
         // content = Image.parseImages(deckFilename, content);
-        // // Log.i(AnkiDroidApp.TAG, "content after parsing images = \n" + content);
+        // // // Log.i(AnkiDroidApp.TAG, "content after parsing images = \n" + content);
 
         // don't play question sound again when displaying answer 
         int questionStartsAt = content.indexOf("<a name=\"question\"></a><hr/>");
@@ -2402,14 +2402,14 @@ public class Reviewer extends Activity implements IButtonListener{
         	content = fenToChessboard(content);
         }
 		
-        // Log.i(AnkiDroidApp.TAG, "content card = \n" + content);
+        // // Log.i(AnkiDroidApp.TAG, "content card = \n" + content);
         StringBuilder style = new StringBuilder();
         style.append(mCustomFontStyle);
         style.append(getDeckStyle(mCurrentCard.mDeck.getDeckPath()));
-        // Log.i(AnkiDroidApp.TAG, "::style::" + style);
+        // // Log.i(AnkiDroidApp.TAG, "::style::" + style);
         mCardContent = new SpannedString(mCardTemplate.replace("::content::", content).replace("::style::", style.toString()));
-        // // Log.i(AnkiDroidApp.TAG, "card html = \n" + card);
-        // Log.i(AnkiDroidApp.TAG, "base url = " + mBaseUrl );
+        // // // Log.i(AnkiDroidApp.TAG, "card html = \n" + card);
+        // // Log.i(AnkiDroidApp.TAG, "base url = " + mBaseUrl );
 
     	fillFlashcard(mShowAnimations);
 
@@ -2457,7 +2457,7 @@ public class Reviewer extends Activity implements IButtonListener{
 
     public void fillFlashcard(boolean flip) {
     	if (!flip) {
-	        // Log.i(AnkiDroidApp.TAG, "base url = " + mBaseUrl);
+	        // // Log.i(AnkiDroidApp.TAG, "base url = " + mBaseUrl);
         	if (mSimpleInterface) {
         		mSimpleCard.setText(mCardContent);
         	} else if (mRefreshWebview) {
@@ -2622,7 +2622,7 @@ public class Reviewer extends Activity implements IButtonListener{
         String fontFace = String.format(
             "@font-face {font-family: \"%s\"; src: url(\"file://%s\");}",
             Utils.removeExtension((new File(fontPath)).getName()), fontPath);
-        // Log.d(AnkiDroidApp.TAG, "adding to style: " + fontFace);
+        // // Log.d(AnkiDroidApp.TAG, "adding to style: " + fontFace);
         builder.append(fontFace);
         builder.append('\n');
       }
@@ -2946,7 +2946,7 @@ public class Reviewer extends Activity implements IButtonListener{
         // applied later
         // and minus the padding
         int availableWidth = (int) (AnkiDroidApp.getDisplayWidth() / mScaleInPercent) - TOTAL_WIDTH_PADDING;
-        // Log.i(AnkiDroidApp.TAG, "availableWidth = " + availableWidth);
+        // // Log.i(AnkiDroidApp.TAG, "availableWidth = " + availableWidth);
         return availableWidth;
     }
 
@@ -2982,7 +2982,7 @@ public class Reviewer extends Activity implements IButtonListener{
         	// this must not be executed on nook (causes fc)
         	mSetScrollbarBarFading = WebView.class.getMethod("setScrollbarFadingEnabled", boolean.class);
         } catch (Throwable e) {
-        	// Log.i(AnkiDroidApp.TAG, "setScrollbarFadingEnabled could not be found due to a too low Android version (< 2.1)");
+        	// // Log.i(AnkiDroidApp.TAG, "setScrollbarFadingEnabled could not be found due to a too low Android version (< 2.1)");
         }
 		if (mCustomFontFiles.length != 0) {
 			return true;
@@ -3036,7 +3036,7 @@ public class Reviewer extends Activity implements IButtonListener{
             // mp.appendTail(sbg);
             // hebrewText = sbg.toString();
             // for (int i = 0; i < hebrewText.length(); i++) {
-            //     // Log.i(AnkiDroidApp.TAG, "flipped brackets: " + hebrewText.codePointAt(i));
+            //     // // Log.i(AnkiDroidApp.TAG, "flipped brackets: " + hebrewText.codePointAt(i));
             // }
             // 3. Reverse all numerical groups (so when they get reversed again they show LTR)
             // Matcher mn = sNumeralsPattern.matcher(hebrewText);
@@ -3048,7 +3048,7 @@ public class Reviewer extends Activity implements IButtonListener{
             // mn.appendTail(sbg);
 
             // for (int i = 0; i < sbg.length(); i++) {
-            //     // Log.i(AnkiDroidApp.TAG, "LTR numerals: " + sbg.codePointAt(i));
+            //     // // Log.i(AnkiDroidApp.TAG, "LTR numerals: " + sbg.codePointAt(i));
             // }
             // hebrewText = sbg.toString();//reverse().toString();
             m.appendReplacement(sb, hebrewText); 
@@ -3186,7 +3186,7 @@ public class Reviewer extends Activity implements IButtonListener{
     public final class AnkiDroidWebChromeClient extends WebChromeClient {
         @Override
         public boolean onJsAlert(WebView view, String url, String message, JsResult result) {
-            // Log.i(AnkiDroidApp.TAG, message);
+            // // Log.i(AnkiDroidApp.TAG, message);
             result.confirm();
             return true;
         }
@@ -3372,13 +3372,13 @@ public class Reviewer extends Activity implements IButtonListener{
 
 	@Override
 	public void buttonPressed(ButtonEvent arg0) {
-		// Log.d("Zeemote","Button pressed, id: "+arg0.getButtonID());
+		// // Log.d("Zeemote","Button pressed, id: "+arg0.getButtonID());
 	}
 
 
 	@Override
 	public void buttonReleased(ButtonEvent arg0) {
-		// Log.d("Zeemote","Button released, id: "+arg0.getButtonID());
+		// // Log.d("Zeemote","Button released, id: "+arg0.getButtonID());
 		Message msg = Message.obtain();
 		msg.what = MSG_ZEEMOTE_BUTTON_A + arg0.getButtonID(); //Button A = 0, Button B = 1...
 		if ((msg.what >= MSG_ZEEMOTE_BUTTON_A) && (msg.what <= MSG_ZEEMOTE_BUTTON_D)) { //make sure messages from future buttons don't get throug

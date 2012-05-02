@@ -329,12 +329,12 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
     private String[] getCustomFonts(String defaultValue) {
         String[] files = Utils.getCustomFonts(this);
         int count = files.length;
-        // Log.d(AnkiDroidApp.TAG, "There are " + count + " custom fonts");
+        // // Log.d(AnkiDroidApp.TAG, "There are " + count + " custom fonts");
         String[] names = new String[count + 1];
         names[0] = defaultValue;
         for (int index = 1; index < count + 1; ++index) {
             names[index] =  Utils.removeExtension((new File(files[index - 1])).getName());
-            // Log.d(AnkiDroidApp.TAG, "Adding custom font: " + names[index]);
+            // // Log.d(AnkiDroidApp.TAG, "Adding custom font: " + names[index]);
         }
         return names;
     }

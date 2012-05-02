@@ -265,7 +265,7 @@ public class Card {
             mTimerStarted += Utils.now() - mTimerStopped;
             mTimerStopped = Double.NaN;
         } else {
-            // Log.i(AnkiDroidApp.TAG, "Card Timer: nothing to resume");
+            // // Log.i(AnkiDroidApp.TAG, "Card Timer: nothing to resume");
         }
     }
 
@@ -536,7 +536,7 @@ public class Card {
 
 
     public void resetCard() {
-        // Log.i(AnkiDroidApp.TAG, "Reset Card: " + mId);
+        // // Log.i(AnkiDroidApp.TAG, "Reset Card: " + mId);
     	mModified = Utils.now();
     	mPriority = PRIORITY_NORMAL;
         mInterval = 0;

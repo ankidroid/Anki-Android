@@ -55,7 +55,7 @@ public class PrefState implements VeecheckState {
             String key = it.next();
             intentString += "|" + key + ":" + extras.get(key).toString();
         }
-        // Log.i("Veecheck", intentString);
+        // // Log.i("Veecheck", intentString);
         return intentString;
     }
 

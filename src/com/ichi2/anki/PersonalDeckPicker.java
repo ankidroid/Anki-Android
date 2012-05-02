@@ -134,10 +134,10 @@ public class PersonalDeckPicker extends Activity {
                 if (new File(mDestination + "/" + deckName + ".anki").exists()) {
                     mDownloadOverwriteAlert.setMessage(getResources().getString(R.string.download_message, deckName));
                     mDownloadOverwriteAlert.show();
-                    // Log.d(AnkiDroidApp.TAG, "Download Deck already exists");
+                    // // Log.d(AnkiDroidApp.TAG, "Download Deck already exists");
                 } else {
                     downloadPersonalDeck(personalDeckDownload);
-                    // Log.d(AnkiDroidApp.TAG, "Download Deck not exists");
+                    // // Log.d(AnkiDroidApp.TAG, "Download Deck not exists");
                 }
             }
 
@@ -184,7 +184,7 @@ public class PersonalDeckPicker extends Activity {
     @Override
     protected void onResume() {
         super.onResume();
-        // Log.i(AnkiDroidApp.TAG, "onResume");
+        // // Log.i(AnkiDroidApp.TAG, "onResume");
         if (mDownloadManagerService != null) {
             try {
                 mDownloadManagerService.registerPersonalDeckCallback(mCallback);
@@ -201,7 +201,7 @@ public class PersonalDeckPicker extends Activity {
     @Override
     protected void onPause() {
         super.onPause();
-        // Log.i(AnkiDroidApp.TAG, "onpause kostas");
+        // // Log.i(AnkiDroidApp.TAG, "onpause kostas");
         if (mDownloadManagerService != null) {
             try {
                 mDownloadManagerService.unregisterPersonalDeckCallback(mCallback);
@@ -216,7 +216,7 @@ public class PersonalDeckPicker extends Activity {
 
     @Override
     protected void onDestroy() {
-        // Log.i(AnkiDroidApp.TAG, "onDestroy");
+        // // Log.i(AnkiDroidApp.TAG, "onDestroy");
         super.onDestroy();
         releaseService();
         releaseBroadcastReceiver();
@@ -227,7 +227,7 @@ public class PersonalDeckPicker extends Activity {
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event)  {
         if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
-            // Log.i(AnkiDroidApp.TAG, "PersonalDeckPicker - onBackPressed()");
+            // // Log.i(AnkiDroidApp.TAG, "PersonalDeckPicker - onBackPressed()");
             closePersonalDeckPicker();
         }
         return super.onKeyDown(keyCode, event);
@@ -250,7 +250,7 @@ public class PersonalDeckPicker extends Activity {
 
     private void releaseService() {
         if (mConnection != null) {
-            // Log.i(AnkiDroidApp.TAG, "Unbinding Service...");
+            // // Log.i(AnkiDroidApp.TAG, "Unbinding Service...");
             unbindService(mConnection);
             mConnection = null;
         }
@@ -368,7 +368,7 @@ public class PersonalDeckPicker extends Activity {
 
 
     private void getPersonalDecks() {
-        // Log.i(AnkiDroidApp.TAG, "getPersonalDecks");
+        // // Log.i(AnkiDroidApp.TAG, "getPersonalDecks");
         SharedPreferences pref = PrefSettings.getSharedPrefs(getBaseContext());
         String username = pref.getString("username", "");
         String password = pref.getString("password", "");
@@ -418,7 +418,7 @@ public class PersonalDeckPicker extends Activity {
             // representation of that from the raw service object.
             mDownloadManagerService = IDownloadManagerService.Stub.asInterface(service);
 
-            // Log.i(AnkiDroidApp.TAG, "onServiceConnected");
+            // // Log.i(AnkiDroidApp.TAG, "onServiceConnected");
             // We want to monitor the service for as long as we are
             // connected to it.
             try {
@@ -446,7 +446,7 @@ public class PersonalDeckPicker extends Activity {
 
         @Override
         public void onDisconnected() {
-            // Log.i(AnkiDroidApp.TAG, "onDisconnected");
+            // // Log.i(AnkiDroidApp.TAG, "onDisconnected");
             if (mNoConnectionAlert != null) {
                 mNoConnectionAlert.show();
             }
@@ -456,7 +456,7 @@ public class PersonalDeckPicker extends Activity {
         @SuppressWarnings("unchecked")
         @Override
         public void onPostExecute(Payload data) {
-            // Log.i(AnkiDroidApp.TAG, "onPostExecute");
+            // // Log.i(AnkiDroidApp.TAG, "onPostExecute");
             if (mProgressDialog != null) {
                 mProgressDialog.dismiss();
             }
