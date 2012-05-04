@@ -339,6 +339,8 @@ public class Decks {
 		}
 	}
 
+	// byName
+	
 	/** Add or update an existing deck. Used for syncing and merging. */
 	public void update(JSONObject g) {
 		try {

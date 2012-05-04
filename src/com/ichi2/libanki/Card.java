@@ -156,6 +156,8 @@ public class Card implements Cloneable {
 	public void flush() {
 		mMod = Utils.intNow();
 		mUsn = mCol.usn();
+		// bug check
+		assert mQueue != 2 || mODue != 0;
 		StringBuilder sb = new StringBuilder();
 		sb.append("INSERT OR REPLACE INTO cards VALUES (");
 		sb.append(mId).append(", ");
@@ -182,6 +184,8 @@ public class Card implements Cloneable {
 	public void flushSched() {
 		mMod = Utils.intNow();
 		mUsn = mCol.usn();
+		// bug check
+		assert mQueue != 2 || mODue != 0;
 		ContentValues values = new ContentValues();
 		values.put("mod", mMod);
 		values.put("usn", mUsn);

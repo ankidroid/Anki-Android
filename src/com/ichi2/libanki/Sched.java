@@ -1590,7 +1590,7 @@ public class Sched {
 				return false;
 			}
 			// if over threshold or every half threshold reps after that
-			if (lf >= card.getLapses()
+			if (card.getLapses() >= lf
 					&& (card.getLapses() - lf) % Math.max(lf / 2, 1) == 0) {
 				// add a leech tag
 				Note n = card.note();
@@ -1598,8 +1598,16 @@ public class Sched {
 				n.flush();
 				// handle
 				if (conf.getInt("leechAction") == 0) {
-					suspendCards(new long[] { card.getId() });
-					card.load();
+					// if it has an old due, remove it from cram/relearning
+					if (card.getODue() != 0) {
+						card.setDue(card.getODue());
+					}
+					if (card.getODid() != 0) {
+						card.setDid(card.getODid());
+					}
+					card.setODue(0);
+					card.setODid(0);
+					card.setQueue(-1);
 				}
 				return true;
 			}
