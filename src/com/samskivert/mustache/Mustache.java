@@ -7,6 +7,7 @@ package com.samskivert.mustache;
 import android.util.Log;
 
 import com.ichi2.anki.AnkiDroidApp;
+import com.ichi2.libanki.Utils;
 
 import java.io.IOException;
 import java.io.Reader;
@@ -16,6 +17,7 @@ import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -233,6 +235,7 @@ public class Mustache
     }
 
     protected static final Pattern spanPattern = Pattern.compile("^<span.+?>(.*)</span>");
+    protected static final String clozeReg = "\\{\\{c%s::(.*?)(::(.*?))?\\}\\}";
 
     protected static String stripSpan (String text)
     {
@@ -388,13 +391,88 @@ public class Mustache
         }
         @Override public void execute (Template tmpl, Template.Context ctx, Writer out)  {
             Object value = tmpl.getValue(ctx, _name, _line);
-            // TODO: configurable behavior on missing values
             if (value != null) {
                 String text = String.valueOf(value);
                 write(out, _stripSpan ? stripSpan(text) : text);
+                return;
+            }
+            
+            // field modifiers
+            String[] parts = _name.split(":", 3);
+            String mod = "";
+            String tag = "";
+            String extra = null;
+            if (parts.length == 1 || parts[0].equals("")) {
+                write(out, String.format("{unknown field %s}", _name));
+                return;
+            } else if (parts.length == 2) {
+                mod = parts[0];
+                tag = parts[1];
+            } else if (parts.length == 3) {
+                mod = parts[0];
+                extra = parts[1];
+                tag = parts[2];
+            }
+            
+            value = tmpl.getValue(ctx, tag, _line);
+            
+            // built-in modifiers
+            if (mod.equals("text")) {
+                // strip html
+                if (value != null) {
+                    write(out, stripSpan(String.valueOf(value)));
+                }
+                return;
+            } else if (mod.equals("type")) {
+                // type answer field; convert it to [[type:...]] for the gui code to process
+                write(out, String.format("[[%s]]", _name));
+                return;
+            } else if (mod.equals("cq") || mod.equals("ca")) {
+                // cloze deletion
+                if (value != null && extra != null) {
+                    write(out, clozeText(String.valueOf(value), extra, mod.substring(1, 2)));
+                }
+                return;
+            } else {
+                // TODO: hook-based field modifier
+                if (value == null) {
+                    write(out, String.format("{unknown field %s}", _name));
+                    return;
+                }
+                write(out, String.valueOf(value));
             }
         }
         protected boolean _stripSpan;
+        
+        protected String clozeText(String txt, String ord, String type) {
+            String regex = String.format(Locale.US, Mustache.clozeReg, ord);
+            Pattern p = Pattern.compile(regex);
+            Matcher m = p.matcher(txt);
+            if (!m.find()) {
+                // cloze doesn't exist; return empty
+                return "";
+            }
+            // replace chosen cloze with type
+            if (type.equals("q")) {
+                if (m.group(3) != "") {
+                    txt = txt.replaceFirst(regex, String.format(Locale.US, "<span class=cloze>[%s...]</span>", m.group(3)));
+                } else {
+                    txt = txt.replaceFirst(regex, String.format(Locale.US, "<span class=cloze>[...]</span>", txt));
+                }
+            } else if (type.equals("a")) {
+                txt = txt.replaceFirst(regex, String.format(Locale.US, "<span class=cloze>%s</span>", m.group(1)));
+            }
+            regex = String.format(Locale.US, Mustache.clozeReg, ".*?");
+            // and display other clozes normally
+            p = Pattern.compile(regex);
+            m = p.matcher(txt);
+            StringBuffer sb = new StringBuffer();
+            while (m.find()) {
+                m.appendReplacement(sb, m.group(1));
+            }
+            m.appendTail(sb);
+            return m.toString();
+        }
     }
 
     /** A helper class for compound segments. */

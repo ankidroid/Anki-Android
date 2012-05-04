@@ -412,7 +412,7 @@ public class Models {
 //    }
 
 
-    public String[] orderedFields(JSONObject m) {
+    public Map<String, Integer> fieldMap(JSONObject m) {
     	JSONArray ja;
 		try {
 			ja = m.getJSONArray("flds");
@@ -421,9 +421,9 @@ public class Models {
 	    		JSONObject f = ja.getJSONObject(i);
 	    		map.put(f.getInt("ord"), f.getString("name"));
 	    	}
-	    	String[] result = new String[map.size()];
+	    	Map<String, Integer> result = new HashMap<String, Integer>();
 	    	for (int i = 0; i < map.size(); i++) {
-	    		result[i] = map.get(i);
+	    		result.put(map.get(i), i);
 	    	}
 	    	return result;
 		} catch (JSONException e) {

@@ -785,9 +785,9 @@ public class Collection {
 		Map<String, String> fields = new HashMap<String, String>();
 		long modelId = (Long) data[2];
 		JSONObject model = mModels.get(modelId);
-		String[] fnames = mModels.orderedFields(model);
-		for (int i = 0; i < flist.length; i++) {
-			fields.put(fnames[i], flist[i]);
+		Map<String, Integer> fmap = mModels.fieldMap(model);
+		for (String fname : fmap.keySet()) {
+		    fields.put(fname, flist[fmap.get(fname).intValue()]);
 		}
 		fields.put("Tags", (String) data[5]);
 		try {
