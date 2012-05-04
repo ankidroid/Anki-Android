@@ -58,8 +58,10 @@ public class SharedDeck extends HashMap<String, Object> {
 
 
     public void setTitle(String title) {
-        title = title.replaceAll("[^][A-Za-z0-9 ()\\-]", "");
-        title = title.substring(0, 40);
+        title = title.replaceAll("[^A-Za-z0-9 ()\\-]", "");
+        if (title.length() > 40) {
+          title = title.substring(0, 40);
+        }
         mTitle = title;
         put("title", mTitle);
     }
