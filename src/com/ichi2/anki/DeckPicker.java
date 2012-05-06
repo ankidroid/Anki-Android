@@ -2398,16 +2398,17 @@ public class DeckPicker extends FragmentActivity {
         				map.put("sep", "bot");
         			}
         		}
-        	} else if (mDeckList.size() > 0 && mDeckList.size() == decks.size() - 1) {
-        		// bottom position
-        		if (name.length == 1) {
-        			m.put("sep", "ful");
-	    		} else {
-	    			m.put("sep", "bot");
-	    		}
         	} else {
         		// center position
         		m.put("sep", "cen");
+        	}
+        	if (mDeckList.size() > 0 && mDeckList.size() == decks.size() - 1) {
+        		// bottom position
+        		if (name.length == 1) {
+        			m.put("sep", "ful");
+        		} else {
+        			m.put("sep", "bot");
+        		}        		
         	}
         	mDeckList.add(m);
         }
