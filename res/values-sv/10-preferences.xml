@@ -145,7 +145,7 @@
   <string name="theme_animations_summ">Visa animeringar när kort vänds</string>
   <string name="animation_speed">Animationslängd</string>
   <string name="animation_speed_summ">Varaktighet av övergångsanimationer: XXX ms</string>
-  <string name="eink_display">E-Ink Display Optimization</string>
+  <string name="eink_display">E-inkdisplay optimering</string>
   <string name="eink_display_summ">Disable all animations and do some optimization for E-Ink Display</string>
   <string name="pref_cat_backup">Säkerhetskopior</string>
   <string name="pref_backup">Använd säkerhetskopior</string>
@@ -215,7 +215,7 @@
   <string name="deck_conf_rev_cards">Repetitioner</string>
   <string name="deck_conf_lps_cards">Lapses</string>
   <string name="deck_conf_other">Andra</string>
-  <string name="deck_conf_add_conf">Add/delete configurations</string>
+  <string name="deck_conf_add_conf">Lägg till/ta bort konfigurationer</string>
   <string name="deck_conf_steps">Steg (i minuter)</string>
   <string name="deck_conf_order">Ordning</string>
   <string name="deck_conf_new_cards_day">Nya kort/dag</string>

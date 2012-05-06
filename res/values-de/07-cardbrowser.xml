@@ -52,7 +52,7 @@
   <string name="card_details_changed">Geändert</string>
   <string name="card_details_tags">Schlagworte</string>
   <string name="card_details_model">Note type</string>
-  <string name="card_browser_sorting_cards">Karten werden sortiert.\nBitte warten...</string>
+  <string name="card_browser_sorting_cards">Karten werden sortiert.\nBitte warten…</string>
   <string name="card_browser_filtering_cards">Filtering cards.\nPlease wait...</string>
   <string name="card_details_card_model">Kartenvorlage</string>
   <string-array name="card_browser_order_labels">

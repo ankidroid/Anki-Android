@@ -50,7 +50,7 @@
   <string name="add">Hinzufügen</string>
   <string name="close">Schließen</string>
   <string name="select">Auswählen</string>
-  <string name="saving_changes">Änderungen werden gespeichert...</string>
+  <string name="saving_changes">Änderungen werden gespeichert…</string>
   <string name="studyoptions_welcome_title">Willkommen in AnkiDroid!</string>
   <string name="studyoptions_no_external_storage_title">Externer Speicher nicht verfügbar</string>
   <string name="studyoptions_no_external_storage_message">Kein externer Speicher verfügbar. AnkiDroid braucht Zugang zur SD-Karte um Stapel zu öffnen oder zu lesen. Überprüfen Sie, ob Ihre SD-Karte eingehängt ist und versuchen Sie es erneut.</string>
@@ -63,7 +63,7 @@
   <string name="card_editor_copy_card">Karte kopieren</string>
   <string name="card_editor_reset_card">Fortschritt zurücksetzen</string>
   <string name="error_insufficient_memory">Vorgang wegen unzureichenden Gerätespeichers nicht möglich</string>
-  <string name="tutorial_load">Creating tutorial deck.\nPlease wait...</string>
+  <string name="tutorial_load">Erstelle Einführungsstapel.\n Bitte warten…</string>
   <string name="tutorial_loading_error">Einführungsstapel konnte nicht erstellt werden</string>
   <string name="rename">Umbenennen</string>
   <string name="rename_error">Stapel %s konnte nicht umbenannt werden</string>
@@ -74,10 +74,10 @@
   <string name="check_db">Datenbank überprüfen</string>
   <string name="check_db_message">Prüfe Datenbank.\n Bitte warten...</string>
   <string name="simple_interface_hint">Leere %s. Beachten Sie, dass die einfache Oberfläche keine Bilder/Sounds etc. anzeigen kann.</string>
-  <string name="delete_deck">Lösche Stapel...\nBitte warten.</string>
+  <string name="delete_deck">Lösche Stapel…\nBitte warten.</string>
   <string-array name="dynOrderLabels">
     <item>Oldest seen first</item>
-    <item>Random</item>
+    <item>Zufällig</item>
     <item>Increasing intervals</item>
     <item>Decreasing intervals</item>
     <item>Most lapses</item>

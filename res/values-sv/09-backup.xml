@@ -28,7 +28,7 @@
   <string name="backup_delete">Tar bort säkerhetskopior.\nVar god vänta...</string>
   <string name="contextmenu_deckpicker_remove_backups">Ta bort säkerhetskopior</string>
   <string name="backup_restore">Återställ från säkerhetskopia</string>
-  <string name="backup_new_collection">New collection</string>
+  <string name="backup_new_collection">Ny samling</string>
   <string name="error_handling_title">Felhantering</string>
   <string name="error_handling_options">Alternativ</string>
   <string name="backup_retry_opening">Prova att öppna igen</string>
@@ -36,7 +36,7 @@
   <string name="backup_repair_deck">Reparera</string>
   <string name="backup_repair_deck_progress">Reparerar databas.\nVar vänlig vänta...</string>
   <string name="backup_restore_error">Kortleken kunde inte återställas</string>
-  <string name="backup_restore_if_missing">Restoring collection if missing...</string>
+  <string name="backup_restore_if_missing">Återställer samling om den saknas...</string>
   <string name="backup_restore_deck">Återställer kortlek.\nVar god vänta...</string>
   <string name="backup_restore_select_title">Välj säkerhetskopia att återställa</string>
   <string name="backup_restore_no_backups">Inga säkerhetskopior för kortleken finns i AnkiDroid. Om du har säkerhetskopior på din stationära dator, kopiera dem manuellt till din AnkiDroid-mapp</string>

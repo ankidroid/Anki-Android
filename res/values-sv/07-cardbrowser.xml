@@ -30,8 +30,8 @@
   <string name="card_browser_unmark_card">Avmarkera anteckning</string>
   <string name="delete_card_title">Ta bort anteckning</string>
   <string name="delete_card_message">Really delete all cards of this note?\nSearch field: %s</string>
-  <string name="card_browser_show_marked">Filter marked</string>
-  <string name="card_browser_show_suspended">Filter suspended</string>
+  <string name="card_browser_show_marked">Filtrera markerade</string>
+  <string name="card_browser_show_suspended">Filter avbrutet</string>
   <string name="card_browser_search_by_tag">Filtrera efter etikett</string>
   <string name="card_browser_tags_shown">Etiketter: %1$s</string>
   <string name="card_browser_change_display_order">Ändra visningsordning</string>
@@ -53,11 +53,11 @@
   <string name="card_details_tags">Etiketter</string>
   <string name="card_details_model">Anteckningstyp</string>
   <string name="card_browser_sorting_cards">Sorterar kort.\nVar god vänta...</string>
-  <string name="card_browser_filtering_cards">Filtering cards.\nPlease wait...</string>
+  <string name="card_browser_filtering_cards">Filtrerar kort.\nVänligen vänta...</string>
   <string name="card_details_card_model">Kortmodell</string>
   <string-array name="card_browser_order_labels">
     <item>Ingen sortering (snabbare)</item>
-    <item>By search field</item>
+    <item>Via sökfält</item>
     <item>Efter förfallodatum</item>
   </string-array>
   <plurals name="card_browser_subtitle">

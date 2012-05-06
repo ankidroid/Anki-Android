@@ -22,8 +22,8 @@
 <resources>
   <string name="statistics_young">Unga</string>
   <string name="statistics_mature">Mogna</string>
-  <string name="statistics_relearn">Relearn</string>
-  <string name="statistics_learn">Learn</string>
+  <string name="statistics_relearn">Studera igen</string>
+  <string name="statistics_learn">Studera</string>
   <string name="statistics_cram">Råplugg</string>
   <string name="statistics_type_title">Statistik</string>
   <string name="stats_cards">Kort</string>
