@@ -47,9 +47,9 @@ import java.util.Random;
 public class Collection {
 
 	// collection schema & syncing vars
-	public static final int SCHEMA_VERSION = 5;
+	public static final int SCHEMA_VERSION = 6;
 	public static final String SYNC_URL = "http://beta.ankiweb.net/sync/";
-	public static final int SYNC_VER = 2;
+	public static final int SYNC_VER = 3;
 
 	private AnkiDb mDb;
 	private boolean mServer;
@@ -588,9 +588,12 @@ public class Collection {
 							did = ndid;
 						}
 						if (getDecks().isDyn(did)) {
+							did = 1;
 						}
+						// if the deck doesn't exist, use default instead
+						did = mDecks.get(did).getLong("id");
 						// we'd like to use the same due# as sibling cards, but we can't retrieve that quickly, so we give it a new id instead
-						data.add(new Object[] { ts, nid, cur.getLong(2), tord, now,
+						data.add(new Object[] { ts, nid, did, tord, now,
 								usn, nextID("pos") });
 						ts += 1;
 					}

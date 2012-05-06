@@ -311,4 +311,8 @@ public class Note {
 	public String getSFld() {
 		return mCol.getDb().queryString("SELECT sfld FROM notes WHERE id = " + mId);
 	}
+
+	public String[] getFields() {
+		return mFields;
+	}
 }

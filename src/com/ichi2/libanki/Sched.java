@@ -1505,7 +1505,8 @@ public class Sched {
 		if (lim == null) {
 			lim = "did = " + did;
 		}
-		mCol.getDb().execute("UPDATE cards SET did = odid, queue = type, odue = 0, odid = 0, usn = " + mCol.usn() + ", mod = " + Utils.intNow() + " WHERE " + lim);
+		// move out of cram queue
+		mCol.getDb().execute("UPDATE cards SET did = odid, queue = (CASE WHEN type = 1 THEN 0 ELSE type END), type = (CASE WHEN type = 1 THEN 0 ELSE type END), due = odue, odue = 0, odid = 0, usn = " + mCol.usn() + ", mod = " + Utils.intNow() + " WHERE " + lim);
 	}
 
 	public void remFromDyn(long[] cids) {
@@ -1547,8 +1548,8 @@ public class Sched {
 		long t = Utils.intNow();
 		int u = mCol.usn();
 		for (long c = 0; c < ids.size(); c++) {
-			// start at -1000 so that reviews are all due
-			data.add(new Object[]{did, -1000 + c, t, u, ids.get((int)c)});
+			// start at -100000 so that reviews are all due
+			data.add(new Object[]{did, -100000 + c, t, u, ids.get((int)c)});
 		}
 		String queue;
 		try {
@@ -1556,8 +1557,8 @@ public class Sched {
 				// everything in the new queue
 				queue = "0";
 			} else {
-				// due reviews stay in the review queue
-				queue = "(CASE WHEN type = 2 AND (odue OR due) <= " + mToday + " THEN 2 ELSE 0 END)";
+				// due reviews stay in the review queue. careful: can't use "odid or did", as sqlite converts to boolean
+				queue = "(CASE WHEN type = 2 AND (CASE WHEN odue THEN odue <= " + mToday + " ELSE due <= " + mToday + " END) THEN 2 ELSE 0 END)";
 			}
 		} catch (JSONException e) {
 			throw new RuntimeException(e);

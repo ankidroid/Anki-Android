@@ -21,6 +21,7 @@ import android.content.ContentValues;
 import android.database.Cursor;
 import android.util.Log;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import org.json.JSONArray;
@@ -227,7 +228,7 @@ public class Card implements Cloneable {
 			// return (new
 			// StringBuilder()).append("<style type=\"text/css\">").append(template().get("css")).append("</style>").toString();
 			return (new StringBuilder()).append("<style>")
-					.append(template().get("css")).append("</style>")
+					.append(model().get("css")).append("</style>")
 					.toString();
 		} catch (JSONException e) {
 			throw new RuntimeException(e);
@@ -316,6 +317,14 @@ public class Card implements Cloneable {
 	public int timeTaken() {
 		int total = (int) ((Utils.now() - mTimerStarted) * 1000);
 		return Math.min(total, timeLimit());
+	}
+
+	public boolean isEmpty() {
+		ArrayList<Integer> ords = mCol.getModels().availOrds(model(), Utils.joinFields(note().getFields()));
+		if (ords.contains(mOrd)) {
+			return true;
+		}
+		return false;
 	}
 
 	/**

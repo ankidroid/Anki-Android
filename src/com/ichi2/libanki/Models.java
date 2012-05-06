@@ -56,7 +56,14 @@ public class Models {
 		"'mod': 9, " +
 		"'usn': 9, " +
 		"'vers': [], " +
-		"'type': " + Sched.MODEL_STD + "}";
+		"'type': " + Sched.MODEL_STD + ", " +
+		"'css': \" .card {" +
+		"font-familiy: arial; " +
+		"font-size: 20px; " +
+		"text-align: center; " +
+		"color:black; " +
+		"background-color: white; }\"" +
+		"}";
 
 	private static final String defaultField = 
 		"{'name': \"\", " +
@@ -74,15 +81,7 @@ public class Models {
 		"'ord': None, " +
 		"'qfmt': \"\", " +
 		"'afmt': \"\", " +
-		"'did': None, " +
-		"'css': \".card { " +
-		" font-family: arial;" +
-		" font-size: 20px;" +
-		" text-align: center;" +
-		" color: black;" +
-		" background-color: white;" +
-		" }" +
-		"\"}";
+		"'did': None, }";
 	
 //    /** Regex pattern used in removing tags from text before diff */
 //    private static final Pattern sFactPattern = Pattern.compile("%\\([tT]ags\\)s");

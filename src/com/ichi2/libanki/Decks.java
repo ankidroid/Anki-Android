@@ -359,6 +359,8 @@ public class Decks {
 		if (allNames().contains(newName) || newName.length() == 0) {
 			return false;
 		}
+		// ensure we have parents
+		newName = _ensureParents(newName);
 		// rename children
 		String oldName;
 		try {
@@ -375,8 +377,6 @@ public class Decks {
 			g.put("name", newName);
 			mDeckIds.put(newName, mDeckIds.remove(oldName));
 			save(g);
-			// finally, ensure we have parents
-			_ensureParents(newName);
 		} catch (JSONException e) {
 			throw new RuntimeException(e);
 		}
@@ -387,6 +387,9 @@ public class Decks {
 	private String _ensureParents(String name) {
 		String s = "";
 		String[] path = name.split("::");
+		if (path.length < 2) {
+			return name;
+		}
 		for (int i = 0; i < path.length - 1; i++) {
 			if (i == 0) {
 				s = path[0];
