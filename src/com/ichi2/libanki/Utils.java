@@ -1,5 +1,5 @@
 /****************************************************************************************
- * Copyright (c) 2009 Daniel Svärd <daniel.svard@gmail.com>                             *
+ * Copyright (c) 2009 Daniel Svï¿½rd <daniel.svard@gmail.com>                             *
  * Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com>                                   *
  * Copyright (c) 2011 Norbert Nagold <norbert.nagold@gmail.com>						    *
  *                                                                                      *
@@ -515,7 +515,9 @@ public class Utils {
         for (int i = 0; i < list.length - 1; i++) {
             result.append(list[i]).append("\u001f");
         }
-        result.append(list[list.length - 1]);
+        if (list.length > 0) {
+            result.append(list[list.length - 1]);        	
+        }
         return result.toString();
     }
 

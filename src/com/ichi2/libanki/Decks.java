@@ -98,7 +98,7 @@ public class Decks {
 			+ "'timer': 0, "
 			+ "'autoplay': True, "
 			+ "'mod': 0, "
-			+ "'usn': 0, }";
+			+ "'usn': 0 }";
 
 	private Collection mCol;
 	private HashMap<Long, JSONObject> mDecks;

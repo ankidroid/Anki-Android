@@ -81,7 +81,7 @@ public class Models {
 		"'ord': None, " +
 		"'qfmt': \"\", " +
 		"'afmt': \"\", " +
-		"'did': None, }";
+		"'did': None }";
 	
 //    /** Regex pattern used in removing tags from text before diff */
 //    private static final Pattern sFactPattern = Pattern.compile("%\\([tT]ags\\)s");
