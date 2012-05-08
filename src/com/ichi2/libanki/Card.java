@@ -662,6 +662,10 @@ public class Card implements Cloneable {
 	public void setOrd(int ord) {
 		mOrd = ord;
 	}
+	
+	public int getOrd() {
+	    return mOrd;
+	}
 
 	public void setDid(long did) {
 		mDid = did;
