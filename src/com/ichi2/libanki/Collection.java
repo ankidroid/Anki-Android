@@ -47,9 +47,9 @@ import java.util.Random;
 public class Collection {
 
 	// collection schema & syncing vars
-	public static final int SCHEMA_VERSION = 2;
+	public static final int SCHEMA_VERSION = 5;
 	public static final String SYNC_URL = "http://beta.ankiweb.net/sync/";
-	public static final int SYNC_VER = 1;
+	public static final int SYNC_VER = 2;
 
 	private AnkiDb mDb;
 	private boolean mServer;
@@ -91,7 +91,7 @@ public class Collection {
 			+
 			// other config
 			"'curModel': None, " + "'nextPos': 1, "
-			+ "'sortType': \"noteFld\", " + "'sortBackwards': False, }";
+			+ "'sortType': \"noteFld\", " + "'sortBackwards': False, 'addToCur': True, }";
 
 	private static Collection sCurrentCollection;
 
@@ -278,7 +278,7 @@ public class Collection {
 			}
 			AnkiDatabaseManager.closeDatabase(mPath);
 			mDb = null;
-			// mMedia.close();
+			mMedia.close();
 			Log.i(AnkiDroidApp.TAG, "Collection closed");
 		}
 	}
@@ -487,16 +487,29 @@ public class Collection {
 	 * @return (active), non-empty templates.
 	 */
 	private ArrayList<JSONObject> findTemplates(Note note) {
-		ArrayList<JSONObject> ok = new ArrayList<JSONObject>();
 		JSONObject model = note.model();
 		ArrayList<Integer> avail = mModels.availOrds(model,
 				Utils.joinFields(note.values()));
+		return _tmplsFromOrds(model, avail);
+	}
+
+	private ArrayList<JSONObject> _tmplsFromOrds(JSONObject model, ArrayList<Integer> avail) {
+		ArrayList<JSONObject> ok = new ArrayList<JSONObject>();
 		JSONArray tmpls;
 		try {
-			tmpls = model.getJSONArray("tmpls");
-			for (int i = 0; i < tmpls.length(); i++) {
-				JSONObject t = tmpls.getJSONObject(i);
-				if (avail.contains(t.getInt("ord"))) {
+			if (model.getInt("type") == Sched.MODEL_STD) {
+				tmpls = model.getJSONArray("tmpls");
+				for (int i = 0; i < tmpls.length(); i++) {
+					JSONObject t = tmpls.getJSONObject(i);
+					if (avail.contains(t.getInt("ord"))) {
+						ok.add(t);
+					}
+				}
+			} else {
+				// cloze - generate temporary templates from first
+				for (int ord : avail) {
+					JSONObject t = new JSONObject(model.getJSONArray("tmpls").getString(0));
+					t.put("ord", ord);
 					ok.add(t);
 				}
 			}
@@ -513,17 +526,30 @@ public class Collection {
 		// build map of (nid,ord) so we don't create dupes
 		String snids = Utils.ids2str(nids);
 		HashMap<Long, HashMap<Integer, Long>> have = new HashMap<Long, HashMap<Integer, Long>>();
+		HashMap<Long, Long> dids = new HashMap<Long, Long>();
 		Cursor cur = null;
 		try {
 			cur = mDb.getDatabase().rawQuery(
-					"SELECT id, nid, ord FROM cards WHERE nid IN " + snids,
+					"SELECT id, nid, ord, did FROM cards WHERE nid IN " + snids,
 					null);
 			while (cur.moveToNext()) {
+				// existing cards
 				long nid = cur.getLong(1);
 				if (!have.containsKey(nids)) {
 					have.put(nid, null);
 				}
 				have.get(nid).put(cur.getInt(2), cur.getLong(0));
+				// and their dids
+				long did = cur.getLong(3);
+				if (!dids.containsKey(nid)) {
+					if (dids.get(nid) != 0 && dids.get(nid) != did) {
+						// cards are in two or more different decks; revert to model default
+						dids.put(nid, 0l);
+					}
+				} else {
+					// first card or multiple cards in same deck
+					dids.put(nid, did);
+				}				
 			}
 		} finally {
 			if (cur != null && !cur.isClosed()) {
@@ -547,23 +573,34 @@ public class Collection {
 				ArrayList<Integer> avail = mModels.availOrds(model,
 						cur.getString(3));
 				long nid = cur.getLong(0);
-				JSONArray tmpls = model.getJSONArray("tmpls");
-				for (int i = 0; i < tmpls.length(); i++) {
-					JSONObject t = tmpls.getJSONObject(i);
+				long did = dids.get(nids);
+				if (did == 0) {
+					did = model.getLong("did");
+				}
+				// add any missing cards
+				for (JSONObject t : _tmplsFromOrds(model, avail)) {
 					int tord = t.getInt("ord");
-					boolean doHave = have.containsKey(nid)
-							&& have.get(nid).containsKey(tord);
-					// if have ord but empty, add cid to remove list
-					// (may not have nid if generating before any cards added)
-					if (doHave && !avail.contains(tord)) {
-						rem.add(have.get(nid).get(tord));
-					}
-					// if missing ord and is available, generate
-					if (!doHave && avail.contains(tord)) {
+					boolean doHave = have.containsKey(nid) && have.get(nid).containsKey(tord);
+					if (!doHave) {
+						// check deck is not a cram deck
+						long ndid = t.getLong("did");
+						if (ndid != 0) {
+							did = ndid;
+						}
+						if (getDecks().isDyn(did)) {
+						}
 						// we'd like to use the same due# as sibling cards, but we can't retrieve that quickly, so we give it a new id instead
 						data.add(new Object[] { ts, nid, cur.getLong(2), tord, now,
 								usn, nextID("pos") });
 						ts += 1;
+					}
+				}
+				// note any cards that need removing
+				if (have.containsKey(nids)) {
+					for (Map.Entry<Integer, Long> n : have.get(nid).entrySet()) {
+						if (!avail.contains(n.getKey())) {
+							rem.add(n.getValue());
+						}
 					}
 				}
 			}
@@ -625,7 +662,7 @@ public class Collection {
 				// the same random number
 				Random r = new Random();
 				r.setSeed(due);
-				return r.nextInt((int) Math.pow(2, 32) - 2) + 1;
+				return r.nextInt(Math.max(due,  1000) - 1) + 1;
 			}
 		} catch (JSONException e) {
 			throw new RuntimeException(e);
@@ -667,15 +704,8 @@ public class Collection {
 		_remNotes(nids);
 	}
 
-	public void remEmptyCards(long[] ids) {
-		if (ids.length == 0) {
-			return;
-		}
-		// TODO: ask user
-		if (true) {
-			remCards(ids);
-		}
-	}
+	// emptyCids
+	// emptyCardReport
 
 	/**
 	 * Field checksums and sorting fields
@@ -763,8 +793,13 @@ public class Collection {
 		try {
 			fields.put("Type", (String) model.get("name"));
 			fields.put("Deck", mDecks.name((Long) data[3]));
-			JSONObject template = model.getJSONArray("tmpls").getJSONObject(
-					(Integer) data[4]);
+			JSONObject template;
+			if (model.getInt("type") == Sched.MODEL_STD) {
+				template = model.getJSONArray("tmpls").getJSONObject(
+						(Integer) data[4]);
+			} else {
+				template = model.getJSONArray("tmpls").getJSONObject(0);
+			}
 			fields.put("Card", template.getString("name"));
             Models.fieldParser fparser = new Models.fieldParser(fields);
 			// render q & a
@@ -1034,6 +1069,11 @@ public class Collection {
         		}
         		// new card position
         		mConf.put("nextPos", mDb.queryScalar("SELECT max(due) + 1 FROM cards WHERE type = 0", false));
+        		// reviews should have a reasonable due
+        		ids = mDb.queryColumn(Long.class, "SELECT id FROM cards WHERE queue = 2 AND due > 10000", 0);
+        		if (ids.size() > 0) {
+        			mDb.execute("UPDATE cards SET due = 0, mod = " + Utils.intNow() + ", usn = " + usn() + " WHERE id IN " + Utils.ids2str(Utils.arrayList2array(ids)));
+        		}
         		mDb.getDatabase().setTransactionSuccessful();
 	        } catch (JSONException e) {
 				throw new RuntimeException(e);

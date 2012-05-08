@@ -384,8 +384,7 @@ public class Syncer {
             return Arrays.asList(TYPE_INTEGER, TYPE_INTEGER, TYPE_INTEGER, TYPE_INTEGER, TYPE_INTEGER, TYPE_INTEGER, TYPE_INTEGER, TYPE_INTEGER, TYPE_INTEGER,
                     TYPE_INTEGER, TYPE_INTEGER, TYPE_INTEGER, TYPE_INTEGER, TYPE_INTEGER, TYPE_INTEGER, TYPE_INTEGER, TYPE_INTEGER, TYPE_STRING);
         } else {
-            return Arrays.asList(TYPE_INTEGER, TYPE_STRING, TYPE_INTEGER, TYPE_INTEGER, TYPE_INTEGER, TYPE_INTEGER, TYPE_STRING, TYPE_STRING, TYPE_INTEGER,
-                    TYPE_INTEGER, TYPE_INTEGER, TYPE_STRING);
+            return Arrays.asList(TYPE_INTEGER, TYPE_STRING, TYPE_INTEGER, TYPE_INTEGER, TYPE_INTEGER, TYPE_STRING, TYPE_STRING, TYPE_STRING, TYPE_STRING, TYPE_INTEGER, TYPE_STRING);
         }
     }
 
@@ -760,6 +759,10 @@ public class Syncer {
 
     private void mergeConf(JSONObject conf) {
     	mCol.setConf(conf);
+    }
+
+    public int getmMediaUsn() {
+        return mMediaUsn;
     }
    
 }

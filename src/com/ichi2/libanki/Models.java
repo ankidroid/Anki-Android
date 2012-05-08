@@ -55,7 +55,8 @@ public class Models {
 		"'latexPost': \"\\\\end{document}\", " +
 		"'mod': 9, " +
 		"'usn': 9, " +
-		"'vers': [] }";
+		"'vers': [], " +
+		"'type': " + Sched.MODEL_STD + "}";
 
 	private static final String defaultField = 
 		"{'name': \"\", " +
@@ -566,7 +567,6 @@ public class Models {
 
     private void _syncTemplates(JSONObject m) {
     	ArrayList<Long> rem = mCol.genCards(Utils.arrayList2array(nids(m)));
-    	mCol.remEmptyCards(Utils.arrayList2array(rem));
     }
 
     
@@ -599,10 +599,10 @@ public class Models {
         Template[] t = new Template[2];
 		try {
 			template = model.getJSONArray("tmpls").getJSONObject(ord);
-			String format = template.getString("qfmt").replace("cloze:", "cq:");
+			String format = template.getString("qfmt").replace("{{cloze:", "{{cq:" + (ord+1) + ":");
             Log.i(AnkiDroidApp.TAG, "Compiling question template \"" + format + "\"");
             t[0] = Mustache.compiler().compile(format);
-            format = template.getString("afmt").replace("cloze:", "ca:");
+            format = template.getString("afmt").replace("{{cloze:", "{{ca:" + (ord+1) + ":");
             Log.i(AnkiDroidApp.TAG, "Compiling answer template \"" + format + "\"");
             t[1] = Mustache.compiler().compile(format);
 		} catch (JSONException e) {
@@ -764,31 +764,29 @@ public class Models {
      */
 
     private void _updateRequired(JSONObject m) {
-    	JSONArray req = new JSONArray();
-    	ArrayList<String> flds = new ArrayList<String>();
-    	JSONArray fields;
 		try {
+	    	if (m.getInt("type") == Sched.MODEL_CLOZE) {
+	    		// nothing to do
+	    		return;
+	    	}
+	    	JSONArray req = new JSONArray();
+	    	ArrayList<String> flds = new ArrayList<String>();
+	    	JSONArray fields;
 			fields = m.getJSONArray("flds");
 	    	for (int i = 0; i < fields.length(); i++) {
 	    		flds.add(fields.getJSONObject(i).getString("name"));
 	    	}
-			boolean cloze = false;
 	    	JSONArray templates = m.getJSONArray("tmpls");
 	    	for (int i = 0; i < templates.length(); i++) {
 	    		JSONObject t = templates.getJSONObject(i);
 	    		Object[] ret = _reqForTemplate(m, flds, t);
-	    		if (((JSONArray)ret[2]).length() > 0) {
-	    			cloze = true;
-	    		}
 	    		JSONArray r = new JSONArray();
 	    		r.put(t.getInt("ord"));
 	    		r.put(ret[0]);
 	    		r.put(ret[1]);
-	    		r.put(ret[2]);
 	    		req.put(r);
 	    	}
 	    	m.put("req", req);
-	    	m.put("cloze", cloze);
 		} catch (JSONException e) {
 			throw new RuntimeException(e);
 		}
@@ -798,14 +796,8 @@ public class Models {
 		try {
 	    	ArrayList<String> a = new ArrayList<String> ();
 	    	ArrayList<String> b = new ArrayList<String> ();
-	    	String cloze = "";
-	    	JSONArray reqstrs = new JSONArray();
-	    	if (t.has("cloze")) {
-	    		// need a cloze-specific filler
-	    		// TODO
-	    	}
 	    	for (String f : flds) {
-	    		a.add(cloze.length() > 0 ? cloze : "1");
+	    		b.add("1");
 	    		b.add("");
 	    	}
 	    	Object[] data;
@@ -832,7 +824,7 @@ public class Models {
 	    		}
 	    	}
 	    	if (req.length() > 0) {
-	    		return new Object[] {type, req, reqstrs};
+	    		return new Object[] {type, req};
 	    	}
 	    	// if there are no required fields, switch to any mode
 	    	type = "any";
@@ -848,7 +840,7 @@ public class Models {
 	    			req.put(i);
 	    		}
 	    	}
-	    	return new Object[]{ type, req, reqstrs};
+	    	return new Object[]{ type, req };
 		} catch (JSONException e) {
 			throw new RuntimeException(e);
 		}
@@ -857,12 +849,15 @@ public class Models {
 
     /** Given a joined field string, return available template ordinals */
     public ArrayList<Integer> availOrds(JSONObject m, String flds) {
-    	String[] fields = Utils.splitFields(flds);
-    	for (String f : fields) {
-    		f = f.trim();
-    	}
-    	ArrayList<Integer> avail = new ArrayList<Integer>();
     	try {
+        	if (m.getInt("type") == Sched.MODEL_CLOZE) {
+        		return _availClozeOrds(m, flds);
+        	}
+        	String[] fields = Utils.splitFields(flds);
+        	for (String f : fields) {
+        		f = f.trim();
+        	}
+        	ArrayList<Integer> avail = new ArrayList<Integer>();
 			JSONArray reqArray = m.getJSONArray("req");
 			for (int i = 0; i < reqArray.length(); i++) {
 				JSONArray sr = reqArray.getJSONArray(i);
@@ -902,26 +897,18 @@ public class Models {
 						continue;
 					}	
 				}
-				// extra cloze requirement?
-				boolean ok = true;
-				for (int j = 0; j < reqstrs.length(); j++) {
-					if (!flds.matches(reqstrs.getString(i))) {
-						// required cloze string was missing
-						ok = false;
-						break;
-					}
-				}
-				if (!ok) {
-					continue;
-				}
 				avail.add(ord);
 			}
+	    	return avail;
 		} catch (JSONException e) {
 			throw new RuntimeException(e);
 		}
-    	return avail;
     }
-    
+
+    private ArrayList<Integer> _availClozeOrds(JSONObject m, String flds) {
+    	// TODO
+    	return null;
+    }
     
     /**
      * Sync handling

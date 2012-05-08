@@ -3,6 +3,7 @@
     <!-- Blue Theme -->
     <style name="Blue">
         <item name="android:background">@color/reviewer_background</item>
+        <item name="android:cacheColorHint">@color/reviewer_background</item>
     </style>
     <style name="Blue.Button" parent="@android:style/Widget.Button">
         <item name="android:background">@drawable/blue_btn_default</item>
@@ -63,6 +64,7 @@
     <!-- Flat Theme -->
     <style name="Flat">
         <item name="android:background">@color/reviewer_background</item>
+        <item name="android:cacheColorHint">@color/reviewer_background</item>
     </style>
     <style name="Flat.Button" parent="@android:style/Widget.Button">
         <item name="android:background">@drawable/blue_btn_default</item>
@@ -123,6 +125,7 @@
     <!-- White Theme -->
     <style name="White">
         <item name="android:background">@color/white_background</item>
+        <item name="android:cacheColorHint">@color/white_background</item>
     </style>
     <style name="White.Button" parent="@android:style/Widget.Button">
         <item name="android:background">@drawable/white_btn_default</item>

@@ -13,6 +13,7 @@
         <item name="android:checkboxStyle">@style/Blue.CompoundButton.CheckBox</item>
         <item name="android:colorForeground">#0000</item>
         <item name="android:colorBackground">@color/background_blue</item>
+        <item name="android:cacheColorHint">@color/background_blue</item>
         <item name="android:editTextStyle">@style/Blue.Edittext</item>
         <item name="android:radioButtonStyle">@style/Blue.CompoundButton.RadioButton</item>
 
@@ -36,6 +37,7 @@
         <item name="android:checkboxStyle">@style/Blue.CompoundButton.CheckBox</item>
         <item name="android:colorForeground">#0000</item>
         <item name="android:colorBackground">@color/background_blue</item>
+        <item name="android:cacheColorHint">@color/background_blue</item>
         <item name="android:editTextStyle">@style/Blue.Edittext</item>
         <item name="android:radioButtonStyle">@style/Blue.CompoundButton.RadioButton</item>
 
@@ -59,6 +61,7 @@
         <item name="android:checkboxStyle">@style/White.CompoundButton.CheckBox</item>
         <item name="android:colorForeground">#0000</item>
         <item name="android:colorBackground">@color/white_background</item>
+        <item name="android:cacheColorHint">@color/white_background</item>
         <item name="android:editTextStyle">@style/White.Edittext</item>
         <item name="android:radioButtonStyle">@style/White.CompoundButton.RadioButton</item>
 

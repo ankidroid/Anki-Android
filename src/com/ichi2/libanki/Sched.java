@@ -84,6 +84,10 @@ public class Sched {
 	public static final int DYN_ADDED = 6;
 	public static final int DYN_DUE = 7;
 
+	// model types
+	public static final int MODEL_STD = 0;
+	public static final int MODEL_CLOZE = 1;
+
 	private static final String[] REV_ORDER_STRINGS = { "ivl DESC", "ivl" };
 	private static final int[] FACTOR_ADDITION_VALUES = { -150, 0, 150 };
 
@@ -92,6 +96,8 @@ public class Sched {
 	private int mQueueLimit;
 	private int mReportLimit;
 	private int mReps;
+	private boolean mHaveQueues;
+	private boolean mClearOverdue;
 	private int mToday;
 	public long mDayCutoff;
 
@@ -129,6 +135,8 @@ public class Sched {
 		mQueueLimit = 50;
 		mReportLimit = 1000;
 		mReps = 0;
+		mHaveQueues = false;
+		mClearOverdue = true;
 		_updateCutoff();
 
 		// Initialise queues
@@ -142,6 +150,9 @@ public class Sched {
 	 */
 	public Card getCard() {
 		_checkDay();
+		if (!mHaveQueues) {
+			reset();
+		}
 		Card card = _getCard();
 		if (card != null) {
 			card.startTimer();
@@ -151,9 +162,13 @@ public class Sched {
 
 	public void reset() {
 		_updateCutoff();
+		if (mClearOverdue) {
+			removeFailed(true);
+		}
 		_resetLrn();
 		_resetRev();
 		_resetNew();
+		mHaveQueues = true;
 	}
 
 	public boolean answerCard(Card card, int ease) {
@@ -234,11 +249,22 @@ public class Sched {
 		return card.getQueue();
 	}
 
-	public boolean lrnButtons(Card card) {
+	public int answerButtons(Card card) {
+		if (card.getODid() == 0 && card.getODue() != 0) {
+			JSONObject conf = _lapseConf(card);
+			try {
+				if (conf.getJSONArray("delays").length() > 1) {
+					return 3;
+				}
+			} catch (JSONException e) {
+				throw new RuntimeException(e);
+			}
+			return 2;
+		}
 		if (card.getQueue() == 2) {
-			return false;
+			return 4;
 		} else {
-			return true;
+			return 3;
 		}
 	}
 
@@ -451,6 +477,10 @@ public class Sched {
 
 	public ArrayList<Object[]> deckDueList(boolean counts) {
 		// DIFFERS FROM LIBANKI: finds all decks
+		_checkDay();
+		if (mClearOverdue) {
+			removeFailed(true);
+		}
 		ArrayList<Object[]> dids = new ArrayList<Object[]>();
 		for (JSONObject g : mCol.getDecks().all()) {
 			try {
@@ -1029,7 +1059,7 @@ public class Sched {
 
 	private int _startingLeft(Card card) {
 		try {
-			JSONObject conf = _newConf(card);
+			JSONObject conf = _lrnConf(card);
 			return conf.getJSONArray("delays").length();
 		} catch (JSONException e) {
 			throw new RuntimeException(e);
@@ -1112,13 +1142,25 @@ public class Sched {
 		removeFailed(null);
 	}
 
+	private void removeFailed(long[] ids) {
+		removeFailed(ids, true);
+	}
+	private void removeFailed(boolean expiredOnly) {
+		removeFailed(null, expiredOnly);
+	}
 	/**
 	 * Remove failed cards from the learning queue.
 	 */
-	private void removeFailed(long[] ids) {
-		String extra = "";
+	private void removeFailed(long[] ids, boolean expiredOnly) {
+		String extra;
 		if (ids != null && ids.length > 0) {
 			extra = " AND id IN " + Utils.ids2str(ids);
+		} else {
+			// benchmarks indicate it's about 10x faster to search all decks with the index than scan the table
+			extra = " AND did IN " + Utils.ids2str(mCol.getDecks().allIds());
+		}
+		if (expiredOnly) {
+			extra += " AND odue <= " + mToday;
 		}
 		mCol.getDb().execute(
 						"UPDATE cards SET due = odue, queue = 2, mod = "
@@ -1457,7 +1499,17 @@ public class Sched {
 	}
 
 	public void remDyn(long did) {
-		mCol.getDb().execute("UPDATE cards SET did = odid, queue = type, odue = 0, odid = 0, usn = " + mCol.usn() + ", mod = " + Utils.intNow() + " WHERE did = " + did);
+		remDyn(did, null);
+	}
+	public void remDyn(long did, String lim) {
+		if (lim == null) {
+			lim = "did = " + did;
+		}
+		mCol.getDb().execute("UPDATE cards SET did = odid, queue = type, odue = 0, odid = 0, usn = " + mCol.usn() + ", mod = " + Utils.intNow() + " WHERE " + lim);
+	}
+
+	public void remFromDyn(long[] cids) {
+		remDyn(0, "id IN " + Utils.ids2str(cids) + " AND odid");
 	}
 
 	private String _dynOrder(JSONObject deck) {
@@ -1518,7 +1570,7 @@ public class Sched {
 			Log.e(AnkiDroidApp.TAG, "error: deck is not a dynamic deck");
 			return 0;
 		}
-		long elapsed = card.getIvl() - card.getODue() - mToday;
+		long elapsed = card.getIvl() - (card.getODue() - mToday);
 		double factor = ((card.getFactor() / 1000.0) + 1.2) / 2.0;
 		return Math.max(1, Math.max(card.getIvl(), (int)(elapsed * factor)));
 	}
@@ -1667,24 +1719,17 @@ public class Sched {
 		for (JSONObject d : mCol.getDecks().all()) {
 			update(d);
 		}
-//		// update all selected decks
-//		for (long did : mCol.getDecks().active()) {
-//			update(mCol.getDecks().get(did));
-//		}
-//		// update parents too
-//		for (JSONObject grp : mCol.getDecks().parents(
-//				mCol.getDecks().selected())) {
-//			update(grp);
-//		}
+		// update all daily counts, but don't save decks to prevent needless conflicts. we'll save on card answer instead
+		for (JSONObject deck : mCol.getDecks().all()) {
+			update(deck);
+		}
 	}
 
 	private void update(JSONObject g) {
-		boolean save = false;
 		for (String t : new String[] { "new", "rev", "lrn", "time" }) {
 			String k = t + "Today";
 			try {
 				if (g.getJSONArray(k).getInt(0) != mToday) {
-					save = true;
 					JSONArray ja = new JSONArray();
 					ja.put(mToday);
 					ja.put(0);
@@ -1693,9 +1738,6 @@ public class Sched {
 			} catch (JSONException e) {
 				throw new RuntimeException(e);
 			}
-		}
-		if (save) {
-			mCol.getDecks().save(g);
 		}
 	}
 
@@ -1851,6 +1893,8 @@ public class Sched {
 	 * Suspend cards.
 	 */
 	public void suspendCards(long[] ids) {
+		remFromDyn(ids);
+		removeFailed(ids);
 		mCol.getDb().execute("UPDATE cards SET queue = -1, mod = " + Utils.intNow()
 								+ ", usn = " + mCol.usn() + " WHERE id IN "
 								+ Utils.ids2str(ids));
@@ -1872,6 +1916,9 @@ public class Sched {
 	 */
 	public void buryNote(long nid) {
 		mCol.setDirty();
+		long[] cids = Utils.arrayList2array(mCol.getDb().queryColumn(Long.class, "SELECT id FROM cards WHERE nid = " + nid, 0));
+		remFromDyn(cids);
+		removeFailed(cids);
 		mCol.getDb().execute("UPDATE cards SET queue = -2 WHERE nid = " + nid);
 	}
 

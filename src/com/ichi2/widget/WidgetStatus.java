@@ -82,7 +82,7 @@ public final class WidgetStatus {
         } else {
             bigWidget = false;
         }
-        if (Integer.parseInt(preferences.getString("minimumCardsDueForNotification", "25")) < 1000000 && sDeckStatus == null) {
+        if (Integer.parseInt(preferences.getString("minimumCardsDueForNotification", "1000001")) < 1000000 && sDeckStatus == null) {
         	notification = true;
         } else {
         	notification = false;

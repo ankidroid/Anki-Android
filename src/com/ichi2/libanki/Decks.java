@@ -64,7 +64,7 @@ public class Decks {
 			+ // currentDay, count
 			"'revToday': [0, 0], " + "'lrnToday': [0, 0], "
 			+ "'timeToday': [0, 0], " + // time in ms
-			"'collapsed': False, 'dyn': 0, 'desc': \"\", 'usn': 0, 'delays' [1, 10], 'separate': True, 'fmult': 0, " +
+			"'collapsed': False, 'dyn': 1, 'desc': \"\", 'usn': 0, 'delays': [1, 10], 'separate': True, 'fmult': 0, " +
 			"'cramRev': False, 'search': \"\", 'limit': 100, 'order': 0, 'shift': True }";
 	
 	
@@ -216,7 +216,7 @@ public class Decks {
 		JSONObject g;
 		long id;
 		try {
-			g = new JSONObject(defaultDeck);
+			g = new JSONObject(type);
 			g.put("name", name);
 			id = Utils.intNow(1000);
 			while (mDecks.containsKey(id)) {
@@ -304,6 +304,17 @@ public class Decks {
 			decks.add(it.next());
 		}
 		return decks;
+	}
+
+	public long[] allIds() {
+		Iterator<Long> it = mDecks.keySet().iterator();
+		long[] ids = new long[mDecks.size()];
+		int i = 0;
+		while (it.hasNext()) {
+			ids[i] = it.next();
+			i++;
+		}
+		return ids;
 	}
 
 	public int count() {
@@ -455,11 +466,30 @@ public class Decks {
 	 */
 
 	public String name(long did) {
+		return name(did, false);
+	}
+	public String name(long did, boolean def) {
 		try {
-			return get(did).getString("name");
+			JSONObject deck = get(did, def);
+			if (deck != null) {
+				return deck.getString("name");
+			}
+			return "[no deck]";
 		} catch (JSONException e) {
 			throw new RuntimeException(e);
 		}
+	}
+
+	public String nameOrNone(long did) {
+		JSONObject deck = get(did, false);
+		if (deck != null) {
+			try {
+				return deck.getString("name");
+			} catch (JSONException e) {
+				throw new RuntimeException(e);
+			}
+		}
+		return null;
 	}
 
 	public void setDeck(long[] cids, long did) {
@@ -628,6 +658,14 @@ public class Decks {
 		long did = id(name, true, defaultDynamicDeck);
 		select(did);
 		return did;
+	}
+
+	public boolean isDyn(long did) {
+		try {
+			return get(did).getInt("dyn") != 0;
+		} catch (JSONException e) {
+			throw new RuntimeException(e);
+		}
 	}
 
 

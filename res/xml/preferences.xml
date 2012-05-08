@@ -588,6 +588,7 @@
                     android:defaultValue="false"
                     android:key="com.ichi2.filters.GoogleTranslaterFilter"/>
         </PreferenceCategory>
+
     </PreferenceScreen>
     <PreferenceScreen android:title="@string/about_title">
         
@@ -600,4 +601,6 @@
     
     
     </PreferenceScreen>
+=======
+
 </PreferenceScreen>
