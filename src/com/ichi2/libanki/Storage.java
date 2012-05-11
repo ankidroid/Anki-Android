@@ -89,7 +89,7 @@ public class Storage {
 			db.execute("UPDATE col SET var = 3");
 			_updateIndices(db);
 		}
-		return db.queryScalar("SELECT ver FROM col");
+		return ver;
 	}
 
 	private static void _upgrade(Collection col, int ver) {
@@ -129,7 +129,7 @@ public class Storage {
 					for (int i = 0; i < ar.length(); i++) {
 						JSONObject t = ar.getJSONObject(i);
 						m.put("css", m.getString("css") + "\n" + t.getString("css").replace(".card ", ".card" + t.getInt("ord") + 1));
-						t.remove("css");
+						t.remove("css");							
 					}
 					col.getModels().save(m);
 				}
