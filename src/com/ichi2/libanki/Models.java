@@ -798,7 +798,7 @@ public class Models {
 	    	ArrayList<String> a = new ArrayList<String> ();
 	    	ArrayList<String> b = new ArrayList<String> ();
 	    	for (String f : flds) {
-	    		b.add("1");
+	    		a.add("1");
 	    		b.add("");
 	    	}
 	    	Object[] data;

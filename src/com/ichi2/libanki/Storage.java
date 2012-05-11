@@ -23,15 +23,11 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.content.ContentValues;
+
 import com.ichi2.anki.AnkiDatabaseManager;
 import com.ichi2.anki.AnkiDb;
 import com.ichi2.anki.AnkiDroidApp;
-import com.ichi2.anki2.R;
-
-import android.content.ContentValues;
-import android.content.res.Resources;
-import android.database.Cursor;
-import android.database.SQLException;
 
 public class Storage {
 	String mPath;
@@ -209,8 +205,8 @@ public class Storage {
     "decks           text not null,"+
     "dconf           text not null,"+
     "tags            text not null"+
-");"+
-"create table if not exists notes ("+
+");");
+		db.execute("create table if not exists notes ("+
  "   id              integer primary key,"+
   "  guid            text not null,"+
    " mid             integer not null,"+
@@ -222,8 +218,8 @@ public class Storage {
    " csum            integer not null,"+
    " flags           integer not null,"+
    " data            text not null"+
-");"+
-"create table if not exists cards ("+
+");");
+		db.execute("create table if not exists cards ("+
  "   id              integer primary key,"+
   "  nid             integer not null,"+
   "  did             integer not null,"+
@@ -242,9 +238,8 @@ public class Storage {
  "   odid            integer not null,"+
  "   flags           integer not null,"+
  "   data            text not null"+
-");"+
-
-"create table if not exists revlog ("+
+");");
+		db.execute("create table if not exists revlog ("+
  "   id              integer primary key,"+
  "   cid             integer not null,"+
  "   usn             integer not null,"+
@@ -254,9 +249,8 @@ public class Storage {
  "   factor          integer not null,"+
  "   time            integer not null,"+
  "   type            integer not null"+
-");"+
-
-"create table if not exists graves ("+
+");");
+		db.execute("create table if not exists graves ("+
 "    usn             integer not null,"+
 "    oid             integer not null,"+
 "    type            integer not null"+
@@ -281,7 +275,7 @@ public class Storage {
 			JSONObject agc = new JSONObject();
 			agc.put("1", gc);
 			ContentValues values = new ContentValues();
-			values.put("conf", Decks.defaultConf);
+			values.put("conf", Collection.defaultConf);
 			values.put("decks", ag.toString());
 			values.put("dconf", agc.toString());
 			db.update("col", values);
@@ -291,13 +285,13 @@ public class Storage {
 	}
 
 	private static void _updateIndices(AnkiDb db) {
-		db.execute("create index if not exists ix_notes_usn on notes (usn);"+
-"create index if not exists ix_cards_usn on cards (usn);"+
-"create index if not exists ix_revlog_usn on revlog (usn);"+
-"create index if not exists ix_cards_nid on cards (nid);"+
-"create index if not exists ix_cards_sched on cards (did, queue, due);"+
-"create index if not exists ix_revlog_cid on revlog (cid);"+
-"create index if not exists ix_notes_csum on notes (csum);)");
+		db.execute("create index if not exists ix_notes_usn on notes (usn);");
+		db.execute("create index if not exists ix_cards_usn on cards (usn);");
+		db.execute("create index if not exists ix_revlog_usn on revlog (usn);");
+		db.execute("create index if not exists ix_cards_nid on cards (nid);");
+		db.execute("create index if not exists ix_cards_sched on cards (did, queue, due);");
+		db.execute("create index if not exists ix_revlog_cid on revlog (cid);");
+		db.execute("create index if not exists ix_notes_csum on notes (csum);)");
 	}
 	/* Upgrading 
 	 * *************************************************************/

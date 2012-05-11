@@ -82,7 +82,7 @@ public class Collection {
 	private boolean mClosing = false;
 
 	// other options
-	private static final String defaultConf = "{"
+	public static final String defaultConf = "{"
 			+
 			// review options
 			"'activeDecks': [1], " + "'curDeck': 1, " + "'newSpread': "
@@ -91,7 +91,7 @@ public class Collection {
 			+
 			// other config
 			"'curModel': None, " + "'nextPos': 1, "
-			+ "'sortType': \"noteFld\", " + "'sortBackwards': False, 'addToCur': True, }";
+			+ "'sortType': \"noteFld\", " + "'sortBackwards': False, 'addToCur': True }";
 
 	private static Collection sCurrentCollection;
 
