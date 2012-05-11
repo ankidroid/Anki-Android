@@ -385,7 +385,7 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
 
         	// load collection
             Log.i(AnkiDroidApp.TAG, "doInBackgroundOpenCollection - File exists -> Loading collection...");
-//            try {
+            try {
                 col = Collection.openCollection(collectionFile);
 
                 // create tutorial deck if needed
@@ -395,9 +395,9 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
                 	publishProgress(new TaskData(res.getString(R.string.tutorial_load)));
                 	doInBackgroundLoadTutorial(new TaskData(col));
                 }            	
-//            } catch (RuntimeException e) {
-//                BackupManager.restoreCollectionIfMissing(collectionFile);            	
-//            }
+            } catch (RuntimeException e) {
+                BackupManager.restoreCollectionIfMissing(collectionFile);            	
+            }
         } else {
             Log.i(AnkiDroidApp.TAG, "doInBackgroundOpenCollection: collection still open - reusing it");
         	col = oldCol;
@@ -405,17 +405,17 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
         if (col == null) {
         	return new TaskData(col);
         }
-//        try {
+        try {
 	        if (reset) {
         		col.getSched().reset();
         	}
 	    	// load decks
         	TreeSet<Object[]> decks = col.getSched().deckDueTree(false);
         	return new TaskData(col, decks, 0);
-//        } catch (RuntimeException e) {
-//		col = null;
-//        	return new TaskData(col);
-//        }
+        } catch (RuntimeException e) {
+        	col = null;
+        	return new TaskData(col);
+        }
     }
 
 
