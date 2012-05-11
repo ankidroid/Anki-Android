@@ -16,48 +16,318 @@
 
 package com.ichi2.libanki;
 
+import java.io.File;
 import java.util.ArrayList;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import com.ichi2.anki.AnkiDatabaseManager;
 import com.ichi2.anki.AnkiDb;
+import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki2.R;
 
+import android.content.ContentValues;
 import android.content.res.Resources;
 import android.database.Cursor;
 import android.database.SQLException;
 
-public class Upgrader {
+public class Storage {
 	String mPath;
 
+	/* Open a new or existing collection. Path must be unicode */
+	public static Collection Collection(String path) {
+		assert path.endsWith(".anki2");
+		File dbFile = new File(path);
+        boolean create = !dbFile.exists();
+        if (create) {
+        	AnkiDroidApp.createDirectoryIfMissing(dbFile.getParentFile());
+        }
+        // connect
+        AnkiDb db = AnkiDatabaseManager.getDatabase(path);
+		int ver;
+		if (create) {
+			ver = _createDB(db);
+		} else {
+			ver = _upgradeSchema(db);			
+		}
+		db.execute("PRAGMA temp_store = memory");
+
+		// LIBANKI: sync, journal_mode --> in AnkiDroid done in AnkiDb
+
+		// add db to col and do any remaining upgrades
+		Collection col = new Collection(db, path);
+		if (ver < Collection.SCHEMA_VERSION) {
+			_upgrade(col, ver);
+		} else if (create) {
+			// add in reverse order so basic is default
+			Models.addClozeModel(col);
+			Models.addBasicModel(col);
+			col.save();
+		}
+		return col;
+		
+	}
+
+	private static int _upgradeSchema(AnkiDb db) {
+		int ver = db.queryScalar("SELECT ver FROM col");
+		if (ver == Collection.SCHEMA_VERSION) {
+			return ver;
+		}
+		// add odid to cards, edue->odue
+		if (db.queryScalar("SELECT ver FROM col") == 1) {
+			db.execute("ALTER TABLE cards RENAME TO cards2");
+			_addSchema(db, false);
+			db.execute("insert into cards select id, nid, did, ord, mod, usn, type, queue, due, ivl, factor, reps, lapses, left, edue, 0, flags, data from cards2");
+			db.execute("DROP TABLE cards2");
+			db.execute("UPDATE col SET var = 2");
+			_updateIndices(db);
+		}
+		// remove did from notes
+		if (db.queryScalar("SELECT ver FROM col") == 2) {
+			db.execute("ALTER TABLE notes RENAME TO notes2");
+			_addSchema(db, false);
+			db.execute("insert into notes select id, guid, mid, mod, usn, tags, flds, sfld, csum, flags, data from notes2");
+			db.execute("DROP TABLE notes2");
+			db.execute("UPDATE col SET var = 3");
+			_updateIndices(db);
+		}
+		return db.queryScalar("SELECT ver FROM col");
+	}
+
+	private static void _upgrade(Collection col, int ver) {
+		try {
+			if (ver < 3) {
+				// new deck properties
+				for (JSONObject d : col.getDecks().all()) {
+					d.put("dyn", 0);
+					d.put("collapsed", false);
+					col.getDecks().save(d);
+				}
+			}
+			if (ver < 4) {
+				col.modSchema();
+				ArrayList<JSONObject> clozes = new ArrayList<JSONObject> (); 
+				for (JSONObject m : col.getModels().all()) {
+					if (!m.getJSONArray("tmpls").getJSONObject(0).getString("qfmt").contains("{{cloze:")) {
+						m.put("type", Sched.MODEL_STD);
+					} else {
+						clozes.add(m);
+					}
+				}
+				for (JSONObject m : clozes) {
+					_upgradeClozeModel(col, m);
+				}
+				col.getDb().execute("UPDATE col SET ver = 4");
+			}
+			if (ver < 5) {
+				col.getDb().execute("UPDATE cards SET odue = 0 WHERE queue = 2");
+				col.getDb().execute("UPDATE col SET ver = 5");
+			}
+			if (ver < 6) {
+				col.modSchema();
+				for (JSONObject m : col.getModels().all()) {
+					m.put("css", new JSONObject(Models.defaultModel).getString("css"));
+					JSONArray ar = m.getJSONArray("tmpls");
+					for (int i = 0; i < ar.length(); i++) {
+						JSONObject t = ar.getJSONObject(i);
+						m.put("css", m.getString("css") + "\n" + t.getString("css").replace(".card ", ".card" + t.getInt("ord") + 1));
+						t.remove("css");
+					}
+					col.getModels().save(m);
+				}
+				col.getDb().execute("UPDATE col SET ver = 6");
+			}
+			if (ver < 7) {
+				col.modSchema();
+				col.getDb().execute("UPDATE cards SET odue = 0 WHERE (type = 1 OR queue = 2) AND NOT odid");
+				col.getDb().execute("UPDATE col SET ver = 7");				
+			}
+		} catch (JSONException e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	private static void _upgradeClozeModel(Collection col, JSONObject m) {
+		try {
+			m.put("type", Sched.MODEL_CLOZE);
+			// convert first template
+			JSONObject t = m.getJSONArray("tmpls").getJSONObject(0);
+			for (String type : new String[]{"qfmt", "afmt"}) {
+				t.put(type, t.getString(type).replaceAll("{{cloze:1:(.+?)}}", "{{cloze:$1}}"));
+			}
+			t.put("name", "Cloze");
+			// delete non-cloze cards for the model
+			JSONArray ja = m.getJSONArray("tmpls");
+			ArrayList<JSONObject> rem = new ArrayList<JSONObject>();
+			for (int i = 1; i < ja.length(); i++) {
+				JSONObject ta = ja.getJSONObject(i);
+				if (!ta.getString("afmt").contains("{{cloze:")) {
+					rem.add(ta);
+				}
+			}
+			for (JSONObject r : rem) {
+				// TODO: write remtemplate
+				col.getModels().remTemplate(m, r);
+			}
+			JSONArray newArray = new JSONArray();
+			newArray.put(ja.get(0));
+			m.put("tmpls", newArray);
+			col.getModels()._updateTemplOrds(m);
+			col.getModels().save(m);
+		} catch (JSONException e) {
+			throw new RuntimeException(e);
+		}
+		
+	}
+
+	private static int _createDB(AnkiDb db) {
+		db.execute("PRAGMA page_size = 4096");
+		db.execute("PRAGMA legacy_file_format = 0");
+		db.execute("VACUUM");
+		_addSchema(db);
+		db.execute("ANALYZE");
+		return Collection.SCHEMA_VERSION;
+	}
+
+	private static void _addSchema(AnkiDb db) {
+		_addSchema(db, true);
+	}
+	private static void _addSchema(AnkiDb db, boolean setColConf) {
+		db.execute("create table if not exists col ( "+
+    "id              integer primary key, "+
+    "crt             integer not null,"+
+    "mod             integer not null,"+
+    "scm             integer not null,"+
+    "ver             integer not null,"+
+    "dty             integer not null,"+
+    "usn             integer not null,"+
+    "ls              integer not null,"+
+    "conf            text not null,"+
+    "models          text not null,"+
+    "decks           text not null,"+
+    "dconf           text not null,"+
+    "tags            text not null"+
+");"+
+"create table if not exists notes ("+
+ "   id              integer primary key,"+
+  "  guid            text not null,"+
+   " mid             integer not null,"+
+   " mod             integer not null,"+
+   " usn             integer not null,"+
+   " tags            text not null,"+
+   " flds            text not null,"+
+   " sfld            integer not null,"+
+   " csum            integer not null,"+
+   " flags           integer not null,"+
+   " data            text not null"+
+");"+
+"create table if not exists cards ("+
+ "   id              integer primary key,"+
+  "  nid             integer not null,"+
+  "  did             integer not null,"+
+  "  ord             integer not null,"+
+  "  mod             integer not null,"+
+   " usn             integer not null,"+
+   " type            integer not null,"+
+   " queue           integer not null,"+
+"    due             integer not null,"+
+ "   ivl             integer not null,"+
+  "  factor          integer not null,"+
+   " reps            integer not null,"+
+ "   lapses          integer not null,"+
+ "   left            integer not null,"+
+ "   odue            integer not null,"+
+ "   odid            integer not null,"+
+ "   flags           integer not null,"+
+ "   data            text not null"+
+");"+
+
+"create table if not exists revlog ("+
+ "   id              integer primary key,"+
+ "   cid             integer not null,"+
+ "   usn             integer not null,"+
+ "   ease            integer not null,"+
+ "   ivl             integer not null,"+
+ "   lastIvl         integer not null,"+
+ "   factor          integer not null,"+
+ "   time            integer not null,"+
+ "   type            integer not null"+
+");"+
+
+"create table if not exists graves ("+
+"    usn             integer not null,"+
+"    oid             integer not null,"+
+"    type            integer not null"+
+")");
+		db.execute("INSERT OR IGNORE INTO col VALUES(1,0,0," + Collection.SCHEMA_VERSION + "," + Utils.intNow(1000) + ",0,0,0,\'\',\'{}\',\'\',\'\',\'{}\')");
+		if (setColConf) {
+			_setColVars(db);
+		}
+	}
+
+	private static void _setColVars(AnkiDb db) {
+		try {
+			JSONObject g = new JSONObject(Decks.defaultDeck);
+			g.put("id", 1);
+			g.put("name", "Default");
+			g.put("conf", 1);
+			g.put("mod", Utils.intNow());
+			JSONObject gc = new JSONObject(Decks.defaultConf);
+			gc.put("id", 1);
+			JSONObject ag = new JSONObject();
+			ag.put("1", g);
+			JSONObject agc = new JSONObject();
+			agc.put("1", gc);
+			ContentValues values = new ContentValues();
+			values.put("conf", Decks.defaultConf);
+			values.put("decks", ag.toString());
+			values.put("dconf", agc.toString());
+			db.update("col", values);
+		} catch (JSONException e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	private static void _updateIndices(AnkiDb db) {
+		db.execute("create index if not exists ix_notes_usn on notes (usn);"+
+"create index if not exists ix_cards_usn on cards (usn);"+
+"create index if not exists ix_revlog_usn on revlog (usn);"+
+"create index if not exists ix_cards_nid on cards (nid);"+
+"create index if not exists ix_cards_sched on cards (did, queue, due);"+
+"create index if not exists ix_revlog_cid on revlog (cid);"+
+"create index if not exists ix_notes_csum on notes (csum);)");
+	}
 	/* Upgrading 
 	 * *************************************************************/
 
-	public void upgrade(String path) {
-//		mPath = path;
-//		_openDB(path);
-//		upgradeSchema();
-//		_openCol();
-//		_upgradeRest();
-//		return mCol;
-	}
+//	public void upgrade(String path) {
+////		mPath = path;
+////		_openDB(path);
+////		upgradeSchema();
+////		_openCol();
+////		_upgradeRest();
+////		return mCol;
+//	}
 
 	/* Integrity checking
 	 * *************************************************************/
 
-	public boolean check(String path) {
-		AnkiDb db = AnkiDatabaseManager.getDatabase(path);
-		// corrupt?
-		if (!db.queryString("PRAGMA integrity_check").equalsIgnoreCase("ok")) {
-			return false;
-		}
-		// old version?
-		if (db.queryScalar("SELECT version FROM decks") < 65) {
-			return false;
-		}
-		// ensure we have indices for checks below
-		// TODO
-		return true;
-	}
+//	public boolean check(String path) {
+//		AnkiDb db = AnkiDatabaseManager.getDatabase(path);
+//		// corrupt?
+//		if (!db.queryString("PRAGMA integrity_check").equalsIgnoreCase("ok")) {
+//			return false;
+//		}
+//		// old version?
+//		if (db.queryScalar("SELECT version FROM decks") < 65) {
+//			return false;
+//		}
+//		// ensure we have indices for checks below
+//		// TODO
+//		return true;
+//	}
 
 	/* DB/Deck opening
 	 * *************************************************************/

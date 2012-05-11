@@ -375,38 +375,17 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
 //        DeckManager.waitForDeckClosingThread(deckFilename);
 
         if (oldCol == null || !oldCol.getPath().equals(collectionFile)) {
-            File dbFile = new File(collectionFile);
-            if (!dbFile.exists()) {
-                Log.i(AnkiDroidApp.TAG, "doInBackgroundOpenCollection: db file does not exist. Creating it...");
-            	publishProgress(new TaskData(res.getString(R.string.create_collection)));
-                // If decks directory does not exist, create it.
-                AnkiDroidApp.createDirectoryIfMissing(dbFile.getParentFile());
-            	// create file
-                try {
-                    // Copy an empty collection file from the assets to the SD card.
-                    InputStream stream = res.getAssets().open("collection.anki2");
-                    Utils.writeToFile(stream, collectionFile);
-                    stream.close();
-                    AnkiDb ankiDB = AnkiDatabaseManager.getDatabase(collectionFile);
-                    // set create time to 0 in order to let it be set later by the collection constructor
-                    ankiDB.execute("UPDATE col SET crt = 0");
-                    AnkiDatabaseManager.closeDatabase(collectionFile);
-                } catch (IOException e) {
-                    Log.e(AnkiDroidApp.TAG, Log.getStackTraceString(e));
-                    Log.e(AnkiDroidApp.TAG, "doInBackgroundOpenCollection - The copy of collection.anki2 to the SD card failed.");
-                    col = null;
-                    return new TaskData(col);
-                }
-            	publishProgress(new TaskData(res.getString(R.string.open_collection)));
-            } else if (BackupManager.safetyBackupNeeded(collectionFile)) {
+
+        	// do a safety backup if last backup is too old --> addresses android's delete db bug 
+            if (BackupManager.safetyBackupNeeded(collectionFile)) {
             	publishProgress(new TaskData(res.getString(R.string.backup_collection)));
             	BackupManager.performBackup(collectionFile);
-            	publishProgress(new TaskData(res.getString(R.string.open_collection)));
             }
+        	publishProgress(new TaskData(res.getString(R.string.open_collection)));
 
         	// load collection
             Log.i(AnkiDroidApp.TAG, "doInBackgroundOpenCollection - File exists -> Loading collection...");
-            try {
+//            try {
                 col = Collection.openCollection(collectionFile);
 
                 // create tutorial deck if needed
@@ -416,9 +395,9 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
                 	publishProgress(new TaskData(res.getString(R.string.tutorial_load)));
                 	doInBackgroundLoadTutorial(new TaskData(col));
                 }            	
-            } catch (RuntimeException e) {
-                BackupManager.restoreCollectionIfMissing(collectionFile);            	
-            }
+//            } catch (RuntimeException e) {
+//                BackupManager.restoreCollectionIfMissing(collectionFile);            	
+//            }
         } else {
             Log.i(AnkiDroidApp.TAG, "doInBackgroundOpenCollection: collection still open - reusing it");
         	col = oldCol;
@@ -426,17 +405,17 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
         if (col == null) {
         	return new TaskData(col);
         }
-        try {
+//        try {
 	        if (reset) {
         		col.getSched().reset();
         	}
 	    	// load decks
         	TreeSet<Object[]> decks = col.getSched().deckDueTree(false);
         	return new TaskData(col, decks, 0);
-        } catch (RuntimeException e) {
-		col = null;
-        	return new TaskData(col);
-        }
+//        } catch (RuntimeException e) {
+//		col = null;
+//        	return new TaskData(col);
+//        }
     }
 
 
@@ -761,7 +740,7 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
 //	       		}
 //	       	}
 	       	if (model == null) {
-	       		model = col.getModels().addBasicModel(title, false);	       		
+	       		model = col.getModels().addBasicModel(col, title);	       		
 	       	}
 	       	model.put("did", did);
 			String[] questions = res.getStringArray(R.array.tutorial_questions);

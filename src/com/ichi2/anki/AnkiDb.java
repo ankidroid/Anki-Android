@@ -47,7 +47,7 @@ public class AnkiDb {
      * Open a database connection to an ".anki" SQLite file.
      */
     public AnkiDb(String ankiFilename) {
-        mDatabase = SQLiteDatabase.openDatabase(ankiFilename, null, SQLiteDatabase.OPEN_READWRITE
+        mDatabase = SQLiteDatabase.openDatabase(ankiFilename, null, (SQLiteDatabase.OPEN_READWRITE + SQLiteDatabase.CREATE_IF_NECESSARY)
                 | SQLiteDatabase.NO_LOCALIZED_COLLATORS);
         if (mDatabase != null) {
         	if (UIUtils.getApiLevel() >= 11) {

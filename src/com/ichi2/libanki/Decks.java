@@ -54,7 +54,7 @@ public class Decks {
 	// private TreeMap<Integer, Model> mModelCache;
 	// private TreeMap<Integer, JSONObject> mGroupConfCache;
 
-	private static final String defaultDeck = "{" + "'newToday': [0, 0], "
+	public static final String defaultDeck = "{" + "'newToday': [0, 0], "
 			+ // currentDay, count
 			"'revToday': [0, 0], " + "'lrnToday': [0, 0], "
 			+ "'timeToday': [0, 0], " + // time in ms
@@ -70,30 +70,33 @@ public class Decks {
 	
 
 	// default group conf
-	private static final String defaultConf = "{" + "'name': \"Default\""
-			+ "'new': {" + "'delays': [1, 10], " + "'ints': [1, 4, 7], " + // 7
+	public static final String defaultConf = 
+			"{" + 
+					"'name': \"Default\"," +
+					"'new': {" + 
+						"'delays': [1, 10], " + 
+						"'ints': [1, 4, 7], " + // 7
 																			// is
 																			// not
 																			// currently
 																			// used
-			"'initialFactor': 2500, " + "'separate': True, " + "'order': "
-			+ Sched.NEW_CARDS_DUE
-			+ ", "
-			+ "'perDay': 20, }, "
+					"'initialFactor': 2500, " + 
+					"'separate': True, " + 
+					"'order': " + Sched.NEW_CARDS_DUE + ", "
+					+ "'perDay': 20 }, "
 			+ "'lapse': {"
-			+ "'delays': [10], "
-			+ "'mult': 0, "
-			+ "'minInt': 1, "
-			+ "'leechFails': 8, "
-			+ "'leechAction': 0, }, "
+				+ "'delays': [10], "
+				+ "'mult': 0, "
+				+ "'minInt': 1, "
+				+ "'leechFails': 8, "
+				+ "'leechAction': 0 }, "
 			// type 0=suspend, 1=tagonly
 			+ "'rev': { "
-			+ "'perDay': 100"
-			+ "'ease4': 1.3, "
-			+ "'fuzz': 0.05, "
-			+ "'minSpace': 1, "
-			+ "'fi': [10, 10], "
-			+ "}, "
+				+ "'perDay': 100, "
+				+ "'ease4': 1.3, "
+				+ "'fuzz': 0.05, "
+				+ "'minSpace': 1, "
+				+ "'fi': [10, 10] }, "
 			+ "'maxTaken': 60, "
 			+ "'timer': 0, "
 			+ "'autoplay': True, "

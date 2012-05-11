@@ -47,7 +47,7 @@ import java.util.Random;
 public class Collection {
 
 	// collection schema & syncing vars
-	public static final int SCHEMA_VERSION = 6;
+	public static final int SCHEMA_VERSION = 7;
 	public static final String SYNC_URL = "http://beta.ankiweb.net/sync/";
 	public static final int SYNC_VER = 3;
 
@@ -96,8 +96,7 @@ public class Collection {
 	private static Collection sCurrentCollection;
 
 	public static synchronized Collection openCollection(String path) {
-		AnkiDb ankiDB = AnkiDatabaseManager.getDatabase(path);
-		sCurrentCollection = new Collection(ankiDB, path);
+		sCurrentCollection = Storage.Collection(path);
 		return sCurrentCollection;
 	}
 

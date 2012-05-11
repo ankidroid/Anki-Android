@@ -40,7 +40,7 @@ import org.json.JSONObject;
 
 public class Models {
 
-	private static final String defaultModel = 
+	public static final String defaultModel = 
 		"{'sortf': 0, " +
 		"'did': 1, " +
 		"'latexPre': \"" +
@@ -148,10 +148,12 @@ public class Models {
         try {
         	JSONObject modelarray = new JSONObject(json);
         	JSONArray ids = modelarray.names();
-        	for (int i = 0; i < ids.length(); i++) {
-        		String id = ids.getString(i);
-        		JSONObject o = modelarray.getJSONObject(id);
-        		mModels.put(o.getLong("id"), o);
+        	if (ids != null) {
+            	for (int i = 0; i < ids.length(); i++) {
+            		String id = ids.getString(i);
+            		JSONObject o = modelarray.getJSONObject(id);
+            		mModels.put(o.getLong("id"), o);
+            	}
         	}
  		} catch (JSONException e) {
  			throw new RuntimeException(e);
@@ -318,12 +320,10 @@ public class Models {
 		}
     }
 
-	public void add(JSONObject m, boolean setCurrent) {
+	public void add(JSONObject m) {
     	_setID(m);
     	update(m);
-    	if (setCurrent) {
-        	setCurrent(m);    		
-    	}
+    	setCurrent(m);    		
     	save(m);
     }
 
@@ -547,7 +547,9 @@ public class Models {
 		}
     }
 
-    //remtemplate
+    public void remTemplate(JSONObject m, JSONObject template) {
+    	// TODO
+    }
 
     public void _updateTemplOrds(JSONObject m) {
     	JSONArray ja;
@@ -930,25 +932,53 @@ public class Models {
      * ***********************************************************************************************
      */
 
-    public JSONObject addBasicModel(String name, boolean setCurrent) {
-    	JSONObject m = newModel(name);
-    	JSONObject fm = newField("Front");
-    	addField(m, fm);
-    	fm = newField("Back");
-    	addField(m, fm);
-    	JSONObject t = newTemplate("Forward");
+    public static JSONObject addBasicModel(Collection col) {
+    	return addBasicModel(col, "Basic");
+    }
+    public static JSONObject addBasicModel(Collection col, String name) {
+    	Models mm = col.getModels();
+    	JSONObject m = mm.newModel(name);
+    	JSONObject fm = mm.newField("Front");
+    	mm.addField(m, fm);
+    	fm = mm.newField("Back");
+    	mm.addField(m, fm);
+    	JSONObject t = mm.newTemplate("Card 1");
     	try {
 			t.put("qfmt", "{{Front}}");
 	    	t.put("afmt", t.getString("qfmt") + "\n\n<hr id=answer>\n\n{{Back}}");
 		} catch (JSONException e) {
 			throw new RuntimeException(e);
 		}
-    	addTemplate(m, t);
-    	add(m, setCurrent);
+    	mm.addTemplate(m, t);
+    	mm.add(m);
     	return m;
     }
 
-    // addClozeModel
+    public static JSONObject addClozeModel(Collection col) {
+    	Models mm = col.getModels();
+    	JSONObject m = mm.newModel("Cloze");
+    	try {
+			m.put("type", Sched.MODEL_CLOZE);
+			String txt = "Text";
+			JSONObject fm = mm.newField(txt);
+			mm.addField(m,  fm);
+			fm = mm.newField("Extra");
+			mm.addField(m,  fm);
+	    	JSONObject t = mm.newTemplate("Cloze");
+	    	String fmt = "{{cloze:" + txt + "}}";
+	    	m.put("css", m.getString("css") + ".cloze {"+
+	    			"font-weight: bold;"+
+	    			"color: blue;"+
+	    			"}");
+			t.put("qfmt", fmt);
+			t.put("afmt", fmt + "<br>\n{{Extra}}");
+			mm.addTemplate(m,  t);
+			mm.add(m);
+		} catch (JSONException e) {
+			throw new RuntimeException(e);
+		}
+    	return m;
+    }
     
     /**
      * Other stuff
