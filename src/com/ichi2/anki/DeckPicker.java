@@ -137,6 +137,7 @@ public class DeckPicker extends FragmentActivity {
     private static final int MENU_SYNC = 8;
     private static final int MENU_ADD_NOTE = 9;
     private static final int MENU_ADD_DECK = 10;
+    private static final int MENU_STATISTICS = 11;
 
 	/**
 	 * Context Menus
@@ -2032,13 +2033,16 @@ public class DeckPicker extends FragmentActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuItem item;
 		UIUtils.addMenuItemInActionBar(menu, Menu.NONE, MENU_HELP, Menu.NONE,
-				R.string.help_title, R.drawable.ic_menu_help);
+				R.string.help_title, R.drawable.menu_help);
 
 		UIUtils.addMenuItemInActionBar(menu, Menu.NONE, MENU_SYNC, Menu.NONE,
-				R.string.sync_title, R.drawable.deckpicker_sync);
+				R.string.sync_title, R.drawable.menu_sync);
 
 		UIUtils.addMenuItemInActionBar(menu, Menu.NONE, MENU_ADD_NOTE, Menu.NONE,
-				R.string.add, R.drawable.studyoptions_add);
+				R.string.add, R.drawable.menu_add);
+
+		UIUtils.addMenuItemInActionBar(menu, Menu.NONE, MENU_STATISTICS, Menu.NONE,
+				R.string.statistics_menu, R.drawable.menu_statistics);
 
 		item = menu.add(Menu.NONE, MENU_CREATE_DECK, Menu.NONE, R.string.new_deck);
         item.setIcon(R.drawable.ic_menu_add);
@@ -2092,6 +2096,9 @@ public class DeckPicker extends FragmentActivity {
 					ActivityTransitionAnimation.slide(DeckPicker.this,
 							ActivityTransitionAnimation.LEFT);
 				}
+        		return true;
+
+        	case MENU_STATISTICS:
         		return true;
 
             case MENU_CREATE_DECK:
