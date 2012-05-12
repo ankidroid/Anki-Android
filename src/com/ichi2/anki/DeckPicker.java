@@ -2080,6 +2080,20 @@ public class DeckPicker extends FragmentActivity {
         		showDialog(DIALOG_SELECT_HELP);
         		return true;
 
+        	case MENU_SYNC:
+            	sync();
+        		return true;
+
+        	case MENU_ADD_NOTE:
+				Intent intent = new Intent(DeckPicker.this, CardEditor.class);
+				intent.putExtra(CardEditor.EXTRA_CALLER, CardEditor.CALLER_DECKPICKER);
+				startActivityForResult(intent, ADD_NOTE);
+				if (UIUtils.getApiLevel() > 4) {
+					ActivityTransitionAnimation.slide(DeckPicker.this,
+							ActivityTransitionAnimation.LEFT);
+				}
+        		return true;
+
             case MENU_CREATE_DECK:
 				StyledDialog.Builder builder2 = new StyledDialog.Builder(DeckPicker.this);
 				builder2.setTitle(res.getString(R.string.new_deck));
