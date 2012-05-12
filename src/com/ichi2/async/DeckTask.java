@@ -406,12 +406,10 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
         	return new TaskData(col);
         }
         try {
-	        if (reset) {
-        		col.getSched().reset();
-        	}
-	    	// load decks
-        	TreeSet<Object[]> decks = col.getSched().deckDueTree(false);
-        	return new TaskData(col, decks, 0);
+//	        if (reset) {
+//        		col.getSched().reset();
+//        	}
+	        return new TaskData(col, doInBackgroundLoadDeckCounts(new TaskData(col)).getObjArray());
         } catch (RuntimeException e) {
         	col = null;
         	return new TaskData(col);
@@ -423,8 +421,7 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
         Log.i(AnkiDroidApp.TAG, "doInBackgroundLoadDeckCounts");
     	Collection col = params[0].getCollection();
        	try {
-	    	Sched sched = col.getSched();
-       		return new TaskData(sched.deckCounts());
+       		return new TaskData(col.getSched().deckCounts());
        	} catch (RuntimeException e) {
        		Log.e(AnkiDroidApp.TAG, "doInBackgroundLoadDeckCounts - error: " + e);
        		return null;
@@ -863,7 +860,12 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
         	mCol = col;
         }
 
+        public TaskData(Collection col, Object[] obj) {
+        	mCol = col;
+        	mObjects = obj;
+        }
 
+        
         public TaskData(Collection col, String string) {
         	mCol = col;
         	mMsg = string;

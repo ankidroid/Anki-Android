@@ -31,6 +31,7 @@ import com.ichi2.anki.Feedback;
 import com.ichi2.anki2.R;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Decks;
+import com.ichi2.libanki.Sched;
 import com.ichi2.libanki.sync.FullSyncer;
 import com.ichi2.libanki.sync.HttpSyncer;
 import com.ichi2.libanki.sync.MediaSyncer;
@@ -341,7 +342,7 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
         	return data;    		
     	} else {
         	data.success = true;
-    		TreeSet<Object[]> decks = col.getSched().deckDueTree(true);
+    		TreeSet<Object[]> decks = col.getSched().deckDueTree(Sched.DECK_INFORMATION_SIMPLE_COUNTS);
         	int[] counts = new int[]{0, 0, 0};
         	for (Object[] deck : decks) {
         		if (((String[])deck[0]).length == 1) {

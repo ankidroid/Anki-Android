@@ -583,13 +583,19 @@ public class DeckPicker extends FragmentActivity {
 				showDialog(DIALOG_LOAD_FAILED);
 				return;
 			}
-			updateDecksList(result.getDeckList(), -1, -1);
+			Object[] res = result.getObjArray();
+			updateDecksList((TreeSet<Object[]>) res[0], (Integer)res[1], (Integer)res[2]);
 			mDeckListView.setVisibility(View.VISIBLE);
 			mDeckListView.setAnimation(ViewAnimation.fade(ViewAnimation.FADE_IN, 500, 0));
 
-			loadCounts();
 			if (mFragmented) {
-				openStudyOptions();				
+				long active = mCol.getDecks().selected();
+				for (int i = 0; i < mDeckList.size(); i++) {
+					if (mDeckList.get(i).get("did").equals(Long.toString(active))) {
+						mDeckListView.setSelection(i);
+						break;
+					}
+				}
 			}
 		}
 
@@ -840,9 +846,6 @@ public class DeckPicker extends FragmentActivity {
 		mFragmented = studyoptionsFrame != null && studyoptionsFrame.getVisibility() == View.VISIBLE;
         
 		Themes.setContentStyle(mainView, Themes.CALLER_DECKPICKER);
-		if (mFragmented) {
-			mainView.setBackgroundResource(R.drawable.white_wallpaper_deckpicker_fragments);
-		}
 
 		registerExternalStorageListener();
 
@@ -899,9 +902,11 @@ public class DeckPicker extends FragmentActivity {
 		mDeckList = new ArrayList<HashMap<String, String>>();
 		mDeckListView = (ListView) findViewById(R.id.files);
 		mDeckListAdapter = new SimpleAdapter(this, mDeckList,
-				R.layout.deck_item, new String[] { "name", "new", "lrn", "rev", "complMat", "complAll", "sep" }, new int[] {
+				R.layout.deck_item, new String[] { "name", "new", "lrn", "rev", //"complMat", "complAll", 
+				"sep" }, new int[] {
 						R.id.DeckPickerName, R.id.deckpicker_new, R.id.deckpicker_lrn, 
-						R.id.deckpicker_rev, R.id.deckpicker_bar_mat, R.id.deckpicker_bar_all, R.id.DeckPickerName });
+						R.id.deckpicker_rev, //R.id.deckpicker_bar_mat, R.id.deckpicker_bar_all, 
+						R.id.DeckPickerName });
 		mDeckListAdapter.setViewBinder(new SimpleAdapter.ViewBinder() {
 			@Override
 			public boolean setViewValue(View view, Object data, String text) {
@@ -921,25 +926,29 @@ public class DeckPicker extends FragmentActivity {
 						return true;
 					}
 					return false;
-				} else if (view.getId() == R.id.deckpicker_bar_mat || view.getId() == R.id.deckpicker_bar_all) {
-					if (text.length() > 0 && !text.equals("-1.0")) {
-						Utils.updateProgressBars(view, (int) UIUtils.getDensityAdjustedValue(DeckPicker.this, 3.4f), (int) (Double.parseDouble(text) * ((View)view.getParent().getParent().getParent()).getHeight()));
-						View parent = (View)view.getParent().getParent();
-						if (parent.getVisibility() == View.INVISIBLE) {
-							parent.setVisibility(View.VISIBLE);
-							parent.setAnimation(ViewAnimation.fade(ViewAnimation.FADE_IN, 500, 0));							
-						}
-					}
-					return true;
-				} else if (view.getVisibility() == View.INVISIBLE) {
-					if (!text.equals("-1")) {
-						view.setVisibility(View.VISIBLE);
-						view.setAnimation(ViewAnimation.fade(ViewAnimation.FADE_IN, 500, 0));
-						return false;						
-					}
-				} else if (text.equals("-1")){
-					view.setVisibility(View.INVISIBLE);
-					return false;					
+//				} else if (view.getId() == R.id.deckpicker_bar_mat || view.getId() == R.id.deckpicker_bar_all) {
+//					if (text.length() > 0 && !text.equals("-1.0")) {
+//						View parent = (View)view.getParent().getParent();
+//						if (text.equals("-2")) {
+//							parent.setVisibility(View.GONE);							
+//						} else {
+//							Utils.updateProgressBars(view, (int) UIUtils.getDensityAdjustedValue(DeckPicker.this, 3.4f), (int) (Double.parseDouble(text) * ((View)view.getParent().getParent().getParent()).getHeight()));
+//							if (parent.getVisibility() == View.INVISIBLE) {
+//								parent.setVisibility(View.VISIBLE);
+//								parent.setAnimation(ViewAnimation.fade(ViewAnimation.FADE_IN, 500, 0));							
+//							}							
+//						}
+//					}
+//					return true;
+//				} else if (view.getVisibility() == View.INVISIBLE) {
+//					if (!text.equals("-1")) {
+//						view.setVisibility(View.VISIBLE);
+//						view.setAnimation(ViewAnimation.fade(ViewAnimation.FADE_IN, 500, 0));
+//						return false;						
+//					}
+//				} else if (text.equals("-1")){
+//					view.setVisibility(View.INVISIBLE);
+//					return false;					
 				}
 				return false;
 			}
@@ -2383,8 +2392,8 @@ public class DeckPicker extends FragmentActivity {
         	m.put("new", ((Integer)d[2]).toString());
         	m.put("lrn", ((Integer)d[3]).toString());
         	m.put("rev", ((Integer)d[4]).toString());
-        	m.put("complMat", ((Float)d[5]).toString());
-        	m.put("complAll", ((Float)d[6]).toString());
+//        	m.put("complMat", ((Float)d[5]).toString());
+//        	m.put("complAll", ((Float)d[6]).toString());
         	if (name.length == 1) {
         		due += Integer.parseInt(m.get("new")) + Integer.parseInt(m.get("lrn")) + Integer.parseInt(m.get("rev"));
         		// top position

@@ -91,6 +91,11 @@ public class Sched {
 	private static final String[] REV_ORDER_STRINGS = { "ivl DESC", "ivl" };
 	private static final int[] FACTOR_ADDITION_VALUES = { -150, 0, 150 };
 
+	// not in libanki
+	public static final int DECK_INFORMATION_NAMES = 0;
+	public static final int DECK_INFORMATION_SIMPLE_COUNTS = 1;
+	public static final int DECK_INFORMATION_EXTENDED_COUNTS = 2;	
+
 	private Collection mCol;
 	private String mName = "std";
 	private int mQueueLimit;
@@ -453,10 +458,10 @@ public class Sched {
 	/** LIBANKI: not in libanki */
 	public Object[] deckCounts() {
     	// check if new day has rolled over and reset counts if yes
-    	if (Utils.now() > mDayCutoff) {
-    		_updateCutoff();
-    	}
-       	TreeSet<Object[]> decks = deckDueTree(true);
+//    	if (Utils.now() > mDayCutoff) {
+//    		_updateCutoff();
+//    	}
+       	TreeSet<Object[]> decks = deckDueTree(DECK_INFORMATION_SIMPLE_COUNTS);
        	int[] counts = new int[]{0, 0, 0};
        	for (Object[] deck : decks) {
        		if (((String[])deck[0]).length == 1) {
@@ -471,11 +476,7 @@ public class Sched {
 	/**
 	 * Returns [deckname, did, new, lrn, rev]
 	 */
-	public ArrayList<Object[]> deckDueList() {
-		return deckDueList(false);
-	}
-
-	public ArrayList<Object[]> deckDueList(boolean counts) {
+	public ArrayList<Object[]> deckDueList(int counts) {
 		// DIFFERS FROM LIBANKI: finds all decks
 		_checkDay();
 		if (mClearOverdue) {
@@ -491,7 +492,7 @@ public class Sched {
 				float matProgress = -1.0f;
 				float allProgress = -1.0f;
 
-				if (counts) {
+				if (counts > DECK_INFORMATION_NAMES) {
 					LinkedList<Long> ldid = new LinkedList<Long>();
 					ldid.add(did);
 					for (Long c : mCol.getDecks().children(did).values()) {
@@ -509,11 +510,16 @@ public class Sched {
 									"_deckRevLimitSingle", JSONObject.class),
 							Sched.class.getDeclaredMethod("_cntFnRev",
 									long.class, int.class));
-					float totalNewCount = newCount(didLimit);
-					float totalCount = cardCount(didLimit);
-					float matureCount = matureCount(didLimit);
-					matProgress = matureCount / totalCount;
-					allProgress = 1 - ((totalNewCount + lrnCount) / totalCount) - matProgress;
+//					if (counts > DECK_INFORMATION_SIMPLE_COUNTS) {
+//						float totalNewCount = newCount(didLimit);
+//						float totalCount = cardCount(didLimit);
+//						float matureCount = matureCount(didLimit);
+//						matProgress = matureCount / totalCount;
+//						allProgress = 1 - ((totalNewCount + lrnCount) / totalCount) - matProgress;
+//					} else {
+//						matProgress = -2.0f;
+//						allProgress = -2.0f;
+//					}
 				}
 				dids.add(new Object[] { g.getString("name"), did, newCount,
 						lrnCount, revCount, matProgress, allProgress });
@@ -526,20 +532,16 @@ public class Sched {
 		return dids;
 	}
 
-	public TreeSet<Object[]> deckDueTree() {
-		return deckDueTree(false);
-	}
-
-	public TreeSet<Object[]> deckDueTree(boolean counts) {
+	public TreeSet<Object[]> deckDueTree(int counts) {
 		return _groupChildren(deckDueList(counts), counts);
 	}
 
 	private TreeSet<Object[]> _groupChildren(ArrayList<Object[]> grps) {
-		return _groupChildren(grps, false);
+		return _groupChildren(grps, 0);
 	}
 
 	private TreeSet<Object[]> _groupChildren(ArrayList<Object[]> grps,
-			boolean counts) {
+			int counts) {
 		TreeSet<Object[]> set = new TreeSet<Object[]>(new DeckNameCompare());
 		// first, split the group names into components
 		for (Object[] g : grps) {
