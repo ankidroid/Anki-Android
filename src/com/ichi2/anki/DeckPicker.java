@@ -134,6 +134,9 @@ public class DeckPicker extends FragmentActivity {
     private static final int MENU_FEEDBACK = 5;
 	private static final int MENU_HELP = 6;
     private static final int CHECK_DATABASE = 7;
+    private static final int MENU_SYNC = 8;
+    private static final int MENU_ADD_NOTE = 9;
+    private static final int MENU_ADD_DECK = 10;
 
 	/**
 	 * Context Menus
@@ -2030,7 +2033,14 @@ public class DeckPicker extends FragmentActivity {
         MenuItem item;
 		UIUtils.addMenuItemInActionBar(menu, Menu.NONE, MENU_HELP, Menu.NONE,
 				R.string.help_title, R.drawable.ic_menu_help);
-        item = menu.add(Menu.NONE, MENU_CREATE_DECK, Menu.NONE, R.string.new_deck);
+
+		UIUtils.addMenuItemInActionBar(menu, Menu.NONE, MENU_SYNC, Menu.NONE,
+				R.string.sync_title, R.drawable.deckpicker_sync);
+
+		UIUtils.addMenuItemInActionBar(menu, Menu.NONE, MENU_ADD_NOTE, Menu.NONE,
+				R.string.add, R.drawable.studyoptions_add);
+
+		item = menu.add(Menu.NONE, MENU_CREATE_DECK, Menu.NONE, R.string.new_deck);
         item.setIcon(R.drawable.ic_menu_add);
         item = menu.add(Menu.NONE, MENU_ADD_SHARED_DECK, Menu.NONE, R.string.menu_get_shared_decks);
         item.setIcon(R.drawable.ic_menu_download);

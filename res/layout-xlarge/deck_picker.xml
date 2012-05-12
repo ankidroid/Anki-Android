@@ -29,6 +29,7 @@
 		android:layout_width="fill_parent"
 		android:layout_alignParentBottom="true"
 		android:layout_height="wrap_content"
+		android:visibility="gone"
 		android:orientation="horizontal">
 		<ImageButton
 			android:src="@drawable/studyoptions_add"

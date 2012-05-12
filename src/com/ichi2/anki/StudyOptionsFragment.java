@@ -168,8 +168,8 @@ public class StudyOptionsFragment extends Fragment implements IButtonListener {
 	private LinearLayout mDeckChart;
 	private ImageButton mAddNote;
 	private ImageButton mCardBrowser;
-	private ImageButton mDeckOptions;
-	private ImageButton mStatisticsButton;
+	private Button mDeckOptions;
+	private Button mStatisticsButton;
 
 	/**
 	 * UI elements for "Congrats" view
@@ -654,19 +654,19 @@ public class StudyOptionsFragment extends Fragment implements IButtonListener {
 				.findViewById(R.id.studyoptions_deck_description);
 		mButtonStart = (Button) mStudyOptionsView
 				.findViewById(R.id.studyoptions_start);
-		mToggleCram = (ToggleButton) mStudyOptionsView
-				.findViewById(R.id.studyoptions_cram);
-		mToggleNight = (ToggleButton) mStudyOptionsView
-				.findViewById(R.id.studyoptions_night);
-		mToggleNight.setChecked(mInvertedColors);
+//		mToggleCram = (ToggleButton) mStudyOptionsView
+//				.findViewById(R.id.studyoptions_cram);
+//		mToggleNight = (ToggleButton) mStudyOptionsView
+//				.findViewById(R.id.studyoptions_night);
+//		mToggleNight.setChecked(mInvertedColors);
 
-		mAddNote = (ImageButton) mStudyOptionsView
-				.findViewById(R.id.studyoptions_add);
-		mCardBrowser = (ImageButton) mStudyOptionsView
-				.findViewById(R.id.studyoptions_card_browser);
-		mStatisticsButton = (ImageButton) mStudyOptionsView
+//		mAddNote = (ImageButton) mStudyOptionsView
+//				.findViewById(R.id.studyoptions_add);
+//		mCardBrowser = (ImageButton) mStudyOptionsView
+//				.findViewById(R.id.studyoptions_card_browser);
+		mStatisticsButton = (Button) mStudyOptionsView
 				.findViewById(R.id.studyoptions_statistics);
-		mDeckOptions = (ImageButton) mStudyOptionsView
+		mDeckOptions = (Button) mStudyOptionsView
 				.findViewById(R.id.studyoptions_options);
 
 		mGlobalBar = (View) mStudyOptionsView
@@ -697,10 +697,10 @@ public class StudyOptionsFragment extends Fragment implements IButtonListener {
 		mDeckChart = (LinearLayout) mStudyOptionsView.findViewById(R.id.studyoptions_chart);
 		
 		mButtonStart.setOnClickListener(mButtonClickListener);
-		mToggleCram.setOnClickListener(mButtonClickListener);
-		mToggleNight.setOnClickListener(mButtonClickListener);
-		mAddNote.setOnClickListener(mButtonClickListener);
-		mCardBrowser.setOnClickListener(mButtonClickListener);
+//		mToggleCram.setOnClickListener(mButtonClickListener);
+//		mToggleNight.setOnClickListener(mButtonClickListener);
+//		mAddNote.setOnClickListener(mButtonClickListener);
+//		mCardBrowser.setOnClickListener(mButtonClickListener);
 		mStatisticsButton.setOnClickListener(mButtonClickListener);
 		mDeckOptions.setOnClickListener(mButtonClickListener);
 
