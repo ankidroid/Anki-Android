@@ -69,11 +69,6 @@ import com.ichi2.themes.StyledProgressDialog;
 import com.ichi2.themes.Themes;
 import com.ichi2.widget.WidgetStatus;
 import com.tomgibara.android.veecheck.util.PrefSettings;
-import com.zeemote.zc.Controller;
-import com.zeemote.zc.event.ButtonEvent;
-import com.zeemote.zc.event.IButtonListener;
-import com.zeemote.zc.ui.android.ControllerAndroidUi;
-import com.zeemote.zc.util.JoystickToButtonAdapter;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -87,7 +82,7 @@ import org.achartengine.renderer.XYMultipleSeriesRenderer;
 import org.achartengine.renderer.XYSeriesRenderer;
 import org.json.JSONException;
 
-public class StudyOptionsFragment extends Fragment implements IButtonListener {
+public class StudyOptionsFragment extends Fragment {
 
 	/**
 	 * Available options performed by other activities
@@ -110,16 +105,6 @@ public class StudyOptionsFragment extends Fragment implements IButtonListener {
 
 	private HashMap<Integer, StyledDialog> mDialogs = new HashMap<Integer, StyledDialog>();
 
-	/** Zeemote messages */
-	private static final int MSG_ZEEMOTE_BUTTON_A = 0x110;
-	private static final int MSG_ZEEMOTE_BUTTON_B = MSG_ZEEMOTE_BUTTON_A + 1;
-	private static final int MSG_ZEEMOTE_BUTTON_C = MSG_ZEEMOTE_BUTTON_A + 2;
-	private static final int MSG_ZEEMOTE_BUTTON_D = MSG_ZEEMOTE_BUTTON_A + 3;
-	private static final int MSG_ZEEMOTE_STICK_UP = MSG_ZEEMOTE_BUTTON_A + 4;
-	private static final int MSG_ZEEMOTE_STICK_DOWN = MSG_ZEEMOTE_BUTTON_A + 5;
-	private static final int MSG_ZEEMOTE_STICK_LEFT = MSG_ZEEMOTE_BUTTON_A + 6;
-	private static final int MSG_ZEEMOTE_STICK_RIGHT = MSG_ZEEMOTE_BUTTON_A + 7;
-
 	/** Broadcast that informs us when the sd card is about to be unmounted */
 	private BroadcastReceiver mUnmountReceiver = null;
 
@@ -131,7 +116,6 @@ public class StudyOptionsFragment extends Fragment implements IButtonListener {
 	private int mCurrentContentView;
 	boolean mInvertedColors = false;
 	String mLocale;
-	private boolean mZeemoteEnabled;
 
 	private boolean mDontSaveOnStop = false;
 
@@ -211,12 +195,6 @@ public class StudyOptionsFragment extends Fragment implements IButtonListener {
 	private boolean mFragmented;
 
 	/**
-	 * Zeemote controller
-	 */
-	protected JoystickToButtonAdapter adapter;
-	ControllerAndroidUi controllerUi;
-
-	/**
 	 * Callbacks for UI events
 	 */
 	private View.OnClickListener mButtonClickListener = new View.OnClickListener() {
@@ -283,48 +261,6 @@ public class StudyOptionsFragment extends Fragment implements IButtonListener {
 		}
 	};
 
-	Handler ZeemoteHandler = new Handler() {
-		public void handleMessage(Message msg) {
-			switch (msg.what) {
-			case MSG_ZEEMOTE_STICK_UP:
-				// sendKey(KeyEvent.KEYCODE_DPAD_UP);
-				break;
-			case MSG_ZEEMOTE_STICK_DOWN:
-				// sendKey(KeyEvent.KEYCODE_DPAD_DOWN);
-				break;
-			case MSG_ZEEMOTE_STICK_LEFT:
-				// sendKey(KeyEvent.KEYCODE_DPAD_LEFT);
-				break;
-			case MSG_ZEEMOTE_STICK_RIGHT:
-				// sendKey(KeyEvent.KEYCODE_DPAD_RIGHT);
-				break;
-			case MSG_ZEEMOTE_BUTTON_A:
-				// sendKey(KeyEvent.KEYCODE_ENTER);
-				openReviewer();
-				break;
-			case MSG_ZEEMOTE_BUTTON_B:
-				// sendKey(KeyEvent.KEYCODE_BACK);
-				if (mCurrentContentView == CONTENT_CONGRATS) {
-					finishCongrats();
-				} else {
-					closeStudyOptions();
-				}
-				break;
-			case MSG_ZEEMOTE_BUTTON_C:
-				sendKey(KeyEvent.KEYCODE_BACK);
-				break;
-			case MSG_ZEEMOTE_BUTTON_D:
-				break;
-			}
-			super.handleMessage(msg);
-		}
-	};
-
-	protected void sendKey(int keycode) {
-//		this.dispatchKeyEvent(new KeyEvent(KeyEvent.ACTION_DOWN, keycode));
-//		this.dispatchKeyEvent(new KeyEvent(KeyEvent.ACTION_UP, keycode));
-		Log.d("Zeemote", "dispatched key " + keycode);
-	}
 
     public static StudyOptionsFragment newInstance(int index) {
     	StudyOptionsFragment f = new StudyOptionsFragment();
@@ -404,31 +340,6 @@ public class StudyOptionsFragment extends Fragment implements IButtonListener {
 		}
 
 		View view = showContentView(CONTENT_STUDY_OPTIONS);
-
-		// Zeemote controller initialization
-		if (mZeemoteEnabled) {
-			if (AnkiDroidApp.zeemoteController() == null) {
-				AnkiDroidApp.setZeemoteController(new Controller(
-						Controller.CONTROLLER_1));
-			}
-//			controllerUi = new ControllerAndroidUi(this,
-//					AnkiDroidApp.zeemoteController());
-			com.zeemote.util.Strings zstrings = com.zeemote.util.Strings
-					.getStrings();
-			if (zstrings.isLocaleAvailable(mLocale)) {
-				Log.d("Zeemote", "Zeemote locale " + mLocale
-						+ " is available. Setting.");
-				zstrings.setLocale(mLocale);
-			} else {
-				Log.d("Zeemote", "Zeemote locale " + mLocale + " is not available.");
-			}
-			if (mZeemoteEnabled) {
-				if (!AnkiDroidApp.zeemoteController().isConnected()) {
-					Log.d("Zeemote", "starting connection in onCreate");
-					controllerUi.startConnectionProcess();
-				}
-			}			
-		}
 		return view;
 	}
 
@@ -494,30 +405,10 @@ public class StudyOptionsFragment extends Fragment implements IButtonListener {
 //		if (mUnmountReceiver != null) {
 //			unregisterReceiver(mUnmountReceiver);
 //		}
-		// Disconnect Zeemote if connected
-		if (mZeemoteEnabled && (AnkiDroidApp.zeemoteController() != null)
-				&& (AnkiDroidApp.zeemoteController().isConnected())) {
-			try {
-				Log.d("Zeemote", "trying to disconnect in onDestroy...");
-				AnkiDroidApp.zeemoteController().disconnect();
-			} catch (IOException ex) {
-				Log.e("Zeemote",
-						"Error on zeemote disconnection in onDestroy: "
-								+ ex.getMessage());
-			}
-		}
 	}
 
 	@Override
 	public void onPause() {
-		if (mZeemoteEnabled && (AnkiDroidApp.zeemoteController() != null)
-				&& (AnkiDroidApp.zeemoteController().isConnected())) {
-			Log.d(AnkiDroidApp.TAG, "Zeemote: Removing listener in onPause");
-			AnkiDroidApp.zeemoteController().removeButtonListener(this);
-			AnkiDroidApp.zeemoteController().removeJoystickListener(adapter);
-			adapter.removeButtonListener(this);
-			adapter = null;
-		}
 		super.onPause();
 	}
 
@@ -526,14 +417,6 @@ public class StudyOptionsFragment extends Fragment implements IButtonListener {
 	@Override
 	public void onResume() {
 		super.onResume();
-		if (mZeemoteEnabled && (AnkiDroidApp.zeemoteController() != null)
-				&& (AnkiDroidApp.zeemoteController().isConnected())) {
-			Log.d("Zeemote", "Adding listener in onResume");
-			AnkiDroidApp.zeemoteController().addButtonListener(this);
-			adapter = new JoystickToButtonAdapter();
-			AnkiDroidApp.zeemoteController().addJoystickListener(adapter);
-			adapter.addButtonListener(this);
-		}
 		if (mCol != null) {
 			if (Utils.now() > mCol.getSched().getDayCutoff()) {
 				updateValuesFromDeck(true);
@@ -1087,8 +970,6 @@ public class StudyOptionsFragment extends Fragment implements IButtonListener {
 		mSwipeEnabled = preferences.getBoolean("swipe", false);
 		mInvertedColors = preferences.getBoolean("invertedColors", false);
 
-		mZeemoteEnabled = preferences.getBoolean("zeemote", false);
-
 		// TODO: set language
 //		mLocale = preferences.getString("language", "");
 //		AnkiDroidApp.setLanguage(mLocale);
@@ -1224,36 +1105,4 @@ public class StudyOptionsFragment extends Fragment implements IButtonListener {
 //			return false;
 //	}
 
-	@Override
-	public void buttonPressed(ButtonEvent arg0) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void buttonReleased(ButtonEvent arg0) {
-		Log.d("Zeemote", "Button released, id: " + arg0.getButtonID());
-		Message msg = Message.obtain();
-		msg.what = MSG_ZEEMOTE_BUTTON_A + arg0.getButtonID(); // Button A = 0,
-																// Button B =
-																// 1...
-		if ((msg.what >= MSG_ZEEMOTE_BUTTON_A)
-				&& (msg.what <= MSG_ZEEMOTE_BUTTON_D)) { // make sure messages
-															// from future
-															// buttons don't get
-															// throug
-			this.ZeemoteHandler.sendMessage(msg);
-		}
-		if (arg0.getButtonID() == -1) {
-			msg.what = MSG_ZEEMOTE_BUTTON_D + arg0.getButtonGameAction();
-			if ((msg.what >= MSG_ZEEMOTE_STICK_UP)
-					&& (msg.what <= MSG_ZEEMOTE_STICK_RIGHT)) { // make sure
-																// messages from
-																// future
-																// buttons don't
-																// get throug
-				this.ZeemoteHandler.sendMessage(msg);
-			}
-		}
-	}
 }

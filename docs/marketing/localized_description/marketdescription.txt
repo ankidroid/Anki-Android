@@ -34,7 +34,6 @@ Add material through the desktop application Anki or directly through Ankidroid.
 • limit studying by tag, time or cards
 • cram mode
 • night mode
-• zeemote support
 • three different ui-themes
 • 27 localisations
 • All previous AnkiDroid versions can be downloaded from the website
