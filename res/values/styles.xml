@@ -182,6 +182,7 @@
 
     <style name="White.ActionBarStyle" parent="android:style/Widget.Holo.ActionBar">
        <item name="android:background">#f5f5f5</item>
+       
     </style>
 
     <!-- Widget Elements -->

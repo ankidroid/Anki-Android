@@ -20,7 +20,6 @@
 
 package com.ichi2.anki;import com.ichi2.anki2.R;
 
-import android.app.Activity;
 import android.app.Dialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -33,7 +32,6 @@ import android.content.SharedPreferences.Editor;
 import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
 import android.content.res.Resources;
-import android.content.res.Resources.NotFoundException;
 import android.database.SQLException;
 import android.net.Uri;
 import android.os.Bundle;
@@ -59,7 +57,6 @@ import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 
@@ -138,6 +135,7 @@ public class DeckPicker extends FragmentActivity {
     private static final int MENU_ADD_NOTE = 9;
     private static final int MENU_ADD_DECK = 10;
     private static final int MENU_STATISTICS = 11;
+    private static final int MENU_CARDBROWSER = 12;
 
 	/**
 	 * Context Menus
@@ -213,8 +211,6 @@ public class DeckPicker extends FragmentActivity {
 	private ImageButton mCardsButton;
 	private ImageButton mStatsButton;
 	private ImageButton mSyncButton;
-	private ImageButton mCramButton;
-	private View mDeckpickerButtons;
 
 	private File[] mBackups;
 	private ArrayList<String> mBrokenDecks;
@@ -857,13 +853,7 @@ public class DeckPicker extends FragmentActivity {
 		mAddButton.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				Intent intent = new Intent(DeckPicker.this, CardEditor.class);
-				intent.putExtra(CardEditor.EXTRA_CALLER, CardEditor.CALLER_DECKPICKER);
-				startActivityForResult(intent, ADD_NOTE);
-				if (UIUtils.getApiLevel() > 4) {
-					ActivityTransitionAnimation.slide(DeckPicker.this,
-							ActivityTransitionAnimation.LEFT);
-				}
+				addNote();
 			}
 		});
 
@@ -871,12 +861,7 @@ public class DeckPicker extends FragmentActivity {
 		mCardsButton.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				Intent cardBrowser = new Intent(DeckPicker.this, CardBrowser.class);
-				cardBrowser.putExtra("fromDeckpicker", true);
-				startActivityForResult(cardBrowser, BROWSE_CARDS);
-				if (UIUtils.getApiLevel() > 4) {
-					ActivityTransitionAnimation.slide(DeckPicker.this, ActivityTransitionAnimation.LEFT);
-				}
+				openCardBrowser();
 			}
 		});
 
@@ -893,13 +878,6 @@ public class DeckPicker extends FragmentActivity {
 			@Override
 			public void onClick(View v) {
 				sync();
-			}
-		});
-		mCramButton = (ImageButton) findViewById(R.id.cram_deck_button);
-		mCramButton.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				addCramDeck();
 			}
 		});
 		
@@ -999,6 +977,25 @@ public class DeckPicker extends FragmentActivity {
 		if (mCol != null) {
 			DeckTask.launchDeckTask(DeckTask.TASK_TYPE_LOAD_DECK_COUNTS, mLoadCountsHandler, new TaskData(mCol));
 		}
+	}
+
+	private void addNote() {
+		Intent intent = new Intent(DeckPicker.this, CardEditor.class);
+		intent.putExtra(CardEditor.EXTRA_CALLER, CardEditor.CALLER_DECKPICKER);
+		startActivityForResult(intent, ADD_NOTE);
+		if (UIUtils.getApiLevel() > 4) {
+			ActivityTransitionAnimation.slide(DeckPicker.this,
+					ActivityTransitionAnimation.LEFT);
+		}
+	}
+
+	private void openCardBrowser() {
+		Intent cardBrowser = new Intent(DeckPicker.this, CardBrowser.class);
+		cardBrowser.putExtra("fromDeckpicker", true);
+		startActivityForResult(cardBrowser, BROWSE_CARDS);
+		if (UIUtils.getApiLevel() > 4) {
+			ActivityTransitionAnimation.slide(DeckPicker.this, ActivityTransitionAnimation.LEFT);
+		}		
 	}
 
 	private boolean hasErrorFiles() {
@@ -2032,17 +2029,22 @@ public class DeckPicker extends FragmentActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuItem item;
+
+        if (mFragmented) {
+    		UIUtils.addMenuItemInActionBar(menu, Menu.NONE, MENU_SYNC, Menu.NONE,
+    				R.string.sync_title, R.drawable.ic_menu_refresh);
+
+    		UIUtils.addMenuItemInActionBar(menu, Menu.NONE, MENU_ADD_NOTE, Menu.NONE,
+    				R.string.add, R.drawable.ic_menu_add);
+
+    		UIUtils.addMenuItemInActionBar(menu, Menu.NONE, MENU_STATISTICS, Menu.NONE,
+    				R.string.statistics_menu, R.drawable.ic_menu_statistics);
+
+    		UIUtils.addMenuItemInActionBar(menu, Menu.NONE, MENU_CARDBROWSER, Menu.NONE,
+    				R.string.menu_cardbrowser, R.drawable.ic_menu_cardbrowser);        	
+        }
 		UIUtils.addMenuItemInActionBar(menu, Menu.NONE, MENU_HELP, Menu.NONE,
 				R.string.help_title, R.drawable.ic_menu_help);
-
-		UIUtils.addMenuItemInActionBar(menu, Menu.NONE, MENU_SYNC, Menu.NONE,
-				R.string.sync_title, R.drawable.ic_menu_refresh);
-
-		UIUtils.addMenuItemInActionBar(menu, Menu.NONE, MENU_ADD_NOTE, Menu.NONE,
-				R.string.add, R.drawable.ic_menu_add);
-
-		UIUtils.addMenuItemInActionBar(menu, Menu.NONE, MENU_STATISTICS, Menu.NONE,
-				R.string.statistics_menu, R.drawable.ic_menu_statistics);
 
 		item = menu.add(Menu.NONE, MENU_CREATE_DECK, Menu.NONE, R.string.new_deck);
         item.setIcon(R.drawable.ic_menu_add);
@@ -2089,16 +2091,15 @@ public class DeckPicker extends FragmentActivity {
         		return true;
 
         	case MENU_ADD_NOTE:
-				Intent intent = new Intent(DeckPicker.this, CardEditor.class);
-				intent.putExtra(CardEditor.EXTRA_CALLER, CardEditor.CALLER_DECKPICKER);
-				startActivityForResult(intent, ADD_NOTE);
-				if (UIUtils.getApiLevel() > 4) {
-					ActivityTransitionAnimation.slide(DeckPicker.this,
-							ActivityTransitionAnimation.LEFT);
-				}
+        		addNote();
         		return true;
 
         	case MENU_STATISTICS:
+				showDialog(DIALOG_SELECT_STATISTICS_TYPE);
+        		return true;
+
+        	case MENU_CARDBROWSER:
+        		openCardBrowser();
         		return true;
 
             case MENU_CREATE_DECK:

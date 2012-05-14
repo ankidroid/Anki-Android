@@ -111,5 +111,6 @@
 		<item>Order added</item>
 		<item>Order due</item>
 	</string-array>
-
+<string name="menu_cardbrowser">Card browser</string>
+	
 </resources>
