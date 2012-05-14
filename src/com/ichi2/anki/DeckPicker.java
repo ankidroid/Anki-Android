@@ -35,8 +35,6 @@ import android.content.res.Resources;
 import android.database.SQLException;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
@@ -75,7 +73,6 @@ import com.ichi2.themes.Themes;
 import com.ichi2.widget.WidgetStatus;
 import com.tomgibara.android.veecheck.util.PrefSettings;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.TreeSet;
@@ -94,8 +91,6 @@ public class DeckPicker extends FragmentActivity {
 	private static final int DIALOG_NO_CONNECTION = 3;
 	private static final int DIALOG_DELETE_DECK = 4;
 	private static final int DIALOG_SELECT_STATISTICS_TYPE = 5;
-	private static final int DIALOG_SELECT_STATISTICS_PERIOD = 6;
-	private static final int DIALOG_DELETE_BACKUPS = 8;
 	private static final int DIALOG_CONTEXT_MENU = 9;
 	private static final int DIALOG_REPAIR_COLLECTION = 10;
 	private static final int DIALOG_NO_SPACE_LEFT = 11;
@@ -127,30 +122,19 @@ public class DeckPicker extends FragmentActivity {
     private static final int CHECK_DATABASE = 7;
     private static final int MENU_SYNC = 8;
     private static final int MENU_ADD_NOTE = 9;
-    private static final int MENU_ADD_DECK = 10;
-    private static final int MENU_STATISTICS = 11;
-    private static final int MENU_CARDBROWSER = 12;
+    private static final int MENU_CREATE_DYNAMIC_DECK = 10;
+    private static final int MENU_STATISTICS = 12;
+    private static final int MENU_CARDBROWSER = 13;
 
 	/**
 	 * Context Menus
 	 */
-    private static final int CONTEXT_MENU_DECK_SUMMARY = 0;
-    private static final int CONTEXT_MENU_CUSTOM_DICTIONARY = 1;
-    private static final int CONTEXT_MENU_RESET_LANGUAGE = 2;
-    private static final int CONTEXT_MENU_RENAME_DECK = 3;
-    private static final int CONTEXT_MENU_DELETE_DECK = 4;
+    private static final int CONTEXT_MENU_RENAME_DECK = 0;
+    private static final int CONTEXT_MENU_DELETE_DECK = 1;
+    private static final int CONTEXT_MENU_DECK_SUMMARY = 2;
+    private static final int CONTEXT_MENU_CUSTOM_DICTIONARY = 3;
+    private static final int CONTEXT_MENU_RESET_LANGUAGE = 4;
     
-	/**
-	 * Message types
-	 */
-	private static final int MSG_LOADING_DECK = 0;
-	private static final int MSG_UPGRADE_NEEDED = 1;
-	private static final int MSG_UPGRADE_SUCCESS = 2;
-	private static final int MSG_UPGRADE_FAILURE = 3;
-	private static final int MSG_COULD_NOT_BE_LOADED = 4;
-	private static final int MSG_CREATING_BACKUP = 5;
-	private static final int MSG_BACKUP_ERROR = 6;
-
 	public static final String EXTRA_START = "start";
 	public static final String EXTRA_DECK_ID = "deckId";
 	public static final int EXTRA_START_NOTHING = 0;
@@ -161,13 +145,11 @@ public class DeckPicker extends FragmentActivity {
 	public static final int RESULT_MEDIA_EJECTED = 202;
 	public static final int RESULT_DB_ERROR = 203;
 	public static final int RESULT_RESTART = 204;
-
 	
     /**
 	* Available options performed by other activities
 	*/
     private static final int PREFERENCES_UPDATE = 0;
-    private static final int CREATE_DECK = 1;
     private static final int DOWNLOAD_SHARED_DECK = 3;
     public static final int REPORT_FEEDBACK = 4;
     private static final int LOG_IN_FOR_DOWNLOAD = 5;
@@ -187,8 +169,6 @@ public class DeckPicker extends FragmentActivity {
 	private Collection mCol;
 
 	private StyledProgressDialog mProgressDialog;
-	private StyledDialog mUpgradeNotesAlert;
-	private StyledDialog mMissingMediaAlert;
 	private StyledDialog mDeckNotLoadedAlert;
 	private StyledDialog mNoSpaceLeftAlert;
 	private ImageButton mAddButton;
@@ -196,28 +176,22 @@ public class DeckPicker extends FragmentActivity {
 	private ImageButton mStatsButton;
 	private ImageButton mSyncButton;
 
-	private File[] mBackups;
-	private ArrayList<String> mBrokenDecks;
-	private boolean mRestoredOrDeleted = false;
-	private ArrayList<String> mAlreadyDealtWith;
+//	private File[] mBackups;
+//	private ArrayList<String> mBrokenDecks;
+//	private boolean mRestoredOrDeleted = false;
+//	private ArrayList<String> mAlreadyDealtWith;
 
 	private SimpleAdapter mDeckListAdapter;
 	private ArrayList<HashMap<String, String>> mDeckList;
 	private ListView mDeckListView;
 
-	private File[] mFileList;
-
 	private boolean mDontSaveOnStop = false;
-	private boolean mDeckIsSelected = false;
 
 	private BroadcastReceiver mUnmountReceiver = null;
 
 	private String mPrefDeckPath = null;
 	private long mLastTimeOpened;
-	private int mPrefDeckOrder = 0;
-	private boolean mPrefStartupDeckPicker = false;
 	private long mCurrentDid;
-	private String mCurrentDeckPath = null;
 	private int mSyncMediaUsn = 0;
 
 	private EditText mDialogEditText;
@@ -267,7 +241,6 @@ public class DeckPicker extends FragmentActivity {
 			HashMap<String, String> data = (HashMap<String, String>) mDeckListAdapter.getItem(mContextMenuPosition);
 			switch (item) {
 			case CONTEXT_MENU_DELETE_DECK:
-				mCurrentDeckPath = data.get("filepath");
 				showDialog(DIALOG_DELETE_DECK);
 				return;
 			case CONTEXT_MENU_RESET_LANGUAGE:
@@ -571,6 +544,7 @@ public class DeckPicker extends FragmentActivity {
 			if (mFragmented) {
 				long active = mCol.getDecks().selected();
 				for (int i = 0; i < mDeckList.size(); i++) {
+					// TODO: load last used deck
 					if (mDeckList.get(i).get("did").equals(Long.toString(active))) {
 						mDeckListView.setSelection(i);
 						break;
@@ -664,7 +638,7 @@ public class DeckPicker extends FragmentActivity {
 			        }	
 //		    	}
 			} else {
-				// TODO: db errro handling
+				// TODO: db error handling
 			}
 		}
 
@@ -709,41 +683,41 @@ public class DeckPicker extends FragmentActivity {
     };
 
 
-    DeckTask.TaskListener mRestoreDeckHandler = new DeckTask.TaskListener() {
-
-    	@Override
-        public void onPreExecute() {
-            mProgressDialog = StyledProgressDialog.show(DeckPicker.this, "", getResources()
-                    .getString(R.string.backup_restore_deck), true);
-        }
-
-
-        @Override
-        public void onPostExecute(DeckTask.TaskData result) {
-			switch (result.getInt()) {
-    		case BackupManager.RETURN_DECK_RESTORED:
-    			mRestoredOrDeleted = true;
-//                handleRestoreDecks(true);
-                break;    			
-    		case BackupManager.RETURN_ERROR:
-        		mDeckNotLoadedAlert.show();
-        		Themes.showThemedToast(DeckPicker.this, getResources().getString(R.string.backup_restore_error), true);
-    			break;
-    		case BackupManager.RETURN_NOT_ENOUGH_SPACE:
-    			mDeckNotLoadedAlert.show();
-    			mNoSpaceLeftAlert.show();
-    			break;
-    		}        		
-        	if (mProgressDialog != null && mProgressDialog.isShowing()) {
-        		mProgressDialog.dismiss();
-        	}
-        }
- 
-		@Override
-		public void onProgressUpdate(TaskData... values) {
-		}
-
-    };
+//    DeckTask.TaskListener mRestoreDeckHandler = new DeckTask.TaskListener() {
+//
+//    	@Override
+//        public void onPreExecute() {
+//            mProgressDialog = StyledProgressDialog.show(DeckPicker.this, "", getResources()
+//                    .getString(R.string.backup_restore_deck), true);
+//        }
+//
+//
+//        @Override
+//        public void onPostExecute(DeckTask.TaskData result) {
+//			switch (result.getInt()) {
+//    		case BackupManager.RETURN_DECK_RESTORED:
+//    			mRestoredOrDeleted = true;
+////                handleRestoreDecks(true);
+//                break;    			
+//    		case BackupManager.RETURN_ERROR:
+//        		mDeckNotLoadedAlert.show();
+//        		Themes.showThemedToast(DeckPicker.this, getResources().getString(R.string.backup_restore_error), true);
+//    			break;
+//    		case BackupManager.RETURN_NOT_ENOUGH_SPACE:
+//    			mDeckNotLoadedAlert.show();
+//    			mNoSpaceLeftAlert.show();
+//    			break;
+//    		}        		
+//        	if (mProgressDialog != null && mProgressDialog.isShowing()) {
+//        		mProgressDialog.dismiss();
+//        	}
+//        }
+// 
+//		@Override
+//		public void onProgressUpdate(TaskData... values) {
+//		}
+//
+//    };
 
     
 	// ----------------------------------------------------------------------------
@@ -981,8 +955,6 @@ public class DeckPicker extends FragmentActivity {
 //        mSwap = preferences.getBoolean("swapqa", false);
 //        mLocale = preferences.getString("language", "");
 //       	setLanguage(mLocale);
-
-		mSwipeEnabled = preferences.getBoolean("swipe", false);
 
         return preferences;
     }
@@ -1429,10 +1401,10 @@ public class DeckPicker extends FragmentActivity {
 			break;
 
 		case DIALOG_CONTEXT_MENU:
-			String[] entries = new String[5];
-			entries[CONTEXT_MENU_DECK_SUMMARY] = "XXXsum";//res.getStringArray(R.array.statistics_type_labels)[0];
-			entries[CONTEXT_MENU_CUSTOM_DICTIONARY] = res.getString(R.string.contextmenu_deckpicker_set_custom_dictionary);
-			entries[CONTEXT_MENU_RESET_LANGUAGE] = res.getString(R.string.contextmenu_deckpicker_reset_language_assignments);
+			String[] entries = new String[2];
+//			entries[CONTEXT_MENU_DECK_SUMMARY] = "XXXsum";//res.getStringArray(R.array.statistics_type_labels)[0];
+//			entries[CONTEXT_MENU_CUSTOM_DICTIONARY] = res.getString(R.string.contextmenu_deckpicker_set_custom_dictionary);
+//			entries[CONTEXT_MENU_RESET_LANGUAGE] = res.getString(R.string.contextmenu_deckpicker_reset_language_assignments);
 			entries[CONTEXT_MENU_RENAME_DECK] = res.getString(R.string.contextmenu_deckpicker_rename_deck);
 			entries[CONTEXT_MENU_DELETE_DECK] = res.getString(R.string.contextmenu_deckpicker_delete_deck);
 			builder.setTitle("Context Menu");
@@ -1911,6 +1883,7 @@ public class DeckPicker extends FragmentActivity {
 	}
 
 	private void addCramDeck() {
+		// TODO: implement this properly
         if (mFragmented) {
 //          getListView().setItemChecked(index, true);
         	
@@ -1988,6 +1961,8 @@ public class DeckPicker extends FragmentActivity {
 
 		item = menu.add(Menu.NONE, MENU_CREATE_DECK, Menu.NONE, R.string.new_deck);
         item.setIcon(R.drawable.ic_menu_add);
+		item = menu.add(Menu.NONE, MENU_CREATE_DYNAMIC_DECK, Menu.NONE, R.string.new_dynamic_deck);
+        item.setIcon(R.drawable.ic_menu_add);
         item = menu.add(Menu.NONE, MENU_ADD_SHARED_DECK, Menu.NONE, R.string.menu_get_shared_decks);
         item.setIcon(R.drawable.ic_menu_download);
         item = menu.add(Menu.NONE, MENU_PREFERENCES, Menu.NONE, R.string.menu_preferences);
@@ -2009,8 +1984,13 @@ public class DeckPicker extends FragmentActivity {
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
         boolean sdCardAvailable = AnkiDroidApp.isSdCardMounted();
-//        menu.findItem(SUBMENU_DOWNLOAD).setEnabled(sdCardAvailable);
-//        menu.findItem(MENU_DOWNLOAD_PERSONAL_DECK).setVisible(sdCardAvailable);
+        menu.findItem(MENU_SYNC).setEnabled(sdCardAvailable);
+        menu.findItem(MENU_ADD_NOTE).setEnabled(sdCardAvailable);
+        menu.findItem(MENU_STATISTICS).setEnabled(sdCardAvailable);
+        menu.findItem(MENU_CARDBROWSER).setEnabled(sdCardAvailable);
+        menu.findItem(MENU_CREATE_DECK).setEnabled(sdCardAvailable);
+        menu.findItem(MENU_CREATE_DYNAMIC_DECK).setEnabled(sdCardAvailable);
+        menu.findItem(CHECK_DATABASE).setEnabled(sdCardAvailable);
         return true;
     }
 
@@ -2063,6 +2043,10 @@ public class DeckPicker extends FragmentActivity {
 				builder2.setNegativeButton(res.getString(R.string.cancel), null);
 				builder2.create().show();
                 return true;
+
+            case MENU_CREATE_DYNAMIC_DECK:
+            	addCramDeck();
+            	return true;
 
             case MENU_ABOUT:
                 startActivity(new Intent(DeckPicker.this, Info.class));
@@ -2155,8 +2139,6 @@ public class DeckPicker extends FragmentActivity {
 ////                    	populateDeckList(preferences.getString("deckPath", AnkiDroidApp.getStorageDirectory()));
 //                    }
 //                }
-        } else if ((requestCode == CREATE_DECK || requestCode == DOWNLOAD_SHARED_DECK) && resultCode == RESULT_OK) {
-//            	populateDeckList(mPrefDeckPath);
         } else if (requestCode == REPORT_FEEDBACK && resultCode == RESULT_OK) {
         } else if (requestCode == LOG_IN_FOR_SYNC && resultCode == RESULT_OK) {
         	sync();
@@ -2198,20 +2180,20 @@ public class DeckPicker extends FragmentActivity {
 		}, new DeckTask.TaskData(mCol));
     }
 
-	private void resetDeckLanguages(String deckPath) {
-		if (MetaDB.resetDeckLanguages(this, deckPath)) {
-			Themes.showThemedToast(this, getResources().getString(R.string.contextmenu_deckpicker_reset_reset_message), true);
-		}
-	}
-
-
-    public void openSharedDeckPicker() {
+//	private void resetDeckLanguages(String deckPath) {
+//		if (MetaDB.resetDeckLanguages(this, deckPath)) {
+//			Themes.showThemedToast(this, getResources().getString(R.string.contextmenu_deckpicker_reset_reset_message), true);
+//		}
+//	}
+//
+//
+//    public void openSharedDeckPicker() {
 //        // deckLoaded = false;
 //        startActivityForResult(new Intent(this, SharedDeckPicker.class), DOWNLOAD_SHARED_DECK);
 //        if (UIUtils.getApiLevel() > 4) {
 //            ActivityTransitionAnimation.slide(this, ActivityTransitionAnimation.RIGHT);
 //        }
-    }
+//    }
 
 
     public void handleDbError() {
@@ -2246,6 +2228,7 @@ public class DeckPicker extends FragmentActivity {
 		openStudyOptions(-1);
 	}
 	private void openStudyOptions(int id) {
+		// TODO: implement this properly
         if (mFragmented) {
 //          getListView().setItemChecked(index, true);
 			Fragment frag = (Fragment) getSupportFragmentManager().findFragmentById(R.id.studyoptions_fragment);
@@ -2319,39 +2302,6 @@ public class DeckPicker extends FragmentActivity {
 			}
 		}, new DeckTask.TaskData(mCol));
 	}
-
-	private CharSequence getSyncLogMessage(
-			ArrayList<HashMap<String, String>> decksChangelogs) {
-		SpannableStringBuilder spannableStringBuilder = new SpannableStringBuilder();
-		int len = decksChangelogs.size();
-		for (int i = 0; i < len; i++) {
-			HashMap<String, String> deckChangelog = decksChangelogs.get(i);
-			String deckName = deckChangelog.get("deckName");
-
-			// Append deck name
-			spannableStringBuilder.append(deckName);
-			// Underline deck name
-			spannableStringBuilder.setSpan(new UnderlineSpan(),
-					spannableStringBuilder.length() - deckName.length(),
-					spannableStringBuilder.length(), 0);
-			// Put deck name in bold style
-			spannableStringBuilder.setSpan(new StyleSpan(
-					android.graphics.Typeface.BOLD), spannableStringBuilder
-					.length()
-					- deckName.length(), spannableStringBuilder.length(), 0);
-
-			// Append sync message
-			spannableStringBuilder.append("\n" + deckChangelog.get("message"));
-
-			// If it is not the last element, add the proper separation
-			if (i != (len - 1)) {
-				spannableStringBuilder.append("\n\n");
-			}
-		}
-
-		return spannableStringBuilder;
-	}
-
 
 	private void updateDecksList(TreeSet<Object[]> decks, int eta, int count) {
 		mDeckList.clear();
