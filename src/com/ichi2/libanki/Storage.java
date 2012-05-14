@@ -138,7 +138,12 @@ public class Storage {
 			if (ver < 7) {
 				col.modSchema();
 				col.getDb().execute("UPDATE cards SET odue = 0 WHERE (type = 1 OR queue = 2) AND NOT odid");
-				col.getDb().execute("UPDATE col SET ver = 7");				
+				col.getDb().execute("UPDATE col SET ver = 7");
+			}
+			if (ver < 8) {
+				col.modSchema();
+				col.getDb().execute("UPDATE cards SET due = due / 1000 WHERE due > 4294967296");
+				col.getDb().execute("UPDATE col SET ver = 8");
 			}
 		} catch (JSONException e) {
 			throw new RuntimeException(e);

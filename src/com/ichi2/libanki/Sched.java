@@ -1164,10 +1164,15 @@ public class Sched {
 		if (expiredOnly) {
 			extra += " AND odue <= " + mToday;
 		}
+		boolean mod = mCol.getDb().getMod();
 		mCol.getDb().execute(
 						"UPDATE cards SET due = odue, queue = 2, mod = "
 								+ Utils.intNow() + ", usn = " + mCol.usn()
 								+ " WHERE queue = 1 AND type = 2 " + extra);
+		if (expiredOnly) {
+			// we don't want to bump the mod time when removing expired
+			mCol.getDb().setMod(mod);
+		}
 	}
 
 	/**
@@ -1254,6 +1259,7 @@ public class Sched {
 					}
 				}
 				if (!mRevQueue.isEmpty()) {
+					// ordering
 					try {
 						if (mCol.getDecks().get(did).getInt("dyn") != 0) {
 							// dynamic decks need due order preserved
@@ -1264,6 +1270,10 @@ public class Sched {
 						}
 					} catch (JSONException e) {
 						throw new RuntimeException(e);
+					}
+					// is the current did empty?
+					if (mRevQueue.size() < lim) {
+						mRevDids.remove();
 					}
 					return true;
 				}

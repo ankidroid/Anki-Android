@@ -47,7 +47,7 @@ import java.util.Random;
 public class Collection {
 
 	// collection schema & syncing vars
-	public static final int SCHEMA_VERSION = 7;
+	public static final int SCHEMA_VERSION = 8;
 	public static final String SYNC_URL = "http://beta.ankiweb.net/sync/";
 	public static final int SYNC_VER = 3;
 
@@ -643,9 +643,11 @@ public class Collection {
 		}
 		try {
 			card.setDid(did != 0 ? did : note.model().getLong("did"));
+			// if invalid did, use default instead
+			card.setDid(mDecks.get(card.getDid()).getLong("id"));
 		} catch (JSONException e) {
 			throw new RuntimeException(e);
-		}
+		}		
 		card.setDue(_dueForDid(card.getDid(), due));
 		if (flush) {
 			card.flush();

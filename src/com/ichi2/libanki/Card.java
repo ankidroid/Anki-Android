@@ -242,7 +242,7 @@ public class Card implements Cloneable {
 			JSONObject m = model();
 			Object[] data;
 			try {
-				data = new Object[] { mId, n.getId(), m.getLong("id"), mDid,
+				data = new Object[] { mId, n.getId(), m.getLong("id"), mODid != 0l ? mODid : mDid,
 						mOrd, n.stringTags(), n.joinedFields() };
 			} catch (JSONException e) {
 				throw new RuntimeException(e);
