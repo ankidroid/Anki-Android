@@ -2033,16 +2033,16 @@ public class DeckPicker extends FragmentActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuItem item;
 		UIUtils.addMenuItemInActionBar(menu, Menu.NONE, MENU_HELP, Menu.NONE,
-				R.string.help_title, R.drawable.menu_help);
+				R.string.help_title, R.drawable.ic_menu_help);
 
 		UIUtils.addMenuItemInActionBar(menu, Menu.NONE, MENU_SYNC, Menu.NONE,
-				R.string.sync_title, R.drawable.menu_sync);
+				R.string.sync_title, R.drawable.ic_menu_refresh);
 
 		UIUtils.addMenuItemInActionBar(menu, Menu.NONE, MENU_ADD_NOTE, Menu.NONE,
-				R.string.add, R.drawable.menu_add);
+				R.string.add, R.drawable.ic_menu_add);
 
 		UIUtils.addMenuItemInActionBar(menu, Menu.NONE, MENU_STATISTICS, Menu.NONE,
-				R.string.statistics_menu, R.drawable.menu_statistics);
+				R.string.statistics_menu, R.drawable.ic_menu_statistics);
 
 		item = menu.add(Menu.NONE, MENU_CREATE_DECK, Menu.NONE, R.string.new_deck);
         item.setIcon(R.drawable.ic_menu_add);
@@ -2057,7 +2057,7 @@ public class DeckPicker extends FragmentActivity {
         item.setIcon(R.drawable.ic_menu_send);
         item = menu.add(Menu.NONE, MENU_ABOUT, Menu.NONE, R.string.menu_about);
         item.setIcon(R.drawable.ic_menu_info_details);
-        item = menu.add(Menu.NONE, StudyOptionsActivity.MENU_ROTATE, Menu.NONE, R.string.menu_about);
+        item = menu.add(Menu.NONE, StudyOptionsActivity.MENU_ROTATE, Menu.NONE, R.string.menu_rotate);
         item.setIcon(R.drawable.ic_menu_always_landscape_portrait);
         
         return true;
