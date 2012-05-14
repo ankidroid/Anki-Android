@@ -24,7 +24,7 @@
 		android:layout_above="@+id/deckpicker_buttons"
 		android:focusable="true"/>
 
-	<LinearLayout
+<!-- 	<LinearLayout
 		android:id="@+id/deckpicker_buttons"
 		android:layout_width="fill_parent"
 		android:layout_alignParentBottom="true"
@@ -63,7 +63,7 @@
 			style="?android:attr/buttonStyleSmall"
 			android:layout_width="0dip"
 			android:layout_weight="1"/>
-			</LinearLayout>
+			</LinearLayout> -->
 	</RelativeLayout>
     	<FrameLayout
 		android:name="com.ichi2.anki.StudyOptionsFragment"

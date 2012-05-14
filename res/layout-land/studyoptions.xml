@@ -175,7 +175,7 @@ android:layout_width="0dip"
 				    android:layout_above="@+id/studyoptions_middle_buttons"
 					android:text="@string/studyoptions_start"
 					android:drawableLeft="@drawable/ic_start"/>	
-				<LinearLayout android:id="@+id/studyoptions_middle_buttons"
+				<!-- <LinearLayout android:id="@+id/studyoptions_middle_buttons"
 				    android:layout_above="@+id/studyoptions_bottom_buttons"
 		         	android:layout_width="fill_parent"
 					android:orientation="horizontal"
@@ -196,7 +196,7 @@ android:layout_width="0dip"
 					android:singleLine="true"	
 						android:textOff="@string/cram"
 						android:textOn="@string/cram" />
-			</LinearLayout>
+			</LinearLayout> -->
 			<LinearLayout android:id="@+id/studyoptions_bottom_buttons"
 			    android:layout_alignParentBottom="true"
 				android:layout_width="fill_parent"

@@ -152,8 +152,8 @@ public class StudyOptionsFragment extends Fragment {
 	private LinearLayout mDeckChart;
 	private ImageButton mAddNote;
 	private ImageButton mCardBrowser;
-	private Button mDeckOptions;
-	private Button mStatisticsButton;
+	private ImageButton mDeckOptions;
+	private ImageButton mStatisticsButton;
 
 	/**
 	 * UI elements for "Congrats" view
@@ -204,24 +204,24 @@ public class StudyOptionsFragment extends Fragment {
 			case R.id.studyoptions_start:
 				openReviewer();
 				return;
-			case R.id.studyoptions_cram:
-				v.setEnabled(false);
-				// if (mToggleCram.isChecked()) {
-				// mToggleCram.setChecked(!mToggleCram.isChecked());
-				// activeCramTags.clear();
-				// cramOrder = cramOrderList[0];
-				// showDialog(DIALOG_CRAM);
-				// } else {
-				// onCramStop();
-				// resetAndUpdateValuesFromDeck();
-				// }
-				return;
-			case R.id.studyoptions_night:
-				if (mInvertedColors != mToggleNight.isChecked()) {
-					mInvertedColors = mToggleNight.isChecked();
-					savePreferences("invertedColors", mInvertedColors);
-				}
-				return;
+//			case R.id.studyoptions_cram:
+//				v.setEnabled(false);
+//				// if (mToggleCram.isChecked()) {
+//				// mToggleCram.setChecked(!mToggleCram.isChecked());
+//				// activeCramTags.clear();
+//				// cramOrder = cramOrderList[0];
+//				// showDialog(DIALOG_CRAM);
+//				// } else {
+//				// onCramStop();
+//				// resetAndUpdateValuesFromDeck();
+//				// }
+//				return;
+//			case R.id.studyoptions_night:
+//				if (mInvertedColors != mToggleNight.isChecked()) {
+//					mInvertedColors = mToggleNight.isChecked();
+//					savePreferences("invertedColors", mInvertedColors);
+//				}
+//				return;
 				// case R.id.studyoptions_congrats_learnmore:
 				// startLearnMore();
 				// return;
@@ -543,14 +543,18 @@ public class StudyOptionsFragment extends Fragment {
 //				.findViewById(R.id.studyoptions_night);
 //		mToggleNight.setChecked(mInvertedColors);
 
-//		mAddNote = (ImageButton) mStudyOptionsView
-//				.findViewById(R.id.studyoptions_add);
-//		mCardBrowser = (ImageButton) mStudyOptionsView
-//				.findViewById(R.id.studyoptions_card_browser);
-		mStatisticsButton = (Button) mStudyOptionsView
-				.findViewById(R.id.studyoptions_statistics);
-		mDeckOptions = (Button) mStudyOptionsView
-				.findViewById(R.id.studyoptions_options);
+		if (!mFragmented) {
+			mAddNote = (ImageButton) mStudyOptionsView
+					.findViewById(R.id.studyoptions_add);
+			mCardBrowser = (ImageButton) mStudyOptionsView
+					.findViewById(R.id.studyoptions_card_browser);
+			mStatisticsButton = (ImageButton) mStudyOptionsView.findViewById(R.id.studyoptions_statistics);
+			mDeckOptions = (ImageButton) mStudyOptionsView.findViewById(R.id.studyoptions_options);
+			mAddNote.setOnClickListener(mButtonClickListener);
+			mCardBrowser.setOnClickListener(mButtonClickListener);
+			mStatisticsButton.setOnClickListener(mButtonClickListener);
+			mDeckOptions.setOnClickListener(mButtonClickListener);
+		}
 
 		mGlobalBar = (View) mStudyOptionsView
 				.findViewById(R.id.studyoptions_global_bar);
@@ -582,10 +586,6 @@ public class StudyOptionsFragment extends Fragment {
 		mButtonStart.setOnClickListener(mButtonClickListener);
 //		mToggleCram.setOnClickListener(mButtonClickListener);
 //		mToggleNight.setOnClickListener(mButtonClickListener);
-//		mAddNote.setOnClickListener(mButtonClickListener);
-//		mCardBrowser.setOnClickListener(mButtonClickListener);
-		mStatisticsButton.setOnClickListener(mButtonClickListener);
-		mDeckOptions.setOnClickListener(mButtonClickListener);
 
 		// The view that shows the congratulations view.
 		mCongratsView = inflater.inflate(
@@ -634,7 +634,7 @@ public class StudyOptionsFragment extends Fragment {
 				public void onClick(DialogInterface dialog, int which) {
 					DeckTask.launchDeckTask(DeckTask.TASK_TYPE_LOAD_STATISTICS, mLoadStatisticsHandler, new DeckTask.TaskData(mCol, which, false));
 				}
-				});
+				}, mFragmented);
 			break;
 
 		case DIALOG_CRAM:

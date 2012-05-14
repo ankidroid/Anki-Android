@@ -772,37 +772,39 @@ public class DeckPicker extends FragmentActivity {
 
 		registerExternalStorageListener();
 
-		mAddButton = (ImageButton) findViewById(R.id.deckpicker_add);
-		mAddButton.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				addNote();
-			}
-		});
+		if (!mFragmented) {
+			mAddButton = (ImageButton) findViewById(R.id.deckpicker_add);
+			mAddButton.setOnClickListener(new OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					addNote();
+				}
+			});
 
-		mCardsButton = (ImageButton) findViewById(R.id.deckpicker_card_browser);
-		mCardsButton.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				openCardBrowser();
-			}
-		});
+			mCardsButton = (ImageButton) findViewById(R.id.deckpicker_card_browser);
+			mCardsButton.setOnClickListener(new OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					openCardBrowser();
+				}
+			});
 
-		mStatsButton = (ImageButton) findViewById(R.id.statistics_all_button);
-		mStatsButton.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				showDialog(DIALOG_SELECT_STATISTICS_TYPE);
-			}
-		});
+			mStatsButton = (ImageButton) findViewById(R.id.statistics_all_button);
+			mStatsButton.setOnClickListener(new OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					showDialog(DIALOG_SELECT_STATISTICS_TYPE);
+				}
+			});
 
-		mSyncButton = (ImageButton) findViewById(R.id.sync_all_button);
-		mSyncButton.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				sync();
-			}
-		});
+			mSyncButton = (ImageButton) findViewById(R.id.sync_all_button);
+			mSyncButton.setOnClickListener(new OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					sync();
+				}
+			});			
+		}
 		
 		mDeckList = new ArrayList<HashMap<String, String>>();
 		mDeckListView = (ListView) findViewById(R.id.files);
@@ -1397,7 +1399,7 @@ public class DeckPicker extends FragmentActivity {
 				public void onClick(DialogInterface dialog, int which) {
 					DeckTask.launchDeckTask(DeckTask.TASK_TYPE_LOAD_STATISTICS, mLoadStatisticsHandler, new DeckTask.TaskData(mCol, which, true));
 				}
-				});
+				}, mFragmented);
 			break;
 
 		case DIALOG_CONTEXT_MENU:
@@ -1984,10 +1986,12 @@ public class DeckPicker extends FragmentActivity {
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
         boolean sdCardAvailable = AnkiDroidApp.isSdCardMounted();
-        menu.findItem(MENU_SYNC).setEnabled(sdCardAvailable);
-        menu.findItem(MENU_ADD_NOTE).setEnabled(sdCardAvailable);
-        menu.findItem(MENU_STATISTICS).setEnabled(sdCardAvailable);
-        menu.findItem(MENU_CARDBROWSER).setEnabled(sdCardAvailable);
+        if (mFragmented) {
+            menu.findItem(MENU_SYNC).setEnabled(sdCardAvailable);
+            menu.findItem(MENU_ADD_NOTE).setEnabled(sdCardAvailable);
+            menu.findItem(MENU_STATISTICS).setEnabled(sdCardAvailable);
+            menu.findItem(MENU_CARDBROWSER).setEnabled(sdCardAvailable);        	
+        }
         menu.findItem(MENU_CREATE_DECK).setEnabled(sdCardAvailable);
         menu.findItem(MENU_CREATE_DYNAMIC_DECK).setEnabled(sdCardAvailable);
         menu.findItem(CHECK_DATABASE).setEnabled(sdCardAvailable);
