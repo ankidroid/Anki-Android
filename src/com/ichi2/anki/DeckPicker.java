@@ -1396,7 +1396,8 @@ public class DeckPicker extends FragmentActivity {
 			dialog = ChartBuilder.getStatisticsDialog(this, new DialogInterface.OnClickListener() {
 				@Override
 				public void onClick(DialogInterface dialog, int which) {
-					DeckTask.launchDeckTask(DeckTask.TASK_TYPE_LOAD_STATISTICS, mLoadStatisticsHandler, new DeckTask.TaskData(mCol, which, true));
+					boolean muh =  mFragmented ? PrefSettings.getSharedPrefs(AnkiDroidApp.getInstance().getBaseContext()).getBoolean("statsRange", true) : true;
+					DeckTask.launchDeckTask(DeckTask.TASK_TYPE_LOAD_STATISTICS, mLoadStatisticsHandler, new DeckTask.TaskData(mCol, which, mFragmented ? PrefSettings.getSharedPrefs(AnkiDroidApp.getInstance().getBaseContext()).getBoolean("statsRange", true) : true));
 				}
 				}, mFragmented);
 			break;

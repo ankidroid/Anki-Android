@@ -395,7 +395,7 @@ public class ChartBuilder extends Activity {
 		    rg2.setOnCheckedChangeListener(new OnCheckedChangeListener () {
 				@Override
 				public void onCheckedChanged(RadioGroup arg0, int arg1) {
-					PrefSettings.getSharedPrefs(AnkiDroidApp.getInstance().getBaseContext()).edit().putBoolean("statsRange", arg0.getCheckedRadioButtonId() == 0).commit();
+					PrefSettings.getSharedPrefs(AnkiDroidApp.getInstance().getBaseContext()).edit().putBoolean("statsRange", arg0.getCheckedRadioButtonId() == arg0.getChildAt(0).getId()).commit();
 				}
 				});
 		    rg2.setLayoutParams(new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, height));
