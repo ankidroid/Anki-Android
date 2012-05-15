@@ -66,7 +66,7 @@ def updateMasterFile(selu):
 		sourceName = '../assets/tutorial.csv'
 	elif selu == '14':
 		targetName = '14-marketdescription.txt'
-		sourceName = '../docs/marketing/localized description/marketdescription.txt'
+		sourceName = '../docs/marketing/localized_description/marketdescription.txt'
 	else:
 		targetName = files[int(selu)-1] + '.xml'
 		sourceName = path + targetName
