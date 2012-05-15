@@ -170,4 +170,5 @@
 </plurals>
 
 <string name="sd_card_not_mounted">SD card is not mounted.</string>
+<string name="studyoptions_options">Options</string>
 </resources>

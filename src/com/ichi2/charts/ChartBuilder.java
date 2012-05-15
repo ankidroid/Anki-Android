@@ -348,7 +348,7 @@ public class ChartBuilder extends Activity {
 	    RadioGroup rg = new RadioGroup(context);
 	    rg.setOrientation(RadioGroup.HORIZONTAL);
 	    RadioGroup.LayoutParams lp = new RadioGroup.LayoutParams(0, LayoutParams.MATCH_PARENT, 1);
-	    String[] text = new String[]{"1 month", "1 year", "all"};
+	    String[] text = res.getStringArray(R.array.stats_period);
 	    int height = context.getResources().getDrawable(R.drawable.white_btn_radio).getIntrinsicHeight();
 	    for (int i = 0; i < statisticRadioButtons.length; i++){
 	    	statisticRadioButtons[i] = new RadioButton(context);
@@ -380,7 +380,7 @@ public class ChartBuilder extends Activity {
 			final RadioButton[] statisticRadioButtons2 = new RadioButton[2];
 		    RadioGroup rg2 = new RadioGroup(context);
 		    rg2.setOrientation(RadioGroup.HORIZONTAL);
-		    String[] text2 = new String[]{"collection", "current deck"};
+		    String[] text2 = res.getStringArray(R.array.stats_range);
 		    for (int i = 0; i < statisticRadioButtons2.length; i++){
 		    	statisticRadioButtons2[i] = new RadioButton(context);
 		    	statisticRadioButtons2[i].setClickable(true);

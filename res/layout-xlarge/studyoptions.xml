@@ -200,7 +200,7 @@
 		         	android:layout_width="0dip"
 		         	android:textSize="14sp"
    		 	     	android:layout_weight="1"
-					android:text="Options"
+					android:text="@string/studyoptions_options"
 					android:drawableLeft="@drawable/studyoptions_opts"/>	
 			</LinearLayout>
 		</LinearLayout>
