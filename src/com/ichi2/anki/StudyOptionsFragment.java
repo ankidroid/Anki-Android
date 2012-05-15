@@ -970,6 +970,10 @@ public class StudyOptionsFragment extends Fragment {
 				mDeckCounts.setVisibility(View.VISIBLE);
 				mDeckCounts.setAnimation(ViewAnimation.fade(ViewAnimation.FADE_IN, 500, 0));
 			}
+
+			if (mFragmented) {
+				((DeckPicker)getActivity()).loadCounts();
+			}
 		}
 		@Override
 		public void onPreExecute() {

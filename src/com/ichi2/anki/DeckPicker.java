@@ -158,7 +158,7 @@ public class DeckPicker extends FragmentActivity {
     private static final int SHOW_INFO_WELCOME = 8;
     private static final int SHOW_INFO_NEW_VERSION = 9;
     private static final int REPORT_ERROR = 10;
-    private static final int SHOW_STUDYOPTIONS = 11;
+    public static final int SHOW_STUDYOPTIONS = 11;
     private static final int ADD_NOTE = 12;
     private static final int LOG_IN = 13;
     private static final int BROWSE_CARDS = 14;
@@ -897,7 +897,7 @@ public class DeckPicker extends FragmentActivity {
 		DeckTask.launchDeckTask(DeckTask.TASK_TYPE_OPEN_COLLECTION, mOpenCollectionHandler, new DeckTask.TaskData(AnkiDroidApp.getCollectionPath()));
 	}
 
-	private void loadCounts() {
+	public void loadCounts() {
 		if (mCol != null) {
 			DeckTask.launchDeckTask(DeckTask.TASK_TYPE_LOAD_DECK_COUNTS, mLoadCountsHandler, new TaskData(mCol));
 		}
