@@ -456,7 +456,6 @@ public class DeckPicker extends FragmentActivity {
 				}
 				showDialog(DIALOG_SYNC_LOG);
 			}
-            mSyncButton.setClickable(true);
 		}
 	};
 
@@ -1878,7 +1877,6 @@ public class DeckPicker extends FragmentActivity {
 			if (hkey.length() == 0) {
 				showDialog(DIALOG_USER_NOT_LOGGED_IN_SYNC);
 			} else {
-				mSyncButton.setClickable(false);
 				Connection.sync(mSyncListener, new Connection.Payload(new Object[] { hkey, true, syncConflictResolution, syncMediaUsn}));
 			}
 		}
@@ -1990,7 +1988,7 @@ public class DeckPicker extends FragmentActivity {
             menu.findItem(MENU_SYNC).setEnabled(sdCardAvailable);
             menu.findItem(MENU_ADD_NOTE).setEnabled(sdCardAvailable);
             menu.findItem(MENU_STATISTICS).setEnabled(sdCardAvailable);
-            menu.findItem(MENU_CARDBROWSER).setEnabled(sdCardAvailable);        	
+            menu.findItem(MENU_CARDBROWSER).setEnabled(sdCardAvailable);
         }
         menu.findItem(MENU_CREATE_DECK).setEnabled(sdCardAvailable);
         menu.findItem(MENU_CREATE_DYNAMIC_DECK).setEnabled(sdCardAvailable);

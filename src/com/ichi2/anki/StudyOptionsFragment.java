@@ -122,16 +122,6 @@ public class StudyOptionsFragment extends Fragment {
 	/** Alerts to inform the user about different situations */
 	private StyledProgressDialog mProgressDialog;
 
-	// /*
-	// * Cram related
-	// */
-	// // private StyledDialog mCramTagsDialog;
-	// private String allCramTags[];
-	// private HashSet<String> activeCramTags;
-	// private String cramOrder;
-	// private static final String[] cramOrderList = { "type, modified",
-	// "created", "random()" };
-
 	/**
 	 * UI elements for "Study Options" view
 	 */
@@ -160,16 +150,8 @@ public class StudyOptionsFragment extends Fragment {
 	 */
 	private View mCongratsView;
 	private TextView mTextCongratsMessage;
-	// private Button mButtonCongratsLearnMore;
-	// private Button mButtonCongratsReviewEarly;
 	private Button mButtonCongratsOpenOtherDeck;
 	private Button mButtonCongratsFinish;
-
-	/**
-	 * UI elements for "Cram Tags" view
-	 */
-	// private ListView mCramTagsListView;
-	// private Spinner mSpinnerCramOrder;
 
 	/**
 	 * Swipe Detection
@@ -204,30 +186,6 @@ public class StudyOptionsFragment extends Fragment {
 			case R.id.studyoptions_start:
 				openReviewer();
 				return;
-//			case R.id.studyoptions_cram:
-//				v.setEnabled(false);
-//				// if (mToggleCram.isChecked()) {
-//				// mToggleCram.setChecked(!mToggleCram.isChecked());
-//				// activeCramTags.clear();
-//				// cramOrder = cramOrderList[0];
-//				// showDialog(DIALOG_CRAM);
-//				// } else {
-//				// onCramStop();
-//				// resetAndUpdateValuesFromDeck();
-//				// }
-//				return;
-//			case R.id.studyoptions_night:
-//				if (mInvertedColors != mToggleNight.isChecked()) {
-//					mInvertedColors = mToggleNight.isChecked();
-//					savePreferences("invertedColors", mInvertedColors);
-//				}
-//				return;
-				// case R.id.studyoptions_congrats_learnmore:
-				// startLearnMore();
-				// return;
-				// case R.id.studyoptions_congrats_reviewearly:
-				// startEarlyReview();
-				// return;
 			case R.id.studyoptions_congrats_open_other_deck:
 				closeStudyOptions();
 				return;
@@ -543,7 +501,10 @@ public class StudyOptionsFragment extends Fragment {
 //				.findViewById(R.id.studyoptions_night);
 //		mToggleNight.setChecked(mInvertedColors);
 
-		if (!mFragmented) {
+		if (mFragmented) {
+			Button but = (Button) mStudyOptionsView.findViewById(R.id.studyoptions_options);
+			but.setOnClickListener(mButtonClickListener);
+		} else {
 			mAddNote = (ImageButton) mStudyOptionsView
 					.findViewById(R.id.studyoptions_add);
 			mCardBrowser = (ImageButton) mStudyOptionsView

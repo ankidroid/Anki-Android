@@ -71,7 +71,7 @@
   <string name="reset_messages_summ">Show current AnkiDroid messages another time</string>
   <string name="reset_all_question">언어설정, 위젯, 칠판기능 및 외부사전 설정을 모두 재설정하시겠습니까?</string>
   <string name="reset_confirmation">모두 재설정</string>
-  <string name="use_ruby_support">ruby annotaion [...]<- 루비 주석 지원 제공</string>
+  <string name="use_ruby_support">ruby annotaion [...] 루비 주석 지원 제공</string>
   <string name="use_ruby_support_summ">대괄호 \' [\' 와 \']\' 가 사용될 경우 대괄호 안 글자는 [...] 형태의 ruby annotation 루비주석으로 처리</string>
   <string name="display_font_size">Relative display font size</string>
   <string name="display_font_size_summ">The font size to use in the display relative to the definitions in the deck. At the moment: XXX %</string>
