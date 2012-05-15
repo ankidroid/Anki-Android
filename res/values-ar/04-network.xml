@@ -102,4 +102,10 @@
   <string name="sync_generic_error">لقد حدث خطأ. الرجاء المحاولة مرة أخرى لاحقاً.</string>
   <string name="sync_check_upload_file">فحص الملف قبل رفعه...</string>
   <string name="sync_check_download_file">التحقق من الملف المنزل...</string>
+  <string name="sync_media_find">Finding changed media...</string>
+  <string name="sync_media_remove">Handling deleted media...</string>
+  <string name="sync_media_from_server">Receiving media from server...</string>
+  <string name="sync_media_to_server">Sending media to server...</string>
+  <string name="sync_media_no_changes">No changes to media files.</string>
+  <string name="sync_media_success">Media synced successfully.</string>
 </resources>

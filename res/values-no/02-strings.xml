@@ -75,6 +75,7 @@
   <string name="check_db_message">Checking database.\nPlease wait...</string>
   <string name="simple_interface_hint">Tom %s. Husk at at enkelt grensesnitt ikke kan vise bilder/lyder osv.</string>
   <string name="delete_deck">Deleting deck...\nPlease wait.</string>
+  <string name="menu_cardbrowser">Card browser</string>
   <string-array name="dynOrderLabels">
     <item>Oldest seen first</item>
     <item>Random</item>

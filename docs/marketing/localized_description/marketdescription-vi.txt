@@ -4,36 +4,36 @@ AnkiDroid lets you learn flashcards very efficiently by showing them just before
 
 Study all sorts of things wherever and whenever you want. Make good use of idle times on bus trips, in supermarket queues or any other waiting situation!
 
-Add material through the desktop application Anki or directly through Ankidroid.
+Create your own flashcard decks or download free decks compiled for many languages and topics (more than 6000 available).
 
-Create your own flashcard decks or download free decks compiled for many languages and topics (more than 6000 available). The application even supports adding material automatically from a dictionary!
+Add material through the desktop application Anki or directly through Ankidroid. The application even supports adding material automatically from a dictionary!
 
 ★ Key features:
 • supported flashcard contents: text, images, sounds, LaTeX
 • spaced repetition (supermemo 2 algorithm)
 • text-to-speech integration
 • more than 6000 premade decks
-• detailed statistics
 • three widgets
+• detailed statistics
 • syncing with AnkiWeb
 • open source
 
 ★ Additional features:
 • write answers (optional)
 • whiteboard
-• card browser
 • card editor/adder
+• card browser
 • import existing collection files (via Anki Desktop)
-• add cards by intent from other applications like dictionaries
 • dictionary integration (ColorDict, GoldenDict, Leo.org, Aedict, diverse web dictionaries)
+• add cards by intent from other applications like dictionaries
 • custom font support
+• review in widget
 • full backup system
 • navigation by swipe, tap, shake
-• review in widget
 • fully customisable
-• chế độ ôn thi
 • limit studying by tag, time or cards
+• chế độ ôn thi
 • night mode
-• zeemote support
 • three different ui-themes
 • 27 localisations
+• All previous AnkiDroid versions can be downloaded from the website

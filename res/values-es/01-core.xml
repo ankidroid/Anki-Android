@@ -77,6 +77,7 @@
   <string name="menu_unmark_card">Desmarcar Tarjeta</string>
   <string name="new_deck">Nuevo mazo</string>
   <string name="create">Crear</string>
+  <string name="new_dynamic_deck">New dynamic deck</string>
   <string name="studyoptions_feedback">Sugerencias</string>
   <string name="studyoptions_cram_dialog_title">Etiquetas a empollar</string>
   <string name="studyoptions_load_other_deck">Cargar otro mazo</string>

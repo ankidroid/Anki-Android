@@ -75,6 +75,7 @@
   <string name="check_db_message">Veritabanı denetleniyor.\nLütfen bekleyin...</string>
   <string name="simple_interface_hint">Boş %s. Basit arayüzün resimleri/sesleri vb. gösteremediğini unutmayın.</string>
   <string name="delete_deck">Deste siliniyor...\nLütfen bekleyin.</string>
+  <string name="menu_cardbrowser">Card browser</string>
   <string-array name="dynOrderLabels">
     <item>En eskiler ilk önce</item>
     <item>Rastgele</item>

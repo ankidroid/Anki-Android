@@ -75,15 +75,16 @@
   <string name="check_db_message">Kontrollerar databasen. \nVänligen vänta...</string>
   <string name="simple_interface_hint">Tom %s. Tänk på att det enkla gränssnittet inte kan visa bilder/ljud m.m.</string>
   <string name="delete_deck">Tar bort kortlek...\nVänligen vänta.</string>
+  <string name="menu_cardbrowser">Card browser</string>
   <string-array name="dynOrderLabels">
-    <item>Oldest seen first</item>
+    <item>Äldst först</item>
     <item>Slumpmässigt</item>
-    <item>Increasing intervals</item>
-    <item>Decreasing intervals</item>
+    <item>Ökande intervall</item>
+    <item>Minskande intervall</item>
     <item>Most lapses</item>
-    <item>Failed today</item>
-    <item>Order added</item>
-    <item>Order due</item>
+    <item>Misslyckade idag</item>
+    <item>Ordningen de lades till</item>
+    <item>Efter förfallotid</item>
   </string-array>
   <plurals name="factadder_cards_added">
     <item quantity="one">1 kort har lagts till</item>

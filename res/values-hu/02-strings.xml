@@ -75,6 +75,7 @@
   <string name="check_db_message">Adatbázis ellenőrzése.\nKérlek, várj...</string>
   <string name="simple_interface_hint">Üres %s. Tarsd szem előtt, hogy az egyszerű felület nem tud képeket/hangokat/stb. megjeleníteni.</string>
   <string name="delete_deck">Pakli törlése...\nKérlek, várj...</string>
+  <string name="menu_cardbrowser">Card browser</string>
   <string-array name="dynOrderLabels">
     <item>Legrégebbi látott először</item>
     <item>Véletlenszerű</item>

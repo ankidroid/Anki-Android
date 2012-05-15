@@ -77,6 +77,7 @@
   <string name="menu_unmark_card">取消卡片標記</string>
   <string name="new_deck">新增牌組</string>
   <string name="create">建立</string>
+  <string name="new_dynamic_deck">New dynamic deck</string>
   <string name="studyoptions_feedback">回饋意見</string>
   <string name="studyoptions_cram_dialog_title">要惡補的標籤</string>
   <string name="studyoptions_load_other_deck">載入其他牌組</string>

@@ -47,11 +47,11 @@
   <string name="download_button_return">Återvänd</string>
   <string name="connection_error_message">Ett nätverksfel har uppstått.</string>
   <string name="sync_log_db_error">Ett databasfel har inträffat.</string>
-  <string name="no_user_password_error_message">In order to proceed with this operation, you need to have an AnkiWeb account and be logged in.</string>
+  <string name="no_user_password_error_message">För att fortsätta med denna operation måste du ha ett AnkiWeb-konto och vara inloggad.</string>
   <string name="username">Användarnamn</string>
   <string name="password">Lösenord</string>
   <string name="log_in">Logga in</string>
-  <string name="sign_up_description">Don\'t have an AnkiWeb account? It\'s free!</string>
+  <string name="sign_up_description">Har du inget AnkiWeb-konto? Det är gratis!</string>
   <string name="sign_up">Registrera dig</string>
   <string name="logged_as">Inloggad som</string>
   <string name="log_out">Logga ut</string>
@@ -65,7 +65,7 @@
   <string name="downloaddeck_search">Sök</string>
   <string name="preferences_title">Inställningar</string>
   <string name="deckpreferences_title">Kortleksinställningar</string>
-  <string name="sync_conflict_message">Your decks here and on AnkiWeb differ in such a way that they can\'t be merged together, so it\'s necessary to overwrite the decks on one side with the decks from the other.\n\nDo you want to upload the decks from here, or download the decks from AnkiWeb?</string>
+  <string name="sync_conflict_message">Dina kortlekar här och på AnkiWeb skiljer sig på ett sätt så att de inte kan slås samman, så kortlekarna på ena sidan måste skrivas över med de från den andra sidan.\n\nVill du ladda upp kortlekarna som används här, eller hämta kortlekarna från AnkiWeb?</string>
   <string name="sync_conflict_local">Ladda upp</string>
   <string name="sync_conflict_remote">Hämta</string>
   <string name="sync_conflict_cancel">Avbryt synkning</string>
@@ -90,7 +90,7 @@
   <string name="sync_too_busy">Servern upptagen. Försök igen senare.</string>
   <string name="sync_remote_db_error">Den nedladdade databasen var korrupt. Var vänlig och försök igen.</string>
   <string name="sync_overwrite_error">Your current collection could not be overwritten by the downloaded file.</string>
-  <string name="sync_write_access_error">The downloaded file could not be saved to the sd card. Either your sd card is mounted read-only or there is not enough space.</string>
+  <string name="sync_write_access_error">Den hämtade filen kunde inte sparas till SD-kortet. Antingen är kortet monterat enbart för läsning eller så har det inte tillräckligt ledigt utrymme.</string>
   <string name="sync_deletions_message">Synkroniserar borttagningar...</string>
   <string name="sync_small_objects_message">Synkar små objekt...</string>
   <string name="sync_finish_message">Avslutar synkronisering...</string>
@@ -102,4 +102,10 @@
   <string name="sync_generic_error">Ett fel har uppstått. Försök igen senare.</string>
   <string name="sync_check_upload_file">Kontrollerar filen innan överföring...</string>
   <string name="sync_check_download_file">Kontrollerar hämtad fil...</string>
+  <string name="sync_media_find">Finding changed media...</string>
+  <string name="sync_media_remove">Handling deleted media...</string>
+  <string name="sync_media_from_server">Receiving media from server...</string>
+  <string name="sync_media_to_server">Sending media to server...</string>
+  <string name="sync_media_no_changes">No changes to media files.</string>
+  <string name="sync_media_success">Media synced successfully.</string>
 </resources>

@@ -75,6 +75,7 @@
   <string name="check_db_message">Проверка базы данных. \nПожалуйста подождите...</string>
   <string name="simple_interface_hint">Пустой %s. Имейте в виду то, что простой интерфейс не может показывать фотографии/звуки и т.д.</string>
   <string name="delete_deck">Удаление колоды...\nПожалуйста подождите...</string>
+  <string name="menu_cardbrowser">Card browser</string>
   <string-array name="dynOrderLabels">
     <item>Старейшие появляться первыми</item>
     <item>Случайно</item>

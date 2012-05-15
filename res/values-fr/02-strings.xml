@@ -22,13 +22,13 @@
 <resources>
   <string name="CardEditorCancelButton">Annuler</string>
   <string name="CardEditorSaveButton">Enregistrer</string>
-  <string name="CardEditorLaterButton">Later</string>
-  <string name="CardEditorCardDeck">Card deck: %s</string>
-  <string name="CardEditorNoteDeck">Note deck: %s</string>
-  <string name="CardEditorModel">Note type: %s</string>
+  <string name="CardEditorLaterButton">Plus tard</string>
+  <string name="CardEditorCardDeck">Paquet de cartes : %s</string>
+  <string name="CardEditorNoteDeck">Inclus dans le paquet : %s</string>
+  <string name="CardEditorModel">Type de note : %s</string>
   <string name="CardEditorTags">Labels: %1$s</string>
   <string name="add_new_tag">Ajouter un nouveau label</string>
-  <string name="note_type">Note type</string>
+  <string name="note_type">Type de note</string>
   <string name="sdcard_missing_message">La carte SD n\'est pas disponible car elle est connectée en USB. Déconnectez l\'USB pour accéder aux paquets.</string>
   <string name="show_whiteboard">Afficher tableau blanc</string>
   <string name="hide_whiteboard">Masquer le tableau blanc</string>
@@ -40,30 +40,30 @@
   <string name="leech_suspend_notification">Carte marquée comme sangsue et suspendue</string>
   <string name="leech_notification">Carte marquée comme sangsue</string>
   <string name="about_title">À propos</string>
-  <string name="cardeditor_title_add_note">Add Note</string>
-  <string name="cardeditor_title_edit_card">Edit Note</string>
-  <string name="factadder_saving_error">Error saving note</string>
-  <string name="cardeditor_move_note_too">Move note too</string>
-  <string name="cardeditor_move_to_notes_deck">To note\'s deck</string>
-  <string name="saving_facts">Saving note</string>
-  <string name="deck">Deck</string>
+  <string name="cardeditor_title_add_note">Ajouter une note</string>
+  <string name="cardeditor_title_edit_card">Modifier la note</string>
+  <string name="factadder_saving_error">La note ne peut s’enregistrer</string>
+  <string name="cardeditor_move_note_too">Déplacer en outre la note</string>
+  <string name="cardeditor_move_to_notes_deck">Vers le paquet de la note</string>
+  <string name="saving_facts">Enregistrer la note</string>
+  <string name="deck">Paquet</string>
   <string name="add">Ajouter</string>
   <string name="close">Fermer</string>
   <string name="select">Sélectionner</string>
   <string name="saving_changes">Enregistrement des modifications...</string>
   <string name="studyoptions_welcome_title">Bienvenue à AnkiDroid</string>
   <string name="studyoptions_no_external_storage_title">Aucun stockage externe disponible</string>
-  <string name="studyoptions_no_external_storage_message">Aucun moyen de stockage externe n\'est disponible pour l\'instant. AnkiDroid nécessite d\'avoir accès à la carte SD afin de lire et charger vos paquets Anki. Veuillez vérifier que votre carte SD est montée et essayez à nouveau.</string>
+  <string name="studyoptions_no_external_storage_message">Pour l\'instant, aucun stockage externe n\'est disponible. Or, AnkiDroid a besoin d’un accès à la carte SD de vos paquets Anki afin de les lire et les charger. Vérifiez que votre carte SD est montée et essayez à nouveau.</string>
   <string name="fact_adder_intent_title">Carte AnkiDroid</string>
   <string name="fact_adder_swap">Échanger</string>
   <string name="deckpicker_select_dictionary_title">Sélectionner un dictionnaire</string>
   <string name="deckpicker_select_dictionary_default">Par défaut</string>
-  <string name="card_editor_add_card">Add note</string>
+  <string name="card_editor_add_card">Ajouter une note</string>
   <string name="card_editor_reset">Réinitialiser</string>
   <string name="card_editor_copy_card">Copier la carte</string>
   <string name="card_editor_reset_card">Réinitialiser les progrès</string>
   <string name="error_insufficient_memory">L\'opération n\'a pas pu être accomplie du fait d\'une mémoire disponible insuffisante sur votre périphérique</string>
-  <string name="tutorial_load">Creating tutorial deck.\nPlease wait...</string>
+  <string name="tutorial_load">Mise en place du tutoriel.\nPatientez…</string>
   <string name="tutorial_loading_error">Le paquet-tutoriel n\'a pas pu être créé</string>
   <string name="rename">Renommer</string>
   <string name="rename_error">Le paquet %s n\'a pas pu être renommé</string>
@@ -71,19 +71,20 @@
   <string name="help_online">Aide en ligne</string>
   <string name="help_faq">FAQ</string>
   <string name="help_tutorial">Paquet-tutoriel</string>
-  <string name="check_db">Check database</string>
-  <string name="check_db_message">Checking database.\nPlease wait...</string>
+  <string name="check_db">Vérifie la base de données</string>
+  <string name="check_db_message">Vérifie la base de données. \nPatientez…</string>
   <string name="simple_interface_hint">%s vide. Gardez à l\'esprit que l\'interface simplifiée ne peut afficher ni d\'images, ni de sons, etc.</string>
-  <string name="delete_deck">Deleting deck...\nPlease wait.</string>
+  <string name="delete_deck">Supprime le paquet…\nPatientez.</string>
+  <string name="menu_cardbrowser">Card browser</string>
   <string-array name="dynOrderLabels">
     <item>Oldest seen first</item>
     <item>Random</item>
     <item>Increasing intervals</item>
     <item>Decreasing intervals</item>
     <item>Most lapses</item>
-    <item>Failed today</item>
-    <item>Order added</item>
-    <item>Order due</item>
+    <item>Ratées aujourd’hui</item>
+    <item>d’après l’ordre d’ajout</item>
+    <item>selon l’urgence</item>
   </string-array>
   <plurals name="factadder_cards_added">
     <item quantity="one">1 carte ajoutée</item>

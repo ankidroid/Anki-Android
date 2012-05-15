@@ -43,5 +43,5 @@
   <string name="delete_deck_success">Deck %1$s deleted. Backup in folder %2$s</string>
   <string name="open_collection_failed_title">Collection not opened</string>
   <string name="open_collection_failed_message">Database could not be opened. It is either not a real anki database or has been corrupted.\n\nYou can try to repair the collection or restore it from a backup (in both cases, the copy of the corrupt deck will be moved to the subfolder \'%1$s\'). Click on \'options\' for that.\n\nMore information about repairing corrupted decks: %2$s.</string>
-  <string name="deck_repair_error">Deck could not be repaired</string>
+  <string name="deck_repair_error">암기묶음을 복구할 수 없습니다</string>
 </resources>

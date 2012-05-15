@@ -75,6 +75,7 @@
   <string name="check_db_message">فحص قاعدة البيانات.\nالرجاء الانتظار...</string>
   <string name="simple_interface_hint">فارغة %s. ضع في اعتبارك أن الواجهة البسيطة لا يمكن أن تعرض الصور/الأصوات إلخ.</string>
   <string name="delete_deck">حذف الرزمة...\nالرجاء الانتظار.</string>
+  <string name="menu_cardbrowser">Card browser</string>
   <string-array name="dynOrderLabels">
     <item>Oldest seen first</item>
     <item>Random</item>

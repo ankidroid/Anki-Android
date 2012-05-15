@@ -102,4 +102,10 @@
   <string name="sync_generic_error">S\'ha produït un error. Si us plau proveu de nou més tard.</string>
   <string name="sync_check_upload_file">S\'esta comprovant l\'arxiu abans de carregar-ho...</string>
   <string name="sync_check_download_file">S\'estan comprovaant els arxius descarregats...</string>
+  <string name="sync_media_find">Finding changed media...</string>
+  <string name="sync_media_remove">Handling deleted media...</string>
+  <string name="sync_media_from_server">Receiving media from server...</string>
+  <string name="sync_media_to_server">Sending media to server...</string>
+  <string name="sync_media_no_changes">No changes to media files.</string>
+  <string name="sync_media_success">Media synced successfully.</string>
 </resources>

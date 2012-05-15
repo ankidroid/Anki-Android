@@ -22,10 +22,10 @@
 <resources>
   <string-array name="new_version_features">
     <item>Komplette Überarbeitung</item>
-    <item>libanki2.0 scheduling</item>
+    <item>Planung mit libanki2.0</item>
     <item>Neuer Lernmodus</item>
     <item>Neues Layout</item>
-    <item>merge syncing possible now</item>
+    <item>Zusammenführen beim Synchronisieren jetzt möglich</item>
     <item>Bessere Statistiken</item>
     <item>Stapel werden nun in einer einzelnen Sammlung gespeichert</item>
     <item>Optionen können nun gemeinsam benutzt werden</item>

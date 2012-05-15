@@ -4,36 +4,36 @@ AnkiDroid us permet aprendre les vostres targetes de forma molt eficient, mostra
 
 Estudieu tot tipus de temes on i quan vulgueu. Feu bon ús dels temps morts en els viatges en autobús, en les cues dels supermercats o qualsevol altra situació d'espera!
 
-Afegiu material a través de l'aplicació d'escriptori Anki o directament a través de l'Ankidroid.
+Genereu els vostres paquets de targetes per memoritzar o baixeu paquets lliures ja preparats, en molts idiomes i sobre molts temes (hi ha més de 6.000 disponibles).
 
-Genereu els vostres paquets de targetes per memoritzar o baixeu paquets lliures ja preparats, en molts idiomes i sobre molts temes (hi ha més de 6.000 disponibles). L'aplicació suporta fins i tot l'addició de material de forma automàtica a partir d'un diccionari!
+Afegiu material a través de l'aplicació d'escriptori Anki o directament a través de l'Ankidroid. L'aplicació suporta fins i tot l'addició de material de forma automàtica a partir d'un diccionari!
 
 ★Característiques destacades:
 •permet targetes de continguts molt divers: text, imatges, sons, LaTeX
 •repetició espaiada (l'algorisme de SuperMemo 2)
 •síntesi de text a veu integrada
 •més de 6.000 paquets disponibles
-•estadístiques detallades
 •tres ginys
+•estadístiques detallades
 •sincronització amb AnkiWeb
 •de codi obert
 
 ★Característiques addicionals:
 •escriure les respostes (opcional)
 •pissarra
-• navegador de targetes
 •editor i generador de targetes
+• navegador de targetes
 •importació de col·leccions ja existents (amb Anki per a l'Escriptori)
-• afegiu targetes a partir d'altres aplicacions com ara diccionaris
 •intregrat amb el diccionari (ColorDict, GoldenDict, Leo.org, Aedict, diversos diccionaris web)
+• afegiu targetes a partir d'altres aplicacions com ara diccionaris
 •permet personalitzar el tipus de lletra
+•revisió al mateix giny
 •complet sistema de còpia de seguretat
 •navegació per escombrat, cop o sacsejada
-•revisió al mateix giny
 •totalment personalitzable
-•mode intesiu
 •limitar l'estudi per etiqueta, pel temps o per les targetes
+•mode intesiu
 •mode nocturn
-•permet fer servir el Zeemote
 •tres aparençes diferents
 •Adaptat a 27 idiomes
+• All previous AnkiDroid versions can be downloaded from the website

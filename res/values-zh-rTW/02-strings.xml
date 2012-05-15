@@ -75,6 +75,7 @@
   <string name="check_db_message">檢查資料庫中...請稍後</string>
   <string name="simple_interface_hint">Empty %s. Bear in mind that simple interface cannot show pictures/sounds etc.</string>
   <string name="delete_deck">Deleting deck...\nPlease wait.</string>
+  <string name="menu_cardbrowser">Card browser</string>
   <string-array name="dynOrderLabels">
     <item>Oldest seen first</item>
     <item>Random</item>

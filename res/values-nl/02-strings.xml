@@ -75,6 +75,7 @@
   <string name="check_db_message">Controle van de database.\nEven wachten...</string>
   <string name="simple_interface_hint">Leeg %s. Onthoud dat een eenvoudige interface geen beelden/geluiden kan tonen.</string>
   <string name="delete_deck">Leerset verwijderen...\nEven wachten.</string>
+  <string name="menu_cardbrowser">Card browser</string>
   <string-array name="dynOrderLabels">
     <item>Oldest seen first</item>
     <item>Random</item>

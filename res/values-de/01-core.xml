@@ -77,6 +77,7 @@
   <string name="menu_unmark_card">Markierung entfernen</string>
   <string name="new_deck">Neuer Stapel</string>
   <string name="create">Erstellen</string>
+  <string name="new_dynamic_deck">New dynamic deck</string>
   <string name="studyoptions_feedback">Rückmeldung</string>
   <string name="studyoptions_cram_dialog_title">Stichwörter, die gepaukt werden sollen</string>
   <string name="studyoptions_load_other_deck">Stapel öffnen</string>

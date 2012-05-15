@@ -77,6 +77,7 @@
   <string name="menu_unmark_card">Desmarcar Cartão</string>
   <string name="new_deck">Novo deck</string>
   <string name="create">Criar</string>
+  <string name="new_dynamic_deck">New dynamic deck</string>
   <string name="studyoptions_feedback">Feedback</string>
   <string name="studyoptions_cram_dialog_title">Tags para cursinho</string>
   <string name="studyoptions_load_other_deck">Carregar Outro Deck</string>

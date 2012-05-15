@@ -72,11 +72,12 @@
   <string name="delete_note_message">Дійсно видалити цю примітку і усі зв\'язані з нею картки?\n%s</string>
   <string name="menu_edit_card">Редагувати картку</string>
   <string name="menu_select">Виділити текст</string>
-  <string name="menu_search">Пошук у %1$ s</string>
+  <string name="menu_search">Пошук у %1$s</string>
   <string name="menu_mark_card">Помітити картку</string>
   <string name="menu_unmark_card">Зняти позначку з картки</string>
   <string name="new_deck">Нова колода</string>
   <string name="create">Створити</string>
+  <string name="new_dynamic_deck">New dynamic deck</string>
   <string name="studyoptions_feedback">Відгук</string>
   <string name="studyoptions_cram_dialog_title">Теги до зубріння</string>
   <string name="studyoptions_load_other_deck">Завантажити іншу колоду</string>
@@ -124,15 +125,15 @@
     <item quantity="other">%d хвилин залишилося</item>
   </plurals>
   <plurals name="studyoptions_congrats_message">
-    <item quantity="one">Завтра буде: 1 картка повторити та %2$.\nПриблизний час: %3$</item>
-    <item quantity="other">Завтра буде: %1$d карток повторити та %2$.\nПриблизний час: %3$</item>
+    <item quantity="one">Завтра буде: 1 картка повторити та %2$d.\nПриблизний час: %3$s</item>
+    <item quantity="other">Завтра буде: %1$d карток повторити та %2$d.\nПриблизний час: %3$s</item>
   </plurals>
   <plurals name="studyoptions_congrats_new_cards">
     <item quantity="one">1 нова картка</item>
-    <item quantity="other">%1$ d нових карт</item>
+    <item quantity="other">%1$d нових карт</item>
   </plurals>
   <plurals name="studyoptions_congrats_eta">
     <item quantity="one">Залишилось часу приблизно: 1 хв.</item>
-    <item quantity="other">Залишилось часу приблизно: %1$ d хв.</item>
+    <item quantity="other">Залишилось часу приблизно: %1$d хв.</item>
   </plurals>
 </resources>

@@ -75,13 +75,14 @@
   <string name="check_db_message">Prüfe Datenbank.\n Bitte warten...</string>
   <string name="simple_interface_hint">Leere %s. Beachten Sie, dass die einfache Oberfläche keine Bilder/Sounds etc. anzeigen kann.</string>
   <string name="delete_deck">Lösche Stapel…\nBitte warten.</string>
+  <string name="menu_cardbrowser">Card browser</string>
   <string-array name="dynOrderLabels">
     <item>Oldest seen first</item>
     <item>Zufällig</item>
     <item>Increasing intervals</item>
     <item>Decreasing intervals</item>
     <item>Most lapses</item>
-    <item>Failed today</item>
+    <item>Heute fehlgeschlagen</item>
     <item>Order added</item>
     <item>Order due</item>
   </string-array>

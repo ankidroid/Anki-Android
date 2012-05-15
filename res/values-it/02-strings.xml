@@ -75,6 +75,7 @@
   <string name="check_db_message">Controllo database.\nAttendere...</string>
   <string name="simple_interface_hint">Vuoto %s. Tieni presente che la semplice interfaccia non può mostrare immagini/suoni ecc.</string>
   <string name="delete_deck">Cancellazione mazzo...\nAttendere.</string>
+  <string name="menu_cardbrowser">Card browser</string>
   <string-array name="dynOrderLabels">
     <item>Oldest seen first</item>
     <item>Random</item>

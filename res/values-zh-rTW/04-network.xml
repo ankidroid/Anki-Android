@@ -102,4 +102,10 @@
   <string name="sync_generic_error">出現錯誤。請稍後再試。</string>
   <string name="sync_check_upload_file">正在檢查需要上傳的檔案...</string>
   <string name="sync_check_download_file">檢查下載的檔案...</string>
+  <string name="sync_media_find">Finding changed media...</string>
+  <string name="sync_media_remove">Handling deleted media...</string>
+  <string name="sync_media_from_server">Receiving media from server...</string>
+  <string name="sync_media_to_server">Sending media to server...</string>
+  <string name="sync_media_no_changes">No changes to media files.</string>
+  <string name="sync_media_success">Media synced successfully.</string>
 </resources>

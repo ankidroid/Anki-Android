@@ -4,36 +4,36 @@ AnkiDroid permite que você aprenda usando cartões de estudo de forma muito efi
 
 Estude qualquer coisa, onde e quando quiser. Faça bom uso do tempo livre em viagens de ônibus, filas de supermercado ou qualquer outra situação de espera!
 
-Adicione material através do Anki desktop ou diretamente pelo Ankidroid.
+Cria seus próprios decks de cartões de estudo ou baixa decks prontos para muitas línguas e tópicos (mais de 6000 disponíveis).
 
-Cria seus próprios decks de cartões de estudo ou baixa decks prontos para muitas línguas e tópicos (mais de 6000 disponíveis). O aplicativo ainda suporta adicionar material automaticamente a partir de um dicionário!
+Adicione material através do Anki desktop ou diretamente pelo Ankidroid. O aplicativo ainda suporta adicionar material automaticamente a partir de um dicionário!
 
 ★ Principais recursos:
 • cartões de estudo com suporte para: texto, imagens, sons, LaTeX
 • repetição espaçada (algoritmo do supermemo 2)
 • integração de reconhecimento de voz
 • mais de 6000 decks disponíves
-• estatísticas detalhadas
 • três widgets
+• estatísticas detalhadas
 • sincronização com AnkiWeb
 • código aberto
 
 ★ Recursos adicionais:
 • gravar respostas (opcional)
 • whiteboard
-• navegador de cartões
 • editor/criador de cartões
+• navegador de cartões
 • importa arquivos de coleções existentes (do Anki Desktop)
-• Adiciona cartões pela interação com outros aplicativos, como dicionários
 • integração com dicionários (ColorDict, GoldenDict, Leo.org, Aedict, diversos dicionários on-line)
+• Adiciona cartões pela interação com outros aplicativos, como dicionários
 • suporte a fonte personalizada
+• revisão no widget
 • sistema de backup completo
 • navegação por toque, deslizar, chacoalhar
-• revisão no widget
 • totalmente configurável
-• modo de cursinho
 • Estudo pode ser limitado por tag, tempo ou cartões
+• modo de cursinho
 • modo noturno
-• suporte a zeemote
 • três temas diferentes
 • 27 línguas
+• All previous AnkiDroid versions can be downloaded from the website

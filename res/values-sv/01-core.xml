@@ -77,6 +77,7 @@
   <string name="menu_unmark_card">Avmarkera kort</string>
   <string name="new_deck">Ny kortlek</string>
   <string name="create">Skapa</string>
+  <string name="new_dynamic_deck">New dynamic deck</string>
   <string name="studyoptions_feedback">Feedback</string>
   <string name="studyoptions_cram_dialog_title">Taggar att råplugga</string>
   <string name="studyoptions_load_other_deck">Ladda annan kortlek</string>
@@ -124,8 +125,8 @@
     <item quantity="other">%d minuter kvar</item>
   </plurals>
   <plurals name="studyoptions_congrats_message">
-    <item quantity="one">Tomorrow there will be: 1 card to review and %2$s.\n Estimated time: %3$s</item>
-    <item quantity="other">Tomorrow there will be: %1$d cards to review and %2$s.\n Estimated time: %3$s</item>
+    <item quantity="one">I morgon kommer det finnas: 1 kort att repetera och %2$s.\n Beräknad tid: %3$s</item>
+    <item quantity="other">I morgon kommer det finnas: %1$d kort att repetera och %2$s.\n Beräknad tid: %3$s</item>
   </plurals>
   <plurals name="studyoptions_congrats_new_cards">
     <item quantity="one">1 nytt kort</item>

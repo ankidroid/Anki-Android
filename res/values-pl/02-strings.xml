@@ -75,6 +75,7 @@
   <string name="check_db_message">Checking database.\nPlease wait...</string>
   <string name="simple_interface_hint">Pusty %s. Pamiętaj, że prosty interfejs nie może pokazywać zdjęć i odtwarzać dźwięków itp.</string>
   <string name="delete_deck">Deleting deck...\nPlease wait.</string>
+  <string name="menu_cardbrowser">Card browser</string>
   <string-array name="dynOrderLabels">
     <item>Oldest seen first</item>
     <item>Random</item>

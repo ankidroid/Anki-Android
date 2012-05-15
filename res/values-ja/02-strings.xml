@@ -75,6 +75,7 @@
   <string name="check_db_message">Checking database.\nPlease wait...</string>
   <string name="simple_interface_hint">%s が空です。 単純なインターフェースでは写真を表示したり、音を出したりはできません。</string>
   <string name="delete_deck">Deleting deck...\nPlease wait.</string>
+  <string name="menu_cardbrowser">Card browser</string>
   <string-array name="dynOrderLabels">
     <item>Oldest seen first</item>
     <item>Random</item>
