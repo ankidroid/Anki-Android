@@ -858,15 +858,7 @@ public class Collection {
 
 	/** Return a list of card ids */
 	public ArrayList<Long> findCards(String search, String order) {
-		String q = "1 = 1";
-		String query;
-		if (false) {
-			// TODO
-		} else {
-			query = "SELECT c.id FROM cards c, notes n WHERE " + q + " AND c.nid=n.id " + order;
-		}
-		ArrayList<Long> res = mDb.queryColumn(Long.class, query, 0);
-		return res;
+		return new Finder(this).findCards(search, order);
 	}
 	
 	/** Return a list of card ids */

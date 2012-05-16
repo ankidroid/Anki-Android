@@ -1497,12 +1497,17 @@ public class Sched {
 		String order = _dynOrder(deck);
 		String limit;
 		ArrayList<Long> ids;
+		String search;
 		try {
 			limit = " LIMIT " + deck.getInt("limit");
-			String search = deck.getInt("search") + " -is:suspended";
-			ids = mCol.findCards(search, order + limit);
+			search = deck.getInt("search") + " -is:suspended";
 		} catch (JSONException e) {
 			throw new RuntimeException(e);
+		}
+		try {
+			ids = mCol.findCards(search, order + limit);			
+		} catch (RuntimeException e) {
+			ids = new ArrayList<Long>();
 		}
 		// move the cards over
 		_moveToDyn(did, ids);

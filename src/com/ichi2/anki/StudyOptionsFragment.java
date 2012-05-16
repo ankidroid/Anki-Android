@@ -88,7 +88,6 @@ public class StudyOptionsFragment extends Fragment {
 	private static final int CONTENT_CONGRATS = 1;
 
 	private static final int DIALOG_STATISTIC_TYPE = 0;
-	private static final int DIALOG_CRAM = 1;
 
 	private HashMap<Integer, StyledDialog> mDialogs = new HashMap<Integer, StyledDialog>();
 
