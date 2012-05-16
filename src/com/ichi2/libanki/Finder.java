@@ -105,8 +105,10 @@ public class Finder {
 			query = "SELECT c.id FROM cards c, notes n WHERE " + q + " AND c.nid=n.id " + order;
 			// manually place the dict value into the query string als java sqlite query does not allow dict as an argument
 			JSONArray names = args.names();
-			for (int i = 0; i < names.length(); i++) {
-				query = query.replace(":" + names.getString(i), "\'" + args.getString(names.getString(i)).replace('\'', '"') + "\'");
+			if (names != null) {
+				for (int i = 0; i < names.length(); i++) {
+					query = query.replace(":" + names.getString(i), "\'" + args.getString(names.getString(i)).replace('\'', '"') + "\'");
+				}				
 			}
 			ArrayList<Long> res = mCol.getDb().queryColumn(Long.class, query, 0);
 			if (order.length() == 0 && mCol.getConf().getBoolean("sortBackwards")) {
@@ -360,7 +362,7 @@ public class Finder {
 			Matcher matcher = allPattern.matcher(mQuery + " ");
 			while (matcher.find()) {
 				String value = matcher.group(2) != null ? matcher.group(2) : (matcher.group(5) != null ? matcher.group(5) : matcher.group(8));
-				boolean isNeg = (matcher.group(1) != null && matcher.group(1).equals("-")) || (matcher.group(4) != null && matcher.group(4).equals("-")) || (matcher.group(5) != null && matcher.group(5).equals("-"));
+				boolean isNeg = (matcher.group(1) != null && matcher.group(1).equals("-")) || (matcher.group(4) != null && matcher.group(4).equals("-")) || (matcher.group(7) != null && matcher.group(7).equals("-"));
 				if (value != null) {
 					JSONObject o = new JSONObject();
 					o.put("value", value);

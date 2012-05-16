@@ -123,13 +123,14 @@ public class CramDeckFragment extends Fragment {
 			public void onClick(View v) {
 				try {
 					mDeck.put("steps", DeckOptions.getDelays(mSteps.getText().toString()));
-//					mDeck.put("search", )
+					mDeck.put("search", mDeckLabel.getText().toString());
 //					mDeck.put("order", value);
 					mDeck.put("limit", Integer.parseInt(mLimit.getText().toString()));
 					mDeck.put("fmult", Integer.parseInt(mLimit.getText().toString()) / 100.0);
 				} catch (JSONException e) {
 					throw new RuntimeException(e);
 				}
+				mCol.getSched().rebuildDyn(mCol.getDecks().id("Cram 1"));
 				closeCramDeckAdder();
 			}
         });

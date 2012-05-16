@@ -1475,10 +1475,10 @@ public class Sched {
 	 */
 
 	/* Rebuild a dynamic deck. */
-	private void rebuildDyn() {
+	public void rebuildDyn() {
 		rebuildDyn(0);
 	}
-	private void rebuildDyn(long did) {
+	public void rebuildDyn(long did) {
 		if (did == 0) {
 			did = mCol.getDecks().selected();
 		}
@@ -1500,7 +1500,7 @@ public class Sched {
 		String search;
 		try {
 			limit = " LIMIT " + deck.getInt("limit");
-			search = deck.getInt("search") + " -is:suspended";
+			search = deck.getString("search") + " -is:suspended";
 		} catch (JSONException e) {
 			throw new RuntimeException(e);
 		}
