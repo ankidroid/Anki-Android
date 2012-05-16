@@ -82,6 +82,7 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
     public static final int TASK_TYPE_UPDATE_VALUES_FROM_DECK = 23;
     public static final int TASK_TYPE_RESTORE_IF_MISSING = 24;
     public static final int TASK_TYPE_DELETE_DECK = 25;
+    public static final int TASK_TYPE_REBUILD_CRAM = 26;
 
     private static DeckTask sInstance;
     private static DeckTask sOldInstance;
@@ -227,6 +228,9 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
 
             case TASK_TYPE_DELETE_DECK:
             	return doInBackgroundDeleteDeck(params);
+
+            case TASK_TYPE_REBUILD_CRAM:
+            	return doInBackgroundRebuildCram(params);
 
             default:
                 return null;
@@ -662,6 +666,15 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
         long did = params[0].getLong();
 		col.getDecks().rem(did, true);
 		return doInBackgroundLoadDeckCounts(new TaskData(col));
+    }
+
+
+    private TaskData doInBackgroundRebuildCram(TaskData... params) {
+        Log.i(AnkiDroidApp.TAG, "doInBackgroundRebuildCram");
+        Collection col = params[0].getCollection();
+        long did = params[0].getLong();
+		col.getSched().rebuildDyn(did);
+		return doInBackgroundUpdateValuesFromDeck(new DeckTask.TaskData(col.getSched(), true));
     }
 
 

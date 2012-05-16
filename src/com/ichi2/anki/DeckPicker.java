@@ -1884,19 +1884,19 @@ public class DeckPicker extends FragmentActivity {
 	}
 
 	private void addCramDeck() {
-		// TODO: implement this properly
-        if (mFragmented) {
-//          getListView().setItemChecked(index, true);
-        	
-			Fragment frag = (Fragment) getSupportFragmentManager().findFragmentById(R.id.studyoptions_fragment);
-			if (!(frag instanceof CramDeckFragment)) {
-				CramDeckFragment details = CramDeckFragment.newInstance(CRAM_DECK_FRAGMENT);
-				FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-				ft.replace(R.id.studyoptions_fragment, details);
-				ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
-				ft.commit();
-			}
-        } else {
+//		// TODO: implement this properly
+//        if (mFragmented) {
+////          getListView().setItemChecked(index, true);
+//        	
+//			Fragment frag = (Fragment) getSupportFragmentManager().findFragmentById(R.id.studyoptions_fragment);
+//			if (!(frag instanceof CramDeckFragment)) {
+//				CramDeckFragment details = CramDeckFragment.newInstance(CRAM_DECK_FRAGMENT);
+//				FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+//				ft.replace(R.id.studyoptions_fragment, details);
+//				ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
+//				ft.commit();
+//			}
+//        } else {
     		mDontSaveOnStop = true;
         	Intent intent = new Intent();
         	intent.putExtra("index", CRAM_DECK_FRAGMENT);
@@ -1911,7 +1911,7 @@ public class DeckPicker extends FragmentActivity {
         			ActivityTransitionAnimation.slide(this, ActivityTransitionAnimation.LEFT);
     			}			
 //    		}
-        }
+//        }
 	}
 
 	private void addSharedDeck() {
@@ -2122,6 +2122,9 @@ public class DeckPicker extends FragmentActivity {
     	if (requestCode == SHOW_STUDYOPTIONS && resultCode == RESULT_OK) {
     		loadCounts();
     	} else if (requestCode == ADD_NOTE && resultCode != RESULT_CANCELED) {
+    		loadCounts();
+    	} else if (requestCode == ADD_CRAM_DECK) {
+    		// TODO: check, if ok has been clicked
     		loadCounts();
         } else if (requestCode == REPORT_ERROR) {
         	showStartupScreensAndDialogs(PrefSettings.getSharedPrefs(getBaseContext()), 3);

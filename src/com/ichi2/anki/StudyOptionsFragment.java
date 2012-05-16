@@ -16,32 +16,22 @@ package com.ichi2.anki;
 
 import com.ichi2.anki2.R;
 
-import android.app.Activity;
-import android.app.Dialog;
 import android.support.v4.app.Fragment;
 import android.content.BroadcastReceiver;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.DialogInterface.OnCancelListener;
 import android.content.SharedPreferences.Editor;
-import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.Paint.Align;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.util.Log;
 import android.view.GestureDetector;
 import android.view.GestureDetector.SimpleOnGestureListener;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -50,7 +40,6 @@ import android.view.ViewTreeObserver.OnGlobalLayoutListener;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
-import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.ToggleButton;
 
@@ -67,10 +56,8 @@ import com.ichi2.libanki.Utils;
 import com.ichi2.themes.StyledDialog;
 import com.ichi2.themes.StyledProgressDialog;
 import com.ichi2.themes.Themes;
-import com.ichi2.widget.WidgetStatus;
 import com.tomgibara.android.veecheck.util.PrefSettings;
 
-import java.io.IOException;
 import java.util.HashMap;
 
 import org.achartengine.ChartFactory;
@@ -101,7 +88,6 @@ public class StudyOptionsFragment extends Fragment {
 	private static final int CONTENT_CONGRATS = 1;
 
 	private static final int DIALOG_STATISTIC_TYPE = 0;
-	private static final int DIALOG_CRAM = 1;
 
 	private HashMap<Integer, StyledDialog> mDialogs = new HashMap<Integer, StyledDialog>();
 
@@ -127,8 +113,6 @@ public class StudyOptionsFragment extends Fragment {
 	 */
 	private View mStudyOptionsView;
 	private Button mButtonStart;
-	private ToggleButton mToggleNight;
-	private ToggleButton mToggleCram;
 	private TextView mTextDeckName;
 	private TextView mTextDeckDescription;
 	private TextView mTextTodayNew;
@@ -203,12 +187,26 @@ public class StudyOptionsFragment extends Fragment {
 				// openStatistics(0);
 				return;
 			case R.id.studyoptions_options:
-				Intent i = new Intent(getActivity(), DeckOptions.class);
-				startActivityForResult(i, DECK_OPTIONS);
-				if (UIUtils.getApiLevel() > 4) {
-					ActivityTransitionAnimation.slide(getActivity(),
-							ActivityTransitionAnimation.FADE);
+				if (mCol.getDecks().isDyn(mCol.getDecks().selected())) {
+		        	Intent intent = new Intent();
+		        	intent.setClass(getActivity(), CramDeckActivity.class);
+		    		startActivity(intent);
+					if (UIUtils.getApiLevel() > 4) {
+						ActivityTransitionAnimation.slide(getActivity(),
+								ActivityTransitionAnimation.FADE);
+					}
+				} else {
+					Intent i = new Intent(getActivity(), DeckOptions.class);
+					startActivityForResult(i, DECK_OPTIONS);
+					if (UIUtils.getApiLevel() > 4) {
+						ActivityTransitionAnimation.slide(getActivity(),
+								ActivityTransitionAnimation.FADE);
+					}					
 				}
+				return;
+			case R.id.studyoptions_rebuild_cram:
+				mProgressDialog = StyledProgressDialog.show(getActivity(), "", getResources().getString(R.string.rebuild_cram_deck), true);
+			 	DeckTask.launchDeckTask(DeckTask.TASK_TYPE_REBUILD_CRAM, mUpdateValuesFromDeckListener, new DeckTask.TaskData(mCol, mCol.getDecks().selected()));
 				return;
 			case R.id.studyoptions_add:
 				addNote();
@@ -501,6 +499,12 @@ public class StudyOptionsFragment extends Fragment {
 //				.findViewById(R.id.studyoptions_night);
 //		mToggleNight.setChecked(mInvertedColors);
 
+		if (mCol != null && mCol.getDecks().isDyn(mCol.getDecks().selected())) {
+			Button rebBut = (Button) mStudyOptionsView.findViewById(R.id.studyoptions_rebuild_cram);
+			rebBut.setOnClickListener(mButtonClickListener);
+			rebBut.setVisibility(View.VISIBLE);
+		}
+
 		if (mFragmented) {
 			Button but = (Button) mStudyOptionsView.findViewById(R.id.studyoptions_options);
 			but.setOnClickListener(mButtonClickListener);
@@ -582,6 +586,11 @@ public class StudyOptionsFragment extends Fragment {
 		mDialogs.get(id).show();
 	}
 
+	private void onPrepareDialog(int id, StyledDialog styledDialog) {
+		// TODO Auto-generated method stub
+		
+	}
+
 	protected StyledDialog onCreateDialog(int id) {
 		StyledDialog dialog = null;
 		Resources res = getResources();
@@ -598,90 +607,12 @@ public class StudyOptionsFragment extends Fragment {
 				}, mFragmented);
 			break;
 
-		case DIALOG_CRAM:
-			// builder.setTitle(R.string.studyoptions_cram_dialog_title);
-			// builder.setPositiveButton(res.getString(R.string.begin_cram),
-			// new OnClickListener() {
-			// @Override
-			// public void onClick(DialogInterface dialog, int which) {
-			// mToggleCram.setChecked(true);
-			// onCram();
-			// }
-			// });
-			// builder.setNegativeButton(res.getString(R.string.cancel), null);
-			//
-			// Spinner spinner = new Spinner(this);
-			//
-			// ArrayAdapter<CharSequence> adapter = ArrayAdapter
-			// .createFromResource(this, R.array.cram_review_order_labels,
-			// android.R.layout.simple_spinner_item);
-			// adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-			// spinner.setAdapter(adapter);
-			// spinner.setSelection(0);
-			// spinner.setOnItemSelectedListener(new
-			// AdapterView.OnItemSelectedListener() {
-			// @Override
-			// public void onItemSelected(AdapterView<?> parent, View view,
-			// int position, long id) {
-			// cramOrder = cramOrderList[position];
-			// }
-			//
-			// @Override
-			// public void onNothingSelected(AdapterView<?> arg0) {
-			// return;
-			// }
-			// });
-			//
-			// builder.setView(spinner, false, true);
-			// dialog = builder.create();
-			// break;
-
 		default:
 			dialog = null;
 		}
 
 		dialog.setOwnerActivity(getActivity());
 		return dialog;
-	}
-
-
-	protected void onPrepareDialog(int id, StyledDialog dialog) {
-		StyledDialog ad = (StyledDialog) dialog;
-
-		// wait for deck loading thread (to avoid problems with resuming
-		// destroyed activities)
-		if (mCol == null) {
-			return;
-		}
-
-		switch (id) {
-
-		case DIALOG_CRAM:
-			// allCramTags = DeckManager.getMainDeck().allTags_();
-			// if (allCramTags == null) {
-			// Themes.showThemedToast(getActivity(),
-			// getResources().getString(R.string.error_insufficient_memory),
-			// false);
-			// ad.setEnabled(false);
-			// return;
-			// }
-			// ad.setMultiChoiceItems(allCramTags, new
-			// boolean[allCramTags.length],
-			// new DialogInterface.OnClickListener() {
-			// @Override
-			// public void onClick(DialogInterface arg0, int which) {
-			// String tag = allCramTags[which];
-			// if (activeCramTags.contains(tag)) {
-			// Log.i(AnkiDroidApp.TAG, "unchecked tag: " + tag);
-			// activeCramTags.remove(tag);
-			// } else {
-			// Log.i(AnkiDroidApp.TAG, "checked tag: " + tag);
-			// activeCramTags.add(tag);
-			// }
-			// }
-			// });
-			break;
-		}
 	}
 
 	private View showContentView(int which) {
@@ -973,6 +904,17 @@ public class StudyOptionsFragment extends Fragment {
 
 			if (mFragmented) {
 				((DeckPicker)getActivity()).loadCounts();
+			}
+
+			// for rebuilding cram decks
+			if (mProgressDialog != null && mProgressDialog.isShowing()) {
+				try {
+					mProgressDialog.dismiss();
+				} catch (Exception e) {
+					Log.e(AnkiDroidApp.TAG,
+							"onPostExecute - Dialog dismiss Exception = "
+									+ e.getMessage());
+				}
 			}
 		}
 		@Override
