@@ -24,6 +24,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.content.ContentValues;
+import android.database.SQLException;
 
 import com.ichi2.anki.AnkiDatabaseManager;
 import com.ichi2.anki.AnkiDb;
@@ -313,20 +314,76 @@ public class Storage {
 	/* Integrity checking
 	 * *************************************************************/
 
-//	public boolean check(String path) {
-//		AnkiDb db = AnkiDatabaseManager.getDatabase(path);
-//		// corrupt?
-//		if (!db.queryString("PRAGMA integrity_check").equalsIgnoreCase("ok")) {
-//			return false;
-//		}
-//		// old version?
-//		if (db.queryScalar("SELECT version FROM decks") < 65) {
-//			return false;
-//		}
-//		// ensure we have indices for checks below
-//		// TODO
-//		return true;
-//	}
+	public static boolean check(String path) {
+		AnkiDb db = AnkiDatabaseManager.getDatabase(path);
+		// corrupt?
+		try {
+    		if (!db.queryString("PRAGMA integrity_check").equalsIgnoreCase("ok")) {
+    			return false;
+    		}
+		} catch (SQLException _) {
+		    return false;
+		}
+		// old version?
+		if (db.queryScalar("SELECT version FROM decks") < 65) {
+			return false;
+		}
+		// ensure we have indices for checks below
+		db.execute("create index if not exists ix_cards_factId on cards (factId)");
+		db.execute("create index if not exists ix_fields_factId on fieldModels (factId)");
+		db.execute("analyze");
+		// fields missing a field model?
+		if (db.queryColumn(Integer.class,
+		        "select id from fields where fieldModelId not in (" +
+                "select distinct id from fieldModels)", 0).size() > 0) {
+		    return false;
+		}
+		// facts missing a field?
+        if (db.queryColumn(Integer.class,
+                "select distinct facts.id from facts, fieldModels where " +
+                "facts.modelId = fieldModels.modelId and fieldModels.id not in " +
+                "(select fieldModelId from fields where factId = facts.id)", 0).size() > 0) {
+            return false;
+        }
+        // cards missing a fact?
+        if (db.queryColumn(Integer.class, "select id from cards where factId not in (select id from facts)", 0).size() > 0) {
+            return false;
+        }
+        // cards missing a card model?
+        if (db.queryColumn(Integer.class, "select id from cards where cardModelId not in (select id from cardModels)", 0).size() > 0) {
+            return false;
+        }
+        // cards with a card model from the wrong model?
+        if (db.queryColumn(Integer.class, "select id from cards where cardModelId not in (select cm.id from " +
+                "cardModels cm, facts f where cm.modelId = f.modelId and " +
+                "f.id = cards.factId)", 0).size() > 0) {
+            return false;
+        }
+        // facts missing a card?
+        if (db.queryColumn(Integer.class, "select facts.id from facts " +
+                "where facts.id not in (select distinct factId from cards)", 0).size() > 0) {
+            return false;
+        }
+        // dangling fields?
+        if (db.queryColumn(Integer.class, "select id from fields where factId not in (select id from facts)", 0).size() > 0) {
+            return false;
+        }
+        // fields without matching interval
+        if (db.queryColumn(Integer.class, "select id from fields where ordinal != (select ordinal from fieldModels " +
+                "where id = fieldModelId)", 0).size() > 0) {
+            return false;
+        }
+        // incorrect types
+        if (db.queryColumn(Integer.class, "select id from cards where relativeDelay != (case " +
+                "when successive then 1 when reps then 0 else 2 end)", 0).size() > 0) {
+            return false;
+        }
+        if (db.queryColumn(Integer.class, "select id from cards where type != (case " +
+                "when type >= 0 then relativeDelay else relativeDelay - 3 end)", 0).size() > 0) {
+            return false;
+        }
+        return true;
+	}
 
 	/* DB/Deck opening
 	 * *************************************************************/
