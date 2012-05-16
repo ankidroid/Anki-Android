@@ -106,7 +106,7 @@ public class Finder {
 			// manually place the dict value into the query string als java sqlite query does not allow dict as an argument
 			JSONArray names = args.names();
 			for (int i = 0; i < names.length(); i++) {
-				query = query.replace(":" + names.getString(i), "\'" + args.getString(names.getString(i)) + "\'");
+				query = query.replace(":" + names.getString(i), "\'" + args.getString(names.getString(i)).replace('\'', '"') + "\'");
 			}
 			ArrayList<Long> res = mCol.getDb().queryColumn(Long.class, query, 0);
 			if (order.length() == 0 && mCol.getConf().getBoolean("sortBackwards")) {

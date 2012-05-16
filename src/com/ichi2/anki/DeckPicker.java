@@ -2010,8 +2010,7 @@ public class DeckPicker extends FragmentActivity {
         		return true;
 
         	case MENU_SYNC:
-        		mCol.findCards("deck:Eng-1ab-Red+Gru+Auf tag:Gru", null);
-//            	sync();
+            	sync();
         		return true;
 
         	case MENU_ADD_NOTE:
