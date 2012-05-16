@@ -193,7 +193,7 @@ public class Note {
 		return mFields[_fieldOrd(key)];
 	}
 
-	public void __setitem__(String key, String value) {
+	public void setitem(String key, String value) {
 		mFields[_fieldOrd(key)] = value;
 	}
 

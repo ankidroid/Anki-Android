@@ -2231,7 +2231,11 @@ public class Sched {
 		return mCol;
 	}
 
-	private class DeckNameCompare implements Comparator<Object[]> {
+	public int getNewCount() {
+        return mNewCount;
+    }
+
+    private class DeckNameCompare implements Comparator<Object[]> {
 		@Override
 		public int compare(Object[] lhs, Object[] rhs) {
 			String[] o1 = (String[]) lhs[0];
