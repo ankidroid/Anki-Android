@@ -866,7 +866,6 @@ public class Models {
 				int ord = sr.getInt(0);
 				String type = sr.getString(1);				
 				JSONArray req = sr.getJSONArray(2);
-				JSONArray reqstrs = sr.getJSONArray(3);
 
 				if (type.equals("none")) {
 					// unsatisfiable template
