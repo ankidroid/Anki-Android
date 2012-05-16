@@ -193,17 +193,29 @@
    		 	     	android:layout_weight="3"
 					android:text="@string/studyoptions_start"
 					android:drawableLeft="@drawable/ic_start"/>	
+			<LinearLayout
+				android:layout_width="0dip"
+				android:layout_height="fill_parent"
+				android:layout_weight="1"
+				android:orientation="vertical">
    				<Button 
-					android:id="@+id/studyoptions_options"
-   	    	  		android:layout_height="fill_parent"
-					android:paddingLeft="16dip"	
-		         	android:layout_width="0dip"
+					android:id="@+id/studyoptions_rebuild_cram"
+   	    	  		android:layout_height="0dip"
+		         	android:layout_width="fill_parent"
 		         	android:textSize="14sp"
    		 	     	android:layout_weight="1"
-					android:text="@string/studyoptions_options"
-					android:drawableLeft="@drawable/studyoptions_opts"/>	
-			</LinearLayout>
-		</LinearLayout>
+					android:text="@string/rebuild_cram_label"
+					android:visibility="gone"/>	
+			    								<Button 
+					android:id="@+id/studyoptions_options"
+   	    	  		android:layout_height="0dip"
+		         	android:layout_width="fill_parent"
+		         	android:textSize="14sp"
+   		 	     	android:layout_weight="1"
+					android:text="@string/studyoptions_options"/>	
+   							</LinearLayout>
+   							</LinearLayout>
+					</LinearLayout>
 	    <RelativeLayout		android:id="@+id/studyoptions_main"
 	android:layout_width="fill_parent"
 	android:layout_height="fill_parent"

@@ -187,12 +187,26 @@ public class StudyOptionsFragment extends Fragment {
 				// openStatistics(0);
 				return;
 			case R.id.studyoptions_options:
-				Intent i = new Intent(getActivity(), DeckOptions.class);
-				startActivityForResult(i, DECK_OPTIONS);
-				if (UIUtils.getApiLevel() > 4) {
-					ActivityTransitionAnimation.slide(getActivity(),
-							ActivityTransitionAnimation.FADE);
+				if (mCol.getDecks().isDyn(mCol.getDecks().selected())) {
+		        	Intent intent = new Intent();
+		        	intent.setClass(getActivity(), CramDeckActivity.class);
+		    		startActivity(intent);
+					if (UIUtils.getApiLevel() > 4) {
+						ActivityTransitionAnimation.slide(getActivity(),
+								ActivityTransitionAnimation.FADE);
+					}
+				} else {
+					Intent i = new Intent(getActivity(), DeckOptions.class);
+					startActivityForResult(i, DECK_OPTIONS);
+					if (UIUtils.getApiLevel() > 4) {
+						ActivityTransitionAnimation.slide(getActivity(),
+								ActivityTransitionAnimation.FADE);
+					}					
 				}
+				return;
+			case R.id.studyoptions_rebuild_cram:
+				mProgressDialog = StyledProgressDialog.show(getActivity(), "", getResources().getString(R.string.rebuild_cram_deck), true);
+			 	DeckTask.launchDeckTask(DeckTask.TASK_TYPE_REBUILD_CRAM, mUpdateValuesFromDeckListener, new DeckTask.TaskData(mCol, mCol.getDecks().selected()));
 				return;
 			case R.id.studyoptions_add:
 				addNote();
@@ -484,6 +498,12 @@ public class StudyOptionsFragment extends Fragment {
 //		mToggleNight = (ToggleButton) mStudyOptionsView
 //				.findViewById(R.id.studyoptions_night);
 //		mToggleNight.setChecked(mInvertedColors);
+
+		if (mCol != null && mCol.getDecks().isDyn(mCol.getDecks().selected())) {
+			Button rebBut = (Button) mStudyOptionsView.findViewById(R.id.studyoptions_rebuild_cram);
+			rebBut.setOnClickListener(mButtonClickListener);
+			rebBut.setVisibility(View.VISIBLE);
+		}
 
 		if (mFragmented) {
 			Button but = (Button) mStudyOptionsView.findViewById(R.id.studyoptions_options);
@@ -884,6 +904,17 @@ public class StudyOptionsFragment extends Fragment {
 
 			if (mFragmented) {
 				((DeckPicker)getActivity()).loadCounts();
+			}
+
+			// for rebuilding cram decks
+			if (mProgressDialog != null && mProgressDialog.isShowing()) {
+				try {
+					mProgressDialog.dismiss();
+				} catch (Exception e) {
+					Log.e(AnkiDroidApp.TAG,
+							"onPostExecute - Dialog dismiss Exception = "
+									+ e.getMessage());
+				}
 			}
 		}
 		@Override

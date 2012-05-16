@@ -131,6 +131,7 @@ public class CramDeckFragment extends Fragment {
 					throw new RuntimeException(e);
 				}
 				mCol.getSched().rebuildDyn(mCol.getDecks().id("Cram 1"));
+				mCol.save();
 				closeCramDeckAdder();
 			}
         });

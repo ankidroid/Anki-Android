@@ -2123,6 +2123,9 @@ public class DeckPicker extends FragmentActivity {
     		loadCounts();
     	} else if (requestCode == ADD_NOTE && resultCode != RESULT_CANCELED) {
     		loadCounts();
+    	} else if (requestCode == ADD_CRAM_DECK) {
+    		// TODO: check, if ok has been clicked
+    		loadCounts();
         } else if (requestCode == REPORT_ERROR) {
         	showStartupScreensAndDialogs(PrefSettings.getSharedPrefs(getBaseContext()), 3);
         } else if (requestCode == SHOW_INFO_WELCOME || requestCode == SHOW_INFO_NEW_VERSION) {
