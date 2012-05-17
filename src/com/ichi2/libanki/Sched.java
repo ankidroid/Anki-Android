@@ -2240,6 +2240,11 @@ public class Sched {
         return mNewCount;
     }
 
+	// Needed for tests
+    public LinkedList<long[]> getNewQueue() {
+        return mNewQueue;
+    }
+
     private class DeckNameCompare implements Comparator<Object[]> {
 		@Override
 		public int compare(Object[] lhs, Object[] rhs) {

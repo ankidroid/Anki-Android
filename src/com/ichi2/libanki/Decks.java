@@ -451,7 +451,42 @@ public class Decks {
 		save();
 	}
 
-	// confid
+    /**
+     * Create a new configuration and return id.
+     * Uses defaultConf as template.
+     * @param name Name of the new configuration
+     * @return The id of the new configuration
+     */
+	public long confId(String name) {
+	    return confId(name, defaultConf);
+	}
+    /**
+     * Create a new configuration and return id.
+     * @param name Name of the new configuration
+     * @param cloneFrom Optional parameter to copy configuration from
+     * @return The id of the new configuration
+     */
+	public long confId(String name, String cloneFrom) {
+	    JSONObject c;
+        long id;
+        try {
+            c = new JSONObject(defaultConf);
+            while (true) {
+                id = Utils.intNow(1000);
+                if (!mDconf.containsKey(new Long(id))) {
+                    break;
+                }
+            }
+            c.put("id", id);
+            c.put("name", name);
+        } catch (JSONException e) {
+            throw new RuntimeException(e);
+        }
+        mDconf.put(new Long(id), c);
+        save(c);
+        return id;
+    }
+
 	// remConf
 
 	public void setConf(JSONObject deck, long id) {
