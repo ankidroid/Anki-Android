@@ -1020,15 +1020,15 @@ public class Sched {
 
 	private int _delayForGrade(JSONObject conf, int left) {
 		try {
-			int delay;
+			double delay;
 			JSONArray ja = conf.getJSONArray("delays");
 			int len = ja.length();
 			try {
-				delay = conf.getJSONArray("delays").getInt(len - left);
+				delay = ja.getDouble(len - left);
 			} catch (JSONException e) {
-				delay = conf.getJSONArray("delays").getInt(0);
+				delay = ja.getDouble(0);
 			}
-			return delay * 60;
+			return (int) (delay * 60.0);
 		} catch (JSONException e) {
 			throw new RuntimeException(e);
 		}
@@ -1870,7 +1870,7 @@ public class Sched {
 				// lapsed
 				JSONObject conf = _lapseConf(card);
 				if (conf.getJSONArray("delays").length() > 0) {
-					return conf.getJSONArray("delays").getInt(0) * 60;
+					return (int) (conf.getJSONArray("delays").getDouble(0) * 60.0);
 				}
 				return _nextLapseIvl(card, conf) * 86400;
 			} else {
