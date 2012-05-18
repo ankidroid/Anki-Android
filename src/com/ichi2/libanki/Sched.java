@@ -1656,7 +1656,7 @@ public class Sched {
 	 * ***************************
 	 */
 
-	private JSONObject _cardConf(Card card) {
+	public JSONObject _cardConf(Card card) {
 		return mCol.getDecks().confForDid(card.getDid());
 	}
 
