@@ -1140,7 +1140,7 @@ public class Sched {
 		}
 	}
 
-	private void removeFailed() {
+	public void removeFailed() {
 		removeFailed(null);
 	}
 
