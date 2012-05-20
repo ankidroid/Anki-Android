@@ -1686,6 +1686,7 @@ public class Sched {
 	private JSONObject _lapseConf(Card card) {
 		try {
 			JSONObject conf = _cardConf(card);
+			// normal deck
 			if (card.getODid() == 0) {
 				return conf.getJSONObject("lapse");
 			} 

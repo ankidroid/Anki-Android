@@ -200,7 +200,8 @@ public class Card implements Cloneable {
 		values.put("left", mLeft);
 		values.put("odue", mODue);
 		values.put("odid", mODid);
-		mCol.getDb().update("cards", values, "id = " + mId, null);
+        values.put("did", mDid);
+        mCol.getDb().update("cards", values, "id = " + mId, null);
 	}
 
 	public String getQuestion(boolean simple) {
@@ -675,7 +676,17 @@ public class Card implements Cloneable {
 		return mDid;
 	}
 
-	public Card clone() {
+	// Needed for tests
+	public Collection getCol() {
+        return mCol;
+    }
+
+	// Needed for tests
+    public void setCol(Collection col) {
+        mCol = col;
+    }
+
+    public Card clone() {
 		try {
 			return (Card) super.clone();
 		} catch (CloneNotSupportedException e) {
