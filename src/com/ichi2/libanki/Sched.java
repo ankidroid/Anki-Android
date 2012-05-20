@@ -1145,7 +1145,7 @@ public class Sched {
 	}
 
 	private void removeFailed(long[] ids) {
-		removeFailed(ids, true);
+		removeFailed(ids, false);
 	}
 	private void removeFailed(boolean expiredOnly) {
 		removeFailed(null, expiredOnly);
@@ -2243,6 +2243,11 @@ public class Sched {
 	// Needed for tests
     public LinkedList<long[]> getNewQueue() {
         return mNewQueue;
+    }
+
+    // Needed for tests
+    public void setClearOverdue(boolean clearOverdue) {
+        mClearOverdue = clearOverdue;
     }
 
     private class DeckNameCompare implements Comparator<Object[]> {
