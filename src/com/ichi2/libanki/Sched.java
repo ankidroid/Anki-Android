@@ -477,7 +477,7 @@ public class Sched {
 	 * Returns [deckname, did, new, lrn, rev]
 	 */
 	public ArrayList<Object[]> deckDueList(int counts) {
-		// DIFFERS FROM LIBANKI: finds all decks
+		// DIFFERS FROM LIBANKI: finds all decks, also it swaps the position of new and rev in the results!
 		_checkDay();
 		if (mClearOverdue) {
 			removeFailed(true);
