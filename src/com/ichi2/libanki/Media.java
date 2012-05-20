@@ -78,7 +78,7 @@ public class Media {
         mMediaDbFilename = mDir + ".db";
         File fd = new File(mDir);
         if (!fd.exists()) {
-            if (fd.mkdir()) {
+            if (!fd.mkdir()) {
                 Log.e(AnkiDroidApp.TAG, "Cannot create media directory: " + mDir);
             }
         }
