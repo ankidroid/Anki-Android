@@ -1550,7 +1550,7 @@ public class Sched {
 
 	private double _ivlWithFactor(JSONObject conf, double ivl) {
 		try {
-			return ivl * conf.getInt("ivlfct");
+			return ivl * conf.getDouble("ivlfct");
 		} catch (JSONException e) {
 			return 1;
 		}
@@ -1862,7 +1862,11 @@ public class Sched {
 			JSONObject dict = new JSONObject();
 			// original deck
 			dict.put("ease4", oconf.getJSONObject("rev").getDouble("ease4"));
-			dict.put("ivlfct", oconf.getJSONObject("rev").getInt("ivlfct"));
+			if (oconf.has("ivlfct")) {
+				dict.put("ivlfct", oconf.getJSONObject("rev").getDouble("ivlfct"));
+			} else {
+				dict.put("ivlfct", "1");
+			}
 			dict.put("minSpace", oconf.getJSONObject("rev").getInt("minSpace"));
 			dict.put("fuzz", oconf.getJSONObject("rev").getDouble("fuzz"));
 			return dict;
