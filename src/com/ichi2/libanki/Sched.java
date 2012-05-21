@@ -1029,7 +1029,7 @@ public class Sched {
 	private Card _getLrnDayCard() {
 		if (_fillLrnDay()) {
 			mLrnCount -= 1;
-			return mCol.getCard(mLrnDayQueue.remove()[1]);
+			return mCol.getCard(mLrnDayQueue.remove()[0]);
 		}
 		return null;
 	}

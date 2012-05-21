@@ -221,8 +221,10 @@ public class Models {
     public JSONObject current() {
     	JSONObject m;
 		try {
-			m = get(mCol.getDecks().current().getLong("mid"));
-	    	if (m == null) {
+			JSONObject curDeck = mCol.getDecks().current();
+			if (curDeck.has("mid")) {
+				m = get(mCol.getDecks().current().getLong("mid"));				
+			} else {
 				m = get(mCol.getConf().getLong("curModel"));
 	    	} 
 	    	if (m == null) {
