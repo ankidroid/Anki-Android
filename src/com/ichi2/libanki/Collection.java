@@ -218,6 +218,10 @@ public class Collection {
 		save(null, 0);
 	}
 
+	public synchronized void save(long mod) {
+		save(null, mod);
+	}
+
 	public synchronized void save(String name, long mod) {
 		// let the managers conditionally flush
 		mModels.flush();
@@ -1140,12 +1144,20 @@ public class Collection {
 		return mScm;
 	}
 
+	public void setScm(long scm) {
+		mScm = scm;
+	}
+
 	public boolean getServer() {
 		return mServer;
 	}
 
 	public void setLs(long ls) {
 		mLs = ls;
+	}
+
+	public long getLs() {
+		return mLs;
 	}
 
 	public void setUsnAfterSync(int usn) {
