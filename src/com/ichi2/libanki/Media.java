@@ -265,6 +265,10 @@ public class Media {
             if (file.isDirectory()) {
                 continue;
             }
+            if (file.getName().startsWith("_")) {
+            	// leading _ says to ignore file
+            	continue;
+            }
             String nfile = file.getName();
             if (!Normalizer.isNormalized(nfile, form)) {
                 nfile = Normalizer.normalize(nfile, form);
@@ -606,6 +610,11 @@ public class Media {
             String fname = f.getName();
             if (fname.compareTo("thumbs.db") == 0) {
                 continue;
+            }
+            // empty files are invalid; clean them up and continue
+            if (f.length() == 0) {
+            	f.delete();
+            	continue;
             }
             // newly added?
             if (!cache.containsKey(fname)) {

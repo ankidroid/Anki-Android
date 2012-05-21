@@ -221,16 +221,16 @@ public class Models {
     public JSONObject current() {
     	JSONObject m;
 		try {
-			m = get(mCol.getConf().getLong("curModel"));
-	    	if (m != null) {
-	    		return m;
-	    	} else {
+			m = get(mCol.getDecks().current().getLong("mid"));
+	    	if (m == null) {
+				m = get(mCol.getConf().getLong("curModel"));
+	    	} 
+	    	if (m == null) {
 	    		if (!mModels.isEmpty()) {
-	    			return mModels.values().iterator().next();
-	    		} else {
-	    			return null;
+	    			m = mModels.values().iterator().next();
 	    		}
 	    	}
+	    	return m;
 		} catch (JSONException e) {
 			throw new RuntimeException(e);
 		}
@@ -265,6 +265,20 @@ public class Models {
 			models.add(it.next());
 		}
 		return models;
+    }
+
+
+    public ArrayList<String> allNAmes() {
+		ArrayList<String> names = new ArrayList<String>();
+		Iterator<JSONObject> it = mModels.values().iterator();
+		while(it.hasNext()) {
+			try {
+				names.add(it.next().getString("name"));
+			} catch (JSONException e) {
+				throw new RuntimeException(e);
+			}
+		}
+		return names;
     }
 
 
@@ -944,7 +958,7 @@ public class Models {
     	JSONObject t = mm.newTemplate("Card 1");
     	try {
 			t.put("qfmt", "{{Front}}");
-	    	t.put("afmt", t.getString("qfmt") + "\n\n<hr id=answer>\n\n{{Back}}");
+	    	t.put("afmt", "{{FrontSide}}\n\n<hr id=answer>\n\n{{Back}}");
 		} catch (JSONException e) {
 			throw new RuntimeException(e);
 		}

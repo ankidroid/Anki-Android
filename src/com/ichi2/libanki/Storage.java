@@ -129,6 +129,9 @@ public class Storage {
 					JSONArray ar = m.getJSONArray("tmpls");
 					for (int i = 0; i < ar.length(); i++) {
 						JSONObject t = ar.getJSONObject(i);
+						if (!t.has("css")) {
+							continue;
+						}
 						m.put("css", m.getString("css") + "\n" + t.getString("css").replace(".card ", ".card" + t.getInt("ord") + 1));
 						t.remove("css");							
 					}
@@ -145,6 +148,13 @@ public class Storage {
 				col.modSchema();
 				col.getDb().execute("UPDATE cards SET due = due / 1000 WHERE due > 4294967296");
 				col.getDb().execute("UPDATE col SET ver = 8");
+			}
+			if (ver < 9) {
+				col.getDb().execute("UPDATE col SET ver = 9");
+			}
+			if (ver < 10) {
+				col.getDb().execute("UPDATE cards SET left = left + left * 1000 WHERE queue = 1");
+				col.getDb().execute("UPDATE col SET ver = 10");
 			}
 		} catch (JSONException e) {
 			throw new RuntimeException(e);

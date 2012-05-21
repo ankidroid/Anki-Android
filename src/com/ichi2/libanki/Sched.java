@@ -20,6 +20,7 @@ import com.ichi2.anki2.R;
 
 import android.content.Context;
 import android.database.Cursor;
+import android.database.SQLException;
 import android.database.sqlite.SQLiteConstraintException;
 import android.graphics.Typeface;
 import android.text.SpannableStringBuilder;
@@ -117,9 +118,11 @@ public class Sched {
 	// Queues
 	private LinkedList<long[]> mNewQueue;
 	private LinkedList<long[]> mLrnQueue;
+	private LinkedList<long[]> mLrnDayQueue;
 	private LinkedList<long[]> mRevQueue;
 
 	private LinkedList<Long> mNewDids;
+	private LinkedList<Long> mLrnDids;
 	private LinkedList<Long> mRevDids;
 
 	private TreeMap<Integer, Integer> mGroupConfs;
@@ -129,12 +132,11 @@ public class Sched {
 	private int mNonselectedDues;
 
 	/**
+	 * queue types: 0=new/cram, 1=lrn, 2=rev, 3=day lrn, -1=suspended, -2=buried
 	 * revlog types: 0=lrn, 1=rev, 2=relrn, 3=cram positive intervals are in
-	 * queue types: 0=new/cram, 1=lrn, 2=rev, -1=suspended, -2=buried
-	 * days (rev), negative intervals in seconds (lrn)
+	 * positive revlog intervals are in days (rev), negative in seconds (lrn)
 	 */
 
-	// FIXME: should log cram reps as cramming
 	public Sched(Collection col) {
 		mCol = col;
 		mQueueLimit = 50;
@@ -147,6 +149,7 @@ public class Sched {
 		// Initialise queues
 		mNewQueue = new LinkedList<long[]>();
 		mLrnQueue = new LinkedList<long[]>();
+		mLrnDayQueue = new LinkedList<long[]>();
 		mRevQueue = new LinkedList<long[]>();
 	}
 
@@ -200,7 +203,7 @@ public class Sched {
 			}
 			_updateStats(card, "new");
 		}
-		if (card.getQueue() == 1) {
+		if (card.getQueue() == 1 || card.getQueue() == 3) {
 			_answerLrnCard(card, ease);
 			if (!wasNew) {
 				_updateStats(card, "lrn");
@@ -230,7 +233,7 @@ public class Sched {
 		if (card != null) {
 			int idx = countIdx(card);
 			if (idx == 1) {
-				counts[1] += card.getLeft();
+				counts[1] += card.getLeft() / 1000;
 			} else {
 				counts[idx] += 1;
 			}
@@ -332,6 +335,30 @@ public class Sched {
 				throw new RuntimeException(e);
 			}
 			mCol.getDecks().save(g);
+		}
+	}
+
+	private void extendLimits(int newc, int rev) {
+		JSONObject cur = mCol.getDecks().current();
+		ArrayList<JSONObject> decks = new ArrayList<JSONObject>();
+		decks.add(cur);
+		try {
+			decks.addAll(mCol.getDecks().parents(cur.getLong("id")));
+			for (long did : mCol.getDecks().children(cur.getLong("id")).values()) {
+				decks.add(mCol.getDecks().get(did));
+			}
+			for (JSONObject g : decks) {
+				// add
+				JSONArray ja = g.getJSONArray("newToday");
+				ja.put(1, ja.getInt(1) - newc);
+				g.put("newToday", ja);
+				ja = g.getJSONArray("revToday");
+				ja.put(1, ja.getInt(1) - rev);
+				g.put("revToday", ja);
+				mCol.getDecks().save(g);
+			}
+		} catch (JSONException e) {
+			throw new RuntimeException(e);
 		}
 	}
 
@@ -482,6 +509,7 @@ public class Sched {
 		if (mClearOverdue) {
 			removeFailed(true);
 		}
+		mCol.getDecks().recoverOrphans();
 		ArrayList<Object[]> dids = new ArrayList<Object[]>();
 		for (JSONObject g : mCol.getDecks().all()) {
 			try {
@@ -630,6 +658,11 @@ public class Sched {
 		}
 		// Card due for review?
 		c = _getRevCard();
+		if (c != null) {
+			return c;
+		}
+		// day learning card due?
+		c = _getLrnDayCard();
 		if (c != null) {
 			return c;
 		}
@@ -864,18 +897,21 @@ public class Sched {
 	}
 
 	/**
-	 * Learning queue
+	 * Learning queues
 	 * ***********************************************************
 	 * ************************************
 	 */
 
 	private void _resetLrnCount() {
 		mLrnCount = _cntFnLrn(_deckLimit());
+		// day
+		mLrnCount += (int) mCol.getDb().queryScalar(
+				"SELECT count() FROM cards WHERE did IN " + _deckLimit() + " AND queue = 3 AND due <= " + mToday + " LIMIT " + mReportLimit, false);
 	}
 
 	private int _cntFnLrn(String dids) {
 		return (int) mCol.getDb().queryScalar(
-				"SELECT sum(left) FROM (SELECT left FROM cards WHERE did IN "
+				"SELECT sum(left / 1000) FROM (SELECT left FROM cards WHERE did IN "
 						+ dids + " AND queue = 1 AND due < " + mDayCutoff
 						+ " LIMIT " + mReportLimit + ")", false);
 	}
@@ -883,8 +919,11 @@ public class Sched {
 	private void _resetLrn() {
 		_resetLrnCount();
 		mLrnQueue.clear();
+		mLrnDayQueue.clear();
+		mLrnDids = mCol.getDecks().active();
 	}
 
+	// sub-day learning
 	private boolean _fillLrn() {
 		if (mLrnCount == 0) {
 			return false;
@@ -934,13 +973,66 @@ public class Sched {
 			if (mLrnQueue.getFirst()[0] < cutoff) {
 				long id = mLrnQueue.remove()[1];
 				Card card = mCol.getCard(id);
-				mLrnCount -= card.getLeft();
+				mLrnCount -= card.getLeft() / 1000;
 				return card;
 			}
 		}
 		return null;
 	}
 
+	// daily learning
+	private boolean _fillLrnDay() {
+		if (mLrnCount == 0) {
+			return false;
+		}
+		if (!mLrnDayQueue.isEmpty()) {
+			return true;
+		}
+		while (mLrnDids.size() > 0) {
+			long did = mLrnDids.getFirst();
+			// fill the queue with the current did
+			mLrnDayQueue.clear();
+			Cursor cur = null;
+			try {
+				cur = mCol
+						.getDb()
+						.getDatabase()
+						.rawQuery(
+								"SELECT id FROM cards WHERE did = " + did
+										+ " AND queue = 3 AND due <= "
+										+ mToday + " LIMIT " + mQueueLimit, null);
+				while (cur.moveToNext()) {
+					mLrnDayQueue.add(new long[] { cur.getLong(0) });
+				}
+			} finally {
+				if (cur != null && !cur.isClosed()) {
+					cur.close();
+				}
+			}
+			if (mLrnDayQueue.size() > 0) {
+				// order
+				Random r = new Random();
+				r.setSeed(mToday);
+				Collections.shuffle(mLrnDayQueue, r);
+				// is the current did empty?
+				if (mLrnDayQueue.size() < mQueueLimit) {
+					mLrnDids.remove();
+				}
+				return true;
+			}
+			// nothing left in the deck; move to next
+			mLrnDids.remove();
+		}
+		return false;
+	}
+
+	private Card _getLrnDayCard() {
+		if (_fillLrnDay()) {
+			mLrnCount -= 1;
+			return mCol.getCard(mLrnDayQueue.remove()[1]);
+		}
+		return null;
+	}
 	/**
 	 * @param ease
 	 *            1=no, 2=yes, 3=remove
@@ -963,26 +1055,37 @@ public class Sched {
 			_rescheduleAsRev(card, conf, true);
 			leaving = true;
 			// graduation time?
-		} else if (ease == 2 && card.getLeft() - 1 <= 0) {
+		} else if (ease == 2 && (card.getLeft() % 1000) - 1 <= 0) {
 			_rescheduleAsRev(card, conf, false);
 			leaving = true;
 		} else {
 			// one step towards graduation
 			if (ease == 2) {
-				card.setLeft(card.getLeft() - 1);
+				// decrement real left count and recalculate left today
+				int left = (card.getLeft() % 1000) - 1;
+				try {
+					card.setLeft(_leftToday(conf.getJSONArray("delays"), left) * 1000 + left);
+				} catch (JSONException e) {
+					throw new RuntimeException(e);
+				}
 				// failed
 			} else {
 				card.setLeft(_startingLeft(card));
 				if (card.getODid() != 0) {
-					try {
-						card.setIvl(Math.max(1, card.getIvl() * conf.getInt("mult")));
-					} catch (JSONException e) {
-						throw new RuntimeException(e);
+					if (conf.has("mult")) {
+						// review that's lapsed
+						try {
+							card.setIvl(Math.max(1, card.getIvl() * conf.getInt("mult")));
+						} catch (JSONException e) {
+							throw new RuntimeException(e);
+						}
+					} else {
+						// new card; no ivl adjustment
+						// pass
 					}
 					card.setODue(mToday + 1);
 				}
 			}
-			mLrnCount += card.getLeft();
 			int delay = _delayForGrade(conf, card.getLeft());
 			if (card.getDue() < Utils.now()) {
 				// not collapsed; add some randomness
@@ -990,14 +1093,23 @@ public class Sched {
 			}
 			// TODO: check, if type for second due is correct
 			card.setDue((int) (Utils.now() + delay));
-			// if the queue is not empty and there's nothing else to do, make
-			// sure we don't put it at the head of the queue and end up showing
-			// it twice in a row
-			if (!mLrnQueue.isEmpty() && mRevCount == 0 && mNewCount == 0) {
-				long smallestDue = mLrnQueue.getFirst()[0];
-				card.setDue(Math.max(card.getDue(), smallestDue + 1));
+			if (card.getDue() < mDayCutoff) {
+				mLrnCount += card.getLeft() / 1000;
+				// if the queue is not empty and there's nothing else to do, make
+				// sure we don't put it at the head of the queue and end up showing
+				// it twice in a row
+				card.setQueue(1);
+				if (!mLrnQueue.isEmpty() && mRevCount == 0 && mNewCount == 0) {
+					long smallestDue = mLrnQueue.getFirst()[0];
+					card.setDue(Math.max(card.getDue(), smallestDue + 1));
+				}
+				_sortIntoLrn(card.getDue(), card.getId());
+			} else {
+				// the card is due in one or more days, so we need to use the day learn queue
+				long ahead = ((card.getDue() - mDayCutoff) / 86400) + 1;
+				card.setDue(mToday + ahead);
+				card.setQueue(3);
 			}
-			_sortIntoLrn(card.getDue(), card.getId());
 		}
 		_logLrn(card, ease, conf, leaving, type, lastLeft);
 	}
@@ -1019,6 +1131,7 @@ public class Sched {
 	}
 
 	private int _delayForGrade(JSONObject conf, int left) {
+		left = left % 1000;
 		try {
 			double delay;
 			JSONArray ja = conf.getJSONArray("delays");
@@ -1062,10 +1175,35 @@ public class Sched {
 	private int _startingLeft(Card card) {
 		try {
 			JSONObject conf = _lrnConf(card);
-			return conf.getJSONArray("delays").length();
+			int tot = conf.getJSONArray("delays").length();
+			int tod = _leftToday(conf.getJSONArray("delays"), tot);
+			return tot + tod * 1000;
 		} catch (JSONException e) {
 			throw new RuntimeException(e);
 		}
+	}
+
+	/* the number of steps that can be completed by the day cutoff */
+	private int _leftToday(JSONArray delays, int left) {
+		return _leftToday(delays, left, 0);
+	}
+	private int _leftToday(JSONArray delays, int left, long now) {
+		if (now == 0) {
+			now = Utils.intNow();
+		}
+		int ok = 0;
+		for (int i = 0; i < delays.length() - left; i++) {
+			try {
+				now += delays.getInt(i + left) * 60;
+			} catch (JSONException e) {
+				throw new RuntimeException(e);
+			}
+			if (now > mDayCutoff) {
+				break;
+			}
+			ok = i;
+		}
+		return ok + 1;
 	}
 
 	private int _graduatingIvl(Card card, JSONObject conf, boolean early) {
@@ -1175,6 +1313,15 @@ public class Sched {
 		}
 	}
 
+	private int _lrnForDeck(long did) {
+		try {
+			return mCol.getDb().queryScalar("SELECT sum(left / 1000) FROM (SELECT left FROM cards WHERE did = " + did + " AND queue = 1 AND due < " + (Utils.intNow() + mCol.getConf().getInt("collapseTime")) + " LIMIT " + mReportLimit, false);
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		} catch (JSONException e) {
+			throw new RuntimeException(e);
+		}
+	}
 	/**
 	 * Reviews
 	 * ******************************************************************
@@ -1323,9 +1470,10 @@ public class Sched {
 			if (conf.getJSONArray("delays").length() > 0) {
 				card.setODue(card.getDue());
 				card.setDue((int) (_delayForGrade(conf, 0) + Utils.now()));
-				card.setLeft(conf.getJSONArray("delays").length());
+				int left = conf.getJSONArray("delays").length();
+				card.setLeft(left + _leftToday(conf.getJSONArray("delays"), left) * 1000);
 				card.setQueue(1);
-				mLrnCount += card.getLeft();
+				mLrnCount += card.getLeft() / 1000;
 			}
 			// leech?
 			if (!_checkLeech(card, conf)
@@ -1394,20 +1542,17 @@ public class Sched {
 				throw new RuntimeException(e);
 			}
 		}
-		// apply forgetting index transform
-		interval = _ivlForFI(conf, interval);
+		// apply interval factor adjustment
+		interval = _ivlWithFactor(conf, interval);
 		// must be at least one day greater than previous interval; two if easy
 		return Math.max(card.getIvl() + (ease == 4 ? 2 : 1), (int) interval);
 	}
 
-	private int _ivlForFI(JSONObject conf, double ivl) {
-		JSONArray fi;
+	private double _ivlWithFactor(JSONObject conf, double ivl) {
 		try {
-			fi = conf.getJSONArray("fi");
-			return (int) (ivl * Math.log(1 - (fi.getInt(0) / 100.0)) / Math
-					.log(1 - (fi.getInt(1) / 100.0)));
+			return ivl * conf.getInt("ivlfct");
 		} catch (JSONException e) {
-			throw new RuntimeException(e);
+			return 1;
 		}
 	}
 
@@ -1717,7 +1862,7 @@ public class Sched {
 			JSONObject dict = new JSONObject();
 			// original deck
 			dict.put("ease4", oconf.getJSONObject("rev").getDouble("ease4"));
-			dict.put("fi", oconf.getJSONObject("rev").getJSONArray("fi"));
+			dict.put("ivlfct", oconf.getJSONObject("rev").getInt("ivlfct"));
 			dict.put("minSpace", oconf.getJSONObject("rev").getInt("minSpace"));
 			dict.put("fuzz", oconf.getJSONObject("rev").getDouble("fuzz"));
 			return dict;
@@ -1865,7 +2010,7 @@ public class Sched {
 	 */
 	public int nextIvl(Card card, int ease) {
 		try {
-			if (card.getQueue() == 0 || card.getQueue() == 1) {
+			if (card.getQueue() == 0 || card.getQueue() == 1 || card.getQueue() == 3) {
 				return _nextLrnIvl(card, ease);
 			} else if (ease == 1) {
 				// lapsed
@@ -1897,7 +2042,7 @@ public class Sched {
 				// early removal
 				return _graduatingIvl(card, conf, true, false) * 86400;
 			} else {
-				int left = card.getLeft() - 1;
+				int left = card.getLeft() % 1000 - 1;
 				if (left <= 0) {
 					// graduate
 					return _graduatingIvl(card, conf, false, false) * 86400;

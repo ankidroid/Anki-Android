@@ -148,7 +148,7 @@ public class Finder {
 				} else if (type.startsWith("cardReps")) {
 					sort = "c.reps";
 				} else if (type.startsWith("cardDue")) {
-					sort = "c.due";
+					sort = "c.type, c.due";
 				} else if (type.startsWith("cardEase")) {
 					sort = "c.factor";
 				} else if (type.startsWith("cardLapses")) {
@@ -309,7 +309,8 @@ public class Finder {
 
 	private void _findDeck(String val, boolean isNeg) {
 		try {
-			long id;
+			ArrayList<Long> ids = new ArrayList<Long>();
+			long id = 0;
 			String extra;
 			if (val.toLowerCase().equals("current")) {
 				id = mCol.getDecks().current().getLong("id");
@@ -321,13 +322,32 @@ public class Finder {
 				}
 				mLims.getJSONArray("preds").put("c.did " + extra + " IN " + Utils.ids2str(mCol.getDecks().allIds()));
 				return;
-			} else {
+			} else if (!val.contains("*")){
+				// single deck
 				id = mCol.getDecks().id(val, false);
+			} else {
+				// wildcard
+				val = val.replace("*", ".*");
+				for (JSONObject d : mCol.getDecks().all()) {
+					if (d.getString("name").matches("(?i)" + val)) {
+						id = d.getLong("id");
+						ids.add(id);
+						for (long a : mCol.getDecks().children(id).values()) {
+							ids.add(a);
+						}
+					}
+					if (ids.size() == 0) {
+						// invalid search
+						mLims.put("valid", false);
+						return;
+					}					
+				}
 			}
-			ArrayList<Long> ids = new ArrayList<Long>();
-			ids.add(id);
-			for (Long a : mCol.getDecks().children(id).values()) {
-				ids.add(a);
+			if (ids.size() == 0) {
+				ids.add(id);
+				for (long a : mCol.getDecks().children(id).values()) {
+					ids.add(a);
+				}				
 			}
 			String sids = Utils.ids2str(Utils.arrayList2array(ids));
 			if (!isNeg) {

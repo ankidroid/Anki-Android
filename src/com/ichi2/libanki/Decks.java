@@ -58,7 +58,9 @@ public class Decks {
 			+ // currentDay, count
 			"'revToday': [0, 0], " + "'lrnToday': [0, 0], "
 			+ "'timeToday': [0, 0], " + // time in ms
-			"'conf': 1, " + "'usn': 0, " + "'desc': \"\", 'dyn': 0, 'collapsed': False }";
+			"'conf': 1, " + "'usn': 0, " + "'desc': \"\", 'dyn': 0, 'collapsed': False, " +
+			// added in beta11
+			"'extendNew': 10, 'extendRev': 50 }";
 
 	private static final String defaultDynamicDeck = "{" + "'newToday': [0, 0], "
 			+ // currentDay, count
@@ -96,7 +98,8 @@ public class Decks {
 				+ "'ease4': 1.3, "
 				+ "'fuzz': 0.05, "
 				+ "'minSpace': 1, "
-				+ "'fi': [10, 10] }, "
+				// in beta11+
+				+ "'ivlfct': 1 }, "
 			+ "'maxTaken': 60, "
 			+ "'timer': 0, "
 			+ "'autoplay': True, "
@@ -259,6 +262,11 @@ public class Decks {
 			if (deck.getInt("dyn") != 0) {
 				// deleting a cramming deck returns cards to their previous deck rather than deleting the cards
 				mCol.getSched().remDyn(did);
+				if (childrenToo) {
+					for (long id : children(did).values()) {
+						rem(id, cardsToo);
+					}
+				}
 			} else {
 				// delete children first
 				if (childrenToo) {
@@ -269,7 +277,9 @@ public class Decks {
 				}
 				// delete cards too?
 				if (cardsToo) {
-					mCol.remCards(cids(did));
+					// don't use cids(), as we want cards in cram decks too
+					ArrayList<Long> cids = mCol.getDb().queryColumn(Long.class, "SELECT id FROM cards WHERE did = " + did + " OR odid = " + did, 0);
+					mCol.remCards(Utils.arrayList2array(cids));
 				}			
 			}
 		} catch (JSONException e) {
@@ -575,6 +585,12 @@ public class Decks {
 			result[i] = cids.get(i);
 		}
 		return result;		
+	}
+
+	public void recoverOrphans() {
+		boolean mod = mCol.getDb().getMod();
+		mCol.getDb().execute("UPDATE cards SET did = 1 WHERE did NOT IN " + Utils.ids2str(allIds()));
+		mCol.getDb().setMod(mod);
 	}
 
 	/**

@@ -47,9 +47,9 @@ import java.util.Random;
 public class Collection {
 
 	// collection schema & syncing vars
-	public static final int SCHEMA_VERSION = 8;
+	public static final int SCHEMA_VERSION = 10;
 	public static final String SYNC_URL = "http://beta.ankiweb.net/sync/";
-	public static final int SYNC_VER = 3;
+	public static final int SYNC_VER = 4;
 
 	private AnkiDb mDb;
 	private boolean mServer;
@@ -812,12 +812,15 @@ public class Collection {
 				template = model.getJSONArray("tmpls").getJSONObject(0);
 			}
 			fields.put("Card", template.getString("name"));
+			fields.put("c" + (((Integer)data[4])+1), "1");
             Models.fieldParser fparser = new Models.fieldParser(fields);
 			// render q & a
 			HashMap<String, String> d = new HashMap<String, String>();
 			d.put("id", Long.toString((Long) data[0]));
 			d.put("q", mModels.getCmpldTemplate(modelId, (Integer) data[4])[0]
 					.execute(fparser));
+			fields.put("FrontSide", d.get("id"));
+			fparser = new Models.fieldParser(fields);
 			d.put("a", mModels.getCmpldTemplate(modelId, (Integer) data[4])[1]
 					.execute(fparser));
 			// TODO: runfilter
@@ -1021,7 +1024,8 @@ public class Collection {
 		mDb.execute("DELETE FROM revlog WHERE id = " + last);
 		// and finally, update daily count
 		// FIXME: what to do in cramming case?
-		String type = (new String[]{"new", "lrn", "rev"})[c.getQueue()];
+		int n = c.getQueue() == 3 ? 1 : c.getQueue();
+		String type = (new String[]{"new", "lrn", "rev"})[n];
 		mSched._updateStats(c, type, -1);
 		return c;
 	}
