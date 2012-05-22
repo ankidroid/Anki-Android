@@ -26,6 +26,7 @@ import android.graphics.Typeface;
 import android.text.SpannableStringBuilder;
 import android.text.style.StyleSpan;
 import android.util.Log;
+import android.util.Pair;
 
 import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.async.DeckTask.TaskData;
@@ -254,6 +255,9 @@ public class Sched {
 	}
 
 	public int countIdx(Card card) {
+	    if (card.getQueue() == 3) {
+	        return 1;
+	    }
 		return card.getQueue();
 	}
 
@@ -1456,17 +1460,20 @@ public class Sched {
 	 */
 
 	private boolean _answerRevCard(Card card, int ease) {
+	    int delay = 0;
 		boolean leech = false;
 		if (ease == 1) {
-			leech = _rescheduleLapse(card);
+		    Pair<Integer, Boolean> res = _rescheduleLapse(card);
+		    delay = res.first;
+		    leech = res.second;
 		} else {
 			_rescheduleRev(card, ease);
 		}
-		_logRev(card, ease);
+		_logRev(card, ease, delay);
 		return leech;
 	}
 
-	private boolean _rescheduleLapse(Card card) {
+	private Pair<Integer, Boolean> _rescheduleLapse(Card card) {
 		JSONObject conf;
 		try {
 			conf = _lapseConf(card);
@@ -1476,9 +1483,11 @@ public class Sched {
 			card.setFactor(Math.max(1300, card.getFactor() - 200));
 			card.setDue(mToday + card.getIvl());
 			// put back in learn queue?
+			int delay = 0;
 			if (conf.getJSONArray("delays").length() > 0) {
 				card.setODue(card.getDue());
-				card.setDue((int) (_delayForGrade(conf, 0) + Utils.now()));
+				delay = _delayForGrade(conf, 0);
+				card.setDue((long) (delay + Utils.now()));
 				int left = conf.getJSONArray("delays").length();
 				card.setLeft(left + _leftToday(conf.getJSONArray("delays"), left) * 1000);
 				card.setQueue(1);
@@ -1488,9 +1497,9 @@ public class Sched {
 			if (!_checkLeech(card, conf)
 					&& conf.getJSONArray("delays").length() > 0) {
 				_sortIntoLrn(card.getDue(), card.getId());
-				return false;
+				return new Pair<Integer, Boolean>(delay, false);
 			} else {
-				return true;
+                return new Pair<Integer, Boolean>(delay, true);
 			}
 		} catch (JSONException e) {
 			throw new RuntimeException(e);
@@ -1520,8 +1529,8 @@ public class Sched {
 		}
 	}
 
-	private void _logRev(Card card, int ease) {
-		log(card.getId(), mCol.usn(), ease, card.getIvl(),
+	private void _logRev(Card card, int ease, int delay) {
+		log(card.getId(), mCol.usn(), ease, ((delay != 0) ? (-delay) : card.getIvl()),
 				card.getLastIvl(), card.getFactor(), card.timeTaken(), 1);
 	}
 
@@ -1871,11 +1880,7 @@ public class Sched {
 			JSONObject dict = new JSONObject();
 			// original deck
 			dict.put("ease4", oconf.getJSONObject("rev").getDouble("ease4"));
-			if (oconf.has("ivlfct")) {
-				dict.put("ivlfct", oconf.getJSONObject("rev").getDouble("ivlfct"));
-			} else {
-				dict.put("ivlfct", "1");
-			}
+			dict.put("ivlfct", oconf.getJSONObject("rev").optDouble("ivlfct", 1.0));
 			dict.put("minSpace", oconf.getJSONObject("rev").getInt("minSpace"));
 			dict.put("fuzz", oconf.getJSONObject("rev").getDouble("fuzz"));
 			return dict;
