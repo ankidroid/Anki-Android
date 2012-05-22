@@ -81,7 +81,10 @@ public class Models {
 		"'ord': None, " +
 		"'qfmt': \"\", " +
 		"'afmt': \"\", " +
-		"'did': None }";
+		"'did': None " +
+		// added in beta 13
+		"'bqfmt': \"\"," +
+		"'bafmt': \"\" }";
 	
 //    /** Regex pattern used in removing tags from text before diff */
 //    private static final Pattern sFactPattern = Pattern.compile("%\\([tT]ags\\)s");
@@ -598,28 +601,41 @@ public class Models {
 
 
     // not in libanki
-    public Template[] getCmpldTemplate(long modelId, int ord) {
+    public Template[] getCmpldTemplate(long modelId, int ord, ArrayList<String> args) {
+    	if (args != null) {
+    		// TODO: cache this for browser too
+    		return compileTemplate(modelId, ord, args);
+    	}
     	if (!mCmpldTemplateMap.containsKey(modelId)) {
     		mCmpldTemplateMap.put(modelId, new HashMap<Integer, Template[]>());
     	}
 		if (!mCmpldTemplateMap.get(modelId).containsKey(ord)) {
-    		mCmpldTemplateMap.get(modelId).put(ord, compileTemplate(modelId, ord));
+    		mCmpldTemplateMap.get(modelId).put(ord, compileTemplate(modelId, ord, args));
 		}
     	return mCmpldTemplateMap.get(modelId).get(ord);
     }
 
 
     // not in libanki
-    private Template[] compileTemplate(long modelId, int ord) {
+    private Template[] compileTemplate(long modelId, int ord, ArrayList<String> args) {
     	JSONObject model = mModels.get(modelId);
         JSONObject template;
         Template[] t = new Template[2];
 		try {
-			template = model.getJSONArray("tmpls").getJSONObject(ord);
-			String format = template.getString("qfmt").replace("{{cloze:", "{{cq:" + (ord+1) + ":");
+			String qfmt;
+			String afmt;
+			if (args != null) {
+				qfmt = args.get(0);
+				afmt = args.get(1);
+			} else {
+				template = model.getJSONArray("tmpls").getJSONObject(ord);
+				qfmt = template.getString("qfmt");
+				afmt = template.getString("afmt");
+			}
+			String format = qfmt.replace("{{cloze:", "{{cq:" + (ord+1) + ":");
             Log.i(AnkiDroidApp.TAG, "Compiling question template \"" + format + "\"");
             t[0] = Mustache.compiler().compile(format);
-            format = template.getString("afmt").replace("{{cloze:", "{{ca:" + (ord+1) + ":");
+            format = afmt.replace("{{cloze:", "{{ca:" + (ord+1) + ":");
             Log.i(AnkiDroidApp.TAG, "Compiling answer template \"" + format + "\"");
             t[1] = Mustache.compiler().compile(format);
 		} catch (JSONException e) {

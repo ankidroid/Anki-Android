@@ -207,8 +207,10 @@ public class Card implements Cloneable {
 	public String getQuestion(boolean simple) {
 		return getQuestion(false, simple);
 	}
-
 	public String getQuestion(boolean reload, boolean simple) {
+		return getQuestion(reload, simple, false);
+	}
+	public String getQuestion(boolean reload, boolean simple, boolean browser) {
 		if (simple) {
 			return _getQA(reload).get("q");
 		} else {
@@ -237,10 +239,14 @@ public class Card implements Cloneable {
 	}
 
 	public HashMap<String, String> _getQA(boolean reload) {
+		return _getQA(reload, false);
+	}
+	public HashMap<String, String> _getQA(boolean reload, boolean browser) {
 		if (mQA == null || reload) {
 			mQA = new HashMap<String, String>();
 			Note n = note(reload);
 			JSONObject m = model();
+			JSONObject t = template();
 			Object[] data;
 			try {
 				data = new Object[] { mId, n.getId(), m.getLong("id"), mODid != 0l ? mODid : mDid,
@@ -248,7 +254,16 @@ public class Card implements Cloneable {
 			} catch (JSONException e) {
 				throw new RuntimeException(e);
 			}
-			mQA = mCol._renderQA(data);
+			ArrayList<String> args = new ArrayList<String>();
+			if (browser) {
+				try {
+					args.add(t.getString("bqfmt"));
+					args.add(t.getString("bafmt"));
+				} catch (JSONException e) {
+					throw new RuntimeException(e);
+				}
+			}
+			mQA = mCol._renderQA(data, args);
 		}
 		return mQA;
 	}

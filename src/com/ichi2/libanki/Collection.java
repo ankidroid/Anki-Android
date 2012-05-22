@@ -799,6 +799,9 @@ public class Collection {
 	 * Returns hash of id, question, answer.
 	 */
 	public HashMap<String, String> _renderQA(Object[] data) {
+		return _renderQA(data, null);
+	}
+	public HashMap<String, String> _renderQA(Object[] data, ArrayList<String> args) {
 		// data is [cid, nid, mid, did, ord, tags, flds]
 		// unpack fields and create dict
 		String[] flist = Utils.splitFields((String) data[6]);
@@ -826,11 +829,11 @@ public class Collection {
 			// render q & a
 			HashMap<String, String> d = new HashMap<String, String>();
 			d.put("id", Long.toString((Long) data[0]));
-			d.put("q", mModels.getCmpldTemplate(modelId, (Integer) data[4])[0]
+			d.put("q", mModels.getCmpldTemplate(modelId, (Integer) data[4], args)[0]
 					.execute(fparser));
 			fields.put("FrontSide", d.get("id"));
 			fparser = new Models.fieldParser(fields);
-			d.put("a", mModels.getCmpldTemplate(modelId, (Integer) data[4])[1]
+			d.put("a", mModels.getCmpldTemplate(modelId, (Integer) data[4], args)[1]
 					.execute(fparser));
 			// TODO: runfilter
 			return d;
