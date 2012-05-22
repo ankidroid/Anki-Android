@@ -327,13 +327,13 @@ public class Utils {
      * ***********************************************************************************************
      */
 
-    public static String hexifyID(int id) {
-        return Integer.toHexString(id);
+    public static String hexifyID(long id) {
+        return Long.toHexString(id);
     }
 
 
-    public static int dehexifyID(String id) {
-    	return Integer.valueOf(id, 16);
+    public static long dehexifyID(String id) {
+    	return Long.valueOf(id, 16);
     }
 
 
