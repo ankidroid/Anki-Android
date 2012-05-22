@@ -857,4 +857,8 @@ public class Decks {
 	public HashMap<Long, JSONObject> getDconf() {
 		return mDconf;
 	}
+
+    public HashMap<Long, JSONObject> getDecks() {
+        return mDecks;
+    }
 }

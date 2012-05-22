@@ -500,6 +500,13 @@ public class Sched {
    		return new Object[]{decks, eta(counts), mCol.cardCount()};
 	}
 
+	   
+    public class DeckDueListComparator implements Comparator<Object[]> {
+        public int compare(Object[] o1, Object[] o2) {
+            return ((String) o1[0]).compareTo((String) o2[0]);
+        }
+    }
+
 	/**
 	 * Returns [deckname, did, new, lrn, rev]
 	 */
@@ -557,6 +564,7 @@ public class Sched {
 				throw new RuntimeException(e);
 			}
 		}
+		Collections.sort(dids, new DeckDueListComparator());
 		return dids;
 	}
 
@@ -1192,9 +1200,10 @@ public class Sched {
 			now = Utils.intNow();
 		}
 		int ok = 0;
-		for (int i = 0; i < delays.length() - left; i++) {
+		int offset = Math.min(left, delays.length());
+		for (int i = 0; i < offset; i++) {
 			try {
-				now += delays.getInt(i + left) * 60;
+				now += (int)(delays.getDouble(delays.length() - offset + i) * 60.0);
 			} catch (JSONException e) {
 				throw new RuntimeException(e);
 			}
