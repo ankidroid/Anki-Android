@@ -1192,9 +1192,9 @@ public class Sched {
 			now = Utils.intNow();
 		}
 		int ok = 0;
-		for (int i = 0; i < delays.length() - left; i++) {
+		for (int i = 0; i < left; i++) {
 			try {
-				now += delays.getInt(i + left) * 60;
+				now += (int)(delays.getDouble(delays.length() - left + i) * 60.0);
 			} catch (JSONException e) {
 				throw new RuntimeException(e);
 			}
