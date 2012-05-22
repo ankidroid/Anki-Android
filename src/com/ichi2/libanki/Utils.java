@@ -444,7 +444,7 @@ public class Utils {
     public static long maxID(AnkiDb db) {
     	long now = intNow(1000);
     	now = Math.max(now, db.queryLongScalar("SELECT MAX(id) FROM cards"));
-    	now = Math.max(now, db.queryLongScalar("SELECT MAX(id) FROM cnotes"));
+    	now = Math.max(now, db.queryLongScalar("SELECT MAX(id) FROM notes"));
     	return now + 1;
     }
 

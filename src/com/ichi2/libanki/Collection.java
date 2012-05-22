@@ -546,12 +546,12 @@ public class Collection {
 				// existing cards
 				long nid = cur.getLong(1);
 				if (!have.containsKey(nids)) {
-					have.put(nid, null);
+					have.put(nid, new HashMap<Integer, Long>());
 				}
 				have.get(nid).put(cur.getInt(2), cur.getLong(0));
 				// and their dids
 				long did = cur.getLong(3);
-				if (!dids.containsKey(nid)) {
+				if (dids.containsKey(nid)) {
 					if (dids.get(nid) != 0 && dids.get(nid) != did) {
 						// cards are in two or more different decks; revert to model default
 						dids.put(nid, 0l);
@@ -581,9 +581,9 @@ public class Collection {
 			while (cur.moveToNext()) {
 				JSONObject model = mModels.get(cur.getLong(1));
 				ArrayList<Integer> avail = mModels.availOrds(model,
-						cur.getString(3));
+						cur.getString(2));
 				long nid = cur.getLong(0);
-				long did = dids.get(nids);
+				long did = dids.get(nid);
 				if (did == 0) {
 					did = model.getLong("did");
 				}
@@ -593,9 +593,14 @@ public class Collection {
 					boolean doHave = have.containsKey(nid) && have.get(nid).containsKey(tord);
 					if (!doHave) {
 						// check deck is not a cram deck
-						long ndid = t.getLong("did");
-						if (ndid != 0) {
-							did = ndid;
+						long ndid;
+						try {
+							ndid = t.getLong("did");
+							if (ndid != 0) {
+								did = ndid;
+							}
+						} catch (JSONException e) {
+							// do nothing
 						}
 						if (getDecks().isDyn(did)) {
 							did = 1;
@@ -625,7 +630,7 @@ public class Collection {
 			}
 		}
 		// bulk update
-		mDb.executeMany("INSERT INTO cards VALUES (?, ?, ?, ?, ?, ?, 0, 0, ?, 0, 0, 0, 0, 0, 0)", data);
+		mDb.executeMany("INSERT INTO cards VALUES (?,?,?,?,?,?,0,0,?,0,0,0,0,0,0,0,0,\"\")", data);
 		return rem;
 	}
 
