@@ -500,6 +500,13 @@ public class Sched {
    		return new Object[]{decks, eta(counts), mCol.cardCount()};
 	}
 
+	   
+    public class DeckDueListComparator implements Comparator<Object[]> {
+        public int compare(Object[] o1, Object[] o2) {
+            return ((String) o1[0]).compareTo((String) o2[0]);
+        }
+    }
+
 	/**
 	 * Returns [deckname, did, new, lrn, rev]
 	 */
@@ -557,6 +564,7 @@ public class Sched {
 				throw new RuntimeException(e);
 			}
 		}
+		Collections.sort(dids, new DeckDueListComparator());
 		return dids;
 	}
 
