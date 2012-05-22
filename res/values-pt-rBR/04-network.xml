@@ -102,10 +102,10 @@
   <string name="sync_generic_error">Ocorreu um erro. Por favor, tente novamente mais tarde.</string>
   <string name="sync_check_upload_file">Verificando arquivo antes de fazer upload...</string>
   <string name="sync_check_download_file">Verificando o arquivo baixado...</string>
-  <string name="sync_media_find">Finding changed media...</string>
-  <string name="sync_media_remove">Handling deleted media...</string>
-  <string name="sync_media_from_server">Receiving media from server...</string>
-  <string name="sync_media_to_server">Sending media to server...</string>
-  <string name="sync_media_no_changes">No changes to media files.</string>
-  <string name="sync_media_success">Media synced successfully.</string>
+  <string name="sync_media_find">Procurando mídias modificadas...</string>
+  <string name="sync_media_remove">Lidando com mídias apagadas...</string>
+  <string name="sync_media_from_server">Recebendo mídias do servidor...</string>
+  <string name="sync_media_to_server">Enviando mídias ao servidor...</string>
+  <string name="sync_media_no_changes">Sem mudanças nos arquivos de mídia.</string>
+  <string name="sync_media_success">Mídias sincronizadas com sucesso.</string>
 </resources>

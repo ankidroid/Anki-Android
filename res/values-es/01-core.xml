@@ -42,7 +42,7 @@
   <string name="ease3_successive">Bien</string>
   <string name="studyoptions_congrats_learnmore">Aprender más</string>
   <string name="studyoptions_congrats_reviewearly">Repasar anticipadamente</string>
-  <string name="studyoptions_congrats_open_other_deck">Abrir otro mazo</string>
+  <string name="studyoptions_congrats_open_other_deck">ciudad</string>
   <string name="studyoptions_congrats_finish">Volver a la pantalla de Estudio</string>
   <string name="card_unsuspended">Suspensión de la tarjeta deshecha</string>
   <string name="card_suspended">Tarjeta resuspendida</string>
@@ -77,7 +77,7 @@
   <string name="menu_unmark_card">Desmarcar Tarjeta</string>
   <string name="new_deck">Nuevo mazo</string>
   <string name="create">Crear</string>
-  <string name="new_dynamic_deck">New dynamic deck</string>
+  <string name="new_dynamic_deck">Nuevo mazo dinámico</string>
   <string name="studyoptions_feedback">Sugerencias</string>
   <string name="studyoptions_cram_dialog_title">Etiquetas a empollar</string>
   <string name="studyoptions_load_other_deck">Cargar otro mazo</string>
@@ -88,10 +88,13 @@
   <string name="download">Descargar</string>
   <string name="open_collection">Abriendo colección.\nPor favor, espera...</string>
   <string name="create_collection">Creando colección.\nPor favor, espera...</string>
+  <string name="rebuild_cram_deck">Reconstruyendo mazo para empollar.\nPor favor, espera...</string>
+  <string name="rebuild_cram_label">Reconstruir</string>
   <string name="studyoptions_congrats_finished">¡Felicidades! Has terminado por ahora.</string>
   <string name="studyoptions_congrats_more_rev">Se ha alcanzado el límite de repasos de hoy, pero todavía hay tarjetas a la espera de ser repasadas. Para una memorización óptima, considera la posibilidad de aumentar el límite diario en las opciones.</string>
   <string name="studyoptions_congrats_more_new">Hay más tarjetas nuevas disponibles, pero se ha alcanzado el límite diario. Puedes aumentar el límite en las opciones, pero ten en cuenta que cuantas más tarjetas nuevas introduzcas, mayor será la carga de trabajo de revisión a corto plazo.</string>
   <string name="sd_card_not_mounted">La tarjeta SD no está preparada.</string>
+  <string name="studyoptions_options">Opciones</string>
   <string-array name="next_review_s">
     <item>1 segundo</item>
     <item>1 minuto</item>

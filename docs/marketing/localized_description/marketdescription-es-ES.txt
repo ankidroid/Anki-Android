@@ -6,7 +6,7 @@ Estudia todo tipo de cosas donde y cuando quieras. ¡Aprovecha los tiempos muert
 
 Crea tus propios mazos de tarjetas o descarga mazos gratuitos creados para muchos idiomas y temas (hay más de 6.000 disponibles).
 
-Añadir material a través de la aplicación de escritorio Anki o directamente mediante Ankidroid. ¡La aplicación soporta incluso la creación de material de forma automática a partir de un diccionario!
+Añade material a través de la aplicación de escritorio Anki o directamente mediante Ankidroid. ¡La aplicación soporta incluso la creación de material de forma automática a partir de un diccionario!
 
 ★ Características principales:
 • contenidos de tarjeta soportados: texto, imágenes, sonidos, LaTeX
@@ -25,15 +25,15 @@ Añadir material a través de la aplicación de escritorio Anki o directamente m
 • explorador de tarjetas
 • importar archivos de colección existentes (vía Anki Escritorio)
 • integración con diccionarios (ColorDict, GoldenDict, Leo.org, Aedict, diversos diccionarios online)
-• agregar tarjetas instantáneamente a partir de otras aplicaciones como diccionarios
+• agregar tarjetas al seleccionar contenido desde otras aplicaciones como diccionarios
 • soporte para fuentes personalizadas
 • repaso en el widget
 • completo sistema de copias de seguridad
 • navegación por gestos, toques, agitado
 • totalmente personalizable
 • limita el estudio por etiquetas, tiempo o tarjetas
-• modo empollar
+• modo Empollar
 • modo noche
 • tres temas de interfaz diferentes
-• traducido en 27 idiomas
-• All previous AnkiDroid versions can be downloaded from the website
+• traducido a 27 idiomas
+• todas las versiones anteriores de AnkiDroid pueden descargarse desde el sitio Web

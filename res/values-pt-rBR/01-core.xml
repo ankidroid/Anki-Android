@@ -88,10 +88,13 @@
   <string name="download">Baixar</string>
   <string name="open_collection">Abrindo coleção.\nPor favor aguarde...</string>
   <string name="create_collection">Abrindo coleção.\nPor favor aguarde...</string>
+  <string name="rebuild_cram_deck">Rebuilding cram deck.\nPlease wait...</string>
+  <string name="rebuild_cram_label">Rebuild</string>
   <string name="studyoptions_congrats_finished">Parabéns!Você terminou por hora.</string>
   <string name="studyoptions_congrats_more_rev">O limite de revisão de hoje foi atingido, mas ainda existem cartões esperando para serem revistos. Para otima memória, considere aumentar o limite diário nas opções.</string>
   <string name="studyoptions_congrats_more_new">Existem mais cartões novos, mas o limite diário foi atingido. Você pode aumentar o limite nas opções, mas por favor, tenha em mente que  quanto mais cartões novos você introduzir, maior será sua carga de revisão a curto prazo.</string>
   <string name="sd_card_not_mounted">Cartão SD não está montado.</string>
+  <string name="studyoptions_options">Options</string>
   <string-array name="next_review_s">
     <item>1 segundo</item>
     <item>1 minuto</item>

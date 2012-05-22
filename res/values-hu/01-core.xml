@@ -88,10 +88,13 @@
   <string name="download">Letöltés</string>
   <string name="open_collection">Gyűjtemény megnyitása.\nKérlek, várj...</string>
   <string name="create_collection">Gyűjtemény létrehozása.\nKérlek, várj...</string>
+  <string name="rebuild_cram_deck">Rebuilding cram deck.\nPlease wait...</string>
+  <string name="rebuild_cram_label">Rebuild</string>
   <string name="studyoptions_congrats_finished">Gratulálok! Mára végeztél.</string>
   <string name="studyoptions_congrats_more_rev">A mai átnézési korlátot elérted, de még mindig maradt átnézendő kártya. Az optimális tanulás érdekében lehet, hogy meg kellene emelni a napi korlátot a Beállítások menüben.</string>
   <string name="studyoptions_congrats_more_new">Még mindig vannak új kártyák, de a napi korlátot elérted. Növelheted a napi korlátot a Beállításoknál, de ne feledd, hogy minél több kártyát vezetsz be, annál több kártyát kell átnézned rövid időn belül, mely nagyobb terhet jelent.</string>
   <string name="sd_card_not_mounted">Az SD kártya nincs csatlakoztatva.</string>
+  <string name="studyoptions_options">Options</string>
   <string-array name="next_review_s">
     <item>1 másodperc</item>
     <item>1 perc</item>

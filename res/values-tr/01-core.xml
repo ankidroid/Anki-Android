@@ -88,10 +88,13 @@
   <string name="download">İndir</string>
   <string name="open_collection">Koleksiyon açılıyor.\nLütfen bekleyin...</string>
   <string name="create_collection">Koleksiyon oluşturuluyor.\nLütfen bekleyin...</string>
+  <string name="rebuild_cram_deck">Rebuilding cram deck.\nPlease wait...</string>
+  <string name="rebuild_cram_label">Rebuild</string>
   <string name="studyoptions_congrats_finished">Tebrikler! Şimdilik bitirdiniz.</string>
   <string name="studyoptions_congrats_more_rev">Bugünün çalışma sınırına ulaşıldı, ama hâlâ çalışılmayı bekleyen kartlar var. En uygun belleme için, seçeneklerden günlük sınırı artırabilirsiniz.</string>
   <string name="studyoptions_congrats_more_new">Daha çalışılmamış yeni kartlar var, fakat günlük sınıra ulaşıldı. Seçeneklerden sınırı artırabilirsiniz, fakat yeni gördüğünüz kart sayısı arttıkça kısa vâdede çalışma yükünüzün yükseleceğini unutmayın.</string>
   <string name="sd_card_not_mounted">SD kart takılı değil.</string>
+  <string name="studyoptions_options">Options</string>
   <string-array name="next_review_s">
     <item>1 saniye</item>
     <item>1 dakika</item>
