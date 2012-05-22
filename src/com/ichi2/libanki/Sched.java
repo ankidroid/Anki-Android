@@ -1192,9 +1192,10 @@ public class Sched {
 			now = Utils.intNow();
 		}
 		int ok = 0;
-		for (int i = 0; i < left; i++) {
+		int offset = Math.min(left, delays.length());
+		for (int i = 0; i < offset; i++) {
 			try {
-				now += (int)(delays.getDouble(delays.length() - left + i) * 60.0);
+				now += (int)(delays.getDouble(delays.length() - offset + i) * 60.0);
 			} catch (JSONException e) {
 				throw new RuntimeException(e);
 			}
