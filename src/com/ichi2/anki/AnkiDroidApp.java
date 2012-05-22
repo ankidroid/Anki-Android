@@ -130,8 +130,16 @@ public class AnkiDroidApp extends Application {
         
     	
     	if (bTibetan && mTibTypeface == null) {
-        	String fileName = "fonts/DDC_Uchen.ttf";
-        	mTibTypeface = Typeface.createFromAsset(getInstance().getAssets(), fileName);
+        	String fileName = "/mnt/sdcard/fonts/DDC_Uchen.ttf";
+//        	mTibTypeface = Typeface.createFromAsset(getInstance().getAssets(), fileName);
+        	File mTibFontFile = new File(fileName);
+        	if ( mTibFontFile.exists()) {
+        		mTibTypeface = Typeface.createFromFile(fileName);
+        	} else {
+        		return false;
+        	}
+        	
+        	
         }
     	
     	return bTibetan;

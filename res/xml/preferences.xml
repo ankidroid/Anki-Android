@@ -507,8 +507,19 @@
                     android:defaultValue="false"
                     android:key="com.ichi2.filters.GoogleTranslaterFilter"/>
         </PreferenceCategory>
-    <PreferenceCategory android:title="@string/pref_cat_tibetan">
+
+    </PreferenceScreen>
+    <PreferenceScreen android:title="@string/about_title">
+        
+    
+    <PreferenceCategory android:title="@string/pref_lang_common">
+        <ListPreference android:key="fontUI" android:title="@string/pref_font_UI"/>
+    </PreferenceCategory><PreferenceCategory android:title="@string/pref_cat_tibetan" android:summary="@string/pref_cat_tibetan">
         <CheckBoxPreference android:title="@string/pref_enable_tibetan" android:key="enableTibetan"/>
     </PreferenceCategory>
-        </PreferenceScreen>
+    
+    
+    </PreferenceScreen>
+=======
+
 </PreferenceScreen>
