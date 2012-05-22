@@ -88,10 +88,13 @@
   <string name="download">Скачать</string>
   <string name="open_collection">Открытие коллекции.\nПожалуйста подождите...</string>
   <string name="create_collection">Создание коллекции.\nПожалуйста подождите...</string>
+  <string name="rebuild_cram_deck">Rebuilding cram deck.\nPlease wait...</string>
+  <string name="rebuild_cram_label">Rebuild</string>
   <string name="studyoptions_congrats_finished">Поздравляем! На сегодня задание выполнено.</string>
   <string name="studyoptions_congrats_more_rev">Достигнут лимит количества просмотров на сегодня, но всё ещё есть карты ожидающие просмотра. Для оптимального запоминания рекомендуется увеличить ежедневный лимит в параметрах.</string>
   <string name="studyoptions_congrats_more_new">Есть ещё новые карты, но ежедневный лимит достигнут. Вы можете увеличить лимит в параметрах, но учтите, что чем больше вы добавляете новых карт, тем больше будет карт в режиме повтора в ближайшие дни.</string>
   <string name="sd_card_not_mounted">SD карта не подключена.</string>
+  <string name="studyoptions_options">Options</string>
   <string-array name="next_review_s">
     <item>1 секунда</item>
     <item>1 минута</item>

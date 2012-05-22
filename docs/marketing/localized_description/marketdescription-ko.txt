@@ -36,4 +36,4 @@ Anki 데스크톱 응용 프로그램 또는 Ankidroid를 통해 직접 카드�
 • 야간 모드
 • 세가지 사용자 테마
 • 27개국 언어 지원
-• All previous AnkiDroid versions can be downloaded from the website
+• 이전 버전의 AnkiDroid 홈페이지에서 다운로드 가능

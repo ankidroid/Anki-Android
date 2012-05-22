@@ -75,7 +75,7 @@
   <string name="check_db_message">데이터베이스 검사 중. \n 기다려주세요...</string>
   <string name="simple_interface_hint">빈 %s. 간단 인터페이스는 그림/소리 등이 재생되지 않습니다.</string>
   <string name="delete_deck">카드 묶음 삭제 중...\n 잠시만 기다리세요.</string>
-  <string name="menu_cardbrowser">Card browser</string>
+  <string name="menu_cardbrowser">카드 탐색기</string>
   <string-array name="dynOrderLabels">
     <item>오래된 카드 먼저 학습하기</item>
     <item>무작위로 학습하기</item>

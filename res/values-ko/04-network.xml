@@ -102,10 +102,10 @@
   <string name="sync_generic_error">오류가 발생 했습니다. 나중에 다시 시도하십시오.</string>
   <string name="sync_check_upload_file">업로드 전 파일 확인 중...</string>
   <string name="sync_check_download_file">다운로드 파일 점검 중...</string>
-  <string name="sync_media_find">Finding changed media...</string>
-  <string name="sync_media_remove">Handling deleted media...</string>
-  <string name="sync_media_from_server">Receiving media from server...</string>
-  <string name="sync_media_to_server">Sending media to server...</string>
-  <string name="sync_media_no_changes">No changes to media files.</string>
-  <string name="sync_media_success">Media synced successfully.</string>
+  <string name="sync_media_find">변경된 미디어 파일 찾는중...</string>
+  <string name="sync_media_remove">삭제된 미디어파일 처리중...</string>
+  <string name="sync_media_from_server">서버에서 미디어 파일 다운로드 중...</string>
+  <string name="sync_media_to_server">미디어 파일 서버 전송 중...</string>
+  <string name="sync_media_no_changes">변경된 미디어 파일이 없습니다.</string>
+  <string name="sync_media_success">미디어 파일이 성공적으로 동기화 되었습니다.</string>
 </resources>

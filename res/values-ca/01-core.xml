@@ -88,10 +88,13 @@
   <string name="download">Descarrega</string>
   <string name="open_collection">S\'està obrint la col·lecció.\nUn moment si us plau...</string>
   <string name="create_collection">S\'està generant la col·lecció.\nUn moment si us plau...</string>
+  <string name="rebuild_cram_deck">Rebuilding cram deck.\nPlease wait...</string>
+  <string name="rebuild_cram_label">Rebuild</string>
   <string name="studyoptions_congrats_finished">Felicitats! Ja heu acabat per ara.</string>
   <string name="studyoptions_congrats_more_rev">S\'ha assolit el límit de revisió d\'avui, però encara hi ha targrtes per a revisar. Per a optimitzar la memòria, considereu augmentar el límit diari a les opcions.</string>
   <string name="studyoptions_congrats_more_new">Hi ha més targetes noves disponibles, però s\'ha arribat al límit diari. Podeu augmentar el límit a les opcions, però si us plau, tingueu en compte que si introduiu més targetes, més alt serà el volum de treball de revisió a curt termini.</string>
   <string name="sd_card_not_mounted">La targeta SD no està muntada.</string>
+  <string name="studyoptions_options">Options</string>
   <string-array name="next_review_s">
     <item>1 segon</item>
     <item>1 minut</item>

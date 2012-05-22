@@ -88,10 +88,13 @@
   <string name="download">Завантажити</string>
   <string name="open_collection">Відкриття колекції.\nЗачекайте будь ласка...</string>
   <string name="create_collection">Створення колекції.\nЗачекайте будь ласка...</string>
+  <string name="rebuild_cram_deck">Rebuilding cram deck.\nPlease wait...</string>
+  <string name="rebuild_cram_label">Rebuild</string>
   <string name="studyoptions_congrats_finished">Вітаємо! На зараз усе.</string>
   <string name="studyoptions_congrats_more_rev">Ви вічерпали ліміт на сьогодні, але досі є картки, які треба переглянути. Для оптимального запам\'ятовування рекомендуємо збільшити щоденнній лиміт у налаштуваннях.</string>
   <string name="studyoptions_congrats_more_new">Ще є картки, але Ви вичерпали сьогоднішній ліміт. Ви можете збільшити ліміт в налаштуваннях, але пам\'ятайте, що чим більше нових карток Ви додаєте, тим більше карток доведеться повторювати у найближчі дні.</string>
   <string name="sd_card_not_mounted">Картка пам\'яті не підключена.</string>
+  <string name="studyoptions_options">Options</string>
   <string-array name="next_review_s">
     <item>1 секунда</item>
     <item>1 хвилина</item>

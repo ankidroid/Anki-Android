@@ -36,4 +36,4 @@ Lägga till material genom skrivbordsprogrammet Anki eller direkt via Ankidroid.
 • nattläge
 • tre olika ui-teman
 • översatt till 27 språk
-• All previous AnkiDroid versions can be downloaded from the website
+•Alla tidigare versioner av AnkiDroid kan hämtas från webbsidan

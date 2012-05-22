@@ -77,7 +77,7 @@
   <string name="menu_unmark_card">카드 마크 해제</string>
   <string name="new_deck">새 카드묶음</string>
   <string name="create">만들기</string>
-  <string name="new_dynamic_deck">New dynamic deck</string>
+  <string name="new_dynamic_deck">새 동적 암기묶음</string>
   <string name="studyoptions_feedback">피드백</string>
   <string name="studyoptions_cram_dialog_title">벼락치기 태그달기</string>
   <string name="studyoptions_load_other_deck">다른 묶음 불러오기</string>
@@ -88,10 +88,13 @@
   <string name="download">다운로드</string>
   <string name="open_collection">컬렉션 여는 중. \n 잠시 기다려 주세요...</string>
   <string name="create_collection">컬렉션 생성하는 중. \n 잠시만 기다려 주세요...</string>
+  <string name="rebuild_cram_deck">벼락치기 암기묶음 재생성 중. \n 잠시만 기다리세요...</string>
+  <string name="rebuild_cram_label">재생성</string>
   <string name="studyoptions_congrats_finished">축하합니다! 오늘의 학습을 모두 끝냈습니다.</string>
   <string name="studyoptions_congrats_more_rev">지정한 하루 분량의 학습을 모두 끝냈지만 학습할 카드가 더 남아있습니다. 적절한 암기를 위해 학습옵션에서 하루 학습량을 늘리는 것을 고려해보세요.</string>
   <string name="studyoptions_congrats_more_new">하루에 학습해야 하는 새카드 학습을 끝냈지만 학습해야 할 더 많은 새카드가 남아있습니다. 학습옵션에서 하루에 학습해야할 새카드 분량을 늘릴 수 있지만, 더 많은 새카드를 학습할 경우 단기간에 학습해야할 분량이 많아짐을 유념하시기 바랍니다.</string>
   <string name="sd_card_not_mounted">SD 카드가 마운트 되지 않았습니다.</string>
+  <string name="studyoptions_options">옵션</string>
   <string-array name="next_review_s">
     <item>1 초</item>
     <item>1 분</item>

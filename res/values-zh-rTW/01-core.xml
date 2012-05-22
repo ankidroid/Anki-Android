@@ -88,10 +88,13 @@
   <string name="download">下載</string>
   <string name="open_collection">開啟集合中。請稍後...</string>
   <string name="create_collection">建立集合中。請稍後...</string>
+  <string name="rebuild_cram_deck">Rebuilding cram deck.\nPlease wait...</string>
+  <string name="rebuild_cram_label">Rebuild</string>
   <string name="studyoptions_congrats_finished">恭喜！你完成今天的進度了。</string>
   <string name="studyoptions_congrats_more_rev">您已經達到今天卡片複習數量的上限了，不過還是有些卡片需要複習。建議您增加選項中每天卡片複習的上限。</string>
   <string name="studyoptions_congrats_more_new">There are more new cards available, but the daily limit has been reached. You can increase the limit in the options, but please bear in mind that the more new cards you introduce, the higher your short-term review workload will become.</string>
   <string name="sd_card_not_mounted">記憶卡尚未掛載.</string>
+  <string name="studyoptions_options">Options</string>
   <string-array name="next_review_s">
     <item>1秒</item>
     <item>1分鐘</item>
