@@ -59,7 +59,7 @@
   <string name="deck_summary_tomorrow_time">내일 예상 학습 시간: &lt;b&gt;%d&lt;/b&gt; 분.</string>
   <string name="deck_summary_finished_in">새 카드 완료: &lt;b&gt;%d&lt;/b&gt; 일</string>
   <string name="deck_summary_cards_per_day">&lt;b&gt;%.1f&lt;/b&gt; 카드/일</string>
-  <string name="deck_summary_deck_age">암기묶음 나이: &lt;b&gt;%d&lt;/b&gt,일</string>
+  <string name="deck_summary_deck_age">암기묶음 나이: &lt;b&gt;%d&lt;/b&gt;일</string>
   <string name="deck_summary_all_decks">모든 암기묶음</string>
   <string name="stats_forecast">예상</string>
   <string name="stats_review_count">복습 횟수</string>
