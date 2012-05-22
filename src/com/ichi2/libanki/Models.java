@@ -81,7 +81,7 @@ public class Models {
 		"'ord': None, " +
 		"'qfmt': \"\", " +
 		"'afmt': \"\", " +
-		"'did': None " +
+		"'did': None, " +
 		// added in beta 13
 		"'bqfmt': \"\"," +
 		"'bafmt': \"\" }";
@@ -602,7 +602,7 @@ public class Models {
 
     // not in libanki
     public Template[] getCmpldTemplate(long modelId, int ord, ArrayList<String> args) {
-    	if (args != null) {
+    	if (args != null && args.size() != 0) {
     		// TODO: cache this for browser too
     		return compileTemplate(modelId, ord, args);
     	}
@@ -624,7 +624,7 @@ public class Models {
 		try {
 			String qfmt;
 			String afmt;
-			if (args != null) {
+			if (args != null && args.size() > 1) {
 				qfmt = args.get(0);
 				afmt = args.get(1);
 			} else {
