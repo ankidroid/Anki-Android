@@ -1094,4 +1094,8 @@ public class Models {
         return mName;
     }
 
+    public HashMap<Long, JSONObject> getModels() {
+    	return mModels;
+    }
+
 }
