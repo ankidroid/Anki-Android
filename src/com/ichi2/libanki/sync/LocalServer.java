@@ -19,10 +19,9 @@ package com.ichi2.libanki.sync;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import com.ichi2.async.Connection;
 import com.ichi2.libanki.Collection;
 
-public class LocalServer extends HttpSyncer {
+public class LocalServer extends Syncer {
 
 	public LocalServer(Collection col) {
 		super(null, null);

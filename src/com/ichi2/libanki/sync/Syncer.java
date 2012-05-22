@@ -64,9 +64,6 @@ public class Syncer {
 	private LinkedList<String> mTablesLeft;
 	private Cursor mCursor;
 
-    public Syncer (Collection col) {
-    	mCol = col;
-    }
     public Syncer (Collection col, HttpSyncer server) {
     	mCol = col;
     	mServer = server;
