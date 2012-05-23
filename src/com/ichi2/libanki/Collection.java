@@ -879,10 +879,18 @@ public class Collection {
 	 */
 
 	/** Return a list of card ids */
-	public ArrayList<Long> findCards(String search, String order) {
-		return new Finder(this).findCards(search, order);
+	public ArrayList<Long> findCards(String search) {
+		return new Finder(this).findCards(search, false, null);
 	}
-	
+	/** Return a list of card ids */
+	public ArrayList<Long> findCards(String search, String order) {
+		return new Finder(this).findCards(search, false, order);
+	}
+	/** Return a list of card ids */
+	public ArrayList<Long> findCards(String search, boolean full) {
+		return new Finder(this).findCards(search, full, null);
+	}
+
 	/** Return a list of card ids */
 	public ArrayList<HashMap<String, String>> findCardsForCardBrowser(boolean wholeCollection) {
 		ArrayList<HashMap<String, String>> data = new ArrayList<HashMap<String, String>>();
