@@ -43,6 +43,7 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Locale;
 import java.util.Random;
 import java.util.TreeMap;
@@ -2322,7 +2323,24 @@ public class Sched {
 		sortCards(ids, pmax + 1);
 	}
 
-	// reschedcards
+	/**
+	 * Put cards in review queue with a new interval in days (min, max).
+	 * @param ids The list of card ids to be affected
+	 * @param imin the minimum interval (inclusive)
+	 * @param imax The maximum interval (inclusive)
+	 */
+	public void reschedCards(long[] ids, int imin, int imax) {
+	    ArrayList<Object[]> d = new ArrayList<Object[]>();
+	    int t = mToday;
+	    long mod = Utils.intNow();
+	    Random rnd = new Random();
+	    for (long id : ids) {
+	        int r = rnd.nextInt(imax - imin + 1) + imin;
+	        d.add(new Object[]{Math.max(1, r), r+t, mCol.usn(), mod, 2500, id});
+	    }
+	    mCol.getDb().executeMany("update cards set type=2,queue=2,ivl=?,due=?, " +
+	        "usn=?, mod=?, factor=? where id=? and odid=0", d);
+	}
 
 	/**
 	 * Repositioning new cards
@@ -2375,8 +2393,16 @@ public class Sched {
 		mCol.getDb().executeMany("UPDATE cards SET due = ?, mod = ?, usn = ? WHERE id = ?", d);
 	}
 
-	// randomizecards
-	// ordercards
+	public void randomizeCards(long did) {
+	    List<Long> cids = mCol.getDb().queryColumn(Long.class, "select id from cards where did = " + did, 0);
+	    sortCards(Utils.toPrimitive(cids), 1, 1, true, false);
+	}
+	
+	public void orderCards(long did) {
+	    List<Long> cids = mCol.getDb().queryColumn(Long.class, "select id from cards where did = " + did, 0);
+	    sortCards(Utils.toPrimitive(cids), 1, 1, false, false);
+	}
+	
 	// resortconf
 
 	/**
