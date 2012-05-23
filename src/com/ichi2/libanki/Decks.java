@@ -508,7 +508,6 @@ public class Decks {
 		save(deck);
 	}
 
-	// setConf
 	// didsforConf
 	// restoretodefault
 

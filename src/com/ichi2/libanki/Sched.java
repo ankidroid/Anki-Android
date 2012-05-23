@@ -43,6 +43,7 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
+import java.util.Locale;
 import java.util.Random;
 import java.util.TreeMap;
 import java.util.TreeSet;
@@ -745,7 +746,7 @@ public class Sched {
 
 	private void _resetNew() {
 		_resetNewCount();
-		mNewDids = mCol.getDecks().active();
+		mNewDids = new LinkedList<Long>(mCol.getDecks().active());
 		mNewQueue.clear();
 		_updateNewCardRatio();
 	}
@@ -1316,10 +1317,9 @@ public class Sched {
 			extra += " AND odue <= " + mToday;
 		}
 		boolean mod = mCol.getDb().getMod();
-		mCol.getDb().execute(
-						"UPDATE cards SET due = odue, queue = 2, mod = "
-								+ Utils.intNow() + ", usn = " + mCol.usn()
-								+ " WHERE queue = 1 AND type = 2 " + extra);
+		mCol.getDb().execute(String.format(Locale.US, "update cards set " +
+				"due = odue, queue = 2, mod = %d, usn = %d, odue = 0 " +
+				"where queue = 1 and type = 2 %s", Utils.intNow(), mCol.usn(), extra));
 		if (expiredOnly) {
 			// we don't want to bump the mod time when removing expired
 			mCol.getDb().setMod(mod);
@@ -2316,7 +2316,7 @@ public class Sched {
 
 	/** Put cards at the end of the new queue. */
 	public void forgetCards(long[] ids) {
-		mCol.getDb().execute("UPDATE cards SET type=0, ivl=0 WHERE id IN " + Utils.ids2str(ids));
+		mCol.getDb().execute("update cards set type=0,queue=0,ivl=0 where id in " + Utils.ids2str(ids));
 		int pmax = mCol.getDb().queryScalar("SELECT max(due) FROM cards WHERE type=0", false);
 		// takes care of mod + usn
 		sortCards(ids, pmax + 1);
@@ -2349,7 +2349,7 @@ public class Sched {
 		for (int c = 0; c < nids.size(); c++) {
 			due.put(nids.get(c), (long) (start + c * step));
 		}
-		int high = start + step * nids.size();
+		int high = start + step * (nids.size() - 1);
 		// shift
 		if (shift) {
 			int low = mCol.getDb().queryScalar("SELECT min(due) FROM cards WHERE due >= " + start + " AND type = 0 AND id NOT IN " + scids, false);
