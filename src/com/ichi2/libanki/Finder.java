@@ -80,9 +80,10 @@ public class Finder {
 	}
 
 	/** Return a list of card ids for QUERY */
-	public ArrayList<Long> findCards(String query, String order) {
+	public ArrayList<Long> findCards(String query, boolean full, String order) {
 		mOrder = order;
 		mQuery = query;
+		mFull = full;
 		_findLimits();
 		try {
 			if (!mLims.getBoolean("valid")) {
