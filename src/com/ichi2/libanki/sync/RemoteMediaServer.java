@@ -32,7 +32,7 @@ import java.util.List;
 
 
 
-public class RemoteMediaServer extends HttpSyncer {
+public class RemoteMediaServer extends BasicHttpSyncer {
 
 	public RemoteMediaServer(String hkey, Connection con) {
 		super(hkey, con);

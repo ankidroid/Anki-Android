@@ -35,7 +35,7 @@ import com.ichi2.async.Connection;
 import com.ichi2.libanki.Collection;
 
 
-public class FullSyncer extends HttpSyncer {
+public class FullSyncer extends BasicHttpSyncer {
 
 	Collection mCol;
 	Connection mCon;

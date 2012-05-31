@@ -27,7 +27,7 @@ import org.json.JSONObject;
 import com.ichi2.async.Connection;
 import com.ichi2.libanki.Collection;
 
-public class RemoteServer extends HttpSyncer {
+public class RemoteServer extends BasicHttpSyncer {
 
 	public RemoteServer(Connection con, String hkey) {
 		super(hkey, con);

@@ -33,7 +33,7 @@ import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Decks;
 import com.ichi2.libanki.Sched;
 import com.ichi2.libanki.sync.FullSyncer;
-import com.ichi2.libanki.sync.HttpSyncer;
+import com.ichi2.libanki.sync.BasicHttpSyncer;
 import com.ichi2.libanki.sync.MediaSyncer;
 import com.ichi2.libanki.sync.RemoteMediaServer;
 import com.ichi2.libanki.sync.RemoteServer;
@@ -207,7 +207,7 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
     private Payload doInBackgroundLogin(Payload data) {
         String username = (String) data.data[0];
         String password = (String) data.data[1];
-        HttpSyncer server = new RemoteServer(this, null);
+        BasicHttpSyncer server = new RemoteServer(this, null);
         HttpResponse ret = server.hostKey(username, password);
         String hostkey = null;
         boolean valid = false;
@@ -250,7 +250,7 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
     	}
     	String path = col.getPath();
 
-    	HttpSyncer server = new RemoteServer(this, hkey);
+    	BasicHttpSyncer server = new RemoteServer(this, hkey);
     	Syncer client = new Syncer(col, server);
 
     	// run sync and check state
@@ -294,7 +294,7 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
             			data.data = new Object[]{Collection.openCollection(path)};
             			return data;        				
         			}
-        			if (!((String) ret[0]).equals(HttpSyncer.ANKIWEB_STATUS_OK)) {
+        			if (!((String) ret[0]).equals(BasicHttpSyncer.ANKIWEB_STATUS_OK)) {
             			data.success = false;
             			data.result = ret;
             			data.data = new Object[]{Collection.openCollection(path)};
