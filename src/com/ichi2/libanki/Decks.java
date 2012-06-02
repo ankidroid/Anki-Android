@@ -560,8 +560,7 @@ public class Decks {
 
 	public void setDeck(long[] cids, long did) {
 		mCol.getDb()
-				.getDatabase()
-				.execSQL(
+				.execute(
 						"UPDATE cards SET did = ?, usn = ?, mod = ? WHERE id IN "
 								+ Utils.ids2str(cids),
 						new Object[] { did, mCol.usn(), Utils.intNow() });

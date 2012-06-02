@@ -124,9 +124,7 @@ public class Note {
 				.stripHTML(mFields[mCol.getModels().sortIdx(mModel)]);
 		String tags = stringTags();
 		long csum = Utils.fieldChecksum(mFields[0]);
-		mCol.getDb()
-				.getDatabase()
-				.execSQL(
+		mCol.getDb().execute(
 						"INSERT OR REPLACE INTO notes VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
 						new Object[] { mId, mGuId, mMid, mMod, mUsn,
 								tags, joinedFields(), sfld, csum, mFlags, mData });
