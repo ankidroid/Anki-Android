@@ -91,14 +91,14 @@ public class Tags {
 
     /** Given a list of tags, add any missing ones to tag registry. */
     public void register(List<String> tags) {
-    	register(tags, 0);
+    	register(tags, -99);
     }
     public void register(List<String> tags, int usn) {
     	// case is stored as received, so user can create different case
     	// versions of the same tag if they ignore the qt autocomplete.
     	for (String t : tags) {
     		if (!mTags.containsKey(t)) {
-    			mTags.put(t, usn == 0 ? mCol.usn() : usn);
+    			mTags.put(t, usn == -99 ? mCol.usn() : usn);
     			mChanged = true;
     		}
     	}

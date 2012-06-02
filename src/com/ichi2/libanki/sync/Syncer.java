@@ -666,10 +666,7 @@ public class Syncer {
     	if (mCol.getServer()) {
 			for (Map.Entry<String, Integer> t : mCol.getTags().allItems().entrySet()) {
 				if (t.getValue() >= mMinUsn) {
-					JSONArray ta = new JSONArray();
-					ta.put(t.getKey());
-					ta.put(t.getValue());
-					result.put(ta);
+					result.put(t.getKey());
 				}
 			}
     	} else {
