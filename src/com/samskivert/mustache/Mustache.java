@@ -449,7 +449,6 @@ public class Mustache
             Pattern p = Pattern.compile(regex);
             Matcher m = p.matcher(txt);
             if (!m.find()) {
-                // cloze doesn't exist; return empty
                 return "";
             }
             // replace chosen cloze with type

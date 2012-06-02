@@ -72,8 +72,12 @@ public class Media {
     private String mMediaDbFilename;
     private AnkiDb mMediaDb;
     
-    public Media(Collection col) {
+    public Media(Collection col, boolean server) {
         mCol = col;
+        if (server) {
+            mDir = null;
+            return;
+        }
         mDir = col.getPath().replaceFirst("\\.anki2$", ".media");
         mMediaDbFilename = mDir + ".db";
         File fd = new File(mDir);

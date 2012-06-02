@@ -1,5 +1,6 @@
 /****************************************************************************************
  * Copyright (c) 2011 Norbert Nagold <norbert.nagold@gmail.com>                         *
+ * Copyright (c) 2012 Kostas Spyropoulos <inigo.aldana@gmail.com>                       *
  *                                                                                      *
  * This program is free software; you can redistribute it and/or modify it under        *
  * the terms of the GNU General Public License as published by the Free Software        *
@@ -17,9 +18,15 @@
 package com.ichi2.libanki;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
+import java.util.Set;
 import java.util.TreeMap;
 import java.util.TreeSet;
 
@@ -83,10 +90,10 @@ public class Tags {
      */
 
     /** Given a list of tags, add any missing ones to tag registry. */
-    public void register(ArrayList<String> tags) {
+    public void register(List<String> tags) {
     	register(tags, 0);
     }
-    public void register(ArrayList<String> tags, int usn) {
+    public void register(List<String> tags, int usn) {
     	// case is stored as received, so user can create different case
     	// versions of the same tag if they ignore the qt autocomplete.
     	for (String t : tags) {
@@ -152,8 +159,70 @@ public class Tags {
      * ***********************************************************************************************
      */
 
-    // bulkadd
-    //bulkrem
+    /**
+     * Add/remove tags in bulk
+     * @param ids The cards to tag.
+     * @param tags List of tags to add/remove. They are space-separated.
+     * @param add True/False to add/remove.
+     */
+    public void bulkAdd(List<Long> ids, String tags) {
+        bulkAdd(ids, tags, true);
+    }
+    public void bulkAdd(List<Long> ids, String tags, boolean add) {
+        List<String> newTags = split(tags);
+        if (newTags == null || newTags.isEmpty()) {
+            return;
+        }
+        // cache tag names
+        register(newTags);
+        // find notes missing the tags
+        String l;
+        if (add) {
+            l = "tags not ";
+        } else {
+            l = "tags ";
+        }
+        StringBuilder lim = new StringBuilder();
+        for (String t : newTags) {
+            if (lim.length() != 0) {
+                lim.append(" or ");
+            }
+            lim.append(l).append("like '% ").append(t).append(" %'");
+        }
+        Cursor cur = null;
+        List<Long> nids = new ArrayList<Long>();
+        ArrayList<Object[]> res = new ArrayList<Object[]>();
+        try {
+            cur = mCol.getDb().getDatabase().rawQuery(
+                    String.format(Locale.US, "select id, tags from notes where id in %s and (%s)",
+                            Utils.ids2str(ids), lim), null);
+            if (add) {
+                while (cur.moveToNext()) {
+                    nids.add(cur.getLong(0));
+                    res.add(new Object[]{addToStr(tags, cur.getString(1)),
+                            Utils.intNow(), mCol.usn(), cur.getLong(0)});
+                }
+            } else {
+                while (cur.moveToNext()) {
+                    nids.add(cur.getLong(0));
+                    res.add(new Object[]{remFromStr(tags, cur.getString(1)),
+                            Utils.intNow(), mCol.usn(), cur.getLong(0)});
+                }
+            }
+        } finally {
+            if (cur != null) {
+                cur.close();
+            }
+        }
+        // update tags
+        mCol.getDb().executeMany(
+                "update notes set tags=:t,mod=:n,usn=:u where id = :id", res);
+     }
+    
+
+    public void bulkRem(List<Long> ids, String tags) {
+        bulkAdd(ids, tags, false);
+    }
 
 
     /**
@@ -162,7 +231,7 @@ public class Tags {
      */
 
     /** Parse a string and return a list of tags. */
-    public ArrayList<String> split(String tags) {
+    public List<String> split(String tags) {
     	ArrayList<String> list = new ArrayList<String>();
         if (tags != null && tags.length() != 0) {
         	for (String s : tags.split("\\s")) {
@@ -192,12 +261,25 @@ public class Tags {
 
     /** Add tags if they don't exist, and canonify */
     public String addToStr(String addtags, String tags) {
-    	// TODO
-    	return "";
+        Set<String> currentTags = new HashSet<String>(split(tags));
+        currentTags.addAll(split(addtags));
+        List<String> curTags = new ArrayList<String>(currentTags);
+        Collections.sort(curTags);
+    	return join(curTags);
     }
 
 
-    //remFromStr
+    /** "Delete tags if they don't exists." */
+    public String remFromStr(String deltags, String tags) {
+        List<String> currentTags = split(tags);
+        for (String tag : split(deltags)) {
+            // find tags, ignoring case
+            if (currentTags.contains(tag)) {
+                currentTags.remove(tag);
+            }
+        }
+        return join(currentTags);
+    }
 
     /**
      * List-based utilities
@@ -205,7 +287,7 @@ public class Tags {
      */
 
     /** Strip duplicates and sort. */
-    public TreeSet<String> canonify(ArrayList<String> tagList) {
+    public TreeSet<String> canonify(List<String> tagList) {
     	TreeSet<String> tree = new TreeSet<String>(String.CASE_INSENSITIVE_ORDER);
     	tree.addAll(tagList);
     	return tree;

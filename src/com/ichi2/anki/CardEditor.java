@@ -84,6 +84,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.TreeSet;
 
 import org.amr.arabic.ArabicUtilities;
@@ -170,7 +171,7 @@ public class CardEditor extends Activity {
 
 	private Note mEditorNote;
 	private Card mCurrentEditedCard;
-	private ArrayList<String> mCurrentTags;
+	private List<String> mCurrentTags;
 	private long mCurrentDid;
 
 	/* indicates if a new fact is added or a card is edited */

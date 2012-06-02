@@ -2,6 +2,7 @@
  * Copyright (c) 2009 Daniel Svärd <daniel.svard@gmail.com>                             *
  * Copyright (c) 2010 Rick Gruber-Riemer <rick@vanosten.net>                            *
  * Copyright (c) 2011 Norbert Nagold <norbert.nagold@gmail.com>                         *
+ * Copyright (c) 2011 Kostas Spyropoulos <inigo.aldana@gmail.com>                       *
  *                                                                                      *
  * This program is free software; you can redistribute it and/or modify it under        *
  * the terms of the GNU General Public License as published by the Free Software        *
@@ -19,26 +20,34 @@
 package com.ichi2.libanki;
 
 import android.content.ContentValues;
+import android.database.Cursor;
 import android.util.Log;
+import android.util.Pair;
 
 import com.ichi2.anki.AnkiDroidApp;
 import com.mindprod.common11.StringTools;
 import com.samskivert.mustache.Mustache;
 import com.samskivert.mustache.Template;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
-import java.util.TreeMap;
-import java.util.regex.Pattern;
-import java.util.regex.Matcher;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
+import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 public class Models {
+    private static final Pattern fClozePattern1 = Pattern.compile("\\{\\{cloze:(.+?)\\}\\}");
+    private static final Pattern fClozePattern2 = Pattern.compile("\\{\\{c(\\d+)::[^}]*?\\}\\}");
 
 	public static final String defaultModel = 
 		"{'sortf': 0, " +
@@ -82,7 +91,6 @@ public class Models {
 		"'qfmt': \"\", " +
 		"'afmt': \"\", " +
 		"'did': None, " +
-		// added in beta 13
 		"'bqfmt': \"\"," +
 		"'bafmt': \"\" }";
 	
@@ -190,6 +198,7 @@ public class Models {
 			}
     	}
     	mChanged = true;
+    	// runHook("newModel")
     }
 
     
@@ -394,7 +403,18 @@ public class Models {
      * ***********************************************************************************************
      */
     
-    // copy
+    /** Copy, save and return. */
+    public JSONObject copy(JSONObject m) {
+        JSONObject m2 = null;
+        try {
+            m2 = new JSONObject(m.toString());
+            m2.put("name", m2.getString("name") + " copy");
+        } catch (JSONException e) {
+            throw new RuntimeException(e);
+        }
+        add(m2);
+        return m2;
+    }
 
     /**
      * Fields
@@ -412,36 +432,16 @@ public class Models {
     	return f;
     }
 
-
-//    /** Mapping of field name --> (ord, field). */
-//    public TreeMap<String, Object[]> fieldMap(JSONObject m) {
-//    	JSONArray ja;
-//		try {
-//			ja = m.getJSONArray("flds");
-//			TreeMap<String, Object[]> map = new TreeMap<String, Object[]>();
-//	    	for (int i = 0; i < ja.length(); i++) {
-//	    		JSONObject f = ja.getJSONObject(i);
-//	    		map.put(f.getString("name"), new Object[]{f.getInt("ord"), f});
-//	    	}
-//	    	return map;
-//		} catch (JSONException e) {
-//			throw new RuntimeException(e);
-//		}
-//    }
-
-
-    public Map<String, Integer> fieldMap(JSONObject m) {
+    /** "Mapping of field name -> (ord, field). */
+    public Map<String, Pair<Integer, JSONObject>> fieldMap(JSONObject m) {
     	JSONArray ja;
 		try {
 			ja = m.getJSONArray("flds");
-			TreeMap<Integer, String> map = new TreeMap<Integer, String>();
+			//TreeMap<Integer, String> map = new TreeMap<Integer, String>();
+			Map<String, Pair<Integer, JSONObject>> result = new HashMap<String, Pair<Integer, JSONObject>>();
 	    	for (int i = 0; i < ja.length(); i++) {
 	    		JSONObject f = ja.getJSONObject(i);
-	    		map.put(f.getInt("ord"), f.getString("name"));
-	    	}
-	    	Map<String, Integer> result = new HashMap<String, Integer>();
-	    	for (int i = 0; i < map.size(); i++) {
-	    		result.put(map.get(i), i);
+	    		result.put(f.getString("name"), new Pair<Integer, JSONObject>(f.getInt("ord"), f));
 	    	}
 	    	return result;
 		} catch (JSONException e) {
@@ -486,7 +486,6 @@ public class Models {
 //		}
 //    }
 
-
     public void addField(JSONObject m, JSONObject field) {
     	// only mod schema if model isn't new
     	try {
@@ -498,16 +497,135 @@ public class Models {
 			m.put("flds", ja);
 			_updateFieldOrds(m);
 			save(m);
-			_transformFields(m); //, Method add);
+			_transformFields(m, new TransformFieldAdd());
 		} catch (JSONException e) {
 			throw new RuntimeException(e);
-		}
+        }
     	
     }
+    class TransformFieldAdd implements TransformFieldVisitor {
+        @Override
+        public String[] transform(String[] fields) {
+            String [] f = Arrays.copyOf(fields, fields.length + 1);
+            f[fields.length] = "";
+            return f;
+        }
+    }
 
-    //remfield
-    //movefield
-    //renamefield
+    public void remField(JSONObject m, JSONObject field) {
+        mCol.modSchema();
+        try {
+            JSONArray ja = m.getJSONArray("flds");
+            JSONArray ja2 = new JSONArray();
+            int idx = -1;
+            for (int i = 0; i < ja.length(); ++i) {
+                if (field.equals(ja.getJSONObject(i))) {
+                    idx = i;
+                    continue;
+                }
+                ja2.put(ja.get(i));
+            }
+            m.put("flds", ja2);
+            int sortf = m.getInt("sortf");
+            if (sortf >= m.getJSONArray("flds").length()) {
+                m.put("sortf", sortf - 1);
+            }
+            _updateFieldOrds(m);
+            _transformFields(m, new TransformFieldDelete(idx));
+            if (idx == sortIdx(m)) {
+                // need to rebuild
+                mCol.updateFieldCache(Utils.toPrimitive(nids(m)));
+            }
+            renameField(m, field, null);
+        } catch (JSONException e) {
+            throw new RuntimeException(e);
+        }
+        
+    }
+    class TransformFieldDelete implements TransformFieldVisitor {
+        private int idx;
+        public TransformFieldDelete(int _idx) {
+            idx = _idx;
+        }
+        @Override
+        public String[] transform(String[] fields) {
+            ArrayList<String> fl = new ArrayList<String>(Arrays.asList(fields));
+            fl.remove(idx);
+            return fl.toArray(new String[]{});
+        }
+    }
+    
+    public void moveField(JSONObject m, JSONObject field, int idx) {
+        mCol.modSchema();
+        try {
+            JSONArray ja = m.getJSONArray("flds");
+            ArrayList<JSONObject> l = new ArrayList<JSONObject>();
+            int oldidx = -1;
+            for (int i = 0; i < ja.length(); ++i) {
+                l.add(ja.getJSONObject(i));
+                if (field.equals(ja.getJSONObject(i))) {
+                    oldidx = i;
+                    if (idx == oldidx) {
+                        return;
+                    }
+                }
+            }
+            l.remove(oldidx);
+            l.add(idx, field);
+            m.put("flds", new JSONArray(l));
+            m.put("sortf", idx);
+            _updateFieldOrds(m);
+            save(m);
+            _transformFields(m, new TransformFieldMove(idx, oldidx));
+            renameField(m, field, null);
+        } catch (JSONException e) {
+            throw new RuntimeException(e);
+        }
+        
+    }
+    class TransformFieldMove implements TransformFieldVisitor {
+        private int idx;
+        private int oldidx;
+        public TransformFieldMove(int _idx, int _oldidx) {
+            idx = _idx;
+            oldidx = _oldidx;
+        }
+        @Override
+        public String[] transform(String[] fields) {
+            String val = fields[oldidx];
+            ArrayList<String> fl = new ArrayList<String>(Arrays.asList(fields));
+            fl.remove(oldidx);
+            fl.add(idx, val);
+            return fl.toArray(new String[]{});
+        }
+    }
+    
+    public void renameField(JSONObject m, JSONObject field, String newName) {
+        mCol.modSchema();
+        try {
+            String pat = String.format("\\{\\{([:#^/]|[^:#/^}][^:}]*?:|)%s\\}\\}", Pattern.quote(field.getString("name")));
+            if (newName == null) {
+                newName = "";
+            }
+            String repl = "{{$1" + newName + "}}";
+            
+            JSONArray tmpls = m.getJSONArray("tmpls");
+            for (int i = 0; i < tmpls.length(); ++i) {
+                JSONObject t = tmpls.getJSONObject(i);
+                for (String fmt : new String[]{"qfmt", "afmt"}) {
+                    if (!newName.equals("")) {
+                        t.put(fmt, t.getString(fmt).replaceAll(pat, repl));
+                    } else {
+                        t.put(fmt, t.getString(fmt).replaceAll(pat, ""));
+                    }
+                }
+            }
+            field.put("name", newName);
+        } catch (JSONException e) {
+            throw new RuntimeException(e);
+        }
+        save(m);
+    }
 
     public void _updateFieldOrds(JSONObject m) {
     	JSONArray ja;
@@ -522,16 +640,34 @@ public class Models {
 		}
     }
 
-    public void _transformFields(JSONObject m) { // Method fn) {
+    interface TransformFieldVisitor {
+        public String[] transform(String[] fields);
+    }
+    
+    public void _transformFields(JSONObject m, TransformFieldVisitor fn) {
     	// model hasn't been added yet?
     	try {
 			if (m.getLong("id") == 0) {
 				return;
 			}
+			ArrayList<Object[]> r = new ArrayList<Object[]>();
+			Cursor cur = null;
+			
+			try {
+			    cur = mCol.getDb().getDatabase().rawQuery("select id, flds from notes where mid = " + m.getLong("id"), null);
+			    while (cur.moveToNext()) {
+			        r.add(new Object[]{Utils.joinFields((String[]) fn.transform(Utils.splitFields(cur.getString(1)))),
+			                Utils.intNow(), mCol.usn(), cur.getLong(0)});
+			    }
+            } finally {
+			    if (cur != null) {
+			        cur.close();
+			    }
+			}
+			mCol.getDb().executeMany("update notes set flds=?,mod=?,usn=? where id = ?", r);
 		} catch (JSONException e) {
 			throw new RuntimeException(e);
-		}
-    	// TODO
+        }
     }
 
     /**
@@ -566,8 +702,54 @@ public class Models {
 		}
     }
 
-    public void remTemplate(JSONObject m, JSONObject template) {
-    	// TODO
+    /**
+     * Removing a template
+     * @return False if removing template would leave orphan notes.
+     */
+    public boolean remTemplate(JSONObject m, JSONObject template) {
+        try {
+            assert(m.getJSONArray("tmpls").length() > 1);
+            // find cards using this template
+            JSONArray ja = m.getJSONArray("tmpls");
+            int ord = -1;
+            for (int i = 0; i < ja.length(); ++i) {
+                if (ja.get(i).equals(template)) {
+                    ord = i;
+                    break;
+                }
+            }
+            String sql = String.format(Locale.US,
+                    "select c.id from cards c, notes f where c.nid=f.id and mid = %d and ord = %d", m.getLong("id"), ord);
+            long[] cids = Utils.toPrimitive(mCol.getDb().queryColumn(Long.class, sql, 0));
+            // all notes with this template must have at least two cards, or we could end up creating orphaned notes
+            sql = String.format(Locale.US,
+                    "select nid, count() from cards where nid in (select nid from cards where id in %s) group by nid having count() < 2 limit 1",
+                    Utils.ids2str(cids));
+            if (mCol.getDb().queryScalar(sql, false) != 0) {
+                return false;
+            }
+            // ok to proceed; remove cards
+            mCol.modSchema();
+            mCol.remCards(cids);
+            // shift ordinals
+            mCol.getDb().execute(
+                    "update cards set ord = ord - 1, usn = ?, mod = ? where nid in (select id from notes where mid = ?) and ord > ?",
+                    new Object[]{mCol.usn(), Utils.intNow(), m.getLong("id"), ord});
+            JSONArray tmpls = m.getJSONArray("tmpls");
+            JSONArray ja2 = new JSONArray();
+            for (int i = 0; i < tmpls.length(); ++i) {
+                if (template.equals(tmpls.getJSONObject(i))) {
+                    continue;
+                }
+                ja2.put(tmpls.get(i));
+            }
+            m.put("tmpls", ja2);
+        } catch (JSONException e) {
+            throw new RuntimeException(e);
+        }
+        _updateTemplOrds(m);
+        save(m);
+        return true;
     }
 
     public void _updateTemplOrds(JSONObject m) {
@@ -583,7 +765,46 @@ public class Models {
 		}
     }
 
-    //movetemplate
+    public void moveTemplate(JSONObject m, JSONObject template, int idx) {
+        try {
+            JSONArray ja = m.getJSONArray("tmpls");
+            int oldidx = -1;
+            ArrayList<JSONObject> l = new ArrayList<JSONObject>();
+            HashMap<Integer, Integer> oldidxs = new HashMap<Integer, Integer>();
+            for (int i = 0; i < ja.length(); ++i) {
+                if (ja.get(i).equals(template)) {
+                    oldidx = i;
+                    if (idx == oldidx) {
+                        return;
+                    }
+                }
+                JSONObject t = ja.getJSONObject(i);
+                oldidxs.put(t.hashCode(), t.getInt("ord"));
+                l.add(t);
+            }
+            l.remove(oldidx);
+            l.add(idx, template);
+            m.put("tmpls", new JSONArray(l));
+            _updateTemplOrds(m);
+            // generate change map - We use StringBuilder
+            StringBuilder sb = new StringBuilder();
+            ja = m.getJSONArray("tmpls");
+            for (int i = 0; i < ja.length(); ++i) {
+                JSONObject t = ja.getJSONObject(i);
+                sb.append("when ord = ").append(oldidxs.get(t.hashCode())).append(" then ").append(t.getInt("ord"));
+                if (i != ja.length() - 1) {
+                    sb.append(" ");
+                }
+            }
+            // apply
+            save(m);
+            mCol.getDb().execute(String.format(Locale.US,
+                    "update cards set ord = (case %s end),usn=?,mod=? where nid in (select id from notes where mid = ?)", sb.toString()),
+                    new Object[]{mCol.usn(), Utils.intNow(), m.getLong("id")});
+        } catch (JSONException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
     private void _syncTemplates(JSONObject m) {
     	ArrayList<Long> rem = mCol.genCards(Utils.arrayList2array(nids(m)));
@@ -600,16 +821,22 @@ public class Models {
 //    }
 
 
-    // not in libanki
-    public Template[] getCmpldTemplate(long modelId, int ord, ArrayList<String> args) {
-    	if (args != null && args.size() != 0) {
-    		// TODO: cache this for browser too
-    		return compileTemplate(modelId, ord, args);
-    	}
+    /**
+     * Get a compiled template, create it if missing or if args != null
+     * @param modelId
+     * @param ord
+     * @param args Pass it as [qfmt, afmt] to use custom format, or [] to use the format from model
+     * @return
+     */
+    public Template[] getCmpldTemplate(long modelId, int ord, List<String> args) {
+    	//if (args != null) {
+    	//	// TODO: cache this for browser too
+    	//	return compileTemplate(modelId, ord, args);
+    	//}
     	if (!mCmpldTemplateMap.containsKey(modelId)) {
     		mCmpldTemplateMap.put(modelId, new HashMap<Integer, Template[]>());
     	}
-		if (!mCmpldTemplateMap.get(modelId).containsKey(ord)) {
+		if (!mCmpldTemplateMap.get(modelId).containsKey(ord) || args != null) {
     		mCmpldTemplateMap.get(modelId).put(ord, compileTemplate(modelId, ord, args));
 		}
     	return mCmpldTemplateMap.get(modelId).get(ord);
@@ -617,7 +844,7 @@ public class Models {
 
 
     // not in libanki
-    private Template[] compileTemplate(long modelId, int ord, ArrayList<String> args) {
+    private Template[] compileTemplate(long modelId, int ord, List<String> args) {
     	JSONObject model = mModels.get(modelId);
         JSONObject template;
         Template[] t = new Template[2];
@@ -789,7 +1016,20 @@ public class Models {
      * ***********************************************************************************************
      */
 
-    //scmhash
+    /** Return a hash of the schema, to see if models are compatible. */
+    public long scmhash(JSONObject m) {
+        String s = "";
+        JSONArray flds;
+        try {
+            flds = m.getJSONArray("flds");
+            for (int i = 0; i < flds.length(); ++i) {
+                s += flds.getJSONObject(i).getString("name");
+            }
+        } catch (JSONException e) {
+            throw new RuntimeException(e);
+        }
+        return Utils.fieldChecksum(s);
+    }
 
     /**
      * Required field/text cache
@@ -830,7 +1070,7 @@ public class Models {
 	    	ArrayList<String> a = new ArrayList<String> ();
 	    	ArrayList<String> b = new ArrayList<String> ();
 	    	for (String f : flds) {
-	    		a.add("1");
+	    		a.add("ankiflag");
 	    		b.add("");
 	    	}
 	    	Object[] data;
@@ -848,11 +1088,10 @@ public class Models {
 	    	for (int i = 0; i < flds.size(); i++) {
 	    		tmp.clear();
 	    		tmp.addAll(a);
-	    		tmp.remove(i);
-	    		tmp.add(i, "");
+	    		tmp.set(i, "");
 	    		data[6] = Utils.joinFields(tmp.toArray(new String[tmp.size()]));
-	    		// if the result is same as empty, field is required
-	    		if (mCol._renderQA(data).get("q").equals(empty)) {
+	    		// if no field content appeared, field is required
+	    		if (!mCol._renderQA(data, new ArrayList<String>()).get("q").contains("ankiflag")) {
 	    			req.put(i);
 	    		}
 	    	}
@@ -865,11 +1104,10 @@ public class Models {
 	    	for (int i = 0; i < flds.size(); i++) {
 	    		tmp.clear();
 	    		tmp.addAll(b);
-	    		tmp.remove(i);
-	    		tmp.add(i, "1");
+	    		tmp.set(i, "1");
 	    		data[6] = Utils.joinFields(tmp.toArray(new String[tmp.size()]));
 	    		// if not the same as empty, this field can make the card non-blank
-	    		if (mCol._renderQA(data).get("q").equals(empty)) {
+	    		if (!mCol._renderQA(data).get("q").equals(empty)) {
 	    			req.put(i);
 	    		}
 	    	}
@@ -906,7 +1144,8 @@ public class Models {
 					// AND requirement?
 					boolean ok = true;
 					for (int j = 0; j < req.length(); j++) {
-						if (fields.length <= j || fields[j] == null || fields[j].length() == 0) {
+					    int idx = req.getInt(j);
+						if (fields[idx] == null || fields[idx].length() == 0) {
 							// missing and was required
 							ok = false;
 							break;
@@ -919,7 +1158,8 @@ public class Models {
 					// OR requirement?
 					boolean ok = false;
 					for (int j = 0; j < req.length(); j++) {
-						if (fields.length <= j || fields[j] == null || fields[j].length() == 0) {
+                        int idx = req.getInt(j);
+						if (fields[idx] != null && fields[idx].length() != 0) {
 							// missing and was required
 							ok = true;
 							break;
@@ -938,8 +1178,37 @@ public class Models {
     }
 
     private ArrayList<Integer> _availClozeOrds(JSONObject m, String flds) {
-    	// TODO
-    	return null;
+        return _availClozeOrds(m, flds, false);
+    }
+    private ArrayList<Integer> _availClozeOrds(JSONObject m, String flds, boolean allowEmpty) {
+    	String[] sflds = Utils.splitFields(flds);
+    	Map<String, Pair<Integer, JSONObject>> map = fieldMap(m);
+    	Set<Integer> ords = new HashSet<Integer>();
+    	Matcher matcher1 = null;
+    	try {
+            matcher1 = fClozePattern1.matcher(m.getJSONArray("tmpls").getJSONObject(0).getString("qfmt"));
+        } catch (JSONException e) {
+            throw new RuntimeException(e);
+        }
+    	while (matcher1.find()) {
+    	    String fname = matcher1.group(1);
+    	    if (!map.containsKey(fname)) {
+    	        continue;
+    	    }
+    	    int ord = map.get(fname).first;
+    	    Matcher matcher2 = fClozePattern2.matcher(sflds[ord]);
+    	    while (matcher2.find()) {
+    	        ords.add(Integer.getInteger(matcher2.group(1)) - 1);
+    	    }
+    	}
+    	if (ords.contains(-1)) {
+    	    ords.remove(-1);
+    	}
+    	if (ords.isEmpty() && allowEmpty) {
+    	    // empty clozes use first ord
+    	    return new ArrayList<Integer>(Arrays.asList(new Integer[]{0}));
+    	}
+    	return new ArrayList<Integer>(ords);
     }
     
     /**

@@ -1,7 +1,8 @@
 /****************************************************************************************
  * Copyright (c) 2009 Daniel Sv�rd <daniel.svard@gmail.com>                             *
  * Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com>                                   *
- * Copyright (c) 2011 Norbert Nagold <norbert.nagold@gmail.com>						    *
+ * Copyright (c) 2011 Norbert Nagold <norbert.nagold@gmail.com>                         *
+ * Copyright (c) 2012 Kostas Spyropoulos <inigo.aldana@gmail.com>                       *
  *                                                                                      *
  * This program is free software; you can redistribute it and/or modify it under        *
  * the terms of the GNU General Public License as published by the Free Software        *
@@ -155,10 +156,12 @@ public class Utils {
      * @param inFormat: if true, return eg 'in 2 days'
      */
     public static String fmtTimeSpan(int time) {
-    	return fmtTimeSpan(time, 0, false);
+        return fmtTimeSpan(time, 0, false, false);
     }
-    public static String fmtTimeSpan(double time, int format, boolean boldNumber) {
-    	// TODO: add short
+    public static String fmtTimeSpan(int time, boolean _short) {
+        return fmtTimeSpan(time, 0, _short, false);
+    }
+    public static String fmtTimeSpan(int time, int format, boolean _short, boolean boldNumber) {
     	int type;
     	int unit = 99;
     	int point = 0;
@@ -177,35 +180,39 @@ public class Utils {
     		type = TIME_YEARS;
     		point = 1;
     	}
-    	time = convertSecondsTo((int)time, type);
+    	double ftime = convertSecondsTo(time, type);
 
     	int formatId;
-    	switch (format) {
-    	case TIME_FORMAT_IN:
-    		if (Math.round(time * 10) == 10) {
-    			formatId = R.array.next_review_in_s;
-    		} else {
-    			formatId = R.array.next_review_in_p;    			
-    		}
-    		break;
-    	case TIME_FORMAT_BEFORE:
-    		if (Math.round(time * 10) == 10) {
-    			formatId = R.array.next_review_before_s;
-    		} else {
-    			formatId = R.array.next_review_before_p;    			
-    		}
-    		break;
-    	case TIME_FORMAT_DEFAULT:
-    	default:
-    		if (Math.round(time * 10) == 10) {
-    			formatId = R.array.next_review_s;
-    		} else {
-    			formatId = R.array.next_review_p;    			
-    		}
-    		break;
+    	if (_short) {
+    	    formatId = R.array.next_review_short;
+    	} else {
+        	switch (format) {
+        	case TIME_FORMAT_IN:
+        		if (Math.round(ftime * 10) == 10) {
+        			formatId = R.array.next_review_in_s;
+        		} else {
+        			formatId = R.array.next_review_in_p;    			
+        		}
+        		break;
+        	case TIME_FORMAT_BEFORE:
+        		if (Math.round(ftime * 10) == 10) {
+        			formatId = R.array.next_review_before_s;
+        		} else {
+        			formatId = R.array.next_review_before_p;    			
+        		}
+        		break;
+        	case TIME_FORMAT_DEFAULT:
+        	default:
+        		if (Math.round(ftime * 10) == 10) {
+        			formatId = R.array.next_review_s;
+        		} else {
+        			formatId = R.array.next_review_p;    			
+        		}
+        		break;
+        	}
     	}
 
-    	String timeString = String.format(AnkiDroidApp.getAppResources().getStringArray(formatId)[type], boldNumber ? "<b>" + fmtDouble(time, point) + "</b>" : fmtDouble(time, point));
+    	String timeString = String.format(AnkiDroidApp.getAppResources().getStringArray(formatId)[type], boldNumber ? "<b>" + fmtDouble(ftime, point) + "</b>" : fmtDouble(ftime, point));
 		if (boldNumber && time == 1) {
 			timeString = timeString.replace("1", "<b>1</b>");
 		}
@@ -352,28 +359,43 @@ public class Utils {
 
     /** Given a list of integers, return a string '(int1,int2,...)'. */
     public static String ids2str(long[] ids) {
-    	StringBuilder sb = new StringBuilder();
-    	sb.append("(");
+        StringBuilder sb = new StringBuilder();
+        sb.append("(");
         if (ids != null) {
-        	String s = Arrays.toString(ids);
-        	sb.append(s.substring(1, s.length() - 1));
+            String s = Arrays.toString(ids);
+            sb.append(s.substring(1, s.length() - 1));
         }
         sb.append(")");
         return sb.toString();
     }
 
+    /** Given a list of integers, return a string '(int1,int2,...)'. */
+    public static String ids2str(Long[] ids) {
+        StringBuilder sb = new StringBuilder();
+        sb.append("(");
+        if (ids != null) {
+            String s = Arrays.toString(ids);
+            sb.append(s.substring(1, s.length() - 1));
+        }
+        sb.append(")");
+        return sb.toString();
+    }
 
-    public static String ids2str(LinkedList<Long> ids) {
-    	StringBuilder sb = new StringBuilder();
-    	sb.append("(");
-    	for (long id : ids) {
-    		if (sb.length() > 1) {
-    			sb.append(", ");
-    		}
-			sb.append(id);
-    	}
-    	sb.append(")");
-    	return sb.toString();
+    /** Given a list of integers, return a string '(int1,int2,...)'. */
+    public static <T> String ids2str(List<T> ids) {
+        StringBuilder sb = new StringBuilder(512);
+        sb.append("(");
+        boolean isNotFirst = false;
+        for (T id : ids) {
+            if (isNotFirst) {
+                sb.append(", ");
+            } else {
+                isNotFirst = true;
+            }
+            sb.append(id);
+        }
+        sb.append(")");
+        return sb.toString();
     }
 
 
@@ -399,24 +421,6 @@ public class Utils {
         return str.toString();
     }
 
-
-    /** Given a list of integers, return a string '(int1,int2,...)'. */
-    public static String ids2str(List<String> ids) {
-        StringBuilder str = new StringBuilder(512);
-        str.append("(");
-        if (ids != null) {
-            int len = ids.size();
-            for (int i = 0; i < len; i++) {
-                if (i == (len - 1)) {
-                    str.append(ids.get(i));
-                } else {
-                    str.append(ids.get(i)).append(",");
-                }
-            }
-        }
-        str.append(")");
-        return str.toString();
-    }
 
     /** LIBANKI: not in libanki */
     public static long[] arrayList2array(ArrayList<Long> list) {

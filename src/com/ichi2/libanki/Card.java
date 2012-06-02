@@ -21,14 +21,14 @@ import android.content.ContentValues;
 import android.database.Cursor;
 import android.util.Log;
 
-import java.util.ArrayList;
-import java.util.HashMap;
+import com.ichi2.anki.AnkiDroidApp;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import com.ichi2.anki.AnkiDroidApp;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 /**
  * A card is a presentation of a note, and has two sides: a question and an
@@ -158,7 +158,7 @@ public class Card implements Cloneable {
 		mMod = Utils.intNow();
 		mUsn = mCol.usn();
 		// bug check
-		assert mQueue != 2 || mODue != 0;
+		assert mQueue != 2 || mODue == 0 || mCol.getDecks().isDyn(mDid);
 		StringBuilder sb = new StringBuilder();
 		sb.append("INSERT OR REPLACE INTO cards VALUES (");
 		sb.append(mId).append(", ");
@@ -186,7 +186,7 @@ public class Card implements Cloneable {
 		mMod = Utils.intNow();
 		mUsn = mCol.usn();
 		// bug check
-		assert mQueue != 2 || mODue != 0;
+        assert mQueue != 2 || mODue == 0 || mCol.getDecks().isDyn(mDid);
 		ContentValues values = new ContentValues();
 		values.put("mod", mMod);
 		values.put("usn", mUsn);
@@ -254,7 +254,7 @@ public class Card implements Cloneable {
 			} catch (JSONException e) {
 				throw new RuntimeException(e);
 			}
-			ArrayList<String> args = new ArrayList<String>();
+			List<String> args = new ArrayList<String>();
 			if (browser) {
 				try {
 					args.add(t.getString("bqfmt"));
