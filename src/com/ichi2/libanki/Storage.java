@@ -36,6 +36,9 @@ public class Storage {
 
 	/* Open a new or existing collection. Path must be unicode */
 	public static Collection Collection(String path) {
+		return Collection(path, false);
+	}
+	public static Collection Collection(String path, boolean server) {
 		assert path.endsWith(".anki2");
 		File dbFile = new File(path);
         boolean create = !dbFile.exists();
@@ -55,7 +58,7 @@ public class Storage {
 		// LIBANKI: sync, journal_mode --> in AnkiDroid done in AnkiDb
 
 		// add db to col and do any remaining upgrades
-		Collection col = new Collection(db, path);
+		Collection col = new Collection(db, path, server);
 		if (ver < Collection.SCHEMA_VERSION) {
 			_upgrade(col, ver);
 		} else if (create) {

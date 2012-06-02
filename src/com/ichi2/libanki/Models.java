@@ -62,8 +62,8 @@ public class Models {
 		"\\\\begin{document} " +
 		"\", " +
 		"'latexPost': \"\\\\end{document}\", " +
-		"'mod': 9, " +
-		"'usn': 9, " +
+		"'mod': 0, " +
+		"'usn': 0, " +
 		"'vers': [], " +
 		"'type': " + Sched.MODEL_STD + ", " +
 		"'css': \" .card {" +
