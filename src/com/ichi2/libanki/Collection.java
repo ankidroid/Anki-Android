@@ -1,5 +1,6 @@
 /****************************************************************************************
  * Copyright (c) 2011 Norbert Nagold <norbert.nagold@gmail.com>                         *
+ * Copyright (c) 2012 Kostas Spyropoulos <inigo.aldana@gmail.com>                       *
  *                                                                                      *
  * This program is free software; you can redistribute it and/or modify it under        *
  * the terms of the GNU General private License as published by the Free Software        *
@@ -19,13 +20,13 @@ package com.ichi2.libanki;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.util.Log;
+import android.util.Pair;
 
 import com.ichi2.anki.AnkiDatabaseManager;
 import com.ichi2.anki.AnkiDb;
 import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.UIUtils;
 import com.ichi2.async.DeckTask;
-import com.ichi2.async.DeckTask.TaskData;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -35,6 +36,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
@@ -47,9 +49,9 @@ import java.util.Random;
 public class Collection {
 
 	// collection schema & syncing vars
-	public static final int SCHEMA_VERSION = 10;
-	public static final String SYNC_URL = "http://beta.ankiweb.net/sync/";
-	public static final int SYNC_VER = 4;
+	public static final int SCHEMA_VERSION = 11;
+	public static final String SYNC_URL = "http://ankiweb.net/sync/";
+	public static final int SYNC_VER = 5;
 
 	private AnkiDb mDb;
 	private boolean mServer;
@@ -110,7 +112,7 @@ public class Collection {
 		mLastSave = Utils.now();
 		clearUndo();
 		mPath = path;
-		mMedia = new Media(this);
+		mMedia = new Media(this, server);
 		mModels = new Models(this);
 		mDecks = new Decks(this);
 		mTags = new Tags(this);
@@ -499,7 +501,7 @@ public class Collection {
 	private ArrayList<JSONObject> findTemplates(Note note) {
 		JSONObject model = note.model();
 		ArrayList<Integer> avail = mModels.availOrds(model,
-				Utils.joinFields(note.values()));
+				Utils.joinFields(note.getFields()));
 		return _tmplsFromOrds(model, avail);
 	}
 
@@ -801,16 +803,16 @@ public class Collection {
 	public HashMap<String, String> _renderQA(Object[] data) {
 		return _renderQA(data, null);
 	}
-	public HashMap<String, String> _renderQA(Object[] data, ArrayList<String> args) {
+	public HashMap<String, String> _renderQA(Object[] data, List<String> args) {
 		// data is [cid, nid, mid, did, ord, tags, flds]
 		// unpack fields and create dict
 		String[] flist = Utils.splitFields((String) data[6]);
 		Map<String, String> fields = new HashMap<String, String>();
 		long modelId = (Long) data[2];
 		JSONObject model = mModels.get(modelId);
-		Map<String, Integer> fmap = mModels.fieldMap(model);
+		Map<String, Pair<Integer, JSONObject>> fmap = mModels.fieldMap(model);
 		for (String fname : fmap.keySet()) {
-		    fields.put(fname, flist[fmap.get(fname).intValue()]);
+		    fields.put(fname, flist[fmap.get(fname).first]);
 		}
 		fields.put("Tags", (String) data[5]);
 		try {
@@ -836,6 +838,7 @@ public class Collection {
 			d.put("a", mModels.getCmpldTemplate(modelId, (Integer) data[4], args)[1]
 					.execute(fparser));
 			// TODO: runfilter
+			// TODO: Warn on empty cloze
 			return d;
 		} catch (JSONException e) {
 			throw new RuntimeException(e);
@@ -879,16 +882,20 @@ public class Collection {
 	 */
 
 	/** Return a list of card ids */
-	public ArrayList<Long> findCards(String search) {
-		return new Finder(this).findCards(search, false, null);
+	public List<Long> findCards(String search) {
+		return new Finder(this).findCards(search, null);
 	}
 	/** Return a list of card ids */
-	public ArrayList<Long> findCards(String search, String order) {
-		return new Finder(this).findCards(search, false, order);
-	}
-	/** Return a list of card ids */
-	public ArrayList<Long> findCards(String search, boolean full) {
-		return new Finder(this).findCards(search, full, null);
+    public List<Long> findCards(String search, String order) {
+        return new Finder(this).findCards(search, order);
+    }
+    /** Return a list of card ids */
+    public List<Long> findCards(String search, Boolean order) {
+        return new Finder(this).findCards(search, order.toString());
+    }
+	/** Return a list of note ids */
+	public List<Long> findNotes(String query) {
+	    return new Finder(this).findNotes(query);
 	}
 
 	/** Return a list of card ids */
@@ -941,9 +948,26 @@ public class Collection {
 		return data;
 	}
 
-	// findreplace
-	// findduplicates
-
+    public int findReplace(List<Long> nids, String src, String dst) {
+        return Finder.findReplace(this, nids, src, dst);
+    }
+    public int findReplace(List<Long> nids, String src, String dst, boolean regex) {
+        return Finder.findReplace(this, nids, src, dst, regex);
+    }
+    public int findReplace(List<Long> nids, String src, String dst, String field) {
+        return Finder.findReplace(this, nids, src, dst, field);
+    }
+	public int findReplace(List<Long> nids, String src, String dst, boolean regex, String field, boolean fold) {
+	    return Finder.findReplace(this, nids, src, dst, regex, field, fold);
+	}
+	
+	public List<Pair<String, List<Long>>> findDupes(String fieldName) {
+	    return Finder.findDupes(this, fieldName, "");
+	}
+	public List<Pair<String, List<Long>>> findDupes(String fieldName, String search) {
+	    return Finder.findDupes(this, fieldName, search);
+	}
+	
 	/**
 	 * Stats
 	 * ********************************************************************
