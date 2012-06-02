@@ -347,7 +347,7 @@ public class Syncer {
     	}
     }
 
-    private long finish() {
+    public long finish() {
     	return finish(0);
     }
     private long finish(long mod) {

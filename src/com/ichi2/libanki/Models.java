@@ -367,9 +367,9 @@ public class Models {
     }
 
     private void _setID(JSONObject m) {
-    	long id = Utils.intNow();
+    	long id = Utils.intNow(1000);
     	while (mModels.containsKey(id)) {
-    		id = Utils.intNow();
+    		id = Utils.intNow(1000);
     	}
     	try {
 			m.put("id", id);
