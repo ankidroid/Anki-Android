@@ -41,6 +41,7 @@ import org.apache.http.params.BasicHttpParams;
 import org.apache.http.params.HttpParams;
 import org.apache.http.params.HttpProtocolParams;
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedInputStream;
@@ -91,6 +92,9 @@ public class BasicHttpSyncer implements HttpSyncer {
     	return req(method, fobj, 6, hkey);
     }
     public HttpResponse req(String method, InputStream fobj, int comp, boolean hkey) {
+    	return req(method, fobj, comp, hkey, null);
+    }
+    public HttpResponse req(String method, InputStream fobj, int comp, boolean hkey, JSONObject registerData) {
 		try {
 	    	String bdry = "--" + BOUNDARY;
 	    	StringWriter buf = new StringWriter();
@@ -133,7 +137,13 @@ public class BasicHttpSyncer implements HttpSyncer {
 	        }
 	        bos.close();
             // connection headers
-	        HttpPost httpPost = new HttpPost(Collection.SYNC_URL + method);
+	        String url = Collection.SYNC_URL;
+	        if (method.equals("register")) {
+	        	url = url + "account/signup" + "?username=" + registerData.getString("u") + "&password=" + registerData.getString("p");
+	        } else {
+	        	url = url + "sync/" + method;
+	        }
+	        HttpPost httpPost = new HttpPost(url);
 	        HttpEntity entity = new ProgressByteEntity(bos.toByteArray());
 
 	        // body
@@ -157,6 +167,8 @@ public class BasicHttpSyncer implements HttpSyncer {
 			throw new RuntimeException(e);
 		} catch (IOException e) {
 			return null;
+		} catch (JSONException e) {
+			throw new RuntimeException(e);
 		}
     }
 
@@ -308,5 +320,10 @@ public class BasicHttpSyncer implements HttpSyncer {
 			Log.e(AnkiDroidApp.TAG, "HttpSyncer: error on getting bytes from string: " + e);
 			return null;
 		}
+	}
+
+
+	public HttpResponse register(String user, String pw) {
+		return null;
 	}
 }

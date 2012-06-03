@@ -46,7 +46,6 @@ public class Info extends Activity {
     public static final int TYPE_WELCOME = 1;
     public static final int TYPE_NEW_VERSION = 2;
     public static final int TYPE_SHARED_DECKS = 3;
-    public static final int TYPE_CREATE_ACCOUNT = 4;
 
     private int mType;
     private WebView mWebView;
@@ -158,12 +157,6 @@ public class Info extends Activity {
     		builder.setMessage("At the moment, it's still necessary to log in manually.\nPlease log in here and choose then your deck");
     		builder.setPositiveButton("ok", null);
     		builder.show();
-    		break;
-
-    	case TYPE_CREATE_ACCOUNT:
-    		mWebView.loadUrl(res.getString(R.string.ankionline_sign_up_url));
-    		mWebView.setWebViewClient(new CustomWebViewClient());
-    		continueButton.setText(res.getString(R.string.download_button_return));
     		break;
 
     	default:

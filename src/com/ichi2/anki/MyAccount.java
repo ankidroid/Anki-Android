@@ -44,9 +44,15 @@ public class MyAccount extends AnkiActivity {
 
     private View mLoginToMyAccountView;
     private View mLoggedIntoMyAccountView;
+    private View mRegisterView;
 
     private EditText mUsername;
     private EditText mPassword;
+
+    private EditText mUsername1;
+    private EditText mPassword1;
+    private EditText mUsername2;
+    private EditText mPassword2;
 
     private TextView mUsernameLoggedIn;
 
@@ -54,6 +60,8 @@ public class MyAccount extends AnkiActivity {
     private StyledDialog mNoConnectionAlert;
     private StyledDialog mConnectionErrorAlert;
     private StyledDialog mInvalidUserPassAlert;
+    private StyledDialog mRegisterAlert;
+    private StyledDialog mErrorAlert;
 
 
     @Override
@@ -124,6 +132,22 @@ public class MyAccount extends AnkiActivity {
     }
 
 
+    private void register() {
+        // Hide soft keyboard
+        InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        inputMethodManager.hideSoftInputFromWindow(mUsername.getWindowToken(), 0);
+
+        String username = mUsername1.getText().toString();
+        String password = mPassword1.getText().toString();
+
+        if (!"".equalsIgnoreCase(username) && !"".equalsIgnoreCase(password)) {
+            Connection.register(registerListener, new Connection.Payload(new Object[] { username, password }));
+        } else {
+            mInvalidUserPassAlert.show();
+        }
+    }
+
+
     private void logout() {
         SharedPreferences preferences = PrefSettings.getSharedPrefs(getBaseContext());
         Editor editor = preferences.edit();
@@ -142,7 +166,7 @@ public class MyAccount extends AnkiActivity {
         Themes.setTextViewStyle(mLoginToMyAccountView.findViewById(R.id.no_account_text));
         mUsername = (EditText) mLoginToMyAccountView.findViewById(R.id.username);
         mPassword = (EditText) mLoginToMyAccountView.findViewById(R.id.password);
-
+       
         Button loginButton = (Button) mLoginToMyAccountView.findViewById(R.id.login_button);
         loginButton.setOnClickListener(new OnClickListener() {
 
@@ -158,12 +182,7 @@ public class MyAccount extends AnkiActivity {
 
             @Override
             public void onClick(View v) {
-            	Intent intent = new Intent(MyAccount.this, Info.class);
-            	intent.putExtra(Info.TYPE_EXTRA, Info.TYPE_CREATE_ACCOUNT);
-                startActivity(intent);
-                if (UIUtils.getApiLevel() > 4) {
-                    ActivityTransitionAnimation.slide(MyAccount.this, ActivityTransitionAnimation.RIGHT);
-                }
+                setContentView(mRegisterView);
             }
 
         });
@@ -181,6 +200,38 @@ public class MyAccount extends AnkiActivity {
             }
 
         });
+
+        mRegisterView = getLayoutInflater().inflate(R.layout.my_account_register, null);
+        Themes.setWallpaper(mRegisterView);
+        mUsername1 = (EditText) mRegisterView.findViewById(R.id.username1);
+        mPassword1 = (EditText) mRegisterView.findViewById(R.id.password1);
+        mUsername2 = (EditText) mRegisterView.findViewById(R.id.username2);
+        mPassword2 = (EditText) mRegisterView.findViewById(R.id.password2);
+       
+        Button registerButton = (Button) mRegisterView.findViewById(R.id.register_button);
+        registerButton.setOnClickListener(new OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                if (mUsername1.getText().toString().length() > 0 && mPassword1.getText().toString().length() > 0 && mUsername1.getText().toString().equals(mUsername2.getText().toString()) && mPassword1.getText().toString().equals(mPassword2.getText().toString())) {
+                	register();
+                } else {
+                	mRegisterAlert.show();
+                }
+            }
+
+        });
+
+        Button cancelButton = (Button) mRegisterView.findViewById(R.id.cancel_button);
+        cancelButton.setOnClickListener(new OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+            	finishWithAnimation(ActivityTransitionAnimation.FADE);
+            }
+
+        });
+
     }
 
 
@@ -197,6 +248,27 @@ public class MyAccount extends AnkiActivity {
         builder.setMessage(res.getString(R.string.connection_needed));
         builder.setPositiveButton(res.getString(R.string.ok), null);
         mNoConnectionAlert = builder.create();
+
+        builder.setTitle(res.getString(R.string.register_title));
+        builder.setIcon(android.R.drawable.ic_dialog_alert);
+        builder.setMessage(res.getString(R.string.register_error));
+        builder.setPositiveButton(res.getString(R.string.ok), null);
+        mErrorAlert = builder.create();
+
+        builder.setTitle(res.getString(R.string.register_title));
+        builder.setIcon(android.R.drawable.ic_dialog_alert);
+        builder.setMessage(res.getString(R.string.register_mismatch));
+        builder.setPositiveButton(res.getString(R.string.ok), new DialogInterface.OnClickListener() {
+
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                mUsername1.setText("");
+                mUsername2.setText("");
+                mPassword1.setText("");
+                mPassword2.setText("");
+            }
+        });
+        mRegisterAlert = builder.create();
 
         builder = new StyledDialog.Builder(this);
         builder.setTitle(res.getString(R.string.log_in));
@@ -271,6 +343,62 @@ public class MyAccount extends AnkiActivity {
                         mConnectionErrorAlert.show();
                     }
                 }
+            }
+        }
+
+
+        @Override
+        public void onDisconnected() {
+            if (mNoConnectionAlert != null) {
+                mNoConnectionAlert.show();
+            }
+        }
+    };
+
+    
+    Connection.TaskListener registerListener = new Connection.TaskListener() {
+
+        @Override
+        public void onProgressUpdate(Object... values) {
+            // Pass
+        }
+
+
+        @Override
+        public void onPreExecute() {
+            Log.i(AnkiDroidApp.TAG, "MyAccount - onPreExcecute");
+            if (mProgressDialog == null || !mProgressDialog.isShowing()) {
+                mProgressDialog = StyledProgressDialog.show(MyAccount.this, "",
+                        getResources().getString(R.string.registering_message), true);
+            }
+        }
+
+
+        @Override
+        public void onPostExecute(Payload data) {
+            Log.i(AnkiDroidApp.TAG, "MyAccount - onPostExecute, succes = " + data.success);
+            if (mProgressDialog != null) {
+                mProgressDialog.dismiss();
+            }
+
+            if (data.success) {
+                Log.i(AnkiDroidApp.TAG, "User successfully registered!");
+                saveUserInformation((String) data.data[0], (String) data.data[1]);
+
+                Intent i = MyAccount.this.getIntent();
+                if (i.hasExtra("notLoggedIn") && i.getExtras().getBoolean("notLoggedIn", false)) {
+                	MyAccount.this.setResult(RESULT_OK, i);
+                	finishWithAnimation(ActivityTransitionAnimation.FADE);
+                } else {
+                    // Show logged view
+                    mUsernameLoggedIn.setText((String) data.data[0]);
+                    setContentView(mLoggedIntoMyAccountView);
+                }
+            } else {
+            	mErrorAlert.show();
+            	if (data.data != null) {
+            		mErrorAlert.setMessage(((String[])data.data)[0]);
+            	}
             }
         }
 

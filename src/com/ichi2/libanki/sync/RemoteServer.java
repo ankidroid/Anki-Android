@@ -16,8 +16,9 @@
 
 package com.ichi2.libanki.sync;
 
-import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 
 import org.apache.http.HttpResponse;
 import org.json.JSONArray;
@@ -42,6 +43,20 @@ public class RemoteServer extends BasicHttpSyncer {
 			jo.put("p", pw);
 			return super.req("hostKey", super.getInputStream(jo.toString()), false);
 		} catch (JSONException e) {
+			return null;
+		}
+	}
+
+	@Override
+	public HttpResponse register(String user, String pw) {
+		try {
+			JSONObject jo = new JSONObject();
+			jo.put("u", URLEncoder.encode(user, "UTF-8" ));
+			jo.put("p", URLEncoder.encode(pw, "UTF-8" ));
+			return super.req("register", null, 6, false, jo);
+		} catch (JSONException e) {
+			return null;
+		} catch (UnsupportedEncodingException e) {
 			return null;
 		}
 	}

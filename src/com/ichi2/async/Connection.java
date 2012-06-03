@@ -65,6 +65,7 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
     public static final int TASK_TYPE_GET_PERSONAL_DECKS = 3;
     public static final int TASK_TYPE_SEND_CRASH_REPORT = 4;
     public static final int TASK_TYPE_DOWNLOAD_MEDIA = 5;
+    public static final int TASK_TYPE_REGISTER = 6;
 
     private static Context sContext;
 
@@ -139,6 +140,12 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
     }
 
 
+    public static Connection register(TaskListener listener, Payload data) {
+        data.taskType = TASK_TYPE_REGISTER;
+        return launchConnectionTask(listener, data);
+    }
+
+
     public static Connection getSharedDecks(TaskListener listener, Payload data) {
         data.taskType = TASK_TYPE_GET_SHARED_DECKS;
         return launchConnectionTask(listener, data);
@@ -177,8 +184,11 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
     
     private Payload doOneInBackground(Payload data) {
         switch (data.taskType) {
-            case TASK_TYPE_LOGIN:
-                return doInBackgroundLogin(data);
+        case TASK_TYPE_LOGIN:
+            return doInBackgroundLogin(data);
+
+        case TASK_TYPE_REGISTER:
+            return doInBackgroundRegister(data);
 
 //            case TASK_TYPE_GET_SHARED_DECKS:
 //                return doInBackgroundGetSharedDecks(data);
@@ -214,7 +224,8 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
         data.returnType = ret.getStatusLine().getStatusCode();
         if (data.returnType == 200) {
 			try {
-				hostkey = (new JSONObject(server.stream2String(ret.getEntity().getContent()))).getString("key");
+				JSONObject jo = (new JSONObject(server.stream2String(ret.getEntity().getContent())));
+				hostkey = jo.getString("key");
 				valid = (hostkey != null) && (hostkey.length() > 0);
 			} catch (JSONException e) {
 				valid = false;
@@ -229,6 +240,42 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
         	data.data = new String[] {username, hostkey};
         } else {
         	data.success = false;
+        }
+        return data;
+    }
+
+    private Payload doInBackgroundRegister(Payload data) {
+        String username = (String) data.data[0];
+        String password = (String) data.data[1];
+        BasicHttpSyncer server = new RemoteServer(this, null);
+        HttpResponse ret = server.register(username, password);
+        String hostkey = null;
+        boolean valid = false;
+        data.returnType = ret.getStatusLine().getStatusCode();
+        String status = null;
+        if (data.returnType == 200) {
+			try {
+				JSONObject jo = (new JSONObject(server.stream2String(ret.getEntity().getContent())));
+				status = jo.getString("status"); 
+				if (status.equals("ok")) {
+					hostkey = jo.getString("hkey");
+					valid = (hostkey != null) && (hostkey.length() > 0);
+				}
+			} catch (JSONException e) {
+			} catch (IllegalStateException e) {
+				throw new RuntimeException(e);
+			} catch (IOException e) {
+				throw new RuntimeException(e);
+			}            	
+        }
+        if (valid) {
+        	data.success = true;
+        	data.data = new String[] {username, hostkey};
+        } else {
+        	data.success = false;
+        	if (status != null) {
+            	data.data = new String[] {status};        		
+        	}
         }
         return data;
     }

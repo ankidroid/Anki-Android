@@ -50,7 +50,7 @@ public class Collection {
 
 	// collection schema & syncing vars
 	public static final int SCHEMA_VERSION = 11;
-	public static final String SYNC_URL = "https://ankiweb.net/sync/";
+	public static final String SYNC_URL = "https://ankiweb.net/";
 	public static final int SYNC_VER = 5;
 
 	private AnkiDb mDb;
