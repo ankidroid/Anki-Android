@@ -31,7 +31,6 @@ import javax.net.ssl.TrustManager;
 
 import org.apache.http.conn.ConnectTimeoutException;
 import org.apache.http.conn.scheme.LayeredSocketFactory;
-import org.apache.http.conn.scheme.SocketFactory;
 import org.apache.http.params.HttpConnectionParams;
 import org.apache.http.params.HttpParams;
 
@@ -44,8 +43,7 @@ import org.apache.http.params.HttpParams;
  *          $
  * @since 1.2.3
  */
-public class EasySSLSocketFactory implements SocketFactory,
-		LayeredSocketFactory {
+public class EasySSLSocketFactory implements LayeredSocketFactory {
 
 	private SSLContext sslcontext = null;
 
@@ -117,7 +115,7 @@ public class EasySSLSocketFactory implements SocketFactory,
 	 */
 	public Socket createSocket(Socket socket, String host, int port,
 			boolean autoClose) throws IOException, UnknownHostException {
-		return getSSLContext().getSocketFactory().createSocket();
+        return getSSLContext().getSocketFactory().createSocket(socket, host, port, autoClose);
 	}
 
 	// -------------------------------------------------------------------

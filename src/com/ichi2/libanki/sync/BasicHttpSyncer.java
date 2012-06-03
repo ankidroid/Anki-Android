@@ -140,17 +140,17 @@ public class BasicHttpSyncer implements HttpSyncer {
 	        httpPost.setEntity(entity);
 	        httpPost.setHeader("Content-type", "multipart/form-data; boundary=" + BOUNDARY);
 
-	        // https
 	        SchemeRegistry schemeRegistry = new SchemeRegistry();
 	        schemeRegistry.register(new Scheme("http", PlainSocketFactory.getSocketFactory(), 80));
 	        schemeRegistry.register(new Scheme("https", new EasySSLSocketFactory(), 443));
+	         
 	        HttpParams params = new BasicHttpParams();
 	        params.setParameter(ConnManagerPNames.MAX_TOTAL_CONNECTIONS, 30);
 	        params.setParameter(ConnManagerPNames.MAX_CONNECTIONS_PER_ROUTE, new ConnPerRouteBean(30));
 	        params.setParameter(HttpProtocolParams.USE_EXPECT_CONTINUE, false);
-	        HttpProtocolParams.setVersion(params, HttpVersion.HTTP_1_1);	         
+	        HttpProtocolParams.setVersion(params, HttpVersion.HTTP_1_1);
+	         
 	        ClientConnectionManager cm = new SingleClientConnManager(params, schemeRegistry);
-
 	        DefaultHttpClient httpClient = new DefaultHttpClient(cm, params);
 	        return httpClient.execute(httpPost);
 		} catch (UnsupportedEncodingException e) {
