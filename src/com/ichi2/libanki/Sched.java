@@ -30,7 +30,6 @@ import android.util.Log;
 import android.util.Pair;
 
 import com.ichi2.anki.AnkiDroidApp;
-import com.ichi2.async.DeckTask.TaskData;
 
 import org.json.JSONArray;
 import org.json.JSONException;

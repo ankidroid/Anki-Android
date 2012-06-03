@@ -16,9 +16,10 @@
 
 package com.ichi2.libanki.sync;
 
+import com.ichi2.anki2.R;
+
 import android.util.Log;
 
-import com.byarger.exchangeit.EasySSLSocketFactory;
 import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.async.Connection;
 import com.ichi2.libanki.Collection;
@@ -34,6 +35,7 @@ import org.apache.http.conn.params.ConnPerRouteBean;
 import org.apache.http.conn.scheme.PlainSocketFactory;
 import org.apache.http.conn.scheme.Scheme;
 import org.apache.http.conn.scheme.SchemeRegistry;
+import org.apache.http.conn.ssl.SSLSocketFactory;
 import org.apache.http.entity.AbstractHttpEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.impl.conn.SingleClientConnManager;
@@ -57,6 +59,7 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.StringWriter;
 import java.io.UnsupportedEncodingException;
+import java.security.KeyStore;
 import java.util.zip.GZIPOutputStream;
 
 public class BasicHttpSyncer implements HttpSyncer {
@@ -152,7 +155,7 @@ public class BasicHttpSyncer implements HttpSyncer {
 
 	        SchemeRegistry schemeRegistry = new SchemeRegistry();
 	        schemeRegistry.register(new Scheme("http", PlainSocketFactory.getSocketFactory(), 80));
-	        schemeRegistry.register(new Scheme("https", new EasySSLSocketFactory(), 443));
+	        schemeRegistry.register(new Scheme("https", newSslSocketFactory(), 443));
 	         
 	        HttpParams params = new BasicHttpParams();
 	        params.setParameter(ConnManagerPNames.MAX_TOTAL_CONNECTIONS, 30);
@@ -326,4 +329,27 @@ public class BasicHttpSyncer implements HttpSyncer {
 	public HttpResponse register(String user, String pw) {
 		return null;
 	}
+
+	private SSLSocketFactory newSslSocketFactory() {
+	    try {
+	        KeyStore trusted = KeyStore.getInstance("BKS");
+	        InputStream in = AnkiDroidApp.getInstance().getApplicationContext().getResources().openRawResource(R.raw.ankiweb_cert);
+	        try {
+	            trusted.load(in, "mysecret".toCharArray());
+	        } finally {
+	            in.close();
+	        }
+	        SSLSocketFactory sf = new SSLSocketFactory(trusted);
+	        sf.setHostnameVerifier(SSLSocketFactory.STRICT_HOSTNAME_VERIFIER);
+	        return sf;
+	    } catch (Exception e) {
+	    	Log.e(AnkiDroidApp.TAG, "Certificate error");
+	    	// to update the ankiweb.cert:
+	    	// 1. get http://bouncycastle.org/download/bcprov-jdk16-145.jar
+	    	// 2. keytool -importcert -v -trustcacerts -file "path_to_cert/interm_ca.cer" -alias IntermediateCA -keystore "res/raw/ankiweb_cert" -provider org.bouncycastle.jce.provider.BouncyCastleProvider -providerpath "path_to_bouncycastle/bcprov-jdk16-145.jar" -storetype BKS -storepass mysecret
+	    	// 3. copy ankiweb_cert to res/raw/
+	        throw new AssertionError(e);
+	    }
+	}
+
 }
