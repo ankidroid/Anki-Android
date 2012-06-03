@@ -77,6 +77,7 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
     private TaskListener mListener;
 
     public static final int RETURN_TYPE_OUT_OF_MEMORY = -1;
+    public static final int TERMS_OF_USE_NOT_AGREED = 0;
 
     public static final String CONFLICT_RESOLUTION = "ConflictResolutionRequired";
 

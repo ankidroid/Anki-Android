@@ -345,7 +345,7 @@ public class SharedDeckPicker extends Activity {
         });
         mNoConnectionAlert = builder.create();
 
-	builder = new StyledDialog.Builder(this);
+        builder = new StyledDialog.Builder(this);
         builder.setTitle(res.getString(R.string.connection_error_title));
         builder.setIcon(android.R.drawable.ic_dialog_alert);
         builder.setMessage(res.getString(R.string.connection_error_return_message));
@@ -500,6 +500,8 @@ public class SharedDeckPicker extends Activity {
             	if (data.returnType == Connection.RETURN_TYPE_OUT_OF_MEMORY) {
     				Themes.showThemedToast(SharedDeckPicker.this, getResources().getString(R.string.error_insufficient_memory), false);
     		    	finish();            		
+                } else if (data.returnType == Connection.TERMS_OF_USE_NOT_AGREED) {
+                    mTermsOfUseNotAgreedAlert.show();
             	} else if (mConnectionErrorAlert != null) {
                     mConnectionErrorAlert.show();
                 }
