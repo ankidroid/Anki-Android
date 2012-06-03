@@ -16,10 +16,14 @@
 
 package com.ichi2.anki;
 
-import org.json.JSONArray;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -36,6 +40,7 @@ import android.widget.TextView;
 
 import com.ichi2.anki2.R;
 import com.ichi2.libanki.Collection;
+import com.ichi2.themes.StyledDialog;
 import com.ichi2.themes.Themes;
 
 public class CramDeckFragment extends Fragment {
@@ -54,6 +59,8 @@ public class CramDeckFragment extends Fragment {
 	private JSONObject mDeck;
 
 	private boolean mFragmented;
+
+	private StyledDialog mDecksDialog;
 
     public static CramDeckFragment newInstance(int index) {
     	CramDeckFragment f = new CramDeckFragment();
@@ -103,7 +110,7 @@ public class CramDeckFragment extends Fragment {
         mDecks.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				// TODO
+				showDecksDialog();
 			}
         });
         mSteps = (EditText) main.findViewById(R.id.cram_deck_steps);
@@ -116,13 +123,15 @@ public class CramDeckFragment extends Fragment {
 			public void onClick(View v) {
 				try {
 					mDeck.put("steps", DeckOptions.getDelays(mSteps.getText().toString()));
-//					mDeck.put("search", )
+					mDeck.put("search", mDeckLabel.getText().toString());
 //					mDeck.put("order", value);
 					mDeck.put("limit", Integer.parseInt(mLimit.getText().toString()));
 					mDeck.put("fmult", Integer.parseInt(mLimit.getText().toString()) / 100.0);
 				} catch (JSONException e) {
 					throw new RuntimeException(e);
 				}
+				mCol.getSched().rebuildDyn(mCol.getDecks().id("Cram 1"));
+				mCol.save();
 				closeCramDeckAdder();
 			}
         });
@@ -139,15 +148,29 @@ public class CramDeckFragment extends Fragment {
         	return null;
         }
         mDeck = mCol.getDecks().current();
-//		try {
-////	       TODO: mDeckLabel.setText(mDeck.getString("search"));
-////	        mSteps.setText(DeckOptions.getDelays(mDeck.getJSONArray("delays")));
-////	        mOrder
-////	        mLimit.setText(mDeck.getInt("limit"));
-////	        mInterval.setText((int)(mDeck.getDouble("fmult") * 100));
-//		} catch (JSONException e) {
-//			throw new RuntimeException(e);
-//		}
+		try {
+			if (mDeck.getInt("dyn") == 0) {
+				String currentDeckName = mDeck.getString("name");
+				ArrayList<String> names = mCol.getDecks().allNames();
+				int n = 1;
+				String cramDeckName = "Cram 1";
+				while (names.contains(cramDeckName)) {
+					n++;
+					cramDeckName = "Cram " + n;
+				}
+				mCol.getDecks().newDyn(cramDeckName);
+				mDeck = mCol.getDecks().current();
+				mDeck.put("search", "\'deck:" + currentDeckName + "\'");
+			}
+			mCramDeckName.setText(mDeck.getString("name"));
+			mDeckLabel.setText(mDeck.getString("search"));
+	        mSteps.setText(DeckOptions.getDelays(mDeck.getJSONArray("delays")));
+//	        TODO: set mOrder
+	        mLimit.setText(Integer.toString(mDeck.getInt("limit")));
+	        mInterval.setText(Integer.toString((int)(mDeck.getDouble("fmult") * 100)));				
+		} catch (JSONException e) {
+			throw new RuntimeException(e);
+		}
 
         if (!mFragmented) {
         	main.setBackgroundResource(R.drawable.white_wallpaper);
@@ -168,6 +191,78 @@ public class CramDeckFragment extends Fragment {
 	}
 
 	private void showDecksDialog() {
-		
+		if (mDecksDialog == null) {
+			ArrayList<CharSequence> dialogDeckItems = new ArrayList<CharSequence>();
+			// Use this array to know which ID is associated with each
+			// Item(name)
+			final ArrayList<Long> dialogDeckIds = new ArrayList<Long>();
+
+			ArrayList<JSONObject> decks = mCol.getDecks().all();
+			String currentName;
+			try {
+				currentName = mDeck.getString("name");
+				for (int i = 0; i < decks.size(); i++) {
+					JSONObject d = decks.get(i);
+					if (d.getString("name").equals(currentName)) {
+						decks.remove(i);
+					}
+				}
+			} catch (JSONException e1) {
+				throw new RuntimeException(e1);
+			}
+			Collections.sort(decks, new JSONNameComparator());
+			StyledDialog.Builder builder = new StyledDialog.Builder(getActivity());
+			builder.setTitle(R.string.deck);
+			for (JSONObject d : decks) {
+				try {
+					dialogDeckItems.add(DeckPicker.readableDeckName(d.getString("name").split("::")));
+					dialogDeckIds.add(d.getLong("id"));
+				} catch (JSONException e) {
+					throw new RuntimeException(e);
+				}
+			}
+			// Convert to Array
+			String[] items = new String[dialogDeckItems.size()];
+			dialogDeckItems.toArray(items);
+
+			builder.setItems(items, new DialogInterface.OnClickListener() {
+				public void onClick(DialogInterface dialog, int item) {
+					try {
+						mDeckLabel.setText("\'deck:" + mCol.getDecks().get(dialogDeckIds.get(item)).getString("name") + "\'");
+					} catch (JSONException e) {
+						throw new RuntimeException(e);
+					}
+				}
+			});
+			mDecksDialog = builder.create();
+		}
+		mDecksDialog.show();
+	}
+
+	public class JSONNameComparator implements Comparator<JSONObject> {
+		@Override
+		public int compare(JSONObject lhs, JSONObject rhs) {
+			String[] o1;
+			String[] o2;
+			try {
+				o1 = lhs.getString("name").split("::");
+				o2 = rhs.getString("name").split("::");
+			} catch (JSONException e) {
+				throw new RuntimeException(e);
+			}
+			for (int i = 0; i < Math.min(o1.length, o2.length); i++) {
+				int result = o1[i].compareToIgnoreCase(o2[i]);
+				if (result != 0) {
+					return result;
+				}
+			}
+			if (o1.length < o2.length) {
+				return -1;
+			} else if (o1.length > o2.length) {
+				return 1;
+			} else {
+				return 0;
+			}
+		}
 	}
 }

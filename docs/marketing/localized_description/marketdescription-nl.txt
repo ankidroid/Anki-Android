@@ -4,36 +4,36 @@ AnkiDroid stelt u in staat zeer efficiënt flashcards te leren, door ze te tonen
 
 Leer van alles, waar en wanneer u maar wilt. Maak nuttig gebruik van uw tijd terwijl u op de bus zit, aanschuift aan de kassa, of elke andere situatie waarin u moet wachten.
 
-Voeg materiaal toe via de desktopapplicatie Anki of rechtstreeks via Ankidroid.
+Maak je eigen sets met flitskaart, of download gratis sets samengesteld voor vele talen en onderwerpen (meer dan 6000 beschikbaar).
 
-Maak je eigen sets met flitskaart, of download gratis sets samengesteld voor vele talen en onderwerpen (meer dan 6000 beschikbaar). De toepassing biedt zelfs ondersteuning voor het automatisch toevoegen van materiaal uit een woordenboek!
+Voeg materiaal toe via de desktopapplicatie Anki of rechtstreeks via Ankidroid. De toepassing biedt zelfs ondersteuning voor het automatisch toevoegen van materiaal uit een woordenboek!
 
 ★ Belangrijkste functies:
 • ondersteunde inhoud voor flitskaarten: tekst, afbeeldingen, geluiden, LaTeX
 • gespreide herhaling (supermemo 2-algoritme)
 • tekst-naar-spraak-integratie
 • meer dan 6000 premade decks
-• gedetailleerde statistieken
 • drie widgets
+• gedetailleerde statistieken
 • synchronisatie met AnkiWeb
 • open source
 
 ★ Extra functies:
 • schrijf antwoorden (optioneel)
 • whiteboard
-• kaartbrowser
 • kaarten bewerken/toevoegen
+• kaartbrowser
 • importeren van bestaande verzameling bestanden (via Anki Desktop)
-• kaarten via het intent-protocol toevoegen vanuit andere toepassingen zoals woordenboeken
 • Woordenboekintegratie (ColorDict, GoldenDict, Leo.org, Aedict, verscheidene webwoordenboeken)
+• kaarten via het intent-protocol toevoegen vanuit andere toepassingen zoals woordenboeken
 • ondersteuning voor aangepaste lettertypes
+• overhoren met een widget
 • volledig backupsysteem
 • navigeren door vegen, tikken, schudden
-• overhoren met een widget
 • volledig aanpasbaar
-• blokmodus
 • beperk via tag, tijd of aantal kaarten
+• blokmodus
 • nachtmodus
-• ondersteuning voor zeemote
 • drie verschillende thema's
 • 27 talen
+• All previous AnkiDroid versions can be downloaded from the website

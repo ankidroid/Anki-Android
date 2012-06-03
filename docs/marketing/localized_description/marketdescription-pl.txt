@@ -4,36 +4,36 @@ AnkiDroid pomaga efektywnie zapamiętywać fiszki wyświetlając je tuż przed i
 
 Ucz się czegokolwiek zechcesz, gdziekolwiek zechcesz. Wykorzystaj wolny czas w czasie dojazdów autobusem, w kolejce sklepowej lub kiedykolwiek musisz na coś czekać!
 
-Dodawanie materiału za pomocą desktopowego programu Anki lub bezpośrednio w AnkiDroidzie
+Twórz własne talie lub pobierz talie darmowe, tworzone dla wielu języków oraz dziedzin (dostępnych jest ponad 6000 talii).
 
-Twórz własne talie lub pobierz talie darmowe, tworzone dla wielu języków oraz dziedzin (dostępnych jest ponad 6000 talii). Aplikacja wspiera nawet dodawanie materiału automatycznie z poziomu słownika
+Dodawanie materiału za pomocą desktopowego programu Anki lub bezpośrednio w AnkiDroidzie Aplikacja wspiera nawet dodawanie materiału automatycznie z poziomu słownika
 
 ★ Podstawowe cechy:
 • karty mogą zawierać: tekst, obrazki, dźwięki, LaTeX
 • planowane powtórki (algorytm SM2)
 • wsparcie dla syntezy mowy
 • ponad 6000 gotowych talii
-• szczegółowe statystyki
 • trzy widżety
+• szczegółowe statystyki
 • synchronizacja z AnkiWeb
 • otwarte oprogramowanie
 
 ★ Dodatkowe możliwości:
 • wpisywanie odpowiedzi (opcjonalne)
 • tablica do rysowania
-• przeglądarka kart
 • edytor kart
+• przeglądarka kart
 • importowanie gotowych plików z kolekcjami (poprzez Anki Desktop)
-• dodawanie kart za pomocą intentów z innych aplikacji, np. słowników
 • integracja ze słownikami (ColorDict, GodenDict, Leo.org, Aedict, różne słowniki online)
+• dodawanie kart za pomocą intentów z innych aplikacji, np. słowników
 • wsparcie dla czcionek użytkownika
+powtórki w widżecie
 • system kopii zapasowych
 • nawigacja poprzez gesty, kliknięcia oraz potrząsanie
-powtórki w widżecie
 • w pełni konfigurowalny
-• tryb "zakuwania"
 • możliwość ustawienia limitów nauki wg etykiet, czasu lub liczby kart
+• tryb "zakuwania"
 • tryb nocny
-• wsparcie dla kotrolera zeemote
 • trzy różne tematy
 • 27 wersji językowych
+• All previous AnkiDroid versions can be downloaded from the website

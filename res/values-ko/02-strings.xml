@@ -22,71 +22,72 @@
 <resources>
   <string name="CardEditorCancelButton">취소</string>
   <string name="CardEditorSaveButton">저장</string>
-  <string name="CardEditorLaterButton">Later</string>
-  <string name="CardEditorCardDeck">Card deck: %s</string>
-  <string name="CardEditorNoteDeck">Note deck: %s</string>
-  <string name="CardEditorModel">Note type: %s</string>
-  <string name="CardEditorTags">Tags: %1$s</string>
-  <string name="add_new_tag">Add new tag</string>
-  <string name="note_type">Note type</string>
+  <string name="CardEditorLaterButton">나중에</string>
+  <string name="CardEditorCardDeck">카드 묶음: %s</string>
+  <string name="CardEditorNoteDeck">노트 묶음: %s</string>
+  <string name="CardEditorModel">노트 유형: %s</string>
+  <string name="CardEditorTags">태그: %1$s</string>
+  <string name="add_new_tag">새 태그 추가</string>
+  <string name="note_type">노트 타입</string>
   <string name="sdcard_missing_message">현재 SD카드가 USB저장소로 사용되고 있어 사용이 불가능합니다. USB연결을 해제하세요.</string>
-  <string name="show_whiteboard">Show Whiteboard</string>
+  <string name="show_whiteboard">칠판 보이기</string>
   <string name="hide_whiteboard">화이트 보드 숨기기</string>
   <string name="clear_whiteboard">화이트 보드 지우기</string>
-  <string name="session_question_limit_reached">Session question limit reached</string>
-  <string name="session_time_limit_reached">Session time limit reached</string>
-  <string name="cram_edit_warning">Card editing not allowed while cramming</string>
-  <string name="suspend_leeches">Suspend Leeches</string>
-  <string name="leech_suspend_notification">Card marked as leech and suspended</string>
-  <string name="leech_notification">Card marked as leech</string>
+  <string name="session_question_limit_reached">1회 학습 중 최대 질문 갯수에 도달함</string>
+  <string name="session_time_limit_reached">1회 학습 제한 시간에 도달함</string>
+  <string name="cram_edit_warning">벼락치기 학습중에는 카드 편집이 금지됩니다</string>
+  <string name="suspend_leeches">거머리카드 중단</string>
+  <string name="leech_suspend_notification">암기 중단 및 거머리로 표시된 카드</string>
+  <string name="leech_notification">거머리로 표시된 카드</string>
   <string name="about_title">about</string>
-  <string name="cardeditor_title_add_note">Add Note</string>
-  <string name="cardeditor_title_edit_card">Edit Note</string>
-  <string name="factadder_saving_error">Error saving note</string>
-  <string name="cardeditor_move_note_too">Move note too</string>
-  <string name="cardeditor_move_to_notes_deck">To note\'s deck</string>
-  <string name="saving_facts">Saving note</string>
-  <string name="deck">Deck</string>
-  <string name="add">Add</string>
-  <string name="close">Close</string>
-  <string name="select">Select</string>
-  <string name="saving_changes">Saving changes...</string>
+  <string name="cardeditor_title_add_note">노트 추가</string>
+  <string name="cardeditor_title_edit_card">노트 편집</string>
+  <string name="factadder_saving_error">오류 노트 저장</string>
+  <string name="cardeditor_move_note_too">노트도 옮기기</string>
+  <string name="cardeditor_move_to_notes_deck">노트 묶음으로</string>
+  <string name="saving_facts">노트 저장</string>
+  <string name="deck">암기묶음</string>
+  <string name="add">추가</string>
+  <string name="close">닫기</string>
+  <string name="select">선택</string>
+  <string name="saving_changes">변경 내용 저장 중...</string>
   <string name="studyoptions_welcome_title">AnkiDroid에 오신 것을 환영합니다</string>
-  <string name="studyoptions_no_external_storage_title">No External Storage Available</string>
-  <string name="studyoptions_no_external_storage_message">No external storage is currently available. AnkiDroid needs to have access to the SD card in order to read and load your Anki decks. Check that your SD card is mounted and try again.</string>
-  <string name="fact_adder_intent_title">AnkiDroid Card</string>
-  <string name="fact_adder_swap">Swap</string>
-  <string name="deckpicker_select_dictionary_title">Select Dictionary</string>
-  <string name="deckpicker_select_dictionary_default">Default</string>
-  <string name="card_editor_add_card">Add note</string>
+  <string name="studyoptions_no_external_storage_title">외부 저장장치를 사용할 수 없습니다</string>
+  <string name="studyoptions_no_external_storage_message">외부 저장 장치를 사용할 수 없습니다. Ankidroid가 Anki 묶음을 읽어 들이고 수정하기 위해서는 SD카드에 접근할 수 있는 권한이 필요합니다. SD 카드가 설치되었는지 확인하시고 다시 한 번 시도해 보세요.</string>
+  <string name="fact_adder_intent_title">AnkiDroid 카드</string>
+  <string name="fact_adder_swap">교체하기</string>
+  <string name="deckpicker_select_dictionary_title">사전 선택</string>
+  <string name="deckpicker_select_dictionary_default">디폴트</string>
+  <string name="card_editor_add_card">메모 추가</string>
   <string name="card_editor_reset">재설정</string>
-  <string name="card_editor_copy_card">Copy card</string>
-  <string name="card_editor_reset_card">Reset progress</string>
-  <string name="error_insufficient_memory">Operation not possible due to insufficient memory on your device</string>
-  <string name="tutorial_load">Creating tutorial deck.\nPlease wait...</string>
-  <string name="tutorial_loading_error">Tutorial deck could not be created</string>
-  <string name="rename">Rename</string>
-  <string name="rename_error">Deck %s could not be renamed</string>
+  <string name="card_editor_copy_card">카드 복사</string>
+  <string name="card_editor_reset_card">학습상황 재설정</string>
+  <string name="error_insufficient_memory">장치 메모리가 부족하여 작업을 더 이상 진행할 수 없습니다</string>
+  <string name="tutorial_load">도움말 묶음 생성 중. \n 잠시 기다려주세요...</string>
+  <string name="tutorial_loading_error">도움말 카드 묶음을 만들 수 없습니다</string>
+  <string name="rename">이름 바꾸기</string>
+  <string name="rename_error">카드묶음 %s 이름을 바꿀 수 없습니다</string>
   <string name="help_title">도움말</string>
-  <string name="help_online">Online help</string>
-  <string name="help_faq">FAQ</string>
-  <string name="help_tutorial">Tutorial deck</string>
-  <string name="check_db">Check database</string>
-  <string name="check_db_message">Checking database.\nPlease wait...</string>
-  <string name="simple_interface_hint">Empty %s. Bear in mind that simple interface cannot show pictures/sounds etc.</string>
-  <string name="delete_deck">Deleting deck...\nPlease wait.</string>
+  <string name="help_online">온라인 도움말</string>
+  <string name="help_faq">자주 묻는 질문</string>
+  <string name="help_tutorial">도움말 카드 묶음</string>
+  <string name="check_db">데이터베이스 점검 중</string>
+  <string name="check_db_message">데이터베이스 검사 중. \n 기다려주세요...</string>
+  <string name="simple_interface_hint">빈 %s. 간단 인터페이스는 그림/소리 등이 재생되지 않습니다.</string>
+  <string name="delete_deck">카드 묶음 삭제 중...\n 잠시만 기다리세요.</string>
+  <string name="menu_cardbrowser">카드 탐색기</string>
   <string-array name="dynOrderLabels">
-    <item>Oldest seen first</item>
-    <item>Random</item>
-    <item>Increasing intervals</item>
-    <item>Decreasing intervals</item>
-    <item>Most lapses</item>
-    <item>Failed today</item>
-    <item>Order added</item>
-    <item>Order due</item>
+    <item>오래된 카드 먼저 학습하기</item>
+    <item>무작위로 학습하기</item>
+    <item>학습 간격 늘이기</item>
+    <item>학습 간격 줄이기</item>
+    <item>학습간격이 제일 긴 것부터</item>
+    <item>오늘 실패한 카드</item>
+    <item>추가된 순서대로</item>
+    <item>순서대로</item>
   </string-array>
   <plurals name="factadder_cards_added">
-    <item quantity="one">1 card added</item>
-    <item quantity="other">%d cards added</item>
+    <item quantity="one">1개 카드 추가됨</item>
+    <item quantity="other">%d 카드 추가됨</item>
   </plurals>
 </resources>

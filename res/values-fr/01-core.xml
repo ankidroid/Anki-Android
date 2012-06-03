@@ -30,7 +30,7 @@
   <string name="studyoptions_due_today">Due today:</string>
   <string name="studyoptions_new_total">Total new cards:</string>
   <string name="studyoptions_total_cards">Total cards:</string>
-  <string name="studyoptions_eta">Temps estimé (min):</string>
+  <string name="studyoptions_eta">Durée estimée (min) :</string>
   <string name="studyoptions_start">Démarrer l\'apprentissage</string>
   <string name="show_answer">Voir Réponse</string>
   <string name="ease1_learning">Encore</string>
@@ -43,7 +43,7 @@
   <string name="studyoptions_congrats_learnmore">En savoir plus</string>
   <string name="studyoptions_congrats_reviewearly">Réviser à l\'avance</string>
   <string name="studyoptions_congrats_open_other_deck">Ouvrir un autre paquet</string>
-  <string name="studyoptions_congrats_finish">Retour à l\'écran d\'étude</string>
+  <string name="studyoptions_congrats_finish">Retour à l’écran d’étude</string>
   <string name="card_unsuspended">Suspension de la carte annulée</string>
   <string name="card_suspended">Carte re-suspendue</string>
   <string name="menu_rotate">Changer d\'orientation</string>
@@ -69,28 +69,32 @@
   <string name="menu_suspend_card">Suspendre la carte</string>
   <string name="menu_suspend_note">Suspend Note</string>
   <string name="menu_delete_note">Delete Note</string>
-  <string name="delete_note_message">Really delete this note and all its cards?\n%s</string>
+  <string name="delete_note_message">Détruire la note et toutes ses cartes ?\n%s</string>
   <string name="menu_edit_card">Modifier la fiche</string>
-  <string name="menu_select">Sélectionner texte</string>
+  <string name="menu_select">Sélection de texte</string>
   <string name="menu_search">Recherche dans %1$s</string>
   <string name="menu_mark_card">Marquer la carte</string>
   <string name="menu_unmark_card">Unmark Card</string>
   <string name="new_deck">New deck</string>
   <string name="create">Create</string>
+  <string name="new_dynamic_deck">New dynamic deck</string>
   <string name="studyoptions_feedback">Commentaires</string>
   <string name="studyoptions_cram_dialog_title">Marqueurs à bachoter</string>
   <string name="studyoptions_load_other_deck">Charger un autre paquet</string>
   <string name="studyoptions_load_tutorial_deck">Create tutorial</string>
-  <string name="studyoptions_night_mode">Night</string>
+  <string name="studyoptions_night_mode">Assombrir</string>
   <string name="visit">Visitez</string>
   <string name="later">Plus tard</string>
   <string name="download">Télécharger</string>
   <string name="open_collection">Opening collection.\nPlease wait...</string>
   <string name="create_collection">Creating collection.\nPlease wait...</string>
+  <string name="rebuild_cram_deck">Rebuilding cram deck.\nPlease wait...</string>
+  <string name="rebuild_cram_label">Rebuild</string>
   <string name="studyoptions_congrats_finished">Congratulations! You have finished for now.</string>
   <string name="studyoptions_congrats_more_rev">Today\'s review limit has been reached, but there are still cards waiting to be reviewed. For optimum memory, consider increasing the daily limit in the options.</string>
   <string name="studyoptions_congrats_more_new">There are more new cards available, but the daily limit has been reached. You can increase the limit in the options, but please bear in mind that the more new cards you introduce, the higher your short-term review workload will become.</string>
-  <string name="sd_card_not_mounted">SD card is not mounted.</string>
+  <string name="sd_card_not_mounted">La carte SD n\'est pas montée.</string>
+  <string name="studyoptions_options">Options</string>
   <string-array name="next_review_s">
     <item>1 seconde</item>
     <item>1 minute</item>
@@ -108,8 +112,8 @@
     <item>%s années</item>
   </string-array>
   <plurals name="deckpicker_title">
-    <item quantity="one">1 of %2$d due (%3$s)</item>
-    <item quantity="other">%1$d of %2$d due (%3$s)</item>
+    <item quantity="one">1 des %2$d prévues (%3$s)</item>
+    <item quantity="other">%1$d des %2$d prévues (%3$s)</item>
   </plurals>
   <plurals name="deckpicker_title_minutes">
     <item quantity="one">1 minute.</item>
@@ -120,19 +124,19 @@
     <item quantity="other">%1$d parmi %2$d dûes</item>
   </plurals>
   <plurals name="reviewer_window_title">
-    <item quantity="one">1 minute left</item>
-    <item quantity="other">%d minutes left</item>
+    <item quantity="one">1 minute restante</item>
+    <item quantity="other">%d min. restantes</item>
   </plurals>
   <plurals name="studyoptions_congrats_message">
-    <item quantity="one">Tomorrow there will be: 1 card to review and %2$s.\n Estimated time: %3$s</item>
-    <item quantity="other">Tomorrow there will be: %1$d cards to review and %2$s.\n Estimated time: %3$s</item>
+    <item quantity="one">Demain, %2$s cartes nouvelles et 1 à revoir.\n Durée estimée : %3$s</item>
+    <item quantity="other">Demain, %2$s cartes nouvelles et %1$d à revoir.\n Durée estimée : %3$s</item>
   </plurals>
   <plurals name="studyoptions_congrats_new_cards">
-    <item quantity="one">1 new card</item>
+    <item quantity="one">1 nouvelle carte</item>
     <item quantity="other">%1$d nouvelles cartes</item>
   </plurals>
   <plurals name="studyoptions_congrats_eta">
-    <item quantity="one">Estimated time: 1 min.</item>
-    <item quantity="other">Estimated time: %1$d min.</item>
+    <item quantity="one">Durée estimée : 1 min.</item>
+    <item quantity="other">Durée estimée : %1$d min.</item>
   </plurals>
 </resources>

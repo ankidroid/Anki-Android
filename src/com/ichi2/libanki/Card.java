@@ -21,6 +21,7 @@ import android.content.ContentValues;
 import android.database.Cursor;
 import android.util.Log;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import org.json.JSONArray;
@@ -156,6 +157,8 @@ public class Card implements Cloneable {
 	public void flush() {
 		mMod = Utils.intNow();
 		mUsn = mCol.usn();
+		// bug check
+		assert mQueue != 2 || mODue != 0;
 		StringBuilder sb = new StringBuilder();
 		sb.append("INSERT OR REPLACE INTO cards VALUES (");
 		sb.append(mId).append(", ");
@@ -182,6 +185,8 @@ public class Card implements Cloneable {
 	public void flushSched() {
 		mMod = Utils.intNow();
 		mUsn = mCol.usn();
+		// bug check
+		assert mQueue != 2 || mODue != 0;
 		ContentValues values = new ContentValues();
 		values.put("mod", mMod);
 		values.put("usn", mUsn);
@@ -195,14 +200,17 @@ public class Card implements Cloneable {
 		values.put("left", mLeft);
 		values.put("odue", mODue);
 		values.put("odid", mODid);
-		mCol.getDb().update("cards", values, "id = " + mId, null);
+        values.put("did", mDid);
+        mCol.getDb().update("cards", values, "id = " + mId, null);
 	}
 
 	public String getQuestion(boolean simple) {
 		return getQuestion(false, simple);
 	}
-
 	public String getQuestion(boolean reload, boolean simple) {
+		return getQuestion(reload, simple, false);
+	}
+	public String getQuestion(boolean reload, boolean simple, boolean browser) {
 		if (simple) {
 			return _getQA(reload).get("q");
 		} else {
@@ -223,7 +231,7 @@ public class Card implements Cloneable {
 			// return (new
 			// StringBuilder()).append("<style type=\"text/css\">").append(template().get("css")).append("</style>").toString();
 			return (new StringBuilder()).append("<style>")
-					.append(template().get("css")).append("</style>")
+					.append(model().get("css")).append("</style>")
 					.toString();
 		} catch (JSONException e) {
 			throw new RuntimeException(e);
@@ -231,18 +239,31 @@ public class Card implements Cloneable {
 	}
 
 	public HashMap<String, String> _getQA(boolean reload) {
+		return _getQA(reload, false);
+	}
+	public HashMap<String, String> _getQA(boolean reload, boolean browser) {
 		if (mQA == null || reload) {
 			mQA = new HashMap<String, String>();
 			Note n = note(reload);
 			JSONObject m = model();
+			JSONObject t = template();
 			Object[] data;
 			try {
-				data = new Object[] { mId, n.getId(), m.getLong("id"), mDid,
+				data = new Object[] { mId, n.getId(), m.getLong("id"), mODid != 0l ? mODid : mDid,
 						mOrd, n.stringTags(), n.joinedFields() };
 			} catch (JSONException e) {
 				throw new RuntimeException(e);
 			}
-			mQA = mCol._renderQA(data);
+			ArrayList<String> args = new ArrayList<String>();
+			if (browser) {
+				try {
+					args.add(t.getString("bqfmt"));
+					args.add(t.getString("bafmt"));
+				} catch (JSONException e) {
+					throw new RuntimeException(e);
+				}
+			}
+			mQA = mCol._renderQA(data, args);
 		}
 		return mQA;
 	}
@@ -263,8 +284,13 @@ public class Card implements Cloneable {
 	}
 
 	public JSONObject template() {
+		JSONObject m = model();
 		try {
-			return model().getJSONArray("tmpls").getJSONObject(mOrd);
+			if (m.getInt("type") == Sched.MODEL_STD) {
+				return m.getJSONArray("tmpls").getJSONObject(mOrd);
+			} else {
+				return model().getJSONArray("tmpls").getJSONObject(0);
+			}
 		} catch (JSONException e) {
 			throw new RuntimeException(e);
 		}
@@ -307,6 +333,14 @@ public class Card implements Cloneable {
 	public int timeTaken() {
 		int total = (int) ((Utils.now() - mTimerStarted) * 1000);
 		return Math.min(total, timeLimit());
+	}
+
+	public boolean isEmpty() {
+		ArrayList<Integer> ords = mCol.getModels().availOrds(model(), Utils.joinFields(note().getFields()));
+		if (ords.contains(mOrd)) {
+			return true;
+		}
+		return false;
 	}
 
 	/**
@@ -644,6 +678,10 @@ public class Card implements Cloneable {
 	public void setOrd(int ord) {
 		mOrd = ord;
 	}
+	
+	public int getOrd() {
+	    return mOrd;
+	}
 
 	public void setDid(long did) {
 		mDid = did;
@@ -653,7 +691,17 @@ public class Card implements Cloneable {
 		return mDid;
 	}
 
-	public Card clone() {
+	// Needed for tests
+	public Collection getCol() {
+        return mCol;
+    }
+
+	// Needed for tests
+    public void setCol(Collection col) {
+        mCol = col;
+    }
+
+    public Card clone() {
 		try {
 			return (Card) super.clone();
 		} catch (CloneNotSupportedException e) {

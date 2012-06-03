@@ -52,8 +52,8 @@
   <string name="select">Ок</string>
   <string name="saving_changes">Сохранение изменений...</string>
   <string name="studyoptions_welcome_title">Добро пожаловать в AnkiDroid</string>
-  <string name="studyoptions_no_external_storage_title">Нет доступа к внешнему хранилищу</string>
-  <string name="studyoptions_no_external_storage_message">Не доступно внешнее хранилище. AnkiDroid должен иметь доступ к SD-карте для того, чтобы читать и загружать колоды. Убедитесь, что ваша SD-карта смонтирована и попробуйте еще раз.</string>
+  <string name="studyoptions_no_external_storage_title">Не доступен накопитель данных</string>
+  <string name="studyoptions_no_external_storage_message">Не доступен накопитель данных. AnkiDroid должен иметь доступ к SD-карте для того, чтобы читать и загружать колоды. Убедитесь, что ваша SD-карта смонтирована и попробуйте еще раз.</string>
   <string name="fact_adder_intent_title">AnkiDroid Карта</string>
   <string name="fact_adder_swap">Обмен</string>
   <string name="deckpicker_select_dictionary_title">Выбрать словарь</string>
@@ -75,6 +75,7 @@
   <string name="check_db_message">Проверка базы данных. \nПожалуйста подождите...</string>
   <string name="simple_interface_hint">Пустой %s. Имейте в виду то, что простой интерфейс не может показывать фотографии/звуки и т.д.</string>
   <string name="delete_deck">Удаление колоды...\nПожалуйста подождите...</string>
+  <string name="menu_cardbrowser">Card browser</string>
   <string-array name="dynOrderLabels">
     <item>Старейшие появляться первыми</item>
     <item>Случайно</item>

@@ -4,36 +4,36 @@ Az AnkiDroid segítségével hatékonyan tanulhatsz szókártyákat, mert akkor 
 
 Tanulj meg akármit, bármikor, bárhol, ha rád tör a tanulhatnék! Használd ki jól a buszozás, sorban állás, vagy másféle várakozás miatt kieső időt!
 
-Hozz létre új anyagot az asztali Anki-val, vagy rögtön az AnkiDroiddal!
+Készíts saját tanulókártya paklit, vagy tölts le ingyeneseket a több, mint 6000, különböző témájú és nyelvű elérhető pakli közül!
 
-Készíts saját tanulókártya paklit, vagy tölts le ingyeneseket a több, mint 6000, különböző témájú és nyelvű elérhető pakli közül! Az alkalmazás támogatja az anyagok automatikus hozzáadását a szótárból!
+Hozz létre új anyagot az asztali Anki-val, vagy rögtön az AnkiDroiddal! Az alkalmazás támogatja az anyagok automatikus hozzáadását a szótárból!
 
 ★ Fő funkciók:
 • támogatott szókártya tartalmak: szöveg, kép, hang, LaTeX
 • késleltetett ismétlés (supermemo 2 algoritmus)
 • szöveg-beszéd integráció
 • több mint 6000 előre elkészített pakli
-• részletes statisztikák
 • 3 widget
+• részletes statisztikák
 • AnkiWeb szinkronizálás
 • nyílt forráskódú
 
 ★ További funkciók:
 • válaszok beírása (lehetőség)
 • tábla
-• kártya böngésző
 • kártya szerkesztő/hozzáadó
+• kártya böngésző
 • importáld a meglévő gyűjtemény fájlokat (Anki Desktop-pal)
-• kártyák hozzáadása más programokból (pl. szótárak)
 • szótár-integráció (ColorDict, GoldenDict, Leo.org, Aedict, különböző webes szótárak)
+• kártyák hozzáadása más programokból (pl. szótárak)
 • egyéni betűtípus-támogatás
+• átnézés a widgetben
 • teljes biztonsági másolat rendszer
 • navigáció elhúzással, érintéssel, rázással
-• átnézés a widgetben
 • teljesen testreszabható
-• magolás mód
 • tanulás korlátozása címke, idő, vagy kártya alapján
+• magolás mód
 • éjszakai mód
-• zeemote támogatás
 • három különböző mejelnés
 • 27 lokalizáció
+• All previous AnkiDroid versions can be downloaded from the website

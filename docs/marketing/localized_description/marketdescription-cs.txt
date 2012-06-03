@@ -4,36 +4,36 @@ AnkiDroid umožňuje velmi efektivní učení kartiček jejich zobrazením těsn
 
 Studium mnoha věcí kdekoliv a kdykoliv chcete. Dobré využití volného času během cesty autobusem, ve frontě v obchodě nebo kdykoliv během čekání!
 
-Přidání učebního materiálu prostřednictvím aplikace Anki nebo přímo přes Ankidroid.
+Vytvořte si vlastní balíčky kartiček nebo si stáhněte zdarma balíčky vytvořené pro mnoho jazyků a témat (k dispozici více než 6000).
 
-Vytvořte si vlastní balíčky kartiček nebo si stáhněte zdarma balíčky vytvořené pro mnoho jazyků a témat (k dispozici více než 6000). Aplikace také podporuje automatické přidávání materiálu ze slovníku!
+Přidání učebního materiálu prostřednictvím aplikace Anki nebo přímo přes Ankidroid. Aplikace také podporuje automatické přidávání materiálu ze slovníku!
 
 Hlavní vlastnosti:
 • podporovaný obsah kartiček: text, obrázky, zvuky, LaTeX
 • rozložené opakování (spaced repetition - algoritmus z programu Supermemo 2)
 • integrované předčítání textu
 • více než 6000 již vytvořených znalostních balíčků
-• podrobné statistiky
 • tři widgety
+• podrobné statistiky
 • synchronizace s AnkiWeb
 • open source
 
 Další funkce:
 • psání odpovědí (volitelné)
 • tabule
-• prohlížeč karet
 přidání/ editace karet
+• prohlížeč karet
 • import stávající kolekce souborů (přes Anki Desktop)
-• přidání kartiček pomocí intent z jiných aplikací, např. slovníků
 • začlenění slovníku (ColorDict, GoldenDict, Leo.org, Aedict, webové slovníky)
+• přidání kartiček pomocí intent z jiných aplikací, např. slovníků
 • podpora vlastního fontu písma
+• opakování ve widgetu
 • kompletní záložní systém
 • ovládání pomocí gest, kliknutí, třesení
-• opakování ve widgetu
 • plně přizpůsobitelný
-• režim šprtání
 • možnost omezení studia podle štítků, času nebo počtu karet
+• režim šprtání
 • noční režim
-• Podpora zeemote
 • tři různá témata pro zobrazení
 • 27 lokalizací
+• All previous AnkiDroid versions can be downloaded from the website

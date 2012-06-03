@@ -29,14 +29,14 @@
   <string name="CardEditorTags">Kenmerken: %1$s</string>
   <string name="add_new_tag">Nieuw kenmerk toevoegen</string>
   <string name="note_type">Kaarttype</string>
-  <string name="sdcard_missing_message">De SD-kaart is niet beschikbaar omdat ze gebruikt wordt voor USB-opslag. Ontkoppel USB om toegang te krijgen tot uw sets.</string>
-  <string name="show_whiteboard">Toon Whiteboard</string>
-  <string name="hide_whiteboard">Verberg Whiteboard</string>
-  <string name="clear_whiteboard">Klaar het Whiteboard</string>
-  <string name="session_question_limit_reached">Limiet bereikt aan vragen in deze sessie</string>
+  <string name="sdcard_missing_message">De SD-kaart is niet beschikbaar omdat ze voor USB-opslag gebruikt wordt. Ontkoppel USB om toegang tot je sets te krijgen.</string>
+  <string name="show_whiteboard">Whiteboard weergeven</string>
+  <string name="hide_whiteboard">Whiteboard verbergen</string>
+  <string name="clear_whiteboard">Whiteboard schoonvegen</string>
+  <string name="session_question_limit_reached">Maximum aantal vragen per sessie bereikt</string>
   <string name="session_time_limit_reached">Tijdslimiet bereikt in deze sessie</string>
-  <string name="cram_edit_warning">Bewerken kaart niet toegestaan tijdens stampen</string>
-  <string name="suspend_leeches">Uitgestelde moeilijke kaarten</string>
+  <string name="cram_edit_warning">Tijdens stampen mogen kaarten niet bewerkt worden</string>
+  <string name="suspend_leeches">Moeilijke kaarten uitstellen</string>
   <string name="leech_suspend_notification">Kaart gemarkeerd als moeilijk en uitgesteld</string>
   <string name="leech_notification">Kaart gemarkeerd als moeilijk</string>
   <string name="about_title">Over</string>
@@ -49,12 +49,12 @@
   <string name="deck">Leerset</string>
   <string name="add">Toevoegen</string>
   <string name="close">Sluiten</string>
-  <string name="select">Selecteer</string>
-  <string name="saving_changes">Bezig met opslaan wijzigingen...</string>
+  <string name="select">Selecteren</string>
+  <string name="saving_changes">Wijzigingen worden opgeslagen...</string>
   <string name="studyoptions_welcome_title">Welkom bij AnkiDroid</string>
   <string name="studyoptions_no_external_storage_title">Geen externe opslag beschikbaar</string>
-  <string name="studyoptions_no_external_storage_message">Geen externe opslag is momenteel beschikbaar. AnkiDroid heeft toegang tot uw SD-kaart nodig om sets te laden. Controleer of uw SD-kaart aanwezig is en probeer opnieuw.</string>
-  <string name="fact_adder_intent_title">Ankidroid Kaart</string>
+  <string name="studyoptions_no_external_storage_message">Er is momenteel geen externe opslag beschikbaar. AnkiDroid heeft toegang tot je SD-kaart nodig om je Ankisets te laden. Controleer of je SD-kaart goed zit en probeer het nog eens.</string>
+  <string name="fact_adder_intent_title">Ankidroid kaart</string>
   <string name="fact_adder_swap">Omkeren</string>
   <string name="deckpicker_select_dictionary_title">Selecteer Woordenboek</string>
   <string name="deckpicker_select_dictionary_default">Standaard</string>
@@ -72,17 +72,18 @@
   <string name="help_faq">FAQ</string>
   <string name="help_tutorial">Voorbeeld leerset</string>
   <string name="check_db">Controleer database</string>
-  <string name="check_db_message">Controle van de database.\nEven wachten...</string>
+  <string name="check_db_message">De databank wordt gecontroleerd.\nEven geduld...</string>
   <string name="simple_interface_hint">Leeg %s. Onthoud dat een eenvoudige interface geen beelden/geluiden kan tonen.</string>
   <string name="delete_deck">Leerset verwijderen...\nEven wachten.</string>
+  <string name="menu_cardbrowser">Card browser</string>
   <string-array name="dynOrderLabels">
-    <item>Oldest seen first</item>
-    <item>Random</item>
-    <item>Increasing intervals</item>
-    <item>Decreasing intervals</item>
-    <item>Most lapses</item>
-    <item>Failed today</item>
-    <item>Order added</item>
+    <item>Langst niet gezien eerst</item>
+    <item>Willekeurig</item>
+    <item>Toenemende intervallen</item>
+    <item>Afnemende intervallen</item>
+    <item>Meeste missers</item>
+    <item>Missers van vandaag</item>
+    <item>Volgorde toegevoegd</item>
     <item>Order due</item>
   </string-array>
   <plurals name="factadder_cards_added">

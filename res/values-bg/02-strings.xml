@@ -75,6 +75,7 @@
   <string name="check_db_message">Checking database.\nPlease wait...</string>
   <string name="simple_interface_hint">Празен %s. Имайте в предвид, че този прост интерфейс не показва картини/звуци и др.</string>
   <string name="delete_deck">Deleting deck...\nPlease wait.</string>
+  <string name="menu_cardbrowser">Card browser</string>
   <string-array name="dynOrderLabels">
     <item>Oldest seen first</item>
     <item>Random</item>

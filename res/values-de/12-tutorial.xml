@@ -17,7 +17,7 @@
  
 <resources> 
  <string-array name="tutorial_questions"> 
-    <item><![CDATA[Thanks for installing AnkiDroid!<br />This is a short introduction.<br />What you see now is the <span style=\'font-weight:600;\'>question</span> part of a flashcard.<br />Please click on the large button below...]]></item> 
+    <item><![CDATA[Vielen Dank für die Installation von AnkiDroid!<br/>Dies ist eine kurze Einführung<br/>What Sie im Moment sehen, ist der <span style=\'font-weight:600;\'>Frage</span>-Teil einer Karteikarte<br/>Bitte klicken Sie auf die große Schaltfläche unten…]]></item> 
     <item><![CDATA[The next card is shown now.<br />The idea is straightforward: Just like in &quot;real world&quot; paper flashcards, you write a question on the front and the answer on the back side of your cards.<br />(click the button to show the back side)]]></item> 
     <item><![CDATA[&quot;What is the capital of Burkina Faso?&quot;<br />Think a bit about the answer and click then &quot;show answer&quot;]]></item> 
     <item><![CDATA[Über jeder Schaltfläche finden sich Informationen darüber, wann die Karte das nächste Mal gezeigt werden soll.]]></item> 
@@ -25,14 +25,14 @@
     <item><![CDATA[Noch einige Worte zur Organisation in AnkiDroid:<br><br>Alle Informationen werden in Frage/Antwort-Paaren erstellt. Wenn in die entgegengesetzte Richtung gelernt werden soll, sollte eine neue Karte mit vertauschten Feldern erstellt werden.]]></item> 
     <item><![CDATA[Alle Karten sind in Stapel zusammengefasst und können mit Hilfe aller möglichen Schlagworte dort leicht organisiert werden.]]></item> 
     <item><![CDATA[There are mainly two ways of getting new cards:<br />You either add premade decks of other users (choose &quot;shared decks&quot; in the decks summary) or create them by yourself.]]></item> 
-    <item><![CDATA[Um Stapel aber perfekt nach Ihren Wünschen zu bekommen, ist es vermutlich notwendig, sie selbst zu erstellen. Das kann entweder mit AnkiDroid erledigt werden...]]></item> 
+    <item><![CDATA[Um Stapel aber perfekt nach Ihren Wünschen zu bekommen, ist es vermutlich notwendig, sie selbst zu erstellen. Das kann entweder mit AnkiDroid erledigt werden…]]></item> 
     <item><![CDATA[Let\'s have a look on the top bar:<br />In the left top corner you find some numbers. The red one counts the failed cards (answered by &quot;again&quot;),]]></item> 
     <item><![CDATA[In der oberen rechten Ecke ist die Denkzeit der aktuellen Karten angegeben und Informationen über die heutige Leistung.]]></item> 
     <item><![CDATA[Albeit you can use AnkiDroid stand alone, it is fully connected to AnkiWeb, the syncing server of Anki Desktop (available for Linux, Windows, Mac).]]></item> 
     <item><![CDATA[Das waren die Hauptpunkte der AnkiDroid-Benutzung.<br /><br />Für Weiteres zum Anki-Konzept besuchen Sie http://ankisrs.net]]></item> 
  </string-array>
  <string-array name="tutorial_answers">
-    <item><![CDATA[... in order to see the <span style=\'font-weight:600;\'>answer</span> part of the flashcard (below the line).<br />Click on the button on the right]]></item> 
+    <item><![CDATA[… um den <span style=\'font-weight:600;\'>Antwort</span>-Teil zu sehen (unter der Linie)<br/>Klicken Sie nun auf die rechte untere Schaltfläche]]></item> 
     <item><![CDATA[Let\'s assume you want to learn the world\'s capitals. Let the question be...<br />(click on one of the buttons to show the next card)]]></item> 
     <item><![CDATA[&quot;Ouagadougou&quot; is the right answer. <br />You didn\'t know it? Click &quot;again&quot; to see the card again in a couple of minutes. Otherwise, click on the other buttons, depending on the easiness of the answer.]]></item> 
     <item><![CDATA[Diese Zeit wird berechnet aus dem Datum, an dem Sie die Karten das letzte Mal beantwortet haben, der aktuell gewählten Schwierigkeit und der früher gewählten Schwierigkeiten.]]></item> 
@@ -40,7 +40,7 @@
     <item><![CDATA[Keine Sorge, das kann automatisch erledigt werden. Informationen müssen nicht doppelt eingegeben werden.]]></item> 
     <item><![CDATA[Sie werden das Konzept schnell verstehen, wenn Sie anfangen, mit AnkiDroid zu arbeiten.]]></item> 
     <item><![CDATA[You\'ll find thousands of premade decks to download and there are probably some which are useful for you.]]></item> 
-    <item><![CDATA[... oder aber (deutlich komfortabler) mit der Desktop-Anwendung Anki (sie kann kostenlos unter http://ankisrs.net heruntergeladen werden).<br><br>Stapel können sehr einfach mit dem Desktop-Programm synchronisiert werden, der Datentransport ist also kein Problem.]]></item> 
+    <item><![CDATA[… oder aber (deutlich komfortabler) mit der Desktop-Anwendung Anki (sie kann kostenlos unter http://ankisrs.net heruntergeladen werden).<br><br>Stapel können sehr einfach mit dem Desktop-Programm synchronisiert werden, der Datentransport ist also kein Problem.]]></item> 
     <item><![CDATA[the black one shows the number of cards you\'ve already learned before and which are due to review today, and the blue number tells you, how many new cards are projected for today. <br />The type of the actual cards is specified by an underline.]]></item> 
     <item><![CDATA[Der obere Balken zeigt den Lernfortschritt, der untere den Anteil heutiger Ja-Antworten.]]></item> 
     <item><![CDATA[Thus, you can easily sync your collection between AnkiDroid and Anki Desktop and use the latter for a more convenient card adding and managing.]]></item> 

@@ -75,6 +75,7 @@
   <string name="check_db_message">Comprobando base de datos.\nPor favor, espera...</string>
   <string name="simple_interface_hint">Vaciar %s. Ten en cuenta que la interfaz simple no puede mostrar imágenes/sonidos etc.</string>
   <string name="delete_deck">Eliminando mazo...\nPor favor, espera.</string>
+  <string name="menu_cardbrowser">Explorador de tarjetas</string>
   <string-array name="dynOrderLabels">
     <item>Vistas más antiguamente primero</item>
     <item>Aleatorio</item>

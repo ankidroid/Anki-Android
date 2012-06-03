@@ -16,32 +16,22 @@ package com.ichi2.anki;
 
 import com.ichi2.anki2.R;
 
-import android.app.Activity;
-import android.app.Dialog;
 import android.support.v4.app.Fragment;
 import android.content.BroadcastReceiver;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.DialogInterface.OnCancelListener;
 import android.content.SharedPreferences.Editor;
-import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.Paint.Align;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.util.Log;
 import android.view.GestureDetector;
 import android.view.GestureDetector.SimpleOnGestureListener;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -50,7 +40,6 @@ import android.view.ViewTreeObserver.OnGlobalLayoutListener;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
-import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.ToggleButton;
 
@@ -67,15 +56,8 @@ import com.ichi2.libanki.Utils;
 import com.ichi2.themes.StyledDialog;
 import com.ichi2.themes.StyledProgressDialog;
 import com.ichi2.themes.Themes;
-import com.ichi2.widget.WidgetStatus;
 import com.tomgibara.android.veecheck.util.PrefSettings;
-import com.zeemote.zc.Controller;
-import com.zeemote.zc.event.ButtonEvent;
-import com.zeemote.zc.event.IButtonListener;
-import com.zeemote.zc.ui.android.ControllerAndroidUi;
-import com.zeemote.zc.util.JoystickToButtonAdapter;
 
-import java.io.IOException;
 import java.util.HashMap;
 
 import org.achartengine.ChartFactory;
@@ -87,7 +69,7 @@ import org.achartengine.renderer.XYMultipleSeriesRenderer;
 import org.achartengine.renderer.XYSeriesRenderer;
 import org.json.JSONException;
 
-public class StudyOptionsFragment extends Fragment implements IButtonListener {
+public class StudyOptionsFragment extends Fragment {
 
 	/**
 	 * Available options performed by other activities
@@ -106,19 +88,8 @@ public class StudyOptionsFragment extends Fragment implements IButtonListener {
 	private static final int CONTENT_CONGRATS = 1;
 
 	private static final int DIALOG_STATISTIC_TYPE = 0;
-	private static final int DIALOG_CRAM = 1;
 
 	private HashMap<Integer, StyledDialog> mDialogs = new HashMap<Integer, StyledDialog>();
-
-	/** Zeemote messages */
-	private static final int MSG_ZEEMOTE_BUTTON_A = 0x110;
-	private static final int MSG_ZEEMOTE_BUTTON_B = MSG_ZEEMOTE_BUTTON_A + 1;
-	private static final int MSG_ZEEMOTE_BUTTON_C = MSG_ZEEMOTE_BUTTON_A + 2;
-	private static final int MSG_ZEEMOTE_BUTTON_D = MSG_ZEEMOTE_BUTTON_A + 3;
-	private static final int MSG_ZEEMOTE_STICK_UP = MSG_ZEEMOTE_BUTTON_A + 4;
-	private static final int MSG_ZEEMOTE_STICK_DOWN = MSG_ZEEMOTE_BUTTON_A + 5;
-	private static final int MSG_ZEEMOTE_STICK_LEFT = MSG_ZEEMOTE_BUTTON_A + 6;
-	private static final int MSG_ZEEMOTE_STICK_RIGHT = MSG_ZEEMOTE_BUTTON_A + 7;
 
 	/** Broadcast that informs us when the sd card is about to be unmounted */
 	private BroadcastReceiver mUnmountReceiver = null;
@@ -131,30 +102,17 @@ public class StudyOptionsFragment extends Fragment implements IButtonListener {
 	private int mCurrentContentView;
 	boolean mInvertedColors = false;
 	String mLocale;
-	private boolean mZeemoteEnabled;
 
 	private boolean mDontSaveOnStop = false;
 
 	/** Alerts to inform the user about different situations */
 	private StyledProgressDialog mProgressDialog;
 
-	// /*
-	// * Cram related
-	// */
-	// // private StyledDialog mCramTagsDialog;
-	// private String allCramTags[];
-	// private HashSet<String> activeCramTags;
-	// private String cramOrder;
-	// private static final String[] cramOrderList = { "type, modified",
-	// "created", "random()" };
-
 	/**
 	 * UI elements for "Study Options" view
 	 */
 	private View mStudyOptionsView;
 	private Button mButtonStart;
-	private ToggleButton mToggleNight;
-	private ToggleButton mToggleCram;
 	private TextView mTextDeckName;
 	private TextView mTextDeckDescription;
 	private TextView mTextTodayNew;
@@ -176,16 +134,8 @@ public class StudyOptionsFragment extends Fragment implements IButtonListener {
 	 */
 	private View mCongratsView;
 	private TextView mTextCongratsMessage;
-	// private Button mButtonCongratsLearnMore;
-	// private Button mButtonCongratsReviewEarly;
 	private Button mButtonCongratsOpenOtherDeck;
 	private Button mButtonCongratsFinish;
-
-	/**
-	 * UI elements for "Cram Tags" view
-	 */
-	// private ListView mCramTagsListView;
-	// private Spinner mSpinnerCramOrder;
 
 	/**
 	 * Swipe Detection
@@ -211,12 +161,6 @@ public class StudyOptionsFragment extends Fragment implements IButtonListener {
 	private boolean mFragmented;
 
 	/**
-	 * Zeemote controller
-	 */
-	protected JoystickToButtonAdapter adapter;
-	ControllerAndroidUi controllerUi;
-
-	/**
 	 * Callbacks for UI events
 	 */
 	private View.OnClickListener mButtonClickListener = new View.OnClickListener() {
@@ -226,30 +170,6 @@ public class StudyOptionsFragment extends Fragment implements IButtonListener {
 			case R.id.studyoptions_start:
 				openReviewer();
 				return;
-			case R.id.studyoptions_cram:
-				v.setEnabled(false);
-				// if (mToggleCram.isChecked()) {
-				// mToggleCram.setChecked(!mToggleCram.isChecked());
-				// activeCramTags.clear();
-				// cramOrder = cramOrderList[0];
-				// showDialog(DIALOG_CRAM);
-				// } else {
-				// onCramStop();
-				// resetAndUpdateValuesFromDeck();
-				// }
-				return;
-			case R.id.studyoptions_night:
-				if (mInvertedColors != mToggleNight.isChecked()) {
-					mInvertedColors = mToggleNight.isChecked();
-					savePreferences("invertedColors", mInvertedColors);
-				}
-				return;
-				// case R.id.studyoptions_congrats_learnmore:
-				// startLearnMore();
-				// return;
-				// case R.id.studyoptions_congrats_reviewearly:
-				// startEarlyReview();
-				// return;
 			case R.id.studyoptions_congrats_open_other_deck:
 				closeStudyOptions();
 				return;
@@ -267,12 +187,26 @@ public class StudyOptionsFragment extends Fragment implements IButtonListener {
 				// openStatistics(0);
 				return;
 			case R.id.studyoptions_options:
-				Intent i = new Intent(getActivity(), DeckOptions.class);
-				startActivityForResult(i, DECK_OPTIONS);
-				if (UIUtils.getApiLevel() > 4) {
-					ActivityTransitionAnimation.slide(getActivity(),
-							ActivityTransitionAnimation.FADE);
+				if (mCol.getDecks().isDyn(mCol.getDecks().selected())) {
+		        	Intent intent = new Intent();
+		        	intent.setClass(getActivity(), CramDeckActivity.class);
+		    		startActivity(intent);
+					if (UIUtils.getApiLevel() > 4) {
+						ActivityTransitionAnimation.slide(getActivity(),
+								ActivityTransitionAnimation.FADE);
+					}
+				} else {
+					Intent i = new Intent(getActivity(), DeckOptions.class);
+					startActivityForResult(i, DECK_OPTIONS);
+					if (UIUtils.getApiLevel() > 4) {
+						ActivityTransitionAnimation.slide(getActivity(),
+								ActivityTransitionAnimation.FADE);
+					}					
 				}
+				return;
+			case R.id.studyoptions_rebuild_cram:
+				mProgressDialog = StyledProgressDialog.show(getActivity(), "", getResources().getString(R.string.rebuild_cram_deck), true);
+			 	DeckTask.launchDeckTask(DeckTask.TASK_TYPE_REBUILD_CRAM, mUpdateValuesFromDeckListener, new DeckTask.TaskData(mCol, mCol.getDecks().selected()));
 				return;
 			case R.id.studyoptions_add:
 				addNote();
@@ -283,48 +217,6 @@ public class StudyOptionsFragment extends Fragment implements IButtonListener {
 		}
 	};
 
-	Handler ZeemoteHandler = new Handler() {
-		public void handleMessage(Message msg) {
-			switch (msg.what) {
-			case MSG_ZEEMOTE_STICK_UP:
-				// sendKey(KeyEvent.KEYCODE_DPAD_UP);
-				break;
-			case MSG_ZEEMOTE_STICK_DOWN:
-				// sendKey(KeyEvent.KEYCODE_DPAD_DOWN);
-				break;
-			case MSG_ZEEMOTE_STICK_LEFT:
-				// sendKey(KeyEvent.KEYCODE_DPAD_LEFT);
-				break;
-			case MSG_ZEEMOTE_STICK_RIGHT:
-				// sendKey(KeyEvent.KEYCODE_DPAD_RIGHT);
-				break;
-			case MSG_ZEEMOTE_BUTTON_A:
-				// sendKey(KeyEvent.KEYCODE_ENTER);
-				openReviewer();
-				break;
-			case MSG_ZEEMOTE_BUTTON_B:
-				// sendKey(KeyEvent.KEYCODE_BACK);
-				if (mCurrentContentView == CONTENT_CONGRATS) {
-					finishCongrats();
-				} else {
-					closeStudyOptions();
-				}
-				break;
-			case MSG_ZEEMOTE_BUTTON_C:
-				sendKey(KeyEvent.KEYCODE_BACK);
-				break;
-			case MSG_ZEEMOTE_BUTTON_D:
-				break;
-			}
-			super.handleMessage(msg);
-		}
-	};
-
-	protected void sendKey(int keycode) {
-//		this.dispatchKeyEvent(new KeyEvent(KeyEvent.ACTION_DOWN, keycode));
-//		this.dispatchKeyEvent(new KeyEvent(KeyEvent.ACTION_UP, keycode));
-		Log.d("Zeemote", "dispatched key " + keycode);
-	}
 
     public static StudyOptionsFragment newInstance(int index) {
     	StudyOptionsFragment f = new StudyOptionsFragment();
@@ -404,31 +296,6 @@ public class StudyOptionsFragment extends Fragment implements IButtonListener {
 		}
 
 		View view = showContentView(CONTENT_STUDY_OPTIONS);
-
-		// Zeemote controller initialization
-		if (mZeemoteEnabled) {
-			if (AnkiDroidApp.zeemoteController() == null) {
-				AnkiDroidApp.setZeemoteController(new Controller(
-						Controller.CONTROLLER_1));
-			}
-//			controllerUi = new ControllerAndroidUi(this,
-//					AnkiDroidApp.zeemoteController());
-			com.zeemote.util.Strings zstrings = com.zeemote.util.Strings
-					.getStrings();
-			if (zstrings.isLocaleAvailable(mLocale)) {
-				Log.d("Zeemote", "Zeemote locale " + mLocale
-						+ " is available. Setting.");
-				zstrings.setLocale(mLocale);
-			} else {
-				Log.d("Zeemote", "Zeemote locale " + mLocale + " is not available.");
-			}
-			if (mZeemoteEnabled) {
-				if (!AnkiDroidApp.zeemoteController().isConnected()) {
-					Log.d("Zeemote", "starting connection in onCreate");
-					controllerUi.startConnectionProcess();
-				}
-			}			
-		}
 		return view;
 	}
 
@@ -494,30 +361,10 @@ public class StudyOptionsFragment extends Fragment implements IButtonListener {
 //		if (mUnmountReceiver != null) {
 //			unregisterReceiver(mUnmountReceiver);
 //		}
-		// Disconnect Zeemote if connected
-		if (mZeemoteEnabled && (AnkiDroidApp.zeemoteController() != null)
-				&& (AnkiDroidApp.zeemoteController().isConnected())) {
-			try {
-				Log.d("Zeemote", "trying to disconnect in onDestroy...");
-				AnkiDroidApp.zeemoteController().disconnect();
-			} catch (IOException ex) {
-				Log.e("Zeemote",
-						"Error on zeemote disconnection in onDestroy: "
-								+ ex.getMessage());
-			}
-		}
 	}
 
 	@Override
 	public void onPause() {
-		if (mZeemoteEnabled && (AnkiDroidApp.zeemoteController() != null)
-				&& (AnkiDroidApp.zeemoteController().isConnected())) {
-			Log.d(AnkiDroidApp.TAG, "Zeemote: Removing listener in onPause");
-			AnkiDroidApp.zeemoteController().removeButtonListener(this);
-			AnkiDroidApp.zeemoteController().removeJoystickListener(adapter);
-			adapter.removeButtonListener(this);
-			adapter = null;
-		}
 		super.onPause();
 	}
 
@@ -526,14 +373,6 @@ public class StudyOptionsFragment extends Fragment implements IButtonListener {
 	@Override
 	public void onResume() {
 		super.onResume();
-		if (mZeemoteEnabled && (AnkiDroidApp.zeemoteController() != null)
-				&& (AnkiDroidApp.zeemoteController().isConnected())) {
-			Log.d("Zeemote", "Adding listener in onResume");
-			AnkiDroidApp.zeemoteController().addButtonListener(this);
-			adapter = new JoystickToButtonAdapter();
-			AnkiDroidApp.zeemoteController().addJoystickListener(adapter);
-			adapter.addButtonListener(this);
-		}
 		if (mCol != null) {
 			if (Utils.now() > mCol.getSched().getDayCutoff()) {
 				updateValuesFromDeck(true);
@@ -654,20 +493,33 @@ public class StudyOptionsFragment extends Fragment implements IButtonListener {
 				.findViewById(R.id.studyoptions_deck_description);
 		mButtonStart = (Button) mStudyOptionsView
 				.findViewById(R.id.studyoptions_start);
-		mToggleCram = (ToggleButton) mStudyOptionsView
-				.findViewById(R.id.studyoptions_cram);
-		mToggleNight = (ToggleButton) mStudyOptionsView
-				.findViewById(R.id.studyoptions_night);
-		mToggleNight.setChecked(mInvertedColors);
+//		mToggleCram = (ToggleButton) mStudyOptionsView
+//				.findViewById(R.id.studyoptions_cram);
+//		mToggleNight = (ToggleButton) mStudyOptionsView
+//				.findViewById(R.id.studyoptions_night);
+//		mToggleNight.setChecked(mInvertedColors);
 
-		mAddNote = (ImageButton) mStudyOptionsView
-				.findViewById(R.id.studyoptions_add);
-		mCardBrowser = (ImageButton) mStudyOptionsView
-				.findViewById(R.id.studyoptions_card_browser);
-		mStatisticsButton = (ImageButton) mStudyOptionsView
-				.findViewById(R.id.studyoptions_statistics);
-		mDeckOptions = (ImageButton) mStudyOptionsView
-				.findViewById(R.id.studyoptions_options);
+		if (mCol != null && mCol.getDecks().isDyn(mCol.getDecks().selected())) {
+			Button rebBut = (Button) mStudyOptionsView.findViewById(R.id.studyoptions_rebuild_cram);
+			rebBut.setOnClickListener(mButtonClickListener);
+			rebBut.setVisibility(View.VISIBLE);
+		}
+
+		if (mFragmented) {
+			Button but = (Button) mStudyOptionsView.findViewById(R.id.studyoptions_options);
+			but.setOnClickListener(mButtonClickListener);
+		} else {
+			mAddNote = (ImageButton) mStudyOptionsView
+					.findViewById(R.id.studyoptions_add);
+			mCardBrowser = (ImageButton) mStudyOptionsView
+					.findViewById(R.id.studyoptions_card_browser);
+			mStatisticsButton = (ImageButton) mStudyOptionsView.findViewById(R.id.studyoptions_statistics);
+			mDeckOptions = (ImageButton) mStudyOptionsView.findViewById(R.id.studyoptions_options);
+			mAddNote.setOnClickListener(mButtonClickListener);
+			mCardBrowser.setOnClickListener(mButtonClickListener);
+			mStatisticsButton.setOnClickListener(mButtonClickListener);
+			mDeckOptions.setOnClickListener(mButtonClickListener);
+		}
 
 		mGlobalBar = (View) mStudyOptionsView
 				.findViewById(R.id.studyoptions_global_bar);
@@ -697,12 +549,8 @@ public class StudyOptionsFragment extends Fragment implements IButtonListener {
 		mDeckChart = (LinearLayout) mStudyOptionsView.findViewById(R.id.studyoptions_chart);
 		
 		mButtonStart.setOnClickListener(mButtonClickListener);
-		mToggleCram.setOnClickListener(mButtonClickListener);
-		mToggleNight.setOnClickListener(mButtonClickListener);
-		mAddNote.setOnClickListener(mButtonClickListener);
-		mCardBrowser.setOnClickListener(mButtonClickListener);
-		mStatisticsButton.setOnClickListener(mButtonClickListener);
-		mDeckOptions.setOnClickListener(mButtonClickListener);
+//		mToggleCram.setOnClickListener(mButtonClickListener);
+//		mToggleNight.setOnClickListener(mButtonClickListener);
 
 		// The view that shows the congratulations view.
 		mCongratsView = inflater.inflate(
@@ -738,6 +586,11 @@ public class StudyOptionsFragment extends Fragment implements IButtonListener {
 		mDialogs.get(id).show();
 	}
 
+	private void onPrepareDialog(int id, StyledDialog styledDialog) {
+		// TODO Auto-generated method stub
+		
+	}
+
 	protected StyledDialog onCreateDialog(int id) {
 		StyledDialog dialog = null;
 		Resources res = getResources();
@@ -751,46 +604,8 @@ public class StudyOptionsFragment extends Fragment implements IButtonListener {
 				public void onClick(DialogInterface dialog, int which) {
 					DeckTask.launchDeckTask(DeckTask.TASK_TYPE_LOAD_STATISTICS, mLoadStatisticsHandler, new DeckTask.TaskData(mCol, which, false));
 				}
-				});
+				}, mFragmented);
 			break;
-
-		case DIALOG_CRAM:
-			// builder.setTitle(R.string.studyoptions_cram_dialog_title);
-			// builder.setPositiveButton(res.getString(R.string.begin_cram),
-			// new OnClickListener() {
-			// @Override
-			// public void onClick(DialogInterface dialog, int which) {
-			// mToggleCram.setChecked(true);
-			// onCram();
-			// }
-			// });
-			// builder.setNegativeButton(res.getString(R.string.cancel), null);
-			//
-			// Spinner spinner = new Spinner(this);
-			//
-			// ArrayAdapter<CharSequence> adapter = ArrayAdapter
-			// .createFromResource(this, R.array.cram_review_order_labels,
-			// android.R.layout.simple_spinner_item);
-			// adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-			// spinner.setAdapter(adapter);
-			// spinner.setSelection(0);
-			// spinner.setOnItemSelectedListener(new
-			// AdapterView.OnItemSelectedListener() {
-			// @Override
-			// public void onItemSelected(AdapterView<?> parent, View view,
-			// int position, long id) {
-			// cramOrder = cramOrderList[position];
-			// }
-			//
-			// @Override
-			// public void onNothingSelected(AdapterView<?> arg0) {
-			// return;
-			// }
-			// });
-			//
-			// builder.setView(spinner, false, true);
-			// dialog = builder.create();
-			// break;
 
 		default:
 			dialog = null;
@@ -798,46 +613,6 @@ public class StudyOptionsFragment extends Fragment implements IButtonListener {
 
 		dialog.setOwnerActivity(getActivity());
 		return dialog;
-	}
-
-
-	protected void onPrepareDialog(int id, StyledDialog dialog) {
-		StyledDialog ad = (StyledDialog) dialog;
-
-		// wait for deck loading thread (to avoid problems with resuming
-		// destroyed activities)
-		if (mCol == null) {
-			return;
-		}
-
-		switch (id) {
-
-		case DIALOG_CRAM:
-			// allCramTags = DeckManager.getMainDeck().allTags_();
-			// if (allCramTags == null) {
-			// Themes.showThemedToast(getActivity(),
-			// getResources().getString(R.string.error_insufficient_memory),
-			// false);
-			// ad.setEnabled(false);
-			// return;
-			// }
-			// ad.setMultiChoiceItems(allCramTags, new
-			// boolean[allCramTags.length],
-			// new DialogInterface.OnClickListener() {
-			// @Override
-			// public void onClick(DialogInterface arg0, int which) {
-			// String tag = allCramTags[which];
-			// if (activeCramTags.contains(tag)) {
-			// Log.i(AnkiDroidApp.TAG, "unchecked tag: " + tag);
-			// activeCramTags.remove(tag);
-			// } else {
-			// Log.i(AnkiDroidApp.TAG, "checked tag: " + tag);
-			// activeCramTags.add(tag);
-			// }
-			// }
-			// });
-			break;
-		}
 	}
 
 	private View showContentView(int which) {
@@ -1087,8 +862,6 @@ public class StudyOptionsFragment extends Fragment implements IButtonListener {
 		mSwipeEnabled = preferences.getBoolean("swipe", false);
 		mInvertedColors = preferences.getBoolean("invertedColors", false);
 
-		mZeemoteEnabled = preferences.getBoolean("zeemote", false);
-
 		// TODO: set language
 //		mLocale = preferences.getString("language", "");
 //		AnkiDroidApp.setLanguage(mLocale);
@@ -1127,6 +900,21 @@ public class StudyOptionsFragment extends Fragment implements IButtonListener {
 			if(mDeckCounts.getVisibility() == View.INVISIBLE) {
 				mDeckCounts.setVisibility(View.VISIBLE);
 				mDeckCounts.setAnimation(ViewAnimation.fade(ViewAnimation.FADE_IN, 500, 0));
+			}
+
+			if (mFragmented) {
+				((DeckPicker)getActivity()).loadCounts();
+			}
+
+			// for rebuilding cram decks
+			if (mProgressDialog != null && mProgressDialog.isShowing()) {
+				try {
+					mProgressDialog.dismiss();
+				} catch (Exception e) {
+					Log.e(AnkiDroidApp.TAG,
+							"onPostExecute - Dialog dismiss Exception = "
+									+ e.getMessage());
+				}
 			}
 		}
 		@Override
@@ -1224,36 +1012,4 @@ public class StudyOptionsFragment extends Fragment implements IButtonListener {
 //			return false;
 //	}
 
-	@Override
-	public void buttonPressed(ButtonEvent arg0) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void buttonReleased(ButtonEvent arg0) {
-		Log.d("Zeemote", "Button released, id: " + arg0.getButtonID());
-		Message msg = Message.obtain();
-		msg.what = MSG_ZEEMOTE_BUTTON_A + arg0.getButtonID(); // Button A = 0,
-																// Button B =
-																// 1...
-		if ((msg.what >= MSG_ZEEMOTE_BUTTON_A)
-				&& (msg.what <= MSG_ZEEMOTE_BUTTON_D)) { // make sure messages
-															// from future
-															// buttons don't get
-															// throug
-			this.ZeemoteHandler.sendMessage(msg);
-		}
-		if (arg0.getButtonID() == -1) {
-			msg.what = MSG_ZEEMOTE_BUTTON_D + arg0.getButtonGameAction();
-			if ((msg.what >= MSG_ZEEMOTE_STICK_UP)
-					&& (msg.what <= MSG_ZEEMOTE_STICK_RIGHT)) { // make sure
-																// messages from
-																// future
-																// buttons don't
-																// get throug
-				this.ZeemoteHandler.sendMessage(msg);
-			}
-		}
-	}
 }

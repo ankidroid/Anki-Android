@@ -56,7 +56,10 @@ public class Template
      * @param ctx the context in which to look up the variable.
      * @param name the name of the variable to be resolved
      */
-    protected Object getValue (Context ctx, String name, int line)
+    protected Object getValue (Context ctx, String name, int line) {
+        return getValue(ctx, name, line, null);
+    }
+    protected Object getValue (Context ctx, String name, int line, String defaultValue)
     {
         while (ctx != null) {
             Object value = getValueIn(ctx.data, name, line);
@@ -67,7 +70,7 @@ public class Template
         }
         // Graceful failing, no need to throw exception
         Log.e(AnkiDroidApp.TAG, "Could not retrieve from context name '" + name + "' on line " + line);
-        return new String("{unknown field " + name + "}");
+        return defaultValue;
     }
 
     protected Object getValueIn (Object data, String name, int line)

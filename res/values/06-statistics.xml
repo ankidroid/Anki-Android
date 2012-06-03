@@ -19,6 +19,7 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
+<string name="statistics_menu">Statistics</string>
 <string name="statistics_young">Young</string>
 <string name="statistics_mature">Mature</string>
 <string name="statistics_relearn">Relearn</string>
@@ -104,5 +105,13 @@
 	<string name="stats_forecast">Forecast</string>
 	<string name="stats_review_count">Review count</string>
 	<string name="stats_review_time">Review time</string>
-	    	    	    	    	    
+	<string-array name="stats_period">
+		<item>1 month</item>
+		<item>1 year</item>
+		<item>all</item>
+	</string-array>	    	    	    	    	    
+	<string-array name="stats_range">
+		<item>collection</item>
+		<item>current deck</item>
+	</string-array>	    	    	    	    	    
 </resources>

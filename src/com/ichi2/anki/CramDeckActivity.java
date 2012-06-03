@@ -18,19 +18,12 @@ package com.ichi2.anki;
 import com.ichi2.anki2.R;
 
 import com.ichi2.anim.ActivityTransitionAnimation;
-import com.ichi2.libanki.Collection;
-import com.ichi2.widget.WidgetStatus;
 
-import android.content.Intent;
-import android.content.pm.ActivityInfo;
-import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 import android.view.KeyEvent;
-import android.view.Menu;
-import android.view.MenuItem;
 
 public class CramDeckActivity extends FragmentActivity {
 

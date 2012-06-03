@@ -70,14 +70,14 @@
   </string-array>
   <string-array name="gestures_labels">
     <item>Cap acció</item>
-    <item>Show answer</item>
-    <item>Answer button 1</item>
-    <item>Answer button 2</item>
-    <item>Answer button 3</item>
-    <item>Answer button 4</item>
-    <item>Answer recommended (green)</item>
-    <item>Answer better than recommended</item>
-    <item>Undo</item>
+    <item>Mostra la resposta</item>
+    <item>Botó de resposta 1</item>
+    <item>Botó de resposta 2</item>
+    <item>Botó de resposta 3</item>
+    <item>Botó de resposta 4</item>
+    <item>Resposta recomanada (verd)</item>
+    <item>Resposta millor que la recomanada</item>
+    <item>Desfés</item>
     <item>Edita la fitxa</item>
     <item>Marca la fitxa</item>
     <item>Cerca l\'expressió</item>
@@ -85,22 +85,22 @@
     <item>Suspèn la fitxa</item>
     <item>Suprimeix la fitxa</item>
     <item>Esborra la pissarra</item>
-    <item>Play media</item>
-    <item>Abort learning</item>
+    <item>Reprodueix-ho</item>
+    <item>Atura l\'estudi</item>
   </string-array>
   <string-array name="theme_labels">
     <item>Android Fosc</item>
     <item>Android Clar</item>
     <item>Blau</item>
-    <item>White</item>
+    <item>Blanc</item>
   </string-array>
   <string-array name="leech_action_labels">
-    <item>Suspend card</item>
-    <item>Tag only</item>
-    <item>Reset as new</item>
+    <item>Suspèn la targeta</item>
+    <item>Només l\'etiqueta</item>
+    <item>Reinicia de nou</item>
   </string-array>
   <string-array name="new_order_labels">
-    <item>New cards in random order</item>
-    <item>New cards in order added</item>
+    <item>Mostra les fitxes noves desendreçades</item>
+    <item>Mostra les fitxes noves pel ordre en que s\'han afegit</item>
   </string-array>
 </resources>

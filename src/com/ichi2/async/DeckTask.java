@@ -82,6 +82,7 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
     public static final int TASK_TYPE_UPDATE_VALUES_FROM_DECK = 23;
     public static final int TASK_TYPE_RESTORE_IF_MISSING = 24;
     public static final int TASK_TYPE_DELETE_DECK = 25;
+    public static final int TASK_TYPE_REBUILD_CRAM = 26;
 
     private static DeckTask sInstance;
     private static DeckTask sOldInstance;
@@ -227,6 +228,9 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
 
             case TASK_TYPE_DELETE_DECK:
             	return doInBackgroundDeleteDeck(params);
+
+            case TASK_TYPE_REBUILD_CRAM:
+            	return doInBackgroundRebuildCram(params);
 
             default:
                 return null;
@@ -375,34 +379,13 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
 //        DeckManager.waitForDeckClosingThread(deckFilename);
 
         if (oldCol == null || !oldCol.getPath().equals(collectionFile)) {
-            File dbFile = new File(collectionFile);
-            if (!dbFile.exists()) {
-                Log.i(AnkiDroidApp.TAG, "doInBackgroundOpenCollection: db file does not exist. Creating it...");
-            	publishProgress(new TaskData(res.getString(R.string.create_collection)));
-                // If decks directory does not exist, create it.
-                AnkiDroidApp.createDirectoryIfMissing(dbFile.getParentFile());
-            	// create file
-                try {
-                    // Copy an empty collection file from the assets to the SD card.
-                    InputStream stream = res.getAssets().open("collection.anki2");
-                    Utils.writeToFile(stream, collectionFile);
-                    stream.close();
-                    AnkiDb ankiDB = AnkiDatabaseManager.getDatabase(collectionFile);
-                    // set create time to 0 in order to let it be set later by the collection constructor
-                    ankiDB.execute("UPDATE col SET crt = 0");
-                    AnkiDatabaseManager.closeDatabase(collectionFile);
-                } catch (IOException e) {
-                    Log.e(AnkiDroidApp.TAG, Log.getStackTraceString(e));
-                    Log.e(AnkiDroidApp.TAG, "doInBackgroundOpenCollection - The copy of collection.anki2 to the SD card failed.");
-                    col = null;
-                    return new TaskData(col);
-                }
-            	publishProgress(new TaskData(res.getString(R.string.open_collection)));
-            } else if (BackupManager.safetyBackupNeeded(collectionFile)) {
+
+        	// do a safety backup if last backup is too old --> addresses android's delete db bug 
+            if (BackupManager.safetyBackupNeeded(collectionFile)) {
             	publishProgress(new TaskData(res.getString(R.string.backup_collection)));
             	BackupManager.performBackup(collectionFile);
-            	publishProgress(new TaskData(res.getString(R.string.open_collection)));
             }
+        	publishProgress(new TaskData(res.getString(R.string.open_collection)));
 
         	// load collection
             Log.i(AnkiDroidApp.TAG, "doInBackgroundOpenCollection - File exists -> Loading collection...");
@@ -427,14 +410,12 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
         	return new TaskData(col);
         }
         try {
-	        if (reset) {
-        		col.getSched().reset();
-        	}
-	    	// load decks
-        	TreeSet<Object[]> decks = col.getSched().deckDueTree(false);
-        	return new TaskData(col, decks, 0);
+//	        if (reset) {
+//        		col.getSched().reset();
+//        	}
+	        return new TaskData(col, doInBackgroundLoadDeckCounts(new TaskData(col)).getObjArray());
         } catch (RuntimeException e) {
-		col = null;
+        	col = null;
         	return new TaskData(col);
         }
     }
@@ -444,8 +425,7 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
         Log.i(AnkiDroidApp.TAG, "doInBackgroundLoadDeckCounts");
     	Collection col = params[0].getCollection();
        	try {
-	    	Sched sched = col.getSched();
-       		return new TaskData(sched.deckCounts());
+       		return new TaskData(col.getSched().deckCounts());
        	} catch (RuntimeException e) {
        		Log.e(AnkiDroidApp.TAG, "doInBackgroundLoadDeckCounts - error: " + e);
        		return null;
@@ -689,6 +669,15 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
     }
 
 
+    private TaskData doInBackgroundRebuildCram(TaskData... params) {
+        Log.i(AnkiDroidApp.TAG, "doInBackgroundRebuildCram");
+        Collection col = params[0].getCollection();
+        long did = params[0].getLong();
+		col.getSched().rebuildDyn(did);
+		return doInBackgroundUpdateValuesFromDeck(new DeckTask.TaskData(col.getSched(), true));
+    }
+
+
     private TaskData doInBackgroundRestoreDeck(TaskData... params) {
 //        Log.i(AnkiDroidApp.TAG, "doInBackgroundRestoreDeck");
 //        String[] paths = params[0].getDeckList();
@@ -761,7 +750,7 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
 //	       		}
 //	       	}
 	       	if (model == null) {
-	       		model = col.getModels().addBasicModel(title, false);	       		
+	       		model = col.getModels().addBasicModel(col, title);	       		
 	       	}
 	       	model.put("did", did);
 			String[] questions = res.getStringArray(R.array.tutorial_questions);
@@ -884,7 +873,12 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
         	mCol = col;
         }
 
+        public TaskData(Collection col, Object[] obj) {
+        	mCol = col;
+        	mObjects = obj;
+        }
 
+        
         public TaskData(Collection col, String string) {
         	mCol = col;
         	mMsg = string;

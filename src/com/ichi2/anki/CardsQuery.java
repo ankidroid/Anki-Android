@@ -28,7 +28,7 @@ import com.ichi2.libanki.Utils;
  */
 public final class CardsQuery {
 
-    /* package for testing */ static final String[] PROJECTION = {
+    /* package for testing */ public static final String[] PROJECTION = {
         "cards.id",         // 0
         "cards.question",   // 1
         "cards.answer",     // 2

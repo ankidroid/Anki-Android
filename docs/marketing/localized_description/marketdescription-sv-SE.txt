@@ -4,36 +4,36 @@ Med AnkiDroid kan du lära dig flashcards effektivt genom att visa dig korten pr
 
 Studera allt möjligt var och när du vill. Utnyttja inaktiv tid på bussen, i kön på affären eller när du väntar på något annat!
 
-Lägga till material genom skrivbordsprogrammet Anki eller direkt via Ankidroid.
+Skapa dina egna flashcard eller ladda ner gratis kortlekar på flera olika språk och ämnen (mer än 6000 tillgängliga).
 
-Skapa dina egna flashcard eller ladda ner gratis kortlekar på flera olika språk och ämnen (mer än 6000 tillgängliga). Programmet stöder även att automatiskt lägga till material från en ordlista!
+Lägga till material genom skrivbordsprogrammet Anki eller direkt via Ankidroid. Programmet stöder även att automatiskt lägga till material från en ordlista!
 
 ★ Huvudfunktioner:
 • stöder flashcardinnehåll: text, bilder, ljud och LaTeX
 • intervallbaserad repetition (supermemo 2 algoritm)
 • text-till-tal-integration
 • mer än 6000 tillgängliga kortlekar
-• detaljerad statistik
 • tre widgetar
+• detaljerad statistik
 • synkronisering med AnkiWeb
 • öppen källkod
 
 ★ Ytterligare funktioner:
 • skriv svar (frivilligt)
 • whiteboard
-• kortutforskare
 • korteditor
+• kortutforskare
 • importera befintliga kortlekar (via Anki Desktop)
-• lägga till kort från andra program som t.ex. ordlistor
 • Ordboksintegration (ColorDict, GoldenDict, Leo.org, Aedict, andra webbordböcker)
+• lägga till kort från andra program som t.ex. ordlistor
 • stöd för anpassade teckensnitt
+• repetera i widgeten
 • fullständigt säkerhetskopieringssystem
 • navigera genom att svepa, trycka och skaka
-• repetera i widgeten
 • helt anpassningsbart
-• råpluggsläge
 • begränsa studierna via etikett, tid eller kort
+• råpluggsläge
 • nattläge
-• zeemote stöd
 • tre olika ui-teman
 • översatt till 27 språk
+•Alla tidigare versioner av AnkiDroid kan hämtas från webbsidan

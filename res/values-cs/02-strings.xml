@@ -75,6 +75,7 @@
   <string name="check_db_message">Kontrola databáze.\nProsím čekejte...</string>
   <string name="simple_interface_hint">Prázdné %s. Mějte na paměti, že jednoduché rozhraní nemůže zobrazit obrázky/zvuky atd.</string>
   <string name="delete_deck">Odstraňování balíčku...\nProsím čekejte.</string>
+  <string name="menu_cardbrowser">Card browser</string>
   <string-array name="dynOrderLabels">
     <item>Oldest seen first</item>
     <item>Random</item>

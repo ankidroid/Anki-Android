@@ -39,8 +39,6 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Locale;
 
-import com.zeemote.zc.Controller;
-
 /**
  * Application class. This file mainly contains Veecheck stuff.
  */
@@ -64,9 +62,6 @@ public class AnkiDroidApp extends Application {
     private static AnkiDroidApp sInstance;
     private static Typeface     mTibTypeface;
     private static boolean bTibetan;
-
-   
-    private Controller mZeemoteController;
 
     /**
      * On application creation.
@@ -135,8 +130,16 @@ public class AnkiDroidApp extends Application {
         
     	
     	if (bTibetan && mTibTypeface == null) {
-        	String fileName = "fonts/DDC_Uchen.ttf";
-        	mTibTypeface = Typeface.createFromAsset(getInstance().getAssets(), fileName);
+        	String fileName = "/mnt/sdcard/fonts/DDC_Uchen.ttf";
+//        	mTibTypeface = Typeface.createFromAsset(getInstance().getAssets(), fileName);
+        	File mTibFontFile = new File(fileName);
+        	if ( mTibFontFile.exists()) {
+        		mTibTypeface = Typeface.createFromFile(fileName);
+        	} else {
+        		return false;
+        	}
+        	
+        	
         }
     	
     	return bTibetan;
@@ -193,15 +196,6 @@ public class AnkiDroidApp extends Application {
 
     public static Resources getAppResources() {
         return sInstance.getResources();
-    }
-
-
-    public static Controller zeemoteController() {
-    	return sInstance.mZeemoteController;
-    }
-    
-    public static void setZeemoteController(Controller controller) {
-    	sInstance.mZeemoteController = controller;
     }
 
 

@@ -54,51 +54,57 @@ public class Decks {
 	// private TreeMap<Integer, Model> mModelCache;
 	// private TreeMap<Integer, JSONObject> mGroupConfCache;
 
-	private static final String defaultDeck = "{" + "'newToday': [0, 0], "
+	public static final String defaultDeck = "{" + "'newToday': [0, 0], "
 			+ // currentDay, count
 			"'revToday': [0, 0], " + "'lrnToday': [0, 0], "
 			+ "'timeToday': [0, 0], " + // time in ms
-			"'conf': 1, " + "'usn': 0, " + "'desc': \"\", 'dyn': 0, 'collapsed': False }";
+			"'conf': 1, " + "'usn': 0, " + "'desc': \"\", 'dyn': 0, 'collapsed': False, " +
+			// added in beta11
+			"'extendNew': 10, 'extendRev': 50 }";
 
 	private static final String defaultDynamicDeck = "{" + "'newToday': [0, 0], "
 			+ // currentDay, count
 			"'revToday': [0, 0], " + "'lrnToday': [0, 0], "
 			+ "'timeToday': [0, 0], " + // time in ms
-			"'collapsed': False, 'dyn': 0, 'desc': \"\", 'usn': 0, 'delays' [1, 10], 'separate': True, 'fmult': 0, " +
+			"'collapsed': False, 'dyn': 1, 'desc': \"\", 'usn': 0, 'delays': [1, 10], 'separate': True, 'fmult': 0, " +
 			"'cramRev': False, 'search': \"\", 'limit': 100, 'order': 0, 'shift': True }";
 	
 	
 
 	// default group conf
-	private static final String defaultConf = "{" + "'name': \"Default\""
-			+ "'new': {" + "'delays': [1, 10], " + "'ints': [1, 4, 7], " + // 7
+	public static final String defaultConf = 
+			"{" + 
+					"'name': \"Default\"," +
+					"'new': {" + 
+						"'delays': [1, 10], " + 
+						"'ints': [1, 4, 7], " + // 7
 																			// is
 																			// not
 																			// currently
 																			// used
-			"'initialFactor': 2500, " + "'separate': True, " + "'order': "
-			+ Sched.NEW_CARDS_DUE
-			+ ", "
-			+ "'perDay': 20, }, "
+					"'initialFactor': 2500, " + 
+					"'separate': True, " + 
+					"'order': " + Sched.NEW_CARDS_DUE + ", "
+					+ "'perDay': 20 }, "
 			+ "'lapse': {"
-			+ "'delays': [10], "
-			+ "'mult': 0, "
-			+ "'minInt': 1, "
-			+ "'leechFails': 8, "
-			+ "'leechAction': 0, }, "
+				+ "'delays': [10], "
+				+ "'mult': 0, "
+				+ "'minInt': 1, "
+				+ "'leechFails': 8, "
+				+ "'leechAction': 0 }, "
 			// type 0=suspend, 1=tagonly
 			+ "'rev': { "
-			+ "'perDay': 100"
-			+ "'ease4': 1.3, "
-			+ "'fuzz': 0.05, "
-			+ "'minSpace': 1, "
-			+ "'fi': [10, 10], "
-			+ "}, "
+				+ "'perDay': 100, "
+				+ "'ease4': 1.3, "
+				+ "'fuzz': 0.05, "
+				+ "'minSpace': 1, "
+				// in beta11+
+				+ "'ivlfct': 1 }, "
 			+ "'maxTaken': 60, "
 			+ "'timer': 0, "
 			+ "'autoplay': True, "
 			+ "'mod': 0, "
-			+ "'usn': 0, }";
+			+ "'usn': 0 }";
 
 	private Collection mCol;
 	private HashMap<Long, JSONObject> mDecks;
@@ -216,7 +222,7 @@ public class Decks {
 		JSONObject g;
 		long id;
 		try {
-			g = new JSONObject(defaultDeck);
+			g = new JSONObject(type);
 			g.put("name", name);
 			id = Utils.intNow(1000);
 			while (mDecks.containsKey(id)) {
@@ -256,6 +262,11 @@ public class Decks {
 			if (deck.getInt("dyn") != 0) {
 				// deleting a cramming deck returns cards to their previous deck rather than deleting the cards
 				mCol.getSched().remDyn(did);
+				if (childrenToo) {
+					for (long id : children(did).values()) {
+						rem(id, cardsToo);
+					}
+				}
 			} else {
 				// delete children first
 				if (childrenToo) {
@@ -266,7 +277,9 @@ public class Decks {
 				}
 				// delete cards too?
 				if (cardsToo) {
-					mCol.remCards(cids(did));
+					// don't use cids(), as we want cards in cram decks too
+					ArrayList<Long> cids = mCol.getDb().queryColumn(Long.class, "SELECT id FROM cards WHERE did = " + did + " OR odid = " + did, 0);
+					mCol.remCards(Utils.arrayList2array(cids));
 				}			
 			}
 		} catch (JSONException e) {
@@ -306,6 +319,17 @@ public class Decks {
 		return decks;
 	}
 
+	public long[] allIds() {
+		Iterator<Long> it = mDecks.keySet().iterator();
+		long[] ids = new long[mDecks.size()];
+		int i = 0;
+		while (it.hasNext()) {
+			ids[i] = it.next();
+			i++;
+		}
+		return ids;
+	}
+
 	public int count() {
 		return mDecks.size();
 	}
@@ -328,6 +352,8 @@ public class Decks {
 		}
 	}
 
+	// byName
+	
 	/** Add or update an existing deck. Used for syncing and merging. */
 	public void update(JSONObject g) {
 		try {
@@ -346,6 +372,8 @@ public class Decks {
 		if (allNames().contains(newName) || newName.length() == 0) {
 			return false;
 		}
+		// ensure we have parents
+		newName = _ensureParents(newName);
 		// rename children
 		String oldName;
 		try {
@@ -362,8 +390,6 @@ public class Decks {
 			g.put("name", newName);
 			mDeckIds.put(newName, mDeckIds.remove(oldName));
 			save(g);
-			// finally, ensure we have parents
-			_ensureParents(newName);
 		} catch (JSONException e) {
 			throw new RuntimeException(e);
 		}
@@ -374,6 +400,9 @@ public class Decks {
 	private String _ensureParents(String name) {
 		String s = "";
 		String[] path = name.split("::");
+		if (path.length < 2) {
+			return name;
+		}
 		for (int i = 0; i < path.length - 1; i++) {
 			if (i == 0) {
 				s = path[0];
@@ -432,7 +461,42 @@ public class Decks {
 		save();
 	}
 
-	// confid
+    /**
+     * Create a new configuration and return id.
+     * Uses defaultConf as template.
+     * @param name Name of the new configuration
+     * @return The id of the new configuration
+     */
+	public long confId(String name) {
+	    return confId(name, defaultConf);
+	}
+    /**
+     * Create a new configuration and return id.
+     * @param name Name of the new configuration
+     * @param cloneFrom Optional parameter to copy configuration from
+     * @return The id of the new configuration
+     */
+	public long confId(String name, String cloneFrom) {
+	    JSONObject c;
+        long id;
+        try {
+            c = new JSONObject(defaultConf);
+            while (true) {
+                id = Utils.intNow(1000);
+                if (!mDconf.containsKey(new Long(id))) {
+                    break;
+                }
+            }
+            c.put("id", id);
+            c.put("name", name);
+        } catch (JSONException e) {
+            throw new RuntimeException(e);
+        }
+        mDconf.put(new Long(id), c);
+        save(c);
+        return id;
+    }
+
 	// remConf
 
 	public void setConf(JSONObject deck, long id) {
@@ -444,7 +508,6 @@ public class Decks {
 		save(deck);
 	}
 
-	// setConf
 	// didsforConf
 	// restoretodefault
 
@@ -455,11 +518,30 @@ public class Decks {
 	 */
 
 	public String name(long did) {
+		return name(did, false);
+	}
+	public String name(long did, boolean def) {
 		try {
-			return get(did).getString("name");
+			JSONObject deck = get(did, def);
+			if (deck != null) {
+				return deck.getString("name");
+			}
+			return "[no deck]";
 		} catch (JSONException e) {
 			throw new RuntimeException(e);
 		}
+	}
+
+	public String nameOrNone(long did) {
+		JSONObject deck = get(did, false);
+		if (deck != null) {
+			try {
+				return deck.getString("name");
+			} catch (JSONException e) {
+				throw new RuntimeException(e);
+			}
+		}
+		return null;
 	}
 
 	public void setDeck(long[] cids, long did) {
@@ -502,6 +584,12 @@ public class Decks {
 			result[i] = cids.get(i);
 		}
 		return result;		
+	}
+
+	public void recoverOrphans() {
+		boolean mod = mCol.getDb().getMod();
+		mCol.getDb().execute("UPDATE cards SET did = 1 WHERE did NOT IN " + Utils.ids2str(allIds()));
+		mCol.getDb().setMod(mod);
 	}
 
 	/**
@@ -628,6 +716,14 @@ public class Decks {
 		long did = id(name, true, defaultDynamicDeck);
 		select(did);
 		return did;
+	}
+
+	public boolean isDyn(long did) {
+		try {
+			return get(did).getInt("dyn") != 0;
+		} catch (JSONException e) {
+			throw new RuntimeException(e);
+		}
 	}
 
 
@@ -757,4 +853,11 @@ public class Decks {
 	// // return false;
 	// // }
 
+	public HashMap<Long, JSONObject> getDconf() {
+		return mDconf;
+	}
+
+    public HashMap<Long, JSONObject> getDecks() {
+        return mDecks;
+    }
 }

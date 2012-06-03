@@ -19,20 +19,14 @@ package com.ichi2.libanki;
 import android.database.Cursor;
 import android.util.Log;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
-import java.util.TreeMap;
+import com.ichi2.anki.AnkiDroidApp;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import com.ichi2.anki.AnkiDroidApp;
+import java.util.ArrayList;
+import java.util.Map;
+import java.util.TreeMap;
 
 public class Note {
 
@@ -50,7 +44,7 @@ public class Note {
 	private String mData = "";
 	private int mFlags;
 
-	private String[] mFMap;
+	private Map<String, Integer> mFMap;
 	private long mScm;
 
 	public Note(Collection col, long id) {
@@ -81,7 +75,7 @@ public class Note {
 				mFields[i] = "";
 			}
 			mData = "";
-			mFMap = mCol.getModels().orderedFields(mModel);
+			mFMap = mCol.getModels().fieldMap(mModel);
 			mScm = mCol.getScm();
 		}
 	}
@@ -113,7 +107,7 @@ public class Note {
 			}
 		}
 		mModel = mCol.getModels().get(mMid);
-		mFMap = mCol.getModels().orderedFields(mModel);
+		mFMap = mCol.getModels().fieldMap(mModel);
 	}
 
 	public void flush() {
@@ -174,7 +168,7 @@ public class Note {
 	 */
 
 	public String[] keys() {
-		return mFMap;
+		return (String[])mFMap.keySet().toArray();
 	}
 
 	public String[] values() {
@@ -182,22 +176,26 @@ public class Note {
 	}
 
 	public String[][] items() {
-		String[][] result = new String[mFMap.length][2];
-		for (int i = 0; i < mFMap.length; i++) {
-			result[i][0] = mFMap[i]; 
+		String[][] result = new String[mFMap.size()][2];
+		for (String fname : mFMap.keySet()) {
+		    int i = mFMap.get(fname).intValue();
+			result[i][0] = fname; 
 			result[i][1] = mFields[i]; 
 		}
 		return result;
 	}
 
+	private int _fieldOrd(String key) {
+	    return mFMap.get(key);
+	}
 
-//	public String _getitem__(String key) {
-//		return mFields[_fieldOrd(key)];
-//	}
-//
-//	public void __setitem__(String key, String value) {
-//		mFields[_fieldOrd(key)] = value;
-//	}
+	public String getitem(String key) {
+		return mFields[_fieldOrd(key)];
+	}
+
+	public void setitem(String key, String value) {
+		mFields[_fieldOrd(key)] = value;
+	}
 
 	/**
 	 * Tags
@@ -310,5 +308,9 @@ public class Note {
 
 	public String getSFld() {
 		return mCol.getDb().queryString("SELECT sfld FROM notes WHERE id = " + mId);
+	}
+
+	public String[] getFields() {
+		return mFields;
 	}
 }

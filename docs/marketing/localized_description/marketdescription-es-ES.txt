@@ -4,36 +4,36 @@ AnkiDroid te permite aprender tarjetas de manera eficiente, mostrándotelas just
 
 Estudia todo tipo de cosas donde y cuando quieras. ¡Aprovecha los tiempos muertos en los viajes en autobús, en las colas de los supermercados o en cualquier otra situación de espera!
 
-Añadir material a través de la aplicación de escritorio Anki o directamente mediante Ankidroid.
+Crea tus propios mazos de tarjetas o descarga mazos gratuitos creados para muchos idiomas y temas (hay más de 6.000 disponibles).
 
-Crea tus propios mazos de tarjetas o descarga mazos gratuitos creados para muchos idiomas y temas (hay más de 6.000 disponibles). ¡La aplicación soporta incluso la creación de material de forma automática a partir de un diccionario!
+Añade material a través de la aplicación de escritorio Anki o directamente mediante Ankidroid. ¡La aplicación soporta incluso la creación de material de forma automática a partir de un diccionario!
 
 ★ Características principales:
 • contenidos de tarjeta soportados: texto, imágenes, sonidos, LaTeX
 • repaso espaciado (algoritmo de SuperMemo 2)
 • integración de texto a voz
 • más de 6000 mazos prediseñados
-• estadísticas detalladas
 • tres widgets
+• estadísticas detalladas
 • sincronización con AnkiWeb
 • código abierto
 
 ★ Características adicionales:
 • escribir las respuestas (opcional)
 • pizarra
-• explorador de tarjetas
 • editor/creador de tarjetas
+• explorador de tarjetas
 • importar archivos de colección existentes (vía Anki Escritorio)
-• agregar tarjetas instantáneamente a partir de otras aplicaciones como diccionarios
 • integración con diccionarios (ColorDict, GoldenDict, Leo.org, Aedict, diversos diccionarios online)
+• agregar tarjetas al seleccionar contenido desde otras aplicaciones como diccionarios
 • soporte para fuentes personalizadas
+• repaso en el widget
 • completo sistema de copias de seguridad
 • navegación por gestos, toques, agitado
-• repaso en el widget
 • totalmente personalizable
-• modo empollar
 • limita el estudio por etiquetas, tiempo o tarjetas
+• modo Empollar
 • modo noche
-• soporte para zeemote
 • tres temas de interfaz diferentes
-• traducido en 27 idiomas
+• traducido a 27 idiomas
+• todas las versiones anteriores de AnkiDroid pueden descargarse desde el sitio Web

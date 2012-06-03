@@ -70,6 +70,9 @@ public class Syncer {
     }
 
     /** Returns 'noChanges', 'fullSync', or 'success'. */
+    public Object[] sync() {
+    	return sync(null);
+    }
     public Object[] sync(Connection con) {
     	// if the deck has any pending changes, flush them first and bump mod time
     	mCol.save();
@@ -115,7 +118,7 @@ public class Syncer {
     	    	}
     	    	mLNewer = mLMod > mRMod;
     	    	// step 2: deletions
-    	    	con.publishProgress(R.string.sync_deletions_message);
+    	    	publishProgress(con, R.string.sync_deletions_message);
 
     	    	Log.i(AnkiDroidApp.TAG, "Sync: collection removed data");
     	    	JSONObject lrem = removed();
@@ -138,7 +141,7 @@ public class Syncer {
     	    	Log.i(AnkiDroidApp.TAG, "Sync: applying removed data");
     	    	remove(rrem);
     	    	// ... and small objects
-    	    	con.publishProgress(R.string.sync_small_objects_message);
+    	    	publishProgress(con, R.string.sync_small_objects_message);
 
     	    	Log.i(AnkiDroidApp.TAG, "Sync: collection small changes");
     	    	JSONObject lchg = changes();
@@ -159,7 +162,7 @@ public class Syncer {
     	    	Log.i(AnkiDroidApp.TAG, "Sync: mergin small changes");
     	    	mergeChanges(lchg, rchg);
     	    	// step 3: stream large tables from server
-        		con.publishProgress(R.string.sync_download_chunk);
+    	    	publishProgress(con, R.string.sync_download_chunk);
     	    	while (true) {
         	    	Log.i(AnkiDroidApp.TAG, "Sync: downloading chunked data");
     	    		JSONObject chunk = mServer.chunk();
@@ -178,7 +181,7 @@ public class Syncer {
     	    		}
     	    	}
     	    	// step 4: stream to server
-        		con.publishProgress(R.string.sync_upload_chunk);
+    	    	publishProgress(con, R.string.sync_upload_chunk);
     	    	while (true) {
         	    	Log.i(AnkiDroidApp.TAG, "Sync: collecting chunked data");
     	    		JSONObject chunk = chunk();
@@ -214,7 +217,7 @@ public class Syncer {
     				return new Object[]{"error", 200, "sanity check failed:\nlocal: " + c.toString() + "\nremote: " + s.toString()};
     			}
     	    	// finalize
-    	    	con.publishProgress(R.string.sync_finish_message);
+    	    	publishProgress(con, R.string.sync_finish_message);
     	    	Log.i(AnkiDroidApp.TAG, "Sync: sending finish command");
     	    	long mod = mServer.finish();
     	    	if (mod == 0) {
@@ -223,7 +226,7 @@ public class Syncer {
     	    	Log.i(AnkiDroidApp.TAG, "Sync: finishing");
     	    	finish(mod);
 
-    	    	con.publishProgress(R.string.sync_writing_db);
+    	    	publishProgress(con, R.string.sync_writing_db);
     	    	mCol.getDb().getDatabase().setTransactionSuccessful();
         	} finally {
     	    	mCol.getDb().getDatabase().endTransaction();	
@@ -236,6 +239,12 @@ public class Syncer {
 			throw new RuntimeException(e);
 		}
     	return new Object[]{"success"};
+    }
+
+    private void publishProgress(Connection con, int id) {
+    	if (con != null) {
+    		con.publishProgress(id);
+    	}
     }
 
 	private JSONArray meta() {
@@ -312,7 +321,7 @@ public class Syncer {
     	}
     	mCol.getSched().reset();
     	// check for missing parent decks
-    	mCol.getSched().deckDueList();
+    	mCol.getSched().deckDueList(Sched.DECK_INFORMATION_SIMPLE_COUNTS);
     	// return summary of deck
     	JSONArray ja = new JSONArray();
     	JSONArray sa = new JSONArray();
@@ -384,8 +393,7 @@ public class Syncer {
             return Arrays.asList(TYPE_INTEGER, TYPE_INTEGER, TYPE_INTEGER, TYPE_INTEGER, TYPE_INTEGER, TYPE_INTEGER, TYPE_INTEGER, TYPE_INTEGER, TYPE_INTEGER,
                     TYPE_INTEGER, TYPE_INTEGER, TYPE_INTEGER, TYPE_INTEGER, TYPE_INTEGER, TYPE_INTEGER, TYPE_INTEGER, TYPE_INTEGER, TYPE_STRING);
         } else {
-            return Arrays.asList(TYPE_INTEGER, TYPE_STRING, TYPE_INTEGER, TYPE_INTEGER, TYPE_INTEGER, TYPE_INTEGER, TYPE_STRING, TYPE_STRING, TYPE_INTEGER,
-                    TYPE_INTEGER, TYPE_INTEGER, TYPE_STRING);
+            return Arrays.asList(TYPE_INTEGER, TYPE_STRING, TYPE_INTEGER, TYPE_INTEGER, TYPE_INTEGER, TYPE_STRING, TYPE_STRING, TYPE_STRING, TYPE_STRING, TYPE_INTEGER, TYPE_STRING);
         }
     }
 
@@ -760,6 +768,10 @@ public class Syncer {
 
     private void mergeConf(JSONObject conf) {
     	mCol.setConf(conf);
+    }
+
+    public int getmMediaUsn() {
+        return mMediaUsn;
     }
    
 }

@@ -22,6 +22,7 @@
 		android:layout_width="fill_parent"
 		android:layout_alignParentBottom="true"
 		android:layout_height="wrap_content"
+		android:visibility="visible"
 		android:orientation="horizontal">
 		<ImageButton
 			android:src="@drawable/studyoptions_add"
@@ -46,12 +47,6 @@
 		<ImageButton android:id="@+id/sync_all_button"
 			android:layout_height="fill_parent"
 			android:src="@drawable/deckpicker_sync"
-			style="?android:attr/buttonStyleSmall"
-			android:layout_width="0dip"
-			android:layout_weight="1"/>
-		<ImageButton android:id="@+id/cram_deck_button"
-			android:layout_height="fill_parent"
-			android:src="@drawable/deckpicker_cram"
 			style="?android:attr/buttonStyleSmall"
 			android:layout_width="0dip"
 			android:layout_weight="1"/>

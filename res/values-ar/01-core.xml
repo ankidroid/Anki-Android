@@ -77,6 +77,7 @@
   <string name="menu_unmark_card">إلغاء تحديد البطاقة</string>
   <string name="new_deck">رزمة جديدة</string>
   <string name="create">إنشاء</string>
+  <string name="new_dynamic_deck">New dynamic deck</string>
   <string name="studyoptions_feedback">مرئياتك</string>
   <string name="studyoptions_cram_dialog_title">وسوم للتركيز عليها</string>
   <string name="studyoptions_load_other_deck">تحميل رزمة أخرى</string>
@@ -87,10 +88,13 @@
   <string name="download">تحميل</string>
   <string name="open_collection">فتح المجموعة.\nالرجاء الانتظار...</string>
   <string name="create_collection">إنشاء المجموعة.\nالرجاء الانتظار...</string>
+  <string name="rebuild_cram_deck">Rebuilding cram deck.\nPlease wait...</string>
+  <string name="rebuild_cram_label">Rebuild</string>
   <string name="studyoptions_congrats_finished">تهانينا! لقد انتهيت لهذا الوقت.</string>
   <string name="studyoptions_congrats_more_rev">لقد بلغت حد المراجعة لهذا اليوم، ولكن لا زالت هناك بطاقات تنتظر المراجعة. للذاكرة المثلى، أعد التفكير في زيادة الحد اليومي من قائمة الخيارات.</string>
   <string name="studyoptions_congrats_more_new">هناك المزيد من البطاقات الجديدة المتوفرة، ولكنك قد بلغت حد المراجعة لهذا اليوم. يمكنك زيادة هذا الحد من الخيارات، ولكن لاحظ أنه كلما زاد تقديم البطاقات الجديدة، كلما زاد عبء المراجعة قصيرة المدى.</string>
   <string name="sd_card_not_mounted">لم تحمل البطاقة المؤمنة.</string>
+  <string name="studyoptions_options">Options</string>
   <string-array name="next_review_s">
     <item>ثانية واحدة</item>
     <item>دقيقة واحدة</item>

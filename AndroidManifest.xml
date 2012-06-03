@@ -20,7 +20,7 @@
 -->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
 	package="com.ichi2.anki2"
-	android:versionName="2.0alpha22-EXPERIMENTAL"
+	android:versionName="2.0alpha34-EXPERIMENTAL"
 	android:versionCode="26"
 	android:installLocation="auto">
     <instrumentation android:name="android.test.InstrumentationTestRunner" android:targetPackage="com.ichi2.anki2"></instrumentation>
@@ -98,7 +98,6 @@
 		<activity android:name="com.ichi2.veecheck.Notification" 
 			android:label="@string/notification_title"
 			android:configChanges="locale"/>
-		<activity android:name="com.zeemote.zc.ui.android.ControllerAndroidUi$Activity" />
 <!-- 		<receiver android:name="com.ichi2.veecheck.CheckReceiver"
 					android:permission="android.permission.RECEIVE_BOOT_COMPLETED">
 			<intent-filter>

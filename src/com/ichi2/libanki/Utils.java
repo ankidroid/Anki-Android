@@ -1,5 +1,5 @@
 /****************************************************************************************
- * Copyright (c) 2009 Daniel Svärd <daniel.svard@gmail.com>                             *
+ * Copyright (c) 2009 Daniel Svï¿½rd <daniel.svard@gmail.com>                             *
  * Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com>                                   *
  * Copyright (c) 2011 Norbert Nagold <norbert.nagold@gmail.com>						    *
  *                                                                                      *
@@ -327,13 +327,13 @@ public class Utils {
      * ***********************************************************************************************
      */
 
-    public static String hexifyID(int id) {
-        return Integer.toHexString(id);
+    public static String hexifyID(long id) {
+        return Long.toHexString(id);
     }
 
 
-    public static int dehexifyID(String id) {
-    	return Integer.valueOf(id, 16);
+    public static long dehexifyID(String id) {
+    	return Long.valueOf(id, 16);
     }
 
 
@@ -444,7 +444,7 @@ public class Utils {
     public static long maxID(AnkiDb db) {
     	long now = intNow(1000);
     	now = Math.max(now, db.queryLongScalar("SELECT MAX(id) FROM cards"));
-    	now = Math.max(now, db.queryLongScalar("SELECT MAX(id) FROM cnotes"));
+    	now = Math.max(now, db.queryLongScalar("SELECT MAX(id) FROM notes"));
     	return now + 1;
     }
 
@@ -515,7 +515,9 @@ public class Utils {
         for (int i = 0; i < list.length - 1; i++) {
             result.append(list[i]).append("\u001f");
         }
-        result.append(list[list.length - 1]);
+        if (list.length > 0) {
+            result.append(list[list.length - 1]);        	
+        }
         return result.toString();
     }
 

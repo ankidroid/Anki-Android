@@ -22,7 +22,7 @@
 <resources>
   <string name="btn_continue">Fortsätt</string>
   <string name="app_name">AnkiDroid</string>
-  <string name="attention">Attention</string>
+  <string name="attention">Observera</string>
   <string name="yes">Ja</string>
   <string name="no">Nej</string>
   <string name="ok">Ok</string>
@@ -69,7 +69,7 @@
   <string name="menu_suspend_card">Åsidosätt kort</string>
   <string name="menu_suspend_note">Åsidosätt anteckning</string>
   <string name="menu_delete_note">Ta bort anteckning</string>
-  <string name="delete_note_message">Really delete this note and all its cards?\n%s</string>
+  <string name="delete_note_message">Vill du verkligen ta bort den här anteckningen och dess kort?\n%s</string>
   <string name="menu_edit_card">Redigera kort</string>
   <string name="menu_select">Markera text</string>
   <string name="menu_search">Sökning i %1$s</string>
@@ -77,6 +77,7 @@
   <string name="menu_unmark_card">Avmarkera kort</string>
   <string name="new_deck">Ny kortlek</string>
   <string name="create">Skapa</string>
+  <string name="new_dynamic_deck">New dynamic deck</string>
   <string name="studyoptions_feedback">Feedback</string>
   <string name="studyoptions_cram_dialog_title">Taggar att råplugga</string>
   <string name="studyoptions_load_other_deck">Ladda annan kortlek</string>
@@ -85,12 +86,15 @@
   <string name="visit">Besök</string>
   <string name="later">Senare</string>
   <string name="download">Hämta</string>
-  <string name="open_collection">Opening collection.\nPlease wait...</string>
-  <string name="create_collection">Creating collection.\nPlease wait...</string>
+  <string name="open_collection">Öppnar samling.\nVar vänlig vänta...</string>
+  <string name="create_collection">Skapar samling.\nVar vänlig vänta...</string>
+  <string name="rebuild_cram_deck">Rebuilding cram deck.\nPlease wait...</string>
+  <string name="rebuild_cram_label">Rebuild</string>
   <string name="studyoptions_congrats_finished">Grattis! Du är klar nu.</string>
   <string name="studyoptions_congrats_more_rev">Today\'s review limit has been reached, but there are still cards waiting to be reviewed. For optimum memory, consider increasing the daily limit in the options.</string>
   <string name="studyoptions_congrats_more_new">There are more new cards available, but the daily limit has been reached. You can increase the limit in the options, but please bear in mind that the more new cards you introduce, the higher your short-term review workload will become.</string>
   <string name="sd_card_not_mounted">SD-kortet är inte monterat.</string>
+  <string name="studyoptions_options">Options</string>
   <string-array name="next_review_s">
     <item>1 sekund</item>
     <item>1 minut</item>
@@ -124,8 +128,8 @@
     <item quantity="other">%d minuter kvar</item>
   </plurals>
   <plurals name="studyoptions_congrats_message">
-    <item quantity="one">Tomorrow there will be: 1 card to review and %2$s.\n Estimated time: %3$s</item>
-    <item quantity="other">Tomorrow there will be: %1$d cards to review and %2$s.\n Estimated time: %3$s</item>
+    <item quantity="one">I morgon kommer det finnas: 1 kort att repetera och %2$s.\n Beräknad tid: %3$s</item>
+    <item quantity="other">I morgon kommer det finnas: %1$d kort att repetera och %2$s.\n Beräknad tid: %3$s</item>
   </plurals>
   <plurals name="studyoptions_congrats_new_cards">
     <item quantity="one">1 nytt kort</item>

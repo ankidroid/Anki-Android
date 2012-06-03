@@ -71,13 +71,13 @@
   <string-array name="gestures_labels">
     <item>Keine Aktion</item>
     <item>Show answer</item>
-    <item>Answer button 1</item>
-    <item>Answer button 2</item>
-    <item>Answer button 3</item>
-    <item>Answer button 4</item>
-    <item>Answer recommended (green)</item>
+    <item>Antwort-Schaltfläche 1</item>
+    <item>Antwort-Schaltfläche 2</item>
+    <item>Antwort-Schaltfläche 3</item>
+    <item>Antwort-Schaltfläche 4</item>
+    <item>Empfohlene Antwort (grün)</item>
     <item>Answer better than recommended</item>
-    <item>Undo</item>
+    <item>Rückgängig</item>
     <item>Karte bearbeiten</item>
     <item>Karte markieren</item>
     <item>Nachschlagen</item>
@@ -85,8 +85,8 @@
     <item>Dauerhaft aussetzen</item>
     <item>Karte löschen</item>
     <item>Tafel säubern</item>
-    <item>Play media</item>
-    <item>Abort learning</item>
+    <item>Medien abspielen</item>
+    <item>Lernen beenden</item>
   </string-array>
   <string-array name="theme_labels">
     <item>Android Dunkel</item>
