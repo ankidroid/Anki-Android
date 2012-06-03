@@ -102,10 +102,10 @@
   <string name="sync_generic_error">Ett fel har uppstått. Försök igen senare.</string>
   <string name="sync_check_upload_file">Kontrollerar filen innan överföring...</string>
   <string name="sync_check_download_file">Kontrollerar hämtad fil...</string>
-  <string name="sync_media_find">Finding changed media...</string>
-  <string name="sync_media_remove">Handling deleted media...</string>
-  <string name="sync_media_from_server">Receiving media from server...</string>
-  <string name="sync_media_to_server">Sending media to server...</string>
-  <string name="sync_media_no_changes">No changes to media files.</string>
-  <string name="sync_media_success">Media synced successfully.</string>
+  <string name="sync_media_find">Hittar ändrade media...</string>
+  <string name="sync_media_remove">Hanterar borttagna media...</string>
+  <string name="sync_media_from_server">Erhåller media från servern...</string>
+  <string name="sync_media_to_server">Sänder media till servern...</string>
+  <string name="sync_media_no_changes">Inga ändringar till mediafiler.</string>
+  <string name="sync_media_success">Media har synkats.</string>
 </resources>

@@ -26,11 +26,11 @@
   <string name="statistics_relearn">Relearn</string>
   <string name="statistics_learn">Learn</string>
   <string name="statistics_cram">Cram</string>
-  <string name="statistics_type_title">Statistics</string>
+  <string name="statistics_type_title">Statistici</string>
   <string name="stats_cards">Cards</string>
-  <string name="stats_answers">Answers</string>
+  <string name="stats_answers">Răspunsuri</string>
   <string name="stats_minutes">Minutes</string>
-  <string name="stats_hours">Hours</string>
+  <string name="stats_hours">Ore</string>
   <string name="statistics_period_x_axis_minutes">Minutes</string>
   <string name="statistics_new_cards">New cards</string>
   <string name="statistics_failed_cards">Failed cards</string>
@@ -56,21 +56,21 @@
   <string name="deck_summary_forecast">Forecast</string>
   <string name="deck_summary_tomorrow_due">Tomorrow due: &lt;b&gt;%d&lt;/b&gt; cards</string>
   <string name="deck_summary_tomorrow_new">Tomorrow new: &lt;b&gt;%d&lt;/b&gt; cards</string>
-  <string name="deck_summary_tomorrow_time">Estimated time tomorrow: &lt;b&gt;%d&lt;/b&gt; min.</string>
+  <string name="deck_summary_tomorrow_time">Timp estimat mâine: &lt;b&gt;%d&lt;/b&gt; min.</string>
   <string name="deck_summary_finished_in">New cards finished in: &lt;b&gt;%d&lt;/b&gt; days</string>
   <string name="deck_summary_cards_per_day">&lt;b&gt;%.1f&lt;/b&gt; cards/day</string>
-  <string name="deck_summary_deck_age">Deck age: &lt;b&gt;%d&lt;/b&gt; days</string>
+  <string name="deck_summary_deck_age">Vârsta pachetului: &lt;b&gt;%d&lt;/b&gt;zile</string>
   <string name="deck_summary_all_decks">All decks</string>
-  <string name="stats_forecast">Forecast</string>
+  <string name="stats_forecast">Prognoză</string>
   <string name="stats_review_count">Review count</string>
   <string name="stats_review_time">Review time</string>
   <string-array name="next_review_in_s">
-    <item>in 1 second</item>
-    <item>in 1 minute</item>
-    <item>in 1 hour</item>
-    <item>in 1 day</item>
+    <item>într-o secundă</item>
+    <item>într-un minut</item>
+    <item>peste o oră</item>
+    <item>peste o zi</item>
     <item>in 1 month</item>
-    <item>in 1 year</item>
+    <item>peste un an</item>
   </string-array>
   <string-array name="next_review_in_p">
     <item>in %s seconds</item>
@@ -78,28 +78,28 @@
     <item>in %s hours</item>
     <item>in %s days</item>
     <item>in %s months</item>
-    <item>in %s years</item>
+    <item>în %s ani</item>
   </string-array>
   <string-array name="next_review_before_s">
-    <item>1 second before</item>
-    <item>1 minute before</item>
-    <item>1 hour before</item>
-    <item>1 day before</item>
-    <item>1 month before</item>
-    <item>1 year before</item>
+    <item>o secundă înainte</item>
+    <item>un minut înainte</item>
+    <item>o oră înainte</item>
+    <item>o zi înainte</item>
+    <item>o lună înainte</item>
+    <item>1 an înainte</item>
   </string-array>
   <string-array name="next_review_before_p">
-    <item>%s seconds before</item>
-    <item>%s minutes before</item>
-    <item>%s hours before</item>
-    <item>%s days before</item>
-    <item>%s months before</item>
-    <item>%s years before</item>
+    <item>%s secunde înainte</item>
+    <item>%s minute înainte</item>
+    <item>%s ore înainte</item>
+    <item>%s de zile înainte</item>
+    <item>%s luni înainte</item>
+    <item>%s ani înainte</item>
   </string-array>
   <string-array name="due_x_axis_title">
     <item>Days</item>
-    <item>Weeks</item>
-    <item>Months</item>
+    <item>Săptămâni</item>
+    <item>Luni</item>
   </string-array>
   <string-array name="stats_period">
     <item>1 month</item>

@@ -77,7 +77,7 @@
   <string name="menu_unmark_card">İşaretini Kaldır</string>
   <string name="new_deck">Yeni deste</string>
   <string name="create">Oluştur</string>
-  <string name="new_dynamic_deck">New dynamic deck</string>
+  <string name="new_dynamic_deck">Yeni dinamik deste</string>
   <string name="studyoptions_feedback">Geribildirim</string>
   <string name="studyoptions_cram_dialog_title">İneklenecek etiketler</string>
   <string name="studyoptions_load_other_deck">Başka Deste Yükle</string>
@@ -88,13 +88,13 @@
   <string name="download">İndir</string>
   <string name="open_collection">Koleksiyon açılıyor.\nLütfen bekleyin...</string>
   <string name="create_collection">Koleksiyon oluşturuluyor.\nLütfen bekleyin...</string>
-  <string name="rebuild_cram_deck">Rebuilding cram deck.\nPlease wait...</string>
-  <string name="rebuild_cram_label">Rebuild</string>
+  <string name="rebuild_cram_deck">İnekleme destesi yeniden oluşturuluyor.\nLütfen bekleyin...</string>
+  <string name="rebuild_cram_label">Yeniden Oluştur</string>
   <string name="studyoptions_congrats_finished">Tebrikler! Şimdilik bitirdiniz.</string>
   <string name="studyoptions_congrats_more_rev">Bugünün çalışma sınırına ulaşıldı, ama hâlâ çalışılmayı bekleyen kartlar var. En uygun belleme için, seçeneklerden günlük sınırı artırabilirsiniz.</string>
   <string name="studyoptions_congrats_more_new">Daha çalışılmamış yeni kartlar var, fakat günlük sınıra ulaşıldı. Seçeneklerden sınırı artırabilirsiniz, fakat yeni gördüğünüz kart sayısı arttıkça kısa vâdede çalışma yükünüzün yükseleceğini unutmayın.</string>
   <string name="sd_card_not_mounted">SD kart takılı değil.</string>
-  <string name="studyoptions_options">Options</string>
+  <string name="studyoptions_options">Seçenekler</string>
   <string-array name="next_review_s">
     <item>1 saniye</item>
     <item>1 dakika</item>

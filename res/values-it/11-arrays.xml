@@ -41,8 +41,8 @@
     <item>Mai</item>
   </string-array>
   <string-array name="cram_review_order_labels">
-    <item>Mostra per primo l\'ultimo modificato</item>
-    <item>Mostra in ordine di inserimento</item>
+    <item>Mostra per prime carte modificate da più tempo</item>
+    <item>Mostra in ordine di aggiunta</item>
     <item>Mostra in ordine casuale</item>
   </string-array>
   <string-array name="studyoptions_more_new_card_order">
@@ -70,23 +70,23 @@
   </string-array>
   <string-array name="gestures_labels">
     <item>Nessuna azione</item>
-    <item>Show answer</item>
-    <item>Answer button 1</item>
-    <item>Answer button 2</item>
-    <item>Answer button 3</item>
-    <item>Answer button 4</item>
-    <item>Answer recommended (green)</item>
-    <item>Answer better than recommended</item>
-    <item>Undo</item>
+    <item>Mostra la risposta</item>
+    <item>Pulsante risposta 1</item>
+    <item>Pulsante risposta 2</item>
+    <item>Pulsante risposta 3</item>
+    <item>Pulsante risposta 4</item>
+    <item>Risposta raccomandata (verde)</item>
+    <item>Risposta migliore di quanto raccomandato</item>
+    <item>Annulla</item>
     <item>Modifica carta</item>
     <item>Segna carta</item>
     <item>Controlla espressione</item>
-    <item>Bury card</item>
+    <item>Seppellisci carta</item>
     <item>Sospendi carta</item>
     <item>Cancella carta</item>
     <item>Pulisci lavagna</item>
-    <item>Play media</item>
-    <item>Abort learning</item>
+    <item>Riproduci contenuti multimediali</item>
+    <item>Termina apprendimento</item>
   </string-array>
   <string-array name="theme_labels">
     <item>Android scuro</item>
@@ -95,12 +95,12 @@
     <item>Bianco</item>
   </string-array>
   <string-array name="leech_action_labels">
-    <item>Suspend card</item>
-    <item>Tag only</item>
-    <item>Reset as new</item>
+    <item>Sospendi carta</item>
+    <item>Etichetta soltanto</item>
+    <item>Reimposta come nuova</item>
   </string-array>
   <string-array name="new_order_labels">
-    <item>New cards in random order</item>
-    <item>New cards in order added</item>
+    <item>Carte nuove in ordine casuale</item>
+    <item>Carte nuove in ordine di aggiunta</item>
   </string-array>
 </resources>

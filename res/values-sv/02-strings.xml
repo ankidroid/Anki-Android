@@ -75,7 +75,7 @@
   <string name="check_db_message">Kontrollerar databasen. \nVänligen vänta...</string>
   <string name="simple_interface_hint">Tom %s. Tänk på att det enkla gränssnittet inte kan visa bilder/ljud m.m.</string>
   <string name="delete_deck">Tar bort kortlek...\nVänligen vänta.</string>
-  <string name="menu_cardbrowser">Card browser</string>
+  <string name="menu_cardbrowser">Kortutforskare</string>
   <string-array name="dynOrderLabels">
     <item>Äldst först</item>
     <item>Slumpmässigt</item>
