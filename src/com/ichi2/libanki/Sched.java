@@ -105,7 +105,6 @@ public class Sched {
 	private int mReportLimit;
 	private int mReps;
 	private boolean mHaveQueues;
-	private boolean mClearOverdue;
 	private int mToday;
 	public long mDayCutoff;
 
@@ -145,7 +144,6 @@ public class Sched {
 		mReportLimit = 1000;
 		mReps = 0;
 		mHaveQueues = false;
-		mClearOverdue = true;
 		_updateCutoff();
 
 		// Initialise queues
@@ -173,9 +171,6 @@ public class Sched {
 
 	public void reset() {
 		_updateCutoff();
-		if (mClearOverdue) {
-			removeFailed(true);
-		}
 		_resetLrn();
 		_resetRev();
 		_resetNew();
@@ -523,9 +518,6 @@ public class Sched {
 	public ArrayList<Object[]> deckDueList(int counts) {
 		// DIFFERS FROM LIBANKI: finds all decks, also it swaps the position of new and rev in the results!
 		_checkDay();
-		if (mClearOverdue) {
-			removeFailed(true);
-		}
 		mCol.getDecks().recoverOrphans();
 		ArrayList<Object[]> dids = new ArrayList<Object[]>();
 		for (JSONObject g : mCol.getDecks().all()) {
@@ -2522,11 +2514,6 @@ public class Sched {
 	// Needed for tests
     public LinkedList<long[]> getNewQueue() {
         return mNewQueue;
-    }
-
-    // Needed for tests
-    public void setClearOverdue(boolean clearOverdue) {
-        mClearOverdue = clearOverdue;
     }
 
     private class DeckNameCompare implements Comparator<Object[]> {

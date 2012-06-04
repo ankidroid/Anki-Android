@@ -55,6 +55,11 @@ public class FullSyncer extends BasicHttpSyncer {
 				return null;
 			}			
 			cont = ret.getEntity().getContent();
+			// TODO: check for upgradeRequired
+//			if (cont.equals("upgradeRequired")) {
+//				runHook("sync", "upgradeRequired");
+//				return null;
+//			}
 		} catch (IllegalStateException e1) {
 			throw new RuntimeException(e1);
 		} catch (IOException e1) {

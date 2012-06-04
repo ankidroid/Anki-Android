@@ -615,6 +615,17 @@ public class Media {
             if (fname.compareTo("thumbs.db") == 0) {
                 continue;
             }
+            // and files with invalid chars
+            boolean bad = false;
+            for (String c : new String[]{ "\0", "/", "\\", ":"}) {
+            	if (fname.contains(c)) {
+            		bad = true;
+            		break;
+            	}
+            }
+            if (bad) {
+            	continue;
+            }
             // empty files are invalid; clean them up and continue
             if (f.length() == 0) {
             	f.delete();
