@@ -79,15 +79,15 @@
     	    	    android:summary="@string/deck_conf_percent"
 		 	android:key="easyBonus" />
 		<EditTextPreference
-        	    	android:title="@string/deck_conf_des_fi"
-        	    	android:numeric="integer" 
-    	    	    android:summary="@string/deck_conf_percent"
-		 	android:key="revDesForIdx" />
+        	    	android:title="@string/deck_conf_ivl_fct"
+        	    	android:inputType="numberDecimal"
+    	    	    android:summary="XXX x"
+		 	android:key="revIvlFct" />
 		<EditTextPreference
-        	    	android:title="@string/deck_conf_ass_fi"
-        	    	android:summary="@string/deck_conf_percent"
+        	    	android:title="@string/deck_conf_max_ivl"
+        	    	android:summary="@string/deck_conf_days"
           	    	android:numeric="integer" 
-		 	android:key="revAssForIdx" />
+		 	android:key="revMaxIvl" />
 	</PreferenceScreen>
 	<PreferenceScreen android:title="@string/deck_conf_lps_cards">
 		<EditTextPreference
