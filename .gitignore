@@ -16,6 +16,8 @@ local.properties
 proguard.cfg
 coverage.em
 
+ant.properties
+
 .idea/
 out/
 *.iml
