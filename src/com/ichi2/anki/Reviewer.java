@@ -2006,58 +2006,66 @@ public class Reviewer extends AnkiActivity {
 
     }
 
-
     private void showEaseButtons() {
         Resources res = getResources();
 
         // hide flipcard button
         switchVisibility(mFlipCardLayout, View.GONE);
 
-        boolean lrnCard = mSched.answerButtons(mCurrentCard) == 3;
+        int buttonCount = mSched.answerButtons(mCurrentCard);
 
         // Set correct label for each button
-        if (lrnCard) {
+	switch (buttonCount) {
+	case 2:
             mEase1.setText(res.getString(R.string.ease1_successive));
-            mEase2.setText(res.getString(R.string.ease2_successive));
-            mEase3.setText(res.getString(R.string.ease3_successive));
-        } else {
-            mEase1.setText(res.getString(R.string.ease1_learning));
-            mEase2.setText(res.getString(R.string.ease2_learning));
-            mEase3.setText(res.getString(R.string.ease3_learning));
-            mEase4.setText(res.getString(R.string.ease4_learning));
-            switchVisibility(mEase4Layout, View.VISIBLE);
-        }
-
-        // Show buttons
-        switchVisibility(mEase1Layout, View.VISIBLE);
-        switchVisibility(mEase2Layout, View.VISIBLE);
-        switchVisibility(mEase3Layout, View.VISIBLE);
-
-        // Focus default button
-        if (lrnCard) {
+            mEase2.setText(res.getString(R.string.ease3_successive));
+            switchVisibility(mEase1Layout, View.VISIBLE);
+            switchVisibility(mEase2Layout, View.VISIBLE);
             mEase2Layout.requestFocus();
             mNext2.setTextColor(mNextTimeTextRecomColor);
             mEase2.setTextColor(mNextTimeTextRecomColor);
             mNext3.setTextColor(mNextTimeTextColor);
             mEase3.setTextColor(mNextTimeTextColor);
-        } else {
+            break;
+	case 3:
+            mEase1.setText(res.getString(R.string.ease1_successive));
+            mEase2.setText(res.getString(R.string.ease3_successive));
+            mEase3.setText(res.getString(R.string.ease3_learning));
+            switchVisibility(mEase1Layout, View.VISIBLE);
+            switchVisibility(mEase2Layout, View.VISIBLE);
+            switchVisibility(mEase3Layout, View.VISIBLE);
+            mEase2Layout.requestFocus();
+            mNext2.setTextColor(mNextTimeTextRecomColor);
+            mEase2.setTextColor(mNextTimeTextRecomColor);
+            mNext3.setTextColor(mNextTimeTextColor);
+            mEase3.setTextColor(mNextTimeTextColor);
+            break;
+	default:
+            mEase1.setText(res.getString(R.string.ease1_successive));
+            mEase2.setText(res.getString(R.string.ease2_successive));
+            mEase3.setText(res.getString(R.string.ease3_successive));
+            mEase4.setText(res.getString(R.string.ease3_learning));
+            switchVisibility(mEase1Layout, View.VISIBLE);
+            switchVisibility(mEase2Layout, View.VISIBLE);
+            switchVisibility(mEase3Layout, View.VISIBLE);
+            switchVisibility(mEase4Layout, View.VISIBLE);
             mEase3Layout.requestFocus();
             mNext2.setTextColor(mNextTimeTextColor);
             mEase2.setTextColor(mNextTimeTextColor);
             mNext3.setTextColor(mNextTimeTextRecomColor);
             mEase3.setTextColor(mNextTimeTextRecomColor);
-        }
+	}
 
         // Show next review time
         if (mshowNextReviewTime) {
             mNext1.setText(mSched.nextIvlStr(mCurrentCard, 1));
             mNext2.setText(mSched.nextIvlStr(mCurrentCard, 2));
-            mNext3.setText(mSched.nextIvlStr(mCurrentCard, 3));
-            mNext4.setText(lrnCard ? "" : mSched.nextIvlStr(mCurrentCard, 4));
-            switchVisibility(mNext1, View.VISIBLE);
-            switchVisibility(mNext2, View.VISIBLE);
-            switchVisibility(mNext3, View.VISIBLE);
-            switchVisibility(mNext4, View.VISIBLE);
+	    if (buttonCount > 2) {
+	            mNext3.setText(mSched.nextIvlStr(mCurrentCard, 3));
+	    }
+	    if (buttonCount > 3) {
+	            mNext4.setText(mSched.nextIvlStr(mCurrentCard, 4));
+	    }
         }
     }
 
@@ -2067,14 +2075,6 @@ public class Reviewer extends AnkiActivity {
         switchVisibility(mEase2Layout, View.GONE);
         switchVisibility(mEase3Layout, View.GONE);
         switchVisibility(mEase4Layout, View.GONE);
-
-        if (mshowNextReviewTime) {
-            int visibility = typeAnswer() ? View.GONE : View.INVISIBLE;
-            switchVisibility(mNext1, visibility);
-            switchVisibility(mNext2, visibility);
-            switchVisibility(mNext3, visibility);
-            switchVisibility(mNext4, visibility);
-        }
 
         if (mFlipCardLayout.getVisibility() != View.VISIBLE) {
             switchVisibility(mFlipCardLayout, View.VISIBLE);

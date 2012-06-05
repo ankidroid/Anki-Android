@@ -833,7 +833,7 @@ public class Collection {
 			d.put("id", Long.toString((Long) data[0]));
 			d.put("q", mModels.getCmpldTemplate(modelId, (Integer) data[4], args)[0]
 					.execute(fparser));
-			fields.put("FrontSide", d.get("id"));
+			fields.put("FrontSide", d.get("q"));
 			fparser = new Models.fieldParser(fields);
 			d.put("a", mModels.getCmpldTemplate(modelId, (Integer) data[4], args)[1]
 					.execute(fparser));
