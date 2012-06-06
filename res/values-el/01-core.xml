@@ -33,13 +33,10 @@
   <string name="studyoptions_eta">Εκτιμώμενη διάρκεια (λεπτά):</string>
   <string name="studyoptions_start">Έναρξη επανάληψης</string>
   <string name="show_answer">Εμφάνιση Απάντησης</string>
-  <string name="ease1_learning">Ξανά</string>
-  <string name="ease2_learning">Καλή</string>
-  <string name="ease3_learning">Εύκολη</string>
-  <string name="ease4_learning">Πολύ εύκολη</string>
   <string name="ease1_successive">Ξανά</string>
   <string name="ease2_successive">Δύσκολη</string>
   <string name="ease3_successive">Καλή</string>
+  <string name="ease3_learning">Εύκολη</string>
   <string name="studyoptions_congrats_learnmore">Μάθετε περισσότερα</string>
   <string name="studyoptions_congrats_reviewearly">Πρόωρη επανάληψη</string>
   <string name="studyoptions_congrats_open_other_deck">Ανοίξτε άλλη τράπουλα</string>
@@ -90,6 +87,8 @@
   <string name="create_collection">Creating collection.\nPlease wait...</string>
   <string name="rebuild_cram_deck">Rebuilding cram deck.\nPlease wait...</string>
   <string name="rebuild_cram_label">Rebuild</string>
+  <string name="empty_cram_label">Empty</string>
+  <string name="empty_cram_deck">Emptying cram deck.\nPlease wait...</string>
   <string name="studyoptions_congrats_finished">Congratulations! You have finished for now.</string>
   <string name="studyoptions_congrats_more_rev">Today\'s review limit has been reached, but there are still cards waiting to be reviewed. For optimum memory, consider increasing the daily limit in the options.</string>
   <string name="studyoptions_congrats_more_new">There are more new cards available, but the daily limit has been reached. You can increase the limit in the options, but please bear in mind that the more new cards you introduce, the higher your short-term review workload will become.</string>

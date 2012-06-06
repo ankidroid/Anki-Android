@@ -33,13 +33,10 @@
   <string name="studyoptions_eta">Arvioitu aika (min):</string>
   <string name="studyoptions_start">Aloita tarkistaminen</string>
   <string name="show_answer">Näytä vastaus</string>
-  <string name="ease1_learning">Uudestaan</string>
-  <string name="ease2_learning">Hyvä</string>
-  <string name="ease3_learning">Helppo</string>
-  <string name="ease4_learning">Erittäin helppo</string>
   <string name="ease1_successive">Uudestaan</string>
   <string name="ease2_successive">Vaikea</string>
   <string name="ease3_successive">Hyvä</string>
+  <string name="ease3_learning">Helppo</string>
   <string name="studyoptions_congrats_learnmore">Opi lisää</string>
   <string name="studyoptions_congrats_reviewearly">Tarkista etuajassa</string>
   <string name="studyoptions_congrats_open_other_deck">Avaa muu korttipakka</string>
@@ -90,6 +87,8 @@
   <string name="create_collection">Creating collection.\nPlease wait...</string>
   <string name="rebuild_cram_deck">Rebuilding cram deck.\nPlease wait...</string>
   <string name="rebuild_cram_label">Rebuild</string>
+  <string name="empty_cram_label">Empty</string>
+  <string name="empty_cram_deck">Emptying cram deck.\nPlease wait...</string>
   <string name="studyoptions_congrats_finished">Congratulations! You have finished for now.</string>
   <string name="studyoptions_congrats_more_rev">Today\'s review limit has been reached, but there are still cards waiting to be reviewed. For optimum memory, consider increasing the daily limit in the options.</string>
   <string name="studyoptions_congrats_more_new">There are more new cards available, but the daily limit has been reached. You can increase the limit in the options, but please bear in mind that the more new cards you introduce, the higher your short-term review workload will become.</string>

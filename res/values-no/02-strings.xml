@@ -76,13 +76,15 @@
   <string name="simple_interface_hint">Tom %s. Husk at at enkelt grensesnitt ikke kan vise bilder/lyder osv.</string>
   <string name="delete_deck">Deleting deck...\nPlease wait.</string>
   <string name="menu_cardbrowser">Card browser</string>
+  <string name="pref_lang_other">Language Preferences</string>
+  <string name="pref_lang_common">LangCommon</string>
+  <string name="pref_font_UI">Custom UI Font</string>
   <string-array name="dynOrderLabels">
     <item>Oldest seen first</item>
     <item>Random</item>
     <item>Increasing intervals</item>
     <item>Decreasing intervals</item>
     <item>Most lapses</item>
-    <item>Failed today</item>
     <item>Order added</item>
     <item>Order due</item>
   </string-array>

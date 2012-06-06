@@ -229,8 +229,8 @@
   <string name="deck_conf_sibl_space">مساحة التقارب بنسبة تصل إلى</string>
   <string name="deck_conf_easy_bonus">مكافأة سهلة</string>
   <string name="deck_conf_min_range">الحد الأدنى لنطاق التقارب</string>
-  <string name="deck_conf_des_fi">فهرس منسي بتعمد</string>
-  <string name="deck_conf_ass_fi">فهرس منسي بافتراض</string>
+  <string name="deck_conf_ivl_fct">Interval modifier</string>
+  <string name="deck_conf_max_ivl">Maximum interval</string>
   <string name="deck_conf_new_lps_ivl">الفاصل الزمني الجديد</string>
   <string name="deck_conf_min_ivl">الحد الأدنى للفاصل الزمني</string>
   <string name="deck_conf_leech_thres">عتبة البطاقات السئولة</string>

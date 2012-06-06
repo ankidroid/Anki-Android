@@ -33,13 +33,10 @@
   <string name="studyoptions_eta">预计所需时间（分钟）：</string>
   <string name="studyoptions_start">开始复习</string>
   <string name="show_answer">显示答案</string>
-  <string name="ease1_learning">重来</string>
-  <string name="ease2_learning">一般</string>
-  <string name="ease3_learning">简单</string>
-  <string name="ease4_learning">很简单</string>
   <string name="ease1_successive">重来</string>
   <string name="ease2_successive">困难</string>
   <string name="ease3_successive">一般</string>
+  <string name="ease3_learning">简单</string>
   <string name="studyoptions_congrats_learnmore">继续学习</string>
   <string name="studyoptions_congrats_reviewearly">提前复习</string>
   <string name="studyoptions_congrats_open_other_deck">打开其他牌组</string>
@@ -90,6 +87,8 @@
   <string name="create_collection">Creating collection.\nPlease wait...</string>
   <string name="rebuild_cram_deck">Rebuilding cram deck.\nPlease wait...</string>
   <string name="rebuild_cram_label">重建</string>
+  <string name="empty_cram_label">Empty</string>
+  <string name="empty_cram_deck">Emptying cram deck.\nPlease wait...</string>
   <string name="studyoptions_congrats_finished">恭喜!你已经完成了今天的计划。</string>
   <string name="studyoptions_congrats_more_rev">Today\'s review limit has been reached, but there are still cards waiting to be reviewed. For optimum memory, consider increasing the daily limit in the options.</string>
   <string name="studyoptions_congrats_more_new">There are more new cards available, but the daily limit has been reached. You can increase the limit in the options, but please bear in mind that the more new cards you introduce, the higher your short-term review workload will become.</string>

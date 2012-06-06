@@ -229,8 +229,8 @@
   <string name="deck_conf_sibl_space">Kardeşlerin en fazla aralanma miktârı</string>
   <string name="deck_conf_easy_bonus">Kolay bonusu</string>
   <string name="deck_conf_min_range">Minimum kardeş menzili</string>
-  <string name="deck_conf_des_fi">Arzulanan unutma indeksi</string>
-  <string name="deck_conf_ass_fi">Farz edilen unutma indeksi</string>
+  <string name="deck_conf_ivl_fct">Interval modifier</string>
+  <string name="deck_conf_max_ivl">Maximum interval</string>
   <string name="deck_conf_new_lps_ivl">Yeni aralık</string>
   <string name="deck_conf_min_ivl">Minimum Aralık</string>
   <string name="deck_conf_leech_thres">Asalak Eşiği</string>

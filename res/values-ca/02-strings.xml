@@ -76,15 +76,17 @@
   <string name="simple_interface_hint">Buit %s. Tingueu en compte que a l\'interfície simple no es mostraen imatges, sons, etc.</string>
   <string name="delete_deck">S\'està suprimint el paquet...\nun moment si us plau.</string>
   <string name="menu_cardbrowser">Card browser</string>
+  <string name="pref_lang_other">Language Preferences</string>
+  <string name="pref_lang_common">LangCommon</string>
+  <string name="pref_font_UI">Custom UI Font</string>
   <string-array name="dynOrderLabels">
     <item>Primer les que fa més temps que no heu vist</item>
     <item>A l\'atzar</item>
     <item>A intervals creixents</item>
     <item>A intervals decreixents</item>
     <item>La majoria dels intervals</item>
-    <item>Fallades avui</item>
-    <item>Ordre en que s\'han afegit</item>
-    <item>Ordre programat</item>
+    <item>Order added</item>
+    <item>Order due</item>
   </string-array>
   <plurals name="factadder_cards_added">
     <item quantity="one">S\'ha afegit 1 targeta</item>

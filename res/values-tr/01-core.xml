@@ -33,13 +33,10 @@
   <string name="studyoptions_eta">Tahminî süre (dk):</string>
   <string name="studyoptions_start">Çalışmaya Başla</string>
   <string name="show_answer">Yanıtı Göster</string>
-  <string name="ease1_learning">Yeniden</string>
-  <string name="ease2_learning">İyi</string>
-  <string name="ease3_learning">Kolay</string>
-  <string name="ease4_learning">Çok Kolay</string>
   <string name="ease1_successive">Yeniden</string>
   <string name="ease2_successive">Zor</string>
   <string name="ease3_successive">İyi</string>
+  <string name="ease3_learning">Kolay</string>
   <string name="studyoptions_congrats_learnmore">Daha Fazlasını Öğren</string>
   <string name="studyoptions_congrats_reviewearly">Erkenden Gözden Geçir</string>
   <string name="studyoptions_congrats_open_other_deck">Başka Deste Aç</string>
@@ -90,6 +87,8 @@
   <string name="create_collection">Koleksiyon oluşturuluyor.\nLütfen bekleyin...</string>
   <string name="rebuild_cram_deck">İnekleme destesi yeniden oluşturuluyor.\nLütfen bekleyin...</string>
   <string name="rebuild_cram_label">Yeniden Oluştur</string>
+  <string name="empty_cram_label">Empty</string>
+  <string name="empty_cram_deck">Emptying cram deck.\nPlease wait...</string>
   <string name="studyoptions_congrats_finished">Tebrikler! Şimdilik bitirdiniz.</string>
   <string name="studyoptions_congrats_more_rev">Bugünün çalışma sınırına ulaşıldı, ama hâlâ çalışılmayı bekleyen kartlar var. En uygun belleme için, seçeneklerden günlük sınırı artırabilirsiniz.</string>
   <string name="studyoptions_congrats_more_new">Daha çalışılmamış yeni kartlar var, fakat günlük sınıra ulaşıldı. Seçeneklerden sınırı artırabilirsiniz, fakat yeni gördüğünüz kart sayısı arttıkça kısa vâdede çalışma yükünüzün yükseleceğini unutmayın.</string>

@@ -76,15 +76,17 @@
   <string name="simple_interface_hint">Vuoto %s. Tieni presente che l\'interfaccia semplice non può mostrare immagini/suoni ecc.</string>
   <string name="delete_deck">Eliminazione mazzo...\nAttendi.</string>
   <string name="menu_cardbrowser">Browser delle carte</string>
+  <string name="pref_lang_other">Language Preferences</string>
+  <string name="pref_lang_common">LangCommon</string>
+  <string name="pref_font_UI">Custom UI Font</string>
   <string-array name="dynOrderLabels">
     <item>Più vecchie visualizzate per prime</item>
     <item>Casuale</item>
     <item>Intervalli crescenti</item>
     <item>Intervalli decrescenti</item>
     <item>Maggior numero di errori</item>
-    <item>Fallite oggi</item>
-    <item>Ordine di aggiunta</item>
-    <item>Ordine di scadenza</item>
+    <item>Order added</item>
+    <item>Order due</item>
   </string-array>
   <plurals name="factadder_cards_added">
     <item quantity="one">1 carta aggiunta</item>

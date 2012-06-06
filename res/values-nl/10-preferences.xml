@@ -229,8 +229,8 @@
   <string name="deck_conf_sibl_space">Ruimte tussen zusters</string>
   <string name="deck_conf_easy_bonus">Gemakkelijk bonus</string>
   <string name="deck_conf_min_range">Minimaal bereik zusters</string>
-  <string name="deck_conf_des_fi">Vergeetachtige index gewensd</string>
-  <string name="deck_conf_ass_fi">Vergeetachtige index verondersteld</string>
+  <string name="deck_conf_ivl_fct">Interval modifier</string>
+  <string name="deck_conf_max_ivl">Maximum interval</string>
   <string name="deck_conf_new_lps_ivl">Nieuw interval</string>
   <string name="deck_conf_min_ivl">Kleinste interval</string>
   <string name="deck_conf_leech_thres">Afneem drempel</string>

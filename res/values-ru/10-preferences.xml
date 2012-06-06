@@ -229,8 +229,8 @@
   <string name="deck_conf_sibl_space">Дистанция родственности карт до</string>
   <string name="deck_conf_easy_bonus">Лёгкий бонус</string>
   <string name="deck_conf_min_range">Минимальный диапазон родственности</string>
-  <string name="deck_conf_des_fi">Желаемый индекс забывания</string>
-  <string name="deck_conf_ass_fi">Предполагаемый индекс забывания</string>
+  <string name="deck_conf_ivl_fct">Interval modifier</string>
+  <string name="deck_conf_max_ivl">Maximum interval</string>
   <string name="deck_conf_new_lps_ivl">Новый интервал</string>
   <string name="deck_conf_min_ivl">Минимальный интервал</string>
   <string name="deck_conf_leech_thres">Порог когда карта считается \"приставучей\"</string>

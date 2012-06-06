@@ -33,13 +33,10 @@
   <string name="studyoptions_eta">Розрахунковий час (хв.):</string>
   <string name="studyoptions_start">Почати огляд</string>
   <string name="show_answer">Показати відповідь</string>
-  <string name="ease1_learning">Знову</string>
-  <string name="ease2_learning">Добре</string>
-  <string name="ease3_learning">Легко</string>
-  <string name="ease4_learning">Дуже легко</string>
   <string name="ease1_successive">Знову</string>
   <string name="ease2_successive">Важко</string>
   <string name="ease3_successive">Добре</string>
+  <string name="ease3_learning">Легко</string>
   <string name="studyoptions_congrats_learnmore">Вчити ще</string>
   <string name="studyoptions_congrats_reviewearly">Review Early</string>
   <string name="studyoptions_congrats_open_other_deck">Відкрити іншу колоду</string>
@@ -90,6 +87,8 @@
   <string name="create_collection">Створення колекції.\nЗачекайте будь ласка...</string>
   <string name="rebuild_cram_deck">Rebuilding cram deck.\nPlease wait...</string>
   <string name="rebuild_cram_label">Rebuild</string>
+  <string name="empty_cram_label">Empty</string>
+  <string name="empty_cram_deck">Emptying cram deck.\nPlease wait...</string>
   <string name="studyoptions_congrats_finished">Вітаємо! На зараз усе.</string>
   <string name="studyoptions_congrats_more_rev">Ви вічерпали ліміт на сьогодні, але досі є картки, які треба переглянути. Для оптимального запам\'ятовування рекомендуємо збільшити щоденнній лиміт у налаштуваннях.</string>
   <string name="studyoptions_congrats_more_new">Ще є картки, але Ви вичерпали сьогоднішній ліміт. Ви можете збільшити ліміт в налаштуваннях, але пам\'ятайте, що чим більше нових карток Ви додаєте, тим більше карток доведеться повторювати у найближчі дні.</string>

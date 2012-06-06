@@ -229,8 +229,8 @@
   <string name="deck_conf_sibl_space">Espaciar hermanas hasta</string>
   <string name="deck_conf_easy_bonus">Bonus para Fácil</string>
   <string name="deck_conf_min_range">Rango mínimo de hermanas</string>
-  <string name="deck_conf_des_fi">Índice de olvido deseado</string>
-  <string name="deck_conf_ass_fi">Índice de olvido asumido</string>
+  <string name="deck_conf_ivl_fct">Interval modifier</string>
+  <string name="deck_conf_max_ivl">Maximum interval</string>
   <string name="deck_conf_new_lps_ivl">Intervalo de nuevas</string>
   <string name="deck_conf_min_ivl">Intervalo mínimo</string>
   <string name="deck_conf_leech_thres">Umbral de Sanguijuelas</string>

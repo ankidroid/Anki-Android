@@ -33,13 +33,10 @@
   <string name="studyoptions_eta">Tempo estimado(min):</string>
   <string name="studyoptions_start">Começar Revisão</string>
   <string name="show_answer">Mostrar Resposta</string>
-  <string name="ease1_learning">Novamente</string>
-  <string name="ease2_learning">Bom</string>
-  <string name="ease3_learning">Fácil</string>
-  <string name="ease4_learning">Muito fácil</string>
   <string name="ease1_successive">Novamente</string>
   <string name="ease2_successive">Difícil</string>
   <string name="ease3_successive">Bom</string>
+  <string name="ease3_learning">Fácil</string>
   <string name="studyoptions_congrats_learnmore">Aprender Mais</string>
   <string name="studyoptions_congrats_reviewearly">Rever Antes</string>
   <string name="studyoptions_congrats_open_other_deck">Abrir outro Deck</string>
@@ -90,6 +87,8 @@
   <string name="create_collection">Abrindo coleção.\nPor favor aguarde...</string>
   <string name="rebuild_cram_deck">Rebuilding cram deck.\nPlease wait...</string>
   <string name="rebuild_cram_label">Rebuild</string>
+  <string name="empty_cram_label">Empty</string>
+  <string name="empty_cram_deck">Emptying cram deck.\nPlease wait...</string>
   <string name="studyoptions_congrats_finished">Parabéns!Você terminou por hora.</string>
   <string name="studyoptions_congrats_more_rev">O limite de revisão de hoje foi atingido, mas ainda existem cartões esperando para serem revistos. Para otima memória, considere aumentar o limite diário nas opções.</string>
   <string name="studyoptions_congrats_more_new">Existem mais cartões novos, mas o limite diário foi atingido. Você pode aumentar o limite nas opções, mas por favor, tenha em mente que  quanto mais cartões novos você introduzir, maior será sua carga de revisão a curto prazo.</string>

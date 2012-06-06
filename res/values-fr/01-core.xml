@@ -33,13 +33,10 @@
   <string name="studyoptions_eta">Durée estimée (min) :</string>
   <string name="studyoptions_start">Démarrer l\'apprentissage</string>
   <string name="show_answer">Voir Réponse</string>
-  <string name="ease1_learning">Encore</string>
-  <string name="ease2_learning">Bon</string>
-  <string name="ease3_learning">Facile</string>
-  <string name="ease4_learning">Très facile</string>
   <string name="ease1_successive">Encore</string>
   <string name="ease2_successive">Difficile</string>
   <string name="ease3_successive">Bon</string>
+  <string name="ease3_learning">Facile</string>
   <string name="studyoptions_congrats_learnmore">En savoir plus</string>
   <string name="studyoptions_congrats_reviewearly">Réviser à l\'avance</string>
   <string name="studyoptions_congrats_open_other_deck">Ouvrir un autre paquet</string>
@@ -90,6 +87,8 @@
   <string name="create_collection">Creating collection.\nPlease wait...</string>
   <string name="rebuild_cram_deck">Rebuilding cram deck.\nPlease wait...</string>
   <string name="rebuild_cram_label">Rebuild</string>
+  <string name="empty_cram_label">Empty</string>
+  <string name="empty_cram_deck">Emptying cram deck.\nPlease wait...</string>
   <string name="studyoptions_congrats_finished">Congratulations! You have finished for now.</string>
   <string name="studyoptions_congrats_more_rev">Today\'s review limit has been reached, but there are still cards waiting to be reviewed. For optimum memory, consider increasing the daily limit in the options.</string>
   <string name="studyoptions_congrats_more_new">There are more new cards available, but the daily limit has been reached. You can increase the limit in the options, but please bear in mind that the more new cards you introduce, the higher your short-term review workload will become.</string>

@@ -64,6 +64,14 @@
   <string name="stats_forecast">Vorausschau</string>
   <string name="stats_review_count">Anzahl Wiederholungen</string>
   <string name="stats_review_time">Lernzeit</string>
+  <string-array name="next_review_short">
+    <item>%ss</item>
+    <item>%sm</item>
+    <item>%sh</item>
+    <item>%sd</item>
+    <item>%smo</item>
+    <item>%sy</item>
+  </string-array>
   <string-array name="next_review_in_s">
     <item>in 1 Sekunde</item>
     <item>in 1 Minute</item>

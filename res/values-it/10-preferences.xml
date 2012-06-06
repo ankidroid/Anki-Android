@@ -229,8 +229,8 @@
   <string name="deck_conf_sibl_space">Distanza le carte gemelle fino a</string>
   <string name="deck_conf_easy_bonus">Bonus facile</string>
   <string name="deck_conf_min_range">Distanza minima carte gemelle</string>
-  <string name="deck_conf_des_fi">Tasso di oblio desiderato</string>
-  <string name="deck_conf_ass_fi">Tasso di oblio attuale</string>
+  <string name="deck_conf_ivl_fct">Interval modifier</string>
+  <string name="deck_conf_max_ivl">Maximum interval</string>
   <string name="deck_conf_new_lps_ivl">Nuovo intervallo</string>
   <string name="deck_conf_min_ivl">Intervallo minimo</string>
   <string name="deck_conf_leech_thres">Soglia sanguisughe</string>

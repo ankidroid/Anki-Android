@@ -33,13 +33,10 @@
   <string name="studyoptions_eta">Tiempo estimado (min.):</string>
   <string name="studyoptions_start">Empezar a repasar</string>
   <string name="show_answer">Mostrar respuesta</string>
-  <string name="ease1_learning">Una vez más</string>
-  <string name="ease2_learning">Bien</string>
-  <string name="ease3_learning">Fácil</string>
-  <string name="ease4_learning">Muy fácil</string>
   <string name="ease1_successive">Una vez más</string>
   <string name="ease2_successive">Difícil</string>
   <string name="ease3_successive">Bien</string>
+  <string name="ease3_learning">Fácil</string>
   <string name="studyoptions_congrats_learnmore">Aprender más</string>
   <string name="studyoptions_congrats_reviewearly">Repasar anticipadamente</string>
   <string name="studyoptions_congrats_open_other_deck">ciudad</string>
@@ -90,6 +87,8 @@
   <string name="create_collection">Creando colección.\nPor favor, espera...</string>
   <string name="rebuild_cram_deck">Reconstruyendo mazo para empollar.\nPor favor, espera...</string>
   <string name="rebuild_cram_label">Reconstruir</string>
+  <string name="empty_cram_label">Empty</string>
+  <string name="empty_cram_deck">Emptying cram deck.\nPlease wait...</string>
   <string name="studyoptions_congrats_finished">¡Felicidades! Has terminado por ahora.</string>
   <string name="studyoptions_congrats_more_rev">Se ha alcanzado el límite de repasos de hoy, pero todavía hay tarjetas a la espera de ser repasadas. Para una memorización óptima, considera la posibilidad de aumentar el límite diario en las opciones.</string>
   <string name="studyoptions_congrats_more_new">Hay más tarjetas nuevas disponibles, pero se ha alcanzado el límite diario. Puedes aumentar el límite en las opciones, pero ten en cuenta que cuantas más tarjetas nuevas introduzcas, mayor será la carga de trabajo de revisión a corto plazo.</string>

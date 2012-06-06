@@ -229,8 +229,8 @@
   <string name="deck_conf_sibl_space">Space siblings by up to</string>
   <string name="deck_conf_easy_bonus">Lätt bonus</string>
   <string name="deck_conf_min_range">Minimum sibling range</string>
-  <string name="deck_conf_des_fi">Desired forgetting index</string>
-  <string name="deck_conf_ass_fi">Assumed forgetting index</string>
+  <string name="deck_conf_ivl_fct">Interval modifier</string>
+  <string name="deck_conf_max_ivl">Maximum interval</string>
   <string name="deck_conf_new_lps_ivl">Nytt intervall</string>
   <string name="deck_conf_min_ivl">Minsta intervall</string>
   <string name="deck_conf_leech_thres">Leech Threshold</string>

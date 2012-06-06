@@ -33,13 +33,10 @@
   <string name="studyoptions_eta">估計時間(分鐘)：</string>
   <string name="studyoptions_start">開始複習</string>
   <string name="show_answer">看答案</string>
-  <string name="ease1_learning">再一次</string>
-  <string name="ease2_learning">不錯</string>
-  <string name="ease3_learning">簡單</string>
-  <string name="ease4_learning">很簡單</string>
   <string name="ease1_successive">再一次</string>
   <string name="ease2_successive">難</string>
   <string name="ease3_successive">不錯</string>
+  <string name="ease3_learning">簡單</string>
   <string name="studyoptions_congrats_learnmore">繼續加油</string>
   <string name="studyoptions_congrats_reviewearly">提早複習</string>
   <string name="studyoptions_congrats_open_other_deck">打開其他牌組</string>
@@ -90,6 +87,8 @@
   <string name="create_collection">建立集合中。請稍後...</string>
   <string name="rebuild_cram_deck">Rebuilding cram deck.\nPlease wait...</string>
   <string name="rebuild_cram_label">Rebuild</string>
+  <string name="empty_cram_label">Empty</string>
+  <string name="empty_cram_deck">Emptying cram deck.\nPlease wait...</string>
   <string name="studyoptions_congrats_finished">恭喜！你完成今天的進度了。</string>
   <string name="studyoptions_congrats_more_rev">您已經達到今天卡片複習數量的上限了，不過還是有些卡片需要複習。建議您增加選項中每天卡片複習的上限。</string>
   <string name="studyoptions_congrats_more_new">There are more new cards available, but the daily limit has been reached. You can increase the limit in the options, but please bear in mind that the more new cards you introduce, the higher your short-term review workload will become.</string>

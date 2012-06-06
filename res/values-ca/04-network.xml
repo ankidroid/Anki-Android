@@ -49,7 +49,9 @@
   <string name="sync_log_db_error">S\'ha produït un error de la base de dades.</string>
   <string name="no_user_password_error_message">Per tal de continuar, us cal un compte a AnkiWeb i us heu de registrar.</string>
   <string name="username">Nom d\'usuari</string>
+  <string name="username_repeat">Repeat username</string>
   <string name="password">Contrasenya</string>
+  <string name="password_repeat">Repeat password</string>
   <string name="log_in">Inicia la sessió</string>
   <string name="sign_up_description">No teniu un compte d\'AnkiWeb? És lliure!</string>
   <string name="sign_up">Registreu-vos</string>
@@ -108,4 +110,8 @@
   <string name="sync_media_to_server">Sending media to server...</string>
   <string name="sync_media_no_changes">No changes to media files.</string>
   <string name="sync_media_success">Media synced successfully.</string>
+  <string name="register_error">An error occurred. Please try again later.</string>
+  <string name="register_title">Register account</string>
+  <string name="register_mismatch">The username/password repetition does not match or is empty. Please re-enter.</string>
+  <string name="registering_message">Creating account.\nPlease wait...</string>
 </resources>

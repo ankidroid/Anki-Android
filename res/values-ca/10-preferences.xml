@@ -229,8 +229,8 @@
   <string name="deck_conf_sibl_space">Separa les targetes germanes amb</string>
   <string name="deck_conf_easy_bonus">Bonus de facilitat</string>
   <string name="deck_conf_min_range">Interval mínim de les targetes germanes</string>
-  <string name="deck_conf_des_fi">Índex d\'oblidar desitjat</string>
-  <string name="deck_conf_ass_fi">Índex d\'oblidar assumit</string>
+  <string name="deck_conf_ivl_fct">Interval modifier</string>
+  <string name="deck_conf_max_ivl">Maximum interval</string>
   <string name="deck_conf_new_lps_ivl">Interval nou</string>
   <string name="deck_conf_min_ivl">Interval mínim</string>
   <string name="deck_conf_leech_thres">Llindar de lapa</string>

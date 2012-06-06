@@ -64,6 +64,14 @@
   <string name="stats_forecast">Tahmin</string>
   <string name="stats_review_count">Çalışma sayısı</string>
   <string name="stats_review_time">Çalışma süresi</string>
+  <string-array name="next_review_short">
+    <item>%ss</item>
+    <item>%sm</item>
+    <item>%sh</item>
+    <item>%sd</item>
+    <item>%smo</item>
+    <item>%sy</item>
+  </string-array>
   <string-array name="next_review_in_s">
     <item>1 saniye sonra</item>
     <item>1 dakika sonra</item>

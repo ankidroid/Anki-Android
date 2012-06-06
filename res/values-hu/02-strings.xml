@@ -76,15 +76,17 @@
   <string name="simple_interface_hint">Üres %s. Tarsd szem előtt, hogy az egyszerű felület nem tud képeket/hangokat/stb. megjeleníteni.</string>
   <string name="delete_deck">Pakli törlése...\nKérlek, várj...</string>
   <string name="menu_cardbrowser">Card browser</string>
+  <string name="pref_lang_other">Language Preferences</string>
+  <string name="pref_lang_common">LangCommon</string>
+  <string name="pref_font_UI">Custom UI Font</string>
   <string-array name="dynOrderLabels">
     <item>Legrégebbi látott először</item>
     <item>Véletlenszerű</item>
     <item>Növekvő időközök</item>
     <item>Csökkenő időközök</item>
     <item>Legtöbb hiba</item>
-    <item>Ma nem sikerült</item>
-    <item>Rendelés hozzáadva</item>
-    <item>Rendelés</item>
+    <item>Order added</item>
+    <item>Order due</item>
   </string-array>
   <plurals name="factadder_cards_added">
     <item quantity="one">1 kártya hozzáadva</item>

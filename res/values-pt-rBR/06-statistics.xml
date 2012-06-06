@@ -64,6 +64,14 @@
   <string name="stats_forecast">Previsão</string>
   <string name="stats_review_count">Contagem de revisões</string>
   <string name="stats_review_time">Tempo de revisão</string>
+  <string-array name="next_review_short">
+    <item>%ss</item>
+    <item>%sm</item>
+    <item>%sh</item>
+    <item>%sd</item>
+    <item>%smo</item>
+    <item>%sy</item>
+  </string-array>
   <string-array name="next_review_in_s">
     <item>em 1 segundo</item>
     <item>em 1 minuto</item>

@@ -49,7 +49,9 @@
   <string name="sync_log_db_error">데이터베이스 오류가 발생했습니다.</string>
   <string name="no_user_password_error_message">이 작업을 계속 하기 위해서는 AnkiWeb 계정에 로그인해야 합니다.</string>
   <string name="username">아이디</string>
+  <string name="username_repeat">사용자이름 재입력</string>
   <string name="password">비밀번호</string>
+  <string name="password_repeat">암호 재입력</string>
   <string name="log_in">로그인</string>
   <string name="sign_up_description">AnkiWeb 계정이 없으십니까? 무료입니다!</string>
   <string name="sign_up">회원가입</string>
@@ -108,4 +110,8 @@
   <string name="sync_media_to_server">미디어 파일 서버 전송 중...</string>
   <string name="sync_media_no_changes">변경된 미디어 파일이 없습니다.</string>
   <string name="sync_media_success">미디어 파일이 성공적으로 동기화 되었습니다.</string>
+  <string name="register_error">오류가 발생 했습니다. 나중에 다시 시도 하십시오.</string>
+  <string name="register_title">계정 등록</string>
+  <string name="register_mismatch">사용자 이름/암호 재입력이 일치하지 않거나 비어 있습니다. 다시 입력 하십시오.</string>
+  <string name="registering_message">계정 생성중. \n 잠시 기다리세요...</string>
 </resources>
