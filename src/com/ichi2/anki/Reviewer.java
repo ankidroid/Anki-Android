@@ -2015,46 +2015,46 @@ public class Reviewer extends AnkiActivity {
         int buttonCount = mSched.answerButtons(mCurrentCard);
 
         // Set correct label for each button
-	switch (buttonCount) {
-	case 2:
-            mEase1.setText(res.getString(R.string.ease1_successive));
-            mEase2.setText(res.getString(R.string.ease3_successive));
-            switchVisibility(mEase1Layout, View.VISIBLE);
-            switchVisibility(mEase2Layout, View.VISIBLE);
-            mEase2Layout.requestFocus();
-            mNext2.setTextColor(mNextTimeTextRecomColor);
-            mEase2.setTextColor(mNextTimeTextRecomColor);
-            mNext3.setTextColor(mNextTimeTextColor);
-            mEase3.setTextColor(mNextTimeTextColor);
-            break;
-	case 3:
-            mEase1.setText(res.getString(R.string.ease1_successive));
-            mEase2.setText(res.getString(R.string.ease3_successive));
-            mEase3.setText(res.getString(R.string.ease3_learning));
-            switchVisibility(mEase1Layout, View.VISIBLE);
-            switchVisibility(mEase2Layout, View.VISIBLE);
-            switchVisibility(mEase3Layout, View.VISIBLE);
-            mEase2Layout.requestFocus();
-            mNext2.setTextColor(mNextTimeTextRecomColor);
-            mEase2.setTextColor(mNextTimeTextRecomColor);
-            mNext3.setTextColor(mNextTimeTextColor);
-            mEase3.setTextColor(mNextTimeTextColor);
-            break;
-	default:
-            mEase1.setText(res.getString(R.string.ease1_successive));
-            mEase2.setText(res.getString(R.string.ease2_successive));
-            mEase3.setText(res.getString(R.string.ease3_successive));
-            mEase4.setText(res.getString(R.string.ease3_learning));
-            switchVisibility(mEase1Layout, View.VISIBLE);
-            switchVisibility(mEase2Layout, View.VISIBLE);
-            switchVisibility(mEase3Layout, View.VISIBLE);
-            switchVisibility(mEase4Layout, View.VISIBLE);
-            mEase3Layout.requestFocus();
-            mNext2.setTextColor(mNextTimeTextColor);
-            mEase2.setTextColor(mNextTimeTextColor);
-            mNext3.setTextColor(mNextTimeTextRecomColor);
-            mEase3.setTextColor(mNextTimeTextRecomColor);
-	}
+    	switch (buttonCount) {
+    	case 2:
+    		mEase1.setText(res.getString(R.string.ease1_successive));
+    		mEase2.setText(res.getString(R.string.ease3_successive));
+    		switchVisibility(mEase1Layout, View.VISIBLE);
+    		switchVisibility(mEase2Layout, View.VISIBLE);
+    		mEase2Layout.requestFocus();
+    		mNext2.setTextColor(mNextTimeTextRecomColor);
+    		mEase2.setTextColor(mNextTimeTextRecomColor);
+    		mNext3.setTextColor(mNextTimeTextColor);
+    		mEase3.setTextColor(mNextTimeTextColor);
+    		break;
+    	case 3:
+    		mEase1.setText(res.getString(R.string.ease1_successive));
+    		mEase2.setText(res.getString(R.string.ease3_successive));
+    		mEase3.setText(res.getString(R.string.ease3_learning));
+    		switchVisibility(mEase1Layout, View.VISIBLE);
+    		switchVisibility(mEase2Layout, View.VISIBLE);
+    		switchVisibility(mEase3Layout, View.VISIBLE);
+    		mEase2Layout.requestFocus();
+        	mNext2.setTextColor(mNextTimeTextRecomColor);
+        	mEase2.setTextColor(mNextTimeTextRecomColor);
+        	mNext3.setTextColor(mNextTimeTextColor);
+        	mEase3.setTextColor(mNextTimeTextColor);
+        	break;
+    	default:
+    		mEase1.setText(res.getString(R.string.ease1_successive));
+    		mEase2.setText(res.getString(R.string.ease2_successive));
+    		mEase3.setText(res.getString(R.string.ease3_successive));
+    		mEase4.setText(res.getString(R.string.ease3_learning));
+    		switchVisibility(mEase1Layout, View.VISIBLE);
+    		switchVisibility(mEase2Layout, View.VISIBLE);
+    		switchVisibility(mEase3Layout, View.VISIBLE);
+    		switchVisibility(mEase4Layout, View.VISIBLE);
+    		mEase3Layout.requestFocus();
+    		mNext2.setTextColor(mNextTimeTextColor);
+    		mEase2.setTextColor(mNextTimeTextColor);
+    		mNext3.setTextColor(mNextTimeTextRecomColor);
+    		mEase3.setTextColor(mNextTimeTextRecomColor);
+    	}
 
         // Show next review time
         if (mshowNextReviewTime) {

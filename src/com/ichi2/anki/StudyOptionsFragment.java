@@ -208,6 +208,10 @@ public class StudyOptionsFragment extends Fragment {
 				mProgressDialog = StyledProgressDialog.show(getActivity(), "", getResources().getString(R.string.rebuild_cram_deck), true);
 			 	DeckTask.launchDeckTask(DeckTask.TASK_TYPE_REBUILD_CRAM, mUpdateValuesFromDeckListener, new DeckTask.TaskData(mCol, mCol.getDecks().selected()));
 				return;
+			case R.id.studyoptions_empty_cram:
+				mProgressDialog = StyledProgressDialog.show(getActivity(), "", getResources().getString(R.string.empty_cram_deck), true);
+			 	DeckTask.launchDeckTask(DeckTask.TASK_TYPE_EMPTY_CRAM, mUpdateValuesFromDeckListener, new DeckTask.TaskData(mCol, mCol.getDecks().selected()));
+				return;
 			case R.id.studyoptions_add:
 				addNote();
 				return;
@@ -502,7 +506,9 @@ public class StudyOptionsFragment extends Fragment {
 		if (mCol != null && mCol.getDecks().isDyn(mCol.getDecks().selected())) {
 			Button rebBut = (Button) mStudyOptionsView.findViewById(R.id.studyoptions_rebuild_cram);
 			rebBut.setOnClickListener(mButtonClickListener);
-			rebBut.setVisibility(View.VISIBLE);
+			Button emptyBut = (Button) mStudyOptionsView.findViewById(R.id.studyoptions_empty_cram);
+			emptyBut.setOnClickListener(mButtonClickListener);
+			((LinearLayout) mStudyOptionsView.findViewById(R.id.studyoptions_cram_buttons)).setVisibility(View.VISIBLE);
 		}
 
 		if (mFragmented) {
