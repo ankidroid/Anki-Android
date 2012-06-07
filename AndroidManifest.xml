@@ -71,6 +71,9 @@
 		<activity android:name="com.ichi2.anki.DeckOptions" 
 			android:label="@string/deckpreferences_title" 
 			android:configChanges="locale"/>
+		<activity android:name="com.ichi2.anki.CramDeckOptions" 
+			android:label="@string/deckpreferences_title" 
+			android:configChanges="locale"/>
 		<activity android:name="com.ichi2.anki.Info" 
 			android:label="@string/about_title" 
 			android:configChanges="locale"/>

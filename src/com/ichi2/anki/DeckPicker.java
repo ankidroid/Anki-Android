@@ -1883,37 +1883,6 @@ public class DeckPicker extends FragmentActivity {
 		}
 	}
 
-	private void addCramDeck() {
-//		// TODO: implement this properly
-//        if (mFragmented) {
-////          getListView().setItemChecked(index, true);
-//        	
-//			Fragment frag = (Fragment) getSupportFragmentManager().findFragmentById(R.id.studyoptions_fragment);
-//			if (!(frag instanceof CramDeckFragment)) {
-//				CramDeckFragment details = CramDeckFragment.newInstance(CRAM_DECK_FRAGMENT);
-//				FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-//				ft.replace(R.id.studyoptions_fragment, details);
-//				ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
-//				ft.commit();
-//			}
-//        } else {
-    		mDontSaveOnStop = true;
-        	Intent intent = new Intent();
-        	intent.putExtra("index", CRAM_DECK_FRAGMENT);
-        	intent.setClass(this, CramDeckActivity.class);
-    		startActivityForResult(intent, ADD_CRAM_DECK);
-//    		if (deckId != 0) {
-//    			if (UIUtils.getApiLevel() > 4) {
-//        			ActivityTransitionAnimation.slide(this, ActivityTransitionAnimation.NONE);
-//    			}
-//    		} else {
-    			if (UIUtils.getApiLevel() > 4) {
-        			ActivityTransitionAnimation.slide(this, ActivityTransitionAnimation.LEFT);
-    			}			
-//    		}
-//        }
-	}
-
 	private void addSharedDeck() {
 		Intent intent = new Intent(DeckPicker.this, Info.class);
 		intent.putExtra(Info.TYPE_EXTRA, Info.TYPE_SHARED_DECKS);
@@ -2048,7 +2017,36 @@ public class DeckPicker extends FragmentActivity {
                 return true;
 
             case MENU_CREATE_DYNAMIC_DECK:
-            	addCramDeck();
+				StyledDialog.Builder builder3 = new StyledDialog.Builder(DeckPicker.this);
+				builder3.setTitle(res.getString(R.string.new_deck));
+
+				mDialogEditText = (EditText) new EditText(DeckPicker.this);
+				ArrayList<String> names = mCol.getDecks().allNames();
+				int n = 1;
+				String cramDeckName = "Cram 1";
+				while (names.contains(cramDeckName)) {
+					n++;
+					cramDeckName = "Cram " + n;
+				}
+				mDialogEditText.setText(cramDeckName);
+//				mDialogEditText.setFilters(new InputFilter[] { mDeckNameFilter });
+				builder3.setView(mDialogEditText, false, false);
+				builder3.setPositiveButton(res.getString(R.string.create),
+						new DialogInterface.OnClickListener() {
+
+							@Override
+							public void onClick(DialogInterface dialog, int which) {
+								long id = mCol.getDecks().newDyn(mDialogEditText.getText().toString());
+								try {
+									mCol.getDecks().get(id).put("empty", true);
+								} catch (JSONException e) {
+									throw new RuntimeException(e);
+								}
+								openStudyOptions();
+							}
+						});
+				builder3.setNegativeButton(res.getString(R.string.cancel), null);
+				builder3.create().show();
             	return true;
 
             case MENU_ABOUT:

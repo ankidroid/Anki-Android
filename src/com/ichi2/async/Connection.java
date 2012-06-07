@@ -221,19 +221,24 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
         HttpResponse ret = server.hostKey(username, password);
         String hostkey = null;
         boolean valid = false;
-        data.returnType = ret.getStatusLine().getStatusCode();
-        if (data.returnType == 200) {
-			try {
-				JSONObject jo = (new JSONObject(server.stream2String(ret.getEntity().getContent())));
-				hostkey = jo.getString("key");
-				valid = (hostkey != null) && (hostkey.length() > 0);
-			} catch (JSONException e) {
-				valid = false;
-			} catch (IllegalStateException e) {
-				throw new RuntimeException(e);
-			} catch (IOException e) {
-				throw new RuntimeException(e);
-			}            	
+        if (ret != null) {
+            data.returnType = ret.getStatusLine().getStatusCode();
+        	Log.i(AnkiDroidApp.TAG, "doInBackgroundLogin - response from server: " + data.returnType + " (" + ret.getStatusLine().getReasonPhrase() + ")");
+            if (data.returnType == 200) {
+    			try {
+    				JSONObject jo = (new JSONObject(server.stream2String(ret.getEntity().getContent())));
+    				hostkey = jo.getString("key");
+    				valid = (hostkey != null) && (hostkey.length() > 0);
+    			} catch (JSONException e) {
+    				valid = false;
+    			} catch (IllegalStateException e) {
+    				throw new RuntimeException(e);
+    			} catch (IOException e) {
+    				throw new RuntimeException(e);
+    			}            	
+            }
+        } else {
+        	Log.e(AnkiDroidApp.TAG, "doInBackgroundLogin - empty response from server");
         }
         if (valid) {
         	data.success = true;

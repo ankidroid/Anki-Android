@@ -68,6 +68,7 @@ import org.achartengine.model.XYSeries;
 import org.achartengine.renderer.XYMultipleSeriesRenderer;
 import org.achartengine.renderer.XYSeriesRenderer;
 import org.json.JSONException;
+import org.json.JSONObject;
 
 public class StudyOptionsFragment extends Fragment {
 
@@ -188,13 +189,7 @@ public class StudyOptionsFragment extends Fragment {
 				return;
 			case R.id.studyoptions_options:
 				if (mCol.getDecks().isDyn(mCol.getDecks().selected())) {
-		        	Intent intent = new Intent();
-		        	intent.setClass(getActivity(), CramDeckActivity.class);
-		    		startActivity(intent);
-					if (UIUtils.getApiLevel() > 4) {
-						ActivityTransitionAnimation.slide(getActivity(),
-								ActivityTransitionAnimation.FADE);
-					}
+					openCramDeckOptions();
 				} else {
 					Intent i = new Intent(getActivity(), DeckOptions.class);
 					startActivityForResult(i, DECK_OPTIONS);
@@ -205,8 +200,7 @@ public class StudyOptionsFragment extends Fragment {
 				}
 				return;
 			case R.id.studyoptions_rebuild_cram:
-				mProgressDialog = StyledProgressDialog.show(getActivity(), "", getResources().getString(R.string.rebuild_cram_deck), true);
-			 	DeckTask.launchDeckTask(DeckTask.TASK_TYPE_REBUILD_CRAM, mUpdateValuesFromDeckListener, new DeckTask.TaskData(mCol, mCol.getDecks().selected()));
+				rebuildCramDeck();
 				return;
 			case R.id.studyoptions_empty_cram:
 				mProgressDialog = StyledProgressDialog.show(getActivity(), "", getResources().getString(R.string.empty_cram_deck), true);
@@ -221,6 +215,19 @@ public class StudyOptionsFragment extends Fragment {
 		}
 	};
 
+	private void openCramDeckOptions() {
+		Intent i = new Intent(getActivity(), CramDeckOptions.class);
+		startActivityForResult(i, DECK_OPTIONS);
+		if (UIUtils.getApiLevel() > 4) {
+			ActivityTransitionAnimation.slide(getActivity(),
+					ActivityTransitionAnimation.FADE);
+		}
+	}
+
+	private void rebuildCramDeck() {
+		mProgressDialog = StyledProgressDialog.show(getActivity(), "", getResources().getString(R.string.rebuild_cram_deck), true);
+	 	DeckTask.launchDeckTask(DeckTask.TASK_TYPE_REBUILD_CRAM, mUpdateValuesFromDeckListener, new DeckTask.TaskData(mCol, mCol.getDecks().selected()));
+	}
 
     public static StudyOptionsFragment newInstance(int index) {
     	StudyOptionsFragment f = new StudyOptionsFragment();
@@ -677,8 +684,13 @@ public class StudyOptionsFragment extends Fragment {
 	}
 	private void updateValuesFromDeck(boolean reset) {
 		String fullName;
+		JSONObject deck = mCol.getDecks().current();
 		try {
-			fullName = mCol.getDecks().current().getString("name");
+			fullName = deck.getString("name");
+			if (deck.has("empty") && deck.getBoolean("empty")) {
+				openCramDeckOptions();
+				return;
+			}
 		} catch (JSONException e) {
 			throw new RuntimeException(e);
 		}
@@ -825,6 +837,16 @@ public class StudyOptionsFragment extends Fragment {
 		if (resultCode == DeckPicker.RESULT_MEDIA_EJECTED) {
 			closeStudyOptions(DeckPicker.RESULT_MEDIA_EJECTED);
 		} else if (requestCode == DECK_OPTIONS) {
+			JSONObject deck = mCol.getDecks().current();
+			// check, if cram deck is
+			try {
+				if (deck.has("empty") && deck.getBoolean("empty")) {
+					rebuildCramDeck();
+					deck.remove("empty");
+				}
+			} catch (JSONException e) {
+				throw new RuntimeException(e);
+			}
 			resetAndUpdateValuesFromDeck();
 		} else if (requestCode == ADD_NOTE && resultCode != getActivity().RESULT_CANCELED) {
 			resetAndUpdateValuesFromDeck();
