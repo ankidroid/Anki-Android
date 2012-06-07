@@ -27,6 +27,7 @@ import com.ichi2.anki.AnkiDb;
 import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.UIUtils;
 import com.ichi2.async.DeckTask;
+import com.samskivert.mustache.Mustache;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -37,8 +38,11 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Random;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 // Anki maintains a cache of used tags so it can quickly present a list of tags
 // for autocomplete and in the browser. For efficiency, deletions are not
@@ -52,6 +56,7 @@ public class Collection {
 	public static final int SCHEMA_VERSION = 11;
 	public static final String SYNC_URL = "https://ankiweb.net/";
 	public static final int SYNC_VER = 5;
+	public static final String HELP_SITE = "http://ankisrs.net/docs/dev/manual.html";
 
 	private AnkiDb mDb;
 	private boolean mServer;
@@ -82,6 +87,9 @@ public class Collection {
 
 	private String mPath;
 	private boolean mClosing = false;
+	
+	// Cloze regex
+	private static final Pattern sRegexPattern = Pattern.compile("\\{\\{cloze:");
 
 	// other options
 	public static final String defaultConf = "{"
@@ -547,7 +555,7 @@ public class Collection {
 			while (cur.moveToNext()) {
 				// existing cards
 				long nid = cur.getLong(1);
-				if (!have.containsKey(nids)) {
+				if (!have.containsKey(nid)) {
 					have.put(nid, new HashMap<Integer, Long>());
 				}
 				have.get(nid).put(cur.getInt(2), cur.getLong(0));
@@ -616,7 +624,7 @@ public class Collection {
 					}
 				}
 				// note any cards that need removing
-				if (have.containsKey(nids)) {
+				if (have.containsKey(nid)) {
 					for (Map.Entry<Integer, Long> n : have.get(nid).entrySet()) {
 						if (!avail.contains(n.getKey())) {
 							rem.add(n.getValue());
@@ -827,19 +835,57 @@ public class Collection {
 			}
 			fields.put("Card", template.getString("name"));
 			fields.put("c" + (((Integer)data[4])+1), "1");
-            Models.fieldParser fparser = new Models.fieldParser(fields);
+            
 			// render q & a
 			HashMap<String, String> d = new HashMap<String, String>();
 			d.put("id", Long.toString((Long) data[0]));
-			d.put("q", mModels.getCmpldTemplate(modelId, (Integer) data[4], args)[0]
-					.execute(fparser));
-			fields.put("FrontSide", d.get("q"));
-			fparser = new Models.fieldParser(fields);
-			d.put("a", mModels.getCmpldTemplate(modelId, (Integer) data[4], args)[1]
-					.execute(fparser));
-			// TODO: runfilter
-			// TODO: Warn on empty cloze
-			return d;
+            String qfmt = template.getString("qfmt");
+            String afmt = template.getString("afmt");
+            String html;
+            String format;
+            
+            // runFilter mungeFields for type "q"
+            Models.fieldParser fparser = new Models.fieldParser(fields);
+		    Matcher m = sRegexPattern.matcher(qfmt);
+		    if (m.find()) {
+		        format = m.replaceFirst(String.format(Locale.US, "{{cq:%d:", ((Integer)data[4])+1));
+                html = Mustache.compiler().compile(format).execute(fparser);
+		    } else {
+		        // use already compiled template 
+                html = mModels.getCmpldTemplate(modelId, (Integer) data[4], args)[0].execute(fparser);
+			}
+            // runFilter mungeQA
+            d.put("q", html);
+            // empty cloze?
+            if (model.getInt("type") == Sched.MODEL_CLOZE) {
+                if (getModels()._availClozeOrds(model, (String) data[6], false).size() == 0) {
+                    d.put("q", "Please edit this note and add some cloze deletions.");
+                }
+            }
+		    fields.put("FrontSide", d.get("q"));
+			    
+		    // runFilter mungeFields for type "a"
+            fparser = new Models.fieldParser(fields);
+            m = sRegexPattern.matcher(afmt);
+            if (m.find()) {
+                format = m.replaceFirst(String.format(Locale.US, "{{ca:%d:", ((Integer)data[4])+1));
+                html = Mustache.compiler().compile(format).execute(fparser);
+            } else {
+                // use already compiled template 
+                html = mModels.getCmpldTemplate(modelId, (Integer) data[4], args)[1].execute(fparser);
+            }
+            // runFilter mungeQA
+            d.put("a", html);
+            // empty cloze?
+            if (model.getInt("type") == Sched.MODEL_CLOZE) {
+                if (getModels()._availClozeOrds(model, (String) data[6], false).size() == 0) {
+                    d.put("q", AnkiDroidApp.getAppResources().getString(com.ichi2.anki2.R.string.empty_cloze_warning,
+                            String.format(Locale.US, "<a href=%s#cloze>%s</a>", HELP_SITE,
+                                    AnkiDroidApp.getAppResources().getString(com.ichi2.anki2.R.string.help_cloze))));
+                }
+            }
+			
+            return d;
 		} catch (JSONException e) {
 			throw new RuntimeException(e);
 		}

@@ -829,10 +829,6 @@ public class Models {
      * @return
      */
     public Template[] getCmpldTemplate(long modelId, int ord, List<String> args) {
-    	//if (args != null) {
-    	//	// TODO: cache this for browser too
-    	//	return compileTemplate(modelId, ord, args);
-    	//}
     	if (!mCmpldTemplateMap.containsKey(modelId)) {
     		mCmpldTemplateMap.put(modelId, new HashMap<Integer, Template[]>());
     	}
@@ -844,7 +840,7 @@ public class Models {
 
 
     // not in libanki
-    private Template[] compileTemplate(long modelId, int ord, List<String> args) {
+    public Template[] compileTemplate(long modelId, int ord, List<String> args) {
     	JSONObject model = mModels.get(modelId);
         JSONObject template;
         Template[] t = new Template[2];
@@ -873,25 +869,26 @@ public class Models {
 
     // not in libanki
     // Handle fields fetched from templates and any anki-specific formatting
+    protected static final String clozeReg = "\\{\\{c%s::(.*?)(::(.*?))?\\}\\}";
     protected static class fieldParser implements Mustache.VariableFetcher {
         private Map <String, String> _fields;
-        private String rubyr = " ?([^ ]+?)\\[(.+?)\\]";
         public fieldParser (Map<String, String> fields) {
             _fields = fields;
         }
 
-        public Object get (Object ctx, String name) throws Exception {
-            if (name.length() == 0) {
+        public Object get (Object ctx, String tag_name) throws Exception {
+            if (tag_name.length() == 0) {
                 return null;
             }
-            String txt = _fields.get(name);
+            String txt = _fields.get(tag_name);
             if (txt != null) {
                 return txt;
             }
-            // field modifier handling as taken from template.py
-            String[] parts = name.split(":", 3);
+            
+            // field modifiers
+            String[] parts = tag_name.split(":", 3);
             String mod = null, extra = null, tag = null;
-            if (parts.length == 1 || parts[0].length() == 0) {
+            if (parts.length == 1 || parts[0].equals("")) {
                 return null;
             } else if (parts.length == 2) {
                 mod = parts[0];
@@ -907,99 +904,55 @@ public class Models {
             Log.d(AnkiDroidApp.TAG, "Processing field modifier " + mod + ": extra = " + extra + ", field " + tag + " = " + txt);
 
             // built-in modifiers
-            // including furigana/ruby text handling
             if (mod.equals("text")) {
                 // strip html
-                if (txt != null) {
+                if (txt != null && txt.length() > 0) {
                     return Utils.stripHTML(txt);
                 }
                 return "";
             } else if (mod.equals("type")) {
-                // TODO: handle type field modifier
-                Log.e(AnkiDroidApp.TAG, "Unimplemented field modifier: " + mod);
-                return null;
+                // type answer field; convert it to [[type:...]] for the gui code to process
+                return String.format(Locale.US, "[[%s]]", tag_name);
             } else if (mod.equals("cq") || mod.equals("ca")) {
-                // cloze handling
-                if (txt == null || extra == null) return "";
-                int ord;
-                try {
-                    ord = Integer.parseInt(extra);
-                } catch (NumberFormatException e) {
-                    return "";
-                }
-                if (ord < 0) return "";
-                String rx = "\\{\\{c"+ord+"::(.*?)(?:::(.*?))?\\}\\}";
-                Matcher m = Pattern.compile(rx).matcher(txt);
-                String clozetxt = null;
-                if (mod.equals("ca")) {
-                    // in answer
-                    clozetxt = m.replaceAll("<span class=\"cloze\">$1</span>");
+                // cloze deletion
+                if (txt != null && txt.length() != 0 && extra != null && extra.length() != 0) {
+                    return clozeText(txt, extra, mod.charAt(1));
                 } else {
-                    // in question
-                    // unfortunately, Android's java implementation replaces
-                    // non-matching captures with "null", requiring this ugly little loop
-                    StringBuffer sb = new StringBuffer();
-                    while (m.find()) {
-                        if (m.group(2) != null) {
-                            m.appendReplacement(sb, "<span class=\"cloze\">[...$2]</span>");
-                        } else {
-                            m.appendReplacement(sb, "<span class=\"cloze\">[...]</span>");
-                        }
-                    }
-                    m.appendTail(sb);
-                    clozetxt = sb.toString();
-                }
-                if (clozetxt.equals(txt)) {
-                    // cloze wasn't found; return empty
                     return "";
                 }
-                // display any other clozes normally
-                clozetxt = clozetxt.replaceAll("\\{\\{c[0-9]+::(.*?)(?:::(.*?))?\\}\\}", "$1");
-                Log.d(AnkiDroidApp.TAG, "Cloze: ord=" + ord + ", txt=" + clozetxt);
-                return clozetxt;
-            } else if (mod.equals("kanjionly")) {
-                if (txt == null) return txt;
-                return txt.replaceAll(rubyr, "$1");
-            } else if (mod.equals("readingonly")) {
-                if (txt == null) return txt;
-                return txt.replaceAll(rubyr, "$2");
-            } else if (mod.equals("furigana")) {
-                if (txt == null) return txt;
-                return txt.replaceAll(rubyr, "<ruby><rb>$1</rb><rt>$2</rt></ruby>");
             } else {
-                Log.w(AnkiDroidApp.TAG, "Unknown field modifier: " + mod);
+                // hook-based field modifier
+                if (txt == null) {
+                    txt = (String) AnkiDroidApp.getHooks().runFilter("fmod_" + mod, "", extra, ctx, tag, tag_name);
+                } else {
+                    txt = (String) AnkiDroidApp.getHooks().runFilter("fmod_" + mod, txt, extra, ctx, tag, tag_name);
+                }
+                if (txt == null) {
+                    return String.format(Locale.US, "{unknown field %s}", tag_name);
+                }
                 return txt;
             }
         }
-    }
 
-//    /**
-//     * This function recompiles the templates for question and answer. It should be called everytime we change mQformat
-//     * or mAformat, so if in the future we create set(Q|A)Format setters, we should include a call to this.
-//     */
-//    private void refreshTemplates(int ord) {
-//        // Question template
-//        StringBuffer sb = new StringBuffer();
-//        Matcher m = sOldStylePattern.matcher(mQformat);
-//        while (m.find()) {
-//            // Convert old style
-//            m.appendReplacement(sb, "{{" + m.group(1) + "}}");
-//        }
-//        m.appendTail(sb);
-//        Log.i(AnkiDroidApp.TAG, "Compiling question template \"" + sb.toString() + "\"");
-//        mQTemplate = Mustache.compiler().compile(sb.toString());
-//
-//        // Answer template
-//        sb = new StringBuffer();
-//        m = sOldStylePattern.matcher(mAformat);
-//        while (m.find()) {
-//            // Convert old style
-//            m.appendReplacement(sb, "{{" + m.group(1) + "}}");
-//        }
-//        m.appendTail(sb);
-//        Log.i(AnkiDroidApp.TAG, "Compiling answer template \"" + sb.toString() + "\"");
-//        mATemplate = Mustache.compiler().compile(sb.toString());
-//    }
+        private static String clozeText(String txt, String ord, char type) {
+            Matcher m = Pattern.compile(String.format(Locale.US, clozeReg, ord)).matcher(txt);
+            if (!m.find()) {
+                return "";
+            }
+            // replace chozen cloze with type
+            if (type == 'q') {
+                if (m.group(3) != null && m.group(3).length() != 0) {
+                    txt = m.replaceAll(String.format(Locale.US, "<span class=cloze>[%s...]</span>", m.group(3)));
+                } else {
+                    txt = m.replaceAll("<span class=cloze>[...]</span>");
+                }
+            } else if (type == 'a') {
+                txt = m.replaceAll("<span class=cloze>$1</span>");
+            }
+            // and display other clozes normally
+            return txt.replaceAll(String.format(Locale.US, clozeReg, ".*?"), "$1");
+        }
+    }
     
     
     /**
@@ -1177,10 +1130,10 @@ public class Models {
 		}
     }
 
-    private ArrayList<Integer> _availClozeOrds(JSONObject m, String flds) {
-        return _availClozeOrds(m, flds, false);
+    public ArrayList<Integer> _availClozeOrds(JSONObject m, String flds) {
+        return _availClozeOrds(m, flds, true);
     }
-    private ArrayList<Integer> _availClozeOrds(JSONObject m, String flds, boolean allowEmpty) {
+    public ArrayList<Integer> _availClozeOrds(JSONObject m, String flds, boolean allowEmpty) {
     	String[] sflds = Utils.splitFields(flds);
     	Map<String, Pair<Integer, JSONObject>> map = fieldMap(m);
     	Set<Integer> ords = new HashSet<Integer>();
@@ -1198,7 +1151,7 @@ public class Models {
     	    int ord = map.get(fname).first;
     	    Matcher matcher2 = fClozePattern2.matcher(sflds[ord]);
     	    while (matcher2.find()) {
-    	        ords.add(Integer.getInteger(matcher2.group(1)) - 1);
+    	        ords.add(Integer.parseInt(matcher2.group(1)) - 1);
     	    }
     	}
     	if (ords.contains(-1)) {
