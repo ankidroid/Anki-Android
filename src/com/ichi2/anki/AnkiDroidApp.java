@@ -15,8 +15,7 @@
  * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
  ****************************************************************************************/
 
-package com.ichi2.anki;import com.ichi2.anki2.R;
-
+package com.ichi2.anki;
 import android.app.Application;
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -32,7 +31,7 @@ import android.view.Display;
 import android.view.WindowManager;
 
 import com.ichi2.async.Connection;
-import com.tomgibara.android.veecheck.Veecheck;
+import com.ichi2.libanki.hooks.Hooks;
 import com.tomgibara.android.veecheck.util.PrefSettings;
 
 import java.io.File;
@@ -64,12 +63,18 @@ public class AnkiDroidApp extends Application {
     private static boolean bTibetan;
 
     /**
+     * Global hooks
+     */
+    private Hooks mHooks;
+
+    /**
      * On application creation.
      */
     @Override
     public void onCreate() {
         super.onCreate();
         sInstance = this;
+        sInstance.mHooks = new Hooks();
 
         Connection.setContext(getApplicationContext());
 
@@ -304,4 +309,8 @@ public class AnkiDroidApp extends Application {
 		this.getResources().updateConfiguration(config,
 				this.getResources().getDisplayMetrics());
 	}
+
+    public static Hooks getHooks() {
+        return sInstance.mHooks;
+    }
 }
