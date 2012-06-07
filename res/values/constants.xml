@@ -71,7 +71,8 @@
 		<item>14</item>
 		<item>15</item>
 		<item>16</item>
-	</string-array>
+		<item>17</item>
+			</string-array>
 	<string-array name="theme_values">
 		<item>0</item>
 		<item>1</item>
