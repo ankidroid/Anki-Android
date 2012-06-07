@@ -283,7 +283,7 @@ public class Note {
 	private void _postFlush() {
 		// generate missing cards
 		if (!mNewlyAdded) {
-			// TODO
+			mCol.genCards(new long[]{getId()});
 		}
 	}
 
