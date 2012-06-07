@@ -10,6 +10,8 @@ public class Hooks {
     
     public Hooks() {
         hooks = new HashMap<String, List<Hook>>();
+        // Add default hooks
+        new FuriganaFilters().install(this);
     }
     
     /**
@@ -17,25 +19,19 @@ public class Hooks {
      * @param hook The name of the hook.
      * @param func A class implements interface Hook and contains the function to add.
      */
-    public void addHook(String hook, Class<? extends Hook> func) {
+    public void addHook(String hook, Hook func) {
         if (!hooks.containsKey(hook) || hooks.get(hook) == null) {
             hooks.put(hook, new ArrayList<Hook>());
         }
         boolean found = false;
         for (Hook h : hooks.get(hook)) {
-            if (func.isInstance(h)) {
+            if (func.equals(h)) {
                 found = true;
                 break;
             }
         }
         if (!found) {
-            try {
-                hooks.get(hook).add(func.newInstance());
-            } catch (InstantiationException e) {
-                throw new RuntimeException(e);
-            } catch (IllegalAccessException e) {
-                throw new RuntimeException(e);
-            }
+            hooks.get(hook).add(func);
         }
     }
 
@@ -44,10 +40,10 @@ public class Hooks {
      * @param hook The name of the hook.
      * @param func A class implements interface Hook and contains the function to remove.
      */
-    public void remHook(String hook, Class<? extends Hook> func) {
+    public void remHook(String hook, Hook func) {
         if (hooks.containsKey(hook) && hooks.get(hook) != null) {
             for (Hook h : hooks.get(hook)) {
-                if (func.isInstance(h)) {
+                if (func.equals(h)) {
                     hooks.get(hook).remove(h);
                     break;
                 }
