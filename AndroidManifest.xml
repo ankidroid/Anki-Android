@@ -48,9 +48,6 @@
 		<activity android:name="com.ichi2.anki.StudyOptionsActivity" 
 			android:label="StudyOptions"
 			android:configChanges="keyboardHidden|locale|orientation"/>
-		<activity android:name="com.ichi2.anki.CramDeckActivity" 
-			android:label="StudyOptions"
-			android:configChanges="keyboardHidden|locale|orientation"/>
 		<activity android:name="com.ichi2.anki.CardBrowser" 
 			android:label="Card Browser"
 			android:configChanges="keyboardHidden|orientation|locale"/>	
