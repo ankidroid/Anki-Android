@@ -117,11 +117,11 @@ public class CramDeckOptions extends PreferenceActivity implements
 							mDeck.put("terms", ar);
 						} else if (entry.getKey().equals("limit")) {
 							JSONArray ar = mDeck.getJSONArray("terms");
-							ar.getJSONArray(0).put(1, (String) entry.getValue());
+							ar.getJSONArray(0).put(1, Integer.parseInt((String) entry.getValue()));
 							mDeck.put("terms", ar);
 						} else if (entry.getKey().equals("order")) {
 							JSONArray ar = mDeck.getJSONArray("terms");
-							ar.getJSONArray(0).put(2, (String) entry.getValue());
+							ar.getJSONArray(0).put(2, Integer.parseInt((String) entry.getValue()));
 							mDeck.put("terms", ar);
 						} else if (entry.getKey().equals("resched")) {
 							mDeck.put("resched", (Boolean) entry.getValue());
