@@ -49,9 +49,9 @@
   <string name="sync_log_db_error">Ein Datenbankfehler ist aufgetreten.</string>
   <string name="no_user_password_error_message">Um mit der Operation fortzufahren, müssen Sie ein AnkiWeb-Konto haben und eingeloggt sein.</string>
   <string name="username">Benutzername</string>
-  <string name="username_repeat">Repeat username</string>
+  <string name="username_repeat">Benutzername-Wiederholung</string>
   <string name="password">Passwort</string>
-  <string name="password_repeat">Repeat password</string>
+  <string name="password_repeat">Passwort-Wiederholung</string>
   <string name="log_in">Einloggen</string>
   <string name="sign_up_description">Sie haben keinen AnkiWeb-Konto? Es ist gratis!</string>
   <string name="sign_up">Registrieren</string>
@@ -104,14 +104,14 @@
   <string name="sync_generic_error">Ein Fehler ist aufgetreten. Bitte versuchen Sie es später wieder.</string>
   <string name="sync_check_upload_file">Prüfe Datei vor dem Hochladen…</string>
   <string name="sync_check_download_file">Prüfe heruntergeladene Datei…</string>
-  <string name="sync_media_find">Finding changed media...</string>
-  <string name="sync_media_remove">Handling deleted media...</string>
-  <string name="sync_media_from_server">Receiving media from server...</string>
-  <string name="sync_media_to_server">Sending media to server...</string>
-  <string name="sync_media_no_changes">No changes to media files.</string>
-  <string name="sync_media_success">Media synced successfully.</string>
-  <string name="register_error">An error occurred. Please try again later.</string>
-  <string name="register_title">Register account</string>
-  <string name="register_mismatch">The username/password repetition does not match or is empty. Please re-enter.</string>
-  <string name="registering_message">Creating account.\nPlease wait...</string>
+  <string name="sync_media_find">Finde veränderte Media-Daten...</string>
+  <string name="sync_media_remove">Bearbeite gelöschte Media-Daten...</string>
+  <string name="sync_media_from_server">Lade Media-Daten vom Server herunter...</string>
+  <string name="sync_media_to_server">Lade Media-Daten zum Server hoch...</string>
+  <string name="sync_media_no_changes">Keine Media-Dateien verändert.</string>
+  <string name="sync_media_success">Media-Dateien erfolgreich synchronisiert.</string>
+  <string name="register_error">Ein Fehler ist aufgetreten. Bitte versuchen Sie es später erneut.</string>
+  <string name="register_title">Konto erstellen</string>
+  <string name="register_mismatch">Die Wiederholung der Benutzernamens bzw. des Passworts ist falsch oder leer. Bitte geben Sie die Informationen erneut ein.</string>
+  <string name="registering_message">Erstelle Konto.\nBitte warten...</string>
 </resources>

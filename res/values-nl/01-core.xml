@@ -94,6 +94,8 @@
   <string name="studyoptions_congrats_more_new">Er zijn meer nieuwe kaarten beschikbaar, maar de dagelijkse limiet is bereikt. Je kan de limiet oprekken in de opties, maar bedenk dat hoe meer kaarten je introduceert, hoe meer overhoringen je op korte termijn zal hebben.</string>
   <string name="sd_card_not_mounted">SD-kaart is niet aangesloten.</string>
   <string name="studyoptions_options">Opties</string>
+  <string name="empty_cloze_warning">Please edit this note and add some cloze deletions. (%1$s)</string>
+  <string name="help_cloze">help</string>
   <string-array name="next_review_s">
     <item>1 seconde</item>
     <item>1 minuut</item>

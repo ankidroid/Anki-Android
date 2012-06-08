@@ -94,6 +94,8 @@
   <string name="studyoptions_congrats_more_new">Még mindig vannak új kártyák, de a napi korlátot elérted. Növelheted a napi korlátot a Beállításoknál, de ne feledd, hogy minél több kártyát vezetsz be, annál több kártyát kell átnézned rövid időn belül, mely nagyobb terhet jelent.</string>
   <string name="sd_card_not_mounted">Az SD kártya nincs csatlakoztatva.</string>
   <string name="studyoptions_options">Options</string>
+  <string name="empty_cloze_warning">Please edit this note and add some cloze deletions. (%1$s)</string>
+  <string name="help_cloze">help</string>
   <string-array name="next_review_s">
     <item>1 másodperc</item>
     <item>1 perc</item>

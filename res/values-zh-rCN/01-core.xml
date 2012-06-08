@@ -94,6 +94,8 @@
   <string name="studyoptions_congrats_more_new">There are more new cards available, but the daily limit has been reached. You can increase the limit in the options, but please bear in mind that the more new cards you introduce, the higher your short-term review workload will become.</string>
   <string name="sd_card_not_mounted">未装入SD卡。</string>
   <string name="studyoptions_options">选项</string>
+  <string name="empty_cloze_warning">Please edit this note and add some cloze deletions. (%1$s)</string>
+  <string name="help_cloze">help</string>
   <string-array name="next_review_s">
     <item>1秒</item>
     <item>1分钟</item>

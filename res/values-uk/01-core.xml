@@ -94,6 +94,8 @@
   <string name="studyoptions_congrats_more_new">Ще є картки, але Ви вичерпали сьогоднішній ліміт. Ви можете збільшити ліміт в налаштуваннях, але пам\'ятайте, що чим більше нових карток Ви додаєте, тим більше карток доведеться повторювати у найближчі дні.</string>
   <string name="sd_card_not_mounted">Картка пам\'яті не підключена.</string>
   <string name="studyoptions_options">Options</string>
+  <string name="empty_cloze_warning">Please edit this note and add some cloze deletions. (%1$s)</string>
+  <string name="help_cloze">help</string>
   <string-array name="next_review_s">
     <item>1 секунда</item>
     <item>1 хвилина</item>

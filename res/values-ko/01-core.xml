@@ -94,6 +94,8 @@
   <string name="studyoptions_congrats_more_new">하루에 학습해야 하는 새카드 학습을 끝냈지만 학습해야 할 더 많은 새카드가 남아있습니다. 학습옵션에서 하루에 학습해야할 새카드 분량을 늘릴 수 있지만, 더 많은 새카드를 학습할 경우 단기간에 학습해야할 분량이 많아짐을 유념하시기 바랍니다.</string>
   <string name="sd_card_not_mounted">SD 카드가 마운트 되지 않았습니다.</string>
   <string name="studyoptions_options">옵션</string>
+  <string name="empty_cloze_warning">Please edit this note and add some cloze deletions. (%1$s)</string>
+  <string name="help_cloze">help</string>
   <string-array name="next_review_s">
     <item>1 초</item>
     <item>1 분</item>

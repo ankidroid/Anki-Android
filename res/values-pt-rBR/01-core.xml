@@ -94,6 +94,8 @@
   <string name="studyoptions_congrats_more_new">Existem mais cartões novos, mas o limite diário foi atingido. Você pode aumentar o limite nas opções, mas por favor, tenha em mente que  quanto mais cartões novos você introduzir, maior será sua carga de revisão a curto prazo.</string>
   <string name="sd_card_not_mounted">Cartão SD não está montado.</string>
   <string name="studyoptions_options">Options</string>
+  <string name="empty_cloze_warning">Please edit this note and add some cloze deletions. (%1$s)</string>
+  <string name="help_cloze">help</string>
   <string-array name="next_review_s">
     <item>1 segundo</item>
     <item>1 minuto</item>
