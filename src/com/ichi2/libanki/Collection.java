@@ -1077,12 +1077,12 @@ public class Collection {
 		return mUndo[0] != null;
 	}
 
-	public Card undo() {
+	public long undo() {
 		if (((Integer) mUndo[0]) == 1) {
 			return _undoReview();
 		} else {
 			_undoOp();
-			return null;
+			return 0;
 		}
 	}
 
@@ -1100,7 +1100,7 @@ public class Collection {
 		mUndo[2] = old;
 	}
 
-	private Card _undoReview() {
+	private long _undoReview() {
 		LinkedList<Card> data = (LinkedList<Card>) mUndo[2];
 		Card c = data.removeLast();
 		if (data.size() == 0) {
@@ -1117,7 +1117,7 @@ public class Collection {
 		int n = c.getQueue() == 3 ? 1 : c.getQueue();
 		String type = (new String[]{"new", "lrn", "rev"})[n];
 		mSched._updateStats(c, type, -1);
-		return c;
+		return c.getId();
 	}
 
 	/** Call via .save() */

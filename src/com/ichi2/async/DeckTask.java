@@ -537,15 +537,18 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
     	Collection col = sched.getCol();
         try {
             col.getDb().getDatabase().beginTransaction();
+        	Card newCard;
             try {
-            	Card newCard = col.undo();
+            	long cid = col.undo();
             	col.reset();
-            	if (newCard != null) {
-            		// a review was undone, 
-                	if (!sched.removeCardFromQueues(newCard)) {
-                		// card was not found in queues
-                		newCard = sched.getCard();
-                	}
+            	if (cid != 0) {
+            		// a review was undone,
+            		newCard = col.getCard(cid);
+            		col.reset();
+//                	if (!sched.removeCardFromQueues(newCard)) {
+//                		// card was not found in queues
+//                		newCard = sched.getCard();
+//                	}
             	} else {
             		newCard = sched.getCard();
             	}

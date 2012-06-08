@@ -684,39 +684,48 @@ public class Sched {
 		// collapse or finish
 		return _getLrnCard(true);
 	}
-
-	/** LIBANKI: not in libanki */
-	public boolean removeCardFromQueues(Card card) {
-		long id = card.getId();
-		Iterator<long[]> i = mNewQueue.iterator();
-		while (i.hasNext()) {
-			long cid = i.next()[0];
-			if (cid == id) {
-				i.remove();
-				mNewCount -= 1;
-				return true;
-			}
-		}
-		i = mLrnQueue.iterator();
-		while (i.hasNext()) {
-			long cid = i.next()[1];
-			if (cid == id) {
-				i.remove();
-				mLrnCount -= card.getLeft();
-				return true;
-			}
-		}
-		i = mRevQueue.iterator();
-		while (i.hasNext()) {
-			long cid = i.next()[0];
-			if (cid == id) {
-				i.remove();
-				mRevCount -= 1;
-				return true;
-			}
-		}
-		return false;
-	}
+//
+//	/** LIBANKI: not in libanki */
+//	public boolean removeCardFromQueues(Card card) {
+//		long id = card.getId();
+//		Iterator<long[]> i = mNewQueue.iterator();
+//		while (i.hasNext()) {
+//			long cid = i.next()[0];
+//			if (cid == id) {
+//				i.remove();
+//				mNewCount -= 1;
+//				return true;
+//			}
+//		}
+//		i = mLrnQueue.iterator();
+//		while (i.hasNext()) {
+//			long cid = i.next()[1];
+//			if (cid == id) {
+//				i.remove();
+//				mLrnCount -= card.getLeft();
+//				return true;
+//			}
+//		}
+//		i = mLrnDayQueue.iterator();
+//		while (i.hasNext()) {
+//			long cid = i.next()[1];
+//			if (cid == id) {
+//				i.remove();
+//				mLrnCount -= card.getLeft();
+//				return true;
+//			}
+//		}
+//		i = mRevQueue.iterator();
+//		while (i.hasNext()) {
+//			long cid = i.next()[0];
+//			if (cid == id) {
+//				i.remove();
+//				mRevCount -= 1;
+//				return true;
+//			}
+//		}
+//		return false;
+//	}
 
 	/**
 	 * New cards
