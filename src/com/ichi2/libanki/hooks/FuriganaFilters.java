@@ -7,8 +7,10 @@ public class FuriganaFilters {
     private static final Pattern r = Pattern.compile(" ?([^ ]+?)\\[(.+?)\\]");
     private static final String ruby = "<ruby><rb>\\1</rb><rt>\\2</rt></ruby>";
     
-    public static void install(Hooks h) {
-        h.addHook("fmod_kanji", Kanji.class);
+    public void install(Hooks h) {
+        h.addHook("fmod_kanji", new Kanji());
+        h.addHook("fmod_kana", new Kana());
+        h.addHook("fmod_furigana", new Furigana());
     }
     
     private static String noSound(Matcher match, String repl) {
