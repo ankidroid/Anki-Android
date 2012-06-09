@@ -667,9 +667,9 @@ public class StudyOptionsFragment extends Fragment {
 			// eta);
 			// }
 		 	mTextCongratsMessage.setText(mCol.getSched().finishedMsg(getActivity()));
-			if (reload) {
-				updateValuesFromDeck();
-			}
+//			if (reload) {
+//				updateValuesFromDeck();
+//			}
 			return mCongratsView;
 		}
 		return null;
@@ -863,7 +863,7 @@ public class StudyOptionsFragment extends Fragment {
 				 showContentView(CONTENT_STUDY_OPTIONS, mDontSaveOnStop);
 				break;
 			case Reviewer.RESULT_NO_MORE_CARDS:
-				showContentView(CONTENT_CONGRATS, mDontSaveOnStop);
+				getActivity().setContentView(showContentView(CONTENT_CONGRATS, mDontSaveOnStop));
 				break;
 			}
 			mDontSaveOnStop = false;

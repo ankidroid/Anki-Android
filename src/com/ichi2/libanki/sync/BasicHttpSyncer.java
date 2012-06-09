@@ -16,14 +16,17 @@
 
 package com.ichi2.libanki.sync;
 
+import com.byarger.exchangeit.EasySSLSocketFactory;
 import com.ichi2.anki2.R;
 
+import android.content.SharedPreferences;
 import android.util.Log;
 
 import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.async.Connection;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Utils;
+import com.tomgibara.android.veecheck.util.PrefSettings;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -39,6 +42,7 @@ import org.apache.http.conn.ssl.SSLSocketFactory;
 import org.apache.http.entity.AbstractHttpEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.impl.conn.SingleClientConnManager;
+import org.apache.http.impl.conn.tsccm.ThreadSafeClientConnManager;
 import org.apache.http.params.BasicHttpParams;
 import org.apache.http.params.HttpParams;
 import org.apache.http.params.HttpProtocolParams;
@@ -61,6 +65,8 @@ import java.io.StringWriter;
 import java.io.UnsupportedEncodingException;
 import java.security.KeyStore;
 import java.util.zip.GZIPOutputStream;
+
+import javax.net.ssl.SSLException;
 
 public class BasicHttpSyncer implements HttpSyncer {
 
@@ -153,19 +159,32 @@ public class BasicHttpSyncer implements HttpSyncer {
 	        httpPost.setEntity(entity);
 	        httpPost.setHeader("Content-type", "multipart/form-data; boundary=" + BOUNDARY);
 
-	        SchemeRegistry schemeRegistry = new SchemeRegistry();
+        	SharedPreferences preferences = PrefSettings.getSharedPrefs(AnkiDroidApp.getInstance().getApplicationContext());
+
+        	SchemeRegistry schemeRegistry = new SchemeRegistry();
 	        schemeRegistry.register(new Scheme("http", PlainSocketFactory.getSocketFactory(), 80));
-	        schemeRegistry.register(new Scheme("https", newSslSocketFactory(), 443));
-	         
+	        if (preferences.getBoolean("sslAcceptAll", false)) {
+	        	Log.e(AnkiDroidApp.TAG, "SSL certificate check is disabled");
+		        schemeRegistry.register(new Scheme("https", new EasySSLSocketFactory(), 443));	        	
+	        } else {
+		        schemeRegistry.register(new Scheme("https", newSslSocketFactory(), 443));
+	        }
+
 	        HttpParams params = new BasicHttpParams();
 	        params.setParameter(ConnManagerPNames.MAX_TOTAL_CONNECTIONS, 30);
 	        params.setParameter(ConnManagerPNames.MAX_CONNECTIONS_PER_ROUTE, new ConnPerRouteBean(30));
 	        params.setParameter(HttpProtocolParams.USE_EXPECT_CONTINUE, false);
 	        HttpProtocolParams.setVersion(params, HttpVersion.HTTP_1_1);
-	         
-	        ClientConnectionManager cm = new SingleClientConnManager(params, schemeRegistry);
-	        DefaultHttpClient httpClient = new DefaultHttpClient(cm, params);
-	        return httpClient.execute(httpPost);
+
+	        ThreadSafeClientConnManager cm = new ThreadSafeClientConnManager(params, schemeRegistry);
+	        try {
+		        DefaultHttpClient httpClient = new DefaultHttpClient(cm, params);
+		        return httpClient.execute(httpPost);
+	        } catch (SSLException e) {
+	        	// SSL cert error: might be related to a bug. as a workaround we accept all certs, if necessary
+	        	preferences.edit().putBoolean("sslAcceptAll", true).commit();
+	        	return req(method, fobj, comp, hkey, registerData);
+	        }
 		} catch (UnsupportedEncodingException e) {
 			throw new RuntimeException(e);
 		} catch (IOException e) {
