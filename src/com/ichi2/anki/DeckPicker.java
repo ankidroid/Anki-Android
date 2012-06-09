@@ -1790,6 +1790,14 @@ public class DeckPicker extends FragmentActivity {
 	// CUSTOM METHODS
 	// ----------------------------------------------------------------------------
 
+    public void setStudyContentView(int view) {
+    	StudyOptionsFragment details = new StudyOptionsFragment(view);
+		FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+		ft.replace(R.id.studyoptions_fragment, details);
+		ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
+		ft.commit();
+    }
+
 	/**
 	 * Registers an intent to listen for ACTION_MEDIA_EJECT notifications. The
 	 * intent will call closeExternalStorageFiles() if the external media is
@@ -2234,15 +2242,16 @@ public class DeckPicker extends FragmentActivity {
 	private void openStudyOptions(int id) {
 		// TODO: implement this properly
         if (mFragmented) {
-//          getListView().setItemChecked(index, true);
-			Fragment frag = (Fragment) getSupportFragmentManager().findFragmentById(R.id.studyoptions_fragment);
-			if (frag == null || !(frag instanceof StudyOptionsFragment) || ((StudyOptionsFragment) frag).getShownIndex() != id) {
-				StudyOptionsFragment details = StudyOptionsFragment.newInstance(id);
-				FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-				ft.replace(R.id.studyoptions_fragment, details);
-				ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
-				ft.commit();
-			}
+        	setStudyContentView(StudyOptionsFragment.CONTENT_STUDY_OPTIONS);
+////          getListView().setItemChecked(index, true);
+//			Fragment frag = (Fragment) getSupportFragmentManager().findFragmentById(R.id.studyoptions_fragment);
+//			if (frag == null || !(frag instanceof StudyOptionsFragment) || ((StudyOptionsFragment) frag).getShownIndex() != id) {
+//				StudyOptionsFragment details = StudyOptionsFragment.newInstance(id);
+//				FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+//				ft.replace(R.id.studyoptions_fragment, details);
+//				ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
+//				ft.commit();
+//			}
         } else {
     		mDontSaveOnStop = true;
         	Intent intent = new Intent();
