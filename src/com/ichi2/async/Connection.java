@@ -77,7 +77,6 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
     private TaskListener mListener;
 
     public static final int RETURN_TYPE_OUT_OF_MEMORY = -1;
-    public static final int TERMS_OF_USE_NOT_AGREED = 0;
 
     public static final String CONFLICT_RESOLUTION = "ConflictResolutionRequired";
 
@@ -238,7 +237,7 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
             AnkiDroidProxy server = new AnkiDroidProxy(username, password);
 
             int status = server.connect(false);
-            if (status != AnkiDroidProxy.LOGIN_OK) {
+            if (status != AnkiDroidProxy.LOGIN_OK && status != AnkiDroidProxy.LOGIN_TERMS_AGREEMENT) {
                 data.success = false;
                 data.returnType = status;
             }
@@ -285,6 +284,8 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
                     data.result = String.format(res.getString(R.string.sync_log_old_version), res.getString(R.string.link_ankidroid));
                 } else if (connectResult == AnkiDroidProxy.LOGIN_TOO_BUSY) {
                     data.result = res.getString(R.string.sync_too_busy);
+                } else if (connectResult == AnkiDroidProxy.LOGIN_TERMS_AGREEMENT) {
+                    data.result = res.getString(R.string.connection_terms_agreement_message);
                 } else {
                     data.result = res.getString(R.string.login_generic_error);
                 }
@@ -400,6 +401,9 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
                         syncChangelog.put("message", String.format(res.getString(R.string.sync_log_old_version), res.getString(R.string.link_ankidroid)));
                     } else if (connectResult == AnkiDroidProxy.LOGIN_TOO_BUSY) {
                         syncChangelog.put("message", res.getString(R.string.sync_too_busy));
+                    } else if (connectResult == AnkiDroidProxy.LOGIN_TERMS_AGREEMENT) {
+                        syncChangelog.put("message", res.getString(R.string.connection_terms_agreement_message));
+                        data.returnType = AnkiDroidProxy.LOGIN_TERMS_AGREEMENT;
                     } else {
                         syncChangelog.put("message", res.getString(R.string.login_generic_error));
                     }

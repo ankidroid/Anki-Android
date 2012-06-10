@@ -29,6 +29,7 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.params.HttpProtocolParams;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -55,6 +56,7 @@ public class AnkiDroidProxy {
     private static final String ANKIWEB_STATUS_OLD_VERSION = "oldVersion";
     private static final String ANKIWEB_STATUS_TOO_BUSY =
         "AnkiWeb is too busy right now. Please try again later.";
+    private static final String ANKIWED_STATUS_TERMS_AGREEMENT = "----- Please visit the AnkiWeb website and agree to the terms. -----";
     /**
      * Connection settings
      */
@@ -75,6 +77,7 @@ public class AnkiDroidProxy {
     /** The server is too busy to serve the request. */
     public static final int LOGIN_TOO_BUSY = 5;
     public static final int DB_ERROR = 6;
+    public static final int LOGIN_TERMS_AGREEMENT = 7;
 
     /**
      * List to hold the shared decks
@@ -137,6 +140,8 @@ public class AnkiDroidProxy {
                     return LOGIN_OLD_VERSION;
                 } else if (ANKIWEB_STATUS_TOO_BUSY.equalsIgnoreCase(status)) {
                     return LOGIN_TOO_BUSY;
+                } else if (status.contains(ANKIWED_STATUS_TERMS_AGREEMENT)) {
+                    return LOGIN_TERMS_AGREEMENT;
                 } else {
                     Log.e(AnkiDroidApp.TAG, "connect - unexpected status: " + status);
                     return LOGIN_ERROR;

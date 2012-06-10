@@ -73,6 +73,9 @@
 <string name="connection_error_message">A network error has occurred.</string>
 <string name="sync_log_db_error">A database error has occurred.</string>
 <string name="no_user_password_error_message">In order to proceed with this operation, you need to have an AnkiOnline account and be logged in.</string>
+<string name="connection_terms_agreement_title">Message from ankiweb.net</string>
+<string name="connection_terms_agreement_message">The terms for shared decks via ankiweb.net have changed and in order to use this service you need to agree to them. To do so, please visit http://ankiweb.net, agree to the terms and syncing should work again.</string>
+
 <!-- <string name="sync_progress_bar_title">Syncing %s</string> -->
 
 <!-- SharedDeck.java -->

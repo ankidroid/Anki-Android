@@ -170,6 +170,7 @@ public class StudyOptions extends Activity implements IButtonListener {
     private static final int DIALOG_BACKUP_NO_SPACE_LEFT = 17;
     private static final int DIALOG_DB_ERROR = 18;
     private static final int DIALOG_SELECT_HELP = 19;
+    private static final int DIALOG_TERMS_AGREEMENT = 20;
 
     private String mCurrentDialogMessage;
 
@@ -1162,6 +1163,18 @@ public class StudyOptions extends Activity implements IButtonListener {
 			builder.setPositiveButton(getResources().getString(R.string.ok), null);
 			dialog = builder.create();
 			break;
+		
+		case DIALOG_TERMS_AGREEMENT:
+		    builder.setTitle(getResources().getString(R.string.connection_terms_agreement_title));
+            builder.setPositiveButton(getResources().getString(R.string.ok), null);
+            builder.setNegativeButton(getResources().getString(R.string.visit), new OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("http://" + AnkiDroidProxy.SYNC_HOST)));
+                }
+            });
+		    dialog = builder.create();
+		    break;
 
 		case DIALOG_NO_SPACE_LEFT:
 	        builder.setNegativeButton(getResources().getString(R.string.dont_show_again), new OnClickListener() {
@@ -1662,6 +1675,7 @@ public class StudyOptions extends Activity implements IButtonListener {
 		case DIALOG_SYNC_CONFLICT_RESOLUTION:
 		case DIALOG_NO_SPACE_LEFT:
 		case DIALOG_DECK_NOT_LOADED:
+		case DIALOG_TERMS_AGREEMENT:
 		case DIALOG_SYNC_LOG:
 			ad.setMessage(mCurrentDialogMessage);
 			break;
@@ -2805,6 +2819,10 @@ public class StudyOptions extends Activity implements IButtonListener {
                 } else if (data.returnType == AnkiDroidProxy.SYNC_CONFLICT_RESOLUTION) {
                     // Need to ask user for conflict resolution direction and re-run sync
                     syncDeckWithPrompt();
+                } else if (data.returnType == AnkiDroidProxy.LOGIN_TERMS_AGREEMENT) {
+                    // Need to ask user for conflict resolution direction and re-run sync
+                    mCurrentDialogMessage = ((HashMap<String, String>) data.result).get("message");
+                    showDialog(DIALOG_TERMS_AGREEMENT);
                 } else {
                     String errorMessage = ((HashMap<String, String>) data.result).get("message");
                     if ((errorMessage != null) && (errorMessage.length() > 0)) {
