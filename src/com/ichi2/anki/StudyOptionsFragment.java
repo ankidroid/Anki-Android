@@ -36,6 +36,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
+import android.view.ViewParent;
 import android.view.ViewTreeObserver.OnGlobalLayoutListener;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -160,13 +161,6 @@ public class StudyOptionsFragment extends Fragment {
 	private Collection mCol;
 
 	private boolean mFragmented;
-
-	public StudyOptionsFragment(int view) {
-		mCurrentContentView = view;
-	}
-
-	public StudyOptionsFragment() {
-	}
 
 	/**
 	 * Callbacks for UI events
@@ -312,7 +306,8 @@ public class StudyOptionsFragment extends Fragment {
 		} else {
 			mCompat = new CompatV3();
 		}
-		return setView(true);
+		resetAndUpdateValuesFromDeck();
+		return mStudyOptionsView;
 	}
 
     @Override
@@ -332,7 +327,7 @@ public class StudyOptionsFragment extends Fragment {
         mDontSaveOnStop = false;
 //		initAllContentViews();
         if (mCurrentContentView == CONTENT_CONGRATS) {
-        	setCongratsView();
+        	setFragmentContentView(mStudyOptionsView, mCongratsView);
         }
 		mTextDeckName.setText(title);
 		mTextDeckName.setVisibility(View.VISIBLE);
@@ -404,12 +399,14 @@ public class StudyOptionsFragment extends Fragment {
 
 	private void closeStudyOptions(int result) {
 //		mCompat.invalidateOptionsMenu(this);
-//		setResult(result);
-//		finish();
-//		if (UIUtils.getApiLevel() > 4) {
-//			ActivityTransitionAnimation.slide(getActivity(),
-//					ActivityTransitionAnimation.RIGHT);
-//		}
+		if (!mFragmented) {
+			getActivity().setResult(result);
+			getActivity().finish();
+			if (UIUtils.getApiLevel() > 4) {
+				ActivityTransitionAnimation.slide(getActivity(),
+						ActivityTransitionAnimation.RIGHT);
+			}			
+		}
 	}
 
 	private void openReviewer() {
@@ -638,46 +635,14 @@ public class StudyOptionsFragment extends Fragment {
 		return dialog;
 	}
 
-	private View setView() {
-		return setView(true);
-	}
-	private View setView(boolean reload) {
-		switch (mCurrentContentView) {
-		case CONTENT_CONGRATS:
-			mTextCongratsMessage.setText(mCol.getSched().finishedMsg(getActivity()));
-			return mCongratsView;
-		case CONTENT_STUDY_OPTIONS:
-			return getStudyOptionsView(reload);
-			default:
-				return null;
-		}
-	}
-	private void setCongratsView() {
-		mCurrentContentView = CONTENT_CONGRATS;
-//		mTextCongratsMessage.setText(mCol.getSched().finishedMsg(getActivity()));
-		if (mFragmented) {
-			((DeckPicker)getActivity()).setStudyContentView(CONTENT_CONGRATS);			
-		} else {
-			((StudyOptionsActivity)getActivity()).setStudyContentView(CONTENT_CONGRATS);			
-		}
-//		setView(mCongratsView);
+	void setFragmentContentView(View oldView, View newView) {
+	    LinearLayout.LayoutParams layoutParams = 
+	            new LinearLayout.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT, ViewGroup.LayoutParams.FILL_PARENT);
+	    ViewGroup parent = (ViewGroup) oldView.getParent();
+	    parent.removeAllViews();
+	    parent.addView(newView);
 	}
 
-	private View getStudyOptionsView(boolean reload) {
-		mCurrentContentView = CONTENT_STUDY_OPTIONS;
-		if (reload) {
-			resetAndUpdateValuesFromDeck();				
-		}
-		return mStudyOptionsView;
-	}
-
-	private void setStudyOptionsView(boolean reload) {
-		if (mFragmented) {
-			((DeckPicker)getActivity()).setStudyContentView(CONTENT_STUDY_OPTIONS);			
-		} else {
-			((StudyOptionsActivity)getActivity()).setStudyContentView(CONTENT_STUDY_OPTIONS);			
-		}
-	}
 
 	//	private View showContentView(int which) {
 //		return showContentView(which, true);
@@ -851,7 +816,7 @@ public class StudyOptionsFragment extends Fragment {
 		mCongratsView.setVisibility(View.INVISIBLE);
 		mCongratsView.setAnimation(ViewAnimation.fade(ViewAnimation.FADE_OUT,
 				500, 0));
-		setStudyOptionsView(true);
+		setFragmentContentView(mCongratsView, mStudyOptionsView);
 		mStudyOptionsView.setVisibility(View.VISIBLE);
 		mStudyOptionsView.setAnimation(ViewAnimation.fade(
 				ViewAnimation.FADE_IN, 500, 0));
@@ -911,11 +876,11 @@ public class StudyOptionsFragment extends Fragment {
 			case Reviewer.RESULT_SESSION_COMPLETED:
 			default:
 				// do not reload counts, if activity is created anew because it has been before destroyed by android
-				resetAndUpdateValuesFromDeck();				
-//				setStudyOptionsView(true);
+				resetAndUpdateValuesFromDeck();
 				break;
 			case Reviewer.RESULT_NO_MORE_CARDS:
-				setCongratsView();
+				mTextCongratsMessage.setText(mCol.getSched().finishedMsg(getActivity()));
+				setFragmentContentView(mStudyOptionsView, mCongratsView);
 				break;
 			}
 			mDontSaveOnStop = false;
@@ -923,7 +888,8 @@ public class StudyOptionsFragment extends Fragment {
 			mDontSaveOnStop = false;
 			resetAndUpdateValuesFromDeck();
 		} else if (requestCode == STATISTICS && mCurrentContentView == CONTENT_CONGRATS) {
-			setStudyOptionsView(true);
+			resetAndUpdateValuesFromDeck();
+			setFragmentContentView(mCongratsView, mStudyOptionsView);
 		}
 	}
 

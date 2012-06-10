@@ -1791,7 +1791,7 @@ public class DeckPicker extends FragmentActivity {
 	// ----------------------------------------------------------------------------
 
     public void setStudyContentView(int view) {
-    	StudyOptionsFragment details = new StudyOptionsFragment(view);
+    	StudyOptionsFragment details = new StudyOptionsFragment();
 		FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
 		ft.replace(R.id.studyoptions_fragment, details);
 		ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);

@@ -58,7 +58,7 @@ public class StudyOptionsActivity extends FragmentActivity {
 
     public void setStudyContentView(int view) {
         // During initial setup, plug in the details fragment.
-        Fragment details = new StudyOptionsFragment(view);
+        Fragment details = new StudyOptionsFragment();
         details.setArguments(getIntent().getExtras());
         getSupportFragmentManager().beginTransaction().add(android.R.id.content, details).commit();
     }
