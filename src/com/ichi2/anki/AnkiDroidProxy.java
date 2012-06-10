@@ -272,6 +272,7 @@ public class AnkiDroidProxy {
             httpPost.setHeader("Accept-Encoding", "identity");
             httpPost.setHeader("Content-type", "application/x-www-form-urlencoded");
             DefaultHttpClient httpClient = new DefaultHttpClient();
+            //httpClient.getParams().setParameter(HttpProtocolParams.USER_AGENT, "AnkiDroid " + AnkiDroidApp.getPkgVersion());
             HttpResponse response = httpClient.execute(httpPost);
             int respCode = response.getStatusLine().getStatusCode();
             if (respCode != 200) {
