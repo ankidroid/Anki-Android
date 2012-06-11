@@ -1700,14 +1700,18 @@ public class Reviewer extends AnkiActivity {
     }
 
 
-    private int getRecommendedEase() {
-        if (mSched.answerButtons(mCurrentCard) == 3) {
-            return EASE_HARD;
-        } else {
-            return EASE_MID;
+    private int getRecommendedEase(boolean easy) {
+        switch (mSched.answerButtons(mCurrentCard)) {
+        case 2:
+        	return EASE_HARD;
+        case 3:
+        	return easy ? EASE_MID : EASE_HARD;
+        case 4:
+        	return easy ? EASE_EASY : EASE_MID;
+		default:
+			return 0;
         }
     }
-
 
     private void answerCard(int ease) {
         if (mInAnswer) {
@@ -3267,14 +3271,14 @@ public class Reviewer extends AnkiActivity {
                 break;
             case GESTURE_ANSWER_RECOMMENDED:
                 if (sDisplayAnswer) {
-                    answerCard(getRecommendedEase());
+                    answerCard(getRecommendedEase(false));
                 } else {
                     displayCardAnswer();
                 }
                 break;
             case GESTURE_ANSWER_BETTER_THAN_RECOMMENDED:
                 if (sDisplayAnswer) {
-                    answerCard(getRecommendedEase() + 1);
+                    answerCard(getRecommendedEase(true));
                 }
                 break;
             case GESTURE_EXIT:
