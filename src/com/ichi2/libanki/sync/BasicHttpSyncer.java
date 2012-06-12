@@ -39,6 +39,7 @@ import org.apache.http.conn.scheme.PlainSocketFactory;
 import org.apache.http.conn.scheme.Scheme;
 import org.apache.http.conn.scheme.SchemeRegistry;
 import org.apache.http.conn.ssl.SSLSocketFactory;
+import org.apache.http.conn.ssl.X509HostnameVerifier;
 import org.apache.http.entity.AbstractHttpEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.impl.conn.SingleClientConnManager;
@@ -163,11 +164,11 @@ public class BasicHttpSyncer implements HttpSyncer {
 
         	SchemeRegistry schemeRegistry = new SchemeRegistry();
 	        schemeRegistry.register(new Scheme("http", PlainSocketFactory.getSocketFactory(), 80));
-	        if (preferences.getBoolean("sslAcceptAll", false)) {
+	        if (preferences.getBoolean("sslAcceptAll", true)) {
 	        	Log.e(AnkiDroidApp.TAG, "SSL certificate check is disabled");
 		        schemeRegistry.register(new Scheme("https", new EasySSLSocketFactory(), 443));	        	
 	        } else {
-		        schemeRegistry.register(new Scheme("https", newSslSocketFactory(), 443));
+		        schemeRegistry.register(new Scheme("https", newSslSocketFactory(SSLSocketFactory.STRICT_HOSTNAME_VERIFIER), 443));
 	        }
 
 	        HttpParams params = new BasicHttpParams();
@@ -182,8 +183,14 @@ public class BasicHttpSyncer implements HttpSyncer {
 		        return httpClient.execute(httpPost);
 	        } catch (SSLException e) {
 	        	// SSL cert error: might be related to a bug. as a workaround we accept all certs, if necessary
-	        	preferences.edit().putBoolean("sslAcceptAll", true).commit();
-	        	return req(method, fobj, comp, hkey, registerData);
+	        	// prevent loop
+	        	if (!preferences.getBoolean("sslAcceptAll", false)) {
+		        	Log.e(AnkiDroidApp.TAG, "workaround for android < 3.0: disabling ssl certificate check");
+		        	preferences.edit().putBoolean("sslAcceptAll", true).commit();
+		        	return req(method, fobj, comp, hkey, registerData);
+	        	} else {
+	        		return null;
+	        	}
 	        }
 		} catch (UnsupportedEncodingException e) {
 			throw new RuntimeException(e);
@@ -349,7 +356,7 @@ public class BasicHttpSyncer implements HttpSyncer {
 		return null;
 	}
 
-	private SSLSocketFactory newSslSocketFactory() {
+	private SSLSocketFactory newSslSocketFactory(X509HostnameVerifier ver) {
 	    try {
 	        KeyStore trusted = KeyStore.getInstance("BKS");
 	        InputStream in = AnkiDroidApp.getInstance().getApplicationContext().getResources().openRawResource(R.raw.ankiweb_cert);
@@ -359,7 +366,7 @@ public class BasicHttpSyncer implements HttpSyncer {
 	            in.close();
 	        }
 	        SSLSocketFactory sf = new SSLSocketFactory(trusted);
-	        sf.setHostnameVerifier(SSLSocketFactory.STRICT_HOSTNAME_VERIFIER);
+	        sf.setHostnameVerifier(ver);
 	        return sf;
 	    } catch (Exception e) {
 	    	Log.e(AnkiDroidApp.TAG, "Certificate error");
