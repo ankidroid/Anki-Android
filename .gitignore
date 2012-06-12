@@ -14,6 +14,7 @@ build.xml
 .build.xml
 local.properties
 proguard.cfg
+proguard-project.txt
 coverage.em
 
 ant.properties
