@@ -1,5 +1,7 @@
 package com.ichi2.libanki.hooks;
 
+import com.ichi2.libanki.LaTeX;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -12,6 +14,7 @@ public class Hooks {
         hooks = new HashMap<String, List<Hook>>();
         // Add default hooks
         new FuriganaFilters().install(this);
+        new LaTeX().installHook(this);
     }
     
     /**
