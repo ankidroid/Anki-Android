@@ -1064,13 +1064,11 @@ public class Collection {
 
 	/* Return (elapsedTime, reps) if timebox reached, or null. */
 	public Long[] timeboxReached() {
-		try {
-            /*
-			if (mConf.getLong("timeLim") != 0) {
+		try {            
+			if (mConf.getLong("timeLim") == 0) {
 				// timeboxing disabled
 				return null;
-			}
-            */
+			}            
 			double elapsed = Utils.now() - mStartTime;
 			if (elapsed > mConf.getLong("timeLim") && !mOvertime) {
 				return new Long[]{mConf.getLong("timeLim"), (long) (mRepsToday - mStartReps)};

@@ -172,43 +172,30 @@ public class StudyOptionsFragment extends Fragment {
 	private View.OnClickListener mButtonClickListener = new View.OnClickListener() {
 		@Override
 		public void onClick(View v) {
+            long timeLimit = 0;
 			switch (v.getId()) {
 			case R.id.studyoptions_start:
 				openReviewer();
 				return;
             case R.id.studyoptions_limitup:
-                ///Deck dekku = DeckManager.getMainDeck();
-                ///long timeLimit = dekku.getSessionTimeLimit() / 60;
-                ///dekku.setSessionTimeLimit((timeLimit + 1) * 60);
-                ///mToggleLimitToggle.setChecked(true);
-                ///mToggleLimitToggle.setText(String.valueOf(timeLimit + 1));
+                timeLimit = (mCol.getTimeLimit() / 60);
+                mCol.setTimeLimit((timeLimit + 1) * 60);
+                mToggleLimitToggle.setChecked(true);
+                mToggleLimitToggle.setText(String.valueOf(timeLimit + 1));
                 return;
             case R.id.studyoptions_limitdown:
-                ///Deck dekku2 = DeckManager.getMainDeck();
-                ///long timeLimit2 = dekku2.getSessionTimeLimit() / 60;
-                ///if(timeLimit2 > 1) {
-                    ///dekku2.setSessionTimeLimit((timeLimit2 - 1) * 60);
-                    ///mToggleLimitToggle.setChecked(true);
-                    ///mToggleLimitToggle.setText(String.valueOf(timeLimit2 - 1));
-                ///} else if(timeLimit2 == 1) {
-                    ///dekku2.setSessionTimeLimit(0);
-                    ///mToggleLimitToggle.setChecked(false);
-                ///}
+                timeLimit = (mCol.getTimeLimit() / 60);
+                if(timeLimit > 1) {
+                    mCol.setTimeLimit((timeLimit - 1) * 60);
+                    mToggleLimitToggle.setChecked(true);
+                    mToggleLimitToggle.setText(String.valueOf(timeLimit - 1));
+                } else if(timeLimit == 1) {
+                    mCol.setTimeLimit(0);
+                    mToggleLimitToggle.setChecked(false);
+                }
                 return;
-            case R.id.studyoptions_limittoggle:
-                // Deck dekku3 = DeckManager.getMainDeck();
-                // if(dekku3.getSessionTimeLimit() > 0) {
-                    // mToggleLimitToggle.setChecked(false);
-                    // dekku3.setSessionTimeLimit(0);
-                // } else {
-                    // mToggleLimitToggle.setChecked(true);
-                    // mToggleLimitToggle.setText("1");
-                    // dekku3.setSessionTimeLimit(60);
-                // }
-                
-                long timeLimit = (mCol.getTimeLimit() / 60);
-                //long timeLimit = (mCol.getTimeLimit());
-            
+            case R.id.studyoptions_limittoggle:                
+                timeLimit = (mCol.getTimeLimit() / 60);            
                 if (timeLimit > 0) {
                     mToggleLimitToggle.setChecked(false);
                     mCol.setTimeLimit(0);
