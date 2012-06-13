@@ -39,12 +39,10 @@ public class RemoteServer extends BasicHttpSyncer {
 	public HttpResponse hostKey(String user, String pw) {
 		try {
 			JSONObject jo = new JSONObject();
-			jo.put("u", URLEncoder.encode(user, "UTF-8" ));
-			jo.put("p", URLEncoder.encode(pw, "UTF-8" ));
+			jo.put("u", user);
+			jo.put("p", pw);
 			return super.req("hostKey", super.getInputStream(jo.toString()), false);
 		} catch (JSONException e) {
-			return null;
-		} catch (UnsupportedEncodingException e) {
 			return null;
 		}
 	}

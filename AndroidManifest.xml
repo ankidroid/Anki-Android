@@ -20,7 +20,7 @@
 -->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
 	package="com.ichi2.anki2"
-	android:versionName="2.0alpha37-EXPERIMENTAL"
+	android:versionName="2.0alpha40-EXPERIMENTAL"
 	android:versionCode="28"
 	android:installLocation="auto">
     <instrumentation android:name="android.test.InstrumentationTestRunner" android:targetPackage="com.ichi2.anki2"></instrumentation>
@@ -169,8 +169,8 @@ android:targetSdkVersion="11"/>
 <uses-permission android:name="android.permission.INTERNET" android:required="false" />
 <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" android:required="false" />
 <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" android:required="false" />
-<uses-permission android:name="android.permission.BLUETOOTH" android:required="false" />
-<uses-permission android:name="android.permission.BLUETOOTH_ADMIN" android:required="false" />
+<!--<uses-permission android:name="android.permission.BLUETOOTH" android:required="false" />
+<uses-permission android:name="android.permission.BLUETOOTH_ADMIN" android:required="false" />-->
 <supports-screens
 android:resizeable="true"
 android:largeScreens="true"
