@@ -212,6 +212,8 @@ public class Reviewer extends AnkiActivity {
     /**
      * Variables to hold preferences
      */
+    private boolean mPrefOvertime;
+    private boolean mPrefHideDueCount;
     private boolean mPrefTimer;
     private boolean mPrefWhiteboard;
     private boolean mPrefWriteAnswers;
@@ -757,15 +759,35 @@ public class Reviewer extends AnkiActivity {
             // setOutAnimation(true);
             // } else {
             // session limits not reached, show next card
+            
+            
 
             mCurrentCard = values[0].getCard();
+            boolean timebox_reached = Collection.currentCollection().timeboxReached() != null ? true : false;
+            if (timebox_reached && mPrefOvertime && !Collection.currentCollection().getOvertime()) {
+                Collection.currentCollection().setOvertime(true);
+            }
+            //String timebox_message = "Timebox finished!";
             if (mCurrentCard == null) {
                 // If the card is null means that there are no more cards scheduled for review.
                 mNoMoreCards = true;
                 mProgressDialog = StyledProgressDialog.show(Reviewer.this, "",
                         getResources().getString(R.string.saving_changes), true);
                 setOutAnimation(false);
+            } else if (timebox_reached && !mPrefOvertime) {
+                //SharedPreferences preferences = PrefSettings.getSharedPrefs(getActivity().getBaseContext()); //getActivity().getBaseContext()
+                //boolean overtime = preferences.getBoolean("overtime", true);
+                
+                mSessionComplete = true;
+                mProgressDialog = StyledProgressDialog.show(Reviewer.this, "",
+                        getResources().getString(R.string.saving_changes), true);
+                setOutAnimation(false);
+                
+                sessionMessage = getResources().getString(R.string.timebox_reached);
             } else {
+                if (timebox_reached) {
+                    sessionMessage = getResources().getString(R.string.timebox_reached);
+                }
                 // Start reviewing next card
                 if (mPrefWriteAnswers) {
                     // only bother query deck if needed
@@ -2139,6 +2161,8 @@ public class Reviewer extends AnkiActivity {
 
     private SharedPreferences restorePreferences() {
         SharedPreferences preferences = PrefSettings.getSharedPrefs(getBaseContext());
+        mPrefHideDueCount = preferences.getBoolean("hideDueCount", false);
+        mPrefOvertime = preferences.getBoolean("overtime", true);
         mPrefTimer = preferences.getBoolean("timer", true);
         mPrefWhiteboard = preferences.getBoolean("whiteboard", false);
         mPrefWriteAnswers = preferences.getBoolean("writeAnswers", false);
@@ -2261,10 +2285,16 @@ public class Reviewer extends AnkiActivity {
 
         int eta = mSched.eta(counts, false);
         UIUtils.setActionBarSubtitle(this, getResources().getQuantityString(R.plurals.reviewer_window_title, eta, eta));
+        
+        //SharedPreferences preferences = PrefSettings.getSharedPrefs(getBaseContext());
+        //boolean hideDueCount = preferences.getBoolean("hideDueCount", true);
 
         SpannableString newCount = new SpannableString(String.valueOf(counts[0]));
         SpannableString lrnCount = new SpannableString(String.valueOf(counts[1]));
         SpannableString revCount = new SpannableString(String.valueOf(counts[2]));
+        if (mPrefHideDueCount) {
+            revCount = new SpannableString("???");
+        }
 
         switch (mCurrentCard.getQueue()) {
             case Card.TYPE_NEW:
@@ -3363,6 +3393,7 @@ public class Reviewer extends AnkiActivity {
 
 
     private void closeReviewer(int result, boolean saveDeck) {
+        Collection.currentCollection().setOvertime(false);
         mTimeoutHandler.removeCallbacks(mShowAnswerTask);
         mTimeoutHandler.removeCallbacks(mShowQuestionTask);
         mTimerHandler.removeCallbacks(removeChosenAnswerText);

@@ -101,6 +101,7 @@ public class StudyOptionsFragment extends Fragment {
 	 */
 	private int mStartedByBigWidget;
 	private boolean mSwipeEnabled;
+    private boolean mPrefHideDueCount;
 	private int mCurrentContentView;
 	boolean mInvertedColors = false;
 	String mLocale;
@@ -115,6 +116,9 @@ public class StudyOptionsFragment extends Fragment {
 	 */
 	private View mStudyOptionsView;
 	private Button mButtonStart;
+    private Button mButtonUp;
+    private Button mButtonDown;
+    private ToggleButton mToggleLimitToggle;
 	private TextView mTextDeckName;
 	private TextView mTextDeckDescription;
 	private TextView mTextTodayNew;
@@ -172,6 +176,48 @@ public class StudyOptionsFragment extends Fragment {
 			case R.id.studyoptions_start:
 				openReviewer();
 				return;
+            case R.id.studyoptions_limitup:
+                ///Deck dekku = DeckManager.getMainDeck();
+                ///long timeLimit = dekku.getSessionTimeLimit() / 60;
+                ///dekku.setSessionTimeLimit((timeLimit + 1) * 60);
+                ///mToggleLimitToggle.setChecked(true);
+                ///mToggleLimitToggle.setText(String.valueOf(timeLimit + 1));
+                return;
+            case R.id.studyoptions_limitdown:
+                ///Deck dekku2 = DeckManager.getMainDeck();
+                ///long timeLimit2 = dekku2.getSessionTimeLimit() / 60;
+                ///if(timeLimit2 > 1) {
+                    ///dekku2.setSessionTimeLimit((timeLimit2 - 1) * 60);
+                    ///mToggleLimitToggle.setChecked(true);
+                    ///mToggleLimitToggle.setText(String.valueOf(timeLimit2 - 1));
+                ///} else if(timeLimit2 == 1) {
+                    ///dekku2.setSessionTimeLimit(0);
+                    ///mToggleLimitToggle.setChecked(false);
+                ///}
+                return;
+            case R.id.studyoptions_limittoggle:
+                // Deck dekku3 = DeckManager.getMainDeck();
+                // if(dekku3.getSessionTimeLimit() > 0) {
+                    // mToggleLimitToggle.setChecked(false);
+                    // dekku3.setSessionTimeLimit(0);
+                // } else {
+                    // mToggleLimitToggle.setChecked(true);
+                    // mToggleLimitToggle.setText("1");
+                    // dekku3.setSessionTimeLimit(60);
+                // }
+                
+                long timeLimit = (mCol.getTimeLimit() / 60);
+                //long timeLimit = (mCol.getTimeLimit());
+            
+                if (timeLimit > 0) {
+                    mToggleLimitToggle.setChecked(false);
+                    mCol.setTimeLimit(0);
+                } else {
+                    mToggleLimitToggle.setChecked(true);
+                    mToggleLimitToggle.setText("1");
+                    mCol.setTimeLimit(60);
+                }
+                return;
 			case R.id.studyoptions_congrats_open_other_deck:
 				closeStudyOptions();
 				return;
@@ -323,6 +369,7 @@ public class StudyOptionsFragment extends Fragment {
 		CharSequence newTotal = mTextNewTotal.getText();
 		CharSequence total = mTextTotal.getText();
 		CharSequence eta = mTextETA.getText();
+        long timelimit = mCol.getTimeLimit() / 60;
         super.onConfigurationChanged(newConfig);
         mDontSaveOnStop = false;
 //		initAllContentViews();
@@ -340,6 +387,11 @@ public class StudyOptionsFragment extends Fragment {
 		mTextNewTotal.setText(newTotal);
 		mTextTotal.setText(total);
 		mTextETA.setText(eta);
+        
+        mToggleLimitToggle.setChecked(timelimit > 0 ? true : false);
+        if (timelimit > 0) {
+            mToggleLimitToggle.setText(String.valueOf(timelimit));
+        }
 		updateStatisticBars();
     }
 
@@ -417,6 +469,7 @@ public class StudyOptionsFragment extends Fragment {
 			ActivityTransitionAnimation.slide(getActivity(),
 					ActivityTransitionAnimation.LEFT);
 		}
+        mCol.startTimebox();
 	}
 
 	private void addNote() {
@@ -508,6 +561,12 @@ public class StudyOptionsFragment extends Fragment {
 				.findViewById(R.id.studyoptions_deck_description);
 		mButtonStart = (Button) mStudyOptionsView
 				.findViewById(R.id.studyoptions_start);
+        mButtonUp = (Button) mStudyOptionsView
+                .findViewById(R.id.studyoptions_limitup);
+        mButtonDown = (Button) mStudyOptionsView
+                .findViewById(R.id.studyoptions_limitdown);
+        mToggleLimitToggle = (ToggleButton) mStudyOptionsView
+                .findViewById(R.id.studyoptions_limittoggle);
 //		mToggleCram = (ToggleButton) mStudyOptionsView
 //				.findViewById(R.id.studyoptions_cram);
 //		mToggleNight = (ToggleButton) mStudyOptionsView
@@ -566,6 +625,9 @@ public class StudyOptionsFragment extends Fragment {
 		mDeckChart = (LinearLayout) mStudyOptionsView.findViewById(R.id.studyoptions_chart);
 		
 		mButtonStart.setOnClickListener(mButtonClickListener);
+        mButtonUp.setOnClickListener(mButtonClickListener);
+        mButtonDown.setOnClickListener(mButtonClickListener);
+        mToggleLimitToggle.setOnClickListener(mButtonClickListener);
 //		mToggleCram.setOnClickListener(mButtonClickListener);
 //		mToggleNight.setOnClickListener(mButtonClickListener);
 
@@ -906,6 +968,7 @@ public class StudyOptionsFragment extends Fragment {
 				.getSharedPrefs(getActivity().getBaseContext());
 
 		mSwipeEnabled = preferences.getBoolean("swipe", false);
+        mPrefHideDueCount = preferences.getBoolean("hideDueCount", true);
 		mInvertedColors = preferences.getBoolean("invertedColors", false);
 
 		// TODO: set language
@@ -931,10 +994,27 @@ public class StudyOptionsFragment extends Fragment {
 
 			updateStatisticBars();
 			updateChart(serieslist);
+            
+            JSONObject conf = mCol.getConf();
+            long timeLimit = 0;
+            try {
+                timeLimit = (conf.getLong("timeLim") / 60);
+            } catch (JSONException e) {
+                throw new RuntimeException(e);
+            }
+            mToggleLimitToggle.setChecked(timeLimit > 0 ? true : false);
+            mToggleLimitToggle.setText(String.valueOf(timeLimit));
+            
+            SharedPreferences preferences = PrefSettings.getSharedPrefs(getActivity().getBaseContext()); //getActivity().getBaseContext()
+            mPrefHideDueCount = preferences.getBoolean("hideDueCount", true);
 
 			mTextTodayNew.setText(String.valueOf(newCards));
-			mTextTodayLrn.setText(String.valueOf(lrnCards));
-			mTextTodayRev.setText(String.valueOf(revCards));
+            mTextTodayLrn.setText(String.valueOf(lrnCards));
+            if (mPrefHideDueCount) {
+                mTextTodayRev.setText("???");
+            } else {
+                mTextTodayRev.setText(String.valueOf(revCards));
+            }			
 			mTextNewTotal.setText(String.valueOf(totalNew));
 			mTextTotal.setText(String.valueOf(totalCards));
 			if (eta != -1) {

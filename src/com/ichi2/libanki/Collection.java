@@ -70,6 +70,7 @@ public class Collection {
 
 	private double mStartTime;
 	private int mStartReps;
+    private boolean mOvertime;
 
 	private int mRepsToday;
 
@@ -130,6 +131,7 @@ public class Collection {
 		}
 		mStartReps = 0;
 		mStartTime = 0;
+        mOvertime = false;
 		mSched = new Sched(this);
 		// check for improper shutdown
 		cleanup();
@@ -1028,6 +1030,32 @@ public class Collection {
 	 * ***************************************************************
 	 * ********************************
 	 */
+    
+    public void setTimeLimit(long seconds) {
+        try {
+            mConf.put("timeLim", seconds);
+        } catch (JSONException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    
+    public long getTimeLimit() {  
+        long timebox = 0;
+        try {
+            timebox = mConf.getLong("timeLim");
+        } catch (JSONException e) {
+            throw new RuntimeException(e);
+        }
+        return timebox;
+    }
+    
+    public void setOvertime(boolean overtime) {
+        mOvertime = overtime;
+    }
+    
+    public boolean getOvertime() {
+        return mOvertime;
+    }
 
 	public void startTimebox() {
 		mStartTime = Utils.now();
@@ -1037,12 +1065,14 @@ public class Collection {
 	/* Return (elapsedTime, reps) if timebox reached, or null. */
 	public Long[] timeboxReached() {
 		try {
+            /*
 			if (mConf.getLong("timeLim") != 0) {
 				// timeboxing disabled
 				return null;
 			}
+            */
 			double elapsed = Utils.now() - mStartTime;
-			if (elapsed > mConf.getLong("timeLim")) {
+			if (elapsed > mConf.getLong("timeLim") && !mOvertime) {
 				return new Long[]{mConf.getLong("timeLim"), (long) (mRepsToday - mStartReps)};
 			}
 		} catch (JSONException e) {
