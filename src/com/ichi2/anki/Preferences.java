@@ -69,6 +69,8 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
     private CheckBoxPreference animationsCheckboxPreference;
     private CheckBoxPreference useBackupPreference;
     private CheckBoxPreference asyncModePreference;
+    private CheckBoxPreference hideDueCountPreference;
+    private CheckBoxPreference overtimePreference;
     private CheckBoxPreference eInkDisplayPreference;
     private ListPreference mLanguageSelection;
     private CharSequence[] mLanguageDialogLabels;
@@ -100,6 +102,8 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
         animationsCheckboxPreference = (CheckBoxPreference) getPreferenceScreen().findPreference("themeAnimations");
         useBackupPreference = (CheckBoxPreference) getPreferenceScreen().findPreference("useBackup");
         asyncModePreference = (CheckBoxPreference) getPreferenceScreen().findPreference("asyncMode");
+        hideDueCountPreference = (CheckBoxPreference) getPreferenceScreen().findPreference("hideDueCount");
+        overtimePreference = (CheckBoxPreference) getPreferenceScreen().findPreference("overtime");
         eInkDisplayPreference = (CheckBoxPreference) getPreferenceScreen().findPreference("eInkDisplay");
         ListPreference listpref = (ListPreference) getPreferenceScreen().findPreference("theme");
         String theme = listpref.getValue();

@@ -42,6 +42,10 @@
 <string name="pref_cat_flashcard">Reviewing screen</string>
 <string name="show_study_options_on_deck_load">Study options on load</string>
 <string name="show_study_options_on_deck_load_summ">Shows study options screen when loading a deck</string>
+<string name="hide_due_count">Hide due count</string>
+<string name="hide_due_count_summ">Hides the due count</string>
+<string name="overtime">Overtime</string>
+<string name="overtime_summ">Continue reviewing after time limit reached</string>
 <string name="show_timer">Show timer</string>
 <string name="show_timer_summ">Timer showing the time it is taking you to answer</string>
 <string name="show_progress_bars">Show progress bars</string>
