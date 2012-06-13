@@ -169,8 +169,8 @@ android:targetSdkVersion="11"/>
 <uses-permission android:name="android.permission.INTERNET" android:required="false" />
 <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" android:required="false" />
 <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" android:required="false" />
-<uses-permission android:name="android.permission.BLUETOOTH" android:required="false" />
-<uses-permission android:name="android.permission.BLUETOOTH_ADMIN" android:required="false" />
+<!--<uses-permission android:name="android.permission.BLUETOOTH" android:required="false" />
+<uses-permission android:name="android.permission.BLUETOOTH_ADMIN" android:required="false" />-->
 <supports-screens
 android:resizeable="true"
 android:largeScreens="true"
