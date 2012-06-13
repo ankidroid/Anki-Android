@@ -62,6 +62,7 @@ import com.ichi2.anim.ActivityTransitionAnimation;
 import com.ichi2.anim.ViewAnimation;
 import com.ichi2.async.Connection;
 import com.ichi2.async.DeckTask;
+import com.ichi2.async.Connection.OldAnkiDeckFilter;
 import com.ichi2.async.Connection.Payload;
 import com.ichi2.async.DeckTask.TaskData;
 import com.ichi2.charts.ChartBuilder;
@@ -73,6 +74,8 @@ import com.ichi2.themes.Themes;
 import com.ichi2.widget.WidgetStatus;
 import com.tomgibara.android.veecheck.util.PrefSettings;
 
+import java.io.File;
+import java.io.FileFilter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.TreeSet;
@@ -165,6 +168,7 @@ public class DeckPicker extends FragmentActivity {
     private static final int ADD_SHARED_DECKS = 15;
     private static final int LOG_IN_FOR_SHARED_DECK = 16;
     private static final int ADD_CRAM_DECK = 17;
+    private static final int SHOW_INFO_UPGRADE_DECKS = 18;
 
 	private Collection mCol;
 
@@ -932,6 +936,18 @@ public class DeckPicker extends FragmentActivity {
     }
 
 
+	private boolean upgradeNeeded() {
+		if ((new File(AnkiDroidApp.getCollectionPath())).exists()) {
+			// collection file exists
+			return false;
+		}
+		if ((new File(AnkiDroidApp.getDefaultAnkiDroidDirectory())).listFiles(new OldAnkiDeckFilter()).length > 0) {
+			return true;
+		}
+        return false;
+    }
+
+
 	private SharedPreferences restorePreferences() {
         SharedPreferences preferences = PrefSettings.getSharedPrefs(getBaseContext());
         mPrefDeckPath = preferences.getString("deckPath", AnkiDroidApp.getDefaultAnkiDroidDirectory());
@@ -962,7 +978,7 @@ public class DeckPicker extends FragmentActivity {
 
 
 	private void showStartupScreensAndDialogs(SharedPreferences preferences, int skip) {
-		if (skip < 1 && preferences.getLong("lastTimeOpened", 0) == 0) {
+        if (skip < 1 && preferences.getLong("lastTimeOpened", 0) == 0) {
 			Intent infoIntent = new Intent(this, Info.class);
 			infoIntent.putExtra(Info.TYPE_EXTRA, Info.TYPE_WELCOME);
 			startActivityForResult(infoIntent, SHOW_INFO_WELCOME);
@@ -977,7 +993,14 @@ public class DeckPicker extends FragmentActivity {
             if (skip != 0 && UIUtils.getApiLevel() > 4) {
             	ActivityTransitionAnimation.slide(this, ActivityTransitionAnimation.LEFT);
             }
-		} else if (skip < 3 && hasErrorFiles()) {
+		} else if (skip < 3 && upgradeNeeded()) {
+			Intent upgradeIntent = new Intent(this, Info.class);
+			upgradeIntent.putExtra(Info.TYPE_EXTRA, Info.TYPE_UPGRADE_DECKS);
+			startActivityForResult(upgradeIntent, SHOW_INFO_UPGRADE_DECKS);
+	        if (skip != 0 && UIUtils.getApiLevel() > 4) {
+	        	ActivityTransitionAnimation.slide(this, ActivityTransitionAnimation.LEFT);
+	        }
+		} else if (skip < 4 && hasErrorFiles()) {
 			Intent i = new Intent(this, Feedback.class);
 			startActivityForResult(i, REPORT_ERROR);
 			if (skip != 0 && UIUtils.getApiLevel() > 4) {
@@ -2133,6 +2156,8 @@ public class DeckPicker extends FragmentActivity {
     		// TODO: check, if ok has been clicked
     		loadCounts();
         } else if (requestCode == REPORT_ERROR) {
+        	showStartupScreensAndDialogs(PrefSettings.getSharedPrefs(getBaseContext()), 4);
+        } else if (requestCode == SHOW_INFO_UPGRADE_DECKS) {
         	showStartupScreensAndDialogs(PrefSettings.getSharedPrefs(getBaseContext()), 3);
         } else if (requestCode == SHOW_INFO_WELCOME || requestCode == SHOW_INFO_NEW_VERSION) {
     		if (resultCode == RESULT_OK) {

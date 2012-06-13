@@ -150,6 +150,8 @@ public class BasicHttpSyncer implements HttpSyncer {
 	        String url = Collection.SYNC_URL;
 	        if (method.equals("register")) {
 	        	url = url + "account/signup" + "?username=" + registerData.getString("u") + "&password=" + registerData.getString("p");
+	        } else if (method.startsWith("upgrade")) {
+	        	url = url + method;
 	        } else {
 	        	url = url + "sync/" + method;
 	        }
@@ -250,7 +252,7 @@ public class BasicHttpSyncer implements HttpSyncer {
     }
 
 	private void publishProgress() {
-		if (mNextSendR <=  bytesReceived || mNextSendS <= bytesSent) {
+		if (mCon != null && (mNextSendR <=  bytesReceived || mNextSendS <= bytesSent)) {
 			long bR = bytesReceived;
 			long bS = bytesSent;
 			mNextSendR = (bR / 1024 + 1) * 1024;

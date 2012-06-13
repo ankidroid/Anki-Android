@@ -154,4 +154,10 @@
 <string name="register_mismatch">The username/password repetition does not match or is empty. Please re-enter.</string>
 <string name="registering_message">Creating account.\nPlease wait...</string>
 
+<string name="upgrade_decks_zipping">Zipping decks for upload.\nPlease wait...</string>
+<string name="upgrade_decks_upload">Uploading zipped decks.\nPlease wait...</string>
+<string name="upgrade_decks_waiting">Waiting, queue position: %s\nPlease wait...</string>
+<string name="upgrade_decks_upgrade_started">"Upgrade started\nPlease waiting for finish...</string>
+<string name="upgrade_decks_downloading">Downloading upgraded collection.\nPlease wait...</string>
+
 </resources>

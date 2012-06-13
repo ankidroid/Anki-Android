@@ -21,11 +21,14 @@ package com.ichi2.async;
 import android.app.Application;
 import android.content.Context;
 import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabaseCorruptException;
 import android.net.ConnectivityManager;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.util.Log;
 
+import com.ichi2.anki.AnkiDatabaseManager;
+import com.ichi2.anki.AnkiDb;
 import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.Feedback;
 import com.ichi2.anki2.R;
@@ -44,7 +47,11 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedInputStream;
+import java.io.ByteArrayInputStream;
 import java.io.File;
+import java.io.FileFilter;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -56,6 +63,8 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.TreeSet;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipOutputStream;
 
 public class Connection extends AsyncTask<Connection.Payload, Object, Connection.Payload> {
 
@@ -66,6 +75,7 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
     public static final int TASK_TYPE_SEND_CRASH_REPORT = 4;
     public static final int TASK_TYPE_DOWNLOAD_MEDIA = 5;
     public static final int TASK_TYPE_REGISTER = 6;
+    public static final int TASK_TYPE_UPGRADE_DECKS = 7;
 
     private static Context sContext;
 
@@ -175,6 +185,12 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
         return launchConnectionTask(listener, data);
     }
 
+
+    public static Connection upgradeDecks(TaskListener listener, Payload data) {
+        data.taskType = TASK_TYPE_UPGRADE_DECKS;
+        return launchConnectionTask(listener, data);
+    }
+    
     @Override
     protected Payload doInBackground(Payload... params) {
     	if (params.length != 1)
@@ -207,6 +223,9 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
                 
             case TASK_TYPE_DOWNLOAD_MEDIA:
                 return doInBackgroundDownloadMissingMedia(data);
+
+            case TASK_TYPE_UPGRADE_DECKS:
+            	return doInBackgroundUpgradeDecks(data);
 
             default:
                 return null;
@@ -247,6 +266,131 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
         	data.success = false;
         }
         return data;
+    }
+
+    private Payload doInBackgroundUpgradeDecks(Payload data) {
+        String path = (String) data.data[0];
+        File ankiDir = new File(path);
+        if (!ankiDir.isDirectory()) {
+        	data.success = false;
+      		return data;
+        }
+        // step 1: gather all .anki files into a zip, without media.
+        // we must store them as 1.anki, 2.anki and provide a map so we don't run into
+        // encoding issues with the zip file.
+    	File[] fileList = ankiDir.listFiles(new OldAnkiDeckFilter());
+    	JSONObject map = new JSONObject();
+    	byte[] buf = new byte[1024];
+	    String zipFilename = path + "/upload.zip";
+	    String colFilename = path + "/collection.anki2";
+    	try {
+    	    ZipOutputStream zos = new ZipOutputStream(new FileOutputStream(zipFilename));
+  	      	int n = 1;
+  	      	for (File f : fileList) {
+  	      		String tmpName = n + ".anki";
+  	      		FileInputStream in = new FileInputStream(f.getAbsolutePath());
+  	      		ZipEntry ze = new ZipEntry(tmpName);
+      	      	zos.putNextEntry(ze);
+  	      		int len;
+  	      		while ((len = in.read(buf)) > 0) {
+  	      			zos.write(buf, 0, len);
+  	      		}
+      	      	zos.closeEntry();
+      	      	map.put(tmpName, f.getName());
+      	      	n++;
+  	      	}
+  	      	ZipEntry ze = new ZipEntry("map.json");
+  	      	zos.putNextEntry(ze);
+  	      	InputStream in = new ByteArrayInputStream(map.toString().getBytes("UTF-8"));
+      		int len;
+      		while ((len = in.read(buf)) > 0) {
+      			zos.write(buf, 0, len);
+      		}
+  	      	zos.closeEntry();
+  	      	zos.close();
+    	} catch (FileNotFoundException e) {
+  	      	throw new RuntimeException(e); 
+  	    } catch (IOException e) {
+  	      	throw new RuntimeException(e); 
+  	    } catch (JSONException e) {
+  	      	throw new RuntimeException(e); 
+		}
+      	File zipFile = new File(zipFilename);
+      	// step 1.1: if it's over 50MB compressed, it must be upgraded by the user
+      	if (zipFile.length() > 50 * 1024 * 1024) {
+      		data.success = false;
+      		return data;
+      	}
+      	// step 2: upload zip file to upgrade service and get token
+        BasicHttpSyncer h = new BasicHttpSyncer(null, null);
+        // note: server doesn't expect it to be gzip compressed, because the zip file is compressed
+        publishProgress(new Object[]{R.string.upgrade_decks_upload});
+        try {
+			HttpResponse resp = h.req("upgrade/upload", new FileInputStream(zipFile), 0, false);
+			String result = h.stream2String(resp.getEntity().getContent());
+			String key;
+			if (result.startsWith("ok:")) {
+				key = result.split(":")[1];
+			} else {
+				data.success = false;
+				return data;
+			}
+			while (true) {
+				result = h.stream2String(h.req("upgrade/status?key=" + key).getEntity().getContent());
+				if (result.equals("error")) {
+					data.success = false;
+					return data;
+				} else if (result.startsWith("waiting:")) {
+					publishProgress(new Object[]{R.string.upgrade_decks_upload, result.split(":")[1]});
+				} else if (result.equals("upgrading")) {
+					publishProgress(new Object[]{R.string.upgrade_decks_upgrade_started});
+				} else if (result.equals("ready")) {
+					break;
+				} else {
+					data.success = false;
+					return data;
+				}
+				Thread.sleep(1000);
+			}
+	        // step 4: fetch upgraded file. this will return the .anki2 file directly, with
+	        // gzip compression if the client says it can handle it
+			publishProgress(new Object[]{R.string.upgrade_decks_downloading});
+			resp = h.req("upgrade/download?key=" + key);
+			if (resp == null) {
+				data.success = false;
+				return data;
+			}
+			// step 5: check the received file is valid
+			InputStream cont = resp.getEntity().getContent();
+			if (!h.writeToFile(cont, colFilename)) {
+				data.success = false;
+				return data;
+			}
+			// check the received file is ok
+			publishProgress(new Object[]{R.string.sync_check_download_file});
+			publishProgress(R.string.sync_check_download_file);
+			try {
+				AnkiDb d = AnkiDatabaseManager.getDatabase(colFilename);
+				if (!d.queryString("PRAGMA integrity_check").equalsIgnoreCase("ok")) {
+					data.success = false;
+					return data;
+				}
+			} finally {
+				AnkiDatabaseManager.closeDatabase(colFilename);
+			}
+			data.success = true;
+	        return data;
+		} catch (FileNotFoundException e) {
+  	      	throw new RuntimeException(e);
+		} catch (InterruptedException e) {
+  	      	throw new RuntimeException(e);
+		} catch (IllegalStateException e) {
+  	      	throw new RuntimeException(e);
+		} catch (IOException e) {
+  	      	throw new RuntimeException(e);
+		} finally {
+			(new File(zipFilename)).delete();
+		}
     }
 
     private Payload doInBackgroundRegister(Payload data) {
@@ -732,4 +876,14 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
 //        }
 //        return data;
 //    }
+
+	public static final class OldAnkiDeckFilter implements FileFilter {
+		@Override
+		public boolean accept(File pathname) {
+			if (pathname.isFile() && pathname.getName().endsWith(".anki")) {
+				return true;
+			}
+			return false;
+		}
+	}
 }
