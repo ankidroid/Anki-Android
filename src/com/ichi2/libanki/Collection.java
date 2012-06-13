@@ -854,7 +854,7 @@ public class Collection {
 		        // use already compiled template 
                 html = mModels.getCmpldTemplate(modelId, (Integer) data[4], args)[0].execute(fparser);
 			}
-            // runFilter mungeQA
+            html = (String) AnkiDroidApp.getHooks().runFilter("mungeQA", html, "q", fields, model, data, this);
             d.put("q", html);
             // empty cloze?
             if (model.getInt("type") == Sched.MODEL_CLOZE) {
@@ -874,7 +874,7 @@ public class Collection {
                 // use already compiled template 
                 html = mModels.getCmpldTemplate(modelId, (Integer) data[4], args)[1].execute(fparser);
             }
-            // runFilter mungeQA
+            html = (String) AnkiDroidApp.getHooks().runFilter("mungeQA", html, "a", fields, model, data, this);
             d.put("a", html);
             // empty cloze?
             if (model.getInt("type") == Sched.MODEL_CLOZE) {
