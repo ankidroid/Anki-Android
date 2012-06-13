@@ -21,13 +21,6 @@
 <resources>
 <!-- Be careful with a reordering. It will probably lead to a deletion of already translated strings on crowdin and should therefore only be done only immediately before release -->
 	<string-array name="new_version_features">
-		<item>review widget</item>
-		<item>rename decks</item>
-		<item>cached list in card browser</item>
-		<item>long click configurable</item>
-		<item>feedback for added facts</item>
-		<item>deck summary in deckpicker</item>
-		<item>temporary storage for intent add information</item>
-		<item>new theme: white</item>
+		<item>Fixed misleading message about a network error</item>
 	</string-array>
 </resources>
