@@ -80,7 +80,7 @@
 		<item>3</item>
 		<item>4</item>
 	</string-array>
-	<string name="link_anki">http://ankisrs.net</string>
+	<string name="link_anki">https://ankiweb.net</string>
 	<string name="link_ankidroid">http://code.google.com/p/ankidroid</string>
 	<string name="link_forum">http://groups.google.com/group/anki-android</string>
 	<string name="link_wiki">http://code.google.com/p/ankidroid/wiki/Index</string>
@@ -96,7 +96,7 @@
 	<string name="link_faq">https://code.google.com/p/ankidroid/wiki/FAQ</string>
 	<string name="error_email">ankidroid@gmail.com</string>
 	<string name="error_post_url">http://ankidroid-triage.appspot.com/crash_receiver</string>		
-	<string name="ankionline_sign_up_url">http://ankiweb.net/</string>
+	<string name="ankionline_sign_up_url">https://ankiweb.net/</string>
 	<string name="feedback_post_url">http://ankidroid-triage.appspot.com/feedback_receiver</string>
 	<string name="shared_decks_url">http://beta.ankiweb.net/shared/decks/</string>
 		<string name="repair_deck">http://ankisrs.net/docs/DeckErrors.html</string>
@@ -164,7 +164,7 @@
 	</string-array>
 	
 	<string-array name="cram_deck_conf_preset_values">
-		<item>0</item>
+		<item>0</item>upgrade_decks_message
 		<item>1</item>
 		<item>2</item>
 		<item>3</item>

@@ -425,6 +425,9 @@ public class DeckPicker extends FragmentActivity {
 					} else if (resultType.equals("genericError")) {
 						mDialogMessage = res.getString(R.string.sync_generic_error);
 						showDialog(DIALOG_SYNC_LOG);
+					} else if (resultType.equals("upgradeRequired")) {
+						mDialogMessage = res.getString(R.string.upgrade_required, res.getString(R.string.link_anki));
+						showDialog(DIALOG_SYNC_LOG);
 					} else {
 						int type = (Integer) result[1];
 						switch (type) {
@@ -993,7 +996,7 @@ public class DeckPicker extends FragmentActivity {
             if (skip != 0 && UIUtils.getApiLevel() > 4) {
             	ActivityTransitionAnimation.slide(this, ActivityTransitionAnimation.LEFT);
             }
-		} else if (skip < 3 && upgradeNeeded()) {
+		} else if (skip < 3 && true) {//upgradeNeeded()) {
 			Intent upgradeIntent = new Intent(this, Info.class);
 			upgradeIntent.putExtra(Info.TYPE_EXTRA, Info.TYPE_UPGRADE_DECKS);
 			startActivityForResult(upgradeIntent, SHOW_INFO_UPGRADE_DECKS);
