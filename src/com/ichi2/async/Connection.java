@@ -288,8 +288,17 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
     	    ZipOutputStream zos = new ZipOutputStream(new FileOutputStream(zipFilename));
   	      	int n = 1;
   	      	for (File f : fileList) {
+  	      		String deckPath = f.getAbsolutePath();
+  	      		// set journal mode to delete
+  				try {
+  					AnkiDb d = AnkiDatabaseManager.getDatabase(deckPath);
+  					d.queryString("PRAGMA journal_mode = DELETE");
+  				} finally {
+  					AnkiDatabaseManager.closeDatabase(deckPath);
+  				}
+  				// zip file
   	      		String tmpName = n + ".anki";
-  	      		FileInputStream in = new FileInputStream(f.getAbsolutePath());
+  	      		FileInputStream in = new FileInputStream(deckPath);
   	      		ZipEntry ze = new ZipEntry(tmpName);
       	      	zos.putNextEntry(ze);
   	      		int len;
