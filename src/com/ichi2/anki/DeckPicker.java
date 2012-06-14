@@ -996,7 +996,7 @@ public class DeckPicker extends FragmentActivity {
             if (skip != 0 && UIUtils.getApiLevel() > 4) {
             	ActivityTransitionAnimation.slide(this, ActivityTransitionAnimation.LEFT);
             }
-		} else if (skip < 3 && true) {//upgradeNeeded()) {
+		} else if (skip < 3 && upgradeNeeded()) {
 			Intent upgradeIntent = new Intent(this, Info.class);
 			upgradeIntent.putExtra(Info.TYPE_EXTRA, Info.TYPE_UPGRADE_DECKS);
 			startActivityForResult(upgradeIntent, SHOW_INFO_UPGRADE_DECKS);
