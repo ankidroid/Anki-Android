@@ -47,7 +47,7 @@ import java.util.regex.Pattern;
 
 public class Models {
     private static final Pattern fClozePattern1 = Pattern.compile("\\{\\{cloze:(.+?)\\}\\}");
-    private static final Pattern fClozePattern2 = Pattern.compile("\\{\\{c(\\d+)::[^}]*?\\}\\}");
+    private static final Pattern fClozePattern2 = Pattern.compile("\\{\\{c(\\d+)::.+?\\}\\}");
 
 	public static final String defaultModel = 
 		"{'sortf': 0, " +
