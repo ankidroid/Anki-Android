@@ -457,7 +457,8 @@ public class Media {
             boolean finished = true;
             for (String fname : filenames) {
                 fnames.add(fname);
-                BufferedInputStream bis = new BufferedInputStream(new FileInputStream(fname), 2048);
+                String fullname = getDir() + "/" + fname;
+                BufferedInputStream bis = new BufferedInputStream(new FileInputStream(fullname), 2048);
                 ZipEntry entry = new ZipEntry(Integer.toString(cnt));
                 zos.putNextEntry(entry);
                 int count = 0;
@@ -466,7 +467,7 @@ public class Media {
                 }
                 bis.close();
                 files.put(Integer.toString(cnt), fname);
-                File file = new File(fname);
+                File file = new File(fullname);
                 sz += file.length();
                 if (sz > SYNC_ZIP_SIZE) {
                     finished = false;
