@@ -65,6 +65,14 @@
 <string name="deck_summary_deck_age">Deck age: &lt;b&gt;%d&lt;/b&gt; days</string>
 <string name="deck_summary_all_decks">All decks</string>
 
+	<string-array name="next_review_short">
+		<item>%ss</item>
+		<item>%sm</item>
+		<item>%sh</item>
+		<item>%sd</item>
+		<item>%smo</item>
+		<item>%sy</item>
+	</string-array>
 	<string-array name="next_review_in_s">
 		<item>in 1 second</item>
 		<item>in 1 minute</item>

@@ -18,6 +18,7 @@ package com.ichi2.libanki;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -35,6 +36,9 @@ public class Storage {
 
 	/* Open a new or existing collection. Path must be unicode */
 	public static Collection Collection(String path) {
+		return Collection(path, false);
+	}
+	public static Collection Collection(String path, boolean server) {
 		assert path.endsWith(".anki2");
 		File dbFile = new File(path);
         boolean create = !dbFile.exists();
@@ -54,7 +58,7 @@ public class Storage {
 		// LIBANKI: sync, journal_mode --> in AnkiDroid done in AnkiDb
 
 		// add db to col and do any remaining upgrades
-		Collection col = new Collection(db, path);
+		Collection col = new Collection(db, path, server);
 		if (ver < Collection.SCHEMA_VERSION) {
 			_upgrade(col, ver);
 		} else if (create) {
@@ -156,6 +160,52 @@ public class Storage {
 				col.getDb().execute("UPDATE cards SET left = left + left * 1000 WHERE queue = 1");
 				col.getDb().execute("UPDATE col SET ver = 10");
 			}
+			if (ver < 11) {
+			    col.modSchema();
+			    for (JSONObject d : col.getDecks().all()) {
+			        if (d.getInt("dyn") != 0) {
+			            int order = d.getInt("order");
+			            // failed order was removed
+			            if (order >= 5) {
+			                order -= 1;
+			            }
+			            JSONArray ja = new JSONArray(Arrays.asList(new Object[]{
+			                    d.getString("search"), d.getInt("limit"), order}));
+			            d.put("terms", new JSONArray());
+			            d.getJSONArray("terms").put(0, ja);
+			            d.remove("search");
+			            d.remove("limit");
+			            d.remove("order");
+			            d.put("resched", true);
+			            d.put("return", true);
+			        } else {
+			            if (!d.has("extendNew")) {
+                            d.put("extendNew", 10);
+                            d.put("extendRev", 50);
+			            }
+			        }
+			        col.getDecks().save(d);
+			    }
+			    for (JSONObject c : col.getDecks().allConf()) {
+			        JSONObject r = c.getJSONObject("rev");
+			        r.put("ivlFct", r.optDouble("ivlFct", 1));
+			        if (r.has("ivlfct")) {
+			            r.remove("ivlfct");
+			        }
+			        r.put("maxIvl", 36500);
+			        col.getDecks().save(c);
+			    }
+			    for (JSONObject m : col.getModels().all()) {
+			        JSONArray tmpls = m.getJSONArray("tmpls");
+			        for (int ti = 0; ti < tmpls.length(); ++ti) {
+			            JSONObject t = tmpls.getJSONObject(ti);
+			            t.put("bqfmt", "");
+			            t.put("bafmt", "");
+			        }
+			        col.getModels().save(m);
+			    }
+			    col.getDb().execute("update col set ver = 11");
+			}
 		} catch (JSONException e) {
 			throw new RuntimeException(e);
 		}
@@ -167,7 +217,7 @@ public class Storage {
 			// convert first template
 			JSONObject t = m.getJSONArray("tmpls").getJSONObject(0);
 			for (String type : new String[]{"qfmt", "afmt"}) {
-				t.put(type, t.getString(type).replaceAll("{{cloze:1:(.+?)}}", "{{cloze:$1}}"));
+				t.put(type, t.getString(type).replaceAll("\\{\\{cloze:1:(.+?)\\}\\}", "{{cloze:$1}}"));
 			}
 			t.put("name", "Cloze");
 			// delete non-cloze cards for the model

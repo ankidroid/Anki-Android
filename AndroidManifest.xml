@@ -20,11 +20,11 @@
 -->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
 	package="com.ichi2.anki2"
-	android:versionName="2.0alpha34-EXPERIMENTAL"
-	android:versionCode="26"
+	android:versionName="2.0alpha40-EXPERIMENTAL"
+	android:versionCode="28"
 	android:installLocation="auto">
     <instrumentation android:name="android.test.InstrumentationTestRunner" android:targetPackage="com.ichi2.anki2"></instrumentation>
-	<application 
+	<application
 	    android:label="@string/app_name" 
 	    android:icon="@drawable/anki" 
   	    android:theme="@style/Theme_White"
@@ -48,9 +48,6 @@
 		<activity android:name="com.ichi2.anki.StudyOptionsActivity" 
 			android:label="StudyOptions"
 			android:configChanges="keyboardHidden|locale|orientation"/>
-		<activity android:name="com.ichi2.anki.CramDeckActivity" 
-			android:label="StudyOptions"
-			android:configChanges="keyboardHidden|locale|orientation"/>
 		<activity android:name="com.ichi2.anki.CardBrowser" 
 			android:label="Card Browser"
 			android:configChanges="keyboardHidden|orientation|locale"/>	
@@ -69,6 +66,9 @@
 			android:label="@string/preferences_title"
 			android:configChanges="keyboardHidden|orientation|locale"/>
 		<activity android:name="com.ichi2.anki.DeckOptions" 
+			android:label="@string/deckpreferences_title" 
+			android:configChanges="locale"/>
+		<activity android:name="com.ichi2.anki.CramDeckOptions" 
 			android:label="@string/deckpreferences_title" 
 			android:configChanges="locale"/>
 		<activity android:name="com.ichi2.anki.Info" 
@@ -169,8 +169,8 @@ android:targetSdkVersion="11"/>
 <uses-permission android:name="android.permission.INTERNET" android:required="false" />
 <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" android:required="false" />
 <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" android:required="false" />
-<uses-permission android:name="android.permission.BLUETOOTH" android:required="false" />
-<uses-permission android:name="android.permission.BLUETOOTH_ADMIN" android:required="false" />
+<!--<uses-permission android:name="android.permission.BLUETOOTH" android:required="false" />
+<uses-permission android:name="android.permission.BLUETOOTH_ADMIN" android:required="false" />-->
 <supports-screens
 android:resizeable="true"
 android:largeScreens="true"

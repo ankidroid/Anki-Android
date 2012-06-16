@@ -33,13 +33,10 @@
   <string name="studyoptions_eta">推定時間 (分):</string>
   <string name="studyoptions_start">スタート</string>
   <string name="show_answer">答えを見る</string>
-  <string name="ease1_learning">もう一度</string>
-  <string name="ease2_learning">普通</string>
-  <string name="ease3_learning">簡単</string>
-  <string name="ease4_learning">とても簡単</string>
   <string name="ease1_successive">もう一度</string>
   <string name="ease2_successive">難</string>
   <string name="ease3_successive">普通</string>
+  <string name="ease3_learning">簡単</string>
   <string name="studyoptions_congrats_learnmore">学習を続ける</string>
   <string name="studyoptions_congrats_reviewearly">学習の前倒し</string>
   <string name="studyoptions_congrats_open_other_deck">他の単語帳を開く</string>
@@ -90,11 +87,15 @@
   <string name="create_collection">Creating collection.\nPlease wait...</string>
   <string name="rebuild_cram_deck">Rebuilding cram deck.\nPlease wait...</string>
   <string name="rebuild_cram_label">Rebuild</string>
+  <string name="empty_cram_label">Empty</string>
+  <string name="empty_cram_deck">Emptying cram deck.\nPlease wait...</string>
   <string name="studyoptions_congrats_finished">Congratulations! You have finished for now.</string>
   <string name="studyoptions_congrats_more_rev">Today\'s review limit has been reached, but there are still cards waiting to be reviewed. For optimum memory, consider increasing the daily limit in the options.</string>
   <string name="studyoptions_congrats_more_new">There are more new cards available, but the daily limit has been reached. You can increase the limit in the options, but please bear in mind that the more new cards you introduce, the higher your short-term review workload will become.</string>
   <string name="sd_card_not_mounted">SD card is not mounted.</string>
   <string name="studyoptions_options">Options</string>
+  <string name="empty_cloze_warning">Please edit this note and add some cloze deletions. (%1$s)</string>
+  <string name="help_cloze">help</string>
   <string-array name="next_review_s">
     <item>1秒</item>
     <item>1分</item>

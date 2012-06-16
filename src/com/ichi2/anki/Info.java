@@ -18,11 +18,15 @@
 package com.ichi2.anki;import com.ichi2.anki2.R;
 
 import com.ichi2.anim.ActivityTransitionAnimation;
+import com.ichi2.async.Connection;
+import com.ichi2.async.Connection.Payload;
 import com.ichi2.themes.StyledDialog;
+import com.ichi2.themes.StyledProgressDialog;
 import com.ichi2.themes.Themes;
 import com.tomgibara.android.veecheck.util.PrefSettings;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.content.SharedPreferences.Editor;
 import android.content.res.Resources;
 import android.os.Bundle;
@@ -46,10 +50,12 @@ public class Info extends Activity {
     public static final int TYPE_WELCOME = 1;
     public static final int TYPE_NEW_VERSION = 2;
     public static final int TYPE_SHARED_DECKS = 3;
-    public static final int TYPE_CREATE_ACCOUNT = 4;
+    public static final int TYPE_UPGRADE_DECKS= 4;
 
     private int mType;
     private WebView mWebView;
+    private StyledProgressDialog mProgressDialog;
+    private StyledDialog mNoConnectionAlert;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,6 +86,8 @@ public class Info extends Activity {
         			break;
         		case TYPE_NEW_VERSION:
         			PrefSettings.getSharedPrefs(Info.this.getBaseContext()).edit().putString("lastVersion", AnkiDroidApp.getPkgVersion()).commit();
+        			break;
+        		case TYPE_UPGRADE_DECKS:
         			break;
         		}
         		finish();
@@ -145,6 +153,9 @@ public class Info extends Activity {
     		sb.append("</ul>");
     		sb.append("</body></html>");
     		mWebView.loadDataWithBaseURL("", sb.toString(), "text/html", "utf-8", null);
+
+    		// reactivating ssl check for every new version
+    		PrefSettings.getSharedPrefs(Info.this.getBaseContext()).edit().putBoolean("sslAcceptAll", false).commit();    		
     		break;
 
     	case TYPE_SHARED_DECKS:
@@ -160,10 +171,25 @@ public class Info extends Activity {
     		builder.show();
     		break;
 
-    	case TYPE_CREATE_ACCOUNT:
-    		mWebView.loadUrl(res.getString(R.string.ankionline_sign_up_url));
-    		mWebView.setWebViewClient(new CustomWebViewClient());
-    		continueButton.setText(res.getString(R.string.download_button_return));
+    	case TYPE_UPGRADE_DECKS:
+    		mWebView.loadDataWithBaseURL("", "your decks need to be upgraded", "text/html", "utf-8", null);
+    		// add upgrade button
+    		Button but = (Button) findViewById(R.id.info_tutorial);
+    		but.setVisibility(View.VISIBLE);
+    		but.setText("upgrade");
+    		but.setOnClickListener(new OnClickListener() {
+            	@Override
+            	public void onClick(View arg0) {
+                    Connection.upgradeDecks(mUpgradeListener, new Connection.Payload(new Object[] { "/sdcard/AnkiDroid" }));
+            	}
+            });
+            StyledDialog.Builder builder2 = new StyledDialog.Builder(this);
+
+            builder2.setTitle(res.getString(R.string.connection_error_title));
+            builder2.setIcon(android.R.drawable.ic_dialog_alert);
+            builder2.setMessage(res.getString(R.string.connection_needed));
+            builder2.setPositiveButton(res.getString(R.string.ok), null);
+            mNoConnectionAlert = builder2.create();
     		break;
 
     	default:
@@ -210,4 +236,53 @@ public class Info extends Activity {
             return true;
         }
     }
+
+    Connection.TaskListener mUpgradeListener = new Connection.TaskListener() {
+
+        @Override
+        public void onProgressUpdate(Object... values) {
+        	int id = (Integer) values[0];
+        	if (values.length > 1) {
+            	mProgressDialog.setMessage(getResources().getString(id, (String)values[1]));
+        	} else {
+            	mProgressDialog.setMessage(getResources().getString(id));        		
+        	}
+        }
+
+
+        @Override
+        public void onPreExecute() {
+            Log.i(AnkiDroidApp.TAG, "Info: UpgradeDecks - onPreExcecute");
+            if (mProgressDialog == null || !mProgressDialog.isShowing()) {
+                mProgressDialog = StyledProgressDialog.show(Info.this, "",
+                        getResources().getString(R.string.upgrade_decks_zipping), true);
+            }
+        }
+
+
+        @Override
+        public void onPostExecute(Payload data) {
+            Log.i(AnkiDroidApp.TAG, "Info: UpgradeDecks - onPostExecute, succes = " + data.success);
+            if (mProgressDialog != null) {
+                mProgressDialog.dismiss();
+            }
+
+            if (data.success) {
+            	finish();
+        		if (UIUtils.getApiLevel() > 4) {
+        			ActivityTransitionAnimation.slide(Info.this, ActivityTransitionAnimation.LEFT);
+        		}
+            } else {
+            	// TODO: show error message
+            }
+        }
+
+
+        @Override
+        public void onDisconnected() {
+            if (mNoConnectionAlert != null) {
+                mNoConnectionAlert.show();
+            }
+        }
+    };
 }

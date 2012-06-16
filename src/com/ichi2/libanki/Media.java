@@ -72,8 +72,12 @@ public class Media {
     private String mMediaDbFilename;
     private AnkiDb mMediaDb;
     
-    public Media(Collection col) {
+    public Media(Collection col, boolean server) {
         mCol = col;
+        if (server) {
+            mDir = null;
+            return;
+        }
         mDir = col.getPath().replaceFirst("\\.anki2$", ".media");
         mMediaDbFilename = mDir + ".db";
         File fd = new File(mDir);
@@ -610,6 +614,17 @@ public class Media {
             String fname = f.getName();
             if (fname.compareTo("thumbs.db") == 0) {
                 continue;
+            }
+            // and files with invalid chars
+            boolean bad = false;
+            for (String c : new String[]{ "\0", "/", "\\", ":"}) {
+            	if (fname.contains(c)) {
+            		bad = true;
+            		break;
+            	}
+            }
+            if (bad) {
+            	continue;
             }
             // empty files are invalid; clean them up and continue
             if (f.length() == 0) {

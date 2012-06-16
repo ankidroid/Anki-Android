@@ -64,6 +64,14 @@
   <string name="stats_forecast">Previsió</string>
   <string name="stats_review_count">Compte de revisions</string>
   <string name="stats_review_time">L\'hora de revisió</string>
+  <string-array name="next_review_short">
+    <item>%ss</item>
+    <item>%sm</item>
+    <item>%sh</item>
+    <item>%sd</item>
+    <item>%smo</item>
+    <item>%sy</item>
+  </string-array>
   <string-array name="next_review_in_s">
     <item>en 1 segon</item>
     <item>en 1 minut</item>

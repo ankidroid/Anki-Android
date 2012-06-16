@@ -33,6 +33,16 @@
                     android:summary="@string/show_study_options_on_deck_load_summ"
                     android:enabled="false"
                     android:key="study_options" />
+            <CheckBoxPreference
+                    android:title="@string/hide_due_count"
+                    android:defaultValue="false"
+                    android:summary="@string/hide_due_count_summ"
+                    android:key="hideDueCount" />
+            <CheckBoxPreference
+                    android:title="@string/overtime"
+                    android:defaultValue="true"
+                    android:summary="@string/overtime_summ"
+                    android:key="overtime" />
         </PreferenceCategory>
         <PreferenceCategory android:title="@string/pref_cat_decks">
             <EditTextPreference

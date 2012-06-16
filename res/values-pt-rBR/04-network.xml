@@ -49,7 +49,9 @@
   <string name="sync_log_db_error">Ocorreu um erro de banco de dados.</string>
   <string name="no_user_password_error_message">Para continuar com esta operação, você precisa ter uma conta AnkiWeb e estar logado.</string>
   <string name="username">Nome de usuário</string>
+  <string name="username_repeat">Repeat username</string>
   <string name="password">Senha</string>
+  <string name="password_repeat">Repeat password</string>
   <string name="log_in">Logar</string>
   <string name="sign_up_description">Não tem uma conta AnkiWeb? É grátis!</string>
   <string name="sign_up">Inscreva se</string>
@@ -108,4 +110,8 @@
   <string name="sync_media_to_server">Enviando mídias ao servidor...</string>
   <string name="sync_media_no_changes">Sem mudanças nos arquivos de mídia.</string>
   <string name="sync_media_success">Mídias sincronizadas com sucesso.</string>
+  <string name="register_error">An error occurred. Please try again later.</string>
+  <string name="register_title">Register account</string>
+  <string name="register_mismatch">The username/password repetition does not match or is empty. Please re-enter.</string>
+  <string name="registering_message">Creating account.\nPlease wait...</string>
 </resources>

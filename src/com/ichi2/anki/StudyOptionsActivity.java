@@ -52,13 +52,16 @@ public class StudyOptionsActivity extends FragmentActivity {
 //        }
 
         if (savedInstanceState == null) {
-            // During initial setup, plug in the details fragment.
-            Fragment details = new StudyOptionsFragment();
-            details.setArguments(getIntent().getExtras());
-            getSupportFragmentManager().beginTransaction().add(android.R.id.content, details).commit();
+        	setStudyContentView(StudyOptionsFragment.CONTENT_STUDY_OPTIONS);
         }
     }
-    
+
+    public void setStudyContentView(int view) {
+        // During initial setup, plug in the details fragment.
+        Fragment details = new StudyOptionsFragment();
+        details.setArguments(getIntent().getExtras());
+        getSupportFragmentManager().beginTransaction().add(android.R.id.content, details).commit();
+    }
     // TODO: onpause, onresume, onstop
     
 	@Override

@@ -62,6 +62,7 @@ import com.ichi2.anim.ActivityTransitionAnimation;
 import com.ichi2.anim.ViewAnimation;
 import com.ichi2.async.Connection;
 import com.ichi2.async.DeckTask;
+import com.ichi2.async.Connection.OldAnkiDeckFilter;
 import com.ichi2.async.Connection.Payload;
 import com.ichi2.async.DeckTask.TaskData;
 import com.ichi2.charts.ChartBuilder;
@@ -73,6 +74,8 @@ import com.ichi2.themes.Themes;
 import com.ichi2.widget.WidgetStatus;
 import com.tomgibara.android.veecheck.util.PrefSettings;
 
+import java.io.File;
+import java.io.FileFilter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.TreeSet;
@@ -165,6 +168,7 @@ public class DeckPicker extends FragmentActivity {
     private static final int ADD_SHARED_DECKS = 15;
     private static final int LOG_IN_FOR_SHARED_DECK = 16;
     private static final int ADD_CRAM_DECK = 17;
+    private static final int SHOW_INFO_UPGRADE_DECKS = 18;
 
 	private Collection mCol;
 
@@ -932,6 +936,18 @@ public class DeckPicker extends FragmentActivity {
     }
 
 
+	private boolean upgradeNeeded() {
+		if ((new File(AnkiDroidApp.getCollectionPath())).exists()) {
+			// collection file exists
+			return false;
+		}
+		if ((new File(AnkiDroidApp.getDefaultAnkiDroidDirectory())).listFiles(new OldAnkiDeckFilter()).length > 0) {
+			return true;
+		}
+        return false;
+    }
+
+
 	private SharedPreferences restorePreferences() {
         SharedPreferences preferences = PrefSettings.getSharedPrefs(getBaseContext());
         mPrefDeckPath = preferences.getString("deckPath", AnkiDroidApp.getDefaultAnkiDroidDirectory());
@@ -962,7 +978,7 @@ public class DeckPicker extends FragmentActivity {
 
 
 	private void showStartupScreensAndDialogs(SharedPreferences preferences, int skip) {
-		if (skip < 1 && preferences.getLong("lastTimeOpened", 0) == 0) {
+        if (skip < 1 && preferences.getLong("lastTimeOpened", 0) == 0) {
 			Intent infoIntent = new Intent(this, Info.class);
 			infoIntent.putExtra(Info.TYPE_EXTRA, Info.TYPE_WELCOME);
 			startActivityForResult(infoIntent, SHOW_INFO_WELCOME);
@@ -977,7 +993,14 @@ public class DeckPicker extends FragmentActivity {
             if (skip != 0 && UIUtils.getApiLevel() > 4) {
             	ActivityTransitionAnimation.slide(this, ActivityTransitionAnimation.LEFT);
             }
-		} else if (skip < 3 && hasErrorFiles()) {
+		} else if (skip < 3 && upgradeNeeded()) {
+			Intent upgradeIntent = new Intent(this, Info.class);
+			upgradeIntent.putExtra(Info.TYPE_EXTRA, Info.TYPE_UPGRADE_DECKS);
+			startActivityForResult(upgradeIntent, SHOW_INFO_UPGRADE_DECKS);
+	        if (skip != 0 && UIUtils.getApiLevel() > 4) {
+	        	ActivityTransitionAnimation.slide(this, ActivityTransitionAnimation.LEFT);
+	        }
+		} else if (skip < 4 && hasErrorFiles()) {
 			Intent i = new Intent(this, Feedback.class);
 			startActivityForResult(i, REPORT_ERROR);
 			if (skip != 0 && UIUtils.getApiLevel() > 4) {
@@ -1790,6 +1813,14 @@ public class DeckPicker extends FragmentActivity {
 	// CUSTOM METHODS
 	// ----------------------------------------------------------------------------
 
+    public void setStudyContentView(int view) {
+    	StudyOptionsFragment details = new StudyOptionsFragment();
+		FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+		ft.replace(R.id.studyoptions_fragment, details);
+		ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
+		ft.commit();
+    }
+
 	/**
 	 * Registers an intent to listen for ACTION_MEDIA_EJECT notifications. The
 	 * intent will call closeExternalStorageFiles() if the external media is
@@ -1881,37 +1912,6 @@ public class DeckPicker extends FragmentActivity {
 				Connection.sync(mSyncListener, new Connection.Payload(new Object[] { hkey, true, syncConflictResolution, syncMediaUsn}));
 			}
 		}
-	}
-
-	private void addCramDeck() {
-//		// TODO: implement this properly
-//        if (mFragmented) {
-////          getListView().setItemChecked(index, true);
-//        	
-//			Fragment frag = (Fragment) getSupportFragmentManager().findFragmentById(R.id.studyoptions_fragment);
-//			if (!(frag instanceof CramDeckFragment)) {
-//				CramDeckFragment details = CramDeckFragment.newInstance(CRAM_DECK_FRAGMENT);
-//				FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-//				ft.replace(R.id.studyoptions_fragment, details);
-//				ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
-//				ft.commit();
-//			}
-//        } else {
-    		mDontSaveOnStop = true;
-        	Intent intent = new Intent();
-        	intent.putExtra("index", CRAM_DECK_FRAGMENT);
-        	intent.setClass(this, CramDeckActivity.class);
-    		startActivityForResult(intent, ADD_CRAM_DECK);
-//    		if (deckId != 0) {
-//    			if (UIUtils.getApiLevel() > 4) {
-//        			ActivityTransitionAnimation.slide(this, ActivityTransitionAnimation.NONE);
-//    			}
-//    		} else {
-    			if (UIUtils.getApiLevel() > 4) {
-        			ActivityTransitionAnimation.slide(this, ActivityTransitionAnimation.LEFT);
-    			}			
-//    		}
-//        }
 	}
 
 	private void addSharedDeck() {
@@ -2048,7 +2048,36 @@ public class DeckPicker extends FragmentActivity {
                 return true;
 
             case MENU_CREATE_DYNAMIC_DECK:
-            	addCramDeck();
+				StyledDialog.Builder builder3 = new StyledDialog.Builder(DeckPicker.this);
+				builder3.setTitle(res.getString(R.string.new_deck));
+
+				mDialogEditText = (EditText) new EditText(DeckPicker.this);
+				ArrayList<String> names = mCol.getDecks().allNames();
+				int n = 1;
+				String cramDeckName = "Cram 1";
+				while (names.contains(cramDeckName)) {
+					n++;
+					cramDeckName = "Cram " + n;
+				}
+				mDialogEditText.setText(cramDeckName);
+//				mDialogEditText.setFilters(new InputFilter[] { mDeckNameFilter });
+				builder3.setView(mDialogEditText, false, false);
+				builder3.setPositiveButton(res.getString(R.string.create),
+						new DialogInterface.OnClickListener() {
+
+							@Override
+							public void onClick(DialogInterface dialog, int which) {
+								long id = mCol.getDecks().newDyn(mDialogEditText.getText().toString());
+								try {
+									mCol.getDecks().get(id).put("empty", true);
+								} catch (JSONException e) {
+									throw new RuntimeException(e);
+								}
+								openStudyOptions();
+							}
+						});
+				builder3.setNegativeButton(res.getString(R.string.cancel), null);
+				builder3.create().show();
             	return true;
 
             case MENU_ABOUT:
@@ -2127,6 +2156,8 @@ public class DeckPicker extends FragmentActivity {
     		// TODO: check, if ok has been clicked
     		loadCounts();
         } else if (requestCode == REPORT_ERROR) {
+        	showStartupScreensAndDialogs(PrefSettings.getSharedPrefs(getBaseContext()), 4);
+        } else if (requestCode == SHOW_INFO_UPGRADE_DECKS) {
         	showStartupScreensAndDialogs(PrefSettings.getSharedPrefs(getBaseContext()), 3);
         } else if (requestCode == SHOW_INFO_WELCOME || requestCode == SHOW_INFO_NEW_VERSION) {
     		if (resultCode == RESULT_OK) {
@@ -2236,15 +2267,16 @@ public class DeckPicker extends FragmentActivity {
 	private void openStudyOptions(int id) {
 		// TODO: implement this properly
         if (mFragmented) {
-//          getListView().setItemChecked(index, true);
-			Fragment frag = (Fragment) getSupportFragmentManager().findFragmentById(R.id.studyoptions_fragment);
-			if (frag == null || !(frag instanceof StudyOptionsFragment) || ((StudyOptionsFragment) frag).getShownIndex() != id) {
-				StudyOptionsFragment details = StudyOptionsFragment.newInstance(id);
-				FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-				ft.replace(R.id.studyoptions_fragment, details);
-				ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
-				ft.commit();
-			}
+        	setStudyContentView(StudyOptionsFragment.CONTENT_STUDY_OPTIONS);
+////          getListView().setItemChecked(index, true);
+//			Fragment frag = (Fragment) getSupportFragmentManager().findFragmentById(R.id.studyoptions_fragment);
+//			if (frag == null || !(frag instanceof StudyOptionsFragment) || ((StudyOptionsFragment) frag).getShownIndex() != id) {
+//				StudyOptionsFragment details = StudyOptionsFragment.newInstance(id);
+//				FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+//				ft.replace(R.id.studyoptions_fragment, details);
+//				ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
+//				ft.commit();
+//			}
         } else {
     		mDontSaveOnStop = true;
         	Intent intent = new Intent();

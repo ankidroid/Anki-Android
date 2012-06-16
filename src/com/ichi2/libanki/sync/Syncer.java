@@ -50,7 +50,7 @@ public class Syncer {
     public static final int TYPE_BLOB = 4;
 
 	Collection mCol;
-	HttpSyncer mServer;
+	BasicHttpSyncer mServer;
 	long mRMod;
 	long mRScm;
 	int mMaxUsn;
@@ -64,7 +64,7 @@ public class Syncer {
 	private LinkedList<String> mTablesLeft;
 	private Cursor mCursor;
 
-    public Syncer (Collection col, HttpSyncer server) {
+    public Syncer (Collection col, BasicHttpSyncer server) {
     	mCol = col;
     	mServer = server;
     }
@@ -247,7 +247,7 @@ public class Syncer {
     	}
     }
 
-	private JSONArray meta() {
+	public JSONArray meta() {
     	JSONArray o = new JSONArray();
     	o.put(mCol.getMod());
     	o.put(mCol.getScm());
@@ -257,7 +257,7 @@ public class Syncer {
     }
 
     /** Bundle up small objects. */
-    private JSONObject changes() {
+	public JSONObject changes() {
     	JSONObject o = new JSONObject();
     	try {
 			o.put("models",getModels());
@@ -272,7 +272,7 @@ public class Syncer {
     	return o;
     }
 
-    private JSONObject applyChanges(JSONObject changes) {
+	public JSONObject applyChanges(JSONObject changes) {
     	mRChg = changes;
     	JSONObject lchg = changes();
     	// merge our side before returning
@@ -280,7 +280,7 @@ public class Syncer {
     	return lchg;
     }
 
-    private void mergeChanges(JSONObject lchg, JSONObject rchg) {
+	public void mergeChanges(JSONObject lchg, JSONObject rchg) {
     	try {
         	// then the other objects
 			mergeModels(rchg.getJSONArray("models"));
@@ -295,7 +295,7 @@ public class Syncer {
     	prepareToChunk();
     }
 
-    private JSONArray sanityCheck() {
+	public JSONArray sanityCheck() {
     	boolean ok = true;
     	ok = ok && mCol.getDb().queryScalar("SELECT count() FROM cards WHERE nid NOT IN (SELECT id FROM notes)", false) == 0;
     	ok = ok && mCol.getDb().queryScalar("SELECT count() FROM notes WHERE id NOT IN (SELECT DISTINCT nid FROM cards)", false) == 0;
@@ -347,7 +347,7 @@ public class Syncer {
     	}
     }
 
-    private long finish() {
+    public long finish() {
     	return finish(0);
     }
     private long finish(long mod) {
@@ -397,7 +397,7 @@ public class Syncer {
         }
     }
 
-    private JSONObject chunk() {
+    public JSONObject chunk() {
     	JSONObject buf = new JSONObject();
     	try {
     		buf.put("done", false);
@@ -451,7 +451,7 @@ public class Syncer {
 		return buf;
    	}
 
-    private void applyChunk(JSONObject chunk) {
+    public void applyChunk(JSONObject chunk) {
 		try {
 	    	if (chunk.has("revlog")) {
 				mergeRevlog(chunk.getJSONArray("revlog"));
@@ -511,7 +511,7 @@ public class Syncer {
     	return o;
     }
 
-    private JSONObject start(int minUsn, boolean lnewer, JSONObject graves) {
+    public JSONObject start(int minUsn, boolean lnewer, JSONObject graves) {
 	mMaxUsn = mCol.getUsnForSync();
 	mMinUsn = minUsn;
 	mLNewer = !lnewer;
@@ -666,10 +666,7 @@ public class Syncer {
     	if (mCol.getServer()) {
 			for (Map.Entry<String, Integer> t : mCol.getTags().allItems().entrySet()) {
 				if (t.getValue() >= mMinUsn) {
-					JSONArray ta = new JSONArray();
-					ta.put(t.getKey());
-					ta.put(t.getValue());
-					result.put(ta);
+					result.put(t.getKey());
 				}
 			}
     	} else {

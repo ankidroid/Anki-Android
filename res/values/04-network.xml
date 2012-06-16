@@ -73,7 +73,9 @@
 
 <!-- MyAccount.java -->
 <string name="username">Username</string>
+<string name="username_repeat">Repeat username</string>
 <string name="password">Password</string>
+<string name="password_repeat">Repeat password</string>
 <string name="log_in">Log in</string>
 <string name="sign_up_description">Don\'t have an AnkiWeb account? It\'s free!</string>
 <string name="sign_up">Sign up</string>
@@ -146,5 +148,16 @@
 <string name="sync_media_to_server">Sending media to server...</string>
 <string name="sync_media_no_changes">No changes to media files.</string>
 <string name="sync_media_success">Media synced successfully.</string>
+
+<string name="register_error">An error occurred. Please try again later.</string>
+<string name="register_title">Register account</string>
+<string name="register_mismatch">The username/password repetition does not match or is empty. Please re-enter.</string>
+<string name="registering_message">Creating account.\nPlease wait...</string>
+
+<string name="upgrade_decks_zipping">Zipping decks for upload.\nPlease wait...</string>
+<string name="upgrade_decks_upload">Uploading zipped decks.\nPlease wait...</string>
+<string name="upgrade_decks_waiting">Waiting, queue position: %s\nPlease wait...</string>
+<string name="upgrade_decks_upgrade_started">"Upgrade started\nPlease waiting for finish...</string>
+<string name="upgrade_decks_downloading">Downloading upgraded collection.\nPlease wait...</string>
 
 </resources>

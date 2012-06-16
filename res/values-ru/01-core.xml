@@ -33,13 +33,10 @@
   <string name="studyoptions_eta">Вероятно займёт (мин):</string>
   <string name="studyoptions_start">Начать Просмотр</string>
   <string name="show_answer">Показать ответ</string>
-  <string name="ease1_learning">Снова</string>
-  <string name="ease2_learning">Хорошо</string>
-  <string name="ease3_learning">Легко</string>
-  <string name="ease4_learning">Очень легко</string>
   <string name="ease1_successive">Снова</string>
   <string name="ease2_successive">Трудно</string>
   <string name="ease3_successive">Хорошо</string>
+  <string name="ease3_learning">Легко</string>
   <string name="studyoptions_congrats_learnmore">Учить дальше</string>
   <string name="studyoptions_congrats_reviewearly">Просмотренные ранее</string>
   <string name="studyoptions_congrats_open_other_deck">Открыть другие колоды</string>
@@ -90,11 +87,15 @@
   <string name="create_collection">Создание коллекции.\nПожалуйста подождите...</string>
   <string name="rebuild_cram_deck">Rebuilding cram deck.\nPlease wait...</string>
   <string name="rebuild_cram_label">Rebuild</string>
+  <string name="empty_cram_label">Empty</string>
+  <string name="empty_cram_deck">Emptying cram deck.\nPlease wait...</string>
   <string name="studyoptions_congrats_finished">Поздравляем! На сегодня задание выполнено.</string>
   <string name="studyoptions_congrats_more_rev">Достигнут лимит количества просмотров на сегодня, но всё ещё есть карты ожидающие просмотра. Для оптимального запоминания рекомендуется увеличить ежедневный лимит в параметрах.</string>
   <string name="studyoptions_congrats_more_new">Есть ещё новые карты, но ежедневный лимит достигнут. Вы можете увеличить лимит в параметрах, но учтите, что чем больше вы добавляете новых карт, тем больше будет карт в режиме повтора в ближайшие дни.</string>
   <string name="sd_card_not_mounted">SD карта не подключена.</string>
   <string name="studyoptions_options">Options</string>
+  <string name="empty_cloze_warning">Please edit this note and add some cloze deletions. (%1$s)</string>
+  <string name="help_cloze">help</string>
   <string-array name="next_review_s">
     <item>1 секунда</item>
     <item>1 минута</item>

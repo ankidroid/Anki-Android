@@ -76,15 +76,17 @@
   <string name="simple_interface_hint">%s vide. Gardez à l\'esprit que l\'interface simplifiée ne peut afficher ni d\'images, ni de sons, etc.</string>
   <string name="delete_deck">Supprime le paquet…\nPatientez.</string>
   <string name="menu_cardbrowser">Card browser</string>
+  <string name="pref_lang_other">Language Preferences</string>
+  <string name="pref_lang_common">LangCommon</string>
+  <string name="pref_font_UI">Custom UI Font</string>
   <string-array name="dynOrderLabels">
     <item>Oldest seen first</item>
     <item>Random</item>
     <item>Increasing intervals</item>
     <item>Decreasing intervals</item>
     <item>Most lapses</item>
-    <item>Ratées aujourd’hui</item>
-    <item>d’après l’ordre d’ajout</item>
-    <item>selon l’urgence</item>
+    <item>Order added</item>
+    <item>Order due</item>
   </string-array>
   <plurals name="factadder_cards_added">
     <item quantity="one">1 carte ajoutée</item>

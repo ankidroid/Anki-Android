@@ -1,5 +1,6 @@
 /****************************************************************************************
  * Copyright (c) 2011 Norbert Nagold <norbert.nagold@gmail.com>                         *
+ * Copyright (c) 2012 Kostas Spyropoulos <inigo.aldana@gmail.com>                       *
  *                                                                                      *
  * This program is free software; you can redistribute it and/or modify it under        *
  * the terms of the GNU General private License as published by the Free Software        *
@@ -19,13 +20,14 @@ package com.ichi2.libanki;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.util.Log;
+import android.util.Pair;
 
 import com.ichi2.anki.AnkiDatabaseManager;
 import com.ichi2.anki.AnkiDb;
 import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.UIUtils;
 import com.ichi2.async.DeckTask;
-import com.ichi2.async.DeckTask.TaskData;
+import com.samskivert.mustache.Mustache;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -35,8 +37,12 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Random;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 // Anki maintains a cache of used tags so it can quickly present a list of tags
 // for autocomplete and in the browser. For efficiency, deletions are not
@@ -47,9 +53,10 @@ import java.util.Random;
 public class Collection {
 
 	// collection schema & syncing vars
-	public static final int SCHEMA_VERSION = 10;
-	public static final String SYNC_URL = "http://beta.ankiweb.net/sync/";
-	public static final int SYNC_VER = 4;
+	public static final int SCHEMA_VERSION = 11;
+	public static final String SYNC_URL = "https://ankiweb.net/";
+	public static final int SYNC_VER = 5;
+	public static final String HELP_SITE = "http://ankisrs.net/docs/dev/manual.html";
 
 	private AnkiDb mDb;
 	private boolean mServer;
@@ -63,6 +70,7 @@ public class Collection {
 
 	private double mStartTime;
 	private int mStartReps;
+    private boolean mOvertime;
 
 	private int mRepsToday;
 
@@ -80,6 +88,9 @@ public class Collection {
 
 	private String mPath;
 	private boolean mClosing = false;
+	
+	// Cloze regex
+	private static final Pattern sRegexPattern = Pattern.compile("\\{\\{cloze:");
 
 	// other options
 	public static final String defaultConf = "{"
@@ -110,7 +121,7 @@ public class Collection {
 		mLastSave = Utils.now();
 		clearUndo();
 		mPath = path;
-		mMedia = new Media(this);
+		mMedia = new Media(this, server);
 		mModels = new Models(this);
 		mDecks = new Decks(this);
 		mTags = new Tags(this);
@@ -120,6 +131,7 @@ public class Collection {
 		}
 		mStartReps = 0;
 		mStartTime = 0;
+        mOvertime = false;
 		mSched = new Sched(this);
 		// check for improper shutdown
 		cleanup();
@@ -499,7 +511,7 @@ public class Collection {
 	private ArrayList<JSONObject> findTemplates(Note note) {
 		JSONObject model = note.model();
 		ArrayList<Integer> avail = mModels.availOrds(model,
-				Utils.joinFields(note.values()));
+				Utils.joinFields(note.getFields()));
 		return _tmplsFromOrds(model, avail);
 	}
 
@@ -545,7 +557,7 @@ public class Collection {
 			while (cur.moveToNext()) {
 				// existing cards
 				long nid = cur.getLong(1);
-				if (!have.containsKey(nids)) {
+				if (!have.containsKey(nid)) {
 					have.put(nid, new HashMap<Integer, Long>());
 				}
 				have.get(nid).put(cur.getInt(2), cur.getLong(0));
@@ -614,7 +626,7 @@ public class Collection {
 					}
 				}
 				// note any cards that need removing
-				if (have.containsKey(nids)) {
+				if (have.containsKey(nid)) {
 					for (Map.Entry<Integer, Long> n : have.get(nid).entrySet()) {
 						if (!avail.contains(n.getKey())) {
 							rem.add(n.getValue());
@@ -801,16 +813,16 @@ public class Collection {
 	public HashMap<String, String> _renderQA(Object[] data) {
 		return _renderQA(data, null);
 	}
-	public HashMap<String, String> _renderQA(Object[] data, ArrayList<String> args) {
+	public HashMap<String, String> _renderQA(Object[] data, List<String> args) {
 		// data is [cid, nid, mid, did, ord, tags, flds]
 		// unpack fields and create dict
 		String[] flist = Utils.splitFields((String) data[6]);
 		Map<String, String> fields = new HashMap<String, String>();
 		long modelId = (Long) data[2];
 		JSONObject model = mModels.get(modelId);
-		Map<String, Integer> fmap = mModels.fieldMap(model);
+		Map<String, Pair<Integer, JSONObject>> fmap = mModels.fieldMap(model);
 		for (String fname : fmap.keySet()) {
-		    fields.put(fname, flist[fmap.get(fname).intValue()]);
+		    fields.put(fname, flist[fmap.get(fname).first]);
 		}
 		fields.put("Tags", (String) data[5]);
 		try {
@@ -825,18 +837,57 @@ public class Collection {
 			}
 			fields.put("Card", template.getString("name"));
 			fields.put("c" + (((Integer)data[4])+1), "1");
-            Models.fieldParser fparser = new Models.fieldParser(fields);
+            
 			// render q & a
 			HashMap<String, String> d = new HashMap<String, String>();
 			d.put("id", Long.toString((Long) data[0]));
-			d.put("q", mModels.getCmpldTemplate(modelId, (Integer) data[4], args)[0]
-					.execute(fparser));
-			fields.put("FrontSide", d.get("id"));
-			fparser = new Models.fieldParser(fields);
-			d.put("a", mModels.getCmpldTemplate(modelId, (Integer) data[4], args)[1]
-					.execute(fparser));
-			// TODO: runfilter
-			return d;
+            String qfmt = template.getString("qfmt");
+            String afmt = template.getString("afmt");
+            String html;
+            String format;
+            
+            // runFilter mungeFields for type "q"
+            Models.fieldParser fparser = new Models.fieldParser(fields);
+		    Matcher m = sRegexPattern.matcher(qfmt);
+		    if (m.find()) {
+		        format = m.replaceFirst(String.format(Locale.US, "{{cq:%d:", ((Integer)data[4])+1));
+                html = Mustache.compiler().compile(format).execute(fparser);
+		    } else {
+		        // use already compiled template 
+                html = mModels.getCmpldTemplate(modelId, (Integer) data[4], args)[0].execute(fparser);
+			}
+            html = (String) AnkiDroidApp.getHooks().runFilter("mungeQA", html, "q", fields, model, data, this);
+            d.put("q", html);
+            // empty cloze?
+            if (model.getInt("type") == Sched.MODEL_CLOZE) {
+                if (getModels()._availClozeOrds(model, (String) data[6], false).size() == 0) {
+                    d.put("q", "Please edit this note and add some cloze deletions.");
+                }
+            }
+		    fields.put("FrontSide", d.get("q"));
+			    
+		    // runFilter mungeFields for type "a"
+            fparser = new Models.fieldParser(fields);
+            m = sRegexPattern.matcher(afmt);
+            if (m.find()) {
+                format = m.replaceFirst(String.format(Locale.US, "{{ca:%d:", ((Integer)data[4])+1));
+                html = Mustache.compiler().compile(format).execute(fparser);
+            } else {
+                // use already compiled template 
+                html = mModels.getCmpldTemplate(modelId, (Integer) data[4], args)[1].execute(fparser);
+            }
+            html = (String) AnkiDroidApp.getHooks().runFilter("mungeQA", html, "a", fields, model, data, this);
+            d.put("a", html);
+            // empty cloze?
+            if (model.getInt("type") == Sched.MODEL_CLOZE) {
+                if (getModels()._availClozeOrds(model, (String) data[6], false).size() == 0) {
+                    d.put("q", AnkiDroidApp.getAppResources().getString(com.ichi2.anki2.R.string.empty_cloze_warning,
+                            String.format(Locale.US, "<a href=%s#cloze>%s</a>", HELP_SITE,
+                                    AnkiDroidApp.getAppResources().getString(com.ichi2.anki2.R.string.help_cloze))));
+                }
+            }
+			
+            return d;
 		} catch (JSONException e) {
 			throw new RuntimeException(e);
 		}
@@ -879,16 +930,20 @@ public class Collection {
 	 */
 
 	/** Return a list of card ids */
-	public ArrayList<Long> findCards(String search) {
-		return new Finder(this).findCards(search, false, null);
+	public List<Long> findCards(String search) {
+		return new Finder(this).findCards(search, null);
 	}
 	/** Return a list of card ids */
-	public ArrayList<Long> findCards(String search, String order) {
-		return new Finder(this).findCards(search, false, order);
-	}
-	/** Return a list of card ids */
-	public ArrayList<Long> findCards(String search, boolean full) {
-		return new Finder(this).findCards(search, full, null);
+    public List<Long> findCards(String search, String order) {
+        return new Finder(this).findCards(search, order);
+    }
+    /** Return a list of card ids */
+    public List<Long> findCards(String search, Boolean order) {
+        return new Finder(this).findCards(search, order.toString());
+    }
+	/** Return a list of note ids */
+	public List<Long> findNotes(String query) {
+	    return new Finder(this).findNotes(query);
 	}
 
 	/** Return a list of card ids */
@@ -941,9 +996,26 @@ public class Collection {
 		return data;
 	}
 
-	// findreplace
-	// findduplicates
-
+    public int findReplace(List<Long> nids, String src, String dst) {
+        return Finder.findReplace(this, nids, src, dst);
+    }
+    public int findReplace(List<Long> nids, String src, String dst, boolean regex) {
+        return Finder.findReplace(this, nids, src, dst, regex);
+    }
+    public int findReplace(List<Long> nids, String src, String dst, String field) {
+        return Finder.findReplace(this, nids, src, dst, field);
+    }
+	public int findReplace(List<Long> nids, String src, String dst, boolean regex, String field, boolean fold) {
+	    return Finder.findReplace(this, nids, src, dst, regex, field, fold);
+	}
+	
+	public List<Pair<String, List<Long>>> findDupes(String fieldName) {
+	    return Finder.findDupes(this, fieldName, "");
+	}
+	public List<Pair<String, List<Long>>> findDupes(String fieldName, String search) {
+	    return Finder.findDupes(this, fieldName, search);
+	}
+	
 	/**
 	 * Stats
 	 * ********************************************************************
@@ -958,6 +1030,32 @@ public class Collection {
 	 * ***************************************************************
 	 * ********************************
 	 */
+    
+    public void setTimeLimit(long seconds) {
+        try {
+            mConf.put("timeLim", seconds);
+        } catch (JSONException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    
+    public long getTimeLimit() {  
+        long timebox = 0;
+        try {
+            timebox = mConf.getLong("timeLim");
+        } catch (JSONException e) {
+            throw new RuntimeException(e);
+        }
+        return timebox;
+    }
+    
+    public void setOvertime(boolean overtime) {
+        mOvertime = overtime;
+    }
+    
+    public boolean getOvertime() {
+        return mOvertime;
+    }
 
 	public void startTimebox() {
 		mStartTime = Utils.now();
@@ -966,13 +1064,13 @@ public class Collection {
 
 	/* Return (elapsedTime, reps) if timebox reached, or null. */
 	public Long[] timeboxReached() {
-		try {
-			if (mConf.getLong("timeLim") != 0) {
+		try {            
+			if (mConf.getLong("timeLim") == 0) {
 				// timeboxing disabled
 				return null;
-			}
+			}            
 			double elapsed = Utils.now() - mStartTime;
-			if (elapsed > mConf.getLong("timeLim")) {
+			if (elapsed > mConf.getLong("timeLim") && !mOvertime) {
 				return new Long[]{mConf.getLong("timeLim"), (long) (mRepsToday - mStartReps)};
 			}
 		} catch (JSONException e) {
@@ -1007,12 +1105,12 @@ public class Collection {
 		return mUndo[0] != null;
 	}
 
-	public Card undo() {
+	public long undo() {
 		if (((Integer) mUndo[0]) == 1) {
 			return _undoReview();
 		} else {
 			_undoOp();
-			return null;
+			return 0;
 		}
 	}
 
@@ -1030,7 +1128,7 @@ public class Collection {
 		mUndo[2] = old;
 	}
 
-	private Card _undoReview() {
+	private long _undoReview() {
 		LinkedList<Card> data = (LinkedList<Card>) mUndo[2];
 		Card c = data.removeLast();
 		if (data.size() == 0) {
@@ -1047,7 +1145,7 @@ public class Collection {
 		int n = c.getQueue() == 3 ? 1 : c.getQueue();
 		String type = (new String[]{"new", "lrn", "rev"})[n];
 		mSched._updateStats(c, type, -1);
-		return c;
+		return c.getId();
 	}
 
 	/** Call via .save() */

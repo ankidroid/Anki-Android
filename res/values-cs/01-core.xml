@@ -33,13 +33,10 @@
   <string name="studyoptions_eta">Odhadovaný čas (min):</string>
   <string name="studyoptions_start">Začít opakovat</string>
   <string name="show_answer">Zobrazit odpověď</string>
-  <string name="ease1_learning">Znovu</string>
-  <string name="ease2_learning">Těžké</string>
-  <string name="ease3_learning">Dobré</string>
-  <string name="ease4_learning">Snadné</string>
   <string name="ease1_successive">Znovu</string>
   <string name="ease2_successive">Těžké</string>
   <string name="ease3_successive">Dobré</string>
+  <string name="ease3_learning">Dobré</string>
   <string name="studyoptions_congrats_learnmore">Naučit se více</string>
   <string name="studyoptions_congrats_reviewearly">Zopakovat dříve</string>
   <string name="studyoptions_congrats_open_other_deck">Otevřít jiný balíček</string>
@@ -90,11 +87,15 @@
   <string name="create_collection">Creating collection.\nPlease wait...</string>
   <string name="rebuild_cram_deck">Rebuilding cram deck.\nPlease wait...</string>
   <string name="rebuild_cram_label">Rebuild</string>
+  <string name="empty_cram_label">Empty</string>
+  <string name="empty_cram_deck">Emptying cram deck.\nPlease wait...</string>
   <string name="studyoptions_congrats_finished">Blahopřejeme! Prozatím jste hotov.</string>
   <string name="studyoptions_congrats_more_rev">Bylo dosaženo limitu dnešního opakování, ale stále existují karty pro přezkoušení. Pro optimální zapamatování zvažte zvýšení denního limitu v možnostech.</string>
   <string name="studyoptions_congrats_more_new">There are more new cards available, but the daily limit has been reached. You can increase the limit in the options, but please bear in mind that the more new cards you introduce, the higher your short-term review workload will become.</string>
   <string name="sd_card_not_mounted">SD karta není připojena.</string>
   <string name="studyoptions_options">Options</string>
+  <string name="empty_cloze_warning">Please edit this note and add some cloze deletions. (%1$s)</string>
+  <string name="help_cloze">help</string>
   <string-array name="next_review_s">
     <item>1 sekunda</item>
     <item>1 minuta</item>

@@ -19,6 +19,9 @@ package com.ichi2.libanki;
 
 import android.text.Html;
 
+import com.ichi2.libanki.hooks.Hook;
+import com.ichi2.libanki.hooks.Hooks;
+
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -26,6 +29,15 @@ import java.util.regex.Pattern;
  * Class used to display and handle correctly LaTeX.
  */
 public class LaTeX {
+    public class LaTeXFilter extends Hook {
+        @Override
+        public Object runFilter(Object arg, Object... args) {
+            return LaTeX.mungeQA((String) arg, (Collection) args[4]);
+        }
+    }
+    public void installHook(Hooks h) {
+        h.addHook("mungeQA", new LaTeXFilter());
+    }
     /**
      * Patterns used to identify LaTeX tags
      */
@@ -42,23 +54,22 @@ public class LaTeX {
      */
     public static String mungeQA(String html, Collection col) {
         StringBuffer sb = new StringBuffer();
-        String contentLeft = html;
 
-        Matcher matcher = sStandardPattern.matcher(contentLeft);
+        Matcher matcher = sStandardPattern.matcher(html);
         while (matcher.find()) {
             matcher.appendReplacement(sb, _imgLink(col, matcher.group(1)));
         }
         matcher.appendTail(sb);
         
-        contentLeft = html;
-        matcher = sExpressionPattern.matcher(contentLeft);
+        matcher = sExpressionPattern.matcher(sb.toString());
+        sb = new StringBuffer();
         while (matcher.find()) {
             matcher.appendReplacement(sb, _imgLink(col, "$" + matcher.group(1) + "$"));
         }
         matcher.appendTail(sb);
-        
-        contentLeft = html;
-        matcher = sMathPattern.matcher(contentLeft);
+
+        matcher = sMathPattern.matcher(sb.toString());
+        sb = new StringBuffer();
         while (matcher.find()) {
             matcher.appendReplacement(sb, _imgLink(col,
                     "\\begin{displaymath}" + matcher.group(1) + "\\end{displaymath}"));

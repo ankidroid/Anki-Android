@@ -33,13 +33,10 @@
   <string name="studyoptions_eta">Geschatte tijd (min):</string>
   <string name="studyoptions_start">Nu overhoren</string>
   <string name="show_answer">Antwoord tonen</string>
-  <string name="ease1_learning">Nogmaals</string>
-  <string name="ease2_learning">Goed</string>
-  <string name="ease3_learning">Makkelijk</string>
-  <string name="ease4_learning">Heel makkelijk</string>
   <string name="ease1_successive">Opnieuw</string>
   <string name="ease2_successive">Moeilijk</string>
   <string name="ease3_successive">Goed</string>
+  <string name="ease3_learning">Makkelijk</string>
   <string name="studyoptions_congrats_learnmore">Meer leren</string>
   <string name="studyoptions_congrats_reviewearly">Vervroegd overhoren</string>
   <string name="studyoptions_congrats_open_other_deck">Laad een andere set</string>
@@ -90,11 +87,15 @@
   <string name="create_collection">Collectie maken.\n\Even wachten...</string>
   <string name="rebuild_cram_deck">Stampset wordt opnieuw opgebouwd.\nEven geduld...</string>
   <string name="rebuild_cram_label">Opnieuw opbouwen</string>
+  <string name="empty_cram_label">Empty</string>
+  <string name="empty_cram_deck">Emptying cram deck.\nPlease wait...</string>
   <string name="studyoptions_congrats_finished">Gefeliciteerd! Je bent nu klaar.</string>
   <string name="studyoptions_congrats_more_rev">Je hebt de overhoringslimiet bereikt, maar er wachten nog kaarten om overhoord te worden. Voor een optimale geheugentraining, overweeg om de dagelijkse limiet te verhogen.</string>
   <string name="studyoptions_congrats_more_new">Er zijn meer nieuwe kaarten beschikbaar, maar de dagelijkse limiet is bereikt. Je kan de limiet oprekken in de opties, maar bedenk dat hoe meer kaarten je introduceert, hoe meer overhoringen je op korte termijn zal hebben.</string>
   <string name="sd_card_not_mounted">SD-kaart is niet aangesloten.</string>
   <string name="studyoptions_options">Opties</string>
+  <string name="empty_cloze_warning">Please edit this note and add some cloze deletions. (%1$s)</string>
+  <string name="help_cloze">help</string>
   <string-array name="next_review_s">
     <item>1 seconde</item>
     <item>1 minuut</item>

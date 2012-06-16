@@ -83,6 +83,7 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
     public static final int TASK_TYPE_RESTORE_IF_MISSING = 24;
     public static final int TASK_TYPE_DELETE_DECK = 25;
     public static final int TASK_TYPE_REBUILD_CRAM = 26;
+    public static final int TASK_TYPE_EMPTY_CRAM = 27;
 
     private static DeckTask sInstance;
     private static DeckTask sOldInstance;
@@ -231,6 +232,9 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
 
             case TASK_TYPE_REBUILD_CRAM:
             	return doInBackgroundRebuildCram(params);
+
+            case TASK_TYPE_EMPTY_CRAM:
+            	return doInBackgroundEmptyCram(params);
 
             default:
                 return null;
@@ -533,15 +537,18 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
     	Collection col = sched.getCol();
         try {
             col.getDb().getDatabase().beginTransaction();
+        	Card newCard;
             try {
-            	Card newCard = col.undo();
+            	long cid = col.undo();
             	col.reset();
-            	if (newCard != null) {
-            		// a review was undone, 
-                	if (!sched.removeCardFromQueues(newCard)) {
-                		// card was not found in queues
-                		newCard = sched.getCard();
-                	}
+            	if (cid != 0) {
+            		// a review was undone,
+            		newCard = col.getCard(cid);
+            		col.reset();
+//                	if (!sched.removeCardFromQueues(newCard)) {
+//                		// card was not found in queues
+//                		newCard = sched.getCard();
+//                	}
             	} else {
             		newCard = sched.getCard();
             	}
@@ -674,6 +681,15 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
         Collection col = params[0].getCollection();
         long did = params[0].getLong();
 		col.getSched().rebuildDyn(did);
+		return doInBackgroundUpdateValuesFromDeck(new DeckTask.TaskData(col.getSched(), true));
+    }
+
+
+    private TaskData doInBackgroundEmptyCram(TaskData... params) {
+        Log.i(AnkiDroidApp.TAG, "doInBackgroundEmptyCram");
+        Collection col = params[0].getCollection();
+        long did = params[0].getLong();
+		col.getSched().emptyDyn(did);
 		return doInBackgroundUpdateValuesFromDeck(new DeckTask.TaskData(col.getSched(), true));
     }
 

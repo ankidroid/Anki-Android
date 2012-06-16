@@ -49,7 +49,9 @@
   <string name="sync_log_db_error">Er deed zich een probleem met de database voor.</string>
   <string name="no_user_password_error_message">Om verder te gaan met deze actie, moet u een AnkiOnline-account hebben en ingelogd zijn.</string>
   <string name="username">Gebruikersnaam</string>
+  <string name="username_repeat">Repeat username</string>
   <string name="password">Wachtwoord</string>
+  <string name="password_repeat">Repeat password</string>
   <string name="log_in">Inloggen</string>
   <string name="sign_up_description">Heb je nog geen AnkiWeb account? Het is gratis!</string>
   <string name="sign_up">Meld je nu aan</string>
@@ -108,4 +110,8 @@
   <string name="sync_media_to_server">Sending media to server...</string>
   <string name="sync_media_no_changes">No changes to media files.</string>
   <string name="sync_media_success">Media synced successfully.</string>
+  <string name="register_error">An error occurred. Please try again later.</string>
+  <string name="register_title">Register account</string>
+  <string name="register_mismatch">The username/password repetition does not match or is empty. Please re-enter.</string>
+  <string name="registering_message">Creating account.\nPlease wait...</string>
 </resources>

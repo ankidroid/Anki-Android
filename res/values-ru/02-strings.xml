@@ -76,15 +76,17 @@
   <string name="simple_interface_hint">Пустой %s. Имейте в виду то, что простой интерфейс не может показывать фотографии/звуки и т.д.</string>
   <string name="delete_deck">Удаление колоды...\nПожалуйста подождите...</string>
   <string name="menu_cardbrowser">Card browser</string>
+  <string name="pref_lang_other">Language Preferences</string>
+  <string name="pref_lang_common">LangCommon</string>
+  <string name="pref_font_UI">Custom UI Font</string>
   <string-array name="dynOrderLabels">
     <item>Старейшие появляться первыми</item>
     <item>Случайно</item>
     <item>По увеличению интервалов</item>
     <item>По уменьшению интервалов</item>
     <item>Наибольшие периоды</item>
-    <item>Неудачные сегодня</item>
-    <item>В порядке добавления</item>
-    <item>В ожидаемом порядке</item>
+    <item>Order added</item>
+    <item>Order due</item>
   </string-array>
   <plurals name="factadder_cards_added">
     <item quantity="one">1 карта добавлена</item>

@@ -35,7 +35,7 @@ import com.ichi2.async.Connection;
 import com.ichi2.libanki.Collection;
 
 
-public class FullSyncer extends HttpSyncer {
+public class FullSyncer extends BasicHttpSyncer {
 
 	Collection mCol;
 	Connection mCon;
@@ -55,6 +55,11 @@ public class FullSyncer extends HttpSyncer {
 				return null;
 			}			
 			cont = ret.getEntity().getContent();
+			// TODO: check for upgradeRequired
+//			if (cont.equals("upgradeRequired")) {
+//				runHook("sync", "upgradeRequired");
+//				return null;
+//			}
 		} catch (IllegalStateException e1) {
 			throw new RuntimeException(e1);
 		} catch (IOException e1) {

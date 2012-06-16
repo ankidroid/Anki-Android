@@ -200,7 +200,7 @@
   <string name="input_workaround">Inmatnings-workaround</string>
   <string name="input_workaround_summ">Tillfällig lösning på att fokusera på inmatningsfält för HTML. Orsakar problem på flera enheter.</string>
   <string name="write_answers_message">För varje kortlek bör du definiera ett fält att jämföra det skrivna svaret med. Du kan kan göra detta via Anki Desktop (korleksegenskaper -&gt; redigera modell -&gt; kortlekslayout).\n\nOm inget fält anges kommer ditt skrivna svar att jämföras med hela svaret hos kortet.</string>
-  <string name="pref_cache_cardbrowser">Kortutforskarecache</string>
+  <string name="pref_cache_cardbrowser">Kortutforskarcache</string>
   <string name="pref_cache_cardbrowser_summ">Håll alla kort från kortutforskaren i cacheminnet (stor minnesåtgång).</string>
   <string name="pref_cache_cardbrowser_reload">Ladda om alla kort?</string>
   <string name="pref_keep_screen_on">Håll skärmen på</string>
@@ -229,8 +229,8 @@
   <string name="deck_conf_sibl_space">Space siblings by up to</string>
   <string name="deck_conf_easy_bonus">Lätt bonus</string>
   <string name="deck_conf_min_range">Minimum sibling range</string>
-  <string name="deck_conf_des_fi">Desired forgetting index</string>
-  <string name="deck_conf_ass_fi">Assumed forgetting index</string>
+  <string name="deck_conf_ivl_fct">Interval modifier</string>
+  <string name="deck_conf_max_ivl">Maximum interval</string>
   <string name="deck_conf_new_lps_ivl">Nytt intervall</string>
   <string name="deck_conf_min_ivl">Minsta intervall</string>
   <string name="deck_conf_leech_thres">Leech Threshold</string>
@@ -245,4 +245,14 @@
   <string name="deck_conf_rem">Remove configuration</string>
   <string name="pref_cat_tibetan">Stöd för tibetanska</string>
   <string name="pref_enable_tibetan">Aktivera stöd för tibetanska</string>
+  <string name="deck_conf_cram_filter">Filter</string>
+  <string name="deck_conf_cram_options">Options</string>
+  <string name="deck_conf_cram_preset">Preset</string>
+  <string name="deck_conf_cram_search">Search</string>
+  <string name="deck_conf_cram_limit">Limit to</string>
+  <string name="deck_conf_cram_order">cards selected by</string>
+  <string name="deck_conf_cram_reschedule">Reschedule</string>
+  <string name="deck_conf_cram_reschedule_summ">Reschedule cards based on my answers in this deck</string>
+  <string name="deck_conf_cram_steps">Custom steps</string>
+  <string name="deck_conf_cram_steps_summ">Define custom steps</string>
 </resources>

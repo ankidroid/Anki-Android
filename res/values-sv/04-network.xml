@@ -49,7 +49,9 @@
   <string name="sync_log_db_error">Ett databasfel har inträffat.</string>
   <string name="no_user_password_error_message">För att fortsätta med denna operation måste du ha ett AnkiWeb-konto och vara inloggad.</string>
   <string name="username">Användarnamn</string>
+  <string name="username_repeat">Upprepa användarnamn</string>
   <string name="password">Lösenord</string>
+  <string name="password_repeat">Upprepa lösenord</string>
   <string name="log_in">Logga in</string>
   <string name="sign_up_description">Har du inget AnkiWeb-konto? Det är gratis!</string>
   <string name="sign_up">Registrera dig</string>
@@ -102,10 +104,14 @@
   <string name="sync_generic_error">Ett fel har uppstått. Försök igen senare.</string>
   <string name="sync_check_upload_file">Kontrollerar filen innan överföring...</string>
   <string name="sync_check_download_file">Kontrollerar hämtad fil...</string>
-  <string name="sync_media_find">Finding changed media...</string>
-  <string name="sync_media_remove">Handling deleted media...</string>
-  <string name="sync_media_from_server">Receiving media from server...</string>
-  <string name="sync_media_to_server">Sending media to server...</string>
-  <string name="sync_media_no_changes">No changes to media files.</string>
-  <string name="sync_media_success">Media synced successfully.</string>
+  <string name="sync_media_find">Hittar ändrade media...</string>
+  <string name="sync_media_remove">Hanterar borttagna media...</string>
+  <string name="sync_media_from_server">Erhåller media från servern...</string>
+  <string name="sync_media_to_server">Sänder media till servern...</string>
+  <string name="sync_media_no_changes">Inga ändringar till mediafiler.</string>
+  <string name="sync_media_success">Media har synkats.</string>
+  <string name="register_error">Ett fel har uppstått. Försök igen senare.</string>
+  <string name="register_title">Registrera konto</string>
+  <string name="register_mismatch">The username/password repetition does not match or is empty. Please re-enter.</string>
+  <string name="registering_message">Skapar konto.\nVar god vänta...</string>
 </resources>

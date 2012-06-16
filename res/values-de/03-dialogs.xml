@@ -48,7 +48,7 @@
   <string name="notification_message">Eine neue Version von Ankidroid ist im Android Market verfügbar. \n\nMöchten Sie diese installieren?</string>
   <string name="notification_stop">Nicht erneut über Aktualisierung benachrichtigen</string>
   <string name="reset_card_dialog_title">Lernfortschritt zurücksetzen</string>
-  <string name="reset_card_dialog_message">This resets the learning progress for all cards of this note (they will look like new cards).\nReally continue?</string>
+  <string name="reset_card_dialog_message">Dies setzt den Lernfortschritt für alle Karten dieses Stapels zurück (sie sehen danach aus wie neue Karten).\nWirklich fortfahren?</string>
   <string name="reset_card_dialog_confirmation">Alle Karten der Notiz zurückgesetzt</string>
   <string name="answering_error_title">Datenbank-Fehler</string>
   <string name="answering_error_message">An error occurred while writing to the collection. This could be related to a corrupt database or to insufficient disc space.\n\nIf it happens more often, please try to check the database, repair the collection or restoring it from a backup. Click on \'options\' for that.\n\nNevertheless, it could be an AnkiDroid bug as well; please report the error that we can check this.</string>

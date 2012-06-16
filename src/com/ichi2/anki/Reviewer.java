@@ -212,6 +212,8 @@ public class Reviewer extends AnkiActivity {
     /**
      * Variables to hold preferences
      */
+    private boolean mPrefOvertime;
+    private boolean mPrefHideDueCount;
     private boolean mPrefTimer;
     private boolean mPrefWhiteboard;
     private boolean mPrefWriteAnswers;
@@ -757,15 +759,35 @@ public class Reviewer extends AnkiActivity {
             // setOutAnimation(true);
             // } else {
             // session limits not reached, show next card
+            
+            
 
             mCurrentCard = values[0].getCard();
+            boolean timebox_reached = Collection.currentCollection().timeboxReached() != null ? true : false;
+            if (timebox_reached && mPrefOvertime && !Collection.currentCollection().getOvertime()) {
+                Collection.currentCollection().setOvertime(true);
+            }
+            //String timebox_message = "Timebox finished!";
             if (mCurrentCard == null) {
                 // If the card is null means that there are no more cards scheduled for review.
                 mNoMoreCards = true;
                 mProgressDialog = StyledProgressDialog.show(Reviewer.this, "",
                         getResources().getString(R.string.saving_changes), true);
                 setOutAnimation(false);
+            } else if (timebox_reached && !mPrefOvertime) {
+                //SharedPreferences preferences = PrefSettings.getSharedPrefs(getActivity().getBaseContext()); //getActivity().getBaseContext()
+                //boolean overtime = preferences.getBoolean("overtime", true);
+                
+                mSessionComplete = true;
+                mProgressDialog = StyledProgressDialog.show(Reviewer.this, "",
+                        getResources().getString(R.string.saving_changes), true);
+                setOutAnimation(false);
+                
+                sessionMessage = getResources().getString(R.string.timebox_reached);
             } else {
+                if (timebox_reached) {
+                    sessionMessage = getResources().getString(R.string.timebox_reached);
+                }
                 // Start reviewing next card
                 if (mPrefWriteAnswers) {
                     // only bother query deck if needed
@@ -1700,14 +1722,18 @@ public class Reviewer extends AnkiActivity {
     }
 
 
-    private int getRecommendedEase() {
-        if (mSched.answerButtons(mCurrentCard) == 3) {
-            return EASE_HARD;
-        } else {
-            return EASE_MID;
+    private int getRecommendedEase(boolean easy) {
+        switch (mSched.answerButtons(mCurrentCard)) {
+        case 2:
+        	return EASE_HARD;
+        case 3:
+        	return easy ? EASE_MID : EASE_HARD;
+        case 4:
+        	return easy ? EASE_EASY : EASE_MID;
+		default:
+			return 0;
         }
     }
-
 
     private void answerCard(int ease) {
         if (mInAnswer) {
@@ -2006,58 +2032,66 @@ public class Reviewer extends AnkiActivity {
 
     }
 
-
     private void showEaseButtons() {
         Resources res = getResources();
 
         // hide flipcard button
         switchVisibility(mFlipCardLayout, View.GONE);
 
-        boolean lrnCard = mSched.answerButtons(mCurrentCard) == 3;
+        int buttonCount = mSched.answerButtons(mCurrentCard);
 
         // Set correct label for each button
-        if (lrnCard) {
-            mEase1.setText(res.getString(R.string.ease1_successive));
-            mEase2.setText(res.getString(R.string.ease2_successive));
-            mEase3.setText(res.getString(R.string.ease3_successive));
-        } else {
-            mEase1.setText(res.getString(R.string.ease1_learning));
-            mEase2.setText(res.getString(R.string.ease2_learning));
-            mEase3.setText(res.getString(R.string.ease3_learning));
-            mEase4.setText(res.getString(R.string.ease4_learning));
-            switchVisibility(mEase4Layout, View.VISIBLE);
-        }
-
-        // Show buttons
-        switchVisibility(mEase1Layout, View.VISIBLE);
-        switchVisibility(mEase2Layout, View.VISIBLE);
-        switchVisibility(mEase3Layout, View.VISIBLE);
-
-        // Focus default button
-        if (lrnCard) {
-            mEase2Layout.requestFocus();
-            mNext2.setTextColor(mNextTimeTextRecomColor);
-            mEase2.setTextColor(mNextTimeTextRecomColor);
-            mNext3.setTextColor(mNextTimeTextColor);
-            mEase3.setTextColor(mNextTimeTextColor);
-        } else {
-            mEase3Layout.requestFocus();
-            mNext2.setTextColor(mNextTimeTextColor);
-            mEase2.setTextColor(mNextTimeTextColor);
-            mNext3.setTextColor(mNextTimeTextRecomColor);
-            mEase3.setTextColor(mNextTimeTextRecomColor);
-        }
+    	switch (buttonCount) {
+    	case 2:
+    		mEase1.setText(res.getString(R.string.ease1_successive));
+    		mEase2.setText(res.getString(R.string.ease3_successive));
+    		switchVisibility(mEase1Layout, View.VISIBLE);
+    		switchVisibility(mEase2Layout, View.VISIBLE);
+    		mEase2Layout.requestFocus();
+    		mNext2.setTextColor(mNextTimeTextRecomColor);
+    		mEase2.setTextColor(mNextTimeTextRecomColor);
+    		mNext3.setTextColor(mNextTimeTextColor);
+    		mEase3.setTextColor(mNextTimeTextColor);
+    		break;
+    	case 3:
+    		mEase1.setText(res.getString(R.string.ease1_successive));
+    		mEase2.setText(res.getString(R.string.ease3_successive));
+    		mEase3.setText(res.getString(R.string.ease3_learning));
+    		switchVisibility(mEase1Layout, View.VISIBLE);
+    		switchVisibility(mEase2Layout, View.VISIBLE);
+    		switchVisibility(mEase3Layout, View.VISIBLE);
+    		mEase2Layout.requestFocus();
+        	mNext2.setTextColor(mNextTimeTextRecomColor);
+        	mEase2.setTextColor(mNextTimeTextRecomColor);
+        	mNext3.setTextColor(mNextTimeTextColor);
+        	mEase3.setTextColor(mNextTimeTextColor);
+        	break;
+    	default:
+    		mEase1.setText(res.getString(R.string.ease1_successive));
+    		mEase2.setText(res.getString(R.string.ease2_successive));
+    		mEase3.setText(res.getString(R.string.ease3_successive));
+    		mEase4.setText(res.getString(R.string.ease3_learning));
+    		switchVisibility(mEase1Layout, View.VISIBLE);
+    		switchVisibility(mEase2Layout, View.VISIBLE);
+    		switchVisibility(mEase3Layout, View.VISIBLE);
+    		switchVisibility(mEase4Layout, View.VISIBLE);
+    		mEase3Layout.requestFocus();
+    		mNext2.setTextColor(mNextTimeTextColor);
+    		mEase2.setTextColor(mNextTimeTextColor);
+    		mNext3.setTextColor(mNextTimeTextRecomColor);
+    		mEase3.setTextColor(mNextTimeTextRecomColor);
+    	}
 
         // Show next review time
         if (mshowNextReviewTime) {
             mNext1.setText(mSched.nextIvlStr(mCurrentCard, 1));
             mNext2.setText(mSched.nextIvlStr(mCurrentCard, 2));
-            mNext3.setText(mSched.nextIvlStr(mCurrentCard, 3));
-            mNext4.setText(lrnCard ? "" : mSched.nextIvlStr(mCurrentCard, 4));
-            switchVisibility(mNext1, View.VISIBLE);
-            switchVisibility(mNext2, View.VISIBLE);
-            switchVisibility(mNext3, View.VISIBLE);
-            switchVisibility(mNext4, View.VISIBLE);
+	    if (buttonCount > 2) {
+	            mNext3.setText(mSched.nextIvlStr(mCurrentCard, 3));
+	    }
+	    if (buttonCount > 3) {
+	            mNext4.setText(mSched.nextIvlStr(mCurrentCard, 4));
+	    }
         }
     }
 
@@ -2067,14 +2101,6 @@ public class Reviewer extends AnkiActivity {
         switchVisibility(mEase2Layout, View.GONE);
         switchVisibility(mEase3Layout, View.GONE);
         switchVisibility(mEase4Layout, View.GONE);
-
-        if (mshowNextReviewTime) {
-            int visibility = typeAnswer() ? View.GONE : View.INVISIBLE;
-            switchVisibility(mNext1, visibility);
-            switchVisibility(mNext2, visibility);
-            switchVisibility(mNext3, visibility);
-            switchVisibility(mNext4, visibility);
-        }
 
         if (mFlipCardLayout.getVisibility() != View.VISIBLE) {
             switchVisibility(mFlipCardLayout, View.VISIBLE);
@@ -2139,6 +2165,8 @@ public class Reviewer extends AnkiActivity {
 
     private SharedPreferences restorePreferences() {
         SharedPreferences preferences = PrefSettings.getSharedPrefs(getBaseContext());
+        mPrefHideDueCount = preferences.getBoolean("hideDueCount", false);
+        mPrefOvertime = preferences.getBoolean("overtime", true);
         mPrefTimer = preferences.getBoolean("timer", true);
         mPrefWhiteboard = preferences.getBoolean("whiteboard", false);
         mPrefWriteAnswers = preferences.getBoolean("writeAnswers", false);
@@ -2261,10 +2289,16 @@ public class Reviewer extends AnkiActivity {
 
         int eta = mSched.eta(counts, false);
         UIUtils.setActionBarSubtitle(this, getResources().getQuantityString(R.plurals.reviewer_window_title, eta, eta));
+        
+        //SharedPreferences preferences = PrefSettings.getSharedPrefs(getBaseContext());
+        //boolean hideDueCount = preferences.getBoolean("hideDueCount", true);
 
         SpannableString newCount = new SpannableString(String.valueOf(counts[0]));
         SpannableString lrnCount = new SpannableString(String.valueOf(counts[1]));
         SpannableString revCount = new SpannableString(String.valueOf(counts[2]));
+        if (mPrefHideDueCount) {
+            revCount = new SpannableString("???");
+        }
 
         switch (mCurrentCard.getQueue()) {
             case Card.TYPE_NEW:
@@ -3267,14 +3301,14 @@ public class Reviewer extends AnkiActivity {
                 break;
             case GESTURE_ANSWER_RECOMMENDED:
                 if (sDisplayAnswer) {
-                    answerCard(getRecommendedEase());
+                    answerCard(getRecommendedEase(false));
                 } else {
                     displayCardAnswer();
                 }
                 break;
             case GESTURE_ANSWER_BETTER_THAN_RECOMMENDED:
                 if (sDisplayAnswer) {
-                    answerCard(getRecommendedEase() + 1);
+                    answerCard(getRecommendedEase(true));
                 }
                 break;
             case GESTURE_EXIT:
@@ -3363,6 +3397,7 @@ public class Reviewer extends AnkiActivity {
 
 
     private void closeReviewer(int result, boolean saveDeck) {
+        Collection.currentCollection().setOvertime(false);
         mTimeoutHandler.removeCallbacks(mShowAnswerTask);
         mTimeoutHandler.removeCallbacks(mShowQuestionTask);
         mTimerHandler.removeCallbacks(removeChosenAnswerText);

@@ -49,7 +49,9 @@
   <string name="sync_log_db_error">Bir veritabanı hatası meydana geldi.</string>
   <string name="no_user_password_error_message">Bu işleme devam etmek için, bir AnkiWeb hesabınız olmalı ve giriş yapmış olmalısınız.</string>
   <string name="username">Kullanıcı adı</string>
+  <string name="username_repeat">Repeat username</string>
   <string name="password">Şifre</string>
+  <string name="password_repeat">Repeat password</string>
   <string name="log_in">Giriş yap</string>
   <string name="sign_up_description">AnkiWeb hesabınız yok mu? Ücretsiz edinin!</string>
   <string name="sign_up">Kaydol</string>
@@ -102,10 +104,14 @@
   <string name="sync_generic_error">Bir hatâ meydana geldi. Lütfen sonra yeniden deneyin.</string>
   <string name="sync_check_upload_file">Yüklemeden önce dosya kontrol ediliyor...</string>
   <string name="sync_check_download_file">İndirilen dosya kontrol ediliyor...</string>
-  <string name="sync_media_find">Finding changed media...</string>
-  <string name="sync_media_remove">Handling deleted media...</string>
-  <string name="sync_media_from_server">Receiving media from server...</string>
-  <string name="sync_media_to_server">Sending media to server...</string>
-  <string name="sync_media_no_changes">No changes to media files.</string>
-  <string name="sync_media_success">Media synced successfully.</string>
+  <string name="sync_media_find">Değiştirilmiş ortamlar bulunuyor...</string>
+  <string name="sync_media_remove">Silinmiş ortamlar işleniyor...</string>
+  <string name="sync_media_from_server">Ortamlar sunucudan alınıyor...</string>
+  <string name="sync_media_to_server">Ortamlar sunucuya gönderiliyor...</string>
+  <string name="sync_media_no_changes">Ortam dosyalarında değişiklik yok.</string>
+  <string name="sync_media_success">Ortamlar başarıyla eşitlendi.</string>
+  <string name="register_error">An error occurred. Please try again later.</string>
+  <string name="register_title">Register account</string>
+  <string name="register_mismatch">The username/password repetition does not match or is empty. Please re-enter.</string>
+  <string name="registering_message">Creating account.\nPlease wait...</string>
 </resources>

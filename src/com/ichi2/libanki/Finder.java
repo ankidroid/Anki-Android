@@ -1,5 +1,6 @@
 /****************************************************************************************
  * Copyright (c) 2012 Norbert Nagold <norbert.nagold@gmail.com>                         *
+ * Copyright (c) 2012 Kostas Spyropoulos <inigo.aldana@gmail.com>                       *
  *                                                                                      *
  * This program is free software; you can redistribute it and/or modify it under        *
  * the terms of the GNU General Public License as published by the Free Software        *
@@ -16,223 +17,371 @@
 
 package com.ichi2.libanki;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.TreeSet;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+import android.database.Cursor;
+import android.database.SQLException;
+import android.util.Pair;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import android.database.Cursor;
-import android.util.Log;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
+import java.util.Set;
+import java.util.TreeMap;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class Finder {
 
-	private static final int SEARCH_TAG = 0;
-	private static final int SEARCH_TYPE = 1;
-	private static final int SEARCH_PHRASE = 2;
-	private static final int SEARCH_NID = 3;
-	private static final int SEARCH_TEMPLATE = 4;
-	private static final int SEARCH_FIELD = 5;
-	private static final int SEARCH_MODEL = 6;
-	private static final int SEARCH_DECK = 7;
-
 	public static Pattern allPattern = Pattern.compile("(-)?\\'(([^\\'\\\\]|\\\\.)*)\\'|(-)?\"(([^\"\\\\]|\\\\.)*)\"|(-)?([^ ]+)|([ ]+)");
+    private static final Pattern fPropPattern = Pattern.compile("(^.+?)(<=|>=|!=|=|<|>)(.+?$)");
+    private static final Pattern fNidsPattern = Pattern.compile("[^0-9,]");
+	
+    private static final List<String> fValidEases = Arrays.asList(new String[]{"1", "2", "3", "4"});
+    private static final List<String> fValidProps = Arrays.asList(new String[]{"due", "ivl", "reps", "lapses", "ease"});
 
 	private Collection mCol;
-	private String mOrder;
-	private String mQuery;
-	private JSONObject mLims;
-	private boolean mFull = false;
 
 	public Finder(Collection col) {
 		mCol = col;
 	}
 
-	private ArrayList<String> fieldNames(Collection col) {
-		return fieldNames(col, true);
-	}
-	private ArrayList<String> fieldNames(Collection col, boolean downcase) {
-		TreeSet<String> fields = new TreeSet<String>();
-		ArrayList<String> names = new ArrayList<String>();
-		for (JSONObject m : col.getModels().all()) {
-			try {
-				JSONArray flds = m.getJSONArray("flds");
-				for (int i = 0; i < flds.length(); i++) {
-					String name = flds.getJSONObject(i).getString("name");
-					if (!fields.contains(name.toLowerCase())) {
-						names.add(name);
-						fields.add(name.toLowerCase());
-					}
-				}
-			} catch (JSONException e) {
-				throw new RuntimeException(e);
-			}
-		}
-		if (downcase) {
-			return new ArrayList<String>(fields);
-		} else {
-			return names;
-		}
-	}
-
 	/** Return a list of card ids for QUERY */
-	public ArrayList<Long> findCards(String query, boolean full, String order) {
-		mOrder = order;
-		mQuery = query;
-		mFull = full;
-		_findLimits();
+	public List<Long> findCards(String query, String _order) {
+	    String[] tokens = _tokenize(query);
+	    Pair<String, String[]> res1 = _where(tokens);
+	    String preds = res1.first;
+	    String[] args = res1.second;
+	    List<Long> res = new ArrayList<Long>();
+	    if (preds == null) {
+	        return res;
+	    }
+	    Pair<String, Boolean> res2 = _order(_order);
+	    String order = res2.first;
+	    boolean rev = res2.second;
+	    String sql = _query(preds, order);
+	    Cursor cur = null;
 		try {
-			if (!mLims.getBoolean("valid")) {
-				return new ArrayList<Long>();
-			}
-			JSONArray ja = mLims.getJSONArray("preds");
-			StringBuilder sb = new StringBuilder();
-			for (int i = 0; i < ja.length(); i++) {
-				sb.append(ja.getString(i));
-				if (i < ja.length() - 1) {
-					sb.append(" AND ");
-				}
-			}
-			String q = sb.toString();
-			if (q.length() == 0) {
-				q = "1";
-			}
-			JSONObject args = mLims.getJSONObject("args");
-			order = _order();
-			query = "SELECT c.id FROM cards c, notes n WHERE " + q + " AND c.nid=n.id " + order;
-			// manually place the dict value into the query string als java sqlite query does not allow dict as an argument
-			JSONArray names = args.names();
-			if (names != null) {
-				for (int i = 0; i < names.length(); i++) {
-					query = query.replace(":" + names.getString(i), "\'" + args.getString(names.getString(i)).replace('\'', '"') + "\'");
-				}				
-			}
-			ArrayList<Long> res = mCol.getDb().queryColumn(Long.class, query, 0);
-			if (order.length() == 0 && mCol.getConf().getBoolean("sortBackwards")) {
-				Collections.reverse(res);
-			}
-			return res;
-		} catch (JSONException e) {
-			throw new RuntimeException(e);
+		     cur = mCol.getDb().getDatabase().rawQuery(sql, args);
+		     while (cur.moveToNext()) {
+		         res.add(cur.getLong(0));
+		     }
+		} catch (SQLException e) {
+		    // invalid grouping
+		    return new ArrayList<Long>();
+		} finally {
+		    if (cur != null) {
+		        cur.close();
+		    }
 		}
+		if (rev) {
+		    Collections.reverse(res);
+		}
+		return res;
+	}
+	
+	public List<Long> findNotes(String query) {
+        String[] tokens = _tokenize(query);
+        Pair<String, String[]> res1 = _where(tokens);
+        String preds = res1.first;
+        String[] args = res1.second;
+        List<Long> res = new ArrayList<Long>();
+        if (preds == null) {
+            return res;
+        } 
+        if (preds.equals("")) {
+            preds = "1";
+        } else {
+            preds = "(" + preds + ")";
+        }
+        String sql = "select distinct(n.id) from cards c, notes n where c.nid=n.id and " + preds;
+        Cursor cur = null;
+        try {
+            cur = mCol.getDb().getDatabase().rawQuery(sql, args);
+            while (cur.moveToNext()) {
+                res.add(cur.getLong(0));
+            }
+       } catch (SQLException e) {
+           // invalid grouping
+           return new ArrayList<Long>();
+       } finally {
+           if (cur != null) {
+               cur.close();
+           }
+       }
+       return res;
+	}
+	
+	// Tokenizing
+	/////////////
+	public String[] _tokenize(String query) {
+	    char inQuote = 0;
+	    List<String> tokens = new ArrayList<String>();
+	    String token = "";
+	    for (int i = 0; i < query.length(); ++i) {
+	        // quoted text
+	        char c = query.charAt(i);
+	        if (c == '\'' || c == '"') {
+	            if (inQuote != 0) {
+	                if (c == inQuote) {
+	                    inQuote = 0; 
+	                } else {
+	                    token += c;
+	                }
+	            } else if (token.length() != 0) {
+	                // quotes are allowed to start directly after a :
+	                if (token.endsWith(":")) {
+	                    inQuote = c;
+	                } else {
+	                    token += c;
+	                }
+	            } else {
+	                inQuote = c;
+	            }
+	        // separator
+	        } else if (c == ' ') {
+	            if (inQuote != 0) {
+	                token += c;
+	            } else if (token.length() != 0) {
+	                // space marks token finished
+	                tokens.add(token);
+	                token = "";
+	            }
+	        // nesting
+	        } else if (c == '(' || c == ')') {
+	            if (inQuote != 0) {
+	                token += c;
+	            } else {
+	                if (c == ')' && token.length() != 0) {
+	                    tokens.add(token);
+	                    token = "";
+	                }
+	                tokens.add(String.valueOf(c));
+	            }
+	        // negation
+	        } else if  (c == '-') {
+	            if (token.length() != 0) {
+	                token += c;
+	            } else if (tokens.size() == 0 || !tokens.get(tokens.size() - 1).equals("not")) {
+	                tokens.add("not");
+	            }
+	        // normal character
+	        } else {
+	            token += c;
+	        }
+	    }
+	    // if we finished in a token, add it
+	    if (token.length() != 0) {
+	        tokens.add(token);
+	    }
+	    return tokens.toArray(new String[]{});
 	}
 
-	private String _order() {
-		// user provided override?
-		if (mOrder != null && mOrder.length() > 0) {
-			return mOrder;
-		}
-		String type;
-		try {
-			type = mCol.getConf().getString("sortType");
-			if (type.length() == 0) {
-				return null;
-			}
-			String sort;
-			if (type.startsWith("note")) {
-				if (type.startsWith("noteCrt")) {
-					sort = "n.id, c.ord";
-				} else if (type.startsWith("noteMod")) {
-					sort = "n.mod, c.ord";
-				} else if (type.startsWith("noteFld")) {
-					sort = "n.sfld COLLATE NOCASE, c.ord";
-				} else {
-					throw new RuntimeException("wrong sort type");
-				}
-			} else if (type.startsWith("card")) {
-				if (type.startsWith("cardMod")) {
-					sort = "c.mod";
-				} else if (type.startsWith("cardReps")) {
-					sort = "c.reps";
-				} else if (type.startsWith("cardDue")) {
-					sort = "c.type, c.due";
-				} else if (type.startsWith("cardEase")) {
-					sort = "c.factor";
-				} else if (type.startsWith("cardLapses")) {
-					sort = "c.lapses";
-				} else if (type.startsWith("cardIvl")) {
-					sort = "c.ivl";
-				} else {
-					throw new RuntimeException("wrong sort type");
-				}
-			} else {
-				throw new RuntimeException("wrong sort type");
-			}
-			return " ORDER BY " + sort;
-		} catch (JSONException e) {
-			throw new RuntimeException(e);
-		}
+	// Query building
+	/////////////////
+	public class SearchState {
+        public boolean isnot;
+        public boolean isor;
+        public boolean join;
+        public String q;
+        public boolean bad;
+        public SearchState() {
+            isnot = false;
+            isor = false;
+            join = false;
+            q = "";
+            bad = false;
+        }
+	}
+	public Pair<String, String[]> _where(String[] tokens) {
+	    // state and query
+	    SearchState s = new SearchState();
+	    List<String> args = new ArrayList<String>();
+	    for (String token : tokens) {
+	        if (s.bad) {
+	            return new Pair<String, String[]>(null, null);
+	        }
+	        // special tokens
+	        if (token.equals("not")) {
+	            s.isnot = true;
+            } else if (token.toLowerCase().equals("or")) {
+                s.isor = true;
+            } else if (token.equals("(")) {
+                addPred(s, token, false);
+                s.join = false;
+            } else if (token.equals(")")) {
+                s.q += ")";
+	        // commands
+            } else if (token.contains(":")) {
+                String[] spl = token.split(":", 2);
+                String cmd = spl[0].toLowerCase();
+                String val = spl[1];
+                if (cmd.equals("tag")) {
+                    addPred(s, _findTag(val, args));
+                } else if (cmd.equals("is")) {
+                    addPred(s, _findCardState(val));
+                } else if (cmd.equals("nid")) {
+                    addPred(s, _findNids(val));
+                } else if (cmd.equals("card")) {
+                    addPred(s, _findTemplate(val));
+                } else if (cmd.equals("note")) {
+                    addPred(s, _findModel(val));
+                } else if (cmd.equals("deck")) {
+                    addPred(s, _findDeck(val));
+                } else if (cmd.equals("prop")) {
+                    addPred(s, _findProp(val));
+                } else if (cmd.equals("rated")) {
+                    addPred(s, _findRated(val));
+                } else if (cmd.equals("added")) {
+                    addPred(s, _findAdded(val));
+                } else {
+                    addPred(s, _findField(cmd, val));
+                }
+            // normal text search
+            } else {
+                addPred(s, _findText(token, args));
+            }
+	    }
+	    if (s.bad) {
+	        return new Pair<String, String[]>(null, null);
+	    }
+	    return new Pair<String, String[]>(s.q, args.toArray(new String[]{}));
+	}
+    private void addPred(SearchState s, String txt) {
+        addPred(s, txt, true);
+    }
+    private void addPred(SearchState s, String txt, boolean wrap) {
+	    // failed command
+	    if (txt == null || txt.length() == 0) {
+	        // if it was to be negated then we can just ignore it
+	        if (s.isnot) {
+	            s.isnot = false;
+	            return;
+	        } else {
+	            s.bad = true;
+                return;
+	        }
+	    } else if (txt.equals("skip")) {
+	        return;
+	    }
+	    // do we need a conjunction
+	    if (s.join) {
+	        if (s.isor) {
+	            s.q += " or ";
+	            s.isor = false;
+	        } else {
+	            s.q += " and ";
+	        }
+	    }
+	    if (s.isnot) {
+	        s.q += " not ";
+	        s.isnot = false;
+	    }
+	    if (wrap) {
+	        txt = "(" + txt + ")";
+	    }
+	    s.q += txt;
+	    s.join = true;
 	}
 
-	/** Generate a list of note/card limits for the query. */
-	private void _findLimits() {
-		mLims = new JSONObject();
-		try {
-			mLims.put("preds", new JSONArray());
-			mLims.put("args", new JSONObject());
-			mLims.put("valid", true);
-		} catch (JSONException e) {
-			throw new RuntimeException(e);
+	private String _query(String preds, String order) {
+	    // can we skip the note table?
+	    String sql;
+	    if (!preds.contains("n.") && !order.contains("n.")) {
+	        sql = "select c.id from cards c where ";
+	    } else {
+	        sql = "select c.id from cards c, notes n where c.nid=n.id and ";
+	    }
+	    // combine with preds
+	    if (preds.length() != 0) {
+	        sql += "(" + preds + ")";
+	    } else {
+	        sql += "1";
+	    }
+	    // order
+	    if (order != null && order.length() != 0) {
+	        sql += " " + order;
+	    }
+	    return sql;
+	}
+	
+	// Ordering
+	///////////
+	
+	private Pair<String, Boolean> _order(String order) {
+	    if (order == null || order.length() == 0) {
+	        return new Pair<String, Boolean>("", false);
+	    } else if (!order.equalsIgnoreCase("true")) {
+	        // custom order string provided
+	        return new Pair<String, Boolean>(" order by " + order, false);
+	    }
+	    // use deck default
+	    String type;
+        try {
+            type = mCol.getConf().getString("sortType");
+            String sort;
+            if (type.startsWith("note")) {
+                if (type.startsWith("noteCrt")) {
+                    sort = "n.id, c.ord";
+                } else if (type.startsWith("noteMod")) {
+                    sort = "n.mod, c.ord";
+                } else if (type.startsWith("noteFld")) {
+                    sort = "n.sfld COLLATE NOCASE, c.ord";
+                } else {
+                    throw new RuntimeException("wrong sort type");
+                }
+            } else if (type.startsWith("card")) {
+                if (type.startsWith("cardMod")) {
+                    sort = "c.mod";
+                } else if (type.startsWith("cardReps")) {
+                    sort = "c.reps";
+                } else if (type.startsWith("cardDue")) {
+                    sort = "c.type, c.due";
+                } else if (type.startsWith("cardEase")) {
+                    sort = "c.factor";
+                } else if (type.startsWith("cardLapses")) {
+                    sort = "c.lapses";
+                } else if (type.startsWith("cardIvl")) {
+                    sort = "c.ivl";
+                } else {
+                    throw new RuntimeException("wrong sort type");
+                }
+            } else {
+                throw new RuntimeException("wrong sort type");
+            }
+            return new Pair<String, Boolean>(" ORDER BY " + sort, mCol.getConf().getBoolean("sortBackwards"));
+        } catch (JSONException e) {
+            throw new RuntimeException(e);
+        }
+	}
+	
+	// Commands
+	///////////
+
+	private String _findTag(String val, List<String> args) {
+		if (val.equals("none")) {
+			return "tags = \"\"";
 		}
-		ArrayList<Object[]> pq = _parseQuery();
-		for (int c = 0; c < pq.size(); c++) {
-			Object[] o = pq.get(c);
-			String token = (String) o[0];
-			boolean isNeg = (Boolean) o[1];
-			int type = (Integer) o[2];
-			if (type == SEARCH_TAG) {
-				_findTag(token, isNeg, c);
-			} else if (type == SEARCH_TYPE) {
-				_findCardState(token, isNeg);
-			} else if (type == SEARCH_NID) {
-				_findNids(token);
-			} else if (type == SEARCH_TEMPLATE) {
-				_findTemplate(token, isNeg);
-			} else if (type == SEARCH_FIELD) {
-				_findField(token, isNeg);
-			} else if (type == SEARCH_MODEL) {
-				_findModel(token, isNeg);
-			} else if (type == SEARCH_DECK) {
-				_findDeck(token, isNeg);
-			} else {
-				_findText(token, isNeg, c);
-			}
+		val = val.replace("*", "%");
+		if (!val.startsWith("%")) {
+			val = "% " + val;
 		}
+		if (!val.endsWith("%")) {
+			val += " %";
+		}
+		args.add(val);
+		return "n.tags like ?";
 	}
 
-	private void _findTag(String val, boolean neg, int c) {
-		try {
-			String t;
-			if (val.equals("none")) {
-				if (neg) {
-					t = "tags != \'\'";
-				} else {
-					t = "tags = \'\'";
-				}
-				mLims.getJSONArray("preds").put(t);
-				return;
-			}
-			String extra = neg ? "NOT" : "";
-			val = val.replace("*", "%");
-			if (!val.startsWith("%")) {
-				val = "% " + val;
-			}
-			if (!val.endsWith("%")) {
-				val += " %";
-			}
-			mLims.getJSONObject("args").put("_tag_" + c, val);
-			mLims.getJSONArray("preds").put("tags " + extra + " like :_tag_" + c);
-		} catch (JSONException e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	private void _findCardState(String val, boolean neg) {
-		String cond = null;
+	private String _findCardState(String val) {
 		int n;
 		if (val.equals("review") || val.equals("new") || val.equals("learn")) {
 			if (val.equals("review")) {
@@ -242,298 +391,429 @@ public class Finder {
 			} else {
 				n = 1;
 			}
-			cond = "type = " + n;
+			return "type = " + n;
 		} else if (val.equals("suspended")) {
-			cond = "queue = -1";
+			return "c.queue = -1";
 		} else if (val.equals("due")) {
-			cond = "(queue = 2 AND due <= " + mCol.getSched().getToday();
-		}
-		if (neg) {
-			cond = "NOT (" + cond + ")";
-		}
-		try {
-			if (cond.length() > 0) {
-				mLims.getJSONArray("preds").put(cond);
-			} else {
-				mLims.put("valid", false);
-			}
-		} catch (JSONException e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	private void _findText(String val, boolean neg, int c) {
-		try {
-			val = val.replace("*", "%");
-			if (!mFull) {
-				mLims.getJSONObject("args").put("_text_" + c, "%" + val + "%");
-				String txt = "sfld LIKE :_text_" + c + " ESCAPE \'\\\\\' OR flds LIKE :_text_" + c + " ESCAPE \'\\\\\'";
-				if (!neg) {
-					mLims.getJSONArray("preds").put(txt);
-				} else {
-					mLims.getJSONArray("preds").put("NOT " + txt);
-				}
-			} else {
-				ArrayList<Long> nids = new ArrayList<Long>();
-				String extra = neg ? "NOT" : "";
-				Cursor cur = null;
-				try {
-					cur = mCol.getDb().getDatabase().rawQuery("SELECT id, flds FROM notes", null);
-					while (cur.moveToNext()) {
-						if (Utils.stripHTML(cur.getString(1)).contains(val)) {
-							nids.add(cur.getLong(0));
-						}
-					}
-				} finally {
-					if (cur != null && !cur.isClosed()) {
-						cur.close();
-					}
-				}
-				mLims.getJSONArray("preds").put("n.id " + extra + " IN " + Utils.ids2str(Utils.arrayList2array(nids)));
-			}
-		} catch (JSONException e) {
-			throw new RuntimeException(e);
-		}	
-	}
-
-	private void _findNids(String val) {
-		try {
-			mLims.getJSONArray("preds").put("n.id IN (" + val + ")");
-		} catch (JSONException e) {
-			throw new RuntimeException(e);
-		}		
-	}
-
-	private void _findModel(String val, boolean isNeg) {
-		// TODO
-	}
-
-	private void _findDeck(String val, boolean isNeg) {
-		try {
-			ArrayList<Long> ids = new ArrayList<Long>();
-			long id = 0;
-			String extra;
-			if (val.toLowerCase().equals("current")) {
-				id = mCol.getDecks().current().getLong("id");
-			} else if (val.toLowerCase().equals("none")) {
-				if (isNeg) {
-					extra = "";
-				} else {
-					extra = "NOT";
-				}
-				mLims.getJSONArray("preds").put("c.did " + extra + " IN " + Utils.ids2str(mCol.getDecks().allIds()));
-				return;
-			} else if (!val.contains("*")){
-				// single deck
-				id = mCol.getDecks().id(val, false);
-			} else {
-				// wildcard
-				val = val.replace("*", ".*");
-				for (JSONObject d : mCol.getDecks().all()) {
-					if (d.getString("name").matches("(?i)" + val)) {
-						id = d.getLong("id");
-						ids.add(id);
-						for (long a : mCol.getDecks().children(id).values()) {
-							ids.add(a);
-						}
-					}
-					if (ids.size() == 0) {
-						// invalid search
-						mLims.put("valid", false);
-						return;
-					}					
-				}
-			}
-			if (ids.size() == 0) {
-				ids.add(id);
-				for (long a : mCol.getDecks().children(id).values()) {
-					ids.add(a);
-				}				
-			}
-			String sids = Utils.ids2str(Utils.arrayList2array(ids));
-			if (!isNeg) {
-				// normal search
-				mLims.getJSONArray("preds").put("(c.odid IN " + sids + " OR c.did IN " + sids + ")");
-			} else {
-				// inverted search
-				mLims.getJSONArray("preds").put("((CASE c.odid WHEN 0 then 1 else c.odid NOT IN " + sids + " END) AND c.did NOT IN " + sids + ")");
-			}
-		} catch (JSONException e) {
-			throw new RuntimeException(e);
-		}	
-	}
-
-	private void _findTemplate(String val, boolean neg) {
-		// TODO
-	}
-
-	private void _findField(String val, boolean neg) {
-		// TODO
-	}
-
-	private ArrayList<Object[]> _parseQuery() {
-		int type = 0;
-		try {
-			ArrayList<JSONObject> tokens = new ArrayList<JSONObject>();
-			ArrayList<Object[]> res = new ArrayList<Object[]>();
-			ArrayList<String> allowedfields = fieldNames(mCol);
-			// break query into words or phraselog
-			// an extra space is added so the loop never ends in the middle
-			// completing a token
-			Matcher matcher = allPattern.matcher(mQuery + " ");
-			while (matcher.find()) {
-				String value = matcher.group(2) != null ? matcher.group(2) : (matcher.group(5) != null ? matcher.group(5) : matcher.group(8));
-				boolean isNeg = (matcher.group(1) != null && matcher.group(1).equals("-")) || (matcher.group(4) != null && matcher.group(4).equals("-")) || (matcher.group(7) != null && matcher.group(7).equals("-"));
-				if (value != null) {
-					JSONObject o = new JSONObject();
-					o.put("value", value);
-					o.put("is_neg", isNeg);				
-					tokens.add(o);					
-				}
-			}
-			boolean intoken = false;
-			boolean isNeg = false;
-			String field = ""; // name of the field for field related commands
-			ArrayList<JSONObject> phraselog = new ArrayList<JSONObject>(); // log of phrases in case potential command is not a command
-			for (int c = 0; c < tokens.size(); c++) {
-				JSONObject token = tokens.get(c);
-				boolean doprocess = true; // only look for commands when this is true
-				// prevent cases such as "field" : value as being processed as a command
-				if (token.getString("value").length() == 0) {
-					if (intoken && type == SEARCH_FIELD && field.length() > 0) {
-						// case: fieldname: any thing here check for existance of fieldname
-						addSearchFieldToken(field, "*", isNeg, res, allowedfields, phraselog);
-						phraselog.clear(); // reset phrases since command is completed
-					}
-					intoken = false;
-					doprocess = false;
-				}
-				if (intoken) {
-					if (type == SEARCH_FIELD && field.length() > 0) {
-						// case: fieldname:"value"
-						addSearchFieldToken(field, token.getString("value"), isNeg, res, allowedfields, phraselog);
-						intoken = false;
-						doprocess = false;
-					} else if (type == SEARCH_FIELD && field.length() == 0) {
-						// case: "fieldname":"name" or "field" anything
-						if (token.getString("value").startsWith(":") && phraselog.size() == 1) {
-							// we now know a colon is next, so mark it as field
-	                        // and keep looking for the value
-							field = phraselog.get(0).getString("value");
-							String[] parts = token.getString("value").split(":", 1);
-							JSONObject o = new JSONObject();
-							o.put("value", token.getString("value"));
-							o.put("is_neg", false);
-							o.put("type", SEARCH_PHRASE);
-							phraselog.add(o);
-							if (parts[1].length() > 0) {
-								// value is included with the :, so wrap it up
-								addSearchFieldToken(field, parts[1], isNeg, res, allowedfields, phraselog);
-								intoken = false;
-								doprocess = false;
-							}
-							doprocess = false;
-						} else {
-							// case: "fieldname"string/"fieldname"tag:name
-							intoken = false;
-						}
-					}
-					if (!intoken && !doprocess) {
-						// command has been fully processed
-						phraselog.clear(); // reset phraselog, since we used it for a command
-					}
-				}
-				if (!intoken) {
-					// include any non-command related phrases in the query
-					for (JSONObject p : phraselog) {
-						res.add(new Object[]{p.getString("value"), p.getBoolean("is_neg"), p.getInt("type")});
-					}
-					phraselog.clear();
-				}
-				if (!intoken && doprocess) {
-					field = "";
-					isNeg = token.getBoolean("is_neg");
-					String val = token.getString("value");
-					if (val.startsWith("tag:")) {
-						token.put("value", val.substring(4));
-						type = SEARCH_TAG;
-					} else if (val.startsWith("is:")) {
-						token.put("value", val.substring(3));						
-						type = SEARCH_TYPE;
-					} else if (val.startsWith("note:")) {
-						token.put("value", val.substring(5));
-						type = SEARCH_MODEL;
-					} else if (val.startsWith("deck:")) {
-						token.put("value", val.substring(5));
-						type = SEARCH_DECK;
-					} else if (val.startsWith("nid:") && val.length() > 4) {
-						String dec = val.substring(4);
-						try {
-							Integer.parseInt(dec);
-							token.put("value", val.substring(4));
-						} catch (Exception e) {
-							try {
-								for (String d : dec.split(",")) {
-									Integer.parseInt(d);
-								}
-								token.put("value", val.substring(4));								
-							} catch (Exception e2) {
-								token.put("value", "0");
-							}
-						}
-						type = SEARCH_NID;
-					} else if (val.startsWith("card:")) {
-						token.put("value", val.substring(5));
-						type = SEARCH_TEMPLATE;
-					} else {
-						type = SEARCH_FIELD;
-						intoken = true;
-						String[] parts = token.getString("value").split(":", 1);
-						JSONObject o = new JSONObject();
-						o.put("value", token.getString("value"));
-						o.put("is_neg", isNeg);
-						o.put("type", SEARCH_PHRASE);
-						phraselog.add(o);
-						if (parts.length == 2 && parts[0].length() > 0) {
-							field = parts[0];
-							if (parts[1].length() > 0) {
-								// simple fieldname:value case -
-								// no need to look for more data
-								addSearchFieldToken(field, parts[1], isNeg, res, allowedfields, phraselog);
-							}
-							intoken = false;
-							doprocess = false;
-						}
-						if (!intoken) {
-							phraselog.clear();
-						}
-					}
-					if (!intoken && doprocess) {
-						res.add(new Object[] {token.getString("value"), isNeg, type});
-					}
-				}
-			}
-			return res;
-		} catch (JSONException e) {
-			throw new RuntimeException(e);
-		}
-
-	}
-	private void addSearchFieldToken(String field, String value, boolean isNeg, ArrayList<Object[]> res, ArrayList<String> allowedfields, ArrayList<JSONObject> phraselog) {
-		if (allowedfields.contains(field.toLowerCase())) {
-			res.add(new Object[]{field + ":" + value, isNeg, SEARCH_FIELD});
+		    return String.format(Locale.US,
+		            "(c.queue in (2,3) and c.due <= %d) or (c.queue = 1 and c.due <= %d)",
+		            mCol.getSched().getToday(), mCol.getSched().getDayCutoff());
 		} else {
-			for (JSONObject p : phraselog) {
-				try {
-					res.add(new Object[]{p.getString("value"), p.getBoolean("is_neg"), p.getInt("type")});
-				} catch (JSONException e) {
-					throw new RuntimeException(e);
-				}
-			}
+		    return null;
 		}
 	}
 
-	// findReplace
-	// findDuplicates
+	private String _findRated(String val) {
+	    // days(:optional_ease)
+	    String[] r = val.split(":");
+	    int days;
+	    try {
+	        days = Integer.parseInt(r[0]);
+	    } catch (NumberFormatException e) {
+	        return "";
+	    }
+	    days = Math.min(days, 31);
+	    // ease
+	    String ease = "";
+	    if (r.length > 1) {
+	        if (!fValidEases.contains(r[1])) {
+	            return "";
+	        }
+	        ease = "and ease=" + r[1];
+	    }
+	    long cutoff = (mCol.getSched().getDayCutoff() - 86400 * days) * 1000;
+	    return String.format(Locale.US, "c.id in (select cid from revlog where id>%d %s)",
+	            cutoff, ease);
+	}
+	
+	private String _findAdded(String val) {
+	    int days;
+	    try {
+	        days = Integer.parseInt(val);
+        } catch (NumberFormatException e) {
+            return "";
+        }
+	    long cutoff = (mCol.getSched().getDayCutoff() - 86400 * days) * 1000;
+	    return "c.id > " + cutoff;
+	}
+	
+	private String _findProp(String _val) {
+	    // extract
+	    Matcher m = fPropPattern.matcher(_val);
+	    if (!m.matches()) {
+	        return "";
+	    }
+        String prop = m.group(1).toLowerCase();
+        String cmp = m.group(2);
+        String sval = m.group(3);
+        int val;
+        // is val valid?
+        try {
+            if (prop.equals("ease")) {
+                // This multiplying and convert to int happens later in libanki, moved it here for efficiency
+                val = (int)(Double.parseDouble(sval) * 1000);
+            } else {
+                val = Integer.parseInt(sval);
+            }
+        } catch (NumberFormatException e) {
+            return "";
+        }
+        // is prop valid?
+        if (!fValidProps.contains(prop)) {
+            return "";
+        }
+        // query
+        String q = "";
+        if (prop.equals("due")) {
+            val += mCol.getSched().getToday();
+            // only valid for review/daily learning
+            q = "(c.queue in (2,3)) and ";
+        } else if (prop.equals("ease")) {
+            prop = "factor";
+            // already done: val = int(val*1000)
+        }
+        q += String.format(Locale.US, "(%s %s %s)", prop, cmp, val);
+        return q;
+	}
+	
+	private String _findText(String val, List<String> args) {
+	    val = val.replace("*", "%");
+        args.add("%" + val + "%");
+        args.add("%" + val + "%");
+        return "(n.sfld like ? escape '\\' or n.flds like ? escape '\\')";
+	}
 
+	private String _findNids(String val) {
+	    if (fNidsPattern.matcher(val).find()) {
+	        return "";
+	    }
+	    return "n.id in (" + val + ")";
+	}
+
+	private String _findModel(String val) {
+		LinkedList<Long> ids = new LinkedList<Long>();
+		val = val.toLowerCase();
+        try {		
+            for (JSONObject m : mCol.getModels().all()) {
+                if (m.getString("name").toLowerCase().equals(val)) {
+                    ids.add(m.getLong("id"));
+                }
+            }
+        } catch (JSONException e) {
+            throw new RuntimeException(e);
+        }
+		return "n.mid in " + Utils.ids2str(ids);
+	}
+
+	private List<Long> dids(long did) {
+	    if (did == 0) {
+	        return null;
+	    } 
+	    TreeMap<String, Long> children = mCol.getDecks().children(did);
+	    
+	    List<Long> res = new ArrayList<Long>();
+	    res.add(did);
+	    res.addAll(children.values());
+	    return res;
+	}
+	public String _findDeck(String val) {
+	    // if searching for all decks, skip
+	    if (val.equals("*")) {
+	        return "skip";
+	    // deck types
+	    } else if (val.equals("filtered")) {
+	        return "c.odid";
+	    }
+
+	    List<Long> ids = null;
+	    // current deck?
+	    try {
+	        if (val.toLowerCase().equals("current")) {
+                ids = dids(mCol.getDecks().current().getLong("id"));
+    	    } else if (!val.contains("*")) {
+    	        // single deck
+    	        ids = dids(mCol.getDecks().id(val, false));
+    	    } else {
+    	        // widlcard
+    	        ids = new ArrayList<Long>();
+    	        val = val.replace("*", ".*");
+    	        for (JSONObject d : mCol.getDecks().all()) {
+    	            if (d.getString("name").matches("(?i)" + val)) {
+    	                for (long id : dids(d.getLong("id"))) {
+    	                    ids.add(id);
+    	                }
+    	            }
+    	        }
+    	    }
+        } catch (JSONException e) {
+            throw new RuntimeException(e);
+        }
+	    if (ids == null || ids.size() == 0) {
+	        return "";
+	    }
+	    String sids = Utils.ids2str(ids);
+	    return String.format(Locale.US,
+	            "c.did in %s or c.odid in %s", sids, sids);
+	}
+
+	private String _findTemplate(String val) {
+		// were we given an ordinal number?
+	    Integer num = null;
+	    try {
+	        num = Integer.parseInt(val) - 1;
+	    } catch (NumberFormatException e) {
+	        num = null;
+	    }
+	    if (num != null) {
+	        return "c.ord = " + num;
+	    }
+	    // search for template names
+	    List<String> lims = new ArrayList<String>();
+	    try {
+	        for (JSONObject m : mCol.getModels().all()) {
+	            JSONArray tmpls = m.getJSONArray("tmpls");
+	            for (int ti = 0; ti < tmpls.length(); ++ti) {
+	                JSONObject t = tmpls.getJSONObject(ti);
+	                if (t.getString("name").equalsIgnoreCase(val)) {
+	                    if (m.getInt("type") == Sched.MODEL_CLOZE) {
+	                        // if the user has asked for a cloze card, we want
+	                        // to give all ordinals, so we just limit to the
+	                        // model instead
+	                        lims.add(String.format(Locale.US, "(n.mid = %s)", m.getLong("id")));
+	                    } else {
+	                        lims.add(String.format(Locale.US, "(n.mid = %s and c.ord = %s)",
+	                                m.getLong("id"), t.getInt("ord")));
+	                    }
+	                }
+	            }
+	            
+	        }
+	    } catch (JSONException e) {
+	        throw new RuntimeException(e);
+	    }
+	    return Utils.join(" or ", lims.toArray(new String[]{}));
+	}
+
+	private String _findField(String field, String val) {
+		val = val.replace("*", "%");
+		// find models that have that field
+		Map<Long, Object[]> mods = new HashMap<Long, Object[]>();
+		try {
+		    for (JSONObject m : mCol.getModels().all()) {
+		        JSONArray flds = m.getJSONArray("flds");
+		        for (int fi = 0; fi < flds.length(); ++fi) {
+		            JSONObject f = flds.getJSONObject(fi);
+		            if (f.getString("name").equalsIgnoreCase(field)) {
+		                mods.put(m.getLong("id"), new Object[]{m, f.getInt("ord")});
+		            }
+		            
+		        }
+		    
+		    }
+		} catch (JSONException e) {
+		    throw new RuntimeException(e);
+		}
+		if (mods.isEmpty()) {
+		    // nothing has that field
+		    return "";
+		}
+		// gather nids
+		String regex = val.replace("_", ".").replace("%", ".*");
+		LinkedList<Long> nids = new LinkedList<Long>();
+		Cursor cur = null;
+		try {
+		    cur = mCol.getDb().getDatabase().rawQuery(
+		            String.format(Locale.US,
+		                    "select id, mid, flds from notes where mid in %s and flds like ? escape '\\'",
+		                    Utils.ids2str(new LinkedList<Long>(mods.keySet()))),
+		                    new String[]{"%" + val + "%"});
+		    while (cur.moveToNext()) {
+		        String[] flds = Utils.splitFields(cur.getString(2));
+		        int ord = (Integer) mods.get(cur.getLong(1))[1];
+		        String strg = flds[ord];
+		        if (Pattern.compile(regex, Pattern.CASE_INSENSITIVE).matcher(strg).matches()) {
+		            nids.add(cur.getLong(0));
+		        }
+		    }
+		} finally {
+		    if (cur != null) {
+		        cur.close();
+		    }
+		}
+		if (nids.isEmpty()) {
+		    return "";
+		}
+		return "n.id in " + Utils.ids2str(nids);
+	}
+
+	// Find and Replace
+	///////////////////
+	   /**
+     * Find and replace fields in a note
+     * @param col The collection to search into.
+     * @param nids The cards to be searched for.
+     * @param src The original text to find.
+     * @param dst The text to change to.
+     * @param regex If true, the src is treated as a regex. Default = false.
+     * @param field Limit the search to specific field. If null, it searches all fields.
+     * @param fold If true the search is case-insensitive. Default = true.
+     * @return
+     */
+    public static int findReplace(Collection col, List<Long> nids, String src, String dst) {
+        return findReplace(col, nids, src, dst, false, null, true);
+    }
+    public static int findReplace(Collection col, List<Long> nids, String src, String dst, boolean regex) {
+        return findReplace(col, nids, src, dst, regex, null, true);
+    }
+    public static int findReplace(Collection col, List<Long> nids, String src, String dst, String field) {
+        return findReplace(col, nids, src, dst, false, field, true);
+    }
+    public static int findReplace(Collection col, List<Long> nids, String src, String dst, boolean isRegex, String field, boolean fold) {
+	    Map<Long, Integer> mmap = new HashMap<Long, Integer>();
+	    if (field != null) {
+	        try {
+	            for (JSONObject m : col.getModels().all()) {
+	                JSONArray flds = m.getJSONArray("flds");
+	                for (int fi = 0; fi < flds.length(); ++fi) {
+	                    JSONObject f = flds.getJSONObject(fi);
+	                    if (f.getString("name").equals(field)) {
+	                        mmap.put(m.getLong("id"), f.getInt("ord"));
+	                    }
+	                }
+	            }
+	        } catch (JSONException e) {
+	            throw new RuntimeException(e);
+	        }
+	        if (mmap.isEmpty()) {
+	            return 0;
+	        }
+	    }
+	    // find and gather replacements
+	    if (!isRegex) {
+	        src = Pattern.quote(src);
+	    }
+	    if (fold) {
+	        src = "(?i)" + src;
+	    }
+	    Pattern regex = Pattern.compile(src);
+	
+	    ArrayList<Object[]> d = new ArrayList<Object[]>();
+	    String sql = "select id, mid, flds from notes where id in " + Utils.ids2str(nids.toArray(new Long[]{}));
+	    nids = new ArrayList<Long>();
+	    
+	    Cursor cur = null;
+	    try {
+	        cur = col.getDb().getDatabase().rawQuery(sql, null);
+	        while (cur.moveToNext()) {
+	            String flds = cur.getString(2);
+	            String origFlds = flds;
+	            // does it match?
+	            String[] sflds = Utils.splitFields(flds);
+	            if (field != null) {
+	                long mid = cur.getLong(1);
+                    if (!mmap.containsKey(mid)) {
+                        continue;
+                    }
+                    int ord = mmap.get(mid);
+                    sflds[ord] = regex.matcher(sflds[ord]).replaceAll(dst);
+	            } else {
+	                for (int i = 0; i < sflds.length; ++i) {
+	                    sflds[i] = regex.matcher(sflds[i]).replaceAll(dst);
+	                }
+	            }
+	            flds = Utils.joinFields(sflds);
+	            if (!flds.equals(origFlds)) {
+	                long nid = cur.getLong(0);
+	                nids.add(nid);
+	                d.add(new Object[]{flds, Utils.intNow(), col.usn(), nid});
+	            }
+	            
+	        }
+	    } finally {
+	        if (cur != null) {
+	            cur.close();
+	        }
+	    }
+	    if (d.isEmpty()) {
+	        return 0;
+	    }
+	    // replace
+	    col.getDb().executeMany("update notes set flds=?,mod=?,usn=? where id=?", d);
+	    long[] pnids = Utils.toPrimitive(nids);
+	    col.updateFieldCache(pnids);
+	    col.genCards(pnids);
+	    return d.size();
+    }
+    
+    public List<String> fieldNames(Collection col, boolean downcase) {
+        Set<String> fields = new HashSet<String>();
+        List<String> names = new ArrayList<String>();
+        try {
+            for (JSONObject m : col.getModels().all()) {
+                JSONArray flds = m.getJSONArray("flds");
+                for (int fi = 0; fi < flds.length(); ++fi) {
+                    JSONObject f = flds.getJSONObject(fi);
+                    if (!fields.contains(f.getString("name").toLowerCase())) {
+                        names.add(f.getString("name"));
+                        fields.add(f.getString("name").toLowerCase());
+                    }
+                }
+            }
+        } catch (JSONException e) {
+            throw new RuntimeException(e);
+        }
+        if (downcase) {
+            return new ArrayList<String>(fields);
+        }
+        return names;
+    }
+    
+    // Find Duplicates
+    //////////////////
+    
+    public static List<Pair<String, List<Long>>> findDupes(Collection col, String fieldName) {
+        return findDupes(col, fieldName, "");
+    }
+	public static List<Pair<String, List<Long>>> findDupes(Collection col, String fieldName, String search) {
+	    // limit search to notes with applicable field name
+	    search += String.format(Locale.US, " '%s:*'", fieldName);
+	    // go through notes
+	    
+	    String sql = "select id, mid, flds from notes where id in " + Utils.ids2str(
+	            col.findNotes(search).toArray(new Long[]{}));
+	    Cursor cur = null;
+	    Map<Long, Integer> fields = new HashMap<Long, Integer>();
+	    Map<String, List<Long>> vals = new HashMap<String, List<Long>>();
+	    List<Pair<String, List<Long>>> dupes = new ArrayList<Pair<String, List<Long>>>();
+        try {
+            cur = col.getDb().getDatabase().rawQuery(sql, null);
+            while (cur.moveToNext()) {
+                long nid = cur.getLong(0);
+                long mid = cur.getLong(1);
+                String[] flds = Utils.splitFields(cur.getString(2));
+                // inlined ordForMid(mid)
+                if (!fields.containsKey(mid)) {
+                    JSONObject model = col.getModels().get(mid);
+                    fields.put(mid, col.getModels().fieldMap(model).get(fieldName).first);
+                }
+                String val = flds[fields.get(mid)];
+                // empty does not count as duplicate
+                if (val.equals("")) {
+                    continue;
+                }
+                if (!vals.containsKey(val)) {
+                    vals.put(val, new ArrayList<Long>());
+                }
+                vals.get(val).add(nid);
+                if (vals.get(val).size() == 2) {
+                    dupes.add(new Pair<String, List<Long>>(val, vals.get(val)));
+                }
+            }
+        } finally {
+            if (cur != null) {
+                cur.close();
+            }
+        }
+        return dupes;
+	}
 }

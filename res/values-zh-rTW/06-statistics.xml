@@ -64,6 +64,14 @@
   <string name="stats_forecast">預測</string>
   <string name="stats_review_count">複習次數</string>
   <string name="stats_review_time">回顧時間</string>
+  <string-array name="next_review_short">
+    <item>%ss</item>
+    <item>%sm</item>
+    <item>%sh</item>
+    <item>%sd</item>
+    <item>%smo</item>
+    <item>%sy</item>
+  </string-array>
   <string-array name="next_review_in_s">
     <item>在 1 秒內</item>
     <item>在 1 分鐘內</item>

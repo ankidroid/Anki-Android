@@ -76,13 +76,15 @@
   <string name="simple_interface_hint">빈 %s. 간단 인터페이스는 그림/소리 등이 재생되지 않습니다.</string>
   <string name="delete_deck">카드 묶음 삭제 중...\n 잠시만 기다리세요.</string>
   <string name="menu_cardbrowser">카드 탐색기</string>
+  <string name="pref_lang_other">언어 기본 설정</string>
+  <string name="pref_lang_common">공통언어</string>
+  <string name="pref_font_UI">사용자 지정 UI 글꼴</string>
   <string-array name="dynOrderLabels">
     <item>오래된 카드 먼저 학습하기</item>
     <item>무작위로 학습하기</item>
     <item>학습 간격 늘이기</item>
     <item>학습 간격 줄이기</item>
     <item>학습간격이 제일 긴 것부터</item>
-    <item>오늘 실패한 카드</item>
     <item>추가된 순서대로</item>
     <item>순서대로</item>
   </string-array>

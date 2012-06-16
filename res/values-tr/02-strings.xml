@@ -75,16 +75,18 @@
   <string name="check_db_message">Veritabanı denetleniyor.\nLütfen bekleyin...</string>
   <string name="simple_interface_hint">Boş %s. Basit arayüzün resimleri/sesleri vb. gösteremediğini unutmayın.</string>
   <string name="delete_deck">Deste siliniyor...\nLütfen bekleyin.</string>
-  <string name="menu_cardbrowser">Card browser</string>
+  <string name="menu_cardbrowser">Kart tarayıcısı</string>
+  <string name="pref_lang_other">Language Preferences</string>
+  <string name="pref_lang_common">LangCommon</string>
+  <string name="pref_font_UI">Custom UI Font</string>
   <string-array name="dynOrderLabels">
     <item>En eskiler ilk önce</item>
     <item>Rastgele</item>
     <item>Artan aralıkta</item>
     <item>Azalan aralıkta</item>
     <item>En fazla yanılma</item>
-    <item>Bugün başarısız</item>
-    <item>Eklenme tarihine göre</item>
-    <item>Çalışılma tarihine göre</item>
+    <item>Order added</item>
+    <item>Order due</item>
   </string-array>
   <plurals name="factadder_cards_added">
     <item quantity="one">1 kart eklendi</item>

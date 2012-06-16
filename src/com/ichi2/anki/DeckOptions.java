@@ -102,10 +102,8 @@ public class DeckOptions extends PreferenceActivity implements
 				mValues.put("revSpaceMin", revOptions.getString("minSpace"));
 				mValues.put("easyBonus", Integer.toString((int) (revOptions
 						.getDouble("ease4") * 100)));
-				mValues.put("revDesForIdx", revOptions.getJSONArray("fi")
-						.getString(0));
-				mValues.put("revAssForIdx", revOptions.getJSONArray("fi")
-						.getString(1));
+				mValues.put("revIvlFct", revOptions.getString("ivlFct"));
+				mValues.put("revMaxIvl", revOptions.getString("maxIvl"));
 				// lapse
 				JSONObject lapOptions = mOptions.getJSONObject("lapse");
 				mValues.put("lapSteps",
@@ -214,20 +212,16 @@ public class DeckOptions extends PreferenceActivity implements
 									.put("ease4",
 											Integer.parseInt((String) entry
 													.getValue()) / 100.0f);
-						} else if (entry.getKey().equals("revDesForIdx")) {
-							JSONArray ja = new JSONArray();
-							ja = new JSONArray();
-							ja.put(Integer.parseInt((String) entry.getValue()));
-							ja.put(mOptions.getJSONObject("rev")
-									.getJSONArray("fi").get(1));
-							mOptions.getJSONObject("rev").put("fi", ja);
-						} else if (entry.getKey().equals("revAssForIdx")) {
-							JSONArray ja = new JSONArray();
-							ja = new JSONArray();
-							ja.put(mOptions.getJSONObject("rev")
-									.getJSONArray("fi").get(0));
-							ja.put(Integer.parseInt((String) entry.getValue()));
-							mOptions.getJSONObject("rev").put("fi", ja);
+						} else if (entry.getKey().equals("revIvlFct")) {
+							mOptions.getJSONObject("rev")
+							.put("ivlFct",
+									Double.parseDouble((String) entry
+											.getValue()));
+						} else if (entry.getKey().equals("revMaxIvl")) {
+							mOptions.getJSONObject("rev")
+							.put("maxIvl",
+									Integer.parseInt((String) entry
+											.getValue()));
 						} else if (entry.getKey().equals("lapSteps")) {
 							String steps = (String) entry.getValue();
 							if (steps.matches("[0-9\\s]*")) {

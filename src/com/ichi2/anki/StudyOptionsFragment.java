@@ -36,6 +36,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
+import android.view.ViewParent;
 import android.view.ViewTreeObserver.OnGlobalLayoutListener;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -68,6 +69,7 @@ import org.achartengine.model.XYSeries;
 import org.achartengine.renderer.XYMultipleSeriesRenderer;
 import org.achartengine.renderer.XYSeriesRenderer;
 import org.json.JSONException;
+import org.json.JSONObject;
 
 public class StudyOptionsFragment extends Fragment {
 
@@ -84,8 +86,8 @@ public class StudyOptionsFragment extends Fragment {
 	/**
 	 * Constants for selecting which content view to display
 	 */
-	private static final int CONTENT_STUDY_OPTIONS = 0;
-	private static final int CONTENT_CONGRATS = 1;
+	public static final int CONTENT_STUDY_OPTIONS = 0;
+	public static final int CONTENT_CONGRATS = 1;
 
 	private static final int DIALOG_STATISTIC_TYPE = 0;
 
@@ -99,6 +101,7 @@ public class StudyOptionsFragment extends Fragment {
 	 */
 	private int mStartedByBigWidget;
 	private boolean mSwipeEnabled;
+    private boolean mPrefHideDueCount;
 	private int mCurrentContentView;
 	boolean mInvertedColors = false;
 	String mLocale;
@@ -113,6 +116,9 @@ public class StudyOptionsFragment extends Fragment {
 	 */
 	private View mStudyOptionsView;
 	private Button mButtonStart;
+    private Button mButtonUp;
+    private Button mButtonDown;
+    private ToggleButton mToggleLimitToggle;
 	private TextView mTextDeckName;
 	private TextView mTextDeckDescription;
 	private TextView mTextTodayNew;
@@ -166,10 +172,39 @@ public class StudyOptionsFragment extends Fragment {
 	private View.OnClickListener mButtonClickListener = new View.OnClickListener() {
 		@Override
 		public void onClick(View v) {
+            long timeLimit = 0;
 			switch (v.getId()) {
 			case R.id.studyoptions_start:
 				openReviewer();
 				return;
+            case R.id.studyoptions_limitup:
+                timeLimit = (mCol.getTimeLimit() / 60);
+                mCol.setTimeLimit((timeLimit + 1) * 60);
+                mToggleLimitToggle.setChecked(true);
+                mToggleLimitToggle.setText(String.valueOf(timeLimit + 1));
+                return;
+            case R.id.studyoptions_limitdown:
+                timeLimit = (mCol.getTimeLimit() / 60);
+                if(timeLimit > 1) {
+                    mCol.setTimeLimit((timeLimit - 1) * 60);
+                    mToggleLimitToggle.setChecked(true);
+                    mToggleLimitToggle.setText(String.valueOf(timeLimit - 1));
+                } else if(timeLimit == 1) {
+                    mCol.setTimeLimit(0);
+                    mToggleLimitToggle.setChecked(false);
+                }
+                return;
+            case R.id.studyoptions_limittoggle:                
+                timeLimit = (mCol.getTimeLimit() / 60);            
+                if (timeLimit > 0) {
+                    mToggleLimitToggle.setChecked(false);
+                    mCol.setTimeLimit(0);
+                } else {
+                    mToggleLimitToggle.setChecked(true);
+                    mToggleLimitToggle.setText("1");
+                    mCol.setTimeLimit(60);
+                }
+                return;
 			case R.id.studyoptions_congrats_open_other_deck:
 				closeStudyOptions();
 				return;
@@ -188,13 +223,7 @@ public class StudyOptionsFragment extends Fragment {
 				return;
 			case R.id.studyoptions_options:
 				if (mCol.getDecks().isDyn(mCol.getDecks().selected())) {
-		        	Intent intent = new Intent();
-		        	intent.setClass(getActivity(), CramDeckActivity.class);
-		    		startActivity(intent);
-					if (UIUtils.getApiLevel() > 4) {
-						ActivityTransitionAnimation.slide(getActivity(),
-								ActivityTransitionAnimation.FADE);
-					}
+					openCramDeckOptions();
 				} else {
 					Intent i = new Intent(getActivity(), DeckOptions.class);
 					startActivityForResult(i, DECK_OPTIONS);
@@ -205,8 +234,11 @@ public class StudyOptionsFragment extends Fragment {
 				}
 				return;
 			case R.id.studyoptions_rebuild_cram:
-				mProgressDialog = StyledProgressDialog.show(getActivity(), "", getResources().getString(R.string.rebuild_cram_deck), true);
-			 	DeckTask.launchDeckTask(DeckTask.TASK_TYPE_REBUILD_CRAM, mUpdateValuesFromDeckListener, new DeckTask.TaskData(mCol, mCol.getDecks().selected()));
+				rebuildCramDeck();
+				return;
+			case R.id.studyoptions_empty_cram:
+				mProgressDialog = StyledProgressDialog.show(getActivity(), "", getResources().getString(R.string.empty_cram_deck), true);
+			 	DeckTask.launchDeckTask(DeckTask.TASK_TYPE_EMPTY_CRAM, mUpdateValuesFromDeckListener, new DeckTask.TaskData(mCol, mCol.getDecks().selected()));
 				return;
 			case R.id.studyoptions_add:
 				addNote();
@@ -217,6 +249,19 @@ public class StudyOptionsFragment extends Fragment {
 		}
 	};
 
+	private void openCramDeckOptions() {
+		Intent i = new Intent(getActivity(), CramDeckOptions.class);
+		startActivityForResult(i, DECK_OPTIONS);
+		if (UIUtils.getApiLevel() > 4) {
+			ActivityTransitionAnimation.slide(getActivity(),
+					ActivityTransitionAnimation.FADE);
+		}
+	}
+
+	private void rebuildCramDeck() {
+		mProgressDialog = StyledProgressDialog.show(getActivity(), "", getResources().getString(R.string.rebuild_cram_deck), true);
+	 	DeckTask.launchDeckTask(DeckTask.TASK_TYPE_REBUILD_CRAM, mUpdateValuesFromDeckListener, new DeckTask.TaskData(mCol, mCol.getDecks().selected()));
+	}
 
     public static StudyOptionsFragment newInstance(int index) {
     	StudyOptionsFragment f = new StudyOptionsFragment();
@@ -294,9 +339,8 @@ public class StudyOptionsFragment extends Fragment {
 		} else {
 			mCompat = new CompatV3();
 		}
-
-		View view = showContentView(CONTENT_STUDY_OPTIONS);
-		return view;
+		resetAndUpdateValuesFromDeck();
+		return mStudyOptionsView;
 	}
 
     @Override
@@ -312,10 +356,13 @@ public class StudyOptionsFragment extends Fragment {
 		CharSequence newTotal = mTextNewTotal.getText();
 		CharSequence total = mTextTotal.getText();
 		CharSequence eta = mTextETA.getText();
+        long timelimit = mCol.getTimeLimit() / 60;
         super.onConfigurationChanged(newConfig);
         mDontSaveOnStop = false;
 //		initAllContentViews();
-		showContentView(mCurrentContentView, false);
+        if (mCurrentContentView == CONTENT_CONGRATS) {
+        	setFragmentContentView(mStudyOptionsView, mCongratsView);
+        }
 		mTextDeckName.setText(title);
 		mTextDeckName.setVisibility(View.VISIBLE);
 		mTextDeckDescription.setText(desc);
@@ -327,6 +374,11 @@ public class StudyOptionsFragment extends Fragment {
 		mTextNewTotal.setText(newTotal);
 		mTextTotal.setText(total);
 		mTextETA.setText(eta);
+        
+        mToggleLimitToggle.setChecked(timelimit > 0 ? true : false);
+        if (timelimit > 0) {
+            mToggleLimitToggle.setText(String.valueOf(timelimit));
+        }
 		updateStatisticBars();
     }
 
@@ -386,12 +438,14 @@ public class StudyOptionsFragment extends Fragment {
 
 	private void closeStudyOptions(int result) {
 //		mCompat.invalidateOptionsMenu(this);
-//		setResult(result);
-//		finish();
-//		if (UIUtils.getApiLevel() > 4) {
-//			ActivityTransitionAnimation.slide(getActivity(),
-//					ActivityTransitionAnimation.RIGHT);
-//		}
+		if (!mFragmented) {
+			getActivity().setResult(result);
+			getActivity().finish();
+			if (UIUtils.getApiLevel() > 4) {
+				ActivityTransitionAnimation.slide(getActivity(),
+						ActivityTransitionAnimation.RIGHT);
+			}			
+		}
 	}
 
 	private void openReviewer() {
@@ -402,6 +456,7 @@ public class StudyOptionsFragment extends Fragment {
 			ActivityTransitionAnimation.slide(getActivity(),
 					ActivityTransitionAnimation.LEFT);
 		}
+        mCol.startTimebox();
 	}
 
 	private void addNote() {
@@ -493,6 +548,12 @@ public class StudyOptionsFragment extends Fragment {
 				.findViewById(R.id.studyoptions_deck_description);
 		mButtonStart = (Button) mStudyOptionsView
 				.findViewById(R.id.studyoptions_start);
+        mButtonUp = (Button) mStudyOptionsView
+                .findViewById(R.id.studyoptions_limitup);
+        mButtonDown = (Button) mStudyOptionsView
+                .findViewById(R.id.studyoptions_limitdown);
+        mToggleLimitToggle = (ToggleButton) mStudyOptionsView
+                .findViewById(R.id.studyoptions_limittoggle);
 //		mToggleCram = (ToggleButton) mStudyOptionsView
 //				.findViewById(R.id.studyoptions_cram);
 //		mToggleNight = (ToggleButton) mStudyOptionsView
@@ -502,7 +563,9 @@ public class StudyOptionsFragment extends Fragment {
 		if (mCol != null && mCol.getDecks().isDyn(mCol.getDecks().selected())) {
 			Button rebBut = (Button) mStudyOptionsView.findViewById(R.id.studyoptions_rebuild_cram);
 			rebBut.setOnClickListener(mButtonClickListener);
-			rebBut.setVisibility(View.VISIBLE);
+			Button emptyBut = (Button) mStudyOptionsView.findViewById(R.id.studyoptions_empty_cram);
+			emptyBut.setOnClickListener(mButtonClickListener);
+			((LinearLayout) mStudyOptionsView.findViewById(R.id.studyoptions_cram_buttons)).setVisibility(View.VISIBLE);
 		}
 
 		if (mFragmented) {
@@ -549,6 +612,9 @@ public class StudyOptionsFragment extends Fragment {
 		mDeckChart = (LinearLayout) mStudyOptionsView.findViewById(R.id.studyoptions_chart);
 		
 		mButtonStart.setOnClickListener(mButtonClickListener);
+        mButtonUp.setOnClickListener(mButtonClickListener);
+        mButtonDown.setOnClickListener(mButtonClickListener);
+        mToggleLimitToggle.setOnClickListener(mButtonClickListener);
 //		mToggleCram.setOnClickListener(mButtonClickListener);
 //		mToggleNight.setOnClickListener(mButtonClickListener);
 
@@ -569,6 +635,9 @@ public class StudyOptionsFragment extends Fragment {
 		// .findViewById(R.id.studyoptions_congrats_reviewearly);
 		mButtonCongratsOpenOtherDeck = (Button) mCongratsView
 				.findViewById(R.id.studyoptions_congrats_open_other_deck);
+		if (mFragmented) {
+			mButtonCongratsOpenOtherDeck.setVisibility(View.GONE);
+		}
 		mButtonCongratsFinish = (Button) mCongratsView
 				.findViewById(R.id.studyoptions_congrats_finish);
 
@@ -615,52 +684,61 @@ public class StudyOptionsFragment extends Fragment {
 		return dialog;
 	}
 
-	private View showContentView(int which) {
-		return showContentView(which, true);
+	void setFragmentContentView(View oldView, View newView) {
+	    LinearLayout.LayoutParams layoutParams = 
+	            new LinearLayout.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT, ViewGroup.LayoutParams.FILL_PARENT);
+	    ViewGroup parent = (ViewGroup) oldView.getParent();
+	    parent.removeAllViews();
+	    parent.addView(newView);
 	}
-	private View showContentView(int which, boolean reload) {
-		mCurrentContentView = which;
 
-		switch (mCurrentContentView) {
 
-		case CONTENT_STUDY_OPTIONS:
-			// TODO: update togglebuttons
-			// Enable timeboxing in case it was disabled from the previous deck
-			// if ((DeckManager.getMainDeck() != null) &&
-			// (DeckManager.getMainDeck().name().equals("cram"))) {
-			// mToggleCram.setChecked(false);
-			// mToggleLimit.setEnabled(true);
-			// }
-//			setContentView(mStudyOptionsView);
-			if (reload) {
-				resetAndUpdateValuesFromDeck();				
-			}
-			return mStudyOptionsView;
-
-		case CONTENT_CONGRATS:
-			// TODO: mTextCongratsMessage.setText(getCongratsMessage(this)
-			// Resources res = getResources();
-			// Deck deck = AnkiDroidApp.deck();
-			// if (deck != null) {
-			// int newCards = deck.getSched().newTomorrow();
-			// int revCards = deck.getSched().revTomorrow() +
-			// deck.getSched().lrnTomorrow();
-			// int eta = 0; // TODO
-			// String newCardsText =
-			// res.getQuantityString(R.plurals.studyoptions_congrats_new_cards,
-			// newCards, newCards);
-			// String etaText =
-			// res.getQuantityString(R.plurals.studyoptions_congrats_eta, eta,
-			// eta);
-			// }
-		 	mTextCongratsMessage.setText(mCol.getSched().finishedMsg(getActivity()));
-			if (reload) {
-				updateValuesFromDeck();
-			}
-			return mCongratsView;
-		}
-		return null;
-	}
+	//	private View showContentView(int which) {
+//		return showContentView(which, true);
+//	}
+//	private View showContentView(int which, boolean reload) {
+//		mCurrentContentView = which;
+//
+//		switch (mCurrentContentView) {
+//
+//		case CONTENT_STUDY_OPTIONS:
+//			// TODO: update togglebuttons
+//			// Enable timeboxing in case it was disabled from the previous deck
+//			// if ((DeckManager.getMainDeck() != null) &&
+//			// (DeckManager.getMainDeck().name().equals("cram"))) {
+//			// mToggleCram.setChecked(false);
+//			// mToggleLimit.setEnabled(true);
+//			// }
+////			setContentView(mStudyOptionsView);
+//			if (reload) {
+//				resetAndUpdateValuesFromDeck();				
+//			}
+//			return mStudyOptionsView;
+//
+//		case CONTENT_CONGRATS:
+//			// TODO: mTextCongratsMessage.setText(getCongratsMessage(this)
+//			// Resources res = getResources();
+//			// Deck deck = AnkiDroidApp.deck();
+//			// if (deck != null) {
+//			// int newCards = deck.getSched().newTomorrow();
+//			// int revCards = deck.getSched().revTomorrow() +
+//			// deck.getSched().lrnTomorrow();
+//			// int eta = 0; // TODO
+//			// String newCardsText =
+//			// res.getQuantityString(R.plurals.studyoptions_congrats_new_cards,
+//			// newCards, newCards);
+//			// String etaText =
+//			// res.getQuantityString(R.plurals.studyoptions_congrats_eta, eta,
+//			// eta);
+//			// }
+//		 	mTextCongratsMessage.setText(mCol.getSched().finishedMsg(getActivity()));
+////			if (reload) {
+////				updateValuesFromDeck();
+////			}
+//			return mCongratsView;
+//		}
+//		return null;
+//	}
 
 	private void resetAndUpdateValuesFromDeck() {
 		updateValuesFromDeck(true);
@@ -671,8 +749,13 @@ public class StudyOptionsFragment extends Fragment {
 	}
 	private void updateValuesFromDeck(boolean reset) {
 		String fullName;
+		JSONObject deck = mCol.getDecks().current();
 		try {
-			fullName = mCol.getDecks().current().getString("name");
+			fullName = deck.getString("name");
+			if (deck.has("empty") && deck.getBoolean("empty")) {
+				openCramDeckOptions();
+				return;
+			}
 		} catch (JSONException e) {
 			throw new RuntimeException(e);
 		}
@@ -782,7 +865,7 @@ public class StudyOptionsFragment extends Fragment {
 		mCongratsView.setVisibility(View.INVISIBLE);
 		mCongratsView.setAnimation(ViewAnimation.fade(ViewAnimation.FADE_OUT,
 				500, 0));
-		showContentView(CONTENT_STUDY_OPTIONS);
+		setFragmentContentView(mCongratsView, mStudyOptionsView);
 		mStudyOptionsView.setVisibility(View.VISIBLE);
 		mStudyOptionsView.setAnimation(ViewAnimation.fade(
 				ViewAnimation.FADE_IN, 500, 0));
@@ -819,6 +902,16 @@ public class StudyOptionsFragment extends Fragment {
 		if (resultCode == DeckPicker.RESULT_MEDIA_EJECTED) {
 			closeStudyOptions(DeckPicker.RESULT_MEDIA_EJECTED);
 		} else if (requestCode == DECK_OPTIONS) {
+			JSONObject deck = mCol.getDecks().current();
+			// check, if cram deck is
+			try {
+				if (deck.has("empty") && deck.getBoolean("empty")) {
+					rebuildCramDeck();
+					deck.remove("empty");
+				}
+			} catch (JSONException e) {
+				throw new RuntimeException(e);
+			}
 			resetAndUpdateValuesFromDeck();
 		} else if (requestCode == ADD_NOTE && resultCode != getActivity().RESULT_CANCELED) {
 			resetAndUpdateValuesFromDeck();
@@ -832,10 +925,11 @@ public class StudyOptionsFragment extends Fragment {
 			case Reviewer.RESULT_SESSION_COMPLETED:
 			default:
 				// do not reload counts, if activity is created anew because it has been before destroyed by android
-				 showContentView(CONTENT_STUDY_OPTIONS, mDontSaveOnStop);
+				resetAndUpdateValuesFromDeck();
 				break;
 			case Reviewer.RESULT_NO_MORE_CARDS:
-				showContentView(CONTENT_CONGRATS, mDontSaveOnStop);
+				mTextCongratsMessage.setText(mCol.getSched().finishedMsg(getActivity()));
+				setFragmentContentView(mStudyOptionsView, mCongratsView);
 				break;
 			}
 			mDontSaveOnStop = false;
@@ -843,7 +937,8 @@ public class StudyOptionsFragment extends Fragment {
 			mDontSaveOnStop = false;
 			resetAndUpdateValuesFromDeck();
 		} else if (requestCode == STATISTICS && mCurrentContentView == CONTENT_CONGRATS) {
-			showContentView(CONTENT_STUDY_OPTIONS);
+			resetAndUpdateValuesFromDeck();
+			setFragmentContentView(mCongratsView, mStudyOptionsView);
 		}
 	}
 
@@ -860,6 +955,7 @@ public class StudyOptionsFragment extends Fragment {
 				.getSharedPrefs(getActivity().getBaseContext());
 
 		mSwipeEnabled = preferences.getBoolean("swipe", false);
+        mPrefHideDueCount = preferences.getBoolean("hideDueCount", true);
 		mInvertedColors = preferences.getBoolean("invertedColors", false);
 
 		// TODO: set language
@@ -885,10 +981,27 @@ public class StudyOptionsFragment extends Fragment {
 
 			updateStatisticBars();
 			updateChart(serieslist);
+            
+            JSONObject conf = mCol.getConf();
+            long timeLimit = 0;
+            try {
+                timeLimit = (conf.getLong("timeLim") / 60);
+            } catch (JSONException e) {
+                throw new RuntimeException(e);
+            }
+            mToggleLimitToggle.setChecked(timeLimit > 0 ? true : false);
+            mToggleLimitToggle.setText(String.valueOf(timeLimit));
+            
+            SharedPreferences preferences = PrefSettings.getSharedPrefs(getActivity().getBaseContext()); //getActivity().getBaseContext()
+            mPrefHideDueCount = preferences.getBoolean("hideDueCount", true);
 
 			mTextTodayNew.setText(String.valueOf(newCards));
-			mTextTodayLrn.setText(String.valueOf(lrnCards));
-			mTextTodayRev.setText(String.valueOf(revCards));
+            mTextTodayLrn.setText(String.valueOf(lrnCards));
+            if (mPrefHideDueCount) {
+                mTextTodayRev.setText("???");
+            } else {
+                mTextTodayRev.setText(String.valueOf(revCards));
+            }			
 			mTextNewTotal.setText(String.valueOf(totalNew));
 			mTextTotal.setText(String.valueOf(totalCards));
 			if (eta != -1) {

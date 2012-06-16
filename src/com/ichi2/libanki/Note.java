@@ -18,6 +18,7 @@ package com.ichi2.libanki;
 
 import android.database.Cursor;
 import android.util.Log;
+import android.util.Pair;
 
 import com.ichi2.anki.AnkiDroidApp;
 
@@ -25,6 +26,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -39,12 +41,12 @@ public class Note {
 	private long mMod;
 	private int mUsn;
 	private boolean mNewlyAdded;
-	private ArrayList<String> mTags;
+	private List<String> mTags;
 	private String[] mFields;
 	private String mData = "";
 	private int mFlags;
 
-	private Map<String, Integer> mFMap;
+	private Map<String, Pair<Integer, JSONObject>> mFMap;
 	private long mScm;
 
 	public Note(Collection col, long id) {
@@ -80,7 +82,7 @@ public class Note {
 		}
 	}
 
-	private void load() {
+	public void load() {
 		Cursor cursor = null;
 		try {
 			cursor = mCol
@@ -122,9 +124,7 @@ public class Note {
 				.stripHTML(mFields[mCol.getModels().sortIdx(mModel)]);
 		String tags = stringTags();
 		long csum = Utils.fieldChecksum(mFields[0]);
-		mCol.getDb()
-				.getDatabase()
-				.execSQL(
+		mCol.getDb().execute(
 						"INSERT OR REPLACE INTO notes VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
 						new Object[] { mId, mGuId, mMid, mMod, mUsn,
 								tags, joinedFields(), sfld, csum, mFlags, mData });
@@ -178,7 +178,7 @@ public class Note {
 	public String[][] items() {
 		String[][] result = new String[mFMap.size()][2];
 		for (String fname : mFMap.keySet()) {
-		    int i = mFMap.get(fname).intValue();
+		    int i = mFMap.get(fname).first;
 			result[i][0] = fname; 
 			result[i][1] = mFields[i]; 
 		}
@@ -186,7 +186,7 @@ public class Note {
 	}
 
 	private int _fieldOrd(String key) {
-	    return mFMap.get(key);
+	    return mFMap.get(key).first;
 	}
 
 	public String getitem(String key) {
@@ -215,7 +215,7 @@ public class Note {
 		mTags = mCol.getTags().split(str);
 	}
 
-	public void setTags(ArrayList<String> tags) {
+	public void setTags(List<String> tags) {
 		mTags = tags;
 	}
 
@@ -232,7 +232,7 @@ public class Note {
 	}
 
 	/** LIBANKI: not in libanki */
-	public ArrayList<String> getTags() {
+	public List<String> getTags() {
 		return mTags;
 	}
 
@@ -283,7 +283,7 @@ public class Note {
 	private void _postFlush() {
 		// generate missing cards
 		if (!mNewlyAdded) {
-			// TODO
+			mCol.genCards(new long[]{getId()});
 		}
 	}
 

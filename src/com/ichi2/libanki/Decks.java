@@ -66,8 +66,11 @@ public class Decks {
 			+ // currentDay, count
 			"'revToday': [0, 0], " + "'lrnToday': [0, 0], "
 			+ "'timeToday': [0, 0], " + // time in ms
-			"'collapsed': False, 'dyn': 1, 'desc': \"\", 'usn': 0, 'delays': [1, 10], 'separate': True, 'fmult': 0, " +
-			"'cramRev': False, 'search': \"\", 'limit': 100, 'order': 0, 'shift': True }";
+			"'collapsed': False, 'dyn': 1, 'desc': \"\", 'usn': 0, 'delays': None, 'separate': True, " +
+			// list of (search, limit, order); we only use first element for now
+			"'terms': [[\"\", 100, 0]], 'resched': True, " +
+			// currently unused
+			"'return': True }";
 	
 	
 
@@ -98,8 +101,8 @@ public class Decks {
 				+ "'ease4': 1.3, "
 				+ "'fuzz': 0.05, "
 				+ "'minSpace': 1, "
-				// in beta11+
-				+ "'ivlfct': 1 }, "
+				+ "'ivlFct': 1, "
+				+ "'maxIvl': 36500 }, "
 			+ "'maxTaken': 60, "
 			+ "'timer': 0, "
 			+ "'autoplay': True, "
@@ -261,7 +264,7 @@ public class Decks {
 		try {
 			if (deck.getInt("dyn") != 0) {
 				// deleting a cramming deck returns cards to their previous deck rather than deleting the cards
-				mCol.getSched().remDyn(did);
+				mCol.getSched().emptyDyn(did);
 				if (childrenToo) {
 					for (long id : children(did).values()) {
 						rem(id, cardsToo);
@@ -296,14 +299,25 @@ public class Decks {
 
 	/** An unsorted list of all deck names. */
 	public ArrayList<String> allNames() {
+	    return allNames(true);
+	}
+	public ArrayList<String> allNames(boolean dyn) {
 		ArrayList<String> list = new ArrayList<String>();
-		for (JSONObject x : mDecks.values()) {
-			try {
-				list.add(x.getString("name"));
-			} catch (JSONException e) {
-				throw new RuntimeException(e);
-			}
-		}
+        try {
+            if (dyn) {
+                for (JSONObject x : mDecks.values()) {
+    				list.add(x.getString("name"));
+                }
+            } else {
+                for (JSONObject x : mDecks.values()) {
+                    if (!x.getBoolean("dyn")) {
+                        list.add(x.getString("name"));
+                    }
+                }
+            }
+        } catch (JSONException e) {
+            throw new RuntimeException(e);
+        }
 		return list;
 	}
 
@@ -546,8 +560,7 @@ public class Decks {
 
 	public void setDeck(long[] cids, long did) {
 		mCol.getDb()
-				.getDatabase()
-				.execSQL(
+				.execute(
 						"UPDATE cards SET did = ?, usn = ?, mod = ? WHERE id IN "
 								+ Utils.ids2str(cids),
 						new Object[] { did, mCol.usn(), Utils.intNow() });
