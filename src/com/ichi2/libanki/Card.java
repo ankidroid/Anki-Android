@@ -18,10 +18,13 @@
 package com.ichi2.libanki;
 
 import android.content.ContentValues;
+import android.content.Context;
+import android.content.res.Resources;
 import android.database.Cursor;
 import android.util.Log;
 
 import com.ichi2.anki.AnkiDroidApp;
+import com.ichi2.anki2.R;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -186,7 +189,7 @@ public class Card implements Cloneable {
 		mMod = Utils.intNow();
 		mUsn = mCol.usn();
 		// bug check
-        assert mQueue != 2 || mODue == 0 || mCol.getDecks().isDyn(mDid);
+		assert mQueue != 2 || mODue == 0 || mCol.getDecks().isDyn(mDid);
 		ContentValues values = new ContentValues();
 		values.put("mod", mMod);
 		values.put("usn", mUsn);
@@ -200,16 +203,18 @@ public class Card implements Cloneable {
 		values.put("left", mLeft);
 		values.put("odue", mODue);
 		values.put("odid", mODid);
-        values.put("did", mDid);
-        mCol.getDb().update("cards", values, "id = " + mId, null);
+		values.put("did", mDid);
+		mCol.getDb().update("cards", values, "id = " + mId, null);
 	}
 
 	public String getQuestion(boolean simple) {
 		return getQuestion(false, simple);
 	}
+
 	public String getQuestion(boolean reload, boolean simple) {
 		return getQuestion(reload, simple, false);
 	}
+
 	public String getQuestion(boolean reload, boolean simple, boolean browser) {
 		if (simple) {
 			return _getQA(reload).get("q");
@@ -220,7 +225,8 @@ public class Card implements Cloneable {
 
 	public String getAnswer(boolean simple) {
 		if (simple) {
-			return _getQA(false).get("a").replaceAll("<hr[^>]*>", "<br>─────<br>");
+			return _getQA(false).get("a").replaceAll("<hr[^>]*>",
+					"<br>─────<br>");
 		} else {
 			return css() + _getQA(false).get("a");
 		}
@@ -231,8 +237,7 @@ public class Card implements Cloneable {
 			// return (new
 			// StringBuilder()).append("<style type=\"text/css\">").append(template().get("css")).append("</style>").toString();
 			return (new StringBuilder()).append("<style>")
-					.append(model().get("css")).append("</style>")
-					.toString();
+					.append(model().get("css")).append("</style>").toString();
 		} catch (JSONException e) {
 			throw new RuntimeException(e);
 		}
@@ -241,6 +246,7 @@ public class Card implements Cloneable {
 	public HashMap<String, String> _getQA(boolean reload) {
 		return _getQA(reload, false);
 	}
+
 	public HashMap<String, String> _getQA(boolean reload, boolean browser) {
 		if (mQA == null || reload) {
 			mQA = new HashMap<String, String>();
@@ -249,8 +255,9 @@ public class Card implements Cloneable {
 			JSONObject t = template();
 			Object[] data;
 			try {
-				data = new Object[] { mId, n.getId(), m.getLong("id"), mODid != 0l ? mODid : mDid,
-						mOrd, n.stringTags(), n.joinedFields() };
+				data = new Object[] { mId, n.getId(), m.getLong("id"),
+						mODid != 0l ? mODid : mDid, mOrd, n.stringTags(),
+						n.joinedFields() };
 			} catch (JSONException e) {
 				throw new RuntimeException(e);
 			}
@@ -336,7 +343,8 @@ public class Card implements Cloneable {
 	}
 
 	public boolean isEmpty() {
-		ArrayList<Integer> ords = mCol.getModels().availOrds(model(), Utils.joinFields(note().getFields()));
+		ArrayList<Integer> ords = mCol.getModels().availOrds(model(),
+				Utils.joinFields(note().getFields()));
 		if (ords.contains(mOrd)) {
 			return true;
 		}
@@ -452,89 +460,109 @@ public class Card implements Cloneable {
 	//
 	//
 	//
-	// public String getCardDetails(Context context) {
-	// Resources res = context.getResources();
-	// StringBuilder builder = new StringBuilder();
-	// builder.append("<html><body text=\"#FFFFFF\"><table><colgroup><col span=\"1\" style=\"width: 40%;\"><col span=\"1\" style=\"width: 60%;\"></colgroup><tr><td>");
-	// builder.append(res.getString(R.string.card_details_question));
-	// builder.append("</td><td>");
-	// builder.append(Utils.stripHTML(mQuestion));
-	// builder.append("</td></tr><tr><td>");
-	// builder.append(res.getString(R.string.card_details_answer));
-	// builder.append("</td><td>");
-	// builder.append(Utils.stripHTML(mAnswer));
-	// builder.append("</td></tr><tr><td>");
-	// builder.append(res.getString(R.string.card_details_due));
-	// builder.append("</td><td>");
-	// if (mYesCount + mNoCount == 0) {
-	// builder.append("-");
-	// } else if (mCombinedDue < mDeck.getDueCutoff()) {
-	// builder.append(res.getString(R.string.card_details_now));
-	// } else {
-	// builder.append(Utils.getReadableInterval(context, (mCombinedDue -
-	// Utils.now()) / 86400.0, true));
-	// }
-	// builder.append("</td></tr><tr><td>");
-	// builder.append(res.getString(R.string.card_details_interval));
-	// builder.append("</td><td>");
-	// if (mInterval == 0) {
-	// builder.append("-");
-	// } else {
-	// builder.append(Utils.getReadableInterval(context, mInterval));
-	// }
-	// builder.append("</td></tr><tr><td>");
-	// builder.append(res.getString(R.string.card_details_ease));
-	// builder.append("</td><td>");
-	// double ease = Math.round(mFactor * 100);
-	// builder.append(ease / 100);
-	// builder.append("</td></tr><tr><td>");
-	// builder.append(res.getString(R.string.card_details_average_time));
-	// builder.append("</td><td>");
-	// if (mYesCount + mNoCount == 0) {
-	// builder.append("-");
-	// } else {
-	// builder.append(Utils.doubleToTime(mAverageTime));
-	// }
-	// builder.append("</td></tr><tr><td>");
-	// builder.append(res.getString(R.string.card_details_total_time));
-	// builder.append("</td><td>");
-	// builder.append(Utils.doubleToTime(mReviewTime));
-	// builder.append("</td></tr><tr><td>");
-	// builder.append(res.getString(R.string.card_details_yes_count));
-	// builder.append("</td><td>");
-	// builder.append(mYesCount);
-	// builder.append("</td></tr><tr><td>");
-	// builder.append(res.getString(R.string.card_details_no_count));
-	// builder.append("</td><td>");
-	// builder.append(mNoCount);
-	// builder.append("</td></tr><tr><td>");
-	// builder.append(res.getString(R.string.card_details_added));
-	// builder.append("</td><td>");
-	// builder.append(DateFormat.getDateFormat(context).format((long) (mCreated
-	// - mDeck.getUtcOffset()) * 1000l));
-	// builder.append("</td></tr><tr><td>");
-	// builder.append(res.getString(R.string.card_details_changed));
-	// builder.append("</td><td>");
-	// builder.append(DateFormat.getDateFormat(context).format((long) (mModified
-	// - mDeck.getUtcOffset()) * 1000l));
-	// builder.append("</td></tr><tr><td>");
-	// builder.append(res.getString(R.string.card_details_tags));
-	// builder.append("</td><td>");
-	// String tags = Arrays.toString(mDeck.allUserTags("WHERE id = " +
-	// mFactId));
-	// builder.append(tags.substring(1, tags.length() - 1));
-	// builder.append("</td></tr><tr><td>");
-	// builder.append(res.getString(R.string.card_details_model));
-	// builder.append("</td><td>");
-	// Model model = Model.getModel(mDeck, mCardModelId, false);
-	// builder.append(model.getName());
-	// builder.append("</td></tr><tr><td>");
-	// builder.append(res.getString(R.string.card_details_card_model));
-	// builder.append("</td><td>");
-	// builder.append(model.getCardModel(mCardModelId).getName());
-	// builder.append("</td></tr></html></body>");
-	// return builder.toString();
-	// }
+	public String getCardDetails(Context context) {
+		// was Context context
+		Resources res = context.getResources();
+		StringBuilder builder = new StringBuilder();
+		builder.append("<html><body ><table><colgroup><col span=\"1\" style=\"width: 40%;\"></col><col span=\"1\" style=\"width: 60%;\"></col></colgroup><tr><td>"); //<colgroup><col span=\"1\" style=\"width: 40%;\"><col span=\"1\" style=\"width: 60%;\"></colgroup>
+//		builder.append("<html><body><h1>heading</h1>body text</body></html>");
+		
+		builder.append(res.getString(R.string.card_details_question));
+//		builder.append("question>");
+		builder.append("</td><td>");
+		builder.append(_getQA(false).get("q"));
+
+		builder.append("</td></tr><tr><td>");
+		builder.append(res.getString(R.string.card_details_answer));
+		builder.append("</td><td>");
+		builder.append(Utils.stripHTML(_getQA(false).get("a")));
+		builder.append("</td></tr>");
+		
+//		builder.append(res.getString(R.string.card_details_due));
+//		builder.append("</td><td>");
+//		
+//		if (mYesCount + mNoCount == 0) {
+//   	builder.append("??");
+//		} else if (mCombinedDue < mDeck.getDueCutoff()) {
+//			builder.append(res.getString(R.string.card_details_now));
+//		} else {
+//			builder.append(Utils.getReadableInterval(context,
+//					(mCombinedDue - Utils.now()) / 86400.0, true));
+//		}
+
+//		builder.append("</td></tr><tr><td>");
+
+////		builder.append(res.getString(R.string.card_details_interval));
+//		builder.append("</td><td>");
+////		if (mInterval == 0) {
+////			builder.append("-");
+////		} else {
+////			builder.append(Utils.getReadableInterval(context, mInterval));
+////		}
+		
+
+//		builder.append("</td></tr><tr><td>");
+////		builder.append(res.getString(R.string.card_details_ease));
+//		builder.append("</td><td>");
+//		double ease = Math.round(mFactor * 100);
+//		builder.append(ease / 100);
+		
+//		builder.append("</td></tr><tr><td>");
+////		builder.append(res.getString(R.string.card_details_average_time));
+//		builder.append("</td><td>");
+////		if (mYesCount + mNoCount == 0) {
+////			builder.append("-");
+////		} else {
+////			builder.append(Utils.doubleToTime(mAverageTime));
+////		}
+		
+//		builder.append("</td></tr><tr><td>");
+////		builder.append(res.getString(R.string.card_details_total_time));
+//		builder.append("</td><td>");
+////		builder.append(Utils.doubleToTime(mReviewTime));
+		
+//		builder.append("</td></tr><tr><td>");
+////		builder.append(res.getString(R.string.card_details_yes_count));
+//		builder.append("</td><td>");
+////		builder.append(mYesCount);
+		
+//		builder.append("</td></tr><tr><td>");
+////		builder.append(res.getString(R.string.card_details_no_count));
+//		builder.append("</td><td>");
+////		builder.append(mNoCount);
+		
+//		builder.append("</td></tr><tr><td>");
+////		builder.append(res.getString(R.string.card_details_added));
+//		builder.append("</td><td>");
+////		builder.append(DateFormat.getDateFormat(context).format(
+////				(long) (mCreated - mDeck.getUtcOffset()) * 1000l));
+		
+//		builder.append("</td></tr><tr><td>");
+////		builder.append(res.getString(R.string.card_details_changed));
+//		builder.append("</td><td>");
+////		builder.append(DateFormat.getDateFormat(context).format(
+////				(long) (mModified - mDeck.getUtcOffset()) * 1000l));
+		
+//		builder.append("</td></tr><tr><td>");
+////		builder.append(res.getString(R.string.card_details_tags));
+//		builder.append("</td><td>");
+////		String tags = Arrays.toString(mDeck
+////				.allUserTags("WHERE id = " + mFactId));
+////		builder.append(tags.substring(1, tags.length() - 1));
+		
+//		builder.append("</td></tr><tr><td>");
+////		builder.append(res.getString(R.string.card_details_model));
+//		builder.append("</td><td>");
+////		Model model = Model.getModel(mDeck, mCardModelId, false);
+////		builder.append(model.getName());
+		
+//		builder.append("</td></tr><tr><td>");
+////		builder.append(res.getString(R.string.card_details_card_model));
+//		builder.append("</td><td>");
+////		builder.append(model.getCardModel(mCardModelId).getName());
+		builder.append("</table></html></body>");
+		return builder.toString();
+	}
 
 	public long getId() {
 		return mId;
@@ -678,9 +706,9 @@ public class Card implements Cloneable {
 	public void setOrd(int ord) {
 		mOrd = ord;
 	}
-	
+
 	public int getOrd() {
-	    return mOrd;
+		return mOrd;
 	}
 
 	public void setDid(long did) {
@@ -693,15 +721,15 @@ public class Card implements Cloneable {
 
 	// Needed for tests
 	public Collection getCol() {
-        return mCol;
-    }
+		return mCol;
+	}
 
 	// Needed for tests
-    public void setCol(Collection col) {
-        mCol = col;
-    }
+	public void setCol(Collection col) {
+		mCol = col;
+	}
 
-    public Card clone() {
+	public Card clone() {
 		try {
 			return (Card) super.clone();
 		} catch (CloneNotSupportedException e) {

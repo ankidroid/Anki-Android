@@ -187,7 +187,11 @@ public class CardBrowser extends Activity {
 				return;
 
 			case CONTEXT_MENU_DETAILS:
-//				Themes.htmlOkDialog(CardBrowser.this, getResources().getString(R.string.card_browser_card_details), mSelectedCard.getCardDetails(CardBrowser.this, true)).show();
+				Card tempCard = mCol.getCard(Long.parseLong(mCards.get(mPositionInCardsList).get("id")));
+				Themes.htmlOkDialog(CardBrowser.this, 
+						getResources().getString(R.string.card_browser_card_details), 
+						tempCard.getCardDetails(CardBrowser.this) ).show();
+				
 				return;
 			}
 		}
