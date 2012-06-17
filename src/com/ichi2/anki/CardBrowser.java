@@ -86,6 +86,7 @@ public class CardBrowser extends Activity {
 	private int mPositionInCardsList;
 
 	private int mOrder;
+	private int mField;
 
 	/** Modifier of percentage of the font size of the card browser */
 	private int mrelativeBrowserFontSize = DEFAULT_FONT_SIZE_RATIO;
@@ -99,6 +100,7 @@ public class CardBrowser extends Activity {
 	private static final int DIALOG_CONTEXT_MENU = 1;
 	private static final int DIALOG_RELOAD_CARDS = 2;
 	private static final int DIALOG_TAGS = 3;
+	private static final int DIALOG_FIELD = 4;
 
 	private static final int BACKGROUND_NORMAL = 0;
 	private static final int BACKGROUND_MARKED = 1;
@@ -112,6 +114,7 @@ public class CardBrowser extends Activity {
 	private static final int MENU_SELECT_SUSPENDED = 31;
 	private static final int MENU_SELECT_TAG = 32;
 	private static final int MENU_CHANGE_ORDER = 5;
+	private static final int MENU_FIELD = 6;
 
 	private static final int EDIT_CARD = 0;
 	private static final int ADD_NOTE = 1;
@@ -128,6 +131,7 @@ public class CardBrowser extends Activity {
 	private boolean mShowOnlyMarSus = false;
 
 	private String[] allTags;
+	private String[] mFields;
 	private HashSet<String> mSelectedTags;
 
 	private boolean mPrefFixArabic;
@@ -362,6 +366,13 @@ public class CardBrowser extends Activity {
 		item.setIcon(R.drawable.ic_menu_revert);
 		item = menu.add(Menu.NONE, MENU_ADD_NOTE, Menu.NONE, R.string.card_editor_add_card);
 		item.setIcon(R.drawable.ic_menu_add);
+		
+		if (mWholeCollection == false) {
+			item = menu.add(Menu.NONE, MENU_FIELD, Menu.NONE, R.string.card_browser_field);
+			item.setIcon(R.drawable.ic_menu_add);
+		}
+		
+		
 		item = menu.add(Menu.NONE, MENU_CHANGE_ORDER, Menu.NONE,
 				R.string.card_browser_change_display_order);
 		item.setIcon(R.drawable.ic_menu_sort_by_size);
@@ -435,6 +446,10 @@ public class CardBrowser extends Activity {
 
 		case MENU_CHANGE_ORDER:
 			showDialog(DIALOG_ORDER);
+			return true;
+			
+		case MENU_FIELD:
+			showDialog(DIALOG_FIELD);
 			return true;
 		}
 
@@ -597,6 +612,35 @@ public class CardBrowser extends Activity {
 //			});
 //			dialog = builder.create();
 //			break;
+		case DIALOG_FIELD:
+			builder.setTitle(res
+					.getString(R.string.card_browser_field_title));
+			builder.setIcon(android.R.drawable.ic_menu_sort_by_size);
+			
+	        HashMap<String, String> card = mAllCards.get(0);
+	        
+			String[][] items = mCol.getCard(Long.parseLong( card.get("id") )).note().items();
+			
+			
+			mFields = new String[items.length+1];
+			mFields[0]="SFLD";
+			
+			for (int i = 0; i < items.length; i++) {
+				mFields[i+1] = items[i][0];
+			}
+			
+			builder.setSingleChoiceItems(mFields, 0, new DialogInterface.OnClickListener() {
+				@Override
+				public void onClick(DialogInterface arg0, int which) {
+					if (which != mField) {
+						mField = which;
+						PrefSettings.getSharedPrefs(AnkiDroidApp.getInstance().getBaseContext()).edit().putInt("cardBrowserField", mField).commit();
+						getCards();
+					}
+				}
+	        });
+			dialog = builder.create();
+			break;
 		}
 		return dialog;
 	}
@@ -842,6 +886,20 @@ public class CardBrowser extends Activity {
 					}
 				}
 				try {
+					
+					int field = PrefSettings.getSharedPrefs(getBaseContext()).getInt("cardBrowserField", 0);
+					
+					Card tempCard = mCol.getCard(Long.parseLong(cards.get(0).get("id"))); //Long.parseLong(mCards.get(0).get("id"))
+					
+					
+					if (field > 0 && (mFields != null)) {
+						for (HashMap<String, String> entry : cards) {
+						tempCard = mCol.getCard(Long.parseLong(entry.get("id")));
+						entry.put("sfld", tempCard.note().getitem(mFields[field]));
+						}
+					}
+					
+					
 					mAllCards.addAll(cards);
 					mCards.addAll(cards);
 					if (mOrder == CARD_ORDER_NONE) {
