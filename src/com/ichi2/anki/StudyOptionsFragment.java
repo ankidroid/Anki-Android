@@ -177,34 +177,34 @@ public class StudyOptionsFragment extends Fragment {
                 case R.id.studyoptions_start:
                     openReviewer();
                     return;
-                case R.id.studyoptions_limitup:
-                    timeLimit = (mCol.getTimeLimit() / 60);
-                    mCol.setTimeLimit((timeLimit + 1) * 60);
-                    mToggleLimitToggle.setChecked(true);
-                    mToggleLimitToggle.setText(String.valueOf(timeLimit + 1));
-                    return;
-                case R.id.studyoptions_limitdown:
-                    timeLimit = (mCol.getTimeLimit() / 60);
-                    if (timeLimit > 1) {
-                        mCol.setTimeLimit((timeLimit - 1) * 60);
-                        mToggleLimitToggle.setChecked(true);
-                        mToggleLimitToggle.setText(String.valueOf(timeLimit - 1));
-                    } else if (timeLimit == 1) {
-                        mCol.setTimeLimit(0);
-                        mToggleLimitToggle.setChecked(false);
-                    }
-                    return;
-                case R.id.studyoptions_limittoggle:
-                    timeLimit = (mCol.getTimeLimit() / 60);
-                    if (timeLimit > 0) {
-                        mToggleLimitToggle.setChecked(false);
-                        mCol.setTimeLimit(0);
-                    } else {
-                        mToggleLimitToggle.setChecked(true);
-                        mToggleLimitToggle.setText("1");
-                        mCol.setTimeLimit(60);
-                    }
-                    return;
+//                case R.id.studyoptions_limitup:
+//                    timeLimit = (mCol.getTimeLimit() / 60);
+//                    mCol.setTimeLimit((timeLimit + 1) * 60);
+//                    mToggleLimitToggle.setChecked(true);
+//                    mToggleLimitToggle.setText(String.valueOf(timeLimit + 1));
+//                    return;
+//                case R.id.studyoptions_limitdown:
+//                    timeLimit = (mCol.getTimeLimit() / 60);
+//                    if (timeLimit > 1) {
+//                        mCol.setTimeLimit((timeLimit - 1) * 60);
+//                        mToggleLimitToggle.setChecked(true);
+//                        mToggleLimitToggle.setText(String.valueOf(timeLimit - 1));
+//                    } else if (timeLimit == 1) {
+//                        mCol.setTimeLimit(0);
+//                        mToggleLimitToggle.setChecked(false);
+//                    }
+//                    return;
+//                case R.id.studyoptions_limittoggle:
+//                    timeLimit = (mCol.getTimeLimit() / 60);
+//                    if (timeLimit > 0) {
+//                        mToggleLimitToggle.setChecked(false);
+//                        mCol.setTimeLimit(0);
+//                    } else {
+//                        mToggleLimitToggle.setChecked(true);
+//                        mToggleLimitToggle.setText("1");
+//                        mCol.setTimeLimit(60);
+//                    }
+//                    return;
                 case R.id.studyoptions_congrats_open_other_deck:
                     closeStudyOptions();
                     return;
@@ -384,10 +384,10 @@ public class StudyOptionsFragment extends Fragment {
         mTextTotal.setText(total);
         mTextETA.setText(eta);
 
-        mToggleLimitToggle.setChecked(timelimit > 0 ? true : false);
-        if (timelimit > 0) {
-            mToggleLimitToggle.setText(String.valueOf(timelimit));
-        }
+//        mToggleLimitToggle.setChecked(timelimit > 0 ? true : false);
+//        if (timelimit > 0) {
+//            mToggleLimitToggle.setText(String.valueOf(timelimit));
+//        }
         updateStatisticBars();
     }
 
@@ -565,9 +565,9 @@ public class StudyOptionsFragment extends Fragment {
         mTextDeckName = (TextView) mStudyOptionsView.findViewById(R.id.studyoptions_deck_name);
         mTextDeckDescription = (TextView) mStudyOptionsView.findViewById(R.id.studyoptions_deck_description);
         mButtonStart = (Button) mStudyOptionsView.findViewById(R.id.studyoptions_start);
-        mButtonUp = (Button) mStudyOptionsView.findViewById(R.id.studyoptions_limitup);
-        mButtonDown = (Button) mStudyOptionsView.findViewById(R.id.studyoptions_limitdown);
-        mToggleLimitToggle = (ToggleButton) mStudyOptionsView.findViewById(R.id.studyoptions_limittoggle);
+//        mButtonUp = (Button) mStudyOptionsView.findViewById(R.id.studyoptions_limitup);
+//        mButtonDown = (Button) mStudyOptionsView.findViewById(R.id.studyoptions_limitdown);
+//        mToggleLimitToggle = (ToggleButton) mStudyOptionsView.findViewById(R.id.studyoptions_limittoggle);
         // mToggleCram = (ToggleButton) mStudyOptionsView
         // .findViewById(R.id.studyoptions_cram);
         // mToggleNight = (ToggleButton) mStudyOptionsView
@@ -614,9 +614,9 @@ public class StudyOptionsFragment extends Fragment {
         mDeckChart = (LinearLayout) mStudyOptionsView.findViewById(R.id.studyoptions_chart);
 
         mButtonStart.setOnClickListener(mButtonClickListener);
-        mButtonUp.setOnClickListener(mButtonClickListener);
-        mButtonDown.setOnClickListener(mButtonClickListener);
-        mToggleLimitToggle.setOnClickListener(mButtonClickListener);
+//        mButtonUp.setOnClickListener(mButtonClickListener);
+//        mButtonDown.setOnClickListener(mButtonClickListener);
+//        mToggleLimitToggle.setOnClickListener(mButtonClickListener);
         // mToggleCram.setOnClickListener(mButtonClickListener);
         // mToggleNight.setOnClickListener(mButtonClickListener);
 
@@ -996,8 +996,8 @@ public class StudyOptionsFragment extends Fragment {
             } catch (JSONException e) {
                 throw new RuntimeException(e);
             }
-            mToggleLimitToggle.setChecked(timeLimit > 0 ? true : false);
-            mToggleLimitToggle.setText(String.valueOf(timeLimit));
+//            mToggleLimitToggle.setChecked(timeLimit > 0 ? true : false);
+//            mToggleLimitToggle.setText(String.valueOf(timeLimit));
 
             SharedPreferences preferences = PrefSettings.getSharedPrefs(getActivity().getBaseContext()); // getActivity().getBaseContext()
             mPrefHideDueCount = preferences.getBoolean("hideDueCount", true);
