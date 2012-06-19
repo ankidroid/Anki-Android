@@ -13,6 +13,7 @@
  * You should have received a copy of the GNU General Public License along with         *
  * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
  ****************************************************************************************/
+
 package com.ichi2.libanki.sync;
 
 import android.util.Log;
@@ -30,17 +31,16 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.List;
 
-
-
 public class RemoteMediaServer extends BasicHttpSyncer {
 
-	public RemoteMediaServer(String hkey, Connection con) {
-		super(hkey, con);
-	} 
-	
+    public RemoteMediaServer(String hkey, Connection con) {
+        super(hkey, con);
+    }
+
+
     public JSONArray remove(List<String> fnames, long minUsn) {
         JSONObject data = new JSONObject();
-        
+
         try {
             data.put("fnames", fnames);
             data.put("minUsn", minUsn);
@@ -66,7 +66,8 @@ public class RemoteMediaServer extends BasicHttpSyncer {
             throw new RuntimeException(e);
         }
     }
-    
+
+
     public File files(long minUsn, String tmpMediaZip) {
         JSONObject data = new JSONObject();
         try {
@@ -89,7 +90,8 @@ public class RemoteMediaServer extends BasicHttpSyncer {
             throw new RuntimeException(e);
         }
     }
-    
+
+
     public long addFiles(File zip) {
         try {
             HttpResponse ret = super.req("addFiles", new FileInputStream(zip));
@@ -112,7 +114,8 @@ public class RemoteMediaServer extends BasicHttpSyncer {
             throw new RuntimeException(e);
         }
     }
-    
+
+
     public long mediaSanity() {
         HttpResponse ret = super.req("mediaSanity");
         if (ret == null) {

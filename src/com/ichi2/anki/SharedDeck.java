@@ -12,7 +12,9 @@
  * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
  ****************************************************************************************/
 
-package com.ichi2.anki;import com.ichi2.anki2.R;
+package com.ichi2.anki;
+
+import com.ichi2.anki2.R;
 
 import java.util.HashMap;
 
@@ -21,16 +23,16 @@ public class SharedDeck extends HashMap<String, Object> {
     private static final long serialVersionUID = 1L;
 
     private int mId;
-    //private String mUsername;
+    // private String mUsername;
     private String mTitle;
-    //private String mDescription;
-    //private String mTags;
-    //private int mVersion;
+    // private String mDescription;
+    // private String mTags;
+    // private int mVersion;
     private int mFacts;
     private int mSize;
-    //private int mCount;
-    //private double mModified;
-    //private String mFileName;
+    // private int mCount;
+    // private double mModified;
+    // private String mFileName;
     /**
      * on demand cache for filtering only
      */
@@ -47,10 +49,9 @@ public class SharedDeck extends HashMap<String, Object> {
     }
 
 
-    //public void setUsername(String username) {
-    //    mUsername = username;
-    //}
-
+    // public void setUsername(String username) {
+    // mUsername = username;
+    // }
 
     public String getTitle() {
         return mTitle;
@@ -63,20 +64,17 @@ public class SharedDeck extends HashMap<String, Object> {
     }
 
 
-    //public void setDescription(String description) {
-    //    mDescription = description;
-    //}
+    // public void setDescription(String description) {
+    // mDescription = description;
+    // }
 
+    // public void setTags(String tags) {
+    // mTags = tags;
+    // }
 
-    //public void setTags(String tags) {
-    //    mTags = tags;
-    //}
-
-
-    //public void setVersion(int version) {
-    //    mVersion = version;
-    //}
-
+    // public void setVersion(int version) {
+    // mVersion = version;
+    // }
 
     public int getFacts() {
         return mFacts;
@@ -84,12 +82,12 @@ public class SharedDeck extends HashMap<String, Object> {
 
 
     public void setFacts(int facts) {
-//        mFacts = facts;
-//        if (facts == 1) {
-//            put("facts", mFacts + " " + AnkiDroidApp.getAppResources().getString(R.string.fact));
-//        } else {
-//            put("facts", mFacts + " " + AnkiDroidApp.getAppResources().getString(R.string.facts));
-//        }
+        // mFacts = facts;
+        // if (facts == 1) {
+        // put("facts", mFacts + " " + AnkiDroidApp.getAppResources().getString(R.string.fact));
+        // } else {
+        // put("facts", mFacts + " " + AnkiDroidApp.getAppResources().getString(R.string.facts));
+        // }
     }
 
 
@@ -103,41 +101,33 @@ public class SharedDeck extends HashMap<String, Object> {
     }
 
 
-    //public void setCount(int count) {
-    //    mCount = count;
-    //}
+    // public void setCount(int count) {
+    // mCount = count;
+    // }
 
+    // public void setModified(double modified) {
+    // mModified = modified;
+    // }
 
-    //public void setModified(double modified) {
-    //    mModified = modified;
-    //}
+    // public void setFileName(String fileName) {
+    // mFileName = fileName;
+    // }
 
+    /*
+     * public void prettyLog() { Log.i(AnkiDroidApp.TAG, "SHARED DECK:"); Log.i(AnkiDroidApp.TAG, "        username = "
+     * + mUsername); Log.i(AnkiDroidApp.TAG, "        title = " + mTitle); Log.i(AnkiDroidApp.TAG,
+     * "        description = " + mDescription); Log.i(AnkiDroidApp.TAG, "        tags = " + mTags);
+     * Log.i(AnkiDroidApp.TAG, "        version = " + mVersion); Log.i(AnkiDroidApp.TAG, "        facts = " + mFacts);
+     * Log.i(AnkiDroidApp.TAG, "        size = " + mSize); Log.i(AnkiDroidApp.TAG, "        count = " + mCount);
+     * Log.i(AnkiDroidApp.TAG, "        modified = " + mModified); Log.i(AnkiDroidApp.TAG, "        fileName = " +
+     * mFileName); }
+     */
 
-    //public void setFileName(String fileName) {
-    //    mFileName = fileName;
-    //}
-
-/*
-    public void prettyLog() {
-        Log.i(AnkiDroidApp.TAG, "SHARED DECK:");
-        Log.i(AnkiDroidApp.TAG, "        username = " + mUsername);
-        Log.i(AnkiDroidApp.TAG, "        title = " + mTitle);
-        Log.i(AnkiDroidApp.TAG, "        description = " + mDescription);
-        Log.i(AnkiDroidApp.TAG, "        tags = " + mTags);
-        Log.i(AnkiDroidApp.TAG, "        version = " + mVersion);
-        Log.i(AnkiDroidApp.TAG, "        facts = " + mFacts);
-        Log.i(AnkiDroidApp.TAG, "        size = " + mSize);
-        Log.i(AnkiDroidApp.TAG, "        count = " + mCount);
-        Log.i(AnkiDroidApp.TAG, "        modified = " + mModified);
-        Log.i(AnkiDroidApp.TAG, "        fileName = " + mFileName);
+    public boolean matchesLowerCaseFilter(String searchText) {
+        // cache our own lower case title, so the next letters in the filter string will be faster
+        if (mLowerCaseTitle == null) {
+            mLowerCaseTitle = getTitle().toLowerCase();
+        }
+        return mLowerCaseTitle.contains(searchText);
     }
-*/
-
-	public boolean matchesLowerCaseFilter(String searchText) {
-		// cache our own lower case title, so the next letters in the filter string will be faster
-		if (mLowerCaseTitle == null) {
-			mLowerCaseTitle = getTitle().toLowerCase();
-		}
-		return mLowerCaseTitle.contains(searchText);
-	}
 }

@@ -1,6 +1,6 @@
 /****************************************************************************************
  * Copyright (c) 2009 Daniel Svärd <daniel.svard@gmail.com>                             *
- * Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com>       							*
+ * Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com>                                   *
  * Copyright (c) 2011 Norbert Nagold <norbert.nagold@gmail.com>                         *
  *                                                                                      *
  * This program is free software; you can redistribute it and/or modify it under        *
@@ -90,7 +90,8 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
 
     private int mType;
     private TaskListener mListener;
-    
+
+
     public static DeckTask launchDeckTask(int type, TaskListener listener, TaskData... params) {
         sOldInstance = sInstance;
 
@@ -109,7 +110,7 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
     public static void waitToFinish() {
         try {
             if ((sInstance != null) && (sInstance.getStatus() != AsyncTask.Status.FINISHED)) {
-            	Log.i(AnkiDroidApp.TAG, "DeckTask: wait to finish");
+                Log.i(AnkiDroidApp.TAG, "DeckTask: wait to finish");
                 sInstance.get();
             }
         } catch (Exception e) {
@@ -128,8 +129,9 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
         }
     }
 
+
     public static boolean taskIsCancelled() {
-    	return sInstance.isCancelled();
+        return sInstance.isCancelled();
     }
 
 
@@ -150,7 +152,8 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
         // Wait for previous thread (if any) to finish before continuing
         try {
             if ((sOldInstance != null) && (sOldInstance.getStatus() != AsyncTask.Status.FINISHED)) {
-            	Log.i(AnkiDroidApp.TAG, "Waiting for " + sOldInstance.mType + " to finish before starting " + sInstance.mType);
+                Log.i(AnkiDroidApp.TAG, "Waiting for " + sOldInstance.mType + " to finish before starting "
+                        + sInstance.mType);
                 sOldInstance.get();
             }
         } catch (Exception e) {
@@ -163,14 +166,14 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
                 return doInBackgroundOpenCollection(params);
 
             case TASK_TYPE_LOAD_DECK_COUNTS:
-            	return doInBackgroundLoadDeckCounts(params);
+                return doInBackgroundLoadDeckCounts(params);
 
             case TASK_TYPE_OPEN_COLLECTION_AND_UPDATE_CARDS:
                 TaskData taskData = doInBackgroundOpenCollection(params);
-//                if (taskData.mInteger == DECK_LOADED) {
-//                    taskData.mDeck.updateAllCards();
-//                    taskData.mCard = taskData.mDeck.getCurrentCard();
-//                }
+                // if (taskData.mInteger == DECK_LOADED) {
+                // taskData.mDeck.updateAllCards();
+                // taskData.mCard = taskData.mDeck.getCurrentCard();
+                // }
                 return taskData;
 
             case TASK_TYPE_SAVE_COLLECTION:
@@ -187,9 +190,9 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
 
             case TASK_TYPE_UPDATE_FACT:
                 return doInBackgroundUpdateNote(params);
-                
+
             case TASK_TYPE_UNDO:
-                return doInBackgroundUndo(params);                
+                return doInBackgroundUndo(params);
 
             case TASK_TYPE_LOAD_CARDS:
                 return doInBackgroundLoadCards(params);
@@ -205,7 +208,7 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
 
             case TASK_TYPE_DELETE_BACKUPS:
                 return doInBackgroundDeleteBackups();
-                
+
             case TASK_TYPE_RESTORE_DECK:
                 return doInBackgroundRestoreDeck(params);
 
@@ -222,19 +225,19 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
                 return doInBackgroundCloseCollection(params);
 
             case TASK_TYPE_UPDATE_VALUES_FROM_DECK:
-            	return doInBackgroundUpdateValuesFromDeck(params);
+                return doInBackgroundUpdateValuesFromDeck(params);
 
             case TASK_TYPE_RESTORE_IF_MISSING:
-            	return doInBackgroundRestoreIfMissing(params);
+                return doInBackgroundRestoreIfMissing(params);
 
             case TASK_TYPE_DELETE_DECK:
-            	return doInBackgroundDeleteDeck(params);
+                return doInBackgroundDeleteDeck(params);
 
             case TASK_TYPE_REBUILD_CRAM:
-            	return doInBackgroundRebuildCram(params);
+                return doInBackgroundRebuildCram(params);
 
             case TASK_TYPE_EMPTY_CRAM:
-            	return doInBackgroundEmptyCram(params);
+                return doInBackgroundEmptyCram(params);
 
             default:
                 return null;
@@ -261,109 +264,109 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
 
 
     private TaskData doInBackgroundAddNote(TaskData[] params) {
-    	Log.i(AnkiDroidApp.TAG, "doInBackgroundAddNote");
-    	Note note = params[0].getNote();
-    	Collection col = note.getCol();
+        Log.i(AnkiDroidApp.TAG, "doInBackgroundAddNote");
+        Note note = params[0].getNote();
+        Collection col = note.getCol();
 
-    	try {
-        	AnkiDb ankiDB = col.getDb();
+        try {
+            AnkiDb ankiDB = col.getDb();
             ankiDB.getDatabase().beginTransaction();
             try {
-            	publishProgress(new TaskData(col.addNote(note)));
+                publishProgress(new TaskData(col.addNote(note)));
                 ankiDB.getDatabase().setTransactionSuccessful();
             } finally {
                 ankiDB.getDatabase().endTransaction();
             }
-    	} catch (RuntimeException e) {
-    		Log.e(AnkiDroidApp.TAG, "doInBackgroundAddNote - RuntimeException on adding fact: " + e);
-    		AnkiDroidApp.saveExceptionReportFile(e, "doInBackgroundAddNote");
+        } catch (RuntimeException e) {
+            Log.e(AnkiDroidApp.TAG, "doInBackgroundAddNote - RuntimeException on adding fact: " + e);
+            AnkiDroidApp.saveExceptionReportFile(e, "doInBackgroundAddNote");
             return new TaskData(false);
         }
-    	return new TaskData(true);
+        return new TaskData(true);
     }
 
 
     private TaskData doInBackgroundUpdateNote(TaskData[] params) {
-    	Log.i(AnkiDroidApp.TAG, "doInBackgroundUpdateNote");
+        Log.i(AnkiDroidApp.TAG, "doInBackgroundUpdateNote");
         // Save the note
-    	Sched sched = params[0].getSched();
-    	Collection col = sched.getCol();
+        Sched sched = params[0].getSched();
+        Collection col = sched.getCol();
         Card editCard = params[0].getCard();
         Note editNote = editCard.note();
         boolean fromReviewer = params[0].getBoolean();
 
         try {
-	        col.getDb().getDatabase().beginTransaction();
-	        try {
-	        	// TODO: undo integration
-	        	editNote.flush();
-	        	// flush card too, in case, did has been changed
-	        	editCard.flush();
-	        	if (fromReviewer) {
-		        	Card newCard;
-		        	if (col.getDecks().active().contains(editCard.getDid())) {
-		        		newCard = editCard;
-		        		newCard.load();
-			        	// reload qa-cache
-		        		newCard.getQuestion(true);
-		        	} else {
-		        		newCard = sched.getCard();
-		        	}
-		        	publishProgress(new TaskData(newCard));	        		
-	        	} else {
-		        	publishProgress(new TaskData(editCard));	        		
-	        	}
-	            col.getDb().getDatabase().setTransactionSuccessful();
-	        } finally {
-	        	col.getDb().getDatabase().endTransaction();
-	        }
-		} catch (RuntimeException e) {
-			Log.e(AnkiDroidApp.TAG, "doInBackgroundUpdateNote - RuntimeException on updating fact: " + e);
-			AnkiDroidApp.saveExceptionReportFile(e, "doInBackgroundUpdateNote");
-			return new TaskData(false);
-		}
+            col.getDb().getDatabase().beginTransaction();
+            try {
+                // TODO: undo integration
+                editNote.flush();
+                // flush card too, in case, did has been changed
+                editCard.flush();
+                if (fromReviewer) {
+                    Card newCard;
+                    if (col.getDecks().active().contains(editCard.getDid())) {
+                        newCard = editCard;
+                        newCard.load();
+                        // reload qa-cache
+                        newCard.getQuestion(true);
+                    } else {
+                        newCard = sched.getCard();
+                    }
+                    publishProgress(new TaskData(newCard));
+                } else {
+                    publishProgress(new TaskData(editCard));
+                }
+                col.getDb().getDatabase().setTransactionSuccessful();
+            } finally {
+                col.getDb().getDatabase().endTransaction();
+            }
+        } catch (RuntimeException e) {
+            Log.e(AnkiDroidApp.TAG, "doInBackgroundUpdateNote - RuntimeException on updating fact: " + e);
+            AnkiDroidApp.saveExceptionReportFile(e, "doInBackgroundUpdateNote");
+            return new TaskData(false);
+        }
         return new TaskData(true);
     }
 
 
     private TaskData doInBackgroundAnswerCard(TaskData... params) {
-    	Sched sched = params[0].getSched();
+        Sched sched = params[0].getSched();
         Card oldCard = params[0].getCard();
-    	int ease = params[0].getInt();
+        int ease = params[0].getInt();
         Card newCard = null;
         int oldCardLeech = 0;
         // 0: normal; 1: leech; 2: leech & suspended
         try {
-	        AnkiDb ankiDB = sched.getCol().getDb();
-	        ankiDB.getDatabase().beginTransaction();
-	        try {
-	            if (oldCard != null) {
-	            	oldCardLeech = sched.answerCard(oldCard, ease) ? 1 : 0;
-	            	if (oldCardLeech != 0) {
-	            		oldCardLeech += sched.leechActionSuspend(oldCard) ? 1 : 0;
-	            	}
-//	            } else if (DeckManager.deckIsOpenedInBigWidget(deck.getDeckPath())) {
-//	                // first card in reviewer is retrieved
-//	            	Log.i(AnkiDroidApp.TAG, "doInBackgroundAnswerCard: get card from big widget");
-//                	newCard = AnkiDroidWidgetBig.getCard();
-	            }
-	            if (newCard == null) {
-		            newCard = sched.getCard();
-	            }
-	            if (newCard != null) {
-		            // render cards before locking database
-	            	newCard._getQA(true);
-	            }
+            AnkiDb ankiDB = sched.getCol().getDb();
+            ankiDB.getDatabase().beginTransaction();
+            try {
+                if (oldCard != null) {
+                    oldCardLeech = sched.answerCard(oldCard, ease) ? 1 : 0;
+                    if (oldCardLeech != 0) {
+                        oldCardLeech += sched.leechActionSuspend(oldCard) ? 1 : 0;
+                    }
+                    // } else if (DeckManager.deckIsOpenedInBigWidget(deck.getDeckPath())) {
+                    // // first card in reviewer is retrieved
+                    // Log.i(AnkiDroidApp.TAG, "doInBackgroundAnswerCard: get card from big widget");
+                    // newCard = AnkiDroidWidgetBig.getCard();
+                }
+                if (newCard == null) {
+                    newCard = sched.getCard();
+                }
+                if (newCard != null) {
+                    // render cards before locking database
+                    newCard._getQA(true);
+                }
                 publishProgress(new TaskData(newCard, oldCardLeech));
-	            ankiDB.getDatabase().setTransactionSuccessful();
-	        } finally {
-	            ankiDB.getDatabase().endTransaction();
-	        }
-		} catch (RuntimeException e) {
-			Log.e(AnkiDroidApp.TAG, "doInBackgroundAnswerCard - RuntimeException on answering card: " + e);
-			AnkiDroidApp.saveExceptionReportFile(e, "doInBackgroundAnswerCard");
-			return new TaskData(false);
-		}
+                ankiDB.getDatabase().setTransactionSuccessful();
+            } finally {
+                ankiDB.getDatabase().endTransaction();
+            }
+        } catch (RuntimeException e) {
+            Log.e(AnkiDroidApp.TAG, "doInBackgroundAnswerCard - RuntimeException on answering card: " + e);
+            AnkiDroidApp.saveExceptionReportFile(e, "doInBackgroundAnswerCard");
+            return new TaskData(false);
+        }
         return new TaskData(true);
     }
 
@@ -379,19 +382,20 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
 
         Collection col = null;
 
-//        publishProgress(new TaskData(AnkiDroidApp.getInstance().getBaseContext().getResources().getString(R.string.finish_operation)));
-//        DeckManager.waitForDeckClosingThread(deckFilename);
+        // publishProgress(new
+        // TaskData(AnkiDroidApp.getInstance().getBaseContext().getResources().getString(R.string.finish_operation)));
+        // DeckManager.waitForDeckClosingThread(deckFilename);
 
         if (oldCol == null || !oldCol.getPath().equals(collectionFile)) {
 
-        	// do a safety backup if last backup is too old --> addresses android's delete db bug 
+            // do a safety backup if last backup is too old --> addresses android's delete db bug
             if (BackupManager.safetyBackupNeeded(collectionFile)) {
-            	publishProgress(new TaskData(res.getString(R.string.backup_collection)));
-            	BackupManager.performBackup(collectionFile);
+                publishProgress(new TaskData(res.getString(R.string.backup_collection)));
+                BackupManager.performBackup(collectionFile);
             }
-        	publishProgress(new TaskData(res.getString(R.string.open_collection)));
+            publishProgress(new TaskData(res.getString(R.string.open_collection)));
 
-        	// load collection
+            // load collection
             Log.i(AnkiDroidApp.TAG, "doInBackgroundOpenCollection - File exists -> Loading collection...");
             try {
                 col = Collection.openCollection(collectionFile);
@@ -399,52 +403,52 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
                 // create tutorial deck if needed
                 SharedPreferences prefs = PrefSettings.getSharedPrefs(AnkiDroidApp.getInstance().getBaseContext());
                 if (prefs.contains("createTutorial") && prefs.getBoolean("createTutorial", false)) {
-                	prefs.edit().remove("createTutorial").commit();
-                	publishProgress(new TaskData(res.getString(R.string.tutorial_load)));
-                	doInBackgroundLoadTutorial(new TaskData(col));
-                }            	
+                    prefs.edit().remove("createTutorial").commit();
+                    publishProgress(new TaskData(res.getString(R.string.tutorial_load)));
+                    doInBackgroundLoadTutorial(new TaskData(col));
+                }
             } catch (RuntimeException e) {
-                BackupManager.restoreCollectionIfMissing(collectionFile);            	
+                BackupManager.restoreCollectionIfMissing(collectionFile);
             }
         } else {
             Log.i(AnkiDroidApp.TAG, "doInBackgroundOpenCollection: collection still open - reusing it");
-        	col = oldCol;
+            col = oldCol;
         }
         if (col == null) {
-        	return new TaskData(col);
+            return new TaskData(col);
         }
         try {
-//	        if (reset) {
-//        		col.getSched().reset();
-//        	}
-	        return new TaskData(col, doInBackgroundLoadDeckCounts(new TaskData(col)).getObjArray());
+            // if (reset) {
+            // col.getSched().reset();
+            // }
+            return new TaskData(col, doInBackgroundLoadDeckCounts(new TaskData(col)).getObjArray());
         } catch (RuntimeException e) {
-        	col = null;
-        	return new TaskData(col);
+            col = null;
+            return new TaskData(col);
         }
     }
 
 
     private TaskData doInBackgroundLoadDeckCounts(TaskData... params) {
         Log.i(AnkiDroidApp.TAG, "doInBackgroundLoadDeckCounts");
-    	Collection col = params[0].getCollection();
-       	try {
-       		return new TaskData(col.getSched().deckCounts());
-       	} catch (RuntimeException e) {
-       		Log.e(AnkiDroidApp.TAG, "doInBackgroundLoadDeckCounts - error: " + e);
-       		return null;
-       	}
+        Collection col = params[0].getCollection();
+        try {
+            return new TaskData(col.getSched().deckCounts());
+        } catch (RuntimeException e) {
+            Log.e(AnkiDroidApp.TAG, "doInBackgroundLoadDeckCounts - error: " + e);
+            return null;
+        }
     }
 
 
     private TaskData doInBackgroundSaveCollection(TaskData... params) {
         Log.i(AnkiDroidApp.TAG, "doInBackgroundSaveCollection");
-    	Collection col = params[0].getCollection();
+        Collection col = params[0].getCollection();
         if (col != null) {
             try {
-            	col.save();
+                col.save();
             } catch (RuntimeException e) {
-            	Log.e(AnkiDroidApp.TAG, "Error on saving deck in background: " + e);
+                Log.e(AnkiDroidApp.TAG, "Error on saving deck in background: " + e);
             }
         }
         return null;
@@ -452,115 +456,114 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
 
 
     private TaskData doInBackgroundDismissNote(TaskData... params) {
-    	Sched sched = params[0].getSched();
-    	Collection col = sched.getCol();
-    	Card card = params[0].getCard();
-    	Note note = card.note();
-    	int type = params[0].getInt();
+        Sched sched = params[0].getSched();
+        Collection col = sched.getCol();
+        Card card = params[0].getCard();
+        Note note = card.note();
+        int type = params[0].getInt();
         try {
             col.getDb().getDatabase().beginTransaction();
             try {
-            	switch (type) {
-            	case 0:
-            		// bury note
-            		sched.buryNote(note.getId());
-            		break;
-            	case 1:
-            		// suspend card
-            		if (card.getQueue() == -1) {
-            			sched.unsuspendCards(new long[]{card.getId()});
-            		} else {
-                		sched.suspendCards(new long[]{card.getId()});
-            		}
-            		break;
-            	case 2:
-            		// suspend note
-            		ArrayList<Card> cards = note.cards();
-            		long[] cids = new long[cards.size()];
-            		for (int i = 0; i < cards.size(); i++) {
-            			cids[i] = cards.get(i).getId();
-            		}
-            		sched.suspendCards(cids);
-            		break;
-            	case 3:
-            		// delete note
-            		col.remNotes(new long[]{note.getId()});
-            		break;
-            	}              
+                switch (type) {
+                    case 0:
+                        // bury note
+                        sched.buryNote(note.getId());
+                        break;
+                    case 1:
+                        // suspend card
+                        if (card.getQueue() == -1) {
+                            sched.unsuspendCards(new long[] { card.getId() });
+                        } else {
+                            sched.suspendCards(new long[] { card.getId() });
+                        }
+                        break;
+                    case 2:
+                        // suspend note
+                        ArrayList<Card> cards = note.cards();
+                        long[] cids = new long[cards.size()];
+                        for (int i = 0; i < cards.size(); i++) {
+                            cids[i] = cards.get(i).getId();
+                        }
+                        sched.suspendCards(cids);
+                        break;
+                    case 3:
+                        // delete note
+                        col.remNotes(new long[] { note.getId() });
+                        break;
+                }
                 publishProgress(new TaskData(col.getSched().getCard(), 0));
                 col.getDb().getDatabase().setTransactionSuccessful();
             } finally {
-            	col.getDb().getDatabase().endTransaction();
+                col.getDb().getDatabase().endTransaction();
             }
-    	} catch (RuntimeException e) {
-    		Log.e(AnkiDroidApp.TAG, "doInBackgroundSuspendCard - RuntimeException on suspending card: " + e);
-			AnkiDroidApp.saveExceptionReportFile(e, "doInBackgroundSuspendCard");
-    		return new TaskData(false);
-    	}
+        } catch (RuntimeException e) {
+            Log.e(AnkiDroidApp.TAG, "doInBackgroundSuspendCard - RuntimeException on suspending card: " + e);
+            AnkiDroidApp.saveExceptionReportFile(e, "doInBackgroundSuspendCard");
+            return new TaskData(false);
+        }
         return new TaskData(true);
     }
-        	
 
 
     private TaskData doInBackgroundMarkCard(TaskData... params) {
-    	Card card = params[0].getCard();
-    	Sched sched = params[0].getSched();
+        Card card = params[0].getCard();
+        Sched sched = params[0].getSched();
         try {
             AnkiDb ankiDB = sched.getCol().getDb();
             ankiDB.getDatabase().beginTransaction();
             try {
                 if (card != null) {
-                	Note note = card.note();
-                	if (note.hasTag("marked")) {
-                		note.delTag("marked");
-                	} else {
-                		note.addTag("marked");
-                	}
-                	note.flush();
+                    Note note = card.note();
+                    if (note.hasTag("marked")) {
+                        note.delTag("marked");
+                    } else {
+                        note.addTag("marked");
+                    }
+                    note.flush();
                 }
                 publishProgress(new TaskData(card));
                 ankiDB.getDatabase().setTransactionSuccessful();
             } finally {
                 ankiDB.getDatabase().endTransaction();
             }
-    	} catch (RuntimeException e) {
-    		Log.e(AnkiDroidApp.TAG, "doInBackgroundMarkCard - RuntimeException on marking card: " + e);
-			AnkiDroidApp.saveExceptionReportFile(e, "doInBackgroundMarkCard");
-    		return new TaskData(false);
+        } catch (RuntimeException e) {
+            Log.e(AnkiDroidApp.TAG, "doInBackgroundMarkCard - RuntimeException on marking card: " + e);
+            AnkiDroidApp.saveExceptionReportFile(e, "doInBackgroundMarkCard");
+            return new TaskData(false);
         }
-		return new TaskData(true);
+        return new TaskData(true);
     }
 
 
     private TaskData doInBackgroundUndo(TaskData... params) {
-    	Sched sched = params[0].getSched();
-    	Collection col = sched.getCol();
+        Sched sched = params[0].getSched();
+        Collection col = sched.getCol();
         try {
             col.getDb().getDatabase().beginTransaction();
-        	Card newCard;
+            Card newCard;
             try {
-            	long cid = col.undo();
-            	col.reset();
-            	if (cid != 0) {
-            		// a review was undone,
-            		newCard = col.getCard(cid);
-            		col.reset();
-//                	if (!sched.removeCardFromQueues(newCard)) {
-//                		// card was not found in queues
-//                		newCard = sched.getCard();
-//                	}
-            	} else {
-            		newCard = sched.getCard();
-            	}
-            	// TODO: handle leech undoing properly
+                long cid = col.undo();
+                col.reset();
+                if (cid != 0) {
+                    // a review was undone,
+                    newCard = col.getCard(cid);
+                    col.reset();
+                    // if (!sched.removeCardFromQueues(newCard)) {
+                    // // card was not found in queues
+                    // newCard = sched.getCard();
+                    // }
+                } else {
+                    newCard = sched.getCard();
+                }
+                // TODO: handle leech undoing properly
                 publishProgress(new TaskData(newCard, 0));
                 col.getDb().getDatabase().setTransactionSuccessful();
             } finally {
-            	col.getDb().getDatabase().endTransaction();
+                col.getDb().getDatabase().endTransaction();
             }
-    	} catch (RuntimeException e) {
-    		Log.e(AnkiDroidApp.TAG, "doInBackgroundUndo - RuntimeException on undoing: " + e);
-			AnkiDroidApp.saveExceptionReportFile(e, "doInBackgroundUndo");
+        } catch (RuntimeException e) {
+            Log.e(AnkiDroidApp.TAG, "doInBackgroundUndo - RuntimeException on undoing: " + e);
+            AnkiDroidApp.saveExceptionReportFile(e, "doInBackgroundUndo");
             return new TaskData(false);
         }
         return new TaskData(true);
@@ -568,11 +571,11 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
 
 
     private TaskData doInBackgroundLoadCards(TaskData... params) {
-    	Log.i(AnkiDroidApp.TAG, "doInBackgroundLoadCards");
-    	Collection col = params[0].getCollection();
-    	boolean wholeCollection = params[0].getBoolean();
-    	publishProgress(new TaskData(col.findCardsForCardBrowser(wholeCollection)));
-    	return null;
+        Log.i(AnkiDroidApp.TAG, "doInBackgroundLoadCards");
+        Collection col = params[0].getCollection();
+        boolean wholeCollection = params[0].getBoolean();
+        publishProgress(new TaskData(col.findCardsForCardBrowser(wholeCollection)));
+        return null;
     }
 
 
@@ -583,76 +586,82 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
         boolean wholeCollection = params[0].getBoolean();
 
         Stats stats = new Stats(col, wholeCollection);
-        switch(type) {
-        default:
-        case Stats.TYPE_FORECAST:
-        	return new TaskData(stats.calculateDue(PrefSettings.getSharedPrefs(AnkiDroidApp.getInstance().getBaseContext()).getInt("statsType", Stats.TYPE_MONTH)));
-        case Stats.TYPE_REVIEW_COUNT:
-        	return new TaskData(stats.calculateDone(PrefSettings.getSharedPrefs(AnkiDroidApp.getInstance().getBaseContext()).getInt("statsType", Stats.TYPE_MONTH), true));
-        case Stats.TYPE_REVIEW_TIME:
-        	return new TaskData(stats.calculateDone(PrefSettings.getSharedPrefs(AnkiDroidApp.getInstance().getBaseContext()).getInt("statsType", Stats.TYPE_MONTH), false));
+        switch (type) {
+            default:
+            case Stats.TYPE_FORECAST:
+                return new TaskData(stats.calculateDue(PrefSettings.getSharedPrefs(
+                        AnkiDroidApp.getInstance().getBaseContext()).getInt("statsType", Stats.TYPE_MONTH)));
+            case Stats.TYPE_REVIEW_COUNT:
+                return new TaskData(stats.calculateDone(
+                        PrefSettings.getSharedPrefs(AnkiDroidApp.getInstance().getBaseContext()).getInt("statsType",
+                                Stats.TYPE_MONTH), true));
+            case Stats.TYPE_REVIEW_TIME:
+                return new TaskData(stats.calculateDone(
+                        PrefSettings.getSharedPrefs(AnkiDroidApp.getInstance().getBaseContext()).getInt("statsType",
+                                Stats.TYPE_MONTH), false));
         }
     }
 
 
     private TaskData doInBackgroundCheckDatabase(TaskData... params) {
         Log.i(AnkiDroidApp.TAG, "doInBackgroundCheckDatabase");
-    	Collection col = params[0].getCollection();
-    	long result = col.fixIntegrity();
-    	if (result == -1) {
-        	return new TaskData(false);    		
-    	} else {
-        	return new TaskData(0, result, true);
-    	}
+        Collection col = params[0].getCollection();
+        long result = col.fixIntegrity();
+        if (result == -1) {
+            return new TaskData(false);
+        } else {
+            return new TaskData(0, result, true);
+        }
     }
 
 
     private TaskData doInBackgroundRepairDeck(TaskData... params) {
-    	Log.i(AnkiDroidApp.TAG, "doInBackgroundRepairDeck");
-    	String deckPath = params[0].getString();
-    	Collection col = params[0].getCollection();
-    	if (col != null) {
-    		col.close(false);
-    	}
-    	return new TaskData(BackupManager.repairDeck(deckPath));
+        Log.i(AnkiDroidApp.TAG, "doInBackgroundRepairDeck");
+        String deckPath = params[0].getString();
+        Collection col = params[0].getCollection();
+        if (col != null) {
+            col.close(false);
+        }
+        return new TaskData(BackupManager.repairDeck(deckPath));
     }
 
 
     private TaskData doInBackgroundCloseCollection(TaskData... params) {
-    	Log.i(AnkiDroidApp.TAG, "doInBackgroundCloseCollection");
-    	Collection col = params[0].getCollection();
-    	if (col != null) {
-    		WidgetStatus.waitToFinish();
-    		try {
-            	String path = col.getPath();
-        		col.close(true);
-        		BackupManager.performBackup(path);
-    		} catch (RuntimeException e) {
-    			Log.i(AnkiDroidApp.TAG, "doInBackgroundCloseCollection: error occurred - collection not properly closed");
-    		}
-    	}
-    	return null;
+        Log.i(AnkiDroidApp.TAG, "doInBackgroundCloseCollection");
+        Collection col = params[0].getCollection();
+        if (col != null) {
+            WidgetStatus.waitToFinish();
+            try {
+                String path = col.getPath();
+                col.close(true);
+                BackupManager.performBackup(path);
+            } catch (RuntimeException e) {
+                Log.i(AnkiDroidApp.TAG,
+                        "doInBackgroundCloseCollection: error occurred - collection not properly closed");
+            }
+        }
+        return null;
     }
 
-    
+
     private TaskData doInBackgroundUpdateValuesFromDeck(TaskData... params) {
         Log.i(AnkiDroidApp.TAG, "doInBackgroundUpdateValuesFromDeck");
         boolean reset = params[0].getBoolean();
         Sched sched = params[0].getSched();
         if (reset) {
-    		sched.reset();        	
+            sched.reset();
         }
-		int[] counts = sched.counts();
-		int totalNewCount = sched.newCount();
-		int totalCount = sched.cardCount();
-		double progressMature= ((double) sched.matureCount())
-				/ ((double) totalCount);
-		double progressAll = 1 - (((double) (totalNewCount + counts[1])) / ((double) totalCount));
-		double[][] serieslist = Stats.getSmallDueStats(sched.getCol());
-		return new TaskData(new Object[]{counts[0], counts[1], counts[2], totalNewCount, totalCount, progressMature, progressAll, sched.eta(counts), serieslist});
+        int[] counts = sched.counts();
+        int totalNewCount = sched.newCount();
+        int totalCount = sched.cardCount();
+        double progressMature = ((double) sched.matureCount()) / ((double) totalCount);
+        double progressAll = 1 - (((double) (totalNewCount + counts[1])) / ((double) totalCount));
+        double[][] serieslist = Stats.getSmallDueStats(sched.getCol());
+        return new TaskData(new Object[] { counts[0], counts[1], counts[2], totalNewCount, totalCount, progressMature,
+                progressAll, sched.eta(counts), serieslist });
     }
 
-    
+
     private TaskData doInBackgroundRestoreIfMissing(TaskData... params) {
         Log.i(AnkiDroidApp.TAG, "doInBackgroundRestoreIfMissing");
         String path = params[0].getString();
@@ -663,7 +672,7 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
 
     private TaskData doInBackgroundDeleteBackups() {
         Log.i(AnkiDroidApp.TAG, "doInBackgroundDeleteBackups");
-    	return null;//ew TaskData(BackupManager.deleteAllBackups());
+        return null;// ew TaskData(BackupManager.deleteAllBackups());
     }
 
 
@@ -671,8 +680,8 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
         Log.i(AnkiDroidApp.TAG, "doInBackgroundDeleteDeck");
         Collection col = params[0].getCollection();
         long did = params[0].getLong();
-		col.getDecks().rem(did, true);
-		return doInBackgroundLoadDeckCounts(new TaskData(col));
+        col.getDecks().rem(did, true);
+        return doInBackgroundLoadDeckCounts(new TaskData(col));
     }
 
 
@@ -680,8 +689,8 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
         Log.i(AnkiDroidApp.TAG, "doInBackgroundRebuildCram");
         Collection col = params[0].getCollection();
         long did = params[0].getLong();
-		col.getSched().rebuildDyn(did);
-		return doInBackgroundUpdateValuesFromDeck(new DeckTask.TaskData(col.getSched(), true));
+        col.getSched().rebuildDyn(did);
+        return doInBackgroundUpdateValuesFromDeck(new DeckTask.TaskData(col.getSched(), true));
     }
 
 
@@ -689,16 +698,16 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
         Log.i(AnkiDroidApp.TAG, "doInBackgroundEmptyCram");
         Collection col = params[0].getCollection();
         long did = params[0].getLong();
-		col.getSched().emptyDyn(did);
-		return doInBackgroundUpdateValuesFromDeck(new DeckTask.TaskData(col.getSched(), true));
+        col.getSched().emptyDyn(did);
+        return doInBackgroundUpdateValuesFromDeck(new DeckTask.TaskData(col.getSched(), true));
     }
 
 
     private TaskData doInBackgroundRestoreDeck(TaskData... params) {
-//        Log.i(AnkiDroidApp.TAG, "doInBackgroundRestoreDeck");
-//        String[] paths = params[0].getDeckList();
-//    	return new TaskData(BackupManager.restoreDeckBackup(paths[0], paths[1]));
-    	return null;
+        // Log.i(AnkiDroidApp.TAG, "doInBackgroundRestoreDeck");
+        // String[] paths = params[0].getDeckList();
+        // return new TaskData(BackupManager.restoreDeckBackup(paths[0], paths[1]));
+        return null;
     }
 
 
@@ -706,24 +715,24 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
         Log.i(AnkiDroidApp.TAG, "doInBackgroundSortCards");
         if (params.length == 1) {
             Comparator comparator = params[0].getComparator();
-            ArrayList<HashMap<String,String>> card = params[0].getCards(); 
-    		Collections.sort(card, comparator);        	
+            ArrayList<HashMap<String, String>> card = params[0].getCards();
+            Collections.sort(card, comparator);
         } else {
-            ArrayList<HashMap<String,String>> allCard = params[0].getCards(); 
-            ArrayList<HashMap<String,String>> cards = params[1].getCards(); 
-        	cards.clear();
-        	HashSet<String> tags = new HashSet<String>();
-        	for (String s : (HashSet<String>) params[2].getObjArray()[0]) {
-        		tags.add(s.toLowerCase());
-        	}
-			for (int i = 0; i < allCard.size(); i++) {
-				HashMap<String, String> card = allCard.get(i);
-				if (Arrays.asList(card.get("tags").toLowerCase().trim().split("\\s")).containsAll(tags)) {
-					cards.add(allCard.get(i));
-				}
-			}
+            ArrayList<HashMap<String, String>> allCard = params[0].getCards();
+            ArrayList<HashMap<String, String>> cards = params[1].getCards();
+            cards.clear();
+            HashSet<String> tags = new HashSet<String>();
+            for (String s : (HashSet<String>) params[2].getObjArray()[0]) {
+                tags.add(s.toLowerCase());
+            }
+            for (int i = 0; i < allCard.size(); i++) {
+                HashMap<String, String> card = allCard.get(i);
+                if (Arrays.asList(card.get("tags").toLowerCase().trim().split("\\s")).containsAll(tags)) {
+                    cards.add(allCard.get(i));
+                }
+            }
         }
-		return null;
+        return null;
     }
 
 
@@ -734,75 +743,75 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
         col.getDb().getDatabase().beginTransaction();
         String title = res.getString(R.string.help_tutorial);
         try {
-        	// get deck or create it
-        	long did = col.getDecks().id(title);
-        	// reset todays counts
-        	JSONObject d = col.getDecks().get(did);
-    		for (String t : new String[] { "new", "rev", "lrn", "time" }) {
-    			String k = t + "Today";
-				JSONArray ja = new JSONArray();
-				ja.put(col.getSched().getToday());
-				ja.put(0);
-				d.put(k, ja);
-    		}
-    		// save deck
-    		col.getDecks().save(d);
-	       	if (col.getSched().cardCount("(" + did + ")") > 0) {
-	       		// deck does already exist. Remove all cards and recreate them to ensure the correct order
-	       		col.remCards(col.getDecks().cids(did));
-	       	}
-	       	JSONObject model = col.getModels().byName(title);
-	       	// TODO: check, if model is valid or delete and recreate it
-	       	// TODO: deactivated at the moment as if forces a schema change
-	       	// create model (remove old ones first)
-//	       	while (model != null) {
-//	       		JSONObject m = col.getModels().byName(title);
-//	       		// rename old tutorial model if there are some non tutorial cards in it
-//	       		if (col.getDb().queryScalar("SELECT id FROM cards WHERE nid IN (SELECT id FROM notes WHERE mid = " + m.getLong("id") + ")", false) == 0) {
-//		       		col.getModels().rem(m);
-//	       		} else {
-//	       			m.put("name", title + " (renamed)");
-//	       			col.getModels().save(m);
-//	       		}
-//	       	}
-	       	if (model == null) {
-	       		model = col.getModels().addBasicModel(col, title);	       		
-	       	}
-	       	model.put("did", did);
-			String[] questions = res.getStringArray(R.array.tutorial_questions);
-			String[] answers = res.getStringArray(R.array.tutorial_answers);
-			String[] sampleQuestions = res.getStringArray(R.array.tutorial_capitals_questions);
-			String[] sampleAnswers = res.getStringArray(R.array.tutorial_capitals_answers);
-        	int len = Math.min(questions.length, answers.length);
-        	for (int i = 0; i < len + Math.min(sampleQuestions.length, sampleAnswers.length); i++) {
-        		Note note = col.newNote(model);
-        		if (note.values().length < 2) {
-        			return new TaskData(false);
-        		}
-        		note.values()[0] = (i < len) ? questions[i] : sampleQuestions[i - len];
-        		note.values()[1] = (i < len) ? answers[i] : sampleAnswers[i - len];
-        		col.addNote(note);
-        	}
-//        	deck.setSessionTimeLimit(0);
-        	if (col.getSched().cardCount("(" + did + ")") == 0) {
-        		// error, delete deck
-        		col.getDecks().rem(did, true);
-        		return new TaskData(false);
-        	} else {
-            	col.save();
-            	col.getDecks().select(did);
-            	col.getDb().getDatabase().setTransactionSuccessful();
-        		return new TaskData(true);
-        	}
+            // get deck or create it
+            long did = col.getDecks().id(title);
+            // reset todays counts
+            JSONObject d = col.getDecks().get(did);
+            for (String t : new String[] { "new", "rev", "lrn", "time" }) {
+                String k = t + "Today";
+                JSONArray ja = new JSONArray();
+                ja.put(col.getSched().getToday());
+                ja.put(0);
+                d.put(k, ja);
+            }
+            // save deck
+            col.getDecks().save(d);
+            if (col.getSched().cardCount("(" + did + ")") > 0) {
+                // deck does already exist. Remove all cards and recreate them to ensure the correct order
+                col.remCards(col.getDecks().cids(did));
+            }
+            JSONObject model = col.getModels().byName(title);
+            // TODO: check, if model is valid or delete and recreate it
+            // TODO: deactivated at the moment as if forces a schema change
+            // create model (remove old ones first)
+            // while (model != null) {
+            // JSONObject m = col.getModels().byName(title);
+            // // rename old tutorial model if there are some non tutorial cards in it
+            // if (col.getDb().queryScalar("SELECT id FROM cards WHERE nid IN (SELECT id FROM notes WHERE mid = " +
+            // m.getLong("id") + ")", false) == 0) {
+            // col.getModels().rem(m);
+            // } else {
+            // m.put("name", title + " (renamed)");
+            // col.getModels().save(m);
+            // }
+            // }
+            if (model == null) {
+                model = col.getModels().addBasicModel(col, title);
+            }
+            model.put("did", did);
+            String[] questions = res.getStringArray(R.array.tutorial_questions);
+            String[] answers = res.getStringArray(R.array.tutorial_answers);
+            String[] sampleQuestions = res.getStringArray(R.array.tutorial_capitals_questions);
+            String[] sampleAnswers = res.getStringArray(R.array.tutorial_capitals_answers);
+            int len = Math.min(questions.length, answers.length);
+            for (int i = 0; i < len + Math.min(sampleQuestions.length, sampleAnswers.length); i++) {
+                Note note = col.newNote(model);
+                if (note.values().length < 2) {
+                    return new TaskData(false);
+                }
+                note.values()[0] = (i < len) ? questions[i] : sampleQuestions[i - len];
+                note.values()[1] = (i < len) ? answers[i] : sampleAnswers[i - len];
+                col.addNote(note);
+            }
+            // deck.setSessionTimeLimit(0);
+            if (col.getSched().cardCount("(" + did + ")") == 0) {
+                // error, delete deck
+                col.getDecks().rem(did, true);
+                return new TaskData(false);
+            } else {
+                col.save();
+                col.getDecks().select(did);
+                col.getDb().getDatabase().setTransactionSuccessful();
+                return new TaskData(true);
+            }
         } catch (SQLException e) {
-			throw new RuntimeException(e);
-		} catch (JSONException e) {
-			throw new RuntimeException(e);
-		} finally {
-        	col.getDb().getDatabase().endTransaction();
-    	}
+            throw new RuntimeException(e);
+        } catch (JSONException e) {
+            throw new RuntimeException(e);
+        } finally {
+            col.getDb().getDatabase().endTransaction();
+        }
     }
-
 
     public static interface TaskListener {
         public void onPreExecute();
@@ -831,8 +840,9 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
         private TreeSet<Object[]> mDeckList;
         private Object[] mObjects;
 
+
         public TaskData(Object[] obj) {
-        	mObjects = obj;
+            mObjects = obj;
         }
 
 
@@ -863,91 +873,95 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
         public TaskData(Context context, int type, int period) {
             mContext = context;
             mType = type;
-        	mInteger = period;
+            mInteger = period;
         }
+
 
         public TaskData(ArrayList<HashMap<String, String>> cards) {
-        	mCards = cards;
+            mCards = cards;
         }
 
+
         public TaskData(ArrayList<HashMap<String, String>> cards, Comparator comparator) {
-        	mCards = cards;
-        	mComparator = comparator;
+            mCards = cards;
+            mComparator = comparator;
         }
+
 
         public TaskData(boolean bool) {
             mBool = bool;
         }
 
- 
+
         public TaskData(TreeSet<Object[]> deckList) {
-        	mDeckList = deckList;
+            mDeckList = deckList;
         }
 
 
         public TaskData(Collection col) {
-        	mCol = col;
+            mCol = col;
         }
+
 
         public TaskData(Collection col, Object[] obj) {
-        	mCol = col;
-        	mObjects = obj;
+            mCol = col;
+            mObjects = obj;
         }
 
-        
+
         public TaskData(Collection col, String string) {
-        	mCol = col;
-        	mMsg = string;
+            mCol = col;
+            mMsg = string;
         }
 
 
         public TaskData(Collection col, int value) {
-        	mCol = col;
+            mCol = col;
             mInteger = value;
         }
 
 
         public TaskData(Collection col, long value) {
-        	mCol = col;
+            mCol = col;
             mLong = value;
         }
 
 
         public TaskData(Collection col, int value, boolean bool) {
-        	mCol = col;
+            mCol = col;
             mInteger = value;
             mBool = bool;
         }
 
 
         public TaskData(Sched sched, Card card, int value) {
-        	mSched = sched;
-        	mCard = card;
+            mSched = sched;
+            mCard = card;
             mInteger = value;
         }
 
 
         public TaskData(Sched sched) {
-        	mSched = sched;
+            mSched = sched;
         }
 
 
         public TaskData(Sched sched, boolean bool) {
-        	mSched = sched;
-        	mBool = bool;
+            mSched = sched;
+            mBool = bool;
         }
 
 
         public TaskData(Sched sched, Card card, boolean bool) {
-        	mSched = sched;
-        	mBool = bool;
-        	mCard = card;
+            mSched = sched;
+            mBool = bool;
+            mCard = card;
         }
 
 
         public TaskData(Collection col, TreeSet<Object[]> decklist, int value) {
-        	mCol = col;
-        	mDeckList = decklist;
+            mCol = col;
+            mDeckList = decklist;
             mInteger = value;
         }
 
@@ -991,12 +1005,12 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
 
 
         public ArrayList<HashMap<String, String>> getCards() {
-        	return mCards;
+            return mCards;
         }
 
 
         public Comparator getComparator() {
-        	return mComparator;
+            return mComparator;
         }
 
 
@@ -1039,11 +1053,11 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
             return mType;
         }
 
-//
-//        public LinkedHashMap<Long, CardModel> getCardModels() {
-//            return mCardModels;
-//        }
 
+        //
+        // public LinkedHashMap<Long, CardModel> getCardModels() {
+        // return mCardModels;
+        // }
 
         public int[] getIntList() {
             return mIntList;
@@ -1051,22 +1065,22 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
 
 
         public Collection getCollection() {
-        	return mCol;
+            return mCol;
         }
 
 
         public Sched getSched() {
-        	return mSched;
+            return mSched;
         }
 
 
         public TreeSet<Object[]> getDeckList() {
-        	return mDeckList;
+            return mDeckList;
         }
 
 
         public Object[] getObjArray() {
-        	return mObjects;
+            return mObjects;
         }
     }
 

@@ -39,11 +39,11 @@ public class NotificationService extends Service {
     /** The id of the notification for due cards. */
     private static final int WIDGET_NOTIFY_ID = 1;
 
+
     @Override
     public void onCreate() {
         super.onCreate();
-        mNotificationManager =
-            (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
     }
 
 
@@ -53,14 +53,14 @@ public class NotificationService extends Service {
 
         Context context = AnkiDroidApp.getInstance().getBaseContext();
         SharedPreferences preferences = PrefSettings.getSharedPrefs(context);
-        int minimumCardsDueForNotification = Integer.parseInt(preferences.getString("minimumCardsDueForNotification", "25"));
+        int minimumCardsDueForNotification = Integer.parseInt(preferences.getString("minimumCardsDueForNotification",
+                "25"));
         int dueCardsCount = WidgetStatus.fetchDue(context);
         if (dueCardsCount >= minimumCardsDueForNotification) {
             // Show a notification
             int icon = R.drawable.anki;
             CharSequence tickerText = String.format(
-                    getString(R.string.widget_minimum_cards_due_notification_ticker_text),
-                    dueCardsCount);
+                    getString(R.string.widget_minimum_cards_due_notification_ticker_text), dueCardsCount);
             long when = System.currentTimeMillis();
 
             Notification notification = new Notification(icon, tickerText, when);
@@ -78,7 +78,8 @@ public class NotificationService extends Service {
             Intent ankiDroidIntent = new Intent(context, StudyOptionsFragment.class);
             ankiDroidIntent.setAction(Intent.ACTION_MAIN);
             ankiDroidIntent.addCategory(Intent.CATEGORY_LAUNCHER);
-            PendingIntent pendingAnkiDroidIntent = PendingIntent.getActivity(context, 0, ankiDroidIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+            PendingIntent pendingAnkiDroidIntent = PendingIntent.getActivity(context, 0, ankiDroidIntent,
+                    PendingIntent.FLAG_UPDATE_CURRENT);
             notification.setLatestEventInfo(appContext, contentTitle, tickerText, pendingAnkiDroidIntent);
 
             mNotificationManager.notify(WIDGET_NOTIFY_ID, notification);
@@ -89,8 +90,8 @@ public class NotificationService extends Service {
     }
 
 
-	@Override
-	public IBinder onBind(Intent arg0) {
-		return null;
-	}
+    @Override
+    public IBinder onBind(Intent arg0) {
+        return null;
+    }
 }

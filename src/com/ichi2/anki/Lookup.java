@@ -1,4 +1,7 @@
-package com.ichi2.anki;import com.ichi2.anki2.R;
+
+package com.ichi2.anki;
+
+import com.ichi2.anki2.R;
 
 import com.ichi2.libanki.Card;
 import com.ichi2.libanki.Utils;
@@ -15,16 +18,18 @@ import android.util.Log;
 
 public class Lookup {
 
-	/**
+    /**
      * Searches
      */
     private static final int DICTIONARY_AEDICT = 0;
     private static final int DICTIONARY_EIJIRO_WEB = 1; // japanese web dictionary
-    private static final int DICTIONARY_LEO_WEB = 2;    // German web dictionary for English, French, Spanish, Italian, Chinese, Russian
-    private static final int DICTIONARY_LEO_APP = 3;    // German web dictionary for English, French, Spanish, Italian, Chinese, Russian
+    private static final int DICTIONARY_LEO_WEB = 2; // German web dictionary for English, French, Spanish, Italian,
+                                                     // Chinese, Russian
+    private static final int DICTIONARY_LEO_APP = 3; // German web dictionary for English, French, Spanish, Italian,
+                                                     // Chinese, Russian
     private static final int DICTIONARY_COLORDICT = 4;
     private static final int DICTIONARY_FORA = 5;
-    private static final int DICTIONARY_NCIKU_WEB = 6;  // chinese web dictionary
+    private static final int DICTIONARY_NCIKU_WEB = 6; // chinese web dictionary
 
     private static Context mContext;
     private static boolean mIsDictionaryAvailable;
@@ -35,21 +40,21 @@ public class Lookup {
     private static Card mCurrentCard;
 
 
-	public static boolean initialize(Context context, String deckFilename) {
-		mContext = context;
-		mDeckFilename = deckFilename;
+    public static boolean initialize(Context context, String deckFilename) {
+        mContext = context;
+        mDeckFilename = deckFilename;
         int customDictionary = MetaDB.getLookupDictionary(context, mDeckFilename);
         if (customDictionary != -1) {
-        	mDictionary = customDictionary;
+            mDictionary = customDictionary;
         } else {
-        	SharedPreferences preferences = PrefSettings.getSharedPrefs(AnkiDroidApp.getInstance().getBaseContext());
-            mDictionary = Integer.parseInt( preferences.getString("dictionary", Integer.toString(DICTIONARY_COLORDICT)));
+            SharedPreferences preferences = PrefSettings.getSharedPrefs(AnkiDroidApp.getInstance().getBaseContext());
+            mDictionary = Integer.parseInt(preferences.getString("dictionary", Integer.toString(DICTIONARY_COLORDICT)));
         }
         switch (mDictionary) {
-        	case DICTIONARY_AEDICT:
-        		mDictionaryAction = "sk.baka.aedict.action.ACTION_SEARCH_EDICT";
+            case DICTIONARY_AEDICT:
+                mDictionaryAction = "sk.baka.aedict.action.ACTION_SEARCH_EDICT";
                 mIsDictionaryAvailable = Utils.isIntentAvailable(mContext, mDictionaryAction);
-        		break;
+                break;
             case DICTIONARY_LEO_WEB:
             case DICTIONARY_NCIKU_WEB:
             case DICTIONARY_EIJIRO_WEB:
@@ -57,15 +62,16 @@ public class Lookup {
                 mIsDictionaryAvailable = Utils.isIntentAvailable(mContext, mDictionaryAction);
                 break;
             case DICTIONARY_LEO_APP:
-                mDictionaryAction = "android.intent.action.SEND";                   
-                mIsDictionaryAvailable = Utils.isIntentAvailable(mContext, mDictionaryAction, new ComponentName("org.leo.android.dict", "org.leo.android.dict.LeoDict"));
+                mDictionaryAction = "android.intent.action.SEND";
+                mIsDictionaryAvailable = Utils.isIntentAvailable(mContext, mDictionaryAction, new ComponentName(
+                        "org.leo.android.dict", "org.leo.android.dict.LeoDict"));
                 break;
             case DICTIONARY_COLORDICT:
-                mDictionaryAction = "colordict.intent.action.SEARCH";                   
+                mDictionaryAction = "colordict.intent.action.SEARCH";
                 mIsDictionaryAvailable = Utils.isIntentAvailable(mContext, mDictionaryAction);
                 break;
             case DICTIONARY_FORA:
-                mDictionaryAction = "com.ngc.fora.action.LOOKUP";                   
+                mDictionaryAction = "com.ngc.fora.action.LOOKUP";
                 mIsDictionaryAvailable = Utils.isIntentAvailable(mContext, mDictionaryAction);
                 break;
             default:
@@ -74,112 +80,118 @@ public class Lookup {
         }
         Log.i(AnkiDroidApp.TAG, "Is intent available = " + mIsDictionaryAvailable);
         return mIsDictionaryAvailable;
-	}
+    }
 
 
-	public static boolean lookUp(String text, Card card) {
-		mCurrentCard = card;
-		// clear text from leading and closing dots, commas, brackets etc.
-		text = text.trim().replaceAll("[,;:\\s\\(\\[\\)\\]\\.]*$", "").replaceAll("^[,;:\\s\\(\\[\\)\\]\\.]*", "");
-		switch (mDictionary) {
-    	case DICTIONARY_AEDICT:
-    		Intent aedictSearchIntent = new Intent(mDictionaryAction);
-    		aedictSearchIntent.putExtra("kanjis", text);
-    		mContext.startActivity(aedictSearchIntent);
-            return true;
-    	case DICTIONARY_LEO_WEB:
-        case DICTIONARY_LEO_APP:
-        	mLookupText = text;
-    		// localisation is needless here since leo.org translates only into or out of German 
-    		final CharSequence[] itemValues = {"en", "fr", "es", "it", "ch", "ru"};
-                    String language = getLanguage(MetaDB.LANGUAGES_QA_UNDEFINED);
-    		if (language.length() > 0) {
-        		for (int i = 0; i < itemValues.length; i++) {
-            		if (language.equals(itemValues[i])) {
-            			lookupLeo(language, mLookupText);
-            			mLookupText = "";
-            			return true;
-            		}
-        		}
-    		}
-    		final String[] items = {"Englisch", "Französisch", "Spanisch", "Italienisch", "Chinesisch", "Russisch"};
-    		StyledDialog.Builder builder = new StyledDialog.Builder(mContext);
-    		builder.setTitle("\"" + mLookupText + "\" nachschlagen");
-    		builder.setItems(items, new DialogInterface.OnClickListener() {
-    			public void onClick(DialogInterface dialog, int item) {
-    				String language = itemValues[item].toString();
-                    storeLanguage(language, MetaDB.LANGUAGES_QA_UNDEFINED);
-        			lookupLeo(language, mLookupText);
-        			mLookupText = "";
-    			}
-    		});
-    		StyledDialog alert = builder.create();
-    		alert.show();
-            return true;
-    	case DICTIONARY_COLORDICT:
-    		Intent colordictSearchIntent = new Intent(mDictionaryAction);
-    		colordictSearchIntent.putExtra("EXTRA_QUERY", text);
-    		mContext.startActivity(colordictSearchIntent);
-            return true;
-    	case DICTIONARY_FORA:
-    		Intent foraSearchIntent = new Intent(mDictionaryAction);
-    		foraSearchIntent.putExtra("HEADWORD", text.trim());
-    		mContext.startActivity(foraSearchIntent);
-            return true;
-    	case DICTIONARY_NCIKU_WEB:
-            Intent ncikuWebIntent = new Intent(mDictionaryAction, Uri.parse("http://m.nciku.com/en/entry/?query=" + text));
-            mContext.startActivity(ncikuWebIntent);
-            return true;
-    	case DICTIONARY_EIJIRO_WEB:
-            Intent eijiroWebIntent = new Intent(mDictionaryAction, Uri.parse("http://eow.alc.co.jp/" + text));
-            mContext.startActivity(eijiroWebIntent);
-            return true;
-		}
-		return false;
-	}
+    public static boolean lookUp(String text, Card card) {
+        mCurrentCard = card;
+        // clear text from leading and closing dots, commas, brackets etc.
+        text = text.trim().replaceAll("[,;:\\s\\(\\[\\)\\]\\.]*$", "").replaceAll("^[,;:\\s\\(\\[\\)\\]\\.]*", "");
+        switch (mDictionary) {
+            case DICTIONARY_AEDICT:
+                Intent aedictSearchIntent = new Intent(mDictionaryAction);
+                aedictSearchIntent.putExtra("kanjis", text);
+                mContext.startActivity(aedictSearchIntent);
+                return true;
+            case DICTIONARY_LEO_WEB:
+            case DICTIONARY_LEO_APP:
+                mLookupText = text;
+                // localisation is needless here since leo.org translates only into or out of German
+                final CharSequence[] itemValues = { "en", "fr", "es", "it", "ch", "ru" };
+                String language = getLanguage(MetaDB.LANGUAGES_QA_UNDEFINED);
+                if (language.length() > 0) {
+                    for (int i = 0; i < itemValues.length; i++) {
+                        if (language.equals(itemValues[i])) {
+                            lookupLeo(language, mLookupText);
+                            mLookupText = "";
+                            return true;
+                        }
+                    }
+                }
+                final String[] items = { "Englisch", "Französisch", "Spanisch", "Italienisch", "Chinesisch", "Russisch" };
+                StyledDialog.Builder builder = new StyledDialog.Builder(mContext);
+                builder.setTitle("\"" + mLookupText + "\" nachschlagen");
+                builder.setItems(items, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int item) {
+                        String language = itemValues[item].toString();
+                        storeLanguage(language, MetaDB.LANGUAGES_QA_UNDEFINED);
+                        lookupLeo(language, mLookupText);
+                        mLookupText = "";
+                    }
+                });
+                StyledDialog alert = builder.create();
+                alert.show();
+                return true;
+            case DICTIONARY_COLORDICT:
+                Intent colordictSearchIntent = new Intent(mDictionaryAction);
+                colordictSearchIntent.putExtra("EXTRA_QUERY", text);
+                mContext.startActivity(colordictSearchIntent);
+                return true;
+            case DICTIONARY_FORA:
+                Intent foraSearchIntent = new Intent(mDictionaryAction);
+                foraSearchIntent.putExtra("HEADWORD", text.trim());
+                mContext.startActivity(foraSearchIntent);
+                return true;
+            case DICTIONARY_NCIKU_WEB:
+                Intent ncikuWebIntent = new Intent(mDictionaryAction, Uri.parse("http://m.nciku.com/en/entry/?query="
+                        + text));
+                mContext.startActivity(ncikuWebIntent);
+                return true;
+            case DICTIONARY_EIJIRO_WEB:
+                Intent eijiroWebIntent = new Intent(mDictionaryAction, Uri.parse("http://eow.alc.co.jp/" + text));
+                mContext.startActivity(eijiroWebIntent);
+                return true;
+        }
+        return false;
+    }
 
 
-	private static void lookupLeo(String language, CharSequence text) {
-		switch(mDictionary) {
-		case DICTIONARY_LEO_WEB:
-			Intent leoSearchIntent = new Intent(mDictionaryAction, Uri.parse("http://pda.leo.org/?lp=" + language
-				+ "de&search=" + text));
-			mContext.startActivity(leoSearchIntent);
-			break;
-		case DICTIONARY_LEO_APP:
-			Intent leoAppSearchIntent = new Intent(mDictionaryAction);
-			leoAppSearchIntent.putExtra("org.leo.android.dict.DICTIONARY", language + "de");
-			leoAppSearchIntent.putExtra(Intent.EXTRA_TEXT, text);
-			leoAppSearchIntent.setComponent(new ComponentName("org.leo.android.dict", "org.leo.android.dict.LeoDict"));
-			mContext.startActivity(leoAppSearchIntent);
-			break;
-		default:
-		}
-	}
+    private static void lookupLeo(String language, CharSequence text) {
+        switch (mDictionary) {
+            case DICTIONARY_LEO_WEB:
+                Intent leoSearchIntent = new Intent(mDictionaryAction, Uri.parse("http://pda.leo.org/?lp=" + language
+                        + "de&search=" + text));
+                mContext.startActivity(leoSearchIntent);
+                break;
+            case DICTIONARY_LEO_APP:
+                Intent leoAppSearchIntent = new Intent(mDictionaryAction);
+                leoAppSearchIntent.putExtra("org.leo.android.dict.DICTIONARY", language + "de");
+                leoAppSearchIntent.putExtra(Intent.EXTRA_TEXT, text);
+                leoAppSearchIntent.setComponent(new ComponentName("org.leo.android.dict",
+                        "org.leo.android.dict.LeoDict"));
+                mContext.startActivity(leoAppSearchIntent);
+                break;
+            default:
+        }
+    }
 
 
-	public static String getSearchStringTitle() {
-		return String.format(mContext.getString(R.string.menu_search), mContext.getResources().getStringArray(R.array.dictionary_labels)[mDictionary]);
-	}
+    public static String getSearchStringTitle() {
+        return String.format(mContext.getString(R.string.menu_search),
+                mContext.getResources().getStringArray(R.array.dictionary_labels)[mDictionary]);
+    }
 
 
-	public static boolean isAvailable() {
-		return mIsDictionaryAvailable;
-	}
+    public static boolean isAvailable() {
+        return mIsDictionaryAvailable;
+    }
 
 
     private static String getLanguage(int questionAnswer) {
-//    	if (mCurrentCard == null) {
-    		return "";
-//    	} else {
-//        	return MetaDB.getLanguage(mContext, mDeckFilename, Models.getModel(DeckManager.getMainDeck(), mCurrentCard.getCardModelId(), false).getId(), mCurrentCard.getCardModelId(), questionAnswer);    		
-//    	}
+        // if (mCurrentCard == null) {
+        return "";
+        // } else {
+        // return MetaDB.getLanguage(mContext, mDeckFilename, Models.getModel(DeckManager.getMainDeck(),
+        // mCurrentCard.getCardModelId(), false).getId(), mCurrentCard.getCardModelId(), questionAnswer);
+        // }
     }
-    
+
+
     private static void storeLanguage(String language, int questionAnswer) {
-//    	if (mCurrentCard != null) {
-//        	MetaDB.storeLanguage(mContext, mDeckFilename,  Models.getModel(DeckManager.getMainDeck(), mCurrentCard.getCardModelId(), false).getId(), mCurrentCard.getCardModelId(), questionAnswer, language);    		
-//    	}
+        // if (mCurrentCard != null) {
+        // MetaDB.storeLanguage(mContext, mDeckFilename, Models.getModel(DeckManager.getMainDeck(),
+        // mCurrentCard.getCardModelId(), false).getId(), mCurrentCard.getCardModelId(), questionAnswer, language);
+        // }
     }
 
 }

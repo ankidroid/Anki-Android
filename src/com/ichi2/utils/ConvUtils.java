@@ -22,14 +22,14 @@ import org.json.JSONException;
 public class ConvUtils {
 
     public static Object[] jsonArray2Objects(JSONArray array) {
-    	Object[] o = new Object[array.length()];
-		for (int i = 0; i < array.length(); i++) {
-			try {
-				o[i] = array.get(i);
-			} catch (JSONException e) {
-				throw new RuntimeException(e);
-			}
-		}
+        Object[] o = new Object[array.length()];
+        for (int i = 0; i < array.length(); i++) {
+            try {
+                o[i] = array.get(i);
+            } catch (JSONException e) {
+                throw new RuntimeException(e);
+            }
+        }
         return o;
     }
 }

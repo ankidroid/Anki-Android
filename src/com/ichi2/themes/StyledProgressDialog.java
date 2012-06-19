@@ -31,11 +31,11 @@ import android.widget.TextView;
 import com.ichi2.anki.AnkiActivity;
 import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki2.R;
- 
 
 public class StyledProgressDialog extends Dialog {
 
-	private Context mContext;
+    private Context mContext;
+
 
     public StyledProgressDialog(Context context) {
         super(context, R.style.StyledDialog);
@@ -45,109 +45,122 @@ public class StyledProgressDialog extends Dialog {
 
     @Override
     public void show() {
-    	try {
-    		super.show();
-    	} catch (BadTokenException e) {
-    		Log.e(AnkiDroidApp.TAG, "Could not show dialog: " + e);
-    	}
+        try {
+            super.show();
+        } catch (BadTokenException e) {
+            Log.e(AnkiDroidApp.TAG, "Could not show dialog: " + e);
+        }
     }
 
 
-	public static StyledProgressDialog show(Context context, CharSequence title, CharSequence message) {
-		return show(context, title, message, true, false, null);
-	}
-	public static StyledProgressDialog show(Context context, CharSequence title, CharSequence message, boolean indeterminable) {
-		return show(context, title, message, indeterminable, false, null);
-	}
-	public static StyledProgressDialog show(Context context, CharSequence title, CharSequence message, boolean indeterminable, boolean cancelable) {
-		return show(context, title, message, indeterminable, cancelable, null);
-	}
-    	public static StyledProgressDialog show(Context context, CharSequence title, CharSequence message, boolean indeterminable, boolean cancelable, DialogInterface.OnCancelListener cancelListener) {
-            final StyledProgressDialog dialog = new StyledProgressDialog(context);
-            LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+    public static StyledProgressDialog show(Context context, CharSequence title, CharSequence message) {
+        return show(context, title, message, true, false, null);
+    }
 
-            View layout = inflater.inflate(R.layout.styled_progress_dialog, null);
-            dialog.addContentView(layout, new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT));
 
-            // set title
-            if (title != null && title.length() > 0) {
-                ((TextView) layout.findViewById(R.id.alertTitle)).setText(title);            	
-//                if (icon != 0) {
-//                    ((ImageView) layout.findViewById(R.id.icon)).setImageResource(icon);            	
-//                } else {
-//                	layout.findViewById(R.id.icon).setVisibility(View.GONE);
-//                }
-            } else {
-            	layout.findViewById(R.id.topPanel).setVisibility(View.GONE);
-            	layout.findViewById(R.id.titleDivider).setVisibility(View.GONE);
-            }
+    public static StyledProgressDialog show(Context context, CharSequence title, CharSequence message,
+            boolean indeterminable) {
+        return show(context, title, message, indeterminable, false, null);
+    }
 
-            // set the message
-            if (message != null) {
-                TextView tv = (TextView) layout.findViewById(R.id.message);
-                tv.setText(message);
-//                if (messageSize != 0) {
-//                    tv.setTextSize(messageSize * context.getResources().getDisplayMetrics().scaledDensity);
-//                }
-            }
 
-            // set background
-            try {
-            	Themes.setStyledProgressDialogDialogBackgrounds(layout);
-            } catch (OutOfMemoryError e) {
-            	Log.e(AnkiDroidApp.TAG, "StyledDialog - Dialog could not be created: " + e);
-            	Themes.showThemedToast(context, context.getResources().getString(R.string.error_insufficient_memory), false);
-            	return null;
-            }
+    public static StyledProgressDialog show(Context context, CharSequence title, CharSequence message,
+            boolean indeterminable, boolean cancelable) {
+        return show(context, title, message, indeterminable, cancelable, null);
+    }
 
-            dialog.setContentView(layout);
-            dialog.setCancelable(cancelable);
-            dialog.setOnCancelListener(cancelListener);
-            if (animationEnabled(context)) {
-            	dialog.show();
-            }
-            return dialog;
+
+    public static StyledProgressDialog show(Context context, CharSequence title, CharSequence message,
+            boolean indeterminable, boolean cancelable, DialogInterface.OnCancelListener cancelListener) {
+        final StyledProgressDialog dialog = new StyledProgressDialog(context);
+        LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+
+        View layout = inflater.inflate(R.layout.styled_progress_dialog, null);
+        dialog.addContentView(layout, new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT));
+
+        // set title
+        if (title != null && title.length() > 0) {
+            ((TextView) layout.findViewById(R.id.alertTitle)).setText(title);
+            // if (icon != 0) {
+            // ((ImageView) layout.findViewById(R.id.icon)).setImageResource(icon);
+            // } else {
+            // layout.findViewById(R.id.icon).setVisibility(View.GONE);
+            // }
+        } else {
+            layout.findViewById(R.id.topPanel).setVisibility(View.GONE);
+            layout.findViewById(R.id.titleDivider).setVisibility(View.GONE);
+        }
+
+        // set the message
+        if (message != null) {
+            TextView tv = (TextView) layout.findViewById(R.id.message);
+            tv.setText(message);
+            // if (messageSize != 0) {
+            // tv.setTextSize(messageSize * context.getResources().getDisplayMetrics().scaledDensity);
+            // }
+        }
+
+        // set background
+        try {
+            Themes.setStyledProgressDialogDialogBackgrounds(layout);
+        } catch (OutOfMemoryError e) {
+            Log.e(AnkiDroidApp.TAG, "StyledDialog - Dialog could not be created: " + e);
+            Themes.showThemedToast(context, context.getResources().getString(R.string.error_insufficient_memory), false);
+            return null;
+        }
+
+        dialog.setContentView(layout);
+        dialog.setCancelable(cancelable);
+        dialog.setOnCancelListener(cancelListener);
+        if (animationEnabled(context)) {
+            dialog.show();
+        }
+        return dialog;
 
     }
+
+
     private static boolean animationEnabled(Context context) {
-    	if (context instanceof AnkiActivity) {
-    		return ((AnkiActivity)context).animationEnabled();
-    	} else {
-    		return true;
-    	}
+        if (context instanceof AnkiActivity) {
+            return ((AnkiActivity) context).animationEnabled();
+        } else {
+            return true;
+        }
     }
 
 
     public void setMessage(CharSequence message) {
-    	View main = super.getWindow().getDecorView();
-    	((TextView) main.findViewById(R.id.message)).setText(message);
+        View main = super.getWindow().getDecorView();
+        ((TextView) main.findViewById(R.id.message)).setText(message);
         ((View) main.findViewById(R.id.contentPanel)).setVisibility(View.VISIBLE);
     }
 
 
     public void setTitle(String message) {
-    	View main = super.getWindow().getDecorView();
-    	((TextView) main.findViewById(R.id.alertTitle)).setText(message);
+        View main = super.getWindow().getDecorView();
+        ((TextView) main.findViewById(R.id.alertTitle)).setText(message);
     }
 
 
     public void setMessage(String message) {
-    	View main = super.getWindow().getDecorView();
-    	((TextView) main.findViewById(R.id.message)).setText(message);
+        View main = super.getWindow().getDecorView();
+        ((TextView) main.findViewById(R.id.message)).setText(message);
         ((View) main.findViewById(R.id.contentPanel)).setVisibility(View.VISIBLE);
     }
 
-    
+
     public void setMax(int max) {
-    	// TODO
+        // TODO
     }
+
 
     public void setProgress(int progress) {
-    	// TODO
+        // TODO
     }
 
+
     public void setProgressStyle(int style) {
-    	// TODO
+        // TODO
     }
 
 }

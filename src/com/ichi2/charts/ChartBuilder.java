@@ -76,16 +76,17 @@ public class ChartBuilder extends Activity {
     private boolean mFullScreen;
 
     private double[][] mSeriesList;
-    private Object[] mMeta; 
+    private Object[] mMeta;
 
     private static final int MENU_FULLSCREEN = 0;
 
-	/**
+    /**
      * Swipe Detection
-     */    
- 	private GestureDetector gestureDetector;
- 	View.OnTouchListener gestureListener;
- 	private boolean mSwipeEnabled;
+     */
+    private GestureDetector gestureDetector;
+    View.OnTouchListener gestureListener;
+    private boolean mSwipeEnabled;
+
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
@@ -98,6 +99,7 @@ public class ChartBuilder extends Activity {
         outState.putSerializable("meta", mMeta);
     }
 
+
     public void closeChartBuilder() {
         finish();
         if (Integer.valueOf(android.os.Build.VERSION.SDK) > 4) {
@@ -109,7 +111,7 @@ public class ChartBuilder extends Activity {
     private SharedPreferences restorePreferences() {
         SharedPreferences preferences = PrefSettings.getSharedPrefs(getBaseContext());
         mFullScreen = preferences.getBoolean("fullScreen", false);
-		mSwipeEnabled = preferences.getBoolean("swipe", false);
+        mSwipeEnabled = preferences.getBoolean("swipe", false);
         return preferences;
     }
 
@@ -130,7 +132,7 @@ public class ChartBuilder extends Activity {
                 SharedPreferences preferences = PrefSettings.getSharedPrefs(getBaseContext());
                 Editor editor = preferences.edit();
                 editor.putBoolean("fullScreen", !mFullScreen);
-//                Statistics.sZoom = zoom;
+                // Statistics.sZoom = zoom;
                 editor.commit();
                 finish();
                 Intent intent = new Intent(this, com.ichi2.charts.ChartBuilder.class);
@@ -139,53 +141,53 @@ public class ChartBuilder extends Activity {
                     ActivityTransitionAnimation.slide(this, ActivityTransitionAnimation.FADE);
                 }
                 return true;
-    		case android.R.id.home:
-    			setResult(AnkiDroidApp.RESULT_TO_HOME);
-    			closeChartBuilder();
-    			return true;
+            case android.R.id.home:
+                setResult(AnkiDroidApp.RESULT_TO_HOME);
+                closeChartBuilder();
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
     }
 
-    
-//    public void setRenderer(int type, int row) {
-//        Resources res = getResources();
-//        XYSeriesRenderer renderer = new XYSeriesRenderer();
-//        if (type <= 2) {
-//        	switch (row) {
-//        	case 0: 
-//                renderer.setColor(res.getColor(R.color.statistics_due_young_cards));
-//        		break;
-//        	case 1:
-//                renderer.setColor(res.getColor(R.color.statistics_due_mature_cards));
-//                break;
-//        	case 2:
-////                renderer.setColor(res.getColor(R.color.statistics_due_failed_cards));
-//        		break;
-//        	}
-//        } else if (type == 3) {
-//        	switch (row) {
-//        	case 0: 
-////                renderer.setColor(res.getColor(R.color.statistics_reps_new_cards));
-//        		break;
-//        	case 1:
-//                renderer.setColor(res.getColor(R.color.statistics_reps_young_cards));
-//                break;
-//        	case 2:
-//                renderer.setColor(res.getColor(R.color.statistics_reps_mature_cards));
-//        		break;
-//        	}
-//        } else {
-//            renderer.setColor(res.getColor(R.color.statistics_default));        	
-//        }
-//        mRenderer.addSeriesRenderer(renderer);
-//    }
+
+    // public void setRenderer(int type, int row) {
+    // Resources res = getResources();
+    // XYSeriesRenderer renderer = new XYSeriesRenderer();
+    // if (type <= 2) {
+    // switch (row) {
+    // case 0:
+    // renderer.setColor(res.getColor(R.color.statistics_due_young_cards));
+    // break;
+    // case 1:
+    // renderer.setColor(res.getColor(R.color.statistics_due_mature_cards));
+    // break;
+    // case 2:
+    // // renderer.setColor(res.getColor(R.color.statistics_due_failed_cards));
+    // break;
+    // }
+    // } else if (type == 3) {
+    // switch (row) {
+    // case 0:
+    // // renderer.setColor(res.getColor(R.color.statistics_reps_new_cards));
+    // break;
+    // case 1:
+    // renderer.setColor(res.getColor(R.color.statistics_reps_young_cards));
+    // break;
+    // case 2:
+    // renderer.setColor(res.getColor(R.color.statistics_reps_mature_cards));
+    // break;
+    // }
+    // } else {
+    // renderer.setColor(res.getColor(R.color.statistics_default));
+    // }
+    // mRenderer.addSeriesRenderer(renderer);
+    // }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-    	Log.i(AnkiDroidApp.TAG, "ChartBuilder.OnCreate");
-    	Themes.applyTheme(this);
+        Log.i(AnkiDroidApp.TAG, "ChartBuilder.OnCreate");
+        Themes.applyTheme(this);
         super.onCreate(savedInstanceState);
         restorePreferences();
         Resources res = getResources();
@@ -195,26 +197,26 @@ public class ChartBuilder extends Activity {
             mSeriesList = stats.getSeriesList();
             mMeta = stats.getMetaInfo();
         } else if (savedInstanceState != null) {
-        	int len = savedInstanceState.getInt("seriesListLen");
-        	mSeriesList = new double[len][];
-        	for (int i = 0; i < len; i++) {
+            int len = savedInstanceState.getInt("seriesListLen");
+            mSeriesList = new double[len][];
+            for (int i = 0; i < len; i++) {
                 mSeriesList[i] = (double[]) savedInstanceState.getSerializable("seriesList" + i);
-        	}
+            }
             mMeta = (Object[]) savedInstanceState.getSerializable("meta");
         } else {
-        	finish();
+            finish();
         }
-        String title = res.getString((Integer)mMeta[1]);
-        boolean backwards = (Boolean)mMeta[2];
-        int[] valueLabels = (int[])mMeta[3];
-        int[] barColors = (int[])mMeta[4];
-        int[] axisTitles = (int[])mMeta[5];
+        String title = res.getString((Integer) mMeta[1]);
+        boolean backwards = (Boolean) mMeta[2];
+        int[] valueLabels = (int[]) mMeta[3];
+        int[] barColors = (int[]) mMeta[4];
+        int[] axisTitles = (int[]) mMeta[5];
         String subTitle = (String) mMeta[6];
 
         if (mSeriesList == null || mSeriesList[0].length < 2) {
             Log.i(AnkiDroidApp.TAG, "ChartBuilder - Data variable empty, closing chartbuilder");
-        	finish();
-        	return;
+            finish();
+            return;
         }
         if (mFullScreen) {
             getWindow()
@@ -231,15 +233,15 @@ public class ChartBuilder extends Activity {
                 mTitle.setTextColor(Color.BLACK);
             } else {
                 setTitle(title);
-            	UIUtils.setActionBarSubtitle(this, subTitle);
+                UIUtils.setActionBarSubtitle(this, subTitle);
                 mTitle.setVisibility(View.GONE);
             }
             for (int i = 1; i < mSeriesList.length; i++) {
-            	XYSeries series = new XYSeries(res.getString(valueLabels[i - 1]));
-            	for (int j = 0; j < mSeriesList[i].length; j++) {
-            		series.add(mSeriesList[0][j], mSeriesList[i][j]);
-            	}
-            	mDataset.addSeries(series);
+                XYSeries series = new XYSeries(res.getString(valueLabels[i - 1]));
+                for (int j = 0; j < mSeriesList[i].length; j++) {
+                    series.add(mSeriesList[0][j], mSeriesList[i][j]);
+                }
+                mDataset.addSeries(series);
                 XYSeriesRenderer renderer = new XYSeriesRenderer();
                 renderer.setColor(res.getColor(barColors[i - 1]));
                 mRenderer.addSeriesRenderer(renderer);
@@ -284,15 +286,15 @@ public class ChartBuilder extends Activity {
         } else {
             mChartView.repaint();
         }
-		gestureDetector = new GestureDetector(new MyGestureDetector());
+        gestureDetector = new GestureDetector(new MyGestureDetector());
         mChartView.setOnTouchListener(new View.OnTouchListener() {
-        	public boolean onTouch(View v, MotionEvent event) {
-        		if (gestureDetector.onTouchEvent(event)) {
-        			return true;
-        		}
-        		return false;
-        		}
-        	});
+            public boolean onTouch(View v, MotionEvent event) {
+                if (gestureDetector.onTouchEvent(event)) {
+                    return true;
+                }
+                return false;
+            }
+        });
     }
 
 
@@ -305,111 +307,121 @@ public class ChartBuilder extends Activity {
         return super.onKeyDown(keyCode, event);
     }
 
-    class MyGestureDetector extends SimpleOnGestureListener {	
-    	@Override
+    class MyGestureDetector extends SimpleOnGestureListener {
+        @Override
         public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
             if (mSwipeEnabled) {
                 try {
-                	if (e1.getY() - e2.getY() > DeckPicker.sSwipeMinDistance && Math.abs(velocityY) > DeckPicker.sSwipeThresholdVelocity && Math.abs(e1.getX() - e2.getX()) < DeckPicker.sSwipeMaxOffPath) {
-                		closeChartBuilder();
+                    if (e1.getY() - e2.getY() > DeckPicker.sSwipeMinDistance
+                            && Math.abs(velocityY) > DeckPicker.sSwipeThresholdVelocity
+                            && Math.abs(e1.getX() - e2.getX()) < DeckPicker.sSwipeMaxOffPath) {
+                        closeChartBuilder();
                     }
-       			}
-                catch (Exception e) {
-                  	Log.e(AnkiDroidApp.TAG, "onFling Exception = " + e.getMessage());
+                } catch (Exception e) {
+                    Log.e(AnkiDroidApp.TAG, "onFling Exception = " + e.getMessage());
                 }
             }
             return false;
-    	}
+        }
     }
+
+
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         if (gestureDetector.onTouchEvent(event))
-	        return true;
-	    else
-	    	return false;
+            return true;
+        else
+            return false;
     }
 
 
-    public static StyledDialog getStatisticsDialog(Context context, DialogInterface.OnClickListener listener, boolean showWholeDeckSelection) {
-    	StyledDialog.Builder builder = new StyledDialog.Builder(context);
-		builder.setTitle(context.getString(R.string.statistics_type_title));
-		builder.setIcon(android.R.drawable.ic_menu_sort_by_size);
+    public static StyledDialog getStatisticsDialog(Context context, DialogInterface.OnClickListener listener,
+            boolean showWholeDeckSelection) {
+        StyledDialog.Builder builder = new StyledDialog.Builder(context);
+        builder.setTitle(context.getString(R.string.statistics_type_title));
+        builder.setIcon(android.R.drawable.ic_menu_sort_by_size);
 
-		// set items
-		String[] items = new String[3];
-		items[0] = context.getResources().getString(R.string.stats_forecast);
-		items[1] = context.getResources().getString(R.string.stats_review_count);
-		items[2] = context.getResources().getString(R.string.stats_review_time);
+        // set items
+        String[] items = new String[3];
+        items[0] = context.getResources().getString(R.string.stats_forecast);
+        items[1] = context.getResources().getString(R.string.stats_review_count);
+        items[2] = context.getResources().getString(R.string.stats_review_time);
 
-		builder.setItems(items, listener);
+        builder.setItems(items, listener);
 
-		// period selection
-		final RadioButton[] statisticRadioButtons = new RadioButton[3];
-	    RadioGroup rg = new RadioGroup(context);
-	    rg.setOrientation(RadioGroup.HORIZONTAL);
-	    RadioGroup.LayoutParams lp = new RadioGroup.LayoutParams(0, LayoutParams.MATCH_PARENT, 1);
-	    Resources res = context.getResources();
-	    String[] text = res.getStringArray(R.array.stats_period);
-	    int height = context.getResources().getDrawable(R.drawable.white_btn_radio).getIntrinsicHeight();
-	    for (int i = 0; i < statisticRadioButtons.length; i++){
-	    	statisticRadioButtons[i] = new RadioButton(context);
-	    	statisticRadioButtons[i].setClickable(true);
-	    	statisticRadioButtons[i].setText("         " + text[i]);
-	    	statisticRadioButtons[i].setHeight(height * 2);
-	    	statisticRadioButtons[i].setSingleLine();
-	    	statisticRadioButtons[i].setBackgroundDrawable(null);
-	    	statisticRadioButtons[i].setGravity(Gravity.CENTER_VERTICAL);
-	        rg.addView(statisticRadioButtons[i], lp);
-	    }
-	    rg.setOnCheckedChangeListener(new OnCheckedChangeListener () {
-			@Override
-			public void onCheckedChanged(RadioGroup arg0, int arg1) {
-				int checked = arg0.getCheckedRadioButtonId();
-				for (int i = 0; i < 3; i++) {
-					if (arg0.getChildAt(i).getId() == checked) {
-						PrefSettings.getSharedPrefs(AnkiDroidApp.getInstance().getBaseContext()).edit().putInt("statsType", i).commit();
-						break;
-					}
-				}
-			}
-			});
-	    rg.setLayoutParams(new LinearLayout.LayoutParams(LayoutParams.FILL_PARENT, height));
-	    statisticRadioButtons[Math.min(PrefSettings.getSharedPrefs(AnkiDroidApp.getInstance().getBaseContext()).getInt("statsType", Stats.TYPE_MONTH), Stats.TYPE_LIFE)].setChecked(true);
+        // period selection
+        final RadioButton[] statisticRadioButtons = new RadioButton[3];
+        RadioGroup rg = new RadioGroup(context);
+        rg.setOrientation(RadioGroup.HORIZONTAL);
+        RadioGroup.LayoutParams lp = new RadioGroup.LayoutParams(0, LayoutParams.MATCH_PARENT, 1);
+        Resources res = context.getResources();
+        String[] text = res.getStringArray(R.array.stats_period);
+        int height = context.getResources().getDrawable(R.drawable.white_btn_radio).getIntrinsicHeight();
+        for (int i = 0; i < statisticRadioButtons.length; i++) {
+            statisticRadioButtons[i] = new RadioButton(context);
+            statisticRadioButtons[i].setClickable(true);
+            statisticRadioButtons[i].setText("         " + text[i]);
+            statisticRadioButtons[i].setHeight(height * 2);
+            statisticRadioButtons[i].setSingleLine();
+            statisticRadioButtons[i].setBackgroundDrawable(null);
+            statisticRadioButtons[i].setGravity(Gravity.CENTER_VERTICAL);
+            rg.addView(statisticRadioButtons[i], lp);
+        }
+        rg.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup arg0, int arg1) {
+                int checked = arg0.getCheckedRadioButtonId();
+                for (int i = 0; i < 3; i++) {
+                    if (arg0.getChildAt(i).getId() == checked) {
+                        PrefSettings.getSharedPrefs(AnkiDroidApp.getInstance().getBaseContext()).edit()
+                                .putInt("statsType", i).commit();
+                        break;
+                    }
+                }
+            }
+        });
+        rg.setLayoutParams(new LinearLayout.LayoutParams(LayoutParams.FILL_PARENT, height));
+        statisticRadioButtons[Math.min(
+                PrefSettings.getSharedPrefs(AnkiDroidApp.getInstance().getBaseContext()).getInt("statsType",
+                        Stats.TYPE_MONTH), Stats.TYPE_LIFE)].setChecked(true);
 
-	    if (showWholeDeckSelection) {
-		    // collection/current deck
-			final RadioButton[] statisticRadioButtons2 = new RadioButton[2];
-		    RadioGroup rg2 = new RadioGroup(context);
-		    rg2.setOrientation(RadioGroup.HORIZONTAL);
-		    String[] text2 = res.getStringArray(R.array.stats_range);
-		    for (int i = 0; i < statisticRadioButtons2.length; i++){
-		    	statisticRadioButtons2[i] = new RadioButton(context);
-		    	statisticRadioButtons2[i].setClickable(true);
-		    	statisticRadioButtons2[i].setText("         " + text2[i]);
-		    	statisticRadioButtons2[i].setHeight(height * 2);
-		    	statisticRadioButtons2[i].setSingleLine();
-		    	statisticRadioButtons2[i].setBackgroundDrawable(null);
-		    	statisticRadioButtons2[i].setGravity(Gravity.CENTER_VERTICAL);
-		        rg2.addView(statisticRadioButtons2[i], lp);
-		    }
-		    rg2.setOnCheckedChangeListener(new OnCheckedChangeListener () {
-				@Override
-				public void onCheckedChanged(RadioGroup arg0, int arg1) {
-					PrefSettings.getSharedPrefs(AnkiDroidApp.getInstance().getBaseContext()).edit().putBoolean("statsRange", arg0.getCheckedRadioButtonId() == arg0.getChildAt(0).getId()).commit();
-				}
-				});
-		    rg2.setLayoutParams(new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, height));
-		    statisticRadioButtons2[PrefSettings.getSharedPrefs(AnkiDroidApp.getInstance().getBaseContext()).getBoolean("statsRange", true) ? 0 : 1].setChecked(true);
+        if (showWholeDeckSelection) {
+            // collection/current deck
+            final RadioButton[] statisticRadioButtons2 = new RadioButton[2];
+            RadioGroup rg2 = new RadioGroup(context);
+            rg2.setOrientation(RadioGroup.HORIZONTAL);
+            String[] text2 = res.getStringArray(R.array.stats_range);
+            for (int i = 0; i < statisticRadioButtons2.length; i++) {
+                statisticRadioButtons2[i] = new RadioButton(context);
+                statisticRadioButtons2[i].setClickable(true);
+                statisticRadioButtons2[i].setText("         " + text2[i]);
+                statisticRadioButtons2[i].setHeight(height * 2);
+                statisticRadioButtons2[i].setSingleLine();
+                statisticRadioButtons2[i].setBackgroundDrawable(null);
+                statisticRadioButtons2[i].setGravity(Gravity.CENTER_VERTICAL);
+                rg2.addView(statisticRadioButtons2[i], lp);
+            }
+            rg2.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(RadioGroup arg0, int arg1) {
+                    PrefSettings.getSharedPrefs(AnkiDroidApp.getInstance().getBaseContext()).edit()
+                            .putBoolean("statsRange", arg0.getCheckedRadioButtonId() == arg0.getChildAt(0).getId())
+                            .commit();
+                }
+            });
+            rg2.setLayoutParams(new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, height));
+            statisticRadioButtons2[PrefSettings.getSharedPrefs(AnkiDroidApp.getInstance().getBaseContext()).getBoolean(
+                    "statsRange", true) ? 0 : 1].setChecked(true);
 
-		    LinearLayout ll = new LinearLayout(context);
-		    ll.setOrientation(LinearLayout.VERTICAL);
-		    ll.setLayoutParams(new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
-		    ll.addView(rg);
-		    ll.addView(rg2);	    
-			builder.setView(ll,  false, true);	    	
-	    } else {
-			builder.setView(rg,  false, true);	    	
-	    }
-		return builder.create();
+            LinearLayout ll = new LinearLayout(context);
+            ll.setOrientation(LinearLayout.VERTICAL);
+            ll.setLayoutParams(new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
+            ll.addView(rg);
+            ll.addView(rg2);
+            builder.setView(ll, false, true);
+        } else {
+            builder.setView(rg, false, true);
+        }
+        return builder.create();
     }
 }

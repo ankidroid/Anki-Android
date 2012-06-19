@@ -35,15 +35,17 @@ import android.view.View;
 import android.widget.RemoteViews;
 
 public class AnkiDroidWidgetSmall extends AppWidgetProvider {
-	
+
     private static BroadcastReceiver mMountReceiver = null;
     private static boolean remounted = false;
+
 
     @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
         Log.i(AnkiDroidApp.TAG, "SmallWidget: onUpdate");
         WidgetStatus.update(context);
     }
+
 
     @Override
     public void onEnabled(Context context) {
@@ -52,6 +54,7 @@ public class AnkiDroidWidgetSmall extends AppWidgetProvider {
         SharedPreferences preferences = PrefSettings.getSharedPrefs(context);
         preferences.edit().putBoolean("widgetSmallEnabled", true).commit();
     }
+
 
     @Override
     public void onDisabled(Context context) {
@@ -71,6 +74,7 @@ public class AnkiDroidWidgetSmall extends AppWidgetProvider {
 
         /** The cached estimated reviewing time. */
         private int eta;
+
 
         @Override
         public void onStart(Intent intent, int startId) {
@@ -98,20 +102,20 @@ public class AnkiDroidWidgetSmall extends AppWidgetProvider {
                 updateViews.setViewVisibility(R.id.ankidroid_widget_small_finish_layout, View.GONE);
 
                 if (mMountReceiver == null) {
-                	mMountReceiver = new BroadcastReceiver() {
+                    mMountReceiver = new BroadcastReceiver() {
                         @Override
                         public void onReceive(Context context, Intent intent) {
                             String action = intent.getAction();
-                        	if (action.equals(Intent.ACTION_MEDIA_MOUNTED)) {
+                            if (action.equals(Intent.ACTION_MEDIA_MOUNTED)) {
                                 Log.i(AnkiDroidApp.TAG, "mMountReceiver - Action = Media Mounted");
                                 if (remounted) {
-                                    WidgetStatus.update(getBaseContext());                                	
-                                	remounted = false;
+                                    WidgetStatus.update(getBaseContext());
+                                    remounted = false;
                                     if (mMountReceiver != null) {
                                         unregisterReceiver(mMountReceiver);
                                     }
                                 } else {
-                                	remounted = true;
+                                    remounted = true;
                                 }
                             }
                         }
@@ -126,32 +130,32 @@ public class AnkiDroidWidgetSmall extends AppWidgetProvider {
                 if (dueCardsCount == 0 || updateDueDecksNow) {
                     // Build a list of decks with due cards.
                     // Also compute the total number of cards due.
-                	int[] counts = WidgetStatus.fetchSmall(context);
-                	
-                	dueCardsCount = counts[0];
-                	progress = counts[1];
-                	eta = counts[2];
-        			if (dueCardsCount <= 0) {
-        				if (dueCardsCount == 0) {
-    		                updateViews.setViewVisibility(R.id.ankidroid_widget_small_finish_layout, View.VISIBLE);        					
-        				} else {
-    		                updateViews.setViewVisibility(R.id.ankidroid_widget_small_finish_layout, View.INVISIBLE);        					
-        				}
-		                updateViews.setViewVisibility(R.id.widget_due, View.INVISIBLE);
-		                updateViews.setViewVisibility(R.id.widget_progress_frame, View.INVISIBLE);
-        			} else {
-		                updateViews.setViewVisibility(R.id.ankidroid_widget_small_finish_layout, View.INVISIBLE);
-		                updateViews.setViewVisibility(R.id.widget_due, View.VISIBLE);
-		                updateViews.setViewVisibility(R.id.widget_progress_frame, View.VISIBLE);
-	                    updateViews.setTextViewText(R.id.widget_due, Integer.toString(dueCardsCount));
-	                    updateViews.setProgressBar(R.id.widget_progress, 100, progress, false);
-					}
-        			if (eta <= 0 || dueCardsCount <= 0) {
-		                updateViews.setViewVisibility(R.id.widget_eta, View.INVISIBLE);        				
-        			} else {
-		                updateViews.setViewVisibility(R.id.widget_eta, View.VISIBLE);        				
-	                    updateViews.setTextViewText(R.id.widget_eta, Integer.toString(eta));
-        			}
+                    int[] counts = WidgetStatus.fetchSmall(context);
+
+                    dueCardsCount = counts[0];
+                    progress = counts[1];
+                    eta = counts[2];
+                    if (dueCardsCount <= 0) {
+                        if (dueCardsCount == 0) {
+                            updateViews.setViewVisibility(R.id.ankidroid_widget_small_finish_layout, View.VISIBLE);
+                        } else {
+                            updateViews.setViewVisibility(R.id.ankidroid_widget_small_finish_layout, View.INVISIBLE);
+                        }
+                        updateViews.setViewVisibility(R.id.widget_due, View.INVISIBLE);
+                        updateViews.setViewVisibility(R.id.widget_progress_frame, View.INVISIBLE);
+                    } else {
+                        updateViews.setViewVisibility(R.id.ankidroid_widget_small_finish_layout, View.INVISIBLE);
+                        updateViews.setViewVisibility(R.id.widget_due, View.VISIBLE);
+                        updateViews.setViewVisibility(R.id.widget_progress_frame, View.VISIBLE);
+                        updateViews.setTextViewText(R.id.widget_due, Integer.toString(dueCardsCount));
+                        updateViews.setProgressBar(R.id.widget_progress, 100, progress, false);
+                    }
+                    if (eta <= 0 || dueCardsCount <= 0) {
+                        updateViews.setViewVisibility(R.id.widget_eta, View.INVISIBLE);
+                    } else {
+                        updateViews.setViewVisibility(R.id.widget_eta, View.VISIBLE);
+                        updateViews.setTextViewText(R.id.widget_eta, Integer.toString(eta));
+                    }
                 }
             }
 
@@ -160,11 +164,13 @@ public class AnkiDroidWidgetSmall extends AppWidgetProvider {
             Intent ankiDroidIntent = new Intent(context, DeckPicker.class);
             ankiDroidIntent.setAction(Intent.ACTION_MAIN);
             ankiDroidIntent.addCategory(Intent.CATEGORY_LAUNCHER);
-            PendingIntent pendingAnkiDroidIntent = PendingIntent.getActivity(context, 0, ankiDroidIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+            PendingIntent pendingAnkiDroidIntent = PendingIntent.getActivity(context, 0, ankiDroidIntent,
+                    PendingIntent.FLAG_UPDATE_CURRENT);
             updateViews.setOnClickPendingIntent(R.id.ankidroid_widget_small_layout, pendingAnkiDroidIntent);
 
             return updateViews;
         }
+
 
         @Override
         public IBinder onBind(Intent arg0) {

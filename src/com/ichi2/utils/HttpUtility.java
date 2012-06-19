@@ -1,3 +1,4 @@
+
 package com.ichi2.utils;
 
 import java.io.IOException;
@@ -16,30 +17,31 @@ import android.util.Log;
 import com.ichi2.anki.AnkiDroidApp;
 
 public class HttpUtility {
-	public static Boolean postReport(String url, List<NameValuePair> values) {
-    	HttpClient httpClient = new DefaultHttpClient();  
-        HttpPost httpPost = new HttpPost(url);  
-      
-        try {  
-        	httpPost.setEntity(new UrlEncodedFormEntity(values));  
-            HttpResponse response = httpClient.execute(httpPost);  
-            
-            switch(response.getStatusLine().getStatusCode()) {
-	            case 200:
-	            	Log.e(AnkiDroidApp.TAG, String.format("feedback report posted to %s", url));
-	            	return true;
-	            	
-            	default:
-            		Log.e(AnkiDroidApp.TAG, String.format("feedback report posted to %s message", url));
-            		Log.e(AnkiDroidApp.TAG, String.format("%d: %s", response.getStatusLine().getStatusCode(), response.getStatusLine().getReasonPhrase()));
-	            	break;
+    public static Boolean postReport(String url, List<NameValuePair> values) {
+        HttpClient httpClient = new DefaultHttpClient();
+        HttpPost httpPost = new HttpPost(url);
+
+        try {
+            httpPost.setEntity(new UrlEncodedFormEntity(values));
+            HttpResponse response = httpClient.execute(httpPost);
+
+            switch (response.getStatusLine().getStatusCode()) {
+                case 200:
+                    Log.e(AnkiDroidApp.TAG, String.format("feedback report posted to %s", url));
+                    return true;
+
+                default:
+                    Log.e(AnkiDroidApp.TAG, String.format("feedback report posted to %s message", url));
+                    Log.e(AnkiDroidApp.TAG, String.format("%d: %s", response.getStatusLine().getStatusCode(), response
+                            .getStatusLine().getReasonPhrase()));
+                    break;
             }
-        } catch (ClientProtocolException ex) {  
-        	Log.e(AnkiDroidApp.TAG, ex.toString());
-        } catch (IOException ex) {  
-        	Log.e(AnkiDroidApp.TAG, ex.toString());  
+        } catch (ClientProtocolException ex) {
+            Log.e(AnkiDroidApp.TAG, ex.toString());
+        } catch (IOException ex) {
+            Log.e(AnkiDroidApp.TAG, ex.toString());
         }
-        
+
         return false;
-	}
+    }
 }

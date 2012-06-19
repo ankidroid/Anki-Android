@@ -1,3 +1,4 @@
+
 package com.ichi2.filters;
 
 import android.content.SharedPreferences;
@@ -8,14 +9,15 @@ import java.util.regex.Pattern;
 
 /**
  * Remove unnecessary information from Google Translate.
- *
+ * 
  * @author evgenij.kozhevnikov@gmail.com
- * */
-public class GoogleTranslaterFilter extends AbstractCardFilter{
+ */
+public class GoogleTranslaterFilter extends AbstractCardFilter {
 
     public static final String CHECK_PATTERN = "Google";
 
     private static final String SEARCH_PATTERN = "(?:\\):\\s*)(.*)(?:\\s|\\b)";
+
 
     public Pair<String, String> filter(Pair<String, String> messages, SharedPreferences preferences) {
         Pair<String, String> result = new Pair<String, String>(messages.first, messages.second);
@@ -30,31 +32,27 @@ public class GoogleTranslaterFilter extends AbstractCardFilter{
         return result;
     }
 
+
     /**
      * Check conditions to running current filter.
-     *
-     * @param messages
-     *          original messages.
-     * @param preferences
-     *          program settings.
+     * 
+     * @param messages original messages.
+     * @param preferences program settings.
      * @return true, if filter could be run, otherwise false.
-     * */
+     */
     private boolean isCanBeExecuted(Pair<String, String> messages, SharedPreferences preferences) {
         return useFilter(preferences) && messages.first.contains(CHECK_PATTERN);
     }
 
+
     /**
      * Forming full text message for search.
-     *
-     * @param messages
-     *      original messages.
+     * 
+     * @param messages original messages.
      * @return full text message for search.
-     * */
+     */
     private String getSearchText(Pair<String, String> messages) {
-        return new StringBuilder(messages.first)
-                .append(messages.second)
-                .append(' ')
-                .toString();
+        return new StringBuilder(messages.first).append(messages.second).append(' ').toString();
     }
 
 }

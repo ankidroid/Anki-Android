@@ -16,6 +16,7 @@
  ****************************************************************************************/
 
 package com.ichi2.anki;
+
 import android.app.Application;
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -42,30 +43,31 @@ import java.util.Locale;
  * Application class. This file mainly contains Veecheck stuff.
  */
 public class AnkiDroidApp extends Application {
-	
-	public static final String LIBANKI_VERSION = "1.2.5";
-	public static final String DROPBOX_PUBLIC_DIR = "/dropbox/Public/Anki";
 
-	public static final int RESULT_TO_HOME = 501;
+    public static final String LIBANKI_VERSION = "1.2.5";
+    public static final String DROPBOX_PUBLIC_DIR = "/dropbox/Public/Anki";
+
+    public static final int RESULT_TO_HOME = 501;
 
     /**
      * Tag for logging messages.
      */
     public static final String TAG = "AnkiDroid";
 
-	public static final String COLLECTION_PATH = "/collection.anki2";
+    public static final String COLLECTION_PATH = "/collection.anki2";
 
     /**
      * Singleton instance of this class.
      */
     private static AnkiDroidApp sInstance;
-    private static Typeface     mTibTypeface;
+    private static Typeface mTibTypeface;
     private static boolean bTibetan;
 
     /**
      * Global hooks
      */
     private Hooks mHooks;
+
 
     /**
      * On application creation.
@@ -109,9 +111,6 @@ public class AnkiDroidApp extends Application {
             // Reason: apply() not available on Android 1.5
             editor.commit();
         }
-        
-        
-        
 
         // Reschedule the checks - we need to do this if the settings have
         // changed (as above)
@@ -121,37 +120,37 @@ public class AnkiDroidApp extends Application {
         // Intent intent = new Intent(Veecheck.getRescheduleAction(this));
         // sendBroadcast(intent);
     }
-    
+
+
     public static boolean isTibetan() {
-    	
-    	SharedPreferences preferences = PrefSettings.getSharedPrefs(getInstance());
-    	
-    	//check for Tibetan support & Typeface initialisation
+
+        SharedPreferences preferences = PrefSettings.getSharedPrefs(getInstance());
+
+        // check for Tibetan support & Typeface initialisation
         if (preferences.getBoolean("enableTibetan", false)) {
-			bTibetan = true;
-		} else {
-			bTibetan = false;
-		}
-        
-    	
-    	if (bTibetan && mTibTypeface == null) {
-        	String fileName = "/mnt/sdcard/fonts/DDC_Uchen.ttf";
-//        	mTibTypeface = Typeface.createFromAsset(getInstance().getAssets(), fileName);
-        	File mTibFontFile = new File(fileName);
-        	if ( mTibFontFile.exists()) {
-        		mTibTypeface = Typeface.createFromFile(fileName);
-        	} else {
-        		return false;
-        	}
-        	
-        	
+            bTibetan = true;
+        } else {
+            bTibetan = false;
         }
-    	
-    	return bTibetan;
+
+        if (bTibetan && mTibTypeface == null) {
+            String fileName = "/mnt/sdcard/fonts/DDC_Uchen.ttf";
+            // mTibTypeface = Typeface.createFromAsset(getInstance().getAssets(), fileName);
+            File mTibFontFile = new File(fileName);
+            if (mTibFontFile.exists()) {
+                mTibTypeface = Typeface.createFromFile(fileName);
+            } else {
+                return false;
+            }
+
+        }
+
+        return bTibetan;
     }
-    
+
+
     public static Typeface getTibetanTypeface() {
-    	return mTibTypeface;
+        return mTibTypeface;
     }
 
 
@@ -166,36 +165,39 @@ public class AnkiDroidApp extends Application {
 
 
     public static String getCollectionPath() {
-		String deckPath = PrefSettings.getSharedPrefs(sInstance.getApplicationContext()).getString("deckPath", AnkiDroidApp.getDefaultAnkiDroidDirectory());
-		return deckPath + AnkiDroidApp.COLLECTION_PATH;
-	}
+        String deckPath = PrefSettings.getSharedPrefs(sInstance.getApplicationContext()).getString("deckPath",
+                AnkiDroidApp.getDefaultAnkiDroidDirectory());
+        return deckPath + AnkiDroidApp.COLLECTION_PATH;
+    }
+
 
     public static String getDefaultAnkiDroidDirectory() {
         return getStorageDirectory() + "/AnkiDroid";
     }
 
+
     public static void createDirectoryIfMissing(File decksDirectory) {
-    	if (!decksDirectory.isDirectory()) {
-    		decksDirectory.mkdirs();
+        if (!decksDirectory.isDirectory()) {
+            decksDirectory.mkdirs();
         }
-    	try {
-			new File(decksDirectory.getAbsolutePath() + "/.nomedia").createNewFile();
-		} catch (IOException e) {
-			Log.e(AnkiDroidApp.TAG, "Nomedia file could not be created");
-		}
-		createNoMediaFileIfMissing(decksDirectory);
+        try {
+            new File(decksDirectory.getAbsolutePath() + "/.nomedia").createNewFile();
+        } catch (IOException e) {
+            Log.e(AnkiDroidApp.TAG, "Nomedia file could not be created");
+        }
+        createNoMediaFileIfMissing(decksDirectory);
     }
 
 
     public static void createNoMediaFileIfMissing(File decksDirectory) {
-    	File mediaFile = new File(decksDirectory.getAbsolutePath() + "/.nomedia");
-    	if (!mediaFile.exists()) {
-        	try {
-        		mediaFile.createNewFile();
-    		} catch (IOException e) {
-    			Log.e(AnkiDroidApp.TAG, "Nomedia file could not be created in path " + decksDirectory.getAbsolutePath());
-    		}    		
-    	}
+        File mediaFile = new File(decksDirectory.getAbsolutePath() + "/.nomedia");
+        if (!mediaFile.exists()) {
+            try {
+                mediaFile.createNewFile();
+            } catch (IOException e) {
+                Log.e(AnkiDroidApp.TAG, "Nomedia file could not be created in path " + decksDirectory.getAbsolutePath());
+            }
+        }
     }
 
 
@@ -225,6 +227,7 @@ public class AnkiDroidApp extends Application {
 
     /**
      * Get package name as defined in the manifest.
+     * 
      * @return the package name.
      */
     public static String getPkgName() {
@@ -244,6 +247,7 @@ public class AnkiDroidApp extends Application {
 
     /**
      * Get the package version as defined in the manifest.
+     * 
      * @return the package version.
      */
     public static String getPkgVersion() {
@@ -259,9 +263,11 @@ public class AnkiDroidApp extends Application {
 
         return pkgVersion;
     }
-    
+
+
     /**
      * Get the DropBox folder
+     * 
      * @return the absolute path to the DropBox public folder, or null if it is not found
      */
     public static String getDropboxDir() {
@@ -272,43 +278,49 @@ public class AnkiDroidApp extends Application {
         return null;
     }
 
+
     public static void saveExceptionReportFile(Throwable e, String origin) {
-    	CustomExceptionHandler.getInstance().uncaughtException(null, e, origin);
+        CustomExceptionHandler.getInstance().uncaughtException(null, e, origin);
     }
+
 
     public static boolean isDonutOrLater() {
         return getSdkVersion() > 3;
     }
 
+
     public static boolean isEclairOrLater() {
         return getSdkVersion() > 4;
     }
+
 
     public static boolean isFroyoOrLater() {
         return getSdkVersion() > 7;
     }
 
+
     public static boolean isHoneycombOrLater() {
         return getSdkVersion() > 11;
     }
+
 
     public static int getSdkVersion() {
         return Integer.valueOf(android.os.Build.VERSION.SDK);
     }
 
 
-	public void setLanguage(String language) {
-		Locale locale;
-		if (language.equals("")) {
-			locale = Locale.getDefault();
-		} else {
-			locale = new Locale(language);
-		}
-		Configuration config = new Configuration();
-		config.locale = locale;
-		this.getResources().updateConfiguration(config,
-				this.getResources().getDisplayMetrics());
-	}
+    public void setLanguage(String language) {
+        Locale locale;
+        if (language.equals("")) {
+            locale = Locale.getDefault();
+        } else {
+            locale = new Locale(language);
+        }
+        Configuration config = new Configuration();
+        config.locale = locale;
+        this.getResources().updateConfiguration(config, this.getResources().getDisplayMetrics());
+    }
+
 
     public static Hooks getHooks() {
         return sInstance.mHooks;

@@ -38,7 +38,7 @@ import com.ichi2.anki.ReadText;
  */
 public class Sound {
 
-	/**
+    /**
      * Pattern used to identify the markers for sound files
      */
     public static Pattern sSoundPattern = Pattern.compile("\\[sound\\:([^\\[\\]]*)\\]");
@@ -51,18 +51,22 @@ public class Sound {
     /**
      * Stores sounds for the current card, key is for question/answer
      */
-    private static HashMap<Integer, ArrayList<String> >  sSoundPaths = new HashMap<Integer, ArrayList<String> >();
+    private static HashMap<Integer, ArrayList<String>> sSoundPaths = new HashMap<Integer, ArrayList<String>>();
+
 
     /* Prevent class from being instantiated */
-    private Sound() { }
-
-    /// Clears current sound paths; call before parseSounds() calls
-    public static void resetSounds() {
-    	sSoundPaths.clear();
+    private Sound() {
     }
 
+
+    // / Clears current sound paths; call before parseSounds() calls
+    public static void resetSounds() {
+        sSoundPaths.clear();
+    }
+
+
     public static String parseSounds(String soundDir, String content, boolean ttsEnabled, int qa) {
-    	boolean soundAvailable = false;
+        boolean soundAvailable = false;
         StringBuilder stringBuilder = new StringBuilder();
         String contentLeft = content;
 
@@ -71,13 +75,13 @@ public class Sound {
         Matcher matcher = sSoundPattern.matcher(content);
         // While there is matches of the pattern for sound markers
         while (matcher.find()) {
-        	soundAvailable = true;
+            soundAvailable = true;
             // Get the sound file name
             String sound = matcher.group(1);
 
             // Construct the sound path and store it
             String soundPath = soundDir + Uri.encode(sound);
-            
+
             // Create appropiate list if needed
             if (!sSoundPaths.containsKey(qa)) {
                 sSoundPaths.put(qa, new ArrayList<String>());
@@ -90,20 +94,21 @@ public class Sound {
             // and then appending the html code to add the play button
             String soundMarker = matcher.group();
             int markerStart = contentLeft.indexOf(soundMarker);
-            stringBuilder.append(contentLeft.substring(0, markerStart));        
+            stringBuilder.append(contentLeft.substring(0, markerStart));
             stringBuilder
-                .append("<a onclick=\"window.interface.playSound(this.title);\" title=\""
-                        + soundPath
-                        + "\"><span style=\"padding:5px;display:inline-block;vertical-align:middle\"><img src=\"file:///android_asset/media_playback_start2.png\" /></span></a>");
+                    .append("<a onclick=\"window.interface.playSound(this.title);\" title=\""
+                            + soundPath
+                            + "\"><span style=\"padding:5px;display:inline-block;vertical-align:middle\"><img src=\"file:///android_asset/media_playback_start2.png\" /></span></a>");
             contentLeft = contentLeft.substring(markerStart + soundMarker.length());
             Log.i(AnkiDroidApp.TAG, "Content left = " + contentLeft);
         }
         if (!soundAvailable && ttsEnabled && !ReadText.getLanguage(qa).equals(ReadText.NO_TTS)) {
-            stringBuilder.append(content.substring(0, content.length() - 9));        
+            stringBuilder.append(content.substring(0, content.length() - 9));
             stringBuilder
-                .append("<a onclick=\"window.interface.playSound(this.title);\" title=\"tts" + Integer.toString(qa)
-                		+ Utils.stripHTML(content)
-                        + "\"><span style=\"padding:5px;display:inline-block;vertical-align:middle\"><img src=\"file:///android_asset/media_playback_start2.png\" /></span></a>");
+                    .append("<a onclick=\"window.interface.playSound(this.title);\" title=\"tts"
+                            + Integer.toString(qa)
+                            + Utils.stripHTML(content)
+                            + "\"><span style=\"padding:5px;display:inline-block;vertical-align:middle\"><img src=\"file:///android_asset/media_playback_start2.png\" /></span></a>");
             contentLeft = "</p>";
         }
 
@@ -123,22 +128,24 @@ public class Sound {
         }
     }
 
+
     /**
      * Plays the given sound, sets playAllListener if available on media player to start next sound
      */
     public static void playSound(String soundPath, OnCompletionListener playAllListener) {
         Log.i(AnkiDroidApp.TAG, "Playing " + soundPath + " has listener? " + Boolean.toString(playAllListener != null));
-        
+
         if (soundPath.substring(0, 3).equals("tts")) {
-        	ReadText.textToSpeech(soundPath.substring(4, soundPath.length()), Integer.parseInt(soundPath.substring(3, 4)));
+            ReadText.textToSpeech(soundPath.substring(4, soundPath.length()),
+                    Integer.parseInt(soundPath.substring(3, 4)));
         } else {
             if (sMediaPlayer == null)
                 sMediaPlayer = new MediaPlayer();
             else
                 sMediaPlayer.reset();
 
-    	    try {
-    	        // soundPath is usually an URI, but Media player requires a path not url encoded
+            try {
+                // soundPath is usually an URI, but Media player requires a path not url encoded
                 URI soundURI = new URI(soundPath);
                 soundPath = new File(soundURI).getAbsolutePath();
                 sMediaPlayer.setDataSource(soundPath);
@@ -154,7 +161,7 @@ public class Sound {
             }
         }
     }
-    
+
     /**
      * Class used to play all sounds for a given card side
      */
@@ -170,9 +177,11 @@ public class Sound {
          */
         private int mNextToPlay = 1;
 
+
         private PlayAllCompletionListener(int qa) {
             mQa = qa;
         }
+
 
         @Override
         public void onCompletion(MediaPlayer mp) {
@@ -183,6 +192,7 @@ public class Sound {
                 releaseSound();
         }
     }
+
 
     /**
      * Releases the sound.
@@ -204,7 +214,7 @@ public class Sound {
             releaseSound();
         }
         if (AnkiDroidApp.isDonutOrLater()) {
-        	ReadText.stopTts();
+            ReadText.stopTts();
         }
     }
 }

@@ -14,7 +14,9 @@
  * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
  ****************************************************************************************/
 
-package com.ichi2.anki;import com.ichi2.anki2.R;
+package com.ichi2.anki;
+
+import com.ichi2.anki2.R;
 
 import android.util.Log;
 
@@ -34,13 +36,14 @@ public class Image {
 
 
     /* Prevent class from being instantiated */
-    private Image() { }
+    private Image() {
+    }
 
 
     /**
      * Parses the content (belonging to deck deckFilename), adding an onload event to the img tags, that will be useful
      * in order to resize them.
-     *
+     * 
      * @param deckFilename Deck's filename whose content is being parsed
      * @param content HTML content of a card
      * @return content Content with the onload events for the img tags

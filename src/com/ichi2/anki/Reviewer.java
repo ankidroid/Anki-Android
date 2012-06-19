@@ -759,8 +759,8 @@ public class Reviewer extends AnkiActivity {
             // setOutAnimation(true);
             // } else {
             // session limits not reached, show next card
-            
-            
+
+
 
             mCurrentCard = values[0].getCard();
             boolean timebox_reached = Collection.currentCollection().timeboxReached() != null ? true : false;
@@ -777,12 +777,12 @@ public class Reviewer extends AnkiActivity {
             } else if (timebox_reached && !mPrefOvertime) {
                 //SharedPreferences preferences = PrefSettings.getSharedPrefs(getActivity().getBaseContext()); //getActivity().getBaseContext()
                 //boolean overtime = preferences.getBoolean("overtime", true);
-                
+
                 mSessionComplete = true;
                 mProgressDialog = StyledProgressDialog.show(Reviewer.this, "",
                         getResources().getString(R.string.saving_changes), true);
                 setOutAnimation(false);
-                
+
                 sessionMessage = getResources().getString(R.string.timebox_reached);
             } else {
                 if (timebox_reached) {
@@ -1725,13 +1725,13 @@ public class Reviewer extends AnkiActivity {
     private int getRecommendedEase(boolean easy) {
         switch (mSched.answerButtons(mCurrentCard)) {
         case 2:
-        	return EASE_HARD;
+            return EASE_HARD;
         case 3:
-        	return easy ? EASE_MID : EASE_HARD;
+            return easy ? EASE_MID : EASE_HARD;
         case 4:
-        	return easy ? EASE_EASY : EASE_MID;
-		default:
-			return 0;
+            return easy ? EASE_EASY : EASE_MID;
+        default:
+            return 0;
         }
     }
 
@@ -2041,57 +2041,57 @@ public class Reviewer extends AnkiActivity {
         int buttonCount = mSched.answerButtons(mCurrentCard);
 
         // Set correct label for each button
-    	switch (buttonCount) {
-    	case 2:
-    		mEase1.setText(res.getString(R.string.ease1_successive));
-    		mEase2.setText(res.getString(R.string.ease3_successive));
-    		switchVisibility(mEase1Layout, View.VISIBLE);
-    		switchVisibility(mEase2Layout, View.VISIBLE);
-    		mEase2Layout.requestFocus();
-    		mNext2.setTextColor(mNextTimeTextRecomColor);
-    		mEase2.setTextColor(mNextTimeTextRecomColor);
-    		mNext3.setTextColor(mNextTimeTextColor);
-    		mEase3.setTextColor(mNextTimeTextColor);
-    		break;
-    	case 3:
-    		mEase1.setText(res.getString(R.string.ease1_successive));
-    		mEase2.setText(res.getString(R.string.ease3_successive));
-    		mEase3.setText(res.getString(R.string.ease3_learning));
-    		switchVisibility(mEase1Layout, View.VISIBLE);
-    		switchVisibility(mEase2Layout, View.VISIBLE);
-    		switchVisibility(mEase3Layout, View.VISIBLE);
-    		mEase2Layout.requestFocus();
-        	mNext2.setTextColor(mNextTimeTextRecomColor);
-        	mEase2.setTextColor(mNextTimeTextRecomColor);
-        	mNext3.setTextColor(mNextTimeTextColor);
-        	mEase3.setTextColor(mNextTimeTextColor);
-        	break;
-    	default:
-    		mEase1.setText(res.getString(R.string.ease1_successive));
-    		mEase2.setText(res.getString(R.string.ease2_successive));
-    		mEase3.setText(res.getString(R.string.ease3_successive));
-    		mEase4.setText(res.getString(R.string.ease3_learning));
-    		switchVisibility(mEase1Layout, View.VISIBLE);
-    		switchVisibility(mEase2Layout, View.VISIBLE);
-    		switchVisibility(mEase3Layout, View.VISIBLE);
-    		switchVisibility(mEase4Layout, View.VISIBLE);
-    		mEase3Layout.requestFocus();
-    		mNext2.setTextColor(mNextTimeTextColor);
-    		mEase2.setTextColor(mNextTimeTextColor);
-    		mNext3.setTextColor(mNextTimeTextRecomColor);
-    		mEase3.setTextColor(mNextTimeTextRecomColor);
-    	}
+        switch (buttonCount) {
+        case 2:
+            mEase1.setText(res.getString(R.string.ease1_successive));
+            mEase2.setText(res.getString(R.string.ease3_successive));
+            switchVisibility(mEase1Layout, View.VISIBLE);
+            switchVisibility(mEase2Layout, View.VISIBLE);
+            mEase2Layout.requestFocus();
+            mNext2.setTextColor(mNextTimeTextRecomColor);
+            mEase2.setTextColor(mNextTimeTextRecomColor);
+            mNext3.setTextColor(mNextTimeTextColor);
+            mEase3.setTextColor(mNextTimeTextColor);
+            break;
+        case 3:
+            mEase1.setText(res.getString(R.string.ease1_successive));
+            mEase2.setText(res.getString(R.string.ease3_successive));
+            mEase3.setText(res.getString(R.string.ease3_learning));
+            switchVisibility(mEase1Layout, View.VISIBLE);
+            switchVisibility(mEase2Layout, View.VISIBLE);
+            switchVisibility(mEase3Layout, View.VISIBLE);
+            mEase2Layout.requestFocus();
+            mNext2.setTextColor(mNextTimeTextRecomColor);
+            mEase2.setTextColor(mNextTimeTextRecomColor);
+            mNext3.setTextColor(mNextTimeTextColor);
+            mEase3.setTextColor(mNextTimeTextColor);
+            break;
+        default:
+            mEase1.setText(res.getString(R.string.ease1_successive));
+            mEase2.setText(res.getString(R.string.ease2_successive));
+            mEase3.setText(res.getString(R.string.ease3_successive));
+            mEase4.setText(res.getString(R.string.ease3_learning));
+            switchVisibility(mEase1Layout, View.VISIBLE);
+            switchVisibility(mEase2Layout, View.VISIBLE);
+            switchVisibility(mEase3Layout, View.VISIBLE);
+            switchVisibility(mEase4Layout, View.VISIBLE);
+            mEase3Layout.requestFocus();
+            mNext2.setTextColor(mNextTimeTextColor);
+            mEase2.setTextColor(mNextTimeTextColor);
+            mNext3.setTextColor(mNextTimeTextRecomColor);
+            mEase3.setTextColor(mNextTimeTextRecomColor);
+        }
 
         // Show next review time
         if (mshowNextReviewTime) {
             mNext1.setText(mSched.nextIvlStr(mCurrentCard, 1));
             mNext2.setText(mSched.nextIvlStr(mCurrentCard, 2));
-	    if (buttonCount > 2) {
-	            mNext3.setText(mSched.nextIvlStr(mCurrentCard, 3));
-	    }
-	    if (buttonCount > 3) {
-	            mNext4.setText(mSched.nextIvlStr(mCurrentCard, 4));
-	    }
+        if (buttonCount > 2) {
+                mNext3.setText(mSched.nextIvlStr(mCurrentCard, 3));
+        }
+        if (buttonCount > 3) {
+                mNext4.setText(mSched.nextIvlStr(mCurrentCard, 4));
+        }
         }
     }
 
@@ -2289,7 +2289,7 @@ public class Reviewer extends AnkiActivity {
 
         int eta = mSched.eta(counts, false);
         UIUtils.setActionBarSubtitle(this, getResources().getQuantityString(R.plurals.reviewer_window_title, eta, eta));
-        
+
         //SharedPreferences preferences = PrefSettings.getSharedPrefs(getBaseContext());
         //boolean hideDueCount = preferences.getBoolean("hideDueCount", true);
 
@@ -2435,7 +2435,7 @@ public class Reviewer extends AnkiActivity {
         if (typeAnswer()) {
             answer = typeAnsAnswerFilter(answer);
         }
-        
+
         String displayString = "";
 
         if (mSimpleInterface) {
