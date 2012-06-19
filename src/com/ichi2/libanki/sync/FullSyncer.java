@@ -82,6 +82,15 @@ public class FullSyncer extends BasicHttpSyncer {
 			}
 		} catch (SQLiteDatabaseCorruptException e) {
 			Log.e(AnkiDroidApp.TAG, "Full sync - downloaded file corrupt");
+			// might be related to a non updated 1.2 account
+			try {
+				FileInputStream fis = new FileInputStream(tpath);
+				if (super.stream2String(fis).equals("upgradeRequired")) {
+					return new Object[]{"upgradeRequired"};
+				}
+			} catch (FileNotFoundException e1) {
+				throw new RuntimeException(e1);
+			}
 			return new Object[]{"remoteDbError"};
 		} finally {
 			AnkiDatabaseManager.closeDatabase(tpath);

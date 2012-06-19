@@ -44,6 +44,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 import java.util.regex.Matcher;
@@ -61,11 +62,13 @@ public class Media {
     public static final int MEDIA_REM = 1;
     public static final long SYNC_ZIP_SIZE = 2560 * 1024;
     
-    private static final Pattern sMediaRegexps[] = {
+    private static final Pattern fMediaRegexps[] = {
         Pattern.compile("(?i)(\\[sound:([^]]+)\\])"),
         Pattern.compile("(?i)(<img[^>]+src=[\"']?([^\"'>]+)[\"']?[^>]*>)")
     };
-    private static final Pattern sRemoteFilePattern = Pattern.compile("(https?|ftp)://");
+    private static final Pattern fRemoteFilePattern = Pattern.compile("(https?|ftp)://");
+    private static final Pattern fDangerousCharacters = Pattern.compile("[]\\[<>:/\\\\&?\\\"\\|]");
+    private static final Pattern fFileOrdinal = Pattern.compile(" \\((\\d+)\\)$");
     
     private Collection mCol;
     private String mDir;
@@ -126,13 +129,13 @@ public class Media {
      * @param opath The path where the media file exists before adding it.
      * @return The filename of the resulting file.
      */
-    private String addFile(String opath) {
+    public String addFile(String opath) {
         String mdir = getDir();
         // remove any dangerous characters
-        String base = new File(opath).getName().replaceAll("[][<>:/\\&]", "");
-        String dst = mdir + base;
+        String base = fDangerousCharacters.matcher(new File(opath).getName()).replaceAll("");
         // if it doesn't exist, copy it directly
-        File newMediaFile = new File(dst);
+        File newMediaFile = new File(mdir, base);
+        String dst = newMediaFile.getAbsolutePath();
         if (!newMediaFile.exists()) {
             try {
                 Utils.copyFile(new File(opath), newMediaFile);
@@ -154,15 +157,26 @@ public class Media {
             root = base.substring(0, extIndex);
             ext = base.substring(extIndex);
         }
-        int num = 1;
-        StringBuilder sb = new StringBuilder(mdir);
-        sb.append("/").append(root).append(" (");
-        do {
-            StringBuilder sb2 = new StringBuilder(sb);
-            sb2.append(num).append(ext);
-            newMediaFile = new File(sb2.toString());
-            num += 1;
-        } while (newMediaFile.exists());
+        StringBuilder sb = null;
+        String path = null;
+        Matcher m = null;
+        int n = 0;
+        while (true) {
+            sb = new StringBuilder(mdir);
+            path = sb.append(File.separatorChar).append(root).append(ext).toString();
+            newMediaFile = new File(path);
+            if (!newMediaFile.exists()) {
+                break;
+            }
+            m = fFileOrdinal.matcher(root);
+            if (!m.find()) {
+                root = root.concat(" (1)");
+            } else {
+                n = Integer.parseInt(m.group(1));
+                root = m.replaceFirst(String.format(Locale.US, " (%d)", n+1));
+            }
+        }
+        // copy and return
         try {
             Utils.copyFile(new File(opath), newMediaFile);
         } catch (IOException e) {
@@ -178,12 +192,15 @@ public class Media {
      * @return True if both files have the same contents
      */
     private boolean filesIdentical(String filepath1, String filepath2) {
-        return (Utils.fileChecksum(filepath1) == Utils.fileChecksum(filepath2));
+        return Utils.fileChecksum(filepath1).equals(Utils.fileChecksum(filepath2));
     }
     
     // String manipulation
     //////////////////////
     
+    public List<String> filesInStr(String string) {
+        return filesInStr(string, false);
+    }
     /**
      * Extract media filenames from an HTML string.
      * @param string The string to scan for media filenames ([sound:...] or <img...>).
@@ -196,11 +213,11 @@ public class Media {
         string = LaTeX.mungeQA(string, mCol);
         // Extract filenames
         Matcher m = null;
-        for (Pattern p : sMediaRegexps) {
+        for (Pattern p : fMediaRegexps) {
             m = p.matcher(string);
             while (m.find()) {
                 String fname = m.group(2);
-                if (includeRemote || (!sRemoteFilePattern.matcher(fname.toLowerCase()).find())) {
+                if (includeRemote || (!fRemoteFilePattern.matcher(fname.toLowerCase()).find())) {
                     l.add(fname);
                 }
             }
@@ -215,7 +232,7 @@ public class Media {
      */
     public String strip(String txt) {
         Matcher m = null;
-        for (Pattern p : sMediaRegexps) {
+        for (Pattern p : fMediaRegexps) {
             m = p.matcher(txt);
             txt = m.replaceAll("");
         }
@@ -228,10 +245,10 @@ public class Media {
      * @return The string with the filenames of any local images percent-escaped as UTF-8.
      */
     public String escapeImages(String string) {
-        Matcher m = sMediaRegexps[1].matcher(string);
+        Matcher m = fMediaRegexps[1].matcher(string);
         StringBuffer sb = new StringBuffer();
         while (m.find()) {
-            if (sRemoteFilePattern.matcher(m.group(2)).find()) {
+            if (fRemoteFilePattern.matcher(m.group(2)).find()) {
                 m.appendReplacement(sb, m.group());
             } else {
                 String tagBegin = m.group(1).substring(0, m.start(2));
@@ -260,7 +277,7 @@ public class Media {
         
         Set<String> normrefs = new HashSet<String>();
         for (String f : allMedia()) {
-            if (Normalizer.isNormalized(f, form)) {
+            if (!Normalizer.isNormalized(f, form)) {
                 f = Normalizer.normalize(f, form);
             }
             normrefs.add(f);
@@ -296,9 +313,9 @@ public class Media {
      */
     private List<String> allMedia() {
         Set<String> files = new HashSet<String>();
-        List<String> fldsList = mMediaDb.queryColumn(String.class, "select flds from notes", 0);
+        List<String> fldsList = mCol.getDb().queryColumn(String.class, "select flds from notes", 0);
         for (String flds : fldsList) {
-            List<String> fList = filesInStr(flds, false);
+            List<String> fList = filesInStr(flds);
             for (String f : fList) {
                 files.add(f);
             }
@@ -328,7 +345,7 @@ public class Media {
             if (f == "") {
                 continue;
             }
-            File file = new File(getDir() + "/" + f);
+            File file = new File(getDir(), f);
             if (file.exists()) {
                 file.delete();
             }
@@ -391,12 +408,13 @@ public class Media {
                 if (illegal(name)) {
                     continue;
                 }
+                String path = getDir().concat(File.separator).concat(name);
                 try {
-                    Utils.writeToFile(z.getInputStream(zentry), getDir() + "/" + name);
+                    Utils.writeToFile(z.getInputStream(zentry), path);
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
-                String csum = Utils.fileChecksum(getDir() + "/" + name);
+                String csum = Utils.fileChecksum(path);
                 // append db
                 media.add(new Object[]{name, csum, _mtime(name)});
                 mMediaDb.execute("delete from log where fname = ?", new String[]{name});
@@ -457,7 +475,8 @@ public class Media {
             boolean finished = true;
             for (String fname : filenames) {
                 fnames.add(fname);
-                BufferedInputStream bis = new BufferedInputStream(new FileInputStream(fname), 2048);
+                File file = new File(getDir(), fname);
+                BufferedInputStream bis = new BufferedInputStream(new FileInputStream(file), 2048);
                 ZipEntry entry = new ZipEntry(Integer.toString(cnt));
                 zos.putNextEntry(entry);
                 int count = 0;
@@ -466,7 +485,6 @@ public class Media {
                 }
                 bis.close();
                 files.put(Integer.toString(cnt), fname);
-                File file = new File(fname);
                 sz += file.length();
                 if (sz > SYNC_ZIP_SIZE) {
                     finished = false;
@@ -539,7 +557,7 @@ public class Media {
      * @return The modification time of the media directory, if it has changed since the last call
      * of findChanges(). If it hasn't, it returns 0.
      */
-    private long _changed() {
+    public long _changed() {
         long mod = mMediaDb.queryLongScalar("select dirMod from meta");
         long mtime = _mtime(getDir());
         if (mod != 0 && mod == mtime) {
@@ -565,7 +583,7 @@ public class Media {
         
         for (String f : result.first) {
             long mt = _mtime(f);
-            String csum = _checksum(getDir() + "/" + f);
+            String csum = _checksum(getDir().concat(File.separator).concat(f));
             media.add(new Object[]{f, csum, mt});
             log.add(new Object[]{f, MEDIA_ADD});
         }
@@ -660,6 +678,10 @@ public class Media {
         // TODO: Remove the assert
         assert mMediaDb.queryLongScalar("select count() from log") == 0;
         return mMediaDb.queryLongScalar("select count() from media");
+    }
+
+    public AnkiDb getMediaDb() {
+        return mMediaDb;
     }
     
 }

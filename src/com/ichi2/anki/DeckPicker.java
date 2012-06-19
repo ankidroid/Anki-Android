@@ -425,6 +425,9 @@ public class DeckPicker extends FragmentActivity {
 					} else if (resultType.equals("genericError")) {
 						mDialogMessage = res.getString(R.string.sync_generic_error);
 						showDialog(DIALOG_SYNC_LOG);
+					} else if (resultType.equals("upgradeRequired")) {
+						mDialogMessage = res.getString(R.string.upgrade_required, res.getString(R.string.link_anki));
+						showDialog(DIALOG_SYNC_LOG);
 					} else {
 						int type = (Integer) result[1];
 						switch (type) {
