@@ -26,11 +26,11 @@ import android.graphics.Camera;
 import android.graphics.Matrix;
 
 public class Animation3D extends Animation {
-	
-	public static final int ANIMATION_TURN = 0;
-	public static final int ANIMATION_EXCHANGE_CARD = 1;
-	public static final int ANIMATION_SLIDE_IN_CARD = 2;
-	public static final int ANIMATION_SLIDE_OUT_CARD = 3;
+
+    public static final int ANIMATION_TURN = 0;
+    public static final int ANIMATION_EXCHANGE_CARD = 1;
+    public static final int ANIMATION_SLIDE_IN_CARD = 2;
+    public static final int ANIMATION_SLIDE_OUT_CARD = 3;
 
     private final float mValueX;
     private final float mValueY;
@@ -42,7 +42,9 @@ public class Animation3D extends Animation {
     int mAction;
     boolean mRealTurn;
 
-    public Animation3D(float valueX, float valueY, float depthZ, int action, boolean direction, boolean realturn, Reviewer reviewer) {
+
+    public Animation3D(float valueX, float valueY, float depthZ, int action, boolean direction, boolean realturn,
+            Reviewer reviewer) {
         mValueX = valueX;
         mValueY = valueY;
         mDepthZ = depthZ;
@@ -51,6 +53,7 @@ public class Animation3D extends Animation {
         mAction = action;
         mRealTurn = realturn;
     }
+
 
     @Override
     public void initialize(int width, int height, int parentWidth, int parentHeight) {
@@ -68,71 +71,71 @@ public class Animation3D extends Animation {
         camera.save();
         float time;
         switch (mAction) {
-        case ANIMATION_TURN:
-        	if (mRealTurn) {
-                time = interpolatedTime >= 0.5f ? (interpolatedTime - 1.0f) : interpolatedTime;        		
-        	} else {
-                time = interpolatedTime >= 0.5f ? -(interpolatedTime - 1.0f) : interpolatedTime;
-        	}
-        	float degrees = time * (mDirection ? -180 : 180);
-            if (interpolatedTime >= 0.5f && !mFlipped) {
-                mReviewer.fillFlashcard(false);
-                mFlipped = true;
-            }
-            camera.translate(0.0f, 0.0f, mDepthZ * Math.abs(degrees));
-            if (mDirection) {
+            case ANIMATION_TURN:
+                if (mRealTurn) {
+                    time = interpolatedTime >= 0.5f ? (interpolatedTime - 1.0f) : interpolatedTime;
+                } else {
+                    time = interpolatedTime >= 0.5f ? -(interpolatedTime - 1.0f) : interpolatedTime;
+                }
+                float degrees = time * (mDirection ? -180 : 180);
+                if (interpolatedTime >= 0.5f && !mFlipped) {
+                    mReviewer.fillFlashcard(false);
+                    mFlipped = true;
+                }
+                camera.translate(0.0f, 0.0f, mDepthZ * Math.abs(degrees));
+                if (mDirection) {
+                    centerX = mValueX / 2;
+                    centerY = mValueY / (mRealTurn ? 2 : 3);
+                    camera.rotateX(degrees);
+                } else {
+                    centerX = mValueX / (mRealTurn ? 2 : 3);
+                    centerY = mValueY / 2;
+                    camera.rotateY(degrees);
+                }
+                break;
+            case ANIMATION_EXCHANGE_CARD:
+                if (mDirection) {
+                    time = interpolatedTime >= 0.5f ? -(interpolatedTime - 1.0f) : -interpolatedTime;
+                } else {
+                    time = interpolatedTime >= 0.5f ? (interpolatedTime - 1.0f) : interpolatedTime;
+                }
+                if (interpolatedTime >= 0.5f && !mFlipped) {
+                    mReviewer.fillFlashcard(false);
+                    mFlipped = true;
+                }
+                camera.translate(mValueX * time * 2, 0.0f, mDepthZ * Math.abs(time * 180));
                 centerX = mValueX / 2;
-                centerY = mValueY / (mRealTurn ? 2 : 3);
-            	camera.rotateX(degrees);
-            } else {
-                centerX = mValueX / (mRealTurn ? 2 : 3);
                 centerY = mValueY / 2;
-            	camera.rotateY(degrees);
-            }
-            break;
-        case ANIMATION_EXCHANGE_CARD:
-            if (mDirection) {
-            	time = interpolatedTime >= 0.5f ? -(interpolatedTime - 1.0f) : -interpolatedTime;
-            } else {
-            	time = interpolatedTime >= 0.5f ? (interpolatedTime - 1.0f) : interpolatedTime;
-            }
-            if (interpolatedTime >= 0.5f && !mFlipped) {
-                mReviewer.fillFlashcard(false);
-                mFlipped = true;
-            }
-            camera.translate(mValueX * time * 2, 0.0f, mDepthZ * Math.abs(time * 180));
-            centerX = mValueX / 2;
-            centerY = mValueY / 2;
-            break;
-        case ANIMATION_SLIDE_IN_CARD:
-            if (mDirection) {
-            	time = 1 - interpolatedTime;
-            } else {
-            	time = -1 + interpolatedTime;
-            }
-            if (interpolatedTime >= 0.0f && !mFlipped) {
-                mReviewer.showFlashcard(true);
-                mReviewer.fillFlashcard(false);
-                mFlipped = true;
-            }
-            camera.translate(mValueX * time * 2, 0.0f, mDepthZ * Math.abs(time * 180));
-            centerX = mValueX / 2;
-            centerY = mValueY / 2;
-            break;        	
-        case ANIMATION_SLIDE_OUT_CARD:
-            if (mDirection) {
-            	time = -interpolatedTime;
-            } else {
-            	time = interpolatedTime;
-            }
-            if (interpolatedTime == 1.0f && !mFlipped) {
-                mReviewer.showFlashcard(false);
-                mFlipped = true;
-            }
-            camera.translate(mValueX * time * 2, 0.0f, mDepthZ * Math.abs(time * 180));
-            centerX = mValueX / 2;
-            centerY = mValueY / 2;
-            break;
+                break;
+            case ANIMATION_SLIDE_IN_CARD:
+                if (mDirection) {
+                    time = 1 - interpolatedTime;
+                } else {
+                    time = -1 + interpolatedTime;
+                }
+                if (interpolatedTime >= 0.0f && !mFlipped) {
+                    mReviewer.showFlashcard(true);
+                    mReviewer.fillFlashcard(false);
+                    mFlipped = true;
+                }
+                camera.translate(mValueX * time * 2, 0.0f, mDepthZ * Math.abs(time * 180));
+                centerX = mValueX / 2;
+                centerY = mValueY / 2;
+                break;
+            case ANIMATION_SLIDE_OUT_CARD:
+                if (mDirection) {
+                    time = -interpolatedTime;
+                } else {
+                    time = interpolatedTime;
+                }
+                if (interpolatedTime == 1.0f && !mFlipped) {
+                    mReviewer.showFlashcard(false);
+                    mFlipped = true;
+                }
+                camera.translate(mValueX * time * 2, 0.0f, mDepthZ * Math.abs(time * 180));
+                centerX = mValueX / 2;
+                centerY = mValueY / 2;
+                break;
         }
 
         camera.getMatrix(matrix);

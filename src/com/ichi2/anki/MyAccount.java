@@ -12,7 +12,9 @@
  * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
  ****************************************************************************************/
 
-package com.ichi2.anki;import com.ichi2.anki2.R;
+package com.ichi2.anki;
+
+import com.ichi2.anki2.R;
 
 import android.content.Context;
 import android.content.DialogInterface;
@@ -66,7 +68,7 @@ public class MyAccount extends AnkiActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-    	Themes.applyTheme(this);
+        Themes.applyTheme(this);
         super.onCreate(savedInstanceState);
 
         initAllContentViews();
@@ -85,21 +87,20 @@ public class MyAccount extends AnkiActivity {
 
 
     // Commented awaiting the resolution of the next issue: http://code.google.com/p/anki/issues/detail?id=1932
-//    private boolean isUsernameAndPasswordValid(String username, String password) {
-//        return isLoginFieldValid(username) && isLoginFieldValid(password);
-//    }
-//
-//
-//    private boolean isLoginFieldValid(String loginField) {
-//        boolean loginFieldValid = false;
-//
-//        if (loginField.length() >= 2 && loginField.matches("[A-Za-z0-9]+")) {
-//            loginFieldValid = true;
-//        }
-//
-//        return loginFieldValid;
-//    }
-
+    // private boolean isUsernameAndPasswordValid(String username, String password) {
+    // return isLoginFieldValid(username) && isLoginFieldValid(password);
+    // }
+    //
+    //
+    // private boolean isLoginFieldValid(String loginField) {
+    // boolean loginFieldValid = false;
+    //
+    // if (loginField.length() >= 2 && loginField.matches("[A-Za-z0-9]+")) {
+    // loginFieldValid = true;
+    // }
+    //
+    // return loginFieldValid;
+    // }
 
     private void saveUserInformation(String username, String hkey) {
         SharedPreferences preferences = PrefSettings.getSharedPrefs(getBaseContext());
@@ -166,7 +167,7 @@ public class MyAccount extends AnkiActivity {
         Themes.setTextViewStyle(mLoginToMyAccountView.findViewById(R.id.no_account_text));
         mUsername = (EditText) mLoginToMyAccountView.findViewById(R.id.username);
         mPassword = (EditText) mLoginToMyAccountView.findViewById(R.id.password);
-       
+
         Button loginButton = (Button) mLoginToMyAccountView.findViewById(R.id.login_button);
         loginButton.setOnClickListener(new OnClickListener() {
 
@@ -207,16 +208,18 @@ public class MyAccount extends AnkiActivity {
         mPassword1 = (EditText) mRegisterView.findViewById(R.id.password1);
         mUsername2 = (EditText) mRegisterView.findViewById(R.id.username2);
         mPassword2 = (EditText) mRegisterView.findViewById(R.id.password2);
-       
+
         Button registerButton = (Button) mRegisterView.findViewById(R.id.register_button);
         registerButton.setOnClickListener(new OnClickListener() {
 
             @Override
             public void onClick(View v) {
-                if (mUsername1.getText().toString().length() > 0 && mPassword1.getText().toString().length() > 0 && mUsername1.getText().toString().equals(mUsername2.getText().toString()) && mPassword1.getText().toString().equals(mPassword2.getText().toString())) {
-                	register();
+                if (mUsername1.getText().toString().length() > 0 && mPassword1.getText().toString().length() > 0
+                        && mUsername1.getText().toString().equals(mUsername2.getText().toString())
+                        && mPassword1.getText().toString().equals(mPassword2.getText().toString())) {
+                    register();
                 } else {
-                	mRegisterAlert.show();
+                    mRegisterAlert.show();
                 }
             }
 
@@ -227,7 +230,7 @@ public class MyAccount extends AnkiActivity {
 
             @Override
             public void onClick(View v) {
-            	finishWithAnimation(ActivityTransitionAnimation.FADE);
+                finishWithAnimation(ActivityTransitionAnimation.FADE);
             }
 
         });
@@ -326,8 +329,8 @@ public class MyAccount extends AnkiActivity {
 
                 Intent i = MyAccount.this.getIntent();
                 if (i.hasExtra("notLoggedIn") && i.getExtras().getBoolean("notLoggedIn", false)) {
-                	MyAccount.this.setResult(RESULT_OK, i);
-                	finishWithAnimation(ActivityTransitionAnimation.FADE);
+                    MyAccount.this.setResult(RESULT_OK, i);
+                    finishWithAnimation(ActivityTransitionAnimation.FADE);
                 } else {
                     // Show logged view
                     mUsernameLoggedIn.setText((String) data.data[0]);
@@ -355,7 +358,6 @@ public class MyAccount extends AnkiActivity {
         }
     };
 
-    
     Connection.TaskListener registerListener = new Connection.TaskListener() {
 
         @Override
@@ -387,18 +389,18 @@ public class MyAccount extends AnkiActivity {
 
                 Intent i = MyAccount.this.getIntent();
                 if (i.hasExtra("notLoggedIn") && i.getExtras().getBoolean("notLoggedIn", false)) {
-                	MyAccount.this.setResult(RESULT_OK, i);
-                	finishWithAnimation(ActivityTransitionAnimation.FADE);
+                    MyAccount.this.setResult(RESULT_OK, i);
+                    finishWithAnimation(ActivityTransitionAnimation.FADE);
                 } else {
                     // Show logged view
                     mUsernameLoggedIn.setText((String) data.data[0]);
                     setContentView(mLoggedIntoMyAccountView);
                 }
             } else {
-            	mErrorAlert.show();
-            	if (data.data != null) {
-            		mErrorAlert.setMessage(((String[])data.data)[0]);
-            	}
+                mErrorAlert.show();
+                if (data.data != null) {
+                    mErrorAlert.setMessage(((String[]) data.data)[0]);
+                }
             }
         }
 
@@ -411,18 +413,18 @@ public class MyAccount extends AnkiActivity {
         }
     };
 
+
     @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event)  {
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
-        	Log.i(AnkiDroidApp.TAG, "MyAccount - onBackPressed()");
-        	finish();
+            Log.i(AnkiDroidApp.TAG, "MyAccount - onBackPressed()");
+            finish();
             if (UIUtils.getApiLevel() > 4) {
                 ActivityTransitionAnimation.slide(this, ActivityTransitionAnimation.FADE);
             }
-        	return true;
+            return true;
         }
         return super.onKeyDown(keyCode, event);
     }
-
 
 }

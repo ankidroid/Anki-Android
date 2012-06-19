@@ -13,6 +13,7 @@
  * You should have received a copy of the GNU General Public License along with         *
  * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
  ****************************************************************************************/
+
 package com.ichi2.libanki.sync;
 
 import android.util.Pair;
@@ -29,12 +30,14 @@ import java.util.List;
 public class MediaSyncer {
     Collection mCol;
     RemoteMediaServer mServer;
-    
+
+
     public MediaSyncer(Collection col, RemoteMediaServer server) {
         mCol = col;
         mServer = server;
     }
-    
+
+
     public String sync(long mediaUsn, Connection con) {
         // step 1: check if there have been any changes
         con.publishProgress(R.string.sync_media_find);
@@ -43,13 +46,13 @@ public class MediaSyncer {
         if (lUsn == mediaUsn && !mCol.getMedia().hasChanged()) {
             return "noChanges";
         }
-        
+
         // step 2: send/recv deletions
         con.publishProgress(R.string.sync_media_remove);
         List<String> lRem = removed();
         JSONArray rRem = mServer.remove(lRem, lUsn);
         remove(rRem);
-        
+
         // step 3: stream files from server
         con.publishProgress(R.string.sync_media_from_server);
         while (true) {
@@ -63,7 +66,7 @@ public class MediaSyncer {
                 break;
             }
         }
-        
+
         // step 4: stream files to the server
         con.publishProgress(R.string.sync_media_to_server);
         while (true) {
@@ -75,36 +78,41 @@ public class MediaSyncer {
             }
             long usn = mServer.addFiles(zipAdded.first);
             // after server has replied, safe to remove from log
-            zipAdded.first.delete();  // remove the temporary file created by Media.zipAdded
+            zipAdded.first.delete(); // remove the temporary file created by Media.zipAdded
             mCol.getMedia().forgetAdded(zipAdded.second);
             mCol.getMedia().setUsn(usn);
         }
-        
+
         // step 5: sanity check during beta testing
         long sMediaSanity = mServer.mediaSanity();
         long cMediaSanity = mediaSanity();
         if (sMediaSanity != cMediaSanity) {
-            throw new RuntimeException("Media sanity check failed. Please copy and paste the text below:\n" +
-                    cMediaSanity + "\n" + sMediaSanity);
+            throw new RuntimeException("Media sanity check failed. Please copy and paste the text below:\n"
+                    + cMediaSanity + "\n" + sMediaSanity);
         }
         return "success";
     }
-    
+
+
     private List<String> removed() {
         return mCol.getMedia().removed();
     }
-    
+
+
     private void remove(JSONArray fnames) {
         mCol.getMedia().syncRemove(fnames);
     }
-    
+
+
     private Pair<File, List<String>> files() {
         return mCol.getMedia().zipAdded();
     }
-    
+
+
     /**
      * Adds any media sent from the server.
-     * @param zip A temporary zip file that contains the media files. 
+     * 
+     * @param zip A temporary zip file that contains the media files.
      * @return True if zip is the last in set. Server returns new usn instead.
      */
     private boolean addFiles(File zip) {
@@ -112,7 +120,8 @@ public class MediaSyncer {
         zip.delete();
         return result;
     }
-    
+
+
     private long mediaSanity() {
         return mCol.getMedia().sanityCheck();
     }

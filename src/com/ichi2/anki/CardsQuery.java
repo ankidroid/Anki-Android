@@ -28,53 +28,49 @@ import com.ichi2.libanki.Utils;
  */
 public final class CardsQuery {
 
-    /* package for testing */ public static final String[] PROJECTION = {
-        "cards.id",         // 0
-        "cards.question",   // 1
-        "cards.answer",     // 2
-        "facts.tags",       // 3
-        "models.tags",      // 4
-        "cardModels.name",  // 5
-        "cards.priority",   // 6
-        "cards.due",        // 7
-        "cards.interval",   // 8
-        "cards.factor",     // 9
-        "cards.created",    // 10
+    /* package for testing */public static final String[] PROJECTION = { "cards.id", // 0
+            "cards.question", // 1
+            "cards.answer", // 2
+            "facts.tags", // 3
+            "models.tags", // 4
+            "cardModels.name", // 5
+            "cards.priority", // 6
+            "cards.due", // 7
+            "cards.interval", // 8
+            "cards.factor", // 9
+            "cards.created", // 10
     };
 
-    /* package for testing */ static final int CARDS_ID = 0;
-    /* package for testing */ static final int CARDS_QUESTION = 1;
-    /* package for testing */ static final int CARDS_ANSWER = 2;
-    /* package for testing */ static final int FACTS_TAGS = 3;
-    /* package for testing */ static final int MODELS_TAGS = 4;
-    /* package for testing */ static final int CARDMODELS_NAME = 5;
-    /* package for testing */ static final int CARDS_PRIORITY = 6;
-    /* package for testing */ static final int CARDS_DUE = 7;
-    /* package for testing */ static final int CARDS_INTERVAL = 8;
-    /* package for testing */ static final int CARDS_FACTOR = 9;
-    /* package for testing */ static final int CARDS_CREATED = 10;
+    /* package for testing */static final int CARDS_ID = 0;
+    /* package for testing */static final int CARDS_QUESTION = 1;
+    /* package for testing */static final int CARDS_ANSWER = 2;
+    /* package for testing */static final int FACTS_TAGS = 3;
+    /* package for testing */static final int MODELS_TAGS = 4;
+    /* package for testing */static final int CARDMODELS_NAME = 5;
+    /* package for testing */static final int CARDS_PRIORITY = 6;
+    /* package for testing */static final int CARDS_DUE = 7;
+    /* package for testing */static final int CARDS_INTERVAL = 8;
+    /* package for testing */static final int CARDS_FACTOR = 9;
+    /* package for testing */static final int CARDS_CREATED = 10;
 
 
     /**
      * Returns the query for getting card details. It supports pagination.
-     *
+     * 
      * @param chunkSize the maximum number of values to return
      * @param startId the id for the last card returned by a previous query
      */
     public static String getRawQuery(int chunkSize, String startId) {
         return String.format("SELECT %s FROM cards, facts, models, cardModels "
                 + "WHERE cards.factId == facts.id AND facts.modelId == models.id "
-                + "AND cards.cardModelId = cardModels.id %s ORDER BY cards.id LIMIT %d",
-                Utils.join(", ", PROJECTION),
-                TextUtils.isEmpty(startId) ? "" : ("AND cards.id > " + startId),
-                chunkSize);
+                + "AND cards.cardModelId = cardModels.id %s ORDER BY cards.id LIMIT %d", Utils.join(", ", PROJECTION),
+                TextUtils.isEmpty(startId) ? "" : ("AND cards.id > " + startId), chunkSize);
     }
 
 
     /**
-     * Creates a new card from the content of the cursor.
-     *
-     * It does not modify the position of the cursor, which should already be pointing to the data to use.
+     * Creates a new card from the content of the cursor. It does not modify the position of the cursor, which should
+     * already be pointing to the data to use.
      */
     public static HashMap<String, String> newCardFromCursor(Cursor cursor) {
         HashMap<String, String> data = new HashMap<String, String>();
@@ -100,10 +96,10 @@ public final class CardsQuery {
 
         data.put("flags", flags);
 
-        data.put("tags",
-                factTags + " "
-                + cursor.getString(CardsQuery.MODELS_TAGS) + " "
-                + cursor.getString(CardsQuery.CARDMODELS_NAME));
+        data.put(
+                "tags",
+                factTags + " " + cursor.getString(CardsQuery.MODELS_TAGS) + " "
+                        + cursor.getString(CardsQuery.CARDMODELS_NAME));
         data.put("due", Double.toString(cursor.getDouble(CardsQuery.CARDS_DUE)));
         data.put("interval", Double.toString(cursor.getDouble(CardsQuery.CARDS_INTERVAL)));
         data.put("factor", Double.toString(cursor.getDouble(CardsQuery.CARDS_FACTOR)));

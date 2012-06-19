@@ -35,7 +35,7 @@ import java.util.ArrayList;
  */
 public class AnkiDb {
 
-	private static final String[] MOD_SQLS = new String[] {"insert", "update", "delete"};
+    private static final String[] MOD_SQLS = new String[] { "insert", "update", "delete" };
 
     /**
      * The deck, which is actually an SQLite database.
@@ -43,25 +43,27 @@ public class AnkiDb {
     private SQLiteDatabase mDatabase;
     private boolean mMod = false;
 
+
     /**
      * Open a database connection to an ".anki" SQLite file.
      */
     public AnkiDb(String ankiFilename) {
-        mDatabase = SQLiteDatabase.openDatabase(ankiFilename, null, (SQLiteDatabase.OPEN_READWRITE + SQLiteDatabase.CREATE_IF_NECESSARY)
-                | SQLiteDatabase.NO_LOCALIZED_COLLATORS);
+        mDatabase = SQLiteDatabase.openDatabase(ankiFilename, null,
+                (SQLiteDatabase.OPEN_READWRITE + SQLiteDatabase.CREATE_IF_NECESSARY)
+                        | SQLiteDatabase.NO_LOCALIZED_COLLATORS);
         if (mDatabase != null) {
-        	if (UIUtils.getApiLevel() >= 11) {
-        		queryString("PRAGMA journal_mode = WAL");
-        	} else {
-        		queryString("PRAGMA journal_mode = DELETE");
-        	}
-            if (PrefSettings.getSharedPrefs(AnkiDroidApp.getInstance().getBaseContext()).getBoolean("asyncMode", false)) {
-            	mDatabase.rawQuery("PRAGMA synchronous = 0", null);
+            if (UIUtils.getApiLevel() >= 11) {
+                queryString("PRAGMA journal_mode = WAL");
             } else {
-            	mDatabase.rawQuery("PRAGMA synchronous = 2", null);
+                queryString("PRAGMA journal_mode = DELETE");
+            }
+            if (PrefSettings.getSharedPrefs(AnkiDroidApp.getInstance().getBaseContext()).getBoolean("asyncMode", false)) {
+                mDatabase.rawQuery("PRAGMA synchronous = 0", null);
+            } else {
+                mDatabase.rawQuery("PRAGMA synchronous = 2", null);
             }
         }
-//        getDatabase().beginTransactionNonExclusive();
+        // getDatabase().beginTransactionNonExclusive();
         mMod = false;
     }
 
@@ -71,22 +73,25 @@ public class AnkiDb {
      */
     public void closeDatabase() {
         if (mDatabase != null) {
-        	// set journal mode again to delete in order to make the db accessible for anki desktop and for full upload 
-        	queryString("PRAGMA journal_mode = DELETE");
+            // set journal mode again to delete in order to make the db accessible for anki desktop and for full upload
+            queryString("PRAGMA journal_mode = DELETE");
             mDatabase.close();
-            Log.i(AnkiDroidApp.TAG, "AnkiDb - closeDatabase, database " + mDatabase.getPath() + " closed = " + !mDatabase.isOpen());
+            Log.i(AnkiDroidApp.TAG, "AnkiDb - closeDatabase, database " + mDatabase.getPath() + " closed = "
+                    + !mDatabase.isOpen());
             mDatabase = null;
         }
     }
 
+
     public void commit() {
-//    	SQLiteDatabase db = getDatabase();
-//    	while (db.inTransaction()) {
-//    		db.setTransactionSuccessful();
-//    		db.endTransaction();
-//    	}
-//    	db.beginTransactionNonExclusive();
+        // SQLiteDatabase db = getDatabase();
+        // while (db.inTransaction()) {
+        // db.setTransactionSuccessful();
+        // db.endTransaction();
+        // }
+        // db.beginTransactionNonExclusive();
     }
+
 
     public SQLiteDatabase getDatabase() {
         return mDatabase;
@@ -94,12 +99,12 @@ public class AnkiDb {
 
 
     public void setMod(boolean mod) {
-    	mMod = mod;
+        mMod = mod;
     }
 
 
     public boolean getMod() {
-    	return mMod;
+        return mMod;
     }
 
 
@@ -110,19 +115,21 @@ public class AnkiDb {
      * @return The integer result of the query.
      */
     public int queryScalar(String query) throws SQLException {
-    	return queryScalar(query, true);
+        return queryScalar(query, true);
     }
+
+
     public int queryScalar(String query, boolean throwException) throws SQLException {
         Cursor cursor = null;
         int scalar;
         try {
             cursor = mDatabase.rawQuery(query, null);
             if (!cursor.moveToNext()) {
-            	if (throwException) {
-                    throw new SQLException("No result for query: " + query);            		
-            	} else {
-            		return 0;
-            	}
+                if (throwException) {
+                    throw new SQLException("No result for query: " + query);
+                } else {
+                    return 0;
+                }
             }
 
             scalar = cursor.getInt(0);
@@ -141,7 +148,7 @@ public class AnkiDb {
         try {
             cursor = mDatabase.rawQuery(query, null);
             if (!cursor.moveToNext()) {
-                throw new SQLException("No result for query: " + query);            		
+                throw new SQLException("No result for query: " + query);
             }
             return cursor.getString(0);
         } finally {
@@ -153,19 +160,21 @@ public class AnkiDb {
 
 
     public long queryLongScalar(String query) throws SQLException {
-    	return queryLongScalar(query, true);
+        return queryLongScalar(query, true);
     }
+
+
     public long queryLongScalar(String query, boolean throwException) throws SQLException {
         Cursor cursor = null;
         long scalar;
         try {
             cursor = mDatabase.rawQuery(query, null);
             if (!cursor.moveToNext()) {
-            	if (throwException) {
-                    throw new SQLException("No result for query: " + query);            		
-            	} else {
-            		return 0;
-            	}
+                if (throwException) {
+                    throw new SQLException("No result for query: " + query);
+                } else {
+                    return 0;
+                }
             }
             scalar = cursor.getLong(0);
         } finally {
@@ -181,7 +190,7 @@ public class AnkiDb {
     /**
      * Convenience method for querying the database for an entire column. The column will be returned as an ArrayList of
      * the specified class. See Deck.initUndo() for a usage example.
-     *
+     * 
      * @param type The class of the column's data type. Example: int.class, String.class.
      * @param query The SQL query statement.
      * @param column The column id in the result set to return.
@@ -221,7 +230,7 @@ public class AnkiDb {
 
     /**
      * Mapping of Java type names to the corresponding Cursor.get method.
-     *
+     * 
      * @param typeName The simple name of the type's class. Example: String.class.getSimpleName().
      * @return The name of the Cursor method to be called.
      */
@@ -242,52 +251,58 @@ public class AnkiDb {
     }
 
 
-	public void execute(String sql) {
-		execute(sql, null);
-	}
-	public void execute(String sql, Object[] object) {
-		String s = sql.trim().toLowerCase();
-		// mark modified?
-		for (String mo : MOD_SQLS) {
-			if (s.startsWith(mo)) {
-				mMod = true;
-				break;
-			}
-		}
-		if (object == null) {
-			this.getDatabase().execSQL(sql);			
-		} else {
-			this.getDatabase().execSQL(sql, object);
-		}
-	}
-
-	/** update must always be called via AnkiDb in order to mark the db as changed */
-	public int update(String table, ContentValues values) {
-		return update(table, values, null, null);
-	}
-	/** update must always be called via AnkiDb in order to mark the db as changed */
-	public int update(String table, ContentValues values, String whereClause, String[] whereArgs) {
-		mMod = true;
-		return getDatabase().update(table, values, whereClause, whereArgs);
-	}
-
-	/** insert must always be called via AnkiDb in order to mark the db as changed */
-	public long insert(String table, String nullColumnHack, ContentValues values) {
-		mMod = true;
-		return getDatabase().insert(table, nullColumnHack, values);
-	}
+    public void execute(String sql) {
+        execute(sql, null);
+    }
 
 
-	public void executeMany(String sql, ArrayList<Object[]> list) {
-		mMod = true;
-		mDatabase.beginTransaction();
-		try {
-			for (Object[] o : list) {
-				mDatabase.execSQL(sql, o);
-			}
-			mDatabase.setTransactionSuccessful();
-		} finally {
-			mDatabase.endTransaction();
-		}
-	}
+    public void execute(String sql, Object[] object) {
+        String s = sql.trim().toLowerCase();
+        // mark modified?
+        for (String mo : MOD_SQLS) {
+            if (s.startsWith(mo)) {
+                mMod = true;
+                break;
+            }
+        }
+        if (object == null) {
+            this.getDatabase().execSQL(sql);
+        } else {
+            this.getDatabase().execSQL(sql, object);
+        }
+    }
+
+
+    /** update must always be called via AnkiDb in order to mark the db as changed */
+    public int update(String table, ContentValues values) {
+        return update(table, values, null, null);
+    }
+
+
+    /** update must always be called via AnkiDb in order to mark the db as changed */
+    public int update(String table, ContentValues values, String whereClause, String[] whereArgs) {
+        mMod = true;
+        return getDatabase().update(table, values, whereClause, whereArgs);
+    }
+
+
+    /** insert must always be called via AnkiDb in order to mark the db as changed */
+    public long insert(String table, String nullColumnHack, ContentValues values) {
+        mMod = true;
+        return getDatabase().insert(table, nullColumnHack, values);
+    }
+
+
+    public void executeMany(String sql, ArrayList<Object[]> list) {
+        mMod = true;
+        mDatabase.beginTransaction();
+        try {
+            for (Object[] o : list) {
+                mDatabase.execSQL(sql, o);
+            }
+            mDatabase.setTransactionSuccessful();
+        } finally {
+            mDatabase.endTransaction();
+        }
+    }
 }

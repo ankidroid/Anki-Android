@@ -50,11 +50,13 @@ public class AnkiDroidWidgetMedium extends AppWidgetProvider {
     private static BroadcastReceiver mMountReceiver = null;
     private static boolean remounted = false;
 
+
     @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
         Log.i(AnkiDroidApp.TAG, "MediumWidget: onUpdate");
         WidgetStatus.update(context);
     }
+
 
     @Override
     public void onEnabled(Context context) {
@@ -63,6 +65,7 @@ public class AnkiDroidWidgetMedium extends AppWidgetProvider {
         SharedPreferences preferences = PrefSettings.getSharedPrefs(context);
         preferences.edit().putBoolean("widgetMediumEnabled", true).commit();
     }
+
 
     @Override
     public void onDisabled(Context context) {
@@ -77,16 +80,15 @@ public class AnkiDroidWidgetMedium extends AppWidgetProvider {
         private static final String ACTION_NEXT = "org.ichi2.anki.AnkiDroidWidget.NEXT";
 
         /**
-         * If this action is used when starting the service, it will move to the previous due
-         * deck.
+         * If this action is used when starting the service, it will move to the previous due deck.
          */
         private static final String ACTION_PREV = "org.ichi2.anki.AnkiDroidWidget.PREV";
 
         /**
          * When received, this action is ignored by the service.
          * <p>
-         * It is used to associate with elements that at some point need to have a pending intent
-         * associated with them, but want to clear it off afterwards.
+         * It is used to associate with elements that at some point need to have a pending intent associated with them,
+         * but want to clear it off afterwards.
          */
         private static final String ACTION_IGNORE = "org.ichi2.anki.AnkiDroidWidget.IGNORE";
 
@@ -102,9 +104,9 @@ public class AnkiDroidWidgetMedium extends AppWidgetProvider {
 
         /**
          * The current due deck that is shown in the widget.
-         *
-         * <p>This value is kept around until as long as the service is running and it is shared
-         * by all instances of the widget.
+         * <p>
+         * This value is kept around until as long as the service is running and it is shared by all instances of the
+         * widget.
          */
         private int currentDueDeck = 0;
 
@@ -113,20 +115,18 @@ public class AnkiDroidWidgetMedium extends AppWidgetProvider {
         /** The cached number of total due cards. */
         private int dueCardsCount;
 
+
         private CharSequence getDeckStatusString(DeckStatus deck) {
             SpannableStringBuilder sb = new SpannableStringBuilder();
 
             SpannableString red = new SpannableString(Integer.toString(deck.mLrnCards));
-            red.setSpan(new ForegroundColorSpan(Color.RED), 0, red.length(),
-                    Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+            red.setSpan(new ForegroundColorSpan(Color.RED), 0, red.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
 
             SpannableString black = new SpannableString(Integer.toString(deck.mDueCards));
-            black.setSpan(new ForegroundColorSpan(Color.BLACK), 0, black.length(),
-                    Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+            black.setSpan(new ForegroundColorSpan(Color.BLACK), 0, black.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
 
             SpannableString blue = new SpannableString(Integer.toString(deck.mNewCards));
-            blue.setSpan(new ForegroundColorSpan(Color.BLUE), 0, blue.length(),
-                    Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+            blue.setSpan(new ForegroundColorSpan(Color.BLUE), 0, blue.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
 
             sb.append(red);
             sb.append(" ");
@@ -172,6 +172,7 @@ public class AnkiDroidWidgetMedium extends AppWidgetProvider {
             manager.updateAppWidget(thisWidget, updateViews);
         }
 
+
         private RemoteViews buildUpdate(Context context, boolean updateDueDecksNow) {
             Log.i(AnkiDroidApp.TAG, "MediumWidget: buildUpdate");
 
@@ -183,31 +184,28 @@ public class AnkiDroidWidgetMedium extends AppWidgetProvider {
             Intent ankiDroidIntent = new Intent(context, DeckPicker.class);
             ankiDroidIntent.setAction(Intent.ACTION_MAIN);
             ankiDroidIntent.addCategory(Intent.CATEGORY_LAUNCHER);
-            PendingIntent pendingAnkiDroidIntent =
-                PendingIntent.getActivity(context, 0, ankiDroidIntent, 0);
-            updateViews.setOnClickPendingIntent(R.id.anki_droid_logo,
-                    pendingAnkiDroidIntent);
+            PendingIntent pendingAnkiDroidIntent = PendingIntent.getActivity(context, 0, ankiDroidIntent, 0);
+            updateViews.setOnClickPendingIntent(R.id.anki_droid_logo, pendingAnkiDroidIntent);
 
             if (!AnkiDroidApp.isSdCardMounted()) {
-                updateViews.setTextViewText(R.id.anki_droid_title,
-                    context.getText(R.string.sdcard_missing_message));
+                updateViews.setTextViewText(R.id.anki_droid_title, context.getText(R.string.sdcard_missing_message));
                 updateViews.setTextViewText(R.id.anki_droid_name, "");
                 updateViews.setTextViewText(R.id.anki_droid_status, "");
                 if (mMountReceiver == null) {
-                	mMountReceiver = new BroadcastReceiver() {
+                    mMountReceiver = new BroadcastReceiver() {
                         @Override
                         public void onReceive(Context context, Intent intent) {
                             String action = intent.getAction();
-                        	if (action.equals(Intent.ACTION_MEDIA_MOUNTED)) {
+                            if (action.equals(Intent.ACTION_MEDIA_MOUNTED)) {
                                 Log.i(AnkiDroidApp.TAG, "mMountReceiver - Action = Media Mounted");
                                 if (remounted) {
                                     WidgetStatus.update(getBaseContext());
-                                	remounted = false;
+                                    remounted = false;
                                     if (mMountReceiver != null) {
                                         unregisterReceiver(mMountReceiver);
                                     }
                                 } else {
-                                	remounted = true;
+                                    remounted = true;
                                 }
                             }
                         }
@@ -229,10 +227,10 @@ public class AnkiDroidWidgetMedium extends AppWidgetProvider {
 
             if (dueCardsCount > 0) {
                 Resources resources = getResources();
-                String decksText = resources.getQuantityString(
-                        R.plurals.widget_decks, dueDecks.size(), dueDecks.size());
-                String text = resources.getQuantityString(
-                        R.plurals.widget_cards_in_decks_due, dueCardsCount, dueCardsCount, decksText);
+                String decksText = resources
+                        .getQuantityString(R.plurals.widget_decks, dueDecks.size(), dueDecks.size());
+                String text = resources.getQuantityString(R.plurals.widget_cards_in_decks_due, dueCardsCount,
+                        dueCardsCount, decksText);
                 updateViews.setTextViewText(R.id.anki_droid_title, text);
                 // If the current due deck is out of bound, go back to the first one.
                 if (currentDueDeck < 0 || currentDueDeck > dueDecks.size() - 1) {
@@ -241,8 +239,7 @@ public class AnkiDroidWidgetMedium extends AppWidgetProvider {
                 // Show the name and info from the current due deck.
                 DeckStatus deckStatus = dueDecks.get(currentDueDeck);
                 updateViews.setTextViewText(R.id.anki_droid_name, deckStatus.mDeckName);
-                updateViews.setTextViewText(R.id.anki_droid_status,
-                    getDeckStatusString(deckStatus));
+                updateViews.setTextViewText(R.id.anki_droid_status, getDeckStatusString(deckStatus));
                 PendingIntent openPendingIntent = getOpenPendingIntent(context, deckStatus.mDeckId);
                 updateViews.setOnClickPendingIntent(R.id.anki_droid_name, openPendingIntent);
                 updateViews.setOnClickPendingIntent(R.id.anki_droid_status, openPendingIntent);
@@ -267,8 +264,7 @@ public class AnkiDroidWidgetMedium extends AppWidgetProvider {
                 updateViews.setViewVisibility(R.id.anki_droid_prev, View.VISIBLE);
             } else {
                 // No card is currently due.
-                updateViews.setTextViewText(R.id.anki_droid_title,
-                    context.getString(R.string.widget_no_cards_due));
+                updateViews.setTextViewText(R.id.anki_droid_title, context.getString(R.string.widget_no_cards_due));
                 updateViews.setTextViewText(R.id.anki_droid_name, "");
                 updateViews.setTextViewText(R.id.anki_droid_status, "");
                 updateViews.setViewVisibility(R.id.anki_droid_name, View.INVISIBLE);
@@ -293,11 +289,12 @@ public class AnkiDroidWidgetMedium extends AppWidgetProvider {
             dueCardsCount = 0;
             for (DeckStatus deck : decks) {
                 if (deck.mDueCards + deck.mLrnCards + deck.mNewCards > 0) {
-                  dueCardsCount += deck.mDueCards + deck.mLrnCards + deck.mNewCards;
-                  dueDecks.add(deck);
+                    dueCardsCount += deck.mDueCards + deck.mLrnCards + deck.mNewCards;
+                    dueDecks.add(deck);
                 }
             }
         }
+
 
         /**
          * Returns a pending intent that updates the widget to show the next deck.
@@ -308,6 +305,7 @@ public class AnkiDroidWidgetMedium extends AppWidgetProvider {
             return PendingIntent.getService(context, 0, ankiDroidIntent, 0);
         }
 
+
         /**
          * Returns a pending intent that updates the widget to show the previous deck.
          */
@@ -316,6 +314,7 @@ public class AnkiDroidWidgetMedium extends AppWidgetProvider {
             ankiDroidIntent.setAction(ACTION_PREV);
             return PendingIntent.getService(context, 0, ankiDroidIntent, 0);
         }
+
 
         /**
          * Returns a pending intent that is ignored by the service.
@@ -326,6 +325,7 @@ public class AnkiDroidWidgetMedium extends AppWidgetProvider {
             return PendingIntent.getService(context, 0, ankiDroidIntent, 0);
         }
 
+
         /**
          * Returns a pending intent that opens the current deck.
          */
@@ -335,6 +335,7 @@ public class AnkiDroidWidgetMedium extends AppWidgetProvider {
             ankiDroidIntent.putExtra(DeckPicker.EXTRA_DECK_ID, deckId);
             return PendingIntent.getService(context, 0, ankiDroidIntent, PendingIntent.FLAG_CANCEL_CURRENT);
         }
+
 
         @Override
         public IBinder onBind(Intent arg0) {

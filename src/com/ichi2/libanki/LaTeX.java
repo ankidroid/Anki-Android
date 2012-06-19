@@ -35,9 +35,12 @@ public class LaTeX {
             return LaTeX.mungeQA((String) arg, (Collection) args[4]);
         }
     }
+
+
     public void installHook(Hooks h) {
         h.addHook("mungeQA", new LaTeXFilter());
     }
+
     /**
      * Patterns used to identify LaTeX tags
      */
@@ -46,8 +49,10 @@ public class LaTeX {
     public static Pattern sMathPattern = Pattern.compile("\\[\\$\\$\\](.+?)\\[/\\$\\$\\]");
     public static Pattern sEntityPattern = Pattern.compile("(&[a-z]+;)");
 
+
     /**
      * Convert TEXT with embedded latex tags to image links.
+     * 
      * @param html The content to search for embedded latex tags.
      * @param col The related collection.
      * @return The content with the tags converted to links.
@@ -60,7 +65,7 @@ public class LaTeX {
             matcher.appendReplacement(sb, _imgLink(col, matcher.group(1)));
         }
         matcher.appendTail(sb);
-        
+
         matcher = sExpressionPattern.matcher(sb.toString());
         sb = new StringBuffer();
         while (matcher.find()) {
@@ -71,20 +76,21 @@ public class LaTeX {
         matcher = sMathPattern.matcher(sb.toString());
         sb = new StringBuffer();
         while (matcher.find()) {
-            matcher.appendReplacement(sb, _imgLink(col,
-                    "\\begin{displaymath}" + matcher.group(1) + "\\end{displaymath}"));
+            matcher.appendReplacement(sb,
+                    _imgLink(col, "\\begin{displaymath}" + matcher.group(1) + "\\end{displaymath}"));
         }
         matcher.appendTail(sb);
-        
+
         return sb.toString();
     }
 
+
     /**
      * Return an img link for LATEX, creating it if necessary.
+     * 
      * @param col The associated Collection object.
      * @param latex The LATEX expression to be replaced
-     * @return A string with the link to the image that is the representation
-     * of the LATEX expression.
+     * @return A string with the link to the image that is the representation of the LATEX expression.
      */
     private static String _imgLink(Collection col, String latex) {
         String txt = _latexFromHtml(col, latex);
@@ -92,11 +98,13 @@ public class LaTeX {
         String link = "<img src=\"" + fname + "\">";
         return link;
     }
-    
+
+
     /**
      * Convert entities and fix newlines.
+     * 
      * @param col The associated Collection where the LATEX is found
-     * @param latex The 
+     * @param latex The
      * @return
      */
     private static String _latexFromHtml(Collection col, String latex) {
@@ -106,7 +114,8 @@ public class LaTeX {
         latex = latex.replace("&nbsp;", " ");
         Matcher matcher = sEntityPattern.matcher(latex);
         while (matcher.find()) {
-            // libanki avoids unescaping &nbsp; here, but converts it anyway few lines later with stripHTML, probably a python quirk.
+            // libanki avoids unescaping &nbsp; here, but converts it anyway few lines later with stripHTML, probably a
+            // python quirk.
             matcher.appendReplacement(sb, Html.fromHtml(matcher.group(1)).toString());
         }
         matcher.appendTail(sb);
@@ -116,116 +125,116 @@ public class LaTeX {
         latex = Utils.stripHTML(latex);
         return latex;
     }
-    
-//    ///Use this to replace <br> tags
-//    private static Pattern sBRPattern = Pattern
-//            .compile("<br( /)?>");
-//
-//    /* Prevent class from being instantiated */
-//    private LaTeX() { }
-//
-//    /**
-//     * Parses the content (belonging to deck), replacing LaTeX with img tags
-//     *
-//     * @TODO should check to see if the image exists or not? Or can we assume that
-//     * the user is bright enough to compile stuff if they are using LaTeX?
-//     * @param deck Deck whose content is being parsed
-//     * @param content HTML content of a card
-//     * @return content Content with the onload events for the img tags
-//     */
-//    public static String parseLaTeX(Models model, String content) {
-//
-//        StringBuilder stringBuilder = new StringBuilder();
-//        String contentLeft = content;
-//        String latex;
-//
-//        //First pass, grab everything that the standard pattern gets
-//        Log.i(AnkiDroidApp.TAG, "parseLaTeX");
-//        Matcher matcher = sStandardPattern.matcher(contentLeft);
-//        while (matcher.find()) {
-//            latex = matcher.group(1);
-//            String img = mungeLatex(model, latex);
-//            img = "latex-" + Utils.checksum(img) + ".png";
-//
-//            String imgTag = matcher.group();
-//            int markerStart = contentLeft.indexOf(imgTag);
-//            stringBuilder.append(contentLeft.substring(0, markerStart));
-//            stringBuilder.append("<img src=\"" + img + "\" alt=\"" + latex + "\">");
-//
-//            contentLeft = contentLeft.substring(markerStart + imgTag.length());
-//        }
-//        stringBuilder.append(contentLeft);
-//
-//        //Second pass, grab everything that the expression pattern gets
-//        contentLeft = stringBuilder.toString();
-//        stringBuilder = new StringBuilder();
-//        matcher = sExpressionPattern.matcher(contentLeft);
-//        while (matcher.find()) {
-//            latex = matcher.group(1);
-//            String img = "$" + mungeLatex(model, latex) + "$";
-//            img = "latex-" + Utils.checksum(img) + ".png";
-//
-//            String imgTag = matcher.group();
-//            int markerStart = contentLeft.indexOf(imgTag);
-//            stringBuilder.append(contentLeft.substring(0, markerStart));
-//            stringBuilder.append("<img src=\"" + img + "\" alt=\"" + latex + "\">");
-//
-//            contentLeft = contentLeft.substring(markerStart + imgTag.length());
-//        }
-//        stringBuilder.append(contentLeft);
-//
-//        //Thid pass, grab everything that the math pattern gets
-//        contentLeft = stringBuilder.toString();
-//        stringBuilder = new StringBuilder();
-//        matcher = sMathPattern.matcher(contentLeft);
-//        while (matcher.find()) {
-//            latex = matcher.group(1);
-//            String img = "\\begin{displaymath}" + mungeLatex(model, latex) + "\\end{displaymath}";
-//            img = "latex-" + Utils.checksum(img) + ".png";
-//
-//            String imgTag = matcher.group();
-//            int markerStart = contentLeft.indexOf(imgTag);
-//            stringBuilder.append(contentLeft.substring(0, markerStart));
-//            stringBuilder.append("<img src=\"" + img + "\" alt=\"" + latex + "\">");
-//
-//            contentLeft = contentLeft.substring(markerStart + imgTag.length());
-//        }
-//        stringBuilder.append(contentLeft);
-//
-//        return stringBuilder.toString();
-//    }
-//
-//    private static final Pattern htmlNamedEntityPattern = Pattern.compile("(?i)&[a-z]+;");
-//
-//    /**
-//     * Convert entities, fix newlines, convert to utf8, and wrap pre/postamble.
-//     *
-//     * @param deck The deck, needed to get the latex pre/post-ambles
-//     * @param latex The latex trsing to be munged
-//     * @return the latex string transformed as described above
-//     */
-//    private static String mungeLatex(Models model, String latex) {
-//        // Deal with HTML named entities
-//        StringBuilder sb = new StringBuilder(latex);
-//        Matcher namedEntity = htmlNamedEntityPattern.matcher(sb);
-//        while (namedEntity.find()) {
-//            sb.replace(namedEntity.start(), namedEntity.end(), Html.fromHtml(namedEntity.group()).toString());
-//            namedEntity = htmlNamedEntityPattern.matcher(sb);
-//        }
-//        latex = sb.toString();
-//
-//        // Fix endlines
-//        latex = sBRPattern.matcher(latex).replaceAll("\n");
-//     
-//        // Add pre/post-ambles
-//        try {
-//			latex = model.getConf().getString("latexPre") + "\n" + latex + "\n" + model.getConf().getString("latexPost");
-//		} catch (JSONException e) {
-//			throw new RuntimeException(e);
-//		}
-//
-//        // TODO: Do we need to convert to UTF-8?
-//
-//        return latex;
-//    }
+
+    // ///Use this to replace <br> tags
+    // private static Pattern sBRPattern = Pattern
+    // .compile("<br( /)?>");
+    //
+    // /* Prevent class from being instantiated */
+    // private LaTeX() { }
+    //
+    // /**
+    // * Parses the content (belonging to deck), replacing LaTeX with img tags
+    // *
+    // * @TODO should check to see if the image exists or not? Or can we assume that
+    // * the user is bright enough to compile stuff if they are using LaTeX?
+    // * @param deck Deck whose content is being parsed
+    // * @param content HTML content of a card
+    // * @return content Content with the onload events for the img tags
+    // */
+    // public static String parseLaTeX(Models model, String content) {
+    //
+    // StringBuilder stringBuilder = new StringBuilder();
+    // String contentLeft = content;
+    // String latex;
+    //
+    // //First pass, grab everything that the standard pattern gets
+    // Log.i(AnkiDroidApp.TAG, "parseLaTeX");
+    // Matcher matcher = sStandardPattern.matcher(contentLeft);
+    // while (matcher.find()) {
+    // latex = matcher.group(1);
+    // String img = mungeLatex(model, latex);
+    // img = "latex-" + Utils.checksum(img) + ".png";
+    //
+    // String imgTag = matcher.group();
+    // int markerStart = contentLeft.indexOf(imgTag);
+    // stringBuilder.append(contentLeft.substring(0, markerStart));
+    // stringBuilder.append("<img src=\"" + img + "\" alt=\"" + latex + "\">");
+    //
+    // contentLeft = contentLeft.substring(markerStart + imgTag.length());
+    // }
+    // stringBuilder.append(contentLeft);
+    //
+    // //Second pass, grab everything that the expression pattern gets
+    // contentLeft = stringBuilder.toString();
+    // stringBuilder = new StringBuilder();
+    // matcher = sExpressionPattern.matcher(contentLeft);
+    // while (matcher.find()) {
+    // latex = matcher.group(1);
+    // String img = "$" + mungeLatex(model, latex) + "$";
+    // img = "latex-" + Utils.checksum(img) + ".png";
+    //
+    // String imgTag = matcher.group();
+    // int markerStart = contentLeft.indexOf(imgTag);
+    // stringBuilder.append(contentLeft.substring(0, markerStart));
+    // stringBuilder.append("<img src=\"" + img + "\" alt=\"" + latex + "\">");
+    //
+    // contentLeft = contentLeft.substring(markerStart + imgTag.length());
+    // }
+    // stringBuilder.append(contentLeft);
+    //
+    // //Thid pass, grab everything that the math pattern gets
+    // contentLeft = stringBuilder.toString();
+    // stringBuilder = new StringBuilder();
+    // matcher = sMathPattern.matcher(contentLeft);
+    // while (matcher.find()) {
+    // latex = matcher.group(1);
+    // String img = "\\begin{displaymath}" + mungeLatex(model, latex) + "\\end{displaymath}";
+    // img = "latex-" + Utils.checksum(img) + ".png";
+    //
+    // String imgTag = matcher.group();
+    // int markerStart = contentLeft.indexOf(imgTag);
+    // stringBuilder.append(contentLeft.substring(0, markerStart));
+    // stringBuilder.append("<img src=\"" + img + "\" alt=\"" + latex + "\">");
+    //
+    // contentLeft = contentLeft.substring(markerStart + imgTag.length());
+    // }
+    // stringBuilder.append(contentLeft);
+    //
+    // return stringBuilder.toString();
+    // }
+    //
+    // private static final Pattern htmlNamedEntityPattern = Pattern.compile("(?i)&[a-z]+;");
+    //
+    // /**
+    // * Convert entities, fix newlines, convert to utf8, and wrap pre/postamble.
+    // *
+    // * @param deck The deck, needed to get the latex pre/post-ambles
+    // * @param latex The latex trsing to be munged
+    // * @return the latex string transformed as described above
+    // */
+    // private static String mungeLatex(Models model, String latex) {
+    // // Deal with HTML named entities
+    // StringBuilder sb = new StringBuilder(latex);
+    // Matcher namedEntity = htmlNamedEntityPattern.matcher(sb);
+    // while (namedEntity.find()) {
+    // sb.replace(namedEntity.start(), namedEntity.end(), Html.fromHtml(namedEntity.group()).toString());
+    // namedEntity = htmlNamedEntityPattern.matcher(sb);
+    // }
+    // latex = sb.toString();
+    //
+    // // Fix endlines
+    // latex = sBRPattern.matcher(latex).replaceAll("\n");
+    //
+    // // Add pre/post-ambles
+    // try {
+    // latex = model.getConf().getString("latexPre") + "\n" + latex + "\n" + model.getConf().getString("latexPost");
+    // } catch (JSONException e) {
+    // throw new RuntimeException(e);
+    // }
+    //
+    // // TODO: Do we need to convert to UTF-8?
+    //
+    // return latex;
+    // }
 }

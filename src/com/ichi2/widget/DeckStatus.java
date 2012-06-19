@@ -1,4 +1,7 @@
-package com.ichi2.widget;import com.ichi2.anki2.R;
+
+package com.ichi2.widget;
+
+import com.ichi2.anki2.R;
 
 /**
  * Simple class to hold the current status of a deck.
@@ -12,8 +15,9 @@ public class DeckStatus {
     public int mProgress;
     public int mEta;
 
+
     public DeckStatus(long deckId, String deckName, int newCards, int lrnCards, int dueCards, int progress, int eta) {
-    	mDeckId = deckId;
+        mDeckId = deckId;
         mDeckName = deckName;
         mNewCards = newCards;
         mLrnCards = lrnCards;

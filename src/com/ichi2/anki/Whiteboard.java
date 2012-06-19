@@ -16,7 +16,9 @@
  * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
  ****************************************************************************************/
 
-package com.ichi2.anki;import com.ichi2.anki2.R;
+package com.ichi2.anki;
+
+import com.ichi2.anki2.R;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -50,7 +52,7 @@ public class Whiteboard extends View {
 
     private float mX;
     private float mY;
-    
+
     private boolean mInvertedColors = false;
     private boolean mMonochrome = true;
 
@@ -62,18 +64,18 @@ public class Whiteboard extends View {
         mMonochrome = monochrome;
 
         if (!mInvertedColors) {
-        	if (mMonochrome) {
+            if (mMonochrome) {
                 mForegroundColor = Color.BLACK;
-        	} else {
-        		mForegroundColor = context.getResources().getColor(R.color.wb_fg_color);
-        	}
+            } else {
+                mForegroundColor = context.getResources().getColor(R.color.wb_fg_color);
+            }
         } else {
-        	if (mMonochrome) {
+            if (mMonochrome) {
                 mForegroundColor = Color.WHITE;
-        	} else {
-        		mForegroundColor = context.getResources().getColor(R.color.wb_fg_color_inv);
-        	}
-    	}
+            } else {
+                mForegroundColor = context.getResources().getColor(R.color.wb_fg_color_inv);
+            }
+        }
 
         mPaint = new Paint();
         mPaint.setAntiAlias(true);
@@ -116,6 +118,7 @@ public class Whiteboard extends View {
 
     /**
      * Handle touch screen motion events.
+     * 
      * @param event The motion event.
      * @return True if the event was handled, false otherwise.
      */
@@ -154,8 +157,8 @@ public class Whiteboard extends View {
 
 
     /**
-     * Create a new bitmap that fits the new screen layout.
-     * The content of the whiteboard does not survive screen rotation.
+     * Create a new bitmap that fits the new screen layout. The content of the whiteboard does not survive screen
+     * rotation.
      */
     public void rotate() {
         mRecreateBitmap = true;
@@ -176,12 +179,12 @@ public class Whiteboard extends View {
         mLocked = false;
     }
 
+
     // XXX: Unused
     // If we don't need to lock the whiteboard, then we should remove mLocked too
-//    public void lock() {
-//        mLocked = true;
-//    }
-
+    // public void lock() {
+    // mLocked = true;
+    // }
 
     private void createBitmap(int w, int h, Bitmap.Config conf) {
         mBitmap = Bitmap.createBitmap(w, h, conf);
@@ -191,11 +194,11 @@ public class Whiteboard extends View {
 
 
     private void createBitmap() {
-    	if (mMonochrome && !mInvertedColors) {
+        if (mMonochrome && !mInvertedColors) {
             createBitmap(AnkiDroidApp.getDisplayWidth(), AnkiDroidApp.getDisplayHeight(), Bitmap.Config.ALPHA_8);
-    	} else {
+        } else {
             createBitmap(AnkiDroidApp.getDisplayWidth(), AnkiDroidApp.getDisplayHeight(), Bitmap.Config.ARGB_4444);
-    	}
+        }
     }
 
 

@@ -14,7 +14,9 @@
  * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
  ****************************************************************************************/
 
-package com.ichi2.anki;import com.ichi2.anki2.R;
+package com.ichi2.anki;
+
+import com.ichi2.anki2.R;
 
 import java.util.ArrayList;
 import java.util.Locale;
@@ -38,65 +40,65 @@ public class ReadText {
     private static int mQuestionAnswer;
     public static final String NO_TTS = "0";
 
-    //private boolean mTtsReady = false;
 
-    
+    // private boolean mTtsReady = false;
+
     private static void speak(String loc) {
-    	int result = mTts.setLanguage(new Locale(loc));
+        int result = mTts.setLanguage(new Locale(loc));
         if (result == TextToSpeech.LANG_MISSING_DATA || result == TextToSpeech.LANG_NOT_SUPPORTED) {
-        	Log.e(AnkiDroidApp.TAG, "Error loading locale "+ loc.toString());
+            Log.e(AnkiDroidApp.TAG, "Error loading locale " + loc.toString());
         } else {
-          	mTts.speak(mTextToSpeak, TextToSpeech.QUEUE_FLUSH, null);
-        }    	
+            mTts.speak(mTextToSpeak, TextToSpeech.QUEUE_FLUSH, null);
+        }
     }
 
 
     public static void setLanguageInformation(int modelId, int template) {
-    	mModelId = modelId;
-    	mTemplate = template;    	
+        mModelId = modelId;
+        mTemplate = template;
     }
 
 
     public static String getLanguage(int qa) {
-        return MetaDB.getLanguage(mReviewer, mDeckFilename,  mModelId, mTemplate, qa);
+        return MetaDB.getLanguage(mReviewer, mDeckFilename, mModelId, mTemplate, qa);
     }
 
 
     public static void textToSpeech(String text, int qa) {
-    	mTextToSpeak = text;
-    	mQuestionAnswer = qa;
+        mTextToSpeak = text;
+        mQuestionAnswer = qa;
 
-    	String language = getLanguage(mQuestionAnswer);
+        String language = getLanguage(mQuestionAnswer);
         if (availableTtsLocales.isEmpty()) {
-	    	Locale[] systemLocales = Locale.getAvailableLocales();
-			for (Locale loc : systemLocales) {
-				if (mTts.isLanguageAvailable(loc) == TextToSpeech.LANG_COUNTRY_AVAILABLE) {
-					availableTtsLocales.add(new String[]{loc.getISO3Language(), loc.getDisplayName()});
-				}
-			}			
-		}
+            Locale[] systemLocales = Locale.getAvailableLocales();
+            for (Locale loc : systemLocales) {
+                if (mTts.isLanguageAvailable(loc) == TextToSpeech.LANG_COUNTRY_AVAILABLE) {
+                    availableTtsLocales.add(new String[] { loc.getISO3Language(), loc.getDisplayName() });
+                }
+            }
+        }
 
         // Check, if stored language is available
         for (int i = 0; i < availableTtsLocales.size(); i++) {
-    		if (language.equals(NO_TTS)) {
-    		    return;
-    		} else if (language.equals(availableTtsLocales.get(i)[0])) {
-    			speak(language);
-    			return;
-    		}
-		}
+            if (language.equals(NO_TTS)) {
+                return;
+            } else if (language.equals(availableTtsLocales.get(i)[0])) {
+                speak(language);
+                return;
+            }
+        }
 
-        // Otherwise ask 
+        // Otherwise ask
         Resources res = mReviewer.getResources();
         StyledDialog.Builder builder = new StyledDialog.Builder(mReviewer);
         if (availableTtsLocales.size() == 0) {
-        	builder.setTitle(res.getString(R.string.no_tts_available_title));
+            builder.setTitle(res.getString(R.string.no_tts_available_title));
             builder.setMessage(res.getString(R.string.no_tts_available_message));
             builder.setIcon(android.R.drawable.ic_dialog_alert);
             builder.setPositiveButton(res.getString(R.string.ok), null);
         } else {
-        	ArrayList<CharSequence> dialogItems = new ArrayList<CharSequence>();
-        	final ArrayList<String> dialogIds = new ArrayList<String>();
+            ArrayList<CharSequence> dialogItems = new ArrayList<CharSequence>();
+            final ArrayList<String> dialogIds = new ArrayList<String>();
             builder.setTitle(R.string.select_locale_title);
             // Add option: "no tts"
             dialogItems.add(res.getString(R.string.tts_no_tts));
@@ -109,36 +111,36 @@ public class ReadText {
             dialogItems.toArray(items);
 
             builder.setItems(items, new DialogInterface.OnClickListener() {
-    			@Override
-    			public void onClick(DialogInterface dialog, int which) {
-    				MetaDB.storeLanguage(mReviewer, mDeckFilename,  mModelId, mTemplate, mQuestionAnswer, dialogIds.get(which));
-    				speak(dialogIds.get(which));
-    			}
-            });        	
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    MetaDB.storeLanguage(mReviewer, mDeckFilename, mModelId, mTemplate, mQuestionAnswer,
+                            dialogIds.get(which));
+                    speak(dialogIds.get(which));
+                }
+            });
         }
         builder.create().show();
     }
 
 
     public static void initializeTts(Context context, String deckFilename) {
-    	mReviewer = context;
-    	mDeckFilename = deckFilename;
-    	mTts = new TextToSpeech(context, new TextToSpeech.OnInitListener() {
-			@Override
-			public void onInit(int status) {
-				// TODO: check if properly initialized (does not work yet)
-				if (status != TextToSpeech.SUCCESS) {
-		            int result = mTts.setLanguage(Locale.US);
-		            if (result == TextToSpeech.LANG_MISSING_DATA ||
-		                result == TextToSpeech.LANG_NOT_SUPPORTED) {
-		            } else {
-		            	Log.e(AnkiDroidApp.TAG, "TTS initialized and set to US" );
-		            }
-		        } else {
-		        	Log.e(AnkiDroidApp.TAG, "Initialization of TTS failed" );
-		        }
-			}
-        });            	
+        mReviewer = context;
+        mDeckFilename = deckFilename;
+        mTts = new TextToSpeech(context, new TextToSpeech.OnInitListener() {
+            @Override
+            public void onInit(int status) {
+                // TODO: check if properly initialized (does not work yet)
+                if (status != TextToSpeech.SUCCESS) {
+                    int result = mTts.setLanguage(Locale.US);
+                    if (result == TextToSpeech.LANG_MISSING_DATA || result == TextToSpeech.LANG_NOT_SUPPORTED) {
+                    } else {
+                        Log.e(AnkiDroidApp.TAG, "TTS initialized and set to US");
+                    }
+                } else {
+                    Log.e(AnkiDroidApp.TAG, "Initialization of TTS failed");
+                }
+            }
+        });
     }
 
 
@@ -146,7 +148,7 @@ public class ReadText {
         if (mTts != null) {
             mTts.stop();
             mTts.shutdown();
-        }    	
+        }
     }
 
 

@@ -86,7 +86,7 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
 
     public static final String CONFLICT_RESOLUTION = "ConflictResolutionRequired";
 
-    
+
     private static Connection launchConnectionTask(TaskListener listener, Payload data) {
 
         if (!isOnline()) {
@@ -190,42 +190,44 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
         data.taskType = TASK_TYPE_UPGRADE_DECKS;
         return launchConnectionTask(listener, data);
     }
-    
+
+
     @Override
     protected Payload doInBackground(Payload... params) {
-    	if (params.length != 1)
-    		throw new IllegalArgumentException();
-    	return doOneInBackground(params[0]);
+        if (params.length != 1)
+            throw new IllegalArgumentException();
+        return doOneInBackground(params[0]);
     }
-    
+
+
     private Payload doOneInBackground(Payload data) {
         switch (data.taskType) {
-        case TASK_TYPE_LOGIN:
-            return doInBackgroundLogin(data);
+            case TASK_TYPE_LOGIN:
+                return doInBackgroundLogin(data);
 
-        case TASK_TYPE_REGISTER:
-            return doInBackgroundRegister(data);
+            case TASK_TYPE_REGISTER:
+                return doInBackgroundRegister(data);
 
-//            case TASK_TYPE_GET_SHARED_DECKS:
-//                return doInBackgroundGetSharedDecks(data);
-//
-//            case TASK_TYPE_GET_PERSONAL_DECKS:
-//                return doInBackgroundGetPersonalDecks(data);
-//
-//            case TASK_TYPE_SYNC_ALL_DECKS:
-//                return doInBackgroundSyncAllDecks(data);
+                // case TASK_TYPE_GET_SHARED_DECKS:
+                // return doInBackgroundGetSharedDecks(data);
+                //
+                // case TASK_TYPE_GET_PERSONAL_DECKS:
+                // return doInBackgroundGetPersonalDecks(data);
+                //
+                // case TASK_TYPE_SYNC_ALL_DECKS:
+                // return doInBackgroundSyncAllDecks(data);
 
             case TASK_TYPE_SYNC:
                 return doInBackgroundSync(data);
 
             case TASK_TYPE_SEND_CRASH_REPORT:
                 return doInBackgroundSendFeedback(data);
-                
+
             case TASK_TYPE_DOWNLOAD_MEDIA:
                 return doInBackgroundDownloadMissingMedia(data);
 
             case TASK_TYPE_UPGRADE_DECKS:
-            	return doInBackgroundUpgradeDecks(data);
+                return doInBackgroundUpgradeDecks(data);
 
             default:
                 return null;
@@ -242,174 +244,177 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
         boolean valid = false;
         if (ret != null) {
             data.returnType = ret.getStatusLine().getStatusCode();
-        	Log.i(AnkiDroidApp.TAG, "doInBackgroundLogin - response from server: " + data.returnType + " (" + ret.getStatusLine().getReasonPhrase() + ")");
+            Log.i(AnkiDroidApp.TAG, "doInBackgroundLogin - response from server: " + data.returnType + " ("
+                    + ret.getStatusLine().getReasonPhrase() + ")");
             if (data.returnType == 200) {
-    			try {
-    				JSONObject jo = (new JSONObject(server.stream2String(ret.getEntity().getContent())));
-    				hostkey = jo.getString("key");
-    				valid = (hostkey != null) && (hostkey.length() > 0);
-    			} catch (JSONException e) {
-    				valid = false;
-    			} catch (IllegalStateException e) {
-    				throw new RuntimeException(e);
-    			} catch (IOException e) {
-    				throw new RuntimeException(e);
-    			}            	
+                try {
+                    JSONObject jo = (new JSONObject(server.stream2String(ret.getEntity().getContent())));
+                    hostkey = jo.getString("key");
+                    valid = (hostkey != null) && (hostkey.length() > 0);
+                } catch (JSONException e) {
+                    valid = false;
+                } catch (IllegalStateException e) {
+                    throw new RuntimeException(e);
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
             }
         } else {
-        	Log.e(AnkiDroidApp.TAG, "doInBackgroundLogin - empty response from server");
+            Log.e(AnkiDroidApp.TAG, "doInBackgroundLogin - empty response from server");
         }
         if (valid) {
-        	data.success = true;
-        	data.data = new String[] {username, hostkey};
+            data.success = true;
+            data.data = new String[] { username, hostkey };
         } else {
-        	data.success = false;
+            data.success = false;
         }
         return data;
     }
+
 
     private Payload doInBackgroundUpgradeDecks(Payload data) {
         String path = (String) data.data[0];
         File ankiDir = new File(path);
         if (!ankiDir.isDirectory()) {
-        	data.success = false;
-        	data.data = new Object[] {"wrong anki directory"};
-      		return data;
+            data.success = false;
+            data.data = new Object[] { "wrong anki directory" };
+            return data;
         }
         // step 1: gather all .anki files into a zip, without media.
         // we must store them as 1.anki, 2.anki and provide a map so we don't run into
         // encoding issues with the zip file.
-    	File[] fileList = ankiDir.listFiles(new OldAnkiDeckFilter());
-    	JSONObject map = new JSONObject();
-    	byte[] buf = new byte[1024];
-	    String zipFilename = path + "/upload.zip";
-	    String colFilename = path + "/collection.anki2";
-    	try {
-    	    ZipOutputStream zos = new ZipOutputStream(new FileOutputStream(zipFilename));
-  	      	int n = 1;
-  	      	for (File f : fileList) {
-  	      		String deckPath = f.getAbsolutePath();
-  	      		// set journal mode to delete
-  				try {
-  					AnkiDb d = AnkiDatabaseManager.getDatabase(deckPath);
-  					d.queryString("PRAGMA journal_mode = DELETE");
-  				} finally {
-  					AnkiDatabaseManager.closeDatabase(deckPath);
-  				}
-  				// zip file
-  	      		String tmpName = n + ".anki";
-  	      		FileInputStream in = new FileInputStream(deckPath);
-  	      		ZipEntry ze = new ZipEntry(tmpName);
-      	      	zos.putNextEntry(ze);
-  	      		int len;
-  	      		while ((len = in.read(buf)) > 0) {
-  	      			zos.write(buf, 0, len);
-  	      		}
-      	      	zos.closeEntry();
-      	      	map.put(tmpName, f.getName());
-      	      	n++;
-  	      	}
-  	      	ZipEntry ze = new ZipEntry("map.json");
-  	      	zos.putNextEntry(ze);
-  	      	InputStream in = new ByteArrayInputStream(map.toString().getBytes("UTF-8"));
-      		int len;
-      		while ((len = in.read(buf)) > 0) {
-      			zos.write(buf, 0, len);
-      		}
-  	      	zos.closeEntry();
-  	      	zos.close();
-    	} catch (FileNotFoundException e) {
-  	      	throw new RuntimeException(e); 
-  	    } catch (IOException e) {
-  	      	throw new RuntimeException(e); 
-  	    } catch (JSONException e) {
-  	      	throw new RuntimeException(e); 
-		}
-      	File zipFile = new File(zipFilename);
-      	// step 1.1: if it's over 50MB compressed, it must be upgraded by the user
-      	if (zipFile.length() > 50 * 1024 * 1024) {
-      		data.success = false;
-        	data.data = new Object[] {"more than 50 mb, please upgrade via desktop"};
-      		return data;
-      	}
-      	// step 2: upload zip file to upgrade service and get token
+        File[] fileList = ankiDir.listFiles(new OldAnkiDeckFilter());
+        JSONObject map = new JSONObject();
+        byte[] buf = new byte[1024];
+        String zipFilename = path + "/upload.zip";
+        String colFilename = path + "/collection.anki2";
+        try {
+            ZipOutputStream zos = new ZipOutputStream(new FileOutputStream(zipFilename));
+            int n = 1;
+            for (File f : fileList) {
+                String deckPath = f.getAbsolutePath();
+                // set journal mode to delete
+                try {
+                    AnkiDb d = AnkiDatabaseManager.getDatabase(deckPath);
+                    d.queryString("PRAGMA journal_mode = DELETE");
+                } finally {
+                    AnkiDatabaseManager.closeDatabase(deckPath);
+                }
+                // zip file
+                String tmpName = n + ".anki";
+                FileInputStream in = new FileInputStream(deckPath);
+                ZipEntry ze = new ZipEntry(tmpName);
+                zos.putNextEntry(ze);
+                int len;
+                while ((len = in.read(buf)) > 0) {
+                    zos.write(buf, 0, len);
+                }
+                zos.closeEntry();
+                map.put(tmpName, f.getName());
+                n++;
+            }
+            ZipEntry ze = new ZipEntry("map.json");
+            zos.putNextEntry(ze);
+            InputStream in = new ByteArrayInputStream(map.toString().getBytes("UTF-8"));
+            int len;
+            while ((len = in.read(buf)) > 0) {
+                zos.write(buf, 0, len);
+            }
+            zos.closeEntry();
+            zos.close();
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        } catch (JSONException e) {
+            throw new RuntimeException(e);
+        }
+        File zipFile = new File(zipFilename);
+        // step 1.1: if it's over 50MB compressed, it must be upgraded by the user
+        if (zipFile.length() > 50 * 1024 * 1024) {
+            data.success = false;
+            data.data = new Object[] { "more than 50 mb, please upgrade via desktop" };
+            return data;
+        }
+        // step 2: upload zip file to upgrade service and get token
         BasicHttpSyncer h = new BasicHttpSyncer(null, null);
         // note: server doesn't expect it to be gzip compressed, because the zip file is compressed
-        publishProgress(new Object[]{R.string.upgrade_decks_upload});
+        publishProgress(new Object[] { R.string.upgrade_decks_upload });
         try {
-			HttpResponse resp = h.req("upgrade/upload", new FileInputStream(zipFile), 0, false);
-			String result = h.stream2String(resp.getEntity().getContent());
-			String key;
-			if (result.startsWith("ok:")) {
-				key = result.split(":")[1];
-			} else {
-				data.success = false;
-	        	data.data = new Object[] {"error when uploading"};
-				return data;
-			}
-			while (true) {
-				result = h.stream2String(h.req("upgrade/status?key=" + key).getEntity().getContent());
-				if (result.equals("error")) {
-					data.success = false;
-		        	data.data = new Object[] {"error"};
-					return data;
-				} else if (result.startsWith("waiting:")) {
-					publishProgress(new Object[]{R.string.upgrade_decks_upload, result.split(":")[1]});
-				} else if (result.equals("upgrading")) {
-					publishProgress(new Object[]{R.string.upgrade_decks_upgrade_started});
-				} else if (result.equals("ready")) {
-					break;
-				} else {
-					data.success = false;
-		        	data.data = new Object[] {"error"};
-					return data;
-				}
-				Thread.sleep(1000);
-			}
-	        // step 4: fetch upgraded file. this will return the .anki2 file directly, with
-	        // gzip compression if the client says it can handle it
-			publishProgress(new Object[]{R.string.upgrade_decks_downloading});
-			resp = h.req("upgrade/download?key=" + key);
-			if (resp == null) {
-				data.success = false;
-	        	data.data = new Object[] {"error downloading file"};
-				return data;
-			}
-			// step 5: check the received file is valid
-			InputStream cont = resp.getEntity().getContent();
-			if (!h.writeToFile(cont, colFilename)) {
-				data.success = false;
-	        	data.data = new Object[] {"error writing on the sd card"};
-	        	(new File(colFilename)).delete();
-				return data;
-			}
-			// check the received file is ok
-			publishProgress(new Object[]{R.string.sync_check_download_file});
-			publishProgress(R.string.sync_check_download_file);
-			try {
-				AnkiDb d = AnkiDatabaseManager.getDatabase(colFilename);
-				if (!d.queryString("PRAGMA integrity_check").equalsIgnoreCase("ok")) {
-					data.success = false;
-					data.data = new Object[] {"downloaded file was corrupt"};
-					return data;
-				}
-			} finally {
-				AnkiDatabaseManager.closeDatabase(colFilename);
-			}
-			data.success = true;
-	        return data;
-		} catch (FileNotFoundException e) {
-  	      	throw new RuntimeException(e);
-		} catch (InterruptedException e) {
-  	      	throw new RuntimeException(e);
-		} catch (IllegalStateException e) {
-  	      	throw new RuntimeException(e);
-		} catch (IOException e) {
-  	      	throw new RuntimeException(e);
-		} finally {
-			(new File(zipFilename)).delete();
-		}
+            HttpResponse resp = h.req("upgrade/upload", new FileInputStream(zipFile), 0, false);
+            String result = h.stream2String(resp.getEntity().getContent());
+            String key;
+            if (result.startsWith("ok:")) {
+                key = result.split(":")[1];
+            } else {
+                data.success = false;
+                data.data = new Object[] { "error when uploading" };
+                return data;
+            }
+            while (true) {
+                result = h.stream2String(h.req("upgrade/status?key=" + key).getEntity().getContent());
+                if (result.equals("error")) {
+                    data.success = false;
+                    data.data = new Object[] { "error" };
+                    return data;
+                } else if (result.startsWith("waiting:")) {
+                    publishProgress(new Object[] { R.string.upgrade_decks_upload, result.split(":")[1] });
+                } else if (result.equals("upgrading")) {
+                    publishProgress(new Object[] { R.string.upgrade_decks_upgrade_started });
+                } else if (result.equals("ready")) {
+                    break;
+                } else {
+                    data.success = false;
+                    data.data = new Object[] { "error" };
+                    return data;
+                }
+                Thread.sleep(1000);
+            }
+            // step 4: fetch upgraded file. this will return the .anki2 file directly, with
+            // gzip compression if the client says it can handle it
+            publishProgress(new Object[] { R.string.upgrade_decks_downloading });
+            resp = h.req("upgrade/download?key=" + key);
+            if (resp == null) {
+                data.success = false;
+                data.data = new Object[] { "error downloading file" };
+                return data;
+            }
+            // step 5: check the received file is valid
+            InputStream cont = resp.getEntity().getContent();
+            if (!h.writeToFile(cont, colFilename)) {
+                data.success = false;
+                data.data = new Object[] { "error writing on the sd card" };
+                (new File(colFilename)).delete();
+                return data;
+            }
+            // check the received file is ok
+            publishProgress(new Object[] { R.string.sync_check_download_file });
+            publishProgress(R.string.sync_check_download_file);
+            try {
+                AnkiDb d = AnkiDatabaseManager.getDatabase(colFilename);
+                if (!d.queryString("PRAGMA integrity_check").equalsIgnoreCase("ok")) {
+                    data.success = false;
+                    data.data = new Object[] { "downloaded file was corrupt" };
+                    return data;
+                }
+            } finally {
+                AnkiDatabaseManager.closeDatabase(colFilename);
+            }
+            data.success = true;
+            return data;
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        } catch (IllegalStateException e) {
+            throw new RuntimeException(e);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        } finally {
+            (new File(zipFilename)).delete();
+        }
     }
+
 
     private Payload doInBackgroundRegister(Payload data) {
         String username = (String) data.data[0];
@@ -421,164 +426,165 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
         data.returnType = ret.getStatusLine().getStatusCode();
         String status = null;
         if (data.returnType == 200) {
-			try {
-				JSONObject jo = (new JSONObject(server.stream2String(ret.getEntity().getContent())));
-				status = jo.getString("status"); 
-				if (status.equals("ok")) {
-					hostkey = jo.getString("hkey");
-					valid = (hostkey != null) && (hostkey.length() > 0);
-				}
-			} catch (JSONException e) {
-			} catch (IllegalStateException e) {
-				throw new RuntimeException(e);
-			} catch (IOException e) {
-				throw new RuntimeException(e);
-			}            	
+            try {
+                JSONObject jo = (new JSONObject(server.stream2String(ret.getEntity().getContent())));
+                status = jo.getString("status");
+                if (status.equals("ok")) {
+                    hostkey = jo.getString("hkey");
+                    valid = (hostkey != null) && (hostkey.length() > 0);
+                }
+            } catch (JSONException e) {
+            } catch (IllegalStateException e) {
+                throw new RuntimeException(e);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
         }
         if (valid) {
-        	data.success = true;
-        	data.data = new String[] {username, hostkey};
+            data.success = true;
+            data.data = new String[] { username, hostkey };
         } else {
-        	data.success = false;
-        	if (status != null) {
-            	data.data = new String[] {status};        		
-        	}
+            data.success = false;
+            if (status != null) {
+                data.data = new String[] { status };
+            }
         }
         return data;
     }
 
+
     private Payload doInBackgroundSync(Payload data) {
-    	// for for doInBackgroundLoadDeckCounts if any
-    	DeckTask.waitToFinish();
+        // for for doInBackgroundLoadDeckCounts if any
+        DeckTask.waitToFinish();
 
-    	String hkey = (String)data.data[0];
-    	boolean media = (Boolean) data.data[1];
-    	String conflictResolution = (String) data.data[2];
-    	int mediaUsn = (Integer) data.data[3];
+        String hkey = (String) data.data[0];
+        boolean media = (Boolean) data.data[1];
+        String conflictResolution = (String) data.data[2];
+        int mediaUsn = (Integer) data.data[3];
 
-    	Collection col = Collection.currentCollection();
-    	if (col == null) {
-			data.success = false;
-			data.result = new Object[]{"genericError"};
-			return data;
-    	}
-    	String path = col.getPath();
+        Collection col = Collection.currentCollection();
+        if (col == null) {
+            data.success = false;
+            data.result = new Object[] { "genericError" };
+            return data;
+        }
+        String path = col.getPath();
 
-    	BasicHttpSyncer server = new RemoteServer(this, hkey);
-    	Syncer client = new Syncer(col, server);
+        BasicHttpSyncer server = new RemoteServer(this, hkey);
+        Syncer client = new Syncer(col, server);
 
-    	// run sync and check state
-    	boolean noChanges = false;
-    	if (conflictResolution == null) {
-			Log.i(AnkiDroidApp.TAG, "Sync - starting sync");
-			publishProgress(R.string.sync_prepare_syncing);
-    		Object[] ret = client.sync(this);
-    		mediaUsn = client.getmMediaUsn();
-			if (ret == null) {
-    			data.success = false;
-    			data.result = new Object[]{"genericError"};
-    			return data;        				
-			}
-    		String retCode = (String)ret[0];
-    		if (!retCode.equals("noChanges") && !retCode.equals("success")) {
-    			data.success = false;
-    			data.result = ret;
-    			// note mediaUSN for later
-    			data.data = new Object[]{mediaUsn};
-    			return data;
-    		}
-    		// save and note success state
-    		col.save();
-    		if (retCode.equals("noChanges")) {
-//    			publishProgress(R.string.sync_no_changes_message);
-    			noChanges = true;
-    		} else {
-//    			publishProgress(R.string.sync_database_success);
-    		}
-    	} else {
-    		try {
-        		server = new FullSyncer(col, hkey, this);
-        		if (conflictResolution.equals("upload")) {
-        			Log.i(AnkiDroidApp.TAG, "Sync - fullsync - upload collection");
-        			publishProgress(R.string.sync_preparing_full_sync_message);
-        			Object[] ret = server.upload();
-        			if (ret == null) {
-            			data.success = false;
-            			data.result = new Object[]{"genericError"};
-            			data.data = new Object[]{Collection.openCollection(path)};
-            			return data;        				
-        			}
-        			if (!((String) ret[0]).equals(BasicHttpSyncer.ANKIWEB_STATUS_OK)) {
-            			data.success = false;
-            			data.result = ret;
-            			data.data = new Object[]{Collection.openCollection(path)};
-            			return data;
-        			}
-        		} else if (conflictResolution.equals("download")) {
-        			Log.i(AnkiDroidApp.TAG, "Sync - fullsync - download collection");
-        			publishProgress(R.string.sync_downloading_message);
-        			Object[] ret = server.download();
-        			if (ret == null) {
-            			data.success = false;
-            			data.result = new Object[]{"genericError"};
-            			data.data = new Object[]{Collection.openCollection(path)};
-            			return data;        				
-        			}
-        			if (!((String)ret[0]).equals("success")) {
-            			data.success = false;
-            			data.result = ret;
-            			data.data = new Object[]{Collection.openCollection(path)};
-            			return data;
-        			}
-        		}
-    		} finally {
-    			publishProgress(R.string.sync_reload_message);
-        		col = Collection.openCollection(path);
-    		}
-    	}
+        // run sync and check state
+        boolean noChanges = false;
+        if (conflictResolution == null) {
+            Log.i(AnkiDroidApp.TAG, "Sync - starting sync");
+            publishProgress(R.string.sync_prepare_syncing);
+            Object[] ret = client.sync(this);
+            mediaUsn = client.getmMediaUsn();
+            if (ret == null) {
+                data.success = false;
+                data.result = new Object[] { "genericError" };
+                return data;
+            }
+            String retCode = (String) ret[0];
+            if (!retCode.equals("noChanges") && !retCode.equals("success")) {
+                data.success = false;
+                data.result = ret;
+                // note mediaUSN for later
+                data.data = new Object[] { mediaUsn };
+                return data;
+            }
+            // save and note success state
+            col.save();
+            if (retCode.equals("noChanges")) {
+                // publishProgress(R.string.sync_no_changes_message);
+                noChanges = true;
+            } else {
+                // publishProgress(R.string.sync_database_success);
+            }
+        } else {
+            try {
+                server = new FullSyncer(col, hkey, this);
+                if (conflictResolution.equals("upload")) {
+                    Log.i(AnkiDroidApp.TAG, "Sync - fullsync - upload collection");
+                    publishProgress(R.string.sync_preparing_full_sync_message);
+                    Object[] ret = server.upload();
+                    if (ret == null) {
+                        data.success = false;
+                        data.result = new Object[] { "genericError" };
+                        data.data = new Object[] { Collection.openCollection(path) };
+                        return data;
+                    }
+                    if (!((String) ret[0]).equals(BasicHttpSyncer.ANKIWEB_STATUS_OK)) {
+                        data.success = false;
+                        data.result = ret;
+                        data.data = new Object[] { Collection.openCollection(path) };
+                        return data;
+                    }
+                } else if (conflictResolution.equals("download")) {
+                    Log.i(AnkiDroidApp.TAG, "Sync - fullsync - download collection");
+                    publishProgress(R.string.sync_downloading_message);
+                    Object[] ret = server.download();
+                    if (ret == null) {
+                        data.success = false;
+                        data.result = new Object[] { "genericError" };
+                        data.data = new Object[] { Collection.openCollection(path) };
+                        return data;
+                    }
+                    if (!((String) ret[0]).equals("success")) {
+                        data.success = false;
+                        data.result = ret;
+                        data.data = new Object[] { Collection.openCollection(path) };
+                        return data;
+                    }
+                }
+            } finally {
+                publishProgress(R.string.sync_reload_message);
+                col = Collection.openCollection(path);
+            }
+        }
 
-    	// then move on to media sync
-    	boolean noMediaChanges = false;
-    	if (media) {
-    	    server = new RemoteMediaServer(hkey, this);
-    	    MediaSyncer mediaClient = new MediaSyncer(col, (RemoteMediaServer) server);
-    	    String ret = mediaClient.sync(mediaUsn, this);
-    	    if (ret.equals("noChanges")) {
-    	        publishProgress(R.string.sync_media_no_changes);
-    	        noMediaChanges = true;
-    	    } else {
-    	        publishProgress(R.string.sync_media_success);
-    	    }
-    	}
-    	if (noChanges && noMediaChanges) {
-        	data.success = false;
-        	data.result = new Object[]{"noChanges"};
-        	return data;    		
-    	} else {
-        	data.success = true;
-    		TreeSet<Object[]> decks = col.getSched().deckDueTree(Sched.DECK_INFORMATION_SIMPLE_COUNTS);
-        	int[] counts = new int[]{0, 0, 0};
-        	for (Object[] deck : decks) {
-        		if (((String[])deck[0]).length == 1) {
-        			counts[0] += (Integer) deck[2];
-        			counts[1] += (Integer) deck[3];
-        			counts[2] += (Integer) deck[4];
-        		}
-        	}
-    		data.result = decks;
-    		data.data = new Object[]{conflictResolution, col, col.getSched().eta(counts), col.cardCount()};
-        	return data;
-    	}
+        // then move on to media sync
+        boolean noMediaChanges = false;
+        if (media) {
+            server = new RemoteMediaServer(hkey, this);
+            MediaSyncer mediaClient = new MediaSyncer(col, (RemoteMediaServer) server);
+            String ret = mediaClient.sync(mediaUsn, this);
+            if (ret.equals("noChanges")) {
+                publishProgress(R.string.sync_media_no_changes);
+                noMediaChanges = true;
+            } else {
+                publishProgress(R.string.sync_media_success);
+            }
+        }
+        if (noChanges && noMediaChanges) {
+            data.success = false;
+            data.result = new Object[] { "noChanges" };
+            return data;
+        } else {
+            data.success = true;
+            TreeSet<Object[]> decks = col.getSched().deckDueTree(Sched.DECK_INFORMATION_SIMPLE_COUNTS);
+            int[] counts = new int[] { 0, 0, 0 };
+            for (Object[] deck : decks) {
+                if (((String[]) deck[0]).length == 1) {
+                    counts[0] += (Integer) deck[2];
+                    counts[1] += (Integer) deck[3];
+                    counts[2] += (Integer) deck[4];
+                }
+            }
+            data.result = decks;
+            data.data = new Object[] { conflictResolution, col, col.getSched().eta(counts), col.cardCount() };
+            return data;
+        }
     }
 
 
     public void publishProgress(int id) {
-    	super.publishProgress(id);
+        super.publishProgress(id);
     }
 
 
     public void publishProgress(int id, long up, long down) {
-    	super.publishProgress(id, up, down);
+        super.publishProgress(id, up, down);
     }
 
 
@@ -586,10 +592,10 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
         Log.i(AnkiDroidApp.TAG, "doInBackgroundSendFeedback");
         String feedbackUrl = (String) data.data[0];
         String errorUrl = (String) data.data[1];
-        String feedback  = (String) data.data[2];
-        ArrayList<HashMap<String, String>> errors  = (ArrayList<HashMap<String, String>>) data.data[3];
-        String groupId  = ((Long) data.data[4]).toString();
-        Application app  = (Application) data.data[5];
+        String feedback = (String) data.data[2];
+        ArrayList<HashMap<String, String>> errors = (ArrayList<HashMap<String, String>>) data.data[3];
+        String groupId = ((Long) data.data[4]).toString();
+        Application app = (Application) data.data[5];
         boolean deleteAfterSending = (Boolean) data.data[6];
 
         String postType = null;
@@ -607,11 +613,11 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
                 publishProgress(postType, 0, Feedback.STATE_FAILED, reply.returnType, reply.result);
             }
         }
-        
+
         for (int i = 0; i < errors.size(); i++) {
             HashMap<String, String> error = errors.get(i);
             if (error.containsKey("state") && error.get("state").equals(Feedback.STATE_WAITING)) {
-                postType = Feedback.TYPE_STACKTRACE; 
+                postType = Feedback.TYPE_STACKTRACE;
                 publishProgress(postType, i, Feedback.STATE_UPLOADING);
                 Payload reply = Feedback.postFeedback(errorUrl, postType, error.get("filename"), groupId, i, app);
                 if (reply.success) {
@@ -620,8 +626,8 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
                     publishProgress(postType, i, Feedback.STATE_FAILED, reply.returnType, reply.result);
                 }
                 if (deleteAfterSending && (reply.success || reply.returnType == 200)) {
-                	File file = new File(app.getFilesDir() + "/" + error.get("filename"));
-                	file.delete();
+                    File file = new File(app.getFilesDir() + "/" + error.get("filename"));
+                    file.delete();
                 }
             }
         }
@@ -630,43 +636,44 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
 
         return data;
     }
-    
+
+
     /**
      * Downloads any missing media files according to the mediaURL deckvar.
+     * 
      * @param data
-     * @return The return type contains data.resultType and an array of Integer
-     * in data.data. data.data[0] is the number of total missing media, data.data[1] is the number
-     * of downloaded ones.
+     * @return The return type contains data.resultType and an array of Integer in data.data. data.data[0] is the number
+     *         of total missing media, data.data[1] is the number of downloaded ones.
      */
     private Payload doInBackgroundDownloadMissingMedia(Payload data) {
         Log.i(AnkiDroidApp.TAG, "DownloadMissingMedia");
         HashMap<String, String> missingPaths = new HashMap<String, String>();
         HashMap<String, String> missingSums = new HashMap<String, String>();
-        
+
         Decks deck = (Decks) data.data[0];
         data.result = deck; // pass it to the return object so we close the deck in the deck picker
-        String syncName = "";//deck.getDeckName();
-                
+        String syncName = "";// deck.getDeckName();
+
         data.success = false;
-        data.data = new Object[] {0, 0, 0};
-//        if (!deck.hasKey("mediaURL")) {
-//            data.success = true;
-//            return data;
-//        }
-        String urlbase = "";//deck.getVar("mediaURL");
+        data.data = new Object[] { 0, 0, 0 };
+        // if (!deck.hasKey("mediaURL")) {
+        // data.success = true;
+        // return data;
+        // }
+        String urlbase = "";// deck.getVar("mediaURL");
         if (urlbase.equals("")) {
             data.success = true;
             return data;
         }
 
-        String mdir = "";//deck.mediaDir(true);
+        String mdir = "";// deck.mediaDir(true);
         int totalMissing = 0;
         int missing = 0;
         int grabbed = 0;
 
         Cursor cursor = null;
         try {
-            cursor = null;//deck.getDB().getDatabase().rawQuery("SELECT filename, originalPath FROM media", null);
+            cursor = null;// deck.getDB().getDatabase().rawQuery("SELECT filename, originalPath FROM media", null);
             String path = null;
             String f = null;
             while (cursor.moveToNext()) {
@@ -700,7 +707,7 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
         int readbytes = 0;
         byte[] buf = new byte[4096];
         for (String file : missingPaths.keySet()) {
-            
+
             try {
                 android.net.Uri uri = android.net.Uri.parse(Uri.encode(urlbase, ":/@%") + Uri.encode(file));
                 url = new URI(uri.toString()).toURL();
@@ -716,10 +723,10 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
                         Log.i(AnkiDroidApp.TAG, "Downloaded " + readbytes + " file: " + path);
                     }
                     fos.close();
-    
+
                     // Verify with checksum
                     sum = missingSums.get(file);
-                    if (true){//sum.equals("") || sum.equals(Utils.fileChecksum(path))) {
+                    if (true) {// sum.equals("") || sum.equals(Utils.fileChecksum(path))) {
                         grabbed++;
                     } else {
                         // Download corrupted, delete file
@@ -729,15 +736,15 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
                         missing++;
                     }
                 } else {
-                    Log.e(AnkiDroidApp.TAG, "Connection error (" + connection.getResponseCode() +
-                            ") while retrieving media file " + urlbase + file);
+                    Log.e(AnkiDroidApp.TAG, "Connection error (" + connection.getResponseCode()
+                            + ") while retrieving media file " + urlbase + file);
                     Log.e(AnkiDroidApp.TAG, "Connection message: " + connection.getResponseMessage());
                     if (missingSums.get(file).equals("")) {
                         // Ignore and keep going
                         missing++;
                     } else {
                         data.success = false;
-                        data.data = new Object[] {file};
+                        data.data = new Object[] { file };
                         return data;
                     }
                 }
@@ -752,7 +759,7 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
                     missing++;
                 } else {
                     data.success = false;
-                    data.data = new Object[] {file};
+                    data.data = new Object[] { file };
                     return data;
                 }
             } catch (IOException e) {
@@ -763,7 +770,7 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
                     missing++;
                 } else {
                     data.success = false;
-                    data.data = new Object[] {file};
+                    data.data = new Object[] { file };
                     return data;
                 }
             } finally {
@@ -817,10 +824,12 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
         public int returnType;
         public Exception exception;
 
+
         public Payload() {
             data = null;
             success = true;
         }
+
 
         public Payload(Object[] data) {
             this.data = data;
@@ -835,73 +844,71 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
         }
     }
 
+    // public static void cancelGetSharedDecks() {
+    // HttpSyncer.resetSharedDecks();
+    // sInstance.cancel(true);
+    // }
 
+    // private Payload doInBackgroundGetSharedDecks(Payload data) {
+    // // DeckManager.closeMainDeck();
+    // try {
+    // data.result = HttpSyncer.getSharedDecks();
+    // } catch (OutOfMemoryError e) {
+    // data.success = false;
+    // data.returnType = RETURN_TYPE_OUT_OF_MEMORY;
+    // Log.e(AnkiDroidApp.TAG, "doInBackgroundGetSharedDecks: OutOfMemoryError: " + e);
+    // } catch (Exception e) {
+    // data.success = false;
+    // data.exception = e;
+    // Log.e(AnkiDroidApp.TAG, "doInBackgroundGetSharedDecks - Error getting shared decks = " + e.getMessage());
+    // Log.e(AnkiDroidApp.TAG, Log.getStackTraceString(e));
+    // }
+    // return data;
+    // }
+    //
+    //
+    // private Payload doInBackgroundGetPersonalDecks(Payload data) {
+    // Resources res = sContext.getResources();
+    // // DeckManager.closeMainDeck();
+    // try {
+    // String username = (String) data.data[0];
+    // String password = (String) data.data[1];
+    // HttpSyncer server = new HttpSyncer(username, password);
+    //
+    // int connectResult = server.connect(false);
+    // if (connectResult != HttpSyncer.LOGIN_OK) {
+    // if (connectResult == HttpSyncer.LOGIN_INVALID_USER_PASS) {
+    // data.result = res.getString(R.string.invalid_username_password);
+    // } else if (connectResult == HttpSyncer.LOGIN_OLD_VERSION) {
+    // data.result = String.format(res.getString(R.string.sync_log_old_version),
+    // res.getString(R.string.link_ankidroid));
+    // } else if (connectResult == HttpSyncer.LOGIN_TOO_BUSY) {
+    // data.result = res.getString(R.string.sync_too_busy);
+    // } else {
+    // data.result = res.getString(R.string.login_generic_error);
+    // }
+    // data.success = false;
+    // return data;
+    // }
+    //
+    // data.result = server.getPersonalDecks();
+    // } catch (Exception e) {
+    // data.success = false;
+    // data.result = null;
+    // data.exception = e;
+    // Log.e(AnkiDroidApp.TAG, "doInBackgroundGetPersonalDecks - Error getting personal decks = " + e.getMessage());
+    // Log.e(AnkiDroidApp.TAG, Log.getStackTraceString(e));
+    // }
+    // return data;
+    // }
 
-//    public static void cancelGetSharedDecks() {
-//       	HttpSyncer.resetSharedDecks();
-//    	sInstance.cancel(true);
-//    }
-
-
-//    private Payload doInBackgroundGetSharedDecks(Payload data) {
-////    	DeckManager.closeMainDeck();
-//        try {
-//            data.result = HttpSyncer.getSharedDecks();
-//        } catch (OutOfMemoryError e) {
-//            data.success = false;
-//            data.returnType = RETURN_TYPE_OUT_OF_MEMORY;
-//	    	Log.e(AnkiDroidApp.TAG, "doInBackgroundGetSharedDecks: OutOfMemoryError: " + e);
-//        } catch (Exception e) {
-//            data.success = false;
-//            data.exception = e;
-//            Log.e(AnkiDroidApp.TAG, "doInBackgroundGetSharedDecks - Error getting shared decks = " + e.getMessage());
-//            Log.e(AnkiDroidApp.TAG, Log.getStackTraceString(e));
-//        }
-//        return data;
-//    }
-//
-//
-//    private Payload doInBackgroundGetPersonalDecks(Payload data) {
-//        Resources res = sContext.getResources();
-////    	DeckManager.closeMainDeck();
-//        try {
-//            String username = (String) data.data[0];
-//            String password = (String) data.data[1];
-//            HttpSyncer server = new HttpSyncer(username, password);
-//
-//            int connectResult = server.connect(false);
-//            if (connectResult != HttpSyncer.LOGIN_OK) {
-//                if (connectResult == HttpSyncer.LOGIN_INVALID_USER_PASS) {
-//                    data.result = res.getString(R.string.invalid_username_password);
-//                } else if (connectResult == HttpSyncer.LOGIN_OLD_VERSION) {
-//                    data.result = String.format(res.getString(R.string.sync_log_old_version), res.getString(R.string.link_ankidroid));
-//                } else if (connectResult == HttpSyncer.LOGIN_TOO_BUSY) {
-//                    data.result = res.getString(R.string.sync_too_busy);
-//                } else {
-//                    data.result = res.getString(R.string.login_generic_error);
-//                }
-//                data.success = false;
-//                return data;
-//            }
-//
-//            data.result = server.getPersonalDecks();
-//        } catch (Exception e) {
-//            data.success = false;
-//            data.result = null;
-//            data.exception = e;
-//            Log.e(AnkiDroidApp.TAG, "doInBackgroundGetPersonalDecks - Error getting personal decks = " + e.getMessage());
-//            Log.e(AnkiDroidApp.TAG, Log.getStackTraceString(e));
-//        }
-//        return data;
-//    }
-
-	public static final class OldAnkiDeckFilter implements FileFilter {
-		@Override
-		public boolean accept(File pathname) {
-			if (pathname.isFile() && pathname.getName().endsWith(".anki")) {
-				return true;
-			}
-			return false;
-		}
-	}
+    public static final class OldAnkiDeckFilter implements FileFilter {
+        @Override
+        public boolean accept(File pathname) {
+            if (pathname.isFile() && pathname.getName().endsWith(".anki")) {
+                return true;
+            }
+            return false;
+        }
+    }
 }

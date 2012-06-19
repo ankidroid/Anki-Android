@@ -14,7 +14,9 @@
  * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
  ****************************************************************************************/
 
-package com.ichi2.anki;import com.ichi2.anki2.R;
+package com.ichi2.anki;
+
+import com.ichi2.anki2.R;
 
 import android.app.Application;
 import android.content.Context;
@@ -86,10 +88,10 @@ public class Feedback extends AnkiActivity {
     protected static SimpleDateFormat df2 = new SimpleDateFormat("Z", Locale.US);
     protected static TimeZone localTz = TimeZone.getDefault();
 
-	// This is used to group the batch of bugs and notes sent on the server side
-	protected long mNonce;
+    // This is used to group the batch of bugs and notes sent on the server side
+    protected long mNonce;
 
-	protected List<HashMap<String, String>> mErrorReports;
+    protected List<HashMap<String, String>> mErrorReports;
     protected SimpleAdapter mErrorAdapter;
     protected ListView mLvErrorList;
     protected EditText mEtFeedbackText;
@@ -107,10 +109,10 @@ public class Feedback extends AnkiActivity {
 
 
     @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event)  {
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
-        	deleteFiles(true, false);
-	        closeFeedback();
+            deleteFiles(true, false);
+            closeFeedback();
         }
         return super.onKeyDown(keyCode, event);
     }
@@ -138,17 +140,17 @@ public class Feedback extends AnkiActivity {
     }
 
 
-	private void closeFeedback() {
-	        if (getIntent().getIntExtra("request", 0) == DeckPicker.RESULT_DB_ERROR) {
-	        	setResult(DeckPicker.RESULT_DB_ERROR);
-	        } else {
-		        setResult(RESULT_OK);
-	        }
-			finish();
-            if (UIUtils.getApiLevel() > 4) {
-                ActivityTransitionAnimation.slide(Feedback.this, ActivityTransitionAnimation.LEFT);
-            }
-	}
+    private void closeFeedback() {
+        if (getIntent().getIntExtra("request", 0) == DeckPicker.RESULT_DB_ERROR) {
+            setResult(DeckPicker.RESULT_DB_ERROR);
+        } else {
+            setResult(RESULT_OK);
+        }
+        finish();
+        if (UIUtils.getApiLevel() > 4) {
+            ActivityTransitionAnimation.slide(Feedback.this, ActivityTransitionAnimation.LEFT);
+        }
+    }
 
 
     private void refreshInterface() {
@@ -158,12 +160,12 @@ public class Feedback extends AnkiActivity {
             Button btnKeepLatest = (Button) findViewById(R.id.btnFeedbackKeepLatest);
             Button btnClearAll = (Button) findViewById(R.id.btnFeedbackClearAll);
             ProgressBar pbSpinner = (ProgressBar) findViewById(R.id.pbFeedbackSpinner);
-    
+
             int numErrors = mErrorReports.size();
             if (numErrors == 0 || mErrorsSent) {
-            	if (!mErrorsSent) {
+                if (!mErrorsSent) {
                     mLvErrorList.setVisibility(View.GONE);
-            	}
+                }
                 btnKeepLatest.setVisibility(View.GONE);
                 btnClearAll.setVisibility(View.GONE);
                 btnSend.setText(res.getString(R.string.feedback_send_feedback));
@@ -179,14 +181,14 @@ public class Feedback extends AnkiActivity {
                     btnKeepLatest.setEnabled(true);
                 }
             }
-    
+
             if (mPostingFeedback) {
                 int buttonHeight = btnSend.getHeight();
                 btnSend.setVisibility(View.GONE);
                 pbSpinner.setVisibility(View.VISIBLE);
                 LinearLayout topLine = (LinearLayout) findViewById(R.id.llFeedbackTopLine);
                 topLine.setMinimumHeight(buttonHeight);
-    
+
                 mEtFeedbackText.setEnabled(false);
                 mImm.hideSoftInputFromWindow(mEtFeedbackText.getWindowToken(), 0);
             } else {
@@ -197,9 +199,10 @@ public class Feedback extends AnkiActivity {
         }
     }
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-    	Themes.applyTheme(this);
+        Themes.applyTheme(this);
         super.onCreate(savedInstanceState);
 
         Resources res = getResources();
@@ -218,13 +221,14 @@ public class Feedback extends AnkiActivity {
 
         getErrorFiles();
         Intent i = getIntent();
-        mAllowFeedback = (i.hasExtra("request") && (i.getIntExtra("request", 0) == DeckPicker.REPORT_FEEDBACK || i.getIntExtra("request", 0) == DeckPicker.RESULT_DB_ERROR)) || mReportErrorMode.equals(REPORT_ASK);
+        mAllowFeedback = (i.hasExtra("request") && (i.getIntExtra("request", 0) == DeckPicker.REPORT_FEEDBACK || i
+                .getIntExtra("request", 0) == DeckPicker.RESULT_DB_ERROR)) || mReportErrorMode.equals(REPORT_ASK);
         if (!mAllowFeedback) {
             if (mReportErrorMode.equals(REPORT_ALWAYS)) { // Always report
                 try {
                     String feedback = "Automatically sent";
-                    Connection.sendFeedback(mSendListener, new Payload(new Object[] {
-                            mFeedbackUrl, mErrorUrl, feedback, mErrorReports, mNonce, getApplication(), true}));
+                    Connection.sendFeedback(mSendListener, new Payload(new Object[] { mFeedbackUrl, mErrorUrl,
+                            feedback, mErrorReports, mNonce, getApplication(), true }));
                     if (mErrorReports.size() > 0) {
                         mPostingFeedback = true;
                     }
@@ -254,20 +258,19 @@ public class Feedback extends AnkiActivity {
         Themes.setWallpaper(mainView);
         Themes.setTextViewStyle(findViewById(R.id.tvFeedbackDisclaimer));
         Themes.setTextViewStyle(findViewById(R.id.lvFeedbackErrorList));
-        
+
         Button btnSend = (Button) findViewById(R.id.btnFeedbackSend);
         Button btnKeepLatest = (Button) findViewById(R.id.btnFeedbackKeepLatest);
         Button btnClearAll = (Button) findViewById(R.id.btnFeedbackClearAll);
         mEtFeedbackText = (EditText) findViewById(R.id.etFeedbackText);
         mLvErrorList = (ListView) findViewById(R.id.lvFeedbackErrorList);
 
-        mErrorAdapter = new SimpleAdapter(this, mErrorReports,
-                R.layout.error_item, new String[] {"name", "state", "result"}, new int[] {
-                    R.id.error_item_text, R.id.error_item_progress, R.id.error_item_status});
+        mErrorAdapter = new SimpleAdapter(this, mErrorReports, R.layout.error_item, new String[] { "name", "state",
+                "result" }, new int[] { R.id.error_item_text, R.id.error_item_progress, R.id.error_item_status });
         mErrorAdapter.setViewBinder(new SimpleAdapter.ViewBinder() {
             @Override
             public boolean setViewValue(View view, Object arg1, String text) {
-                switch(view.getId()) {
+                switch (view.getId()) {
                     case R.id.error_item_progress:
                         if (text.equals(STATE_UPLOADING)) {
                             view.setVisibility(View.VISIBLE);
@@ -304,8 +307,8 @@ public class Feedback extends AnkiActivity {
             public void onClick(View v) {
                 if (!mPostingFeedback) {
                     String feedback = mEtFeedbackText.getText().toString();
-                    Connection.sendFeedback(mSendListener, new Payload(new Object[] {
-                            mFeedbackUrl, mErrorUrl, feedback, mErrorReports, mNonce, getApplication(), false}));
+                    Connection.sendFeedback(mSendListener, new Payload(new Object[] { mFeedbackUrl, mErrorUrl,
+                            feedback, mErrorReports, mNonce, getApplication(), false }));
                     if (mErrorReports.size() > 0) {
                         mPostingFeedback = true;
                     }
@@ -328,29 +331,33 @@ public class Feedback extends AnkiActivity {
 
         refreshInterface();
 
-        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN |
-                WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
+        getWindow().setSoftInputMode(
+                WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN
+                        | WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
 
     }
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
 
-        case android.R.id.home:
-        	closeFeedback();
-			return true;
+            case android.R.id.home:
+                closeFeedback();
+                return true;
 
-		default:
-			return super.onOptionsItemSelected(item);
+            default:
+                return super.onOptionsItemSelected(item);
         }
     }
+
 
     private void refreshErrorListView() {
         if (mAllowFeedback) {
             mErrorAdapter.notifyDataSetChanged();
         }
     }
+
 
     private void getErrorFiles() {
         mErrorReports = new ArrayList<HashMap<String, String>>();
@@ -368,15 +375,17 @@ public class Feedback extends AnkiActivity {
         }
     }
 
+
     /**
      * Delete the crash log files.
+     * 
      * @param onlyProcessed only delete the log files that have been sent.
-     * @param keepLatest keep the latest log file. If the file has not been sent yet, it is
-     * not deleted even if this value is set to false.
+     * @param keepLatest keep the latest log file. If the file has not been sent yet, it is not deleted even if this
+     *            value is set to false.
      */
     private void deleteFiles(boolean onlyProcessed, boolean keepLatest) {
 
-        for (int i = (keepLatest? 1: 0); i < mErrorReports.size(); ) {
+        for (int i = (keepLatest ? 1 : 0); i < mErrorReports.size();) {
             try {
                 String errorState = mErrorReports.get(i).get("state");
                 if (!onlyProcessed || errorState.equals(STATE_SUCCESSFUL)) {
@@ -391,6 +400,7 @@ public class Feedback extends AnkiActivity {
         }
     }
 
+
     public static boolean isErrorType(String postType) {
         return !(postType.equals(TYPE_FEEDBACK) || postType.equals(TYPE_ERROR_FEEDBACK));
     }
@@ -404,6 +414,7 @@ public class Feedback extends AnkiActivity {
             }
         }
 
+
         @Override
         public void onPostExecute(Payload data) {
             mPostingFeedback = false;
@@ -411,31 +422,34 @@ public class Feedback extends AnkiActivity {
             refreshInterface();
         }
 
+
         @Override
         public void onPreExecute() {
             // pass
         }
 
+
         @Override
         public void onProgressUpdate(Object... values) {
             Resources res = getResources();
 
-            String postType = (String)values[0];
-            int errorIndex = (Integer)values[1];
-            String state = (String)values[2];
+            String postType = (String) values[0];
+            int errorIndex = (Integer) values[1];
+            String state = (String) values[2];
 
             if (isErrorType(postType) && mErrorReports.size() > errorIndex) {
                 mErrorReports.get(errorIndex).put("state", state);
                 if (!state.equals(Feedback.STATE_UPLOADING)) {
-                    int returnCode = (Integer)values[3];
+                    int returnCode = (Integer) values[3];
                     if (returnCode == 200) {
                         // The result is either: "new" (for first encountered bug), "known" (for existing bugs) or
                         // ("issue:xxx:<status>" for known and linked)
-                        String result = (String)values[4];
+                        String result = (String) values[4];
                         if (result.equalsIgnoreCase("new")) {
                             mErrorReports.get(errorIndex).put("name", res.getString(R.string.feedback_error_reply_new));
                         } else if (result.equalsIgnoreCase("known")) {
-                            mErrorReports.get(errorIndex).put("name", res.getString(R.string.feedback_error_reply_known));
+                            mErrorReports.get(errorIndex).put("name",
+                                    res.getString(R.string.feedback_error_reply_known));
                         } else if (result.startsWith("issue:")) {
                             String[] resultPieces = result.split(":");
                             int issue = Integer.parseInt(resultPieces[1]);
@@ -466,7 +480,8 @@ public class Feedback extends AnkiActivity {
                                     res.getString(R.string.feedback_error_reply_malformed));
                         }
                     } else {
-                        mErrorReports.get(errorIndex).put("result", res.getString(R.string.feedback_error_reply_failed));
+                        mErrorReports.get(errorIndex)
+                                .put("result", res.getString(R.string.feedback_error_reply_failed));
                     }
                 }
                 refreshErrorListView();
@@ -474,13 +489,15 @@ public class Feedback extends AnkiActivity {
                 if (mAllowFeedback) {
                     if (state.equals(STATE_SUCCESSFUL)) {
                         mEtFeedbackText.setText("");
-                        Themes.showThemedToast(Feedback.this, res.getString(R.string.feedback_message_sent_success), false);
+                        Themes.showThemedToast(Feedback.this, res.getString(R.string.feedback_message_sent_success),
+                                false);
                     } else if (state.equals(STATE_FAILED)) {
-                        int respCode = (Integer)values[3];
+                        int respCode = (Integer) values[3];
                         if (respCode == 0) {
                             onDisconnected();
                         } else {
-                        	Themes.showThemedToast(Feedback.this, res.getString(R.string.feedback_message_sent_failure, respCode), false);
+                            Themes.showThemedToast(Feedback.this,
+                                    res.getString(R.string.feedback_message_sent_failure, respCode), false);
                         }
                     }
                 }
@@ -504,7 +521,9 @@ public class Feedback extends AnkiActivity {
         pairs.add(new BasicNameValuePair("reportsenttz", reportsenttz));
     }
 
-    private static List<NameValuePair> extractPairsFromError(String type, String errorFile, String groupId, int index, Application app) {
+
+    private static List<NameValuePair> extractPairsFromError(String type, String errorFile, String groupId, int index,
+            Application app) {
         List<NameValuePair> pairs = new ArrayList<NameValuePair>();
 
         pairs.add(new BasicNameValuePair("type", "crash-stacktrace"));
@@ -515,19 +534,19 @@ public class Feedback extends AnkiActivity {
         String singleLine = null;
         try {
             BufferedReader br = new BufferedReader(new InputStreamReader(app.openFileInput(errorFile)));
-            while((singleLine = br.readLine()) != null) {
+            while ((singleLine = br.readLine()) != null) {
                 int indexOfEquals = singleLine.indexOf('=');
 
-                if(indexOfEquals==-1)
+                if (indexOfEquals == -1)
                     continue;
 
                 String key = singleLine.substring(0, indexOfEquals).toLowerCase();
-                String value = singleLine.substring(indexOfEquals+1,singleLine.length());
+                String value = singleLine.substring(indexOfEquals + 1, singleLine.length());
 
-                if(key.equals("stacktrace")) {
+                if (key.equals("stacktrace")) {
                     StringBuilder sb = new StringBuilder(value);
 
-                    while((singleLine = br.readLine()) != null) {
+                    while ((singleLine = br.readLine()) != null) {
                         sb.append(singleLine);
                         sb.append("\n");
                     }
@@ -548,9 +567,10 @@ public class Feedback extends AnkiActivity {
         return pairs;
     }
 
+
     /**
-     * Posting feedback or error info to the server.
-     * This is called from the AsyncTask.
+     * Posting feedback or error info to the server. This is called from the AsyncTask.
+     * 
      * @param url The url to post the feedback to.
      * @param type The type of the info, eg Feedback.TYPE_CRASH_STACKTRACE.
      * @param feedback For feedback types this is the message. For error/crash types this is the path to the error file.
@@ -558,7 +578,8 @@ public class Feedback extends AnkiActivity {
      * @param index The index of the error in the list
      * @return A Payload file showing success, response code and response message.
      */
-    public static Payload postFeedback(String url, String type, String feedback, String groupId, int index, Application app) {
+    public static Payload postFeedback(String url, String type, String feedback, String groupId, int index,
+            Application app) {
         Payload result = new Payload(null);
 
         List<NameValuePair> pairs = null;
@@ -586,7 +607,7 @@ public class Feedback extends AnkiActivity {
             Log.e(AnkiDroidApp.TAG, String.format("Bug report posted to %s", url));
 
             int respCode = response.getStatusLine().getStatusCode();
-            switch(respCode) {
+            switch (respCode) {
                 case 200:
                     result.success = true;
                     result.returnType = respCode;
@@ -595,9 +616,8 @@ public class Feedback extends AnkiActivity {
                     break;
 
                 default:
-                    Log.e(AnkiDroidApp.TAG, String.format("postFeedback failure: %d - %s",
-                                response.getStatusLine().getStatusCode(),
-                                response.getStatusLine().getReasonPhrase()));
+                    Log.e(AnkiDroidApp.TAG, String.format("postFeedback failure: %d - %s", response.getStatusLine()
+                            .getStatusCode(), response.getStatusLine().getReasonPhrase()));
                     result.success = false;
                     result.returnType = respCode;
                     result.result = response.getStatusLine().getReasonPhrase();

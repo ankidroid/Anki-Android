@@ -41,102 +41,103 @@ import android.os.Bundle;
 
 public class WidgetDialog extends AnkiActivity {
 
-	public static final String ACTION_SHOW_DECK_SELECTION_DIALOG = "org.ichi2.WidgetDialog.SHOWDECKSELECTIONDIALOG";
-	public static final String ACTION_SHOW_RESTRICTIONS_DIALOG = "org.ichi2.WidgetDialog.SHOWRESTRICTIONSDIALOG";
+    public static final String ACTION_SHOW_DECK_SELECTION_DIALOG = "org.ichi2.WidgetDialog.SHOWDECKSELECTIONDIALOG";
+    public static final String ACTION_SHOW_RESTRICTIONS_DIALOG = "org.ichi2.WidgetDialog.SHOWRESTRICTIONSDIALOG";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-    	Themes.applyTheme(this, Themes.THEME_NO_THEME);
-    	super.onCreate(savedInstanceState);
-    	Intent intent = getIntent();
-    	if (intent != null) {
-    		String action = intent.getAction();
-    		if (action != null) {
-    			if (ACTION_SHOW_DECK_SELECTION_DIALOG.equals(action)) {
-    				Collection col = Collection.currentCollection();
-    				if (col == null) {
-    					return;
-    				}
-    				ArrayList<CharSequence> dialogDeckItems = new ArrayList<CharSequence>();
-    				// Use this array to know which ID is associated with each
-    				// Item(name)
-    				final ArrayList<Long> dialogDeckIds = new ArrayList<Long>();
+        Themes.applyTheme(this, Themes.THEME_NO_THEME);
+        super.onCreate(savedInstanceState);
+        Intent intent = getIntent();
+        if (intent != null) {
+            String action = intent.getAction();
+            if (action != null) {
+                if (ACTION_SHOW_DECK_SELECTION_DIALOG.equals(action)) {
+                    Collection col = Collection.currentCollection();
+                    if (col == null) {
+                        return;
+                    }
+                    ArrayList<CharSequence> dialogDeckItems = new ArrayList<CharSequence>();
+                    // Use this array to know which ID is associated with each
+                    // Item(name)
+                    final ArrayList<Long> dialogDeckIds = new ArrayList<Long>();
 
-    				ArrayList<JSONObject> decks = col.getDecks().all();
-    				Collections.sort(decks, new JSONNameComparator());
-    				StyledDialog.Builder builder = new StyledDialog.Builder(this);
-    				builder.setTitle(R.string.deck);
-    				for (JSONObject d : decks) {
-    					try {
-    						dialogDeckItems.add(DeckPicker.readableDeckName(d.getString("name").split("::")));
-    						dialogDeckIds.add(d.getLong("id"));
-    					} catch (JSONException e) {
-    						throw new RuntimeException(e);
-    					}
-    				}
-    				// Convert to Array
-    				String[] items = new String[dialogDeckItems.size()];
-    				dialogDeckItems.toArray(items);
+                    ArrayList<JSONObject> decks = col.getDecks().all();
+                    Collections.sort(decks, new JSONNameComparator());
+                    StyledDialog.Builder builder = new StyledDialog.Builder(this);
+                    builder.setTitle(R.string.deck);
+                    for (JSONObject d : decks) {
+                        try {
+                            dialogDeckItems.add(DeckPicker.readableDeckName(d.getString("name").split("::")));
+                            dialogDeckIds.add(d.getLong("id"));
+                        } catch (JSONException e) {
+                            throw new RuntimeException(e);
+                        }
+                    }
+                    // Convert to Array
+                    String[] items = new String[dialogDeckItems.size()];
+                    dialogDeckItems.toArray(items);
 
-    				builder.setItems(items, new DialogInterface.OnClickListener() {
-    					public void onClick(DialogInterface dialog, int item) {   						
-		            		Intent newIntent = new Intent(WidgetDialog.this, AnkiDroidWidgetBig.UpdateService.class);
-		            		newIntent.putExtra(DeckPicker.EXTRA_DECK_ID, dialogDeckIds.get(item));
-		            		newIntent.setAction(AnkiDroidWidgetBig.UpdateService.ACTION_OPENDECK);
-		            		startService(newIntent);
-    					}
-    				});
-    				builder.setOnDismissListener(new OnDismissListener() {
+                    builder.setItems(items, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int item) {
+                            Intent newIntent = new Intent(WidgetDialog.this, AnkiDroidWidgetBig.UpdateService.class);
+                            newIntent.putExtra(DeckPicker.EXTRA_DECK_ID, dialogDeckIds.get(item));
+                            newIntent.setAction(AnkiDroidWidgetBig.UpdateService.ACTION_OPENDECK);
+                            startService(newIntent);
+                        }
+                    });
+                    builder.setOnDismissListener(new OnDismissListener() {
 
-						@Override
-						public void onDismiss(DialogInterface arg0) {
-		            		WidgetDialog.this.finishWithoutAnimation();
-						}
-    					
-    				});
-    				builder.show();
-    			} else if (ACTION_SHOW_RESTRICTIONS_DIALOG.equals(action)) {
-    				Resources res = getResources();
-    				StyledDialog.Builder builder = new StyledDialog.Builder(this);
-    				builder.setTitle(res.getString(R.string.widget_big)).
-    					setMessage(R.string.widget_big_restrictions_dialog).
-    					setOnDismissListener(new OnDismissListener() {
+                        @Override
+                        public void onDismiss(DialogInterface arg0) {
+                            WidgetDialog.this.finishWithoutAnimation();
+                        }
 
-    						@Override
-    						public void onDismiss(DialogInterface arg0) {
-    							WidgetDialog.this.finishWithoutAnimation();
-    						}
-    					}).setPositiveButton(res.getString(R.string.ok), null);
-					builder.show();
-    			}
-    		}
-    	}
+                    });
+                    builder.show();
+                } else if (ACTION_SHOW_RESTRICTIONS_DIALOG.equals(action)) {
+                    Resources res = getResources();
+                    StyledDialog.Builder builder = new StyledDialog.Builder(this);
+                    builder.setTitle(res.getString(R.string.widget_big))
+                            .setMessage(R.string.widget_big_restrictions_dialog)
+                            .setOnDismissListener(new OnDismissListener() {
+
+                                @Override
+                                public void onDismiss(DialogInterface arg0) {
+                                    WidgetDialog.this.finishWithoutAnimation();
+                                }
+                            }).setPositiveButton(res.getString(R.string.ok), null);
+                    builder.show();
+                }
+            }
+        }
     }
 
     public class JSONNameComparator implements Comparator<JSONObject> {
-		@Override
-		public int compare(JSONObject lhs, JSONObject rhs) {
-			String[] o1;
-			String[] o2;
-			try {
-				o1 = lhs.getString("name").split("::");
-				o2 = rhs.getString("name").split("::");
-			} catch (JSONException e) {
-				throw new RuntimeException(e);
-			}
-			for (int i = 0; i < Math.min(o1.length, o2.length); i++) {
-				int result = o1[i].compareToIgnoreCase(o2[i]);
-				if (result != 0) {
-					return result;
-				}
-			}
-			if (o1.length < o2.length) {
-				return -1;
-			} else if (o1.length > o2.length) {
-				return 1;
-			} else {
-				return 0;
-			}
-		}
-	}
+        @Override
+        public int compare(JSONObject lhs, JSONObject rhs) {
+            String[] o1;
+            String[] o2;
+            try {
+                o1 = lhs.getString("name").split("::");
+                o2 = rhs.getString("name").split("::");
+            } catch (JSONException e) {
+                throw new RuntimeException(e);
+            }
+            for (int i = 0; i < Math.min(o1.length, o2.length); i++) {
+                int result = o1[i].compareToIgnoreCase(o2[i]);
+                if (result != 0) {
+                    return result;
+                }
+            }
+            if (o1.length < o2.length) {
+                return -1;
+            } else if (o1.length > o2.length) {
+                return 1;
+            } else {
+                return 0;
+            }
+        }
+    }
 }

@@ -12,7 +12,9 @@
  * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
  ****************************************************************************************/
 
-package com.ichi2.anki;import com.ichi2.anki2.R;
+package com.ichi2.anki;
+
+import com.ichi2.anki2.R;
 
 import android.content.Context;
 import android.content.pm.PackageInfo;
@@ -97,15 +99,15 @@ public class CustomExceptionHandler implements Thread.UncaughtExceptionHandler {
             mInformation.put("Brand", android.os.Build.BRAND);
             mInformation.put("Device", android.os.Build.DEVICE);
             mInformation.put("Display", android.os.Build.DISPLAY);
-            //mInformation.put("FingerPrint", android.os.Build.FINGERPRINT);
+            // mInformation.put("FingerPrint", android.os.Build.FINGERPRINT);
             mInformation.put("Host", android.os.Build.HOST);
             mInformation.put("ID", android.os.Build.ID);
             mInformation.put("Model", android.os.Build.MODEL);
             mInformation.put("Product", android.os.Build.PRODUCT);
-            //mInformation.put("Tags", android.os.Build.TAGS);
+            // mInformation.put("Tags", android.os.Build.TAGS);
             mInformation.put("Time", Long.toString(android.os.Build.TIME));
-            //mInformation.put("Type", android.os.Build.TYPE);
-            //mInformation.put("User", android.os.Build.USER);
+            // mInformation.put("Type", android.os.Build.TYPE);
+            // mInformation.put("User", android.os.Build.USER);
             mInformation.put("TotalInternalMemory", Long.toString(getTotalInternalMemorySize()));
             mInformation.put("AvailableInternalMemory", Long.toString(getAvailableInternalMemorySize()));
 
@@ -118,33 +120,35 @@ public class CustomExceptionHandler implements Thread.UncaughtExceptionHandler {
 
     @Override
     public void uncaughtException(Thread t, Throwable e) {
-    	uncaughtException(t, e, null);
+        uncaughtException(t, e, null);
     }
+
+
     public void uncaughtException(Thread t, Throwable e, String origin) {
         Log.i(AnkiDroidApp.TAG, "uncaughtException");
 
         collectInformation();
 
         Date ts = new Date();
-    	TimeZone tz = TimeZone.getDefault();
-    	
+        TimeZone tz = TimeZone.getDefault();
+
         SimpleDateFormat df1 = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS", Locale.US);
         SimpleDateFormat df2 = new SimpleDateFormat("Z", Locale.US);
-        
+
         df1.setTimeZone(TimeZone.getTimeZone("UTC"));
-        
+
         String reportgeneratedutc = String.format("%s", df1.format(ts));
         String reportgeneratedtzoffset = String.format("%s", df2.format(ts));
         String reportgeneratedtz = String.format("%s", tz.getID());
-        
+
         StringBuilder reportInformation = new StringBuilder(10000);
-        
+
         reportInformation.append(String.format("reportgeneratedutc=%s\n", reportgeneratedutc));
         reportInformation.append(String.format("reportgeneratedtzoffset=%s\n", reportgeneratedtzoffset));
         reportInformation.append(String.format("reportgeneratedtz=%s\n", reportgeneratedtz));
 
         if (origin != null && origin.length() > 0) {
-        	reportInformation.append(String.format("origin=%s\n", origin));
+            reportInformation.append(String.format("origin=%s\n", origin));
         }
 
         for (String key : mInformation.keySet()) {
@@ -153,7 +157,7 @@ public class CustomExceptionHandler implements Thread.UncaughtExceptionHandler {
             reportInformation.append(String.format("%s=%s\n", key.toLowerCase(), value));
         }
 
-        reportInformation.append("stacktrace=\nBegin Stacktrace\n");	
+        reportInformation.append("stacktrace=\nBegin Stacktrace\n");
 
         // Stack trace
         final Writer result = new StringWriter();

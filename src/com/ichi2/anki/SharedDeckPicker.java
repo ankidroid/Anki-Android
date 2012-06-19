@@ -96,7 +96,7 @@
 //
 //    @Override
 //    protected void onCreate(Bundle savedInstanceState) {
-//    	Themes.applyTheme(this);
+//      Themes.applyTheme(this);
 //        super.onCreate(savedInstanceState);
 //
 //        setContentView(R.layout.download_deck_picker);
@@ -116,7 +116,7 @@
 //
 //        mSearchEditText = (EditText) findViewById(R.id.shared_deck_download_search);
 //        mSearchEditText.addTextChangedListener(new TextWatcher() {
-//        	public void afterTextChanged(Editable s) {
+//          public void afterTextChanged(Editable s) {
 //                findDecks();
 //            }
 //            public void beforeTextChanged(CharSequence s, int start, int count, int after){}
@@ -135,7 +135,7 @@
 //                    for (Download d : mSharedDeckDownloads) {
 //                        if (d.getTitle().equals(selectedDeck.getTitle())) {
 //                            // Duplicate downloads not allowed, sorry.
-//                        	Themes.showThemedToast(SharedDeckPicker.this, res.getString(R.string.duplicate_download), true);
+//                          Themes.showThemedToast(SharedDeckPicker.this, res.getString(R.string.duplicate_download), true);
 //                            return;
 //                        }
 //                    }
@@ -345,7 +345,7 @@
 //        });
 //        mNoConnectionAlert = builder.create();
 //
-//	builder = new StyledDialog.Builder(this);
+//  builder = new StyledDialog.Builder(this);
 //        builder.setTitle(res.getString(R.string.connection_error_title));
 //        builder.setIcon(android.R.drawable.ic_dialog_alert);
 //        builder.setMessage(res.getString(R.string.connection_error_return_message));
@@ -394,7 +394,7 @@
 //            List<SharedDeck> foundDecks = new ArrayList<SharedDeck>();
 //            String searchText = mSearchEditText.getText().toString().toLowerCase();
 //            for (SharedDeck sharedDeck : mSharedDecks) {
-//				if (sharedDeck.matchesLowerCaseFilter(searchText)) {
+//              if (sharedDeck.matchesLowerCaseFilter(searchText)) {
 //                    foundDecks.add(sharedDeck);
 //                }
 //            }
@@ -423,10 +423,10 @@
 //
 //
 //    private void closeSharedDeckPicker() {
-//    	if (mDownloadSuccessful) {
-//    		Intent intent = SharedDeckPicker.this.getIntent();
-//    		setResult(RESULT_OK, intent);
-//    	}
+//      if (mDownloadSuccessful) {
+//          Intent intent = SharedDeckPicker.this.getIntent();
+//          setResult(RESULT_OK, intent);
+//      }
 //        finish();
 //        if (Integer.valueOf(android.os.Build.VERSION.SDK) > 4) {
 //            ActivityTransitionAnimation.slide(this, ActivityTransitionAnimation.LEFT);
@@ -497,10 +497,10 @@
 //                mSharedDecks.addAll((List<SharedDeck>) data.result);
 //                findDecks();
 //            } else {
-//            	if (data.returnType == Connection.RETURN_TYPE_OUT_OF_MEMORY) {
-//    				Themes.showThemedToast(SharedDeckPicker.this, getResources().getString(R.string.error_insufficient_memory), false);
-//    		    	finish();            		
-//            	} else if (mConnectionErrorAlert != null) {
+//              if (data.returnType == Connection.RETURN_TYPE_OUT_OF_MEMORY) {
+//                  Themes.showThemedToast(SharedDeckPicker.this, getResources().getString(R.string.error_insufficient_memory), false);
+//                  finish();                   
+//              } else if (mConnectionErrorAlert != null) {
 //                    mConnectionErrorAlert.show();
 //                }
 //            }
@@ -693,4 +693,4 @@
 //        }
 //
 //    }
-//}
+// }
