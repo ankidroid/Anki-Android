@@ -172,15 +172,24 @@ public class Info extends Activity {
     		break;
 
     	case TYPE_UPGRADE_DECKS:
-    		mWebView.loadDataWithBaseURL("", "your decks need to be upgraded", "text/html", "utf-8", null);
+    		sb.append("<html><body>");
+    		sb.append(res.getString(R.string.upgrade_decks_message));
+    		sb.append("<ul><li>");
+    		sb.append(res.getString(R.string.upgrade_decks_message_pos1, AnkiDroidApp.getDefaultAnkiDroidDirectory()));
+    		sb.append("</li><li>");
+    		sb.append(res.getString(R.string.upgrade_decks_message_pos2, res.getString(R.string.link_anki)));
+    		sb.append("</li><li>");
+    		sb.append(res.getString(R.string.upgrade_decks_message_pos3));
+    		sb.append("</li></ul></body></html>");
+    		mWebView.loadDataWithBaseURL("", sb.toString(), "text/html", "utf-8", null);
     		// add upgrade button
     		Button but = (Button) findViewById(R.id.info_tutorial);
     		but.setVisibility(View.VISIBLE);
-    		but.setText("upgrade");
+    		but.setText(res.getString(R.string.upgrade_decks_button));
     		but.setOnClickListener(new OnClickListener() {
             	@Override
             	public void onClick(View arg0) {
-                    Connection.upgradeDecks(mUpgradeListener, new Connection.Payload(new Object[] { "/sdcard/AnkiDroid" }));
+                    Connection.upgradeDecks(mUpgradeListener, new Connection.Payload(new Object[] { AnkiDroidApp.getDefaultAnkiDroidDirectory() }));
             	}
             });
             StyledDialog.Builder builder2 = new StyledDialog.Builder(this);

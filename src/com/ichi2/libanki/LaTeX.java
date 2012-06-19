@@ -101,6 +101,9 @@ public class LaTeX {
      */
     private static String _latexFromHtml(Collection col, String latex) {
         StringBuffer sb = new StringBuffer();
+        // entitydefs defines nbsp as \xa0 instead of a standard space, so we
+        // replace it first
+        latex = latex.replace("&nbsp;", " ");
         Matcher matcher = sEntityPattern.matcher(latex);
         while (matcher.find()) {
             // libanki avoids unescaping &nbsp; here, but converts it anyway few lines later with stripHTML, probably a python quirk.
@@ -108,6 +111,8 @@ public class LaTeX {
         }
         matcher.appendTail(sb);
         latex = sb.toString().replaceAll("<br( /)?>", "\n");
+        // replace <div> etc with spaces
+        latex = latex.replaceAll("<.+?>", " ");
         latex = Utils.stripHTML(latex);
         return latex;
     }

@@ -273,6 +273,7 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
         File ankiDir = new File(path);
         if (!ankiDir.isDirectory()) {
         	data.success = false;
+        	data.data = new Object[] {"wrong anki directory"};
       		return data;
         }
         // step 1: gather all .anki files into a zip, without media.
@@ -287,8 +288,17 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
     	    ZipOutputStream zos = new ZipOutputStream(new FileOutputStream(zipFilename));
   	      	int n = 1;
   	      	for (File f : fileList) {
+  	      		String deckPath = f.getAbsolutePath();
+  	      		// set journal mode to delete
+  				try {
+  					AnkiDb d = AnkiDatabaseManager.getDatabase(deckPath);
+  					d.queryString("PRAGMA journal_mode = DELETE");
+  				} finally {
+  					AnkiDatabaseManager.closeDatabase(deckPath);
+  				}
+  				// zip file
   	      		String tmpName = n + ".anki";
-  	      		FileInputStream in = new FileInputStream(f.getAbsolutePath());
+  	      		FileInputStream in = new FileInputStream(deckPath);
   	      		ZipEntry ze = new ZipEntry(tmpName);
       	      	zos.putNextEntry(ze);
   	      		int len;
@@ -319,6 +329,7 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
       	// step 1.1: if it's over 50MB compressed, it must be upgraded by the user
       	if (zipFile.length() > 50 * 1024 * 1024) {
       		data.success = false;
+        	data.data = new Object[] {"more than 50 mb, please upgrade via desktop"};
       		return data;
       	}
       	// step 2: upload zip file to upgrade service and get token
@@ -333,12 +344,14 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
 				key = result.split(":")[1];
 			} else {
 				data.success = false;
+	        	data.data = new Object[] {"error when uploading"};
 				return data;
 			}
 			while (true) {
 				result = h.stream2String(h.req("upgrade/status?key=" + key).getEntity().getContent());
 				if (result.equals("error")) {
 					data.success = false;
+		        	data.data = new Object[] {"error"};
 					return data;
 				} else if (result.startsWith("waiting:")) {
 					publishProgress(new Object[]{R.string.upgrade_decks_upload, result.split(":")[1]});
@@ -348,6 +361,7 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
 					break;
 				} else {
 					data.success = false;
+		        	data.data = new Object[] {"error"};
 					return data;
 				}
 				Thread.sleep(1000);
@@ -358,12 +372,15 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
 			resp = h.req("upgrade/download?key=" + key);
 			if (resp == null) {
 				data.success = false;
+	        	data.data = new Object[] {"error downloading file"};
 				return data;
 			}
 			// step 5: check the received file is valid
 			InputStream cont = resp.getEntity().getContent();
 			if (!h.writeToFile(cont, colFilename)) {
 				data.success = false;
+	        	data.data = new Object[] {"error writing on the sd card"};
+	        	(new File(colFilename)).delete();
 				return data;
 			}
 			// check the received file is ok
@@ -373,6 +390,7 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
 				AnkiDb d = AnkiDatabaseManager.getDatabase(colFilename);
 				if (!d.queryString("PRAGMA integrity_check").equalsIgnoreCase("ok")) {
 					data.success = false;
+					data.data = new Object[] {"downloaded file was corrupt"};
 					return data;
 				}
 			} finally {
