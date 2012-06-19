@@ -95,9 +95,7 @@ import java.util.zip.GZIPOutputStream;
  * TODO comments
  */
 public class Utils {
-    enum SqlCommandType {
-        SQL_INS, SQL_UPD, SQL_DEL
-    };
+    enum SqlCommandType { SQL_INS, SQL_UPD, SQL_DEL };
 
     // Used to format doubles with English's decimal separator system
     public static final Locale ENGLISH_LOCALE = new Locale("en_US");
@@ -123,10 +121,8 @@ public class Utils {
     public static final int TIME_FORMAT_IN = 1;
     public static final int TIME_FORMAT_BEFORE = 2;
 
-
     /* Prevent class from being instantiated */
-    private Utils() {
-    }
+    private Utils() { }
 
     // Regex pattern used in removing tags from text before diff
     private static final Pattern stylePattern = Pattern.compile("(?s)<style.*?>.*?</style>");
@@ -137,142 +133,130 @@ public class Utils {
 
     private static final String ALL_CHARACTERS = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
 
-
-    /** The time in integer seconds. Pass scale=1000 to get milliseconds. */
+    /**The time in integer seconds. Pass scale=1000 to get milliseconds. */
     public static double now() {
         return (System.currentTimeMillis() / 1000.0);
     }
 
 
-    /** The time in integer seconds. Pass scale=1000 to get milliseconds. */
+    /**The time in integer seconds. Pass scale=1000 to get milliseconds. */
     public static long intNow() {
-        return intNow(1);
+    	return intNow(1);
     }
-
-
-    public static long intNow(int scale) {
+	public static long intNow(int scale) {
         return (long) (now() * scale);
     }
-
 
     // timetable
     // aftertimetable
     // shorttimetable
-
+    
     /**
      * Return a string representing a time span (eg '2 days').
-     * 
      * @param inFormat: if true, return eg 'in 2 days'
      */
     public static String fmtTimeSpan(int time) {
         return fmtTimeSpan(time, 0, false, false);
     }
-
-
     public static String fmtTimeSpan(int time, boolean _short) {
         return fmtTimeSpan(time, 0, _short, false);
     }
-
-
     public static String fmtTimeSpan(int time, int format, boolean _short, boolean boldNumber) {
-        int type;
-        int unit = 99;
-        int point = 0;
-        if (Math.abs(time) < 60 || unit < 1) {
-            type = TIME_SECONDS;
-        } else if (Math.abs(time) < 3599 || unit < 2) {
-            type = TIME_MINUTES;
-        } else if (Math.abs(time) < 60 * 60 * 24 || unit < 3) {
-            type = TIME_HOURS;
-        } else if (Math.abs(time) < 60 * 60 * 24 * 29.5 || unit < 4) {
-            type = TIME_DAYS;
-        } else if (Math.abs(time) < 60 * 60 * 24 * 30 * 11.95 || unit < 5) {
-            type = TIME_MONTHS;
-            point = 1;
-        } else {
-            type = TIME_YEARS;
-            point = 1;
-        }
-        double ftime = convertSecondsTo(time, type);
+    	int type;
+    	int unit = 99;
+    	int point = 0;
+    	if (Math.abs(time) < 60 || unit < 1) {
+    		type = TIME_SECONDS;
+    	} else if (Math.abs(time) < 3599 || unit < 2) {
+    		type = TIME_MINUTES;
+    	} else if (Math.abs(time) < 60 * 60 * 24 || unit < 3) {
+    		type = TIME_HOURS;
+    	} else if (Math.abs(time) < 60 * 60 * 24 * 29.5 || unit < 4) {
+    		type = TIME_DAYS;
+    	} else if (Math.abs(time) < 60 * 60 * 24 * 30 * 11.95 || unit < 5) {
+    		type = TIME_MONTHS;
+    		point = 1;
+    	} else {
+    		type = TIME_YEARS;
+    		point = 1;
+    	}
+    	double ftime = convertSecondsTo(time, type);
 
-        int formatId;
-        if (_short) {
-            formatId = R.array.next_review_short;
-        } else {
-            switch (format) {
-                case TIME_FORMAT_IN:
-                    if (Math.round(ftime * 10) == 10) {
-                        formatId = R.array.next_review_in_s;
-                    } else {
-                        formatId = R.array.next_review_in_p;
-                    }
-                    break;
-                case TIME_FORMAT_BEFORE:
-                    if (Math.round(ftime * 10) == 10) {
-                        formatId = R.array.next_review_before_s;
-                    } else {
-                        formatId = R.array.next_review_before_p;
-                    }
-                    break;
-                case TIME_FORMAT_DEFAULT:
-                default:
-                    if (Math.round(ftime * 10) == 10) {
-                        formatId = R.array.next_review_s;
-                    } else {
-                        formatId = R.array.next_review_p;
-                    }
-                    break;
-            }
-        }
+    	int formatId;
+    	if (_short) {
+    	    formatId = R.array.next_review_short;
+    	} else {
+        	switch (format) {
+        	case TIME_FORMAT_IN:
+        		if (Math.round(ftime * 10) == 10) {
+        			formatId = R.array.next_review_in_s;
+        		} else {
+        			formatId = R.array.next_review_in_p;    			
+        		}
+        		break;
+        	case TIME_FORMAT_BEFORE:
+        		if (Math.round(ftime * 10) == 10) {
+        			formatId = R.array.next_review_before_s;
+        		} else {
+        			formatId = R.array.next_review_before_p;    			
+        		}
+        		break;
+        	case TIME_FORMAT_DEFAULT:
+        	default:
+        		if (Math.round(ftime * 10) == 10) {
+        			formatId = R.array.next_review_s;
+        		} else {
+        			formatId = R.array.next_review_p;    			
+        		}
+        		break;
+        	}
+    	}
 
-        String timeString = String.format(AnkiDroidApp.getAppResources().getStringArray(formatId)[type],
-                boldNumber ? "<b>" + fmtDouble(ftime, point) + "</b>" : fmtDouble(ftime, point));
-        if (boldNumber && time == 1) {
-            timeString = timeString.replace("1", "<b>1</b>");
-        }
-        return timeString;
+    	String timeString = String.format(AnkiDroidApp.getAppResources().getStringArray(formatId)[type], boldNumber ? "<b>" + fmtDouble(ftime, point) + "</b>" : fmtDouble(ftime, point));
+		if (boldNumber && time == 1) {
+			timeString = timeString.replace("1", "<b>1</b>");
+		}
+		return timeString;
     }
 
 
     private static double convertSecondsTo(int seconds, int type) {
-        switch (type) {
-            case TIME_SECONDS:
-                return seconds;
-            case TIME_MINUTES:
-                return seconds / 60.0;
-            case TIME_HOURS:
-                return seconds / 3600.0;
-            case TIME_DAYS:
-                return seconds / 86400.0;
-            case TIME_MONTHS:
-                return seconds / 2592000.0;
-            case TIME_YEARS:
-                return seconds / 31536000.0;
-            default:
-                return 0;
-        }
+    	switch (type) {
+    	case TIME_SECONDS:
+    		return seconds;
+    	case TIME_MINUTES:
+    		return seconds / 60.0;
+    	case TIME_HOURS:
+    		return seconds / 3600.0;    		
+    	case TIME_DAYS:
+    		return seconds / 86400.0;    		
+    	case TIME_MONTHS:
+    		return seconds / 2592000.0;    		
+    	case TIME_YEARS:
+    		return seconds / 31536000.0;
+		default:
+    		return 0;
+    	}
     }
 
-
     /**
-     * Locale ***********************************************************************************************
+     * Locale
+     * ***********************************************************************************************
      */
 
     /**
      * @return double with percentage sign
      */
     public static String fmtPercentage(Double value) {
-        return fmtPercentage(value, 0);
+	return fmtPercentage(value, 0);
     }
-
-
     public static String fmtPercentage(Double value, int point) {
-        // only retrieve the percentage format the first time
-        if (mCurrentPercentageFormat == null) {
-            mCurrentPercentageFormat = NumberFormat.getPercentInstance(Locale.getDefault());
-        }
-        mCurrentNumberFormat.setMaximumFractionDigits(point);
-        return mCurrentPercentageFormat.format(value);
+    	// only retrieve the percentage format the first time
+    	if (mCurrentPercentageFormat == null) {
+    		mCurrentPercentageFormat = NumberFormat.getPercentInstance(Locale.getDefault());
+    	}
+    	mCurrentNumberFormat.setMaximumFractionDigits(point);
+    	return mCurrentPercentageFormat.format(value);
     }
 
 
@@ -280,27 +264,24 @@ public class Utils {
      * @return a string with decimal separator according to current locale
      */
     public static String fmtDouble(Double value) {
-        return fmtDouble(value, 1);
+    	return fmtDouble(value, 1);
     }
-
-
     public static String fmtDouble(Double value, int point) {
-        // only retrieve the number format the first time
-        if (mCurrentNumberFormat == null) {
-            mCurrentNumberFormat = NumberFormat.getInstance(Locale.getDefault());
-        }
-        mCurrentNumberFormat.setMaximumFractionDigits(point);
-        return mCurrentNumberFormat.format(value);
+    	// only retrieve the number format the first time
+    	if (mCurrentNumberFormat == null) {
+    		mCurrentNumberFormat = NumberFormat.getInstance(Locale.getDefault());
+    	}
+    	mCurrentNumberFormat.setMaximumFractionDigits(point);
+    	return mCurrentNumberFormat.format(value);
     }
-
 
     /**
-     * HTML ***********************************************************************************************
+     * HTML
+     * ***********************************************************************************************
      */
 
     /**
      * Strips a text from <style>...</style>, <script>...</script> and <_any_tag_> HTML tags.
-     * 
      * @param The HTML text to be cleaned.
      * @return The text without the aforementioned tags.
      */
@@ -325,16 +306,16 @@ public class Utils {
 
 
     private String minimizeHTML(String s) {
-        // TODO
-        return s;
+    	// TODO
+    	return s;
     }
 
 
     /**
-     * Takes a string and replaces all the HTML symbols in it with their unescaped representation. This should only
-     * affect substrings of the form &something; and not tags. Internet rumour says that Html.fromHtml() doesn't cover
-     * all cases, but it doesn't get less vague than that.
-     * 
+     * Takes a string and replaces all the HTML symbols in it with their unescaped representation.
+     * This should only affect substrings of the form &something; and not tags.
+     * Internet rumour says that Html.fromHtml() doesn't cover all cases, but it doesn't get less
+     * vague than that.
      * @param html The HTML escaped text
      * @return The text with its HTML entities unescaped.
      */
@@ -348,9 +329,9 @@ public class Utils {
         return sb.toString();
     }
 
-
     /**
-     * IDs ***********************************************************************************************
+     * IDs
+     * ***********************************************************************************************
      */
 
     public static String hexifyID(long id) {
@@ -359,17 +340,17 @@ public class Utils {
 
 
     public static long dehexifyID(String id) {
-        return Long.valueOf(id, 16);
+    	return Long.valueOf(id, 16);
     }
 
 
     /** Given a list of integers, return a string '(int1,int2,...)'. */
     public static String ids2str(int[] ids) {
-        StringBuilder sb = new StringBuilder();
-        sb.append("(");
+    	StringBuilder sb = new StringBuilder();
+    	sb.append("(");
         if (ids != null) {
-            String s = Arrays.toString(ids);
-            sb.append(s.substring(1, s.length() - 1));
+        	String s = Arrays.toString(ids);
+        	sb.append(s.substring(1, s.length() - 1));
         }
         sb.append(")");
         return sb.toString();
@@ -388,7 +369,6 @@ public class Utils {
         return sb.toString();
     }
 
-
     /** Given a list of integers, return a string '(int1,int2,...)'. */
     public static String ids2str(Long[] ids) {
         StringBuilder sb = new StringBuilder();
@@ -400,7 +380,6 @@ public class Utils {
         sb.append(")");
         return sb.toString();
     }
-
 
     /** Given a list of integers, return a string '(int1,int2,...)'. */
     public static <T> String ids2str(List<T> ids) {
@@ -444,97 +423,95 @@ public class Utils {
 
 
     /** LIBANKI: not in libanki */
-    public static long[] arrayList2array(ArrayList<Long> list) {
-        long[] ar = new long[list.size()];
-        int i = 0;
-        for (long l : list) {
-            ar[i++] = l;
-        }
-        return ar;
+    public static long[] arrayList2array(List<Long> list) {
+    	long[] ar = new long[list.size()];
+    	int i = 0;
+    	for (long l : list) {
+    		ar[i++] = l;
+    	}
+    	return ar;
     }
-
 
     /** Return a non-conflicting timestamp for table. */
     public static long timestampID(AnkiDb db, String table) {
-        // be careful not to create multiple objects without flushing them, or they
+    	// be careful not to create multiple objects without flushing them, or they
         // may share an ID.
-        long t = intNow(1000);
-        while (db.queryScalar("SELECT id FROM " + table + " WHERE id = " + t, false) != 0) {
-            t += 1;
-        }
-        return t;
+    	long t = intNow(1000);
+    	while (db.queryScalar("SELECT id FROM " + table + " WHERE id = " + t, false) != 0) {
+    		t += 1;
+    	}
+    	return t;
     }
 
 
     /** Return the first safe ID to use. */
     public static long maxID(AnkiDb db) {
-        long now = intNow(1000);
-        now = Math.max(now, db.queryLongScalar("SELECT MAX(id) FROM cards"));
-        now = Math.max(now, db.queryLongScalar("SELECT MAX(id) FROM notes"));
-        return now + 1;
+    	long now = intNow(1000);
+    	now = Math.max(now, db.queryLongScalar("SELECT MAX(id) FROM cards"));
+    	now = Math.max(now, db.queryLongScalar("SELECT MAX(id) FROM notes"));
+    	return now + 1;
     }
 
 
     // used in ankiweb
     public static String base62(int num, String extra) {
-        String table = ALL_CHARACTERS + extra;
-        int len = table.length();
-        String buf = "";
-        int mod = 0;
-        while (num != 0) {
-            mod = num % len;
-            buf = buf + table.substring(mod, mod + 1);
-            num = num / len;
-        }
+    	String table = ALL_CHARACTERS + extra;
+    	int len = table.length();
+    	String buf = "";
+    	int mod = 0;
+    	while (num != 0) {
+    		mod = num % len;
+    		buf = buf + table.substring(mod, mod + 1);
+    		num = num / len;
+    	}
         return buf;
     }
 
-
     // all printable characters minus quotes, backslash and separators
     public static String base91(int num) {
-        return base62(num, "!#$%&()*+,-./:;<=>?@[]^_`{|}~");
+    	return base62(num, "!#$%&()*+,-./:;<=>?@[]^_`{|}~");
     }
 
 
     /** return a base91-encoded 64bit random number */
     public static String guid64() {
-        return base91((new Random()).nextInt((int) (Math.pow(2, 61) - 1)));
+    	return base91((new Random()).nextInt((int) (Math.pow(2, 61) - 1)));
     }
 
 
-    // public static JSONArray listToJSONArray(List<Object> list) {
-    // JSONArray jsonArray = new JSONArray();
-    //
-    // for (Object o : list) {
-    // jsonArray.put(o);
-    // }
-    //
-    // return jsonArray;
-    // }
-    //
-    //
-    // public static List<String> jsonArrayToListString(JSONArray jsonArray) throws JSONException {
-    // ArrayList<String> list = new ArrayList<String>();
-    //
-    // int len = jsonArray.length();
-    // for (int i = 0; i < len; i++) {
-    // list.add(jsonArray.getString(i));
-    // }
-    //
-    // return list;
-    // }
+//    public static JSONArray listToJSONArray(List<Object> list) {
+//        JSONArray jsonArray = new JSONArray();
+//
+//        for (Object o : list) {
+//            jsonArray.put(o);
+//        }
+//
+//        return jsonArray;
+//    }
+//
+//
+//    public static List<String> jsonArrayToListString(JSONArray jsonArray) throws JSONException {
+//        ArrayList<String> list = new ArrayList<String>();
+//
+//        int len = jsonArray.length();
+//        for (int i = 0; i < len; i++) {
+//            list.add(jsonArray.getString(i));
+//        }
+//
+//        return list;
+//    }
 
     public static long[] jsonArrayToLongArray(JSONArray jsonArray) throws JSONException {
-        long[] ar = new long[jsonArray.length()];
+    	long[] ar = new long[jsonArray.length()];
         for (int i = 0; i < jsonArray.length(); i++) {
-            ar[i] = jsonArray.getLong(i);
+        	ar[i] = jsonArray.getLong(i);
         }
         return ar;
     }
-
-
+        
     /**
-     * Fields ***********************************************************************************************
+     * Fields
+     * ***********************************************************************************************
      */
 
     public static String joinFields(String[] list) {
@@ -543,33 +520,34 @@ public class Utils {
             result.append(list[i]).append("\u001f");
         }
         if (list.length > 0) {
-            result.append(list[list.length - 1]);
+            result.append(list[list.length - 1]);        	
         }
         return result.toString();
     }
 
 
     public static String[] splitFields(String fields) {
-        // do not drop empty fields
-        fields = fields.replaceAll("\\x1f\\x1f", "\u001f\u001e\u001f");
-        fields = fields.replaceAll("\\x1f$", "\u001f\u001e");
-        String[] split = fields.split("\\x1f");
-        for (int i = 0; i < split.length; i++) {
-            if (split[i].matches("\\x1e")) {
-                split[i] = "";
-            }
-        }
-        return split;
+    	// do not drop empty fields
+    	fields = fields.replaceAll("\\x1f\\x1f", "\u001f\u001e\u001f");
+    	fields = fields.replaceAll("\\x1f$", "\u001f\u001e");
+    	String[] split = fields.split("\\x1f");
+    	for (int i = 0; i < split.length; i++) {
+    		if (split[i].matches("\\x1e")) {
+    			split[i] = "";
+    		}
+    	}
+    	return split;
     }
 
-
     /**
-     * Checksums ***********************************************************************************************
+     * Checksums
+     * ***********************************************************************************************
      */
 
     /**
-     * MD5 checksum. Equivalent to python sha1.hexdigest()
-     * 
+     * MD5 checksum.
+     * Equivalent to python sha1.hexdigest()
+     *
      * @param data the string to generate hash from
      * @return A string of length 32 containing the hexadecimal representation of the MD5 checksum of data.
      */
@@ -604,16 +582,13 @@ public class Utils {
      * @return 32 bit unsigned number from first 8 digits of sha1 hash
      */
     public static long fieldChecksum(String data) {
-        return Long.valueOf(checksum(data).substring(0, 8), 16);
+    	return Long.valueOf(checksum(data).substring(0, 8), 16);
     }
-
-
+    
     /**
      * Generate the SHA1 checksum of a file.
-     * 
      * @param file The file to be checked
-     * @return A string of length 32 containing the hexadecimal representation of the SHA1 checksum of the file's
-     *         contents.
+     * @return A string of length 32 containing the hexadecimal representation of the SHA1 checksum of the file's contents. 
      */
     public static String fileChecksum(String file) {
         byte[] buffer = new byte[1024];
@@ -650,55 +625,56 @@ public class Utils {
     /** Replace HTML line break tags with new lines. */
     public static String replaceLineBreak(String text) {
         return text.replaceAll("<br(\\s*\\/*)>", "\n");
-    }
+	}
 
 
-    // /**
-    // * MD5 sum of file.
-    // * Equivalent to checksum(open(os.path.join(mdir, file), "rb").read()))
-    // *
-    // * @param path The full path to the file
-    // * @return A string of length 32 containing the hexadecimal representation of the MD5 checksum of the contents
-    // * of the file
-    // */
-    // public static String fileChecksum(String path) {
-    // byte[] bytes = null;
-    // try {
-    // File file = new File(path);
-    // if (file != null && file.isFile()) {
-    // bytes = new byte[(int)file.length()];
-    // FileInputStream fin = new FileInputStream(file);
-    // fin.read(bytes);
-    // }
-    // } catch (FileNotFoundException e) {
-    // Log.e(AnkiDroidApp.TAG, "Can't find file " + path + " to calculate its checksum");
-    // } catch (IOException e) {
-    // Log.e(AnkiDroidApp.TAG, "Can't read file " + path + " to calculate its checksum");
-    // }
-    // if (bytes == null) {
-    // Log.w(AnkiDroidApp.TAG, "File " + path + " appears to be empty");
-    // return "";
-    // }
-    // MessageDigest md = null;
-    // byte[] digest = null;
-    // try {
-    // md = MessageDigest.getInstance("MD5");
-    // digest = md.digest(bytes);
-    // } catch (NoSuchAlgorithmException e) {
-    // Log.e(AnkiDroidApp.TAG, "Utils.checksum: No such algorithm. " + e.getMessage());
-    // throw new RuntimeException(e);
-    // }
-    // BigInteger biginteger = new BigInteger(1, digest);
-    // String result = biginteger.toString(16);
-    // // pad with zeros to length of 32
-    // if (result.length() < 32) {
-    // result = "00000000000000000000000000000000".substring(0, 32 - result.length()) + result;
-    // }
-    // return result;
-    // }
+//    /**
+//     * MD5 sum of file.
+//     * Equivalent to checksum(open(os.path.join(mdir, file), "rb").read()))
+//     *
+//     * @param path The full path to the file
+//     * @return A string of length 32 containing the hexadecimal representation of the MD5 checksum of the contents
+//     * of the file
+//     */
+//    public static String fileChecksum(String path) {
+//        byte[] bytes = null;
+//        try {
+//            File file = new File(path);
+//            if (file != null && file.isFile()) {
+//                bytes = new byte[(int)file.length()];
+//                FileInputStream fin = new FileInputStream(file);
+//                fin.read(bytes);
+//            }
+//        } catch (FileNotFoundException e) {
+//            Log.e(AnkiDroidApp.TAG, "Can't find file " + path + " to calculate its checksum");
+//        } catch (IOException e) {
+//            Log.e(AnkiDroidApp.TAG, "Can't read file " + path + " to calculate its checksum");
+//        }
+//        if (bytes == null) {
+//            Log.w(AnkiDroidApp.TAG, "File " + path + " appears to be empty");
+//            return "";
+//        }
+//        MessageDigest md = null;
+//        byte[] digest = null;
+//        try {
+//            md = MessageDigest.getInstance("MD5");
+//            digest = md.digest(bytes);
+//        } catch (NoSuchAlgorithmException e) {
+//            Log.e(AnkiDroidApp.TAG, "Utils.checksum: No such algorithm. " + e.getMessage());
+//            throw new RuntimeException(e);
+//        }
+//        BigInteger biginteger = new BigInteger(1, digest);
+//        String result = biginteger.toString(16);
+//        // pad with zeros to length of 32
+//        if (result.length() < 32) {
+//            result = "00000000000000000000000000000000".substring(0, 32 - result.length()) + result;
+//        }
+//        return result;
+//    }
 
     /**
-     * Tempo files ***********************************************************************************************
+     *  Tempo files
+     * ***********************************************************************************************
      */
 
     // tmpdir
@@ -706,7 +682,6 @@ public class Utils {
     // namedtmp
     /**
      * Converts an InputStream to a String.
-     * 
      * @param is InputStream to convert
      * @return String version of the InputStream
      */
@@ -731,7 +706,6 @@ public class Utils {
 
     /**
      * Compress data.
-     * 
      * @param bytesToCompress is the byte array to compress.
      * @return a compressed byte array.
      * @throws java.io.IOException
@@ -762,9 +736,9 @@ public class Utils {
 
 
     /**
-     * Utility method to write to a file. Throws the exception, so we can report it in syncing log
-     * 
-     * @throws IOException
+     * Utility method to write to a file.
+     * Throws the exception, so we can report it in syncing log
+     * @throws IOException 
      */
     public static void writeToFile(InputStream source, String destination) throws IOException {
         Log.i(AnkiDroidApp.TAG, "Creating new file... = " + destination);
@@ -793,8 +767,7 @@ public class Utils {
         if (endTimeMillis != startTimeMillis) {
             speedKbSec = sizeKb * 1000 / (endTimeMillis - startTimeMillis);
         }
-        Log.d(AnkiDroidApp.TAG, "Utils.writeToFile: " + "Size: " + sizeKb + "Kb, " + "Duration: " + durationSeconds
-                + "s, " + "Speed: " + speedKbSec + "Kb/s");
+        Log.d(AnkiDroidApp.TAG, "Utils.writeToFile: " + "Size: " + sizeKb + "Kb, " + "Duration: " + durationSeconds + "s, " + "Speed: " + speedKbSec + "Kb/s");
         output.close();
     }
 
@@ -808,7 +781,8 @@ public class Utils {
     public static void printJSONObject(JSONObject jsonObject, boolean writeToFile) {
         BufferedWriter buff;
         try {
-            buff = writeToFile ? new BufferedWriter(new FileWriter("/sdcard/payloadAndroid.txt"), 8192) : null;
+            buff = writeToFile ?  
+                    new BufferedWriter(new FileWriter("/sdcard/payloadAndroid.txt"), 8192) : null;
             try {
                 printJSONObject(jsonObject, "-", buff);
             } finally {
@@ -823,8 +797,7 @@ public class Utils {
 
     private static void printJSONObject(JSONObject jsonObject, String indentation, BufferedWriter buff) {
         try {
-            @SuppressWarnings("unchecked")
-            Iterator<String> keys = (Iterator<String>) jsonObject.keys();
+            @SuppressWarnings("unchecked") Iterator<String> keys = (Iterator<String>) jsonObject.keys();
             TreeSet<String> orderedKeysSet = new TreeSet<String>();
             while (keys.hasNext()) {
                 orderedKeysSet.add(keys.next());
@@ -841,14 +814,14 @@ public class Utils {
                             buff.write(indentation + " " + key + " : ");
                             buff.newLine();
                         }
-                        Log.i(AnkiDroidApp.TAG, "   " + indentation + key + " : ");
+                        Log.i(AnkiDroidApp.TAG, "	" + indentation + key + " : ");
                         printJSONObject((JSONObject) value, indentation + "-", buff);
                     } else {
                         if (buff != null) {
                             buff.write(indentation + " " + key + " = " + jsonObject.get(key).toString());
                             buff.newLine();
                         }
-                        Log.i(AnkiDroidApp.TAG, "   " + indentation + key + " = " + jsonObject.get(key).toString());
+                        Log.i(AnkiDroidApp.TAG, "	" + indentation + key + " = " + jsonObject.get(key).toString());
                     }
                 } catch (JSONException e) {
                     Log.e(AnkiDroidApp.TAG, "JSONException = " + e.getMessage());
@@ -861,14 +834,18 @@ public class Utils {
 
 
     /*
-     * public static void saveJSONObject(JSONObject jsonObject) throws IOException { Log.i(AnkiDroidApp.TAG,
-     * "saveJSONObject"); BufferedWriter buff = new BufferedWriter(new FileWriter("/sdcard/jsonObjectAndroid.txt",
-     * true)); buff.write(jsonObject.toString()); buff.close(); }
-     */
+    public static void saveJSONObject(JSONObject jsonObject) throws IOException {
+        Log.i(AnkiDroidApp.TAG, "saveJSONObject");
+        BufferedWriter buff = new BufferedWriter(new FileWriter("/sdcard/jsonObjectAndroid.txt", true));
+        buff.write(jsonObject.toString());
+        buff.close();
+    }
+    */
+
 
     /**
      * Returns 1 if true, 0 if false
-     * 
+     *
      * @param b The boolean to convert to integer
      * @return 1 if b is true, 0 otherwise
      */
@@ -878,10 +855,11 @@ public class Utils {
 
 
     /**
-     * Returns the effective date of the present moment. If the time is prior the cut-off time (9:00am by default as of
-     * 11/02/10) return yesterday, otherwise today Note that the Date class is java.sql.Date whose constructor sets
-     * hours, minutes etc to zero
-     * 
+     *  Returns the effective date of the present moment.
+     *  If the time is prior the cut-off time (9:00am by default as of 11/02/10) return yesterday,
+     *  otherwise today
+     *  Note that the Date class is java.sql.Date whose constructor sets hours, minutes etc to zero
+     *
      * @param utcOffset The UTC offset in seconds we are going to use to determine today or yesterday.
      * @return The date (with time set to 00:00:00) that corresponds to today in Anki terms
      */
@@ -898,31 +876,30 @@ public class Utils {
 
 
     public static void printDate(String name, double date) {
-        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH-mm-ss");
-        df.setTimeZone(TimeZone.getTimeZone("GMT"));
-        Calendar cal = new GregorianCalendar(TimeZone.getTimeZone("GMT"));
-        cal.setTimeInMillis((long) date * 1000);
-        Log.d(AnkiDroidApp.TAG, "Value of " + name + ": " + cal.getTime().toGMTString());
-    }
+    	SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH-mm-ss");
+    	df.setTimeZone(TimeZone.getTimeZone("GMT"));
+    	Calendar cal = new GregorianCalendar(TimeZone.getTimeZone("GMT"));
+    	cal.setTimeInMillis((long)date * 1000);
+    	Log.d(AnkiDroidApp.TAG, "Value of " + name + ": " + cal.getTime().toGMTString());
+	}
 
 
     public static String doubleToTime(double value) {
-        int time = (int) Math.round(value);
-        int seconds = time % 60;
-        int minutes = (time - seconds) / 60;
-        String formattedTime;
-        if (seconds < 10) {
-            formattedTime = Integer.toString(minutes) + ":0" + Integer.toString(seconds);
-        } else {
-            formattedTime = Integer.toString(minutes) + ":" + Integer.toString(seconds);
-        }
-        return formattedTime;
+    	int time = (int) Math.round(value);
+    	int seconds = time % 60;
+    	int minutes = (time - seconds) / 60;
+    	String formattedTime;
+    	if (seconds < 10) {
+    		formattedTime = Integer.toString(minutes) + ":0" + Integer.toString(seconds);
+    	} else {
+    		formattedTime = Integer.toString(minutes) + ":" + Integer.toString(seconds);
+    	}
+    	return formattedTime;
     }
 
 
     /**
      * Returns the proleptic Gregorian ordinal of the date, where January 1 of year 1 has ordinal 1.
-     * 
      * @param date Date to convert to ordinal, since 01/01/01
      * @return The ordinal representing the date
      */
@@ -934,7 +911,6 @@ public class Utils {
 
     /**
      * Return the date corresponding to the proleptic Gregorian ordinal, where January 1 of year 1 has ordinal 1.
-     * 
      * @param ordinal representing the days since 01/01/01
      * @return Date converted from the ordinal
      */
@@ -947,7 +923,6 @@ public class Utils {
      * Indicates whether the specified action can be used as an intent. This method queries the package manager for
      * installed packages that can respond to an intent with the specified action. If no suitable package is found, this
      * method returns false.
-     * 
      * @param context The application's environment.
      * @param action The Intent action to check for availability.
      * @return True if an Intent with the specified action can be sent and responded to, false otherwise.
@@ -965,7 +940,6 @@ public class Utils {
         return list.size() > 0;
     }
 
-
     /**
      * @param mediaDir media directory path on SD card
      * @return path converted to file URL, properly UTF-8 URL encoded
@@ -977,7 +951,7 @@ public class Utils {
         if (mediaDir.length() != 0 && !mediaDir.equalsIgnoreCase("null")) {
             Uri mediaDirUri = Uri.fromFile(new File(mediaDir));
 
-            return mediaDirUri.toString() + "/";
+            return mediaDirUri.toString() +"/";
         }
         return "";
     }
@@ -998,8 +972,6 @@ public class Utils {
         }
         return results;
     }
-
-
     public static long[] toPrimitive(Collection<Long> array) {
         long[] results = new long[array.size()];
         if (array != null) {
@@ -1010,24 +982,24 @@ public class Utils {
         }
         return results;
     }
-
+  
 
     public static void updateProgressBars(View view, int x, int y) {
         if (view == null) {
             return;
         }
         if (view.getParent() instanceof LinearLayout) {
-            LinearLayout.LayoutParams lparam = new LinearLayout.LayoutParams(0, 0);
+            LinearLayout.LayoutParams lparam = new LinearLayout.LayoutParams(0, 0);            
             lparam.height = y;
             lparam.width = x;
             view.setLayoutParams(lparam);
         } else if (view.getParent() instanceof FrameLayout) {
-            FrameLayout.LayoutParams lparam = new FrameLayout.LayoutParams(0, 0);
+        	FrameLayout.LayoutParams lparam = new FrameLayout.LayoutParams(0, 0);            
             lparam.height = y;
             lparam.width = x;
             view.setLayoutParams(lparam);
         }
-    }
+    }  
 
 
     /**
@@ -1039,22 +1011,19 @@ public class Utils {
         return 4 * 60 * 60 - (cal.get(Calendar.ZONE_OFFSET) + cal.get(Calendar.DST_OFFSET)) / 1000;
     }
 
-
     /** Returns the filename without the extension. */
     public static String removeExtension(String filename) {
-        int dotPosition = filename.lastIndexOf('.');
-        if (dotPosition == -1) {
-            return filename;
-        }
-        return filename.substring(0, dotPosition);
+      int dotPosition = filename.lastIndexOf('.');
+      if (dotPosition == -1) {
+        return filename;
+      }
+      return filename.substring(0, dotPosition);
     }
 
 
     /** Removes any character that are not valid as deck names. */
     public static String removeInvalidDeckNameCharacters(String name) {
-        if (name == null) {
-            return null;
-        }
+        if (name == null) { return null; }
         // The only characters that we cannot absolutely allow to appear in the filename are the ones reserved in some
         // file system. Currently these are \, /, and :, in order to cover Linux, OSX, and Windows.
         return name.replaceAll("[:/\\\\]", "");
@@ -1070,30 +1039,30 @@ public class Utils {
         int fontsCount = 0;
         File[] fontsList = null;
         if (fontsDir.exists() && fontsDir.isDirectory()) {
-            fontsCount = fontsDir.listFiles().length;
-            fontsList = fontsDir.listFiles();
+        	fontsCount = fontsDir.listFiles().length;
+        	fontsList = fontsDir.listFiles();
         }
         String[] ankiDroidFonts = null;
         String assetPath = "/android_asset/fonts/";
         int adFontsCount = 0;
-        try {
-            ankiDroidFonts = context.getAssets().list("fonts");
-            adFontsCount = ankiDroidFonts.length;
-        } catch (IOException e) {
-            Log.e(AnkiDroidApp.TAG, "Error on retrieving ankidroid fonts: " + e);
-        }
-        String[] fonts = new String[fontsCount + adFontsCount];
+		try {
+			ankiDroidFonts = context.getAssets().list("fonts");
+			adFontsCount = ankiDroidFonts.length;
+		} catch (IOException e) {
+			Log.e(AnkiDroidApp.TAG, "Error on retrieving ankidroid fonts: " + e);
+		}
+		String[] fonts = new String[fontsCount + adFontsCount];
         for (int i = 0; i < fontsCount; i++) {
-            fonts[i] = fontsList[i].getAbsolutePath();
+        	fonts[i] = fontsList[i].getAbsolutePath();
         }
         for (int i = fontsCount; i < fonts.length; i++) {
-            fonts[i] = assetPath + ankiDroidFonts[i - fontsCount];
+        	fonts[i] = assetPath + ankiDroidFonts[i - fontsCount];        	
         }
 
         if (fonts.length > 0) {
-            return fonts;
+        	return fonts;
         } else {
-            return new String[0];
+        	return new String[0];
         }
     }
 
@@ -1110,16 +1079,14 @@ public class Utils {
         return sb.toString();
     }
 
-
     /**
      * Simply copy a file to another location
-     * 
      * @param sourceFile The source file
      * @param destFile The destination file, doesn't need to exist yet.
      * @throws IOException
      */
     public static void copyFile(File sourceFile, File destFile) throws IOException {
-        if (!destFile.exists()) {
+        if(!destFile.exists()) {
             destFile.createNewFile();
         }
 
