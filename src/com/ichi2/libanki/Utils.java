@@ -423,7 +423,7 @@ public class Utils {
 
 
     /** LIBANKI: not in libanki */
-    public static long[] arrayList2array(ArrayList<Long> list) {
+    public static long[] arrayList2array(List<Long> list) {
     	long[] ar = new long[list.size()];
     	int i = 0;
     	for (long l : list) {

@@ -542,6 +542,9 @@ public class Collection {
 	/**
 	 * Generate cards for non-empty templates, return ids to remove.
 	 */
+	public ArrayList<Long> genCards(List<Long> nids) {
+	    return genCards(Utils.arrayList2array(nids));
+	}
 	public ArrayList<Long> genCards(long[] nids) {
 		// build map of (nid,ord) so we don't create dupes
 		String snids = Utils.ids2str(nids);
@@ -644,8 +647,47 @@ public class Collection {
 		return rem;
 	}
 
-	// previewCards
-
+	/**
+	 * Return cards of a note, without saving them
+	 * @param note The note whose cards are going to be previewed
+     * @param type 0 - when previewing in add dialog, only non-empty
+     *             1 - when previewing edit, only existing
+     *             2 - when previewing in models dialog, all templates
+     * @return list of cards
+	 */
+	public List<Card> previewCards(Note note) {
+	    return previewCards(note, 0);
+	}
+	public List<Card> previewCards(Note note, int type) {
+	    ArrayList<JSONObject> cms = null;
+	    if (type == 0) {
+	        cms = findTemplates(note);
+	    } else if (type == 1) {
+	        cms = new ArrayList<JSONObject>();
+	        for (Card c : note.cards()) {
+	            cms.add(c.template());
+	        }
+	    } else {
+	        cms = new ArrayList<JSONObject>();
+	        try {
+                JSONArray ja = note.model().getJSONArray("tmpls");
+                for (int i = 0; i < ja.length(); ++i) {
+                    cms.add(ja.getJSONObject(i));
+                }
+            } catch (JSONException e) {
+                throw new RuntimeException(e);
+            }
+	    }
+	    if (cms.isEmpty()) {
+	        return new ArrayList<Card>();
+	    }
+	    List<Card> cards = new ArrayList<Card>();
+	    for (JSONObject template : cms) {
+	        cards.add(_newCard(note, template, 1, false));
+	    }
+	    return cards;
+	}
+	
 	/**
 	 * Create a new card.
 	 */
@@ -734,7 +776,14 @@ public class Collection {
 		_remNotes(nids);
 	}
 
-	// emptyCids
+	public List<Long> emptyCids() {
+	    List<Long> rem = new ArrayList<Long>();
+	    for (JSONObject m : getModels().all()) {
+	        rem.addAll(genCards(getModels().nids(m)));
+	    }
+	    return rem;
+	}
+	
 	// emptyCardReport
 
 	/**
