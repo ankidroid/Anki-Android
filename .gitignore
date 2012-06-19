@@ -18,6 +18,7 @@ proguard-project.txt
 coverage.em
 
 ant.properties
+default.properties
 
 .idea/
 out/
