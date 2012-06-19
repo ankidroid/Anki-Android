@@ -340,6 +340,7 @@ public class DownloadManagerService extends Service {
                     if ("shared.anki".equalsIgnoreCase(zipEntry.getName())) {
                         Utils.writeToFile(zipInputStream, deckFilename);
                     } else if (zipEntry.getName().startsWith("shared.media/", 0)) {
+                        new File(partialDeckPath + ".media/").mkdir();
                         // // Log.i(AnkiDroidApp.TAG, "Folder created = " + new File(partialDeckPath + ".media/").mkdir());
                         // // Log.i(AnkiDroidApp.TAG, "Destination = " + AnkiDroidApp.getStorageDirectory() + "/" + title + ".media/" + zipEntry.getName().replace("shared.media/", ""));
                         Utils.writeToFile(zipInputStream,
