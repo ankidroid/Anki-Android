@@ -345,7 +345,7 @@ public class Media {
             if (f == "") {
                 continue;
             }
-            File file = new File(getDir() + "/" + f);
+            File file = new File(getDir(), f);
             if (file.exists()) {
                 file.delete();
             }
@@ -408,12 +408,13 @@ public class Media {
                 if (illegal(name)) {
                     continue;
                 }
+                String path = getDir().concat(File.separator).concat(name);
                 try {
-                    Utils.writeToFile(z.getInputStream(zentry), getDir() + "/" + name);
+                    Utils.writeToFile(z.getInputStream(zentry), path);
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
-                String csum = Utils.fileChecksum(getDir() + "/" + name);
+                String csum = Utils.fileChecksum(path);
                 // append db
                 media.add(new Object[]{name, csum, _mtime(name)});
                 mMediaDb.execute("delete from log where fname = ?", new String[]{name});
@@ -474,8 +475,8 @@ public class Media {
             boolean finished = true;
             for (String fname : filenames) {
                 fnames.add(fname);
-                String fullname = getDir() + "/" + fname;
-                BufferedInputStream bis = new BufferedInputStream(new FileInputStream(fullname), 2048);
+                File file = new File(getDir(), fname);
+                BufferedInputStream bis = new BufferedInputStream(new FileInputStream(file), 2048);
                 ZipEntry entry = new ZipEntry(Integer.toString(cnt));
                 zos.putNextEntry(entry);
                 int count = 0;
@@ -484,7 +485,6 @@ public class Media {
                 }
                 bis.close();
                 files.put(Integer.toString(cnt), fname);
-                File file = new File(fullname);
                 sz += file.length();
                 if (sz > SYNC_ZIP_SIZE) {
                     finished = false;
@@ -583,7 +583,7 @@ public class Media {
         
         for (String f : result.first) {
             long mt = _mtime(f);
-            String csum = _checksum(getDir() + "/" + f);
+            String csum = _checksum(getDir().concat(File.separator).concat(f));
             media.add(new Object[]{f, csum, mt});
             log.add(new Object[]{f, MEDIA_ADD});
         }
