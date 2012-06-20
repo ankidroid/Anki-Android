@@ -176,8 +176,8 @@ public class Finder {
             } else if (c == '-') {
                 if (token.length() != 0) {
                     token += c;
-                } else if (tokens.size() == 0 || !tokens.get(tokens.size() - 1).equals("not")) {
-                    tokens.add("not");
+                } else if (tokens.size() == 0 || !tokens.get(tokens.size() - 1).equals("-")) {
+                    tokens.add("-");
                 }
                 // normal character
             } else {
@@ -220,7 +220,7 @@ public class Finder {
                 return new Pair<String, String[]>(null, null);
             }
             // special tokens
-            if (token.equals("not")) {
+            if (token.equals("-")) {
                 s.isnot = true;
             } else if (token.toLowerCase().equals("or")) {
                 s.isor = true;

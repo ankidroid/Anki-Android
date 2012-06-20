@@ -1553,26 +1553,36 @@ public class Sched {
                 card.setFactor(Math.max(1300, card.getFactor() - 200));
                 card.setDue(mToday + card.getIvl());
             }
-            // put back in learn queue?
+            // if suspended as a leech, nothing to do
             int delay = 0;
-            if (conf.getJSONArray("delays").length() > 0) {
-                if (card.getODue() == 0) {
-                    card.setODue(card.getDue());
-                }
-                delay = _delayForGrade(conf, 0);
-                card.setDue((long) (delay + Utils.now()));
+            if (_checkLeech(card, conf) && card.getQueue() == -1) {
+            	return new Pair<Integer, Boolean>(delay, true);
+            }
+            // if no relearning steps, nothing to do
+            if (conf.getJSONArray("delays").length() == 0) {
+            	return new Pair<Integer, Boolean>(delay, false);
+            }
+            // record rev due date for later
+            if (card.getODue() == 0) {
+            	card.setODue(card.getDue());
+            }
+            delay = _delayForGrade(conf, 0);
+            card.setDue((long) (delay + Utils.now()));
+            // queue 1
+            if (card.getDue() < mDayCutoff) {
                 int left = conf.getJSONArray("delays").length();
                 card.setLeft(left + _leftToday(conf.getJSONArray("delays"), left) * 1000);
-                card.setQueue(1);
                 mLrnCount += card.getLeft() / 1000;
-            }
-            // leech?
-            if (!_checkLeech(card, conf) && conf.getJSONArray("delays").length() > 0) {
+                card.setQueue(1);
                 _sortIntoLrn(card.getDue(), card.getId());
                 return new Pair<Integer, Boolean>(delay, false);
             } else {
-                return new Pair<Integer, Boolean>(delay, true);
+            	// day learn queue
+            	long ahead = ((card.getDue() - mDayCutoff) / 86400) + 1;
+            	card.setDue(mToday + ahead);
+            	card.setQueue(3);
             }
+        	return new Pair<Integer, Boolean>(delay, true);
         } catch (JSONException e) {
             throw new RuntimeException(e);
         }

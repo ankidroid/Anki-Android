@@ -114,6 +114,7 @@
 		<item>Review today\'s forgotten cards</item>
 		<item>Review ahead by two days</item>
 		<item>Review due cards with tag</item>
+		<item>Review due cards with decreasing intervals</item>
 		<item>Cram all cards</item>
 	</string-array>
 	
