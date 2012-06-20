@@ -88,6 +88,8 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
     private static DeckTask sInstance;
     private static DeckTask sOldInstance;
 
+    private static boolean sHadCardQueue = false;
+
     private int mType;
     private TaskListener mListener;
 
@@ -310,7 +312,7 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
                         // reload qa-cache
                         newCard.getQuestion(true);
                     } else {
-                        newCard = sched.getCard();
+                        newCard = getCard(sched);
                     }
                     publishProgress(new TaskData(newCard));
                 } else {
@@ -351,7 +353,7 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
                     // newCard = AnkiDroidWidgetBig.getCard();
                 }
                 if (newCard == null) {
-                    newCard = sched.getCard();
+                    newCard = getCard(sched);
                 }
                 if (newCard != null) {
                     // render cards before locking database
@@ -370,6 +372,13 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
         return new TaskData(true);
     }
 
+    private Card getCard(Sched sched) {
+    	if (sHadCardQueue) {
+    		sched.reset();
+    		sHadCardQueue = false;
+    	}
+    	return sched.getCard();
+    }
 
     private TaskData doInBackgroundOpenCollection(TaskData... params) {
         Log.i(AnkiDroidApp.TAG, "doInBackgroundOpenCollection");
@@ -491,7 +500,7 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
                         col.remNotes(new long[] { note.getId() });
                         break;
                 }
-                publishProgress(new TaskData(col.getSched().getCard(), 0));
+                publishProgress(new TaskData(getCard(col.getSched()), 0));
                 col.getDb().getDatabase().setTransactionSuccessful();
             } finally {
                 col.getDb().getDatabase().endTransaction();
@@ -543,17 +552,15 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
             Card newCard;
             try {
                 long cid = col.undo();
-                col.reset();
                 if (cid != 0) {
                     // a review was undone,
                     newCard = col.getCard(cid);
                     col.reset();
-                    // if (!sched.removeCardFromQueues(newCard)) {
-                    // // card was not found in queues
-                    // newCard = sched.getCard();
-                    // }
+                    sHadCardQueue = true;
                 } else {
-                    newCard = sched.getCard();
+                	// TODO: do not fetch new card if a non review operation has been undone
+                    col.reset();
+                    newCard = getCard(sched);
                 }
                 // TODO: handle leech undoing properly
                 publishProgress(new TaskData(newCard, 0));
