@@ -520,7 +520,7 @@ public class Sched {
         // if (Utils.now() > mDayCutoff) {
         // _updateCutoff();
         // }
-        TreeSet<Object[]> decks = deckDueTree(DECK_INFORMATION_SIMPLE_COUNTS);
+        TreeSet<Object[]> decks = deckDueTree(0);
         int[] counts = new int[] { 0, 0, 0 };
         for (Object[] deck : decks) {
             if (((String[]) deck[0]).length == 1) {
@@ -532,145 +532,135 @@ public class Sched {
         return new Object[] { decks, eta(counts), mCol.cardCount() };
     }
 
-    public class DeckDueListComparator implements Comparator<Object[]> {
-        public int compare(Object[] o1, Object[] o2) {
-            return ((String) o1[0]).compareTo((String) o2[0]);
+    public class DeckDueListComparator implements Comparator<JSONObject> {
+        public int compare(JSONObject o1, JSONObject o2) {
+            try {
+				return o1.getString("name").compareTo(o2.getString("name"));
+			} catch (JSONException e) {
+				throw new RuntimeException(e);
+			}
         }
     }
 
 
     /**
-     * Returns [deckname, did, new, lrn, rev]
+     * Returns [deckname, did, rev, lrn, new]
      */
     public ArrayList<Object[]> deckDueList(int counts) {
-        // DIFFERS FROM LIBANKI: finds all decks, also it swaps the position of new and rev in the results!
         _checkDay();
         mCol.getDecks().recoverOrphans();
-        ArrayList<Object[]> dids = new ArrayList<Object[]>();
-        for (JSONObject g : mCol.getDecks().all()) {
-            try {
-                long did = g.getLong("id");
-                int newCount = -1;
-                int lrnCount = -1;
-                int revCount = -1;
-                float matProgress = -1.0f;
-                float allProgress = -1.0f;
-
-                if (counts > DECK_INFORMATION_NAMES) {
-                    LinkedList<Long> ldid = new LinkedList<Long>();
-                    ldid.add(did);
-                    for (Long c : mCol.getDecks().children(did).values()) {
-                        ldid.add(c);
-                    }
-                    String didLimit = Utils.ids2str(ldid);
-                    newCount = _walkingCount(ldid,
-                            Sched.class.getDeclaredMethod("_deckNewLimitSingle", JSONObject.class),
-                            Sched.class.getDeclaredMethod("_cntFnNew", long.class, int.class));
-                    lrnCount = _cntFnLrn(didLimit);
-                    revCount = _walkingCount(ldid,
-                            Sched.class.getDeclaredMethod("_deckRevLimitSingle", JSONObject.class),
-                            Sched.class.getDeclaredMethod("_cntFnRev", long.class, int.class));
-                    // if (counts > DECK_INFORMATION_SIMPLE_COUNTS) {
-                    // float totalNewCount = newCount(didLimit);
-                    // float totalCount = cardCount(didLimit);
-                    // float matureCount = matureCount(didLimit);
-                    // matProgress = matureCount / totalCount;
-                    // allProgress = 1 - ((totalNewCount + lrnCount) / totalCount) - matProgress;
-                    // } else {
-                    // matProgress = -2.0f;
-                    // allProgress = -2.0f;
-                    // }
-                }
-                dids.add(new Object[] { g.getString("name"), did, newCount, lrnCount, revCount, matProgress,
-                        allProgress });
-            } catch (JSONException e) {
-                throw new RuntimeException(e);
-            } catch (NoSuchMethodException e) {
-                throw new RuntimeException(e);
-            }
+        ArrayList<JSONObject> decks = mCol.getDecks().all();
+        Collections.sort(decks, new DeckDueListComparator());
+        HashMap<String, Integer[]> lims = new HashMap<String, Integer[]>();
+        ArrayList<Object[]> data = new ArrayList<Object[]>();
+        try {
+            for (JSONObject deck : decks) {
+            	String p;
+            	String[] parts = deck.getString("name").split("::");
+            	if (parts.length < 2) {
+            		p = "";
+            	} else {
+            		StringBuilder sb = new StringBuilder();
+            		for (int i = 0; i < parts.length - 1; i++) {
+            			sb.append(parts[i]);
+            			if (i < parts.length - 2) {
+            				sb.append("::");
+            			}
+            		}
+            		p = sb.toString();
+            	}
+            	// new
+            	int nlim = _deckNewLimitSingle(deck);
+            	if (p.length() > 0) {
+            		nlim = Math.min(nlim, lims.get(p)[0]);
+            	}
+            	int newC = _newForDeck(deck.getLong("id"), nlim);
+            	// learning
+            	int lrn = _lrnForDeck(deck.getLong("id"));
+            	// reviews
+            	int rlim = _deckRevLimitSingle(deck);
+            	if (p.length() > 0) {
+            		rlim = Math.min(rlim,  lims.get(p)[1]);
+            	}
+            	int rev = _revForDeck(deck.getLong("id"), rlim);
+            	// save to list
+            	// LIBANKI: order differs from libanki (here: new, lrn, rev)
+            	data.add(new Object[]{deck.getString("name"), deck.getLong("id"), newC, lrn, rev});
+            	// add deck as a parent
+            	lims.put(deck.getString("name"), new Integer[]{nlim, rlim});
+            }        	
+        } catch (JSONException e) {
+        	throw new RuntimeException(e);
         }
-        Collections.sort(dids, new DeckDueListComparator());
-        return dids;
+        return data;
     }
 
 
     public TreeSet<Object[]> deckDueTree(int counts) {
-        return _groupChildren(deckDueList(counts), counts);
+        return _groupChildren(deckDueList(counts));
     }
 
 
     private TreeSet<Object[]> _groupChildren(ArrayList<Object[]> grps) {
-        return _groupChildren(grps, 0);
-    }
-
-
-    private TreeSet<Object[]> _groupChildren(ArrayList<Object[]> grps, int counts) {
         TreeSet<Object[]> set = new TreeSet<Object[]>(new DeckNameCompare());
         // first, split the group names into components
         for (Object[] g : grps) {
-            set.add(new Object[] { ((String) g[0]).split("::"), g[1], g[2], g[3], g[4], g[5], g[6] });
+            set.add(new Object[] { ((String) g[0]).split("::"), g[1], g[2], g[3], g[4] });
         }
-        // if (counts) {
-        // // then run main function
-        // return _groupChildrenMain(set);
-        // } else {
-        return set;
-        // }
+        return _groupChildrenMain(set);
     }
 
 
-    // private TreeSet<Object[]> _groupChildrenMain(TreeSet<Object[]> grps) {
-    // return _groupChildrenMain(grps, 0);
-    // }
-    // private TreeSet<Object[]> _groupChildrenMain(TreeSet<Object[]> grps, int
-    // depth) {
-    // TreeSet<Object[]> tree = new TreeSet<Object[]>(new DeckNameCompare());
-    // // group and recurse
-    // Iterator<Object[]> it = grps.iterator();
-    // Object[] tmp = null;
-    // while (tmp != null || it.hasNext()) {
-    // Object[] head;
-    // if (tmp != null) {
-    // head = tmp;
-    // tmp = null;
-    // } else {
-    // head = it.next();
-    // }
-    // String[] title = (String[]) head[0];
-    // long did = (Long) head[1];
-    // int newCount = (Integer) head[2];
-    // int lrnCount = (Integer) head[3];
-    // int revCount = (Integer) head[4];
-    // TreeSet<Object[]> children = new TreeSet<Object[]>(new
-    // DeckNameCompare());
-    // while (it.hasNext()) {
-    // Object[] o = it.next();
-    // if (((String[])o[0])[depth].equals(title[depth])) {
-    // // add to children
-    // children.add(o);
-    // } else {
-    // // proceed with this as head
-    // tmp = o;
-    // break;
-    // }
-    // }
-    // children = _groupChildrenMain(children, depth + 1);
-    // // tally up children counts
-    // for (Object[] ch : children) {
-    // newCount += (Integer)ch[2];
-    // lrnCount += (Integer)ch[3];
-    // revCount += (Integer)ch[4];
-    // }
-    // tree.add(new Object[] {title, did, newCount, lrnCount, revCount,
-    // children});
-    // }
-    // TreeSet<Object[]> result = new TreeSet<Object[]>(new DeckNameCompare());
-    // for (Object[] t : tree) {
-    // result.add(new Object[]{t[0], t[1], t[2], t[3], t[4]});
-    // result.addAll((TreeSet<Object[]>) t[5]);
-    // }
-    // return result;
-    // }
+    private TreeSet<Object[]> _groupChildrenMain(TreeSet<Object[]> grps) {
+    	return _groupChildrenMain(grps, 0);
+    }
+    private TreeSet<Object[]> _groupChildrenMain(TreeSet<Object[]> grps, int depth) {
+        TreeSet<Object[]> tree = new TreeSet<Object[]>(new DeckNameCompare());
+        // group and recurse
+        Iterator<Object[]> it = grps.iterator();
+        Object[] tmp = null;
+        while (tmp != null || it.hasNext()) {
+            Object[] head;
+            if (tmp != null) {
+                head = tmp;
+                tmp = null;
+            } else {
+                head = it.next();
+            }
+            String[] title = (String[]) head[0];
+            long did = (Long) head[1];
+            int newCount = (Integer) head[2];
+            int lrnCount = (Integer) head[3];
+            int revCount = (Integer) head[4];
+            TreeSet<Object[]> children = new TreeSet<Object[]>(new DeckNameCompare());
+            while (it.hasNext()) {
+                Object[] o = it.next();
+                if (((String[])o[0])[depth].equals(title[depth])) {
+                    // add to children
+                    children.add(o);
+                } else {
+                    // proceed with this as head
+                    tmp = o;
+                    break;
+                }
+            }
+            children = _groupChildrenMain(children, depth + 1);
+            // tally up children counts
+            for (Object[] ch : children) {
+                newCount += (Integer)ch[2];
+                lrnCount += (Integer)ch[3];
+                revCount += (Integer)ch[4];
+            }
+            tree.add(new Object[] {title, did, newCount, lrnCount, revCount,
+            children});
+        }
+        TreeSet<Object[]> result = new TreeSet<Object[]>(new DeckNameCompare());
+        for (Object[] t : tree) {
+            result.add(new Object[]{t[0], t[1], t[2], t[3], t[4]});
+            result.addAll((TreeSet<Object[]>) t[5]);
+        }
+        return result;
+    }
 
     /**
      * Getting the next card ****************************************************
@@ -923,6 +913,16 @@ public class Sched {
         } catch (NoSuchMethodException e) {
             throw new RuntimeException(e);
         }
+    }
+
+
+    /* New count for a single deck. */
+    public int _newForDeck(long did, int lim) {
+    	if (lim == 0) {
+    		return 0;
+    	}
+    	lim = Math.min(lim, mReportLimit);
+    	return mCol.getDb().queryScalar("SELECT count() FROM (SELECT 1 FROM cards WHERE did = " + did + " AND queue = 0 LIMIT " + lim + ")", false);
     }
 
 
@@ -1397,7 +1397,7 @@ public class Sched {
             return mCol.getDb().queryScalar(
                     "SELECT sum(left / 1000) FROM (SELECT left FROM cards WHERE did = " + did
                             + " AND queue = 1 AND due < " + (Utils.intNow() + mCol.getConf().getInt("collapseTime"))
-                            + " LIMIT " + mReportLimit, false);
+                            + " LIMIT " + mReportLimit + ")", false);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         } catch (JSONException e) {
@@ -1429,6 +1429,12 @@ public class Sched {
         } catch (JSONException e) {
             throw new RuntimeException(e);
         }
+    }
+
+
+    public int _revForDeck(long did, int lim) {
+    	lim = Math.min(lim, mReportLimit);
+    	return mCol.getDb().queryScalar("SELECT count() FROM (SELECT 1 FROM cards WHERE did = " + did + " AND queue = 2 and due <= " + mToday + " LIMIT " + lim + ")", false);
     }
 
 
