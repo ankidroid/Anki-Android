@@ -128,16 +128,6 @@
 
 		<service android:name="com.ichi2.anki.services.NotificationService"/>
 
-		<!-- medium widget -->
-		<receiver android:name="com.ichi2.widget.AnkiDroidWidgetMedium" android:label="@string/widget_medium">
-			<intent-filter>
-			<action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
-			</intent-filter>
-			<meta-data android:name="android.appwidget.provider" android:resource="@xml/widget_provider" />
-		</receiver>
-		<!-- Service to perform web API queries -->
-		<service android:name="com.ichi2.widget.AnkiDroidWidgetMedium$UpdateService" />
-
 		<!-- small widget -->
 		<receiver android:name="com.ichi2.widget.AnkiDroidWidgetSmall" android:label="@string/widget_small">
 			<intent-filter>
@@ -147,17 +137,27 @@
 		</receiver>
 		<!-- Service to perform web API queries -->
 		<service android:name="com.ichi2.widget.AnkiDroidWidgetSmall$UpdateService" />
+		
+		<!-- medium widget
+		<receiver android:name="com.ichi2.widget.AnkiDroidWidgetMedium" android:label="@string/widget_medium">
+			<intent-filter>
+			<action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+			</intent-filter>
+			<meta-data android:name="android.appwidget.provider" android:resource="@xml/widget_provider" />
+		</receiver>-->
+		<!-- Service to perform web API queries 
+		<service android:name="com.ichi2.widget.AnkiDroidWidgetMedium$UpdateService" />-->
 
-		<!-- big widget -->
+		<!-- big widget 
 		<uses-library android:name="android.test.runner"></uses-library>
 		<receiver android:name="com.ichi2.widget.AnkiDroidWidgetBig" android:label="@string/widget_big">
 			<intent-filter>
 			<action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
 			</intent-filter>
 			<meta-data android:name="android.appwidget.provider" android:resource="@xml/widget_provider_big" />
-		</receiver>
-		<!-- Service to perform web API queries -->
-		<service android:name="com.ichi2.widget.AnkiDroidWidgetBig$UpdateService" />
+		</receiver>-->
+		<!-- Service to perform web API queries 
+		<service android:name="com.ichi2.widget.AnkiDroidWidgetBig$UpdateService" />-->
 
 		<service android:name="com.ichi2.widget.WidgetContentService" />
 	</application>
