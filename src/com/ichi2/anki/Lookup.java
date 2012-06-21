@@ -6,7 +6,6 @@ import com.ichi2.anki2.R;
 import com.ichi2.libanki.Card;
 import com.ichi2.libanki.Utils;
 import com.ichi2.themes.StyledDialog;
-import com.tomgibara.android.veecheck.util.PrefSettings;
 
 import android.content.ComponentName;
 import android.content.Context;
@@ -47,7 +46,7 @@ public class Lookup {
         if (customDictionary != -1) {
             mDictionary = customDictionary;
         } else {
-            SharedPreferences preferences = PrefSettings.getSharedPrefs(AnkiDroidApp.getInstance().getBaseContext());
+            SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(AnkiDroidApp.getInstance().getBaseContext());
             mDictionary = Integer.parseInt(preferences.getString("dictionary", Integer.toString(DICTIONARY_COLORDICT)));
         }
         switch (mDictionary) {

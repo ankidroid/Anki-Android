@@ -26,7 +26,6 @@ import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.async.Connection;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Utils;
-import com.tomgibara.android.veecheck.util.PrefSettings;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -172,7 +171,7 @@ public class BasicHttpSyncer implements HttpSyncer {
             httpPost.setEntity(entity);
             httpPost.setHeader("Content-type", "multipart/form-data; boundary=" + BOUNDARY);
 
-            SharedPreferences preferences = PrefSettings.getSharedPrefs(AnkiDroidApp.getInstance()
+            SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(AnkiDroidApp.getInstance()
                     .getApplicationContext());
 
             SchemeRegistry schemeRegistry = new SchemeRegistry();

@@ -22,7 +22,6 @@ import java.lang.reflect.Method;
 
 import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki2.R;
-import com.tomgibara.android.veecheck.util.PrefSettings;
 
 import android.content.Context;
 import android.content.DialogInterface.OnCancelListener;
@@ -314,24 +313,24 @@ public class Themes {
                 switch (mCurrentTheme) {
                     case THEME_ANDROID_DARK:
                     case THEME_ANDROID_LIGHT:
-                        ((View) view.findViewById(R.id.flashcard_frame)).setBackgroundResource(PrefSettings
+                        ((View) view.findViewById(R.id.flashcard_frame)).setBackgroundResource(AnkiDroidApp
                                 .getSharedPrefs(mContext).getBoolean("invertedColors", false) ? R.color.black
                                 : R.color.white);
                         break;
                     case THEME_BLUE:
                         ((View) view.findViewById(R.id.flashcard_frame))
-                                .setBackgroundResource(PrefSettings.getSharedPrefs(mContext).getBoolean(
+                                .setBackgroundResource(AnkiDroidApp.getSharedPrefs(mContext).getBoolean(
                                         "invertedColors", false) ? R.color.reviewer_night_card_background
                                         : R.color.white);
                         break;
                     case THEME_FLAT:
                         ((View) view.findViewById(R.id.flashcard_frame))
-                                .setBackgroundResource(PrefSettings.getSharedPrefs(mContext).getBoolean(
+                                .setBackgroundResource(AnkiDroidApp.getSharedPrefs(mContext).getBoolean(
                                         "invertedColors", false) ? R.color.reviewer_night_card_background
                                         : R.color.white);
                         break;
                     case THEME_WHITE:
-                        ((View) view.findViewById(R.id.flashcard_frame)).setBackgroundResource(PrefSettings
+                        ((View) view.findViewById(R.id.flashcard_frame)).setBackgroundResource(AnkiDroidApp
                                 .getSharedPrefs(mContext).getBoolean("invertedColors", false) ? R.color.black
                                 : R.color.white);
 

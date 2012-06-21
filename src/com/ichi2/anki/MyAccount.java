@@ -40,7 +40,6 @@ import com.ichi2.libanki.sync.BasicHttpSyncer;
 import com.ichi2.themes.StyledDialog;
 import com.ichi2.themes.StyledProgressDialog;
 import com.ichi2.themes.Themes;
-import com.tomgibara.android.veecheck.util.PrefSettings;
 
 public class MyAccount extends AnkiActivity {
 
@@ -74,7 +73,7 @@ public class MyAccount extends AnkiActivity {
         initAllContentViews();
         initAllAlertDialogs();
 
-        SharedPreferences preferences = PrefSettings.getSharedPrefs(getBaseContext());
+        SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(getBaseContext());
         if (preferences.getString("hkey", "").length() > 0) {
             String username = preferences.getString("username", "");
             mUsernameLoggedIn.setText(username);
@@ -103,7 +102,7 @@ public class MyAccount extends AnkiActivity {
     // }
 
     private void saveUserInformation(String username, String hkey) {
-        SharedPreferences preferences = PrefSettings.getSharedPrefs(getBaseContext());
+        SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(getBaseContext());
         Editor editor = preferences.edit();
         editor.putString("username", username);
         editor.putString("hkey", hkey);
@@ -150,7 +149,7 @@ public class MyAccount extends AnkiActivity {
 
 
     private void logout() {
-        SharedPreferences preferences = PrefSettings.getSharedPrefs(getBaseContext());
+        SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(getBaseContext());
         Editor editor = preferences.edit();
         editor.putString("username", "");
         editor.putString("hkey", "");

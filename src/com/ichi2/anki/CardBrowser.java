@@ -59,7 +59,6 @@ import com.ichi2.themes.StyledDialog;
 import com.ichi2.themes.StyledProgressDialog;
 import com.ichi2.themes.Themes;
 import com.ichi2.widget.WidgetStatus;
-import com.tomgibara.android.veecheck.util.PrefSettings;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -224,7 +223,7 @@ public class CardBrowser extends Activity {
 
         mBackground = Themes.getCardBrowserBackground();
 
-        SharedPreferences preferences = PrefSettings.getSharedPrefs(getBaseContext());
+        SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(getBaseContext());
         mrelativeBrowserFontSize = preferences.getInt("relativeCardBrowserFontSize", DEFAULT_FONT_SIZE_RATIO);
         mPrefFixArabic = preferences.getBoolean("fixArabicText", false);
         mPrefCacheCardBrowser = preferences.getBoolean("cardBrowserCache", false);
@@ -475,7 +474,7 @@ public class CardBrowser extends Activity {
                             public void onClick(DialogInterface arg0, int which) {
                                 if (which != mOrder) {
                                     mOrder = which;
-                                    PrefSettings.getSharedPrefs(AnkiDroidApp.getInstance().getBaseContext()).edit()
+                                    AnkiDroidApp.getSharedPrefs(AnkiDroidApp.getInstance().getBaseContext()).edit()
                                             .putInt("cardBrowserOrder", mOrder).commit();
                                     if (mOrder != CARD_ORDER_NONE) {
                                         DeckTask.launchDeckTask(DeckTask.TASK_TYPE_UPDATE_CARD_BROWSER_LIST,
@@ -720,7 +719,7 @@ public class CardBrowser extends Activity {
                     public void onProgressUpdate(DeckTask.TaskData... values) {
                     }
                 },
-                new DeckTask.TaskData(PrefSettings.getSharedPrefs(getBaseContext()).getString("deckPath",
+                new DeckTask.TaskData(AnkiDroidApp.getSharedPrefs(getBaseContext()).getString("deckPath",
                         AnkiDroidApp.getDefaultAnkiDroidDirectory())
                         + AnkiDroidApp.COLLECTION_PATH));
     }

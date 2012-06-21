@@ -5,7 +5,6 @@ import com.ichi2.anki2.R;
 
 import com.ichi2.anim.ActivityTransitionAnimation;
 import com.ichi2.anim.ViewAnimation;
-import com.tomgibara.android.veecheck.util.PrefSettings;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -19,7 +18,7 @@ import android.view.animation.Animation;
 public class AnkiActivity extends Activity {
 
     public boolean animationDisabled() {
-        SharedPreferences preferences = PrefSettings.getSharedPrefs(this);
+        SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(this);
         boolean eInkDisplay = preferences.getBoolean("eInkDisplay", false);
         return eInkDisplay;
     }

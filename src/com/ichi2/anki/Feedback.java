@@ -45,7 +45,6 @@ import com.ichi2.async.Connection.Payload;
 import com.ichi2.libanki.Utils;
 import com.ichi2.themes.StyledDialog;
 import com.ichi2.themes.Themes;
-import com.tomgibara.android.veecheck.util.PrefSettings;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
@@ -208,7 +207,7 @@ public class Feedback extends AnkiActivity {
         Resources res = getResources();
 
         Context context = getBaseContext();
-        SharedPreferences sharedPreferences = PrefSettings.getSharedPrefs(context);
+        SharedPreferences sharedPreferences = AnkiDroidApp.getSharedPrefs(context);
         mReportErrorMode = sharedPreferences.getString("reportErrorMode", REPORT_ASK);
 
         mNonce = UUID.randomUUID().getMostSignificantBits();

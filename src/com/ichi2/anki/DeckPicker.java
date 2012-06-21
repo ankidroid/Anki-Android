@@ -71,7 +71,6 @@ import com.ichi2.themes.StyledDialog;
 import com.ichi2.themes.StyledProgressDialog;
 import com.ichi2.themes.Themes;
 import com.ichi2.widget.WidgetStatus;
-import com.tomgibara.android.veecheck.util.PrefSettings;
 
 import java.io.File;
 import java.io.FileFilter;
@@ -389,7 +388,7 @@ public class DeckPicker extends FragmentActivity {
                     String resultType = (String) result[0];
                     if (resultType.equals("badAuth")) {
                         // delete old auth information
-                        SharedPreferences preferences = PrefSettings.getSharedPrefs(getBaseContext());
+                        SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(getBaseContext());
                         Editor editor = preferences.edit();
                         editor.putString("username", "");
                         editor.putString("hkey", "");
@@ -976,7 +975,7 @@ public class DeckPicker extends FragmentActivity {
 
 
     private SharedPreferences restorePreferences() {
-        SharedPreferences preferences = PrefSettings.getSharedPrefs(getBaseContext());
+        SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(getBaseContext());
         mPrefDeckPath = preferences.getString("deckPath", AnkiDroidApp.getDefaultAnkiDroidDirectory());
         mLastTimeOpened = preferences.getLong("lastTimeOpened", 0);
         mSwipeEnabled = preferences.getBoolean("swipe", false);
@@ -1444,12 +1443,12 @@ public class DeckPicker extends FragmentActivity {
                 dialog = ChartBuilder.getStatisticsDialog(this, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        boolean muh = mFragmented ? PrefSettings.getSharedPrefs(
+                        boolean muh = mFragmented ? AnkiDroidApp.getSharedPrefs(
                                 AnkiDroidApp.getInstance().getBaseContext()).getBoolean("statsRange", true) : true;
                         DeckTask.launchDeckTask(
                                 DeckTask.TASK_TYPE_LOAD_STATISTICS,
                                 mLoadStatisticsHandler,
-                                new DeckTask.TaskData(mCol, which, mFragmented ? PrefSettings.getSharedPrefs(
+                                new DeckTask.TaskData(mCol, which, mFragmented ? AnkiDroidApp.getSharedPrefs(
                                         AnkiDroidApp.getInstance().getBaseContext()).getBoolean("statsRange", true)
                                         : true));
                     }
@@ -1950,7 +1949,7 @@ public class DeckPicker extends FragmentActivity {
      */
     private void sync(String syncConflictResolution, int syncMediaUsn) {
         if (mCol != null) {
-            SharedPreferences preferences = PrefSettings.getSharedPrefs(getBaseContext());
+            SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(getBaseContext());
             String hkey = preferences.getString("hkey", "");
             if (hkey.length() == 0) {
                 showDialog(DIALOG_USER_NOT_LOGGED_IN_SYNC);
@@ -2136,7 +2135,7 @@ public class DeckPicker extends FragmentActivity {
 
             case MENU_ADD_SHARED_DECK:
                 if (mCol != null) {
-                    SharedPreferences preferences = PrefSettings.getSharedPrefs(getBaseContext());
+                    SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(getBaseContext());
                     String hkey = preferences.getString("hkey", "");
                     if (hkey.length() == 0) {
                         showDialog(DIALOG_USER_NOT_LOGGED_IN_ADD_SHARED_DECK);
@@ -2201,12 +2200,12 @@ public class DeckPicker extends FragmentActivity {
             // TODO: check, if ok has been clicked
             loadCounts();
         } else if (requestCode == REPORT_ERROR) {
-            showStartupScreensAndDialogs(PrefSettings.getSharedPrefs(getBaseContext()), 4);
+            showStartupScreensAndDialogs(AnkiDroidApp.getSharedPrefs(getBaseContext()), 4);
         } else if (requestCode == SHOW_INFO_UPGRADE_DECKS) {
-            showStartupScreensAndDialogs(PrefSettings.getSharedPrefs(getBaseContext()), 3);
+            showStartupScreensAndDialogs(AnkiDroidApp.getSharedPrefs(getBaseContext()), 3);
         } else if (requestCode == SHOW_INFO_WELCOME || requestCode == SHOW_INFO_NEW_VERSION) {
             if (resultCode == RESULT_OK) {
-                showStartupScreensAndDialogs(PrefSettings.getSharedPrefs(getBaseContext()),
+                showStartupScreensAndDialogs(AnkiDroidApp.getSharedPrefs(getBaseContext()),
                         requestCode == SHOW_INFO_WELCOME ? 1 : 2);
             } else {
                 finish();

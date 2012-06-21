@@ -93,7 +93,6 @@ import com.ichi2.themes.Themes;
 import com.ichi2.utils.DiffEngine;
 import com.ichi2.utils.RubyParser;
 import com.ichi2.widget.WidgetStatus;
-import com.tomgibara.android.veecheck.util.PrefSettings;
 
 import org.amr.arabic.ArabicUtilities;
 import org.json.JSONArray;
@@ -553,7 +552,7 @@ public class Reviewer extends AnkiActivity {
                 Log.e(AnkiDroidApp.TAG, "Error on dispatching touch event: " + e);
                 if (mInputWorkaround) {
                     Log.e(AnkiDroidApp.TAG, "Error on using InputWorkaround: " + e + " --> disabled");
-                    PrefSettings.getSharedPrefs(getBaseContext()).edit().putBoolean("inputWorkaround", false).commit();
+                    AnkiDroidApp.getSharedPrefs(getBaseContext()).edit().putBoolean("inputWorkaround", false).commit();
                     Reviewer.this.finishWithoutAnimation();
                 }
             }
@@ -1379,7 +1378,7 @@ public class Reviewer extends AnkiActivity {
                     public void onProgressUpdate(DeckTask.TaskData... values) {
                     }
                 },
-                new DeckTask.TaskData(PrefSettings.getSharedPrefs(getBaseContext()).getString("deckPath",
+                new DeckTask.TaskData(AnkiDroidApp.getSharedPrefs(getBaseContext()).getString("deckPath",
                         AnkiDroidApp.getDefaultAnkiDroidDirectory())
                         + AnkiDroidApp.COLLECTION_PATH, 0, true));
     }
@@ -2164,7 +2163,7 @@ public class Reviewer extends AnkiActivity {
 
 
     private SharedPreferences restorePreferences() {
-        SharedPreferences preferences = PrefSettings.getSharedPrefs(getBaseContext());
+        SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(getBaseContext());
         mPrefHideDueCount = preferences.getBoolean("hideDueCount", false);
         mPrefOvertime = preferences.getBoolean("overtime", true);
         mPrefTimer = preferences.getBoolean("timer", true);
@@ -2814,7 +2813,7 @@ public class Reviewer extends AnkiActivity {
     /** Returns the CSS used to set the default font. */
     private String getDefaultFontStyle() {
         if (mCustomDefaultFontCss == null) {
-            SharedPreferences preferences = PrefSettings.getSharedPrefs(getBaseContext());
+            SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(getBaseContext());
             String defaultFont = preferences.getString("defaultFont", null);
             if (defaultFont == null || "".equals(defaultFont)) {
                 defaultFont = Themes.getReviewerFontName();

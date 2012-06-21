@@ -29,8 +29,6 @@ import android.graphics.Path;
 import android.view.MotionEvent;
 import android.view.View;
 
-import com.tomgibara.android.veecheck.util.PrefSettings;
-
 /**
  * Whiteboard allowing the user to draw the card's answer on the touchscreen.
  */
@@ -84,7 +82,7 @@ public class Whiteboard extends View {
         mPaint.setStyle(Paint.Style.STROKE);
         mPaint.setStrokeJoin(Paint.Join.ROUND);
         mPaint.setStrokeCap(Paint.Cap.ROUND);
-        int wbStrokeWidth = PrefSettings.getSharedPrefs(context).getInt("whiteBoardStrokeWidth", 6);
+        int wbStrokeWidth = AnkiDroidApp.getSharedPrefs(context).getInt("whiteBoardStrokeWidth", 6);
         mPaint.setStrokeWidth((float) wbStrokeWidth);
 
         createBitmap();

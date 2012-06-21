@@ -51,7 +51,6 @@ import com.ichi2.async.DeckTask;
 import com.ichi2.libanki.Utils;
 import com.ichi2.themes.StyledProgressDialog;
 import com.ichi2.themes.Themes;
-import com.tomgibara.android.veecheck.util.PrefSettings;
 
 /**
  * Preferences dialog.
@@ -99,7 +98,7 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
         super.onCreate(savedInstanceState);
 
         mPrefMan = getPreferenceManager();
-        mPrefMan.setSharedPreferencesName(PrefSettings.SHARED_PREFS_NAME);
+        mPrefMan.setSharedPreferencesName(AnkiDroidApp.SHARED_PREFS_NAME);
 
         addPreferencesFromResource(R.xml.preferences);
         // mVeecheckStatus = mPrefMan.getSharedPreferences().getBoolean(PrefSettings.KEY_ENABLED,

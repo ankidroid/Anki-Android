@@ -18,7 +18,6 @@ import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki2.R;
 import com.ichi2.anki.StudyOptionsFragment;
 import com.ichi2.widget.WidgetStatus;
-import com.tomgibara.android.veecheck.util.PrefSettings;
 
 import android.app.Notification;
 import android.app.NotificationManager;
@@ -52,7 +51,7 @@ public class NotificationService extends Service {
         Log.i(AnkiDroidApp.TAG, "NotificationService: OnStart");
 
         Context context = AnkiDroidApp.getInstance().getBaseContext();
-        SharedPreferences preferences = PrefSettings.getSharedPrefs(context);
+        SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(context);
         int minimumCardsDueForNotification = Integer.parseInt(preferences.getString("minimumCardsDueForNotification",
                 "25"));
         int dueCardsCount = WidgetStatus.fetchDue(context);

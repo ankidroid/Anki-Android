@@ -33,7 +33,6 @@ import android.view.WindowManager;
 
 import com.ichi2.async.Connection;
 import com.ichi2.libanki.hooks.Hooks;
-import com.tomgibara.android.veecheck.util.PrefSettings;
 
 import java.io.File;
 import java.io.IOException;
@@ -68,6 +67,11 @@ public class AnkiDroidApp extends Application {
      */
     private Hooks mHooks;
 
+    /**
+     * The name of the shared preferences for this class, as supplied to
+     * {@link Context#getSharedPreferences(String, int)}.
+     */
+    public static final String SHARED_PREFS_NAME = AnkiDroidApp.class.getPackage().getName();
 
     /**
      * On application creation.
@@ -85,46 +89,34 @@ public class AnkiDroidApp extends Application {
         customExceptionHandler.init(sInstance.getApplicationContext());
         Thread.setDefaultUncaughtExceptionHandler(customExceptionHandler);
 
-        SharedPreferences preferences = PrefSettings.getSharedPrefs(this);
+        SharedPreferences preferences = getSharedPrefs(this);
         // Assign some default settings if necessary
-        if (preferences.getString(PrefSettings.KEY_CHECK_URI, null) == null) {
+        if (!preferences.contains("deckPath")) {
             Editor editor = preferences.edit();
-            // Test Update Notifications
-            // Some ridiculously fast polling, just to demonstrate it working...
-            /*
-             * editor.putBoolean(PrefSettings.KEY_ENABLED, true); editor.putLong(PrefSettings.KEY_PERIOD, 30 * 1000L);
-             * editor.putLong(PrefSettings.KEY_CHECK_INTERVAL, 60 * 1000L); editor.putString(PrefSettings.KEY_CHECK_URI,
-             * "http://ankidroid.googlecode.com/files/test_notifications.xml");
-             */
-            editor.putString(PrefSettings.KEY_CHECK_URI, "http://ankidroid.googlecode.com/files/last_release.xml");
-
             // Create the folder "AnkiDroid", if not exists, where the decks
             // will be stored by default
             String deckPath = getDefaultAnkiDroidDirectory();
             createDirectoryIfMissing(new File(deckPath));
-
-            // Put the base path in preferences pointing to the default
-            // "AnkiDroid" folder
+            // Put the base path in preferences pointing to the default "AnkiDroid" folder
             editor.putString("deckPath", deckPath);
-
             // Using commit instead of apply even though we don't need a return value.
             // Reason: apply() not available on Android 1.5
             editor.commit();
         }
-
-        // Reschedule the checks - we need to do this if the settings have
-        // changed (as above)
-        // It may also necessary in the case where an application has been
-        // updated
-        // Here for simplicity, we do it every time the application is launched
-        // Intent intent = new Intent(Veecheck.getRescheduleAction(this));
-        // sendBroadcast(intent);
     }
 
+    /**
+     * Convenience method for accessing Shared preferences
+     * @param context Context to get preferences for.
+     * @return A SharedPreferences object for this instance of the app. 
+     */
+    public static SharedPreferences getSharedPrefs(Context context) {
+        return context.getSharedPreferences(SHARED_PREFS_NAME, Context.MODE_PRIVATE);
+    }
 
     public static boolean isTibetan() {
 
-        SharedPreferences preferences = PrefSettings.getSharedPrefs(getInstance());
+        SharedPreferences preferences = getSharedPrefs(getInstance());
 
         // check for Tibetan support & Typeface initialisation
         if (preferences.getBoolean("enableTibetan", false)) {
@@ -165,7 +157,7 @@ public class AnkiDroidApp extends Application {
 
 
     public static String getCollectionPath() {
-        String deckPath = PrefSettings.getSharedPrefs(sInstance.getApplicationContext()).getString("deckPath",
+        String deckPath = getSharedPrefs(sInstance.getApplicationContext()).getString("deckPath",
                 AnkiDroidApp.getDefaultAnkiDroidDirectory());
         return deckPath + AnkiDroidApp.COLLECTION_PATH;
     }

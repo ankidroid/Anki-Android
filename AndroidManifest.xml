@@ -98,32 +98,7 @@
 		<activity android:name="com.ichi2.veecheck.Notification" 
 			android:label="@string/notification_title"
 			android:configChanges="locale"/>
-<!-- 		<receiver android:name="com.ichi2.veecheck.CheckReceiver"
-					android:permission="android.permission.RECEIVE_BOOT_COMPLETED">
-			<intent-filter>
-				<action
-				 android:name="android.intent.action.BOOT_COMPLETED">
-				</action>
-			</intent-filter>
-			<intent-filter>
-				<action
-					android:name="com.ichi2.anki.VEECHECK_RESCHEDULE_CHECKS">
-				</action>
-			</intent-filter>
-			<intent-filter>
-				<action
-					android:name="com.ichi2.anki.VEECHECK_CONSIDER_CHECK">
-				</action>
-			</intent-filter>
-		</receiver>
-		<service android:name="com.ichi2.veecheck.CheckService">
-			<intent-filter>
-				<action
-					android:name="com.ichi2.anki.VEECHECK_PERFORM_CHECK">
-				</action>
-				<data android:scheme="http"></data>
-			</intent-filter>
-		</service> -->
+
 		<service android:name="com.ichi2.anki.services.DownloadManagerService"/>
 
 		<service android:name="com.ichi2.anki.services.NotificationService"/>
@@ -168,7 +143,6 @@ android:targetSdkVersion="11"/>
 <uses-permission android:name="android.permission.VIBRATE" android:required="false" />
 <uses-permission android:name="android.permission.INTERNET" android:required="false" />
 <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" android:required="false" />
-<uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" android:required="false" />
 <!--<uses-permission android:name="android.permission.BLUETOOTH" android:required="false" />
 <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" android:required="false" />-->
 <supports-screens

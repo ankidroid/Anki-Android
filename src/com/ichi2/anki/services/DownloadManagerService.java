@@ -46,7 +46,6 @@ import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Decks;
 import com.ichi2.libanki.Utils;
 import com.ichi2.libanki.sync.BasicHttpSyncer;
-import com.tomgibara.android.veecheck.util.PrefSettings;
 
 import java.io.DataOutputStream;
 import java.io.File;
@@ -169,7 +168,7 @@ public class DownloadManagerService extends Service {
 
 
     private void restorePreferences() {
-        SharedPreferences pref = PrefSettings.getSharedPrefs(getBaseContext());
+        SharedPreferences pref = AnkiDroidApp.getSharedPrefs(getBaseContext());
         mUsername = pref.getString("username", "");
         mPassword = pref.getString("password", "");
         mDestination = pref.getString("deckPath", AnkiDroidApp.getDefaultAnkiDroidDirectory());
@@ -210,7 +209,7 @@ public class DownloadManagerService extends Service {
                     String title = filename.substring(0, filename.length() - ".anki.updating".length());
                     SharedDeckDownload download = new SharedDeckDownload(title);
 
-                    SharedPreferences pref = PrefSettings.getSharedPrefs(getBaseContext());
+                    SharedPreferences pref = AnkiDroidApp.getSharedPrefs(getBaseContext());
                     String pausedPref = "paused:" + mDestination + "/tmp/" + download.getFilename() + ".anki.updating";
                     if (pref.getBoolean(pausedPref, false)) {
                         download.setStatus(SharedDeckDownload.STATUS_PAUSED);
@@ -247,7 +246,7 @@ public class DownloadManagerService extends Service {
         }
 
         // Remove any download related shared preference that doesn't have a corresponding incomplete file
-        SharedPreferences pref = PrefSettings.getSharedPrefs(getBaseContext());
+        SharedPreferences pref = AnkiDroidApp.getSharedPrefs(getBaseContext());
         Matcher sharedPrefMatcher;
         Editor editor = pref.edit();
         boolean sharedPreferencesChanged = false;
@@ -371,7 +370,7 @@ public class DownloadManagerService extends Service {
 
     private int getNextNotificationId() {
         // Retrieve previously saved value
-        SharedPreferences pref = PrefSettings.getSharedPrefs(getBaseContext());
+        SharedPreferences pref = AnkiDroidApp.getSharedPrefs(getBaseContext());
         int notificationCounter = pref.getInt("notificationCounter", 0);
 
         // Increment it
@@ -901,7 +900,7 @@ public class DownloadManagerService extends Service {
                 download.setTitle(unzippedDeckName);
 
                 // Update all cards in deck
-                SharedPreferences pref = PrefSettings.getSharedPrefs(getBaseContext());
+                SharedPreferences pref = AnkiDroidApp.getSharedPrefs(getBaseContext());
                 Editor editor = pref.edit();
                 editor.putLong("numUpdatedCards:" + mDestination + "/tmp/" + download.getFilename() + ".anki.updating",
                         0);
@@ -951,7 +950,7 @@ public class DownloadManagerService extends Service {
                 // deck.beforeUpdateCards();
                 // deck.updateAllCards();
                 SharedDeckDownload download = (SharedDeckDownload) args[0].data[0];
-                SharedPreferences pref = PrefSettings.getSharedPrefs(getBaseContext());
+                SharedPreferences pref = AnkiDroidApp.getSharedPrefs(getBaseContext());
                 String updatedCardsPref = "numUpdatedCards:" + mDestination + "/tmp/" + download.getFilename()
                         + ".anki.updating";
                 long totalCards = 0;// deck.cardCount();
@@ -1064,7 +1063,7 @@ public class DownloadManagerService extends Service {
             // DeckManager.closeDeck(deck.getDeckPath());
 
             SharedDeckDownload download = (SharedDeckDownload) result.data[0];
-            SharedPreferences pref = PrefSettings.getSharedPrefs(getBaseContext());
+            SharedPreferences pref = AnkiDroidApp.getSharedPrefs(getBaseContext());
             Editor editor = pref.edit();
 
             Log.i(AnkiDroidApp.TAG, "Finished deck " + download.getFilename() + " " + result.success);

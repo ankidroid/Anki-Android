@@ -57,7 +57,6 @@ import com.ichi2.libanki.Utils;
 import com.ichi2.themes.StyledDialog;
 import com.ichi2.themes.StyledProgressDialog;
 import com.ichi2.themes.Themes;
-import com.tomgibara.android.veecheck.util.PrefSettings;
 
 import java.util.HashMap;
 
@@ -553,7 +552,7 @@ public class StudyOptionsFragment extends Fragment {
                     public void onProgressUpdate(DeckTask.TaskData... values) {
                     }
                 },
-                new DeckTask.TaskData(PrefSettings.getSharedPrefs(getActivity().getBaseContext()).getString("deckPath",
+                new DeckTask.TaskData(AnkiDroidApp.getSharedPrefs(getActivity().getBaseContext()).getString("deckPath",
                         AnkiDroidApp.getDefaultAnkiDroidDirectory())
                         + AnkiDroidApp.COLLECTION_PATH));
     }
@@ -951,7 +950,7 @@ public class StudyOptionsFragment extends Fragment {
 
 
     private void savePreferences(String name, boolean value) {
-        SharedPreferences preferences = PrefSettings.getSharedPrefs(getActivity().getBaseContext());
+        SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(getActivity().getBaseContext());
         Editor editor = preferences.edit();
         editor.putBoolean(name, value);
         editor.commit();
@@ -959,7 +958,7 @@ public class StudyOptionsFragment extends Fragment {
 
 
     private SharedPreferences restorePreferences() {
-        SharedPreferences preferences = PrefSettings.getSharedPrefs(getActivity().getBaseContext());
+        SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(getActivity().getBaseContext());
 
         mSwipeEnabled = preferences.getBoolean("swipe", false);
         mPrefHideDueCount = preferences.getBoolean("hideDueCount", true);
@@ -999,7 +998,7 @@ public class StudyOptionsFragment extends Fragment {
 //            mToggleLimitToggle.setChecked(timeLimit > 0 ? true : false);
 //            mToggleLimitToggle.setText(String.valueOf(timeLimit));
 
-            SharedPreferences preferences = PrefSettings.getSharedPrefs(getActivity().getBaseContext()); // getActivity().getBaseContext()
+            SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(getActivity().getBaseContext()); // getActivity().getBaseContext()
             mPrefHideDueCount = preferences.getBoolean("hideDueCount", true);
 
             mTextTodayNew.setText(String.valueOf(newCards));

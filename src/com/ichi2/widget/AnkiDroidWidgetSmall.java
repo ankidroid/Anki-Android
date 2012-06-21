@@ -17,7 +17,6 @@ package com.ichi2.widget;
 import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.DeckPicker;
 import com.ichi2.anki2.R;
-import com.tomgibara.android.veecheck.util.PrefSettings;
 
 import android.app.PendingIntent;
 import android.app.Service;
@@ -51,7 +50,7 @@ public class AnkiDroidWidgetSmall extends AppWidgetProvider {
     public void onEnabled(Context context) {
         super.onEnabled(context);
         Log.i(AnkiDroidApp.TAG, "SmallWidget: Widget enabled");
-        SharedPreferences preferences = PrefSettings.getSharedPrefs(context);
+        SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(context);
         preferences.edit().putBoolean("widgetSmallEnabled", true).commit();
     }
 
@@ -60,7 +59,7 @@ public class AnkiDroidWidgetSmall extends AppWidgetProvider {
     public void onDisabled(Context context) {
         super.onDisabled(context);
         Log.i(AnkiDroidApp.TAG, "SmallWidget: Widget disabled");
-        SharedPreferences preferences = PrefSettings.getSharedPrefs(context);
+        SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(context);
         preferences.edit().putBoolean("widgetSmallEnabled", false).commit();
     }
 
