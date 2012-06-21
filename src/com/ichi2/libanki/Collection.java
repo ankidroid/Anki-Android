@@ -105,6 +105,9 @@ public class Collection {
 
     public static final int UNDO_REVIEW = 0;
     public static final int UNDO_EDIT_NOTE = 1;
+    public static final int UNDO_BURY_NOTE = 2;
+
+    private static final int UNDO_SIZE_MAX = 20;
 
     private static Collection sCurrentCollection;
 
@@ -362,6 +365,9 @@ public class Collection {
      */
     public void setDirty() {
         mDty = true;
+    }
+    public void setDirty(boolean dty) {
+        mDty = dty;
     }
 
 
@@ -1222,6 +1228,7 @@ public class Collection {
             String type = (new String[] { "new", "lrn", "rev" })[n];
             mSched._updateStats(c, type, -1);
             return c.getId();
+
     	case UNDO_EDIT_NOTE:
     		Note note = (Note) data[1];
     		note.flush();
@@ -1243,6 +1250,14 @@ public class Collection {
             	return card.getId();
             }
     		return 0;
+
+    	case UNDO_BURY_NOTE:
+    		setDirty((Boolean)data[1]);
+    		for (Card cc : (ArrayList<Card>)data[2]) {
+    			cc.flush();
+    		}
+    		return (Long) data[3];
+
         default:
         	return 0;
     	}
@@ -1257,6 +1272,12 @@ public class Collection {
     	case UNDO_EDIT_NOTE:
     		mUndo.add(new Object[]{type, ((Note)o[0]).clone(), o[1], o[2]});
     		break;
+    	case UNDO_BURY_NOTE:
+    		mUndo.add(new Object[]{type, o[0], o[1], o[2]});    		
+    		break;
+    	}
+    	while (mUndo.size() > UNDO_SIZE_MAX) {
+    		mUndo.removeFirst();
     	}
     }
 
@@ -1418,4 +1439,9 @@ public class Collection {
     public void setServer(boolean server) {
         mServer = server;
     }
+
+    public boolean getDirty() {
+        return mDty;
+    }
+
 }

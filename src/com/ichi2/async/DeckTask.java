@@ -477,7 +477,15 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
             try {
                 switch (type) {
                     case 0:
-                        // bury note
+                    	// store information for undoing first
+                        long[] cardIds = Utils.arrayList2array(col.getDb().queryColumn(Long.class,
+                                "SELECT id FROM cards WHERE nid = " + note.getId(), 0));
+                        ArrayList<Card> undoCards = new ArrayList<Card>();
+                        for (long c : cardIds) {
+                        	undoCards.add(col.getCard(c));
+                        }
+                    	col.markUndo(Collection.UNDO_BURY_NOTE, new Object[]{col.getDirty(), undoCards, card.getId()});
+                    	// then bury
                         sched.buryNote(note.getId());
                         break;
                     case 1:
