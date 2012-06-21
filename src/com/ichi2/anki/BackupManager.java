@@ -33,7 +33,6 @@ import java.util.UnknownFormatConversionException;
 
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Utils;
-import com.tomgibara.android.veecheck.util.PrefSettings;
 
 import android.content.SharedPreferences;
 import android.os.StatFs;
@@ -76,7 +75,7 @@ public class BackupManager {
 
 
     private static File getBackupDirectory() {
-        SharedPreferences prefs = PrefSettings.getSharedPrefs(AnkiDroidApp.getInstance().getBaseContext());
+        SharedPreferences prefs = AnkiDroidApp.getSharedPrefs(AnkiDroidApp.getInstance().getBaseContext());
         File directory = new File(prefs.getString("deckPath", AnkiDroidApp.getStorageDirectory()) + BACKUP_SUFFIX);
         if (!directory.isDirectory()) {
             directory.mkdirs();
@@ -86,7 +85,7 @@ public class BackupManager {
 
 
     private static File getBrokenDirectory() {
-        SharedPreferences prefs = PrefSettings.getSharedPrefs(AnkiDroidApp.getInstance().getBaseContext());
+        SharedPreferences prefs = AnkiDroidApp.getSharedPrefs(AnkiDroidApp.getInstance().getBaseContext());
         File directory = new File(prefs.getString("deckPath", AnkiDroidApp.getStorageDirectory()) + BROKEN_DECKS_SUFFIX);
         if (!directory.isDirectory()) {
             directory.mkdirs();
@@ -105,7 +104,7 @@ public class BackupManager {
      * corrupted decks
      */
     public static boolean safetyBackupNeeded(String path, int days) {
-        if (!PrefSettings.getSharedPrefs(AnkiDroidApp.getInstance().getBaseContext()).getBoolean("useBackup", true)) {
+        if (!AnkiDroidApp.getSharedPrefs(AnkiDroidApp.getInstance().getBaseContext()).getBoolean("useBackup", true)) {
             return false;
         }
 
@@ -164,7 +163,7 @@ public class BackupManager {
 
 
     public static void performBackup(String path, int interval) {
-        SharedPreferences prefs = PrefSettings.getSharedPrefs(AnkiDroidApp.getInstance().getBaseContext());
+        SharedPreferences prefs = AnkiDroidApp.getSharedPrefs(AnkiDroidApp.getInstance().getBaseContext());
         if (!prefs.getBoolean("useBackup", true)) {
             return;
         }

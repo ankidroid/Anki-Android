@@ -41,7 +41,6 @@ import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki2.R;
 import com.ichi2.async.Connection;
 import com.mindprod.common11.BigDate;
-import com.tomgibara.android.veecheck.util.PrefSettings;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -1032,7 +1031,7 @@ public class Utils {
 
     /** Returns a list of files for the installed custom fonts. */
     public static String[] getCustomFonts(Context context) {
-        SharedPreferences preferences = PrefSettings.getSharedPrefs(context);
+        SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(context);
         String deckPath = preferences.getString("deckPath", AnkiDroidApp.getDefaultAnkiDroidDirectory());
         String fontsPath = deckPath + "/fonts/";
         File fontsDir = new File(fontsPath);

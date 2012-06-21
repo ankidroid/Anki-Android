@@ -25,7 +25,6 @@ import com.ichi2.async.Connection.Payload;
 import com.ichi2.themes.StyledDialog;
 import com.ichi2.themes.StyledProgressDialog;
 import com.ichi2.themes.Themes;
-import com.tomgibara.android.veecheck.util.PrefSettings;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -85,11 +84,11 @@ public class Info extends Activity {
                 setResult(RESULT_OK);
                 switch (mType) {
                     case TYPE_WELCOME:
-                        PrefSettings.getSharedPrefs(Info.this.getBaseContext()).edit()
+                        AnkiDroidApp.getSharedPrefs(Info.this.getBaseContext()).edit()
                                 .putLong("lastTimeOpened", System.currentTimeMillis()).commit();
                         break;
                     case TYPE_NEW_VERSION:
-                        PrefSettings.getSharedPrefs(Info.this.getBaseContext()).edit()
+                        AnkiDroidApp.getSharedPrefs(Info.this.getBaseContext()).edit()
                                 .putString("lastVersion", AnkiDroidApp.getPkgVersion()).commit();
                         break;
                     case TYPE_UPGRADE_DECKS:
@@ -146,7 +145,7 @@ public class Info extends Activity {
                     @Override
                     public void onClick(View arg0) {
                         setResult(RESULT_OK);
-                        Editor edit = PrefSettings.getSharedPrefs(Info.this.getBaseContext()).edit();
+                        Editor edit = AnkiDroidApp.getSharedPrefs(Info.this.getBaseContext()).edit();
                         edit.putLong("lastTimeOpened", System.currentTimeMillis());
                         edit.putBoolean("createTutorial", true);
                         edit.commit();
@@ -172,7 +171,7 @@ public class Info extends Activity {
                 mWebView.loadDataWithBaseURL("", sb.toString(), "text/html", "utf-8", null);
 
                 // reactivating ssl check for every new version
-                PrefSettings.getSharedPrefs(Info.this.getBaseContext()).edit().putBoolean("sslAcceptAll", false)
+                AnkiDroidApp.getSharedPrefs(Info.this.getBaseContext()).edit().putBoolean("sslAcceptAll", false)
                         .commit();
                 break;
 

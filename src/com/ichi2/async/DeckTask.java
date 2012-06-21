@@ -45,7 +45,6 @@ import com.ichi2.libanki.Sched;
 import com.ichi2.libanki.Stats;
 import com.ichi2.libanki.Utils;
 import com.ichi2.widget.WidgetStatus;
-import com.tomgibara.android.veecheck.util.PrefSettings;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -401,7 +400,7 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
                 col = Collection.openCollection(collectionFile);
 
                 // create tutorial deck if needed
-                SharedPreferences prefs = PrefSettings.getSharedPrefs(AnkiDroidApp.getInstance().getBaseContext());
+                SharedPreferences prefs = AnkiDroidApp.getSharedPrefs(AnkiDroidApp.getInstance().getBaseContext());
                 if (prefs.contains("createTutorial") && prefs.getBoolean("createTutorial", false)) {
                     prefs.edit().remove("createTutorial").commit();
                     publishProgress(new TaskData(res.getString(R.string.tutorial_load)));
@@ -589,15 +588,15 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
         switch (type) {
             default:
             case Stats.TYPE_FORECAST:
-                return new TaskData(stats.calculateDue(PrefSettings.getSharedPrefs(
+                return new TaskData(stats.calculateDue(AnkiDroidApp.getSharedPrefs(
                         AnkiDroidApp.getInstance().getBaseContext()).getInt("statsType", Stats.TYPE_MONTH)));
             case Stats.TYPE_REVIEW_COUNT:
                 return new TaskData(stats.calculateDone(
-                        PrefSettings.getSharedPrefs(AnkiDroidApp.getInstance().getBaseContext()).getInt("statsType",
+                        AnkiDroidApp.getSharedPrefs(AnkiDroidApp.getInstance().getBaseContext()).getInt("statsType",
                                 Stats.TYPE_MONTH), true));
             case Stats.TYPE_REVIEW_TIME:
                 return new TaskData(stats.calculateDone(
-                        PrefSettings.getSharedPrefs(AnkiDroidApp.getInstance().getBaseContext()).getInt("statsType",
+                        AnkiDroidApp.getSharedPrefs(AnkiDroidApp.getInstance().getBaseContext()).getInt("statsType",
                                 Stats.TYPE_MONTH), false));
         }
     }

@@ -3,7 +3,8 @@ package com.ichi2.filters;
 
 import android.content.Context;
 import android.util.Pair;
-import com.tomgibara.android.veecheck.util.PrefSettings;
+
+import com.ichi2.anki.AnkiDroidApp;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,7 +41,7 @@ public class FilterFacade {
     public Pair<String, String> filter(Pair<String, String> messages) {
         Pair<String, String> result = new Pair<String, String>(messages.first, messages.second);
         for (CardFilter cardFilter : filters) {
-            result = cardFilter.filter(result, PrefSettings.getSharedPrefs(context));
+            result = cardFilter.filter(result, AnkiDroidApp.getSharedPrefs(context));
         }
         return result;
     }

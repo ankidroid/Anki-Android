@@ -77,7 +77,6 @@ import com.ichi2.themes.StyledDialog.Builder;
 import com.ichi2.themes.StyledProgressDialog;
 import com.ichi2.themes.Themes;
 import com.ichi2.widget.WidgetStatus;
-import com.tomgibara.android.veecheck.util.PrefSettings;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -484,7 +483,7 @@ public class CardEditor extends Activity {
             }
         });
 
-        SharedPreferences preferences = PrefSettings.getSharedPrefs(getBaseContext());
+        SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(getBaseContext());
         mPrefFixArabic = preferences.getBoolean("fixArabicText", false);
         // if Arabic reshaping is enabled, disable the Save button to avoid
         // saving the reshaped string to the deck
@@ -616,7 +615,7 @@ public class CardEditor extends Activity {
                     public void onProgressUpdate(DeckTask.TaskData... values) {
                     }
                 },
-                new DeckTask.TaskData(PrefSettings.getSharedPrefs(getBaseContext()).getString("deckPath",
+                new DeckTask.TaskData(AnkiDroidApp.getSharedPrefs(getBaseContext()).getString("deckPath",
                         AnkiDroidApp.getDefaultAnkiDroidDirectory())
                         + AnkiDroidApp.COLLECTION_PATH));
     }

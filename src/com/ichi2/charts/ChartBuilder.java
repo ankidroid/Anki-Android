@@ -61,7 +61,6 @@ import com.ichi2.anki2.R;
 import com.ichi2.libanki.Stats;
 import com.ichi2.themes.StyledDialog;
 import com.ichi2.themes.Themes;
-import com.tomgibara.android.veecheck.util.PrefSettings;
 
 public class ChartBuilder extends Activity {
     public static final String TYPE = "type";
@@ -109,7 +108,7 @@ public class ChartBuilder extends Activity {
 
 
     private SharedPreferences restorePreferences() {
-        SharedPreferences preferences = PrefSettings.getSharedPrefs(getBaseContext());
+        SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(getBaseContext());
         mFullScreen = preferences.getBoolean("fullScreen", false);
         mSwipeEnabled = preferences.getBoolean("swipe", false);
         return preferences;
@@ -129,7 +128,7 @@ public class ChartBuilder extends Activity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case MENU_FULLSCREEN:
-                SharedPreferences preferences = PrefSettings.getSharedPrefs(getBaseContext());
+                SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(getBaseContext());
                 Editor editor = preferences.edit();
                 editor.putBoolean("fullScreen", !mFullScreen);
                 // Statistics.sZoom = zoom;
@@ -373,7 +372,7 @@ public class ChartBuilder extends Activity {
                 int checked = arg0.getCheckedRadioButtonId();
                 for (int i = 0; i < 3; i++) {
                     if (arg0.getChildAt(i).getId() == checked) {
-                        PrefSettings.getSharedPrefs(AnkiDroidApp.getInstance().getBaseContext()).edit()
+                        AnkiDroidApp.getSharedPrefs(AnkiDroidApp.getInstance().getBaseContext()).edit()
                                 .putInt("statsType", i).commit();
                         break;
                     }
@@ -382,7 +381,7 @@ public class ChartBuilder extends Activity {
         });
         rg.setLayoutParams(new LinearLayout.LayoutParams(LayoutParams.FILL_PARENT, height));
         statisticRadioButtons[Math.min(
-                PrefSettings.getSharedPrefs(AnkiDroidApp.getInstance().getBaseContext()).getInt("statsType",
+                AnkiDroidApp.getSharedPrefs(AnkiDroidApp.getInstance().getBaseContext()).getInt("statsType",
                         Stats.TYPE_MONTH), Stats.TYPE_LIFE)].setChecked(true);
 
         if (showWholeDeckSelection) {
@@ -404,13 +403,13 @@ public class ChartBuilder extends Activity {
             rg2.setOnCheckedChangeListener(new OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(RadioGroup arg0, int arg1) {
-                    PrefSettings.getSharedPrefs(AnkiDroidApp.getInstance().getBaseContext()).edit()
+                    AnkiDroidApp.getSharedPrefs(AnkiDroidApp.getInstance().getBaseContext()).edit()
                             .putBoolean("statsRange", arg0.getCheckedRadioButtonId() == arg0.getChildAt(0).getId())
                             .commit();
                 }
             });
             rg2.setLayoutParams(new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, height));
-            statisticRadioButtons2[PrefSettings.getSharedPrefs(AnkiDroidApp.getInstance().getBaseContext()).getBoolean(
+            statisticRadioButtons2[AnkiDroidApp.getSharedPrefs(AnkiDroidApp.getInstance().getBaseContext()).getBoolean(
                     "statsRange", true) ? 0 : 1].setChecked(true);
 
             LinearLayout ll = new LinearLayout(context);

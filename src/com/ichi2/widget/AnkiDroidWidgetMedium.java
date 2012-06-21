@@ -18,7 +18,6 @@ import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.DeckPicker;
 import com.ichi2.anki2.R;
 import com.ichi2.anki.StudyOptionsFragment;
-import com.tomgibara.android.veecheck.util.PrefSettings;
 
 import android.app.PendingIntent;
 import android.app.Service;
@@ -62,7 +61,7 @@ public class AnkiDroidWidgetMedium extends AppWidgetProvider {
     public void onEnabled(Context context) {
         super.onEnabled(context);
         Log.i(AnkiDroidApp.TAG, "MediumWidget: Widget enabled");
-        SharedPreferences preferences = PrefSettings.getSharedPrefs(context);
+        SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(context);
         preferences.edit().putBoolean("widgetMediumEnabled", true).commit();
     }
 
@@ -71,7 +70,7 @@ public class AnkiDroidWidgetMedium extends AppWidgetProvider {
     public void onDisabled(Context context) {
         super.onDisabled(context);
         Log.i(AnkiDroidApp.TAG, "MediumWidget: Widget disabled");
-        SharedPreferences preferences = PrefSettings.getSharedPrefs(context);
+        SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(context);
         preferences.edit().putBoolean("widgetMediumEnabled", false).commit();
     }
 

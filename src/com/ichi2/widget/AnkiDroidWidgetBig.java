@@ -22,7 +22,6 @@ import com.ichi2.anki2.R;
 import com.ichi2.async.DeckTask;
 import com.ichi2.libanki.Card;
 import com.ichi2.libanki.Utils;
-import com.tomgibara.android.veecheck.util.PrefSettings;
 
 import android.app.PendingIntent;
 import android.app.Service;
@@ -65,7 +64,7 @@ public class AnkiDroidWidgetBig extends AppWidgetProvider {
             // check, if card is still the same after reloading the deck. If not, show question instead of answering
             if (tempIntent.getAction().startsWith(UpdateService.ACTION_ANSWER)
                     && contentService.mCurrentCard != null
-                    && PrefSettings.getSharedPrefs(AnkiDroidApp.getInstance().getBaseContext()).getLong(
+                    && AnkiDroidApp.getSharedPrefs(AnkiDroidApp.getInstance().getBaseContext()).getLong(
                             "lastWidgetCard", 0) != contentService.mCurrentCard.getId()) {
                 tempIntent.setAction(UpdateService.ACTION_UPDATE);
                 tempIntent.putExtra(UpdateService.EXTRA_VIEW, UpdateService.VIEW_SHOW_QUESTION);
@@ -93,7 +92,7 @@ public class AnkiDroidWidgetBig extends AppWidgetProvider {
     public void onEnabled(Context context) {
         super.onEnabled(context);
         Log.i(AnkiDroidApp.TAG, "BigWidget: Widget enabled");
-        SharedPreferences preferences = PrefSettings.getSharedPrefs(context);
+        SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(context);
         if (!preferences.getBoolean("widgetBigEnabled", false)) {
             // show info dialog
             Intent intent;
@@ -105,7 +104,7 @@ public class AnkiDroidWidgetBig extends AppWidgetProvider {
         if (contentService != null) {
             contentService.mBigCurrentView = UpdateService.VIEW_NOT_SPECIFIED;
             contentService.mCol = null;
-            PrefSettings.getSharedPrefs(AnkiDroidApp.getInstance().getBaseContext()).edit()
+            AnkiDroidApp.getSharedPrefs(AnkiDroidApp.getInstance().getBaseContext()).edit()
                     .putString("lastWidgetDeck", "").commit();
             contentService.setCard(null);
             contentService.mBigCurrentMessage = null;
@@ -120,7 +119,7 @@ public class AnkiDroidWidgetBig extends AppWidgetProvider {
     public void onDisabled(Context context) {
         super.onDisabled(context);
         Log.i(AnkiDroidApp.TAG, "BigWidget: Widget disabled");
-        SharedPreferences preferences = PrefSettings.getSharedPrefs(context);
+        SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(context);
         preferences.edit().putBoolean("widgetBigEnabled", false).commit();
     }
 
@@ -420,7 +419,7 @@ public class AnkiDroidWidgetBig extends AppWidgetProvider {
             @Override
             public void onPostExecute(DeckTask.TaskData result) {
                 contentService.mCol = null;
-                PrefSettings.getSharedPrefs(UpdateService.this.getBaseContext()).edit().putString("lastWidgetDeck", "")
+                AnkiDroidApp.getSharedPrefs(UpdateService.this.getBaseContext()).edit().putString("lastWidgetDeck", "")
                         .commit();
                 contentService.setCard(null);
                 contentService.mBigShowProgressDialog = false;
@@ -582,7 +581,7 @@ public class AnkiDroidWidgetBig extends AppWidgetProvider {
                         showProgressDialog();
                         contentService.mWaitForAsyncTask = true;
                         AsyncTask<String, Void, DeckStatus[]> getTomorrowDuesAsyncTask = new GetTomorrowDueAsyncTask();
-                        getTomorrowDuesAsyncTask.execute(PrefSettings.getSharedPrefs(
+                        getTomorrowDuesAsyncTask.execute(AnkiDroidApp.getSharedPrefs(
                                 AnkiDroidWidgetBig.UpdateService.this).getString("deckPath",
                                 AnkiDroidApp.getStorageDirectory() + "/AnkiDroid"));
                     } else {

@@ -22,7 +22,6 @@ import com.ichi2.anki.services.NotificationService;
 import com.ichi2.async.DeckTask.TaskData;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Decks;
-import com.tomgibara.android.veecheck.util.PrefSettings;
 
 import android.content.Context;
 import android.content.Intent;
@@ -73,7 +72,7 @@ public final class WidgetStatus {
 
     public static void update(Context context, DeckStatus deckStatus, boolean updateBigWidget) {
         sDeckStatus = deckStatus;
-        SharedPreferences preferences = PrefSettings.getSharedPrefs(context);
+        SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(context);
         if (preferences.getBoolean("widgetMediumEnabled", false)) {
             mediumWidget = true;
         } else {

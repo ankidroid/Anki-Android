@@ -26,7 +26,6 @@ import android.widget.Toast;
 import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.MetaDB;
 import com.ichi2.anki2.R;
-import com.tomgibara.android.veecheck.util.PrefSettings;
 
 public class CustomDialogPreference extends DialogPreference implements DialogInterface.OnClickListener {
     private Context mContext;
@@ -41,11 +40,11 @@ public class CustomDialogPreference extends DialogPreference implements DialogIn
     public void onClick(DialogInterface dialog, int which) {
         if (which == DialogInterface.BUTTON_POSITIVE) {
             if (this.getTitle().equals(mContext.getResources().getString(R.string.reset_dialogs))) {
-                Editor editor = PrefSettings.getSharedPrefs(AnkiDroidApp.getInstance().getBaseContext()).edit();
+                Editor editor = AnkiDroidApp.getSharedPrefs(AnkiDroidApp.getInstance().getBaseContext()).edit();
                 editor.putBoolean("dontShowLowMemory", false);
                 editor.commit();
             } else if (this.getTitle().equals(mContext.getResources().getString(R.string.reset_messages))) {
-                Editor editor = PrefSettings.getSharedPrefs(AnkiDroidApp.getInstance().getBaseContext()).edit();
+                Editor editor = AnkiDroidApp.getSharedPrefs(AnkiDroidApp.getInstance().getBaseContext()).edit();
                 editor.putInt("lastMessageNum", 0);
                 editor.putBoolean("showBroadcastMessageToday", true);
                 editor.commit();

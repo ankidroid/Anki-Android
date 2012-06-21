@@ -19,7 +19,6 @@ import org.xml.sax.SAXException;
 import com.ichi2.libanki.Utils;
 import com.ichi2.themes.StyledDialog;
 import com.ichi2.themes.Themes;
-import com.tomgibara.android.veecheck.util.PrefSettings;
 
 import android.app.Activity;
 import android.content.Context;
@@ -51,7 +50,7 @@ public class BroadcastMessages {
 
 
     public static void checkForNewMessages(Activity activity) {
-        SharedPreferences prefs = PrefSettings.getSharedPrefs(activity);
+        SharedPreferences prefs = AnkiDroidApp.getSharedPrefs(activity);
         // don't retrieve messages, if option in preferences is not set
         if (!prefs.getBoolean("showBroadcastMessages", true)) {
             return;
@@ -142,7 +141,7 @@ public class BroadcastMessages {
             Activity activity = params[0];
             mActivity = activity;
 
-            SharedPreferences prefs = PrefSettings.getSharedPrefs(activity);
+            SharedPreferences prefs = AnkiDroidApp.getSharedPrefs(activity);
             int lastNum = prefs.getInt("lastMessageNum", -1);
             if (lastNum == -1) {
                 // first start of AnkiDroid ever (or at least of a version which supports broadcast messages).
@@ -280,7 +279,7 @@ public class BroadcastMessages {
 
 
     private static void setMessageRead(Context context, int num) {
-        Editor editor = PrefSettings.getSharedPrefs(context).edit();
+        Editor editor = AnkiDroidApp.getSharedPrefs(context).edit();
         Log.d(AnkiDroidApp.TAG, "BroadcastMessages: set message " + num + " as read");
         editor.putInt("lastMessageNum", num);
         editor.commit();

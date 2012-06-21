@@ -24,9 +24,6 @@ import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
-
-import com.tomgibara.android.veecheck.util.PrefSettings;
-
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 
@@ -57,7 +54,7 @@ public class AnkiDb {
             } else {
                 queryString("PRAGMA journal_mode = DELETE");
             }
-            if (PrefSettings.getSharedPrefs(AnkiDroidApp.getInstance().getBaseContext()).getBoolean("asyncMode", false)) {
+            if (AnkiDroidApp.getSharedPrefs(AnkiDroidApp.getInstance().getBaseContext()).getBoolean("asyncMode", false)) {
                 mDatabase.rawQuery("PRAGMA synchronous = 0", null);
             } else {
                 mDatabase.rawQuery("PRAGMA synchronous = 2", null);
