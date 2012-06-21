@@ -84,7 +84,7 @@ public class Collection {
     private JSONObject mConf;
     // END: SQL table columns
 
-    private Object[] mUndo;
+    private LinkedList<Object[]> mUndo;
 
     private String mPath;
     private boolean mClosing = false;
@@ -102,6 +102,9 @@ public class Collection {
             // other config
             "'curModel': None, " + "'nextPos': 1, " + "'sortType': \"noteFld\", "
             + "'sortBackwards': False, 'addToCur': True }";
+
+    public static final int UNDO_REVIEW = 0;
+    public static final int UNDO_EDIT_NOTE = 1;
 
     private static Collection sCurrentCollection;
 
@@ -254,7 +257,8 @@ public class Collection {
             lock();
             mDb.setMod(false);
         }
-        _markOp(name);
+        // undoing non review operation is handled differently in ankidroid
+//        _markOp(name);
         mLastSave = Utils.now();
     }
 
@@ -1180,92 +1184,81 @@ public class Collection {
      */
 
     /**
-     * [type, undoName, data] type 1 = review; type 2 = checkpoint
+     * [type, undoName, data] type 1 = review; type 2 = 
      */
     public void clearUndo() {
-        mUndo = new Object[3];
+        mUndo = new LinkedList<Object[]>();
     }
 
 
-    /** Undo menu item name, or None if undo unavailable. */
-    public String undoName() {
-        if (mUndo[1] == null) {
-            return null;
-        } else {
-            return (String) mUndo[1];
-        }
-    }
+//    /** Undo menu item name, or None if undo unavailable. */
+//    public String undoName() {
+//        if (mUndo[1] == null) {
+//            return null;
+//        } else {
+//            return (String) mUndo[1];
+//        }
+//    }
 
 
     public boolean undoAvailable() {
-        return mUndo[0] != null;
+        return mUndo.size() > 0;
     }
 
 
     public long undo() {
-        if (((Integer) mUndo[0]) == 1) {
-            return _undoReview();
-        } else {
-            _undoOp();
-            return 0;
-        }
-    }
-
-
-    public void markReview(Card card) {
-        LinkedList<Card> old = new LinkedList<Card>();
-        if (mUndo[0] != null) {
-            if ((Integer) mUndo[0] == 1) {
-                old.addAll((LinkedList<Card>) mUndo[2]);
+    	Object[] data = mUndo.removeLast();
+    	switch ((Integer)data[0]) {
+    	case UNDO_REVIEW:
+            Card c = (Card) data[1];
+            // write old data
+            c.flush();
+            // and delete revlog entry
+            long last = mDb.queryLongScalar("SELECT id FROM revlog WHERE cid = " + c.getId() + " ORDER BY id DESC LIMIT 1");
+            mDb.execute("DELETE FROM revlog WHERE id = " + last);
+            // and finally, update daily count
+            // FIXME: what to do in cramming case?
+            int n = c.getQueue() == 3 ? 1 : c.getQueue();
+            String type = (new String[] { "new", "lrn", "rev" })[n];
+            mSched._updateStats(c, type, -1);
+            return c.getId();
+    	case UNDO_EDIT_NOTE:
+    		Note note = (Note) data[1];
+    		note.flush();
+    		long cid = (Long) data[2];
+            Card card = null;
+            if ((Boolean) data[3]) {
+                Card newCard = getCard(cid);
+                if (getDecks().active().contains(newCard.getDid())) {
+                    card = newCard;
+                    card.load();
+                    // reload qa-cache
+                    card.getQuestion(true);
+                }
             }
-            clearUndo();
-        }
-        mUndo[0] = 1;
-        mUndo[1] = "review";
-        old.add(card.clone());
-        mUndo[2] = old;
-    }
-
-
-    private long _undoReview() {
-        LinkedList<Card> data = (LinkedList<Card>) mUndo[2];
-        Card c = data.removeLast();
-        if (data.size() == 0) {
-            clearUndo();
-        }
-        // write old data
-        c.flush();
-        // and delete revlog entry
-        long last = mDb.queryLongScalar("SELECT id FROM revlog WHERE cid = " + c.getId() + " ORDER BY id DESC LIMIT 1");
-        mDb.execute("DELETE FROM revlog WHERE id = " + last);
-        // and finally, update daily count
-        // FIXME: what to do in cramming case?
-        int n = c.getQueue() == 3 ? 1 : c.getQueue();
-        String type = (new String[] { "new", "lrn", "rev" })[n];
-        mSched._updateStats(c, type, -1);
-        return c.getId();
-    }
-
-
-    /** Call via .save() */
-    private void _markOp(String name) {
-        if (name != null && name.length() > 0) {
-            mUndo[0] = 2;
-            mUndo[1] = name;
-        } else {
-            // saving disables old checkpoint, but not review undo
-            if (mUndo[0] != null && (Integer) mUndo[0] == 2) {
-                clearUndo();
+            if (card == null) {
+            	card = getSched().getCard();
             }
-        }
+            if (card != null) {
+            	return card.getId();
+            }
+    		return 0;
+        default:
+        	return 0;
+    	}
     }
 
 
-    private void _undoOp() {
-        rollback();
-        clearUndo();
+    public void markUndo(int type, Object[] o) {
+    	switch(type) {
+    	case UNDO_REVIEW:
+    		mUndo.add(new Object[]{type, ((Card)o[0]).clone()});
+    		break;
+    	case UNDO_EDIT_NOTE:
+    		mUndo.add(new Object[]{type, ((Note)o[0]).clone(), o[1], o[2]});
+    		break;
+    	}
     }
-
 
     /**
      * DB maintenance *********************************************************** ************************************

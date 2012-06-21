@@ -30,7 +30,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
-public class Note {
+public class Note implements Cloneable {
 
     private Collection mCol;
 
@@ -329,4 +329,13 @@ public class Note {
     public String[] getFields() {
         return mFields;
     }
+
+    public Note clone() {
+        try {
+            return (Note) super.clone();
+        } catch (CloneNotSupportedException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
 }

@@ -183,7 +183,7 @@ public class Sched {
     public boolean answerCard(Card card, int ease) {
         Log.i(AnkiDroidApp.TAG, "answerCard - ease:" + ease);
         boolean isLeech = false;
-        mCol.markReview(card);
+        mCol.markUndo(Collection.UNDO_REVIEW, new Object[]{card});
         card.setReps(card.getReps() + 1);
         boolean wasNew = (card.getQueue() == 0);
         if (wasNew) {
