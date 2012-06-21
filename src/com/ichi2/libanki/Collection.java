@@ -106,7 +106,11 @@ public class Collection {
     public static final int UNDO_REVIEW = 0;
     public static final int UNDO_EDIT_NOTE = 1;
     public static final int UNDO_BURY_NOTE = 2;
-
+    public static final int UNDO_SUSPEND_CARD = 3;
+    public static final int UNDO_SUSPEND_NOTE = 4;
+    public static final int UNDO_DELETE_NOTE = 5;
+    
+    
     private static final int UNDO_SIZE_MAX = 20;
 
     private static Collection sCurrentCollection;
@@ -1258,6 +1262,17 @@ public class Collection {
     		}
     		return (Long) data[3];
 
+    	case UNDO_SUSPEND_CARD:
+    		Card suspendedCard = (Card)data[1];
+    		suspendedCard.flush();
+    		return suspendedCard.getId();
+
+    	case UNDO_SUSPEND_NOTE:
+    		for (Card ccc : (ArrayList<Card>) data[1]) {
+    			ccc.flush();
+    		}
+    		return (Long) data[2];
+
         default:
         	return 0;
     	}
@@ -1273,7 +1288,13 @@ public class Collection {
     		mUndo.add(new Object[]{type, ((Note)o[0]).clone(), o[1], o[2]});
     		break;
     	case UNDO_BURY_NOTE:
-    		mUndo.add(new Object[]{type, o[0], o[1], o[2]});    		
+    		mUndo.add(new Object[]{type, o[0], o[1], o[2]});
+    		break;
+    	case UNDO_SUSPEND_CARD:
+    		mUndo.add(new Object[]{type, o[0]});
+    		break;
+    	case UNDO_SUSPEND_NOTE:
+    		mUndo.add(new Object[]{type, o[0], o[1]});
     		break;
     	}
     	while (mUndo.size() > UNDO_SIZE_MAX) {

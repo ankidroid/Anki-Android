@@ -478,18 +478,13 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
                 switch (type) {
                     case 0:
                     	// store information for undoing first
-                        long[] cardIds = Utils.arrayList2array(col.getDb().queryColumn(Long.class,
-                                "SELECT id FROM cards WHERE nid = " + note.getId(), 0));
-                        ArrayList<Card> undoCards = new ArrayList<Card>();
-                        for (long c : cardIds) {
-                        	undoCards.add(col.getCard(c));
-                        }
-                    	col.markUndo(Collection.UNDO_BURY_NOTE, new Object[]{col.getDirty(), undoCards, card.getId()});
+                    	col.markUndo(Collection.UNDO_BURY_NOTE, new Object[]{col.getDirty(), note.cards(), card.getId()});
                     	// then bury
                         sched.buryNote(note.getId());
                         break;
                     case 1:
                         // suspend card
+                    	col.markUndo(Collection.UNDO_SUSPEND_CARD, new Object[]{card});
                         if (card.getQueue() == -1) {
                             sched.unsuspendCards(new long[] { card.getId() });
                         } else {
@@ -503,6 +498,7 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
                         for (int i = 0; i < cards.size(); i++) {
                             cids[i] = cards.get(i).getId();
                         }
+                    	col.markUndo(Collection.UNDO_SUSPEND_NOTE, new Object[]{cards, card.getId()});
                         sched.suspendCards(cids);
                         break;
                     case 3:
