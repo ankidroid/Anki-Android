@@ -1304,7 +1304,7 @@ public class Collection {
     		mUndo.add(new Object[]{type, o[0], o[1], o[2]});
     		break;
     	case UNDO_SUSPEND_CARD:
-    		mUndo.add(new Object[]{type, o[0]});
+    		mUndo.add(new Object[]{type, o[0].clone()});
     		break;
     	case UNDO_SUSPEND_NOTE:
     		mUndo.add(new Object[]{type, o[0], o[1]});
