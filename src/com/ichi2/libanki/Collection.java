@@ -109,6 +109,7 @@ public class Collection {
     public static final int UNDO_SUSPEND_CARD = 3;
     public static final int UNDO_SUSPEND_NOTE = 4;
     public static final int UNDO_DELETE_NOTE = 5;
+    public static final int UNDO_MARK_NOTE = 6;
     
     
     private static final int UNDO_SIZE_MAX = 20;
@@ -1222,7 +1223,7 @@ public class Collection {
     	case UNDO_REVIEW:
             Card c = (Card) data[1];
             // write old data
-            c.flush();
+            c.flush(false);
             // and delete revlog entry
             long last = mDb.queryLongScalar("SELECT id FROM revlog WHERE cid = " + c.getId() + " ORDER BY id DESC LIMIT 1");
             mDb.execute("DELETE FROM revlog WHERE id = " + last);
@@ -1235,7 +1236,7 @@ public class Collection {
 
     	case UNDO_EDIT_NOTE:
     		Note note = (Note) data[1];
-    		note.flush();
+    		note.flush(note.getMod(), false);
     		long cid = (Long) data[2];
             Card card = null;
             if ((Boolean) data[3]) {
@@ -1258,32 +1259,38 @@ public class Collection {
     	case UNDO_BURY_NOTE:
     		setDirty((Boolean)data[1]);
     		for (Card cc : (ArrayList<Card>)data[2]) {
-    			cc.flush();
+    			cc.flush(false);
     		}
     		return (Long) data[3];
 
     	case UNDO_SUSPEND_CARD:
     		Card suspendedCard = (Card)data[1];
-    		suspendedCard.flush();
+    		suspendedCard.flush(false);
     		return suspendedCard.getId();
 
     	case UNDO_SUSPEND_NOTE:
     		for (Card ccc : (ArrayList<Card>) data[1]) {
-    			ccc.flush();
+    			ccc.flush(false);
     		}
     		return (Long) data[2];
 
     	case UNDO_DELETE_NOTE:
-		ArrayList<Long> ids = new ArrayList<Long>();
-		Note note2 = (Note)data[1];
-		note2.flush(note2.getMod());
-		ids.add(note2.getId());
-    		for (Card c4 : (ArrayList<Card>) data[2]) {
-    			c4.flush(false);
-			ids.add(c4.getId());
-    		}
-		mDb.execute("DELETE FROM graves WHERE oid IN " + Utils.ids2str(Utils.arrayList2array(ids)));
-		mDb.executeMany("INSERT INTO revlog VALUES (?,?,?,?,?,?,?,?,?)", (ArrayList<Object[]>) data[4]);
+    		ArrayList<Long> ids = new ArrayList<Long>();
+    		Note note2 = (Note)data[1];
+    		note2.flush(note2.getMod(), false);
+    		ids.add(note2.getId());
+        		for (Card c4 : (ArrayList<Card>) data[2]) {
+        			c4.flush(false);
+    			ids.add(c4.getId());
+        		}
+    		mDb.execute("DELETE FROM graves WHERE oid IN " + Utils.ids2str(Utils.arrayList2array(ids)));
+    		mDb.executeMany("INSERT INTO revlog VALUES (?,?,?,?,?,?,?,?,?)", (ArrayList<Object[]>) data[4]);
+    		return (Long) data[3];
+
+    	case UNDO_MARK_NOTE:
+    		Note note3 = getNote((Long) data[1]);
+    		note3.setTagsFromStr((String) data[2]);
+    		note3.flush(note3.getMod(), false);
     		return (Long) data[3];
 
         default:
@@ -1309,9 +1316,12 @@ public class Collection {
     	case UNDO_SUSPEND_NOTE:
     		mUndo.add(new Object[]{type, o[0], o[1]});
     		break;
-	case UNDO_DELETE_NOTE:
+    	case UNDO_DELETE_NOTE:
     		mUndo.add(new Object[]{type, o[0], o[1], o[2], o[3]});
-		break;
+    		break;
+    	case UNDO_MARK_NOTE:
+    		mUndo.add(new Object[]{type, o[0], o[1], o[2]});
+    		break;
     	}
     	while (mUndo.size() > UNDO_SIZE_MAX) {
     		mUndo.removeFirst();

@@ -589,6 +589,7 @@ public class DeckTask extends
 			try {
 				if (card != null) {
 					Note note = card.note();
+					sched.getCol().markUndo(Collection.UNDO_MARK_NOTE, new Object[] { note.getId(), note.stringTags(), card.getId() });
 					if (note.hasTag("marked")) {
 						note.delTag("marked");
 					} else {
