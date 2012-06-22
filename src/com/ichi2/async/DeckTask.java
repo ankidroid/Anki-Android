@@ -484,7 +484,7 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
                         break;
                     case 1:
                         // suspend card
-                    	col.markUndo(Collection.UNDO_SUSPEND_CARD, new Object[]{card});
+                    	col.markUndo(Collection.UNDO_SUSPEND_CARD, new Object[]{card.clone()});
                         if (card.getQueue() == -1) {
                             sched.unsuspendCards(new long[] { card.getId() });
                         } else {
