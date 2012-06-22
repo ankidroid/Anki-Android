@@ -1273,6 +1273,19 @@ public class Collection {
     		}
     		return (Long) data[2];
 
+    	case UNDO_DELETE_NOTE:
+		ArrayList<Long> ids = new ArrayList<Long>();
+		Note note2 = (Note)data[1];
+		note2.flush();
+		ids.add(note2.getId();
+    		for (Card c4 : (ArrayList<Card>) data[2]) {
+    			c4.flush();
+			ids.add(c4.getId());
+    		}
+		mDb.execute("DELETE FROM graves WHERE oid IN " + Utils.ids2str(Utils.arrayList2array(ids)));
+		mDb.executeMany("INSERT INTO revlog VALUES (?,?,?,?,?,?,?,?,?)", data[4]);
+    		return (Long) data[3];
+
         default:
         	return 0;
     	}
@@ -1291,11 +1304,14 @@ public class Collection {
     		mUndo.add(new Object[]{type, o[0], o[1], o[2]});
     		break;
     	case UNDO_SUSPEND_CARD:
-    		mUndo.add(new Object[]{type, o[0]});
+    		mUndo.add(new Object[]{type, o[0].clone()});
     		break;
     	case UNDO_SUSPEND_NOTE:
     		mUndo.add(new Object[]{type, o[0], o[1]});
     		break;
+	case UNDO_DELETE_NOTE:
+    		mUndo.add(new Object[]{type, o[0], o[1], o[2], o[3]});
+		break;
     	}
     	while (mUndo.size() > UNDO_SIZE_MAX) {
     		mUndo.removeFirst();

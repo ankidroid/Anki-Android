@@ -477,14 +477,15 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
             try {
                 switch (type) {
                     case 0:
-                    	// store information for undoing first
+                        // collect undo information
                     	col.markUndo(Collection.UNDO_BURY_NOTE, new Object[]{col.getDirty(), note.cards(), card.getId()});
                     	// then bury
                         sched.buryNote(note.getId());
                         break;
                     case 1:
+                        // collect undo information
+                    	col.markUndo(Collection.UNDO_SUSPEND_CARD, new Object[]{card});
                         // suspend card
-                    	col.markUndo(Collection.UNDO_SUSPEND_CARD, new Object[]{card.clone()});
                         if (card.getQueue() == -1) {
                             sched.unsuspendCards(new long[] { card.getId() });
                         } else {
@@ -492,16 +493,36 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
                         }
                         break;
                     case 2:
-                        // suspend note
+                        // collect undo information
                         ArrayList<Card> cards = note.cards();
                         long[] cids = new long[cards.size()];
                         for (int i = 0; i < cards.size(); i++) {
                             cids[i] = cards.get(i).getId();
                         }
                     	col.markUndo(Collection.UNDO_SUSPEND_NOTE, new Object[]{cards, card.getId()});
+                        // suspend note
                         sched.suspendCards(cids);
                         break;
                     case 3:
+                        // collect undo information
+			Cursor cur = null;
+                        ArrayList<Card> allCards = note.cards();
+                        long[] cids = new long[allCards.size()];
+                        for (int i = 0; i < allCards.size(); i++) {
+                            cids[i] = allCards.get(i).getId();
+                        }
+			ArrayList<Object[]> revLogData = new ArrayList<Object[]>();
+			try {
+	                    cur = col.getDb().getDatabase().rawQuery("SELECT * FROM revlog WHERE cid IN " + Utils.ids2str(cids), null);
+	                    while (cur.moveToNext()) {
+	                        revLogData.add(new Object[] { cur.getLong(0), cur.getLong(1), cur.getInt(2), cur.getInt(3), cur.getInt(4), cur.getInt(5), cur.getInt(6), cur.getInt(7), cur.getInt(8) });
+	                    }
+	                } finally {
+	                    if (cur != null && !cur.isClosed()) {
+	                        cur.close();
+	                    }
+	                }
+                    	col.markUndo(Collection.UNDO_DELETE_NOTE, new Object[]{note, allCards, card.getId(), revLogData});
                         // delete note
                         col.remNotes(new long[] { note.getId() });
                         break;
