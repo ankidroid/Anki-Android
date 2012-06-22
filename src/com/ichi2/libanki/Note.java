@@ -118,10 +118,17 @@ public class Note implements Cloneable {
     }
 
 
-    public void flush(int mod) {
+    public void flush(long mod) {
+    	flush(mod, true);
+    }
+
+
+    public void flush(long mod, boolean changeUsn) {
         _preFlush();
         mMod = mod != 0 ? mod : Utils.intNow();
-        mUsn = mCol.usn();
+        if (changeUsn) {
+            mUsn = mCol.usn();        	
+        }
         String sfld = Utils.stripHTML(mFields[mCol.getModels().sortIdx(mModel)]);
         String tags = stringTags();
         long csum = Utils.fieldChecksum(mFields[0]);
@@ -328,6 +335,10 @@ public class Note implements Cloneable {
 
     public String[] getFields() {
         return mFields;
+    }
+
+    public long getMod() {
+        return mMod;
     }
 
     public Note clone() {
