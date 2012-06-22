@@ -49,9 +49,9 @@
   <string name="sync_log_db_error">Ocurrió un error en la base de datos.</string>
   <string name="no_user_password_error_message">Para continuar con esta operación, necesitas una cuenta en AnkiWeb y haber iniciado sesión.</string>
   <string name="username">Usuario</string>
-  <string name="username_repeat">Repeat username</string>
+  <string name="username_repeat">Repita el nombre de usuario</string>
   <string name="password">Contraseña</string>
-  <string name="password_repeat">Repeat password</string>
+  <string name="password_repeat">Repita la contraseña</string>
   <string name="log_in">Iniciar sesión</string>
   <string name="sign_up_description">¿No tienes una cuenta de AnkiWeb? ¡Es gratis!</string>
   <string name="sign_up">Regístrate</string>
@@ -110,8 +110,19 @@
   <string name="sync_media_to_server">Enviando archivos multimedia al servidor...</string>
   <string name="sync_media_no_changes">Sin cambios en los archivos multimedia.</string>
   <string name="sync_media_success">Archivos multimedia sincronizados correctamente.</string>
-  <string name="register_error">An error occurred. Please try again later.</string>
-  <string name="register_title">Register account</string>
-  <string name="register_mismatch">The username/password repetition does not match or is empty. Please re-enter.</string>
-  <string name="registering_message">Creating account.\nPlease wait...</string>
+  <string name="register_error">Se ha producido un error. Inténtalo de nuevo más tarde.</string>
+  <string name="register_title">Registrar una cuenta</string>
+  <string name="register_mismatch">El nombre de usuario/contraseña repetido no coincide o está vacío. Por favor, vuelve a introducirlo.</string>
+  <string name="registering_message">Creando cuenta.\nPor favor, espera...</string>
+  <string name="upgrade_decks_zipping">Comprimiendo mazos para cargar\nPor favor, espera...</string>
+  <string name="upgrade_decks_upload">Cargando mazos comprimidos.\nPor favor, espera...</string>
+  <string name="upgrade_decks_waiting">En espera, posición en la cola: %s\nPor favor, espera...</string>
+  <string name="upgrade_decks_upgrade_started">\"Actualización iniciada\nPor favor, espera a que finalice...</string>
+  <string name="upgrade_decks_downloading">Descargando colección actualizada.\nPor favor, espera...</string>
+  <string name="upgrade_decks_message">There is no Anki 2.0 collection available but at least one deck of the old Anki 1.2 format has been found. In order to use your decks with the new version of AnkiDroid they need to be converted first into a single collection of the new Anki-2.0 format. There are three possibilities for this:</string>
+  <string name="upgrade_decks_message_pos1">By using Anki Desktop 2.0, your decks will be converted at the first start. You can sync over AnkiWeb or just copy the new collection afterwards to your mobile device. Start with syncing your Anki-1.2 decks to Anki Desktop (or copy them from your AnkiDroid directory (%s) to your Anki Desktop 1.2 directory on your computer) and start Anki Desktop 2.0.</string>
+  <string name="upgrade_decks_message_pos2">If you already sync your decks over ankiweb, you\'ll just need to log in once to %s and your decks will be converted there. After that you can simply sync the new collection to your mobile device.</string>
+  <string name="upgrade_decks_message_pos3">As a third possibility, you can have your decks converted via AnkiDroid itself and AnkiWeb. If you click on the upgrade button below, your decks will be bundled and uploaded to AnkiWeb. The converted collection will then be automatically downloaded and opened. You don\'t need any registration for that but be aware that it might be better to use a wifi connection in order to prevent too much traffic over your mobile connection. If the compressed decks amount to more than 50 mb, you cannot use this way. Please resort to the other options in this case.</string>
+  <string name="upgrade_required">Tus mazos de AnkiWeb poseen todavía el antiguo formato Anki 1.2. Por favor, visita %s y regístrate allí. Tus mazos, a continuación, serán convertidos automáticamente al nuevo formato.</string>
+  <string name="upgrade_decks_button">Actualizar</string>
 </resources>

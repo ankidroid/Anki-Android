@@ -70,14 +70,14 @@
   </string-array>
   <string-array name="gestures_labels">
     <item>Nenhuma ação</item>
-    <item>Show answer</item>
-    <item>Answer button 1</item>
-    <item>Answer button 2</item>
-    <item>Answer button 3</item>
-    <item>Answer button 4</item>
-    <item>Answer recommended (green)</item>
-    <item>Answer better than recommended</item>
-    <item>Undo</item>
+    <item>Mostrar resposta</item>
+    <item>Botão de resposta 1</item>
+    <item>Botão de resposta 2</item>
+    <item>Botão de resposta 3</item>
+    <item>Botão de resposta 4</item>
+    <item>Resposta recomendada (verde)</item>
+    <item>Resposta melhor que recomendada</item>
+    <item>Desfazer</item>
     <item>Editar cartão</item>
     <item>Marcar cartão</item>
     <item>Verificar expressão</item>
@@ -85,7 +85,7 @@
     <item>Suspender cartão</item>
     <item>Apagar cartão</item>
     <item>Limpar Whiteboard</item>
-    <item>Play media</item>
+    <item>Reproduzir mídia</item>
     <item>Abort learning</item>
   </string-array>
   <string-array name="theme_labels">
@@ -95,17 +95,17 @@
     <item>Branco</item>
   </string-array>
   <string-array name="leech_action_labels">
-    <item>Suspend card</item>
+    <item>Suspender cartão</item>
     <item>Tag only</item>
     <item>Reset as new</item>
   </string-array>
   <string-array name="new_order_labels">
-    <item>New cards in random order</item>
-    <item>New cards in order added</item>
+    <item>Novos cartões em ordem aleatória</item>
+    <item>Novos cartões na ordem adicionada</item>
   </string-array>
   <string-array name="cram_deck_conf_order_labels">
     <item>Oldest seen first</item>
-    <item>Random</item>
+    <item>Aleatório</item>
     <item>Increasing intervals</item>
     <item>Decreasing intervals</item>
     <item>Most lapsed</item>
@@ -114,7 +114,7 @@
   </string-array>
   <string-array name="cram_deck_conf_preset_labels">
     <item><![CDATA[<select preset>]]></item>
-    <item>Preview all new cards</item>
+    <item>Visualizar todas as novas cartas</item>
     <item>Preview cards added today</item>
     <item>Review today\'s forgotten cards</item>
     <item>Review ahead by two days</item>

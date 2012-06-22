@@ -29,14 +29,14 @@
   <string name="contextmenu_deckpicker_remove_backups">Remover backups</string>
   <string name="backup_restore">Restaurar do backup</string>
   <string name="backup_new_collection">Nova coleção</string>
-  <string name="error_handling_title">Error handling</string>
+  <string name="error_handling_title">Tratamento de erros</string>
   <string name="error_handling_options">Opções</string>
   <string name="backup_retry_opening">Tentar abrir novamente</string>
   <string name="backup_error_menu_repair">Consertar banco de dados</string>
   <string name="backup_repair_deck">Consertar</string>
   <string name="backup_repair_deck_progress">Consertando banco de dados.\nPor favor aguarde...</string>
   <string name="backup_restore_error">Deck não pôde ser restaurado</string>
-  <string name="backup_restore_if_missing">Restoring collection if missing...</string>
+  <string name="backup_restore_if_missing">Restaurando coleção caso esteja faltando...</string>
   <string name="backup_restore_deck">Restaurando deck. \nPor favor espere...</string>
   <string name="backup_restore_select_title">Selecione o backup para restaurar</string>
   <string name="backup_restore_no_backups">Sem backups disponíveis para este deck no AnkiDroid. Se você tiver backups em seu computador, por favor, copie manualmente para a pasta AnkiDroid</string>

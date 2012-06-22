@@ -104,21 +104,21 @@
     <item>Tarjetas nuevas en orden añadido</item>
   </string-array>
   <string-array name="cram_deck_conf_order_labels">
-    <item>Oldest seen first</item>
-    <item>Random</item>
-    <item>Increasing intervals</item>
-    <item>Decreasing intervals</item>
-    <item>Most lapsed</item>
-    <item>Order added</item>
-    <item>Order due</item>
+    <item>Vistas más antiguamente primero</item>
+    <item>Aleatorio</item>
+    <item>Intervalos crecientes</item>
+    <item>Intervalos decrecientes</item>
+    <item>Más atrasadas</item>
+    <item>Orden añadido</item>
+    <item>Orden programado</item>
   </string-array>
   <string-array name="cram_deck_conf_preset_labels">
     <item><![CDATA[<select preset>]]></item>
-    <item>Preview all new cards</item>
-    <item>Preview cards added today</item>
-    <item>Review today\'s forgotten cards</item>
-    <item>Review ahead by two days</item>
-    <item>Review due cards with tag</item>
-    <item>Cram all cards</item>
+    <item>Previsualizar todas las tarjetas nuevas</item>
+    <item>Previsualizar las tarjetas añadidas hoy</item>
+    <item>Repasar las tarjetas olvidadas de hoy</item>
+    <item>Repasar dos días por adelantado</item>
+    <item>Repasar tarjetas programadas con etiqueta</item>
+    <item>Empollar todas las tarjetas</item>
   </string-array>
 </resources>

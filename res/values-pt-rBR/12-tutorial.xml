@@ -17,9 +17,9 @@
  
 <resources> 
  <string-array name="tutorial_questions"> 
-    <item><![CDATA[Thanks for installing AnkiDroid!<br />This is a short introduction.<br />What you see now is the <span style=\'font-weight:600;\'>question</span> part of a flashcard.<br />Please click on the large button below...]]></item> 
-    <item><![CDATA[The next card is shown now.<br />The idea is straightforward: Just like in &quot;real world&quot; paper flashcards, you write a question on the front and the answer on the back side of your cards.<br />(click the button to show the back side)]]></item> 
-    <item><![CDATA[&quot;What is the capital of Burkina Faso?&quot;<br />Think a bit about the answer and click then &quot;show answer&quot;]]></item> 
+    <item><![CDATA[Obrigado por instalar AnkiDroid!<br/>Esta é uma curta introdução.<br/>O que você vê agora é a parte da <span style=\'font-weight:600;\'>pergunta</span> de um cartão.<br/>Por favor, clique no botão grande abaixo...]]></item> 
+    <item><![CDATA[O próximo cartão é mostrado agora.<br/>A idéia é simples: Assim como nos cartões do mundo real, você escreve uma pergunta na frente e a resposta no verso dos seus cartões.<br/>(clique no botão para mostrar o verso) ]]></item> 
+    <item><![CDATA[&quot;Qual é a capital de Burkina Faso?&quot;<br/>Pense um pouco na resposta e então clique &quot;mostrar resposta&quot;]]></item> 
     <item><![CDATA[Acima de todos os botões de resposta, você encontra informações sobre o tempo, após o qual o cartão será mostrado novamente quando respondido por este botão.]]></item> 
     <item><![CDATA[A intenção é mostrar-lhe novamente o cartão imediatamente antes que você o esqueceria. Estudos empíricos demonstraram que por esta via informações podem ser aprendidas com a maior eficiência.]]></item> 
     <item><![CDATA[Algumas palavras sobre a organização em AnkiDroid:<br/><br>Todas as informações tem de ser colocada em pares de pergunta e resposta. Se você quer aprender em outra direção, você deveria criar outro cartão com as informações trocadas.]]></item> 
@@ -32,9 +32,9 @@
     <item><![CDATA[Estes têm sido os principais pontos de uso do AnkiDroid.<br/><br>Para obter mais informações sobre o conceito chave do Anki, visite http://ankisrs.net/]]></item> 
  </string-array>
  <string-array name="tutorial_answers">
-    <item><![CDATA[... in order to see the <span style=\'font-weight:600;\'>answer</span> part of the flashcard (below the line).<br />Click on the button on the right]]></item> 
-    <item><![CDATA[Let\'s assume you want to learn the world\'s capitals. Let the question be...<br />(click on one of the buttons to show the next card)]]></item> 
-    <item><![CDATA[&quot;Ouagadougou&quot; is the right answer. <br />You didn\'t know it? Click &quot;again&quot; to see the card again in a couple of minutes. Otherwise, click on the other buttons, depending on the easiness of the answer.]]></item> 
+    <item><![CDATA[... para ver a parte da <span style=\'font-weight:600;\'>resposta</span> do cartão (abaixo da linha).<br/>Clique no botão à direita]]></item> 
+    <item><![CDATA[Vamos supor que você queira aprender as capitais do mundo. A questão é...<br/>(clique em um dos botões para mostrar o próximo cartão)]]></item> 
+    <item><![CDATA[&quot;Ouagadoudou&quot; ;e a resposta correta. <br/> Você não sabia? Clique &quot;novamente&quot; para ver o cartão novamente em alguns minutos. Senão, clique nos outros botões, dependendo da facilidade da questão.]]></item> 
     <item><![CDATA[Este período de tempo é calculado sobre a última vez que você respondeu o cartão, a escolha atual de dificuldade e opções de dificuldade de respostas anteriores deste cartão.]]></item> 
     <item><![CDATA[Se você quiser saber mais sobre repetições espaçadas, visite:<br>http://en.wikipedia.org/wiki/Spaced_repetition_system]]></item> 
     <item><![CDATA[Não se preocupe, isso pode ser feito automaticamente. Não há necessidade de inserir a mesma informação duas vezes.]]></item> 
