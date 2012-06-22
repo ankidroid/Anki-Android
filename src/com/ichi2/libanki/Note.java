@@ -101,7 +101,8 @@ public class Note implements Cloneable {
             mUsn = cursor.getInt(3);
             mFields = Utils.splitFields(cursor.getString(5));
             mTags = mCol.getTags().split(cursor.getString(4));
-            mData = cursor.getString(6);
+            mFlags = cursor.getInt(6);
+            mData = cursor.getString(7);
             mScm = mCol.getScm();
         } finally {
             if (cursor != null) {
