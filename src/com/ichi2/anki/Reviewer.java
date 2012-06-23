@@ -827,7 +827,6 @@ public class Reviewer extends AnkiActivity {
             if (mProgressDialog != null && mProgressDialog.isShowing()) {
                 mProgressDialog.dismiss();
             }
-            mInAnswer = false;
         }
     };
 
@@ -1738,7 +1737,6 @@ public class Reviewer extends AnkiActivity {
         if (mInAnswer) {
             return;
         }
-        mInAnswer = true;
         mIsSelecting = false;
         if (mPrefTextSelection) {
             clipboardSetText("");
@@ -3053,6 +3051,7 @@ public class Reviewer extends AnkiActivity {
             mAnswerField.setEnabled(true);
         }
         mTouchLayer.setVisibility(View.VISIBLE);
+        mInAnswer = false;
     }
 
 
@@ -3060,6 +3059,7 @@ public class Reviewer extends AnkiActivity {
         mCardFrame.setEnabled(false);
         mFlipCardLayout.setEnabled(false);
         mTouchLayer.setVisibility(View.INVISIBLE);
+        mInAnswer = true;
 
         switch (mCurrentEase) {
             case EASE_FAILED:

@@ -76,17 +76,17 @@
   <string name="simple_interface_hint">Vaciar %s. Ten en cuenta que la interfaz simple no puede mostrar imágenes/sonidos etc.</string>
   <string name="delete_deck">Eliminando mazo...\nPor favor, espera.</string>
   <string name="menu_cardbrowser">Explorador de tarjetas</string>
-  <string name="pref_lang_other">Language Preferences</string>
+  <string name="pref_lang_other">Preferencias de Idioma</string>
   <string name="pref_lang_common">LangCommon</string>
-  <string name="pref_font_UI">Custom UI Font</string>
+  <string name="pref_font_UI">Fuente de interfaz personalizada</string>
   <string-array name="dynOrderLabels">
     <item>Vistas más antiguamente primero</item>
     <item>Aleatorio</item>
     <item>Intervalos crecientes</item>
     <item>Intervalos decrecientes</item>
     <item>Mayores lapsos</item>
-    <item>Order added</item>
-    <item>Order due</item>
+    <item>Orden añadidas</item>
+    <item>Orden programadas</item>
   </string-array>
   <plurals name="factadder_cards_added">
     <item quantity="one">Se ha añadido 1 tarjeta</item>

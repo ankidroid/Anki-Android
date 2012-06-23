@@ -152,8 +152,13 @@ public class Card implements Cloneable {
 
 
     public void flush() {
-        mMod = Utils.intNow();
-        mUsn = mCol.usn();
+    	flush(true);
+    }
+    public void flush(boolean changeModUsn) {
+    	if (changeModUsn) {
+            mMod = Utils.intNow();    		
+            mUsn = mCol.usn();    		
+    	}
         // bug check
         assert mQueue != 2 || mODue == 0 || mCol.getDecks().isDyn(mDid);
         StringBuilder sb = new StringBuilder();

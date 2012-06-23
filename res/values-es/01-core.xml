@@ -87,15 +87,15 @@
   <string name="create_collection">Creando colección.\nPor favor, espera...</string>
   <string name="rebuild_cram_deck">Reconstruyendo mazo para empollar.\nPor favor, espera...</string>
   <string name="rebuild_cram_label">Reconstruir</string>
-  <string name="empty_cram_label">Empty</string>
-  <string name="empty_cram_deck">Emptying cram deck.\nPlease wait...</string>
+  <string name="empty_cram_label">Vaciar</string>
+  <string name="empty_cram_deck">Vaciando mazo de empollar.\nPor favor, espera...</string>
   <string name="studyoptions_congrats_finished">¡Felicidades! Has terminado por ahora.</string>
   <string name="studyoptions_congrats_more_rev">Se ha alcanzado el límite de repasos de hoy, pero todavía hay tarjetas a la espera de ser repasadas. Para una memorización óptima, considera la posibilidad de aumentar el límite diario en las opciones.</string>
   <string name="studyoptions_congrats_more_new">Hay más tarjetas nuevas disponibles, pero se ha alcanzado el límite diario. Puedes aumentar el límite en las opciones, pero ten en cuenta que cuantas más tarjetas nuevas introduzcas, mayor será la carga de trabajo de revisión a corto plazo.</string>
   <string name="sd_card_not_mounted">La tarjeta SD no está preparada.</string>
   <string name="studyoptions_options">Opciones</string>
   <string name="empty_cloze_warning">Please edit this note and add some cloze deletions. (%1$s)</string>
-  <string name="help_cloze">help</string>
+  <string name="help_cloze">Ayuda</string>
   <string-array name="next_review_s">
     <item>1 segundo</item>
     <item>1 minuto</item>

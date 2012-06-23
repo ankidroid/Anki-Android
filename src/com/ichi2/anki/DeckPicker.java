@@ -73,7 +73,6 @@ import com.ichi2.themes.Themes;
 import com.ichi2.widget.WidgetStatus;
 
 import java.io.File;
-import java.io.FileFilter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.TreeSet;

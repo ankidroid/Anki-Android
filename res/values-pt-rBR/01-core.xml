@@ -66,7 +66,7 @@
   <string name="menu_suspend_card">Suspender cartão</string>
   <string name="menu_suspend_note">Suspender Nota</string>
   <string name="menu_delete_note">Deletar Anotação</string>
-  <string name="delete_note_message">Really delete this note and all its cards?\n%s</string>
+  <string name="delete_note_message">Deseja excluir esta anotação e todos os seus cartões?\n%s</string>
   <string name="menu_edit_card">Editar cartão</string>
   <string name="menu_select">Selecionar texto</string>
   <string name="menu_search">Pesquisa em %1$s</string>
@@ -74,7 +74,7 @@
   <string name="menu_unmark_card">Desmarcar Cartão</string>
   <string name="new_deck">Novo deck</string>
   <string name="create">Criar</string>
-  <string name="new_dynamic_deck">New dynamic deck</string>
+  <string name="new_dynamic_deck">Novo deck dinâmico</string>
   <string name="studyoptions_feedback">Feedback</string>
   <string name="studyoptions_cram_dialog_title">Tags para cursinho</string>
   <string name="studyoptions_load_other_deck">Carregar Outro Deck</string>
@@ -85,17 +85,17 @@
   <string name="download">Baixar</string>
   <string name="open_collection">Abrindo coleção.\nPor favor aguarde...</string>
   <string name="create_collection">Abrindo coleção.\nPor favor aguarde...</string>
-  <string name="rebuild_cram_deck">Rebuilding cram deck.\nPlease wait...</string>
-  <string name="rebuild_cram_label">Rebuild</string>
-  <string name="empty_cram_label">Empty</string>
-  <string name="empty_cram_deck">Emptying cram deck.\nPlease wait...</string>
+  <string name="rebuild_cram_deck">Reconstruindo deck do cursinho.\nPor favor aguarde...</string>
+  <string name="rebuild_cram_label">Reconstuir</string>
+  <string name="empty_cram_label">Vazio</string>
+  <string name="empty_cram_deck">Esvaziando deck do cursinho.\nPor favor aguarde...</string>
   <string name="studyoptions_congrats_finished">Parabéns!Você terminou por hora.</string>
   <string name="studyoptions_congrats_more_rev">O limite de revisão de hoje foi atingido, mas ainda existem cartões esperando para serem revistos. Para otima memória, considere aumentar o limite diário nas opções.</string>
   <string name="studyoptions_congrats_more_new">Existem mais cartões novos, mas o limite diário foi atingido. Você pode aumentar o limite nas opções, mas por favor, tenha em mente que  quanto mais cartões novos você introduzir, maior será sua carga de revisão a curto prazo.</string>
   <string name="sd_card_not_mounted">Cartão SD não está montado.</string>
-  <string name="studyoptions_options">Options</string>
-  <string name="empty_cloze_warning">Please edit this note and add some cloze deletions. (%1$s)</string>
-  <string name="help_cloze">help</string>
+  <string name="studyoptions_options">Opções</string>
+  <string name="empty_cloze_warning">Por favor edite esta nota e adicione algumas deleções cloze. (%1$s)</string>
+  <string name="help_cloze">Ajuda</string>
   <string-array name="next_review_s">
     <item>1 segundo</item>
     <item>1 minuto</item>

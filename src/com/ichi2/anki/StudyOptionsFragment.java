@@ -17,6 +17,7 @@ package com.ichi2.anki;
 import com.ichi2.anki2.R;
 
 import android.support.v4.app.Fragment;
+import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -998,8 +999,11 @@ public class StudyOptionsFragment extends Fragment {
 //            mToggleLimitToggle.setChecked(timeLimit > 0 ? true : false);
 //            mToggleLimitToggle.setText(String.valueOf(timeLimit));
 
-            SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(getActivity().getBaseContext()); // getActivity().getBaseContext()
-            mPrefHideDueCount = preferences.getBoolean("hideDueCount", true);
+            Activity act = getActivity();
+            if (act != null) {
+                SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(act.getBaseContext());
+                mPrefHideDueCount = preferences.getBoolean("hideDueCount", true);
+            }
 
             mTextTodayNew.setText(String.valueOf(newCards));
             mTextTodayLrn.setText(String.valueOf(lrnCards));

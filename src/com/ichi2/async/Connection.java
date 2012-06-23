@@ -543,6 +543,11 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
             }
         }
 
+        // clear undo to avoid non syncing orphans (because undo resets usn too 
+        if (!noChanges) {
+        	col.clearUndo();
+        }
+
         // then move on to media sync
         boolean noMediaChanges = false;
         if (media) {
