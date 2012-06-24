@@ -497,7 +497,15 @@
                     android:title="@string/pref_simple_interface"
                     android:summary="@string/pref_simple_interface_summ"
                     android:defaultValue="false"
+                    android:disableDependentsState="false"
                     android:key="simpleInterface"/>
+                        <EditTextPreference
+                    android:title="@string/pref_simple_interface_exclude_tags"
+                    android:defaultValue="html"
+                    android:summary="@string/pref_simple_interface_exclude_tags_summ"
+                    android:dependency="simpleInterface"
+                    android:key="simpleInterfaceExcludeTags" />
+          
             <CheckBoxPreference android:title="@string/timeout_answer_text"
                                 android:summary="@string/timeout_answer_summ" android:defaultValue="false"
                                 android:disableDependentsState="false" android:key="timeoutAnswer" />

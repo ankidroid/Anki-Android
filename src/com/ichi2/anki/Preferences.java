@@ -39,6 +39,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.preference.CheckBoxPreference;
+import android.preference.EditTextPreference;
 import android.preference.ListPreference;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceManager;
@@ -86,6 +87,7 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
     private static String[] mShowValueInSummSeek = { "relativeDisplayFontSize", "relativeCardBrowserFontSize",
             "answerButtonSize", "whiteBoardStrokeWidth", "minShakeIntensity", "swipeSensibility",
             "timeoutAnswerSeconds", "timeoutQuestionSeconds", "animationDuration", "backupMax" };
+    private static String[] mShowValueInSummEditText = { "simpleInterfaceExcludeTags" };
     private TreeMap<String, String> mListsToUpdate = new TreeMap<String, String>();
     private StyledProgressDialog mProgressDialog;
     private boolean lockCheckAction = false;
@@ -127,6 +129,9 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
         for (String key : mShowValueInSummSeek) {
             updateSeekBarPreference(key);
         }
+        for (String key : mShowValueInSummEditText) {
+            updateEditTextPreference(key);
+        }
     }
 
 
@@ -148,6 +153,29 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
                 listpref.setSummary(replaceString(oldsum, entry));
             } else {
                 listpref.setSummary(entry);
+            }
+        }
+    }
+
+
+    private void updateEditTextPreference(String key) {
+        EditTextPreference pref = (EditTextPreference) getPreferenceScreen().findPreference(key);
+        String entry;
+        try {
+            entry = pref.getText();
+        } catch (NullPointerException e) {
+            Log.e(AnkiDroidApp.TAG, "Error getting set preference value of " + key + ": " + e);
+            entry = "?";
+        }
+        if (mListsToUpdate.containsKey(key)) {
+        	pref.setSummary(replaceString(mListsToUpdate.get(key), entry));
+        } else {
+            String oldsum = (String) pref.getSummary();
+            if (oldsum.contains("XXX")) {
+                mListsToUpdate.put(key, oldsum);
+                pref.setSummary(replaceString(oldsum, entry));
+            } else {
+            	pref.setSummary(entry);
             }
         }
     }
@@ -296,6 +324,8 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
                 updateListPreference(key);
             } else if (Arrays.asList(mShowValueInSummSeek).contains(key)) {
                 updateSeekBarPreference(key);
+            } else if (Arrays.asList(mShowValueInSummEditText).contains(key)) {
+                updateEditTextPreference(key);
             } else if (key.equals("writeAnswers") && sharedPreferences.getBoolean("writeAnswers", false)) {
                 showDialog(DIALOG_WRITE_ANSWERS);
             } else if (key.equals("useBackup")) {

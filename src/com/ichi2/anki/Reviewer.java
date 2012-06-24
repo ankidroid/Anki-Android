@@ -84,6 +84,7 @@ import com.ichi2.async.DeckTask;
 import com.ichi2.libanki.Card;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Models;
+import com.ichi2.libanki.Note;
 import com.ichi2.libanki.Sched;
 import com.ichi2.libanki.Sound;
 import com.ichi2.libanki.Utils;
@@ -107,6 +108,7 @@ import java.lang.reflect.Method;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -247,6 +249,8 @@ public class Reviewer extends AnkiActivity {
     private boolean mPrefUseTimer;
     private boolean mShowAnimations = false;
     private boolean mSimpleInterface = false;
+    private boolean mCurrentSimpleInterface = false;
+    private ArrayList<String> mSimpleInterfaceExcludeTags;
     private String mLocale;
 
     // Answer card & cloze deletion variables
@@ -542,7 +546,7 @@ public class Reviewer extends AnkiActivity {
             }
             try {
                 if (event != null) {
-                    if (mSimpleInterface) {
+                    if (mCurrentSimpleInterface) {
                         mSimpleCard.dispatchTouchEvent(event);
                     } else {
                         mCard.dispatchTouchEvent(event);
@@ -1167,7 +1171,7 @@ public class Reviewer extends AnkiActivity {
             return true;
         }
         /** Enhancement 722: Hardware buttons for scrolling, I.Z. */
-        if (!mSimpleInterface) {
+        if (!mCurrentSimpleInterface) {
             if (keyCode == 92) {
                 mCard.pageUp(false);
                 if (mDoubleScrolling) {
@@ -1804,45 +1808,11 @@ public class Reviewer extends AnkiActivity {
             mClipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
         }
         mCardFrame.removeAllViews();
-        if (mSimpleInterface) {
-            mSimpleCard = new TextView(this);
-            Themes.setRegularFont(mSimpleCard);
-            mSimpleCard.setTextSize(mSimpleCard.getTextSize() * mDisplayFontSize / 100);
-            mSimpleCard.setGravity(Gravity.CENTER);
-            try {
-                mSetTextIsSelectable = TextView.class.getMethod("setTextIsSelectable", boolean.class);
-            } catch (Throwable e) {
-                Log.i(AnkiDroidApp.TAG,
-                        "mSetTextIsSelectable could not be found due to a too low Android version (< 3.0)");
-                mSetTextIsSelectable = null;
-            }
-            if (mSetTextIsSelectable != null) {
-                try {
-                    mSetTextIsSelectable.invoke(mSimpleCard, true);
-                } catch (Exception e) {
-                    Log.e(AnkiDroidApp.TAG, e.toString());
-                }
-            }
-            mSimpleCard.setClickable(true);
-            mCardFrame.addView(mSimpleCard);
-        } else {
-            mCard = createWebView();
-            mCardFrame.addView(mCard);
-        }
         if (!mChangeBorderStyle) {
             ((View) findViewById(R.id.flashcard_border)).setVisibility(View.VISIBLE);
         }
-
-        if (mRefreshWebview && !mSimpleInterface) {
-            mNextCard = createWebView();
-            mNextCard.setVisibility(View.GONE);
-            mCardFrame.addView(mNextCard, 0);
-
-            mCustomFontStyle = getCustomFontsStyle() + getDefaultFontStyle();
-        }
-
         // hunt for input issue 720, like android issue 3341
-        if (!AnkiDroidApp.isFroyoOrLater() && !mSimpleInterface) {
+        if (!AnkiDroidApp.isFroyoOrLater() && (mCard != null)) {
             mCard.setFocusableInTouchMode(true);
         }
 
@@ -2013,11 +1983,12 @@ public class Reviewer extends AnkiActivity {
         mTextBarBlue.setTextColor(invert ? res.getColor(R.color.textbar_blue_color_inv) : res
                 .getColor(R.color.textbar_blue_color));
 
-        if (mSimpleInterface) {
+        if (mSimpleCard != null) {
             mSimpleCard.setBackgroundColor(mCurrentBackgroundColor);
             mSimpleCard.setTextColor(mForegroundColor);
-        } else {
-            mCard.setBackgroundColor(mCurrentBackgroundColor);
+        }
+        if (mCard != null) {
+            mCard.setBackgroundColor(mCurrentBackgroundColor);        	
         }
 
         int fgColor = R.color.studyoptions_progressbar_frame_light;
@@ -2233,10 +2204,82 @@ public class Reviewer extends AnkiActivity {
         }
 
         mSimpleInterface = preferences.getBoolean("simpleInterface", false);
+        if (mSimpleInterface) {
+        	String tags = preferences.getString("simpleInterfaceExcludeTags", "").replace(",", " ");
+        	mSimpleInterfaceExcludeTags = new ArrayList<String>();
+        	for (String t : tags.split(" ")) {
+        		if (t.length() > 0) {
+        			mSimpleInterfaceExcludeTags.add(t);
+        		}
+        	}
+        }
 
         return preferences;
     }
 
+    private void setInterface() {
+    	if (mCurrentCard == null) {
+    		return;
+    	}
+    	if (mSimpleInterface) {
+        	Note note = mCurrentCard.note();
+        	mCurrentSimpleInterface = true;
+        	for (String s : mSimpleInterfaceExcludeTags) {
+        		if (note.hasTag(s)) {
+        			mCurrentSimpleInterface = false;
+        			break;
+        		}
+        	}
+    	}
+		if (mCurrentSimpleInterface) {
+			if (mSimpleCard == null) {
+	            mSimpleCard = new TextView(this);
+	            Themes.setRegularFont(mSimpleCard);
+	            mSimpleCard.setTextSize(mSimpleCard.getTextSize() * mDisplayFontSize / 100);
+	            mSimpleCard.setGravity(Gravity.CENTER);
+	            try {
+	                mSetTextIsSelectable = TextView.class.getMethod("setTextIsSelectable", boolean.class);
+	            } catch (Throwable e) {
+	                Log.i(AnkiDroidApp.TAG,
+	                        "mSetTextIsSelectable could not be found due to a too low Android version (< 3.0)");
+	                mSetTextIsSelectable = null;
+	            }
+	            if (mSetTextIsSelectable != null) {
+	                try {
+	                    mSetTextIsSelectable.invoke(mSimpleCard, true);
+	                } catch (Exception e) {
+	                    Log.e(AnkiDroidApp.TAG, e.toString());
+	                }
+	            }
+	            mSimpleCard.setClickable(true);
+	            mCardFrame.addView(mSimpleCard);
+
+	            mSimpleCard.setBackgroundColor(mCurrentBackgroundColor);
+	            mSimpleCard.setTextColor(mForegroundColor);
+			}
+			if (mSimpleCard.getVisibility() != View.VISIBLE) {
+				mSimpleCard.setVisibility(View.VISIBLE);
+				mCard.setVisibility(View.GONE);				
+			}
+		} else {
+			if (mCard == null) {
+	            mCard = createWebView();
+	            mCardFrame.addView(mCard);				
+	            if (mRefreshWebview) {
+	                mNextCard = createWebView();
+	                mNextCard.setVisibility(View.GONE);
+	                mCardFrame.addView(mNextCard, 0);
+		            mCard.setBackgroundColor(mCurrentBackgroundColor);        	
+
+	                mCustomFontStyle = getCustomFontsStyle() + getDefaultFontStyle();
+	            }
+			}
+			if (mCard.getVisibility() != View.VISIBLE) {
+				mSimpleCard.setVisibility(View.GONE);
+				mCard.setVisibility(View.VISIBLE);				
+			}
+		}
+    }
 
     private void setDueMessage() {
         // Decks deck = DeckManager.getMainDeck();
@@ -2366,7 +2409,9 @@ public class Reviewer extends AnkiActivity {
             mEase4.setHeight(mButtonHeight);
         }
 
-        String question = mCurrentCard.getQuestion(mSimpleInterface);
+        setInterface();
+
+        String question = mCurrentCard.getQuestion(mCurrentSimpleInterface);
         if (typeAnswer()) {
             question = typeAnsQuestionFilter(question);
         }
@@ -2380,7 +2425,7 @@ public class Reviewer extends AnkiActivity {
 
         String displayString = "";
 
-        if (mSimpleInterface) {
+        if (mCurrentSimpleInterface) {
             mCardContent = Html.fromHtml(question);
             if (mCardContent.length() == 0) {
                 SpannableString hint = new SpannableString(getResources().getString(R.string.simple_interface_hint,
@@ -2428,14 +2473,14 @@ public class Reviewer extends AnkiActivity {
         sDisplayAnswer = true;
         setFlipCardAnimation();
 
-        String answer = mCurrentCard.getAnswer(mSimpleInterface);
+        String answer = mCurrentCard.getAnswer(mCurrentSimpleInterface);
         if (typeAnswer()) {
             answer = typeAnsAnswerFilter(answer);
         }
 
         String displayString = "";
 
-        if (mSimpleInterface) {
+        if (mCurrentSimpleInterface) {
             mCardContent = Html.fromHtml(answer);
             if (mCardContent.length() == 0) {
                 SpannableString hint = new SpannableString(getResources().getString(R.string.simple_interface_hint,
@@ -2502,7 +2547,7 @@ public class Reviewer extends AnkiActivity {
     private void updateCard(String content) {
         Log.i(AnkiDroidApp.TAG, "updateCard");
 
-        if (mSimpleInterface) {
+        if (mCurrentSimpleInterface) {
             fillFlashcard(mShowAnimations);
             return;
         }
@@ -2611,9 +2656,9 @@ public class Reviewer extends AnkiActivity {
             Sound.playSounds(qa);
         } else {
             if (sDisplayAnswer) {
-                ReadText.textToSpeech(Utils.stripHTML(mCurrentCard.getAnswer(mSimpleInterface)), qa);
+                ReadText.textToSpeech(Utils.stripHTML(mCurrentCard.getAnswer(mCurrentSimpleInterface)), qa);
             } else {
-                ReadText.textToSpeech(Utils.stripHTML(mCurrentCard.getQuestion(mSimpleInterface)), qa);
+                ReadText.textToSpeech(Utils.stripHTML(mCurrentCard.getQuestion(mCurrentSimpleInterface)), qa);
             }
         }
     }
@@ -2649,7 +2694,7 @@ public class Reviewer extends AnkiActivity {
     public void fillFlashcard(boolean flip) {
         if (!flip) {
             Log.i(AnkiDroidApp.TAG, "base url = " + mBaseUrl);
-            if (mSimpleInterface) {
+            if (mCurrentSimpleInterface) {
                 mSimpleCard.setText(mCardContent);
             } else if (mRefreshWebview) {
                 mNextCard.setBackgroundColor(mCurrentBackgroundColor);
@@ -3130,7 +3175,7 @@ public class Reviewer extends AnkiActivity {
     private void selectAndCopyText() {
         try {
             KeyEvent shiftPressEvent = new KeyEvent(0, 0, KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_SHIFT_LEFT, 0, 0);
-            if (mSimpleInterface) {
+            if (mCurrentSimpleInterface) {
                 shiftPressEvent.dispatch(mSimpleCard);
             } else {
                 shiftPressEvent.dispatch(mCard);
@@ -3543,7 +3588,7 @@ public class Reviewer extends AnkiActivity {
 
         @Override
         public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
-            if (!mSimpleInterface) {
+            if (!mCurrentSimpleInterface) {
                 if (mCard.getScrollY() != 0) {
                     mIsYScrolling = true;
                 }
