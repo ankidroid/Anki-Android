@@ -93,6 +93,7 @@ import com.ichi2.themes.StyledProgressDialog;
 import com.ichi2.themes.Themes;
 import com.ichi2.utils.DiffEngine;
 import com.ichi2.utils.RubyParser;
+import com.ichi2.widget.DeckStatus;
 import com.ichi2.widget.WidgetStatus;
 
 import org.amr.arabic.ArabicUtilities;
@@ -1138,10 +1139,9 @@ public class Reviewer extends AnkiActivity {
         // }
 
         if (!isFinishing()) {
-            int[] counts = mSched.counts(mCurrentCard);
             // try {
-            WidgetStatus.update(this);// , new DeckStatus(mSched.getCol().getDecks().current().getLong("id"), -1, "",
-                                      // counts[0], counts[1], counts[2], -1, -1));
+            WidgetStatus.update(this, mSched.progressToday(null, mCurrentCard, true));
+            
             // } catch (JSONException e) {
             // throw new RuntimeException(e);
             // }
@@ -2364,10 +2364,11 @@ public class Reviewer extends AnkiActivity {
             mStatisticBarsMax = view.getWidth();
             mStatisticBarsHeight = view.getHeight();
         }
+        float[] progress = mSched.progressToday(null, mCurrentCard, false);
         Utils.updateProgressBars(mSessionProgressBar,
-                (int) (mStatisticBarsMax * mSched.todaysProgress(mCurrentCard, false, false)), mStatisticBarsHeight);
+                (int) (mStatisticBarsMax * progress[0]), mStatisticBarsHeight);
         Utils.updateProgressBars(mSessionProgressTotalBar,
-                (int) (mStatisticBarsMax * mSched.todaysProgress(mCurrentCard, true, false)), mStatisticBarsHeight);
+                (int) (mStatisticBarsMax * progress[1]), mStatisticBarsHeight);
     }
 
     /*

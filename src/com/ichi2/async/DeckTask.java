@@ -721,21 +721,26 @@ public class DeckTask extends
 
 	private TaskData doInBackgroundUpdateValuesFromDeck(TaskData... params) {
 		Log.i(AnkiDroidApp.TAG, "doInBackgroundUpdateValuesFromDeck");
-		boolean reset = params[0].getBoolean();
-		Sched sched = params[0].getSched();
-		if (reset) {
-			sched.reset();
+		try {
+			boolean reset = params[0].getBoolean();
+			Sched sched = params[0].getSched();
+			if (reset) {
+				sched.reset();
+			}
+			int[] counts = sched.counts();
+			int totalNewCount = sched.newCount();
+			int totalCount = sched.cardCount();
+			double progressMature = ((double) sched.matureCount())
+					/ ((double) totalCount);
+			double progressAll = 1 - (((double) (totalNewCount + counts[1])) / ((double) totalCount));
+			double[][] serieslist = Stats.getSmallDueStats(sched.getCol());
+			return new TaskData(new Object[] { counts[0], counts[1], counts[2],
+					totalNewCount, totalCount, progressMature, progressAll,
+					sched.eta(counts), serieslist });			
+		} catch (RuntimeException e) {
+			Log.e(AnkiDroidApp.TAG, "doInBackgroundUpdateValuesFromDeck - an error occurred: " + e);
+			return null;
 		}
-		int[] counts = sched.counts();
-		int totalNewCount = sched.newCount();
-		int totalCount = sched.cardCount();
-		double progressMature = ((double) sched.matureCount())
-				/ ((double) totalCount);
-		double progressAll = 1 - (((double) (totalNewCount + counts[1])) / ((double) totalCount));
-		double[][] serieslist = Stats.getSmallDueStats(sched.getCol());
-		return new TaskData(new Object[] { counts[0], counts[1], counts[2],
-				totalNewCount, totalCount, progressMature, progressAll,
-				sched.eta(counts), serieslist });
 	}
 
 	private TaskData doInBackgroundRestoreIfMissing(TaskData... params) {

@@ -975,6 +975,9 @@ public class StudyOptionsFragment extends Fragment {
     DeckTask.TaskListener mUpdateValuesFromDeckListener = new DeckTask.TaskListener() {
         @Override
         public void onPostExecute(DeckTask.TaskData result) {
+        	if (result == null) {
+        		return;
+        	}
             Object[] obj = result.getObjArray();
             int newCards = (Integer) obj[0];
             int lrnCards = (Integer) obj[1];

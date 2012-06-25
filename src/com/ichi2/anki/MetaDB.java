@@ -31,7 +31,7 @@ public class MetaDB {
     private static final String DATABASE_NAME = "ankidroid.db";
 
     /** The Database Version, increase if you want updates to happen on next upgrade. */
-    private static final int DATABASE_VERSION = 1;
+    private static final int DATABASE_VERSION = 2;
 
     // Possible values for the qa column of the languages table.
     /** The language refers to the question. */
@@ -85,6 +85,8 @@ public class MetaDB {
                 + "deckpath TEXT NOT NULL, " + "dictionary INTEGER)");
         mMetaDb.execSQL("CREATE TABLE IF NOT EXISTS intentInformation (" + "id INTEGER PRIMARY KEY AUTOINCREMENT, "
                 + "source TEXT NOT NULL, " + "target INTEGER NOT NULL)");
+        mMetaDb.execSQL("CREATE TABLE IF NOT EXISTS smallWidgetStatus (" + "id INTEGER PRIMARY KEY AUTOINCREMENT, "
+                + "progress INTEGER NOT NULL, left INTEGER NOT NULL, eta INTEGER NOT NULL)");
         // Use pragma to get info about widgetStatus.
         Cursor c = mMetaDb.rawQuery("PRAGMA table_info(widgetStatus)", null);
         int columnNumber = c.getCount();
@@ -135,6 +137,8 @@ public class MetaDB {
             Log.i(AnkiDroidApp.TAG, "Resetting custom Dictionary");
             mMetaDb.execSQL("DROP TABLE IF EXISTS widgetStatus;");
             Log.i(AnkiDroidApp.TAG, "Resetting widget status");
+            mMetaDb.execSQL("DROP TABLE IF EXISTS smallWidgetStatus;");
+            Log.i(AnkiDroidApp.TAG, "Resetting small widget status");
             mMetaDb.execSQL("DROP TABLE IF EXISTS intentInformation;");
             Log.i(AnkiDroidApp.TAG, "Resetting intentInformation");
             upgradeDB(mMetaDb, DATABASE_VERSION);
@@ -171,10 +175,11 @@ public class MetaDB {
         try {
             Log.i(AnkiDroidApp.TAG, "Resetting widget status");
             mMetaDb.execSQL("DROP TABLE IF EXISTS widgetStatus;");
+            mMetaDb.execSQL("DROP TABLE IF EXISTS smallWidgetStatus;");
             openDB(context);
             return true;
         } catch (Exception e) {
-            Log.e("Error", "Error resetting widgetStatus ", e);
+            Log.e("Error", "Error resetting widgetStatus and smallWidgetStatus", e);
         }
         return false;
     }
@@ -438,20 +443,10 @@ public class MetaDB {
     public static int[] getWidgetSmallStatus(Context context) {
         openDBIfClosed(context);
         Cursor cursor = null;
-        int due = 0;
-        int progress = 0;
-        int eta = 0;
-        boolean noDeck = true;
         try {
-            cursor = mMetaDb.query("widgetStatus", new String[] { "deckName", "newCards", "lrnCards", "dueCards",
-                    "progress", "eta" }, null, null, null, null, null);
+            cursor = mMetaDb.query("smallWidgetStatus", new String[] { "progress", "left", "eta" }, null, null, null, null, null);
             while (cursor.moveToNext()) {
-                noDeck = false;
-                if (cursor.getString(0).split("::").length == 1) {
-                    due += cursor.getInt(1) + cursor.getInt(2) + cursor.getInt(3);
-                    progress = cursor.getInt(4);
-                    eta = cursor.getInt(5);
-                }
+            	return (new int[]{ cursor.getInt(0), cursor.getInt(1), cursor.getInt(2)});
             }
         } catch (SQLiteException e) {
             Log.e(AnkiDroidApp.TAG, "Error while querying widgetStatus", e);
@@ -460,7 +455,7 @@ public class MetaDB {
                 cursor.close();
             }
         }
-        return new int[] { noDeck ? -1 : due, progress, eta };
+        return null;
     }
 
 
@@ -482,6 +477,28 @@ public class MetaDB {
             }
         }
         return due;
+    }
+
+
+    public static void storeSmallWidgetStatus(Context context, float[] progress) {
+        openDBIfClosed(context);
+        try {
+            mMetaDb.beginTransaction();
+            try {
+                // First clear all the existing content.
+                mMetaDb.execSQL("DELETE FROM smallWidgetStatus");
+                mMetaDb.execSQL("INSERT INTO smallWidgetStatus(progress, left, eta) VALUES (?, ?, ?)", new Object[] {(int)(progress[1] * 1000), (int)progress[2], (int)progress[3]});
+                mMetaDb.setTransactionSuccessful();
+            } finally {
+                mMetaDb.endTransaction();
+            }
+        } catch (IllegalStateException e) {
+            Log.e(AnkiDroidApp.TAG, "MetaDB.storeSmallWidgetStatus: failed", e);
+        } catch (SQLiteException e) {
+            Log.e(AnkiDroidApp.TAG, "MetaDB.storeSmallWidgetStatus: failed", e);
+            closeDB();
+            Log.i(AnkiDroidApp.TAG, "Trying to reset Widget: " + resetWidget(context));
+        }
     }
 
 

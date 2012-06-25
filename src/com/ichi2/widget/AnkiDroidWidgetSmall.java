@@ -131,8 +131,8 @@ public class AnkiDroidWidgetSmall extends AppWidgetProvider {
                     // Also compute the total number of cards due.
                     int[] counts = WidgetStatus.fetchSmall(context);
 
-                    dueCardsCount = counts[0];
-                    progress = counts[1];
+                    progress = counts[0];
+                    dueCardsCount = counts[1];
                     eta = counts[2];
                     if (dueCardsCount <= 0) {
                         if (dueCardsCount == 0) {
@@ -147,7 +147,7 @@ public class AnkiDroidWidgetSmall extends AppWidgetProvider {
                         updateViews.setViewVisibility(R.id.widget_due, View.VISIBLE);
                         updateViews.setViewVisibility(R.id.widget_progress_frame, View.VISIBLE);
                         updateViews.setTextViewText(R.id.widget_due, Integer.toString(dueCardsCount));
-                        updateViews.setProgressBar(R.id.widget_progress, 100, progress, false);
+                        updateViews.setProgressBar(R.id.widget_progress, 1000, progress, false);
                     }
                     if (eta <= 0 || dueCardsCount <= 0) {
                         updateViews.setViewVisibility(R.id.widget_eta, View.INVISIBLE);
