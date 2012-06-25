@@ -113,7 +113,7 @@
     <item>기간 순서대로</item>
   </string-array>
   <string-array name="cram_deck_conf_preset_labels">
-    <item><! [CDATA [< 사전 설정 선택 >]] ></item>
+    <item><![CDATA[사전 설정 선택 ]]></item>
     <item>모든 새로운 카드 미리 보기</item>
     <item>오늘 추가된 카드를 미리 보기</item>
     <item>오늘 잊은 카드를 리뷰</item>
