@@ -379,8 +379,19 @@ public class Models {
         }
     }
 
-
-    // usecounts
+    /**
+     * Number of notes using m
+     * @param m The model to the count the notes of.
+     * @return The number of notes with that model.
+     */
+    public int useCount(JSONObject m) {
+        try {
+            return mCol.getDb().queryScalar(String.format(Locale.US,
+                    "select count() from notes where mid = %d", m.getLong("id")));
+        } catch (JSONException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
     /**
      * Copying ***********************************************************************************************
@@ -980,9 +991,122 @@ public class Models {
      * Model changing ***********************************************************************************************
      */
 
-    // change
-    // _changeNotes
-    // _changeCards
+    /**
+     * Change a model
+     * @param m The model to change.
+     * @param nids The list of notes that the change applies to.
+     * @param newModel For replacing the old model with another one. Should be self if the model is not changing
+     * @param fmap Field map for switching fields. This is ord->ord and there should not be duplicate targets 
+     * @param cmap Field map for switching fields. This is ord->ord and there should not be duplicate targets
+     */
+    public void change(JSONObject m, long[] nids, JSONObject newModel, Map<Integer, Integer> fmap, Map<Integer, Integer> cmap) {
+        mCol.modSchema();
+        try {
+            assert (newModel.getLong("id") == m.getLong("id")) || (fmap != null && cmap != null);
+        } catch (JSONException e) {
+            throw new RuntimeException(e);
+        }
+        if (fmap != null) {
+            _changeNotes(nids, newModel, fmap);
+        }
+        if (cmap != null) {
+            _changeCards(nids, m, newModel, cmap);
+        }
+        mCol.genCards(nids);
+    }
+    
+    private void _changeNotes(long[] nids, JSONObject newModel, Map<Integer, Integer> map) {
+        List<Object[]> d = new ArrayList<Object[]>();
+        int nfields;
+        long mid;
+        try {
+            nfields = newModel.getJSONArray("flds").length();
+            mid = newModel.getLong("id");
+        } catch (JSONException e) {
+            throw new RuntimeException(e);
+        }
+        Cursor cur = null;
+        try {
+            cur = mCol.getDb().getDatabase().rawQuery(
+                    "select id, flds from notes where id in ".concat(Utils.ids2str(nids)), null);
+            while (cur.moveToNext()) {
+                long nid = cur.getLong(0);
+                String[] flds = Utils.splitFields(cur.getString(1));
+                Map<Integer, String> newflds = new HashMap<Integer, String>();
+                
+                for (Integer old : map.keySet()) {
+                    newflds.put(map.get(old), flds[old]);
+                }
+                List<String> flds2 = new ArrayList<String>();
+                for (int c = 0; c < nfields; ++c) {
+                    if (newflds.containsKey(c)) {
+                        flds2.add(newflds.get(c));
+                    } else {
+                        flds2.add("");
+                    }
+                }
+                String joinedFlds = Utils.joinFields(flds2.toArray(new String[]{}));
+                d.add(new Object[] { joinedFlds, mid, Utils.intNow(), mCol.usn(), nid });
+            }
+        } finally {
+            if (cur != null) {
+                cur.close();
+            }
+        }
+        mCol.getDb().executeMany("update notes set flds=?,mid=?,mod=?,usn=? where id = ?", d);
+        mCol.updateFieldCache(nids);
+    }
+    
+    private void _changeCards(long[] nids, JSONObject oldModel, JSONObject newModel, Map<Integer, Integer> map) {
+        List<Object[]> d = new ArrayList<Object[]>();
+        List<Long> deleted = new ArrayList<Long>();
+        Cursor cur = null;
+        int omType;
+        int nmType;
+        int nflds;
+        try {
+            omType = oldModel.getInt("type");
+            nmType = newModel.getInt("type");
+            nflds = newModel.getJSONArray("flds").length();
+        } catch (JSONException e) {
+            throw new RuntimeException(e);
+        }
+        try {
+            cur = mCol.getDb().getDatabase().rawQuery(
+                    "select id, ord from cards where nid in ".concat(Utils.ids2str(nids)), null);
+            while (cur.moveToNext()) {
+                // if the src model is a cloze, we ignore the map, as the gui doesn't currently
+                // support mapping them
+                Integer newOrd;
+                long cid = cur.getLong(0); 
+                int ord = cur.getInt(1);
+                if (omType == Sched.MODEL_CLOZE) {
+                    newOrd = cur.getInt(1);
+                    if (nmType != Sched.MODEL_CLOZE) {
+                        // if we're mapping to a regular note, we need to check if
+                        // the destination ord is valid
+                        if (nflds <= ord) {
+                            newOrd = null;
+                        }
+                    }
+                } else {
+                    // mapping from a regular note, so the map should be valid
+                    newOrd = map.get(ord);
+                }
+                if (newOrd != null) {
+                    d.add(new Object[] { newOrd, mCol.usn(), Utils.intNow(), cid });
+                } else {
+                    deleted.add(cid);
+                }
+            }
+        } finally {
+            if (cur != null) {
+                cur.close();
+            }
+        }
+        mCol.getDb().executeMany("update cards set ord=?,usn=?,mod=? where id=?", d);
+        mCol.remCards(Utils.toPrimitive(deleted));
+    }
 
     /**
      * Schema hash ***********************************************************************************************
