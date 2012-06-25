@@ -114,14 +114,17 @@ public class Card implements Cloneable {
         }
     }
 
-
-    public void load() {
+    /**
+     * Reload Card details from db.
+     * @return True if the load was successful, false if no card with such id was found.
+     */
+    public boolean load() {
         Cursor cursor = null;
         try {
             cursor = mCol.getDb().getDatabase().rawQuery("SELECT * FROM cards WHERE id = " + mId, null);
             if (!cursor.moveToFirst()) {
-                Log.w(AnkiDroidApp.TAG, "Card.java (fromDB(id)): No result from query.");
-                return;
+                Log.w(AnkiDroidApp.TAG, "Card.load: No card with id " + mId);
+                return false;
             }
             mId = cursor.getLong(0);
             mNid = cursor.getLong(1);
@@ -148,6 +151,7 @@ public class Card implements Cloneable {
         }
         mQA = null;
         mNote = null;
+        return true;
     }
 
 
