@@ -18,25 +18,13 @@
 
 package com.ichi2.anki;
 
-import com.ichi2.anim.ActivityTransitionAnimation;
-import com.ichi2.anki2.R;
-
-import java.io.File;
-import java.util.Arrays;
-import java.util.Locale;
-import java.util.Map;
-import java.util.TreeMap;
-
-import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
+import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.DialogInterface.OnClickListener;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.content.res.Resources;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.preference.CheckBoxPreference;
 import android.preference.ListPreference;
@@ -47,10 +35,19 @@ import android.view.KeyEvent;
 import android.view.WindowManager.BadTokenException;
 
 import com.hlidskialf.android.preference.SeekBarPreference;
+import com.ichi2.anim.ActivityTransitionAnimation;
+import com.ichi2.anki2.R;
 import com.ichi2.async.DeckTask;
 import com.ichi2.libanki.Utils;
+import com.ichi2.themes.StyledDialog;
 import com.ichi2.themes.StyledProgressDialog;
 import com.ichi2.themes.Themes;
+
+import java.io.File;
+import java.util.Arrays;
+import java.util.Locale;
+import java.util.Map;
+import java.util.TreeMap;
 
 /**
  * Preferences dialog.
@@ -244,11 +241,6 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
     @Override
     protected void onPause() {
         super.onPause();
-        // Reschedule the checking in case the user has changed the veecheck switch
-        // if (mVeecheckStatus ^ mPrefMan.getSharedPreferences().getBoolean(PrefSettings.KEY_ENABLED, mVeecheckStatus))
-        // {
-        // sendBroadcast(new Intent(Veecheck.getRescheduleAction(this)));
-        // }
     }
 
 
@@ -376,7 +368,7 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
     @Override
     protected Dialog onCreateDialog(int id) {
         Resources res = getResources();
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        StyledDialog.Builder builder = new StyledDialog.Builder(this);
         switch (id) {
             case DIALOG_BACKUP:
                 builder.setTitle(res.getString(R.string.backup_manager_title));
