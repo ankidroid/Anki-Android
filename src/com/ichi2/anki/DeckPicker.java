@@ -1997,6 +1997,16 @@ public class DeckPicker extends FragmentActivity {
             UIUtils.addMenuItemInActionBar(menu, Menu.NONE, MENU_ADD_NOTE, Menu.NONE, R.string.add,
                     R.drawable.ic_menu_add);
 
+        	int icon;
+        	SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(this);
+        	if (preferences.getBoolean("invertedColors", false)) {
+        		icon = R.drawable.ic_menu_recent_history_black;
+        	} else {
+        		icon = R.drawable.ic_menu_recent_history;
+        	}
+            UIUtils.addMenuItemInActionBar(menu, Menu.NONE, StudyOptionsActivity.MENU_NIGHT, Menu.NONE, R.string.night_mode,
+                    icon);
+
             UIUtils.addMenuItemInActionBar(menu, Menu.NONE, MENU_STATISTICS, Menu.NONE, R.string.statistics_menu,
                     R.drawable.ic_menu_statistics);
 
@@ -2171,6 +2181,17 @@ public class DeckPicker extends FragmentActivity {
                 } else {
                     this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
                 }
+                return true;
+
+            case StudyOptionsActivity.MENU_NIGHT:
+            	SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(this);
+            	if (preferences.getBoolean("invertedColors", false)) {
+            		preferences.edit().putBoolean("invertedColors", false).commit();
+            		item.setIcon(R.drawable.ic_menu_recent_history);
+            	} else {
+            		preferences.edit().putBoolean("invertedColors", true).commit();
+            		item.setIcon(R.drawable.ic_menu_recent_history_black);
+            	}
                 return true;
 
             default:

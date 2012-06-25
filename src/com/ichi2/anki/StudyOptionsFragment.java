@@ -963,7 +963,6 @@ public class StudyOptionsFragment extends Fragment {
 
         mSwipeEnabled = preferences.getBoolean("swipe", false);
         mPrefHideDueCount = preferences.getBoolean("hideDueCount", true);
-        mInvertedColors = preferences.getBoolean("invertedColors", false);
 
         // TODO: set language
         // mLocale = preferences.getString("language", "");
