@@ -3361,41 +3361,30 @@ public class Reviewer extends AnkiActivity {
             case GESTURE_EXIT:
                 closeReviewer(RESULT_DEFAULT, false);
                 break;
-            // case GESTURE_UNDO:
-            // if (DeckManager.getMainDeck().undoAvailable()) {
-            // setNextCardAnimation(true);
-            // DeckTask.launchDeckTask(DeckTask.TASK_TYPE_UNDO, mUpdateCardHandler, new
-            // DeckTask.TaskData(UPDATE_CARD_SHOW_QUESTION,
-            // DeckManager.getMainDeck(), mCurrentCard.getId(), false));
-            // }
-            // break;
-            // case GESTURE_REDO:
-            // if (DeckManager.getMainDeck().redoAvailable()) {
-            // DeckTask.launchDeckTask(DeckTask.TASK_TYPE_REDO, mUpdateCardHandler, new
-            // DeckTask.TaskData(UPDATE_CARD_SHOW_QUESTION,
-            // DeckManager.getMainDeck(), mCurrentCard.getId(), false));
-            // }
-            // break;
+            case GESTURE_UNDO:
+            	if(mSched.getCol().undoAvailable()) {
+                	undo();            		
+            	}
+            	break;
             case GESTURE_EDIT:
                 editCard();
                 break;
-            // case GESTURE_MARK:
-            // DeckTask.launchDeckTask(DeckTask.TASK_TYPE_MARK_CARD, mMarkCardHandler, new DeckTask.TaskData(0,
-            // DeckManager.getMainDeck(), mCurrentCard));
-            // break;
+     		case GESTURE_MARK:
+     			DeckTask.launchDeckTask(DeckTask.TASK_TYPE_MARK_CARD, mMarkCardHandler, new DeckTask.TaskData(mSched, mCurrentCard, 0));
+     			break;
             case GESTURE_LOOKUP:
                 lookUpOrSelectText();
                 break;
-            // case GESTURE_BURY:
-            // setNextCardAnimation(false);
-            // DeckTask.launchDeckTask(DeckTask.TASK_TYPE_BURY_CARD, mAnswerCardHandler, new DeckTask.TaskData(0,
-            // DeckManager.getMainDeck(), mCurrentCard));
-            // break;
-            // case GESTURE_SUSPEND:
-            // setNextCardAnimation(false);
-            // DeckTask.launchDeckTask(DeckTask.TASK_TYPE_SUSPEND_CARD, mAnswerCardHandler, new DeckTask.TaskData(0,
-            // DeckManager.getMainDeck(), mCurrentCard));
-            // break;
+         	case GESTURE_BURY:
+                setNextCardAnimation(false);
+                DeckTask.launchDeckTask(DeckTask.TASK_TYPE_DISMISS_NOTE, mDismissCardHandler, new DeckTask.TaskData(
+                        mSched, mCurrentCard, 0));
+                break;
+         	case GESTURE_SUSPEND:
+                setNextCardAnimation(false);
+                DeckTask.launchDeckTask(DeckTask.TASK_TYPE_DISMISS_NOTE, mDismissCardHandler, new DeckTask.TaskData(
+                        mSched, mCurrentCard, 1));
+                break;
             case GESTURE_DELETE:
                 showDeleteNoteDialog();
                 break;
