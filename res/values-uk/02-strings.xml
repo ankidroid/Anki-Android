@@ -51,6 +51,7 @@
   <string name="close">Close</string>
   <string name="select">Select</string>
   <string name="saving_changes">Saving changes...</string>
+  <string name="timebox_reached">Timebox reached!</string>
   <string name="studyoptions_welcome_title">Welcome to AnkiDroid</string>
   <string name="studyoptions_no_external_storage_title">No External Storage Available</string>
   <string name="studyoptions_no_external_storage_message">No external storage is currently available. AnkiDroid needs to have access to the SD card in order to read and load your Anki decks. Check that your SD card is mounted and try again.</string>

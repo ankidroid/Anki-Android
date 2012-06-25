@@ -36,4 +36,4 @@ Adicione material através do Anki desktop ou diretamente pelo Ankidroid. O apli
 • modo noturno
 • três temas diferentes
 • 27 línguas
-• All previous AnkiDroid versions can be downloaded from the website
+• Todas as versões anteriores do AnkiDroid podem ser baixadas pelo site

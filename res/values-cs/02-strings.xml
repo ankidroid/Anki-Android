@@ -51,6 +51,7 @@
   <string name="close">Zavřít</string>
   <string name="select">Vybrat</string>
   <string name="saving_changes">Ukládání změn ...</string>
+  <string name="timebox_reached">Timebox reached!</string>
   <string name="studyoptions_welcome_title">Vítejte v AnkiDroid</string>
   <string name="studyoptions_no_external_storage_title">Není k dispozici externí paměť</string>
   <string name="studyoptions_no_external_storage_message">Žádná externí paměť není momentálně k dispozici. AnkiDroid potřebuje přistupovat k SD kartě, aby mohl načíst Anki balíčky. Zkontrolujte, zda je vaše SD karta připojena a akci opakujte.</string>

@@ -41,6 +41,10 @@
   <string name="pref_cat_flashcard">Reviewing screen</string>
   <string name="show_study_options_on_deck_load">Opiskeluasetukset latauksessa</string>
   <string name="show_study_options_on_deck_load_summ">Näytä opiskelu-asetukset näyttö ladattaessa korttipakkaa</string>
+  <string name="hide_due_count">Hide due count</string>
+  <string name="hide_due_count_summ">Hides the due count</string>
+  <string name="overtime">Overtime</string>
+  <string name="overtime_summ">Continue reviewing after time limit reached</string>
   <string name="show_timer">Näytä ajastin</string>
   <string name="show_timer_summ">Ajastin näyttää ajan, joka vie vastattaessa</string>
   <string name="show_progress_bars">Näytä edistymispalkkit</string>
@@ -207,6 +211,8 @@
   <string name="pref_keep_screen_on_summ">Prevent screen from being turned off while reviewing</string>
   <string name="pref_simple_interface">Simple Interface</string>
   <string name="pref_simple_interface_summ">Speeds up card showing but does only support text (no pictures, sounds etc.)</string>
+  <string name="pref_simple_interface_exclude_tags">Normal interface by tag</string>
+  <string name="pref_simple_interface_exclude_tags_summ">Do not use simple interface for these tags: XXX</string>
   <string name="deck_conf_deck_name">Deck name</string>
   <string name="deck_conf_deck_description">Deck description</string>
   <string name="deck_conf_conf_set">Configuration set</string>

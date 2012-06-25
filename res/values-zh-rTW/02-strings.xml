@@ -51,6 +51,7 @@
   <string name="close">關閉</string>
   <string name="select">選擇</string>
   <string name="saving_changes">正在儲存設定…</string>
+  <string name="timebox_reached">Timebox reached!</string>
   <string name="studyoptions_welcome_title">歡迎來到 AnkiDroid</string>
   <string name="studyoptions_no_external_storage_title">沒有可用的記憶卡</string>
   <string name="studyoptions_no_external_storage_message">目前沒有可用的記憶卡。Ankidroid需要讀寫記憶卡的權限才能運作。請確認您的記憶卡裝載無誤，再試一次。</string>

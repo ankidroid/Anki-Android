@@ -41,6 +41,10 @@
   <string name="pref_cat_flashcard">Pantalla de revisión</string>
   <string name="show_study_options_on_deck_load">Opciones de estudio al cargar</string>
   <string name="show_study_options_on_deck_load_summ">Mostrar opciones de estudio al cargar un mazo</string>
+  <string name="hide_due_count">Ocultar cuenta de programadas</string>
+  <string name="hide_due_count_summ">Hides the due count</string>
+  <string name="overtime">Overtime</string>
+  <string name="overtime_summ">Continuar repasando después de alcanzado el límite de tiempo</string>
   <string name="show_timer">Mostrar temporizador</string>
   <string name="show_timer_summ">Muestra el tiempo que te está llevando responder</string>
   <string name="show_progress_bars">Mostrar barras de progreso</string>
@@ -207,6 +211,8 @@
   <string name="pref_keep_screen_on_summ">Impedir que la pantalla se apague mientras estás repasando</string>
   <string name="pref_simple_interface">Interfaz sencilla</string>
   <string name="pref_simple_interface_summ">Acelera la visualización de las tarjetas pero sólo admite texto (sin imágenes, sonidos, etc.)</string>
+  <string name="pref_simple_interface_exclude_tags">Normal interface by tag</string>
+  <string name="pref_simple_interface_exclude_tags_summ">Do not use simple interface for these tags: XXX</string>
   <string name="deck_conf_deck_name">Nombre del mazo</string>
   <string name="deck_conf_deck_description">Descripción del mazo</string>
   <string name="deck_conf_conf_set">Conjunto de configuraciones</string>

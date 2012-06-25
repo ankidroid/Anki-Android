@@ -49,9 +49,9 @@
   <string name="sync_log_db_error">Si è verificato un errore nel database.</string>
   <string name="no_user_password_error_message">Per procedere con questa operazione devi avere un account AnkiWeb ed essere connesso.</string>
   <string name="username">Nome utente</string>
-  <string name="username_repeat">Repeat username</string>
+  <string name="username_repeat">Ripeti il nome utente</string>
   <string name="password">Password</string>
-  <string name="password_repeat">Repeat password</string>
+  <string name="password_repeat">Ripeti la password</string>
   <string name="log_in">Accedi</string>
   <string name="sign_up_description">Non hai un account AnkiWeb? È gratis!</string>
   <string name="sign_up">Registrati</string>
@@ -110,7 +110,7 @@
   <string name="sync_media_to_server">Invio media al server...</string>
   <string name="sync_media_no_changes">Nessuna modifica ai file multimediali.</string>
   <string name="sync_media_success">Media sincronizzati con successo.</string>
-  <string name="register_error">An error occurred. Please try again later.</string>
+  <string name="register_error">Si è verificato un errore. Riprova più tardi.</string>
   <string name="register_title">Register account</string>
   <string name="register_mismatch">The username/password repetition does not match or is empty. Please re-enter.</string>
   <string name="registering_message">Creating account.\nPlease wait...</string>

@@ -51,6 +51,7 @@
   <string name="close">閉じる</string>
   <string name="select">選択</string>
   <string name="saving_changes">変更を保存しています...</string>
+  <string name="timebox_reached">Timebox reached!</string>
   <string name="studyoptions_welcome_title">AnkiDroid へようこそ</string>
   <string name="studyoptions_no_external_storage_title">外部メモリーが接続されていません</string>
   <string name="studyoptions_no_external_storage_message">外部メモリーが接続されていません。SDカードがマウントされているかどうか、確認してください。</string>

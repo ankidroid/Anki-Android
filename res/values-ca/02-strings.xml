@@ -51,6 +51,7 @@
   <string name="close">Tanca</string>
   <string name="select">Seleccioneu</string>
   <string name="saving_changes">Desant els canvis...</string>
+  <string name="timebox_reached">Timebox reached!</string>
   <string name="studyoptions_welcome_title">Benvingut a l\'AnkiDroid</string>
   <string name="studyoptions_no_external_storage_title">No hi ha cap suport extern disponible</string>
   <string name="studyoptions_no_external_storage_message">No hi ha cap suport extern disponible. AnkiDroid necessita tenir accés a la targeta SD per llegir i carregar els vostres paquets. Comproveu que la targeta SD està muntada i torneu-ho a provar.</string>

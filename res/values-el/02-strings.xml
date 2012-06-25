@@ -51,6 +51,7 @@
   <string name="close">Κλείσιμο</string>
   <string name="select">Επιλέξτε</string>
   <string name="saving_changes">Αποθήκευση αλλαγών...</string>
+  <string name="timebox_reached">Timebox reached!</string>
   <string name="studyoptions_welcome_title">Καλώς ήρθατε στο AnkiDroid</string>
   <string name="studyoptions_no_external_storage_title">Μη διαθέσιμη εξωτερική αποθήκευση</string>
   <string name="studyoptions_no_external_storage_message">Δεν υπάρχει διαθέσιμη εξωτερική αποθήκευση αυτή τη στιγμή. Το AnkiDroid χρειάζεται να έχει πρόσβαση στην κάρτα SD σας για να διαβάσει και να φορτώσει τις Anki τράπουλές σας. Ελέγξτε ότι η κάρτα SD σας είναι τοποθετημένη και προσπαθήστε ξανά.</string>

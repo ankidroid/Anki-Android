@@ -51,6 +51,7 @@
   <string name="close">Kapat</string>
   <string name="select">Seç</string>
   <string name="saving_changes">Değişiklikler kaydediliyor...</string>
+  <string name="timebox_reached">Timebox reached!</string>
   <string name="studyoptions_welcome_title">AnkiDroid\'e Hoşgeldiniz</string>
   <string name="studyoptions_no_external_storage_title">Mevcut Harici Depolama Yok</string>
   <string name="studyoptions_no_external_storage_message">Şu anda mevcut harici depolama yok. AnkiDroid Anki destelerinizi okumak ve yüklemek için SD kart erişimine ihtiyaç duyar. SD kartınızın takılı olduğuna emin olup tekrar deneyin.</string>
@@ -76,17 +77,17 @@
   <string name="simple_interface_hint">Boş %s. Basit arayüzün resimleri/sesleri vb. gösteremediğini unutmayın.</string>
   <string name="delete_deck">Deste siliniyor...\nLütfen bekleyin.</string>
   <string name="menu_cardbrowser">Kart tarayıcısı</string>
-  <string name="pref_lang_other">Language Preferences</string>
+  <string name="pref_lang_other">Dil Tercihleri</string>
   <string name="pref_lang_common">LangCommon</string>
-  <string name="pref_font_UI">Custom UI Font</string>
+  <string name="pref_font_UI">Arayüz Yazı Tipi</string>
   <string-array name="dynOrderLabels">
     <item>En eskiler ilk önce</item>
     <item>Rastgele</item>
     <item>Artan aralıkta</item>
     <item>Azalan aralıkta</item>
     <item>En fazla yanılma</item>
-    <item>Order added</item>
-    <item>Order due</item>
+    <item>Ekleniş sırası</item>
+    <item>Çıkma sırası</item>
   </string-array>
   <plurals name="factadder_cards_added">
     <item quantity="one">1 kart eklendi</item>
