@@ -2367,9 +2367,11 @@ public class Reviewer extends AnkiActivity {
         }
 
         String question = mCurrentCard.getQuestion(mSimpleInterface);
-        if (typeAnswer()) {
+        
+        // preventing rendering {{type:Field}} if type answer is not enabled in preferences
+        //if (typeAnswer()) {
             question = typeAnsQuestionFilter(question);
-        }
+        //}
         updateMenuItems();
 
         if (mPrefFixArabic) {
@@ -2429,9 +2431,10 @@ public class Reviewer extends AnkiActivity {
         setFlipCardAnimation();
 
         String answer = mCurrentCard.getAnswer(mSimpleInterface);
-        if (typeAnswer()) {
+        // preventing rendering {{type:Field}} if type answer is not enabled in preferences
+        //if (typeAnswer()) {
             answer = typeAnsAnswerFilter(answer);
-        }
+        //}
 
         String displayString = "";
 
