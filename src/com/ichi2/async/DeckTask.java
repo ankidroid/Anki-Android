@@ -381,7 +381,8 @@ public class DeckTask extends
 					"doInBackgroundAnswerCard - RuntimeException on answering card: "
 							+ e);
 			AnkiDroidApp.saveExceptionReportFile(e, "doInBackgroundAnswerCard");
-			return new TaskData(false);
+			throw new RuntimeException(e);
+//			return new TaskData(false);
 		}
 		return new TaskData(true);
 	}
