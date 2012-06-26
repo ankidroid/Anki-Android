@@ -41,6 +41,10 @@
   <string name="pref_cat_flashcard">レビュー画面</string>
   <string name="show_study_options_on_deck_load">ロード時に学習設定を表示</string>
   <string name="show_study_options_on_deck_load_summ">単語帳を読み込むときに学習のオプション画面を表示する</string>
+  <string name="hide_due_count">Hide due count</string>
+  <string name="hide_due_count_summ">Hides the due count</string>
+  <string name="overtime">Overtime</string>
+  <string name="overtime_summ">Continue reviewing after time limit reached</string>
   <string name="show_timer">タイマーを表示</string>
   <string name="show_timer_summ">解答までの時間をタイマーで表示します</string>
   <string name="show_progress_bars">進行状況バーを表示する</string>
@@ -207,6 +211,8 @@
   <string name="pref_keep_screen_on_summ">レビュー中はスクリーンを常時オン</string>
   <string name="pref_simple_interface">﻿シンプルなインターフェイス</string>
   <string name="pref_simple_interface_summ">カードの表示をスピードアップします。ただしテキストのみ（画像、音声などは未対応）</string>
+  <string name="pref_simple_interface_exclude_tags">Normal interface by tag</string>
+  <string name="pref_simple_interface_exclude_tags_summ">Do not use simple interface for these tags: XXX</string>
   <string name="deck_conf_deck_name">Deck name</string>
   <string name="deck_conf_deck_description">Deck description</string>
   <string name="deck_conf_conf_set">Configuration set</string>

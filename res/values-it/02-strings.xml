@@ -51,6 +51,7 @@
   <string name="close">Chiudi</string>
   <string name="select">Seleziona</string>
   <string name="saving_changes">Salvataggio delle modifiche ...</string>
+  <string name="timebox_reached">Timebox reached!</string>
   <string name="studyoptions_welcome_title">Benvenuto in AnkiDroid</string>
   <string name="studyoptions_no_external_storage_title">Nessuna scheda di archiviazione esterna disponibile</string>
   <string name="studyoptions_no_external_storage_message">La memoria esterna non è disponibile. AnkiDroid deve avere accesso alla scheda SD per leggere e caricare i mazzi. Controlla che la scheda SD sia correttamente al suo posto e prova ancora.</string>
@@ -85,8 +86,8 @@
     <item>Intervalli crescenti</item>
     <item>Intervalli decrescenti</item>
     <item>Maggior numero di errori</item>
-    <item>Order added</item>
-    <item>Order due</item>
+    <item>Ordine di aggiunta</item>
+    <item>Ordine di scadenza</item>
   </string-array>
   <plurals name="factadder_cards_added">
     <item quantity="one">1 carta aggiunta</item>

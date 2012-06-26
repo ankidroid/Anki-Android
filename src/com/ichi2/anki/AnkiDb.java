@@ -24,8 +24,10 @@ import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
+
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Database layer for AnkiDroid. Can read the native Anki format through Android's SQLite driver.
@@ -290,7 +292,7 @@ public class AnkiDb {
     }
 
 
-    public void executeMany(String sql, ArrayList<Object[]> list) {
+    public void executeMany(String sql, List<Object[]> list) {
         mMod = true;
         mDatabase.beginTransaction();
         try {

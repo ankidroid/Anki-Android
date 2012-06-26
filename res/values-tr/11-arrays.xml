@@ -104,21 +104,22 @@
     <item>Yeni kartlar ekleniş sırasına göre</item>
   </string-array>
   <string-array name="cram_deck_conf_order_labels">
-    <item>Oldest seen first</item>
-    <item>Random</item>
-    <item>Increasing intervals</item>
-    <item>Decreasing intervals</item>
-    <item>Most lapsed</item>
-    <item>Order added</item>
-    <item>Order due</item>
+    <item>Eski çıkanlar ilk önce</item>
+    <item>Rastgele</item>
+    <item>Artan aralıkta</item>
+    <item>Azalan aralıkta</item>
+    <item>En çok yanıltan</item>
+    <item>Ekleniş sırası</item>
+    <item>Çıkma sırası</item>
   </string-array>
   <string-array name="cram_deck_conf_preset_labels">
     <item><![CDATA[<select preset>]]></item>
-    <item>Preview all new cards</item>
-    <item>Preview cards added today</item>
-    <item>Review today\'s forgotten cards</item>
-    <item>Review ahead by two days</item>
-    <item>Review due cards with tag</item>
+    <item>Bütün yeni kartları önizle</item>
+    <item>Bugün eklenen kartları önizle</item>
+    <item>Bugünkü unutulan kartları çalış</item>
+    <item>İki gün sonrasını önden çalış</item>
+    <item>Çıkacak olan etiketli kartları çalış</item>
+    <item>Review due cards with decreasing intervals</item>
     <item>Cram all cards</item>
   </string-array>
 </resources>

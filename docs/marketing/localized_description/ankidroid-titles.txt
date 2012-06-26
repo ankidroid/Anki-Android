@@ -16,7 +16,7 @@ nl: AnkiDroid flitskaarten
 pt-BR: AnkiDroid Cartões de Estudo
 ru: AnkiDroid флэш-карты
 th: บัตรคำ AnkiDroid
-tr: AnkiDroid bilgi kartları
+tr: AnkiDroid Bilgi Kartları
 vi: Thẻ thông minh AnkiDroid
 zh-CN: AnkiDroid 记忆卡片
 zh-TW: AnkiDroid 單字卡

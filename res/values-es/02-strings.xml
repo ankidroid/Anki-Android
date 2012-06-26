@@ -51,6 +51,7 @@
   <string name="close">Cerrar</string>
   <string name="select">Seleccionar</string>
   <string name="saving_changes">Guardando cambios...</string>
+  <string name="timebox_reached">Timebox reached!</string>
   <string name="studyoptions_welcome_title">Bienvenido a AnkiDroid</string>
   <string name="studyoptions_no_external_storage_title">Almacenamiento externo no disponible</string>
   <string name="studyoptions_no_external_storage_message">Almacenamiento externo no disponible actualmente. AnkiDroid necesita tener acceso a la tarjeta de memoria para leer y cargar tus mazos. Comprueba que la tarjeta de memoria está conectada e inténtalo de nuevo.</string>

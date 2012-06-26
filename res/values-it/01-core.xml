@@ -87,7 +87,7 @@
   <string name="create_collection">Creazione collezione.\nAttendi...</string>
   <string name="rebuild_cram_deck">Ricreo mazzo per lo studio focalizzato.\nAttendi...</string>
   <string name="rebuild_cram_label">Ricrea</string>
-  <string name="empty_cram_label">Empty</string>
+  <string name="empty_cram_label">Vuoto</string>
   <string name="empty_cram_deck">Emptying cram deck.\nPlease wait...</string>
   <string name="studyoptions_congrats_finished">Complimenti! Per ora hai finito.</string>
   <string name="studyoptions_congrats_more_rev">Il limite delle ripetizioni per oggi è stato raggiunto, ma ci sono ancora carte che aspettano di essere ripetute. Per un utilizzo ottimale della memoria, considera di aumentare il limite giornaliero nelle opzioni.</string>

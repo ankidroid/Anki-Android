@@ -963,7 +963,6 @@ public class StudyOptionsFragment extends Fragment {
 
         mSwipeEnabled = preferences.getBoolean("swipe", false);
         mPrefHideDueCount = preferences.getBoolean("hideDueCount", true);
-        mInvertedColors = preferences.getBoolean("invertedColors", false);
 
         // TODO: set language
         // mLocale = preferences.getString("language", "");
@@ -975,6 +974,9 @@ public class StudyOptionsFragment extends Fragment {
     DeckTask.TaskListener mUpdateValuesFromDeckListener = new DeckTask.TaskListener() {
         @Override
         public void onPostExecute(DeckTask.TaskData result) {
+        	if (result == null) {
+        		return;
+        	}
             Object[] obj = result.getObjArray();
             int newCards = (Integer) obj[0];
             int lrnCards = (Integer) obj[1];

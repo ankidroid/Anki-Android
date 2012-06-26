@@ -86,7 +86,7 @@
     <item>Apagar cartão</item>
     <item>Limpar Whiteboard</item>
     <item>Reproduzir mídia</item>
-    <item>Abort learning</item>
+    <item>Parar aprendizado</item>
   </string-array>
   <string-array name="theme_labels">
     <item>Dark Android</item>
@@ -97,28 +97,29 @@
   <string-array name="leech_action_labels">
     <item>Suspender cartão</item>
     <item>Tag only</item>
-    <item>Reset as new</item>
+    <item>Redefinir como novo</item>
   </string-array>
   <string-array name="new_order_labels">
     <item>Novos cartões em ordem aleatória</item>
     <item>Novos cartões na ordem adicionada</item>
   </string-array>
   <string-array name="cram_deck_conf_order_labels">
-    <item>Oldest seen first</item>
+    <item>Mais antigos primeiro</item>
     <item>Aleatório</item>
-    <item>Increasing intervals</item>
-    <item>Decreasing intervals</item>
-    <item>Most lapsed</item>
-    <item>Order added</item>
-    <item>Order due</item>
+    <item>Intervalos crescentes</item>
+    <item>Intervalos decrescentes</item>
+    <item>Mais falhados</item>
+    <item>Ordem de adição</item>
+    <item>Ordem de revisão</item>
   </string-array>
   <string-array name="cram_deck_conf_preset_labels">
     <item><![CDATA[<select preset>]]></item>
     <item>Visualizar todas as novas cartas</item>
-    <item>Preview cards added today</item>
-    <item>Review today\'s forgotten cards</item>
-    <item>Review ahead by two days</item>
-    <item>Review due cards with tag</item>
+    <item>Visualizar cartões adicionados hoje</item>
+    <item>Revisar cartões esquecidos de hoje</item>
+    <item>Revisar cartões previstos para dois dias</item>
+    <item>Revisão cartões devidos com tag</item>
+    <item>Review due cards with decreasing intervals</item>
     <item>Cram all cards</item>
   </string-array>
 </resources>

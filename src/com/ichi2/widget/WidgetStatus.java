@@ -50,6 +50,7 @@ public final class WidgetStatus {
     private static boolean notification = false;
 
     private static DeckStatus sDeckStatus;
+    private static float[] sSmallWidgetStatus;
     private static AsyncTask<Context, Void, Context> sUpdateDeckStatusAsyncTask;
 
 
@@ -60,18 +61,24 @@ public final class WidgetStatus {
 
     /** Request the widget to update its status. */
     public static void update(Context context) {
-        update(context, null);
+        update(context, true);
     }
 
 
     /** Request the widget to update its status. */
     public static void update(Context context, DeckStatus deckStatus) {
-        update(context, deckStatus, true);
+        sDeckStatus = deckStatus;
+        update(context);
     }
 
 
-    public static void update(Context context, DeckStatus deckStatus, boolean updateBigWidget) {
-        sDeckStatus = deckStatus;
+    public static void update(Context context, float[] smallWidgetStatus) {
+    	sSmallWidgetStatus = smallWidgetStatus;
+        update(context);
+    }
+
+
+    public static void update(Context context, boolean updateBigWidget) {
         SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(context);
         if (preferences.getBoolean("widgetMediumEnabled", false)) {
             mediumWidget = true;
@@ -160,6 +167,7 @@ public final class WidgetStatus {
         private static final DeckStatus[] EMPTY_DECK_STATUS = new DeckStatus[0];
 
         private static DeckStatus[] mDecks = EMPTY_DECK_STATUS;
+        private static float[] mSmallWidgetStatus = new float[]{0, 0, 0, 0};
 
 
         @Override
@@ -172,7 +180,7 @@ public final class WidgetStatus {
             }
 
             // For the deck information
-            ArrayList<DeckStatus> decks = new ArrayList<DeckStatus>();
+//            ArrayList<DeckStatus> decks = new ArrayList<DeckStatus>();
 
             // if (sDeckStatus != null && mDecks != null && mDecks.length > 0) {
             // decks = new ArrayList<DeckStatus>(mDecks.length);
@@ -190,35 +198,47 @@ public final class WidgetStatus {
             // }
             // } else {
             try {
-                Collection col = Collection.currentCollection();
-                Object[] di;
-                float progress;
-                if (col == null) {
-                    col = Collection.openCollection(AnkiDroidApp.getCollectionPath());
-                    di = col.getSched().deckCounts();
-                    progress = col.getSched().todaysProgress(null, true, true);
-                    col.close(false);
-                } else {
-                    di = col.getSched().deckCounts();
-                    progress = col.getSched().todaysProgress(null, true, true);
-                }
-                int eta = (Integer) di[1];
-                for (Object[] d : (TreeSet<Object[]>) di[0]) {
-                    String[] sname = (String[]) d[0];
-                    StringBuilder name = new StringBuilder();
-                    name.append(sname[0]);
-                    for (int i = 1; i < sname.length; i++) {
-                        name.append("::").append(sname[i]);
+            	if (sSmallWidgetStatus == null) {
+                    Collection col = Collection.currentCollection();
+                    if (col == null) {
+                        col = Collection.openCollection(AnkiDroidApp.getCollectionPath());
+                        mSmallWidgetStatus = col.getSched().progressToday(null, null, true);
+                        col.close(false);
+                    } else {
+                        mSmallWidgetStatus = col.getSched().progressToday(null, null, true);                    	
                     }
-                    decks.add(new DeckStatus((Long) d[1], name.toString(), (Integer) d[2], (Integer) d[3],
-                            (Integer) d[4], (int) (progress * 100), eta));
-                }
+            	} else {
+            		mSmallWidgetStatus = sSmallWidgetStatus;
+            	}
+//                Collection col = Collection.currentCollection();              
+//                Object[] di;
+//                float progress;
+//                if (col == null) {
+//                    col = Collection.openCollection(AnkiDroidApp.getCollectionPath());
+//                    di = col.getSched().deckCounts();
+//                    progress = col.getSched().todaysProgress(null, true, true);
+//                    col.close(false);
+//                } else {
+//                    di = col.getSched().deckCounts();
+//                    progress = col.getSched().progressTodayAll(di);
+//                }
+//                int eta = (Integer) di[1];
+//                for (Object[] d : (TreeSet<Object[]>) di[0]) {
+//                    String[] sname = (String[]) d[0];
+//                    StringBuilder name = new StringBuilder();
+//                    name.append(sname[0]);
+//                    for (int i = 1; i < sname.length; i++) {
+//                        name.append("::").append(sname[i]);
+//                    }
+//                    decks.add(new DeckStatus((Long) d[1], name.toString(), (Integer) d[2], (Integer) d[3],
+//                            (Integer) d[4], (int) (progress * 100), eta));
+//                }
             } catch (SQLException e) {
                 Log.i(AnkiDroidApp.TAG, "Widget: Problems on retrieving deck information");
             }
-            // }
-
-            mDecks = decks.toArray(EMPTY_DECK_STATUS);
+//             }
+//
+//            mDecks = decks.toArray(EMPTY_DECK_STATUS);
             return context;
         }
 
@@ -226,24 +246,25 @@ public final class WidgetStatus {
         @Override
         protected void onPostExecute(Context context) {
             Log.d(AnkiDroidApp.TAG, "WidgetStatus.UpdateDeckStatusAsyncTask.onPostExecute()");
-            MetaDB.storeWidgetStatus(context, mDecks);
-            if (mediumWidget) {
-                Intent intent;
-                intent = new Intent(context, AnkiDroidWidgetMedium.UpdateService.class);
-                intent.setAction(AnkiDroidWidgetMedium.UpdateService.ACTION_UPDATE);
-                context.startService(intent);
-            }
+            MetaDB.storeSmallWidgetStatus(context, mSmallWidgetStatus);
+//            MetaDB.storeWidgetStatus(context, mDecks);
+//            if (mediumWidget) {
+//                Intent intent;
+//                intent = new Intent(context, AnkiDroidWidgetMedium.UpdateService.class);
+//                intent.setAction(AnkiDroidWidgetMedium.UpdateService.ACTION_UPDATE);
+//                context.startService(intent);
+//            }
             if (smallWidget) {
                 Intent intent;
                 intent = new Intent(context, AnkiDroidWidgetSmall.UpdateService.class);
                 context.startService(intent);
             }
-            if (bigWidget) {
-                Intent intent;
-                intent = new Intent(context, AnkiDroidWidgetBig.UpdateService.class);
-                intent.setAction(AnkiDroidWidgetBig.UpdateService.ACTION_UPDATE);
-                context.startService(intent);
-            }
+//            if (bigWidget) {
+//                Intent intent;
+//                intent = new Intent(context, AnkiDroidWidgetBig.UpdateService.class);
+//                intent.setAction(AnkiDroidWidgetBig.UpdateService.ACTION_UPDATE);
+//                context.startService(intent);
+//            }
             if (notification) {
                 Intent intent;
                 intent = new Intent(context, NotificationService.class);

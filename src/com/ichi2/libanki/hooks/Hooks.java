@@ -16,6 +16,7 @@ public class Hooks {
         hooks = new HashMap<String, List<Hook>>();
         // Add default hooks
         new FuriganaFilters().install(this);
+        new HintFilter().install(this);
         new LaTeX().installHook(this);
     }
 

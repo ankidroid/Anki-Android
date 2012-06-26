@@ -51,6 +51,7 @@
   <string name="close">关闭</string>
   <string name="select">选择</string>
   <string name="saving_changes">正在保存设置…</string>
+  <string name="timebox_reached">Timebox reached!</string>
   <string name="studyoptions_welcome_title">欢迎进入 AnkiDroid</string>
   <string name="studyoptions_no_external_storage_title">没有可用的外部存储</string>
   <string name="studyoptions_no_external_storage_message">没有可用的外部存储空间，AnkiDroid需要访问SD卡以载入您的Anki牌组。确认SD卡挂载后重试。</string>

@@ -27,7 +27,7 @@
   <string name="no">Hayır</string>
   <string name="ok">Tamam</string>
   <string name="studyoptions_deck_name">Deste adı</string>
-  <string name="studyoptions_due_today">Tekrarlanacak:</string>
+  <string name="studyoptions_due_today">Bugün çıkacak:</string>
   <string name="studyoptions_new_total">Toplam yeni kart:</string>
   <string name="studyoptions_total_cards">Toplam kart:</string>
   <string name="studyoptions_eta">Tahminî süre (dk):</string>
@@ -87,15 +87,15 @@
   <string name="create_collection">Koleksiyon oluşturuluyor.\nLütfen bekleyin...</string>
   <string name="rebuild_cram_deck">İnekleme destesi yeniden oluşturuluyor.\nLütfen bekleyin...</string>
   <string name="rebuild_cram_label">Yeniden Oluştur</string>
-  <string name="empty_cram_label">Empty</string>
-  <string name="empty_cram_deck">Emptying cram deck.\nPlease wait...</string>
+  <string name="empty_cram_label">Boş</string>
+  <string name="empty_cram_deck">İnekleme destesi boşaltılıyor.\nLütfen bekleyin...</string>
   <string name="studyoptions_congrats_finished">Tebrikler! Şimdilik bitirdiniz.</string>
   <string name="studyoptions_congrats_more_rev">Bugünün çalışma sınırına ulaşıldı, ama hâlâ çalışılmayı bekleyen kartlar var. En uygun belleme için, seçeneklerden günlük sınırı artırabilirsiniz.</string>
   <string name="studyoptions_congrats_more_new">Daha çalışılmamış yeni kartlar var, fakat günlük sınıra ulaşıldı. Seçeneklerden sınırı artırabilirsiniz, fakat yeni gördüğünüz kart sayısı arttıkça kısa vâdede çalışma yükünüzün yükseleceğini unutmayın.</string>
   <string name="sd_card_not_mounted">SD kart takılı değil.</string>
   <string name="studyoptions_options">Seçenekler</string>
-  <string name="empty_cloze_warning">Please edit this note and add some cloze deletions. (%1$s)</string>
-  <string name="help_cloze">help</string>
+  <string name="empty_cloze_warning">Lütfen bu notu düzenleyip bazı boşluklar ekleyin. (%1$s)</string>
+  <string name="help_cloze">Yardım</string>
   <string-array name="next_review_s">
     <item>1 saniye</item>
     <item>1 dakika</item>
@@ -113,8 +113,8 @@
     <item>%s yıl</item>
   </string-array>
   <plurals name="deckpicker_title">
-    <item quantity="one">%2$d kartın 1\'i çalışılacak (%3$s)</item>
-    <item quantity="other">%2$d kartın %1$d tanesi çalışılacak (%3$s)</item>
+    <item quantity="one">%2$d kartın 1\'i çıkacak (%3$s)</item>
+    <item quantity="other">%2$d kartın %1$d tanesi çıkacak (%3$s)</item>
   </plurals>
   <plurals name="deckpicker_title_minutes">
     <item quantity="one">1 dk.</item>

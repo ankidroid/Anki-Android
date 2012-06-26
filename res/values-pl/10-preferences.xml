@@ -41,6 +41,10 @@
   <string name="pref_cat_flashcard">Okno powtórek</string>
   <string name="show_study_options_on_deck_load">Pokaż opcje przy ładowaniu</string>
   <string name="show_study_options_on_deck_load_summ">Pokaż ustawienia nauki przy ładowaniu talii</string>
+  <string name="hide_due_count">Hide due count</string>
+  <string name="hide_due_count_summ">Hides the due count</string>
+  <string name="overtime">Overtime</string>
+  <string name="overtime_summ">Continue reviewing after time limit reached</string>
   <string name="show_timer">Pokaż zegar</string>
   <string name="show_timer_summ">Zegar pokazujący ile czasu trwa odpowiedź</string>
   <string name="show_progress_bars">Pokaż paski postępu</string>
@@ -207,6 +211,8 @@
   <string name="pref_keep_screen_on_summ">Nie pozwól na wyłączanie ekranu podczas powtórek</string>
   <string name="pref_simple_interface">Prosty interfejs</string>
   <string name="pref_simple_interface_summ">Przyspiesza wyświetlanie kart, ale obsługuje tylko tekst (bez zdjęć, dźwięków itp.)</string>
+  <string name="pref_simple_interface_exclude_tags">Normal interface by tag</string>
+  <string name="pref_simple_interface_exclude_tags_summ">Do not use simple interface for these tags: XXX</string>
   <string name="deck_conf_deck_name">Deck name</string>
   <string name="deck_conf_deck_description">Deck description</string>
   <string name="deck_conf_conf_set">Configuration set</string>

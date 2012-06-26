@@ -41,6 +41,10 @@
   <string name="pref_cat_flashcard">Overhoorscherm</string>
   <string name="show_study_options_on_deck_load">Studeeropties tonen</string>
   <string name="show_study_options_on_deck_load_summ">Toont studeeropties als je een leerset laadt</string>
+  <string name="hide_due_count">Hide due count</string>
+  <string name="hide_due_count_summ">Hides the due count</string>
+  <string name="overtime">Overtime</string>
+  <string name="overtime_summ">Continue reviewing after time limit reached</string>
   <string name="show_timer">Toon timer</string>
   <string name="show_timer_summ">Timer die laat zien hoe lang u over het antwoorden doet</string>
   <string name="show_progress_bars">Toon voortgangsbalken</string>
@@ -207,6 +211,8 @@
   <string name="pref_keep_screen_on_summ">Voorkom dat scherm uitgeschakeld wordt tijdens herhalen</string>
   <string name="pref_simple_interface">Eenvoudige interface</string>
   <string name="pref_simple_interface_summ">Toont kaarten sneller, maar ondersteunt enkel tekst (geen afbeeldingen, geluiden, etc.)</string>
+  <string name="pref_simple_interface_exclude_tags">Normal interface by tag</string>
+  <string name="pref_simple_interface_exclude_tags_summ">Do not use simple interface for these tags: XXX</string>
   <string name="deck_conf_deck_name">Setnaam</string>
   <string name="deck_conf_deck_description">Omschrijving van de leerset</string>
   <string name="deck_conf_conf_set">Configuratieset</string>

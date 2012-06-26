@@ -129,9 +129,8 @@ public class Sched {
     private TreeMap<Integer, Integer> mGroupConfs;
     private TreeMap<Integer, JSONObject> mConfCache;
 
-    /** all due cards which are not in the current deck selection */
-    private int mNonselectedDues;
-
+    private HashMap<Long, Pair<Integer, int[]>> mNonSelectedDecksProgress;
+    private boolean mNonSelectedDecksCleared = false;
 
     /**
      * queue types: 0=new/cram, 1=lrn, 2=rev, 3=day lrn, -1=suspended, -2=buried revlog types: 0=lrn, 1=rev, 2=relrn,
@@ -380,67 +379,6 @@ public class Sched {
     }
 
 
-    /** LIBANKI: not in libanki */
-    public int eta(int[] counts) {
-        return eta(counts, true);
-    }
-
-
-    public int eta(int[] counts, boolean reload) {
-        double revYesRate;
-        double revTime;
-        double lrnYesRate;
-        double lrnTime;
-        if (reload || mEtaCache[0] == -1) {
-            Cursor cur = null;
-            try {
-                cur = mCol
-                        .getDb()
-                        .getDatabase()
-                        .rawQuery(
-                                "SELECT avg(CASE WHEN ease > 1 THEN 1 ELSE 0 END), avg(time) FROM revlog WHERE type = 1 AND id > "
-                                        + ((mCol.getSched().getDayCutoff() - (7 * 86400)) * 1000), null);
-                if (!cur.moveToFirst()) {
-                    return -1;
-                }
-                revYesRate = cur.getDouble(0);
-                revTime = cur.getDouble(1);
-                cur = mCol
-                        .getDb()
-                        .getDatabase()
-                        .rawQuery(
-                                "SELECT avg(CASE WHEN ease = 3 THEN 1 ELSE 0 END), avg(time) FROM revlog WHERE type != 1 AND id > "
-                                        + ((mCol.getSched().getDayCutoff() - (7 * 86400)) * 1000), null);
-                if (!cur.moveToFirst()) {
-                    return -1;
-                }
-                lrnYesRate = cur.getDouble(0);
-                lrnTime = cur.getDouble(1);
-            } finally {
-                if (cur != null && !cur.isClosed()) {
-                    cur.close();
-                }
-            }
-            mEtaCache[0] = revYesRate;
-            mEtaCache[1] = revTime;
-            mEtaCache[2] = lrnYesRate;
-            mEtaCache[3] = lrnTime;
-        } else {
-            revYesRate = mEtaCache[0];
-            revTime = mEtaCache[1];
-            lrnYesRate = mEtaCache[2];
-            lrnTime = mEtaCache[3];
-        }
-        // rev cards
-        double eta = revTime * counts[2];
-        // lrn cards
-        double factor = Math.min(1 / (1 - lrnYesRate), 10);
-        double lrnAnswers = (counts[0] + counts[1] + counts[2] * (1 - revYesRate)) * factor;
-        eta += lrnAnswers * lrnTime;
-        return (int) (eta / 60000);
-    }
-
-
     private int _walkingCount() {
         return _walkingCount(null, null, null);
     }
@@ -516,10 +454,6 @@ public class Sched {
 
     /** LIBANKI: not in libanki */
     public Object[] deckCounts() {
-        // check if new day has rolled over and reset counts if yes
-        // if (Utils.now() > mDayCutoff) {
-        // _updateCutoff();
-        // }
         TreeSet<Object[]> decks = deckDueTree(0);
         int[] counts = new int[] { 0, 0, 0 };
         for (Object[] deck : decks) {
@@ -2320,71 +2254,166 @@ public class Sched {
     }
 
 
-    /** NOT IN LIBANKI */
-    public float todaysProgress(Card card, boolean allDecks, boolean reloadNonselected) {
-        int counts = mNewCount + mLrnCount + mRevCount;
-        if (card != null) {
-            int idx = countIdx(card);
-            if (idx == 1) {
-                counts += card.getLeft();
-            } else {
-                counts += 1;
-            }
-        }
-        try {
-            float done = 0;
-            if (allDecks) {
-                if (reloadNonselected) {
-                    mNonselectedDues = 0;
-                    for (JSONObject g : mCol.getDecks().all()) {
-                        try {
-                            if (!g.getString("name").matches(".*::.*")) {
-                                long did = g.getLong("id");
-                                LinkedList<Long> ldid = new LinkedList<Long>();
-                                ldid.add(did);
-                                for (Long c : mCol.getDecks().children(did).values()) {
-                                    ldid.add(c);
-                                }
-                                String didLimit = Utils.ids2str(ldid);
-                                mNonselectedDues += _walkingCount(ldid,
-                                        Sched.class.getDeclaredMethod("_deckNewLimitSingle", JSONObject.class),
-                                        Sched.class.getDeclaredMethod("_cntFnNew", long.class, int.class));
-                                mNonselectedDues += _cntFnLrn(didLimit);
-                                mNonselectedDues += _walkingCount(ldid,
-                                        Sched.class.getDeclaredMethod("_deckRevLimitSingle", JSONObject.class),
-                                        Sched.class.getDeclaredMethod("_cntFnRev", long.class, int.class));
-                            }
-                        } catch (JSONException e) {
-                            throw new RuntimeException(e);
-                        } catch (NoSuchMethodException e) {
-                            throw new RuntimeException(e);
-                        }
-                    }
-                    mNonselectedDues -= mNewCount + mLrnCount + mRevCount;
-                }
-                counts += mNonselectedDues;
-                for (JSONObject d : mCol.getDecks().all()) {
-                    if (!d.getString("name").matches(".*::.*")) {
-                        done += d.getJSONArray("newToday").getInt(1) + d.getJSONArray("lrnToday").getInt(1)
-                                + d.getJSONArray("revToday").getInt(1);
-                    }
-                }
-            } else {
-                JSONObject c = mCol.getDecks().current();
-                done = c.getJSONArray("newToday").getInt(1) + c.getJSONArray("lrnToday").getInt(1)
-                        + c.getJSONArray("revToday").getInt(1);
-            }
-            return done / (done + counts);
-        } catch (JSONException e) {
-            throw new RuntimeException(e);
-        }
+    /** returns today's progress 
+     * 
+     * @param counts (if empty, cached version will be used if any)
+     * @param card
+     * @return [progressCurrentDeck, progressAllDecks, leftCards, eta]
+     */
+    public float[] progressToday(TreeSet<Object[]> counts, Card card, boolean eta) {
+    	try {
+        	int doneCurrent = 0;
+        	int[] leftCurrent = new int[]{0, 0, 0};
+        	String[] cs = new String[]{"new", "lrn", "rev"};
+        	long currentDid = 0;
+        	long currentParentDid = 0;
+
+        	// refresh deck progresses with fresh counts if necessary
+        	if (counts != null || mNonSelectedDecksProgress == null) {
+        		if (mNonSelectedDecksProgress == null) {
+            		mNonSelectedDecksProgress = new HashMap<Long, Pair<Integer, int[]>>();
+        		}
+        		mNonSelectedDecksProgress.clear();
+        		if (counts == null) {
+        			// reload counts
+        			counts = (TreeSet<Object[]>)deckCounts()[0];
+        		}
+        		int done = 0;
+            	for (Object[] d : counts) {
+            		if (((String[])d[0]).length == 1) {
+            			// top deck
+            			JSONObject deck = mCol.getDecks().get((Long) d[1]);
+                		for (String s : cs) {
+                			done += deck.getJSONArray(s + "Today").getInt(1);
+                		}
+                		mNonSelectedDecksProgress.put((Long)d[1], new Pair<Integer, int[]>(done, new int[]{(Integer)d[2], (Integer)d[3], (Integer)d[4]}));
+            		}
+            	}
+            	mNonSelectedDecksCleared = false;
+        	}
+
+        	// current selected deck
+        	if (card != null) {
+        		JSONObject deck = mCol.getDecks().current();
+        		currentDid = deck.getLong("id");
+        		String[] name = deck.getString("name").split(" ");
+        		if (name.length > 1) {
+        			// is a subdeck, note parent's did
+        			currentParentDid = mCol.getDecks().id(name[0], false);
+        		}
+        		for (String s : cs) {
+        			doneCurrent += deck.getJSONArray(s + "Today").getInt(1);
+        		}
+        		int idx = countIdx(card);
+        		leftCurrent = new int[]{ mNewCount + (idx == 1 ? 0 : 1), mLrnCount + (idx == 1 ? card.getLeft() / 1000 : 0), mRevCount + (idx == 1 ? 0 : 1)};
+        	}
+
+    		// remove current deck from cache if still present
+        	if (!mNonSelectedDecksCleared) {
+        		if (mNonSelectedDecksProgress.containsKey(currentDid)) {
+        			mNonSelectedDecksProgress.remove(currentDid);
+            		mNonSelectedDecksCleared = true;
+        		} else if (mNonSelectedDecksProgress.containsKey(currentParentDid)) {
+        			Pair<Integer, int[]> c = mNonSelectedDecksProgress.get(currentParentDid);
+        			int[] left = c.second;
+        			left[0] -= leftCurrent[0];
+        			left[1] -= leftCurrent[1];
+        			left[2] -= leftCurrent[2];
+        			mNonSelectedDecksProgress.put(currentParentDid, new Pair<Integer, int[]>(c.first - doneCurrent, left));
+            		mNonSelectedDecksCleared = true;
+        		}
+        	}
+
+        	int doneAll = 0;
+        	int[] leftAll = new int[]{0, 0, 0};
+        	for (Pair<Integer, int[]> d : mNonSelectedDecksProgress.values()) {
+        		doneAll += d.first;
+        		leftAll[0] += d.second[0];
+        		leftAll[1] += d.second[1];
+        		leftAll[2] += d.second[2];
+        	}
+        	doneAll += doneCurrent;
+        	leftAll[0] += leftCurrent[0];
+        	leftAll[1] += leftCurrent[1];
+        	leftAll[2] += leftCurrent[2];
+        	int totalAll = doneAll + leftAll[0] + leftAll[1] + leftAll[2];
+        	int totalCurrent = doneCurrent + leftCurrent[0] + leftCurrent[1] + leftCurrent[2];
+
+        	float progressCurrent = -1;
+        	if (totalCurrent != 0) {
+        		progressCurrent = (float) doneCurrent / (float) totalCurrent;
+        	}
+        	float progressTotal = -1;
+        	if (totalAll != 0) {
+        		progressTotal = (float) doneAll / (float) totalAll;
+        	}
+        	return new float[]{ progressCurrent, progressTotal, totalAll - doneAll, eta ? eta(leftAll, false) : -1};
+    	} catch (JSONException e) {
+    		throw new RuntimeException(e);
+    	}
     }
 
 
-    public void resetTotalProgress() {
-        mNonselectedDues = 0;
+    /** LIBANKI: not in libanki */
+    public int eta(int[] counts) {
+        return eta(counts, true);
     }
 
+
+    /** estimates remaining time for learning (based on last seven days) */
+    public int eta(int[] counts, boolean reload) {
+        double revYesRate;
+        double revTime;
+        double lrnYesRate;
+        double lrnTime;
+        if (reload || mEtaCache[0] == -1) {
+            Cursor cur = null;
+            try {
+                cur = mCol
+                        .getDb()
+                        .getDatabase()
+                        .rawQuery(
+                                "SELECT avg(CASE WHEN ease > 1 THEN 1 ELSE 0 END), avg(time) FROM revlog WHERE type = 1 AND id > "
+                                        + ((mCol.getSched().getDayCutoff() - (7 * 86400)) * 1000), null);
+                if (!cur.moveToFirst()) {
+                    return -1;
+                }
+                revYesRate = cur.getDouble(0);
+                revTime = cur.getDouble(1);
+                cur = mCol
+                        .getDb()
+                        .getDatabase()
+                        .rawQuery(
+                                "SELECT avg(CASE WHEN ease = 3 THEN 1 ELSE 0 END), avg(time) FROM revlog WHERE type != 1 AND id > "
+                                        + ((mCol.getSched().getDayCutoff() - (7 * 86400)) * 1000), null);
+                if (!cur.moveToFirst()) {
+                    return -1;
+                }
+                lrnYesRate = cur.getDouble(0);
+                lrnTime = cur.getDouble(1);
+            } finally {
+                if (cur != null && !cur.isClosed()) {
+                    cur.close();
+                }
+            }
+            mEtaCache[0] = revYesRate;
+            mEtaCache[1] = revTime;
+            mEtaCache[2] = lrnYesRate;
+            mEtaCache[3] = lrnTime;
+        } else {
+            revYesRate = mEtaCache[0];
+            revTime = mEtaCache[1];
+            lrnYesRate = mEtaCache[2];
+            lrnTime = mEtaCache[3];
+        }
+        // rev cards
+        double eta = revTime * counts[2];
+        // lrn cards
+        double factor = Math.min(1 / (1 - lrnYesRate), 10);
+        double lrnAnswers = (counts[0] + counts[1] + counts[2] * (1 - revYesRate)) * factor;
+        eta += lrnAnswers * lrnTime;
+        return (int) (eta / 60000);
+    }
 
     //
     // /**

@@ -18,27 +18,16 @@
 
 package com.ichi2.anki;
 
-import com.ichi2.anim.ActivityTransitionAnimation;
-import com.ichi2.anki2.R;
-
-import java.io.File;
-import java.util.Arrays;
-import java.util.Locale;
-import java.util.Map;
-import java.util.TreeMap;
-
-import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
+import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.DialogInterface.OnClickListener;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.content.res.Resources;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.preference.CheckBoxPreference;
+import android.preference.EditTextPreference;
 import android.preference.ListPreference;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceManager;
@@ -47,10 +36,19 @@ import android.view.KeyEvent;
 import android.view.WindowManager.BadTokenException;
 
 import com.hlidskialf.android.preference.SeekBarPreference;
+import com.ichi2.anim.ActivityTransitionAnimation;
+import com.ichi2.anki2.R;
 import com.ichi2.async.DeckTask;
 import com.ichi2.libanki.Utils;
+import com.ichi2.themes.StyledDialog;
 import com.ichi2.themes.StyledProgressDialog;
 import com.ichi2.themes.Themes;
+
+import java.io.File;
+import java.util.Arrays;
+import java.util.Locale;
+import java.util.Map;
+import java.util.TreeMap;
 
 /**
  * Preferences dialog.
@@ -86,6 +84,7 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
     private static String[] mShowValueInSummSeek = { "relativeDisplayFontSize", "relativeCardBrowserFontSize",
             "answerButtonSize", "whiteBoardStrokeWidth", "minShakeIntensity", "swipeSensibility",
             "timeoutAnswerSeconds", "timeoutQuestionSeconds", "animationDuration", "backupMax" };
+    private static String[] mShowValueInSummEditText = { "simpleInterfaceExcludeTags" };
     private TreeMap<String, String> mListsToUpdate = new TreeMap<String, String>();
     private StyledProgressDialog mProgressDialog;
     private boolean lockCheckAction = false;
@@ -127,6 +126,9 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
         for (String key : mShowValueInSummSeek) {
             updateSeekBarPreference(key);
         }
+        for (String key : mShowValueInSummEditText) {
+            updateEditTextPreference(key);
+        }
     }
 
 
@@ -148,6 +150,29 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
                 listpref.setSummary(replaceString(oldsum, entry));
             } else {
                 listpref.setSummary(entry);
+            }
+        }
+    }
+
+
+    private void updateEditTextPreference(String key) {
+        EditTextPreference pref = (EditTextPreference) getPreferenceScreen().findPreference(key);
+        String entry;
+        try {
+            entry = pref.getText();
+        } catch (NullPointerException e) {
+            Log.e(AnkiDroidApp.TAG, "Error getting set preference value of " + key + ": " + e);
+            entry = "?";
+        }
+        if (mListsToUpdate.containsKey(key)) {
+        	pref.setSummary(replaceString(mListsToUpdate.get(key), entry));
+        } else {
+            String oldsum = (String) pref.getSummary();
+            if (oldsum.contains("XXX")) {
+                mListsToUpdate.put(key, oldsum);
+                pref.setSummary(replaceString(oldsum, entry));
+            } else {
+            	pref.setSummary(entry);
             }
         }
     }
@@ -244,11 +269,6 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
     @Override
     protected void onPause() {
         super.onPause();
-        // Reschedule the checking in case the user has changed the veecheck switch
-        // if (mVeecheckStatus ^ mPrefMan.getSharedPreferences().getBoolean(PrefSettings.KEY_ENABLED, mVeecheckStatus))
-        // {
-        // sendBroadcast(new Intent(Veecheck.getRescheduleAction(this)));
-        // }
     }
 
 
@@ -296,6 +316,8 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
                 updateListPreference(key);
             } else if (Arrays.asList(mShowValueInSummSeek).contains(key)) {
                 updateSeekBarPreference(key);
+            } else if (Arrays.asList(mShowValueInSummEditText).contains(key)) {
+                updateEditTextPreference(key);
             } else if (key.equals("writeAnswers") && sharedPreferences.getBoolean("writeAnswers", false)) {
                 showDialog(DIALOG_WRITE_ANSWERS);
             } else if (key.equals("useBackup")) {
@@ -376,7 +398,7 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
     @Override
     protected Dialog onCreateDialog(int id) {
         Resources res = getResources();
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        StyledDialog.Builder builder = new StyledDialog.Builder(this);
         switch (id) {
             case DIALOG_BACKUP:
                 builder.setTitle(res.getString(R.string.backup_manager_title));

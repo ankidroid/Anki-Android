@@ -51,6 +51,7 @@
   <string name="close">Stäng</string>
   <string name="select">Välj</string>
   <string name="saving_changes">Sparar ändringar...</string>
+  <string name="timebox_reached">Timebox reached!</string>
   <string name="studyoptions_welcome_title">Välkommen till AnkiDroid</string>
   <string name="studyoptions_no_external_storage_title">Inget externt lagringutrymme tillgängligt</string>
   <string name="studyoptions_no_external_storage_message">Ingen extern lagring är tillgänglig för tillfället. AnkiDroid måste ha tillgång till SD-kortet för att läsa och ladda dina Anki-kortlekar. Kontrollera att SD-kortet är monterat och försök igen.</string>

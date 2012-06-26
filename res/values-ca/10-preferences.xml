@@ -41,6 +41,10 @@
   <string name="pref_cat_flashcard">Pantalla de revisió</string>
   <string name="show_study_options_on_deck_load">Mostra les opcions d\'aprenentatge en carregar el paquet</string>
   <string name="show_study_options_on_deck_load_summ">Mostra les opcions d\'aprenentatge en carregar un paquet</string>
+  <string name="hide_due_count">Hide due count</string>
+  <string name="hide_due_count_summ">Hides the due count</string>
+  <string name="overtime">Overtime</string>
+  <string name="overtime_summ">Continue reviewing after time limit reached</string>
   <string name="show_timer">Mostra el temps</string>
   <string name="show_timer_summ">Mostra el temps que trigueu a contestar</string>
   <string name="show_progress_bars">Mostra la barra de progrés</string>
@@ -207,6 +211,8 @@
   <string name="pref_keep_screen_on_summ">Evita que la pantalla s\'apagui durant la revisió</string>
   <string name="pref_simple_interface">Interfície simple</string>
   <string name="pref_simple_interface_summ">Accelera la targeta que es mostra però només és compatible amb text (no hi ha imatges, sons, etc.)</string>
+  <string name="pref_simple_interface_exclude_tags">Normal interface by tag</string>
+  <string name="pref_simple_interface_exclude_tags_summ">Do not use simple interface for these tags: XXX</string>
   <string name="deck_conf_deck_name">Nom del paquet</string>
   <string name="deck_conf_deck_description">Descripció del paquet</string>
   <string name="deck_conf_conf_set">Grup de configuració</string>

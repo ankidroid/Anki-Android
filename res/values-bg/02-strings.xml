@@ -51,6 +51,7 @@
   <string name="close">Затвори</string>
   <string name="select">Изберете</string>
   <string name="saving_changes">Записване на промените...</string>
+  <string name="timebox_reached">Timebox reached!</string>
   <string name="studyoptions_welcome_title">Добре дошли в AnkiDroid</string>
   <string name="studyoptions_no_external_storage_title">Няма налична външна памет</string>
   <string name="studyoptions_no_external_storage_message">Външно запаметяващо устройство не е достъпно. AnkiDroid трябва да има достъп до картата на SD, за да четете и да заредите вашата колода. Проверете дали вашата SD карта е поставена и опитайте отново.</string>

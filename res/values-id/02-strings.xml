@@ -51,6 +51,7 @@
   <string name="close">Tutup</string>
   <string name="select">Pilih</string>
   <string name="saving_changes">Menyimpan perubahan...</string>
+  <string name="timebox_reached">Timebox reached!</string>
   <string name="studyoptions_welcome_title">Selamat Datang ke AnkiDroid</string>
   <string name="studyoptions_no_external_storage_title">Tiada Storan Luaran Ditemui</string>
   <string name="studyoptions_no_external_storage_message">Storan luaran tidak ditemui. AnkiDroid tidak boleh memuat dek Anki tanpanya. Sila periksa kad SD terpasang dan cuba lagi.</string>
