@@ -22,5 +22,6 @@
 <resources>
   <string-array name="new_version_features">
     <item>Fixed misleading message about a network error</item>
+    <item>Create media directory when downloading shared deck</item>
   </string-array>
 </resources>
