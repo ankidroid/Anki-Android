@@ -625,6 +625,7 @@ public class DeckTask extends
 					// a review was undone,
 					newCard = col.getCard(cid);
 					col.reset();
+					col.getSched().decrementCounts(newCard);
 					sHadCardQueue = true;
 				} else {
 					// TODO: do not fetch new card if a non review operation has

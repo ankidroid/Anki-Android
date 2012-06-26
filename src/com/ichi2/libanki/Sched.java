@@ -169,6 +169,21 @@ public class Sched {
         return card;
     }
 
+    /* NOT IN LIBANKI */
+    public void decrementCounts(Card card) {
+    	int type = card.getQueue();
+    	switch (type) {
+    	case 0:
+    		mNewCount--;
+    		break;
+    	case 2:
+    		mRevCount--;
+    		break;
+    	default:
+    		mLrnCount--;
+    	}
+    }
+
 
     public void reset() {
         _updateCutoff();
