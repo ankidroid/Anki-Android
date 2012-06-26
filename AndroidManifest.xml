@@ -58,7 +58,7 @@
 			android:label="@string/shareddeckpicker_title"
 			android:configChanges="keyboardHidden|orientation|locale"/>
 		<activity android:name="com.ichi2.anki.Reviewer" 
-			android:configChanges="keyboardHidden|orientation|locale"/>
+			android:configChanges="keyboardHidden|orientation|locale|screenSize"/>
 		<activity android:name="com.ichi2.anki.MyAccount" 
 			android:label="@string/menu_my_account"
 			android:configChanges="keyboardHidden|orientation|locale"/>

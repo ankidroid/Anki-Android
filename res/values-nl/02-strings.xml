@@ -51,6 +51,7 @@
   <string name="close">Sluiten</string>
   <string name="select">Selecteren</string>
   <string name="saving_changes">Wijzigingen worden opgeslagen...</string>
+  <string name="timebox_reached">Timebox reached!</string>
   <string name="studyoptions_welcome_title">Welkom bij AnkiDroid</string>
   <string name="studyoptions_no_external_storage_title">Geen externe opslag beschikbaar</string>
   <string name="studyoptions_no_external_storage_message">Er is momenteel geen externe opslag beschikbaar. AnkiDroid heeft toegang tot je SD-kaart nodig om je Ankisets te laden. Controleer of je SD-kaart goed zit en probeer het nog eens.</string>

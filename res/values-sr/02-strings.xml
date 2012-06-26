@@ -51,6 +51,7 @@
   <string name="close">Zatvori</string>
   <string name="select">Select</string>
   <string name="saving_changes">Sačuvavanje izmena...</string>
+  <string name="timebox_reached">Timebox reached!</string>
   <string name="studyoptions_welcome_title">Welcome to AnkiDroid</string>
   <string name="studyoptions_no_external_storage_title">Nema SD Kartice</string>
   <string name="studyoptions_no_external_storage_message">Нема екстерних складиштење је тренутно доступна. АнкиДроид треба да имају приступ сдцард како би се читати и учитајте своје Анки палубама. Проверите да ли сдцард је монтирана и покушајте поново.</string>

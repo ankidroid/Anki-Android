@@ -51,6 +51,7 @@
   <string name="close">Закрыть</string>
   <string name="select">Ок</string>
   <string name="saving_changes">Сохранение изменений...</string>
+  <string name="timebox_reached">Timebox reached!</string>
   <string name="studyoptions_welcome_title">Добро пожаловать в AnkiDroid</string>
   <string name="studyoptions_no_external_storage_title">Не доступен накопитель данных</string>
   <string name="studyoptions_no_external_storage_message">Не доступен накопитель данных. AnkiDroid должен иметь доступ к SD-карте для того, чтобы читать и загружать колоды. Убедитесь, что ваша SD-карта смонтирована и попробуйте еще раз.</string>

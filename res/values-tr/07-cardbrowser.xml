@@ -40,7 +40,7 @@
   <string name="card_details_question">Soru</string>
   <string name="card_details_answer">Yanıt</string>
   <string name="card_details_due">Vade</string>
-  <string name="card_details_last_due">Son geliş</string>
+  <string name="card_details_last_due">Son çıkma</string>
   <string name="card_details_now">Şu anda</string>
   <string name="card_details_interval">Aralık</string>
   <string name="card_details_ease">Kolaylık</string>
@@ -58,7 +58,7 @@
   <string-array name="card_browser_order_labels">
     <item>Sıralamadan (daha hızlı)</item>
     <item>Arama alanına göre</item>
-    <item>Vade süresine göre</item>
+    <item>Çıkış zamanına göre</item>
   </string-array>
   <plurals name="card_browser_subtitle">
     <item quantity="one">%2$d kartın 1 tanesi gösteriliyor</item>

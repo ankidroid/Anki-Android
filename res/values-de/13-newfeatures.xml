@@ -28,7 +28,7 @@
     <item>Zusammenführen beim Synchronisieren jetzt möglich</item>
     <item>Bessere Statistiken</item>
     <item>Stapel werden nun in einer einzelnen Sammlung gespeichert</item>
-    <item>Optionen können nun gemeinsam benutzt werden</item>
+    <item>options are shareable now</item>
     <item>Tablet-Layout</item>
   </string-array>
 </resources>

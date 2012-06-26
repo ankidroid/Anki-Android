@@ -23,6 +23,7 @@ import com.ichi2.libanki.Collection;
 import com.ichi2.widget.WidgetStatus;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
 import android.os.Bundle;
@@ -38,6 +39,7 @@ public class StudyOptionsActivity extends FragmentActivity {
     /** Menus */
     private static final int MENU_PREFERENCES = 201;
     public static final int MENU_ROTATE = 202;
+    public static final int MENU_NIGHT = 203;
 
 
     @Override
@@ -70,6 +72,16 @@ public class StudyOptionsActivity extends FragmentActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+    	int icon;
+    	SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(this);
+    	if (preferences.getBoolean("invertedColors", false)) {
+    		icon = R.drawable.ic_menu_recent_history_black;
+    	} else {
+    		icon = R.drawable.ic_menu_recent_history;
+    	}
+        UIUtils.addMenuItemInActionBar(menu, Menu.NONE, MENU_NIGHT, Menu.NONE, R.string.night_mode,
+                icon);
+
         UIUtils.addMenuItem(menu, Menu.NONE, MENU_PREFERENCES, Menu.NONE, R.string.menu_preferences,
                 R.drawable.ic_menu_preferences);
         UIUtils.addMenuItem(menu, Menu.NONE, MENU_ROTATE, Menu.NONE, R.string.menu_rotate,
@@ -99,6 +111,17 @@ public class StudyOptionsActivity extends FragmentActivity {
                 } else {
                     this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
                 }
+                return true;
+
+            case MENU_NIGHT:
+            	SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(this);
+            	if (preferences.getBoolean("invertedColors", false)) {
+            		preferences.edit().putBoolean("invertedColors", false).commit();
+            		item.setIcon(R.drawable.ic_menu_recent_history);
+            	} else {
+            		preferences.edit().putBoolean("invertedColors", true).commit();
+            		item.setIcon(R.drawable.ic_menu_recent_history_black);
+            	}
                 return true;
 
             default:

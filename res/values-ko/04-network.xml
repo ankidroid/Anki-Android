@@ -114,15 +114,15 @@
   <string name="register_title">계정 등록</string>
   <string name="register_mismatch">사용자 이름/암호 재입력이 일치하지 않거나 비어 있습니다. 다시 입력 하십시오.</string>
   <string name="registering_message">계정 생성중. \n 잠시 기다리세요...</string>
-  <string name="upgrade_decks_zipping">Zipping decks for upload.\nPlease wait...</string>
-  <string name="upgrade_decks_upload">Uploading zipped decks.\nPlease wait...</string>
-  <string name="upgrade_decks_waiting">Waiting, queue position: %s\nPlease wait...</string>
-  <string name="upgrade_decks_upgrade_started">\"Upgrade started\nPlease waiting for finish...</string>
-  <string name="upgrade_decks_downloading">Downloading upgraded collection.\nPlease wait...</string>
-  <string name="upgrade_decks_message">There is no Anki 2.0 collection available but at least one deck of the old Anki 1.2 format has been found. In order to use your decks with the new version of AnkiDroid they need to be converted first into a single collection of the new Anki-2.0 format. There are three possibilities for this:</string>
+  <string name="upgrade_decks_zipping">카드묶음을 업로드하기 위해 압축중입니다.\n기다리세요...</string>
+  <string name="upgrade_decks_upload">압축된 카드묶음을 업로드 중입니다.\n기다려주세요...</string>
+  <string name="upgrade_decks_waiting">대기중, 저장소 위치 %s\n기다려주세요...</string>
+  <string name="upgrade_decks_upgrade_started">업그레이드가 시작되었습니다.\n끝마칠 때까지 기다려주세요...</string>
+  <string name="upgrade_decks_downloading">업그레이드된 컬렉션을 다운로드중입니다.\n기다려주세요...</string>
+  <string name="upgrade_decks_message">사용할 수 있는 Anki 2.0 컬렉션이 없지만 적어도 하나 이상의 Anki 1.2 형태 카드묶음이 발견되었습니다. 새로운 버전의 AnkiDroid와 발견된 카드묶음을 사용하기 위해서는, 새로운 Anki 2.0 형태의 컬렉션 하나로 발견된 카드묶음이 전환되어야 합니다. 전환하기 위한 3가지의 가능한 방법 :</string>
   <string name="upgrade_decks_message_pos1">By using Anki Desktop 2.0, your decks will be converted at the first start. You can sync over AnkiWeb or just copy the new collection afterwards to your mobile device. Start with syncing your Anki-1.2 decks to Anki Desktop (or copy them from your AnkiDroid directory (%s) to your Anki Desktop 1.2 directory on your computer) and start Anki Desktop 2.0.</string>
-  <string name="upgrade_decks_message_pos2">If you already sync your decks over ankiweb, you\'ll just need to log in once to %s and your decks will be converted there. After that you can simply sync the new collection to your mobile device.</string>
+  <string name="upgrade_decks_message_pos2">만약 이미 ankiweb을 이용하여 카드묶음을 동기화 했다면, %s에 로그인을 하면 카드묶음이 전환될 것입니다. 그후 이동기기에서 간단하게 새로운 컬렉션을 동기화 하면 됩니다.</string>
   <string name="upgrade_decks_message_pos3">As a third possibility, you can have your decks converted via AnkiDroid itself and AnkiWeb. If you click on the upgrade button below, your decks will be bundled and uploaded to AnkiWeb. The converted collection will then be automatically downloaded and opened. You don\'t need any registration for that but be aware that it might be better to use a wifi connection in order to prevent too much traffic over your mobile connection. If the compressed decks amount to more than 50 mb, you cannot use this way. Please resort to the other options in this case.</string>
-  <string name="upgrade_required">Your decks on AnkiWeb are still in the old Anki 1.2 format. Please visit %s and log in there. Your decks will then automatically be converted into the new format.</string>
-  <string name="upgrade_decks_button">Upgrade</string>
+  <string name="upgrade_required">AnkiWeb의 카드묶음이 아직 예전 1.2 버전 형태입니다. %s에 로그인하면, 카드묶음이 자동으로 새 형태로 전환됩니다.</string>
+  <string name="upgrade_decks_button">업그레이드</string>
 </resources>

@@ -41,6 +41,10 @@
   <string name="pref_cat_flashcard">Repetitionsskärm</string>
   <string name="show_study_options_on_deck_load">Studieinställningar vid laddning</string>
   <string name="show_study_options_on_deck_load_summ">Visar studieinställningsskärmen när du laddar en kortlek</string>
+  <string name="hide_due_count">Hide due count</string>
+  <string name="hide_due_count_summ">Hides the due count</string>
+  <string name="overtime">Overtime</string>
+  <string name="overtime_summ">Continue reviewing after time limit reached</string>
   <string name="show_timer">Visa timer</string>
   <string name="show_timer_summ">Timer som visar hur lång tid det tar dig att svara</string>
   <string name="show_progress_bars">Visa förloppsmätare</string>
@@ -207,6 +211,8 @@
   <string name="pref_keep_screen_on_summ">Förhindra att skärmen stängs av vid repetition av kort</string>
   <string name="pref_simple_interface">Enkelt gränssnitt</string>
   <string name="pref_simple_interface_summ">Snabbar upp kortbyten men stöder endast text (inga bilder, ljud etc.)</string>
+  <string name="pref_simple_interface_exclude_tags">Normal interface by tag</string>
+  <string name="pref_simple_interface_exclude_tags_summ">Do not use simple interface for these tags: XXX</string>
   <string name="deck_conf_deck_name">Kortleksnamn</string>
   <string name="deck_conf_deck_description">Kortleksbeskrivning</string>
   <string name="deck_conf_conf_set">Configuration set</string>

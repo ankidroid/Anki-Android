@@ -51,6 +51,7 @@
   <string name="close">Fechar</string>
   <string name="select">Selecione</string>
   <string name="saving_changes">Salvando alterações...</string>
+  <string name="timebox_reached">Timebox reached!</string>
   <string name="studyoptions_welcome_title">Bem-vindo ao AnkiDroid</string>
   <string name="studyoptions_no_external_storage_title">Nenhum armazenamento externo disponível</string>
   <string name="studyoptions_no_external_storage_message">Nenhum armazenamento externo está disponível no momento. AnkiDroid precisa ter acesso ao cartão SD para ler e carregar seus Decks. Verifique se o cartão SD está montado e tente novamente.</string>
@@ -80,13 +81,13 @@
   <string name="pref_lang_common">LangCommon</string>
   <string name="pref_font_UI">Custom UI Font</string>
   <string-array name="dynOrderLabels">
-    <item>Oldest seen first</item>
+    <item>Mais antigos primeiro</item>
     <item>Aleatório</item>
     <item>Intervalos creascentes</item>
     <item>Intervalos decrescentes</item>
-    <item>Most lapses</item>
-    <item>Order added</item>
-    <item>Order due</item>
+    <item>Mais falhados</item>
+    <item>Ordem de adição</item>
+    <item>Ordem de revisão</item>
   </string-array>
   <plurals name="factadder_cards_added">
     <item quantity="one">1 cartão adicionado</item>

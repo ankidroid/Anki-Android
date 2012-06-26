@@ -41,6 +41,10 @@
   <string name="pref_cat_flashcard">Экран просмотра</string>
   <string name="show_study_options_on_deck_load">Параметры обучения</string>
   <string name="show_study_options_on_deck_load_summ">Показать параметры обучения при загрузке колоды</string>
+  <string name="hide_due_count">Hide due count</string>
+  <string name="hide_due_count_summ">Hides the due count</string>
+  <string name="overtime">Overtime</string>
+  <string name="overtime_summ">Continue reviewing after time limit reached</string>
   <string name="show_timer">Показать таймер</string>
   <string name="show_timer_summ">Таймер показывает сколько времени Вам остаётся для ответа</string>
   <string name="show_progress_bars">Индикаторы хода выполнения</string>
@@ -207,6 +211,8 @@
   <string name="pref_keep_screen_on_summ">Запретить отключение экрана при просмотре карт</string>
   <string name="pref_simple_interface">Простой интерфейс</string>
   <string name="pref_simple_interface_summ">Ускоряет отображение карты, но поддерживают только текст (не изображения, звуки и т.д.)</string>
+  <string name="pref_simple_interface_exclude_tags">Normal interface by tag</string>
+  <string name="pref_simple_interface_exclude_tags_summ">Do not use simple interface for these tags: XXX</string>
   <string name="deck_conf_deck_name">Название колоды</string>
   <string name="deck_conf_deck_description">Описание колоды</string>
   <string name="deck_conf_conf_set">Набор конфигурации</string>

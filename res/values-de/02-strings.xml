@@ -51,6 +51,7 @@
   <string name="close">Schließen</string>
   <string name="select">Auswählen</string>
   <string name="saving_changes">Änderungen werden gespeichert…</string>
+  <string name="timebox_reached">Timebox reached!</string>
   <string name="studyoptions_welcome_title">Willkommen in AnkiDroid!</string>
   <string name="studyoptions_no_external_storage_title">Externer Speicher nicht verfügbar</string>
   <string name="studyoptions_no_external_storage_message">Kein externer Speicher verfügbar. AnkiDroid braucht Zugang zur SD-Karte um Stapel zu öffnen oder zu lesen. Überprüfen Sie, ob Ihre SD-Karte eingehängt ist und versuchen Sie es erneut.</string>

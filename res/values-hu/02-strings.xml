@@ -51,6 +51,7 @@
   <string name="close">Bezárás</string>
   <string name="select">Kiválasztás</string>
   <string name="saving_changes">Módosítások mentése...</string>
+  <string name="timebox_reached">Timebox reached!</string>
   <string name="studyoptions_welcome_title">Üdv az AnkiDroidban!</string>
   <string name="studyoptions_no_external_storage_title">Külső tároló nem elérhető</string>
   <string name="studyoptions_no_external_storage_message">Külső tároló jelenleg nem elérhető. Az AnkiDroid-nak hozzá kell férnie az SD kártyához az Anki paklik olvasásához és írásához. Ellenőrizd, hogy az SD kártya megfelelően rendelkezére áll, és próbáld megint.</string>

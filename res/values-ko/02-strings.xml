@@ -51,6 +51,7 @@
   <string name="close">닫기</string>
   <string name="select">선택</string>
   <string name="saving_changes">변경 내용 저장 중...</string>
+  <string name="timebox_reached">Timebox가 도달</string>
   <string name="studyoptions_welcome_title">AnkiDroid에 오신 것을 환영합니다</string>
   <string name="studyoptions_no_external_storage_title">외부 저장장치를 사용할 수 없습니다</string>
   <string name="studyoptions_no_external_storage_message">외부 저장 장치를 사용할 수 없습니다. Ankidroid가 Anki 묶음을 읽어 들이고 수정하기 위해서는 SD카드에 접근할 수 있는 권한이 필요합니다. SD 카드가 설치되었는지 확인하시고 다시 한 번 시도해 보세요.</string>

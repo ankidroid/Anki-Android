@@ -51,6 +51,7 @@
   <string name="close">Đóng</string>
   <string name="select">Chọn</string>
   <string name="saving_changes">Đang lưu các sửa đồi...</string>
+  <string name="timebox_reached">Timebox reached!</string>
   <string name="studyoptions_welcome_title">Chào mừng đến với AnkiDroid</string>
   <string name="studyoptions_no_external_storage_title">Không Có Bộ lưu trữ Ngoài</string>
   <string name="studyoptions_no_external_storage_message">Không có bộ lưu trữ ngoài. AnkiDroid cần truy nhập vào thẻ SD để đọc và nạp các tập thẻ Anki. Xin kiểm tra xem thẻ SD đã được gắn vào và truy xuất được hay chưa rồi sau đó thử lại.</string>

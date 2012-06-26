@@ -104,9 +104,9 @@
     <item>Carte nuove in ordine di aggiunta</item>
   </string-array>
   <string-array name="cram_deck_conf_order_labels">
-    <item>Oldest seen first</item>
+    <item>Più vecchie visualizzate per prime</item>
     <item>Random</item>
-    <item>Increasing intervals</item>
+    <item>Intervalli crescenti</item>
     <item>Decreasing intervals</item>
     <item>Most lapsed</item>
     <item>Order added</item>
@@ -119,6 +119,7 @@
     <item>Review today\'s forgotten cards</item>
     <item>Review ahead by two days</item>
     <item>Review due cards with tag</item>
+    <item>Review due cards with decreasing intervals</item>
     <item>Cram all cards</item>
   </string-array>
 </resources>

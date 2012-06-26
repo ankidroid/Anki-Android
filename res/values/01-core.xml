@@ -122,7 +122,7 @@
 <string name="studyoptions_load_other_deck">Load Other Deck</string>
 <string name="studyoptions_load_tutorial_deck">Create tutorial</string>
 <!--<string name="studyoptions_load_sample_deck">Load Sample Deck</string>-->
-<string name="studyoptions_night_mode">Night</string>
+<string name="night_mode">Night mode</string>
 
 	<string-array name="next_review_s">
 		<item>1 second</item>

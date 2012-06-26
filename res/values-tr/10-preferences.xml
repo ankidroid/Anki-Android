@@ -41,6 +41,10 @@
   <string name="pref_cat_flashcard">Gözden geçirme ekranı</string>
   <string name="show_study_options_on_deck_load">Yüklemede çalışma seçenekleri</string>
   <string name="show_study_options_on_deck_load_summ">Deste yüklenirken çalışma seçenekleri ekranını gösterir</string>
+  <string name="hide_due_count">Hide due count</string>
+  <string name="hide_due_count_summ">Hides the due count</string>
+  <string name="overtime">Overtime</string>
+  <string name="overtime_summ">Continue reviewing after time limit reached</string>
   <string name="show_timer">Zamanlayıcıyı göster</string>
   <string name="show_timer_summ">Yanıtlamanızın ne kadar sürdüğünü gösteren zamanlayıcı</string>
   <string name="show_progress_bars">İlerleme çubuklarını göster</string>
@@ -207,6 +211,8 @@
   <string name="pref_keep_screen_on_summ">Gözden geçirme sırasında ekranın kapanmasını engelle</string>
   <string name="pref_simple_interface">Basit Arayüz</string>
   <string name="pref_simple_interface_summ">Kart değiştirmeyi hızlandırır ama yalnızca metin destekler (resim, ses vb. olmadan)</string>
+  <string name="pref_simple_interface_exclude_tags">Normal interface by tag</string>
+  <string name="pref_simple_interface_exclude_tags_summ">Do not use simple interface for these tags: XXX</string>
   <string name="deck_conf_deck_name">Deste adı</string>
   <string name="deck_conf_deck_description">Deste tanımı</string>
   <string name="deck_conf_conf_set">Yapılandırma seti</string>
@@ -229,8 +235,8 @@
   <string name="deck_conf_sibl_space">Kardeşlerin en fazla aralanma miktârı</string>
   <string name="deck_conf_easy_bonus">Kolay bonusu</string>
   <string name="deck_conf_min_range">Minimum kardeş menzili</string>
-  <string name="deck_conf_ivl_fct">Interval modifier</string>
-  <string name="deck_conf_max_ivl">Maximum interval</string>
+  <string name="deck_conf_ivl_fct">Aralık düzenleyicisi</string>
+  <string name="deck_conf_max_ivl">Maksimum aralık</string>
   <string name="deck_conf_new_lps_ivl">Yeni aralık</string>
   <string name="deck_conf_min_ivl">Minimum Aralık</string>
   <string name="deck_conf_leech_thres">Asalak Eşiği</string>
@@ -245,14 +251,14 @@
   <string name="deck_conf_rem">Yapılandırmayı kaldır</string>
   <string name="pref_cat_tibetan">Tibetçe Desteği</string>
   <string name="pref_enable_tibetan">Tibetçe Desteğini Aç</string>
-  <string name="deck_conf_cram_filter">Filter</string>
-  <string name="deck_conf_cram_options">Options</string>
-  <string name="deck_conf_cram_preset">Preset</string>
-  <string name="deck_conf_cram_search">Search</string>
-  <string name="deck_conf_cram_limit">Limit to</string>
-  <string name="deck_conf_cram_order">cards selected by</string>
-  <string name="deck_conf_cram_reschedule">Reschedule</string>
-  <string name="deck_conf_cram_reschedule_summ">Reschedule cards based on my answers in this deck</string>
-  <string name="deck_conf_cram_steps">Custom steps</string>
-  <string name="deck_conf_cram_steps_summ">Define custom steps</string>
+  <string name="deck_conf_cram_filter">Süzgeç</string>
+  <string name="deck_conf_cram_options">Seçenekler</string>
+  <string name="deck_conf_cram_preset">Önayar</string>
+  <string name="deck_conf_cram_search">Arama</string>
+  <string name="deck_conf_cram_limit">Sınırla:</string>
+  <string name="deck_conf_cram_order">kart seçme ölçütü:</string>
+  <string name="deck_conf_cram_reschedule">Yeniden zamanla</string>
+  <string name="deck_conf_cram_reschedule_summ">Bu destedeki yanıtlarıma göre kartları yeniden zamanla</string>
+  <string name="deck_conf_cram_steps">Kişisel adımlar</string>
+  <string name="deck_conf_cram_steps_summ">Kendi adımlarınızı tanımlayın</string>
 </resources>
