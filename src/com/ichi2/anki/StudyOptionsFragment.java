@@ -260,20 +260,20 @@ public class StudyOptionsFragment extends Fragment {
     }
 
 
-    public static StudyOptionsFragment newInstance(int index) {
+    public static StudyOptionsFragment newInstance(long deckId) {
         StudyOptionsFragment f = new StudyOptionsFragment();
 
         // Supply index input as an argument.
         Bundle args = new Bundle();
-        args.putInt("index", index);
+        args.putLong("deckId", deckId);
         f.setArguments(args);
 
         return f;
     }
 
 
-    public int getShownIndex() {
-        return getArguments().getInt("index", 0);
+    public long getShownIndex() {
+        return getArguments().getLong("deckId", 0);
     }
 
 

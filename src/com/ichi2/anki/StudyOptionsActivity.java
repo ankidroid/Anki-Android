@@ -64,7 +64,7 @@ public class StudyOptionsActivity extends FragmentActivity {
     }
 
     public void loadContent() {
-        mCurrentFragment = new StudyOptionsFragment();
+        mCurrentFragment = StudyOptionsFragment.newInstance(0);
         mCurrentFragment.setArguments(getIntent().getExtras());
         getSupportFragmentManager().beginTransaction().add(android.R.id.content, mCurrentFragment).commit();
     }

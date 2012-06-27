@@ -1855,12 +1855,15 @@ public class DeckPicker extends FragmentActivity {
     // CUSTOM METHODS
     // ----------------------------------------------------------------------------
 
-    public void setStudyContentView(int view) {
-        StudyOptionsFragment details = new StudyOptionsFragment();
-        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        ft.replace(R.id.studyoptions_fragment, details);
-        ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
-        ft.commit();
+    public void setStudyContentView(long deckId) {
+    	Fragment frag = (Fragment) getSupportFragmentManager().findFragmentById(R.id.studyoptions_fragment);
+    	if (frag == null || !(frag instanceof StudyOptionsFragment) || ((StudyOptionsFragment) frag).getShownIndex() != deckId) {
+            StudyOptionsFragment details = StudyOptionsFragment.newInstance(deckId);
+            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+            ft.replace(R.id.studyoptions_fragment, details);
+            ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+            ft.commit();
+    	}
     }
 
 
@@ -2128,7 +2131,7 @@ public class DeckPicker extends FragmentActivity {
                         } catch (JSONException e) {
                             throw new RuntimeException(e);
                         }
-                        openStudyOptions();
+                        openStudyOptions(id);
                     }
                 });
                 builder3.setNegativeButton(res.getString(R.string.cancel), null);
@@ -2335,29 +2338,13 @@ public class DeckPicker extends FragmentActivity {
     }
 
 
-    private void openStudyOptions() {
-        openStudyOptions(-1);
-    }
-
-
-    private void openStudyOptions(int id) {
-        // TODO: implement this properly
+    private void openStudyOptions(long deckId) {
         if (mFragmented) {
-            setStudyContentView(StudyOptionsFragment.CONTENT_STUDY_OPTIONS);
-            // // getListView().setItemChecked(index, true);
-            // Fragment frag = (Fragment) getSupportFragmentManager().findFragmentById(R.id.studyoptions_fragment);
-            // if (frag == null || !(frag instanceof StudyOptionsFragment) || ((StudyOptionsFragment)
-            // frag).getShownIndex() != id) {
-            // StudyOptionsFragment details = StudyOptionsFragment.newInstance(id);
-            // FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-            // ft.replace(R.id.studyoptions_fragment, details);
-            // ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
-            // ft.commit();
-            // }
+            setStudyContentView(deckId);
         } else {
             mDontSaveOnStop = true;
             Intent intent = new Intent();
-            intent.putExtra("index", id);
+            intent.putExtra("index", deckId);
             intent.setClass(this, StudyOptionsActivity.class);
             // if (deckId != 0) {
             // intent.putExtra(EXTRA_DECK_ID, deckId);
@@ -2382,8 +2369,9 @@ public class DeckPicker extends FragmentActivity {
         @SuppressWarnings("unchecked")
         HashMap<String, String> data = (HashMap<String, String>) mDeckListAdapter.getItem(id);
         Log.i(AnkiDroidApp.TAG, "Selected " + deckFilename);
-        mCol.getDecks().select(Long.parseLong(data.get("did")));
-        openStudyOptions(id);
+        long deckId = Long.parseLong(data.get("did"));
+        mCol.getDecks().select(deckId);
+        openStudyOptions(deckId);
     }
 
 
@@ -2400,7 +2388,7 @@ public class DeckPicker extends FragmentActivity {
             public void onPostExecute(TaskData result) {
                 if (result.getBoolean()) {
                     loadCounts();
-                    openStudyOptions();
+                    openStudyOptions(mCol.getDecks().selected());
                 } else {
                     Themes.showThemedToast(DeckPicker.this, getResources().getString(R.string.tutorial_loading_error),
                             false);
@@ -2512,7 +2500,7 @@ public class DeckPicker extends FragmentActivity {
                 try {
                     if (e1.getX() - e2.getX() > sSwipeMinDistance && Math.abs(velocityX) > sSwipeThresholdVelocity
                             && Math.abs(e1.getY() - e2.getY()) < sSwipeMaxOffPath) {
-                        openStudyOptions();
+                        openStudyOptions(mCol.getDecks().selected());
                     }
                 } catch (Exception e) {
                     Log.e(AnkiDroidApp.TAG, "onFling Exception = " + e.getMessage());
