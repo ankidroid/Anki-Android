@@ -772,19 +772,21 @@ public class DeckTask extends
 	private TaskData doInBackgroundRebuildCram(TaskData... params) {
 		Log.i(AnkiDroidApp.TAG, "doInBackgroundRebuildCram");
 		Collection col = params[0].getCollection();
+		boolean fragmented = params[0].getBoolean();
 		long did = params[0].getLong();
 		col.getSched().rebuildDyn(did);
 		return doInBackgroundUpdateValuesFromDeck(new DeckTask.TaskData(
-				col.getSched(), true));
+				col, new Object[]{true, fragmented}));
 	}
 
 	private TaskData doInBackgroundEmptyCram(TaskData... params) {
 		Log.i(AnkiDroidApp.TAG, "doInBackgroundEmptyCram");
 		Collection col = params[0].getCollection();
+		boolean fragmented = params[0].getBoolean();
 		long did = params[0].getLong();
 		col.getSched().emptyDyn(did);
 		return doInBackgroundUpdateValuesFromDeck(new DeckTask.TaskData(
-				col.getSched(), true));
+				col, new Object[]{true, fragmented}));
 	}
 
 	private TaskData doInBackgroundRestoreDeck(TaskData... params) {
@@ -1003,6 +1005,12 @@ public class DeckTask extends
 		public TaskData(Collection col, long value) {
 			mCol = col;
 			mLong = value;
+		}
+
+		public TaskData(Collection col, long value, boolean bool) {
+			mCol = col;
+			mLong = value;
+			mBool = bool;
 		}
 
 		public TaskData(Collection col, int value, boolean bool) {

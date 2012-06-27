@@ -234,7 +234,7 @@ public class StudyOptionsFragment extends Fragment {
                     mProgressDialog = StyledProgressDialog.show(getActivity(), "",
                             getResources().getString(R.string.empty_cram_deck), true);
                     DeckTask.launchDeckTask(DeckTask.TASK_TYPE_EMPTY_CRAM, mUpdateValuesFromDeckListener,
-                            new DeckTask.TaskData(mCol, mCol.getDecks().selected()));
+                            new DeckTask.TaskData(mCol, mCol.getDecks().selected(), mFragmented));
                     return;
                 case R.id.studyoptions_add:
                     addNote();
@@ -259,7 +259,7 @@ public class StudyOptionsFragment extends Fragment {
         mProgressDialog = StyledProgressDialog.show(getActivity(), "",
                 getResources().getString(R.string.rebuild_cram_deck), true);
         DeckTask.launchDeckTask(DeckTask.TASK_TYPE_REBUILD_CRAM, mUpdateValuesFromDeckListener, new DeckTask.TaskData(
-                mCol, mCol.getDecks().selected()));
+                mCol, mCol.getDecks().selected(), mFragmented));
     }
 
 
@@ -640,28 +640,30 @@ public class StudyOptionsFragment extends Fragment {
         JSONObject deck = mCol.getDecks().current();
         try {
             fullName = deck.getString("name");
-            if (deck.has("empty") && deck.getBoolean("empty")) {
+            String[] name = fullName.split("::");
+            StringBuilder nameBuilder = new StringBuilder();
+            if (name.length > 0) {
+                nameBuilder.append(name[0]);
+            }
+            if (name.length > 1) {
+                nameBuilder.append("\n").append(name[1]);
+            }
+            if (name.length > 3) {
+                nameBuilder.append("...");
+            }
+            if (name.length > 2) {
+                nameBuilder.append("\n").append(name[name.length - 1]);
+            }
+            mTextDeckName.setText(nameBuilder.toString());
+
+            // open cram deck option if deck is opened for the first time
+            if (deck.getInt("dyn") != 0 && deck.has("empty") && deck.getBoolean("empty")) {
                 openCramDeckOptions();
                 return;
             }
         } catch (JSONException e) {
             throw new RuntimeException(e);
         }
-        String[] name = fullName.split("::");
-        StringBuilder nameBuilder = new StringBuilder();
-        if (name.length > 0) {
-            nameBuilder.append(name[0]);
-        }
-        if (name.length > 1) {
-            nameBuilder.append("\n").append(name[1]);
-        }
-        if (name.length > 3) {
-            nameBuilder.append("...");
-        }
-        if (name.length > 2) {
-            nameBuilder.append("\n").append(name[name.length - 1]);
-        }
-        mTextDeckName.setText(nameBuilder.toString());
 
         if (!mFragmented) {
             getActivity().setTitle(fullName);
@@ -791,17 +793,18 @@ public class StudyOptionsFragment extends Fragment {
         if (resultCode == DeckPicker.RESULT_MEDIA_EJECTED) {
             closeStudyOptions(DeckPicker.RESULT_MEDIA_EJECTED);
         } else if (requestCode == DECK_OPTIONS) {
-            JSONObject deck = mCol.getDecks().current();
-            // check, if cram deck is
             try {
-                if (deck.has("empty") && deck.getBoolean("empty")) {
-                    rebuildCramDeck();
+                JSONObject deck = mCol.getDecks().current();
+                if (deck.getInt("dyn") != 0 && deck.has("empty") && deck.getBoolean("empty")) {
+                	// deck is a cram deck and has to be filled for the first time
                     deck.remove("empty");
+                    rebuildCramDeck();
+                } else {
+                    resetAndUpdateValuesFromDeck();               	
                 }
             } catch (JSONException e) {
                 throw new RuntimeException(e);
             }
-            resetAndUpdateValuesFromDeck();
         } else if (requestCode == ADD_NOTE && resultCode != getActivity().RESULT_CANCELED) {
             resetAndUpdateValuesFromDeck();
         } else if (requestCode == PREFERENCES_UPDATE) {
@@ -845,65 +848,64 @@ public class StudyOptionsFragment extends Fragment {
         return preferences;
     }
 
-    DeckTask.TaskListener mUpdateValuesFromDeckListener = new DeckTask.TaskListener() {
+	DeckTask.TaskListener mUpdateValuesFromDeckListener = new DeckTask.TaskListener() {
         @Override
         public void onPostExecute(DeckTask.TaskData result) {
-        	if (result == null) {
-        		return;
+        	if (result != null) {
+                Object[] obj = result.getObjArray();
+                int newCards = (Integer) obj[0];
+                int lrnCards = (Integer) obj[1];
+                int revCards = (Integer) obj[2];
+                int totalNew = (Integer) obj[3];
+                int totalCards = (Integer) obj[4];
+                mProgressMature = (Double) obj[5];
+                mProgressAll = (Double) obj[6];
+                int eta = (Integer) obj[7];
+                double[][] serieslist = (double[][]) obj[8];
+
+                updateStatisticBars();
+                updateChart(serieslist);
+
+//                JSONObject conf = mCol.getConf();
+//                long timeLimit = 0;
+//                try {
+//                    timeLimit = (conf.getLong("timeLim") / 60);
+//                } catch (JSONException e) {
+//                    throw new RuntimeException(e);
+//                }
+//                mToggleLimitToggle.setChecked(timeLimit > 0 ? true : false);
+//                mToggleLimitToggle.setText(String.valueOf(timeLimit));
+
+//                Activity act = getActivity();
+//                if (act != null) {
+//                    SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(act.getBaseContext());
+//                    mPrefHideDueCount = preferences.getBoolean("hideDueCount", true);
+//                }
+
+                mTextTodayNew.setText(String.valueOf(newCards));
+                mTextTodayLrn.setText(String.valueOf(lrnCards));
+//                if (mPrefHideDueCount) {
+//                    mTextTodayRev.setText("???");
+//                } else {
+                    mTextTodayRev.setText(String.valueOf(revCards));
+//                }
+                mTextNewTotal.setText(String.valueOf(totalNew));
+                mTextTotal.setText(String.valueOf(totalCards));
+                if (eta != -1) {
+                    mTextETA.setText(Integer.toString(eta));
+                } else {
+                    mTextETA.setText("-");
+                }
+
+                if (mDeckCounts.getVisibility() == View.INVISIBLE) {
+                    mDeckCounts.setVisibility(View.VISIBLE);
+                    mDeckCounts.setAnimation(ViewAnimation.fade(ViewAnimation.FADE_IN, 500, 0));
+                }
+
+                if (mFragmented) {
+                    ((DeckPicker) getActivity()).loadCounts();
+                }
         	}
-            Object[] obj = result.getObjArray();
-            int newCards = (Integer) obj[0];
-            int lrnCards = (Integer) obj[1];
-            int revCards = (Integer) obj[2];
-            int totalNew = (Integer) obj[3];
-            int totalCards = (Integer) obj[4];
-            mProgressMature = (Double) obj[5];
-            mProgressAll = (Double) obj[6];
-            int eta = (Integer) obj[7];
-            double[][] serieslist = (double[][]) obj[8];
-
-            updateStatisticBars();
-            updateChart(serieslist);
-
-//            JSONObject conf = mCol.getConf();
-//            long timeLimit = 0;
-//            try {
-//                timeLimit = (conf.getLong("timeLim") / 60);
-//            } catch (JSONException e) {
-//                throw new RuntimeException(e);
-//            }
-//            mToggleLimitToggle.setChecked(timeLimit > 0 ? true : false);
-//            mToggleLimitToggle.setText(String.valueOf(timeLimit));
-
-//            Activity act = getActivity();
-//            if (act != null) {
-//                SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(act.getBaseContext());
-//                mPrefHideDueCount = preferences.getBoolean("hideDueCount", true);
-//            }
-
-            mTextTodayNew.setText(String.valueOf(newCards));
-            mTextTodayLrn.setText(String.valueOf(lrnCards));
-//            if (mPrefHideDueCount) {
-//                mTextTodayRev.setText("???");
-//            } else {
-                mTextTodayRev.setText(String.valueOf(revCards));
-//            }
-            mTextNewTotal.setText(String.valueOf(totalNew));
-            mTextTotal.setText(String.valueOf(totalCards));
-            if (eta != -1) {
-                mTextETA.setText(Integer.toString(eta));
-            } else {
-                mTextETA.setText("-");
-            }
-
-            if (mDeckCounts.getVisibility() == View.INVISIBLE) {
-                mDeckCounts.setVisibility(View.VISIBLE);
-                mDeckCounts.setAnimation(ViewAnimation.fade(ViewAnimation.FADE_IN, 500, 0));
-            }
-
-            if (mFragmented) {
-                ((DeckPicker) getActivity()).loadCounts();
-            }
 
             // for rebuilding cram decks
             if (mProgressDialog != null && mProgressDialog.isShowing()) {
