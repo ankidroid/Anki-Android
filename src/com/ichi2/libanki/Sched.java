@@ -172,15 +172,20 @@ public class Sched {
     /* NOT IN LIBANKI */
     public void decrementCounts(Card card) {
     	int type = card.getQueue();
+	if (type 
     	switch (type) {
     	case 0:
     		mNewCount--;
     		break;
+    	case 1:
+    		mLrnCount -= card.getLeft() / 1000;
+    		break;
     	case 2:
     		mRevCount--;
     		break;
-    	default:
+    	case 3:
     		mLrnCount--;
+    		break;
     	}
     }
 
