@@ -622,7 +622,7 @@ public class StudyOptionsFragment extends Fragment {
         parent.addView(newView);
     }
 
-    private void resetAndUpdateValuesFromDeck() {
+    public void resetAndUpdateValuesFromDeck() {
         updateValuesFromDeck(true);
     }
 
@@ -797,7 +797,7 @@ public class StudyOptionsFragment extends Fragment {
                     deck.remove("empty");
                     rebuildCramDeck();
                 } else {
-                    resetAndUpdateValuesFromDeck();               	
+                    resetAndUpdateValuesFromDeck();
                 }
             } catch (JSONException e) {
                 throw new RuntimeException(e);

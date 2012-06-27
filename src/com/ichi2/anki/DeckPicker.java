@@ -473,6 +473,14 @@ public class DeckPicker extends FragmentActivity {
                     mDialogMessage = res.getString(R.string.sync_database_success);
                 }
                 showDialog(DIALOG_SYNC_LOG);
+
+                // update StudyOptions too if open
+                if (mFragmented) {
+                	StudyOptionsFragment frag = getFragment();
+                	if (frag != null) {
+                		frag.resetAndUpdateValuesFromDeck();
+                	}
+                }
             }
         }
     };
@@ -1064,9 +1072,13 @@ public class DeckPicker extends FragmentActivity {
         Log.i(AnkiDroidApp.TAG, "DeckPicker - onStop");
         super.onStop();
         if (!mDontSaveOnStop) {
-            WidgetStatus.update(this);
             if (isFinishing()) {
                 DeckTask.launchDeckTask(DeckTask.TASK_TYPE_CLOSE_DECK, mCloseCollectionHandler, new TaskData(mCol));
+            } else {
+            	StudyOptionsFragment frag = getFragment();
+            	if (!(frag != null && !frag.dbSaveNecessary())) {
+                	UIUtils.saveCollectionInBackground(mCol);
+            	}
             }
         }
     }
@@ -1866,6 +1878,13 @@ public class DeckPicker extends FragmentActivity {
     	}
     }
 
+    public StudyOptionsFragment getFragment() {
+    	Fragment frag = (Fragment) getSupportFragmentManager().findFragmentById(R.id.studyoptions_fragment);
+    	if (frag != null && (frag instanceof StudyOptionsFragment)) {
+    		return (StudyOptionsFragment) frag;
+    	}
+    	return null;
+    }
 
     /**
      * Registers an intent to listen for ACTION_MEDIA_EJECT notifications. The intent will call
@@ -2463,6 +2482,9 @@ public class DeckPicker extends FragmentActivity {
         } else {
             setTitle(res.getString(R.string.app_name));
         }
+
+        // update widget
+        WidgetStatus.update(this, decks);
     }
 
     // private void restartApp() {

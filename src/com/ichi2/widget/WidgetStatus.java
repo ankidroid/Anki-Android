@@ -51,6 +51,8 @@ public final class WidgetStatus {
 
     private static DeckStatus sDeckStatus;
     private static float[] sSmallWidgetStatus;
+    private static TreeSet<Object[]> sDeckCounts;
+
     private static AsyncTask<Context, Void, Context> sUpdateDeckStatusAsyncTask;
 
 
@@ -68,6 +70,12 @@ public final class WidgetStatus {
     /** Request the widget to update its status. */
     public static void update(Context context, DeckStatus deckStatus) {
         sDeckStatus = deckStatus;
+        update(context);
+    }
+
+
+    public static void update(Context context, TreeSet<Object[]> deckCounts) {
+    	sDeckCounts = deckCounts;
         update(context);
     }
 
@@ -202,10 +210,10 @@ public final class WidgetStatus {
                     Collection col = Collection.currentCollection();
                     if (col == null) {
                         col = Collection.openCollection(AnkiDroidApp.getCollectionPath());
-                        mSmallWidgetStatus = col.getSched().progressToday(null, null, true);
+                        mSmallWidgetStatus = col.getSched().progressToday(sDeckCounts, null, true);
                         col.close(false);
                     } else {
-                        mSmallWidgetStatus = col.getSched().progressToday(null, null, true);                    	
+                        mSmallWidgetStatus = col.getSched().progressToday(sDeckCounts, null, true);                    	
                     }
             	} else {
             		mSmallWidgetStatus = sSmallWidgetStatus;
