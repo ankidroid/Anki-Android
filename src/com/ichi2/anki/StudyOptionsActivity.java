@@ -20,6 +20,7 @@ import com.ichi2.anki2.R;
 
 import com.ichi2.anim.ActivityTransitionAnimation;
 import com.ichi2.libanki.Collection;
+import com.ichi2.themes.Themes;
 import com.ichi2.widget.WidgetStatus;
 
 import android.content.Intent;
@@ -33,6 +34,7 @@ import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 
 public class StudyOptionsActivity extends FragmentActivity {
 
@@ -41,9 +43,11 @@ public class StudyOptionsActivity extends FragmentActivity {
     public static final int MENU_ROTATE = 202;
     public static final int MENU_NIGHT = 203;
 
+    Fragment mCurrentFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Themes.applyTheme(this);
         super.onCreate(savedInstanceState);
 
         // if (getResources().getConfiguration().orientation
@@ -55,18 +59,15 @@ public class StudyOptionsActivity extends FragmentActivity {
         // }
 
         if (savedInstanceState == null) {
-            setStudyContentView(StudyOptionsFragment.CONTENT_STUDY_OPTIONS);
+        	loadContent();
         }
     }
 
-
-    public void setStudyContentView(int view) {
-        // During initial setup, plug in the details fragment.
-        Fragment details = new StudyOptionsFragment();
-        details.setArguments(getIntent().getExtras());
-        getSupportFragmentManager().beginTransaction().add(android.R.id.content, details).commit();
+    public void loadContent() {
+        Fragment mCurrentFragment = new StudyOptionsFragment();
+        mCurrentFragment.setArguments(getIntent().getExtras());
+        getSupportFragmentManager().beginTransaction().add(android.R.id.content, mCurrentFragment).commit();
     }
-
 
     // TODO: onpause, onresume, onstop
 
@@ -167,5 +168,14 @@ public class StudyOptionsActivity extends FragmentActivity {
             WidgetStatus.update(this);
             UIUtils.saveCollectionInBackground(Collection.currentCollection());
         }
+    }
+
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+    	if (mCurrentFragment != null) {
+    		return ((StudyOptionsFragment)mCurrentFragment).onTouchEvent(event);
+    	} else {
+    		return false;
+    	}
     }
 }

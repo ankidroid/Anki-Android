@@ -23,7 +23,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.DialogInterface.OnCancelListener;
-import android.content.SharedPreferences.Editor;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.graphics.Color;
@@ -37,7 +36,6 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
-import android.view.ViewParent;
 import android.view.ViewTreeObserver.OnGlobalLayoutListener;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -93,9 +91,6 @@ public class StudyOptionsFragment extends Fragment {
 
     private HashMap<Integer, StyledDialog> mDialogs = new HashMap<Integer, StyledDialog>();
 
-    /** Broadcast that informs us when the sd card is about to be unmounted */
-    private BroadcastReceiver mUnmountReceiver = null;
-
     /**
      * Preferences
      */
@@ -116,9 +111,9 @@ public class StudyOptionsFragment extends Fragment {
      */
     private View mStudyOptionsView;
     private Button mButtonStart;
-    private Button mButtonUp;
-    private Button mButtonDown;
-    private ToggleButton mToggleLimitToggle;
+//    private Button mButtonUp;
+//    private Button mButtonDown;
+//    private ToggleButton mToggleLimitToggle;
     private TextView mTextDeckName;
     private TextView mTextDeckDescription;
     private TextView mTextTodayNew;
@@ -172,7 +167,7 @@ public class StudyOptionsFragment extends Fragment {
     private View.OnClickListener mButtonClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            long timeLimit = 0;
+//            long timeLimit = 0;
             switch (v.getId()) {
                 case R.id.studyoptions_start:
                     openReviewer();
@@ -218,8 +213,8 @@ public class StudyOptionsFragment extends Fragment {
                     showDialog(DIALOG_STATISTIC_TYPE);
                     return;
                 case R.id.studyoptions_congrats_message:
-                    // mStatisticType = 0;
-                    // openStatistics(0);
+                    DeckTask.launchDeckTask(DeckTask.TASK_TYPE_LOAD_STATISTICS, mLoadStatisticsHandler,
+                            new DeckTask.TaskData(mCol, Stats.TYPE_MONTH, false));
                     return;
                 case R.id.studyoptions_options:
                     if (mCol.getDecks().isDyn(mCol.getDecks().selected())) {
@@ -288,8 +283,7 @@ public class StudyOptionsFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         if (container == null) {
-            // Currently in a layout without a container, so no
-            // reason to create our view.
+            // Currently in a layout without a container, so no reason to create our view.
             return null;
         }
 
@@ -305,27 +299,23 @@ public class StudyOptionsFragment extends Fragment {
 
 
     protected View createView(LayoutInflater inflater, Bundle savedInstanceState) {
-        // Themes.applyTheme(this);
         super.onCreate(savedInstanceState);
 
-        Log.i(AnkiDroidApp.TAG, "StudyOptions - OnCreate()");
+        Log.i(AnkiDroidApp.TAG, "StudyOptions - createView()");
 
         restorePreferences();
 
-        // registerExternalStorageListener();
-
         mCol = Collection.currentCollection();
         if (mCol == null) {
-            reloadCollection(savedInstanceState);
+            reloadCollection();
             return null;
         }
 
-        Intent intent = getActivity().getIntent();
-        if (intent != null && intent.hasExtra(DeckPicker.EXTRA_DECK_ID)) {
-            mCol.getDecks().select(intent.getLongExtra(DeckPicker.EXTRA_DECK_ID, 1));
-        }
+//        Intent intent = getActivity().getIntent();
+//        if (intent != null && intent.hasExtra(DeckPicker.EXTRA_DECK_ID)) {
+//            mCol.getDecks().select(intent.getLongExtra(DeckPicker.EXTRA_DECK_ID, 1));
+//        }
 
-        // activeCramTags = new HashSet<String>();
         mFragmented = getActivity().getClass() != StudyOptionsActivity.class;
 
         initAllContentViews(inflater);
@@ -347,7 +337,9 @@ public class StudyOptionsFragment extends Fragment {
         } else {
             mCompat = new CompatV3();
         }
-        resetAndUpdateValuesFromDeck();
+
+        resetAndUpdateValuesFromDeck();        	
+
         return mStudyOptionsView;
     }
 
@@ -365,12 +357,12 @@ public class StudyOptionsFragment extends Fragment {
         CharSequence newTotal = mTextNewTotal.getText();
         CharSequence total = mTextTotal.getText();
         CharSequence eta = mTextETA.getText();
-        long timelimit = mCol.getTimeLimit() / 60;
+//        long timelimit = mCol.getTimeLimit() / 60;
         super.onConfigurationChanged(newConfig);
         mDontSaveOnStop = false;
-        // initAllContentViews();
+//        initAllContentViews();
         if (mCurrentContentView == CONTENT_CONGRATS) {
-            setFragmentContentView(mStudyOptionsView, mCongratsView);
+            setFragmentContentView(mCongratsView);
         }
         mTextDeckName.setText(title);
         mTextDeckName.setVisibility(View.VISIBLE);
@@ -391,30 +383,6 @@ public class StudyOptionsFragment extends Fragment {
         updateStatisticBars();
     }
 
-
-    // /**
-    // * Registers an intent to listen for ACTION_MEDIA_EJECT notifications. The
-    // * intent will call closeExternalStorageFiles() if the external media is
-    // * going to be ejected, so applications can clean up any files they have
-    // * open.
-    // */
-    // public void registerExternalStorageListener() {
-    // if (mUnmountReceiver == null) {
-    // mUnmountReceiver = new BroadcastReceiver() {
-    // @Override
-    // public void onReceive(Context context, Intent intent) {
-    // closeStudyOptions(DeckPicker.RESULT_MEDIA_EJECTED);
-    // }
-    // };
-    // IntentFilter iFilter = new IntentFilter();
-    // iFilter.addAction(Intent.ACTION_MEDIA_UNMOUNTED);
-    //
-    // // ACTION_MEDIA_EJECT is never invoked (probably due to an android bug
-    // // iFilter.addAction(Intent.ACTION_MEDIA_EJECT);
-    // iFilter.addDataScheme("file");
-    // registerReceiver(mUnmountReceiver, iFilter);
-    // }
-    // }
 
     @Override
     public void onDestroy() {
@@ -481,39 +449,7 @@ public class StudyOptionsFragment extends Fragment {
     }
 
 
-    // private void startEarlyReview() {
-    // // Deck deck = DeckManager.getMainDeck();
-    // // if (deck != null) {
-    // // mInReviewer = true;
-    // // deck.setupReviewEarlyScheduler();
-    // // deck.reset();
-    // // Intent reviewer = new Intent(getActivity(), Reviewer.class);
-    // // reviewer.putExtra("deckFilename", mDeckFilename);
-    // // startActivityForResult(reviewer, REQUEST_REVIEW);
-    // // if (UIUtils.getApiLevel() > 4) {
-    // // ActivityTransitionAnimation.slide(getActivity(),
-    // // ActivityTransitionAnimation.LEFT);
-    // // }
-    // // }
-    // }
-    //
-    // private void startLearnMore() {
-    // // Deck deck = DeckManager.getMainDeck();
-    // // if (deck != null) {
-    // // mInReviewer = true;
-    // // deck.setupLearnMoreScheduler();
-    // // deck.reset();
-    // // Intent reviewer = new Intent(getActivity(), Reviewer.class);
-    // // reviewer.putExtra("deckFilename", mDeckFilename);
-    // // startActivityForResult(reviewer, REQUEST_REVIEW);
-    // // if (UIUtils.getApiLevel() > 4) {
-    // // ActivityTransitionAnimation.slide(getActivity(),
-    // // ActivityTransitionAnimation.LEFT);
-    // // }
-    // // }
-    // }
-
-    private void reloadCollection(final Bundle savedInstanceState) {
+    private void reloadCollection() {
         DeckTask.launchDeckTask(
                 DeckTask.TASK_TYPE_OPEN_COLLECTION,
                 new DeckTask.TaskListener() {
@@ -530,9 +466,9 @@ public class StudyOptionsFragment extends Fragment {
                         mCol = result.getCollection();
                         Collection.putCurrentCollection(mCol);
                         if (mCol == null) {
-                            // finish();
+                        	closeStudyOptions();
                         } else {
-                            onCreate(savedInstanceState);
+                        	((StudyOptionsActivity)getActivity()).loadContent();
                         }
                     }
 
@@ -543,7 +479,7 @@ public class StudyOptionsFragment extends Fragment {
                                 getResources().getString(R.string.open_collection), true, true, new OnCancelListener() {
                                     @Override
                                     public void onCancel(DialogInterface arg0) {
-                                        // finish();
+                                    	closeStudyOptions();
                                     }
                                 });
                     }
@@ -656,15 +592,11 @@ public class StudyOptionsFragment extends Fragment {
 
 
     private void onPrepareDialog(int id, StyledDialog styledDialog) {
-        // TODO Auto-generated method stub
-
     }
 
 
     protected StyledDialog onCreateDialog(int id) {
         StyledDialog dialog = null;
-        Resources res = getResources();
-        StyledDialog.Builder builder = new StyledDialog.Builder(getActivity());
 
         switch (id) {
 
@@ -687,61 +619,11 @@ public class StudyOptionsFragment extends Fragment {
     }
 
 
-    void setFragmentContentView(View oldView, View newView) {
-        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT,
-                ViewGroup.LayoutParams.FILL_PARENT);
-        ViewGroup parent = (ViewGroup) oldView.getParent();
+    void setFragmentContentView(View newView) {
+        ViewGroup parent = (ViewGroup) this.getView();        
         parent.removeAllViews();
         parent.addView(newView);
     }
-
-
-    // private View showContentView(int which) {
-    // return showContentView(which, true);
-    // }
-    // private View showContentView(int which, boolean reload) {
-    // mCurrentContentView = which;
-    //
-    // switch (mCurrentContentView) {
-    //
-    // case CONTENT_STUDY_OPTIONS:
-    // // TODO: update togglebuttons
-    // // Enable timeboxing in case it was disabled from the previous deck
-    // // if ((DeckManager.getMainDeck() != null) &&
-    // // (DeckManager.getMainDeck().name().equals("cram"))) {
-    // // mToggleCram.setChecked(false);
-    // // mToggleLimit.setEnabled(true);
-    // // }
-    // // setContentView(mStudyOptionsView);
-    // if (reload) {
-    // resetAndUpdateValuesFromDeck();
-    // }
-    // return mStudyOptionsView;
-    //
-    // case CONTENT_CONGRATS:
-    // // TODO: mTextCongratsMessage.setText(getCongratsMessage(this)
-    // // Resources res = getResources();
-    // // Deck deck = AnkiDroidApp.deck();
-    // // if (deck != null) {
-    // // int newCards = deck.getSched().newTomorrow();
-    // // int revCards = deck.getSched().revTomorrow() +
-    // // deck.getSched().lrnTomorrow();
-    // // int eta = 0; // TODO
-    // // String newCardsText =
-    // // res.getQuantityString(R.plurals.studyoptions_congrats_new_cards,
-    // // newCards, newCards);
-    // // String etaText =
-    // // res.getQuantityString(R.plurals.studyoptions_congrats_eta, eta,
-    // // eta);
-    // // }
-    // mTextCongratsMessage.setText(mCol.getSched().finishedMsg(getActivity()));
-    // // if (reload) {
-    // // updateValuesFromDeck();
-    // // }
-    // return mCongratsView;
-    // }
-    // return null;
-    // }
 
     private void resetAndUpdateValuesFromDeck() {
         updateValuesFromDeck(true);
@@ -794,7 +676,7 @@ public class StudyOptionsFragment extends Fragment {
         }
 
         DeckTask.launchDeckTask(DeckTask.TASK_TYPE_UPDATE_VALUES_FROM_DECK, mUpdateValuesFromDeckListener,
-                new DeckTask.TaskData(mCol.getSched(), reset));
+                new DeckTask.TaskData(mCol, new Object[]{reset, mSmallChart != null}));
     }
 
 
@@ -874,7 +756,7 @@ public class StudyOptionsFragment extends Fragment {
         mStudyOptionsView.setVisibility(View.INVISIBLE);
         mCongratsView.setVisibility(View.INVISIBLE);
         mCongratsView.setAnimation(ViewAnimation.fade(ViewAnimation.FADE_OUT, 500, 0));
-        setFragmentContentView(mCongratsView, mStudyOptionsView);
+        setFragmentContentView(mStudyOptionsView);
         mStudyOptionsView.setVisibility(View.VISIBLE);
         mStudyOptionsView.setAnimation(ViewAnimation.fade(ViewAnimation.FADE_IN, 500, 0));
         mCongratsView.setVisibility(View.VISIBLE);
@@ -936,7 +818,7 @@ public class StudyOptionsFragment extends Fragment {
                     break;
                 case Reviewer.RESULT_NO_MORE_CARDS:
                     mTextCongratsMessage.setText(mCol.getSched().finishedMsg(getActivity()));
-                    setFragmentContentView(mStudyOptionsView, mCongratsView);
+                    setFragmentContentView(mCongratsView);
                     break;
             }
             mDontSaveOnStop = false;
@@ -945,16 +827,8 @@ public class StudyOptionsFragment extends Fragment {
             resetAndUpdateValuesFromDeck();
         } else if (requestCode == STATISTICS && mCurrentContentView == CONTENT_CONGRATS) {
             resetAndUpdateValuesFromDeck();
-            setFragmentContentView(mCongratsView, mStudyOptionsView);
+            setFragmentContentView(mStudyOptionsView);
         }
-    }
-
-
-    private void savePreferences(String name, boolean value) {
-        SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(getActivity().getBaseContext());
-        Editor editor = preferences.edit();
-        editor.putBoolean(name, value);
-        editor.commit();
     }
 
 
@@ -962,7 +836,7 @@ public class StudyOptionsFragment extends Fragment {
         SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(getActivity().getBaseContext());
 
         mSwipeEnabled = preferences.getBoolean("swipe", false);
-        mPrefHideDueCount = preferences.getBoolean("hideDueCount", true);
+//        mPrefHideDueCount = preferences.getBoolean("hideDueCount", true);
 
         // TODO: set language
         // mLocale = preferences.getString("language", "");
@@ -991,21 +865,21 @@ public class StudyOptionsFragment extends Fragment {
             updateStatisticBars();
             updateChart(serieslist);
 
-            JSONObject conf = mCol.getConf();
-            long timeLimit = 0;
-            try {
-                timeLimit = (conf.getLong("timeLim") / 60);
-            } catch (JSONException e) {
-                throw new RuntimeException(e);
-            }
+//            JSONObject conf = mCol.getConf();
+//            long timeLimit = 0;
+//            try {
+//                timeLimit = (conf.getLong("timeLim") / 60);
+//            } catch (JSONException e) {
+//                throw new RuntimeException(e);
+//            }
 //            mToggleLimitToggle.setChecked(timeLimit > 0 ? true : false);
 //            mToggleLimitToggle.setText(String.valueOf(timeLimit));
 
-            Activity act = getActivity();
-            if (act != null) {
-                SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(act.getBaseContext());
-                mPrefHideDueCount = preferences.getBoolean("hideDueCount", true);
-            }
+//            Activity act = getActivity();
+//            if (act != null) {
+//                SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(act.getBaseContext());
+//                mPrefHideDueCount = preferences.getBoolean("hideDueCount", true);
+//            }
 
             mTextTodayNew.setText(String.valueOf(newCards));
             mTextTodayLrn.setText(String.valueOf(lrnCards));
@@ -1128,12 +1002,8 @@ public class StudyOptionsFragment extends Fragment {
         }
     }
 
-    // @Override
-    // public boolean onTouchEvent(MotionEvent event) {
-    // if (mSwipeEnabled && gestureDetector.onTouchEvent(event))
-    // return true;
-    // else
-    // return false;
-    // }
+    public boolean onTouchEvent(MotionEvent event) {
+    	return mSwipeEnabled && gestureDetector.onTouchEvent(event);
+    }
 
 }

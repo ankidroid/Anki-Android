@@ -724,18 +724,22 @@ public class DeckTask extends
 	private TaskData doInBackgroundUpdateValuesFromDeck(TaskData... params) {
 		Log.i(AnkiDroidApp.TAG, "doInBackgroundUpdateValuesFromDeck");
 		try {
-			boolean reset = params[0].getBoolean();
-			Sched sched = params[0].getSched();
+			Sched sched = params[0].getCollection().getSched();
+			Object[] obj = params[0].getObjArray();
+			boolean reset = (Boolean) obj[0];
 			if (reset) {
 				sched.reset();
 			}
 			int[] counts = sched.counts();
 			int totalNewCount = sched.newCount();
 			int totalCount = sched.cardCount();
-			double progressMature = ((double) sched.matureCount())
-					/ ((double) totalCount);
+			double progressMature = ((double) sched.matureCount()) / ((double) totalCount);
 			double progressAll = 1 - (((double) (totalNewCount + counts[1])) / ((double) totalCount));
-			double[][] serieslist = Stats.getSmallDueStats(sched.getCol());
+			double[][] serieslist = null;
+			// only calculate stats if necessary
+			if ((Boolean) obj[1]) {
+				serieslist = Stats.getSmallDueStats(sched.getCol());
+			}
 			return new TaskData(new Object[] { counts[0], counts[1], counts[2],
 					totalNewCount, totalCount, progressMature, progressAll,
 					sched.eta(counts), serieslist });			

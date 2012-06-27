@@ -2337,7 +2337,7 @@ public class Sched {
             		doneAll -= c[0];
             		leftAll[0] -= c[1];
             		leftAll[1] -= c[2];
-            		leftAll[2] -= c[3];        			
+            		leftAll[2] -= c[3];
         		}
         	}
         	doneAll += doneCurrent;
