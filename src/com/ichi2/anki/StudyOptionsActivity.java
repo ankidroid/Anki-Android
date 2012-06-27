@@ -43,7 +43,7 @@ public class StudyOptionsActivity extends FragmentActivity {
     public static final int MENU_ROTATE = 202;
     public static final int MENU_NIGHT = 203;
 
-    Fragment mCurrentFragment;
+    private Fragment mCurrentFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,7 +64,7 @@ public class StudyOptionsActivity extends FragmentActivity {
     }
 
     public void loadContent() {
-        Fragment mCurrentFragment = new StudyOptionsFragment();
+        mCurrentFragment = new StudyOptionsFragment();
         mCurrentFragment.setArguments(getIntent().getExtras());
         getSupportFragmentManager().beginTransaction().add(android.R.id.content, mCurrentFragment).commit();
     }
@@ -164,7 +164,7 @@ public class StudyOptionsActivity extends FragmentActivity {
     @Override
     public void onStop() {
         super.onStop();
-        if (!isFinishing()) {
+        if (!isFinishing() && mCurrentFragment != null && ((StudyOptionsFragment)mCurrentFragment).dbSaveNecessary()) {
             WidgetStatus.update(this);
             UIUtils.saveCollectionInBackground(Collection.currentCollection());
         }

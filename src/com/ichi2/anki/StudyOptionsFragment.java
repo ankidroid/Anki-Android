@@ -17,8 +17,6 @@ package com.ichi2.anki;
 import com.ichi2.anki2.R;
 
 import android.support.v4.app.Fragment;
-import android.app.Activity;
-import android.content.BroadcastReceiver;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -41,7 +39,6 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.ToggleButton;
 
 import com.ichi2.anim.ActivityTransitionAnimation;
 import com.ichi2.anim.ViewAnimation;
@@ -1008,4 +1005,7 @@ public class StudyOptionsFragment extends Fragment {
     	return mSwipeEnabled && gestureDetector.onTouchEvent(event);
     }
 
+    public boolean dbSaveNecessary() {
+    	return !mDontSaveOnStop;
+    }
 }
