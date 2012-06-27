@@ -1009,11 +1009,11 @@ public class StudyOptionsFragment extends Fragment {
 
             mTextTodayNew.setText(String.valueOf(newCards));
             mTextTodayLrn.setText(String.valueOf(lrnCards));
-            if (mPrefHideDueCount) {
-                mTextTodayRev.setText("???");
-            } else {
+//            if (mPrefHideDueCount) {
+//                mTextTodayRev.setText("???");
+//            } else {
                 mTextTodayRev.setText(String.valueOf(revCards));
-            }
+//            }
             mTextNewTotal.setText(String.valueOf(totalNew));
             mTextTotal.setText(String.valueOf(totalCards));
             if (eta != -1) {

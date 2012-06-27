@@ -2171,16 +2171,16 @@ public class Reviewer extends AnkiActivity {
             }
             mShakeIntensity = preferences.getInt("minShakeIntensity", 70);
 
-            mGestureSwipeUp = Integer.parseInt(preferences.getString("gestureSwipeUp", "0"));
+            mGestureSwipeUp = Integer.parseInt(preferences.getString("gestureSwipeUp", "9"));
             mGestureSwipeDown = Integer.parseInt(preferences.getString("gestureSwipeDown", "0"));
-            mGestureSwipeLeft = Integer.parseInt(preferences.getString("gestureSwipeLeft", "13"));
-            mGestureSwipeRight = Integer.parseInt(preferences.getString("gestureSwipeRight", "0"));
-            mGestureDoubleTap = Integer.parseInt(preferences.getString("gestureDoubleTap", "0"));
-            mGestureTapLeft = Integer.parseInt(preferences.getString("gestureTapLeft", "0"));
-            mGestureTapRight = Integer.parseInt(preferences.getString("gestureTapRight", "0"));
-            mGestureTapTop = Integer.parseInt(preferences.getString("gestureTapTop", "0"));
-            mGestureTapBottom = Integer.parseInt(preferences.getString("gestureTapBottom", "0"));
-            mGestureLongclick = Integer.parseInt(preferences.getString("gestureLongclick", "0"));
+            mGestureSwipeLeft = Integer.parseInt(preferences.getString("gestureSwipeLeft", "8"));
+            mGestureSwipeRight = Integer.parseInt(preferences.getString("gestureSwipeRight", "17"));
+            mGestureDoubleTap = Integer.parseInt(preferences.getString("gestureDoubleTap", "7"));
+            mGestureTapLeft = Integer.parseInt(preferences.getString("gestureTapLeft", "3"));
+            mGestureTapRight = Integer.parseInt(preferences.getString("gestureTapRight", "6"));
+            mGestureTapTop = Integer.parseInt(preferences.getString("gestureTapTop", "12"));
+            mGestureTapBottom = Integer.parseInt(preferences.getString("gestureTapBottom", "2"));
+            mGestureLongclick = Integer.parseInt(preferences.getString("gestureLongclick", "11"));
         }
         mShowAnimations = preferences.getBoolean("themeAnimations", false);
         if (mShowAnimations) {
