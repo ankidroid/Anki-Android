@@ -487,64 +487,6 @@ public class DeckPicker extends FragmentActivity {
         }
     };
 
-    // private Connection.TaskListener mDownloadMediaListener = new Connection.TaskListener() {
-    //
-    // @Override
-    // public void onDisconnected() {
-    // showDialog(DIALOG_NO_CONNECTION);
-    // }
-    //
-    // @Override
-    // public void onPreExecute() {
-    // // Pass
-    // }
-    //
-    // @Override
-    // public void onProgressUpdate(Object... values) {
-    // int total = ((Integer)values[1]).intValue();
-    // int done = ((Integer)values[2]).intValue();
-    // if (!((Boolean)values[0]).booleanValue()) {
-    // // Initializing, just get the count of missing media
-    // if (mProgressDialog != null && mProgressDialog.isShowing()) {
-    // mProgressDialog.dismiss();
-    // }
-    // mProgressDialog.setMax(total);
-    // mProgressDialog.show();
-    // } else {
-    // mProgressDialog.setProgress(done);
-    // }
-    // }
-    //
-    // @Override
-    // public void onPostExecute(Payload data) {
-    // Log.i(AnkiDroidApp.TAG, "onPostExecute");
-    // Resources res = getResources();
-    // if (mProgressDialog != null) {
-    // mProgressDialog.dismiss();
-    // }
-    //
-    // if (data.success) {
-    // int total = ((Integer)data.data[0]).intValue();
-    // if (total == 0) {
-    // mMissingMediaAlert
-    // .setMessage(res.getString(R.string.deckpicker_download_missing_none));
-    // } else {
-    // int done = ((Integer)data.data[1]).intValue();
-    // int missing = ((Integer)data.data[2]).intValue();
-    // mMissingMediaAlert
-    // .setMessage(res.getString(R.string.deckpicker_download_missing_success, done, missing));
-    // }
-    // } else {
-    // String failedFile = (String)data.data[0];
-    // mMissingMediaAlert
-    // .setMessage(res.getString(R.string.deckpicker_download_missing_error, failedFile));
-    // }
-    // mMissingMediaAlert.show();
-    //
-    // Deck deck = (Deck) data.result;
-    // DeckManager.closeDeck(deck.getDeckPath(), DeckManager.REQUESTING_ACTIVITY_DECKPICKER);
-    // }
-    // };
 
     DeckTask.TaskListener mOpenCollectionHandler = new DeckTask.TaskListener() {
 
@@ -2531,19 +2473,6 @@ public class DeckPicker extends FragmentActivity {
     // INNER CLASSES
     // ----------------------------------------------------------------------------
 
-    // private class ThemedAdapter extends SimpleAdapter {
-    // public ThemedAdapter(Context context, ArrayList<HashMap<String, String>> items, int resource, String[] from,
-    // int[] to) {
-    // super(context, items, resource, from, to);
-    // }
-    //
-    // // @Override
-    // // public View getView(int position, View convertView, ViewGroup parent) {
-    // // View view = super.getView(position, convertView, parent);
-    // // Themes.setContentStyle(view, Themes.CALLER_DECKPICKER_DECK);
-    // // return view;
-    // // }
-    // }
 
     class MyGestureDetector extends SimpleOnGestureListener {
         @Override

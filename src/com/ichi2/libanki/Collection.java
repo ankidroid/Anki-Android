@@ -117,11 +117,13 @@ public class Collection {
     private static Collection sCurrentCollection;
     private boolean mOpenedByWidget;
 
-    public static synchronized Collection openCollection(String path) {
+    public static Collection openCollection(String path) {
     	return openCollection(path, false);
     }
     public static synchronized Collection openCollection(String path, boolean openedByWidget) {
-        sCurrentCollection = Storage.Collection(path);
+    	if (sCurrentCollection == null || !sCurrentCollection.mPath.equals(path)) {
+            sCurrentCollection = Storage.Collection(path);    		
+    	}
         sCurrentCollection.mOpenedByWidget = openedByWidget;
         return sCurrentCollection;
     }

@@ -26,7 +26,6 @@ import org.json.JSONObject;
 
 import android.content.ContentValues;
 import android.database.SQLException;
-import android.util.Log;
 
 import com.ichi2.anki.AnkiDatabaseManager;
 import com.ichi2.anki.AnkiDb;
