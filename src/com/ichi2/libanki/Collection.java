@@ -123,8 +123,8 @@ public class Collection {
     public static synchronized Collection openCollection(String path, boolean openedByWidget) {
     	if (sCurrentCollection == null || !sCurrentCollection.mPath.equals(path)) {
             sCurrentCollection = Storage.Collection(path);    		
+            sCurrentCollection.mOpenedByWidget = openedByWidget;    		
     	}
-        sCurrentCollection.mOpenedByWidget = openedByWidget;
         return sCurrentCollection;
     }
 
@@ -334,6 +334,7 @@ public class Collection {
             mMedia.close();
             Log.i(AnkiDroidApp.TAG, "Collection closed");
         }
+        sCurrentCollection = null;
     }
 
 

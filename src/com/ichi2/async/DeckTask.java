@@ -459,7 +459,8 @@ public class DeckTask extends
 					new TaskData(col)).getObjArray());
 		} catch (RuntimeException e) {
 			col = null;
-			return new TaskData(col);
+			throw new RuntimeException(e);
+//			return new TaskData(col);
 		}
 	}
 

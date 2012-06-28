@@ -41,13 +41,8 @@ public class Storage {
     }
 
 
-    public synchronized static Collection Collection(String path, boolean server) {
+    public static Collection Collection(String path, boolean server) {
         assert path.endsWith(".anki2");
-
-        // avoid double opening of a collection
-        if (AnkiDatabaseManager.isDatabaseOpen(path) && Collection.currentCollection() != null && Collection.currentCollection().getPath().equals(path)) {
-        	return Collection.currentCollection();
-        }
 
         File dbFile = new File(path);
         boolean create = !dbFile.exists();
