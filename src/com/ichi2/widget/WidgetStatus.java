@@ -63,30 +63,31 @@ public final class WidgetStatus {
 
     /** Request the widget to update its status. */
     public static void update(Context context) {
-        update(context, true);
+        update(context, true, null, null, null);
     }
 
 
     /** Request the widget to update its status. */
     public static void update(Context context, DeckStatus deckStatus) {
-        sDeckStatus = deckStatus;
-        update(context);
+        update(context, true, deckStatus, null, null);
     }
 
 
     public static void update(Context context, TreeSet<Object[]> deckCounts) {
-    	sDeckCounts = deckCounts;
-        update(context);
+        update(context, true, null, null, deckCounts);
     }
 
 
     public static void update(Context context, float[] smallWidgetStatus) {
-    	sSmallWidgetStatus = smallWidgetStatus;
-        update(context);
+        update(context, true, null, smallWidgetStatus, null);
     }
 
 
-    public static void update(Context context, boolean updateBigWidget) {
+    public static void update(Context context, boolean updateBigWidget, DeckStatus deckStatus, float[] smallWidgetStatus, TreeSet<Object[]> deckCounts) {
+        sDeckStatus = deckStatus;
+    	sSmallWidgetStatus = smallWidgetStatus;
+    	sDeckCounts = deckCounts;
+
         SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(context);
         if (preferences.getBoolean("widgetMediumEnabled", false)) {
             mediumWidget = true;
