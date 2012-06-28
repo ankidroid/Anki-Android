@@ -2296,8 +2296,8 @@ public class Sched {
         			// reload counts
         			counts = (TreeSet<Object[]>)deckCounts()[0];
         		}
-        		int done = 0;
             	for (Object[] d : counts) {
+            		int done = 0;
         			JSONObject deck = mCol.getDecks().get((Long) d[1]);
             		for (String s : cs) {
             			done += deck.getJSONArray(s + "Today").getInt(1);
