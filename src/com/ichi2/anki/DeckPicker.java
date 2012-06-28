@@ -51,6 +51,7 @@ import android.view.View;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.view.GestureDetector.SimpleOnGestureListener;
 import android.view.View.OnClickListener;
+import android.view.ViewTreeObserver.OnGlobalLayoutListener;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -2485,6 +2486,23 @@ public class DeckPicker extends FragmentActivity {
 
         // update widget
         WidgetStatus.update(this, decks);
+
+        // select last loaded deck if any
+        if (mFragmented && getFragment() == null) {
+        	long did = mCol.getDecks().selected();
+        	for (int i = 0; i < mDeckList.size(); i++) {
+        		if (Long.parseLong(mDeckList.get(i).get("did")) == did) {
+        			final int lastPosition = i;
+                    mDeckListView.getViewTreeObserver().addOnGlobalLayoutListener(new OnGlobalLayoutListener() {
+                        @Override
+                        public void onGlobalLayout() {
+                        	mDeckListView.getViewTreeObserver().removeGlobalOnLayoutListener(this);
+                        	mDeckListView.performItemClick(null, lastPosition, 0);
+                        }
+                    });        			
+        		}
+        	}
+        }
     }
 
     // private void restartApp() {
@@ -2559,31 +2577,6 @@ public class DeckPicker extends FragmentActivity {
         }
         return sb.toString();
     }
-
-    // private InputFilter mDeckNameFilter = new InputFilter() {
-    // public CharSequence filter(CharSequence source, int start,
-    // int end, Spanned dest, int dstart, int dend) {
-    // for (int i = start; i < end; i++) {
-    // if (!Character.isLetterOrDigit(source.charAt(i))) {
-    // char comp = source.charAt(i);
-    // if (comp == ' ') {
-    // return "";
-    // }
-    // boolean forbidden = true;
-    // for (char c : new char[]{':', '+', '-', '!', '_'}) {
-    // if (c == comp) {
-    // forbidden = false;
-    // break;
-    // }
-    // }
-    // if (forbidden) {
-    // return "";
-    // }
-    // }
-    // }
-    // return null;
-    // }
-    // };
 
 }
 
