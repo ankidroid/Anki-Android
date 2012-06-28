@@ -566,15 +566,22 @@ public class DeckPicker extends FragmentActivity {
             mDeckListView.setVisibility(View.VISIBLE);
             mDeckListView.setAnimation(ViewAnimation.fade(ViewAnimation.FADE_IN, 500, 0));
 
+            // select last loaded deck if any
             if (mFragmented) {
-                long active = mCol.getDecks().selected();
-                for (int i = 0; i < mDeckList.size(); i++) {
-                    // TODO: load last used deck
-                    if (mDeckList.get(i).get("did").equals(Long.toString(active))) {
-                        mDeckListView.setSelection(i);
+            	long did = mCol.getDecks().selected();
+            	for (int i = 0; i < mDeckList.size(); i++) {
+            		if (Long.parseLong(mDeckList.get(i).get("did")) == did) {
+            			final int lastPosition = i;
+                        mDeckListView.getViewTreeObserver().addOnGlobalLayoutListener(new OnGlobalLayoutListener() {
+                            @Override
+                            public void onGlobalLayout() {
+                            	mDeckListView.getViewTreeObserver().removeGlobalOnLayoutListener(this);
+                            	mDeckListView.performItemClick(null, lastPosition, 0);
+                            }
+                        });
                         break;
-                    }
-                }
+            		}
+            	}
             }
         }
 
@@ -2486,23 +2493,6 @@ public class DeckPicker extends FragmentActivity {
 
         // update widget
         WidgetStatus.update(this, decks);
-
-        // select last loaded deck if any
-        if (mFragmented && getFragment() == null) {
-        	long did = mCol.getDecks().selected();
-        	for (int i = 0; i < mDeckList.size(); i++) {
-        		if (Long.parseLong(mDeckList.get(i).get("did")) == did) {
-        			final int lastPosition = i;
-                    mDeckListView.getViewTreeObserver().addOnGlobalLayoutListener(new OnGlobalLayoutListener() {
-                        @Override
-                        public void onGlobalLayout() {
-                        	mDeckListView.getViewTreeObserver().removeGlobalOnLayoutListener(this);
-                        	mDeckListView.performItemClick(null, lastPosition, 0);
-                        }
-                    });        			
-        		}
-        	}
-        }
     }
 
     // private void restartApp() {
