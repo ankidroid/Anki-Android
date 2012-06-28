@@ -26,6 +26,7 @@ import org.json.JSONObject;
 
 import android.content.ContentValues;
 import android.database.SQLException;
+import android.util.Log;
 
 import com.ichi2.anki.AnkiDatabaseManager;
 import com.ichi2.anki.AnkiDb;
@@ -45,7 +46,7 @@ public class Storage {
         assert path.endsWith(".anki2");
 
         // avoid double opening of a collection
-        if (AnkiDatabaseManager.isDatabaseOpen(path) && Collection.currentCollection().getPath().equals(path)) {
+        if (AnkiDatabaseManager.isDatabaseOpen(path) && Collection.currentCollection() != null && Collection.currentCollection().getPath().equals(path)) {
         	return Collection.currentCollection();
         }
 

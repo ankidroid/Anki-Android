@@ -167,6 +167,7 @@ public class DeckPicker extends FragmentActivity {
     private static final int LOG_IN_FOR_SHARED_DECK = 16;
     private static final int ADD_CRAM_DECK = 17;
     private static final int SHOW_INFO_UPGRADE_DECKS = 18;
+    private static final int REQUEST_REVIEW = 19;
 
     private Collection mCol;
 
@@ -1878,10 +1879,11 @@ public class DeckPicker extends FragmentActivity {
     public void setStudyContentView(long deckId) {
     	Fragment frag = (Fragment) getSupportFragmentManager().findFragmentById(R.id.studyoptions_fragment);
     	if (frag == null || !(frag instanceof StudyOptionsFragment) || ((StudyOptionsFragment) frag).getShownIndex() != deckId) {
-            StudyOptionsFragment details = StudyOptionsFragment.newInstance(deckId);
+            StudyOptionsFragment details = StudyOptionsFragment.newInstance(deckId, false);
             FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+//            ft.setCustomAnimations(R.anim.fade_in, R.anim.fade_out);
+            ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE);
             ft.replace(R.id.studyoptions_fragment, details);
-            ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
             ft.commit();
     	}
     }
@@ -2279,6 +2281,26 @@ public class DeckPicker extends FragmentActivity {
             addSharedDeck();
         } else if (requestCode == ADD_SHARED_DECKS) {
             sync();
+        } else if (requestCode == REQUEST_REVIEW) {
+            Log.i(AnkiDroidApp.TAG, "Result code = " + resultCode);
+            switch (resultCode) {
+                case Reviewer.RESULT_SESSION_COMPLETED:
+                default:
+                    // do not reload counts, if activity is created anew because it has been before destroyed by android
+                	loadCounts();
+                    break;
+                case Reviewer.RESULT_NO_MORE_CARDS:
+                    mDontSaveOnStop = true;
+                    Intent i = new Intent();
+                    i.setClass(this, StudyOptionsActivity.class);
+                    i.putExtra("onlyFnsMsg", true);
+                    startActivityForResult(i, SHOW_STUDYOPTIONS);
+                    if (UIUtils.getApiLevel() > 4) {
+                        ActivityTransitionAnimation.slide(this, ActivityTransitionAnimation.LEFT);
+                    }
+                    break;
+            }
+
         }
 
         // workaround for hidden dialog on return
@@ -2526,11 +2548,26 @@ public class DeckPicker extends FragmentActivity {
     class MyGestureDetector extends SimpleOnGestureListener {
         @Override
         public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
-            if (mSwipeEnabled) {
+            if (mSwipeEnabled && !mFragmented) {
                 try {
                     if (e1.getX() - e2.getX() > sSwipeMinDistance && Math.abs(velocityX) > sSwipeThresholdVelocity
                             && Math.abs(e1.getY() - e2.getY()) < sSwipeMaxOffPath) {
-                        openStudyOptions(mCol.getDecks().selected());
+                    	mDontSaveOnStop = true;
+                    	float pos = e1.getY();
+                    	for (int j = 0; j < mDeckListView.getChildCount(); j++) {
+                    		View v = mDeckListView.getChildAt(j);
+                    		if (v.getY() + v.getHeight() > pos) {
+                            	HashMap<String, String> data = (HashMap<String, String>) mDeckListAdapter.getItem(j);
+                            	mCol.getDecks().select(Long.parseLong(data.get("did")));
+                            	mCol.reset();
+                                Intent reviewer = new Intent(DeckPicker.this, Reviewer.class);
+                                startActivityForResult(reviewer, REQUEST_REVIEW);
+                                if (UIUtils.getApiLevel() > 4) {
+                                    ActivityTransitionAnimation.slide(DeckPicker.this, ActivityTransitionAnimation.LEFT);
+                                }
+                            	return true;
+                    		}
+                    	}
                     }
                 } catch (Exception e) {
                     Log.e(AnkiDroidApp.TAG, "onFling Exception = " + e.getMessage());

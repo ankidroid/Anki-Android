@@ -260,12 +260,13 @@ public class StudyOptionsFragment extends Fragment {
     }
 
 
-    public static StudyOptionsFragment newInstance(long deckId) {
+    public static StudyOptionsFragment newInstance(long deckId, boolean onlyFnsMsg) {
         StudyOptionsFragment f = new StudyOptionsFragment();
 
         // Supply index input as an argument.
         Bundle args = new Bundle();
         args.putLong("deckId", deckId);
+        args.putBoolean("onlyFnsMsg", onlyFnsMsg);
         f.setArguments(args);
 
         return f;
@@ -333,6 +334,12 @@ public class StudyOptionsFragment extends Fragment {
             mCompat = new CompatV11();
         } else {
             mCompat = new CompatV3();
+        }
+
+        if (getArguments().getBoolean("onlyFnsMsg")) {
+            mTextCongratsMessage.setText(mCol.getSched().finishedMsg(getActivity()));
+            mButtonCongratsFinish.setVisibility(View.GONE);
+            return mCongratsView;
         }
 
         resetAndUpdateValuesFromDeck();        	
@@ -465,7 +472,7 @@ public class StudyOptionsFragment extends Fragment {
                         if (mCol == null) {
                         	closeStudyOptions();
                         } else {
-                        	((StudyOptionsActivity)getActivity()).loadContent();
+                        	((StudyOptionsActivity)getActivity()).loadContent(false);
                         }
                     }
 

@@ -59,12 +59,12 @@ public class StudyOptionsActivity extends FragmentActivity {
         // }
 
         if (savedInstanceState == null) {
-        	loadContent();
+        	loadContent(getIntent().getBooleanExtra("onlyFnsMsg", false));
         }
     }
 
-    public void loadContent() {
-        mCurrentFragment = StudyOptionsFragment.newInstance(0);
+    public void loadContent(boolean onlyFnsMsg) {
+        mCurrentFragment = StudyOptionsFragment.newInstance(0, onlyFnsMsg);
         mCurrentFragment.setArguments(getIntent().getExtras());
         getSupportFragmentManager().beginTransaction().add(android.R.id.content, mCurrentFragment).commit();
     }

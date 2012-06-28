@@ -466,6 +466,9 @@ public class DeckTask extends
 	private TaskData doInBackgroundLoadDeckCounts(TaskData... params) {
 		Log.i(AnkiDroidApp.TAG, "doInBackgroundLoadDeckCounts");
 		Collection col = params[0].getCollection();
+		if (col == null) {
+			return null;
+		}
 		try {
 			return new TaskData(col.getSched().deckCounts());
 		} catch (RuntimeException e) {
