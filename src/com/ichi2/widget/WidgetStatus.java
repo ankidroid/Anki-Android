@@ -209,9 +209,9 @@ public final class WidgetStatus {
             	if (sSmallWidgetStatus == null) {
                     Collection col = Collection.currentCollection();
                     if (col == null) {
-                        col = Collection.openCollection(AnkiDroidApp.getCollectionPath());
+                        col = Collection.openCollection(AnkiDroidApp.getCollectionPath(), true);
                         mSmallWidgetStatus = col.getSched().progressToday(sDeckCounts, null, true);
-                        col.close(false);
+                        col.closeIfOnlyOpenedByWidget();
                     } else {
                         mSmallWidgetStatus = col.getSched().progressToday(sDeckCounts, null, true);                    	
                     }

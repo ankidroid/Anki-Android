@@ -471,7 +471,8 @@ public class DeckTask extends
 		} catch (RuntimeException e) {
 			Log.e(AnkiDroidApp.TAG, "doInBackgroundLoadDeckCounts - error: "
 					+ e);
-			return null;
+			throw new RuntimeException(e);
+//			return null;
 		}
 	}
 
