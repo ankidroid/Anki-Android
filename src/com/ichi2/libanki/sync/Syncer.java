@@ -308,24 +308,49 @@ public class Syncer {
 
     public JSONArray sanityCheck() {
         boolean ok = true;
-        ok = ok
-                && mCol.getDb().queryScalar("SELECT count() FROM cards WHERE nid NOT IN (SELECT id FROM notes)", false) == 0;
-        ok = ok
-                && mCol.getDb().queryScalar(
-                        "SELECT count() FROM notes WHERE id NOT IN (SELECT DISTINCT nid FROM cards)", false) == 0;
-        ok = ok && mCol.getDb().queryScalar("SELECT count() FROM cards WHERE usn = -1", false) == 0;
-        ok = ok && mCol.getDb().queryScalar("SELECT count() FROM notes WHERE usn = -1", false) == 0;
-        ok = ok && mCol.getDb().queryScalar("SELECT count() FROM revlog WHERE usn = -1", false) == 0;
-        ok = ok && mCol.getDb().queryScalar("SELECT count() FROM graves WHERE usn = -1", false) == 0;
+        if (mCol.getDb().queryScalar("SELECT count() FROM cards WHERE nid NOT IN (SELECT id FROM notes)", false) != 0) {
+        	ok = false;
+            Log.e(AnkiDroidApp.TAG, "Sync - SanityCheck: there are cards without mother notes");
+        }
+        if (mCol.getDb().queryScalar(
+                        "SELECT count() FROM notes WHERE id NOT IN (SELECT DISTINCT nid FROM cards)", false) != 0) {
+        	ok = false;
+            Log.e(AnkiDroidApp.TAG, "Sync - SanityCheck: there are notes without cards");
+        }
+        if (mCol.getDb().queryScalar("SELECT count() FROM cards WHERE usn = -1", false) != 0) {
+        	ok = false;
+            Log.e(AnkiDroidApp.TAG, "Sync - SanityCheck: there are unsynced cards");        	
+        }
+        if (mCol.getDb().queryScalar("SELECT count() FROM notes WHERE usn = -1", false) != 0) {
+        	ok = false;
+            Log.e(AnkiDroidApp.TAG, "Sync - SanityCheck: there are unsynced notes");        	
+        }
+        if (mCol.getDb().queryScalar("SELECT count() FROM revlog WHERE usn = -1", false) != 0) {
+        	ok = false;
+            Log.e(AnkiDroidApp.TAG, "Sync - SanityCheck: there are unsynced revlogs");        	
+        }
+        if (mCol.getDb().queryScalar("SELECT count() FROM graves WHERE usn = -1", false) != 0) {
+        	ok = false;
+            Log.e(AnkiDroidApp.TAG, "Sync - SanityCheck: there are unsynced graves");
+        }
         try {
             for (JSONObject g : mCol.getDecks().all()) {
-                ok = ok && g.getInt("usn") != -1;
+                if (g.getInt("usn") == -1) {
+                	ok = false;
+                    Log.e(AnkiDroidApp.TAG, "Sync - SanityCheck: unsynced deck: " + g.getString("name"));
+                }
             }
             for (Integer usn : mCol.getTags().allItems().values()) {
-                ok = ok && usn != -1;
+                if (usn == -1) {
+                	ok = false;
+                    Log.e(AnkiDroidApp.TAG, "Sync - SanityCheck: there are unsynced tags");
+                }
             }
             for (JSONObject m : mCol.getModels().all()) {
-                ok = ok && m.getInt("usn") != -1;
+                if (m.getInt("usn") == -1) {
+                	ok = false;
+                    Log.e(AnkiDroidApp.TAG, "Sync - SanityCheck: unsynced model: " + m.getString("name"));
+                }
             }
         } catch (JSONException e) {
             throw new RuntimeException(e);
