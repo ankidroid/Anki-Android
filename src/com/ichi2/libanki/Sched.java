@@ -2286,6 +2286,24 @@ public class Sched {
         	String[] cs = new String[]{"new", "lrn", "rev"};
         	long currentDid = 0;
 
+        	// current selected deck
+        	if (counts == null) {
+        		JSONObject deck = mCol.getDecks().current();
+        		currentDid = deck.getLong("id");
+        		for (String s : cs) {
+        			doneCurrent += deck.getJSONArray(s + "Today").getInt(1);
+        		}
+        		if (card != null) {
+            		int idx = countIdx(card);
+            		leftCurrent[idx] += idx == 1 ? card.getLeft() / 1000 : 1;
+        		} else {
+        			reset();
+        		}
+        		leftCurrent[0] += mNewCount;
+        		leftCurrent[1] += mLrnCount;
+        		leftCurrent[2] += mRevCount;
+        	}
+
         	// refresh deck progresses with fresh counts if necessary
         	if (counts != null || mCachedDeckCounts == null) {
         		if (mCachedDeckCounts == null) {
@@ -2304,17 +2322,6 @@ public class Sched {
             		}
             		mCachedDeckCounts.put((Long)d[1], new Pair<String[], long[]> ((String[])d[0], new long[]{done, (Integer)d[2], (Integer)d[3], (Integer)d[4]}));
             	}
-        	}
-
-        	// current selected deck
-        	if (card != null) {
-        		JSONObject deck = mCol.getDecks().current();
-        		currentDid = deck.getLong("id");
-        		for (String s : cs) {
-        			doneCurrent += deck.getJSONArray(s + "Today").getInt(1);
-        		}
-        		int idx = countIdx(card);
-        		leftCurrent = new int[]{ mNewCount + (idx == 1 ? 0 : 1), mLrnCount + (idx == 1 ? card.getLeft() / 1000 : 0), mRevCount + (idx == 1 ? 0 : 1)};
         	}
 
         	int doneAll = 0;
