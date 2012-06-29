@@ -75,7 +75,7 @@
 
 <string name="undo">Undo</string>
 
-<string name="finish_operation">Finishing previous operation.\nPlease wait...</string>
+<string name="finish_operation">Finishing previous operation (most likely backup creation).\nPlease wait...</string>
 
 <string name="contextmenu_deckpicker_download_missing_media">Download missing media</string>
 <string name="contextmenu_deckpicker_reset_language_assignments">Reset Language Assignments</string>

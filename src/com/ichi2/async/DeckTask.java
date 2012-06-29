@@ -154,8 +154,13 @@ public class DeckTask extends
 			}
 			if ((sOldInstance != null)
 					&& (sOldInstance.getStatus() != AsyncTask.Status.FINISHED)) {
-				Log.i(AnkiDroidApp.TAG, "Waiting for " + sOldInstance.mType
-						+ " to finish before starting " + sInstance.mType);
+				Log.i(AnkiDroidApp.TAG, "Waiting for " + sOldInstance.mType + " to finish before starting " + sInstance.mType);
+
+				// let user know if the last deck close is still performing a backup 
+				if (mType == TASK_TYPE_OPEN_COLLECTION && sOldInstance.mType == TASK_TYPE_CLOSE_DECK) {
+					 publishProgress(new TaskData(AnkiDroidApp.getInstance().getBaseContext().getResources().getString(R.string.finish_operation)));
+				}
+
 				sOldInstance.get();
 			}
 		} catch (Exception e) {
@@ -394,13 +399,10 @@ public class DeckTask extends
 
 		// see, if a collection is still opened
 		Collection oldCol = Collection.currentCollection();
-		boolean reset = params[0].getBoolean();
 
 		Collection col = null;
 
-		// publishProgress(new
-		// TaskData(AnkiDroidApp.getInstance().getBaseContext().getResources().getString(R.string.finish_operation)));
-		// DeckManager.waitForDeckClosingThread(deckFilename);
+		publishProgress(new TaskData(res.getString(R.string.open_collection)));
 
 		if (oldCol == null || !oldCol.getPath().equals(collectionFile)) {
 
