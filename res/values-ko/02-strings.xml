@@ -45,6 +45,7 @@
   <string name="factadder_saving_error">오류 노트 저장</string>
   <string name="cardeditor_move_note_too">노트도 옮기기</string>
   <string name="cardeditor_move_to_notes_deck">노트 묶음으로</string>
+  <string name="pref_lang_support">Language Settings</string>
   <string name="saving_facts">노트 저장</string>
   <string name="deck">암기묶음</string>
   <string name="add">추가</string>

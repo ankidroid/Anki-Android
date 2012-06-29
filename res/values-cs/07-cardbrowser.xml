@@ -31,6 +31,8 @@
   <string name="delete_card_title">Odstranit poznámku</string>
   <string name="delete_card_message">Really delete all cards of this note?\nSearch field: %s</string>
   <string name="card_browser_show_marked">Filter marked</string>
+  <string name="card_browser_field">Change CardBrowser Field</string>
+  <string name="card_browser_field_title">Change CardBrowser Field</string>
   <string name="card_browser_show_suspended">Filter suspended</string>
   <string name="card_browser_search_by_tag">Filter by tag</string>
   <string name="card_browser_tags_shown">Štítky: %1$s</string>

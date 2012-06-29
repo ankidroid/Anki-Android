@@ -45,6 +45,7 @@
   <string name="factadder_saving_error">Fel vid sparande av anteckning</string>
   <string name="cardeditor_move_note_too">Flytta även anteckning</string>
   <string name="cardeditor_move_to_notes_deck">Till anteckningens kortlek</string>
+  <string name="pref_lang_support">Language Settings</string>
   <string name="saving_facts">Sparar anteckning</string>
   <string name="deck">Kortlek</string>
   <string name="add">Lägg till</string>

@@ -45,7 +45,7 @@
   <string name="card_suspended">卡片再次跳过</string>
   <string name="menu_rotate">旋转</string>
   <string name="undo">撤销</string>
-  <string name="finish_operation">正在执行之前的操作。\n请稍等</string>
+  <string name="finish_operation">Finishing previous operation (most likely backup creation).\nPlease wait...</string>
   <string name="contextmenu_deckpicker_download_missing_media">下载缺失的媒体文件</string>
   <string name="contextmenu_deckpicker_reset_language_assignments">取消指定牌组语言</string>
   <string name="contextmenu_deckpicker_reset_reset_message">重置语言设置</string>
@@ -79,7 +79,7 @@
   <string name="studyoptions_cram_dialog_title">强记选项</string>
   <string name="studyoptions_load_other_deck">载入其他牌组</string>
   <string name="studyoptions_load_tutorial_deck">创建教程牌组</string>
-  <string name="studyoptions_night_mode">Night</string>
+  <string name="night_mode">Night mode</string>
   <string name="visit">访问</string>
   <string name="later">稍后</string>
   <string name="download">下载</string>

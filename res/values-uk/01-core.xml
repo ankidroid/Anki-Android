@@ -45,7 +45,7 @@
   <string name="card_suspended">Картка знову призупинина</string>
   <string name="menu_rotate">Повернути</string>
   <string name="undo">Скасувати</string>
-  <string name="finish_operation">Завершаю попередню операцію.\nЗачекайте будьласка...</string>
+  <string name="finish_operation">Finishing previous operation (most likely backup creation).\nPlease wait...</string>
   <string name="contextmenu_deckpicker_download_missing_media">Завантажити відсутні медіа-файли</string>
   <string name="contextmenu_deckpicker_reset_language_assignments">Скинути мовні налаштування</string>
   <string name="contextmenu_deckpicker_reset_reset_message">Скинути мову</string>
@@ -79,7 +79,7 @@
   <string name="studyoptions_cram_dialog_title">Теги до зубріння</string>
   <string name="studyoptions_load_other_deck">Завантажити іншу колоду</string>
   <string name="studyoptions_load_tutorial_deck">Створити підручник</string>
-  <string name="studyoptions_night_mode">Ніч</string>
+  <string name="night_mode">Night mode</string>
   <string name="visit">Visit</string>
   <string name="later">Пізніше</string>
   <string name="download">Завантажити</string>

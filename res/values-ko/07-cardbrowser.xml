@@ -31,6 +31,8 @@
   <string name="delete_card_title">노트 삭제</string>
   <string name="delete_card_message">정말로 이 노트가 들어간 모든 카드를 삭제하시겠니까?\n검색창: %s</string>
   <string name="card_browser_show_marked">표시별 필터링</string>
+  <string name="card_browser_field">Change CardBrowser Field</string>
+  <string name="card_browser_field_title">Change CardBrowser Field</string>
   <string name="card_browser_show_suspended">미룸별 필터링</string>
   <string name="card_browser_search_by_tag">태그별 필터링</string>
   <string name="card_browser_tags_shown">태그: %1$s</string>

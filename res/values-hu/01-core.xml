@@ -45,7 +45,7 @@
   <string name="card_suspended">Card resuspended</string>
   <string name="menu_rotate">Forgatás</string>
   <string name="undo">Visszavonás</string>
-  <string name="finish_operation">Befejező előző művelet.\n Kérlek várj...</string>
+  <string name="finish_operation">Finishing previous operation (most likely backup creation).\nPlease wait...</string>
   <string name="contextmenu_deckpicker_download_missing_media">Download missing media</string>
   <string name="contextmenu_deckpicker_reset_language_assignments">Nyelv-hozzárendelés visszaállítása</string>
   <string name="contextmenu_deckpicker_reset_reset_message">Nyelv visszaállítása</string>
@@ -79,7 +79,7 @@
   <string name="studyoptions_cram_dialog_title">Cram címkék</string>
   <string name="studyoptions_load_other_deck">Másik pakli betöltése</string>
   <string name="studyoptions_load_tutorial_deck">Bemutató létrehozása</string>
-  <string name="studyoptions_night_mode">Éjszaka</string>
+  <string name="night_mode">Night mode</string>
   <string name="visit">Látogatás</string>
   <string name="later">Később</string>
   <string name="download">Letöltés</string>

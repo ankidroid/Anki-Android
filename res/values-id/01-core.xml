@@ -45,7 +45,7 @@
   <string name="card_suspended">Kad digantung</string>
   <string name="menu_rotate">Pusing</string>
   <string name="undo">Buat asal</string>
-  <string name="finish_operation">Menyudah operasi lepas.\nSila tunggu...</string>
+  <string name="finish_operation">Finishing previous operation (most likely backup creation).\nPlease wait...</string>
   <string name="contextmenu_deckpicker_download_missing_media">Muat turun media kurang</string>
   <string name="contextmenu_deckpicker_reset_language_assignments">Set Tugasan Bahasa</string>
   <string name="contextmenu_deckpicker_reset_reset_message">Set bahasa</string>
@@ -79,7 +79,7 @@
   <string name="studyoptions_cram_dialog_title">Tag untuk cram</string>
   <string name="studyoptions_load_other_deck">Muat Dek Lain</string>
   <string name="studyoptions_load_tutorial_deck">Create tutorial</string>
-  <string name="studyoptions_night_mode">Night</string>
+  <string name="night_mode">Night mode</string>
   <string name="visit">Kunjungi</string>
   <string name="later">Kemudian</string>
   <string name="download">Muat turun</string>

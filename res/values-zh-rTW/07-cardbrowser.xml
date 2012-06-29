@@ -31,6 +31,8 @@
   <string name="delete_card_title">刪除註解</string>
   <string name="delete_card_message">您確定要刪除所有卡片的註解嗎？\n搜尋欄位：%s</string>
   <string name="card_browser_show_marked">過濾器已經被標記</string>
+  <string name="card_browser_field">Change CardBrowser Field</string>
+  <string name="card_browser_field_title">Change CardBrowser Field</string>
   <string name="card_browser_show_suspended">過濾器終止了</string>
   <string name="card_browser_search_by_tag">根據標籤過濾</string>
   <string name="card_browser_tags_shown">標籤：%1$s</string>

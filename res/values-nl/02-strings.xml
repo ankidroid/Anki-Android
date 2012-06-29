@@ -45,6 +45,7 @@
   <string name="factadder_saving_error">Fout bij oplaan kaart</string>
   <string name="cardeditor_move_note_too">Verplaats ook deze kaart</string>
   <string name="cardeditor_move_to_notes_deck">Verplaats naar leerset van deze kaart</string>
+  <string name="pref_lang_support">Language Settings</string>
   <string name="saving_facts">Kaart opslaan</string>
   <string name="deck">Leerset</string>
   <string name="add">Toevoegen</string>

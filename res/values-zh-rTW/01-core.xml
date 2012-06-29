@@ -45,7 +45,7 @@
   <string name="card_suspended">Card resuspended</string>
   <string name="menu_rotate">旋轉</string>
   <string name="undo">還原</string>
-  <string name="finish_operation">完成先前動作中.請稍後...</string>
+  <string name="finish_operation">Finishing previous operation (most likely backup creation).\nPlease wait...</string>
   <string name="contextmenu_deckpicker_download_missing_media">正在下載缺少的媒體</string>
   <string name="contextmenu_deckpicker_reset_language_assignments">重設語言</string>
   <string name="contextmenu_deckpicker_reset_reset_message">重設語言</string>
@@ -79,7 +79,7 @@
   <string name="studyoptions_cram_dialog_title">要惡補的標籤</string>
   <string name="studyoptions_load_other_deck">載入其他牌組</string>
   <string name="studyoptions_load_tutorial_deck">建立操作手冊</string>
-  <string name="studyoptions_night_mode">夜晚模式</string>
+  <string name="night_mode">Night mode</string>
   <string name="visit">參觀</string>
   <string name="later">晚點</string>
   <string name="download">下載</string>

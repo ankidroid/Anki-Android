@@ -45,7 +45,7 @@
   <string name="card_suspended">ระงับการใช้บัตรซ้ำ</string>
   <string name="menu_rotate">หมุน</string>
   <string name="undo">เรียกคืน</string>
-  <string name="finish_operation">กำลังทำงานที่ค้างไว้ให้เสร็จ.\n กรุณารอสักครู่</string>
+  <string name="finish_operation">Finishing previous operation (most likely backup creation).\nPlease wait...</string>
   <string name="contextmenu_deckpicker_download_missing_media">ดาวน์โหลดสื่อที่หายไป</string>
   <string name="contextmenu_deckpicker_reset_language_assignments">ตั้งค่าการกำหนดภาษาใหม่</string>
   <string name="contextmenu_deckpicker_reset_reset_message">ตั้งค่าภาษาใหม่</string>
@@ -79,7 +79,7 @@
   <string name="studyoptions_cram_dialog_title">Tags to cram</string>
   <string name="studyoptions_load_other_deck">โหลดสำรับอื่น ๆ</string>
   <string name="studyoptions_load_tutorial_deck">Create tutorial</string>
-  <string name="studyoptions_night_mode">Night</string>
+  <string name="night_mode">Night mode</string>
   <string name="visit">เยี่ยมชม</string>
   <string name="later">ภายหลัง</string>
   <string name="download">ดาวน์โหลด</string>

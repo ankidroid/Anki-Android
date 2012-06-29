@@ -31,6 +31,8 @@
   <string name="delete_card_title">Notiz löschen</string>
   <string name="delete_card_message">Sollen wirklich alle Karten dieser Notiz gelöscht werden?\nSuchfeld: %s</string>
   <string name="card_browser_show_marked">Markierte herausfiltern</string>
+  <string name="card_browser_field">Change CardBrowser Field</string>
+  <string name="card_browser_field_title">Change CardBrowser Field</string>
   <string name="card_browser_show_suspended">Ausgesetzte herausfiltern</string>
   <string name="card_browser_search_by_tag">Nach Tag filtern</string>
   <string name="card_browser_tags_shown">Schlagworte: %1$s</string>

@@ -45,7 +45,7 @@
   <string name="card_suspended">カードが再停止されました</string>
   <string name="menu_rotate">回転</string>
   <string name="undo">元に戻す</string>
-  <string name="finish_operation">前の操作を終了しています。\nしばらくお待ちください…</string>
+  <string name="finish_operation">Finishing previous operation (most likely backup creation).\nPlease wait...</string>
   <string name="contextmenu_deckpicker_download_missing_media">不足しているメディアをダウンロードします</string>
   <string name="contextmenu_deckpicker_reset_language_assignments">言語設定のリセット</string>
   <string name="contextmenu_deckpicker_reset_reset_message">言語設定のリセット</string>
@@ -79,7 +79,7 @@
   <string name="studyoptions_cram_dialog_title">このタグがついているカードを総復習する</string>
   <string name="studyoptions_load_other_deck">他の単語帳を開く</string>
   <string name="studyoptions_load_tutorial_deck">Create tutorial</string>
-  <string name="studyoptions_night_mode">Night</string>
+  <string name="night_mode">Night mode</string>
   <string name="visit">訪問</string>
   <string name="later">後で</string>
   <string name="download">ダウンロード</string>

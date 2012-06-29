@@ -45,7 +45,7 @@
   <string name="card_suspended">Karte wieder ausgesetzt</string>
   <string name="menu_rotate">Drehen</string>
   <string name="undo">Rückgängig</string>
-  <string name="finish_operation">Beende letzte Operation.\nBitte warten…</string>
+  <string name="finish_operation">Finishing previous operation (most likely backup creation).\nPlease wait...</string>
   <string name="contextmenu_deckpicker_download_missing_media">Fehlende Media-Daten herunterladen</string>
   <string name="contextmenu_deckpicker_reset_language_assignments">Sprachzuordnungen zurücksetzen</string>
   <string name="contextmenu_deckpicker_reset_reset_message">Sprachen zurückgesetzt</string>
@@ -79,7 +79,7 @@
   <string name="studyoptions_cram_dialog_title">Stichwörter, die gepaukt werden sollen</string>
   <string name="studyoptions_load_other_deck">Stapel öffnen</string>
   <string name="studyoptions_load_tutorial_deck">Einführungsstapel erstellen</string>
-  <string name="studyoptions_night_mode">Nacht</string>
+  <string name="night_mode">Night mode</string>
   <string name="visit">Besuchen</string>
   <string name="later">Später</string>
   <string name="download">Holen</string>

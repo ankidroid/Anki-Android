@@ -45,7 +45,7 @@
   <string name="card_suspended">Thẻ bị tạm dừng</string>
   <string name="menu_rotate">Xoay</string>
   <string name="undo">Hoàn tác</string>
-  <string name="finish_operation">Đang kết thúc thao tác trước.\nXin hãy chờ...</string>
+  <string name="finish_operation">Finishing previous operation (most likely backup creation).\nPlease wait...</string>
   <string name="contextmenu_deckpicker_download_missing_media">Tải thông tin bị thiếu</string>
   <string name="contextmenu_deckpicker_reset_language_assignments">Đặt lại ngôn ngữ phân công</string>
   <string name="contextmenu_deckpicker_reset_reset_message">Đặt lại ngôn ngữ</string>
@@ -79,7 +79,7 @@
   <string name="studyoptions_cram_dialog_title">Đánh dấu để nhồi</string>
   <string name="studyoptions_load_other_deck">Mở tập thẻ khác</string>
   <string name="studyoptions_load_tutorial_deck">Create tutorial</string>
-  <string name="studyoptions_night_mode">Night</string>
+  <string name="night_mode">Night mode</string>
   <string name="visit">Truy cập</string>
   <string name="later">Sau</string>
   <string name="download">Tải về</string>

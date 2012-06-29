@@ -45,7 +45,7 @@
   <string name="card_suspended">Tarjeta resuspendida</string>
   <string name="menu_rotate">Rotar</string>
   <string name="undo">Deshacer</string>
-  <string name="finish_operation">Finalizando la operación anterior.\nPor favor, espera...</string>
+  <string name="finish_operation">Finishing previous operation (most likely backup creation).\nPlease wait...</string>
   <string name="contextmenu_deckpicker_download_missing_media">Descargar archivos multimedia que falten</string>
   <string name="contextmenu_deckpicker_reset_language_assignments">Restablecer las Asignaciones de Idioma</string>
   <string name="contextmenu_deckpicker_reset_reset_message">Restablecer idioma</string>
@@ -79,7 +79,7 @@
   <string name="studyoptions_cram_dialog_title">Etiquetas a empollar</string>
   <string name="studyoptions_load_other_deck">Cargar otro mazo</string>
   <string name="studyoptions_load_tutorial_deck">Crear tutorial</string>
-  <string name="studyoptions_night_mode">Noche</string>
+  <string name="night_mode">Night mode</string>
   <string name="visit">Visita</string>
   <string name="later">Más tarde</string>
   <string name="download">Descargar</string>

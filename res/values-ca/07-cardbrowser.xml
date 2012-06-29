@@ -31,6 +31,8 @@
   <string name="delete_card_title">Suprimeix la nota</string>
   <string name="delete_card_message">Segur que voleu suprimir totes les targetes amb aquesta nota?\nCamp de cerca: %s</string>
   <string name="card_browser_show_marked">Filtra les marcades</string>
+  <string name="card_browser_field">Change CardBrowser Field</string>
+  <string name="card_browser_field_title">Change CardBrowser Field</string>
   <string name="card_browser_show_suspended">Filtra les suspes</string>
   <string name="card_browser_search_by_tag">Filtrar per la etiqueta</string>
   <string name="card_browser_tags_shown">Etiquetes: %1$s</string>

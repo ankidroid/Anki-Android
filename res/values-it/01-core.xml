@@ -40,12 +40,12 @@
   <string name="studyoptions_congrats_learnmore">Impara ancora</string>
   <string name="studyoptions_congrats_reviewearly">Rivedere presto</string>
   <string name="studyoptions_congrats_open_other_deck">Apri un altro mazzo</string>
-  <string name="studyoptions_congrats_finish">Tornare alla schermata di studio</string>
+  <string name="studyoptions_congrats_finish">Torna alla schermata di studio</string>
   <string name="card_unsuspended">Annulla la sospensione della carta</string>
   <string name="card_suspended">Carta risospesa</string>
   <string name="menu_rotate">Ruotare</string>
   <string name="undo">Annullare</string>
-  <string name="finish_operation">Completazione operazione precedente.\nAttendi...</string>
+  <string name="finish_operation">Finishing previous operation (most likely backup creation).\nPlease wait...</string>
   <string name="contextmenu_deckpicker_download_missing_media">Download media mancante</string>
   <string name="contextmenu_deckpicker_reset_language_assignments">Reset assegnazioni lingua</string>
   <string name="contextmenu_deckpicker_reset_reset_message">Reset lingua</string>
@@ -79,7 +79,7 @@
   <string name="studyoptions_cram_dialog_title">Etichette per lo studio focalizzato</string>
   <string name="studyoptions_load_other_deck">Carica un altro mazzo</string>
   <string name="studyoptions_load_tutorial_deck">Crea mazzo d\'esercizio</string>
-  <string name="studyoptions_night_mode">Notte</string>
+  <string name="night_mode">Night mode</string>
   <string name="visit">Visita</string>
   <string name="later">Più tardi</string>
   <string name="download">Download</string>
@@ -87,7 +87,7 @@
   <string name="create_collection">Creazione collezione.\nAttendi...</string>
   <string name="rebuild_cram_deck">Ricreo mazzo per lo studio focalizzato.\nAttendi...</string>
   <string name="rebuild_cram_label">Ricrea</string>
-  <string name="empty_cram_label">Vuoto</string>
+  <string name="empty_cram_label">Svuota</string>
   <string name="empty_cram_deck">Emptying cram deck.\nPlease wait...</string>
   <string name="studyoptions_congrats_finished">Complimenti! Per ora hai finito.</string>
   <string name="studyoptions_congrats_more_rev">Il limite delle ripetizioni per oggi è stato raggiunto, ma ci sono ancora carte che aspettano di essere ripetute. Per un utilizzo ottimale della memoria, considera di aumentare il limite giornaliero nelle opzioni.</string>
