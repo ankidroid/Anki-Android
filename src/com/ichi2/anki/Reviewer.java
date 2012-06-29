@@ -2257,7 +2257,7 @@ public class Reviewer extends AnkiActivity {
 	            mSimpleCard.setBackgroundColor(mCurrentBackgroundColor);
 	            mSimpleCard.setTextColor(mForegroundColor);
 			}
-			if (mSimpleCard.getVisibility() != View.VISIBLE) {
+			if (mSimpleCard.getVisibility() != View.VISIBLE || (mCard != null && mCard.getVisibility() == View .VISIBLE)) {
 				mSimpleCard.setVisibility(View.VISIBLE);
 				mCard.setVisibility(View.GONE);				
 			}
@@ -2274,7 +2274,7 @@ public class Reviewer extends AnkiActivity {
 	                mCustomFontStyle = getCustomFontsStyle() + getDefaultFontStyle();
 	            }
 			}
-			if (mCard.getVisibility() != View.VISIBLE) {
+			if (mCard.getVisibility() != View.VISIBLE || (mSimpleCard != null && mSimpleCard.getVisibility() == View .VISIBLE)) {
 				mSimpleCard.setVisibility(View.GONE);
 				mCard.setVisibility(View.VISIBLE);				
 			}
