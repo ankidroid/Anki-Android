@@ -1402,10 +1402,11 @@ public class Models {
      * a tag
      */
     public static String invertColors(String text) {
-        final String[] colors = { "color=\"white\"", "color=\"black\"" };
-        final String[] htmlColors = { "color=\"#000000\"", "color=\"#ffffff\"" };
+        final String[] colors = { "white", "black" };
+        final String[] htmlColors = { "#000000", "#ffffff" };
         for (int i = 0; i < colors.length; i++) {
-            text = text.replace(colors[i], htmlColors[i]);
+            text = text.replace("color=\"" + colors[i] + "\"", "color=\"" + htmlColors[i] + "\"");
+            text = text.replace("color: " + colors[i], "color: " + htmlColors[i]);
         }
         int state = 0;
         StringBuffer inverted = new StringBuffer(text.length());
