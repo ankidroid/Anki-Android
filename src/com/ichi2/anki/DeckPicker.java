@@ -878,8 +878,14 @@ public class DeckPicker extends FragmentActivity {
 
 
     private void loadCollection() {
-        DeckTask.launchDeckTask(DeckTask.TASK_TYPE_OPEN_COLLECTION, mOpenCollectionHandler, new DeckTask.TaskData(
-                AnkiDroidApp.getCollectionPath()));
+    	String path = AnkiDroidApp.getCollectionPath();
+        Collection col = Collection.currentCollection();
+        if (col == null || !col.getPath().equals(path)) {
+            DeckTask.launchDeckTask(DeckTask.TASK_TYPE_OPEN_COLLECTION, mOpenCollectionHandler, new DeckTask.TaskData(path));        	
+        } else {
+        	mCol = col;
+        	loadCounts();
+        }
     }
 
 
