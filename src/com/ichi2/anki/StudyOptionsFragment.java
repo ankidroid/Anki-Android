@@ -512,7 +512,7 @@ public class StudyOptionsFragment extends Fragment {
         // .findViewById(R.id.studyoptions_cram);
         // mToggleNight = (ToggleButton) mStudyOptionsView
         // .findViewById(R.id.studyoptions_night);
-        // mToggleNight.setChecked(mInvertedColors);
+        // mToggle.setChecked(mInvertedColors);
 
         if (mCol != null && mCol.getDecks().isDyn(mCol.getDecks().selected())) {
             Button rebBut = (Button) mStudyOptionsView.findViewById(R.id.studyoptions_rebuild_cram);

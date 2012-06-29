@@ -76,9 +76,9 @@ public class StudyOptionsActivity extends FragmentActivity {
     	int icon;
     	SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(this);
     	if (preferences.getBoolean("invertedColors", false)) {
-    		icon = R.drawable.ic_menu_recent_history_black;
+    		icon = R.drawable.ic_menu_night_checked;
     	} else {
-    		icon = R.drawable.ic_menu_recent_history;
+    		icon = R.drawable.ic_menu_night;
     	}
         UIUtils.addMenuItemInActionBar(menu, Menu.NONE, MENU_NIGHT, Menu.NONE, R.string.night_mode,
                 icon);
@@ -118,10 +118,10 @@ public class StudyOptionsActivity extends FragmentActivity {
             	SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(this);
             	if (preferences.getBoolean("invertedColors", false)) {
             		preferences.edit().putBoolean("invertedColors", false).commit();
-            		item.setIcon(R.drawable.ic_menu_recent_history);
+            		item.setIcon(R.drawable.ic_menu_night);
             	} else {
             		preferences.edit().putBoolean("invertedColors", true).commit();
-            		item.setIcon(R.drawable.ic_menu_recent_history_black);
+            		item.setIcon(R.drawable.ic_menu_night_checked);
             	}
                 return true;
 
