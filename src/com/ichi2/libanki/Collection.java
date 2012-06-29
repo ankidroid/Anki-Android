@@ -123,7 +123,9 @@ public class Collection {
     public static synchronized Collection openCollection(String path, boolean openedByWidget) {
     	if (sCurrentCollection == null || !sCurrentCollection.mPath.equals(path)) {
             sCurrentCollection = Storage.Collection(path);    		
-            sCurrentCollection.mOpenedByWidget = openedByWidget;    		
+            sCurrentCollection.mOpenedByWidget = openedByWidget;
+    	} else {
+    		sCurrentCollection.mOpenedByWidget = false;
     	}
         return sCurrentCollection;
     }
@@ -169,6 +171,7 @@ public class Collection {
     // only close collection if no other process requested access before
     public void closeIfOnlyOpenedByWidget() {
     	if (mOpenedByWidget) {
+    		Log.i(AnkiDroidApp.TAG, "closeIfOnlyOpenedByWidget - collection only opened by widget, closing it");
     		close(false);
     	}
     }

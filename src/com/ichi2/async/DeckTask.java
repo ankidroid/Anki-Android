@@ -57,7 +57,6 @@ public class DeckTask extends
 		AsyncTask<DeckTask.TaskData, DeckTask.TaskData, DeckTask.TaskData> {
 
 	public static final int TASK_TYPE_OPEN_COLLECTION = 0;
-	public static final int TASK_TYPE_OPEN_COLLECTION_AND_UPDATE_CARDS = 1;
 	public static final int TASK_TYPE_SAVE_COLLECTION = 2;
 	public static final int TASK_TYPE_ANSWER_CARD = 3;
 	public static final int TASK_TYPE_MARK_CARD = 5;
@@ -171,14 +170,6 @@ public class DeckTask extends
 
 		case TASK_TYPE_LOAD_DECK_COUNTS:
 			return doInBackgroundLoadDeckCounts(params);
-
-		case TASK_TYPE_OPEN_COLLECTION_AND_UPDATE_CARDS:
-			TaskData taskData = doInBackgroundOpenCollection(params);
-			// if (taskData.mInteger == DECK_LOADED) {
-			// taskData.mDeck.updateAllCards();
-			// taskData.mCard = taskData.mDeck.getCurrentCard();
-			// }
-			return taskData;
 
 		case TASK_TYPE_SAVE_COLLECTION:
 			return doInBackgroundSaveCollection(params);
