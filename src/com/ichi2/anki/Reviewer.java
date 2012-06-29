@@ -1206,69 +1206,69 @@ public class Reviewer extends AnkiActivity {
     }
 
 
-    @Override
-    public void onConfigurationChanged(Configuration newConfig) {
-        super.onConfigurationChanged(newConfig);
-        setLanguage(mLocale);
-        Log.i(AnkiDroidApp.TAG, "onConfigurationChanged");
-
-        mConfigurationChanged = true;
-
-        long savedTimer = mCardTimer.getBase();
-        CharSequence savedAnswerField = mAnswerField.getText();
-        boolean cardVisible = mCardContainer.getVisibility() == View.VISIBLE;
-        int lookupButtonVis = mLookUpIcon.getVisibility();
-
-        // Reload layout
-        initLayout(R.layout.flashcard);
-
-        if (mRelativeButtonSize != 100) {
-            mFlipCard.setHeight(mButtonHeight);
-            mEase1.setHeight(mButtonHeight);
-            mEase2.setHeight(mButtonHeight);
-            mEase3.setHeight(mButtonHeight);
-            mEase4.setHeight(mButtonHeight);
-        }
-
-        // Modify the card template to indicate the new available width and refresh card
-        mCardTemplate = mCardTemplate.replaceFirst("var availableWidth = \\d*;", "var availableWidth = "
-                + getAvailableWidthInCard() + ";");
-
-        if (typeAnswer()) {
-            mAnswerField.setText(savedAnswerField);
-        }
-        if (mPrefWhiteboard) {
-            mWhiteboard.rotate();
-        }
-        if (mInvertedColors) {
-            invertColors(true);
-        }
-
-        // If the card hasn't loaded yet, don't refresh it
-        // Also skipping the counts (because we don't know which one to underline)
-        // They will be updated when the card loads anyway
-        if (mCurrentCard != null) {
-            if (cardVisible) {
-                fillFlashcard(false);
-                if (mPrefTimer) {
-                    mCardTimer.setBase(savedTimer);
-                    mCardTimer.start();
-                }
-                if (sDisplayAnswer) {
-                    updateForNewCard();
-                }
-            } else {
-                mCardContainer.setVisibility(View.INVISIBLE);
-                switchVisibility(mProgressBars, View.INVISIBLE);
-                switchVisibility(mCardTimer, View.INVISIBLE);
-            }
-            if (sDisplayAnswer) {
-                showEaseButtons();
-            }
-        }
-        mLookUpIcon.setVisibility(lookupButtonVis);
-        mConfigurationChanged = false;
-    }
+//    @Override
+//    public void onConfigurationChanged(Configuration newConfig) {
+//        super.onConfigurationChanged(newConfig);
+//        setLanguage(mLocale);
+//        Log.i(AnkiDroidApp.TAG, "onConfigurationChanged");
+//
+//        mConfigurationChanged = true;
+//
+//        long savedTimer = mCardTimer.getBase();
+//        CharSequence savedAnswerField = mAnswerField.getText();
+//        boolean cardVisible = mCardContainer.getVisibility() == View.VISIBLE;
+//        int lookupButtonVis = mLookUpIcon.getVisibility();
+//
+//        // Reload layout
+//        initLayout(R.layout.flashcard);
+//
+//        if (mRelativeButtonSize != 100) {
+//            mFlipCard.setHeight(mButtonHeight);
+//            mEase1.setHeight(mButtonHeight);
+//            mEase2.setHeight(mButtonHeight);
+//            mEase3.setHeight(mButtonHeight);
+//            mEase4.setHeight(mButtonHeight);
+//        }
+//
+//        // Modify the card template to indicate the new available width and refresh card
+//        mCardTemplate = mCardTemplate.replaceFirst("var availableWidth = \\d*;", "var availableWidth = "
+//                + getAvailableWidthInCard() + ";");
+//
+//        if (typeAnswer()) {
+//            mAnswerField.setText(savedAnswerField);
+//        }
+//        if (mPrefWhiteboard) {
+//            mWhiteboard.rotate();
+//        }
+//        if (mInvertedColors) {
+//            invertColors(true);
+//        }
+//
+//        // If the card hasn't loaded yet, don't refresh it
+//        // Also skipping the counts (because we don't know which one to underline)
+//        // They will be updated when the card loads anyway
+//        if (mCurrentCard != null) {
+//            if (cardVisible) {
+//                fillFlashcard(false);
+//                if (mPrefTimer) {
+//                    mCardTimer.setBase(savedTimer);
+//                    mCardTimer.start();
+//                }
+//                if (sDisplayAnswer) {
+//                    updateForNewCard();
+//                }
+//            } else {
+//                mCardContainer.setVisibility(View.INVISIBLE);
+//                switchVisibility(mProgressBars, View.INVISIBLE);
+//                switchVisibility(mCardTimer, View.INVISIBLE);
+//            }
+//            if (sDisplayAnswer) {
+//                showEaseButtons();
+//            }
+//        }
+//        mLookUpIcon.setVisibility(lookupButtonVis);
+//        mConfigurationChanged = false;
+//    }
 
 
     private void updateMenuItems() {
