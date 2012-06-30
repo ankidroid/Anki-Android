@@ -56,6 +56,7 @@ import com.ichi2.libanki.Card;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Note;
 import com.ichi2.themes.StyledDialog;
+import com.ichi2.themes.StyledOpenCollectionDialog;
 import com.ichi2.themes.StyledProgressDialog;
 import com.ichi2.themes.Themes;
 import com.ichi2.widget.WidgetStatus;
@@ -78,6 +79,7 @@ public class CardBrowser extends Activity {
     private EditText mSearchEditText;
 
     private StyledProgressDialog mProgressDialog;
+    private StyledOpenCollectionDialog mOpenCollectionDialog;
     private boolean mUndoRedoDialogShowing = false;
 
     public static Card sCardBrowserCard;
@@ -746,8 +748,7 @@ public class CardBrowser extends Activity {
 
                     @Override
                     public void onPreExecute() {
-                        mProgressDialog = StyledProgressDialog.show(CardBrowser.this, "",
-                                getResources().getString(R.string.open_collection), true, true, new OnCancelListener() {
+                    	mOpenCollectionDialog = StyledOpenCollectionDialog.show(CardBrowser.this, getResources().getString(R.string.open_collection), new OnCancelListener() {
                                     @Override
                                     public void onCancel(DialogInterface arg0) {
                                         finish();

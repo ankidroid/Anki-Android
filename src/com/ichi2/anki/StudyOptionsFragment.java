@@ -51,6 +51,7 @@ import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Stats;
 import com.ichi2.libanki.Utils;
 import com.ichi2.themes.StyledDialog;
+import com.ichi2.themes.StyledOpenCollectionDialog;
 import com.ichi2.themes.StyledProgressDialog;
 import com.ichi2.themes.Themes;
 
@@ -102,6 +103,7 @@ public class StudyOptionsFragment extends Fragment {
 
     /** Alerts to inform the user about different situations */
     private StyledProgressDialog mProgressDialog;
+    private StyledOpenCollectionDialog mOpenCollectionDialog;
 
     /**
      * UI elements for "Study Options" view
@@ -460,9 +462,9 @@ public class StudyOptionsFragment extends Fragment {
 
                     @Override
                     public void onPostExecute(DeckTask.TaskData result) {
-                        if (mProgressDialog.isShowing()) {
+                        if (mOpenCollectionDialog.isShowing()) {
                             try {
-                                mProgressDialog.dismiss();
+                            	mOpenCollectionDialog.dismiss();
                             } catch (Exception e) {
                                 Log.e(AnkiDroidApp.TAG, "onPostExecute - Dialog dismiss Exception = " + e.getMessage());
                             }
@@ -479,8 +481,7 @@ public class StudyOptionsFragment extends Fragment {
 
                     @Override
                     public void onPreExecute() {
-                        mProgressDialog = StyledProgressDialog.show(getActivity(), "",
-                                getResources().getString(R.string.open_collection), true, true, new OnCancelListener() {
+                    	mOpenCollectionDialog = StyledOpenCollectionDialog.show(getActivity(), getResources().getString(R.string.open_collection), new OnCancelListener() {
                                     @Override
                                     public void onCancel(DialogInterface arg0) {
                                     	closeStudyOptions();

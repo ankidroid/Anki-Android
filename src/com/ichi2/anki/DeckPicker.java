@@ -35,6 +35,7 @@ import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.database.SQLException;
+import android.graphics.PixelFormat;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -52,11 +53,15 @@ import android.view.ContextMenu.ContextMenuInfo;
 import android.view.GestureDetector.SimpleOnGestureListener;
 import android.view.View.OnClickListener;
 import android.view.ViewTreeObserver.OnGlobalLayoutListener;
+import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.SimpleAdapter;
+import android.widget.TextView;
 
 import com.ichi2.anim.ActivityTransitionAnimation;
 import com.ichi2.anim.ViewAnimation;
@@ -69,6 +74,7 @@ import com.ichi2.charts.ChartBuilder;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Utils;
 import com.ichi2.themes.StyledDialog;
+import com.ichi2.themes.StyledOpenCollectionDialog;
 import com.ichi2.themes.StyledProgressDialog;
 import com.ichi2.themes.Themes;
 import com.ichi2.widget.WidgetStatus;
@@ -172,6 +178,7 @@ public class DeckPicker extends FragmentActivity {
     private Collection mCol;
 
     private StyledProgressDialog mProgressDialog;
+    private StyledOpenCollectionDialog mOpenCollectionDialog;
     private StyledDialog mDeckNotLoadedAlert;
     private StyledDialog mNoSpaceLeftAlert;
     private ImageButton mAddButton;
@@ -484,13 +491,6 @@ public class DeckPicker extends FragmentActivity {
 
         @Override
         public void onPostExecute(DeckTask.TaskData result) {
-            if (mProgressDialog.isShowing()) {
-                try {
-                    mProgressDialog.dismiss();
-                } catch (Exception e) {
-                    Log.e(AnkiDroidApp.TAG, "onPostExecute - Dialog dismiss Exception = " + e.getMessage());
-                }
-            }
             mCol = result.getCollection();
             if (mCol == null) {
                 showDialog(DIALOG_LOAD_FAILED);
@@ -498,9 +498,6 @@ public class DeckPicker extends FragmentActivity {
             }
             Object[] res = result.getObjArray();
             updateDecksList((TreeSet<Object[]>) res[0], (Integer) res[1], (Integer) res[2]);
-            mDeckListView.setVisibility(View.VISIBLE);
-            mDeckListView.setAnimation(ViewAnimation.fade(ViewAnimation.FADE_IN, 500, 0));
-
             // select last loaded deck if any
             if (mFragmented) {
             	long did = mCol.getDecks().selected();
@@ -518,23 +515,29 @@ public class DeckPicker extends FragmentActivity {
             		}
             	}
             }
+            if (mOpenCollectionDialog.isShowing()) {
+                try {
+                	mOpenCollectionDialog.dismiss();
+                } catch (Exception e) {
+                    Log.e(AnkiDroidApp.TAG, "onPostExecute - Dialog dismiss Exception = " + e.getMessage());
+                }
+            }
         }
 
 
         @Override
         public void onPreExecute() {
-            mProgressDialog = StyledProgressDialog.show(DeckPicker.this, "",
-                    getResources().getString(R.string.open_collection), true, true, new OnCancelListener() {
+        	if (mOpenCollectionDialog == null || !mOpenCollectionDialog.isShowing()) {
+        		mOpenCollectionDialog = StyledOpenCollectionDialog.show(DeckPicker.this, getResources().getString(R.string.open_collection), new OnCancelListener() {
 
-                        @Override
-                        public void onCancel(DialogInterface arg0) {
-                            // TODO: close dbs?
-                            DeckTask.cancelTask();
-                            finish();
-                        }
-                    });
-            mDeckListView.setVisibility(View.INVISIBLE);
-            mDeckListView.setAnimation(ViewAnimation.fade(ViewAnimation.FADE_OUT, 500, 0));
+                    @Override
+                    public void onCancel(DialogInterface arg0) {
+                        // TODO: close dbs?
+                        DeckTask.cancelTask();
+                        finish();
+                    }
+                });        		
+        	}
         }
 
 
@@ -542,8 +545,8 @@ public class DeckPicker extends FragmentActivity {
         public void onProgressUpdate(DeckTask.TaskData... values) {
             String message = values[0].getString();
             if (message != null) {
-                mProgressDialog.setMessage(message);
-            }
+            	mOpenCollectionDialog.setMessage(message);
+            }        		
         }
     };
 
@@ -741,7 +744,7 @@ public class DeckPicker extends FragmentActivity {
         View studyoptionsFrame = findViewById(R.id.studyoptions_fragment);
         mFragmented = studyoptionsFrame != null && studyoptionsFrame.getVisibility() == View.VISIBLE;
 
-        Themes.setContentStyle(mainView, Themes.CALLER_DECKPICKER);
+        Themes.setContentStyle(mFragmented ? mainView : mainView.findViewById(R.id.deckpicker_view), Themes.CALLER_DECKPICKER);
 
         registerExternalStorageListener();
 
@@ -2516,6 +2519,15 @@ public class DeckPicker extends FragmentActivity {
             }
         }
         return sb.toString();
+    }
+
+    @Override
+    public void onAttachedToWindow() {
+        super.onAttachedToWindow();
+        if (!mFragmented) {
+            Window window = getWindow();
+            window.setFormat(PixelFormat.RGBA_8888);        	
+        }
     }
 
 }

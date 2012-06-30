@@ -35,12 +35,12 @@
 		android:text="@string/studyoptions_load_tutorial_deck"
         android:layout_width="0dip"
         android:layout_weight="1"
-		android:layout_height="wrap_content"
+		android:layout_height="fill_parent"
 		android:visibility="gone"/>		
 	<Button android:id="@+id/info_continue"
 		android:text="@string/btn_continue"
         android:layout_width="0dip"
         android:layout_weight="1"
-		android:layout_height="wrap_content"/>		
+		android:layout_height="fill_parent"/>		
 	</LinearLayout>
 </RelativeLayout>
