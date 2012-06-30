@@ -75,10 +75,11 @@ public class BroadcastMessages {
             try {
                 com = Integer.valueOf(version1[i]).compareTo(Integer.valueOf(version2[i]));
             } catch (NumberFormatException e) {
-                String[] subVersion1 = version1[i].replaceAll("([:alpha:])([:digit:])", "$1.$2")
-                        .replaceAll("([:digit:])([:alpha:])", "$1.$2").split("\\.");
-                String[] subVersion2 = version2[i].replaceAll("([:alpha:])([:digit:])", "$1.$2")
-                        .replaceAll("([:digit:])([:alpha:])", "$1.$2").split("\\.");
+            	// 1.0alpha4EXPERIMENTAL --> 1.0.alpha.EXPERIMENTAL
+                String[] subVersion1 = version1[i].replaceAll("([:alpha:])[\\s|\\.|-]*([:digit:])", "$1.$2")
+                        .replaceAll("([:digit:])[\\s|\\.|-]*([:alpha:])", "$1.$2").split("\\.");
+                String[] subVersion2 = version2[i].replaceAll("([:alpha:])[\\s|\\.|-]*([:digit:])", "$1.$2")
+                        .replaceAll("([:digit:])[\\s|\\.|-]*([:alpha:])", "$1.$2").split("\\.");
                 for (int j = 0; j < Math.min(subVersion1.length, subVersion2.length); j++) {
                     try {
                         com = Integer.valueOf(subVersion1[j]).compareTo(Integer.valueOf(subVersion2[j]));
@@ -90,9 +91,23 @@ public class BroadcastMessages {
                     }
                 }
                 if (subVersion1.length > subVersion2.length) {
-                    return -1;
+                	try {
+                		int test = Integer.valueOf(subVersion1[subVersion2.length]);
+                		// subversion of --> later
+                		return 1;
+                    } catch (NumberFormatException f) {
+                    	// not a number --> e.g. "EXPERIMENTAL" --> drop it
+                    	return -1;
+                	}
                 } else if (subVersion1.length < subVersion2.length) {
-                    return 1;
+                	try {
+                		int test = Integer.valueOf(subVersion2[subVersion1.length]);
+                		// subversion of --> later
+                		return -1;
+                    } catch (NumberFormatException f) {
+                    	// not a number --> e.g. "EXPERIMENTAL" --> drop it
+                    	return 1;
+                	}
                 }
             }
             if (com != 0) {
