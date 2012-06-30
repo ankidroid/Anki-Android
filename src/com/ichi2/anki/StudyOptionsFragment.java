@@ -842,8 +842,9 @@ public class StudyOptionsFragment extends Fragment {
     private SharedPreferences restorePreferences() {
         SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(getActivity().getBaseContext());
 
-        mSwipeEnabled = preferences.getBoolean("swipe", false);
-//        mPrefHideDueCount = preferences.getBoolean("hideDueCount", true);
+        mSwipeEnabled = AnkiDroidApp.initiateGestures(getActivity(), preferences);
+
+        //        mPrefHideDueCount = preferences.getBoolean("hideDueCount", true);
 
         // TODO: set language
         // mLocale = preferences.getString("language", "");
@@ -977,25 +978,25 @@ public class StudyOptionsFragment extends Fragment {
         public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
             if (mSwipeEnabled) {
                 try {
-                    if (e1.getX() - e2.getX() > DeckPicker.sSwipeMinDistance
-                            && Math.abs(velocityX) > DeckPicker.sSwipeThresholdVelocity
-                            && Math.abs(e1.getY() - e2.getY()) < DeckPicker.sSwipeMaxOffPath) {
+                    if (e1.getX() - e2.getX() > AnkiDroidApp.sSwipeMinDistance
+                            && Math.abs(velocityX) > AnkiDroidApp.sSwipeThresholdVelocity
+                            && Math.abs(e1.getY() - e2.getY()) < AnkiDroidApp.sSwipeMaxOffPath) {
                         // left
                         openReviewer();
-                    } else if (e2.getX() - e1.getX() > DeckPicker.sSwipeMinDistance
-                            && Math.abs(velocityX) > DeckPicker.sSwipeThresholdVelocity
-                            && Math.abs(e1.getY() - e2.getY()) < DeckPicker.sSwipeMaxOffPath) {
+                    } else if (e2.getX() - e1.getX() > AnkiDroidApp.sSwipeMinDistance
+                            && Math.abs(velocityX) > AnkiDroidApp.sSwipeThresholdVelocity
+                            && Math.abs(e1.getY() - e2.getY()) < AnkiDroidApp.sSwipeMaxOffPath) {
                         // right
                         closeStudyOptions();
-                    } else if (e2.getY() - e1.getY() > DeckPicker.sSwipeMinDistance
-                            && Math.abs(velocityY) > DeckPicker.sSwipeThresholdVelocity
-                            && Math.abs(e1.getX() - e2.getX()) < DeckPicker.sSwipeMaxOffPath) {
+                    } else if (e2.getY() - e1.getY() > AnkiDroidApp.sSwipeMinDistance
+                            && Math.abs(velocityY) > AnkiDroidApp.sSwipeThresholdVelocity
+                            && Math.abs(e1.getX() - e2.getX()) < AnkiDroidApp.sSwipeMaxOffPath) {
                         // down
                         DeckTask.launchDeckTask(DeckTask.TASK_TYPE_LOAD_STATISTICS, mLoadStatisticsHandler,
                                 new DeckTask.TaskData(mCol, Stats.TYPE_FORECAST, false));
-                    } else if (e1.getY() - e2.getY() > DeckPicker.sSwipeMinDistance
-                            && Math.abs(velocityY) > DeckPicker.sSwipeThresholdVelocity
-                            && Math.abs(e1.getX() - e2.getX()) < DeckPicker.sSwipeMaxOffPath) {
+                    } else if (e1.getY() - e2.getY() > AnkiDroidApp.sSwipeMinDistance
+                            && Math.abs(velocityY) > AnkiDroidApp.sSwipeThresholdVelocity
+                            && Math.abs(e1.getX() - e2.getX()) < AnkiDroidApp.sSwipeMaxOffPath) {
                         // up
                         addNote();
                     }

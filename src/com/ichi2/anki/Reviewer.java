@@ -2163,7 +2163,8 @@ public class Reviewer extends AnkiActivity {
         mWaitQuestionSecond = preferences.getInt("timeoutQuestionSeconds", 60);
         mScrollingButtons = preferences.getBoolean("scrolling_buttons", false);
         mDoubleScrolling = preferences.getBoolean("double_scrolling", false);
-        mGesturesEnabled = preferences.getBoolean("swipe", false);
+
+        mGesturesEnabled = AnkiDroidApp.initiateGestures(this, preferences);
         if (mGesturesEnabled) {
             mGestureShake = Integer.parseInt(preferences.getString("gestureShake", "0"));
             if (mGestureShake != 0) {
@@ -3487,25 +3488,25 @@ public class Reviewer extends AnkiActivity {
         public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
             if (mGesturesEnabled) {
                 try {
-                    if (e2.getY() - e1.getY() > DeckPicker.sSwipeMinDistance
-                            && Math.abs(velocityY) > DeckPicker.sSwipeThresholdVelocity
-                            && Math.abs(e1.getX() - e2.getX()) < DeckPicker.sSwipeMaxOffPath && !mIsYScrolling) {
+                    if (e2.getY() - e1.getY() > AnkiDroidApp.sSwipeMinDistance
+                            && Math.abs(velocityY) > AnkiDroidApp.sSwipeThresholdVelocity
+                            && Math.abs(e1.getX() - e2.getX()) < AnkiDroidApp.sSwipeMaxOffPath && !mIsYScrolling) {
                         // down
                         executeCommand(mGestureSwipeDown);
-                    } else if (e1.getY() - e2.getY() > DeckPicker.sSwipeMinDistance
-                            && Math.abs(velocityY) > DeckPicker.sSwipeThresholdVelocity
-                            && Math.abs(e1.getX() - e2.getX()) < DeckPicker.sSwipeMaxOffPath && !mIsYScrolling) {
+                    } else if (e1.getY() - e2.getY() > AnkiDroidApp.sSwipeMinDistance
+                            && Math.abs(velocityY) > AnkiDroidApp.sSwipeThresholdVelocity
+                            && Math.abs(e1.getX() - e2.getX()) < AnkiDroidApp.sSwipeMaxOffPath && !mIsYScrolling) {
                         // up
                         executeCommand(mGestureSwipeUp);
-                    } else if (e2.getX() - e1.getX() > DeckPicker.sSwipeMinDistance
-                            && Math.abs(velocityX) > DeckPicker.sSwipeThresholdVelocity
-                            && Math.abs(e1.getY() - e2.getY()) < DeckPicker.sSwipeMaxOffPath && !mIsXScrolling
+                    } else if (e2.getX() - e1.getX() > AnkiDroidApp.sSwipeMinDistance
+                            && Math.abs(velocityX) > AnkiDroidApp.sSwipeThresholdVelocity
+                            && Math.abs(e1.getY() - e2.getY()) < AnkiDroidApp.sSwipeMaxOffPath && !mIsXScrolling
                             && !mIsSelecting) {
                         // right
                         executeCommand(mGestureSwipeRight);
-                    } else if (e1.getX() - e2.getX() > DeckPicker.sSwipeMinDistance
-                            && Math.abs(velocityX) > DeckPicker.sSwipeThresholdVelocity
-                            && Math.abs(e1.getY() - e2.getY()) < DeckPicker.sSwipeMaxOffPath && !mIsXScrolling
+                    } else if (e1.getX() - e2.getX() > AnkiDroidApp.sSwipeMinDistance
+                            && Math.abs(velocityX) > AnkiDroidApp.sSwipeThresholdVelocity
+                            && Math.abs(e1.getY() - e2.getY()) < AnkiDroidApp.sSwipeMaxOffPath && !mIsXScrolling
                             && !mIsSelecting) {
                         // left
                         executeCommand(mGestureSwipeLeft);

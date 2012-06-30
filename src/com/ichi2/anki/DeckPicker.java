@@ -215,14 +215,6 @@ public class DeckPicker extends FragmentActivity {
     View.OnTouchListener gestureListener;
     private boolean mSwipeEnabled;
 
-    private static final int SWIPE_MIN_DISTANCE_DIP = 65;
-    private static final int SWIPE_MAX_OFF_PATH_DIP = 120;
-    private static final int SWIPE_THRESHOLD_VELOCITY_DIP = 120;
-
-    public static int sSwipeMinDistance;
-    public static int sSwipeMaxOffPath;
-    public static int sSwipeThresholdVelocity;
-
     // ----------------------------------------------------------------------------
     // LISTENERS
     // ----------------------------------------------------------------------------
@@ -942,21 +934,7 @@ public class DeckPicker extends FragmentActivity {
         SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(getBaseContext());
         mPrefDeckPath = preferences.getString("deckPath", AnkiDroidApp.getDefaultAnkiDroidDirectory());
         mLastTimeOpened = preferences.getLong("lastTimeOpened", 0);
-        mSwipeEnabled = preferences.getBoolean("swipe", false);
-
-        // Convert dip to pixel, code in parts from http://code.google.com/p/k9mail/
-        final float gestureScale = getResources().getDisplayMetrics().density;
-        int sensibility = preferences.getInt("swipeSensibility", 100);
-        if (sensibility != 100) {
-            float sens = (200 - sensibility) / 100.0f;
-            sSwipeMinDistance = (int) (SWIPE_MIN_DISTANCE_DIP * sens * gestureScale + 0.5f);
-            sSwipeThresholdVelocity = (int) (SWIPE_THRESHOLD_VELOCITY_DIP * sens * gestureScale + 0.5f);
-            sSwipeMaxOffPath = (int) (SWIPE_MAX_OFF_PATH_DIP * Math.sqrt(sens) * gestureScale + 0.5f);
-        } else {
-            sSwipeMinDistance = (int) (SWIPE_MIN_DISTANCE_DIP * gestureScale + 0.5f);
-            sSwipeThresholdVelocity = (int) (SWIPE_THRESHOLD_VELOCITY_DIP * gestureScale + 0.5f);
-            sSwipeMaxOffPath = (int) (SWIPE_MAX_OFF_PATH_DIP * gestureScale + 0.5f);
-        }
+        mSwipeEnabled = AnkiDroidApp.initiateGestures(this, preferences);
 
         // mInvertedColors = preferences.getBoolean("invertedColors", false);
         // mSwap = preferences.getBoolean("swapqa", false);
@@ -2485,8 +2463,8 @@ public class DeckPicker extends FragmentActivity {
         public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
             if (mSwipeEnabled && !mFragmented) {
                 try {
-                    if (e1.getX() - e2.getX() > sSwipeMinDistance && Math.abs(velocityX) > sSwipeThresholdVelocity
-                            && Math.abs(e1.getY() - e2.getY()) < sSwipeMaxOffPath) {
+                    if (e1.getX() - e2.getX() > AnkiDroidApp.sSwipeMinDistance && Math.abs(velocityX) > AnkiDroidApp.sSwipeThresholdVelocity
+                            && Math.abs(e1.getY() - e2.getY()) < AnkiDroidApp.sSwipeMaxOffPath) {
                     	mDontSaveOnStop = true;
                     	float pos = e1.getY();
                     	for (int j = 0; j < mDeckListView.getChildCount(); j++) {

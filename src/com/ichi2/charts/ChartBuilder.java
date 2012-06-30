@@ -311,9 +311,9 @@ public class ChartBuilder extends Activity {
         public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
             if (mSwipeEnabled) {
                 try {
-                    if (e1.getY() - e2.getY() > DeckPicker.sSwipeMinDistance
-                            && Math.abs(velocityY) > DeckPicker.sSwipeThresholdVelocity
-                            && Math.abs(e1.getX() - e2.getX()) < DeckPicker.sSwipeMaxOffPath) {
+                    if (e1.getY() - e2.getY() > AnkiDroidApp.sSwipeMinDistance
+                            && Math.abs(velocityY) > AnkiDroidApp.sSwipeThresholdVelocity
+                            && Math.abs(e1.getX() - e2.getX()) < AnkiDroidApp.sSwipeMaxOffPath) {
                         closeChartBuilder();
                     }
                 } catch (Exception e) {
