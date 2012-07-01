@@ -196,7 +196,7 @@
     </style>
 
     <style name="Animation.Translucent" parent="@android:style/Animation.Translucent">
-        <item name="android:windowEnterAnimation">@anim/translucent_enter</item>
+        <item name="android:windowEnterAnimation">@null</item>
         <item name="android:windowExitAnimation">@anim/translucent_exit</item>
     </style>
     

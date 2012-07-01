@@ -56,15 +56,11 @@ import android.view.ViewTreeObserver.OnGlobalLayoutListener;
 import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.EditText;
-import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ListView;
-import android.widget.RelativeLayout;
 import android.widget.SimpleAdapter;
-import android.widget.TextView;
 
 import com.ichi2.anim.ActivityTransitionAnimation;
-import com.ichi2.anim.ViewAnimation;
 import com.ichi2.async.Connection;
 import com.ichi2.async.DeckTask;
 import com.ichi2.async.Connection.OldAnkiDeckFilter;
@@ -718,6 +714,14 @@ public class DeckPicker extends FragmentActivity {
             startActivityIfNeeded(reloadIntent, 0);
         }
 
+        // need to start this here in order to avoid showing deckpicker before splashscreen
+        if (Collection.currentCollection() == null) {
+            setTitle("");
+            mOpenCollectionHandler.onPreExecute();        	
+        } else {
+            setTitle(getResources().getString(R.string.app_name));
+        }
+
         Themes.applyTheme(this);
         super.onCreate(savedInstanceState);
 
@@ -878,6 +882,9 @@ public class DeckPicker extends FragmentActivity {
         if (col == null || !col.getPath().equals(path)) {
             DeckTask.launchDeckTask(DeckTask.TASK_TYPE_OPEN_COLLECTION, mOpenCollectionHandler, new DeckTask.TaskData(path));        	
         } else {
+        	if (mOpenCollectionDialog != null && mOpenCollectionDialog.isShowing()) {
+        		mOpenCollectionDialog.dismiss();
+        	}
         	mCol = col;
         	loadCounts();
         }
@@ -2438,9 +2445,8 @@ public class DeckPicker extends FragmentActivity {
                 time = res.getQuantityString(R.plurals.deckpicker_title_minutes, eta, eta);
             }
             UIUtils.setActionBarSubtitle(this, res.getQuantityString(R.plurals.deckpicker_title, due, due, count, time));
-        } else {
-            setTitle(res.getString(R.string.app_name));
         }
+        setTitle(res.getString(R.string.app_name));
 
         // update widget
         WidgetStatus.update(this, decks);
