@@ -56,8 +56,6 @@ public class StyledOpenCollectionDialog extends Dialog {
     @Override
     public void dismiss() {
         try {
-            this.mMainLayout.setVisibility(View.GONE);
-            this.mMainLayout.setAnimation(ViewAnimation.fade(ViewAnimation.FADE_OUT, 500, 0));
             super.dismiss();
         } catch (BadTokenException e) {
             Log.e(AnkiDroidApp.TAG, "Could not dismiss dialog: " + e);
