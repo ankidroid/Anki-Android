@@ -45,7 +45,7 @@
   <string name="card_suspended">Κάρτα επαναστάλει</string>
   <string name="menu_rotate">Περιστροφή</string>
   <string name="undo">Αναίρεση</string>
-  <string name="finish_operation">Τελειώνει η προηγούμενη λειτουργία.\nΠαρακαλώ περιμένετε...</string>
+  <string name="finish_operation">Finishing previous operation (most likely backup creation).\nPlease wait...</string>
   <string name="contextmenu_deckpicker_download_missing_media">Λήψη απόντων μέσων</string>
   <string name="contextmenu_deckpicker_reset_language_assignments">Επαναφορά καταχωρήσεων Γλωσσών</string>
   <string name="contextmenu_deckpicker_reset_reset_message">Επαναφορά γλώσσας</string>
@@ -79,7 +79,7 @@
   <string name="studyoptions_cram_dialog_title">Ετικέτες προς εντατική μελέτη</string>
   <string name="studyoptions_load_other_deck">Φορτώστε άλλη τράπουλα</string>
   <string name="studyoptions_load_tutorial_deck">Create tutorial</string>
-  <string name="studyoptions_night_mode">Night</string>
+  <string name="night_mode">Night mode</string>
   <string name="visit">Επίσκεψη</string>
   <string name="later">Αργότερα</string>
   <string name="download">Λήψη</string>

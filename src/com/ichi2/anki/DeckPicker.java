@@ -35,6 +35,7 @@ import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.database.SQLException;
+import android.graphics.PixelFormat;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -51,6 +52,8 @@ import android.view.View;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.view.GestureDetector.SimpleOnGestureListener;
 import android.view.View.OnClickListener;
+import android.view.ViewTreeObserver.OnGlobalLayoutListener;
+import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -58,7 +61,6 @@ import android.widget.ListView;
 import android.widget.SimpleAdapter;
 
 import com.ichi2.anim.ActivityTransitionAnimation;
-import com.ichi2.anim.ViewAnimation;
 import com.ichi2.async.Connection;
 import com.ichi2.async.DeckTask;
 import com.ichi2.async.Connection.OldAnkiDeckFilter;
@@ -68,6 +70,7 @@ import com.ichi2.charts.ChartBuilder;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Utils;
 import com.ichi2.themes.StyledDialog;
+import com.ichi2.themes.StyledOpenCollectionDialog;
 import com.ichi2.themes.StyledProgressDialog;
 import com.ichi2.themes.Themes;
 import com.ichi2.widget.WidgetStatus;
@@ -166,10 +169,12 @@ public class DeckPicker extends FragmentActivity {
     private static final int LOG_IN_FOR_SHARED_DECK = 16;
     private static final int ADD_CRAM_DECK = 17;
     private static final int SHOW_INFO_UPGRADE_DECKS = 18;
+    private static final int REQUEST_REVIEW = 19;
 
     private Collection mCol;
 
     private StyledProgressDialog mProgressDialog;
+    private StyledOpenCollectionDialog mOpenCollectionDialog;
     private StyledDialog mDeckNotLoadedAlert;
     private StyledDialog mNoSpaceLeftAlert;
     private ImageButton mAddButton;
@@ -212,14 +217,6 @@ public class DeckPicker extends FragmentActivity {
     private GestureDetector gestureDetector;
     View.OnTouchListener gestureListener;
     private boolean mSwipeEnabled;
-
-    private static final int SWIPE_MIN_DISTANCE_DIP = 65;
-    private static final int SWIPE_MAX_OFF_PATH_DIP = 120;
-    private static final int SWIPE_THRESHOLD_VELOCITY_DIP = 120;
-
-    public static int sSwipeMinDistance;
-    public static int sSwipeMaxOffPath;
-    public static int sSwipeThresholdVelocity;
 
     // ----------------------------------------------------------------------------
     // LISTENERS
@@ -473,80 +470,23 @@ public class DeckPicker extends FragmentActivity {
                     mDialogMessage = res.getString(R.string.sync_database_success);
                 }
                 showDialog(DIALOG_SYNC_LOG);
+
+                // update StudyOptions too if open
+                if (mFragmented) {
+                	StudyOptionsFragment frag = getFragment();
+                	if (frag != null) {
+                		frag.resetAndUpdateValuesFromDeck();
+                	}
+                }
             }
         }
     };
 
-    // private Connection.TaskListener mDownloadMediaListener = new Connection.TaskListener() {
-    //
-    // @Override
-    // public void onDisconnected() {
-    // showDialog(DIALOG_NO_CONNECTION);
-    // }
-    //
-    // @Override
-    // public void onPreExecute() {
-    // // Pass
-    // }
-    //
-    // @Override
-    // public void onProgressUpdate(Object... values) {
-    // int total = ((Integer)values[1]).intValue();
-    // int done = ((Integer)values[2]).intValue();
-    // if (!((Boolean)values[0]).booleanValue()) {
-    // // Initializing, just get the count of missing media
-    // if (mProgressDialog != null && mProgressDialog.isShowing()) {
-    // mProgressDialog.dismiss();
-    // }
-    // mProgressDialog.setMax(total);
-    // mProgressDialog.show();
-    // } else {
-    // mProgressDialog.setProgress(done);
-    // }
-    // }
-    //
-    // @Override
-    // public void onPostExecute(Payload data) {
-    // Log.i(AnkiDroidApp.TAG, "onPostExecute");
-    // Resources res = getResources();
-    // if (mProgressDialog != null) {
-    // mProgressDialog.dismiss();
-    // }
-    //
-    // if (data.success) {
-    // int total = ((Integer)data.data[0]).intValue();
-    // if (total == 0) {
-    // mMissingMediaAlert
-    // .setMessage(res.getString(R.string.deckpicker_download_missing_none));
-    // } else {
-    // int done = ((Integer)data.data[1]).intValue();
-    // int missing = ((Integer)data.data[2]).intValue();
-    // mMissingMediaAlert
-    // .setMessage(res.getString(R.string.deckpicker_download_missing_success, done, missing));
-    // }
-    // } else {
-    // String failedFile = (String)data.data[0];
-    // mMissingMediaAlert
-    // .setMessage(res.getString(R.string.deckpicker_download_missing_error, failedFile));
-    // }
-    // mMissingMediaAlert.show();
-    //
-    // Deck deck = (Deck) data.result;
-    // DeckManager.closeDeck(deck.getDeckPath(), DeckManager.REQUESTING_ACTIVITY_DECKPICKER);
-    // }
-    // };
 
     DeckTask.TaskListener mOpenCollectionHandler = new DeckTask.TaskListener() {
 
         @Override
         public void onPostExecute(DeckTask.TaskData result) {
-            if (mProgressDialog.isShowing()) {
-                try {
-                    mProgressDialog.dismiss();
-                } catch (Exception e) {
-                    Log.e(AnkiDroidApp.TAG, "onPostExecute - Dialog dismiss Exception = " + e.getMessage());
-                }
-            }
             mCol = result.getCollection();
             if (mCol == null) {
                 showDialog(DIALOG_LOAD_FAILED);
@@ -554,17 +494,28 @@ public class DeckPicker extends FragmentActivity {
             }
             Object[] res = result.getObjArray();
             updateDecksList((TreeSet<Object[]>) res[0], (Integer) res[1], (Integer) res[2]);
-            mDeckListView.setVisibility(View.VISIBLE);
-            mDeckListView.setAnimation(ViewAnimation.fade(ViewAnimation.FADE_IN, 500, 0));
-
+            // select last loaded deck if any
             if (mFragmented) {
-                long active = mCol.getDecks().selected();
-                for (int i = 0; i < mDeckList.size(); i++) {
-                    // TODO: load last used deck
-                    if (mDeckList.get(i).get("did").equals(Long.toString(active))) {
-                        mDeckListView.setSelection(i);
+            	long did = mCol.getDecks().selected();
+            	for (int i = 0; i < mDeckList.size(); i++) {
+            		if (Long.parseLong(mDeckList.get(i).get("did")) == did) {
+            			final int lastPosition = i;
+                        mDeckListView.getViewTreeObserver().addOnGlobalLayoutListener(new OnGlobalLayoutListener() {
+                            @Override
+                            public void onGlobalLayout() {
+                            	mDeckListView.getViewTreeObserver().removeGlobalOnLayoutListener(this);
+                            	mDeckListView.performItemClick(null, lastPosition, 0);
+                            }
+                        });
                         break;
-                    }
+            		}
+            	}
+            }
+            if (mOpenCollectionDialog.isShowing()) {
+                try {
+                	mOpenCollectionDialog.dismiss();
+                } catch (Exception e) {
+                    Log.e(AnkiDroidApp.TAG, "onPostExecute - Dialog dismiss Exception = " + e.getMessage());
                 }
             }
         }
@@ -572,18 +523,17 @@ public class DeckPicker extends FragmentActivity {
 
         @Override
         public void onPreExecute() {
-            mProgressDialog = StyledProgressDialog.show(DeckPicker.this, "",
-                    getResources().getString(R.string.open_collection), true, true, new OnCancelListener() {
+        	if (mOpenCollectionDialog == null || !mOpenCollectionDialog.isShowing()) {
+        		mOpenCollectionDialog = StyledOpenCollectionDialog.show(DeckPicker.this, getResources().getString(R.string.open_collection), new OnCancelListener() {
 
-                        @Override
-                        public void onCancel(DialogInterface arg0) {
-                            // TODO: close dbs?
-                            DeckTask.cancelTask();
-                            finish();
-                        }
-                    });
-            mDeckListView.setVisibility(View.INVISIBLE);
-            mDeckListView.setAnimation(ViewAnimation.fade(ViewAnimation.FADE_OUT, 500, 0));
+                    @Override
+                    public void onCancel(DialogInterface arg0) {
+                        // TODO: close dbs?
+                        DeckTask.cancelTask();
+                        finish();
+                    }
+                });        		
+        	}
         }
 
 
@@ -591,8 +541,8 @@ public class DeckPicker extends FragmentActivity {
         public void onProgressUpdate(DeckTask.TaskData... values) {
             String message = values[0].getString();
             if (message != null) {
-                mProgressDialog.setMessage(message);
-            }
+            	mOpenCollectionDialog.setMessage(message);
+            }        		
         }
     };
 
@@ -764,6 +714,14 @@ public class DeckPicker extends FragmentActivity {
             startActivityIfNeeded(reloadIntent, 0);
         }
 
+        // need to start this here in order to avoid showing deckpicker before splashscreen
+        if (Collection.currentCollection() == null) {
+            setTitle("");
+            mOpenCollectionHandler.onPreExecute();        	
+        } else {
+            setTitle(getResources().getString(R.string.app_name));
+        }
+
         Themes.applyTheme(this);
         super.onCreate(savedInstanceState);
 
@@ -790,7 +748,7 @@ public class DeckPicker extends FragmentActivity {
         View studyoptionsFrame = findViewById(R.id.studyoptions_fragment);
         mFragmented = studyoptionsFrame != null && studyoptionsFrame.getVisibility() == View.VISIBLE;
 
-        Themes.setContentStyle(mainView, Themes.CALLER_DECKPICKER);
+        Themes.setContentStyle(mFragmented ? mainView : mainView.findViewById(R.id.deckpicker_view), Themes.CALLER_DECKPICKER);
 
         registerExternalStorageListener();
 
@@ -919,8 +877,17 @@ public class DeckPicker extends FragmentActivity {
 
 
     private void loadCollection() {
-        DeckTask.launchDeckTask(DeckTask.TASK_TYPE_OPEN_COLLECTION, mOpenCollectionHandler, new DeckTask.TaskData(
-                AnkiDroidApp.getCollectionPath()));
+    	String path = AnkiDroidApp.getCollectionPath();
+        Collection col = Collection.currentCollection();
+        if (col == null || !col.getPath().equals(path)) {
+            DeckTask.launchDeckTask(DeckTask.TASK_TYPE_OPEN_COLLECTION, mOpenCollectionHandler, new DeckTask.TaskData(path));        	
+        } else {
+        	if (mOpenCollectionDialog != null && mOpenCollectionDialog.isShowing()) {
+        		mOpenCollectionDialog.dismiss();
+        	}
+        	mCol = col;
+        	loadCounts();
+        }
     }
 
 
@@ -977,21 +944,7 @@ public class DeckPicker extends FragmentActivity {
         SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(getBaseContext());
         mPrefDeckPath = preferences.getString("deckPath", AnkiDroidApp.getDefaultAnkiDroidDirectory());
         mLastTimeOpened = preferences.getLong("lastTimeOpened", 0);
-        mSwipeEnabled = preferences.getBoolean("swipe", false);
-
-        // Convert dip to pixel, code in parts from http://code.google.com/p/k9mail/
-        final float gestureScale = getResources().getDisplayMetrics().density;
-        int sensibility = preferences.getInt("swipeSensibility", 100);
-        if (sensibility != 100) {
-            float sens = (200 - sensibility) / 100.0f;
-            sSwipeMinDistance = (int) (SWIPE_MIN_DISTANCE_DIP * sens * gestureScale + 0.5f);
-            sSwipeThresholdVelocity = (int) (SWIPE_THRESHOLD_VELOCITY_DIP * sens * gestureScale + 0.5f);
-            sSwipeMaxOffPath = (int) (SWIPE_MAX_OFF_PATH_DIP * Math.sqrt(sens) * gestureScale + 0.5f);
-        } else {
-            sSwipeMinDistance = (int) (SWIPE_MIN_DISTANCE_DIP * gestureScale + 0.5f);
-            sSwipeThresholdVelocity = (int) (SWIPE_THRESHOLD_VELOCITY_DIP * gestureScale + 0.5f);
-            sSwipeMaxOffPath = (int) (SWIPE_MAX_OFF_PATH_DIP * gestureScale + 0.5f);
-        }
+        mSwipeEnabled = AnkiDroidApp.initiateGestures(this, preferences);
 
         // mInvertedColors = preferences.getBoolean("invertedColors", false);
         // mSwap = preferences.getBoolean("swapqa", false);
@@ -1064,9 +1017,13 @@ public class DeckPicker extends FragmentActivity {
         Log.i(AnkiDroidApp.TAG, "DeckPicker - onStop");
         super.onStop();
         if (!mDontSaveOnStop) {
-            WidgetStatus.update(this);
             if (isFinishing()) {
                 DeckTask.launchDeckTask(DeckTask.TASK_TYPE_CLOSE_DECK, mCloseCollectionHandler, new TaskData(mCol));
+            } else {
+            	StudyOptionsFragment frag = getFragment();
+            	if (!(frag != null && !frag.dbSaveNecessary())) {
+                	UIUtils.saveCollectionInBackground(mCol);
+            	}
             }
         }
     }
@@ -1855,14 +1812,25 @@ public class DeckPicker extends FragmentActivity {
     // CUSTOM METHODS
     // ----------------------------------------------------------------------------
 
-    public void setStudyContentView(int view) {
-        StudyOptionsFragment details = new StudyOptionsFragment();
-        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        ft.replace(R.id.studyoptions_fragment, details);
-        ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
-        ft.commit();
+    public void setStudyContentView(long deckId) {
+    	Fragment frag = (Fragment) getSupportFragmentManager().findFragmentById(R.id.studyoptions_fragment);
+    	if (frag == null || !(frag instanceof StudyOptionsFragment) || ((StudyOptionsFragment) frag).getShownIndex() != deckId) {
+            StudyOptionsFragment details = StudyOptionsFragment.newInstance(deckId, false);
+            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+//            ft.setCustomAnimations(R.anim.fade_in, R.anim.fade_out);
+            ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE);
+            ft.replace(R.id.studyoptions_fragment, details);
+            ft.commit();
+    	}
     }
 
+    public StudyOptionsFragment getFragment() {
+    	Fragment frag = (Fragment) getSupportFragmentManager().findFragmentById(R.id.studyoptions_fragment);
+    	if (frag != null && (frag instanceof StudyOptionsFragment)) {
+    		return (StudyOptionsFragment) frag;
+    	}
+    	return null;
+    }
 
     /**
      * Registers an intent to listen for ACTION_MEDIA_EJECT notifications. The intent will call
@@ -2000,9 +1968,9 @@ public class DeckPicker extends FragmentActivity {
         	int icon;
         	SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(this);
         	if (preferences.getBoolean("invertedColors", false)) {
-        		icon = R.drawable.ic_menu_recent_history_black;
+        		icon = R.drawable.ic_menu_night_checked;
         	} else {
-        		icon = R.drawable.ic_menu_recent_history;
+        		icon = R.drawable.ic_menu_night;
         	}
             UIUtils.addMenuItemInActionBar(menu, Menu.NONE, StudyOptionsActivity.MENU_NIGHT, Menu.NONE, R.string.night_mode,
                     icon);
@@ -2128,7 +2096,7 @@ public class DeckPicker extends FragmentActivity {
                         } catch (JSONException e) {
                             throw new RuntimeException(e);
                         }
-                        openStudyOptions();
+                        openStudyOptions(id);
                     }
                 });
                 builder3.setNegativeButton(res.getString(R.string.cancel), null);
@@ -2187,10 +2155,10 @@ public class DeckPicker extends FragmentActivity {
             	SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(this);
             	if (preferences.getBoolean("invertedColors", false)) {
             		preferences.edit().putBoolean("invertedColors", false).commit();
-            		item.setIcon(R.drawable.ic_menu_recent_history);
+            		item.setIcon(R.drawable.ic_menu_night);
             	} else {
             		preferences.edit().putBoolean("invertedColors", true).commit();
-            		item.setIcon(R.drawable.ic_menu_recent_history_black);
+            		item.setIcon(R.drawable.ic_menu_night_checked);
             	}
                 return true;
 
@@ -2249,6 +2217,26 @@ public class DeckPicker extends FragmentActivity {
             addSharedDeck();
         } else if (requestCode == ADD_SHARED_DECKS) {
             sync();
+        } else if (requestCode == REQUEST_REVIEW) {
+            Log.i(AnkiDroidApp.TAG, "Result code = " + resultCode);
+            switch (resultCode) {
+                case Reviewer.RESULT_SESSION_COMPLETED:
+                default:
+                    // do not reload counts, if activity is created anew because it has been before destroyed by android
+                	loadCounts();
+                    break;
+                case Reviewer.RESULT_NO_MORE_CARDS:
+                    mDontSaveOnStop = true;
+                    Intent i = new Intent();
+                    i.setClass(this, StudyOptionsActivity.class);
+                    i.putExtra("onlyFnsMsg", true);
+                    startActivityForResult(i, SHOW_STUDYOPTIONS);
+                    if (UIUtils.getApiLevel() > 4) {
+                        ActivityTransitionAnimation.slide(this, ActivityTransitionAnimation.LEFT);
+                    }
+                    break;
+            }
+
         }
 
         // workaround for hidden dialog on return
@@ -2335,29 +2323,13 @@ public class DeckPicker extends FragmentActivity {
     }
 
 
-    private void openStudyOptions() {
-        openStudyOptions(-1);
-    }
-
-
-    private void openStudyOptions(int id) {
-        // TODO: implement this properly
+    private void openStudyOptions(long deckId) {
         if (mFragmented) {
-            setStudyContentView(StudyOptionsFragment.CONTENT_STUDY_OPTIONS);
-            // // getListView().setItemChecked(index, true);
-            // Fragment frag = (Fragment) getSupportFragmentManager().findFragmentById(R.id.studyoptions_fragment);
-            // if (frag == null || !(frag instanceof StudyOptionsFragment) || ((StudyOptionsFragment)
-            // frag).getShownIndex() != id) {
-            // StudyOptionsFragment details = StudyOptionsFragment.newInstance(id);
-            // FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-            // ft.replace(R.id.studyoptions_fragment, details);
-            // ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
-            // ft.commit();
-            // }
+            setStudyContentView(deckId);
         } else {
             mDontSaveOnStop = true;
             Intent intent = new Intent();
-            intent.putExtra("index", id);
+            intent.putExtra("index", deckId);
             intent.setClass(this, StudyOptionsActivity.class);
             // if (deckId != 0) {
             // intent.putExtra(EXTRA_DECK_ID, deckId);
@@ -2382,8 +2354,9 @@ public class DeckPicker extends FragmentActivity {
         @SuppressWarnings("unchecked")
         HashMap<String, String> data = (HashMap<String, String>) mDeckListAdapter.getItem(id);
         Log.i(AnkiDroidApp.TAG, "Selected " + deckFilename);
-        mCol.getDecks().select(Long.parseLong(data.get("did")));
-        openStudyOptions(id);
+        long deckId = Long.parseLong(data.get("did"));
+        mCol.getDecks().select(deckId);
+        openStudyOptions(deckId);
     }
 
 
@@ -2400,7 +2373,7 @@ public class DeckPicker extends FragmentActivity {
             public void onPostExecute(TaskData result) {
                 if (result.getBoolean()) {
                     loadCounts();
-                    openStudyOptions();
+                    openStudyOptions(mCol.getDecks().selected());
                 } else {
                     Themes.showThemedToast(DeckPicker.this, getResources().getString(R.string.tutorial_loading_error),
                             false);
@@ -2472,9 +2445,11 @@ public class DeckPicker extends FragmentActivity {
                 time = res.getQuantityString(R.plurals.deckpicker_title_minutes, eta, eta);
             }
             UIUtils.setActionBarSubtitle(this, res.getQuantityString(R.plurals.deckpicker_title, due, due, count, time));
-        } else {
-            setTitle(res.getString(R.string.app_name));
         }
+        setTitle(res.getString(R.string.app_name));
+
+        // update widget
+        WidgetStatus.update(this, decks);
     }
 
     // private void restartApp() {
@@ -2491,28 +2466,30 @@ public class DeckPicker extends FragmentActivity {
     // INNER CLASSES
     // ----------------------------------------------------------------------------
 
-    // private class ThemedAdapter extends SimpleAdapter {
-    // public ThemedAdapter(Context context, ArrayList<HashMap<String, String>> items, int resource, String[] from,
-    // int[] to) {
-    // super(context, items, resource, from, to);
-    // }
-    //
-    // // @Override
-    // // public View getView(int position, View convertView, ViewGroup parent) {
-    // // View view = super.getView(position, convertView, parent);
-    // // Themes.setContentStyle(view, Themes.CALLER_DECKPICKER_DECK);
-    // // return view;
-    // // }
-    // }
 
     class MyGestureDetector extends SimpleOnGestureListener {
         @Override
         public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
-            if (mSwipeEnabled) {
+            if (mSwipeEnabled && !mFragmented) {
                 try {
-                    if (e1.getX() - e2.getX() > sSwipeMinDistance && Math.abs(velocityX) > sSwipeThresholdVelocity
-                            && Math.abs(e1.getY() - e2.getY()) < sSwipeMaxOffPath) {
-                        openStudyOptions();
+                    if (e1.getX() - e2.getX() > AnkiDroidApp.sSwipeMinDistance && Math.abs(velocityX) > AnkiDroidApp.sSwipeThresholdVelocity
+                            && Math.abs(e1.getY() - e2.getY()) < AnkiDroidApp.sSwipeMaxOffPath) {
+                    	mDontSaveOnStop = true;
+                    	float pos = e1.getY();
+                    	for (int j = 0; j < mDeckListView.getChildCount(); j++) {
+                    		View v = mDeckListView.getChildAt(j);
+                    		if (v.getY() + v.getHeight() > pos) {
+                            	HashMap<String, String> data = (HashMap<String, String>) mDeckListAdapter.getItem(j);
+                            	mCol.getDecks().select(Long.parseLong(data.get("did")));
+                            	mCol.reset();
+                                Intent reviewer = new Intent(DeckPicker.this, Reviewer.class);
+                                startActivityForResult(reviewer, REQUEST_REVIEW);
+                                if (UIUtils.getApiLevel() > 4) {
+                                    ActivityTransitionAnimation.slide(DeckPicker.this, ActivityTransitionAnimation.LEFT);
+                                }
+                            	return true;
+                    		}
+                    	}
                     }
                 } catch (Exception e) {
                     Log.e(AnkiDroidApp.TAG, "onFling Exception = " + e.getMessage());
@@ -2550,30 +2527,14 @@ public class DeckPicker extends FragmentActivity {
         return sb.toString();
     }
 
-    // private InputFilter mDeckNameFilter = new InputFilter() {
-    // public CharSequence filter(CharSequence source, int start,
-    // int end, Spanned dest, int dstart, int dend) {
-    // for (int i = start; i < end; i++) {
-    // if (!Character.isLetterOrDigit(source.charAt(i))) {
-    // char comp = source.charAt(i);
-    // if (comp == ' ') {
-    // return "";
-    // }
-    // boolean forbidden = true;
-    // for (char c : new char[]{':', '+', '-', '!', '_'}) {
-    // if (c == comp) {
-    // forbidden = false;
-    // break;
-    // }
-    // }
-    // if (forbidden) {
-    // return "";
-    // }
-    // }
-    // }
-    // return null;
-    // }
-    // };
+    @Override
+    public void onAttachedToWindow() {
+        super.onAttachedToWindow();
+        if (!mFragmented) {
+            Window window = getWindow();
+            window.setFormat(PixelFormat.RGBA_8888);        	
+        }
+    }
 
 }
 

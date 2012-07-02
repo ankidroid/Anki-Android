@@ -45,6 +45,7 @@
   <string name="factadder_saving_error">Error saving note</string>
   <string name="cardeditor_move_note_too">Move note too</string>
   <string name="cardeditor_move_to_notes_deck">To note\'s deck</string>
+  <string name="pref_lang_support">Language Settings</string>
   <string name="saving_facts">Saving note</string>
   <string name="deck">Deck</string>
   <string name="add">Dodaj</string>

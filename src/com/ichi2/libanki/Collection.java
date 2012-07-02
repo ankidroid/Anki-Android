@@ -115,10 +115,18 @@ public class Collection {
     private static final int UNDO_SIZE_MAX = 20;
 
     private static Collection sCurrentCollection;
+    private boolean mOpenedByWidget;
 
-
-    public static synchronized Collection openCollection(String path) {
-        sCurrentCollection = Storage.Collection(path);
+    public static Collection openCollection(String path) {
+    	return openCollection(path, false);
+    }
+    public static synchronized Collection openCollection(String path, boolean openedByWidget) {
+    	if (sCurrentCollection == null || !sCurrentCollection.mPath.equals(path)) {
+            sCurrentCollection = Storage.Collection(path);    		
+            sCurrentCollection.mOpenedByWidget = openedByWidget;
+    	} else {
+    		sCurrentCollection.mOpenedByWidget = false;
+    	}
         return sCurrentCollection;
     }
 
@@ -155,8 +163,17 @@ public class Collection {
         if (sCurrentCollection == null || sCurrentCollection.mClosing || sCurrentCollection.mDb == null) {
             return null;
         } else {
+        	sCurrentCollection.mOpenedByWidget = false;
             return sCurrentCollection;
         }
+    }
+
+    // only close collection if no other process requested access before
+    public void closeIfOnlyOpenedByWidget() {
+    	if (mOpenedByWidget) {
+    		Log.i(AnkiDroidApp.TAG, "closeIfOnlyOpenedByWidget - collection only opened by widget, closing it");
+    		close(false);
+    	}
     }
 
 
@@ -320,6 +337,7 @@ public class Collection {
             mMedia.close();
             Log.i(AnkiDroidApp.TAG, "Collection closed");
         }
+        sCurrentCollection = null;
     }
 
 

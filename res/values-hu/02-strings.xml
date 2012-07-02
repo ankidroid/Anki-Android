@@ -45,6 +45,7 @@
   <string name="factadder_saving_error">Hiba a jegyzet mentése közben</string>
   <string name="cardeditor_move_note_too">Jegyzet mozgatása felfelé</string>
   <string name="cardeditor_move_to_notes_deck">Jegyzet paklijához</string>
+  <string name="pref_lang_support">Language Settings</string>
   <string name="saving_facts">Jegyzet mentése</string>
   <string name="deck">Pakli</string>
   <string name="add">Hozzáadás</string>

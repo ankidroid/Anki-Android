@@ -45,6 +45,7 @@
   <string name="factadder_saving_error">Chyba při ukládání poznámky</string>
   <string name="cardeditor_move_note_too">Přesunout také poznámku</string>
   <string name="cardeditor_move_to_notes_deck">To note\'s deck</string>
+  <string name="pref_lang_support">Language Settings</string>
   <string name="saving_facts">Ukládání poznámky</string>
   <string name="deck">Balíček</string>
   <string name="add">Přidat</string>

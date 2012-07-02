@@ -51,6 +51,8 @@ public final class WidgetStatus {
 
     private static DeckStatus sDeckStatus;
     private static float[] sSmallWidgetStatus;
+    private static TreeSet<Object[]> sDeckCounts;
+
     private static AsyncTask<Context, Void, Context> sUpdateDeckStatusAsyncTask;
 
 
@@ -61,24 +63,31 @@ public final class WidgetStatus {
 
     /** Request the widget to update its status. */
     public static void update(Context context) {
-        update(context, true);
+        update(context, true, null, null, null);
     }
 
 
     /** Request the widget to update its status. */
     public static void update(Context context, DeckStatus deckStatus) {
-        sDeckStatus = deckStatus;
-        update(context);
+        update(context, true, deckStatus, null, null);
+    }
+
+
+    public static void update(Context context, TreeSet<Object[]> deckCounts) {
+        update(context, true, null, null, deckCounts);
     }
 
 
     public static void update(Context context, float[] smallWidgetStatus) {
-    	sSmallWidgetStatus = smallWidgetStatus;
-        update(context);
+        update(context, true, null, smallWidgetStatus, null);
     }
 
 
-    public static void update(Context context, boolean updateBigWidget) {
+    public static void update(Context context, boolean updateBigWidget, DeckStatus deckStatus, float[] smallWidgetStatus, TreeSet<Object[]> deckCounts) {
+        sDeckStatus = deckStatus;
+    	sSmallWidgetStatus = smallWidgetStatus;
+    	sDeckCounts = deckCounts;
+
         SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(context);
         if (preferences.getBoolean("widgetMediumEnabled", false)) {
             mediumWidget = true;
@@ -201,11 +210,13 @@ public final class WidgetStatus {
             	if (sSmallWidgetStatus == null) {
                     Collection col = Collection.currentCollection();
                     if (col == null) {
-                        col = Collection.openCollection(AnkiDroidApp.getCollectionPath());
-                        mSmallWidgetStatus = col.getSched().progressToday(null, null, true);
-                        col.close(false);
+                    	Log.i(AnkiDroidApp.TAG, "updateWidgetStatus - Collection not present, opening it");
+                        col = Collection.openCollection(AnkiDroidApp.getCollectionPath(), true);
+                        mSmallWidgetStatus = col.getSched().progressToday(sDeckCounts, null, true);
+                    	Log.i(AnkiDroidApp.TAG, "updateWidgetStatus - close collection, if necessary");
+                        col.closeIfOnlyOpenedByWidget();
                     } else {
-                        mSmallWidgetStatus = col.getSched().progressToday(null, null, true);                    	
+                        mSmallWidgetStatus = col.getSched().progressToday(sDeckCounts, null, true);                    	
                     }
             	} else {
             		mSmallWidgetStatus = sSmallWidgetStatus;

@@ -45,6 +45,7 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 import java.util.Random;
 import java.util.TreeMap;
 import java.util.TreeSet;
@@ -129,8 +130,7 @@ public class Sched {
     private TreeMap<Integer, Integer> mGroupConfs;
     private TreeMap<Integer, JSONObject> mConfCache;
 
-    private HashMap<Long, Pair<Integer, int[]>> mNonSelectedDecksProgress;
-    private boolean mNonSelectedDecksCleared = false;
+    private HashMap<Long, Pair<String[], long[]>> mCachedDeckCounts;
 
     /**
      * queue types: 0=new/cram, 1=lrn, 2=rev, 3=day lrn, -1=suspended, -2=buried revlog types: 0=lrn, 1=rev, 2=relrn,
@@ -167,6 +167,25 @@ public class Sched {
             card.startTimer();
         }
         return card;
+    }
+
+    /* NOT IN LIBANKI */
+    public void decrementCounts(Card card) {
+    	int type = card.getQueue();
+    	switch (type) {
+    	case 0:
+    		mNewCount--;
+    		break;
+    	case 1:
+    		mLrnCount -= card.getLeft() / 1000;
+    		break;
+    	case 2:
+    		mRevCount--;
+    		break;
+    	case 3:
+    		mLrnCount--;
+    		break;
+    	}
     }
 
 
@@ -2266,71 +2285,67 @@ public class Sched {
         	int[] leftCurrent = new int[]{0, 0, 0};
         	String[] cs = new String[]{"new", "lrn", "rev"};
         	long currentDid = 0;
-        	long currentParentDid = 0;
+
+        	// current selected deck
+        	if (counts == null) {
+        		JSONObject deck = mCol.getDecks().current();
+        		currentDid = deck.getLong("id");
+        		for (String s : cs) {
+        			doneCurrent += deck.getJSONArray(s + "Today").getInt(1);
+        		}
+        		if (card != null) {
+            		int idx = countIdx(card);
+            		leftCurrent[idx] += idx == 1 ? card.getLeft() / 1000 : 1;
+        		} else {
+        			reset();
+        		}
+        		leftCurrent[0] += mNewCount;
+        		leftCurrent[1] += mLrnCount;
+        		leftCurrent[2] += mRevCount;
+        	}
 
         	// refresh deck progresses with fresh counts if necessary
-        	if (counts != null || mNonSelectedDecksProgress == null) {
-        		if (mNonSelectedDecksProgress == null) {
-            		mNonSelectedDecksProgress = new HashMap<Long, Pair<Integer, int[]>>();
+        	if (counts != null || mCachedDeckCounts == null) {
+        		if (mCachedDeckCounts == null) {
+        			mCachedDeckCounts = new HashMap<Long, Pair<String[], long[]>>();
         		}
-        		mNonSelectedDecksProgress.clear();
+        		mCachedDeckCounts.clear();
         		if (counts == null) {
         			// reload counts
         			counts = (TreeSet<Object[]>)deckCounts()[0];
         		}
-        		int done = 0;
             	for (Object[] d : counts) {
-            		if (((String[])d[0]).length == 1) {
-            			// top deck
-            			JSONObject deck = mCol.getDecks().get((Long) d[1]);
-                		for (String s : cs) {
-                			done += deck.getJSONArray(s + "Today").getInt(1);
-                		}
-                		mNonSelectedDecksProgress.put((Long)d[1], new Pair<Integer, int[]>(done, new int[]{(Integer)d[2], (Integer)d[3], (Integer)d[4]}));
+            		int done = 0;
+        			JSONObject deck = mCol.getDecks().get((Long) d[1]);
+            		for (String s : cs) {
+            			done += deck.getJSONArray(s + "Today").getInt(1);
             		}
+            		mCachedDeckCounts.put((Long)d[1], new Pair<String[], long[]> ((String[])d[0], new long[]{done, (Integer)d[2], (Integer)d[3], (Integer)d[4]}));
             	}
-            	mNonSelectedDecksCleared = false;
-        	}
-
-        	// current selected deck
-        	if (card != null) {
-        		JSONObject deck = mCol.getDecks().current();
-        		currentDid = deck.getLong("id");
-        		String[] name = deck.getString("name").split(" ");
-        		if (name.length > 1) {
-        			// is a subdeck, note parent's did
-        			currentParentDid = mCol.getDecks().id(name[0], false);
-        		}
-        		for (String s : cs) {
-        			doneCurrent += deck.getJSONArray(s + "Today").getInt(1);
-        		}
-        		int idx = countIdx(card);
-        		leftCurrent = new int[]{ mNewCount + (idx == 1 ? 0 : 1), mLrnCount + (idx == 1 ? card.getLeft() / 1000 : 0), mRevCount + (idx == 1 ? 0 : 1)};
-        	}
-
-    		// remove current deck from cache if still present
-        	if (!mNonSelectedDecksCleared) {
-        		if (mNonSelectedDecksProgress.containsKey(currentDid)) {
-        			mNonSelectedDecksProgress.remove(currentDid);
-            		mNonSelectedDecksCleared = true;
-        		} else if (mNonSelectedDecksProgress.containsKey(currentParentDid)) {
-        			Pair<Integer, int[]> c = mNonSelectedDecksProgress.get(currentParentDid);
-        			int[] left = c.second;
-        			left[0] -= leftCurrent[0];
-        			left[1] -= leftCurrent[1];
-        			left[2] -= leftCurrent[2];
-        			mNonSelectedDecksProgress.put(currentParentDid, new Pair<Integer, int[]>(c.first - doneCurrent, left));
-            		mNonSelectedDecksCleared = true;
-        		}
         	}
 
         	int doneAll = 0;
         	int[] leftAll = new int[]{0, 0, 0};
-        	for (Pair<Integer, int[]> d : mNonSelectedDecksProgress.values()) {
-        		doneAll += d.first;
-        		leftAll[0] += d.second[0];
-        		leftAll[1] += d.second[1];
-        		leftAll[2] += d.second[2];
+        	for (Map.Entry<Long, Pair<String[], long[]>> d : mCachedDeckCounts.entrySet()) {
+        		boolean exclude = d.getKey() == currentDid; // || mCol.getDecks().isDyn(d.getKey());
+        		if (d.getValue().first.length == 1) {
+        			if (exclude) {
+        				// don't count cached version of current deck
+        				continue;
+        			}
+        			long[] c = d.getValue().second;
+            		doneAll += c[0];
+            		leftAll[0] += c[1];
+            		leftAll[1] += c[2];
+            		leftAll[2] += c[3];
+        		} else if (exclude) {
+        			// exclude cached values for current deck in order to avoid double count
+        			long[] c = d.getValue().second;
+            		doneAll -= c[0];
+            		leftAll[0] -= c[1];
+            		leftAll[1] -= c[2];
+            		leftAll[2] -= c[3];
+        		}
         	}
         	doneAll += doneCurrent;
         	leftAll[0] += leftCurrent[0];

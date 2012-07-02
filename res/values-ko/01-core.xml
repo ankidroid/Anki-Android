@@ -45,7 +45,7 @@
   <string name="card_suspended">미뤄진 카드</string>
   <string name="menu_rotate">회전</string>
   <string name="undo">실행 취소</string>
-  <string name="finish_operation">이전 작업 마무리 중.\n기다려주세요...</string>
+  <string name="finish_operation">Finishing previous operation (most likely backup creation).\nPlease wait...</string>
   <string name="contextmenu_deckpicker_download_missing_media">누락된 미디어 다운로드</string>
   <string name="contextmenu_deckpicker_reset_language_assignments">언어 재설정하기</string>
   <string name="contextmenu_deckpicker_reset_reset_message">언어설정</string>
@@ -79,7 +79,7 @@
   <string name="studyoptions_cram_dialog_title">벼락치기 태그달기</string>
   <string name="studyoptions_load_other_deck">다른 묶음 불러오기</string>
   <string name="studyoptions_load_tutorial_deck">도움말 만들기</string>
-  <string name="studyoptions_night_mode">야간</string>
+  <string name="night_mode">야간 모드</string>
   <string name="visit">방문하기</string>
   <string name="later">나중에</string>
   <string name="download">다운로드</string>

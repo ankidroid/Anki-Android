@@ -31,6 +31,8 @@
   <string name="delete_card_title">Eliminar nota</string>
   <string name="delete_card_message">¿Realmente deseas eliminar todas las tarjetas de esta nota?\nCampo de búsqueda: %s</string>
   <string name="card_browser_show_marked">Filtrar marcadas</string>
+  <string name="card_browser_field">Change CardBrowser Field</string>
+  <string name="card_browser_field_title">Change CardBrowser Field</string>
   <string name="card_browser_show_suspended">Filtrar suspendidas</string>
   <string name="card_browser_search_by_tag">Filtrar por etiqueta</string>
   <string name="card_browser_tags_shown">Etiquetas: %1$s</string>

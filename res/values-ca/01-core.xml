@@ -45,7 +45,7 @@
   <string name="card_suspended">Targeta suspesa de nou</string>
   <string name="menu_rotate">Girar</string>
   <string name="undo">Desfés</string>
-  <string name="finish_operation">Acabant l\'operació anterior.\nSi us plau, espera...</string>
+  <string name="finish_operation">Finishing previous operation (most likely backup creation).\nPlease wait...</string>
   <string name="contextmenu_deckpicker_download_missing_media">Baixa els media que falten</string>
   <string name="contextmenu_deckpicker_reset_language_assignments">Reinicia les assignacions de tots el idiomes</string>
   <string name="contextmenu_deckpicker_reset_reset_message">Restableix l\'idioma</string>
@@ -79,7 +79,7 @@
   <string name="studyoptions_cram_dialog_title">Etiquetes que voleu repassar (cram)</string>
   <string name="studyoptions_load_other_deck">Carrega un altre paquet</string>
   <string name="studyoptions_load_tutorial_deck">Genera el tutorial</string>
-  <string name="studyoptions_night_mode">Nit</string>
+  <string name="night_mode">Night mode</string>
   <string name="visit">Visita</string>
   <string name="later">Més tard</string>
   <string name="download">Descarrega</string>

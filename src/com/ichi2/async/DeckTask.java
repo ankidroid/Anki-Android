@@ -57,7 +57,6 @@ public class DeckTask extends
 		AsyncTask<DeckTask.TaskData, DeckTask.TaskData, DeckTask.TaskData> {
 
 	public static final int TASK_TYPE_OPEN_COLLECTION = 0;
-	public static final int TASK_TYPE_OPEN_COLLECTION_AND_UPDATE_CARDS = 1;
 	public static final int TASK_TYPE_SAVE_COLLECTION = 2;
 	public static final int TASK_TYPE_ANSWER_CARD = 3;
 	public static final int TASK_TYPE_MARK_CARD = 5;
@@ -155,8 +154,13 @@ public class DeckTask extends
 			}
 			if ((sOldInstance != null)
 					&& (sOldInstance.getStatus() != AsyncTask.Status.FINISHED)) {
-				Log.i(AnkiDroidApp.TAG, "Waiting for " + sOldInstance.mType
-						+ " to finish before starting " + sInstance.mType);
+				Log.i(AnkiDroidApp.TAG, "Waiting for " + sOldInstance.mType + " to finish before starting " + sInstance.mType);
+
+				// let user know if the last deck close is still performing a backup 
+				if (mType == TASK_TYPE_OPEN_COLLECTION && sOldInstance.mType == TASK_TYPE_CLOSE_DECK) {
+					 publishProgress(new TaskData(AnkiDroidApp.getInstance().getBaseContext().getResources().getString(R.string.finish_operation)));
+				}
+
 				sOldInstance.get();
 			}
 		} catch (Exception e) {
@@ -171,14 +175,6 @@ public class DeckTask extends
 
 		case TASK_TYPE_LOAD_DECK_COUNTS:
 			return doInBackgroundLoadDeckCounts(params);
-
-		case TASK_TYPE_OPEN_COLLECTION_AND_UPDATE_CARDS:
-			TaskData taskData = doInBackgroundOpenCollection(params);
-			// if (taskData.mInteger == DECK_LOADED) {
-			// taskData.mDeck.updateAllCards();
-			// taskData.mCard = taskData.mDeck.getCurrentCard();
-			// }
-			return taskData;
 
 		case TASK_TYPE_SAVE_COLLECTION:
 			return doInBackgroundSaveCollection(params);
@@ -403,13 +399,10 @@ public class DeckTask extends
 
 		// see, if a collection is still opened
 		Collection oldCol = Collection.currentCollection();
-		boolean reset = params[0].getBoolean();
 
 		Collection col = null;
 
-		// publishProgress(new
-		// TaskData(AnkiDroidApp.getInstance().getBaseContext().getResources().getString(R.string.finish_operation)));
-		// DeckManager.waitForDeckClosingThread(deckFilename);
+		publishProgress(new TaskData(res.getString(R.string.open_collection)));
 
 		if (oldCol == null || !oldCol.getPath().equals(collectionFile)) {
 
@@ -459,19 +452,24 @@ public class DeckTask extends
 					new TaskData(col)).getObjArray());
 		} catch (RuntimeException e) {
 			col = null;
-			return new TaskData(col);
+			throw new RuntimeException(e);
+//			return new TaskData(col);
 		}
 	}
 
 	private TaskData doInBackgroundLoadDeckCounts(TaskData... params) {
 		Log.i(AnkiDroidApp.TAG, "doInBackgroundLoadDeckCounts");
 		Collection col = params[0].getCollection();
+		if (col == null) {
+			return null;
+		}
 		try {
 			return new TaskData(col.getSched().deckCounts());
 		} catch (RuntimeException e) {
 			Log.e(AnkiDroidApp.TAG, "doInBackgroundLoadDeckCounts - error: "
 					+ e);
-			return null;
+			throw new RuntimeException(e);
+//			return null;
 		}
 	}
 
@@ -625,6 +623,7 @@ public class DeckTask extends
 					// a review was undone,
 					newCard = col.getCard(cid);
 					col.reset();
+					col.getSched().decrementCounts(newCard);
 					sHadCardQueue = true;
 				} else {
 					// TODO: do not fetch new card if a non review operation has
@@ -723,18 +722,22 @@ public class DeckTask extends
 	private TaskData doInBackgroundUpdateValuesFromDeck(TaskData... params) {
 		Log.i(AnkiDroidApp.TAG, "doInBackgroundUpdateValuesFromDeck");
 		try {
-			boolean reset = params[0].getBoolean();
-			Sched sched = params[0].getSched();
+			Sched sched = params[0].getCollection().getSched();
+			Object[] obj = params[0].getObjArray();
+			boolean reset = (Boolean) obj[0];
 			if (reset) {
 				sched.reset();
 			}
 			int[] counts = sched.counts();
 			int totalNewCount = sched.newCount();
 			int totalCount = sched.cardCount();
-			double progressMature = ((double) sched.matureCount())
-					/ ((double) totalCount);
+			double progressMature = ((double) sched.matureCount()) / ((double) totalCount);
 			double progressAll = 1 - (((double) (totalNewCount + counts[1])) / ((double) totalCount));
-			double[][] serieslist = Stats.getSmallDueStats(sched.getCol());
+			double[][] serieslist = null;
+			// only calculate stats if necessary
+			if ((Boolean) obj[1]) {
+				serieslist = Stats.getSmallDueStats(sched.getCol());
+			}
 			return new TaskData(new Object[] { counts[0], counts[1], counts[2],
 					totalNewCount, totalCount, progressMature, progressAll,
 					sched.eta(counts), serieslist });			
@@ -767,19 +770,21 @@ public class DeckTask extends
 	private TaskData doInBackgroundRebuildCram(TaskData... params) {
 		Log.i(AnkiDroidApp.TAG, "doInBackgroundRebuildCram");
 		Collection col = params[0].getCollection();
+		boolean fragmented = params[0].getBoolean();
 		long did = params[0].getLong();
 		col.getSched().rebuildDyn(did);
 		return doInBackgroundUpdateValuesFromDeck(new DeckTask.TaskData(
-				col.getSched(), true));
+				col, new Object[]{true, fragmented}));
 	}
 
 	private TaskData doInBackgroundEmptyCram(TaskData... params) {
 		Log.i(AnkiDroidApp.TAG, "doInBackgroundEmptyCram");
 		Collection col = params[0].getCollection();
+		boolean fragmented = params[0].getBoolean();
 		long did = params[0].getLong();
 		col.getSched().emptyDyn(did);
 		return doInBackgroundUpdateValuesFromDeck(new DeckTask.TaskData(
-				col.getSched(), true));
+				col, new Object[]{true, fragmented}));
 	}
 
 	private TaskData doInBackgroundRestoreDeck(TaskData... params) {
@@ -998,6 +1003,12 @@ public class DeckTask extends
 		public TaskData(Collection col, long value) {
 			mCol = col;
 			mLong = value;
+		}
+
+		public TaskData(Collection col, long value, boolean bool) {
+			mCol = col;
+			mLong = value;
+			mBool = bool;
 		}
 
 		public TaskData(Collection col, int value, boolean bool) {

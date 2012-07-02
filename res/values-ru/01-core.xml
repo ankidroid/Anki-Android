@@ -45,7 +45,7 @@
   <string name="card_suspended">Карта снова приостановлена</string>
   <string name="menu_rotate">Повернуть</string>
   <string name="undo">Откат</string>
-  <string name="finish_operation">Завершение предыдущей операции.\nПожалуйста, подождите...</string>
+  <string name="finish_operation">Finishing previous operation (most likely backup creation).\nPlease wait...</string>
   <string name="contextmenu_deckpicker_download_missing_media">Скачать недостающие медиа-файлы</string>
   <string name="contextmenu_deckpicker_reset_language_assignments">Сброс языка</string>
   <string name="contextmenu_deckpicker_reset_reset_message">Сброс языка</string>
@@ -79,7 +79,7 @@
   <string name="studyoptions_cram_dialog_title">Что \"зубрить\" (теги)</string>
   <string name="studyoptions_load_other_deck">Открыть другие колоды</string>
   <string name="studyoptions_load_tutorial_deck">Создать учебник</string>
-  <string name="studyoptions_night_mode">Ночь</string>
+  <string name="night_mode">Night mode</string>
   <string name="visit">Посещение</string>
   <string name="later">Позже</string>
   <string name="download">Скачать</string>

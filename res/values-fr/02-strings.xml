@@ -45,6 +45,7 @@
   <string name="factadder_saving_error">La note ne peut s’enregistrer</string>
   <string name="cardeditor_move_note_too">Déplacer en outre la note</string>
   <string name="cardeditor_move_to_notes_deck">Vers le paquet de la note</string>
+  <string name="pref_lang_support">Language Settings</string>
   <string name="saving_facts">Enregistrer la note</string>
   <string name="deck">Paquet</string>
   <string name="add">Ajouter</string>

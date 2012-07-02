@@ -20,19 +20,19 @@
 -->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
 	package="com.ichi2.anki2"
-	android:versionName="2.0alpha41-EXPERIMENTAL"
-	android:versionCode="28"
+	android:versionName="2.0alpha45-EXPERIMENTAL"
+	android:versionCode="30"
 	android:installLocation="auto">
     <instrumentation android:name="android.test.InstrumentationTestRunner" android:targetPackage="com.ichi2.anki2"></instrumentation>
 	<application
 	    android:label="@string/app_name" 
 	    android:icon="@drawable/anki" 
-  	    android:theme="@style/Theme_White"
   	    android:windowSoftInputMode="adjustResize"
 	    android:name="com.ichi2.anki.AnkiDroidApp" android:debuggable="true">
 	    <!-- android:label="@string/app_name" -->
 		<activity android:name="com.ichi2.anki.DeckPicker"
-		    android:label="@string/app_name"
+			    android:label="@string/app_name"
+		  	    android:theme="@style/Theme_Start"
 				android:configChanges="keyboardHidden|orientation|locale">
 			<intent-filter>
 				<action android:name="android.intent.action.MAIN" />

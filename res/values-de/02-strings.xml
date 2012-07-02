@@ -45,6 +45,7 @@
   <string name="factadder_saving_error">Fehler beim Speichern der Notiz</string>
   <string name="cardeditor_move_note_too">Notiz ebenfalls verschieben</string>
   <string name="cardeditor_move_to_notes_deck">To note\'s deck</string>
+  <string name="pref_lang_support">Language Settings</string>
   <string name="saving_facts">Notiz speichern</string>
   <string name="deck">Stapel</string>
   <string name="add">Hinzufügen</string>

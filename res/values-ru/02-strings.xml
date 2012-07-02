@@ -45,6 +45,7 @@
   <string name="factadder_saving_error">Ошибка при сохранении заметки</string>
   <string name="cardeditor_move_note_too">Переместить заметку тоже</string>
   <string name="cardeditor_move_to_notes_deck">В заметки колоды</string>
+  <string name="pref_lang_support">Language Settings</string>
   <string name="saving_facts">Сохранение заметки</string>
   <string name="deck">Колода</string>
   <string name="add">Добавить</string>

@@ -89,6 +89,7 @@ import com.ichi2.libanki.Sched;
 import com.ichi2.libanki.Sound;
 import com.ichi2.libanki.Utils;
 import com.ichi2.themes.StyledDialog;
+import com.ichi2.themes.StyledOpenCollectionDialog;
 import com.ichi2.themes.StyledProgressDialog;
 import com.ichi2.themes.Themes;
 import com.ichi2.utils.DiffEngine;
@@ -312,6 +313,7 @@ public class Reviewer extends AnkiActivity {
     private Whiteboard mWhiteboard;
     private ClipboardManager mClipboard;
     private StyledProgressDialog mProgressDialog;
+    private StyledOpenCollectionDialog mOpenCollectionDialog;
     private Menu mOptionsMenu;
     private ProgressBar mProgressBar;
 
@@ -1207,69 +1209,69 @@ public class Reviewer extends AnkiActivity {
     }
 
 
-    @Override
-    public void onConfigurationChanged(Configuration newConfig) {
-        super.onConfigurationChanged(newConfig);
-        setLanguage(mLocale);
-        Log.i(AnkiDroidApp.TAG, "onConfigurationChanged");
-
-        mConfigurationChanged = true;
-
-        long savedTimer = mCardTimer.getBase();
-        CharSequence savedAnswerField = mAnswerField.getText();
-        boolean cardVisible = mCardContainer.getVisibility() == View.VISIBLE;
-        int lookupButtonVis = mLookUpIcon.getVisibility();
-
-        // Reload layout
-        initLayout(R.layout.flashcard);
-
-        if (mRelativeButtonSize != 100) {
-            mFlipCard.setHeight(mButtonHeight);
-            mEase1.setHeight(mButtonHeight);
-            mEase2.setHeight(mButtonHeight);
-            mEase3.setHeight(mButtonHeight);
-            mEase4.setHeight(mButtonHeight);
-        }
-
-        // Modify the card template to indicate the new available width and refresh card
-        mCardTemplate = mCardTemplate.replaceFirst("var availableWidth = \\d*;", "var availableWidth = "
-                + getAvailableWidthInCard() + ";");
-
-        if (typeAnswer()) {
-            mAnswerField.setText(savedAnswerField);
-        }
-        if (mPrefWhiteboard) {
-            mWhiteboard.rotate();
-        }
-        if (mInvertedColors) {
-            invertColors(true);
-        }
-
-        // If the card hasn't loaded yet, don't refresh it
-        // Also skipping the counts (because we don't know which one to underline)
-        // They will be updated when the card loads anyway
-        if (mCurrentCard != null) {
-            if (cardVisible) {
-                fillFlashcard(false);
-                if (mPrefTimer) {
-                    mCardTimer.setBase(savedTimer);
-                    mCardTimer.start();
-                }
-                if (sDisplayAnswer) {
-                    updateForNewCard();
-                }
-            } else {
-                mCardContainer.setVisibility(View.INVISIBLE);
-                switchVisibility(mProgressBars, View.INVISIBLE);
-                switchVisibility(mCardTimer, View.INVISIBLE);
-            }
-            if (sDisplayAnswer) {
-                showEaseButtons();
-            }
-        }
-        mLookUpIcon.setVisibility(lookupButtonVis);
-        mConfigurationChanged = false;
-    }
+//    @Override
+//    public void onConfigurationChanged(Configuration newConfig) {
+//        super.onConfigurationChanged(newConfig);
+//        setLanguage(mLocale);
+//        Log.i(AnkiDroidApp.TAG, "onConfigurationChanged");
+//
+//        mConfigurationChanged = true;
+//
+//        long savedTimer = mCardTimer.getBase();
+//        CharSequence savedAnswerField = mAnswerField.getText();
+//        boolean cardVisible = mCardContainer.getVisibility() == View.VISIBLE;
+//        int lookupButtonVis = mLookUpIcon.getVisibility();
+//
+//        // Reload layout
+//        initLayout(R.layout.flashcard);
+//
+//        if (mRelativeButtonSize != 100) {
+//            mFlipCard.setHeight(mButtonHeight);
+//            mEase1.setHeight(mButtonHeight);
+//            mEase2.setHeight(mButtonHeight);
+//            mEase3.setHeight(mButtonHeight);
+//            mEase4.setHeight(mButtonHeight);
+//        }
+//
+//        // Modify the card template to indicate the new available width and refresh card
+//        mCardTemplate = mCardTemplate.replaceFirst("var availableWidth = \\d*;", "var availableWidth = "
+//                + getAvailableWidthInCard() + ";");
+//
+//        if (typeAnswer()) {
+//            mAnswerField.setText(savedAnswerField);
+//        }
+//        if (mPrefWhiteboard) {
+//            mWhiteboard.rotate();
+//        }
+//        if (mInvertedColors) {
+//            invertColors(true);
+//        }
+//
+//        // If the card hasn't loaded yet, don't refresh it
+//        // Also skipping the counts (because we don't know which one to underline)
+//        // They will be updated when the card loads anyway
+//        if (mCurrentCard != null) {
+//            if (cardVisible) {
+//                fillFlashcard(false);
+//                if (mPrefTimer) {
+//                    mCardTimer.setBase(savedTimer);
+//                    mCardTimer.start();
+//                }
+//                if (sDisplayAnswer) {
+//                    updateForNewCard();
+//                }
+//            } else {
+//                mCardContainer.setVisibility(View.INVISIBLE);
+//                switchVisibility(mProgressBars, View.INVISIBLE);
+//                switchVisibility(mCardTimer, View.INVISIBLE);
+//            }
+//            if (sDisplayAnswer) {
+//                showEaseButtons();
+//            }
+//        }
+//        mLookUpIcon.setVisibility(lookupButtonVis);
+//        mConfigurationChanged = false;
+//    }
 
 
     private void updateMenuItems() {
@@ -1348,9 +1350,9 @@ public class Reviewer extends AnkiActivity {
 
                     @Override
                     public void onPostExecute(DeckTask.TaskData result) {
-                        if (mProgressDialog.isShowing()) {
+                        if (mOpenCollectionDialog.isShowing()) {
                             try {
-                                mProgressDialog.dismiss();
+                            	mOpenCollectionDialog.dismiss();
                             } catch (Exception e) {
                                 Log.e(AnkiDroidApp.TAG, "onPostExecute - Dialog dismiss Exception = " + e.getMessage());
                             }
@@ -1368,8 +1370,7 @@ public class Reviewer extends AnkiActivity {
 
                     @Override
                     public void onPreExecute() {
-                        mProgressDialog = StyledProgressDialog.show(Reviewer.this, "",
-                                getResources().getString(R.string.open_collection), true, true, new OnCancelListener() {
+                    	mOpenCollectionDialog = StyledOpenCollectionDialog.show(Reviewer.this, getResources().getString(R.string.open_collection), new OnCancelListener() {
                                     @Override
                                     public void onCancel(DialogInterface arg0) {
                                         finish();
@@ -2164,7 +2165,8 @@ public class Reviewer extends AnkiActivity {
         mWaitQuestionSecond = preferences.getInt("timeoutQuestionSeconds", 60);
         mScrollingButtons = preferences.getBoolean("scrolling_buttons", false);
         mDoubleScrolling = preferences.getBoolean("double_scrolling", false);
-        mGesturesEnabled = preferences.getBoolean("swipe", false);
+
+        mGesturesEnabled = AnkiDroidApp.initiateGestures(this, preferences);
         if (mGesturesEnabled) {
             mGestureShake = Integer.parseInt(preferences.getString("gestureShake", "0"));
             if (mGestureShake != 0) {
@@ -2172,16 +2174,16 @@ public class Reviewer extends AnkiActivity {
             }
             mShakeIntensity = preferences.getInt("minShakeIntensity", 70);
 
-            mGestureSwipeUp = Integer.parseInt(preferences.getString("gestureSwipeUp", "0"));
+            mGestureSwipeUp = Integer.parseInt(preferences.getString("gestureSwipeUp", "9"));
             mGestureSwipeDown = Integer.parseInt(preferences.getString("gestureSwipeDown", "0"));
-            mGestureSwipeLeft = Integer.parseInt(preferences.getString("gestureSwipeLeft", "13"));
-            mGestureSwipeRight = Integer.parseInt(preferences.getString("gestureSwipeRight", "0"));
-            mGestureDoubleTap = Integer.parseInt(preferences.getString("gestureDoubleTap", "0"));
-            mGestureTapLeft = Integer.parseInt(preferences.getString("gestureTapLeft", "0"));
-            mGestureTapRight = Integer.parseInt(preferences.getString("gestureTapRight", "0"));
-            mGestureTapTop = Integer.parseInt(preferences.getString("gestureTapTop", "0"));
-            mGestureTapBottom = Integer.parseInt(preferences.getString("gestureTapBottom", "0"));
-            mGestureLongclick = Integer.parseInt(preferences.getString("gestureLongclick", "0"));
+            mGestureSwipeLeft = Integer.parseInt(preferences.getString("gestureSwipeLeft", "8"));
+            mGestureSwipeRight = Integer.parseInt(preferences.getString("gestureSwipeRight", "17"));
+            mGestureDoubleTap = Integer.parseInt(preferences.getString("gestureDoubleTap", "7"));
+            mGestureTapLeft = Integer.parseInt(preferences.getString("gestureTapLeft", "3"));
+            mGestureTapRight = Integer.parseInt(preferences.getString("gestureTapRight", "6"));
+            mGestureTapTop = Integer.parseInt(preferences.getString("gestureTapTop", "12"));
+            mGestureTapBottom = Integer.parseInt(preferences.getString("gestureTapBottom", "2"));
+            mGestureLongclick = Integer.parseInt(preferences.getString("gestureLongclick", "11"));
         }
         mShowAnimations = preferences.getBoolean("themeAnimations", false);
         if (mShowAnimations) {
@@ -2258,7 +2260,7 @@ public class Reviewer extends AnkiActivity {
 	            mSimpleCard.setBackgroundColor(mCurrentBackgroundColor);
 	            mSimpleCard.setTextColor(mForegroundColor);
 			}
-			if (mSimpleCard.getVisibility() != View.VISIBLE) {
+			if (mSimpleCard.getVisibility() != View.VISIBLE || (mCard != null && mCard.getVisibility() == View .VISIBLE)) {
 				mSimpleCard.setVisibility(View.VISIBLE);
 				mCard.setVisibility(View.GONE);				
 			}
@@ -2275,7 +2277,7 @@ public class Reviewer extends AnkiActivity {
 	                mCustomFontStyle = getCustomFontsStyle() + getDefaultFontStyle();
 	            }
 			}
-			if (mCard.getVisibility() != View.VISIBLE) {
+			if (mCard.getVisibility() != View.VISIBLE || (mSimpleCard != null && mSimpleCard.getVisibility() == View .VISIBLE)) {
 				mSimpleCard.setVisibility(View.GONE);
 				mCard.setVisibility(View.VISIBLE);				
 			}
@@ -3501,25 +3503,25 @@ public class Reviewer extends AnkiActivity {
         public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
             if (mGesturesEnabled) {
                 try {
-                    if (e2.getY() - e1.getY() > DeckPicker.sSwipeMinDistance
-                            && Math.abs(velocityY) > DeckPicker.sSwipeThresholdVelocity
-                            && Math.abs(e1.getX() - e2.getX()) < DeckPicker.sSwipeMaxOffPath && !mIsYScrolling) {
+                    if (e2.getY() - e1.getY() > AnkiDroidApp.sSwipeMinDistance
+                            && Math.abs(velocityY) > AnkiDroidApp.sSwipeThresholdVelocity
+                            && Math.abs(e1.getX() - e2.getX()) < AnkiDroidApp.sSwipeMaxOffPath && !mIsYScrolling) {
                         // down
                         executeCommand(mGestureSwipeDown);
-                    } else if (e1.getY() - e2.getY() > DeckPicker.sSwipeMinDistance
-                            && Math.abs(velocityY) > DeckPicker.sSwipeThresholdVelocity
-                            && Math.abs(e1.getX() - e2.getX()) < DeckPicker.sSwipeMaxOffPath && !mIsYScrolling) {
+                    } else if (e1.getY() - e2.getY() > AnkiDroidApp.sSwipeMinDistance
+                            && Math.abs(velocityY) > AnkiDroidApp.sSwipeThresholdVelocity
+                            && Math.abs(e1.getX() - e2.getX()) < AnkiDroidApp.sSwipeMaxOffPath && !mIsYScrolling) {
                         // up
                         executeCommand(mGestureSwipeUp);
-                    } else if (e2.getX() - e1.getX() > DeckPicker.sSwipeMinDistance
-                            && Math.abs(velocityX) > DeckPicker.sSwipeThresholdVelocity
-                            && Math.abs(e1.getY() - e2.getY()) < DeckPicker.sSwipeMaxOffPath && !mIsXScrolling
+                    } else if (e2.getX() - e1.getX() > AnkiDroidApp.sSwipeMinDistance
+                            && Math.abs(velocityX) > AnkiDroidApp.sSwipeThresholdVelocity
+                            && Math.abs(e1.getY() - e2.getY()) < AnkiDroidApp.sSwipeMaxOffPath && !mIsXScrolling
                             && !mIsSelecting) {
                         // right
                         executeCommand(mGestureSwipeRight);
-                    } else if (e1.getX() - e2.getX() > DeckPicker.sSwipeMinDistance
-                            && Math.abs(velocityX) > DeckPicker.sSwipeThresholdVelocity
-                            && Math.abs(e1.getY() - e2.getY()) < DeckPicker.sSwipeMaxOffPath && !mIsXScrolling
+                    } else if (e1.getX() - e2.getX() > AnkiDroidApp.sSwipeMinDistance
+                            && Math.abs(velocityX) > AnkiDroidApp.sSwipeThresholdVelocity
+                            && Math.abs(e1.getY() - e2.getY()) < AnkiDroidApp.sSwipeMaxOffPath && !mIsXScrolling
                             && !mIsSelecting) {
                         // left
                         executeCommand(mGestureSwipeLeft);

@@ -45,7 +45,7 @@
   <string name="card_suspended">Card resuspended</string>
   <string name="menu_rotate">Rotate</string>
   <string name="undo">Poništi</string>
-  <string name="finish_operation">Finishing previous operation.\nPlease wait...</string>
+  <string name="finish_operation">Finishing previous operation (most likely backup creation).\nPlease wait...</string>
   <string name="contextmenu_deckpicker_download_missing_media">Download missing media</string>
   <string name="contextmenu_deckpicker_reset_language_assignments">Reset Language Assignments</string>
   <string name="contextmenu_deckpicker_reset_reset_message">Language reset</string>
@@ -79,7 +79,7 @@
   <string name="studyoptions_cram_dialog_title">Oznake za štrebanje</string>
   <string name="studyoptions_load_other_deck">Učitaj Drugi Špil</string>
   <string name="studyoptions_load_tutorial_deck">Create tutorial</string>
-  <string name="studyoptions_night_mode">Night</string>
+  <string name="night_mode">Night mode</string>
   <string name="visit">Visit</string>
   <string name="later">Later</string>
   <string name="download">Download</string>

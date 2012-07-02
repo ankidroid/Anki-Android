@@ -20,6 +20,7 @@ import com.ichi2.anki2.R;
 
 import com.ichi2.anim.ActivityTransitionAnimation;
 import com.ichi2.libanki.Collection;
+import com.ichi2.themes.Themes;
 import com.ichi2.widget.WidgetStatus;
 
 import android.content.Intent;
@@ -33,6 +34,7 @@ import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 
 public class StudyOptionsActivity extends FragmentActivity {
 
@@ -41,9 +43,11 @@ public class StudyOptionsActivity extends FragmentActivity {
     public static final int MENU_ROTATE = 202;
     public static final int MENU_NIGHT = 203;
 
+    private Fragment mCurrentFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Themes.applyTheme(this);
         super.onCreate(savedInstanceState);
 
         // if (getResources().getConfiguration().orientation
@@ -55,18 +59,15 @@ public class StudyOptionsActivity extends FragmentActivity {
         // }
 
         if (savedInstanceState == null) {
-            setStudyContentView(StudyOptionsFragment.CONTENT_STUDY_OPTIONS);
+        	loadContent(getIntent().getBooleanExtra("onlyFnsMsg", false));
         }
     }
 
-
-    public void setStudyContentView(int view) {
-        // During initial setup, plug in the details fragment.
-        Fragment details = new StudyOptionsFragment();
-        details.setArguments(getIntent().getExtras());
-        getSupportFragmentManager().beginTransaction().add(android.R.id.content, details).commit();
+    public void loadContent(boolean onlyFnsMsg) {
+        mCurrentFragment = StudyOptionsFragment.newInstance(0, onlyFnsMsg);
+        mCurrentFragment.setArguments(getIntent().getExtras());
+        getSupportFragmentManager().beginTransaction().add(android.R.id.content, mCurrentFragment).commit();
     }
-
 
     // TODO: onpause, onresume, onstop
 
@@ -75,9 +76,9 @@ public class StudyOptionsActivity extends FragmentActivity {
     	int icon;
     	SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(this);
     	if (preferences.getBoolean("invertedColors", false)) {
-    		icon = R.drawable.ic_menu_recent_history_black;
+    		icon = R.drawable.ic_menu_night_checked;
     	} else {
-    		icon = R.drawable.ic_menu_recent_history;
+    		icon = R.drawable.ic_menu_night;
     	}
         UIUtils.addMenuItemInActionBar(menu, Menu.NONE, MENU_NIGHT, Menu.NONE, R.string.night_mode,
                 icon);
@@ -117,10 +118,10 @@ public class StudyOptionsActivity extends FragmentActivity {
             	SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(this);
             	if (preferences.getBoolean("invertedColors", false)) {
             		preferences.edit().putBoolean("invertedColors", false).commit();
-            		item.setIcon(R.drawable.ic_menu_recent_history);
+            		item.setIcon(R.drawable.ic_menu_night);
             	} else {
             		preferences.edit().putBoolean("invertedColors", true).commit();
-            		item.setIcon(R.drawable.ic_menu_recent_history_black);
+            		item.setIcon(R.drawable.ic_menu_night_checked);
             	}
                 return true;
 
@@ -163,9 +164,18 @@ public class StudyOptionsActivity extends FragmentActivity {
     @Override
     public void onStop() {
         super.onStop();
-        if (!isFinishing()) {
+        if (!isFinishing() && mCurrentFragment != null && ((StudyOptionsFragment)mCurrentFragment).dbSaveNecessary()) {
             WidgetStatus.update(this);
             UIUtils.saveCollectionInBackground(Collection.currentCollection());
         }
+    }
+
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+    	if (mCurrentFragment != null) {
+    		return ((StudyOptionsFragment)mCurrentFragment).onTouchEvent(event);
+    	} else {
+    		return false;
+    	}
     }
 }

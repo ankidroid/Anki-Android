@@ -45,7 +45,7 @@
   <string name="card_suspended">Zrušeno pozastavení karty</string>
   <string name="menu_rotate">Otočit</string>
   <string name="undo">Vrátit zpět</string>
-  <string name="finish_operation">Dokončování předchozí operace.\nProsím čekejte...</string>
+  <string name="finish_operation">Finishing previous operation (most likely backup creation).\nPlease wait...</string>
   <string name="contextmenu_deckpicker_download_missing_media">Stáhnout chybějící média</string>
   <string name="contextmenu_deckpicker_reset_language_assignments">Obnovit přiřazení jazyka</string>
   <string name="contextmenu_deckpicker_reset_reset_message">Obnovení jazyka</string>
@@ -79,7 +79,7 @@
   <string name="studyoptions_cram_dialog_title">Značky pro šprtání</string>
   <string name="studyoptions_load_other_deck">Načíst jiný balíček</string>
   <string name="studyoptions_load_tutorial_deck">Vytvořit kurz</string>
-  <string name="studyoptions_night_mode">Noc</string>
+  <string name="night_mode">Night mode</string>
   <string name="visit">Navštívit</string>
   <string name="later">Později</string>
   <string name="download">Stáhnout</string>

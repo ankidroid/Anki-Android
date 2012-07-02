@@ -45,6 +45,7 @@
   <string name="factadder_saving_error">Error saving note</string>
   <string name="cardeditor_move_note_too">同時移動註解</string>
   <string name="cardeditor_move_to_notes_deck">To note\'s deck</string>
+  <string name="pref_lang_support">Language Settings</string>
   <string name="saving_facts">儲存註解中</string>
   <string name="deck">牌組</string>
   <string name="add">新增</string>

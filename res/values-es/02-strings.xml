@@ -45,6 +45,7 @@
   <string name="factadder_saving_error">Error al guardar la nota</string>
   <string name="cardeditor_move_note_too">Mover también la nota</string>
   <string name="cardeditor_move_to_notes_deck">Al mazo de la nota</string>
+  <string name="pref_lang_support">Language Settings</string>
   <string name="saving_facts">Guardando nota</string>
   <string name="deck">Mazo</string>
   <string name="add">Añadir</string>

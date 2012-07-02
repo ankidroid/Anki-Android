@@ -45,6 +45,7 @@
   <string name="factadder_saving_error">Not kaydedilirken hata</string>
   <string name="cardeditor_move_note_too">Notu da taşı</string>
   <string name="cardeditor_move_to_notes_deck">Notun destesine</string>
+  <string name="pref_lang_support">Language Settings</string>
   <string name="saving_facts">Not kaydediliyor</string>
   <string name="deck">Deste</string>
   <string name="add">Ekle</string>
