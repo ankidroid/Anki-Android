@@ -27,7 +27,7 @@ git pull https://github.com/$DEVELOPER/Anki-Android.git $BRANCH
 if [ "$?" -ne "0" ]; then zenity --error --text 'pull failed'; exit 1; fi 
 
 # Compile
-ant debug
+ant clean debug
 if [ "$?" -ne "0" ]; then zenity --error --text 'compile failed'; exit 1; fi 
 
 # If compile worked, push
