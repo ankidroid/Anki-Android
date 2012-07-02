@@ -616,7 +616,7 @@ public class Themes {
     public static String getReviewerFontName() {
         switch (mCurrentTheme) {
             case THEME_WHITE:
-                return "OpenSans-Regular";
+                return "OpenSans";
             default:
                 return null;
         }

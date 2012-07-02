@@ -110,6 +110,7 @@ import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -341,7 +342,7 @@ public class Reviewer extends AnkiActivity {
     private long mSavedTimer = 0;
 
     private boolean mRefreshWebview = false;
-    private String[] mCustomFontFiles;
+    private List<AnkiFont> mCustomFontFiles;
     private String mCustomDefaultFontCss;
     private String mCustomFontStyle;
 
@@ -2845,11 +2846,24 @@ public class Reviewer extends AnkiActivity {
      */
     private String getCustomFontsStyle() {
         StringBuilder builder = new StringBuilder();
-        for (String fontPath : mCustomFontFiles) {
-            String fontFace = String.format("@font-face {font-family: \"%s\"; src: url(\"file://%s\");}",
-                    Utils.removeExtension((new File(fontPath)).getName()), fontPath);
-            Log.d(AnkiDroidApp.TAG, "adding to style: " + fontFace);
-            builder.append(fontFace);
+        for (AnkiFont font : mCustomFontFiles) {
+//            File fontfile = new File(fontPath);
+//            Typeface tf = Typeface.createFromAsset(getAssets(), "fonts/" + fontfile.getName());
+//            if (tf.isBold()) {
+//                weight = "font-weight: bold;";
+//            } else {
+//                weight = "font-weight: normal;";
+//            }
+//            if (tf.isItalic()) {
+//                style = "font-style: italic;";
+//            } else {
+//                style = "font-style: normal;";
+//            }
+//            family = Utils.removeExtension(fontfile.getName()).replaceAll("-.*$", "");
+//            String fontFace = String.format("@font-face {font-family: \"%s\"; %s %s src: url(\"file://%s\");}",
+//                    family, weight, style, fontPath);
+//            Log.d(AnkiDroidApp.TAG, "adding to style: " + fontFace);
+            builder.append(font.getStyle());
             builder.append('\n');
         }
         return builder.toString();
@@ -3206,7 +3220,7 @@ public class Reviewer extends AnkiActivity {
             Log.i(AnkiDroidApp.TAG,
                     "setScrollbarFadingEnabled could not be found due to a too low Android version (< 2.1)");
         }
-        if (mCustomFontFiles.length != 0) {
+        if (mCustomFontFiles.size() != 0) {
             return true;
         }
         return false;
