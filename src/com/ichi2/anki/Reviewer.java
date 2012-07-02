@@ -2882,10 +2882,10 @@ public class Reviewer extends AnkiActivity {
                 if (defaultFont == null || "".equals(defaultFont)) {
                     mCustomDefaultFontCss = "";
                 } else {
-                    mCustomDefaultFontCss = "BODY .question, BODY .answer { font-family: '" + defaultFont + "' }\n";
+                    mCustomDefaultFontCss = "BODY .question BODY .answer { font-family: '" + defaultFont + "' font-weight: normal; font-style: normal; font-stretch: normal; }\n";
                 }
             } else {
-                mCustomDefaultFontCss = "BODY .question, BODY .answer { font-family: '" + defaultFont + "' }\n";
+                mCustomDefaultFontCss = "BODY .question, BODY .answer { font-family: '" + defaultFont + "' font-weight: normal; font-style: normal; font-stretch: normal; }\n";
             }
         }
         return mCustomDefaultFontCss;
