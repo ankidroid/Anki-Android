@@ -119,7 +119,7 @@
     <item>Bugünkü unutulan kartları çalış</item>
     <item>İki gün sonrasını önden çalış</item>
     <item>Çıkacak olan etiketli kartları çalış</item>
-    <item>Review due cards with decreasing intervals</item>
-    <item>Cram all cards</item>
+    <item>Çıkacak kartları azalan aralıklarla çalış</item>
+    <item>Bütün kartları inekle</item>
   </string-array>
 </resources>

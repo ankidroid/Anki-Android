@@ -41,10 +41,10 @@
   <string name="pref_cat_flashcard">Gözden geçirme ekranı</string>
   <string name="show_study_options_on_deck_load">Yüklemede çalışma seçenekleri</string>
   <string name="show_study_options_on_deck_load_summ">Deste yüklenirken çalışma seçenekleri ekranını gösterir</string>
-  <string name="hide_due_count">Hide due count</string>
-  <string name="hide_due_count_summ">Hides the due count</string>
-  <string name="overtime">Overtime</string>
-  <string name="overtime_summ">Continue reviewing after time limit reached</string>
+  <string name="hide_due_count">Çıkacak sayısını gizle</string>
+  <string name="hide_due_count_summ">Çıkacak kart sayısını gizler</string>
+  <string name="overtime">Fazla mesai</string>
+  <string name="overtime_summ">Süre sınırına ulaştıktan sonra çalışmaya devam et</string>
   <string name="show_timer">Zamanlayıcıyı göster</string>
   <string name="show_timer_summ">Yanıtlamanızın ne kadar sürdüğünü gösteren zamanlayıcı</string>
   <string name="show_progress_bars">İlerleme çubuklarını göster</string>
@@ -211,8 +211,8 @@
   <string name="pref_keep_screen_on_summ">Gözden geçirme sırasında ekranın kapanmasını engelle</string>
   <string name="pref_simple_interface">Basit Arayüz</string>
   <string name="pref_simple_interface_summ">Kart değiştirmeyi hızlandırır ama yalnızca metin destekler (resim, ses vb. olmadan)</string>
-  <string name="pref_simple_interface_exclude_tags">Normal interface by tag</string>
-  <string name="pref_simple_interface_exclude_tags_summ">Do not use simple interface for these tags: XXX</string>
+  <string name="pref_simple_interface_exclude_tags">Etikete göre normal arayüz</string>
+  <string name="pref_simple_interface_exclude_tags_summ">Şu etiketler için basit arayüzü kullanma: XXX</string>
   <string name="deck_conf_deck_name">Deste adı</string>
   <string name="deck_conf_deck_description">Deste tanımı</string>
   <string name="deck_conf_conf_set">Yapılandırma seti</string>

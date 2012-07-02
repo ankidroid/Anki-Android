@@ -31,8 +31,8 @@
   <string name="delete_card_title">Notu sil</string>
   <string name="delete_card_message">Bu nottaki bütün kartlar gerçekten silinsin mi?\nArama alanı: %s</string>
   <string name="card_browser_show_marked">İşâretlileri göster</string>
-  <string name="card_browser_field">Change CardBrowser Field</string>
-  <string name="card_browser_field_title">Change CardBrowser Field</string>
+  <string name="card_browser_field">Kart Tarayıcısı Alanını Değiştir</string>
+  <string name="card_browser_field_title">Kart Tarayıcısı Alanını Değiştir</string>
   <string name="card_browser_show_suspended">Askıdakileri göster</string>
   <string name="card_browser_search_by_tag">Etikete göre süz</string>
   <string name="card_browser_tags_shown">Etiketler: %1$s</string>

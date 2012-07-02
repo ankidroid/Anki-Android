@@ -45,7 +45,7 @@
   <string name="card_suspended">Kart yeniden askıya alındı</string>
   <string name="menu_rotate">Çevir</string>
   <string name="undo">Geri Al</string>
-  <string name="finish_operation">Finishing previous operation (most likely backup creation).\nPlease wait...</string>
+  <string name="finish_operation">Önceki işlem tamamlanıyor (büyük olasılıkla yedekleme).\nLütfen bekleyin...</string>
   <string name="contextmenu_deckpicker_download_missing_media">Eksik ortamı indir</string>
   <string name="contextmenu_deckpicker_reset_language_assignments">Dil Görevlerini Sıfırla</string>
   <string name="contextmenu_deckpicker_reset_reset_message">Dil sıfırlama</string>
@@ -79,7 +79,7 @@
   <string name="studyoptions_cram_dialog_title">İneklenecek etiketler</string>
   <string name="studyoptions_load_other_deck">Başka Deste Yükle</string>
   <string name="studyoptions_load_tutorial_deck">Eğitime başla</string>
-  <string name="night_mode">Night mode</string>
+  <string name="night_mode">Gece modu</string>
   <string name="visit">Ziyaret et</string>
   <string name="later">Daha sonra</string>
   <string name="download">İndir</string>
