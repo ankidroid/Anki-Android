@@ -46,6 +46,7 @@ import com.ichi2.themes.Themes;
 
 import java.io.File;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.TreeMap;
@@ -303,10 +304,10 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
                         sharedPreferences.edit().putString("defaultFont", "").commit();
                         break;
                     case Themes.THEME_FLAT:
-                        sharedPreferences.edit().putString("defaultFont", "OpenSans-Regular").commit();
+                        sharedPreferences.edit().putString("defaultFont", "OpenSans").commit();
                         break;
                     case Themes.THEME_WHITE:
-                        sharedPreferences.edit().putString("defaultFont", "OpenSans-Regular").commit();
+                        sharedPreferences.edit().putString("defaultFont", "OpenSans").commit();
                         break;
                 }
                 Intent intent = this.getIntent();
@@ -357,13 +358,13 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
 
     /** Returns a list of the names of the installed custom fonts. */
     private String[] getCustomFonts(String defaultValue) {
-        String[] files = Utils.getCustomFonts(this);
-        int count = files.length;
+        List<AnkiFont> fonts = Utils.getCustomFonts(this);
+        int count = fonts.size();
         Log.d(AnkiDroidApp.TAG, "There are " + count + " custom fonts");
         String[] names = new String[count + 1];
         names[0] = defaultValue;
         for (int index = 1; index < count + 1; ++index) {
-            names[index] = Utils.removeExtension((new File(files[index - 1])).getName());
+            names[index] = fonts.get(index-1).getName();
             Log.d(AnkiDroidApp.TAG, "Adding custom font: " + names[index]);
         }
         return names;

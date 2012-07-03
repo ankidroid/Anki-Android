@@ -17,7 +17,7 @@ public class FuriganaFilters {
 
 
     private static String noSound(Matcher match, String repl) {
-        repl += "\\3";
+        repl += "$3";
         if (match.group(2).startsWith("sound:")) {
             // return without modification
             return match.group(0);

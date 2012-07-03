@@ -38,6 +38,7 @@ import android.widget.LinearLayout;
 
 import com.ichi2.anki.AnkiDb;
 import com.ichi2.anki.AnkiDroidApp;
+import com.ichi2.anki.AnkiFont;
 import com.ichi2.anki2.R;
 import com.ichi2.async.Connection;
 import com.mindprod.common11.BigDate;
@@ -1030,7 +1031,7 @@ public class Utils {
 
 
     /** Returns a list of files for the installed custom fonts. */
-    public static String[] getCustomFonts(Context context) {
+    public static List<AnkiFont> getCustomFonts(Context context) {
         SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(context);
         String deckPath = preferences.getString("deckPath", AnkiDroidApp.getDefaultAnkiDroidDirectory());
         String fontsPath = deckPath + "/fonts/";
@@ -1042,27 +1043,20 @@ public class Utils {
         	fontsList = fontsDir.listFiles();
         }
         String[] ankiDroidFonts = null;
-        String assetPath = "/android_asset/fonts/";
-        int adFontsCount = 0;
 		try {
 			ankiDroidFonts = context.getAssets().list("fonts");
-			adFontsCount = ankiDroidFonts.length;
 		} catch (IOException e) {
 			Log.e(AnkiDroidApp.TAG, "Error on retrieving ankidroid fonts: " + e);
 		}
-		String[] fonts = new String[fontsCount + adFontsCount];
+        List<AnkiFont> fonts = new ArrayList<AnkiFont>();
         for (int i = 0; i < fontsCount; i++) {
-        	fonts[i] = fontsList[i].getAbsolutePath();
+        	fonts.add(new AnkiFont(null, fontsList[i].getAbsolutePath(), false));
         }
-        for (int i = fontsCount; i < fonts.length; i++) {
-        	fonts[i] = assetPath + ankiDroidFonts[i - fontsCount];        	
+        for (int i = 0; i < ankiDroidFonts.length; i++) {
+        	fonts.add(new AnkiFont(context, ankiDroidFonts[i], true));        	
         }
 
-        if (fonts.length > 0) {
-        	return fonts;
-        } else {
-        	return new String[0];
-        }
+       	return fonts;
     }
 
 
