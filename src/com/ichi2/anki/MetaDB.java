@@ -464,11 +464,14 @@ public class MetaDB {
         Cursor cursor = null;
         int due = 0;
         try {
-            cursor = mMetaDb.query("widgetStatus", new String[] { "dueCards", "failedCards", "newCards" }, null, null,
+            cursor = mMetaDb.query("smallWidgetStatus", new String[] { "left" }, null, null,
                     null, null, null);
-            while (cursor.moveToNext()) {
-                due += cursor.getInt(0) + cursor.getInt(1) + cursor.getInt(2);
+            if (cursor.moveToFirst()) {
+            	return cursor.getInt(0);
             }
+//            while (cursor.moveToNext()) {
+//                due += cursor.getInt(0) + cursor.getInt(1) + cursor.getInt(2);
+//            }
         } catch (SQLiteException e) {
             Log.e(AnkiDroidApp.TAG, "Error while querying widgetStatus", e);
         } finally {
