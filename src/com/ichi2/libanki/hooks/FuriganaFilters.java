@@ -6,7 +6,7 @@ import java.util.regex.Pattern;
 
 public class FuriganaFilters {
     private static final Pattern r = Pattern.compile(" ?([^\\[]+?)\\[(.+?)\\]([^ ]+?|$)");
-    private static final String ruby = "<ruby><rb>\\1</rb><rt>\\2</rt></ruby>";
+    private static final String ruby = "<ruby><rb>$1</rb><rt>$2</rt></ruby>";
 
 
     public void install(Hooks h) {
@@ -17,7 +17,7 @@ public class FuriganaFilters {
 
 
     private static String noSound(Matcher match, String repl) {
-        repl += "\\3";
+        repl += "$3";
         if (match.group(2).startsWith("sound:")) {
             // return without modification
             return match.group(0);
