@@ -94,7 +94,6 @@ import com.ichi2.themes.StyledProgressDialog;
 import com.ichi2.themes.Themes;
 import com.ichi2.utils.DiffEngine;
 import com.ichi2.utils.RubyParser;
-import com.ichi2.widget.DeckStatus;
 import com.ichi2.widget.WidgetStatus;
 
 import org.amr.arabic.ArabicUtilities;
