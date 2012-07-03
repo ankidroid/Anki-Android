@@ -377,8 +377,7 @@ public class DeckTask extends
 					"doInBackgroundAnswerCard - RuntimeException on answering card: "
 							+ e);
 			AnkiDroidApp.saveExceptionReportFile(e, "doInBackgroundAnswerCard");
-			throw new RuntimeException(e);
-//			return new TaskData(false);
+			return new TaskData(false);
 		}
 		return new TaskData(true);
 	}
@@ -417,44 +416,34 @@ public class DeckTask extends
 					res.getString(R.string.open_collection)));
 
 			// load collection
-			Log.i(AnkiDroidApp.TAG,
-					"doInBackgroundOpenCollection - File exists -> Loading collection...");
 			try {
 				col = Collection.openCollection(collectionFile);
-
-				// create tutorial deck if needed
-				SharedPreferences prefs = AnkiDroidApp
-						.getSharedPrefs(AnkiDroidApp.getInstance()
-								.getBaseContext());
-				if (prefs.contains("createTutorial")
-						&& prefs.getBoolean("createTutorial", false)) {
-					prefs.edit().remove("createTutorial").commit();
-					publishProgress(new TaskData(
-							res.getString(R.string.tutorial_load)));
-					doInBackgroundLoadTutorial(new TaskData(col));
-				}
 			} catch (RuntimeException e) {
 				BackupManager.restoreCollectionIfMissing(collectionFile);
+				Log.e(AnkiDroidApp.TAG,
+						"doInBackgroundOpenCollection - RuntimeException on opening collection: "
+								+ e);
+				AnkiDroidApp
+						.saveExceptionReportFile(e, "doInBackgroundOpenCollection");
+				return new TaskData(false);
+			}
+			// create tutorial deck if needed
+			SharedPreferences prefs = AnkiDroidApp
+					.getSharedPrefs(AnkiDroidApp.getInstance()
+							.getBaseContext());
+			if (prefs.contains("createTutorial")
+					&& prefs.getBoolean("createTutorial", false)) {
+				prefs.edit().remove("createTutorial").commit();
+				publishProgress(new TaskData(
+						res.getString(R.string.tutorial_load)));
+				doInBackgroundLoadTutorial(new TaskData(col));
 			}
 		} else {
 			Log.i(AnkiDroidApp.TAG,
 					"doInBackgroundOpenCollection: collection still open - reusing it");
 			col = oldCol;
 		}
-		if (col == null) {
-			return new TaskData(col);
-		}
-		try {
-			// if (reset) {
-			// col.getSched().reset();
-			// }
-			return new TaskData(col, doInBackgroundLoadDeckCounts(
-					new TaskData(col)).getObjArray());
-		} catch (RuntimeException e) {
-			col = null;
-			throw new RuntimeException(e);
-//			return new TaskData(col);
-		}
+		return new TaskData(col, doInBackgroundLoadDeckCounts(new TaskData(col)).getObjArray());
 	}
 
 	private TaskData doInBackgroundLoadDeckCounts(TaskData... params) {
@@ -468,8 +457,7 @@ public class DeckTask extends
 		} catch (RuntimeException e) {
 			Log.e(AnkiDroidApp.TAG, "doInBackgroundLoadDeckCounts - error: "
 					+ e);
-			throw new RuntimeException(e);
-//			return null;
+			return null;
 		}
 	}
 
@@ -706,8 +694,8 @@ public class DeckTask extends
 		Log.i(AnkiDroidApp.TAG, "doInBackgroundCloseCollection");
 		Collection col = params[0].getCollection();
 		if (col != null) {
-			WidgetStatus.waitToFinish();
 			try {
+				WidgetStatus.waitToFinish();
 				String path = col.getPath();
 				col.close(true);
 				BackupManager.performBackup(path);
@@ -900,9 +888,11 @@ public class DeckTask extends
 				return new TaskData(true);
 			}
 		} catch (SQLException e) {
-			throw new RuntimeException(e);
+			AnkiDroidApp.saveExceptionReportFile(e, "doInBackgroundLoadTutorial");
+			return new DeckTask.TaskData(false);
 		} catch (JSONException e) {
-			throw new RuntimeException(e);
+			AnkiDroidApp.saveExceptionReportFile(e, "doInBackgroundLoadTutorial");
+			return new DeckTask.TaskData(false);
 		} finally {
 			col.getDb().getDatabase().endTransaction();
 		}

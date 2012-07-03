@@ -1726,16 +1726,22 @@ public class Reviewer extends AnkiActivity {
 
 
     private int getRecommendedEase(boolean easy) {
-        switch (mSched.answerButtons(mCurrentCard)) {
-        case 2:
-            return EASE_HARD;
-        case 3:
-            return easy ? EASE_MID : EASE_HARD;
-        case 4:
-            return easy ? EASE_EASY : EASE_MID;
-        default:
-            return 0;
-        }
+    	try {
+            switch (mSched.answerButtons(mCurrentCard)) {
+            case 2:
+                return EASE_HARD;
+            case 3:
+                return easy ? EASE_MID : EASE_HARD;
+            case 4:
+                return easy ? EASE_EASY : EASE_MID;
+            default:
+                return 0;
+            }    		
+    	} catch (RuntimeException e) {
+			AnkiDroidApp.saveExceptionReportFile(e, "Reviewer-getRecommendedEase");
+            closeReviewer(DeckPicker.RESULT_DB_ERROR, true);
+    		return 0;
+    	}
     }
 
     private void answerCard(int ease) {
@@ -2007,7 +2013,14 @@ public class Reviewer extends AnkiActivity {
         // hide flipcard button
         switchVisibility(mFlipCardLayout, View.GONE);
 
-        int buttonCount = mSched.answerButtons(mCurrentCard);
+        int buttonCount;
+        try {
+        	buttonCount = mSched.answerButtons(mCurrentCard);
+    	} catch (RuntimeException e) {
+    		AnkiDroidApp.saveExceptionReportFile(e, "Reviewer-showEaseButtons");
+            closeReviewer(DeckPicker.RESULT_DB_ERROR, true);
+            return;
+    	}
 
         // Set correct label for each button
         switch (buttonCount) {

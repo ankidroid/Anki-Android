@@ -550,10 +550,6 @@ public class DeckPicker extends FragmentActivity {
 
         @Override
         public void onPostExecute(DeckTask.TaskData result) {
-            if (result == null) {
-                // TODO: error handling
-                return;
-            }
             Object[] res = result.getObjArray();
             updateDecksList((TreeSet<Object[]>) res[0], (Integer) res[1], (Integer) res[2]);
         }
@@ -2396,6 +2392,10 @@ public class DeckPicker extends FragmentActivity {
 
 
     private void updateDecksList(TreeSet<Object[]> decks, int eta, int count) {
+    	if (decks == null) {
+    		Log.e(AnkiDroidApp.TAG, "updateDecksList: empty decks list");
+    		return;
+    	}
         mDeckList.clear();
         int due = 0;
         for (Object[] d : decks) {
