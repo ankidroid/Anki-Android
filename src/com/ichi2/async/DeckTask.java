@@ -443,7 +443,12 @@ public class DeckTask extends
 					"doInBackgroundOpenCollection: collection still open - reusing it");
 			col = oldCol;
 		}
-		return new TaskData(col, doInBackgroundLoadDeckCounts(new TaskData(col)).getObjArray());
+		Object[] counts = null;
+		DeckTask.TaskData result = doInBackgroundLoadDeckCounts(new TaskData(col));
+		if (result != null) {
+			counts = result.getObjArray();
+		}
+		return new TaskData(col, counts);
 	}
 
 	private TaskData doInBackgroundLoadDeckCounts(TaskData... params) {
