@@ -426,6 +426,8 @@ public class DeckPicker extends FragmentActivity {
                     } else if (resultType.equals("finishError")) {
                         mDialogMessage = res.getString(R.string.sync_log_finish_error);
                         showDialog(DIALOG_SYNC_LOG);
+                    } else if (resultType.equals("IOException")) {
+                        showDialog(DIALOG_DB_ERROR);
                     } else if (resultType.equals("genericError")) {
                         mDialogMessage = res.getString(R.string.sync_generic_error);
                         showDialog(DIALOG_SYNC_LOG);

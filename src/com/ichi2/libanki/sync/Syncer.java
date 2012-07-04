@@ -241,7 +241,8 @@ public class Syncer {
         } catch (IllegalStateException e) {
             throw new RuntimeException(e);
         } catch (IOException e) {
-            throw new RuntimeException(e);
+			AnkiDroidApp.saveExceptionReportFile(e, "Syncer-sync");
+        	return new Object[] { "IOException" };
         }
         return new Object[] { "success" };
     }
