@@ -1144,6 +1144,12 @@ public class Sched {
             try {
                 delay = ja.getDouble(len - left);
             } catch (JSONException e) {
+            	if (conf.has("delays")) {
+            		delay = conf.getJSONArray("delays").getDouble(0);
+            	} else {
+            		// user deleted final step; use dummy value
+            		delay = 1;
+            	}
                 delay = ja.getDouble(0);
             }
             return (int) (delay * 60.0);
@@ -2528,7 +2534,7 @@ public class Sched {
 
     /** Put cards at the end of the new queue. */
     public void forgetCards(long[] ids) {
-        mCol.getDb().execute("update cards set type=0,queue=0,ivl=0 where id in " + Utils.ids2str(ids));
+        mCol.getDb().execute("update cards set type=0,queue=0,ivl=0,factor=2500 where id in " + Utils.ids2str(ids));
         int pmax = mCol.getDb().queryScalar("SELECT max(due) FROM cards WHERE type=0", false);
         // takes care of mod + usn
         sortCards(ids, pmax + 1);

@@ -250,6 +250,12 @@ public class Media {
     }
 
 
+    public String stripAudio(String txt) {
+    	Matcher m = fMediaRegexps[0].matcher(txt);
+    	return m.replaceAll("");
+    }
+
+
     /**
      * Percent-escape UTF-8 characters in local image filenames.
      * 

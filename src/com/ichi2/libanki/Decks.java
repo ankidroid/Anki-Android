@@ -84,7 +84,7 @@ public class Decks {
             + "'leechAction': 0 }, "
             // type 0=suspend, 1=tagonly
             + "'rev': { " + "'perDay': 100, " + "'ease4': 1.3, " + "'fuzz': 0.05, " + "'minSpace': 1, "
-            + "'ivlFct': 1, " + "'maxIvl': 36500 }, " + "'maxTaken': 60, " + "'timer': 0, " + "'autoplay': True, "
+            + "'ivlFct': 1, " + "'maxIvl': 36500 }, " + "'maxTaken': 60, " + "'timer': 0, " + "'autoplay': True, 'replayq': True "
             + "'mod': 0, " + "'usn': 0 }";
 
     private Collection mCol;
@@ -385,8 +385,6 @@ public class Decks {
         if (allNames().contains(newName) || newName.length() == 0) {
             return false;
         }
-        // ensure we have parents
-        newName = _ensureParents(newName);
         // rename children
         String oldName;
         try {
@@ -403,6 +401,10 @@ public class Decks {
             g.put("name", newName);
             mDeckIds.put(newName, mDeckIds.remove(oldName));
             save(g);
+            // ensure we have parents
+            newName = _ensureParents(newName);
+            // renaming may have altered active did order
+            maybeAddToActive();
         } catch (JSONException e) {
             throw new RuntimeException(e);
         }

@@ -1067,7 +1067,7 @@ public class Models {
         try {
             omType = oldModel.getInt("type");
             nmType = newModel.getInt("type");
-            nflds = newModel.getJSONArray("flds").length();
+            nflds = newModel.getJSONArray("tmpls").length();
         } catch (JSONException e) {
             throw new RuntimeException(e);
         }

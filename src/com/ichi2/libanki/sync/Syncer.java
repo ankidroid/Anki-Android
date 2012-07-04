@@ -605,7 +605,7 @@ public class Syncer {
             // notes first, so we don't end up with duplicate graves
             mCol._remNotes(Utils.jsonArrayToLongArray(graves.getJSONArray("notes")));
             // then cards
-            mCol.remCards(Utils.jsonArrayToLongArray(graves.getJSONArray("cards")));
+            mCol.remCards(Utils.jsonArrayToLongArray(graves.getJSONArray("cards")), false);
             // and decks
             JSONArray decks = graves.getJSONArray("decks");
             for (int i = 0; i < decks.length(); i++) {
