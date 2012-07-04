@@ -5,8 +5,8 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class FuriganaFilters {
-    private static final Pattern r = Pattern.compile(" ?([^ >]+?)\\[(.+?)\\]");
-    private static final String ruby = "<ruby><rb>\\1</rb><rt>\\2</rt></ruby>";
+    private static final Pattern r = Pattern.compile(" ?([^\\[]+?)\\[(.+?)\\]([^ ]+?|$)");
+    private static final String ruby = "<ruby><rb>$1</rb><rt>$2</rt></ruby>";
 
 
     public void install(Hooks h) {
