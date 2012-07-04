@@ -1148,9 +1148,8 @@ public class Sched {
             		delay = conf.getJSONArray("delays").getDouble(0);
             	} else {
             		// user deleted final step; use dummy value
-            		delay = 1;
+            		delay = 1.0;
             	}
-                delay = ja.getDouble(0);
             }
             return (int) (delay * 60.0);
         } catch (JSONException e) {

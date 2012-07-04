@@ -64,6 +64,7 @@ public class Media {
 
     private static final Pattern fMediaRegexps[] = { Pattern.compile("(?i)(\\[sound:([^]]+)\\])"),
             Pattern.compile("(?i)(<img[^>]+src=[\"']?([^\"'>]+)[\"']?[^>]*>)") };
+    private static final Pattern fSoundRegexps = Pattern.compile("\\[sound:.*?\\]");
     private static final Pattern fRemoteFilePattern = Pattern.compile("(https?|ftp)://");
     private static final Pattern fDangerousCharacters = Pattern.compile("[]\\[<>:/\\\\&?\\\"\\|]");
     private static final Pattern fFileOrdinal = Pattern.compile(" \\((\\d+)\\)$");
@@ -251,7 +252,7 @@ public class Media {
 
 
     public String stripAudio(String txt) {
-    	Matcher m = fMediaRegexps[0].matcher(txt);
+    	Matcher m = fSoundRegexps.matcher(txt);
     	return m.replaceAll("");
     }
 
