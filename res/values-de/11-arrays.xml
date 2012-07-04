@@ -96,7 +96,7 @@
   </string-array>
   <string-array name="leech_action_labels">
     <item>Suspend card</item>
-    <item>Tag only</item>
+    <item>Nur Schlagwort</item>
     <item>Reset as new</item>
   </string-array>
   <string-array name="new_order_labels">

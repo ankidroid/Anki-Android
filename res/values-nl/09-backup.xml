@@ -29,6 +29,10 @@
   <string name="contextmenu_deckpicker_remove_backups">Verwijder de back-ups</string>
   <string name="backup_restore">Back-up terugzetten</string>
   <string name="backup_new_collection">Nieuwe collectie</string>
+  <string name="backup_del_collection">Delete collection and create new one</string>
+  <string name="backup_del_collection_question">Do you really want to delete the collection and create a new one? This will drop all your learning progress and delete all cards!</string>
+  <string name="backup_full_sync_from_server">Full sync from server</string>
+  <string name="backup_full_sync_from_server_question">Do you really want to overwrite your collection with the one from AnkiWeb? This will drop all your learning progress and added information since your last sync!</string>
   <string name="error_handling_title">Foutafhandeling</string>
   <string name="error_handling_options">Opties</string>
   <string name="backup_retry_opening">Opnieuw openen</string>
