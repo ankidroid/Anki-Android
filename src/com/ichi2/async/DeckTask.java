@@ -781,11 +781,13 @@ public class DeckTask extends
 	}
 
 	private TaskData doInBackgroundRestoreDeck(TaskData... params) {
-		// Log.i(AnkiDroidApp.TAG, "doInBackgroundRestoreDeck");
-		// String[] paths = params[0].getDeckList();
-		// return new TaskData(BackupManager.restoreDeckBackup(paths[0],
-		// paths[1]));
-		return null;
+		 Log.i(AnkiDroidApp.TAG, "doInBackgroundRestoreDeck");
+		 Object[] data = params[0].getObjArray();
+		 Collection col = (Collection) data[0];
+		 if (col != null) {
+			 col.close(false);
+		 }
+		 return new TaskData(BackupManager.restoreBackup((String)data[1], (String)data[2]));
 	}
 
 	private TaskData doInBackgroundUpdateCardBrowserList(TaskData... params) {

@@ -177,17 +177,12 @@ public class DeckPicker extends FragmentActivity {
 
     private StyledProgressDialog mProgressDialog;
     private StyledOpenCollectionDialog mOpenCollectionDialog;
-    private StyledDialog mDeckNotLoadedAlert;
-    private StyledDialog mNoSpaceLeftAlert;
     private ImageButton mAddButton;
     private ImageButton mCardsButton;
     private ImageButton mStatsButton;
     private ImageButton mSyncButton;
 
-    // private File[] mBackups;
-    // private ArrayList<String> mBrokenDecks;
-    // private boolean mRestoredOrDeleted = false;
-    // private ArrayList<String> mAlreadyDealtWith;
+    private File[] mBackups;
 
     private SimpleAdapter mDeckListAdapter;
     private ArrayList<HashMap<String, String>> mDeckList;
@@ -654,41 +649,38 @@ public class DeckPicker extends FragmentActivity {
     };
 
 
-    // DeckTask.TaskListener mRestoreDeckHandler = new DeckTask.TaskListener() {
-    //
-    // @Override
-    // public void onPreExecute() {
-    // mProgressDialog = StyledProgressDialog.show(DeckPicker.this, "", getResources()
-    // .getString(R.string.backup_restore_deck), true);
-    // }
-    //
-    //
-    // @Override
-    // public void onPostExecute(DeckTask.TaskData result) {
-    // switch (result.getInt()) {
-    // case BackupManager.RETURN_DECK_RESTORED:
-    // mRestoredOrDeleted = true;
-    // // handleRestoreDecks(true);
-    // break;
-    // case BackupManager.RETURN_ERROR:
-    // mDeckNotLoadedAlert.show();
-    // Themes.showThemedToast(DeckPicker.this, getResources().getString(R.string.backup_restore_error), true);
-    // break;
-    // case BackupManager.RETURN_NOT_ENOUGH_SPACE:
-    // mDeckNotLoadedAlert.show();
-    // mNoSpaceLeftAlert.show();
-    // break;
-    // }
-    // if (mProgressDialog != null && mProgressDialog.isShowing()) {
-    // mProgressDialog.dismiss();
-    // }
-    // }
-    //
-    // @Override
-    // public void onProgressUpdate(TaskData... values) {
-    // }
-    //
-    // };
+     DeckTask.TaskListener mRestoreDeckHandler = new DeckTask.TaskListener() {
+    
+     @Override
+     public void onPreExecute() {
+    	 mProgressDialog = StyledProgressDialog.show(DeckPicker.this, "", getResources().getString(R.string.backup_restore_deck), true);
+     }
+    
+    
+     @Override
+     public void onPostExecute(DeckTask.TaskData result) {
+    	 switch (result.getInt()) {
+    	 case BackupManager.RETURN_DECK_RESTORED:
+    		 loadCollection();
+    		 break;
+    	 case BackupManager.RETURN_ERROR:
+    		 Themes.showThemedToast(DeckPicker.this, getResources().getString(R.string.backup_restore_error), true);
+    		 showDialog(DIALOG_ERROR_HANDLING);
+    		 break;
+    	 case BackupManager.RETURN_NOT_ENOUGH_SPACE:
+    		 showDialog(DIALOG_NO_SPACE_LEFT);
+    		 break;
+    	 }
+    	 if (mProgressDialog != null && mProgressDialog.isShowing()) {
+    		 mProgressDialog.dismiss();
+    	 }
+     }
+    
+     @Override
+     public void onProgressUpdate(TaskData... values) {
+     }
+    
+     };
 
     // ----------------------------------------------------------------------------
     // ANDROID METHODS
@@ -1107,85 +1099,6 @@ public class DeckPicker extends FragmentActivity {
                 dialog = builder.create();
                 break;
 
-            // builder.setTitle(res.getString(R.string.backup_manager_title));
-            // builder.setIcon(android.R.drawable.ic_dialog_alert);
-            // builder.setPositiveButton(res.getString(R.string.retry), new
-            // OnClickListener() {
-            //
-            // @Override
-            // public void onClick(DialogInterface dialog, int which) {
-            // displayProgressDialogAndLoadDeck();
-            // }
-            // });
-            // builder.setNegativeButton(res.getString(R.string.backup_restore), new
-            // OnClickListener() {
-            //
-            // @Override
-            // public void onClick(DialogInterface dialog, int which) {
-            // Resources res = getResources();
-            // mBackups = BackupManager.getDeckBackups(new File(mDeckFilename));
-            // if (mBackups.length == 0) {
-            // StyledDialog.Builder builder = new
-            // StyledDialog.Builder(StudyOptions.this);
-            // builder.setTitle(res.getString(R.string.backup_manager_title))
-            // .setIcon(android.R.drawable.ic_dialog_alert)
-            // .setMessage(res.getString(R.string.backup_restore_no_backups))
-            // .setPositiveButton(res.getString(R.string.ok), new
-            // Dialog.OnClickListener() {
-            //
-            // @Override
-            // public void onClick(DialogInterface dialog, int which) {
-            // showDialog(DIALOG_DECK_NOT_LOADED);
-            // }
-            // }).setCancelable(true).setOnCancelListener(new OnCancelListener() {
-            //
-            // @Override
-            // public void onCancel(DialogInterface arg0) {
-            // showDialog(DIALOG_DECK_NOT_LOADED);
-            // }
-            // }).show();
-            // } else {
-            // String[] dates = new String[mBackups.length];
-            // for (int i = 0; i < mBackups.length; i++) {
-            // dates[i] =
-            // mBackups[i].getName().replaceAll(".*-(\\d{4}-\\d{2}-\\d{2}).anki",
-            // "$1");
-            // }
-            // StyledDialog.Builder builder = new
-            // StyledDialog.Builder(StudyOptions.this);
-            // builder.setTitle(res.getString(R.string.backup_restore_select_title))
-            // .setIcon(android.R.drawable.ic_input_get)
-            // .setSingleChoiceItems(dates, dates.length, new
-            // DialogInterface.OnClickListener(){
-            //
-            // @Override
-            // public void onClick(DialogInterface dialog, int which) {
-            // // DeckTask.launchDeckTask(DeckTask.TASK_TYPE_RESTORE_DECK,
-            // mRestoreDeckHandler, new DeckTask.TaskData(null, new String[]
-            // {mDeckFilename, mBackups[which].getPath()}, 0, 0));
-            // dialog.dismiss();
-            // }
-            // }).setCancelable(true).setOnCancelListener(new OnCancelListener() {
-            //
-            // @Override
-            // public void onCancel(DialogInterface arg0) {
-            // showDialog(DIALOG_DECK_NOT_LOADED);
-            // }
-            // }).show();
-            // }
-            // }
-            // });
-            // builder.setNeutralButton(res.getString(R.string.backup_repair_deck),
-            // new OnClickListener() {
-            //
-            // @Override
-            // public void onClick(DialogInterface dialog, int which) {
-            // DeckTask.launchDeckTask(DeckTask.TASK_TYPE_REPAIR_DECK,
-            // mRepairDeckHandler, new DeckTask.TaskData(mDeckFilename));
-            // }
-            // });
-            // builder.setCancelable(true);
-
             case DIALOG_LOAD_FAILED:
                 builder.setMessage(res.getString(R.string.open_collection_failed_message,
                         BackupManager.BROKEN_DECKS_SUFFIX, res.getString(R.string.repair_deck)));
@@ -1448,7 +1361,7 @@ public class DeckPicker extends FragmentActivity {
                         DeckTask.launchDeckTask(DeckTask.TASK_TYPE_REPAIR_DECK, mRepairDeckHandler,
                                 new DeckTask.TaskData(mCol, mCol.getPath()));
                     }
-                });
+            	});
                 builder.setNegativeButton(res.getString(R.string.no), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
@@ -1530,53 +1443,46 @@ public class DeckPicker extends FragmentActivity {
                 break;
 
              case DIALOG_RESTORE_BACKUP:
-            // mBackups = BackupManager.getDeckBackups(new File(mDeckFilename));
-            // if (mBackups.length == 0) {
-            // StyledDialog d = (StyledDialog) onCreateDialog(DIALOG_OK);
-            // d.setTitle(getResources().getString(R.string.backup_restore));
-            // d.setMessage(res.getString(R.string.backup_restore_no_backups));
-            // d.setPositiveButton(res.getString(R.string.ok), new
-            // Dialog.OnClickListener() {
-            // @Override
-            // public void onClick(DialogInterface dialog, int which) {
-            // showDialog(DIALOG_ERROR_HANDLING);
-            // }
-            // });
-            // d.setCancelable(true).setOnCancelListener(new OnCancelListener() {
-            // @Override
-            // public void onCancel(DialogInterface arg0) {
-            // showDialog(DIALOG_ERROR_HANDLING);
-            // }
-            // });
-            // d.show();
-            // } else {
-            // String[] dates = new String[mBackups.length];
-            // for (int i = 0; i < mBackups.length; i++) {
-            // dates[i] = mBackups[i].getName().replaceAll(".*-(\\d{4}-\\d{2}-\\d{2}).anki2", "$1");
-            // }
-            // StyledDialog.Builder builder = new
-            // StyledDialog.Builder(StudyOptions.this);
-            // builder.setTitle(res.getString(R.string.backup_restore_select_title))
-            // .setIcon(android.R.drawable.ic_input_get)
-            // .setSingleChoiceItems(dates, dates.length, new
-            // DialogInterface.OnClickListener(){
-            //
-            // @Override
-            // public void onClick(DialogInterface dialog, int which) {
-            // // DeckTask.launchDeckTask(DeckTask.TASK_TYPE_RESTORE_DECK,
-            // mRestoreDeckHandler, new DeckTask.TaskData(null, new String[]
-            // {mDeckFilename, mBackups[which].getPath()}, 0, 0));
-            // dialog.dismiss();
-            // }
-            // }).setCancelable(true).setOnCancelListener(new OnCancelListener() {
-            //
-            // @Override
-            // public void onCancel(DialogInterface arg0) {
-            // showDialog(DIALOG_DECK_NOT_LOADED);
-            // }
-            // }).show();
-            // }
-            // break;
+            	 mBackups = BackupManager.getBackups(new File(AnkiDroidApp.getCollectionPath()));
+            	 if (mBackups.length == 0) {
+            		 builder.setTitle(getResources().getString(R.string.backup_restore));
+            		 builder.setMessage(res.getString(R.string.backup_restore_no_backups));
+            		 builder.setPositiveButton(res.getString(R.string.ok), new
+            				 Dialog.OnClickListener() {
+            			 @Override
+            			 public void onClick(DialogInterface dialog, int which) {
+            				 showDialog(DIALOG_ERROR_HANDLING);
+            			 }
+            		 });
+            		 builder.setCancelable(true).setOnCancelListener(new OnCancelListener() {
+            			 @Override
+            			 public void onCancel(DialogInterface arg0) {
+            				 showDialog(DIALOG_ERROR_HANDLING);
+            			 }
+            		 });
+            	 } else {
+            		 String[] dates = new String[mBackups.length];
+            		 for (int i = 0; i < mBackups.length; i++) {
+            			 dates[i] = mBackups[i].getName().replaceAll(".*-(\\d{4}-\\d{2}-\\d{2})-(\\d{2})-(\\d{2}).anki2", "$1 ($2:$3 h)");
+            		 }
+            		 builder.setTitle(res.getString(R.string.backup_restore_select_title));
+            		 builder.setIcon(android.R.drawable.ic_input_get);
+            		 builder.setSingleChoiceItems(dates, dates.length, new DialogInterface.OnClickListener(){
+            			 
+            			 @Override
+            			 public void onClick(DialogInterface dialog, int which) {
+            				  DeckTask.launchDeckTask(DeckTask.TASK_TYPE_RESTORE_DECK, mRestoreDeckHandler, new DeckTask.TaskData(new Object[]{mCol, AnkiDroidApp.getCollectionPath(), mBackups[which].getPath()}));
+            			 }
+            		 	});
+            		 builder.setCancelable(true).setOnCancelListener(new OnCancelListener() {          
+            			 @Override
+            			 public void onCancel(DialogInterface arg0) {
+            				 showDialog(DIALOG_ERROR_HANDLING);
+            			 }
+            		 });
+            	 }
+        		 dialog = builder.create();
+        		 break;
 
              case DIALOG_NEW_COLLECTION:
                  builder.setTitle(res.getString(R.string.backup_new_collection));
@@ -1718,7 +1624,7 @@ public class DeckPicker extends FragmentActivity {
                                 showDialog(DIALOG_REPAIR_COLLECTION);
                                 return;
                             case 3:
-//                                showDialog(DIALOG_RESTORE_BACKUP);
+                                showDialog(DIALOG_RESTORE_BACKUP);
                                 return;
                             case 4:
                                 showDialog(DIALOG_FULL_SYNC_FROM_SERVER);
