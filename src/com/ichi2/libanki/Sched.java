@@ -1144,7 +1144,7 @@ public class Sched {
             try {
                 delay = ja.getDouble(len - left);
             } catch (JSONException e) {
-            	if (conf.has("delays")) {
+            	if (conf.getJSONArray("delays").length() > 0) {
             		delay = conf.getJSONArray("delays").getDouble(0);
             	} else {
             		// user deleted final step; use dummy value

@@ -968,6 +968,9 @@ public class Models {
 
         private static String clozeText(String txt, String ord, char type) {
             Matcher m = Pattern.compile(String.format(Locale.US, clozeReg, ord)).matcher(txt);
+            if (!m.find()) {
+                return "";
+            }
             // replace chozen cloze with type
             if (type == 'q') {
                 if (m.group(3) != null && m.group(3).length() != 0) {
