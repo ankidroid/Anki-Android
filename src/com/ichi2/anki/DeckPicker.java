@@ -487,11 +487,11 @@ public class DeckPicker extends FragmentActivity {
         @Override
         public void onPostExecute(DeckTask.TaskData result) {
             mCol = result.getCollection();
-            if (mCol == null) {
+            Object[] res = result.getObjArray();
+            if (mCol == null || res == null) {
                 showDialog(DIALOG_LOAD_FAILED);
                 return;
             }
-            Object[] res = result.getObjArray();
             updateDecksList((TreeSet<Object[]>) res[0], (Integer) res[1], (Integer) res[2]);
             // select last loaded deck if any
             if (mFragmented) {
