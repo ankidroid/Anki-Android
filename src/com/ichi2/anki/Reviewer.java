@@ -1037,11 +1037,9 @@ public class Reviewer extends AnkiActivity {
                 Lookup.initialize(this, mCollectionFilename);
             }
 
-            // Load the template for the card and set on it the available width for images
+            // Load the template for the card
             try {
                 mCardTemplate = Utils.convertStreamToString(getAssets().open("card_template.html"));
-                mCardTemplate = mCardTemplate.replaceFirst("var availableWidth = \\d*;", "var availableWidth = "
-                        + getAvailableWidthInCard() + ";");
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -2650,6 +2648,9 @@ public class Reviewer extends AnkiActivity {
         if (mNightMode) {
             content = Models.invertColors(content);
         }
+        // Calculate available width and provide it to javascript for image resizing.
+        mCardTemplate = mCardTemplate.replaceFirst("var availableWidth = \\d*;", 
+                String.format(Locale.US, "var availableWidth = %d;", getAvailableWidthInCard()));
 
         mCardContent = new SpannedString(mCardTemplate.replace("::content::", content).replace("::style::",
                 style.toString()));
