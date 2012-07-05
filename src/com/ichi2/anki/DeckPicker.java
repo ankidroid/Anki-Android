@@ -869,6 +869,19 @@ public class DeckPicker extends FragmentActivity {
     }
 
 
+    @Override
+    public void onSaveInstanceState(Bundle savedInstanceState) {
+      super.onSaveInstanceState(savedInstanceState);
+      savedInstanceState.putLong("mCurrentDid", mCurrentDid);
+//      savedInstanceState.putSerializable("mDeckList", mDeckList);
+    }
+    @Override
+    public void onRestoreInstanceState(Bundle savedInstanceState) {
+      super.onRestoreInstanceState(savedInstanceState);
+      mCurrentDid = savedInstanceState.getLong("mCurrentDid");
+//      mDeckList = (ArrayList<HashMap<String, String>>) savedInstanceState.getSerializable("mDeckList");
+    }
+
     private void loadCollection() {
     	String path = AnkiDroidApp.getCollectionPath();
         Collection col = Collection.currentCollection();
@@ -1266,6 +1279,9 @@ public class DeckPicker extends FragmentActivity {
                 break;
 
             case DIALOG_DELETE_DECK:
+            	if (mCol == null || mDeckList == null) {
+            		return null;
+            	}
                 builder.setTitle(res.getString(R.string.delete_deck_title));
                 builder.setIcon(android.R.drawable.ic_dialog_alert);
                 builder.setMessage(String.format(res.getString(R.string.delete_deck_message), "\'"
@@ -1563,12 +1579,18 @@ public class DeckPicker extends FragmentActivity {
         StyledDialog ad = (StyledDialog) dialog;
         switch (id) {
             case DIALOG_DELETE_DECK:
+            	if (mCol == null || mDeckList == null) {
+            		return;
+            	}
                 mCurrentDid = Long.parseLong(mDeckList.get(mContextMenuPosition).get("did"));
                 ad.setMessage(String.format(res.getString(R.string.delete_deck_message),
                         "\'" + mCol.getDecks().name(mCurrentDid) + "\'"));
                 break;
 
             case DIALOG_CONTEXT_MENU:
+            	if (mCol == null || mDeckList == null) {
+            		return;
+            	}
                 mCurrentDid = Long.parseLong(mDeckList.get(mContextMenuPosition).get("did"));
                 ad.setTitle(mCol.getDecks().name(mCurrentDid));
                 break;

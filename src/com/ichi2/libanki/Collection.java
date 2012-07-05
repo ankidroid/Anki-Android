@@ -122,6 +122,7 @@ public class Collection {
     	return openCollection(path, false);
     }
     public static synchronized Collection openCollection(String path, boolean openedByWidget) {
+    	Log.i(AnkiDroidApp.TAG, "openCollection");
     	if (sCurrentCollection == null || !sCurrentCollection.mPath.equals(path)) {
             sCurrentCollection = Storage.Collection(path);    		
             sCurrentCollection.mOpenedByWidget = openedByWidget;
