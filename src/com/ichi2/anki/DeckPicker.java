@@ -329,6 +329,7 @@ public class DeckPicker extends FragmentActivity {
 
         @Override
         public void onPreExecute() {
+        	mDontSaveOnStop = true;
             countUp = 0;
             countDown = 0;
             if (mProgressDialog == null || !mProgressDialog.isShowing()) {
@@ -372,6 +373,7 @@ public class DeckPicker extends FragmentActivity {
         public void onPostExecute(Payload data) {
             Log.i(AnkiDroidApp.TAG, "onPostExecute");
             Resources res = DeckPicker.this.getResources();
+        	mDontSaveOnStop = false;
             if (mProgressDialog != null) {
                 mProgressDialog.dismiss();
             }
