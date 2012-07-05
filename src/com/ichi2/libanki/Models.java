@@ -974,11 +974,11 @@ public class Models {
             // replace chozen cloze with type
             if (type == 'q') {
                 if (m.group(3) != null && m.group(3).length() != 0) {
-                    txt = m.replaceAll(String.format(Locale.US, "<span class=cloze>[%s...]</span>", m.group(3)));
+                    txt = m.replaceAll(String.format(Locale.US, "<span class=cloze>[$3...]</span>"));
                 } else {
                     txt = m.replaceAll("<span class=cloze>[...]</span>");
                 }
-            } else if (type == 'a') {
+            } else {
                 txt = m.replaceAll("<span class=cloze>$1</span>");
             }
             // and display other clozes normally

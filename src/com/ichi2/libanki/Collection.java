@@ -101,8 +101,7 @@ public class Collection {
             +
             // other config
             "'curModel': None, " + "'nextPos': 1, " + "'sortType': \"noteFld\", "
-            + "'sortBackwards': False, 'addToCur': True, " + // add new to currently selected deck?
-            "'replayBoth': True }"; // include question when replaying answer?
+            + "'sortBackwards': False, 'addToCur': True }"; // add new to currently selected deck?
 
     public static final int UNDO_REVIEW = 0;
     public static final int UNDO_EDIT_NOTE = 1;

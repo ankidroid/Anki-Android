@@ -819,8 +819,9 @@ public class Finder {
     public static List<Pair<String, List<Long>>> findDupes(Collection col, String fieldName, String search) {
         // limit search to notes with applicable field name
     	if (search != null && search.length() > 0) {
-            search += String.format(Locale.US, " '%s:*'", fieldName);    		
+            search = String.format(Locale.US, "(%s) ", search);
     	}
+        search += String.format(Locale.US, "'%s:*'", fieldName);
         // go through notes
 
         String sql = "select id, mid, flds from notes where id in "
