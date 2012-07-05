@@ -998,9 +998,9 @@ public class Collection {
                 if (getModels()._availClozeOrds(model, (String) data[6], false).size() == 0) {
                     d.put("q",
                             AnkiDroidApp.getAppResources().getString(
-                                    com.ichi2.anki2.R.string.empty_cloze_warning,
+                                    com.ichi2.anki.R.string.empty_cloze_warning,
                                     String.format(Locale.US, "<a href=%s#cloze>%s</a>", HELP_SITE, AnkiDroidApp
-                                            .getAppResources().getString(com.ichi2.anki2.R.string.help_cloze))));
+                                            .getAppResources().getString(com.ichi2.anki.R.string.help_cloze))));
                 }
             }
 

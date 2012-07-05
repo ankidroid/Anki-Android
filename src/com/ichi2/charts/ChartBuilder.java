@@ -55,9 +55,8 @@ import android.widget.RadioGroup.OnCheckedChangeListener;
 
 import com.ichi2.anim.ActivityTransitionAnimation;
 import com.ichi2.anki.AnkiDroidApp;
-import com.ichi2.anki.DeckPicker;
 import com.ichi2.anki.UIUtils;
-import com.ichi2.anki2.R;
+import com.ichi2.anki.R;
 import com.ichi2.libanki.Stats;
 import com.ichi2.themes.StyledDialog;
 import com.ichi2.themes.Themes;

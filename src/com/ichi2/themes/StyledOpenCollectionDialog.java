@@ -29,10 +29,9 @@ import android.view.WindowManager;
 import android.view.WindowManager.BadTokenException;
 import android.widget.TextView;
 
-import com.ichi2.anim.ViewAnimation;
 import com.ichi2.anki.AnkiActivity;
 import com.ichi2.anki.AnkiDroidApp;
-import com.ichi2.anki2.R;
+import com.ichi2.anki.R;
 
 public class StyledOpenCollectionDialog extends Dialog {
 

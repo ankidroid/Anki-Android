@@ -20,8 +20,6 @@
 
 package com.ichi2.anki;
 
-import com.ichi2.anki2.R;
-
 import android.app.Dialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;

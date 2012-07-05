@@ -16,7 +16,7 @@ package com.ichi2.widget;
 
 import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.DeckPicker;
-import com.ichi2.anki2.R;
+import com.ichi2.anki.R;
 import com.ichi2.anki.StudyOptionsFragment;
 
 import android.app.PendingIntent;

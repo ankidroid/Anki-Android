@@ -30,7 +30,7 @@ import android.widget.TextView;
 
 import com.ichi2.anki.AnkiActivity;
 import com.ichi2.anki.AnkiDroidApp;
-import com.ichi2.anki2.R;
+import com.ichi2.anki.R;
 
 public class StyledProgressDialog extends Dialog {
 

@@ -21,7 +21,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 import com.ichi2.anki.AnkiDroidApp;
-import com.ichi2.anki2.R;
+import com.ichi2.anki.R;
 
 import android.content.Context;
 import android.content.DialogInterface.OnCancelListener;

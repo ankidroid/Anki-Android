@@ -18,7 +18,7 @@ package com.ichi2.libanki.sync;
 
 import android.util.Pair;
 
-import com.ichi2.anki2.R;
+import com.ichi2.anki.R;
 import com.ichi2.async.Connection;
 import com.ichi2.libanki.Collection;
 

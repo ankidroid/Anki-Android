@@ -44,7 +44,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import com.ichi2.anim.ActivityTransitionAnimation;
-import com.ichi2.anki2.R;
+import com.ichi2.anki.R;
 import com.ichi2.libanki.Collection;
 import com.ichi2.themes.Themes;
 

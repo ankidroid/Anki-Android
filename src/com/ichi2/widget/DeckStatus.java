@@ -1,7 +1,7 @@
 
 package com.ichi2.widget;
 
-import com.ichi2.anki2.R;
+import com.ichi2.anki.R;
 
 /**
  * Simple class to hold the current status of a deck.

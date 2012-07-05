@@ -37,7 +37,7 @@ import android.view.WindowManager.BadTokenException;
 
 import com.hlidskialf.android.preference.SeekBarPreference;
 import com.ichi2.anim.ActivityTransitionAnimation;
-import com.ichi2.anki2.R;
+import com.ichi2.anki.R;
 import com.ichi2.async.DeckTask;
 import com.ichi2.libanki.Utils;
 import com.ichi2.themes.StyledDialog;

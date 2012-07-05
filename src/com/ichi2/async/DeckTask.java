@@ -33,7 +33,7 @@ import org.json.JSONObject;
 import com.ichi2.anki.AnkiDb;
 import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.BackupManager;
-import com.ichi2.anki2.R;
+import com.ichi2.anki.R;
 import com.ichi2.libanki.Card;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Note;
