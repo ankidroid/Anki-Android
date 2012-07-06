@@ -93,7 +93,6 @@ import com.ichi2.themes.StyledOpenCollectionDialog;
 import com.ichi2.themes.StyledProgressDialog;
 import com.ichi2.themes.Themes;
 import com.ichi2.utils.DiffEngine;
-import com.ichi2.utils.RubyParser;
 import com.ichi2.widget.WidgetStatus;
 
 import org.amr.arabic.ArabicUtilities;
@@ -2528,8 +2527,6 @@ public class Reviewer extends AnkiActivity {
                     correctAnswer = matcher.replaceAll("\n");
                     matcher = Sound.sSoundPattern.matcher(correctAnswer);
                     correctAnswer = matcher.replaceAll("");
-                    matcher = Image.sImagePattern.matcher(correctAnswer);
-                    correctAnswer = matcher.replaceAll("");
                     Log.i(AnkiDroidApp.TAG, "correct answer = " + correctAnswer);
 
                     // Obtain the diff and send it to updateCard
@@ -2573,29 +2570,13 @@ public class Reviewer extends AnkiActivity {
         }
 
         // mBaseUrl = Utils.getBaseUrl();
-        Boolean isJapaneseModel = false;
 
         // Check whether there is a hard coded font-size in the content and apply the relative font size
         // Check needs to be done before CSS is applied to content;
         content = recalculateHardCodedFontSize(content, mDisplayFontSize);
 
         // Add CSS for font color and font size
-        if (mCurrentCard != null) {
-            final String japaneseModelTag = "Japanese";
-
-            // Decks currentDeck = DeckManager.getMainDeck();
-            // Models myModel = Models.getModel(currentDeck, mCurrentCard.getCardModelId(), false);
-            // if (myModel == null) {
-            // Log.e(AnkiDroidApp.TAG,
-            // "updateCard - no Model could be fetched. Closing Reviewer and showing db-error dialog");
-            // closeReviewer(DeckPicker.RESULT_DB_ERROR, true);
-            // }
-            int nightBackground = Themes.getNightModeCardBackground(this);
-            // content = myModel.getCSSForFontColorSize(mCurrentCard.getCardModelId(), mDisplayFontSize, mNightMode,
-            // nightBackground) + Models.invertColors(content, mNightMode);
-            // isJapaneseModel = myModel.hasTag(japaneseModelTag);
-            // mCurrentBackgroundColor = myModel.getBackgroundColor(mCurrentCard.getCardModelId());
-        } else {
+        if (mCurrentCard == null) {
             mCard.getSettings().setDefaultFontSize(calculateDynamicFontSize(content));
         }
 
@@ -2617,17 +2598,7 @@ public class Reviewer extends AnkiActivity {
         }
         answer = Sound.parseSounds(mBaseUrl, content, mSpeakText, qa);
 
-        // Parse out the LaTeX images
-        // question = LaTeX.parseLaTeX(DeckManager.getMainDeck(), question);
-        // answer = LaTeX.parseLaTeX(DeckManager.getMainDeck(), answer);
-
-        // If ruby annotation support is activated, then parse and handle:
-        // Strip kanji in question, add furigana in answer
-        if (mPrefUseRubySupport && isJapaneseModel) {
-            content = RubyParser.ankiStripKanji(question) + RubyParser.ankiRubyToMarkup(answer);
-        } else {
-            content = question + answer;
-        }
+        content = question + answer;
 
         // In order to display the bold style correctly, we have to change
         // font-weight to 700
