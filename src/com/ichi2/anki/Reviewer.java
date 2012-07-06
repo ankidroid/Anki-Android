@@ -2516,9 +2516,13 @@ public class Reviewer extends AnkiActivity {
             if (typeAnswer()) {
                 mAnswerField.setVisibility(View.GONE);
                 if (mCurrentCard != null) {
+                    if (mPrefFixArabic) {
+                        // reshape
+                        mTypeCorrect = ArabicUtilities.reshapeSentence(mTypeCorrect, true);
+                    }
                     // Obtain the user answer and the correct answer
                     String userAnswer = mAnswerField.getText().toString();
-                    Matcher matcher = sSpanPattern.matcher(Utils.stripHTMLMedia(ArabicUtilities.reshapeSentence(mTypeCorrect, true)));
+                    Matcher matcher = sSpanPattern.matcher(Utils.stripHTMLMedia(mTypeCorrect));
                     String correctAnswer = matcher.replaceAll("");
                     matcher = sBrPattern.matcher(correctAnswer);
                     correctAnswer = matcher.replaceAll("\n");
