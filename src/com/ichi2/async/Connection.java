@@ -21,7 +21,6 @@ package com.ichi2.async;
 import android.app.Application;
 import android.content.Context;
 import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabaseCorruptException;
 import android.net.ConnectivityManager;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -423,21 +422,23 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
         HttpResponse ret = server.register(username, password);
         String hostkey = null;
         boolean valid = false;
-        data.returnType = ret.getStatusLine().getStatusCode();
         String status = null;
-        if (data.returnType == 200) {
-            try {
-                JSONObject jo = (new JSONObject(server.stream2String(ret.getEntity().getContent())));
-                status = jo.getString("status");
-                if (status.equals("ok")) {
-                    hostkey = jo.getString("hkey");
-                    valid = (hostkey != null) && (hostkey.length() > 0);
+        if (ret != null) {
+            data.returnType = ret.getStatusLine().getStatusCode();
+            if (data.returnType == 200) {
+                try {
+                    JSONObject jo = (new JSONObject(server.stream2String(ret.getEntity().getContent())));
+                    status = jo.getString("status");
+                    if (status.equals("ok")) {
+                        hostkey = jo.getString("hkey");
+                        valid = (hostkey != null) && (hostkey.length() > 0);
+                    }
+                } catch (JSONException e) {
+                } catch (IllegalStateException e) {
+                    throw new RuntimeException(e);
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
                 }
-            } catch (JSONException e) {
-            } catch (IllegalStateException e) {
-                throw new RuntimeException(e);
-            } catch (IOException e) {
-                throw new RuntimeException(e);
             }
         }
         if (valid) {
