@@ -28,7 +28,7 @@
   <string-array name="error_reporting_choice_labels">
     <item>Sempre reportar</item>
     <item>Nunca reportar</item>
-    <item>Me pergunte</item>
+    <item>Pergunte-me</item>
   </string-array>
   <string-array name="widget_minimum_cards_due_labels">
     <item>10</item>
@@ -84,19 +84,19 @@
     <item>Enterrar cartão</item>
     <item>Suspender cartão</item>
     <item>Apagar cartão</item>
-    <item>Limpar Whiteboard</item>
+    <item>Limpar Quadro</item>
     <item>Reproduzir mídia</item>
     <item>Parar aprendizado</item>
   </string-array>
   <string-array name="theme_labels">
-    <item>Dark Android</item>
+    <item>Android Dark</item>
     <item>Android Light</item>
     <item>Azul</item>
     <item>Branco</item>
   </string-array>
   <string-array name="leech_action_labels">
     <item>Suspender cartão</item>
-    <item>Tag only</item>
+    <item>Por Tag somente em</item>
     <item>Redefinir como novo</item>
   </string-array>
   <string-array name="new_order_labels">
@@ -119,7 +119,7 @@
     <item>Revisar cartões esquecidos de hoje</item>
     <item>Revisar cartões previstos para dois dias</item>
     <item>Revisão cartões devidos com tag</item>
-    <item>Review due cards with decreasing intervals</item>
-    <item>Cram all cards</item>
+    <item>Revisar cartões devidos com intervalos decrescentes</item>
+    <item>Cursinho com todos os cartões</item>
   </string-array>
 </resources>

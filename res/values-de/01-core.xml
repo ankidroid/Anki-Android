@@ -45,7 +45,7 @@
   <string name="card_suspended">Karte wieder ausgesetzt</string>
   <string name="menu_rotate">Drehen</string>
   <string name="undo">Rückgängig</string>
-  <string name="finish_operation">Letzte Operation wird beendet (vermutlich Backuperstellung).\nBitte warten...</string>
+  <string name="finish_operation">Letzte Operation wird beendet (vermutlich eine Sicherung der Kollektion).\nBitte warten...</string>
   <string name="contextmenu_deckpicker_download_missing_media">Fehlende Media-Daten herunterladen</string>
   <string name="contextmenu_deckpicker_reset_language_assignments">Sprachzuordnungen zurücksetzen</string>
   <string name="contextmenu_deckpicker_reset_reset_message">Sprachen zurückgesetzt</string>

@@ -13,7 +13,6 @@ id: Kad imbas AnkiDroid
 ja: アンキドロイド単語帳
 ko: ﻿AnkiDroid 암기카드
 nl: AnkiDroid flitskaarten
-pt-BR: AnkiDroid Cartões de Estudo
 ru: AnkiDroid флэш-карты
 th: บัตรคำ AnkiDroid
 tr: AnkiDroid Bilgi Kartları

@@ -39,13 +39,12 @@
   <string name="backup_error_menu_repair">Reparar base de datos</string>
   <string name="backup_repair_deck">Reparar</string>
   <string name="backup_repair_deck_progress">Reparando la base de datos.\nPor favor, esperar...</string>
-  <string name="backup_restore_error">No se pudo restaurar el mazo</string>
+  <string name="backup_restore_error">Collection could not be restored</string>
   <string name="backup_restore_if_missing">Restaurando la colección si falta...</string>
-  <string name="backup_restore_deck">Restaurando mazo.\nPor favor, espera...</string>
+  <string name="backup_restore_deck">Restoring collection.\nPlease wait...</string>
   <string name="backup_restore_select_title">Selecciona copia de seguridad para restaurar</string>
-  <string name="backup_restore_no_backups">No hay copias de seguridad de este mazo disponibles en AnkiDroid. Si tienes copias de seguridad en tu ordenador de sobremesa, por favor, cópialas manualmente en tu carpeta de AnkiDroid</string>
-  <string name="delete_deck_success">Mazo %1$s eliminado. Copia de seguridad en la carpeta %2$s</string>
+  <string name="backup_restore_no_backups">No backups for this collection available on this device. If you have backups on your desktop computer, please copy them manually into your AnkiDroid folder</string>
   <string name="open_collection_failed_title">La colección no se abrió</string>
   <string name="open_collection_failed_message">No se pudo abrir la base de datos. O bien no es una base de datos real de anki, o bien ha sido dañada.\n\nPuedes intentar reparar la colección o restaurarla desde una copia de seguridad (en ambos casos, la copia del mazo dañado se moverá a la subcarpeta \'%1$s\'). Para ello, haz clic en \"Opciones\".\n\nMás información acerca de cómo reparar mazos dañados: %2$s.</string>
-  <string name="deck_repair_error">El mazo no pudo ser reparado</string>
+  <string name="deck_repair_error">Collection could not be repaired</string>
 </resources>

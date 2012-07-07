@@ -26,7 +26,7 @@
   <string name="yes">Sim</string>
   <string name="no">Não</string>
   <string name="ok">OK</string>
-  <string name="studyoptions_deck_name">Nome do Deck</string>
+  <string name="studyoptions_deck_name">Nome do deck</string>
   <string name="studyoptions_due_today">Devidas Hoje:</string>
   <string name="studyoptions_new_total">Total Cartões novos:</string>
   <string name="studyoptions_total_cards">Total Cartões:</string>
@@ -39,20 +39,20 @@
   <string name="ease3_learning">Fácil</string>
   <string name="studyoptions_congrats_learnmore">Aprender Mais</string>
   <string name="studyoptions_congrats_reviewearly">Rever Antes</string>
-  <string name="studyoptions_congrats_open_other_deck">Abrir outro Deck</string>
-  <string name="studyoptions_congrats_finish">Voltar à tela de estudo</string>
+  <string name="studyoptions_congrats_open_other_deck">Abrir Outro Deck</string>
+  <string name="studyoptions_congrats_finish">Voltar à Tela de Estudo</string>
   <string name="card_unsuspended">Suspensão de cartão desfeita</string>
-  <string name="card_suspended">Cartão resuspendido</string>
+  <string name="card_suspended">Cartão ressuspendido</string>
   <string name="menu_rotate">Girar</string>
   <string name="undo">Desfazer</string>
-  <string name="finish_operation">Finishing previous operation (most likely backup creation).\nPlease wait...</string>
-  <string name="contextmenu_deckpicker_download_missing_media">Baixar mídia ausentes</string>
+  <string name="finish_operation">Terminando a operação anterior (provavelmente criação de backup). \nPor favor aguarde...</string>
+  <string name="contextmenu_deckpicker_download_missing_media">Baixar mídia ausente</string>
   <string name="contextmenu_deckpicker_reset_language_assignments">Redefinir Atribuições de Idioma</string>
   <string name="contextmenu_deckpicker_reset_reset_message">Redefinir idioma</string>
   <string name="contextmenu_deckpicker_optimize_deck">Otimizar banco de dados</string>
   <string name="contextmenu_deckpicker_rename_deck">Renomear deck</string>
   <string name="contextmenu_deckpicker_set_custom_dictionary">Usar dicionário personalizado</string>
-  <string name="begin_cram">Iniciar Cursinho</string>
+  <string name="begin_cram">Iniciar Modo Preparatório</string>
   <string name="cram">Cursinho</string>
   <string name="menu_download_deck">Baixar deck</string>
   <string name="menu_download_shared_deck">Deck compartilhado</string>
@@ -66,36 +66,36 @@
   <string name="menu_suspend_card">Suspender cartão</string>
   <string name="menu_suspend_note">Suspender Nota</string>
   <string name="menu_delete_note">Deletar Anotação</string>
-  <string name="delete_note_message">Deseja excluir esta anotação e todos os seus cartões?\n%s</string>
+  <string name="delete_note_message">Deseja realmente excluir esta anotação e todos os seus cartões?\n%s</string>
   <string name="menu_edit_card">Editar cartão</string>
   <string name="menu_select">Selecionar texto</string>
-  <string name="menu_search">Pesquisa em %1$s</string>
+  <string name="menu_search">Pesquisar em %1$s</string>
   <string name="menu_mark_card">Marcar Cartão</string>
   <string name="menu_unmark_card">Desmarcar Cartão</string>
   <string name="new_deck">Novo deck</string>
   <string name="create">Criar</string>
   <string name="new_dynamic_deck">Novo deck dinâmico</string>
   <string name="studyoptions_feedback">Feedback</string>
-  <string name="studyoptions_cram_dialog_title">Tags para cursinho</string>
+  <string name="studyoptions_cram_dialog_title">Tags do preparatório</string>
   <string name="studyoptions_load_other_deck">Carregar Outro Deck</string>
   <string name="studyoptions_load_tutorial_deck">Criar tutorial</string>
-  <string name="night_mode">Night mode</string>
+  <string name="night_mode">Modo noite</string>
   <string name="visit">Visitar</string>
   <string name="later">Mais tarde</string>
   <string name="download">Baixar</string>
   <string name="open_collection">Abrindo coleção.\nPor favor aguarde...</string>
   <string name="create_collection">Abrindo coleção.\nPor favor aguarde...</string>
-  <string name="rebuild_cram_deck">Reconstruindo deck do cursinho.\nPor favor aguarde...</string>
-  <string name="rebuild_cram_label">Reconstuir</string>
+  <string name="rebuild_cram_deck">Reconstruindo deck do preparatório.\nPor favor aguarde...</string>
+  <string name="rebuild_cram_label">Reconstruir</string>
   <string name="empty_cram_label">Vazio</string>
-  <string name="empty_cram_deck">Esvaziando deck do cursinho.\nPor favor aguarde...</string>
-  <string name="studyoptions_congrats_finished">Parabéns!Você terminou por hora.</string>
-  <string name="studyoptions_congrats_more_rev">O limite de revisão de hoje foi atingido, mas ainda existem cartões esperando para serem revistos. Para otima memória, considere aumentar o limite diário nas opções.</string>
-  <string name="studyoptions_congrats_more_new">Existem mais cartões novos, mas o limite diário foi atingido. Você pode aumentar o limite nas opções, mas por favor, tenha em mente que  quanto mais cartões novos você introduzir, maior será sua carga de revisão a curto prazo.</string>
+  <string name="empty_cram_deck">Esvaziando deck do preparatório.\nPor favor aguarde...</string>
+  <string name="studyoptions_congrats_finished">Parabéns! Você terminou por hora.</string>
+  <string name="studyoptions_congrats_more_rev">O limite de revisão de hoje foi atingido, mas ainda existem cartões esperando para serem revistos. Para uma otima memória, considere aumentar o limite diário nas opções.</string>
+  <string name="studyoptions_congrats_more_new">Existem mais cartões novos disponíveis, mas o limite diário foi atingido. Você pode aumentar o limite nas opções, mas por favor, tenha em mente que quanto mais cartões novos você introduzir, maior será sua carga de revisão a curto prazo.</string>
   <string name="sd_card_not_mounted">Cartão SD não está montado.</string>
   <string name="studyoptions_options">Opções</string>
-  <string name="empty_cloze_warning">Por favor edite esta nota e adicione algumas deleções cloze. (%1$s)</string>
-  <string name="help_cloze">Ajuda</string>
+  <string name="empty_cloze_warning">Por favor edite esta nota e adicione algumas deleções fechadas. (%1$s)</string>
+  <string name="help_cloze">ajuda</string>
   <string-array name="next_review_s">
     <item>1 segundo</item>
     <item>1 minuto</item>
@@ -121,8 +121,8 @@
     <item quantity="other">%d min.</item>
   </plurals>
   <plurals name="deckpicker_due">
-    <item quantity="one">1 de %2$d programado</item>
-    <item quantity="other">%1$d de %2$d programados</item>
+    <item quantity="one">1 de %2$d devido</item>
+    <item quantity="other">%1$d de %2$d devido</item>
   </plurals>
   <plurals name="reviewer_window_title">
     <item quantity="one">1 minuto restante</item>
@@ -130,7 +130,7 @@
   </plurals>
   <plurals name="studyoptions_congrats_message">
     <item quantity="one">Amanhã haverá: 1 cartão para revisar e %2$s.\n Tempo estimado: %3$s</item>
-    <item quantity="other">Amanhã haverá: %1$d cartão para revisar e %2$s.\n Tempo estimado: %3$s</item>
+    <item quantity="other">Amanhã haverá: %1$d cartões para revisar e %2$s.\n Tempo estimado: %3$s</item>
   </plurals>
   <plurals name="studyoptions_congrats_new_cards">
     <item quantity="one">1 cartão novo</item>

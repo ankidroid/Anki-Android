@@ -68,9 +68,9 @@
     <item>%ss</item>
     <item>%sm</item>
     <item>%sh</item>
-    <item>%sd</item>
-    <item>%smo</item>
-    <item>%sy</item>
+    <item>%sg</item>
+    <item>%sme</item>
+    <item>%sa</item>
   </string-array>
   <string-array name="next_review_in_s">
     <item>﻿in 1 secondo</item>
