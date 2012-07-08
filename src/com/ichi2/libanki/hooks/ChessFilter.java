@@ -9,7 +9,6 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class ChessFilter extends Hook {
-
     private static final Pattern fFenPattern = Pattern.compile("\\[fen ?([^\\]]*)\\]([^\\[]+)\\[/fen\\]");
     private static final Pattern fFenOrientationPattern = Pattern.compile("orientation *= *\"?(black|white)\"?");
     private static final String fRenderFen =
