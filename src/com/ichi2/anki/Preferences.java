@@ -94,9 +94,14 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        // Themes.applyTheme(this);
+        int apiLevel = AnkiDroidApp.getSdkVersion();
+        if (apiLevel >= 7 && apiLevel <= 10) {
+            Themes.applyTheme(this, Themes.THEME_ANDROID_DARK);
+        }
         super.onCreate(savedInstanceState);
+        // Workaround for bug 4611: http://code.google.com/p/android/issues/detail?id=4611
 
+        
         mPrefMan = getPreferenceManager();
         mPrefMan.setSharedPreferencesName(AnkiDroidApp.SHARED_PREFS_NAME);
 
