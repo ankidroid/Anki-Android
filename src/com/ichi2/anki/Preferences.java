@@ -2,6 +2,7 @@
  * Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com>                           *
  * Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com>                                   *
  * Copyright (c) 2010 Norbert Nagold <norbert.nagold@gmail.com>                         *
+ * Copyright (c) 2012 Kostas Spyropoulos <inigo.aldana@gmail.com>                       *
  *                                                                                      *
  * This program is free software; you can redistribute it and/or modify it under        *
  * the terms of the GNU General Public License as published by the Free Software        *
@@ -70,8 +71,6 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
     private CheckBoxPreference animationsCheckboxPreference;
     private CheckBoxPreference useBackupPreference;
     private CheckBoxPreference asyncModePreference;
-    private CheckBoxPreference hideDueCountPreference;
-    private CheckBoxPreference overtimePreference;
     private CheckBoxPreference eInkDisplayPreference;
     private CheckBoxPreference convertFenText;
     private ListPreference mLanguageSelection;
@@ -118,8 +117,6 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
         animationsCheckboxPreference = (CheckBoxPreference) getPreferenceScreen().findPreference("themeAnimations");
         useBackupPreference = (CheckBoxPreference) getPreferenceScreen().findPreference("useBackup");
         asyncModePreference = (CheckBoxPreference) getPreferenceScreen().findPreference("asyncMode");
-        hideDueCountPreference = (CheckBoxPreference) getPreferenceScreen().findPreference("hideDueCount");
-        overtimePreference = (CheckBoxPreference) getPreferenceScreen().findPreference("overtime");
         eInkDisplayPreference = (CheckBoxPreference) getPreferenceScreen().findPreference("eInkDisplay");
         ListPreference listpref = (ListPreference) getPreferenceScreen().findPreference("theme");
         convertFenText = (CheckBoxPreference) getPreferenceScreen().findPreference("convertFenText");
@@ -205,30 +202,6 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
         }
     }
 
-
-    // private void enableWalSupport() {
-    // Cursor cursor = null;
-    // String sqliteVersion = "";
-    // SQLiteDatabase database = null;
-    // try {
-    // database = SQLiteDatabase.openOrCreateDatabase(":memory:", null);
-    // cursor = database.rawQuery("select sqlite_version() AS sqlite_version", null);
-    // while(cursor.moveToNext()){
-    // sqliteVersion = cursor.getString(0);
-    // }
-    // } finally {
-    // database.close();
-    // if (cursor != null) {
-    // cursor.close();
-    // }
-    // }
-    // if (sqliteVersion.length() >= 3 && Double.parseDouble(sqliteVersion.subSequence(0, 3).toString()) >= 3.7) {
-    // walModePreference.setEnabled(true);
-    // } else {
-    // Log.e(AnkiDroidApp.TAG, "WAL mode not available due to a SQLite version lower than 3.7.0");
-    // walModePreference.setChecked(false);
-    // }
-    // }
 
     private String replaceString(String str, String value) {
         if (str.contains("XXX")) {
@@ -358,7 +331,8 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
                     AnkiDroidApp.createNoMediaFileIfMissing(decksDirectory);
                 }
             } else if (key.equals("eInkDisplay")) {
-                boolean enableAnimation = !eInkDisplayPreference.isChecked();
+                animationsCheckboxPreference.setChecked(false);
+                animationsCheckboxPreference.setEnabled(!eInkDisplayPreference.isChecked());
             } else if (key.equals("convertFenText")) {
                 if (convertFenText.isChecked()) {
                     ChessFilter.install(AnkiDroidApp.getHooks());
