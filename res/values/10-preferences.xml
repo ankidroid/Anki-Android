@@ -280,8 +280,9 @@
 <string name="deck_conf_ren">Rename configuration</string>
 <string name="deck_conf_rem">Remove configuration</string>
 <string name="pref_cat_tibetan">Tibetan Support</string>
+<string name="pref_cat_languages_advanced">Advanced support for typefaces</string>
 <string name="pref_enable_tibetan">Enable Tibetan Support</string>
-
+<string name="pref_enable_tibetan_summ">Enables tibetan typeface for card browser and card editor. Typeface should be provided in /mnt/sdard/fonts/DDC_Uchen.ttf.</string>
 
 <string name="deck_conf_cram_filter">Filter</string>
 <string name="deck_conf_cram_options">Options</string>

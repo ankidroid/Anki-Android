@@ -4,6 +4,7 @@
 ~ Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com>
 ~ Copyright (c) 2009 Jordi Chacon <jordi.chacon@gmail.com>
 ~ Copyright (c) 2011 Norbert Nagold <norbert.nagold@gmail.com>
+~ Copyright (c) 2012 Kostas Spyropoulos <inigo.aldana@gmail.com>
 ~
 ~ This program is free software; you can redistribute it and/or modify it under
 ~ the terms of the GNU General Public License as published by the Free Software
@@ -21,13 +22,6 @@
     xmlns:app="http://schemas.android.com/apk/res/com.ichi2.anki2" >
 
     <PreferenceScreen android:title="@string/pref_cat_general" >
-        <PreferenceCategory android:title="@string/language" >
-            <ListPreference
-                android:defaultValue=""
-                android:key="language"
-                android:summary="@string/language_summ"
-                android:title="@string/language" />
-        </PreferenceCategory>
         <PreferenceCategory android:title="@string/pref_cat_start" >
             <CheckBoxPreference
                 android:defaultValue="true"
@@ -479,16 +473,6 @@
                 android:title="@string/async_mode" />
             <CheckBoxPreference
                 android:defaultValue="false"
-                android:key="fixHebrewText"
-                android:summary="@string/fix_hebrew_text_summ"
-                android:title="@string/fix_hebrew_text" />
-            <CheckBoxPreference
-                android:defaultValue="false"
-                android:key="fixArabicText"
-                android:summary="@string/fix_arabic_text_summ"
-                android:title="@string/fix_arabic_text" />
-            <CheckBoxPreference
-                android:defaultValue="false"
                 android:key="convertFenText"
                 android:summary="@string/convert_fen_text_summ"
                 android:title="@string/convert_fen_text" />
@@ -502,26 +486,23 @@
                 android:key="inputWorkaround"
                 android:summary="@string/input_workaround_summ"
                 android:title="@string/input_workaround" />
-
             <ListPreference
                 android:defaultValue=""
                 android:key="defaultFont"
                 android:summary="@string/default_font_summ"
                 android:title="@string/default_font" />
-
             <CheckBoxPreference
                     android:title="@string/pref_simple_interface"
                     android:summary="@string/pref_simple_interface_summ"
                     android:defaultValue="false"
                     android:disableDependentsState="false"
                     android:key="simpleInterface"/>
-                        <EditTextPreference
+            <EditTextPreference
                     android:title="@string/pref_simple_interface_exclude_tags"
                     android:defaultValue="html"
                     android:summary="@string/pref_simple_interface_exclude_tags_summ"
                     android:dependency="simpleInterface"
                     android:key="simpleInterfaceExcludeTags" />
-
             <CheckBoxPreference
                 android:defaultValue="false"
                 android:disableDependentsState="false"
@@ -555,12 +536,31 @@
         </PreferenceCategory>
     </PreferenceScreen>
     <PreferenceScreen android:title="@string/pref_lang_support" >
+        <PreferenceCategory android:title="@string/language" >
+            <ListPreference
+                android:defaultValue=""
+                android:key="language"
+                android:summary="@string/language_summ"
+                android:title="@string/language" />
+        </PreferenceCategory>
         <PreferenceCategory
-            android:summary="@string/pref_cat_tibetan"
-            android:title="@string/pref_cat_tibetan" >
+            android:summary="@string/pref_cat_languages_advanced"
+            android:title="@string/pref_cat_languages_advanced" >
             <CheckBoxPreference
+                android:defaultValue="false"
                 android:key="enableTibetan"
+                android:summary="@string/pref_enable_tibetan_summ"
                 android:title="@string/pref_enable_tibetan" />
+            <CheckBoxPreference
+                android:defaultValue="false"
+                android:key="fixHebrewText"
+                android:summary="@string/fix_hebrew_text_summ"
+                android:title="@string/fix_hebrew_text" />
+            <CheckBoxPreference
+                android:defaultValue="false"
+                android:key="fixArabicText"
+                android:summary="@string/fix_arabic_text_summ"
+                android:title="@string/fix_arabic_text" />
         </PreferenceCategory>
     </PreferenceScreen>
 =======
