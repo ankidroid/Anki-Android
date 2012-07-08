@@ -66,13 +66,6 @@
                 app:interval="1"
                 app:min="1" />
         </PreferenceCategory>
-        <PreferenceCategory android:title="@string/pref_cat_sync" >
-            <CheckBoxPreference
-                android:defaultValue="true"
-                android:key="syncFetchMedia"
-                android:summary="@string/sync_fetch_missing_media_summ"
-                android:title="@string/sync_fetch_missing_media" />
-        </PreferenceCategory>
     </PreferenceScreen>
     <PreferenceScreen android:title="@string/pref_cat_qadisplay" >
         <PreferenceCategory android:title="@string/pref_cat_themes" >
