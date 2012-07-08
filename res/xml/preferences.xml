@@ -194,7 +194,7 @@
     <PreferenceScreen android:title="@string/pref_cat_reviewing" >
         <PreferenceCategory android:title="@string/pref_cat_reviewer_behaviour" >
 	        <CheckBoxPreference
-	            android:defaultValue="false"
+	            android:defaultValue="true"
 	            android:key="writeAnswers"
 	            android:summary="@string/write_answers_summ"
 	            android:title="@string/write_answers" />
