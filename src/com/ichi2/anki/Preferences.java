@@ -268,6 +268,9 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
         ListPreference customFontsPreference = (ListPreference) getPreferenceScreen().findPreference("defaultFont");
         customFontsPreference.setEntries(getCustomFonts("System default"));
         customFontsPreference.setEntryValues(getCustomFonts(""));
+        ListPreference browserEditorCustomFontsPreference = (ListPreference) getPreferenceScreen().findPreference("browserEditorFont");
+        browserEditorCustomFontsPreference.setEntries(getCustomFonts("System default"));
+        browserEditorCustomFontsPreference.setEntryValues(getCustomFonts(""));
     }
 
 

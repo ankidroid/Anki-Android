@@ -234,7 +234,6 @@ public class Reviewer extends AnkiActivity {
     private int mShakeIntensity;
     private boolean mShakeActionStarted = false;
     private boolean mPrefFixHebrew; // Apply manual RTL for hebrew text - bug in Android WebView
-    private boolean mPrefConvertFen;
     private boolean mPrefFixArabic;
     // Android WebView
     private boolean mSpeakText;
@@ -2163,7 +2162,6 @@ public class Reviewer extends AnkiActivity {
         mInputWorkaround = preferences.getBoolean("inputWorkaround", false);
         mPrefFixHebrew = preferences.getBoolean("fixHebrewText", false);
         mPrefFixArabic = preferences.getBoolean("fixArabicText", false);
-        mPrefConvertFen = preferences.getBoolean("convertFenText", false);
         mSpeakText = preferences.getBoolean("tts", false);
         mPlaySoundsAtStart = preferences.getBoolean("playSoundsAtStart", true);
         mShowProgressBars = preferences.getBoolean("progressBars", true);
@@ -2889,7 +2887,7 @@ public class Reviewer extends AnkiActivity {
 
 
     private boolean isFenConversionEnabled() {
-        return mPrefConvertFen;
+        return false;
     }
 
 
