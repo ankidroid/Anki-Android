@@ -2419,10 +2419,8 @@ public class Reviewer extends AnkiActivity {
         setInterface();
 
         String question = mCurrentCard.getQuestion(mCurrentSimpleInterface);
-        // preventing rendering {{type:Field}} if type answer is not enabled in preferences
-        //if (typeAnswer()) {
-            question = typeAnsQuestionFilter(question);
-        //}
+        question = typeAnsQuestionFilter(question);
+
         updateMenuItems();
 
         if (mPrefFixArabic) {
@@ -2482,10 +2480,7 @@ public class Reviewer extends AnkiActivity {
         setFlipCardAnimation();
 
         String answer = mCurrentCard.getAnswer(mCurrentSimpleInterface);
-        // preventing rendering {{type:Field}} if type answer is not enabled in preferences
-        //if (typeAnswer()) {
-            answer = typeAnsAnswerFilter(answer);
-        //}
+        answer = typeAnsAnswerFilter(answer);
 
         String displayString = "";
 
@@ -2602,11 +2597,6 @@ public class Reviewer extends AnkiActivity {
         if (isHebrewFixEnabled()) {
             content = applyFixForHebrew(content);
         }
-//
-//        // Chess notation FEN handling
-//        if (this.isFenConversionEnabled()) {
-//            content = fenToChessboard(content);
-//        }
 
         Log.i(AnkiDroidApp.TAG, "content card = \n" + content);
         StringBuilder style = new StringBuilder();
