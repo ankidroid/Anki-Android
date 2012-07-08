@@ -1126,23 +1126,19 @@ public class CardBrowser extends Activity {
 
         private int fontSizeScalePcent;
         private float originalTextSize = -1.0f;
-        private boolean mTibetan;
-        private Typeface mTibTypeface;
-
+        private Typeface mCustomTypeface;
 
         public SizeControlledListAdapter(Context context, List<? extends Map<String, ?>> data, int resource,
                 String[] from, int[] to, int fontSizeScalePcent) {
             super(context, data, resource, from, to);
             this.fontSizeScalePcent = fontSizeScalePcent;
 
-            mTibetan = AnkiDroidApp.isTibetan();
-
-            mTibTypeface = null;
-
-            if (mTibetan) {
-                mTibTypeface = AnkiDroidApp.getTibetanTypeface();
+            // Use custom font if selected from preferences
+            SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(getBaseContext());
+            String customFont = preferences.getString("browserEditorFont", "");
+            if (!customFont.equals("")) {
+                mCustomTypeface = AnkiFont.getTypeface(context, customFont);
             }
-
         }
 
 
@@ -1170,8 +1166,8 @@ public class CardBrowser extends Activity {
                                     * (fontSizeScalePcent / 100.0f));
                         }
 
-                        if (mTibetan) {
-                            ((TextView) child).setTypeface(mTibTypeface);
+                        if (mCustomTypeface != null) {
+                            ((TextView) child).setTypeface(mCustomTypeface);
                         }
 
                     }

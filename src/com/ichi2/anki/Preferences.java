@@ -270,7 +270,7 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
         customFontsPreference.setEntryValues(getCustomFonts(""));
         ListPreference browserEditorCustomFontsPreference = (ListPreference) getPreferenceScreen().findPreference("browserEditorFont");
         browserEditorCustomFontsPreference.setEntries(getCustomFonts("System default"));
-        browserEditorCustomFontsPreference.setEntryValues(getCustomFonts(""));
+        browserEditorCustomFontsPreference.setEntryValues(getCustomFonts("", true));
     }
 
 
@@ -365,14 +365,24 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
 
     /** Returns a list of the names of the installed custom fonts. */
     private String[] getCustomFonts(String defaultValue) {
+        return getCustomFonts(defaultValue, false);
+    }
+    private String[] getCustomFonts(String defaultValue, boolean useFullPath) {
         List<AnkiFont> fonts = Utils.getCustomFonts(this);
         int count = fonts.size();
         Log.d(AnkiDroidApp.TAG, "There are " + count + " custom fonts");
         String[] names = new String[count + 1];
         names[0] = defaultValue;
-        for (int index = 1; index < count + 1; ++index) {
-            names[index] = fonts.get(index-1).getName();
-            Log.d(AnkiDroidApp.TAG, "Adding custom font: " + names[index]);
+        if (useFullPath) {
+            for (int index = 1; index < count + 1; ++index) {
+                names[index] = fonts.get(index-1).getPath();
+                Log.d(AnkiDroidApp.TAG, "Adding custom font: " + names[index]);
+            }
+        } else {
+            for (int index = 1; index < count + 1; ++index) {
+                names[index] = fonts.get(index-1).getName();
+                Log.d(AnkiDroidApp.TAG, "Adding custom font: " + names[index]);
+            }
         }
         return names;
     }

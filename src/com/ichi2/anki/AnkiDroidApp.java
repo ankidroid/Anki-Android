@@ -59,8 +59,6 @@ public class AnkiDroidApp extends Application {
      * Singleton instance of this class.
      */
     private static AnkiDroidApp sInstance;
-    private static Typeface mTibTypeface;
-    private static boolean bTibetan;
 
     /**
      * Global hooks
@@ -121,37 +119,6 @@ public class AnkiDroidApp extends Application {
      */
     public static SharedPreferences getSharedPrefs(Context context) {
         return context.getSharedPreferences(SHARED_PREFS_NAME, Context.MODE_PRIVATE);
-    }
-
-    public static boolean isTibetan() {
-
-        SharedPreferences preferences = getSharedPrefs(getInstance());
-
-        // check for Tibetan support & Typeface initialisation
-        if (preferences.getBoolean("enableTibetan", false)) {
-            bTibetan = true;
-        } else {
-            bTibetan = false;
-        }
-
-        if (bTibetan && mTibTypeface == null) {
-            String fileName = "/mnt/sdcard/fonts/DDC_Uchen.ttf";
-            // mTibTypeface = Typeface.createFromAsset(getInstance().getAssets(), fileName);
-            File mTibFontFile = new File(fileName);
-            if (mTibFontFile.exists()) {
-                mTibTypeface = Typeface.createFromFile(fileName);
-            } else {
-                return false;
-            }
-
-        }
-
-        return bTibetan;
-    }
-
-
-    public static Typeface getTibetanTypeface() {
-        return mTibTypeface;
     }
 
 

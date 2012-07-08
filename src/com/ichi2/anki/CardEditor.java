@@ -1324,19 +1324,19 @@ public class CardEditor extends Activity {
         mEditFields = new LinkedList<FieldEditText>();
         String[][] fields = mEditorNote.items();
 
-        boolean mTibetan = AnkiDroidApp.isTibetan();
-
-        Typeface mTibTypeface = null;
-
-        if (mTibetan) {
-            mTibTypeface = AnkiDroidApp.getTibetanTypeface();
+        // Use custom font if selected from preferences
+        Typeface mCustomTypeface = null;
+        SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(getBaseContext());
+        String customFont = preferences.getString("browserEditorFont", "");
+        if (!customFont.equals("")) {
+            mCustomTypeface = AnkiFont.getTypeface(this, customFont);
         }
-
+        
         for (int i = 0; i < fields.length; i++) {
             FieldEditText newTextbox = new FieldEditText(this, i, fields[i]);
 
-            if (mTibetan) {
-                newTextbox.setTypeface(mTibTypeface);
+            if (mCustomTypeface != null) {
+                newTextbox.setTypeface(mCustomTypeface);
             }
 
             TextView label = newTextbox.getLabel();
