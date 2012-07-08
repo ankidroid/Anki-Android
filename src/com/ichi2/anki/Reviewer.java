@@ -225,7 +225,6 @@ public class Reviewer extends AnkiActivity {
     private boolean mPrefFullscreenReview;
     private boolean mshowNextReviewTime;
     private boolean mZoomEnabled;
-    private boolean mPrefUseRubySupport; // Parse for ruby annotations
     private String mCollectionFilename;
     private int mRelativeButtonSize;
     private boolean mDoubleScrolling;
@@ -2156,7 +2155,6 @@ public class Reviewer extends AnkiActivity {
         mInvertedColors = mNightMode;
         mBlackWhiteboard = preferences.getBoolean("blackWhiteboard", true);
         mSwapQA = preferences.getBoolean("swapqa", false);
-        mPrefUseRubySupport = preferences.getBoolean("useRubySupport", false);
         mPrefFullscreenReview = preferences.getBoolean("fullscreenReview", false);
         mshowNextReviewTime = preferences.getBoolean("showNextReviewTime", true);
         mZoomEnabled = preferences.getBoolean("zoom", false);
