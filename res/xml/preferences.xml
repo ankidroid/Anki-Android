@@ -503,6 +503,11 @@
                 android:key="fixArabicText"
                 android:summary="@string/fix_arabic_text_summ"
                 android:title="@string/fix_arabic_text" />
+            <CheckBoxPreference
+                android:defaultValue="false"
+                android:key="convertFenText"
+                android:summary="@string/convert_fen_text_summ"
+                android:title="@string/convert_fen_text" />
         </PreferenceCategory>
     </PreferenceScreen>
     <PreferenceScreen android:title="@string/pref_cat_dictionary" >

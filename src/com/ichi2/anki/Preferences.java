@@ -40,6 +40,7 @@ import com.ichi2.anim.ActivityTransitionAnimation;
 import com.ichi2.anki2.R;
 import com.ichi2.async.DeckTask;
 import com.ichi2.libanki.Utils;
+import com.ichi2.libanki.hooks.ChessFilter;
 import com.ichi2.themes.StyledDialog;
 import com.ichi2.themes.StyledProgressDialog;
 import com.ichi2.themes.Themes;
@@ -72,6 +73,7 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
     private CheckBoxPreference hideDueCountPreference;
     private CheckBoxPreference overtimePreference;
     private CheckBoxPreference eInkDisplayPreference;
+    private CheckBoxPreference convertFenText;
     private ListPreference mLanguageSelection;
     private CharSequence[] mLanguageDialogLabels;
     private CharSequence[] mLanguageDialogValues;
@@ -120,6 +122,7 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
         overtimePreference = (CheckBoxPreference) getPreferenceScreen().findPreference("overtime");
         eInkDisplayPreference = (CheckBoxPreference) getPreferenceScreen().findPreference("eInkDisplay");
         ListPreference listpref = (ListPreference) getPreferenceScreen().findPreference("theme");
+        convertFenText = (CheckBoxPreference) getPreferenceScreen().findPreference("convertFenText");
         String theme = listpref.getValue();
         animationsCheckboxPreference.setEnabled(theme.equals("2") || theme.equals("3"));
         zoomCheckboxPreference.setEnabled(!swipeCheckboxPreference.isChecked());
@@ -326,7 +329,7 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
                 updateSeekBarPreference(key);
             } else if (Arrays.asList(mShowValueInSummEditText).contains(key)) {
                 updateEditTextPreference(key);
-            } else if (key.equals("writeAnswers") && sharedPreferences.getBoolean("writeAnswers", false)) {
+            } else if (key.equals("writeAnswers") && sharedPreferences.getBoolean("writeAnswers", true)) {
                 showDialog(DIALOG_WRITE_ANSWERS);
             } else if (key.equals("useBackup")) {
                 if (lockCheckAction) {
@@ -356,6 +359,12 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
                 }
             } else if (key.equals("eInkDisplay")) {
                 boolean enableAnimation = !eInkDisplayPreference.isChecked();
+            } else if (key.equals("convertFenText")) {
+                if (convertFenText.isChecked()) {
+                    ChessFilter.install(AnkiDroidApp.getHooks());
+                } else {
+                    ChessFilter.uninstall(AnkiDroidApp.getHooks());
+                }
             }
         } catch (BadTokenException e) {
             Log.e(AnkiDroidApp.TAG, "Preferences: BadTokenException on showDialog: " + e);

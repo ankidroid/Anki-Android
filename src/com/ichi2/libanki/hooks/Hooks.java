@@ -18,6 +18,7 @@ public class Hooks {
         new FuriganaFilters().install(this);
         new HintFilter().install(this);
         new LaTeX().installHook(this);
+        //ChessFilter.install(this);
     }
 
 
