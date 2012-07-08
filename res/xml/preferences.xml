@@ -214,29 +214,6 @@
                 android:summary="@string/tts_summ"
                 android:title="@string/tts" />
         </PreferenceCategory>
-        <PreferenceCategory android:title="@string/pref_cat_lookup" >
-            <CheckBoxPreference
-                android:defaultValue="true"
-                android:disableDependentsState="false"
-                android:key="textSelection"
-                android:summary="@string/text_selection_summ"
-                android:title="@string/text_selection" />
-            <CheckBoxPreference
-                android:defaultValue="false"
-                android:dependency="textSelection"
-                android:key="textSelectionLongclickWorkaround"
-                android:summary="@string/text_selection_click_summ"
-                android:title="@string/text_selection_click" />
-
-            <ListPreference
-                android:defaultValue="0"
-                android:dependency="textSelection"
-                android:entries="@array/dictionary_labels"
-                android:entryValues="@array/dictionary_values"
-                android:key="dictionary"
-                android:summary="@string/dictionary_summ"
-                android:title="@string/dictionary" />
-        </PreferenceCategory>
     </PreferenceScreen>
     <PreferenceScreen android:title="@string/pref_cat_navigation" >
         <PreferenceCategory android:title="@string/pref_cat_swipe" >
@@ -520,15 +497,6 @@
                 android:summary="@string/timeout_question_seconds"
                 android:title="@string/timeout_question_seconds" />
         </PreferenceCategory>
-        <PreferenceCategory
-            android:summary="@string/filter_external_data_summ"
-            android:title="@string/filter_external_data" >
-            <CheckBoxPreference
-                android:defaultValue="false"
-                android:key="com.ichi2.filters.GoogleTranslaterFilter"
-                android:summary="@string/filter_google_translate_summ"
-                android:title="@string/filter_google_translate" />
-        </PreferenceCategory>
     </PreferenceScreen>
     <PreferenceScreen android:title="@string/pref_lang_support" >
         <PreferenceCategory android:title="@string/language" >
@@ -558,6 +526,37 @@
                 android:title="@string/fix_arabic_text" />
         </PreferenceCategory>
     </PreferenceScreen>
-=======
-
+    <PreferenceScreen android:title="@string/pref_cat_dictionary" >
+        <PreferenceCategory android:title="@string/pref_cat_lookup" >
+            <CheckBoxPreference
+                android:defaultValue="true"
+                android:disableDependentsState="false"
+                android:key="textSelection"
+                android:summary="@string/text_selection_summ"
+                android:title="@string/text_selection" />
+            <CheckBoxPreference
+                android:defaultValue="false"
+                android:dependency="textSelection"
+                android:key="textSelectionLongclickWorkaround"
+                android:summary="@string/text_selection_click_summ"
+                android:title="@string/text_selection_click" />
+            <ListPreference
+                android:defaultValue="0"
+                android:dependency="textSelection"
+                android:entries="@array/dictionary_labels"
+                android:entryValues="@array/dictionary_values"
+                android:key="dictionary"
+                android:summary="@string/dictionary_summ"
+                android:title="@string/dictionary" />
+        </PreferenceCategory>
+        <PreferenceCategory
+            android:summary="@string/filter_external_data_summ"
+            android:title="@string/filter_external_data" >
+            <CheckBoxPreference
+                android:defaultValue="false"
+                android:key="com.ichi2.filters.GoogleTranslaterFilter"
+                android:summary="@string/filter_google_translate_summ"
+                android:title="@string/filter_google_translate" />
+        </PreferenceCategory>
+    </PreferenceScreen>
 </PreferenceScreen>
