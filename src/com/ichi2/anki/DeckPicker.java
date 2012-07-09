@@ -75,6 +75,7 @@ import com.ichi2.widget.WidgetStatus;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.TreeSet;
 
@@ -1461,7 +1462,11 @@ public class DeckPicker extends FragmentActivity {
                 break;
 
              case DIALOG_RESTORE_BACKUP:
-            	 mBackups = BackupManager.getBackups(new File(AnkiDroidApp.getCollectionPath()));
+            	 File[] files = BackupManager.getBackups(new File(AnkiDroidApp.getCollectionPath()));
+            	 mBackups = new File[files.length];
+            	 for (int i = 0; i < files.length; i++) {
+                	 mBackups[i] = files[files.length - 1 - i];
+            	 }
             	 if (mBackups.length == 0) {
             		 builder.setTitle(getResources().getString(R.string.backup_restore));
             		 builder.setMessage(res.getString(R.string.backup_restore_no_backups));

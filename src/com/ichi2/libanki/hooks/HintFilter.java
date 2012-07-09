@@ -18,7 +18,7 @@ package com.ichi2.libanki.hooks;
 
 import android.content.res.Resources;
 
-import com.ichi2.anki2.R;
+import com.ichi2.anki.R;
 
 import java.util.Locale;
 
