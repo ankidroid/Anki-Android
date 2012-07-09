@@ -163,7 +163,7 @@ public class MetaDB {
         try {
             Log.i(AnkiDroidApp.TAG, "Resetting all language assignments");
             mMetaDb.execSQL("DROP TABLE IF EXISTS languages;");
-            openDB(context);
+            upgradeDB(mMetaDb, DATABASE_VERSION);
             return true;
         } catch (Exception e) {
             Log.e("Error", "Error resetting MetaDB ", e);
@@ -181,7 +181,7 @@ public class MetaDB {
             Log.i(AnkiDroidApp.TAG, "Resetting widget status");
             mMetaDb.execSQL("DROP TABLE IF EXISTS widgetStatus;");
             mMetaDb.execSQL("DROP TABLE IF EXISTS smallWidgetStatus;");
-            openDB(context);
+            upgradeDB(mMetaDb, DATABASE_VERSION);
             return true;
         } catch (Exception e) {
             Log.e("Error", "Error resetting widgetStatus and smallWidgetStatus", e);
@@ -198,7 +198,7 @@ public class MetaDB {
         try {
             Log.i(AnkiDroidApp.TAG, "Resetting intent information");
             mMetaDb.execSQL("DROP TABLE IF EXISTS intentInformation;");
-            openDB(context);
+            upgradeDB(mMetaDb, DATABASE_VERSION);
             return true;
         } catch (Exception e) {
             Log.e("Error", "Error resetting intentInformation ", e);
@@ -572,6 +572,8 @@ public class MetaDB {
                 list.add(item);
             }
         } catch (SQLiteException e) {
+            upgradeDB(mMetaDb, DATABASE_VERSION);
+
             Log.e(AnkiDroidApp.TAG, "Error while querying intentInformation", e);
         } finally {
             if (cursor != null && !cursor.isClosed()) {
