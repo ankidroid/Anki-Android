@@ -455,7 +455,7 @@ public class StudyOptionsFragment extends Fragment {
     }
 
 
-    private void reloadCollection() {
+    public void reloadCollection() {
         DeckTask.launchDeckTask(
                 DeckTask.TASK_TYPE_OPEN_COLLECTION,
                 new DeckTask.TaskListener() {

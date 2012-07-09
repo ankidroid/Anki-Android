@@ -176,6 +176,7 @@ public class DeckPicker extends FragmentActivity {
 
     private StyledProgressDialog mProgressDialog;
     private StyledOpenCollectionDialog mOpenCollectionDialog;
+    private StyledOpenCollectionDialog mNotMountedDialog;
     private ImageButton mAddButton;
     private ImageButton mCardsButton;
     private ImageButton mStatsButton;
@@ -532,7 +533,7 @@ public class DeckPicker extends FragmentActivity {
                         DeckTask.cancelTask();
                         finish();
                     }
-                });        		
+                });
         	}
         }
 
@@ -940,6 +941,7 @@ public class DeckPicker extends FragmentActivity {
             // collection file exists
             return false;
         }
+        // else check for old files to upgrade
         if ((new File(AnkiDroidApp.getDefaultAnkiDroidDirectory())).listFiles(new OldAnkiDeckFilter()).length > 0) {
             return true;
         }
@@ -1431,13 +1433,21 @@ public class DeckPicker extends FragmentActivity {
                 break;
 
             case DIALOG_SD_CARD_NOT_MOUNTED:
+            	if (mNotMountedDialog == null || !mNotMountedDialog.isShowing()) {
+            		mNotMountedDialog = StyledOpenCollectionDialog.show(DeckPicker.this, getResources().getString(R.string.sd_card_not_mounted), new OnCancelListener() {
+
+                        @Override
+                        public void onCancel(DialogInterface arg0) {
+                            finish();
+                        }
+                    });
+            	}
+            	dialog = null;
+            	break;
+
             case DIALOG_NO_SPACE_LEFT:
                 builder.setTitle(res.getString(R.string.attention));
-                if (id == DIALOG_NO_SPACE_LEFT) {
-                    builder.setMessage(res.getString(R.string.sd_space_warning, BackupManager.MIN_FREE_SPACE));
-                } else {
-                    builder.setMessage(res.getString(R.string.sd_card_not_mounted));
-                }
+                builder.setMessage(res.getString(R.string.sd_space_warning, BackupManager.MIN_FREE_SPACE));
                 builder.setPositiveButton(res.getString(R.string.ok), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
@@ -1725,22 +1735,23 @@ public class DeckPicker extends FragmentActivity {
                 @Override
                 public void onReceive(Context context, Intent intent) {
                     if (intent.getAction().equals(Intent.ACTION_MEDIA_EJECT)) {
+                        showDialog(DIALOG_SD_CARD_NOT_MOUNTED);
                         if (mCol != null) {
                             mCol.close();
                         }
-                        showDialog(DIALOG_SD_CARD_NOT_MOUNTED);
-                    } else if (intent.getAction().equals(Intent.ACTION_MEDIA_UNMOUNTED)) {
-                        showDialog(DIALOG_LOAD_FAILED);
+                    } else if (intent.getAction().equals(Intent.ACTION_MEDIA_MOUNTED)) {
+                    	if (mNotMountedDialog != null && mNotMountedDialog.isShowing()) {
+                    		mNotMountedDialog.dismiss();                    		
+                    	}
+                    	loadCollection();
                     }
-
-                    showDialog(DIALOG_SD_CARD_NOT_MOUNTED);
                 }
             };
             IntentFilter iFilter = new IntentFilter();
 
             // ACTION_MEDIA_EJECT is never invoked (probably due to an android bug
             iFilter.addAction(Intent.ACTION_MEDIA_EJECT);
-            iFilter.addAction(Intent.ACTION_MEDIA_UNMOUNTED);
+            iFilter.addAction(Intent.ACTION_MEDIA_MOUNTED);
             iFilter.addDataScheme("file");
             registerReceiver(mUnmountReceiver, iFilter);
         }
