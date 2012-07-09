@@ -163,7 +163,6 @@ public class CardEditor extends Activity {
     private TextView mModelButton;
     private TextView mDeckButton;
     private Button mSwapButton;
-    private ToggleButton mMoveNoteTooToggle;
 
     private Note mEditorNote;
     private Card mCurrentEditedCard;
@@ -527,9 +526,6 @@ public class CardEditor extends Activity {
                         // set did for card
                         if (changedDid) {
                             mCurrentEditedCard.setDid(mCurrentDid);
-                            if (mMoveNoteTooToggle.isChecked()) {
-                                // TODO: mEditorNote.setDid(mCurrentDid);
-                            }
                         }
                         mChanged = true;
                     }
@@ -1006,32 +1002,6 @@ public class CardEditor extends Activity {
                     }
                 });
 
-                if (!mAddNote) {
-                    LinearLayout ll = new LinearLayout(this);
-                    ll.setLayoutParams(new LinearLayout.LayoutParams(LayoutParams.FILL_PARENT,
-                            LayoutParams.WRAP_CONTENT));
-                    LayoutParams lp = new LinearLayout.LayoutParams(0, LayoutParams.WRAP_CONTENT, 1);
-                    mMoveNoteTooToggle = new ToggleButton(this);
-                    mMoveNoteTooToggle.setSingleLine();
-                    mMoveNoteTooToggle.setLayoutParams(lp);
-                    mMoveNoteTooToggle.setText(R.string.cardeditor_move_note_too);
-                    ll.addView(mMoveNoteTooToggle);
-                    Button origButton = new Button(this);
-                    origButton.setSingleLine();
-                    origButton.setText(R.string.cardeditor_move_to_notes_deck);
-                    origButton.setBackgroundResource(R.drawable.white_btn_small);
-                    origButton.setLayoutParams(lp);
-                    origButton.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            // TODO: mCurrentDid = mEditorNote.getDid();
-                            updateDeck();
-                            mDeckSelectDialog.dismiss();
-                        }
-                    });
-                    ll.addView(origButton);
-                    builder.setView(ll, false, true);
-                }
                 dialog = builder.create();
                 mDeckSelectDialog = dialog;
                 break;
