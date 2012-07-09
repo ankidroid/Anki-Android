@@ -187,8 +187,6 @@ public class Reviewer extends AnkiActivity {
             .compile("[[\\u0591-\\u05BD][\\u05BF\\u05C1\\u05C2\\u05C4\\u05C5\\u05C7]]");
     // private static final Pattern sBracketsPattern = Pattern.compile("[()\\[\\]{}]");
     // private static final Pattern sNumeralsPattern = Pattern.compile("[0-9][0-9%]+");
-    private static final Pattern sFenPattern = Pattern.compile("\\[fen ?([^\\]]*)\\]([^\\[]+)\\[/fen\\]");
-    private static final Pattern sFenOrientationPattern = Pattern.compile("orientation *= *\"?(black|white)\"?");
 
     /** to be sento to and from the card editor */
     private static Card sEditorCard;
@@ -225,7 +223,6 @@ public class Reviewer extends AnkiActivity {
     private boolean mPrefFullscreenReview;
     private boolean mshowNextReviewTime;
     private boolean mZoomEnabled;
-    private boolean mPrefUseRubySupport; // Parse for ruby annotations
     private String mCollectionFilename;
     private int mRelativeButtonSize;
     private boolean mDoubleScrolling;
@@ -235,7 +232,6 @@ public class Reviewer extends AnkiActivity {
     private int mShakeIntensity;
     private boolean mShakeActionStarted = false;
     private boolean mPrefFixHebrew; // Apply manual RTL for hebrew text - bug in Android WebView
-    private boolean mPrefConvertFen;
     private boolean mPrefFixArabic;
     // Android WebView
     private boolean mSpeakText;
@@ -2148,7 +2144,7 @@ public class Reviewer extends AnkiActivity {
         mPrefOvertime = preferences.getBoolean("overtime", true);
         mPrefTimer = preferences.getBoolean("timer", true);
         mPrefWhiteboard = preferences.getBoolean("whiteboard", false);
-        mPrefWriteAnswers = preferences.getBoolean("writeAnswers", false);
+        mPrefWriteAnswers = preferences.getBoolean("writeAnswers", true);
         mPrefTextSelection = preferences.getBoolean("textSelection", true);
         mLongClickWorkaround = preferences.getBoolean("textSelectionLongclickWorkaround", false);
         // mDeckFilename = preferences.getString("deckFilename", "");
@@ -2156,7 +2152,6 @@ public class Reviewer extends AnkiActivity {
         mInvertedColors = mNightMode;
         mBlackWhiteboard = preferences.getBoolean("blackWhiteboard", true);
         mSwapQA = preferences.getBoolean("swapqa", false);
-        mPrefUseRubySupport = preferences.getBoolean("useRubySupport", false);
         mPrefFullscreenReview = preferences.getBoolean("fullscreenReview", false);
         mshowNextReviewTime = preferences.getBoolean("showNextReviewTime", true);
         mZoomEnabled = preferences.getBoolean("zoom", false);
@@ -2165,7 +2160,6 @@ public class Reviewer extends AnkiActivity {
         mInputWorkaround = preferences.getBoolean("inputWorkaround", false);
         mPrefFixHebrew = preferences.getBoolean("fixHebrewText", false);
         mPrefFixArabic = preferences.getBoolean("fixArabicText", false);
-        mPrefConvertFen = preferences.getBoolean("convertFenText", false);
         mSpeakText = preferences.getBoolean("tts", false);
         mPlaySoundsAtStart = preferences.getBoolean("playSoundsAtStart", true);
         mShowProgressBars = preferences.getBoolean("progressBars", true);
@@ -2425,10 +2419,8 @@ public class Reviewer extends AnkiActivity {
         setInterface();
 
         String question = mCurrentCard.getQuestion(mCurrentSimpleInterface);
-        // preventing rendering {{type:Field}} if type answer is not enabled in preferences
-        //if (typeAnswer()) {
-            question = typeAnsQuestionFilter(question);
-        //}
+        question = typeAnsQuestionFilter(question);
+
         updateMenuItems();
 
         if (mPrefFixArabic) {
@@ -2488,10 +2480,7 @@ public class Reviewer extends AnkiActivity {
         setFlipCardAnimation();
 
         String answer = mCurrentCard.getAnswer(mCurrentSimpleInterface);
-        // preventing rendering {{type:Field}} if type answer is not enabled in preferences
-        //if (typeAnswer()) {
-            answer = typeAnsAnswerFilter(answer);
-        //}
+        answer = typeAnsAnswerFilter(answer);
 
         String displayString = "";
 
@@ -2607,11 +2596,6 @@ public class Reviewer extends AnkiActivity {
         // Find hebrew text
         if (isHebrewFixEnabled()) {
             content = applyFixForHebrew(content);
-        }
-
-        // Chess notation FEN handling
-        if (this.isFenConversionEnabled()) {
-            content = fenToChessboard(content);
         }
 
         Log.i(AnkiDroidApp.TAG, "content card = \n" + content);
@@ -2887,11 +2871,6 @@ public class Reviewer extends AnkiActivity {
 
     private boolean isHebrewFixEnabled() {
         return mPrefFixHebrew;
-    }
-
-
-    private boolean isFenConversionEnabled() {
-        return mPrefConvertFen;
     }
 
 
@@ -3284,31 +3263,6 @@ public class Reviewer extends AnkiActivity {
             m.appendReplacement(sb, hebrewText);
         }
         m.appendTail(sb);
-        return sb.toString();
-    }
-
-
-    private String fenToChessboard(String text) {
-        Matcher mf = sFenPattern.matcher(text);
-        StringBuffer sb = new StringBuffer();
-        while (mf.find()) {
-            if (mf.group(1).length() == 0) {
-                mf.appendReplacement(sb, "<script type=\"text/javascript\">document.write(renderFen('" + mf.group(2)
-                        + "',false));</script>");
-            } else {
-                Matcher mo = sFenOrientationPattern.matcher(mf.group(1));
-                if (mo.find() && mo.group(1).equalsIgnoreCase("black")) {
-                    mf.appendReplacement(sb,
-                            "<script type=\"text/javascript\">document.write(renderFen('" + mf.group(2)
-                                    + "',1));</script>");
-                } else {
-                    mf.appendReplacement(sb,
-                            "<script type=\"text/javascript\">document.write(renderFen('" + mf.group(2)
-                                    + "',false));</script>");
-                }
-            }
-        }
-        mf.appendTail(sb);
         return sb.toString();
     }
 

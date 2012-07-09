@@ -21,15 +21,11 @@ public class AnkiFont {
         File fontfile = new File(mPath);
         mName = Utils.removeExtension(fontfile.getName());
         mFamily = mName;
-        Typeface tf = null;
-        if (fromAssets) {
-            tf = Typeface.createFromAsset(ctx.getAssets(), "fonts/".concat(fontfile.getName()));
-        } else {
-            tf = Typeface.createFromFile(mPath);
-        }
+
         if (fromAssets) {
             mPath = fAssetPathPrefix.concat(fontfile.getName());
         }
+        Typeface tf = getTypeface(ctx, mPath);
         if (tf.isBold() || mName.toLowerCase().contains("bold")) {
             mWeight = "font-weight: bolder;";
             mFamily = mFamily.replaceFirst("(?i)-?Bold", "");
@@ -72,5 +68,15 @@ public class AnkiFont {
     }
     public String getName() {
         return mName;
+    }
+    public String getPath() {
+        return mPath;
+    }
+    public static Typeface getTypeface(Context ctx, String path) {
+        if (path.startsWith(fAssetPathPrefix)) {
+            return Typeface.createFromAsset(ctx.getAssets(), path.replaceFirst("/android_asset/", ""));
+        } else {
+            return Typeface.createFromFile(path);
+        }
     }
 }
