@@ -26,8 +26,8 @@
             <EditTextPreference
                 android:defaultValue="/sdcard/AnkiDroid"
                 android:key="deckPath"
-                android:summary="@string/deck_path_summ"
-                android:title="@string/deck_path" />
+                android:summary="@string/col_path_summ"
+                android:title="@string/col_path" />
         </PreferenceCategory>
         <PreferenceCategory android:title="@string/pref_cat_backup" >
             <CheckBoxPreference

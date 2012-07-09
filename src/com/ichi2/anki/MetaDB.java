@@ -1,7 +1,6 @@
 
 package com.ichi2.anki;
 
-import com.ichi2.anki.R;
 import com.ichi2.libanki.Utils;
 import com.ichi2.widget.DeckStatus;
 
@@ -31,7 +30,7 @@ public class MetaDB {
     private static final String DATABASE_NAME = "ankidroid.db";
 
     /** The Database Version, increase if you want updates to happen on next upgrade. */
-    private static final int DATABASE_VERSION = 2;
+    private static final int DATABASE_VERSION = 3;
 
     // Possible values for the qa column of the languages table.
     /** The language refers to the question. */
@@ -84,7 +83,7 @@ public class MetaDB {
         mMetaDb.execSQL("CREATE TABLE IF NOT EXISTS customDictionary (" + "_id INTEGER PRIMARY KEY AUTOINCREMENT, "
                 + "deckpath TEXT NOT NULL, " + "dictionary INTEGER)");
         mMetaDb.execSQL("CREATE TABLE IF NOT EXISTS intentInformation (" + "id INTEGER PRIMARY KEY AUTOINCREMENT, "
-                + "source TEXT NOT NULL, " + "target INTEGER NOT NULL)");
+                + "fields TEXT NOT NULL)");
         mMetaDb.execSQL("CREATE TABLE IF NOT EXISTS smallWidgetStatus (" + "id INTEGER PRIMARY KEY AUTOINCREMENT, "
                 + "progress INTEGER NOT NULL, left INTEGER NOT NULL, eta INTEGER NOT NULL)");
         // Use pragma to get info about widgetStatus.
@@ -100,7 +99,13 @@ public class MetaDB {
                     + "deckName TEXT NOT NULL, " + "newCards INTEGER NOT NULL, " + "lrnCards INTEGER NOT NULL, "
                     + "dueCards INTEGER NOT NULL, " + "progress INTEGER NOT NULL, " + "eta INTEGER NOT NULL)");
         }
-        // }
+        c = mMetaDb.rawQuery("PRAGMA table_info(intentInformation)", null);
+        columnNumber = c.getCount();
+        if (columnNumber > 2) {
+            mMetaDb.execSQL("ALTER TABLE intentInformation " + "ADD COLUMN fields INTEGER NOT NULL DEFAULT '0'");
+            mMetaDb.execSQL("ALTER TABLE intentInformation " + "DROP COLUMN source INTEGER NOT NULL DEFAULT '0'");
+            mMetaDb.execSQL("ALTER TABLE intentInformation " + "DROP COLUMN target INTEGER NOT NULL DEFAULT '0'");
+        }
         mMetaDb.setVersion(databaseVersion);
         Log.i(AnkiDroidApp.TAG, "Upgrading Internal Database finished. New version: " + databaseVersion);
         return mMetaDb;
@@ -550,18 +555,16 @@ public class MetaDB {
                 item.put("id", Integer.toString(cursor.getInt(0)));
                 String fields = cursor.getString(1);
                 String[] split = Utils.splitFields(fields);
-                String source = "";
-                String target = "";
-                for (String s : split) {
-                    if (s.length() > 0) {
-                        if (source.length() == 0) {
-                            source = s;
-                        } else if (target.length() == 0) {
-                            target = s;
-                        } else {
-                            break;
-                        }
-                    }
+                String source = null;
+                String target = null;
+                for (int i = 0; i < split.length; i++) {
+                	if (source == null || source.length() == 0) {
+                		source = split[i];
+                	} else if (target == null || target.length() == 0) {
+                		target = split[i];
+                	} else {
+                		break;
+                	}
                 }
                 item.put("source", source);
                 item.put("target", target);

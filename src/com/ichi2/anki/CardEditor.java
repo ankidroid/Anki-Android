@@ -197,8 +197,7 @@ public class CardEditor extends Activity {
 
     // private String mSourceLanguage;
     // private String mTargetLanguage;
-    private String mSourceText;
-    private String mTargetText;
+    private String[] mSourceText;
     private int mSourcePosition = 0;
     private int mTargetPosition = 1;
     private boolean mCancelled = false;
@@ -230,7 +229,6 @@ public class CardEditor extends Activity {
             } else if (count > 0) {
                 mChanged = true;
                 mSourceText = null;
-                mTargetText = null;
                 setNote();
                 Themes.showThemedToast(CardEditor.this,
                         getResources().getQuantityString(R.plurals.factadder_cards_added, count, count), true);
@@ -401,8 +399,9 @@ public class CardEditor extends Activity {
                 if (ACTION_CREATE_FLASHCARD.equals(intent.getAction())) {
                     // mSourceLanguage = extras.getString(SOURCE_LANGUAGE);
                     // mTargetLanguage = extras.getString(TARGET_LANGUAGE);
-                    mSourceText = extras.getString(SOURCE_TEXT);
-                    mTargetText = extras.getString(TARGET_TEXT);
+                	mSourceText = new String[2];
+                    mSourceText[0] = extras.getString(SOURCE_TEXT);
+                    mSourceText[1] = extras.getString(TARGET_TEXT);
                 } else {
                     Pair<String, String> messages = new Pair<String, String>(extras.getString(Intent.EXTRA_SUBJECT),
                             extras.getString(Intent.EXTRA_TEXT));
@@ -410,14 +409,15 @@ public class CardEditor extends Activity {
                     /* Filter garbage information */
                     Pair<String, String> cleanMessages = new FilterFacade(getBaseContext()).filter(messages);
 
-                    mSourceText = cleanMessages.first;
-                    mTargetText = cleanMessages.second;
+                	mSourceText = new String[2];
+                    mSourceText[0] = cleanMessages.first;
+                    mSourceText[1] = cleanMessages.second;
                 }
-                if (mSourceText == null && mTargetText == null) {
+                if (mSourceText == null) {
                     finish();
                     return;
                 }
-                if (mSourceText.equals("Aedict Notepad") && addFromAedict(mTargetText)) {
+                if (mSourceText[0].equals("Aedict Notepad") && addFromAedict(mSourceText[1])) {
                     finish();
                     return;
                 }
@@ -432,12 +432,12 @@ public class CardEditor extends Activity {
             // set information transferred by intent
             String contents = null;
             if (mSourceText != null) {
-                if (mAedictIntent && (mEditFields.size() == 3) && mTargetText.contains("[")) {
-                    contents = mTargetText.replaceFirst("\\[", "\u001f");
+                if (mAedictIntent && (mEditFields.size() == 3) && mSourceText[1].contains("[")) {
+                    contents = mSourceText[1].replaceFirst("\\[", "\u001f");
                     contents = contents.substring(0, contents.length() - 1);
                 } else {
-                    mEditFields.get(0).setText(mSourceText);
-                    mEditFields.get(1).setText(mTargetText);
+                    mEditFields.get(0).setText(mSourceText[0]);
+                    mEditFields.get(1).setText(mSourceText[1]);
                 }
             } else {
                 contents = intent.getStringExtra(EXTRA_CONTENTS);
@@ -465,10 +465,11 @@ public class CardEditor extends Activity {
                         MetaDB.saveIntentInformation(CardEditor.this, content);
                         populateEditFields();
                         mSourceText = null;
-                        mTargetText = null;
-                        if (mCaller == CALLER_INDICLASH || mCaller == CALLER_CARDEDITOR_INTENT_ADD) {
-                            closeCardEditor();
-                        }
+                        Themes.showThemedToast(CardEditor.this,
+                                getResources().getString(R.string.CardEditorLaterMessage), false);
+                    }
+                    if (mCaller == CALLER_INDICLASH || mCaller == CALLER_CARDEDITOR_INTENT_ADD) {
+                        closeCardEditor();
                     }
                 }
             });
@@ -627,8 +628,8 @@ public class CardEditor extends Activity {
                     if (notepad_lines.length > i + 1) {
                         String[] entry_lines = notepad_lines[i + 1].split(":");
                         if (entry_lines.length > 1) {
-                            mSourceText = entry_lines[1];
-                            mTargetText = entry_lines[0];
+                            mSourceText[0] = entry_lines[1];
+                            mSourceText[1] = entry_lines[0];
                             mAedictIntent = true;
                         } else {
                             Themes.showThemedToast(CardEditor.this,
@@ -646,6 +647,13 @@ public class CardEditor extends Activity {
         }
         Themes.showThemedToast(CardEditor.this, getResources().getString(R.string.intent_aedict_category), false);
         return true;
+    }
+
+
+    private void resetEditFields (String[] content) {
+    	for (int i = 0; i < Math.min(content.length, mEditFields.size()); i++) {
+    		mEditFields.get(i).setText(content[i]);
+    	}
     }
 
 
@@ -762,12 +770,7 @@ public class CardEditor extends Activity {
             case MENU_RESET:
                 if (mAddNote) {
                     if (mCaller == CALLER_INDICLASH || mCaller == CALLER_CARDEDITOR_INTENT_ADD) {
-                        if (mSourceText != null) {
-                            mEditFields.get(0).setText(mSourceText);
-                        }
-                        if (mTargetText != null) {
-                            mEditFields.get(1).setText(mTargetText);
-                        }
+                    	resetEditFields(mSourceText);
                     } else {
                         setEditFieldTexts(getIntent().getStringExtra(EXTRA_CONTENTS));
                         if (!mEditFields.isEmpty()) {
@@ -1044,12 +1047,7 @@ public class CardEditor extends Activity {
                                 oldValues[i] = mEditFields.get(i).getText().toString();
                             }
                             setNote();
-                            if ((mSourceText == null || mSourceText.length() == 0)
-                                    && (mTargetText == null || mTargetText.length() == 0)) {
-                                for (int i = 0; i < Math.min(size, mEditFields.size()); i++) {
-                                    mEditFields.get(i).setText(oldValues[i]);
-                                }
-                            }
+                            resetEditFields(oldValues);
                             mTimerHandler.removeCallbacks(checkDuplicatesRunnable);
                             duplicateCheck(false);
                         }
