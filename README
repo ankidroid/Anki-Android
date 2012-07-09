@@ -1,39 +1,10 @@
 AnkiDroid: Anki on Android
-See http://ichi2.net/anki/wiki/AndroidAnki
+
+How to compile: http://code.google.com/p/ankidroid/wiki/Contribution#Source_code
 
 === Running with Ant ===
 
 1. Create a "local.properties" file containing the path to the Android SDK, for instance:
 sdk.dir=/home/nico/programs/android-sdk
 
-2. Plug in your Android phone via USB and run the following command: ant install-device
-
-3. To install on an emulator run: ant install-emulator
-
-=== Zeemote JS1 support ===
-
-The controller must be paired first.  Turn on Bluetooth, Go to Preferences -> Navigation and check "Zeemote support".  Restart AnkiDroid.
-Default assignments:
-
- While in the Reviewer:
-  Button A - play question/answer audio
-  Button B - close Reviewer
-  Button C - undo (if available)
-  Button D - show answer
-  Stick Up - Mark 4 (Easy/Very Easy) (Review/New)
-  Stick Dn - Mark 1 (Again)
-  Stick Left - Mark 2 (Hard/Good)
-  Stick Right - Mark 3 (Good/Easy)
-  
- While in the StudyOptions (Deck details) screen:
-  Button A - open Reviewer
-  Button B - go to DeckPicker (list of decks)
-  
- While in the Congratulations screen:
-  Button A - openReviewer
-  Button B - go to StudyOptions (Deck details)
-  
- While in the DeckPicker (list of decks):
-  Stick up/down - scroll the list
-  Button A - load selected deck
-  Button B - go to StudyOptions (Deck details)
+2. Plug in your Android phone via USB and run the following command: ant debug; ant installd
