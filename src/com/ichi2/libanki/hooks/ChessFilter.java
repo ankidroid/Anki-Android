@@ -83,8 +83,8 @@ public class ChessFilter extends Hook {
             try {
                 mf.appendReplacement(sb, "<script type=\"text/javascript\">document.write(" +
                         String.format(Locale.US, fRenderFen, mf.group(2), showBlack) + ");</script>");
-            } catch (Throwable e) {
-                Log.e(AnkiDroidApp.TAG, "Chess boom!", e);
+            } catch (Exception e) {
+                Log.e(AnkiDroidApp.TAG, "ChessFilter exception: ", e);
             }
         }
         mf.appendTail(sb);
