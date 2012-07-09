@@ -885,6 +885,10 @@ public class DeckPicker extends FragmentActivity {
     }
 
     private void loadCollection() {
+    	if (!AnkiDroidApp.isSdCardMounted()) {
+    		showDialog(DIALOG_SD_CARD_NOT_MOUNTED);
+    		return;
+    	}
     	String path = AnkiDroidApp.getCollectionPath();
         Collection col = Collection.currentCollection();
         if (col == null || !col.getPath().equals(path)) {
@@ -937,6 +941,10 @@ public class DeckPicker extends FragmentActivity {
 
 
     private boolean upgradeNeeded() {
+    	if (!AnkiDroidApp.isSdCardMounted()) {
+    		showDialog(DIALOG_SD_CARD_NOT_MOUNTED);
+    		return false;
+    	}
         if ((new File(AnkiDroidApp.getCollectionPath())).exists()) {
             // collection file exists
             return false;
