@@ -16,11 +16,15 @@
 
 package com.ichi2.libanki.hooks;
 
+import android.util.Log;
+
+import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.libanki.LaTeX;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 public class Hooks {
@@ -86,9 +90,17 @@ public class Hooks {
      */
     public void runHook(String hook, Object... args) {
         List<Hook> _hook = hooks.get(hook);
+        String funcName = "";
         if (_hook != null) {
-            for (Hook func : _hook) {
-                func.runHook(args);
+            try {
+                for (Hook func : _hook) {
+                    funcName = func.getClass().getCanonicalName();
+                    func.runHook(args);
+                }
+            } catch (Exception e) {
+                Log.e(AnkiDroidApp.TAG, String.format(Locale.US,
+                        "Exception while running hook %s:%s", hook, funcName), e);
+                return;
             }
         }
     }
@@ -103,9 +115,17 @@ public class Hooks {
      */
     public Object runFilter(String hook, Object arg, Object... args) {
         List<Hook> _hook = hooks.get(hook);
+        String funcName = "";
         if (_hook != null) {
-            for (Hook func : _hook) {
-                arg = func.runFilter(arg, args);
+            try {
+                for (Hook func : _hook) {
+                    funcName = func.getClass().getCanonicalName();
+                    arg = func.runFilter(arg, args);
+                }
+            } catch (Exception e) {
+                Log.e(AnkiDroidApp.TAG, String.format(Locale.US,
+                        "Exception while running hook %s:%s", hook, funcName), e);
+                return String.format(Locale.US, "Error in filter %s:", hook, funcName);
             }
         }
         return arg;
