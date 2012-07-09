@@ -45,7 +45,7 @@
   <string name="factadder_saving_error">Hi ha hagurt un error en desar la nota</string>
   <string name="cardeditor_move_note_too">Mou també la nota</string>
   <string name="cardeditor_move_to_notes_deck">A la nota del paquet</string>
-  <string name="pref_lang_support">Language Settings</string>
+  <string name="pref_lang_support">Language</string>
   <string name="saving_facts">S\'està desant la nota</string>
   <string name="deck">Paquet</string>
   <string name="add">Afegeix</string>
@@ -78,6 +78,7 @@
   <string name="simple_interface_hint">Buit %s. Tingueu en compte que a l\'interfície simple no es mostraen imatges, sons, etc.</string>
   <string name="delete_deck">S\'està suprimint el paquet...\nun moment si us plau.</string>
   <string name="menu_cardbrowser">Card browser</string>
+  <string name="show_hint">Show Hint</string>
   <string name="pref_lang_other">Language Preferences</string>
   <string name="pref_lang_common">LangCommon</string>
   <string name="pref_font_UI">Custom UI Font</string>

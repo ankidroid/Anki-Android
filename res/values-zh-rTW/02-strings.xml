@@ -45,7 +45,7 @@
   <string name="factadder_saving_error">Error saving note</string>
   <string name="cardeditor_move_note_too">同時移動註解</string>
   <string name="cardeditor_move_to_notes_deck">To note\'s deck</string>
-  <string name="pref_lang_support">Language Settings</string>
+  <string name="pref_lang_support">Language</string>
   <string name="saving_facts">儲存註解中</string>
   <string name="deck">牌組</string>
   <string name="add">新增</string>
@@ -78,6 +78,7 @@
   <string name="simple_interface_hint">Empty %s. Bear in mind that simple interface cannot show pictures/sounds etc.</string>
   <string name="delete_deck">Deleting deck...\nPlease wait.</string>
   <string name="menu_cardbrowser">Card browser</string>
+  <string name="show_hint">Show Hint</string>
   <string name="pref_lang_other">Language Preferences</string>
   <string name="pref_lang_common">LangCommon</string>
   <string name="pref_font_UI">Custom UI Font</string>

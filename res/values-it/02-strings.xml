@@ -45,7 +45,7 @@
   <string name="factadder_saving_error">Errore salvataggio nota</string>
   <string name="cardeditor_move_note_too">Sposta anche la nota</string>
   <string name="cardeditor_move_to_notes_deck">Vai al mazzo</string>
-  <string name="pref_lang_support">Language Settings</string>
+  <string name="pref_lang_support">Language</string>
   <string name="saving_facts">Salvataggio nota</string>
   <string name="deck">Mazzo</string>
   <string name="add">Aggiungi</string>
@@ -78,6 +78,7 @@
   <string name="simple_interface_hint">Vuoto %s. Tieni presente che l\'interfaccia semplice non può mostrare immagini/suoni ecc.</string>
   <string name="delete_deck">Eliminazione mazzo...\nAttendi.</string>
   <string name="menu_cardbrowser">Browser delle carte</string>
+  <string name="show_hint">Show Hint</string>
   <string name="pref_lang_other">Language Preferences</string>
   <string name="pref_lang_common">LangCommon</string>
   <string name="pref_font_UI">Custom UI Font</string>

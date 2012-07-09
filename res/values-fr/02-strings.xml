@@ -45,7 +45,7 @@
   <string name="factadder_saving_error">La note ne peut être enregistrée</string>
   <string name="cardeditor_move_note_too">Déplacer aussi la note</string>
   <string name="cardeditor_move_to_notes_deck">Vers le paquet de la note</string>
-  <string name="pref_lang_support">Paramètres linguistiques</string>
+  <string name="pref_lang_support">Language</string>
   <string name="saving_facts">Enregistrer la note</string>
   <string name="deck">Paquet</string>
   <string name="add">Ajouter</string>
@@ -78,6 +78,7 @@
   <string name="simple_interface_hint">%s vide. Ni le son ni l’image ne peut être reproduit dans l’interface simplifiée.</string>
   <string name="delete_deck">Suppression du paquet…\nPatience.</string>
   <string name="menu_cardbrowser">Examiner les cartes</string>
+  <string name="show_hint">Show Hint</string>
   <string name="pref_lang_other">Préférences linguistiques</string>
   <string name="pref_lang_common">LangCommon</string>
   <string name="pref_font_UI">Police pour l’interface utilisateur</string>

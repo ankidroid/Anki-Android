@@ -45,7 +45,7 @@
   <string name="factadder_saving_error">Fel vid sparande av anteckning</string>
   <string name="cardeditor_move_note_too">Flytta även anteckning</string>
   <string name="cardeditor_move_to_notes_deck">Till anteckningens kortlek</string>
-  <string name="pref_lang_support">Language Settings</string>
+  <string name="pref_lang_support">Language</string>
   <string name="saving_facts">Sparar anteckning</string>
   <string name="deck">Kortlek</string>
   <string name="add">Lägg till</string>
@@ -78,6 +78,7 @@
   <string name="simple_interface_hint">Tom %s. Tänk på att det enkla gränssnittet inte kan visa bilder/ljud m.m.</string>
   <string name="delete_deck">Tar bort kortlek...\nVänligen vänta.</string>
   <string name="menu_cardbrowser">Kortutforskare</string>
+  <string name="show_hint">Show Hint</string>
   <string name="pref_lang_other">Language Preferences</string>
   <string name="pref_lang_common">LangCommon</string>
   <string name="pref_font_UI">Custom UI Font</string>
