@@ -95,8 +95,8 @@
 <string name="card_browser_font_size_summ">The relative font size to use in the card browser. At the moment: XXX %</string>
 <string name="button_size">Relative button size</string>
 <string name="button_size_summ">Relative size of the buttons on the reviewing screen. At the moment: XXX %</string>
-<string name="deck_path">Deck path</string>
-<string name="deck_path_summ">Path to where your decks are stored</string>
+<string name="col_path">Collection path</string>
+<string name="col_path_summ">Path to where your collection is stored</string>
 <string name="fullscreen_review">Review in fullscreen</string>
 <string name="fullscreen_review_summ">You can decide if you want to use all available screen space during card reviewing</string>
 <string name="zoom">Enable Zoom</string>
@@ -174,7 +174,7 @@
 <string name="pref_backup">Use backups</string>
 <string name="pref_backup_summ">Create automatically a backup before opening a deck (once a day)</string>
 <string name="pref_backup_max">Backup depth</string>
-<string name="pref_backup_max_summ">Maximum number of backups per deck: XXX</string>
+<string name="pref_backup_max_summ">Maximum number of backups: XXX</string>
 <string name="pref_backup_warning">Disabling backups will delete all current backup files. Proceed anyway?</string>
 
 
