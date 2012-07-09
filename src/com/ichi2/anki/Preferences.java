@@ -2,6 +2,7 @@
  * Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com>                           *
  * Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com>                                   *
  * Copyright (c) 2010 Norbert Nagold <norbert.nagold@gmail.com>                         *
+ * Copyright (c) 2012 Kostas Spyropoulos <inigo.aldana@gmail.com>                       *
  *                                                                                      *
  * This program is free software; you can redistribute it and/or modify it under        *
  * the terms of the GNU General Public License as published by the Free Software        *
@@ -40,6 +41,7 @@ import com.ichi2.anim.ActivityTransitionAnimation;
 import com.ichi2.anki.R;
 import com.ichi2.async.DeckTask;
 import com.ichi2.libanki.Utils;
+import com.ichi2.libanki.hooks.ChessFilter;
 import com.ichi2.themes.StyledDialog;
 import com.ichi2.themes.StyledProgressDialog;
 import com.ichi2.themes.Themes;
@@ -69,9 +71,8 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
     private CheckBoxPreference animationsCheckboxPreference;
     private CheckBoxPreference useBackupPreference;
     private CheckBoxPreference asyncModePreference;
-    private CheckBoxPreference hideDueCountPreference;
-    private CheckBoxPreference overtimePreference;
     private CheckBoxPreference eInkDisplayPreference;
+    private CheckBoxPreference convertFenText;
     private ListPreference mLanguageSelection;
     private CharSequence[] mLanguageDialogLabels;
     private CharSequence[] mLanguageDialogValues;
@@ -94,14 +95,13 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        // Workaround for bug 4611: http://code.google.com/p/android/issues/detail?id=4611
         int apiLevel = AnkiDroidApp.getSdkVersion();
         if (apiLevel >= 7 && apiLevel <= 10) {
             Themes.applyTheme(this, Themes.THEME_ANDROID_DARK);
         }
         super.onCreate(savedInstanceState);
-        // Workaround for bug 4611: http://code.google.com/p/android/issues/detail?id=4611
 
-        
         mPrefMan = getPreferenceManager();
         mPrefMan.setSharedPreferencesName(AnkiDroidApp.SHARED_PREFS_NAME);
 
@@ -117,10 +117,9 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
         animationsCheckboxPreference = (CheckBoxPreference) getPreferenceScreen().findPreference("themeAnimations");
         useBackupPreference = (CheckBoxPreference) getPreferenceScreen().findPreference("useBackup");
         asyncModePreference = (CheckBoxPreference) getPreferenceScreen().findPreference("asyncMode");
-        hideDueCountPreference = (CheckBoxPreference) getPreferenceScreen().findPreference("hideDueCount");
-        overtimePreference = (CheckBoxPreference) getPreferenceScreen().findPreference("overtime");
         eInkDisplayPreference = (CheckBoxPreference) getPreferenceScreen().findPreference("eInkDisplay");
         ListPreference listpref = (ListPreference) getPreferenceScreen().findPreference("theme");
+        convertFenText = (CheckBoxPreference) getPreferenceScreen().findPreference("convertFenText");
         String theme = listpref.getValue();
         animationsCheckboxPreference.setEnabled(theme.equals("2") || theme.equals("3"));
         zoomCheckboxPreference.setEnabled(!swipeCheckboxPreference.isChecked());
@@ -204,30 +203,6 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
     }
 
 
-    // private void enableWalSupport() {
-    // Cursor cursor = null;
-    // String sqliteVersion = "";
-    // SQLiteDatabase database = null;
-    // try {
-    // database = SQLiteDatabase.openOrCreateDatabase(":memory:", null);
-    // cursor = database.rawQuery("select sqlite_version() AS sqlite_version", null);
-    // while(cursor.moveToNext()){
-    // sqliteVersion = cursor.getString(0);
-    // }
-    // } finally {
-    // database.close();
-    // if (cursor != null) {
-    // cursor.close();
-    // }
-    // }
-    // if (sqliteVersion.length() >= 3 && Double.parseDouble(sqliteVersion.subSequence(0, 3).toString()) >= 3.7) {
-    // walModePreference.setEnabled(true);
-    // } else {
-    // Log.e(AnkiDroidApp.TAG, "WAL mode not available due to a SQLite version lower than 3.7.0");
-    // walModePreference.setChecked(false);
-    // }
-    // }
-
     private String replaceString(String str, String value) {
         if (str.contains("XXX")) {
             return str.replace("XXX", value);
@@ -269,6 +244,9 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
         ListPreference customFontsPreference = (ListPreference) getPreferenceScreen().findPreference("defaultFont");
         customFontsPreference.setEntries(getCustomFonts("System default"));
         customFontsPreference.setEntryValues(getCustomFonts(""));
+        ListPreference browserEditorCustomFontsPreference = (ListPreference) getPreferenceScreen().findPreference("browserEditorFont");
+        browserEditorCustomFontsPreference.setEntries(getCustomFonts("System default"));
+        browserEditorCustomFontsPreference.setEntryValues(getCustomFonts("", true));
     }
 
 
@@ -324,7 +302,7 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
                 updateSeekBarPreference(key);
             } else if (Arrays.asList(mShowValueInSummEditText).contains(key)) {
                 updateEditTextPreference(key);
-            } else if (key.equals("writeAnswers") && sharedPreferences.getBoolean("writeAnswers", false)) {
+            } else if (key.equals("writeAnswers") && sharedPreferences.getBoolean("writeAnswers", true)) {
                 showDialog(DIALOG_WRITE_ANSWERS);
             } else if (key.equals("useBackup")) {
                 if (lockCheckAction) {
@@ -353,7 +331,14 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
                     AnkiDroidApp.createNoMediaFileIfMissing(decksDirectory);
                 }
             } else if (key.equals("eInkDisplay")) {
-                boolean enableAnimation = !eInkDisplayPreference.isChecked();
+                animationsCheckboxPreference.setChecked(false);
+                animationsCheckboxPreference.setEnabled(!eInkDisplayPreference.isChecked());
+            } else if (key.equals("convertFenText")) {
+                if (convertFenText.isChecked()) {
+                    ChessFilter.install(AnkiDroidApp.getHooks());
+                } else {
+                    ChessFilter.uninstall(AnkiDroidApp.getHooks());
+                }
             }
         } catch (BadTokenException e) {
             Log.e(AnkiDroidApp.TAG, "Preferences: BadTokenException on showDialog: " + e);
@@ -363,14 +348,24 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
 
     /** Returns a list of the names of the installed custom fonts. */
     private String[] getCustomFonts(String defaultValue) {
+        return getCustomFonts(defaultValue, false);
+    }
+    private String[] getCustomFonts(String defaultValue, boolean useFullPath) {
         List<AnkiFont> fonts = Utils.getCustomFonts(this);
         int count = fonts.size();
         Log.d(AnkiDroidApp.TAG, "There are " + count + " custom fonts");
         String[] names = new String[count + 1];
         names[0] = defaultValue;
-        for (int index = 1; index < count + 1; ++index) {
-            names[index] = fonts.get(index-1).getName();
-            Log.d(AnkiDroidApp.TAG, "Adding custom font: " + names[index]);
+        if (useFullPath) {
+            for (int index = 1; index < count + 1; ++index) {
+                names[index] = fonts.get(index-1).getPath();
+                Log.d(AnkiDroidApp.TAG, "Adding custom font: " + names[index]);
+            }
+        } else {
+            for (int index = 1; index < count + 1; ++index) {
+                names[index] = fonts.get(index-1).getName();
+                Log.d(AnkiDroidApp.TAG, "Adding custom font: " + names[index]);
+            }
         }
         return names;
     }
