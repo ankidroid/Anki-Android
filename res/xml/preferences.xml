@@ -22,14 +22,6 @@
     xmlns:app="http://schemas.android.com/apk/res/com.ichi2.anki" >
 
     <PreferenceScreen android:title="@string/pref_cat_general" >
-        <PreferenceCategory android:title="@string/pref_cat_start" >
-            <CheckBoxPreference
-                android:defaultValue="true"
-                android:enabled="false"
-                android:key="study_options"
-                android:summary="@string/show_study_options_on_deck_load_summ"
-                android:title="@string/show_study_options_on_deck_load" />
-        </PreferenceCategory>
         <PreferenceCategory android:title="@string/pref_cat_decks" >
             <EditTextPreference
                 android:defaultValue="/sdcard/AnkiDroid"
@@ -109,19 +101,14 @@
         <PreferenceCategory android:title="@string/pref_cat_performance" >
             <CheckBoxPreference
                 android:defaultValue="false"
-                android:key="hideDueCount"
-                android:summary="@string/hide_due_count_summ"
-                android:title="@string/hide_due_count" />
+                android:key="asyncMode"
+                android:summary="@string/async_mode_summ"
+                android:title="@string/async_mode" />
             <CheckBoxPreference
                 android:defaultValue="false"
                 android:key="cardBrowserCache"
                 android:summary="@string/pref_cache_cardbrowser_summ"
                 android:title="@string/pref_cache_cardbrowser" />
-            <CheckBoxPreference
-                android:defaultValue="false"
-                android:key="asyncMode"
-                android:summary="@string/async_mode_summ"
-                android:title="@string/async_mode" />
 		</PreferenceCategory>
     </PreferenceScreen>
     <PreferenceScreen android:title="@string/pref_cat_qadisplay" >
@@ -198,12 +185,12 @@
 	            android:key="writeAnswers"
 	            android:summary="@string/write_answers_summ"
 	            android:title="@string/write_answers" />
-          	<CheckBoxPreference
+<!--           	<CheckBoxPreference
                 android:defaultValue="true"
                 android:key="overtime"
                 android:summary="@string/overtime_summ"
                 android:title="@string/overtime" />
-            <CheckBoxPreference
+ -->            <CheckBoxPreference
                 android:defaultValue="false"
                 android:key="fixOrientation"
                 android:summary="@string/fix_orientation_summ"
