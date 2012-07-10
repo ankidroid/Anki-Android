@@ -23,6 +23,7 @@
   <string name="CardEditorCancelButton">Annuler</string>
   <string name="CardEditorSaveButton">Enregistrer</string>
   <string name="CardEditorLaterButton">Plus tard</string>
+  <string name="CardEditorLaterMessage">Saved information for later</string>
   <string name="CardEditorCardDeck">Paquet de cartes : %s</string>
   <string name="CardEditorNoteDeck">Incluse dans le paquet : %s</string>
   <string name="CardEditorModel">Type de note : %s</string>
@@ -43,8 +44,6 @@
   <string name="cardeditor_title_add_note">Ajout de note</string>
   <string name="cardeditor_title_edit_card">Modifier la note</string>
   <string name="factadder_saving_error">La note ne peut être enregistrée</string>
-  <string name="cardeditor_move_note_too">Déplacer aussi la note</string>
-  <string name="cardeditor_move_to_notes_deck">Vers le paquet de la note</string>
   <string name="pref_lang_support">Language</string>
   <string name="saving_facts">Enregistrer la note</string>
   <string name="deck">Paquet</string>

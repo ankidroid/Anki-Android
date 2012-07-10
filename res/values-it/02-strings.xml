@@ -23,6 +23,7 @@
   <string name="CardEditorCancelButton">Annulla</string>
   <string name="CardEditorSaveButton">Salva</string>
   <string name="CardEditorLaterButton">In seguito</string>
+  <string name="CardEditorLaterMessage">Saved information for later</string>
   <string name="CardEditorCardDeck">Mazzo carte: %s</string>
   <string name="CardEditorNoteDeck">Mazzo nota: %s</string>
   <string name="CardEditorModel">Tipo nota: %s</string>
@@ -43,8 +44,6 @@
   <string name="cardeditor_title_add_note">Aggiungi nota</string>
   <string name="cardeditor_title_edit_card">Modifica nota</string>
   <string name="factadder_saving_error">Errore salvataggio nota</string>
-  <string name="cardeditor_move_note_too">Sposta anche la nota</string>
-  <string name="cardeditor_move_to_notes_deck">Vai al mazzo</string>
   <string name="pref_lang_support">Language</string>
   <string name="saving_facts">Salvataggio nota</string>
   <string name="deck">Mazzo</string>

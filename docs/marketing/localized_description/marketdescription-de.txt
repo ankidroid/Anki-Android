@@ -10,30 +10,28 @@ Fügen Sie neues Material mit der Desktop-Applikation oder direkt mit AnkiDroid 
 
 ★ Haupt-Merkmale:
 • Unterstützte Karteikarten-Inhalte: Text, Bilder, Sounds, LaTeX
-Spaced Repetition (SuperMemo 2 Algorithmus)
-Text-to-speech Integration
-Mehr als 6000 vorgefertigte Decks
-• drei Widgets
-Detaillierte Statistiken
-Synchronisation mit AnkiWeb
-Open Source
+• Spaced Repetition (SuperMemo 2 Algorithmus)
+• Text-In-Sprache-Integration
+• Mehr als 6000 vorgefertigte Decks
+• progress widget
+• Detaillierte Statistiken
+• Synchronisation mit AnkiWeb
+• Open Source
 
 ★ Zusätzliche Merkmale:
 • Antworten schreiben (optional)
 • Whiteboard
 • Karteneditor/Möglichkeit, Karten hinzuzufügen
 • Kartenübersicht
+• tablet layout
 • Importieren von bestehenden Sammlungen (über Anki Desktop)
 • Wörterbuch-Integration (ColorDict, GoldenDict, Leo.org, Aedict, diverse Web-Wörterbücher)
 • Fügen Sie Karten über Intents von anderen Programmen (wie z.B. Wörterbüchern) hinzu
 • Unterstützung für andere Schriftarten
-• Lernen im Widget
 • ausgebautes Sicherungssystem
 • Navigation per Wischen, Klicken oder Schütteln
 • Voll konfigurierbar
-Lernen nach Stichwort, Zeit oder Kartenzahl einschränken
-• Pauk-Modus
+• dynamic deck handling
 • Nacht-Modus
-Drei verschiedene Farb-Themen
 • 27 Sprachen
 • All previous AnkiDroid versions can be downloaded from the website

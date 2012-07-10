@@ -114,15 +114,15 @@
   <string name="register_title">Konto erstellen</string>
   <string name="register_mismatch">Die Wiederholung der Benutzernamens bzw. des Passworts ist falsch oder leer. Bitte geben Sie die Informationen erneut ein.</string>
   <string name="registering_message">Erstelle Konto.\nBitte warten...</string>
-  <string name="upgrade_decks_zipping">Zipping decks for upload.\nPlease wait...</string>
-  <string name="upgrade_decks_upload">Uploading zipped decks.\nPlease wait...</string>
-  <string name="upgrade_decks_waiting">Waiting, queue position: %s\nPlease wait...</string>
-  <string name="upgrade_decks_upgrade_started">\"Upgrade started\nPlease waiting for finish...</string>
-  <string name="upgrade_decks_downloading">Downloading upgraded collection.\nPlease wait...</string>
-  <string name="upgrade_decks_message">There is no Anki 2.0 collection available but at least one deck of the old Anki 1.2 format has been found. In order to use your decks with the new version of AnkiDroid they need to be converted first into a single collection of the new Anki-2.0 format. There are three possibilities for this:</string>
-  <string name="upgrade_decks_message_pos1">By using Anki Desktop 2.0, your decks will be converted at the first start. You can sync over AnkiWeb or just copy the new collection afterwards to your mobile device. Start with syncing your Anki-1.2 decks to Anki Desktop (or copy them from your AnkiDroid directory (%s) to your Anki Desktop 1.2 directory on your computer) and start Anki Desktop 2.0.</string>
-  <string name="upgrade_decks_message_pos2">If you already sync your decks over ankiweb, you\'ll just need to log in once to %s and your decks will be converted there. After that you can simply sync the new collection to your mobile device.</string>
-  <string name="upgrade_decks_message_pos3">As a third possibility, you can have your decks converted via AnkiDroid itself and AnkiWeb. If you click on the upgrade button below, your decks will be bundled and uploaded to AnkiWeb. The converted collection will then be automatically downloaded and opened. You don\'t need any registration for that but be aware that it might be better to use a wifi connection in order to prevent too much traffic over your mobile connection. If the compressed decks amount to more than 50 mb, you cannot use this way. Please resort to the other options in this case.</string>
-  <string name="upgrade_required">Your decks on AnkiWeb are still in the old Anki 1.2 format. Please visit %s and log in there. Your decks will then automatically be converted into the new format.</string>
-  <string name="upgrade_decks_button">Upgrade</string>
+  <string name="upgrade_decks_zipping">Komprimiere Stapel fürs Hochladen.\nBitte warten...</string>
+  <string name="upgrade_decks_upload">Lade komprimierte Stapel hoch.\nBitte warten...</string>
+  <string name="upgrade_decks_waiting">Warteschlagenposition: %s\nBitte warten...</string>
+  <string name="upgrade_decks_upgrade_started">Konvertierung gestartet.\nBitte warten Sie auf die Fertigstellung...</string>
+  <string name="upgrade_decks_downloading">Lade konvertierte Sammlung herunter.\nBitte warten...</string>
+  <string name="upgrade_decks_message">Es ist keine Anki-2.0-Sammlung vorhanden aber es wurde zumindest ein Stapel im alten Anki-1.2-Format gefunden. Um Ihre Stapel mit der neuen Version von AnkiDroid nutzen zu können, müssen sie zuerst in eine einzelne Sammlung des neuen Anki-2.0-Formats konvertiert werden. Dafür haben Sie drei Möglichkeiten:</string>
+  <string name="upgrade_decks_message_pos1">Wenn Sie Anki-Desktop-2.0 benutzen, werden Ihre Stapel beim ersten Start konvertiert. Sie können dann über AnkiWeb synchronisieren oder die neue Sammlung auf Ihr Mobilgerät kopieren. Kopieren Sie Ihre Stapel vom AnkiDroid-Verzeichnis (%s) in Ihr Anki-Desktop-1.2-Verzeichnis auf Ihrem Computer (wenn Sie sie nicht ohnehin synchronisiert haben) und starten Anki-Desktop-2.0.</string>
+  <string name="upgrade_decks_message_pos2">Wenn Sie Ihre Stapel über AnkiWeb synchronisieren, müssen Sie sich nur einmal unter %s einloggen und Ihre Stapel werden automatisch konvertiert. Danach können Sie die neue Sammlung einfach auf Ihr Mobilgerät synchronisieren.</string>
+  <string name="upgrade_decks_message_pos3">Als dritte Möglichkeit können Sie die Stapel über AnkiDroid selbst und AnkiWeb konvertieren. Wenn Sie auf die Konvertieren-Schaltfläche klicken, werden Ihre Stapel komprimiert und zu AnkiWeb hochgeladen. Die konvertierte Sammlung wird dann automatisch heruntergeladen und geöffnet. Sie brauchen dafür keine Registrierung dafür; denken Sie aber daran, dass einiger Datenverkehr benötigt wird, evtl. also eine WLAN-Verbindung zu empfehlen ist. Die Möglichkeit besteht nur, sofern die komprimierten Stapel kleiner als 50 MB sind; ansonsten greifen Sie bitte auf eine der anderen Optionen zurück.</string>
+  <string name="upgrade_required">Ihr Stapel in AnkiWeb sind noch im alten Anki-1.2-Format. Bitte loggen Sie sich unter %s ein; Ihre stapel werden dann automatisch ins neue Format übertragen.</string>
+  <string name="upgrade_decks_button">Konvertieren</string>
 </resources>

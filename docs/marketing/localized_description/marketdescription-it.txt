@@ -13,7 +13,7 @@ Aggiungi materiale con l'applicazione per desktop Anki o direttamente con AnkiDr
 • ripetizioni spaziate (algoritmo supermemo 2)
 • integrazione sintesi vocale
 • più di 6000 mazzi preconfezionati
-• tre widget
+• progress widget
 • statistiche dettagliate
 • sincronizzazione con AnkiWeb
 • open source
@@ -23,17 +23,15 @@ Aggiungi materiale con l'applicazione per desktop Anki o direttamente con AnkiDr
 • lavagna
 • editor delle carte
 • browser delle carte
+• tablet layout
 • importazione di collezioni esistenti (via Anki Desktop)
 • integrazione dizionari (ColorDict, GoldenDict, Leo.org, Aedict, diversi dizionari web)
 • aggiunta di carte da altre applicazioni come dizionari
 • supporto di tipi di carattere personalizzati
-• ripetizioni nel widget
 • sistema completo di backup
 • navigazione con scorrimento, tocco, scuotimento
 • completamente personalizzabile
-• limiti di studio per etichette, tempo o carte
-• modalità studio focalizzato (cram)
+• dynamic deck handling
 • modalità notturna
-• tre differenti temi dell'interfaccia
 • 27 localizzazioni
 • Tutte le precedenti versioni di AnkiDroid possono essere scaricate dal sito Web

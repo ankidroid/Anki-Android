@@ -23,6 +23,7 @@
   <string name="CardEditorCancelButton">İptal</string>
   <string name="CardEditorSaveButton">Kaydet</string>
   <string name="CardEditorLaterButton">Daha sonra</string>
+  <string name="CardEditorLaterMessage">Saved information for later</string>
   <string name="CardEditorCardDeck">Kart destesi: %s</string>
   <string name="CardEditorNoteDeck">Not destesi: %s</string>
   <string name="CardEditorModel">Not türü: %s</string>
@@ -43,8 +44,6 @@
   <string name="cardeditor_title_add_note">Not Ekle</string>
   <string name="cardeditor_title_edit_card">Notu Düzenle</string>
   <string name="factadder_saving_error">Not kaydedilirken hata</string>
-  <string name="cardeditor_move_note_too">Notu da taşı</string>
-  <string name="cardeditor_move_to_notes_deck">Notun destesine</string>
   <string name="pref_lang_support">Language</string>
   <string name="saving_facts">Not kaydediliyor</string>
   <string name="deck">Deste</string>

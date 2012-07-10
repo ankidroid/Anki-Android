@@ -23,6 +23,7 @@
   <string name="CardEditorCancelButton">إلغاء</string>
   <string name="CardEditorSaveButton">حفظ</string>
   <string name="CardEditorLaterButton">لاحقا</string>
+  <string name="CardEditorLaterMessage">Saved information for later</string>
   <string name="CardEditorCardDeck">بطاقة الرزمة: %s</string>
   <string name="CardEditorNoteDeck">ملاحظة الرزمة: %s</string>
   <string name="CardEditorModel">نوع الملاحظة: %s</string>
@@ -43,8 +44,6 @@
   <string name="cardeditor_title_add_note">أضف ملاحظة</string>
   <string name="cardeditor_title_edit_card">حرر الملاحظة</string>
   <string name="factadder_saving_error">حدث خطأ أثناء حفظ الملاحظة</string>
-  <string name="cardeditor_move_note_too">حرك الملاحظة أيضا</string>
-  <string name="cardeditor_move_to_notes_deck">إلى ملاحظة الرزمة</string>
   <string name="pref_lang_support">Language</string>
   <string name="saving_facts">حفظ الملاحظة</string>
   <string name="deck">رزمة</string>

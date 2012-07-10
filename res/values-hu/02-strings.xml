@@ -23,6 +23,7 @@
   <string name="CardEditorCancelButton">Mégse</string>
   <string name="CardEditorSaveButton">Mentés</string>
   <string name="CardEditorLaterButton">Később</string>
+  <string name="CardEditorLaterMessage">Saved information for later</string>
   <string name="CardEditorCardDeck">Kártya pakli: %s</string>
   <string name="CardEditorNoteDeck">Jegyzet pakli: %s</string>
   <string name="CardEditorModel">Jegyzet típusa: %s</string>
@@ -43,8 +44,6 @@
   <string name="cardeditor_title_add_note">Jegyzet hozzáadása</string>
   <string name="cardeditor_title_edit_card">Jegyzet szerkesztése</string>
   <string name="factadder_saving_error">Hiba a jegyzet mentése közben</string>
-  <string name="cardeditor_move_note_too">Jegyzet mozgatása felfelé</string>
-  <string name="cardeditor_move_to_notes_deck">Jegyzet paklijához</string>
   <string name="pref_lang_support">Language</string>
   <string name="saving_facts">Jegyzet mentése</string>
   <string name="deck">Pakli</string>

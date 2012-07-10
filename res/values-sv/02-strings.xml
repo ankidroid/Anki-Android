@@ -23,6 +23,7 @@
   <string name="CardEditorCancelButton">Avbryt</string>
   <string name="CardEditorSaveButton">Spara</string>
   <string name="CardEditorLaterButton">Senare</string>
+  <string name="CardEditorLaterMessage">Saved information for later</string>
   <string name="CardEditorCardDeck">Kortlek: %s</string>
   <string name="CardEditorNoteDeck">Anteckningskortlek: %s</string>
   <string name="CardEditorModel">Anteckningstyp: %s</string>
@@ -43,8 +44,6 @@
   <string name="cardeditor_title_add_note">Lägg till anteckning</string>
   <string name="cardeditor_title_edit_card">Redigera anteckning</string>
   <string name="factadder_saving_error">Fel vid sparande av anteckning</string>
-  <string name="cardeditor_move_note_too">Flytta även anteckning</string>
-  <string name="cardeditor_move_to_notes_deck">Till anteckningens kortlek</string>
   <string name="pref_lang_support">Language</string>
   <string name="saving_facts">Sparar anteckning</string>
   <string name="deck">Kortlek</string>

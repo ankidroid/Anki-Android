@@ -23,6 +23,7 @@
   <string name="CardEditorCancelButton">Cancel·la</string>
   <string name="CardEditorSaveButton">Desa</string>
   <string name="CardEditorLaterButton">Més tard</string>
+  <string name="CardEditorLaterMessage">Saved information for later</string>
   <string name="CardEditorCardDeck">Paquet de targetes: %s</string>
   <string name="CardEditorNoteDeck">Nota del paquet: %s</string>
   <string name="CardEditorModel">Tipus de nota: %s</string>
@@ -43,8 +44,6 @@
   <string name="cardeditor_title_add_note">Afegeix una nota</string>
   <string name="cardeditor_title_edit_card">Edita la nota</string>
   <string name="factadder_saving_error">Hi ha hagurt un error en desar la nota</string>
-  <string name="cardeditor_move_note_too">Mou també la nota</string>
-  <string name="cardeditor_move_to_notes_deck">A la nota del paquet</string>
   <string name="pref_lang_support">Language</string>
   <string name="saving_facts">S\'està desant la nota</string>
   <string name="deck">Paquet</string>
