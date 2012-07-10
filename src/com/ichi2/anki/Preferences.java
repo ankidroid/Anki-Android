@@ -108,8 +108,6 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
         mPrefMan.setSharedPreferencesName(AnkiDroidApp.SHARED_PREFS_NAME);
 
         addPreferencesFromResource(R.xml.preferences);
-        // mVeecheckStatus = mPrefMan.getSharedPreferences().getBoolean(PrefSettings.KEY_ENABLED,
-        // PrefSettings.DEFAULT_ENABLED);
 
         getPreferenceScreen().getSharedPreferences().registerOnSharedPreferenceChangeListener(this);
         swipeCheckboxPreference = (CheckBoxPreference) getPreferenceScreen().findPreference("swipe");
@@ -267,10 +265,6 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
             } else if (key.equals("timeoutAnswer")) {
                 keepScreenOnCheckBoxPreference.setChecked(showAnswerCheckBoxPreference.isChecked());
             } else if (key.equals("language")) {
-                Intent intent = this.getIntent();
-                // setResult(DeckPicker.RESULT_RESTART, intent);
-                closePreferences();
-            } else if (key.equals("startup_mode")) {
                 Intent intent = this.getIntent();
                 // setResult(DeckPicker.RESULT_RESTART, intent);
                 closePreferences();
