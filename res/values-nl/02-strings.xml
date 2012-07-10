@@ -23,6 +23,7 @@
   <string name="CardEditorCancelButton">Annuleren</string>
   <string name="CardEditorSaveButton">Opslaan</string>
   <string name="CardEditorLaterButton">Later</string>
+  <string name="CardEditorLaterMessage">Saved information for later</string>
   <string name="CardEditorCardDeck">Kaart leerset: %s</string>
   <string name="CardEditorNoteDeck">Kaart leerset: %s</string>
   <string name="CardEditorModel">Kaarttype: %s</string>
@@ -43,8 +44,6 @@
   <string name="cardeditor_title_add_note">Kaart toevoegen</string>
   <string name="cardeditor_title_edit_card">Kaart bewerken</string>
   <string name="factadder_saving_error">Fout bij oplaan kaart</string>
-  <string name="cardeditor_move_note_too">Verplaats ook deze kaart</string>
-  <string name="cardeditor_move_to_notes_deck">Verplaats naar leerset van deze kaart</string>
   <string name="pref_lang_support">Language</string>
   <string name="saving_facts">Kaart opslaan</string>
   <string name="deck">Leerset</string>

@@ -30,5 +30,6 @@
     <item>los mazos ahora se guardan en una colección única</item>
     <item>options are shareable now</item>
     <item>diseño para tablet</item>
+    <item>tons of performance improvements</item>
   </string-array>
 </resources>

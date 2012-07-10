@@ -23,6 +23,7 @@
   <string name="CardEditorCancelButton">取消</string>
   <string name="CardEditorSaveButton">儲存</string>
   <string name="CardEditorLaterButton">Later</string>
+  <string name="CardEditorLaterMessage">Saved information for later</string>
   <string name="CardEditorCardDeck">Card deck: %s</string>
   <string name="CardEditorNoteDeck">Note deck: %s</string>
   <string name="CardEditorModel">Note type: %s</string>
@@ -43,8 +44,6 @@
   <string name="cardeditor_title_add_note">Add Note</string>
   <string name="cardeditor_title_edit_card">Edit Note</string>
   <string name="factadder_saving_error">Error saving note</string>
-  <string name="cardeditor_move_note_too">同時移動註解</string>
-  <string name="cardeditor_move_to_notes_deck">To note\'s deck</string>
   <string name="pref_lang_support">Language</string>
   <string name="saving_facts">儲存註解中</string>
   <string name="deck">牌組</string>

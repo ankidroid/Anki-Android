@@ -23,6 +23,7 @@
   <string name="CardEditorCancelButton">취소</string>
   <string name="CardEditorSaveButton">저장</string>
   <string name="CardEditorLaterButton">나중에</string>
+  <string name="CardEditorLaterMessage">Saved information for later</string>
   <string name="CardEditorCardDeck">카드 묶음: %s</string>
   <string name="CardEditorNoteDeck">노트 묶음: %s</string>
   <string name="CardEditorModel">노트 유형: %s</string>
@@ -43,8 +44,6 @@
   <string name="cardeditor_title_add_note">노트 추가</string>
   <string name="cardeditor_title_edit_card">노트 편집</string>
   <string name="factadder_saving_error">오류 노트 저장</string>
-  <string name="cardeditor_move_note_too">노트도 옮기기</string>
-  <string name="cardeditor_move_to_notes_deck">노트 묶음으로</string>
   <string name="pref_lang_support">Language</string>
   <string name="saving_facts">노트 저장</string>
   <string name="deck">암기묶음</string>

@@ -13,7 +13,7 @@ Add material through the desktop application Anki or directly through Ankidroid.
 • spaced repetition (supermemo 2 algorithm)
 • text-to-speech integration
 • more than 6000 premade decks
-• three widgets
+• progress widget
 • detailed statistics
 • syncing with AnkiWeb
 • open source
@@ -23,17 +23,15 @@ Add material through the desktop application Anki or directly through Ankidroid.
 • whiteboard
 • card editor/adder
 • card browser
+• tablet layout
 通过桌面版本的Anki可以导入现有的文件
 • dictionary integration (ColorDict, GoldenDict, Leo.org, Aedict, diverse web dictionaries)
 • add cards by intent from other applications like dictionaries
 • custom font support
-通过快捷方式浏览
 • full backup system
 • navigation by swipe, tap, shake
 • fully customisable
-• limit studying by tag, time or cards
-• cram mode
+• dynamic deck handling
 • night mode
-• three different ui-themes
 支持27种不同的语言
 • All previous AnkiDroid versions can be downloaded from the website
