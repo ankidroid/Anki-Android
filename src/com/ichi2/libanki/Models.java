@@ -954,9 +954,9 @@ public class Models {
             } else {
                 // hook-based field modifier
                 if (txt == null) {
-                    txt = (String) AnkiDroidApp.getHooks().runFilter("fmod_" + mod, "", extra, ctx, tag, tag_name);
+                    txt = (String) AnkiDroidApp.getHooks().runFilter("fmod_" + mod, "", extra, AnkiDroidApp.getAppResources(), tag, tag_name);
                 } else {
-                    txt = (String) AnkiDroidApp.getHooks().runFilter("fmod_" + mod, txt, extra, ctx, tag, tag_name);
+                    txt = (String) AnkiDroidApp.getHooks().runFilter("fmod_" + mod, txt, extra, AnkiDroidApp.getAppResources(), tag, tag_name);
                 }
                 if (txt == null) {
                     return String.format(Locale.US, "{unknown field %s}", tag_name);

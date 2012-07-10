@@ -45,7 +45,7 @@
   <string name="factadder_saving_error">Fout bij oplaan kaart</string>
   <string name="cardeditor_move_note_too">Verplaats ook deze kaart</string>
   <string name="cardeditor_move_to_notes_deck">Verplaats naar leerset van deze kaart</string>
-  <string name="pref_lang_support">Language Settings</string>
+  <string name="pref_lang_support">Language</string>
   <string name="saving_facts">Kaart opslaan</string>
   <string name="deck">Leerset</string>
   <string name="add">Toevoegen</string>
@@ -78,6 +78,7 @@
   <string name="simple_interface_hint">Leeg %s. Onthoud dat een eenvoudige interface geen beelden/geluiden kan tonen.</string>
   <string name="delete_deck">Leerset verwijderen...\nEven wachten.</string>
   <string name="menu_cardbrowser">Card browser</string>
+  <string name="show_hint">Show Hint</string>
   <string name="pref_lang_other">Language Preferences</string>
   <string name="pref_lang_common">LangCommon</string>
   <string name="pref_font_UI">Custom UI Font</string>

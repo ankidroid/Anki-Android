@@ -20,11 +20,17 @@ import com.ichi2.anki.R;
 
 import com.ichi2.anim.ActivityTransitionAnimation;
 import com.ichi2.libanki.Collection;
+import com.ichi2.themes.StyledOpenCollectionDialog;
 import com.ichi2.themes.Themes;
 import com.ichi2.widget.WidgetStatus;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.content.DialogInterface.OnCancelListener;
 import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
 import android.os.Bundle;
@@ -45,6 +51,9 @@ public class StudyOptionsActivity extends FragmentActivity {
 
     private Fragment mCurrentFragment;
 
+    private BroadcastReceiver mUnmountReceiver = null;
+    private StyledOpenCollectionDialog mNotMountedDialog;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         Themes.applyTheme(this);
@@ -61,6 +70,7 @@ public class StudyOptionsActivity extends FragmentActivity {
         if (savedInstanceState == null) {
         	loadContent(getIntent().getBooleanExtra("onlyFnsMsg", false));
         }
+        registerExternalStorageListener();
     }
 
     public void loadContent(boolean onlyFnsMsg) {
@@ -178,4 +188,38 @@ public class StudyOptionsActivity extends FragmentActivity {
     		return false;
     	}
     }
+
+    private void registerExternalStorageListener() {
+        if (mUnmountReceiver == null) {
+            mUnmountReceiver = new BroadcastReceiver() {
+                @Override
+                public void onReceive(Context context, Intent intent) {
+                    if (intent.getAction().equals(Intent.ACTION_MEDIA_EJECT)) {
+                    	if (mNotMountedDialog == null || !mNotMountedDialog.isShowing()) {
+                    		mNotMountedDialog = StyledOpenCollectionDialog.show(StudyOptionsActivity.this, getResources().getString(R.string.sd_card_not_mounted), new OnCancelListener() {
+
+                                @Override
+                                public void onCancel(DialogInterface arg0) {
+                                    finish();
+                                }
+                            });
+                    	}
+                    } else if (intent.getAction().equals(Intent.ACTION_MEDIA_MOUNTED)) {
+                    	if (mNotMountedDialog != null && mNotMountedDialog.isShowing()) {
+                    		mNotMountedDialog.dismiss();                    		
+                    	}
+                    	((StudyOptionsFragment)mCurrentFragment).reloadCollection();
+                    }
+                }
+            };
+            IntentFilter iFilter = new IntentFilter();
+
+            // ACTION_MEDIA_EJECT is never invoked (probably due to an android bug
+            iFilter.addAction(Intent.ACTION_MEDIA_EJECT);
+            iFilter.addAction(Intent.ACTION_MEDIA_MOUNTED);
+            iFilter.addDataScheme("file");
+            registerReceiver(mUnmountReceiver, iFilter);
+        }
+    }
+
 }

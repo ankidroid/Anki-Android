@@ -369,7 +369,6 @@ public class BackupManager {
             }
         }
         Collections.sort(deckBackups);
-        Collections.reverse(deckBackups);
         File[] fileList = new File[deckBackups.size()];
         deckBackups.toArray(fileList);
         return fileList;

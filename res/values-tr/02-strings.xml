@@ -45,7 +45,7 @@
   <string name="factadder_saving_error">Not kaydedilirken hata</string>
   <string name="cardeditor_move_note_too">Notu da taşı</string>
   <string name="cardeditor_move_to_notes_deck">Notun destesine</string>
-  <string name="pref_lang_support">Dil Ayarları</string>
+  <string name="pref_lang_support">Language</string>
   <string name="saving_facts">Not kaydediliyor</string>
   <string name="deck">Deste</string>
   <string name="add">Ekle</string>
@@ -78,6 +78,7 @@
   <string name="simple_interface_hint">Boş %s. Basit arayüzün resimleri/sesleri vb. gösteremediğini unutmayın.</string>
   <string name="delete_deck">Deste siliniyor...\nLütfen bekleyin.</string>
   <string name="menu_cardbrowser">Kart tarayıcısı</string>
+  <string name="show_hint">Show Hint</string>
   <string name="pref_lang_other">Dil Tercihleri</string>
   <string name="pref_lang_common">LangCommon</string>
   <string name="pref_font_UI">Arayüz Yazı Tipi</string>

@@ -736,6 +736,13 @@ public class CardBrowser extends Activity {
 
                     @Override
                     public void onPostExecute(DeckTask.TaskData result) {
+                        if (mOpenCollectionDialog.isShowing()) {
+                            try {
+                            	mOpenCollectionDialog.dismiss();
+                            } catch (Exception e) {
+                                Log.e(AnkiDroidApp.TAG, "onPostExecute - Dialog dismiss Exception = " + e.getMessage());
+                            }
+                        }
                         mCol = result.getCollection();
                         Collection.putCurrentCollection(mCol);
                         if (mCol == null) {
@@ -904,26 +911,23 @@ public class CardBrowser extends Activity {
 					
 					int field = AnkiDroidApp.getSharedPrefs(getBaseContext()).getInt("cardBrowserField", 0);
 					
-					Card tempCard = mCol.getCard(Long.parseLong(cards.get(0).get("id"))); //Long.parseLong(mCards.get(0).get("id"))
-					
-					ArrayList<String> uniqueFields = new ArrayList<String>();
-					
-					if (field > 0 && (mFields != null)) {
+					if (cards.size() > 0 && field > 0 && (mFields != null)) {
+						Card tempCard = mCol.getCard(Long.parseLong(cards.get(0).get("id")));						
+						ArrayList<String> uniqueFields = new ArrayList<String>();
 						for (HashMap<String, String> entry : cards) {
-						tempCard = mCol.getCard(Long.parseLong(entry.get("id")));
-						String item = tempCard.note().getitem(mFields[field]);
-						entry.put("sfld", item);
-						
-						if (!uniqueFields.contains(item)) {
-							uniqueFields.add(item);
-							mAllCards.add(entry);
-							mCards.add(entry);
-						}
-						
+							tempCard = mCol.getCard(Long.parseLong(entry.get("id")));
+							String item = tempCard.note().getitem(mFields[field]);
+							entry.put("sfld", item);
+
+							if (!uniqueFields.contains(item)) {
+								uniqueFields.add(item);
+								mAllCards.add(entry);
+								mCards.add(entry);
+							}						
 						}
 					} else {
-                    mAllCards.addAll(cards);
-                    mCards.addAll(cards);
+						mAllCards.addAll(cards);
+						mCards.addAll(cards);
 					}
 					
 					

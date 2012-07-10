@@ -45,7 +45,7 @@
   <string name="factadder_saving_error">Hiba a jegyzet mentése közben</string>
   <string name="cardeditor_move_note_too">Jegyzet mozgatása felfelé</string>
   <string name="cardeditor_move_to_notes_deck">Jegyzet paklijához</string>
-  <string name="pref_lang_support">Language Settings</string>
+  <string name="pref_lang_support">Language</string>
   <string name="saving_facts">Jegyzet mentése</string>
   <string name="deck">Pakli</string>
   <string name="add">Hozzáadás</string>
@@ -78,6 +78,7 @@
   <string name="simple_interface_hint">Üres %s. Tarsd szem előtt, hogy az egyszerű felület nem tud képeket/hangokat/stb. megjeleníteni.</string>
   <string name="delete_deck">Pakli törlése...\nKérlek, várj...</string>
   <string name="menu_cardbrowser">Card browser</string>
+  <string name="show_hint">Show Hint</string>
   <string name="pref_lang_other">Language Preferences</string>
   <string name="pref_lang_common">LangCommon</string>
   <string name="pref_font_UI">Custom UI Font</string>
