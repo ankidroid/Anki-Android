@@ -162,7 +162,9 @@ public class StudyOptionsActivity extends FragmentActivity {
             AnkiDroidApp.setLanguage(newLanguage);
             mInvalidateMenu = true;
         }
-        mCurrentFragment.restorePreferences();
+        if (mCurrentFragment != null) {
+            mCurrentFragment.restorePreferences();        	
+        }
     }
 
 
