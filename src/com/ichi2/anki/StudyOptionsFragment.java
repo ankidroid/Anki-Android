@@ -14,6 +14,7 @@
 
 package com.ichi2.anki;
 
+import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnCancelListener;
 import android.content.Intent;
@@ -414,7 +415,8 @@ public class StudyOptionsFragment extends Fragment {
 
 
     private void closeStudyOptions() {
-        closeStudyOptions(getActivity().RESULT_OK);
+        getActivity();
+        closeStudyOptions(Activity.RESULT_OK);
     }
 
 
@@ -806,7 +808,7 @@ public class StudyOptionsFragment extends Fragment {
             } catch (JSONException e) {
                 throw new RuntimeException(e);
             }
-        } else if (requestCode == ADD_NOTE && resultCode != getActivity().RESULT_CANCELED) {
+        } else if (requestCode == ADD_NOTE && resultCode != Activity.RESULT_CANCELED) {
             resetAndUpdateValuesFromDeck();
         } else if (requestCode == REQUEST_REVIEW) {
             Log.i(AnkiDroidApp.TAG, "Result code = " + resultCode);
@@ -824,7 +826,7 @@ public class StudyOptionsFragment extends Fragment {
                     break;
             }
             mDontSaveOnStop = false;
-        } else if (requestCode == BROWSE_CARDS && resultCode == getActivity().RESULT_OK) {
+        } else if (requestCode == BROWSE_CARDS && resultCode == Activity.RESULT_OK) {
             mDontSaveOnStop = false;
             resetAndUpdateValuesFromDeck();
         } else if (requestCode == STATISTICS && mCurrentContentView == CONTENT_CONGRATS) {
