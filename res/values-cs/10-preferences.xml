@@ -180,10 +180,10 @@
   <string name="session_question_limit_summ">Počet otázek v sezení. Vyberte 0 pro neomezený počet.</string>
   <string name="new_cards_order">Pořadí nových karet</string>
   <string name="new_cards_order_summ">Pořadí, ve kterém se ukazují nové karty.</string>
-  <string name="show_new_cards_in">Ukázat nové karty v...</string>
+  <string name="show_new_cards_in">Ukázat nové karty v&#8230;</string>
   <string name="new_card_spacing">Rozmístění nových karet</string>
   <string name="new_card_spacing_summ">Jak umísťovat nové karty v průběhu zkoušení.</string>
-  <string name="show_new_cards">Zobrazit nové karty ...</string>
+  <string name="show_new_cards">Zobrazit nové karty &#8230;</string>
   <string name="show_next_review_time">Čas příštího opakování</string>
   <string name="show_next_review_time_summ">Zobrazí čas příštího opakování na základě vaší volby</string>
   <string name="update_notification">Oznámení o aktualizaci</string>
@@ -196,7 +196,7 @@
   <string name="filter_google_translate">Z Google překladače</string>
   <string name="filter_google_translate_summ">Just save source word and translation</string>
   <string name="convert_fen_text_summ">Draw chessboard from Forsyth Edwards Notation. The notation must be enclosed in [fen][/fen] tag.</string>
-  <string name="sync_set_journal_mode">Nastavování odpovídajícího journal módu...</string>
+  <string name="sync_set_journal_mode">Nastavování odpovídajícího journal módu&#8230;</string>
   <string name="async_mode">Synchronizace vypnuta</string>
   <string name="async_mode_summ">Urychluje AnkiDroid, ale může se poškodit balíček, když celý Android systém zhavaruje. Používejte proto zálohování</string>
   <string name="async_mode_message">Uvědomte si, že tato možnost je méně bezpečná a může způsobit porušení balíčku při pádu Android (např. z důvodu nedostatku energie).\nVelmi doporučujeme použít zálohování systému, pokud je tato volba nastavena.\nPřesto chcete povolit?</string>

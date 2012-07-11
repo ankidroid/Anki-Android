@@ -50,7 +50,7 @@
   <string name="add">Aggiungi</string>
   <string name="close">Chiudi</string>
   <string name="select">Seleziona</string>
-  <string name="saving_changes">Salvataggio delle modifiche ...</string>
+  <string name="saving_changes">Salvataggio delle modifiche &#8230;</string>
   <string name="timebox_reached">Timebox reached!</string>
   <string name="studyoptions_welcome_title">Benvenuto in AnkiDroid</string>
   <string name="studyoptions_no_external_storage_title">Nessuna scheda di archiviazione esterna disponibile</string>
@@ -64,7 +64,7 @@
   <string name="card_editor_copy_card">Copia carta</string>
   <string name="card_editor_reset_card">Reimposta progresso</string>
   <string name="error_insufficient_memory">Operazione non possibile a causa di memoria insufficiente sul tuo apparecchio</string>
-  <string name="tutorial_load">Creazione del mazzo d\'esercizio.\nAttendi...</string>
+  <string name="tutorial_load">Creazione del mazzo d\'esercizio.\nAttendi&#8230;</string>
   <string name="tutorial_loading_error">Il mazzo d\'esercizio non può essere creato</string>
   <string name="rename">Rinomina</string>
   <string name="rename_error">Mazzo %s potrebbe non essere rinominato</string>
@@ -73,9 +73,9 @@
   <string name="help_faq">FAQ</string>
   <string name="help_tutorial">Mazzo d\'esercizio</string>
   <string name="check_db">Controllo database</string>
-  <string name="check_db_message">Controllo database.\nAttendi...</string>
+  <string name="check_db_message">Controllo database.\nAttendi&#8230;</string>
   <string name="simple_interface_hint">Vuoto %s. Tieni presente che l\'interfaccia semplice non può mostrare immagini/suoni ecc.</string>
-  <string name="delete_deck">Eliminazione mazzo...\nAttendi.</string>
+  <string name="delete_deck">Eliminazione mazzo&#8230;\nAttendi.</string>
   <string name="menu_cardbrowser">Browser delle carte</string>
   <string name="show_hint">Show Hint</string>
   <string name="pref_lang_other">Language Preferences</string>

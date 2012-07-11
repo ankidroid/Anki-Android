@@ -28,7 +28,7 @@
   <string name="widget_minimum_cards_due_notification_ticker_title">Карти поради</string>
   <string name="widget_minimum_cards_due_notification_ticker_text">%d AnkiDroid карти поради</string>
   <string name="widget_no_cards_due">Няма дължими карти</string>
-  <string name="widget_loading">Зареждане на джаджа...</string>
+  <string name="widget_loading">Зареждане на джаджа&#8230;</string>
   <string name="widget_medium">AnkiDroid среден</string>
   <string name="widget_small">AnkiDroid малък</string>
   <string name="widget_big">AnkiDroid голям</string>

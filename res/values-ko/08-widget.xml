@@ -28,7 +28,7 @@
   <string name="widget_minimum_cards_due_notification_ticker_title">복습예정카드</string>
   <string name="widget_minimum_cards_due_notification_ticker_text">%d AnkiDroid 카드 복습 예정</string>
   <string name="widget_no_cards_due">복습할 카드 없음</string>
-  <string name="widget_loading">위젯 로드중...</string>
+  <string name="widget_loading">위젯 로드중&#8230;</string>
   <string name="widget_medium">AnkiDroid 매체</string>
   <string name="widget_small">작은 화면 AnkiDroid</string>
   <string name="widget_big">큰화면 Ankidroid</string>

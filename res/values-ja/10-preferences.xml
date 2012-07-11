@@ -196,7 +196,7 @@
   <string name="filter_google_translate">From Google Translate</string>
   <string name="filter_google_translate_summ">Just save source word and translation</string>
   <string name="convert_fen_text_summ">Draw chessboard from Forsyth Edwards Notation. The notation must be enclosed in [fen][/fen] tag.</string>
-  <string name="sync_set_journal_mode">正しいジャーナル·モードを設定する...</string>
+  <string name="sync_set_journal_mode">正しいジャーナル·モードを設定する&#8230;</string>
   <string name="async_mode">同期無効</string>
   <string name="async_mode_summ">これは AnkiDroid の立ち上がりを早くしますが、全体 Android システムがクラッシュしたときにデータベースが破損することがあります。したがってバックアップ同期の使用をお薦めします。</string>
   <string name="async_mode_message">このオプションは、Androidがクラッシュした場合（例えば、電池が無くなった場合など）に単語帳が壊される恐れがあり、安全でないことに注意してください。\nこのオプションを設定する場合はバックアップシステムを利用することを強くお薦めします。\nそれでも、有効にしますか？</string>

@@ -35,7 +35,7 @@
   <string name="statistics_new_cards">Yeni kart</string>
   <string name="statistics_failed_cards">Başarısız kart:</string>
   <string name="statistics_fullscreen">Tam Ekrana Geç</string>
-  <string name="calculating_statistics">İstatistikler hesaplanıyor.\nLütfen bekleyin...</string>
+  <string name="calculating_statistics">İstatistikler hesaplanıyor.\nLütfen bekleyin&#8230;</string>
   <string name="deck_summary_cards">Kart sayısı:</string>
   <string name="deck_summary_notes">Not sayısı:</string>
   <string name="deck_summary_cards_mature">Olgun kart:</string>

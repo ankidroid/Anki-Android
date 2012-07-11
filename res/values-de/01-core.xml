@@ -45,7 +45,7 @@
   <string name="card_suspended">Karte wieder ausgesetzt</string>
   <string name="menu_rotate">Drehen</string>
   <string name="undo">Rückgängig</string>
-  <string name="finish_operation">Letzte Operation wird beendet\n(vermutlich eine Sicherung der Sammlung).\nBitte warten...</string>
+  <string name="finish_operation">Letzte Operation wird beendet\n(vermutlich eine Sicherung der Sammlung).\nBitte warten&#8230;</string>
   <string name="contextmenu_deckpicker_download_missing_media">Fehlende Media-Daten herunterladen</string>
   <string name="contextmenu_deckpicker_reset_language_assignments">Sprachzuordnungen zurücksetzen</string>
   <string name="contextmenu_deckpicker_reset_reset_message">Sprachen zurückgesetzt</string>
@@ -85,10 +85,10 @@
   <string name="download">Holen</string>
   <string name="open_collection">Öffne Sammlung.\nBitte warten…</string>
   <string name="create_collection">Erstelle Sammlung.\nBitte warten…</string>
-  <string name="rebuild_cram_deck">Fülle dynamischen Stapel.\nBitte warten...</string>
+  <string name="rebuild_cram_deck">Fülle dynamischen Stapel.\nBitte warten&#8230;</string>
   <string name="rebuild_cram_label">Füllen</string>
   <string name="empty_cram_label">Leeren</string>
-  <string name="empty_cram_deck">Leere dynamischen Stapel.\n Bitte warten...</string>
+  <string name="empty_cram_deck">Leere dynamischen Stapel.\n Bitte warten&#8230;</string>
   <string name="studyoptions_congrats_finished">Herzlichen Glückwunsch! Sie sind für heute fertig.</string>
   <string name="studyoptions_congrats_more_rev">Das Lern-Limit ist für heute erreicht, aber es verbleiben noch fällige Karten. Denken Sie für einen optimalen Lernerfolg darüber nach, das tägliche Limit in den Optionen zu erhöhen.</string>
   <string name="studyoptions_congrats_more_new">Es sind weitere neue Karten verfügbar, aber das tägliche Limit ist erreicht. Sie können dieses in den Optionen erhöhen, aber denken Sie daran, dass die kurzfristige Lernzeit umso höher ist, je mehr Karten Sie täglich hinzufügen.</string>

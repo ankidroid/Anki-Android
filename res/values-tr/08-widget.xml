@@ -28,7 +28,7 @@
   <string name="widget_minimum_cards_due_notification_ticker_title">Çalışılacak Kart</string>
   <string name="widget_minimum_cards_due_notification_ticker_text">%d AnkiDroid kartı çalışılacak</string>
   <string name="widget_no_cards_due">Çalışılacak kart yok</string>
-  <string name="widget_loading">Widget yükleniyor...</string>
+  <string name="widget_loading">Widget yükleniyor&#8230;</string>
   <string name="widget_medium">AnkiDroid Orta</string>
   <string name="widget_small">AnkiDroid Küçük</string>
   <string name="widget_big">AnkiDroid Büyük</string>

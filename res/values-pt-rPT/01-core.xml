@@ -45,7 +45,7 @@
   <string name="card_suspended">Cartão ressuspendido</string>
   <string name="menu_rotate">Girar</string>
   <string name="undo">Desfazer</string>
-  <string name="finish_operation">Terminando a operação anterior (provavelmente criação de backup). \nPor favor aguarde...</string>
+  <string name="finish_operation">Terminando a operação anterior (provavelmente criação de backup). \nPor favor aguarde&#8230;</string>
   <string name="contextmenu_deckpicker_download_missing_media">Baixar mídia ausente</string>
   <string name="contextmenu_deckpicker_reset_language_assignments">Redefinir Atribuições de Idioma</string>
   <string name="contextmenu_deckpicker_reset_reset_message">Redefinir idioma</string>
@@ -61,7 +61,7 @@
   <string name="menu_preferences">Preferências</string>
   <string name="menu_zeemote">Zeemote</string>
   <string name="menu_about">Sobre</string>
-  <string name="menu_dismiss_note">Nota ao Desfazer...</string>
+  <string name="menu_dismiss_note">Nota ao Desfazer&#8230;</string>
   <string name="menu_bury_note">Enterrar Nota</string>
   <string name="menu_suspend_card">Suspender cartão</string>
   <string name="menu_suspend_note">Suspender Nota</string>
@@ -83,12 +83,12 @@
   <string name="visit">Visitar</string>
   <string name="later">Mais tarde</string>
   <string name="download">Baixar</string>
-  <string name="open_collection">Abrindo coleção.\nPor favor aguarde...</string>
-  <string name="create_collection">Abrindo coleção.\nPor favor aguarde...</string>
-  <string name="rebuild_cram_deck">Reconstruindo deck do preparatório.\nPor favor aguarde...</string>
+  <string name="open_collection">Abrindo coleção.\nPor favor aguarde&#8230;</string>
+  <string name="create_collection">Abrindo coleção.\nPor favor aguarde&#8230;</string>
+  <string name="rebuild_cram_deck">Reconstruindo deck do preparatório.\nPor favor aguarde&#8230;</string>
   <string name="rebuild_cram_label">Reconstruir</string>
   <string name="empty_cram_label">Vazio</string>
-  <string name="empty_cram_deck">Esvaziando deck do preparatório.\nPor favor aguarde...</string>
+  <string name="empty_cram_deck">Esvaziando deck do preparatório.\nPor favor aguarde&#8230;</string>
   <string name="studyoptions_congrats_finished">Parabéns! Você terminou por hora.</string>
   <string name="studyoptions_congrats_more_rev">O limite de revisão de hoje foi atingido, mas ainda existem cartões esperando para serem revistos. Para uma otima memória, considere aumentar o limite diário nas opções.</string>
   <string name="studyoptions_congrats_more_new">Existem mais cartões novos disponíveis, mas o limite diário foi atingido. Você pode aumentar o limite nas opções, mas por favor, tenha em mente que quanto mais cartões novos você introduzir, maior será sua carga de revisão a curto prazo.</string>

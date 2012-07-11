@@ -45,7 +45,7 @@
   <string name="card_suspended">Kart yeniden askıya alındı</string>
   <string name="menu_rotate">Çevir</string>
   <string name="undo">Geri Al</string>
-  <string name="finish_operation">Önceki işlem tamamlanıyor (büyük olasılıkla yedekleme).\nLütfen bekleyin...</string>
+  <string name="finish_operation">Önceki işlem tamamlanıyor (büyük olasılıkla yedekleme).\nLütfen bekleyin&#8230;</string>
   <string name="contextmenu_deckpicker_download_missing_media">Eksik ortamı indir</string>
   <string name="contextmenu_deckpicker_reset_language_assignments">Dil Görevlerini Sıfırla</string>
   <string name="contextmenu_deckpicker_reset_reset_message">Dil sıfırlama</string>
@@ -61,7 +61,7 @@
   <string name="menu_preferences">Tercihler</string>
   <string name="menu_zeemote">Zeemote</string>
   <string name="menu_about">Hakkında</string>
-  <string name="menu_dismiss_note">Notu Yoksay...</string>
+  <string name="menu_dismiss_note">Notu Yoksay&#8230;</string>
   <string name="menu_bury_note">Notu Gizle</string>
   <string name="menu_suspend_card">Kartı Askıya Al</string>
   <string name="menu_suspend_note">Notu Askıya Al</string>
@@ -83,12 +83,12 @@
   <string name="visit">Ziyaret et</string>
   <string name="later">Daha sonra</string>
   <string name="download">İndir</string>
-  <string name="open_collection">Koleksiyon açılıyor.\nLütfen bekleyin...</string>
-  <string name="create_collection">Koleksiyon oluşturuluyor.\nLütfen bekleyin...</string>
-  <string name="rebuild_cram_deck">İnekleme destesi yeniden oluşturuluyor.\nLütfen bekleyin...</string>
+  <string name="open_collection">Koleksiyon açılıyor.\nLütfen bekleyin&#8230;</string>
+  <string name="create_collection">Koleksiyon oluşturuluyor.\nLütfen bekleyin&#8230;</string>
+  <string name="rebuild_cram_deck">İnekleme destesi yeniden oluşturuluyor.\nLütfen bekleyin&#8230;</string>
   <string name="rebuild_cram_label">Yeniden Oluştur</string>
   <string name="empty_cram_label">Boş</string>
-  <string name="empty_cram_deck">İnekleme destesi boşaltılıyor.\nLütfen bekleyin...</string>
+  <string name="empty_cram_deck">İnekleme destesi boşaltılıyor.\nLütfen bekleyin&#8230;</string>
   <string name="studyoptions_congrats_finished">Tebrikler! Şimdilik bitirdiniz.</string>
   <string name="studyoptions_congrats_more_rev">Bugünün çalışma sınırına ulaşıldı, ama hâlâ çalışılmayı bekleyen kartlar var. En uygun belleme için, seçeneklerden günlük sınırı artırabilirsiniz.</string>
   <string name="studyoptions_congrats_more_new">Daha çalışılmamış yeni kartlar var, fakat günlük sınıra ulaşıldı. Seçeneklerden sınırı artırabilirsiniz, fakat yeni gördüğünüz kart sayısı arttıkça kısa vâdede çalışma yükünüzün yükseleceğini unutmayın.</string>

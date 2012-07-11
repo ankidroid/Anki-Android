@@ -28,7 +28,7 @@
   <string name="widget_minimum_cards_due_notification_ticker_title">卡片到期</string>
   <string name="widget_minimum_cards_due_notification_ticker_text">有%d张AnkiDroid卡片到期需要复习</string>
   <string name="widget_no_cards_due">没有卡片到期</string>
-  <string name="widget_loading">Widget loading...</string>
+  <string name="widget_loading">Widget loading&#8230;</string>
   <string name="widget_medium">AnkiDroid Medium</string>
   <string name="widget_small">AnkiDroid Small</string>
   <string name="widget_big">AnkiDroid Big</string>

@@ -180,10 +180,10 @@
   <string name="session_question_limit_summ">Le nombre maximal de questions par session. 0 pour illimité.</string>
   <string name="new_cards_order">Ordre des nouvelles cartes</string>
   <string name="new_cards_order_summ">L\'ordre dans lequel les nouvelles cartes apparaissent.</string>
-  <string name="show_new_cards_in">Montrer les nouvelles cartes dans...</string>
+  <string name="show_new_cards_in">Montrer les nouvelles cartes dans&#8230;</string>
   <string name="new_card_spacing">Espacement des nouvelles cartes</string>
   <string name="new_card_spacing_summ">Comment distribuer les nouvelles cartes parmi les révisions.</string>
-  <string name="show_new_cards">Montrer les nouvelles cartes...</string>
+  <string name="show_new_cards">Montrer les nouvelles cartes&#8230;</string>
   <string name="show_next_review_time">Prochain temps de révision</string>
   <string name="show_next_review_time_summ">Montre le prochain temps de révision dépendant de votre choix</string>
   <string name="update_notification">Mise à jour des notifications</string>
@@ -196,7 +196,7 @@
   <string name="filter_google_translate">From Google Translate</string>
   <string name="filter_google_translate_summ">Just save source word and translation</string>
   <string name="convert_fen_text_summ">Draw chessboard from Forsyth Edwards Notation. The notation must be enclosed in [fen][/fen] tag.</string>
-  <string name="sync_set_journal_mode">Réglage du mode de journal adéquat...</string>
+  <string name="sync_set_journal_mode">Réglage du mode de journal adéquat&#8230;</string>
   <string name="async_mode">Pas de synchronisation</string>
   <string name="async_mode_summ">Ceci accélère AnkiDroid mais peut corrompre les bases de données lorsque votre système Android plante complètement donc utilisez les sauvegardes.</string>
   <string name="async_mode_message">Soyez conscient que cette option est moins sécurisée et peut provoquer des corruptions des vos paquets lorsque Android plante (ex : à cause d\'une batterie à plat).\n il est FORTEMENT recommandé d\'utilisé le système de sauvegarde si cette option est activée.\nL\'activer quand même ?</string>

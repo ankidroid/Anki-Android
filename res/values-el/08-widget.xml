@@ -28,7 +28,7 @@
   <string name="widget_minimum_cards_due_notification_ticker_title">Αναμένουσες Κάρτες</string>
   <string name="widget_minimum_cards_due_notification_ticker_text">%d κάρτες AnkiDroid εις αναμονή</string>
   <string name="widget_no_cards_due">Δεν απομένουν επαναλήψεις</string>
-  <string name="widget_loading">Φόρτωση widget...</string>
+  <string name="widget_loading">Φόρτωση widget&#8230;</string>
   <string name="widget_medium">AnkiDroid Μεσαίο</string>
   <string name="widget_small">AnkiDroid Μικρό</string>
   <string name="widget_big">AnkiDroid Μεγάλο</string>

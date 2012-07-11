@@ -45,7 +45,7 @@
   <string name="card_suspended">カードが再停止されました</string>
   <string name="menu_rotate">回転</string>
   <string name="undo">元に戻す</string>
-  <string name="finish_operation">Finishing previous operation (most likely backup creation).\nPlease wait...</string>
+  <string name="finish_operation">Finishing previous operation (most likely backup creation).\nPlease wait&#8230;</string>
   <string name="contextmenu_deckpicker_download_missing_media">不足しているメディアをダウンロードします</string>
   <string name="contextmenu_deckpicker_reset_language_assignments">言語設定のリセット</string>
   <string name="contextmenu_deckpicker_reset_reset_message">言語設定のリセット</string>
@@ -61,7 +61,7 @@
   <string name="menu_preferences">設定</string>
   <string name="menu_zeemote">Zeemote</string>
   <string name="menu_about">このプログラムについて</string>
-  <string name="menu_dismiss_note">Dismiss Note...</string>
+  <string name="menu_dismiss_note">Dismiss Note&#8230;</string>
   <string name="menu_bury_note">Bury Note</string>
   <string name="menu_suspend_card">カードの表示を中止</string>
   <string name="menu_suspend_note">Suspend Note</string>
@@ -83,12 +83,12 @@
   <string name="visit">訪問</string>
   <string name="later">後で</string>
   <string name="download">ダウンロード</string>
-  <string name="open_collection">Opening collection.\nPlease wait...</string>
-  <string name="create_collection">Creating collection.\nPlease wait...</string>
-  <string name="rebuild_cram_deck">Rebuilding cram deck.\nPlease wait...</string>
+  <string name="open_collection">Opening collection.\nPlease wait&#8230;</string>
+  <string name="create_collection">Creating collection.\nPlease wait&#8230;</string>
+  <string name="rebuild_cram_deck">Rebuilding cram deck.\nPlease wait&#8230;</string>
   <string name="rebuild_cram_label">Rebuild</string>
   <string name="empty_cram_label">Empty</string>
-  <string name="empty_cram_deck">Emptying cram deck.\nPlease wait...</string>
+  <string name="empty_cram_deck">Emptying cram deck.\nPlease wait&#8230;</string>
   <string name="studyoptions_congrats_finished">Congratulations! You have finished for now.</string>
   <string name="studyoptions_congrats_more_rev">Today\'s review limit has been reached, but there are still cards waiting to be reviewed. For optimum memory, consider increasing the daily limit in the options.</string>
   <string name="studyoptions_congrats_more_new">There are more new cards available, but the daily limit has been reached. You can increase the limit in the options, but please bear in mind that the more new cards you introduce, the higher your short-term review workload will become.</string>

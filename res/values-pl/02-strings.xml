@@ -50,7 +50,7 @@
   <string name="add">Dodaj</string>
   <string name="close">Zamknij</string>
   <string name="select">Wybierz</string>
-  <string name="saving_changes">Trwa zapisywanie zmian...</string>
+  <string name="saving_changes">Trwa zapisywanie zmian&#8230;</string>
   <string name="timebox_reached">Timebox reached!</string>
   <string name="studyoptions_welcome_title">Witamy w AnkiDroid</string>
   <string name="studyoptions_no_external_storage_title">Brak zewnętrznej pamięci masowej</string>
@@ -64,7 +64,7 @@
   <string name="card_editor_copy_card">Kopiuj kartę</string>
   <string name="card_editor_reset_card">Resetuj postępy</string>
   <string name="error_insufficient_memory">Operacja nie może być wykonana z powodu niewystarczającej pamięci na urządzeniu</string>
-  <string name="tutorial_load">Creating tutorial deck.\nPlease wait...</string>
+  <string name="tutorial_load">Creating tutorial deck.\nPlease wait&#8230;</string>
   <string name="tutorial_loading_error">Nie można utworzyć talii instruktażowej</string>
   <string name="rename">Zmień nazwę</string>
   <string name="rename_error">Nie można zmienić nazwy talii %s</string>
@@ -73,9 +73,9 @@
   <string name="help_faq">FAQ</string>
   <string name="help_tutorial">Talia instruktażowa</string>
   <string name="check_db">Check database</string>
-  <string name="check_db_message">Checking database.\nPlease wait...</string>
+  <string name="check_db_message">Checking database.\nPlease wait&#8230;</string>
   <string name="simple_interface_hint">Pusty %s. Pamiętaj, że prosty interfejs nie może pokazywać zdjęć i odtwarzać dźwięków itp.</string>
-  <string name="delete_deck">Deleting deck...\nPlease wait.</string>
+  <string name="delete_deck">Deleting deck&#8230;\nPlease wait.</string>
   <string name="menu_cardbrowser">Card browser</string>
   <string name="show_hint">Show Hint</string>
   <string name="pref_lang_other">Language Preferences</string>

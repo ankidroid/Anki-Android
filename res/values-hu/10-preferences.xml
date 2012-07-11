@@ -180,10 +180,10 @@
   <string name="session_question_limit_summ">Kérdések száma egy munkamenetben. Válaszd a 0-át, hogy ne legyen korlát.</string>
   <string name="new_cards_order">Új kártyák sorrendje</string>
   <string name="new_cards_order_summ">Milyen sorrendben mutassa az új kártyákat?</string>
-  <string name="show_new_cards_in">Mutasd az új kártyákat...</string>
+  <string name="show_new_cards_in">Mutasd az új kártyákat&#8230;</string>
   <string name="new_card_spacing">Új kártya köz</string>
   <string name="new_card_spacing_summ">Hol jelenjenek meg az új kártyák átnézéskor.</string>
-  <string name="show_new_cards">Új kártyák mutatása...</string>
+  <string name="show_new_cards">Új kártyák mutatása&#8230;</string>
   <string name="show_next_review_time">Következő gyakorlás ideje</string>
   <string name="show_next_review_time_summ">Mutatja a következő gyakorlási időpontot a választásod alapján</string>
   <string name="update_notification">Értesítések frissítése</string>
@@ -196,7 +196,7 @@
   <string name="filter_google_translate">From Google Translate</string>
   <string name="filter_google_translate_summ">Just save source word and translation</string>
   <string name="convert_fen_text_summ">Draw chessboard from Forsyth Edwards Notation. The notation must be enclosed in [fen][/fen] tag.</string>
-  <string name="sync_set_journal_mode">Helyes naplózási mód beállítása...</string>
+  <string name="sync_set_journal_mode">Helyes naplózási mód beállítása&#8230;</string>
   <string name="async_mode">Szinkron kikapcsolása</string>
   <string name="async_mode_summ">Ez felgyorsítja az AnkiDroidot, de sérülhet az adatbázis, ha az Android rendszer összeomlik. Használj biztonsági mentést!</string>
   <string name="async_mode_message">Figyelem! Ez az opció nem elég biztonságos, és a pakli sérüléséhez vezethet, ha az Android rendszer összeomlik (pl. ha kiesik az akkumlátor).\nErősen ajánlott a biztonsági mentési rendszer használata ennek az opciónak az engedélyezése esetén.\nÍgy is engedélyezed?</string>

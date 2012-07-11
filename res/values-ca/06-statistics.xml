@@ -35,7 +35,7 @@
   <string name="statistics_new_cards">Noves fitxes</string>
   <string name="statistics_failed_cards">Fitxes fallades</string>
   <string name="statistics_fullscreen">Conmuta la pantalla completa</string>
-  <string name="calculating_statistics">S\'estan calculant les estadístiques.\nUn moment si us plau...</string>
+  <string name="calculating_statistics">S\'estan calculant les estadístiques.\nUn moment si us plau&#8230;</string>
   <string name="deck_summary_cards">Número de fitxes:</string>
   <string name="deck_summary_notes">Número de notes:</string>
   <string name="deck_summary_cards_mature">Fitxes madures:</string>

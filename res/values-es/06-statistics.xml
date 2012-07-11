@@ -35,7 +35,7 @@
   <string name="statistics_new_cards">Tarjetas nuevas</string>
   <string name="statistics_failed_cards">Tarjetas falladas</string>
   <string name="statistics_fullscreen">Activar Pantalla Completa</string>
-  <string name="calculating_statistics">Calculando estadísticas.\nPor favor, espera...</string>
+  <string name="calculating_statistics">Calculando estadísticas.\nPor favor, espera&#8230;</string>
   <string name="deck_summary_cards">Número de tarjetas:</string>
   <string name="deck_summary_notes">Número de notas:</string>
   <string name="deck_summary_cards_mature">Tarjetas maduras:</string>

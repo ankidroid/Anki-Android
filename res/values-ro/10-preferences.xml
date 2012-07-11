@@ -180,10 +180,10 @@
   <string name="session_question_limit_summ">Numărul de întrebări într-o sesiune. Selectaţi 0 pentru nelimitat.</string>
   <string name="new_cards_order">Ordonare carduri noi</string>
   <string name="new_cards_order_summ">Ordinea în care se prezintă cardurile noi.</string>
-  <string name="show_new_cards_in">Arată noile carduri in...</string>
+  <string name="show_new_cards_in">Arată noile carduri in&#8230;</string>
   <string name="new_card_spacing">Spaţiere carduri noi</string>
   <string name="new_card_spacing_summ">Unde se distribuie cardurile noi în timpul recapitularii.</string>
-  <string name="show_new_cards">Arată carduri noi ...</string>
+  <string name="show_new_cards">Arată carduri noi &#8230;</string>
   <string name="show_next_review_time">Next review time</string>
   <string name="show_next_review_time_summ">Shows the next review time depending on your choice</string>
   <string name="update_notification">Update notifications</string>
@@ -196,7 +196,7 @@
   <string name="filter_google_translate">From Google Translate</string>
   <string name="filter_google_translate_summ">Just save source word and translation</string>
   <string name="convert_fen_text_summ">Draw chessboard from Forsyth Edwards Notation. The notation must be enclosed in [fen][/fen] tag.</string>
-  <string name="sync_set_journal_mode">Setting correct journal mode...</string>
+  <string name="sync_set_journal_mode">Setting correct journal mode&#8230;</string>
   <string name="async_mode">Synchronous off</string>
   <string name="async_mode_summ">This speeds AnkiDroid up but can corrupt databases when the whole Android system crashes. So use backups</string>
   <string name="async_mode_message">Be aware that this option is less safe and can cause deck corruptions when Android crashes (e.g. due to power shortage).\nIt is HIGHLY recommended to use the backup system if this option is set.\nEnable it anyway?</string>

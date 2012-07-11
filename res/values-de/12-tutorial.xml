@@ -33,7 +33,7 @@
  </string-array>
  <string-array name="tutorial_answers">
     <item><![CDATA[… um den <span style=\'font-weight:600;\'>Antwort</span>-Teil zu sehen (unter der Linie)<br/>Klicken Sie nun auf die rechte untere Schaltfläche]]></item> 
-    <item><![CDATA[Let\'s assume you want to learn the world\'s capitals. Let the question be...<br />(click on one of the buttons to show the next card)]]></item> 
+    <item><![CDATA[Let\'s assume you want to learn the world\'s capitals. Let the question be&#8230;<br />(click on one of the buttons to show the next card)]]></item> 
     <item><![CDATA[&quot;Ouagadougou&quot; is the right answer. <br />You didn\'t know it? Click &quot;again&quot; to see the card again in a couple of minutes. Otherwise, click on the other buttons, depending on the easiness of the answer.]]></item> 
     <item><![CDATA[Diese Zeit wird berechnet aus dem Datum, an dem Sie die Karten das letzte Mal beantwortet haben, der aktuell gewählten Schwierigkeit und der früher gewählten Schwierigkeiten.]]></item> 
     <item><![CDATA[Wenn Sie mehr zum Thema Spaced Repetition wissen wollen, können Sie hier mehr nachlesen:<br>http://en.wikipedia.org/wiki/Spaced_repetition_system]]></item> 

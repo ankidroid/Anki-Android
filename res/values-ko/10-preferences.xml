@@ -81,8 +81,8 @@
   <string name="reset_messages_summ">현재 표시된 AnkiDroid 메시지를 나중에 보기</string>
   <string name="reset_all_question">언어설정, 위젯, 칠판기능 및 외부사전 설정을 모두 재설정하시겠습니까?</string>
   <string name="reset_confirmation">모두 재설정</string>
-  <string name="use_ruby_support">ruby annotaion [...] 루비 주석 지원 제공</string>
-  <string name="use_ruby_support_summ">대괄호 \' [\' 와 \']\' 가 사용될 경우 대괄호 안 글자는 [...] 형태의 ruby annotation 루비주석으로 처리</string>
+  <string name="use_ruby_support">ruby annotaion [&#8230;] 루비 주석 지원 제공</string>
+  <string name="use_ruby_support_summ">대괄호 \' [\' 와 \']\' 가 사용될 경우 대괄호 안 글자는 [&#8230;] 형태의 ruby annotation 루비주석으로 처리</string>
   <string name="display_font_size">Relative font size</string>
   <string name="display_font_size_summ">암기묶음 글꼴 설정에 따라 복습 화면에 사용할 상대적 글꼴 크기 : XXX%</string>
   <string name="card_browser_font_size">Card Browser font size</string>
@@ -180,10 +180,10 @@
   <string name="session_question_limit_summ">세션 1회에 학습할 카드 수를 지정합니다. 제한을 두지 않으려면 0을 선택하세요.</string>
   <string name="new_cards_order">새 카드 순서</string>
   <string name="new_cards_order_summ">새 카드 표시 순서</string>
-  <string name="show_new_cards_in">시간 안에 새카드 보기...</string>
+  <string name="show_new_cards_in">시간 안에 새카드 보기&#8230;</string>
   <string name="new_card_spacing">새 카드 간격</string>
   <string name="new_card_spacing_summ">복습시 새 카드를 분배 위치</string>
-  <string name="show_new_cards">새카드 보기...</string>
+  <string name="show_new_cards">새카드 보기&#8230;</string>
   <string name="show_next_review_time">다음 복습 시간</string>
   <string name="show_next_review_time_summ">설정에 따라 다음 복습시간 보여주기</string>
   <string name="update_notification">공지 업데이트</string>
@@ -196,7 +196,7 @@
   <string name="filter_google_translate">구글 번역기</string>
   <string name="filter_google_translate_summ">원본 단어와 번역을 그대로 저장</string>
   <string name="convert_fen_text_summ">Forsyth 에드워즈 진법에서 체스판을 그립니다. 표기법은 [다이어트] [/ 다이어트] 태그로 묶어야합니다.</string>
-  <string name="sync_set_journal_mode">올바른 저널 모드를 설정 ...</string>
+  <string name="sync_set_journal_mode">올바른 저널 모드를 설정 &#8230;</string>
   <string name="async_mode">동기화 끄기</string>
   <string name="async_mode_summ">Ankidroid 속도를 향상시킬 수 있지만 안드로이드 시스템이 멈출경우 데이터베이스가 손상됩니다. 그러므로 백업 사용을 권장합니다</string>
   <string name="async_mode_message">이 옵션은 안드로이드(예: 전원 부족)운영체제가 다운될 경우 암기묶음이 손상될 수 있으므로 다소 안전하지 않습니다. \n 백업 시스템을 사용할 것을 강력히 추천합니다. \n 어쨌든 가능하게 할까요?</string>

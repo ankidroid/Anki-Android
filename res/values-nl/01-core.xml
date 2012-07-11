@@ -45,7 +45,7 @@
   <string name="card_suspended">Kaart opnieuw uitstellen</string>
   <string name="menu_rotate">Omkeren</string>
   <string name="undo">Ongedaan maken</string>
-  <string name="finish_operation">Finishing previous operation (most likely backup creation).\nPlease wait...</string>
+  <string name="finish_operation">Finishing previous operation (most likely backup creation).\nPlease wait&#8230;</string>
   <string name="contextmenu_deckpicker_download_missing_media">Download ontbrekende media</string>
   <string name="contextmenu_deckpicker_reset_language_assignments">Taaltoewijzingen opnieuw instellen</string>
   <string name="contextmenu_deckpicker_reset_reset_message">Taal opnieuw instellen</string>
@@ -61,7 +61,7 @@
   <string name="menu_preferences">Voorkeuren</string>
   <string name="menu_zeemote">Zeemote</string>
   <string name="menu_about">Over</string>
-  <string name="menu_dismiss_note">Meme negeren...</string>
+  <string name="menu_dismiss_note">Meme negeren&#8230;</string>
   <string name="menu_bury_note">Meme verbergen</string>
   <string name="menu_suspend_card">Kaart uitstellen</string>
   <string name="menu_suspend_note">Meme opschorten</string>
@@ -83,12 +83,12 @@
   <string name="visit">Bezoeken</string>
   <string name="later">Later</string>
   <string name="download">Downloaden</string>
-  <string name="open_collection">Collectie openen.\nEven wachten...</string>
-  <string name="create_collection">Collectie maken.\n\Even wachten...</string>
-  <string name="rebuild_cram_deck">Stampset wordt opnieuw opgebouwd.\nEven geduld...</string>
+  <string name="open_collection">Collectie openen.\nEven wachten&#8230;</string>
+  <string name="create_collection">Collectie maken.\n\Even wachten&#8230;</string>
+  <string name="rebuild_cram_deck">Stampset wordt opnieuw opgebouwd.\nEven geduld&#8230;</string>
   <string name="rebuild_cram_label">Opnieuw opbouwen</string>
   <string name="empty_cram_label">Empty</string>
-  <string name="empty_cram_deck">Emptying cram deck.\nPlease wait...</string>
+  <string name="empty_cram_deck">Emptying cram deck.\nPlease wait&#8230;</string>
   <string name="studyoptions_congrats_finished">Gefeliciteerd! Je bent nu klaar.</string>
   <string name="studyoptions_congrats_more_rev">Je hebt de overhoringslimiet bereikt, maar er wachten nog kaarten om overhoord te worden. Voor een optimale geheugentraining, overweeg om de dagelijkse limiet te verhogen.</string>
   <string name="studyoptions_congrats_more_new">Er zijn meer nieuwe kaarten beschikbaar, maar de dagelijkse limiet is bereikt. Je kan de limiet oprekken in de opties, maar bedenk dat hoe meer kaarten je introduceert, hoe meer overhoringen je op korte termijn zal hebben.</string>
