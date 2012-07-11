@@ -20,11 +20,12 @@ import android.database.Cursor;
 import android.database.SQLException;
 import android.net.Uri;
 import android.util.Log;
-import android.util.Pair;
 
 import com.ichi2.anki.AnkiDatabaseManager;
 import com.ichi2.anki.AnkiDb;
 import com.ichi2.anki.AnkiDroidApp;
+import com.ichi2.anki.Pair;
+import com.ichi2.anki.UIUtils;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -285,6 +286,7 @@ public class Media {
     // Rebuilding DB
     // //////////////
 
+
     /**
      * Finds missing and unused media files
      * 
@@ -294,12 +296,11 @@ public class Media {
         File mdir = new File(getDir());
         List<List<String>> result = new ArrayList<List<String>>();
         List<String> unused = new ArrayList<String>();
-        Normalizer.Form form = Normalizer.Form.NFD;
 
         Set<String> normrefs = new HashSet<String>();
         for (String f : allMedia()) {
-            if (!Normalizer.isNormalized(f, form)) {
-                f = Normalizer.normalize(f, form);
+            if (UIUtils.getApiLevel() > 9) {
+                f = Utils.normalizeUnicode(f);
             }
             normrefs.add(f);
         }
@@ -312,8 +313,8 @@ public class Media {
                 continue;
             }
             String nfile = file.getName();
-            if (!Normalizer.isNormalized(nfile, form)) {
-                nfile = Normalizer.normalize(nfile, form);
+            if (UIUtils.getApiLevel() > 9) {
+                nfile = Utils.normalizeUnicode(nfile);
             }
             if (!normrefs.contains(nfile)) {
                 unused.add(file.getName());

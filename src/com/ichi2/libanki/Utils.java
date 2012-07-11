@@ -19,6 +19,7 @@
 
 package com.ichi2.libanki;
 
+import android.annotation.TargetApi;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
@@ -61,6 +62,7 @@ import java.nio.channels.FileChannel;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.sql.Date;
+import java.text.Normalizer;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -1086,5 +1088,14 @@ public class Utils {
             }
         }
     }
+    
+    @TargetApi(9)
+    public static String normalizeUnicode(String txt) {
+        if (!Normalizer.isNormalized(txt, Normalizer.Form.NFD)) {
+            return Normalizer.normalize(txt, Normalizer.Form.NFD);
+        }
+        return txt;
+    }
+    
 
 }

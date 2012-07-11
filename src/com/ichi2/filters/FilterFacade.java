@@ -2,9 +2,9 @@
 package com.ichi2.filters;
 
 import android.content.Context;
-import android.util.Pair;
 
 import com.ichi2.anki.AnkiDroidApp;
+import com.ichi2.anki.Pair;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,8 +38,8 @@ public class FilterFacade {
      * @param messages data, received from external application, where first attribute is the SUBJECT information and
      *            second attribute is the TEXT information.
      */
-    public Pair<String, String> filter(Pair<String, String> messages) {
-        Pair<String, String> result = new Pair<String, String>(messages.first, messages.second);
+    public Pair<String, String> filter(String[] messages) {
+        String[] result = new String[]{messages[0], messages[1]};
         for (CardFilter cardFilter : filters) {
             result = cardFilter.filter(result, AnkiDroidApp.getSharedPrefs(context));
         }
