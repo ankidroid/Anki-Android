@@ -80,7 +80,7 @@
   <string name="sync_downloading_media">Muat turun media %1$d/%2$d&#8230;</string>
   <string name="sync_log_uploading_message">Sinkronisasi penuh dari lokal</string>
   <string name="sync_log_downloading_message">Sinkronisasi penuh dari server</string>
-  <string name="sync_log_clocks_unsynchronized">Waktu peranti anda berbeda dari server %1$s %2$d detik; tidak boleh sinkronisasi.</string>
+  <string name="sync_log_clocks_unsynchronized">Waktu peranti anda berbeda dari server %1$d %2$s detik; tidak boleh sinkronisasi.</string>
   <string name="sync_log_clocks_unsynchronized_tz">, waktu zon peranti mungkin salah</string>
   <string name="sync_log_clocks_unsynchronized_date">, tarikh peranti mungkin salah</string>
   <string name="sync_log_old_version">Protokol sinkronisasi telah berubah, silakan upgrade ke AnkiDroid terbaru. Lihat %s</string>
