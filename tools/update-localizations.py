@@ -57,6 +57,7 @@ def replacechars(filename, fileExt, isCrowdin):
 				line = string.replace(line, '\'', '\\\'')
 				line = string.replace(line, '\\\\\'', '\\\'')
 				line = string.replace(line, 'amp;', '')
+				line = string.replace(line, '...', '&#8230;')
 				if re.search('%[0-9]\\s\\$|%[0-9]\\$\\s', line) != None:
 					errorOccured = True
 #			print line		
@@ -78,6 +79,7 @@ def replacechars(filename, fileExt, isCrowdin):
 					errorOccured = True
 					print contentLine
 				continue
+			contentLine = string.replace(contentLine, '...', '&#8230;')
 			line.append(["<![CDATA[" + contentLine[:sepPos] + "]]>", "<![CDATA[" + contentLine[sepPos+11:] + "]]>"])
 		for fi in line:
 			fi[0] = re.sub('\"+', '\\\"', fi[0])
