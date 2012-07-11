@@ -133,7 +133,7 @@ public class Stats {
                                     + " AS day, " // day
                                     + "count(), " // all cards
                                     + "sum(CASE WHEN ivl >= 21 THEN 1 ELSE 0 END) " // mature cards
-                                    + "FROM cards WHERE did IN " + _limit() + " AND queue = 2" + lim
+                                    + "FROM cards WHERE did IN " + _limit() + " AND queue IN (2,3)" + lim
                                     + " GROUP BY day ORDER BY day", null);
             while (cur.moveToNext()) {
                 dues.add(new int[] { cur.getInt(0), cur.getInt(1), cur.getInt(2) });
@@ -181,7 +181,7 @@ public class Stats {
                                     + "count(), " // all cards
                                     + "sum(CASE WHEN ivl >= 21 THEN 1 ELSE 0 END) " // mature cards
                                     + "FROM cards WHERE did IN " + col.getSched()._deckLimit()
-                                    + " AND queue = 2 AND day <= 7 GROUP BY day ORDER BY day", null);
+                                    + " AND queue IN (2,3) AND day <= 7 GROUP BY day ORDER BY day", null);
             while (cur.moveToNext()) {
                 dues.add(new int[] { cur.getInt(0), cur.getInt(1), cur.getInt(2) });
             }
