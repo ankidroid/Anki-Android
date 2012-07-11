@@ -14,18 +14,17 @@
 
 package com.ichi2.anki;
 
-import com.ichi2.anki.R;
-
-import android.support.v4.app.Fragment;
+import android.app.Activity;
 import android.content.DialogInterface;
+import android.content.DialogInterface.OnCancelListener;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.DialogInterface.OnCancelListener;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.Paint.Align;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.GestureDetector;
 import android.view.GestureDetector.SimpleOnGestureListener;
@@ -55,8 +54,6 @@ import com.ichi2.themes.StyledOpenCollectionDialog;
 import com.ichi2.themes.StyledProgressDialog;
 import com.ichi2.themes.Themes;
 
-import java.util.HashMap;
-
 import org.achartengine.ChartFactory;
 import org.achartengine.GraphicalView;
 import org.achartengine.chart.BarChart;
@@ -66,6 +63,8 @@ import org.achartengine.renderer.XYMultipleSeriesRenderer;
 import org.achartengine.renderer.XYSeriesRenderer;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.HashMap;
 
 public class StudyOptionsFragment extends Fragment {
 
@@ -94,10 +93,8 @@ public class StudyOptionsFragment extends Fragment {
      */
     private int mStartedByBigWidget;
     private boolean mSwipeEnabled;
-    private boolean mPrefHideDueCount;
     private int mCurrentContentView;
     boolean mInvertedColors = false;
-    String mLocale;
 
     private boolean mDontSaveOnStop = false;
 
@@ -418,7 +415,8 @@ public class StudyOptionsFragment extends Fragment {
 
 
     private void closeStudyOptions() {
-        closeStudyOptions(getActivity().RESULT_OK);
+        getActivity();
+        closeStudyOptions(Activity.RESULT_OK);
     }
 
 
@@ -783,7 +781,7 @@ public class StudyOptionsFragment extends Fragment {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent intent) {
         super.onActivityResult(requestCode, resultCode, intent);
-        Log.i(AnkiDroidApp.TAG, "StudyOptions: onActivityResult");
+        Log.i(AnkiDroidApp.TAG, "StudyOptionsFragment: onActivityResult");
 
         if (resultCode == DeckPicker.RESULT_DB_ERROR) {
             closeStudyOptions(DeckPicker.RESULT_DB_ERROR);
@@ -810,10 +808,8 @@ public class StudyOptionsFragment extends Fragment {
             } catch (JSONException e) {
                 throw new RuntimeException(e);
             }
-        } else if (requestCode == ADD_NOTE && resultCode != getActivity().RESULT_CANCELED) {
+        } else if (requestCode == ADD_NOTE && resultCode != Activity.RESULT_CANCELED) {
             resetAndUpdateValuesFromDeck();
-        } else if (requestCode == PREFERENCES_UPDATE) {
-            restorePreferences();
         } else if (requestCode == REQUEST_REVIEW) {
             Log.i(AnkiDroidApp.TAG, "Result code = " + resultCode);
             // TODO: Return to standard scheduler
@@ -830,7 +826,7 @@ public class StudyOptionsFragment extends Fragment {
                     break;
             }
             mDontSaveOnStop = false;
-        } else if (requestCode == BROWSE_CARDS && resultCode == getActivity().RESULT_OK) {
+        } else if (requestCode == BROWSE_CARDS && resultCode == Activity.RESULT_OK) {
             mDontSaveOnStop = false;
             resetAndUpdateValuesFromDeck();
         } else if (requestCode == STATISTICS && mCurrentContentView == CONTENT_CONGRATS) {
@@ -840,17 +836,10 @@ public class StudyOptionsFragment extends Fragment {
     }
 
 
-    private SharedPreferences restorePreferences() {
+    public SharedPreferences restorePreferences() {
         SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(getActivity().getBaseContext());
 
         mSwipeEnabled = AnkiDroidApp.initiateGestures(getActivity(), preferences);
-
-        //        mPrefHideDueCount = preferences.getBoolean("hideDueCount", true);
-
-        // TODO: set language
-        // mLocale = preferences.getString("language", "");
-        // AnkiDroidApp.setLanguage(mLocale);
-
         return preferences;
     }
 

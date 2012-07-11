@@ -42,6 +42,7 @@ import com.ichi2.anki.R;
 import com.ichi2.async.DeckTask;
 import com.ichi2.libanki.Utils;
 import com.ichi2.libanki.hooks.ChessFilter;
+import com.ichi2.libanki.hooks.HebrewFixFilter;
 import com.ichi2.themes.StyledDialog;
 import com.ichi2.themes.StyledProgressDialog;
 import com.ichi2.themes.Themes;
@@ -73,6 +74,7 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
     private CheckBoxPreference asyncModePreference;
     private CheckBoxPreference eInkDisplayPreference;
     private CheckBoxPreference convertFenText;
+    private CheckBoxPreference fixHebrewText;
     private ListPreference mLanguageSelection;
     private CharSequence[] mLanguageDialogLabels;
     private CharSequence[] mLanguageDialogValues;
@@ -106,8 +108,6 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
         mPrefMan.setSharedPreferencesName(AnkiDroidApp.SHARED_PREFS_NAME);
 
         addPreferencesFromResource(R.xml.preferences);
-        // mVeecheckStatus = mPrefMan.getSharedPreferences().getBoolean(PrefSettings.KEY_ENABLED,
-        // PrefSettings.DEFAULT_ENABLED);
 
         getPreferenceScreen().getSharedPreferences().registerOnSharedPreferenceChangeListener(this);
         swipeCheckboxPreference = (CheckBoxPreference) getPreferenceScreen().findPreference("swipe");
@@ -120,6 +120,7 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
         eInkDisplayPreference = (CheckBoxPreference) getPreferenceScreen().findPreference("eInkDisplay");
         ListPreference listpref = (ListPreference) getPreferenceScreen().findPreference("theme");
         convertFenText = (CheckBoxPreference) getPreferenceScreen().findPreference("convertFenText");
+        fixHebrewText = (CheckBoxPreference) getPreferenceScreen().findPreference("fixHebrewText");
         String theme = listpref.getValue();
         animationsCheckboxPreference.setEnabled(theme.equals("2") || theme.equals("3"));
         zoomCheckboxPreference.setEnabled(!swipeCheckboxPreference.isChecked());
@@ -264,12 +265,6 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
             } else if (key.equals("timeoutAnswer")) {
                 keepScreenOnCheckBoxPreference.setChecked(showAnswerCheckBoxPreference.isChecked());
             } else if (key.equals("language")) {
-                Intent intent = this.getIntent();
-                // setResult(DeckPicker.RESULT_RESTART, intent);
-                closePreferences();
-            } else if (key.equals("startup_mode")) {
-                Intent intent = this.getIntent();
-                // setResult(DeckPicker.RESULT_RESTART, intent);
                 closePreferences();
             } else if (key.equals("theme")) {
                 String theme = sharedPreferences.getString("theme", "3");
@@ -338,6 +333,12 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
                     ChessFilter.install(AnkiDroidApp.getHooks());
                 } else {
                     ChessFilter.uninstall(AnkiDroidApp.getHooks());
+                }
+            } else if (key.equals("fixHebrewText")) {
+                if (fixHebrewText.isChecked()) {
+                    HebrewFixFilter.install(AnkiDroidApp.getHooks());
+                } else {
+                    HebrewFixFilter.uninstall(AnkiDroidApp.getHooks());
                 }
             }
         } catch (BadTokenException e) {

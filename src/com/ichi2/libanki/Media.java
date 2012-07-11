@@ -642,7 +642,7 @@ public class Media {
         if (mediaRem.size() > 0) {
             mMediaDb.executeMany("delete from media where fname = ?", mediaRem);
         }
-        mMediaDb.execute("update meta set dirMod = ?", new Object[] { getDir() });
+        mMediaDb.execute("update meta set dirMod = ?", new Object[] { _mtime(getDir()) });
         // and logs
         mMediaDb.executeMany("insert or replace into log values (?, ?)", log);
     }

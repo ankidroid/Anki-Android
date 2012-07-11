@@ -64,6 +64,7 @@ public class AnkiDroidApp extends Application {
      * Global hooks
      */
     private Hooks mHooks;
+    private String mLanguage;
 
     /**
      * The name of the shared preferences for this class, as supplied to
@@ -97,6 +98,7 @@ public class AnkiDroidApp extends Application {
         Thread.setDefaultUncaughtExceptionHandler(customExceptionHandler);
 
         SharedPreferences preferences = getSharedPrefs(this);
+        sInstance.mLanguage = mLanguage = preferences.getString("language", "");
         // Assign some default settings if necessary
         if (!preferences.contains("deckPath")) {
             Editor editor = preferences.edit();
@@ -276,8 +278,11 @@ public class AnkiDroidApp extends Application {
         return Integer.valueOf(android.os.Build.VERSION.SDK);
     }
 
+    public static String getLanguage() {
+        return getInstance().mLanguage;
+    }
 
-    public void setLanguage(String language) {
+    public static void setLanguage(String language) {
         Locale locale;
         if (language.equals("")) {
             locale = Locale.getDefault();
@@ -286,7 +291,8 @@ public class AnkiDroidApp extends Application {
         }
         Configuration config = new Configuration();
         config.locale = locale;
-        this.getResources().updateConfiguration(config, this.getResources().getDisplayMetrics());
+        getInstance().getResources().updateConfiguration(config, getInstance().getResources().getDisplayMetrics());
+        getInstance().mLanguage = language;
     }
 
 
