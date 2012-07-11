@@ -200,11 +200,11 @@ public class Syncer {
                 // step 5: sanity check during beta testing
                 JSONArray c = sanityCheck();
                 if (c == null) {
-                    return new Object[] { "error", 200, "sanity check error on local" };
+                    return new Object[] { "sanityCheckError", null };
                 }
                 JSONArray s = mServer.sanityCheck();
                 if (s.getString(0).equals("error")) {
-                    return new Object[] { "error", 200, "sanity check error on server" };
+                    return new Object[] { "sanityCheckError", null };
                 }
                 boolean error = false;
                 for (int i = 0; i < s.getJSONArray(0).length(); i++) {
@@ -218,8 +218,7 @@ public class Syncer {
                     }
                 }
                 if (error) {
-                    return new Object[] { "error", 200,
-                            "sanity check failed:\nlocal: " + c.toString() + "\nremote: " + s.toString() };
+                    return new Object[] { "sanityCheckError", "sanity check failed: local: " + c.toString() + ", remote: " + s.toString() };
                 }
                 // finalize
                 publishProgress(con, R.string.sync_finish_message);

@@ -108,6 +108,7 @@ public class DeckPicker extends FragmentActivity {
     private static final int DIALOG_SD_CARD_NOT_MOUNTED = 23;
     private static final int DIALOG_NEW_COLLECTION = 24;
     private static final int DIALOG_FULL_SYNC_FROM_SERVER = 25;
+    private static final int DIALOG_SYNC_ERROR = 26;
 
     private String mDialogMessage;
     private int[] mRepairValues;
@@ -436,6 +437,9 @@ public class DeckPicker extends FragmentActivity {
                     } else if (resultType.equals("upgradeRequired")) {
                         mDialogMessage = res.getString(R.string.upgrade_required, res.getString(R.string.link_anki));
                         showDialog(DIALOG_SYNC_LOG);
+                    } else if (resultType.equals("sanityCheckError")) {
+                        mDialogMessage = res.getString(R.string.sync_log_error_fix, result[1] != null ? (" (" + (String) result[1] + ")") : "");
+                        showDialog(DIALOG_SYNC_ERROR);
                     } else {
                         int type = (Integer) result[1];
                         switch (type) {
@@ -1409,6 +1413,14 @@ public class DeckPicker extends FragmentActivity {
                 dialog = builder.create();
                 break;
 
+            case DIALOG_SYNC_ERROR:
+                builder.setPositiveButton(res.getString(R.string.sync_conflict_local), mSyncConflictResolutionListener);
+                builder.setNeutralButton(res.getString(R.string.sync_conflict_remote), mSyncConflictResolutionListener);
+                builder.setNegativeButton(res.getString(R.string.sync_conflict_cancel), mSyncConflictResolutionListener);
+                builder.setTitle(res.getString(R.string.sync_log_title));
+                dialog = builder.create();
+                break;
+
             case DIALOG_SYNC_LOG:
                 builder.setTitle(res.getString(R.string.sync_log_title));
                 builder.setPositiveButton(res.getString(R.string.ok), null);
@@ -1620,6 +1632,7 @@ public class DeckPicker extends FragmentActivity {
                 break;
 
             case DIALOG_SYNC_LOG:
+            case DIALOG_SYNC_ERROR:
                 ad.setMessage(mDialogMessage);
                 break;
 
