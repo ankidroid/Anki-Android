@@ -502,9 +502,9 @@ public class Models {
     class TransformFieldAdd implements TransformFieldVisitor {
         @Override
         public String[] transform(String[] fields) {
-            String[] f = Arrays.copyOf(fields, fields.length + 1);
-            f[fields.length] = "";
-            return f;
+            List<String> f = Arrays.asList(fields);
+            f.add("");
+            return f.toArray(new String[]{});
         }
     }
 

@@ -38,8 +38,8 @@ public class FilterFacade {
      * @param messages data, received from external application, where first attribute is the SUBJECT information and
      *            second attribute is the TEXT information.
      */
-    public Pair<String, String> filter(String[] messages) {
-        String[] result = new String[]{messages[0], messages[1]};
+    public Pair<String, String> filter(Pair<String, String> messages) {
+        Pair<String, String> result = new Pair<String, String>(messages.first, messages.second);
         for (CardFilter cardFilter : filters) {
             result = cardFilter.filter(result, AnkiDroidApp.getSharedPrefs(context));
         }

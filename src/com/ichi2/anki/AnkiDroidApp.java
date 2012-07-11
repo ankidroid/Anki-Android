@@ -32,6 +32,9 @@ import android.view.Display;
 import android.view.WindowManager;
 
 import com.ichi2.async.Connection;
+import com.ichi2.compat.Compat;
+import com.ichi2.compat.CompatV11;
+import com.ichi2.compat.CompatV4;
 import com.ichi2.libanki.hooks.Hooks;
 
 import java.io.File;
@@ -60,11 +63,15 @@ public class AnkiDroidApp extends Application {
      */
     private static AnkiDroidApp sInstance;
 
-    /**
-     * Global hooks
-     */
+    /** Global hooks */
     private Hooks mHooks;
+    
+    /** Application locale */
     private String mLanguage;
+    
+    /** Compatibility interface, Used to perform operation in a platform specific way. */
+    private Compat mCompat;
+
 
     /**
      * The name of the shared preferences for this class, as supplied to
@@ -87,6 +94,13 @@ public class AnkiDroidApp extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+
+        if (UIUtils.getApiLevel() >= 11) {
+            mCompat = new CompatV11();
+        } else {
+            mCompat = new CompatV4();
+        }
+
         sInstance = this;
         sInstance.mHooks = new Hooks();
 
@@ -319,4 +333,9 @@ public class AnkiDroidApp extends Application {
     	}
         return mGesturesEnabled;
     }
+
+    public Compat getCompat() {
+        return mCompat;
+    }
+
 }

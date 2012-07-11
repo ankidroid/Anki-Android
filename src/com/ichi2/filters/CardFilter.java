@@ -3,7 +3,7 @@ package com.ichi2.filters;
 
 import android.content.SharedPreferences;
 
-import java.util.Map;
+import com.ichi2.anki.Pair;
 
 /**
  * Card filter for garbage information. One card filter for one message type from one application. Card filters are
@@ -22,6 +22,6 @@ public interface CardFilter {
      * @param preferences program settings.
      * @return clean for current filter data.
      */
-    public String[] filter(String[] messages, SharedPreferences preferences);
+    public Pair<String, String> filter(Pair<String, String> messages, SharedPreferences preferences);
 
 }
