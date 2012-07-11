@@ -24,10 +24,10 @@ import android.app.Dialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.DialogInterface.OnCancelListener;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
-import android.content.DialogInterface.OnCancelListener;
 import android.content.SharedPreferences.Editor;
 import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
@@ -41,14 +41,14 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.ContextMenu;
+import android.view.ContextMenu.ContextMenuInfo;
 import android.view.GestureDetector;
+import android.view.GestureDetector.SimpleOnGestureListener;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.ContextMenu.ContextMenuInfo;
-import android.view.GestureDetector.SimpleOnGestureListener;
 import android.view.View.OnClickListener;
 import android.view.ViewTreeObserver.OnGlobalLayoutListener;
 import android.view.Window;
@@ -60,9 +60,9 @@ import android.widget.SimpleAdapter;
 
 import com.ichi2.anim.ActivityTransitionAnimation;
 import com.ichi2.async.Connection;
-import com.ichi2.async.DeckTask;
 import com.ichi2.async.Connection.OldAnkiDeckFilter;
 import com.ichi2.async.Connection.Payload;
+import com.ichi2.async.DeckTask;
 import com.ichi2.async.DeckTask.TaskData;
 import com.ichi2.charts.ChartBuilder;
 import com.ichi2.libanki.Collection;
@@ -73,13 +73,12 @@ import com.ichi2.themes.StyledProgressDialog;
 import com.ichi2.themes.Themes;
 import com.ichi2.widget.WidgetStatus;
 
+import org.json.JSONException;
+
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.TreeSet;
-
-import org.json.JSONException;
 
 public class DeckPicker extends FragmentActivity {
 
@@ -202,6 +201,7 @@ public class DeckPicker extends FragmentActivity {
     int mStatisticType;
 
     public boolean mFragmented;
+    private boolean mInvalidateMenu;
 
     boolean mCompletionBarRestrictToActive = false; // set this to true in order to calculate completion bar only for
                                                     // active cards
@@ -781,6 +781,7 @@ public class DeckPicker extends FragmentActivity {
             });
         }
 
+        mInvalidateMenu = false;
         mDeckList = new ArrayList<HashMap<String, String>>();
         mDeckListView = (ListView) findViewById(R.id.files);
         mDeckListAdapter = new SimpleAdapter(this, mDeckList, R.layout.deck_item, new String[] { "name", "new", "lrn",
@@ -1906,6 +1907,17 @@ public class DeckPicker extends FragmentActivity {
         return true;
     }
 
+    
+    @Override
+    public boolean onMenuOpened(int featureId, Menu menu) {
+        if (mInvalidateMenu) {
+            menu.clear();
+            onCreateOptionsMenu(menu);
+            mInvalidateMenu = false;
+        }
+
+        return super.onMenuOpened(featureId, menu);
+    }
 
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
@@ -2100,6 +2112,11 @@ public class DeckPicker extends FragmentActivity {
                 finish();
             }
         } else if (requestCode == PREFERENCES_UPDATE) {
+            String newLanguage = AnkiDroidApp.getSharedPrefs(this).getString("language", "");
+            if (!AnkiDroidApp.getLanguage().equals(newLanguage)) {
+                AnkiDroidApp.setLanguage(newLanguage);
+                mInvalidateMenu = true;
+            }
             // if (resultCode == StudyOptions.RESULT_RESTART) {
             // setResult(StudyOptions.RESULT_RESTART);
             // finish();
