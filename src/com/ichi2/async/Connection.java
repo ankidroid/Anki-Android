@@ -460,7 +460,7 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
 
         String hkey = (String) data.data[0];
         boolean media = (Boolean) data.data[1];
-        String conflictResolution = (String) data.data[2];
+        String conflictResolution = "download";//(String) data.data[2];
         int mediaUsn = (Integer) data.data[3];
 
         Collection col = Collection.currentCollection();
@@ -538,9 +538,13 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
                         return data;
                     }
                 }
-            } finally {
-                publishProgress(R.string.sync_reload_message);
-                col = Collection.openCollection(path);
+                col = Collection.openCollection(path);                	
+            } catch (RuntimeException e) {
+    			AnkiDroidApp.saveExceptionReportFile(e, "doInBackgroundSync-fullSync");
+                data.success = false;
+                data.result = "IOException";
+                data.data = new Object[] { mediaUsn };
+                return data;
             }
         }
 
@@ -583,6 +587,7 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
         }
     }
 
+    
 
     public void publishProgress(int id) {
         super.publishProgress(id);
