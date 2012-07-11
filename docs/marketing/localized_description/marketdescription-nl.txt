@@ -13,7 +13,7 @@ Voeg materiaal toe via de desktopapplicatie Anki of rechtstreeks via Ankidroid. 
 • gespreide herhaling (supermemo 2-algoritme)
 • tekst-naar-spraak-integratie
 • meer dan 6000 premade decks
-• drie widgets
+• progress widget
 • gedetailleerde statistieken
 • synchronisatie met AnkiWeb
 • open source
@@ -23,17 +23,15 @@ Voeg materiaal toe via de desktopapplicatie Anki of rechtstreeks via Ankidroid. 
 • whiteboard
 • kaarten bewerken/toevoegen
 • kaartbrowser
+• tablet layout
 • importeren van bestaande verzameling bestanden (via Anki Desktop)
 • Woordenboekintegratie (ColorDict, GoldenDict, Leo.org, Aedict, verscheidene webwoordenboeken)
 • kaarten via het intent-protocol toevoegen vanuit andere toepassingen zoals woordenboeken
 • ondersteuning voor aangepaste lettertypes
-• overhoren met een widget
 • volledig backupsysteem
 • navigeren door vegen, tikken, schudden
 • volledig aanpasbaar
-• beperk via tag, tijd of aantal kaarten
-• blokmodus
+• dynamic deck handling
 • nachtmodus
-• drie verschillende thema's
 • 27 talen
 • All previous AnkiDroid versions can be downloaded from the website

@@ -13,7 +13,7 @@ Añade material a través de la aplicación de escritorio Anki o directamente me
 • repaso espaciado (algoritmo de SuperMemo 2)
 • integración de texto a voz
 • más de 6000 mazos prediseñados
-• tres widgets
+• progress widget
 • estadísticas detalladas
 • sincronización con AnkiWeb
 • código abierto
@@ -23,17 +23,15 @@ Añade material a través de la aplicación de escritorio Anki o directamente me
 • pizarra
 • editor/creador de tarjetas
 • explorador de tarjetas
+• tablet layout
 • importar archivos de colección existentes (vía Anki Escritorio)
 • integración con diccionarios (ColorDict, GoldenDict, Leo.org, Aedict, diversos diccionarios online)
 • agregar tarjetas al seleccionar contenido desde otras aplicaciones como diccionarios
 • soporte para fuentes personalizadas
-• repaso en el widget
 • completo sistema de copias de seguridad
 • navegación por gestos, toques, agitado
 • totalmente personalizable
-• limita el estudio por etiquetas, tiempo o tarjetas
-• modo Empollar
+• dynamic deck handling
 • modo noche
-• tres temas de interfaz diferentes
 • traducido a 27 idiomas
 • todas las versiones anteriores de AnkiDroid pueden descargarse desde el sitio Web

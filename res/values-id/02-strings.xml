@@ -23,6 +23,7 @@
   <string name="CardEditorCancelButton">Batal</string>
   <string name="CardEditorSaveButton">Simpan</string>
   <string name="CardEditorLaterButton">Later</string>
+  <string name="CardEditorLaterMessage">Saved information for later</string>
   <string name="CardEditorCardDeck">Card deck: %s</string>
   <string name="CardEditorNoteDeck">Note deck: %s</string>
   <string name="CardEditorModel">Note type: %s</string>
@@ -43,8 +44,6 @@
   <string name="cardeditor_title_add_note">Add Note</string>
   <string name="cardeditor_title_edit_card">Edit Note</string>
   <string name="factadder_saving_error">Error saving note</string>
-  <string name="cardeditor_move_note_too">Move note too</string>
-  <string name="cardeditor_move_to_notes_deck">To note\'s deck</string>
   <string name="pref_lang_support">Language</string>
   <string name="saving_facts">Saving note</string>
   <string name="deck">Deck</string>

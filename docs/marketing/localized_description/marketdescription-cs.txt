@@ -13,7 +13,7 @@ Hlavní vlastnosti:
 • rozložené opakování (spaced repetition - algoritmus z programu Supermemo 2)
 • integrované předčítání textu
 • více než 6000 již vytvořených znalostních balíčků
-• tři widgety
+• progress widget
 • podrobné statistiky
 • synchronizace s AnkiWeb
 • open source
@@ -23,17 +23,15 @@ Další funkce:
 • tabule
 přidání/ editace karet
 • prohlížeč karet
+• tablet layout
 • import stávající kolekce souborů (přes Anki Desktop)
 • začlenění slovníku (ColorDict, GoldenDict, Leo.org, Aedict, webové slovníky)
 • přidání kartiček pomocí intent z jiných aplikací, např. slovníků
 • podpora vlastního fontu písma
-• opakování ve widgetu
 • kompletní záložní systém
 • ovládání pomocí gest, kliknutí, třesení
 • plně přizpůsobitelný
-• možnost omezení studia podle štítků, času nebo počtu karet
-• režim šprtání
+• dynamic deck handling
 • noční režim
-• tři různá témata pro zobrazení
 • 27 lokalizací
 • All previous AnkiDroid versions can be downloaded from the website

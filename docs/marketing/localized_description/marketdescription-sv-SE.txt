@@ -13,7 +13,7 @@ Lägga till material genom skrivbordsprogrammet Anki eller direkt via Ankidroid.
 • intervallbaserad repetition (supermemo 2 algoritm)
 • text-till-tal-integration
 • mer än 6000 tillgängliga kortlekar
-• tre widgetar
+• progress widget
 • detaljerad statistik
 • synkronisering med AnkiWeb
 • öppen källkod
@@ -23,17 +23,15 @@ Lägga till material genom skrivbordsprogrammet Anki eller direkt via Ankidroid.
 • whiteboard
 • korteditor
 • kortutforskare
+• tablet layout
 • importera befintliga kortlekar (via Anki Desktop)
 • Ordboksintegration (ColorDict, GoldenDict, Leo.org, Aedict, andra webbordböcker)
 • lägga till kort från andra program som t.ex. ordlistor
 • stöd för anpassade teckensnitt
-• repetera i widgeten
 • fullständigt säkerhetskopieringssystem
 • navigera genom att svepa, trycka och skaka
 • helt anpassningsbart
-• begränsa studierna via etikett, tid eller kort
-• råpluggsläge
+• dynamic deck handling
 • nattläge
-• tre olika ui-teman
 • översatt till 27 språk
 •Alla tidigare versioner av AnkiDroid kan hämtas från webbsidan

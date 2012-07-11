@@ -13,7 +13,7 @@ Tambahkan bahan melalui aplikasi desktop Anki atau langsung melalui Ankidroid. A
 • spasi pengulangan (algoritma supermemo 2)
 • integrasi teks-suara
 • lebih dari 6000 dek tersedia
-• three widgets
+• progress widget
 • statistik rinci
 • sinkronisasi dengan AnkiWeb
 • sumber terbuka
@@ -23,17 +23,15 @@ Tambahkan bahan melalui aplikasi desktop Anki atau langsung melalui Ankidroid. A
 • papan tulis
 • Kad editor / tambah
 Pelayar kad
+• tablet layout
 • mengimpor file koleksi yang ada (melalui Anki Desktop)
 • integrasi kamus(ColorDict, GoldenDict, Leo.org, Aedict, kamus web bermacam)
 • menambahkan kad dengan 'intent&gt; dari aplikasi lain seperti kamus
 • dukungan kustom font
-• review in widget
 • sistem sokongan penuh
 • navigasi dengan gesek, tekan, goyang
 • sepenuhnya disesuaikan
-• membatasi belajar dengan tag, waktu atau kad
-• modus cram
+• dynamic deck handling
 • modus malam
-• tiga ui-tema yang berbeda
 • 27 localisations
 • All previous AnkiDroid versions can be downloaded from the website

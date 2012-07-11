@@ -23,6 +23,7 @@
   <string name="CardEditorCancelButton">Zrušit</string>
   <string name="CardEditorSaveButton">Uložit</string>
   <string name="CardEditorLaterButton">Později</string>
+  <string name="CardEditorLaterMessage">Saved information for later</string>
   <string name="CardEditorCardDeck">Karta balíčku: %s</string>
   <string name="CardEditorNoteDeck">Poznámka balíčku: %s</string>
   <string name="CardEditorModel">Typ poznámky:%s</string>
@@ -43,8 +44,6 @@
   <string name="cardeditor_title_add_note">Přidat poznámku</string>
   <string name="cardeditor_title_edit_card">Upravit poznámku</string>
   <string name="factadder_saving_error">Chyba při ukládání poznámky</string>
-  <string name="cardeditor_move_note_too">Přesunout také poznámku</string>
-  <string name="cardeditor_move_to_notes_deck">To note\'s deck</string>
   <string name="pref_lang_support">Language</string>
   <string name="saving_facts">Ukládání poznámky</string>
   <string name="deck">Balíček</string>

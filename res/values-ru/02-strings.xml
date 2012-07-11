@@ -23,6 +23,7 @@
   <string name="CardEditorCancelButton">Отмена</string>
   <string name="CardEditorSaveButton">Сохранить</string>
   <string name="CardEditorLaterButton">Позже</string>
+  <string name="CardEditorLaterMessage">Saved information for later</string>
   <string name="CardEditorCardDeck">Карта колоды: %s</string>
   <string name="CardEditorNoteDeck">Заметка колоды: %s</string>
   <string name="CardEditorModel">Тип заметки: %s</string>
@@ -43,8 +44,6 @@
   <string name="cardeditor_title_add_note">Добавить заметку</string>
   <string name="cardeditor_title_edit_card">Изменить заметку</string>
   <string name="factadder_saving_error">Ошибка при сохранении заметки</string>
-  <string name="cardeditor_move_note_too">Переместить заметку тоже</string>
-  <string name="cardeditor_move_to_notes_deck">В заметки колоды</string>
   <string name="pref_lang_support">Language</string>
   <string name="saving_facts">Сохранение заметки</string>
   <string name="deck">Колода</string>

@@ -23,6 +23,7 @@
   <string name="CardEditorCancelButton">Abbrechen</string>
   <string name="CardEditorSaveButton">Speichern</string>
   <string name="CardEditorLaterButton">Später</string>
+  <string name="CardEditorLaterMessage">Information für später gespeichert</string>
   <string name="CardEditorCardDeck">Karten-Stapel: %s</string>
   <string name="CardEditorNoteDeck">Notiz-Stapel: %s</string>
   <string name="CardEditorModel">Notiz-Typ: %s</string>
@@ -43,8 +44,6 @@
   <string name="cardeditor_title_add_note">Notiz hinzufügen</string>
   <string name="cardeditor_title_edit_card">Notiz bearbeiten</string>
   <string name="factadder_saving_error">Fehler beim Speichern der Notiz</string>
-  <string name="cardeditor_move_note_too">Notiz ebenfalls verschieben</string>
-  <string name="cardeditor_move_to_notes_deck">To note\'s deck</string>
   <string name="pref_lang_support">Sprache</string>
   <string name="saving_facts">Notiz speichern</string>
   <string name="deck">Stapel</string>
