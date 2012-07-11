@@ -26,7 +26,7 @@ public class UIUtils {
             return Integer.parseInt(Build.VERSION.SDK);
         } catch (NumberFormatException e) {
             // If there is an error, return the minimum supported version.
-            return 3;
+            return 4;
         }
     }
 
