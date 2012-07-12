@@ -24,11 +24,11 @@
     <item><![CDATA[Die Idee ist, Karten kurz vor dem Vergessen zu präsentieren. Empirische Studien haben gezeigt, dass Informationen auf diese Weise am effizientesten gelernt werden können.]]></item> 
     <item><![CDATA[Noch einige Worte zur Organisation in AnkiDroid:<br><br>Alle Informationen werden in Frage/Antwort-Paaren erstellt. Wenn in die entgegengesetzte Richtung gelernt werden soll, sollte eine neue Karte mit vertauschten Feldern erstellt werden.]]></item> 
     <item><![CDATA[Alle Karten sind in Stapel zusammengefasst und können mit Hilfe aller möglichen Schlagworte dort leicht organisiert werden.]]></item> 
-    <item><![CDATA[There are mainly two ways of getting new cards:<br />You either add premade decks of other users (choose &quot;shared decks&quot; in the decks summary) or create them by yourself.]]></item> 
+    <item><![CDATA[Im wesentlichen gibt es zwei Möglichkeiten, neue Karten zu bekommen:<br>Entweder fügen Sie vorgefertigte Stapel anderer Nutzen hinzu (wählen Sie dazu \'Öffentliche Stapel\' in der Stapelübersicht) oder Sie fügen Sie selbst hinzu.]]></item> 
     <item><![CDATA[Um Stapel aber perfekt nach Ihren Wünschen zu bekommen, ist es vermutlich notwendig, sie selbst zu erstellen. Das kann entweder mit AnkiDroid erledigt werden…]]></item> 
     <item><![CDATA[Let\'s have a look on the top bar:<br />In the left top corner you find some numbers. The red one counts the failed cards (answered by &quot;again&quot;),]]></item> 
     <item><![CDATA[In der oberen rechten Ecke ist die Denkzeit der aktuellen Karten angegeben und Informationen über die heutige Leistung.]]></item> 
-    <item><![CDATA[Albeit you can use AnkiDroid stand alone, it is fully connected to AnkiWeb, the syncing server of Anki Desktop (available for Linux, Windows, Mac).]]></item> 
+    <item><![CDATA[Obwohl Sie AnkiDroid auch alleine nutzen könne, ist es voll kompatibel mit AnkiWeb, dem Synchronisationsserver von Anki Desktop (verfügbar für Linux, Windows, Mac).]]></item> 
     <item><![CDATA[Das waren die Hauptpunkte der AnkiDroid-Benutzung.<br /><br />Für Weiteres zum Anki-Konzept besuchen Sie http://ankisrs.net]]></item> 
  </string-array>
  <string-array name="tutorial_answers">
@@ -39,11 +39,11 @@
     <item><![CDATA[Wenn Sie mehr zum Thema Spaced Repetition wissen wollen, können Sie hier mehr nachlesen:<br>http://en.wikipedia.org/wiki/Spaced_repetition_system]]></item> 
     <item><![CDATA[Keine Sorge, das kann automatisch erledigt werden. Informationen müssen nicht doppelt eingegeben werden.]]></item> 
     <item><![CDATA[Sie werden das Konzept schnell verstehen, wenn Sie anfangen, mit AnkiDroid zu arbeiten.]]></item> 
-    <item><![CDATA[You\'ll find thousands of premade decks to download and there are probably some which are useful for you.]]></item> 
+    <item><![CDATA[Es gibt tausende von fertigen Stapeln zum Download; Sie finden sicher einige, die Sie nutzen können.]]></item> 
     <item><![CDATA[… oder aber (deutlich komfortabler) mit der Desktop-Anwendung Anki (sie kann kostenlos unter http://ankisrs.net heruntergeladen werden).<br><br>Stapel können sehr einfach mit dem Desktop-Programm synchronisiert werden, der Datentransport ist also kein Problem.]]></item> 
     <item><![CDATA[the black one shows the number of cards you\'ve already learned before and which are due to review today, and the blue number tells you, how many new cards are projected for today. <br />The type of the actual cards is specified by an underline.]]></item> 
     <item><![CDATA[Der obere Balken zeigt den Lernfortschritt, der untere den Anteil heutiger Ja-Antworten.]]></item> 
-    <item><![CDATA[Thus, you can easily sync your collection between AnkiDroid and Anki Desktop and use the latter for a more convenient card adding and managing.]]></item> 
+    <item><![CDATA[Sie können deshalb Ihre Sammlung ganz einfach zwischen AnkiDroid und Anki Desktop synchronisieren und letzteres benutzen, um bequem Karten hinzuzufügen und zu verwalten.]]></item> 
     <item><![CDATA[Testen Sie AnkiDroid nun einfach ein bisschen und sehen, ob es Ihren Anforderungen entspricht.<br><br>Starten Sie z.B. mit der Stapelübersicht (drücken Sie Menü im der Hauptansicht und wählen „Alle Stapel“), wo Sie fertige Stapel herunterladen oder eigene erstellen können (drücken Sie dort ebenfalls Menü).]]></item> 
  </string-array>
 </resources>

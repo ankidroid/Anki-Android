@@ -6,14 +6,14 @@ Lernen Sie alle möglichen Dinge, wo und wann Sie wollen. Nutzen Sie freie Zeit 
 
 Erstellen Sie eigenen Karteikarten-Stapel oder laden kostenlos vorgefertigte Stapel herunter (es sind mehr als 6000 Stapel zu verschiedenen Sprachen und Themen verfügbar).
 
-Fügen Sie neues Material mit der Desktop-Applikation oder direkt mit AnkiDroid hinzu. Die Anwendung unterstützt sogar das automatische Hinzufügen von Material aus einem Wörterbuch!
+Fügen Sie neues Material mit der Desktop-Applikation oder direkt mit AnkiDroid hinzu. Es wird sogar das automatische Hinzufügen von Material aus einem Wörterbuch unterstützt!
 
 ★ Haupt-Merkmale:
 • Unterstützte Karteikarten-Inhalte: Text, Bilder, Sounds, LaTeX
 • Spaced Repetition (SuperMemo 2 Algorithmus)
 • Text-In-Sprache-Integration
 • Mehr als 6000 vorgefertigte Decks
-• progress widget
+• Fortschritts-Widget
 • Detaillierte Statistiken
 • Synchronisation mit AnkiWeb
 • Open Source
@@ -23,15 +23,15 @@ Fügen Sie neues Material mit der Desktop-Applikation oder direkt mit AnkiDroid 
 • Whiteboard
 • Karteneditor/Möglichkeit, Karten hinzuzufügen
 • Kartenübersicht
-• tablet layout
+• Tablet-Layout
 • Importieren von bestehenden Sammlungen (über Anki Desktop)
 • Wörterbuch-Integration (ColorDict, GoldenDict, Leo.org, Aedict, diverse Web-Wörterbücher)
 • Fügen Sie Karten über Intents von anderen Programmen (wie z.B. Wörterbüchern) hinzu
 • Unterstützung für andere Schriftarten
-• ausgebautes Sicherungssystem
+• Ausgebautes Sicherungssystem
 • Navigation per Wischen, Klicken oder Schütteln
 • Voll konfigurierbar
-• dynamic deck handling
+• Dynamische Stapel
 • Nacht-Modus
 • 27 Sprachen
-• All previous AnkiDroid versions can be downloaded from the website
+• Alle vorherigen AnkiDroid-Version können von der Website heruntergeladen werden

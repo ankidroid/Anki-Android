@@ -70,13 +70,13 @@
   </string-array>
   <string-array name="gestures_labels">
     <item>Keine Aktion</item>
-    <item>Show answer</item>
+    <item>Antwort zeigen</item>
     <item>Antwort-Schaltfläche 1</item>
     <item>Antwort-Schaltfläche 2</item>
     <item>Antwort-Schaltfläche 3</item>
     <item>Antwort-Schaltfläche 4</item>
     <item>Empfohlene Antwort (grün)</item>
-    <item>Answer better than recommended</item>
+    <item>Antwort besser als empfohlen</item>
     <item>Rückgängig</item>
     <item>Karte bearbeiten</item>
     <item>Karte markieren</item>
@@ -95,31 +95,31 @@
     <item>Weiß</item>
   </string-array>
   <string-array name="leech_action_labels">
-    <item>Suspend card</item>
+    <item>Karte dauerhaft aussetzen</item>
     <item>Nur Schlagwort</item>
-    <item>Reset as new</item>
+    <item>Als neu zurücksetzen</item>
   </string-array>
   <string-array name="new_order_labels">
-    <item>New cards in random order</item>
-    <item>New cards in order added</item>
+    <item>Neue Karten in zufälliger Reihenfolge</item>
+    <item>Neue Karten in Reihenfolge des Hinzufügens</item>
   </string-array>
   <string-array name="cram_deck_conf_order_labels">
-    <item>Oldest seen first</item>
-    <item>Random</item>
-    <item>Increasing intervals</item>
-    <item>Decreasing intervals</item>
-    <item>Most lapsed</item>
-    <item>Order added</item>
-    <item>Order due</item>
+    <item>Am frühesten gesehene zuerst</item>
+    <item>Zufällig</item>
+    <item>Steigende Intervalle</item>
+    <item>Sinkende Intervalle</item>
+    <item>Am häufigsten vergessen</item>
+    <item>Hinzufügungsreihenfolge</item>
+    <item>Fälligkeitsreihenfolge</item>
   </string-array>
   <string-array name="cram_deck_conf_preset_labels">
-    <item><![CDATA[<select preset>]]></item>
-    <item>Preview all new cards</item>
-    <item>Preview cards added today</item>
-    <item>Review today\'s forgotten cards</item>
-    <item>Review ahead by two days</item>
-    <item>Review due cards with tag</item>
-    <item>Review due cards with decreasing intervals</item>
-    <item>Cram all cards</item>
+    <item><![CDATA[<Voreinstellung wählen>]]></item>
+    <item>Vorschau neue Karten (alle)</item>
+    <item>Vorschau neue Karten (von heute)</item>
+    <item>Wiederhole heute vergessene Karten</item>
+    <item>Wiederhole zwei Tage im Voraus</item>
+    <item>Wiederhole fällige Karten nach Schlagwort</item>
+    <item>Wiederhole fällige Karten in fallenden Intervallen</item>
+    <item>Alle Karten pauken</item>
   </string-array>
 </resources>
