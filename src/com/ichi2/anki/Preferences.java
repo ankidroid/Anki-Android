@@ -306,8 +306,6 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
                     lockCheckAction = true;
                     useBackupPreference.setChecked(true);
                     showDialog(DIALOG_BACKUP);
-                } else {
-                    setReloadDeck();
                 }
             } else if (key.equals("asyncMode")) {
                 if (lockCheckAction) {
@@ -316,8 +314,6 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
                     lockCheckAction = true;
                     asyncModePreference.setChecked(false);
                     showDialog(DIALOG_ASYNC);
-                } else {
-                    setReloadDeck();
                 }
             } else if (key.equals("deckPath")) {
                 File decksDirectory = new File(sharedPreferences.getString("deckPath",
@@ -372,12 +368,6 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
     }
 
 
-    private void setReloadDeck() {
-        // DeckManager.closeMainDeck();
-        // setResult(StudyOptions.RESULT_RELOAD_DECK, getIntent());
-    }
-
-
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
@@ -429,7 +419,6 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
                     public void onClick(DialogInterface arg0, int arg1) {
                         lockCheckAction = true;
                         asyncModePreference.setChecked(true);
-                        setReloadDeck();
                     }
                 });
                 builder.setNegativeButton(res.getString(R.string.no), null);
