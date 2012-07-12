@@ -89,7 +89,6 @@ public class Decks {
 
     private Collection mCol;
     private HashMap<Long, JSONObject> mDecks;
-    private HashMap<String, Long> mDeckIds;
     private HashMap<Long, JSONObject> mDconf;
     private boolean mChanged;
 
@@ -106,7 +105,6 @@ public class Decks {
 
     public void load(String decks, String dconf) {
         mDecks = new HashMap<Long, JSONObject>();
-        mDeckIds = new HashMap<String, Long>();
         mDconf = new HashMap<Long, JSONObject>();
         try {
             JSONObject decksarray = new JSONObject(decks);
@@ -116,7 +114,6 @@ public class Decks {
                 JSONObject o = decksarray.getJSONObject(id);
                 long longId = Long.parseLong(id);
                 mDecks.put(longId, o);
-                mDeckIds.put(o.getString("name"), longId);
             }
             JSONObject confarray = new JSONObject(dconf);
             ids = confarray.names();
@@ -217,7 +214,6 @@ public class Decks {
             }
             g.put("id", id);
             mDecks.put(id, g);
-            mDeckIds.put(name, id);
         } catch (JSONException e) {
             throw new RuntimeException(e);
         }
@@ -394,13 +390,11 @@ public class Decks {
                     String on = grp.getString("name");
                     String nn = on.replace(oldName + "::", newName + "::");
                     grp.put("name", nn);
-                    mDeckIds.put(nn, mDeckIds.remove(on));
                     save(grp);
                 }
             }
             // adjust name and save
             g.put("name", newName);
-            mDeckIds.put(newName, mDeckIds.remove(oldName));
             save(g);
             // ensure we have parents
             newName = _ensureParents(newName);
@@ -709,7 +703,7 @@ public class Decks {
                 } else {
                     deckpath = deckpath + "::" + path[i];
                 }
-                list.add(get(mDeckIds.get(deckpath)));
+                list.add(get(id(deckpath, false)));
             }
             return list;
         } catch (JSONException e) {
