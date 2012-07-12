@@ -81,7 +81,7 @@
             android:paddingRight="8dip">
             <TextView android:id="@+id/message"
                 android:textColor="#ffff"
-                android:textSize="18sp"
+                android:textSize="16sp"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:padding="5dip" />
