@@ -395,6 +395,7 @@ public class Decks {
                     String nn = on.replace(oldName + "::", newName + "::");
                     grp.put("name", nn);
                     mDeckIds.put(nn, mDeckIds.remove(on));
+                    save(grp);
                 }
             }
             // adjust name and save
