@@ -460,7 +460,7 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
 
         String hkey = (String) data.data[0];
         boolean media = (Boolean) data.data[1];
-        String conflictResolution = "download";//(String) data.data[2];
+        String conflictResolution = (String) data.data[2];
         int mediaUsn = (Integer) data.data[3];
 
         Collection col = Collection.currentCollection();
