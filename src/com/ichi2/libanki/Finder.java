@@ -19,7 +19,8 @@ package com.ichi2.libanki;
 
 import android.database.Cursor;
 import android.database.SQLException;
-import android.util.Pair;
+
+import com.ichi2.anki.Pair;
 
 import org.json.JSONArray;
 import org.json.JSONException;

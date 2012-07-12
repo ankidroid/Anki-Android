@@ -22,9 +22,9 @@ package com.ichi2.libanki;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.util.Log;
-import android.util.Pair;
 
 import com.ichi2.anki.AnkiDroidApp;
+import com.ichi2.anki.Pair;
 import com.mindprod.common11.StringTools;
 import com.samskivert.mustache.Mustache;
 import com.samskivert.mustache.Template;
@@ -502,7 +502,8 @@ public class Models {
     class TransformFieldAdd implements TransformFieldVisitor {
         @Override
         public String[] transform(String[] fields) {
-            String[] f = Arrays.copyOf(fields, fields.length + 1);
+            String[] f = new String[fields.length + 1];
+            System.arraycopy(fields, 0, f, 0, fields.length);
             f[fields.length] = "";
             return f;
         }

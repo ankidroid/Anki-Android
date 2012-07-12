@@ -3,6 +3,7 @@ package com.ichi2.anim;
 
 import com.ichi2.anki.R;
 
+import android.annotation.TargetApi;
 import android.app.Activity;
 
 public class ActivityTransitionAnimation {
@@ -14,6 +15,7 @@ public class ActivityTransitionAnimation {
     public static int NONE = 5;
 
 
+    @TargetApi(5)
     public static void slide(Activity activity, int direction) {
         if (direction == LEFT) {
             activity.overridePendingTransition(R.anim.slide_left_in, R.anim.slide_left_out);

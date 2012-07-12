@@ -100,7 +100,7 @@ public class ChartBuilder extends Activity {
 
     public void closeChartBuilder() {
         finish();
-        if (Integer.valueOf(android.os.Build.VERSION.SDK) > 4) {
+        if (UIUtils.getApiLevel() > 4) {
             ActivityTransitionAnimation.slide(this, ActivityTransitionAnimation.UP);
         }
     }
@@ -135,7 +135,7 @@ public class ChartBuilder extends Activity {
                 finish();
                 Intent intent = new Intent(this, com.ichi2.charts.ChartBuilder.class);
                 startActivity(intent);
-                if (Integer.valueOf(android.os.Build.VERSION.SDK) > 4) {
+                if (UIUtils.getApiLevel() > 4) {
                     ActivityTransitionAnimation.slide(this, ActivityTransitionAnimation.FADE);
                 }
                 return true;

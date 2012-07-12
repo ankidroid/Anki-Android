@@ -278,7 +278,7 @@ public class CardBrowser extends Activity {
                 // return;
                 // }
                 startActivityForResult(editCard, EDIT_CARD);
-                if (Integer.valueOf(android.os.Build.VERSION.SDK) > 4) {
+                if (UIUtils.getApiLevel() > 4) {
                     ActivityTransitionAnimation.slide(CardBrowser.this, ActivityTransitionAnimation.LEFT);
                 }
             }

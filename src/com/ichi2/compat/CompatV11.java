@@ -16,11 +16,13 @@
 
 package com.ichi2.compat;
 
+import android.annotation.TargetApi;
 import android.app.Activity;
 
 /**
  * Implementation of {@link Compat} for Honeycomb and later.
  */
+@TargetApi(11)
 public class CompatV11 implements Compat {
     @Override
     public void invalidateOptionsMenu(Activity activity) {

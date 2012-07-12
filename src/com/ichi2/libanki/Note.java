@@ -18,9 +18,9 @@ package com.ichi2.libanki;
 
 import android.database.Cursor;
 import android.util.Log;
-import android.util.Pair;
 
 import com.ichi2.anki.AnkiDroidApp;
+import com.ichi2.anki.Pair;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -28,7 +28,6 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.TreeMap;
 
 public class Note implements Cloneable {
 

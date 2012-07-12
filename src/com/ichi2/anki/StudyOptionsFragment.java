@@ -45,7 +45,7 @@ import com.ichi2.async.DeckTask;
 import com.ichi2.charts.ChartBuilder;
 import com.ichi2.compat.Compat;
 import com.ichi2.compat.CompatV11;
-import com.ichi2.compat.CompatV3;
+import com.ichi2.compat.CompatV4;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Stats;
 import com.ichi2.libanki.Utils;
@@ -149,9 +149,6 @@ public class StudyOptionsFragment extends Fragment {
     private View mGlobalMatBar;
     private double mProgressMature;
     private double mProgressAll;
-
-    /** Used to perform operation in a platform specific way. */
-    private Compat mCompat;
 
     private Collection mCol;
 
@@ -327,12 +324,6 @@ public class StudyOptionsFragment extends Fragment {
                     return false;
                 }
             };
-        }
-
-        if (UIUtils.getApiLevel() >= 11) {
-            mCompat = new CompatV11();
-        } else {
-            mCompat = new CompatV3();
         }
 
         if (getArguments().getBoolean("onlyFnsMsg")) {

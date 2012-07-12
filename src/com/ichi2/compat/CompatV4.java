@@ -19,9 +19,9 @@ package com.ichi2.compat;
 import android.app.Activity;
 
 /**
- * Implementation of {@link Compat} for Cupcake and later.
+ * Implementation of {@link Compat} for Eclair and later.
  */
-public class CompatV3 implements Compat {
+public class CompatV4 implements Compat {
     @Override
     public void invalidateOptionsMenu(Activity activity) {
         // There is no way (or need) to invalidate the options menu before Honeycomb.

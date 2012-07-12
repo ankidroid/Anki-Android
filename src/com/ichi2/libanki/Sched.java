@@ -17,8 +17,6 @@
 
 package com.ichi2.libanki;
 
-import com.ichi2.anki.R;
-
 import android.content.Context;
 import android.database.Cursor;
 import android.database.SQLException;
@@ -27,9 +25,10 @@ import android.graphics.Typeface;
 import android.text.SpannableStringBuilder;
 import android.text.style.StyleSpan;
 import android.util.Log;
-import android.util.Pair;
 
 import com.ichi2.anki.AnkiDroidApp;
+import com.ichi2.anki.Pair;
+import com.ichi2.anki.R;
 
 import org.json.JSONArray;
 import org.json.JSONException;

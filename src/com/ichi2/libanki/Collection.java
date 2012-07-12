@@ -20,11 +20,11 @@ package com.ichi2.libanki;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.util.Log;
-import android.util.Pair;
 
 import com.ichi2.anki.AnkiDatabaseManager;
 import com.ichi2.anki.AnkiDb;
 import com.ichi2.anki.AnkiDroidApp;
+import com.ichi2.anki.Pair;
 import com.ichi2.anki.UIUtils;
 import com.ichi2.async.DeckTask;
 import com.samskivert.mustache.Mustache;

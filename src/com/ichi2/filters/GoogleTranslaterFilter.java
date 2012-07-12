@@ -2,7 +2,8 @@
 package com.ichi2.filters;
 
 import android.content.SharedPreferences;
-import android.util.Pair;
+
+import com.ichi2.anki.Pair;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
