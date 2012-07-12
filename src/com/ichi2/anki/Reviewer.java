@@ -80,6 +80,7 @@ import com.ichi2.anim.ActivityTransitionAnimation;
 import com.ichi2.anim.Animation3D;
 import com.ichi2.anim.ViewAnimation;
 import com.ichi2.anki.R;
+import com.ichi2.anki.receiver.SdCardReceiver;
 import com.ichi2.async.DeckTask;
 import com.ichi2.libanki.Card;
 import com.ichi2.libanki.Collection;
@@ -189,6 +190,7 @@ public class Reviewer extends AnkiActivity {
      * Broadcast that informs us when the sd card is about to be unmounted
      */
     private BroadcastReceiver mUnmountReceiver = null;
+    private StyledOpenCollectionDialog mNotMountedDialog;
 
     private boolean mInBackground = false;
 
@@ -291,6 +293,7 @@ public class Reviewer extends AnkiActivity {
     private ClipboardManager mClipboard;
     private StyledProgressDialog mProgressDialog;
     private StyledOpenCollectionDialog mOpenCollectionDialog;
+    private Bundle mSavedInstanceState;
     private Menu mOptionsMenu;
     private ProgressBar mProgressBar;
 
@@ -1132,11 +1135,11 @@ public class Reviewer extends AnkiActivity {
     protected void onDestroy() {
         super.onDestroy();
         Log.i(AnkiDroidApp.TAG, "Reviewer - onDestroy()");
-        if (mUnmountReceiver != null) {
-            unregisterReceiver(mUnmountReceiver);
-        }
         if (mSpeakText && AnkiDroidApp.isDonutOrLater()) {
             ReadText.releaseTts();
+        }
+        if (mUnmountReceiver != null) {
+            unregisterReceiver(mUnmountReceiver);
         }
     }
 
@@ -1318,7 +1321,8 @@ public class Reviewer extends AnkiActivity {
     }
 
 
-    private void reloadCollection(final Bundle savedInstanceState) {
+    private void reloadCollection(Bundle savedInstanceState) {
+    	mSavedInstanceState = savedInstanceState;
         DeckTask.launchDeckTask(
                 DeckTask.TASK_TYPE_OPEN_COLLECTION,
                 new DeckTask.TaskListener() {
@@ -1336,9 +1340,8 @@ public class Reviewer extends AnkiActivity {
                         Collection.putCurrentCollection(col);
                         if (col == null) {
                             finish();
-                            // finishNoStorageAvailable();
                         } else {
-                            onCreate(savedInstanceState);
+                            onCreate(mSavedInstanceState);                        	
                         }
                     }
 
@@ -1565,25 +1568,32 @@ public class Reviewer extends AnkiActivity {
     // ----------------------------------------------------------------------------
 
     /**
-     * Registers an intent to listen for ACTION_MEDIA_EJECT notifications. The intent will call
-     * closeExternalStorageFiles() if the external media is going to be ejected, so applications can clean up any files
-     * they have open.
+     * Show/dismiss dialog when sd card is ejected/remounted (collection is saved by SdCardReceiver)
      */
     private void registerExternalStorageListener() {
         if (mUnmountReceiver == null) {
             mUnmountReceiver = new BroadcastReceiver() {
                 @Override
                 public void onReceive(Context context, Intent intent) {
-                    Log.i(AnkiDroidApp.TAG, "mUnmountReceiver - Action = Media Eject");
-                    finishNoStorageAvailable();
+                    if (intent.getAction().equals(SdCardReceiver.MEDIA_EJECT)) {
+//                		mNotMountedDialog = StyledOpenCollectionDialog.show(Reviewer.this, getResources().getString(R.string.sd_card_not_mounted), new OnCancelListener() {
+//
+//                            @Override
+//                            public void onCancel(DialogInterface arg0) {
+                                finish();
+//                            }
+//                        });
+//                    } else if (intent.getAction().equals(SdCardReceiver.MEDIA_MOUNT)) {
+//                    	if (mNotMountedDialog != null && mNotMountedDialog.isShowing()) {
+//                    		mNotMountedDialog.dismiss();                    		
+//                    	}
+//                    	reloadCollection(null);
+                    }
                 }
             };
             IntentFilter iFilter = new IntentFilter();
-            iFilter.addAction(Intent.ACTION_MEDIA_UNMOUNTED);
-
-            // ACTION_MEDIA_EJECT is never invoked (probably due to an android bug
-            // iFilter.addAction(Intent.ACTION_MEDIA_EJECT);
-            iFilter.addDataScheme("file");
+            iFilter.addAction(SdCardReceiver.MEDIA_EJECT);
+//            iFilter.addAction(SdCardReceiver.MEDIA_MOUNT);
             registerReceiver(mUnmountReceiver, iFilter);
         }
     }

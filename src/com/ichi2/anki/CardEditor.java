@@ -61,6 +61,7 @@ import android.widget.TextView;
 
 import com.ichi2.anim.ActivityTransitionAnimation;
 import com.ichi2.anim.ViewAnimation;
+import com.ichi2.anki.receiver.SdCardReceiver;
 import com.ichi2.async.DeckTask;
 import com.ichi2.filters.FilterFacade;
 import com.ichi2.libanki.Card;
@@ -69,6 +70,7 @@ import com.ichi2.libanki.Note;
 import com.ichi2.libanki.Utils;
 import com.ichi2.themes.StyledDialog;
 import com.ichi2.themes.StyledDialog.Builder;
+import com.ichi2.themes.StyledOpenCollectionDialog;
 import com.ichi2.themes.StyledProgressDialog;
 import com.ichi2.themes.Themes;
 import com.ichi2.widget.WidgetStatus;
@@ -148,6 +150,8 @@ public class CardEditor extends Activity {
      * Broadcast that informs us when the sd card is about to be unmounted
      */
     private BroadcastReceiver mUnmountReceiver = null;
+    private StyledOpenCollectionDialog mNotMountedDialog;
+    private Bundle mSavedInstanceState;
 
     private LinearLayout mFieldsLayoutContainer;
 
@@ -567,7 +571,8 @@ public class CardEditor extends Activity {
     }
 
 
-    private void reloadCollection(final Bundle savedInstanceState) {
+    private void reloadCollection(Bundle savedInstanceState) {
+    	mSavedInstanceState = savedInstanceState;
         DeckTask.launchDeckTask(
                 DeckTask.TASK_TYPE_OPEN_COLLECTION,
                 new DeckTask.TaskListener() {
@@ -586,7 +591,7 @@ public class CardEditor extends Activity {
                         if (mCol == null) {
                             finish();
                         } else {
-                            onCreate(savedInstanceState);
+                            onCreate(mSavedInstanceState);
                         }
                     }
 
@@ -811,25 +816,24 @@ public class CardEditor extends Activity {
     // ----------------------------------------------------------------------------
 
     /**
-     * Registers an intent to listen for ACTION_MEDIA_EJECT notifications.
+     * finish when sd card is ejected
      */
-    public void registerExternalStorageListener() {
+    private void registerExternalStorageListener() {
         if (mUnmountReceiver == null) {
             mUnmountReceiver = new BroadcastReceiver() {
                 @Override
                 public void onReceive(Context context, Intent intent) {
-                    String action = intent.getAction();
-                    if (action.equals(Intent.ACTION_MEDIA_EJECT)) {
-                        finishNoStorageAvailable();
+                    if (intent.getAction().equals(SdCardReceiver.MEDIA_EJECT)) {
+                        finish();
                     }
                 }
             };
             IntentFilter iFilter = new IntentFilter();
-            iFilter.addAction(Intent.ACTION_MEDIA_EJECT);
-            iFilter.addDataScheme("file");
+            iFilter.addAction(SdCardReceiver.MEDIA_EJECT);
             registerReceiver(mUnmountReceiver, iFilter);
         }
     }
+
 
 
     private void finishNoStorageAvailable() {

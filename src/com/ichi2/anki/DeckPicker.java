@@ -59,6 +59,7 @@ import android.widget.ListView;
 import android.widget.SimpleAdapter;
 
 import com.ichi2.anim.ActivityTransitionAnimation;
+import com.ichi2.anki.receiver.SdCardReceiver;
 import com.ichi2.async.Connection;
 import com.ichi2.async.Connection.OldAnkiDeckFilter;
 import com.ichi2.async.Connection.Payload;
@@ -555,6 +556,9 @@ public class DeckPicker extends FragmentActivity {
 
         @Override
         public void onPostExecute(DeckTask.TaskData result) {
+        	if (result == null) {
+        		return;
+        	}
             Object[] res = result.getObjArray();
             updateDecksList((TreeSet<Object[]>) res[0], (Integer) res[1], (Integer) res[2]);
         }
@@ -1054,10 +1058,10 @@ public class DeckPicker extends FragmentActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        Log.i(AnkiDroidApp.TAG, "DeckPicker - onDestroy()");
         if (mUnmountReceiver != null) {
             unregisterReceiver(mUnmountReceiver);
         }
+        Log.i(AnkiDroidApp.TAG, "DeckPicker - onDestroy()");
     }
 
 
@@ -1747,21 +1751,16 @@ public class DeckPicker extends FragmentActivity {
     }
 
     /**
-     * Registers an intent to listen for ACTION_MEDIA_EJECT notifications. The intent will call
-     * closeExternalStorageFiles() if the external media is going to be ejected, so applications can clean up any files
-     * they have open.
+     * Show/dismiss dialog when sd card is ejected/remounted (collection is saved by SdCardReceiver)
      */
     private void registerExternalStorageListener() {
         if (mUnmountReceiver == null) {
             mUnmountReceiver = new BroadcastReceiver() {
                 @Override
                 public void onReceive(Context context, Intent intent) {
-                    if (intent.getAction().equals(Intent.ACTION_MEDIA_EJECT)) {
+                    if (intent.getAction().equals(SdCardReceiver.MEDIA_EJECT)) {
                         showDialog(DIALOG_SD_CARD_NOT_MOUNTED);
-                        if (mCol != null) {
-                            mCol.close();
-                        }
-                    } else if (intent.getAction().equals(Intent.ACTION_MEDIA_MOUNTED)) {
+                    } else if (intent.getAction().equals(SdCardReceiver.MEDIA_MOUNT)) {
                     	if (mNotMountedDialog != null && mNotMountedDialog.isShowing()) {
                     		mNotMountedDialog.dismiss();                    		
                     	}
@@ -1770,11 +1769,8 @@ public class DeckPicker extends FragmentActivity {
                 }
             };
             IntentFilter iFilter = new IntentFilter();
-
-            // ACTION_MEDIA_EJECT is never invoked (probably due to an android bug
-            iFilter.addAction(Intent.ACTION_MEDIA_EJECT);
-            iFilter.addAction(Intent.ACTION_MEDIA_MOUNTED);
-            iFilter.addDataScheme("file");
+            iFilter.addAction(SdCardReceiver.MEDIA_EJECT);
+            iFilter.addAction(SdCardReceiver.MEDIA_MOUNT);
             registerReceiver(mUnmountReceiver, iFilter);
         }
     }

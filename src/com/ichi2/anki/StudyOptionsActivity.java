@@ -34,6 +34,7 @@ import android.view.MenuItem;
 import android.view.MotionEvent;
 
 import com.ichi2.anim.ActivityTransitionAnimation;
+import com.ichi2.anki.receiver.SdCardReceiver;
 import com.ichi2.libanki.Collection;
 import com.ichi2.themes.StyledOpenCollectionDialog;
 import com.ichi2.themes.Themes;
@@ -209,6 +210,14 @@ public class StudyOptionsActivity extends FragmentActivity {
     }
 
     @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if (mUnmountReceiver != null) {
+            unregisterReceiver(mUnmountReceiver);
+        }
+    }
+
+    @Override
     public boolean onTouchEvent(MotionEvent event) {
     	if (mCurrentFragment != null) {
     		return mCurrentFragment.onTouchEvent(event);
@@ -217,22 +226,23 @@ public class StudyOptionsActivity extends FragmentActivity {
     	}
     }
 
+    /**
+     * Show/dismiss dialog when sd card is ejected/remounted (collection is saved by SdCardReceiver)
+     */
     private void registerExternalStorageListener() {
         if (mUnmountReceiver == null) {
             mUnmountReceiver = new BroadcastReceiver() {
                 @Override
                 public void onReceive(Context context, Intent intent) {
-                    if (intent.getAction().equals(Intent.ACTION_MEDIA_EJECT)) {
-                    	if (mNotMountedDialog == null || !mNotMountedDialog.isShowing()) {
-                    		mNotMountedDialog = StyledOpenCollectionDialog.show(StudyOptionsActivity.this, getResources().getString(R.string.sd_card_not_mounted), new OnCancelListener() {
+                    if (intent.getAction().equals(SdCardReceiver.MEDIA_EJECT)) {
+                		mNotMountedDialog = StyledOpenCollectionDialog.show(StudyOptionsActivity.this, getResources().getString(R.string.sd_card_not_mounted), new OnCancelListener() {
 
-                                @Override
-                                public void onCancel(DialogInterface arg0) {
-                                    finish();
-                                }
-                            });
-                    	}
-                    } else if (intent.getAction().equals(Intent.ACTION_MEDIA_MOUNTED)) {
+                            @Override
+                            public void onCancel(DialogInterface arg0) {
+                                finish();
+                            }
+                        });
+                    } else if (intent.getAction().equals(SdCardReceiver.MEDIA_MOUNT)) {
                     	if (mNotMountedDialog != null && mNotMountedDialog.isShowing()) {
                     		mNotMountedDialog.dismiss();                    		
                     	}
@@ -241,13 +251,9 @@ public class StudyOptionsActivity extends FragmentActivity {
                 }
             };
             IntentFilter iFilter = new IntentFilter();
-
-            // ACTION_MEDIA_EJECT is never invoked (probably due to an android bug
-            iFilter.addAction(Intent.ACTION_MEDIA_EJECT);
-            iFilter.addAction(Intent.ACTION_MEDIA_MOUNTED);
-            iFilter.addDataScheme("file");
+            iFilter.addAction(SdCardReceiver.MEDIA_EJECT);
+            iFilter.addAction(SdCardReceiver.MEDIA_MOUNT);
             registerReceiver(mUnmountReceiver, iFilter);
         }
     }
-
 }

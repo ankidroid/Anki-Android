@@ -19,10 +19,13 @@ package com.ichi2.anki;
 import android.app.Activity;
 
 import com.ichi2.anki.R;
+import com.ichi2.anki.receiver.SdCardReceiver;
 
 import android.app.Dialog;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.IntentFilter;
 import android.content.DialogInterface.OnCancelListener;
 import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
@@ -137,6 +140,11 @@ public class CardBrowser extends Activity {
 
     private boolean mPrefFixArabic;
 
+    /**
+     * Broadcast that informs us when the sd card is about to be unmounted
+     */
+    private BroadcastReceiver mUnmountReceiver = null;
+
     private boolean mPrefCacheCardBrowser;
     // private static ArrayList<HashMap<String, String>> sAllCardsCache;
 
@@ -224,6 +232,7 @@ public class CardBrowser extends Activity {
             reloadCollection(savedInstanceState);
             return;
         }
+        registerExternalStorageListener();
 
         Intent i = getIntent();
         mWholeCollection = i.hasExtra("fromDeckpicker") && i.getBooleanExtra("fromDeckpicker", false);
@@ -1211,4 +1220,24 @@ public class CardBrowser extends Activity {
             }
         }
     }
+
+    /**
+     * Show/dismiss dialog when sd card is ejected/remounted (collection is saved by SdCardReceiver)
+     */
+    private void registerExternalStorageListener() {
+        if (mUnmountReceiver == null) {
+            mUnmountReceiver = new BroadcastReceiver() {
+                @Override
+                public void onReceive(Context context, Intent intent) {
+                    if (intent.getAction().equals(SdCardReceiver.MEDIA_EJECT)) {
+                    	finish();
+                    }
+                }
+            };
+            IntentFilter iFilter = new IntentFilter();
+            iFilter.addAction(SdCardReceiver.MEDIA_EJECT);
+            registerReceiver(mUnmountReceiver, iFilter);
+        }
+    }
+
 }

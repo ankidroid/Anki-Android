@@ -136,6 +136,19 @@
 		<service android:name="com.ichi2.widget.AnkiDroidWidgetBig$UpdateService" />-->
 
 		<service android:name="com.ichi2.widget.WidgetContentService" />
+		
+    	<receiver android:name="com.ichi2.anki.receiver.SdCardReceiver"
+    	    android:enabled="true"
+    	    android:exported="true">
+   	        <intent-filter>
+                <action android:name="android.intent.action.MEDIA_MOUNTED" />
+                <data android:scheme="file" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.MEDIA_EJECT" />
+                <data android:scheme="file" />
+            </intent-filter>
+    	</receiver>
 	</application>
 	
 	<uses-sdk android:minSdkVersion="4"
@@ -144,6 +157,7 @@ android:targetSdkVersion="11"/>
 <uses-permission android:name="android.permission.VIBRATE" android:required="false" />
 <uses-permission android:name="android.permission.INTERNET" android:required="false" />
 <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" android:required="false" />
+
 <!--<uses-permission android:name="android.permission.BLUETOOTH" android:required="false" />
 <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" android:required="false" />-->
 <supports-screens

@@ -18,7 +18,11 @@ package com.ichi2.anki;
  * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
  ****************************************************************************************/
 
+import android.content.BroadcastReceiver;
 import android.content.ContentValues;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.os.Bundle;
@@ -43,6 +47,7 @@ import org.json.JSONObject;
 
 import com.ichi2.anim.ActivityTransitionAnimation;
 import com.ichi2.anki.R;
+import com.ichi2.anki.receiver.SdCardReceiver;
 import com.ichi2.libanki.Collection;
 
 /**
@@ -52,6 +57,8 @@ public class CramDeckOptions extends PreferenceActivity implements OnSharedPrefe
 
     private JSONObject mDeck;
     private Collection mCol;
+
+    private BroadcastReceiver mUnmountReceiver = null;
 
     private String[] dynExamples = new String[] { null,
             "{'search'=\"is:new\", 'resched'=False, 'steps'=\"1\", 'order'=5}",
@@ -343,6 +350,8 @@ public class CramDeckOptions extends PreferenceActivity implements OnSharedPrefe
         }
         mDeck = mCol.getDecks().current();
 
+        registerExternalStorageListener();
+
         try {
             if (mCol == null || mDeck.getInt("dyn") != 1) {
                 Log.i(AnkiDroidApp.TAG, "CramDeckOptions - No Collection loaded or deck is not a dyn deck");
@@ -382,6 +391,13 @@ public class CramDeckOptions extends PreferenceActivity implements OnSharedPrefe
         return super.onKeyDown(keyCode, event);
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (mUnmountReceiver != null) {
+            unregisterReceiver(mUnmountReceiver);
+        }
+    }
 
     protected void updateSummaries() {
         // for all text preferences, set summary as current database value
@@ -459,6 +475,25 @@ public class CramDeckOptions extends PreferenceActivity implements OnSharedPrefe
                 throw new RuntimeException(e);
             }
             return o1.compareToIgnoreCase(o2);
+        }
+    }
+
+    /**
+     * finish when sd card is ejected
+     */
+    private void registerExternalStorageListener() {
+        if (mUnmountReceiver == null) {
+            mUnmountReceiver = new BroadcastReceiver() {
+                @Override
+                public void onReceive(Context context, Intent intent) {
+                    if (intent.getAction().equals(SdCardReceiver.MEDIA_EJECT)) {
+                        finish();
+                    }
+                }
+            };
+            IntentFilter iFilter = new IntentFilter();
+            iFilter.addAction(SdCardReceiver.MEDIA_EJECT);
+            registerReceiver(mUnmountReceiver, iFilter);
         }
     }
 
