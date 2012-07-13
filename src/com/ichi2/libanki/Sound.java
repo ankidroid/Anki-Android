@@ -96,7 +96,7 @@ public class Sound {
             int markerStart = contentLeft.indexOf(soundMarker);
             stringBuilder.append(contentLeft.substring(0, markerStart));
             stringBuilder
-                    .append("<a onclick=\"window.interface.playSound(this.title);\" title=\""
+                    .append("<a onclick=\"window.ankidroid.playSound(this.title);\" title=\""
                             + soundPath
                             + "\"><span style=\"padding:5px;display:inline-block;vertical-align:middle\"><img src=\"file:///android_asset/media_playback_start2.png\" /></span></a>");
             contentLeft = contentLeft.substring(markerStart + soundMarker.length());
@@ -105,7 +105,7 @@ public class Sound {
         if (!soundAvailable && ttsEnabled && !ReadText.getLanguage(qa).equals(ReadText.NO_TTS)) {
             stringBuilder.append(content.substring(0, content.length() - 9));
             stringBuilder
-                    .append("<a onclick=\"window.interface.playSound(this.title);\" title=\"tts"
+                    .append("<a onclick=\"window.ankidroid.playSound(this.title);\" title=\"tts"
                             + Integer.toString(qa)
                             + Utils.stripHTML(content)
                             + "\"><span style=\"padding:5px;display:inline-block;vertical-align:middle\"><img src=\"file:///android_asset/media_playback_start2.png\" /></span></a>");

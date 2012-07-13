@@ -79,7 +79,6 @@ import android.widget.TextView;
 import com.ichi2.anim.ActivityTransitionAnimation;
 import com.ichi2.anim.Animation3D;
 import com.ichi2.anim.ViewAnimation;
-import com.ichi2.anki.R;
 import com.ichi2.anki.receiver.SdCardReceiver;
 import com.ichi2.async.DeckTask;
 import com.ichi2.libanki.Card;
@@ -233,6 +232,7 @@ public class Reviewer extends AnkiActivity {
     private boolean mSimpleInterface = false;
     private boolean mCurrentSimpleInterface = false;
     private ArrayList<String> mSimpleInterfaceExcludeTags;
+    private int mAvailableInCardWidth;
     private String mLocale;
 
     // Answer card & cloze deletion variables
@@ -302,7 +302,6 @@ public class Reviewer extends AnkiActivity {
 
     private long mSessionTimeLimit;
     private int mSessionCurrReps;
-    private float mScaleInPercent;
     private boolean mShowWhiteboard = false;
 
     private int mNextTimeTextColor;
@@ -1939,7 +1938,7 @@ public class Reviewer extends AnkiActivity {
         }
         webView.getSettings().setJavaScriptEnabled(true);
         webView.setWebChromeClient(new AnkiDroidWebChromeClient());
-        webView.addJavascriptInterface(new JavaScriptInterface(), "interface");
+        webView.addJavascriptInterface(new JavaScriptInterface(this), "ankidroid");
         if (AnkiDroidApp.isFroyoOrLater()) {
             webView.setFocusableInTouchMode(false);
         }
@@ -1955,7 +1954,6 @@ public class Reviewer extends AnkiActivity {
                 mSetScrollbarBarFading = null;
             }
         }
-        mScaleInPercent = webView.getScale();
         return webView;
     }
 
@@ -2595,9 +2593,6 @@ public class Reviewer extends AnkiActivity {
         if (mNightMode) {
             content = Models.invertColors(content);
         }
-        // Calculate available width and provide it to javascript for image resizing.
-        mCardTemplate = mCardTemplate.replaceFirst("var availableWidth = \\d*;", 
-                String.format(Locale.US, "var availableWidth = %d;", getAvailableWidthInCard()));
 
         mCardContent = new SpannedString(mCardTemplate.replace("::content::", content).replace("::style::",
                 style.toString()));
@@ -3131,17 +3126,6 @@ public class Reviewer extends AnkiActivity {
     }
 
 
-    private int getAvailableWidthInCard() {
-        // The width available is equals to
-        // the screen's width divided by the default scale factor used by the WebView, because this scale factor will be
-        // applied later
-        // and minus the padding
-        int availableWidth = (int) (AnkiDroidApp.getDisplayWidth() / mScaleInPercent) - TOTAL_WIDTH_PADDING;
-        Log.i(AnkiDroidApp.TAG, "availableWidth = " + availableWidth);
-        return availableWidth;
-    }
-
-
     /**
      * Select Text in the webview and automatically sends the selected text to the clipboard. From
      * http://cosmez.blogspot.com/2010/04/webview-emulateshiftheld-on-android.html
@@ -3309,10 +3293,11 @@ public class Reviewer extends AnkiActivity {
     }
 
     public final class JavaScriptInterface {
+        private Reviewer mCtx;
 
-        JavaScriptInterface() {
+        JavaScriptInterface(Reviewer ctx) {
+            mCtx = ctx;
         }
-
 
         /**
          * This is not called on the UI thread. Send a message that will be handled on the UI thread.
@@ -3322,8 +3307,24 @@ public class Reviewer extends AnkiActivity {
             msg.obj = soundPath;
             mHandler.sendMessage(msg);
         }
+        public int getAvailableWidth() {
+            if (mCtx.mAvailableInCardWidth == 0) {
+                mCtx.mAvailableInCardWidth = mCtx.calcAvailableInCardWidth();
+            }
+            return mCtx.mAvailableInCardWidth;
+        }
     }
 
+    /** Calculate the width that is available to the webview for content */
+    public int calcAvailableInCardWidth() {
+        // The available width of the webview equals to the container's width, minus the container's padding
+        // divided by the default scale factor used by the WebView, and minus the WebView's padding
+        if (mCard != null && mCardFrame != null) {
+            return (int) ((mCardFrame.getWidth() - mCardFrame.getPaddingLeft() - mCardFrame.getPaddingRight()) /
+                    mCard.getScale()) - mCard.getPaddingLeft() - mCard.getPaddingRight();
+        }
+        return 0;
+    }
 
     private void closeReviewer(int result, boolean saveDeck) {
         Collection.currentCollection().setOvertime(false);
@@ -3359,7 +3360,6 @@ public class Reviewer extends AnkiActivity {
         public MyWebView(Context context) {
             super(context);
         }
-
 
         @Override
         public boolean onCheckIsTextEditor() {

@@ -2,7 +2,6 @@
 	<head>   
 		<link rel="stylesheet" type="text/css" href="file:///android_asset/flashcard_css" />
 		<script type="text/javascript">
-		var availableWidth = 0;
 		function init() {
 			var imgs = document.getElementsByTagName('img');
 			var n = imgs.length;
@@ -25,12 +24,12 @@
 		{
 			if (!e) var e = window.event;
 			var img = e.currentTarget || e.srcElement;
+			availableWidth = window.ankidroid.getAvailableWidth();
 			
 			var newImg = new Image();
 			newImg.src = img.src;
 			var imageHeight = newImg.height;
 			var imageWidth = newImg.width;
-			
 			if(imageHeight != 0 && imageWidth != 0)
 			{
 				if(imageWidth >  availableWidth)
