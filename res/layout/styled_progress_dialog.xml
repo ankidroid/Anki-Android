@@ -84,6 +84,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:max="10000"
+            android:background="@color/transparent"
             android:layout_marginTop="10dip"
             android:layout_marginBottom="10dip"
             android:layout_marginLeft="8dip"
