@@ -563,7 +563,16 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
         if (media) {
             server = new RemoteMediaServer(hkey, this);
             MediaSyncer mediaClient = new MediaSyncer(col, (RemoteMediaServer) server);
-            String ret = mediaClient.sync(mediaUsn, this);
+            String ret;
+            try {
+                ret = mediaClient.sync(mediaUsn, this);
+           } catch (RuntimeException e) {
+    			AnkiDroidApp.saveExceptionReportFile(e, "doInBackgroundSync-mediaSync");
+                data.success = false;
+                data.result = new Object[]{"IOException"};
+                data.data = new Object[] { mediaUsn };
+                return data;
+            }
             if (ret.equals("noChanges")) {
                 publishProgress(R.string.sync_media_no_changes);
                 noMediaChanges = true;
