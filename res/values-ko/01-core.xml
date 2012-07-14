@@ -113,8 +113,8 @@
     <item>%s 년</item>
   </string-array>
   <plurals name="deckpicker_title">
-    <item quantity="one">%2$d 중 1개 (%3$d초)</item>
-    <item quantity="other">(%3$초) %2$d 중 %1$d개 예정</item>
+    <item quantity="one">%2$d 중 1개 (%2$d초)</item>
+    <item quantity="other">(%3$d초) %2$d 중 %1$d개 예정</item>
   </plurals>
   <plurals name="deckpicker_title_minutes">
     <item quantity="one">1분</item>
