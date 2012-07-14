@@ -542,7 +542,7 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
             } catch (RuntimeException e) {
     			AnkiDroidApp.saveExceptionReportFile(e, "doInBackgroundSync-fullSync");
                 data.success = false;
-                data.result = "IOException";
+                data.result = new Object[]{"IOException"};
                 data.data = new Object[] { mediaUsn };
                 return data;
             }

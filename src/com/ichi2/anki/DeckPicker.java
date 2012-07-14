@@ -442,16 +442,23 @@ public class DeckPicker extends FragmentActivity {
                         mDialogMessage = res.getString(R.string.sync_log_error_fix, result[1] != null ? (" (" + (String) result[1] + ")") : "");
                         showDialog(DIALOG_SYNC_ERROR);
                     } else {
-                        int type = (Integer) result[1];
-                        switch (type) {
-                            case 503:
-                                mDialogMessage = res.getString(R.string.sync_too_busy);
-                                break;
-                            default:
-                                mDialogMessage = res.getString(R.string.sync_log_error_specific,
-                                        Integer.toString(type), (String) result[2]);
-                                break;
-                        }
+                    	if (result.length > 1 && result[1] instanceof Integer) {
+                            int type = (Integer) result[1];
+                            switch (type) {
+                                case 503:
+                                    mDialogMessage = res.getString(R.string.sync_too_busy);
+                                    break;
+                                default:
+                                    mDialogMessage = res.getString(R.string.sync_log_error_specific,
+                                            Integer.toString(type), (String) result[2]);
+                                    break;
+                            }                    		
+                    	} else if (result[0] instanceof String) {
+                            mDialogMessage = res.getString(R.string.sync_log_error_specific,
+                                    -1, (String) result[0]);                    		
+                    	} else {
+                            mDialogMessage = res.getString(R.string.sync_generic_error);
+                    	}
                         showDialog(DIALOG_SYNC_LOG);
                     }
                     if (data.data != null && data.data.length >= 1 && data.data[0] instanceof Collection) {
