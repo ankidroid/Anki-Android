@@ -35,7 +35,7 @@
   <string name="statistics_new_cards">Nya kort</string>
   <string name="statistics_failed_cards">Misslyckade kort</string>
   <string name="statistics_fullscreen">Växla fullskärm</string>
-  <string name="calculating_statistics">Beräknar statistik.\nVar god vänta&#8230;</string>
+  <string name="calculating_statistics">Beräknar statistik.\nVar god vänta...</string>
   <string name="deck_summary_cards">Antal kort:</string>
   <string name="deck_summary_notes">Antal anteckningar:</string>
   <string name="deck_summary_cards_mature">Mogna kort:</string>

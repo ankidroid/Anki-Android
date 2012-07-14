@@ -45,7 +45,7 @@
   <string name="card_suspended">Card resuspended</string>
   <string name="menu_rotate">Forgatás</string>
   <string name="undo">Visszavonás</string>
-  <string name="finish_operation">Finishing previous operation (most likely backup creation).\nPlease wait&#8230;</string>
+  <string name="finish_operation">Finishing previous operation (most likely backup creation).\nPlease wait...</string>
   <string name="contextmenu_deckpicker_download_missing_media">Download missing media</string>
   <string name="contextmenu_deckpicker_reset_language_assignments">Nyelv-hozzárendelés visszaállítása</string>
   <string name="contextmenu_deckpicker_reset_reset_message">Nyelv visszaállítása</string>
@@ -61,7 +61,7 @@
   <string name="menu_preferences">Beállítások</string>
   <string name="menu_zeemote">Zeemote</string>
   <string name="menu_about">Névjegy</string>
-  <string name="menu_dismiss_note">Jegyzet elvetése&#8230;</string>
+  <string name="menu_dismiss_note">Jegyzet elvetése...</string>
   <string name="menu_bury_note">Jegyzet eltemetése</string>
   <string name="menu_suspend_card">Kártya felfüggesztése</string>
   <string name="menu_suspend_note">Jegyzet felfüggesztése</string>
@@ -83,12 +83,12 @@
   <string name="visit">Látogatás</string>
   <string name="later">Később</string>
   <string name="download">Letöltés</string>
-  <string name="open_collection">Gyűjtemény megnyitása.\nKérlek, várj&#8230;</string>
-  <string name="create_collection">Gyűjtemény létrehozása.\nKérlek, várj&#8230;</string>
-  <string name="rebuild_cram_deck">Rebuilding cram deck.\nPlease wait&#8230;</string>
+  <string name="open_collection">Gyűjtemény megnyitása.\nKérlek, várj...</string>
+  <string name="create_collection">Gyűjtemény létrehozása.\nKérlek, várj...</string>
+  <string name="rebuild_cram_deck">Rebuilding cram deck.\nPlease wait...</string>
   <string name="rebuild_cram_label">Rebuild</string>
   <string name="empty_cram_label">Empty</string>
-  <string name="empty_cram_deck">Emptying cram deck.\nPlease wait&#8230;</string>
+  <string name="empty_cram_deck">Emptying cram deck.\nPlease wait...</string>
   <string name="studyoptions_congrats_finished">Gratulálok! Mára végeztél.</string>
   <string name="studyoptions_congrats_more_rev">A mai átnézési korlátot elérted, de még mindig maradt átnézendő kártya. Az optimális tanulás érdekében lehet, hogy meg kellene emelni a napi korlátot a Beállítások menüben.</string>
   <string name="studyoptions_congrats_more_new">Még mindig vannak új kártyák, de a napi korlátot elérted. Növelheted a napi korlátot a Beállításoknál, de ne feledd, hogy minél több kártyát vezetsz be, annál több kártyát kell átnézned rövid időn belül, mely nagyobb terhet jelent.</string>

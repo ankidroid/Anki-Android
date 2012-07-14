@@ -35,7 +35,7 @@
   <string name="statistics_new_cards">新しいカード</string>
   <string name="statistics_failed_cards">正解できなかったカード</string>
   <string name="statistics_fullscreen">フルスクリーンの切り替え</string>
-  <string name="calculating_statistics">Calculating statistics.\nPlease wait&#8230;</string>
+  <string name="calculating_statistics">Calculating statistics.\nPlease wait...</string>
   <string name="deck_summary_cards">カードの数:</string>
   <string name="deck_summary_notes">Number of notes:</string>
   <string name="deck_summary_cards_mature">習熟したカード:</string>

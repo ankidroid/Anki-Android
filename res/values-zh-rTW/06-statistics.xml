@@ -35,7 +35,7 @@
   <string name="statistics_new_cards">新卡片</string>
   <string name="statistics_failed_cards">失敗的卡片</string>
   <string name="statistics_fullscreen">切換全螢幕</string>
-  <string name="calculating_statistics">計算統計資料中。請稍後&#8230;</string>
+  <string name="calculating_statistics">計算統計資料中。請稍後...</string>
   <string name="deck_summary_cards">卡片數量: </string>
   <string name="deck_summary_notes">注解的數目：</string>
   <string name="deck_summary_cards_mature">熟練的卡片:</string>

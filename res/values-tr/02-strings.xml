@@ -50,7 +50,7 @@
   <string name="add">Ekle</string>
   <string name="close">Kapat</string>
   <string name="select">Seç</string>
-  <string name="saving_changes">Değişiklikler kaydediliyor&#8230;</string>
+  <string name="saving_changes">Değişiklikler kaydediliyor...</string>
   <string name="timebox_reached">Timebox\'a ulaşıldı!</string>
   <string name="studyoptions_welcome_title">AnkiDroid\'e Hoşgeldiniz</string>
   <string name="studyoptions_no_external_storage_title">Mevcut Harici Depolama Yok</string>
@@ -64,7 +64,7 @@
   <string name="card_editor_copy_card">Kartı kopyala</string>
   <string name="card_editor_reset_card">İlerlemeyi sıfırla</string>
   <string name="error_insufficient_memory">Cihazda yetersiz bellek olması nedeniyle işlem gerçekleştirilemiyor</string>
-  <string name="tutorial_load">Eğitim destesi oluşturuluyor.\nLütfen bekleyin&#8230;</string>
+  <string name="tutorial_load">Eğitim destesi oluşturuluyor.\nLütfen bekleyin...</string>
   <string name="tutorial_loading_error">Eğitim destesi oluşturulamadı</string>
   <string name="rename">Adını değiştir</string>
   <string name="rename_error">%s destesinin adı değiştirilemedi</string>
@@ -73,14 +73,15 @@
   <string name="help_faq">SSS</string>
   <string name="help_tutorial">Eğitim destesi</string>
   <string name="check_db">Veritabanını denetle</string>
-  <string name="check_db_message">Veritabanı denetleniyor.\nLütfen bekleyin&#8230;</string>
+  <string name="check_db_message">Veritabanı denetleniyor.\nLütfen bekleyin...</string>
   <string name="simple_interface_hint">Boş %s. Basit arayüzün resimleri/sesleri vb. gösteremediğini unutmayın.</string>
-  <string name="delete_deck">Deste siliniyor&#8230;\nLütfen bekleyin.</string>
+  <string name="delete_deck">Deste siliniyor...\nLütfen bekleyin.</string>
   <string name="menu_cardbrowser">Kart tarayıcısı</string>
   <string name="show_hint">Show Hint</string>
   <string name="pref_lang_other">Dil Tercihleri</string>
   <string name="pref_lang_common">LangCommon</string>
   <string name="pref_font_UI">Arayüz Yazı Tipi</string>
+  <string name="info_rate">Rate AnkiDroid</string>
   <string-array name="dynOrderLabels">
     <item>En eskiler ilk önce</item>
     <item>Rastgele</item>

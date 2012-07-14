@@ -35,7 +35,7 @@
   <string name="statistics_new_cards">Nieuwe kaarten</string>
   <string name="statistics_failed_cards">Foute kaarten</string>
   <string name="statistics_fullscreen">Volledig scherm</string>
-  <string name="calculating_statistics">Statistieken berekenen.\nEven geduld&#8230;</string>
+  <string name="calculating_statistics">Statistieken berekenen.\nEven geduld...</string>
   <string name="deck_summary_cards">Aantal kaarten:</string>
   <string name="deck_summary_notes">Aantal memes:</string>
   <string name="deck_summary_cards_mature">Oudere kaarten:</string>

@@ -45,7 +45,7 @@
   <string name="card_suspended">卡片再次跳过</string>
   <string name="menu_rotate">旋转</string>
   <string name="undo">撤销</string>
-  <string name="finish_operation">Finishing previous operation (most likely backup creation).\nPlease wait&#8230;</string>
+  <string name="finish_operation">Finishing previous operation (most likely backup creation).\nPlease wait...</string>
   <string name="contextmenu_deckpicker_download_missing_media">下载缺失的媒体文件</string>
   <string name="contextmenu_deckpicker_reset_language_assignments">取消指定牌组语言</string>
   <string name="contextmenu_deckpicker_reset_reset_message">重置语言设置</string>
@@ -61,7 +61,7 @@
   <string name="menu_preferences">偏好设置</string>
   <string name="menu_zeemote">蓝牙手柄</string>
   <string name="menu_about">关于</string>
-  <string name="menu_dismiss_note">Dismiss Note&#8230;</string>
+  <string name="menu_dismiss_note">Dismiss Note...</string>
   <string name="menu_bury_note">Bury Note</string>
   <string name="menu_suspend_card">不要复习</string>
   <string name="menu_suspend_note">Suspend Note</string>
@@ -83,12 +83,12 @@
   <string name="visit">访问</string>
   <string name="later">稍后</string>
   <string name="download">下载</string>
-  <string name="open_collection">Opening collection.\nPlease wait&#8230;</string>
-  <string name="create_collection">Creating collection.\nPlease wait&#8230;</string>
-  <string name="rebuild_cram_deck">Rebuilding cram deck.\nPlease wait&#8230;</string>
+  <string name="open_collection">Opening collection.\nPlease wait...</string>
+  <string name="create_collection">Creating collection.\nPlease wait...</string>
+  <string name="rebuild_cram_deck">Rebuilding cram deck.\nPlease wait...</string>
   <string name="rebuild_cram_label">重建</string>
   <string name="empty_cram_label">Empty</string>
-  <string name="empty_cram_deck">Emptying cram deck.\nPlease wait&#8230;</string>
+  <string name="empty_cram_deck">Emptying cram deck.\nPlease wait...</string>
   <string name="studyoptions_congrats_finished">恭喜!你已经完成了今天的计划。</string>
   <string name="studyoptions_congrats_more_rev">Today\'s review limit has been reached, but there are still cards waiting to be reviewed. For optimum memory, consider increasing the daily limit in the options.</string>
   <string name="studyoptions_congrats_more_new">There are more new cards available, but the daily limit has been reached. You can increase the limit in the options, but please bear in mind that the more new cards you introduce, the higher your short-term review workload will become.</string>

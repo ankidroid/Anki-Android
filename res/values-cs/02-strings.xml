@@ -50,7 +50,7 @@
   <string name="add">Přidat</string>
   <string name="close">Zavřít</string>
   <string name="select">Vybrat</string>
-  <string name="saving_changes">Ukládání změn &#8230;</string>
+  <string name="saving_changes">Ukládání změn ...</string>
   <string name="timebox_reached">Timebox reached!</string>
   <string name="studyoptions_welcome_title">Vítejte v AnkiDroid</string>
   <string name="studyoptions_no_external_storage_title">Není k dispozici externí paměť</string>
@@ -64,7 +64,7 @@
   <string name="card_editor_copy_card">Kopírovat kartu</string>
   <string name="card_editor_reset_card">Obnovit proces učení</string>
   <string name="error_insufficient_memory">Operace není možná z důvodu nedostatku paměti na zařízení</string>
-  <string name="tutorial_load">Vytváření výukového balíčku. \nČekejte&#8230;</string>
+  <string name="tutorial_load">Vytváření výukového balíčku. \nČekejte...</string>
   <string name="tutorial_loading_error">Nebylo možné vytvořit výukový balíček</string>
   <string name="rename">Přejmenovat</string>
   <string name="rename_error">Balíček %s nelze přejmenovat</string>
@@ -73,14 +73,15 @@
   <string name="help_faq">Nejčastější dotazy</string>
   <string name="help_tutorial">Výukový balíček</string>
   <string name="check_db">Zkontrolovat databázi</string>
-  <string name="check_db_message">Kontrola databáze.\nProsím čekejte&#8230;</string>
+  <string name="check_db_message">Kontrola databáze.\nProsím čekejte...</string>
   <string name="simple_interface_hint">Prázdné %s. Mějte na paměti, že jednoduché rozhraní nemůže zobrazit obrázky/zvuky atd.</string>
-  <string name="delete_deck">Odstraňování balíčku&#8230;\nProsím čekejte.</string>
+  <string name="delete_deck">Odstraňování balíčku...\nProsím čekejte.</string>
   <string name="menu_cardbrowser">Card browser</string>
   <string name="show_hint">Show Hint</string>
   <string name="pref_lang_other">Language Preferences</string>
   <string name="pref_lang_common">LangCommon</string>
   <string name="pref_font_UI">Custom UI Font</string>
+  <string name="info_rate">Rate AnkiDroid</string>
   <string-array name="dynOrderLabels">
     <item>Oldest seen first</item>
     <item>Random</item>

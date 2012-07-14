@@ -50,7 +50,7 @@
   <string name="add">Añadir</string>
   <string name="close">Cerrar</string>
   <string name="select">Seleccionar</string>
-  <string name="saving_changes">Guardando cambios&#8230;</string>
+  <string name="saving_changes">Guardando cambios...</string>
   <string name="timebox_reached">Timebox reached!</string>
   <string name="studyoptions_welcome_title">Bienvenido a AnkiDroid</string>
   <string name="studyoptions_no_external_storage_title">Almacenamiento externo no disponible</string>
@@ -64,7 +64,7 @@
   <string name="card_editor_copy_card">Copiar tarjeta</string>
   <string name="card_editor_reset_card">Reiniciar cuenta de progreso</string>
   <string name="error_insufficient_memory">La operación no es posible debido a insuficiencia de memoria en tu dispositivo</string>
-  <string name="tutorial_load">Creando mazo tutorial.\nPor favor, espera&#8230;</string>
+  <string name="tutorial_load">Creando mazo tutorial.\nPor favor, espera...</string>
   <string name="tutorial_loading_error">No se pudo crear el mazo tutorial</string>
   <string name="rename">Renombrar</string>
   <string name="rename_error">El mazo %s no pudo ser renombrado</string>
@@ -73,14 +73,15 @@
   <string name="help_faq">Preguntas más frecuentes</string>
   <string name="help_tutorial">Mazo tutorial</string>
   <string name="check_db">Comprobar base de datos</string>
-  <string name="check_db_message">Comprobando base de datos.\nPor favor, espera&#8230;</string>
+  <string name="check_db_message">Comprobando base de datos.\nPor favor, espera...</string>
   <string name="simple_interface_hint">Vaciar %s. Ten en cuenta que la interfaz simple no puede mostrar imágenes/sonidos etc.</string>
-  <string name="delete_deck">Eliminando mazo&#8230;\nPor favor, espera.</string>
+  <string name="delete_deck">Eliminando mazo...\nPor favor, espera.</string>
   <string name="menu_cardbrowser">Explorador de tarjetas</string>
   <string name="show_hint">Show Hint</string>
   <string name="pref_lang_other">Preferencias de Idioma</string>
   <string name="pref_lang_common">LangCommon</string>
   <string name="pref_font_UI">Fuente de interfaz personalizada</string>
+  <string name="info_rate">Rate AnkiDroid</string>
   <string-array name="dynOrderLabels">
     <item>Vistas más antiguamente primero</item>
     <item>Aleatorio</item>

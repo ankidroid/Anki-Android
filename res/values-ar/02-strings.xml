@@ -50,7 +50,7 @@
   <string name="add">أضف</string>
   <string name="close">أغلق</string>
   <string name="select">حدد</string>
-  <string name="saving_changes">حفظ التغييرات&#8230;</string>
+  <string name="saving_changes">حفظ التغييرات...</string>
   <string name="timebox_reached">Timebox reached!</string>
   <string name="studyoptions_welcome_title">مرحباً بكم مع آنكيدرويد</string>
   <string name="studyoptions_no_external_storage_title">لا تتوفر مساحة تخزين خارجية</string>
@@ -64,7 +64,7 @@
   <string name="card_editor_copy_card">انسخ البطاقة</string>
   <string name="card_editor_reset_card">أعد تعيين التقدم</string>
   <string name="error_insufficient_memory">العملية غير ممكنة نظرا للذاكرة غير الكافية في جهازك</string>
-  <string name="tutorial_load">إنشاء الرزمة التعليمية.\n الرجاء الانتظار&#8230;</string>
+  <string name="tutorial_load">إنشاء الرزمة التعليمية.\n الرجاء الانتظار...</string>
   <string name="tutorial_loading_error">الرزمة التعليمية لا يمكن إنشاءها</string>
   <string name="rename">أعد التسمية</string>
   <string name="rename_error">الرزمة %s لا يمكن إعادة تسميتها</string>
@@ -73,14 +73,15 @@
   <string name="help_faq">الأسئلة الشائعة</string>
   <string name="help_tutorial">الرزمة التعليمية</string>
   <string name="check_db">افحص قاعدة البيانات</string>
-  <string name="check_db_message">فحص قاعدة البيانات.\nالرجاء الانتظار&#8230;</string>
+  <string name="check_db_message">فحص قاعدة البيانات.\nالرجاء الانتظار...</string>
   <string name="simple_interface_hint">فارغة %s. ضع في اعتبارك أن الواجهة البسيطة لا يمكن أن تعرض الصور/الأصوات إلخ.</string>
-  <string name="delete_deck">حذف الرزمة&#8230;\nالرجاء الانتظار.</string>
+  <string name="delete_deck">حذف الرزمة...\nالرجاء الانتظار.</string>
   <string name="menu_cardbrowser">Card browser</string>
   <string name="show_hint">Show Hint</string>
   <string name="pref_lang_other">Language Preferences</string>
   <string name="pref_lang_common">LangCommon</string>
   <string name="pref_font_UI">Custom UI Font</string>
+  <string name="info_rate">Rate AnkiDroid</string>
   <string-array name="dynOrderLabels">
     <item>Oldest seen first</item>
     <item>Random</item>

@@ -180,10 +180,10 @@
   <string name="session_question_limit_summ">Antal frågor per studiepass. Välj 0 för obegränsat.</string>
   <string name="new_cards_order">Ordning på nya kort</string>
   <string name="new_cards_order_summ">I vilken ordning nya kort visas.</string>
-  <string name="show_new_cards_in">Visa nya kort om&#8230;</string>
+  <string name="show_new_cards_in">Visa nya kort om...</string>
   <string name="new_card_spacing">Avstånd mellan nya kort</string>
   <string name="new_card_spacing_summ">Hur nya kort distribueras under repetitionen.</string>
-  <string name="show_new_cards">Visa nya kort&#8230;</string>
+  <string name="show_new_cards">Visa nya kort...</string>
   <string name="show_next_review_time">Nästa repetitionstid</string>
   <string name="show_next_review_time_summ">Visar tid för nästa repetition beroende på ditt val</string>
   <string name="update_notification">Underrättelser om uppdateringar</string>
@@ -196,7 +196,7 @@
   <string name="filter_google_translate">Från Google Translate</string>
   <string name="filter_google_translate_summ">Just save source word and translation</string>
   <string name="convert_fen_text_summ">Draw chessboard from Forsyth Edwards Notation. The notation must be enclosed in [fen][/fen] tag.</string>
-  <string name="sync_set_journal_mode">Ställer in korrekt journalläge&#8230;</string>
+  <string name="sync_set_journal_mode">Ställer in korrekt journalläge...</string>
   <string name="async_mode">Asynkront läge</string>
   <string name="async_mode_summ">Detta snabbar AnkiDroid upp men kan korrumpera databaser när hela Android-systemet kraschar, så använd säkerhetskopior</string>
   <string name="async_mode_message">Detta alternativt är osäkert och kan göra dina kortlekar oanvändbara om AnkiDroid kraschar (t.ex. på grund av slut på batteriet).\nDet är rekommenderas STARKT att säkerhetskopieringssytemet används om detta alternativ är aktiverat.\nAktivera ändå?</string>

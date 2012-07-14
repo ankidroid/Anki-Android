@@ -50,7 +50,7 @@
   <string name="add">추가</string>
   <string name="close">닫기</string>
   <string name="select">선택</string>
-  <string name="saving_changes">변경 내용 저장 중&#8230;</string>
+  <string name="saving_changes">변경 내용 저장 중...</string>
   <string name="timebox_reached">Timebox가 도달</string>
   <string name="studyoptions_welcome_title">AnkiDroid에 오신 것을 환영합니다</string>
   <string name="studyoptions_no_external_storage_title">외부 저장장치를 사용할 수 없습니다</string>
@@ -64,7 +64,7 @@
   <string name="card_editor_copy_card">카드 복사</string>
   <string name="card_editor_reset_card">학습상황 재설정</string>
   <string name="error_insufficient_memory">장치 메모리가 부족하여 작업을 더 이상 진행할 수 없습니다</string>
-  <string name="tutorial_load">도움말 묶음 생성 중. \n 잠시 기다려주세요&#8230;</string>
+  <string name="tutorial_load">도움말 묶음 생성 중. \n 잠시 기다려주세요...</string>
   <string name="tutorial_loading_error">도움말 카드 묶음을 만들 수 없습니다</string>
   <string name="rename">이름 바꾸기</string>
   <string name="rename_error">카드묶음 %s 이름을 바꿀 수 없습니다</string>
@@ -73,14 +73,15 @@
   <string name="help_faq">자주 묻는 질문</string>
   <string name="help_tutorial">도움말 카드 묶음</string>
   <string name="check_db">데이터베이스 점검 중</string>
-  <string name="check_db_message">데이터베이스 검사 중. \n 기다려주세요&#8230;</string>
+  <string name="check_db_message">데이터베이스 검사 중. \n 기다려주세요...</string>
   <string name="simple_interface_hint">빈 %s. 간단 인터페이스는 그림/소리 등이 재생되지 않습니다.</string>
-  <string name="delete_deck">카드 묶음 삭제 중&#8230;\n 잠시만 기다리세요.</string>
+  <string name="delete_deck">카드 묶음 삭제 중...\n 잠시만 기다리세요.</string>
   <string name="menu_cardbrowser">카드 탐색기</string>
   <string name="show_hint">Show Hint</string>
   <string name="pref_lang_other">언어 기본 설정</string>
   <string name="pref_lang_common">공통언어</string>
   <string name="pref_font_UI">사용자 지정 UI 글꼴</string>
+  <string name="info_rate">Rate AnkiDroid</string>
   <string-array name="dynOrderLabels">
     <item>오래된 카드 먼저 학습하기</item>
     <item>무작위로 학습하기</item>

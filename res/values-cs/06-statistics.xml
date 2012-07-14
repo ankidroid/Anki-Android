@@ -35,7 +35,7 @@
   <string name="statistics_new_cards">Nové karty</string>
   <string name="statistics_failed_cards">Neúspěšné karty</string>
   <string name="statistics_fullscreen">Na celou obrazovku</string>
-  <string name="calculating_statistics">Calculating statistics.\nPlease wait&#8230;</string>
+  <string name="calculating_statistics">Calculating statistics.\nPlease wait...</string>
   <string name="deck_summary_cards">Počet karet:</string>
   <string name="deck_summary_notes">Počet poznámek:</string>
   <string name="deck_summary_cards_mature">Zralé karty:</string>

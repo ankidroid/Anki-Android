@@ -50,7 +50,7 @@
   <string name="add">Добавить</string>
   <string name="close">Закрыть</string>
   <string name="select">Ок</string>
-  <string name="saving_changes">Сохранение изменений&#8230;</string>
+  <string name="saving_changes">Сохранение изменений...</string>
   <string name="timebox_reached">Timebox reached!</string>
   <string name="studyoptions_welcome_title">Добро пожаловать в AnkiDroid</string>
   <string name="studyoptions_no_external_storage_title">Не доступен накопитель данных</string>
@@ -64,7 +64,7 @@
   <string name="card_editor_copy_card">Копировать карту</string>
   <string name="card_editor_reset_card">Сброс прогресса</string>
   <string name="error_insufficient_memory">Операция не возможна из-за недостатка памяти на Вашем устройстве</string>
-  <string name="tutorial_load">Создание учебной колоды. \nПожалуйста подождите&#8230;</string>
+  <string name="tutorial_load">Создание учебной колоды. \nПожалуйста подождите...</string>
   <string name="tutorial_loading_error">Учебная колода не может быть создана</string>
   <string name="rename">Переименовать</string>
   <string name="rename_error">Колода %s не может быть переименована</string>
@@ -73,14 +73,15 @@
   <string name="help_faq">Вопросы и ответы</string>
   <string name="help_tutorial">Учебная колода</string>
   <string name="check_db">Проверка базы данных</string>
-  <string name="check_db_message">Проверка базы данных. \nПожалуйста подождите&#8230;</string>
+  <string name="check_db_message">Проверка базы данных. \nПожалуйста подождите...</string>
   <string name="simple_interface_hint">Пустой %s. Имейте в виду то, что простой интерфейс не может показывать фотографии/звуки и т.д.</string>
-  <string name="delete_deck">Удаление колоды&#8230;\nПожалуйста подождите&#8230;</string>
+  <string name="delete_deck">Удаление колоды...\nПожалуйста подождите...</string>
   <string name="menu_cardbrowser">Card browser</string>
   <string name="show_hint">Show Hint</string>
   <string name="pref_lang_other">Language Preferences</string>
   <string name="pref_lang_common">LangCommon</string>
   <string name="pref_font_UI">Custom UI Font</string>
+  <string name="info_rate">Rate AnkiDroid</string>
   <string-array name="dynOrderLabels">
     <item>Старейшие появляться первыми</item>
     <item>Случайно</item>

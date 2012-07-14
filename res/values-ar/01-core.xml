@@ -45,7 +45,7 @@
   <string name="card_suspended">بطاقة معاد تعليقها</string>
   <string name="menu_rotate">تدوير</string>
   <string name="undo">تراجع</string>
-  <string name="finish_operation">Finishing previous operation (most likely backup creation).\nPlease wait&#8230;</string>
+  <string name="finish_operation">Finishing previous operation (most likely backup creation).\nPlease wait...</string>
   <string name="contextmenu_deckpicker_download_missing_media">حمل الوسائط المفقودة</string>
   <string name="contextmenu_deckpicker_reset_language_assignments">أعد تعيين تخصيصات اللغة</string>
   <string name="contextmenu_deckpicker_reset_reset_message">إعادة تعيين اللغة</string>
@@ -61,7 +61,7 @@
   <string name="menu_preferences">تفضيلات</string>
   <string name="menu_zeemote">استخدمZeemote</string>
   <string name="menu_about">حول</string>
-  <string name="menu_dismiss_note">ملاحظة الإبعاد&#8230;</string>
+  <string name="menu_dismiss_note">ملاحظة الإبعاد...</string>
   <string name="menu_bury_note">ملاحظة الإخفاء</string>
   <string name="menu_suspend_card">علق البطاقة</string>
   <string name="menu_suspend_note">ملاحظة التعليق</string>
@@ -83,12 +83,12 @@
   <string name="visit">قم بزيارة</string>
   <string name="later">في وقت لاحق</string>
   <string name="download">تحميل</string>
-  <string name="open_collection">فتح المجموعة.\nالرجاء الانتظار&#8230;</string>
-  <string name="create_collection">إنشاء المجموعة.\nالرجاء الانتظار&#8230;</string>
-  <string name="rebuild_cram_deck">Rebuilding cram deck.\nPlease wait&#8230;</string>
+  <string name="open_collection">فتح المجموعة.\nالرجاء الانتظار...</string>
+  <string name="create_collection">إنشاء المجموعة.\nالرجاء الانتظار...</string>
+  <string name="rebuild_cram_deck">Rebuilding cram deck.\nPlease wait...</string>
   <string name="rebuild_cram_label">Rebuild</string>
   <string name="empty_cram_label">Empty</string>
-  <string name="empty_cram_deck">Emptying cram deck.\nPlease wait&#8230;</string>
+  <string name="empty_cram_deck">Emptying cram deck.\nPlease wait...</string>
   <string name="studyoptions_congrats_finished">تهانينا! لقد انتهيت لهذا الوقت.</string>
   <string name="studyoptions_congrats_more_rev">لقد بلغت حد المراجعة لهذا اليوم، ولكن لا زالت هناك بطاقات تنتظر المراجعة. للذاكرة المثلى، أعد التفكير في زيادة الحد اليومي من قائمة الخيارات.</string>
   <string name="studyoptions_congrats_more_new">هناك المزيد من البطاقات الجديدة المتوفرة، ولكنك قد بلغت حد المراجعة لهذا اليوم. يمكنك زيادة هذا الحد من الخيارات، ولكن لاحظ أنه كلما زاد تقديم البطاقات الجديدة، كلما زاد عبء المراجعة قصيرة المدى.</string>

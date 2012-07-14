@@ -28,7 +28,7 @@
   <string name="widget_minimum_cards_due_notification_ticker_title">Tarjetas pendientes</string>
   <string name="widget_minimum_cards_due_notification_ticker_text">%d repasos pendientes</string>
   <string name="widget_no_cards_due">No hay tarjetas pendientes</string>
-  <string name="widget_loading">Cargando el widget&#8230;</string>
+  <string name="widget_loading">Cargando el widget...</string>
   <string name="widget_medium">AnkiDroid Medio</string>
   <string name="widget_small">AnkiDroid Pequeño</string>
   <string name="widget_big">AnkiDroid Grande</string>

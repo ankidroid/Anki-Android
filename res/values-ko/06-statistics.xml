@@ -35,7 +35,7 @@
   <string name="statistics_new_cards">새로운 카드</string>
   <string name="statistics_failed_cards">실패한 카드</string>
   <string name="statistics_fullscreen">전체화면 켜고 끄기</string>
-  <string name="calculating_statistics">통계 작성 중:\n 잠시만 기다리세요&#8230;</string>
+  <string name="calculating_statistics">통계 작성 중:\n 잠시만 기다리세요...</string>
   <string name="deck_summary_cards">카드 번호 :</string>
   <string name="deck_summary_notes">노트 번호:</string>
   <string name="deck_summary_cards_mature">오래된 카드:</string>

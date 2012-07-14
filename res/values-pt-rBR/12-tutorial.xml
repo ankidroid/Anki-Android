@@ -17,7 +17,7 @@
  
 <resources> 
  <string-array name="tutorial_questions"> 
-    <item><![CDATA[Obrigado por instalar AnkiDroid!<br/>Esta é uma curta introdução.<br/>O que você vê agora é a parte da <span style=\'font-weight:600;\'>pergunta</span> de um cartão.<br/>Por favor, clique no botão grande abaixo&#8]]></item> 
+    <item><![CDATA[Obrigado por instalar AnkiDroid!<br/>Esta é uma curta introdução.<br/>O que você vê agora é a parte da <span style=\'font-weight:600;\'>pergunta</span> de um cartão.<br/>Por favor, clique no botão grande abaixo...]]></item> 
     <item><![CDATA[O próximo cartão é mostrado agora.<br/>A idéia é simples: Assim como nos cartões do mundo real, você escreve uma pergunta na frente e a resposta no verso dos seus cartões.<br/>(clique no botão para mostrar o verso) ]]></item> 
     <item><![CDATA[&quot;Qual é a capital de Burkina Faso?&quot;<br/>Pense um pouco na resposta e então clique &quot;mostrar resposta&quot;]]></item> 
     <item><![CDATA[Acima de todos os botões de resposta, você encontra informações sobre o tempo, após o qual o cartão será mostrado novamente quando respondido por este botão.]]></item> 
@@ -25,22 +25,22 @@
     <item><![CDATA[Algumas palavras sobre a organização em AnkiDroid:<br/><br>Todas as informações tem de ser colocada em pares de pergunta e resposta. Se você quer aprender em outra direção, você deveria criar outro cartão com as informações trocadas.]]></item> 
     <item><![CDATA[Cartões são postos junto em decks e lá podem ser organizados com a ajuda de todos os tipos de tags.]]></item> 
     <item><![CDATA[Existem principalmente duas formas de pegar novos cartõess:<br />Você pode adicionar cartões pre-feitos de outros usuários (escolha &quot;decks compartilhados&quot; no resumo dos decks) ou crie-os por si mesmo.]]></item> 
-    <item><![CDATA[De qualquer forma, criar seus próprios decks é essencial para atender perfeitamente às suas necessidades. Você pode fazer isso diretamente no AnkiDroid&#8]]></item> 
+    <item><![CDATA[De qualquer forma, criar seus próprios decks é essencial para atender perfeitamente às suas necessidades. Você pode fazer isso diretamente no AnkiDroid...]]></item> 
     <item><![CDATA[Vamos dar uma  olhada na barra superior<br />No canto superior esquerdo você acha alguns numeros. O vermelho conta os cartões errados(respondidos por &quot;again&quot;),]]></item> 
     <item><![CDATA[No canto direito, você encontra informações sobre seu tempo de pensando neste cartão e sobre seu desempenho.]]></item> 
     <item><![CDATA[Embora você possa usar o AnkiDroid sozinho, ele é totalmente conectado a internet, o servidor de Anki Desktop (disponivel para Linux, Windows, Mac)]]></item> 
     <item><![CDATA[Estes têm sido os principais pontos de uso do AnkiDroid.<br/><br>Para obter mais informações sobre o conceito chave do Anki, visite http://ankisrs.net/]]></item> 
  </string-array>
  <string-array name="tutorial_answers">
-    <item><![CDATA[tor>&#8230; para ver a parte da <span style=\'font-weight:600;\'>resposta</span> do cartão (abaixo da linha).<br/>Clique no botão à direita]]></item> 
-    <item><![CDATA[Vamos supor que você queira aprender as capitais do mundo. A questão é&#8230;<br/>(clique em um dos botões para mostrar o próximo cartão)]]></item> 
+    <item><![CDATA[... para ver a parte da <span style=\'font-weight:600;\'>resposta</span> do cartão (abaixo da linha).<br/>Clique no botão à direita]]></item> 
+    <item><![CDATA[Vamos supor que você queira aprender as capitais do mundo. A questão é...<br/>(clique em um dos botões para mostrar o próximo cartão)]]></item> 
     <item><![CDATA[&quot;Ouagadoudou&quot; ;e a resposta correta. <br/> Você não sabia? Clique &quot;novamente&quot; para ver o cartão novamente em alguns minutos. Senão, clique nos outros botões, dependendo da facilidade da questão.]]></item> 
     <item><![CDATA[Este período de tempo é calculado sobre a última vez que você respondeu o cartão, a escolha atual de dificuldade e opções de dificuldade de respostas anteriores deste cartão.]]></item> 
     <item><![CDATA[Se você quiser saber mais sobre repetições espaçadas, visite:<br>http://en.wikipedia.org/wiki/Spaced_repetition_system]]></item> 
     <item><![CDATA[Não se preocupe, isso pode ser feito automaticamente. Não há necessidade de inserir a mesma informação duas vezes.]]></item> 
     <item><![CDATA[Você vai aprender isso rapidamente quando você começar a usar o AnkiDroid.]]></item> 
     <item><![CDATA[Você vai encontrar milhares de decks pre-feitos para baixar e provavelmente alguns lhe são uteis.]]></item> 
-    <item><![CDATA[tor>&#8230;ou(um pouco mais conveniente) com o aplicativo de desktop Anki(disponível gratuitamente em http://ankisrs.net/).<br><br>Você pode sincronizar seus decks com o aplicativo de desktop facilmente, então transferir os dados não é um problema.]]></item> 
+    <item><![CDATA[...ou(um pouco mais conveniente) com o aplicativo de desktop Anki(disponível gratuitamente em http://ankisrs.net/).<br><br>Você pode sincronizar seus decks com o aplicativo de desktop facilmente, então transferir os dados não é um problema.]]></item> 
     <item><![CDATA[o preto mostra o numero de cartões que você já aprendeu antes e são devidos hoje, e o azul lhe diz quantos cartões novos estão projetados para hoje.<br />O tipo de cartões atuais está especificado por um sublinhado.]]></item> 
     <item><![CDATA[A barra superior mostra seu progresso, a inferior indica o percentual de respostas Sim.]]></item> 
     <item><![CDATA[Enfim, você pode sincronizar sua coleção entre AnkiDroid e Anki Desktop e usar este ultimo para uma adição mais conveniente e gerenciavel.]]></item> 

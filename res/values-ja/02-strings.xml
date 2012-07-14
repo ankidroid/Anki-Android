@@ -50,7 +50,7 @@
   <string name="add">追加</string>
   <string name="close">閉じる</string>
   <string name="select">選択</string>
-  <string name="saving_changes">変更を保存しています&#8230;</string>
+  <string name="saving_changes">変更を保存しています...</string>
   <string name="timebox_reached">Timebox reached!</string>
   <string name="studyoptions_welcome_title">AnkiDroid へようこそ</string>
   <string name="studyoptions_no_external_storage_title">外部メモリーが接続されていません</string>
@@ -64,7 +64,7 @@
   <string name="card_editor_copy_card">カードをコピーする</string>
   <string name="card_editor_reset_card">初めから</string>
   <string name="error_insufficient_memory">メモリ不足のため操作できませんでした。</string>
-  <string name="tutorial_load">Creating tutorial deck.\nPlease wait&#8230;</string>
+  <string name="tutorial_load">Creating tutorial deck.\nPlease wait...</string>
   <string name="tutorial_loading_error">チュートリアルの単語帳を作成できませんでした。</string>
   <string name="rename">名前変更</string>
   <string name="rename_error">単語帳 %s の名前を変更できません。</string>
@@ -73,14 +73,15 @@
   <string name="help_faq">よくある質問</string>
   <string name="help_tutorial">チュートリアルの単語帳</string>
   <string name="check_db">Check database</string>
-  <string name="check_db_message">Checking database.\nPlease wait&#8230;</string>
+  <string name="check_db_message">Checking database.\nPlease wait...</string>
   <string name="simple_interface_hint">%s が空です。 単純なインターフェースでは写真を表示したり、音を出したりはできません。</string>
-  <string name="delete_deck">Deleting deck&#8230;\nPlease wait.</string>
+  <string name="delete_deck">Deleting deck...\nPlease wait.</string>
   <string name="menu_cardbrowser">Card browser</string>
   <string name="show_hint">Show Hint</string>
   <string name="pref_lang_other">Language Preferences</string>
   <string name="pref_lang_common">LangCommon</string>
   <string name="pref_font_UI">Custom UI Font</string>
+  <string name="info_rate">Rate AnkiDroid</string>
   <string-array name="dynOrderLabels">
     <item>Oldest seen first</item>
     <item>Random</item>

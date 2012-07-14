@@ -45,7 +45,7 @@
   <string name="card_suspended">Картка знову призупинина</string>
   <string name="menu_rotate">Повернути</string>
   <string name="undo">Скасувати</string>
-  <string name="finish_operation">Finishing previous operation (most likely backup creation).\nPlease wait&#8230;</string>
+  <string name="finish_operation">Finishing previous operation (most likely backup creation).\nPlease wait...</string>
   <string name="contextmenu_deckpicker_download_missing_media">Завантажити відсутні медіа-файли</string>
   <string name="contextmenu_deckpicker_reset_language_assignments">Скинути мовні налаштування</string>
   <string name="contextmenu_deckpicker_reset_reset_message">Скинути мову</string>
@@ -61,7 +61,7 @@
   <string name="menu_preferences">Налаштування</string>
   <string name="menu_zeemote">Zeemote</string>
   <string name="menu_about">Про програму</string>
-  <string name="menu_dismiss_note">Відхилити примітку&#8230;</string>
+  <string name="menu_dismiss_note">Відхилити примітку...</string>
   <string name="menu_bury_note">Приховати замітку</string>
   <string name="menu_suspend_card">Відкласти картку</string>
   <string name="menu_suspend_note">Призупинити замітку</string>
@@ -83,12 +83,12 @@
   <string name="visit">Visit</string>
   <string name="later">Пізніше</string>
   <string name="download">Завантажити</string>
-  <string name="open_collection">Відкриття колекції.\nЗачекайте будь ласка&#8230;</string>
-  <string name="create_collection">Створення колекції.\nЗачекайте будь ласка&#8230;</string>
-  <string name="rebuild_cram_deck">Rebuilding cram deck.\nPlease wait&#8230;</string>
+  <string name="open_collection">Відкриття колекції.\nЗачекайте будь ласка...</string>
+  <string name="create_collection">Створення колекції.\nЗачекайте будь ласка...</string>
+  <string name="rebuild_cram_deck">Rebuilding cram deck.\nPlease wait...</string>
   <string name="rebuild_cram_label">Rebuild</string>
   <string name="empty_cram_label">Empty</string>
-  <string name="empty_cram_deck">Emptying cram deck.\nPlease wait&#8230;</string>
+  <string name="empty_cram_deck">Emptying cram deck.\nPlease wait...</string>
   <string name="studyoptions_congrats_finished">Вітаємо! На зараз усе.</string>
   <string name="studyoptions_congrats_more_rev">Ви вічерпали ліміт на сьогодні, але досі є картки, які треба переглянути. Для оптимального запам\'ятовування рекомендуємо збільшити щоденнній лиміт у налаштуваннях.</string>
   <string name="studyoptions_congrats_more_new">Ще є картки, але Ви вичерпали сьогоднішній ліміт. Ви можете збільшити ліміт в налаштуваннях, але пам\'ятайте, що чим більше нових карток Ви додаєте, тим більше карток доведеться повторювати у найближчі дні.</string>

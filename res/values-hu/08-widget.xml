@@ -28,7 +28,7 @@
   <string name="widget_minimum_cards_due_notification_ticker_title">Esedékes kártyák</string>
   <string name="widget_minimum_cards_due_notification_ticker_text">%d darab AnkiDroid kártya esedékes</string>
   <string name="widget_no_cards_due">Nincs esedékes kártya</string>
-  <string name="widget_loading">Widget betöltése&#8230;</string>
+  <string name="widget_loading">Widget betöltése...</string>
   <string name="widget_medium">AnkiDroid közepes</string>
   <string name="widget_small">AnkiDroid kicsi</string>
   <string name="widget_big">AnkiDroid nagy</string>

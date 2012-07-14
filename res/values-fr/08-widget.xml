@@ -28,7 +28,7 @@
   <string name="widget_minimum_cards_due_notification_ticker_title">Cartes à faire</string>
   <string name="widget_minimum_cards_due_notification_ticker_text">%d cartes AnkiDroid à faire</string>
   <string name="widget_no_cards_due">Pas de cartes dûes</string>
-  <string name="widget_loading">Chargement du widget&#8230;</string>
+  <string name="widget_loading">Chargement du widget...</string>
   <string name="widget_medium">AnkiDroid moyen</string>
   <string name="widget_small">AnkiDroid petit</string>
   <string name="widget_big">AnkiDroid Grand</string>
