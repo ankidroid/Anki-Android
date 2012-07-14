@@ -961,12 +961,16 @@ public class DeckPicker extends FragmentActivity {
     		showDialog(DIALOG_SD_CARD_NOT_MOUNTED);
     		return false;
     	}
+    	File dir = new File(AnkiDroidApp.getDefaultAnkiDroidDirectory());
+        if (!dir.isDirectory()) {
+        	dir.mkdirs();
+        }
         if ((new File(AnkiDroidApp.getCollectionPath())).exists()) {
             // collection file exists
             return false;
         }
         // else check for old files to upgrade
-        if ((new File(AnkiDroidApp.getDefaultAnkiDroidDirectory())).listFiles(new OldAnkiDeckFilter()).length > 0) {
+        if (dir.listFiles(new OldAnkiDeckFilter()).length > 0) {
             return true;
         }
         return false;
