@@ -12,7 +12,8 @@ public class ActivityTransitionAnimation {
     public static int FADE = 2;
     public static int UP = 3;
     public static int DOWN = 4;
-    public static int NONE = 5;
+    public static int DIALOG_EXIT = 5;
+    public static int NONE = 6;
 
 
     @TargetApi(5)
@@ -27,6 +28,8 @@ public class ActivityTransitionAnimation {
             activity.overridePendingTransition(R.anim.slide_up_in, R.anim.slide_up_out);
         } else if (direction == DOWN) {
             activity.overridePendingTransition(R.anim.slide_down_in, R.anim.slide_down_out);
+        } else if (direction == DIALOG_EXIT) {
+            activity.overridePendingTransition(R.anim.none, R.anim.dialog_exit);
         } else if (direction == NONE) {
             activity.overridePendingTransition(R.anim.none, R.anim.none);
         }

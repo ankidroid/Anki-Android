@@ -1729,7 +1729,7 @@ public class DeckPicker extends FragmentActivity {
             Log.i(AnkiDroidApp.TAG, "DeckPicker - onBackPressed()");
             finish();
             if (UIUtils.getApiLevel() > 4) {
-                ActivityTransitionAnimation.slide(this, ActivityTransitionAnimation.NONE);
+                ActivityTransitionAnimation.slide(this, ActivityTransitionAnimation.DIALOG_EXIT);
             }
             return true;
         }
