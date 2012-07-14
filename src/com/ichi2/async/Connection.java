@@ -341,6 +341,11 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
         publishProgress(new Object[] { R.string.upgrade_decks_upload });
         try {
             HttpResponse resp = h.req("upgrade/upload", new FileInputStream(zipFile), 0, false);
+            if (resp == null) {
+                data.success = false;
+                data.data = new Object[] { "error when uploading" };
+                return data;
+            }
             String result = h.stream2String(resp.getEntity().getContent());
             String key;
             if (result.startsWith("ok:")) {
