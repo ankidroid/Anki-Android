@@ -2133,6 +2133,7 @@ public class DeckPicker extends FragmentActivity {
                 AnkiDroidApp.setLanguage(newLanguage);
                 mInvalidateMenu = true;
             }
+            restorePreferences();
             // if (resultCode == StudyOptions.RESULT_RESTART) {
             // setResult(StudyOptions.RESULT_RESTART);
             // finish();
