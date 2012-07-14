@@ -566,6 +566,11 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
             String ret;
             try {
                 ret = mediaClient.sync(mediaUsn, this);
+                if (ret == null) {
+                    data.success = false;
+                    data.result = new Object[] { "genericError" };
+                    return data;
+                }
            } catch (RuntimeException e) {
     			AnkiDroidApp.saveExceptionReportFile(e, "doInBackgroundSync-mediaSync");
                 data.success = false;
