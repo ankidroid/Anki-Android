@@ -121,5 +121,6 @@
 <string name="pref_lang_other">Language Preferences</string>
 <string name="pref_lang_common">LangCommon</string>
 <string name="pref_font_UI">Custom UI Font</string>
+<string name="info_rate">Rate AnkiDroid</string>
 
 </resources>

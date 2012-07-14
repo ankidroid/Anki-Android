@@ -1917,12 +1917,12 @@ public class DeckPicker extends FragmentActivity {
         item = menu.add(Menu.NONE, MENU_MY_ACCOUNT, Menu.NONE, R.string.menu_my_account);
         item.setIcon(R.drawable.ic_menu_home);
         UIUtils.addMenuItem(menu, Menu.NONE, CHECK_DATABASE, Menu.NONE, R.string.check_db, R.drawable.ic_menu_search);
+        item = menu.add(Menu.NONE, StudyOptionsActivity.MENU_ROTATE, Menu.NONE, R.string.menu_rotate);
+        item.setIcon(R.drawable.ic_menu_always_landscape_portrait);
         item = menu.add(Menu.NONE, MENU_FEEDBACK, Menu.NONE, R.string.studyoptions_feedback);
         item.setIcon(R.drawable.ic_menu_send);
         item = menu.add(Menu.NONE, MENU_ABOUT, Menu.NONE, R.string.menu_about);
         item.setIcon(R.drawable.ic_menu_info_details);
-        item = menu.add(Menu.NONE, StudyOptionsActivity.MENU_ROTATE, Menu.NONE, R.string.menu_rotate);
-        item.setIcon(R.drawable.ic_menu_always_landscape_portrait);
 
         return true;
     }
