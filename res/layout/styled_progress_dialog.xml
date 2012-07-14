@@ -90,6 +90,7 @@
             android:layout_marginRight="12dip" />
 
         <TextView android:id="@+id/message"
+            android:paddingRight="20dip"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical" />
