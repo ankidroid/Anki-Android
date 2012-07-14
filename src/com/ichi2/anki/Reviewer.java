@@ -1622,14 +1622,16 @@ public class Reviewer extends AnkiActivity {
 
 
     private void undo() {
-        setNextCardAnimation(true);
-        if (mProgressDialog != null && mProgressDialog.isShowing()) {
-            mProgressDialog.setMessage(getResources().getString(R.string.saving_changes));
-        } else {
-            mProgressDialog = StyledProgressDialog.show(Reviewer.this, "",
-                    getResources().getString(R.string.saving_changes), true);
-        }
-        DeckTask.launchDeckTask(DeckTask.TASK_TYPE_UNDO, mAnswerCardHandler, new DeckTask.TaskData(mSched));
+    	if (mSched.getCol().undoAvailable()) {
+            setNextCardAnimation(true);
+            if (mProgressDialog != null && mProgressDialog.isShowing()) {
+                mProgressDialog.setMessage(getResources().getString(R.string.saving_changes));
+            } else {
+                mProgressDialog = StyledProgressDialog.show(Reviewer.this, "",
+                        getResources().getString(R.string.saving_changes), true);
+            }
+            DeckTask.launchDeckTask(DeckTask.TASK_TYPE_UNDO, mAnswerCardHandler, new DeckTask.TaskData(mSched));    		
+    	}
     }
 
 

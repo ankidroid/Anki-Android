@@ -1244,9 +1244,6 @@ public class Collection {
 
 
     public long undo() {
-    	if (mUndo.size() == 0) {
-    		return 0;
-    	}
     	Object[] data = mUndo.removeLast();
     	switch ((Integer)data[0]) {
     	case UNDO_REVIEW:
