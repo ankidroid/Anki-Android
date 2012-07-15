@@ -207,7 +207,7 @@ public class CardBrowser extends Activity {
     				Card tempCard = mCol.getCard(Long.parseLong(mCards.get(mPositionInCardsList).get("id")));
     				Themes.htmlOkDialog(CardBrowser.this, 
     						getResources().getString(R.string.card_browser_card_details), 
-    						tempCard.getCardDetails(CardBrowser.this) ).show();
+    						tempCard.getCardDetails(CardBrowser.this)).show();
                     return;
             }
         }
@@ -589,42 +589,6 @@ public class CardBrowser extends Activity {
                 });
                 dialog = builder.create();
                 break;
-//		case DIALOG_RELOAD_CARDS:
-//			builder.setTitle(res.getString(R.string.pref_cache_cardbrowser));
-//			builder.setMessage(res.getString(R.string.pref_cache_cardbrowser_reload));
-//			builder.setPositiveButton(res.getString(R.string.yes), new OnClickListener() {
-//
-//				@Override
-//				public void onClick(DialogInterface arg0, int arg1) {
-//					DeckTask.launchDeckTask(DeckTask.TASK_TYPE_LOAD_CARDS,
-//							mLoadCardsHandler,
-//							new DeckTask.TaskData(mDeck, LOAD_CHUNK));	
-//					}
-//				
-//			});
-//			builder.setNegativeButton(res.getString(R.string.no), new OnClickListener() {
-//
-//				@Override
-//				public void onClick(DialogInterface arg0, int arg1) {
-//					mAllCards.addAll(sAllCardsCache);
-//					mCards.addAll(mAllCards);
-//					updateList();
-//				}
-//				
-//			});
-//			builder.setCancelable(true);
-//			builder.setOnCancelListener(new OnCancelListener() {
-//
-//				@Override
-//				public void onCancel(DialogInterface arg0) {
-//					mAllCards.addAll(sAllCardsCache);
-//					mCards.addAll(mAllCards);
-//					updateList();
-//				}
-//				
-//			});
-//			dialog = builder.create();
-//			break;
 		case DIALOG_FIELD:
 			builder.setTitle(res
 					.getString(R.string.card_browser_field_title));
@@ -722,17 +686,9 @@ public class CardBrowser extends Activity {
 
 
     private void getCards() {
-        // if ((sCachedDeckPath != null && !sCachedDeckPath.equals(mDeck.getDeckPath())) || !mPrefCacheCardBrowser) {
-        // sCachedDeckPath = null;
-        // sAllCardsCache = null;
-        // }
-        // if (mPrefCacheCardBrowser && sAllCardsCache != null && !sAllCardsCache.isEmpty()) {
-        // showDialog(DIALOG_RELOAD_CARDS);
-        // } else {
         mAllCards.clear();
         DeckTask.launchDeckTask(DeckTask.TASK_TYPE_LOAD_CARDS, mLoadCardsHandler, new DeckTask.TaskData(mCol, 0,
                 mWholeCollection));
-        // }
     }
 
 
