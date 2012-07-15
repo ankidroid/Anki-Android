@@ -215,7 +215,7 @@ public class Reviewer extends AnkiActivity {
     private boolean mShakeEnabled = false;
     private int mShakeIntensity;
     private boolean mShakeActionStarted = false;
-    private boolean mPrefFixHebrew; // Apply manual RTL for hebrew text - bug in Android WebView
+    private boolean mPrefFixHebrew;
     private boolean mPrefFixArabic;
     // Android WebView
     private boolean mSpeakText;
@@ -227,6 +227,7 @@ public class Reviewer extends AnkiActivity {
     private boolean mNightMode = false;
     private boolean mIsLastCard = false;
     private boolean mShowProgressBars;
+    private boolean mPrefFadeScrollbars;
     private boolean mPrefUseTimer;
     private boolean mShowAnimations = false;
     private boolean mSimpleInterface = false;
@@ -393,7 +394,6 @@ public class Reviewer extends AnkiActivity {
 
     private int mFadeDuration = 300;
 
-    private Method mSetScrollbarBarFading = null;
     private Method mSetTextIsSelectable = null;
 
     private Sched mSched;
@@ -1941,21 +1941,16 @@ public class Reviewer extends AnkiActivity {
         webView.getSettings().setJavaScriptEnabled(true);
         webView.setWebChromeClient(new AnkiDroidWebChromeClient());
         webView.addJavascriptInterface(new JavaScriptInterface(this), "ankidroid");
-        if (AnkiDroidApp.isFroyoOrLater()) {
+        if (UIUtils.getApiLevel() > 7) {
             webView.setFocusableInTouchMode(false);
         }
-        Log.i(AnkiDroidApp.TAG,
-                "Focusable = " + webView.isFocusable() + ", Focusable in touch mode = "
-                        + webView.isFocusableInTouchMode());
-        if (mSetScrollbarBarFading != null) {
-            try {
-                mSetScrollbarBarFading.invoke(webView, false);
-            } catch (Throwable e) {
-                Log.i(AnkiDroidApp.TAG,
-                        "setScrollbarFadingEnabled could not be set due to a too low Android version (< 2.1)");
-                mSetScrollbarBarFading = null;
-            }
-        }
+        if (UIUtils.getApiLevel() > 4) {
+           webView.setScrollbarFadingEnabled(mPrefFadeScrollbars);
+       }
+        Log.i(AnkiDroidApp.TAG, String.format(Locale.US, "Focusable = %s, Focusable in touch mode = %s",
+                webView.isFocusable(), webView.isFocusableInTouchMode()));
+        Log.i(AnkiDroidApp.TAG, "Fade scrollbars: " + webView.isScrollbarFadingEnabled());
+
         return webView;
     }
 
@@ -2156,6 +2151,7 @@ public class Reviewer extends AnkiActivity {
         mSpeakText = preferences.getBoolean("tts", false);
         mPlaySoundsAtStart = preferences.getBoolean("playSoundsAtStart", true);
         mShowProgressBars = preferences.getBoolean("progressBars", true);
+        mPrefFadeScrollbars = preferences.getBoolean("fadeScrollbars", false);
         mPrefUseTimer = preferences.getBoolean("timeoutAnswer", false);
         mWaitAnswerSecond = preferences.getInt("timeoutAnswerSeconds", 20);
         mWaitQuestionSecond = preferences.getInt("timeoutQuestionSeconds", 60);
@@ -3155,13 +3151,6 @@ public class Reviewer extends AnkiActivity {
                     || android.os.Build.MODEL.toLowerCase().indexOf(s) != -1) {
                 return true;
             }
-        }
-        try {
-            // this must not be executed on nook (causes fc)
-            mSetScrollbarBarFading = WebView.class.getMethod("setScrollbarFadingEnabled", boolean.class);
-        } catch (Throwable e) {
-            Log.i(AnkiDroidApp.TAG,
-                    "setScrollbarFadingEnabled could not be found due to a too low Android version (< 2.1)");
         }
         if (mCustomFontFiles.size() != 0) {
             return true;
