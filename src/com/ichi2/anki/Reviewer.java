@@ -3320,8 +3320,8 @@ public class Reviewer extends AnkiActivity {
         // The available width of the webview equals to the container's width, minus the container's padding
         // divided by the default scale factor used by the WebView, and minus the WebView's padding
         if (mCard != null && mCardFrame != null) {
-            return (int) ((mCardFrame.getWidth() - mCardFrame.getPaddingLeft() - mCardFrame.getPaddingRight()) /
-                    mCard.getScale()) - mCard.getPaddingLeft() - mCard.getPaddingRight();
+            return Math.round((mCardFrame.getWidth() - mCardFrame.getPaddingLeft() - mCardFrame.getPaddingRight()
+                    - mCard.getPaddingLeft() - mCard.getPaddingRight()) / mCard.getScale());
         }
         return 0;
     }
