@@ -92,9 +92,6 @@ public class CardBrowser extends Activity {
     private int mOrder;
 	private int mField;
 
-    /** Modifier of percentage of the font size of the card browser */
-    private int mrelativeBrowserFontSize = DEFAULT_FONT_SIZE_RATIO;
-
     private static final int CONTEXT_MENU_MARK = 0;
     private static final int CONTEXT_MENU_SUSPEND = 1;
     private static final int CONTEXT_MENU_DELETE = 2;
@@ -240,7 +237,8 @@ public class CardBrowser extends Activity {
         mBackground = Themes.getCardBrowserBackground();
 
         SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(getBaseContext());
-        mrelativeBrowserFontSize = preferences.getInt("relativeCardBrowserFontSize", DEFAULT_FONT_SIZE_RATIO);
+        int sflRelativeFontSize = preferences.getInt("relativeCardBrowserFontSize", DEFAULT_FONT_SIZE_RATIO);
+        String sflCustomFont = preferences.getString("browserEditorFont", "");
         mPrefFixArabic = preferences.getBoolean("fixArabicText", false);
         mPrefCacheCardBrowser = preferences.getBoolean("cardBrowserCache", false);
         mOrder = preferences.getInt("cardBrowserOrder", CARD_ORDER_NONE);
@@ -251,7 +249,7 @@ public class CardBrowser extends Activity {
 
         mCardsAdapter = new SizeControlledListAdapter(this, mCards, R.layout.card_item, new String[] { "sfld", "tmpl",
                 "deck", "flags" }, new int[] { R.id.card_sfld, R.id.card_tmpl, R.id.card_deck, R.id.card_item },
-                mrelativeBrowserFontSize);
+                sflRelativeFontSize, sflCustomFont);
         mCardsAdapter.setViewBinder(new SimpleAdapter.ViewBinder() {
             @Override
             public boolean setViewValue(View view, Object arg1, String text) {
@@ -1144,16 +1142,12 @@ public class CardBrowser extends Activity {
 
         private int fontSizeScalePcent;
         private float originalTextSize = -1.0f;
-        private Typeface mCustomTypeface;
+        private Typeface mCustomTypeface = null;
 
         public SizeControlledListAdapter(Context context, List<? extends Map<String, ?>> data, int resource,
-                String[] from, int[] to, int fontSizeScalePcent) {
+                String[] from, int[] to, int fontSizeScalePcent, String customFont) {
             super(context, data, resource, from, to);
             this.fontSizeScalePcent = fontSizeScalePcent;
-
-            // Use custom font if selected from preferences
-            SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(getBaseContext());
-            String customFont = preferences.getString("browserEditorFont", "");
             if (!customFont.equals("")) {
                 mCustomTypeface = AnkiFont.getTypeface(context, customFont);
             }
@@ -1169,17 +1163,14 @@ public class CardBrowser extends Activity {
                 View child;
                 for (int i = 0; i < group.getChildCount(); i++) {
                     child = group.getChildAt(i);
-                    // and set text size on all TextViews found
-                    if (child instanceof TextView) {
-                        // mBrowserFontSize
+                    // and set text size and custom font on the sfld view only
+                    if (child instanceof TextView && child.getId() == R.id.card_sfld) {
                         float currentSize = ((TextView) child).getTextSize();
                         if (originalTextSize < 0) {
                             originalTextSize = ((TextView) child).getTextSize();
                         }
-                        // do nothing when pref is 100% and apply scaling only
-                        // once
-                        if ((fontSizeScalePcent < 99 || fontSizeScalePcent > 101)
-                                && (Math.abs(originalTextSize - currentSize) < 0.1)) {
+                        // do nothing when pref is 100% and apply scaling only once
+                        if (fontSizeScalePcent != 100 && Math.abs(originalTextSize - currentSize) < 0.1) {
                             ((TextView) child).setTextSize(TypedValue.COMPLEX_UNIT_SP, originalTextSize
                                     * (fontSizeScalePcent / 100.0f));
                         }
@@ -1187,13 +1178,9 @@ public class CardBrowser extends Activity {
                         if (mCustomTypeface != null) {
                             ((TextView) child).setTypeface(mCustomTypeface);
                         }
-
                     }
-
                 }
-
             }
-
             return view;
         }
     }
