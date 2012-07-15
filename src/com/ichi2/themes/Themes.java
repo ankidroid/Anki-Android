@@ -31,6 +31,7 @@ import android.graphics.Color;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewGroup.MarginLayoutParams;
@@ -699,6 +700,7 @@ public class Themes {
             FrameLayout.LayoutParams llp = new FrameLayout.LayoutParams(width, height);
             llp.setMargins((int) (dipLeft * factor), (int) (dipTop * factor), (int) (dipRight * factor),
                     (int) (dipBottom * factor));
+            llp.gravity = Gravity.CENTER_HORIZONTAL;
             view.setLayoutParams(llp);
         } else if (c == RelativeLayout.class) {
             RelativeLayout.LayoutParams llp = new RelativeLayout.LayoutParams(width, height);
