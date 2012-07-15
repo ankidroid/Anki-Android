@@ -295,8 +295,12 @@ public class Info extends Activity {
         @Override
         public void onPostExecute(Payload data) {
             Log.i(AnkiDroidApp.TAG, "Info: UpgradeDecks - onPostExecute, succes = " + data.success);
-            if (mProgressDialog != null) {
-                mProgressDialog.dismiss();
+            try {
+                if (mProgressDialog != null && mProgressDialog.isShowing()) {
+                    mProgressDialog.dismiss();
+                }            	
+            } catch (IllegalArgumentException e) {
+            	Log.e(AnkiDroidApp.TAG, "Info - IllegalArgumentException: " + e);
             }
 
             if (data.success) {
