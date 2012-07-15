@@ -802,11 +802,16 @@ public class CardBrowser extends Activity {
     }
 
 
-    private void updateCardInList(Card card) {
+    private void updateCardInList(Card card, String updatedCardTags) {
         Note note = card.note();
         for (Card c : note.cards()) {
             int aPos = getPosition(mAllCards, c.getId());
             int pos = getPosition(mCards, c.getId());
+
+            if (updatedCardTags != null) {
+                mAllCards.get(aPos).put("tags", updatedCardTags);
+                mCards.get(pos).put("tags", updatedCardTags);
+            }
 
             String sfld = note.getSFld();
             mAllCards.get(aPos).put("sfld", sfld);
@@ -969,7 +974,7 @@ public class CardBrowser extends Activity {
 
         @Override
         public void onProgressUpdate(DeckTask.TaskData... values) {
-            updateCardInList(values[0].getCard());
+            updateCardInList(values[0].getCard(), values[0].getString());
         }
 
 
@@ -1000,7 +1005,7 @@ public class CardBrowser extends Activity {
         @Override
         public void onPostExecute(DeckTask.TaskData result) {
             if (result.getBoolean()) {
-                updateCardInList(mCol.getCard(Long.parseLong(mCards.get(mPositionInCardsList).get("id"))));
+                updateCardInList(mCol.getCard(Long.parseLong(mCards.get(mPositionInCardsList).get("id"))), null);
             } else {
                 closeCardBrowser(DeckPicker.RESULT_DB_ERROR);
             }
