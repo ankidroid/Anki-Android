@@ -271,4 +271,6 @@
   <string name="deck_conf_cram_reschedule_summ">Reprogramar tarjetas en base a mis respuestas en este mazo</string>
   <string name="deck_conf_cram_steps">Pasos personalizados</string>
   <string name="deck_conf_cram_steps_summ">Definir pasos personalizados</string>
+  <string name="pref_show_splashscreen">Splash screen</string>
+  <string name="pref_show_splashscreen_summ">Show splash screen</string>
 </resources>

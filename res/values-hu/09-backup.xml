@@ -29,9 +29,9 @@
   <string name="contextmenu_deckpicker_remove_backups">Biztonsási másolatok eltávolítása</string>
   <string name="backup_restore">Visszaállítás biztonsági másolatból</string>
   <string name="backup_new_collection">Új gyűjtemény</string>
-  <string name="backup_del_collection">Delete collection and create new one</string>
+  <string name="backup_del_collection">Törölje a gyűjteményt, és hozzon létre egy újat</string>
   <string name="backup_del_collection_question">Do you really want to delete the collection and create a new one? This will drop all your learning progress and delete all cards!</string>
-  <string name="backup_full_sync_from_server">Full sync from server</string>
+  <string name="backup_full_sync_from_server">Teljes szinkronizáció a szerverről</string>
   <string name="backup_full_sync_from_server_question">Do you really want to overwrite your collection with the one from AnkiWeb? This will drop all your learning progress and added information since your last sync!</string>
   <string name="error_handling_title">Hibakezelés</string>
   <string name="error_handling_options">Beállítások</string>
@@ -39,12 +39,12 @@
   <string name="backup_error_menu_repair">Adatbázis javítása</string>
   <string name="backup_repair_deck">Javítás</string>
   <string name="backup_repair_deck_progress">Adatbázis javítása.\nKérlek, várj...</string>
-  <string name="backup_restore_error">Collection could not be restored</string>
+  <string name="backup_restore_error">Gyűjtemény nem javítható</string>
   <string name="backup_restore_if_missing">Gyűjtemény visszaállítása, ha hiányzik...</string>
-  <string name="backup_restore_deck">Restoring collection.\nPlease wait...</string>
+  <string name="backup_restore_deck">Gyűjtemény javítása. \nKérlek várj...</string>
   <string name="backup_restore_select_title">Válaszd ki a visszaállítandó biztonsági másolatot</string>
-  <string name="backup_restore_no_backups">No backups for this collection available on this device. If you have backups on your desktop computer, please copy them manually into your AnkiDroid folder</string>
+  <string name="backup_restore_no_backups">Az AnkiDroid nem találja a pakli biztonsági másolatát. Ha van biztonsági mentés a számítógépeden, kérlek másold be az AnkiDroid mappádba kézzel</string>
   <string name="open_collection_failed_title">A gyűjtemény nincs megnyitva</string>
   <string name="open_collection_failed_message">Az adatbázist nem lehet megnyitni, mert vagy nem anki adatbázis, vagy sérült.\n\nMegpróbálhatod kijavítani a gyűjteményt, vagy biztonsági mentésből visszaállítani(mindkét esetben biztonsági másolat készül a sérült pakliról a \'%1$s\' almappában). Kattints a \'Beállítások\'-ra.\n\nTöbb információ a sérült paklik kijavításáról itt: %2$s.</string>
-  <string name="deck_repair_error">Collection could not be repaired</string>
+  <string name="deck_repair_error">Gyűjtemény nem javítható</string>
 </resources>

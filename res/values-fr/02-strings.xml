@@ -44,7 +44,7 @@
   <string name="cardeditor_title_add_note">Ajout de note</string>
   <string name="cardeditor_title_edit_card">Modifier la note</string>
   <string name="factadder_saving_error">La note ne peut être enregistrée</string>
-  <string name="pref_lang_support">Language</string>
+  <string name="pref_lang_support">Langue</string>
   <string name="saving_facts">Enregistrer la note</string>
   <string name="deck">Paquet</string>
   <string name="add">Ajouter</string>
@@ -77,11 +77,11 @@
   <string name="simple_interface_hint">%s vide. Ni le son ni l’image ne peut être reproduit dans l’interface simplifiée.</string>
   <string name="delete_deck">Suppression du paquet…\nPatience.</string>
   <string name="menu_cardbrowser">Examiner les cartes</string>
-  <string name="show_hint">Show Hint</string>
+  <string name="show_hint">Afficher l\'astuce</string>
   <string name="pref_lang_other">Préférences linguistiques</string>
   <string name="pref_lang_common">LangCommon</string>
   <string name="pref_font_UI">Police pour l’interface utilisateur</string>
-  <string name="info_rate">Rate AnkiDroid</string>
+  <string name="info_rate">Noter AnkiDroid</string>
   <string-array name="dynOrderLabels">
     <item>Des plus au moins anciennes</item>
     <item>Aléatoirement</item>
