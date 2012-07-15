@@ -442,16 +442,23 @@ public class DeckPicker extends FragmentActivity {
                         mDialogMessage = res.getString(R.string.sync_log_error_fix, result[1] != null ? (" (" + (String) result[1] + ")") : "");
                         showDialog(DIALOG_SYNC_ERROR);
                     } else {
-                        int type = (Integer) result[1];
-                        switch (type) {
-                            case 503:
-                                mDialogMessage = res.getString(R.string.sync_too_busy);
-                                break;
-                            default:
-                                mDialogMessage = res.getString(R.string.sync_log_error_specific,
-                                        Integer.toString(type), (String) result[2]);
-                                break;
-                        }
+                    	if (result.length > 1 && result[1] instanceof Integer) {
+                            int type = (Integer) result[1];
+                            switch (type) {
+                                case 503:
+                                    mDialogMessage = res.getString(R.string.sync_too_busy);
+                                    break;
+                                default:
+                                    mDialogMessage = res.getString(R.string.sync_log_error_specific,
+                                            Integer.toString(type), (String) result[2]);
+                                    break;
+                            }                    		
+                    	} else if (result[0] instanceof String) {
+                            mDialogMessage = res.getString(R.string.sync_log_error_specific,
+                                    -1, (String) result[0]);                    		
+                    	} else {
+                            mDialogMessage = res.getString(R.string.sync_generic_error);
+                    	}
                         showDialog(DIALOG_SYNC_LOG);
                     }
                     if (data.data != null && data.data.length >= 1 && data.data[0] instanceof Collection) {
@@ -954,12 +961,16 @@ public class DeckPicker extends FragmentActivity {
     		showDialog(DIALOG_SD_CARD_NOT_MOUNTED);
     		return false;
     	}
+    	File dir = new File(AnkiDroidApp.getDefaultAnkiDroidDirectory());
+        if (!dir.isDirectory()) {
+        	dir.mkdirs();
+        }
         if ((new File(AnkiDroidApp.getCollectionPath())).exists()) {
             // collection file exists
             return false;
         }
         // else check for old files to upgrade
-        if ((new File(AnkiDroidApp.getDefaultAnkiDroidDirectory())).listFiles(new OldAnkiDeckFilter()).length > 0) {
+        if (dir.listFiles(new OldAnkiDeckFilter()).length > 0) {
             return true;
         }
         return false;
@@ -1397,7 +1408,7 @@ public class DeckPicker extends FragmentActivity {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         DeckTask.launchDeckTask(DeckTask.TASK_TYPE_REPAIR_DECK, mRepairDeckHandler,
-                                new DeckTask.TaskData(mCol, mCol.getPath()));
+                                new DeckTask.TaskData(mCol, AnkiDroidApp.getCollectionPath()));
                     }
             	});
                 builder.setNegativeButton(res.getString(R.string.no), new DialogInterface.OnClickListener() {
@@ -1718,7 +1729,7 @@ public class DeckPicker extends FragmentActivity {
             Log.i(AnkiDroidApp.TAG, "DeckPicker - onBackPressed()");
             finish();
             if (UIUtils.getApiLevel() > 4) {
-                ActivityTransitionAnimation.slide(this, ActivityTransitionAnimation.NONE);
+                ActivityTransitionAnimation.slide(this, ActivityTransitionAnimation.DIALOG_EXIT);
             }
             return true;
         }
@@ -1906,12 +1917,12 @@ public class DeckPicker extends FragmentActivity {
         item = menu.add(Menu.NONE, MENU_MY_ACCOUNT, Menu.NONE, R.string.menu_my_account);
         item.setIcon(R.drawable.ic_menu_home);
         UIUtils.addMenuItem(menu, Menu.NONE, CHECK_DATABASE, Menu.NONE, R.string.check_db, R.drawable.ic_menu_search);
+        item = menu.add(Menu.NONE, StudyOptionsActivity.MENU_ROTATE, Menu.NONE, R.string.menu_rotate);
+        item.setIcon(R.drawable.ic_menu_always_landscape_portrait);
         item = menu.add(Menu.NONE, MENU_FEEDBACK, Menu.NONE, R.string.studyoptions_feedback);
         item.setIcon(R.drawable.ic_menu_send);
         item = menu.add(Menu.NONE, MENU_ABOUT, Menu.NONE, R.string.menu_about);
         item.setIcon(R.drawable.ic_menu_info_details);
-        item = menu.add(Menu.NONE, StudyOptionsActivity.MENU_ROTATE, Menu.NONE, R.string.menu_rotate);
-        item.setIcon(R.drawable.ic_menu_always_landscape_portrait);
 
         return true;
     }
@@ -2126,6 +2137,7 @@ public class DeckPicker extends FragmentActivity {
                 AnkiDroidApp.setLanguage(newLanguage);
                 mInvalidateMenu = true;
             }
+            restorePreferences();
             // if (resultCode == StudyOptions.RESULT_RESTART) {
             // setResult(StudyOptions.RESULT_RESTART);
             // finish();

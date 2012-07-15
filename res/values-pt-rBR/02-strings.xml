@@ -23,7 +23,7 @@
   <string name="CardEditorCancelButton">Cancelar</string>
   <string name="CardEditorSaveButton">Salvar</string>
   <string name="CardEditorLaterButton">Mais Tarde</string>
-  <string name="CardEditorLaterMessage">Saved information for later</string>
+  <string name="CardEditorLaterMessage">Informação salva para mais tarde</string>
   <string name="CardEditorCardDeck">Deck de Cartões: %s</string>
   <string name="CardEditorNoteDeck">Deck de Notas: %s</string>
   <string name="CardEditorModel">Tipo de Nota: %s</string>
@@ -44,13 +44,13 @@
   <string name="cardeditor_title_add_note">Adicionar nota</string>
   <string name="cardeditor_title_edit_card">Editar nota</string>
   <string name="factadder_saving_error">Erro ao salvar nota</string>
-  <string name="pref_lang_support">Language</string>
+  <string name="pref_lang_support">Idioma</string>
   <string name="saving_facts">Salvando nota</string>
   <string name="deck">Deck</string>
   <string name="add">Adicionar</string>
   <string name="close">Fechar</string>
   <string name="select">Selecione</string>
-  <string name="saving_changes">Salvando alterações&#8230;</string>
+  <string name="saving_changes">Salvando alterações...</string>
   <string name="timebox_reached">TimeBox Alcançado!</string>
   <string name="studyoptions_welcome_title">Bem-vindo ao AnkiDroid</string>
   <string name="studyoptions_no_external_storage_title">Nenhum armazenamento externo disponível</string>
@@ -64,7 +64,7 @@
   <string name="card_editor_copy_card">Copiar cartão</string>
   <string name="card_editor_reset_card">Redefinir progresso</string>
   <string name="error_insufficient_memory">Operação impossível devido a memória insuficiente no dispositivo</string>
-  <string name="tutorial_load">Criando deck tutorial. \nPor favor aguarde&#8230;</string>
+  <string name="tutorial_load">Criando deck tutorial. \nPor favor aguarde...</string>
   <string name="tutorial_loading_error">Deck tutorial não pôde ser criado</string>
   <string name="rename">Renomear</string>
   <string name="rename_error">Deck %s não pôde ser renomeado</string>
@@ -73,14 +73,15 @@
   <string name="help_faq">FAQ</string>
   <string name="help_tutorial">Deck Tutorial</string>
   <string name="check_db">Verificar banco de dados</string>
-  <string name="check_db_message">Verificando banco de dados.\nEspere um momento&#8230;</string>
+  <string name="check_db_message">Verificando banco de dados.\nEspere um momento...</string>
   <string name="simple_interface_hint">%s Vazio. Tenha em mente que nessa simples interface não é possível visualizar imagens/sons etc.</string>
-  <string name="delete_deck">Deletando deck&#8230;\nEspere um momento.</string>
+  <string name="delete_deck">Deletando deck...\nEspere um momento.</string>
   <string name="menu_cardbrowser">Navegador de cartões</string>
-  <string name="show_hint">Show Hint</string>
+  <string name="show_hint">Mostrar dica</string>
   <string name="pref_lang_other">Preferências de idioma</string>
   <string name="pref_lang_common">LingComum</string>
   <string name="pref_font_UI">Fonte de IU personalizada</string>
+  <string name="info_rate">Rate AnkiDroid</string>
   <string-array name="dynOrderLabels">
     <item>Mais antigos primeiro</item>
     <item>Aleatório</item>

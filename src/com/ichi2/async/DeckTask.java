@@ -392,9 +392,12 @@ public class DeckTask extends
 
 	private TaskData doInBackgroundOpenCollection(TaskData... params) {
 		Log.i(AnkiDroidApp.TAG, "doInBackgroundOpenCollection");
+		long time = Utils.intNow(1000);
 		Resources res = AnkiDroidApp.getInstance().getBaseContext()
 				.getResources();
 		String collectionFile = params[0].getString();
+
+		SharedPreferences prefs = AnkiDroidApp.getSharedPrefs(AnkiDroidApp.getInstance().getBaseContext());
 
 		// see, if a collection is still opened
 		Collection oldCol = Collection.currentCollection();
@@ -428,9 +431,6 @@ public class DeckTask extends
 				return new TaskData(false);
 			}
 			// create tutorial deck if needed
-			SharedPreferences prefs = AnkiDroidApp
-					.getSharedPrefs(AnkiDroidApp.getInstance()
-							.getBaseContext());
 			if (prefs.contains("createTutorial")
 					&& prefs.getBoolean("createTutorial", false)) {
 				prefs.edit().remove("createTutorial").commit();
@@ -447,6 +447,15 @@ public class DeckTask extends
 		DeckTask.TaskData result = doInBackgroundLoadDeckCounts(new TaskData(col));
 		if (result != null) {
 			counts = result.getObjArray();
+		}
+		if (prefs.getBoolean("splashScreen", false)) {
+			long millies = Utils.intNow(1000) - time;
+			if (millies < 1000) {
+				try {
+					Thread.sleep(1200 - millies);
+				} catch (InterruptedException e) {
+				}
+			}			
 		}
 		return new TaskData(col, counts);
 	}

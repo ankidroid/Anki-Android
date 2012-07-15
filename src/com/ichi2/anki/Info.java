@@ -30,6 +30,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences.Editor;
 import android.content.res.Resources;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -81,6 +82,10 @@ public class Info extends Activity {
         continueButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View arg0) {
+            	if (mType == TYPE_ABOUT) {
+            		Info.this.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=com.ichi2.anki")));
+            		return;
+            	}
                 setResult(RESULT_OK);
                 switch (mType) {
                     case TYPE_WELCOME:
@@ -125,6 +130,7 @@ public class Info extends Activity {
                                 res.getString(R.string.link_source))).append("<br/><br/>");
                 sb.append("</body></html>");
                 mWebView.loadDataWithBaseURL("", sb.toString(), "text/html", "utf-8", null);
+                ((Button) findViewById(R.id.info_continue)).setText(res.getString(R.string.info_rate));
                 break;
 
             case TYPE_WELCOME:

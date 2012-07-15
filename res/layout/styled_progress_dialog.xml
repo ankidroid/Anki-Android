@@ -80,16 +80,18 @@
    		    android:baselineAligned="false">
         
         <ProgressBar android:id="@android:id/progress"
-            style="?android:attr/progressBarStyle"
+            style="@style/White.Spinner"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:max="10000"
+            android:background="@color/transparent"
             android:layout_marginTop="10dip"
             android:layout_marginBottom="10dip"
             android:layout_marginLeft="8dip"
             android:layout_marginRight="12dip" />
 
         <TextView android:id="@+id/message"
+            android:paddingRight="20dip"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical" />

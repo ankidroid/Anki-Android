@@ -23,7 +23,7 @@
   <string name="CardEditorCancelButton">Annulla</string>
   <string name="CardEditorSaveButton">Salva</string>
   <string name="CardEditorLaterButton">In seguito</string>
-  <string name="CardEditorLaterMessage">Saved information for later</string>
+  <string name="CardEditorLaterMessage">Informazione salvata per più tardi</string>
   <string name="CardEditorCardDeck">Mazzo carte: %s</string>
   <string name="CardEditorNoteDeck">Mazzo nota: %s</string>
   <string name="CardEditorModel">Tipo nota: %s</string>
@@ -44,14 +44,14 @@
   <string name="cardeditor_title_add_note">Aggiungi nota</string>
   <string name="cardeditor_title_edit_card">Modifica nota</string>
   <string name="factadder_saving_error">Errore salvataggio nota</string>
-  <string name="pref_lang_support">Language</string>
+  <string name="pref_lang_support">Lingua</string>
   <string name="saving_facts">Salvataggio nota</string>
   <string name="deck">Mazzo</string>
   <string name="add">Aggiungi</string>
   <string name="close">Chiudi</string>
   <string name="select">Seleziona</string>
-  <string name="saving_changes">Salvataggio delle modifiche &#8230;</string>
-  <string name="timebox_reached">Timebox reached!</string>
+  <string name="saving_changes">Salvataggio delle modifiche ...</string>
+  <string name="timebox_reached">Limite di tempo raggiunto!</string>
   <string name="studyoptions_welcome_title">Benvenuto in AnkiDroid</string>
   <string name="studyoptions_no_external_storage_title">Nessuna scheda di archiviazione esterna disponibile</string>
   <string name="studyoptions_no_external_storage_message">La memoria esterna non è disponibile. AnkiDroid deve avere accesso alla scheda SD per leggere e caricare i mazzi. Controlla che la scheda SD sia correttamente al suo posto e prova ancora.</string>
@@ -64,7 +64,7 @@
   <string name="card_editor_copy_card">Copia carta</string>
   <string name="card_editor_reset_card">Reimposta progresso</string>
   <string name="error_insufficient_memory">Operazione non possibile a causa di memoria insufficiente sul tuo apparecchio</string>
-  <string name="tutorial_load">Creazione del mazzo d\'esercizio.\nAttendi&#8230;</string>
+  <string name="tutorial_load">Creazione del mazzo d\'esercizio.\nAttendi...</string>
   <string name="tutorial_loading_error">Il mazzo d\'esercizio non può essere creato</string>
   <string name="rename">Rinomina</string>
   <string name="rename_error">Mazzo %s potrebbe non essere rinominato</string>
@@ -73,14 +73,15 @@
   <string name="help_faq">FAQ</string>
   <string name="help_tutorial">Mazzo d\'esercizio</string>
   <string name="check_db">Controllo database</string>
-  <string name="check_db_message">Controllo database.\nAttendi&#8230;</string>
+  <string name="check_db_message">Controllo database.\nAttendi...</string>
   <string name="simple_interface_hint">Vuoto %s. Tieni presente che l\'interfaccia semplice non può mostrare immagini/suoni ecc.</string>
-  <string name="delete_deck">Eliminazione mazzo&#8230;\nAttendi.</string>
+  <string name="delete_deck">Eliminazione mazzo...\nAttendi.</string>
   <string name="menu_cardbrowser">Browser delle carte</string>
-  <string name="show_hint">Show Hint</string>
-  <string name="pref_lang_other">Language Preferences</string>
+  <string name="show_hint">Mostra suggerimento</string>
+  <string name="pref_lang_other">Preferenze lingua</string>
   <string name="pref_lang_common">LangCommon</string>
-  <string name="pref_font_UI">Custom UI Font</string>
+  <string name="pref_font_UI">Carattere interfaccia utente personalizzato</string>
+  <string name="info_rate">Rate AnkiDroid</string>
   <string-array name="dynOrderLabels">
     <item>Più vecchie visualizzate per prime</item>
     <item>Casuale</item>

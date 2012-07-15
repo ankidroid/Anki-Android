@@ -35,7 +35,7 @@
   <string name="statistics_new_cards">بطاقات جديدة</string>
   <string name="statistics_failed_cards">بطاقات فاشلة</string>
   <string name="statistics_fullscreen">تبديل ملء الشاشة</string>
-  <string name="calculating_statistics">حساب الإحصائيات.\nالرجاء الانتظار&#8230;</string>
+  <string name="calculating_statistics">حساب الإحصائيات.\nالرجاء الانتظار...</string>
   <string name="deck_summary_cards">عدد البطاقات:</string>
   <string name="deck_summary_notes">عدد الملاحظات:</string>
   <string name="deck_summary_cards_mature">البطاقات الناضجة:</string>

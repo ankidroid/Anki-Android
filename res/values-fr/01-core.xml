@@ -45,7 +45,7 @@
   <string name="card_suspended">Carte re-suspendue</string>
   <string name="menu_rotate">Changer d\'orientation</string>
   <string name="undo">Annuler</string>
-  <string name="finish_operation">Finishing previous operation (most likely backup creation).\nPlease wait&#8230;</string>
+  <string name="finish_operation">Finishing previous operation (most likely backup creation).\nPlease wait...</string>
   <string name="contextmenu_deckpicker_download_missing_media">Télécharger les médias manquants</string>
   <string name="contextmenu_deckpicker_reset_language_assignments">Réinitialiser les affectations de langue</string>
   <string name="contextmenu_deckpicker_reset_reset_message">Réinitialiser la langue</string>
@@ -88,7 +88,7 @@
   <string name="rebuild_cram_deck">Réparation du paquet bachoteur.\nPatience…</string>
   <string name="rebuild_cram_label">Réparer</string>
   <string name="empty_cram_label">Empty</string>
-  <string name="empty_cram_deck">Emptying cram deck.\nPlease wait&#8230;</string>
+  <string name="empty_cram_deck">Emptying cram deck.\nPlease wait...</string>
   <string name="studyoptions_congrats_finished">FÉLICITATIONS ! Vous avez terminé… pour l’instant !</string>
   <string name="studyoptions_congrats_more_rev">Vous avez atteint votre quota de révisions, mais il reste des cartes prévues pour aujourd’hui. Sauf à risquer l’oubli chronique, pensez à adapter le quota.</string>
   <string name="studyoptions_congrats_more_new">Vous avez atteint votre quota quotidien de cartes inédites alors qu’il en reste. Vous pouvez élargir le quota sachant que vous aurez d’autant plus de cartes à revoir à court terme.</string>

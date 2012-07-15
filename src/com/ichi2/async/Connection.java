@@ -341,6 +341,11 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
         publishProgress(new Object[] { R.string.upgrade_decks_upload });
         try {
             HttpResponse resp = h.req("upgrade/upload", new FileInputStream(zipFile), 0, false);
+            if (resp == null) {
+                data.success = false;
+                data.data = new Object[] { "error when uploading" };
+                return data;
+            }
             String result = h.stream2String(resp.getEntity().getContent());
             String key;
             if (result.startsWith("ok:")) {
@@ -542,7 +547,7 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
             } catch (RuntimeException e) {
     			AnkiDroidApp.saveExceptionReportFile(e, "doInBackgroundSync-fullSync");
                 data.success = false;
-                data.result = "IOException";
+                data.result = new Object[]{"IOException"};
                 data.data = new Object[] { mediaUsn };
                 return data;
             }
@@ -558,7 +563,21 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
         if (media) {
             server = new RemoteMediaServer(hkey, this);
             MediaSyncer mediaClient = new MediaSyncer(col, (RemoteMediaServer) server);
-            String ret = mediaClient.sync(mediaUsn, this);
+            String ret;
+            try {
+                ret = mediaClient.sync(mediaUsn, this);
+                if (ret == null) {
+                    data.success = false;
+                    data.result = new Object[] { "genericError" };
+                    return data;
+                }
+           } catch (RuntimeException e) {
+    			AnkiDroidApp.saveExceptionReportFile(e, "doInBackgroundSync-mediaSync");
+                data.success = false;
+                data.result = new Object[]{"IOException"};
+                data.data = new Object[] { mediaUsn };
+                return data;
+            }
             if (ret.equals("noChanges")) {
                 publishProgress(R.string.sync_media_no_changes);
                 noMediaChanges = true;

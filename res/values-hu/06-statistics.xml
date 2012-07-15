@@ -35,7 +35,7 @@
   <string name="statistics_new_cards">Új kártyák</string>
   <string name="statistics_failed_cards">Rontott kártyák</string>
   <string name="statistics_fullscreen">Teljse képernyő</string>
-  <string name="calculating_statistics">Statisztikák számítása.\nKérlek, várj&#8230;</string>
+  <string name="calculating_statistics">Statisztikák számítása.\nKérlek, várj...</string>
   <string name="deck_summary_cards">Kártyák száma:</string>
   <string name="deck_summary_notes">Jegyzetek száma:</string>
   <string name="deck_summary_cards_mature">Régi kártyák:</string>

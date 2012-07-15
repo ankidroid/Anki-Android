@@ -81,6 +81,7 @@
   <string name="pref_lang_other">Préférences linguistiques</string>
   <string name="pref_lang_common">LangCommon</string>
   <string name="pref_font_UI">Police pour l’interface utilisateur</string>
+  <string name="info_rate">Rate AnkiDroid</string>
   <string-array name="dynOrderLabels">
     <item>Des plus au moins anciennes</item>
     <item>Aléatoirement</item>

@@ -50,7 +50,7 @@
   <string name="add">Thêm</string>
   <string name="close">Đóng</string>
   <string name="select">Chọn</string>
-  <string name="saving_changes">Đang lưu các sửa đồi&#8230;</string>
+  <string name="saving_changes">Đang lưu các sửa đồi...</string>
   <string name="timebox_reached">Timebox reached!</string>
   <string name="studyoptions_welcome_title">Chào mừng đến với AnkiDroid</string>
   <string name="studyoptions_no_external_storage_title">Không Có Bộ lưu trữ Ngoài</string>
@@ -64,7 +64,7 @@
   <string name="card_editor_copy_card">Sao chép thẻ</string>
   <string name="card_editor_reset_card">Thiết lập lại quá trình học</string>
   <string name="error_insufficient_memory">Không thể thao tác vì không đủ bộ nhớ trên thiết bị của bạn</string>
-  <string name="tutorial_load">Creating tutorial deck.\nPlease wait&#8230;</string>
+  <string name="tutorial_load">Creating tutorial deck.\nPlease wait...</string>
   <string name="tutorial_loading_error">Không thể tạo được tập thẻ hướng dẫn</string>
   <string name="rename">Đổi tên</string>
   <string name="rename_error">Không thể đổi tên tập thẻ %s</string>
@@ -73,14 +73,15 @@
   <string name="help_faq">CÂU HỎI THƯỜNG GẶP</string>
   <string name="help_tutorial">Tập thẻ hướng dẫn</string>
   <string name="check_db">Check database</string>
-  <string name="check_db_message">Checking database.\nPlease wait&#8230;</string>
+  <string name="check_db_message">Checking database.\nPlease wait...</string>
   <string name="simple_interface_hint">%s trống. Xin lưu ý giao diện đơn giản sẽ không có hình ảnh, tiếng, v.v.</string>
-  <string name="delete_deck">Deleting deck&#8230;\nPlease wait.</string>
+  <string name="delete_deck">Deleting deck...\nPlease wait.</string>
   <string name="menu_cardbrowser">Card browser</string>
   <string name="show_hint">Show Hint</string>
   <string name="pref_lang_other">Language Preferences</string>
   <string name="pref_lang_common">LangCommon</string>
   <string name="pref_font_UI">Custom UI Font</string>
+  <string name="info_rate">Rate AnkiDroid</string>
   <string-array name="dynOrderLabels">
     <item>Oldest seen first</item>
     <item>Random</item>

@@ -35,7 +35,7 @@
   <string name="statistics_new_cards">Uudet kortit</string>
   <string name="statistics_failed_cards">Epäonnistuneet kortit</string>
   <string name="statistics_fullscreen">Vaihda täysruututilaan</string>
-  <string name="calculating_statistics">Calculating statistics.\nPlease wait&#8230;</string>
+  <string name="calculating_statistics">Calculating statistics.\nPlease wait...</string>
   <string name="deck_summary_cards">Number of cards:</string>
   <string name="deck_summary_notes">Number of notes:</string>
   <string name="deck_summary_cards_mature">Mature cards:</string>

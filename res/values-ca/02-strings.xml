@@ -50,7 +50,7 @@
   <string name="add">Afegeix</string>
   <string name="close">Tanca</string>
   <string name="select">Seleccioneu</string>
-  <string name="saving_changes">Desant els canvis&#8230;</string>
+  <string name="saving_changes">Desant els canvis...</string>
   <string name="timebox_reached">Timebox reached!</string>
   <string name="studyoptions_welcome_title">Benvingut a l\'AnkiDroid</string>
   <string name="studyoptions_no_external_storage_title">No hi ha cap suport extern disponible</string>
@@ -64,7 +64,7 @@
   <string name="card_editor_copy_card">Còpia la fitxa</string>
   <string name="card_editor_reset_card">Reinicia</string>
   <string name="error_insufficient_memory">No hi ha suficient memòria al dispositiu per a aquesta operació</string>
-  <string name="tutorial_load">S\'està generant el tutorial.\nUn moment si us plau&#8230;</string>
+  <string name="tutorial_load">S\'està generant el tutorial.\nUn moment si us plau...</string>
   <string name="tutorial_loading_error">No ha estat possible generar el paquet de mostra</string>
   <string name="rename">Canvia el nom</string>
   <string name="rename_error">No ha estat possible canviar el nom del paquet %s</string>
@@ -73,14 +73,15 @@
   <string name="help_faq">PMF</string>
   <string name="help_tutorial">Paquet Tutorial</string>
   <string name="check_db">Comprova la base de dades</string>
-  <string name="check_db_message">S\'està comprovant la base de dades.\nUn moment si us plau&#8230;</string>
+  <string name="check_db_message">S\'està comprovant la base de dades.\nUn moment si us plau...</string>
   <string name="simple_interface_hint">Buit %s. Tingueu en compte que a l\'interfície simple no es mostraen imatges, sons, etc.</string>
-  <string name="delete_deck">S\'està suprimint el paquet&#8230;\nun moment si us plau.</string>
+  <string name="delete_deck">S\'està suprimint el paquet...\nun moment si us plau.</string>
   <string name="menu_cardbrowser">Card browser</string>
   <string name="show_hint">Show Hint</string>
   <string name="pref_lang_other">Language Preferences</string>
   <string name="pref_lang_common">LangCommon</string>
   <string name="pref_font_UI">Custom UI Font</string>
+  <string name="info_rate">Rate AnkiDroid</string>
   <string-array name="dynOrderLabels">
     <item>Primer les que fa més temps que no heu vist</item>
     <item>A l\'atzar</item>

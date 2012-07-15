@@ -73,7 +73,7 @@
   <string name="help_faq">Häufige Fragen</string>
   <string name="help_tutorial">Einführungsstapel</string>
   <string name="check_db">Datenbank überprüfen</string>
-  <string name="check_db_message">Prüfe Datenbank.\n Bitte warten&#8230;</string>
+  <string name="check_db_message">Prüfe Datenbank.\n Bitte warten...</string>
   <string name="simple_interface_hint">Leere %s. Beachten Sie, dass die einfache Oberfläche keine Bilder/Sounds etc. anzeigen kann.</string>
   <string name="delete_deck">Lösche Stapel…\nBitte warten.</string>
   <string name="menu_cardbrowser">Kartenübersicht</string>
@@ -81,6 +81,7 @@
   <string name="pref_lang_other">Sprach-Einstellungen</string>
   <string name="pref_lang_common">LangCommon</string>
   <string name="pref_font_UI">Benutzerdefinierte UI-Schriftart</string>
+  <string name="info_rate">Rate AnkiDroid</string>
   <string-array name="dynOrderLabels">
     <item>Am frühesten gesehene zuerst</item>
     <item>Zufällig</item>

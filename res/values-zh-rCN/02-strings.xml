@@ -64,7 +64,7 @@
   <string name="card_editor_copy_card">复制卡片</string>
   <string name="card_editor_reset_card">清空学习记录</string>
   <string name="error_insufficient_memory">由于设备内存不足导致操作无法完成。</string>
-  <string name="tutorial_load">Creating tutorial deck.\nPlease wait&#8230;</string>
+  <string name="tutorial_load">Creating tutorial deck.\nPlease wait...</string>
   <string name="tutorial_loading_error">无法创建教程词库。</string>
   <string name="rename">重命名</string>
   <string name="rename_error">牌组 %s 无法重命名</string>
@@ -73,14 +73,15 @@
   <string name="help_faq">常见问题</string>
   <string name="help_tutorial">教程词库</string>
   <string name="check_db">Check database</string>
-  <string name="check_db_message">Checking database.\nPlease wait&#8230;</string>
+  <string name="check_db_message">Checking database.\nPlease wait...</string>
   <string name="simple_interface_hint">Empty %s. Bear in mind that simple interface cannot show pictures/sounds etc.</string>
-  <string name="delete_deck">Deleting deck&#8230;\nPlease wait.</string>
+  <string name="delete_deck">Deleting deck...\nPlease wait.</string>
   <string name="menu_cardbrowser">Card browser</string>
   <string name="show_hint">Show Hint</string>
   <string name="pref_lang_other">Language Preferences</string>
   <string name="pref_lang_common">LangCommon</string>
   <string name="pref_font_UI">Custom UI Font</string>
+  <string name="info_rate">Rate AnkiDroid</string>
   <string-array name="dynOrderLabels">
     <item>Oldest seen first</item>
     <item>Random</item>

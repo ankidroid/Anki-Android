@@ -109,6 +109,11 @@
                 android:key="cardBrowserCache"
                 android:summary="@string/pref_cache_cardbrowser_summ"
                 android:title="@string/pref_cache_cardbrowser" />
+            <CheckBoxPreference
+                android:defaultValue="false"
+                android:key="splashScreen"
+                android:summary="@string/pref_show_splashscreen_summ"
+                android:title="@string/pref_show_splashscreen" />
 		</PreferenceCategory>
     </PreferenceScreen>
     <PreferenceScreen android:title="@string/pref_cat_qadisplay" >

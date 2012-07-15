@@ -135,14 +135,15 @@
     <LinearLayout android:id="@+id/buttonPanel"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:minHeight="54dip"
+        android:minHeight="46dip"
+        android:gravity="center"
         android:orientation="vertical" >
         <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
+        	android:layout_gravity="center"
             android:orientation="horizontal"
-            android:paddingTop="1dip"
-            android:paddingBottom="1dip"
+            android:paddingTop="2dip"
             android:paddingLeft="2dip"
             android:paddingRight="2dip">
             <!-- android:useLargestChild="true"-->
@@ -155,8 +156,7 @@
                 android:layout_width="0dip"
                 android:layout_gravity="left"
                 android:layout_weight="1"
-                android:maxLines="2"
-				android:singleLine="false"
+				android:singleLine="true"
 				android:ellipsize="none"
                 style="?android:attr/buttonStyleSmall"
                 android:layout_height="fill_parent" />
@@ -164,8 +164,7 @@
                 android:layout_width="0dip"
                 android:layout_gravity="center_horizontal"
                 android:layout_weight="1"
-                android:maxLines="2"
-				android:singleLine="false"
+				android:singleLine="true"
 				android:ellipsize="none"
                 style="?android:attr/buttonStyleSmall"
                 android:layout_height="fill_parent" />
@@ -173,8 +172,7 @@
                 android:layout_width="0dip"
                 android:layout_gravity="right"
                 android:layout_weight="1"
-                android:maxLines="2"
-				android:singleLine="false"
+				android:singleLine="true"
 				android:ellipsize="none"
                 style="?android:attr/buttonStyleSmall"
                 android:layout_height="fill_parent" />

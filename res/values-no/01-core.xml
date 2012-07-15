@@ -45,7 +45,7 @@
   <string name="card_suspended">Kort suspendert på nytt</string>
   <string name="menu_rotate">Rotér</string>
   <string name="undo">Angre</string>
-  <string name="finish_operation">Finishing previous operation (most likely backup creation).\nPlease wait&#8230;</string>
+  <string name="finish_operation">Finishing previous operation (most likely backup creation).\nPlease wait...</string>
   <string name="contextmenu_deckpicker_download_missing_media">Last ned manglende mediafiler</string>
   <string name="contextmenu_deckpicker_reset_language_assignments">Tilbakestill språkinnstillinger</string>
   <string name="contextmenu_deckpicker_reset_reset_message">Tilbakestill språk</string>
@@ -61,7 +61,7 @@
   <string name="menu_preferences">Innstillinger</string>
   <string name="menu_zeemote">Zeemote</string>
   <string name="menu_about">Om</string>
-  <string name="menu_dismiss_note">Dismiss Note&#8230;</string>
+  <string name="menu_dismiss_note">Dismiss Note...</string>
   <string name="menu_bury_note">Bury Note</string>
   <string name="menu_suspend_card">Suspender kort</string>
   <string name="menu_suspend_note">Suspend Note</string>
@@ -83,12 +83,12 @@
   <string name="visit">Besøk</string>
   <string name="later">Senere</string>
   <string name="download">Last ned</string>
-  <string name="open_collection">Opening collection.\nPlease wait&#8230;</string>
-  <string name="create_collection">Creating collection.\nPlease wait&#8230;</string>
-  <string name="rebuild_cram_deck">Rebuilding cram deck.\nPlease wait&#8230;</string>
+  <string name="open_collection">Opening collection.\nPlease wait...</string>
+  <string name="create_collection">Creating collection.\nPlease wait...</string>
+  <string name="rebuild_cram_deck">Rebuilding cram deck.\nPlease wait...</string>
   <string name="rebuild_cram_label">Rebuild</string>
   <string name="empty_cram_label">Empty</string>
-  <string name="empty_cram_deck">Emptying cram deck.\nPlease wait&#8230;</string>
+  <string name="empty_cram_deck">Emptying cram deck.\nPlease wait...</string>
   <string name="studyoptions_congrats_finished">Congratulations! You have finished for now.</string>
   <string name="studyoptions_congrats_more_rev">Today\'s review limit has been reached, but there are still cards waiting to be reviewed. For optimum memory, consider increasing the daily limit in the options.</string>
   <string name="studyoptions_congrats_more_new">There are more new cards available, but the daily limit has been reached. You can increase the limit in the options, but please bear in mind that the more new cards you introduce, the higher your short-term review workload will become.</string>

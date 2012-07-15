@@ -180,10 +180,10 @@
   <string name="session_question_limit_summ">Jumlah pertanyaan dalam sesi. Pilih 0 untuk tidak ada batas.</string>
   <string name="new_cards_order">Turutan Kad Baru</string>
   <string name="new_cards_order_summ">Urutan untuk menunjukkan kad baru.</string>
-  <string name="show_new_cards_in">Tunjukkan kad baru dalam&#8230;</string>
+  <string name="show_new_cards_in">Tunjukkan kad baru dalam...</string>
   <string name="new_card_spacing">Kad Baru Jarak</string>
   <string name="new_card_spacing_summ">Di mana untuk mendistribusikan kad baru semasa reviu.</string>
-  <string name="show_new_cards">Tunjuk kad baru&#8230;</string>
+  <string name="show_new_cards">Tunjuk kad baru...</string>
   <string name="show_next_review_time">Masa reviu berikut</string>
   <string name="show_next_review_time_summ">Tunjuk masa reviu berikutnya</string>
   <string name="update_notification">Notifikasi baru</string>
@@ -196,7 +196,7 @@
   <string name="filter_google_translate">From Google Translate</string>
   <string name="filter_google_translate_summ">Just save source word and translation</string>
   <string name="convert_fen_text_summ">Draw chessboard from Forsyth Edwards Notation. The notation must be enclosed in [fen][/fen] tag.</string>
-  <string name="sync_set_journal_mode">Set mod jurnal yang betul&#8230;</string>
+  <string name="sync_set_journal_mode">Set mod jurnal yang betul...</string>
   <string name="async_mode">Sinkronisasi off</string>
   <string name="async_mode_summ">Ini membuat AnkiDroid lebih laju tetapi ada risiko kerosakan data bila sistem Android rosak. Sediakan salinan </string>
   <string name="async_mode_message">Perhatian bahawa opsyen in tidak selamat dan boleh merosak dek bila Android terganggu (cth. bila tiada bateri).\nPastikan ada salinan jika opsyen in dipilih.\nPilih opsyn ini?</string>

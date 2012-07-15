@@ -28,7 +28,7 @@
   <string name="widget_minimum_cards_due_notification_ticker_title">Kaarten te doen</string>
   <string name="widget_minimum_cards_due_notification_ticker_text">%d AnkiDroid kaarten om te leren</string>
   <string name="widget_no_cards_due">Geen kaarten over</string>
-  <string name="widget_loading">Widget laden&#8230;</string>
+  <string name="widget_loading">Widget laden...</string>
   <string name="widget_medium">AnkiDroid Gemiddeld</string>
   <string name="widget_small">AnkiDroid (klein)</string>
   <string name="widget_big">AnkiDroid Groot</string>

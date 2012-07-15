@@ -73,8 +73,8 @@
         <item name="android:dropDownListViewStyle">@style/White.Widget.ListView.DropDown</item>
         <item name="android:listDivider">@drawable/white_listdivider</item>
         <item name="android:listPreferredItemHeight">56dip</item>
-        <item name="android:spinnerStyle">@style/White.Widget.Spinner</item>
-        <item name="android:spinnerDropDownItemStyle">@style/White.Widget.DropDownItem.Spinner</item>
+<!--         <item name="android:spinnerStyle">@style/White.Widget.Spinner</item>
+ -->        <item name="android:spinnerDropDownItemStyle">@style/White.Widget.DropDownItem.Spinner</item>
     </style>
 
     <!-- Basic theme for dialogs -->

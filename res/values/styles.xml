@@ -161,6 +161,18 @@
         <item name="android:typeface">monospace</item>
         <item name="android:textSize">30sp</item>
     </style>
+    <style name="White.Spinner">
+        <item name="android:indeterminate">true</item>
+        <item name="android:indeterminateDrawable">@drawable/white_spinner</item>
+        <item name="android:indeterminateDuration">2000</item>
+        <item name="android:indeterminateOnly">true</item>
+    </style>
+    <style name="White.Spinner.White">
+        <item name="android:indeterminate">true</item>
+        <item name="android:indeterminateDrawable">@drawable/white_white_spinner</item>
+        <item name="android:indeterminateDuration">2000</item>
+        <item name="android:indeterminateOnly">true</item>
+    </style>
     <style name="White.Edittext" parent="@android:style/Widget.EditText">
         <item name="android:background">@drawable/white_edit_text</item>
     </style>

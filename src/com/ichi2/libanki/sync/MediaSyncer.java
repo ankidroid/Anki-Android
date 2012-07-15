@@ -16,6 +16,9 @@
 
 package com.ichi2.libanki.sync;
 
+import android.util.Log;
+
+import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.Pair;
 import com.ichi2.anki.R;
 import com.ichi2.async.Connection;
@@ -50,6 +53,10 @@ public class MediaSyncer {
         con.publishProgress(R.string.sync_media_remove);
         List<String> lRem = removed();
         JSONArray rRem = mServer.remove(lRem, lUsn);
+        if (rRem == null) {
+            Log.i(AnkiDroidApp.TAG, "MediaSyner: error (empty rRem) - returning");
+            return null;
+        }
         remove(rRem);
 
         // step 3: stream files from server

@@ -361,6 +361,9 @@ public class BackupManager {
 
     public static File[] getBackups(File colFile) {
         File[] files = getBackupDirectory().listFiles();
+        if (files == null) {
+        	files = new File[0];
+        }
         ArrayList<File> deckBackups = new ArrayList<File>();
         for (File aktFile : files) {
             if (aktFile.getName().replaceAll("^(.*)-\\d{4}-\\d{2}-\\d{2}-\\d{2}-\\d{2}.anki2$", "$1.anki2")
