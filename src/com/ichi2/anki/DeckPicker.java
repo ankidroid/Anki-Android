@@ -2185,6 +2185,10 @@ public class DeckPicker extends FragmentActivity {
 
 
     private void integrityCheck() {
+    	if (mCol == null) {
+    		loadCollection();
+    		return;
+    	}
         DeckTask.launchDeckTask(DeckTask.TASK_TYPE_CHECK_DATABASE, new DeckTask.TaskListener() {
             @Override
             public void onPreExecute() {
