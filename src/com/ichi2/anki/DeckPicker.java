@@ -1407,6 +1407,7 @@ public class DeckPicker extends FragmentActivity {
                 builder.setPositiveButton(res.getString(R.string.yes), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
+                    	mCol = null;
                         DeckTask.launchDeckTask(DeckTask.TASK_TYPE_REPAIR_DECK, mRepairDeckHandler,
                                 new DeckTask.TaskData(mCol, AnkiDroidApp.getCollectionPath()));
                     }
