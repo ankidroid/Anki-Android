@@ -1122,7 +1122,7 @@ public class DeckPicker extends FragmentActivity {
 
             case DIALOG_CONNECTION_ERROR:
                 builder.setTitle(res.getString(R.string.connection_error_title));
-                builder.setIcon(android.R.drawable.ic_dialog_alert);
+                builder.setIcon(R.drawable.ic_dialog_alert);
                 builder.setMessage(res.getString(R.string.connection_error_message));
                 builder.setPositiveButton(res.getString(R.string.retry), new DialogInterface.OnClickListener() {
                     @Override
@@ -1149,7 +1149,7 @@ public class DeckPicker extends FragmentActivity {
                 builder.setMessage(res.getString(R.string.open_collection_failed_message,
                         BackupManager.BROKEN_DECKS_SUFFIX, res.getString(R.string.repair_deck)));
                 builder.setTitle(R.string.open_collection_failed_title);
-                builder.setIcon(android.R.drawable.ic_dialog_alert);
+                builder.setIcon(R.drawable.ic_dialog_alert);
                 builder.setPositiveButton(res.getString(R.string.error_handling_options),
                         new DialogInterface.OnClickListener() {
                             @Override
@@ -1175,7 +1175,7 @@ public class DeckPicker extends FragmentActivity {
             case DIALOG_DB_ERROR:
                 builder.setMessage(R.string.answering_error_message);
                 builder.setTitle(R.string.answering_error_title);
-                builder.setIcon(android.R.drawable.ic_dialog_alert);
+                builder.setIcon(R.drawable.ic_dialog_alert);
                 builder.setPositiveButton(res.getString(R.string.error_handling_options),
                         new DialogInterface.OnClickListener() {
                             @Override
@@ -1212,7 +1212,7 @@ public class DeckPicker extends FragmentActivity {
 
             case DIALOG_ERROR_HANDLING:
                 builder.setTitle(res.getString(R.string.error_handling_title));
-                builder.setIcon(android.R.drawable.ic_dialog_alert);
+                builder.setIcon(R.drawable.ic_dialog_alert);
                 builder.setSingleChoiceItems(new String[] { "1" }, 0, null);
                 builder.setOnCancelListener(new OnCancelListener() {
                     @Override
@@ -1243,7 +1243,7 @@ public class DeckPicker extends FragmentActivity {
 
             case DIALOG_USER_NOT_LOGGED_IN_ADD_SHARED_DECK:
                 builder.setTitle(res.getString(R.string.connection_error_title));
-                builder.setIcon(android.R.drawable.ic_dialog_alert);
+                builder.setIcon(R.drawable.ic_dialog_alert);
                 builder.setMessage(res.getString(R.string.no_user_password_error_message));
                 builder.setNegativeButton(res.getString(R.string.cancel), null);
                 builder.setPositiveButton(res.getString(R.string.log_in), new DialogInterface.OnClickListener() {
@@ -1262,7 +1262,7 @@ public class DeckPicker extends FragmentActivity {
 
             case DIALOG_USER_NOT_LOGGED_IN_SYNC:
                 builder.setTitle(res.getString(R.string.connection_error_title));
-                builder.setIcon(android.R.drawable.ic_dialog_alert);
+                builder.setIcon(R.drawable.ic_dialog_alert);
                 builder.setMessage(res.getString(R.string.no_user_password_error_message));
                 builder.setNegativeButton(res.getString(R.string.cancel), null);
                 builder.setPositiveButton(res.getString(R.string.log_in), new DialogInterface.OnClickListener() {
@@ -1303,7 +1303,7 @@ public class DeckPicker extends FragmentActivity {
 
             case DIALOG_NO_CONNECTION:
                 builder.setTitle(res.getString(R.string.connection_error_title));
-                builder.setIcon(android.R.drawable.ic_dialog_alert);
+                builder.setIcon(R.drawable.ic_dialog_alert);
                 builder.setMessage(res.getString(R.string.connection_needed));
                 builder.setPositiveButton(res.getString(R.string.ok), null);
                 dialog = builder.create();
@@ -1314,7 +1314,7 @@ public class DeckPicker extends FragmentActivity {
             		return null;
             	}
                 builder.setTitle(res.getString(R.string.delete_deck_title));
-                builder.setIcon(android.R.drawable.ic_dialog_alert);
+                builder.setIcon(R.drawable.ic_dialog_alert);
                 builder.setMessage(String.format(res.getString(R.string.delete_deck_message), "\'"
                         + mCol.getDecks().name(mCurrentDid) + "\'"));
                 builder.setPositiveButton(res.getString(R.string.delete_deck_confirm),
@@ -1403,7 +1403,7 @@ public class DeckPicker extends FragmentActivity {
             case DIALOG_REPAIR_COLLECTION:
                 builder.setTitle(res.getString(R.string.backup_repair_deck));
                 builder.setMessage(res.getString(R.string.repair_deck_dialog, BackupManager.BROKEN_DECKS_SUFFIX));
-                builder.setIcon(android.R.drawable.ic_dialog_alert);
+                builder.setIcon(R.drawable.ic_dialog_alert);
                 builder.setPositiveButton(res.getString(R.string.yes), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {

@@ -188,7 +188,7 @@ public class CardBrowser extends Activity {
                     Resources res = getResources();
                     StyledDialog.Builder builder = new StyledDialog.Builder(CardBrowser.this);
                     builder.setTitle(res.getString(R.string.delete_card_title));
-                    builder.setIcon(android.R.drawable.ic_dialog_alert);
+                    builder.setIcon(R.drawable.ic_dialog_alert);
                     builder.setMessage(res.getString(R.string.delete_card_message, mCards.get(mPositionInCardsList)
                             .get("sfld")));
                     builder.setPositiveButton(res.getString(R.string.yes), new DialogInterface.OnClickListener() {
@@ -855,7 +855,7 @@ public class CardBrowser extends Activity {
                 Resources res = getResources();
                 StyledDialog.Builder builder = new StyledDialog.Builder(CardBrowser.this);
                 builder.setTitle(res.getString(R.string.error));
-                builder.setIcon(android.R.drawable.ic_dialog_alert);
+                builder.setIcon(R.drawable.ic_dialog_alert);
                 builder.setMessage(res.getString(R.string.card_browser_cardloading_error));
                 builder.setPositiveButton(res.getString(R.string.ok), new DialogInterface.OnClickListener() {
                     @Override

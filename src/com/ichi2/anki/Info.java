@@ -220,7 +220,7 @@ public class Info extends Activity {
                 StyledDialog.Builder builder2 = new StyledDialog.Builder(this);
 
                 builder2.setTitle(res.getString(R.string.connection_error_title));
-                builder2.setIcon(android.R.drawable.ic_dialog_alert);
+                builder2.setIcon(R.drawable.ic_dialog_alert);
                 builder2.setMessage(res.getString(R.string.connection_needed));
                 builder2.setPositiveButton(res.getString(R.string.ok), null);
                 mNoConnectionAlert = builder2.create();

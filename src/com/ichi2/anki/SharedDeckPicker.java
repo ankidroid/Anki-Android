@@ -333,7 +333,7 @@
 //        StyledDialog.Builder builder = new StyledDialog.Builder(this);
 //
 //        builder.setTitle(res.getString(R.string.connection_error_title));
-//        builder.setIcon(android.R.drawable.ic_dialog_alert);
+//        builder.setIcon(R.drawable.ic_dialog_alert);
 //        builder.setMessage(res.getString(R.string.connection_needed));
 //        builder.setPositiveButton(res.getString(R.string.ok), new OnClickListener() {
 //
@@ -347,7 +347,7 @@
 //
 //  builder = new StyledDialog.Builder(this);
 //        builder.setTitle(res.getString(R.string.connection_error_title));
-//        builder.setIcon(android.R.drawable.ic_dialog_alert);
+//        builder.setIcon(R.drawable.ic_dialog_alert);
 //        builder.setMessage(res.getString(R.string.connection_error_return_message));
 //        builder.setPositiveButton(res.getString(R.string.retry), new OnClickListener() {
 //
