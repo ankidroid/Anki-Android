@@ -12,8 +12,8 @@ Hozz létre új anyagot az asztali Anki-val, vagy rögtön az AnkiDroiddal! Az a
 • támogatott szókártya tartalmak: szöveg, kép, hang, LaTeX
 • késleltetett ismétlés (supermemo 2 algoritmus)
 • szöveg-beszéd integráció
-• több mint 6000 előre elkészített pakli
-• progress widget
+• több mint 6000 előre előkészített pakli
+• előrehaladás widget
 • részletes statisztikák
 • AnkiWeb szinkronizálás
 • nyílt forráskódú
@@ -21,9 +21,9 @@ Hozz létre új anyagot az asztali Anki-val, vagy rögtön az AnkiDroiddal! Az a
 ★ További funkciók:
 • válaszok beírása (lehetőség)
 • tábla
-• kártya szerkesztő/hozzáadó
+• kártya szerkesztő/létrehozó
 • kártya böngésző
-• tablet layout
+• tablet kijelzős elrendezés
 • importáld a meglévő gyűjtemény fájlokat (Anki Desktop-pal)
 • szótár-integráció (ColorDict, GoldenDict, Leo.org, Aedict, különböző webes szótárak)
 • kártyák hozzáadása más programokból (pl. szótárak)
@@ -31,7 +31,7 @@ Hozz létre új anyagot az asztali Anki-val, vagy rögtön az AnkiDroiddal! Az a
 • teljes biztonsági másolat rendszer
 • navigáció elhúzással, érintéssel, rázással
 • teljesen testreszabható
-• dynamic deck handling
+dinamikus pakli kezelés
 • éjszakai mód
-• 27 lokalizáció
-• All previous AnkiDroid versions can be downloaded from the website
+• 27 fordítás
+• Minden korábbi AnkiDroid verzió letölthető a honlapról

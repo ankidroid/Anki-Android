@@ -105,21 +105,21 @@
   </string-array>
   <string-array name="cram_deck_conf_order_labels">
     <item>Più vecchie visualizzate per prime</item>
-    <item>Random</item>
+    <item>Casuale</item>
     <item>Intervalli crescenti</item>
-    <item>Decreasing intervals</item>
-    <item>Most lapsed</item>
-    <item>Order added</item>
-    <item>Order due</item>
+    <item>Intervalli decrescenti</item>
+    <item>Maggior numero di errori</item>
+    <item>Ordine di aggiunta</item>
+    <item>Ordine di scadenza</item>
   </string-array>
   <string-array name="cram_deck_conf_preset_labels">
-    <item><![CDATA[<select preset>]]></item>
-    <item>Preview all new cards</item>
-    <item>Preview cards added today</item>
-    <item>Review today\'s forgotten cards</item>
-    <item>Review ahead by two days</item>
-    <item>Review due cards with tag</item>
-    <item>Review due cards with decreasing intervals</item>
-    <item>Cram all cards</item>
+    <item><![CDATA[<seleziona predefinito>]]></item>
+    <item>Anteprima carte nuove</item>
+    <item>Anteprima carte aggiunte oggi</item>
+    <item>Ripeti le carte dimenticate oggi</item>
+    <item>Ripeti due giorni in anticipo</item>
+    <item>Ripeti carte scadute con etichetta</item>
+    <item>Ripeti carte scadute con intervalli decrescenti</item>
+    <item>Studio focalizzato di tutte le carte</item>
   </string-array>
 </resources>

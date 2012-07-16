@@ -271,4 +271,6 @@
   <string name="deck_conf_cram_reschedule_summ">이 카드묶음에서 내 대답에 근거에 재조정된 카드들</string>
   <string name="deck_conf_cram_steps">사용자 정의 단계</string>
   <string name="deck_conf_cram_steps_summ">사용자 정의 단계를 정의</string>
+  <string name="pref_show_splashscreen">Splash screen</string>
+  <string name="pref_show_splashscreen_summ">Show splash screen</string>
 </resources>

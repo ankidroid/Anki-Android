@@ -119,7 +119,7 @@
     <item>Repasar las tarjetas olvidadas de hoy</item>
     <item>Repasar dos días por adelantado</item>
     <item>Repasar tarjetas programadas con etiqueta</item>
-    <item>Review due cards with decreasing intervals</item>
-    <item>Cram all cards</item>
+    <item>Repasar las tarjetas programadas con intervalos decrecientes</item>
+    <item>Empollar todas las tarjetas</item>
   </string-array>
 </resources>

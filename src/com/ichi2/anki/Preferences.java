@@ -73,6 +73,7 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
     private CheckBoxPreference useBackupPreference;
     private CheckBoxPreference asyncModePreference;
     private CheckBoxPreference eInkDisplayPreference;
+    private CheckBoxPreference fadeScrollbars;
     private CheckBoxPreference convertFenText;
     private CheckBoxPreference fixHebrewText;
     private ListPreference mLanguageSelection;
@@ -118,6 +119,7 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
         useBackupPreference = (CheckBoxPreference) getPreferenceScreen().findPreference("useBackup");
         asyncModePreference = (CheckBoxPreference) getPreferenceScreen().findPreference("asyncMode");
         eInkDisplayPreference = (CheckBoxPreference) getPreferenceScreen().findPreference("eInkDisplay");
+        fadeScrollbars = (CheckBoxPreference) getPreferenceScreen().findPreference("fadeScrollbars");
         ListPreference listpref = (ListPreference) getPreferenceScreen().findPreference("theme");
         convertFenText = (CheckBoxPreference) getPreferenceScreen().findPreference("convertFenText");
         fixHebrewText = (CheckBoxPreference) getPreferenceScreen().findPreference("fixHebrewText");
@@ -134,6 +136,10 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
         }
         for (String key : mShowValueInSummEditText) {
             updateEditTextPreference(key);
+        }
+        if (UIUtils.getApiLevel() < 5) {
+            fadeScrollbars.setChecked(false);
+            fadeScrollbars.setEnabled(false);
         }
     }
 
@@ -324,6 +330,8 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
             } else if (key.equals("eInkDisplay")) {
                 animationsCheckboxPreference.setChecked(false);
                 animationsCheckboxPreference.setEnabled(!eInkDisplayPreference.isChecked());
+                fadeScrollbars.setChecked(false);
+                fadeScrollbars.setEnabled(!eInkDisplayPreference.isChecked());
             } else if (key.equals("convertFenText")) {
                 if (convertFenText.isChecked()) {
                     ChessFilter.install(AnkiDroidApp.getHooks());

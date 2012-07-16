@@ -319,7 +319,7 @@ public class DeckTask extends
 					}
 					publishProgress(new TaskData(newCard));
 				} else {
-					publishProgress(new TaskData(editCard));
+					publishProgress(new TaskData(editCard, editNote.stringTags()));
 				}
 				col.getDb().getDatabase().setTransactionSuccessful();
 			} finally {
@@ -955,7 +955,12 @@ public class DeckTask extends
 		}
 
 		public TaskData(Card card) {
-			mCard = card;
+		    mCard = card;
+		}
+
+		public TaskData(Card card, String tags) {
+		    mCard = card;
+		    mMsg = tags;
 		}
 
 		public TaskData(Card card, int integer) {

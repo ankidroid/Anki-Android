@@ -71,10 +71,10 @@
   <string name="menu_select">Sélection de texte</string>
   <string name="menu_search">Recherche dans %1$s</string>
   <string name="menu_mark_card">Marquer la carte</string>
-  <string name="menu_unmark_card">Unmark Card</string>
+  <string name="menu_unmark_card">Retirer le marquage</string>
   <string name="new_deck">Nouveau paquet</string>
   <string name="create">Créer</string>
-  <string name="new_dynamic_deck">New dynamic deck</string>
+  <string name="new_dynamic_deck">Nouveau paquet dynamique</string>
   <string name="studyoptions_feedback">Commentaires</string>
   <string name="studyoptions_cram_dialog_title">Marqueurs à bachoter</string>
   <string name="studyoptions_load_other_deck">Charger un autre paquet</string>
@@ -87,7 +87,7 @@
   <string name="create_collection">Création de la collection.\nPatience…</string>
   <string name="rebuild_cram_deck">Réparation du paquet bachoteur.\nPatience…</string>
   <string name="rebuild_cram_label">Réparer</string>
-  <string name="empty_cram_label">Empty</string>
+  <string name="empty_cram_label">Vide</string>
   <string name="empty_cram_deck">Emptying cram deck.\nPlease wait...</string>
   <string name="studyoptions_congrats_finished">FÉLICITATIONS ! Vous avez terminé… pour l’instant !</string>
   <string name="studyoptions_congrats_more_rev">Vous avez atteint votre quota de révisions, mais il reste des cartes prévues pour aujourd’hui. Sauf à risquer l’oubli chronique, pensez à adapter le quota.</string>

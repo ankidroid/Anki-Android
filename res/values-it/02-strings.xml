@@ -81,7 +81,7 @@
   <string name="pref_lang_other">Preferenze lingua</string>
   <string name="pref_lang_common">LangCommon</string>
   <string name="pref_font_UI">Carattere interfaccia utente personalizzato</string>
-  <string name="info_rate">Rate AnkiDroid</string>
+  <string name="info_rate">Valuta AnkiDroid</string>
   <string-array name="dynOrderLabels">
     <item>Più vecchie visualizzate per prime</item>
     <item>Casuale</item>
