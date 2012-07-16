@@ -21,6 +21,8 @@
 import pycurl
 import StringIO
 import sys
+import string
+import os
 
 CROWDIN_KEY = ''
 PROJECT_IDENTIFIER = 'ankidroid'
@@ -34,6 +36,8 @@ alllang = ['ar', 'ca', 'cs', 'de', 'el', 'es-ES', 'fi', 'fr', 'hu', 'id', 'it', 
 def uploadtranslation(language, filename, sourcefile):
 	if len(language) > 2:
 		pathlan = string.replace(language, '-', '-r')
+		if not os.path.exists('../res/values-' + pathlan):
+			pathlan = pathlan[:2]
 	else:
 		pathlan = language
 	path = '../res/values-' + pathlan + '/'
@@ -119,7 +123,7 @@ elif sel == 't':
 				for s in files:
 					uploadtranslation(language, s, s)
 			else:
-				uploadtranslation(language, files[int(selu)-1], s)
+				uploadtranslation(language, files[int(selu)-1], sourcefile)
 	elif selu == 'all':
 		for s in files:
 			uploadtranslation(language, s, s)
