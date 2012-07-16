@@ -83,7 +83,7 @@
   <string name="visit">Odwiedź</string>
   <string name="later">Później</string>
   <string name="download">Pobierz</string>
-  <string name="open_collection">Otwieranie kolekcji.\nProszę czekać...</string>
+  <string name="open_collection">Opening collection.\nPlease wait...</string>
   <string name="create_collection">Tworzenie kolekcji.\nProszę czekać...</string>
   <string name="rebuild_cram_deck">Przebudowywanie talii.\nProszę czekać...</string>
   <string name="rebuild_cram_label">Odbuduj</string>
