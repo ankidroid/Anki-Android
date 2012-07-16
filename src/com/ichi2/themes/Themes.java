@@ -781,7 +781,7 @@ public class Themes {
             text = "<html><body text=\"#FFFFFF\" link=\"#E37068\" alink=\"#E37068\" vlink=\"#E37068\">" + text
                     + "</body></html>";
         }
-        view.loadData(text, "text/html", "UTF-8");
+        view.loadDataWithBaseURL("", text, "text/html", "UTF-8", "");
         builder.setView(view, true);
         builder.setPositiveButton(context.getResources().getString(R.string.ok), okListener);
         builder.setCancelable(true);

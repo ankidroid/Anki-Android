@@ -56,6 +56,7 @@ import android.widget.TextView;
 import com.ichi2.anim.ActivityTransitionAnimation;
 import com.ichi2.async.DeckTask;
 import com.ichi2.libanki.Card;
+import com.ichi2.libanki.CardStats;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Note;
 import com.ichi2.themes.StyledDialog;
@@ -91,9 +92,6 @@ public class CardBrowser extends Activity {
 
     private int mOrder;
 	private int mField;
-
-    /** Modifier of percentage of the font size of the card browser */
-    private int mrelativeBrowserFontSize = DEFAULT_FONT_SIZE_RATIO;
 
     private static final int CONTEXT_MENU_MARK = 0;
     private static final int CONTEXT_MENU_SUSPEND = 1;
@@ -210,7 +208,7 @@ public class CardBrowser extends Activity {
     				Card tempCard = mCol.getCard(Long.parseLong(mCards.get(mPositionInCardsList).get("id")));
     				Themes.htmlOkDialog(CardBrowser.this, 
     						getResources().getString(R.string.card_browser_card_details), 
-    						tempCard.getCardDetails(CardBrowser.this) ).show();
+    						CardStats.report(CardBrowser.this, tempCard, mCol)).show();
                     return;
             }
         }
@@ -240,7 +238,8 @@ public class CardBrowser extends Activity {
         mBackground = Themes.getCardBrowserBackground();
 
         SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(getBaseContext());
-        mrelativeBrowserFontSize = preferences.getInt("relativeCardBrowserFontSize", DEFAULT_FONT_SIZE_RATIO);
+        int sflRelativeFontSize = preferences.getInt("relativeCardBrowserFontSize", DEFAULT_FONT_SIZE_RATIO);
+        String sflCustomFont = preferences.getString("browserEditorFont", "");
         mPrefFixArabic = preferences.getBoolean("fixArabicText", false);
         mPrefCacheCardBrowser = preferences.getBoolean("cardBrowserCache", false);
         mOrder = preferences.getInt("cardBrowserOrder", CARD_ORDER_NONE);
@@ -251,7 +250,7 @@ public class CardBrowser extends Activity {
 
         mCardsAdapter = new SizeControlledListAdapter(this, mCards, R.layout.card_item, new String[] { "sfld", "tmpl",
                 "deck", "flags" }, new int[] { R.id.card_sfld, R.id.card_tmpl, R.id.card_deck, R.id.card_item },
-                mrelativeBrowserFontSize);
+                sflRelativeFontSize, sflCustomFont);
         mCardsAdapter.setViewBinder(new SimpleAdapter.ViewBinder() {
             @Override
             public boolean setViewValue(View view, Object arg1, String text) {
@@ -591,42 +590,6 @@ public class CardBrowser extends Activity {
                 });
                 dialog = builder.create();
                 break;
-//		case DIALOG_RELOAD_CARDS:
-//			builder.setTitle(res.getString(R.string.pref_cache_cardbrowser));
-//			builder.setMessage(res.getString(R.string.pref_cache_cardbrowser_reload));
-//			builder.setPositiveButton(res.getString(R.string.yes), new OnClickListener() {
-//
-//				@Override
-//				public void onClick(DialogInterface arg0, int arg1) {
-//					DeckTask.launchDeckTask(DeckTask.TASK_TYPE_LOAD_CARDS,
-//							mLoadCardsHandler,
-//							new DeckTask.TaskData(mDeck, LOAD_CHUNK));	
-//					}
-//				
-//			});
-//			builder.setNegativeButton(res.getString(R.string.no), new OnClickListener() {
-//
-//				@Override
-//				public void onClick(DialogInterface arg0, int arg1) {
-//					mAllCards.addAll(sAllCardsCache);
-//					mCards.addAll(mAllCards);
-//					updateList();
-//				}
-//				
-//			});
-//			builder.setCancelable(true);
-//			builder.setOnCancelListener(new OnCancelListener() {
-//
-//				@Override
-//				public void onCancel(DialogInterface arg0) {
-//					mAllCards.addAll(sAllCardsCache);
-//					mCards.addAll(mAllCards);
-//					updateList();
-//				}
-//				
-//			});
-//			dialog = builder.create();
-//			break;
 		case DIALOG_FIELD:
 			builder.setTitle(res
 					.getString(R.string.card_browser_field_title));
@@ -724,17 +687,9 @@ public class CardBrowser extends Activity {
 
 
     private void getCards() {
-        // if ((sCachedDeckPath != null && !sCachedDeckPath.equals(mDeck.getDeckPath())) || !mPrefCacheCardBrowser) {
-        // sCachedDeckPath = null;
-        // sAllCardsCache = null;
-        // }
-        // if (mPrefCacheCardBrowser && sAllCardsCache != null && !sAllCardsCache.isEmpty()) {
-        // showDialog(DIALOG_RELOAD_CARDS);
-        // } else {
         mAllCards.clear();
         DeckTask.launchDeckTask(DeckTask.TASK_TYPE_LOAD_CARDS, mLoadCardsHandler, new DeckTask.TaskData(mCol, 0,
                 mWholeCollection));
-        // }
     }
 
 
@@ -1144,16 +1099,12 @@ public class CardBrowser extends Activity {
 
         private int fontSizeScalePcent;
         private float originalTextSize = -1.0f;
-        private Typeface mCustomTypeface;
+        private Typeface mCustomTypeface = null;
 
         public SizeControlledListAdapter(Context context, List<? extends Map<String, ?>> data, int resource,
-                String[] from, int[] to, int fontSizeScalePcent) {
+                String[] from, int[] to, int fontSizeScalePcent, String customFont) {
             super(context, data, resource, from, to);
             this.fontSizeScalePcent = fontSizeScalePcent;
-
-            // Use custom font if selected from preferences
-            SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(getBaseContext());
-            String customFont = preferences.getString("browserEditorFont", "");
             if (!customFont.equals("")) {
                 mCustomTypeface = AnkiFont.getTypeface(context, customFont);
             }
@@ -1169,17 +1120,14 @@ public class CardBrowser extends Activity {
                 View child;
                 for (int i = 0; i < group.getChildCount(); i++) {
                     child = group.getChildAt(i);
-                    // and set text size on all TextViews found
-                    if (child instanceof TextView) {
-                        // mBrowserFontSize
+                    // and set text size and custom font on the sfld view only
+                    if (child instanceof TextView && child.getId() == R.id.card_sfld) {
                         float currentSize = ((TextView) child).getTextSize();
                         if (originalTextSize < 0) {
                             originalTextSize = ((TextView) child).getTextSize();
                         }
-                        // do nothing when pref is 100% and apply scaling only
-                        // once
-                        if ((fontSizeScalePcent < 99 || fontSizeScalePcent > 101)
-                                && (Math.abs(originalTextSize - currentSize) < 0.1)) {
+                        // do nothing when pref is 100% and apply scaling only once
+                        if (fontSizeScalePcent != 100 && Math.abs(originalTextSize - currentSize) < 0.1) {
                             ((TextView) child).setTextSize(TypedValue.COMPLEX_UNIT_SP, originalTextSize
                                     * (fontSizeScalePcent / 100.0f));
                         }
@@ -1187,13 +1135,9 @@ public class CardBrowser extends Activity {
                         if (mCustomTypeface != null) {
                             ((TextView) child).setTypeface(mCustomTypeface);
                         }
-
                     }
-
                 }
-
             }
-
             return view;
         }
     }

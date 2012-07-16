@@ -18,13 +18,10 @@
 package com.ichi2.libanki;
 
 import android.content.ContentValues;
-import android.content.Context;
-import android.content.res.Resources;
 import android.database.Cursor;
 import android.util.Log;
 
 import com.ichi2.anki.AnkiDroidApp;
-import com.ichi2.anki.R;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -475,109 +472,6 @@ public class Card implements Cloneable {
     //
     //
     //
-	public String getCardDetails(Context context) {
-		// was Context context
-		Resources res = context.getResources();
-		StringBuilder builder = new StringBuilder();
-		builder.append("<html><body ><table><colgroup><col span=\"1\" style=\"width: 40%;\"></col><col span=\"1\" style=\"width: 60%;\"></col></colgroup><tr><td>"); //<colgroup><col span=\"1\" style=\"width: 40%;\"><col span=\"1\" style=\"width: 60%;\"></colgroup>
-//		builder.append("<html><body><h1>heading</h1>body text</body></html>");
-		
-		builder.append(res.getString(R.string.card_details_question));
-//		builder.append("question>");
-		builder.append("</td><td>");
-		builder.append(_getQA(false).get("q"));
-
-		builder.append("</td></tr><tr><td>");
-		builder.append(res.getString(R.string.card_details_answer));
-		builder.append("</td><td>");
-		builder.append(Utils.stripHTML(_getQA(false).get("a")));
-		builder.append("</td></tr>");
-		
-//		builder.append(res.getString(R.string.card_details_due));
-//		builder.append("</td><td>");
-//		
-//		if (mYesCount + mNoCount == 0) {
-//   	builder.append("??");
-//		} else if (mCombinedDue < mDeck.getDueCutoff()) {
-//			builder.append(res.getString(R.string.card_details_now));
-//		} else {
-//			builder.append(Utils.getReadableInterval(context,
-//					(mCombinedDue - Utils.now()) / 86400.0, true));
-//		}
-
-//		builder.append("</td></tr><tr><td>");
-
-////		builder.append(res.getString(R.string.card_details_interval));
-//		builder.append("</td><td>");
-////		if (mInterval == 0) {
-////			builder.append("-");
-////		} else {
-////			builder.append(Utils.getReadableInterval(context, mInterval));
-////		}
-		
-
-//		builder.append("</td></tr><tr><td>");
-////		builder.append(res.getString(R.string.card_details_ease));
-//		builder.append("</td><td>");
-//		double ease = Math.round(mFactor * 100);
-//		builder.append(ease / 100);
-		
-//		builder.append("</td></tr><tr><td>");
-////		builder.append(res.getString(R.string.card_details_average_time));
-//		builder.append("</td><td>");
-////		if (mYesCount + mNoCount == 0) {
-////			builder.append("-");
-////		} else {
-////			builder.append(Utils.doubleToTime(mAverageTime));
-////		}
-		
-//		builder.append("</td></tr><tr><td>");
-////		builder.append(res.getString(R.string.card_details_total_time));
-//		builder.append("</td><td>");
-////		builder.append(Utils.doubleToTime(mReviewTime));
-		
-//		builder.append("</td></tr><tr><td>");
-////		builder.append(res.getString(R.string.card_details_yes_count));
-//		builder.append("</td><td>");
-////		builder.append(mYesCount);
-		
-//		builder.append("</td></tr><tr><td>");
-////		builder.append(res.getString(R.string.card_details_no_count));
-//		builder.append("</td><td>");
-////		builder.append(mNoCount);
-		
-//		builder.append("</td></tr><tr><td>");
-////		builder.append(res.getString(R.string.card_details_added));
-//		builder.append("</td><td>");
-////		builder.append(DateFormat.getDateFormat(context).format(
-////				(long) (mCreated - mDeck.getUtcOffset()) * 1000l));
-		
-//		builder.append("</td></tr><tr><td>");
-////		builder.append(res.getString(R.string.card_details_changed));
-//		builder.append("</td><td>");
-////		builder.append(DateFormat.getDateFormat(context).format(
-////				(long) (mModified - mDeck.getUtcOffset()) * 1000l));
-		
-//		builder.append("</td></tr><tr><td>");
-////		builder.append(res.getString(R.string.card_details_tags));
-//		builder.append("</td><td>");
-////		String tags = Arrays.toString(mDeck
-////				.allUserTags("WHERE id = " + mFactId));
-////		builder.append(tags.substring(1, tags.length() - 1));
-		
-//		builder.append("</td></tr><tr><td>");
-////		builder.append(res.getString(R.string.card_details_model));
-//		builder.append("</td><td>");
-////		Model model = Model.getModel(mDeck, mCardModelId, false);
-////		builder.append(model.getName());
-		
-//		builder.append("</td></tr><tr><td>");
-////		builder.append(res.getString(R.string.card_details_card_model));
-//		builder.append("</td><td>");
-////		builder.append(model.getCardModel(mCardModelId).getName());
-		builder.append("</table></html></body>");
-		return builder.toString();
-	}
 
     public long getId() {
         return mId;
