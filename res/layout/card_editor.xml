@@ -49,8 +49,13 @@
   		android:layout_height="wrap_content" 
   		android:layout_width="fill_parent"
 	  	android:orientation="vertical" >
-		<LinearLayout android:layout_width="fill_parent"
+ 	    <LinearLayout
+  		android:layout_height="wrap_content" 
+  		android:layout_width="fill_parent"
+	  	android:orientation="horizontal" >
+ 	        		<LinearLayout android:layout_width="0dip"
 			android:layout_height="wrap_content" 
+				    android:layout_weight="2"
 			android:id="@+id/CardEditorModelButton"
 			android:visibility="gone"
 			style="?android:attr/buttonStyleSmall"
@@ -67,6 +72,17 @@
 				android:layout_gravity="center"
 				android:gravity="left|center_vertical"/>				
 		</LinearLayout>
+
+				<Button android:layout_width="0dip"
+				    android:layout_weight="1"
+				android:layout_height="wrap_content" 
+				android:id="@+id/CardEditorSwapButton"
+				style="?android:attr/buttonStyleSmall"
+				android:layout_gravity="center"
+         		android:text="@string/fact_adder_swap"
+				android:gravity="center"/>
+		</LinearLayout>
+						
 		<LinearLayout 
 			android:layout_width="fill_parent"
 			android:layout_height="wrap_content" 
@@ -102,14 +118,6 @@
 				android:layout_gravity="center"
 				android:gravity="left|center_vertical"/>				
 		</LinearLayout>
-		<Button android:layout_width="fill_parent"
-				android:layout_height="wrap_content" 
-				android:id="@+id/CardEditorSwapButton"
-				style="?android:attr/buttonStyleSmall"
-				android:layout_gravity="center"
-         		android:text="@string/fact_adder_swap"
-         		android:visibility="gone"
-				android:gravity="center"/>
         </LinearLayout>
 	</LinearLayout>
 

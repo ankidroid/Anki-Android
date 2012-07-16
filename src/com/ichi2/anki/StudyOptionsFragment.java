@@ -462,7 +462,7 @@ public class StudyOptionsFragment extends Fragment {
                         Collection.putCurrentCollection(mCol);
                         if (mCol == null) {
                         	closeStudyOptions();
-                        } else {
+                        } else if (!mFragmented) {
                         	((StudyOptionsActivity)getActivity()).loadContent(false);
                         }
                     }

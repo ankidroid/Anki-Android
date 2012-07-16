@@ -331,7 +331,10 @@ public class Collection {
                     getDb().getDatabase().endTransaction();
                 }
             } else {
-                rollback();
+                if (getDb().getDatabase().inTransaction()) {
+                    getDb().getDatabase().endTransaction();
+                }
+                lock();
             }
             AnkiDatabaseManager.closeDatabase(mPath);
             mDb = null;
@@ -347,18 +350,6 @@ public class Collection {
             mDb = AnkiDatabaseManager.getDatabase(mPath);
             mMedia.connect();
         }
-    }
-
-
-    public void rollback() {
-        // We normally don't wrap multiple DB operations in one transaction that could be potentially rolled
-        // back here, but just in case we have done so manually, do roll it back.
-        // hint: com.ichi2.libanki.SchedTestCase.test_overdue_lapse()
-        if (getDb().getDatabase().inTransaction()) {
-            getDb().getDatabase().endTransaction();
-        }
-        load();
-        lock();
     }
 
 

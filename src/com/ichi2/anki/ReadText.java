@@ -94,7 +94,7 @@ public class ReadText {
         if (availableTtsLocales.size() == 0) {
             builder.setTitle(res.getString(R.string.no_tts_available_title));
             builder.setMessage(res.getString(R.string.no_tts_available_message));
-            builder.setIcon(android.R.drawable.ic_dialog_alert);
+            builder.setIcon(R.drawable.ic_dialog_alert);
             builder.setPositiveButton(res.getString(R.string.ok), null);
         } else {
             ArrayList<CharSequence> dialogItems = new ArrayList<CharSequence>();

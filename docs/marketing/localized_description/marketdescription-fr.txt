@@ -34,4 +34,4 @@ Ajouter des cartes par le biais de l'application Anki Desktop ou directement ave
 • dynamic deck handling
 • mode nuit
 • 27 localisations
-• All previous AnkiDroid versions can be downloaded from the website
+• Toutes les versions précédentes d'AnkiDroid peuvent être téléchargées à partir du site Web

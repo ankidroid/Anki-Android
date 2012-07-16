@@ -305,6 +305,10 @@ public class BackupManager {
             Process process = Runtime.getRuntime().exec(cmd);
             process.waitFor();
 
+            if (!new File(deckPath + ".tmp").exists()) {
+            	return false;
+            }
+
             if (!moveDatabaseToBrokenFolder(deckPath, false)) {
                 return false;
             }

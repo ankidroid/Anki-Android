@@ -59,7 +59,6 @@ public class Sched {
     // new card insertion order
     public static final int NEW_CARDS_RANDOM = 0;
     public static final int NEW_CARDS_DUE = 1;
-
     // review card sort order
     public static final int REV_CARDS_RANDOM = 0;
     public static final int REV_CARDS_OLD_FIRST = 1;
@@ -77,6 +76,7 @@ public class Sched {
     // media log
     public static final int MEDIA_ADD = 0;
     public static final int MEDIA_REM = 1;
+    
 
     // dynamic deck order
     public static final int DYN_OLDEST = 0;

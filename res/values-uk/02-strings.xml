@@ -22,77 +22,77 @@
 <resources>
   <string name="CardEditorCancelButton">Скасувати</string>
   <string name="CardEditorSaveButton">Зберегти</string>
-  <string name="CardEditorLaterButton">Later</string>
-  <string name="CardEditorLaterMessage">Saved information for later</string>
-  <string name="CardEditorCardDeck">Card deck: %s</string>
-  <string name="CardEditorNoteDeck">Note deck: %s</string>
-  <string name="CardEditorModel">Note type: %s</string>
-  <string name="CardEditorTags">Tags: %1$s</string>
-  <string name="add_new_tag">Add new tag</string>
-  <string name="note_type">Note type</string>
-  <string name="sdcard_missing_message">SD card is unavailable because it is being used as USB storage. Disconnect USB to access your decks.</string>
+  <string name="CardEditorLaterButton">Пізніше</string>
+  <string name="CardEditorLaterMessage">Інформація збережена на пізніше</string>
+  <string name="CardEditorCardDeck">Колода картки:%s</string>
+  <string name="CardEditorNoteDeck">Колода Запису:%s</string>
+  <string name="CardEditorModel">Тип Запису:%s</string>
+  <string name="CardEditorTags">Мітки: %1$s</string>
+  <string name="add_new_tag">Додати мітку</string>
+  <string name="note_type">Тип Запису</string>
+  <string name="sdcard_missing_message">SD картка недоступна бо використовується як пам’ять USB. Для доступу до своїх колод від’єднайте USB.</string>
   <string name="show_whiteboard">Show Whiteboard</string>
   <string name="hide_whiteboard">Hide Whiteboard</string>
   <string name="clear_whiteboard">Clear Whiteboard</string>
   <string name="session_question_limit_reached">Session question limit reached</string>
   <string name="session_time_limit_reached">Session time limit reached</string>
-  <string name="cram_edit_warning">Card editing not allowed while cramming</string>
-  <string name="suspend_leeches">Suspend Leeches</string>
-  <string name="leech_suspend_notification">Card marked as leech and suspended</string>
-  <string name="leech_notification">Card marked as leech</string>
+  <string name="cram_edit_warning">Редагування карток не дозволене під-час зубріння</string>
+  <string name="suspend_leeches">Відкласти липкі картки</string>
+  <string name="leech_suspend_notification">Картку позначено як липка, і відкладено</string>
+  <string name="leech_notification">Картка позначена як липка</string>
   <string name="about_title">Про програму</string>
-  <string name="cardeditor_title_add_note">Add Note</string>
-  <string name="cardeditor_title_edit_card">Edit Note</string>
-  <string name="factadder_saving_error">Error saving note</string>
-  <string name="pref_lang_support">Language</string>
-  <string name="saving_facts">Saving note</string>
+  <string name="cardeditor_title_add_note">Додати Запис</string>
+  <string name="cardeditor_title_edit_card">Редагування Запису</string>
+  <string name="factadder_saving_error">Помилка збереження запису</string>
+  <string name="pref_lang_support">Мова</string>
+  <string name="saving_facts">Збереження запису</string>
   <string name="deck">Deck</string>
-  <string name="add">Add</string>
-  <string name="close">Close</string>
-  <string name="select">Select</string>
-  <string name="saving_changes">Saving changes...</string>
+  <string name="add">Додати</string>
+  <string name="close">Закрити</string>
+  <string name="select">Вибрати</string>
+  <string name="saving_changes">Збереження змін...</string>
   <string name="timebox_reached">Timebox reached!</string>
   <string name="studyoptions_welcome_title">Welcome to AnkiDroid</string>
   <string name="studyoptions_no_external_storage_title">No External Storage Available</string>
   <string name="studyoptions_no_external_storage_message">No external storage is currently available. AnkiDroid needs to have access to the SD card in order to read and load your Anki decks. Check that your SD card is mounted and try again.</string>
-  <string name="fact_adder_intent_title">AnkiDroid Card</string>
+  <string name="fact_adder_intent_title">Картка AnkiDroid</string>
   <string name="fact_adder_swap">Swap</string>
-  <string name="deckpicker_select_dictionary_title">Select Dictionary</string>
-  <string name="deckpicker_select_dictionary_default">Default</string>
+  <string name="deckpicker_select_dictionary_title">Вибрати Словник</string>
+  <string name="deckpicker_select_dictionary_default">За замовчанням</string>
   <string name="card_editor_add_card">Add note</string>
-  <string name="card_editor_reset">Reset</string>
-  <string name="card_editor_copy_card">Copy card</string>
-  <string name="card_editor_reset_card">Reset progress</string>
-  <string name="error_insufficient_memory">Operation not possible due to insufficient memory on your device</string>
-  <string name="tutorial_load">Creating tutorial deck.\nPlease wait...</string>
-  <string name="tutorial_loading_error">Tutorial deck could not be created</string>
-  <string name="rename">Rename</string>
-  <string name="rename_error">Deck %s could not be renamed</string>
-  <string name="help_title">Help</string>
-  <string name="help_online">Online help</string>
+  <string name="card_editor_reset">Скинути</string>
+  <string name="card_editor_copy_card">Копіювати картку</string>
+  <string name="card_editor_reset_card">Скинути поступ</string>
+  <string name="error_insufficient_memory">Дія не можлива через брак пам’яті на вашому пристрої</string>
+  <string name="tutorial_load">Створення навчальної колоди.\n Будь ласка, зачекайте...</string>
+  <string name="tutorial_loading_error">Неможливо створити навчальну колоду</string>
+  <string name="rename">Перейменувати</string>
+  <string name="rename_error">Колода %s не може бути перейменована</string>
+  <string name="help_title">Допомога</string>
+  <string name="help_online">Допомога онлайн</string>
   <string name="help_faq">FAQ</string>
-  <string name="help_tutorial">Tutorial deck</string>
-  <string name="check_db">Check database</string>
-  <string name="check_db_message">Checking database.\nPlease wait...</string>
-  <string name="simple_interface_hint">Empty %s. Bear in mind that simple interface cannot show pictures/sounds etc.</string>
-  <string name="delete_deck">Deleting deck...\nPlease wait.</string>
-  <string name="menu_cardbrowser">Card browser</string>
-  <string name="show_hint">Show Hint</string>
-  <string name="pref_lang_other">Language Preferences</string>
+  <string name="help_tutorial">Навчальна колода</string>
+  <string name="check_db">Перевірити базу даних</string>
+  <string name="check_db_message">Перевірка бази даних.\n Будь ласка, зачекайте...</string>
+  <string name="simple_interface_hint">Спорожнюється %s. Пам’ятайте, що простий інтерфейс не підтримує картинок/звуків та ін.</string>
+  <string name="delete_deck">Видалення колоди...\n Будь ласка, зачекайте.</string>
+  <string name="menu_cardbrowser">Оглядач карток</string>
+  <string name="show_hint">Показати підказку</string>
+  <string name="pref_lang_other">Мовні параметри</string>
   <string name="pref_lang_common">LangCommon</string>
-  <string name="pref_font_UI">Custom UI Font</string>
+  <string name="pref_font_UI">Користувацький шрифт інтерфейсу</string>
   <string name="info_rate">Rate AnkiDroid</string>
   <string-array name="dynOrderLabels">
-    <item>Oldest seen first</item>
-    <item>Random</item>
-    <item>Increasing intervals</item>
-    <item>Decreasing intervals</item>
+    <item>Найстарші спочатку</item>
+    <item>Випадковий порядок</item>
+    <item>Зростаючий інтервал</item>
+    <item>Спадний інтервал</item>
     <item>Most lapses</item>
-    <item>Order added</item>
+    <item>Порядок доданий</item>
     <item>Order due</item>
   </string-array>
   <plurals name="factadder_cards_added">
-    <item quantity="one">1 card added</item>
-    <item quantity="other">%d cards added</item>
+    <item quantity="one">додана 1 картка</item>
+    <item quantity="other">додано %d карток</item>
   </plurals>
 </resources>

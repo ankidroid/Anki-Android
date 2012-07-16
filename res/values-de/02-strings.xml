@@ -51,7 +51,7 @@
   <string name="close">Schließen</string>
   <string name="select">Auswählen</string>
   <string name="saving_changes">Änderungen werden gespeichert…</string>
-  <string name="timebox_reached">Timebox reached!</string>
+  <string name="timebox_reached">Zeitlimit erreicht!</string>
   <string name="studyoptions_welcome_title">Willkommen in AnkiDroid!</string>
   <string name="studyoptions_no_external_storage_title">Externer Speicher nicht verfügbar</string>
   <string name="studyoptions_no_external_storage_message">Kein externer Speicher verfügbar. AnkiDroid braucht Zugang zur SD-Karte um Stapel zu öffnen oder zu lesen. Überprüfen Sie, ob Ihre SD-Karte eingehängt ist und versuchen Sie es erneut.</string>
@@ -81,7 +81,7 @@
   <string name="pref_lang_other">Sprach-Einstellungen</string>
   <string name="pref_lang_common">LangCommon</string>
   <string name="pref_font_UI">Benutzerdefinierte UI-Schriftart</string>
-  <string name="info_rate">Rate AnkiDroid</string>
+  <string name="info_rate">AnkiDroid bewerten</string>
   <string-array name="dynOrderLabels">
     <item>Am frühesten gesehene zuerst</item>
     <item>Zufällig</item>

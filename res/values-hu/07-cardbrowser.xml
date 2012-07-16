@@ -31,8 +31,8 @@
   <string name="delete_card_title">Jegyzet törlése</string>
   <string name="delete_card_message">Tényleg törölni akarod a jegyzet összes kártyáját?\nKereső mező: %s</string>
   <string name="card_browser_show_marked">Megjelöltek szűrése</string>
-  <string name="card_browser_field">Change CardBrowser Field</string>
-  <string name="card_browser_field_title">Change CardBrowser Field</string>
+  <string name="card_browser_field">Kártyaböngésző mező módosítása</string>
+  <string name="card_browser_field_title">Kártyaböngésző mező módosítása</string>
   <string name="card_browser_show_suspended">Szűrés felfüggesztve</string>
   <string name="card_browser_search_by_tag">Címke szerinti szűrés</string>
   <string name="card_browser_tags_shown">Címkék: %1$s</string>

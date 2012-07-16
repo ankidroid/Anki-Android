@@ -246,19 +246,19 @@ public class MyAccount extends AnkiActivity {
         StyledDialog.Builder builder = new StyledDialog.Builder(this);
 
         builder.setTitle(res.getString(R.string.connection_error_title));
-        builder.setIcon(android.R.drawable.ic_dialog_alert);
+        builder.setIcon(R.drawable.ic_dialog_alert);
         builder.setMessage(res.getString(R.string.connection_needed));
         builder.setPositiveButton(res.getString(R.string.ok), null);
         mNoConnectionAlert = builder.create();
 
         builder.setTitle(res.getString(R.string.register_title));
-        builder.setIcon(android.R.drawable.ic_dialog_alert);
+        builder.setIcon(R.drawable.ic_dialog_alert);
         builder.setMessage(res.getString(R.string.register_error));
         builder.setPositiveButton(res.getString(R.string.ok), null);
         mErrorAlert = builder.create();
 
         builder.setTitle(res.getString(R.string.register_title));
-        builder.setIcon(android.R.drawable.ic_dialog_alert);
+        builder.setIcon(R.drawable.ic_dialog_alert);
         builder.setMessage(res.getString(R.string.register_mismatch));
         builder.setPositiveButton(res.getString(R.string.ok), new DialogInterface.OnClickListener() {
 
@@ -274,14 +274,14 @@ public class MyAccount extends AnkiActivity {
 
         builder = new StyledDialog.Builder(this);
         builder.setTitle(res.getString(R.string.log_in));
-        builder.setIcon(android.R.drawable.ic_dialog_alert);
+        builder.setIcon(R.drawable.ic_dialog_alert);
         builder.setMessage(res.getString(R.string.invalid_username_password));
         builder.setPositiveButton(res.getString(R.string.ok), null);
         mInvalidUserPassAlert = builder.create();
 
         builder = new StyledDialog.Builder(this);
         builder.setTitle(res.getString(R.string.connection_error_title));
-        builder.setIcon(android.R.drawable.ic_dialog_alert);
+        builder.setIcon(R.drawable.ic_dialog_alert);
         builder.setMessage(res.getString(R.string.connection_error_message));
         builder.setPositiveButton(res.getString(R.string.retry), new DialogInterface.OnClickListener() {
 

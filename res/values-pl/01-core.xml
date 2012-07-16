@@ -22,7 +22,7 @@
 <resources>
   <string name="btn_continue">Kontynuuj</string>
   <string name="app_name">AnkiDroid</string>
-  <string name="attention">Attention</string>
+  <string name="attention">Uwaga</string>
   <string name="yes">Tak</string>
   <string name="no">Nie</string>
   <string name="ok">OK</string>
@@ -45,7 +45,7 @@
   <string name="card_suspended">Karta zawieszona</string>
   <string name="menu_rotate">Obrót</string>
   <string name="undo">Cofnij</string>
-  <string name="finish_operation">Finishing previous operation (most likely backup creation).\nPlease wait...</string>
+  <string name="finish_operation">Kończenie poprzedniej operacji (najprawdopodobniej tworzenie kopii zapasowej).\nProszę czekać...</string>
   <string name="contextmenu_deckpicker_download_missing_media">Pobierz brakujące media</string>
   <string name="contextmenu_deckpicker_reset_language_assignments">Zresetuj przypisanie języka</string>
   <string name="contextmenu_deckpicker_reset_reset_message">Reset języka</string>
@@ -73,29 +73,29 @@
   <string name="menu_mark_card">Oznacz kartę</string>
   <string name="menu_unmark_card">Odznacz kartę</string>
   <string name="new_deck">Nowa talia</string>
-  <string name="create">Create</string>
+  <string name="create">Utwórz</string>
   <string name="new_dynamic_deck">New dynamic deck</string>
   <string name="studyoptions_feedback">Informacje zwrotne</string>
   <string name="studyoptions_cram_dialog_title">Etykiety do zakuwania</string>
   <string name="studyoptions_load_other_deck">Wczytaj inną talię</string>
-  <string name="studyoptions_load_tutorial_deck">Create tutorial</string>
-  <string name="night_mode">Night mode</string>
+  <string name="studyoptions_load_tutorial_deck">Utwórz samouczek</string>
+  <string name="night_mode">Tryb nocny</string>
   <string name="visit">Odwiedź</string>
   <string name="later">Później</string>
   <string name="download">Pobierz</string>
   <string name="open_collection">Opening collection.\nPlease wait...</string>
-  <string name="create_collection">Creating collection.\nPlease wait...</string>
-  <string name="rebuild_cram_deck">Rebuilding cram deck.\nPlease wait...</string>
-  <string name="rebuild_cram_label">Rebuild</string>
-  <string name="empty_cram_label">Empty</string>
-  <string name="empty_cram_deck">Emptying cram deck.\nPlease wait...</string>
-  <string name="studyoptions_congrats_finished">Congratulations! You have finished for now.</string>
-  <string name="studyoptions_congrats_more_rev">Today\'s review limit has been reached, but there are still cards waiting to be reviewed. For optimum memory, consider increasing the daily limit in the options.</string>
-  <string name="studyoptions_congrats_more_new">There are more new cards available, but the daily limit has been reached. You can increase the limit in the options, but please bear in mind that the more new cards you introduce, the higher your short-term review workload will become.</string>
-  <string name="sd_card_not_mounted">SD card is not mounted.</string>
-  <string name="studyoptions_options">Options</string>
+  <string name="create_collection">Tworzenie kolekcji.\nProszę czekać...</string>
+  <string name="rebuild_cram_deck">Przebudowywanie talii.\nProszę czekać...</string>
+  <string name="rebuild_cram_label">Odbuduj</string>
+  <string name="empty_cram_label">Wyczyść</string>
+  <string name="empty_cram_deck">Czyszczenie talii.\nProszę czekać...</string>
+  <string name="studyoptions_congrats_finished">Gratulacje! Zakończono powtórki na dziś.</string>
+  <string name="studyoptions_congrats_more_rev">Dzisiejszy limit powtórek został wyczerpany ale wciąż pozostają karty do przeglądnięcia. Dla optymalnego zapamiętywania proszę rozważyć zwiększenie dziennego limitu w ustawieniach.</string>
+  <string name="studyoptions_congrats_more_new">Dostępnych jest więcej nowych kart ale dzienny limit został wyczerpany. Możesz powiększyć limit w opcjach ale pamiętaj, że im więcej nowych kart tym większa ilość krótko terminowych powtórek.</string>
+  <string name="sd_card_not_mounted">Brak karty SD.</string>
+  <string name="studyoptions_options">Opcje</string>
   <string name="empty_cloze_warning">Please edit this note and add some cloze deletions. (%1$s)</string>
-  <string name="help_cloze">help</string>
+  <string name="help_cloze">pomoc</string>
   <string-array name="next_review_s">
     <item>1 sekunda</item>
     <item>1 minuta</item>
@@ -113,8 +113,8 @@
     <item>%s lat</item>
   </string-array>
   <plurals name="deckpicker_title">
-    <item quantity="one">1 of %2$d due (%3$s)</item>
-    <item quantity="other">%1$d of %2$d due (%3$s)</item>
+    <item quantity="one">1 z %2$d zaległych (%3$s)</item>
+    <item quantity="other">%1$d z %2$d zaległych (%3$s)</item>
   </plurals>
   <plurals name="deckpicker_title_minutes">
     <item quantity="one">1 min.</item>
@@ -125,19 +125,19 @@
     <item quantity="other">%1$d z %2$d zaległych</item>
   </plurals>
   <plurals name="reviewer_window_title">
-    <item quantity="one">1 minute left</item>
-    <item quantity="other">%d minutes left</item>
+    <item quantity="one">Została 1 minuta</item>
+    <item quantity="other">Pozostało minut: %d</item>
   </plurals>
   <plurals name="studyoptions_congrats_message">
     <item quantity="one">Tomorrow there will be: 1 card to review and %2$s.\n Estimated time: %3$s</item>
     <item quantity="other">Tomorrow there will be: %1$d cards to review and %2$s.\n Estimated time: %3$s</item>
   </plurals>
   <plurals name="studyoptions_congrats_new_cards">
-    <item quantity="one">1 new card</item>
+    <item quantity="one">1 nowa karta</item>
     <item quantity="other">%1$d nowych kart</item>
   </plurals>
   <plurals name="studyoptions_congrats_eta">
-    <item quantity="one">Estimated time: 1 min.</item>
-    <item quantity="other">Estimated time: %1$d min.</item>
+    <item quantity="one">Szacowany czas: 1 min.</item>
+    <item quantity="other">Szacowany czas: %1$d min.</item>
   </plurals>
 </resources>

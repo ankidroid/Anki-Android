@@ -333,6 +333,11 @@ public class CardEditor extends Activity {
         mModelButton = (TextView) findViewById(R.id.CardEditorModelText);
         mTagsButton = (TextView) findViewById(R.id.CardEditorTagText);
         mSwapButton = (Button) findViewById(R.id.CardEditorSwapButton);
+        mSwapButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+            	swapText(false);
+            }
+        });
 
         mAedictIntent = false;
 

@@ -23,7 +23,7 @@
   <string name="CardEditorCancelButton">Mégse</string>
   <string name="CardEditorSaveButton">Mentés</string>
   <string name="CardEditorLaterButton">Később</string>
-  <string name="CardEditorLaterMessage">Saved information for later</string>
+  <string name="CardEditorLaterMessage">Információk mentése későbbre</string>
   <string name="CardEditorCardDeck">Kártya pakli: %s</string>
   <string name="CardEditorNoteDeck">Jegyzet pakli: %s</string>
   <string name="CardEditorModel">Jegyzet típusa: %s</string>
@@ -44,14 +44,14 @@
   <string name="cardeditor_title_add_note">Jegyzet hozzáadása</string>
   <string name="cardeditor_title_edit_card">Jegyzet szerkesztése</string>
   <string name="factadder_saving_error">Hiba a jegyzet mentése közben</string>
-  <string name="pref_lang_support">Language</string>
+  <string name="pref_lang_support">Nyelv</string>
   <string name="saving_facts">Jegyzet mentése</string>
   <string name="deck">Pakli</string>
   <string name="add">Hozzáadás</string>
   <string name="close">Bezárás</string>
   <string name="select">Kiválasztás</string>
   <string name="saving_changes">Módosítások mentése...</string>
-  <string name="timebox_reached">Timebox reached!</string>
+  <string name="timebox_reached">Időkeret letelt!</string>
   <string name="studyoptions_welcome_title">Üdv az AnkiDroidban!</string>
   <string name="studyoptions_no_external_storage_title">Külső tároló nem elérhető</string>
   <string name="studyoptions_no_external_storage_message">Külső tároló jelenleg nem elérhető. Az AnkiDroid-nak hozzá kell férnie az SD kártyához az Anki paklik olvasásához és írásához. Ellenőrizd, hogy az SD kártya megfelelően rendelkezére áll, és próbáld megint.</string>
@@ -76,20 +76,20 @@
   <string name="check_db_message">Adatbázis ellenőrzése.\nKérlek, várj...</string>
   <string name="simple_interface_hint">Üres %s. Tarsd szem előtt, hogy az egyszerű felület nem tud képeket/hangokat/stb. megjeleníteni.</string>
   <string name="delete_deck">Pakli törlése...\nKérlek, várj...</string>
-  <string name="menu_cardbrowser">Card browser</string>
-  <string name="show_hint">Show Hint</string>
-  <string name="pref_lang_other">Language Preferences</string>
+  <string name="menu_cardbrowser">Kártya böngésző</string>
+  <string name="show_hint">Leírás mutatása</string>
+  <string name="pref_lang_other">Nyelvi beállítások</string>
   <string name="pref_lang_common">LangCommon</string>
-  <string name="pref_font_UI">Custom UI Font</string>
-  <string name="info_rate">Rate AnkiDroid</string>
+  <string name="pref_font_UI">Saját UI betűkészlet</string>
+  <string name="info_rate">AnkiDroid értékelése</string>
   <string-array name="dynOrderLabels">
     <item>Legrégebbi látott először</item>
     <item>Véletlenszerű</item>
     <item>Növekvő időközök</item>
     <item>Csökkenő időközök</item>
     <item>Legtöbb hiba</item>
-    <item>Order added</item>
-    <item>Order due</item>
+    <item>Rendezés hozzáadva</item>
+    <item>Rendezési szempont</item>
   </string-array>
   <plurals name="factadder_cards_added">
     <item quantity="one">1 kártya hozzáadva</item>

@@ -21,6 +21,8 @@
 import pycurl
 import StringIO
 import sys
+import string
+import os
 
 CROWDIN_KEY = ''
 PROJECT_IDENTIFIER = 'ankidroid'
@@ -34,6 +36,8 @@ alllang = ['ar', 'ca', 'cs', 'de', 'el', 'es-ES', 'fi', 'fr', 'hu', 'id', 'it', 
 def uploadtranslation(language, filename, sourcefile):
 	if len(language) > 2:
 		pathlan = string.replace(language, '-', '-r')
+		if not os.path.exists('../res/values-' + pathlan):
+			pathlan = pathlan[:2]
 	else:
 		pathlan = language
 	path = '../res/values-' + pathlan + '/'
@@ -49,7 +53,7 @@ def uploadtranslation(language, filename, sourcefile):
 	if filename:
 		if language:
 			c = pycurl.Curl()
-			fields = [('files['+filename+']', (c.FORM_FILE, path + sourcefile + '.xml')), ('language', language), ('auto_approve_imported','0')]
+			fields = [('files['+filename+']', (c.FORM_FILE, path + sourcefile + '.xml')), ('language', language), ('auto_approve_imported','0'), ('import_eq_suggestions','0')]
 			c.setopt(pycurl.URL, 'http://crowdin.net/api/project/' + PROJECT_IDENTIFIER + '/upload-translation?key=' + CROWDIN_KEY)
 			c.setopt(pycurl.HTTPPOST, fields)
 			b = StringIO.StringIO()
@@ -119,7 +123,7 @@ elif sel == 't':
 				for s in files:
 					uploadtranslation(language, s, s)
 			else:
-				uploadtranslation(language, files[int(selu)-1], s)
+				uploadtranslation(language, files[int(selu)-1], sourcefile)
 	elif selu == 'all':
 		for s in files:
 			uploadtranslation(language, s, s)

@@ -1695,7 +1695,7 @@ public class Reviewer extends AnkiActivity {
         Resources res = getResources();
         StyledDialog.Builder builder = new StyledDialog.Builder(this);
         builder.setTitle(res.getString(R.string.delete_card_title));
-        builder.setIcon(android.R.drawable.ic_dialog_alert);
+        builder.setIcon(R.drawable.ic_dialog_alert);
         builder.setMessage(String.format(res.getString(R.string.delete_note_message),
                 Utils.stripHTML(mCurrentCard.getQuestion(true))));
         builder.setPositiveButton(res.getString(R.string.yes), new DialogInterface.OnClickListener() {
