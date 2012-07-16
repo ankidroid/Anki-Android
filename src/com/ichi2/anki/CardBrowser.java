@@ -56,6 +56,7 @@ import android.widget.TextView;
 import com.ichi2.anim.ActivityTransitionAnimation;
 import com.ichi2.async.DeckTask;
 import com.ichi2.libanki.Card;
+import com.ichi2.libanki.CardStats;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Note;
 import com.ichi2.themes.StyledDialog;
@@ -207,7 +208,7 @@ public class CardBrowser extends Activity {
     				Card tempCard = mCol.getCard(Long.parseLong(mCards.get(mPositionInCardsList).get("id")));
     				Themes.htmlOkDialog(CardBrowser.this, 
     						getResources().getString(R.string.card_browser_card_details), 
-    						tempCard.getCardDetails(CardBrowser.this)).show();
+    						CardStats.report(CardBrowser.this, tempCard, mCol)).show();
                     return;
             }
         }
