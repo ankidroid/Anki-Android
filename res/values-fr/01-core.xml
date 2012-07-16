@@ -45,7 +45,7 @@
   <string name="card_suspended">Carte re-suspendue</string>
   <string name="menu_rotate">Changer d\'orientation</string>
   <string name="undo">Annuler</string>
-  <string name="finish_operation">Finishing previous operation (most likely backup creation).\nPlease wait...</string>
+  <string name="finish_operation">Opération précédente en cours de terminaison (probablement une sauvegarde). \nVeuillez patienter...</string>
   <string name="contextmenu_deckpicker_download_missing_media">Télécharger les médias manquants</string>
   <string name="contextmenu_deckpicker_reset_language_assignments">Réinitialiser les affectations de langue</string>
   <string name="contextmenu_deckpicker_reset_reset_message">Réinitialiser la langue</string>

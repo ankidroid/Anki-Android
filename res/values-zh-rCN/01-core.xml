@@ -87,7 +87,7 @@
   <string name="create_collection">Creating collection.\nPlease wait...</string>
   <string name="rebuild_cram_deck">Rebuilding cram deck.\nPlease wait...</string>
   <string name="rebuild_cram_label">重建</string>
-  <string name="empty_cram_label">Empty</string>
+  <string name="empty_cram_label">空</string>
   <string name="empty_cram_deck">Emptying cram deck.\nPlease wait...</string>
   <string name="studyoptions_congrats_finished">恭喜!你已经完成了今天的计划。</string>
   <string name="studyoptions_congrats_more_rev">Today\'s review limit has been reached, but there are still cards waiting to be reviewed. For optimum memory, consider increasing the daily limit in the options.</string>
@@ -95,7 +95,7 @@
   <string name="sd_card_not_mounted">未装入SD卡。</string>
   <string name="studyoptions_options">选项</string>
   <string name="empty_cloze_warning">Please edit this note and add some cloze deletions. (%1$s)</string>
-  <string name="help_cloze">help</string>
+  <string name="help_cloze">帮助</string>
   <string-array name="next_review_s">
     <item>1秒</item>
     <item>1分钟</item>

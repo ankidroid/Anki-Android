@@ -70,14 +70,14 @@
   </string-array>
   <string-array name="gestures_labels">
     <item>Aucune action</item>
-    <item>Show answer</item>
+    <item>Afficher la réponse</item>
     <item>Answer button 1</item>
     <item>Answer button 2</item>
     <item>Answer button 3</item>
     <item>Answer button 4</item>
     <item>Answer recommended (green)</item>
     <item>Answer better than recommended</item>
-    <item>Undo</item>
+    <item>Annuler</item>
     <item>Modifier la carte</item>
     <item>Marquer la carte</item>
     <item>Rechercher l\'expression</item>
@@ -120,6 +120,6 @@
     <item>Review ahead by two days</item>
     <item>Review due cards with tag</item>
     <item>Review due cards with decreasing intervals</item>
-    <item>Cram all cards</item>
+    <item>Bachoter toutes les cartes</item>
   </string-array>
 </resources>

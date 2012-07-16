@@ -58,7 +58,7 @@
   <string name="card_browser_filtering_cards">Filtering cards.\nPlease wait...</string>
   <string name="card_details_card_model">Modèle de carte</string>
   <string-array name="card_browser_order_labels">
-    <item>No sorting (faster)</item>
+    <item>Pas de tri (plus rapide)</item>
     <item>By search field</item>
     <item>Par échéance</item>
   </string-array>

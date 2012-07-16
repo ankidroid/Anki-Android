@@ -87,7 +87,7 @@
   <string name="sync_conflict_title">Conflito de sincronização</string>
   <string name="sync_no_changes_message">Não foram encontradas alterações.</string>
   <string name="sync_database_success">Coleção sincronizada com êxito</string>
-  <string name="sync_log_error_fix">A syncing error occurred%s.\n\nIf this happens consistently, you can do a full sync, which will probably fix the problem. Be aware that it will overwrite either your local collection or the one on AnkiWeb.\nIf you really want to do full sync, please choose if you want to upload your local collection or to download from the server.</string>
+  <string name="sync_log_error_fix">Ocorreu um erro ao sincronizar %s.\n\n Caso isso ocorra constantemente você pode fazer uma sincronia completa que provavelmente irá consertar o problema. Esteja ciente que isso ou irá sobrescrever sua coleção local ou aquela na AnkiWeb.\n Se desejas realmente fazer uma sincronia completa, por favor escolha se você quer fazer o  upload da sua coleção local ou o download do servidor.</string>
   <string name="sync_log_error_specific">Erro de Sincronização, tipo:%1$s, mensagem:%2$s</string>
   <string name="sync_corrupt_database">Seu banco de dados está corrompido. Por favor corrija-o antes de tentar novamente a sincronização.\n\nVeja %s para obter informações sobre como reparar o banco de dados.</string>
   <string name="sync_too_busy">Servidor ocupado. Tente novamente mais tarde.</string>
