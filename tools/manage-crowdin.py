@@ -49,7 +49,7 @@ def uploadtranslation(language, filename, sourcefile):
 	if filename:
 		if language:
 			c = pycurl.Curl()
-			fields = [('files['+filename+']', (c.FORM_FILE, path + sourcefile + '.xml')), ('language', language), ('auto_approve_imported','0')]
+			fields = [('files['+filename+']', (c.FORM_FILE, path + sourcefile + '.xml')), ('language', language), ('auto_approve_imported','0'), ('import_eq_suggestions','0')]
 			c.setopt(pycurl.URL, 'http://crowdin.net/api/project/' + PROJECT_IDENTIFIER + '/upload-translation?key=' + CROWDIN_KEY)
 			c.setopt(pycurl.HTTPPOST, fields)
 			b = StringIO.StringIO()
