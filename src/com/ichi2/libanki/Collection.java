@@ -345,7 +345,7 @@ public class Collection {
     public void reopen() {
         if (mDb == null) {
             mDb = AnkiDatabaseManager.getDatabase(mPath);
-            // mMedia.connect();
+            mMedia.connect();
         }
     }
 
@@ -833,7 +833,6 @@ public class Collection {
         // remove cards
         _logRem(ids, Sched.REM_CARD);
         mDb.execute("DELETE FROM cards WHERE id IN " + sids);
-        mDb.execute("DELETE FROM revlog WHERE cid IN " + sids);
         // then notes
         if (!notes) {
         	return;
@@ -1310,7 +1309,6 @@ public class Collection {
     			ids.add(c4.getId());
         		}
     		mDb.execute("DELETE FROM graves WHERE oid IN " + Utils.ids2str(Utils.arrayList2array(ids)));
-    		mDb.executeMany("INSERT INTO revlog VALUES (?,?,?,?,?,?,?,?,?)", (ArrayList<Object[]>) data[4]);
     		return (Long) data[3];
 
     	case UNDO_MARK_NOTE:
@@ -1343,7 +1341,7 @@ public class Collection {
     		mUndo.add(new Object[]{type, o[0], o[1]});
     		break;
     	case UNDO_DELETE_NOTE:
-    		mUndo.add(new Object[]{type, o[0], o[1], o[2], o[3]});
+    		mUndo.add(new Object[]{type, o[0], o[1], o[2]});
     		break;
     	case UNDO_MARK_NOTE:
     		mUndo.add(new Object[]{type, o[0], o[1], o[2]});

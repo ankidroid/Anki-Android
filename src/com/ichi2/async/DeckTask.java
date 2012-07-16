@@ -533,34 +533,13 @@ public class DeckTask extends
 					break;
 				case 3:
 					// collect undo information
-					Cursor cur = null;
 					ArrayList<Card> allCs = note.cards();
 					long[] cardIds = new long[allCs.size()];
 					for (int i = 0; i < allCs.size(); i++) {
 						cardIds[i] = allCs.get(i).getId();
 					}
-					ArrayList<Object[]> revLogData = new ArrayList<Object[]>();
-					try {
-						cur = col
-								.getDb()
-								.getDatabase()
-								.rawQuery(
-										"SELECT * FROM revlog WHERE cid IN "
-												+ Utils.ids2str(cardIds), null);
-						while (cur.moveToNext()) {
-							revLogData.add(new Object[] { cur.getLong(0),
-									cur.getLong(1), cur.getInt(2),
-									cur.getInt(3), cur.getInt(4),
-									cur.getInt(5), cur.getInt(6),
-									cur.getInt(7), cur.getInt(8) });
-						}
-					} finally {
-						if (cur != null && !cur.isClosed()) {
-							cur.close();
-						}
-					}
 					col.markUndo(Collection.UNDO_DELETE_NOTE, new Object[] {
-							note, allCs, card.getId(), revLogData });
+							note, allCs, card.getId() });
 					// delete note
 					col.remNotes(new long[] { note.getId() });
 					break;

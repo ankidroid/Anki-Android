@@ -65,7 +65,7 @@ public class Media {
 
     private static final Pattern fMediaRegexps[] = { Pattern.compile("(?i)(\\[sound:([^]]+)\\])"),
             Pattern.compile("(?i)(<img[^>]+src=[\"']?([^\"'>]+)[\"']?[^>]*>)") };
-    private static final Pattern fSoundRegexps = Pattern.compile("\\[sound:.*?\\]");
+    private static final Pattern fSoundRegexps = Pattern.compile("\\[sound:(.*?)\\]");
     private static final Pattern fRemoteFilePattern = Pattern.compile("(https?|ftp)://");
     private static final Pattern fDangerousCharacters = Pattern.compile("[]\\[<>:/\\\\&?\\\"\\|]");
     private static final Pattern fFileOrdinal = Pattern.compile(" \\((\\d+)\\)$");
@@ -95,7 +95,7 @@ public class Media {
     }
 
 
-    private void connect() {
+    public void connect() {
         File mediaDbFile = new File(mMediaDbFilename);
         if (!mediaDbFile.exists()) {
             // Copy an empty collection file from the assets to the SD card.
