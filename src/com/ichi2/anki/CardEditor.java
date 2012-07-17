@@ -150,7 +150,6 @@ public class CardEditor extends Activity {
      * Broadcast that informs us when the sd card is about to be unmounted
      */
     private BroadcastReceiver mUnmountReceiver = null;
-    private StyledOpenCollectionDialog mNotMountedDialog;
     private Bundle mSavedInstanceState;
 
     private LinearLayout mFieldsLayoutContainer;
@@ -193,6 +192,7 @@ public class CardEditor extends Activity {
     private StyledDialog mTagsDialog;
 
     private StyledProgressDialog mProgressDialog;
+    private StyledOpenCollectionDialog mOpenCollectionDialog;
 
     // private String mSourceLanguage;
     // private String mTargetLanguage;
@@ -318,11 +318,11 @@ public class CardEditor extends Activity {
             // save information without showing card editor
         	fetchIntentInformation(intent);
             MetaDB.saveIntentInformation(CardEditor.this, Utils.joinFields(mSourceText));
-            Themes.showThemedToast(CardEditor.this, getResources().getString(R.string.CardEditorLaterMessage), false);
+            Themes.showThemedToast(CardEditor.this, getResources().getString(R.string.app_name) + ": " + getResources().getString(R.string.CardEditorLaterMessage), false);
         	finish();
         	return;
         }
-        
+
         mCol = Collection.currentCollection();
         if (mCol == null) {
             reloadCollection(savedInstanceState);
@@ -607,9 +607,9 @@ public class CardEditor extends Activity {
 
                     @Override
                     public void onPostExecute(DeckTask.TaskData result) {
-                        if (mProgressDialog.isShowing()) {
+                        if (mOpenCollectionDialog.isShowing()) {
                             try {
-                                mProgressDialog.dismiss();
+                            	mOpenCollectionDialog.dismiss();
                             } catch (Exception e) {
                                 Log.e(AnkiDroidApp.TAG, "onPostExecute - Dialog dismiss Exception = " + e.getMessage());
                             }
@@ -626,13 +626,12 @@ public class CardEditor extends Activity {
 
                     @Override
                     public void onPreExecute() {
-                        mProgressDialog = StyledProgressDialog.show(CardEditor.this, "",
-                                getResources().getString(R.string.open_collection), true, true, new OnCancelListener() {
-                                    @Override
-                                    public void onCancel(DialogInterface arg0) {
-                                        finish();
-                                    }
-                                });
+                    	mOpenCollectionDialog = StyledOpenCollectionDialog.show(CardEditor.this, getResources().getString(R.string.open_collection), new OnCancelListener() {
+                            @Override
+                            public void onCancel(DialogInterface arg0) {
+                                finish();
+                            }
+                        });
                     }
 
 
