@@ -192,7 +192,7 @@
         <item name="android:checkMark">@drawable/blue_btn_radio</item>
     </style>
 
-    <style name="White.ActionBarStyle" parent="android:style/Widget.Holo.ActionBar">
+    <style name="White.ActionBarStyle" parent="@android:style/Widget.Holo.ActionBar">
        <item name="android:background">#f5f5f5</item>
        
     </style>
