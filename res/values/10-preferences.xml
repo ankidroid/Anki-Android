@@ -308,6 +308,7 @@
 <string name="pref_show_splashscreen_summ">Show splash screen</string>
 <string name="pref_intent_add_instant">Instant add</string>
 <string name="pref_intent_add_instant_summ">Add new cards from dictionaries without opening AnkiDroid. You find them later under \'saved data\' in card adder.</string>
+<string name="pref_cat_intent_add">External data addition</string>
 
 
 </resources>
