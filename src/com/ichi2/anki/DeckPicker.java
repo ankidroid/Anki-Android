@@ -543,7 +543,7 @@ public class DeckPicker extends FragmentActivity {
                     public void onCancel(DialogInterface arg0) {
                         // TODO: close dbs?
                         DeckTask.cancelTask();
-                        finish();
+                        finishWithAnimation();
                     }
                 });
         	}
@@ -720,7 +720,7 @@ public class DeckPicker extends FragmentActivity {
             }
             reloadIntent.addCategory(Intent.CATEGORY_LAUNCHER);
             reloadIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            finish();
+            finishWithAnimation();
             startActivityIfNeeded(reloadIntent, 0);
         }
 
@@ -1160,13 +1160,13 @@ public class DeckPicker extends FragmentActivity {
                 builder.setNegativeButton(res.getString(R.string.close), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        finish();
+                        finishWithAnimation();
                     }
                 });
                 builder.setOnCancelListener(new OnCancelListener() {
                     @Override
                     public void onCancel(DialogInterface dialog) {
-                        finish();
+                        finishWithAnimation();
                     }
                 });
                 dialog = builder.create();
@@ -1202,7 +1202,7 @@ public class DeckPicker extends FragmentActivity {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                     	if (mCol == null) {
-                    		finish();
+                    		finishWithAnimation();
                     	}
                     }
                 });
@@ -1475,7 +1475,7 @@ public class DeckPicker extends FragmentActivity {
 
                         @Override
                         public void onCancel(DialogInterface arg0) {
-                            finish();
+                            finishWithAnimation();
                         }
                     });
             	}
@@ -1488,7 +1488,7 @@ public class DeckPicker extends FragmentActivity {
                 builder.setPositiveButton(res.getString(R.string.ok), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        finish();
+                        finishWithAnimation();
                     }
                 });
                 // builder.setNegativeButton(res.getString(R.string.dont_show_again), new
@@ -1502,7 +1502,7 @@ public class DeckPicker extends FragmentActivity {
                 builder.setOnCancelListener(new OnCancelListener() {
                     @Override
                     public void onCancel(DialogInterface arg0) {
-                        finish();
+                        finishWithAnimation();
                     }
                 });
                 dialog = builder.create();
@@ -1728,15 +1728,18 @@ public class DeckPicker extends FragmentActivity {
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
             Log.i(AnkiDroidApp.TAG, "DeckPicker - onBackPressed()");
-            finish();
-            if (UIUtils.getApiLevel() > 4) {
-                ActivityTransitionAnimation.slide(this, ActivityTransitionAnimation.DIALOG_EXIT);
-            }
+            finishWithAnimation();
             return true;
         }
         return super.onKeyDown(keyCode, event);
     }
 
+    private void finishWithAnimation() {
+        finish();
+        if (UIUtils.getApiLevel() > 4) {
+            ActivityTransitionAnimation.slide(this, ActivityTransitionAnimation.DIALOG_EXIT);
+        }
+    }
 
     // ----------------------------------------------------------------------------
     // CUSTOM METHODS
@@ -2124,13 +2127,17 @@ public class DeckPicker extends FragmentActivity {
         } else if (requestCode == REPORT_ERROR) {
             showStartupScreensAndDialogs(AnkiDroidApp.getSharedPrefs(getBaseContext()), 4);
         } else if (requestCode == SHOW_INFO_UPGRADE_DECKS) {
-            showStartupScreensAndDialogs(AnkiDroidApp.getSharedPrefs(getBaseContext()), 3);
+        	if (resultCode == RESULT_CANCELED) {
+        		finishWithAnimation();
+        	} else {
+                showStartupScreensAndDialogs(AnkiDroidApp.getSharedPrefs(getBaseContext()), 3);        		
+        	}
         } else if (requestCode == SHOW_INFO_WELCOME || requestCode == SHOW_INFO_NEW_VERSION) {
             if (resultCode == RESULT_OK) {
                 showStartupScreensAndDialogs(AnkiDroidApp.getSharedPrefs(getBaseContext()),
                         requestCode == SHOW_INFO_WELCOME ? 1 : 2);
             } else {
-                finish();
+                finishWithAnimation();
             }
         } else if (requestCode == PREFERENCES_UPDATE) {
             String newLanguage = AnkiDroidApp.getSharedPrefs(this).getString("language", "");
@@ -2141,7 +2148,7 @@ public class DeckPicker extends FragmentActivity {
             restorePreferences();
             // if (resultCode == StudyOptions.RESULT_RESTART) {
             // setResult(StudyOptions.RESULT_RESTART);
-            // finish();
+            // finishWithAnimation();
             // } else {
             // SharedPreferences preferences = PrefSettings.getSharedPrefs(getBaseContext());
             // BackupManager.initBackup();
@@ -2406,7 +2413,7 @@ public class DeckPicker extends FragmentActivity {
     // .getLaunchIntentForPackage(getBaseContext().getPackageName());
     // mCompat.invalidateOptionsMenu(this);
     // MetaDB.closeDB();
-    // StudyOptions.this.finish();
+    // StudyOptions.this.finishWithAnimation();
     // startActivity(i);
     // }
 

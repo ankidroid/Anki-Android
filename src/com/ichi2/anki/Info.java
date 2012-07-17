@@ -322,6 +322,7 @@ public class Info extends Activity {
             if (data.success) {
             	ArrayList<String> failed = (ArrayList<String>) data.data[0];
             	if (failed.size() == 0) {
+            		setResult(RESULT_OK);
                     finish();
                     if (UIUtils.getApiLevel() > 4) {
                         ActivityTransitionAnimation.slide(Info.this, ActivityTransitionAnimation.LEFT);
@@ -339,11 +340,13 @@ public class Info extends Activity {
 
 						@Override
 						public void onClick(DialogInterface dialog, int which) {
+		            		setResult(RESULT_OK);
 		                    finish();
 		                    if (UIUtils.getApiLevel() > 4) {
 		                        ActivityTransitionAnimation.slide(Info.this, ActivityTransitionAnimation.LEFT);
 		                    }
 						}});
+                    builder.setCancelable(false);
                     builder.show();
             	}
             } else {
