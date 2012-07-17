@@ -298,7 +298,7 @@ public class Decks {
                 }
             } else {
                 for (JSONObject x : mDecks.values()) {
-                    if (!x.getBoolean("dyn")) {
+                    if (x.getInt("dyn") == 0) {
                         list.add(x.getString("name"));
                     }
                 }
