@@ -17,16 +17,22 @@
 
 package com.ichi2.anki;
 
+import java.io.File;
+import java.util.ArrayList;
+
 import com.ichi2.anki.R;
 
 import com.ichi2.anim.ActivityTransitionAnimation;
 import com.ichi2.async.Connection;
+import com.ichi2.async.Connection.OldAnkiDeckFilter;
 import com.ichi2.async.Connection.Payload;
 import com.ichi2.themes.StyledDialog;
 import com.ichi2.themes.StyledProgressDialog;
 import com.ichi2.themes.Themes;
 
 import android.app.Activity;
+import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences.Editor;
 import android.content.res.Resources;
@@ -196,7 +202,14 @@ public class Info extends Activity {
 
             case TYPE_UPGRADE_DECKS:
                 sb.append("<html><body>");
-                sb.append(res.getString(R.string.upgrade_decks_message));
+                File[] fileList = (new File(AnkiDroidApp.getDefaultAnkiDroidDirectory())).listFiles(new OldAnkiDeckFilter());
+                StringBuilder fsb = new StringBuilder();
+                fsb.append("<ul>");
+                for (File f : fileList) {
+                	fsb.append("<li>").append(f.getName().replace(".anki", "")).append("</li>");
+                }
+            	fsb.append("</ul>");
+                sb.append(res.getString(R.string.upgrade_decks_message, fsb.toString()));
                 sb.append("<ul><li>");
                 sb.append(res.getString(R.string.upgrade_decks_message_pos1,
                         AnkiDroidApp.getDefaultAnkiDroidDirectory()));
@@ -204,7 +217,9 @@ public class Info extends Activity {
                 sb.append(res.getString(R.string.upgrade_decks_message_pos2, res.getString(R.string.link_anki)));
                 sb.append("</li><li>");
                 sb.append(res.getString(R.string.upgrade_decks_message_pos3));
-                sb.append("</li></ul></body></html>");
+                sb.append("</li></ul>");
+                sb.append(res.getString(R.string.upgrade_decks_message_finish));
+                sb.append("</body></html>");
                 mWebView.loadDataWithBaseURL("", sb.toString(), "text/html", "utf-8", null);
                 // add upgrade button
                 Button but = (Button) findViewById(R.id.info_tutorial);
@@ -295,6 +310,7 @@ public class Info extends Activity {
         @Override
         public void onPostExecute(Payload data) {
             Log.i(AnkiDroidApp.TAG, "Info: UpgradeDecks - onPostExecute, succes = " + data.success);
+        	Resources res = getResources();
             try {
                 if (mProgressDialog != null && mProgressDialog.isShowing()) {
                     mProgressDialog.dismiss();
@@ -304,12 +320,39 @@ public class Info extends Activity {
             }
 
             if (data.success) {
-                finish();
-                if (UIUtils.getApiLevel() > 4) {
-                    ActivityTransitionAnimation.slide(Info.this, ActivityTransitionAnimation.LEFT);
-                }
+            	ArrayList<String> failed = (ArrayList<String>) data.data[0];
+            	if (failed.size() == 0) {
+                    finish();
+                    if (UIUtils.getApiLevel() > 4) {
+                        ActivityTransitionAnimation.slide(Info.this, ActivityTransitionAnimation.LEFT);
+                    }
+            	} else {
+                    StyledDialog.Builder builder = new StyledDialog.Builder(Info.this);
+                    builder.setTitle(res.getString(R.string.connection_error_title));
+                    builder.setIcon(R.drawable.ic_dialog_alert);
+                    StringBuilder sbb = new StringBuilder();
+                    for (String s : failed) {
+                    	sbb.append("\u2022 ").append(s).append("\n");
+                    }
+                    builder.setMessage(res.getString(R.string.upgrade_decks_failed, sbb.toString()));
+                    builder.setPositiveButton(res.getString(R.string.ok), new Dialog.OnClickListener() {
+
+						@Override
+						public void onClick(DialogInterface dialog, int which) {
+		                    finish();
+		                    if (UIUtils.getApiLevel() > 4) {
+		                        ActivityTransitionAnimation.slide(Info.this, ActivityTransitionAnimation.LEFT);
+		                    }
+						}});
+                    builder.show();
+            	}
             } else {
-                // TODO: show error message
+                StyledDialog.Builder builder = new StyledDialog.Builder(Info.this);
+                builder.setTitle(res.getString(R.string.connection_error_title));
+                builder.setIcon(R.drawable.ic_dialog_alert);
+                builder.setMessage((String) data.data[0]);
+                builder.setPositiveButton(res.getString(R.string.ok), null);
+                builder.show();
             }
         }
 

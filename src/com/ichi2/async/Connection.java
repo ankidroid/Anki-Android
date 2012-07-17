@@ -404,6 +404,16 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
             } finally {
                 AnkiDatabaseManager.closeDatabase(colFilename);
             }
+            Collection col = Collection.openCollection(colFilename);
+            ArrayList<String> decks = col.getDecks().allNames(false);
+            ArrayList<String> failed = new ArrayList<String>();
+            for (File f : fileList) {
+            	String name = f.getName().replace(".anki", "");
+            	if (!decks.contains(name)) {
+            		failed.add(name);
+            	}
+            }
+            data.data = new Object[] { failed };
             data.success = true;
             return data;
         } catch (FileNotFoundException e) {
