@@ -333,7 +333,7 @@ public class Info extends Activity {
                     builder.setIcon(R.drawable.ic_dialog_alert);
                     StringBuilder sbb = new StringBuilder();
                     for (String s : failed) {
-                    	sbb.append("\u2022 ").append(s).append("\n");
+                    	sbb.append(" \u2022 ").append(s).append("\n");
                     }
                     builder.setMessage(res.getString(R.string.upgrade_decks_failed, sbb.toString()));
                     builder.setPositiveButton(res.getString(R.string.ok), new Dialog.OnClickListener() {

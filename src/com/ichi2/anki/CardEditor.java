@@ -479,6 +479,15 @@ public class CardEditor extends Activity {
             });
         } else {
             setTitle(R.string.cardeditor_title_edit_card);
+            mSwapButton.setVisibility(View.GONE);
+            mSwapButton = (Button) findViewById(R.id.CardEditorLaterButton);
+            mSwapButton.setVisibility(View.VISIBLE);
+            mSwapButton.setText(getResources().getString(R.string.fact_adder_swap));
+            mSwapButton.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
+                	swapText(false);
+                }
+            });
         }
 
         ((LinearLayout) findViewById(R.id.CardEditorDeckButton)).setOnClickListener(new View.OnClickListener() {
