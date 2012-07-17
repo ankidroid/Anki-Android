@@ -2172,7 +2172,7 @@ public class DeckPicker extends FragmentActivity {
                     i.putExtra("onlyFnsMsg", true);
                     startActivityForResult(i, SHOW_STUDYOPTIONS);
                     if (UIUtils.getApiLevel() > 4) {
-                        ActivityTransitionAnimation.slide(this, ActivityTransitionAnimation.LEFT);
+                        ActivityTransitionAnimation.slide(this, ActivityTransitionAnimation.RIGHT);
                     }
                     break;
             }
