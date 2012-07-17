@@ -20,17 +20,6 @@
 -->
 <resources>
 
-<!-- AnkiDroid.java -->
-<!--<string name="loading_new_card">Loading new card...</string>-->
-<string name="loading_deck">Loading deck. Please wait...</string>
-<!--<string name="connection_unsuccessful">The connection was unsuccessful. Check your connection settings and try again, please.</string>-->
-<string name="connection_needed">You are currently offline.</string>
-<!--<string name="study_options">Study Options</string>-->
-<!--<string name="suspend">Suspend</string>-->
-<!--<string name="edit_card">Edit Card</string>-->
-<!--<string name="switch_another_deck">Switch to another deck</string>-->
-
-<!-- PersonalDeckPicker.java -->
 <string name="currently_downloading">Currently downloading</string>
 <string name="starting_download">Starting download...</string>
 <string name="downloading">Downloading...</string>
@@ -44,22 +33,11 @@
 <string name="cancel">Cancel</string>
 <string name="download_overwrite">Overwrite</string>
 <string name="download_cancel">Cancel Download</string>
-<string name="download_message">Deck %1$s already exists in Local. Do you want to overwrite?</string>
+
 
 <!-- SharedDeckPicker.java -->
 <string name="shared_decks">Shared Decks</string>
-<string name="updating">Updating...</string>
-<!-- currently_downloading -> PersonalDeckPicker.java -->
-<!-- starting_download -> PersonalDeckPicker.java -->
-<!-- downloading -> PersonalDeckPicker.java -->
-<!-- paused -> PersonalDeckPicker.java -->
-<!-- downloaded -> PersonalDeckPicker.java -->
-<!-- error -> PersonalDeckPicker.java -->
 <string name="loading_shared_decks">Loading available shared decks...</string>
-<!-- connection_error_title -> PersonalDeckPicker.java -->
-<!-- connection_error_message -> PersonalDeckPicker.java -->
-<!-- retry -> PersonalDeckPicker.java -->
-<!-- cancel -> PersonalDeckPicker.java -->
 <string name="cancel_download">Cancel Download</string>
 <string name="resume_download">Resume Download</string>
 <string name="pause_download">Pause Download</string>
@@ -88,7 +66,6 @@
 
 <!-- DownloadManagerService.java -->
 <string name="download_finished">Download finished</string>
-<string name="deck_downloaded">Deck downloaded</string>
 
 <!-- AndroidManifest.xml -->
 <string name="personaldeckpicker_title">Open Online Deck</string>

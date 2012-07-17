@@ -172,8 +172,8 @@ public class Utils {
     	double ftime = convertSecondsTo(time, type);
 
     	int formatId;
-    	if (_short) {
-    	    formatId = R.array.next_review_short;
+    	if (false){//_short) {
+    	    //formatId = R.array.next_review_short;
     	} else {
         	switch (format) {
         	case TIME_FORMAT_IN:
