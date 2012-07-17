@@ -52,11 +52,8 @@
   <string name="contextmenu_deckpicker_optimize_deck">데이터베이스 최적화</string>
   <string name="contextmenu_deckpicker_rename_deck">다른 이름으로 묶음 저장</string>
   <string name="contextmenu_deckpicker_set_custom_dictionary">사용자 사전 설정</string>
-  <string name="begin_cram">벼락치기 모드 시작</string>
-  <string name="cram">벼락치기</string>
   <string name="menu_download_deck">암기묶음 다운로드</string>
   <string name="menu_download_shared_deck">공유된 암기묶음</string>
-  <string name="menu_download_personal_deck">내 암기묶음</string>
   <string name="menu_my_account">계정 동기화</string>
   <string name="menu_preferences">환경 설정</string>
   <string name="menu_zeemote">Zeemote</string>
@@ -76,15 +73,12 @@
   <string name="create">만들기</string>
   <string name="new_dynamic_deck">새 동적 암기묶음</string>
   <string name="studyoptions_feedback">피드백</string>
-  <string name="studyoptions_cram_dialog_title">벼락치기 태그달기</string>
-  <string name="studyoptions_load_other_deck">다른 묶음 불러오기</string>
   <string name="studyoptions_load_tutorial_deck">도움말 만들기</string>
   <string name="night_mode">야간 모드</string>
   <string name="visit">방문하기</string>
   <string name="later">나중에</string>
   <string name="download">다운로드</string>
   <string name="open_collection">컬렉션 여는 중. \n 잠시 기다려 주세요…</string>
-  <string name="create_collection">컬렉션 생성하는 중. \n 잠시만 기다려 주세요…</string>
   <string name="rebuild_cram_deck">벼락치기 암기묶음 재생성 중. \n 잠시만 기다리세요…</string>
   <string name="rebuild_cram_label">재생성</string>
   <string name="empty_cram_label">비우기</string>

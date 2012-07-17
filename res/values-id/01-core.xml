@@ -52,11 +52,8 @@
   <string name="contextmenu_deckpicker_optimize_deck">Optimumkan data</string>
   <string name="contextmenu_deckpicker_rename_deck">Rename deck</string>
   <string name="contextmenu_deckpicker_set_custom_dictionary">Tetapkan kamus sendiri</string>
-  <string name="begin_cram">Mula mod Cram</string>
-  <string name="cram">Cram</string>
   <string name="menu_download_deck">Muat turun dek</string>
   <string name="menu_download_shared_deck">Dek kongsi</string>
-  <string name="menu_download_personal_deck">Dek personal</string>
   <string name="menu_my_account">Sync account</string>
   <string name="menu_preferences">Keutamaan</string>
   <string name="menu_zeemote">Zeemote</string>
@@ -76,15 +73,12 @@
   <string name="create">Create</string>
   <string name="new_dynamic_deck">New dynamic deck</string>
   <string name="studyoptions_feedback">Maklum balas</string>
-  <string name="studyoptions_cram_dialog_title">Tag untuk cram</string>
-  <string name="studyoptions_load_other_deck">Muat Dek Lain</string>
   <string name="studyoptions_load_tutorial_deck">Create tutorial</string>
   <string name="night_mode">Night mode</string>
   <string name="visit">Kunjungi</string>
   <string name="later">Kemudian</string>
   <string name="download">Muat turun</string>
   <string name="open_collection">Opening collection.\nPlease wait...</string>
-  <string name="create_collection">Creating collection.\nPlease wait...</string>
   <string name="rebuild_cram_deck">Rebuilding cram deck.\nPlease wait...</string>
   <string name="rebuild_cram_label">Rebuild</string>
   <string name="empty_cram_label">Empty</string>

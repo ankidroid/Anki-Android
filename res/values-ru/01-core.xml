@@ -52,11 +52,8 @@
   <string name="contextmenu_deckpicker_optimize_deck">Оптимизировать базу данных</string>
   <string name="contextmenu_deckpicker_rename_deck">Переименовать колоду</string>
   <string name="contextmenu_deckpicker_set_custom_dictionary">Установить пользовательский словарь</string>
-  <string name="begin_cram">Включить режим</string>
-  <string name="cram">Зубрёжка</string>
   <string name="menu_download_deck">Скачать колоду</string>
   <string name="menu_download_shared_deck">Общедоступная колода</string>
-  <string name="menu_download_personal_deck">Личная колода</string>
   <string name="menu_my_account">Учётная запись синхронизации</string>
   <string name="menu_preferences">Настройки</string>
   <string name="menu_zeemote">Zeemote</string>
@@ -76,15 +73,12 @@
   <string name="create">Создать</string>
   <string name="new_dynamic_deck">Новая динамическая колода</string>
   <string name="studyoptions_feedback">Обратная связь</string>
-  <string name="studyoptions_cram_dialog_title">Что \"зубрить\" (теги)</string>
-  <string name="studyoptions_load_other_deck">Открыть другие колоды</string>
   <string name="studyoptions_load_tutorial_deck">Создать учебник</string>
   <string name="night_mode">Ночной режим</string>
   <string name="visit">Посещение</string>
   <string name="later">Позже</string>
   <string name="download">Скачать</string>
   <string name="open_collection">Открытие коллекции.\nПожалуйста подождите...</string>
-  <string name="create_collection">Создание коллекции.\nПожалуйста подождите...</string>
   <string name="rebuild_cram_deck">Перестроение колоды для зубрёжки.\nПожалуйста, подождите...</string>
   <string name="rebuild_cram_label">Перестроить</string>
   <string name="empty_cram_label">Очистить</string>

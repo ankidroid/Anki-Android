@@ -52,11 +52,8 @@
   <string name="contextmenu_deckpicker_optimize_deck">การปรับฐานข้อมูลให้มีประสิทธิภาพ</string>
   <string name="contextmenu_deckpicker_rename_deck">Rename deck</string>
   <string name="contextmenu_deckpicker_set_custom_dictionary">ตั้งค่าพจนากรุมแบบกำหนดเอง</string>
-  <string name="begin_cram">Start Cram mode</string>
-  <string name="cram">Cram</string>
   <string name="menu_download_deck">ดาวน์โหลดสำรับ</string>
   <string name="menu_download_shared_deck">สำรับที่ใช้ร่วมกัน</string>
-  <string name="menu_download_personal_deck">สำรับส่วนบุคคล</string>
   <string name="menu_my_account">Sync account</string>
   <string name="menu_preferences">กำหนดลักษณะ</string>
   <string name="menu_zeemote">Zeemote</string>
@@ -76,15 +73,12 @@
   <string name="create">Create</string>
   <string name="new_dynamic_deck">New dynamic deck</string>
   <string name="studyoptions_feedback">ความคิดเห็น</string>
-  <string name="studyoptions_cram_dialog_title">Tags to cram</string>
-  <string name="studyoptions_load_other_deck">โหลดสำรับอื่น ๆ</string>
   <string name="studyoptions_load_tutorial_deck">Create tutorial</string>
   <string name="night_mode">Night mode</string>
   <string name="visit">เยี่ยมชม</string>
   <string name="later">ภายหลัง</string>
   <string name="download">ดาวน์โหลด</string>
   <string name="open_collection">Opening collection.\nPlease wait...</string>
-  <string name="create_collection">Creating collection.\nPlease wait...</string>
   <string name="rebuild_cram_deck">Rebuilding cram deck.\nPlease wait...</string>
   <string name="rebuild_cram_label">Rebuild</string>
   <string name="empty_cram_label">Empty</string>

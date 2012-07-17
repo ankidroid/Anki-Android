@@ -64,14 +64,6 @@
   <string name="stats_forecast">Прогноз</string>
   <string name="stats_review_count">Число просмотров</string>
   <string name="stats_review_time">Время просмотра</string>
-  <string-array name="next_review_short">
-    <item>%ss</item>
-    <item>%sm</item>
-    <item>%sh</item>
-    <item>%sd</item>
-    <item>%smo</item>
-    <item>%sy</item>
-  </string-array>
   <string-array name="next_review_in_s">
     <item>через 1 секунду</item>
     <item>через 1 минуту</item>

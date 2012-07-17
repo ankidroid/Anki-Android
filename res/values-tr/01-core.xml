@@ -52,11 +52,8 @@
   <string name="contextmenu_deckpicker_optimize_deck">Veritabanını iyileştir</string>
   <string name="contextmenu_deckpicker_rename_deck">Destenin adını değiştir</string>
   <string name="contextmenu_deckpicker_set_custom_dictionary">Harici sözlük ayarla</string>
-  <string name="begin_cram">İnekleme modunu başlat</string>
-  <string name="cram">İnekleme</string>
   <string name="menu_download_deck">Deste indir</string>
   <string name="menu_download_shared_deck">Paylaşılan deste</string>
-  <string name="menu_download_personal_deck">Kişisel deste</string>
   <string name="menu_my_account">Hesabı eşitle</string>
   <string name="menu_preferences">Tercihler</string>
   <string name="menu_zeemote">Zeemote</string>
@@ -76,15 +73,12 @@
   <string name="create">Oluştur</string>
   <string name="new_dynamic_deck">Yeni dinamik deste</string>
   <string name="studyoptions_feedback">Geribildirim</string>
-  <string name="studyoptions_cram_dialog_title">İneklenecek etiketler</string>
-  <string name="studyoptions_load_other_deck">Başka Deste Yükle</string>
   <string name="studyoptions_load_tutorial_deck">Eğitime başla</string>
   <string name="night_mode">Gece modu</string>
   <string name="visit">Ziyaret et</string>
   <string name="later">Daha sonra</string>
   <string name="download">İndir</string>
   <string name="open_collection">Koleksiyon açılıyor.\nLütfen bekleyin...</string>
-  <string name="create_collection">Koleksiyon oluşturuluyor.\nLütfen bekleyin...</string>
   <string name="rebuild_cram_deck">İnekleme destesi yeniden oluşturuluyor.\nLütfen bekleyin...</string>
   <string name="rebuild_cram_label">Yeniden Oluştur</string>
   <string name="empty_cram_label">Boş</string>

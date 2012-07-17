@@ -32,15 +32,7 @@
   <string name="no_tts_available_message">Teksti puheeksi kieli ei ole käytettävissä</string>
   <string name="tts_no_tts">Älä puhu</string>
   <string name="dont_show_again">Don\'t show again</string>
-  <string name="deck_upgrade_too_old_version">Pakkojen joiden versiot vanhempi kuin 39 eivät tue AnkiDroidia. Avaa korttipakka Anki-työpöytä versiolla ja päivitä korttipakka uusimpaan versioon.</string>
   <string name="sync_log_title">Synkronointiloki</string>
-  <string name="deckpicker_upgrading">Päivitetään korttipakkaa...</string>
-  <string name="deckpicker_upgrade_notes_title">Päivitä korttipakan tulokset</string>
-  <string name="deckpicker_upgrade_notes_button">Huomautukset</string>
-  <string name="deckpicker_download_missing_title">Haetaan puuttuva media</string>
-  <string name="deckpicker_download_missing_none">Mediatiedostoja ei puutu</string>
-  <string name="deckpicker_download_missing_success">Haettiin %1$d, puuttuu %2$d</string>
-  <string name="deckpicker_download_missing_error">Virhe tiedostossa: %1$s</string>
   <string name="notify_ticker">Sovelluksen päivitys</string>
   <string name="notify_title">Ankidroid on päivitetty</string>
   <string name="notify_message">Lataa uusin versio</string>

@@ -79,7 +79,6 @@
   <string name="menu_cardbrowser">카드 탐색기</string>
   <string name="show_hint">Show Hint</string>
   <string name="pref_lang_other">언어 기본 설정</string>
-  <string name="pref_lang_common">공통언어</string>
   <string name="pref_font_UI">사용자 지정 UI 글꼴</string>
   <string name="info_rate">Rate AnkiDroid</string>
   <string-array name="dynOrderLabels">

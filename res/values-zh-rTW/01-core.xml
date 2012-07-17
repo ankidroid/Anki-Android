@@ -52,11 +52,8 @@
   <string name="contextmenu_deckpicker_optimize_deck">最佳化資料庫</string>
   <string name="contextmenu_deckpicker_rename_deck">重新命名</string>
   <string name="contextmenu_deckpicker_set_custom_dictionary">自訂資料夾</string>
-  <string name="begin_cram">啟動惡補模式</string>
-  <string name="cram">惡補</string>
   <string name="menu_download_deck">下載牌組</string>
   <string name="menu_download_shared_deck">共享牌組</string>
-  <string name="menu_download_personal_deck">個人牌組</string>
   <string name="menu_my_account">同步帳號</string>
   <string name="menu_preferences">偏好設定</string>
   <string name="menu_zeemote">Zeemote</string>
@@ -76,15 +73,12 @@
   <string name="create">建立</string>
   <string name="new_dynamic_deck">New dynamic deck</string>
   <string name="studyoptions_feedback">回饋意見</string>
-  <string name="studyoptions_cram_dialog_title">要惡補的標籤</string>
-  <string name="studyoptions_load_other_deck">載入其他牌組</string>
   <string name="studyoptions_load_tutorial_deck">建立操作手冊</string>
   <string name="night_mode">Night mode</string>
   <string name="visit">參觀</string>
   <string name="later">晚點</string>
   <string name="download">下載</string>
   <string name="open_collection">開啟集合中。請稍後...</string>
-  <string name="create_collection">建立集合中。請稍後...</string>
   <string name="rebuild_cram_deck">Rebuilding cram deck.\nPlease wait...</string>
   <string name="rebuild_cram_label">Rebuild</string>
   <string name="empty_cram_label">Empty</string>

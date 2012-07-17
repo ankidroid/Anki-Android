@@ -32,15 +32,7 @@
   <string name="no_tts_available_message">沒有可用的朗讀語言</string>
   <string name="tts_no_tts">不要發音</string>
   <string name="dont_show_again">不要再顯示</string>
-  <string name="deck_upgrade_too_old_version">AnkiDroid不支援39版以前的牌組。請用電腦上的Anki打開該牌組，以便更新到最新版本。</string>
   <string name="sync_log_title">同步化記錄</string>
-  <string name="deckpicker_upgrading">升級牌組中...</string>
-  <string name="deckpicker_upgrade_notes_title">牌組升級結果</string>
-  <string name="deckpicker_upgrade_notes_button">備註</string>
-  <string name="deckpicker_download_missing_title">正在取得缺少的媒體</string>
-  <string name="deckpicker_download_missing_none">沒有找不到的媒體檔</string>
-  <string name="deckpicker_download_missing_success">成功取得%1$d，缺少%2$d</string>
-  <string name="deckpicker_download_missing_error">檔案錯誤：%1$s</string>
   <string name="notify_ticker">更新程式</string>
   <string name="notify_title">Ankidroid 更新成功</string>
   <string name="notify_message">下載新版本</string>

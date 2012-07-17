@@ -79,7 +79,6 @@
   <string name="menu_cardbrowser">Navegador de cartões</string>
   <string name="show_hint">Show Hint</string>
   <string name="pref_lang_other">Preferências de idioma</string>
-  <string name="pref_lang_common">LingComum</string>
   <string name="pref_font_UI">Fonte de IU personalizada</string>
   <string name="info_rate">Rate AnkiDroid</string>
   <string-array name="dynOrderLabels">

@@ -55,6 +55,8 @@
   <string name="show_timer_summ">Zeigt die Zeit bis zum Beantworten der Frage</string>
   <string name="show_progress_bars">Erfolgsbalken anzeigen</string>
   <string name="show_progress_bars_summ">Zeigt beim Lernen den heutigen Lernfortschritt sowie den heutigen Anteil von Ja-Antworten.</string>
+  <string name="fade_scrollbars">Fade scrollbars</string>
+  <string name="fade_scrollbars_summ">Automatically fade out flashcard scrollbars when not scrolling</string>
   <string name="show_whiteboard_summ">Erlaubt es, auf den Bildschirm zu schreiben</string>
   <string name="whiteboard_stroke_width">Whiteboard-Pinsel</string>
   <string name="whiteboard_stroke_width_summ">Breite des Pinsels: XXX</string>
@@ -273,4 +275,7 @@
   <string name="deck_conf_cram_steps_summ">Define custom steps</string>
   <string name="pref_show_splashscreen">Splash screen</string>
   <string name="pref_show_splashscreen_summ">Show splash screen</string>
+  <string name="pref_intent_add_instant">Instant add</string>
+  <string name="pref_intent_add_instant_summ">Add new cards from dictionaries without opening AnkiDroid. You find them later under \'saved data\' in card adder.</string>
+  <string name="pref_cat_intent_add">External data addition</string>
 </resources>

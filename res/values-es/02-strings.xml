@@ -79,7 +79,6 @@
   <string name="menu_cardbrowser">Explorador de tarjetas</string>
   <string name="show_hint">Mostrar Sugerencia</string>
   <string name="pref_lang_other">Preferencias de Idioma</string>
-  <string name="pref_lang_common">LangCommon</string>
   <string name="pref_font_UI">Fuente de interfaz personalizada</string>
   <string name="info_rate">Puntúa AnkiDroid</string>
   <string-array name="dynOrderLabels">

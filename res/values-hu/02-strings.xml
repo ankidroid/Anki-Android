@@ -79,7 +79,6 @@
   <string name="menu_cardbrowser">Kártya böngésző</string>
   <string name="show_hint">Leírás mutatása</string>
   <string name="pref_lang_other">Nyelvi beállítások</string>
-  <string name="pref_lang_common">LangCommon</string>
   <string name="pref_font_UI">Saját UI betűkészlet</string>
   <string name="info_rate">AnkiDroid értékelése</string>
   <string-array name="dynOrderLabels">

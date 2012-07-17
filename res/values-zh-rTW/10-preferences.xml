@@ -55,6 +55,8 @@
   <string name="show_timer_summ">監控您回答時間的計時器</string>
   <string name="show_progress_bars">顯示進度條</string>
   <string name="show_progress_bars_summ">Shows today\'s progress and proportion of today\'s yes answers while reviewing</string>
+  <string name="fade_scrollbars">Fade scrollbars</string>
+  <string name="fade_scrollbars_summ">Automatically fade out flashcard scrollbars when not scrolling</string>
   <string name="show_whiteboard_summ">讓你可以在螢幕上畫畫</string>
   <string name="whiteboard_stroke_width">白板筆劃寬度</string>
   <string name="whiteboard_stroke_width_summ">筆劃寬度：XXX</string>
@@ -273,4 +275,7 @@
   <string name="deck_conf_cram_steps_summ">Define custom steps</string>
   <string name="pref_show_splashscreen">Splash screen</string>
   <string name="pref_show_splashscreen_summ">Show splash screen</string>
+  <string name="pref_intent_add_instant">Instant add</string>
+  <string name="pref_intent_add_instant_summ">Add new cards from dictionaries without opening AnkiDroid. You find them later under \'saved data\' in card adder.</string>
+  <string name="pref_cat_intent_add">External data addition</string>
 </resources>
