@@ -538,6 +538,11 @@
                 android:key="com.ichi2.filters.GoogleTranslaterFilter"
                 android:summary="@string/filter_google_translate_summ"
                 android:title="@string/filter_google_translate" />
+            <CheckBoxPreference
+                android:defaultValue="false"
+                android:key="intentAdditionInstantAdd"
+                android:summary="@string/pref_intent_add_instant_summ"
+                android:title="@string/pref_intent_add_instant" />
         </PreferenceCategory>
     </PreferenceScreen>
 </PreferenceScreen>
