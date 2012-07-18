@@ -55,8 +55,8 @@
   <string name="show_timer_summ">Časovač zobrazující jak dlouho vám trvá odpovědět</string>
   <string name="show_progress_bars">Zobrazit ukazatele průběhu</string>
   <string name="show_progress_bars_summ">Zobrazí dnešní pokrok a podíl dnešních Ano odpovědi při opakování</string>
-  <string name="fade_scrollbars">Fade scrollbars</string>
-  <string name="fade_scrollbars_summ">Automatically fade out flashcard scrollbars when not scrolling</string>
+  <string name="fade_scrollbars">Mizející posuvníky</string>
+  <string name="fade_scrollbars_summ">Automaticky skrýt posuvníky kartiček, když nejsou nutné</string>
   <string name="show_whiteboard_summ">Umožňuje psát na obrazovku</string>
   <string name="whiteboard_stroke_width">Šířka tahu na tabuli</string>
   <string name="whiteboard_stroke_width_summ">Šířka čáry: XXX</string>
@@ -99,7 +99,7 @@
   <string name="zoom_summ">Zobrazit ovládání lupy během opakování</string>
   <string name="zeemote">Podpora Zeemote JS1</string>
   <string name="zeemote_summ">Použít Zeemote JS1 ovladače pro ovládání opakování.</string>
-  <string name="zeemote_actions">Zeemote actions in Reviewer</string>
+  <string name="zeemote_actions">Zeemote akce při opakování</string>
   <string name="zeemote_a">Tlačítko A</string>
   <string name="zeemote_b">Tlačítko B</string>
   <string name="zeemote_c">Tlačítko C</string>
@@ -109,7 +109,7 @@
   <string name="zeemote_left">Stick left</string>
   <string name="zeemote_right">Stick right</string>
   <string name="zeemote_show_answer">Show answers with mark actions</string>
-  <string name="zeemote_show_answer_summ">Actions assigned to marks 1-4 also show answer.</string>
+  <string name="zeemote_show_answer_summ">Akce přiřazené ke značkám 1-4 zobrazí také odpověď.</string>
   <string name="swipe">Povolit gesta</string>
   <string name="swipe_summ_off">Použít gesta pro přepínání mezi obrazovkami a zodpovězenými kartami. Toto nastavení není kompatibilní s ovládacími prvky lupy</string>
   <string name="swipe_summ_on">Vodorovné tažení k přepínání mezi obrazovkami. Konfigurace dalších akcí níže</string>
@@ -243,12 +243,12 @@
   <string name="deck_conf_sibl_space">Space siblings by up to</string>
   <string name="deck_conf_easy_bonus">Bonus pro snadné</string>
   <string name="deck_conf_min_range">Minimální rozsah pro sourozence</string>
-  <string name="deck_conf_ivl_fct">Interval modifier</string>
+  <string name="deck_conf_ivl_fct">Modifikátor intervalu</string>
   <string name="deck_conf_max_ivl">Maximální interval</string>
   <string name="deck_conf_new_lps_ivl">Nový interval</string>
   <string name="deck_conf_min_ivl">Minimální interval</string>
   <string name="deck_conf_leech_thres">Práh pro pijavice</string>
-  <string name="deck_conf_fails">XXX fails</string>
+  <string name="deck_conf_fails">XXX chybných</string>
   <string name="deck_conf_leech_action">Akce pro pijavice</string>
   <string name="deck_conf_max_time">Maximální čas pro odpověď</string>
   <string name="deck_conf_seconds">XXX sekund</string>
@@ -275,7 +275,7 @@
   <string name="deck_conf_cram_steps_summ">Define custom steps</string>
   <string name="pref_show_splashscreen">Úvodní obrazovka</string>
   <string name="pref_show_splashscreen_summ">Zobrazit úvodní obrazovku</string>
-  <string name="pref_intent_add_instant">Instant add</string>
+  <string name="pref_intent_add_instant">Rychlé přidání</string>
   <string name="pref_intent_add_instant_summ">Add new cards from dictionaries without opening AnkiDroid. You find them later under \'saved data\' in card adder.</string>
   <string name="pref_cat_intent_add">External data addition</string>
 </resources>
