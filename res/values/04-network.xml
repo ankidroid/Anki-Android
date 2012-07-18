@@ -20,6 +20,7 @@
 -->
 <resources>
 
+<string name="connection_needed">You are currently offline.</string>
 <string name="currently_downloading">Currently downloading</string>
 <string name="starting_download">Starting download...</string>
 <string name="downloading">Downloading...</string>
