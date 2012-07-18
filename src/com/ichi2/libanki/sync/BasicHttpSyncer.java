@@ -51,8 +51,9 @@ import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -109,6 +110,7 @@ public class BasicHttpSyncer implements HttpSyncer {
 
 
     public HttpResponse req(String method, InputStream fobj, int comp, boolean hkey, JSONObject registerData) {
+        File tmpFileBuffer = null;
         try {
             String bdry = "--" + BOUNDARY;
             StringWriter buf = new StringWriter();
@@ -119,7 +121,10 @@ public class BasicHttpSyncer implements HttpSyncer {
                 buf.write(bdry + "\r\n");
                 buf.write("Content-Disposition: form-data; name=\"k\"\r\n\r\n" + mHKey + "\r\n");
             }
-            ByteArrayOutputStream bos = new ByteArrayOutputStream();
+            tmpFileBuffer = File.createTempFile("syncer", ".tmp", new File(AnkiDroidApp.getCacheStorageDirectory()));
+            FileOutputStream fos = new FileOutputStream(tmpFileBuffer);
+            BufferedOutputStream bos = new BufferedOutputStream(fos);
+            GZIPOutputStream tgt;
             // payload as raw data or json
             if (fobj != null) {
                 // header
@@ -132,23 +137,23 @@ public class BasicHttpSyncer implements HttpSyncer {
                 BufferedInputStream bfobj = new BufferedInputStream(fobj);
                 byte[] chunk = new byte[65536];
                 if (comp != 0) {
-                    GZIPOutputStream tgt = new GZIPOutputStream(new BufferedOutputStream(bos));
+                    tgt = new GZIPOutputStream(bos);
                     while ((len = bfobj.read(chunk)) > 0) {
                         tgt.write(chunk, 0, len);
                     }
                     tgt.close();
+                    bos = new BufferedOutputStream(new FileOutputStream(tmpFileBuffer, true));
                 } else {
-                    BufferedOutputStream tgt = new BufferedOutputStream(bos);
                     while ((len = bfobj.read(chunk)) > 0) {
-                        tgt.write(chunk, 0, len);
+                        bos.write(chunk, 0, len);
                     }
-                    tgt.close();
                 }
                 bos.write(("\r\n" + bdry + "--\r\n").getBytes("UTF-8"));
             } else {
                 buf.close();
                 bos.write(buf.toString().getBytes("UTF-8"));
             }
+            bos.flush();
             bos.close();
             // connection headers
             String url = Collection.SYNC_URL;
@@ -161,7 +166,7 @@ public class BasicHttpSyncer implements HttpSyncer {
                 url = url + "sync/" + method;
             }
             HttpPost httpPost = new HttpPost(url);
-            HttpEntity entity = new ProgressByteEntity(bos.toByteArray());
+            HttpEntity entity = new ProgressByteEntity(tmpFileBuffer);
 
             // body
             httpPost.setEntity(entity);
@@ -173,8 +178,7 @@ public class BasicHttpSyncer implements HttpSyncer {
             params.setParameter(ConnManagerPNames.MAX_CONNECTIONS_PER_ROUTE, new ConnPerRouteBean(30));
             params.setParameter(CoreProtocolPNames.USE_EXPECT_CONTINUE, false);
             HttpProtocolParams.setVersion(params, HttpVersion.HTTP_1_1);
-            HttpConnectionParams.setConnectionTimeout(params, 10000);
-            HttpConnectionParams.setSoTimeout(params, 10000);
+            HttpConnectionParams.setSoTimeout(params, 20000);
 
             // Registry
             SchemeRegistry registry = new SchemeRegistry();
@@ -192,9 +196,14 @@ public class BasicHttpSyncer implements HttpSyncer {
         } catch (UnsupportedEncodingException e) {
             throw new RuntimeException(e);
         } catch (IOException e) {
+            Log.e(AnkiDroidApp.TAG, "BasicHttpSyncer.sync: IOException", e);
             return null;
         } catch (JSONException e) {
             throw new RuntimeException(e);
+        } finally {
+            if (tmpFileBuffer != null && tmpFileBuffer.exists()) {
+                tmpFileBuffer.delete();
+            }
         }
     }
 
@@ -318,10 +327,14 @@ public class BasicHttpSyncer implements HttpSyncer {
         private long mLength;
 
 
-        public ProgressByteEntity(byte[] byteArray) {
+        public ProgressByteEntity(File file) {
             super();
-            mLength = byteArray.length;
-            mInputStream = new ByteArrayInputStream(byteArray);
+            mLength = file.length();
+            try {
+                mInputStream = new BufferedInputStream(new FileInputStream(file));
+            } catch (FileNotFoundException e) {
+                throw new RuntimeException(e);
+            }
         }
 
 

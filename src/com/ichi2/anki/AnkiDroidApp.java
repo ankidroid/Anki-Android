@@ -147,6 +147,14 @@ public class AnkiDroidApp extends Application {
         return Environment.getExternalStorageDirectory().getAbsolutePath();
     }
 
+    public static String getCacheStorageDirectory() {
+        File cache = new File(String.format(Locale.US, "%s/Android/data/%s.%s/cache/",
+                getStorageDirectory(), AnkiDroidApp.getInstance().getPackageName(), AnkiDroidApp.getAppName()));
+        if (!cache.exists()) {
+            cache.mkdirs();
+        }
+        return cache.getAbsolutePath();
+    }
 
     public static String getCollectionPath() {
         String deckPath = getSharedPrefs(sInstance.getApplicationContext()).getString("deckPath",
@@ -214,7 +222,7 @@ public class AnkiDroidApp extends Application {
      * 
      * @return the package name.
      */
-    public static String getPkgName() {
+    public static String getAppName() {
         String pkgName = TAG;
         Context context = sInstance.getApplicationContext();
 

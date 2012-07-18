@@ -254,7 +254,7 @@ public class Info extends Activity {
 
     private String getTitleString() {
         StringBuilder appName = new StringBuilder();
-        appName.append(AnkiDroidApp.getPkgName());
+        appName.append(AnkiDroidApp.getAppName());
         appName.append(" v");
         appName.append(AnkiDroidApp.getPkgVersion());
         return appName.toString();
