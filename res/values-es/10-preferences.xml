@@ -273,9 +273,9 @@
   <string name="deck_conf_cram_reschedule_summ">Reprogramar tarjetas en base a mis respuestas en este mazo</string>
   <string name="deck_conf_cram_steps">Pasos personalizados</string>
   <string name="deck_conf_cram_steps_summ">Definir pasos personalizados</string>
-  <string name="pref_show_splashscreen">Splash screen</string>
-  <string name="pref_show_splashscreen_summ">Show splash screen</string>
-  <string name="pref_intent_add_instant">Instant add</string>
-  <string name="pref_intent_add_instant_summ">Add new cards from dictionaries without opening AnkiDroid. You find them later under \'saved data\' in card adder.</string>
-  <string name="pref_cat_intent_add">External data addition</string>
+  <string name="pref_show_splashscreen">Pantalla de bienvenida</string>
+  <string name="pref_show_splashscreen_summ">Mostrar pantalla de bienvenida</string>
+  <string name="pref_intent_add_instant">Adición instantánea</string>
+  <string name="pref_intent_add_instant_summ">Añadir nuevas tarjetas desde diccionarios sin abrir AnkiDroid. Las encontrarás más tarde en \'datos guardados\', en la pantalla Añadir Tarjetas.</string>
+  <string name="pref_cat_intent_add">Adición de datos externos</string>
 </resources>
