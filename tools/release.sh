@@ -6,13 +6,16 @@
 # If no option given, will guess the next version number.
 
 # Suffix configuration
-#SUFFIX=""
-SUFFIX="-EXPERIMENTAL"
+SUFFIX=""
+#SUFFIX="-EXPERIMENTAL"
 
 set -x
 
 # Version number to use
-PREVIOUS_VERSION=`grep android:versionName AndroidManifest.xml | sed -e 's/.*="//' | sed -e 's/".*//' | sed -e "s/$SUFFIX//g"`
+PREVIOUS_VERSION=`grep android:versionName AndroidManifest.xml | sed -e 's/.*="//' | sed -e 's/".*//'`
+if [ -n "$SUFFIX" ]; then
+ PREVIOUS_VERSION=`echo $PREVIOUS_VERSION | sed -e "s/$SUFFIX//g"`
+fi
 GUESSED_VERSION=`echo $PREVIOUS_VERSION | gawk -f tools/lib/increase-version.awk`
 VERSION=${1:-$GUESSED_VERSION$SUFFIX}
 
