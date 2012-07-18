@@ -79,7 +79,6 @@
   <string name="menu_cardbrowser">Kartenübersicht</string>
   <string name="show_hint">Hinweis zeigen</string>
   <string name="pref_lang_other">Sprach-Einstellungen</string>
-  <string name="pref_lang_common">LangCommon</string>
   <string name="pref_font_UI">Benutzerdefinierte UI-Schriftart</string>
   <string name="info_rate">AnkiDroid bewerten</string>
   <string-array name="dynOrderLabels">

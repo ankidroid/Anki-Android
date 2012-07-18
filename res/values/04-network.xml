@@ -20,17 +20,6 @@
 -->
 <resources>
 
-<!-- AnkiDroid.java -->
-<!--<string name="loading_new_card">Loading new card...</string>-->
-<string name="loading_deck">Loading deck. Please wait...</string>
-<!--<string name="connection_unsuccessful">The connection was unsuccessful. Check your connection settings and try again, please.</string>-->
-<string name="connection_needed">You are currently offline.</string>
-<!--<string name="study_options">Study Options</string>-->
-<!--<string name="suspend">Suspend</string>-->
-<!--<string name="edit_card">Edit Card</string>-->
-<!--<string name="switch_another_deck">Switch to another deck</string>-->
-
-<!-- PersonalDeckPicker.java -->
 <string name="currently_downloading">Currently downloading</string>
 <string name="starting_download">Starting download...</string>
 <string name="downloading">Downloading...</string>
@@ -44,22 +33,11 @@
 <string name="cancel">Cancel</string>
 <string name="download_overwrite">Overwrite</string>
 <string name="download_cancel">Cancel Download</string>
-<string name="download_message">Deck %1$s already exists in Local. Do you want to overwrite?</string>
+
 
 <!-- SharedDeckPicker.java -->
 <string name="shared_decks">Shared Decks</string>
-<string name="updating">Updating...</string>
-<!-- currently_downloading -> PersonalDeckPicker.java -->
-<!-- starting_download -> PersonalDeckPicker.java -->
-<!-- downloading -> PersonalDeckPicker.java -->
-<!-- paused -> PersonalDeckPicker.java -->
-<!-- downloaded -> PersonalDeckPicker.java -->
-<!-- error -> PersonalDeckPicker.java -->
 <string name="loading_shared_decks">Loading available shared decks...</string>
-<!-- connection_error_title -> PersonalDeckPicker.java -->
-<!-- connection_error_message -> PersonalDeckPicker.java -->
-<!-- retry -> PersonalDeckPicker.java -->
-<!-- cancel -> PersonalDeckPicker.java -->
 <string name="cancel_download">Cancel Download</string>
 <string name="resume_download">Resume Download</string>
 <string name="pause_download">Pause Download</string>
@@ -88,7 +66,6 @@
 
 <!-- DownloadManagerService.java -->
 <string name="download_finished">Download finished</string>
-<string name="deck_downloaded">Deck downloaded</string>
 
 <!-- AndroidManifest.xml -->
 <string name="personaldeckpicker_title">Open Online Deck</string>
@@ -160,10 +137,12 @@
 <string name="upgrade_decks_waiting">Waiting, queue position: %s\nPlease wait...</string>
 <string name="upgrade_decks_upgrade_started">Upgrade started\nPlease waiting for finish...</string>
 <string name="upgrade_decks_downloading">Downloading upgraded collection.\nPlease wait...</string>
-<string name="upgrade_decks_message">There is no Anki 2.0 collection available but at least one deck of the old Anki 1.2 format has been found. In order to use your decks with the new version of AnkiDroid they need to be converted first into a single collection of the new Anki-2.0 format. There are three possibilities for this:</string>
+<string name="upgrade_decks_message">There is no Anki 2.0 collection available but one or more decks in the old Anki 1.2 format have been found:%sIn order to use your decks with the new version of AnkiDroid they need to be converted first into a single collection of the new Anki-2.0 format. There are three possibilities for this:</string>
 <string name="upgrade_decks_message_pos1">By using Anki Desktop 2.0, your decks will be converted at the first start. You can sync over AnkiWeb or just copy the new collection afterwards to your mobile device. Copy your decks from your AnkiDroid directory (%s) to your Anki Desktop 1.2 directory on your computer (if you haven\'t synced them anyway) and start Anki Desktop 2.0.</string>
 <string name="upgrade_decks_message_pos2">If you already sync your decks over ankiweb, you\'ll just need to log in once to %s and your decks will be converted there. After that you can simply sync the new collection to your mobile device.</string>
 <string name="upgrade_decks_message_pos3">As a third possibility, you can have your decks converted via AnkiDroid itself and AnkiWeb. If you click on the upgrade button below, your decks will be bundled and uploaded to AnkiWeb. The converted collection will then be automatically downloaded and opened. You don\'t need any registration for that but be aware that it might be better to use a wifi connection in order to prevent too much traffic over your mobile connection. If the compressed decks amount to more than 50 mb, you cannot use this way. Please resort to the other options in this case.</string>
+<string name="upgrade_decks_message_finish">If you just proceed a new collection will be created without taking your old decks into account.</string>
 <string name="upgrade_required">Your decks on AnkiWeb are still in the old Anki 1.2 format. Please visit %s and log in there. Your decks will then automatically be converted into the new format.</string>
 <string name="upgrade_decks_button">Upgrade</string>
+<string name="upgrade_decks_failed">These decks could not be upgraded\n%sPlease open them in Anki Desktop and do a database check. Afterwards you can import them via Anki Desktop.</string>
 </resources>

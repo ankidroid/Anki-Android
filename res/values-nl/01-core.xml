@@ -52,11 +52,8 @@
   <string name="contextmenu_deckpicker_optimize_deck">Optimaliseer database</string>
   <string name="contextmenu_deckpicker_rename_deck">Setnaam wijzigen</string>
   <string name="contextmenu_deckpicker_set_custom_dictionary">Instellen van de aangepaste woordenlijst</string>
-  <string name="begin_cram">Start stampmodus</string>
-  <string name="cram">Stampen</string>
   <string name="menu_download_deck">Set downloaden</string>
   <string name="menu_download_shared_deck">Gedeelde set</string>
-  <string name="menu_download_personal_deck">Persoonlijke set</string>
   <string name="menu_my_account">Account synchroniseren</string>
   <string name="menu_preferences">Voorkeuren</string>
   <string name="menu_zeemote">Zeemote</string>
@@ -76,15 +73,12 @@
   <string name="create">Maak</string>
   <string name="new_dynamic_deck">Nieuwe dynamische set</string>
   <string name="studyoptions_feedback">Feedback</string>
-  <string name="studyoptions_cram_dialog_title">Tags om te stampen</string>
-  <string name="studyoptions_load_other_deck">Andere set laden</string>
   <string name="studyoptions_load_tutorial_deck">Maak handleiding</string>
   <string name="night_mode">Night mode</string>
   <string name="visit">Bezoeken</string>
   <string name="later">Later</string>
   <string name="download">Downloaden</string>
   <string name="open_collection">Collectie openen.\nEven wachten...</string>
-  <string name="create_collection">Collectie maken.\n\Even wachten...</string>
   <string name="rebuild_cram_deck">Stampset wordt opnieuw opgebouwd.\nEven geduld...</string>
   <string name="rebuild_cram_label">Opnieuw opbouwen</string>
   <string name="empty_cram_label">Empty</string>

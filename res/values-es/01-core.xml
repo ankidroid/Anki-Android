@@ -52,11 +52,8 @@
   <string name="contextmenu_deckpicker_optimize_deck">Optimizar la base de datos</string>
   <string name="contextmenu_deckpicker_rename_deck">Renombrar mazo</string>
   <string name="contextmenu_deckpicker_set_custom_dictionary">Establecer diccionario personalizado</string>
-  <string name="begin_cram">Comenzar a empollar</string>
-  <string name="cram">Empollar</string>
   <string name="menu_download_deck">Descargar mazo</string>
   <string name="menu_download_shared_deck">Mazo compartido</string>
-  <string name="menu_download_personal_deck">Mazo personal</string>
   <string name="menu_my_account">Cuenta de sincronización</string>
   <string name="menu_preferences">Preferencias</string>
   <string name="menu_zeemote">Zeemote</string>
@@ -76,15 +73,12 @@
   <string name="create">Crear</string>
   <string name="new_dynamic_deck">Nuevo mazo dinámico</string>
   <string name="studyoptions_feedback">Sugerencias</string>
-  <string name="studyoptions_cram_dialog_title">Etiquetas a empollar</string>
-  <string name="studyoptions_load_other_deck">Cargar otro mazo</string>
   <string name="studyoptions_load_tutorial_deck">Crear tutorial</string>
   <string name="night_mode">Modo Noche</string>
   <string name="visit">Visita</string>
   <string name="later">Más tarde</string>
   <string name="download">Descargar</string>
   <string name="open_collection">Abriendo colección.\nPor favor, espera...</string>
-  <string name="create_collection">Creando colección.\nPor favor, espera...</string>
   <string name="rebuild_cram_deck">Reconstruyendo mazo para empollar.\nPor favor, espera...</string>
   <string name="rebuild_cram_label">Reconstruir</string>
   <string name="empty_cram_label">Vaciar</string>

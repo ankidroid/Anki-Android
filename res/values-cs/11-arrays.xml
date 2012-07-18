@@ -96,7 +96,7 @@
   </string-array>
   <string-array name="leech_action_labels">
     <item>Odložit kartu</item>
-    <item>Tag only</item>
+    <item>Pouze štítky</item>
     <item>Obnovit jako nové</item>
   </string-array>
   <string-array name="new_order_labels">
@@ -104,18 +104,18 @@
     <item>Nové karty v pořadí přidání</item>
   </string-array>
   <string-array name="cram_deck_conf_order_labels">
-    <item>Oldest seen first</item>
-    <item>Random</item>
-    <item>Increasing intervals</item>
-    <item>Decreasing intervals</item>
+    <item>Nejstarší nejdříve</item>
+    <item>Náhodně</item>
+    <item>Rostoucí intervaly</item>
+    <item>Klesající intervaly</item>
     <item>Most lapsed</item>
-    <item>Order added</item>
+    <item>V pořádí přidání</item>
     <item>Order due</item>
   </string-array>
   <string-array name="cram_deck_conf_preset_labels">
     <item><![CDATA[<select preset>]]></item>
-    <item>Preview all new cards</item>
-    <item>Preview cards added today</item>
+    <item>Náhled všech nových karet</item>
+    <item>Náhled dnes přidaných karet</item>
     <item>Review today\'s forgotten cards</item>
     <item>Review ahead by two days</item>
     <item>Review due cards with tag</item>

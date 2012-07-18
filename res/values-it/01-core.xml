@@ -52,11 +52,8 @@
   <string name="contextmenu_deckpicker_optimize_deck">Ottimizzare database</string>
   <string name="contextmenu_deckpicker_rename_deck">Rinomina mazzo</string>
   <string name="contextmenu_deckpicker_set_custom_dictionary">Imposta dizionario personalizzato</string>
-  <string name="begin_cram">Inizia studio focalizzato</string>
-  <string name="cram">Studio focalizzato</string>
   <string name="menu_download_deck">Scarica il mazzo</string>
   <string name="menu_download_shared_deck">Mazzo condiviso</string>
-  <string name="menu_download_personal_deck">Mazzo privato</string>
   <string name="menu_my_account">Sincronizzazione account</string>
   <string name="menu_preferences">Preferenze</string>
   <string name="menu_zeemote">Zeemote</string>
@@ -76,15 +73,12 @@
   <string name="create">Crea</string>
   <string name="new_dynamic_deck">Nuovo mazzo dinamico</string>
   <string name="studyoptions_feedback">Commenti e suggerimenti</string>
-  <string name="studyoptions_cram_dialog_title">Etichette per lo studio focalizzato</string>
-  <string name="studyoptions_load_other_deck">Carica un altro mazzo</string>
   <string name="studyoptions_load_tutorial_deck">Crea mazzo d\'esercizio</string>
   <string name="night_mode">Modalità notturna</string>
   <string name="visit">Visita</string>
   <string name="later">Più tardi</string>
   <string name="download">Download</string>
   <string name="open_collection">Apertura collezione.\nAttendi...</string>
-  <string name="create_collection">Creazione collezione.\nAttendi...</string>
   <string name="rebuild_cram_deck">Ricreo mazzo per lo studio focalizzato.\nAttendi...</string>
   <string name="rebuild_cram_label">Ricrea</string>
   <string name="empty_cram_label">Svuota</string>

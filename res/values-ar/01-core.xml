@@ -52,11 +52,8 @@
   <string name="contextmenu_deckpicker_optimize_deck">تحسين قاعدة البيانات</string>
   <string name="contextmenu_deckpicker_rename_deck">أعد تسمية الرزمة</string>
   <string name="contextmenu_deckpicker_set_custom_dictionary">عين قاموس مخصص</string>
-  <string name="begin_cram">ابدأ نمط المركز</string>
-  <string name="cram">مركّز</string>
   <string name="menu_download_deck">حمل رزمة</string>
   <string name="menu_download_shared_deck">رزمة مشتركة</string>
-  <string name="menu_download_personal_deck">رزمة شخصية</string>
   <string name="menu_my_account">حساب المزامنة</string>
   <string name="menu_preferences">تفضيلات</string>
   <string name="menu_zeemote">استخدمZeemote</string>
@@ -76,15 +73,12 @@
   <string name="create">إنشاء</string>
   <string name="new_dynamic_deck">New dynamic deck</string>
   <string name="studyoptions_feedback">مرئياتك</string>
-  <string name="studyoptions_cram_dialog_title">وسوم للتركيز عليها</string>
-  <string name="studyoptions_load_other_deck">تحميل رزمة أخرى</string>
   <string name="studyoptions_load_tutorial_deck">إنشاء الرزمة التعليمية</string>
   <string name="night_mode">Night mode</string>
   <string name="visit">قم بزيارة</string>
   <string name="later">في وقت لاحق</string>
   <string name="download">تحميل</string>
   <string name="open_collection">فتح المجموعة.\nالرجاء الانتظار...</string>
-  <string name="create_collection">إنشاء المجموعة.\nالرجاء الانتظار...</string>
   <string name="rebuild_cram_deck">Rebuilding cram deck.\nPlease wait...</string>
   <string name="rebuild_cram_label">Rebuild</string>
   <string name="empty_cram_label">Empty</string>

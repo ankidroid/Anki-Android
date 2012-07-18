@@ -52,11 +52,8 @@
   <string name="contextmenu_deckpicker_optimize_deck">Optimiser la base de données</string>
   <string name="contextmenu_deckpicker_rename_deck">Renommer le paquet</string>
   <string name="contextmenu_deckpicker_set_custom_dictionary">Définir un dictionnaire personnalisé</string>
-  <string name="begin_cram">Démarrer la bachotage</string>
-  <string name="cram">Bachoter</string>
   <string name="menu_download_deck">Télécharger le paquet</string>
   <string name="menu_download_shared_deck">Paquet partagé</string>
-  <string name="menu_download_personal_deck">Paquet personnel</string>
   <string name="menu_my_account">Synchroniser</string>
   <string name="menu_preferences">Préférences</string>
   <string name="menu_zeemote">Zeemote</string>
@@ -76,15 +73,12 @@
   <string name="create">Créer</string>
   <string name="new_dynamic_deck">Nouveau paquet dynamique</string>
   <string name="studyoptions_feedback">Commentaires</string>
-  <string name="studyoptions_cram_dialog_title">Marqueurs à bachoter</string>
-  <string name="studyoptions_load_other_deck">Charger un autre paquet</string>
   <string name="studyoptions_load_tutorial_deck">Écrire un guide</string>
   <string name="night_mode">Assombrir</string>
   <string name="visit">Visitez</string>
   <string name="later">Plus tard</string>
   <string name="download">Télécharger</string>
   <string name="open_collection">Chargement de la collection.\nPatience…</string>
-  <string name="create_collection">Création de la collection.\nPatience…</string>
   <string name="rebuild_cram_deck">Réparation du paquet bachoteur.\nPatience…</string>
   <string name="rebuild_cram_label">Réparer</string>
   <string name="empty_cram_label">Vide</string>

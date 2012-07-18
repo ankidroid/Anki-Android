@@ -64,14 +64,6 @@
   <string name="stats_forecast">Prognos</string>
   <string name="stats_review_count">Antal repetitioner</string>
   <string name="stats_review_time">Repetitionsstid</string>
-  <string-array name="next_review_short">
-    <item>%ss</item>
-    <item>%sm</item>
-    <item>%sh</item>
-    <item>%sd</item>
-    <item>%smo</item>
-    <item>%sy</item>
-  </string-array>
   <string-array name="next_review_in_s">
     <item>om 1 sekund</item>
     <item>om 1 minut</item>

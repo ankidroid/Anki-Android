@@ -64,14 +64,6 @@
   <string name="stats_forecast">예상</string>
   <string name="stats_review_count">복습 횟수</string>
   <string name="stats_review_time">복습 시간</string>
-  <string-array name="next_review_short">
-    <item>%s초</item>
-    <item>%s분</item>
-    <item>%s시간</item>
-    <item>%s일</item>
-    <item>%s월</item>
-    <item>%s년</item>
-  </string-array>
   <string-array name="next_review_in_s">
     <item>1초에</item>
     <item>1분에</item>

@@ -52,11 +52,8 @@
   <string name="contextmenu_deckpicker_optimize_deck">Оптимизиране на база данни</string>
   <string name="contextmenu_deckpicker_rename_deck">Преименуване на колода</string>
   <string name="contextmenu_deckpicker_set_custom_dictionary">Задаване на потребителски речник</string>
-  <string name="begin_cram">Стартиране режим на зубрене</string>
-  <string name="cram">Зубря</string>
   <string name="menu_download_deck">Изтегляне на колода</string>
   <string name="menu_download_shared_deck">Споделена колода</string>
-  <string name="menu_download_personal_deck">Лични колода</string>
   <string name="menu_my_account">Sync account</string>
   <string name="menu_preferences">Предпочитания</string>
   <string name="menu_zeemote">Контролер*</string>
@@ -76,15 +73,12 @@
   <string name="create">Create</string>
   <string name="new_dynamic_deck">New dynamic deck</string>
   <string name="studyoptions_feedback">Обратна връзка</string>
-  <string name="studyoptions_cram_dialog_title">Етикети за зубрене</string>
-  <string name="studyoptions_load_other_deck">Зареждане на друга колода</string>
   <string name="studyoptions_load_tutorial_deck">Create tutorial</string>
   <string name="night_mode">Night mode</string>
   <string name="visit">Посетете</string>
   <string name="later">По-късно</string>
   <string name="download">Изтегляне</string>
   <string name="open_collection">Opening collection.\nPlease wait...</string>
-  <string name="create_collection">Creating collection.\nPlease wait...</string>
   <string name="rebuild_cram_deck">Rebuilding cram deck.\nPlease wait...</string>
   <string name="rebuild_cram_label">Rebuild</string>
   <string name="empty_cram_label">Empty</string>

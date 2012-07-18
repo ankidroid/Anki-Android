@@ -150,7 +150,6 @@ public class CardEditor extends Activity {
      * Broadcast that informs us when the sd card is about to be unmounted
      */
     private BroadcastReceiver mUnmountReceiver = null;
-    private StyledOpenCollectionDialog mNotMountedDialog;
     private Bundle mSavedInstanceState;
 
     private LinearLayout mFieldsLayoutContainer;
@@ -193,6 +192,7 @@ public class CardEditor extends Activity {
     private StyledDialog mTagsDialog;
 
     private StyledProgressDialog mProgressDialog;
+    private StyledOpenCollectionDialog mOpenCollectionDialog;
 
     // private String mSourceLanguage;
     // private String mTargetLanguage;
@@ -311,6 +311,18 @@ public class CardEditor extends Activity {
             }
         }
         Log.i(AnkiDroidApp.TAG, "CardEditor: caller: " + mCaller);
+        
+        SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(getBaseContext());
+
+        if (mCaller == CALLER_INDICLASH && preferences.getBoolean("intentAdditionInstantAdd", false)) {
+            // save information without showing card editor
+        	fetchIntentInformation(intent);
+            MetaDB.saveIntentInformation(CardEditor.this, Utils.joinFields(mSourceText));
+            Themes.showThemedToast(CardEditor.this, getResources().getString(R.string.app_name) + ": " + getResources().getString(R.string.CardEditorLaterMessage), false);
+        	finish();
+        	return;
+        }
+
         mCol = Collection.currentCollection();
         if (mCol == null) {
             reloadCollection(savedInstanceState);
@@ -399,24 +411,7 @@ public class CardEditor extends Activity {
                 break;
 
             case CALLER_INDICLASH:
-                Bundle extras = intent.getExtras();
-                if (ACTION_CREATE_FLASHCARD.equals(intent.getAction())) {
-                    // mSourceLanguage = extras.getString(SOURCE_LANGUAGE);
-                    // mTargetLanguage = extras.getString(TARGET_LANGUAGE);
-                	mSourceText = new String[2];
-                    mSourceText[0] = extras.getString(SOURCE_TEXT);
-                    mSourceText[1] = extras.getString(TARGET_TEXT);
-                } else {
-                    Pair<String, String> messages = new Pair<String, String>(extras.getString(Intent.EXTRA_SUBJECT),
-                            extras.getString(Intent.EXTRA_TEXT));
-
-                    /* Filter garbage information */
-                    Pair<String, String> cleanMessages = new FilterFacade(getBaseContext()).filter(messages);
-
-                	mSourceText = new String[2];
-                    mSourceText[0] = cleanMessages.first;
-                    mSourceText[1] = cleanMessages.second;
-                }
+            	fetchIntentInformation(intent);
                 if (mSourceText == null) {
                     finish();
                     return;
@@ -479,6 +474,15 @@ public class CardEditor extends Activity {
             });
         } else {
             setTitle(R.string.cardeditor_title_edit_card);
+            mSwapButton.setVisibility(View.GONE);
+            mSwapButton = (Button) findViewById(R.id.CardEditorLaterButton);
+            mSwapButton.setVisibility(View.VISIBLE);
+            mSwapButton.setText(getResources().getString(R.string.fact_adder_swap));
+            mSwapButton.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
+                	swapText(false);
+                }
+            });
         }
 
         ((LinearLayout) findViewById(R.id.CardEditorDeckButton)).setOnClickListener(new View.OnClickListener() {
@@ -487,7 +491,6 @@ public class CardEditor extends Activity {
             }
         });
 
-        SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(getBaseContext());
         mPrefFixArabic = preferences.getBoolean("fixArabicText", false);
         // if Arabic reshaping is enabled, disable the Save button to avoid
         // saving the reshaped string to the deck
@@ -575,6 +578,26 @@ public class CardEditor extends Activity {
         }
     }
 
+    private void fetchIntentInformation(Intent intent) {
+        Bundle extras = intent.getExtras();
+        if (ACTION_CREATE_FLASHCARD.equals(intent.getAction())) {
+            // mSourceLanguage = extras.getString(SOURCE_LANGUAGE);
+            // mTargetLanguage = extras.getString(TARGET_LANGUAGE);
+        	mSourceText = new String[2];
+            mSourceText[0] = extras.getString(SOURCE_TEXT);
+            mSourceText[1] = extras.getString(TARGET_TEXT);
+        } else {
+            Pair<String, String> messages = new Pair<String, String>(extras.getString(Intent.EXTRA_SUBJECT),
+                    extras.getString(Intent.EXTRA_TEXT));
+
+            /* Filter garbage information */
+            Pair<String, String> cleanMessages = new FilterFacade(getBaseContext()).filter(messages);
+
+        	mSourceText = new String[2];
+            mSourceText[0] = cleanMessages.first;
+            mSourceText[1] = cleanMessages.second;
+        }
+    }
 
     private void reloadCollection(Bundle savedInstanceState) {
     	mSavedInstanceState = savedInstanceState;
@@ -584,9 +607,9 @@ public class CardEditor extends Activity {
 
                     @Override
                     public void onPostExecute(DeckTask.TaskData result) {
-                        if (mProgressDialog.isShowing()) {
+                        if (mOpenCollectionDialog.isShowing()) {
                             try {
-                                mProgressDialog.dismiss();
+                            	mOpenCollectionDialog.dismiss();
                             } catch (Exception e) {
                                 Log.e(AnkiDroidApp.TAG, "onPostExecute - Dialog dismiss Exception = " + e.getMessage());
                             }
@@ -603,13 +626,12 @@ public class CardEditor extends Activity {
 
                     @Override
                     public void onPreExecute() {
-                        mProgressDialog = StyledProgressDialog.show(CardEditor.this, "",
-                                getResources().getString(R.string.open_collection), true, true, new OnCancelListener() {
-                                    @Override
-                                    public void onCancel(DialogInterface arg0) {
-                                        finish();
-                                    }
-                                });
+                    	mOpenCollectionDialog = StyledOpenCollectionDialog.show(CardEditor.this, getResources().getString(R.string.open_collection), new OnCancelListener() {
+                            @Override
+                            public void onCancel(DialogInterface arg0) {
+                                finish();
+                            }
+                        });
                     }
 
 

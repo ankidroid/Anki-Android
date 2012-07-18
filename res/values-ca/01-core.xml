@@ -52,11 +52,8 @@
   <string name="contextmenu_deckpicker_optimize_deck">Optimitza la base de dades</string>
   <string name="contextmenu_deckpicker_rename_deck">Canvia el nom del paquet</string>
   <string name="contextmenu_deckpicker_set_custom_dictionary">Establir diccionari personalitzat</string>
-  <string name="begin_cram">Comença el mode repàs (cram)</string>
-  <string name="cram">Repàs (cram)</string>
   <string name="menu_download_deck">Baixa el paquet</string>
   <string name="menu_download_shared_deck">Paquet compartit</string>
-  <string name="menu_download_personal_deck">Paquet personal</string>
   <string name="menu_my_account">Compte de sincronització</string>
   <string name="menu_preferences">Preferències</string>
   <string name="menu_zeemote">Zeemote</string>
@@ -76,15 +73,12 @@
   <string name="create">Genera</string>
   <string name="new_dynamic_deck">New dynamic deck</string>
   <string name="studyoptions_feedback">Comentaris</string>
-  <string name="studyoptions_cram_dialog_title">Etiquetes que voleu repassar (cram)</string>
-  <string name="studyoptions_load_other_deck">Carrega un altre paquet</string>
   <string name="studyoptions_load_tutorial_deck">Genera el tutorial</string>
   <string name="night_mode">Night mode</string>
   <string name="visit">Visita</string>
   <string name="later">Més tard</string>
   <string name="download">Descarrega</string>
   <string name="open_collection">S\'està obrint la col·lecció.\nUn moment si us plau...</string>
-  <string name="create_collection">S\'està generant la col·lecció.\nUn moment si us plau...</string>
   <string name="rebuild_cram_deck">Rebuilding cram deck.\nPlease wait...</string>
   <string name="rebuild_cram_label">Rebuild</string>
   <string name="empty_cram_label">Empty</string>

@@ -55,6 +55,8 @@
   <string name="show_timer_summ">타이머에 정답 제시 소요시간 보이기</string>
   <string name="show_progress_bars">상태바 보이기</string>
   <string name="show_progress_bars_summ">리뷰하는 동안 오늘의 진도와 정답비율 보여주기</string>
+  <string name="fade_scrollbars">Fade scrollbars</string>
+  <string name="fade_scrollbars_summ">Automatically fade out flashcard scrollbars when not scrolling</string>
   <string name="show_whiteboard_summ">학습화면에 쓰기기능 가능하게 함</string>
   <string name="whiteboard_stroke_width">화이트보드 선 폭</string>
   <string name="whiteboard_stroke_width_summ">선굵기: XXX</string>
@@ -273,4 +275,7 @@
   <string name="deck_conf_cram_steps_summ">사용자 정의 단계를 정의</string>
   <string name="pref_show_splashscreen">Splash screen</string>
   <string name="pref_show_splashscreen_summ">Show splash screen</string>
+  <string name="pref_intent_add_instant">Instant add</string>
+  <string name="pref_intent_add_instant_summ">Add new cards from dictionaries without opening AnkiDroid. You find them later under \'saved data\' in card adder.</string>
+  <string name="pref_cat_intent_add">External data addition</string>
 </resources>

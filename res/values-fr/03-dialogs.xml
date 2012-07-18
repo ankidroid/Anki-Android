@@ -32,15 +32,7 @@
   <string name="no_tts_available_message">Aucun langage de synthèse vocale disponible</string>
   <string name="tts_no_tts">Ne pas parler</string>
   <string name="dont_show_again">Ne plus montrer</string>
-  <string name="deck_upgrade_too_old_version">Les paquets dont la version est antérieure à 39 ne sont pas pris en charge par AnkiDroid. Ouvrez ce paquet sur la version pour ordinateur d’Anki, laquelle saura mettre à jour le paquet.</string>
   <string name="sync_log_title">Journal des synchronisations</string>
-  <string name="deckpicker_upgrading">Mise à jour du paquet…</string>
-  <string name="deckpicker_upgrade_notes_title">Résultats de la mise à jour des paquets</string>
-  <string name="deckpicker_upgrade_notes_button">Remarques</string>
-  <string name="deckpicker_download_missing_title">Récupérer des médias manquants</string>
-  <string name="deckpicker_download_missing_none">Aucun fichier multimédia ne manque</string>
-  <string name="deckpicker_download_missing_success">%1$d fut récupéré mais il manque %2$d</string>
-  <string name="deckpicker_download_missing_error">Problème avec le fichier : %1$s</string>
   <string name="notify_ticker">Mise à jour de l’application</string>
   <string name="notify_title">AnkiDroid mis à jour</string>
   <string name="notify_message">Télécharger une nouvelle version</string>

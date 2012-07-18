@@ -52,11 +52,8 @@
   <string name="contextmenu_deckpicker_optimize_deck">Optymalizacja bazy danych</string>
   <string name="contextmenu_deckpicker_rename_deck">Zmień nazwę talii</string>
   <string name="contextmenu_deckpicker_set_custom_dictionary">Ustaw własny słownik</string>
-  <string name="begin_cram">Zacznij zakuwanie</string>
-  <string name="cram">Zakuwaj</string>
   <string name="menu_download_deck">Pobierz talię</string>
   <string name="menu_download_shared_deck">Udostępniona talia</string>
-  <string name="menu_download_personal_deck">Własna talia</string>
   <string name="menu_my_account">Synchronizacja konta</string>
   <string name="menu_preferences">Ustawienia</string>
   <string name="menu_zeemote">Zeemote</string>
@@ -76,15 +73,12 @@
   <string name="create">Utwórz</string>
   <string name="new_dynamic_deck">New dynamic deck</string>
   <string name="studyoptions_feedback">Informacje zwrotne</string>
-  <string name="studyoptions_cram_dialog_title">Etykiety do zakuwania</string>
-  <string name="studyoptions_load_other_deck">Wczytaj inną talię</string>
   <string name="studyoptions_load_tutorial_deck">Utwórz samouczek</string>
   <string name="night_mode">Tryb nocny</string>
   <string name="visit">Odwiedź</string>
   <string name="later">Później</string>
   <string name="download">Pobierz</string>
   <string name="open_collection">Opening collection.\nPlease wait...</string>
-  <string name="create_collection">Tworzenie kolekcji.\nProszę czekać...</string>
   <string name="rebuild_cram_deck">Przebudowywanie talii.\nProszę czekać...</string>
   <string name="rebuild_cram_label">Odbuduj</string>
   <string name="empty_cram_label">Wyczyść</string>

@@ -52,11 +52,8 @@
   <string name="contextmenu_deckpicker_optimize_deck">Optimera databas</string>
   <string name="contextmenu_deckpicker_rename_deck">Byt namn på kortlek</string>
   <string name="contextmenu_deckpicker_set_custom_dictionary">Ange egen ordlista</string>
-  <string name="begin_cram">Starta råplugg</string>
-  <string name="cram">Råplugg</string>
   <string name="menu_download_deck">Hämta kortlek</string>
   <string name="menu_download_shared_deck">Delad kortlek</string>
-  <string name="menu_download_personal_deck">Egen kortlek</string>
   <string name="menu_my_account">Synkronisera konto</string>
   <string name="menu_preferences">Inställningar</string>
   <string name="menu_zeemote">Zeemote</string>
@@ -76,15 +73,12 @@
   <string name="create">Skapa</string>
   <string name="new_dynamic_deck">New dynamic deck</string>
   <string name="studyoptions_feedback">Feedback</string>
-  <string name="studyoptions_cram_dialog_title">Taggar att råplugga</string>
-  <string name="studyoptions_load_other_deck">Ladda annan kortlek</string>
   <string name="studyoptions_load_tutorial_deck">Skapa övningskortlek</string>
   <string name="night_mode">Night mode</string>
   <string name="visit">Besök</string>
   <string name="later">Senare</string>
   <string name="download">Hämta</string>
   <string name="open_collection">Öppnar samling.\nVar vänlig vänta...</string>
-  <string name="create_collection">Skapar samling.\nVar vänlig vänta...</string>
   <string name="rebuild_cram_deck">Rebuilding cram deck.\nPlease wait...</string>
   <string name="rebuild_cram_label">Rebuild</string>
   <string name="empty_cram_label">Empty</string>

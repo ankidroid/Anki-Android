@@ -52,11 +52,8 @@
   <string name="contextmenu_deckpicker_optimize_deck">データベースを最適化します</string>
   <string name="contextmenu_deckpicker_rename_deck">単語帳の名前の変更</string>
   <string name="contextmenu_deckpicker_set_custom_dictionary">カスタム辞書設定</string>
-  <string name="begin_cram">詰め込み勉強を始める</string>
-  <string name="cram">詰め込み勉強</string>
   <string name="menu_download_deck">単語帳をダウンロード</string>
   <string name="menu_download_shared_deck">共有の単語帳</string>
-  <string name="menu_download_personal_deck">個人の単語帳</string>
   <string name="menu_my_account">Sync account</string>
   <string name="menu_preferences">設定</string>
   <string name="menu_zeemote">Zeemote</string>
@@ -76,15 +73,12 @@
   <string name="create">Create</string>
   <string name="new_dynamic_deck">New dynamic deck</string>
   <string name="studyoptions_feedback">フィードバック</string>
-  <string name="studyoptions_cram_dialog_title">このタグがついているカードを総復習する</string>
-  <string name="studyoptions_load_other_deck">他の単語帳を開く</string>
   <string name="studyoptions_load_tutorial_deck">Create tutorial</string>
   <string name="night_mode">Night mode</string>
   <string name="visit">訪問</string>
   <string name="later">後で</string>
   <string name="download">ダウンロード</string>
   <string name="open_collection">Opening collection.\nPlease wait...</string>
-  <string name="create_collection">Creating collection.\nPlease wait...</string>
   <string name="rebuild_cram_deck">Rebuilding cram deck.\nPlease wait...</string>
   <string name="rebuild_cram_label">Rebuild</string>
   <string name="empty_cram_label">Empty</string>

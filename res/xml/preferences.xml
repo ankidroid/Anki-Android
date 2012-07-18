@@ -531,6 +531,14 @@
                 android:title="@string/dictionary" />
         </PreferenceCategory>
         <PreferenceCategory
+            android:title="@string/pref_cat_intent_add" >
+            <CheckBoxPreference
+                android:defaultValue="false"
+                android:key="intentAdditionInstantAdd"
+                android:summary="@string/pref_intent_add_instant_summ"
+                android:title="@string/pref_intent_add_instant" />
+        </PreferenceCategory>
+            <PreferenceCategory
             android:summary="@string/filter_external_data_summ"
             android:title="@string/filter_external_data" >
             <CheckBoxPreference

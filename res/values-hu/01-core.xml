@@ -52,11 +52,8 @@
   <string name="contextmenu_deckpicker_optimize_deck">Adatbázis optimalizálása </string>
   <string name="contextmenu_deckpicker_rename_deck">Pakli átnevezése</string>
   <string name="contextmenu_deckpicker_set_custom_dictionary">Saját szótár beállítása</string>
-  <string name="begin_cram">Magoló mód indítás</string>
-  <string name="cram">Magolás</string>
   <string name="menu_download_deck">Pakli letöltése</string>
   <string name="menu_download_shared_deck">Megosztott pakli</string>
-  <string name="menu_download_personal_deck">Személyes pakli</string>
   <string name="menu_my_account">Fiók szinkronizálása</string>
   <string name="menu_preferences">Beállítások</string>
   <string name="menu_zeemote">Zeemote</string>
@@ -76,15 +73,12 @@
   <string name="create">Létrehozás</string>
   <string name="new_dynamic_deck">Új, dinamikus pakli</string>
   <string name="studyoptions_feedback">Visszajelzés</string>
-  <string name="studyoptions_cram_dialog_title">Magoló címkék</string>
-  <string name="studyoptions_load_other_deck">Másik pakli betöltése</string>
   <string name="studyoptions_load_tutorial_deck">Bemutató létrehozása</string>
   <string name="night_mode">Éjszakai mód</string>
   <string name="visit">Látogatás</string>
   <string name="later">Később</string>
   <string name="download">Letöltés</string>
   <string name="open_collection">Gyűjtemény megnyitása.\nKérlek, várj...</string>
-  <string name="create_collection">Gyűjtemény létrehozása.\nKérlek, várj...</string>
   <string name="rebuild_cram_deck">Magoló pakli újraépítése.\nKérlek várj...</string>
   <string name="rebuild_cram_label">Újraépít</string>
   <string name="empty_cram_label">Üres</string>

@@ -31,11 +31,11 @@
   <string name="add_new_tag">Додати мітку</string>
   <string name="note_type">Тип Запису</string>
   <string name="sdcard_missing_message">SD картка недоступна бо використовується як пам’ять USB. Для доступу до своїх колод від’єднайте USB.</string>
-  <string name="show_whiteboard">Show Whiteboard</string>
-  <string name="hide_whiteboard">Hide Whiteboard</string>
-  <string name="clear_whiteboard">Clear Whiteboard</string>
-  <string name="session_question_limit_reached">Session question limit reached</string>
-  <string name="session_time_limit_reached">Session time limit reached</string>
+  <string name="show_whiteboard">Показати Дошку</string>
+  <string name="hide_whiteboard">Приховати Дошку</string>
+  <string name="clear_whiteboard">Очистити Дошку</string>
+  <string name="session_question_limit_reached">Досягнуто обмеження кількості питань для сесії</string>
+  <string name="session_time_limit_reached">Досягнуто обмеження часу для сесії</string>
   <string name="cram_edit_warning">Редагування карток не дозволене під-час зубріння</string>
   <string name="suspend_leeches">Відкласти липкі картки</string>
   <string name="leech_suspend_notification">Картку позначено як липка, і відкладено</string>
@@ -46,20 +46,20 @@
   <string name="factadder_saving_error">Помилка збереження запису</string>
   <string name="pref_lang_support">Мова</string>
   <string name="saving_facts">Збереження запису</string>
-  <string name="deck">Deck</string>
+  <string name="deck">Колода</string>
   <string name="add">Додати</string>
   <string name="close">Закрити</string>
   <string name="select">Вибрати</string>
   <string name="saving_changes">Збереження змін...</string>
-  <string name="timebox_reached">Timebox reached!</string>
-  <string name="studyoptions_welcome_title">Welcome to AnkiDroid</string>
-  <string name="studyoptions_no_external_storage_title">No External Storage Available</string>
-  <string name="studyoptions_no_external_storage_message">No external storage is currently available. AnkiDroid needs to have access to the SD card in order to read and load your Anki decks. Check that your SD card is mounted and try again.</string>
+  <string name="timebox_reached">Досягнуто обмеження часу!</string>
+  <string name="studyoptions_welcome_title">Ласкаво просимо в AnkiDroid</string>
+  <string name="studyoptions_no_external_storage_title">Немає доступної зовнішньої пам’яті</string>
+  <string name="studyoptions_no_external_storage_message">Немає доступної зовнішньої пам’яті. AnkiDroid необхідний доступ до SD карти для завантаження та читання ваших колод Anki. Перевірте, що ваша SD картка встановлена і спробуйте знову.</string>
   <string name="fact_adder_intent_title">Картка AnkiDroid</string>
-  <string name="fact_adder_swap">Swap</string>
+  <string name="fact_adder_swap">Поміняти місцями</string>
   <string name="deckpicker_select_dictionary_title">Вибрати Словник</string>
   <string name="deckpicker_select_dictionary_default">За замовчанням</string>
-  <string name="card_editor_add_card">Add note</string>
+  <string name="card_editor_add_card">Додати примітку</string>
   <string name="card_editor_reset">Скинути</string>
   <string name="card_editor_copy_card">Копіювати картку</string>
   <string name="card_editor_reset_card">Скинути поступ</string>
@@ -79,17 +79,16 @@
   <string name="menu_cardbrowser">Оглядач карток</string>
   <string name="show_hint">Показати підказку</string>
   <string name="pref_lang_other">Мовні параметри</string>
-  <string name="pref_lang_common">LangCommon</string>
   <string name="pref_font_UI">Користувацький шрифт інтерфейсу</string>
-  <string name="info_rate">Rate AnkiDroid</string>
+  <string name="info_rate">Оцініть AnkiDroid</string>
   <string-array name="dynOrderLabels">
     <item>Найстарші спочатку</item>
     <item>Випадковий порядок</item>
     <item>Зростаючий інтервал</item>
     <item>Спадний інтервал</item>
-    <item>Most lapses</item>
+    <item>Найбільші недоліки</item>
     <item>Порядок доданий</item>
-    <item>Order due</item>
+    <item>Порядок черги</item>
   </string-array>
   <plurals name="factadder_cards_added">
     <item quantity="one">додана 1 картка</item>

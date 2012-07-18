@@ -44,7 +44,7 @@
   <string name="cardeditor_title_add_note">Přidat poznámku</string>
   <string name="cardeditor_title_edit_card">Upravit poznámku</string>
   <string name="factadder_saving_error">Chyba při ukládání poznámky</string>
-  <string name="pref_lang_support">Language</string>
+  <string name="pref_lang_support">Jazyk</string>
   <string name="saving_facts">Ukládání poznámky</string>
   <string name="deck">Balíček</string>
   <string name="add">Přidat</string>
@@ -64,7 +64,7 @@
   <string name="card_editor_copy_card">Kopírovat kartu</string>
   <string name="card_editor_reset_card">Obnovit proces učení</string>
   <string name="error_insufficient_memory">Operace není možná z důvodu nedostatku paměti na zařízení</string>
-  <string name="tutorial_load">Vytváření výukového balíčku. \nČekejte...</string>
+  <string name="tutorial_load">Vytváření výukového balíčku. \nProsím čekejte...</string>
   <string name="tutorial_loading_error">Nebylo možné vytvořit výukový balíček</string>
   <string name="rename">Přejmenovat</string>
   <string name="rename_error">Balíček %s nelze přejmenovat</string>
@@ -76,20 +76,19 @@
   <string name="check_db_message">Kontrola databáze.\nProsím čekejte...</string>
   <string name="simple_interface_hint">Prázdné %s. Mějte na paměti, že jednoduché rozhraní nemůže zobrazit obrázky/zvuky atd.</string>
   <string name="delete_deck">Odstraňování balíčku...\nProsím čekejte.</string>
-  <string name="menu_cardbrowser">Card browser</string>
-  <string name="show_hint">Show Hint</string>
-  <string name="pref_lang_other">Language Preferences</string>
-  <string name="pref_lang_common">LangCommon</string>
-  <string name="pref_font_UI">Custom UI Font</string>
-  <string name="info_rate">Rate AnkiDroid</string>
+  <string name="menu_cardbrowser">Prohlížeč karet</string>
+  <string name="show_hint">Ukázat tip</string>
+  <string name="pref_lang_other">Předvolby jazyka</string>
+  <string name="pref_font_UI">Vlastní písmo</string>
+  <string name="info_rate">Ohodnotit AnkiDroid</string>
   <string-array name="dynOrderLabels">
-    <item>Oldest seen first</item>
-    <item>Random</item>
-    <item>Increasing intervals</item>
-    <item>Decreasing intervals</item>
+    <item>Nejstarší první</item>
+    <item>Náhodně</item>
+    <item>Rostoucí intervaly</item>
+    <item>Klesající intervaly</item>
     <item>Most lapses</item>
-    <item>Order added</item>
-    <item>Order due</item>
+    <item>V pořádí přidání</item>
+    <item>V pořadí zkoušení</item>
   </string-array>
   <plurals name="factadder_cards_added">
     <item quantity="one">1 karta přidána</item>

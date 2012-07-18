@@ -64,14 +64,6 @@
   <string name="stats_forecast">Previsione</string>
   <string name="stats_review_count">Conteggio ripetizioni</string>
   <string name="stats_review_time">Tempo di ripetizione</string>
-  <string-array name="next_review_short">
-    <item>%ss</item>
-    <item>%sm</item>
-    <item>%sh</item>
-    <item>%sg</item>
-    <item>%sme</item>
-    <item>%sa</item>
-  </string-array>
   <string-array name="next_review_in_s">
     <item>﻿in 1 secondo</item>
     <item>in 1 minuto</item>

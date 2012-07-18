@@ -64,14 +64,6 @@
   <string name="stats_forecast">Prévisions</string>
   <string name="stats_review_count">Nombre de révisions</string>
   <string name="stats_review_time">Temps de révision</string>
-  <string-array name="next_review_short">
-    <item>%s s</item>
-    <item>%s min</item>
-    <item>%s h</item>
-    <item>%s j</item>
-    <item>%s mois</item>
-    <item>%s an(s)</item>
-  </string-array>
   <string-array name="next_review_in_s">
     <item>dans 1 seconde</item>
     <item>dans 1 minute</item>

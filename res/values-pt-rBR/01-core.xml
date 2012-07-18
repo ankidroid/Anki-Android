@@ -52,11 +52,8 @@
   <string name="contextmenu_deckpicker_optimize_deck">Otimizar banco de dados</string>
   <string name="contextmenu_deckpicker_rename_deck">Renomear deck</string>
   <string name="contextmenu_deckpicker_set_custom_dictionary">Usar dicionário personalizado</string>
-  <string name="begin_cram">Iniciar Modo Preparatório</string>
-  <string name="cram">Cursinho</string>
   <string name="menu_download_deck">Baixar deck</string>
   <string name="menu_download_shared_deck">Deck compartilhado</string>
-  <string name="menu_download_personal_deck">Deck pessoal</string>
   <string name="menu_my_account">Conta de sincronização</string>
   <string name="menu_preferences">Preferências</string>
   <string name="menu_zeemote">Zeemote</string>
@@ -76,15 +73,12 @@
   <string name="create">Criar</string>
   <string name="new_dynamic_deck">Novo deck dinâmico</string>
   <string name="studyoptions_feedback">Feedback</string>
-  <string name="studyoptions_cram_dialog_title">Tags do preparatório</string>
-  <string name="studyoptions_load_other_deck">Carregar Outro Deck</string>
   <string name="studyoptions_load_tutorial_deck">Criar tutorial</string>
   <string name="night_mode">Modo noite</string>
   <string name="visit">Visitar</string>
   <string name="later">Mais tarde</string>
   <string name="download">Baixar</string>
   <string name="open_collection">Abrindo coleção.\nPor favor aguarde...</string>
-  <string name="create_collection">Abrindo coleção.\nPor favor aguarde...</string>
   <string name="rebuild_cram_deck">Reconstruindo deck do preparatório.\nPor favor aguarde...</string>
   <string name="rebuild_cram_label">Reconstruir</string>
   <string name="empty_cram_label">Vazio</string>
