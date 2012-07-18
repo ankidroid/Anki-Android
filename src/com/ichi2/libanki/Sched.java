@@ -605,6 +605,16 @@ public class Sched {
                   revCount += (Integer)ch[4];
                }
             }
+            // limit the counts to the deck's limits
+            JSONObject conf = mCol.getDecks().confForDid(did);
+            try {
+                if (conf.getInt("dyn") == 0) {
+                    revCount = Math.min(revCount, conf.getJSONObject("rev").getInt("perDay"));
+                    newCount = Math.min(newCount, conf.getJSONObject("new").getInt("perDay"));
+                }
+            } catch (JSONException e) {
+                throw new RuntimeException(e);
+            }
             tree.add(new Object[] {title, did, newCount, lrnCount, revCount,
             children});
         }
