@@ -1488,6 +1488,11 @@ public class Collection {
     }
 
 
+    public void setCrt(long crt) {
+        mCrt = crt;
+    }
+
+
     public Sched getSched() {
         return mSched;
     }

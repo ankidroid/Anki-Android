@@ -273,6 +273,7 @@ public class Syncer {
             o.put("tags", getTags());
             if (mLNewer) {
                 o.put("conf", getConf());
+                o.put("crt", mCol.getCrt());
             }
         } catch (JSONException e) {
             throw new RuntimeException(e);
@@ -298,6 +299,10 @@ public class Syncer {
             mergeTags(rchg.getJSONArray("tags"));
             if (rchg.has("conf")) {
                 mergeConf(rchg.getJSONObject("conf"));
+            }
+            // this was left out of earlier betas
+            if (rchg.has("crt")) {
+                mCol.setCrt(rchg.getLong("crt"));
             }
         } catch (JSONException e) {
             throw new RuntimeException(e);
