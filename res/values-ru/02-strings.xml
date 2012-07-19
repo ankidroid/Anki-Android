@@ -23,7 +23,7 @@
   <string name="CardEditorCancelButton">Отмена</string>
   <string name="CardEditorSaveButton">Сохранить</string>
   <string name="CardEditorLaterButton">Позже</string>
-  <string name="CardEditorLaterMessage">Saved information for later</string>
+  <string name="CardEditorLaterMessage">Сохранённая информация</string>
   <string name="CardEditorCardDeck">Карта колоды: %s</string>
   <string name="CardEditorNoteDeck">Заметка колоды: %s</string>
   <string name="CardEditorModel">Тип заметки: %s</string>
@@ -51,7 +51,7 @@
   <string name="close">Закрыть</string>
   <string name="select">Ок</string>
   <string name="saving_changes">Сохранение изменений...</string>
-  <string name="timebox_reached">Timebox reached!</string>
+  <string name="timebox_reached">Лимит времени достигнут!</string>
   <string name="studyoptions_welcome_title">Добро пожаловать в AnkiDroid</string>
   <string name="studyoptions_no_external_storage_title">Не доступен накопитель данных</string>
   <string name="studyoptions_no_external_storage_message">Не доступен накопитель данных. AnkiDroid должен иметь доступ к SD-карте для того, чтобы читать и загружать колоды. Убедитесь, что ваша SD-карта смонтирована и попробуйте еще раз.</string>
@@ -80,7 +80,7 @@
   <string name="show_hint">Показывать подсказки</string>
   <string name="pref_lang_other">Языковые настройки</string>
   <string name="pref_font_UI">Шрифт пользовательского интерфейса</string>
-  <string name="info_rate">Rate AnkiDroid</string>
+  <string name="info_rate">Оценка AnkiDroid</string>
   <string-array name="dynOrderLabels">
     <item>Старейшие появляться первыми</item>
     <item>Случайно</item>
@@ -88,7 +88,7 @@
     <item>По уменьшению интервалов</item>
     <item>Наибольшие периоды</item>
     <item>Порядок просмотра добавлен</item>
-    <item>Order due</item>
+    <item>Соответствующий порядок</item>
   </string-array>
   <plurals name="factadder_cards_added">
     <item quantity="one">1 карта добавлена</item>

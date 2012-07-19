@@ -104,22 +104,22 @@
     <item>Новые в порядке их добавления</item>
   </string-array>
   <string-array name="cram_deck_conf_order_labels">
-    <item>Oldest seen first</item>
-    <item>Random</item>
-    <item>Increasing intervals</item>
-    <item>Decreasing intervals</item>
-    <item>Most lapsed</item>
-    <item>Order added</item>
-    <item>Order due</item>
+    <item>Старейшие показывать первыми</item>
+    <item>Случайно</item>
+    <item>По увеличению интервалов</item>
+    <item>По уменьшению интервалов</item>
+    <item>Больше истёкших</item>
+    <item>Порядок просмотра добавлен</item>
+    <item>В порядке добавления</item>
   </string-array>
   <string-array name="cram_deck_conf_preset_labels">
-    <item><![CDATA[<select preset>]]></item>
-    <item>Preview all new cards</item>
-    <item>Preview cards added today</item>
-    <item>Review today\'s forgotten cards</item>
-    <item>Review ahead by two days</item>
-    <item>Review due cards with tag</item>
-    <item>Review due cards with decreasing intervals</item>
-    <item>Cram all cards</item>
+    <item><![CDATA[<выбор предварительных настроек>]]></item>
+    <item>Просмотреть все новые карты</item>
+    <item>Просмотр карт, добавленных сегодня</item>
+    <item>Обзор карт, забытых сегодня</item>
+    <item>Просмотр карт с опережением в 2 дня</item>
+    <item>Просмотр повторяемых карт по тегу</item>
+    <item>Просмотр повторяемых карт без уменьшения интервалов</item>
+    <item>Зубрить все карты</item>
   </string-array>
 </resources>
