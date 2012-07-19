@@ -69,6 +69,7 @@ public class BasicHttpSyncer implements HttpSyncer {
 
     private static final String BOUNDARY = "Anki-sync-boundary";
     public static final String ANKIWEB_STATUS_OK = "OK";
+    private static final int SYNC_TIMEOUT = 30000;
 
     public volatile long bytesSent = 0;
     public volatile long bytesReceived = 0;
@@ -178,7 +179,7 @@ public class BasicHttpSyncer implements HttpSyncer {
             params.setParameter(ConnManagerPNames.MAX_CONNECTIONS_PER_ROUTE, new ConnPerRouteBean(30));
             params.setParameter(CoreProtocolPNames.USE_EXPECT_CONTINUE, false);
             HttpProtocolParams.setVersion(params, HttpVersion.HTTP_1_1);
-            HttpConnectionParams.setSoTimeout(params, 20000);
+            HttpConnectionParams.setSoTimeout(params, SYNC_TIMEOUT);
 
             // Registry
             SchemeRegistry registry = new SchemeRegistry();

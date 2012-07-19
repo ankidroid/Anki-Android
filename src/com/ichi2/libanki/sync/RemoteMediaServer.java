@@ -42,7 +42,7 @@ public class RemoteMediaServer extends BasicHttpSyncer {
         JSONObject data = new JSONObject();
 
         try {
-            data.put("fnames", fnames);
+            data.put("fnames", new JSONArray(fnames));
             data.put("minUsn", minUsn);
             HttpResponse ret = super.req("remove", super.getInputStream(data.toString()));
             if (ret == null) {
@@ -74,14 +74,17 @@ public class RemoteMediaServer extends BasicHttpSyncer {
             data.put("minUsn", minUsn);
             HttpResponse ret = super.req("files", super.getInputStream(data.toString()));
             if (ret == null) {
+                Log.e(AnkiDroidApp.TAG, "RemoteMediaServer.files: Exception during request");
                 return null;
             }
             int resultType = ret.getStatusLine().getStatusCode();
             if (resultType == 200) {
                 super.writeToFile(ret.getEntity().getContent(), tmpMediaZip);
                 return new File(tmpMediaZip);
+            } else {
+                Log.e(AnkiDroidApp.TAG, "RemoteMediaServer.files: Request returned " + resultType);
+                return null;
             }
-            return null;
         } catch (JSONException e) {
             throw new RuntimeException(e);
         } catch (IllegalStateException e) {
