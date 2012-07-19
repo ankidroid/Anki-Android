@@ -49,6 +49,7 @@ import com.ichi2.anim.ActivityTransitionAnimation;
 import com.ichi2.anki.R;
 import com.ichi2.anki.receiver.SdCardReceiver;
 import com.ichi2.libanki.Collection;
+import com.ichi2.themes.Themes;
 
 /**
  * Preferences for the current deck.
@@ -341,6 +342,13 @@ public class CramDeckOptions extends PreferenceActivity implements OnSharedPrefe
 
     @Override
     protected void onCreate(Bundle icicle) {
+        // Workaround for bug 4611: http://code.google.com/p/android/issues/detail?id=4611
+        // This screen doesn't suffer from this bug really as it doesn't have nested
+        // PreferenceScreens, but we have change the background for consistency with
+        // DeckOptions background.
+        if (AnkiDroidApp.getSdkVersion() >= 7 && AnkiDroidApp.getSdkVersion() <= 10) {
+            Themes.applyTheme(this, Themes.THEME_ANDROID_DARK);
+        }
         super.onCreate(icicle);
 
         mCol = Collection.currentCollection();
