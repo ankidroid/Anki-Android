@@ -378,6 +378,10 @@ public class DeckOptions extends PreferenceActivity implements OnSharedPreferenc
 
     @Override
     protected void onCreate(Bundle icicle) {
+        // Workaround for bug 4611: http://code.google.com/p/android/issues/detail?id=4611
+        if (AnkiDroidApp.getSdkVersion() >= 7 && AnkiDroidApp.getSdkVersion() <= 10) {
+            Themes.applyTheme(this, Themes.THEME_ANDROID_DARK);
+        }
         super.onCreate(icicle);
 
         mCol = Collection.currentCollection();
