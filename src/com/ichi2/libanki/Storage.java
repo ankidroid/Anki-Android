@@ -19,6 +19,7 @@ package com.ichi2.libanki;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Locale;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -300,8 +301,9 @@ public class Storage {
                 + "   time            integer not null," + "   type            integer not null" + ");");
         db.execute("create table if not exists graves (" + "    usn             integer not null,"
                 + "    oid             integer not null," + "    type            integer not null" + ")");
-        db.execute("INSERT OR IGNORE INTO col VALUES(1,0,0," + Collection.SCHEMA_VERSION + "," + Utils.intNow(1000)
-                + ",0,0,0,\'\',\'{}\',\'\',\'\',\'{}\')");
+        db.execute(String.format(Locale.US,
+                "INSERT OR IGNORE INTO col VALUES(1,0,0,%d,%d,0,0,0,'','{}','','','{}')",
+                Utils.intNow(1000), Collection.SCHEMA_VERSION));
         if (setColConf) {
             _setColVars(db);
         }
