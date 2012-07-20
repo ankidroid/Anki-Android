@@ -286,7 +286,7 @@ public class CardBrowser extends Activity {
                 // return;
                 // }
                 startActivityForResult(editCard, EDIT_CARD);
-                if (UIUtils.getApiLevel() > 4) {
+                if (AnkiDroidApp.SDK_VERSION > 4) {
                     ActivityTransitionAnimation.slide(CardBrowser.this, ActivityTransitionAnimation.LEFT);
                 }
             }
@@ -415,7 +415,7 @@ public class CardBrowser extends Activity {
                 Intent intent = new Intent(CardBrowser.this, CardEditor.class);
                 intent.putExtra(CardEditor.EXTRA_CALLER, CardEditor.CALLER_CARDBROWSER_ADD);
                 startActivityForResult(intent, ADD_NOTE);
-                if (UIUtils.getApiLevel() > 4) {
+                if (AnkiDroidApp.SDK_VERSION > 4) {
                     ActivityTransitionAnimation.slide(CardBrowser.this, ActivityTransitionAnimation.LEFT);
                 }
                 return true;
@@ -1090,7 +1090,7 @@ public class CardBrowser extends Activity {
     private void closeCardBrowser(int result) {
         setResult(result);
         finish();
-        if (UIUtils.getApiLevel() > 4) {
+        if (AnkiDroidApp.SDK_VERSION > 4) {
             ActivityTransitionAnimation.slide(this, ActivityTransitionAnimation.RIGHT);
         }
     }

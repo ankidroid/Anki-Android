@@ -144,7 +144,7 @@ public class AnkiActivity extends Activity {
 
 
     private void disableActivityAnimation() {
-        if (UIUtils.getApiLevel() > 4) {
+        if (AnkiDroidApp.SDK_VERSION > 4) {
             ActivityTransitionAnimation.slide(this, ActivityTransitionAnimation.NONE);
         }
     }
@@ -163,7 +163,7 @@ public class AnkiActivity extends Activity {
         if (animationDisabled()) {
             disableActivityAnimation();
         } else {
-            if (UIUtils.getApiLevel() > 4) {
+            if (AnkiDroidApp.SDK_VERSION > 4) {
                 ActivityTransitionAnimation.slide(this, animation);
             }
         }

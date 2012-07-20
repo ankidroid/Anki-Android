@@ -789,7 +789,7 @@ public class CardEditor extends Activity {
                     intent.putExtra(EXTRA_CONTENTS, getFieldsText());
                 }
                 startActivityForResult(intent, REQUEST_ADD);
-                if (UIUtils.getApiLevel() > 4) {
+                if (AnkiDroidApp.SDK_VERSION > 4) {
                     ActivityTransitionAnimation.slide(CardEditor.this, ActivityTransitionAnimation.LEFT);
                 }
                 return true;
@@ -898,15 +898,15 @@ public class CardEditor extends Activity {
         finish();
         if (mCaller == CALLER_CARDEDITOR_INTENT_ADD || mCaller == CALLER_BIGWIDGET_EDIT
                 || mCaller == CALLER_BIGWIDGET_ADD) {
-            if (UIUtils.getApiLevel() > 4) {
+            if (AnkiDroidApp.SDK_VERSION > 4) {
                 ActivityTransitionAnimation.slide(CardEditor.this, ActivityTransitionAnimation.FADE);
             }
         } else if (mCaller == CALLER_INDICLASH) {
-            if (UIUtils.getApiLevel() > 4) {
+            if (AnkiDroidApp.SDK_VERSION > 4) {
                 ActivityTransitionAnimation.slide(CardEditor.this, ActivityTransitionAnimation.NONE);
             }
         } else {
-            if (UIUtils.getApiLevel() > 4) {
+            if (AnkiDroidApp.SDK_VERSION > 4) {
                 ActivityTransitionAnimation.slide(CardEditor.this, ActivityTransitionAnimation.RIGHT);
             }
         }
@@ -1129,7 +1129,7 @@ public class CardEditor extends Activity {
                 intent.putExtra(EXTRA_CONTENTS, map.get("fields"));
                 intent.putExtra(EXTRA_ID, map.get("id"));
                 startActivityForResult(intent, REQUEST_INTENT_ADD);
-                if (UIUtils.getApiLevel() > 4) {
+                if (AnkiDroidApp.SDK_VERSION > 4) {
                     ActivityTransitionAnimation.slide(CardEditor.this, ActivityTransitionAnimation.FADE);
                 }
                 mIntentInformationDialog.dismiss();

@@ -124,7 +124,7 @@ public class StudyOptionsActivity extends FragmentActivity {
 
             case MENU_PREFERENCES:
                 startActivityForResult(new Intent(this, Preferences.class), StudyOptionsFragment.PREFERENCES_UPDATE);
-                if (UIUtils.getApiLevel() > 4) {
+                if (AnkiDroidApp.SDK_VERSION > 4) {
                     ActivityTransitionAnimation.slide(this, ActivityTransitionAnimation.FADE);
                 }
                 return true;
@@ -179,7 +179,7 @@ public class StudyOptionsActivity extends FragmentActivity {
         // mCompat.invalidateOptionsMenu(this);
         setResult(result);
         finish();
-        if (UIUtils.getApiLevel() > 4) {
+        if (AnkiDroidApp.SDK_VERSION > 4) {
             ActivityTransitionAnimation.slide(this, ActivityTransitionAnimation.RIGHT);
         }
     }

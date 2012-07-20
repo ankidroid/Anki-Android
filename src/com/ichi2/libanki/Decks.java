@@ -20,28 +20,16 @@
 package com.ichi2.libanki;
 
 import android.content.ContentValues;
-import android.database.Cursor;
-import android.database.SQLException;
-import android.os.DropBoxManager.Entry;
-import android.util.Log;
-
-import com.ichi2.anki.AnkiDatabaseManager;
-import com.ichi2.anki.AnkiDb;
-import com.ichi2.anki.AnkiDroidApp;
-import com.ichi2.async.DeckTask;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.Map;
-import java.util.Random;
 import java.util.TreeMap;
 
 /**

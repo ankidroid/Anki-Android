@@ -106,7 +106,7 @@ public class Info extends Activity {
                         break;
                 }
                 finish();
-                if (UIUtils.getApiLevel() > 4) {
+                if (AnkiDroidApp.SDK_VERSION > 4) {
                     ActivityTransitionAnimation.slide(Info.this, ActivityTransitionAnimation.LEFT);
                 }
             }
@@ -162,7 +162,7 @@ public class Info extends Activity {
                         edit.putBoolean("createTutorial", true);
                         edit.commit();
                         finish();
-                        if (UIUtils.getApiLevel() > 4) {
+                        if (AnkiDroidApp.SDK_VERSION > 4) {
                             ActivityTransitionAnimation.slide(Info.this, ActivityTransitionAnimation.LEFT);
                         }
                     }
@@ -257,7 +257,7 @@ public class Info extends Activity {
                 Log.i(AnkiDroidApp.TAG, "Info - onBackPressed()");
                 setResult(RESULT_CANCELED);
                 finish();
-                if (UIUtils.getApiLevel() > 4) {
+                if (AnkiDroidApp.SDK_VERSION > 4) {
                     ActivityTransitionAnimation.slide(Info.this, ActivityTransitionAnimation.LEFT);
                 }
             }
@@ -324,7 +324,7 @@ public class Info extends Activity {
             	if (failed.size() == 0) {
             		setResult(RESULT_OK);
                     finish();
-                    if (UIUtils.getApiLevel() > 4) {
+                    if (AnkiDroidApp.SDK_VERSION > 4) {
                         ActivityTransitionAnimation.slide(Info.this, ActivityTransitionAnimation.LEFT);
                     }
             	} else {
@@ -342,7 +342,7 @@ public class Info extends Activity {
 						public void onClick(DialogInterface dialog, int which) {
 		            		setResult(RESULT_OK);
 		                    finish();
-		                    if (UIUtils.getApiLevel() > 4) {
+		                    if (AnkiDroidApp.SDK_VERSION > 4) {
 		                        ActivityTransitionAnimation.slide(Info.this, ActivityTransitionAnimation.LEFT);
 		                    }
 						}});

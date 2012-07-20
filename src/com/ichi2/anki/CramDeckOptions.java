@@ -346,7 +346,7 @@ public class CramDeckOptions extends PreferenceActivity implements OnSharedPrefe
         // This screen doesn't suffer from this bug really as it doesn't have nested
         // PreferenceScreens, but we have change the background for consistency with
         // DeckOptions background.
-        if (AnkiDroidApp.getSdkVersion() >= 7 && AnkiDroidApp.getSdkVersion() <= 10) {
+        if (AnkiDroidApp.SDK_VERSION >= 7 && AnkiDroidApp.SDK_VERSION <= 10) {
             Themes.applyTheme(this, Themes.THEME_ANDROID_DARK);
         }
         super.onCreate(icicle);
@@ -391,7 +391,7 @@ public class CramDeckOptions extends PreferenceActivity implements OnSharedPrefe
         if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
             Log.i(AnkiDroidApp.TAG, "DeckOptions - onBackPressed()");
             finish();
-            if (UIUtils.getApiLevel() > 4) {
+            if (AnkiDroidApp.SDK_VERSION > 4) {
                 ActivityTransitionAnimation.slide(this, ActivityTransitionAnimation.FADE);
             }
             return true;

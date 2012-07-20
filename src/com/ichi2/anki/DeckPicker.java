@@ -615,7 +615,7 @@ public class DeckPicker extends FragmentActivity {
                 // } else {
                 Intent intent = new Intent(DeckPicker.this, com.ichi2.charts.ChartBuilder.class);
                 startActivity(intent);
-                if (UIUtils.getApiLevel() > 4) {
+                if (AnkiDroidApp.SDK_VERSION > 4) {
                     ActivityTransitionAnimation.slide(DeckPicker.this, ActivityTransitionAnimation.DOWN);
                 }
                 // }
@@ -930,7 +930,7 @@ public class DeckPicker extends FragmentActivity {
         Intent intent = new Intent(DeckPicker.this, CardEditor.class);
         intent.putExtra(CardEditor.EXTRA_CALLER, CardEditor.CALLER_DECKPICKER);
         startActivityForResult(intent, ADD_NOTE);
-        if (UIUtils.getApiLevel() > 4) {
+        if (AnkiDroidApp.SDK_VERSION > 4) {
             ActivityTransitionAnimation.slide(DeckPicker.this, ActivityTransitionAnimation.LEFT);
         }
     }
@@ -940,7 +940,7 @@ public class DeckPicker extends FragmentActivity {
         Intent cardBrowser = new Intent(DeckPicker.this, CardBrowser.class);
         cardBrowser.putExtra("fromDeckpicker", true);
         startActivityForResult(cardBrowser, BROWSE_CARDS);
-        if (UIUtils.getApiLevel() > 4) {
+        if (AnkiDroidApp.SDK_VERSION > 4) {
             ActivityTransitionAnimation.slide(DeckPicker.this, ActivityTransitionAnimation.LEFT);
         }
     }
@@ -997,7 +997,7 @@ public class DeckPicker extends FragmentActivity {
             Intent infoIntent = new Intent(this, Info.class);
             infoIntent.putExtra(Info.TYPE_EXTRA, Info.TYPE_WELCOME);
             startActivityForResult(infoIntent, SHOW_INFO_WELCOME);
-            if (skip != 0 && UIUtils.getApiLevel() > 4) {
+            if (skip != 0 && AnkiDroidApp.SDK_VERSION > 4) {
                 ActivityTransitionAnimation.slide(this, ActivityTransitionAnimation.LEFT);
             }
         } else if (skip < 2 && !preferences.getString("lastVersion", "").equals(AnkiDroidApp.getPkgVersion())) {
@@ -1005,20 +1005,20 @@ public class DeckPicker extends FragmentActivity {
             Intent infoIntent = new Intent(this, Info.class);
             infoIntent.putExtra(Info.TYPE_EXTRA, Info.TYPE_NEW_VERSION);
             startActivityForResult(infoIntent, SHOW_INFO_NEW_VERSION);
-            if (skip != 0 && UIUtils.getApiLevel() > 4) {
+            if (skip != 0 && AnkiDroidApp.SDK_VERSION > 4) {
                 ActivityTransitionAnimation.slide(this, ActivityTransitionAnimation.LEFT);
             }
         } else if (skip < 3 && upgradeNeeded()) {
             Intent upgradeIntent = new Intent(this, Info.class);
             upgradeIntent.putExtra(Info.TYPE_EXTRA, Info.TYPE_UPGRADE_DECKS);
             startActivityForResult(upgradeIntent, SHOW_INFO_UPGRADE_DECKS);
-            if (skip != 0 && UIUtils.getApiLevel() > 4) {
+            if (skip != 0 && AnkiDroidApp.SDK_VERSION > 4) {
                 ActivityTransitionAnimation.slide(this, ActivityTransitionAnimation.LEFT);
             }
         } else if (skip < 4 && hasErrorFiles()) {
             Intent i = new Intent(this, Feedback.class);
             startActivityForResult(i, REPORT_ERROR);
-            if (skip != 0 && UIUtils.getApiLevel() > 4) {
+            if (skip != 0 && AnkiDroidApp.SDK_VERSION > 4) {
                 ActivityTransitionAnimation.slide(this, ActivityTransitionAnimation.LEFT);
             }
         } else if (!AnkiDroidApp.isSdCardMounted()) {
@@ -1191,7 +1191,7 @@ public class DeckPicker extends FragmentActivity {
                                 i.putExtra("request", RESULT_DB_ERROR);
                                 dialog.dismiss();
                                 startActivityForResult(i, REPORT_ERROR);
-                                if (UIUtils.getApiLevel() > 4) {
+                                if (AnkiDroidApp.SDK_VERSION > 4) {
                                     ActivityTransitionAnimation.slide(DeckPicker.this,
                                             ActivityTransitionAnimation.RIGHT);
                                 }
@@ -1252,7 +1252,7 @@ public class DeckPicker extends FragmentActivity {
                         Intent myAccount = new Intent(DeckPicker.this, MyAccount.class);
                         myAccount.putExtra("notLoggedIn", true);
                         startActivityForResult(myAccount, LOG_IN_FOR_SHARED_DECK);
-                        if (UIUtils.getApiLevel() > 4) {
+                        if (AnkiDroidApp.SDK_VERSION > 4) {
                             ActivityTransitionAnimation.slide(DeckPicker.this, ActivityTransitionAnimation.FADE);
                         }
                     }
@@ -1271,7 +1271,7 @@ public class DeckPicker extends FragmentActivity {
                         Intent myAccount = new Intent(DeckPicker.this, MyAccount.class);
                         myAccount.putExtra("notLoggedIn", true);
                         startActivityForResult(myAccount, LOG_IN_FOR_SYNC);
-                        if (UIUtils.getApiLevel() > 4) {
+                        if (AnkiDroidApp.SDK_VERSION > 4) {
                             ActivityTransitionAnimation.slide(DeckPicker.this, ActivityTransitionAnimation.FADE);
                         }
                     }
@@ -1736,7 +1736,7 @@ public class DeckPicker extends FragmentActivity {
 
     private void finishWithAnimation() {
         finish();
-        if (UIUtils.getApiLevel() > 4) {
+        if (AnkiDroidApp.SDK_VERSION > 4) {
             ActivityTransitionAnimation.slide(this, ActivityTransitionAnimation.DIALOG_EXIT);
         }
     }
@@ -1858,7 +1858,7 @@ public class DeckPicker extends FragmentActivity {
         Intent intent = new Intent(DeckPicker.this, Info.class);
         intent.putExtra(Info.TYPE_EXTRA, Info.TYPE_SHARED_DECKS);
         startActivityForResult(intent, ADD_SHARED_DECKS);
-        if (UIUtils.getApiLevel() > 4) {
+        if (AnkiDroidApp.SDK_VERSION > 4) {
             ActivityTransitionAnimation.slide(DeckPicker.this, ActivityTransitionAnimation.RIGHT);
         }
     }
@@ -2042,7 +2042,7 @@ public class DeckPicker extends FragmentActivity {
 
             case MENU_ABOUT:
                 startActivity(new Intent(DeckPicker.this, Info.class));
-                if (UIUtils.getApiLevel() > 4) {
+                if (AnkiDroidApp.SDK_VERSION > 4) {
                     ActivityTransitionAnimation.slide(DeckPicker.this, ActivityTransitionAnimation.RIGHT);
                 }
                 return true;
@@ -2071,7 +2071,7 @@ public class DeckPicker extends FragmentActivity {
                 Intent i = new Intent(DeckPicker.this, Feedback.class);
                 i.putExtra("request", REPORT_FEEDBACK);
                 startActivityForResult(i, REPORT_FEEDBACK);
-                if (UIUtils.getApiLevel() > 4) {
+                if (AnkiDroidApp.SDK_VERSION > 4) {
                     ActivityTransitionAnimation.slide(this, ActivityTransitionAnimation.RIGHT);
                 }
                 return true;
@@ -2178,7 +2178,7 @@ public class DeckPicker extends FragmentActivity {
                     i.setClass(this, StudyOptionsActivity.class);
                     i.putExtra("onlyFnsMsg", true);
                     startActivityForResult(i, SHOW_STUDYOPTIONS);
-                    if (UIUtils.getApiLevel() > 4) {
+                    if (AnkiDroidApp.SDK_VERSION > 4) {
                         ActivityTransitionAnimation.slide(this, ActivityTransitionAnimation.RIGHT);
                     }
                     break;
@@ -2291,7 +2291,7 @@ public class DeckPicker extends FragmentActivity {
             // ActivityTransitionAnimation.slide(this, ActivityTransitionAnimation.NONE);
             // }
             // } else {
-            if (UIUtils.getApiLevel() > 4) {
+            if (AnkiDroidApp.SDK_VERSION > 4) {
                 ActivityTransitionAnimation.slide(this, ActivityTransitionAnimation.LEFT);
             }
             // }
@@ -2439,7 +2439,7 @@ public class DeckPicker extends FragmentActivity {
                             	mCol.reset();
                                 Intent reviewer = new Intent(DeckPicker.this, Reviewer.class);
                                 startActivityForResult(reviewer, REQUEST_REVIEW);
-                                if (UIUtils.getApiLevel() > 4) {
+                                if (AnkiDroidApp.SDK_VERSION > 4) {
                                     ActivityTransitionAnimation.slide(DeckPicker.this, ActivityTransitionAnimation.LEFT);
                                 }
                             	return true;

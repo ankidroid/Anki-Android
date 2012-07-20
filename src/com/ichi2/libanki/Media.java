@@ -25,7 +25,6 @@ import com.ichi2.anki.AnkiDatabaseManager;
 import com.ichi2.anki.AnkiDb;
 import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.Pair;
-import com.ichi2.anki.UIUtils;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -39,7 +38,6 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.text.Normalizer;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -299,7 +297,7 @@ public class Media {
 
         Set<String> normrefs = new HashSet<String>();
         for (String f : allMedia()) {
-            if (UIUtils.getApiLevel() > 9) {
+            if (AnkiDroidApp.SDK_VERSION > 9) {
                 f = Utils.normalizeUnicode(f);
             }
             normrefs.add(f);
@@ -313,7 +311,7 @@ public class Media {
                 continue;
             }
             String nfile = file.getName();
-            if (UIUtils.getApiLevel() > 9) {
+            if (AnkiDroidApp.SDK_VERSION > 9) {
                 nfile = Utils.normalizeUnicode(nfile);
             }
             if (!normrefs.contains(nfile)) {

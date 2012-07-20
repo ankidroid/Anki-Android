@@ -43,9 +43,6 @@ import com.ichi2.anim.ActivityTransitionAnimation;
 import com.ichi2.anim.ViewAnimation;
 import com.ichi2.async.DeckTask;
 import com.ichi2.charts.ChartBuilder;
-import com.ichi2.compat.Compat;
-import com.ichi2.compat.CompatV11;
-import com.ichi2.compat.CompatV4;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Stats;
 import com.ichi2.libanki.Utils;
@@ -215,7 +212,7 @@ public class StudyOptionsFragment extends Fragment {
                     } else {
                         Intent i = new Intent(getActivity(), DeckOptions.class);
                         startActivityForResult(i, DECK_OPTIONS);
-                        if (UIUtils.getApiLevel() > 4) {
+                        if (AnkiDroidApp.SDK_VERSION > 4) {
                             ActivityTransitionAnimation.slide(getActivity(), ActivityTransitionAnimation.FADE);
                         }
                     }
@@ -242,7 +239,7 @@ public class StudyOptionsFragment extends Fragment {
     private void openCramDeckOptions() {
         Intent i = new Intent(getActivity(), CramDeckOptions.class);
         startActivityForResult(i, DECK_OPTIONS);
-        if (UIUtils.getApiLevel() > 4) {
+        if (AnkiDroidApp.SDK_VERSION > 4) {
             ActivityTransitionAnimation.slide(getActivity(), ActivityTransitionAnimation.FADE);
         }
     }
@@ -416,7 +413,7 @@ public class StudyOptionsFragment extends Fragment {
         if (!mFragmented) {
             getActivity().setResult(result);
             getActivity().finish();
-            if (UIUtils.getApiLevel() > 4) {
+            if (AnkiDroidApp.SDK_VERSION > 4) {
                 ActivityTransitionAnimation.slide(getActivity(), ActivityTransitionAnimation.RIGHT);
             }
         }
@@ -427,7 +424,7 @@ public class StudyOptionsFragment extends Fragment {
         mDontSaveOnStop = true;
         Intent reviewer = new Intent(getActivity(), Reviewer.class);
         startActivityForResult(reviewer, REQUEST_REVIEW);
-        if (UIUtils.getApiLevel() > 4) {
+        if (AnkiDroidApp.SDK_VERSION > 4) {
             ActivityTransitionAnimation.slide(getActivity(), ActivityTransitionAnimation.LEFT);
         }
         mCol.startTimebox();
@@ -438,7 +435,7 @@ public class StudyOptionsFragment extends Fragment {
         Intent intent = new Intent(getActivity(), CardEditor.class);
         intent.putExtra(CardEditor.EXTRA_CALLER, CardEditor.CALLER_STUDYOPTIONS);
         startActivityForResult(intent, ADD_NOTE);
-        if (UIUtils.getApiLevel() > 4) {
+        if (AnkiDroidApp.SDK_VERSION > 4) {
             ActivityTransitionAnimation.slide(getActivity(), ActivityTransitionAnimation.LEFT);
         }
     }
@@ -763,7 +760,7 @@ public class StudyOptionsFragment extends Fragment {
         mDontSaveOnStop = true;
         Intent cardBrowser = new Intent(getActivity(), CardBrowser.class);
         startActivityForResult(cardBrowser, BROWSE_CARDS);
-        if (UIUtils.getApiLevel() > 4) {
+        if (AnkiDroidApp.SDK_VERSION > 4) {
             ActivityTransitionAnimation.slide(getActivity(), ActivityTransitionAnimation.LEFT);
         }
     }
@@ -931,7 +928,7 @@ public class StudyOptionsFragment extends Fragment {
                 // } else {
                 Intent intent = new Intent(getActivity(), com.ichi2.charts.ChartBuilder.class);
                 startActivityForResult(intent, STATISTICS);
-                if (UIUtils.getApiLevel() > 4) {
+                if (AnkiDroidApp.SDK_VERSION > 4) {
                     ActivityTransitionAnimation.slide(getActivity(), ActivityTransitionAnimation.DOWN);
                 }
                 // }

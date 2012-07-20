@@ -213,8 +213,6 @@ public class Sound {
             sMediaPlayer.stop();
             releaseSound();
         }
-        if (AnkiDroidApp.isDonutOrLater()) {
-            ReadText.stopTts();
-        }
+        ReadText.stopTts();
     }
 }

@@ -1,35 +1,22 @@
 
 package com.ichi2.anki;
 
-import java.lang.reflect.Field;
-import java.lang.Object;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-import java.util.Calendar;
-import java.util.GregorianCalendar;
+import android.content.Context;
+import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 
 import com.ichi2.async.DeckTask;
 import com.ichi2.async.DeckTask.TaskData;
 import com.ichi2.libanki.Collection;
 
-import android.content.Context;
-import android.os.Build;
-import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
+import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 
 public class UIUtils {
-
-    /** Returns the API level of this device. */
-    public static int getApiLevel() {
-        try {
-            return Integer.parseInt(Build.VERSION.SDK);
-        } catch (NumberFormatException e) {
-            // If there is an error, return the minimum supported version.
-            return 4;
-        }
-    }
-
 
     public static float getDensityAdjustedValue(Context context, float value) {
         return context.getResources().getDisplayMetrics().density * value;

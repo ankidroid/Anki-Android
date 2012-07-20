@@ -996,7 +996,7 @@ public class Reviewer extends AnkiActivity {
                 getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                         WindowManager.LayoutParams.FLAG_FULLSCREEN);
                 // Do not hide the title bar in Honeycomb, since it contains the action bar.
-                if (!AnkiDroidApp.isHoneycombOrLater()) {
+                if (AnkiDroidApp.SDK_VERSION <= 11) {
                     requestWindowFeature(Window.FEATURE_NO_TITLE);
                 }
             }
@@ -1134,7 +1134,7 @@ public class Reviewer extends AnkiActivity {
     protected void onDestroy() {
         super.onDestroy();
         Log.i(AnkiDroidApp.TAG, "Reviewer - onDestroy()");
-        if (mSpeakText && AnkiDroidApp.isDonutOrLater()) {
+        if (mSpeakText) {
             ReadText.releaseTts();
         }
         if (mUnmountReceiver != null) {
@@ -1806,7 +1806,7 @@ public class Reviewer extends AnkiActivity {
             ((View) findViewById(R.id.flashcard_border)).setVisibility(View.VISIBLE);
         }
         // hunt for input issue 720, like android issue 3341
-        if (!AnkiDroidApp.isFroyoOrLater() && (mCard != null)) {
+        if (AnkiDroidApp.SDK_VERSION <= 7 && (mCard != null)) {
             mCard.setFocusableInTouchMode(true);
         }
 
@@ -1941,10 +1941,10 @@ public class Reviewer extends AnkiActivity {
         webView.getSettings().setJavaScriptEnabled(true);
         webView.setWebChromeClient(new AnkiDroidWebChromeClient());
         webView.addJavascriptInterface(new JavaScriptInterface(this), "ankidroid");
-        if (UIUtils.getApiLevel() > 7) {
+        if (AnkiDroidApp.SDK_VERSION > 7) {
             webView.setFocusableInTouchMode(false);
         }
-        if (UIUtils.getApiLevel() > 4) {
+        if (AnkiDroidApp.SDK_VERSION > 4) {
            webView.setScrollbarFadingEnabled(mPrefFadeScrollbars);
        }
         Log.i(AnkiDroidApp.TAG, String.format(Locale.US, "Focusable = %s, Focusable in touch mode = %s",
@@ -2440,7 +2440,7 @@ public class Reviewer extends AnkiActivity {
 
             displayString = enrichWithQADiv(question, false);
 
-            if (mSpeakText && AnkiDroidApp.isDonutOrLater()) {
+            if (mSpeakText) {
                 // ReadText.setLanguageInformation(Model.getModel(DeckManager.getMainDeck(),
                 // mCurrentCard.getCardModelId(), false).getId(), mCurrentCard.getCardModelId());
             }
@@ -2666,7 +2666,7 @@ public class Reviewer extends AnkiActivity {
                 mNextCard.setVisibility(View.GONE);
                 mCardFrame.addView(mNextCard, 0);
                 // hunt for input issue 720, like android issue 3341
-                if (!AnkiDroidApp.isFroyoOrLater()) {
+                if (AnkiDroidApp.SDK_VERSION <= 7) {
                     mCard.setFocusableInTouchMode(true);
                 }
             } else {
@@ -3339,7 +3339,7 @@ public class Reviewer extends AnkiActivity {
             UIUtils.saveCollectionInBackground(mSched.getCol());
         }
         finish();
-        if (UIUtils.getApiLevel() > 4) {
+        if (AnkiDroidApp.SDK_VERSION > 4) {
             ActivityTransitionAnimation.slide(Reviewer.this, ActivityTransitionAnimation.RIGHT);
         }
         // }

@@ -51,7 +51,7 @@ public class AnkiDb {
                 (SQLiteDatabase.OPEN_READWRITE + SQLiteDatabase.CREATE_IF_NECESSARY)
                         | SQLiteDatabase.NO_LOCALIZED_COLLATORS);
         if (mDatabase != null) {
-            if (UIUtils.getApiLevel() >= 11) {
+            if (AnkiDroidApp.SDK_VERSION >= 11) {
                 queryString("PRAGMA journal_mode = WAL");
             } else {
                 queryString("PRAGMA journal_mode = DELETE");

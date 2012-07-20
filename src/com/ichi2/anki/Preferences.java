@@ -99,8 +99,7 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         // Workaround for bug 4611: http://code.google.com/p/android/issues/detail?id=4611
-        int apiLevel = AnkiDroidApp.getSdkVersion();
-        if (apiLevel >= 7 && apiLevel <= 10) {
+        if (AnkiDroidApp.SDK_VERSION >= 7 && AnkiDroidApp.SDK_VERSION <= 10) {
             Themes.applyTheme(this, Themes.THEME_ANDROID_DARK);
         }
         super.onCreate(savedInstanceState);
@@ -137,7 +136,7 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
         for (String key : mShowValueInSummEditText) {
             updateEditTextPreference(key);
         }
-        if (UIUtils.getApiLevel() < 5) {
+        if (AnkiDroidApp.SDK_VERSION <= 4) {
             fadeScrollbars.setChecked(false);
             fadeScrollbars.setEnabled(false);
         }
@@ -389,7 +388,7 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
 
     private void closePreferences() {
         finish();
-        if (UIUtils.getApiLevel() > 4) {
+        if (AnkiDroidApp.SDK_VERSION > 4) {
             ActivityTransitionAnimation.slide(this, ActivityTransitionAnimation.FADE);
         }
     }

@@ -15,6 +15,12 @@
  */
 package org.achartengine;
 
+import android.annotation.TargetApi;
+import android.graphics.RectF;
+import android.view.MotionEvent;
+
+import com.ichi2.anki.AnkiDroidApp;
+
 import org.achartengine.chart.AbstractChart;
 import org.achartengine.chart.RoundChart;
 import org.achartengine.chart.XYChart;
@@ -23,12 +29,6 @@ import org.achartengine.tools.Pan;
 import org.achartengine.tools.PanListener;
 import org.achartengine.tools.Zoom;
 import org.achartengine.tools.ZoomListener;
-
-import android.annotation.TargetApi;
-import android.graphics.RectF;
-import android.view.MotionEvent;
-
-import com.ichi2.anki.UIUtils;
 
 /**
  * The main handler of the touch events.
@@ -87,7 +87,7 @@ public class TouchHandler implements ITouchHandler {
       if (oldX >= 0 || oldY >= 0) {
         float newX = event.getX();
         float newY = event.getY();
-        if (UIUtils.getApiLevel() > 4 && event.getPointerCount() > 1 && (oldX2 >= 0 || oldY2 >= 0) && mRenderer.isZoomEnabled()) {
+        if (AnkiDroidApp.SDK_VERSION > 4 && event.getPointerCount() > 1 && (oldX2 >= 0 || oldY2 >= 0) && mRenderer.isZoomEnabled()) {
           float newX2 = event.getX(1);
           float newY2 = event.getY(1);
           float newDeltaX = Math.abs(newX - newX2);

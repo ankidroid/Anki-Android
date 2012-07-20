@@ -25,7 +25,6 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.content.res.Resources;
-import android.graphics.Typeface;
 import android.os.Environment;
 import android.util.Log;
 import android.view.Display;
@@ -46,6 +45,7 @@ import java.util.Locale;
  */
 public class AnkiDroidApp extends Application {
 
+    public static final int SDK_VERSION = android.os.Build.VERSION.SDK_INT;
     public static final String LIBANKI_VERSION = "1.2.5";
     public static final String DROPBOX_PUBLIC_DIR = "/dropbox/Public/Anki";
 
@@ -95,7 +95,7 @@ public class AnkiDroidApp extends Application {
     public void onCreate() {
         super.onCreate();
 
-        if (UIUtils.getApiLevel() >= 11) {
+        if (AnkiDroidApp.SDK_VERSION >= 11) {
             mCompat = new CompatV11();
         } else {
             mCompat = new CompatV4();
@@ -275,30 +275,6 @@ public class AnkiDroidApp extends Application {
         CustomExceptionHandler.getInstance().uncaughtException(null, e, origin);
     }
 
-
-    public static boolean isDonutOrLater() {
-        return getSdkVersion() > 3;
-    }
-
-
-    public static boolean isEclairOrLater() {
-        return getSdkVersion() > 4;
-    }
-
-
-    public static boolean isFroyoOrLater() {
-        return getSdkVersion() > 7;
-    }
-
-
-    public static boolean isHoneycombOrLater() {
-        return getSdkVersion() > 11;
-    }
-
-
-    public static int getSdkVersion() {
-        return Integer.valueOf(android.os.Build.VERSION.SDK);
-    }
 
     public static String getLanguage() {
         return getInstance().mLanguage;
