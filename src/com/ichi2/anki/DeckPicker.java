@@ -275,6 +275,7 @@ public class DeckPicker extends FragmentActivity {
                     builder2.setTitle(res.getString(R.string.contextmenu_deckpicker_rename_deck));
 
                     mDialogEditText = (EditText) new EditText(DeckPicker.this);
+                    mDialogEditText.setSingleLine();
                     mDialogEditText.setText(mCol.getDecks().name(mCurrentDid));
                     // mDialogEditText.setFilters(new InputFilter[] { mDeckNameFilter });
                     builder2.setView(mDialogEditText, false, false);
@@ -282,8 +283,7 @@ public class DeckPicker extends FragmentActivity {
 
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                            String newName = mDialogEditText.getText().toString()
-                                    .replaceAll("[\'\"\\s\\n\\r\\[\\]\\(\\)]", "");
+                            String newName = mDialogEditText.getText().toString().replaceAll("['\"]", "");
                             if (mCol.getDecks().rename(mCol.getDecks().get(mCurrentDid), newName)) {
                                 for (HashMap<String, String> d : mDeckList) {
                                     if (d.get("did").equals(Long.toString(mCurrentDid))) {
