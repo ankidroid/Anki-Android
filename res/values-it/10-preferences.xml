@@ -104,10 +104,10 @@
   <string name="zeemote_b">Pulsante B</string>
   <string name="zeemote_c">Pulsante C</string>
   <string name="zeemote_d">Pulsante D</string>
-  <string name="zeemote_up">Stick up</string>
-  <string name="zeemote_down">Stick down</string>
-  <string name="zeemote_left">Stick left</string>
-  <string name="zeemote_right">Stick right</string>
+  <string name="zeemote_up">Barra in alto</string>
+  <string name="zeemote_down">Barra in basso</string>
+  <string name="zeemote_left">Barra a sinistra</string>
+  <string name="zeemote_right">Barra a destra</string>
   <string name="zeemote_show_answer">Mostra le risposte con le azioni di contrassegno</string>
   <string name="zeemote_show_answer_summ">Le azioni assegnate ai contrassegni 1-4 mostrano anche la risposta.</string>
   <string name="swipe">Attiva le Gestures</string>

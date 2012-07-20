@@ -461,9 +461,7 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
             data.data = new String[] { username, hostkey };
         } else {
             data.success = false;
-            if (status != null) {
-                data.data = new String[] { status };
-            }
+            data.data = new String[] { status != null ? status : AnkiDroidApp.getAppResources().getString(R.string.connection_error_message)};
         }
         return data;
     }

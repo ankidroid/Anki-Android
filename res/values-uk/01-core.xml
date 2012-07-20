@@ -54,7 +54,7 @@
   <string name="contextmenu_deckpicker_set_custom_dictionary">Встановити словник користувача</string>
   <string name="menu_download_deck">Завантажити колоду</string>
   <string name="menu_download_shared_deck">Спільна колода</string>
-  <string name="menu_my_account">Синхронізувати обліковий запис</string>
+  <string name="menu_my_account">Змінити обліковий запис</string>
   <string name="menu_preferences">Налаштування</string>
   <string name="menu_zeemote">Zeemote</string>
   <string name="menu_about">Про програму</string>

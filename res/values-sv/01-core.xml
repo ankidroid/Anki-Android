@@ -45,7 +45,7 @@
   <string name="card_suspended">Kort åsidosatt igen</string>
   <string name="menu_rotate">Rotera</string>
   <string name="undo">Ångra</string>
-  <string name="finish_operation">Finishing previous operation (most likely backup creation).\nPlease wait...</string>
+  <string name="finish_operation">Slutför föregående operation (troligen skapande av säkerhetskopia).\nVar god vänta...</string>
   <string name="contextmenu_deckpicker_download_missing_media">Hämta saknade media</string>
   <string name="contextmenu_deckpicker_reset_language_assignments">Återställ språktilldelningar</string>
   <string name="contextmenu_deckpicker_reset_reset_message">Återställning av språk</string>
@@ -71,10 +71,10 @@
   <string name="menu_unmark_card">Avmarkera kort</string>
   <string name="new_deck">Ny kortlek</string>
   <string name="create">Skapa</string>
-  <string name="new_dynamic_deck">New dynamic deck</string>
+  <string name="new_dynamic_deck">Ny dynamisk kortlek</string>
   <string name="studyoptions_feedback">Feedback</string>
   <string name="studyoptions_load_tutorial_deck">Skapa övningskortlek</string>
-  <string name="night_mode">Night mode</string>
+  <string name="night_mode">Nattläge</string>
   <string name="visit">Besök</string>
   <string name="later">Senare</string>
   <string name="download">Hämta</string>

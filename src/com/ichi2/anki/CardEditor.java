@@ -587,9 +587,20 @@ public class CardEditor extends Activity {
             mSourceText[0] = extras.getString(SOURCE_TEXT);
             mSourceText[1] = extras.getString(TARGET_TEXT);
         } else {
-            Pair<String, String> messages = new Pair<String, String>(extras.getString(Intent.EXTRA_SUBJECT),
-                    extras.getString(Intent.EXTRA_TEXT));
-
+        	String first;
+        	String second;
+        	if (extras.getString(Intent.EXTRA_SUBJECT) != null) {
+        		first = extras.getString(Intent.EXTRA_SUBJECT);
+        	} else {
+        		first = "";
+        	}
+        	if (extras.getString(Intent.EXTRA_TEXT) != null) {
+        		second = extras.getString(Intent.EXTRA_TEXT);
+        	} else {
+        		second = "";
+        	}
+            Pair<String, String> messages = new Pair<String, String>(first, second);
+            
             /* Filter garbage information */
             Pair<String, String> cleanMessages = new FilterFacade(getBaseContext()).filter(messages);
 
