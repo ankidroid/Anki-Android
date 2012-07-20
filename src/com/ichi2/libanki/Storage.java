@@ -301,9 +301,9 @@ public class Storage {
                 + "   time            integer not null," + "   type            integer not null" + ");");
         db.execute("create table if not exists graves (" + "    usn             integer not null,"
                 + "    oid             integer not null," + "    type            integer not null" + ")");
-        db.execute(String.format(Locale.US,
-                "INSERT OR IGNORE INTO col VALUES(1,0,0,%d,%d,0,0,0,'','{}','','','{}')",
-                Utils.intNow(1000), Collection.SCHEMA_VERSION));
+        db.execute("INSERT OR IGNORE INTO col VALUES(1,0,0," +
+                Utils.intNow(1000) + "," + Collection.SCHEMA_VERSION +
+                ",0,0,0,'','{}','','','{}')");
         if (setColConf) {
             _setColVars(db);
         }

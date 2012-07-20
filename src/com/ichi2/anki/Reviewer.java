@@ -1947,8 +1947,9 @@ public class Reviewer extends AnkiActivity {
         if (AnkiDroidApp.SDK_VERSION > 4) {
            webView.setScrollbarFadingEnabled(mPrefFadeScrollbars);
        }
-        Log.i(AnkiDroidApp.TAG, String.format(Locale.US, "Focusable = %s, Focusable in touch mode = %s",
-                webView.isFocusable(), webView.isFocusableInTouchMode()));
+        Log.i(AnkiDroidApp.TAG, "Focusable = " +
+                webView.isFocusable() + ", Focusable in touch mode = " +
+                webView.isFocusableInTouchMode());
         Log.i(AnkiDroidApp.TAG, "Fade scrollbars: " + webView.isScrollbarFadingEnabled());
 
         return webView;

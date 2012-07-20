@@ -1352,8 +1352,8 @@ public class Sched {
         }
         boolean mod = mCol.getDb().getMod();
         mCol.getDb().execute(
-                String.format(Locale.US, "update cards set " + "due = odue, queue = 2, mod = %d, usn = %d, odue = 0 "
-                        + "where queue = 1 and type = 2 %s", Utils.intNow(), mCol.usn(), extra));
+                "update cards set due = odue, queue = 2, mod = " + Utils.intNow() +
+                ", usn = " + mCol.usn() + ", odue = 0 where queue = 1 and type = 2 " + extra);
         if (expiredOnly) {
             // we don't want to bump the mod time when removing expired
             mCol.getDb().setMod(mod);
@@ -1832,13 +1832,12 @@ public class Sched {
             data.add(new Object[] { did, -100000 + c, t, u, ids.get((int) c) });
         }
         // due reviews stay in the review queue. careful: can't use "odid or did", as sqlite converts to boolean
-        String queue = String.format(Locale.US,
-                "(CASE WHEN type = 2 AND (CASE WHEN odue THEN odue <= %d ELSE due <= %d END) THEN 2 ELSE 0 END)",
-                mToday, mToday);
+        String queue = "(CASE WHEN type = 2 AND (CASE WHEN odue THEN odue <= " + mToday +
+                " ELSE due <= " + mToday + " END) THEN 2 ELSE 0 END)";
         mCol.getDb().executeMany(
-                String.format(Locale.US, "UPDATE cards SET " + "odid = (CASE WHEN odid THEN odid ELSE did END), "
-                        + "odue = (CASE WHEN odue THEN odue ELSE due END), "
-                        + "did = ?, queue = %s, due = ?, mod = ?, usn = ? WHERE id = ?", queue), data);
+                "UPDATE cards SET odid = (CASE WHEN odid THEN odid ELSE did END), " +
+                "odue = (CASE WHEN odue THEN odue ELSE due END), did = ?, queue = " +
+                queue + ", due = ?, mod = ?, usn = ? WHERE id = ?", data);
     }
 
 

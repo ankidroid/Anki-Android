@@ -210,9 +210,8 @@ public class Tags {
             cur = mCol
                     .getDb()
                     .getDatabase()
-                    .rawQuery(
-                            String.format(Locale.US, "select id, tags from notes where id in %s and (%s)",
-                                    Utils.ids2str(ids), lim), null);
+                    .rawQuery("select id, tags from notes where id in " + Utils.ids2str(ids) +
+                            " and (" + lim + ")", null);
             if (add) {
                 while (cur.moveToNext()) {
                     nids.add(cur.getLong(0));

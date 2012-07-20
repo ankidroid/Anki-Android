@@ -175,7 +175,7 @@ public class Media {
                 root = root.concat(" (1)");
             } else {
                 n = Integer.parseInt(m.group(1));
-                root = m.replaceFirst(String.format(Locale.US, " (%d)", n + 1));
+                root = m.replaceFirst(" (" + String.valueOf(n + 1) + ")");
             }
         }
         // copy and return

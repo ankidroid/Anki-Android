@@ -98,8 +98,8 @@ public class Hooks {
                     func.runHook(args);
                 }
             } catch (Exception e) {
-                Log.e(AnkiDroidApp.TAG, String.format(Locale.US,
-                        "Exception while running hook %s:%s", hook, funcName), e);
+                Log.e(AnkiDroidApp.TAG, "Exception while running hook " +
+                        hook + ":" + funcName, e);
                 return;
             }
         }
@@ -123,9 +123,9 @@ public class Hooks {
                     arg = func.runFilter(arg, args);
                 }
             } catch (Exception e) {
-                Log.e(AnkiDroidApp.TAG, String.format(Locale.US,
-                        "Exception while running hook %s:%s", hook, funcName), e);
-                return String.format(Locale.US, "Error in filter %s:", hook, funcName);
+                Log.e(AnkiDroidApp.TAG, "Exception while running hook " +
+                        hook + ":" + funcName, e);
+                return "Error in filter " + hook + ":" + funcName;
             }
         }
         return arg;

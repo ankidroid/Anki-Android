@@ -955,7 +955,7 @@ public class Collection {
             Models.fieldParser fparser = new Models.fieldParser(fields);
             Matcher m = sRegexPattern.matcher(qfmt);
             if (m.find()) {
-                format = m.replaceFirst(String.format(Locale.US, "{{cq:%d:", ((Integer) data[4]) + 1));
+                format = m.replaceFirst("{{cq:" + String.valueOf(((Integer) data[4]) + 1) + ":");
                 html = Mustache.compiler().compile(format).execute(fparser);
             } else {
                 // use already compiled template
@@ -975,7 +975,7 @@ public class Collection {
             fparser = new Models.fieldParser(fields);
             m = sRegexPattern.matcher(afmt);
             if (m.find()) {
-                format = m.replaceFirst(String.format(Locale.US, "{{ca:%d:", ((Integer) data[4]) + 1));
+                format = m.replaceFirst("{{ca:" + String.valueOf(((Integer) data[4]) + 1) + ":");
                 html = Mustache.compiler().compile(format).execute(fparser);
             } else {
                 // use already compiled template
@@ -989,8 +989,9 @@ public class Collection {
                     d.put("q",
                             AnkiDroidApp.getAppResources().getString(
                                     com.ichi2.anki.R.string.empty_cloze_warning,
-                                    String.format(Locale.US, "<a href=%s#cloze>%s</a>", HELP_SITE, AnkiDroidApp
-                                            .getAppResources().getString(com.ichi2.anki.R.string.help_cloze))));
+                                    "<a href=" + HELP_SITE + "#cloze>" +
+                                    AnkiDroidApp.getAppResources().getString(
+                                            com.ichi2.anki.R.string.help_cloze) + "</a>"));
                 }
             }
 

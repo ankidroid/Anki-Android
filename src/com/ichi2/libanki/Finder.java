@@ -414,8 +414,8 @@ public class Finder {
         } else if (val.equals("suspended")) {
             return "c.queue = -1";
         } else if (val.equals("due")) {
-            return String.format(Locale.US, "(c.queue in (2,3) and c.due <= %d) or (c.queue = 1 and c.due <= %d)", mCol
-                    .getSched().getToday(), mCol.getSched().getDayCutoff());
+            return "(c.queue in (2,3) and c.due <= " + mCol.getSched().getToday() +
+                    ") or (c.queue = 1 and c.due <= " + mCol.getSched().getDayCutoff() + ")";
         } else {
             return null;
         }
@@ -441,7 +441,7 @@ public class Finder {
             ease = "and ease=" + r[1];
         }
         long cutoff = (mCol.getSched().getDayCutoff() - 86400 * days) * 1000;
-        return String.format(Locale.US, "c.id in (select cid from revlog where id>%d %s)", cutoff, ease);
+        return "c.id in (select cid from revlog where id>" + cutoff + " " + ease + ")";
     }
 
 
@@ -492,7 +492,7 @@ public class Finder {
             prop = "factor";
             // already done: val = int(val*1000)
         }
-        q += String.format(Locale.US, "(%s %s %s)", prop, cmp, val);
+        q += "(" + prop + " " + cmp + " " + val + ")";
         return q;
     }
 
@@ -578,7 +578,7 @@ public class Finder {
             return "";
         }
         String sids = Utils.ids2str(ids);
-        return String.format(Locale.US, "c.did in %s or c.odid in %s", sids, sids);
+        return "c.did in " + sids + " or c.odid in " + sids;
     }
 
 
@@ -605,10 +605,10 @@ public class Finder {
                             // if the user has asked for a cloze card, we want
                             // to give all ordinals, so we just limit to the
                             // model instead
-                            lims.add(String.format(Locale.US, "(n.mid = %s)", m.getLong("id")));
+                            lims.add("(n.mid = " + m.getLong("id") + ")");
                         } else {
-                            lims.add(String.format(Locale.US, "(n.mid = %s and c.ord = %s)", m.getLong("id"),
-                                    t.getInt("ord")));
+                            lims.add("(n.mid = " + m.getLong("id") + " and c.ord = " +
+                                    t.getInt("ord") + ")");
                         }
                     }
                 }
@@ -649,14 +649,10 @@ public class Finder {
         LinkedList<Long> nids = new LinkedList<Long>();
         Cursor cur = null;
         try {
-            cur = mCol
-                    .getDb()
-                    .getDatabase()
-                    .rawQuery(
-                            String.format(Locale.US,
-                                    "select id, mid, flds from notes where mid in %s and flds like ? escape '\\'",
-                                    Utils.ids2str(new LinkedList<Long>(mods.keySet()))),
-                            new String[] { "%" + val + "%" });
+            cur = mCol.getDb().getDatabase().rawQuery(
+                    "select id, mid, flds from notes where mid in " +
+                    Utils.ids2str(new LinkedList<Long>(mods.keySet())) +
+                    " and flds like ? escape '\\'", new String[] { "%" + val + "%" });
             while (cur.moveToNext()) {
                 String[] flds = Utils.splitFields(cur.getString(2));
                 int ord = (Integer) mods.get(cur.getLong(1))[1];
@@ -820,9 +816,9 @@ public class Finder {
     public static List<Pair<String, List<Long>>> findDupes(Collection col, String fieldName, String search) {
         // limit search to notes with applicable field name
     	if (search != null && search.length() > 0) {
-            search = String.format(Locale.US, "(%s) ", search);
+            search = "(" + search + ") ";
     	}
-        search += String.format(Locale.US, "'%s:*'", fieldName);
+        search += "'" + fieldName + ":*'";
         // go through notes
 
         String sql = "select id, mid, flds from notes where id in "

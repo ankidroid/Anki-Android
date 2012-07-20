@@ -148,8 +148,10 @@ public class AnkiDroidApp extends Application {
     }
 
     public static String getCacheStorageDirectory() {
-        File cache = new File(String.format(Locale.US, "%s/Android/data/%s.%s/cache/",
-                getStorageDirectory(), AnkiDroidApp.getInstance().getPackageName(), AnkiDroidApp.getAppName()));
+        File cache = new File(getStorageDirectory() +
+                "/Android/data/" +
+                AnkiDroidApp.getInstance().getPackageName() + "." +
+                AnkiDroidApp.getAppName() + "/cache/");
         if (!cache.exists()) {
             cache.mkdirs();
         }

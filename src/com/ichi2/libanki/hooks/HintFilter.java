@@ -36,11 +36,11 @@ public class HintFilter {
             }
             Resources res = (Resources) args[1];
             // random id
-            String domid = String.format(Locale.US, "hint%d", txt.hashCode());
-            return String.format(Locale.US, "<a href=\"#\" onclick=\"" +
-            		"this.style.display='none';document.getElementById('%s').style.display='block';" +
-            		"return false;\">%s</a><div id=\"%s\" style=\"display: none\">%s</div>",
-            		domid, res.getString(R.string.show_hint), domid, txt);
+            String domid = "hint" + txt.hashCode();
+            return "<a href=\"#\" onclick=\"this.style.display='none';document.getElementById('" +
+                    domid + "').style.display='block';return false;\">" +
+                    res.getString(R.string.show_hint) + "</a><div id=\"" +
+            		domid + "\" style=\"display: none\">" + txt + "</div>";
         }
     }
 }

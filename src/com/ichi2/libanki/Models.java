@@ -386,8 +386,7 @@ public class Models {
      */
     public int useCount(JSONObject m) {
         try {
-            return mCol.getDb().queryScalar(String.format(Locale.US,
-                    "select count() from notes where mid = %d", m.getLong("id")));
+            return mCol.getDb().queryScalar("select count() from notes where mid = " + m.getLong("id"));
         } catch (JSONException e) {
             throw new RuntimeException(e);
         }
@@ -736,15 +735,12 @@ public class Models {
                     break;
                 }
             }
-            String sql = String.format(Locale.US,
-                    "select c.id from cards c, notes f where c.nid=f.id and mid = %d and ord = %d", m.getLong("id"),
-                    ord);
+            String sql = "select c.id from cards c, notes f where c.nid=f.id and mid = " +
+                    m.getLong("id") + " and ord = " + ord;
             long[] cids = Utils.toPrimitive(mCol.getDb().queryColumn(Long.class, sql, 0));
             // all notes with this template must have at least two cards, or we could end up creating orphaned notes
-            sql = String
-                    .format(Locale.US,
-                            "select nid, count() from cards where nid in (select nid from cards where id in %s) group by nid having count() < 2 limit 1",
-                            Utils.ids2str(cids));
+            sql = "select nid, count() from cards where nid in (select nid from cards where id in " +
+                    Utils.ids2str(cids) + ") group by nid having count() < 2 limit 1";
             if (mCol.getDb().queryScalar(sql, false) != 0) {
                 return false;
             }
@@ -821,12 +817,9 @@ public class Models {
             }
             // apply
             save(m);
-            mCol.getDb()
-                    .execute(
-                            String.format(
-                                    Locale.US,
-                                    "update cards set ord = (case %s end),usn=?,mod=? where nid in (select id from notes where mid = ?)",
-                                    sb.toString()), new Object[] { mCol.usn(), Utils.intNow(), m.getLong("id") });
+            mCol.getDb().execute("update cards set ord = (case " + sb.toString() +
+            		" end),usn=?,mod=? where nid in (select id from notes where mid = ?)",
+                    new Object[] { mCol.usn(), Utils.intNow(), m.getLong("id") });
         } catch (JSONException e) {
             throw new RuntimeException(e);
         }
@@ -944,7 +937,7 @@ public class Models {
                 return "";
             } else if (mod.equals("type")) {
                 // type answer field; convert it to [[type:...]] for the gui code to process
-                return String.format(Locale.US, "[[%s]]", tag_name);
+                return "[[" + tag_name + "]]";
             } else if (mod.equals("cq") || mod.equals("ca")) {
                 // cloze deletion
                 if (txt != null && txt.length() != 0 && extra != null && extra.length() != 0) {
@@ -960,7 +953,7 @@ public class Models {
                     txt = (String) AnkiDroidApp.getHooks().runFilter("fmod_" + mod, txt, extra, AnkiDroidApp.getAppResources(), tag, tag_name);
                 }
                 if (txt == null) {
-                    return String.format(Locale.US, "{unknown field %s}", tag_name);
+                    return "{unknown field " + tag_name + "}";
                 }
                 return txt;
             }
@@ -975,7 +968,7 @@ public class Models {
             // replace chozen cloze with type
             if (type == 'q') {
                 if (m.group(3) != null && m.group(3).length() != 0) {
-                    txt = m.replaceAll(String.format(Locale.US, "<span class=cloze>[$3...]</span>"));
+                    txt = m.replaceAll("<span class=cloze>[$3...]</span>");
                 } else {
                     txt = m.replaceAll("<span class=cloze>[...]</span>");
                 }
