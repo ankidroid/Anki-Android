@@ -17,6 +17,7 @@
 package com.ichi2.compat;
 
 import android.support.v4.app.FragmentActivity;
+import android.view.View;
 import android.webkit.WebView;
 
 /**
@@ -29,4 +30,5 @@ public class CompatV4 implements Compat {
         return txt;
     }
     public void setScrollbarFadingEnabled(WebView webview, boolean enable) { }
+    public void setOverScrollModeNever(View v) { }
 }

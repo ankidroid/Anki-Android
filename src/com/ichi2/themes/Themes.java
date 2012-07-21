@@ -208,21 +208,7 @@ public class Themes {
                         break;
                     case THEME_WHITE:
                         lv.setSelector(R.drawable.white_deckpicker_list_selector);
-                        try {
-                            Method overScrollMethod = lv.getClass().getMethod("setOverScrollMode", int.class);
-                            if (overScrollMethod != null) {
-                                Field f = View.class.getField("OVER_SCROLL_NEVER");
-                                int overScrollNever = f.getInt(f);
-                                overScrollMethod.invoke(lv, overScrollNever);
-                            }
-                        } catch (SecurityException e) {
-                        } catch (NoSuchMethodException e) {
-                        } catch (IllegalArgumentException e) {
-                        } catch (IllegalAccessException e) {
-                        } catch (InvocationTargetException e) {
-                        } catch (NullPointerException e) {
-                        } catch (NoSuchFieldException e) {
-                        }
+                        AnkiDroidApp.getCompat().setOverScrollModeNever(lv);
                         lv.setVerticalScrollBarEnabled(false);
                         lv.setFadingEdgeLength(15);
                         lv.setDividerHeight(0);
@@ -250,21 +236,7 @@ public class Themes {
                     case THEME_WHITE:
                         lv2.setBackgroundResource(R.drawable.white_textview);
                         lv2.setSelector(R.drawable.white_deckpicker_list_selector);
-                        try {
-                            Method overScrollMethod = lv2.getClass().getMethod("setOverScrollMode", int.class);
-                            if (overScrollMethod != null) {
-                                Field f = View.class.getField("OVER_SCROLL_NEVER");
-                                int overScrollNever = f.getInt(f);
-                                overScrollMethod.invoke(lv2, overScrollNever);
-                            }
-                        } catch (SecurityException e) {
-                        } catch (NoSuchMethodException e) {
-                        } catch (IllegalArgumentException e) {
-                        } catch (IllegalAccessException e) {
-                        } catch (InvocationTargetException e) {
-                        } catch (NullPointerException e) {
-                        } catch (NoSuchFieldException e) {
-                        }
+                        AnkiDroidApp.getCompat().setOverScrollModeNever(lv2);
                         lv2.setFadingEdgeLength(15);
                         lv2.setDividerHeight(0);
                         lv2.setSelector(R.drawable.white_deckpicker_list_selector);
