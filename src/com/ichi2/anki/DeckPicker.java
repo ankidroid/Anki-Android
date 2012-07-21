@@ -1849,7 +1849,8 @@ public class DeckPicker extends FragmentActivity {
             if (hkey.length() == 0) {
                 showDialog(DIALOG_USER_NOT_LOGGED_IN_SYNC);
             } else {
-                Connection.sync(mSyncListener, new Connection.Payload(new Object[] { hkey, true,
+                Connection.sync(mSyncListener, new Connection.Payload(new Object[] { hkey, 
+                        preferences.getBoolean("syncFetchesMedia", true),
                         syncConflictResolution, syncMediaUsn }));
             }
         }
