@@ -43,6 +43,7 @@ public class MediaSyncer {
     public String sync(long mediaUsn, Connection con) {
         // step 1: check if there have been any changes
         con.publishProgress(R.string.sync_media_find);
+        Log.i(AnkiDroidApp.TAG, "MediaSync: finding changed media");
         mCol.getMedia().findChanges();
         long lUsn = mCol.getMedia().usn();
         if (lUsn == mediaUsn && !mCol.getMedia().hasChanged()) {
@@ -51,6 +52,7 @@ public class MediaSyncer {
 
         // step 2: send/recv deletions
         con.publishProgress(R.string.sync_media_remove);
+        Log.i(AnkiDroidApp.TAG, "MediaSync: handling deleted media");
         List<String> lRem = removed();
         JSONArray rRem = mServer.remove(lRem, lUsn);
         if (rRem == null) {
@@ -61,6 +63,7 @@ public class MediaSyncer {
 
         // step 3: stream files from server
         con.publishProgress(R.string.sync_media_from_server);
+        Log.i(AnkiDroidApp.TAG, "MediaSync: receing media from server");
         while (true) {
             long usn = mCol.getMedia().usn();
             File zip = mServer.files(usn, mCol.getPath().replaceFirst("collection\\.anki2$", "tmpSyncFromServer.zip"));
@@ -75,6 +78,7 @@ public class MediaSyncer {
 
         // step 4: stream files to the server
         con.publishProgress(R.string.sync_media_to_server);
+        Log.i(AnkiDroidApp.TAG, "MediaSync: sending media to server");
         while (true) {
             Pair<File, List<String>> zipAdded = files();
             if (zipAdded.second == null || zipAdded.second.size() == 0) {
@@ -90,6 +94,7 @@ public class MediaSyncer {
         }
 
         // step 5: sanity check during beta testing
+        Log.i(AnkiDroidApp.TAG, "MediaSync: sanity check");
         long sMediaSanity = mServer.mediaSanity();
         long cMediaSanity = mediaSanity();
         if (sMediaSanity != cMediaSanity) {

@@ -163,7 +163,7 @@ public class Syncer {
                     return new Object[] { "error", rchg.get("errorType"), rchg.get("errorReason") };
                 }
 
-                Log.i(AnkiDroidApp.TAG, "Sync: mergin small changes");
+                Log.i(AnkiDroidApp.TAG, "Sync: merging small changes");
                 mergeChanges(lchg, rchg);
                 // step 3: stream large tables from server
                 publishProgress(con, R.string.sync_download_chunk);
