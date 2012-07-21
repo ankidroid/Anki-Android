@@ -337,6 +337,16 @@ public class CardBrowser extends Activity {
 
 
     @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (mUnmountReceiver != null) {
+            unregisterReceiver(mUnmountReceiver);
+        }
+        Log.i(AnkiDroidApp.TAG, "CardBrowser - onDestroy()");
+    }
+
+
+    @Override
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo) {
         mPositionInCardsList = ((AdapterView.AdapterContextMenuInfo) menuInfo).position;
         showDialog(DIALOG_CONTEXT_MENU);
