@@ -17,16 +17,11 @@
 package com.ichi2.compat;
 
 import android.annotation.TargetApi;
-import android.support.v4.app.FragmentActivity;
 import android.webkit.WebView;
 
 /** Implementation of {@link Compat} for SDK level 5 */
 @TargetApi(5)
 public class CompatV5 extends CompatV4 implements Compat {
-    @Override
-    public void onAttachedToWindow(FragmentActivity fragment) {
-        fragment.onAttachedToWindow();
-    }
     @Override
     public void setScrollbarFadingEnabled(WebView webview, boolean enable) {
         webview.setScrollbarFadingEnabled(enable);

@@ -77,6 +77,8 @@ import com.ichi2.widget.WidgetStatus;
 import org.json.JSONException;
 
 import java.io.File;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.TreeSet;
@@ -2484,7 +2486,7 @@ public class DeckPicker extends FragmentActivity {
 
     @Override
     public void onAttachedToWindow() {
-        AnkiDroidApp.getCompat().onAttachedToWindow(this);
+        
         if (!mFragmented) {
             Window window = getWindow();
             window.setFormat(PixelFormat.RGBA_8888);        	

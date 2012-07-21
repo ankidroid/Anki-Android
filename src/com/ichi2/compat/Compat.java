@@ -16,7 +16,6 @@
 
 package com.ichi2.compat;
 
-import android.support.v4.app.FragmentActivity;
 import android.view.View;
 import android.webkit.WebView;
 
@@ -41,7 +40,6 @@ import android.webkit.WebView;
  * again in CompatV9, unless the behaviour is supposed to be different there.
  */
 public interface Compat {
-    public abstract void onAttachedToWindow(FragmentActivity fragment);
     public abstract String normalizeUnicode(String txt);
     public abstract void setScrollbarFadingEnabled(WebView webview, boolean enable);
     public abstract void setOverScrollModeNever(View v);

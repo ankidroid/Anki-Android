@@ -16,7 +16,6 @@
 
 package com.ichi2.compat;
 
-import android.support.v4.app.FragmentActivity;
 import android.view.View;
 import android.webkit.WebView;
 
@@ -25,7 +24,6 @@ import android.webkit.WebView;
  * This should contain the implementations for non-supported by low SDKs methods.
  */
 public class CompatV4 implements Compat {
-    public void onAttachedToWindow(FragmentActivity fragment) { }
     public String normalizeUnicode(String txt) {
         return txt;
     }
