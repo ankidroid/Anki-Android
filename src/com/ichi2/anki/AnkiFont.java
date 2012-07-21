@@ -6,13 +6,13 @@ import android.graphics.Typeface;
 import com.ichi2.libanki.Utils;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 public class AnkiFont {
     private String mName;
     private String mFamily;
-    private String mWeight;
-    private String mStyle;
-    private String mStretch;
+    private List<String> mAttributes = new ArrayList<String>();
     private String mPath;
     private static final String fAssetPathPrefix = "/android_asset/fonts/";
 
@@ -27,44 +27,47 @@ public class AnkiFont {
         }
         Typeface tf = getTypeface(ctx, mPath);
         if (tf.isBold() || mName.toLowerCase().contains("bold")) {
-            mWeight = "font-weight: bolder;";
+            mAttributes.add("font-weight: bolder;");
             mFamily = mFamily.replaceFirst("(?i)-?Bold", "");
         } else if (mName.toLowerCase().contains("light")) {
-            mWeight = "font-weight: lighter;";
+            mAttributes.add("font-weight: lighter;");
             mFamily = mFamily.replaceFirst("(?i)-?Light", "");
         } else {
-            mWeight = "font-weight: normal;";
+            mAttributes.add("font-weight: normal;");
         }
         if (tf.isItalic() || mName.toLowerCase().contains("italic")) {
-            mStyle = "font-style: italic;";
+            mAttributes.add("font-style: italic;");
             mFamily = mFamily.replaceFirst("(?i)-?Italic", "");
         } else if (mName.toLowerCase().contains("oblique")) {
-            mStyle = "font-style: oblique;";
+            mAttributes.add("font-style: oblique;");
             mFamily = mFamily.replaceFirst("(?i)-?Oblique", "");
         } else {
-            mStyle = "font-style: normal;";
+            mAttributes.add("font-style: normal;");
         }
         if (mName.toLowerCase().contains("condensed") || mName.toLowerCase().contains("narrow")) {
-            mStretch = "font-stretch: condensed;";
+            mAttributes.add("font-stretch: condensed;");
             mFamily = mFamily.replaceFirst("(?i)-?Condensed", "");
             mFamily = mFamily.replaceFirst("(?i)-?Narrow(er)?", "");
         } else if (mName.toLowerCase().contains("expanded") || mName.toLowerCase().contains("wide")) {
-            mStretch = "font-stretch: expanded;";
+            mAttributes.add("font-stretch: expanded;");
             mFamily = mFamily.replaceFirst("(?i)-?Expanded", "");
             mFamily = mFamily.replaceFirst("(?i)-?Wide(r)?", "");
         } else {
-            mStretch = "font-stretch: normal;";
+            mAttributes.add("font-stretch: normal;");
         }
         mFamily = mFamily.replaceFirst("(?i)-?Regular", "");
     }
-    public String getStyle() {
-        String style = String.format("@font-face {font-family: \"%s\"; src: url(\"file://%s\");}",
-                mName, mPath);
-        if (mFamily.equalsIgnoreCase(mName)) {
-            return style;
+    public String getDeclaration() {
+        StringBuilder sb = new StringBuilder("@font-face {");
+        sb.append(getCSS()).append(" src: url(\"file://").append(mPath).append("\");}");
+        return sb.toString();
+    }
+    public String getCSS() {
+        StringBuilder sb = new StringBuilder("font-family: \"").append(mFamily).append("\";");
+        for (String attr : mAttributes) {
+            sb.append(" ").append(attr);
         }
-        return String.format("%s\n@font-face {font-family: \"%s\"; %s %s %s src: url(\"file://%s\");}",
-                style, mFamily, mWeight, mStyle, mStretch, mPath);
+        return sb.toString();
     }
     public String getName() {
         return mName;

@@ -109,8 +109,10 @@ import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -324,7 +326,7 @@ public class Reviewer extends AnkiActivity {
     private long mSavedTimer = 0;
 
     private boolean mRefreshWebview = false;
-    private List<AnkiFont> mCustomFontFiles;
+    private Map<String, AnkiFont> mCustomFonts;
     private String mCustomDefaultFontCss;
     private String mCustomFontStyle;
 
@@ -2323,9 +2325,6 @@ public class Reviewer extends AnkiActivity {
         int eta = mSched.eta(counts, false);
         UIUtils.setActionBarSubtitle(this, getResources().getQuantityString(R.plurals.reviewer_window_title, eta, eta));
 
-        //SharedPreferences preferences = PrefSettings.getSharedPrefs(getBaseContext());
-        //boolean hideDueCount = preferences.getBoolean("hideDueCount", true);
-
         SpannableString newCount = new SpannableString(String.valueOf(counts[0]));
         SpannableString lrnCount = new SpannableString(String.valueOf(counts[1]));
         SpannableString revCount = new SpannableString(String.valueOf(counts[2]));
@@ -2799,24 +2798,8 @@ public class Reviewer extends AnkiActivity {
      */
     private String getCustomFontsStyle() {
         StringBuilder builder = new StringBuilder();
-        for (AnkiFont font : mCustomFontFiles) {
-//            File fontfile = new File(fontPath);
-//            Typeface tf = Typeface.createFromAsset(getAssets(), "fonts/" + fontfile.getName());
-//            if (tf.isBold()) {
-//                weight = "font-weight: bold;";
-//            } else {
-//                weight = "font-weight: normal;";
-//            }
-//            if (tf.isItalic()) {
-//                style = "font-style: italic;";
-//            } else {
-//                style = "font-style: normal;";
-//            }
-//            family = Utils.removeExtension(fontfile.getName()).replaceAll("-.*$", "");
-//            String fontFace = String.format("@font-face {font-family: \"%s\"; %s %s src: url(\"file://%s\");}",
-//                    family, weight, style, fontPath);
-//            Log.d(AnkiDroidApp.TAG, "adding to style: " + fontFace);
-            builder.append(font.getStyle());
+        for (AnkiFont font : mCustomFonts.values()) {
+            builder.append(font.getDeclaration());
             builder.append('\n');
         }
         return builder.toString();
@@ -2828,15 +2811,16 @@ public class Reviewer extends AnkiActivity {
         if (mCustomDefaultFontCss == null) {
             SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(getBaseContext());
             String defaultFont = preferences.getString("defaultFont", null);
-            if (defaultFont == null || "".equals(defaultFont)) {
+            if (defaultFont != null && !"".equals(defaultFont) && mCustomFonts.containsKey(defaultFont)) {
+                mCustomDefaultFontCss = "BODY .question, BODY .answer { " + mCustomFonts.get(defaultFont).getCSS() + " }\n";
+            } else {
                 defaultFont = Themes.getReviewerFontName();
                 if (defaultFont == null || "".equals(defaultFont)) {
                     mCustomDefaultFontCss = "";
                 } else {
-                    mCustomDefaultFontCss = "BODY .question BODY .answer { font-family: '" + defaultFont + "' font-weight: normal; font-style: normal; font-stretch: normal; }\n";
+                    mCustomDefaultFontCss = "BODY .question BODY .answer { font-family: '" + defaultFont +
+                            "' font-weight: normal; font-style: normal; font-stretch: normal; }\n";
                 }
-            } else {
-                mCustomDefaultFontCss = "BODY .question, BODY .answer { font-family: '" + defaultFont + "' font-weight: normal; font-style: normal; font-stretch: normal; }\n";
             }
         }
         return mCustomDefaultFontCss;
@@ -2845,11 +2829,6 @@ public class Reviewer extends AnkiActivity {
 
     public static Card getEditorCard() {
         return sEditorCard;
-    }
-
-
-    private boolean isHebrewFixEnabled() {
-        return mPrefFixHebrew;
     }
 
 
@@ -3143,39 +3122,25 @@ public class Reviewer extends AnkiActivity {
 
 
     public boolean getRefreshWebviewAndInitializeWebviewVariables() {
-        mCustomFontFiles = Utils.getCustomFonts(getBaseContext());
+        List<AnkiFont> fonts = Utils.getCustomFonts(getBaseContext());
+        mCustomFonts = new HashMap<String, AnkiFont>();
+        for (AnkiFont f : fonts) {
+            mCustomFonts.put(f.getName(), f);
+        }
         for (String s : new String[] { "nook" }) {
             if (android.os.Build.DEVICE.toLowerCase().indexOf(s) != -1
                     || android.os.Build.MODEL.toLowerCase().indexOf(s) != -1) {
                 return true;
             }
         }
-        if (mCustomFontFiles.size() != 0) {
+        if (mCustomFonts.size() != 0) {
             return true;
         }
         return false;
     }
 
 
-    /**
-     * Setup media. Try to detect if we're using dropbox and set the mediaPrefix accordingly. Then set the media
-     * directory.
-     * 
-     * @param deck The deck that we've just opened
-     */
-    // public static String setupMedia(Decks deck) {
-    // String mediaLoc = deck.getStringVar("mediaURL");
-    // if (mediaLoc != null) {
-    // mediaLoc = mediaLoc.replace("\\", "/");
-    // if (mediaLoc.contains("/Dropbox/Public/Anki")) {
-    // // We're using dropbox
-    // deck.setMediaPrefix(AnkiDroidApp.getDropboxDir());
-    // }
-    // }
-    // return deck.mediaDir();
-    // }
-
-        private void executeCommand(int which) {
+    private void executeCommand(int which) {
         switch (which) {
             case GESTURE_NOTHING:
                 break;

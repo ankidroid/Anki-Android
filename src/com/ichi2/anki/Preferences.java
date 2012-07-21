@@ -355,19 +355,19 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
         return getCustomFonts(defaultValue, false);
     }
     private String[] getCustomFonts(String defaultValue, boolean useFullPath) {
-        List<AnkiFont> fonts = Utils.getCustomFonts(this);
-        int count = fonts.size();
+        List<AnkiFont> mFonts = Utils.getCustomFonts(this);
+        int count = mFonts.size();
         Log.d(AnkiDroidApp.TAG, "There are " + count + " custom fonts");
         String[] names = new String[count + 1];
         names[0] = defaultValue;
         if (useFullPath) {
             for (int index = 1; index < count + 1; ++index) {
-                names[index] = fonts.get(index-1).getPath();
+                names[index] = mFonts.get(index-1).getPath();
                 Log.d(AnkiDroidApp.TAG, "Adding custom font: " + names[index]);
             }
         } else {
             for (int index = 1; index < count + 1; ++index) {
-                names[index] = fonts.get(index-1).getName();
+                names[index] = mFonts.get(index-1).getName();
                 Log.d(AnkiDroidApp.TAG, "Adding custom font: " + names[index]);
             }
         }
