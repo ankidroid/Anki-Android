@@ -16,14 +16,17 @@
 
 package com.ichi2.compat;
 
-import android.app.Activity;
+import android.support.v4.app.FragmentActivity;
+import android.webkit.WebView;
 
 /**
- * Implementation of {@link Compat} for Eclair and later.
+ * Implementation of {@link Compat} for SDK level 4.
+ * This should contain the implementations for non-supported by low SDKs methods.
  */
 public class CompatV4 implements Compat {
-    @Override
-    public void invalidateOptionsMenu(Activity activity) {
-        // There is no way (or need) to invalidate the options menu before Honeycomb.
+    public void onAttachedToWindow(FragmentActivity fragment) { }
+    public String normalizeUnicode(String txt) {
+        return txt;
     }
+    public void setScrollbarFadingEnabled(WebView webview, boolean enable) { }
 }

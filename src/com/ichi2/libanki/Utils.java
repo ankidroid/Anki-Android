@@ -1088,14 +1088,4 @@ public class Utils {
             }
         }
     }
-    
-    @TargetApi(9)
-    public static String normalizeUnicode(String txt) {
-        if (!Normalizer.isNormalized(txt, Normalizer.Form.NFD)) {
-            return Normalizer.normalize(txt, Normalizer.Form.NFD);
-        }
-        return txt;
-    }
-    
-
 }

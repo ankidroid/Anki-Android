@@ -2484,7 +2484,7 @@ public class DeckPicker extends FragmentActivity {
 
     @Override
     public void onAttachedToWindow() {
-        super.onAttachedToWindow();
+        AnkiDroidApp.getCompat().onAttachedToWindow(this);
         if (!mFragmented) {
             Window window = getWindow();
             window.setFormat(PixelFormat.RGBA_8888);        	

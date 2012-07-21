@@ -298,7 +298,7 @@ public class Media {
         Set<String> normrefs = new HashSet<String>();
         for (String f : allMedia()) {
             if (AnkiDroidApp.SDK_VERSION > 9) {
-                f = Utils.normalizeUnicode(f);
+                f = AnkiDroidApp.getCompat().normalizeUnicode(f);
             }
             normrefs.add(f);
         }
@@ -312,7 +312,7 @@ public class Media {
             }
             String nfile = file.getName();
             if (AnkiDroidApp.SDK_VERSION > 9) {
-                nfile = Utils.normalizeUnicode(nfile);
+                nfile = AnkiDroidApp.getCompat().normalizeUnicode(nfile);
             }
             if (!normrefs.contains(nfile)) {
                 unused.add(file.getName());

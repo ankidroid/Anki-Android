@@ -32,8 +32,9 @@ import android.view.WindowManager;
 
 import com.ichi2.async.Connection;
 import com.ichi2.compat.Compat;
-import com.ichi2.compat.CompatV11;
+import com.ichi2.compat.CompatV5;
 import com.ichi2.compat.CompatV4;
+import com.ichi2.compat.CompatV9;
 import com.ichi2.libanki.hooks.Hooks;
 
 import java.io.File;
@@ -95,8 +96,10 @@ public class AnkiDroidApp extends Application {
     public void onCreate() {
         super.onCreate();
 
-        if (AnkiDroidApp.SDK_VERSION >= 11) {
-            mCompat = new CompatV11();
+        if (AnkiDroidApp.SDK_VERSION >= 9) {
+            mCompat = new CompatV9();
+        } else if (AnkiDroidApp.SDK_VERSION >= 5) {
+            mCompat = new CompatV5();
         } else {
             mCompat = new CompatV4();
         }
@@ -320,8 +323,8 @@ public class AnkiDroidApp extends Application {
         return mGesturesEnabled;
     }
 
-    public Compat getCompat() {
-        return mCompat;
+    public static Compat getCompat() {
+        return sInstance.mCompat;
     }
 
 }

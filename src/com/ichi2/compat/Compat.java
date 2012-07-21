@@ -16,7 +16,8 @@
 
 package com.ichi2.compat;
 
-import android.app.Activity;
+import android.support.v4.app.FragmentActivity;
+import android.webkit.WebView;
 
 /**
  * This interface defines a set of functions that are not available on all platforms.
@@ -24,8 +25,22 @@ import android.app.Activity;
  * A set of implementations for the supported platforms are available.
  * <p>
  * Each implementation ends with a {@code V<n>} prefix, identifying the minimum API version on which this implementation
- * can be used. For example, see {@link CompatV11}.
+ * can be used. For example, see {@link CompatV5}.
+ * <p>
+ * Each implementation should extend the previous implementation and implement this interface.
+ * <p>
+ * Each implementation should only override the methods that first become available in its own version, use @Override.
+ * <p>
+ * Methods not supported by its api, will default to the empty implementations of CompatV4.
+ * Methods first supported by lower APIs, will default to those implementations since we extended them.
+ * <p>
+ * Example: CompatV9 extends CompatV5 as of the time of writing. This means that the normalizeUnicode method
+ * that uses classes only available in API 9, should be implemented properly in CompatV9 with @Override annotatin.
+ * On the other hand the method onAttachedToWindow that first becomes available in API 5 need not be implemented
+ * again in CompatV9, unless the behaviour is supposed to be different there.
  */
 public interface Compat {
-    public void invalidateOptionsMenu(Activity activity);
+    public abstract void onAttachedToWindow(FragmentActivity fragment);
+    public abstract String normalizeUnicode(String txt);
+    public abstract void setScrollbarFadingEnabled(WebView webview, boolean enable);
 }
