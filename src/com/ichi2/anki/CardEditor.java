@@ -323,7 +323,7 @@ public class CardEditor extends Activity {
         	return;
         }
 
-        mCol = Collection.currentCollection();
+        mCol = AnkiDroidApp.getCol();
         if (mCol == null) {
             reloadCollection(savedInstanceState);
             return;
@@ -574,7 +574,7 @@ public class CardEditor extends Activity {
         super.onStop();
         if (!isFinishing()) {
             WidgetStatus.update(this);
-            UIUtils.saveCollectionInBackground(mCol);
+            UIUtils.saveCollectionInBackground();
         }
     }
 
@@ -626,7 +626,6 @@ public class CardEditor extends Activity {
                             }
                         }
                         mCol = result.getCollection();
-                        Collection.putCurrentCollection(mCol);
                         if (mCol == null) {
                             finish();
                         } else {

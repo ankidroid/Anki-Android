@@ -351,7 +351,7 @@ public class CramDeckOptions extends PreferenceActivity implements OnSharedPrefe
         }
         super.onCreate(icicle);
 
-        mCol = Collection.currentCollection();
+        mCol = AnkiDroidApp.getCol();
         if (mCol == null) {
             finish();
             return;

@@ -35,11 +35,15 @@ import com.ichi2.compat.Compat;
 import com.ichi2.compat.CompatV5;
 import com.ichi2.compat.CompatV4;
 import com.ichi2.compat.CompatV9;
+import com.ichi2.libanki.Collection;
+import com.ichi2.libanki.Storage;
 import com.ichi2.libanki.hooks.Hooks;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.Locale;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 /**
  * Application class. This file mainly contains Veecheck stuff.
@@ -63,6 +67,10 @@ public class AnkiDroidApp extends Application {
      * Singleton instance of this class.
      */
     private static AnkiDroidApp sInstance;
+    private Collection mCurrentCollection;
+    private int mAccessThreadCount = 0;
+    private static final Lock mLock = new ReentrantLock();
+
 
     /** Global hooks */
     private Hooks mHooks;
@@ -327,4 +335,54 @@ public class AnkiDroidApp extends Application {
         return sInstance.mCompat;
     }
 
+    public static synchronized Collection openCollection(String path) {
+    	mLock.lock();
+    	Log.i(AnkiDroidApp.TAG, "openCollection: " + path);
+        try {
+        	if (sInstance.mCurrentCollection == null || !sInstance.mCurrentCollection.getPath().equals(path)) {
+        		if (sInstance.mCurrentCollection != null) {
+        			// close old collection prior to opening new one
+        			sInstance.mCurrentCollection.close();
+        			sInstance.mAccessThreadCount = 0;
+        		}
+        		sInstance.mCurrentCollection = Storage.Collection(path);
+        		sInstance.mAccessThreadCount++;
+        	} else {
+        		sInstance.mAccessThreadCount++;
+        	}
+            return sInstance.mCurrentCollection;
+		} finally {
+			mLock.unlock();
+        }
+    }
+
+    public static Collection getCol() {
+    	return sInstance.mCurrentCollection;
+    }
+
+    public static void closeCollection(boolean save) {
+    	mLock.lock();
+    	Log.i(AnkiDroidApp.TAG, "closeCollection");
+        try {
+        	sInstance.mAccessThreadCount--;
+        	if (sInstance.mAccessThreadCount == 0 && sInstance.mCurrentCollection != null) {
+        		Collection col = sInstance.mCurrentCollection;
+            	sInstance.mCurrentCollection = null;
+        		col.close(save);
+        	}
+    	} finally {
+    		mLock.unlock();
+    	}
+    	
+    	
+    }
+
+    public static boolean colIsOpen() {
+    	return sInstance.mCurrentCollection != null;
+    }
+
+    public static void resetAccessThreadCount() {
+    	sInstance.mAccessThreadCount = 0;
+    	sInstance.mCurrentCollection = null;
+    }
 }

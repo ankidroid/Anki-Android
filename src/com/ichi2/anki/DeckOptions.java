@@ -384,7 +384,7 @@ public class DeckOptions extends PreferenceActivity implements OnSharedPreferenc
         }
         super.onCreate(icicle);
 
-        mCol = Collection.currentCollection();
+        mCol = AnkiDroidApp.getCol();
         if (mCol == null) {
             finish();
             return;

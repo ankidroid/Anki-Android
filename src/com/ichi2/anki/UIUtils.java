@@ -96,23 +96,25 @@ public class UIUtils {
     }
 
 
-    public static void saveCollectionInBackground(Collection col) {
-        DeckTask.launchDeckTask(DeckTask.TASK_TYPE_SAVE_COLLECTION, new DeckTask.TaskListener() {
-            @Override
-            public void onPreExecute() {
-                Log.i(AnkiDroidApp.TAG, "saveCollectionInBackground: start");
-            }
+    public static void saveCollectionInBackground() {
+    	if (AnkiDroidApp.colIsOpen()) {
+            DeckTask.launchDeckTask(DeckTask.TASK_TYPE_SAVE_COLLECTION, new DeckTask.TaskListener() {
+                @Override
+                public void onPreExecute() {
+                    Log.i(AnkiDroidApp.TAG, "saveCollectionInBackground: start");
+                }
 
 
-            @Override
-            public void onPostExecute(TaskData result) {
-                Log.i(AnkiDroidApp.TAG, "saveCollectionInBackground: finished");
-            }
+                @Override
+                public void onPostExecute(TaskData result) {
+                    Log.i(AnkiDroidApp.TAG, "saveCollectionInBackground: finished");
+                }
 
 
-            @Override
-            public void onProgressUpdate(TaskData... values) {
-            }
-        }, new DeckTask.TaskData(col));
+                @Override
+                public void onProgressUpdate(TaskData... values) {
+                }
+            }, new DeckTask.TaskData(AnkiDroidApp.getCol()));    		
+    	}
     }
 }

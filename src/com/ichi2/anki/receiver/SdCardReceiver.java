@@ -42,7 +42,7 @@ public class SdCardReceiver extends BroadcastReceiver {
         	Intent i = new Intent();
         	i.setAction(MEDIA_EJECT);
         	context.sendBroadcast(i);
-        	Collection col = Collection.currentCollection();
+        	Collection col = AnkiDroidApp.getCol();
             if (col != null) {
             	col.close();
             }

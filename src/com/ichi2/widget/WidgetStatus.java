@@ -208,16 +208,9 @@ public final class WidgetStatus {
             // } else {
             try {
             	if (sSmallWidgetStatus == null) {
-                    Collection col = Collection.currentCollection();
-                    if (col == null) {
-                    	Log.i(AnkiDroidApp.TAG, "updateWidgetStatus - Collection not present, opening it");
-                        col = Collection.openCollection(AnkiDroidApp.getCollectionPath(), true);
-                        mSmallWidgetStatus = col.getSched().progressToday(sDeckCounts, null, true);
-                    	Log.i(AnkiDroidApp.TAG, "updateWidgetStatus - close collection, if necessary");
-                        col.closeIfOnlyOpenedByWidget();
-                    } else {
-                        mSmallWidgetStatus = col.getSched().progressToday(sDeckCounts, null, true);                    	
-                    }
+                    Collection col = AnkiDroidApp.openCollection(AnkiDroidApp.getCollectionPath());
+                    mSmallWidgetStatus = col.getSched().progressToday(sDeckCounts, null, true);
+                    AnkiDroidApp.closeCollection(false);
             	} else {
             		mSmallWidgetStatus = sSmallWidgetStatus;
             	}

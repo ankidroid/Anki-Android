@@ -225,7 +225,7 @@ public class CardBrowser extends Activity {
         setContentView(mainView);
         Themes.setContentStyle(mainView, Themes.CALLER_CARDBROWSER);
 
-        mCol = Collection.currentCollection();
+        mCol = AnkiDroidApp.getCol();
         if (mCol == null) {
             reloadCollection(savedInstanceState);
             return;
@@ -331,7 +331,7 @@ public class CardBrowser extends Activity {
         super.onStop();
         if (!isFinishing()) {
             WidgetStatus.update(this);
-            UIUtils.saveCollectionInBackground(mCol);
+            UIUtils.saveCollectionInBackground();
         }
     }
 
@@ -718,7 +718,6 @@ public class CardBrowser extends Activity {
                             }
                         }
                         mCol = result.getCollection();
-                        Collection.putCurrentCollection(mCol);
                         if (mCol == null) {
                             finish();
                         } else {

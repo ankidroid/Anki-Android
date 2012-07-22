@@ -400,7 +400,7 @@ public class DeckTask extends
 		SharedPreferences prefs = AnkiDroidApp.getSharedPrefs(AnkiDroidApp.getInstance().getBaseContext());
 
 		// see, if a collection is still opened
-		Collection oldCol = Collection.currentCollection();
+		Collection oldCol = AnkiDroidApp.getCol();
 
 		Collection col = null;
 
@@ -420,7 +420,7 @@ public class DeckTask extends
 
 			// load collection
 			try {
-				col = Collection.openCollection(collectionFile);
+				col = AnkiDroidApp.openCollection(collectionFile);
 			} catch (RuntimeException e) {
 				BackupManager.restoreCollectionIfMissing(collectionFile);
 				Log.e(AnkiDroidApp.TAG,
@@ -690,7 +690,7 @@ public class DeckTask extends
 			try {
 				WidgetStatus.waitToFinish();
 				String path = col.getPath();
-				col.close(true);
+				AnkiDroidApp.closeCollection(true);
 				BackupManager.performBackup(path);
 			} catch (RuntimeException e) {
 				Log.i(AnkiDroidApp.TAG,

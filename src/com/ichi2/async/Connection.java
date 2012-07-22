@@ -404,7 +404,7 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
             } finally {
                 AnkiDatabaseManager.closeDatabase(colFilename);
             }
-            Collection col = Collection.openCollection(colFilename);
+            Collection col = AnkiDroidApp.openCollection(colFilename);
             ArrayList<String> decks = col.getDecks().allNames(false);
             ArrayList<String> failed = new ArrayList<String>();
             for (File f : fileList) {
@@ -476,7 +476,7 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
         String conflictResolution = (String) data.data[2];
         int mediaUsn = (Integer) data.data[3];
 
-        Collection col = Collection.currentCollection();
+        Collection col = AnkiDroidApp.getCol();
         if (col == null) {
             data.success = false;
             data.result = new Object[] { "genericError" };
@@ -525,13 +525,13 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
                     if (ret == null) {
                         data.success = false;
                         data.result = new Object[] { "genericError" };
-                        data.data = new Object[] { Collection.openCollection(path) };
+                        AnkiDroidApp.openCollection(path);
                         return data;
                     }
                     if (!((String) ret[0]).equals(BasicHttpSyncer.ANKIWEB_STATUS_OK)) {
                         data.success = false;
                         data.result = ret;
-                        data.data = new Object[] { Collection.openCollection(path) };
+                        AnkiDroidApp.openCollection(path);
                         return data;
                     }
                 } else if (conflictResolution.equals("download")) {
@@ -541,17 +541,17 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
                     if (ret == null) {
                         data.success = false;
                         data.result = new Object[] { "genericError" };
-                        data.data = new Object[] { Collection.openCollection(path) };
+                        AnkiDroidApp.openCollection(path);
                         return data;
                     }
                     if (!((String) ret[0]).equals("success")) {
                         data.success = false;
                         data.result = ret;
-                        data.data = new Object[] { Collection.openCollection(path) };
+                        AnkiDroidApp.openCollection(path);
                         return data;
                     }
                 }
-                col = Collection.openCollection(path);                	
+                col = AnkiDroidApp.openCollection(path);
             } catch (RuntimeException e) {
     			AnkiDroidApp.saveExceptionReportFile(e, "doInBackgroundSync-fullSync");
                 data.success = false;

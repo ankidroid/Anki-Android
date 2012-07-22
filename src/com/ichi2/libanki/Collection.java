@@ -87,7 +87,6 @@ public class Collection {
     private LinkedList<Object[]> mUndo;
 
     private String mPath;
-    private boolean mClosing = false;
 
     // Cloze regex
     private static final Pattern sRegexPattern = Pattern.compile("\\{\\{cloze:");
@@ -114,24 +113,6 @@ public class Collection {
     
     private static final int UNDO_SIZE_MAX = 20;
 
-    private static Collection sCurrentCollection;
-    private boolean mOpenedByWidget;
-
-    public static Collection openCollection(String path) {
-    	return openCollection(path, false);
-    }
-    public static synchronized Collection openCollection(String path, boolean openedByWidget) {
-    	Log.i(AnkiDroidApp.TAG, "openCollection");
-    	if (sCurrentCollection == null || !sCurrentCollection.mPath.equals(path)) {
-            sCurrentCollection = Storage.Collection(path);    		
-            sCurrentCollection.mOpenedByWidget = openedByWidget;
-    	} else {
-    		sCurrentCollection.mOpenedByWidget = false;
-    	}
-        return sCurrentCollection;
-    }
-
-
     public Collection(AnkiDb db, String path) {
         this(db, path, false);
     }
@@ -157,29 +138,6 @@ public class Collection {
         mSched = new Sched(this);
         // check for improper shutdown
         cleanup();
-    }
-
-
-    public static Collection currentCollection() {
-        if (sCurrentCollection == null || sCurrentCollection.mClosing || sCurrentCollection.mDb == null) {
-            return null;
-        } else {
-        	sCurrentCollection.mOpenedByWidget = false;
-            return sCurrentCollection;
-        }
-    }
-
-    // only close collection if no other process requested access before
-    public void closeIfOnlyOpenedByWidget() {
-    	if (mOpenedByWidget) {
-    		Log.i(AnkiDroidApp.TAG, "closeIfOnlyOpenedByWidget - collection only opened by widget, closing it");
-    		close(false);
-    	}
-    }
-
-
-    public static void putCurrentCollection(Collection col) {
-        sCurrentCollection = col;
     }
 
 
@@ -319,7 +277,6 @@ public class Collection {
         // Wait for any thread working on the deck to finish.
         // DeckTask.waitToFinish();
         // }
-        mClosing = true;
         if (mDb != null) {
             cleanup();
             if (save) {
@@ -339,9 +296,9 @@ public class Collection {
             AnkiDatabaseManager.closeDatabase(mPath);
             mDb = null;
             mMedia.close();
+            AnkiDroidApp.resetAccessThreadCount();
             Log.i(AnkiDroidApp.TAG, "Collection closed");
         }
-        sCurrentCollection = null;
     }
 
 

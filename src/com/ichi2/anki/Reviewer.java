@@ -751,9 +751,9 @@ public class Reviewer extends AnkiActivity {
 
 
             mCurrentCard = values[0].getCard();
-            boolean timebox_reached = Collection.currentCollection().timeboxReached() != null ? true : false;
-            if (timebox_reached && mPrefOvertime && !Collection.currentCollection().getOvertime()) {
-                Collection.currentCollection().setOvertime(true);
+            boolean timebox_reached = AnkiDroidApp.getCol().timeboxReached() != null ? true : false;
+            if (timebox_reached && mPrefOvertime && !AnkiDroidApp.getCol().getOvertime()) {
+            	AnkiDroidApp.getCol().setOvertime(true);
             }
             //String timebox_message = "Timebox finished!";
             if (mCurrentCard == null) {
@@ -974,7 +974,7 @@ public class Reviewer extends AnkiActivity {
         // The hardware buttons should control the music volume while reviewing.
         setVolumeControlStream(AudioManager.STREAM_MUSIC);
 
-        Collection col = Collection.currentCollection();
+        Collection col = AnkiDroidApp.getCol();
         if (col == null) {
             reloadCollection(savedInstanceState);
             return;
@@ -1127,7 +1127,7 @@ public class Reviewer extends AnkiActivity {
             // } catch (JSONException e) {
             // throw new RuntimeException(e);
             // }
-            UIUtils.saveCollectionInBackground(mSched.getCol());
+            UIUtils.saveCollectionInBackground();
         }
     }
 
@@ -1337,12 +1337,10 @@ public class Reviewer extends AnkiActivity {
                                 Log.e(AnkiDroidApp.TAG, "onPostExecute - Dialog dismiss Exception = " + e.getMessage());
                             }
                         }
-                        Collection col = result.getCollection();
-                        Collection.putCurrentCollection(col);
-                        if (col == null) {
-                            finish();
-                        } else {
+                        if (AnkiDroidApp.colIsOpen()) {
                             onCreate(mSavedInstanceState);                        	
+                        } else {
+                            finish();
                         }
                     }
 
@@ -3281,7 +3279,7 @@ public class Reviewer extends AnkiActivity {
     }
 
     private void closeReviewer(int result, boolean saveDeck) {
-        Collection.currentCollection().setOvertime(false);
+    	AnkiDroidApp.getCol().setOvertime(false);
         mTimeoutHandler.removeCallbacks(mShowAnswerTask);
         mTimeoutHandler.removeCallbacks(mShowQuestionTask);
         mTimerHandler.removeCallbacks(removeChosenAnswerText);
@@ -3299,7 +3297,7 @@ public class Reviewer extends AnkiActivity {
         // DeckTask.TaskData(DeckManager.getMainDeck(), 0));
         // } else {
         if (saveDeck) {
-            UIUtils.saveCollectionInBackground(mSched.getCol());
+            UIUtils.saveCollectionInBackground();
         }
         finish();
         if (AnkiDroidApp.SDK_VERSION > 4) {

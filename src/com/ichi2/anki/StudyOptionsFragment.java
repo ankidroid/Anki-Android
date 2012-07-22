@@ -296,7 +296,7 @@ public class StudyOptionsFragment extends Fragment {
 
         restorePreferences();
 
-        mCol = Collection.currentCollection();
+        mCol = AnkiDroidApp.getCol();
         if (mCol == null) {
             reloadCollection();
             return null;
@@ -456,7 +456,6 @@ public class StudyOptionsFragment extends Fragment {
                             }
                         }
                         mCol = result.getCollection();
-                        Collection.putCurrentCollection(mCol);
                         if (mCol == null) {
                         	closeStudyOptions();
                         } else if (!mFragmented) {

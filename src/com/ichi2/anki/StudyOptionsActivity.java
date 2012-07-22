@@ -205,7 +205,7 @@ public class StudyOptionsActivity extends FragmentActivity {
         super.onStop();
         if (!isFinishing() && mCurrentFragment != null && mCurrentFragment.dbSaveNecessary()) {
             WidgetStatus.update(this);
-            UIUtils.saveCollectionInBackground(Collection.currentCollection());
+            UIUtils.saveCollectionInBackground();
         }
     }
 

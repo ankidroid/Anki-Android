@@ -291,7 +291,7 @@ public class BackupManager {
 
     public static boolean repairDeck(String deckPath) {
         File deckFile = new File(deckPath);
-        Collection col = Collection.currentCollection();
+        Collection col = AnkiDroidApp.getCol();
         if (col != null) {
             col.close();
         }
