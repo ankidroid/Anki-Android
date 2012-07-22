@@ -72,7 +72,7 @@
   <string name="help_online">Aiuto online</string>
   <string name="help_faq">FAQ</string>
   <string name="help_tutorial">Mazzo d\'esercizio</string>
-  <string name="check_db">Controllo database</string>
+  <string name="check_db">Controlla database</string>
   <string name="check_db_message">Controllo database.\nAttendi...</string>
   <string name="simple_interface_hint">Vuoto %s. Tieni presente che l\'interfaccia semplice non può mostrare immagini/suoni ecc.</string>
   <string name="delete_deck">Eliminazione mazzo...\nAttendi.</string>

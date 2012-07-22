@@ -22,14 +22,14 @@
 <resources>
   <string name="CardEditorCancelButton">Anuluj</string>
   <string name="CardEditorSaveButton">Zapisz</string>
-  <string name="CardEditorLaterButton">Later</string>
+  <string name="CardEditorLaterButton">Później</string>
   <string name="CardEditorLaterMessage">Saved information for later</string>
-  <string name="CardEditorCardDeck">Card deck: %s</string>
-  <string name="CardEditorNoteDeck">Note deck: %s</string>
-  <string name="CardEditorModel">Note type: %s</string>
+  <string name="CardEditorCardDeck">Karta talii: %s</string>
+  <string name="CardEditorNoteDeck">Notatka talii: %s</string>
+  <string name="CardEditorModel">Rodzaj notatki: %s</string>
   <string name="CardEditorTags">Etykiety: %1$s</string>
   <string name="add_new_tag">Dodaj nową etykietę</string>
-  <string name="note_type">Note type</string>
+  <string name="note_type">Rodzaj notatki</string>
   <string name="sdcard_missing_message">Karta SD jest niedostępna, ponieważ jest ona używana jako pamięć masowa USB. Odłącz USB, aby uzyskać dostęp do Twoich talii.</string>
   <string name="show_whiteboard">Pokaż zegar / tablicę</string>
   <string name="hide_whiteboard">Ukryj tablicę</string>
@@ -41,12 +41,12 @@
   <string name="leech_suspend_notification">Karta oznaczona jako pijawka i zawieszona</string>
   <string name="leech_notification">Karta oznaczona jako pijawka</string>
   <string name="about_title">O programie</string>
-  <string name="cardeditor_title_add_note">Add Note</string>
-  <string name="cardeditor_title_edit_card">Edit Note</string>
-  <string name="factadder_saving_error">Error saving note</string>
-  <string name="pref_lang_support">Language</string>
-  <string name="saving_facts">Saving note</string>
-  <string name="deck">Deck</string>
+  <string name="cardeditor_title_add_note">Dodaj notatkę</string>
+  <string name="cardeditor_title_edit_card">Edytuj notatkę</string>
+  <string name="factadder_saving_error">Błąd podczas zapisywania notatki</string>
+  <string name="pref_lang_support">Język</string>
+  <string name="saving_facts">Zapisywanie notatki</string>
+  <string name="deck">Talia</string>
   <string name="add">Dodaj</string>
   <string name="close">Zamknij</string>
   <string name="select">Wybierz</string>
@@ -59,12 +59,12 @@
   <string name="fact_adder_swap">Zamień</string>
   <string name="deckpicker_select_dictionary_title">Wybierz słownik</string>
   <string name="deckpicker_select_dictionary_default">Domyślny</string>
-  <string name="card_editor_add_card">Add note</string>
+  <string name="card_editor_add_card">Dodaj notatkę</string>
   <string name="card_editor_reset">Reset</string>
   <string name="card_editor_copy_card">Kopiuj kartę</string>
   <string name="card_editor_reset_card">Resetuj postępy</string>
   <string name="error_insufficient_memory">Operacja nie może być wykonana z powodu niewystarczającej pamięci na urządzeniu</string>
-  <string name="tutorial_load">Creating tutorial deck.\nPlease wait...</string>
+  <string name="tutorial_load">Tworzenie talii szkoleniowej.\nProszę czekać...</string>
   <string name="tutorial_loading_error">Nie można utworzyć talii instruktażowej</string>
   <string name="rename">Zmień nazwę</string>
   <string name="rename_error">Nie można zmienić nazwy talii %s</string>
@@ -72,22 +72,22 @@
   <string name="help_online">Pomoc online</string>
   <string name="help_faq">FAQ</string>
   <string name="help_tutorial">Talia instruktażowa</string>
-  <string name="check_db">Check database</string>
-  <string name="check_db_message">Checking database.\nPlease wait...</string>
+  <string name="check_db">Sprawdź bazę danych</string>
+  <string name="check_db_message">Sprawdzanie bazy danych.\nProszę czekać...</string>
   <string name="simple_interface_hint">Pusty %s. Pamiętaj, że prosty interfejs nie może pokazywać zdjęć i odtwarzać dźwięków itp.</string>
-  <string name="delete_deck">Deleting deck...\nPlease wait.</string>
-  <string name="menu_cardbrowser">Card browser</string>
-  <string name="show_hint">Show Hint</string>
-  <string name="pref_lang_other">Language Preferences</string>
-  <string name="pref_font_UI">Custom UI Font</string>
-  <string name="info_rate">Rate AnkiDroid</string>
+  <string name="delete_deck">Usuwanie talii...\nProszę czekać...</string>
+  <string name="menu_cardbrowser">Przeglądarka kart</string>
+  <string name="show_hint">Pokaż podpowiedź</string>
+  <string name="pref_lang_other">Opcje języka</string>
+  <string name="pref_font_UI">Niestandardowa czcionka</string>
+  <string name="info_rate">Oceń AnkiDroid</string>
   <string-array name="dynOrderLabels">
-    <item>Oldest seen first</item>
-    <item>Random</item>
-    <item>Increasing intervals</item>
-    <item>Decreasing intervals</item>
+    <item>Najstarszy jako pierwszy</item>
+    <item>Losowo</item>
+    <item>Zwiększane interwały</item>
+    <item>Zmniejszane interwały</item>
     <item>Most lapses</item>
-    <item>Order added</item>
+    <item>Kolejność dodana</item>
     <item>Order due</item>
   </string-array>
   <plurals name="factadder_cards_added">

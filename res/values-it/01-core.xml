@@ -32,7 +32,7 @@
   <string name="studyoptions_total_cards">Totale carte:</string>
   <string name="studyoptions_eta">Tempo stimato (min):</string>
   <string name="studyoptions_start">Inizia Ripetizioni</string>
-  <string name="show_answer">Mostra risposta</string>
+  <string name="show_answer">Mostra la risposta</string>
   <string name="ease1_successive">Ripeti</string>
   <string name="ease2_successive">Difficile</string>
   <string name="ease3_successive">Buono</string>
@@ -43,22 +43,22 @@
   <string name="studyoptions_congrats_finish">Torna alla schermata di studio</string>
   <string name="card_unsuspended">Annulla la sospensione della carta</string>
   <string name="card_suspended">Carta risospesa</string>
-  <string name="menu_rotate">Ruotare</string>
-  <string name="undo">Annullare</string>
+  <string name="menu_rotate">Ruota</string>
+  <string name="undo">Annulla</string>
   <string name="finish_operation">Completamento operazione precedente in corso (probabilmente creazione backup).\nAttendi...</string>
   <string name="contextmenu_deckpicker_download_missing_media">Download media mancante</string>
   <string name="contextmenu_deckpicker_reset_language_assignments">Reset assegnazioni lingua</string>
   <string name="contextmenu_deckpicker_reset_reset_message">Reset lingua</string>
   <string name="contextmenu_deckpicker_optimize_deck">Ottimizzare database</string>
-  <string name="contextmenu_deckpicker_rename_deck">Rinomina mazzo</string>
+  <string name="contextmenu_deckpicker_rename_deck">Rinomina il mazzo</string>
   <string name="contextmenu_deckpicker_set_custom_dictionary">Imposta dizionario personalizzato</string>
   <string name="menu_download_deck">Scarica il mazzo</string>
   <string name="menu_download_shared_deck">Mazzo condiviso</string>
-  <string name="menu_my_account">Sincronizzazione account</string>
+  <string name="menu_my_account">Sincronizza account</string>
   <string name="menu_preferences">Preferenze</string>
   <string name="menu_zeemote">Zeemote</string>
   <string name="menu_about">Informazioni</string>
-  <string name="menu_dismiss_note">Ignora nota...</string>
+  <string name="menu_dismiss_note">Ignora la nota...</string>
   <string name="menu_bury_note">Seppellisci nota</string>
   <string name="menu_suspend_card">Sospendi carta</string>
   <string name="menu_suspend_note">Sospendi nota</string>
@@ -123,15 +123,15 @@
     <item quantity="other">ancora %d minuti</item>
   </plurals>
   <plurals name="studyoptions_congrats_message">
-    <item quantity="one">Domani ci sarà: 1 carta da ripetere e %2$s.\n Tempo stimato: %3$s</item>
-    <item quantity="other">Domani ci saranno: %1$d carte da ripetere e %2$s.\n Tempo stimato: %3$s</item>
+    <item quantity="one">Domani ci sarà: 1 carta da ripetere e %2$s.\n Durata stimata: %3$s</item>
+    <item quantity="other">Domani ci saranno: %1$d carte da ripetere e %2$s.\n Durata stimata: %3$s</item>
   </plurals>
   <plurals name="studyoptions_congrats_new_cards">
     <item quantity="one">1 carta nuova</item>
     <item quantity="other">﻿%1$d nuove carte</item>
   </plurals>
   <plurals name="studyoptions_congrats_eta">
-    <item quantity="one">Tempo stimato: 1 min.</item>
-    <item quantity="other">Tempo stimato: %1$d min.</item>
+    <item quantity="one">Durata stimata: 1 min.</item>
+    <item quantity="other">Durata stimata: %1$d min.</item>
   </plurals>
 </resources>

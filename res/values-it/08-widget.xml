@@ -44,7 +44,7 @@
     <item quantity="other">%1$d corsi</item>
   </plurals>
   <plurals name="widget_big_eta">
-    <item quantity="one">Tempo stimato: 1 min.</item>
-    <item quantity="other">Tempo stimato: %d min.</item>
+    <item quantity="one">Durata stimata: 1 min.</item>
+    <item quantity="other">Durata stimata: %d min.</item>
   </plurals>
 </resources>

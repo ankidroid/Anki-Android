@@ -63,7 +63,7 @@
   <string name="downloaddeck_search">Hledat</string>
   <string name="preferences_title">Nastavení</string>
   <string name="deckpreferences_title">Předvolby balíčků</string>
-  <string name="sync_conflict_message">Your decks here and on AnkiWeb differ in such a way that they can\'t be merged together, so it\'s necessary to overwrite the decks on one side with the decks from the other.\n\nDo you want to upload the decks from here, or download the decks from AnkiWeb?</string>
+  <string name="sync_conflict_message">Vaše balíčky zde a na AnkiWeb se liší natolik, že nemohou být sloučeny dohromady, takže je nutné přepsat balíčky jedné strany druhou.\n\nChcete použít balíčky odtud nebo balíčky z AnkiWeb?</string>
   <string name="sync_conflict_local">Odeslat</string>
   <string name="sync_conflict_remote">Stáhnout</string>
   <string name="sync_conflict_cancel">Zrušit synchronizaci</string>
@@ -114,14 +114,14 @@
   <string name="upgrade_decks_zipping">Komprimuji balíček pro odesílání.\nProsím čekejte...</string>
   <string name="upgrade_decks_upload">Odesílání komprimovaného balíčku.\nProsím čekejte...</string>
   <string name="upgrade_decks_waiting">Čekání, pozice ve frontě: %s\nProsím čekejte...</string>
-  <string name="upgrade_decks_upgrade_started">Upgrade started\nPlease waiting for finish...</string>
+  <string name="upgrade_decks_upgrade_started">Upgrade začal\nProsím vyčkejte na dokončení...</string>
   <string name="upgrade_decks_downloading">Stahování inovované kolekce.\nProsím čekejte...</string>
   <string name="upgrade_decks_message">There is no Anki 2.0 collection available but one or more decks in the old Anki 1.2 format have been found:%sIn order to use your decks with the new version of AnkiDroid they need to be converted first into a single collection of the new Anki-2.0 format. There are three possibilities for this:</string>
   <string name="upgrade_decks_message_pos1">Při prvním použití Anki Desktop 2.0 budou vaše balíčky převedeny. Můžete synchronizovat přes AnkiWeb nebo jen novou kolekci zkopírovat do mobilního zařízení. Zkopírujte vaše balíčky z adresáře AnkiDroid (%s) do adresáře Anki 1.2 na vašem počítači (pokud ještě nejsou synchronizované) a spusťte Anki pro PC 2.0.</string>
   <string name="upgrade_decks_message_pos2">If you already sync your decks over ankiweb, you\'ll just need to log in once to %s and your decks will be converted there. After that you can simply sync the new collection to your mobile device.</string>
   <string name="upgrade_decks_message_pos3">As a third possibility, you can have your decks converted via AnkiDroid itself and AnkiWeb. If you click on the upgrade button below, your decks will be bundled and uploaded to AnkiWeb. The converted collection will then be automatically downloaded and opened. You don\'t need any registration for that but be aware that it might be better to use a wifi connection in order to prevent too much traffic over your mobile connection. If the compressed decks amount to more than 50 mb, you cannot use this way. Please resort to the other options in this case.</string>
   <string name="upgrade_decks_message_finish">If you just proceed a new collection will be created without taking your old decks into account.</string>
-  <string name="upgrade_required">Your decks on AnkiWeb are still in the old Anki 1.2 format. Please visit %s and log in there. Your decks will then automatically be converted into the new format.</string>
+  <string name="upgrade_required">Vaše balíčky na AnkiWeb jsou stále ve starém formátu Anki 1.2. Prosím navštivte %s a přihlaste se zde. Vaše balíčky budou automaticky převedeny do nového formátu.</string>
   <string name="upgrade_decks_button">Upgrade</string>
   <string name="upgrade_decks_failed">These decks could not be upgraded\n%sPlease open them in Anki Desktop and do a database check. Afterwards you can import them via Anki Desktop.</string>
 </resources>
