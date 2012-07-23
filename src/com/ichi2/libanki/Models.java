@@ -258,20 +258,6 @@ public class Models {
     }
 
 
-    public ArrayList<String> allNAmes() {
-        ArrayList<String> names = new ArrayList<String>();
-        Iterator<JSONObject> it = mModels.values().iterator();
-        while (it.hasNext()) {
-            try {
-                names.add(it.next().getString("name"));
-            } catch (JSONException e) {
-                throw new RuntimeException(e);
-            }
-        }
-        return names;
-    }
-
-
     /** get model with NAME. */
     public JSONObject byName(String name) {
         for (JSONObject m : mModels.values()) {
