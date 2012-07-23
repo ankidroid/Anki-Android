@@ -50,7 +50,7 @@
   <string name="hide_due_count">Скрыть количество повторяемых</string>
   <string name="hide_due_count_summ">Скрыть отображение количества повторяемых карт</string>
   <string name="overtime">Дополнительное время</string>
-  <string name="overtime_summ">Продолжить обзор после того, как достигнут лимит времени</string>
+  <string name="overtime_summ">Продолжить обучение после того, как достигнут лимит времени</string>
   <string name="show_timer">Показать таймер</string>
   <string name="show_timer_summ">Таймер показывает сколько времени Вам остаётся для ответа</string>
   <string name="show_progress_bars">Индикаторы хода выполнения</string>
