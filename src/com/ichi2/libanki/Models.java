@@ -559,10 +559,20 @@ public class Models {
                     }
                 }
             }
+            // remember old sort field
+            String sortf = m.getJSONArray("flds").getJSONObject(m.getInt("sortf")).toString();
+            // move
             l.remove(oldidx);
             l.add(idx, field);
             m.put("flds", new JSONArray(l));
-            m.put("sortf", idx);
+            // restore sort field
+            ja = m.getJSONArray("flds");
+            for (int i = 0; i < ja.length(); ++i) {
+                if (ja.getJSONObject(i).toString().equals(sortf)) {
+                    m.put("sortf", i);
+                    break;
+                }
+            }
             _updateFieldOrds(m);
             save(m);
             _transformFields(m, new TransformFieldMove(idx, oldidx));
