@@ -40,6 +40,8 @@ import android.os.Handler;
 import android.view.MotionEvent;
 import android.view.View;
 
+import com.ichi2.anki.AnkiDroidApp;
+
 /**
  * The view that encapsulates the graphical chart.
  */
@@ -113,13 +115,7 @@ public class GraphicalView extends View {
       mZoomOut = new Zoom(mChart, false, mRenderer.getZoomRate());
       mFitZoom = new FitZoom(mChart);
     }
-    int version = 7;
-    try {
-      version = Integer.valueOf(Build.VERSION.SDK);
-    } catch (Exception e) {
-      // do nothing
-    }
-    if (version < 7) {
+    if (AnkiDroidApp.SDK_VERSION < 7) {
       mTouchHandler = new TouchHandlerOld(this, mChart);
     } else {
       mTouchHandler = new TouchHandler(this, mChart);
