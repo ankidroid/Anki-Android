@@ -1683,7 +1683,7 @@ public class Reviewer extends AnkiActivity {
     private boolean lookUp() {
         mLookUpIcon.setVisibility(View.GONE);
         mIsSelecting = false;
-        if (Lookup.lookUp(clipboardGetText().toString(), mCurrentCard)) {
+        if (Lookup.lookUp(clipboardGetText().toString())) {
             clipboardSetText("");
         }
         return true;

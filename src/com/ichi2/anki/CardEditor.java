@@ -827,8 +827,7 @@ public class CardEditor extends Activity {
                         field.selectAll();
                     }
                     Lookup.lookUp(
-                            field.getText().toString().substring(field.getSelectionStart(), field.getSelectionEnd()),
-                            null);
+                            field.getText().toString().substring(field.getSelectionStart(), field.getSelectionEnd()));
                 }
                 return true;
 
