@@ -1308,10 +1308,17 @@ public class Reviewer extends AnkiActivity {
         if (mPrefTextSelection) {
             item = menu.add(Menu.NONE, MENU_SEARCH, Menu.NONE, res.getString(R.string.menu_select));
             item.setIcon(R.drawable.ic_menu_search);
+            item.setEnabled(Lookup.isAvailable());
         }
         return true;
     }
 
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+    	Resources res = getResources();
+    	menu.findItem(MENU_SEARCH).setTitle(clipboardHasText() ? Lookup.getSearchStringTitle() : res.getString(R.string.menu_select));
+		return true;
+    }
 
     private void updateBigWidget(boolean showProgressDialog) {
         // if (DeckManager.deckIsOpenedInBigWidget(DeckManager.getMainDeckPath())) {
