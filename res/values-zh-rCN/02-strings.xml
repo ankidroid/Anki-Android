@@ -22,14 +22,14 @@
 <resources>
   <string name="CardEditorCancelButton">取消</string>
   <string name="CardEditorSaveButton">保存</string>
-  <string name="CardEditorLaterButton">Later</string>
-  <string name="CardEditorLaterMessage">Saved information for later</string>
-  <string name="CardEditorCardDeck">Card deck: %s</string>
-  <string name="CardEditorNoteDeck">Note deck: %s</string>
-  <string name="CardEditorModel">Note type: %s</string>
+  <string name="CardEditorLaterButton">稍后</string>
+  <string name="CardEditorLaterMessage">保存的信息</string>
+  <string name="CardEditorCardDeck">卡片所属牌组：%s</string>
+  <string name="CardEditorNoteDeck">条目注释所属牌组：%s</string>
+  <string name="CardEditorModel">条目注释类型:%s</string>
   <string name="CardEditorTags">标签: %1$s</string>
   <string name="add_new_tag">添加新标签</string>
-  <string name="note_type">Note type</string>
+  <string name="note_type">条目注释类型</string>
   <string name="sdcard_missing_message">SD卡暂时不可用，因为当前正作为USB存储设备。拔掉USB之后即可访问你的牌组。</string>
   <string name="show_whiteboard">显示计时器/白板</string>
   <string name="hide_whiteboard">隐藏白板</string>
@@ -41,17 +41,17 @@
   <string name="leech_suspend_notification">卡片被标记为记忆难点并暂停复习</string>
   <string name="leech_notification">卡片被标记为记忆难点</string>
   <string name="about_title">关于</string>
-  <string name="cardeditor_title_add_note">Add Note</string>
-  <string name="cardeditor_title_edit_card">Edit Note</string>
-  <string name="factadder_saving_error">Error saving note</string>
-  <string name="pref_lang_support">Language</string>
-  <string name="saving_facts">Saving note</string>
-  <string name="deck">Deck</string>
+  <string name="cardeditor_title_add_note">增加条目注释</string>
+  <string name="cardeditor_title_edit_card">编辑条目注释</string>
+  <string name="factadder_saving_error">保存条目注释时出现错误</string>
+  <string name="pref_lang_support">语言</string>
+  <string name="saving_facts">保存条目注释</string>
+  <string name="deck">牌组</string>
   <string name="add">添加</string>
   <string name="close">关闭</string>
   <string name="select">选择</string>
   <string name="saving_changes">正在保存设置…</string>
-  <string name="timebox_reached">Timebox reached!</string>
+  <string name="timebox_reached">达到时间限制！</string>
   <string name="studyoptions_welcome_title">欢迎进入 AnkiDroid</string>
   <string name="studyoptions_no_external_storage_title">没有可用的外部存储</string>
   <string name="studyoptions_no_external_storage_message">没有可用的外部存储空间，AnkiDroid需要访问SD卡以载入您的Anki牌组。确认SD卡挂载后重试。</string>
@@ -59,12 +59,12 @@
   <string name="fact_adder_swap">交换</string>
   <string name="deckpicker_select_dictionary_title">选择词典</string>
   <string name="deckpicker_select_dictionary_default">默认</string>
-  <string name="card_editor_add_card">Add note</string>
+  <string name="card_editor_add_card">添加条目注释</string>
   <string name="card_editor_reset">复原</string>
   <string name="card_editor_copy_card">复制卡片</string>
   <string name="card_editor_reset_card">清空学习记录</string>
   <string name="error_insufficient_memory">由于设备内存不足导致操作无法完成。</string>
-  <string name="tutorial_load">Creating tutorial deck.\nPlease wait...</string>
+  <string name="tutorial_load">创建教学牌组。\n请等待...</string>
   <string name="tutorial_loading_error">无法创建教程词库。</string>
   <string name="rename">重命名</string>
   <string name="rename_error">牌组 %s 无法重命名</string>
@@ -72,26 +72,26 @@
   <string name="help_online">在线帮助</string>
   <string name="help_faq">常见问题</string>
   <string name="help_tutorial">教程词库</string>
-  <string name="check_db">Check database</string>
-  <string name="check_db_message">Checking database.\nPlease wait...</string>
-  <string name="simple_interface_hint">Empty %s. Bear in mind that simple interface cannot show pictures/sounds etc.</string>
-  <string name="delete_deck">Deleting deck...\nPlease wait.</string>
-  <string name="menu_cardbrowser">Card browser</string>
-  <string name="show_hint">Show Hint</string>
-  <string name="pref_lang_other">Language Preferences</string>
-  <string name="pref_font_UI">Custom UI Font</string>
-  <string name="info_rate">Rate AnkiDroid</string>
+  <string name="check_db">检查数据库</string>
+  <string name="check_db_message">检查数据库。\n请等待...</string>
+  <string name="simple_interface_hint">空%s.请注意，简单界面无法显示图片或声音等素材。</string>
+  <string name="delete_deck">删除牌组...\n请等待.</string>
+  <string name="menu_cardbrowser">卡片浏览器</string>
+  <string name="show_hint">显示提示信息</string>
+  <string name="pref_lang_other">语言预置</string>
+  <string name="pref_font_UI">自定义UI字体</string>
+  <string name="info_rate">评价AnkiDroid</string>
   <string-array name="dynOrderLabels">
-    <item>Oldest seen first</item>
-    <item>Random</item>
-    <item>Increasing intervals</item>
-    <item>Decreasing intervals</item>
-    <item>Most lapses</item>
-    <item>Order added</item>
-    <item>Order due</item>
+    <item>优先显示老卡片</item>
+    <item>随机</item>
+    <item>增加时间间隔</item>
+    <item>减少时间间隔</item>
+    <item>错误最多的</item>
+    <item>添加的顺序</item>
+    <item>到期的顺序</item>
   </string-array>
   <plurals name="factadder_cards_added">
     <item quantity="one">添加一张卡片</item>
-    <item quantity="other">%d cards added</item>
+    <item quantity="other">%d卡片已添加</item>
   </plurals>
 </resources>
