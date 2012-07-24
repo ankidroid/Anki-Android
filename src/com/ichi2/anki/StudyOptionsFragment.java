@@ -296,6 +296,8 @@ public class StudyOptionsFragment extends Fragment {
 
         restorePreferences();
 
+        mFragmented = getActivity().getClass() != StudyOptionsActivity.class;
+
         mCol = AnkiDroidApp.getCol();
         if (mCol == null) {
             reloadCollection();
@@ -306,8 +308,6 @@ public class StudyOptionsFragment extends Fragment {
 //        if (intent != null && intent.hasExtra(DeckPicker.EXTRA_DECK_ID)) {
 //            mCol.getDecks().select(intent.getLongExtra(DeckPicker.EXTRA_DECK_ID, 1));
 //        }
-
-        mFragmented = getActivity().getClass() != StudyOptionsActivity.class;
 
         initAllContentViews(inflater);
 
