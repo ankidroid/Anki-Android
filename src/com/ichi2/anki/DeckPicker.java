@@ -2295,6 +2295,10 @@ public class DeckPicker extends FragmentActivity {
 
 
     private void handleDeckSelection(int id) {
+    	if (!AnkiDroidApp.colIsOpen()) {
+    		loadCollection();
+    	}
+
         String deckFilename = null;
 
         @SuppressWarnings("unchecked")
