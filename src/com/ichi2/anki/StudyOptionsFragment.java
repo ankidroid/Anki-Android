@@ -147,8 +147,6 @@ public class StudyOptionsFragment extends Fragment {
     private double mProgressMature;
     private double mProgressAll;
 
-    private Collection mCol;
-
     private boolean mFragmented;
 
     /**
@@ -157,6 +155,7 @@ public class StudyOptionsFragment extends Fragment {
     private View.OnClickListener mButtonClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
+        	Collection col = AnkiDroidApp.getCol();
 //            long timeLimit = 0;
             switch (v.getId()) {
                 case R.id.studyoptions_start:
@@ -204,10 +203,10 @@ public class StudyOptionsFragment extends Fragment {
                     return;
                 case R.id.studyoptions_congrats_message:
                     DeckTask.launchDeckTask(DeckTask.TASK_TYPE_LOAD_STATISTICS, mLoadStatisticsHandler,
-                            new DeckTask.TaskData(mCol, Stats.TYPE_MONTH, false));
+                            new DeckTask.TaskData(col, Stats.TYPE_MONTH, false));
                     return;
                 case R.id.studyoptions_options:
-                    if (mCol.getDecks().isDyn(mCol.getDecks().selected())) {
+                    if (col.getDecks().isDyn(col.getDecks().selected())) {
                         openCramDeckOptions();
                     } else {
                         Intent i = new Intent(getActivity(), DeckOptions.class);
@@ -224,7 +223,7 @@ public class StudyOptionsFragment extends Fragment {
                     mProgressDialog = StyledProgressDialog.show(getActivity(), "",
                             getResources().getString(R.string.empty_cram_deck), true);
                     DeckTask.launchDeckTask(DeckTask.TASK_TYPE_EMPTY_CRAM, mUpdateValuesFromDeckListener,
-                            new DeckTask.TaskData(mCol, mCol.getDecks().selected(), mFragmented));
+                            new DeckTask.TaskData(col, col.getDecks().selected(), mFragmented));
                     return;
                 case R.id.studyoptions_add:
                     addNote();
@@ -249,7 +248,7 @@ public class StudyOptionsFragment extends Fragment {
         mProgressDialog = StyledProgressDialog.show(getActivity(), "",
                 getResources().getString(R.string.rebuild_cram_deck), true);
         DeckTask.launchDeckTask(DeckTask.TASK_TYPE_REBUILD_CRAM, mUpdateValuesFromDeckListener, new DeckTask.TaskData(
-                mCol, mCol.getDecks().selected(), mFragmented));
+        		AnkiDroidApp.getCol(), AnkiDroidApp.getCol().getDecks().selected(), mFragmented));
     }
 
 
@@ -298,8 +297,7 @@ public class StudyOptionsFragment extends Fragment {
 
         mFragmented = getActivity().getClass() != StudyOptionsActivity.class;
 
-        mCol = AnkiDroidApp.getCol();
-        if (mCol == null) {
+        if (!AnkiDroidApp.colIsOpen()) {
             reloadCollection();
             return null;
         }
@@ -324,7 +322,7 @@ public class StudyOptionsFragment extends Fragment {
         }
 
         if (getArguments().getBoolean("onlyFnsMsg")) {
-            mTextCongratsMessage.setText(mCol.getSched().finishedMsg(getActivity()));
+            mTextCongratsMessage.setText(AnkiDroidApp.getCol().getSched().finishedMsg(getActivity()));
             mButtonCongratsFinish.setVisibility(View.GONE);
             return mCongratsView;
         }
@@ -394,8 +392,8 @@ public class StudyOptionsFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        if (mCol != null) {
-            if (Utils.now() > mCol.getSched().getDayCutoff()) {
+        if (AnkiDroidApp.colIsOpen()) {
+            if (Utils.now() > AnkiDroidApp.getCol().getSched().getDayCutoff()) {
                 updateValuesFromDeck(true);
             }
         }
@@ -427,7 +425,7 @@ public class StudyOptionsFragment extends Fragment {
         if (AnkiDroidApp.SDK_VERSION > 4) {
             ActivityTransitionAnimation.slide(getActivity(), ActivityTransitionAnimation.LEFT);
         }
-        mCol.startTimebox();
+        AnkiDroidApp.getCol().startTimebox();
     }
 
 
@@ -455,8 +453,7 @@ public class StudyOptionsFragment extends Fragment {
                                 Log.e(AnkiDroidApp.TAG, "onPostExecute - Dialog dismiss Exception = " + e.getMessage());
                             }
                         }
-                        mCol = result.getCollection();
-                        if (mCol == null) {
+                        if (!AnkiDroidApp.colIsOpen()) {
                         	closeStudyOptions();
                         } else if (!mFragmented) {
                         	((StudyOptionsActivity)getActivity()).loadContent(false);
@@ -500,7 +497,7 @@ public class StudyOptionsFragment extends Fragment {
         // .findViewById(R.id.studyoptions_night);
         // mToggle.setChecked(mInvertedColors);
 
-        if (mCol != null && mCol.getDecks().isDyn(mCol.getDecks().selected())) {
+        if (AnkiDroidApp.colIsOpen() && AnkiDroidApp.getCol().getDecks().isDyn(AnkiDroidApp.getCol().getDecks().selected())) {
             Button rebBut = (Button) mStudyOptionsView.findViewById(R.id.studyoptions_rebuild_cram);
             rebBut.setOnClickListener(mButtonClickListener);
             Button emptyBut = (Button) mStudyOptionsView.findViewById(R.id.studyoptions_empty_cram);
@@ -595,7 +592,7 @@ public class StudyOptionsFragment extends Fragment {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         DeckTask.launchDeckTask(DeckTask.TASK_TYPE_LOAD_STATISTICS, mLoadStatisticsHandler,
-                                new DeckTask.TaskData(mCol, which, false));
+                                new DeckTask.TaskData(AnkiDroidApp.getCol(), which, false));
                     }
                 }, mFragmented);
                 break;
@@ -627,7 +624,10 @@ public class StudyOptionsFragment extends Fragment {
 
     private void updateValuesFromDeck(boolean reset) {
         String fullName;
-        JSONObject deck = mCol.getDecks().current();
+        if (!AnkiDroidApp.colIsOpen()) {
+        	return;
+        }
+        JSONObject deck = AnkiDroidApp.getCol().getDecks().current();
         try {
             fullName = deck.getString("name");
             String[] name = fullName.split("::");
@@ -659,7 +659,7 @@ public class StudyOptionsFragment extends Fragment {
             getActivity().setTitle(fullName);
         }
 
-        String desc = mCol.getDecks().getActualDescription();
+        String desc = AnkiDroidApp.getCol().getDecks().getActualDescription();
         if (desc.length() > 0) {
             mTextDeckDescription.setText(desc);
             mTextDeckDescription.setVisibility(View.VISIBLE);
@@ -668,7 +668,7 @@ public class StudyOptionsFragment extends Fragment {
         }
 
         DeckTask.launchDeckTask(DeckTask.TASK_TYPE_UPDATE_VALUES_FROM_DECK, mUpdateValuesFromDeckListener,
-                new DeckTask.TaskData(mCol, new Object[]{reset, mSmallChart != null}));
+                new DeckTask.TaskData(AnkiDroidApp.getCol(), new Object[]{reset, mSmallChart != null}));
     }
 
 
@@ -784,7 +784,7 @@ public class StudyOptionsFragment extends Fragment {
             closeStudyOptions(DeckPicker.RESULT_MEDIA_EJECTED);
         } else if (requestCode == DECK_OPTIONS) {
             try {
-                JSONObject deck = mCol.getDecks().current();
+                JSONObject deck = AnkiDroidApp.getCol().getDecks().current();
                 if (deck.getInt("dyn") != 0 && deck.has("empty") && deck.getBoolean("empty")) {
                 	// deck is a cram deck and has to be filled for the first time
                     deck.remove("empty");
@@ -808,7 +808,7 @@ public class StudyOptionsFragment extends Fragment {
                     resetAndUpdateValuesFromDeck();
                     break;
                 case Reviewer.RESULT_NO_MORE_CARDS:
-                    mTextCongratsMessage.setText(mCol.getSched().finishedMsg(getActivity()));
+                    mTextCongratsMessage.setText(AnkiDroidApp.getCol().getSched().finishedMsg(getActivity()));
                     setFragmentContentView(mCongratsView);
                     break;
             }
@@ -970,7 +970,7 @@ public class StudyOptionsFragment extends Fragment {
                             && Math.abs(e1.getX() - e2.getX()) < AnkiDroidApp.sSwipeMaxOffPath) {
                         // down
                         DeckTask.launchDeckTask(DeckTask.TASK_TYPE_LOAD_STATISTICS, mLoadStatisticsHandler,
-                                new DeckTask.TaskData(mCol, Stats.TYPE_FORECAST, false));
+                                new DeckTask.TaskData(AnkiDroidApp.getCol(), Stats.TYPE_FORECAST, false));
                     } else if (e1.getY() - e2.getY() > AnkiDroidApp.sSwipeMinDistance
                             && Math.abs(velocityY) > AnkiDroidApp.sSwipeThresholdVelocity
                             && Math.abs(e1.getX() - e2.getX()) < AnkiDroidApp.sSwipeMaxOffPath) {
