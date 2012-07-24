@@ -11,7 +11,7 @@ Dodawanie materiału za pomocą desktopowego programu Anki lub bezpośrednio w A
 ★ Podstawowe cechy:
 • karty mogą zawierać: tekst, obrazki, dźwięki, LaTeX
 • planowane powtórki (algorytm SM2)
-• wsparcie dla syntezy mowy
+• obsługa syntezy mowy
 • ponad 6000 gotowych talii
 • progress widget
 • szczegółowe statystyki
@@ -27,7 +27,7 @@ Dodawanie materiału za pomocą desktopowego programu Anki lub bezpośrednio w A
 • importowanie gotowych plików z kolekcjami (poprzez Anki Desktop)
 • integracja ze słownikami (ColorDict, GodenDict, Leo.org, Aedict, różne słowniki online)
 • dodawanie kart za pomocą intentów z innych aplikacji, np. słowników
-• wsparcie dla czcionek użytkownika
+• obsługa czcionek użytkownika
 • system kopii zapasowych
 • nawigacja poprzez gesty, kliknięcia oraz potrząsanie
 • w pełni konfigurowalny

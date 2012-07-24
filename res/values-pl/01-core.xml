@@ -32,7 +32,7 @@
   <string name="studyoptions_total_cards">Łącznie kart:</string>
   <string name="studyoptions_eta">Szacowany czas (min):</string>
   <string name="studyoptions_start">Zacznij powtórki</string>
-  <string name="show_answer">Pokaż Odpowiedź</string>
+  <string name="show_answer">Pokaż odpowiedź</string>
   <string name="ease1_successive">Powtórz</string>
   <string name="ease2_successive">Trudno</string>
   <string name="ease3_successive">Dobrze</string>
