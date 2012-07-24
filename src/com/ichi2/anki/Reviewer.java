@@ -105,9 +105,13 @@ import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
+import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -174,11 +178,15 @@ public class Reviewer extends AnkiActivity {
     /** The percentage of the absolute font size specified in the deck. */
     private int mDisplayFontSize = 100;
 
-    /** The absolute CSS measurement units inclusive semicolon for pattern search */
-    private static final String[] ABSOLUTE_CSS_UNITS = { "px;", "pt;", "in;", "cm;", "mm;", "pc;" };
-
-    /** The relative CSS measurement units inclusive semicolon for pattern search */
-    private static final String[] RELATIVE_CSS_UNITS = { "%;", "em;" };
+    /** Pattern for font-size style declarations */
+    private static final Pattern fFontSizePattern = Pattern.compile(
+            "font-size\\s*:\\s*([0-9.]+)\\s*((?:px|pt|in|cm|mm|pc|%|em))\\s*;?", Pattern.CASE_INSENSITIVE);
+    /** Pattern for opening/closing span/div tags */
+    private static final Pattern fSpanDivPattern = Pattern.compile(
+            "<(/?)(span|div)", Pattern.CASE_INSENSITIVE);
+    /** The relative CSS measurement units for pattern search */
+    private static final Set<String> fRelativeCssUnits = new HashSet<String>(
+            Arrays.asList(new String[]{ "%", "em" }));
 
     /**
      * Broadcast that informs us when the sd card is about to be unmounted
@@ -2647,105 +2655,69 @@ public class Reviewer extends AnkiActivity {
 
 
     /**
-     * Parses content in question and answer to see, whether someone has hard coded the font size in a card layout. If
-     * this is so, then the font size must be replaced with one corrected by the relative font size. If a relative CSS
-     * unit measure is used (e.g. 'em'), then only hierarchy in 'span' tag is taken into account.
+     * Parses content in question and answer to see, whether someone has hard coded the font size in a card layout.
+     * If this is so, then the font size must be replaced with one corrected by the relative font size. If a relative
+     * CSS unit measure is used (e.g. 'em'), then only the outer tag 'span' or 'div' tag in a hierarchy of such tags
+     * is adjusted.
+     * This is not bullet-proof, a combination of font-size in span and in css classes will break this logic, but let's
+     * just avoid building an HTML parser for this feature.
+     * Anything that threatens common sense will break this logic, eg nested span/divs with CSS classes having font-size
+     * declarations with relative units (40% dif inside 120% div inside 60% div). Broken HTML also breaks this.
+     * Feel free to improve, but please keep it short and fast.
      * 
-     * @param content
-     * @param percentage - the relative font size percentage defined in preferences
+     * @param content The HTML content that will be font-size-adjusted.
+     * @param percentage The relative font size percentage defined in preferences
      * @return
      */
     private String recalculateHardCodedFontSize(String content, int percentage) {
-        if (null == content || 0 == content.trim().length()) {
-            return "";
+        if (percentage == 100 || null == content || 0 == content.trim().length()) {
+            return content.trim();
         }
-        StringBuilder sb = new StringBuilder(content);
-
-        boolean fontSizeFound = true; // whether the previous loop found a valid font-size attribute
+        StringBuffer sb = new StringBuffer();
         int spanTagDepth = 0; // to find out whether a relative CSS unit measure is within another one
         int outerRelativeSpanTagDepth = 100; // the hierarchy depth of the current outer relative span
-        int start = 0;
-        int posSpan = 0;
-        int posFontSize = 0;
-        int posUnit = 0;
-        int intSize; // for absolute css measurement values
         double doubleSize; // for relative css measurement values
-        boolean isRelativeUnit = true; // true if em or %
-        String sizeS;
 
-        // formatter for decimal numbers
-        DecimalFormatSymbols symbols = new DecimalFormatSymbols();
-        symbols.setDecimalSeparator('.');
-        DecimalFormat dFormat = new DecimalFormat("0.##", symbols);
-
-        while (fontSizeFound) {
-            posFontSize = sb.indexOf("font-size:", start);
-            if (-1 == posFontSize) {
-                fontSizeFound = false;
-                continue;
-            } else {
-                // check whether </span> are found and decrease spanTagDepth accordingly
-                posSpan = sb.indexOf("</span>", start);
-                while (-1 != posSpan && posSpan < posFontSize) {
-                    spanTagDepth -= 1;
-                    posSpan = sb.indexOf("</span>", posSpan + 7);
-                }
-                start = posFontSize + 10;
-                for (int a = 0; a < ABSOLUTE_CSS_UNITS.length; a++) {
-                    posUnit = sb.indexOf(ABSOLUTE_CSS_UNITS[a], start);
-                    if (-1 != posUnit) {
-                        isRelativeUnit = false;
-                        break;
-                    }
-                }
-                if (-1 == posUnit) {
-                    for (int a = 0; a < RELATIVE_CSS_UNITS.length; a++) {
-                        posUnit = sb.indexOf(RELATIVE_CSS_UNITS[a], start);
-                        if (-1 != posUnit) {
-                            isRelativeUnit = true;
-                            break;
-                        }
-                    }
-                }
-            }
-            if (-1 == posUnit) {
-                // only absolute and relative measures are taken into account. E.g. 'xx-small', 'inherit' etc. are not
-                // taken into account
-                fontSizeFound = false;
-                continue;
-            } else if (17 < (posUnit - posFontSize)) { // assuming max 1 blank and 5 digits
-                // only take into account if font-size measurement is close, because theoretically "font-size:" could be
-                // part of text
-                continue;
-            } else {
-                spanTagDepth += 1; // because we assume that font-sizes always are declared in span tags
-                start = posUnit + 3; // needs to be more than posPx due to decimals
-                sizeS = sb.substring(posFontSize + 10, posUnit).trim();
-                if (isRelativeUnit) {
-                    if (outerRelativeSpanTagDepth >= spanTagDepth) {
-                        outerRelativeSpanTagDepth = spanTagDepth;
-                        try {
-                            doubleSize = dFormat.parse(sizeS).doubleValue();
-                        } catch (ParseException e) {
-                            continue; // ignore this one
-                        }
-                        doubleSize = doubleSize * percentage / 100;
-                        sizeS = dFormat.format(doubleSize);
-                    } // else do nothing as relative sizes within relative sizes should not be changed
+        int lastMatch = 0;
+        String contentPart;
+        Matcher m2;
+        Matcher m = fFontSizePattern.matcher(content);
+        while (m.find()) {
+            contentPart = content.substring(lastMatch, m.start());
+            m2 = fSpanDivPattern.matcher(contentPart);
+            while (m2.find()) {
+                if (m2.group(1).equals("/")) {
+                    --spanTagDepth;
                 } else {
-                    try {
-                        intSize = Integer.parseInt(sizeS);
-                    } catch (NumberFormatException e) {
-                        start = posFontSize + 10;
-                        continue; // ignore this one
-                    }
-                    intSize = intSize * percentage / 100;
-                    sizeS = Integer.toString(intSize);
+                    ++spanTagDepth;
                 }
-                sb.replace(posFontSize + 10, posUnit, sizeS);
+                if (spanTagDepth < outerRelativeSpanTagDepth) {
+                    // went outside of previous scope
+                    outerRelativeSpanTagDepth = 100;
+                }
             }
+            lastMatch = m.end();
+
+            try {
+                doubleSize = Double.parseDouble(m.group(1));
+                doubleSize = doubleSize * percentage / 100;
+            } catch (NumberFormatException e) {
+                continue; // ignore this one
+            }
+
+            if (fRelativeCssUnits.contains(m.group(2))) {
+                // handle relative units
+                if (outerRelativeSpanTagDepth < spanTagDepth) {
+                    m.appendReplacement(sb, m.group());
+                    continue;
+                }
+                outerRelativeSpanTagDepth = spanTagDepth;
+            }
+            m.appendReplacement(sb, String.format(Locale.US, "font-size:%.2f%s;", doubleSize, m.group(2)));
         }
-        return sb.toString();
+        m.appendTail(sb);
+        String a = sb.toString();
+        return a;
     }
 
 
