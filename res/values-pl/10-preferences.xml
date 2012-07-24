@@ -83,7 +83,7 @@
   <string name="reset_messages_summ">Pokaż aktualne powiadomienia innym razem</string>
   <string name="reset_all_question">Przywrócić domyślne ustawienia języka, widżetu, tablicy i słownika?</string>
   <string name="reset_confirmation">Reset ustawień</string>
-  <string name="use_ruby_support">Wsparcie dla notacji ruby</string>
+  <string name="use_ruby_support">Obsługa notacji ruby</string>
   <string name="use_ruby_support_summ">W razie znalezienia znaków \'[\' i \']\', tekst zawarty między nimi będzie traktowany jako notacja ruby</string>
   <string name="display_font_size">Relative font size</string>
   <string name="display_font_size_summ">Rozmiar czcionki względem zdefiniowanego w talii. W tej chwili: XXX %</string>
@@ -97,7 +97,7 @@
   <string name="fullscreen_review_summ">Możesz zdecydować, czy chcesz korzystać z całego dostępnego miejsca na ekranie podczas powtarzania kart</string>
   <string name="zoom">Włącz powiększenie</string>
   <string name="zoom_summ">Pokaż kontrolki zbliżenia podczas powtórek</string>
-  <string name="zeemote">Wsparcie kontrolera Zeemote JS1</string>
+  <string name="zeemote">Obsługa kontrolera Zeemote JS1</string>
   <string name="zeemote_summ">Użyj kontrolera Zeemote JS1 do obsługi powtórek</string>
   <string name="zeemote_actions">Zeemote actions in Reviewer</string>
   <string name="zeemote_a">Przycisk A</string>
@@ -191,7 +191,7 @@
   <string name="update_notification">Powiadomienia o nowych wersjach</string>
   <string name="update_notification_summ">Powiadom mnie, gdy AnkiDroid jest aktualizowany</string>
   <string name="fix_arabic_text">Popraw wyświetlanie arabskiego</string>
-  <string name="fix_arabic_text_summ">Częściowe obejście problemu z ograniczonym wsparciem dla arabskiego przez Androida. Kiedy jest włączone, niemożliwa jest edycja kart.</string>
+  <string name="fix_arabic_text_summ">Częściowe obejście problemu z ograniczoną obsługą arabskiego przez Androida. Kiedy jest włączone, niemożliwa jest edycja kart.</string>
   <string name="convert_fen_text">Obsługa notacji szachowej</string>
   <string name="filter_external_data">Filter external data</string>
   <string name="filter_external_data_summ">Transform messages from external applications to a natty view.</string>

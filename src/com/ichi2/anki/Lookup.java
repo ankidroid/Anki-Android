@@ -36,7 +36,6 @@ public class Lookup {
     private static int mDictionary;
     private static String mLookupText;
     private static String mDeckFilename;
-    private static Card mCurrentCard;
 
 
     public static boolean initialize(Context context, String deckFilename) {
@@ -82,8 +81,10 @@ public class Lookup {
     }
 
 
-    public static boolean lookUp(String text, Card card) {
-        mCurrentCard = card;
+    public static boolean lookUp(String text) {
+    	if (!mIsDictionaryAvailable) {
+    		return false;
+    	}
         // clear text from leading and closing dots, commas, brackets etc.
         text = text.trim().replaceAll("[,;:\\s\\(\\[\\)\\]\\.]*$", "").replaceAll("^[,;:\\s\\(\\[\\)\\]\\.]*", "");
         switch (mDictionary) {
