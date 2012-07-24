@@ -2674,8 +2674,8 @@ public class Reviewer extends AnkiActivity {
             return content.trim();
         }
         StringBuffer sb = new StringBuffer();
-        int spanTagDepth = 0; // to find out whether a relative CSS unit measure is within another one
-        int outerRelativeSpanTagDepth = 100; // the hierarchy depth of the current outer relative span
+        int tagDepth = 0; // to find out whether a relative CSS unit measure is within another one
+        int lastRelUnitnTagDepth = 100; // the hierarchy depth of the current outer relative span
         double doubleSize; // for relative css measurement values
 
         int lastMatch = 0;
@@ -2687,13 +2687,13 @@ public class Reviewer extends AnkiActivity {
             m2 = fSpanDivPattern.matcher(contentPart);
             while (m2.find()) {
                 if (m2.group(1).equals("/")) {
-                    --spanTagDepth;
+                    --tagDepth;
                 } else {
-                    ++spanTagDepth;
+                    ++tagDepth;
                 }
-                if (spanTagDepth < outerRelativeSpanTagDepth) {
+                if (tagDepth < lastRelUnitnTagDepth) {
                     // went outside of previous scope
-                    outerRelativeSpanTagDepth = 100;
+                    lastRelUnitnTagDepth = 100;
                 }
             }
             lastMatch = m.end();
@@ -2707,11 +2707,11 @@ public class Reviewer extends AnkiActivity {
 
             if (fRelativeCssUnits.contains(m.group(2))) {
                 // handle relative units
-                if (outerRelativeSpanTagDepth < spanTagDepth) {
+                if (lastRelUnitnTagDepth < tagDepth) {
                     m.appendReplacement(sb, m.group());
                     continue;
                 }
-                outerRelativeSpanTagDepth = spanTagDepth;
+                lastRelUnitnTagDepth = tagDepth;
             }
             m.appendReplacement(sb, String.format(Locale.US, "font-size:%.2f%s;", doubleSize, m.group(2)));
         }
