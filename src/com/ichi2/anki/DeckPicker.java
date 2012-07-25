@@ -1625,7 +1625,7 @@ public class DeckPicker extends FragmentActivity {
         StyledDialog ad = (StyledDialog) dialog;
         switch (id) {
             case DIALOG_DELETE_DECK:
-            	if (AnkiDroidApp.colIsOpen() || mDeckList == null) {
+            	if (AnkiDroidApp.colIsOpen() || mDeckList == null || mDeckList.size() == 0) {
             		return;
             	}
                 mCurrentDid = Long.parseLong(mDeckList.get(mContextMenuPosition).get("did"));
@@ -1634,7 +1634,7 @@ public class DeckPicker extends FragmentActivity {
                 break;
 
             case DIALOG_CONTEXT_MENU:
-            	if (!AnkiDroidApp.colIsOpen() || mDeckList == null) {
+            	if (!AnkiDroidApp.colIsOpen() || mDeckList == null || mDeckList.size() == 0) {
             		return;
             	}
                 mCurrentDid = Long.parseLong(mDeckList.get(mContextMenuPosition).get("did"));
