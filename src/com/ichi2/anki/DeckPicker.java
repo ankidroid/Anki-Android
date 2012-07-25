@@ -112,9 +112,11 @@ public class DeckPicker extends FragmentActivity {
     private static final int DIALOG_NEW_COLLECTION = 24;
     private static final int DIALOG_FULL_SYNC_FROM_SERVER = 25;
     private static final int DIALOG_SYNC_ERROR = 26;
+    private static final int DIALOG_SYNC_UPGRADE_REQUIRED = 27;
 
     private String mDialogMessage;
     private int[] mRepairValues;
+    private boolean mLoadFailed;
 
     /**
      * Menus
@@ -434,13 +436,12 @@ public class DeckPicker extends FragmentActivity {
                         mDialogMessage = res.getString(R.string.sync_log_finish_error);
                         showDialog(DIALOG_SYNC_LOG);
                     } else if (resultType.equals("IOException")) {
-                        showDialog(DIALOG_DB_ERROR);
+                    	handleDbError();
                     } else if (resultType.equals("genericError")) {
                         mDialogMessage = res.getString(R.string.sync_generic_error);
                         showDialog(DIALOG_SYNC_LOG);
                     } else if (resultType.equals("upgradeRequired")) {
-                        mDialogMessage = res.getString(R.string.upgrade_required, res.getString(R.string.link_anki));
-                        showDialog(DIALOG_SYNC_LOG);
+                        showDialog(DIALOG_SYNC_UPGRADE_REQUIRED);
                     } else if (resultType.equals("sanityCheckError")) {
                         mDialogMessage = res.getString(R.string.sync_log_error_fix, result[1] != null ? (" (" + (String) result[1] + ")") : "");
                         showDialog(DIALOG_SYNC_ERROR);
@@ -462,12 +463,13 @@ public class DeckPicker extends FragmentActivity {
                     	} else {
                             mDialogMessage = res.getString(R.string.sync_generic_error);
                     	}
-                        showDialog(DIALOG_SYNC_LOG);
                     }
                 }
             } else {
                 updateDecksList((TreeSet<Object[]>) data.result, (Integer) data.data[2], (Integer) data.data[3]);
-                if (data.data.length > 0 && data.data[0] instanceof String && ((String) data.data[0]).length() > 0) {
+                if ((Boolean) data.data[4]) {
+                	mDialogMessage = res.getString(R.string.sync_media_error);
+                } else if (data.data.length > 0 && data.data[0] instanceof String && ((String) data.data[0]).length() > 0) {
                     String dataString = (String) data.data[0];
                     if (dataString.equals("upload")) {
                         mDialogMessage = res.getString(R.string.sync_log_uploading_message);
@@ -480,7 +482,13 @@ public class DeckPicker extends FragmentActivity {
                 } else {
                     mDialogMessage = res.getString(R.string.sync_database_success);
                 }
+
                 showDialog(DIALOG_SYNC_LOG);
+
+                // close opening dialog in case it's open
+            	if (mOpenCollectionDialog != null && mOpenCollectionDialog.isShowing()) {
+            		mOpenCollectionDialog.dismiss();
+            	}
 
                 // update StudyOptions too if open
                 if (mFragmented) {
@@ -501,6 +509,7 @@ public class DeckPicker extends FragmentActivity {
             Collection col = result.getCollection();
             Object[] res = result.getObjArray();
             if (col == null || res == null) {
+            	AnkiDatabaseManager.closeDatabase(AnkiDroidApp.getCollectionPath());
                 showDialog(DIALOG_LOAD_FAILED);
                 return;
             }
@@ -1214,7 +1223,7 @@ public class DeckPicker extends FragmentActivity {
                 builder.setOnCancelListener(new OnCancelListener() {
                     @Override
                     public void onCancel(DialogInterface dialog) {
-                        if (!AnkiDroidApp.colIsOpen()) {
+                        if (mLoadFailed) {
                         	// dialog has been called because collection could not be opened
                             showDialog(DIALOG_LOAD_FAILED);
                         } else {
@@ -1226,7 +1235,7 @@ public class DeckPicker extends FragmentActivity {
                 builder.setNegativeButton(res.getString(R.string.cancel), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        if (!AnkiDroidApp.colIsOpen()) {
+                        if (mLoadFailed) {
                         	// dialog has been called because collection could not be opened
                             showDialog(DIALOG_LOAD_FAILED);
                         } else {
@@ -1433,6 +1442,42 @@ public class DeckPicker extends FragmentActivity {
                 dialog = builder.create();
                 break;
 
+            case DIALOG_SYNC_UPGRADE_REQUIRED:
+            	builder.setMessage(res.getString(R.string.upgrade_required, res.getString(R.string.link_anki)));
+                builder.setPositiveButton(res.getString(R.string.retry), new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        sync("download", mSyncMediaUsn);
+                    }
+                });
+                builder.setNegativeButton(res.getString(R.string.cancel), new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        if (mLoadFailed) {
+                        	// dialog has been called because collection could not be opened
+                            showDialog(DIALOG_LOAD_FAILED);
+                        } else {
+                        	// dialog has been called because a db error happened
+                            showDialog(DIALOG_DB_ERROR);
+                        }
+                    }
+                });
+                builder.setOnCancelListener(new OnCancelListener() {
+                    @Override
+                    public void onCancel(DialogInterface arg0) {
+                        if (mLoadFailed) {
+                        	// dialog has been called because collection could not be opened
+                            showDialog(DIALOG_LOAD_FAILED);
+                        } else {
+                        	// dialog has been called because a db error happened
+                            showDialog(DIALOG_DB_ERROR);
+                        }
+                    }
+                });
+                builder.setTitle(res.getString(R.string.sync_log_title));
+                dialog = builder.create();
+                break;
+
             case DIALOG_SYNC_LOG:
                 builder.setTitle(res.getString(R.string.sync_log_title));
                 builder.setPositiveButton(res.getString(R.string.ok), null);
@@ -1625,7 +1670,7 @@ public class DeckPicker extends FragmentActivity {
         StyledDialog ad = (StyledDialog) dialog;
         switch (id) {
             case DIALOG_DELETE_DECK:
-            	if (AnkiDroidApp.colIsOpen() || mDeckList == null) {
+            	if (AnkiDroidApp.colIsOpen() || mDeckList == null || mDeckList.size() == 0) {
             		return;
             	}
                 mCurrentDid = Long.parseLong(mDeckList.get(mContextMenuPosition).get("did"));
@@ -1634,7 +1679,7 @@ public class DeckPicker extends FragmentActivity {
                 break;
 
             case DIALOG_CONTEXT_MENU:
-            	if (!AnkiDroidApp.colIsOpen() || mDeckList == null) {
+            	if (!AnkiDroidApp.colIsOpen() || mDeckList == null || mDeckList.size() == 0) {
             		return;
             	}
                 mCurrentDid = Long.parseLong(mDeckList.get(mContextMenuPosition).get("did"));
@@ -1647,8 +1692,16 @@ public class DeckPicker extends FragmentActivity {
                 break;
 
             case DIALOG_DB_ERROR:
+            	mLoadFailed = false;
                 ad.getButton(Dialog.BUTTON3).setEnabled(hasErrorFiles());
                 break;
+
+            case DIALOG_LOAD_FAILED:
+            	mLoadFailed = true;
+            	if (mOpenCollectionDialog != null && mOpenCollectionDialog.isShowing()) {
+            		mOpenCollectionDialog.setMessage(res.getString(R.string.col_load_failed));
+            	}
+            	break;
 
             case DIALOG_ERROR_HANDLING:
                 ArrayList<String> options = new ArrayList<String>();
@@ -1681,7 +1734,7 @@ public class DeckPicker extends FragmentActivity {
                     titles[i] = options.get(i);
                     mRepairValues[i] = values.get(i);
                 }
-                ad.setSingleChoiceItems(titles, 0, new DialogInterface.OnClickListener() {
+                ad.setItems(titles, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         switch (mRepairValues[which]) {
@@ -1835,16 +1888,14 @@ public class DeckPicker extends FragmentActivity {
      *            syncing was required.
      */
     private void sync(String syncConflictResolution, int syncMediaUsn) {
-        if (AnkiDroidApp.colIsOpen()) {
-            SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(getBaseContext());
-            String hkey = preferences.getString("hkey", "");
-            if (hkey.length() == 0) {
-                showDialog(DIALOG_USER_NOT_LOGGED_IN_SYNC);
-            } else {
-                Connection.sync(mSyncListener, new Connection.Payload(new Object[] { hkey, 
-                        preferences.getBoolean("syncFetchesMedia", true),
-                        syncConflictResolution, syncMediaUsn }));
-            }
+        SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(getBaseContext());
+        String hkey = preferences.getString("hkey", "");
+        if (hkey.length() == 0) {
+            showDialog(DIALOG_USER_NOT_LOGGED_IN_SYNC);
+        } else {
+            Connection.sync(mSyncListener, new Connection.Payload(new Object[] { hkey, 
+                    preferences.getBoolean("syncFetchesMedia", true),
+                    syncConflictResolution, syncMediaUsn }));
         }
     }
 
@@ -2212,7 +2263,7 @@ public class DeckPicker extends FragmentActivity {
                             Math.round(result.getLong() / 1024)));
                     dialog.show();
                 } else {
-                    showDialog(DIALOG_DB_ERROR);
+                	handleDbError();
                 }
             }
 
@@ -2241,6 +2292,7 @@ public class DeckPicker extends FragmentActivity {
     // }
 
     public void handleDbError() {
+    	AnkiDatabaseManager.closeDatabase(AnkiDroidApp.getCollectionPath());
         DeckTask.launchDeckTask(DeckTask.TASK_TYPE_RESTORE_IF_MISSING, new DeckTask.TaskListener() {
             @Override
             public void onPreExecute() {

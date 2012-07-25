@@ -86,6 +86,7 @@
             <TextView android:id="@+id/message"
                 android:textColor="#ffff"
                 android:textSize="16sp"
+                android:autoLink="web"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:padding="5dip" />

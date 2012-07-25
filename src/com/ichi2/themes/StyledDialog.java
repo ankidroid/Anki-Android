@@ -104,7 +104,7 @@ public class StyledDialog extends Dialog {
     }
 
 
-    public void setItems(int type, ListView listview, String[] values, int checkedItem, boolean[] checked,
+    private void setItems(int type, ListView listview, String[] values, int checkedItem, boolean[] checked,
             DialogInterface.OnClickListener listener) {
         mListView = listview;
         mItemList = new ArrayList<String>();
@@ -194,6 +194,13 @@ public class StyledDialog extends Dialog {
         View main = super.getWindow().getDecorView();
         ((View) main.findViewById(R.id.listViewPanel)).setVisibility(View.VISIBLE);
         setItems(2, (ListView) super.getWindow().getDecorView().findViewById(R.id.listview), values, 0, null, listener);
+    }
+
+
+    public void setItems(String[] values, DialogInterface.OnClickListener listener) {
+        View main = super.getWindow().getDecorView();
+        ((View) main.findViewById(R.id.listViewPanel)).setVisibility(View.VISIBLE);
+        setItems(1, (ListView) super.getWindow().getDecorView().findViewById(R.id.listview), values, 0, null, listener);
     }
 
 

@@ -1318,7 +1318,7 @@ public class Reviewer extends AnkiActivity {
 
     // These three methods use a deprecated API - they should be updated to possibly use its more modern version.
     private boolean clipboardHasText() {
-        return mClipboard.hasText();
+        return mClipboard != null && mClipboard.hasText();
     }
 
 

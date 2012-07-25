@@ -23,7 +23,7 @@
   <string name="CardEditorCancelButton">Avbryt</string>
   <string name="CardEditorSaveButton">Spara</string>
   <string name="CardEditorLaterButton">Senare</string>
-  <string name="CardEditorLaterMessage">Saved information for later</string>
+  <string name="CardEditorLaterMessage">Sparad information för senare</string>
   <string name="CardEditorCardDeck">Kortlek: %s</string>
   <string name="CardEditorNoteDeck">Anteckningskortlek: %s</string>
   <string name="CardEditorModel">Anteckningstyp: %s</string>
@@ -44,7 +44,7 @@
   <string name="cardeditor_title_add_note">Lägg till anteckning</string>
   <string name="cardeditor_title_edit_card">Redigera anteckning</string>
   <string name="factadder_saving_error">Fel vid sparande av anteckning</string>
-  <string name="pref_lang_support">Language</string>
+  <string name="pref_lang_support">Språk</string>
   <string name="saving_facts">Sparar anteckning</string>
   <string name="deck">Kortlek</string>
   <string name="add">Lägg till</string>
@@ -77,7 +77,7 @@
   <string name="simple_interface_hint">Tom %s. Tänk på att det enkla gränssnittet inte kan visa bilder/ljud m.m.</string>
   <string name="delete_deck">Tar bort kortlek...\nVänligen vänta.</string>
   <string name="menu_cardbrowser">Kortutforskare</string>
-  <string name="show_hint">Show Hint</string>
+  <string name="show_hint">Visa ledtråd</string>
   <string name="pref_lang_other">Language Preferences</string>
   <string name="pref_font_UI">Custom UI Font</string>
   <string name="info_rate">Rate AnkiDroid</string>
