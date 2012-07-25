@@ -88,6 +88,7 @@ import com.ichi2.libanki.Note;
 import com.ichi2.libanki.Sched;
 import com.ichi2.libanki.Sound;
 import com.ichi2.libanki.Utils;
+import com.ichi2.themes.HtmlColors;
 import com.ichi2.themes.StyledDialog;
 import com.ichi2.themes.StyledOpenCollectionDialog;
 import com.ichi2.themes.StyledProgressDialog;
@@ -2355,7 +2356,7 @@ public class Reviewer extends AnkiActivity {
                     StringBuffer span = new StringBuffer();
                     span.append("<span style=\"font-family: '").append(mTypeFont)
                     .append("'; font-size: ").append(mTypeSize).append("px\">");
-                    span.append(diff.diff_prettyHtml(diff.diff_main(userAnswer, correctAnswer)));
+                    span.append(diff.diff_prettyHtml(diff.diff_main(userAnswer, correctAnswer), mNightMode));
                     span.append("</span>");
                     span.append("<br/>").append(answer);
                     displayString = enrichWithQADiv(span.toString(), true);
@@ -2422,7 +2423,7 @@ public class Reviewer extends AnkiActivity {
         Log.i(AnkiDroidApp.TAG, "::style::" + style);
 
         if (mNightMode) {
-            content = Models.invertColors(content);
+            content = HtmlColors.invertColors(content);
         }
 
         mCardContent = new SpannedString(mCardTemplate.replace("::content::", content).replace("::style::",
