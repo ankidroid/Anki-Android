@@ -192,7 +192,7 @@ public class BasicHttpSyncer implements HttpSyncer {
                 return httpClient.execute(httpPost);
             } catch (SSLException e) {
                 Log.e(AnkiDroidApp.TAG, "SSLException while building HttpClient", e);
-                throw new RuntimeException(e);
+                return null;
             }
         } catch (UnsupportedEncodingException e) {
             throw new RuntimeException(e);
