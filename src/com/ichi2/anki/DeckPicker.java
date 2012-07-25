@@ -112,9 +112,11 @@ public class DeckPicker extends FragmentActivity {
     private static final int DIALOG_NEW_COLLECTION = 24;
     private static final int DIALOG_FULL_SYNC_FROM_SERVER = 25;
     private static final int DIALOG_SYNC_ERROR = 26;
+    private static final int DIALOG_SYNC_UPGRADE_REQUIRED = 27;
 
     private String mDialogMessage;
     private int[] mRepairValues;
+    private boolean mLoadFailed;
 
     /**
      * Menus
@@ -439,8 +441,7 @@ public class DeckPicker extends FragmentActivity {
                         mDialogMessage = res.getString(R.string.sync_generic_error);
                         showDialog(DIALOG_SYNC_LOG);
                     } else if (resultType.equals("upgradeRequired")) {
-                        mDialogMessage = res.getString(R.string.upgrade_required, res.getString(R.string.link_anki));
-                        showDialog(DIALOG_SYNC_LOG);
+                        showDialog(DIALOG_SYNC_UPGRADE_REQUIRED);
                     } else if (resultType.equals("sanityCheckError")) {
                         mDialogMessage = res.getString(R.string.sync_log_error_fix, result[1] != null ? (" (" + (String) result[1] + ")") : "");
                         showDialog(DIALOG_SYNC_ERROR);
@@ -1222,7 +1223,7 @@ public class DeckPicker extends FragmentActivity {
                 builder.setOnCancelListener(new OnCancelListener() {
                     @Override
                     public void onCancel(DialogInterface dialog) {
-                        if (!AnkiDroidApp.colIsOpen()) {
+                        if (mLoadFailed) {
                         	// dialog has been called because collection could not be opened
                             showDialog(DIALOG_LOAD_FAILED);
                         } else {
@@ -1234,7 +1235,7 @@ public class DeckPicker extends FragmentActivity {
                 builder.setNegativeButton(res.getString(R.string.cancel), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        if (!AnkiDroidApp.colIsOpen()) {
+                        if (mLoadFailed) {
                         	// dialog has been called because collection could not be opened
                             showDialog(DIALOG_LOAD_FAILED);
                         } else {
@@ -1437,6 +1438,42 @@ public class DeckPicker extends FragmentActivity {
                 builder.setPositiveButton(res.getString(R.string.sync_conflict_local), mSyncConflictResolutionListener);
                 builder.setNeutralButton(res.getString(R.string.sync_conflict_remote), mSyncConflictResolutionListener);
                 builder.setNegativeButton(res.getString(R.string.sync_conflict_cancel), mSyncConflictResolutionListener);
+                builder.setTitle(res.getString(R.string.sync_log_title));
+                dialog = builder.create();
+                break;
+
+            case DIALOG_SYNC_UPGRADE_REQUIRED:
+            	builder.setMessage(res.getString(R.string.upgrade_required, res.getString(R.string.link_anki)));
+                builder.setPositiveButton(res.getString(R.string.retry), new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        sync("download", mSyncMediaUsn);
+                    }
+                });
+                builder.setNegativeButton(res.getString(R.string.cancel), new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        if (mLoadFailed) {
+                        	// dialog has been called because collection could not be opened
+                            showDialog(DIALOG_LOAD_FAILED);
+                        } else {
+                        	// dialog has been called because a db error happened
+                            showDialog(DIALOG_DB_ERROR);
+                        }
+                    }
+                });
+                builder.setOnCancelListener(new OnCancelListener() {
+                    @Override
+                    public void onCancel(DialogInterface arg0) {
+                        if (mLoadFailed) {
+                        	// dialog has been called because collection could not be opened
+                            showDialog(DIALOG_LOAD_FAILED);
+                        } else {
+                        	// dialog has been called because a db error happened
+                            showDialog(DIALOG_DB_ERROR);
+                        }
+                    }
+                });
                 builder.setTitle(res.getString(R.string.sync_log_title));
                 dialog = builder.create();
                 break;
@@ -1655,10 +1692,12 @@ public class DeckPicker extends FragmentActivity {
                 break;
 
             case DIALOG_DB_ERROR:
+            	mLoadFailed = false;
                 ad.getButton(Dialog.BUTTON3).setEnabled(hasErrorFiles());
                 break;
 
             case DIALOG_LOAD_FAILED:
+            	mLoadFailed = true;
             	if (mOpenCollectionDialog != null && mOpenCollectionDialog.isShowing()) {
             		mOpenCollectionDialog.setMessage(res.getString(R.string.col_load_failed));
             	}
