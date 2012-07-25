@@ -1650,6 +1650,12 @@ public class DeckPicker extends FragmentActivity {
                 ad.getButton(Dialog.BUTTON3).setEnabled(hasErrorFiles());
                 break;
 
+            case DIALOG_LOAD_FAILED:
+            	if (mOpenCollectionDialog != null && mOpenCollectionDialog.isShowing()) {
+            		mOpenCollectionDialog.setMessage(res.getString(R.string.col_load_failed));
+            	}
+            	break;
+
             case DIALOG_ERROR_HANDLING:
                 ArrayList<String> options = new ArrayList<String>();
                 ArrayList<Integer> values = new ArrayList<Integer>();
@@ -1835,16 +1841,14 @@ public class DeckPicker extends FragmentActivity {
      *            syncing was required.
      */
     private void sync(String syncConflictResolution, int syncMediaUsn) {
-        if (AnkiDroidApp.colIsOpen()) {
-            SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(getBaseContext());
-            String hkey = preferences.getString("hkey", "");
-            if (hkey.length() == 0) {
-                showDialog(DIALOG_USER_NOT_LOGGED_IN_SYNC);
-            } else {
-                Connection.sync(mSyncListener, new Connection.Payload(new Object[] { hkey, 
-                        preferences.getBoolean("syncFetchesMedia", true),
-                        syncConflictResolution, syncMediaUsn }));
-            }
+        SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(getBaseContext());
+        String hkey = preferences.getString("hkey", "");
+        if (hkey.length() == 0) {
+            showDialog(DIALOG_USER_NOT_LOGGED_IN_SYNC);
+        } else {
+            Connection.sync(mSyncListener, new Connection.Payload(new Object[] { hkey, 
+                    preferences.getBoolean("syncFetchesMedia", true),
+                    syncConflictResolution, syncMediaUsn }));
         }
     }
 
