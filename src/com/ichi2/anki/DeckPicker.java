@@ -462,12 +462,13 @@ public class DeckPicker extends FragmentActivity {
                     	} else {
                             mDialogMessage = res.getString(R.string.sync_generic_error);
                     	}
-                        showDialog(DIALOG_SYNC_LOG);
                     }
                 }
             } else {
                 updateDecksList((TreeSet<Object[]>) data.result, (Integer) data.data[2], (Integer) data.data[3]);
-                if (data.data.length > 0 && data.data[0] instanceof String && ((String) data.data[0]).length() > 0) {
+                if ((Boolean) data.data[4]) {
+                	mDialogMessage = res.getString(R.string.sync_media_error);
+                } else if (data.data.length > 0 && data.data[0] instanceof String && ((String) data.data[0]).length() > 0) {
                     String dataString = (String) data.data[0];
                     if (dataString.equals("upload")) {
                         mDialogMessage = res.getString(R.string.sync_log_uploading_message);
@@ -480,7 +481,13 @@ public class DeckPicker extends FragmentActivity {
                 } else {
                     mDialogMessage = res.getString(R.string.sync_database_success);
                 }
+
                 showDialog(DIALOG_SYNC_LOG);
+
+                // close opening dialog in case it's open
+            	if (mOpenCollectionDialog != null && mOpenCollectionDialog.isShowing()) {
+            		mOpenCollectionDialog.dismiss();
+            	}
 
                 // update StudyOptions too if open
                 if (mFragmented) {

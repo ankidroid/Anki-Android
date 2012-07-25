@@ -575,6 +575,7 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
 
         // then move on to media sync
         boolean noMediaChanges = false;
+        boolean mediaError = false;
         if (media) {
             server = new RemoteMediaServer(hkey, this);
             MediaSyncer mediaClient = new MediaSyncer(col, (RemoteMediaServer) server);
@@ -582,22 +583,18 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
             try {
                 ret = mediaClient.sync(mediaUsn, this);
                 if (ret == null) {
-                    data.success = false;
-                    data.result = new Object[] { "genericError" };
-                    return data;
+                	mediaError = true;
+                } else {
+                    if (ret.equals("noChanges")) {
+                        publishProgress(R.string.sync_media_no_changes);
+                        noMediaChanges = true;
+                    } else {
+                        publishProgress(R.string.sync_media_success);
+                    }                	
                 }
            } catch (RuntimeException e) {
     			AnkiDroidApp.saveExceptionReportFile(e, "doInBackgroundSync-mediaSync");
-                data.success = false;
-                data.result = new Object[]{"IOException"};
-                data.data = new Object[] { mediaUsn };
-                return data;
-            }
-            if (ret.equals("noChanges")) {
-                publishProgress(R.string.sync_media_no_changes);
-                noMediaChanges = true;
-            } else {
-                publishProgress(R.string.sync_media_success);
+            	mediaError = true;
             }
         }
         if (noChanges && noMediaChanges) {
@@ -616,7 +613,7 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
                 }
             }
             data.result = decks;
-            data.data = new Object[] { conflictResolution, col, col.getSched().eta(counts), col.cardCount() };
+            data.data = new Object[] { conflictResolution, col, col.getSched().eta(counts), col.cardCount(), mediaError };
             return data;
         }
     }
