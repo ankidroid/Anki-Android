@@ -58,11 +58,11 @@
   <string name="menu_preferences">Налаштування</string>
   <string name="menu_zeemote">Zeemote</string>
   <string name="menu_about">Про програму</string>
-  <string name="menu_dismiss_note">Відхилити примітку...</string>
-  <string name="menu_bury_note">Приховати замітку</string>
+  <string name="menu_dismiss_note">Відхилити Запис...</string>
+  <string name="menu_bury_note">Приховати Запис</string>
   <string name="menu_suspend_card">Відкласти картку</string>
-  <string name="menu_suspend_note">Призупинити замітку</string>
-  <string name="menu_delete_note">Видалити замітку</string>
+  <string name="menu_suspend_note">Призупинити Запис</string>
+  <string name="menu_delete_note">Видалити Запис</string>
   <string name="delete_note_message">Дійсно видалити цю примітку і усі зв\'язані з нею картки?\n%s</string>
   <string name="menu_edit_card">Редагувати картку</string>
   <string name="menu_select">Виділити текст</string>
