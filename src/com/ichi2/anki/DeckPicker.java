@@ -1681,7 +1681,7 @@ public class DeckPicker extends FragmentActivity {
                     titles[i] = options.get(i);
                     mRepairValues[i] = values.get(i);
                 }
-                ad.setSingleChoiceItems(titles, 0, new DialogInterface.OnClickListener() {
+                ad.setItems(titles, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         switch (mRepairValues[which]) {
