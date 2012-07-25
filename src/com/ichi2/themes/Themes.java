@@ -957,6 +957,7 @@ public class Themes {
         View ease3 = view.findViewById(R.id.flashcard_layout_ease3);
         View ease4 = view.findViewById(R.id.flashcard_layout_ease4);
         View border = view.findViewById(R.id.flashcard_border);
+        View mAnswerField = view.findViewById(R.id.answer_field);
         final Drawable[] defaultButtons = new Drawable[] { flipCard.getBackground(), ease1.getBackground(),
                 ease2.getBackground(), ease3.getBackground(), ease4.getBackground() };
 
@@ -969,6 +970,7 @@ public class Themes {
             ease2.setBackgroundResource(mNightModeButton);
             ease3.setBackgroundResource(mNightModeButton);
             ease4.setBackgroundResource(mNightModeButton);
+            mAnswerField.setBackgroundResource(mNightModeButton);
 
             foregroundColor = Color.WHITE;
             nextTimeRecommendedColor = res.getColor(R.color.next_time_recommended_color_inv);

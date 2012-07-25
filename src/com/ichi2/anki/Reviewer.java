@@ -1819,13 +1819,14 @@ public class Reviewer extends AnkiActivity {
         mTextBarBlack.setTextColor(mForegroundColor);
         mTextBarBlue.setTextColor(invert ? res.getColor(R.color.textbar_blue_color_inv) : res
                 .getColor(R.color.textbar_blue_color));
+        mAnswerField.setTextColor(mForegroundColor);
 
         if (mSimpleCard != null) {
             mSimpleCard.setBackgroundColor(mCurrentBackgroundColor);
             mSimpleCard.setTextColor(mForegroundColor);
         }
         if (mCard != null) {
-            mCard.setBackgroundColor(mCurrentBackgroundColor);        	
+            mCard.setBackgroundColor(mCurrentBackgroundColor);
         }
 
         int fgColor = R.color.studyoptions_progressbar_frame_light;
