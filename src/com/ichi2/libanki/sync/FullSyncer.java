@@ -56,19 +56,16 @@ public class FullSyncer extends BasicHttpSyncer {
                 return null;
             }
             cont = ret.getEntity().getContent();
-            // TODO: check for upgradeRequired
-            // if (cont.equals("upgradeRequired")) {
-            // runHook("sync", "upgradeRequired");
-            // return null;
-            // }
         } catch (IllegalStateException e1) {
             throw new RuntimeException(e1);
         } catch (IOException e1) {
             return null;
         }
-        String path = mCol.getPath();
-        mCol.close(false);
-        mCol = null;
+        String path = AnkiDroidApp.getCollectionPath();
+        if (mCol != null) {
+            mCol.close(false);
+            mCol = null;
+        }
         String tpath = path + ".tmp";
         if (!super.writeToFile(cont, tpath)) {
             return new Object[] { "sdAccessError" };

@@ -477,12 +477,12 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
         int mediaUsn = (Integer) data.data[3];
 
         Collection col = AnkiDroidApp.getCol();
-        if (col == null) {
+        if (col == null && !conflictResolution.equals("download")) {
             data.success = false;
             data.result = new Object[] { "genericError" };
             return data;
         }
-        String path = col.getPath();
+        String path = AnkiDroidApp.getCollectionPath();
 
         BasicHttpSyncer server = new RemoteServer(this, hkey);
         Syncer client = new Syncer(col, server);
