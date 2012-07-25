@@ -16,11 +16,13 @@
 
 package com.ichi2.libanki.sync;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 
 import org.apache.http.HttpResponse;
 
@@ -70,6 +72,15 @@ public class FullSyncer extends BasicHttpSyncer {
         if (!super.writeToFile(cont, tpath)) {
             return new Object[] { "sdAccessError" };
         }
+        // first check, if account needs upgrade (from 1.2)
+        try {
+            FileInputStream fis = new FileInputStream(tpath);
+            if (super.stream2String(fis, 15).equals("upgradeRequired")) {
+                return new Object[] { "upgradeRequired" };
+            }
+        } catch (FileNotFoundException e1) {
+            throw new RuntimeException(e1);
+        }
         // check the received file is ok
         mCon.publishProgress(R.string.sync_check_download_file);
         try {
@@ -80,15 +91,6 @@ public class FullSyncer extends BasicHttpSyncer {
             }
         } catch (SQLiteDatabaseCorruptException e) {
             Log.e(AnkiDroidApp.TAG, "Full sync - downloaded file corrupt");
-            // might be related to a non updated 1.2 account
-            try {
-                FileInputStream fis = new FileInputStream(tpath);
-                if (super.stream2String(fis).equals("upgradeRequired")) {
-                    return new Object[] { "upgradeRequired" };
-                }
-            } catch (FileNotFoundException e1) {
-                throw new RuntimeException(e1);
-            }
             return new Object[] { "remoteDbError" };
         } finally {
             AnkiDatabaseManager.closeDatabase(tpath);

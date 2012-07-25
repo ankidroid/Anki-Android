@@ -238,12 +238,15 @@ public class BasicHttpSyncer implements HttpSyncer {
 
 
     public String stream2String(InputStream stream) {
+    	return stream2String(stream, -1);
+    }
+    public String stream2String(InputStream stream, int maxSize) {
         BufferedReader rd;
         try {
-            rd = new BufferedReader(new InputStreamReader(stream, "UTF-8"), 4096);
+            rd = new BufferedReader(new InputStreamReader(stream, "UTF-8"), Math.min(4096, maxSize));
             String line;
             StringBuilder sb = new StringBuilder();
-            while ((line = rd.readLine()) != null) {
+            while ((line = rd.readLine()) != null && (maxSize == -1 || sb.length() < maxSize)) {
                 sb.append(line);
                 bytesReceived += line.length();
                 publishProgress();

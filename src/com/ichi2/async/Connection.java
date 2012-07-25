@@ -476,11 +476,16 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
         String conflictResolution = (String) data.data[2];
         int mediaUsn = (Integer) data.data[3];
 
+        boolean colCorruptFullSync = false;
         Collection col = AnkiDroidApp.getCol();
-        if (col == null && !conflictResolution.equals("download")) {
-            data.success = false;
-            data.result = new Object[] { "genericError" };
-            return data;
+        if (col == null) {
+        	if (conflictResolution.equals("download")) {
+        		colCorruptFullSync = true;
+        	} else {
+                data.success = false;
+                data.result = new Object[] { "genericError" };
+                return data;
+        	}
         }
         String path = AnkiDroidApp.getCollectionPath();
 
@@ -547,7 +552,9 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
                     if (!((String) ret[0]).equals("success")) {
                         data.success = false;
                         data.result = ret;
-                        AnkiDroidApp.openCollection(path);
+                        if (!colCorruptFullSync) {
+                            AnkiDroidApp.openCollection(path);                        	
+                        }
                         return data;
                     }
                 }
