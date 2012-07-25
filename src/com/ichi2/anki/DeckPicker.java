@@ -434,7 +434,7 @@ public class DeckPicker extends FragmentActivity {
                         mDialogMessage = res.getString(R.string.sync_log_finish_error);
                         showDialog(DIALOG_SYNC_LOG);
                     } else if (resultType.equals("IOException")) {
-                        showDialog(DIALOG_DB_ERROR);
+                    	handleDbError();
                     } else if (resultType.equals("genericError")) {
                         mDialogMessage = res.getString(R.string.sync_generic_error);
                         showDialog(DIALOG_SYNC_LOG);
@@ -501,6 +501,7 @@ public class DeckPicker extends FragmentActivity {
             Collection col = result.getCollection();
             Object[] res = result.getObjArray();
             if (col == null || res == null) {
+            	AnkiDatabaseManager.closeDatabase(AnkiDroidApp.getCollectionPath());
                 showDialog(DIALOG_LOAD_FAILED);
                 return;
             }
@@ -2216,7 +2217,7 @@ public class DeckPicker extends FragmentActivity {
                             Math.round(result.getLong() / 1024)));
                     dialog.show();
                 } else {
-                    showDialog(DIALOG_DB_ERROR);
+                	handleDbError();
                 }
             }
 
@@ -2245,6 +2246,7 @@ public class DeckPicker extends FragmentActivity {
     // }
 
     public void handleDbError() {
+    	AnkiDatabaseManager.closeDatabase(AnkiDroidApp.getCollectionPath());
         DeckTask.launchDeckTask(DeckTask.TASK_TYPE_RESTORE_IF_MISSING, new DeckTask.TaskListener() {
             @Override
             public void onPreExecute() {
