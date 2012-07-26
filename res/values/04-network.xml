@@ -127,6 +127,7 @@
 <string name="sync_media_to_server">Sending media to server...</string>
 <string name="sync_media_no_changes">No changes to media files.</string>
 <string name="sync_media_success">Media synced successfully.</string>
+<string name="sync_media_error">Error syncing media data.</string>
 
 <string name="register_error">An error occurred. Please try again later.</string>
 <string name="register_title">Register account</string>

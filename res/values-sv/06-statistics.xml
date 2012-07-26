@@ -104,10 +104,10 @@
   <string-array name="stats_period">
     <item>1 månad</item>
     <item>1 år</item>
-    <item>all</item>
+    <item>alla</item>
   </string-array>
   <string-array name="stats_range">
-    <item>collection</item>
+    <item>samling</item>
     <item>aktuell kortlek</item>
   </string-array>
 </resources>
