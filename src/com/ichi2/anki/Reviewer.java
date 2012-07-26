@@ -2427,6 +2427,7 @@ public class Reviewer extends AnkiActivity {
             content = HtmlColors.invertColors(content);
         }
 
+        content = SmpToHtmlEntity(content);
         mCardContent = new SpannedString(mCardTemplate.replace("::content::", content).replace("::style::",
                 style.toString()));
         Log.i(AnkiDroidApp.TAG, "base url = " + mBaseUrl);
@@ -2437,6 +2438,22 @@ public class Reviewer extends AnkiActivity {
             playSounds();
     }
 
+    /**
+     * Converts characters in Unicode Supplementary Multilingual Plane (SMP) to their equivalent Html Entities.
+     * This is done because webview has difficulty displaying these characters.
+     * @param text
+     * @return
+     */
+    private String SmpToHtmlEntity(String text) {
+        StringBuffer sb = new StringBuffer();
+        Matcher m = Pattern.compile("([^\u0000-\uFFFF])").matcher(text);
+        while (m.find()) {
+            String a = "&#x" + Integer.toHexString(m.group(1).codePointAt(0)) + ";";
+            m.appendReplacement(sb, a);
+        }
+        m.appendTail(sb);
+        return sb.toString();
+    }
 
     /**
      * Plays sounds (or TTS, if configured) for current shown side of card
