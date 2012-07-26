@@ -25,6 +25,7 @@ import android.util.Log;
 
 import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.Pair;
+import com.ichi2.themes.HtmlColors;
 import com.mindprod.common11.StringTools;
 import com.samskivert.mustache.Mustache;
 import com.samskivert.mustache.Template;
@@ -255,20 +256,6 @@ public class Models {
             models.add(it.next());
         }
         return models;
-    }
-
-
-    public ArrayList<String> allNAmes() {
-        ArrayList<String> names = new ArrayList<String>();
-        Iterator<JSONObject> it = mModels.values().iterator();
-        while (it.hasNext()) {
-            try {
-                names.add(it.next().getString("name"));
-            } catch (JSONException e) {
-                throw new RuntimeException(e);
-            }
-        }
-        return names;
     }
 
 
@@ -573,10 +560,20 @@ public class Models {
                     }
                 }
             }
+            // remember old sort field
+            String sortf = m.getJSONArray("flds").getJSONObject(m.getInt("sortf")).toString();
+            // move
             l.remove(oldidx);
             l.add(idx, field);
             m.put("flds", new JSONArray(l));
-            m.put("sortf", idx);
+            // restore sort field
+            ja = m.getJSONArray("flds");
+            for (int i = 0; i < ja.length(); ++i) {
+                if (ja.getJSONObject(i).toString().equals(sortf)) {
+                    m.put("sortf", i);
+                    break;
+                }
+            }
             _updateFieldOrds(m);
             save(m);
             _transformFields(m, new TransformFieldMove(idx, oldidx));
@@ -1386,56 +1383,6 @@ public class Models {
 
     public void setChanged() {
         mChanged = true;
-    }
-
-
-    /**
-     * Returns a string where all colors have been inverted. It applies to anything that is in a tag and looks like
-     * #FFFFFF Example: Here only #000000 will be replaced (#777777 is content) <span style="color: #000000;">Code
-     * #777777 is the grey color</span> This is done with a state machine with 2 states: - 0: within content - 1: within
-     * a tag
-     */
-    public static String invertColors(String text) {
-        final String[] colors = { "white", "black" };
-        final String[] htmlColors = { "#000000", "#ffffff" };
-        for (int i = 0; i < colors.length; i++) {
-            text = text.replace("color=\"" + colors[i] + "\"", "color=\"" + htmlColors[i] + "\"");
-            text = text.replace("color: " + colors[i], "color: " + htmlColors[i]);
-        }
-        int state = 0;
-        StringBuffer inverted = new StringBuffer(text.length());
-        for (int i = 0; i < text.length(); i++) {
-            char character = text.charAt(i);
-            if (state == 1 && character == '#') {
-                // TODO: handle shorter html-colors too (e.g. #0000)
-                inverted.append(invertColor(text.substring(i + 1, i + 7)));
-            } else {
-                if (character == '<') {
-                    state = 1;
-                }
-                if (character == '>') {
-                    state = 0;
-                }
-                inverted.append(character);
-            }
-        }
-        return inverted.toString();
-    }
-
-
-    private static String invertColor(String color) {
-        if (color.length() != 0) {
-            color = StringTools.toUpperCase(color);
-        }
-        final char[] items = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F' };
-        final char[] tmpItems = { 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v' };
-        for (int i = 0; i < 16; i++) {
-            color = color.replace(items[i], tmpItems[15 - i]);
-        }
-        for (int i = 0; i < 16; i++) {
-            color = color.replace(tmpItems[i], items[i]);
-        }
-        return color;
     }
 
 
