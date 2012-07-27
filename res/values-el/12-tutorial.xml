@@ -26,7 +26,7 @@
     <item><![CDATA[Οι κάρτες συλλέγονται σε τράπουλες και εκεί μπορούν να οργανωθούν με τη βοήθεια διαφόρων ετικετών.]]></item> 
     <item><![CDATA[There are mainly two ways of getting new cards:<br />You either add premade decks of other users (choose &quot;shared decks&quot; in the decks summary) or create them by yourself.]]></item> 
     <item><![CDATA[Εν πάση περιπτώση, η δημιουργία των δικών σας τραπουλών είναι αναγκαία για την τέλεια ικανοποίηση των αναγκών σας. Αυτό μπορείτε Μπορείτε να το κάνετε αυτό απευθείας στο AnkiDroid...]]></item> 
-    <item><![CDATA[Let\'s have a look on the top bar:<br />In the left top corner you find some numbers. The red one counts the failed cards (answered by &quot;again&quot;),]]></item> 
+    <item><![CDATA[Let\'s have a look on the top bar:<br />In the left top corner you find some numbers. The blue one tells you, how many new cards are still projected for today. The red number counts the failed cards (answered by &quot;again&quot;),]]></item> 
     <item><![CDATA[Στη δεξιά γωνία θα βρείτε πληροφορίες σχετικά με το χρόνο σκέψης σας από αυτή την κάρτα και την επίδοσή σας.]]></item> 
     <item><![CDATA[Albeit you can use AnkiDroid stand alone, it is fully connected to AnkiWeb, the syncing server of Anki Desktop (available for Linux, Windows, Mac).]]></item> 
     <item><![CDATA[Αυτά ήταν τα κύρια σημεία της χρήσης AnkiDroid.<br /><br>Για περισσότερες πληροφορίες σχετικά με τη βασική έννοια του Anki, επισκεφθείτε http://ankisrs.net/]]></item> 
@@ -41,7 +41,7 @@
     <item><![CDATA[Θα μάθετε γρήγορα για αυτό όταν αρχίσετε να χρησιμοποιείτε το AnkiDroid.]]></item> 
     <item><![CDATA[You\'ll find thousands of premade decks to download and there are probably some which are useful for you.]]></item> 
     <item><![CDATA[... ή (πιο εύκολα) με την εφαρμογή desktop Anki (κατεβάστε την δωρεάν στο http://ankisrs.net/).<br><br>Μπορείτε να συγχρονίσετε τις τράπουλές σας με την εφαρμογή desktop πολύ εύκολα, οπότε μεταφέροντας τα δεδομένα δεν είναι πρόβλημα.]]></item> 
-    <item><![CDATA[the black one shows the number of cards you\'ve already learned before and which are due to review today, and the blue number tells you, how many new cards are projected for today. <br />The type of the actual cards is specified by an underline.]]></item> 
+    <item><![CDATA[the green one shows the number of cards you\'ve already learned before and which are due to review today.<br />The type of the actual cards is specified by an underline.]]></item> 
     <item><![CDATA[Η επάνω γραμμή δείχνει την πρόοδό σας, η κάτω δείχνει το ποσοστό των ναι απαντήσεων.]]></item> 
     <item><![CDATA[Thus, you can easily sync your collection between AnkiDroid and Anki Desktop and use the latter for a more convenient card adding and managing.]]></item> 
     <item><![CDATA[Απλά δοκιμάστε το λίγο τώρα και δείτε, αν σας εξυπηρετεί.<br><br>Ίσως ξεκινήστε με την επισκόπηση τραπουλών (πατήστε μενού στην κύρια οθόνη και επιλέξτε &quot;όλες οι τράπουλες&quot;), όπου μπορείτε να κατεβάσετε έτοιμες τράπουλες ή να δημιουργήσετε τη δική σας (απλώς χρησιμοποιήστε το μενού εκεί).]]></item> 

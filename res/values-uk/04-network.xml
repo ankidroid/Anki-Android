@@ -93,7 +93,7 @@
   <string name="sync_deletions_message">Синхронізація видаленого...</string>
   <string name="sync_small_objects_message">Синхронізація малих об’єктів...</string>
   <string name="sync_finish_message">Завершення синхронізації...</string>
-  <string name="sync_log_finish_error">Error while sending finish direction to server</string>
+  <string name="sync_log_finish_error">Помилка надсилання кінцевого напрямку до сервера</string>
   <string name="sync_writing_db">Запис змін до бази даних...</string>
   <string name="sync_download_chunk">Завантаження змін...</string>
   <string name="sync_upload_chunk">Відвантаження змін...</string>
@@ -107,6 +107,7 @@
   <string name="sync_media_to_server">Надсилання медіа на сервер...</string>
   <string name="sync_media_no_changes">Жодних змін в медіа файлах.</string>
   <string name="sync_media_success">Медіа успішно синхронізовано.</string>
+  <string name="sync_media_error">Помилка синхронізації даних медіа.</string>
   <string name="register_error">Виникла помилка. Будь ласка, спробуйте пізніше.</string>
   <string name="register_title">Реєстрація облікового запису</string>
   <string name="register_mismatch">Пара ім’я користувача/пароль не співпадає або порожня. Будь ласка, введіть ще раз.</string>

@@ -112,7 +112,7 @@ public class CardEditor extends Activity {
     private static final int DIALOG_RESET_CARD = 3;
     private static final int DIALOG_INTENT_INFORMATION = 4;
 
-    private static final String ACTION_CREATE_FLASHCARD = "org.openintents.indiclash.CREATE_FLASHCARD";
+    private static final String ACTION_CREATE_FLASHCARD = "org.openintents.action.CREATE_FLASHCARD";
     private static final String ACTION_CREATE_FLASHCARD_SEND = "android.intent.action.SEND";
 
     private static final int MENU_LOOKUP = 0;

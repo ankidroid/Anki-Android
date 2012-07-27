@@ -26,7 +26,7 @@
     <item><![CDATA[Kad-kad dikumpul sebagai dek dan ditanda dengan pelbagai tag.]]></item> 
     <item><![CDATA[There are mainly two ways of getting new cards:<br />You either add premade decks of other users (choose &quot;shared decks&quot; in the decks summary) or create them by yourself.]]></item> 
     <item><![CDATA[Mereka kad sendiri penting untuk memenuhi kehendak sendiri. Gunakan AnkiDroid...]]></item> 
-    <item><![CDATA[Let\'s have a look on the top bar:<br />In the left top corner you find some numbers. The red one counts the failed cards (answered by &quot;again&quot;),]]></item> 
+    <item><![CDATA[Let\'s have a look on the top bar:<br />In the left top corner you find some numbers. The blue one tells you, how many new cards are still projected for today. The red number counts the failed cards (answered by &quot;again&quot;),]]></item> 
     <item><![CDATA[Sudut kanan atas menunjuk masa berfikir dan kemajuan.]]></item> 
     <item><![CDATA[Albeit you can use AnkiDroid stand alone, it is fully connected to AnkiWeb, the syncing server of Anki Desktop (available for Linux, Windows, Mac).]]></item> 
     <item><![CDATA[Ini inti utama pengguanan AnkiDroid.<br /><br>Untuk maklumat tambahan konsep Anki, lawat http://ankisrs.net/]]></item> 
@@ -41,7 +41,7 @@
     <item><![CDATA[Anda akan belajar lagi bila anda mula menggunakan AnkiDroid.]]></item> 
     <item><![CDATA[You\'ll find thousands of premade decks to download and there are probably some which are useful for you.]]></item> 
     <item><![CDATA[... atau (lebih mudah) dengan aplikasi destop Anki (muat turun percuma  http://ankisrs.net/).<br><br>Anda boleh sync dek dengan mudah, jadi memindahkannya bukan satu masalah.]]></item> 
-    <item><![CDATA[the black one shows the number of cards you\'ve already learned before and which are due to review today, and the blue number tells you, how many new cards are projected for today. <br />The type of the actual cards is specified by an underline.]]></item> 
+    <item><![CDATA[the green one shows the number of cards you\'ve already learned before and which are due to review today.<br />The type of the actual cards is specified by an underline.]]></item> 
     <item><![CDATA[Bar atas ialah kemajuan, bar bawah ialah peratusan menjawab ya.]]></item> 
     <item><![CDATA[Thus, you can easily sync your collection between AnkiDroid and Anki Desktop and use the latter for a more convenient card adding and managing.]]></item> 
     <item><![CDATA[Sila cuba dan rasa kesesuaiannya.<br><br>Boleh mulakan dengan overviu dek (tekan menu dan pilih&quot;semua dek&quot;), di situ anda boleh muat turun dek atau buat satu (gunakan saja menu).]]></item> 

@@ -107,6 +107,7 @@
   <string name="sync_media_to_server">Lade Media-Daten zum Server hoch...</string>
   <string name="sync_media_no_changes">Keine Media-Dateien verändert.</string>
   <string name="sync_media_success">Media-Dateien erfolgreich synchronisiert.</string>
+  <string name="sync_media_error">Fehler beim Synchronisieren der Media-Daten.</string>
   <string name="register_error">Ein Fehler ist aufgetreten. Bitte versuchen Sie es später erneut.</string>
   <string name="register_title">Konto erstellen</string>
   <string name="register_mismatch">Die Wiederholung der Benutzernamens bzw. des Passworts ist falsch oder leer. Bitte geben Sie die Informationen erneut ein.</string>

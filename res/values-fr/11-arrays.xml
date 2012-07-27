@@ -71,12 +71,12 @@
   <string-array name="gestures_labels">
     <item>Aucune action</item>
     <item>Afficher la réponse</item>
-    <item>Answer button 1</item>
-    <item>Answer button 2</item>
-    <item>Answer button 3</item>
-    <item>Answer button 4</item>
-    <item>Answer recommended (green)</item>
-    <item>Answer better than recommended</item>
+    <item>Bouton de réponse 1</item>
+    <item>Bouton de réponse 2</item>
+    <item>Bouton de réponse 3</item>
+    <item>Bouton de réponse 4</item>
+    <item>Réponse recommandée (vert)</item>
+    <item>Réponse meilleure que celle recommandée</item>
     <item>Annuler</item>
     <item>Modifier la carte</item>
     <item>Marquer la carte</item>
@@ -85,8 +85,8 @@
     <item>Suspendre la carte</item>
     <item>Supprimer la carte</item>
     <item>Effacer le tableau</item>
-    <item>Play media</item>
-    <item>Abort learning</item>
+    <item>Jouer les médias</item>
+    <item>Quitter l\'apprentissage</item>
   </string-array>
   <string-array name="theme_labels">
     <item>Android sombre</item>
@@ -95,31 +95,31 @@
     <item>Blanc</item>
   </string-array>
   <string-array name="leech_action_labels">
-    <item>Suspend card</item>
-    <item>Tag only</item>
-    <item>Reset as new</item>
+    <item>Suspendre la carte</item>
+    <item>Taguer uniquement</item>
+    <item>Réinitialiser comme nouvelle</item>
   </string-array>
   <string-array name="new_order_labels">
-    <item>New cards in random order</item>
-    <item>New cards in order added</item>
+    <item>Nouvelles cartes dans un ordre aléatoire</item>
+    <item>Nouvelles cartes dans l\'ordre d\'ajout</item>
   </string-array>
   <string-array name="cram_deck_conf_order_labels">
-    <item>Oldest seen first</item>
-    <item>Random</item>
-    <item>Increasing intervals</item>
-    <item>Decreasing intervals</item>
-    <item>Most lapsed</item>
-    <item>Order added</item>
-    <item>Order due</item>
+    <item>Les plus anciennes en premier</item>
+    <item>Au hasard</item>
+    <item>Intervalles croissants</item>
+    <item>Intervalles décroissants</item>
+    <item>Les plus échouées</item>
+    <item>L\'ordre d\'ajout</item>
+    <item>Les plus urgentes d\'abord</item>
   </string-array>
   <string-array name="cram_deck_conf_preset_labels">
-    <item><![CDATA[<select preset>]]></item>
-    <item>Preview all new cards</item>
-    <item>Preview cards added today</item>
-    <item>Review today\'s forgotten cards</item>
-    <item>Review ahead by two days</item>
-    <item>Review due cards with tag</item>
-    <item>Review due cards with decreasing intervals</item>
+    <item><![CDATA[<sélectionner le réglage>]]></item>
+    <item>Prévisualiser toutes les nouvelles cartes</item>
+    <item>Prévisualiser toutes les cartes ajoutées aujourd\'hui</item>
+    <item>Prévisualiser toutes les cartes oubliées aujourd\'hui</item>
+    <item>Réviser en avance de deux jours</item>
+    <item>Réviser les cartes prévues avec tag</item>
+    <item>Réviser les cartes prévues par intervalles décroissants</item>
     <item>Bachoter toutes les cartes</item>
   </string-array>
 </resources>
