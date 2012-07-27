@@ -107,6 +107,7 @@
   <string name="sync_media_to_server">Отправка медиа-файлов на сервер...</string>
   <string name="sync_media_no_changes">Медиа-файлы не изменены.</string>
   <string name="sync_media_success">Медиа-файлы успешно синхронизированы.</string>
+  <string name="sync_media_error">Ошибка синхронизации медиа-данных.</string>
   <string name="register_error">Произошла ошибка. Пожалуйста, повторите попытку позже.</string>
   <string name="register_title">Зарегистрироваться</string>
   <string name="register_mismatch">Логин и/или пароль не соответствуют или пусты. Пожалуйста, введите снова.</string>

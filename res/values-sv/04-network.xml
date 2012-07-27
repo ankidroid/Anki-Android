@@ -107,6 +107,7 @@
   <string name="sync_media_to_server">Sänder media till servern...</string>
   <string name="sync_media_no_changes">Inga ändringar till mediafiler.</string>
   <string name="sync_media_success">Media har synkats.</string>
+  <string name="sync_media_error">Error syncing media data.</string>
   <string name="register_error">Ett fel har uppstått. Försök igen senare.</string>
   <string name="register_title">Registrera konto</string>
   <string name="register_mismatch">The username/password repetition does not match or is empty. Please re-enter.</string>

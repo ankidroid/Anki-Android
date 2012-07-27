@@ -26,7 +26,7 @@
     <item><![CDATA[Kort läggs samman i kortlekar och kan organiseras med hjälp av taggar.]]></item> 
     <item><![CDATA[There are mainly two ways of getting new cards:<br />You either add premade decks of other users (choose &quot;shared decks&quot; in the decks summary) or create them by yourself.]]></item> 
     <item><![CDATA[Men att skapa egna kortlekar är troligen bäst för dina egna behov. Du kan göra detta direkt i AnkiDroid...]]></item> 
-    <item><![CDATA[Let\'s have a look on the top bar:<br />In the left top corner you find some numbers. The red one counts the failed cards (answered by &quot;again&quot;),]]></item> 
+    <item><![CDATA[Let\'s have a look on the top bar:<br />In the left top corner you find some numbers. The blue one tells you, how many new cards are still projected for today. The red number counts the failed cards (answered by &quot;again&quot;),]]></item> 
     <item><![CDATA[I det högra hörnet hittar du information om använd tid för detta kort och om dina framsteg.]]></item> 
     <item><![CDATA[Albeit you can use AnkiDroid stand alone, it is fully connected to AnkiWeb, the syncing server of Anki Desktop (available for Linux, Windows, Mac).]]></item> 
     <item><![CDATA[Detta har varit de viktigaste punkterna vid användning av AnkiDroid.<br /><br>För mer information om funktioner och användningsområden, gå till http://ankisrs.net/]]></item> 
@@ -41,7 +41,7 @@
     <item><![CDATA[Du kommer att lära dig detta snabbt när du börjar använda AnkiDroid.]]></item> 
     <item><![CDATA[You\'ll find thousands of premade decks to download and there are probably some which are useful for you.]]></item> 
     <item><![CDATA[... eller (något enklare) med hjälp av skrivbordsmjukvaran Anki (som kan laddas ner gratis här http://ankisrs.net/).<br><br>Du kan synkronisera dina kortlekar mellan AnkiDroid och Anki väldigt enkelt, så det är inga problem att föra över dem.]]></item> 
-    <item><![CDATA[the black one shows the number of cards you\'ve already learned before and which are due to review today, and the blue number tells you, how many new cards are projected for today. <br />The type of the actual cards is specified by an underline.]]></item> 
+    <item><![CDATA[the green one shows the number of cards you\'ve already learned before and which are due to review today.<br />The type of the actual cards is specified by an underline.]]></item> 
     <item><![CDATA[Den övre stapeln visar dina framsteg och den undre visar andelen korrekta svar.]]></item> 
     <item><![CDATA[Thus, you can easily sync your collection between AnkiDroid and Anki Desktop and use the latter for a more convenient card adding and managing.]]></item> 
     <item><![CDATA[Prova att använda det nu en stund och se om det passar just dig.<br><br>Börja med kortlekssammanfattningen (tryck meny på huvudskärmen och välj &quot;alla kortlekar&quot;). Där kan du ladda ner färdiga kortlekar eller skapa dina egna (använd menyn där).]]></item> 

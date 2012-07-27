@@ -107,6 +107,7 @@
   <string name="sync_media_to_server">Ortamlar sunucuya gönderiliyor...</string>
   <string name="sync_media_no_changes">Ortam dosyalarında değişiklik yok.</string>
   <string name="sync_media_success">Ortamlar başarıyla eşitlendi.</string>
+  <string name="sync_media_error">Error syncing media data.</string>
   <string name="register_error">Bir hatâ meydana geldi. Lütfen sonra yeniden deneyin.</string>
   <string name="register_title">Üye ol</string>
   <string name="register_mismatch">Kullanıcı adı/şifre tekrarı uyuşmuyor veya boş. Lütfen yeniden girin.</string>

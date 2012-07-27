@@ -81,6 +81,7 @@
   <string name="pref_lang_other">Preferências de idioma</string>
   <string name="pref_font_UI">Fonte de IU personalizada</string>
   <string name="info_rate">Rate AnkiDroid</string>
+  <string name="col_load_failed">Collection loading failed.\nPress back to close AnkiDroid.</string>
   <string-array name="dynOrderLabels">
     <item>Mais antigos primeiro</item>
     <item>Aleatório</item>

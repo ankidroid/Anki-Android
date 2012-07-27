@@ -107,6 +107,7 @@
   <string name="sync_media_to_server">Invio media al server...</string>
   <string name="sync_media_no_changes">Nessuna modifica ai file multimediali.</string>
   <string name="sync_media_success">Media sincronizzati con successo.</string>
+  <string name="sync_media_error">Errore di sincronizzazione dei dati multimediali.</string>
   <string name="register_error">Si è verificato un errore. Riprova più tardi.</string>
   <string name="register_title">Registra account</string>
   <string name="register_mismatch">La ripetizione del nome utente/password non corrisponde o è vuota. Reinseriscili.</string>

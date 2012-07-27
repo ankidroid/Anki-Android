@@ -23,7 +23,7 @@
   <string name="CardEditorCancelButton">Annuler</string>
   <string name="CardEditorSaveButton">Enregistrer</string>
   <string name="CardEditorLaterButton">Plus tard</string>
-  <string name="CardEditorLaterMessage">Saved information for later</string>
+  <string name="CardEditorLaterMessage">Information sauvegardée pour plus tard</string>
   <string name="CardEditorCardDeck">Paquet de cartes : %s</string>
   <string name="CardEditorNoteDeck">Incluse dans le paquet : %s</string>
   <string name="CardEditorModel">Type de note : %s</string>
@@ -37,9 +37,9 @@
   <string name="session_question_limit_reached">Limite de questions par session atteinte</string>
   <string name="session_time_limit_reached">Temps limite de session atteint</string>
   <string name="cram_edit_warning">On ne touche pas aux cartes pendant un bachotage</string>
-  <string name="suspend_leeches">Masquer les cartes encombrantes</string>
-  <string name="leech_suspend_notification">La carte, marquée « encombrante », est masquée</string>
-  <string name="leech_notification">Carte marquée « encombrante »</string>
+  <string name="suspend_leeches">Suspendre les cartes \"sangsues\"</string>
+  <string name="leech_suspend_notification">Carte marquée comme sangsue et suspendue</string>
+  <string name="leech_notification">Carte marquée comme sangsue</string>
   <string name="about_title">À propos</string>
   <string name="cardeditor_title_add_note">Ajout de note</string>
   <string name="cardeditor_title_edit_card">Modifier la note</string>
@@ -81,6 +81,7 @@
   <string name="pref_lang_other">Préférences linguistiques</string>
   <string name="pref_font_UI">Police pour l’interface utilisateur</string>
   <string name="info_rate">Noter AnkiDroid</string>
+  <string name="col_load_failed">Le chargement de la collection à échoué.\nAppuyez sur retour pour fermer AnkiDroid.</string>
   <string-array name="dynOrderLabels">
     <item>Des plus au moins anciennes</item>
     <item>Aléatoirement</item>

@@ -81,6 +81,7 @@
   <string name="pref_lang_other">언어 기본 설정</string>
   <string name="pref_font_UI">사용자 지정 UI 글꼴</string>
   <string name="info_rate">Rate AnkiDroid</string>
+  <string name="col_load_failed">Collection loading failed.\nPress back to close AnkiDroid.</string>
   <string-array name="dynOrderLabels">
     <item>오래된 카드 먼저 학습하기</item>
     <item>무작위로 학습하기</item>
