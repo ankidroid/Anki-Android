@@ -27,7 +27,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.database.Cursor;
+import android.util.Log;
 
+import com.ichi2.anki.AnkiDatabaseManager;
 import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.BackupManager;
 import com.ichi2.libanki.Collection;
@@ -71,19 +73,22 @@ public class Anki2Importer {
 			try {
 				cnt = _import();
 			} finally {
-				mSrc.close(false);
+				// do not close collection but close only db (in order not to confuse access counting in storage.java
+				AnkiDatabaseManager.closeDatabase(mSrc.getPath());
 			}
 			// import media
 			JSONObject media = new JSONObject(Utils.convertStreamToString(new FileInputStream(fileDir + "/media")));
 			String mediaDir = mCol.getMedia().getDir() + "/";
 			JSONArray names = media.names();
-			for (int i = 0; i < names.length(); i++) {
-				String n = names.getString(i);
-				String o = media.getString(n);
-				File of = new File(mediaDir + o);
-				if (!of.exists()) {
-					File newFile = new File(fileDir + "/" + n);
-					newFile.renameTo(of);
+			if (names != null) {
+				for (int i = 0; i < names.length(); i++) {
+					String n = names.getString(i);
+					String o = media.getString(n);
+					File of = new File(mediaDir + o);
+					if (!of.exists()) {
+						File newFile = new File(fileDir + "/" + n);
+						newFile.renameTo(of);
+					}
 				}
 			}
 			// delete tmp dir
@@ -108,11 +113,15 @@ public class Anki2Importer {
 			long id = mDst.getDecks().id(mDeckPrefix);
 			mDst.getDecks().select(id);
 		}
+		Log.i(AnkiDroidApp.TAG, "Import - preparing");
 		_prepareTS();
 		_prepareModels();
+		Log.i(AnkiDroidApp.TAG, "Import - importing notes");
 		_importNotes();
+		Log.i(AnkiDroidApp.TAG, "Import - importing cards");
 		int cnt = _importCards();
 //		_importMedia();
+		Log.i(AnkiDroidApp.TAG, "Import - finishing");
 		_postImport();
 		// LIBANKI: vacuum and analyze is done in DeckTask
 		return cnt;

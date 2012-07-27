@@ -801,12 +801,11 @@ public class DeckTask extends
 			}
 			return new TaskData(addedCount, counts, true);
 		} catch (RuntimeException e) {
-			throw new RuntimeException(e);
-//			Log.e(AnkiDroidApp.TAG,
-//					"doInBackgroundImport - RuntimeException on importing cards: "
-//							+ e);
-//			AnkiDroidApp.saveExceptionReportFile(e, "doInBackgroundImport");
-//			return new TaskData(false);
+			Log.e(AnkiDroidApp.TAG,
+					"doInBackgroundImport - RuntimeException on importing cards: "
+							+ e);
+			AnkiDroidApp.saveExceptionReportFile(e, "doInBackgroundImport");
+			return new TaskData(false);
 		}
 	}
 
