@@ -79,6 +79,8 @@ import java.util.TreeSet;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.zip.Deflater;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipInputStream;
 
 /**
  * TODO comments
@@ -692,6 +694,36 @@ public class Utils {
         return contentOfMyInputStream;
     }
 
+
+    public static boolean unzip(String filename, String targetDirectory) {
+        try {
+        	File dir = new File(targetDirectory);
+        	if (!dir.exists() || !dir.isDirectory()) {
+        		dir.mkdirs();
+        	}
+            byte[] buf = new byte[1024];
+            ZipInputStream zis = new ZipInputStream(new FileInputStream(filename));
+            ZipEntry ze = zis.getNextEntry();
+            while (ze != null) { 
+                String name = ze.getName();
+                Log.i(AnkiDroidApp.TAG, "uncompress " + name);
+                int n;
+                FileOutputStream fos = new FileOutputStream(targetDirectory + "/" + name);
+                while ((n = zis.read(buf, 0, 1024)) > -1) {
+                    fos.write(buf, 0, n);                	
+                }
+                fos.close(); 
+                zis.closeEntry();
+                ze = zis.getNextEntry();
+
+            }
+            zis.close();
+            return true;
+        } catch (IOException e) {
+        	Log.e(AnkiDroidApp.TAG, "IOException on decompressing file " + filename);
+        	return false;
+        }
+    }
 
     /**
      * Compress data.

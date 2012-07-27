@@ -40,6 +40,7 @@ import com.ichi2.libanki.Note;
 import com.ichi2.libanki.Sched;
 import com.ichi2.libanki.Stats;
 import com.ichi2.libanki.Utils;
+import com.ichi2.libanki.importer.Anki2Importer;
 import com.ichi2.widget.WidgetStatus;
 
 import android.content.Context;
@@ -79,6 +80,7 @@ public class DeckTask extends
 	public static final int TASK_TYPE_DELETE_DECK = 25;
 	public static final int TASK_TYPE_REBUILD_CRAM = 26;
 	public static final int TASK_TYPE_EMPTY_CRAM = 27;
+	public static final int TASK_TYPE_IMPORT = 28;
 
 	private static DeckTask sInstance;
 	private static DeckTask sOldInstance;
@@ -239,6 +241,9 @@ public class DeckTask extends
 		case TASK_TYPE_EMPTY_CRAM:
 			return doInBackgroundEmptyCram(params);
 
+		case TASK_TYPE_IMPORT:
+			return doInBackgroundImport(params);
+			
 		default:
 			return null;
 		}
@@ -768,6 +773,43 @@ public class DeckTask extends
 				col, new Object[]{true, fragmented}));
 	}
 
+	private TaskData doInBackgroundImport(TaskData... params) {
+		Log.i(AnkiDroidApp.TAG, "doInBackgroundImport");
+		Collection col = params[0].getCollection();
+		String path = params[0].getString();
+		Anki2Importer imp = new Anki2Importer(col, path);
+		int addedCount = -1;
+		try {
+			AnkiDb ankiDB = col.getDb();
+			ankiDB.getDatabase().beginTransaction();
+			try {
+				addedCount = imp.run();
+				ankiDB.getDatabase().setTransactionSuccessful();
+			} finally {
+				ankiDB.getDatabase().endTransaction();
+			}
+			ankiDB.execute("VACUUM");
+			ankiDB.execute("ANALYZE");
+
+			// actualize counts
+			Object[] counts = null;
+			if (addedCount != -1) {
+				DeckTask.TaskData result = doInBackgroundLoadDeckCounts(new TaskData(col));
+				if (result != null) {
+					counts = result.getObjArray();
+				}			
+			}
+			return new TaskData(addedCount, counts, true);
+		} catch (RuntimeException e) {
+			throw new RuntimeException(e);
+//			Log.e(AnkiDroidApp.TAG,
+//					"doInBackgroundImport - RuntimeException on importing cards: "
+//							+ e);
+//			AnkiDroidApp.saveExceptionReportFile(e, "doInBackgroundImport");
+//			return new TaskData(false);
+		}
+	}
+
 	private TaskData doInBackgroundRestoreDeck(TaskData... params) {
 		 Log.i(AnkiDroidApp.TAG, "doInBackgroundRestoreDeck");
 		 Object[] data = params[0].getObjArray();
@@ -920,6 +962,12 @@ public class DeckTask extends
 
 		public TaskData(Object[] obj) {
 			mObjects = obj;
+		}
+
+		public TaskData(int value, Object[] obj, boolean bool) {
+			mObjects = obj;
+			mInteger = value;
+			mBool = bool;
 		}
 
 		public TaskData(int value, Card card) {
