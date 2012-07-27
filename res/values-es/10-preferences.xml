@@ -55,8 +55,8 @@
   <string name="show_timer_summ">Muestra el tiempo que te está llevando responder</string>
   <string name="show_progress_bars">Mostrar barras de progreso</string>
   <string name="show_progress_bars_summ">Muestra el progreso de hoy y la proporción de respuestas correctas de hoy mientras se repasa.</string>
-  <string name="fade_scrollbars">Fade scrollbars</string>
-  <string name="fade_scrollbars_summ">Automatically fade out flashcard scrollbars when not scrolling</string>
+  <string name="fade_scrollbars">Ocultar las barras de desplazamiento</string>
+  <string name="fade_scrollbars_summ">Ocultar automáticamente las barras de desplazamiento en las tarjetas cuando no hay desplazamiento</string>
   <string name="show_whiteboard_summ">Te permite escribir en la pantalla</string>
   <string name="whiteboard_stroke_width">Ancho del trazo en la pizarra</string>
   <string name="whiteboard_stroke_width_summ">Ancho del trazo: XXX</string>

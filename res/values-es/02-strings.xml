@@ -56,7 +56,7 @@
   <string name="studyoptions_no_external_storage_title">Almacenamiento externo no disponible</string>
   <string name="studyoptions_no_external_storage_message">Almacenamiento externo no disponible actualmente. AnkiDroid necesita tener acceso a la tarjeta de memoria para leer y cargar tus mazos. Comprueba que la tarjeta de memoria está conectada e inténtalo de nuevo.</string>
   <string name="fact_adder_intent_title">Tarjeta de AnkiDroid</string>
-  <string name="fact_adder_swap">nome</string>
+  <string name="fact_adder_swap">Intercambiar</string>
   <string name="deckpicker_select_dictionary_title">Seleccionar diccionario</string>
   <string name="deckpicker_select_dictionary_default">Por defecto</string>
   <string name="card_editor_add_card">Añadir nota</string>
@@ -81,7 +81,12 @@
   <string name="pref_lang_other">Preferencias de Idioma</string>
   <string name="pref_font_UI">Fuente de interfaz personalizada</string>
   <string name="info_rate">Puntúa AnkiDroid</string>
-  <string name="col_load_failed">Collection loading failed.\nPress back to close AnkiDroid.</string>
+  <string name="col_load_failed">Error al cargar la colección.\nPresiona el botón de retroceso para cerrar AnkiDroid.</string>
+  <string name="import_title">Import Cards</string>
+  <string name="import_message">Do you really want to import all cards of file %s?</string>
+  <string name="import_log_success">Successfully imported %d cards</string>
+  <string name="import_log_error">Import failed</string>
+  <string name="import_importing">Importing cards.\nPlease wait...</string>
   <string-array name="dynOrderLabels">
     <item>Vistas más antiguamente primero</item>
     <item>Aleatorio</item>

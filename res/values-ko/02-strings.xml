@@ -82,6 +82,11 @@
   <string name="pref_font_UI">사용자 지정 UI 글꼴</string>
   <string name="info_rate">Rate AnkiDroid</string>
   <string name="col_load_failed">Collection loading failed.\nPress back to close AnkiDroid.</string>
+  <string name="import_title">Import Cards</string>
+  <string name="import_message">Do you really want to import all cards of file %s?</string>
+  <string name="import_log_success">Successfully imported %d cards</string>
+  <string name="import_log_error">Import failed</string>
+  <string name="import_importing">Importing cards.\nPlease wait...</string>
   <string-array name="dynOrderLabels">
     <item>오래된 카드 먼저 학습하기</item>
     <item>무작위로 학습하기</item>

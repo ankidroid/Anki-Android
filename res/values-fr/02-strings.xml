@@ -82,6 +82,11 @@
   <string name="pref_font_UI">Police pour l’interface utilisateur</string>
   <string name="info_rate">Noter AnkiDroid</string>
   <string name="col_load_failed">Le chargement de la collection à échoué.\nAppuyez sur retour pour fermer AnkiDroid.</string>
+  <string name="import_title">Import Cards</string>
+  <string name="import_message">Do you really want to import all cards of file %s?</string>
+  <string name="import_log_success">Successfully imported %d cards</string>
+  <string name="import_log_error">Import failed</string>
+  <string name="import_importing">Importing cards.\nPlease wait...</string>
   <string-array name="dynOrderLabels">
     <item>Des plus au moins anciennes</item>
     <item>Aléatoirement</item>
