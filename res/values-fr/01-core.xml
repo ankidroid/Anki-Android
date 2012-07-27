@@ -61,12 +61,12 @@
   <string name="menu_dismiss_note">Écarter la note</string>
   <string name="menu_bury_note">Enfouir la note</string>
   <string name="menu_suspend_card">Suspendre la carte</string>
-  <string name="menu_suspend_note">Masquer la note</string>
+  <string name="menu_suspend_note">Suspendre la note</string>
   <string name="menu_delete_note">Supprimer la note</string>
   <string name="delete_note_message">Détruire la note et toutes ses cartes ?\n%s</string>
-  <string name="menu_edit_card">Modifier la fiche</string>
+  <string name="menu_edit_card">Modifier la carte</string>
   <string name="menu_select">Sélection de texte</string>
-  <string name="menu_search">Recherche dans %1$s</string>
+  <string name="menu_search">Chercher dans %1$s</string>
   <string name="menu_mark_card">Marquer la carte</string>
   <string name="menu_unmark_card">Retirer le marquage</string>
   <string name="new_deck">Nouveau paquet</string>
@@ -81,8 +81,9 @@
   <string name="open_collection">Chargement de la collection.\nPatience…</string>
   <string name="rebuild_cram_deck">Réparation du paquet bachoteur.\nPatience…</string>
   <string name="rebuild_cram_label">Réparer</string>
-  <string name="empty_cram_label">Vide</string>
-  <string name="empty_cram_deck">Emptying cram deck.\nPlease wait...</string>
+  <string name="empty_cram_label">Vider</string>
+  <string name="empty_cram_deck">Paquet de bachotage en cours de vidage.\n
+Veuillez patienter...</string>
   <string name="studyoptions_congrats_finished">FÉLICITATIONS ! Vous avez terminé… pour l’instant !</string>
   <string name="studyoptions_congrats_more_rev">Vous avez atteint votre quota de révisions, mais il reste des cartes prévues pour aujourd’hui. Sauf à risquer l’oubli chronique, pensez à adapter le quota.</string>
   <string name="studyoptions_congrats_more_new">Vous avez atteint votre quota quotidien de cartes inédites alors qu’il en reste. Vous pouvez élargir le quota sachant que vous aurez d’autant plus de cartes à revoir à court terme.</string>
@@ -112,7 +113,7 @@
   </plurals>
   <plurals name="deckpicker_title_minutes">
     <item quantity="one">1 minute.</item>
-    <item quantity="other">%d minute</item>
+    <item quantity="other">%d minute(s).</item>
   </plurals>
   <plurals name="deckpicker_due">
     <item quantity="one">1 parmi %2$d dûe</item>

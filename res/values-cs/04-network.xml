@@ -107,6 +107,7 @@
   <string name="sync_media_to_server">Odesílání médií na server...</string>
   <string name="sync_media_no_changes">Žádné změny mediálních souborů.</string>
   <string name="sync_media_success">Média úspěšně synchronizovány.</string>
+  <string name="sync_media_error">Error syncing media data.</string>
   <string name="register_error">Došlo k chybě. Opakujte akci později.</string>
   <string name="register_title">Registrovat účet</string>
   <string name="register_mismatch">Uživatelské jméno nebo hesla se neshodují nebo jsou prázdné. Zadejte znovu.</string>

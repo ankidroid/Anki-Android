@@ -30,10 +30,10 @@
   <string name="card_browser_unmark_card">Відмінити відмітку</string>
   <string name="delete_card_title">Видалити запис</string>
   <string name="delete_card_message">Дійсно видалити всі картки цього запису?\nПошукове поле: %s</string>
-  <string name="card_browser_show_marked">Сортування відмічено</string>
+  <string name="card_browser_show_marked">Фільтрувати позначені</string>
   <string name="card_browser_field">Змінити поле CardBrowser</string>
   <string name="card_browser_field_title">Змінити поле CardBrowser</string>
-  <string name="card_browser_show_suspended">Сортування відкладено</string>
+  <string name="card_browser_show_suspended">Фільтрувати відкладені</string>
   <string name="card_browser_search_by_tag">Фільтрувати за міткою</string>
   <string name="card_browser_tags_shown">Мітки: %1$s</string>
   <string name="card_browser_change_display_order">Змінити порядок відображення</string>

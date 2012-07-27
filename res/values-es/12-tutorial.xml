@@ -26,7 +26,7 @@
     <item><![CDATA[Las tarjetas se agrupan en mazos y se pueden organizar con la ayuda de todo tipo de etiquetas.]]></item> 
     <item><![CDATA[Existen principalmente dos maneras de obtener nuevas tarjetas:<br/>Agregar mazos pre-hechos de otros usuarios (elige &quot;mazos compartidos&quot; en el resumen de mazos) o crearlos tú mismo.]]></item> 
     <item><![CDATA[En cualquier caso, crear tus propios mazos es esencial para cubrir tus necesidades a la perfección. Puedes hacerlo directamente en AnkiDroid...]]></item> 
-    <item><![CDATA[Vamos a echar un vistazo a la barra superior: <br/>En la esquina superior izquierda encontrarás algunos números. El rojo cuenta las tarjetas falladas (respondidas con &quot;Otra vez&quot;),]]></item> 
+    <item><![CDATA[Let\'s have a look on the top bar:<br />In the left top corner you find some numbers. The blue one tells you, how many new cards are still projected for today. The red number counts the failed cards (answered by &quot;again&quot;),]]></item> 
     <item><![CDATA[En la esquina derecha se encuentra información acerca de tu tiempo de reflexion con esta tarjeta, y sobre tu rendimiento.]]></item> 
     <item><![CDATA[Aunque puedes utilizar AnkiDroid independientemente, está totalmente conectado a AnkiWeb, el servidor de sincronización de la versión de escritorio de Anki (disponible para Linux, Windows, Mac).]]></item> 
     <item><![CDATA[Estos han sido los principales puntos sobre el uso de AnkiDroid.<br /><br>Para más información sobre el concepto clave de Anki, visita http://ankisrs.net/]]></item> 
@@ -41,7 +41,7 @@
     <item><![CDATA[Aprenderás rápidamente acerca de esto cuando empieces a utilizar AnkiDroid.]]></item> 
     <item><![CDATA[Encontrarás miles de mazos pre-hechos para descargar y probablemente haya algunos que te sean útiles.]]></item> 
     <item><![CDATA[... o (un poco más cómodo) con la aplicación de escritorio Anki (descargable gratuitamente en http://ankisrs.net/).<br><br>Puedes sincronizar tus mazos con la aplicación de escritorio muy fácilmente, por lo que transferir los datos no es un problema.]]></item> 
-    <item><![CDATA[el negro muestra el número de tarjetas que ya habías aprendido antes y que deberías revisar hoy, y el número azul te indica cuántas tarjetas nuevas hay planeadas para hoy. <br/>El tipo de la tarjeta actual está indicado con un subrayado.]]></item> 
+    <item><![CDATA[the green one shows the number of cards you\'ve already learned before and which are due to review today.<br />The type of the actual cards is specified by an underline.]]></item> 
     <item><![CDATA[La barra superior muestra tu progreso sobre el total de fichas programadas para hoy, la inferior indica el porcentaje de respuestas afirmativas (que son cualquiera excepto \"Otra vez\").]]></item> 
     <item><![CDATA[Por lo tanto, puedes sincronizar tu colección entre AnkiDroid y Anki versión escritorio, y utilizar este último para agregar y administrar tarjetas de manera más cómoda.]]></item> 
     <item><![CDATA[Pruébalo un poco ahora y comprueba si se ajusta a tus necesidades.<br><br>Tal vez puedas comenzar con el resumen de mazos (pulsa el botón menu en la pantalla principal y selecciona \"Todos los mazos\"), donde puedes descargar mazos prefabricados o crear los tuyos propios (sólo tienes que utilizar el menú de allí).]]></item> 

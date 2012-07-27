@@ -1259,8 +1259,11 @@ public class Reviewer extends AnkiActivity {
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
     	Resources res = getResources();
-    	menu.findItem(MENU_SEARCH).setTitle(clipboardHasText() ? Lookup.getSearchStringTitle() : res.getString(R.string.menu_select));
-		return true;
+    	MenuItem item = menu.findItem(MENU_SEARCH);
+    	if (item != null) {
+		setTitle(clipboardHasText() ? Lookup.getSearchStringTitle() : res.getString(R.string.menu_select));
+	}
+	return true;
     }
 
     private void updateBigWidget(boolean showProgressDialog) {

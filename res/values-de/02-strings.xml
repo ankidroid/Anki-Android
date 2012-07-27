@@ -81,6 +81,7 @@
   <string name="pref_lang_other">Sprach-Einstellungen</string>
   <string name="pref_font_UI">Benutzerdefinierte UI-Schriftart</string>
   <string name="info_rate">AnkiDroid bewerten</string>
+  <string name="col_load_failed">Laden der Sammlung fehlgeschlagen.\nDrücken Sie \"zurück\", um AnkiDroid zu schließen.</string>
   <string-array name="dynOrderLabels">
     <item>Am frühesten gesehene zuerst</item>
     <item>Zufällig</item>
