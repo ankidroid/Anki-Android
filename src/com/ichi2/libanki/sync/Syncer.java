@@ -199,11 +199,8 @@ public class Syncer {
                 }
                 // step 5: sanity check during beta testing
                 JSONArray c = sanityCheck();
-                if (c == null) {
-                    return new Object[] { "sanityCheckError", null };
-                }
                 JSONArray s = mServer.sanityCheck();
-                if (s.getString(0).equals("error")) {
+                if (c == null || s == null || s.getString(0).equals("error")) {
                     return new Object[] { "sanityCheckError", null };
                 }
                 boolean error = false;
