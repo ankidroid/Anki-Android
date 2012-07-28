@@ -825,7 +825,7 @@ public class StudyOptionsFragment extends Fragment {
             } else if (requestCode == STATISTICS && mCurrentContentView == CONTENT_CONGRATS) {
                 resetAndUpdateValuesFromDeck();
                 setFragmentContentView(mStudyOptionsView);
-            }        	
+            }
         }
     }
 

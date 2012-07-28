@@ -82,11 +82,11 @@
   <string name="pref_font_UI">Шрифт пользовательского интерфейса</string>
   <string name="info_rate">Оценка AnkiDroid</string>
   <string name="col_load_failed">Сбой загрузки коллекции.\nНажмите кнопку назад, чтобы закрыть AnkiDroid.</string>
-  <string name="import_title">Import Cards</string>
-  <string name="import_message">Do you really want to import all cards of file %s?</string>
-  <string name="import_log_success">Successfully imported %d cards</string>
-  <string name="import_log_error">Import failed</string>
-  <string name="import_importing">Importing cards.\nPlease wait...</string>
+  <string name="import_title">Импорт карт</string>
+  <string name="import_message">Вы действительно хотите импортировать все карты из файла %s?</string>
+  <string name="import_log_success">Успешно импортированы %d карты</string>
+  <string name="import_log_error">Импорт не удался</string>
+  <string name="import_importing">Импортирование карт.\nПожалуйста, подождите...</string>
   <string-array name="dynOrderLabels">
     <item>Старейшие появляться первыми</item>
     <item>Случайно</item>

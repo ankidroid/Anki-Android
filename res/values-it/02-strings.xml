@@ -82,11 +82,11 @@
   <string name="pref_font_UI">Carattere interfaccia utente personalizzato</string>
   <string name="info_rate">Valuta AnkiDroid</string>
   <string name="col_load_failed">Caricamento della collezione fallito.\nPremi indietro per chiudere AnkiDroid.</string>
-  <string name="import_title">Import Cards</string>
-  <string name="import_message">Do you really want to import all cards of file %s?</string>
-  <string name="import_log_success">Successfully imported %d cards</string>
-  <string name="import_log_error">Import failed</string>
-  <string name="import_importing">Importing cards.\nPlease wait...</string>
+  <string name="import_title">Importa carte</string>
+  <string name="import_message">Vuoi veramente importare tutte le carte del file %s?</string>
+  <string name="import_log_success">Importato %d carte con successo</string>
+  <string name="import_log_error">Importazione fallita</string>
+  <string name="import_importing">Importazione carte.\nAttendi...</string>
   <string-array name="dynOrderLabels">
     <item>Più vecchie visualizzate per prime</item>
     <item>Casuale</item>
