@@ -413,6 +413,7 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
             		failed.add(name);
             	}
             }
+            AnkiDroidApp.closeCollection(false);
             data.data = new Object[] { failed };
             data.success = true;
             return data;
