@@ -105,8 +105,10 @@
   <string name="sync_media_remove">삭제된 미디어파일 처리중...</string>
   <string name="sync_media_from_server">서버에서 미디어 파일 다운로드 중...</string>
   <string name="sync_media_to_server">미디어 파일 서버 전송 중...</string>
+  <string name="sync_media_sanity_check">Checking media counts...</string>
   <string name="sync_media_no_changes">변경된 미디어 파일이 없습니다.</string>
   <string name="sync_media_success">미디어 파일이 성공적으로 동기화 되었습니다.</string>
+  <string name="sync_media_sanity_failed">Media sync completed, but the media count doesn\'t agree with the server. The next media sync will be full to correct any error.</string>
   <string name="sync_media_error">Error syncing media data.</string>
   <string name="register_error">오류가 발생 했습니다. 나중에 다시 시도 하십시오.</string>
   <string name="register_title">계정 등록</string>
@@ -117,12 +119,14 @@
   <string name="upgrade_decks_waiting">대기중, 저장소 위치 %s\n기다려주세요...</string>
   <string name="upgrade_decks_upgrade_started">Upgrade started\nPlease waiting for finish...</string>
   <string name="upgrade_decks_downloading">업그레이드된 컬렉션을 다운로드중입니다.\n기다려주세요...</string>
+  <string name="upgrade_decks_media">Copying old media files to new media location.\nPlease wait...</string>
   <string name="upgrade_decks_message">There is no Anki 2.0 collection available but one or more decks in the old Anki 1.2 format have been found:%sIn order to use your decks with the new version of AnkiDroid they need to be converted first into a single collection of the new Anki-2.0 format. There are three possibilities for this:</string>
   <string name="upgrade_decks_message_pos1">By using Anki Desktop 2.0, your decks will be converted at the first start. You can sync over AnkiWeb or just copy the new collection afterwards to your mobile device. Copy your decks from your AnkiDroid directory (%s) to your Anki Desktop 1.2 directory on your computer (if you haven\'t synced them anyway) and start Anki Desktop 2.0.</string>
   <string name="upgrade_decks_message_pos2">만약 이미 ankiweb을 이용하여 카드묶음을 동기화 했다면, %s에 로그인을 하면 카드묶음이 전환될 것입니다. 그후 이동기기에서 간단하게 새로운 컬렉션을 동기화 하면 됩니다.</string>
-  <string name="upgrade_decks_message_pos3">제3의 대안으로 Ankidroid와 Ankiweb을 이용해서 파일 변황을 할 수 있습니다. 아래의 업그레드 버튼을 누르면 암기묶음이 AnkiWeb으로 업로드 됩니다. 변환된 컬렉션 파일이 자동으로 다운로드된 후 열리게 됩니다. 이때 어떤 등록도 필요하진 않지만 과다한 통신요금 부과를 피하기위해 와이파이 환경에서 작업하시는 것이 좋습니다. 하지만 압축한 암기묶음 파일이 50메가 이상일 경우에는 이 방식을 사용할 수 없습니다. 이럴 경우에는 다른 방식을 이용하시기 바랍니다.</string>
+  <string name="upgrade_decks_message_pos3">As a third possibility, you can have your decks converted via AnkiDroid itself and AnkiWeb. If you click on the upgrade button below, your decks will be bundled and uploaded to AnkiWeb. The converted collection will then be automatically downloaded and opened. You don\'t need any registration for that but be aware that it might be better to use a wifi connection in order to prevent too much traffic over your mobile connection. If the compressed decks amount to more than 50 mb, you cannot use this way. Please resort to the other options in this case. If your deck media files are hosted in custom folders or Dropbox custom folder, they might have to be copied manually to the new location.</string>
   <string name="upgrade_decks_message_finish">If you just proceed a new collection will be created without taking your old decks into account.</string>
   <string name="upgrade_required">AnkiWeb의 카드묶음이 아직 예전 1.2 버전 형태입니다. %s에 로그인하면, 카드묶음이 자동으로 새 형태로 전환됩니다.</string>
   <string name="upgrade_decks_button">업그레이드</string>
-  <string name="upgrade_decks_failed">These decks could not be upgraded\n%sPlease open them in Anki Desktop and do a database check. Afterwards you can import them via Anki Desktop.</string>
+  <string name="upgrade_decks_failed">These decks could not be upgraded:\n%sPlease open them in Anki Desktop and do a database check. Afterwards you can import them via Anki Desktop.</string>
+  <string name="upgrade_decks_media_failed">Copying the media files to the new media folder (%1$s) has failed for these decks:\n%2$sPlease move the media files manually.</string>
 </resources>
