@@ -20,7 +20,7 @@
 -->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
 	package="com.ichi2.anki"
-	android:versionName="2.0beta9"
+	android:versionName="2.0beta10"
 	android:versionCode="30"
 	android:installLocation="auto">
     <instrumentation android:name="android.test.InstrumentationTestRunner" android:targetPackage="com.ichi2.anki"></instrumentation>
@@ -45,6 +45,19 @@
 				<category android:name="android.intent.category.DEFAULT" />
 				<data android:mimeType="application/vnd.anki" />
 			</intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="http" android:host="*" android:mimeType="*/*"
+                    android:pathPattern=".*\\.apkg" />
+                <data android:scheme="https" android:host="*" android:mimeType="*/*"
+                    android:pathPattern=".*\\.apkg" />
+                <data android:scheme="content" android:host="*" android:mimeType="*/*"
+                    android:pathPattern=".*\\.apkg" />
+                <data android:scheme="file" android:host="*" android:mimeType="*/*"
+                    android:pathPattern=".*\\.apkg" />
+            </intent-filter>
 		</activity>
 		<activity android:name="com.ichi2.anki.StudyOptionsActivity" 
 			android:label="StudyOptions"
@@ -79,7 +92,7 @@
 			android:label="@string/fact_adder_intent_title"
 			android:configChanges="keyboardHidden|orientation|locale">
             <intent-filter>
-                <action android:name="org.openintents.indiclash.CREATE_FLASHCARD" />
+                <action android:name="org.openintents.action.CREATE_FLASHCARD" />
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
             <intent-filter>

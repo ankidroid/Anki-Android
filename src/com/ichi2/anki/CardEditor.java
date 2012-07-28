@@ -1180,6 +1180,10 @@ public class CardEditor extends Activity {
         StyledDialog ad = (StyledDialog) dialog;
         switch (id) {
             case DIALOG_TAGS_SELECT:
+            	if (mEditorNote == null) {
+            		dialog = null;
+            		return;
+            	}
                 selectedTags = new ArrayList<String>();
                 for (String s : mEditorNote.getTags()) {
                     selectedTags.add(s);

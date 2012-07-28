@@ -782,43 +782,50 @@ public class StudyOptionsFragment extends Fragment {
         // TODO: proper integration of big widget
         if (resultCode == DeckPicker.RESULT_MEDIA_EJECTED) {
             closeStudyOptions(DeckPicker.RESULT_MEDIA_EJECTED);
-        } else if (requestCode == DECK_OPTIONS) {
-            try {
-                JSONObject deck = AnkiDroidApp.getCol().getDecks().current();
-                if (deck.getInt("dyn") != 0 && deck.has("empty") && deck.getBoolean("empty")) {
-                	// deck is a cram deck and has to be filled for the first time
-                    deck.remove("empty");
-                    rebuildCramDeck();
-                } else {
-                    resetAndUpdateValuesFromDeck();
+        } else {
+            if (!AnkiDroidApp.colIsOpen()) {
+                reloadCollection();
+                mDontSaveOnStop = false;
+                return;
+            }
+        	if (requestCode == DECK_OPTIONS) {
+                try {
+                    JSONObject deck = AnkiDroidApp.getCol().getDecks().current();
+                    if (deck.getInt("dyn") != 0 && deck.has("empty") && deck.getBoolean("empty")) {
+                    	// deck is a cram deck and has to be filled for the first time
+                        deck.remove("empty");
+                        rebuildCramDeck();
+                    } else {
+                        resetAndUpdateValuesFromDeck();
+                    }
+                } catch (JSONException e) {
+                    throw new RuntimeException(e);
                 }
-            } catch (JSONException e) {
-                throw new RuntimeException(e);
+            } else if (requestCode == ADD_NOTE && resultCode != Activity.RESULT_CANCELED) {
+                resetAndUpdateValuesFromDeck();
+            } else if (requestCode == REQUEST_REVIEW) {
+                Log.i(AnkiDroidApp.TAG, "Result code = " + resultCode);
+                // TODO: Return to standard scheduler
+                // TODO: handle big widget
+                switch (resultCode) {
+                    case Reviewer.RESULT_SESSION_COMPLETED:
+                    default:
+                        // do not reload counts, if activity is created anew because it has been before destroyed by android
+                        resetAndUpdateValuesFromDeck();
+                        break;
+                    case Reviewer.RESULT_NO_MORE_CARDS:
+                        mTextCongratsMessage.setText(AnkiDroidApp.getCol().getSched().finishedMsg(getActivity()));
+                        setFragmentContentView(mCongratsView);
+                        break;
+                }
+                mDontSaveOnStop = false;
+            } else if (requestCode == BROWSE_CARDS && resultCode == Activity.RESULT_OK) {
+                mDontSaveOnStop = false;
+                resetAndUpdateValuesFromDeck();
+            } else if (requestCode == STATISTICS && mCurrentContentView == CONTENT_CONGRATS) {
+                resetAndUpdateValuesFromDeck();
+                setFragmentContentView(mStudyOptionsView);
             }
-        } else if (requestCode == ADD_NOTE && resultCode != Activity.RESULT_CANCELED) {
-            resetAndUpdateValuesFromDeck();
-        } else if (requestCode == REQUEST_REVIEW) {
-            Log.i(AnkiDroidApp.TAG, "Result code = " + resultCode);
-            // TODO: Return to standard scheduler
-            // TODO: handle big widget
-            switch (resultCode) {
-                case Reviewer.RESULT_SESSION_COMPLETED:
-                default:
-                    // do not reload counts, if activity is created anew because it has been before destroyed by android
-                    resetAndUpdateValuesFromDeck();
-                    break;
-                case Reviewer.RESULT_NO_MORE_CARDS:
-                    mTextCongratsMessage.setText(AnkiDroidApp.getCol().getSched().finishedMsg(getActivity()));
-                    setFragmentContentView(mCongratsView);
-                    break;
-            }
-            mDontSaveOnStop = false;
-        } else if (requestCode == BROWSE_CARDS && resultCode == Activity.RESULT_OK) {
-            mDontSaveOnStop = false;
-            resetAndUpdateValuesFromDeck();
-        } else if (requestCode == STATISTICS && mCurrentContentView == CONTENT_CONGRATS) {
-            resetAndUpdateValuesFromDeck();
-            setFragmentContentView(mStudyOptionsView);
         }
     }
 

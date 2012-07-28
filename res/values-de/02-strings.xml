@@ -82,6 +82,11 @@
   <string name="pref_font_UI">Benutzerdefinierte UI-Schriftart</string>
   <string name="info_rate">AnkiDroid bewerten</string>
   <string name="col_load_failed">Laden der Sammlung fehlgeschlagen.\nDrücken Sie \"zurück\", um AnkiDroid zu schließen.</string>
+  <string name="import_title">Karten importieren</string>
+  <string name="import_message">Möchten Sie wirklich alle Karten aus der Datei %s importieren?</string>
+  <string name="import_log_success">Erfolgreich %d Karten importiert</string>
+  <string name="import_log_error">Import fehlgeschlagen</string>
+  <string name="import_importing">Karten werden importiert.\nBitte warten...</string>
   <string-array name="dynOrderLabels">
     <item>Am frühesten gesehene zuerst</item>
     <item>Zufällig</item>

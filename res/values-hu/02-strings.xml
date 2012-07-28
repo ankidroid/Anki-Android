@@ -82,6 +82,11 @@
   <string name="pref_font_UI">Saját UI betűkészlet</string>
   <string name="info_rate">AnkiDroid értékelése</string>
   <string name="col_load_failed">Collection loading failed.\nPress back to close AnkiDroid.</string>
+  <string name="import_title">Import Cards</string>
+  <string name="import_message">Do you really want to import all cards of file %s?</string>
+  <string name="import_log_success">Successfully imported %d cards</string>
+  <string name="import_log_error">Import failed</string>
+  <string name="import_importing">Importing cards.\nPlease wait...</string>
   <string-array name="dynOrderLabels">
     <item>Legrégebbi látott először</item>
     <item>Véletlenszerű</item>

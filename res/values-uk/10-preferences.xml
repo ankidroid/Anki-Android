@@ -206,7 +206,7 @@
   <string name="fix_orientation_summ">Заборонити зміну орієнтації під час перегляду</string>
   <string name="per_day">За день</string>
   <string name="studyoptions_new_cards_per_day">Нових карток за день</string>
-  <string name="studyoptions_max_fail_card">Max fail cards</string>
+  <string name="studyoptions_max_fail_card">Максимум невдалих карток</string>
   <string name="show_broadcast_messages">Показувати поточні повідомлення</string>
   <string name="show_broadcast_messages_summ">Показувати повідомлення AnkiDroid про оновлення до нових версій або інші важливі новини</string>
   <string name="input_workaround">Тимчасове рішення для введення</string>
