@@ -2049,7 +2049,9 @@ public class DeckPicker extends FragmentActivity {
     @Override
     public boolean onMenuOpened(int featureId, Menu menu) {
         if (mInvalidateMenu) {
-            menu.clear();
+        	if (menu != null) {
+                menu.clear();
+        	}
             onCreateOptionsMenu(menu);
             mInvalidateMenu = false;
         }
