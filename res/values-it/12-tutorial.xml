@@ -26,7 +26,7 @@
     <item><![CDATA[Le carte vengono raccolte in mazzi e possono essere organizzate con l\'aiuto di ogni tipo di etichetta.]]></item> 
     <item><![CDATA[Ci sono principalmente due modi per aggiungere carte nuove:<br />Puoi scaricare dei mazzi già creati da altri utenti (scegli &quot;mazzi condivisi&quot; nel sommario dei mazzi) o crearli te stesso.]]></item> 
     <item><![CDATA[Ma ad ogni modo, la creazione di mazzi personali è essenziale per soddisfare a pieno le tue esigenze. Puoi farlo direttamente con AnkiDroid...]]></item> 
-    <item><![CDATA[Let\'s have a look on the top bar:<br />In the left top corner you find some numbers. The blue one tells you, how many new cards are still projected for today. The red number counts the failed cards (answered by &quot;again&quot;),]]></item> 
+    <item><![CDATA[Diamo uno sguardo alla barra in alto:<br /> Nell\'angolo in alto a sinistra trovi alcuni numeri. Il numero blu indica quante carte nuove sono ancora previste per oggi. Il numero rosso indica le carte fallite (alle quali hai risposto con &quot;Ripeti&quot;),]]></item> 
     <item><![CDATA[Nell\'angolo destro trovi le informazioni sul tempo a disposizione e sulla tua performance.]]></item> 
     <item><![CDATA[Anche se è possibile utilizzare AnkiDroid stand-alone, esso è completamente collegato ad AnkiWeb, il server di sincronizzazione di Anki Desktop (disponibile per Linux, Windows, Mac).]]></item> 
     <item><![CDATA[Questi erano i punti principali per l\'utilizzo di AnkiDroid.<br /><br>Per ulteriori informazioni sui concetti di Anki, visita http://ankisrs.net/]]></item> 
@@ -41,7 +41,7 @@
     <item><![CDATA[Lo imparerai rapidamente quando inizierai a utilizzare AnkiDroid.]]></item> 
     <item><![CDATA[Troverai migliaia di mazzi già pronti da scaricare e probabilmente ce ne sono alcuni che potranno esserti utili.]]></item> 
     <item><![CDATA[...o (più facilmente) con l\'applicazione Anki per pc (scaricabile gratuitamente sul sito http://ankisrs.net/).<br><br>La sincronizzazione dei tuoi mazzi con l\'applicazione per pc è semplicissima, quindi trasferire i dati non sarà un problema.]]></item> 
-    <item><![CDATA[the green one shows the number of cards you\'ve already learned before and which are due to review today.<br />The type of the actual cards is specified by an underline.]]></item> 
+    <item><![CDATA[ quello verde indica il numero di carte già imparate precedentemente e che sono da ripetere oggi.<br />Il tipo di carta attuale è indicato con una sottolineatura.]]></item> 
     <item><![CDATA[Nella barra superiore ci sono i tuoi progressi, quella inferiore indica la percentuale di risposte positive.]]></item> 
     <item><![CDATA[In questo modo puoi sincronizzare con facilità la tua collezione tra AnkiDroid e Anki Desktop, e utilizzare quest\'ultimo per aggiungere e gestire le carte più facilmente.]]></item> 
     <item><![CDATA[Ora provalo un po\' e vedi se soddisfa le tue esigenze.<br><br>Inizia magari con la schermata principale dei mazzi (Premi menu sullo schermo principale e scegli &quot;tutti i mazzi&quot;), da dove puoi scaricare mazzi già pronti o crearne di tuoi (basta usare il menu).]]></item> 
