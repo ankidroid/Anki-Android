@@ -56,14 +56,14 @@ public class MediaSyncer {
         List<String> lRem = removed();
         JSONArray rRem = mServer.remove(lRem, lUsn);
         if (rRem == null) {
-            Log.i(AnkiDroidApp.TAG, "MediaSyner: error (empty rRem) - returning");
+            Log.e(AnkiDroidApp.TAG, "MediaSyncer: error (empty rRem) - returning");
             return null;
         }
         remove(rRem);
 
         // step 3: stream files from server
         con.publishProgress(R.string.sync_media_from_server);
-        Log.i(AnkiDroidApp.TAG, "MediaSync: receing media from server");
+        Log.i(AnkiDroidApp.TAG, "MediaSync: receiving media from server");
         while (true) {
             long usn = mCol.getMedia().usn();
             File zip = mServer.files(usn, mCol.getPath().replaceFirst("collection\\.anki2$", "tmpSyncFromServer.zip"));
@@ -94,12 +94,23 @@ public class MediaSyncer {
         }
 
         // step 5: sanity check during beta testing
+        con.publishProgress(R.string.sync_media_sanity_check);
         Log.i(AnkiDroidApp.TAG, "MediaSync: sanity check");
         long sMediaSanity = mServer.mediaSanity();
-        long cMediaSanity = mediaSanity();
-        if (sMediaSanity != cMediaSanity) {
-            throw new RuntimeException("Media sanity check failed. Please copy and paste the text below:\n"
-                    + cMediaSanity + "\n" + sMediaSanity);
+        Pair<Long, Long> cMediaSanity = mediaSanity();
+        if (cMediaSanity.first != 0 || sMediaSanity != cMediaSanity.second) {
+            Log.e(AnkiDroidApp.TAG,
+                    "Media sanity check failed. Diffs [local, server] - Logs: [" + cMediaSanity.first +
+                    ", 0], Counts: [" + cMediaSanity.second + ", " + sMediaSanity + "]");
+            if (cMediaSanity.first != 0) {
+                AnkiDroidApp.saveExceptionReportFile(new RuntimeException(
+                        "Media sanity check failed. Logs not empty."), "doInBackgroundSync-mediaSync");
+            } else {
+                AnkiDroidApp.saveExceptionReportFile(new RuntimeException(
+                        "Media sanity check failed. Counts are off."), "doInBackgroundSync-mediaSync");
+            }
+            mCol.getMedia().resetMediaDb();
+            return "sanityFailed";
         }
         return "success";
     }
@@ -133,7 +144,7 @@ public class MediaSyncer {
     }
 
 
-    private long mediaSanity() {
+    private Pair<Long, Long> mediaSanity() {
         return mCol.getMedia().sanityCheck();
     }
 }

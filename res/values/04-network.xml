@@ -125,8 +125,10 @@
 <string name="sync_media_remove">Handling deleted media...</string>
 <string name="sync_media_from_server">Receiving media from server...</string>
 <string name="sync_media_to_server">Sending media to server...</string>
+<string name="sync_media_sanity_check">Checking media counts...</string>
 <string name="sync_media_no_changes">No changes to media files.</string>
 <string name="sync_media_success">Media synced successfully.</string>
+<string name="sync_media_sanity_failed">Media sync completed, but the media count doesn\'t agree with the server. The next media sync will be full to correct any error.</string>
 <string name="sync_media_error">Error syncing media data.</string>
 
 <string name="register_error">An error occurred. Please try again later.</string>

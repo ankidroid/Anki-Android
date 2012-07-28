@@ -773,9 +773,9 @@ public class Utils {
         long sizeBytes = 0;
         int len;
         if (source == null) {
-            Log.i(AnkiDroidApp.TAG, "source is null!");
+            Log.e(AnkiDroidApp.TAG, "source is null!");
         }
-        while ((len = source.read(buf)) > 0) {
+        while ((len = source.read(buf)) >= 0) {
             output.write(buf, 0, len);
             sizeBytes += len;
         }

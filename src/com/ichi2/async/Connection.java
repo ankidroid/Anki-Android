@@ -306,7 +306,7 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
                 ZipEntry ze = new ZipEntry(tmpName);
                 zos.putNextEntry(ze);
                 int len;
-                while ((len = in.read(buf)) > 0) {
+                while ((len = in.read(buf)) >= 0) {
                     zos.write(buf, 0, len);
                 }
                 zos.closeEntry();
@@ -317,7 +317,7 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
             zos.putNextEntry(ze);
             InputStream in = new ByteArrayInputStream(map.toString().getBytes("UTF-8"));
             int len;
-            while ((len = in.read(buf)) > 0) {
+            while ((len = in.read(buf)) >= 0) {
                 zos.write(buf, 0, len);
             }
             zos.closeEntry();
@@ -608,7 +608,7 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
 
         // then move on to media sync
         boolean noMediaChanges = false;
-        boolean mediaError = false;
+        String mediaError = null;
         if (media) {
             server = new RemoteMediaServer(hkey, this);
             MediaSyncer mediaClient = new MediaSyncer(col, (RemoteMediaServer) server);
@@ -616,18 +616,20 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
             try {
                 ret = mediaClient.sync(mediaUsn, this);
                 if (ret == null) {
-                	mediaError = true;
+                    mediaError = AnkiDroidApp.getAppResources().getString(R.string.sync_media_error);
                 } else {
                     if (ret.equals("noChanges")) {
                         publishProgress(R.string.sync_media_no_changes);
                         noMediaChanges = true;
+                    } if (ret.equals("sanityFailed")) {
+                        mediaError = AnkiDroidApp.getAppResources().getString(R.string.sync_media_sanity_failed);
                     } else {
                         publishProgress(R.string.sync_media_success);
-                    }                	
+                    }
                 }
-           } catch (RuntimeException e) {
-    			AnkiDroidApp.saveExceptionReportFile(e, "doInBackgroundSync-mediaSync");
-            	mediaError = true;
+            } catch (RuntimeException e) {
+               AnkiDroidApp.saveExceptionReportFile(e, "doInBackgroundSync-mediaSync");
+               mediaError = e.getLocalizedMessage();
             }
         }
         if (noChanges && noMediaChanges) {
