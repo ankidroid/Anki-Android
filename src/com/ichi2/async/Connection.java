@@ -34,6 +34,7 @@ import com.ichi2.anki.R;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Decks;
 import com.ichi2.libanki.Sched;
+import com.ichi2.libanki.Utils;
 import com.ichi2.libanki.sync.FullSyncer;
 import com.ichi2.libanki.sync.BasicHttpSyncer;
 import com.ichi2.libanki.sync.MediaSyncer;
@@ -407,14 +408,45 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
             Collection col = AnkiDroidApp.openCollection(colFilename);
             ArrayList<String> decks = col.getDecks().allNames(false);
             ArrayList<String> failed = new ArrayList<String>();
+            ArrayList<File> mediaDirs = new ArrayList<File>();
             for (File f : fileList) {
-            	String name = f.getName().replace(".anki", "");
-            	if (!decks.contains(name)) {
-            		failed.add(name);
-            	}
+                String name = f.getName().replaceFirst("\\.anki$", "");
+                if (!decks.contains(name)) {
+                    failed.add(name);
+                } else {
+                    mediaDirs.add(new File(f.getAbsolutePath().replaceFirst("\\.anki$", ".media")));
+                }
             }
+            File newMediaDir = new File(col.getMedia().getDir());
             AnkiDroidApp.closeCollection(false);
-            data.data = new Object[] { failed };
+
+            // step 6. move media files to new media directory
+            publishProgress(new Object[] { R.string.upgrade_decks_media });
+            ArrayList<String> failedMedia = new ArrayList<String>();
+            File curMediaDir = null;
+            for ( File mediaDir : mediaDirs) {
+                curMediaDir = mediaDir;
+                // Check if media directory exists and is local
+                if (!curMediaDir.exists() || !curMediaDir.isDirectory()) {
+                    // If not try finding it in dropbox 1.2.x
+                    curMediaDir = new File(AnkiDroidApp.getDropboxDir(), mediaDir.getName());
+                    if (!curMediaDir.exists() || !curMediaDir.isDirectory()) {
+                        // No media for this deck
+                        continue;
+                    }
+                }
+                // Found media dir, copy files
+                for (File m : curMediaDir.listFiles()) {
+                    try {
+                        Utils.copyFile(m, new File(newMediaDir, m.getName()));
+                    } catch (IOException e) {
+                        failedMedia.add(curMediaDir.getName().replaceFirst("\\.media$", ".anki"));
+                        break;
+                    }
+                }
+            }
+
+            data.data = new Object[] { failed, failedMedia, newMediaDir.getAbsolutePath()};
             data.success = true;
             return data;
         } catch (FileNotFoundException e) {
