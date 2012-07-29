@@ -16,6 +16,7 @@
 
 package com.ichi2.libanki.hooks;
 
+import android.content.SharedPreferences;
 import android.util.Log;
 
 import com.ichi2.anki.AnkiDroidApp;
@@ -31,13 +32,19 @@ public class Hooks {
     private Map<String, List<Hook>> hooks;
 
 
-    public Hooks() {
+    public Hooks(SharedPreferences prefs) {
         hooks = new HashMap<String, List<Hook>>();
-        // Add default hooks
+        // Always-ON hooks
         new FuriganaFilters().install(this);
         new HintFilter().install(this);
         new LaTeX().installHook(this);
-        //ChessFilter.install(this);
+        // Preferences activated hooks
+        if (prefs.getBoolean("fixHebrewText", false)) {
+            HebrewFixFilter.install(this);
+        }
+        if (prefs.getBoolean("convertFenText", false)) {
+            ChessFilter.install(this);
+        }
     }
 
 
