@@ -140,8 +140,10 @@
   <string name="shake_intensity_summ">Κατώτατο όριο για την αναγνώριση ανακίνησης: XXX</string>
   <string name="sync_fetch_missing_media">Λήψη μέσων με συγχρονισμό</string>
   <string name="sync_fetch_missing_media_summ">Αυτόματη λήψη απόντων μέσων κατά τον συγχρονισμό.</string>
-  <string name="fix_hebrew_text">Επιβολή RTL για τα εβραϊκά</string>
-  <string name="fix_hebrew_text_summ">Εναλλακτική λύση για περιορισμένη υποστήριξη για εβραϊκά από το Android. Δεν υποστηρίζει φωνήεντα.</string>
+  <string name="fix_hebrew_text">Fix for Hebrew vowels</string>
+  <string name="fix_hebrew_text_summ">Workaround for rendering Hebrew vowels correctly.</string>
+  <string name="fix_hebrew_instructions">This setting bypasses the RTL algorithm of Android to show Hebrew text with vowels correctly.\n\nFor this to work, you need to download font Tohu.ttf and copy it manually to:\n%s/fonts/\n\nYou won\'t have to modify your cards.</string>
+  <string name="fix_hebrew_download_font">Download Font</string>
   <string name="default_font">Προεπιλεγμένη γραμματοσειρά</string>
   <string name="default_font_summ">The font used for text that has no font formatting specified. Custom fonts should be installed on the SD card in a folder called \'fonts\' in your AnkiDroid folder.</string>
   <string name="language">Γλώσσα</string>

@@ -140,8 +140,10 @@
   <string name="shake_intensity_summ">Drempel voor herkennen schudden: XXX</string>
   <string name="sync_fetch_missing_media">Haal media op bij synchroniseren</string>
   <string name="sync_fetch_missing_media_summ">Haal automatisch ontbrekende media op bij synchroniseren.</string>
-  <string name="fix_hebrew_text">RTL afdwingen voor Hebreeuws</string>
-  <string name="fix_hebrew_text_summ">Workaround voor beperkte ondersteuning voor Hebreeuws door Android-platform. Ondersteunt geen klinkers.</string>
+  <string name="fix_hebrew_text">Fix for Hebrew vowels</string>
+  <string name="fix_hebrew_text_summ">Workaround for rendering Hebrew vowels correctly.</string>
+  <string name="fix_hebrew_instructions">This setting bypasses the RTL algorithm of Android to show Hebrew text with vowels correctly.\n\nFor this to work, you need to download font Tohu.ttf and copy it manually to:\n%s/fonts/\n\nYou won\'t have to modify your cards.</string>
+  <string name="fix_hebrew_download_font">Download Font</string>
   <string name="default_font">Standaardlettertype</string>
   <string name="default_font_summ">Het lettertype dat wordt gebruikt voor tekst zonder specifiek lettertypeopmaak. Aangepaste lettertypen moeten worden geïnstalleerd op de SD-kaart in een map met de naam \'fonts\' in de map AnkiDroid.</string>
   <string name="language">Taal</string>
