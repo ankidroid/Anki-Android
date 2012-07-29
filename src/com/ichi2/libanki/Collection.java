@@ -89,7 +89,7 @@ public class Collection {
     private String mPath;
 
     // Cloze regex
-    private static final Pattern sRegexPattern = Pattern.compile("\\{\\{cloze:");
+    private static final Pattern fClozePattern = Pattern.compile("\\{\\{cloze:");
 
     // other options
     public static final String defaultConf = "{"
@@ -910,14 +910,9 @@ public class Collection {
 
             // runFilter mungeFields for type "q"
             Models.fieldParser fparser = new Models.fieldParser(fields);
-            Matcher m = sRegexPattern.matcher(qfmt);
-            if (m.find()) {
-                format = m.replaceFirst("{{cq:" + String.valueOf(((Integer) data[4]) + 1) + ":");
-                html = Mustache.compiler().compile(format).execute(fparser);
-            } else {
-                // use already compiled template
-                html = mModels.getCmpldTemplate(modelId, (Integer) data[4], args)[0].execute(fparser);
-            }
+            Matcher m = fClozePattern.matcher(qfmt);
+            format = m.replaceFirst("{{cq:" + String.valueOf(((Integer) data[4]) + 1) + ":");
+            html = mModels.getCmpldTemplate(format).execute(fparser);
             html = (String) AnkiDroidApp.getHooks().runFilter("mungeQA", html, "q", fields, model, data, this);
             d.put("q", html);
             // empty cloze?
@@ -930,14 +925,9 @@ public class Collection {
 
             // runFilter mungeFields for type "a"
             fparser = new Models.fieldParser(fields);
-            m = sRegexPattern.matcher(afmt);
-            if (m.find()) {
-                format = m.replaceFirst("{{ca:" + String.valueOf(((Integer) data[4]) + 1) + ":");
-                html = Mustache.compiler().compile(format).execute(fparser);
-            } else {
-                // use already compiled template
-                html = mModels.getCmpldTemplate(modelId, (Integer) data[4], args)[1].execute(fparser);
-            }
+            m = fClozePattern.matcher(afmt);
+            format = m.replaceFirst("{{ca:" + String.valueOf(((Integer) data[4]) + 1) + ":");
+            html = mModels.getCmpldTemplate(format).execute(fparser);
             html = (String) AnkiDroidApp.getHooks().runFilter("mungeQA", html, "a", fields, model, data, this);
             d.put("a", html);
             // empty cloze?
