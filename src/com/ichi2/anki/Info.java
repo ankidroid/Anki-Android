@@ -320,22 +320,38 @@ public class Info extends Activity {
             }
 
             if (data.success) {
-            	ArrayList<String> failed = (ArrayList<String>) data.data[0];
-            	if (failed.size() == 0) {
-            		setResult(RESULT_OK);
+                ArrayList<String> failed = (ArrayList<String>) data.data[0];
+                ArrayList<String> failedMedia = (ArrayList<String>) data.data[1];
+                String newMediaDir = (String) data.data[2];
+                if (failed.size() == 0 && failedMedia.size() == 0) {
+                    setResult(RESULT_OK);
                     finish();
                     if (AnkiDroidApp.SDK_VERSION > 4) {
                         ActivityTransitionAnimation.slide(Info.this, ActivityTransitionAnimation.LEFT);
                     }
-            	} else {
+                } else {
                     StyledDialog.Builder builder = new StyledDialog.Builder(Info.this);
                     builder.setTitle(res.getString(R.string.connection_error_title));
                     builder.setIcon(R.drawable.ic_dialog_alert);
-                    StringBuilder sbb = new StringBuilder();
-                    for (String s : failed) {
-                    	sbb.append(" \u2022 ").append(s).append("\n");
+                    String failures = "";
+                    if (failed.size() > 0) {
+                        StringBuilder sbb = new StringBuilder();
+                        for (String s : failed) {
+                            sbb.append(" \u2022 ").append(s).append("\n");
+                        }
+                        failures += res.getString(R.string.upgrade_decks_failed, sbb.toString());
                     }
-                    builder.setMessage(res.getString(R.string.upgrade_decks_failed, sbb.toString()));
+                    if (failedMedia.size() > 0) {
+                        StringBuilder sbb = new StringBuilder();
+                        for (String s : failedMedia) {
+                            sbb.append(" \u2022 ").append(s).append("\n");
+                        }
+                        if (failures.length() > 0) {
+                            failures += "\n\n";
+                        }
+                        failures += res.getString(R.string.upgrade_decks_media_failed, newMediaDir, sbb.toString());
+                    }
+                    builder.setMessage(failures);
                     builder.setPositiveButton(res.getString(R.string.ok), new Dialog.OnClickListener() {
 
 						@Override

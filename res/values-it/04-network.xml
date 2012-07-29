@@ -105,8 +105,10 @@
   <string name="sync_media_remove">Trattamento media eliminati...</string>
   <string name="sync_media_from_server">Ricezione media dal server...</string>
   <string name="sync_media_to_server">Invio media al server...</string>
+  <string name="sync_media_sanity_check">Checking media counts...</string>
   <string name="sync_media_no_changes">Nessuna modifica ai file multimediali.</string>
   <string name="sync_media_success">Media sincronizzati con successo.</string>
+  <string name="sync_media_sanity_failed">Media sync completed, but the media count doesn\'t agree with the server. The next media sync will be full to correct any error.</string>
   <string name="sync_media_error">Errore di sincronizzazione dei dati multimediali.</string>
   <string name="register_error">Si è verificato un errore. Riprova più tardi.</string>
   <string name="register_title">Registra account</string>
@@ -117,12 +119,14 @@
   <string name="upgrade_decks_waiting">In attesa, posizione nella coda: %s\nAttendi...</string>
   <string name="upgrade_decks_upgrade_started">Aggiornamento iniziato\nAttendi la conclusione...</string>
   <string name="upgrade_decks_downloading">Scarico la collezione aggiornata.\nAttendi...</string>
+  <string name="upgrade_decks_media">Copio i vecchi file multimediali nella nuova posizione.\nAttendi...</string>
   <string name="upgrade_decks_message">Non è disponibile nessuna collezione Anki 2.0, ma è stato trovato almeno un mazzo nel vecchio formato Anki 1.2:%sPer poter utilizzare i mazzi con la nuova versione di AnkiDroid, devono dapprima essere convertiti in un\'unica collezione nel nuovo formato Anki-2.0. Per fare questo ci sono tre possibilità:</string>
   <string name="upgrade_decks_message_pos1">Usando Anki Desktop 2.0, i tuoi mazzi saranno convertiti al primo avvio. Puoi sincronizzare tramite AnkiWeb o semplicemente copiare in seguito la nuova collezione sul tuo dispositivo mobile. Copia i mazzi dalla tua cartella AnkiDroid (%s) alla tua cartella Anki Desktop 1.2 sul tuo computer (se non li hai già sincronizzati) e avvia Anki Desktop 2.0.</string>
   <string name="upgrade_decks_message_pos2">Se sincronizzi già i tuoi mazzi tramite ankiweb, ti basta accedere una volta a %s ed i tuoi mazzi saranno convertiti lì. Dopo di che puoi semplicemente sincronizzare la nuova collezione sul tuo dispositivo mobile.</string>
-  <string name="upgrade_decks_message_pos3">Come terza possibilità, puoi convertire i tuoi mazzi via AnkiDroid stesso e AnkiWeb. Se clicchi sul pulsante di aggiornamento qui sotto, i tuoi mazzi verranno raggruppati e caricati su AnkiWeb. La collezione convertita verrà poi scaricata e aperta automaticamente. Non è necessario essere registrato per fare questo, ma considera che potrebbe essere meglio utilizzare una connessione wifi per evitare un traffico eccessivo sulla connessione mobile. Se i mazzi compressi superano i 50 mb, non è possibile utilizzare questo metodo. In questo caso devi ricorrere alle altre opzioni.</string>
+  <string name="upgrade_decks_message_pos3">As a third possibility, you can have your decks converted via AnkiDroid itself and AnkiWeb. If you click on the upgrade button below, your decks will be bundled and uploaded to AnkiWeb. The converted collection will then be automatically downloaded and opened. You don\'t need any registration for that but be aware that it might be better to use a wifi connection in order to prevent too much traffic over your mobile connection. If the compressed decks amount to more than 50 mb, you cannot use this way. Please resort to the other options in this case. If your deck media files are hosted in custom folders or Dropbox custom folder, they might have to be copied manually to the new location.</string>
   <string name="upgrade_decks_message_finish">Se procedi verrà creata una nuova collezione senza considerare i tuoi vecchi mazzi.</string>
   <string name="upgrade_required">I tuoi mazzi su AnkiWeb sono ancora nel vecchio formato Anki 1.2. Visita %s ed esegui l\'accesso. I tuoi mazzi verranno convertiti automaticamente nel nuovo formato.</string>
   <string name="upgrade_decks_button">Aggiorna</string>
-  <string name="upgrade_decks_failed">Questi mazzi non hanno potuto essere aggiornati\n%sAprili in Anki Desktop ed esegui un controllo del database. In seguito puoi importarli tramite Anki Desktop.</string>
+  <string name="upgrade_decks_failed">These decks could not be upgraded:\n%sPlease open them in Anki Desktop and do a database check. Afterwards you can import them via Anki Desktop.</string>
+  <string name="upgrade_decks_media_failed">Copying the media files to the new media folder (%1$s) has failed for these decks:\n%2$sPlease move the media files manually.</string>
 </resources>

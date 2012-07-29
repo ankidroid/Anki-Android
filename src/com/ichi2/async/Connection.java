@@ -34,6 +34,7 @@ import com.ichi2.anki.R;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Decks;
 import com.ichi2.libanki.Sched;
+import com.ichi2.libanki.Utils;
 import com.ichi2.libanki.sync.FullSyncer;
 import com.ichi2.libanki.sync.BasicHttpSyncer;
 import com.ichi2.libanki.sync.MediaSyncer;
@@ -305,7 +306,7 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
                 ZipEntry ze = new ZipEntry(tmpName);
                 zos.putNextEntry(ze);
                 int len;
-                while ((len = in.read(buf)) > 0) {
+                while ((len = in.read(buf)) >= 0) {
                     zos.write(buf, 0, len);
                 }
                 zos.closeEntry();
@@ -316,7 +317,7 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
             zos.putNextEntry(ze);
             InputStream in = new ByteArrayInputStream(map.toString().getBytes("UTF-8"));
             int len;
-            while ((len = in.read(buf)) > 0) {
+            while ((len = in.read(buf)) >= 0) {
                 zos.write(buf, 0, len);
             }
             zos.closeEntry();
@@ -407,14 +408,45 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
             Collection col = AnkiDroidApp.openCollection(colFilename);
             ArrayList<String> decks = col.getDecks().allNames(false);
             ArrayList<String> failed = new ArrayList<String>();
+            ArrayList<File> mediaDirs = new ArrayList<File>();
             for (File f : fileList) {
-            	String name = f.getName().replace(".anki", "");
-            	if (!decks.contains(name)) {
-            		failed.add(name);
-            	}
+                String name = f.getName().replaceFirst("\\.anki$", "");
+                if (!decks.contains(name)) {
+                    failed.add(name);
+                } else {
+                    mediaDirs.add(new File(f.getAbsolutePath().replaceFirst("\\.anki$", ".media")));
+                }
             }
+            File newMediaDir = new File(col.getMedia().getDir());
             AnkiDroidApp.closeCollection(false);
-            data.data = new Object[] { failed };
+
+            // step 6. move media files to new media directory
+            publishProgress(new Object[] { R.string.upgrade_decks_media });
+            ArrayList<String> failedMedia = new ArrayList<String>();
+            File curMediaDir = null;
+            for ( File mediaDir : mediaDirs) {
+                curMediaDir = mediaDir;
+                // Check if media directory exists and is local
+                if (!curMediaDir.exists() || !curMediaDir.isDirectory()) {
+                    // If not try finding it in dropbox 1.2.x
+                    curMediaDir = new File(AnkiDroidApp.getDropboxDir(), mediaDir.getName());
+                    if (!curMediaDir.exists() || !curMediaDir.isDirectory()) {
+                        // No media for this deck
+                        continue;
+                    }
+                }
+                // Found media dir, copy files
+                for (File m : curMediaDir.listFiles()) {
+                    try {
+                        Utils.copyFile(m, new File(newMediaDir, m.getName()));
+                    } catch (IOException e) {
+                        failedMedia.add(curMediaDir.getName().replaceFirst("\\.media$", ".anki"));
+                        break;
+                    }
+                }
+            }
+
+            data.data = new Object[] { failed, failedMedia, newMediaDir.getAbsolutePath()};
             data.success = true;
             return data;
         } catch (FileNotFoundException e) {
@@ -576,7 +608,7 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
 
         // then move on to media sync
         boolean noMediaChanges = false;
-        boolean mediaError = false;
+        String mediaError = null;
         if (media) {
             server = new RemoteMediaServer(hkey, this);
             MediaSyncer mediaClient = new MediaSyncer(col, (RemoteMediaServer) server);
@@ -584,18 +616,20 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
             try {
                 ret = mediaClient.sync(mediaUsn, this);
                 if (ret == null) {
-                	mediaError = true;
+                    mediaError = AnkiDroidApp.getAppResources().getString(R.string.sync_media_error);
                 } else {
                     if (ret.equals("noChanges")) {
                         publishProgress(R.string.sync_media_no_changes);
                         noMediaChanges = true;
+                    } if (ret.equals("sanityFailed")) {
+                        mediaError = AnkiDroidApp.getAppResources().getString(R.string.sync_media_sanity_failed);
                     } else {
                         publishProgress(R.string.sync_media_success);
-                    }                	
+                    }
                 }
-           } catch (RuntimeException e) {
-    			AnkiDroidApp.saveExceptionReportFile(e, "doInBackgroundSync-mediaSync");
-            	mediaError = true;
+            } catch (RuntimeException e) {
+               AnkiDroidApp.saveExceptionReportFile(e, "doInBackgroundSync-mediaSync");
+               mediaError = e.getLocalizedMessage();
             }
         }
         if (noChanges && noMediaChanges) {

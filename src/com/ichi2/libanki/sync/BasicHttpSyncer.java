@@ -139,13 +139,13 @@ public class BasicHttpSyncer implements HttpSyncer {
                 byte[] chunk = new byte[65536];
                 if (comp != 0) {
                     tgt = new GZIPOutputStream(bos);
-                    while ((len = bfobj.read(chunk)) > 0) {
+                    while ((len = bfobj.read(chunk)) >= 0) {
                         tgt.write(chunk, 0, len);
                     }
                     tgt.close();
                     bos = new BufferedOutputStream(new FileOutputStream(tmpFileBuffer, true));
                 } else {
-                    while ((len = bfobj.read(chunk)) > 0) {
+                    while ((len = bfobj.read(chunk)) >= 0) {
                         bos.write(chunk, 0, len);
                     }
                 }
@@ -217,7 +217,7 @@ public class BasicHttpSyncer implements HttpSyncer {
             output = new BufferedOutputStream(new FileOutputStream(file));
             byte[] buf = new byte[Utils.CHUNK_SIZE];
             int len;
-            while ((len = source.read(buf)) > 0) {
+            while ((len = source.read(buf)) >= 0) {
                 output.write(buf, 0, len);
                 bytesReceived += len;
                 publishProgress();
