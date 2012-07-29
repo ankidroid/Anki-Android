@@ -3215,7 +3215,7 @@ public class Reviewer extends AnkiActivity {
 
         @Override
         public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
-            if (!mCurrentSimpleInterface) {
+            if (!mCurrentSimpleInterface && mCard != null) {
                 if (mCard.getScrollY() != 0) {
                     mIsYScrolling = true;
                 }
