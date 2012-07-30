@@ -37,6 +37,7 @@ import com.ichi2.anki.AnkiDb;
 import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.AnkiFont;
 import com.ichi2.anki.R;
+import com.ichi2.async.Connection.OldAnkiDeckFilter;
 import com.mindprod.common11.BigDate;
 
 import org.json.JSONArray;
@@ -48,6 +49,7 @@ import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileFilter;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -1053,8 +1055,7 @@ public class Utils {
 
     /** Returns a list of files for the installed custom fonts. */
     public static List<AnkiFont> getCustomFonts(Context context) {
-        SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(context);
-        String deckPath = preferences.getString("deckPath", AnkiDroidApp.getDefaultAnkiDroidDirectory());
+        String deckPath = AnkiDroidApp.getCurrentAnkiDroidDirectory(context);
         String fontsPath = deckPath + "/fonts/";
         File fontsDir = new File(fontsPath);
         int fontsCount = 0;
@@ -1078,6 +1079,32 @@ public class Utils {
         }
 
        	return fonts;
+    }
+
+    
+    /** Returns a list of apkg-files. */
+    public static List<File> getImportableDecks(Context context) {
+        String deckPath = AnkiDroidApp.getCurrentAnkiDroidDirectory(context);
+        File dir = new File(deckPath);
+        int deckCount = 0;
+        File[] deckList = null;
+        if (dir.exists() && dir.isDirectory()) {
+        	deckList = dir.listFiles(new FileFilter(){
+                @Override
+                public boolean accept(File pathname) {
+                    if (pathname.isFile() && pathname.getName().endsWith(".apkg")) {
+                        return true;
+                    }
+                    return false;
+                }
+            });
+        	deckCount = deckList.length;
+        }
+        List<File> decks = new ArrayList<File>();
+        for (int i = 0; i < deckCount; i++) {
+        	decks.add(deckList[i]);
+        }
+       	return decks;
     }
 
 
@@ -1120,4 +1147,5 @@ public class Utils {
             }
         }
     }
+
 }

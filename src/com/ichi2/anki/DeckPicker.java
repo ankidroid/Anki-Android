@@ -79,6 +79,7 @@ import org.json.JSONException;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.TreeSet;
 
 public class DeckPicker extends FragmentActivity {
@@ -113,12 +114,15 @@ public class DeckPicker extends FragmentActivity {
     private static final int DIALOG_SYNC_UPGRADE_REQUIRED = 27;
     private static final int DIALOG_IMPORT = 28;
     private static final int DIALOG_IMPORT_LOG = 29;
+    private static final int DIALOG_IMPORT_HINT = 30;
+    private static final int DIALOG_IMPORT_SELECT = 31;
 
     private String mDialogMessage;
     private int[] mRepairValues;
     private boolean mLoadFailed;
 
     private String mImportPath;
+    private String[] mImportValues;
 
     /**
      * Menus
@@ -136,6 +140,7 @@ public class DeckPicker extends FragmentActivity {
     private static final int MENU_CREATE_DYNAMIC_DECK = 10;
     private static final int MENU_STATISTICS = 12;
     private static final int MENU_CARDBROWSER = 13;
+    private static final int MENU_IMPORT = 14;
 
     /**
      * Context Menus
@@ -1584,6 +1589,24 @@ public class DeckPicker extends FragmentActivity {
                 dialog = builder.create();
             	break;
 
+            case DIALOG_IMPORT_SELECT:
+                builder.setTitle(res.getString(R.string.import_title));
+            	dialog = builder.create();
+            	break;
+
+            case DIALOG_IMPORT_HINT:
+                builder.setTitle(res.getString(R.string.import_title));
+                builder.setMessage(res.getString(R.string.import_hint, AnkiDroidApp.getCurrentAnkiDroidDirectory(this)));
+                builder.setPositiveButton(res.getString(R.string.ok),  new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        showDialog(DIALOG_IMPORT_SELECT);
+                    }
+                });
+                builder.setNegativeButton(res.getString(R.string.cancel),  null);
+                dialog = builder.create();
+            	break;
+
             case DIALOG_IMPORT_LOG:
                 builder.setTitle(res.getString(R.string.import_title));
                 builder.setPositiveButton(res.getString(R.string.ok), null);
@@ -1828,6 +1851,29 @@ public class DeckPicker extends FragmentActivity {
                     }
                 });
                 break;
+
+            case DIALOG_IMPORT_SELECT:
+            	List<File> fileList = Utils.getImportableDecks(this);
+            	if (fileList.size() == 0) {
+                    Themes.showThemedToast(DeckPicker.this, getResources().getString(R.string.import_no_file_found),
+                            false);
+            	}
+                ad.setEnabled(fileList.size() != 0);
+                String[] tts = new String[fileList.size()];
+                mImportValues = new String[fileList.size()];
+                for (int i = 0; i < tts.length; i++) {
+                	tts[i] = fileList.get(i).getName().replace(".apkg", "");
+                    mImportValues[i] = fileList.get(i).getAbsolutePath();
+                }
+                ad.setItems(tts, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                    	mImportPath = mImportValues[which];
+                    	showDialog(DIALOG_IMPORT);
+                    }
+                });
+            	break;
+
         }
     }
 
@@ -2030,6 +2076,8 @@ public class DeckPicker extends FragmentActivity {
         item.setIcon(R.drawable.ic_menu_add);
         item = menu.add(Menu.NONE, MENU_ADD_SHARED_DECK, Menu.NONE, R.string.menu_get_shared_decks);
         item.setIcon(R.drawable.ic_menu_download);
+        item = menu.add(Menu.NONE, MENU_IMPORT, Menu.NONE, R.string.menu_import);
+        item.setIcon(R.drawable.ic_menu_download);
         item = menu.add(Menu.NONE, MENU_PREFERENCES, Menu.NONE, R.string.menu_preferences);
         item.setIcon(R.drawable.ic_menu_preferences);
         item = menu.add(Menu.NONE, MENU_MY_ACCOUNT, Menu.NONE, R.string.menu_my_account);
@@ -2174,6 +2222,10 @@ public class DeckPicker extends FragmentActivity {
                     }
                 }
                 return true;
+
+            case MENU_IMPORT:
+            	showDialog(DIALOG_IMPORT_HINT);
+           	return true;
 
             case MENU_MY_ACCOUNT:
                 startActivity(new Intent(DeckPicker.this, MyAccount.class));

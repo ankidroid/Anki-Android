@@ -183,6 +183,10 @@ public class AnkiDroidApp extends Application {
     }
 
 
+    public static String getCurrentAnkiDroidDirectory(Context context) {
+    	return AnkiDroidApp.getSharedPrefs(context).getString("deckPath", AnkiDroidApp.getDefaultAnkiDroidDirectory());
+    }
+
     public static void createDirectoryIfMissing(File decksDirectory) {
         if (!decksDirectory.isDirectory()) {
             decksDirectory.mkdirs();
