@@ -44,6 +44,7 @@
   <string name="card_unsuspended">ระงับการยกเลิกบัตร</string>
   <string name="card_suspended">ระงับการใช้บัตรซ้ำ</string>
   <string name="menu_rotate">หมุน</string>
+  <string name="menu_import">Import cards</string>
   <string name="undo">เรียกคืน</string>
   <string name="finish_operation">Finishing previous operation (most likely backup creation).\nPlease wait...</string>
   <string name="contextmenu_deckpicker_download_missing_media">ดาวน์โหลดสื่อที่หายไป</string>

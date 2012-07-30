@@ -44,6 +44,7 @@
   <string name="card_unsuspended">Suspensió de targeta desfeta</string>
   <string name="card_suspended">Targeta suspesa de nou</string>
   <string name="menu_rotate">Girar</string>
+  <string name="menu_import">Import cards</string>
   <string name="undo">Desfés</string>
   <string name="finish_operation">Finishing previous operation (most likely backup creation).\nPlease wait...</string>
   <string name="contextmenu_deckpicker_download_missing_media">Baixa els media que falten</string>

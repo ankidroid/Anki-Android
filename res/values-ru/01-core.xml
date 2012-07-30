@@ -44,6 +44,7 @@
   <string name="card_unsuspended">Приостановка карты была отменена</string>
   <string name="card_suspended">Карта снова приостановлена</string>
   <string name="menu_rotate">Повернуть</string>
+  <string name="menu_import">Import cards</string>
   <string name="undo">Откат</string>
   <string name="finish_operation">Завершение предыдущей операции (скорее всего создание резервной копии). \nПожалуйста, подождите...</string>
   <string name="contextmenu_deckpicker_download_missing_media">Скачать недостающие медиа-файлы</string>

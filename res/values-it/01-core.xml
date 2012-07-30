@@ -44,6 +44,7 @@
   <string name="card_unsuspended">Annulla la sospensione della carta</string>
   <string name="card_suspended">Carta risospesa</string>
   <string name="menu_rotate">Ruota</string>
+  <string name="menu_import">Import cards</string>
   <string name="undo">Annulla</string>
   <string name="finish_operation">Completamento operazione precedente in corso (probabilmente creazione backup).\nAttendi...</string>
   <string name="contextmenu_deckpicker_download_missing_media">Download media mancante</string>

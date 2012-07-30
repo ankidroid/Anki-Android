@@ -44,6 +44,7 @@
   <string name="card_unsuspended">Đã hủy việc tạm dừng thẻ</string>
   <string name="card_suspended">Thẻ bị tạm dừng</string>
   <string name="menu_rotate">Xoay</string>
+  <string name="menu_import">Import cards</string>
   <string name="undo">Hoàn tác</string>
   <string name="finish_operation">Finishing previous operation (most likely backup creation).\nPlease wait...</string>
   <string name="contextmenu_deckpicker_download_missing_media">Tải thông tin bị thiếu</string>

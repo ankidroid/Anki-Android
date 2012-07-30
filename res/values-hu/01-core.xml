@@ -44,6 +44,7 @@
   <string name="card_unsuspended">Kártya visszavonás nem sikerült</string>
   <string name="card_suspended">Kártya visszaállítva</string>
   <string name="menu_rotate">Forgatás</string>
+  <string name="menu_import">Import cards</string>
   <string name="undo">Visszavonás</string>
   <string name="finish_operation">Előző művelet befejezése (valószínűleg biztonsági másolat létrehozása). \nKérlek várj...</string>
   <string name="contextmenu_deckpicker_download_missing_media">Hiányzó média letöltése</string>

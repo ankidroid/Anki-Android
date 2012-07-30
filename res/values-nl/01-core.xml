@@ -44,6 +44,7 @@
   <string name="card_unsuspended">Uitstellen kaart ongedaan gemaakt</string>
   <string name="card_suspended">Kaart opnieuw uitstellen</string>
   <string name="menu_rotate">Omkeren</string>
+  <string name="menu_import">Import cards</string>
   <string name="undo">Ongedaan maken</string>
   <string name="finish_operation">Finishing previous operation (most likely backup creation).\nPlease wait...</string>
   <string name="contextmenu_deckpicker_download_missing_media">Download ontbrekende media</string>

@@ -44,6 +44,7 @@
   <string name="card_unsuspended">Αναστολή κάρτας αναιρέθηκε</string>
   <string name="card_suspended">Κάρτα επαναστάλει</string>
   <string name="menu_rotate">Περιστροφή</string>
+  <string name="menu_import">Import cards</string>
   <string name="undo">Αναίρεση</string>
   <string name="finish_operation">Finishing previous operation (most likely backup creation).\nPlease wait...</string>
   <string name="contextmenu_deckpicker_download_missing_media">Λήψη απόντων μέσων</string>

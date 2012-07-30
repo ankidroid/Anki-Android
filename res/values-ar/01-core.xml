@@ -44,6 +44,7 @@
   <string name="card_unsuspended">فك تعليق البطاقة</string>
   <string name="card_suspended">بطاقة معاد تعليقها</string>
   <string name="menu_rotate">تدوير</string>
+  <string name="menu_import">Import cards</string>
   <string name="undo">تراجع</string>
   <string name="finish_operation">Finishing previous operation (most likely backup creation).\nPlease wait...</string>
   <string name="contextmenu_deckpicker_download_missing_media">حمل الوسائط المفقودة</string>

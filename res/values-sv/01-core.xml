@@ -44,6 +44,7 @@
   <string name="card_unsuspended">Kort återställt</string>
   <string name="card_suspended">Kort åsidosatt igen</string>
   <string name="menu_rotate">Rotera</string>
+  <string name="menu_import">Import cards</string>
   <string name="undo">Ångra</string>
   <string name="finish_operation">Slutför föregående operation (troligen skapande av säkerhetskopia).\nVar god vänta...</string>
   <string name="contextmenu_deckpicker_download_missing_media">Hämta saknade media</string>

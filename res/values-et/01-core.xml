@@ -44,6 +44,7 @@
   <string name="card_unsuspended">Card suspension undone</string>
   <string name="card_suspended">Card resuspended</string>
   <string name="menu_rotate">Pööra</string>
+  <string name="menu_import">Import cards</string>
   <string name="undo">Võta tagasi</string>
   <string name="finish_operation">Finishing previous operation (most likely backup creation).\nPlease wait...</string>
   <string name="contextmenu_deckpicker_download_missing_media">Lae alla puuduv meedia</string>

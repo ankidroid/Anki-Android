@@ -44,6 +44,7 @@
   <string name="card_unsuspended">Zrušeno vyřazení karty</string>
   <string name="card_suspended">Zrušeno pozastavení karty</string>
   <string name="menu_rotate">Otočit</string>
+  <string name="menu_import">Import cards</string>
   <string name="undo">Vrátit zpět</string>
   <string name="finish_operation">Dokončování předchozí operace (nejpravděpodobněji vytváření zálohy). \nProsím čekejte...</string>
   <string name="contextmenu_deckpicker_download_missing_media">Stáhnout chybějící média</string>

@@ -44,6 +44,7 @@
   <string name="card_unsuspended">Kad tergantung dibatal</string>
   <string name="card_suspended">Kad digantung</string>
   <string name="menu_rotate">Pusing</string>
+  <string name="menu_import">Import cards</string>
   <string name="undo">Buat asal</string>
   <string name="finish_operation">Finishing previous operation (most likely backup creation).\nPlease wait...</string>
   <string name="contextmenu_deckpicker_download_missing_media">Muat turun media kurang</string>

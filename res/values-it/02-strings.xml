@@ -87,6 +87,8 @@
   <string name="import_log_success">Importato %d carte con successo</string>
   <string name="import_log_error">Importazione fallita</string>
   <string name="import_importing">Importazione carte.\nAttendi...</string>
+  <string name="import_hint">To import cards, place the apkg file in directory %s and press ok</string>
+  <string name="import_no_file_found">No importable apkg file found</string>
   <string-array name="dynOrderLabels">
     <item>Più vecchie visualizzate per prime</item>
     <item>Casuale</item>

@@ -44,6 +44,7 @@
   <string name="card_unsuspended">카드 미루기 취소</string>
   <string name="card_suspended">미뤄진 카드</string>
   <string name="menu_rotate">회전</string>
+  <string name="menu_import">Import cards</string>
   <string name="undo">실행 취소</string>
   <string name="finish_operation">Finishing previous operation (most likely backup creation).\nPlease wait...</string>
   <string name="contextmenu_deckpicker_download_missing_media">누락된 미디어 다운로드</string>

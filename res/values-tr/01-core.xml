@@ -44,6 +44,7 @@
   <string name="card_unsuspended">Askıya alma geri alındı</string>
   <string name="card_suspended">Kart yeniden askıya alındı</string>
   <string name="menu_rotate">Çevir</string>
+  <string name="menu_import">Import cards</string>
   <string name="undo">Geri Al</string>
   <string name="finish_operation">Önceki işlem tamamlanıyor (büyük olasılıkla yedekleme).\nLütfen bekleyin...</string>
   <string name="contextmenu_deckpicker_download_missing_media">Eksik ortamı indir</string>

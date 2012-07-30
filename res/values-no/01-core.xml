@@ -44,6 +44,7 @@
   <string name="card_unsuspended">Omgjort suspensjon av kort</string>
   <string name="card_suspended">Kort suspendert på nytt</string>
   <string name="menu_rotate">Rotér</string>
+  <string name="menu_import">Import cards</string>
   <string name="undo">Angre</string>
   <string name="finish_operation">Finishing previous operation (most likely backup creation).\nPlease wait...</string>
   <string name="contextmenu_deckpicker_download_missing_media">Last ned manglende mediafiler</string>

@@ -44,6 +44,7 @@
   <string name="card_unsuspended">Скриване на картата отменено</string>
   <string name="card_suspended">Открий картата</string>
   <string name="menu_rotate">Завъртане</string>
+  <string name="menu_import">Import cards</string>
   <string name="undo">Отмени</string>
   <string name="finish_operation">Finishing previous operation (most likely backup creation).\nPlease wait...</string>
   <string name="contextmenu_deckpicker_download_missing_media">Изтегли липсващата медия</string>

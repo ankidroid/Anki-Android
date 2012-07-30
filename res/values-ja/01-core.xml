@@ -44,6 +44,7 @@
   <string name="card_unsuspended">カードの停止解除</string>
   <string name="card_suspended">カードが再停止されました</string>
   <string name="menu_rotate">回転</string>
+  <string name="menu_import">Import cards</string>
   <string name="undo">元に戻す</string>
   <string name="finish_operation">Finishing previous operation (most likely backup creation).\nPlease wait...</string>
   <string name="contextmenu_deckpicker_download_missing_media">不足しているメディアをダウンロードします</string>

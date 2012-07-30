@@ -44,6 +44,7 @@
   <string name="card_unsuspended">Suspensão de cartão desfeita</string>
   <string name="card_suspended">Cartão ressuspendido</string>
   <string name="menu_rotate">Girar</string>
+  <string name="menu_import">Import cards</string>
   <string name="undo">Desfazer</string>
   <string name="finish_operation">Terminando a operação anterior (provavelmente criação de backup). \nPor favor aguarde...</string>
   <string name="contextmenu_deckpicker_download_missing_media">Baixar mídia ausente</string>

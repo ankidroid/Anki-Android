@@ -44,6 +44,7 @@
   <string name="card_unsuspended">Відкладення картки скасовано</string>
   <string name="card_suspended">Картка знову відкладена</string>
   <string name="menu_rotate">Повернути</string>
+  <string name="menu_import">Import cards</string>
   <string name="undo">Відмінити</string>
   <string name="finish_operation">Завершення попередньої операції (найбільш ймовірно, створення резервної копії). \n Будь ласка, зачекайте...</string>
   <string name="contextmenu_deckpicker_download_missing_media">Завантажити відсутні медіа-файли</string>

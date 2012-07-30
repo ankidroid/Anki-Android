@@ -87,6 +87,8 @@
   <string name="import_log_success">Successfully imported %d cards</string>
   <string name="import_log_error">Import failed</string>
   <string name="import_importing">Importing cards.\nPlease wait...</string>
+  <string name="import_hint">To import cards, place the apkg file in directory %s and press ok</string>
+  <string name="import_no_file_found">No importable apkg file found</string>
   <string-array name="dynOrderLabels">
     <item>Vistas más antiguamente primero</item>
     <item>Aleatorio</item>

@@ -87,6 +87,8 @@
   <string name="import_log_success">Успешно импортированы %d карты</string>
   <string name="import_log_error">Импорт не удался</string>
   <string name="import_importing">Импортирование карт.\nПожалуйста, подождите...</string>
+  <string name="import_hint">To import cards, place the apkg file in directory %s and press ok</string>
+  <string name="import_no_file_found">No importable apkg file found</string>
   <string-array name="dynOrderLabels">
     <item>Старейшие появляться первыми</item>
     <item>Случайно</item>

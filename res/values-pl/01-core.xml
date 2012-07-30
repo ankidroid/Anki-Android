@@ -44,6 +44,7 @@
   <string name="card_unsuspended">Karta reaktywowana</string>
   <string name="card_suspended">Karta zawieszona</string>
   <string name="menu_rotate">Obrót</string>
+  <string name="menu_import">Import cards</string>
   <string name="undo">Cofnij</string>
   <string name="finish_operation">Kończenie poprzedniej operacji (najprawdopodobniej tworzenie kopii zapasowej).\nProszę czekać...</string>
   <string name="contextmenu_deckpicker_download_missing_media">Pobierz brakujące media</string>
