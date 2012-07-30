@@ -104,7 +104,9 @@ public class AnkiDroidApp extends Application {
     public void onCreate() {
         super.onCreate();
 
-        if (AnkiDroidApp.SDK_VERSION >= 9) {
+        if (android.os.Build.MODEL.toLowerCase().equals("nook") || android.os.Build.DEVICE.toLowerCase().equals("nook")) {
+            mCompat = new CompatV4();
+        } else if (AnkiDroidApp.SDK_VERSION >= 9) {
             mCompat = new CompatV9();
         } else if (AnkiDroidApp.SDK_VERSION >= 5) {
             mCompat = new CompatV5();
