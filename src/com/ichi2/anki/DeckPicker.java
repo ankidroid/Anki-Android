@@ -983,7 +983,7 @@ public class DeckPicker extends FragmentActivity {
     		showDialog(DIALOG_SD_CARD_NOT_MOUNTED);
     		return false;
     	}
-    	File dir = new File(AnkiDroidApp.getDefaultAnkiDroidDirectory());
+    	File dir = new File(AnkiDroidApp.getCurrentAnkiDroidDirectory(this));
         if (!dir.isDirectory()) {
         	dir.mkdirs();
         }
@@ -1001,7 +1001,7 @@ public class DeckPicker extends FragmentActivity {
 
     private SharedPreferences restorePreferences() {
         SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(getBaseContext());
-        mPrefDeckPath = preferences.getString("deckPath", AnkiDroidApp.getDefaultAnkiDroidDirectory());
+        mPrefDeckPath = AnkiDroidApp.getCurrentAnkiDroidDirectory(this);
         mLastTimeOpened = preferences.getLong("lastTimeOpened", 0);
         mSwipeEnabled = AnkiDroidApp.initiateGestures(this, preferences);
 

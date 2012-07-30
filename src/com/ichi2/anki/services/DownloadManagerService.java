@@ -171,7 +171,7 @@ public class DownloadManagerService extends Service {
         SharedPreferences pref = AnkiDroidApp.getSharedPrefs(getBaseContext());
         mUsername = pref.getString("username", "");
         mPassword = pref.getString("password", "");
-        mDestination = pref.getString("deckPath", AnkiDroidApp.getDefaultAnkiDroidDirectory());
+        mDestination = AnkiDroidApp.getCurrentAnkiDroidDirectory(getBaseContext());
     }
 
 

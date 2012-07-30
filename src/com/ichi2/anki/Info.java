@@ -202,7 +202,7 @@ public class Info extends Activity {
 
             case TYPE_UPGRADE_DECKS:
                 sb.append("<html><body>");
-                File[] fileList = (new File(AnkiDroidApp.getDefaultAnkiDroidDirectory())).listFiles(new OldAnkiDeckFilter());
+                File[] fileList = (new File(AnkiDroidApp.getCurrentAnkiDroidDirectory(this))).listFiles(new OldAnkiDeckFilter());
                 StringBuilder fsb = new StringBuilder();
                 fsb.append("<ul>");
                 for (File f : fileList) {
@@ -212,7 +212,7 @@ public class Info extends Activity {
                 sb.append(res.getString(R.string.upgrade_decks_message, fsb.toString()));
                 sb.append("<ul><li>");
                 sb.append(res.getString(R.string.upgrade_decks_message_pos1,
-                        AnkiDroidApp.getDefaultAnkiDroidDirectory()));
+                		AnkiDroidApp.getCurrentAnkiDroidDirectory(this)));
                 sb.append("</li><li>");
                 sb.append(res.getString(R.string.upgrade_decks_message_pos2, res.getString(R.string.link_anki)));
                 sb.append("</li><li>");
@@ -229,7 +229,7 @@ public class Info extends Activity {
                     @Override
                     public void onClick(View arg0) {
                         Connection.upgradeDecks(mUpgradeListener,
-                                new Connection.Payload(new Object[] { AnkiDroidApp.getDefaultAnkiDroidDirectory() }));
+                                new Connection.Payload(new Object[] { AnkiDroidApp.getCurrentAnkiDroidDirectory(Info.this) }));
                     }
                 });
                 StyledDialog.Builder builder2 = new StyledDialog.Builder(this);

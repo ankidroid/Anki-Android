@@ -1313,8 +1313,7 @@ public class Reviewer extends AnkiActivity {
                     public void onProgressUpdate(DeckTask.TaskData... values) {
                     }
                 },
-                new DeckTask.TaskData(AnkiDroidApp.getSharedPrefs(getBaseContext()).getString("deckPath",
-                        AnkiDroidApp.getDefaultAnkiDroidDirectory())
+                new DeckTask.TaskData(AnkiDroidApp.getCurrentAnkiDroidDirectory(this)
                         + AnkiDroidApp.COLLECTION_PATH, 0, true));
     }
 

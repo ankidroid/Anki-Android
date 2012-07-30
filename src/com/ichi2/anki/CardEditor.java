@@ -649,8 +649,7 @@ public class CardEditor extends Activity {
                     public void onProgressUpdate(DeckTask.TaskData... values) {
                     }
                 },
-                new DeckTask.TaskData(AnkiDroidApp.getSharedPrefs(getBaseContext()).getString("deckPath",
-                        AnkiDroidApp.getDefaultAnkiDroidDirectory())
+                new DeckTask.TaskData(AnkiDroidApp.getCurrentAnkiDroidDirectory(this)
                         + AnkiDroidApp.COLLECTION_PATH));
     }
 
