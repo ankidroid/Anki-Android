@@ -1819,9 +1819,9 @@ public class Reviewer extends AnkiActivity {
         mNext4.setTextColor(mNextTimeTextColor);
         mEase4.setTextColor(mNextTimeTextColor);
         mCardTimer.setTextColor(mForegroundColor);
-        mTextBarBlack.setTextColor(mForegroundColor);
-        mTextBarBlue.setTextColor(invert ? res.getColor(R.color.textbar_blue_color_inv) : res
-                .getColor(R.color.textbar_blue_color));
+        mTextBarRed.setTextColor(invert ? res.getColor(R.color.night_blue) : res.getColor(R.color.blue));
+        mTextBarBlack.setTextColor(invert ? res.getColor(R.color.night_red) : res.getColor(R.color.red));
+        mTextBarBlue.setTextColor(invert ? res.getColor(R.color.night_green) : res.getColor(R.color.green));
         mAnswerField.setTextColor(mForegroundColor);
 
         if (mSimpleCard != null) {
