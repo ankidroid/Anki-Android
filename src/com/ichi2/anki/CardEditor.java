@@ -1011,8 +1011,10 @@ public class CardEditor extends Activity {
                 builder.setTitle(R.string.deck);
                 for (JSONObject d : decks) {
                     try {
-                        dialogDeckItems.add(DeckPicker.readableDeckName(d.getString("name").split("::")));
-                        dialogDeckIds.add(d.getLong("id"));
+                        if (d.getInt("dyn") == 0) {
+                            dialogDeckItems.add(d.getString("name"));
+                            dialogDeckIds.add(d.getLong("id"));
+                        }
                     } catch (JSONException e) {
                         throw new RuntimeException(e);
                     }

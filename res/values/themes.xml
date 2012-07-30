@@ -85,7 +85,7 @@
     </style>
 
     <!-- Theme for widget dialogs -->
-    <style name="Theme_Translucent" parent="style/Theme_Blue">
+    <style name="Theme_Translucent" parent="@style/Theme_Blue">
         <item name="android:windowNoTitle">true</item>
         <item name="android:windowContentOverlay">@null</item>
         <item name="android:windowBackground">@android:color/transparent</item>
@@ -94,7 +94,7 @@
         <item name="android:windowAnimationStyle">@android:style/Animation</item>
     </style>
 
-    <style name="Theme_Start" parent="Theme_White">
+    <style name="Theme_Start" parent="@style/Theme_White">
         <item name="android:windowBackground">@android:color/transparent</item>
         <item name="android:windowNoTitle">true</item>
     </style>

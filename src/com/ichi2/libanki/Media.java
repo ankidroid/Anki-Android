@@ -721,10 +721,17 @@ public class Media {
     }
 
 
-    public long sanityCheck() {
-        // TODO: Remove the assert
-        assert mMediaDb.queryLongScalar("select count() from log") == 0;
-        return mMediaDb.queryLongScalar("select count() from media");
+    public Pair<Long, Long> sanityCheck() {
+        return new Pair<Long, Long> (
+                mMediaDb.queryLongScalar("select count() from log"),
+                mMediaDb.queryLongScalar("select count() from media"));
+    }
+
+    public void resetMediaDb() {
+        mMediaDb.execute("delete from log");
+        mMediaDb.execute("delete from media");
+        mMediaDb.execute("delete from meta");
+        mMediaDb.execute("insert into meta values(0,0)");
     }
 
 

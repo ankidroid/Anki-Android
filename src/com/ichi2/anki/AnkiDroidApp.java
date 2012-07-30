@@ -113,7 +113,6 @@ public class AnkiDroidApp extends Application {
         }
 
         sInstance = this;
-        sInstance.mHooks = new Hooks();
 
         Connection.setContext(getApplicationContext());
 
@@ -123,6 +122,7 @@ public class AnkiDroidApp extends Application {
         Thread.setDefaultUncaughtExceptionHandler(customExceptionHandler);
 
         SharedPreferences preferences = getSharedPrefs(this);
+        sInstance.mHooks = new Hooks(preferences);
         sInstance.mLanguage = mLanguage = preferences.getString("language", "");
         // Assign some default settings if necessary
         if (!preferences.contains("deckPath")) {

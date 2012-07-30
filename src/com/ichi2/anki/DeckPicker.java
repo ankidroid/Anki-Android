@@ -461,7 +461,7 @@ public class DeckPicker extends FragmentActivity {
                             }                    		
                     	} else if (result[0] instanceof String) {
                             mDialogMessage = res.getString(R.string.sync_log_error_specific,
-                                    -1, (String) result[0]);                    		
+                                    -1, (String) result[0]);
                     	} else {
                             mDialogMessage = res.getString(R.string.sync_generic_error);
                     	}
@@ -469,8 +469,8 @@ public class DeckPicker extends FragmentActivity {
                 }
             } else {
                 updateDecksList((TreeSet<Object[]>) data.result, (Integer) data.data[2], (Integer) data.data[3]);
-                if ((Boolean) data.data[4]) {
-                	mDialogMessage = res.getString(R.string.sync_media_error);
+                if (data.data[4] != null) {
+                    mDialogMessage = (String) data.data[4];
                 } else if (data.data.length > 0 && data.data[0] instanceof String && ((String) data.data[0]).length() > 0) {
                     String dataString = (String) data.data[0];
                     if (dataString.equals("upload")) {
