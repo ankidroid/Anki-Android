@@ -19,6 +19,7 @@ package com.ichi2.anki;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.TreeSet;
 
 import com.ichi2.anki.R;
 
@@ -34,6 +35,8 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.DialogInterface.OnCancelListener;
 import android.content.SharedPreferences.Editor;
 import android.content.res.Resources;
 import android.net.Uri;
@@ -59,6 +62,14 @@ public class Info extends Activity {
     public static final int TYPE_NEW_VERSION = 2;
     public static final int TYPE_SHARED_DECKS = 3;
     public static final int TYPE_UPGRADE_DECKS = 4;
+
+    private static final int DIALOG_USER_NOT_LOGGED_IN_SYNC = 0;
+    private static final int DIALOG_SYNC_LOG = 1;
+    private static final int DIALOG_SYNC_UPGRADE_REQUIRED = 2;
+
+    private static final int LOG_IN_FOR_SYNC = 0;
+
+    private String mDialogMessage;
 
     private int mType;
     private WebView mWebView;
@@ -221,6 +232,7 @@ public class Info extends Activity {
                 sb.append(res.getString(R.string.upgrade_decks_message_finish));
                 sb.append("</body></html>");
                 mWebView.loadDataWithBaseURL("", sb.toString(), "text/html", "utf-8", null);
+
                 // add upgrade button
                 Button but = (Button) findViewById(R.id.info_tutorial);
                 but.setVisibility(View.VISIBLE);
@@ -232,6 +244,17 @@ public class Info extends Activity {
                                 new Connection.Payload(new Object[] { AnkiDroidApp.getCurrentAnkiDroidDirectory(Info.this) }));
                     }
                 });
+
+                // add sync button
+                Button syncButton = (Button) findViewById(R.id.info_sync);
+                syncButton.setVisibility(View.VISIBLE);
+                syncButton.setOnClickListener(new OnClickListener() {
+                    @Override
+                    public void onClick(View arg0) {
+                    	downloadCollection();
+                    }
+                });
+
                 StyledDialog.Builder builder2 = new StyledDialog.Builder(this);
 
                 builder2.setTitle(res.getString(R.string.connection_error_title));
@@ -247,7 +270,86 @@ public class Info extends Activity {
         }
     }
 
+    @Override
+    protected Dialog onCreateDialog(int id) {
+        StyledDialog dialog = null;
+        Resources res = getResources();
+        StyledDialog.Builder builder = new StyledDialog.Builder(this);
+        switch (id) {
+        case DIALOG_USER_NOT_LOGGED_IN_SYNC:
+            builder.setTitle(res.getString(R.string.connection_error_title));
+            builder.setIcon(R.drawable.ic_dialog_alert);
+            builder.setMessage(res.getString(R.string.no_user_password_error_message));
+            builder.setNegativeButton(res.getString(R.string.cancel), null);
+            builder.setPositiveButton(res.getString(R.string.log_in), new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    Intent myAccount = new Intent(Info.this, MyAccount.class);
+                    myAccount.putExtra("notLoggedIn", true);
+                    startActivityForResult(myAccount, LOG_IN_FOR_SYNC);
+                    if (AnkiDroidApp.SDK_VERSION > 4) {
+                        ActivityTransitionAnimation.slide(Info.this, ActivityTransitionAnimation.FADE);
+                    }
+                }
+            });
+            dialog = builder.create();
+            break;
 
+        case DIALOG_SYNC_LOG:
+            builder.setTitle(res.getString(R.string.sync_log_title));
+            builder.setPositiveButton(res.getString(R.string.ok), null);
+            dialog = builder.create();
+            break;
+
+        case DIALOG_SYNC_UPGRADE_REQUIRED:
+        	builder.setMessage(res.getString(R.string.upgrade_required, res.getString(R.string.link_anki)));
+            builder.setPositiveButton(res.getString(R.string.retry), new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                	downloadCollection();
+                }
+            });
+            builder.setNegativeButton(res.getString(R.string.cancel), null);
+            builder.setTitle(res.getString(R.string.sync_log_title));
+            dialog = builder.create();
+            break;
+        }
+        return dialog;
+    }
+
+    @Override
+    protected void onPrepareDialog(int id, Dialog dialog) {
+        Resources res = getResources();
+        StyledDialog ad = (StyledDialog) dialog;
+        switch (id) {
+    
+        case DIALOG_SYNC_LOG:
+        	ad.setMessage(mDialogMessage);
+        	break;
+        }
+    }
+
+    
+    private void downloadCollection() {
+        SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(getBaseContext());
+        String hkey = preferences.getString("hkey", "");
+        if (hkey.length() == 0) {
+            showDialog(DIALOG_USER_NOT_LOGGED_IN_SYNC);
+        } else {
+            Connection.sync(mSyncListener, new Connection.Payload(new Object[] { hkey, 
+                    preferences.getBoolean("syncFetchesMedia", true),
+                    "download", 0 }));
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
+        super.onActivityResult(requestCode, resultCode, intent);
+        if (requestCode == LOG_IN_FOR_SYNC && resultCode == RESULT_OK) {
+        	downloadCollection();
+        }
+    }
+    
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
@@ -383,4 +485,128 @@ public class Info extends Activity {
             }
         }
     };
+    
+    private Connection.TaskListener mSyncListener = new Connection.TaskListener() {
+
+        String currentMessage;
+        long countUp;
+        long countDown;
+
+
+        @Override
+        public void onDisconnected() {
+            if (mNoConnectionAlert != null) {
+                mNoConnectionAlert.show();
+            }
+        }
+
+
+        @Override
+        public void onPreExecute() {
+            countUp = 0;
+            countDown = 0;
+            if (mProgressDialog == null || !mProgressDialog.isShowing()) {
+                mProgressDialog = StyledProgressDialog
+                        .show(Info.this, getResources().getString(R.string.sync_title),
+                                getResources().getString(R.string.sync_prepare_syncing) + "\n"
+                                        + getResources().getString(R.string.sync_up_down_size, countUp, countDown),
+                                true, false);
+            }
+        }
+
+
+        @Override
+        public void onProgressUpdate(Object... values) {
+            Resources res = getResources();
+            if (values[0] instanceof Boolean) {
+                // This is the part Download missing media of syncing
+                int total = ((Integer) values[1]).intValue();
+                int done = ((Integer) values[2]).intValue();
+                values[0] = ((String) values[3]);
+                values[1] = res.getString(R.string.sync_downloading_media, done, total);
+            } else if (values[0] instanceof Integer) {
+                int id = (Integer) values[0];
+                if (id != 0) {
+                    currentMessage = res.getString(id);
+                }
+                if (values.length >= 3) {
+                    countUp = (Long) values[1];
+                    countDown = (Long) values[2];
+                }
+            }
+            if (mProgressDialog != null && mProgressDialog.isShowing()) {
+                // mProgressDialog.setTitle((String) values[0]);
+                mProgressDialog.setMessage(currentMessage + "\n"
+                        + res.getString(R.string.sync_up_down_size, countUp / 1024, countDown / 1024));
+            }
+        }
+
+
+        @Override
+        public void onPostExecute(Payload data) {
+            Log.i(AnkiDroidApp.TAG, "onPostExecute");
+            Resources res = Info.this.getResources();
+            if (mProgressDialog != null) {
+                mProgressDialog.dismiss();
+            }
+            if (!data.success) {
+                Object[] result = (Object[]) data.result;
+                if (result[0] instanceof String) {
+                    String resultType = (String) result[0];
+                    if (resultType.equals("badAuth")) {
+                        // delete old auth information
+                        SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(getBaseContext());
+                        Editor editor = preferences.edit();
+                        editor.putString("username", "");
+                        editor.putString("hkey", "");
+                        editor.commit();
+                        // then show
+                        showDialog(DIALOG_USER_NOT_LOGGED_IN_SYNC);
+                    } else if (resultType.equals("dbError")) {
+                        mDialogMessage = res.getString(R.string.sync_corrupt_database, R.string.repair_deck);
+                        showDialog(DIALOG_SYNC_LOG);
+                    } else if (resultType.equals("overwriteError")) {
+                        mDialogMessage = res.getString(R.string.sync_overwrite_error);
+                        showDialog(DIALOG_SYNC_LOG);
+                    } else if (resultType.equals("remoteDbError")) {
+                        mDialogMessage = res.getString(R.string.sync_remote_db_error);
+                        showDialog(DIALOG_SYNC_LOG);
+                    } else if (resultType.equals("sdAccessError")) {
+                        mDialogMessage = res.getString(R.string.sync_write_access_error);
+                        showDialog(DIALOG_SYNC_LOG);
+                    } else if (resultType.equals("genericError")) {
+                        mDialogMessage = res.getString(R.string.sync_generic_error);
+                        showDialog(DIALOG_SYNC_LOG);
+                    } else if (resultType.equals("upgradeRequired")) {
+                        showDialog(DIALOG_SYNC_UPGRADE_REQUIRED);
+                    } else {
+                    	if (result.length > 1 && result[1] instanceof Integer) {
+                            int type = (Integer) result[1];
+                            switch (type) {
+                                case 503:
+                                    mDialogMessage = res.getString(R.string.sync_too_busy);
+                                    break;
+                                default:
+                                    mDialogMessage = res.getString(R.string.sync_log_error_specific,
+                                            Integer.toString(type), (String) result[2]);
+                                    break;
+                            }                    		
+                    	} else if (result[0] instanceof String) {
+                            mDialogMessage = res.getString(R.string.sync_log_error_specific,
+                                    -1, (String) result[0]);
+                    	} else {
+                            mDialogMessage = res.getString(R.string.sync_generic_error);
+                    	}
+                    }
+                }
+            } else {
+                setResult(RESULT_OK);
+                finish();
+                if (AnkiDroidApp.SDK_VERSION > 4) {
+                    ActivityTransitionAnimation.slide(Info.this, ActivityTransitionAnimation.LEFT);
+                }
+            }
+        }
+    };
+
 }
