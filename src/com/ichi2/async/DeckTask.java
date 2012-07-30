@@ -411,7 +411,7 @@ public class DeckTask extends
 
 		publishProgress(new TaskData(res.getString(R.string.open_collection)));
 
-		if (oldCol == null || !oldCol.getPath().equals(collectionFile)) {
+		if (!(AnkiDroidApp.colIsOpen() && oldCol.getPath().equals(collectionFile))) {
 
 			// do a safety backup if last backup is too old --> addresses
 			// android's delete db bug

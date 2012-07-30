@@ -384,7 +384,7 @@ public class AnkiDroidApp extends Application {
     }
 
     public static boolean colIsOpen() {
-    	return sInstance.mCurrentCollection != null;
+    	return sInstance.mCurrentCollection != null && sInstance.mCurrentCollection.getDb() != null && sInstance.mCurrentCollection.getDb().getDatabase().isOpen();
     }
 
     public static void resetAccessThreadCount() {

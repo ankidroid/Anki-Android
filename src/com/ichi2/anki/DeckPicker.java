@@ -585,6 +585,9 @@ public class DeckPicker extends FragmentActivity {
         	}
             Object[] res = result.getObjArray();
             updateDecksList((TreeSet<Object[]>) res[0], (Integer) res[1], (Integer) res[2]);
+        	if (mOpenCollectionDialog != null && mOpenCollectionDialog.isShowing()) {
+            	mOpenCollectionDialog.dismiss();        		
+        	}
         }
 
 
@@ -933,9 +936,6 @@ public class DeckPicker extends FragmentActivity {
         if (col == null || !col.getPath().equals(path)) {
             DeckTask.launchDeckTask(DeckTask.TASK_TYPE_OPEN_COLLECTION, mOpenCollectionHandler, new DeckTask.TaskData(path));        	
         } else {
-        	if (mOpenCollectionDialog != null && mOpenCollectionDialog.isShowing()) {
-        		mOpenCollectionDialog.dismiss();
-        	}
         	loadCounts();
         }
     }
@@ -1053,7 +1053,7 @@ public class DeckPicker extends FragmentActivity {
             preferences.edit().putBoolean("noSpaceLeft", false).commit();
         } else if (mImportPath != null && AnkiDroidApp.colIsOpen()) {
         	showDialog(DIALOG_IMPORT);
-        } else if (!AnkiDroidApp.colIsOpen()) {
+        } else {
             loadCollection();
         }
     }
