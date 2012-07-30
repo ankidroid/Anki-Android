@@ -105,10 +105,10 @@
   <string name="sync_media_remove">Обработка удаленных медиа-файлов...</string>
   <string name="sync_media_from_server">Получение медиа-файлов с сервера...</string>
   <string name="sync_media_to_server">Отправка медиа-файлов на сервер...</string>
-  <string name="sync_media_sanity_check">Checking media counts...</string>
+  <string name="sync_media_sanity_check">Проверка количества медиа-файлов...</string>
   <string name="sync_media_no_changes">Медиа-файлы не изменены.</string>
   <string name="sync_media_success">Медиа-файлы успешно синхронизированы.</string>
-  <string name="sync_media_sanity_failed">Media sync completed, but the media count doesn\'t agree with the server. The next media sync will be full to correct any error.</string>
+  <string name="sync_media_sanity_failed">Синхронизация медиа-файлов завершена, но количество медиа-файлов на вашем мобильном устройстве не совпадает с количеством на сервере. При следующей синхронизации будут устранены все ошибки.</string>
   <string name="sync_media_error">Ошибка синхронизации медиа-данных.</string>
   <string name="register_error">Произошла ошибка. Пожалуйста, повторите попытку позже.</string>
   <string name="register_title">Зарегистрироваться</string>
@@ -119,14 +119,14 @@
   <string name="upgrade_decks_waiting">Ожидание, позиция в очереди: %s\n Пожалуйста подождите...</string>
   <string name="upgrade_decks_upgrade_started">Началось обновление.\nПожалуйста, дождитесь завершения...</string>
   <string name="upgrade_decks_downloading">Загружаю обновлённую коллекцию.\nПожалуйста подождите...</string>
-  <string name="upgrade_decks_media">Copying old media files to new media location.\nPlease wait...</string>
+  <string name="upgrade_decks_media">Копирование старых медиа-файлов в новую папку.\nПожалуйста, подождите...</string>
   <string name="upgrade_decks_message">Не найдена ни одна коллекция формата Anki 2.0, но найдены одна и более колод в старом формате Anki 1.2:%s Чтобы использовать ваши колоды в новой верии AnkiDroid, Вам нужно сначала их конвертировать в единую коллекцию нового Anki-2.0 формата. Существуют 3 возможности для этого:</string>
   <string name="upgrade_decks_message_pos1">При использовании Anki Desktop 2.0 Ваши колоды будут конвертированы при первом запуске программы. Вы можете синхронизировать используя AnkiWeb или скопировав новую коллекцию на Ваше мобильное устройство. Скопируйте ваши колоды из AnkiDroid-каталога (%s) на настольный компьютер в каталог Anki Desktop 1.2 (если вы ещё не синхронизировали) и запустите Anki Desktop 2.0.</string>
   <string name="upgrade_decks_message_pos2">Если Вы уже синхронизировали Ваши колоды через AnkiWeb, Вам нужно просто зайти один раз %s и Ваши колоды будут конвертированы. После этого Вы можете просто синхронизироваться с новой коллекцией на Вашем мобильном устройстве.</string>
-  <string name="upgrade_decks_message_pos3">As a third possibility, you can have your decks converted via AnkiDroid itself and AnkiWeb. If you click on the upgrade button below, your decks will be bundled and uploaded to AnkiWeb. The converted collection will then be automatically downloaded and opened. You don\'t need any registration for that but be aware that it might be better to use a wifi connection in order to prevent too much traffic over your mobile connection. If the compressed decks amount to more than 50 mb, you cannot use this way. Please resort to the other options in this case. If your deck media files are hosted in custom folders or Dropbox custom folder, they might have to be copied manually to the new location.</string>
+  <string name="upgrade_decks_message_pos3">В качестве третьей возможности, вы можете сконвертировать ваши колоды спомощью самого AnkiDroid и AnkiWeb. Если вы нажмете расположенную ниже кнопку обновить, ваши колоды будут собраны и отправлены на сервер AnkiWeb. После конвертации набор колод будет автоматически скачан и открыт. Нет необходимости в какой-либо регистрации для выполнения этого действия. предупреждаем, что лучше использовать wifi соединение, чтобы исбежать большого трафика через мобильное соединение. Если размер упакованных колод будет больше 50 Мб, вы не сможете использовать этот способ конверсии, таком случае используйте другие возможности. Если ваша колода медиа-файлов расположена в особом расположении или в папке Dropbox, необходимо переместить их вручную в новое расположение.</string>
   <string name="upgrade_decks_message_finish">Если Вы сейчас продолжите, то будет создана новая коллекция без добавления ваших старых колод в аккаунт.</string>
   <string name="upgrade_required">Ваши колоды в AnkiWeb всё ещё в старом Anki 1.2 формате. Пожалуйста посетите %s и войдите в аккаунт. Тогда Ваши колоды будут автоматически конвертированы в новый формат.</string>
   <string name="upgrade_decks_button">Обновление</string>
-  <string name="upgrade_decks_failed">These decks could not be upgraded:\n%sPlease open them in Anki Desktop and do a database check. Afterwards you can import them via Anki Desktop.</string>
-  <string name="upgrade_decks_media_failed">Copying the media files to the new media folder (%1$s) has failed for these decks:\n%2$sPlease move the media files manually.</string>
+  <string name="upgrade_decks_failed">Следующие колоды не были обновлены:\n%sПожалуйста, откройте их в Anki Desktop и выполните проверку базы данных. Затем Вы сможете их импортировать используя Anki Desktop.</string>
+  <string name="upgrade_decks_media_failed">Копирование медиа-файлов в новую папку (%1$s) не удалось для колод:\n%2$sПожалуйста, переместите медиа-файлы вручную.</string>
 </resources>

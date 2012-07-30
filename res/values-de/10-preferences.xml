@@ -140,8 +140,10 @@
   <string name="shake_intensity_summ">Schwelle, ab der ein Schütteln erkannt wird: XXX</string>
   <string name="sync_fetch_missing_media">Mediadaten synchronisieren</string>
   <string name="sync_fetch_missing_media_summ">Mediadaten automatisch beziehen, wenn synchronisiert wird.</string>
-  <string name="fix_hebrew_text">Umgekehrte Textrichtung für Hebräisch</string>
-  <string name="fix_hebrew_text_summ">Erzwingt umgekehrte Textrichtung, um Hebräisch auf dem Android-System darzustellen. Vokale werden nicht unterstützt</string>
+  <string name="fix_hebrew_text">Fix for Hebrew vowels</string>
+  <string name="fix_hebrew_text_summ">Workaround for rendering Hebrew vowels correctly.</string>
+  <string name="fix_hebrew_instructions">This setting bypasses the RTL algorithm of Android to show Hebrew text with vowels correctly.\n\nFor this to work, you need to download font Tohu.ttf and copy it manually to:\n%s/fonts/\n\nYou won\'t have to modify your cards.</string>
+  <string name="fix_hebrew_download_font">Download Font</string>
   <string name="default_font">Standardschrift</string>
   <string name="default_font_summ">Die Schriftart, welche für Text ohne festgelegte Schriftart-Formatierung benutzt wird. Benutzerdefinierte Schriftarten sollten auf der SD-Karte in einem Ordner „fonts“ in Ihrem AnkiDroid-Ordner installiert werden.</string>
   <string name="language">Sprache</string>

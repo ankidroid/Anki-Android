@@ -140,8 +140,10 @@
   <string name="shake_intensity_summ">Soglia per il riconoscimento di agitare: XXX</string>
   <string name="sync_fetch_missing_media">Recuperare i media con sincronizzazione</string>
   <string name="sync_fetch_missing_media_summ">Recupera automaticamente i contenuti multimediali durante la sincronizzazione.</string>
-  <string name="fix_hebrew_text">Applica RTL per Ebraico</string>
-  <string name="fix_hebrew_text_summ">Soluzione per il supporto limitato della lingua Ebraica sulla piattaforma Android. Non supporta le vocali.</string>
+  <string name="fix_hebrew_text">Fix for Hebrew vowels</string>
+  <string name="fix_hebrew_text_summ">Workaround for rendering Hebrew vowels correctly.</string>
+  <string name="fix_hebrew_instructions">This setting bypasses the RTL algorithm of Android to show Hebrew text with vowels correctly.\n\nFor this to work, you need to download font Tohu.ttf and copy it manually to:\n%s/fonts/\n\nYou won\'t have to modify your cards.</string>
+  <string name="fix_hebrew_download_font">Download Font</string>
   <string name="default_font">Carattere predefinito</string>
   <string name="default_font_summ">Font usato per il testo per il quale non è specificata nessuna formattazione del carattere. Font personalizzati devono essere installati sulla scheda SD in una cartella chiamata \'fonts\' nella tua cartella AnkiDroid.</string>
   <string name="language">Lingua</string>

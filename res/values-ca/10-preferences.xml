@@ -140,8 +140,10 @@
   <string name="shake_intensity_summ">Llindar de reconeixement per sacsejar: XXX</string>
   <string name="sync_fetch_missing_media">Recupera els media en sincronitzar</string>
   <string name="sync_fetch_missing_media_summ">Recupera automàticament els mitjans que falten al sincronitzar.</string>
-  <string name="fix_hebrew_text">Feu complir RTL per l\'hebreu</string>
-  <string name="fix_hebrew_text_summ">Solució per al suport limitat de la llengua hebrea de la plataforma Android No permet l\'ús de vocals.</string>
+  <string name="fix_hebrew_text">Fix for Hebrew vowels</string>
+  <string name="fix_hebrew_text_summ">Workaround for rendering Hebrew vowels correctly.</string>
+  <string name="fix_hebrew_instructions">This setting bypasses the RTL algorithm of Android to show Hebrew text with vowels correctly.\n\nFor this to work, you need to download font Tohu.ttf and copy it manually to:\n%s/fonts/\n\nYou won\'t have to modify your cards.</string>
+  <string name="fix_hebrew_download_font">Download Font</string>
   <string name="default_font">Tipus de lletra per omissió</string>
   <string name="default_font_summ">El tipus de lletra utilitzat per a text que no té de un tipus de lletra especificat. Cal instal·lar tipus de lletres personalitzats a la targeta SD, en una carpeta anomenada \"fonts\" de la vostra carpeta d\'AnkiDroid.</string>
   <string name="language">Idioma</string>

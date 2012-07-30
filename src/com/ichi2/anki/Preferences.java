@@ -26,6 +26,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.content.res.Resources;
+import android.net.Uri;
 import android.os.Bundle;
 import android.preference.CheckBoxPreference;
 import android.preference.EditTextPreference;
@@ -61,6 +62,7 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
 
     private static final int DIALOG_ASYNC = 1;
     private static final int DIALOG_BACKUP = 2;
+    private static final int DIALOG_HEBREW_FONT = 3;
     private static final int DIALOG_WRITE_ANSWERS = 4;
 
     // private boolean mVeecheckStatus;
@@ -340,6 +342,7 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
             } else if (key.equals("fixHebrewText")) {
                 if (fixHebrewText.isChecked()) {
                     HebrewFixFilter.install(AnkiDroidApp.getHooks());
+                    showDialog(DIALOG_HEBREW_FONT);
                 } else {
                     HebrewFixFilter.uninstall(AnkiDroidApp.getHooks());
                 }
@@ -435,6 +438,22 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
                 builder.setCancelable(false);
                 builder.setMessage(res.getString(R.string.write_answers_message));
                 builder.setNegativeButton(res.getString(R.string.ok), null);
+                break;
+            case DIALOG_HEBREW_FONT:
+                builder.setTitle(res.getString(R.string.fix_hebrew_text));
+                builder.setCancelable(false);
+                builder.setMessage(res.getString(R.string.fix_hebrew_instructions,
+                        AnkiDroidApp.getDefaultAnkiDroidDirectory()));
+                builder.setNegativeButton(R.string.cancel, null);
+                builder.setPositiveButton(
+                        res.getString(R.string.fix_hebrew_download_font), new OnClickListener(){
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                Intent intent = new Intent("android.intent.action.VIEW",
+                                        Uri.parse(getResources().getString(R.string.link_hebrew_font)));
+                                startActivity(intent);
+                            }
+                        });
                 break;
         }
         return builder.create();

@@ -140,8 +140,10 @@
   <string name="shake_intensity_summ">Shake認識のしきい値: XXX</string>
   <string name="sync_fetch_missing_media">同期するメディアを取得しています</string>
   <string name="sync_fetch_missing_media_summ">同期の際に不足しているメディアを自動的に取得する.</string>
-  <string name="fix_hebrew_text">ヘブライ語は右から表示する</string>
-  <string name="fix_hebrew_text_summ">Androidプラットフォームでの制限されたヘブライ語サポートの回避策. 母音をサポートしません.</string>
+  <string name="fix_hebrew_text">Fix for Hebrew vowels</string>
+  <string name="fix_hebrew_text_summ">Workaround for rendering Hebrew vowels correctly.</string>
+  <string name="fix_hebrew_instructions">This setting bypasses the RTL algorithm of Android to show Hebrew text with vowels correctly.\n\nFor this to work, you need to download font Tohu.ttf and copy it manually to:\n%s/fonts/\n\nYou won\'t have to modify your cards.</string>
+  <string name="fix_hebrew_download_font">Download Font</string>
   <string name="default_font">既定のフォント</string>
   <string name="default_font_summ">The font used for text that has no font formatting specified. Custom fonts should be installed on the SD card in a folder called \'fonts\' in your AnkiDroid folder.</string>
   <string name="language">言語</string>

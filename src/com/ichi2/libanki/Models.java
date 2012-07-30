@@ -91,7 +91,7 @@ public class Models {
     // private AnkiDb mDb;
     //
     /** Map for compiled Mustache Templates */
-    private HashMap<Long, HashMap<Integer, Template[]>> mCmpldTemplateMap = new HashMap<Long, HashMap<Integer, Template[]>>();
+    private Map<String, Template> mCmpldTemplateMap = new HashMap<String, Template>();
 
 
     //
@@ -845,44 +845,14 @@ public class Models {
      * @param args Pass it as [qfmt, afmt] to use custom format, or [] to use the format from model
      * @return
      */
-    public Template[] getCmpldTemplate(long modelId, int ord, List<String> args) {
-        if (!mCmpldTemplateMap.containsKey(modelId)) {
-            mCmpldTemplateMap.put(modelId, new HashMap<Integer, Template[]>());
+    public Template getCmpldTemplate(String format) {
+        if (!mCmpldTemplateMap.containsKey(format)) {
+            mCmpldTemplateMap.put(format, Mustache.compiler().compile(format));
         }
-        if (!mCmpldTemplateMap.get(modelId).containsKey(ord) || args != null) {
-            mCmpldTemplateMap.get(modelId).put(ord, compileTemplate(modelId, ord, args));
-        }
-        return mCmpldTemplateMap.get(modelId).get(ord);
+
+        return mCmpldTemplateMap.get(format);
     }
 
-
-    // not in libanki
-    public Template[] compileTemplate(long modelId, int ord, List<String> args) {
-        JSONObject model = mModels.get(modelId);
-        JSONObject template;
-        Template[] t = new Template[2];
-        try {
-            String qfmt;
-            String afmt;
-            if (args != null && args.size() > 1) {
-                qfmt = args.get(0);
-                afmt = args.get(1);
-            } else {
-                template = model.getJSONArray("tmpls").getJSONObject(ord);
-                qfmt = template.getString("qfmt");
-                afmt = template.getString("afmt");
-            }
-            String format = qfmt.replace("{{cloze:", "{{cq:" + (ord + 1) + ":");
-            Log.i(AnkiDroidApp.TAG, "Compiling question template \"" + format + "\"");
-            t[0] = Mustache.compiler().compile(format);
-            format = afmt.replace("{{cloze:", "{{ca:" + (ord + 1) + ":");
-            Log.i(AnkiDroidApp.TAG, "Compiling answer template \"" + format + "\"");
-            t[1] = Mustache.compiler().compile(format);
-        } catch (JSONException e) {
-            throw new RuntimeException(e);
-        }
-        return t;
-    }
 
     // not in libanki
     // Handle fields fetched from templates and any anki-specific formatting
