@@ -18,42 +18,38 @@
 */
 -->
 
+
+
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
 	android:layout_height="fill_parent"
 	android:id="@+id/deckpicker_loading_layer"
 	android:background="#000000">
-<RelativeLayout
-    android:layout_width="fill_parent"
-	android:layout_height="fill_parent"
-	android:orientation="vertical"
-	android:background="@drawable/deckpicker_load_bg_big"
-	android:gravity="center">
 	<LinearLayout
-	    android:layout_centerInParent="true" 
-	    android:layout_height="wrap_content"
-	    android:layout_width="wrap_content"
+	    android:layout_height="fill_parent"
+	    android:layout_width="fill_parent"
 		android:gravity="center"
+		android:background="@drawable/deckpicker_load_bg_big"
 		android:orientation="vertical">
-	<LinearLayout
-	    android:layout_height="wrap_content"
-	    android:gravity="center"
-    	android:layout_width="wrap_content"
-	    android:orientation="horizontal">
-	    <TextView 
-	    android:layout_height="wrap_content"
-	    android:layout_width="wrap_content"
-	    android:textSize="44sp"
-	    android:textColor="#ffffff"
-	    android:text="Anki"/>
-    <TextView 
-	    android:layout_height="wrap_content"
-	    android:layout_width="wrap_content"
-	    android:text="Droid"
-	    android:textSize="44sp"
-	    android:textColor="#ffffff"
-	    android:textStyle="bold"/>    	    
-	</LinearLayout>
+		<LinearLayout
+		    android:layout_height="wrap_content"
+		    android:gravity="center"
+	    	android:layout_width="wrap_content"
+		    android:orientation="horizontal">
+		    <TextView 
+		    android:layout_height="wrap_content"
+		    android:layout_width="wrap_content"
+		    android:textSize="44sp"
+		    android:textColor="#ffffff"
+		    android:text="Anki"/>
+		    <TextView 
+			    android:layout_height="wrap_content"
+			    android:layout_width="wrap_content"
+			    android:text="Droid"
+			    android:textSize="44sp"
+			    android:textColor="#ffffff"
+			    android:textStyle="bold"/>    	    
+		</LinearLayout>
         <ProgressBar android:id="@android:id/progress"
             style="@style/White.Spinner.White"
             android:layout_width="wrap_content"
@@ -64,19 +60,17 @@
             android:layout_marginBottom="10dip"
             android:layout_marginLeft="10dip"
             android:layout_marginRight="10dip" />
-
-    <TextView android:id="@+id/deckpicker_loading_layer_statusline" 
-	    android:layout_height="wrap_content"
-	    android:layout_width="wrap_content"
-	    android:text="@string/open_collection"
-	    android:layout_marginTop="6dip"
-	    android:lines="4"
-	    android:layout_marginBottom="0dip"
-	    android:layout_marginLeft="16dip"
-	    android:layout_marginRight="16dip"
-	    android:gravity="center_horizontal"
-	    android:textSize="16sp"
-	    android:textColor="#ffffff"/>    	    
+	    <TextView android:id="@+id/deckpicker_loading_layer_statusline" 
+		    android:layout_height="wrap_content"
+		    android:layout_width="wrap_content"
+		    android:text="@string/open_collection"
+		    android:layout_marginTop="6dip"
+		    android:lines="4"
+		    android:layout_marginBottom="0dip"
+		    android:layout_marginLeft="16dip"
+		    android:layout_marginRight="16dip"
+		    android:gravity="center_horizontal"
+		    android:textSize="16sp"
+		    android:textColor="#ffffff"/>    	    
 	</LinearLayout>
-</RelativeLayout>
 </FrameLayout>
