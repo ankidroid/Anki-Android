@@ -1325,7 +1325,9 @@ public class Reviewer extends AnkiActivity {
 
 
     private void clipboardSetText(CharSequence text) {
-        mClipboard.setText(text);
+        if (mClipboard != null) {
+		mClipboard.setText(text);
+	}
     }
 
 
