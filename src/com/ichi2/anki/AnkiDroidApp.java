@@ -345,8 +345,8 @@ public class AnkiDroidApp extends Application {
     	mLock.lock();
     	Log.i(AnkiDroidApp.TAG, "openCollection: " + path);
         try {
-        	if (sInstance.mCurrentCollection == null || !sInstance.mCurrentCollection.getPath().equals(path)) {
-        		if (sInstance.mCurrentCollection != null) {
+        	if (!colIsOpen() || !sInstance.mCurrentCollection.getPath().equals(path)) {
+        		if (colIsOpen()) {
         			// close old collection prior to opening new one
         			sInstance.mCurrentCollection.close();
         			sInstance.mAccessThreadCount = 0;
