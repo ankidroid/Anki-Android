@@ -21,7 +21,6 @@
 		android:fastScrollEnabled="true" 
 		android:drawSelectorOnTop="true"
 		android:layout_alignParentTop="true"
-		android:layout_above="@+id/deckpicker_buttons"
 		android:focusable="true"/>
 
 <!-- 	<LinearLayout
