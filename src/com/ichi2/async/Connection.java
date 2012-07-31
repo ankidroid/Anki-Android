@@ -512,7 +512,7 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
 
         boolean colCorruptFullSync = false;
         Collection col = AnkiDroidApp.getCol();
-        if (!AnkiDroidApp.isColOpen()) {
+        if (!AnkiDroidApp.colIsOpen()) {
         	if (conflictResolution != null && conflictResolution.equals("download")) {
         		colCorruptFullSync = true;
         	} else {
