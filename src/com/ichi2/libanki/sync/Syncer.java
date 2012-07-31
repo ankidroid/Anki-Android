@@ -34,6 +34,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.lang.OutOfMemoryError;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -236,6 +237,9 @@ public class Syncer {
             throw new RuntimeException(e);
         } catch (IllegalStateException e) {
             throw new RuntimeException(e);
+        } catch (OutOfMemoryError e) {
+			AnkiDroidApp.saveExceptionReportFile(e, "Syncer-sync");
+        	return new Object[] { "OutOfMemoryError" };
         } catch (IOException e) {
 			AnkiDroidApp.saveExceptionReportFile(e, "Syncer-sync");
         	return new Object[] { "IOException" };
