@@ -55,6 +55,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.lang.OutOfMemoryError;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URI;
@@ -511,7 +512,7 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
 
         boolean colCorruptFullSync = false;
         Collection col = AnkiDroidApp.getCol();
-        if (col == null) {
+        if (!AnkiDroidApp.colIsOpen()) {
         	if (conflictResolution != null && conflictResolution.equals("download")) {
         		colCorruptFullSync = true;
         	} else {
@@ -592,8 +593,14 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
                     }
                 }
                 col = AnkiDroidApp.openCollection(path);
+            } catch (OutOfMemoryError e) {
+            	AnkiDroidApp.saveExceptionReportFile(e, "doInBackgroundSync-fullSync");
+                data.success = false;
+                data.result = new Object[]{"OutOfMemoryError"};
+                data.data = new Object[] { mediaUsn };
+                return data;
             } catch (RuntimeException e) {
-    			AnkiDroidApp.saveExceptionReportFile(e, "doInBackgroundSync-fullSync");
+            	AnkiDroidApp.saveExceptionReportFile(e, "doInBackgroundSync-fullSync");
                 data.success = false;
                 data.result = new Object[]{"IOException"};
                 data.data = new Object[] { mediaUsn };

@@ -336,6 +336,10 @@ public class StudyOptionsFragment extends Fragment {
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
         Log.i(AnkiDroidApp.TAG, "onConfigurationChanged");
+	if (mTextDeckName == null) {
+		// layout not yet initialized
+		return;
+	}
         mDontSaveOnStop = true;
         CharSequence title = mTextDeckName.getText();
         CharSequence desc = mTextDeckDescription.getText();
