@@ -513,6 +513,12 @@ public class StudyOptionsFragment extends Fragment {
             but.setOnClickListener(mButtonClickListener);
         } else {
             mAddNote = (ImageButton) mStudyOptionsView.findViewById(R.id.studyoptions_add);
+            if (AnkiDroidApp.colIsOpen()) {
+                Collection col = AnkiDroidApp.getCol();
+                if (col.getDecks().isDyn(col.getDecks().selected())) {
+                    mAddNote.setEnabled(false);
+                }
+            }
             mCardBrowser = (ImageButton) mStudyOptionsView.findViewById(R.id.studyoptions_card_browser);
             mStatisticsButton = (ImageButton) mStudyOptionsView.findViewById(R.id.studyoptions_statistics);
             mDeckOptions = (ImageButton) mStudyOptionsView.findViewById(R.id.studyoptions_options);

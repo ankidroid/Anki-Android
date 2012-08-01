@@ -1077,6 +1077,13 @@ public class CardEditor extends Activity {
                         long newId = dialogIds.get(item);
                         if (oldModelId != newId) {
                             mCol.getModels().setCurrent(mCol.getModels().get(newId));
+                            JSONObject cdeck = mCol.getDecks().current();
+                            try {
+                                cdeck.put("mid", newId);
+                            } catch (JSONException e) {
+                                throw new RuntimeException(e);
+                            }
+                            mCol.getDecks().save(cdeck);
                             int size = mEditFields.size();
                             String[] oldValues = new String[size];
                             for (int i = 0; i < size; i++) {
@@ -1425,31 +1432,17 @@ public class CardEditor extends Activity {
     private void setNote(Note note) {
         try {
             if (note == null) {
-                boolean firstCard = mEditorNote == null;
-                mEditorNote = mCol.newNote();
-                // TODO: mCurrentDid = mEditorNote.getDid();
-                if (firstCard && mCaller == CALLER_STUDYOPTIONS
-                        && mCurrentDid != mCol.getDecks().current().getLong("id")) {
-                    mCurrentDid = mCol.getDecks().current().getLong("id");
-                    // if called from studyoptions, try to set the decks model
-                    ArrayList<JSONObject> models = mCol.getModels().all();
-                    boolean found = false;
-                    for (int i = 0; i < models.size(); i++) {
-                        JSONObject m = models.get(i);
-                        if (m.getLong("did") == mCurrentDid) {
-                            mEditorNote = new Note(mCol, m);
-                            found = true;
-                            break;
-                        }
-                    }
-                    if (!found) {
-                        // set current deck to current model
-                        mEditorNote.model().put("did", mCurrentDid);
-                    }
+                mCurrentDid = mCol.getDecks().current().getLong("id");
+                if (mCol.getDecks().isDyn(mCurrentDid)) {
+                    mCurrentDid = 1;
                 }
+
+                JSONObject model = mCol.getModels().current();
+                mEditorNote = new Note(mCol, model);
+                mEditorNote.model().put("did", mCurrentDid);
                 mModelButton.setText(getResources().getString(R.string.CardEditorModel,
-                        mEditorNote.model().getString("name")));
-                JSONArray tags = mEditorNote.model().getJSONArray("tags");
+                        model.getString("name")));
+                JSONArray tags = model.getJSONArray("tags");
                 for (int i = 0; i < tags.length(); i++) {
                     mEditorNote.addTag(tags.getString(i));
                 }
