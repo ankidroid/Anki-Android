@@ -17,41 +17,36 @@
 
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 	<PreferenceCategory android:title="@string/deck_conf_cram_filter">
-    
-    	<ListPreference
-            	android:title="@string/deck_conf_cram_preset"
-		android:key="preset"/>
-    	<EditTextPreference
-            	android:title="@string/deck_conf_cram_search"
-            	android:key="search" />
-    	
-    	<EditTextPreference
-            	android:title="@string/deck_conf_cram_limit"
-        	    	android:numeric="integer"             	
-            	android:key="limit" />
-    	<ListPreference
-            	android:title="@string/deck_conf_cram_order"
-		android:key="order"/>
-    		
-    		</PreferenceCategory>
-    
-	<PreferenceCategory android:title="@string/deck_conf_cram_options">
+		<ListPreference
+			android:title="@string/deck_conf_cram_preset"
+			android:key="preset"/>
+		<EditTextPreference
+			android:title="@string/deck_conf_cram_search"
+			android:key="search" />
+		<EditTextPreference
+			android:title="@string/deck_conf_cram_limit"
+			android:numeric="integer"
+			android:key="limit" />
+		<ListPreference
+			android:title="@string/deck_conf_cram_order"
+			android:key="order"/>
+	</PreferenceCategory>
+
+		<PreferenceCategory android:title="@string/deck_conf_cram_options">
 		<CheckBoxPreference
 			android:title="@string/deck_conf_cram_reschedule"
 			android:defaultValue="true"
 			android:summary="@string/deck_conf_cram_reschedule_summ"
 			android:key="resched" />
-	    		<CheckBoxPreference
+	    <CheckBoxPreference
 			android:title="@string/deck_conf_cram_steps"
 			android:defaultValue="true"
-			                    android:disableDependentsState="false"
-			android:summary="@string/deck_conf_separate_summ"
+			android:disableDependentsState="false"
+			android:summary="@string/deck_conf_cram_steps_summ"
 			android:key="stepsOn" />
-    	<EditTextPreference
-            	android:title="@string/deck_conf_cram_steps"
-            	                    android:dependency="stepsOn"
-         
-           	android:key="steps" />
-	    				
-    </PreferenceCategory>
+		<EditTextPreference
+			android:title="@string/deck_conf_cram_steps"
+			android:dependency="stepsOn"
+			android:key="steps" />
+	</PreferenceCategory>
 </PreferenceScreen>
