@@ -88,7 +88,7 @@ public class Storage {
             _addSchema(db, false);
             db.execute("insert into cards select id, nid, did, ord, mod, usn, type, queue, due, ivl, factor, reps, lapses, left, edue, 0, flags, data from cards2");
             db.execute("DROP TABLE cards2");
-            db.execute("UPDATE col SET var = 2");
+            db.execute("UPDATE col SET ver = 2");
             _updateIndices(db);
         }
         // remove did from notes
@@ -97,7 +97,7 @@ public class Storage {
             _addSchema(db, false);
             db.execute("insert into notes select id, guid, mid, mod, usn, tags, flds, sfld, csum, flags, data from notes2");
             db.execute("DROP TABLE notes2");
-            db.execute("UPDATE col SET var = 3");
+            db.execute("UPDATE col SET ver = 3");
             _updateIndices(db);
         }
         return ver;
