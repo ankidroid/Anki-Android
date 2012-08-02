@@ -1072,10 +1072,16 @@ public class Utils {
 		}
         List<AnkiFont> fonts = new ArrayList<AnkiFont>();
         for (int i = 0; i < fontsCount; i++) {
-        	fonts.add(new AnkiFont(null, fontsList[i].getAbsolutePath(), false));
+            AnkiFont font = AnkiFont.createAnkiFont(context, fontsList[i].getAbsolutePath(), false);
+            if (font != null) {
+                fonts.add(font);
+            }
         }
         for (int i = 0; i < ankiDroidFonts.length; i++) {
-        	fonts.add(new AnkiFont(context, ankiDroidFonts[i], true));        	
+            AnkiFont font = AnkiFont.createAnkiFont(context, ankiDroidFonts[i], true);
+        	if (font != null) {
+                fonts.add(font);
+            }
         }
 
        	return fonts;

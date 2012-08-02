@@ -1,62 +1,89 @@
 package com.ichi2.anki;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.graphics.Typeface;
+import android.util.Log;
+import android.widget.Toast;
 
 import com.ichi2.libanki.Utils;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class AnkiFont {
     private String mName;
     private String mFamily;
-    private List<String> mAttributes = new ArrayList<String>();
+    private List<String> mAttributes;
     private String mPath;
     private static final String fAssetPathPrefix = "/android_asset/fonts/";
+    private static Set<String> corruptFonts = new HashSet<String>();
 
-    public AnkiFont(Context ctx, String path, boolean fromAssets) {
+    private AnkiFont(String name, String family, List<String> attributes, String path) {
+        mName = name;
+        mFamily = family;
+        mAttributes = attributes;
         mPath = path;
-        File fontfile = new File(mPath);
-        mName = Utils.removeExtension(fontfile.getName());
-        mFamily = mName;
+    }
+    
+    /**
+     * Factory for AnkiFont creation.
+     * Creates a typeface wrapper from a font file representing.
+     * @param ctx Activity context, needed to access assets
+     * @param path Path to typeface file, needed when this is a custom font.
+     * @param fromAssets True if the font is to be found in assets of application
+     * @return A new AnkiFont object or null if the file can't be interpreted as typeface.
+     */
+    public static AnkiFont createAnkiFont(Context ctx, String path, boolean fromAssets) {
+        File fontfile = new File(path);
+        String name = Utils.removeExtension(fontfile.getName());
+        String family = name;
+        List<String> attributes = new ArrayList<String>();
 
         if (fromAssets) {
-            mPath = fAssetPathPrefix.concat(fontfile.getName());
+            path = fAssetPathPrefix.concat(fontfile.getName());
         }
-        Typeface tf = getTypeface(ctx, mPath);
-        if (tf.isBold() || mName.toLowerCase().contains("bold")) {
-            mAttributes.add("font-weight: bolder;");
-            mFamily = mFamily.replaceFirst("(?i)-?Bold", "");
-        } else if (mName.toLowerCase().contains("light")) {
-            mAttributes.add("font-weight: lighter;");
-            mFamily = mFamily.replaceFirst("(?i)-?Light", "");
+        Typeface tf = getTypeface(ctx, path);
+        if (tf == null) {
+            // unable to create typeface
+            return null;
+        }
+        if (tf.isBold() || name.toLowerCase().contains("bold")) {
+            attributes.add("font-weight: bolder;");
+            family = family.replaceFirst("(?i)-?Bold", "");
+        } else if (name.toLowerCase().contains("light")) {
+            attributes.add("font-weight: lighter;");
+            family = family.replaceFirst("(?i)-?Light", "");
         } else {
-            mAttributes.add("font-weight: normal;");
+            attributes.add("font-weight: normal;");
         }
-        if (tf.isItalic() || mName.toLowerCase().contains("italic")) {
-            mAttributes.add("font-style: italic;");
-            mFamily = mFamily.replaceFirst("(?i)-?Italic", "");
-        } else if (mName.toLowerCase().contains("oblique")) {
-            mAttributes.add("font-style: oblique;");
-            mFamily = mFamily.replaceFirst("(?i)-?Oblique", "");
+        if (tf.isItalic() || name.toLowerCase().contains("italic")) {
+            attributes.add("font-style: italic;");
+            family = family.replaceFirst("(?i)-?Italic", "");
+        } else if (name.toLowerCase().contains("oblique")) {
+            attributes.add("font-style: oblique;");
+            family = family.replaceFirst("(?i)-?Oblique", "");
         } else {
-            mAttributes.add("font-style: normal;");
+            attributes.add("font-style: normal;");
         }
-        if (mName.toLowerCase().contains("condensed") || mName.toLowerCase().contains("narrow")) {
-            mAttributes.add("font-stretch: condensed;");
-            mFamily = mFamily.replaceFirst("(?i)-?Condensed", "");
-            mFamily = mFamily.replaceFirst("(?i)-?Narrow(er)?", "");
-        } else if (mName.toLowerCase().contains("expanded") || mName.toLowerCase().contains("wide")) {
-            mAttributes.add("font-stretch: expanded;");
-            mFamily = mFamily.replaceFirst("(?i)-?Expanded", "");
-            mFamily = mFamily.replaceFirst("(?i)-?Wide(r)?", "");
+        if (name.toLowerCase().contains("condensed") || name.toLowerCase().contains("narrow")) {
+            attributes.add("font-stretch: condensed;");
+            family = family.replaceFirst("(?i)-?Condensed", "");
+            family = family.replaceFirst("(?i)-?Narrow(er)?", "");
+        } else if (name.toLowerCase().contains("expanded") || name.toLowerCase().contains("wide")) {
+            attributes.add("font-stretch: expanded;");
+            family = family.replaceFirst("(?i)-?Expanded", "");
+            family = family.replaceFirst("(?i)-?Wide(r)?", "");
         } else {
-            mAttributes.add("font-stretch: normal;");
+            attributes.add("font-stretch: normal;");
         }
-        mFamily = mFamily.replaceFirst("(?i)-?Regular", "");
+        family = family.replaceFirst("(?i)-?Regular", "");
+        return new AnkiFont(name, family, attributes, path);
     }
+    
     public String getDeclaration() {
         StringBuilder sb = new StringBuilder("@font-face {");
         sb.append(getCSS()).append(" src: url(\"file://").append(mPath).append("\");}");
@@ -76,10 +103,24 @@ public class AnkiFont {
         return mPath;
     }
     public static Typeface getTypeface(Context ctx, String path) {
-        if (path.startsWith(fAssetPathPrefix)) {
-            return Typeface.createFromAsset(ctx.getAssets(), path.replaceFirst("/android_asset/", ""));
-        } else {
-            return Typeface.createFromFile(path);
+        try {
+            if (path.startsWith(fAssetPathPrefix)) {
+                return Typeface.createFromAsset(ctx.getAssets(), path.replaceFirst("/android_asset/", ""));
+            } else {
+                return Typeface.createFromFile(path);
+            }
+        } catch (RuntimeException e) {
+            Log.w(AnkiDroidApp.TAG, "AnkiFont.getTypeface: " + e.getMessage() + " - File: " + path);
+            if (!corruptFonts.contains(path)) {
+                // Show warning toast
+                String name = new File(path).getName();
+                Resources res = AnkiDroidApp.getAppResources();
+                Toast toast = Toast.makeText(ctx, res.getString(R.string.corrupt_font, name), Toast.LENGTH_LONG);
+                toast.show();
+                // Don't warn again in this session
+                corruptFonts.add(path);
+            }
+            return null;
         }
     }
 }

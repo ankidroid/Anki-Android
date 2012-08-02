@@ -43,6 +43,7 @@
 <string name="suspend_leeches">Suspend Leeches</string>
 <string name="leech_suspend_notification">Card marked as leech and suspended</string>
 <string name="leech_notification">Card marked as leech</string>
+<string name="corrupt_font">Corrupt font file %s</string>
 
 
 <!--Card Editor-->
