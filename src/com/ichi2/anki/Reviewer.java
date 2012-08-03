@@ -290,7 +290,6 @@ public class Reviewer extends AnkiActivity {
     private StyledProgressDialog mProgressDialog;
     private StyledOpenCollectionDialog mOpenCollectionDialog;
     private Bundle mSavedInstanceState;
-    private Menu mOptionsMenu;
     private ProgressBar mProgressBar;
 
     private Card mCurrentCard;
@@ -566,7 +565,6 @@ public class Reviewer extends AnkiActivity {
 
         @Override
         public void onProgressUpdate(DeckTask.TaskData... values) {
-            updateMenuItems();
             if (mProgressDialog.isShowing()) {
                 mProgressDialog.dismiss();
             }
@@ -1196,33 +1194,8 @@ public class Reviewer extends AnkiActivity {
 //    }
 
 
-    private void updateMenuItems() {
-        if (mOptionsMenu == null) {
-            return;
-        }
-        MenuItem item = mOptionsMenu.findItem(MENU_MARK);
-        if (mCurrentCard.note().hasTag("marked")) {
-            item.setTitle(R.string.menu_unmark_card);
-            item.setIcon(R.drawable.ic_menu_marked);
-        } else {
-            item.setTitle(R.string.menu_mark_card);
-            item.setIcon(R.drawable.ic_menu_mark);
-        }
-        item = mOptionsMenu.findItem(MENU_UNDO);
-        if (mSched.getCol().undoAvailable()) {
-            item.setEnabled(true);
-            item.setIcon(R.drawable.ic_menu_revert);
-        } else {
-            item.setEnabled(false);
-            item.setIcon(R.drawable.ic_menu_revert_disabled);
-        }
-    }
-
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        mOptionsMenu = menu;
-        MenuItem item;
         Resources res = getResources();
 
         UIUtils.addMenuItemInActionBar(menu, Menu.NONE, MENU_MARK, Menu.NONE, R.string.menu_mark_card,
@@ -1249,7 +1222,7 @@ public class Reviewer extends AnkiActivity {
         removeDeckSubMenu.add(Menu.NONE, MENU_REMOVE_SUSPEND_NOTE, Menu.NONE, R.string.menu_suspend_note);
         removeDeckSubMenu.add(Menu.NONE, MENU_REMOVE_DELETE, Menu.NONE, R.string.menu_delete_note);
         if (mPrefTextSelection) {
-            item = menu.add(Menu.NONE, MENU_SEARCH, Menu.NONE, res.getString(R.string.menu_select));
+            MenuItem item = menu.add(Menu.NONE, MENU_SEARCH, Menu.NONE, res.getString(R.string.menu_select));
             item.setIcon(R.drawable.ic_menu_search);
             item.setEnabled(Lookup.isAvailable());
         }
@@ -1259,10 +1232,26 @@ public class Reviewer extends AnkiActivity {
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
     	Resources res = getResources();
-    	MenuItem item = menu.findItem(MENU_SEARCH);
+        MenuItem item = menu.findItem(MENU_MARK);
+        if (mCurrentCard.note().hasTag("marked")) {
+            item.setTitle(R.string.menu_unmark_card);
+            item.setIcon(R.drawable.ic_menu_marked);
+        } else {
+            item.setTitle(R.string.menu_mark_card);
+            item.setIcon(R.drawable.ic_menu_mark);
+        }
+        item = menu.findItem(MENU_UNDO);
+        if (mSched.getCol().undoAvailable()) {
+            item.setEnabled(true);
+            item.setIcon(R.drawable.ic_menu_revert);
+        } else {
+            item.setEnabled(false);
+            item.setIcon(R.drawable.ic_menu_revert_disabled);
+        }
+        item = menu.findItem(MENU_SEARCH);
     	if (item != null) {
-		setTitle(clipboardHasText() ? Lookup.getSearchStringTitle() : res.getString(R.string.menu_select));
-	}
+    		setTitle(clipboardHasText() ? Lookup.getSearchStringTitle() : res.getString(R.string.menu_select));
+    	}
 	return true;
     }
 
@@ -2260,8 +2249,6 @@ public class Reviewer extends AnkiActivity {
 
         String question = mCurrentCard.getQuestion(mCurrentSimpleInterface);
         question = typeAnsQuestionFilter(question);
-
-        updateMenuItems();
 
         if (mPrefFixArabic) {
             question = ArabicUtilities.reshapeSentence(question, true);
