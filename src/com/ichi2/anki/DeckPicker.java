@@ -1559,8 +1559,12 @@ public class DeckPicker extends FragmentActivity {
                                 if (result.getBoolean()) {
                                 	Resources res = getResources();
                                 	int count = result.getInt();
-                                	if (count == -1) {
-                                        mDialogMessage = res.getString(R.string.import_log_error);
+                                	if (count < 0) {
+                                		if (count == -2) {
+                                            mDialogMessage = res.getString(R.string.import_log_no_apkg);                                			
+                                		} else {
+                                            mDialogMessage = res.getString(R.string.import_log_error);                                			
+                                		}
                                         showDialog(DIALOG_IMPORT_LOG);
                                 	} else {
                                         mDialogMessage = res.getString(R.string.import_log_success, count);
@@ -1611,6 +1615,7 @@ public class DeckPicker extends FragmentActivity {
             	break;
 
             case DIALOG_IMPORT_LOG:
+                builder.setIcon(R.drawable.ic_dialog_alert);
                 builder.setTitle(res.getString(R.string.import_title));
                 builder.setPositiveButton(res.getString(R.string.ok), null);
                 dialog = builder.create();

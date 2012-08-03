@@ -788,8 +788,10 @@ public class DeckTask extends
 			} finally {
 				ankiDB.getDatabase().endTransaction();
 			}
-			ankiDB.execute("VACUUM");
-			ankiDB.execute("ANALYZE");
+			if (addedCount >= 0) {
+				ankiDB.execute("VACUUM");
+				ankiDB.execute("ANALYZE");
+			}
 
 			// actualize counts
 			Object[] counts = null;
