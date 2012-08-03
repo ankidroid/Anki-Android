@@ -871,7 +871,8 @@ public class StudyOptionsFragment extends Fragment {
                         break;
                 }
                 mDontSaveOnStop = false;
-            } else if (requestCode == BROWSE_CARDS && resultCode == Activity.RESULT_OK) {
+            } else if (requestCode == BROWSE_CARDS &&
+                    (resultCode == Activity.RESULT_OK || resultCode == Activity.RESULT_CANCELED)) {
                 mDontSaveOnStop = false;
                 resetAndUpdateValuesFromDeck();
             } else if (requestCode == STATISTICS && mCurrentContentView == CONTENT_CONGRATS) {
