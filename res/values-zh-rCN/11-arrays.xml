@@ -113,7 +113,7 @@
     <item>根据到期顺序</item>
   </string-array>
   <string-array name="cram_deck_conf_preset_labels">
-    <item><! [CDATA [< 选择预置>]] 〉</item>
+    <item><![CDATA[< 选择预置>]]></item>
     <item>预览所有新卡牌</item>
     <item>预览今天添加的卡牌</item>
     <item>复习今天遗忘的卡牌</item>
