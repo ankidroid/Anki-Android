@@ -50,6 +50,9 @@
   <string name="intent_add_clear_all">Очистить все</string>
   <string name="intent_aedict_empty">Категория «по умолчанию» является пустой</string>
   <string name="intent_aedict_category">При добавлении карты AnkiDroid удаляет все категории блокнота или добавляет одну с именем «default»</string>
+  <string name="learnmore_title">Extend Limits</string>
+  <string name="learnmore_extend_new_limit">New limit by</string>
+  <string name="learnmore_extend_rev_limit">Review limit by</string>
   <string-array name="about_content">
     <item><![CDATA[<h2>%1$s:<br/>Flashcards для Android</h2>AnkiDroid - это приложение для изучения учебных карточек, полностью совместимо с настольной версией <a href="%2$s">Anki</a>. Вы можете создавать, скачивать и изучать информацию, и в AnkiDroid и Anki Desktop, синхронизируя их между собой.]]></item>
     <item><![CDATA[Чтобы сделать AnkiDroid лучше, пожалуйста, сообщайте нам о любых ошибках <a href="%1$s">здесь</a>; запрос новых функций или идеи также очень приветствуются! Пожалуйста используйте <a href="%2$s">wiki</a> и участвуйте в <a href="%3$s">форуме</a>.]]></item>

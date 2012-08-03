@@ -50,6 +50,9 @@
   <string name="intent_add_clear_all">Cancella tutto</string>
   <string name="intent_aedict_empty">Categoria \'default\' è vuota</string>
   <string name="intent_aedict_category">Per aggiungere le carte ad AnkiDroid rimuovi tutte le categorie Notepad o aggiungine una chiamata \'default\'</string>
+  <string name="learnmore_title">Extend Limits</string>
+  <string name="learnmore_extend_new_limit">New limit by</string>
+  <string name="learnmore_extend_rev_limit">Review limit by</string>
   <string-array name="about_content">
     <item><![CDATA[<h2>%1$s:<br/>Flashcard per Android</h2>AnkiDroid è un\'applicazione per flashcard pienamente compatibile con il software per desktop <a href="%2$s">Anki</a>. Puoi creare, scaricare e apprendere contenuti da entrambi, AnkiDroid o Anki Desktop, e sincronizzarli molto facilmente.]]></item>
     <item><![CDATA[Aiutaci a migliorare AnkiDroid: segnala per favore ogni problema <a href="%1$s">qui</a>; idee relative a nuove funzionalità sono benvenute! Usa il <a href="%2$s">wiki</a> e presentati sul <a href="%3$s">forum</a>.]]></item>

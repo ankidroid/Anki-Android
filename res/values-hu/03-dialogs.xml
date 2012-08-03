@@ -50,6 +50,9 @@
   <string name="intent_add_clear_all">Mindent töröl</string>
   <string name="intent_aedict_empty">Az \"alap\" kategória üres</string>
   <string name="intent_aedict_category">Hogy új kártyákat adj az AnkiDroid-hoz, távolítsd el az összes Jegyzettömb/Notepad/ kategóriát, vagy adj hozzá egyet \'default\' névvel</string>
+  <string name="learnmore_title">Extend Limits</string>
+  <string name="learnmore_extend_new_limit">New limit by</string>
+  <string name="learnmore_extend_rev_limit">Review limit by</string>
   <string-array name="about_content">
     <item><![CDATA[<h2>%1$s:<br/>Tanulókártyák Androidra</h2>Az AnkiDroid egy tanulókártya kezelő program, ami teljesen kompatibilis az <a href="%2$s">Anki</a> asztali programmal. Segítségükkel létrehozhatsz, letölthetsz és tanulhatsz különböző tartalmakat, mind az AnkiDroiddal, mind pedig az asztali Anki-val, pakliaidat szinkronizálhatod közöttük.]]></item>
     <item><![CDATA[Segíts, hogy mégjobb legyen az AnkiDroid! Megkérünk, hogy jelents bármiféle bug-ot <a href="%1$s">itt</a>, de új ötleteket is szívesen fogadunk! Használd a <a href="%2$s">wiki</a>-t, és köszönj be a <a href="%3$s">fórumon</a>.]]></item>

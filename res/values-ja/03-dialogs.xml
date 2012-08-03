@@ -50,6 +50,9 @@
   <string name="intent_add_clear_all">すべて消去</string>
   <string name="intent_aedict_empty">カテゴリー \'default\' が空です。</string>
   <string name="intent_aedict_category">AnkiDroidにカードを登録するため、すべてのNotepadカテゴリを削除するか追、\'default\' という名前のカテゴリを追加してください。</string>
+  <string name="learnmore_title">Extend Limits</string>
+  <string name="learnmore_extend_new_limit">New limit by</string>
+  <string name="learnmore_extend_rev_limit">Review limit by</string>
   <string-array name="about_content">
     <item><![CDATA[<h2>%1$s:<br/>Android用のフラッシュカード</h2>AnkiDroidは、デスクトップソフトウェア <a href="%2$s">Anki</a>と完全互換のフラッシュカードアプリです。あなたは、AnkiDroid と Anki Desktopのどちらでも教材を作成、ダウンロード、学習し、また、簡単に双方の同期をとることができます。]]></item>
     <item><![CDATA[AnkiDroid 良くするため、できるだけバグを、 <a href="%1$s"> ここに</a>報告して頂けると助かります。 新しい機能のアイデアも大歓迎 ！<a href="%2$s"> wiki</a> を使用して、<a href="%3$s"> フォーラム</a>で意見交換してください。]]></item>

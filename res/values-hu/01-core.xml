@@ -91,6 +91,7 @@
   <string name="studyoptions_options">Beállítások</string>
   <string name="empty_cloze_warning">Szerkeszd ezt a megjegyzést és adj meg hozzá néhány közeli /törlést/. (%1$s)</string>
   <string name="help_cloze">segítség</string>
+  <string name="button_sync">Sync</string>
   <string-array name="next_review_s">
     <item>1 másodperc</item>
     <item>1 perc</item>

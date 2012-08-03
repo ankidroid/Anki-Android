@@ -50,6 +50,9 @@
   <string name="intent_add_clear_all">全部清除</string>
   <string name="intent_aedict_empty">类别“默认”为空</string>
   <string name="intent_aedict_category">向AnkiDroid中添加卡片，需要删除所有NotePad类别，或者添加“默认”类别。</string>
+  <string name="learnmore_title">Extend Limits</string>
+  <string name="learnmore_extend_new_limit">New limit by</string>
+  <string name="learnmore_extend_rev_limit">Review limit by</string>
   <string-array name="about_content">
     <item><![CDATA[<h2>%1$s:<br/>安卓上的快闪卡Flashcards</h2>AnkiDroid是一个快闪卡程序，与桌面客户端<a href="%2$s">Anki</a>完全兼容。在AnkiDroid和Anki桌面客户端上，你可以创建，下载并学习任意内容，轻松实现同步。]]></item>
     <item><![CDATA[帮助我们使AnkiDroid更好，请将bug报告到<a href="%1$s">这里</a>； 也欢迎关于软件特性的各种意见和建议！请使用<a href="%2$s">wiki</a>或者在<a href="%3$s">论坛</a>打招呼。]]></item>

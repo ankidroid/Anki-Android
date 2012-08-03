@@ -44,7 +44,7 @@
   <string name="card_unsuspended">Відкладення картки скасовано</string>
   <string name="card_suspended">Картка знову відкладена</string>
   <string name="menu_rotate">Повернути</string>
-  <string name="menu_import">Import cards</string>
+  <string name="menu_import">Імпортувати карти</string>
   <string name="undo">Відмінити</string>
   <string name="finish_operation">Завершення попередньої операції (найбільш ймовірно, створення резервної копії). \n Будь ласка, зачекайте...</string>
   <string name="contextmenu_deckpicker_download_missing_media">Завантажити відсутні медіа-файли</string>
@@ -91,6 +91,7 @@
   <string name="studyoptions_options">Параметри</string>
   <string name="empty_cloze_warning">Будь ласка, відредагуйте цей запис і додайте трохи замазування. (%1$s)</string>
   <string name="help_cloze">допомога</string>
+  <string name="button_sync">Sync</string>
   <string-array name="next_review_s">
     <item>1 секунда</item>
     <item>1 хвилина</item>

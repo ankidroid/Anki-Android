@@ -91,6 +91,7 @@
   <string name="studyoptions_options">Opções</string>
   <string name="empty_cloze_warning">Por favor edite esta nota e adicione algumas deleções fechadas. (%1$s)</string>
   <string name="help_cloze">ajuda</string>
+  <string name="button_sync">Sync</string>
   <string-array name="next_review_s">
     <item>1 segundo</item>
     <item>1 minuto</item>

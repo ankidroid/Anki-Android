@@ -50,6 +50,9 @@
   <string name="intent_add_clear_all">Alles löschen</string>
   <string name="intent_aedict_empty">Kategorie \'Standard\' ist leer</string>
   <string name="intent_aedict_category">Entfernen Sie alle Notepad-Kategorien um Karten zu AnkiDroid hinzuzufügen oder fügen Sie die Kategorie \'default\' hinzu</string>
+  <string name="learnmore_title">Begrenzungen ausweiten</string>
+  <string name="learnmore_extend_new_limit">Neue-Karten-Limit um</string>
+  <string name="learnmore_extend_rev_limit">Wiederholen-Limit um</string>
   <string-array name="about_content">
     <item><![CDATA[<h2>%1$s:<br/>Karteikarten für Android</h2>AnkiDroid ist eine Karteikarten-Anwendung, die voll kompatibel ist mit der Desktop-Software <a href="%2$s">Anki</a>. Sie können mit beiden Programmen Inhalte erstellen, herunterladen und lernen und sie sehr einfach synchronisieren.]]></item>
     <item><![CDATA[Helfen Sie uns, AnkiDroid besser zu machen und melden alle Fehler <a href="%1$s">hier</a>; Ideen für neue Funktionen sind ebenfalls willkommen! Benutzen Sie das <a href="%2$s">Wiki</a> und sagen im <a href="%3$s">Forum</a> Hallo.]]></item>

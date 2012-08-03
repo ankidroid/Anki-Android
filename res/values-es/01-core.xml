@@ -44,7 +44,7 @@
   <string name="card_unsuspended">Suspensión de la tarjeta deshecha</string>
   <string name="card_suspended">Tarjeta resuspendida</string>
   <string name="menu_rotate">Rotar</string>
-  <string name="menu_import">Import cards</string>
+  <string name="menu_import">Importar tarjetas</string>
   <string name="undo">Deshacer</string>
   <string name="finish_operation">Terminando la operación anterior (seguramente la creación de una copia de seguridad).\nPor favor, espera...</string>
   <string name="contextmenu_deckpicker_download_missing_media">Descargar archivos multimedia que falten</string>
@@ -91,6 +91,7 @@
   <string name="studyoptions_options">Opciones</string>
   <string name="empty_cloze_warning">Please edit this note and add some cloze deletions. (%1$s)</string>
   <string name="help_cloze">Ayuda</string>
+  <string name="button_sync">Sync</string>
   <string-array name="next_review_s">
     <item>1 segundo</item>
     <item>1 minuto</item>

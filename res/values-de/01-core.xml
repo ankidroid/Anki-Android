@@ -91,6 +91,7 @@
   <string name="studyoptions_options">Einstellungen</string>
   <string name="empty_cloze_warning">Bitte bearbeiten Sie diese Notiz und fügen einige Lückentext-Streichungen ein (%1$s)</string>
   <string name="help_cloze">Hilfe</string>
+  <string name="button_sync">Synchronisieren</string>
   <string-array name="next_review_s">
     <item>1 Sekunde</item>
     <item>1 Minute</item>

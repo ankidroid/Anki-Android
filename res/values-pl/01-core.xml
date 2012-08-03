@@ -44,7 +44,7 @@
   <string name="card_unsuspended">Karta reaktywowana</string>
   <string name="card_suspended">Karta zawieszona</string>
   <string name="menu_rotate">Obrót</string>
-  <string name="menu_import">Import cards</string>
+  <string name="menu_import">Import kart</string>
   <string name="undo">Cofnij</string>
   <string name="finish_operation">Kończenie poprzedniej operacji (najprawdopodobniej tworzenie kopii zapasowej).\nProszę czekać...</string>
   <string name="contextmenu_deckpicker_download_missing_media">Pobierz brakujące media</string>
@@ -79,7 +79,7 @@
   <string name="visit">Odwiedź</string>
   <string name="later">Później</string>
   <string name="download">Pobierz</string>
-  <string name="open_collection">Opening collection.\nPlease wait...</string>
+  <string name="open_collection">Otwieranie kolekcji.\nProszę czekać...</string>
   <string name="rebuild_cram_deck">Przebudowywanie talii.\nProszę czekać...</string>
   <string name="rebuild_cram_label">Odbuduj</string>
   <string name="empty_cram_label">Wyczyść</string>
@@ -91,6 +91,7 @@
   <string name="studyoptions_options">Opcje</string>
   <string name="empty_cloze_warning">Please edit this note and add some cloze deletions. (%1$s)</string>
   <string name="help_cloze">pomoc</string>
+  <string name="button_sync">Sync</string>
   <string-array name="next_review_s">
     <item>1 sekunda</item>
     <item>1 minuta</item>
@@ -124,8 +125,8 @@
     <item quantity="other">Pozostało minut: %d</item>
   </plurals>
   <plurals name="studyoptions_congrats_message">
-    <item quantity="one">Tomorrow there will be: 1 card to review and %2$s.\n Estimated time: %3$s</item>
-    <item quantity="other">Tomorrow there will be: %1$d cards to review and %2$s.\n Estimated time: %3$s</item>
+    <item quantity="one">Jutro będzie 1 karta do powtórki i %2$s.\n Szacowany czas: %3$s</item>
+    <item quantity="other">Jutro będzie %1$d kart do powtórki i %2$s.\n Szacowany czas: %3$s</item>
   </plurals>
   <plurals name="studyoptions_congrats_new_cards">
     <item quantity="one">1 nowa karta</item>

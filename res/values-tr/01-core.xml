@@ -91,6 +91,7 @@
   <string name="studyoptions_options">Seçenekler</string>
   <string name="empty_cloze_warning">Lütfen bu notu düzenleyip bazı boşluklar ekleyin. (%1$s)</string>
   <string name="help_cloze">Yardım</string>
+  <string name="button_sync">Sync</string>
   <string-array name="next_review_s">
     <item>1 saniye</item>
     <item>1 dakika</item>

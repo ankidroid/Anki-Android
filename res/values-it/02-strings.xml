@@ -40,6 +40,7 @@
   <string name="suspend_leeches">Sospendi le sanguisughe</string>
   <string name="leech_suspend_notification">Carta contrassegnata come sanguisuga e sospesa</string>
   <string name="leech_notification">Carta contrassegnata come sanguisuga</string>
+  <string name="corrupt_font">Corrupt font file %s</string>
   <string name="about_title">Informazioni</string>
   <string name="cardeditor_title_add_note">Aggiungi nota</string>
   <string name="cardeditor_title_edit_card">Modifica nota</string>
@@ -86,9 +87,10 @@
   <string name="import_message">Vuoi veramente importare tutte le carte del file %s?</string>
   <string name="import_log_success">Importato %d carte con successo</string>
   <string name="import_log_error">Importazione fallita</string>
+  <string name="import_log_no_apkg">This is not a valid apkg file</string>
   <string name="import_importing">Importazione carte.\nAttendi...</string>
-  <string name="import_hint">To import cards, place the apkg file in directory %s and press ok</string>
-  <string name="import_no_file_found">No importable apkg file found</string>
+  <string name="import_hint">Per importare carte, inserisci il file apkg nella cartella %s e premi ok</string>
+  <string name="import_no_file_found">Nessun file apkg importabile trovato</string>
   <string-array name="dynOrderLabels">
     <item>Più vecchie visualizzate per prime</item>
     <item>Casuale</item>

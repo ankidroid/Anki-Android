@@ -92,6 +92,7 @@ Veuillez patienter...</string>
   <string name="studyoptions_options">Options</string>
   <string name="empty_cloze_warning">N’oubliez pas le texte à trous. (%1$s)</string>
   <string name="help_cloze">aide</string>
+  <string name="button_sync">Sync</string>
   <string-array name="next_review_s">
     <item>1 seconde</item>
     <item>1 minute</item>

@@ -44,7 +44,7 @@
   <string name="card_unsuspended">Annulla la sospensione della carta</string>
   <string name="card_suspended">Carta risospesa</string>
   <string name="menu_rotate">Ruota</string>
-  <string name="menu_import">Import cards</string>
+  <string name="menu_import">Importa carte</string>
   <string name="undo">Annulla</string>
   <string name="finish_operation">Completamento operazione precedente in corso (probabilmente creazione backup).\nAttendi...</string>
   <string name="contextmenu_deckpicker_download_missing_media">Download media mancante</string>
@@ -91,6 +91,7 @@
   <string name="studyoptions_options">Opzioni</string>
   <string name="empty_cloze_warning">Modifica questa nota e aggiungi testo da completare. (%1$s)</string>
   <string name="help_cloze">aiuto</string>
+  <string name="button_sync">Sync</string>
   <string-array name="next_review_s">
     <item>1 secondo</item>
     <item>1 minuto</item>

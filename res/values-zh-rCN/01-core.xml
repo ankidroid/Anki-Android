@@ -44,7 +44,7 @@
   <string name="card_unsuspended">卡片本次跳过失败</string>
   <string name="card_suspended">卡片再次跳过</string>
   <string name="menu_rotate">旋转</string>
-  <string name="menu_import">Import cards</string>
+  <string name="menu_import">导入卡牌</string>
   <string name="undo">撤销</string>
   <string name="finish_operation">完成遗留操作（如备份等）。\n请等待...</string>
   <string name="contextmenu_deckpicker_download_missing_media">下载缺失的媒体文件</string>
@@ -91,6 +91,7 @@
   <string name="studyoptions_options">选项</string>
   <string name="empty_cloze_warning">请编辑此条目，并增加一些完形填空形式的题目。 (%1$s)</string>
   <string name="help_cloze">帮助</string>
+  <string name="button_sync">Sync</string>
   <string-array name="next_review_s">
     <item>1秒</item>
     <item>1分钟</item>

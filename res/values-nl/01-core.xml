@@ -44,9 +44,9 @@
   <string name="card_unsuspended">Uitstellen kaart ongedaan gemaakt</string>
   <string name="card_suspended">Kaart opnieuw uitstellen</string>
   <string name="menu_rotate">Omkeren</string>
-  <string name="menu_import">Import cards</string>
+  <string name="menu_import">Kaarten importeren</string>
   <string name="undo">Ongedaan maken</string>
-  <string name="finish_operation">Finishing previous operation (most likely backup creation).\nPlease wait...</string>
+  <string name="finish_operation">Vorige operatie afmaken (meestal backup).\nGeduld aub...</string>
   <string name="contextmenu_deckpicker_download_missing_media">Download ontbrekende media</string>
   <string name="contextmenu_deckpicker_reset_language_assignments">Taaltoewijzingen opnieuw instellen</string>
   <string name="contextmenu_deckpicker_reset_reset_message">Taal opnieuw instellen</string>
@@ -75,22 +75,23 @@
   <string name="new_dynamic_deck">Nieuwe dynamische set</string>
   <string name="studyoptions_feedback">Feedback</string>
   <string name="studyoptions_load_tutorial_deck">Maak handleiding</string>
-  <string name="night_mode">Night mode</string>
+  <string name="night_mode">Nachtmodus</string>
   <string name="visit">Bezoeken</string>
   <string name="later">Later</string>
   <string name="download">Downloaden</string>
   <string name="open_collection">Collectie openen.\nEven wachten...</string>
   <string name="rebuild_cram_deck">Stampset wordt opnieuw opgebouwd.\nEven geduld...</string>
   <string name="rebuild_cram_label">Opnieuw opbouwen</string>
-  <string name="empty_cram_label">Empty</string>
-  <string name="empty_cram_deck">Emptying cram deck.\nPlease wait...</string>
+  <string name="empty_cram_label">Leeg</string>
+  <string name="empty_cram_deck">Stamp stapel verwijderen.\n Even geduld...</string>
   <string name="studyoptions_congrats_finished">Gefeliciteerd! Je bent nu klaar.</string>
   <string name="studyoptions_congrats_more_rev">Je hebt de overhoringslimiet bereikt, maar er wachten nog kaarten om overhoord te worden. Voor een optimale geheugentraining, overweeg om de dagelijkse limiet te verhogen.</string>
   <string name="studyoptions_congrats_more_new">Er zijn meer nieuwe kaarten beschikbaar, maar de dagelijkse limiet is bereikt. Je kan de limiet oprekken in de opties, maar bedenk dat hoe meer kaarten je introduceert, hoe meer overhoringen je op korte termijn zal hebben.</string>
   <string name="sd_card_not_mounted">SD-kaart is niet aangesloten.</string>
   <string name="studyoptions_options">Opties</string>
-  <string name="empty_cloze_warning">Please edit this note and add some cloze deletions. (%1$s)</string>
-  <string name="help_cloze">help</string>
+  <string name="empty_cloze_warning">Aub in deze notitie cloze verwijderingen toevoegen.(%1$s)</string>
+  <string name="help_cloze">hulp</string>
+  <string name="button_sync">Sync</string>
   <string-array name="next_review_s">
     <item>1 seconde</item>
     <item>1 minuut</item>

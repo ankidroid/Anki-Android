@@ -40,6 +40,7 @@
   <string name="suspend_leeches">Suspender Sanguijuelas</string>
   <string name="leech_suspend_notification">Tarjeta marcada como sanguijuela y suspendida</string>
   <string name="leech_notification">Tarjeta marcada como sanguijuela</string>
+  <string name="corrupt_font">Corrupt font file %s</string>
   <string name="about_title">Acerca de</string>
   <string name="cardeditor_title_add_note">Añadir Nota</string>
   <string name="cardeditor_title_edit_card">Editar Nota</string>
@@ -82,13 +83,14 @@
   <string name="pref_font_UI">Fuente de interfaz personalizada</string>
   <string name="info_rate">Puntúa AnkiDroid</string>
   <string name="col_load_failed">Error al cargar la colección.\nPresiona el botón de retroceso para cerrar AnkiDroid.</string>
-  <string name="import_title">Import Cards</string>
-  <string name="import_message">Do you really want to import all cards of file %s?</string>
-  <string name="import_log_success">Successfully imported %d cards</string>
-  <string name="import_log_error">Import failed</string>
-  <string name="import_importing">Importing cards.\nPlease wait...</string>
-  <string name="import_hint">To import cards, place the apkg file in directory %s and press ok</string>
-  <string name="import_no_file_found">No importable apkg file found</string>
+  <string name="import_title">Importar Tarjetas</string>
+  <string name="import_message">¿Realmente deseas importar todas las tarjetas del archivo %s?</string>
+  <string name="import_log_success">Se importaron con éxito %d tarjetas</string>
+  <string name="import_log_error">La importación falló</string>
+  <string name="import_log_no_apkg">This is not a valid apkg file</string>
+  <string name="import_importing">Importando tarjetas.\nPor favor, espera...</string>
+  <string name="import_hint">Para importar tarjetas, coloca el archivo apkg en el directorio %s y presiona ok</string>
+  <string name="import_no_file_found">No se encontró ningún archivo apkg importable</string>
   <string-array name="dynOrderLabels">
     <item>Vistas más antiguamente primero</item>
     <item>Aleatorio</item>

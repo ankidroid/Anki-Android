@@ -31,5 +31,6 @@
     <item>Параметры теперь могут быть совместно используемыми</item>
     <item>поддержка большого размера экрана (планшета)</item>
     <item>тысячи улучшения производительности</item>
+    <item>card import function</item>
   </string-array>
 </resources>

@@ -91,6 +91,7 @@
   <string name="studyoptions_options">옵션</string>
   <string name="empty_cloze_warning">이 노트를 편집 하 고 일부 cloze 삭제를 추가 하십시오. (%1$s)</string>
   <string name="help_cloze">도움말</string>
+  <string name="button_sync">Sync</string>
   <string-array name="next_review_s">
     <item>1 초</item>
     <item>1 분</item>
