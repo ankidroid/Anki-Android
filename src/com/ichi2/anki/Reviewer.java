@@ -2029,6 +2029,9 @@ public class Reviewer extends AnkiActivity {
             mGestureTapBottom = Integer.parseInt(preferences.getString("gestureTapBottom", "2"));
             mGestureLongclick = Integer.parseInt(preferences.getString("gestureLongclick", "11"));
         }
+        if (mPrefTextSelection && mLongClickWorkaround) {
+            mGestureLongclick = GESTURE_LOOKUP;
+        }
         mShowAnimations = preferences.getBoolean("themeAnimations", false);
         if (mShowAnimations) {
             int animationDuration = preferences.getInt("animationDuration", 500);
