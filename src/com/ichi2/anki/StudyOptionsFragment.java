@@ -17,6 +17,7 @@ package com.ichi2.anki;
 import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnCancelListener;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
@@ -35,6 +36,7 @@ import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
 import android.view.ViewTreeObserver.OnGlobalLayoutListener;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -82,6 +84,7 @@ public class StudyOptionsFragment extends Fragment {
     public static final int CONTENT_CONGRATS = 1;
 
     private static final int DIALOG_STATISTIC_TYPE = 0;
+    private static final int DIALOG_LEARN_MORE = 1;
 
     private HashMap<Integer, StyledDialog> mDialogs = new HashMap<Integer, StyledDialog>();
 
@@ -127,9 +130,11 @@ public class StudyOptionsFragment extends Fragment {
      * UI elements for "Congrats" view
      */
     private View mCongratsView;
+    private View mLearnMoreView;
     private TextView mTextCongratsMessage;
     private Button mButtonCongratsOpenOtherDeck;
     private Button mButtonCongratsFinish;
+    private Button mButtonCongratsLearnMore;
 
     /**
      * Swipe Detection
@@ -191,6 +196,9 @@ public class StudyOptionsFragment extends Fragment {
 //                    return;
                 case R.id.studyoptions_congrats_open_other_deck:
                     closeStudyOptions();
+                    return;
+                case R.id.studyoptions_congrats_learnmore:
+                    showDialog(DIALOG_LEARN_MORE);
                     return;
                 case R.id.studyoptions_congrats_finish:
                     finishCongrats();
@@ -554,6 +562,8 @@ public class StudyOptionsFragment extends Fragment {
 
         // The view that shows the congratulations view.
         mCongratsView = inflater.inflate(R.layout.studyoptions_congrats, null);
+        // The view that shows the learn more options
+        mLearnMoreView = inflater.inflate(R.layout.styled_learn_more_dialog, null);
 
         Themes.setWallpaper(mCongratsView);
 
@@ -561,8 +571,7 @@ public class StudyOptionsFragment extends Fragment {
         Themes.setTextViewStyle(mTextCongratsMessage);
 
         mTextCongratsMessage.setOnClickListener(mButtonClickListener);
-        // mButtonCongratsLearnMore = (Button) mCongratsView
-        // .findViewById(R.id.studyoptions_congrats_learnmore);
+        mButtonCongratsLearnMore = (Button) mCongratsView.findViewById(R.id.studyoptions_congrats_learnmore);
         // mButtonCongratsReviewEarly = (Button) mCongratsView
         // .findViewById(R.id.studyoptions_congrats_reviewearly);
         mButtonCongratsOpenOtherDeck = (Button) mCongratsView.findViewById(R.id.studyoptions_congrats_open_other_deck);
@@ -571,7 +580,7 @@ public class StudyOptionsFragment extends Fragment {
         }
         mButtonCongratsFinish = (Button) mCongratsView.findViewById(R.id.studyoptions_congrats_finish);
 
-        // mButtonCongratsLearnMore.setOnClickListener(mButtonClickListener);
+        mButtonCongratsLearnMore.setOnClickListener(mButtonClickListener);
         // mButtonCongratsReviewEarly.setOnClickListener(mButtonClickListener);
         mButtonCongratsOpenOtherDeck.setOnClickListener(mButtonClickListener);
         mButtonCongratsFinish.setOnClickListener(mButtonClickListener);
@@ -593,6 +602,8 @@ public class StudyOptionsFragment extends Fragment {
 
     protected StyledDialog onCreateDialog(int id) {
         StyledDialog dialog = null;
+        Resources res = getResources();
+        StyledDialog.Builder builder = new StyledDialog.Builder(this.getActivity());
 
         switch (id) {
 
@@ -604,6 +615,38 @@ public class StudyOptionsFragment extends Fragment {
                                 new DeckTask.TaskData(AnkiDroidApp.getCol(), which, false));
                     }
                 }, mFragmented);
+                break;
+
+            case DIALOG_LEARN_MORE:
+                builder.setTitle(res.getString(R.string.learnmore_title));
+                //builder.setIcon(android.R.drawable.ic_menu_sort_by_size);
+                builder.setContentView(mLearnMoreView);
+                builder.setCancelable(true);
+                builder.setNegativeButton(R.string.cancel, null);
+                builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        if (AnkiDroidApp.colIsOpen()) {
+                            try {
+                                int n = Integer.parseInt(((EditText) mLearnMoreView.findViewById(R.id.learnmore_extend_new_limit)).getText().toString());
+                                int r = Integer.parseInt(((EditText) mLearnMoreView.findViewById(R.id.learnmore_extend_rev_limit)).getText().toString());
+                                Collection col = AnkiDroidApp.getCol();
+                                JSONObject deck = col.getDecks().current();
+                                deck.put("extendNew", n);
+                                deck.put("extendRev", r);
+                                col.getDecks().save(deck);
+                                col.getSched().extendLimits(n, r);
+                                finishCongrats();
+                                resetAndUpdateValuesFromDeck();
+                            } catch (NumberFormatException e) {
+                                // ignore non numerical values
+                            } catch (JSONException e) {
+                                throw new RuntimeException(e);
+                            }
+                        }
+                    }
+                });
+                dialog = builder.create();
                 break;
 
             default:

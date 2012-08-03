@@ -372,7 +372,7 @@ public class Sched {
     }
 
 
-    private void extendLimits(int newc, int rev) {
+    public void extendLimits(int newc, int rev) {
         JSONObject cur = mCol.getDecks().current();
         ArrayList<JSONObject> decks = new ArrayList<JSONObject>();
         decks.add(cur);
