@@ -20,6 +20,7 @@
 
 package com.ichi2.anki;
 
+import android.app.Activity;
 import android.app.Dialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -2296,6 +2297,9 @@ public class DeckPicker extends FragmentActivity {
         if (requestCode == SHOW_STUDYOPTIONS && resultCode == RESULT_OK) {
             loadCounts();
         } else if (requestCode == ADD_NOTE && resultCode != RESULT_CANCELED) {
+            loadCounts();
+        } else if (requestCode == BROWSE_CARDS &&
+                (resultCode == Activity.RESULT_OK || resultCode == Activity.RESULT_CANCELED)) {
             loadCounts();
         } else if (requestCode == ADD_CRAM_DECK) {
             // TODO: check, if ok has been clicked

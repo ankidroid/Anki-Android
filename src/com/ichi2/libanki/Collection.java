@@ -18,6 +18,7 @@
 package com.ichi2.libanki;
 
 import android.content.ContentValues;
+import android.content.res.Resources;
 import android.database.Cursor;
 import android.util.Log;
 
@@ -25,6 +26,7 @@ import com.ichi2.anki.AnkiDatabaseManager;
 import com.ichi2.anki.AnkiDb;
 import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.Pair;
+import com.ichi2.anki.R;
 import com.ichi2.anki.UIUtils;
 import com.ichi2.async.DeckTask;
 import com.samskivert.mustache.Mustache;
@@ -109,7 +111,14 @@ public class Collection {
     public static final int UNDO_SUSPEND_NOTE = 4;
     public static final int UNDO_DELETE_NOTE = 5;
     public static final int UNDO_MARK_NOTE = 6;
-    
+    private static final int[] fUndoNames = new int[]{
+        R.string.undo_action_review,
+        R.string.undo_action_edit,
+        R.string.undo_action_bury,
+        R.string.undo_action_suspend_card,
+        R.string.undo_action_suspend_note,
+        R.string.undo_action_delete,
+        R.string.undo_action_mark};
     
     private static final int UNDO_SIZE_MAX = 20;
 
@@ -1166,14 +1175,16 @@ public class Collection {
     }
 
 
-//    /** Undo menu item name, or None if undo unavailable. */
-//    public String undoName() {
-//        if (mUndo[1] == null) {
-//            return null;
-//        } else {
-//            return (String) mUndo[1];
-//        }
-//    }
+    /** Undo menu item name, or "" if undo unavailable. */
+    public String undoName(Resources res) {
+        if (mUndo.size() > 0) {
+            int undoType = ((Integer) mUndo.getLast()[0]).intValue();
+            if (undoType >= 0 && undoType < fUndoNames.length) {
+                return res.getString(fUndoNames[undoType]);
+            }
+        }
+        return "";
+    }
 
 
     public boolean undoAvailable() {

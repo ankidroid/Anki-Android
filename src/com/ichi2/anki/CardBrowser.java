@@ -363,7 +363,7 @@ public class CardBrowser extends Activity {
                 // sAllCardsCache = new ArrayList<HashMap<String, String>>();
                 // sAllCardsCache.addAll(mAllCards);
                 // }
-                closeCardBrowser();
+                closeCardBrowser(Activity.RESULT_OK);
             } else {
                 mSearchEditText.setText("");
                 mSearchEditText.setHint(R.string.downloaddeck_search);
