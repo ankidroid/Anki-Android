@@ -14,6 +14,12 @@
 		android:layout_height="wrap_content"
 		android:layout_width="fill_parent"
 		android:gravity="center"
+		android:id="@+id/studyoptions_congrats_undo"
+		android:text="@string/undo" />
+	<Button
+		android:layout_height="wrap_content"
+		android:layout_width="fill_parent"
+		android:gravity="center"
 		android:id="@+id/studyoptions_congrats_open_other_deck"
 		android:text="@string/studyoptions_congrats_open_other_deck" />
 	<Button

@@ -132,6 +132,7 @@ public class StudyOptionsFragment extends Fragment {
     private View mCongratsView;
     private View mLearnMoreView;
     private TextView mTextCongratsMessage;
+    private Button mButtonCongratsUndo;
     private Button mButtonCongratsOpenOtherDeck;
     private Button mButtonCongratsFinish;
     private Button mButtonCongratsLearnMore;
@@ -194,6 +195,13 @@ public class StudyOptionsFragment extends Fragment {
 //                        mCol.setTimeLimit(60);
 //                    }
 //                    return;
+                case R.id.studyoptions_congrats_undo:
+                    if (AnkiDroidApp.colIsOpen()) {
+                        col.undo();
+                        finishCongrats();
+                        resetAndUpdateValuesFromDeck();
+                    }
+                    return;
                 case R.id.studyoptions_congrats_open_other_deck:
                     closeStudyOptions();
                     return;
@@ -309,6 +317,7 @@ public class StudyOptionsFragment extends Fragment {
             reloadCollection();
             return null;
         }
+        AnkiDroidApp.getCol().clearUndo();
 
 //        Intent intent = getActivity().getIntent();
 //        if (intent != null && intent.hasExtra(DeckPicker.EXTRA_DECK_ID)) {
@@ -571,6 +580,7 @@ public class StudyOptionsFragment extends Fragment {
         Themes.setTextViewStyle(mTextCongratsMessage);
 
         mTextCongratsMessage.setOnClickListener(mButtonClickListener);
+        mButtonCongratsUndo = (Button) mCongratsView.findViewById(R.id.studyoptions_congrats_undo);
         mButtonCongratsLearnMore = (Button) mCongratsView.findViewById(R.id.studyoptions_congrats_learnmore);
         // mButtonCongratsReviewEarly = (Button) mCongratsView
         // .findViewById(R.id.studyoptions_congrats_reviewearly);
@@ -580,6 +590,7 @@ public class StudyOptionsFragment extends Fragment {
         }
         mButtonCongratsFinish = (Button) mCongratsView.findViewById(R.id.studyoptions_congrats_finish);
 
+        mButtonCongratsUndo.setOnClickListener(mButtonClickListener);
         mButtonCongratsLearnMore.setOnClickListener(mButtonClickListener);
         // mButtonCongratsReviewEarly.setOnClickListener(mButtonClickListener);
         mButtonCongratsOpenOtherDeck.setOnClickListener(mButtonClickListener);
@@ -866,6 +877,14 @@ public class StudyOptionsFragment extends Fragment {
                         resetAndUpdateValuesFromDeck();
                         break;
                     case Reviewer.RESULT_NO_MORE_CARDS:
+                        if (!AnkiDroidApp.getCol().undoAvailable()) {
+                            mButtonCongratsUndo.setEnabled(false);
+                            mButtonCongratsUndo.setVisibility(View.GONE);
+                        } else {
+                            Resources res = AnkiDroidApp.getAppResources();
+                            mButtonCongratsUndo.setText(res.getString(R.string.studyoptions_congrats_undo,
+                                    AnkiDroidApp.getCol().undoName(res)));
+                        }
                         mTextCongratsMessage.setText(AnkiDroidApp.getCol().getSched().finishedMsg(getActivity()));
                         setFragmentContentView(mCongratsView);
                         break;

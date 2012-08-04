@@ -64,6 +64,7 @@
 <string name="ease3_successive">Good</string>
 <string name="ease3_learning">Easy</string>
 
+<string name="studyoptions_congrats_undo">Undo %s</string>
 <string name="studyoptions_congrats_learnmore">Learn More</string>
 <string name="studyoptions_congrats_reviewearly">Review Early</string>
 <string name="studyoptions_congrats_open_other_deck">Open Other Deck</string>
@@ -75,6 +76,13 @@
 <string name="menu_import">Import cards</string>
 
 <string name="undo">Undo</string>
+<string name="undo_action_review">review</string>
+<string name="undo_action_edit">edit note</string>
+<string name="undo_action_bury">bury note</string>
+<string name="undo_action_suspend_card">suspend card</string>
+<string name="undo_action_suspend_note">suspend note</string>
+<string name="undo_action_delete">delete note</string>
+<string name="undo_action_mark">mark note</string>
 
 <string name="finish_operation">Finishing previous operation (most likely backup creation).\nPlease wait...</string>
 
