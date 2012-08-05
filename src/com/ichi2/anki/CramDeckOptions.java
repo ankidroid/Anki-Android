@@ -27,6 +27,7 @@ import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.os.Bundle;
 import android.preference.CheckBoxPreference;
+import android.preference.EditTextPreference;
 import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceActivity;
@@ -58,6 +59,8 @@ public class CramDeckOptions extends PreferenceActivity implements OnSharedPrefe
 
     private JSONObject mDeck;
     private Collection mCol;
+    private String mPresetSearchSuffix;
+    private boolean mAllowCommit = true;
 
     private BroadcastReceiver mUnmountReceiver = null;
 
@@ -105,7 +108,6 @@ public class CramDeckOptions extends PreferenceActivity implements OnSharedPrefe
         public class Editor implements SharedPreferences.Editor {
 
             private ContentValues mUpdate = new ContentValues();
-
 
             @Override
             public SharedPreferences.Editor clear() {
@@ -162,6 +164,14 @@ public class CramDeckOptions extends PreferenceActivity implements OnSharedPrefe
                                     if (name.equals("resched")) {
                                         mUpdate.put(name, presetValues.getBoolean(name));
                                         mValues.put(name, Boolean.toString(presetValues.getBoolean(name)));
+                                    } else if (name.equals("search")) {
+                                        if (mPresetSearchSuffix != null) {
+                                            mUpdate.put(name, presetValues.getString(name) + " " + mPresetSearchSuffix);
+                                            mValues.put(name, presetValues.getString(name) + " " + mPresetSearchSuffix);
+                                        } else {
+                                            mUpdate.put(name, presetValues.getString(name));
+                                            mValues.put(name, presetValues.getString(name));
+                                        }
                                     } else {
                                         mUpdate.put(name, presetValues.getString(name));
                                         mValues.put(name, presetValues.getString(name));
@@ -243,7 +253,9 @@ public class CramDeckOptions extends PreferenceActivity implements OnSharedPrefe
 
 
             public void apply() {
-                commit();
+                if (mAllowCommit) {
+                    commit();
+                }
             }
 
 
@@ -358,11 +370,18 @@ public class CramDeckOptions extends PreferenceActivity implements OnSharedPrefe
         }
         mDeck = mCol.getDecks().current();
 
+        Bundle initialConfig = getIntent().getBundleExtra("cramInitialConfig");
+        if (initialConfig != null) {
+            if (initialConfig.containsKey("searchSuffix")) {
+                mPresetSearchSuffix = initialConfig.getString("searchSuffix");
+            }
+        }
+
         registerExternalStorageListener();
 
         try {
             if (mCol == null || mDeck.getInt("dyn") != 1) {
-                Log.i(AnkiDroidApp.TAG, "CramDeckOptions - No Collection loaded or deck is not a dyn deck");
+                Log.w(AnkiDroidApp.TAG, "CramDeckOptions - No Collection loaded or deck is not a dyn deck");
                 finish();
                 return;
             } else {
@@ -408,6 +427,7 @@ public class CramDeckOptions extends PreferenceActivity implements OnSharedPrefe
     }
 
     protected void updateSummaries() {
+        mAllowCommit = false;
         // for all text preferences, set summary as current database value
         for (String key : mPref.mValues.keySet()) {
             Preference pref = this.findPreference(key);
@@ -422,6 +442,10 @@ public class CramDeckOptions extends PreferenceActivity implements OnSharedPrefe
             } else {
                 value = this.mPref.getString(key, "");
             }
+            // update value for EditTexts
+            if (pref instanceof EditTextPreference) {
+                ((EditTextPreference) pref).setText(value);
+            }
             // update summary
             if (!mPref.mSummaries.containsKey(key)) {
                 CharSequence s = pref.getSummary();
@@ -434,6 +458,7 @@ public class CramDeckOptions extends PreferenceActivity implements OnSharedPrefe
                 pref.setSummary(value);
             }
         }
+        mAllowCommit = true;
     }
 
 
@@ -447,6 +472,10 @@ public class CramDeckOptions extends PreferenceActivity implements OnSharedPrefe
         leechActPref.setEntries(R.array.cram_deck_conf_preset_labels);
         leechActPref.setEntryValues(R.array.cram_deck_conf_preset_values);
         leechActPref.setValue("0");
+        if (mPresetSearchSuffix != null) {
+            EditTextPreference searchPref = (EditTextPreference) findPreference("search");
+            searchPref.setText(mPresetSearchSuffix);
+        }
     }
 
 

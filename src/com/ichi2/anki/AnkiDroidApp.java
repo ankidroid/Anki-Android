@@ -46,7 +46,7 @@ import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
 /**
- * Application class. This file mainly contains Veecheck stuff.
+ * Application class.
  */
 public class AnkiDroidApp extends Application {
 

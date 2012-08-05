@@ -63,7 +63,9 @@ import org.achartengine.renderer.XYSeriesRenderer;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 public class StudyOptionsFragment extends Fragment {
 
@@ -107,6 +109,7 @@ public class StudyOptionsFragment extends Fragment {
      */
     private View mStudyOptionsView;
     private Button mButtonStart;
+    private Button mFragmentedCram;
 //    private Button mButtonUp;
 //    private Button mButtonDown;
 //    private ToggleButton mToggleLimitToggle;
@@ -125,7 +128,7 @@ public class StudyOptionsFragment extends Fragment {
     private ImageButton mCardBrowser;
     private ImageButton mDeckOptions;
     private ImageButton mStatisticsButton;
-
+    private EditText mDialogEditText = null;
     /**
      * UI elements for "Congrats" view
      */
@@ -153,6 +156,8 @@ public class StudyOptionsFragment extends Fragment {
     private double mProgressMature;
     private double mProgressAll;
 
+    public Bundle mCramInitialConfig = null;
+    
     private boolean mFragmented;
 
     /**
@@ -241,6 +246,43 @@ public class StudyOptionsFragment extends Fragment {
                     DeckTask.launchDeckTask(DeckTask.TASK_TYPE_EMPTY_CRAM, mUpdateValuesFromDeckListener,
                             new DeckTask.TaskData(col, col.getDecks().selected(), mFragmented));
                     return;
+                case R.id.studyoptions_new_filtercram:
+                    if (mFragmented) {
+                        Resources res = getResources();
+                        StyledDialog.Builder builder = new StyledDialog.Builder(getActivity());
+                        builder.setTitle(res.getString(R.string.new_deck));
+
+                        mDialogEditText = new EditText(getActivity());
+                        ArrayList<String> names = AnkiDroidApp.getCol().getDecks().allNames();
+                        int n = 1;
+                        String cramDeckName = "Cram 1";
+                        while (names.contains(cramDeckName)) {
+                            n++;
+                            cramDeckName = "Cram " + n;
+                        }
+                        mDialogEditText.setText(cramDeckName);
+                        // mDialogEditText.setFilters(new InputFilter[] { mDeckNameFilter });
+                        builder.setView(mDialogEditText, false, false);
+                        builder.setPositiveButton(res.getString(R.string.create), new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                Bundle initialConfig = new Bundle();
+                                long id;
+                                try {
+                                    initialConfig.putString("searchSuffix", "'deck:" +
+                                            AnkiDroidApp.getCol().getDecks().current().getString("name") + "'");
+                                    id = AnkiDroidApp.getCol().getDecks().newDyn(mDialogEditText.getText().toString());
+                                    AnkiDroidApp.getCol().getDecks().get(id);
+                                } catch (JSONException e) {
+                                    throw new RuntimeException(e);
+                                }
+                                ((DeckPicker) getActivity()).setStudyContentView(id, initialConfig);
+                            }
+                        });
+                        builder.setNegativeButton(res.getString(R.string.cancel), null);
+                        builder.create().show();
+                    }
+                    return;
                 case R.id.studyoptions_add:
                     addNote();
                     return;
@@ -252,7 +294,11 @@ public class StudyOptionsFragment extends Fragment {
 
 
     private void openCramDeckOptions() {
+        openCramDeckOptions(null);
+    }
+    private void openCramDeckOptions(Bundle initialConfig) {
         Intent i = new Intent(getActivity(), CramDeckOptions.class);
+        i.putExtra("cramInitialConfig", initialConfig);
         startActivityForResult(i, DECK_OPTIONS);
         if (AnkiDroidApp.SDK_VERSION > 4) {
             ActivityTransitionAnimation.slide(getActivity(), ActivityTransitionAnimation.FADE);
@@ -268,13 +314,14 @@ public class StudyOptionsFragment extends Fragment {
     }
 
 
-    public static StudyOptionsFragment newInstance(long deckId, boolean onlyFnsMsg) {
+    public static StudyOptionsFragment newInstance(long deckId, boolean onlyFnsMsg, Bundle cramInitialConfig) {
         StudyOptionsFragment f = new StudyOptionsFragment();
 
         // Supply index input as an argument.
         Bundle args = new Bundle();
         args.putLong("deckId", deckId);
         args.putBoolean("onlyFnsMsg", onlyFnsMsg);
+        args.putBundle("cramInitialConfig", cramInitialConfig);
         f.setArguments(args);
 
         return f;
@@ -343,8 +390,10 @@ public class StudyOptionsFragment extends Fragment {
             mButtonCongratsFinish.setVisibility(View.GONE);
             return mCongratsView;
         }
+        
+        mCramInitialConfig = getArguments().getBundle("cramInitialConfig");
 
-        resetAndUpdateValuesFromDeck();        	
+        resetAndUpdateValuesFromDeck();
 
         return mStudyOptionsView;
     }
@@ -511,8 +560,7 @@ public class StudyOptionsFragment extends Fragment {
 //        mButtonUp = (Button) mStudyOptionsView.findViewById(R.id.studyoptions_limitup);
 //        mButtonDown = (Button) mStudyOptionsView.findViewById(R.id.studyoptions_limitdown);
 //        mToggleLimitToggle = (ToggleButton) mStudyOptionsView.findViewById(R.id.studyoptions_limittoggle);
-        // mToggleCram = (ToggleButton) mStudyOptionsView
-        // .findViewById(R.id.studyoptions_cram);
+
         // mToggleNight = (ToggleButton) mStudyOptionsView
         // .findViewById(R.id.studyoptions_night);
         // mToggle.setChecked(mInvertedColors);
@@ -528,6 +576,17 @@ public class StudyOptionsFragment extends Fragment {
         if (mFragmented) {
             Button but = (Button) mStudyOptionsView.findViewById(R.id.studyoptions_options);
             but.setOnClickListener(mButtonClickListener);
+            mFragmentedCram = (Button) mStudyOptionsView.findViewById(R.id.studyoptions_new_filtercram);
+            if (AnkiDroidApp.colIsOpen() && AnkiDroidApp.getCol().getDecks().isDyn(AnkiDroidApp.getCol().getDecks().selected())) {
+                mFragmentedCram.setEnabled(false);
+                mFragmentedCram.setVisibility(View.GONE);
+            } else {
+                // If we are in fragmented mode, then the cram option in menu applies to all decks, so we need an extra
+                // button in StudyOptions side of screen to create dynamic deck filtered on this deck
+                mFragmentedCram.setEnabled(true);
+                mFragmentedCram.setVisibility(View.VISIBLE);
+            }
+            mFragmentedCram.setOnClickListener(mButtonClickListener);
         } else {
             mAddNote = (ImageButton) mStudyOptionsView.findViewById(R.id.studyoptions_add);
             if (AnkiDroidApp.colIsOpen()) {
@@ -710,8 +769,8 @@ public class StudyOptionsFragment extends Fragment {
             mTextDeckName.setText(nameBuilder.toString());
 
             // open cram deck option if deck is opened for the first time
-            if (deck.getInt("dyn") != 0 && deck.has("empty") && deck.getBoolean("empty")) {
-                openCramDeckOptions();
+            if (mCramInitialConfig != null) {
+                openCramDeckOptions(mCramInitialConfig);
                 return;
             }
         } catch (JSONException e) {
@@ -852,18 +911,20 @@ public class StudyOptionsFragment extends Fragment {
                 return;
             }
         	if (requestCode == DECK_OPTIONS) {
-                try {
-                    JSONObject deck = AnkiDroidApp.getCol().getDecks().current();
-                    if (deck.getInt("dyn") != 0 && deck.has("empty") && deck.getBoolean("empty")) {
-                    	// deck is a cram deck and has to be filled for the first time
-                        deck.remove("empty");
-                        rebuildCramDeck();
-                    } else {
-                        resetAndUpdateValuesFromDeck();
-                    }
-                } catch (JSONException e) {
-                    throw new RuntimeException(e);
-                }
+        	    if (mCramInitialConfig != null) {
+        	        mCramInitialConfig = null;
+        	        try {
+        	            JSONObject deck = AnkiDroidApp.getCol().getDecks().current();
+        	            if (deck.getInt("dyn") != 0 && deck.has("empty")) {
+        	                deck.remove("empty");
+        	            }
+        	        } catch (JSONException e) {
+        	            throw new RuntimeException(e);
+        	        }
+        	        rebuildCramDeck();
+        	    } else {
+        	        resetAndUpdateValuesFromDeck();
+        	    }
             } else if (requestCode == ADD_NOTE && resultCode != Activity.RESULT_CANCELED) {
                 resetAndUpdateValuesFromDeck();
             } else if (requestCode == REQUEST_REVIEW) {
