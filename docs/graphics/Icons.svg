@@ -91,14 +91,6 @@
     </clipPath>
     <filter
        inkscape:collect="always"
-       id="filter4041">
-      <feGaussianBlur
-         inkscape:collect="always"
-         stdDeviation="1.2478948"
-         id="feGaussianBlur4043" />
-    </filter>
-    <filter
-       inkscape:collect="always"
        id="filter4011">
       <feGaussianBlur
          inkscape:collect="always"
@@ -113,17 +105,17 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="3.1434045"
-     inkscape:cx="463.8629"
-     inkscape:cy="821.80866"
+     inkscape:zoom="1.5717023"
+     inkscape:cx="450.13468"
+     inkscape:cy="830.14801"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
-     inkscape:window-width="1920"
-     inkscape:window-height="997"
-     inkscape:window-x="0"
-     inkscape:window-y="30"
-     inkscape:window-maximized="1" />
+     inkscape:window-width="706"
+     inkscape:window-height="534"
+     inkscape:window-x="347"
+     inkscape:window-y="108"
+     inkscape:window-maximized="0" />
   <metadata
      id="metadata7">
     <rdf:RDF>
@@ -132,7 +124,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -803,7 +795,8 @@
        id="g3973"
        inkscape:export-filename="/home/andreas/Dropbox/AnkiDroid/Theme/widget/ic_chart.png"
        inkscape:export-xdpi="132.17999"
-       inkscape:export-ydpi="132.17999">
+       inkscape:export-ydpi="132.17999"
+       transform="translate(-1.2725057,-6.6806547)">
       <rect
          y="213.74759"
          x="544.23785"
@@ -1017,7 +1010,7 @@
     </g>
     <path
        style="fill:#ffffff;fill-opacity:0.59607843;stroke:#535753;stroke-width:0.93099999;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
-       d="m 483.86711,191.10322 0,20.34375 16.5,0 0,-20.34375 -16.5,0 z m 2.59375,3.25 11.3125,0 0,2.9375 -11.3125,0 0,-2.9375 z m 0,5.4375 11.3125,0 0,2.96875 -11.3125,0 0,-2.96875 z m 0,5.46875 11.3125,0 0,2.9375 -11.3125,0 0,-2.9375 z"
+       d="m 499.77343,169.47062 0,20.34375 16.5,0 0,-20.34375 -16.5,0 z m 2.59375,3.25 11.3125,0 0,2.9375 -11.3125,0 0,-2.9375 z m 0,5.4375 11.3125,0 0,2.96875 -11.3125,0 0,-2.96875 z m 0,5.46875 11.3125,0 0,2.9375 -11.3125,0 0,-2.9375 z"
        id="rect4120"
        inkscape:export-filename="/home/andreas/Dropbox/AnkiDroid/Theme/widget/ic_card.png"
        inkscape:export-xdpi="129.03"
@@ -1079,5 +1072,39 @@
        y="348.34842"
        rx="11.562034"
        ry="39.097813" />
+    <g
+       id="g4114"
+       transform="translate(134.75952,-296.16215)">
+      <rect
+         transform="matrix(0.70710678,-0.70710678,0.70710678,0.70710678,0,0)"
+         ry="0.5088641"
+         rx="0.8560288"
+         y="590.89948"
+         x="-144.4164"
+         height="5.0625"
+         width="1.75"
+         id="rect4093"
+         style="fill:#f1f1f1;fill-opacity:1;stroke:#535753;stroke-width:0.93000001;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none" />
+      <path
+         transform="matrix(1.0901215,0,0,1.0901215,-24.063457,-47.108155)"
+         d="m 315,516.48718 c 0,3.24468 -2.63033,5.875 -5.875,5.875 -3.24467,0 -5.875,-2.63032 -5.875,-5.875 0,-3.24467 2.63033,-5.875 5.875,-5.875 3.24467,0 5.875,2.63033 5.875,5.875 z"
+         sodipodi:ry="5.875"
+         sodipodi:rx="5.875"
+         sodipodi:cy="516.48718"
+         sodipodi:cx="309.125"
+         id="path4077"
+         style="fill:#f1f1f1;fill-opacity:1;fill-rule:evenodd;stroke:#535753;stroke-width:0.85311592;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+         sodipodi:type="arc" />
+      <rect
+         transform="matrix(0.70710678,-0.70710678,0.70710678,0.70710678,0,0)"
+         ry="0.57308799"
+         rx="1.5941648"
+         y="594.31323"
+         x="-145.26704"
+         height="6.5096779"
+         width="3.452919"
+         id="rect4095"
+         style="fill:#f1f1f1;fill-opacity:1;stroke:#535753;stroke-width:0.93000001;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none" />
+    </g>
   </g>
 </svg>
