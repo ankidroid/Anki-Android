@@ -87,6 +87,7 @@ public class DeckOptions extends PreferenceActivity implements OnSharedPreferenc
                 mValues.put("maxAnswerTime", mOptions.getString("maxTaken"));
                 mValues.put("showAnswerTimer", Boolean.toString(mOptions.getString("timer").equals("1")));
                 mValues.put("autoPlayAudio", Boolean.toString(mOptions.getBoolean("autoplay")));
+                mValues.put("replayQuestion", Boolean.toString(mOptions.getBoolean("replayq")));
                 // new
                 JSONObject newOptions = mOptions.getJSONObject("new");
                 mValues.put("newSteps", getDelays(newOptions.getJSONArray("delays")));
@@ -112,7 +113,8 @@ public class DeckOptions extends PreferenceActivity implements OnSharedPreferenc
                 mValues.put("lapLeechThres", lapOptions.getString("leechFails"));
                 mValues.put("lapLeechAct", lapOptions.getString("leechAction"));
             } catch (JSONException e) {
-                throw new RuntimeException(e);
+            	addMissingValues();
+            	finish();
             }
         }
 
@@ -153,6 +155,8 @@ public class DeckOptions extends PreferenceActivity implements OnSharedPreferenc
                             mOptions.put("timer", (Boolean) entry.getValue() ? "1" : "0");
                         } else if (entry.getKey().equals("autoPlayAudio")) {
                             mOptions.put("autoplay", (Boolean) entry.getValue());
+                        } else if (entry.getKey().equals("replayQuestion")) {
+                            mOptions.put("replayq", (Boolean) entry.getValue());
                         } else if (entry.getKey().equals("newSteps")) {
                             String steps = (String) entry.getValue();
                             if (steps.matches("[0-9\\s]*")) {
@@ -550,6 +554,20 @@ public class DeckOptions extends PreferenceActivity implements OnSharedPreferenc
             iFilter.addAction(SdCardReceiver.MEDIA_EJECT);
             registerReceiver(mUnmountReceiver, iFilter);
         }
+    }
+
+    private void addMissingValues() {
+    	try {
+    		for (JSONObject o : mCol.getDecks().all()) {
+    			JSONObject conf = mCol.getDecks().confForDid(o.getLong("id"));
+    			if (!conf.has("replayq")) {
+    				conf.put("replayq", true);
+					mCol.getDecks().save(conf);            				
+    			}
+    		}
+		} catch (JSONException e1) {
+			// nothing
+		}
     }
 
 }
