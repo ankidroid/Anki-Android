@@ -2108,8 +2108,8 @@ public class DeckPicker extends FragmentActivity {
         if (mInvalidateMenu) {
         	if (menu != null) {
                 menu.clear();
+                onCreateOptionsMenu(menu);
         	}
-            onCreateOptionsMenu(menu);
             mInvalidateMenu = false;
         }
 
