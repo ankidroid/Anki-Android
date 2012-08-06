@@ -50,6 +50,12 @@
   <string name="intent_add_clear_all">Очистити все</string>
   <string name="intent_aedict_empty">Категорія  \'default\'  порожня</string>
   <string name="intent_aedict_category">Щоб додати картки до AnkiDroid видаліть всі категорії Notepad або додайте категорію \'default\'</string>
+  <string name="learnmore_title">Extend Limits</string>
+  <string name="learnmore_extend_new_limit">New limit by</string>
+  <string name="learnmore_extend_rev_limit">Review limit by</string>
+  <string name="reviewearly_title">Review Early Settings</string>
+  <string name="reviewearly_instructions">This option will create a Filtered Deck called \'XXX\' with the cards that are due for review in the number of days you select below. If such a Filtered Deck already exists it will be emptied and reconfigured.</string>
+  <string name="reviewearly_days_ahead">How many days ahead</string>
   <string-array name="about_content">
     <item><![CDATA[<h2>%1$s:<br/>Картки для Android</h2>AnkiDroid це додаток для карток повністю сумісний з програмою для ПК <a href="%2$s">Anki</a>. Ви можете створювати, завантажувати та вивчати вміст на AnkiDroid або Anki Desktop та з легкістю здійснювати синхронізацію.]]></item>
     <item><![CDATA[Щоб зробити AnkiDroid кращою, будь ласка, доповідайте про виявлені недоліки <a href="%1$s">here</a>; ідеї для нових властивостей програми також вітаються! Будь ласка, користуйтесь <a href="%2$s">wiki</a> та скажіть Привіт на  <a href="%3$s">форумі</a>.]]></item>

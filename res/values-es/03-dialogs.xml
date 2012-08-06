@@ -50,6 +50,12 @@
   <string name="intent_add_clear_all">Borrar todo</string>
   <string name="intent_aedict_empty">La categoría \'default\' está vacía</string>
   <string name="intent_aedict_category">Para añadir tarjetas AnkiDroid borra todas las categorías del Bloc de notas o agrega una llamada \'default\'</string>
+  <string name="learnmore_title">Extend Limits</string>
+  <string name="learnmore_extend_new_limit">New limit by</string>
+  <string name="learnmore_extend_rev_limit">Review limit by</string>
+  <string name="reviewearly_title">Review Early Settings</string>
+  <string name="reviewearly_instructions">This option will create a Filtered Deck called \'XXX\' with the cards that are due for review in the number of days you select below. If such a Filtered Deck already exists it will be emptied and reconfigured.</string>
+  <string name="reviewearly_days_ahead">How many days ahead</string>
   <string-array name="about_content">
     <item><![CDATA[<h2>%1$s:<br/>Tarjetas de estudio para Android</h2>AnkiDroid es una aplicación de tarjetas de estudio que es totalmente compatible con el software de escritorio <a href="%2$s">Anki</a>. Puedes crear, descargar y estudiar contenidos en ambos, AnkiDroid o Anki Escritorio, y sincronizarlos muy fácilmente.]]></item>
     <item><![CDATA[Para ayudarnos a mejorar AnkiDroid, por favor, infórmanos de cualquier error <a href="%1$s">aquí</a>; ¡también apreciamos mucho las ideas sobre nuevas funciones! Por favor, usa la <a href="%2$s">wiki</a> y salúdanos en el <a href="%3$s">foro</a>.]]></item>

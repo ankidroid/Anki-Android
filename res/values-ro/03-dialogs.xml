@@ -50,6 +50,12 @@
   <string name="intent_add_clear_all">Clear all</string>
   <string name="intent_aedict_empty">Category \'default\' is empty</string>
   <string name="intent_aedict_category">To add cards to AnkiDroid remove all Notepad categories or add one named \'default\'</string>
+  <string name="learnmore_title">Extend Limits</string>
+  <string name="learnmore_extend_new_limit">New limit by</string>
+  <string name="learnmore_extend_rev_limit">Review limit by</string>
+  <string name="reviewearly_title">Review Early Settings</string>
+  <string name="reviewearly_instructions">This option will create a Filtered Deck called \'XXX\' with the cards that are due for review in the number of days you select below. If such a Filtered Deck already exists it will be emptied and reconfigured.</string>
+  <string name="reviewearly_days_ahead">How many days ahead</string>
   <string-array name="about_content">
     <item><![CDATA[<h2>%1$s:<br/>Flashcards for Android</h2>AnkiDroid is a flashcard application which is fully compatible with the desktop software <a href="%2$s">Anki</a>. You can create, download and learn contents on both, AnkiDroid or Anki Desktop, and synchronize them very easily.]]></item>
     <item><![CDATA[To help us make AnkiDroid better, please report any bug <a href="%1$s">here</a>; new feature ideas are very welcome too! Please use the <a href="%2$s">wiki</a> and say Hi on the <a href="%3$s">forum</a>.]]></item>

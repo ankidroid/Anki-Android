@@ -37,6 +37,7 @@
   <string name="ease2_successive">困难</string>
   <string name="ease3_successive">一般</string>
   <string name="ease3_learning">简单</string>
+  <string name="studyoptions_congrats_undo">Undo %s</string>
   <string name="studyoptions_congrats_learnmore">继续学习</string>
   <string name="studyoptions_congrats_reviewearly">提前复习</string>
   <string name="studyoptions_congrats_open_other_deck">打开其他牌组</string>
@@ -44,8 +45,15 @@
   <string name="card_unsuspended">卡片本次跳过失败</string>
   <string name="card_suspended">卡片再次跳过</string>
   <string name="menu_rotate">旋转</string>
-  <string name="menu_import">Import cards</string>
+  <string name="menu_import">导入卡牌</string>
   <string name="undo">撤销</string>
+  <string name="undo_action_review">review</string>
+  <string name="undo_action_edit">edit note</string>
+  <string name="undo_action_bury">bury note</string>
+  <string name="undo_action_suspend_card">suspend card</string>
+  <string name="undo_action_suspend_note">suspend note</string>
+  <string name="undo_action_delete">delete note</string>
+  <string name="undo_action_mark">mark note</string>
   <string name="finish_operation">完成遗留操作（如备份等）。\n请等待...</string>
   <string name="contextmenu_deckpicker_download_missing_media">下载缺失的媒体文件</string>
   <string name="contextmenu_deckpicker_reset_language_assignments">取消指定牌组语言</string>
@@ -84,6 +92,8 @@
   <string name="rebuild_cram_label">重建</string>
   <string name="empty_cram_label">空</string>
   <string name="empty_cram_deck">清空强记牌组。\n请等待...</string>
+  <string name="studyoptions_new_filtercram">Filter/Cram</string>
+  <string name="review_early_deck_name">Review Early</string>
   <string name="studyoptions_congrats_finished">恭喜!你已经完成了今天的计划。</string>
   <string name="studyoptions_congrats_more_rev">今天的复习数量限制已达到，但仍有一些卡片需要复习。为了更好的记忆效果，请考虑在选项中增加每日的复习数量限制。</string>
   <string name="studyoptions_congrats_more_new">仍有新卡片需要学习，但每日的学习数量限制已达到。你可以在选项中增加这个限制，不过请记住，你每天学习的新卡片越多，短期复习压力就越大。</string>
@@ -91,6 +101,7 @@
   <string name="studyoptions_options">选项</string>
   <string name="empty_cloze_warning">请编辑此条目，并增加一些完形填空形式的题目。 (%1$s)</string>
   <string name="help_cloze">帮助</string>
+  <string name="button_sync">同步</string>
   <string-array name="next_review_s">
     <item>1秒</item>
     <item>1分钟</item>

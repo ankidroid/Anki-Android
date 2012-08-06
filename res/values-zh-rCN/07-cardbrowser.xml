@@ -64,6 +64,6 @@
   </string-array>
   <plurals name="card_browser_subtitle">
     <item quantity="one">显示%2$d张卡片中的1张</item>
-    <item quantity="other">显示%2$d张卡片中的%1$D张</item>
+    <item quantity="other">显示%2$d张卡片中的%1$d张</item>
   </plurals>
 </resources>

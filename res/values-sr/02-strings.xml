@@ -40,6 +40,7 @@
   <string name="suspend_leeches">Suspendiraj Pijavice</string>
   <string name="leech_suspend_notification">Kartica je označena kao pijavica i suspendovana</string>
   <string name="leech_notification">Kartica označena kao pijavica</string>
+  <string name="corrupt_font">Corrupt font file %s</string>
   <string name="about_title">O programu</string>
   <string name="cardeditor_title_add_note">Add Note</string>
   <string name="cardeditor_title_edit_card">Edit Note</string>

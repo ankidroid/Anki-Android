@@ -37,6 +37,7 @@
   <string name="ease2_successive">Трудно</string>
   <string name="ease3_successive">Хорошо</string>
   <string name="ease3_learning">Легко</string>
+  <string name="studyoptions_congrats_undo">Undo %s</string>
   <string name="studyoptions_congrats_learnmore">Учить дальше</string>
   <string name="studyoptions_congrats_reviewearly">Просмотренные ранее</string>
   <string name="studyoptions_congrats_open_other_deck">Открыть другие колоды</string>
@@ -44,8 +45,15 @@
   <string name="card_unsuspended">Приостановка карты была отменена</string>
   <string name="card_suspended">Карта снова приостановлена</string>
   <string name="menu_rotate">Повернуть</string>
-  <string name="menu_import">Import cards</string>
+  <string name="menu_import">Импортировать карты</string>
   <string name="undo">Откат</string>
+  <string name="undo_action_review">review</string>
+  <string name="undo_action_edit">edit note</string>
+  <string name="undo_action_bury">bury note</string>
+  <string name="undo_action_suspend_card">suspend card</string>
+  <string name="undo_action_suspend_note">suspend note</string>
+  <string name="undo_action_delete">delete note</string>
+  <string name="undo_action_mark">mark note</string>
   <string name="finish_operation">Завершение предыдущей операции (скорее всего создание резервной копии). \nПожалуйста, подождите...</string>
   <string name="contextmenu_deckpicker_download_missing_media">Скачать недостающие медиа-файлы</string>
   <string name="contextmenu_deckpicker_reset_language_assignments">Сброс языка</string>
@@ -76,7 +84,7 @@
   <string name="studyoptions_feedback">Обратная связь</string>
   <string name="studyoptions_load_tutorial_deck">Создать учебник</string>
   <string name="night_mode">Ночной режим</string>
-  <string name="visit">Посещение</string>
+  <string name="visit">Посетить</string>
   <string name="later">Позже</string>
   <string name="download">Скачать</string>
   <string name="open_collection">Открытие коллекции.\nПожалуйста подождите...</string>
@@ -84,6 +92,8 @@
   <string name="rebuild_cram_label">Перестроить</string>
   <string name="empty_cram_label">Очистить</string>
   <string name="empty_cram_deck">Очистка колоды для зубрёжки.\nПожалуйста, подождите...</string>
+  <string name="studyoptions_new_filtercram">Filter/Cram</string>
+  <string name="review_early_deck_name">Review Early</string>
   <string name="studyoptions_congrats_finished">Поздравляем! На сегодня задание выполнено.</string>
   <string name="studyoptions_congrats_more_rev">Достигнут лимит количества просмотров на сегодня, но всё ещё есть карты ожидающие просмотра. Для оптимального запоминания рекомендуется увеличить ежедневный лимит в параметрах.</string>
   <string name="studyoptions_congrats_more_new">Есть ещё новые карты, но ежедневный лимит достигнут. Вы можете увеличить лимит в параметрах, но учтите, что чем больше вы добавляете новых карт, тем больше будет карт в режиме повтора в ближайшие дни.</string>
@@ -91,6 +101,7 @@
   <string name="studyoptions_options">Параметры</string>
   <string name="empty_cloze_warning">Пожалуйста, отредактируйте эту заметку и добавьте элементы с пропусками.(%1$s)</string>
   <string name="help_cloze">Справка</string>
+  <string name="button_sync">Синхронизация</string>
   <string-array name="next_review_s">
     <item>1 секунда</item>
     <item>1 минута</item>

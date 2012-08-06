@@ -50,6 +50,12 @@
   <string name="intent_add_clear_all">Rensa allt</string>
   <string name="intent_aedict_empty">Kategori \'default\' är tom</string>
   <string name="intent_aedict_category">För att lägga till kort till AnkiDroid, ta bort alla Notepadkategorier eller lägg till en som heter \'default\'</string>
+  <string name="learnmore_title">Extend Limits</string>
+  <string name="learnmore_extend_new_limit">New limit by</string>
+  <string name="learnmore_extend_rev_limit">Review limit by</string>
+  <string name="reviewearly_title">Review Early Settings</string>
+  <string name="reviewearly_instructions">This option will create a Filtered Deck called \'XXX\' with the cards that are due for review in the number of days you select below. If such a Filtered Deck already exists it will be emptied and reconfigured.</string>
+  <string name="reviewearly_days_ahead">How many days ahead</string>
   <string-array name="about_content">
     <item><![CDATA[<h2>%1$s:<br/>Flashcards till Android</h2>AnkiDroid är en flashcardapplikation som är fullt kompitabel med skrivbordsmjukvaran <a href="%2$s">Anki</a>. Du kan skapa, ladda ner och lära dig nya saker via både AnkiDroid och Anki Desktop, och därefter enkelt synkronisera dem.]]></item>
     <item><![CDATA[Hjälp gärna till att göra AnkiDroid ännu bättre genom att rapportera buggar <a href="%1$s">här</a>; Idéer på nya funktioner är också välkomna! Använd också <a href="%2$s">wikin</a> och säg Hej på <a href="%3$s">forumet</a>.]]></item>

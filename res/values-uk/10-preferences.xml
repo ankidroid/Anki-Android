@@ -140,10 +140,10 @@
   <string name="shake_intensity_summ">Поріг розпізнання струсу: ХХХ</string>
   <string name="sync_fetch_missing_media">Затягати медіа під час синхронізації</string>
   <string name="sync_fetch_missing_media_summ">Автоматично затягати відсутні медіа під час синхронізації.</string>
-  <string name="fix_hebrew_text">Fix for Hebrew vowels</string>
-  <string name="fix_hebrew_text_summ">Workaround for rendering Hebrew vowels correctly.</string>
-  <string name="fix_hebrew_instructions">This setting bypasses the RTL algorithm of Android to show Hebrew text with vowels correctly.\n\nFor this to work, you need to download font Tohu.ttf and copy it manually to:\n%s/fonts/\n\nYou won\'t have to modify your cards.</string>
-  <string name="fix_hebrew_download_font">Download Font</string>
+  <string name="fix_hebrew_text">Виправлення для голосних на івриті</string>
+  <string name="fix_hebrew_text_summ">Вирішення проблеми з неправильним відображенням голосних на івриті.</string>
+  <string name="fix_hebrew_instructions">Ця настройка обходить RTL(з права наліво) алгоритм Android, щоб правильно відображати текст з голосними на івриті .\n\nДля цього вам також необхідно завантажити шрифт Tohu.ttf і скопіювати його вручну в:\n%s/fonts/\n\nВам не доведеться змінювати свої карти.</string>
+  <string name="fix_hebrew_download_font">Завантажити шрифт</string>
   <string name="default_font">Типовий шрифт</string>
   <string name="default_font_summ">Шрифт для тексту без вказівки на форматування шрифту. Користувацькі шрифти повинні бути встановлені на карті пам’яті в папці \'fonts\' у вашій папці AnkiDroid.</string>
   <string name="language">Мова</string>

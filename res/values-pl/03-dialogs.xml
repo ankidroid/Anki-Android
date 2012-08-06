@@ -50,6 +50,12 @@
   <string name="intent_add_clear_all">Wyczyść wszystko</string>
   <string name="intent_aedict_empty">Kategoria \'Domyślne\' jest pusta</string>
   <string name="intent_aedict_category">Aby dodać karty AnkiDroid usuń wszystkie kategorie Notatnika lub dodaj jedną o nazwie \'default\'</string>
+  <string name="learnmore_title">Extend Limits</string>
+  <string name="learnmore_extend_new_limit">New limit by</string>
+  <string name="learnmore_extend_rev_limit">Review limit by</string>
+  <string name="reviewearly_title">Review Early Settings</string>
+  <string name="reviewearly_instructions">This option will create a Filtered Deck called \'XXX\' with the cards that are due for review in the number of days you select below. If such a Filtered Deck already exists it will be emptied and reconfigured.</string>
+  <string name="reviewearly_days_ahead">How many days ahead</string>
   <string-array name="about_content">
     <item><![CDATA[<h2>%1$s:<br/>Fiszki dla Androida</h2>AnkiDroid to programowy odpowiednik pudełka z fiszkami, w pełni kompatybilny z desktopową wersją programu <a href="%2$s">Anki</a>. Karty z materiałem do nauki można tworzyć lub pobierać za pomocą zarówno AnkiDroida jak i wersji desktopowej Anki, a następnie łatwo synchronizować je pomiędzy tymi programami.]]></item>
     <item><![CDATA[Aby pomóc nam w ulepszaniu AnkiDroida, prosimy zgłaszać błędy <a href="%1$s">tutaj</a>; nowe pomysły też są mile widziane! Skorzystaj z <a href="%2$s">wiki</a> i przywitaj się na <a href="%3$s">forum</a>.]]></item>

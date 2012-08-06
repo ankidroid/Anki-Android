@@ -40,6 +40,7 @@
   <string name="suspend_leeches">Åsidosätt utsugarkort</string>
   <string name="leech_suspend_notification">Markerat som utsugarkort och åsidosatt</string>
   <string name="leech_notification">Markerat som utsugarkort</string>
+  <string name="corrupt_font">Felaktig teckensnittsfil %s</string>
   <string name="about_title">Om</string>
   <string name="cardeditor_title_add_note">Lägg till anteckning</string>
   <string name="cardeditor_title_edit_card">Redigera anteckning</string>
@@ -78,15 +79,15 @@
   <string name="delete_deck">Tar bort kortlek...\nVänligen vänta.</string>
   <string name="menu_cardbrowser">Kortutforskare</string>
   <string name="show_hint">Visa ledtråd</string>
-  <string name="pref_lang_other">Language Preferences</string>
+  <string name="pref_lang_other">Språkinställningar</string>
   <string name="pref_font_UI">Custom UI Font</string>
   <string name="info_rate">Rate AnkiDroid</string>
   <string name="col_load_failed">Collection loading failed.\nPress back to close AnkiDroid.</string>
-  <string name="import_title">Import Cards</string>
+  <string name="import_title">Importera kort</string>
   <string name="import_message">Do you really want to import all cards of file %s?</string>
   <string name="import_log_success">Successfully imported %d cards</string>
-  <string name="import_log_error">Import failed</string>
-  <string name="import_importing">Importing cards.\nPlease wait...</string>
+  <string name="import_log_error">Importen misslyckades</string>
+  <string name="import_importing">Importerar kort.\nVar god vänta...</string>
   <string name="import_hint">To import cards, place the apkg file in directory %s and press ok</string>
   <string name="import_no_file_found">No importable apkg file found</string>
   <string-array name="dynOrderLabels">
@@ -95,8 +96,8 @@
     <item>Ökande intervall</item>
     <item>Minskande intervall</item>
     <item>Most lapses</item>
-    <item>Order added</item>
-    <item>Order due</item>
+    <item>Ordningen de lades till</item>
+    <item>Efter förfallotid</item>
   </string-array>
   <plurals name="factadder_cards_added">
     <item quantity="one">1 kort har lagts till</item>

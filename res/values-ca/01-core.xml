@@ -37,6 +37,7 @@
   <string name="ease2_successive">Difícil</string>
   <string name="ease3_successive">Correcte</string>
   <string name="ease3_learning">Fàcil</string>
+  <string name="studyoptions_congrats_undo">Undo %s</string>
   <string name="studyoptions_congrats_learnmore">Aprendre més</string>
   <string name="studyoptions_congrats_reviewearly">Revisa aviat</string>
   <string name="studyoptions_congrats_open_other_deck">Obre un altre paquet</string>
@@ -46,6 +47,13 @@
   <string name="menu_rotate">Girar</string>
   <string name="menu_import">Import cards</string>
   <string name="undo">Desfés</string>
+  <string name="undo_action_review">review</string>
+  <string name="undo_action_edit">edit note</string>
+  <string name="undo_action_bury">bury note</string>
+  <string name="undo_action_suspend_card">suspend card</string>
+  <string name="undo_action_suspend_note">suspend note</string>
+  <string name="undo_action_delete">delete note</string>
+  <string name="undo_action_mark">mark note</string>
   <string name="finish_operation">Finishing previous operation (most likely backup creation).\nPlease wait...</string>
   <string name="contextmenu_deckpicker_download_missing_media">Baixa els media que falten</string>
   <string name="contextmenu_deckpicker_reset_language_assignments">Reinicia les assignacions de tots el idiomes</string>
@@ -84,6 +92,8 @@
   <string name="rebuild_cram_label">Rebuild</string>
   <string name="empty_cram_label">Empty</string>
   <string name="empty_cram_deck">Emptying cram deck.\nPlease wait...</string>
+  <string name="studyoptions_new_filtercram">Filter/Cram</string>
+  <string name="review_early_deck_name">Review Early</string>
   <string name="studyoptions_congrats_finished">Felicitats! Ja heu acabat per ara.</string>
   <string name="studyoptions_congrats_more_rev">S\'ha assolit el límit de revisió d\'avui, però encara hi ha targrtes per a revisar. Per a optimitzar la memòria, considereu augmentar el límit diari a les opcions.</string>
   <string name="studyoptions_congrats_more_new">Hi ha més targetes noves disponibles, però s\'ha arribat al límit diari. Podeu augmentar el límit a les opcions, però si us plau, tingueu en compte que si introduiu més targetes, més alt serà el volum de treball de revisió a curt termini.</string>
@@ -91,6 +101,7 @@
   <string name="studyoptions_options">Options</string>
   <string name="empty_cloze_warning">Please edit this note and add some cloze deletions. (%1$s)</string>
   <string name="help_cloze">help</string>
+  <string name="button_sync">Sync</string>
   <string-array name="next_review_s">
     <item>1 segon</item>
     <item>1 minut</item>

@@ -37,6 +37,7 @@
   <string name="ease2_successive">Difícil</string>
   <string name="ease3_successive">Bom</string>
   <string name="ease3_learning">Fácil</string>
+  <string name="studyoptions_congrats_undo">Undo %s</string>
   <string name="studyoptions_congrats_learnmore">Aprender Mais</string>
   <string name="studyoptions_congrats_reviewearly">Rever Antes</string>
   <string name="studyoptions_congrats_open_other_deck">Abrir Outro Deck</string>
@@ -46,6 +47,13 @@
   <string name="menu_rotate">Girar</string>
   <string name="menu_import">Import cards</string>
   <string name="undo">Desfazer</string>
+  <string name="undo_action_review">review</string>
+  <string name="undo_action_edit">edit note</string>
+  <string name="undo_action_bury">bury note</string>
+  <string name="undo_action_suspend_card">suspend card</string>
+  <string name="undo_action_suspend_note">suspend note</string>
+  <string name="undo_action_delete">delete note</string>
+  <string name="undo_action_mark">mark note</string>
   <string name="finish_operation">Terminando a operação anterior (provavelmente criação de backup). \nPor favor aguarde...</string>
   <string name="contextmenu_deckpicker_download_missing_media">Baixar mídia ausente</string>
   <string name="contextmenu_deckpicker_reset_language_assignments">Redefinir Atribuições de Idioma</string>
@@ -84,6 +92,8 @@
   <string name="rebuild_cram_label">Reconstruir</string>
   <string name="empty_cram_label">Vazio</string>
   <string name="empty_cram_deck">Esvaziando deck do preparatório.\nPor favor aguarde...</string>
+  <string name="studyoptions_new_filtercram">Filter/Cram</string>
+  <string name="review_early_deck_name">Review Early</string>
   <string name="studyoptions_congrats_finished">Parabéns! Você terminou por hora.</string>
   <string name="studyoptions_congrats_more_rev">O limite de revisão de hoje foi atingido, mas ainda existem cartões esperando para serem revistos. Para uma otima memória, considere aumentar o limite diário nas opções.</string>
   <string name="studyoptions_congrats_more_new">Existem mais cartões novos disponíveis, mas o limite diário foi atingido. Você pode aumentar o limite nas opções, mas por favor, tenha em mente que quanto mais cartões novos você introduzir, maior será sua carga de revisão a curto prazo.</string>
@@ -91,6 +101,7 @@
   <string name="studyoptions_options">Opções</string>
   <string name="empty_cloze_warning">Por favor edite esta nota e adicione algumas deleções fechadas. (%1$s)</string>
   <string name="help_cloze">ajuda</string>
+  <string name="button_sync">Sync</string>
   <string-array name="next_review_s">
     <item>1 segundo</item>
     <item>1 minuto</item>

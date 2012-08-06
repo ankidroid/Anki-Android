@@ -40,6 +40,7 @@
   <string name="suspend_leeches">不要复习记忆难点</string>
   <string name="leech_suspend_notification">卡片被标记为记忆难点并暂停复习</string>
   <string name="leech_notification">卡片被标记为记忆难点</string>
+  <string name="corrupt_font">字体文件 %s 已损坏</string>
   <string name="about_title">关于</string>
   <string name="cardeditor_title_add_note">增加条目注释</string>
   <string name="cardeditor_title_edit_card">编辑条目注释</string>
@@ -81,14 +82,14 @@
   <string name="pref_lang_other">语言预置</string>
   <string name="pref_font_UI">自定义UI字体</string>
   <string name="info_rate">评价AnkiDroid</string>
-  <string name="col_load_failed">Collection loading failed.\nPress back to close AnkiDroid.</string>
-  <string name="import_title">Import Cards</string>
-  <string name="import_message">Do you really want to import all cards of file %s?</string>
-  <string name="import_log_success">Successfully imported %d cards</string>
-  <string name="import_log_error">Import failed</string>
-  <string name="import_importing">Importing cards.\nPlease wait...</string>
-  <string name="import_hint">To import cards, place the apkg file in directory %s and press ok</string>
-  <string name="import_no_file_found">No importable apkg file found</string>
+  <string name="col_load_failed">加载集合失败。\n 按back键，关闭AnkiDroid。</string>
+  <string name="import_title">导入卡牌</string>
+  <string name="import_message">确实要导入文件 %s 中的所有卡牌吗？</string>
+  <string name="import_log_success">成功导入 %d 张卡牌</string>
+  <string name="import_log_error">导入失败</string>
+  <string name="import_importing">导入卡牌。\n请稍后...</string>
+  <string name="import_hint">要导入卡牌，请把apkg文件放在%s目录中，然后按确定。</string>
+  <string name="import_no_file_found">未找到可导入的apkg文件</string>
   <string-array name="dynOrderLabels">
     <item>优先显示老卡片</item>
     <item>随机</item>

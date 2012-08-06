@@ -37,6 +37,7 @@
   <string name="ease2_successive">Nehéz</string>
   <string name="ease3_successive">Jó</string>
   <string name="ease3_learning">Könnyű</string>
+  <string name="studyoptions_congrats_undo">Undo %s</string>
   <string name="studyoptions_congrats_learnmore">További tanulás</string>
   <string name="studyoptions_congrats_reviewearly">Korai ismétlés</string>
   <string name="studyoptions_congrats_open_other_deck">Másik pakli megnyitása</string>
@@ -46,6 +47,13 @@
   <string name="menu_rotate">Forgatás</string>
   <string name="menu_import">Import cards</string>
   <string name="undo">Visszavonás</string>
+  <string name="undo_action_review">review</string>
+  <string name="undo_action_edit">edit note</string>
+  <string name="undo_action_bury">bury note</string>
+  <string name="undo_action_suspend_card">suspend card</string>
+  <string name="undo_action_suspend_note">suspend note</string>
+  <string name="undo_action_delete">delete note</string>
+  <string name="undo_action_mark">mark note</string>
   <string name="finish_operation">Előző művelet befejezése (valószínűleg biztonsági másolat létrehozása). \nKérlek várj...</string>
   <string name="contextmenu_deckpicker_download_missing_media">Hiányzó média letöltése</string>
   <string name="contextmenu_deckpicker_reset_language_assignments">Nyelv-hozzárendelés visszaállítása</string>
@@ -84,6 +92,8 @@
   <string name="rebuild_cram_label">Újraépít</string>
   <string name="empty_cram_label">Üres</string>
   <string name="empty_cram_deck">Magoló pakli ürítés.\nKérlek várj...</string>
+  <string name="studyoptions_new_filtercram">Filter/Cram</string>
+  <string name="review_early_deck_name">Review Early</string>
   <string name="studyoptions_congrats_finished">Gratulálok! Mára végeztél.</string>
   <string name="studyoptions_congrats_more_rev">A mai átnézési korlátot elérted, de még mindig maradt átnézendő kártya. Az optimális tanulás érdekében lehet, hogy meg kellene emelni a napi korlátot a Beállítások menüben.</string>
   <string name="studyoptions_congrats_more_new">Még mindig vannak új kártyák, de a napi korlátot elérted. Növelheted a napi korlátot a Beállításoknál, de ne feledd, hogy minél több kártyát vezetsz be, annál több kártyát kell átnézned rövid időn belül, mely nagyobb terhet jelent.</string>
@@ -91,6 +101,7 @@
   <string name="studyoptions_options">Beállítások</string>
   <string name="empty_cloze_warning">Szerkeszd ezt a megjegyzést és adj meg hozzá néhány közeli /törlést/. (%1$s)</string>
   <string name="help_cloze">segítség</string>
+  <string name="button_sync">Sync</string>
   <string-array name="next_review_s">
     <item>1 másodperc</item>
     <item>1 perc</item>

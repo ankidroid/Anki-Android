@@ -40,6 +40,7 @@
   <string name="suspend_leeches">Zawieś pijawki</string>
   <string name="leech_suspend_notification">Karta oznaczona jako pijawka i zawieszona</string>
   <string name="leech_notification">Karta oznaczona jako pijawka</string>
+  <string name="corrupt_font">Corrupt font file %s</string>
   <string name="about_title">O programie</string>
   <string name="cardeditor_title_add_note">Dodaj notatkę</string>
   <string name="cardeditor_title_edit_card">Edytuj notatkę</string>

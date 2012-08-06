@@ -40,6 +40,7 @@
   <string name="suspend_leeches">Lernbremsen aussetzen</string>
   <string name="leech_suspend_notification">Karte als Lernbremse markiert und ausgesetzt</string>
   <string name="leech_notification">Karte als Lernbremse markiert</string>
+  <string name="corrupt_font">Unbenutzbare Schrift-Datei %s</string>
   <string name="about_title">Über</string>
   <string name="cardeditor_title_add_note">Notiz hinzufügen</string>
   <string name="cardeditor_title_edit_card">Notiz bearbeiten</string>
