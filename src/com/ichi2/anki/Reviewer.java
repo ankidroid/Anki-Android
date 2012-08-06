@@ -1236,7 +1236,7 @@ public class Reviewer extends AnkiActivity {
     public boolean onPrepareOptionsMenu(Menu menu) {
     	Resources res = getResources();
         MenuItem item = menu.findItem(MENU_MARK);
-        if (mCurrentCard.note().hasTag("marked")) {
+        if (mCurrentCard != null && mCurrentCard.note().hasTag("marked")) {
             item.setTitle(R.string.menu_unmark_card);
             item.setIcon(R.drawable.ic_menu_marked);
         } else {
