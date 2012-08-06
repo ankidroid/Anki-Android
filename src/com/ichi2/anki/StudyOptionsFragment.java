@@ -44,6 +44,7 @@ import android.widget.TextView;
 import com.ichi2.anim.ActivityTransitionAnimation;
 import com.ichi2.anim.ViewAnimation;
 import com.ichi2.async.DeckTask;
+import com.ichi2.async.DeckTask.TaskData;
 import com.ichi2.charts.ChartBuilder;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Stats;
@@ -60,6 +61,7 @@ import org.achartengine.model.XYMultipleSeriesDataset;
 import org.achartengine.model.XYSeries;
 import org.achartengine.renderer.XYMultipleSeriesRenderer;
 import org.achartengine.renderer.XYSeriesRenderer;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -87,6 +89,7 @@ public class StudyOptionsFragment extends Fragment {
 
     private static final int DIALOG_STATISTIC_TYPE = 0;
     private static final int DIALOG_LEARN_MORE = 1;
+    private static final int DIALOG_REVIEW_EARLY = 2;
 
     private HashMap<Integer, StyledDialog> mDialogs = new HashMap<Integer, StyledDialog>();
 
@@ -134,11 +137,13 @@ public class StudyOptionsFragment extends Fragment {
      */
     private View mCongratsView;
     private View mLearnMoreView;
+    private View mReviewEarlyView;
     private TextView mTextCongratsMessage;
     private Button mButtonCongratsUndo;
     private Button mButtonCongratsOpenOtherDeck;
     private Button mButtonCongratsFinish;
     private Button mButtonCongratsLearnMore;
+    private Button mButtonCongratsReviewEarly;
 
     /**
      * Swipe Detection
@@ -212,6 +217,9 @@ public class StudyOptionsFragment extends Fragment {
                     return;
                 case R.id.studyoptions_congrats_learnmore:
                     showDialog(DIALOG_LEARN_MORE);
+                    return;
+                case R.id.studyoptions_congrats_reviewearly:
+                    showDialog(DIALOG_REVIEW_EARLY);
                     return;
                 case R.id.studyoptions_congrats_finish:
                     finishCongrats();
@@ -632,6 +640,7 @@ public class StudyOptionsFragment extends Fragment {
         mCongratsView = inflater.inflate(R.layout.studyoptions_congrats, null);
         // The view that shows the learn more options
         mLearnMoreView = inflater.inflate(R.layout.styled_learn_more_dialog, null);
+        mReviewEarlyView = inflater.inflate(R.layout.styled_review_early_dialog, null);
 
         Themes.setWallpaper(mCongratsView);
 
@@ -641,8 +650,7 @@ public class StudyOptionsFragment extends Fragment {
         mTextCongratsMessage.setOnClickListener(mButtonClickListener);
         mButtonCongratsUndo = (Button) mCongratsView.findViewById(R.id.studyoptions_congrats_undo);
         mButtonCongratsLearnMore = (Button) mCongratsView.findViewById(R.id.studyoptions_congrats_learnmore);
-        // mButtonCongratsReviewEarly = (Button) mCongratsView
-        // .findViewById(R.id.studyoptions_congrats_reviewearly);
+        mButtonCongratsReviewEarly = (Button) mCongratsView.findViewById(R.id.studyoptions_congrats_reviewearly);
         mButtonCongratsOpenOtherDeck = (Button) mCongratsView.findViewById(R.id.studyoptions_congrats_open_other_deck);
         if (mFragmented) {
             mButtonCongratsOpenOtherDeck.setVisibility(View.GONE);
@@ -651,7 +659,7 @@ public class StudyOptionsFragment extends Fragment {
 
         mButtonCongratsUndo.setOnClickListener(mButtonClickListener);
         mButtonCongratsLearnMore.setOnClickListener(mButtonClickListener);
-        // mButtonCongratsReviewEarly.setOnClickListener(mButtonClickListener);
+        mButtonCongratsReviewEarly.setOnClickListener(mButtonClickListener);
         mButtonCongratsOpenOtherDeck.setOnClickListener(mButtonClickListener);
         mButtonCongratsFinish.setOnClickListener(mButtonClickListener);
     }
@@ -689,7 +697,6 @@ public class StudyOptionsFragment extends Fragment {
 
             case DIALOG_LEARN_MORE:
                 builder.setTitle(res.getString(R.string.learnmore_title));
-                //builder.setIcon(android.R.drawable.ic_menu_sort_by_size);
                 builder.setContentView(mLearnMoreView);
                 builder.setCancelable(true);
                 builder.setNegativeButton(R.string.cancel, null);
@@ -718,6 +725,47 @@ public class StudyOptionsFragment extends Fragment {
                 });
                 dialog = builder.create();
                 break;
+            case DIALOG_REVIEW_EARLY:
+                builder.setTitle(res.getString(R.string.reviewearly_title));
+                TextView instructionsView = ((TextView) mReviewEarlyView.findViewById(R.id.reviewearly_instructions));
+                String instructions = instructionsView.getText().toString();
+                instructionsView.setText(instructions.replaceAll("XXX", res.getString(R.string.review_early_deck_name)));
+                builder.setContentView(mReviewEarlyView);
+                builder.setCancelable(true);
+                builder.setNegativeButton(R.string.cancel, null);
+                builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        if (AnkiDroidApp.colIsOpen()) {
+                            try {
+                                int days = Integer.parseInt(((EditText) mReviewEarlyView.findViewById(R.id.reviewearly_days_ahead)).getText().toString());
+                                Collection col = AnkiDroidApp.getCol();
+                                JSONObject deck = col.getDecks().current();
+                                String search = "prop:due<=" + String.valueOf(days) + " 'deck:" + deck.getString("name") + "'";
+                                long id = AnkiDroidApp.getCol().getDecks().newDyn(getResources().getString(R.string.review_early_deck_name));
+                                deck = col.getDecks().current();
+                                JSONArray ar = deck.getJSONArray("terms");
+                                ar.getJSONArray(0).put(0, search); // search: "prop:due<=X 'deck:DeckName'"
+                                ar.getJSONArray(0).put(1, 1000);   // limit: 1000
+                                ar.getJSONArray(0).put(2, 6);      // order: due
+                                deck.put("terms", ar);
+                                deck.put("resched", true);
+                                deck.put("delays", null);
+                                finishCongrats();
+                                mProgressDialog = StyledProgressDialog.show(getActivity(), "",
+                                        getResources().getString(R.string.rebuild_cram_deck), true);
+                                DeckTask.launchDeckTask(DeckTask.TASK_TYPE_REBUILD_CRAM, mRebuildEarlyReviewListener, new DeckTask.TaskData(
+                                        AnkiDroidApp.getCol(), AnkiDroidApp.getCol().getDecks().selected(), mFragmented));
+                            } catch (NumberFormatException e) {
+                                // ignore non numerical values
+                            } catch (JSONException e) {
+                                throw new RuntimeException(e);
+                            }
+                        }
+                    }
+                });
+                dialog = builder.create();
+                break;
 
             default:
                 dialog = null;
@@ -729,7 +777,7 @@ public class StudyOptionsFragment extends Fragment {
 
 
     void setFragmentContentView(View newView) {
-        ViewGroup parent = (ViewGroup) this.getView();        
+        ViewGroup parent = (ViewGroup) this.getView();
         parent.removeAllViews();
         parent.addView(newView);
     }
@@ -970,6 +1018,20 @@ public class StudyOptionsFragment extends Fragment {
         return preferences;
     }
 
+    DeckTask.TaskListener mRebuildEarlyReviewListener = new DeckTask.TaskListener() {
+        @Override
+        public void onPostExecute(TaskData result) {
+            resetAndUpdateValuesFromDeck();
+        }
+        
+        @Override
+        public void onPreExecute() {
+        }
+        @Override
+        public void onProgressUpdate(TaskData... values) {
+        }
+    };
+            
 	DeckTask.TaskListener mUpdateValuesFromDeckListener = new DeckTask.TaskListener() {
         @Override
         public void onPostExecute(DeckTask.TaskData result) {

@@ -75,4 +75,8 @@
 <string name="learnmore_extend_new_limit">New limit by</string>
 <string name="learnmore_extend_rev_limit">Review limit by</string>
 
+<string name="reviewearly_title">Review Early Settings</string>
+<string name="reviewearly_instructions">This option will create a Filtered Deck called \'XXX\' with the cards that are due for review in the number of days you select below. If such a Filtered Deck already exists it will be emptied and reconfigured.</string>
+<string name="reviewearly_days_ahead">How many days ahead</string>
+
 </resources>
