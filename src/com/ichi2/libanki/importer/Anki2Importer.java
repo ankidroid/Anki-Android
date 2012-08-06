@@ -66,9 +66,12 @@ public class Anki2Importer {
 		try	{
 			// extract the deck from the zip file
 			String fileDir = AnkiDroidApp.getCurrentAnkiDroidDirectory(AnkiDroidApp.getInstance().getBaseContext()) + "/tmpzip";
-			Utils.unzip(mFile, fileDir);
 			// from anki2.py
-			_prepareFiles(fileDir + "/collection.anki2");
+			String colFile = fileDir + "/collection.anki2";
+			if (!Utils.unzip(mFile, fileDir) || !(new File(colFile)).exists()) {
+				return -2;
+			}
+			_prepareFiles(colFile);
 			int cnt = -1;
 			try {
 				cnt = _import();

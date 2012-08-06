@@ -334,6 +334,9 @@ public class Reviewer extends AnkiActivity {
     private GestureDetector gestureDetector;
     View.OnTouchListener gestureListener;
 
+    private boolean mIsXScrolling = false;
+    private boolean mIsYScrolling = false;
+
     /**
      * Gesture Allocation
      */
@@ -1233,7 +1236,7 @@ public class Reviewer extends AnkiActivity {
     public boolean onPrepareOptionsMenu(Menu menu) {
     	Resources res = getResources();
         MenuItem item = menu.findItem(MENU_MARK);
-        if (mCurrentCard.note().hasTag("marked")) {
+        if (mCurrentCard != null && mCurrentCard.note().hasTag("marked")) {
             item.setTitle(R.string.menu_unmark_card);
             item.setIcon(R.drawable.ic_menu_marked);
         } else {
@@ -2071,7 +2074,7 @@ public class Reviewer extends AnkiActivity {
     	}
 		if (mCurrentSimpleInterface) {
 			if (mSimpleCard == null) {
-	            mSimpleCard = new TextView(this);
+	            mSimpleCard = new ScrollTextView(this);
 	            Themes.setRegularFont(mSimpleCard);
 	            mSimpleCard.setTextSize(mSimpleCard.getTextSize() * mDisplayFontSize / 100);
 	            mSimpleCard.setGravity(Gravity.CENTER);
@@ -3102,12 +3105,36 @@ public class Reviewer extends AnkiActivity {
                 return super.onCheckIsTextEditor();
             }
         }
+
+		@Override
+		protected void onScrollChanged (int horiz, int vert, int oldHoriz, int oldVert) {
+			super.onScrollChanged(horiz, vert, oldHoriz, oldVert);
+			if (Math.abs(horiz - oldHoriz) > Math.abs(vert - oldVert)) {
+	        	mIsXScrolling = true;
+				scrollHandler.removeCallbacks(scrollXRunnable);
+				scrollHandler.postDelayed(scrollXRunnable, 300);
+			} else {
+	        	mIsYScrolling = true;
+				scrollHandler.removeCallbacks(scrollYRunnable);
+				scrollHandler.postDelayed(scrollYRunnable, 300);
+			}
+		}
+
+	    private final Handler scrollHandler = new Handler();
+	    private final Runnable scrollXRunnable = new Runnable() {
+	        public void run() {
+	        	mIsXScrolling = false;
+	        }
+	    };
+	    private final Runnable scrollYRunnable = new Runnable() {
+	        public void run() {
+	        	mIsYScrolling = false;
+	        }
+	    };
+
     }
 
     class MyGestureDetector extends SimpleOnGestureListener {
-        private boolean mIsXScrolling = false;
-        private boolean mIsYScrolling = false;
-
 
         @Override
         public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
@@ -3136,8 +3163,6 @@ public class Reviewer extends AnkiActivity {
                         // left
                         executeCommand(mGestureSwipeLeft);
                     }
-                    mIsXScrolling = false;
-                    mIsYScrolling = false;
                 } catch (Exception e) {
                     Log.e(AnkiDroidApp.TAG, "onFling Exception = " + e.getMessage());
                 }
@@ -3202,21 +3227,6 @@ public class Reviewer extends AnkiActivity {
             }
             return false;
         }
-
-
-        @Override
-        public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
-            if (!mCurrentSimpleInterface && mCard != null) {
-                if (mCard.getScrollY() != 0) {
-                    mIsYScrolling = true;
-                }
-                if (mCard.getScrollX() != 0) {
-                    mIsXScrolling = true;
-                }
-            }
-            return super.onScroll(e1, e2, distanceX, distanceY);
-        }
-
     }
 
 
@@ -3226,6 +3236,40 @@ public class Reviewer extends AnkiActivity {
             return true;
         else
             return false;
+    }
+
+    class ScrollTextView extends TextView {
+
+		public ScrollTextView(Context context) {
+			super(context);
+		}
+
+		@Override
+		protected void onScrollChanged (int horiz, int vert, int oldHoriz, int oldVert) {
+			super.onScrollChanged(horiz, vert, oldHoriz, oldVert);
+			if (Math.abs(horiz - oldHoriz) > Math.abs(vert - oldVert)) {
+	        	mIsXScrolling = true;
+				scrollHandler.removeCallbacks(scrollXRunnable);
+				scrollHandler.postDelayed(scrollXRunnable, 300);
+			} else {
+	        	mIsYScrolling = true;
+				scrollHandler.removeCallbacks(scrollYRunnable);
+				scrollHandler.postDelayed(scrollYRunnable, 300);
+			}
+		}
+
+	    private final Handler scrollHandler = new Handler();
+	    private final Runnable scrollXRunnable = new Runnable() {
+	        public void run() {
+	        	mIsXScrolling = false;
+	        }
+	    };
+	    private final Runnable scrollYRunnable = new Runnable() {
+	        public void run() {
+	        	mIsYScrolling = false;
+	        }
+	    };
+
     }
 
 }
