@@ -25,6 +25,7 @@ import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
@@ -32,13 +33,21 @@ import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
+import android.widget.EditText;
 
 import com.ichi2.anim.ActivityTransitionAnimation;
 import com.ichi2.anki.receiver.SdCardReceiver;
 import com.ichi2.libanki.Collection;
+import com.ichi2.themes.StyledDialog;
 import com.ichi2.themes.StyledOpenCollectionDialog;
 import com.ichi2.themes.Themes;
 import com.ichi2.widget.WidgetStatus;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
 
 public class StudyOptionsActivity extends FragmentActivity {
 
@@ -53,6 +62,7 @@ public class StudyOptionsActivity extends FragmentActivity {
 
     private BroadcastReceiver mUnmountReceiver = null;
     private StyledOpenCollectionDialog mNotMountedDialog;
+    private EditText mDialogEditText = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,8 +84,18 @@ public class StudyOptionsActivity extends FragmentActivity {
     }
 
     public void loadContent(boolean onlyFnsMsg) {
-        mCurrentFragment = StudyOptionsFragment.newInstance(0, onlyFnsMsg);
-        mCurrentFragment.setArguments(getIntent().getExtras());
+        loadContent(onlyFnsMsg, null);
+    }
+    public void loadContent(boolean onlyFnsMsg, Bundle cramConfig) {
+        mCurrentFragment = StudyOptionsFragment.newInstance(0, false, null);
+        Bundle args = getIntent().getExtras();
+        if (onlyFnsMsg) {
+            args.putBoolean("onlyFnsMsg", onlyFnsMsg);
+        }
+        if (cramConfig != null) {
+            args.putBundle("cramInitialConfig", cramConfig);
+        }
+        mCurrentFragment.setArguments(args);
         getSupportFragmentManager().beginTransaction().add(android.R.id.content, mCurrentFragment).commit();
     }
 
@@ -98,6 +118,10 @@ public class StudyOptionsActivity extends FragmentActivity {
                 R.drawable.ic_menu_preferences);
         UIUtils.addMenuItem(menu, Menu.NONE, MENU_ROTATE, Menu.NONE, R.string.menu_rotate,
                 android.R.drawable.ic_menu_always_landscape_portrait);
+        if (AnkiDroidApp.colIsOpen() && !AnkiDroidApp.getCol().getDecks().isDyn(AnkiDroidApp.getCol().getDecks().selected())) {
+            UIUtils.addMenuItem(menu, Menu.NONE, DeckPicker.MENU_CREATE_DYNAMIC_DECK, Menu.NONE,
+                    R.string.studyoptions_new_filtercram, R.drawable.ic_menu_add);
+        }
         return true;
     }
 
@@ -117,6 +141,7 @@ public class StudyOptionsActivity extends FragmentActivity {
     /** Handles item selections */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        Resources res = this.getResources();
         switch (item.getItemId()) {
             case android.R.id.home:
                 closeStudyOptions();
@@ -147,7 +172,40 @@ public class StudyOptionsActivity extends FragmentActivity {
             		item.setIcon(R.drawable.ic_menu_night_checked);
             	}
                 return true;
+            case DeckPicker.MENU_CREATE_DYNAMIC_DECK:
+                StyledDialog.Builder builder = new StyledDialog.Builder(StudyOptionsActivity.this);
+                builder.setTitle(res.getString(R.string.new_deck));
 
+                mDialogEditText = new EditText(StudyOptionsActivity.this);
+                ArrayList<String> names = AnkiDroidApp.getCol().getDecks().allNames();
+                int n = 1;
+                String cramDeckName = "Cram 1";
+                while (names.contains(cramDeckName)) {
+                    n++;
+                    cramDeckName = "Cram " + n;
+                }
+                mDialogEditText.setText(cramDeckName);
+                // mDialogEditText.setFilters(new InputFilter[] { mDeckNameFilter });
+                builder.setView(mDialogEditText, false, false);
+                builder.setPositiveButton(res.getString(R.string.create), new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        long id;
+                        Bundle initialConfig = new Bundle();
+                        try {
+                            initialConfig.putString("searchSuffix", "'deck:" +
+                                    AnkiDroidApp.getCol().getDecks().current().getString("name") + "'");
+                            id = AnkiDroidApp.getCol().getDecks().newDyn(mDialogEditText.getText().toString());
+                            AnkiDroidApp.getCol().getDecks().get(id);
+                        } catch (JSONException e) {
+                            throw new RuntimeException(e);
+                        }
+                        loadContent(false, initialConfig);
+                    }
+                });
+                builder.setNegativeButton(res.getString(R.string.cancel), null);
+                builder.create().show();
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }

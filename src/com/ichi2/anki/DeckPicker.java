@@ -138,7 +138,7 @@ public class DeckPicker extends FragmentActivity {
     private static final int CHECK_DATABASE = 7;
     private static final int MENU_SYNC = 8;
     private static final int MENU_ADD_NOTE = 9;
-    private static final int MENU_CREATE_DYNAMIC_DECK = 10;
+    public static final int MENU_CREATE_DYNAMIC_DECK = 10;
     private static final int MENU_STATISTICS = 12;
     private static final int MENU_CARDBROWSER = 13;
     private static final int MENU_IMPORT = 14;
@@ -1915,10 +1915,10 @@ public class DeckPicker extends FragmentActivity {
     // CUSTOM METHODS
     // ----------------------------------------------------------------------------
 
-    public void setStudyContentView(long deckId) {
+    public void setStudyContentView(long deckId, Bundle cramConfig) {
     	Fragment frag = (Fragment) getSupportFragmentManager().findFragmentById(R.id.studyoptions_fragment);
     	if (frag == null || !(frag instanceof StudyOptionsFragment) || ((StudyOptionsFragment) frag).getShownIndex() != deckId) {
-            StudyOptionsFragment details = StudyOptionsFragment.newInstance(deckId, false);
+            StudyOptionsFragment details = StudyOptionsFragment.newInstance(deckId, false, cramConfig);
             FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
 //            ft.setCustomAnimations(R.anim.fade_in, R.anim.fade_out);
             ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE);
@@ -2201,12 +2201,7 @@ public class DeckPicker extends FragmentActivity {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         long id = AnkiDroidApp.getCol().getDecks().newDyn(mDialogEditText.getText().toString());
-                        try {
-                        	AnkiDroidApp.getCol().getDecks().get(id).put("empty", true);
-                        } catch (JSONException e) {
-                            throw new RuntimeException(e);
-                        }
-                        openStudyOptions(id);
+                        openStudyOptions(id, new Bundle());
                     }
                 });
                 builder3.setNegativeButton(res.getString(R.string.cancel), null);
@@ -2456,12 +2451,16 @@ public class DeckPicker extends FragmentActivity {
 
 
     private void openStudyOptions(long deckId) {
+        openStudyOptions(deckId, null);
+    }
+        private void openStudyOptions(long deckId, Bundle cramInitialConfig) {
         if (mFragmented) {
-            setStudyContentView(deckId);
+            setStudyContentView(deckId, cramInitialConfig);
         } else {
             mDontSaveOnStop = true;
             Intent intent = new Intent();
             intent.putExtra("index", deckId);
+            intent.putExtra("cramInitialConfig", cramInitialConfig);
             intent.setClass(this, StudyOptionsActivity.class);
             // if (deckId != 0) {
             // intent.putExtra(EXTRA_DECK_ID, deckId);
