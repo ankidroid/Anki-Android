@@ -512,6 +512,7 @@ public class DeckTask extends
 									card.getId() });
 					// then bury
 					sched.buryNote(note.getId());
+					sHadCardQueue = true;
 					break;
 				case 1:
 					// collect undo information
@@ -535,6 +536,7 @@ public class DeckTask extends
 							cards, card.getId() });
 					// suspend note
 					sched.suspendCards(cids);
+					sHadCardQueue = true;
 					break;
 				case 3:
 					// collect undo information
@@ -547,6 +549,7 @@ public class DeckTask extends
 							note, allCs, card.getId() });
 					// delete note
 					col.remNotes(new long[] { note.getId() });
+					sHadCardQueue = true;
 					break;
 				}
 				publishProgress(new TaskData(getCard(col.getSched()), 0));
