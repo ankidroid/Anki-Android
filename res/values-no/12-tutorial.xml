@@ -17,33 +17,33 @@
  
 <resources> 
  <string-array name="tutorial_questions"> 
-    <item><![CDATA[Thanks for installing AnkiDroid!<br />This is a short introduction.<br />What you see now is the <span style=\'font-weight:600;\'>question</span> part of a flashcard.<br />Please click on the large button below...]]></item> 
-    <item><![CDATA[The next card is shown now.<br />The idea is straightforward: Just like in &quot;real world&quot; paper flashcards, you write a question on the front and the answer on the back side of your cards.<br />(click the button to show the back side)]]></item> 
-    <item><![CDATA[&quot;What is the capital of Burkina Faso?&quot;<br />Think a bit about the answer and click then &quot;show answer&quot;]]></item> 
-    <item><![CDATA[Above every answer buttons, you find information about the time, after which the card will be shown again when answered by this button.]]></item> 
-    <item><![CDATA[The intention is to show you the card again, immediately before you would forget it. Empirical studies have shown that by this means information can be learned most efficiently.]]></item> 
-    <item><![CDATA[Some words about the organisation in AnkiDroid:<br /><br>All information has to be put into pairs of question and answer. If you want to learn in the other direction, you should create another card with swapped information.]]></item> 
-    <item><![CDATA[Cards are put together in decks and can there be organised by help of all sorts of tags.]]></item> 
-    <item><![CDATA[There are mainly two ways of getting new cards:<br />You either add premade decks of other users (choose &quot;shared decks&quot; in the decks summary) or create them by yourself.]]></item> 
-    <item><![CDATA[But anyway, creating own decks is essential to suit your needs perfectly. You can do this directly in AnkiDroid...]]></item> 
-    <item><![CDATA[Let\'s have a look on the top bar:<br />In the left top corner you find some numbers. The blue one tells you, how many new cards are still projected for today. The red number counts the failed cards (answered by &quot;again&quot;),]]></item> 
-    <item><![CDATA[On the right corner you find information about your thinking time of this card and about your performance.]]></item> 
-    <item><![CDATA[Albeit you can use AnkiDroid stand alone, it is fully connected to AnkiWeb, the syncing server of Anki Desktop (available for Linux, Windows, Mac).]]></item> 
-    <item><![CDATA[These have been the main points of AnkiDroid usage.<br /><br>For more information about the key concept of Anki, visit http://ankisrs.net/]]></item> 
+    <item><![CDATA[Takk for at du har installert AnkiDroid!<br />Dette er en kort introduksjon.<br />Det du ser nå er<span style=\'font-weight:600;\'>spørsmålssiden</span>av et spørrekort.<br />Klikk på den store knappen under...]]></item> 
+    <item><![CDATA[Neste kort vises nå.<br />Det er ganske enkelt: akkurat som med virkelige, fysiske papirspørrekort, skriver du et spørsmål på forsiden, og svaret på baksiden av kortene.<br />(Klikk på knappen for å vise baksiden)]]></item> 
+    <item><![CDATA[&quot;Hva er hovedstaden i Burkina Faso?&quot;<br />Prøv å komme på riktig svar, og klikk så &quot;vis svar&quot;]]></item> 
+    <item><![CDATA[Over hver svarknapp ser du den tiden det vil ta før dette kortet blir vist igjen, dersom du velger knappen.]]></item> 
+    <item><![CDATA[Hensikten er å vise deg kortet på nytt, rett før du ville ha glemt det. Empiriske undersøkelser har vist at denne måten er den mest effektive måten å lære informasjon på.]]></item> 
+    <item><![CDATA[Kort om organiseringen i AnkiDroid:<br /><br>All informasjon må bestå av par med spørsmål og svar. Hvis du vil lære i motsatt retning, burde du lage nok et kort med ombyttet informasjon.]]></item> 
+    <item><![CDATA[Kort samles i kortstokker, og kan der organiseres ved hjelp av alle mulige typer emneord.]]></item> 
+    <item><![CDATA[Det er to hovedmåter å skaffe seg nye kort:<br />Enten legger du til ferdiglagde kortstokker fra andre brukere (velg&quot;delte kortstokker&quot;i kortstokk-sammendraget), eller du lager dem selv.]]></item> 
+    <item><![CDATA[Men uansett, å lage dine egne kortstokker er viktig for å imøtekomme dine behov best mulig. Du kan gjøre dette rett i AnkiDroid...]]></item> 
+    <item><![CDATA[La oss ta en kikk på den øverste linjen:<br/>I det venstre hjørnet er det noen tall. Det blå tallet viser hvor mange nye kort du har igjen i dag. Det røde tallet viser antallet mislykkede kort (besvart med knappen &quot;igjen&quot;),]]></item> 
+    <item><![CDATA[I det høyre hjørnet finner du informasjon om betenkningstiden du har brukt på dette kortet, og om innsatsen din.]]></item> 
+    <item><![CDATA[Selv om du kan bruke AnkiDroid frittstående, er det fullt tilknyttet AnkiWeb, Anki Desktop sin synkroniseringsserver (tilgjengelig for Linux, Windows, Mac).]]></item> 
+    <item><![CDATA[Nå har vi gjennomgått hovedpoengene i bruk av AnkiDroid.<br /><br>For mer informasjon om hovedpoenget med Anki, gå til http://ankisrs.net/]]></item> 
  </string-array>
  <string-array name="tutorial_answers">
-    <item><![CDATA[... in order to see the <span style=\'font-weight:600;\'>answer</span> part of the flashcard (below the line).<br />Click on the button on the right]]></item> 
-    <item><![CDATA[Let\'s assume you want to learn the world\'s capitals. Let the question be...<br />(click on one of the buttons to show the next card)]]></item> 
-    <item><![CDATA[&quot;Ouagadougou&quot; is the right answer. <br />You didn\'t know it? Click &quot;again&quot; to see the card again in a couple of minutes. Otherwise, click on the other buttons, depending on the easiness of the answer.]]></item> 
-    <item><![CDATA[This time period is calculated of the last time you answered the card, the current ease choice and ease choices of previous answers of that card.]]></item> 
-    <item><![CDATA[If you want to learn more about spaced repetition, visit:<br>http://en.wikipedia.org/wiki/Spaced_repetition_system]]></item> 
-    <item><![CDATA[Don\'t worry, this can be done automatically. There is no need of inserting the same information twice.]]></item> 
-    <item><![CDATA[You will learn about that quickly when you start to use AnkiDroid.]]></item> 
-    <item><![CDATA[You\'ll find thousands of premade decks to download and there are probably some which are useful for you.]]></item> 
-    <item><![CDATA[... or (a bit more convenient) with the desktop application Anki (downloadable for free under http://ankisrs.net/).<br><br>You can sync your decks with the desktop application very easily, so transfering the data is not a problem.]]></item> 
-    <item><![CDATA[the green one shows the number of cards you\'ve already learned before and which are due to review today.<br />The type of the actual cards is specified by an underline.]]></item> 
-    <item><![CDATA[The upper bar shows your progress, the lower one indicates the percentage of yes answers.]]></item> 
-    <item><![CDATA[Thus, you can easily sync your collection between AnkiDroid and Anki Desktop and use the latter for a more convenient card adding and managing.]]></item> 
-    <item><![CDATA[Just try it a bit out now and see, if it fits your needs.<br><br>Maybe start with the deck overview (hit menu on the main screen and choose &quot;all decks&quot;), where you can download premade decks or create your own (just use the menu there).]]></item> 
+    <item><![CDATA[...for å vise <span style=\'font-weight:600;\'>svarsiden</span> av kortet (under linjen).<br />Klikk på knappen til høyre]]></item> 
+    <item><![CDATA[La oss anta at du har lyst til å lære verdens hovedsteder. La spørsmålet være...<br />(klikk på en av knappene for å vise det neste kortet)]]></item> 
+    <item><![CDATA[&quot;Ouagadougou&quot;er det rette svaret.<br />Visste du det ikke? Klikk&quot;igjen&quot;for å se kortet på nytt om noen minutter. Ellers, velg mellom de andre knappene, avhengig av hvor lett det var for deg å svare riktig.]]></item> 
+    <item><![CDATA[Tidsintervallet beregnes ved hjelp av følgende faktorer: når du sist besvarte kortet, hvor lett du velger at kortet er med knappene, og hvor lett du valgte at det var de forrige gangene.]]></item> 
+    <item><![CDATA[Hvis du vil lære mer om tidsbestemt gjentakelse (\"spaced repetition\"), kan du se:<br>http://en.wikipedia.org/wiki/Spaced_repetition_system]]></item> 
+    <item><![CDATA[Det er ikke noe stress, det kan gjøres automatisk. Det er ikke nødvendig å legge inn samme informasjon to ganger.]]></item> 
+    <item><![CDATA[Du kommer kjapt til å lære om det når du begynner å bruke AnkiDroid.]]></item> 
+    <item><![CDATA[Du finner tusenvis av ferdige kortstokker til nedlastning, og det er sikkert noen av dem som er nyttige for deg.]]></item> 
+    <item><![CDATA[...eller (litt mer praktisk) med skrivebords-applikasjonen Anki (som kan lastes ned gratis på http://ankisrs.net/).<br><br>Du kan enkelt synkronisere kortstokkene med skrivebords-applikasjonen, så det å utveksle data er ikke noe problem.]]></item> 
+    <item><![CDATA[det grønne viser antallet kort du allerede har lært tidligere, og som er klare til å gjennomgås i dag.<br/>Hvilken type det aktuelle kortet er, vises med understreking.]]></item> 
+    <item><![CDATA[Den øverste stolpen viser fremgangen din, den nederste viser prosentandel med ja-svar.]]></item> 
+    <item><![CDATA[Du kan altså lett synkronisere kortstokken din mellom AnkiDroid og Anki Desktop, og bruke sistnevnte for å enklere legge til og bearbeide kort.]]></item> 
+    <item><![CDATA[Bare prøv det litt nå, og sjekk om det passer til dine behov.<br><br>Du kan jo starte med kortstokk-oversikten (klikk meny på hovedskjermbildet, og velg &quot;alle kortstokker&quot;), hvor du kan laste ned ferdige kortstokker, eller lage dine egne (bare bruk menyen der).]]></item> 
  </string-array>
 </resources>

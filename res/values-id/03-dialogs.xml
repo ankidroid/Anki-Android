@@ -53,6 +53,9 @@
   <string name="learnmore_title">Extend Limits</string>
   <string name="learnmore_extend_new_limit">New limit by</string>
   <string name="learnmore_extend_rev_limit">Review limit by</string>
+  <string name="reviewearly_title">Review Early Settings</string>
+  <string name="reviewearly_instructions">This option will create a Filtered Deck called \'XXX\' with the cards that are due for review in the number of days you select below. If such a Filtered Deck already exists it will be emptied and reconfigured.</string>
+  <string name="reviewearly_days_ahead">How many days ahead</string>
   <string-array name="about_content">
     <item><![CDATA[<h2>%1$s:<br/>Kad imbas untuk Android</h2>AnkiDroid ialah kad imbas yang juga serasi dengan perisian destop <a href="%2$s">Anki</a>. Anda boleh reka, muat turun dan belajar di antara dua perisian ini.]]></item>
     <item><![CDATA[Bantu kami memperbaiki AnkiDroid dengan melapor bug di <a href="%1$s">sini</a>; Cadangan baru dijemput! Guna <a href="%2$s">wiki</a> dan bincang di dalam  <a href="%3$s">forum</a>.]]></item>

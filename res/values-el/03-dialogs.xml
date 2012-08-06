@@ -53,6 +53,9 @@
   <string name="learnmore_title">Extend Limits</string>
   <string name="learnmore_extend_new_limit">New limit by</string>
   <string name="learnmore_extend_rev_limit">Review limit by</string>
+  <string name="reviewearly_title">Review Early Settings</string>
+  <string name="reviewearly_instructions">This option will create a Filtered Deck called \'XXX\' with the cards that are due for review in the number of days you select below. If such a Filtered Deck already exists it will be emptied and reconfigured.</string>
+  <string name="reviewearly_days_ahead">How many days ahead</string>
   <string-array name="about_content">
     <item><![CDATA[<h2>%1$s:<br/>Κάρτες για το Android</h2>Το AnkiDroid είναι μία εφαρμογή καρτών που είναι πλήρως συμβατή με το λογισμικό <a href="%2$s">Anki</a>. Μπορείτε να δημιουργήσετε, να κατεβάσετε και να μάθετε κάρτες και στα δύο, AnkiDroid ή Anki και να συγχρονίζετε μεταξύ τους πολύ εύκολα.]]></item>
     <item><![CDATA[Για να μας βοηθήσετε να βελτιώσουμε το AnkiDroid, παρακαλούμε αναφέρετε τυχών σφάλματα <a href="%1$s">εδώ</a>. Ιδέες για νέα χαρακτηριστικά είναι ευπρόσδεκτες επίσης! Παρακαλούμε χρησιμοποιείστε το <a href="%2$s">wiki</a> και πείτε μας ένα Γεια στο <a href="%3$s">φόρουμ</a>.]]></item>

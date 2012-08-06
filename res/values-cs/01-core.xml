@@ -37,6 +37,7 @@
   <string name="ease2_successive">Těžké</string>
   <string name="ease3_successive">Dobré</string>
   <string name="ease3_learning">Dobré</string>
+  <string name="studyoptions_congrats_undo">Undo %s</string>
   <string name="studyoptions_congrats_learnmore">Naučit se více</string>
   <string name="studyoptions_congrats_reviewearly">Zopakovat dříve</string>
   <string name="studyoptions_congrats_open_other_deck">Otevřít jiný balíček</string>
@@ -46,6 +47,13 @@
   <string name="menu_rotate">Otočit</string>
   <string name="menu_import">Import cards</string>
   <string name="undo">Vrátit zpět</string>
+  <string name="undo_action_review">review</string>
+  <string name="undo_action_edit">edit note</string>
+  <string name="undo_action_bury">bury note</string>
+  <string name="undo_action_suspend_card">suspend card</string>
+  <string name="undo_action_suspend_note">suspend note</string>
+  <string name="undo_action_delete">delete note</string>
+  <string name="undo_action_mark">mark note</string>
   <string name="finish_operation">Dokončování předchozí operace (nejpravděpodobněji vytváření zálohy). \nProsím čekejte...</string>
   <string name="contextmenu_deckpicker_download_missing_media">Stáhnout chybějící média</string>
   <string name="contextmenu_deckpicker_reset_language_assignments">Obnovit přiřazení jazyka</string>
@@ -84,6 +92,8 @@
   <string name="rebuild_cram_label">Znovu sestavit</string>
   <string name="empty_cram_label">Vyprázdnit</string>
   <string name="empty_cram_deck">Vyprazdňování balíčku šprtání.\nProsím čekejte...</string>
+  <string name="studyoptions_new_filtercram">Filter/Cram</string>
+  <string name="review_early_deck_name">Review Early</string>
   <string name="studyoptions_congrats_finished">Blahopřejeme! Prozatím jste hotov.</string>
   <string name="studyoptions_congrats_more_rev">Bylo dosaženo limitu dnešního opakování, ale stále existují karty pro přezkoušení. Pro optimální zapamatování zvažte zvýšení denního limitu v možnostech.</string>
   <string name="studyoptions_congrats_more_new">Existuje více nových karet, ale denní limit byl dosažen. Můžete limit zvýšit v možnostech, ale mějte na paměti, že čím více nových karet si zobrazíte, tím bude vyšší krátkodobé vytížení při učení.</string>

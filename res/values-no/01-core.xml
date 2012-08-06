@@ -37,6 +37,7 @@
   <string name="ease2_successive">Vanskelig</string>
   <string name="ease3_successive">Bra</string>
   <string name="ease3_learning">Lett</string>
+  <string name="studyoptions_congrats_undo">Angre %s</string>
   <string name="studyoptions_congrats_learnmore">Lær mer</string>
   <string name="studyoptions_congrats_reviewearly">Tidlig gjennomgang</string>
   <string name="studyoptions_congrats_open_other_deck">Åpne en annen kortstokk</string>
@@ -46,6 +47,13 @@
   <string name="menu_rotate">Rotér</string>
   <string name="menu_import">Importer kort</string>
   <string name="undo">Angre</string>
+  <string name="undo_action_review">Se gjennom</string>
+  <string name="undo_action_edit">rediger notat</string>
+  <string name="undo_action_bury">begrav notat</string>
+  <string name="undo_action_suspend_card">suspender kort</string>
+  <string name="undo_action_suspend_note">suspender notat</string>
+  <string name="undo_action_delete">slett notat</string>
+  <string name="undo_action_mark">merk notat</string>
   <string name="finish_operation">Avslutter forrige handling (sannsynligvis backup).\nVennligst vent...</string>
   <string name="contextmenu_deckpicker_download_missing_media">Last ned manglende mediafiler</string>
   <string name="contextmenu_deckpicker_reset_language_assignments">Tilbakestill språkinnstillinger</string>
@@ -84,6 +92,8 @@
   <string name="rebuild_cram_label">Gjenoppbygg</string>
   <string name="empty_cram_label">Tom</string>
   <string name="empty_cram_deck">Tømmer pugge-kortstokken.\nVennligst vent...</string>
+  <string name="studyoptions_new_filtercram">Filtrer/pugg</string>
+  <string name="review_early_deck_name">Tidlig gjennomgang</string>
   <string name="studyoptions_congrats_finished">Gratulerer! Du er ferdig for nå.</string>
   <string name="studyoptions_congrats_more_rev">Du har nådd grensen for gjennomgang i dag, men det er fortsatt kort du ikke har gått gjennom. For best mulig effekt, bør du vurdere å øke grensen i alternativene.</string>
   <string name="studyoptions_congrats_more_new">Det finnes flere nye kort, men den daglige grensen er nådd. Du kan øke grensen i alternativene, men vennligst husk at jo flere nye kort du introduserer, jo høyere blir arbeidsmengden for gjennomgang på kort sikt.</string>
@@ -91,7 +101,7 @@
   <string name="studyoptions_options">Alternativer</string>
   <string name="empty_cloze_warning">Vennligst rediger notatet og legg til noen innfyllingsfelt. (%1$s)</string>
   <string name="help_cloze">Hjelp</string>
-  <string name="button_sync">Sync</string>
+  <string name="button_sync">Synkronisér</string>
   <string-array name="next_review_s">
     <item>1 sekund</item>
     <item>1 minutt</item>

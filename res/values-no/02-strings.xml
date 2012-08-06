@@ -22,50 +22,50 @@
 <resources>
   <string name="CardEditorCancelButton">Avbryt</string>
   <string name="CardEditorSaveButton">Lagre</string>
-  <string name="CardEditorLaterButton">Later</string>
-  <string name="CardEditorLaterMessage">Saved information for later</string>
-  <string name="CardEditorCardDeck">Card deck: %s</string>
-  <string name="CardEditorNoteDeck">Note deck: %s</string>
-  <string name="CardEditorModel">Note type: %s</string>
+  <string name="CardEditorLaterButton">Senere</string>
+  <string name="CardEditorLaterMessage">Lagret informasjonen til senere</string>
+  <string name="CardEditorCardDeck">Kortstokk: %s</string>
+  <string name="CardEditorNoteDeck">Notatkortstokk:%s</string>
+  <string name="CardEditorModel">Notattype:%s</string>
   <string name="CardEditorTags">Etiketter: %1$s</string>
   <string name="add_new_tag">Legg til ny etikett</string>
-  <string name="note_type">Note type</string>
+  <string name="note_type">Notattype</string>
   <string name="sdcard_missing_message">SD-kortet er utilgjengelig fordi den brukes som USB-lagring. Frakoble USB for å å få tilgang til dine kortstokker.</string>
   <string name="show_whiteboard">Vis tavle</string>
   <string name="hide_whiteboard">Skjul tavle</string>
-  <string name="clear_whiteboard">Rensk tavle</string>
+  <string name="clear_whiteboard">Rens tavle</string>
   <string name="session_question_limit_reached">Grensen for kort er nådd for denne økten</string>
   <string name="session_time_limit_reached">Tiden er over for denne økten</string>
-  <string name="cram_edit_warning">Kortredigering ikke tillatt mens pugger</string>
-  <string name="suspend_leeches">Deaktiver lik</string>
-  <string name="leech_suspend_notification">Kort merket som lik og deaktivert</string>
-  <string name="leech_notification">Kort merket som lik</string>
-  <string name="corrupt_font">Corrupt font file %s</string>
+  <string name="cram_edit_warning">Kortredigering ikke tillatt under pugging</string>
+  <string name="suspend_leeches">Deaktiver igler</string>
+  <string name="leech_suspend_notification">Kort merket som igle og deaktivert</string>
+  <string name="leech_notification">Kort merket som igle</string>
+  <string name="corrupt_font">Ugyldig font-fil %s</string>
   <string name="about_title">Om</string>
-  <string name="cardeditor_title_add_note">Add Note</string>
-  <string name="cardeditor_title_edit_card">Edit Note</string>
-  <string name="factadder_saving_error">Error saving note</string>
-  <string name="pref_lang_support">Language</string>
-  <string name="saving_facts">Saving note</string>
-  <string name="deck">Deck</string>
+  <string name="cardeditor_title_add_note">Legg til notat</string>
+  <string name="cardeditor_title_edit_card">Rediger notat</string>
+  <string name="factadder_saving_error">Feil under lagring av notat</string>
+  <string name="pref_lang_support">Språk</string>
+  <string name="saving_facts">Lagrer notat</string>
+  <string name="deck">Kortstokk</string>
   <string name="add">Legg til</string>
   <string name="close">Lukk</string>
   <string name="select">Velg</string>
   <string name="saving_changes">Lagrer endringer...</string>
-  <string name="timebox_reached">Timebox reached!</string>
+  <string name="timebox_reached">Timebox oppnådd!</string>
   <string name="studyoptions_welcome_title">Velkommen til AnkiDroid</string>
   <string name="studyoptions_no_external_storage_title">Ingen ekstern lagringsplass tilgjengelig</string>
   <string name="studyoptions_no_external_storage_message">Ingen ekstern lagring er tilgjengelig for øyeblikket. AnkiDroid må ha tilgang til SD-kortet for å kunne lese og laste dine Anki-kortstokker. Kontroller at SD-kortet er montert, og prøv på nytt.</string>
-  <string name="fact_adder_intent_title">AnkiDroid kort</string>
+  <string name="fact_adder_intent_title">AnkiDroid-kort</string>
   <string name="fact_adder_swap">Bytt om</string>
   <string name="deckpicker_select_dictionary_title">Velg ordliste</string>
   <string name="deckpicker_select_dictionary_default">Standard</string>
-  <string name="card_editor_add_card">Add note</string>
+  <string name="card_editor_add_card">Legg til notat</string>
   <string name="card_editor_reset">Tilbakestill</string>
   <string name="card_editor_copy_card">Kopier kort</string>
   <string name="card_editor_reset_card">Tilbakestill fremdrift</string>
   <string name="error_insufficient_memory">Operasjonen ikke mulig på grunn av for lite minne på enheten</string>
-  <string name="tutorial_load">Creating tutorial deck.\nPlease wait...</string>
+  <string name="tutorial_load">Oppretter læringskortstokk.\nVennligst vent...</string>
   <string name="tutorial_loading_error">Opplæringskortstokk kunne ikke opprettes</string>
   <string name="rename">Omdøpe</string>
   <string name="rename_error">Kortstokk %s kan ikke omdøpes</string>
@@ -73,32 +73,31 @@
   <string name="help_online">Online hjelp</string>
   <string name="help_faq">FAQ</string>
   <string name="help_tutorial">Opplæringskortstokk</string>
-  <string name="check_db">Check database</string>
-  <string name="check_db_message">Checking database.\nPlease wait...</string>
+  <string name="check_db">Kontroller database</string>
+  <string name="check_db_message">Undersøker database.\nVennligst vent...</string>
   <string name="simple_interface_hint">Tom %s. Husk at at enkelt grensesnitt ikke kan vise bilder/lyder osv.</string>
-  <string name="delete_deck">Deleting deck...\nPlease wait.</string>
-  <string name="menu_cardbrowser">Card browser</string>
-  <string name="show_hint">Show Hint</string>
-  <string name="pref_lang_other">Language Preferences</string>
-  <string name="pref_font_UI">Custom UI Font</string>
-  <string name="info_rate">Rate AnkiDroid</string>
-  <string name="col_load_failed">Collection loading failed.\nPress back to close AnkiDroid.</string>
+  <string name="delete_deck">Sletter kortstokk...\nVennligst vent.</string>
+  <string name="menu_cardbrowser">Kortutforsker</string>
+  <string name="show_hint">Vis hint</string>
+  <string name="pref_lang_other">Spåkinnstillinger</string>
+  <string name="pref_font_UI">Tilpasset tekst</string>
+  <string name="info_rate">Bedøm AnkiDroid</string>
+  <string name="col_load_failed">Henting av samling mislykkes.\nVelg tilbake for å lukke AnkiDroid.</string>
   <string name="import_title">Importer kort</string>
-  <string name="import_message">Do you really want to import all cards of file %s?</string>
+  <string name="import_message">Vil du importere alle kortene i fil %s?</string>
   <string name="import_log_success">Importerte %d kort problemfritt</string>
   <string name="import_log_error">Import feilet</string>
-  <string name="import_log_no_apkg">This is not a valid apkg file</string>
   <string name="import_importing">Importerer kort.\nVennligst vent...</string>
   <string name="import_hint">For å importere kort, legg apkg-filen i mappen %s og trykk ok</string>
   <string name="import_no_file_found">Fant ingen apkg-fil å hente</string>
   <string-array name="dynOrderLabels">
-    <item>Oldest seen first</item>
-    <item>Random</item>
-    <item>Increasing intervals</item>
-    <item>Decreasing intervals</item>
-    <item>Most lapses</item>
-    <item>Order added</item>
-    <item>Order due</item>
+    <item>Eldste først</item>
+    <item>Tilfeldig</item>
+    <item>Økende intervaller</item>
+    <item>Synkende intervaller</item>
+    <item>Flest bortfall</item>
+    <item>Rekkefølge lagt til</item>
+    <item>Rekkefølge klar</item>
   </string-array>
   <plurals name="factadder_cards_added">
     <item quantity="one">Ett kort lagt til</item>

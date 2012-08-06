@@ -37,6 +37,7 @@
   <string name="ease2_successive">Difícil</string>
   <string name="ease3_successive">Bien</string>
   <string name="ease3_learning">Fácil</string>
+  <string name="studyoptions_congrats_undo">Deshacer %s</string>
   <string name="studyoptions_congrats_learnmore">Aprender más</string>
   <string name="studyoptions_congrats_reviewearly">Repasar anticipadamente</string>
   <string name="studyoptions_congrats_open_other_deck">Abrir otro mazo</string>
@@ -46,6 +47,13 @@
   <string name="menu_rotate">Rotar</string>
   <string name="menu_import">Importar tarjetas</string>
   <string name="undo">Deshacer</string>
+  <string name="undo_action_review">repasar</string>
+  <string name="undo_action_edit">editar nota</string>
+  <string name="undo_action_bury">enterrar nota</string>
+  <string name="undo_action_suspend_card">suspender tarjeta</string>
+  <string name="undo_action_suspend_note">suspender nota</string>
+  <string name="undo_action_delete">eliminar nota</string>
+  <string name="undo_action_mark">marcar nota</string>
   <string name="finish_operation">Terminando la operación anterior (seguramente la creación de una copia de seguridad).\nPor favor, espera...</string>
   <string name="contextmenu_deckpicker_download_missing_media">Descargar archivos multimedia que falten</string>
   <string name="contextmenu_deckpicker_reset_language_assignments">Restablecer las Asignaciones de Idioma</string>
@@ -84,6 +92,8 @@
   <string name="rebuild_cram_label">Reconstruir</string>
   <string name="empty_cram_label">Vaciar</string>
   <string name="empty_cram_deck">Vaciando mazo de empollar.\nPor favor, espera...</string>
+  <string name="studyoptions_new_filtercram">Filtrar/Empollar</string>
+  <string name="review_early_deck_name">Repasar Antes</string>
   <string name="studyoptions_congrats_finished">¡Felicidades! Has terminado por ahora.</string>
   <string name="studyoptions_congrats_more_rev">Se ha alcanzado el límite de repasos de hoy, pero todavía hay tarjetas a la espera de ser repasadas. Para una memorización óptima, considera la posibilidad de aumentar el límite diario en las opciones.</string>
   <string name="studyoptions_congrats_more_new">Hay más tarjetas nuevas disponibles, pero se ha alcanzado el límite diario. Puedes aumentar el límite en las opciones, pero ten en cuenta que cuantas más tarjetas nuevas introduzcas, mayor será la carga de trabajo de revisión a corto plazo.</string>
@@ -91,7 +101,7 @@
   <string name="studyoptions_options">Opciones</string>
   <string name="empty_cloze_warning">Please edit this note and add some cloze deletions. (%1$s)</string>
   <string name="help_cloze">Ayuda</string>
-  <string name="button_sync">Sync</string>
+  <string name="button_sync">Sincronizar</string>
   <string-array name="next_review_s">
     <item>1 segundo</item>
     <item>1 minuto</item>

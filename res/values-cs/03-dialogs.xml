@@ -53,6 +53,9 @@
   <string name="learnmore_title">Extend Limits</string>
   <string name="learnmore_extend_new_limit">New limit by</string>
   <string name="learnmore_extend_rev_limit">Review limit by</string>
+  <string name="reviewearly_title">Review Early Settings</string>
+  <string name="reviewearly_instructions">This option will create a Filtered Deck called \'XXX\' with the cards that are due for review in the number of days you select below. If such a Filtered Deck already exists it will be emptied and reconfigured.</string>
+  <string name="reviewearly_days_ahead">How many days ahead</string>
   <string-array name="about_content">
     <item><![CDATA[<h2>%1$s:<br/>Flashcards pro Android</h2>AnkiDroid je flashcard aplikace, která je plně kompatibilní s programem pro pc  <a href="%2$s">Anki</a>. Můžete vytvářet, stahovat a učit se v obou, v AnkiDroid nebo Anki pro pc, a vše mezi nimi velmi jednoduše synchronizovat.]]></item>
     <item><![CDATA[Pomozte nám, prosím, zlepšit AnkiDroid a nahlašte nám chyby <a href="%1$s">zde</a>; nové nápady jsou vítany také! Prosím, využijte <a href="%2$s">wiki</a> a podělte se s námi o poznatky na <a href="%3$s">fóru</a>.]]></item>

@@ -53,6 +53,9 @@
   <string name="learnmore_title">Extend Limits</string>
   <string name="learnmore_extend_new_limit">New limit by</string>
   <string name="learnmore_extend_rev_limit">Review limit by</string>
+  <string name="reviewearly_title">Review Early Settings</string>
+  <string name="reviewearly_instructions">This option will create a Filtered Deck called \'XXX\' with the cards that are due for review in the number of days you select below. If such a Filtered Deck already exists it will be emptied and reconfigured.</string>
+  <string name="reviewearly_days_ahead">How many days ahead</string>
   <string-array name="about_content">
     <item><![CDATA[<h2>%1$s:<br/>Tanulókártyák Androidra</h2>Az AnkiDroid egy tanulókártya kezelő program, ami teljesen kompatibilis az <a href="%2$s">Anki</a> asztali programmal. Segítségükkel létrehozhatsz, letölthetsz és tanulhatsz különböző tartalmakat, mind az AnkiDroiddal, mind pedig az asztali Anki-val, pakliaidat szinkronizálhatod közöttük.]]></item>
     <item><![CDATA[Segíts, hogy mégjobb legyen az AnkiDroid! Megkérünk, hogy jelents bármiféle bug-ot <a href="%1$s">itt</a>, de új ötleteket is szívesen fogadunk! Használd a <a href="%2$s">wiki</a>-t, és köszönj be a <a href="%3$s">fórumon</a>.]]></item>

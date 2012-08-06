@@ -37,6 +37,7 @@
   <string name="ease2_successive">Khó</string>
   <string name="ease3_successive">Tốt</string>
   <string name="ease3_learning">Dễ</string>
+  <string name="studyoptions_congrats_undo">Undo %s</string>
   <string name="studyoptions_congrats_learnmore">Tìm hiểu thêm</string>
   <string name="studyoptions_congrats_reviewearly">Ôn tập Sớm</string>
   <string name="studyoptions_congrats_open_other_deck">Mở Tập thẻ Khác</string>
@@ -46,6 +47,13 @@
   <string name="menu_rotate">Xoay</string>
   <string name="menu_import">Import cards</string>
   <string name="undo">Hoàn tác</string>
+  <string name="undo_action_review">review</string>
+  <string name="undo_action_edit">edit note</string>
+  <string name="undo_action_bury">bury note</string>
+  <string name="undo_action_suspend_card">suspend card</string>
+  <string name="undo_action_suspend_note">suspend note</string>
+  <string name="undo_action_delete">delete note</string>
+  <string name="undo_action_mark">mark note</string>
   <string name="finish_operation">Finishing previous operation (most likely backup creation).\nPlease wait...</string>
   <string name="contextmenu_deckpicker_download_missing_media">Tải thông tin bị thiếu</string>
   <string name="contextmenu_deckpicker_reset_language_assignments">Đặt lại ngôn ngữ phân công</string>
@@ -84,6 +92,8 @@
   <string name="rebuild_cram_label">Rebuild</string>
   <string name="empty_cram_label">Empty</string>
   <string name="empty_cram_deck">Emptying cram deck.\nPlease wait...</string>
+  <string name="studyoptions_new_filtercram">Filter/Cram</string>
+  <string name="review_early_deck_name">Review Early</string>
   <string name="studyoptions_congrats_finished">Congratulations! You have finished for now.</string>
   <string name="studyoptions_congrats_more_rev">Today\'s review limit has been reached, but there are still cards waiting to be reviewed. For optimum memory, consider increasing the daily limit in the options.</string>
   <string name="studyoptions_congrats_more_new">There are more new cards available, but the daily limit has been reached. You can increase the limit in the options, but please bear in mind that the more new cards you introduce, the higher your short-term review workload will become.</string>

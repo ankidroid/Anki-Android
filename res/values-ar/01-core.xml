@@ -37,6 +37,7 @@
   <string name="ease2_successive">صعب</string>
   <string name="ease3_successive">جيد</string>
   <string name="ease3_learning">سهل</string>
+  <string name="studyoptions_congrats_undo">Undo %s</string>
   <string name="studyoptions_congrats_learnmore">تعلم المزيد</string>
   <string name="studyoptions_congrats_reviewearly">استعراض مبكر</string>
   <string name="studyoptions_congrats_open_other_deck">افتح رزمة أخرى</string>
@@ -46,6 +47,13 @@
   <string name="menu_rotate">تدوير</string>
   <string name="menu_import">Import cards</string>
   <string name="undo">تراجع</string>
+  <string name="undo_action_review">review</string>
+  <string name="undo_action_edit">edit note</string>
+  <string name="undo_action_bury">bury note</string>
+  <string name="undo_action_suspend_card">suspend card</string>
+  <string name="undo_action_suspend_note">suspend note</string>
+  <string name="undo_action_delete">delete note</string>
+  <string name="undo_action_mark">mark note</string>
   <string name="finish_operation">Finishing previous operation (most likely backup creation).\nPlease wait...</string>
   <string name="contextmenu_deckpicker_download_missing_media">حمل الوسائط المفقودة</string>
   <string name="contextmenu_deckpicker_reset_language_assignments">أعد تعيين تخصيصات اللغة</string>
@@ -84,6 +92,8 @@
   <string name="rebuild_cram_label">Rebuild</string>
   <string name="empty_cram_label">Empty</string>
   <string name="empty_cram_deck">Emptying cram deck.\nPlease wait...</string>
+  <string name="studyoptions_new_filtercram">Filter/Cram</string>
+  <string name="review_early_deck_name">Review Early</string>
   <string name="studyoptions_congrats_finished">تهانينا! لقد انتهيت لهذا الوقت.</string>
   <string name="studyoptions_congrats_more_rev">لقد بلغت حد المراجعة لهذا اليوم، ولكن لا زالت هناك بطاقات تنتظر المراجعة. للذاكرة المثلى، أعد التفكير في زيادة الحد اليومي من قائمة الخيارات.</string>
   <string name="studyoptions_congrats_more_new">هناك المزيد من البطاقات الجديدة المتوفرة، ولكنك قد بلغت حد المراجعة لهذا اليوم. يمكنك زيادة هذا الحد من الخيارات، ولكن لاحظ أنه كلما زاد تقديم البطاقات الجديدة، كلما زاد عبء المراجعة قصيرة المدى.</string>

@@ -53,6 +53,9 @@
   <string name="learnmore_title">Extend Limits</string>
   <string name="learnmore_extend_new_limit">New limit by</string>
   <string name="learnmore_extend_rev_limit">Review limit by</string>
+  <string name="reviewearly_title">Review Early Settings</string>
+  <string name="reviewearly_instructions">This option will create a Filtered Deck called \'XXX\' with the cards that are due for review in the number of days you select below. If such a Filtered Deck already exists it will be emptied and reconfigured.</string>
+  <string name="reviewearly_days_ahead">How many days ahead</string>
   <string-array name="about_content">
     <item><![CDATA[<h2>%1$s:<br/>Android用のフラッシュカード</h2>AnkiDroidは、デスクトップソフトウェア <a href="%2$s">Anki</a>と完全互換のフラッシュカードアプリです。あなたは、AnkiDroid と Anki Desktopのどちらでも教材を作成、ダウンロード、学習し、また、簡単に双方の同期をとることができます。]]></item>
     <item><![CDATA[AnkiDroid 良くするため、できるだけバグを、 <a href="%1$s"> ここに</a>報告して頂けると助かります。 新しい機能のアイデアも大歓迎 ！<a href="%2$s"> wiki</a> を使用して、<a href="%3$s"> フォーラム</a>で意見交換してください。]]></item>

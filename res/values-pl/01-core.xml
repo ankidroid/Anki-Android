@@ -37,6 +37,7 @@
   <string name="ease2_successive">Trudno</string>
   <string name="ease3_successive">Dobrze</string>
   <string name="ease3_learning">Łatwo</string>
+  <string name="studyoptions_congrats_undo">Undo %s</string>
   <string name="studyoptions_congrats_learnmore">Nauka kolejnych</string>
   <string name="studyoptions_congrats_reviewearly">Powtarzaj wcześnie</string>
   <string name="studyoptions_congrats_open_other_deck">Otwórz inną talię</string>
@@ -46,6 +47,13 @@
   <string name="menu_rotate">Obrót</string>
   <string name="menu_import">Import kart</string>
   <string name="undo">Cofnij</string>
+  <string name="undo_action_review">review</string>
+  <string name="undo_action_edit">edit note</string>
+  <string name="undo_action_bury">bury note</string>
+  <string name="undo_action_suspend_card">suspend card</string>
+  <string name="undo_action_suspend_note">suspend note</string>
+  <string name="undo_action_delete">delete note</string>
+  <string name="undo_action_mark">mark note</string>
   <string name="finish_operation">Kończenie poprzedniej operacji (najprawdopodobniej tworzenie kopii zapasowej).\nProszę czekać...</string>
   <string name="contextmenu_deckpicker_download_missing_media">Pobierz brakujące media</string>
   <string name="contextmenu_deckpicker_reset_language_assignments">Zresetuj przypisanie języka</string>
@@ -84,6 +92,8 @@
   <string name="rebuild_cram_label">Odbuduj</string>
   <string name="empty_cram_label">Wyczyść</string>
   <string name="empty_cram_deck">Czyszczenie talii.\nProszę czekać...</string>
+  <string name="studyoptions_new_filtercram">Filter/Cram</string>
+  <string name="review_early_deck_name">Review Early</string>
   <string name="studyoptions_congrats_finished">Gratulacje! Zakończono powtórki na dziś.</string>
   <string name="studyoptions_congrats_more_rev">Dzisiejszy limit powtórek został wyczerpany ale wciąż pozostają karty do przeglądnięcia. Dla optymalnego zapamiętywania proszę rozważyć zwiększenie dziennego limitu w ustawieniach.</string>
   <string name="studyoptions_congrats_more_new">Dostępnych jest więcej nowych kart ale dzienny limit został wyczerpany. Możesz powiększyć limit w opcjach ale pamiętaj, że im więcej nowych kart tym większa ilość krótko terminowych powtórek.</string>

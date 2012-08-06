@@ -37,6 +37,7 @@
   <string name="ease2_successive">Zor</string>
   <string name="ease3_successive">İyi</string>
   <string name="ease3_learning">Kolay</string>
+  <string name="studyoptions_congrats_undo">Undo %s</string>
   <string name="studyoptions_congrats_learnmore">Daha Fazlasını Öğren</string>
   <string name="studyoptions_congrats_reviewearly">Erkenden Gözden Geçir</string>
   <string name="studyoptions_congrats_open_other_deck">Başka Deste Aç</string>
@@ -46,6 +47,13 @@
   <string name="menu_rotate">Çevir</string>
   <string name="menu_import">Import cards</string>
   <string name="undo">Geri Al</string>
+  <string name="undo_action_review">review</string>
+  <string name="undo_action_edit">edit note</string>
+  <string name="undo_action_bury">bury note</string>
+  <string name="undo_action_suspend_card">suspend card</string>
+  <string name="undo_action_suspend_note">suspend note</string>
+  <string name="undo_action_delete">delete note</string>
+  <string name="undo_action_mark">mark note</string>
   <string name="finish_operation">Önceki işlem tamamlanıyor (büyük olasılıkla yedekleme).\nLütfen bekleyin...</string>
   <string name="contextmenu_deckpicker_download_missing_media">Eksik ortamı indir</string>
   <string name="contextmenu_deckpicker_reset_language_assignments">Dil Görevlerini Sıfırla</string>
@@ -84,6 +92,8 @@
   <string name="rebuild_cram_label">Yeniden Oluştur</string>
   <string name="empty_cram_label">Boş</string>
   <string name="empty_cram_deck">İnekleme destesi boşaltılıyor.\nLütfen bekleyin...</string>
+  <string name="studyoptions_new_filtercram">Filter/Cram</string>
+  <string name="review_early_deck_name">Review Early</string>
   <string name="studyoptions_congrats_finished">Tebrikler! Şimdilik bitirdiniz.</string>
   <string name="studyoptions_congrats_more_rev">Bugünün çalışma sınırına ulaşıldı, ama hâlâ çalışılmayı bekleyen kartlar var. En uygun belleme için, seçeneklerden günlük sınırı artırabilirsiniz.</string>
   <string name="studyoptions_congrats_more_new">Daha çalışılmamış yeni kartlar var, fakat günlük sınıra ulaşıldı. Seçeneklerden sınırı artırabilirsiniz, fakat yeni gördüğünüz kart sayısı arttıkça kısa vâdede çalışma yükünüzün yükseleceğini unutmayın.</string>
