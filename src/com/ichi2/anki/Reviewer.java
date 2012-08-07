@@ -1244,7 +1244,7 @@ public class Reviewer extends AnkiActivity {
             item.setIcon(R.drawable.ic_menu_mark);
         }
         item = menu.findItem(MENU_UNDO);
-        if (mSched.getCol().undoAvailable()) {
+        if (AnkiDroidApp.colIsOpen() && AnkiDroidApp.getCol().undoAvailable()) {
             item.setEnabled(true);
             item.setIcon(R.drawable.ic_menu_revert);
         } else {
