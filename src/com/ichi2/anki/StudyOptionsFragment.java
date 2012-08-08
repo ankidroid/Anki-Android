@@ -1161,7 +1161,15 @@ public class StudyOptionsFragment extends Fragment {
                             && Math.abs(velocityX) > AnkiDroidApp.sSwipeThresholdVelocity
                             && Math.abs(e1.getY() - e2.getY()) < AnkiDroidApp.sSwipeMaxOffPath) {
                         // left
-                        openReviewer();
+                        if (mCongratsView != null && mCongratsView.getVisibility() == View.VISIBLE) {
+                            if (AnkiDroidApp.colIsOpen()) {
+                                AnkiDroidApp.getCol().undo();
+                                finishCongrats();
+                                resetAndUpdateValuesFromDeck();
+                            }
+                        } else {
+                            openReviewer();
+                        }
                     } else if (e2.getX() - e1.getX() > AnkiDroidApp.sSwipeMinDistance
                             && Math.abs(velocityX) > AnkiDroidApp.sSwipeThresholdVelocity
                             && Math.abs(e1.getY() - e2.getY()) < AnkiDroidApp.sSwipeMaxOffPath) {

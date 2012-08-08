@@ -576,6 +576,7 @@ public class Reviewer extends AnkiActivity {
 
         @Override
         public void onPostExecute(DeckTask.TaskData result) {
+            refreshActionBar();
             if (!result.getBoolean()) {
                 // RuntimeException occured on marking cards
                 closeReviewer(DeckPicker.RESULT_DB_ERROR, true);
@@ -797,6 +798,8 @@ public class Reviewer extends AnkiActivity {
             if (mProgressDialog != null && mProgressDialog.isShowing()) {
                 mProgressDialog.dismiss();
             }
+            // set the correct mark/unmark icon on action bar
+            refreshActionBar();
         }
     };
 
@@ -1244,7 +1247,7 @@ public class Reviewer extends AnkiActivity {
             item.setIcon(R.drawable.ic_menu_mark);
         }
         item = menu.findItem(MENU_UNDO);
-        if (mSched.getCol().undoAvailable()) {
+        if (AnkiDroidApp.colIsOpen() && AnkiDroidApp.getCol().undoAvailable()) {
             item.setEnabled(true);
             item.setIcon(R.drawable.ic_menu_revert);
         } else {
@@ -3088,6 +3091,10 @@ public class Reviewer extends AnkiActivity {
         if (AnkiDroidApp.SDK_VERSION > 4) {
             ActivityTransitionAnimation.slide(Reviewer.this, ActivityTransitionAnimation.RIGHT);
         }
+    }
+
+    private void refreshActionBar() {
+        AnkiDroidApp.getCompat().invalidateOptionsMenu(Reviewer.this);
     }
 
     /** Fixing bug 720: <input> focus, thanks to pablomouzo on android issue 7189 */
