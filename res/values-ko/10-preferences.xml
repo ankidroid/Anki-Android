@@ -256,6 +256,8 @@
   <string name="deck_conf_seconds">XXX 초</string>
   <string name="deck_conf_timer">답변 타이머 보이기</string>
   <string name="deck_conf_autoplay">오디오 자동 재생</string>
+  <string name="deck_conf_replayq">Replay Question</string>
+  <string name="deck_conf_replayq_summ">When answer shown, replay both question and answer audio</string>
   <string name="deck_conf_add">새로 환경설정 지정</string>
   <string name="deck_conf_ren">환경설정 다른 이름으로 저장</string>
   <string name="deck_conf_rem">설정 제거</string>

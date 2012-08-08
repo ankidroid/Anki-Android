@@ -22,10 +22,10 @@
 <resources>
   <string name="welcome_message">Med AnkiDroid kan du effektivt lære store mengder gloser eller annet materiale. AnkiDroid viser deg det du skal lære like før du glemmer det.\n\nFor å få et første inntrykk av hvordan det fungerer anbefaler vi at du starter med en innførings-kortstokk, som gir deg litt grunnleggende informasjon, og prøve systemet litt. Bare klikk på \"Begynn å se gjennom\" etter at du har åpnet stokken.\n\nLage innførings-kortstokk nå?</string>
   <string name="check_db_title">Kontroller database</string>
-  <string name="check_db_result_message">Database checked and optimized.\nShrunk by %d kb</string>
+  <string name="check_db_result_message">Databasen sjekket og optimalisert.\nKrympet med %d kb</string>
   <string name="contextmenu_deckpicker_delete_deck">Slett kortstokk</string>
   <string name="delete_deck_title">Slett kortstokk</string>
-  <string name="delete_deck_message">Are you sure you wish to delete all cards in %s?</string>
+  <string name="delete_deck_message">Vil du virkelig slette alle kortene i %s?</string>
   <string name="delete_deck_confirm">Slett den</string>
   <string name="new_version_message">Nye funksjoner:</string>
   <string name="no_tts_available_title">Tekst til tale</string>
@@ -36,31 +36,31 @@
   <string name="notify_ticker">Programvareoppdatering</string>
   <string name="notify_title">AnkiDroid oppdatert</string>
   <string name="notify_message">Last ned en ny versjon</string>
-  <string name="notification_title">Bekreft AnkiDroid oppdatering</string>
+  <string name="notification_title">Bekreft AnkiDroid-oppdatering</string>
   <string name="notification_message">En ny versjon av AnkiDroid er tilgjengelig i Android Market.\n\nVil du installere den?</string>
   <string name="notification_stop">Ikke varsle meg om denne oppdateringen på nytt</string>
   <string name="reset_card_dialog_title">Tilbakestille fremdrift for kort</string>
   <string name="reset_card_dialog_message">This resets the learning progress for all cards of this note (they will look like new cards).\nReally continue?</string>
   <string name="reset_card_dialog_confirmation">All cards of this note reset</string>
   <string name="answering_error_title">Databasefeil</string>
-  <string name="answering_error_message">An error occurred while writing to the collection. This could be related to a corrupt database or to insufficient disc space.\n\nIf it happens more often, please try to check the database, repair the collection or restoring it from a backup. Click on \'options\' for that.\n\nNevertheless, it could be an AnkiDroid bug as well; please report the error that we can check this.</string>
+  <string name="answering_error_message">Det oppstod en feil under skriving til samlingen. Dette kan ha sammenheng med en ødelagt database eller manglende plass på disken.\n\nHvis det skjer igjen, vennligst prøv å kontrollere databasen, reparere samlingen, eller gjenopprette den fra en sikkerhetskopi. Klikk i så fall \'valg\'.\n\nUansett kan det hende at det er en feil i AnkiDroid; så vennligst rapporter feilen, sånn at vi kan undersøke tilfellet.</string>
   <string name="answering_error_report">Rapporter feil</string>
   <string name="repair_deck_dialog">Vil du virkelig prøve å reparere databasen?\n\nEn kopi vil bli opprettet i undermappen \'%s\' før forsøket starter.</string>
   <string name="intent_add_saved_information">Lagrede data</string>
   <string name="intent_add_clear_all">Fjern alle</string>
   <string name="intent_aedict_empty">Kategorien \'standard\' er tom</string>
   <string name="intent_aedict_category">For å legge kort til AnkiDroid, fjern alle notisblokk-kategorier eller legg til en som heter \'default\'</string>
-  <string name="learnmore_title">Extend Limits</string>
-  <string name="learnmore_extend_new_limit">New limit by</string>
-  <string name="learnmore_extend_rev_limit">Review limit by</string>
-  <string name="reviewearly_title">Review Early Settings</string>
+  <string name="learnmore_title">Utvid begrensninger</string>
+  <string name="learnmore_extend_new_limit">Begrens nye med</string>
+  <string name="learnmore_extend_rev_limit">Begrens gjennomgang med</string>
+  <string name="reviewearly_title">Innstillinger for tidlig gjennomgang</string>
   <string name="reviewearly_instructions">This option will create a Filtered Deck called \'XXX\' with the cards that are due for review in the number of days you select below. If such a Filtered Deck already exists it will be emptied and reconfigured.</string>
-  <string name="reviewearly_days_ahead">How many days ahead</string>
+  <string name="reviewearly_days_ahead">Hvor mange dager fremover</string>
   <string-array name="about_content">
-    <item><![CDATA[<h2>%1$s: <br/>Puggekort til Android</h2>AnkiDroid er et puggekortprogram som er fullstendig kompatibel med skrivebordsprogramvaren <a href="%2$s"> Anki</a>. Du kan opprette, laste ned og lære innholdet på både AnkiDroid og Anki Desktop, og synkroniser dem veldig enkelt.]]></item>
-    <item><![CDATA[For å hjelpe oss med å gjøre AnkiDroid bedre, vennligst rapporter alle feil <a href="%1$s"> her</a>; ideer til nye funksjon er svært velkommen også! Vennligst bruk <a href="%2$s"> wiki</a> og si hei på <a href="%3$s"> forumet</a>.]]></item>
-    <item><![CDATA[AnkiDroid er <a href="%1$s"> åpen kildeprogramvare <a/>, slik at alle er oppfordret til å <a href="%2$s"> delta som</a> <a href="%3$s"> bidragsytere</a>:-)]]></item>
-    <item><![CDATA[De som ikke er programmerere kan også hjelpe, for eksempel ved <a href="%1$s"> å oversette</a> AnkiDroid, oppdatere wiki og skjermbilder, <a href="%2$s"> donere</a> til Anki skrivebordet eller ved å blogge om AnkiDroid!]]></item>
+    <item><![CDATA[<h2>%1$s: <br/>Spørrekort til Android</h2>AnkiDroid er et spørrekortprogram som er fullstendig kompatibetl med skrivebordsprogramvaren <a href="%2$s">Anki</a>. Du kan opprette, laste ned og lære nye ting på både AnkiDroid og Anki Desktop, og synkronisere mellom dem med letthet.]]></item>
+    <item><![CDATA[For å hjelpe oss med å gjøre AnkiDroid bedre, vennligst rapporter alle feil <a href="%1$s">her</a>; ideer til nye funksjoner tas imot med takk! Vennligst bruk <a href="%2$s">wiki</a> og si Hei på <a href="%3$s">forumet</a>.]]></item>
+    <item><![CDATA[AnkiDroid er <a href="%1$s">åpen kilde-programvare<a/>, slik at alle oppfordres til å <a href="%2$s">delta som</a> <a href="%3$s"> bidragsytere</a>:-)]]></item>
+    <item><![CDATA[De som ikke er programmerere kan også hjelpe, for eksempel ved <a href="%1$s">å oversette</a> AnkiDroid, oppdatere wiki\'en og skjermbilder, <a href="%2$s">donere</a> til Anki Desktop eller ved å blogge om AnkiDroid!]]></item>
     <item><![CDATA[AnkiDroid er utgitt under <a href="%1$s"> GNU GPL v3-lisensen</a> og kildekoden er tilgjengelig <a href="%2$s"> her</a>.]]></item>
   </string-array>
 </resources>

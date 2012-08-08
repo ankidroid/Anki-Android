@@ -110,7 +110,7 @@
     <item>Minskande intervall</item>
     <item>Most lapsed</item>
     <item>Ordningen de lades till</item>
-    <item>Order due</item>
+    <item>Efter förfallotid</item>
   </string-array>
   <string-array name="cram_deck_conf_preset_labels">
     <item><![CDATA[<select preset>]]></item>
@@ -120,6 +120,6 @@
     <item>Review ahead by two days</item>
     <item>Review due cards with tag</item>
     <item>Review due cards with decreasing intervals</item>
-    <item>Cram all cards</item>
+    <item>Råplugga alla kort</item>
   </string-array>
 </resources>

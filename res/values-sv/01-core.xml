@@ -50,7 +50,7 @@
   <string name="undo_action_review">review</string>
   <string name="undo_action_edit">edit note</string>
   <string name="undo_action_bury">bury note</string>
-  <string name="undo_action_suspend_card">suspend card</string>
+  <string name="undo_action_suspend_card">åsidosätt kort</string>
   <string name="undo_action_suspend_note">suspend note</string>
   <string name="undo_action_delete">delete note</string>
   <string name="undo_action_mark">mark note</string>
@@ -93,7 +93,7 @@
   <string name="empty_cram_label">Tom</string>
   <string name="empty_cram_deck">Emptying cram deck.\nPlease wait...</string>
   <string name="studyoptions_new_filtercram">Filter/Cram</string>
-  <string name="review_early_deck_name">Review Early</string>
+  <string name="review_early_deck_name">Granska tidigt</string>
   <string name="studyoptions_congrats_finished">Grattis! Du är klar nu.</string>
   <string name="studyoptions_congrats_more_rev">Today\'s review limit has been reached, but there are still cards waiting to be reviewed. For optimum memory, consider increasing the daily limit in the options.</string>
   <string name="studyoptions_congrats_more_new">There are more new cards available, but the daily limit has been reached. You can increase the limit in the options, but please bear in mind that the more new cards you introduce, the higher your short-term review workload will become.</string>

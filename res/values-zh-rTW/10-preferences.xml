@@ -256,6 +256,8 @@
   <string name="deck_conf_seconds">XXX seconds</string>
   <string name="deck_conf_timer">顯示答案計時器</string>
   <string name="deck_conf_autoplay">自動播放音效</string>
+  <string name="deck_conf_replayq">Replay Question</string>
+  <string name="deck_conf_replayq_summ">When answer shown, replay both question and answer audio</string>
   <string name="deck_conf_add">新增設定</string>
   <string name="deck_conf_ren">重新命名設定</string>
   <string name="deck_conf_rem">Remove configuration</string>

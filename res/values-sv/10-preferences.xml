@@ -47,8 +47,8 @@
   <string name="pref_cat_fonts">Teckensnitt</string>
   <string name="show_study_options_on_deck_load">Studieinställningar vid laddning</string>
   <string name="show_study_options_on_deck_load_summ">Visar studieinställningsskärmen när du laddar en kortlek</string>
-  <string name="hide_due_count">Hide due count</string>
-  <string name="hide_due_count_summ">Hides the due count</string>
+  <string name="hide_due_count">Göm antal i kö</string>
+  <string name="hide_due_count_summ">Gömmer antalet i kö</string>
   <string name="overtime">Övertid</string>
   <string name="overtime_summ">Continue reviewing after time limit reached</string>
   <string name="show_timer">Visa timer</string>
@@ -256,6 +256,8 @@
   <string name="deck_conf_seconds">XXX sekunder</string>
   <string name="deck_conf_timer">Visa svarstimer</string>
   <string name="deck_conf_autoplay">Spela upp ljud automatiskt</string>
+  <string name="deck_conf_replayq">Replay Question</string>
+  <string name="deck_conf_replayq_summ">When answer shown, replay both question and answer audio</string>
   <string name="deck_conf_add">Lägg till konfiguration</string>
   <string name="deck_conf_ren">Rename configuration</string>
   <string name="deck_conf_rem">Remove configuration</string>

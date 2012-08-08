@@ -87,6 +87,7 @@
   <string name="import_message">Deseja realemente importar todos os cartões do arquivo %s?</string>
   <string name="import_log_success">%d cartões importados com êxito</string>
   <string name="import_log_error">Importação falhou</string>
+  <string name="import_log_no_apkg">This is not a valid apkg file</string>
   <string name="import_importing">Importando cartões.\nPor favor aguardar...</string>
   <string name="import_hint">To import cards, place the apkg file in directory %s and press ok</string>
   <string name="import_no_file_found">No importable apkg file found</string>

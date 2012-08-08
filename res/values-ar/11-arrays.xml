@@ -104,22 +104,22 @@
     <item>البطاقات الجديدة في ترتيب إضافتها</item>
   </string-array>
   <string-array name="cram_deck_conf_order_labels">
-    <item>Oldest seen first</item>
-    <item>Random</item>
-    <item>Increasing intervals</item>
-    <item>Decreasing intervals</item>
-    <item>Most lapsed</item>
-    <item>Order added</item>
-    <item>Order due</item>
+    <item>مشاهدة الأقدم أولا</item>
+    <item>عشوائي</item>
+    <item>زيادة الفترات</item>
+    <item>تقليل الفترات</item>
+    <item>الأكثر نسيانا</item>
+    <item>إضافة الترتيب</item>
+    <item>ترتيب الاستحقاق</item>
   </string-array>
   <string-array name="cram_deck_conf_preset_labels">
     <item><![CDATA[<select preset>]]></item>
-    <item>Preview all new cards</item>
-    <item>Preview cards added today</item>
-    <item>Review today\'s forgotten cards</item>
-    <item>Review ahead by two days</item>
-    <item>Review due cards with tag</item>
-    <item>Review due cards with decreasing intervals</item>
-    <item>Cram all cards</item>
+    <item>معاينة جميع البطاقات الجديدة</item>
+    <item>معاينة بطاقات المضافة اليوم</item>
+    <item>مراجعة البطاقات المنسية اليوم</item>
+    <item>مراجعة متقدمة بيومين</item>
+    <item>مراجعة البطاقات المستحقة بوسم</item>
+    <item>راجع البطاقات المستحقة مع تقليل الفترات</item>
+    <item>التركيز لكل البطاقات</item>
   </string-array>
 </resources>
