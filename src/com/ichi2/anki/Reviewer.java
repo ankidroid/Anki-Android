@@ -1069,7 +1069,9 @@ public class Reviewer extends AnkiActivity {
 
         if (!isFinishing()) {
             // try {
-            WidgetStatus.update(this, mSched.progressToday(null, mCurrentCard, true));
+        	if (AnkiDroidApp.colIsOpen()) {
+                WidgetStatus.update(this, mSched.progressToday(null, mCurrentCard, true));        		
+        	}
             
             // } catch (JSONException e) {
             // throw new RuntimeException(e);
