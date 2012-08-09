@@ -372,7 +372,6 @@ public class StudyOptionsFragment extends Fragment {
             reloadCollection();
             return null;
         }
-        AnkiDroidApp.getCol().clearUndo();
 
 //        Intent intent = getActivity().getIntent();
 //        if (intent != null && intent.hasExtra(DeckPicker.EXTRA_DECK_ID)) {
@@ -394,9 +393,12 @@ public class StudyOptionsFragment extends Fragment {
         }
 
         if (getArguments().getBoolean("onlyFnsMsg")) {
-            mTextCongratsMessage.setText(AnkiDroidApp.getCol().getSched().finishedMsg(getActivity()));
+        	prepareCongratsView();
             mButtonCongratsFinish.setVisibility(View.GONE);
             return mCongratsView;
+        } else {
+        	// clear undo if new deck is opened (do not clear if only congrats msg is shown)
+            AnkiDroidApp.getCol().clearUndo();
         }
         
         mCramInitialConfig = getArguments().getBundle("cramInitialConfig");
@@ -925,6 +927,19 @@ public class StudyOptionsFragment extends Fragment {
     }
 
 
+    private void prepareCongratsView() {
+        if (!AnkiDroidApp.colIsOpen() || !AnkiDroidApp.getCol().undoAvailable()) {
+            mButtonCongratsUndo.setEnabled(false);
+            mButtonCongratsUndo.setVisibility(View.GONE);
+        } else {
+            Resources res = AnkiDroidApp.getAppResources();
+            mButtonCongratsUndo.setText(res.getString(R.string.studyoptions_congrats_undo,
+                    AnkiDroidApp.getCol().undoName(res)));
+        }
+        mTextCongratsMessage.setText(AnkiDroidApp.getCol().getSched().finishedMsg(getActivity()));
+    }
+
+
     private void openCardBrowser() {
         mDontSaveOnStop = true;
         Intent cardBrowser = new Intent(getActivity(), CardBrowser.class);
@@ -986,15 +1001,7 @@ public class StudyOptionsFragment extends Fragment {
                         resetAndUpdateValuesFromDeck();
                         break;
                     case Reviewer.RESULT_NO_MORE_CARDS:
-                        if (!AnkiDroidApp.getCol().undoAvailable()) {
-                            mButtonCongratsUndo.setEnabled(false);
-                            mButtonCongratsUndo.setVisibility(View.GONE);
-                        } else {
-                            Resources res = AnkiDroidApp.getAppResources();
-                            mButtonCongratsUndo.setText(res.getString(R.string.studyoptions_congrats_undo,
-                                    AnkiDroidApp.getCol().undoName(res)));
-                        }
-                        mTextCongratsMessage.setText(AnkiDroidApp.getCol().getSched().finishedMsg(getActivity()));
+                    	prepareCongratsView();
                         setFragmentContentView(mCongratsView);
                         break;
                 }
