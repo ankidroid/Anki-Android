@@ -20,6 +20,7 @@ import android.content.DialogInterface.OnCancelListener;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.graphics.Color;
@@ -677,6 +678,16 @@ public class StudyOptionsFragment extends Fragment {
 
 
     private void onPrepareDialog(int id, StyledDialog styledDialog) {
+    	switch (id) {
+    	case DIALOG_LEARN_MORE:
+    		SharedPreferences pref = AnkiDroidApp.getSharedPrefs(getActivity());
+    		((EditText) mLearnMoreView.findViewById(R.id.learnmore_extend_new_limit)).setText(Integer.toString(pref.getInt("extendNew", 10)));
+    		((EditText) mLearnMoreView.findViewById(R.id.learnmore_extend_rev_limit)).setText(Integer.toString(pref.getInt("extendRev", 50)));
+    		break;
+    	case DIALOG_REVIEW_EARLY:
+    		((EditText) mReviewEarlyView.findViewById(R.id.reviewearly_days_ahead)).setText(Integer.toString(AnkiDroidApp.getSharedPrefs(getActivity()).getInt("reviewAhead", 1)));
+    		break;
+    	}
     }
 
 
@@ -709,6 +720,10 @@ public class StudyOptionsFragment extends Fragment {
                             try {
                                 int n = Integer.parseInt(((EditText) mLearnMoreView.findViewById(R.id.learnmore_extend_new_limit)).getText().toString());
                                 int r = Integer.parseInt(((EditText) mLearnMoreView.findViewById(R.id.learnmore_extend_rev_limit)).getText().toString());
+                                Editor prefEd = AnkiDroidApp.getSharedPrefs(getActivity()).edit();
+                                prefEd.putInt("extendNew", n);
+                                prefEd.putInt("extendRev", r);
+                                prefEd.commit();
                                 Collection col = AnkiDroidApp.getCol();
                                 JSONObject deck = col.getDecks().current();
                                 deck.put("extendNew", n);
@@ -741,6 +756,7 @@ public class StudyOptionsFragment extends Fragment {
                         if (AnkiDroidApp.colIsOpen()) {
                             try {
                                 int days = Integer.parseInt(((EditText) mReviewEarlyView.findViewById(R.id.reviewearly_days_ahead)).getText().toString());
+                                AnkiDroidApp.getSharedPrefs(getActivity()).edit().putInt("reviewAhead", days).commit();
                                 Collection col = AnkiDroidApp.getCol();
                                 JSONObject deck = col.getDecks().current();
                                 String search = "prop:due<=" + String.valueOf(days) + " 'deck:" + deck.getString("name") + "'";
