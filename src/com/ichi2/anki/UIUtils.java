@@ -79,23 +79,6 @@ public class UIUtils {
     }
 
 
-    public static void setActionBarSubtitle(Context context, String text) {
-        try {
-            Method getActionBar = context.getClass().getMethod("getActionBar");
-            if (getActionBar != null) {
-                Object o = getActionBar.invoke(context);
-                o.getClass().getMethod("setSubtitle", CharSequence.class).invoke(o, text);
-            }
-        } catch (SecurityException e) {
-        } catch (NoSuchMethodException e) {
-        } catch (IllegalArgumentException e) {
-        } catch (IllegalAccessException e) {
-        } catch (InvocationTargetException e) {
-        } catch (NullPointerException e) {
-        }
-    }
-
-
     public static void saveCollectionInBackground() {
     	if (AnkiDroidApp.colIsOpen()) {
             DeckTask.launchDeckTask(DeckTask.TASK_TYPE_SAVE_COLLECTION, new DeckTask.TaskListener() {

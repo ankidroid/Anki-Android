@@ -32,4 +32,9 @@ public class CompatV4 implements Compat {
     public void setOverScrollModeNever(View v) { }
     public void invalidateOptionsMenu(Activity activity) { }
 	public void setActionBarBackground(Activity activity, int color) { }
+	public void setTitle(Activity activity, String title, boolean inverted) {
+		activity.setTitle(title);
+	}
+	public void setSubtitle(Activity activity, String title) { }
+	public void setSubtitle(Activity activity, String title, boolean inverted) { }
 }

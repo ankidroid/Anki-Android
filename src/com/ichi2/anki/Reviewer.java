@@ -931,11 +931,11 @@ public class Reviewer extends AnkiActivity {
 
             try {
                 String[] title = mSched.getCol().getDecks().current().getString("name").split("::");
-                setTitle(title[title.length - 1]);
+                AnkiDroidApp.getCompat().setTitle(this, title[title.length - 1], mInvertedColors);
             } catch (JSONException e) {
                 throw new RuntimeException(e);
             }
-            UIUtils.setActionBarSubtitle(this, "");
+            AnkiDroidApp.getCompat().setSubtitle(this, "", mInvertedColors);
 
             // Remove the status bar and title bar
             if (mPrefFullscreenReview) {
@@ -2182,7 +2182,7 @@ public class Reviewer extends AnkiActivity {
 
         try {
             String[] title = mSched.getCol().getDecks().get(mCurrentCard.getDid()).getString("name").split("::");
-            setTitle(title[title.length - 1]);
+            AnkiDroidApp.getCompat().setTitle(this, title[title.length - 1], mInvertedColors);
         } catch (JSONException e) {
             throw new RuntimeException(e);
         }
@@ -2190,7 +2190,7 @@ public class Reviewer extends AnkiActivity {
         int[] counts = mSched.counts(mCurrentCard);
 
         int eta = mSched.eta(counts, false);
-		UIUtils.setActionBarSubtitle(this, getResources().getQuantityString(R.plurals.reviewer_window_title, eta, eta));
+        AnkiDroidApp.getCompat().setSubtitle(this, getResources().getQuantityString(R.plurals.reviewer_window_title, eta, eta), mInvertedColors);
 
         SpannableString newCount = new SpannableString(String.valueOf(counts[0]));
         SpannableString lrnCount = new SpannableString(String.valueOf(counts[1]));
