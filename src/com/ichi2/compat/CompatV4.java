@@ -31,5 +31,5 @@ public class CompatV4 implements Compat {
     public void setScrollbarFadingEnabled(WebView webview, boolean enable) { }
     public void setOverScrollModeNever(View v) { }
     public void invalidateOptionsMenu(Activity activity) { }
-	public void setActionBarBackground(Activity activity) { }
+	public void setActionBarBackground(Activity activity, int color) { }
 }

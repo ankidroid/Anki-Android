@@ -1852,6 +1852,7 @@ public class Reviewer extends AnkiActivity {
         findViewById(R.id.progress_bars_border2).setBackgroundResource(fgColor);
         findViewById(R.id.progress_bars_back1).setBackgroundResource(bgColor);
         findViewById(R.id.progress_bars_back2).setBackgroundResource(bgColor);
+        AnkiDroidApp.getCompat().setActionBarBackground(this, invert ? R.color.white_background_night : R.color.actionbar_background);
     }
 
     private void showEaseButtons() {
@@ -2189,7 +2190,7 @@ public class Reviewer extends AnkiActivity {
         int[] counts = mSched.counts(mCurrentCard);
 
         int eta = mSched.eta(counts, false);
-        UIUtils.setActionBarSubtitle(this, getResources().getQuantityString(R.plurals.reviewer_window_title, eta, eta));
+		UIUtils.setActionBarSubtitle(this, getResources().getQuantityString(R.plurals.reviewer_window_title, eta, eta));
 
         SpannableString newCount = new SpannableString(String.valueOf(counts[0]));
         SpannableString lrnCount = new SpannableString(String.valueOf(counts[1]));

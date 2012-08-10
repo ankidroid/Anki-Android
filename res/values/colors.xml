@@ -99,5 +99,7 @@
 	<color name="night_blue">#b1b1ff</color>
 	<color name="night_red">#f50000</color>
 	<color name="night_green">#00cf00</color>
+	
+	<color name="actionbar_background">#f5f5f5</color>
 				
 </resources>

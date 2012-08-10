@@ -1,7 +1,5 @@
 package com.ichi2.compat;
 
-import com.ichi2.anki.R;
-
 import android.annotation.TargetApi;
 import android.app.ActionBar;
 import android.app.Activity;
@@ -15,8 +13,8 @@ public class CompatV11 extends CompatV5 implements Compat {
         activity.invalidateOptionsMenu();
     }
     @Override
-    public void setActionBarBackground(Activity activity) {
+    public void setActionBarBackground(Activity activity, int color) {
     	ActionBar ab = activity.getActionBar();
-        ab.setBackgroundDrawable(new ColorDrawable(activity.getResources().getColor(R.color.white_background_night)));
+        ab.setBackgroundDrawable(new ColorDrawable(activity.getResources().getColor(color)));
     }
 }
