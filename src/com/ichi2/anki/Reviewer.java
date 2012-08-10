@@ -59,7 +59,6 @@ import android.view.MotionEvent;
 import android.view.SubMenu;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.View.OnKeyListener;
 import android.view.Window;
 import android.view.WindowManager;
 import android.view.animation.AccelerateDecelerateInterpolator;
@@ -85,7 +84,6 @@ import com.ichi2.anki.receiver.SdCardReceiver;
 import com.ichi2.async.DeckTask;
 import com.ichi2.libanki.Card;
 import com.ichi2.libanki.Collection;
-import com.ichi2.libanki.Models;
 import com.ichi2.libanki.Note;
 import com.ichi2.libanki.Sched;
 import com.ichi2.libanki.Sound;
@@ -104,9 +102,6 @@ import org.json.JSONException;
 
 import java.io.IOException;
 import java.lang.reflect.Method;
-import java.text.DecimalFormat;
-import java.text.DecimalFormatSymbols;
-import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -1857,7 +1852,6 @@ public class Reviewer extends AnkiActivity {
         findViewById(R.id.progress_bars_border2).setBackgroundResource(fgColor);
         findViewById(R.id.progress_bars_back1).setBackgroundResource(bgColor);
         findViewById(R.id.progress_bars_back2).setBackgroundResource(bgColor);
-
     }
 
     private void showEaseButtons() {

@@ -45,4 +45,5 @@ public interface Compat {
     public abstract void setScrollbarFadingEnabled(WebView webview, boolean enable);
     public abstract void setOverScrollModeNever(View v);
     public abstract void invalidateOptionsMenu(Activity activity);
+    public abstract void setActionBarBackground(Activity activity);
 }
