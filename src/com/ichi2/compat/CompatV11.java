@@ -7,7 +7,7 @@ import android.graphics.drawable.ColorDrawable;
 
 /** Implementation of {@link Compat} for SDK level 9 */
 @TargetApi(11)
-public class CompatV11 extends CompatV5 implements Compat {
+public class CompatV11 extends CompatV9 implements Compat {
     @Override
     public void invalidateOptionsMenu(Activity activity) {
         activity.invalidateOptionsMenu();
