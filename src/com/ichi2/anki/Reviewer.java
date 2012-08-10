@@ -48,6 +48,7 @@ import android.text.SpannedString;
 import android.text.style.StyleSpan;
 import android.text.style.UnderlineSpan;
 import android.util.Log;
+import android.view.ActionMode;
 import android.view.GestureDetector;
 import android.view.GestureDetector.SimpleOnGestureListener;
 import android.view.Gravity;
@@ -58,6 +59,7 @@ import android.view.MotionEvent;
 import android.view.SubMenu;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.View.OnKeyListener;
 import android.view.Window;
 import android.view.WindowManager;
 import android.view.animation.AccelerateDecelerateInterpolator;
@@ -1323,13 +1325,17 @@ public class Reviewer extends AnkiActivity {
 
     private void clipboardSetText(CharSequence text) {
         if (mClipboard != null) {
-		mClipboard.setText(text);
-	}
+        	mClipboard.setText(text);
+        }
     }
 
 
     private CharSequence clipboardGetText() {
-        return mClipboard.getText();
+        if (mClipboard != null) {
+            return mClipboard.getText();
+        } else {
+        	return "";
+        }
     }
 
 
@@ -1541,6 +1547,25 @@ public class Reviewer extends AnkiActivity {
         return true;
     }
 
+    private void showLookupButtonIfNeeded() {
+        if (mPrefTextSelection && mClipboard != null) {
+            if (clipboardGetText().length() != 0 && Lookup.isAvailable() && mLookUpIcon.getVisibility() != View.VISIBLE) {
+                mLookUpIcon.setVisibility(View.VISIBLE);
+                enableViewAnimation(mLookUpIcon, ViewAnimation.fade(ViewAnimation.FADE_IN, mFadeDuration, 0));
+            } else if (mLookUpIcon.getVisibility() == View.VISIBLE) {
+                mLookUpIcon.setVisibility(View.GONE);
+                enableViewAnimation(mLookUpIcon, ViewAnimation.fade(ViewAnimation.FADE_OUT, mFadeDuration, 0));
+            }
+        }
+    }
+
+    private void hideLookupButton() {
+        if (mPrefTextSelection && mLookUpIcon.getVisibility() != View.GONE) {
+            mLookUpIcon.setVisibility(View.GONE);
+            enableViewAnimation(mLookUpIcon, ViewAnimation.fade(ViewAnimation.FADE_OUT, mFadeDuration, 0));
+            clipboardSetText("");
+        }
+    }
 
     private void showDeleteNoteDialog() {
         Dialog dialog;
@@ -1589,11 +1614,7 @@ public class Reviewer extends AnkiActivity {
         }
         mIsSelecting = false;
         if (mPrefTextSelection) {
-            clipboardSetText("");
-            if (mLookUpIcon.getVisibility() == View.VISIBLE) {
-                mLookUpIcon.setVisibility(View.GONE);
-                enableViewAnimation(mLookUpIcon, ViewAnimation.fade(ViewAnimation.FADE_OUT, mFadeDuration, 0));
-            }
+            hideLookupButton();
         }
         switch (ease) {
             case EASE_FAILED:
@@ -3221,19 +3242,7 @@ public class Reviewer extends AnkiActivity {
                 }
             }
             mIsSelecting = false;
-            if (mPrefTextSelection && mClipboard != null) {
-                if (clipboardGetText().length() != 0 && Lookup.isAvailable()) {
-                    if (mLookUpIcon.getVisibility() != View.VISIBLE) {
-                        mLookUpIcon.setVisibility(View.VISIBLE);
-                        enableViewAnimation(mLookUpIcon, ViewAnimation.fade(ViewAnimation.FADE_IN, mFadeDuration, 0));
-                    }
-                } else {
-                    if (mLookUpIcon.getVisibility() == View.VISIBLE) {
-                        mLookUpIcon.setVisibility(View.GONE);
-                        enableViewAnimation(mLookUpIcon, ViewAnimation.fade(ViewAnimation.FADE_OUT, mFadeDuration, 0));
-                    }
-                }
-            }
+            showLookupButtonIfNeeded();
             return false;
         }
     }
