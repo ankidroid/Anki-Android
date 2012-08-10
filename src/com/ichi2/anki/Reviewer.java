@@ -1258,7 +1258,7 @@ public class Reviewer extends AnkiActivity {
         }
         item = menu.findItem(MENU_SEARCH);
     	if (item != null) {
-    		setTitle(clipboardHasText() ? Lookup.getSearchStringTitle() : res.getString(R.string.menu_select));
+    		item.setTitle(clipboardHasText() ? Lookup.getSearchStringTitle() : res.getString(R.string.menu_select));
     	}
 	return true;
     }
