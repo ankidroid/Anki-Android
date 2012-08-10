@@ -37,7 +37,7 @@
   <string name="ease2_successive">Svår</string>
   <string name="ease3_successive">Bra</string>
   <string name="ease3_learning">Lätt</string>
-  <string name="studyoptions_congrats_undo">Undo %s</string>
+  <string name="studyoptions_congrats_undo">Ångra %s</string>
   <string name="studyoptions_congrats_learnmore">Lär dig mer</string>
   <string name="studyoptions_congrats_reviewearly">Repetera tidigt</string>
   <string name="studyoptions_congrats_open_other_deck">Öppna annan kortlek</string>
@@ -47,7 +47,7 @@
   <string name="menu_rotate">Rotera</string>
   <string name="menu_import">Importera kort</string>
   <string name="undo">Ångra</string>
-  <string name="undo_action_review">review</string>
+  <string name="undo_action_review">repetera</string>
   <string name="undo_action_edit">edit note</string>
   <string name="undo_action_bury">bury note</string>
   <string name="undo_action_suspend_card">åsidosätt kort</string>
@@ -96,7 +96,7 @@
   <string name="review_early_deck_name">Granska tidigt</string>
   <string name="studyoptions_congrats_finished">Grattis! Du är klar nu.</string>
   <string name="studyoptions_congrats_more_rev">Today\'s review limit has been reached, but there are still cards waiting to be reviewed. For optimum memory, consider increasing the daily limit in the options.</string>
-  <string name="studyoptions_congrats_more_new">There are more new cards available, but the daily limit has been reached. You can increase the limit in the options, but please bear in mind that the more new cards you introduce, the higher your short-term review workload will become.</string>
+  <string name="studyoptions_congrats_more_new">There are more new cards available, but the daily limit has been reached. You can increase the limit in the options, but please bear in mind that this will increase your short-term review workload.</string>
   <string name="sd_card_not_mounted">SD-kortet är inte monterat.</string>
   <string name="studyoptions_options">Alternativ</string>
   <string name="empty_cloze_warning">Please edit this note and add some cloze deletions. (%1$s)</string>

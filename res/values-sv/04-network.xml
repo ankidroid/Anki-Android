@@ -88,7 +88,7 @@
   <string name="sync_corrupt_database">Din databas är korrupt. Var vänlig och åtgärda detta innan du försöker synkronisera igen.\n\nSe %s för mer information om att reparera din databas.</string>
   <string name="sync_too_busy">Servern upptagen. Försök igen senare.</string>
   <string name="sync_remote_db_error">Den nedladdade databasen var korrupt. Var vänlig och försök igen.</string>
-  <string name="sync_overwrite_error">Your current collection could not be overwritten by the downloaded file.</string>
+  <string name="sync_overwrite_error">Din nuvarande samling kunde inte skrivas över av den hämtade filen.</string>
   <string name="sync_write_access_error">Den hämtade filen kunde inte sparas till SD-kortet. Antingen är kortet monterat enbart för läsning eller så har det inte tillräckligt ledigt utrymme.</string>
   <string name="sync_deletions_message">Synkroniserar borttagningar...</string>
   <string name="sync_small_objects_message">Synkar små objekt...</string>
@@ -114,9 +114,9 @@
   <string name="register_title">Registrera konto</string>
   <string name="register_mismatch">The username/password repetition does not match or is empty. Please re-enter.</string>
   <string name="registering_message">Skapar konto.\nVar god vänta...</string>
-  <string name="upgrade_decks_zipping">Zipping decks for upload.\nPlease wait...</string>
-  <string name="upgrade_decks_upload">Uploading zipped decks.\nPlease wait...</string>
-  <string name="upgrade_decks_waiting">Waiting, queue position: %s\nPlease wait...</string>
+  <string name="upgrade_decks_zipping">Paketerar kortlekar för sändning.\nVar god vänta...</string>
+  <string name="upgrade_decks_upload">Sänder paketerade kortlekar.\nVar god vänta...</string>
+  <string name="upgrade_decks_waiting">Väntar, position i kö: %s\nVar god vänta...</string>
   <string name="upgrade_decks_upgrade_started">Uppgradering påbörjad\nVänligen vänta tills den är klar...</string>
   <string name="upgrade_decks_downloading">Downloading upgraded collection.\nPlease wait...</string>
   <string name="upgrade_decks_media">Copying old media files to new media location.\nPlease wait...</string>

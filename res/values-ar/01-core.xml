@@ -96,7 +96,7 @@
   <string name="review_early_deck_name">مراجعة مبكرة</string>
   <string name="studyoptions_congrats_finished">تهانينا! لقد انتهيت لهذا الوقت.</string>
   <string name="studyoptions_congrats_more_rev">لقد بلغت حد المراجعة لهذا اليوم، ولكن لا زالت هناك بطاقات تنتظر المراجعة. للذاكرة المثلى، أعد التفكير في زيادة الحد اليومي من قائمة الخيارات.</string>
-  <string name="studyoptions_congrats_more_new">هناك المزيد من البطاقات الجديدة المتوفرة، ولكنك قد بلغت حد المراجعة لهذا اليوم. يمكنك زيادة هذا الحد من الخيارات، ولكن لاحظ أنه كلما زاد تقديم البطاقات الجديدة، كلما زاد عبء المراجعة قصيرة المدى.</string>
+  <string name="studyoptions_congrats_more_new">There are more new cards available, but the daily limit has been reached. You can increase the limit in the options, but please bear in mind that this will increase your short-term review workload.</string>
   <string name="sd_card_not_mounted">لم تحمل البطاقة المؤمنة.</string>
   <string name="studyoptions_options">خيارات</string>
   <string name="empty_cloze_warning">Please edit this note and add some cloze deletions. (%1$s)</string>

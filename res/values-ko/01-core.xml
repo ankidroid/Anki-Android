@@ -96,7 +96,7 @@
   <string name="review_early_deck_name">Review Early</string>
   <string name="studyoptions_congrats_finished">축하합니다! 오늘의 학습을 모두 끝냈습니다.</string>
   <string name="studyoptions_congrats_more_rev">지정한 하루 분량의 학습을 모두 끝냈지만 학습할 카드가 더 남아있습니다. 적절한 암기를 위해 학습옵션에서 하루 학습량을 늘리는 것을 고려해보세요.</string>
-  <string name="studyoptions_congrats_more_new">하루에 학습해야 하는 새카드 학습을 끝냈지만 학습해야 할 더 많은 새카드가 남아있습니다. 학습옵션에서 하루에 학습해야할 새카드 분량을 늘릴 수 있지만, 더 많은 새카드를 학습할 경우 단기간에 학습해야할 분량이 많아짐을 유념하시기 바랍니다.</string>
+  <string name="studyoptions_congrats_more_new">There are more new cards available, but the daily limit has been reached. You can increase the limit in the options, but please bear in mind that this will increase your short-term review workload.</string>
   <string name="sd_card_not_mounted">SD 카드가 마운트 되지 않았습니다.</string>
   <string name="studyoptions_options">옵션</string>
   <string name="empty_cloze_warning">이 노트를 편집 하 고 일부 cloze 삭제를 추가 하십시오. (%1$s)</string>

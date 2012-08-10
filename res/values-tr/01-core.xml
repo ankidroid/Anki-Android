@@ -96,7 +96,7 @@
   <string name="review_early_deck_name">Review Early</string>
   <string name="studyoptions_congrats_finished">Tebrikler! Şimdilik bitirdiniz.</string>
   <string name="studyoptions_congrats_more_rev">Bugünün çalışma sınırına ulaşıldı, ama hâlâ çalışılmayı bekleyen kartlar var. En uygun belleme için, seçeneklerden günlük sınırı artırabilirsiniz.</string>
-  <string name="studyoptions_congrats_more_new">Daha çalışılmamış yeni kartlar var, fakat günlük sınıra ulaşıldı. Seçeneklerden sınırı artırabilirsiniz, fakat yeni gördüğünüz kart sayısı arttıkça kısa vâdede çalışma yükünüzün yükseleceğini unutmayın.</string>
+  <string name="studyoptions_congrats_more_new">There are more new cards available, but the daily limit has been reached. You can increase the limit in the options, but please bear in mind that this will increase your short-term review workload.</string>
   <string name="sd_card_not_mounted">SD kart takılı değil.</string>
   <string name="studyoptions_options">Seçenekler</string>
   <string name="empty_cloze_warning">Lütfen bu notu düzenleyip bazı boşluklar ekleyin. (%1$s)</string>

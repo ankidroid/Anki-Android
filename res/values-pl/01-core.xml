@@ -96,7 +96,7 @@
   <string name="review_early_deck_name">Review Early</string>
   <string name="studyoptions_congrats_finished">Gratulacje! Zakończono powtórki na dziś.</string>
   <string name="studyoptions_congrats_more_rev">Dzisiejszy limit powtórek został wyczerpany ale wciąż pozostają karty do przeglądnięcia. Dla optymalnego zapamiętywania proszę rozważyć zwiększenie dziennego limitu w ustawieniach.</string>
-  <string name="studyoptions_congrats_more_new">Dostępnych jest więcej nowych kart ale dzienny limit został wyczerpany. Możesz powiększyć limit w opcjach ale pamiętaj, że im więcej nowych kart tym większa ilość krótko terminowych powtórek.</string>
+  <string name="studyoptions_congrats_more_new">There are more new cards available, but the daily limit has been reached. You can increase the limit in the options, but please bear in mind that this will increase your short-term review workload.</string>
   <string name="sd_card_not_mounted">Brak karty SD.</string>
   <string name="studyoptions_options">Opcje</string>
   <string name="empty_cloze_warning">Please edit this note and add some cloze deletions. (%1$s)</string>

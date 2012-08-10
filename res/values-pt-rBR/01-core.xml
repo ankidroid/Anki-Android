@@ -96,7 +96,7 @@
   <string name="review_early_deck_name">Review Early</string>
   <string name="studyoptions_congrats_finished">Parabéns! Você terminou por hora.</string>
   <string name="studyoptions_congrats_more_rev">O limite de revisão de hoje foi atingido, mas ainda existem cartões esperando para serem revistos. Para uma otima memória, considere aumentar o limite diário nas opções.</string>
-  <string name="studyoptions_congrats_more_new">Existem mais cartões novos disponíveis, mas o limite diário foi atingido. Você pode aumentar o limite nas opções, mas por favor, tenha em mente que quanto mais cartões novos você introduzir, maior será sua carga de revisão a curto prazo.</string>
+  <string name="studyoptions_congrats_more_new">There are more new cards available, but the daily limit has been reached. You can increase the limit in the options, but please bear in mind that this will increase your short-term review workload.</string>
   <string name="sd_card_not_mounted">Cartão SD não está montado.</string>
   <string name="studyoptions_options">Opções</string>
   <string name="empty_cloze_warning">Por favor edite esta nota e adicione algumas deleções fechadas. (%1$s)</string>

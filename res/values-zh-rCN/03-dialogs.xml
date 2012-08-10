@@ -50,9 +50,10 @@
   <string name="intent_add_clear_all">全部清除</string>
   <string name="intent_aedict_empty">类别“默认”为空</string>
   <string name="intent_aedict_category">向AnkiDroid中添加卡片，需要删除所有NotePad类别，或者添加“默认”类别。</string>
-  <string name="learnmore_title">扩展限制</string>
-  <string name="learnmore_extend_new_limit">新卡牌数量限制</string>
-  <string name="learnmore_extend_rev_limit">复习数量限制</string>
+  <string name="learnmore_title">Study More Settings</string>
+  <string name="learnmore_insructions">You can temporarily increase your new cards and max reviews limits below to extend today\'s learning session.</string>
+  <string name="learnmore_extend_new_limit">Increase new cards limit by</string>
+  <string name="learnmore_extend_rev_limit">Increase max reviews limit by</string>
   <string name="reviewearly_title">提前复习设置</string>
   <string name="reviewearly_instructions">此选项将创建名为\'XXX\'的筛选卡牌组，里面的卡牌将在您下面选择的天数内到期。如果已经有这样的筛选卡牌组，那么它会被清空并重新配置。</string>
   <string name="reviewearly_days_ahead">提前多少天</string>

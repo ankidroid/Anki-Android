@@ -40,7 +40,7 @@
   <string name="notification_message">En ny versjon av AnkiDroid er tilgjengelig i Android Market.\n\nVil du installere den?</string>
   <string name="notification_stop">Ikke varsle meg om denne oppdateringen på nytt</string>
   <string name="reset_card_dialog_title">Tilbakestille fremdrift for kort</string>
-  <string name="reset_card_dialog_message">This resets the learning progress for all cards of this note (they will look like new cards).\nReally continue?</string>
+  <string name="reset_card_dialog_message">Dette tilbakestiller læringshistorikken for alle kortene i dette notatet (de kommer til å se ut som nye kort).\nVil du fortsette?</string>
   <string name="reset_card_dialog_confirmation">All cards of this note reset</string>
   <string name="answering_error_title">Databasefeil</string>
   <string name="answering_error_message">Det oppstod en feil under skriving til samlingen. Dette kan ha sammenheng med en ødelagt database eller manglende plass på disken.\n\nHvis det skjer igjen, vennligst prøv å kontrollere databasen, reparere samlingen, eller gjenopprette den fra en sikkerhetskopi. Klikk i så fall \'valg\'.\n\nUansett kan det hende at det er en feil i AnkiDroid; så vennligst rapporter feilen, sånn at vi kan undersøke tilfellet.</string>
@@ -50,11 +50,12 @@
   <string name="intent_add_clear_all">Fjern alle</string>
   <string name="intent_aedict_empty">Kategorien \'standard\' er tom</string>
   <string name="intent_aedict_category">For å legge kort til AnkiDroid, fjern alle notisblokk-kategorier eller legg til en som heter \'default\'</string>
-  <string name="learnmore_title">Utvid begrensninger</string>
-  <string name="learnmore_extend_new_limit">Begrens nye med</string>
-  <string name="learnmore_extend_rev_limit">Begrens gjennomgang med</string>
+  <string name="learnmore_title">\"Lær mer\"-innstillinger</string>
+  <string name="learnmore_insructions">Under kan du midlertidig øke grensen for antall nye kort og antall gjennomsyn for å utvide dagens læringsøkt.</string>
+  <string name="learnmore_extend_new_limit">Øk grensen for nye kort med</string>
+  <string name="learnmore_extend_rev_limit">Øk grensen for maksimalt antall gjennomsyn med</string>
   <string name="reviewearly_title">Innstillinger for tidlig gjennomgang</string>
-  <string name="reviewearly_instructions">This option will create a Filtered Deck called \'XXX\' with the cards that are due for review in the number of days you select below. If such a Filtered Deck already exists it will be emptied and reconfigured.</string>
+  <string name="reviewearly_instructions">Dette valget oppretter en filtrert kortstokk ved navn \"XXX\", med kortene som er klare til å gjennomgås i det antallet dager du velger under. Hvis det allerede finnes en slik filtrert kortstokk, blir den tømt og rekonfigurert.</string>
   <string name="reviewearly_days_ahead">Hvor mange dager fremover</string>
   <string-array name="about_content">
     <item><![CDATA[<h2>%1$s: <br/>Spørrekort til Android</h2>AnkiDroid er et spørrekortprogram som er fullstendig kompatibetl med skrivebordsprogramvaren <a href="%2$s">Anki</a>. Du kan opprette, laste ned og lære nye ting på både AnkiDroid og Anki Desktop, og synkronisere mellom dem med letthet.]]></item>

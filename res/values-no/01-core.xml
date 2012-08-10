@@ -96,7 +96,7 @@
   <string name="review_early_deck_name">Tidlig gjennomgang</string>
   <string name="studyoptions_congrats_finished">Gratulerer! Du er ferdig for i dag.</string>
   <string name="studyoptions_congrats_more_rev">Du har nådd grensen for gjennomgang i dag, men det er fortsatt kort du ikke har gått gjennom. For best mulig effekt, bør du vurdere å øke grensen i alternativene.</string>
-  <string name="studyoptions_congrats_more_new">Det finnes flere nye kort, men den daglige grensen er nådd. Du kan øke grensen i alternativene, men vennligst husk at jo flere nye kort du introduserer, jo høyere blir arbeidsmengden for gjennomgang på kort sikt.</string>
+  <string name="studyoptions_congrats_more_new">There are more new cards available, but the daily limit has been reached. You can increase the limit in the options, but please bear in mind that this will increase your short-term review workload.</string>
   <string name="sd_card_not_mounted">SD-kortet mangler.</string>
   <string name="studyoptions_options">Alternativer</string>
   <string name="empty_cloze_warning">Vennligst rediger notatet og legg til noen innfyllingsfelt. (%1$s)</string>

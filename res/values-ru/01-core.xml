@@ -96,7 +96,7 @@
   <string name="review_early_deck_name">Просмотренные ранее</string>
   <string name="studyoptions_congrats_finished">Поздравляем! На сегодня задание выполнено.</string>
   <string name="studyoptions_congrats_more_rev">Достигнут лимит количества просмотров на сегодня, но всё ещё есть карты ожидающие просмотра. Для оптимального запоминания рекомендуется увеличить ежедневный лимит в параметрах.</string>
-  <string name="studyoptions_congrats_more_new">Есть ещё новые карты, но ежедневный лимит достигнут. Вы можете увеличить лимит в параметрах, но учтите, что чем больше вы добавляете новых карт, тем больше будет карт в режиме повтора в ближайшие дни.</string>
+  <string name="studyoptions_congrats_more_new">Есть ещё новые карты, но дневной лимит карт был уже выучен. Вы можете увеличить лимит, но учтите, что это увеличит и объёмы повторений в следующие дни.</string>
   <string name="sd_card_not_mounted">SD карта не подключена.</string>
   <string name="studyoptions_options">Параметры</string>
   <string name="empty_cloze_warning">Пожалуйста, отредактируйте эту заметку и добавьте элементы с пропусками.(%1$s)</string>
