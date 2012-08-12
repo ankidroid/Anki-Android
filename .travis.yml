@@ -1,8 +1,8 @@
 language: java
 before_install:
   # download the latest android sdk and unzip
-  - wget http://dl.google.com/android/android-sdk_r18-linux.tgz
-  - tar -zxf android-sdk_r18-linux.tgz
+  - wget http://dl.google.com/android/android-sdk_r20-linux.tgz
+  - tar -zxf android-sdk_r20-linux.tgz
   # setup your ANDROID_HOME and PATH environment variables
   - export ANDROID_HOME=~/builds/flerda/Anki-Android/android-sdk-linux
   - export PATH=${PATH}:${ANDROID_HOME}/tools:${ANDROID_HOME}/platform-tools
