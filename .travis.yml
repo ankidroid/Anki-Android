@@ -4,7 +4,7 @@ before_install:
   - wget http://dl.google.com/android/android-sdk_r20-linux.tgz
   - tar -zxf android-sdk_r20-linux.tgz
   # setup your ANDROID_HOME and PATH environment variables
-  - export ANDROID_HOME=~/builds/flerda/Anki-Android/android-sdk-linux
+  - export ANDROID_HOME=~/builds/ankidroid-continuous/Anki-Android/android-sdk-linux
   - export PATH=${PATH}:${ANDROID_HOME}/tools:${ANDROID_HOME}/platform-tools
   # Only update the SDK for the tools and platform-tools and whatever API level
   # you are building for android.
