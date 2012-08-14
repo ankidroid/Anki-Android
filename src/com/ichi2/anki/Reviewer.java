@@ -2388,6 +2388,10 @@ public class Reviewer extends AnkiActivity {
             return;
         }
 
+        // Check whether there is a hard coded font-size in the content and apply the relative font size
+        // Check needs to be done before CSS is applied to content;
+        content = recalculateHardCodedFontSize(content, mDisplayFontSize);
+
         // Add CSS for font color and font size
         if (mCurrentCard == null) {
             mCard.getSettings().setDefaultFontSize(calculateDynamicFontSize(content));
@@ -2410,17 +2414,10 @@ public class Reviewer extends AnkiActivity {
         // In order to display the bold style correctly, we have to change
         // font-weight to 700
         content = content.replace("font-weight:600;", "font-weight:700;");
-        
+
         Log.i(AnkiDroidApp.TAG, "content card = \n" + content);
         StringBuilder style = new StringBuilder();
         style.append(mCustomFontStyle);
-        
-        // Scale all text by setting the font-size of the body element. Assume a base size of 250%,
-        // then scale according to the configured relative font size.
-        float relativeFontScale = 250 * ((float)mDisplayFontSize/100);
-        String fontScaleStyle = String.format("BODY { font-size: %s%%; }", relativeFontScale);
-        style.append(fontScaleStyle);
-        
         Log.i(AnkiDroidApp.TAG, "::style::" + style);
 
         if (mNightMode) {
@@ -2678,6 +2675,74 @@ public class Reviewer extends AnkiActivity {
         sb.append("</div>");
         return sb.toString();
     }
+
+
+    /**
+     * Parses content in question and answer to see, whether someone has hard coded the font size in a card layout.
+     * If this is so, then the font size must be replaced with one corrected by the relative font size. If a relative
+     * CSS unit measure is used (e.g. 'em'), then only the outer tag 'span' or 'div' tag in a hierarchy of such tags
+     * is adjusted.
+     * This is not bullet-proof, a combination of font-size in span and in css classes will break this logic, but let's
+     * just avoid building an HTML parser for this feature.
+     * Anything that threatens common sense will break this logic, eg nested span/divs with CSS classes having font-size
+     * declarations with relative units (40% dif inside 120% div inside 60% div). Broken HTML also breaks this.
+     * Feel free to improve, but please keep it short and fast.
+     * 
+     * @param content The HTML content that will be font-size-adjusted.
+     * @param percentage The relative font size percentage defined in preferences
+     * @return
+     */
+    private String recalculateHardCodedFontSize(String content, int percentage) {
+        if (percentage == 100 || null == content || 0 == content.trim().length()) {
+            return content.trim();
+        }
+        StringBuffer sb = new StringBuffer();
+        int tagDepth = 0; // to find out whether a relative CSS unit measure is within another one
+        int lastRelUnitnTagDepth = 100; // the hierarchy depth of the current outer relative span
+        double doubleSize; // for relative css measurement values
+
+        int lastMatch = 0;
+        String contentPart;
+        Matcher m2;
+        Matcher m = fFontSizePattern.matcher(content);
+        while (m.find()) {
+            contentPart = content.substring(lastMatch, m.start());
+            m2 = fSpanDivPattern.matcher(contentPart);
+            while (m2.find()) {
+                if (m2.group(1).equals("/")) {
+                    --tagDepth;
+                } else {
+                    ++tagDepth;
+                }
+                if (tagDepth < lastRelUnitnTagDepth) {
+                    // went outside of previous scope
+                    lastRelUnitnTagDepth = 100;
+                }
+            }
+            lastMatch = m.end();
+
+            try {
+                doubleSize = Double.parseDouble(m.group(1));
+                doubleSize = doubleSize * percentage / 100;
+            } catch (NumberFormatException e) {
+                continue; // ignore this one
+            }
+
+            if (fRelativeCssUnits.contains(m.group(2))) {
+                // handle relative units
+                if (lastRelUnitnTagDepth < tagDepth) {
+                    m.appendReplacement(sb, m.group());
+                    continue;
+                }
+                lastRelUnitnTagDepth = tagDepth;
+            }
+            m.appendReplacement(sb, String.format(Locale.US, "font-size:%.2f%s;", doubleSize, m.group(2)));
+        }
+        m.appendTail(sb);
+        String a = sb.toString();
+        return a;
+    }
+
 
     /**
      * @return true if the AnkiDroid preference for writing answer is true and if the Anki Deck CardLayout specifies a
