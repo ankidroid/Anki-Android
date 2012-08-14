@@ -96,7 +96,7 @@
   <string name="review_early_deck_name">Review Early</string>
   <string name="studyoptions_congrats_finished">Вітаємо! На зараз усе.</string>
   <string name="studyoptions_congrats_more_rev">Ви вичерпали ліміт повторювання на сьогодні, але досі є картки, які чекають на перегляд. Для оптимального запам\'ятовування можна збільшити щоденнній лиміт у налаштуваннях.</string>
-  <string name="studyoptions_congrats_more_new">У Вас ще є нові картки, але сьогоднішній ліміт вичерпано. Ви можете збільшити ліміт в налаштуваннях, але пам\'ятайте, що чим більше нових карток Ви додаєте, тим більше карток доведеться повторювати у найближчі дні.</string>
+  <string name="studyoptions_congrats_more_new">There are more new cards available, but the daily limit has been reached. You can increase the limit in the options, but please bear in mind that this will increase your short-term review workload.</string>
   <string name="sd_card_not_mounted">Картка пам\'яті не підключена.</string>
   <string name="studyoptions_options">Параметри</string>
   <string name="empty_cloze_warning">Будь ласка, відредагуйте цей запис і додайте трохи замазування. (%1$s)</string>

@@ -256,6 +256,8 @@
   <string name="deck_conf_seconds">XXX Sekunden</string>
   <string name="deck_conf_timer">Zeige Antwort-Timer</string>
   <string name="deck_conf_autoplay">Audio automatisch abspielen</string>
+  <string name="deck_conf_replayq">Frage erneut abspielen</string>
+  <string name="deck_conf_replayq_summ">Spiele sowohl Frage als auch Antwort erneut ab, wenn die Antwort gezeigt wird</string>
   <string name="deck_conf_add">Konfiguration hinzufügen</string>
   <string name="deck_conf_ren">Konfiguration umbenennen</string>
   <string name="deck_conf_rem">Entferne Konfiguration</string>

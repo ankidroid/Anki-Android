@@ -125,7 +125,7 @@
       </PreferenceScreen>
     <PreferenceScreen android:title="@string/pref_cat_qadisplay" >
         <PreferenceCategory android:title="@string/pref_cat_themes" >
-            <ListPreference
+<!--             <ListPreference
                 android:defaultValue="2"
                 android:enabled="false"
                 android:entries="@array/theme_labels"
@@ -133,7 +133,7 @@
                 android:key="theme"
                 android:summary=""
                 android:title="@string/select_theme" />
-
+ -->
             <CheckBoxPreference
                 android:defaultValue="false"
                 android:disableDependentsState="false"

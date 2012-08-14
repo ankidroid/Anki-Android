@@ -35,6 +35,7 @@ import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.database.SQLException;
 import android.graphics.PixelFormat;
+import android.graphics.Rect;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -2583,7 +2584,7 @@ public class DeckPicker extends FragmentActivity {
             if (eta != -1) {
                 time = res.getQuantityString(R.plurals.deckpicker_title_minutes, eta, eta);
             }
-            UIUtils.setActionBarSubtitle(this, res.getQuantityString(R.plurals.deckpicker_title, due, due, count, time));
+            AnkiDroidApp.getCompat().setSubtitle(this, res.getQuantityString(R.plurals.deckpicker_title, due, due, count, time));
         }
         setTitle(res.getString(R.string.app_name));
 
@@ -2613,25 +2614,27 @@ public class DeckPicker extends FragmentActivity {
                 try {
                     if (e1.getX() - e2.getX() > AnkiDroidApp.sSwipeMinDistance && Math.abs(velocityX) > AnkiDroidApp.sSwipeThresholdVelocity
                             && Math.abs(e1.getY() - e2.getY()) < AnkiDroidApp.sSwipeMaxOffPath) {
-                    	mDontSaveOnStop = true;
-                    	float pos = e1.getY();
-                    	for (int j = 0; j < mDeckListView.getChildCount(); j++) {
-                    		View v = mDeckListView.getChildAt(j);
-                    		if (v.getY() + v.getHeight() > pos) {
-                            	HashMap<String, String> data = (HashMap<String, String>) mDeckListAdapter.getItem(j);
-                            	Collection col = AnkiDroidApp.getCol();
-                            	if (col != null) {
-                                	col.getDecks().select(Long.parseLong(data.get("did")));
-                                	col.reset();
+                        mDontSaveOnStop = true;
+                        float pos = e1.getY();
+                        for (int j = 0; j < mDeckListView.getChildCount(); j++) {
+                            View v = mDeckListView.getChildAt(j);
+                            Rect rect = new Rect();
+                            v.getHitRect(rect);
+                            if (rect.top < pos && rect.bottom > pos) {
+                                HashMap<String, String> data = (HashMap<String, String>) mDeckListAdapter.getItem(mDeckListView.getPositionForView(v));
+                                Collection col = AnkiDroidApp.getCol();
+                                if (col != null) {
+                                    col.getDecks().select(Long.parseLong(data.get("did")));
+                                    col.reset();
                                     Intent reviewer = new Intent(DeckPicker.this, Reviewer.class);
                                     startActivityForResult(reviewer, REQUEST_REVIEW);
                                     if (AnkiDroidApp.SDK_VERSION > 4) {
                                         ActivityTransitionAnimation.slide(DeckPicker.this, ActivityTransitionAnimation.LEFT);
                                     }
-                                	return true;                            		
-                            	}
-                    		}
-                    	}
+                                    return true;
+                                }
+                            }
+                        }
                     }
                 } catch (Exception e) {
                     Log.e(AnkiDroidApp.TAG, "onFling Exception = " + e.getMessage());

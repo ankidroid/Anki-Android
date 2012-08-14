@@ -24,6 +24,14 @@
     android:layout_width="fill_parent"
 	android:gravity="center"
 	android:orientation="vertical">
+	<TextView
+	    android:layout_height="wrap_content"
+	    android:layout_width="fill_parent"
+        android:layout_marginLeft="4dip"
+        android:layout_marginRight="4dip"
+        android:layout_marginTop="8dip"
+        android:layout_marginBottom="8dip"
+	    android:text="@string/learnmore_insructions"/>
 	<LinearLayout
 		android:layout_width="fill_parent"
 		android:layout_height="wrap_content"
@@ -33,11 +41,10 @@
 			android:layout_height="wrap_content"
 			android:layout_weight="4"
 			android:layout_marginLeft="4dip"
-			android:text="@string/learnmore_extend_new_limit"
-			android:textSize="16dip"/>
+			android:text="@string/learnmore_extend_new_limit"/>
 		<EditText android:id="@+id/learnmore_extend_new_limit"
 			android:layout_width="0dip"
-			android:layout_height="38dip"
+			android:layout_height="wrap_content"
 			android:layout_weight="1"
 			android:layout_marginRight="4dip"
 			android:gravity="center"
@@ -54,11 +61,10 @@
 			android:layout_height="wrap_content"
 			android:layout_weight="4"
 			android:layout_marginLeft="4dip"
-			android:text="@string/learnmore_extend_rev_limit"
-			android:textSize="16dip"/>
+			android:text="@string/learnmore_extend_rev_limit"/>
 		<EditText android:id="@+id/learnmore_extend_rev_limit"
 			android:layout_width="0dip"
-			android:layout_height="38dip"
+			android:layout_height="wrap_content"
 			android:layout_weight="1"
 			android:layout_marginRight="4dip"
 			android:gravity="center"

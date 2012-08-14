@@ -16,6 +16,7 @@
 
 package com.ichi2.compat;
 
+import android.app.Activity;
 import android.view.View;
 import android.webkit.WebView;
 
@@ -43,4 +44,9 @@ public interface Compat {
     public abstract String normalizeUnicode(String txt);
     public abstract void setScrollbarFadingEnabled(WebView webview, boolean enable);
     public abstract void setOverScrollModeNever(View v);
+    public abstract void invalidateOptionsMenu(Activity activity);
+    public abstract void setActionBarBackground(Activity activity, int color);
+    public abstract void setTitle(Activity activity, String title, boolean inverted);
+    public abstract void setSubtitle(Activity activity, String title);
+    public abstract void setSubtitle(Activity activity, String title, boolean inverted);
 }

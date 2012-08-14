@@ -87,6 +87,7 @@
   <string name="import_message">Ви дійсно бажаєте імпортувати всі карти з файлу %s?</string>
   <string name="import_log_success">Успішно імпортовано %d карт</string>
   <string name="import_log_error">Не вдалося виконати імпорт</string>
+  <string name="import_log_no_apkg">This is not a valid apkg file</string>
   <string name="import_importing">Відбувається імпорт карт. \nЗачекайте, будь-ласка...</string>
   <string name="import_hint">Щоб імпортувати карти, помістіть apkg файл в каталог %s і натисніть кнопку ok</string>
   <string name="import_no_file_found">Файл імпорту apkg не знайдено</string>

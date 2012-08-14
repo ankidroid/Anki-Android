@@ -50,9 +50,10 @@
   <string name="intent_add_clear_all">Alles löschen</string>
   <string name="intent_aedict_empty">Kategorie \'Standard\' ist leer</string>
   <string name="intent_aedict_category">Entfernen Sie alle Notepad-Kategorien um Karten zu AnkiDroid hinzuzufügen oder fügen Sie die Kategorie \'default\' hinzu</string>
-  <string name="learnmore_title">Begrenzungen ausweiten</string>
-  <string name="learnmore_extend_new_limit">Neue-Karten-Limit um</string>
-  <string name="learnmore_extend_rev_limit">Wiederholen-Limit um</string>
+  <string name="learnmore_title">Mehr-Lernen-Einstellungen</string>
+  <string name="learnmore_insructions">Sie können vorübergehend das Neue-Karten- und Wiederholungs-Limit erhöhen, um heute mehr zu lernen.</string>
+  <string name="learnmore_extend_new_limit">Neue-Karten-Limit erhöhen um</string>
+  <string name="learnmore_extend_rev_limit">Wiederholungs-Limit erhöhen um</string>
   <string name="reviewearly_title">Einstellung zum vorzeitigen Wiederholen</string>
   <string name="reviewearly_instructions">Diese Option erstellt einen Filter-Stapel mit dem Namen \'XXX\', der alle alle Karten enthält, die in dem von Ihnen ausgewählten Zeitraum fällig sind. Wenn ein solcher Stapel bereits existiert, wird er geleert und neu konfiguriert.</string>
   <string name="reviewearly_days_ahead">Wie viele Tage im Voraus?</string>

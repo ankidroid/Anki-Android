@@ -256,6 +256,8 @@
   <string name="deck_conf_seconds">XXX 秒</string>
   <string name="deck_conf_timer">显示计时器</string>
   <string name="deck_conf_autoplay">自动播放音频</string>
+  <string name="deck_conf_replayq">重播问题</string>
+  <string name="deck_conf_replayq_summ">显示答案时，同时播放问题和答案的音频提示。</string>
   <string name="deck_conf_add">添加配置</string>
   <string name="deck_conf_ren">重命名配置</string>
   <string name="deck_conf_rem">删除配置</string>

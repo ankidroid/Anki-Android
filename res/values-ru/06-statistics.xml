@@ -22,8 +22,8 @@
 <resources>
   <string name="statistics_menu">Статистика</string>
   <string name="statistics_young">Молодые</string>
-  <string name="statistics_mature">Зрелый</string>
-  <string name="statistics_relearn">Заново выучено</string>
+  <string name="statistics_mature">Развитые</string>
+  <string name="statistics_relearn">Переучивание</string>
   <string name="statistics_learn">Обучение</string>
   <string name="statistics_cram">Зубрёжка</string>
   <string name="statistics_type_title">Статистика</string>

@@ -256,6 +256,8 @@
   <string name="deck_conf_seconds">XXX секунд</string>
   <string name="deck_conf_timer">Показать таймер для ответа</string>
   <string name="deck_conf_autoplay">Автоматически проигрывать аудио</string>
+  <string name="deck_conf_replayq">Воспроизведение вопроса</string>
+  <string name="deck_conf_replayq_summ">При показе ответа, воспроизводить аудио и вопроса, и ответа</string>
   <string name="deck_conf_add">Добавление конфигурации</string>
   <string name="deck_conf_ren">Переименование конфигурации</string>
   <string name="deck_conf_rem">Удалить конфигурацию</string>

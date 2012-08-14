@@ -51,12 +51,13 @@
   <string name="intent_add_clear_all">امسح الكل</string>
   <string name="intent_aedict_empty">التصنيف \'default\' فارغ</string>
   <string name="intent_aedict_category">لإضافة بطاقات إلى آنكيدرويد أزل كل تصنيفات المفكرة أو أضف واحد باسم \'default\'</string>
-  <string name="learnmore_title">Extend Limits</string>
-  <string name="learnmore_extend_new_limit">New limit by</string>
-  <string name="learnmore_extend_rev_limit">Review limit by</string>
-  <string name="reviewearly_title">Review Early Settings</string>
+  <string name="learnmore_title">Study More Settings</string>
+  <string name="learnmore_insructions">You can temporarily increase your new cards and max reviews limits below to extend today\'s learning session.</string>
+  <string name="learnmore_extend_new_limit">Increase new cards limit by</string>
+  <string name="learnmore_extend_rev_limit">Increase max reviews limit by</string>
+  <string name="reviewearly_title">مراجعة الإعدادات المبكرة</string>
   <string name="reviewearly_instructions">This option will create a Filtered Deck called \'XXX\' with the cards that are due for review in the number of days you select below. If such a Filtered Deck already exists it will be emptied and reconfigured.</string>
-  <string name="reviewearly_days_ahead">How many days ahead</string>
+  <string name="reviewearly_days_ahead">كم عدد الأيام المتقدمة</string>
   <string-array name="about_content">
     <item><![CDATA[<h2>%1$s:<br/>البطاقات التعليمية لأندرويد</h2>آنكيدرويد تطبيق للبطاقات التعليمية متكامل بشكل كامل مع نسخة سطح المكتب <a href="%2$s">Anki</a>. يمكنك إنشاء و تحميل و تعلم المحتوى في كلاهما، آنكيدرويد و آنكي و المزامنة بينهما بكل سهولة.]]></item>
     <item><![CDATA[لمساعدتنا لجعل آنكيدرويد أفضل، الرجاء أبلغ عن أي علة  من  <a href="%1$s">هنا</a>، أفكار المميزات الجديدة مرحب بها أيضا! الرجاء استخدام <a href="%2$s">الويكي</a> و قل أهلا في<a href="%3$s">المنتدى</a>.]]></item>

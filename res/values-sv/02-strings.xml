@@ -84,9 +84,10 @@
   <string name="info_rate">Rate AnkiDroid</string>
   <string name="col_load_failed">Collection loading failed.\nPress back to close AnkiDroid.</string>
   <string name="import_title">Importera kort</string>
-  <string name="import_message">Do you really want to import all cards of file %s?</string>
-  <string name="import_log_success">Successfully imported %d cards</string>
+  <string name="import_message">Är du säker att du vill importera alla kort i filen %s?</string>
+  <string name="import_log_success">Importerade %d kort</string>
   <string name="import_log_error">Importen misslyckades</string>
+  <string name="import_log_no_apkg">This is not a valid apkg file</string>
   <string name="import_importing">Importerar kort.\nVar god vänta...</string>
   <string name="import_hint">To import cards, place the apkg file in directory %s and press ok</string>
   <string name="import_no_file_found">No importable apkg file found</string>

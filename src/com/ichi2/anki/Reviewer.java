@@ -48,6 +48,7 @@ import android.text.SpannedString;
 import android.text.style.StyleSpan;
 import android.text.style.UnderlineSpan;
 import android.util.Log;
+import android.view.ActionMode;
 import android.view.GestureDetector;
 import android.view.GestureDetector.SimpleOnGestureListener;
 import android.view.Gravity;
@@ -83,7 +84,6 @@ import com.ichi2.anki.receiver.SdCardReceiver;
 import com.ichi2.async.DeckTask;
 import com.ichi2.libanki.Card;
 import com.ichi2.libanki.Collection;
-import com.ichi2.libanki.Models;
 import com.ichi2.libanki.Note;
 import com.ichi2.libanki.Sched;
 import com.ichi2.libanki.Sound;
@@ -102,9 +102,6 @@ import org.json.JSONException;
 
 import java.io.IOException;
 import java.lang.reflect.Method;
-import java.text.DecimalFormat;
-import java.text.DecimalFormatSymbols;
-import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -576,6 +573,7 @@ public class Reviewer extends AnkiActivity {
 
         @Override
         public void onPostExecute(DeckTask.TaskData result) {
+            refreshActionBar();
             if (!result.getBoolean()) {
                 // RuntimeException occured on marking cards
                 closeReviewer(DeckPicker.RESULT_DB_ERROR, true);
@@ -797,6 +795,8 @@ public class Reviewer extends AnkiActivity {
             if (mProgressDialog != null && mProgressDialog.isShowing()) {
                 mProgressDialog.dismiss();
             }
+            // set the correct mark/unmark icon on action bar
+            refreshActionBar();
         }
     };
 
@@ -931,11 +931,11 @@ public class Reviewer extends AnkiActivity {
 
             try {
                 String[] title = mSched.getCol().getDecks().current().getString("name").split("::");
-                setTitle(title[title.length - 1]);
+                AnkiDroidApp.getCompat().setTitle(this, title[title.length - 1], mInvertedColors);
             } catch (JSONException e) {
                 throw new RuntimeException(e);
             }
-            UIUtils.setActionBarSubtitle(this, "");
+            AnkiDroidApp.getCompat().setSubtitle(this, "", mInvertedColors);
 
             // Remove the status bar and title bar
             if (mPrefFullscreenReview) {
@@ -1066,7 +1066,9 @@ public class Reviewer extends AnkiActivity {
 
         if (!isFinishing()) {
             // try {
-            WidgetStatus.update(this, mSched.progressToday(null, mCurrentCard, true));
+        	if (AnkiDroidApp.colIsOpen()) {
+                WidgetStatus.update(this, mSched.progressToday(null, mCurrentCard, true));        		
+        	}
             
             // } catch (JSONException e) {
             // throw new RuntimeException(e);
@@ -1244,7 +1246,7 @@ public class Reviewer extends AnkiActivity {
             item.setIcon(R.drawable.ic_menu_mark);
         }
         item = menu.findItem(MENU_UNDO);
-        if (mSched.getCol().undoAvailable()) {
+        if (AnkiDroidApp.colIsOpen() && AnkiDroidApp.getCol().undoAvailable()) {
             item.setEnabled(true);
             item.setIcon(R.drawable.ic_menu_revert);
         } else {
@@ -1253,7 +1255,7 @@ public class Reviewer extends AnkiActivity {
         }
         item = menu.findItem(MENU_SEARCH);
     	if (item != null) {
-    		setTitle(clipboardHasText() ? Lookup.getSearchStringTitle() : res.getString(R.string.menu_select));
+    		item.setTitle(clipboardHasText() ? Lookup.getSearchStringTitle() : res.getString(R.string.menu_select));
     	}
 	return true;
     }
@@ -1318,13 +1320,17 @@ public class Reviewer extends AnkiActivity {
 
     private void clipboardSetText(CharSequence text) {
         if (mClipboard != null) {
-		mClipboard.setText(text);
-	}
+        	mClipboard.setText(text);
+        }
     }
 
 
     private CharSequence clipboardGetText() {
-        return mClipboard.getText();
+        if (mClipboard != null) {
+            return mClipboard.getText();
+        } else {
+        	return "";
+        }
     }
 
 
@@ -1536,6 +1542,25 @@ public class Reviewer extends AnkiActivity {
         return true;
     }
 
+    private void showLookupButtonIfNeeded() {
+        if (mPrefTextSelection && mClipboard != null) {
+            if (clipboardGetText().length() != 0 && Lookup.isAvailable() && mLookUpIcon.getVisibility() != View.VISIBLE) {
+                mLookUpIcon.setVisibility(View.VISIBLE);
+                enableViewAnimation(mLookUpIcon, ViewAnimation.fade(ViewAnimation.FADE_IN, mFadeDuration, 0));
+            } else if (mLookUpIcon.getVisibility() == View.VISIBLE) {
+                mLookUpIcon.setVisibility(View.GONE);
+                enableViewAnimation(mLookUpIcon, ViewAnimation.fade(ViewAnimation.FADE_OUT, mFadeDuration, 0));
+            }
+        }
+    }
+
+    private void hideLookupButton() {
+        if (mPrefTextSelection && mLookUpIcon.getVisibility() != View.GONE) {
+            mLookUpIcon.setVisibility(View.GONE);
+            enableViewAnimation(mLookUpIcon, ViewAnimation.fade(ViewAnimation.FADE_OUT, mFadeDuration, 0));
+            clipboardSetText("");
+        }
+    }
 
     private void showDeleteNoteDialog() {
         Dialog dialog;
@@ -1584,11 +1609,7 @@ public class Reviewer extends AnkiActivity {
         }
         mIsSelecting = false;
         if (mPrefTextSelection) {
-            clipboardSetText("");
-            if (mLookUpIcon.getVisibility() == View.VISIBLE) {
-                mLookUpIcon.setVisibility(View.GONE);
-                enableViewAnimation(mLookUpIcon, ViewAnimation.fade(ViewAnimation.FADE_OUT, mFadeDuration, 0));
-            }
+            hideLookupButton();
         }
         switch (ease) {
             case EASE_FAILED:
@@ -1831,7 +1852,7 @@ public class Reviewer extends AnkiActivity {
         findViewById(R.id.progress_bars_border2).setBackgroundResource(fgColor);
         findViewById(R.id.progress_bars_back1).setBackgroundResource(bgColor);
         findViewById(R.id.progress_bars_back2).setBackgroundResource(bgColor);
-
+        AnkiDroidApp.getCompat().setActionBarBackground(this, invert ? R.color.white_background_night : R.color.actionbar_background);
     }
 
     private void showEaseButtons() {
@@ -2161,7 +2182,7 @@ public class Reviewer extends AnkiActivity {
 
         try {
             String[] title = mSched.getCol().getDecks().get(mCurrentCard.getDid()).getString("name").split("::");
-            setTitle(title[title.length - 1]);
+            AnkiDroidApp.getCompat().setTitle(this, title[title.length - 1], mInvertedColors);
         } catch (JSONException e) {
             throw new RuntimeException(e);
         }
@@ -2169,7 +2190,7 @@ public class Reviewer extends AnkiActivity {
         int[] counts = mSched.counts(mCurrentCard);
 
         int eta = mSched.eta(counts, false);
-        UIUtils.setActionBarSubtitle(this, getResources().getQuantityString(R.plurals.reviewer_window_title, eta, eta));
+        AnkiDroidApp.getCompat().setSubtitle(this, getResources().getQuantityString(R.plurals.reviewer_window_title, eta, eta), mInvertedColors);
 
         SpannableString newCount = new SpannableString(String.valueOf(counts[0]));
         SpannableString lrnCount = new SpannableString(String.valueOf(counts[1]));
@@ -3090,6 +3111,10 @@ public class Reviewer extends AnkiActivity {
         }
     }
 
+    private void refreshActionBar() {
+        AnkiDroidApp.getCompat().invalidateOptionsMenu(Reviewer.this);
+    }
+
     /** Fixing bug 720: <input> focus, thanks to pablomouzo on android issue 7189 */
     class MyWebView extends WebView {
 
@@ -3212,19 +3237,7 @@ public class Reviewer extends AnkiActivity {
                 }
             }
             mIsSelecting = false;
-            if (mPrefTextSelection && mClipboard != null) {
-                if (clipboardGetText().length() != 0 && Lookup.isAvailable()) {
-                    if (mLookUpIcon.getVisibility() != View.VISIBLE) {
-                        mLookUpIcon.setVisibility(View.VISIBLE);
-                        enableViewAnimation(mLookUpIcon, ViewAnimation.fade(ViewAnimation.FADE_IN, mFadeDuration, 0));
-                    }
-                } else {
-                    if (mLookUpIcon.getVisibility() == View.VISIBLE) {
-                        mLookUpIcon.setVisibility(View.GONE);
-                        enableViewAnimation(mLookUpIcon, ViewAnimation.fade(ViewAnimation.FADE_OUT, mFadeDuration, 0));
-                    }
-                }
-            }
+            showLookupButtonIfNeeded();
             return false;
         }
     }

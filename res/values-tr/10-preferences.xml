@@ -256,6 +256,8 @@
   <string name="deck_conf_seconds">XXX saniye</string>
   <string name="deck_conf_timer">Yanıtlama zamanlayıcısını göster</string>
   <string name="deck_conf_autoplay">Sesi kendiliğinden oynat</string>
+  <string name="deck_conf_replayq">Replay Question</string>
+  <string name="deck_conf_replayq_summ">When answer shown, replay both question and answer audio</string>
   <string name="deck_conf_add">Yapılandırma ekle</string>
   <string name="deck_conf_ren">Yapılandırma adını değiştir</string>
   <string name="deck_conf_rem">Yapılandırmayı kaldır</string>

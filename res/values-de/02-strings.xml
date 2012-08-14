@@ -87,6 +87,7 @@
   <string name="import_message">Möchten Sie wirklich alle Karten aus der Datei %s importieren?</string>
   <string name="import_log_success">Erfolgreich %d Karten importiert</string>
   <string name="import_log_error">Import fehlgeschlagen</string>
+  <string name="import_log_no_apkg">Dies ist keine richtige apgk-Datei</string>
   <string name="import_importing">Karten werden importiert.\nBitte warten...</string>
   <string name="import_hint">Um Karten zu importieren, kopieren Sie die apkg-Datei ins Verzeichnis %s und drücken \'Ok\'</string>
   <string name="import_no_file_found">Keine importierbaren apkg-Dateien gefunden</string>

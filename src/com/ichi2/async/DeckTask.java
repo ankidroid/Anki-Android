@@ -524,6 +524,7 @@ public class DeckTask extends
 					} else {
 						sched.suspendCards(new long[] { card.getId() });
 					}
+					sHadCardQueue = true;
 					break;
 				case 2:
 					// collect undo information

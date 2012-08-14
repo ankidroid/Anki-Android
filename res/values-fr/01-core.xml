@@ -97,7 +97,7 @@ Veuillez patienter...</string>
   <string name="review_early_deck_name">Review Early</string>
   <string name="studyoptions_congrats_finished">FÉLICITATIONS ! Vous avez terminé… pour l’instant !</string>
   <string name="studyoptions_congrats_more_rev">Vous avez atteint votre quota de révisions, mais il reste des cartes prévues pour aujourd’hui. Sauf à risquer l’oubli chronique, pensez à adapter le quota.</string>
-  <string name="studyoptions_congrats_more_new">Vous avez atteint votre quota quotidien de cartes inédites alors qu’il en reste. Vous pouvez élargir le quota sachant que vous aurez d’autant plus de cartes à revoir à court terme.</string>
+  <string name="studyoptions_congrats_more_new">There are more new cards available, but the daily limit has been reached. You can increase the limit in the options, but please bear in mind that this will increase your short-term review workload.</string>
   <string name="sd_card_not_mounted">La carte SD n’est pas montée.</string>
   <string name="studyoptions_options">Options</string>
   <string name="empty_cloze_warning">N’oubliez pas le texte à trous. (%1$s)</string>
