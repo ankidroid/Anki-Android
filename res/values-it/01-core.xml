@@ -38,8 +38,8 @@
   <string name="ease3_successive">Buono</string>
   <string name="ease3_learning">Facile</string>
   <string name="studyoptions_congrats_undo">Annulla %s</string>
-  <string name="studyoptions_congrats_learnmore">Impara ancora</string>
-  <string name="studyoptions_congrats_reviewearly">Rivedere presto</string>
+  <string name="studyoptions_congrats_learnmore">Studia altre carte</string>
+  <string name="studyoptions_congrats_reviewearly">Ripeti in anticipo</string>
   <string name="studyoptions_congrats_open_other_deck">Apri un altro mazzo</string>
   <string name="studyoptions_congrats_finish">Torna alla schermata di studio</string>
   <string name="card_unsuspended">Annulla la sospensione della carta</string>
@@ -93,10 +93,10 @@
   <string name="empty_cram_label">Svuota</string>
   <string name="empty_cram_deck">Svuoto mazzo per lo studio focalizzato.\nAttendi...</string>
   <string name="studyoptions_new_filtercram">Filtro/Studio focalizzato</string>
-  <string name="review_early_deck_name">Ripeti presto</string>
+  <string name="review_early_deck_name">Ripeti in anticipo</string>
   <string name="studyoptions_congrats_finished">Complimenti! Per ora hai finito.</string>
   <string name="studyoptions_congrats_more_rev">Il limite delle ripetizioni per oggi è stato raggiunto, ma ci sono ancora carte che aspettano di essere ripetute. Per un utilizzo ottimale della memoria, considera di aumentare il limite giornaliero nelle opzioni.</string>
-  <string name="studyoptions_congrats_more_new">There are more new cards available, but the daily limit has been reached. You can increase the limit in the options, but please bear in mind that this will increase your short-term review workload.</string>
+  <string name="studyoptions_congrats_more_new">Ci sono ulteriori carte nuove disponibili, ma il limite giornaliero è stato raggiunto. Puoi aumentare il limite nelle opzioni, ma ricordati che ciò aumenterà il tuo carico di lavoro per le ripetizioni a breve termine.</string>
   <string name="sd_card_not_mounted">La scheda SD non è montata.</string>
   <string name="studyoptions_options">Opzioni</string>
   <string name="empty_cloze_warning">Modifica questa nota e aggiungi testo da completare. (%1$s)</string>
@@ -140,7 +140,7 @@
   </plurals>
   <plurals name="studyoptions_congrats_new_cards">
     <item quantity="one">1 carta nuova</item>
-    <item quantity="other">﻿%1$d nuove carte</item>
+    <item quantity="other">%1$d carte nuove</item>
   </plurals>
   <plurals name="studyoptions_congrats_eta">
     <item quantity="one">Durata stimata: 1 min.</item>

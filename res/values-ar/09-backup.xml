@@ -32,7 +32,7 @@
   <string name="backup_del_collection">حذف المجموعة وإنشاء واحدة جديدة</string>
   <string name="backup_del_collection_question">هل حقاً تريد حذف المجموعة وإنشاء واحدة جديدة؟ هذا سيتم إسقاط جميع تقدمك في التعلم وحذف كافة البطاقات!</string>
   <string name="backup_full_sync_from_server">مزامنة كاملة من الخادم</string>
-  <string name="backup_full_sync_from_server_question">Do you really want to overwrite your collection with the one from AnkiWeb? This will drop all your learning progress and added information since your last sync!</string>
+  <string name="backup_full_sync_from_server_question">هل تريد حقاً الكتابة فوق مجموعتك بواحدة من أنكيويب؟ هذا سيلغى مستوى تقدمك في التعلم والمعلومات المضافة منذ آخر مزامنة لك!</string>
   <string name="error_handling_title">معالجة الأخطاء</string>
   <string name="error_handling_options">خيارات</string>
   <string name="backup_retry_opening">إعادة محاولة الفتح</string>

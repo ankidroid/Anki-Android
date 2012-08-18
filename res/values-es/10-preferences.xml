@@ -141,7 +141,7 @@
   <string name="sync_fetch_missing_media">Buscar archivos multimedia al sincronizar</string>
   <string name="sync_fetch_missing_media_summ">Buscar automáticamente archivos multimedia faltantes al sincronizar.</string>
   <string name="fix_hebrew_text">Corrección para vocales hebreas</string>
-  <string name="fix_hebrew_text_summ">Workaround for rendering Hebrew vowels correctly.</string>
+  <string name="fix_hebrew_text_summ">Solución para mostrar las vocales Hebreas correctamente.</string>
   <string name="fix_hebrew_instructions">This setting bypasses the RTL algorithm of Android to show Hebrew text with vowels correctly.\n\nFor this to work, you need to download font Tohu.ttf and copy it manually to:\n%s/fonts/\n\nYou won\'t have to modify your cards.</string>
   <string name="fix_hebrew_download_font">Descargar Fuente</string>
   <string name="default_font">Fuente predeterminada</string>
@@ -256,8 +256,8 @@
   <string name="deck_conf_seconds">XXX segundos</string>
   <string name="deck_conf_timer">Mostrar temporizador de respuesta</string>
   <string name="deck_conf_autoplay">Reproducir audio automáticamente</string>
-  <string name="deck_conf_replayq">Replay Question</string>
-  <string name="deck_conf_replayq_summ">When answer shown, replay both question and answer audio</string>
+  <string name="deck_conf_replayq">Volver a reproducir pregunta</string>
+  <string name="deck_conf_replayq_summ">Cuando la respuesta sea mostrada, reproducir el audio de la pregunta y de la respuesta</string>
   <string name="deck_conf_add">Agregar configuración</string>
   <string name="deck_conf_ren">Cambiar el nombre de la configuración</string>
   <string name="deck_conf_rem">Borrar configuración</string>

@@ -25,7 +25,7 @@
   <string name="check_db_result_message">数据库已检查并优化。\n缩小%d kb</string>
   <string name="contextmenu_deckpicker_delete_deck">删除牌组</string>
   <string name="delete_deck_title">删除牌组</string>
-  <string name="delete_deck_message">你确定要删除%s中的所有卡片吗？</string>
+  <string name="delete_deck_message">你确定要删除%s中的所有卡牌吗？</string>
   <string name="delete_deck_confirm">删除牌组</string>
   <string name="new_version_message">新特性：</string>
   <string name="no_tts_available_title">文字转语音(TTS)</string>
@@ -39,8 +39,8 @@
   <string name="notification_title">确认更新Ankidroid</string>
   <string name="notification_message">Android市场中有新版本的Ankidroid。\n\n您要安装吗？</string>
   <string name="notification_stop">不再提示更新</string>
-  <string name="reset_card_dialog_title">重置卡片进度</string>
-  <string name="reset_card_dialog_message">此操作将重置使用此条目注释的所有卡片的学习进度(恢复新卡片状态)。\n你确定要继续吗？</string>
+  <string name="reset_card_dialog_title">重置卡牌进度</string>
+  <string name="reset_card_dialog_message">此操作将重置使用此条目注释的所有卡牌的学习进度(恢复新卡牌状态)。\n你确定要继续吗？</string>
   <string name="reset_card_dialog_confirmation">重置使用此条目注释的所有卡牌</string>
   <string name="answering_error_title">数据库错误</string>
   <string name="answering_error_message">写入集合时出错。可能是数据库损坏，或者磁盘空间不足。\n\n如果频繁发生此错误，请检查数据库，修复集合或从备份中恢复。点击\"选项\"按钮以执行上述操作。\n\n当然，也可能只是AnkiDroid的bug，请报告这个错误，我们会尽力解决。</string>
@@ -49,11 +49,11 @@
   <string name="intent_add_saved_information">已保存的数据</string>
   <string name="intent_add_clear_all">全部清除</string>
   <string name="intent_aedict_empty">类别“默认”为空</string>
-  <string name="intent_aedict_category">向AnkiDroid中添加卡片，需要删除所有NotePad类别，或者添加“默认”类别。</string>
-  <string name="learnmore_title">Study More Settings</string>
-  <string name="learnmore_insructions">You can temporarily increase your new cards and max reviews limits below to extend today\'s learning session.</string>
-  <string name="learnmore_extend_new_limit">Increase new cards limit by</string>
-  <string name="learnmore_extend_rev_limit">Increase max reviews limit by</string>
+  <string name="intent_aedict_category">向AnkiDroid中添加卡牌，需要删除所有NotePad类别，或者添加“默认”类别。</string>
+  <string name="learnmore_title">学习更多卡牌设置</string>
+  <string name="learnmore_insructions">你可以暂时增加下面的新卡牌学习量与最大复习数量，以扩展今天的课程。</string>
+  <string name="learnmore_extend_new_limit">增加新卡牌学习数量</string>
+  <string name="learnmore_extend_rev_limit">增加最大复习数量</string>
   <string name="reviewearly_title">提前复习设置</string>
   <string name="reviewearly_instructions">此选项将创建名为\'XXX\'的筛选卡牌组，里面的卡牌将在您下面选择的天数内到期。如果已经有这样的筛选卡牌组，那么它会被清空并重新配置。</string>
   <string name="reviewearly_days_ahead">提前多少天</string>

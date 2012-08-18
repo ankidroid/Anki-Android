@@ -13,7 +13,7 @@ Añade material a través de la aplicación de escritorio Anki o directamente me
 • repaso espaciado (algoritmo de SuperMemo 2)
 • integración de texto a voz
 • más de 6000 mazos prediseñados
-• progress widget
+• widget de progreso
 • estadísticas detalladas
 • sincronización con AnkiWeb
 • código abierto
@@ -31,7 +31,7 @@ Añade material a través de la aplicación de escritorio Anki o directamente me
 • completo sistema de copias de seguridad
 • navegación por gestos, toques, agitado
 • totalmente personalizable
-• dynamic deck handling
+• manejo de mazos dinámicos
 • modo noche
 • traducido a 27 idiomas
 • todas las versiones anteriores de AnkiDroid pueden descargarse desde el sitio Web

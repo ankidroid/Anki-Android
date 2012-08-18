@@ -32,7 +32,7 @@
   <string name="stats_minutes">Minuti</string>
   <string name="stats_hours">Ore</string>
   <string name="statistics_period_x_axis_minutes">Minuti</string>
-  <string name="statistics_new_cards">Nuove carte</string>
+  <string name="statistics_new_cards">Carte nuove</string>
   <string name="statistics_failed_cards">Carte sbagliate</string>
   <string name="statistics_fullscreen">Schermo intero</string>
   <string name="calculating_statistics">Calcolo statistiche.\nAttendi...</string>
@@ -48,7 +48,7 @@
   <string name="deck_summary_answers_young">Carte giovani: &lt;b&gt;%1$.1f %2$s&lt;/b&gt; (%3$d of %4$d)</string>
   <string name="deck_summary_answers_firstseen">Visti la prima volta: &lt;b&gt;%1$.1f %2$s&lt;/b&gt; (%3$d of %4$d)</string>
   <string name="deck_summary_reviews">Ripetizioni:</string>
-  <string name="deck_summary_news">Nuove carte:</string>
+  <string name="deck_summary_news">Carte nuove:</string>
   <string name="deck_summary_average_week">Media visti l\'ultima settimana</string>
   <string name="deck_summary_average_month">Media visti l\'ultimo mese</string>
   <string name="deck_summary_average_year">Media visti l\'ultimo anno</string>
@@ -57,7 +57,7 @@
   <string name="deck_summary_tomorrow_due">Da fare domani: &lt;b&gt;%d&lt;/b&gt; carte</string>
   <string name="deck_summary_tomorrow_new">Domani nuove: &lt;b&gt;%d&lt;/b&gt; carte</string>
   <string name="deck_summary_tomorrow_time">Durata stimata domani: &lt;b&gt;%d&lt;/b&gt; min.</string>
-  <string name="deck_summary_finished_in">Nuove carte finite in: &lt;b&gt;%d&lt;/b&gt; giorni</string>
+  <string name="deck_summary_finished_in">Carte nuove finite in: &lt;b&gt;%d&lt;/b&gt; giorni</string>
   <string name="deck_summary_cards_per_day">&lt;b&gt;%.1f&lt;/b&gt; carte/giorno</string>
   <string name="deck_summary_deck_age">Età del mazzo: &lt;b&gt;%d&lt;/b&gt; giorni</string>
   <string name="deck_summary_all_decks">Tutti i mazzi</string>

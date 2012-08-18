@@ -52,7 +52,7 @@
   <string name="close">أغلق</string>
   <string name="select">حدد</string>
   <string name="saving_changes">حفظ التغييرات...</string>
-  <string name="timebox_reached">Timebox reached!</string>
+  <string name="timebox_reached">وصلت صندوق الوقت!</string>
   <string name="studyoptions_welcome_title">مرحباً بكم مع آنكيدرويد</string>
   <string name="studyoptions_no_external_storage_title">لا تتوفر مساحة تخزين خارجية</string>
   <string name="studyoptions_no_external_storage_message">لا تتوفر بطاقة تخزين خارجية حاليا. آنكيدرويد يحتاج إلى الوصول إلى البطاقة التخزين الخارجية من أجل قراءة وتحميل رزم الآنكي الخاصة بك. تأكد من تحميل بطاقة التخزين وأعد المحاولة.</string>
@@ -97,9 +97,9 @@
     <item>عشوائي</item>
     <item>زيادة الفترات</item>
     <item>تقليل الفترات</item>
-    <item>Most lapses</item>
+    <item>أكثر الأخطاء</item>
     <item>الترتيب أضيف</item>
-    <item>Order due</item>
+    <item>ترتيب الاستحقاق</item>
   </string-array>
   <plurals name="factadder_cards_added">
     <item quantity="one">أضيفت بطاقة واحدة</item>

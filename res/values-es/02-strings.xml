@@ -40,7 +40,7 @@
   <string name="suspend_leeches">Suspender Sanguijuelas</string>
   <string name="leech_suspend_notification">Tarjeta marcada como sanguijuela y suspendida</string>
   <string name="leech_notification">Tarjeta marcada como sanguijuela</string>
-  <string name="corrupt_font">Corrupt font file %s</string>
+  <string name="corrupt_font">Archivo de fuente corrupto %s</string>
   <string name="about_title">Acerca de</string>
   <string name="cardeditor_title_add_note">Añadir Nota</string>
   <string name="cardeditor_title_edit_card">Editar Nota</string>
@@ -87,7 +87,7 @@
   <string name="import_message">¿Realmente deseas importar todas las tarjetas del archivo %s?</string>
   <string name="import_log_success">Se importaron con éxito %d tarjetas</string>
   <string name="import_log_error">La importación falló</string>
-  <string name="import_log_no_apkg">This is not a valid apkg file</string>
+  <string name="import_log_no_apkg">Éste no es un archivo apkg válido</string>
   <string name="import_importing">Importando tarjetas.\nPor favor, espera...</string>
   <string name="import_hint">Para importar tarjetas, coloca el archivo apkg en el directorio %s y presiona ok</string>
   <string name="import_no_file_found">No se encontró ningún archivo apkg importable</string>
