@@ -475,6 +475,7 @@ public class DeckPicker extends FragmentActivity {
                     	} else {
                             mDialogMessage = res.getString(R.string.sync_generic_error);
                     	}
+                        showDialog(DIALOG_SYNC_ERROR);
                     }
                 }
             } else {
