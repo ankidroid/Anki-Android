@@ -355,7 +355,7 @@ public class Collection {
     /**
      * Unsuspend any temporarily suspended cards.
      */
-    private void cleanup() {
+    public void cleanup() {
         if (mDty) {
             mSched.onClose();
             mDty = false;
