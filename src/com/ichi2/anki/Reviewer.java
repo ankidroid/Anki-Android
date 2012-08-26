@@ -30,6 +30,7 @@ import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.Typeface;
+import android.graphics.drawable.Drawable;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
@@ -41,10 +42,14 @@ import android.os.Message;
 import android.os.SystemClock;
 import android.os.Vibrator;
 import android.text.ClipboardManager;
+import android.text.Editable;
 import android.text.Html;
+import android.text.Html.TagHandler;
+import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.SpannedString;
+import android.text.style.StrikethroughSpan;
 import android.text.style.StyleSpan;
 import android.text.style.UnderlineSpan;
 import android.util.Log;
@@ -99,7 +104,9 @@ import com.ichi2.widget.WidgetStatus;
 import org.amr.arabic.ArabicUtilities;
 import org.json.JSONArray;
 import org.json.JSONException;
+import org.xml.sax.XMLReader;
 
+import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
@@ -2283,7 +2290,7 @@ public class Reviewer extends AnkiActivity {
         String displayString = "";
 
         if (mCurrentSimpleInterface) {
-            mCardContent = Html.fromHtml(question);
+            mCardContent = convertToSimple(question);
             if (mCardContent.length() == 0) {
                 SpannableString hint = new SpannableString(getResources().getString(R.string.simple_interface_hint,
                         R.string.card_details_question));
@@ -2336,7 +2343,7 @@ public class Reviewer extends AnkiActivity {
         String displayString = "";
 
         if (mCurrentSimpleInterface) {
-            mCardContent = Html.fromHtml(answer);
+            mCardContent = convertToSimple(answer);
             if (mCardContent.length() == 0) {
                 SpannableString hint = new SpannableString(getResources().getString(R.string.simple_interface_hint,
                         R.string.card_details_answer));
@@ -3285,4 +3292,62 @@ public class Reviewer extends AnkiActivity {
 
     }
 
+    private TagHandler mSimpleInterfaceTagHandler = new TagHandler () {
+
+        public void handleTag(boolean opening, String tag, Editable output,
+                XMLReader xmlReader) {
+//            if(tag.equalsIgnoreCase("div")) {
+//            	output.append("\n");
+//            } else 
+        	if(tag.equalsIgnoreCase("strike") || tag.equals("s")) {
+                int len = output.length();
+                if(opening) {
+                    output.setSpan(new StrikethroughSpan(), len, len, Spannable.SPAN_MARK_MARK);
+                } else {
+                    Object obj = getLast(output, StrikethroughSpan.class);
+                    int where = output.getSpanStart(obj);
+
+                    output.removeSpan(obj);
+
+                    if (where != len) {
+                        output.setSpan(new StrikethroughSpan(), where, len, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+                    }
+                }
+            }
+        }
+
+        private Object getLast(Editable text, Class kind) {
+            Object[] objs = text.getSpans(0, text.length(), kind);
+
+            if (objs.length == 0) {
+                return null;
+            } else {
+                for(int i = objs.length;i>0;i--) {
+                    if(text.getSpanFlags(objs[i-1]) == Spannable.SPAN_MARK_MARK) {
+                        return objs[i-1];
+                    }
+                }
+                return null;
+            }
+        }
+    };
+
+    private Html.ImageGetter mSimpleInterfaceImagegetter = new Html.ImageGetter () {
+
+        public Drawable getDrawable(String source) {
+            String path = AnkiDroidApp.getCurrentAnkiDroidDirectory(Reviewer.this) + "/collection.media/" + source;
+            if ((new File(path)).exists()) {
+                Drawable d = Drawable.createFromPath(path);
+                d.setBounds(0,0,d.getIntrinsicWidth(),d.getIntrinsicHeight());
+                return d;            	
+            } else {
+            	return null;
+            }
+        }
+    };
+
+    private Spanned convertToSimple(String text) {
+    	text = text.replaceAll("</div>$", "").replaceAll("(</div>)*<div>", "<br>");
+    	return Html.fromHtml(text, mSimpleInterfaceImagegetter, mSimpleInterfaceTagHandler);
+    }
 }
