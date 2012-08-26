@@ -220,7 +220,7 @@
   <string name="pref_keep_screen_on">Manter a Tela Ligada</string>
   <string name="pref_keep_screen_on_summ">Impedir que a tela seja desligada enquanto revisa</string>
   <string name="pref_simple_interface">Interface simples</string>
-  <string name="pref_simple_interface_summ">Acelera a apresentação do cartão mas só oferece suporte a texto(sem imagens, sons etc.)</string>
+  <string name="pref_simple_interface_summ">Speeds up card showing but does not support all html features</string>
   <string name="pref_simple_interface_exclude_tags">Interface normal por tag</string>
   <string name="pref_simple_interface_exclude_tags_summ">Não use interface simplificada para essas tags: XXX</string>
   <string name="deck_conf_deck_name">Nome do deck</string>

@@ -220,7 +220,7 @@
   <string name="pref_keep_screen_on">Κρατήστε οθόνη αναμένη</string>
   <string name="pref_keep_screen_on_summ">Αποτροπή της οθόνης από το να σβήσει κατά την επανάληψη</string>
   <string name="pref_simple_interface">Απλό interface</string>
-  <string name="pref_simple_interface_summ">Επιταχύνει την εμφάνιση κάρτας αλλά υποστηρίζει μόνο κείμενο (χωρίς εικόνες, ήχους κλπ.)</string>
+  <string name="pref_simple_interface_summ">Speeds up card showing but does not support all html features</string>
   <string name="pref_simple_interface_exclude_tags">Κανονική παρουσίαση με βάση την ετικέτα</string>
   <string name="pref_simple_interface_exclude_tags_summ">Μη εφαρμογή απλής παρουσίασης για αυτές τις ετικέτες: XXX</string>
   <string name="deck_conf_deck_name">Όνομα τράπουλας</string>

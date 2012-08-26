@@ -50,7 +50,7 @@
   <string name="intent_add_clear_all">Cancella tutto</string>
   <string name="intent_aedict_empty">Categoria \'default\' è vuota</string>
   <string name="intent_aedict_category">Per aggiungere le carte ad AnkiDroid rimuovi tutte le categorie Notepad o aggiungine una chiamata \'default\'</string>
-  <string name="learnmore_title">Impostazioni studia ancora</string>
+  <string name="learnmore_title">Impostazioni studia altre carte nuove</string>
   <string name="learnmore_insructions">Puoi aumentare temporaneamente il limite di carte nuove e di ripetizioni giornaliere qui sotto per estendere la sessione odierna.</string>
   <string name="learnmore_extend_new_limit">Aumenta il limite di carte nuove di</string>
   <string name="learnmore_extend_rev_limit">Aumenta il limite di ripetizioni di</string>

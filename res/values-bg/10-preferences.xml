@@ -220,7 +220,7 @@
   <string name="pref_keep_screen_on">Запази екрана вкл</string>
   <string name="pref_keep_screen_on_summ">Попречите на екрана да бъде изключен докато преглеждате</string>
   <string name="pref_simple_interface">Прост интерфейс</string>
-  <string name="pref_simple_interface_summ">Ускорява картата, но поддържа само текст (без снимки, звуци и др.)</string>
+  <string name="pref_simple_interface_summ">Speeds up card showing but does not support all html features</string>
   <string name="pref_simple_interface_exclude_tags">Normal interface by tag</string>
   <string name="pref_simple_interface_exclude_tags_summ">Do not use simple interface for these tags: XXX</string>
   <string name="deck_conf_deck_name">Deck name</string>

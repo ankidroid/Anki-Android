@@ -220,7 +220,7 @@
   <string name="pref_keep_screen_on">화면을 켜진 채로 유지</string>
   <string name="pref_keep_screen_on_summ">리뷰하는 동안 화면꺼짐 방지</string>
   <string name="pref_simple_interface">간단한 인터페이스</string>
-  <string name="pref_simple_interface_summ">카드를 보여주는 속도를 높이지만 그림과 소리를 지원하지 않습니다.</string>
+  <string name="pref_simple_interface_summ">Speeds up card showing but does not support all html features</string>
   <string name="pref_simple_interface_exclude_tags">태그에 의한 일반 인터페이스</string>
   <string name="pref_simple_interface_exclude_tags_summ">XXX : 이러한 태그에 대한 간단한 인터페이스를 사용하지 마십시오</string>
   <string name="deck_conf_deck_name">꾸러미 이름</string>

@@ -33,19 +33,19 @@
   <string name="sdcard_missing_message">De SD-kaart is niet beschikbaar omdat ze voor USB-opslag gebruikt wordt. Ontkoppel USB om toegang tot je sets te krijgen.</string>
   <string name="show_whiteboard">Whiteboard weergeven</string>
   <string name="hide_whiteboard">Whiteboard verbergen</string>
-  <string name="clear_whiteboard">Whiteboard schoonvegen</string>
+  <string name="clear_whiteboard">Whiteboard leegmaken</string>
   <string name="session_question_limit_reached">Maximum aantal vragen per sessie bereikt</string>
   <string name="session_time_limit_reached">Tijdslimiet bereikt in deze sessie</string>
-  <string name="cram_edit_warning">Tijdens stampen mogen kaarten niet bewerkt worden</string>
-  <string name="suspend_leeches">Moeilijke kaarten uitstellen</string>
+  <string name="cram_edit_warning">Het bewerken van kaarten is niet toegestaan tijdens stampen</string>
+  <string name="suspend_leeches">Moeilijke kaarten blokkeren</string>
   <string name="leech_suspend_notification">Kaart gemarkeerd als moeilijk en uitgesteld</string>
   <string name="leech_notification">Kaart gemarkeerd als moeilijk</string>
-  <string name="corrupt_font">Corrupt font file %s</string>
+  <string name="corrupt_font">Corrupt lettertype bestand %s</string>
   <string name="about_title">Over</string>
   <string name="cardeditor_title_add_note">Kaart toevoegen</string>
   <string name="cardeditor_title_edit_card">Kaart bewerken</string>
   <string name="factadder_saving_error">Fout bij oplaan kaart</string>
-  <string name="pref_lang_support">Language</string>
+  <string name="pref_lang_support">Taal</string>
   <string name="saving_facts">Kaart opslaan</string>
   <string name="deck">Leerset</string>
   <string name="add">Toevoegen</string>
@@ -55,7 +55,7 @@
   <string name="timebox_reached">Timebox reached!</string>
   <string name="studyoptions_welcome_title">Welkom bij AnkiDroid</string>
   <string name="studyoptions_no_external_storage_title">Geen externe opslag beschikbaar</string>
-  <string name="studyoptions_no_external_storage_message">Er is momenteel geen externe opslag beschikbaar. AnkiDroid heeft toegang tot je SD-kaart nodig om je Ankisets te laden. Controleer of je SD-kaart goed zit en probeer het nog eens.</string>
+  <string name="studyoptions_no_external_storage_message">Er is momenteel geen externe opslag beschikbaar. AnkiDroid heeft toegang tot uw SD-kaart nodig om uw Anki sets te lezen en te laden. Controleer of uw SD-kaart goed is geplaatst en probeer het opnieuw.</string>
   <string name="fact_adder_intent_title">Ankidroid kaart</string>
   <string name="fact_adder_swap">Omkeren</string>
   <string name="deckpicker_select_dictionary_title">Selecteer Woordenboek</string>
@@ -70,35 +70,35 @@
   <string name="rename">Naam wijzigen</string>
   <string name="rename_error">Leerset %s kon niet hernoemd worden</string>
   <string name="help_title">Hulp</string>
-  <string name="help_online">Online hulp</string>
+  <string name="help_online">Online help</string>
   <string name="help_faq">FAQ</string>
   <string name="help_tutorial">Voorbeeld leerset</string>
   <string name="check_db">Controleer database</string>
-  <string name="check_db_message">De databank wordt gecontroleerd.\nEven geduld...</string>
-  <string name="simple_interface_hint">Leeg %s. Onthoud dat een eenvoudige interface geen beelden/geluiden kan tonen.</string>
+  <string name="check_db_message">De databank wordt gecontroleerd.\nEven geduld alstublieft...</string>
+  <string name="simple_interface_hint">Maak %s leeg. Houd er rekening mee dat een eenvoudige interface geen beelden/geluiden etc. kan tonen.</string>
   <string name="delete_deck">Leerset verwijderen...\nEven wachten.</string>
-  <string name="menu_cardbrowser">Card browser</string>
-  <string name="show_hint">Show Hint</string>
-  <string name="pref_lang_other">Language Preferences</string>
+  <string name="menu_cardbrowser">Kaartbrowser</string>
+  <string name="show_hint">Toon tip</string>
+  <string name="pref_lang_other">Taalinstellingen</string>
   <string name="pref_font_UI">Custom UI Font</string>
-  <string name="info_rate">Rate AnkiDroid</string>
-  <string name="col_load_failed">Collection loading failed.\nPress back to close AnkiDroid.</string>
-  <string name="import_title">Import Cards</string>
-  <string name="import_message">Do you really want to import all cards of file %s?</string>
-  <string name="import_log_success">Successfully imported %d cards</string>
-  <string name="import_log_error">Import failed</string>
-  <string name="import_log_no_apkg">This is not a valid apkg file</string>
-  <string name="import_importing">Importing cards.\nPlease wait...</string>
-  <string name="import_hint">To import cards, place the apkg file in directory %s and press ok</string>
-  <string name="import_no_file_found">No importable apkg file found</string>
+  <string name="info_rate">Geef AnkiDroid een cijfer</string>
+  <string name="col_load_failed">Land van collectie mislukt.\nKlik terug om AnkiDroid te sluiten.</string>
+  <string name="import_title">Importeer kaarten</string>
+  <string name="import_message">Weet u zeker dat u alle van van bestand %s wilt importeren?</string>
+  <string name="import_log_success">%d kaarten zijn succesvol geimporteerd</string>
+  <string name="import_log_error">Importeren mislukt</string>
+  <string name="import_log_no_apkg">Dit is een onjuist apkg bestand</string>
+  <string name="import_importing">Kaarten importeren.\n Even geduld alstublieft...</string>
+  <string name="import_hint">Om kaarten te importeren, plaats het apkg bestand in map %s en klik ok</string>
+  <string name="import_no_file_found">Geen importeerbaar apkg bestand gevonden</string>
   <string-array name="dynOrderLabels">
     <item>Langst niet gezien eerst</item>
     <item>Willekeurig</item>
     <item>Toenemende intervallen</item>
     <item>Afnemende intervallen</item>
     <item>Meeste missers</item>
-    <item>Order added</item>
-    <item>Order due</item>
+    <item>Wanneer toegevoegd</item>
+    <item>Wanneer te doen</item>
   </string-array>
   <plurals name="factadder_cards_added">
     <item quantity="one">1 kaart toegevoegd</item>

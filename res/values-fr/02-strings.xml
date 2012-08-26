@@ -40,7 +40,7 @@
   <string name="suspend_leeches">Suspendre les cartes \"sangsues\"</string>
   <string name="leech_suspend_notification">Carte marquée comme sangsue et suspendue</string>
   <string name="leech_notification">Carte marquée comme sangsue</string>
-  <string name="corrupt_font">Corrupt font file %s</string>
+  <string name="corrupt_font">Fichier de police corrompu %s</string>
   <string name="about_title">À propos</string>
   <string name="cardeditor_title_add_note">Ajout de note</string>
   <string name="cardeditor_title_edit_card">Modifier la note</string>
@@ -83,14 +83,14 @@
   <string name="pref_font_UI">Police pour l’interface utilisateur</string>
   <string name="info_rate">Noter AnkiDroid</string>
   <string name="col_load_failed">Le chargement de la collection à échoué.\nAppuyez sur retour pour fermer AnkiDroid.</string>
-  <string name="import_title">Import Cards</string>
-  <string name="import_message">Do you really want to import all cards of file %s?</string>
-  <string name="import_log_success">Successfully imported %d cards</string>
-  <string name="import_log_error">Import failed</string>
-  <string name="import_log_no_apkg">This is not a valid apkg file</string>
-  <string name="import_importing">Importing cards.\nPlease wait...</string>
-  <string name="import_hint">To import cards, place the apkg file in directory %s and press ok</string>
-  <string name="import_no_file_found">No importable apkg file found</string>
+  <string name="import_title">Importer des cartes</string>
+  <string name="import_message">Voulez-vous vraiment d\'importer toutes les cartes du fichier %s ?</string>
+  <string name="import_log_success">%d cartes importées avec succès</string>
+  <string name="import_log_error">Échec de l\'importation</string>
+  <string name="import_log_no_apkg">Ce n\'est pas un fichier apkg valide</string>
+  <string name="import_importing">Import en cours\nVeuillez patienter...</string>
+  <string name="import_hint">Pour importer des cartes, placez le fichier apkg dans le répertoire %s et appuyez sur ok</string>
+  <string name="import_no_file_found">Aucun fichier apkg importable n\'a été trouvé</string>
   <string-array name="dynOrderLabels">
     <item>Des plus au moins anciennes</item>
     <item>Aléatoirement</item>

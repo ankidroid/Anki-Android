@@ -23,7 +23,7 @@
   <string name="CardEditorCancelButton">İptal</string>
   <string name="CardEditorSaveButton">Kaydet</string>
   <string name="CardEditorLaterButton">Daha sonra</string>
-  <string name="CardEditorLaterMessage">Saved information for later</string>
+  <string name="CardEditorLaterMessage">Bilgi daha sonrası için kaydedildi</string>
   <string name="CardEditorCardDeck">Kart destesi: %s</string>
   <string name="CardEditorNoteDeck">Not destesi: %s</string>
   <string name="CardEditorModel">Not türü: %s</string>
@@ -40,12 +40,12 @@
   <string name="suspend_leeches">Asalakları Askıya Al</string>
   <string name="leech_suspend_notification">Kart asalak olarak işaretlenip askıya alınmış</string>
   <string name="leech_notification">Kart asalak olarak işaretlenmiş</string>
-  <string name="corrupt_font">Corrupt font file %s</string>
+  <string name="corrupt_font">Bozuk yazı tipi dosyası %s</string>
   <string name="about_title">Hakkında</string>
   <string name="cardeditor_title_add_note">Not Ekle</string>
   <string name="cardeditor_title_edit_card">Notu Düzenle</string>
   <string name="factadder_saving_error">Not kaydedilirken hata</string>
-  <string name="pref_lang_support">Language</string>
+  <string name="pref_lang_support">Dil</string>
   <string name="saving_facts">Not kaydediliyor</string>
   <string name="deck">Deste</string>
   <string name="add">Ekle</string>
@@ -78,19 +78,19 @@
   <string name="simple_interface_hint">Boş %s. Basit arayüzün resimleri/sesleri vb. gösteremediğini unutmayın.</string>
   <string name="delete_deck">Deste siliniyor...\nLütfen bekleyin.</string>
   <string name="menu_cardbrowser">Kart tarayıcısı</string>
-  <string name="show_hint">Show Hint</string>
+  <string name="show_hint">İpucunu Göster</string>
   <string name="pref_lang_other">Dil Tercihleri</string>
   <string name="pref_font_UI">Arayüz Yazı Tipi</string>
-  <string name="info_rate">Rate AnkiDroid</string>
-  <string name="col_load_failed">Collection loading failed.\nPress back to close AnkiDroid.</string>
-  <string name="import_title">Import Cards</string>
-  <string name="import_message">Do you really want to import all cards of file %s?</string>
-  <string name="import_log_success">Successfully imported %d cards</string>
-  <string name="import_log_error">Import failed</string>
-  <string name="import_log_no_apkg">This is not a valid apkg file</string>
-  <string name="import_importing">Importing cards.\nPlease wait...</string>
-  <string name="import_hint">To import cards, place the apkg file in directory %s and press ok</string>
-  <string name="import_no_file_found">No importable apkg file found</string>
+  <string name="info_rate">AnkiDroid\'e Oy Ver</string>
+  <string name="col_load_failed">Koleksiyon yükleme başarısız oldu.\nAnkiDroid\'i kapatmak için geriye basın.</string>
+  <string name="import_title">İçeri Kart Aktar</string>
+  <string name="import_message">%s dosyasının bütün kartlarını içeri aktarmayı gerçekten istiyor musunuz?</string>
+  <string name="import_log_success">%d kart başarıyla aktarıldı</string>
+  <string name="import_log_error">Aktarma başarısız</string>
+  <string name="import_log_no_apkg">Bu geçerli bir apkg dosyası değil</string>
+  <string name="import_importing">Kartlar aktarılıyor.\nLütfen bekleyin...</string>
+  <string name="import_hint">İçeri kart aktarmak için, apkg dosyasını %s dizinine yerleştirip Tamam\'a basın</string>
+  <string name="import_no_file_found">Aktarılabilecek apkg dosyası bulunmuyor</string>
   <string-array name="dynOrderLabels">
     <item>En eskiler ilk önce</item>
     <item>Rastgele</item>

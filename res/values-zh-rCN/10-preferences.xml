@@ -220,7 +220,7 @@
   <string name="pref_keep_screen_on">保持屏幕开启</string>
   <string name="pref_keep_screen_on_summ">防止在复习时关闭屏幕</string>
   <string name="pref_simple_interface">简单界面</string>
-  <string name="pref_simple_interface_summ">加速卡牌显示，但只支持文本（没有图片、 声音等）</string>
+  <string name="pref_simple_interface_summ">Speeds up card showing but does not support all html features</string>
   <string name="pref_simple_interface_exclude_tags">正常接口，按tag标记</string>
   <string name="pref_simple_interface_exclude_tags_summ">这些tag标记不使用简单界面： XXX</string>
   <string name="deck_conf_deck_name">牌组名称</string>

@@ -220,7 +220,7 @@
   <string name="pref_keep_screen_on">La skjermen forbli på</string>
   <string name="pref_keep_screen_on_summ">Hindre at skjermen slår seg av mens du gjennomgår kort</string>
   <string name="pref_simple_interface">Enkelt grensesnitt</string>
-  <string name="pref_simple_interface_summ">Gjør visning av kort kjappere, men støtter kun tekst (ingen bilder, lyd, osv.)</string>
+  <string name="pref_simple_interface_summ">Speeds up card showing but does not support all html features</string>
   <string name="pref_simple_interface_exclude_tags">Vanlig grensesnitt etter emneord</string>
   <string name="pref_simple_interface_exclude_tags_summ">Ikke bruk enkelt grensesnitt for følgende emneord: XXX</string>
   <string name="deck_conf_deck_name">Kortstokknavn</string>

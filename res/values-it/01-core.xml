@@ -38,7 +38,7 @@
   <string name="ease3_successive">Buono</string>
   <string name="ease3_learning">Facile</string>
   <string name="studyoptions_congrats_undo">Annulla %s</string>
-  <string name="studyoptions_congrats_learnmore">Studia altre carte</string>
+  <string name="studyoptions_congrats_learnmore">Studia altre carte nuove</string>
   <string name="studyoptions_congrats_reviewearly">Ripeti in anticipo</string>
   <string name="studyoptions_congrats_open_other_deck">Apri un altro mazzo</string>
   <string name="studyoptions_congrats_finish">Torna alla schermata di studio</string>
