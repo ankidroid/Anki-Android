@@ -205,7 +205,7 @@ public class Reviewer extends AnkiActivity {
      */
     private boolean mPrefOvertime;
     private boolean mPrefHideDueCount;
-    private boolean mPrefTimer;
+    private boolean mShowTimer;
     private boolean mPrefWhiteboard;
     private boolean mPrefWriteAnswers;
     private boolean mPrefTextSelection;
@@ -640,14 +640,11 @@ public class Reviewer extends AnkiActivity {
                 mWhiteboard.clear();
             }
 
-            if (mPrefTimer) {
-                mCardTimer.setBase(SystemClock.elapsedRealtime());
-                mCardTimer.start();
-            }
             if (sDisplayAnswer) {
                 displayCardAnswer();
             } else {
                 displayCardQuestion();
+                initTimer();
             }
             try {
                 if (mProgressDialog != null && mProgressDialog.isShowing()) {
@@ -682,9 +679,7 @@ public class Reviewer extends AnkiActivity {
         @Override
         public void onPreExecute() {
             mProgressBar.setVisibility(View.VISIBLE);
-            if (mPrefTimer) {
-                mCardTimer.stop();
-            }
+            mCardTimer.stop();
             blockControls();
         }
 
@@ -1044,7 +1039,7 @@ public class Reviewer extends AnkiActivity {
         // DeckTask.launchDeckTask(DeckTask.TASK_TYPE_ANSWER_CARD, mAnswerCardHandler, new DeckTask.TaskData(0, deck,
         // null));
         // } else {
-        // restartTimer();
+        restartTimer();
         // }
         //
         if (mShakeEnabled) {
@@ -1349,7 +1344,7 @@ public class Reviewer extends AnkiActivity {
             mTextBarBlack.setVisibility(View.VISIBLE);
             mTextBarBlue.setVisibility(View.VISIBLE);
             mChosenAnswer.setVisibility(View.VISIBLE);
-            if (mPrefTimer) {
+            if (mShowTimer) {
                 mCardTimer.setVisibility(View.VISIBLE);
             }
             if (mShowProgressBars) {
@@ -1491,11 +1486,19 @@ public class Reviewer extends AnkiActivity {
 
     private void stopTimer() {
         // Stop visible timer and card timer
-        if (mPrefTimer) {
-            mCardTimer.stop();
-        }
+        mCardTimer.stop();
         if (mCurrentCard != null) {
-            // mCurrentCard.stopTimer();
+             mCurrentCard.stopTimer();
+        }
+    }
+
+
+    private void restartTimer() {
+        // Restart visible timer and card timer
+        if (mCurrentCard != null) {
+            mCardTimer.setBase(SystemClock.elapsedRealtime() - mCurrentCard.timeTaken());
+            mCardTimer.start();
+            mCurrentCard.resumeTimer();
         }
     }
 
@@ -1751,10 +1754,7 @@ public class Reviewer extends AnkiActivity {
         }
 
         mCardTimer = (Chronometer) findViewById(R.id.card_time);
-        if (mPrefTimer && (mConfigurationChanged)) {
-            switchVisibility(mCardTimer, View.VISIBLE);
-        }
-        if (mShowProgressBars && (mConfigurationChanged)) {
+        if (mShowProgressBars && mProgressBars.getVisibility() != View.VISIBLE) {
             switchVisibility(mProgressBars, View.VISIBLE);
         }
 
@@ -1972,7 +1972,7 @@ public class Reviewer extends AnkiActivity {
 
 
     private void switchTopBarVisibility(int visible) {
-        if (mPrefTimer) {
+        if (mShowTimer) {
             switchVisibility(mCardTimer, visible, true);
         }
         if (mShowProgressBars) {
@@ -2004,7 +2004,6 @@ public class Reviewer extends AnkiActivity {
         SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(getBaseContext());
         mPrefHideDueCount = preferences.getBoolean("hideDueCount", false);
         mPrefOvertime = preferences.getBoolean("overtime", true);
-        mPrefTimer = preferences.getBoolean("timer", true);
         mPrefWhiteboard = preferences.getBoolean("whiteboard", false);
         mPrefWriteAnswers = preferences.getBoolean("writeAnswers", true);
         mPrefTextSelection = preferences.getBoolean("textSelection", true);
@@ -2174,11 +2173,6 @@ public class Reviewer extends AnkiActivity {
         if (mPrefWhiteboard && !mShowAnimations) {
             mWhiteboard.clear();
         }
-
-        if (mPrefTimer) {
-            mCardTimer.setBase(SystemClock.elapsedRealtime());
-            mCardTimer.start();
-        }
     }
 
 
@@ -2254,17 +2248,27 @@ public class Reviewer extends AnkiActivity {
 
     private Runnable mShowAnswerTask = new Runnable() {
         public void run() {
-            if (mPrefTimer) {
-                mCardTimer.stop();
-            }
             if (mFlipCardLayout.isEnabled() == true && mFlipCardLayout.getVisibility() == View.VISIBLE) {
                 mFlipCardLayout.performClick();
             }
         }
     };
 
+    private void initTimer() {
+        mShowTimer = mCurrentCard.showTimer();
+        if (mShowTimer && mCardTimer.getVisibility() == View.INVISIBLE) {
+        	switchVisibility(mCardTimer, View.VISIBLE);        	
+        } else if (!mShowTimer && mCardTimer.getVisibility() != View.INVISIBLE) {
+        	switchVisibility(mCardTimer, View.INVISIBLE);
+        }
+        mCardTimer.setBase(SystemClock.elapsedRealtime());
+        mCardTimer.start();
+    }
 
     private void displayCardQuestion() {
+    	// show timer, if activated in the deck's preferences
+    	initTimer();
+
         sDisplayAnswer = false;
 
         if (mButtonHeight == 0 && mRelativeButtonSize != 100) {
@@ -2843,10 +2847,6 @@ public class Reviewer extends AnkiActivity {
                 break;
         }
 
-        if (mPrefTimer) {
-            mCardTimer.setEnabled(true);
-        }
-
         if (mPrefWhiteboard) {
             mWhiteboard.setEnabled(true);
         }
@@ -2900,10 +2900,6 @@ public class Reviewer extends AnkiActivity {
                 mEase3Layout.setEnabled(false);
                 mEase4Layout.setEnabled(false);
                 break;
-        }
-
-        if (mPrefTimer) {
-            mCardTimer.setEnabled(false);
         }
 
         if (mPrefWhiteboard) {

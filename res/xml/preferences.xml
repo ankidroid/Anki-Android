@@ -251,11 +251,6 @@
                 android:title="@string/show_next_review_time" />
             <CheckBoxPreference
                 android:defaultValue="true"
-                android:key="timer"
-                android:summary="@string/show_timer_summ"
-                android:title="@string/show_timer" />
-            <CheckBoxPreference
-                android:defaultValue="true"
                 android:key="progressBars"
                 android:summary="@string/show_progress_bars_summ"
                 android:title="@string/show_progress_bars" />

@@ -52,8 +52,6 @@
 <string name="hide_due_count_summ">Hides the due count</string>
 <string name="overtime">Overtime</string>
 <string name="overtime_summ">Continue reviewing after time limit reached</string>
-<string name="show_timer">Show timer</string>
-<string name="show_timer_summ">Timer showing the time it is taking you to answer</string>
 <string name="show_progress_bars">Show progress bars</string>
 <string name="show_progress_bars_summ">Shows today\'s progress and proportion of today\'s yes answers while reviewing</string>
 <string name="fade_scrollbars">Fade scrollbars</string>
