@@ -1,5 +1,6 @@
 /****************************************************************************************
  * Copyright (c) 2010 Norbert Nagold <norbert.nagold@gmail.com>                         *
+ * Copyright (c) 2012 Kostas Spyropoulos <inigo.aldana@gmail.com>                       *
  *                                                                                      *
  * This program is free software; you can redistribute it and/or modify it under        *
  * the terms of the GNU General Public License as published by the Free Software        *
@@ -17,25 +18,18 @@
 package com.ichi2.anki;
 
 import android.app.Activity;
-
-import com.ichi2.anki.R;
-import com.ichi2.anki.receiver.SdCardReceiver;
-
 import android.app.Dialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.IntentFilter;
 import android.content.DialogInterface.OnCancelListener;
 import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.graphics.Typeface;
 import android.os.Bundle;
-import android.os.Handler;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.ContextMenu;
@@ -49,12 +43,15 @@ import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
 
 import com.ichi2.anim.ActivityTransitionAnimation;
+import com.ichi2.anki.receiver.SdCardReceiver;
 import com.ichi2.async.DeckTask;
+import com.ichi2.async.DeckTask.TaskData;
 import com.ichi2.libanki.Card;
 import com.ichi2.libanki.CardStats;
 import com.ichi2.libanki.Collection;
@@ -65,22 +62,26 @@ import com.ichi2.themes.StyledProgressDialog;
 import com.ichi2.themes.Themes;
 import com.ichi2.widget.WidgetStatus;
 
+import org.json.JSONException;
+
 import java.util.ArrayList;
-import java.util.Comparator;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 
-import org.amr.arabic.ArabicUtilities;
-import org.json.JSONException;
-
 public class CardBrowser extends Activity {
+//    private List<Long> mCardIds = new ArrayList<Long>();
     private ArrayList<HashMap<String, String>> mCards;
-    private ArrayList<HashMap<String, String>> mAllCards;
+    //private ArrayList<HashMap<String, String>> mAllCards;
+    private HashMap<String, String> mDeckNames;
     private ListView mCardsListView;
     private SimpleAdapter mCardsAdapter;
     private EditText mSearchEditText;
+    private String mSearchTerms;
+    private String mRestrictOnDeck;
+    private ImageButton mSearchButton;
 
     private StyledProgressDialog mProgressDialog;
     private StyledOpenCollectionDialog mOpenCollectionDialog;
@@ -91,6 +92,7 @@ public class CardBrowser extends Activity {
     private int mPositionInCardsList;
 
     private int mOrder;
+    private boolean mOrderAsc;
 	private int mField;
 
     private static final int CONTEXT_MENU_MARK = 0;
@@ -122,15 +124,24 @@ public class CardBrowser extends Activity {
     private static final int ADD_NOTE = 1;
     private static final int DEFAULT_FONT_SIZE_RATIO = 100;
 
+    // Should match order of R.array.card_browser_order_labels
     private static final int CARD_ORDER_NONE = 0;
-    private static final int CARD_ORDER_SFLD = 1;
-    private static final int CARD_ORDER_DUE = 2;
+    private static final String[] fSortTypes = new String[]{
+        "",
+        "noteFld",
+        "noteCrt",
+        "noteMod",
+        "cardMod",
+        "cardDue",
+        "cardIvl",
+        "cardEase",
+        "cardReps",
+        "cardLapses"};
+    String[] mOrderByFields;
 
     private int[] mBackground;
 
     private boolean mWholeCollection;
-
-    private boolean mShowOnlyMarSus = false;
 
     private String[] allTags;
 	private String[] mFields;
@@ -146,24 +157,8 @@ public class CardBrowser extends Activity {
     private boolean mPrefCacheCardBrowser;
     // private static ArrayList<HashMap<String, String>> sAllCardsCache;
 
-    private Handler mTimerHandler = new Handler();
-    private static final int WAIT_TIME_UNTIL_UPDATE = 800;
-
     private Collection mCol;
     private HashMap<Long, HashMap<Integer, String>> mTemplates;
-
-    private Runnable updateList = new Runnable() {
-        public void run() {
-            updateCardsList();
-        }
-    };
-
-    // private DeckTask.TaskListener mUndoRedoHandler = new DeckTask.TaskListener() {
-    // @Override
-    // public void onPreExecute() {
-    // Resources res = getResources();
-    // mProgressDialog = ProgressDialog.show(CardBrowser.this, "", res.getString(R.string.saving_changes), true);
-    // }
 
     private DialogInterface.OnClickListener mContextMenuListener = new DialogInterface.OnClickListener() {
 
@@ -230,6 +225,10 @@ public class CardBrowser extends Activity {
             reloadCollection(savedInstanceState);
             return;
         }
+        mDeckNames = new HashMap<String, String>();
+        for (long did : mCol.getDecks().allIds()) {
+            mDeckNames.put(String.valueOf(did), mCol.getDecks().name(did));
+        }
         registerExternalStorageListener();
 
         Intent i = getIntent();
@@ -242,14 +241,35 @@ public class CardBrowser extends Activity {
         String sflCustomFont = preferences.getString("browserEditorFont", "");
         mPrefFixArabic = preferences.getBoolean("fixArabicText", false);
         mPrefCacheCardBrowser = preferences.getBoolean("cardBrowserCache", false);
-        mOrder = preferences.getInt("cardBrowserOrder", CARD_ORDER_NONE);
+        
+        Resources res = getResources();
+        mOrderByFields = res.getStringArray(R.array.card_browser_order_labels);
+        try {
+            mOrder = CARD_ORDER_NONE;
+            String colOrder = mCol.getConf().getString("sortType");
+            for (int c = 0; c < fSortTypes.length; ++c) {
+                if (fSortTypes[c].equals(colOrder)) {
+                    mOrder = c;
+                    break;
+                }
+            }
+            mOrderAsc = mCol.getConf().getBoolean("sortBackwards");
+            // default to descending for non-text fields
+            if (fSortTypes[mOrder].equals("noteFld")) {
+                mOrderAsc = !mOrderAsc;
+            }
+        } catch (JSONException e) {
+            throw new RuntimeException(e);
+        }
+//        mOrder = preferences.getInt("cardBrowserOrder", CARD_ORDER_NONE);
+//        mOrderReverse = preferences.getBoolean("cardBrowserOrderReverse", false);
 
         mCards = new ArrayList<HashMap<String, String>>();
-        mAllCards = new ArrayList<HashMap<String, String>>();
+        //mAllCards = new ArrayList<HashMap<String, String>>();
         mCardsListView = (ListView) findViewById(R.id.card_browser_list);
 
-        mCardsAdapter = new SizeControlledListAdapter(this, mCards, R.layout.card_item, new String[] { "sfld", "tmpl",
-                "deck", "flags" }, new int[] { R.id.card_sfld, R.id.card_tmpl, R.id.card_deck, R.id.card_item },
+        mCardsAdapter = new SizeControlledListAdapter(this, mCards, R.layout.card_item, new String[] { "sfld",
+                "deck", "flags" }, new int[] { R.id.card_sfld, R.id.card_deck, R.id.card_item },
                 sflRelativeFontSize, sflCustomFont);
         mCardsAdapter.setViewBinder(new SimpleAdapter.ViewBinder() {
             @Override
@@ -294,27 +314,42 @@ public class CardBrowser extends Activity {
         registerForContextMenu(mCardsListView);
 
         mSearchEditText = (EditText) findViewById(R.id.card_browser_search);
-        mSearchEditText.addTextChangedListener(new TextWatcher() {
-            public void afterTextChanged(Editable s) {
-                mTimerHandler.removeCallbacks(updateList);
-                mTimerHandler.postDelayed(updateList, WAIT_TIME_UNTIL_UPDATE);
-            }
-
-
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-            }
-
-
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
+//        mSearchEditText.addTextChangedListener(new TextWatcher() {
+//            public void afterTextChanged(Editable s) {
+//                mTimerHandler.removeCallbacks(updateList);
+//                mTimerHandler.postDelayed(updateList, WAIT_TIME_UNTIL_UPDATE);
+//            }
+//
+//
+//            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+//            }
+//
+//
+//            public void onTextChanged(CharSequence s, int start, int before, int count) {
+//            }
+//        });
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+        mSearchButton = (ImageButton) findViewById(R.id.card_browser_search_button);
+        mSearchButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mSearchTerms = mSearchEditText.getText().toString().toLowerCase();
+                if (mSearchTerms.length() == 0) {
+                    mSearchEditText.setHint(R.string.downloaddeck_search);
+                }
+                searchCards();
             }
         });
-        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 
+        mSearchTerms = "";
         if (mWholeCollection) {
-            setTitle(getResources().getString(R.string.card_browser_all_decks));
+            mRestrictOnDeck = "";
+            setTitle(res.getString(R.string.card_browser_all_decks));
         } else {
             try {
-                setTitle(mCol.getDecks().current().getString("name"));
+                String deckName = mCol.getDecks().current().getString("name");
+                mRestrictOnDeck = "deck:'" + deckName + "' ";
+                setTitle(deckName);
             } catch (JSONException e) {
                 throw new RuntimeException(e);
             }
@@ -322,7 +357,7 @@ public class CardBrowser extends Activity {
 
         mSelectedTags = new HashSet<String>();
 
-        getCards();
+//        getCards();
     }
 
 
@@ -357,20 +392,12 @@ public class CardBrowser extends Activity {
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
             Log.i(AnkiDroidApp.TAG, "CardBrowser - onBackPressed()");
-            if (mSearchEditText.getText().length() == 0 && !mShowOnlyMarSus && mSelectedTags.size() == 0) {
-                // if (mPrefCacheCardBrowser) {
-                // sCachedDeckPath = mDeck.getDeckPath();
-                // sAllCardsCache = new ArrayList<HashMap<String, String>>();
-                // sAllCardsCache.addAll(mAllCards);
-                // }
+            if (mSearchEditText.getText().length() == 0) {
                 closeCardBrowser(Activity.RESULT_OK);
             } else {
                 mSearchEditText.setText("");
                 mSearchEditText.setHint(R.string.downloaddeck_search);
                 mSelectedTags.clear();
-                mCards.clear();
-                mCards.addAll(mAllCards);
-                updateList();
             }
             return true;
         }
@@ -395,9 +422,9 @@ public class CardBrowser extends Activity {
         item = menu.add(Menu.NONE, MENU_SHOW_MARKED, Menu.NONE, R.string.card_browser_show_marked);
         item.setIcon(R.drawable.ic_menu_star_on);
         item = menu.add(Menu.NONE, MENU_SELECT_SUSPENDED, Menu.NONE, R.string.card_browser_show_suspended);
-        item.setIcon(R.drawable.ic_menu_search);
-        item = menu.add(Menu.NONE, MENU_SELECT_TAG, Menu.NONE, R.string.card_browser_search_by_tag);
         item.setIcon(R.drawable.ic_menu_close_clear_cancel);
+        item = menu.add(Menu.NONE, MENU_SELECT_TAG, Menu.NONE, R.string.card_browser_search_by_tag);
+        item.setIcon(R.drawable.ic_menu_search);
         return true;
     }
 
@@ -431,29 +458,17 @@ public class CardBrowser extends Activity {
                 return true;
 
             case MENU_SHOW_MARKED:
-                mShowOnlyMarSus = true;
+                mSearchTerms = "tag:marked";
+                mSearchEditText.setText("");
                 mSearchEditText.setHint(R.string.card_browser_show_marked);
-                mCards.clear();
-                for (int i = 0; i < mAllCards.size(); i++) {
-                    int flags = Integer.parseInt(mAllCards.get(i).get("flags"));
-                    if (flags == 2 || flags == 3) {
-                        mCards.add(mAllCards.get(i));
-                    }
-                }
-                updateList();
+                searchCards();
                 return true;
 
             case MENU_SELECT_SUSPENDED:
-                mShowOnlyMarSus = true;
+                mSearchTerms = "is:suspended";
+                mSearchEditText.setText("");
                 mSearchEditText.setHint(R.string.card_browser_show_suspended);
-                mCards.clear();
-                for (int i = 0; i < mAllCards.size(); i++) {
-                    int flags = Integer.parseInt(mAllCards.get(i).get("flags"));
-                    if (flags == 1 || flags == 3) {
-                        mCards.add(mAllCards.get(i));
-                    }
-                }
-                updateList();
+                searchCards();
                 return true;
 
             case MENU_SELECT_TAG:
@@ -475,6 +490,7 @@ public class CardBrowser extends Activity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        // FIXME:
         super.onActivityResult(requestCode, resultCode, data);
 
         if (resultCode == DeckPicker.RESULT_DB_ERROR) {
@@ -486,7 +502,8 @@ public class CardBrowser extends Activity {
             DeckTask.launchDeckTask(DeckTask.TASK_TYPE_UPDATE_FACT, mUpdateCardHandler,
                     new DeckTask.TaskData(mCol.getSched(), sCardBrowserCard, false));
         } else if (requestCode == ADD_NOTE && resultCode == RESULT_OK) {
-            getCards();
+            mSearchTerms = mSearchEditText.getText().toString().toLowerCase();
+            searchCards();
         }
     }
 
@@ -500,20 +517,35 @@ public class CardBrowser extends Activity {
         switch (id) {
             case DIALOG_ORDER:
                 builder.setTitle(res.getString(R.string.card_browser_change_display_order_title));
+                builder.setMessage(res.getString(R.string.card_browser_change_display_order_reverse));
                 builder.setIcon(android.R.drawable.ic_menu_sort_by_size);
-                builder.setSingleChoiceItems(getResources().getStringArray(R.array.card_browser_order_labels), mOrder,
+                builder.setSingleChoiceItems(res.getStringArray(R.array.card_browser_order_labels), mOrder,
                         new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface arg0, int which) {
                                 if (which != mOrder) {
                                     mOrder = which;
-                                    AnkiDroidApp.getSharedPrefs(AnkiDroidApp.getInstance().getBaseContext()).edit()
-                                            .putInt("cardBrowserOrder", mOrder).commit();
-                                    if (mOrder != CARD_ORDER_NONE) {
-                                        DeckTask.launchDeckTask(DeckTask.TASK_TYPE_UPDATE_CARD_BROWSER_LIST,
-                                                mSortCardsHandler, new DeckTask.TaskData(mAllCards,
-                                                        new HashMapCompare()));
+                                    mOrderAsc = false;
+                                    try {
+                                        mCol.getConf().put("sortType", fSortTypes[mOrder]);
+                                        // default to descending for non-text fields
+                                        if (fSortTypes[mOrder].equals("noteFld")) {
+                                            mOrderAsc = true;
+                                        }
+                                        mCol.getConf().put("sortBackwards", mOrderAsc);
+                                    } catch (JSONException e) {
+                                        throw new RuntimeException(e);
                                     }
+                                    searchCards();
+                                } else if (which != CARD_ORDER_NONE) {
+                                    mOrderAsc = !mOrderAsc;
+                                    try {
+                                        mCol.getConf().put("sortBackwards", mOrderAsc);
+                                    } catch (JSONException e) {
+                                        throw new RuntimeException(e);
+                                    }
+                                    Collections.reverse(mCards);
+                                    updateList();
                                 }
                             }
                         });
@@ -521,6 +553,7 @@ public class CardBrowser extends Activity {
                 break;
 
             case DIALOG_CONTEXT_MENU:
+                // FIXME:
                 String[] entries = new String[4];
                 @SuppressWarnings("unused")
                 MenuItem item;
@@ -555,34 +588,15 @@ public class CardBrowser extends Activity {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         mSearchEditText.setText("");
-                        mTimerHandler.removeCallbacks(updateList);
                         String tags = mSelectedTags.toString();
                         mSearchEditText.setHint(getResources().getString(R.string.card_browser_tags_shown,
                                 tags.substring(1, tags.length() - 1)));
-                        DeckTask.launchDeckTask(
-                                DeckTask.TASK_TYPE_UPDATE_CARD_BROWSER_LIST,
-                                new DeckTask.TaskListener() {
-                                    @Override
-                                    public void onPreExecute() {
-                                        mProgressDialog = StyledProgressDialog.show(CardBrowser.this, "",
-                                                getResources().getString(R.string.card_browser_filtering_cards), true);
-                                    }
-
-
-                                    @Override
-                                    public void onProgressUpdate(DeckTask.TaskData... values) {
-                                    }
-
-
-                                    @Override
-                                    public void onPostExecute(DeckTask.TaskData result) {
-                                        updateList();
-                                        if (mProgressDialog != null && mProgressDialog.isShowing()) {
-                                            mProgressDialog.dismiss();
-                                        }
-                                    }
-                                }, new DeckTask.TaskData(mAllCards), new DeckTask.TaskData(mCards),
-                                new DeckTask.TaskData(new Object[] { mSelectedTags }));
+                        StringBuilder sb = new StringBuilder();
+                        for (String tag : mSelectedTags) {
+                            sb.append("tag:").append(tag).append(" "); 
+                        }
+                        mSearchTerms = sb.toString();
+                        searchCards();
                     }
                 });
                 builder.setNegativeButton(res.getString(R.string.cancel), new OnClickListener() {
@@ -600,35 +614,35 @@ public class CardBrowser extends Activity {
                 });
                 dialog = builder.create();
                 break;
-		case DIALOG_FIELD:
-			builder.setTitle(res
-					.getString(R.string.card_browser_field_title));
-			builder.setIcon(android.R.drawable.ic_menu_sort_by_size);
-			
-	        HashMap<String, String> card = mAllCards.get(0);
-	        
-			String[][] items = mCol.getCard(Long.parseLong( card.get("id") )).note().items();
-			
-			
-			mFields = new String[items.length+1];
-			mFields[0]="SFLD";
-			
-			for (int i = 0; i < items.length; i++) {
-				mFields[i+1] = items[i][0];
-			}
-			
-			builder.setSingleChoiceItems(mFields, 0, new DialogInterface.OnClickListener() {
-				@Override
-				public void onClick(DialogInterface arg0, int which) {
-					if (which != mField) {
-						mField = which;
-						AnkiDroidApp.getSharedPrefs(AnkiDroidApp.getInstance().getBaseContext()).edit().putInt("cardBrowserField", mField).commit();
-						getCards();
-					}
-				}
-	        });
-			dialog = builder.create();
-			break;
+//		case DIALOG_FIELD:
+//			builder.setTitle(res
+//					.getString(R.string.card_browser_field_title));
+//			builder.setIcon(android.R.drawable.ic_menu_sort_by_size);
+//			
+//	        HashMap<String, String> card = mAllCards.get(0);
+//	        
+//			String[][] items = mCol.getCard(Long.parseLong( card.get("id") )).note().items();
+//			
+//			
+//			mFields = new String[items.length+1];
+//			mFields[0]="SFLD";
+//			
+//			for (int i = 0; i < items.length; i++) {
+//				mFields[i+1] = items[i][0];
+//			}
+//			
+//			builder.setSingleChoiceItems(mFields, 0, new DialogInterface.OnClickListener() {
+//				@Override
+//				public void onClick(DialogInterface arg0, int which) {
+//					if (which != mField) {
+//						mField = which;
+//						AnkiDroidApp.getSharedPrefs(AnkiDroidApp.getInstance().getBaseContext()).edit().putInt("cardBrowserField", mField).commit();
+//						getCards();
+//					}
+//				}
+//	        });
+//			dialog = builder.create();
+//			break;
         }
         return dialog;
     }
@@ -639,18 +653,31 @@ public class CardBrowser extends Activity {
         Resources res = getResources();
         StyledDialog ad = (StyledDialog) dialog;
         switch (id) {
+            case DIALOG_ORDER:
+                for (int i = 0; i < mOrderByFields.length; ++i) {
+                    if (i != CARD_ORDER_NONE && i == mOrder) {
+                        if (mOrderAsc) {
+                            ad.changeListItem(i, mOrderByFields[i] + " (\u25b2)");
+                        } else {
+                            ad.changeListItem(i, mOrderByFields[i] + " (\u25bc)");
+                        }
+                    } else {
+                        ad.changeListItem(i, mOrderByFields[i]);
+                    }
+                }
+                break;
             case DIALOG_CONTEXT_MENU:
                 HashMap<String, String> card = mCards.get(mPositionInCardsList);
                 int flags = Integer.parseInt(card.get("flags"));
                 if (flags == 2 || flags == 3) {
                     ad.changeListItem(CONTEXT_MENU_MARK, res.getString(R.string.card_browser_unmark_card));
-                    Log.i(AnkiDroidApp.TAG, "Selected Card is currently marked");
+                    Log.d(AnkiDroidApp.TAG, "Selected Card is currently marked");
                 } else {
                     ad.changeListItem(CONTEXT_MENU_MARK, res.getString(R.string.card_browser_mark_card));
                 }
                 if (flags == 1 || flags == 3) {
                     ad.changeListItem(CONTEXT_MENU_SUSPEND, res.getString(R.string.card_browser_unsuspend_card));
-                    Log.i(AnkiDroidApp.TAG, "Selected Card is currently suspended");
+                    Log.d(AnkiDroidApp.TAG, "Selected Card is currently suspended");
                 } else {
                     ad.changeListItem(CONTEXT_MENU_SUSPEND, res.getString(R.string.card_browser_suspend_card));
                 }
@@ -663,10 +690,10 @@ public class CardBrowser extends Activity {
                     public void onClick(DialogInterface dialog, int which) {
                         String tag = allTags[which];
                         if (mSelectedTags.contains(tag)) {
-                            Log.i(AnkiDroidApp.TAG, "unchecked tag: " + tag);
+                            Log.d(AnkiDroidApp.TAG, "unchecked tag: " + tag);
                             mSelectedTags.remove(tag);
                         } else {
-                            Log.i(AnkiDroidApp.TAG, "checked tag: " + tag);
+                            Log.d(AnkiDroidApp.TAG, "checked tag: " + tag);
                             mSelectedTags.add(tag);
                         }
                     }
@@ -676,30 +703,14 @@ public class CardBrowser extends Activity {
     }
 
 
-    private void updateCardsList() {
-        String searchText = mSearchEditText.getText().toString().toLowerCase();
-        mShowOnlyMarSus = false;
-
-        mSearchEditText.setHint(R.string.downloaddeck_search);
-        mCards.clear();
-        if (searchText.length() == 0 && mSelectedTags.size() == 0) {
-            mCards.addAll(mAllCards);
-        } else {
-            for (int i = 0; i < mAllCards.size(); i++) {
-                HashMap<String, String> card = mAllCards.get(i);
-                if (card.get("sfld").toLowerCase().indexOf(searchText) != -1) {
-                    mCards.add(mAllCards.get(i));
-                }
-            }
+    private void searchCards() {
+        String searchText = mRestrictOnDeck + mSearchTerms;
+        if (mCol != null) {
+            mCards.clear();
+            DeckTask.launchDeckTask(DeckTask.TASK_TYPE_SEARCH_CARDS,
+                    mSearchCardsHandler, new DeckTask.TaskData(
+                            new Object[]{mCol, mDeckNames, searchText, ((mOrder == CARD_ORDER_NONE)? "": "true")}));
         }
-        updateList();
-    }
-
-
-    private void getCards() {
-        mAllCards.clear();
-        DeckTask.launchDeckTask(DeckTask.TASK_TYPE_LOAD_CARDS, mLoadCardsHandler, new DeckTask.TaskData(mCol, 0,
-                mWholeCollection));
     }
 
 
@@ -750,7 +761,7 @@ public class CardBrowser extends Activity {
         mCardsAdapter.notifyDataSetChanged();
         int count = mCards.size();
         UIUtils.setActionBarSubtitle(this,
-                getResources().getQuantityString(R.plurals.card_browser_subtitle, count, count, mAllCards.size()));
+                getResources().getQuantityString(R.plurals.card_browser_subtitle, count, count, mCards.size()));
     }
 
 
@@ -768,16 +779,13 @@ public class CardBrowser extends Activity {
     private void updateCardInList(Card card, String updatedCardTags) {
         Note note = card.note();
         for (Card c : note.cards()) {
-            int aPos = getPosition(mAllCards, c.getId());
             int pos = getPosition(mCards, c.getId());
 
             if (updatedCardTags != null) {
-                mAllCards.get(aPos).put("tags", updatedCardTags);
                 mCards.get(pos).put("tags", updatedCardTags);
             }
 
             String sfld = note.getSFld();
-            mAllCards.get(aPos).put("sfld", sfld);
             mCards.get(pos).put("sfld", sfld);
 
             if (mWholeCollection) {
@@ -787,12 +795,10 @@ public class CardBrowser extends Activity {
                 } catch (JSONException e) {
                     throw new RuntimeException(e);
                 }
-                mAllCards.get(aPos).put("deck", deckName);
                 mCards.get(pos).put("deck", deckName);
             }
 
             String flags = Integer.toString((c.getQueue() == -1 ? 1 : 0) + (note.hasTag("marked") ? 2 : 0));
-            mAllCards.get(aPos).put("flags", flags);
             mCards.get(pos).put("flags", flags);
         }
         updateList();
@@ -802,129 +808,127 @@ public class CardBrowser extends Activity {
     private void deleteNote(Card card) {
         ArrayList<Card> cards = card.note().cards();
         for (Card c : cards) {
+//            mCardIds.remove(new Long(c.getId()));
             mCards.remove(getPosition(mCards, c.getId()));
-            mAllCards.remove(getPosition(mAllCards, c.getId()));
         }
         updateList();
     }
 
-    private DeckTask.TaskListener mLoadCardsHandler = new DeckTask.TaskListener() {
-        boolean canceled = false;
-
-
-        @Override
-        public void onPreExecute() {
-            if (!mUndoRedoDialogShowing) {
-                if (mProgressDialog != null && mProgressDialog.isShowing()) {
-                    mProgressDialog.setMessage(getResources().getString(R.string.card_browser_load));
-                    mProgressDialog.setOnCancelListener(new OnCancelListener() {
-
-                        @Override
-                        public void onCancel(DialogInterface arg0) {
-                            canceled = true;
-                            DeckTask.cancelTask();
-                            closeCardBrowser();
-                        }
-                    });
-                } else {
-                    mProgressDialog = StyledProgressDialog.show(CardBrowser.this, "",
-                            getResources().getString(R.string.card_browser_load), true, true, new OnCancelListener() {
-
-                                @Override
-                                public void onCancel(DialogInterface arg0) {
-                                    canceled = true;
-                                    DeckTask.cancelTask();
-                                    closeCardBrowser();
-                                }
-                            });
-                }
-            } else {
-                mProgressDialog.setMessage(getResources().getString(R.string.card_browser_load));
-                mUndoRedoDialogShowing = false;
-            }
-        }
-
-
-        @Override
-        public void onPostExecute(DeckTask.TaskData result) {
-            // This verification would not be necessary if
-            // onConfigurationChanged it's executed correctly (which seems
-            // that emulator does not do)
-        }
-
-
-        @Override
-        public void onProgressUpdate(DeckTask.TaskData... values) {
-            if (canceled) {
-                return;
-            }
-            ArrayList<HashMap<String, String>> cards = values[0].getCards();
-            if (cards == null) {
-                Resources res = getResources();
-                StyledDialog.Builder builder = new StyledDialog.Builder(CardBrowser.this);
-                builder.setTitle(res.getString(R.string.error));
-                builder.setIcon(R.drawable.ic_dialog_alert);
-                builder.setMessage(res.getString(R.string.card_browser_cardloading_error));
-                builder.setPositiveButton(res.getString(R.string.ok), new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        closeCardBrowser();
-                    }
-                });
-                builder.setOnCancelListener(new OnCancelListener() {
-                    @Override
-                    public void onCancel(DialogInterface dialog) {
-                        closeCardBrowser();
-                    }
-                });
-                builder.create().show();
-            } else {
-                if (mPrefFixArabic) {
-                    for (HashMap<String, String> entry : cards) {
-                        entry.put("sfld", ArabicUtilities.reshapeSentence(entry.get("sfld")));
-                    }
-                }
-                try {
-					
-					int field = AnkiDroidApp.getSharedPrefs(getBaseContext()).getInt("cardBrowserField", 0);
-					
-					if (cards.size() > 0 && field > 0 && (mFields != null)) {
-						Card tempCard = mCol.getCard(Long.parseLong(cards.get(0).get("id")));						
-						ArrayList<String> uniqueFields = new ArrayList<String>();
-						for (HashMap<String, String> entry : cards) {
-							tempCard = mCol.getCard(Long.parseLong(entry.get("id")));
-							String item = tempCard.note().getitem(mFields[field]);
-							entry.put("sfld", item);
-
-							if (!uniqueFields.contains(item)) {
-								uniqueFields.add(item);
-								mAllCards.add(entry);
-								mCards.add(entry);
-							}						
-						}
-					} else {
-						mAllCards.addAll(cards);
-						mCards.addAll(cards);
-					}
-					
-					
-					
-                    if (mOrder == CARD_ORDER_NONE) {
-                        updateCardsList();
-                        mProgressDialog.dismiss();
-                    } else {
-                        DeckTask.launchDeckTask(DeckTask.TASK_TYPE_UPDATE_CARD_BROWSER_LIST, mSortCardsHandler,
-                                new DeckTask.TaskData(mAllCards, new HashMapCompare()));
-                    }
-                } catch (OutOfMemoryError e) {
-                    Log.e(AnkiDroidApp.TAG, "CardBrowser: mLoadCardsHandler: OutOfMemoryError: " + e);
-                    Themes.showThemedToast(CardBrowser.this,
-                            getResources().getString(R.string.error_insufficient_memory), false);
-                    closeCardBrowser();
-                }
-            }
-        }
-    };
+//    private DeckTask.TaskListener mLoadCardsHandler = new DeckTask.TaskListener() {
+//        boolean canceled = false;
+//
+//
+//        @Override
+//        public void onPreExecute() {
+//            if (!mUndoRedoDialogShowing) {
+//                if (mProgressDialog != null && mProgressDialog.isShowing()) {
+//                    mProgressDialog.setMessage(getResources().getString(R.string.card_browser_load));
+//                    mProgressDialog.setOnCancelListener(new OnCancelListener() {
+//
+//                        @Override
+//                        public void onCancel(DialogInterface arg0) {
+//                            canceled = true;
+//                            DeckTask.cancelTask();
+//                            closeCardBrowser();
+//                        }
+//                    });
+//                } else {
+//                    mProgressDialog = StyledProgressDialog.show(CardBrowser.this, "",
+//                            getResources().getString(R.string.card_browser_load), true, true, new OnCancelListener() {
+//
+//                                @Override
+//                                public void onCancel(DialogInterface arg0) {
+//                                    canceled = true;
+//                                    DeckTask.cancelTask();
+//                                    closeCardBrowser();
+//                                }
+//                            });
+//                }
+//            } else {
+//                mProgressDialog.setMessage(getResources().getString(R.string.card_browser_load));
+//                mUndoRedoDialogShowing = false;
+//            }
+//        }
+//
+//
+//        @Override
+//        public void onPostExecute(DeckTask.TaskData result) {
+//            // This verification would not be necessary if
+//            // onConfigurationChanged it's executed correctly (which seems
+//            // that emulator does not do)
+//        }
+//
+//
+//        @Override
+//        public void onProgressUpdate(DeckTask.TaskData... values) {
+//            if (canceled) {
+//                return;
+//            }
+//            ArrayList<HashMap<String, String>> cards = values[0].getCards();
+//            if (cards == null) {
+//                Resources res = getResources();
+//                StyledDialog.Builder builder = new StyledDialog.Builder(CardBrowser.this);
+//                builder.setTitle(res.getString(R.string.error));
+//                builder.setIcon(R.drawable.ic_dialog_alert);
+//                builder.setMessage(res.getString(R.string.card_browser_cardloading_error));
+//                builder.setPositiveButton(res.getString(R.string.ok), new DialogInterface.OnClickListener() {
+//                    @Override
+//                    public void onClick(DialogInterface dialog, int which) {
+//                        closeCardBrowser();
+//                    }
+//                });
+//                builder.setOnCancelListener(new OnCancelListener() {
+//                    @Override
+//                    public void onCancel(DialogInterface dialog) {
+//                        closeCardBrowser();
+//                    }
+//                });
+//                builder.create().show();
+//            } else {
+//                if (mPrefFixArabic) {
+//                    for (HashMap<String, String> entry : cards) {
+//                        entry.put("sfld", ArabicUtilities.reshapeSentence(entry.get("sfld")));
+//                    }
+//                }
+//                try {
+//
+//                    int field = AnkiDroidApp.getSharedPrefs(getBaseContext()).getInt("cardBrowserField", 0);
+//
+//					if (cards.size() > 0 && field > 0 && (mFields != null)) {
+//						Card tempCard = mCol.getCard(Long.parseLong(cards.get(0).get("id")));
+//						ArrayList<String> uniqueFields = new ArrayList<String>();
+//						for (HashMap<String, String> entry : cards) {
+//							tempCard = mCol.getCard(Long.parseLong(entry.get("id")));
+//							String item = tempCard.note().getitem(mFields[field]);
+//							entry.put("sfld", item);
+//
+//							if (!uniqueFields.contains(item)) {
+//								uniqueFields.add(item);
+//								mAllCards.add(entry);
+//								mCards.add(entry);
+//							}
+//						}
+//					} else {
+//						mAllCards.addAll(cards);
+//						mCards.addAll(cards);
+//					}
+//
+//                    if (mOrder == CARD_ORDER_NONE) {
+//                        updateCardsList();
+//                        mProgressDialog.dismiss();
+//                    } else {
+//                        DeckTask.launchDeckTask(DeckTask.TASK_TYPE_UPDATE_CARD_BROWSER_LIST, mSortCardsHandler,
+//                                new DeckTask.TaskData(mAllCards, new HashMapCompare()));
+//                    }
+//                } catch (OutOfMemoryError e) {
+//                    Log.e(AnkiDroidApp.TAG, "CardBrowser: mLoadCardsHandler: OutOfMemoryError: " + e);
+//                    Themes.showThemedToast(CardBrowser.this,
+//                            getResources().getString(R.string.error_insufficient_memory), false);
+//                    closeCardBrowser();
+//                }
+//            }
+//        }
+//    };
 
     private DeckTask.TaskListener mUpdateCardHandler = new DeckTask.TaskListener() {
         @Override
@@ -937,6 +941,10 @@ public class CardBrowser extends Activity {
 
         @Override
         public void onProgressUpdate(DeckTask.TaskData... values) {
+//            // Update list if search involved marked
+//            if (fSearchMarkedPattern.matcher(mSearchTerms).find()) {
+//                updateCardsList();
+//            }
             updateCardInList(values[0].getCard(), values[0].getString());
         }
 
@@ -968,6 +976,10 @@ public class CardBrowser extends Activity {
         @Override
         public void onPostExecute(DeckTask.TaskData result) {
             if (result.getBoolean()) {
+//                // Update list if search on suspended
+//                if (fSearchSuspendedPattern.matcher(mSearchTerms).find()) {
+//                    updateCardsList();
+//                }
                 updateCardInList(mCol.getCard(Long.parseLong(mCards.get(mPositionInCardsList).get("id"))), null);
             } else {
                 closeCardBrowser(DeckPicker.RESULT_DB_ERROR);
@@ -998,6 +1010,62 @@ public class CardBrowser extends Activity {
         }
     };
 
+    private DeckTask.TaskListener mSearchCardsHandler = new DeckTask.TaskListener() {
+        @Override
+        public void onProgressUpdate(TaskData... values) {
+//            mCardIds = values[0].getIdList();
+            mCards.clear();
+            mCards.addAll(values[0].getCards());
+            updateList();
+        }
+
+        @Override
+        public void onPreExecute() {
+            Resources res = getResources();
+            if (mProgressDialog != null && mProgressDialog.isShowing()) {
+                mProgressDialog.setMessage(res.getString(R.string.card_browser_filtering_cards));
+            } else {
+                mProgressDialog = StyledProgressDialog.show(CardBrowser.this, "",
+                        res.getString(R.string.card_browser_filtering_cards), true);
+            }
+        }
+
+        @Override
+        public void onPostExecute(TaskData result) {
+            if (mProgressDialog != null && mProgressDialog.isShowing()) {
+                mProgressDialog.dismiss();
+            }
+        }
+    };
+
+    private DeckTask.TaskListener mReloadCardsHandler = new DeckTask.TaskListener() {
+        @Override
+        public void onProgressUpdate(TaskData... values) {
+        }
+
+        @Override
+        public void onPreExecute() {
+            Resources res = getResources();
+            if (mProgressDialog != null && mProgressDialog.isShowing()) {
+                mProgressDialog.setMessage(res.getString(R.string.card_browser_load));
+            } else {
+                mProgressDialog = StyledProgressDialog.show(CardBrowser.this, "",
+                        res.getString(R.string.card_browser_load), true);
+            }
+        }
+
+        @Override
+        public void onPostExecute(TaskData result) {
+            if (mProgressDialog != null && mProgressDialog.isShowing()) {
+                mProgressDialog.dismiss();
+            }
+            mCards.clear();
+            mCards.addAll(result.getCards());
+            updateList();
+        }
+    };
+
+
     private DeckTask.TaskListener mSortCardsHandler = new DeckTask.TaskListener() {
         @Override
         public void onPreExecute() {
@@ -1018,7 +1086,8 @@ public class CardBrowser extends Activity {
 
         @Override
         public void onPostExecute(DeckTask.TaskData result) {
-            updateCardsList();
+            // FIXME:
+            searchCards();
             if (mProgressDialog != null && mProgressDialog.isShowing()) {
                 mProgressDialog.dismiss();
             }
@@ -1150,33 +1219,33 @@ public class CardBrowser extends Activity {
         }
     }
 
-    private class HashMapCompare implements Comparator<HashMap<String, String>> {
-        @Override
-        public int compare(HashMap<String, String> object1, HashMap<String, String> object2) {
-            try {
-                int result = 0;
-                switch (mOrder) {
-                    case CARD_ORDER_SFLD:
-                        result = object1.get("sfld").compareToIgnoreCase(object2.get("sfld"));
-                        if (result == 0) {
-                            result = object1.get("tmpl").compareToIgnoreCase(object2.get("tmpl"));
-                        }
-                        break;
-
-                    case CARD_ORDER_DUE:
-                        result = Long.valueOf(object1.get("due")).compareTo(Long.valueOf(object2.get("due")));
-                        if (result == 0) {
-                            result = object1.get("sfld").compareToIgnoreCase(object2.get("sfld"));
-                        }
-                        break;
-                }
-                return result;
-            } catch (Exception e) {
-                Log.e(AnkiDroidApp.TAG, "Error on sorting cards: " + e);
-                return 0;
-            }
-        }
-    }
+//    private class HashMapCompare implements Comparator<HashMap<String, String>> {
+//        @Override
+//        public int compare(HashMap<String, String> object1, HashMap<String, String> object2) {
+//            try {
+//                int result = 0;
+//                switch (mOrder) {
+//                    case CARD_ORDER_SFLD:
+//                        result = object1.get("sfld").compareToIgnoreCase(object2.get("sfld"));
+//                        if (result == 0) {
+//                            result = object1.get("tmpl").compareToIgnoreCase(object2.get("tmpl"));
+//                        }
+//                        break;
+//
+//                    case CARD_ORDER_DUE:
+//                        result = Long.valueOf(object1.get("due")).compareTo(Long.valueOf(object2.get("due")));
+//                        if (result == 0) {
+//                            result = object1.get("sfld").compareToIgnoreCase(object2.get("sfld"));
+//                        }
+//                        break;
+//                }
+//                return result;
+//            } catch (Exception e) {
+//                Log.e(AnkiDroidApp.TAG, "Error on sorting cards: " + e);
+//                return 0;
+//            }
+//        }
+//    }
 
     /**
      * Show/dismiss dialog when sd card is ejected/remounted (collection is saved by SdCardReceiver)
