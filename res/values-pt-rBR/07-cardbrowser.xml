@@ -41,8 +41,8 @@
   <string name="card_browser_card_details">Detalhes do cartão</string>
   <string name="card_details_question">Pergunta</string>
   <string name="card_details_answer">Resposta</string>
-  <string name="card_details_due">Programado</string>
-  <string name="card_details_last_due">Último programado</string>
+  <string name="card_details_due">Devido</string>
+  <string name="card_details_last_due">Último devido</string>
   <string name="card_details_now">Agora</string>
   <string name="card_details_interval">Intervalo</string>
   <string name="card_details_ease">Dificuldade</string>

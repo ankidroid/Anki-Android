@@ -140,10 +140,10 @@
   <string name="shake_intensity_summ">Seuil pour la reconnaissance de secousse: XXX</string>
   <string name="sync_fetch_missing_media">Télécharger les médias lors de la synchronisation</string>
   <string name="sync_fetch_missing_media_summ">Lors de la synchronisation, automatiquement télécharger les médias disparus.</string>
-  <string name="fix_hebrew_text">Fix for Hebrew vowels</string>
-  <string name="fix_hebrew_text_summ">Workaround for rendering Hebrew vowels correctly.</string>
+  <string name="fix_hebrew_text">Correctif pour les voyelles en Hébreu</string>
+  <string name="fix_hebrew_text_summ">Solution de rechange pour afficher correctement les voyelles hébraïques.</string>
   <string name="fix_hebrew_instructions">This setting bypasses the RTL algorithm of Android to show Hebrew text with vowels correctly.\n\nFor this to work, you need to download font Tohu.ttf and copy it manually to:\n%s/fonts/\n\nYou won\'t have to modify your cards.</string>
-  <string name="fix_hebrew_download_font">Download Font</string>
+  <string name="fix_hebrew_download_font">Télécharger la police</string>
   <string name="default_font">Police par défaut</string>
   <string name="default_font_summ">The font used for text that has no font formatting specified. Custom fonts should be installed on the SD card in a folder called \'fonts\' in your AnkiDroid folder.</string>
   <string name="language">Langue</string>
@@ -220,7 +220,7 @@
   <string name="pref_keep_screen_on">Garder l\'écran allumé</string>
   <string name="pref_keep_screen_on_summ">Empêcher l\'écran d\'être mis hors tension pendant la revue des cartes</string>
   <string name="pref_simple_interface">Interface simplifiée</string>
-  <string name="pref_simple_interface_summ">Accélère l\'affichage de la carte mais prend uniquement en charge les textes (pas d\'images, de sons, etc.)</string>
+  <string name="pref_simple_interface_summ">Speeds up card showing but does not support all html features</string>
   <string name="pref_simple_interface_exclude_tags">Normal interface by tag</string>
   <string name="pref_simple_interface_exclude_tags_summ">Ne pas utiliser l\'interface simplifiée pour ces tags : XXX</string>
   <string name="deck_conf_deck_name">Nom du paquet</string>
@@ -256,6 +256,8 @@
   <string name="deck_conf_seconds">XXX secondes</string>
   <string name="deck_conf_timer">Montrer la minuterie</string>
   <string name="deck_conf_autoplay">Jouer automatiquement l\'audio</string>
+  <string name="deck_conf_replayq">Replay Question</string>
+  <string name="deck_conf_replayq_summ">Quand la réponse est affichée, rejouer l\'audio de la question et de la réponse</string>
   <string name="deck_conf_add">Ajouter une configuration</string>
   <string name="deck_conf_ren">Renommer la configuration</string>
   <string name="deck_conf_rem">Supprimer la configuration</string>

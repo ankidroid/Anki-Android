@@ -760,8 +760,7 @@ public class CardBrowser extends Activity {
     private void updateList() {
         mCardsAdapter.notifyDataSetChanged();
         int count = mCards.size();
-        UIUtils.setActionBarSubtitle(this,
-                getResources().getQuantityString(R.plurals.card_browser_subtitle, count, count, mCards.size()));
+        AnkiDroidApp.getCompat().setSubtitle(this, getResources().getQuantityString(R.plurals.card_browser_subtitle, count, count, mCards.size()));
     }
 
 

@@ -48,18 +48,18 @@
   <string-array name="studyoptions_more_new_card_order">
     <item>Mostra le carte nuove in ordine casuale</item>
     <item>Mostra le carte nuove in ordine di aggiunta</item>
-    <item>Mostra le nuove carte in ordine di aggiunta inverso</item>
+    <item>Mostra le carte nuove in ordine di aggiunta inverso</item>
   </string-array>
   <string-array name="studyoptions_more_new_card_schedule">
     <item>Distribuisci le carte nuove sulla sequenza di ripetizioni</item>
-    <item>Mostra le carte nuove dopo tutte le altre</item>
-    <item>Mostra le carte nuove prima delle ripetizioni</item>
+    <item>Carte nuove dopo tutte le altre</item>
+    <item>Carte nuove prima delle ripetizioni</item>
   </string-array>
   <string-array name="studyoptions_more_rev_card_order">
     <item>Ripeti a partire dalle carte con l\'intervallo più lungo</item>
     <item>Ripeti a partire dalle carte con l\'intervallo più corto</item>
     <item>Ripeti le carte in ordine di scadenza</item>
-    <item>Rpeti le carte in ordine casuale</item>
+    <item>Ripeti le carte in ordine casuale</item>
   </string-array>
   <string-array name="studyoptions_more_fail_card_option">
     <item>Mostra presto le carte fallite</item>

@@ -220,7 +220,7 @@
   <string name="pref_keep_screen_on">Κρατήστε οθόνη αναμένη</string>
   <string name="pref_keep_screen_on_summ">Αποτροπή της οθόνης από το να σβήσει κατά την επανάληψη</string>
   <string name="pref_simple_interface">Απλό interface</string>
-  <string name="pref_simple_interface_summ">Επιταχύνει την εμφάνιση κάρτας αλλά υποστηρίζει μόνο κείμενο (χωρίς εικόνες, ήχους κλπ.)</string>
+  <string name="pref_simple_interface_summ">Speeds up card showing but does not support all html features</string>
   <string name="pref_simple_interface_exclude_tags">Κανονική παρουσίαση με βάση την ετικέτα</string>
   <string name="pref_simple_interface_exclude_tags_summ">Μη εφαρμογή απλής παρουσίασης για αυτές τις ετικέτες: XXX</string>
   <string name="deck_conf_deck_name">Όνομα τράπουλας</string>
@@ -256,6 +256,8 @@
   <string name="deck_conf_seconds">XXX δευτερόλεπτα</string>
   <string name="deck_conf_timer">Εμφάνιση χρονόμετρου απαντήσεων</string>
   <string name="deck_conf_autoplay">Αυτόματη αναπαραγωγή ήχου</string>
+  <string name="deck_conf_replayq">Replay Question</string>
+  <string name="deck_conf_replayq_summ">When answer shown, replay both question and answer audio</string>
   <string name="deck_conf_add">Προσθήκη ρυθμίσεων</string>
   <string name="deck_conf_ren">Μετονομασία ρυθμίσεων</string>
   <string name="deck_conf_rem">Διαγραφή ρυθμίσεων</string>

@@ -54,7 +54,7 @@
   <string name="deck_summary_average_year">Média vistos ano passado</string>
   <string name="deck_summary_average_total">Média de vistos sempre</string>
   <string name="deck_summary_forecast">Previsão</string>
-  <string name="deck_summary_tomorrow_due">Programados Amanhã: &lt;b&gt;%d&lt;/b&gt; cartões</string>
+  <string name="deck_summary_tomorrow_due">Devidos Amanhã: &lt;b&gt;%d&lt;/b&gt; cartões</string>
   <string name="deck_summary_tomorrow_new">Novos amanhã: &lt;b&gt;%d&lt;/b&gt; cartões</string>
   <string name="deck_summary_tomorrow_time">Tempo para amanhã: &lt;b&gt;%d&lt;/b&gt; min.</string>
   <string name="deck_summary_finished_in">Cartões novos terminam em: &lt;b&gt;%d&lt;/b&gt; dias</string>

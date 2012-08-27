@@ -43,7 +43,6 @@ public class Anki2Importer {
 	int mTotal;
 	ArrayList<String> mLog;
 	long mTs;
-	boolean mNeedCards = true;
 	String mDeckPrefix = null;
 
 	Collection mDst;
@@ -180,14 +179,20 @@ public class Anki2Importer {
             		existing.put((Long) note[0], true);
             		// rewrite internal ids, models etc.
             		note[2] = lmid;
-            		note[3] = Utils.intNow();
             		note[4] = usn;
             		add.add(note);
             		dirty.add((Long) note[0]);
             		// note we have the added note
             		mNotes.put((String) note[1], new Object[]{note[0], note[3], note[2]});
             	} else {
-            		// not yet implemented
+//            		// update existing note - not yet tested; for post 2.0
+//            		boolean newer = note[3] > mod;
+//            		if (mAllowUpdate && _mid(mid) == mid && newer) {
+//            			note[0] = localNid;
+//            			note[4] = usn;
+//            			add.add(note);
+//            			dirty.add(note[0]);
+//            		}
             	}
             }
         } finally {
@@ -221,9 +226,6 @@ public class Anki2Importer {
 				return mModelMap.get(mid);
 			}
 			JSONObject src = new JSONObject(mSrc.getModels().get(mid).toString());
-			if (!mNeedCards) {
-				src.put("needWizard", 1);
-			}
 			// if it doesn't exist, we'll copy it over, preserving id
 			if (!mDst.getModels().have(mid)) {
 				mDst.getModels().update(src);
@@ -301,6 +303,10 @@ public class Anki2Importer {
 				g2.put("conf", g.getLong("conf"));
 				mDst.getDecks().save(g2);
 			}
+			// save desc
+			JSONObject deck = mDst.getDecks().get(newid);
+			deck.put("desc", g.getString("desc"));
+			mDst.getDecks().save(deck);
 			// add to deck map and return
 			mDecks.put(did, newid);
 			return newid;
@@ -312,9 +318,6 @@ public class Anki2Importer {
 	/** Cards */
 
 	private int _importCards() {
-		if (!mNeedCards) {
-			return 0;
-		}
 		// build map of (guid, ord) -> cid and used id cache
 		mCards = new HashMap<String, HashMap<Integer, Long>>();
 		HashMap<Long, Boolean> existing = new HashMap<Long, Boolean>();
@@ -424,21 +427,8 @@ public class Anki2Importer {
 
 	private void _postImport() {
 		try {
-			if (mNeedCards) {
-				// make sure new position is correct
-				mDst.getConf().put("nextPos", mDst.getDb().queryLongScalar("SELECT max(due) + 1 FROM cards WHERE type = 0", false));
-			} else {
-				// newly added models will have been flagged with needWizard=1; we
-				// need to mark reused models with needWizard=2 so the new cards
-				// can be generated
-				for (long mid : mModelMap.values()) {
-					JSONObject m = mDst.getModels().get(mid);
-					if (!m.has("needWizard") || m.getInt("needWizard") == 0) {
-						m.put("needWizard", 2);
-						mDst.getModels().save(m);
-					}
-				}
-			}
+			// make sure new position is correct
+			mDst.getConf().put("nextPos", mDst.getDb().queryLongScalar("SELECT max(due) + 1 FROM cards WHERE type = 0", false));
 			mDst.save();		
 		} catch (JSONException e) {
 			throw new RuntimeException(e);

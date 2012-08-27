@@ -220,7 +220,7 @@
   <string name="pref_keep_screen_on">Держать экран включенным</string>
   <string name="pref_keep_screen_on_summ">Запретить отключение экрана при просмотре карт</string>
   <string name="pref_simple_interface">Простой интерфейс</string>
-  <string name="pref_simple_interface_summ">Ускоряет отображение карты, но поддерживают только текст (не изображения, звуки и т.д.)</string>
+  <string name="pref_simple_interface_summ">Speeds up card showing but does not support all html features</string>
   <string name="pref_simple_interface_exclude_tags">Нормальный интерфейс по тегам</string>
   <string name="pref_simple_interface_exclude_tags_summ">Не использовать простой интерфейс для этих тегов: XXX</string>
   <string name="deck_conf_deck_name">Название колоды</string>
@@ -256,6 +256,8 @@
   <string name="deck_conf_seconds">XXX секунд</string>
   <string name="deck_conf_timer">Показать таймер для ответа</string>
   <string name="deck_conf_autoplay">Автоматически проигрывать аудио</string>
+  <string name="deck_conf_replayq">Воспроизведение вопроса</string>
+  <string name="deck_conf_replayq_summ">При показе ответа, воспроизводить аудио и вопроса, и ответа</string>
   <string name="deck_conf_add">Добавление конфигурации</string>
   <string name="deck_conf_ren">Переименование конфигурации</string>
   <string name="deck_conf_rem">Удалить конфигурацию</string>

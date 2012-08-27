@@ -83,7 +83,7 @@
   <string name="sync_conflict_title">Conflicto al sincronizar</string>
   <string name="sync_no_changes_message">No se encontraron cambios.</string>
   <string name="sync_database_success">Colección sincronizada con éxito</string>
-  <string name="sync_log_error_fix">A syncing error occurred%s.\n\nIf this happens consistently, you can do a full sync, which will probably fix the problem. Be aware that it will overwrite either your local collection or the one on AnkiWeb.\nIf you really want to do full sync, please choose if you want to upload your local collection or to download from the server.</string>
+  <string name="sync_log_error_fix">Ocurrió un error de sincronización%s.\n\nSi esto sucede repetidamente, puedes hacer una sincronización completa que seguramente arreglará el problema. Ten en cuenta que esto sobrescribirá, o bien tu colección local en el dispositivo móvil, o bien la alojada en el servidor AnkiWeb.\nSi deseas hacer una sincronización completa, por favor, elige si quieres cargar tu colección local, o descargar desde el servidor.</string>
   <string name="sync_log_error_specific">Error de sincronización, tipo: %1$s, mensaje: %2$s</string>
   <string name="sync_corrupt_database">La base de datos está dañada. Por favor, arréglala antes de intentar volver a sincronizar.\n\nLee %s para obtener información acerca de cómo reparar la base de datos.</string>
   <string name="sync_too_busy">Servidor demasiado ocupado. Inténtelo de nuevo más tarde.</string>
@@ -105,7 +105,7 @@
   <string name="sync_media_remove">Manipulando archivos multimedia eliminados...</string>
   <string name="sync_media_from_server">Recibiendo los archivos multimedia del servidor...</string>
   <string name="sync_media_to_server">Enviando archivos multimedia al servidor...</string>
-  <string name="sync_media_sanity_check">Checking media counts...</string>
+  <string name="sync_media_sanity_check">Comprobando cuenta de archivos multimedia...</string>
   <string name="sync_media_no_changes">Sin cambios en los archivos multimedia.</string>
   <string name="sync_media_success">Archivos multimedia sincronizados correctamente.</string>
   <string name="sync_media_sanity_failed">La sincronización de los archivos multimedia se completó, pero el número de archivos no coincide con el del servidor. La próxima sincronización será completa para corregir cualquier error.</string>
@@ -120,13 +120,13 @@
   <string name="upgrade_decks_upgrade_started">Actualización iniciada\nPor favor, espera a que finalice...</string>
   <string name="upgrade_decks_downloading">Descargando colección actualizada.\nPor favor, espera...</string>
   <string name="upgrade_decks_media">Copiando los antiguos archivos multimedia a la nueva ubicación multimedia.\nPor favor, espera...</string>
-  <string name="upgrade_decks_message">There is no Anki 2.0 collection available but one or more decks in the old Anki 1.2 format have been found:%sIn order to use your decks with the new version of AnkiDroid they need to be converted first into a single collection of the new Anki-2.0 format. There are three possibilities for this:</string>
+  <string name="upgrade_decks_message">No hay ninguna colección de Anki 2.0 disponible, pero se han encontrado uno o más mazos en el antiguo formato Anki 1.2:%sPara que puedas usar tus mazos con la nueva versión de Ankidroid, éstos necesitan ser convertidos primero a una colección única con el nuevo formato Anki 2.0. Hay tres formas de hacerlo:</string>
   <string name="upgrade_decks_message_pos1">Usando Anki Desktop 2.0, tus mazos serán convertidos al iniciar por primera vez el programa. Puedes sincronizarlos con AnkiWeb o simplemente copiar la nueva colección a tu dispositivo móvil. Para hacer esto último, copia tus mazos de tu directorio AnkiDroid (%s) al directorio de Anki Desktop 1.2 en tu ordenador (si no los has sincronizado ya) e inicia Anki Desktop 2.0.</string>
   <string name="upgrade_decks_message_pos2">Si has sincronizado tus mazos con ankiweb, sólo tendrás que iniciar sesión una vez en %s y tus mazos se convertirán allí. Después puedes simplemente sincronizar la nueva colección con tu dispositivo móvil.</string>
-  <string name="upgrade_decks_message_pos3">As a third possibility, you can have your decks converted via AnkiDroid itself and AnkiWeb. If you click on the upgrade button below, your decks will be bundled and uploaded to AnkiWeb. The converted collection will then be automatically downloaded and opened. You don\'t need any registration for that but be aware that it might be better to use a wifi connection in order to prevent too much traffic over your mobile connection. If the compressed decks amount to more than 50 mb, you cannot use this way. Please resort to the other options in this case. If your deck media files are hosted in custom folders or Dropbox custom folder, they might have to be copied manually to the new location.</string>
+  <string name="upgrade_decks_message_pos3">Como tercera posibilidad, puedes convertir tus mazos mediante el mismo Ankidroid y Ankiweb. Si haces clic en el botón de actualizar que hay aquí debajo, tus mazos serán juntados y enviados a Ankiweb. La colección convertida se descargará y se abrirá luego automáticamente. No necesitas registrarte para ello, pero ten en cuenta que convendría que uses una conexión wifi para prevenir un tráfico de datos excesivo con tu conexión de datos móvil. Si los mazos comprimidos suman más de 50 mb, no puedes usar este método. Por favor, recurre a las otras opciones en este caso. Si los archivos multimedia de tu mazo están alojados en carpetas personalizadas o en una carpeta Dropbox, quizá debas copiarlos manualmente a la nueva localización.</string>
   <string name="upgrade_decks_message_finish">Si decides continuar se creará una nueva colección sin tomar tus viejos mazos en cuenta.</string>
   <string name="upgrade_required">Tus mazos de AnkiWeb poseen todavía el antiguo formato Anki 1.2. Por favor, visita %s y regístrate allí. Tus mazos, a continuación, serán convertidos automáticamente al nuevo formato.</string>
   <string name="upgrade_decks_button">Actualizar</string>
-  <string name="upgrade_decks_failed">These decks could not be upgraded:\n%sPlease open them in Anki Desktop and do a database check. Afterwards you can import them via Anki Desktop.</string>
-  <string name="upgrade_decks_media_failed">Copying the media files to the new media folder (%1$s) has failed for these decks:\n%2$sPlease move the media files manually.</string>
+  <string name="upgrade_decks_failed">Estos mazos no pudieron ser actualizados:\n%sPor favor, ábrelos en Anki versión escritorio y haz una comprobación de la base de datos. Después podrás importarlos mediante Anki versión escritorio.</string>
+  <string name="upgrade_decks_media_failed">La copia de los archivos multimedia a la nueva carpeta multimedia (%1$s) ha fallado con estos mazos:\n%2$sPor favor, mueve los archivos multimedia manualmente.</string>
 </resources>

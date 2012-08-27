@@ -23,7 +23,7 @@
   <string name="CardEditorCancelButton">إلغاء</string>
   <string name="CardEditorSaveButton">حفظ</string>
   <string name="CardEditorLaterButton">لاحقا</string>
-  <string name="CardEditorLaterMessage">Saved information for later</string>
+  <string name="CardEditorLaterMessage">حفظ المعلومات لوقت لاحق</string>
   <string name="CardEditorCardDeck">بطاقة الرزمة: %s</string>
   <string name="CardEditorNoteDeck">ملاحظة الرزمة: %s</string>
   <string name="CardEditorModel">نوع الملاحظة: %s</string>
@@ -40,19 +40,19 @@
   <string name="suspend_leeches">علق البطاقات السئولة</string>
   <string name="leech_suspend_notification">البطاقة علمت كسَئُولة و معلقة</string>
   <string name="leech_notification">البطاقة علمت كسَئُولة</string>
-  <string name="corrupt_font">Corrupt font file %s</string>
+  <string name="corrupt_font">ملف خط معطوب %s</string>
   <string name="about_title">حول</string>
   <string name="cardeditor_title_add_note">أضف ملاحظة</string>
   <string name="cardeditor_title_edit_card">حرر الملاحظة</string>
   <string name="factadder_saving_error">حدث خطأ أثناء حفظ الملاحظة</string>
-  <string name="pref_lang_support">Language</string>
+  <string name="pref_lang_support">اللغة</string>
   <string name="saving_facts">حفظ الملاحظة</string>
   <string name="deck">رزمة</string>
   <string name="add">أضف</string>
   <string name="close">أغلق</string>
   <string name="select">حدد</string>
   <string name="saving_changes">حفظ التغييرات...</string>
-  <string name="timebox_reached">Timebox reached!</string>
+  <string name="timebox_reached">وصلت صندوق الوقت!</string>
   <string name="studyoptions_welcome_title">مرحباً بكم مع آنكيدرويد</string>
   <string name="studyoptions_no_external_storage_title">لا تتوفر مساحة تخزين خارجية</string>
   <string name="studyoptions_no_external_storage_message">لا تتوفر بطاقة تخزين خارجية حاليا. آنكيدرويد يحتاج إلى الوصول إلى البطاقة التخزين الخارجية من أجل قراءة وتحميل رزم الآنكي الخاصة بك. تأكد من تحميل بطاقة التخزين وأعد المحاولة.</string>
@@ -77,27 +77,29 @@
   <string name="check_db_message">فحص قاعدة البيانات.\nالرجاء الانتظار...</string>
   <string name="simple_interface_hint">فارغة %s. ضع في اعتبارك أن الواجهة البسيطة لا يمكن أن تعرض الصور/الأصوات إلخ.</string>
   <string name="delete_deck">حذف الرزمة...\nالرجاء الانتظار.</string>
-  <string name="menu_cardbrowser">Card browser</string>
-  <string name="show_hint">Show Hint</string>
-  <string name="pref_lang_other">Language Preferences</string>
-  <string name="pref_font_UI">Custom UI Font</string>
-  <string name="info_rate">Rate AnkiDroid</string>
-  <string name="col_load_failed">Collection loading failed.\nPress back to close AnkiDroid.</string>
-  <string name="import_title">Import Cards</string>
-  <string name="import_message">Do you really want to import all cards of file %s?</string>
-  <string name="import_log_success">Successfully imported %d cards</string>
-  <string name="import_log_error">Import failed</string>
-  <string name="import_importing">Importing cards.\nPlease wait...</string>
-  <string name="import_hint">To import cards, place the apkg file in directory %s and press ok</string>
-  <string name="import_no_file_found">No importable apkg file found</string>
+  <string name="menu_cardbrowser">مستعرض البطاقات</string>
+  <string name="show_hint">إظهار تلميح</string>
+  <string name="pref_lang_other">تفضيلات اللغة</string>
+  <string name="pref_font_UI">خط واجهة مستخدم مخصص</string>
+  <string name="info_rate">قيم أنكيدرويد</string>
+  <string name="col_load_failed">فشل تحميل المجموعة-\nاضغط تراجع لإغلاق أنكيدرويد.</string>
+  <string name="import_title">استيراد البطاقات</string>
+  <string name="import_message">هل تريد حقاً استيراد كافة البطاقات من الملف %s؟
+</string>
+  <string name="import_log_success">استوردت %d بطاقة بنجاح</string>
+  <string name="import_log_error">فشل الاستيراد</string>
+  <string name="import_log_no_apkg">هذا ليس ملف apkg صالح</string>
+  <string name="import_importing">استيراد بطاقات.\n يرجى الانتظار...</string>
+  <string name="import_hint">لاستيراد البطاقات، ضع الملف apkg في الدليل %s ثم اضغط موافق</string>
+  <string name="import_no_file_found">لم يعثر على أي ملف apkg قابل للاستيراد</string>
   <string-array name="dynOrderLabels">
-    <item>Oldest seen first</item>
-    <item>Random</item>
-    <item>Increasing intervals</item>
-    <item>Decreasing intervals</item>
-    <item>Most lapses</item>
-    <item>Order added</item>
-    <item>Order due</item>
+    <item>الأقدم تشاهد أولا</item>
+    <item>عشوائي</item>
+    <item>زيادة الفترات</item>
+    <item>تقليل الفترات</item>
+    <item>أكثر الأخطاء</item>
+    <item>الترتيب أضيف</item>
+    <item>ترتيب الاستحقاق</item>
   </string-array>
   <plurals name="factadder_cards_added">
     <item quantity="one">أضيفت بطاقة واحدة</item>

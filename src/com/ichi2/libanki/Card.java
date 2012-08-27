@@ -322,18 +322,18 @@ public class Card implements Cloneable {
     }
 
 
-    // public void stopTimer() {
-    // mTimerStopped = Utils.now();
-    // }
+     public void stopTimer() {
+    	 mTimerStopped = Utils.now();
+     }
 
-    // public void resumeTimer() {
-    // if (!Double.isNaN(mTimerStarted) && !Double.isNaN(mTimerStopped)) {
-    // mTimerStarted += Utils.now() - mTimerStopped;
-    // mTimerStopped = Double.NaN;
-    // } else {
-    // Log.i(AnkiDroidApp.TAG, "Card Timer: nothing to resume");
-    // }
-    // }
+     public void resumeTimer() {
+         if (!Double.isNaN(mTimerStarted) && !Double.isNaN(mTimerStopped)) {
+        	mTimerStarted += Utils.now() - mTimerStopped;
+    	 	mTimerStopped = Double.NaN;
+         } else {
+        	 Log.i(AnkiDroidApp.TAG, "Card Timer: nothing to resume");
+         }
+     }
 
     /**
      * Time taken to answer card, in integer MS.
@@ -677,6 +677,13 @@ public class Card implements Cloneable {
         mCol = col;
     }
 
+    public boolean showTimer() {
+    	try {
+			return mCol.getDecks().confForDid(mODid == 0 ? mDid : mODid).getInt("timer") != 0;
+		} catch (JSONException e) {
+			throw new RuntimeException(e);
+		}
+    }
 
     public Card clone() {
         try {

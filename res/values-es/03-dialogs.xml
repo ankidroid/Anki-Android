@@ -50,9 +50,10 @@
   <string name="intent_add_clear_all">Borrar todo</string>
   <string name="intent_aedict_empty">La categoría \'default\' está vacía</string>
   <string name="intent_aedict_category">Para añadir tarjetas AnkiDroid borra todas las categorías del Bloc de notas o agrega una llamada \'default\'</string>
-  <string name="learnmore_title">Extender Límites</string>
-  <string name="learnmore_extend_new_limit">Límite nuevo por</string>
-  <string name="learnmore_extend_rev_limit">Límite de repaso por</string>
+  <string name="learnmore_title">Ajustes de Estudiar Más</string>
+  <string name="learnmore_insructions">Puedes aumentar temporalmente los límites de tarjetas nuevas y repasos máximos aquí debajo para alargar la sesión de estudio de hoy.</string>
+  <string name="learnmore_extend_new_limit">Aumentar el límite de tarjetas nuevas en</string>
+  <string name="learnmore_extend_rev_limit">Aumentar el límite de repasos máximos en</string>
   <string name="reviewearly_title">Configuración de Repasar Antes</string>
   <string name="reviewearly_instructions">Esta opción creará un Mazo Filtrado llamado \'XXX\' con las tarjetas que están programadas para repaso en el número de días que selecciones aquí debajo. Si ya existe tal Mazo Filtrado, será vaciado y reconfigurado.</string>
   <string name="reviewearly_days_ahead">Cuántos días de antelación</string>

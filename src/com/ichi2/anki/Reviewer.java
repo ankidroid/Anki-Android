@@ -30,6 +30,7 @@ import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.Typeface;
+import android.graphics.drawable.Drawable;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
@@ -41,13 +42,18 @@ import android.os.Message;
 import android.os.SystemClock;
 import android.os.Vibrator;
 import android.text.ClipboardManager;
+import android.text.Editable;
 import android.text.Html;
+import android.text.Html.TagHandler;
+import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.SpannedString;
+import android.text.style.StrikethroughSpan;
 import android.text.style.StyleSpan;
 import android.text.style.UnderlineSpan;
 import android.util.Log;
+import android.view.ActionMode;
 import android.view.GestureDetector;
 import android.view.GestureDetector.SimpleOnGestureListener;
 import android.view.Gravity;
@@ -83,7 +89,6 @@ import com.ichi2.anki.receiver.SdCardReceiver;
 import com.ichi2.async.DeckTask;
 import com.ichi2.libanki.Card;
 import com.ichi2.libanki.Collection;
-import com.ichi2.libanki.Models;
 import com.ichi2.libanki.Note;
 import com.ichi2.libanki.Sched;
 import com.ichi2.libanki.Sound;
@@ -99,12 +104,11 @@ import com.ichi2.widget.WidgetStatus;
 import org.amr.arabic.ArabicUtilities;
 import org.json.JSONArray;
 import org.json.JSONException;
+import org.xml.sax.XMLReader;
 
+import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Method;
-import java.text.DecimalFormat;
-import java.text.DecimalFormatSymbols;
-import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -201,7 +205,7 @@ public class Reviewer extends AnkiActivity {
      */
     private boolean mPrefOvertime;
     private boolean mPrefHideDueCount;
-    private boolean mPrefTimer;
+    private boolean mShowTimer;
     private boolean mPrefWhiteboard;
     private boolean mPrefWriteAnswers;
     private boolean mPrefTextSelection;
@@ -636,14 +640,11 @@ public class Reviewer extends AnkiActivity {
                 mWhiteboard.clear();
             }
 
-            if (mPrefTimer) {
-                mCardTimer.setBase(SystemClock.elapsedRealtime());
-                mCardTimer.start();
-            }
             if (sDisplayAnswer) {
                 displayCardAnswer();
             } else {
                 displayCardQuestion();
+                initTimer();
             }
             try {
                 if (mProgressDialog != null && mProgressDialog.isShowing()) {
@@ -678,9 +679,7 @@ public class Reviewer extends AnkiActivity {
         @Override
         public void onPreExecute() {
             mProgressBar.setVisibility(View.VISIBLE);
-            if (mPrefTimer) {
-                mCardTimer.stop();
-            }
+            mCardTimer.stop();
             blockControls();
         }
 
@@ -934,11 +933,11 @@ public class Reviewer extends AnkiActivity {
 
             try {
                 String[] title = mSched.getCol().getDecks().current().getString("name").split("::");
-                setTitle(title[title.length - 1]);
+                AnkiDroidApp.getCompat().setTitle(this, title[title.length - 1], mInvertedColors);
             } catch (JSONException e) {
                 throw new RuntimeException(e);
             }
-            UIUtils.setActionBarSubtitle(this, "");
+            AnkiDroidApp.getCompat().setSubtitle(this, "", mInvertedColors);
 
             // Remove the status bar and title bar
             if (mPrefFullscreenReview) {
@@ -1040,7 +1039,7 @@ public class Reviewer extends AnkiActivity {
         // DeckTask.launchDeckTask(DeckTask.TASK_TYPE_ANSWER_CARD, mAnswerCardHandler, new DeckTask.TaskData(0, deck,
         // null));
         // } else {
-        // restartTimer();
+        restartTimer();
         // }
         //
         if (mShakeEnabled) {
@@ -1069,7 +1068,9 @@ public class Reviewer extends AnkiActivity {
 
         if (!isFinishing()) {
             // try {
-            WidgetStatus.update(this, mSched.progressToday(null, mCurrentCard, true));
+        	if (AnkiDroidApp.colIsOpen()) {
+                WidgetStatus.update(this, mSched.progressToday(null, mCurrentCard, true));        		
+        	}
             
             // } catch (JSONException e) {
             // throw new RuntimeException(e);
@@ -1256,7 +1257,7 @@ public class Reviewer extends AnkiActivity {
         }
         item = menu.findItem(MENU_SEARCH);
     	if (item != null) {
-    		setTitle(clipboardHasText() ? Lookup.getSearchStringTitle() : res.getString(R.string.menu_select));
+    		item.setTitle(clipboardHasText() ? Lookup.getSearchStringTitle() : res.getString(R.string.menu_select));
     	}
 	return true;
     }
@@ -1321,13 +1322,17 @@ public class Reviewer extends AnkiActivity {
 
     private void clipboardSetText(CharSequence text) {
         if (mClipboard != null) {
-		mClipboard.setText(text);
-	}
+        	mClipboard.setText(text);
+        }
     }
 
 
     private CharSequence clipboardGetText() {
-        return mClipboard.getText();
+        if (mClipboard != null) {
+            return mClipboard.getText();
+        } else {
+        	return "";
+        }
     }
 
 
@@ -1339,7 +1344,7 @@ public class Reviewer extends AnkiActivity {
             mTextBarBlack.setVisibility(View.VISIBLE);
             mTextBarBlue.setVisibility(View.VISIBLE);
             mChosenAnswer.setVisibility(View.VISIBLE);
-            if (mPrefTimer) {
+            if (mShowTimer) {
                 mCardTimer.setVisibility(View.VISIBLE);
             }
             if (mShowProgressBars) {
@@ -1481,11 +1486,19 @@ public class Reviewer extends AnkiActivity {
 
     private void stopTimer() {
         // Stop visible timer and card timer
-        if (mPrefTimer) {
-            mCardTimer.stop();
-        }
+        mCardTimer.stop();
         if (mCurrentCard != null) {
-            // mCurrentCard.stopTimer();
+             mCurrentCard.stopTimer();
+        }
+    }
+
+
+    private void restartTimer() {
+        // Restart visible timer and card timer
+        if (mCurrentCard != null) {
+            mCardTimer.setBase(SystemClock.elapsedRealtime() - mCurrentCard.timeTaken());
+            mCardTimer.start();
+            mCurrentCard.resumeTimer();
         }
     }
 
@@ -1539,6 +1552,25 @@ public class Reviewer extends AnkiActivity {
         return true;
     }
 
+    private void showLookupButtonIfNeeded() {
+        if (mPrefTextSelection && mClipboard != null) {
+            if (clipboardGetText().length() != 0 && Lookup.isAvailable() && mLookUpIcon.getVisibility() != View.VISIBLE) {
+                mLookUpIcon.setVisibility(View.VISIBLE);
+                enableViewAnimation(mLookUpIcon, ViewAnimation.fade(ViewAnimation.FADE_IN, mFadeDuration, 0));
+            } else if (mLookUpIcon.getVisibility() == View.VISIBLE) {
+                mLookUpIcon.setVisibility(View.GONE);
+                enableViewAnimation(mLookUpIcon, ViewAnimation.fade(ViewAnimation.FADE_OUT, mFadeDuration, 0));
+            }
+        }
+    }
+
+    private void hideLookupButton() {
+        if (mPrefTextSelection && mLookUpIcon.getVisibility() != View.GONE) {
+            mLookUpIcon.setVisibility(View.GONE);
+            enableViewAnimation(mLookUpIcon, ViewAnimation.fade(ViewAnimation.FADE_OUT, mFadeDuration, 0));
+            clipboardSetText("");
+        }
+    }
 
     private void showDeleteNoteDialog() {
         Dialog dialog;
@@ -1587,11 +1619,7 @@ public class Reviewer extends AnkiActivity {
         }
         mIsSelecting = false;
         if (mPrefTextSelection) {
-            clipboardSetText("");
-            if (mLookUpIcon.getVisibility() == View.VISIBLE) {
-                mLookUpIcon.setVisibility(View.GONE);
-                enableViewAnimation(mLookUpIcon, ViewAnimation.fade(ViewAnimation.FADE_OUT, mFadeDuration, 0));
-            }
+            hideLookupButton();
         }
         switch (ease) {
             case EASE_FAILED:
@@ -1726,10 +1754,7 @@ public class Reviewer extends AnkiActivity {
         }
 
         mCardTimer = (Chronometer) findViewById(R.id.card_time);
-        if (mPrefTimer && (mConfigurationChanged)) {
-            switchVisibility(mCardTimer, View.VISIBLE);
-        }
-        if (mShowProgressBars && (mConfigurationChanged)) {
+        if (mShowProgressBars && mProgressBars.getVisibility() != View.VISIBLE) {
             switchVisibility(mProgressBars, View.VISIBLE);
         }
 
@@ -1834,7 +1859,7 @@ public class Reviewer extends AnkiActivity {
         findViewById(R.id.progress_bars_border2).setBackgroundResource(fgColor);
         findViewById(R.id.progress_bars_back1).setBackgroundResource(bgColor);
         findViewById(R.id.progress_bars_back2).setBackgroundResource(bgColor);
-
+        AnkiDroidApp.getCompat().setActionBarBackground(this, invert ? R.color.white_background_night : R.color.actionbar_background);
     }
 
     private void showEaseButtons() {
@@ -1947,7 +1972,7 @@ public class Reviewer extends AnkiActivity {
 
 
     private void switchTopBarVisibility(int visible) {
-        if (mPrefTimer) {
+        if (mShowTimer) {
             switchVisibility(mCardTimer, visible, true);
         }
         if (mShowProgressBars) {
@@ -1979,7 +2004,6 @@ public class Reviewer extends AnkiActivity {
         SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(getBaseContext());
         mPrefHideDueCount = preferences.getBoolean("hideDueCount", false);
         mPrefOvertime = preferences.getBoolean("overtime", true);
-        mPrefTimer = preferences.getBoolean("timer", true);
         mPrefWhiteboard = preferences.getBoolean("whiteboard", false);
         mPrefWriteAnswers = preferences.getBoolean("writeAnswers", true);
         mPrefTextSelection = preferences.getBoolean("textSelection", true);
@@ -2149,11 +2173,6 @@ public class Reviewer extends AnkiActivity {
         if (mPrefWhiteboard && !mShowAnimations) {
             mWhiteboard.clear();
         }
-
-        if (mPrefTimer) {
-            mCardTimer.setBase(SystemClock.elapsedRealtime());
-            mCardTimer.start();
-        }
     }
 
 
@@ -2164,7 +2183,7 @@ public class Reviewer extends AnkiActivity {
 
         try {
             String[] title = mSched.getCol().getDecks().get(mCurrentCard.getDid()).getString("name").split("::");
-            setTitle(title[title.length - 1]);
+            AnkiDroidApp.getCompat().setTitle(this, title[title.length - 1], mInvertedColors);
         } catch (JSONException e) {
             throw new RuntimeException(e);
         }
@@ -2172,7 +2191,7 @@ public class Reviewer extends AnkiActivity {
         int[] counts = mSched.counts(mCurrentCard);
 
         int eta = mSched.eta(counts, false);
-        UIUtils.setActionBarSubtitle(this, getResources().getQuantityString(R.plurals.reviewer_window_title, eta, eta));
+        AnkiDroidApp.getCompat().setSubtitle(this, getResources().getQuantityString(R.plurals.reviewer_window_title, eta, eta), mInvertedColors);
 
         SpannableString newCount = new SpannableString(String.valueOf(counts[0]));
         SpannableString lrnCount = new SpannableString(String.valueOf(counts[1]));
@@ -2229,17 +2248,27 @@ public class Reviewer extends AnkiActivity {
 
     private Runnable mShowAnswerTask = new Runnable() {
         public void run() {
-            if (mPrefTimer) {
-                mCardTimer.stop();
-            }
             if (mFlipCardLayout.isEnabled() == true && mFlipCardLayout.getVisibility() == View.VISIBLE) {
                 mFlipCardLayout.performClick();
             }
         }
     };
 
+    private void initTimer() {
+        mShowTimer = mCurrentCard.showTimer();
+        if (mShowTimer && mCardTimer.getVisibility() == View.INVISIBLE) {
+        	switchVisibility(mCardTimer, View.VISIBLE);        	
+        } else if (!mShowTimer && mCardTimer.getVisibility() != View.INVISIBLE) {
+        	switchVisibility(mCardTimer, View.INVISIBLE);
+        }
+        mCardTimer.setBase(SystemClock.elapsedRealtime());
+        mCardTimer.start();
+    }
 
     private void displayCardQuestion() {
+    	// show timer, if activated in the deck's preferences
+    	initTimer();
+
         sDisplayAnswer = false;
 
         if (mButtonHeight == 0 && mRelativeButtonSize != 100) {
@@ -2265,7 +2294,7 @@ public class Reviewer extends AnkiActivity {
         String displayString = "";
 
         if (mCurrentSimpleInterface) {
-            mCardContent = Html.fromHtml(question);
+            mCardContent = convertToSimple(question);
             if (mCardContent.length() == 0) {
                 SpannableString hint = new SpannableString(getResources().getString(R.string.simple_interface_hint,
                         R.string.card_details_question));
@@ -2318,7 +2347,7 @@ public class Reviewer extends AnkiActivity {
         String displayString = "";
 
         if (mCurrentSimpleInterface) {
-            mCardContent = Html.fromHtml(answer);
+            mCardContent = convertToSimple(answer);
             if (mCardContent.length() == 0) {
                 SpannableString hint = new SpannableString(getResources().getString(R.string.simple_interface_hint,
                         R.string.card_details_answer));
@@ -2818,10 +2847,6 @@ public class Reviewer extends AnkiActivity {
                 break;
         }
 
-        if (mPrefTimer) {
-            mCardTimer.setEnabled(true);
-        }
-
         if (mPrefWhiteboard) {
             mWhiteboard.setEnabled(true);
         }
@@ -2875,10 +2900,6 @@ public class Reviewer extends AnkiActivity {
                 mEase3Layout.setEnabled(false);
                 mEase4Layout.setEnabled(false);
                 break;
-        }
-
-        if (mPrefTimer) {
-            mCardTimer.setEnabled(false);
         }
 
         if (mPrefWhiteboard) {
@@ -3219,19 +3240,7 @@ public class Reviewer extends AnkiActivity {
                 }
             }
             mIsSelecting = false;
-            if (mPrefTextSelection && mClipboard != null) {
-                if (clipboardGetText().length() != 0 && Lookup.isAvailable()) {
-                    if (mLookUpIcon.getVisibility() != View.VISIBLE) {
-                        mLookUpIcon.setVisibility(View.VISIBLE);
-                        enableViewAnimation(mLookUpIcon, ViewAnimation.fade(ViewAnimation.FADE_IN, mFadeDuration, 0));
-                    }
-                } else {
-                    if (mLookUpIcon.getVisibility() == View.VISIBLE) {
-                        mLookUpIcon.setVisibility(View.GONE);
-                        enableViewAnimation(mLookUpIcon, ViewAnimation.fade(ViewAnimation.FADE_OUT, mFadeDuration, 0));
-                    }
-                }
-            }
+            showLookupButtonIfNeeded();
             return false;
         }
     }
@@ -3279,4 +3288,62 @@ public class Reviewer extends AnkiActivity {
 
     }
 
+    private TagHandler mSimpleInterfaceTagHandler = new TagHandler () {
+
+        public void handleTag(boolean opening, String tag, Editable output,
+                XMLReader xmlReader) {
+//            if(tag.equalsIgnoreCase("div")) {
+//            	output.append("\n");
+//            } else 
+        	if(tag.equalsIgnoreCase("strike") || tag.equals("s")) {
+                int len = output.length();
+                if(opening) {
+                    output.setSpan(new StrikethroughSpan(), len, len, Spannable.SPAN_MARK_MARK);
+                } else {
+                    Object obj = getLast(output, StrikethroughSpan.class);
+                    int where = output.getSpanStart(obj);
+
+                    output.removeSpan(obj);
+
+                    if (where != len) {
+                        output.setSpan(new StrikethroughSpan(), where, len, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+                    }
+                }
+            }
+        }
+
+        private Object getLast(Editable text, Class kind) {
+            Object[] objs = text.getSpans(0, text.length(), kind);
+
+            if (objs.length == 0) {
+                return null;
+            } else {
+                for(int i = objs.length;i>0;i--) {
+                    if(text.getSpanFlags(objs[i-1]) == Spannable.SPAN_MARK_MARK) {
+                        return objs[i-1];
+                    }
+                }
+                return null;
+            }
+        }
+    };
+
+    private Html.ImageGetter mSimpleInterfaceImagegetter = new Html.ImageGetter () {
+
+        public Drawable getDrawable(String source) {
+            String path = AnkiDroidApp.getCurrentAnkiDroidDirectory(Reviewer.this) + "/collection.media/" + source;
+            if ((new File(path)).exists()) {
+                Drawable d = Drawable.createFromPath(path);
+                d.setBounds(0,0,d.getIntrinsicWidth(),d.getIntrinsicHeight());
+                return d;            	
+            } else {
+            	return null;
+            }
+        }
+    };
+
+    private Spanned convertToSimple(String text) {
+    	text = text.replaceAll("</div>$", "").replaceAll("(</div>)*<div>", "<br>");
+    	return Html.fromHtml(text, mSimpleInterfaceImagegetter, mSimpleInterfaceTagHandler);
+    }
 }

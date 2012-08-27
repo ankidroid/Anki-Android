@@ -87,6 +87,7 @@
   <string name="import_message">Vil du importere alle kortene i fil %s?</string>
   <string name="import_log_success">Importerte %d kort problemfritt</string>
   <string name="import_log_error">Import feilet</string>
+  <string name="import_log_no_apkg">This is not a valid apkg file</string>
   <string name="import_importing">Importerer kort.\nVennligst vent...</string>
   <string name="import_hint">For å importere kort, legg apkg-filen i mappen %s og trykk ok</string>
   <string name="import_no_file_found">Fant ingen apkg-fil å hente</string>
@@ -94,8 +95,8 @@
     <item>Eldste først</item>
     <item>Tilfeldig</item>
     <item>Økende intervaller</item>
-    <item>Synkende intervaller</item>
-    <item>Flest bortfall</item>
+    <item>Minkende intervaller</item>
+    <item>Besvart feil flest ganger</item>
     <item>Rekkefølge lagt til</item>
     <item>Rekkefølge klar</item>
   </string-array>

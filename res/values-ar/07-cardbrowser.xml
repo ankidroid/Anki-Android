@@ -31,8 +31,8 @@
   <string name="delete_card_title">احذف الملاحظة</string>
   <string name="delete_card_message">حقا تريد حذف كل البطاقات في هذه الملاحظة؟\nحقل البحث: %s</string>
   <string name="card_browser_show_marked">تصفية معلمة</string>
-  <string name="card_browser_field">Change CardBrowser Field</string>
-  <string name="card_browser_field_title">Change CardBrowser Field</string>
+  <string name="card_browser_field">غير حقل مستعرض البطاقات</string>
+  <string name="card_browser_field_title">تغيير حقل مستعرض البطاقات</string>
   <string name="card_browser_show_suspended">تصفية معلقة</string>
   <string name="card_browser_search_by_tag">تصفية بالوسم</string>
   <string name="card_browser_tags_shown">الوسوم: %1$s</string>

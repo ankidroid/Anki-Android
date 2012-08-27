@@ -87,6 +87,7 @@
   <string name="import_message">确实要导入文件 %s 中的所有卡牌吗？</string>
   <string name="import_log_success">成功导入 %d 张卡牌</string>
   <string name="import_log_error">导入失败</string>
+  <string name="import_log_no_apkg">这不是一个正确的 apkg 文件</string>
   <string name="import_importing">导入卡牌。\n请稍后...</string>
   <string name="import_hint">要导入卡牌，请把apkg文件放在%s目录中，然后按确定。</string>
   <string name="import_no_file_found">未找到可导入的apkg文件</string>

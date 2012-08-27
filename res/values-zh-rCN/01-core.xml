@@ -96,7 +96,7 @@
   <string name="review_early_deck_name">提前复习</string>
   <string name="studyoptions_congrats_finished">恭喜!你已经完成了今天的计划。</string>
   <string name="studyoptions_congrats_more_rev">今天的复习数量限制已达到，但仍有一些卡牌需要复习。为了更好的记忆效果，请考虑在选项中增加每日的复习数量限制。</string>
-  <string name="studyoptions_congrats_more_new">仍有新卡牌需要学习，但每日的学习数量限制已达到。你可以在选项中增加这个限制，不过请记住，你每天学习的新卡牌越多，短期复习压力就越大。</string>
+  <string name="studyoptions_congrats_more_new">还有新卡牌待学习，但已达到每日上限。您可以增加设置中的每日学习上限，不过请留意，这会增加您短期的复习工作量。</string>
   <string name="sd_card_not_mounted">未加载SD卡。</string>
   <string name="studyoptions_options">选项</string>
   <string name="empty_cloze_warning">请编辑此条目注释，并增加一些完形填空形式的题目。 (%1$s)</string>

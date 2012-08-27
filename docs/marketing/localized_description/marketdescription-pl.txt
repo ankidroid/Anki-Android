@@ -13,7 +13,7 @@ Dodawanie materiału za pomocą desktopowego programu Anki lub bezpośrednio w A
 • planowane powtórki (algorytm SM2)
 • obsługa syntezy mowy
 • ponad 6000 gotowych talii
-• progress widget
+• widok postępu w widżecie
 • szczegółowe statystyki
 • synchronizacja z AnkiWeb
 • otwarte oprogramowanie
@@ -23,7 +23,7 @@ Dodawanie materiału za pomocą desktopowego programu Anki lub bezpośrednio w A
 • tablica do rysowania
 • edytor kart
 • przeglądarka kart
-• tablet layout
+• widok na tablety
 • importowanie gotowych plików z kolekcjami (poprzez Anki Desktop)
 • integracja ze słownikami (ColorDict, GodenDict, Leo.org, Aedict, różne słowniki online)
 • dodawanie kart za pomocą intentów z innych aplikacji, np. słowników
@@ -31,7 +31,7 @@ Dodawanie materiału za pomocą desktopowego programu Anki lub bezpośrednio w A
 • system kopii zapasowych
 • nawigacja poprzez gesty, kliknięcia oraz potrząsanie
 • w pełni konfigurowalny
-• dynamic deck handling
+• dynamiczna obsługa talii
 • tryb nocny
 • 27 wersji językowych
-• All previous AnkiDroid versions can be downloaded from the website
+• Wszystkie poprzednie wersje AnkiDroid można pobrać z serwisu www

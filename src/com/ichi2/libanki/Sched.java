@@ -1566,7 +1566,7 @@ public class Sched {
 
     private int _nextLapseIvl(Card card, JSONObject conf) {
         try {
-            return (int) (card.getIvl() * conf.getDouble("mult")) + 1;
+            return Math.max(conf.getInt("minInt"), (int)(card.getIvl() * conf.getDouble("mult")));
         } catch (JSONException e) {
             throw new RuntimeException(e);
         }
@@ -1607,40 +1607,38 @@ public class Sched {
      * Ideal next interval for CARD, given EASE.
      */
     private int _nextRevIvl(Card card, int ease) {
-        long delay = _daysLate(card);
-        double interval = 0;
-        JSONObject conf = _revConf(card);
-        double fct = card.getFactor() / 1000.0;
-        if (ease == 2) {
-            interval = (card.getIvl() + delay / 4) * 1.2;
-        } else if (ease == 3) {
-            interval = (card.getIvl() + delay / 2) * fct;
-        } else if (ease == 4) {
-            try {
-                interval = (card.getIvl() + delay) * fct * conf.getDouble("ease4");
-            } catch (JSONException e) {
-                throw new RuntimeException(e);
-            }
-        }
-        // apply interval factor adjustment
-        interval = _ivlWithFactor(conf, interval);
-        // must be at least one day greater than previous interval; two if easy
-        int intinterval = Math.max(card.getIvl() + (ease == 4 ? 2 : 1), (int) interval);
-        // interval capped?
         try {
-            return Math.min(intinterval, conf.getInt("maxIvl"));
+            long delay = _daysLate(card);
+            int interval = 0;
+            JSONObject conf = _revConf(card);
+            double fct = card.getFactor() / 1000.0;
+            int ivl2 = _constrainedIvl((int)((card.getIvl() + delay/4) * 1.2), conf, card.getIvl());
+            int ivl3 = _constrainedIvl((int)((card.getIvl() + delay/2) * fct), conf, ivl2);
+            int ivl4 = _constrainedIvl((int)((card.getIvl() + delay) * fct * conf.getDouble("ease4")), conf, ivl3);
+            if (ease == 2) {
+                interval = ivl2;
+            } else if (ease == 3) {
+                interval = ivl3;
+            } else if (ease == 4) {
+            	interval = ivl4;
+            }
+            // interval capped?
+            return Math.min(interval, conf.getInt("maxIvl"));
         } catch (JSONException e) {
             throw new RuntimeException(e);
         }
     }
 
 
-    private double _ivlWithFactor(JSONObject conf, double ivl) {
+    /** Integer interval after interval factor and prev+1 constraints applied */
+    private int _constrainedIvl(int ivl, JSONObject conf, double prev) {
+    	double newIvl = ivl;
         try {
-            return ivl * conf.getDouble("ivlFct");
+        	newIvl = ivl * conf.getDouble("ivlFct");
         } catch (JSONException e) {
-            return 1;
+        	// nothing;
         }
+        return (int) Math.max(newIvl, prev + 1);
     }
 
 
@@ -2149,7 +2147,15 @@ public class Sched {
         if (ivl == 0) {
             return "";
         }
-        return Utils.fmtTimeSpan(ivl, _short);
+        String s = Utils.fmtTimeSpan(ivl, _short);
+        try {
+			if (ivl < mCol.getConf().getInt("collapseTime")) {
+				s = "< " + s;
+			}
+		} catch (JSONException e) {
+			throw new RuntimeException(e);
+		}
+        return s;
     }
 
 
@@ -2243,10 +2249,10 @@ public class Sched {
     public void buryNote(long nid) {
         mCol.setDirty();
         long[] cids = Utils.arrayList2array(mCol.getDb().queryColumn(Long.class,
-                "SELECT id FROM cards WHERE nid = " + nid, 0));
+                "SELECT id FROM cards WHERE nid = " + nid + " AND queue >= 0", 0));
         remFromDyn(cids);
         removeFailed(cids);
-        mCol.getDb().execute("UPDATE cards SET queue = -2 WHERE nid = " + nid);
+        mCol.getDb().execute("UPDATE cards SET queue = -2 WHERE id IN " + Utils.ids2str(cids));
     }
 
 
@@ -2570,6 +2576,7 @@ public class Sched {
                 "update cards set type=2,queue=2,ivl=?,due=?, " + "usn=?, mod=?, factor=? where id=? and odid=0", d);
     }
 
+    // resetCards
 
     /**
      * Repositioning new cards **************************************************
@@ -2584,8 +2591,13 @@ public class Sched {
     public void sortCards(long[] cids, int start, int step, boolean shuffle, boolean shift) {
         String scids = Utils.ids2str(cids);
         long now = Utils.intNow();
-        ArrayList<Long> nids = mCol.getDb().queryColumn(Long.class,
-                "SELECT DISTINCT nid FROM cards WHERE type = 0 AND id IN " + scids + " ORDER BY nid", 0);
+        ArrayList<Long> nids = new ArrayList<Long>();
+        for (long id : cids) {
+        	long nid = mCol.getDb().queryScalar("SELECT nid FROM cards WHERE id = " + id);
+        	if (!nids.contains(nid)) {
+        		nids.add(nid);
+        	}
+        }
         if (nids.size() == 0) {
             // no new cards
             return;
@@ -2636,7 +2648,7 @@ public class Sched {
 
 
     public void orderCards(long did) {
-        List<Long> cids = mCol.getDb().queryColumn(Long.class, "select id from cards where did = " + did, 0);
+        List<Long> cids = mCol.getDb().queryColumn(Long.class, "SELECT id FROM cards WHERE did = " + did + " ORDER BY id", 0);
         sortCards(Utils.toPrimitive(cids), 1, 1, false, false);
     }
 

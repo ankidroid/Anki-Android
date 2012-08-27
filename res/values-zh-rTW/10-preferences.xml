@@ -220,7 +220,7 @@
   <string name="pref_keep_screen_on">保持螢幕開啟</string>
   <string name="pref_keep_screen_on_summ">複習時避免螢幕關閉</string>
   <string name="pref_simple_interface">簡單的介面</string>
-  <string name="pref_simple_interface_summ">Speeds up card showing but does only support text (no pictures, sounds etc.)</string>
+  <string name="pref_simple_interface_summ">Speeds up card showing but does not support all html features</string>
   <string name="pref_simple_interface_exclude_tags">Normal interface by tag</string>
   <string name="pref_simple_interface_exclude_tags_summ">Do not use simple interface for these tags: XXX</string>
   <string name="deck_conf_deck_name">牌組名稱</string>
@@ -256,6 +256,8 @@
   <string name="deck_conf_seconds">XXX seconds</string>
   <string name="deck_conf_timer">顯示答案計時器</string>
   <string name="deck_conf_autoplay">自動播放音效</string>
+  <string name="deck_conf_replayq">Replay Question</string>
+  <string name="deck_conf_replayq_summ">When answer shown, replay both question and answer audio</string>
   <string name="deck_conf_add">新增設定</string>
   <string name="deck_conf_ren">重新命名設定</string>
   <string name="deck_conf_rem">Remove configuration</string>

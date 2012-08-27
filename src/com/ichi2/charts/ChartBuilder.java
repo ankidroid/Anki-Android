@@ -231,7 +231,7 @@ public class ChartBuilder extends Activity {
                 mTitle.setTextColor(Color.BLACK);
             } else {
                 setTitle(title);
-                UIUtils.setActionBarSubtitle(this, subTitle);
+                AnkiDroidApp.getCompat().setSubtitle(this, subTitle);
                 mTitle.setVisibility(View.GONE);
             }
             for (int i = 1; i < mSeriesList.length; i++) {

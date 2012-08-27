@@ -220,7 +220,7 @@
   <string name="pref_keep_screen_on">Zorg dat scherm aan blijft</string>
   <string name="pref_keep_screen_on_summ">Voorkom dat scherm uitgeschakeld wordt tijdens herhalen</string>
   <string name="pref_simple_interface">Eenvoudige interface</string>
-  <string name="pref_simple_interface_summ">Toont kaarten sneller, maar ondersteunt enkel tekst (geen afbeeldingen, geluiden, etc.)</string>
+  <string name="pref_simple_interface_summ">Speeds up card showing but does not support all html features</string>
   <string name="pref_simple_interface_exclude_tags">Normal interface by tag</string>
   <string name="pref_simple_interface_exclude_tags_summ">Do not use simple interface for these tags: XXX</string>
   <string name="deck_conf_deck_name">Setnaam</string>
@@ -256,6 +256,8 @@
   <string name="deck_conf_seconds">XXX seconden</string>
   <string name="deck_conf_timer">Toon antwoordklok</string>
   <string name="deck_conf_autoplay">Geluid automatisch afspelen</string>
+  <string name="deck_conf_replayq">Replay Question</string>
+  <string name="deck_conf_replayq_summ">When answer shown, replay both question and answer audio</string>
   <string name="deck_conf_add">Configuratie toevoegen</string>
   <string name="deck_conf_ren">Naam wijzigen van configuratie</string>
   <string name="deck_conf_rem">Configuratie verwijderen</string>

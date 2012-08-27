@@ -49,7 +49,7 @@
   <string name="show_study_options_on_deck_load_summ">Mostrar opciones de estudio al cargar un mazo</string>
   <string name="hide_due_count">Ocultar cuenta de programadas</string>
   <string name="hide_due_count_summ">Oculta la cuenta de programadas</string>
-  <string name="overtime">Overtime</string>
+  <string name="overtime">Tiempo extra</string>
   <string name="overtime_summ">Continuar repasando después de alcanzado el límite de tiempo</string>
   <string name="show_timer">Mostrar temporizador</string>
   <string name="show_timer_summ">Muestra el tiempo que te está llevando responder</string>
@@ -141,8 +141,8 @@
   <string name="sync_fetch_missing_media">Buscar archivos multimedia al sincronizar</string>
   <string name="sync_fetch_missing_media_summ">Buscar automáticamente archivos multimedia faltantes al sincronizar.</string>
   <string name="fix_hebrew_text">Corrección para vocales hebreas</string>
-  <string name="fix_hebrew_text_summ">Workaround for rendering Hebrew vowels correctly.</string>
-  <string name="fix_hebrew_instructions">This setting bypasses the RTL algorithm of Android to show Hebrew text with vowels correctly.\n\nFor this to work, you need to download font Tohu.ttf and copy it manually to:\n%s/fonts/\n\nYou won\'t have to modify your cards.</string>
+  <string name="fix_hebrew_text_summ">Solución para mostrar las vocales Hebreas correctamente.</string>
+  <string name="fix_hebrew_instructions">Esta opción evade el algoritmo RTL de Android para mostrar correctamente texto hebreo con vocales.\n\nPara que esto funcione, necesitas descargar la fuente Tohu.ttf y copiarla manualmente a:\n%s/fonts/\n\nNo necesitarás hacer ninguna modificación a tus tarjetas.</string>
   <string name="fix_hebrew_download_font">Descargar Fuente</string>
   <string name="default_font">Fuente predeterminada</string>
   <string name="default_font_summ">La fuente utilizada para el texto no tiene un formato de fuente especificado. Las fuentes personalizadas deben instalarse en la tarjeta SD, en una carpeta llamada \'fuentes\' en tu carpeta AnkiDroid.</string>
@@ -220,7 +220,7 @@
   <string name="pref_keep_screen_on">Mantener encendida la pantalla</string>
   <string name="pref_keep_screen_on_summ">Impedir que la pantalla se apague mientras estás repasando</string>
   <string name="pref_simple_interface">Interfaz sencilla</string>
-  <string name="pref_simple_interface_summ">Acelera la visualización de las tarjetas pero sólo admite texto (sin imágenes, sonidos, etc.)</string>
+  <string name="pref_simple_interface_summ">Speeds up card showing but does not support all html features</string>
   <string name="pref_simple_interface_exclude_tags">Interfaz normal por etiqueta</string>
   <string name="pref_simple_interface_exclude_tags_summ">No utilizar la interfaz simple para estas etiquetas: XXX</string>
   <string name="deck_conf_deck_name">Nombre del mazo</string>
@@ -256,6 +256,8 @@
   <string name="deck_conf_seconds">XXX segundos</string>
   <string name="deck_conf_timer">Mostrar temporizador de respuesta</string>
   <string name="deck_conf_autoplay">Reproducir audio automáticamente</string>
+  <string name="deck_conf_replayq">Volver a reproducir pregunta</string>
+  <string name="deck_conf_replayq_summ">Cuando la respuesta sea mostrada, reproducir el audio de la pregunta y de la respuesta</string>
   <string name="deck_conf_add">Agregar configuración</string>
   <string name="deck_conf_ren">Cambiar el nombre de la configuración</string>
   <string name="deck_conf_rem">Borrar configuración</string>

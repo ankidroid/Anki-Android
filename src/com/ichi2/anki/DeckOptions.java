@@ -85,7 +85,7 @@ public class DeckOptions extends PreferenceActivity implements OnSharedPreferenc
                 mValues.put("desc", mDeck.getString("desc"));
                 mValues.put("deckConf", mDeck.getString("conf"));
                 mValues.put("maxAnswerTime", mOptions.getString("maxTaken"));
-                mValues.put("showAnswerTimer", Boolean.toString(mOptions.getString("timer").equals("1")));
+                mValues.put("showAnswerTimer", Boolean.toString(mOptions.getInt("timer") == 1));
                 mValues.put("autoPlayAudio", Boolean.toString(mOptions.getBoolean("autoplay")));
                 mValues.put("replayQuestion", Boolean.toString(mOptions.getBoolean("replayq")));
                 // new
@@ -152,7 +152,7 @@ public class DeckOptions extends PreferenceActivity implements OnSharedPreferenc
                         } else if (entry.getKey().equals("maxAnswerTime")) {
                             mOptions.put("maxTaken", Integer.parseInt((String) entry.getValue()));
                         } else if (entry.getKey().equals("showAnswerTimer")) {
-                            mOptions.put("timer", (Boolean) entry.getValue() ? "1" : "0");
+                            mOptions.put("timer", (Boolean) entry.getValue() ? 1 : 0);
                         } else if (entry.getKey().equals("autoPlayAudio")) {
                             mOptions.put("autoplay", (Boolean) entry.getValue());
                         } else if (entry.getKey().equals("replayQuestion")) {
