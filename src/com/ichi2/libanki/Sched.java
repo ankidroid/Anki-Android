@@ -2148,13 +2148,13 @@ public class Sched {
             return "";
         }
         String s = Utils.fmtTimeSpan(ivl, _short);
-        try {
-			if (ivl < mCol.getConf().getInt("collapseTime")) {
-				s = "< " + s;
-			}
-		} catch (JSONException e) {
-			throw new RuntimeException(e);
-		}
+//        try {
+//			if (ivl < mCol.getConf().getInt("collapseTime")) {
+//				s = "< " + s;
+//			}
+//		} catch (JSONException e) {
+//			throw new RuntimeException(e);
+//		}
         return s;
     }
 
