@@ -777,8 +777,12 @@ public class CardBrowser extends Activity {
 
     private void updateCardInList(Card card, String updatedCardTags) {
         Note note = card.note();
+        int pos;
         for (Card c : note.cards()) {
-            int pos = getPosition(mCards, c.getId());
+            pos = getPosition(mCards, c.getId());
+            if (pos < 0 || pos >= mCards.size()) {
+                continue;
+            }
 
             if (updatedCardTags != null) {
                 mCards.get(pos).put("tags", updatedCardTags);
@@ -806,9 +810,12 @@ public class CardBrowser extends Activity {
 
     private void deleteNote(Card card) {
         ArrayList<Card> cards = card.note().cards();
+        int pos;
         for (Card c : cards) {
-//            mCardIds.remove(new Long(c.getId()));
-            mCards.remove(getPosition(mCards, c.getId()));
+            pos = getPosition(mCards, c.getId());
+            if (pos >= 0 && pos < mCards.size()) {
+                mCards.remove(pos);
+            }
         }
         updateList();
     }
