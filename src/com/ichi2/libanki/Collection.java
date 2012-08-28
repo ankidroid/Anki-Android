@@ -1006,65 +1006,15 @@ public class Collection {
     public List<Long> findCards(String search, Boolean order) {
         return new Finder(this).findCards(search, order.toString());
     }
+    
+    public ArrayList<HashMap<String, String>> findCardsForCardBrowser(String search, String order, HashMap<String, String> deckNames) {
+        return new Finder(this).findCardsForCardBrowser(search, order, deckNames);
+    }
 
 
     /** Return a list of note ids */
     public List<Long> findNotes(String query) {
         return new Finder(this).findNotes(query);
-    }
-
-
-    /** Return a list of card ids */
-    public ArrayList<HashMap<String, String>> findCardsForCardBrowser(boolean wholeCollection) {
-        ArrayList<HashMap<String, String>> data = new ArrayList<HashMap<String, String>>();
-        Cursor cur = null;
-        String lim = "";
-        if (!wholeCollection) {
-            lim = " AND c.did IN " + mSched._deckLimit();
-        }
-        HashMap<Long, HashMap<Integer, String>> templates = mModels.getTemplateNames();
-        HashMap<Long, String> decks = null;
-        if (wholeCollection) {
-            decks = new HashMap<Long, String>();
-            try {
-                for (JSONObject o : mDecks.all()) {
-                    decks.put(o.getLong("id"), o.getString("name"));
-                }
-            } catch (JSONException e) {
-                throw new RuntimeException(e);
-            }
-        }
-        try {
-			cur = mDb.getDatabase().rawQuery(
-			        "SELECT c.id, n.sfld, n.mid, c.ord, c.did, c.queue, n.tags, c.due, c.type, n.flds FROM cards c, notes n WHERE c.nid = n.id" +
-			lim, null);
-            while (cur.moveToNext()) {
-                HashMap<String, String> map = new HashMap<String, String>();
-                map.put("id", cur.getString(0));
-                map.put("sfld", cur.getString(1));
-                map.put("tmpl", templates.get(cur.getLong(2)).get(cur.getInt(3)));
-                map.put("deck", wholeCollection ? decks.get(cur.getLong(4)) : "");
-                int queue = cur.getInt(5);
-                String tags = cur.getString(6);
-                map.put("flags", Integer.toString((queue == -1 ? 1 : 0) + (tags.matches(".*[Mm]arked.*") ? 2 : 0)));
-                map.put("tags", tags);
-                String due = cur.getString(7);
-                if (cur.getInt(8) == 1) {
-                    due = Integer.toString(mSched.getToday());
-                }
-                map.put("due", due);
-				map.put("flds", cur.getString(9));
-                data.add(map);
-                if (DeckTask.taskIsCancelled()) {
-                    return null;
-                }
-            }
-        } finally {
-            if (cur != null && !cur.isClosed()) {
-                cur.close();
-            }
-        }
-        return data;
     }
 
 

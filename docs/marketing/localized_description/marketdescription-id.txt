@@ -9,11 +9,11 @@ Buat dek sendiri  atau download percuma dek untuk sebarang bahasa dan topik (leb
 Tambahkan bahan melalui aplikasi desktop Anki atau langsung melalui Ankidroid. Aplikasi mendukung menambahkan bahan secara otomatis dari kamus!
 
 ★ fitur utama:
-• isi flashcard didukung: teks, gambar, suara, LaTeX
+• isi flashcard yang didukung: teks, gambar, suara, LaTeX
 • spasi pengulangan (algoritma supermemo 2)
 • integrasi teks-suara
 • lebih dari 6000 dek tersedia
-• progress widget
+• widget progres
 • statistik rinci
 • sinkronisasi dengan AnkiWeb
 • sumber terbuka
@@ -23,7 +23,7 @@ Tambahkan bahan melalui aplikasi desktop Anki atau langsung melalui Ankidroid. A
 • papan tulis
 • Kad editor / tambah
 Pelayar kad
-• tablet layout
+• tata letak tablet
 • mengimpor file koleksi yang ada (melalui Anki Desktop)
 • integrasi kamus(ColorDict, GoldenDict, Leo.org, Aedict, kamus web bermacam)
 • menambahkan kad dengan 'intent&gt; dari aplikasi lain seperti kamus
@@ -31,7 +31,7 @@ Pelayar kad
 • sistem sokongan penuh
 • navigasi dengan gesek, tekan, goyang
 • sepenuhnya disesuaikan
-• dynamic deck handling
+• penanganan tumpukan kartu dinamis
 • modus malam
-• 27 localisations
-• All previous AnkiDroid versions can be downloaded from the website
+• 27 pelokalan
+• Seluruh versi AnkiDroid sebelumnya dapat diunduh dari stus web

@@ -220,7 +220,7 @@
   <string name="pref_keep_screen_on">Ausschalten verhindern</string>
   <string name="pref_keep_screen_on_summ">Keine automatische Bildschirmabschaltung während des Lernens</string>
   <string name="pref_simple_interface">Einfache Oberfläche</string>
-  <string name="pref_simple_interface_summ">Beschleunigt die Kartenanzeige, unterstützt aber nur Text (keine Bilder, Sounds etc.)</string>
+  <string name="pref_simple_interface_summ">Beschleunigt die Kartenanzeige, unterstützt aber nicht alle Html-Features</string>
   <string name="pref_simple_interface_exclude_tags">Normale Oberfläche nach Schlagworten</string>
   <string name="pref_simple_interface_exclude_tags_summ">Für folgende Schlagworte die einfache Oberfläche nicht benutzen: XXX</string>
   <string name="deck_conf_deck_name">Stapelname</string>

@@ -30,6 +30,7 @@ import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.Typeface;
+import android.graphics.drawable.Drawable;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
@@ -41,10 +42,14 @@ import android.os.Message;
 import android.os.SystemClock;
 import android.os.Vibrator;
 import android.text.ClipboardManager;
+import android.text.Editable;
 import android.text.Html;
+import android.text.Html.TagHandler;
+import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.SpannedString;
+import android.text.style.StrikethroughSpan;
 import android.text.style.StyleSpan;
 import android.text.style.UnderlineSpan;
 import android.util.Log;
@@ -99,7 +104,9 @@ import com.ichi2.widget.WidgetStatus;
 import org.amr.arabic.ArabicUtilities;
 import org.json.JSONArray;
 import org.json.JSONException;
+import org.xml.sax.XMLReader;
 
+import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
@@ -198,7 +205,7 @@ public class Reviewer extends AnkiActivity {
      */
     private boolean mPrefOvertime;
     private boolean mPrefHideDueCount;
-    private boolean mPrefTimer;
+    private boolean mShowTimer;
     private boolean mPrefWhiteboard;
     private boolean mPrefWriteAnswers;
     private boolean mPrefTextSelection;
@@ -633,14 +640,11 @@ public class Reviewer extends AnkiActivity {
                 mWhiteboard.clear();
             }
 
-            if (mPrefTimer) {
-                mCardTimer.setBase(SystemClock.elapsedRealtime());
-                mCardTimer.start();
-            }
             if (sDisplayAnswer) {
                 displayCardAnswer();
             } else {
                 displayCardQuestion();
+                initTimer();
             }
             try {
                 if (mProgressDialog != null && mProgressDialog.isShowing()) {
@@ -675,9 +679,7 @@ public class Reviewer extends AnkiActivity {
         @Override
         public void onPreExecute() {
             mProgressBar.setVisibility(View.VISIBLE);
-            if (mPrefTimer) {
-                mCardTimer.stop();
-            }
+            mCardTimer.stop();
             blockControls();
         }
 
@@ -1037,7 +1039,7 @@ public class Reviewer extends AnkiActivity {
         // DeckTask.launchDeckTask(DeckTask.TASK_TYPE_ANSWER_CARD, mAnswerCardHandler, new DeckTask.TaskData(0, deck,
         // null));
         // } else {
-        // restartTimer();
+        restartTimer();
         // }
         //
         if (mShakeEnabled) {
@@ -1342,7 +1344,7 @@ public class Reviewer extends AnkiActivity {
             mTextBarBlack.setVisibility(View.VISIBLE);
             mTextBarBlue.setVisibility(View.VISIBLE);
             mChosenAnswer.setVisibility(View.VISIBLE);
-            if (mPrefTimer) {
+            if (mShowTimer) {
                 mCardTimer.setVisibility(View.VISIBLE);
             }
             if (mShowProgressBars) {
@@ -1484,11 +1486,19 @@ public class Reviewer extends AnkiActivity {
 
     private void stopTimer() {
         // Stop visible timer and card timer
-        if (mPrefTimer) {
-            mCardTimer.stop();
-        }
+        mCardTimer.stop();
         if (mCurrentCard != null) {
-            // mCurrentCard.stopTimer();
+             mCurrentCard.stopTimer();
+        }
+    }
+
+
+    private void restartTimer() {
+        // Restart visible timer and card timer
+        if (mCurrentCard != null) {
+            mCardTimer.setBase(SystemClock.elapsedRealtime() - mCurrentCard.timeTaken());
+            mCardTimer.start();
+            mCurrentCard.resumeTimer();
         }
     }
 
@@ -1744,10 +1754,7 @@ public class Reviewer extends AnkiActivity {
         }
 
         mCardTimer = (Chronometer) findViewById(R.id.card_time);
-        if (mPrefTimer && (mConfigurationChanged)) {
-            switchVisibility(mCardTimer, View.VISIBLE);
-        }
-        if (mShowProgressBars && (mConfigurationChanged)) {
+        if (mShowProgressBars && mProgressBars.getVisibility() != View.VISIBLE) {
             switchVisibility(mProgressBars, View.VISIBLE);
         }
 
@@ -1965,7 +1972,7 @@ public class Reviewer extends AnkiActivity {
 
 
     private void switchTopBarVisibility(int visible) {
-        if (mPrefTimer) {
+        if (mShowTimer) {
             switchVisibility(mCardTimer, visible, true);
         }
         if (mShowProgressBars) {
@@ -1997,7 +2004,6 @@ public class Reviewer extends AnkiActivity {
         SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(getBaseContext());
         mPrefHideDueCount = preferences.getBoolean("hideDueCount", false);
         mPrefOvertime = preferences.getBoolean("overtime", true);
-        mPrefTimer = preferences.getBoolean("timer", true);
         mPrefWhiteboard = preferences.getBoolean("whiteboard", false);
         mPrefWriteAnswers = preferences.getBoolean("writeAnswers", true);
         mPrefTextSelection = preferences.getBoolean("textSelection", true);
@@ -2167,11 +2173,6 @@ public class Reviewer extends AnkiActivity {
         if (mPrefWhiteboard && !mShowAnimations) {
             mWhiteboard.clear();
         }
-
-        if (mPrefTimer) {
-            mCardTimer.setBase(SystemClock.elapsedRealtime());
-            mCardTimer.start();
-        }
     }
 
 
@@ -2247,17 +2248,27 @@ public class Reviewer extends AnkiActivity {
 
     private Runnable mShowAnswerTask = new Runnable() {
         public void run() {
-            if (mPrefTimer) {
-                mCardTimer.stop();
-            }
             if (mFlipCardLayout.isEnabled() == true && mFlipCardLayout.getVisibility() == View.VISIBLE) {
                 mFlipCardLayout.performClick();
             }
         }
     };
 
+    private void initTimer() {
+        mShowTimer = mCurrentCard.showTimer();
+        if (mShowTimer && mCardTimer.getVisibility() == View.INVISIBLE) {
+        	switchVisibility(mCardTimer, View.VISIBLE);        	
+        } else if (!mShowTimer && mCardTimer.getVisibility() != View.INVISIBLE) {
+        	switchVisibility(mCardTimer, View.INVISIBLE);
+        }
+        mCardTimer.setBase(SystemClock.elapsedRealtime());
+        mCardTimer.start();
+    }
 
     private void displayCardQuestion() {
+    	// show timer, if activated in the deck's preferences
+    	initTimer();
+
         sDisplayAnswer = false;
 
         if (mButtonHeight == 0 && mRelativeButtonSize != 100) {
@@ -2283,7 +2294,7 @@ public class Reviewer extends AnkiActivity {
         String displayString = "";
 
         if (mCurrentSimpleInterface) {
-            mCardContent = Html.fromHtml(question);
+            mCardContent = convertToSimple(question);
             if (mCardContent.length() == 0) {
                 SpannableString hint = new SpannableString(getResources().getString(R.string.simple_interface_hint,
                         R.string.card_details_question));
@@ -2336,7 +2347,7 @@ public class Reviewer extends AnkiActivity {
         String displayString = "";
 
         if (mCurrentSimpleInterface) {
-            mCardContent = Html.fromHtml(answer);
+            mCardContent = convertToSimple(answer);
             if (mCardContent.length() == 0) {
                 SpannableString hint = new SpannableString(getResources().getString(R.string.simple_interface_hint,
                         R.string.card_details_answer));
@@ -2836,10 +2847,6 @@ public class Reviewer extends AnkiActivity {
                 break;
         }
 
-        if (mPrefTimer) {
-            mCardTimer.setEnabled(true);
-        }
-
         if (mPrefWhiteboard) {
             mWhiteboard.setEnabled(true);
         }
@@ -2893,10 +2900,6 @@ public class Reviewer extends AnkiActivity {
                 mEase3Layout.setEnabled(false);
                 mEase4Layout.setEnabled(false);
                 break;
-        }
-
-        if (mPrefTimer) {
-            mCardTimer.setEnabled(false);
         }
 
         if (mPrefWhiteboard) {
@@ -3285,4 +3288,62 @@ public class Reviewer extends AnkiActivity {
 
     }
 
+    private TagHandler mSimpleInterfaceTagHandler = new TagHandler () {
+
+        public void handleTag(boolean opening, String tag, Editable output,
+                XMLReader xmlReader) {
+//            if(tag.equalsIgnoreCase("div")) {
+//            	output.append("\n");
+//            } else 
+        	if(tag.equalsIgnoreCase("strike") || tag.equals("s")) {
+                int len = output.length();
+                if(opening) {
+                    output.setSpan(new StrikethroughSpan(), len, len, Spannable.SPAN_MARK_MARK);
+                } else {
+                    Object obj = getLast(output, StrikethroughSpan.class);
+                    int where = output.getSpanStart(obj);
+
+                    output.removeSpan(obj);
+
+                    if (where != len) {
+                        output.setSpan(new StrikethroughSpan(), where, len, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+                    }
+                }
+            }
+        }
+
+        private Object getLast(Editable text, Class kind) {
+            Object[] objs = text.getSpans(0, text.length(), kind);
+
+            if (objs.length == 0) {
+                return null;
+            } else {
+                for(int i = objs.length;i>0;i--) {
+                    if(text.getSpanFlags(objs[i-1]) == Spannable.SPAN_MARK_MARK) {
+                        return objs[i-1];
+                    }
+                }
+                return null;
+            }
+        }
+    };
+
+    private Html.ImageGetter mSimpleInterfaceImagegetter = new Html.ImageGetter () {
+
+        public Drawable getDrawable(String source) {
+            String path = AnkiDroidApp.getCurrentAnkiDroidDirectory(Reviewer.this) + "/collection.media/" + source;
+            if ((new File(path)).exists()) {
+                Drawable d = Drawable.createFromPath(path);
+                d.setBounds(0,0,d.getIntrinsicWidth(),d.getIntrinsicHeight());
+                return d;            	
+            } else {
+            	return null;
+            }
+        }
+    };
+
+    private Spanned convertToSimple(String text) {
+    	text = text.replaceAll("</div>$", "").replaceAll("(</div>)*<div>", "<br>");
+    	return Html.fromHtml(text, mSimpleInterfaceImagegetter, mSimpleInterfaceTagHandler);
+    }
 }

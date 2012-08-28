@@ -220,7 +220,7 @@
   <string name="pref_keep_screen_on">أبق الشاشة تعمل</string>
   <string name="pref_keep_screen_on_summ">امنع الشاشة من الإطفاء أثناء المراجعة</string>
   <string name="pref_simple_interface">واجهة مبسطة</string>
-  <string name="pref_simple_interface_summ">تسريع إظهار البطاقة لكنه يدعم فقط النصوص (لا صور أو أصوات إلخ.)</string>
+  <string name="pref_simple_interface_summ">Speeds up card showing but does not support all html features</string>
   <string name="pref_simple_interface_exclude_tags">واجهة عادية حسب الوسم</string>
   <string name="pref_simple_interface_exclude_tags_summ">لا تستخدم واجهة بسيطة لهذه الوسوم: XXX</string>
   <string name="deck_conf_deck_name">اسم الرزمة</string>

@@ -140,10 +140,10 @@
   <string name="shake_intensity_summ">Limite de reconhecimento balanço: XXX</string>
   <string name="sync_fetch_missing_media">Busca mídia durante a sincronização</string>
   <string name="sync_fetch_missing_media_summ">Busca mídia faltando automaticamente durante a sincronização.</string>
-  <string name="fix_hebrew_text">Fix for Hebrew vowels</string>
-  <string name="fix_hebrew_text_summ">Workaround for rendering Hebrew vowels correctly.</string>
-  <string name="fix_hebrew_instructions">This setting bypasses the RTL algorithm of Android to show Hebrew text with vowels correctly.\n\nFor this to work, you need to download font Tohu.ttf and copy it manually to:\n%s/fonts/\n\nYou won\'t have to modify your cards.</string>
-  <string name="fix_hebrew_download_font">Download Font</string>
+  <string name="fix_hebrew_text">Correção para vogais em Hebraico</string>
+  <string name="fix_hebrew_text_summ">Solução alternativa de renderização correta dos sons de vogais do Hebraico.</string>
+  <string name="fix_hebrew_instructions">Esta definição ignora o algoritmo do Android para mostrar texto Hebraico com vogais corretamente.\n\nPara isso funcionar, você precisa baixar a fonte Tohu.ttf e copiá-la manualmente para:\n%s/fonts/\n\nVocê não terá que modificar seus cartões.</string>
+  <string name="fix_hebrew_download_font">Baixar Fonte</string>
   <string name="default_font">Fonte padrão</string>
   <string name="default_font_summ">A fonte usada para texto sem formatação de fonte especificada. Fontes personalizadas devem ser instaladas no cartão SD em uma pasta chamada \'fonts\' na pasta do AnkiDroid.</string>
   <string name="language">Idioma</string>
@@ -220,7 +220,7 @@
   <string name="pref_keep_screen_on">Manter a Tela Ligada</string>
   <string name="pref_keep_screen_on_summ">Impedir que a tela seja desligada enquanto revisa</string>
   <string name="pref_simple_interface">Interface simples</string>
-  <string name="pref_simple_interface_summ">Acelera a apresentação do cartão mas só oferece suporte a texto(sem imagens, sons etc.)</string>
+  <string name="pref_simple_interface_summ">Speeds up card showing but does not support all html features</string>
   <string name="pref_simple_interface_exclude_tags">Interface normal por tag</string>
   <string name="pref_simple_interface_exclude_tags_summ">Não use interface simplificada para essas tags: XXX</string>
   <string name="deck_conf_deck_name">Nome do deck</string>
@@ -256,8 +256,8 @@
   <string name="deck_conf_seconds">XXX segundos</string>
   <string name="deck_conf_timer">Mostrar o cronômetro de resposta</string>
   <string name="deck_conf_autoplay">Reproduzir áudio automaticamente</string>
-  <string name="deck_conf_replayq">Replay Question</string>
-  <string name="deck_conf_replayq_summ">When answer shown, replay both question and answer audio</string>
+  <string name="deck_conf_replayq">Reproduzir Pergunta</string>
+  <string name="deck_conf_replayq_summ">Quando resposta visível, reproduzir audios da pergunta e da resposta</string>
   <string name="deck_conf_add">Adicionar configuração</string>
   <string name="deck_conf_ren">Renomear configuração</string>
   <string name="deck_conf_rem">Remover configuração</string>

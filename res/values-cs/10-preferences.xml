@@ -220,7 +220,7 @@
   <string name="pref_keep_screen_on">Nevypínat obrazovku</string>
   <string name="pref_keep_screen_on_summ">Zabránit vypnutí obrazovky během opakování</string>
   <string name="pref_simple_interface">Jednoduché rozhraní</string>
-  <string name="pref_simple_interface_summ">Urychluje zobrazení karet, ale podporuje pouze text (bez obrázků, zvuků atd.)</string>
+  <string name="pref_simple_interface_summ">Speeds up card showing but does not support all html features</string>
   <string name="pref_simple_interface_exclude_tags">Běžné rozhraní podle štítků</string>
   <string name="pref_simple_interface_exclude_tags_summ">Nepoužívat jednoduché rozhraní pro tyto štítky: XXX</string>
   <string name="deck_conf_deck_name">Jméno balíčku</string>

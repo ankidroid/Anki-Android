@@ -220,7 +220,7 @@
   <string name="pref_keep_screen_on">Manté la pantalla engegada</string>
   <string name="pref_keep_screen_on_summ">Evita que la pantalla s\'apagui durant la revisió</string>
   <string name="pref_simple_interface">Interfície simple</string>
-  <string name="pref_simple_interface_summ">Accelera la targeta que es mostra però només és compatible amb text (no hi ha imatges, sons, etc.)</string>
+  <string name="pref_simple_interface_summ">Speeds up card showing but does not support all html features</string>
   <string name="pref_simple_interface_exclude_tags">Normal interface by tag</string>
   <string name="pref_simple_interface_exclude_tags_summ">Do not use simple interface for these tags: XXX</string>
   <string name="deck_conf_deck_name">Nom del paquet</string>

@@ -37,7 +37,7 @@
   <string name="ease2_successive">Difficile</string>
   <string name="ease3_successive">Bon</string>
   <string name="ease3_learning">Facile</string>
-  <string name="studyoptions_congrats_undo">Undo %s</string>
+  <string name="studyoptions_congrats_undo">Annuler %s</string>
   <string name="studyoptions_congrats_learnmore">En savoir plus</string>
   <string name="studyoptions_congrats_reviewearly">Réviser à l\'avance</string>
   <string name="studyoptions_congrats_open_other_deck">Ouvrir un autre paquet</string>
@@ -45,15 +45,15 @@
   <string name="card_unsuspended">Suspension de la carte annulée</string>
   <string name="card_suspended">Carte re-suspendue</string>
   <string name="menu_rotate">Changer d\'orientation</string>
-  <string name="menu_import">Import cards</string>
+  <string name="menu_import">Importer des cartes</string>
   <string name="undo">Annuler</string>
-  <string name="undo_action_review">review</string>
-  <string name="undo_action_edit">edit note</string>
-  <string name="undo_action_bury">bury note</string>
-  <string name="undo_action_suspend_card">suspend card</string>
-  <string name="undo_action_suspend_note">suspend note</string>
-  <string name="undo_action_delete">delete note</string>
-  <string name="undo_action_mark">mark note</string>
+  <string name="undo_action_review">réviser</string>
+  <string name="undo_action_edit">modifier la note</string>
+  <string name="undo_action_bury">enterrer la note</string>
+  <string name="undo_action_suspend_card">suspendre la carte</string>
+  <string name="undo_action_suspend_note">suspendre la note</string>
+  <string name="undo_action_delete">supprimer la note</string>
+  <string name="undo_action_mark">Marquer la note</string>
   <string name="finish_operation">Opération précédente en cours de terminaison (probablement une sauvegarde). \nVeuillez patienter...</string>
   <string name="contextmenu_deckpicker_download_missing_media">Télécharger les médias manquants</string>
   <string name="contextmenu_deckpicker_reset_language_assignments">Réinitialiser les affectations de langue</string>
@@ -93,16 +93,16 @@
   <string name="empty_cram_label">Vider</string>
   <string name="empty_cram_deck">Paquet de bachotage en cours de vidage.\n
 Veuillez patienter...</string>
-  <string name="studyoptions_new_filtercram">Filter/Cram</string>
-  <string name="review_early_deck_name">Review Early</string>
+  <string name="studyoptions_new_filtercram">Filtrer/Bachoter</string>
+  <string name="review_early_deck_name">Réviser à l\'avance</string>
   <string name="studyoptions_congrats_finished">FÉLICITATIONS ! Vous avez terminé… pour l’instant !</string>
   <string name="studyoptions_congrats_more_rev">Vous avez atteint votre quota de révisions, mais il reste des cartes prévues pour aujourd’hui. Sauf à risquer l’oubli chronique, pensez à adapter le quota.</string>
-  <string name="studyoptions_congrats_more_new">There are more new cards available, but the daily limit has been reached. You can increase the limit in the options, but please bear in mind that this will increase your short-term review workload.</string>
+  <string name="studyoptions_congrats_more_new">Il reste des nouvelles cartes disponibles, mais la limite journalière à été atteinte. Vous pouvez augmenter cette limite dans les options, mais garder à l\'esprit que cela augmentera votre charge de travail à court terme.</string>
   <string name="sd_card_not_mounted">La carte SD n’est pas montée.</string>
   <string name="studyoptions_options">Options</string>
   <string name="empty_cloze_warning">N’oubliez pas le texte à trous. (%1$s)</string>
   <string name="help_cloze">aide</string>
-  <string name="button_sync">Sync</string>
+  <string name="button_sync">Synchroniser</string>
   <string-array name="next_review_s">
     <item>1 seconde</item>
     <item>1 minute</item>
