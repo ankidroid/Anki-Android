@@ -46,7 +46,7 @@ public class Whiteboard extends View {
     private int mForegroundColor;
 
     private boolean mLocked;
-    private boolean mRecreateBitmap = false;
+    // private boolean mRecreateBitmap = false;
 
     private float mX;
     private float mY;
@@ -101,22 +101,23 @@ public class Whiteboard extends View {
     }
 
 
-    @Override
-    protected void onSizeChanged(int w, int h, int oldw, int oldh) {
-        // We want to create the bitmap again only when the screen has been rotated,
-        // not when the size changes in the transition between the front and the back
-        // of a card (that would made the Whiteboard to disappear)
-        if (mRecreateBitmap) {
-            createBitmap();
-            super.onSizeChanged(w, h, oldw, oldh);
-            mRecreateBitmap = false;
-        }
-    }
+   // // We use only one big, square bitmap now. Nothing left to do here, then.
+   //  @Override
+   //  protected void onSizeChanged(int w, int h, int oldw, int oldh) {
+   //      // We want to create the bitmap again only when the screen has been rotated,
+   //      // not when the size changes in the transition between the front and the back
+   //      // of a card (that would made the Whiteboard to disappear)
+   //      if (mRecreateBitmap) {
+   //          createBitmap();
+   //          super.onSizeChanged(w, h, oldw, oldh);
+   //          mRecreateBitmap = false;
+   //      }
+   //  }
 
 
     /**
      * Handle touch screen motion events.
-     * 
+     *
      * @param event The motion event.
      * @return True if the event was handled, false otherwise.
      */
@@ -154,13 +155,15 @@ public class Whiteboard extends View {
     }
 
 
-    /**
-     * Create a new bitmap that fits the new screen layout. The content of the whiteboard does not survive screen
-     * rotation.
-     */
-    public void rotate() {
-        mRecreateBitmap = true;
-    }
+   // // This hasn't been called anyway for a while now. See also
+   // //  onSizeChanged and createBitmap for more comments.
+   //  /**
+   //   * Create a new bitmap that fits the new screen layout. The content of the whiteboard does not survive screen
+   //   * rotation.
+   //   */
+   //  public void rotate() {
+   //      mRecreateBitmap = true;
+   //  }
 
 
     /**
@@ -192,10 +195,14 @@ public class Whiteboard extends View {
 
 
     private void createBitmap() {
+       // To fix issue #1336, just make the whiteboard big and
+       // square.
+       int bitmapSize = Math.max(AnkiDroidApp.getDisplayWidth(),
+                                 AnkiDroidApp.getDisplayHeight());
         if (mMonochrome && !mInvertedColors) {
-            createBitmap(AnkiDroidApp.getDisplayWidth(), AnkiDroidApp.getDisplayHeight(), Bitmap.Config.ALPHA_8);
+           createBitmap(bitmapSize, bitmapSize, Bitmap.Config.ALPHA_8);
         } else {
-            createBitmap(AnkiDroidApp.getDisplayWidth(), AnkiDroidApp.getDisplayHeight(), Bitmap.Config.ARGB_4444);
+            createBitmap(bitmapSize, bitmapSize, Bitmap.Config.ARGB_4444);
         }
     }
 
