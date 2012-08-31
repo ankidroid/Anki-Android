@@ -220,7 +220,7 @@
   <string name="pref_keep_screen_on">Mantener encendida la pantalla</string>
   <string name="pref_keep_screen_on_summ">Impedir que la pantalla se apague mientras estás repasando</string>
   <string name="pref_simple_interface">Interfaz sencilla</string>
-  <string name="pref_simple_interface_summ">Speeds up card showing but does not support all html features</string>
+  <string name="pref_simple_interface_summ">Aumenta la velocidad de visualización de las tarjetas, pero no soporta todas las características html</string>
   <string name="pref_simple_interface_exclude_tags">Interfaz normal por etiqueta</string>
   <string name="pref_simple_interface_exclude_tags_summ">No utilizar la interfaz simple para estas etiquetas: XXX</string>
   <string name="deck_conf_deck_name">Nombre del mazo</string>

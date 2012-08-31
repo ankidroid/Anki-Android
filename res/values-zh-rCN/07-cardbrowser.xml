@@ -23,13 +23,13 @@
   <string name="card_browser_all_decks">所有牌组</string>
   <string name="card_browser_load">加载卡牌。\n请稍候...</string>
   <string name="card_browser_cardloading_error">载入卡牌时发生错误。这可能与你的设备的内存限制有关。选择一个更小的牌组再重试。</string>
-  <string name="card_browser_delete_card">删除条目注释</string>
+  <string name="card_browser_delete_card">删除卡牌记录</string>
   <string name="card_browser_suspend_card">不要复习</string>
   <string name="card_browser_unsuspend_card">恢复复习</string>
-  <string name="card_browser_mark_card">已标记的条目注释</string>
-  <string name="card_browser_unmark_card">未标记的条目注释</string>
-  <string name="delete_card_title">删除条目注释</string>
-  <string name="delete_card_message">真的删除此条目注释的所有卡牌？\n搜索字段：%s</string>
+  <string name="card_browser_mark_card">已标记的卡牌记录</string>
+  <string name="card_browser_unmark_card">未标记的卡牌记录</string>
+  <string name="delete_card_title">删除卡牌记录</string>
+  <string name="delete_card_message">真的删除此卡牌记录的所有卡牌？\n搜索字段：%s</string>
   <string name="card_browser_show_marked">筛选器暂停使用</string>
   <string name="card_browser_field">改变卡牌浏览器字段</string>
   <string name="card_browser_field_title">改变卡牌浏览器字段</string>
@@ -53,7 +53,7 @@
   <string name="card_details_added">添加时间</string>
   <string name="card_details_changed">修改时间</string>
   <string name="card_details_tags">标签</string>
-  <string name="card_details_model">条目注释类型</string>
+  <string name="card_details_model">卡牌记录类型</string>
   <string name="card_browser_sorting_cards">卡牌排序。\n请稍候...</string>
   <string name="card_browser_filtering_cards">筛选卡牌。\n请稍候...</string>
   <string name="card_details_card_model">卡牌模板</string>

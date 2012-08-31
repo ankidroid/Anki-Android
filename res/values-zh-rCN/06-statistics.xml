@@ -37,7 +37,7 @@
   <string name="statistics_fullscreen">全屏显示</string>
   <string name="calculating_statistics">计算统计信息。 \n 请稍候...</string>
   <string name="deck_summary_cards">卡牌数量：</string>
-  <string name="deck_summary_notes">条目注释的数目：</string>
+  <string name="deck_summary_notes">卡牌记录的数量：</string>
   <string name="deck_summary_cards_mature">熟悉的卡牌:</string>
   <string name="deck_summary_cards_young">有待熟悉的卡牌:</string>
   <string name="deck_summary_cards_unseen">未学习卡牌：</string>

@@ -1403,7 +1403,7 @@ public class Sched {
 
     public int _revForDeck(long did, int lim) {
     	lim = Math.min(lim, mReportLimit);
-    	return mCol.getDb().queryScalar("SELECT count() FROM (SELECT 1 FROM cards WHERE did = " + did + " AND queue = 2 and due <= " + mToday + " LIMIT " + lim + ")", false);
+    	return mCol.getDb().queryScalar("SELECT count() FROM (SELECT 1 FROM cards WHERE did = " + did + " AND queue IN (2, 3) AND due <= " + mToday + " LIMIT " + lim + ")", false);
     }
 
 
@@ -2148,13 +2148,13 @@ public class Sched {
             return "";
         }
         String s = Utils.fmtTimeSpan(ivl, _short);
-        try {
-			if (ivl < mCol.getConf().getInt("collapseTime")) {
-				s = "< " + s;
-			}
-		} catch (JSONException e) {
-			throw new RuntimeException(e);
-		}
+//        try {
+//			if (ivl < mCol.getConf().getInt("collapseTime")) {
+//				s = "< " + s;
+//			}
+//		} catch (JSONException e) {
+//			throw new RuntimeException(e);
+//		}
         return s;
     }
 

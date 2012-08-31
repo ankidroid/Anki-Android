@@ -249,9 +249,9 @@
   <string name="deck_conf_max_ivl">Intervalle maximal</string>
   <string name="deck_conf_new_lps_ivl">Nouvel intervalle</string>
   <string name="deck_conf_min_ivl">Intervalle minimal</string>
-  <string name="deck_conf_leech_thres">Seuil pour les cartes encombrantes</string>
+  <string name="deck_conf_leech_thres">Seuil d’encombrement</string>
   <string name="deck_conf_fails">XXX échecs</string>
-  <string name="deck_conf_leech_action">Action pour les cartes encombrantes</string>
+  <string name="deck_conf_leech_action">Cartes encombrantes : action</string>
   <string name="deck_conf_max_time">Temps de réponse maximal</string>
   <string name="deck_conf_seconds">XXX secondes</string>
   <string name="deck_conf_timer">Montrer la minuterie</string>

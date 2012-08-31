@@ -37,9 +37,9 @@
   <string name="session_question_limit_reached">Limite de questions par session atteinte</string>
   <string name="session_time_limit_reached">Temps limite de session atteint</string>
   <string name="cram_edit_warning">On ne touche pas aux cartes pendant un bachotage</string>
-  <string name="suspend_leeches">Suspendre les cartes \"sangsues\"</string>
-  <string name="leech_suspend_notification">Carte marquée comme sangsue et suspendue</string>
-  <string name="leech_notification">Carte marquée comme sangsue</string>
+  <string name="suspend_leeches">Masquer les cartes encombrantes</string>
+  <string name="leech_suspend_notification">La carte, marquée « encombrante », est masquée</string>
+  <string name="leech_notification">Carte marquée « encombrante »</string>
   <string name="corrupt_font">Fichier de police corrompu %s</string>
   <string name="about_title">À propos</string>
   <string name="cardeditor_title_add_note">Ajout de note</string>
