@@ -220,7 +220,7 @@
   <string name="pref_keep_screen_on">Mantieni acceso lo schermo</string>
   <string name="pref_keep_screen_on_summ">Previeni che lo schermo si spenga durante le ripetizioni</string>
   <string name="pref_simple_interface">Interfaccia semplice</string>
-  <string name="pref_simple_interface_summ">Speeds up card showing but does not support all html features</string>
+  <string name="pref_simple_interface_summ">Velocizza la visualizzazione delle carte ma non supporta tutte le funzionalità di html</string>
   <string name="pref_simple_interface_exclude_tags">Interfaccia normale per etichetta</string>
   <string name="pref_simple_interface_exclude_tags_summ">Non utilizzare l\'interfaccia semplice per queste etichette: XXX</string>
   <string name="deck_conf_deck_name">Nome del mazzo</string>
