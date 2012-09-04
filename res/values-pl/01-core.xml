@@ -72,7 +72,7 @@
   <string name="menu_suspend_card">Zawieś kartę</string>
   <string name="menu_suspend_note">Notatka wstrzymana</string>
   <string name="menu_delete_note">Usuń notatkę</string>
-  <string name="delete_note_message">Really delete this note and all its cards?\n%s</string>
+  <string name="delete_note_message">Jesteś pewny, że chcesz usunąć tę notatkę i wszystkie jej karty?\n%s</string>
   <string name="menu_edit_card">Edytuj kartę</string>
   <string name="menu_select">Zaznacz tekst</string>
   <string name="menu_search">Wyszukiwanie w %1$s</string>
@@ -92,7 +92,7 @@
   <string name="rebuild_cram_label">Odbuduj</string>
   <string name="empty_cram_label">Wyczyść</string>
   <string name="empty_cram_deck">Czyszczenie talii.\nProszę czekać...</string>
-  <string name="studyoptions_new_filtercram">Filter/Cram</string>
+  <string name="studyoptions_new_filtercram">Filtr/Cram</string>
   <string name="review_early_deck_name">Powtarzaj wcześnie</string>
   <string name="studyoptions_congrats_finished">Gratulacje! Zakończono powtórki na dziś.</string>
   <string name="studyoptions_congrats_more_rev">Dzisiejszy limit powtórek został wyczerpany ale wciąż pozostają karty do przeglądnięcia. Dla optymalnego zapamiętywania proszę rozważyć zwiększenie dziennego limitu w ustawieniach.</string>
