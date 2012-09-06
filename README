@@ -1,10 +1,3 @@
 AnkiDroid: Anki on Android
 
 How to compile: http://code.google.com/p/ankidroid/wiki/Contribution#Source_code
-
-=== Running with Ant ===
-
-1. Create a "local.properties" file containing the path to the Android SDK, for instance:
-sdk.dir=/home/nico/programs/android-sdk
-
-2. Plug in your Android phone via USB and run the following command: ant debug; ant installd
