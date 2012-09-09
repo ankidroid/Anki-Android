@@ -19,14 +19,32 @@
 	android:orientation="vertical"
     android:layout_width="fill_parent"
 	android:layout_height="fill_parent">
-	<WebView
-        android:id="@+id/info"
+	<FrameLayout
         android:layout_width="fill_parent"
 		android:layout_height="fill_parent"
 		android:layout_alignParentTop="true"
 		android:layout_marginBottom="4dip"
 		android:fadingEdge="vertical"
-		android:layout_above="@+id/info_buttons"/>
+		android:layout_above="@+id/info_buttons">
+	<WebView
+        android:id="@+id/info"
+        android:layout_width="fill_parent"
+		android:layout_height="fill_parent"/>
+	<RelativeLayout
+        android:id="@+id/info_loading_layer"
+	    android:background="@color/white_background"
+	    android:visibility="visible"
+        android:layout_width="fill_parent"
+		android:layout_height="fill_parent"
+		android:gravity="center">
+	    <TextView 
+	        android:layout_gravity="center"
+	        android:text="@string/loading_shared_decks"
+        android:layout_width="wrap_content"
+		android:layout_height="wrap_content"/>
+	</RelativeLayout>
+	 
+	</FrameLayout>
 	<LinearLayout  android:id="@+id/info_buttons"
 	    android:layout_width="fill_parent"
 	    android:layout_height="wrap_content"

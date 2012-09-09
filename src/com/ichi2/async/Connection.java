@@ -47,6 +47,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
+import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileFilter;
@@ -55,12 +57,16 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.UnsupportedEncodingException;
 import java.lang.OutOfMemoryError;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.TreeSet;
@@ -77,6 +83,7 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
     public static final int TASK_TYPE_DOWNLOAD_MEDIA = 5;
     public static final int TASK_TYPE_REGISTER = 6;
     public static final int TASK_TYPE_UPGRADE_DECKS = 7;
+    public static final int TASK_TYPE_DOWNLOAD_SHARED_DECK = 8;
 
     private static Context sContext;
 
@@ -193,6 +200,12 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
     }
 
 
+    public static Connection downloadSharedDeck(TaskListener listener, Payload data) {
+        data.taskType = TASK_TYPE_DOWNLOAD_SHARED_DECK;
+        return launchConnectionTask(listener, data);
+    }
+
+
     @Override
     protected Payload doInBackground(Payload... params) {
         if (params.length != 1)
@@ -229,6 +242,9 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
 
             case TASK_TYPE_UPGRADE_DECKS:
                 return doInBackgroundUpgradeDecks(data);
+
+            case TASK_TYPE_DOWNLOAD_SHARED_DECK:
+            	return doInBackgroundDownloadSharedDeck(data);
 
             default:
                 return null;
@@ -868,6 +884,60 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
         data.data[1] = new Integer(grabbed);
         data.data[2] = new Integer(missing);
         data.success = true;
+        return data;
+    }
+
+
+    private Payload doInBackgroundDownloadSharedDeck(Payload data) {
+        String url = (String) data.data[0];
+        String colFilename = AnkiDroidApp.getCurrentAnkiDroidDirectory(AnkiDroidApp.getInstance().getBaseContext()) + "/tmpImportFile.apkg";
+        URL fileUrl;
+        URLConnection conn;
+        InputStream cont;
+		try {
+			fileUrl = new URL(url);
+	        conn = fileUrl.openConnection();
+	        conn.setConnectTimeout(10000);
+	        conn.setReadTimeout(10000);        
+	        cont = conn.getInputStream();
+		} catch (MalformedURLException e2) {
+            data.success = false;
+            return data;			
+		} catch (IOException e) {
+            data.success = false;
+            return data;			
+		}
+        if (cont == null) {
+            data.success = false;
+            return data;
+        }
+        File file = new File(colFilename);
+        OutputStream output = null;
+        try {
+            file.createNewFile();
+            output = new BufferedOutputStream(new FileOutputStream(file));
+            byte[] buf = new byte[Utils.CHUNK_SIZE];
+            int len;
+            int count = 0;
+            while ((len = cont.read(buf)) >= 0) {
+                output.write(buf, 0, len);
+                count += len;
+                publishProgress(new Object[] { count / 1024 });
+            }
+            output.close();
+        } catch (IOException e) {
+            try {
+                output.close();
+            } catch (IOException e1) {
+                // do nothing
+            }
+            // no write access or sd card full
+            file.delete();
+            data.success = false;
+            return data;
+        }
+        data.success = true;
+        data.result = colFilename;
         return data;
     }
 

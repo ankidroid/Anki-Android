@@ -18,8 +18,19 @@
 package com.ichi2.anki;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
-import java.util.TreeSet;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.ResponseHandler;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.util.EntityUtils;
 
 import com.ichi2.anki.R;
 
@@ -27,6 +38,7 @@ import com.ichi2.anim.ActivityTransitionAnimation;
 import com.ichi2.async.Connection;
 import com.ichi2.async.Connection.OldAnkiDeckFilter;
 import com.ichi2.async.Connection.Payload;
+import com.ichi2.libanki.Utils;
 import com.ichi2.themes.StyledDialog;
 import com.ichi2.themes.StyledProgressDialog;
 import com.ichi2.themes.Themes;
@@ -36,10 +48,11 @@ import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.DialogInterface.OnCancelListener;
 import android.content.SharedPreferences.Editor;
 import android.content.res.Resources;
+import android.graphics.Bitmap;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -48,6 +61,8 @@ import android.view.View.OnClickListener;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Button;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 /**
  * Shows an about box, which is a small HTML page.
@@ -73,6 +88,8 @@ public class Info extends Activity {
 
     private int mType;
     private WebView mWebView;
+    private RelativeLayout mLoadingLayer;
+    private String mShareDecksTemplate;
     private StyledProgressDialog mProgressDialog;
     private StyledDialog mNoConnectionAlert;
 
@@ -199,16 +216,17 @@ public class Info extends Activity {
                 break;
 
             case TYPE_SHARED_DECKS:
+            	mLoadingLayer = (RelativeLayout) findViewById(R.id.info_loading_layer);
+                mLoadingLayer.setVisibility(View.VISIBLE);
+    			try {
+    				mShareDecksTemplate = Utils.convertStreamToString(getAssets().open("shared_decks_template.html"));
+    			} catch (IOException e) {
+    				e.printStackTrace();
+    			}
+                mWebView.setWebViewClient(new MobileAnkiWebview());
                 mWebView.loadUrl(res.getString(R.string.shared_decks_url));
-                mWebView.setWebViewClient(new CustomWebViewClient());
                 mWebView.getSettings().setJavaScriptEnabled(true);
                 continueButton.setText(res.getString(R.string.download_button_return));
-
-                // this is only shown until ankiweb gives a possibility of logging in by hkey
-                StyledDialog.Builder builder = new StyledDialog.Builder(this);
-                builder.setMessage("At the moment, it's still necessary to log in manually.\nPlease log in here and choose then your deck");
-                builder.setPositiveButton("ok", null);
-                builder.show();
                 break;
 
             case TYPE_UPGRADE_DECKS:
@@ -377,14 +395,105 @@ public class Info extends Activity {
         return appName.toString();
     }
 
-    private class CustomWebViewClient extends WebViewClient {
+    private class MobileAnkiWebview extends WebViewClient {
+    	WebView mWebView;
+    	String mUrl;
+    	
         @Override
         public boolean shouldOverrideUrlLoading(WebView view, String url) {
             Log.i(AnkiDroidApp.TAG, "LoadSharedDecks: loading: " + url);
             view.loadUrl(url);
             return true;
         }
+
+        @Override
+        public void onPageStarted(WebView view, String url, Bitmap favicon) {
+        	if (mUrl != null && mUrl.equals(url)) {
+        		super.onPageStarted(view, url, favicon);
+        	} else if (url.matches(".*/shared/download/[0-9]*")) {
+                Connection.downloadSharedDeck(mDownloadDeckListener,
+                        new Connection.Payload(new Object[] { url }));
+        	} else {
+        		mLoadingLayer.setVisibility(View.VISIBLE);
+                mWebView = view;
+                mUrl = url;
+                AsyncTask<String, Void, String> parseShareDecks = new ParseSharedDecks();
+                parseShareDecks.execute(url);        		
+        	}
+        }
+
+        private class ParseSharedDecks extends AsyncTask<String, Void, String> {
+            @Override
+            protected String doInBackground(String... params) {
+                Log.i(AnkiDroidApp.TAG, "Info.ParseSharedDecks.doInBackground()");
+                HttpGet pageGet = new HttpGet(params[0]);
+                HttpClient client = new DefaultHttpClient();
+
+                ResponseHandler<String> handler = new ResponseHandler<String>() {
+    				@Override
+    				public String handleResponse(HttpResponse response)
+    						throws ClientProtocolException, IOException {
+                        HttpEntity entity = response.getEntity();
+                        String html;
+                        if (entity != null) {
+                            html = EntityUtils.toString(entity);
+                            return html;
+                        } else {
+                            return null;
+                        }
+    				}
+                };
+                String pageHTML = null;
+                try {
+                    while (pageHTML == null){
+                        pageHTML = client.execute(pageGet, handler);
+                    }
+                } catch (ClientProtocolException e) {
+                	pageHTML = "error";
+                } catch (IOException e) {
+                	pageHTML = "error";
+                }
+
+                Pattern pattern = Pattern.compile("</*div(\\sid=\\\"content\\\")*");
+                Matcher matcher = pattern.matcher(pageHTML);
+                int start = -1;
+                int end = 0;
+                int inner = 0;
+                while (matcher.find()) {
+                	if (matcher.group().length() > 8) {
+                		start = matcher.start();
+                	} else if (start >= 0) {
+                		if (matcher.group().equals("<div")) {
+                			inner++;
+                		} else {
+                			if (inner == 0) {
+                				end = matcher.end();
+                				break;
+                			} else {
+                				inner--;
+                			}
+                		}
+                	}
+                }
+                if (start == -1 || end <= 0) {
+                	return "error";
+                } else {
+                	return mShareDecksTemplate.replace("::content::",  pageHTML.substring(start, end));
+                }
+            }
+
+            @Override
+            protected void onPostExecute(String html) {
+                Log.d(AnkiDroidApp.TAG, "Info.ParseSharedDecks.onPostExecute()");
+                if (mWebView != null && mUrl != null & html != null) {
+                    mWebView.loadDataWithBaseURL(mUrl, html, null, "utf-8", mUrl);
+                    mLoadingLayer.setVisibility(View.INVISIBLE);
+                }
+            }
+        }
+
     }
+
 
     Connection.TaskListener mUpgradeListener = new Connection.TaskListener() {
 
@@ -472,6 +581,68 @@ public class Info extends Activity {
                 builder.setTitle(res.getString(R.string.connection_error_title));
                 builder.setIcon(R.drawable.ic_dialog_alert);
                 builder.setMessage((String) data.data[0]);
+                builder.setPositiveButton(res.getString(R.string.ok), null);
+                builder.show();
+            }
+        }
+
+
+        @Override
+        public void onDisconnected() {
+            if (mNoConnectionAlert != null) {
+                mNoConnectionAlert.show();
+            }
+        }
+    };
+    
+    Connection.TaskListener mDownloadDeckListener = new Connection.TaskListener() {
+    	int countDown = 0;
+    	
+        @Override
+        public void onProgressUpdate(Object... values) {
+            countDown = ((Integer) values[0]).intValue();
+            if (mProgressDialog != null && mProgressDialog.isShowing()) {
+                // mProgressDialog.setTitle((String) values[0]);
+                mProgressDialog.setMessage(getResources().getString(R.string.download_deck, countDown));
+            }
+        }
+
+
+        @Override
+        public void onPreExecute() {
+            Log.i(AnkiDroidApp.TAG, "Info: mDownloadDeckListener - onPreExcecute");
+            if (mProgressDialog == null || !mProgressDialog.isShowing()) {
+                mProgressDialog = StyledProgressDialog.show(Info.this, "",
+                		getResources().getString(R.string.download_deck, countDown / 1024), true);
+            }
+        }
+
+
+        @Override
+        public void onPostExecute(Payload data) {
+            Log.i(AnkiDroidApp.TAG, "Info: mDownloadDeckListener - onPostExecute, succes = " + data.success);
+        	Resources res = getResources();
+            try {
+                if (mProgressDialog != null && mProgressDialog.isShowing()) {
+                    mProgressDialog.dismiss();
+                }            	
+            } catch (IllegalArgumentException e) {
+            	Log.e(AnkiDroidApp.TAG, "Info - IllegalArgumentException: " + e);
+            }
+
+            if (data.success) {
+            	Intent intent = new Intent();
+            	intent.putExtra("importPath", (String) data.result);
+            	setResult(RESULT_OK, intent);
+                finish();
+                if (AnkiDroidApp.SDK_VERSION > 4) {
+                    ActivityTransitionAnimation.slide(Info.this, ActivityTransitionAnimation.LEFT);
+                }
+            } else {
+                StyledDialog.Builder builder = new StyledDialog.Builder(Info.this);
+                builder.setTitle(res.getString(R.string.connection_error_title));
+                builder.setIcon(R.drawable.ic_dialog_alert);
+                builder.setMessage(res.getString(R.string.register_error));
                 builder.setPositiveButton(res.getString(R.string.ok), null);
                 builder.show();
             }
@@ -608,5 +779,4 @@ public class Info extends Activity {
             }
         }
     };
-
 }

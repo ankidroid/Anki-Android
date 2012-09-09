@@ -2340,7 +2340,10 @@ public class DeckPicker extends FragmentActivity {
         } else if (requestCode == LOG_IN_FOR_SHARED_DECK && resultCode == RESULT_OK) {
             addSharedDeck();
         } else if (requestCode == ADD_SHARED_DECKS) {
-            sync();
+        	mImportPath = intent.getStringExtra("importPath");
+        	if (AnkiDroidApp.colIsOpen() && mImportPath != null) {
+        		showDialog(DIALOG_IMPORT);
+        	}
         } else if (requestCode == REQUEST_REVIEW) {
             Log.i(AnkiDroidApp.TAG, "Result code = " + resultCode);
             switch (resultCode) {
