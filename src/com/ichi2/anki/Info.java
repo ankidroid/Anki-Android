@@ -478,7 +478,7 @@ public class Info extends Activity {
                 if (start == -1 || end <= 0) {
                 	return "error";
                 } else {
-                	return mShareDecksTemplate.replace("::content::",  pageHTML.substring(start, end));
+                	return mShareDecksTemplate.replace("::content::",  pageHTML.substring(start, end)).replaceAll(">\nDownload(.|\n)*", ">Import</a></div>");
                 }
             }
 
