@@ -1367,7 +1367,7 @@ public class Sched {
                     "SELECT sum(left / 1000) FROM (SELECT left FROM cards WHERE did = " + did
                             + " AND queue = 1 AND due < " + (Utils.intNow() + mCol.getConf().getInt("collapseTime"))
                             + " LIMIT " + mReportLimit + ")", false);
-            return cnt + = mCol.getDb().queryScalar(
+            return cnt += mCol.getDb().queryScalar(
                     "SELECT count() FROM (SELECT 1 FROM cards WHERE did = " + did
                             + " AND queue = 3 AND due < " + mToday
                             + " LIMIT " + mReportLimit + ")", false);
@@ -1532,7 +1532,7 @@ public class Sched {
                 card.setFactor(Math.max(1300, card.getFactor() - 200));
                 card.setDue(mToday + card.getIvl());
 		// if it's a filtered deck, update odue as well
-		if (card.getODid != 0) {
+		if (card.getODid() != 0) {
 	                card.setODue(card.getDue());
 		}
             }

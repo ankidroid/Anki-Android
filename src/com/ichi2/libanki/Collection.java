@@ -1269,7 +1269,7 @@ public class Collection {
                 }
 		// note types with a missing model
                 ArrayList<Long> ids = mDb.queryColumn(Long.class,
-                        "SELECT id FROM notes WHERE mid NOT IN " + Utils.ids2str(mModels.ids())), 0);
+                        "SELECT id FROM notes WHERE mid NOT IN " + Utils.ids2str(mModels.ids()), 0);
 		if (ids.size() != 0) {
 			// TODO: add return information about deleted notes
 	                _remNotes(Utils.arrayList2array(ids));
