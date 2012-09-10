@@ -408,7 +408,7 @@ public class Finder {
             } else if (val.equals("new")) {
                 n = 0;
             } else {
-                n = 1;
+		return "queue IN (1, 3)";
             }
             return "type = " + n;
         } else if (val.equals("suspended")) {

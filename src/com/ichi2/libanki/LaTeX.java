@@ -112,13 +112,6 @@ public class LaTeX {
         // entitydefs defines nbsp as \xa0 instead of a standard space, so we
         // replace it first
         latex = latex.replace("&nbsp;", " ");
-        Matcher matcher = sEntityPattern.matcher(latex);
-        while (matcher.find()) {
-            // libanki avoids unescaping &nbsp; here, but converts it anyway few lines later with stripHTML, probably a
-            // python quirk.
-            matcher.appendReplacement(sb, Html.fromHtml(matcher.group(1)).toString());
-        }
-        matcher.appendTail(sb);
         latex = sb.toString().replaceAll("<br( /)?>", "\n");
         // replace <div> etc with spaces
         latex = latex.replaceAll("<.+?>", " ");

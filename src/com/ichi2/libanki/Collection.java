@@ -1317,10 +1317,19 @@ public class Collection {
                 if (!mDb.queryString("PRAGMA integrity_check").equals("ok")) {
                     return -1;
                 }
-                // delete any notes with missing cards
+		// note types with a missing model
                 ArrayList<Long> ids = mDb.queryColumn(Long.class,
+                        "SELECT id FROM notes WHERE mid NOT IN " + Utils.ids2str(mModels.ids())), 0);
+		if (ids.size() != 0) {
+			// TODO: add return information about deleted notes
+	                _remNotes(Utils.arrayList2array(ids));
+		}
+	        // delete any notes with missing cards
+                ids = mDb.queryColumn(Long.class,
                         "SELECT id FROM notes WHERE id NOT IN (SELECT DISTINCT nid FROM cards)", 0);
-                _remNotes(Utils.arrayList2array(ids));
+		if (ids.size() != 0) {
+			// TODO: add return information about deleted notes
+	                _remNotes(Utils.arrayList2array(ids));			}
                 // tags
                 mTags.registerNotes();
                 // field cache

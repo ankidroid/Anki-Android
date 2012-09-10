@@ -353,6 +353,18 @@ public class Models {
     }
 
 
+    public long[] ids() {
+        Iterator<Long> it = mModels.keySet().iterator();
+        long[] ids = new long[mModels.size()];
+        int i = 0;
+        while (it.hasNext()) {
+            ids[i] = it.next();
+            i++;
+        }
+        return ids;
+    }
+
+
     /**
      * Tools ***********************************************************************************************
      */
