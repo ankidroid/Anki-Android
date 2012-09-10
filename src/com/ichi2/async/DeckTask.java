@@ -24,6 +24,8 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
 import java.util.TreeSet;
 
 import org.json.JSONArray;
@@ -33,6 +35,7 @@ import org.json.JSONObject;
 import com.ichi2.anki.AnkiDb;
 import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.BackupManager;
+import com.ichi2.anki.CardBrowser;
 import com.ichi2.anki.R;
 import com.ichi2.libanki.Card;
 import com.ichi2.libanki.Collection;
@@ -64,7 +67,6 @@ public class DeckTask extends
 	public static final int TASK_TYPE_ADD_FACT = 6;
 	public static final int TASK_TYPE_UPDATE_FACT = 7;
 	public static final int TASK_TYPE_UNDO = 8;
-	public static final int TASK_TYPE_LOAD_CARDS = 10;
 	public static final int TASK_TYPE_DISMISS_NOTE = 11;
 	public static final int TASK_TYPE_LOAD_STATISTICS = 13;
 	public static final int TASK_TYPE_CHECK_DATABASE = 14;
@@ -81,7 +83,8 @@ public class DeckTask extends
 	public static final int TASK_TYPE_REBUILD_CRAM = 26;
 	public static final int TASK_TYPE_EMPTY_CRAM = 27;
 	public static final int TASK_TYPE_IMPORT = 28;
-
+    public static final int TASK_TYPE_SEARCH_CARDS = 29;
+    
 	private static DeckTask sInstance;
 	private static DeckTask sOldInstance;
 
@@ -196,8 +199,8 @@ public class DeckTask extends
 		case TASK_TYPE_UNDO:
 			return doInBackgroundUndo(params);
 
-		case TASK_TYPE_LOAD_CARDS:
-			return doInBackgroundLoadCards(params);
+		case TASK_TYPE_SEARCH_CARDS:
+		    return doInBackgroundSearchCards(params);
 
 		case TASK_TYPE_DISMISS_NOTE:
 			return doInBackgroundDismissNote(params);
@@ -636,14 +639,21 @@ public class DeckTask extends
 		return new TaskData(true);
 	}
 
-	private TaskData doInBackgroundLoadCards(TaskData... params) {
-		Log.i(AnkiDroidApp.TAG, "doInBackgroundLoadCards");
-		Collection col = params[0].getCollection();
-		boolean wholeCollection = params[0].getBoolean();
-		publishProgress(new TaskData(
-				col.findCardsForCardBrowser(wholeCollection)));
-		return null;
-	}
+    private TaskData doInBackgroundSearchCards(TaskData... params) {
+        Log.i(AnkiDroidApp.TAG, "doInBackgroundSearchCards");
+        Collection col = (Collection) params[0].getObjArray()[0];
+        HashMap<String, String> deckNames = (HashMap<String, String>) params[0].getObjArray()[1];
+        String query = (String) params[0].getObjArray()[2];
+        String order = (String) params[0].getObjArray()[3];
+        TaskData result = new TaskData(col.findCardsForCardBrowser(query, order, deckNames));
+        if (DeckTask.taskIsCancelled()) {
+            return null;
+        } else {
+            publishProgress(result);
+        }
+        return null;
+    }
+
 
 	private TaskData doInBackgroundLoadStatistics(TaskData... params) {
 		Log.i(AnkiDroidApp.TAG, "doInBackgroundLoadStatistics");
@@ -964,15 +974,16 @@ public class DeckTask extends
 		private Sched mSched;
 		private TreeSet<Object[]> mDeckList;
 		private Object[] mObjects;
+		private List<Long> mIdList;
 
 		public TaskData(Object[] obj) {
 			mObjects = obj;
 		}
 
 		public TaskData(int value, Object[] obj, boolean bool) {
-			mObjects = obj;
-			mInteger = value;
-			mBool = bool;
+		    mObjects = obj;
+		    mInteger = value;
+		    mBool = bool;
 		}
 
 		public TaskData(int value, Card card) {
@@ -1117,10 +1128,18 @@ public class DeckTask extends
 		public TaskData(int[] intlist) {
 			mIntList = intlist;
 		}
+		
+		public TaskData(List<Long> idList) {
+		    mIdList = idList;
+		}
 
 		public ArrayList<HashMap<String, String>> getCards() {
 			return mCards;
 		}
+
+        public void setCards(ArrayList<HashMap<String, String>> cards) {
+            mCards = cards;
+        }
 
 		public Comparator getComparator() {
 			return mComparator;
@@ -1182,6 +1201,13 @@ public class DeckTask extends
 		public Object[] getObjArray() {
 			return mObjects;
 		}
+        public List<Long> getIdList() {
+            return mIdList;
+        }
+
+        public void setIdList(List<Long> idList) {
+            mIdList = idList;
+        }
 	}
 
 }

@@ -19,7 +19,9 @@ package com.ichi2.libanki;
 
 import android.database.Cursor;
 import android.database.SQLException;
+import android.util.Log;
 
+import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.Pair;
 
 import org.json.JSONArray;
@@ -72,7 +74,7 @@ public class Finder {
         Pair<String, Boolean> res2 = _order(_order);
         String order = res2.first;
         boolean rev = res2.second;
-        String sql = _query(preds, order);
+        String sql = _query(preds, order, false);
         Cursor cur = null;
         try {
             cur = mCol.getDb().getDatabase().rawQuery(sql, args);
@@ -93,6 +95,48 @@ public class Finder {
         return res;
     }
 
+    /** Return a list of card ids for QUERY */
+    public ArrayList<HashMap<String, String>> findCardsForCardBrowser(String query, String _order, HashMap<String, String> deckNames) {
+        String[] tokens = _tokenize(query);
+        Pair<String, String[]> res1 = _where(tokens);
+        String preds = res1.first;
+        String[] args = res1.second;
+        ArrayList<HashMap<String, String>> res = new ArrayList<HashMap<String, String>>();
+        if (preds == null) {
+            return res;
+        }
+        Pair<String, Boolean> res2 = _order(_order);
+        String order = res2.first;
+        boolean rev = res2.second;
+        String sql = _query(preds, order, true);
+        Cursor cur = null;
+        try {
+            cur = mCol.getDb().getDatabase().rawQuery(sql, args);
+            while (cur.moveToNext()) {
+                HashMap<String, String> map = new HashMap<String, String>();
+                map.put("id", cur.getString(0));
+                map.put("sfld", cur.getString(1));
+                map.put("deck", deckNames.get(cur.getString(2)));
+                int queue = cur.getInt(3);
+                String tags = cur.getString(4);
+                map.put("flags", Integer.toString((queue == -1 ? 1 : 0) + (tags.matches(".*[Mm]arked.*") ? 2 : 0)));
+                map.put("tags", tags);
+                res.add(map);
+            }
+        } catch (SQLException e) {
+            // invalid grouping
+            Log.e(AnkiDroidApp.TAG, "Invalid grouping, sql: " + sql);
+            return new ArrayList<HashMap<String, String>>();
+        } finally {
+            if (cur != null) {
+                cur.close();
+            }
+        }
+        if (rev) {
+            Collections.reverse(res);
+        }
+        return res;
+    }
 
     public List<Long> findNotes(String query) {
         String[] tokens = _tokenize(query);
@@ -308,13 +352,17 @@ public class Finder {
     }
 
 
-    private String _query(String preds, String order) {
+    private String _query(String preds, String order, boolean forCardBrowser) {
         // can we skip the note table?
         String sql;
-        if (!preds.contains("n.") && !order.contains("n.")) {
-            sql = "select c.id from cards c where ";
+        if (forCardBrowser) {
+            sql = "select c.id, n.sfld, c.did, c.queue, n.tags from cards c, notes n where c.nid=n.id and ";
         } else {
-            sql = "select c.id from cards c, notes n where c.nid=n.id and ";
+            if (!preds.contains("n.") && !order.contains("n.")) {
+                sql = "select c.id from cards c where ";
+            } else {
+                sql = "select c.id from cards c, notes n where c.nid=n.id and ";
+            }
         }
         // combine with preds
         if (preds.length() != 0) {
@@ -353,7 +401,7 @@ public class Finder {
                 } else if (type.startsWith("noteFld")) {
                     sort = "n.sfld COLLATE NOCASE, c.ord";
                 } else {
-                    throw new RuntimeException("wrong sort type");
+                    throw new RuntimeException("wrong sort type " + type);
                 }
             } else if (type.startsWith("card")) {
                 if (type.startsWith("cardMod")) {
@@ -369,12 +417,19 @@ public class Finder {
                 } else if (type.startsWith("cardIvl")) {
                     sort = "c.ivl";
                 } else {
-                    throw new RuntimeException("wrong sort type");
+                    throw new RuntimeException("wrong sort type " + type);
                 }
             } else {
-                throw new RuntimeException("wrong sort type");
+                throw new RuntimeException("wrong sort type " + type);
             }
-            return new Pair<String, Boolean>(" ORDER BY " + sort, mCol.getConf().getBoolean("sortBackwards"));
+            boolean sortBackwards = false;
+            int sortBackwardsInt = mCol.getConf().optInt("sortBackwards", -1);
+            if (sortBackwardsInt == -1) {
+                sortBackwards = mCol.getConf().getBoolean("sortBackwards");
+            } else if (sortBackwardsInt > 0) {
+                sortBackwards = true;
+            }
+            return new Pair<String, Boolean>(" ORDER BY " + sort, sortBackwards);
         } catch (JSONException e) {
             throw new RuntimeException(e);
         }
