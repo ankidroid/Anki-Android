@@ -33,7 +33,7 @@
 	<RelativeLayout
         android:id="@+id/info_loading_layer"
 	    android:background="@color/white"
-	    android:visibility="visible"
+	    android:visibility="invisible"
         android:layout_width="fill_parent"
 		android:layout_height="fill_parent"
 		android:gravity="center">
