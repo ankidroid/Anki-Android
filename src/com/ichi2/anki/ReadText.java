@@ -34,9 +34,8 @@ public class ReadText {
     private static ArrayList<String[]> availableTtsLocales = new ArrayList<String[]>();
     private static String mTextToSpeak;
     private static Context mReviewer;
-    private static String mDeckFilename;
-    private static int mModelId;
-    private static int mTemplate;
+    private static long mDid;
+    private static int mOrd;
     private static int mQuestionAnswer;
     public static final String NO_TTS = "0";
 
@@ -53,22 +52,18 @@ public class ReadText {
     }
 
 
-    public static void setLanguageInformation(int modelId, int template) {
-        mModelId = modelId;
-        mTemplate = template;
+    public static String getLanguage(long did, int ord, int qa) {
+        return MetaDB.getLanguage(mReviewer, did, ord, qa);
     }
 
 
-    public static String getLanguage(int qa) {
-        return MetaDB.getLanguage(mReviewer, mDeckFilename, mModelId, mTemplate, qa);
-    }
-
-
-    public static void textToSpeech(String text, int qa) {
+    public static void textToSpeech(String text, long did, int ord, int qa) {
         mTextToSpeak = text;
         mQuestionAnswer = qa;
+        mDid = did;
+        mOrd = ord;
 
-        String language = getLanguage(mQuestionAnswer);
+        String language = getLanguage(mDid, mOrd, mQuestionAnswer);
         if (availableTtsLocales.isEmpty()) {
             Locale[] systemLocales = Locale.getAvailableLocales();
             for (Locale loc : systemLocales) {
@@ -113,7 +108,7 @@ public class ReadText {
             builder.setItems(items, new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
-                    MetaDB.storeLanguage(mReviewer, mDeckFilename, mModelId, mTemplate, mQuestionAnswer,
+                    MetaDB.storeLanguage(mReviewer, mDid, mOrd, mQuestionAnswer,
                             dialogIds.get(which));
                     speak(dialogIds.get(which));
                 }
@@ -123,9 +118,8 @@ public class ReadText {
     }
 
 
-    public static void initializeTts(Context context, String deckFilename) {
+    public static void initializeTts(Context context) {
         mReviewer = context;
-        mDeckFilename = deckFilename;
         mTts = new TextToSpeech(context, new TextToSpeech.OnInitListener() {
             @Override
             public void onInit(int status) {

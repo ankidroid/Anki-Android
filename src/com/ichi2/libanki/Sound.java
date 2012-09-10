@@ -102,15 +102,16 @@ public class Sound {
             contentLeft = contentLeft.substring(markerStart + soundMarker.length());
             Log.i(AnkiDroidApp.TAG, "Content left = " + contentLeft);
         }
-        if (!soundAvailable && ttsEnabled && !ReadText.getLanguage(qa).equals(ReadText.NO_TTS)) {
-            stringBuilder.append(content.substring(0, content.length() - 9));
-            stringBuilder
-                    .append("<a onclick=\"window.ankidroid.playSound(this.title);\" title=\"tts"
-                            + Integer.toString(qa)
-                            + Utils.stripHTML(content)
-                            + "\"><span style=\"padding:5px;display:inline-block;vertical-align:middle\"><img src=\"file:///android_asset/media_playback_start2.png\" /></span></a>");
-            contentLeft = "</p>";
-        }
+        // TODO: readd tts
+//        if (!soundAvailable && ttsEnabled && !ReadText.getLanguage(qa).equals(ReadText.NO_TTS)) {
+//            stringBuilder.append(content.substring(0, content.length() - 9));
+//            stringBuilder
+//                    .append("<a onclick=\"window.ankidroid.playSound(this.title);\" title=\"tts"
+//                            + Integer.toString(qa)
+//                            + Utils.stripHTML(content)
+//                            + "\"><span style=\"padding:5px;display:inline-block;vertical-align:middle\"><img src=\"file:///android_asset/media_playback_start2.png\" /></span></a>");
+//            contentLeft = "</p>";
+//        }
 
         stringBuilder.append(contentLeft);
 
@@ -136,8 +137,9 @@ public class Sound {
         Log.i(AnkiDroidApp.TAG, "Playing " + soundPath + " has listener? " + Boolean.toString(playAllListener != null));
 
         if (soundPath.substring(0, 3).equals("tts")) {
-            ReadText.textToSpeech(soundPath.substring(4, soundPath.length()),
-                    Integer.parseInt(soundPath.substring(3, 4)));
+        	// TODO: give information about did
+//            ReadText.textToSpeech(soundPath.substring(4, soundPath.length()),
+//                    Integer.parseInt(soundPath.substring(3, 4)));
         } else {
             if (sMediaPlayer == null)
                 sMediaPlayer = new MediaPlayer();
