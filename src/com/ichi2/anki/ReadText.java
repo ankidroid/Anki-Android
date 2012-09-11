@@ -19,11 +19,14 @@ package com.ichi2.anki;
 import com.ichi2.anki.R;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Locale;
 
 import com.ichi2.themes.StyledDialog;
 
 import android.speech.tts.TextToSpeech;
+import android.speech.tts.TextToSpeech.OnUtteranceCompletedListener;
+import android.speech.tts.UtteranceProgressListener;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.res.Resources;
@@ -38,16 +41,21 @@ public class ReadText {
     private static int mOrd;
     private static int mQuestionAnswer;
     public static final String NO_TTS = "0";
-
+    public static ArrayList<String[]> mTextQueue = new ArrayList<String[]>();
+    public static HashMap<String, String> mTtsParams;
 
     // private boolean mTtsReady = false;
 
-    private static void speak(String loc) {
+    private static void speak(String text, String loc) {
         int result = mTts.setLanguage(new Locale(loc));
         if (result == TextToSpeech.LANG_MISSING_DATA || result == TextToSpeech.LANG_NOT_SUPPORTED) {
             Log.e(AnkiDroidApp.TAG, "Error loading locale " + loc.toString());
         } else {
-            mTts.speak(mTextToSpeak, TextToSpeech.QUEUE_FLUSH, null);
+        	if (mTts.isSpeaking()) {
+        		mTextQueue.add(new String[]{text, loc});
+        	} else {
+                mTts.speak(mTextToSpeak, TextToSpeech.QUEUE_FLUSH, mTtsParams);        		
+        	}
         }
     }
 
@@ -78,7 +86,7 @@ public class ReadText {
             if (language.equals(NO_TTS)) {
                 return;
             } else if (language.equals(availableTtsLocales.get(i)[0])) {
-                speak(language);
+                speak(mTextToSpeak, language);
                 return;
             }
         }
@@ -110,7 +118,7 @@ public class ReadText {
                 public void onClick(DialogInterface dialog, int which) {
                     MetaDB.storeLanguage(mReviewer, mDid, mOrd, mQuestionAnswer,
                             dialogIds.get(which));
-                    speak(dialogIds.get(which));
+                    speak(mTextToSpeak, dialogIds.get(which));
                 }
             });
         }
@@ -133,8 +141,27 @@ public class ReadText {
                 } else {
                     Log.e(AnkiDroidApp.TAG, "Initialization of TTS failed");
                 }
+                mTts.setOnUtteranceProgressListener(new UtteranceProgressListener() {
+        			@Override
+        			public void onDone(String arg0) {
+        				if (mTextQueue.size() > 0) {
+        					String[] text = mTextQueue.remove(0);
+        					speak(text[0], text[1]);
+        				}
+        			}
+        			@Override
+        			public void onError(String arg0) {
+        			}
+        			@Override
+        			public void onStart(String arg0) {
+        			}
+                	
+                });
+
             }
         });
+        mTtsParams = new HashMap<String, String>();
+        mTtsParams.put(TextToSpeech.Engine.KEY_PARAM_UTTERANCE_ID,"stringId");
     }
 
 
@@ -148,6 +175,9 @@ public class ReadText {
 
     public static void stopTts() {
         if (mTts != null) {
+        	if (mTextQueue != null) {
+        		mTextQueue.clear();
+        	}
             mTts.stop();
         }
     }
