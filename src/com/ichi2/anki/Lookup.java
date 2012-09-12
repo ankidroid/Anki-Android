@@ -31,17 +31,20 @@ public class Lookup {
     private static final int DICTIONARY_NCIKU_WEB = 6; // chinese web dictionary
 
     private static Context mContext;
+    private static long mDid;
     private static boolean mIsDictionaryAvailable;
     private static String mDictionaryAction;
     private static int mDictionary;
     private static String mLookupText;
-    private static String mDeckFilename;
 
 
-    public static boolean initialize(Context context, String deckFilename) {
+    public static boolean initialize(Context context, long did) {
         mContext = context;
-        mDeckFilename = deckFilename;
-        int customDictionary = MetaDB.getLookupDictionary(context, mDeckFilename);
+        if (mDid == did) {
+        	return mIsDictionaryAvailable;
+        }
+        mDid = did;
+        int customDictionary = MetaDB.getLookupDictionary(context, did);
         if (customDictionary != -1) {
             mDictionary = customDictionary;
         } else {

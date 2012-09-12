@@ -237,6 +237,9 @@ public class Card implements Cloneable {
         }
     }
 
+    public String getPureAnswerForReading() {
+    	return _getQA(false).get("a").replaceAll("(.|\n)*<hr id=answer>\n\n", "");
+    }
 
     public String css() {
         try {

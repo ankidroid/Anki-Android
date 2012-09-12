@@ -305,11 +305,6 @@
         </PreferenceCategory>
         <PreferenceCategory android:title="@string/pref_cat_sounds" >
             <CheckBoxPreference
-                android:defaultValue="true"
-                android:key="playSoundsAtStart"
-                android:summary="@string/play_sounds_at_start_summ"
-                android:title="@string/play_sounds_at_start" />
-            <CheckBoxPreference
                 android:defaultValue="false"
                 android:key="tts"
                 android:summary="@string/tts_summ"

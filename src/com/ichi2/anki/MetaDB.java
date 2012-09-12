@@ -30,7 +30,7 @@ public class MetaDB {
     private static final String DATABASE_NAME = "ankidroid.db";
 
     /** The Database Version, increase if you want updates to happen on next upgrade. */
-    private static final int DATABASE_VERSION = 3;
+    private static final int DATABASE_VERSION = 4;
 
     // Possible values for the qa column of the languages table.
     /** The language refers to the question. */
@@ -74,14 +74,20 @@ public class MetaDB {
         Log.i(AnkiDroidApp.TAG, "Upgrading Internal Database..");
         // if (mMetaDb.getVersion() == 0) {
         Log.i(AnkiDroidApp.TAG, "Applying changes for version: 0");
+
+        if (mMetaDb.getVersion() < 4) {
+            mMetaDb.execSQL("DROP TABLE IF EXISTS languages;");
+            mMetaDb.execSQL("DROP TABLE IF EXISTS customDictionary;");
+            mMetaDb.execSQL("DROP TABLE IF EXISTS whiteboardState;");
+        }
+
         // Create tables if not exist
         mMetaDb.execSQL("CREATE TABLE IF NOT EXISTS languages (" + " _id INTEGER PRIMARY KEY AUTOINCREMENT, "
-                + "deckpath TEXT NOT NULL, modelid INTEGER NOT NULL, " + "cardmodelid INTEGER NOT NULL, "
-                + "qa INTEGER, " + "language TEXT)");
+                + "did INTEGER NOT NULL, ord INTEGER, " + "qa INTEGER, " + "language TEXT)");
         mMetaDb.execSQL("CREATE TABLE IF NOT EXISTS whiteboardState (" + "_id INTEGER PRIMARY KEY AUTOINCREMENT, "
-                + "deckpath TEXT NOT NULL, " + "state INTEGER)");
+                + "did INTEGER NOT NULL, " + "state INTEGER)");
         mMetaDb.execSQL("CREATE TABLE IF NOT EXISTS customDictionary (" + "_id INTEGER PRIMARY KEY AUTOINCREMENT, "
-                + "deckpath TEXT NOT NULL, " + "dictionary INTEGER)");
+                + "did INTEGER NOT NULL, " + "dictionary INTEGER)");
         mMetaDb.execSQL("CREATE TABLE IF NOT EXISTS intentInformation (" + "id INTEGER PRIMARY KEY AUTOINCREMENT, "
                 + "fields TEXT NOT NULL)");
         mMetaDb.execSQL("CREATE TABLE IF NOT EXISTS smallWidgetStatus (" + "id INTEGER PRIMARY KEY AUTOINCREMENT, "
@@ -210,21 +216,17 @@ public class MetaDB {
     /**
      * Associates a language to a deck, model, and card model for a given type.
      * 
-     * @param deckPath the deck for which to store the language association
-     * @param modelId the model for which to store the language association
-     * @param cardModelId the card model for which to store the language association
      * @param qa the part of the card for which to store the association, {@link #LANGUAGES_QA_QUESTION},
      *            {@link #LANGUAGES_QA_ANSWER}, or {@link #LANGUAGES_QA_UNDEFINED}
      * @param language the language to associate, as a two-characters, lowercase string
      */
-    public static void storeLanguage(Context context, String deckPath, int modelId, int cardModelId, int qa,
+    public static void storeLanguage(Context context, long did, int ord, int qa,
             String language) {
         openDBIfClosed(context);
-        deckPath = stripQuotes(deckPath);
         try {
-            mMetaDb.execSQL("INSERT INTO languages (deckpath, modelid, cardmodelid, qa, language) "
-                    + " VALUES (?, ?, ?, ?, ?);", new Object[] { deckPath, modelId, cardModelId, qa, language });
-            Log.i(AnkiDroidApp.TAG, "Store language for deck " + deckPath);
+            mMetaDb.execSQL("INSERT INTO languages (did, ord, qa, language) "
+                    + " VALUES (?, ?, ?, ?);", new Object[] { did, ord, qa, language });
+            Log.i(AnkiDroidApp.TAG, "Store language for deck " + did);
         } catch (Exception e) {
             Log.e("Error", "Error storing language in MetaDB ", e);
         }
@@ -234,21 +236,16 @@ public class MetaDB {
     /**
      * Returns the language associated with the given deck, model and card model, for the given type.
      * 
-     * @param deckPath the deck for which to store the language association
-     * @param modelId the model for which to store the language association
-     * @param cardModelId the card model for which to store the language association
      * @param qa the part of the card for which to store the association, {@link #LANGUAGES_QA_QUESTION},
      *            {@link #LANGUAGES_QA_ANSWER}, or {@link #LANGUAGES_QA_UNDEFINED} return the language associate with
      *            the type, as a two-characters, lowercase string, or the empty string if no association is defined
      */
-    public static String getLanguage(Context context, String deckPath, int modelId, int cardModelId, int qa) {
+    public static String getLanguage(Context context, long did, int ord, int qa) {
         openDBIfClosed(context);
         String language = "";
-        deckPath = stripQuotes(deckPath);
         Cursor cur = null;
         try {
-            String query = "SELECT language FROM languages " + "WHERE deckpath = \'" + deckPath + "\' "
-                    + "AND modelid = " + modelId + " " + "AND cardmodelid = " + cardModelId + " " + "AND qa = " + qa
+            String query = "SELECT language FROM languages " + "WHERE did = " + did + " AND ord = " + ord + " AND qa = " + qa
                     + " " + "LIMIT 1";
             cur = mMetaDb.rawQuery(query, null);
             Log.i(AnkiDroidApp.TAG, "getLanguage: " + query);
@@ -269,15 +266,13 @@ public class MetaDB {
     /**
      * Resets all the language associates for a given deck.
      * 
-     * @param deckPath the deck for which to reset the language associations
      * @return whether an error occurred while resetting the language for the deck
      */
-    public static boolean resetDeckLanguages(Context context, String deckPath) {
+    public static boolean resetDeckLanguages(Context context, long did) {
         openDBIfClosed(context);
-        deckPath = stripQuotes(deckPath);
         try {
-            mMetaDb.execSQL("DELETE FROM languages WHERE deckpath = \'" + deckPath + "\';");
-            Log.i(AnkiDroidApp.TAG, "Resetting language assignment for deck " + deckPath);
+            mMetaDb.execSQL("DELETE FROM languages WHERE did = " + did + ";");
+            Log.i(AnkiDroidApp.TAG, "Resetting language assignment for deck " + did);
             return true;
         } catch (Exception e) {
             Log.e("Error", "Error resetting deck language", e);
@@ -289,15 +284,13 @@ public class MetaDB {
     /**
      * Returns the state of the whiteboard for the given deck.
      * 
-     * @param deckPath the deck for which to retrieve the whiteboard state
      * @return 1 if the whiteboard should be shown, 0 otherwise
      */
-    public static int getWhiteboardState(Context context, String deckPath) {
+    public static int getWhiteboardState(Context context, long did) {
         openDBIfClosed(context);
         Cursor cur = null;
         try {
-            cur = mMetaDb.rawQuery("SELECT state FROM whiteboardState" + " WHERE deckpath = \'" + stripQuotes(deckPath)
-                    + "\'", null);
+            cur = mMetaDb.rawQuery("SELECT state FROM whiteboardState" + " WHERE did = " + did, null);
             if (cur.moveToNext()) {
                 return cur.getInt(0);
             } else {
@@ -317,23 +310,21 @@ public class MetaDB {
     /**
      * Stores the state of the whiteboard for a given deck.
      * 
-     * @param deckPath the deck for which to store the whiteboard state
      * @param state 1 if the whiteboard should be shown, 0 otherwise
      */
-    public static void storeWhiteboardState(Context context, String deckPath, int state) {
+    public static void storeWhiteboardState(Context context, long did, int state) {
         openDBIfClosed(context);
-        deckPath = stripQuotes(deckPath);
         Cursor cur = null;
         try {
-            cur = mMetaDb.rawQuery("SELECT _id FROM whiteboardState" + " WHERE deckpath = \'" + deckPath + "\'", null);
+            cur = mMetaDb.rawQuery("SELECT _id FROM whiteboardState" + " WHERE did  = " + did, null);
             if (cur.moveToNext()) {
-                mMetaDb.execSQL("UPDATE whiteboardState " + "SET deckpath=\'" + deckPath + "\', " + "state="
+                mMetaDb.execSQL("UPDATE whiteboardState " + "SET did = " + did + ", " + "state="
                         + Integer.toString(state) + " " + "WHERE _id=" + cur.getString(0) + ";");
-                Log.i(AnkiDroidApp.TAG, "Store whiteboard state (" + state + ") for deck " + deckPath);
+                Log.i(AnkiDroidApp.TAG, "Store whiteboard state (" + state + ") for deck " + did);
             } else {
-                mMetaDb.execSQL("INSERT INTO whiteboardState (deckpath, state) VALUES (?, ?)", new Object[] { deckPath,
+                mMetaDb.execSQL("INSERT INTO whiteboardState (did, state) VALUES (?, ?)", new Object[] { did,
                         state });
-                Log.i(AnkiDroidApp.TAG, "Store whiteboard state (" + state + ") for deck " + deckPath);
+                Log.i(AnkiDroidApp.TAG, "Store whiteboard state (" + state + ") for deck " + did);
             }
         } catch (Exception e) {
             Log.e("Error", "Error storing whiteboard state in MetaDB ", e);
@@ -348,15 +339,14 @@ public class MetaDB {
     /**
      * Returns a custom dictionary associated to a deck
      * 
-     * @param deckPath the deck for which a custom dictionary should be retrieved
      * @return integer number of dictionary, -1 if not set (standard dictionary will be used)
      */
-    public static int getLookupDictionary(Context context, String deckPath) {
+    public static int getLookupDictionary(Context context, long did) {
         openDBIfClosed(context);
         Cursor cur = null;
         try {
-            cur = mMetaDb.rawQuery("SELECT dictionary FROM customDictionary" + " WHERE deckpath = \'"
-                    + stripQuotes(deckPath) + "\'", null);
+            cur = mMetaDb.rawQuery("SELECT dictionary FROM customDictionary" + " WHERE did = "
+                    + did, null);
             if (cur.moveToNext()) {
                 return cur.getInt(0);
             } else {
@@ -376,23 +366,21 @@ public class MetaDB {
     /**
      * Stores a custom dictionary for a given deck.
      * 
-     * @param deckPath the deck for which a custom dictionary should be retrieved
      * @param dictionary integer number of dictionary, -1 if not set (standard dictionary will be used)
      */
-    public static void storeLookupDictionary(Context context, String deckPath, int dictionary) {
+    public static void storeLookupDictionary(Context context, long did, int dictionary) {
         openDBIfClosed(context);
-        deckPath = stripQuotes(deckPath);
         Cursor cur = null;
         try {
-            cur = mMetaDb.rawQuery("SELECT _id FROM customDictionary" + " WHERE deckpath = \'" + deckPath + "\'", null);
+            cur = mMetaDb.rawQuery("SELECT _id FROM customDictionary" + " WHERE did = " + did, null);
             if (cur.moveToNext()) {
-                mMetaDb.execSQL("UPDATE customDictionary " + "SET deckpath=\'" + deckPath + "\', " + "dictionary="
+                mMetaDb.execSQL("UPDATE customDictionary " + "SET did = " + did + ", " + "dictionary="
                         + Integer.toString(dictionary) + " " + "WHERE _id=" + cur.getString(0) + ";");
-                Log.i(AnkiDroidApp.TAG, "Store custom dictionary (" + dictionary + ") for deck " + deckPath);
+                Log.i(AnkiDroidApp.TAG, "Store custom dictionary (" + dictionary + ") for deck " + did);
             } else {
-                mMetaDb.execSQL("INSERT INTO customDictionary (deckpath, dictionary) VALUES (?, ?)", new Object[] {
-                        deckPath, dictionary });
-                Log.i(AnkiDroidApp.TAG, "Store custom dictionary (" + dictionary + ") for deck " + deckPath);
+                mMetaDb.execSQL("INSERT INTO customDictionary (did, dictionary) VALUES (?, ?)", new Object[] {
+                        did, dictionary });
+                Log.i(AnkiDroidApp.TAG, "Store custom dictionary (" + dictionary + ") for deck " + did);
             }
         } catch (Exception e) {
             Log.e("Error", "Error storing custom dictionary to MetaDB ", e);

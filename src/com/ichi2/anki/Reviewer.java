@@ -225,7 +225,6 @@ public class Reviewer extends AnkiActivity {
     private boolean mPrefFixArabic;
     // Android WebView
     private boolean mSpeakText;
-    private boolean mPlaySoundsAtStart;
     private boolean mInvertedColors = false;
     private int mCurrentBackgroundColor;
     private boolean mBlackWhiteboard = true;
@@ -962,7 +961,6 @@ public class Reviewer extends AnkiActivity {
             initLayout(R.layout.flashcard);
             if (mPrefTextSelection) {
                 clipboardSetText("");
-                Lookup.initialize(this, mCollectionFilename);
             }
 
             // Load the template for the card
@@ -980,11 +978,11 @@ public class Reviewer extends AnkiActivity {
 
             // Initialize text-to-speech. This is an asynchronous operation.
             if (mSpeakText) {
-                ReadText.initializeTts(this, mCollectionFilename);
+                ReadText.initializeTts(this);
             }
 
             // Get last whiteboard state
-            if (mPrefWhiteboard && MetaDB.getWhiteboardState(this, mCollectionFilename) == 1) {
+            if (mPrefWhiteboard && mCurrentCard != null && MetaDB.getWhiteboardState(this, mCurrentCard.getDid()) == 1) {
                 mShowWhiteboard = true;
                 mWhiteboard.setVisibility(View.VISIBLE);
             }
@@ -1374,12 +1372,12 @@ public class Reviewer extends AnkiActivity {
                     // Show whiteboard
                     mWhiteboard.setVisibility(View.VISIBLE);
                     item.setTitle(R.string.hide_whiteboard);
-                    MetaDB.storeWhiteboardState(this, mCollectionFilename, 1);
+                    MetaDB.storeWhiteboardState(this, mCurrentCard.getDid(), 1);
                 } else {
                     // Hide whiteboard
                     mWhiteboard.setVisibility(View.GONE);
                     item.setTitle(R.string.show_whiteboard);
-                    MetaDB.storeWhiteboardState(this, mCollectionFilename, 0);
+                    MetaDB.storeWhiteboardState(this, mCurrentCard.getDid(), 0);
                 }
                 return true;
 
@@ -2020,7 +2018,6 @@ public class Reviewer extends AnkiActivity {
         mInputWorkaround = preferences.getBoolean("inputWorkaround", false);
         mPrefFixArabic = preferences.getBoolean("fixArabicText", false);
         mSpeakText = preferences.getBoolean("tts", false);
-        mPlaySoundsAtStart = preferences.getBoolean("playSoundsAtStart", true);
         mShowProgressBars = preferences.getBoolean("progressBars", true);
         mPrefFadeScrollbars = preferences.getBoolean("fadeScrollbars", false);
         mPrefUseTimer = preferences.getBoolean("timeoutAnswer", false);
@@ -2415,57 +2412,60 @@ public class Reviewer extends AnkiActivity {
     private void updateCard(String content) {
         Log.i(AnkiDroidApp.TAG, "updateCard");
 
+        Lookup.initialize(this, mCurrentCard.getDid());
+
         if (mCurrentSimpleInterface) {
             fillFlashcard(mShowAnimations);
-            return;
+        } else {
+
+            // Check whether there is a hard coded font-size in the content and apply the relative font size
+            // Check needs to be done before CSS is applied to content;
+            content = recalculateHardCodedFontSize(content, mDisplayFontSize);
+
+            // Add CSS for font color and font size
+            if (mCurrentCard == null) {
+                mCard.getSettings().setDefaultFontSize(calculateDynamicFontSize(content));
+            }
+
+            // don't play question sound again when displaying answer
+            String question = "";
+            String answer = "";
+
+            Sound.resetSounds();
+
+            int qa = MetaDB.LANGUAGES_QA_QUESTION;
+            if (sDisplayAnswer) {
+                qa = MetaDB.LANGUAGES_QA_ANSWER;
+            }
+            answer = Sound.parseSounds(mBaseUrl, content, mSpeakText, qa);
+
+            content = question + answer;
+
+            // In order to display the bold style correctly, we have to change
+            // font-weight to 700
+            content = content.replace("font-weight:600;", "font-weight:700;");
+
+            Log.i(AnkiDroidApp.TAG, "content card = \n" + content);
+            StringBuilder style = new StringBuilder();
+            style.append(mCustomFontStyle);
+            Log.i(AnkiDroidApp.TAG, "::style::" + style);
+
+            if (mNightMode) {
+                content = HtmlColors.invertColors(content);
+            }
+
+            content = SmpToHtmlEntity(content);
+            mCardContent = new SpannedString(mCardTemplate.replace("::content::", content).replace("::style::",
+                    style.toString()));
+            Log.i(AnkiDroidApp.TAG, "base url = " + mBaseUrl);
+
+            fillFlashcard(mShowAnimations);
         }
 
-        // Check whether there is a hard coded font-size in the content and apply the relative font size
-        // Check needs to be done before CSS is applied to content;
-        content = recalculateHardCodedFontSize(content, mDisplayFontSize);
-
-        // Add CSS for font color and font size
-        if (mCurrentCard == null) {
-            mCard.getSettings().setDefaultFontSize(calculateDynamicFontSize(content));
-        }
-
-        // don't play question sound again when displaying answer
-        String question = "";
-        String answer = "";
-
-        Sound.resetSounds();
-
-        int qa = MetaDB.LANGUAGES_QA_QUESTION;
-        if (sDisplayAnswer) {
-            qa = MetaDB.LANGUAGES_QA_ANSWER;
-        }
-        answer = Sound.parseSounds(mBaseUrl, content, mSpeakText, qa);
-
-        content = question + answer;
-
-        // In order to display the bold style correctly, we have to change
-        // font-weight to 700
-        content = content.replace("font-weight:600;", "font-weight:700;");
-
-        Log.i(AnkiDroidApp.TAG, "content card = \n" + content);
-        StringBuilder style = new StringBuilder();
-        style.append(mCustomFontStyle);
-        Log.i(AnkiDroidApp.TAG, "::style::" + style);
-
-        if (mNightMode) {
-            content = HtmlColors.invertColors(content);
-        }
-
-        content = SmpToHtmlEntity(content);
-        mCardContent = new SpannedString(mCardTemplate.replace("::content::", content).replace("::style::",
-                style.toString()));
-        Log.i(AnkiDroidApp.TAG, "base url = " + mBaseUrl);
-
-        fillFlashcard(mShowAnimations);
-
-        if (!mConfigurationChanged && mPlaySoundsAtStart)
+        if (!mConfigurationChanged) {
             playSounds();
-    }
+    	}
+	}
 
     /**
      * Converts characters in Unicode Supplementary Multilingual Plane (SMP) to their equivalent Html Entities.
@@ -2488,18 +2488,28 @@ public class Reviewer extends AnkiActivity {
      * Plays sounds (or TTS, if configured) for current shown side of card
      */
     private void playSounds() {
-        int qa = sDisplayAnswer ? MetaDB.LANGUAGES_QA_ANSWER : MetaDB.LANGUAGES_QA_QUESTION;
+    	// first check, if sound is activated for the current deck
+    	try {
+			if (!mSched.getCol().getDecks().confForDid(mCurrentCard.getDid()).getBoolean("autoplay")) {
+				return;
+			}
 
-        // We need to play the sounds from the proper side of the card
-        if (!mSpeakText) {
-            Sound.playSounds(qa);
-        } else {
-            if (sDisplayAnswer) {
-                ReadText.textToSpeech(Utils.stripHTML(mCurrentCard.getAnswer(mCurrentSimpleInterface)), qa);
-            } else {
-                ReadText.textToSpeech(Utils.stripHTML(mCurrentCard.getQuestion(mCurrentSimpleInterface)), qa);
-            }
-        }
+	        // We need to play the sounds from the proper side of the card
+	        if (!mSpeakText) {
+	            Sound.playSounds(sDisplayAnswer ? MetaDB.LANGUAGES_QA_ANSWER : MetaDB.LANGUAGES_QA_QUESTION);
+	        } else {
+	            if (sDisplayAnswer) {
+	            	if (mSched.getCol().getDecks().confForDid(mCurrentCard.getDid()).getBoolean("replayq")) {
+		                ReadText.textToSpeech(Utils.stripHTML(mCurrentCard.getQuestion(mCurrentSimpleInterface)), mCurrentCard.getDid(), mCurrentCard.getOrd(), MetaDB.LANGUAGES_QA_QUESTION);
+	    			}
+	                ReadText.textToSpeech(Utils.stripHTML(mCurrentCard.getPureAnswerForReading()), mCurrentCard.getDid(), mCurrentCard.getOrd(), MetaDB.LANGUAGES_QA_ANSWER);
+	            } else {
+	                ReadText.textToSpeech(Utils.stripHTML(mCurrentCard.getQuestion(mCurrentSimpleInterface)), mCurrentCard.getDid(), mCurrentCard.getOrd(), MetaDB.LANGUAGES_QA_QUESTION);
+	            }
+	        }
+		} catch (JSONException e) {
+			throw new RuntimeException(e);
+		}
     }
 
 
