@@ -64,6 +64,6 @@
   </string-array>
   <plurals name="card_browser_subtitle">
     <item quantity="one">1 von %2$d Karten angezeigt</item>
-    <item quantity="other">%1$d %2$d Karten angezeigt</item>
+    <item quantity="other">%1$d von %2$d Karten angezeigt</item>
   </plurals>
 </resources>
