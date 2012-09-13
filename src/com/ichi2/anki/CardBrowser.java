@@ -95,6 +95,7 @@ public class CardBrowser extends Activity {
     private int mOrder;
     private boolean mOrderAsc;
 	private int mField;
+	private int mTotalCount;
 
     private static final int CONTEXT_MENU_MARK = 0;
     private static final int CONTEXT_MENU_SUSPEND = 1;
@@ -358,7 +359,7 @@ public class CardBrowser extends Activity {
 
         mSelectedTags = new HashSet<String>();
 
-//        getCards();
+        searchCards();
     }
 
 
@@ -761,7 +762,7 @@ public class CardBrowser extends Activity {
     private void updateList() {
         mCardsAdapter.notifyDataSetChanged();
         int count = mCards.size();
-        AnkiDroidApp.getCompat().setSubtitle(this, getResources().getQuantityString(R.plurals.card_browser_subtitle, count, count, mCards.size()));
+        AnkiDroidApp.getCompat().setSubtitle(this, getResources().getQuantityString(R.plurals.card_browser_subtitle, count, count, mTotalCount));
     }
 
 
@@ -1039,6 +1040,8 @@ public class CardBrowser extends Activity {
 
         @Override
         public void onPostExecute(TaskData result) {
+        	mTotalCount = result.getInt();
+        	updateList();
             if (mProgressDialog != null && mProgressDialog.isShowing()) {
                 mProgressDialog.dismiss();
             }

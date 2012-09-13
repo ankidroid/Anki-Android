@@ -25,7 +25,6 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
 import java.util.TreeSet;
 
 import org.json.JSONArray;
@@ -35,7 +34,6 @@ import org.json.JSONObject;
 import com.ichi2.anki.AnkiDb;
 import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.BackupManager;
-import com.ichi2.anki.CardBrowser;
 import com.ichi2.anki.R;
 import com.ichi2.libanki.Card;
 import com.ichi2.libanki.Collection;
@@ -49,7 +47,6 @@ import com.ichi2.widget.WidgetStatus;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
-import android.database.Cursor;
 import android.database.SQLException;
 import android.os.AsyncTask;
 import android.util.Log;
@@ -651,7 +648,7 @@ public class DeckTask extends
         } else {
             publishProgress(result);
         }
-        return null;
+        return new TaskData(col.cardCount(col.getDecks().active()));
     }
 
 

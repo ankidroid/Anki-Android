@@ -774,6 +774,12 @@ public class Collection {
     }
 
 
+    // NOT IN LIBANKI //
+    public int cardCount(List<Long> dids) {
+        return mDb.queryScalar("SELECT count() FROM cards WHERE did IN " + Utils.ids2str(dids));
+    }
+
+
     /**
      * Bulk delete cards by ID.
      */

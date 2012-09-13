@@ -481,7 +481,29 @@ public class Sched {
                 counts[2] += (Integer) deck[4];
             }
         }
-        return new Object[] { decks, eta(counts), mCol.cardCount() };
+        TreeSet<Object[]> decksNet = new TreeSet<Object[]>(new DeckNameCompare());
+        for (Object[] d : decks) {
+        	try {
+        		boolean show = true;
+        		for (JSONObject o : mCol.getDecks().parents((Long) d[1])) {
+        			if (o.getBoolean("collapsed")) {
+        				show = false;
+        				break;
+        			}
+        		}
+        		if (show) {
+        			if (mCol.getDecks().get((Long) d[1]).getBoolean("collapsed")) {
+        				String[] name = (String[]) d[0];
+        				name[name.length - 1] = name[name.length - 1] + " (+)";
+        				d[0] = name;
+        			}
+    				decksNet.add(d);
+        		}
+			} catch (JSONException e) {
+				throw new RuntimeException(e);
+			}
+        }
+        return new Object[] { decksNet, eta(counts), mCol.cardCount() };
     }
 
     public class DeckDueListComparator implements Comparator<JSONObject> {
