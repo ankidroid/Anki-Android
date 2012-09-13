@@ -60,6 +60,7 @@ import com.ichi2.themes.StyledDialog;
 import com.ichi2.themes.StyledOpenCollectionDialog;
 import com.ichi2.themes.StyledProgressDialog;
 import com.ichi2.themes.Themes;
+import com.ichi2.upgrade.Upgrade;
 import com.ichi2.widget.WidgetStatus;
 
 import org.json.JSONException;
@@ -253,7 +254,7 @@ public class CardBrowser extends Activity {
                     break;
                 }
             }
-            mOrderAsc = mCol.getConf().getBoolean("sortBackwards");
+            mOrderAsc = Upgrade.upgradeJSONIfNecessary(mCol, mCol.getConf(), "sortBackwards", false);
             // default to descending for non-text fields
             if (fSortTypes[mOrder].equals("noteFld")) {
                 mOrderAsc = !mOrderAsc;
