@@ -33,6 +33,7 @@ import android.content.SharedPreferences.Editor;
 import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
 import android.content.res.Resources;
+import android.content.res.Resources.NotFoundException;
 import android.database.SQLException;
 import android.graphics.PixelFormat;
 import android.graphics.Rect;
@@ -69,6 +70,7 @@ import com.ichi2.async.DeckTask;
 import com.ichi2.async.DeckTask.TaskData;
 import com.ichi2.charts.ChartBuilder;
 import com.ichi2.libanki.Collection;
+import com.ichi2.libanki.Decks;
 import com.ichi2.libanki.Utils;
 import com.ichi2.themes.StyledDialog;
 import com.ichi2.themes.StyledOpenCollectionDialog;
@@ -77,6 +79,7 @@ import com.ichi2.themes.Themes;
 import com.ichi2.widget.WidgetStatus;
 
 import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -147,11 +150,12 @@ public class DeckPicker extends FragmentActivity {
     /**
      * Context Menus
      */
-    private static final int CONTEXT_MENU_RENAME_DECK = 0;
-    private static final int CONTEXT_MENU_DELETE_DECK = 1;
-    private static final int CONTEXT_MENU_DECK_SUMMARY = 2;
-    private static final int CONTEXT_MENU_CUSTOM_DICTIONARY = 3;
-    private static final int CONTEXT_MENU_RESET_LANGUAGE = 4;
+    private static final int CONTEXT_MENU_COLLAPSE_DECK = 0;
+    private static final int CONTEXT_MENU_RENAME_DECK = 1;
+    private static final int CONTEXT_MENU_DELETE_DECK = 2;
+    private static final int CONTEXT_MENU_DECK_SUMMARY = 3;
+    private static final int CONTEXT_MENU_CUSTOM_DICTIONARY = 4;
+    private static final int CONTEXT_MENU_RESET_LANGUAGE = 5;
 
     public static final String EXTRA_START = "start";
     public static final String EXTRA_DECK_ID = "deckId";
@@ -247,6 +251,18 @@ public class DeckPicker extends FragmentActivity {
             @SuppressWarnings("unchecked")
             HashMap<String, String> data = (HashMap<String, String>) mDeckListAdapter.getItem(mContextMenuPosition);
             switch (item) {
+            	case CONTEXT_MENU_COLLAPSE_DECK:
+    				try {
+    					JSONObject deck = AnkiDroidApp.getCol().getDecks().get(mCurrentDid);
+    					if (AnkiDroidApp.getCol().getDecks().children(mCurrentDid).size() > 0) {
+        					deck.put("collapsed", !deck.getBoolean("collapsed"));
+        					AnkiDroidApp.getCol().getDecks().save(deck);
+                    		loadCounts();
+    					}
+    				} catch (JSONException e1) {
+    					// do nothing
+    				}
+            		return;
                 case CONTEXT_MENU_DELETE_DECK:
                     showDialog(DIALOG_DELETE_DECK);
                     return;
@@ -1415,13 +1431,14 @@ public class DeckPicker extends FragmentActivity {
                 break;
 
             case DIALOG_CONTEXT_MENU:
-                String[] entries = new String[2];
+                String[] entries = new String[3];
                 // entries[CONTEXT_MENU_DECK_SUMMARY] =
                 // "XXXsum";//res.getStringArray(R.array.statistics_type_labels)[0];
                 // entries[CONTEXT_MENU_CUSTOM_DICTIONARY] =
                 // res.getString(R.string.contextmenu_deckpicker_set_custom_dictionary);
                 // entries[CONTEXT_MENU_RESET_LANGUAGE] =
                 // res.getString(R.string.contextmenu_deckpicker_reset_language_assignments);
+                entries[CONTEXT_MENU_COLLAPSE_DECK] = res.getString(R.string.contextmenu_deckpicker_collapse_deck);
                 entries[CONTEXT_MENU_RENAME_DECK] = res.getString(R.string.contextmenu_deckpicker_rename_deck);
                 entries[CONTEXT_MENU_DELETE_DECK] = res.getString(R.string.contextmenu_deckpicker_delete_deck);
                 builder.setTitle("Context Menu");
@@ -1784,6 +1801,13 @@ public class DeckPicker extends FragmentActivity {
             		return;
             	}
                 mCurrentDid = Long.parseLong(mDeckList.get(mContextMenuPosition).get("did"));
+    			try {
+    				ad.changeListItem(CONTEXT_MENU_COLLAPSE_DECK, getResources().getString(AnkiDroidApp.getCol().getDecks().get(mCurrentDid).getBoolean("collapsed") ? R.string.contextmenu_deckpicker_inflate_deck : R.string.contextmenu_deckpicker_collapse_deck));
+    			} catch (NotFoundException e) {
+    				// do nothing
+    			} catch (JSONException e) {
+    				// do nothing
+    			}
                 ad.setTitle(AnkiDroidApp.getCol().getDecks().name(mCurrentDid));
                 break;
 
@@ -2340,7 +2364,9 @@ public class DeckPicker extends FragmentActivity {
         } else if (requestCode == LOG_IN_FOR_SHARED_DECK && resultCode == RESULT_OK) {
             addSharedDeck();
         } else if (requestCode == ADD_SHARED_DECKS) {
-        	mImportPath = intent.getStringExtra("importPath");
+		if (intent != null) {
+	        	mImportPath = intent.getStringExtra("importPath");
+		}
         	if (AnkiDroidApp.colIsOpen() && mImportPath != null) {
         		showDialog(DIALOG_IMPORT);
         	}

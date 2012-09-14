@@ -60,6 +60,7 @@ import com.ichi2.themes.StyledDialog;
 import com.ichi2.themes.StyledOpenCollectionDialog;
 import com.ichi2.themes.StyledProgressDialog;
 import com.ichi2.themes.Themes;
+import com.ichi2.upgrade.Upgrade;
 import com.ichi2.widget.WidgetStatus;
 
 import org.json.JSONException;
@@ -94,6 +95,7 @@ public class CardBrowser extends Activity {
     private int mOrder;
     private boolean mOrderAsc;
 	private int mField;
+	private int mTotalCount;
 
     private static final int CONTEXT_MENU_MARK = 0;
     private static final int CONTEXT_MENU_SUSPEND = 1;
@@ -253,7 +255,7 @@ public class CardBrowser extends Activity {
                     break;
                 }
             }
-            mOrderAsc = mCol.getConf().getBoolean("sortBackwards");
+            mOrderAsc = Upgrade.upgradeJSONIfNecessary(mCol, mCol.getConf(), "sortBackwards", false);
             // default to descending for non-text fields
             if (fSortTypes[mOrder].equals("noteFld")) {
                 mOrderAsc = !mOrderAsc;
@@ -357,7 +359,7 @@ public class CardBrowser extends Activity {
 
         mSelectedTags = new HashSet<String>();
 
-//        getCards();
+        searchCards();
     }
 
 
@@ -760,7 +762,7 @@ public class CardBrowser extends Activity {
     private void updateList() {
         mCardsAdapter.notifyDataSetChanged();
         int count = mCards.size();
-        AnkiDroidApp.getCompat().setSubtitle(this, getResources().getQuantityString(R.plurals.card_browser_subtitle, count, count, mCards.size()));
+        AnkiDroidApp.getCompat().setSubtitle(this, getResources().getQuantityString(R.plurals.card_browser_subtitle, count, count, mTotalCount));
     }
 
 
@@ -1038,6 +1040,8 @@ public class CardBrowser extends Activity {
 
         @Override
         public void onPostExecute(TaskData result) {
+        	mTotalCount = result.getInt();
+        	updateList();
             if (mProgressDialog != null && mProgressDialog.isShowing()) {
                 mProgressDialog.dismiss();
             }

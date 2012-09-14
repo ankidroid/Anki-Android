@@ -481,7 +481,29 @@ public class Sched {
                 counts[2] += (Integer) deck[4];
             }
         }
-        return new Object[] { decks, eta(counts), mCol.cardCount() };
+        TreeSet<Object[]> decksNet = new TreeSet<Object[]>(new DeckNameCompare());
+        for (Object[] d : decks) {
+        	try {
+        		boolean show = true;
+        		for (JSONObject o : mCol.getDecks().parents((Long) d[1])) {
+        			if (o.getBoolean("collapsed")) {
+        				show = false;
+        				break;
+        			}
+        		}
+        		if (show) {
+        			if (mCol.getDecks().get((Long) d[1]).getBoolean("collapsed")) {
+        				String[] name = (String[]) d[0];
+        				name[name.length - 1] = name[name.length - 1] + " (+)";
+        				d[0] = name;
+        			}
+    				decksNet.add(d);
+        		}
+			} catch (JSONException e) {
+				throw new RuntimeException(e);
+			}
+        }
+        return new Object[] { decksNet, eta(counts), mCol.cardCount() };
     }
 
     public class DeckDueListComparator implements Comparator<JSONObject> {
@@ -1981,7 +2003,17 @@ public class Sched {
             dict.put("resched", conf.getBoolean("resched"));
             return dict;
         } catch (JSONException e) {
-            throw new RuntimeException(e);
+	    JSONObject conf = _cardConf(card);
+	    if (!mCol.getDecks().isDyn(card.getDid()) && card.getODid() != 0) {
+		// workaround, if a card's deck is a normal deck, but odid != 0
+	        card.setODue(0);
+	        card.setODid(0);
+		AnkiDroidApp.saveExceptionReportFile(e, "fixedODidInconsistencyInSched_lapseConf");
+		// return proper value after having fixed the problem
+		return _lapseConf(card);
+	    } else {
+	           throw new RuntimeException(e);
+	    }
         }
     }
 

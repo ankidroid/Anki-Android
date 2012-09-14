@@ -2490,7 +2490,8 @@ public class Reviewer extends AnkiActivity {
     private void playSounds() {
     	// first check, if sound is activated for the current deck
     	try {
-			if (!mSched.getCol().getDecks().confForDid(mCurrentCard.getDid()).getBoolean("autoplay")) {
+		long did = mCurrentCard.getODid();
+			if (!mSched.getCol().getDecks().confForDid(did == 0 ? mCurrentCard.getDid() : did).getBoolean("autoplay")) {
 				return;
 			}
 

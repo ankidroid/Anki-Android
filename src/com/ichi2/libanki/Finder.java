@@ -23,6 +23,7 @@ import android.util.Log;
 
 import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.Pair;
+import com.ichi2.upgrade.Upgrade;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -422,13 +423,7 @@ public class Finder {
             } else {
                 throw new RuntimeException("wrong sort type " + type);
             }
-            boolean sortBackwards = false;
-            int sortBackwardsInt = mCol.getConf().optInt("sortBackwards", -1);
-            if (sortBackwardsInt == -1) {
-                sortBackwards = mCol.getConf().getBoolean("sortBackwards");
-            } else if (sortBackwardsInt > 0) {
-                sortBackwards = true;
-            }
+            boolean sortBackwards = Upgrade.upgradeJSONIfNecessary(mCol, mCol.getConf(), "sortBackwards", false);
             return new Pair<String, Boolean>(" ORDER BY " + sort, sortBackwards);
         } catch (JSONException e) {
             throw new RuntimeException(e);
