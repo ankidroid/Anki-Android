@@ -156,11 +156,7 @@ public class CardBrowser extends Activity {
      */
     private BroadcastReceiver mUnmountReceiver = null;
 
-    private boolean mPrefCacheCardBrowser;
-    // private static ArrayList<HashMap<String, String>> sAllCardsCache;
-
     private Collection mCol;
-    private HashMap<Long, HashMap<Integer, String>> mTemplates;
 
     private DialogInterface.OnClickListener mContextMenuListener = new DialogInterface.OnClickListener() {
 
@@ -242,7 +238,6 @@ public class CardBrowser extends Activity {
         int sflRelativeFontSize = preferences.getInt("relativeCardBrowserFontSize", DEFAULT_FONT_SIZE_RATIO);
         String sflCustomFont = preferences.getString("browserEditorFont", "");
         mPrefFixArabic = preferences.getBoolean("fixArabicText", false);
-        mPrefCacheCardBrowser = preferences.getBoolean("cardBrowserCache", false);
         
         Resources res = getResources();
         mOrderByFields = res.getStringArray(R.array.card_browser_order_labels);
@@ -263,11 +258,8 @@ public class CardBrowser extends Activity {
         } catch (JSONException e) {
             throw new RuntimeException(e);
         }
-//        mOrder = preferences.getInt("cardBrowserOrder", CARD_ORDER_NONE);
-//        mOrderReverse = preferences.getBoolean("cardBrowserOrderReverse", false);
 
         mCards = new ArrayList<HashMap<String, String>>();
-        //mAllCards = new ArrayList<HashMap<String, String>>();
         mCardsListView = (ListView) findViewById(R.id.card_browser_list);
 
         mCardsAdapter = new SizeControlledListAdapter(this, mCards, R.layout.card_item, new String[] { "sfld",
@@ -303,10 +295,6 @@ public class CardBrowser extends Activity {
                 mPositionInCardsList = position;
                 long cardId = Long.parseLong(mCards.get(mPositionInCardsList).get("id"));
                 sCardBrowserCard = mCol.getCard(cardId);
-                // if (mSelectedCard == null) {
-                // deleteCard(mCards.get(mPositionInCardsList).get("id"), mPositionInCardsList);
-                // return;
-                // }
                 startActivityForResult(editCard, EDIT_CARD);
                 if (AnkiDroidApp.SDK_VERSION > 4) {
                     ActivityTransitionAnimation.slide(CardBrowser.this, ActivityTransitionAnimation.LEFT);
@@ -316,20 +304,6 @@ public class CardBrowser extends Activity {
         registerForContextMenu(mCardsListView);
 
         mSearchEditText = (EditText) findViewById(R.id.card_browser_search);
-//        mSearchEditText.addTextChangedListener(new TextWatcher() {
-//            public void afterTextChanged(Editable s) {
-//                mTimerHandler.removeCallbacks(updateList);
-//                mTimerHandler.postDelayed(updateList, WAIT_TIME_UNTIL_UPDATE);
-//            }
-//
-//
-//            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-//            }
-//
-//
-//            public void onTextChanged(CharSequence s, int start, int before, int count) {
-//            }
-//        });
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
         mSearchButton = (ImageButton) findViewById(R.id.card_browser_search_button);
         mSearchButton.setOnClickListener(new View.OnClickListener() {
@@ -359,7 +333,9 @@ public class CardBrowser extends Activity {
 
         mSelectedTags = new HashSet<String>();
 
-        searchCards();
+        if (!preferences.getBoolean("cardBrowserNoSearchOnOpen", false)) {
+        	searchCards();
+        }
     }
 
 
@@ -446,6 +422,7 @@ public class CardBrowser extends Activity {
         switch (item.getItemId()) {
 
             case MENU_UNDO:
+            	// TODO: Implement undo
                 // DeckTask.launchDeckTask(DeckTask.TASK_TYPE_UNDO, mUndoRedoHandler, new DeckTask.TaskData(0, mDeck, 0,
                 // true));
                 return true;
@@ -1021,7 +998,6 @@ public class CardBrowser extends Activity {
     private DeckTask.TaskListener mSearchCardsHandler = new DeckTask.TaskListener() {
         @Override
         public void onProgressUpdate(TaskData... values) {
-//            mCardIds = values[0].getIdList();
             mCards.clear();
             mCards.addAll(values[0].getCards());
             updateList();
@@ -1229,33 +1205,6 @@ public class CardBrowser extends Activity {
         }
     }
 
-//    private class HashMapCompare implements Comparator<HashMap<String, String>> {
-//        @Override
-//        public int compare(HashMap<String, String> object1, HashMap<String, String> object2) {
-//            try {
-//                int result = 0;
-//                switch (mOrder) {
-//                    case CARD_ORDER_SFLD:
-//                        result = object1.get("sfld").compareToIgnoreCase(object2.get("sfld"));
-//                        if (result == 0) {
-//                            result = object1.get("tmpl").compareToIgnoreCase(object2.get("tmpl"));
-//                        }
-//                        break;
-//
-//                    case CARD_ORDER_DUE:
-//                        result = Long.valueOf(object1.get("due")).compareTo(Long.valueOf(object2.get("due")));
-//                        if (result == 0) {
-//                            result = object1.get("sfld").compareToIgnoreCase(object2.get("sfld"));
-//                        }
-//                        break;
-//                }
-//                return result;
-//            } catch (Exception e) {
-//                Log.e(AnkiDroidApp.TAG, "Error on sorting cards: " + e);
-//                return 0;
-//            }
-//        }
-//    }
 
     /**
      * Show/dismiss dialog when sd card is ejected/remounted (collection is saved by SdCardReceiver)
