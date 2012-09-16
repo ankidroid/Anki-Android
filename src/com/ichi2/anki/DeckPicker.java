@@ -2105,18 +2105,18 @@ public class DeckPicker extends FragmentActivity {
         UIUtils.addMenuItemInActionBar(menu, Menu.NONE, MENU_HELP, Menu.NONE, R.string.help_title,
                 R.drawable.ic_menu_help);
 
-        item = menu.add(Menu.NONE, MENU_CREATE_DECK, Menu.NONE, R.string.new_deck);
-        item.setIcon(R.drawable.ic_menu_add);
-        item = menu.add(Menu.NONE, MENU_CREATE_DYNAMIC_DECK, Menu.NONE, R.string.new_dynamic_deck);
-        item.setIcon(R.drawable.ic_menu_add);
-        item = menu.add(Menu.NONE, MENU_ADD_SHARED_DECK, Menu.NONE, R.string.menu_get_shared_decks);
-        item.setIcon(R.drawable.ic_menu_download);
-        item = menu.add(Menu.NONE, MENU_IMPORT, Menu.NONE, R.string.menu_import);
-        item.setIcon(R.drawable.ic_menu_download);
         item = menu.add(Menu.NONE, MENU_PREFERENCES, Menu.NONE, R.string.menu_preferences);
         item.setIcon(R.drawable.ic_menu_preferences);
         item = menu.add(Menu.NONE, MENU_MY_ACCOUNT, Menu.NONE, R.string.menu_my_account);
         item.setIcon(R.drawable.ic_menu_home);
+        item = menu.add(Menu.NONE, MENU_ADD_SHARED_DECK, Menu.NONE, R.string.menu_get_shared_decks);
+        item.setIcon(R.drawable.ic_menu_download);
+        item = menu.add(Menu.NONE, MENU_CREATE_DECK, Menu.NONE, R.string.new_deck);
+        item.setIcon(R.drawable.ic_menu_add);
+        item = menu.add(Menu.NONE, MENU_CREATE_DYNAMIC_DECK, Menu.NONE, R.string.new_dynamic_deck);
+        item.setIcon(R.drawable.ic_menu_add);
+        item = menu.add(Menu.NONE, MENU_IMPORT, Menu.NONE, R.string.menu_import);
+        item.setIcon(R.drawable.ic_menu_download);
         UIUtils.addMenuItem(menu, Menu.NONE, CHECK_DATABASE, Menu.NONE, R.string.check_db, R.drawable.ic_menu_search);
         item = menu.add(Menu.NONE, StudyOptionsActivity.MENU_ROTATE, Menu.NONE, R.string.menu_rotate);
         item.setIcon(R.drawable.ic_menu_always_landscape_portrait);
