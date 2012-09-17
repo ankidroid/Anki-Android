@@ -2547,9 +2547,11 @@ public class Reviewer extends AnkiActivity {
             if (mCurrentSimpleInterface) {
                 mSimpleCard.setText(mCardContent);
             } else if (mRefreshWebview) {
-                mNextCard.setBackgroundColor(mCurrentBackgroundColor);
-                mNextCard.loadDataWithBaseURL(mBaseUrl, mCardContent.toString(), "text/html", "utf-8", null);
-                mNextCard.setVisibility(View.VISIBLE);
+            	if (mNextCard != null) {
+                    mNextCard.setBackgroundColor(mCurrentBackgroundColor);
+                    mNextCard.loadDataWithBaseURL(mBaseUrl, mCardContent.toString(), "text/html", "utf-8", null);
+                    mNextCard.setVisibility(View.VISIBLE);
+            	}
                 mCardFrame.removeView(mCard);
                 mCard.destroy();
                 mCard = mNextCard;
