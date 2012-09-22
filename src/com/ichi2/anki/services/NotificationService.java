@@ -15,6 +15,7 @@
 package com.ichi2.anki.services;
 
 import com.ichi2.anki.AnkiDroidApp;
+import com.ichi2.anki.DeckPicker;
 import com.ichi2.anki.R;
 import com.ichi2.anki.StudyOptionsFragment;
 import com.ichi2.widget.WidgetStatus;
@@ -74,7 +75,7 @@ public class NotificationService extends Service {
             Context appContext = getApplicationContext();
             CharSequence contentTitle = getText(R.string.widget_minimum_cards_due_notification_ticker_title);
 
-            Intent ankiDroidIntent = new Intent(context, StudyOptionsFragment.class);
+            Intent ankiDroidIntent = new Intent(context, DeckPicker.class);
             ankiDroidIntent.setAction(Intent.ACTION_MAIN);
             ankiDroidIntent.addCategory(Intent.CATEGORY_LAUNCHER);
             PendingIntent pendingAnkiDroidIntent = PendingIntent.getActivity(context, 0, ankiDroidIntent,
