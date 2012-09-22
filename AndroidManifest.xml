@@ -34,18 +34,13 @@
         android:targetSdkVersion="11" />
 
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission
-        android:name="android.permission.VIBRATE"
-        android:required="false" />
-    <uses-permission
-        android:name="android.permission.INTERNET"
-        android:required="false" />
-    <uses-permission
-        android:name="android.permission.ACCESS_NETWORK_STATE"
-        android:required="false" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <!--
-	<uses-permission android:name="android.permission.BLUETOOTH" android:required="false" />
-	<uses-permission android:name="android.permission.BLUETOOTH_ADMIN" android:required="false" />
+	<uses-permission android:name="android.permission.BLUETOOTH" />
+        <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+        <uses-feature android:name="android.hardware.bluetooth" android:required="false" />
     -->
     
     <supports-screens
