@@ -37,7 +37,7 @@
   <string name="ease2_successive">Těžké</string>
   <string name="ease3_successive">Dobré</string>
   <string name="ease3_learning">Dobré</string>
-  <string name="studyoptions_congrats_undo">Undo %s</string>
+  <string name="studyoptions_congrats_undo">Zpět %s</string>
   <string name="studyoptions_congrats_learnmore">Naučit se více</string>
   <string name="studyoptions_congrats_reviewearly">Zopakovat dříve</string>
   <string name="studyoptions_congrats_open_other_deck">Otevřít jiný balíček</string>
@@ -45,13 +45,13 @@
   <string name="card_unsuspended">Zrušeno vyřazení karty</string>
   <string name="card_suspended">Zrušeno pozastavení karty</string>
   <string name="menu_rotate">Otočit</string>
-  <string name="menu_import">Import cards</string>
+  <string name="menu_import">Import karet</string>
   <string name="undo">Vrátit zpět</string>
-  <string name="undo_action_review">review</string>
-  <string name="undo_action_edit">edit note</string>
-  <string name="undo_action_bury">bury note</string>
-  <string name="undo_action_suspend_card">suspend card</string>
-  <string name="undo_action_suspend_note">suspend note</string>
+  <string name="undo_action_review">opakovat</string>
+  <string name="undo_action_edit">upravit poznámku</string>
+  <string name="undo_action_bury">přeskočit poznámku</string>
+  <string name="undo_action_suspend_card">vyřadit kartu</string>
+  <string name="undo_action_suspend_note">vyřadit poznámku</string>
   <string name="undo_action_delete">Odstranit poznámku</string>
   <string name="undo_action_mark">Označit poznámku</string>
   <string name="finish_operation">Dokončování předchozí operace (nejpravděpodobněji vytváření zálohy). \nProsím čekejte...</string>
@@ -60,6 +60,8 @@
   <string name="contextmenu_deckpicker_reset_reset_message">Obnovení jazyka</string>
   <string name="contextmenu_deckpicker_optimize_deck">Optimalizovat databázi</string>
   <string name="contextmenu_deckpicker_rename_deck">Přejmenovat balíček</string>
+  <string name="contextmenu_deckpicker_collapse_deck">Collapse deck</string>
+  <string name="contextmenu_deckpicker_inflate_deck">Inflate deck</string>
   <string name="contextmenu_deckpicker_set_custom_dictionary">Nastavit vlastní slovník</string>
   <string name="menu_download_deck">Stáhnout balíček</string>
   <string name="menu_download_shared_deck">Sdílený balíček</string>
@@ -92,16 +94,16 @@
   <string name="rebuild_cram_label">Znovu sestavit</string>
   <string name="empty_cram_label">Vyprázdnit</string>
   <string name="empty_cram_deck">Vyprazdňování balíčku šprtání.\nProsím čekejte...</string>
-  <string name="studyoptions_new_filtercram">Filter/Cram</string>
-  <string name="review_early_deck_name">Review Early</string>
+  <string name="studyoptions_new_filtercram">Filtr/Šprtání</string>
+  <string name="review_early_deck_name">Zopakovat brzo</string>
   <string name="studyoptions_congrats_finished">Blahopřejeme! Prozatím jste hotov.</string>
   <string name="studyoptions_congrats_more_rev">Bylo dosaženo limitu dnešního opakování, ale stále existují karty pro přezkoušení. Pro optimální zapamatování zvažte zvýšení denního limitu v možnostech.</string>
-  <string name="studyoptions_congrats_more_new">There are more new cards available, but the daily limit has been reached. You can increase the limit in the options, but please bear in mind that this will increase your short-term review workload.</string>
+  <string name="studyoptions_congrats_more_new">Existuje více nových karet, ale byl dosažen denní limit. Můžete zvýšit tento limit v Nastavení, ale mějte na paměti, že se krátkodobě zvýší vaše zátěž na opakování.</string>
   <string name="sd_card_not_mounted">SD karta není připojena.</string>
   <string name="studyoptions_options">Možnosti</string>
   <string name="empty_cloze_warning">Please edit this note and add some cloze deletions. (%1$s)</string>
   <string name="help_cloze">Pomoc</string>
-  <string name="button_sync">Sync</string>
+  <string name="button_sync">Synchronizovat</string>
   <string-array name="next_review_s">
     <item>1 sekunda</item>
     <item>1 minuta</item>

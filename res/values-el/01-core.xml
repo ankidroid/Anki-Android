@@ -60,6 +60,8 @@
   <string name="contextmenu_deckpicker_reset_reset_message">Επαναφορά γλώσσας</string>
   <string name="contextmenu_deckpicker_optimize_deck">Βελτιστοποίηση βάσης δεδομένων</string>
   <string name="contextmenu_deckpicker_rename_deck">Μετονομασία τράπουλας</string>
+  <string name="contextmenu_deckpicker_collapse_deck">Collapse deck</string>
+  <string name="contextmenu_deckpicker_inflate_deck">Inflate deck</string>
   <string name="contextmenu_deckpicker_set_custom_dictionary">Ορισμός προσαρμοσμένου λεξικού</string>
   <string name="menu_download_deck">Λήψη τράπουλας</string>
   <string name="menu_download_shared_deck">Κοινόχρηστη τράπουλα</string>

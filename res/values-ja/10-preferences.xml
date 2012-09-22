@@ -51,8 +51,6 @@
   <string name="hide_due_count_summ">Hides the due count</string>
   <string name="overtime">Overtime</string>
   <string name="overtime_summ">Continue reviewing after time limit reached</string>
-  <string name="show_timer">タイマーを表示</string>
-  <string name="show_timer_summ">解答までの時間をタイマーで表示します</string>
   <string name="show_progress_bars">進行状況バーを表示する</string>
   <string name="show_progress_bars_summ">今日の進行状況と正解率をレビュー中に表示</string>
   <string name="fade_scrollbars">Fade scrollbars</string>
@@ -214,9 +212,8 @@
   <string name="input_workaround">入力の回避策</string>
   <string name="input_workaround_summ">HTMLの入力ボックス上のフォーカスの問題の回避策。いくつかのデバイスで問題が発生します。</string>
   <string name="write_answers_message">各単語帳に答えを比較するためのフィールドを定義する必要があります。これには、アンキデスクトップを使用します。(単語帳プロパティ -&gt; モデル　編集 -&gt; Card Layout).\n\nもし、比較フィールドが設定されていない場合、書かれた回答は常にカードの答え全体と比較されます。</string>
-  <string name="pref_cache_cardbrowser">カード ブラウザー キャッシュ</string>
-  <string name="pref_cache_cardbrowser_summ">全てのカードブラウザーのカードをキャッシュします。（メモリー消費大）</string>
-  <string name="pref_cache_cardbrowser_reload">すべてのカードをリロードしますか?</string>
+  <string name="pref_cardbrowser_skip_init_search">Fast Card Browser Open</string>
+  <string name="pref_cardbrowser_skip_init_search_summ">Skips initial automatic search when the card browser opens.</string>
   <string name="pref_keep_screen_on">スクリーン常時オン</string>
   <string name="pref_keep_screen_on_summ">レビュー中はスクリーンを常時オン</string>
   <string name="pref_simple_interface">﻿シンプルなインターフェイス</string>

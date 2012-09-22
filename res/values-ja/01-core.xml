@@ -60,6 +60,8 @@
   <string name="contextmenu_deckpicker_reset_reset_message">言語設定のリセット</string>
   <string name="contextmenu_deckpicker_optimize_deck">データベースを最適化します</string>
   <string name="contextmenu_deckpicker_rename_deck">単語帳の名前の変更</string>
+  <string name="contextmenu_deckpicker_collapse_deck">Collapse deck</string>
+  <string name="contextmenu_deckpicker_inflate_deck">Inflate deck</string>
   <string name="contextmenu_deckpicker_set_custom_dictionary">カスタム辞書設定</string>
   <string name="menu_download_deck">単語帳をダウンロード</string>
   <string name="menu_download_shared_deck">共有の単語帳</string>

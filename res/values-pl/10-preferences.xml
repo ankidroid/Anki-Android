@@ -51,8 +51,6 @@
   <string name="hide_due_count_summ">Hides the due count</string>
   <string name="overtime">Overtime</string>
   <string name="overtime_summ">Continue reviewing after time limit reached</string>
-  <string name="show_timer">Pokaż zegar</string>
-  <string name="show_timer_summ">Zegar pokazujący ile czasu trwa odpowiedź</string>
   <string name="show_progress_bars">Pokaż paski postępu</string>
   <string name="show_progress_bars_summ">Pokazuje dzisiejszy postęp oraz udział poprawnych odpowiedzi.</string>
   <string name="fade_scrollbars">Fade scrollbars</string>
@@ -214,9 +212,8 @@
   <string name="input_workaround">Poprawka przy wpisywaniu</string>
   <string name="input_workaround_summ">Obejście problemu nieaktywnych pól tekstowych HTML na niektórych urządzeniach.</string>
   <string name="write_answers_message">Dla każdej talii należy zdefiniować pole, które porównywane będzie z wpisywaną odpowiedzią. Można to zrobić w wersji desktopowej Anki (Własności talii -&gt; Edytuj model -&gt; Układ karty).\n\nJeśli nie zdefiniowano takiego pola, wpisywana odpowiedź będzie zawsze porównywana z całym polem odpowiedzi karty.</string>
-  <string name="pref_cache_cardbrowser">Pamięć podręczna przeglądarki kart</string>
-  <string name="pref_cache_cardbrowser_summ">Przechowuje karty z przeglądarki kart w pamięci podręcznej (większe zużycie pamięci).</string>
-  <string name="pref_cache_cardbrowser_reload">Wczytać ponownie wszystkie karty?</string>
+  <string name="pref_cardbrowser_skip_init_search">Fast Card Browser Open</string>
+  <string name="pref_cardbrowser_skip_init_search_summ">Skips initial automatic search when the card browser opens.</string>
   <string name="pref_keep_screen_on">Nie wyłączaj ekranu</string>
   <string name="pref_keep_screen_on_summ">Nie pozwól na wyłączanie ekranu podczas powtórek</string>
   <string name="pref_simple_interface">Prosty interfejs</string>

@@ -60,6 +60,8 @@
   <string name="contextmenu_deckpicker_reset_reset_message">Dil sıfırlama</string>
   <string name="contextmenu_deckpicker_optimize_deck">Veritabanını iyileştir</string>
   <string name="contextmenu_deckpicker_rename_deck">Destenin adını değiştir</string>
+  <string name="contextmenu_deckpicker_collapse_deck">Collapse deck</string>
+  <string name="contextmenu_deckpicker_inflate_deck">Inflate deck</string>
   <string name="contextmenu_deckpicker_set_custom_dictionary">Harici sözlük ayarla</string>
   <string name="menu_download_deck">Deste indir</string>
   <string name="menu_download_shared_deck">Paylaşılan deste</string>

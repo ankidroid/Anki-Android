@@ -38,6 +38,8 @@
   <string name="card_browser_tags_shown">Schlagworte: %1$s</string>
   <string name="card_browser_change_display_order">Anzeigereihenfolge</string>
   <string name="card_browser_change_display_order_title">Anzeigereihenfolge</string>
+  <string name="card_browser_change_display_order_reverse">Zum Umkehren ein Feld zweimal wählen.</string>
+  <string name="card_browser_order_reverse">(umkehren)</string>
   <string name="card_browser_card_details">Kartendetails</string>
   <string name="card_details_question">Frage</string>
   <string name="card_details_answer">Antwort</string>
@@ -61,6 +63,13 @@
     <item>Keine Sortierung (schneller)</item>
     <item>Nach Suchfeld</item>
     <item>Nach Fälligkeit</item>
+    <item>nach Änderungsdatum</item>
+    <item>Nach letzter Veränderung</item>
+    <item>Nach Fälligkeit</item>
+    <item>nach Intervall</item>
+    <item>Nach Leichtigkeit</item>
+    <item>Nach Wiederholungen</item>
+    <item>Nach Anzahl falscher Antworten</item>
   </string-array>
   <plurals name="card_browser_subtitle">
     <item quantity="one">1 von %2$d Karten angezeigt</item>

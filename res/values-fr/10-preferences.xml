@@ -49,10 +49,8 @@
   <string name="show_study_options_on_deck_load_summ">Montrer les options d\'études au chargement d\'un paquet</string>
   <string name="hide_due_count">Cacher le compteur de cartes planifiées</string>
   <string name="hide_due_count_summ">Cache le compteur de carte planifiées</string>
-  <string name="overtime">Overtime</string>
+  <string name="overtime">Dépassement</string>
   <string name="overtime_summ">Continuer à réviser après avoir atteint la limite de temps</string>
-  <string name="show_timer">Montrer la minuterie</string>
-  <string name="show_timer_summ">Minuterie indiquant le temps qu\'il vous faut pour répondre</string>
   <string name="show_progress_bars">Afficher les barres de progression</string>
   <string name="show_progress_bars_summ">Montre les progrès du jour et la proportion de bonnes réponses pendant la révision</string>
   <string name="fade_scrollbars">Cacher les barres de défilement</string>
@@ -108,7 +106,7 @@
   <string name="zeemote_down">Joystick bas</string>
   <string name="zeemote_left">Joystick gauche</string>
   <string name="zeemote_right">Joystick droit</string>
-  <string name="zeemote_show_answer">Show answers with mark actions</string>
+  <string name="zeemote_show_answer">Afficher les réponses avec les marques</string>
   <string name="zeemote_show_answer_summ">Actions assigned to marks 1-4 also show answer.</string>
   <string name="swipe">Permettre la commande par geste</string>
   <string name="swipe_summ_off">Utilisez des gestes pour basculer entre les écrans et les cartes de réponse. Cette option n\'est pas compatible avec les commandes de contrôle du zoom</string>
@@ -145,7 +143,7 @@
   <string name="fix_hebrew_instructions">This setting bypasses the RTL algorithm of Android to show Hebrew text with vowels correctly.\n\nFor this to work, you need to download font Tohu.ttf and copy it manually to:\n%s/fonts/\n\nYou won\'t have to modify your cards.</string>
   <string name="fix_hebrew_download_font">Télécharger la police</string>
   <string name="default_font">Police par défaut</string>
-  <string name="default_font_summ">The font used for text that has no font formatting specified. Custom fonts should be installed on the SD card in a folder called \'fonts\' in your AnkiDroid folder.</string>
+  <string name="default_font_summ">La police d’écriture demandée pour texte est introuvable. Toutes les polices accessoires doivent se trouver sur la carte mémoire SD dans un dossier nommé FONTS au sein de ANKIDROID.</string>
   <string name="language">Langue</string>
   <string name="language_summ">Sélectionnez la langue, AnkiDroid doit utiliser. À l\'heure actuelle: XXX</string>
   <string name="language_system">Langue du système</string>
@@ -196,7 +194,7 @@
   <string name="fix_arabic_text_summ">Solution partielle pour un support limité de l\'arabe par la plateforme Android. Lorsqu\'il est activé il n\'est pas possible de modifier les cartes.</string>
   <string name="convert_fen_text">Support de la notation algébrique (échecs)</string>
   <string name="filter_external_data">Filtrage des données externes</string>
-  <string name="filter_external_data_summ">Transform messages from external applications to a natty view.</string>
+  <string name="filter_external_data_summ">Transformer des messages à partir d\'applications externes à un affichage de natty.</string>
   <string name="filter_google_translate">Depuis Google Traduction</string>
   <string name="filter_google_translate_summ">Enregistrer uniquement le mot source et sa traduction</string>
   <string name="convert_fen_text_summ">Dessiner un échiquier à partir de la notation Forsyth-Edwards. La notation doit être contenue entre les balises [fen] et [/fen].</string>
@@ -214,9 +212,8 @@
   <string name="input_workaround">Solution de rechange pour les champs de saisie</string>
   <string name="input_workaround_summ">Solution de rechange pour remédier à des problèmes de focus sur les champs de saisie HTML. Pose des problèmes sur de nombreux appareils.</string>
   <string name="write_answers_message">Vous devriez définir un champ de comparaison avec la réponse écrite pour chaque paquet de cartes. Vous pouvez faire ceci par l\'intermédiaire d\'Anki Desktop (propriétés du paquet -&gt; édtier modèle -&gt; disposition de la carte).\n\nSi aucun champ de comparaison n\'est défini, votre réponse sera toujours comparée avec toutes les réponses de la carte en question.</string>
-  <string name="pref_cache_cardbrowser">Cache du navigateur de carte</string>
-  <string name="pref_cache_cardbrowser_summ">Garder toutes les cartes du navigateur de cartes en cache (consomme de la mémoire).</string>
-  <string name="pref_cache_cardbrowser_reload">Recharger toutes les cartes ?</string>
+  <string name="pref_cardbrowser_skip_init_search">Fast Card Browser Open</string>
+  <string name="pref_cardbrowser_skip_init_search_summ">Skips initial automatic search when the card browser opens.</string>
   <string name="pref_keep_screen_on">Garder l\'écran allumé</string>
   <string name="pref_keep_screen_on_summ">Empêcher l\'écran d\'être mis hors tension pendant la revue des cartes</string>
   <string name="pref_simple_interface">Interface simplifiée</string>
@@ -225,7 +222,7 @@
   <string name="pref_simple_interface_exclude_tags_summ">Ne pas utiliser l\'interface simplifiée pour ces tags : XXX</string>
   <string name="deck_conf_deck_name">Nom du paquet</string>
   <string name="deck_conf_deck_description">Description du paquet</string>
-  <string name="deck_conf_conf_set">Configuration set</string>
+  <string name="deck_conf_conf_set">Jeu de configuration</string>
   <string name="deck_conf_pref_cat_options">Options</string>
   <string name="deck_conf_new_cards">Nouvelles cartes</string>
   <string name="deck_conf_rev_cards">Révisions</string>

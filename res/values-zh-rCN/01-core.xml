@@ -60,6 +60,8 @@
   <string name="contextmenu_deckpicker_reset_reset_message">重置语言设置</string>
   <string name="contextmenu_deckpicker_optimize_deck">优化数据库</string>
   <string name="contextmenu_deckpicker_rename_deck">重命令牌组</string>
+  <string name="contextmenu_deckpicker_collapse_deck">折叠卡牌组</string>
+  <string name="contextmenu_deckpicker_inflate_deck">展开卡牌组</string>
   <string name="contextmenu_deckpicker_set_custom_dictionary">设置自定义词典</string>
   <string name="menu_download_deck">下载牌组</string>
   <string name="menu_download_shared_deck">共享牌组</string>

@@ -129,4 +129,5 @@
   <string name="upgrade_decks_button">ترقية</string>
   <string name="upgrade_decks_failed">هذه الرزم لا يمكن أن ترقى:\n%s الرجاء فتحهم في أنكي سطح المكتب وعمل التأكد لقاعدة البيانات. بعد ذلك يمكنك استيرادهم من خلال أنكي سطح المكتب.</string>
   <string name="upgrade_decks_media_failed">نسخ ملفات الوسائط إلى مجلد الوسائط الجديد (%1$s) فشل لهذه الرزم:\n%2$s الرجاء نقل ملفات الوسائط بشكل يدوي.</string>
+  <string name="download_deck">Downloading deck (%d kb).\nPlease wait...</string>
 </resources>

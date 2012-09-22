@@ -60,6 +60,8 @@
   <string name="contextmenu_deckpicker_reset_reset_message">Réinitialiser la langue</string>
   <string name="contextmenu_deckpicker_optimize_deck">Optimiser la base de données</string>
   <string name="contextmenu_deckpicker_rename_deck">Renommer le paquet</string>
+  <string name="contextmenu_deckpicker_collapse_deck">Collapse deck</string>
+  <string name="contextmenu_deckpicker_inflate_deck">Inflate deck</string>
   <string name="contextmenu_deckpicker_set_custom_dictionary">Définir un dictionnaire personnalisé</string>
   <string name="menu_download_deck">Télécharger le paquet</string>
   <string name="menu_download_shared_deck">Paquet partagé</string>

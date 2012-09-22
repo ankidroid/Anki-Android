@@ -38,6 +38,8 @@
   <string name="card_browser_tags_shown">Etichette: %1$s</string>
   <string name="card_browser_change_display_order">Modifica ordine visualizzazione</string>
   <string name="card_browser_change_display_order_title">Scegli ordine visualizzazione</string>
+  <string name="card_browser_change_display_order_reverse">Seleziona due volte un campo per invertirlo.</string>
+  <string name="card_browser_order_reverse">(inverti)</string>
   <string name="card_browser_card_details">Dettagli carta</string>
   <string name="card_details_question">Domanda</string>
   <string name="card_details_answer">Risposta</string>
@@ -60,7 +62,14 @@
   <string-array name="card_browser_order_labels">
     <item>Nessun ordinamento (più veloce)</item>
     <item>Per campo di ricerca</item>
-    <item>Per scadenza</item>
+    <item>Per data di creazione</item>
+    <item>Per data di modifica</item>
+    <item>Per data di cambiamento</item>
+    <item>Per data di scadenza</item>
+    <item>Per intervallo</item>
+    <item>Per facilità</item>
+    <item>Per ripetizioni</item>
+    <item>Per errori</item>
   </string-array>
   <plurals name="card_browser_subtitle">
     <item quantity="one">1 di %2$d carte mostrata</item>

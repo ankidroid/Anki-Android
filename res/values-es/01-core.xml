@@ -60,6 +60,8 @@
   <string name="contextmenu_deckpicker_reset_reset_message">Restablecer idioma</string>
   <string name="contextmenu_deckpicker_optimize_deck">Optimizar la base de datos</string>
   <string name="contextmenu_deckpicker_rename_deck">Renombrar mazo</string>
+  <string name="contextmenu_deckpicker_collapse_deck">Contraer mazo</string>
+  <string name="contextmenu_deckpicker_inflate_deck">Expandir mazo</string>
   <string name="contextmenu_deckpicker_set_custom_dictionary">Establecer diccionario personalizado</string>
   <string name="menu_download_deck">Descargar mazo</string>
   <string name="menu_download_shared_deck">Mazo compartido</string>

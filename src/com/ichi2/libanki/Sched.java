@@ -2003,15 +2003,15 @@ public class Sched {
             dict.put("resched", conf.getBoolean("resched"));
             return dict;
         } catch (JSONException e) {
-	    JSONObject conf = _cardConf(card);
-	    if (!mCol.getDecks().isDyn(card.getDid()) && card.getODid() != 0) {
-		// workaround, if a card's deck is a normal deck, but odid != 0
-	        card.setODue(0);
-	        card.setODid(0);
-		AnkiDroidApp.saveExceptionReportFile(e, "fixedODidInconsistencyInSched_lapseConf");
-		// return proper value after having fixed the problem
-		return _lapseConf(card);
-	    } else {
+        	JSONObject conf = _cardConf(card);
+        	if (!mCol.getDecks().isDyn(card.getDid()) && card.getODid() != 0) {
+        		// workaround, if a card's deck is a normal deck, but odid != 0
+        		card.setODue(0);
+        		card.setODid(0);
+        		AnkiDroidApp.saveExceptionReportFile(e, "fixedODidInconsistencyInSched_lapseConf");
+        		// return proper value after having fixed the problem
+        		return _lapseConf(card);
+        	} else {
 	           throw new RuntimeException(e);
 	    }
         }

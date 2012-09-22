@@ -51,8 +51,6 @@
   <string name="hide_due_count_summ">Oculta a contagem de devidos</string>
   <string name="overtime">Tempo excedente</string>
   <string name="overtime_summ">Continuar a revisar após o limite de tempo ser atingido</string>
-  <string name="show_timer">Mostrar cronômetro</string>
-  <string name="show_timer_summ">Cronômetro mostrando quanto que você está levando para responder</string>
   <string name="show_progress_bars">Mostrar barras de progresso</string>
   <string name="show_progress_bars_summ">Mostra o progresso e a proporção de respostas sim de hoje enquanto revisa</string>
   <string name="fade_scrollbars">Esconder barras de rolagens</string>
@@ -214,9 +212,8 @@
   <string name="input_workaround">Solução Alternativa de Entrada</string>
   <string name="input_workaround_summ">Solução alternativa para problemas em focalizar caixas de entrada em HTML. Causa problemas em vários dispositivos.</string>
   <string name="write_answers_message">Você deve definir para cada deck um campo para comparar com a resposta escrita. Você pode fazer isso através Anki Desktop (Propriedades dos Decks - &gt; Editar modelo - &gt; Layout do Cartão).\n\nSe nenhum campo de comparação é definido, sua resposta escrita será sempre comparada com a resposta inteira do cartão.</string>
-  <string name="pref_cache_cardbrowser">Navegador do Cache dos Cartões</string>
-  <string name="pref_cache_cardbrowser_summ">Manter todas os cartões do navegador de cartões no cache(consome memória).</string>
-  <string name="pref_cache_cardbrowser_reload">Recarregar todos os cartões?</string>
+  <string name="pref_cardbrowser_skip_init_search">Fast Card Browser Open</string>
+  <string name="pref_cardbrowser_skip_init_search_summ">Skips initial automatic search when the card browser opens.</string>
   <string name="pref_keep_screen_on">Manter a Tela Ligada</string>
   <string name="pref_keep_screen_on_summ">Impedir que a tela seja desligada enquanto revisa</string>
   <string name="pref_simple_interface">Interface simples</string>

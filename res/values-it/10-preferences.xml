@@ -51,8 +51,6 @@
   <string name="hide_due_count_summ">Nasconde il conteggio delle carte scadute</string>
   <string name="overtime">Tempo oltre il limite</string>
   <string name="overtime_summ">Continua le ripetizioni dopo aver raggiunto il limite di tempo</string>
-  <string name="show_timer">Mostra il timer</string>
-  <string name="show_timer_summ">Timer che mostra il tempo impiegato per rispondere</string>
   <string name="show_progress_bars">Mostra le barre di avanzamento</string>
   <string name="show_progress_bars_summ">Mostra i progressi di oggi e la proporzione di sì odierni durante le ripetizioni</string>
   <string name="fade_scrollbars">Dissolvi barre di scorrimento</string>
@@ -214,9 +212,8 @@
   <string name="input_workaround">Soluzione per problemi di immissione</string>
   <string name="input_workaround_summ">Soluzione per problemi di fuoco con campi di immissione HTML. Provoca problemi su diversi dispositivi.</string>
   <string name="write_answers_message">È necessario definire per ogni mazzo un campo col quale confrontare la risposta scritta. Puoi farlo con Anki Desktop (proprietà mazzo -&gt; modifica modello -&gt; layout carta).\n\nSe non è impostato nessun campo per il confronto, la risposta scritta sarà sempre confrontata con tutta la risposta della carta.</string>
-  <string name="pref_cache_cardbrowser">Cache del browser delle carte</string>
-  <string name="pref_cache_cardbrowser_summ">Tieni tutte le carte del browser delle carte nella cache (consuma memoria).</string>
-  <string name="pref_cache_cardbrowser_reload">Ricarica tutte le carte?</string>
+  <string name="pref_cardbrowser_skip_init_search">Fast Card Browser Open</string>
+  <string name="pref_cardbrowser_skip_init_search_summ">Skips initial automatic search when the card browser opens.</string>
   <string name="pref_keep_screen_on">Mantieni acceso lo schermo</string>
   <string name="pref_keep_screen_on_summ">Previeni che lo schermo si spenga durante le ripetizioni</string>
   <string name="pref_simple_interface">Interfaccia semplice</string>

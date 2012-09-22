@@ -51,8 +51,6 @@
   <string name="hide_due_count_summ">기간 수 숨기기</string>
   <string name="overtime">초과 작업 시간</string>
   <string name="overtime_summ">도달 시간 제한 검토 후에 계속</string>
-  <string name="show_timer">타이머 표시</string>
-  <string name="show_timer_summ">타이머에 정답 제시 소요시간 보이기</string>
   <string name="show_progress_bars">상태바 보이기</string>
   <string name="show_progress_bars_summ">리뷰하는 동안 오늘의 진도와 정답비율 보여주기</string>
   <string name="fade_scrollbars">Fade scrollbars</string>
@@ -214,9 +212,8 @@
   <string name="input_workaround">입력창 설정</string>
   <string name="input_workaround_summ">HTML 입력상자 선택문제 회피방법.몇몇 장치에서 문제가 발생함.</string>
   <string name="write_answers_message">쓰기형 정답 사용시 반드시 비교할 필드을 정의해야 합니다. 이는  Anki 데스크탑 버전에서 할 수도 있습니다. (암기꾸러미 속성 -&gt; 모델 편집 -&gt; 카드 레이아웃).\n\n 만약 비교할 필드를 지정하지 않으면, 정답을 썼을 때 전체 카드 정답과 비교하게 됩니다.</string>
-  <string name="pref_cache_cardbrowser">카드 브라우저 캐시</string>
-  <string name="pref_cache_cardbrowser_summ">카드 브라우져의 모든 카드를 캐쉬에 저장(메모리가 소비됨).</string>
-  <string name="pref_cache_cardbrowser_reload">모든 카드를 새로고침?</string>
+  <string name="pref_cardbrowser_skip_init_search">Fast Card Browser Open</string>
+  <string name="pref_cardbrowser_skip_init_search_summ">Skips initial automatic search when the card browser opens.</string>
   <string name="pref_keep_screen_on">화면을 켜진 채로 유지</string>
   <string name="pref_keep_screen_on_summ">리뷰하는 동안 화면꺼짐 방지</string>
   <string name="pref_simple_interface">간단한 인터페이스</string>

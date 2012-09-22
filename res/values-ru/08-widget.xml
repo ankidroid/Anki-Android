@@ -36,8 +36,8 @@
   <string name="open_in_reviewer">Открыть колоду в AnkiDroid</string>
   <string name="widget_big_tomorrow_due">Завтра будет:</string>
   <plurals name="widget_cards_in_decks_due">
-    <item quantity="one">повтор 1 из %2$s</item>
-    <item quantity="other">повтор %1$d из %2$s</item>
+    <item quantity="one">сегодня 1 из %2$s</item>
+    <item quantity="other">сегодня %1$d из %2$s</item>
   </plurals>
   <plurals name="widget_decks">
     <item quantity="one">1 колоды</item>

@@ -38,6 +38,8 @@
   <string name="card_browser_tags_shown">Etiquetas: %1$s</string>
   <string name="card_browser_change_display_order">Orden de presentación</string>
   <string name="card_browser_change_display_order_title">Elige el orden de presentación</string>
+  <string name="card_browser_change_display_order_reverse">Selecciona un campo dos veces para invertir.</string>
+  <string name="card_browser_order_reverse">(inverso)</string>
   <string name="card_browser_card_details">Detalles de la tarjeta</string>
   <string name="card_details_question">Pregunta</string>
   <string name="card_details_answer">Respuesta</string>
@@ -45,7 +47,7 @@
   <string name="card_details_last_due">Programada por última vez</string>
   <string name="card_details_now">Ahora</string>
   <string name="card_details_interval">Intervalo</string>
-  <string name="card_details_ease">Dificultad</string>
+  <string name="card_details_ease">Facilidad</string>
   <string name="card_details_average_time">Tiempo promedio</string>
   <string name="card_details_total_time">Tiempo total</string>
   <string name="card_details_yes_count">Repuestas afirmativas</string>
@@ -60,7 +62,14 @@
   <string-array name="card_browser_order_labels">
     <item>Sin orden (más rápido)</item>
     <item>Por campo de búsqueda</item>
-    <item>Por tiempo programado</item>
+    <item>Por fecha de creación</item>
+    <item>Por fecha de edición</item>
+    <item>Por fecha de modificación</item>
+    <item>Por fecha programada</item>
+    <item>Por intervalo</item>
+    <item>Por facilidad</item>
+    <item>Por repasos</item>
+    <item>Por lapsos</item>
   </string-array>
   <plurals name="card_browser_subtitle">
     <item quantity="one">1 de %2$d tarjetas mostradas</item>

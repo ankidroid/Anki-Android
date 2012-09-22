@@ -51,8 +51,6 @@
   <string name="hide_due_count_summ">Çıkacak kart sayısını gizler</string>
   <string name="overtime">Fazla mesai</string>
   <string name="overtime_summ">Süre sınırına ulaştıktan sonra çalışmaya devam et</string>
-  <string name="show_timer">Zamanlayıcıyı göster</string>
-  <string name="show_timer_summ">Yanıtlamanızın ne kadar sürdüğünü gösteren zamanlayıcı</string>
   <string name="show_progress_bars">İlerleme çubuklarını göster</string>
   <string name="show_progress_bars_summ">Gözden geçirme sırasında bugünkü ilerlemenizi ve evet yanıtlarınızı gösterir</string>
   <string name="fade_scrollbars">Fade scrollbars</string>
@@ -214,9 +212,8 @@
   <string name="input_workaround">Giriş Çözümü</string>
   <string name="input_workaround_summ">HTML giriş kutularındaki odaklama sorunları için çözüm. Bazı cihazlarda sorun yaratabilir.</string>
   <string name="write_answers_message">Her deste için yazılı yanıtların karşılaştırılacağı bir alan belirlemelisiniz. Bunu Anki Masaüstü yoluyla yapabilirsiniz (deste özellikleri -&gt; modeli düzenle -&gt; kart düzeni).\n\nKarşılaştırma alanı ayarlanmamışsa, yazılı yanıtınız her zaman kart yanıtının tümüyle karşılaştırılacak.</string>
-  <string name="pref_cache_cardbrowser">Kart Tarayıcısı Önbelleği</string>
-  <string name="pref_cache_cardbrowser_summ">Bütün kart tarayıcısı kartlarını önbellekte tutar (bellek harcar).</string>
-  <string name="pref_cache_cardbrowser_reload">Bütün kartlar yeniden yüklensin mi?</string>
+  <string name="pref_cardbrowser_skip_init_search">Fast Card Browser Open</string>
+  <string name="pref_cardbrowser_skip_init_search_summ">Skips initial automatic search when the card browser opens.</string>
   <string name="pref_keep_screen_on">Ekranı Açık Tut</string>
   <string name="pref_keep_screen_on_summ">Gözden geçirme sırasında ekranın kapanmasını engelle</string>
   <string name="pref_simple_interface">Basit Arayüz</string>

@@ -51,8 +51,6 @@
   <string name="hide_due_count_summ">Hides the due count</string>
   <string name="overtime">Overtime</string>
   <string name="overtime_summ">Continue reviewing after time limit reached</string>
-  <string name="show_timer">Toon timer</string>
-  <string name="show_timer_summ">Timer die laat zien hoe lang u over het antwoorden doet</string>
   <string name="show_progress_bars">Toon voortgangsbalken</string>
   <string name="show_progress_bars_summ">Laat de voortgang en het aantal Ja-antwoorden van vandaag zien tijdens de overhoring</string>
   <string name="fade_scrollbars">Fade scrollbars</string>
@@ -214,9 +212,8 @@
   <string name="input_workaround">Workaround voor invoer</string>
   <string name="input_workaround_summ">Oplossing voor  problemen met het scherpstellen op HTML-invoervelden. Dit veroorzaakt problemen op meerdere apparaten.</string>
   <string name="write_answers_message">Definieer voor ieder leerset een veld om te vergelijken met het geschreven antwoord. U kunt dit doen met Anki Desktop (eigenschappen van de leerset -&gt; bewerken model -&gt; Kaart Layout).\n\nAls geen vergelijk veld is ingesteld, zal het schriftelijke antwoord altijd worden vergeleken met het antwoord van de gehele kaart.</string>
-  <string name="pref_cache_cardbrowser">Kaartbrowser cache</string>
-  <string name="pref_cache_cardbrowser_summ">Alle kaarten van de kaartbrowser in het cache-geheugen houden (neemt geheugen in gebruik).</string>
-  <string name="pref_cache_cardbrowser_reload">Alle kaarten opnieuw laden?</string>
+  <string name="pref_cardbrowser_skip_init_search">Fast Card Browser Open</string>
+  <string name="pref_cardbrowser_skip_init_search_summ">Skips initial automatic search when the card browser opens.</string>
   <string name="pref_keep_screen_on">Zorg dat scherm aan blijft</string>
   <string name="pref_keep_screen_on_summ">Voorkom dat scherm uitgeschakeld wordt tijdens herhalen</string>
   <string name="pref_simple_interface">Eenvoudige interface</string>

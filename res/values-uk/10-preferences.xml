@@ -51,8 +51,6 @@
   <string name="hide_due_count_summ">Приховує лічильник карток, що підлягають вивченню</string>
   <string name="overtime">Понаднормово</string>
   <string name="overtime_summ">Продовжити огляд після досягнення ліміту часу</string>
-  <string name="show_timer">Показати таймер</string>
-  <string name="show_timer_summ">Таймер, що показує час затрачений вами на відповідь</string>
   <string name="show_progress_bars">Показувати стрічки поступу</string>
   <string name="show_progress_bars_summ">Показувати сьогоднішній поступ та відношення відповідей \'так\' за сьогодні під час перегляду</string>
   <string name="fade_scrollbars">Знебарвити смуги прокручування</string>
@@ -214,9 +212,8 @@
   <string name="input_workaround">Тимчасове рішення для введення</string>
   <string name="input_workaround_summ">Тимчасове рішення для полів введення HTML. Призводить до проблем на деяких пристроях.</string>
   <string name="write_answers_message">Ви повинні призначити поле для порівняння письмової відповіді для кожної колоди. Це можна зробити через Anki Desktop (властивості колоди -&gt; редагувати модель -&gt; дизайн картки).\n\nЯкщо поле для порівняння не задане, письмова відповідь завжди буде порівнюватись із відповіддю в цілому.</string>
-  <string name="pref_cache_cardbrowser">Кеш Оглядача карток</string>
-  <string name="pref_cache_cardbrowser_summ">Тримає всі картки оглядача карток в кеші (вимогливо до пам’яті).</string>
-  <string name="pref_cache_cardbrowser_reload">Перезавантажити всі картки?</string>
+  <string name="pref_cardbrowser_skip_init_search">Fast Card Browser Open</string>
+  <string name="pref_cardbrowser_skip_init_search_summ">Skips initial automatic search when the card browser opens.</string>
   <string name="pref_keep_screen_on">Тримати екран увімкненим</string>
   <string name="pref_keep_screen_on_summ">Попереджати вимкнення екрану під час перегляду</string>
   <string name="pref_simple_interface">Простий інтерфейс</string>

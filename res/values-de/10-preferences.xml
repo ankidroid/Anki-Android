@@ -51,8 +51,6 @@
   <string name="hide_due_count_summ">Zeigt die Anzahl fälliger Karten nicht an</string>
   <string name="overtime">Weiterlernen</string>
   <string name="overtime_summ">Mit dem Lernen fortfahren, auch wenn das Zeitlimit erreicht ist</string>
-  <string name="show_timer">Timer anzeigen</string>
-  <string name="show_timer_summ">Zeigt die Zeit bis zum Beantworten der Frage</string>
   <string name="show_progress_bars">Erfolgsbalken anzeigen</string>
   <string name="show_progress_bars_summ">Zeigt beim Lernen den heutigen Lernfortschritt sowie den heutigen Anteil von Ja-Antworten.</string>
   <string name="fade_scrollbars">Rollbalken ausblenden</string>
@@ -214,9 +212,8 @@
   <string name="input_workaround">Eingabe-Fehlerbehebung</string>
   <string name="input_workaround_summ">Fehlerbehebung für Fokusierungsprobleme mit HTML-Eingabe-Feldern. Verursacht Probleme auf einigen Geräten.</string>
   <string name="write_answers_message">Sie sollten für jeden Stapel ein Feld definieren, mit dem Ihre geschriebene Antwort verglichen wird. Sie können das mit Anki Desktop erledigen (Stapel-Eigenschaften → Modell bearbeiten → Kartenlayout).\n\nWenn kein Vergleichsfeld festgelegt ist, wird Ihre geschriebene Antwort immer mit der gesamten Kartenantwort verglichen.</string>
-  <string name="pref_cache_cardbrowser">Kartenübersicht-Cache</string>
-  <string name="pref_cache_cardbrowser_summ">Karten der Kartenübersicht im Cache behalten (verbraucht Speicher).</string>
-  <string name="pref_cache_cardbrowser_reload">Karten neu laden?</string>
+  <string name="pref_cardbrowser_skip_init_search">Kartenübersicht schnell öffnen</string>
+  <string name="pref_cardbrowser_skip_init_search_summ">Überspringt das automatische Laden aller Karten beim Öffnen der Kartenübersicht.</string>
   <string name="pref_keep_screen_on">Ausschalten verhindern</string>
   <string name="pref_keep_screen_on_summ">Keine automatische Bildschirmabschaltung während des Lernens</string>
   <string name="pref_simple_interface">Einfache Oberfläche</string>

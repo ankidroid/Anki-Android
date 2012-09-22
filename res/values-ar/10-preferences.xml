@@ -51,8 +51,6 @@
   <string name="hide_due_count_summ">يخفي عدد المستحق</string>
   <string name="overtime">العمل الإضافي</string>
   <string name="overtime_summ">مواصلة المراجعة بعد الوصول للوقت المخصص</string>
-  <string name="show_timer">أظهر المؤقت</string>
-  <string name="show_timer_summ">المؤقت يظهر لك الوقت الذي تأخذه للإجابة</string>
   <string name="show_progress_bars">عرض أشرطة التقدم</string>
   <string name="show_progress_bars_summ">يبين التقدم المحرز في اليوم ونسبة اليوم بإجابات نعم أثناء المراجعة</string>
   <string name="fade_scrollbars">إخفاء أشرطة التمرير</string>
@@ -214,9 +212,8 @@
   <string name="input_workaround">إدخال الحل المؤقت</string>
   <string name="input_workaround_summ">حل مؤقت لمشاكل التركيز في حقول الإدخال لـ HTML. يسبب المشاكل في العديد من الأجهزة.</string>
   <string name="write_answers_message">يجب عليك تحديد لكل رزمة حقلا لمقارنة الإجابة المكتوبة به. يمكنك فعل ذلك بواسطة برنامج أنكي سطح المكتب (خيارات الرزمة -&gt; تحرير النموذج -&gt; مخطط البطاقة).\n\nإذا لم يكن هناك حقل للمقارنة، فإن إجابتك المكتوبة ستقارن دائما بإجابة البطاقة الكاملة.</string>
-  <string name="pref_cache_cardbrowser">الذاكرة المخبأة لمستعرض البطاقة</string>
-  <string name="pref_cache_cardbrowser_summ">حمل جميع بطاقات مستعرض البطاقة في الذاكرة المخبأة (الذاكرة الاستهلاكية).</string>
-  <string name="pref_cache_cardbrowser_reload">إعادة تحميل كل البطاقات؟</string>
+  <string name="pref_cardbrowser_skip_init_search">Fast Card Browser Open</string>
+  <string name="pref_cardbrowser_skip_init_search_summ">Skips initial automatic search when the card browser opens.</string>
   <string name="pref_keep_screen_on">أبق الشاشة تعمل</string>
   <string name="pref_keep_screen_on_summ">امنع الشاشة من الإطفاء أثناء المراجعة</string>
   <string name="pref_simple_interface">واجهة مبسطة</string>

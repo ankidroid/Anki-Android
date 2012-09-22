@@ -60,6 +60,8 @@
   <string name="contextmenu_deckpicker_reset_reset_message">언어설정</string>
   <string name="contextmenu_deckpicker_optimize_deck">데이터베이스 최적화</string>
   <string name="contextmenu_deckpicker_rename_deck">다른 이름으로 묶음 저장</string>
+  <string name="contextmenu_deckpicker_collapse_deck">Collapse deck</string>
+  <string name="contextmenu_deckpicker_inflate_deck">Inflate deck</string>
   <string name="contextmenu_deckpicker_set_custom_dictionary">사용자 사전 설정</string>
   <string name="menu_download_deck">암기묶음 다운로드</string>
   <string name="menu_download_shared_deck">공유된 암기묶음</string>

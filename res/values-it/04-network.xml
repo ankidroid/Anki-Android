@@ -129,4 +129,5 @@
   <string name="upgrade_decks_button">Aggiorna</string>
   <string name="upgrade_decks_failed">Questi mazzi non hanno potuto essere aggiornati:\n%sAprili in Anki Desktop ed esegui un controllo del database. In seguito puoi importarli tramite Anki Desktop.</string>
   <string name="upgrade_decks_media_failed">La copia dei file multimediali nella nuova cartella dei media (%1$s) non è riuscita per questi mazzi:\n%2$sSposta manualmente i file multimediali.</string>
+  <string name="download_deck">Scarico mazzo (%d kb).\nAttendi...</string>
 </resources>

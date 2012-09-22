@@ -60,6 +60,8 @@
   <string name="contextmenu_deckpicker_reset_reset_message">Nyelv visszaállítása</string>
   <string name="contextmenu_deckpicker_optimize_deck">Adatbázis optimalizálása </string>
   <string name="contextmenu_deckpicker_rename_deck">Pakli átnevezése</string>
+  <string name="contextmenu_deckpicker_collapse_deck">Collapse deck</string>
+  <string name="contextmenu_deckpicker_inflate_deck">Inflate deck</string>
   <string name="contextmenu_deckpicker_set_custom_dictionary">Saját szótár beállítása</string>
   <string name="menu_download_deck">Pakli letöltése</string>
   <string name="menu_download_shared_deck">Megosztott pakli</string>
