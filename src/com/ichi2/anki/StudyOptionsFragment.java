@@ -27,6 +27,7 @@ import android.graphics.Color;
 import android.graphics.Paint.Align;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.text.Html;
 import android.util.Log;
 import android.view.GestureDetector;
 import android.view.GestureDetector.SimpleOnGestureListener;
@@ -849,7 +850,7 @@ public class StudyOptionsFragment extends Fragment {
 
         String desc = AnkiDroidApp.getCol().getDecks().getActualDescription();
         if (desc.length() > 0) {
-            mTextDeckDescription.setText(desc);
+            mTextDeckDescription.setText(Html.fromHtml(desc));
             mTextDeckDescription.setVisibility(View.VISIBLE);
         } else {
             mTextDeckDescription.setVisibility(View.GONE);
