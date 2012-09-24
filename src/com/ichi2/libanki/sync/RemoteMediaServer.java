@@ -97,7 +97,7 @@ public class RemoteMediaServer extends BasicHttpSyncer {
 
     public long addFiles(File zip) {
         try {
-            HttpResponse ret = super.req("addFiles", new FileInputStream(zip));
+            HttpResponse ret = super.req("addFiles", 0, new FileInputStream(zip));
             if (ret == null) {
                 return 0;
             }

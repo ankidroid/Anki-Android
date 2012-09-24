@@ -87,6 +87,10 @@ public class MediaSyncer {
                 break;
             }
             long usn = mServer.addFiles(zipAdded.first);
+            if (usn == 0) {
+            	// an error occurred, return
+            	return null;
+            }
             // after server has replied, safe to remove from log
             zipAdded.first.delete(); // remove the temporary file created by Media.zipAdded
             mCol.getMedia().forgetAdded(zipAdded.second);

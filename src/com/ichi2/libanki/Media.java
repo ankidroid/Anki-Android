@@ -48,6 +48,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.zip.DeflaterOutputStream;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipException;
 import java.util.zip.ZipFile;
@@ -497,7 +498,7 @@ public class Media {
         List<String> fnames = new ArrayList<String>();
 
         try {
-            ZipOutputStream zos = new ZipOutputStream(new BufferedOutputStream(new FileOutputStream(f)));
+            ZipOutputStream zos = new ZipOutputStream(new DeflaterOutputStream(new BufferedOutputStream(new FileOutputStream(f))));
 
             JSONObject files = new JSONObject();
             int cnt = 0;
