@@ -129,4 +129,5 @@
   <string name="upgrade_decks_button">升级</string>
   <string name="upgrade_decks_failed">这些牌组不能升级：\n%s请在Anki桌面客户端中打开它们，并进行数据库检查。之后可用Anki桌面客户端导入。</string>
   <string name="upgrade_decks_media_failed">复制媒体文件到新的媒体文件夹 （%1$s) 已失败，失败牌组如下：\n%2$s请手动移动媒体文件。</string>
+  <string name="download_deck">下载卡牌组(%d kb).\n 请等待...</string>
 </resources>

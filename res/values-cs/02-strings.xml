@@ -40,7 +40,7 @@
   <string name="suspend_leeches">Vyřadit pijavice</string>
   <string name="leech_suspend_notification">Karta označena jako pijavice a vyřazena</string>
   <string name="leech_notification">Karta byla označena jako pijavice</string>
-  <string name="corrupt_font">Corrupt font file %s</string>
+  <string name="corrupt_font">Poškozený soubor písma %s</string>
   <string name="about_title">O aplikaci</string>
   <string name="cardeditor_title_add_note">Přidat poznámku</string>
   <string name="cardeditor_title_edit_card">Upravit poznámku</string>
@@ -82,15 +82,15 @@
   <string name="pref_lang_other">Předvolby jazyka</string>
   <string name="pref_font_UI">Vlastní písmo</string>
   <string name="info_rate">Ohodnotit AnkiDroid</string>
-  <string name="col_load_failed">Collection loading failed.\nPress back to close AnkiDroid.</string>
-  <string name="import_title">Import Cards</string>
-  <string name="import_message">Do you really want to import all cards of file %s?</string>
-  <string name="import_log_success">Successfully imported %d cards</string>
-  <string name="import_log_error">Import failed</string>
-  <string name="import_log_no_apkg">This is not a valid apkg file</string>
-  <string name="import_importing">Importing cards.\nPlease wait...</string>
-  <string name="import_hint">To import cards, place the apkg file in directory %s and press ok</string>
-  <string name="import_no_file_found">No importable apkg file found</string>
+  <string name="col_load_failed">Načítání kolekce se nezdařilo.\nStiskněte zpět pro zavření AnkiDroid.</string>
+  <string name="import_title">Import karet</string>
+  <string name="import_message">Opravdu chcete importovat všechny karty ze souboru %s?</string>
+  <string name="import_log_success">Importováno %d karet</string>
+  <string name="import_log_error">Import se nezdařil</string>
+  <string name="import_log_no_apkg">Toto není platný apkg soubor</string>
+  <string name="import_importing">Import karet.\nProsím čekejte...</string>
+  <string name="import_hint">Pro import karet umístěte soubor apkg do adresáře %s a stiskněte ok</string>
+  <string name="import_no_file_found">Nebyl nalezen žádný soubor apkg pro import</string>
   <string-array name="dynOrderLabels">
     <item>Nejstarší první</item>
     <item>Náhodně</item>

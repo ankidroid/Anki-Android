@@ -129,4 +129,5 @@
   <string name="upgrade_decks_button">Обновить</string>
   <string name="upgrade_decks_failed">Следующие колоды не были обновлены:\n%sПожалуйста, откройте их в Anki Desktop и выполните проверку базы данных. Затем Вы сможете их импортировать используя Anki Desktop.</string>
   <string name="upgrade_decks_media_failed">Копирование медиа-файлов в новую папку (%1$s) не удалось для колод:\n%2$sПожалуйста, переместите медиа-файлы вручную.</string>
+  <string name="download_deck">Загрузка колоды (%d кбайт).\nПожалуйста, подождите...</string>
 </resources>

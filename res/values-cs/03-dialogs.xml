@@ -52,8 +52,8 @@
   <string name="intent_aedict_category">Chcete-li přidat AnkiDroid karty, odstraňte všechny kategorie Poznámkového bloku nebo přidejte jednu s názvem \'default\'</string>
   <string name="learnmore_title">Study More Settings</string>
   <string name="learnmore_insructions">You can temporarily increase your new cards and max reviews limits below to extend today\'s learning session.</string>
-  <string name="learnmore_extend_new_limit">Increase new cards limit by</string>
-  <string name="learnmore_extend_rev_limit">Increase max reviews limit by</string>
+  <string name="learnmore_extend_new_limit">Zvýšit limit nových karet na</string>
+  <string name="learnmore_extend_rev_limit">Zvýšit max limit opakovaných na</string>
   <string name="reviewearly_title">Review Early Settings</string>
   <string name="reviewearly_instructions">This option will create a Filtered Deck called \'XXX\' with the cards that are due for review in the number of days you select below. If such a Filtered Deck already exists it will be emptied and reconfigured.</string>
   <string name="reviewearly_days_ahead">How many days ahead</string>

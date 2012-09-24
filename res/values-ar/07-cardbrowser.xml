@@ -38,6 +38,8 @@
   <string name="card_browser_tags_shown">الوسوم: %1$s</string>
   <string name="card_browser_change_display_order">غير ترتيب العرض</string>
   <string name="card_browser_change_display_order_title">اختر ترتيب العرض</string>
+  <string name="card_browser_change_display_order_reverse">Select a field twice to reverse.</string>
+  <string name="card_browser_order_reverse">(reverse)</string>
   <string name="card_browser_card_details">تفاصيل البطاقة</string>
   <string name="card_details_question">السؤال</string>
   <string name="card_details_answer">الإجابة</string>
@@ -60,7 +62,14 @@
   <string-array name="card_browser_order_labels">
     <item>بلا فرز (أسرع)</item>
     <item>بحقل البحث</item>
-    <item>حسب الموعد المحدد</item>
+    <item>By created time</item>
+    <item>By edited time</item>
+    <item>By changed time</item>
+    <item>By due time</item>
+    <item>By interval</item>
+    <item>By ease</item>
+    <item>By reviews</item>
+    <item>By lapses</item>
   </string-array>
   <plurals name="card_browser_subtitle">
     <item quantity="one">شوهدت بطاقة من %2$d</item>

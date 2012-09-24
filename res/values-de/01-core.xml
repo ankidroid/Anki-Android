@@ -60,6 +60,8 @@
   <string name="contextmenu_deckpicker_reset_reset_message">Sprachen zurückgesetzt</string>
   <string name="contextmenu_deckpicker_optimize_deck">Datenbank optimieren</string>
   <string name="contextmenu_deckpicker_rename_deck">Stapel umbenennen</string>
+  <string name="contextmenu_deckpicker_collapse_deck">Stapel einfalten</string>
+  <string name="contextmenu_deckpicker_inflate_deck">Stapel auffalten</string>
   <string name="contextmenu_deckpicker_set_custom_dictionary">Eigenes Wörterbuch festlegen</string>
   <string name="menu_download_deck">Stapel herunterladen</string>
   <string name="menu_download_shared_deck">Öffentlicher Stapel</string>

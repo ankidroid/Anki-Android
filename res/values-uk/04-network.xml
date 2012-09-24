@@ -129,4 +129,5 @@
   <string name="upgrade_decks_button">Оновлення</string>
   <string name="upgrade_decks_failed">Не можливо обновити ці колоди\n%sБудь ласка, відкрийте їх в Anki Desktop та здійсніть перевірку бази даних Після цього ви можете імпортувати їх через Anki Desktop.</string>
   <string name="upgrade_decks_media_failed">Копіювання файлів мультимедіа до нової медіа папки (%1$s) для цих колод не виконано:\n%2$sБудь ласка, перемістіть медіа файли вручну.</string>
+  <string name="download_deck">Downloading deck (%d kb).\nPlease wait...</string>
 </resources>

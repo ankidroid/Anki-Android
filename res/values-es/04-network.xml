@@ -129,4 +129,5 @@
   <string name="upgrade_decks_button">Actualizar</string>
   <string name="upgrade_decks_failed">Estos mazos no pudieron ser actualizados:\n%sPor favor, ábrelos en Anki versión escritorio y haz una comprobación de la base de datos. Después podrás importarlos mediante Anki versión escritorio.</string>
   <string name="upgrade_decks_media_failed">La copia de los archivos multimedia a la nueva carpeta multimedia (%1$s) ha fallado con estos mazos:\n%2$sPor favor, mueve los archivos multimedia manualmente.</string>
+  <string name="download_deck">Descargando mazo (%d kb).\nPor favor, espera...</string>
 </resources>

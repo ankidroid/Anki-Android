@@ -60,6 +60,8 @@
   <string name="contextmenu_deckpicker_reset_reset_message">重設語言</string>
   <string name="contextmenu_deckpicker_optimize_deck">最佳化資料庫</string>
   <string name="contextmenu_deckpicker_rename_deck">重新命名</string>
+  <string name="contextmenu_deckpicker_collapse_deck">Collapse deck</string>
+  <string name="contextmenu_deckpicker_inflate_deck">Inflate deck</string>
   <string name="contextmenu_deckpicker_set_custom_dictionary">自訂資料夾</string>
   <string name="menu_download_deck">下載牌組</string>
   <string name="menu_download_shared_deck">共享牌組</string>

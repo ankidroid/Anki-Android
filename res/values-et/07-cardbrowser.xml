@@ -38,6 +38,8 @@
   <string name="card_browser_tags_shown">Sildid: %1$s</string>
   <string name="card_browser_change_display_order">Kuvamise järjestuse muutmine</string>
   <string name="card_browser_change_display_order_title">Valige kuvamisjärjestus</string>
+  <string name="card_browser_change_display_order_reverse">Select a field twice to reverse.</string>
+  <string name="card_browser_order_reverse">(reverse)</string>
   <string name="card_browser_card_details">Kaardi andmed</string>
   <string name="card_details_question">Küsimus</string>
   <string name="card_details_answer">Vastus</string>
@@ -60,7 +62,14 @@
   <string-array name="card_browser_order_labels">
     <item>No sorting (faster)</item>
     <item>By search field</item>
-    <item>Tähtaja järgi</item>
+    <item>By created time</item>
+    <item>By edited time</item>
+    <item>By changed time</item>
+    <item>By due time</item>
+    <item>By interval</item>
+    <item>By ease</item>
+    <item>By reviews</item>
+    <item>By lapses</item>
   </string-array>
   <plurals name="card_browser_subtitle">
     <item quantity="one">1 of %2$d cards shown</item>

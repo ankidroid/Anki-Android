@@ -51,8 +51,6 @@
   <string name="hide_due_count_summ">Hides the due count</string>
   <string name="overtime">Overtime</string>
   <string name="overtime_summ">Continue reviewing after time limit reached</string>
-  <string name="show_timer">Покажи таймера</string>
-  <string name="show_timer_summ">Таймер, показващ колко време отнемат отговорите ви</string>
   <string name="show_progress_bars">Покажи ленти на развитието</string>
   <string name="show_progress_bars_summ">Показва днешния напредък и част от днешните отговори, докато преглеждате</string>
   <string name="fade_scrollbars">Fade scrollbars</string>
@@ -214,9 +212,8 @@
   <string name="input_workaround">Въвеждане за заобикаляне</string>
   <string name="input_workaround_summ">За заобикаляне на проблема с HTML входните полета. Причинява проблеми на някой устройства.</string>
   <string name="write_answers_message">Можете да дефинирате за всяка колода поле, за да сравните с писмен отговор. Можете да направите това чрез Anki десктоп (дек свойства - &gt; редактиране на модел - &gt; положение на карта).\n\n Ако е зададено никакво поле за сравняване, вашият писмен отговор винаги ще се сравни с картата за целия отговор.</string>
-  <string name="pref_cache_cardbrowser">Кеш на Картовия браузър</string>
-  <string name="pref_cache_cardbrowser_summ">Пази всички карти за браузъра на карти в кеш (памет).</string>
-  <string name="pref_cache_cardbrowser_reload">Презареждане на всички карти?</string>
+  <string name="pref_cardbrowser_skip_init_search">Fast Card Browser Open</string>
+  <string name="pref_cardbrowser_skip_init_search_summ">Skips initial automatic search when the card browser opens.</string>
   <string name="pref_keep_screen_on">Запази екрана вкл</string>
   <string name="pref_keep_screen_on_summ">Попречите на екрана да бъде изключен докато преглеждате</string>
   <string name="pref_simple_interface">Прост интерфейс</string>

@@ -30,14 +30,16 @@
   <string name="card_browser_unmark_card">未标记的卡牌记录</string>
   <string name="delete_card_title">删除卡牌记录</string>
   <string name="delete_card_message">真的删除此卡牌记录的所有卡牌？\n搜索字段：%s</string>
-  <string name="card_browser_show_marked">筛选器暂停使用</string>
+  <string name="card_browser_show_marked">筛选已标记卡牌</string>
   <string name="card_browser_field">改变卡牌浏览器字段</string>
   <string name="card_browser_field_title">改变卡牌浏览器字段</string>
-  <string name="card_browser_show_suspended">暂停使用的筛选器</string>
+  <string name="card_browser_show_suspended">筛选已暂停卡牌</string>
   <string name="card_browser_search_by_tag">按标签筛选</string>
   <string name="card_browser_tags_shown">标签: %1$s</string>
   <string name="card_browser_change_display_order">改变排序方式</string>
   <string name="card_browser_change_display_order_title">排序方式</string>
+  <string name="card_browser_change_display_order_reverse">选择字段两次，以翻转。</string>
+  <string name="card_browser_order_reverse">(翻转)</string>
   <string name="card_browser_card_details">详细信息</string>
   <string name="card_details_question">问题</string>
   <string name="card_details_answer">答案</string>
@@ -60,7 +62,14 @@
   <string-array name="card_browser_order_labels">
     <item>不排序(更快)</item>
     <item>搜索字段</item>
-    <item>按到期时间</item>
+    <item>按照创建时间排序</item>
+    <item>按照编辑时间排序</item>
+    <item>按照变更时间排序</item>
+    <item>按照到期时间排序</item>
+    <item>按照间隔时间排序</item>
+    <item>按照难易程度排序</item>
+    <item>按照复习时间排序</item>
+    <item>按照失误次数排序</item>
   </string-array>
   <plurals name="card_browser_subtitle">
     <item quantity="one">显示%2$d张卡牌中的1张</item>

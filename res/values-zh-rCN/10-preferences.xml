@@ -51,8 +51,6 @@
   <string name="hide_due_count_summ">隐藏到期计数</string>
   <string name="overtime">超时</string>
   <string name="overtime_summ">达到时间限制后继续复习</string>
-  <string name="show_timer">显示计时器</string>
-  <string name="show_timer_summ">计时器显示你回答所需的时间</string>
   <string name="show_progress_bars">显示进度条</string>
   <string name="show_progress_bars_summ">在复习时显示今天的进展，并显示答案为“是”的比例。</string>
   <string name="fade_scrollbars">淡出滚动条</string>
@@ -214,9 +212,8 @@
   <string name="input_workaround">输入的临时解决方法</string>
   <string name="input_workaround_summ">针对HTML输入框的临时解决方法。在几个设备上会出现此问题。</string>
   <string name="write_answers_message">应为每个牌组指定一个域，用于与输入的答案做比较。您可以通过 Anki 桌面客户端(牌组属性-&gt; 编辑模型-&gt; 卡牌布局).\n\n 如果没有设置比较字段，输入的答案将总是与整个卡牌的回答部分做比较。</string>
-  <string name="pref_cache_cardbrowser">卡牌浏览器的缓存</string>
-  <string name="pref_cache_cardbrowser_summ">在缓存中保存所有卡牌（消耗更多内存）。</string>
-  <string name="pref_cache_cardbrowser_reload">重新加载所有卡牌吗？</string>
+  <string name="pref_cardbrowser_skip_init_search">快速打开卡牌浏览器</string>
+  <string name="pref_cardbrowser_skip_init_search_summ">省略打开卡牌浏览器事，进行的自动搜索。</string>
   <string name="pref_keep_screen_on">保持屏幕开启</string>
   <string name="pref_keep_screen_on_summ">防止在复习时关闭屏幕</string>
   <string name="pref_simple_interface">简单界面</string>

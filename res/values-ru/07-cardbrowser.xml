@@ -38,6 +38,8 @@
   <string name="card_browser_tags_shown">Теги: %1$s</string>
   <string name="card_browser_change_display_order">Изменение сортировки</string>
   <string name="card_browser_change_display_order_title">Сортировка</string>
+  <string name="card_browser_change_display_order_reverse">Выберите поле дважды, чтобы реверсировать.</string>
+  <string name="card_browser_order_reverse">(реверс)</string>
   <string name="card_browser_card_details">Информация о карте</string>
   <string name="card_details_question">Вопрос</string>
   <string name="card_details_answer">Ответ</string>
@@ -60,7 +62,14 @@
   <string-array name="card_browser_order_labels">
     <item>Без сортировки (быстрее)</item>
     <item>Поиск по полю</item>
+    <item>по времени создания</item>
+    <item>по времени редактирования</item>
+    <item>по времени изменения</item>
     <item>по времени повтора</item>
+    <item>по интервалу</item>
+    <item>по сложности</item>
+    <item>по количеству просмотров</item>
+    <item>по кругам</item>
   </string-array>
   <plurals name="card_browser_subtitle">
     <item quantity="one">1 из %2$d карт показаны</item>

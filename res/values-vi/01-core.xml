@@ -60,6 +60,8 @@
   <string name="contextmenu_deckpicker_reset_reset_message">Đặt lại ngôn ngữ</string>
   <string name="contextmenu_deckpicker_optimize_deck">Tối ưu hóa cơ sở dữ liệu</string>
   <string name="contextmenu_deckpicker_rename_deck">Đổi tên tập thẻ</string>
+  <string name="contextmenu_deckpicker_collapse_deck">Collapse deck</string>
+  <string name="contextmenu_deckpicker_inflate_deck">Inflate deck</string>
   <string name="contextmenu_deckpicker_set_custom_dictionary">Thiết lập từ điển riêng</string>
   <string name="menu_download_deck">Tải về tập thẻ</string>
   <string name="menu_download_shared_deck">Tập thẻ chia sẻ</string>

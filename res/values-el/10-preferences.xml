@@ -51,8 +51,6 @@
   <string name="hide_due_count_summ">Αποκρύπτει τον αριθμό αναμενώμενων καρτών</string>
   <string name="overtime">Υπερωρία</string>
   <string name="overtime_summ">Συνέχιση της επανάληψης πέραν της προθεσμίας</string>
-  <string name="show_timer">Εμφάνιση χρονόμετρου</string>
-  <string name="show_timer_summ">Χρονόμετρο που δείχνει το χρόνο που σας παίρνει για να απαντήσετε</string>
   <string name="show_progress_bars">Εμφάνιση γραμμών προόδου</string>
   <string name="show_progress_bars_summ">Δείχνει τη σημερινή πρόοδο και ποσοστό των σημερινών απαντήσεων ναι κατά την επανάληψη</string>
   <string name="fade_scrollbars">Αυτόματη απόκρυψη μπάρας κύλισης</string>
@@ -214,9 +212,8 @@
   <string name="input_workaround">Εναλλακτικός τρόπος εισόδου</string>
   <string name="input_workaround_summ">Εναλλακτικός τρόπος αντιμετώπισης για προβλήματα με την εστίαση σε HTML πεδία εισόδου. Προκαλεί προβλήματα σε πολλές συσκευές.</string>
   <string name="write_answers_message">Θα πρέπει να ορίσετε για κάθε τράπουλα ένα πεδίο να συγκρίνετε με γραπτή απάντηση. Μπορείτε να το κάνετε αυτό μέσω του Anki Desktop (deck properties -&gt; edit model -&gt; card layout).\n\nαν δεν έχει οριστεί κανένα πεδίο σύγκρισης, η γραπτή απάντηση θα συγκριθεί πάντα με όλη την κάρτα απάντηση.</string>
-  <string name="pref_cache_cardbrowser">Μνήμη Ευρετηρίου Καρτών</string>
-  <string name="pref_cache_cardbrowser_summ">Κρατάει όλες τις κάρτες του ευρετηρίου στη μνήμη (καταναλώνει μνήμη).</string>
-  <string name="pref_cache_cardbrowser_reload">Ανανέωση όλων των καρτών;</string>
+  <string name="pref_cardbrowser_skip_init_search">Fast Card Browser Open</string>
+  <string name="pref_cardbrowser_skip_init_search_summ">Skips initial automatic search when the card browser opens.</string>
   <string name="pref_keep_screen_on">Κρατήστε οθόνη αναμένη</string>
   <string name="pref_keep_screen_on_summ">Αποτροπή της οθόνης από το να σβήσει κατά την επανάληψη</string>
   <string name="pref_simple_interface">Απλό interface</string>

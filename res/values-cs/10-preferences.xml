@@ -51,8 +51,6 @@
   <string name="hide_due_count_summ">Hides the due count</string>
   <string name="overtime">Přesčas</string>
   <string name="overtime_summ">Pokračovat v opakování po dosažení časového limitu</string>
-  <string name="show_timer">Zobrazit časovač</string>
-  <string name="show_timer_summ">Časovač zobrazující jak dlouho vám trvá odpovědět</string>
   <string name="show_progress_bars">Zobrazit ukazatele průběhu</string>
   <string name="show_progress_bars_summ">Zobrazí dnešní pokrok a podíl dnešních Ano odpovědi při opakování</string>
   <string name="fade_scrollbars">Mizející posuvníky</string>
@@ -214,9 +212,8 @@
   <string name="input_workaround">Řešení psaní odpovědí</string>
   <string name="input_workaround_summ">Řešení problémů se vstupními HTML poli. Způsobuje problémy na několika zařízeních.</string>
   <string name="write_answers_message">Měli byste definovat pro každý balíček pole srovnání s písemnou odpovědí. Můžete to udělat pomocí Anki Desktop (Vlastnosti balíku -&gt; Upravit model -&gt; Rozvržení karty).\n\nPokud není srovnávací pole nastaveno, budou vaše písemné odpovědi vždy porovnávány s celou kartou odpovědi.</string>
-  <string name="pref_cache_cardbrowser">Vyrovnávací paměť prohlížeče karet</string>
-  <string name="pref_cache_cardbrowser_summ">Drží všechny karty prohlížeče karet ve vyrovnávací paměti (větší využití paměti).</string>
-  <string name="pref_cache_cardbrowser_reload">Znovu načíst všechny karty?</string>
+  <string name="pref_cardbrowser_skip_init_search">Fast Card Browser Open</string>
+  <string name="pref_cardbrowser_skip_init_search_summ">Skips initial automatic search when the card browser opens.</string>
   <string name="pref_keep_screen_on">Nevypínat obrazovku</string>
   <string name="pref_keep_screen_on_summ">Zabránit vypnutí obrazovky během opakování</string>
   <string name="pref_simple_interface">Jednoduché rozhraní</string>

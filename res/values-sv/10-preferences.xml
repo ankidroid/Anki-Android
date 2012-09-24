@@ -51,8 +51,6 @@
   <string name="hide_due_count_summ">Gömmer antalet i kö</string>
   <string name="overtime">Övertid</string>
   <string name="overtime_summ">Continue reviewing after time limit reached</string>
-  <string name="show_timer">Visa timer</string>
-  <string name="show_timer_summ">Timer som visar hur lång tid det tar dig att svara</string>
   <string name="show_progress_bars">Visa förloppsmätare</string>
   <string name="show_progress_bars_summ">Visar dagens framsteg och andel av dagens korrekta svar vid repetition</string>
   <string name="fade_scrollbars">Fade scrollbars</string>
@@ -214,9 +212,8 @@
   <string name="input_workaround">Inmatnings-workaround</string>
   <string name="input_workaround_summ">Tillfällig lösning på att fokusera på inmatningsfält för HTML. Orsakar problem på flera enheter.</string>
   <string name="write_answers_message">För varje kortlek bör du definiera ett fält att jämföra det skrivna svaret med. Du kan kan göra detta via Anki Desktop (korleksegenskaper -&gt; redigera modell -&gt; kortlekslayout).\n\nOm inget fält anges kommer ditt skrivna svar att jämföras med hela svaret hos kortet.</string>
-  <string name="pref_cache_cardbrowser">Kortutforskarcache</string>
-  <string name="pref_cache_cardbrowser_summ">Håll alla kort från kortutforskaren i cacheminnet (stor minnesåtgång).</string>
-  <string name="pref_cache_cardbrowser_reload">Ladda om alla kort?</string>
+  <string name="pref_cardbrowser_skip_init_search">Fast Card Browser Open</string>
+  <string name="pref_cardbrowser_skip_init_search_summ">Skips initial automatic search when the card browser opens.</string>
   <string name="pref_keep_screen_on">Håll skärmen på</string>
   <string name="pref_keep_screen_on_summ">Förhindra att skärmen stängs av vid repetition av kort</string>
   <string name="pref_simple_interface">Enkelt gränssnitt</string>

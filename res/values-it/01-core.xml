@@ -60,6 +60,8 @@
   <string name="contextmenu_deckpicker_reset_reset_message">Reset lingua</string>
   <string name="contextmenu_deckpicker_optimize_deck">Ottimizzare database</string>
   <string name="contextmenu_deckpicker_rename_deck">Rinomina il mazzo</string>
+  <string name="contextmenu_deckpicker_collapse_deck">Collapse deck</string>
+  <string name="contextmenu_deckpicker_inflate_deck">Inflate deck</string>
   <string name="contextmenu_deckpicker_set_custom_dictionary">Imposta dizionario personalizzato</string>
   <string name="menu_download_deck">Scarica il mazzo</string>
   <string name="menu_download_shared_deck">Mazzo condiviso</string>

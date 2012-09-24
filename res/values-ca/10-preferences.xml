@@ -51,8 +51,6 @@
   <string name="hide_due_count_summ">Hides the due count</string>
   <string name="overtime">Overtime</string>
   <string name="overtime_summ">Continue reviewing after time limit reached</string>
-  <string name="show_timer">Mostra el temps</string>
-  <string name="show_timer_summ">Mostra el temps que trigueu a contestar</string>
   <string name="show_progress_bars">Mostra la barra de progrés</string>
   <string name="show_progress_bars_summ">Mostra el progrés d\'avui i la proporció de respostes afirmatives d\'avui en revisar</string>
   <string name="fade_scrollbars">Fade scrollbars</string>
@@ -214,9 +212,8 @@
   <string name="input_workaround">Solució alternativa d\'entrada</string>
   <string name="input_workaround_summ">Solució alternativa enfocada als problemes de les caixes d\'entrada HTML. Causa problemes en alguns dispositius.</string>
   <string name="write_answers_message">Heu de definir per a cada paquet un camp per comparar-ho amb la resposta per escrit. Ho podeu fer a través de l\'Anki a l\'escriptori (propietats del paquet -&gt; edita el model -&gt; Disseny de la fitxa).\n\nSi no hi cap camp per comparar, la resposta escrita sempre es compara amb la resposta sencera de la targeta.</string>
-  <string name="pref_cache_cardbrowser">Cau del navegador de targetes</string>
-  <string name="pref_cache_cardbrowser_summ">Manté totes les targetes del navegador en la memòria cau (consumeix molta memòria).</string>
-  <string name="pref_cache_cardbrowser_reload">Voleu tornar a carregar totes les targetes?</string>
+  <string name="pref_cardbrowser_skip_init_search">Fast Card Browser Open</string>
+  <string name="pref_cardbrowser_skip_init_search_summ">Skips initial automatic search when the card browser opens.</string>
   <string name="pref_keep_screen_on">Manté la pantalla engegada</string>
   <string name="pref_keep_screen_on_summ">Evita que la pantalla s\'apagui durant la revisió</string>
   <string name="pref_simple_interface">Interfície simple</string>

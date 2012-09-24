@@ -38,6 +38,8 @@
   <string name="card_browser_tags_shown">Labels: %1$s</string>
   <string name="card_browser_change_display_order">Changer l\'ordre d\'affichage</string>
   <string name="card_browser_change_display_order_title">Choisir l\'ordre d\'affichage</string>
+  <string name="card_browser_change_display_order_reverse">Inversez l’ordre par double-sélection du champ.</string>
+  <string name="card_browser_order_reverse">(inverser l’ordre)</string>
   <string name="card_browser_card_details">Détails de la carte</string>
   <string name="card_details_question">Question</string>
   <string name="card_details_answer">Réponse</string>
@@ -60,7 +62,14 @@
   <string-array name="card_browser_order_labels">
     <item>Pas de tri (plus rapide)</item>
     <item>Par champ de recherche</item>
-    <item>Par échéance</item>
+    <item>Par ancienneté</item>
+    <item>Par date de correction</item>
+    <item>Par date de changement</item>
+    <item>Par date d’échéance</item>
+    <item>Par largeur de l’intervalle</item>
+    <item>Par simplicité</item>
+    <item>Par le nombre de répétitions passées</item>
+    <item>Par difficulté</item>
   </string-array>
   <plurals name="card_browser_subtitle">
     <item quantity="one">1 carte sur %2$d affichée</item>

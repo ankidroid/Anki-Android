@@ -51,8 +51,6 @@
   <string name="hide_due_count_summ">Hides the due count</string>
   <string name="overtime">Overtime</string>
   <string name="overtime_summ">Continue reviewing after time limit reached</string>
-  <string name="show_timer">Tunjuk pemasa</string>
-  <string name="show_timer_summ">Pemasa menunjukkan tempoh menjawab</string>
   <string name="show_progress_bars">Tunjuk bar progres</string>
   <string name="show_progress_bars_summ">Tunjukkan progres hari ini dan jawapan ya semasa reviu</string>
   <string name="fade_scrollbars">Fade scrollbars</string>
@@ -214,9 +212,8 @@
   <string name="input_workaround">Jalan sementara Input</string>
   <string name="input_workaround_summ">Jalan sementara untuk masalah petak HTML. Berlaku pada beberapa peranti.</string>
   <string name="write_answers_message">Anda patut menyediakan jawapan dalam petak. Gunakan Anki Desktop untuk ini (deck properties -&gt; edit model -&gt; card layout).\n\nJika petak jawapan tidak diisi, jawapan ditulis akan dirujuk kepada jawapan semua kad.</string>
-  <string name="pref_cache_cardbrowser">Card Browser Cache</string>
-  <string name="pref_cache_cardbrowser_summ">Holds all card browser cards in cache (memory consumptive).</string>
-  <string name="pref_cache_cardbrowser_reload">Reload all cards?</string>
+  <string name="pref_cardbrowser_skip_init_search">Fast Card Browser Open</string>
+  <string name="pref_cardbrowser_skip_init_search_summ">Skips initial automatic search when the card browser opens.</string>
   <string name="pref_keep_screen_on">Sentiasa Hidup Skrin</string>
   <string name="pref_keep_screen_on_summ">Menghalan skrin ditutup semasa reviu</string>
   <string name="pref_simple_interface">Simple Interface</string>

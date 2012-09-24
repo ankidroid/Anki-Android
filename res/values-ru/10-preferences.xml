@@ -51,8 +51,6 @@
   <string name="hide_due_count_summ">Скрыть отображение количества повторяемых карт</string>
   <string name="overtime">Дополнительное время</string>
   <string name="overtime_summ">Продолжить обучение после того, как достигнут лимит времени</string>
-  <string name="show_timer">Показать таймер</string>
-  <string name="show_timer_summ">Таймер показывает сколько времени Вам остаётся для ответа</string>
   <string name="show_progress_bars">Индикаторы хода выполнения</string>
   <string name="show_progress_bars_summ">Показывает сегодняшний прогресс и долю сегодняшних \"да\" ответов</string>
   <string name="fade_scrollbars">Исчезание полос прокрутки</string>
@@ -214,9 +212,8 @@
   <string name="input_workaround">Трюк с полями ввода</string>
   <string name="input_workaround_summ">Решение проблемы с html-полями ввода для нескольких устройств.</string>
   <string name="write_answers_message">Вы должны определить для каждой колоды поле, с которым будет сравниваться написанный ответ. Вы можете сделать это в Anki Desktop (Свойства колоды -&gt; Изменить модель -&gt; Шаблон карты). \n\n Если поле для сравнения не было установлено, то Ваш написанный ответ будет сравниваться со всем ответом карты.</string>
-  <string name="pref_cache_cardbrowser">Кэш браузера карт</string>
-  <string name="pref_cache_cardbrowser_summ">Держать все карты браузера карт в кэше (неэкономное потребление памяти).</string>
-  <string name="pref_cache_cardbrowser_reload">Перезагрузить все карты?</string>
+  <string name="pref_cardbrowser_skip_init_search">Быстро открыть браузер карт</string>
+  <string name="pref_cardbrowser_skip_init_search_summ">Пропустить начальный автоматический поиск при открытии браузера карт.</string>
   <string name="pref_keep_screen_on">Держать экран включенным</string>
   <string name="pref_keep_screen_on_summ">Запретить отключение экрана при просмотре карт</string>
   <string name="pref_simple_interface">Простой интерфейс</string>

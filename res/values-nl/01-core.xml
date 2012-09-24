@@ -60,6 +60,8 @@
   <string name="contextmenu_deckpicker_reset_reset_message">Taal opnieuw instellen</string>
   <string name="contextmenu_deckpicker_optimize_deck">Optimaliseer database</string>
   <string name="contextmenu_deckpicker_rename_deck">Setnaam wijzigen</string>
+  <string name="contextmenu_deckpicker_collapse_deck">Set inklappen</string>
+  <string name="contextmenu_deckpicker_inflate_deck">Set uitklappen</string>
   <string name="contextmenu_deckpicker_set_custom_dictionary">Instellen van de aangepaste woordenlijst</string>
   <string name="menu_download_deck">Set downloaden</string>
   <string name="menu_download_shared_deck">Gedeelde set</string>

@@ -129,4 +129,5 @@
   <string name="upgrade_decks_button">Konvertieren</string>
   <string name="upgrade_decks_failed">Diese Stapel konnten nicht konvertiert werden:\n%sBitte öffnen Sie sie in Anki Desktop und führen einen Datenbank-Check durch. Danach können Sie sie mit Anki Desktop importieren.</string>
   <string name="upgrade_decks_media_failed">Das Kopieren der Multimedia-Dateien ins neue Media-Verzeichnis (%1$s) ist für diese Stapel fehlgeschlagen:\n%2$sBitte kopieren Sie die Media-Dateien manuell.</string>
+  <string name="download_deck">Stapel wird heruntergeladen (%d kb).\nBitte warten...</string>
 </resources>

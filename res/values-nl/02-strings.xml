@@ -23,7 +23,7 @@
   <string name="CardEditorCancelButton">Annuleren</string>
   <string name="CardEditorSaveButton">Opslaan</string>
   <string name="CardEditorLaterButton">Later</string>
-  <string name="CardEditorLaterMessage">Saved information for later</string>
+  <string name="CardEditorLaterMessage">Informatie opgeslagen voor later</string>
   <string name="CardEditorCardDeck">Kaart leerset: %s</string>
   <string name="CardEditorNoteDeck">Kaart leerset: %s</string>
   <string name="CardEditorModel">Kaarttype: %s</string>
@@ -52,7 +52,7 @@
   <string name="close">Sluiten</string>
   <string name="select">Selecteren</string>
   <string name="saving_changes">Wijzigingen worden opgeslagen...</string>
-  <string name="timebox_reached">Timebox reached!</string>
+  <string name="timebox_reached">Timebox bereikt!</string>
   <string name="studyoptions_welcome_title">Welkom bij AnkiDroid</string>
   <string name="studyoptions_no_external_storage_title">Geen externe opslag beschikbaar</string>
   <string name="studyoptions_no_external_storage_message">Er is momenteel geen externe opslag beschikbaar. AnkiDroid heeft toegang tot uw SD-kaart nodig om uw Anki sets te lezen en te laden. Controleer of uw SD-kaart goed is geplaatst en probeer het opnieuw.</string>
@@ -80,7 +80,7 @@
   <string name="menu_cardbrowser">Kaartbrowser</string>
   <string name="show_hint">Toon tip</string>
   <string name="pref_lang_other">Taalinstellingen</string>
-  <string name="pref_font_UI">Custom UI Font</string>
+  <string name="pref_font_UI">Aangepast lettertype</string>
   <string name="info_rate">Geef AnkiDroid een cijfer</string>
   <string name="col_load_failed">Land van collectie mislukt.\nKlik terug om AnkiDroid te sluiten.</string>
   <string name="import_title">Importeer kaarten</string>
