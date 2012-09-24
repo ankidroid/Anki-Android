@@ -86,6 +86,7 @@ public class Sched {
     public static final int DYN_LAPSES = 4;
     public static final int DYN_ADDED = 5;
     public static final int DYN_DUE = 6;
+    public static final int DYN_REVADDED = 7;
 
     // model types
     public static final int MODEL_STD = 0;
@@ -1841,11 +1842,15 @@ public class Sched {
             case DYN_ADDED:
                 t = "n.id";
                 break;
+            case DYN_REVADDED:
+                t = "n.id desc";
+                break;
             case DYN_DUE:
                 t = "c.due";
                 break;
             default:
-                throw new RuntimeException("Sched._dynOrder: Unexpected order for dynamic deck " + o);
+            	// if we don't understand the term, default to due order
+            	t = "c.due";
         }
         return t + " limit " + l;
     }

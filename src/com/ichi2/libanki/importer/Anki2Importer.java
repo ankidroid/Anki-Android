@@ -164,6 +164,7 @@ public class Anki2Importer {
         ArrayList<Object[]> add = new ArrayList<Object[]>();
         ArrayList<Long> dirty = new ArrayList<Long>();
         int usn = mDst.usn();
+        int dupes = 0;
         try {
             cursor = mSrc.getDb().getDatabase().rawQuery("SELECT * FROM notes", null);
             while (cursor.moveToNext()) {
@@ -180,11 +181,14 @@ public class Anki2Importer {
             		// rewrite internal ids, models etc.
             		note[2] = lmid;
             		note[4] = usn;
+            		// update media references in case of dupes
+//            		TODO: note[6] = _mungeMedia(note[3], note[6]);
             		add.add(note);
             		dirty.add((Long) note[0]);
             		// note we have the added note
             		mNotes.put((String) note[1], new Object[]{note[0], note[3], note[2]});
             	} else {
+            		dupes += 1;
 //            		// update existing note - not yet tested; for post 2.0
 //            		boolean newer = note[3] > mod;
 //            		if (mAllowUpdate && _mid(mid) == mid && newer) {
@@ -200,6 +204,10 @@ public class Anki2Importer {
                 cursor.close();
             }
         }
+        if (dupes != 0) {
+        	// TODO: notify about dupes
+        }
+        // add to col
         mDst.getDb().executeMany("INSERT OR REPLACE INTO NOTES VALUES (?,?,?,?,?,?,?,?,?,?,?)", add);
         long[] dis = Utils.arrayList2array(dirty);
         mDst.updateFieldCache(dis);
@@ -421,6 +429,12 @@ public class Anki2Importer {
         mDst.getDb().executeMany("INSERT OR IGNORE INTO cards VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)", cards);
         mDst.getDb().executeMany("INSERT OR IGNORE INTO revlog VALUES (?,?,?,?,?,?,?,?,?)", revlog);
         return cnt;
+	}
+
+	private String _mungeMedia(long mid, String fields) {
+		String[] fs = Utils.splitFields(fields);
+		// TODO: repl
+		return fields;
 	}
 
 	/** post-import cleanup */

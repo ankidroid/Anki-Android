@@ -106,7 +106,8 @@
 		<item>Most lapsed</item>
 		<item>Order added</item>
 		<item>Order due</item>
-	</string-array>
+		<item>Latest added first</item>
+			</string-array>
 	<string-array name="cram_deck_conf_preset_labels">
 		<item><![CDATA[<select preset>]]></item>
 		<item>Preview all new cards</item>

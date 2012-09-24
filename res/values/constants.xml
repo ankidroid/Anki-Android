@@ -163,7 +163,8 @@
 		<item>4</item>
 		<item>5</item>
 		<item>6</item>
-	</string-array>
+		<item>7</item>
+			</string-array>
 	
 	<string-array name="cram_deck_conf_preset_values">
 		<item>0</item>upgrade_decks_message

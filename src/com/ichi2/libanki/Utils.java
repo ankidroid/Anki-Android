@@ -160,7 +160,7 @@ public class Utils {
     	int point = 0;
     	if (Math.abs(time) < 60 || unit < 1) {
     		type = TIME_SECONDS;
-    	} else if (Math.abs(time) < 3599 || unit < 2) {
+    	} else if (Math.abs(time) < 3600 || unit < 2) {
     		type = TIME_MINUTES;
     	} else if (Math.abs(time) < 60 * 60 * 24 || unit < 3) {
     		type = TIME_HOURS;
