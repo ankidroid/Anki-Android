@@ -451,7 +451,7 @@ public class DeckOptions extends PreferenceActivity implements OnSharedPreferenc
                 continue;
             } else if (pref instanceof ListPreference) {
                 ListPreference lp = (ListPreference) pref;
-                value = lp.getEntry().toString();
+                value = lp.getEntry() != null ? lp.getEntry().toString() : "";
             } else {
                 value = this.mPref.getString(key, "");
             }
