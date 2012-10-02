@@ -114,7 +114,7 @@
     <item>Latest added first</item>
   </string-array>
   <string-array name="cram_deck_conf_preset_labels">
-    <item><! [CDATA [< seleccioneu preestablert >]] ></item>
+    <item><![CDATA[<seleccioneu preestablert>]]></item>
     <item>Vista prèvia de totes les noves targetes</item>
     <item>Mostra les targetes afegides avui</item>
     <item>Mostra les targetes oblidades avui</item>
