@@ -107,7 +107,7 @@
   <string name="zeemote_left">Joystick gauche</string>
   <string name="zeemote_right">Joystick droit</string>
   <string name="zeemote_show_answer">Afficher les réponses avec les marques</string>
-  <string name="zeemote_show_answer_summ">Actions assigned to marks 1-4 also show answer.</string>
+  <string name="zeemote_show_answer_summ">Les boutons 1 à 4 affichent la réponse.</string>
   <string name="swipe">Permettre la commande par geste</string>
   <string name="swipe_summ_off">Utilisez des gestes pour basculer entre les écrans et les cartes de réponse. Cette option n\'est pas compatible avec les commandes de contrôle du zoom</string>
   <string name="swipe_summ_on">Faites glisser horizontalement pour basculer entre les écrans. Configurez les autres actions ci-dessous</string>
@@ -140,7 +140,7 @@
   <string name="sync_fetch_missing_media_summ">Lors de la synchronisation, automatiquement télécharger les médias disparus.</string>
   <string name="fix_hebrew_text">Correctif pour les voyelles en Hébreu</string>
   <string name="fix_hebrew_text_summ">Solution de rechange pour afficher correctement les voyelles hébraïques.</string>
-  <string name="fix_hebrew_instructions">This setting bypasses the RTL algorithm of Android to show Hebrew text with vowels correctly.\n\nFor this to work, you need to download font Tohu.ttf and copy it manually to:\n%s/fonts/\n\nYou won\'t have to modify your cards.</string>
+  <string name="fix_hebrew_instructions">À cause de ce paramètre l’algorithme d’Android pour afficher du texte dans le sens hébreu fonctionne mal avec les voyelles.\n\nTéléchargez la police Tohu.ttf et la copier manuellement vers :\n%s/fonts/\n\nVous n\'aurez pas à modifier vos cartes.</string>
   <string name="fix_hebrew_download_font">Télécharger la police</string>
   <string name="default_font">Police par défaut</string>
   <string name="default_font_summ">La police d’écriture demandée pour texte est introuvable. Toutes les polices accessoires doivent se trouver sur la carte mémoire SD dans un dossier nommé FONTS au sein de ANKIDROID.</string>
@@ -212,13 +212,13 @@
   <string name="input_workaround">Solution de rechange pour les champs de saisie</string>
   <string name="input_workaround_summ">Solution de rechange pour remédier à des problèmes de focus sur les champs de saisie HTML. Pose des problèmes sur de nombreux appareils.</string>
   <string name="write_answers_message">Vous devriez définir un champ de comparaison avec la réponse écrite pour chaque paquet de cartes. Vous pouvez faire ceci par l\'intermédiaire d\'Anki Desktop (propriétés du paquet -&gt; édtier modèle -&gt; disposition de la carte).\n\nSi aucun champ de comparaison n\'est défini, votre réponse sera toujours comparée avec toutes les réponses de la carte en question.</string>
-  <string name="pref_cardbrowser_skip_init_search">Fast Card Browser Open</string>
-  <string name="pref_cardbrowser_skip_init_search_summ">Skips initial automatic search when the card browser opens.</string>
+  <string name="pref_cardbrowser_skip_init_search">Ouverture du lecteur rapide</string>
+  <string name="pref_cardbrowser_skip_init_search_summ">Ne pas initier de recherche automatique à l’ouverture du lecteur de cartes.</string>
   <string name="pref_keep_screen_on">Garder l\'écran allumé</string>
   <string name="pref_keep_screen_on_summ">Empêcher l\'écran d\'être mis hors tension pendant la revue des cartes</string>
   <string name="pref_simple_interface">Interface simplifiée</string>
-  <string name="pref_simple_interface_summ">Speeds up card showing but does not support all html features</string>
-  <string name="pref_simple_interface_exclude_tags">Normal interface by tag</string>
+  <string name="pref_simple_interface_summ">Accélère l\'affichage de la carte, mais supporte peu le HTML</string>
+  <string name="pref_simple_interface_exclude_tags">Interface normale par marqueur</string>
   <string name="pref_simple_interface_exclude_tags_summ">Ne pas utiliser l\'interface simplifiée pour ces tags : XXX</string>
   <string name="deck_conf_deck_name">Nom du paquet</string>
   <string name="deck_conf_deck_description">Description du paquet</string>
@@ -253,7 +253,7 @@
   <string name="deck_conf_seconds">XXX secondes</string>
   <string name="deck_conf_timer">Montrer la minuterie</string>
   <string name="deck_conf_autoplay">Jouer automatiquement l\'audio</string>
-  <string name="deck_conf_replayq">Replay Question</string>
+  <string name="deck_conf_replayq">Revoir la question</string>
   <string name="deck_conf_replayq_summ">Quand la réponse est affichée, rejouer l\'audio de la question et de la réponse</string>
   <string name="deck_conf_add">Ajouter une configuration</string>
   <string name="deck_conf_ren">Renommer la configuration</string>

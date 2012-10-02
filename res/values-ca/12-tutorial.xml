@@ -26,7 +26,7 @@
     <item><![CDATA[Les targetes s\'agrupen en paquets i es poden organitzar amb l&#39;ajuda de tot tipus d&#39;etiquetes.]]></item> 
     <item><![CDATA[Hi ha dues maneres d\'obtenir noves targetes:<br/>Podeu descàrregar paquets preparats per altres usuaris (seleccioneu \"paquets compartits\" a la pantalla resum del paquet) o bé podeu generar els vostres propis paquets]]></item> 
     <item><![CDATA[Però de tota manera, la creació de paquets pròpis és essencial per satisfer les vostres necessitats a la perfecció. Podeu fer això directament a AnkiDroid ... ]]></item> 
-    <item><![CDATA[Let\'s have a look on the top bar:<br />In the left top corner you find some numbers. The blue one tells you, how many new cards are still projected for today. The red number counts the failed cards (answered by &quot;again&quot;),]]></item> 
+    <item><![CDATA[Anem a fer una ullada a la barra superior:<br>A la cantonada superior esquerra trobareu alguns números. El blau ens diu que, com quantes targetes noves falten per veure avui. El número vermell indica les respostes fallades (respostes amb \"Nou\"),]]></item> 
     <item><![CDATA[A la cantonada dreta trobareu informació sobre el temps que heu estat pensant en aquesta targeta i sobre el vostre rendiment.]]></item> 
     <item><![CDATA[Encara que podeu utilitzar AnkiDroid de forma independent, està totalment connectat a AnkiWeb, el servidor de sincronització de l\'Anki per a l\'Escriptori (disponible per a Linux, Windows i Mac).]]></item> 
     <item><![CDATA[Aquests han estat els principals punts d\'ús AnkiDroid. <br/><br> Per més informació sobre el concepte clau de Anki, visiteu http://ankisrs.net/ ]]></item> 
@@ -41,7 +41,7 @@
     <item><![CDATA[ Ho aprendreu de seguida quan començeu a utilitzar AnkiDroid.]]></item> 
     <item><![CDATA[Trobareu milers de paquets preparats per descarregar i probablement hi ha alguns que us seràn d#39;utilitat.]]></item> 
     <item><![CDATA[ ... o (una mica més còmode), amb la aplicació Anki d\'escriptori (que es pot descarregar de forma gratuïta a http://ankisrs.net/). <br><br> Podeu sincronitzar els vostres paquets amb l&#39;aplicació d&#39;escriptori molt fàcilment, de manera que la transferència de dades no és cap problema.]]></item> 
-    <item><![CDATA[the green one shows the number of cards you\'ve already learned before and which are due to review today.<br />The type of the actual cards is specified by an underline.]]></item> 
+    <item><![CDATA[el verd mostra el número de targetes que ja heu après abans i que es revisaran avui.<br>Els subrratllat indica el tipus de les targetes actuals.</separator>]]></item> 
     <item><![CDATA[ La barra superior mostra el progrés, la inferior indica el percentatge de respostes afirmatives.]]></item> 
     <item><![CDATA[Per tant, podeu sincronitzar fàcilment la vostra col.lecció de targetes entre AnkiDroid i Anki per a l\'Escriptori i utilitzar aquest darrer per afegir targetes i gestionar-les de forma més còmode.]]></item> 
     <item><![CDATA[ Proveu-hp una mica ara i veieu si s&#39;ajusta a les vostres necessitats. <br><br> Podeu començar amb el paquet de presentació (premeu menú a la pantalla principal i trieu l&#39;opció \"tots els paquets\"), on es poden descarregar paquets prefabricats o generar els vostres propis (amb el menú que trobareu allà).]]></item> 

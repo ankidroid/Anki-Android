@@ -104,22 +104,23 @@
     <item>Mostra les fitxes noves pel ordre en que s\'han afegit</item>
   </string-array>
   <string-array name="cram_deck_conf_order_labels">
-    <item>Oldest seen first</item>
-    <item>Random</item>
-    <item>Increasing intervals</item>
-    <item>Decreasing intervals</item>
-    <item>Most lapsed</item>
-    <item>Order added</item>
-    <item>Order due</item>
+    <item>Primer les que fa més temps que no heu vist</item>
+    <item>A l\'atzar</item>
+    <item>A intervals creixents</item>
+    <item>A intervals decreixents</item>
+    <item>Més espaiades</item>
+    <item>Ordre en que s\'han afegit</item>
+    <item>Per ordre de venciment</item>
+    <item>Latest added first</item>
   </string-array>
   <string-array name="cram_deck_conf_preset_labels">
-    <item><![CDATA[<select preset>]]></item>
-    <item>Preview all new cards</item>
-    <item>Preview cards added today</item>
-    <item>Review today\'s forgotten cards</item>
-    <item>Review ahead by two days</item>
-    <item>Review due cards with tag</item>
-    <item>Review due cards with decreasing intervals</item>
-    <item>Cram all cards</item>
+    <item><! [CDATA [< seleccioneu preestablert >]] ></item>
+    <item>Vista prèvia de totes les noves targetes</item>
+    <item>Mostra les targetes afegides avui</item>
+    <item>Mostra les targetes oblidades avui</item>
+    <item>Revisió dos dies per endavant</item>
+    <item>Revisió de les targetes vencudes amb l\'etiqueta</item>
+    <item>Revisió les targetes que han vencut, a intervals decreixents</item>
+    <item>Barreja totes les targetes</item>
   </string-array>
 </resources>

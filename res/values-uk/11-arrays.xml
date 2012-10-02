@@ -111,6 +111,7 @@
     <item>З найбільшою кількістю ляпсів</item>
     <item>В порядку додавання</item>
     <item>В порядку черги</item>
+    <item>Latest added first</item>
   </string-array>
   <string-array name="cram_deck_conf_preset_labels">
     <item><![CDATA[<select preset>]]></item>

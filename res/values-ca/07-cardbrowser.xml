@@ -31,15 +31,15 @@
   <string name="delete_card_title">Suprimeix la nota</string>
   <string name="delete_card_message">Segur que voleu suprimir totes les targetes amb aquesta nota?\nCamp de cerca: %s</string>
   <string name="card_browser_show_marked">Filtra les marcades</string>
-  <string name="card_browser_field">Change CardBrowser Field</string>
-  <string name="card_browser_field_title">Change CardBrowser Field</string>
+  <string name="card_browser_field">Canvia el camp CardBrowser</string>
+  <string name="card_browser_field_title">Canvia el camp CardBrowser</string>
   <string name="card_browser_show_suspended">Filtra les suspes</string>
   <string name="card_browser_search_by_tag">Filtrar per la etiqueta</string>
   <string name="card_browser_tags_shown">Etiquetes: %1$s</string>
   <string name="card_browser_change_display_order">Canvia l\'ordre de presentació</string>
   <string name="card_browser_change_display_order_title">Trieu l\'ordre de visualització</string>
-  <string name="card_browser_change_display_order_reverse">Select a field twice to reverse.</string>
-  <string name="card_browser_order_reverse">(reverse)</string>
+  <string name="card_browser_change_display_order_reverse">Seleccioneu un camp dues vegades per invertir-lo.</string>
+  <string name="card_browser_order_reverse">(inverteix)</string>
   <string name="card_browser_card_details">Detalls de la fitxa</string>
   <string name="card_details_question">Pregunta</string>
   <string name="card_details_answer">Resposta</string>
@@ -62,14 +62,14 @@
   <string-array name="card_browser_order_labels">
     <item>Cap ordenació (més ràpid)</item>
     <item>Per camp de recerca</item>
-    <item>By created time</item>
-    <item>By edited time</item>
-    <item>By changed time</item>
-    <item>By due time</item>
-    <item>By interval</item>
-    <item>By ease</item>
-    <item>By reviews</item>
-    <item>By lapses</item>
+    <item>Per hora de creació</item>
+    <item>Per hora d\'edició</item>
+    <item>Per hora de modificació</item>
+    <item>Per venciment</item>
+    <item>Per interval</item>
+    <item>Per dificultat</item>
+    <item>Per revisions</item>
+    <item>Per intervals</item>
   </string-array>
   <plurals name="card_browser_subtitle">
     <item quantity="one">Es mostra 1 de %2$d targetes</item>

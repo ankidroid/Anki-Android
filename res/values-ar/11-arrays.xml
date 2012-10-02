@@ -111,6 +111,7 @@
     <item>الأكثر نسيانا</item>
     <item>إضافة الترتيب</item>
     <item>ترتيب الاستحقاق</item>
+    <item>Latest added first</item>
   </string-array>
   <string-array name="cram_deck_conf_preset_labels">
     <item><![CDATA[<select preset>]]></item>

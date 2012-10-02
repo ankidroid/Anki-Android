@@ -111,6 +111,7 @@
     <item>Больше истёкших</item>
     <item>Порядок просмотра добавлен</item>
     <item>В порядке добавления</item>
+    <item>Последние добавленные первыми</item>
   </string-array>
   <string-array name="cram_deck_conf_preset_labels">
     <item><![CDATA[<выбор предварительных настроек>]]></item>

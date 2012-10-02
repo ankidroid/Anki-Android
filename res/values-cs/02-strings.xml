@@ -23,7 +23,7 @@
   <string name="CardEditorCancelButton">Zrušit</string>
   <string name="CardEditorSaveButton">Uložit</string>
   <string name="CardEditorLaterButton">Později</string>
-  <string name="CardEditorLaterMessage">Saved information for later</string>
+  <string name="CardEditorLaterMessage">Uložené informace na později</string>
   <string name="CardEditorCardDeck">Karta balíčku: %s</string>
   <string name="CardEditorNoteDeck">Poznámka balíčku: %s</string>
   <string name="CardEditorModel">Typ poznámky:%s</string>
@@ -52,7 +52,7 @@
   <string name="close">Zavřít</string>
   <string name="select">Vybrat</string>
   <string name="saving_changes">Ukládání změn ...</string>
-  <string name="timebox_reached">Timebox reached!</string>
+  <string name="timebox_reached">Dosažen čas!</string>
   <string name="studyoptions_welcome_title">Vítejte v AnkiDroid</string>
   <string name="studyoptions_no_external_storage_title">Není k dispozici externí paměť</string>
   <string name="studyoptions_no_external_storage_message">Žádná externí paměť není momentálně k dispozici. AnkiDroid potřebuje přistupovat k SD kartě, aby mohl načíst Anki balíčky. Zkontrolujte, zda je vaše SD karta připojena a akci opakujte.</string>

@@ -129,5 +129,5 @@
   <string name="upgrade_decks_button">Mise à jour</string>
   <string name="upgrade_decks_failed">Ces paquets ne peuvent être mis à jour\n%sVeuillez les ouvrir dans Anki Desktop et effectuez une vérification de la base de données. Après cela, vous pourrez les importer via Anki Desktop.</string>
   <string name="upgrade_decks_media_failed">La copie des médias dans le nouveau dossier de média (%1$s) a échoué pour ces paquets :\n%2$sVeuillez déplacer manuellement les fichiers médias.</string>
-  <string name="download_deck">Downloading deck (%d kb).\nPlease wait...</string>
+  <string name="download_deck">Téléchargement du paquet (%d Ko). \nPatience…</string>
 </resources>

@@ -111,6 +111,7 @@
     <item>Aυτές με τις περισσότερες ολισθήσεις</item>
     <item>Κατά σειρά προσθήκης</item>
     <item>Κατά σειρά αναμονής</item>
+    <item>Latest added first</item>
   </string-array>
   <string-array name="cram_deck_conf_preset_labels">
     <item><![CDATA[<προκαθορισμένες ρυθμίσεις>]]></item>

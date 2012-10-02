@@ -13,7 +13,7 @@ Ajouter des cartes par le biais de l'application Anki Desktop ou directement ave
 • répétition espacée (algorithme supermemo 2)
 • intégration de la synthèse vocale
 • plus de 6000 paquets de cartes téléchargeables
-• progress widget
+• widget progression
 • statistiques détaillées
 • synchronisation avec AnkiWeb
 • open source
@@ -23,7 +23,7 @@ Ajouter des cartes par le biais de l'application Anki Desktop ou directement ave
 • tableau blanc
 • éditeur de cartes
 • navigateur de cartes
-• tablet layout
+• présentation pour tablettes
 • import des collections existantes (via Anki Desktop)
 • intégration avec des dictionnaires (ColorDict, GoldenDict, Leo.org, Aedict, divers dictionnaires web)
 • ajout de cartes par "intent" depuis d'autres applications comme des dictionnaires
@@ -31,7 +31,7 @@ Ajouter des cartes par le biais de l'application Anki Desktop ou directement ave
 • système de sauvegarde 
 • navigation par swipe, tap, shake
 • entièrement personnalisable
-• dynamic deck handling
+• gestion des paquets dynamiques
 • mode nuit
 • 27 localisations
 • Toutes les versions précédentes d'AnkiDroid peuvent être téléchargées à partir du site Web

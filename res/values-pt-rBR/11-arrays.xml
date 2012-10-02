@@ -111,6 +111,7 @@
     <item>Mais falhados</item>
     <item>Ordem de adição</item>
     <item>Ordem de revisão</item>
+    <item>Latest added first</item>
   </string-array>
   <string-array name="cram_deck_conf_preset_labels">
     <item><![CDATA[<select preset>]]></item>

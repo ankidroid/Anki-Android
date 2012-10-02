@@ -212,8 +212,8 @@
   <string name="input_workaround">Solución para Entrada</string>
   <string name="input_workaround_summ">Solución para atajar los problemas en cajas de texto HTML. Causa problemas en varios dispositivos.</string>
   <string name="write_answers_message">Debes definir un campo en cada mazo para comparar con la respuesta escrita. Puedes hacerlo a través de Anki versión escritorio (Propiedades del mazo - &gt; Editar modelo - &gt; Formato de tarjeta).\n\nSi no se establece ningún campo de comparación, siempre se comparará tu respuesta por escrito con la respuesta de la tarjeta al completo.</string>
-  <string name="pref_cardbrowser_skip_init_search">Fast Card Browser Open</string>
-  <string name="pref_cardbrowser_skip_init_search_summ">Skips initial automatic search when the card browser opens.</string>
+  <string name="pref_cardbrowser_skip_init_search">Apertura Rápida del Explorador</string>
+  <string name="pref_cardbrowser_skip_init_search_summ">Se salta la búsqueda automática inicial cuando el explorador es abierto.</string>
   <string name="pref_keep_screen_on">Mantener encendida la pantalla</string>
   <string name="pref_keep_screen_on_summ">Impedir que la pantalla se apague mientras estás repasando</string>
   <string name="pref_simple_interface">Interfaz sencilla</string>

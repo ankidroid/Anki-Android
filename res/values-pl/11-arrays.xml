@@ -101,7 +101,7 @@
   </string-array>
   <string-array name="new_order_labels">
     <item>Nowe karty w kolejności losowej</item>
-    <item>New cards in order added</item>
+    <item>Nowe karty w kolejności dodania</item>
   </string-array>
   <string-array name="cram_deck_conf_order_labels">
     <item>Najstarszy jako pierwszy</item>
@@ -111,6 +111,7 @@
     <item>Most lapsed</item>
     <item>Order added</item>
     <item>Order due</item>
+    <item>Ostatnio dodane na początku</item>
   </string-array>
   <string-array name="cram_deck_conf_preset_labels">
     <item><![CDATA[<select preset>]]></item>

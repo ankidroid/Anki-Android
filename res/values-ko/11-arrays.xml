@@ -111,6 +111,7 @@
     <item>최고 착오</item>
     <item>추가된 순서대로</item>
     <item>기간 순서대로</item>
+    <item>Latest added first</item>
   </string-array>
   <string-array name="cram_deck_conf_preset_labels">
     <item><![CDATA[사전 설정 선택 ]]></item>

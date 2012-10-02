@@ -32,7 +32,7 @@
   <string name="studyoptions_total_cards">Aantal kaarten:</string>
   <string name="studyoptions_eta">Geschatte tijd (min):</string>
   <string name="studyoptions_start">Nu overhoren</string>
-  <string name="show_answer">Antwoord tonen</string>
+  <string name="show_answer">Toon antwoord</string>
   <string name="ease1_successive">Opnieuw</string>
   <string name="ease2_successive">Moeilijk</string>
   <string name="ease3_successive">Goed</string>
@@ -121,8 +121,8 @@
     <item>%s jaren</item>
   </string-array>
   <plurals name="deckpicker_title">
-    <item quantity="one">1 van %2$d gedaan (%3$s)</item>
-    <item quantity="other">%1$d van %2$d gedaan (%3$s)</item>
+    <item quantity="one">1 van %2$d te doen(%3$s)</item>
+    <item quantity="other">%1$d van %2$d te doen(%3$s)</item>
   </plurals>
   <plurals name="deckpicker_title_minutes">
     <item quantity="one">1 min.</item>

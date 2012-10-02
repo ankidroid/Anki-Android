@@ -212,8 +212,8 @@
   <string name="input_workaround">Soluzione per problemi di immissione</string>
   <string name="input_workaround_summ">Soluzione per problemi di fuoco con campi di immissione HTML. Provoca problemi su diversi dispositivi.</string>
   <string name="write_answers_message">È necessario definire per ogni mazzo un campo col quale confrontare la risposta scritta. Puoi farlo con Anki Desktop (proprietà mazzo -&gt; modifica modello -&gt; layout carta).\n\nSe non è impostato nessun campo per il confronto, la risposta scritta sarà sempre confrontata con tutta la risposta della carta.</string>
-  <string name="pref_cardbrowser_skip_init_search">Fast Card Browser Open</string>
-  <string name="pref_cardbrowser_skip_init_search_summ">Skips initial automatic search when the card browser opens.</string>
+  <string name="pref_cardbrowser_skip_init_search">Apertura veloce del browser</string>
+  <string name="pref_cardbrowser_skip_init_search_summ">Salta la ricerca iniziale automatica all\'apertura del browser.</string>
   <string name="pref_keep_screen_on">Mantieni acceso lo schermo</string>
   <string name="pref_keep_screen_on_summ">Previeni che lo schermo si spenga durante le ripetizioni</string>
   <string name="pref_simple_interface">Interfaccia semplice</string>

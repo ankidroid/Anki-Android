@@ -50,13 +50,13 @@
   <string name="intent_add_clear_all">Neteja-ho tot</string>
   <string name="intent_aedict_empty">La categoria \'per omissió\' és buida</string>
   <string name="intent_aedict_category">Per afegir targetes de AnkiDroid treieu totes les categories del bloc de notes o afegiu-ne una anomenada \'per omissió\'</string>
-  <string name="learnmore_title">Study More Settings</string>
-  <string name="learnmore_insructions">You can temporarily increase your new cards and max reviews limits below to extend today\'s learning session.</string>
-  <string name="learnmore_extend_new_limit">Increase new cards limit by</string>
-  <string name="learnmore_extend_rev_limit">Increase max reviews limit by</string>
-  <string name="reviewearly_title">Review Early Settings</string>
-  <string name="reviewearly_instructions">This option will create a Filtered Deck called \'XXX\' with the cards that are due for review in the number of days you select below. If such a Filtered Deck already exists it will be emptied and reconfigured.</string>
-  <string name="reviewearly_days_ahead">How many days ahead</string>
+  <string name="learnmore_title">Més opcions de configuració d\'estudi</string>
+  <string name="learnmore_insructions">A sota podeu augmentar temporalment els vostres límits de targetes noves i de màxim número de comentaris per estendre la sessió d\'aprenentatge d\'avui.</string>
+  <string name="learnmore_extend_new_limit">Augmentar límit de targetes noves en</string>
+  <string name="learnmore_extend_rev_limit">Augmentar el límit màxim de comentaris en</string>
+  <string name="reviewearly_title">Paràmetres de la revisió inicial</string>
+  <string name="reviewearly_instructions">Aquesta opció genera un Paquet Filtrat anomenat \'XXX\' amb les targetes que han vencut, per a la revisió en el nombre de dies que seleccioneu a continuació. Si ja existeix aquest Paquet Filtrat es buidarà i es tornarà a configurar.</string>
+  <string name="reviewearly_days_ahead">Quants dies per endavant</string>
   <string-array name="about_content">
     <item><![CDATA[<h2>%1$s: <br/> Targetes per memoritzar per Android </h2> AnkiDroid és una aplicació de gestió de tagetes per memoritzar, totalment compatible amb el programari d\'escriptori <a href="%2$s">Anki</a>. Podeu generar, descarregar i aprendre els continguts als dos programaris, a l\'Escriptori i a AnkiDroid Anki, i sincronitzar-los amb molta facilitat.]]</item>
     <item><![CDATA[AnkiDroid és <a href="%1$s">programari de codi obert<a/>, així que us animem a <a href="%2$s">unir-vos</a> als <a href="%3$s">col·laboradors</a>:-)]]></item>

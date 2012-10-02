@@ -111,6 +111,7 @@
     <item>Maggior numero di errori</item>
     <item>Ordine di aggiunta</item>
     <item>Ordine di scadenza</item>
+    <item>Dapprima aggiunte più recentemente</item>
   </string-array>
   <string-array name="cram_deck_conf_preset_labels">
     <item><![CDATA[<seleziona predefinito>]]></item>

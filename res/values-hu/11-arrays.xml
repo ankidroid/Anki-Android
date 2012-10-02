@@ -111,6 +111,7 @@
     <item>A legtöbbször lejárt</item>
     <item>Rendezés hozzáadva</item>
     <item>Rendezés</item>
+    <item>Latest added first</item>
   </string-array>
   <string-array name="cram_deck_conf_preset_labels">
     <item><![CDATA[<select preset>]]></item>
