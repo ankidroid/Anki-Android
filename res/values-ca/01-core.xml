@@ -101,7 +101,7 @@
   <string name="studyoptions_congrats_more_new">Hi ha més targetes noves, però s\'ha assolit el límit diari. Podeu augmentar el límit a les opcions, però si us plau, tingueu en compte que això farà augmentar la càrrega de treball de la revisió a curt termini.</string>
   <string name="sd_card_not_mounted">La targeta SD no està muntada.</string>
   <string name="studyoptions_options">Opcions</string>
-  <string name="empty_cloze_warning">Si us plau editeu aquesta nota i afegir algunes supressions cloze. (%1$s)</string>
+  <string name="empty_cloze_warning">Si us plau editeu aquesta nota i afegir algunes supressions cloze. (%1$ s)</string>
   <string name="help_cloze">ajuda</string>
   <string name="button_sync">Sincronització</string>
   <string-array name="next_review_s">
