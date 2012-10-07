@@ -1,37 +1,37 @@
-Memorize anything with AnkiDroid!
+هر چیزی را با آنکی دروید بخاطر بسپارید!
 
-AnkiDroid lets you learn flashcards very efficiently by showing them just before you will forget. It is fully compatible with the spaced repetition software Anki (including synchronization), which is available for Windows, Linux and MacOS.
+آنکی دروید به شما اجازه می دهد که با روشی بسیار مناسب  فلش کارتها را قبل از اینکه آنها را فراموش کنید یاد بگیرید. کاملا سازگار شده برای انجام کارهای تکراری در فواصل زمانی با نرم افزار آنکی (از جمله  همگام سازی ) با سیستم عامل های ویندوز ،لینوکس و مکینتاش.
 
-Study all sorts of things wherever and whenever you want. Make good use of idle times on bus trips, in supermarket queues or any other waiting situation!
+هرچیزی را هر وقت و هر جا که می خواهید مطالعه کنید. از زمانهای بیکاری در اتوبوس، در سوپرمارکت یا هر جایی دیگری که منتظر هستید، استفاده مناسب نمایید!
 
-Create your own flashcard decks or download free decks compiled for many languages and topics (more than 6000 available).
+خودتان دسته های فلش کارت را بسازید یا دسته های مجانی کامپایل شده را به چندین زبان و موضوع دانلود کنید.(بیش از 6000 در دسترس است).
 
-Add material through the desktop application Anki or directly through Ankidroid. The application even supports adding material automatically from a dictionary!
+از طریق برنامه کامپیوتری یا مستقیما از طریق آنکی دروید موضوعات را اضافه کنید. برنامه حتی از اضافه کردن خودکار موضوعات از یک دیکشنری پشتیبانی می کند!
 
-★ Key features:
-• supported flashcard contents: text, images, sounds, LaTeX
-• spaced repetition (supermemo 2 algorithm)
-• text-to-speech integration
-• more than 6000 premade decks
-• progress widget
-• detailed statistics
-• syncing with AnkiWeb
-• open source
+خصیصه های کلیدی:
+• پشتیبانی از فلش کارت مطالب: متن، تصاویر، برای تلفن های موبایل، لاتکس
+کارهای تکراری با فاصله زمانی (دو الگوریتم بخاطر سپاری)
+یکپارچه سازی متن به سخن
+بیش از 6000 دسته از پیش ساخته شده
+ویجت پیشرفته
+آمار تفضیلی
+همگام سازی با آنکی وب
+متن باز
 
-★ Additional features:
-• write answers (optional)
-• whiteboard
-• card editor/adder
+خصیصه های اضافه شده:
+نوشتن پاسخ (اختیاری)
+محل نوشتن
+افزایشگر/ویراستار کارت
 . مرورگر کارت
-• tablet layout
-• import existing collection files (via Anki Desktop)
-• dictionary integration (ColorDict, GoldenDict, Leo.org, Aedict, diverse web dictionaries)
-• add cards by intent from other applications like dictionaries
-• custom font support
-• سیستم پشتیبان کامل
-• navigation by swipe, tap, shake
-• fully customisable
-• dynamic deck handling
+بهینه سازی تبلت
+وارد کردن مجموعه فایل های موجود (از طریق نرم افزار کامپیوتر آنکی)
+یکپارچگی واژه نامه (کلر دیک،گلدن دیک،لئوارگ،آا دیک،واژه نامه های گوناگون وب)
+اضافه کردن کارتها از طریق برنامه های دیگر مانند واژه نامه ها
+پشتیبانی از فونت سفارشی
+• سیستم پشتیبان گیری کامل
+انجام عمل چند رسانه ای بوسیله حرکت عقب و جلو،ضربه،تکان دادن
+کاملا قابل سفارشی سازی
+بررسی پویای یک دسته کارت
 • حالت شب
-• 27 localisations
-• All previous AnkiDroid versions can be downloaded from the website
+27 ایستگاه محلی
+می توانید از وب سایت آنکی دروید تمام نسخه های قبلی را دانلود کنید

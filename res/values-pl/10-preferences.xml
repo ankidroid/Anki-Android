@@ -40,7 +40,7 @@
   <string name="pref_cat_themes">Tematy</string>
   <string name="pref_cat_reviewing">Reviewing</string>
   <string name="pref_cat_reviewer_behaviour">Reviewer behaviour</string>
-  <string name="pref_cat_flashcard">Card Display</string>
+  <string name="pref_cat_flashcard">Wyświetlanie kart</string>
   <string name="pref_cat_dictionary">Słowniki</string>
   <string name="pref_cat_messages">Wiadomości i opinie</string>
   <string name="pref_cat_performance">Wydajność</string>
@@ -50,7 +50,7 @@
   <string name="hide_due_count">Hide due count</string>
   <string name="hide_due_count_summ">Hides the due count</string>
   <string name="overtime">Overtime</string>
-  <string name="overtime_summ">Continue reviewing after time limit reached</string>
+  <string name="overtime_summ">Kontynuuj powtórki po osiągnięciu limitu czasu</string>
   <string name="show_progress_bars">Pokaż paski postępu</string>
   <string name="show_progress_bars_summ">Pokazuje dzisiejszy postęp oraz udział poprawnych odpowiedzi.</string>
   <string name="fade_scrollbars">Fade scrollbars</string>
@@ -226,7 +226,7 @@
   <string name="deck_conf_pref_cat_options">Opcje</string>
   <string name="deck_conf_new_cards">Nowe karty</string>
   <string name="deck_conf_rev_cards">Powtórki</string>
-  <string name="deck_conf_lps_cards">Lapses</string>
+  <string name="deck_conf_lps_cards">Pomyłki</string>
   <string name="deck_conf_other">Inny</string>
   <string name="deck_conf_add_conf">Add/delete configurations</string>
   <string name="deck_conf_steps">Kroki (w minutach)</string>
@@ -246,11 +246,11 @@
   <string name="deck_conf_max_ivl">Maksymalny interwał</string>
   <string name="deck_conf_new_lps_ivl">Nowy interwał</string>
   <string name="deck_conf_min_ivl">Minimalny interwał</string>
-  <string name="deck_conf_leech_thres">Leech Threshold</string>
+  <string name="deck_conf_leech_thres">Próg pijawek</string>
   <string name="deck_conf_fails">XXX fails</string>
   <string name="deck_conf_leech_action">Leech Action</string>
   <string name="deck_conf_max_time">Maksymalny czas odpowiedzi</string>
-  <string name="deck_conf_seconds">XXX seconds</string>
+  <string name="deck_conf_seconds">XXX sekund</string>
   <string name="deck_conf_timer">Pokaż czas odpowiedzi</string>
   <string name="deck_conf_autoplay">Automatycznie odtwarzaj audio</string>
   <string name="deck_conf_replayq">Powtórz pytanie</string>
@@ -259,7 +259,7 @@
   <string name="deck_conf_ren">Zmień nazwę konfiguracji</string>
   <string name="deck_conf_rem">Remove configuration</string>
   <string name="pref_cat_tibetan">Tibetan Support</string>
-  <string name="pref_cat_languages_advanced">Advanced support for typefaces</string>
+  <string name="pref_cat_languages_advanced">Zaawansowana obsługa czcionek</string>
   <string name="pref_enable_tibetan">Enable Tibetan Support</string>
   <string name="pref_enable_tibetan_summ">Enables tibetan typeface for card browser and card editor. Typeface should be provided in /mnt/sdard/fonts/DDC_Uchen.ttf.</string>
   <string name="pref_browser_editor_font">Czcionki przeglądarki i edytora</string>
