@@ -14,10 +14,23 @@
 
 package com.ichi2.anki;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+
+import org.achartengine.ChartFactory;
+import org.achartengine.GraphicalView;
+import org.achartengine.chart.BarChart;
+import org.achartengine.model.XYMultipleSeriesDataset;
+import org.achartengine.model.XYSeries;
+import org.achartengine.renderer.XYMultipleSeriesRenderer;
+import org.achartengine.renderer.XYSeriesRenderer;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnCancelListener;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
@@ -26,11 +39,13 @@ import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.Paint.Align;
 import android.os.Bundle;
+import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.text.Html;
 import android.util.Log;
 import android.view.GestureDetector;
 import android.view.GestureDetector.SimpleOnGestureListener;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -45,6 +60,7 @@ import android.widget.TextView;
 
 import com.ichi2.anim.ActivityTransitionAnimation;
 import com.ichi2.anim.ViewAnimation;
+import com.ichi2.anki.controller.IAnkiControllable;
 import com.ichi2.async.DeckTask;
 import com.ichi2.async.DeckTask.TaskData;
 import com.ichi2.charts.ChartBuilder;
@@ -56,22 +72,7 @@ import com.ichi2.themes.StyledOpenCollectionDialog;
 import com.ichi2.themes.StyledProgressDialog;
 import com.ichi2.themes.Themes;
 
-import org.achartengine.ChartFactory;
-import org.achartengine.GraphicalView;
-import org.achartengine.chart.BarChart;
-import org.achartengine.model.XYMultipleSeriesDataset;
-import org.achartengine.model.XYSeries;
-import org.achartengine.renderer.XYMultipleSeriesRenderer;
-import org.achartengine.renderer.XYSeriesRenderer;
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-
-public class StudyOptionsFragment extends Fragment {
+public class StudyOptionsFragment extends Fragment implements IAnkiControllable {
 
     /**
      * Available options performed by other activities
@@ -93,6 +94,10 @@ public class StudyOptionsFragment extends Fragment {
     private static final int DIALOG_LEARN_MORE = 1;
     private static final int DIALOG_REVIEW_EARLY = 2;
 
+    private static final int MSG_CNTRL_REVIEWER = 0x110;
+    private static final int MSG_CNTRL_BACK = 0x111;
+    private static final int MSG_CNTRL_CLOSE = 0x112;
+
     private HashMap<Integer, StyledDialog> mDialogs = new HashMap<Integer, StyledDialog>();
 
     /**
@@ -113,7 +118,7 @@ public class StudyOptionsFragment extends Fragment {
      * UI elements for "Study Options" view
      */
     private View mStudyOptionsView;
-    private Button mButtonStart;
+    public Button mButtonStart;
     private Button mFragmentedCram;
 //    private Button mButtonUp;
 //    private Button mButtonDown;
@@ -483,7 +488,6 @@ public class StudyOptionsFragment extends Fragment {
 
 
     private void closeStudyOptions() {
-        getActivity();
         closeStudyOptions(Activity.RESULT_OK);
     }
 
@@ -1227,4 +1231,44 @@ public class StudyOptionsFragment extends Fragment {
     public boolean dbSaveNecessary() {
     	return !mDontSaveOnStop;
     }
+
+	@Override
+	public Bundle getSupportedControllerActions() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void handleControllerMessage(Message msg) {
+    	Log.i(AnkiDroidApp.TAG, "Received controller message: " + msg.what);
+    	switch (msg.what) {
+    	case MSG_CNTRL_REVIEWER:
+    		if (mCurrentContentView != CONTENT_CONGRATS) {
+    			openReviewer();
+    		}
+    		break;
+    	case MSG_CNTRL_BACK:
+    		if (mCurrentContentView == CONTENT_CONGRATS) {
+    			finishCongrats();
+    		} else {
+    			closeStudyOptions();
+    		}
+    		break;
+    	case MSG_CNTRL_CLOSE:
+    		getActivity().dispatchKeyEvent(new KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_BACK));
+    		getActivity().dispatchKeyEvent(new KeyEvent(KeyEvent.ACTION_UP, KeyEvent.KEYCODE_BACK));
+    		break;
+    	default:
+    	}
+	}
+
+	@Override
+	public boolean canStartController() {
+		return false;
+	}
+
+	@Override
+	public boolean canStopController() {
+		return false;
+	}
 }

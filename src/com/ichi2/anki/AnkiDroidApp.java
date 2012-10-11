@@ -17,6 +17,12 @@
 
 package com.ichi2.anki;
 
+import java.io.File;
+import java.io.IOException;
+import java.util.Locale;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
+
 import android.app.Application;
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -30,21 +36,16 @@ import android.util.Log;
 import android.view.Display;
 import android.view.WindowManager;
 
+import com.ichi2.anki.controller.ControllerManager;
 import com.ichi2.async.Connection;
 import com.ichi2.compat.Compat;
 import com.ichi2.compat.CompatV11;
-import com.ichi2.compat.CompatV5;
 import com.ichi2.compat.CompatV4;
+import com.ichi2.compat.CompatV5;
 import com.ichi2.compat.CompatV9;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Storage;
 import com.ichi2.libanki.hooks.Hooks;
-
-import java.io.File;
-import java.io.IOException;
-import java.util.Locale;
-import java.util.concurrent.locks.Lock;
-import java.util.concurrent.locks.ReentrantLock;
 
 /**
  * Application class.
@@ -142,6 +143,10 @@ public class AnkiDroidApp extends Application {
             // Reason: apply() not available on Android 1.5
             editor.commit();
         }
+        
+        getPluginManager().discoverPlugins();
+        Log.i(TAG, "App onCreate");
+        //getControllerManager().enableController();
     }
 
     /**
@@ -342,6 +347,14 @@ public class AnkiDroidApp extends Application {
 
     public static Compat getCompat() {
         return sInstance.mCompat;
+    }
+
+    public static PluginManager getPluginManager() {
+        return PluginManager.getPluginManager();
+    }
+
+    public static ControllerManager getControllerManager() {
+        return ControllerManager.getControllerManager();
     }
 
     public static synchronized Collection openCollection(String path) {

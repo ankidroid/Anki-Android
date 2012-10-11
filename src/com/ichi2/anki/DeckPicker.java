@@ -39,6 +39,7 @@ import android.graphics.PixelFormat;
 import android.graphics.Rect;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
@@ -62,6 +63,7 @@ import android.widget.ListView;
 import android.widget.SimpleAdapter;
 
 import com.ichi2.anim.ActivityTransitionAnimation;
+import com.ichi2.anki.controller.AnkiControllableFragmentActivity;
 import com.ichi2.anki.receiver.SdCardReceiver;
 import com.ichi2.async.Connection;
 import com.ichi2.async.Connection.OldAnkiDeckFilter;
@@ -87,7 +89,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.TreeSet;
 
-public class DeckPicker extends FragmentActivity {
+public class DeckPicker extends AnkiControllableFragmentActivity {
 
     public static final int CRAM_DECK_FRAGMENT = -1;
     /**
@@ -190,6 +192,13 @@ public class DeckPicker extends FragmentActivity {
     private static final int SHOW_INFO_UPGRADE_DECKS = 18;
     private static final int REQUEST_REVIEW = 19;
 
+    private static final int MSG_CNTRL_DECK_UP = 0x211;
+    private static final int MSG_CNTRL_DECK_DOWN = 0x212;
+    private static final int MSG_CNTRL_DECK_LEFT = 0x213;
+    private static final int MSG_CNTRL_DECK_RIGHT = 0x214;
+    private static final int MSG_CNTRL_DECK_SELECT = 0x110;
+    private static final int MSG_CNTRL_CLOSE = 0x111;
+ 
     private StyledProgressDialog mProgressDialog;
     private StyledOpenCollectionDialog mOpenCollectionDialog;
     private StyledOpenCollectionDialog mNotMountedDialog;
@@ -1927,6 +1936,9 @@ public class DeckPicker extends FragmentActivity {
             finishWithAnimation();
             return true;
         }
+        if (keyCode == KeyEvent.KEYCODE_DPAD_DOWN) { 
+        	Log.i(AnkiDroidApp.TAG, "Down: " + event.getRepeatCount());
+        }
         return super.onKeyDown(keyCode, event);
     }
 
@@ -2711,5 +2723,54 @@ public class DeckPicker extends FragmentActivity {
         }
     }
 
+
+	@Override
+	public Bundle getSupportedControllerActions() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+    @Override
+    public void handleControllerMessage(Message msg) {
+    	Log.i(AnkiDroidApp.TAG, "Received controller message: " + msg.what);
+    	switch (msg.what) {
+    	case MSG_CNTRL_DECK_UP:
+    		mDeckListView.requestFocusFromTouch();
+    		sendKey(KeyEvent.KEYCODE_DPAD_UP);
+    		break;
+    	case MSG_CNTRL_DECK_DOWN:
+    		mDeckListView.requestFocusFromTouch();
+    		sendKey(KeyEvent.KEYCODE_DPAD_DOWN);
+    		break;
+    	case MSG_CNTRL_DECK_LEFT:
+    		if (mFragmented) {
+    			this.mDeckListView.requestFocus();
+    		}
+    		break;
+    	case MSG_CNTRL_DECK_RIGHT:
+    		if (mFragmented) {
+    			getFragment().mButtonStart.requestFocus();
+    		}
+    		break;
+    	case MSG_CNTRL_DECK_SELECT:
+    		sendKey(KeyEvent.KEYCODE_ENTER);
+    		break;
+    	case MSG_CNTRL_CLOSE:
+    		sendKey(KeyEvent.KEYCODE_BACK);
+    		break;
+    	default:
+    	}
+    }
+
+	@Override
+	public boolean canStartController() {
+		return true;
+	}
+	
+	@Override
+	public boolean canStopController() {
+		return true;
+	}
 }
 
