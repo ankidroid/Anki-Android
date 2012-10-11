@@ -81,7 +81,7 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
     private ListPreference mLanguageSelection;
     private CharSequence[] mLanguageDialogLabels;
     private CharSequence[] mLanguageDialogValues;
-    private static String[] mAppLanguages = { "ar", "bg", "ca", "cs", "de", "el", "es-AR", "es-ES", "et", "fi", "fr", "hu", "id",
+    private static String[] mAppLanguages = { "ar", "bg", "ca", "cs", "de", "el", "es-AR", "es-ES", "et", "fa", "fi", "fr", "hu", "id",
             "it", "ja", "ko", "nl", "no", "pl", "pt_PT", "pt_BR", "ro", "ru", "sr", "sv", "th", "tr", "uk", "vi",
             "zh_CN", "zh_TW", "en" };
     private static String[] mShowValueInSummList = { "language", "dictionary", "reportErrorMode",

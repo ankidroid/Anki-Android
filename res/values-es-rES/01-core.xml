@@ -33,7 +33,7 @@
   <string name="studyoptions_eta">Tiempo estimado (min.):</string>
   <string name="studyoptions_start">Empezar a repasar</string>
   <string name="show_answer">Mostrar respuesta</string>
-  <string name="ease1_successive">Una vez más</string>
+  <string name="ease1_successive">De nuevo</string>
   <string name="ease2_successive">Difícil</string>
   <string name="ease3_successive">Bien</string>
   <string name="ease3_learning">Fácil</string>
@@ -55,7 +55,7 @@
   <string name="undo_action_delete">eliminar nota</string>
   <string name="undo_action_mark">marcar nota</string>
   <string name="finish_operation">Terminando la operación anterior (seguramente la creación de una copia de seguridad).\nPor favor, espera...</string>
-  <string name="contextmenu_deckpicker_download_missing_media">Descargar archivos multimedia que falten</string>
+  <string name="contextmenu_deckpicker_download_missing_media">Descargar archivos multimedia perdidos</string>
   <string name="contextmenu_deckpicker_reset_language_assignments">Restablecer las Asignaciones de Idioma</string>
   <string name="contextmenu_deckpicker_reset_reset_message">Restablecer idioma</string>
   <string name="contextmenu_deckpicker_optimize_deck">Optimizar la base de datos</string>
@@ -77,7 +77,7 @@
   <string name="delete_note_message">¿Realmente deseas eliminar esta nota y todas sus tarjetas?\n%s</string>
   <string name="menu_edit_card">Editar tarjeta</string>
   <string name="menu_select">Seleccionar texto</string>
-  <string name="menu_search">Búsqueda en %1$s</string>
+  <string name="menu_search">Buscar en %1$s</string>
   <string name="menu_mark_card">Marcar Tarjeta</string>
   <string name="menu_unmark_card">Desmarcar Tarjeta</string>
   <string name="new_deck">Nuevo mazo</string>

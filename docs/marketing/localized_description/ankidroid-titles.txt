@@ -7,6 +7,7 @@ de: AnkiDroid Karteikarten
 el: Κάρτες AnkiDroid
 es-AR: Tarjetas flash AnkiDroid
 es-ES: Tarjetas AnkiDroid
+fa: فلش کارتهای انکی دروید
 fi: AnkiDroid-muistikortit
 fr: AnkiDroid (Cartes mémoire)
 hu: AnkiDroid tanuló kártyák

@@ -98,7 +98,7 @@
   <string name="review_early_deck_name">Overhoor eerder</string>
   <string name="studyoptions_congrats_finished">Gefeliciteerd! Je bent nu klaar.</string>
   <string name="studyoptions_congrats_more_rev">Je hebt de overhoringslimiet bereikt, maar er wachten nog kaarten om overhoord te worden. Voor een optimale geheugentraining, overweeg om de dagelijkse limiet te verhogen bij instellingen.</string>
-  <string name="studyoptions_congrats_more_new">Er zijn meer nieuwe kaarden beschikbaar, maar de dagelijkse limiet is bereikt. Je kan de limiet verhogen in de instellingen, maar hou er rekening mee dat dit de korte-termijn werklast zal verhogen.</string>
+  <string name="studyoptions_congrats_more_new">Er zijn meer nieuwe kaarten beschikbaar, maar de dagelijkse limiet is bereikt. Je kunt de limiet verhogen in de instellingen, maar houd er rekening mee dat dit de werklast voor de korte termijn zal verhogen.</string>
   <string name="sd_card_not_mounted">SD-kaart is niet aangesloten.</string>
   <string name="studyoptions_options">Instellingen</string>
   <string name="empty_cloze_warning">Aub in deze notitie cloze verwijderingen toevoegen.(%1$s)</string>
