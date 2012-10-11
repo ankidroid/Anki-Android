@@ -45,7 +45,7 @@
   <string name="deck_summary_average_interval">میانگین فاصله زمانی: &lt;b&gt;%.1f&lt;/b&gt; روز</string>
   <string name="deck_summary_answers_correct">پاسخ صحیح</string>
   <string name="deck_summary_answers_mature">کارتهای سررسیده: &lt;b&gt;%1$.1f %2$s&lt;/b&gt; %2$s (%3$d of %4$d)</string>
-  <string name="deck_summary_answers_young">کارت های جوان: &lt;b&gt; %1$.1f %2 s$&lt;/b&gt; (%3 د $از %4$d)</string>
+  <string name="deck_summary_answers_young">کارت های جوان: &lt;b&gt; %1$.1f %2$s&lt;/b&gt; (%3$d of %4$d)</string>
   <string name="deck_summary_answers_firstseen">Seen the first time: &lt;b&gt;%1$.1f %2$s&lt;/b&gt; (%3$d of %4$d)</string>
   <string name="deck_summary_reviews">بررسی:</string>
   <string name="deck_summary_news">کارت های جدید:</string>
