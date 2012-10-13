@@ -49,6 +49,8 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
+import android.content.pm.ActivityInfo;
+import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.net.Uri;
@@ -258,6 +260,11 @@ public class Info extends Activity {
                 but.setOnClickListener(new OnClickListener() {
                     @Override
                     public void onClick(View arg0) {
+                        if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
+                            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+                        } else if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
+                            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+                        }
                         Connection.upgradeDecks(mUpgradeListener,
                                 new Connection.Payload(new Object[] { AnkiDroidApp.getCurrentAnkiDroidDirectory(Info.this) }));
                     }
