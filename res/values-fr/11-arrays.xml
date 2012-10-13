@@ -111,7 +111,7 @@
     <item>Les plus échouées</item>
     <item>L\'ordre d\'ajout</item>
     <item>Les plus urgentes d\'abord</item>
-    <item>Latest added first</item>
+    <item>Les dernières ajoutées d’abord</item>
   </string-array>
   <string-array name="cram_deck_conf_preset_labels">
     <item><![CDATA[<sélectionner le réglage>]]></item>
