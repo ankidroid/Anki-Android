@@ -913,6 +913,16 @@ public class Reviewer extends AnkiActivity {
         super.onCreate(savedInstanceState);
         Log.i(AnkiDroidApp.TAG, "Reviewer - onCreate");
 
+        // Remove the status bar and title bar
+        if (mPrefFullscreenReview) {
+            getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                    WindowManager.LayoutParams.FLAG_FULLSCREEN);
+            // Do not hide the title bar in Honeycomb, since it contains the action bar.
+            if (AnkiDroidApp.SDK_VERSION <= 11) {
+                requestWindowFeature(Window.FEATURE_NO_TITLE);
+            }
+        }
+
         mChangeBorderStyle = Themes.getTheme() == Themes.THEME_ANDROID_LIGHT
                 || Themes.getTheme() == Themes.THEME_ANDROID_DARK;
 
@@ -937,16 +947,6 @@ public class Reviewer extends AnkiActivity {
                 throw new RuntimeException(e);
             }
             AnkiDroidApp.getCompat().setSubtitle(this, "", mInvertedColors);
-
-            // Remove the status bar and title bar
-            if (mPrefFullscreenReview) {
-                getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                        WindowManager.LayoutParams.FLAG_FULLSCREEN);
-                // Do not hide the title bar in Honeycomb, since it contains the action bar.
-                if (AnkiDroidApp.SDK_VERSION <= 11) {
-                    requestWindowFeature(Window.FEATURE_NO_TITLE);
-                }
-            }
 
             registerExternalStorageListener();
 
