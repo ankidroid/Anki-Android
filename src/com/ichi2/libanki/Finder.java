@@ -436,7 +436,7 @@ public class Finder {
 
     private String _findTag(String val, List<String> args) {
         if (val.equals("none")) {
-            return "tags = \"\"";
+            return "n.tags = \"\"";
         }
         val = val.replace("*", "%");
         if (!val.startsWith("%")) {
