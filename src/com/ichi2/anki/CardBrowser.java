@@ -250,6 +250,9 @@ public class CardBrowser extends Activity {
                     break;
                 }
             }
+            if (mOrder == 1 && preferences.getBoolean("cardBrowserNoSorting", false)) {
+            	mOrder = 0;
+            }
             mOrderAsc = Upgrade.upgradeJSONIfNecessary(mCol, mCol.getConf(), "sortBackwards", false);
             // default to descending for non-text fields
             if (fSortTypes[mOrder].equals("noteFld")) {
@@ -506,7 +509,13 @@ public class CardBrowser extends Activity {
                                     mOrder = which;
                                     mOrderAsc = false;
                                     try {
-                                        mCol.getConf().put("sortType", fSortTypes[mOrder]);
+                                    	if (mOrder == 0) {
+                                            mCol.getConf().put("sortType", fSortTypes[1]);
+                                            AnkiDroidApp.getSharedPrefs(getBaseContext()).edit().putBoolean("cardBrowserNoSorting", true).commit();
+                                    	} else {
+                                            mCol.getConf().put("sortType", fSortTypes[mOrder]);
+                                            AnkiDroidApp.getSharedPrefs(getBaseContext()).edit().putBoolean("cardBrowserNoSorting", false).commit();
+                                    	}
                                         // default to descending for non-text fields
                                         if (fSortTypes[mOrder].equals("noteFld")) {
                                             mOrderAsc = true;
