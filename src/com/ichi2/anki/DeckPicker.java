@@ -115,7 +115,7 @@ public class DeckPicker extends FragmentActivity {
     private static final int DIALOG_SD_CARD_NOT_MOUNTED = 23;
     private static final int DIALOG_NEW_COLLECTION = 24;
     private static final int DIALOG_FULL_SYNC_FROM_SERVER = 25;
-    private static final int DIALOG_SYNC_ERROR = 26;
+    private static final int DIALOG_SYNC_SANITY_ERROR = 26;
     private static final int DIALOG_SYNC_UPGRADE_REQUIRED = 27;
     private static final int DIALOG_IMPORT = 28;
     private static final int DIALOG_IMPORT_LOG = 29;
@@ -472,7 +472,7 @@ public class DeckPicker extends FragmentActivity {
                         showDialog(DIALOG_SYNC_UPGRADE_REQUIRED);
                     } else if (resultType.equals("sanityCheckError")) {
                         mDialogMessage = res.getString(R.string.sync_log_error_fix, result[1] != null ? (" (" + (String) result[1] + ")") : "");
-                        showDialog(DIALOG_SYNC_ERROR);
+                        showDialog(DIALOG_SYNC_SANITY_ERROR);
                     } else {
                     	if (result.length > 1 && result[1] instanceof Integer) {
                             int type = (Integer) result[1];
@@ -1475,7 +1475,7 @@ public class DeckPicker extends FragmentActivity {
                 dialog = builder.create();
                 break;
 
-            case DIALOG_SYNC_ERROR:
+            case DIALOG_SYNC_SANITY_ERROR:
                 builder.setPositiveButton(res.getString(R.string.sync_conflict_local), mSyncConflictResolutionListener);
                 builder.setNeutralButton(res.getString(R.string.sync_conflict_remote), mSyncConflictResolutionListener);
                 builder.setNegativeButton(res.getString(R.string.sync_conflict_cancel), mSyncConflictResolutionListener);
@@ -1813,7 +1813,7 @@ public class DeckPicker extends FragmentActivity {
 
             case DIALOG_IMPORT_LOG:
             case DIALOG_SYNC_LOG:
-            case DIALOG_SYNC_ERROR:
+            case DIALOG_SYNC_SANITY_ERROR:
                 ad.setMessage(mDialogMessage);
                 break;
 
@@ -2061,12 +2061,34 @@ public class DeckPicker extends FragmentActivity {
     private DialogInterface.OnClickListener mSyncConflictResolutionListener = new DialogInterface.OnClickListener() {
         @Override
         public void onClick(DialogInterface dialog, int which) {
+            Resources res = getResources();
+            StyledDialog.Builder builder;
             switch (which) {
                 case DialogInterface.BUTTON_POSITIVE:
-                    sync("upload", mSyncMediaUsn);
+                    builder = new StyledDialog.Builder(DeckPicker.this);
+                    builder.setPositiveButton(res.getString(R.string.yes), new Dialog.OnClickListener() {
+						@Override
+						public void onClick(DialogInterface dialog, int which) {
+		                    sync("upload", mSyncMediaUsn);
+						}                    	
+                    });
+                    builder.setNegativeButton(res.getString(R.string.no), null);
+                    builder.setTitle(res.getString(R.string.sync_log_title));
+                    builder.setMessage(res.getString(R.string.sync_conflict_local_confirm));
+                    builder.show();
                     break;
                 case DialogInterface.BUTTON_NEUTRAL:
-                    sync("download", mSyncMediaUsn);
+                    builder = new StyledDialog.Builder(DeckPicker.this);
+                    builder.setPositiveButton(res.getString(R.string.yes), new Dialog.OnClickListener() {
+						@Override
+						public void onClick(DialogInterface dialog, int which) {
+		                    sync("download", mSyncMediaUsn);
+						}                    	
+                    });
+                    builder.setNegativeButton(res.getString(R.string.no), null);
+                    builder.setTitle(res.getString(R.string.sync_log_title));
+                    builder.setMessage(res.getString(R.string.sync_conflict_remote_confirm));
+                    builder.show();
                     break;
                 case DialogInterface.BUTTON_NEGATIVE:
                 default:
