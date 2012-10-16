@@ -66,6 +66,8 @@
   <string name="sync_conflict_message">Vaše balíčky zde a na AnkiWeb se liší natolik, že nemohou být sloučeny dohromady, takže je nutné přepsat balíčky jedné strany druhou.\n\nChcete použít balíčky odtud nebo balíčky z AnkiWeb?</string>
   <string name="sync_conflict_local">Odeslat</string>
   <string name="sync_conflict_remote">Stáhnout</string>
+  <string name="sync_conflict_remote_confirm">Do you really want to download the server\'s collection? Be aware that this will overwrite your local collection.</string>
+  <string name="sync_conflict_local_confirm">Do you really want to upload the local collection? Be aware that this will overwrite your collection on the server.</string>
   <string name="sync_conflict_cancel">Zrušit synchronizaci</string>
   <string name="sync_prepare_syncing">Příprava synchronizace...</string>
   <string name="sync_preparing_full_sync_message">Příprava úplné synchronizace...</string>

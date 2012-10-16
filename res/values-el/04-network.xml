@@ -66,6 +66,8 @@
   <string name="sync_conflict_message">Οι τράπουλές σας εδώ και στο AnkiWeb διαφέρουν κατά τέτοιο τρόπο που δε μπορούν να συγχωνευτούν, για αυτό πρέπει να αντικαταστήσετε τις τράπουλες της μίας τοποθεσίας με τις τράπουλες της άλλης.\n\nΘέλετε να στείλετε τις τράπουλες από εδώ, ή να λάβετε τις τράπουλες από το AnkiWeb;</string>
   <string name="sync_conflict_local">Αποστολή</string>
   <string name="sync_conflict_remote">Λήψη</string>
+  <string name="sync_conflict_remote_confirm">Do you really want to download the server\'s collection? Be aware that this will overwrite your local collection.</string>
+  <string name="sync_conflict_local_confirm">Do you really want to upload the local collection? Be aware that this will overwrite your collection on the server.</string>
   <string name="sync_conflict_cancel">Ακύρωση Συγχρονισμού</string>
   <string name="sync_prepare_syncing">Προετοιμασία συγχρονισμού...</string>
   <string name="sync_preparing_full_sync_message">Προετοιμασία πλήρους συγχρονισμού...</string>

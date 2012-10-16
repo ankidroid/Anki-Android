@@ -66,6 +66,8 @@
   <string name="sync_conflict_message">Az itteni és az AnkiWeb-es paklik között olyan a különbség, hogy nem lehet őket egybegyúrni, ezért szükséges felülirni az egyik helyen lévő paklit a másik helyen lévővel.\n\nSzeretnéd feltölteni innen a paklikat, vagy letöltöd őket az AnkiWeb-ről?</string>
   <string name="sync_conflict_local">Feltöltés</string>
   <string name="sync_conflict_remote">Letöltés</string>
+  <string name="sync_conflict_remote_confirm">Do you really want to download the server\'s collection? Be aware that this will overwrite your local collection.</string>
+  <string name="sync_conflict_local_confirm">Do you really want to upload the local collection? Be aware that this will overwrite your collection on the server.</string>
   <string name="sync_conflict_cancel">Szinkronizálás leállítása</string>
   <string name="sync_prepare_syncing">Felkészülés a szinkronizálásra...</string>
   <string name="sync_preparing_full_sync_message">Teljes szinkronizálásra való felkészülés...</string>

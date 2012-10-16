@@ -72,7 +72,7 @@
     <item>Por lapso</item>
   </string-array>
   <plurals name="card_browser_subtitle">
-    <item quantity="one">1 of %2$d cards shown</item>
+    <item quantity="one">1 de %2$d tarjetas mostrada</item>
     <item quantity="other">%1$d de %2$d tarjetas mostradas</item>
   </plurals>
 </resources>

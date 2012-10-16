@@ -66,6 +66,8 @@
   <string name="sync_conflict_message">Buradaki ve AnkiWeb\'deki desteleriniz birbirleriyle birleştirilemeyecek şekilde farklıdır, bu yüzden bir taraftaki desteleri diğerleriyle değiştirmek gerekir.\n\nBuradaki desteleri yüklemek mi, yoksa AnkiWeb\'deki desteleri indirmek mi istiyorsunuz?</string>
   <string name="sync_conflict_local">Yükle</string>
   <string name="sync_conflict_remote">İndir</string>
+  <string name="sync_conflict_remote_confirm">Do you really want to download the server\'s collection? Be aware that this will overwrite your local collection.</string>
+  <string name="sync_conflict_local_confirm">Do you really want to upload the local collection? Be aware that this will overwrite your collection on the server.</string>
   <string name="sync_conflict_cancel">Eşitlemeyi İptal Et</string>
   <string name="sync_prepare_syncing">Eşitlemeye hazırlanıyor...</string>
   <string name="sync_preparing_full_sync_message">Tam eşitlemeye hazırlanıyor...</string>

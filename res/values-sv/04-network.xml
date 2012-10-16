@@ -66,6 +66,8 @@
   <string name="sync_conflict_message">Dina kortlekar här och på AnkiWeb skiljer sig på ett sätt så att de inte kan slås samman, så kortlekarna på ena sidan måste skrivas över med de från den andra sidan.\n\nVill du ladda upp kortlekarna som används här, eller hämta kortlekarna från AnkiWeb?</string>
   <string name="sync_conflict_local">Ladda upp</string>
   <string name="sync_conflict_remote">Hämta</string>
+  <string name="sync_conflict_remote_confirm">Do you really want to download the server\'s collection? Be aware that this will overwrite your local collection.</string>
+  <string name="sync_conflict_local_confirm">Do you really want to upload the local collection? Be aware that this will overwrite your collection on the server.</string>
   <string name="sync_conflict_cancel">Avbryt synkning</string>
   <string name="sync_prepare_syncing">Förbereder synkning ...</string>
   <string name="sync_preparing_full_sync_message">Förbereder fullständig synkronisering...</string>

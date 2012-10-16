@@ -66,6 +66,8 @@
   <string name="sync_conflict_message">Seus decks aqui e em AnkiWeb diferem de tal forma que eles não podem ser mesclados juntos, por isso é necessário substituir os decks de um lado com os decks do outro.\n\nDeseja fazer upload dos decks daqui, ou baixar os decks de AnkiWeb?</string>
   <string name="sync_conflict_local">Fazer upload</string>
   <string name="sync_conflict_remote">Baixar</string>
+  <string name="sync_conflict_remote_confirm">Do you really want to download the server\'s collection? Be aware that this will overwrite your local collection.</string>
+  <string name="sync_conflict_local_confirm">Do you really want to upload the local collection? Be aware that this will overwrite your collection on the server.</string>
   <string name="sync_conflict_cancel">Cancelar sincronização</string>
   <string name="sync_prepare_syncing">Preparando sincronização...</string>
   <string name="sync_preparing_full_sync_message">Preparando sincronização completa...</string>

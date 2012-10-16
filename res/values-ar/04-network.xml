@@ -66,6 +66,8 @@
   <string name="sync_conflict_message">رزمك الخاص بك هنا وعلى أنكي ويب تختلف بطريقة بحيث لا يمكن دمجهما معا، لذلك من الضروري إحلال الرزم من جهة إلى جهة أخرى .\n\nهل تريد رفع الرزم من هنا، أو تنزيل الرزم من أنكي ويب؟</string>
   <string name="sync_conflict_local">رفع</string>
   <string name="sync_conflict_remote">تنزيل</string>
+  <string name="sync_conflict_remote_confirm">Do you really want to download the server\'s collection? Be aware that this will overwrite your local collection.</string>
+  <string name="sync_conflict_local_confirm">Do you really want to upload the local collection? Be aware that this will overwrite your collection on the server.</string>
   <string name="sync_conflict_cancel">إلغاء المزامنة</string>
   <string name="sync_prepare_syncing">إعداد المزامنة...</string>
   <string name="sync_preparing_full_sync_message">إعداد مزامنة كاملة...</string>

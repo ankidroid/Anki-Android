@@ -66,6 +66,8 @@
   <string name="sync_conflict_message">AnkiWeb 서버와 현재 기기의 암기묶음이 서로 다르기 때문에 어떤 방식으로든 병합을 할 수가 없습니다. 그래서 한 쪽의 암기묶음 파일을 다른쪽으로 덮어쓰기해야만 합니다.\n\n 암기묶음을 서버로 업로드 할까요? 아니면 AnkiWeb 서버에서 다운로드 할까요?</string>
   <string name="sync_conflict_local">업로드</string>
   <string name="sync_conflict_remote">다운로드</string>
+  <string name="sync_conflict_remote_confirm">Do you really want to download the server\'s collection? Be aware that this will overwrite your local collection.</string>
+  <string name="sync_conflict_local_confirm">Do you really want to upload the local collection? Be aware that this will overwrite your collection on the server.</string>
   <string name="sync_conflict_cancel">동기화 취소</string>
   <string name="sync_prepare_syncing">동기화 준비 중...</string>
   <string name="sync_preparing_full_sync_message">전체 동기화를 준비하는 중...</string>
