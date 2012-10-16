@@ -1567,7 +1567,7 @@ public class DeckPicker extends FragmentActivity {
             case DIALOG_IMPORT:
                 builder.setTitle(res.getString(R.string.import_title));
                 builder.setMessage(res.getString(R.string.import_message, mImportPath));
-                builder.setPositiveButton(res.getString(R.string.yes), new DialogInterface.OnClickListener() {
+                builder.setPositiveButton(res.getString(R.string.import_message_add), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         DeckTask.launchDeckTask(DeckTask.TASK_TYPE_IMPORT, new DeckTask.TaskListener() {
@@ -1611,7 +1611,62 @@ public class DeckPicker extends FragmentActivity {
                         mImportPath = null;
                     }
                 });
-                builder.setNegativeButton(res.getString(R.string.no), null);
+                builder.setPositiveButton(res.getString(R.string.import_message_replace), new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                    	Resources res = getResources();
+                    	StyledDialog.Builder builder = new StyledDialog.Builder(DeckPicker.this);
+                        builder.setTitle(res.getString(R.string.import_title));
+                        builder.setMessage(res.getString(R.string.import_message_replace_confirm, mImportPath));
+                        builder.setPositiveButton(res.getString(R.string.yes), new DialogInterface.OnClickListener() {
+
+							@Override
+							public void onClick(DialogInterface dialog,
+									int which) {
+		                        DeckTask.launchDeckTask(DeckTask.TASK_TYPE_IMPORT_REPLACE, new DeckTask.TaskListener() {
+		                            @Override
+		                            public void onPostExecute(DeckTask.TaskData result) {
+		                            	if (mProgressDialog != null && mProgressDialog.isShowing()) {
+		                                    mProgressDialog.dismiss();
+		                                }
+		                                if (result.getBoolean()) {
+		                                	Resources res = getResources();
+		                                	int count = result.getInt();
+		                                	if (count < 0) {
+		                                		if (count == -2) {
+		                                            mDialogMessage = res.getString(R.string.import_log_no_apkg);                                			
+		                                		} else {
+		                                            mDialogMessage = res.getString(R.string.import_log_error);                                			
+		                                		}
+		                                        showDialog(DIALOG_IMPORT_LOG);
+		                                	} else {
+		                                        Object[] info = result.getObjArray();
+		                                        updateDecksList((TreeSet<Object[]>) info[0], (Integer) info[1], (Integer) info[2]);
+		                                	}
+		                                } else {
+		                                	handleDbError();
+		                                }
+		                            }
+		                            @Override
+		                            public void onPreExecute() {
+		                                if (mProgressDialog == null || !mProgressDialog.isShowing()) {
+		                                    mProgressDialog = StyledProgressDialog
+		                                            .show(DeckPicker.this, getResources().getString(R.string.import_title),
+		                                                    getResources().getString(R.string.import_importing), true, false);
+		                                }
+		                            }
+		                            @Override
+		                            public void onProgressUpdate(DeckTask.TaskData... values) {
+		                            }
+		                        }, new TaskData(AnkiDroidApp.getCol(), mImportPath));
+		                        mImportPath = null;
+							}
+                        	
+                        });
+                        builder.setNegativeButton(res.getString(R.string.no), null);
+                    }
+                });
+                builder.setNegativeButton(res.getString(R.string.cancel), null);
                 builder.setCancelable(true);
                 dialog = builder.create();
             	break;
