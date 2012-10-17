@@ -1664,6 +1664,7 @@ public class DeckPicker extends FragmentActivity {
                         	
                         });
                         builder.setNegativeButton(res.getString(R.string.no), null);
+                        builder.show();
                     }
                 });
                 builder.setNegativeButton(res.getString(R.string.cancel), null);

@@ -836,6 +836,11 @@ public class DeckTask extends
 
 		// extract the deck from the zip file
 		String fileDir = AnkiDroidApp.getCurrentAnkiDroidDirectory(AnkiDroidApp.getInstance().getBaseContext()) + "/tmpzip";
+    	File dir = new File(fileDir);
+    	if (dir.exists()) {
+    		BackupManager.removeDir(dir);
+    	}
+
 		// from anki2.py
 		String colFile = fileDir + "/collection.anki2";
 		if (!Utils.unzip(path, fileDir) || !(new File(colFile)).exists()) {
@@ -845,14 +850,14 @@ public class DeckTask extends
 		String colPath = col.getPath();
 		// unload collection and trigger a backup
 		AnkiDroidApp.closeCollection(true);
-		BackupManager.performBackup(colPath);
+		BackupManager.performBackup(colPath, true);
 		// overwrite collection
 		File f = new File(colFile);
 		f.renameTo(new File(colPath));
 		
 		int addedCount = -1;
 		try {
-			col = AnkiDroidApp.openCollection(path);
+			col = AnkiDroidApp.openCollection(colPath);
 			
 			// because users don't have a backup of media, it's safer to import new
 			// data and rely on them running a media db check to get rid of any
@@ -867,23 +872,21 @@ public class DeckTask extends
 					String o = media.getString(n);
 					File of = new File(mediaDir + o);
 					if (!of.exists()) {
-						File newFile = new File(fileDir + "/" + n);
-						newFile.renameTo(of);
+						of.delete();
 					}
+					File newFile = new File(fileDir + "/" + n);
+					newFile.renameTo(of);
 				}
 			}
 			// delete tmp dir
-			File dir = new File(fileDir);
 			BackupManager.removeDir(dir);
 			
 			// actualize counts
 			Object[] counts = null;
-			if (addedCount != -1) {
-				DeckTask.TaskData result = doInBackgroundLoadDeckCounts(new TaskData(col));
-				if (result != null) {
-					counts = result.getObjArray();
-				}			
-			}
+			DeckTask.TaskData result = doInBackgroundLoadDeckCounts(new TaskData(col));
+			if (result != null) {
+				counts = result.getObjArray();
+			}			
 			return new TaskData(addedCount, counts, true);
 		} catch (RuntimeException e) {
 			Log.e(AnkiDroidApp.TAG,
