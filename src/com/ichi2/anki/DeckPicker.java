@@ -1631,18 +1631,12 @@ public class DeckPicker extends FragmentActivity {
 		                                }
 		                                if (result.getBoolean()) {
 		                                	Resources res = getResources();
-		                                	int count = result.getInt();
-		                                	if (count < 0) {
-		                                		if (count == -2) {
-		                                            mDialogMessage = res.getString(R.string.import_log_no_apkg);                                			
-		                                		} else {
-		                                            mDialogMessage = res.getString(R.string.import_log_error);                                			
-		                                		}
-		                                        showDialog(DIALOG_IMPORT_LOG);
-		                                	} else {
-		                                        Object[] info = result.getObjArray();
-		                                        updateDecksList((TreeSet<Object[]>) info[0], (Integer) info[1], (Integer) info[2]);
-		                                	}
+		                                	int code = result.getInt();
+	                                		if (code == -2) {
+	                                            mDialogMessage = res.getString(R.string.import_log_no_apkg);
+	                                		}
+	                                        Object[] info = result.getObjArray();
+	                                        updateDecksList((TreeSet<Object[]>) info[0], (Integer) info[1], (Integer) info[2]);
 		                                } else {
 		                                	handleDbError();
 		                                }
