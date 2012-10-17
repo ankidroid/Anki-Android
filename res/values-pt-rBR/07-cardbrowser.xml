@@ -39,7 +39,7 @@
   <string name="card_browser_change_display_order">Alterar a ordem de exibição</string>
   <string name="card_browser_change_display_order_title">Escolha a ordem de exibição</string>
   <string name="card_browser_change_display_order_reverse">Selecione um campo duas vezes para inverter a ordem.</string>
-  <string name="card_browser_order_reverse">(reverse)</string>
+  <string name="card_browser_order_reverse">(inverso)</string>
   <string name="card_browser_card_details">Detalhes do cartão</string>
   <string name="card_details_question">Pergunta</string>
   <string name="card_details_answer">Resposta</string>
@@ -63,8 +63,8 @@
     <item>Nenhuma distribuição(mais rápido)</item>
     <item>Por campo busca</item>
     <item>Por ordem de criação</item>
-    <item>By edited time</item>
-    <item>By changed time</item>
+    <item>Por última edição</item>
+    <item>Por mudança no tempo do card</item>
     <item>Por tempo programado</item>
     <item>Por intervalo</item>
     <item>Por facilidade</item>

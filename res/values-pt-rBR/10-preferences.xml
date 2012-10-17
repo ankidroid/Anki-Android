@@ -212,7 +212,7 @@
   <string name="input_workaround">Solução Alternativa de Entrada</string>
   <string name="input_workaround_summ">Solução alternativa para problemas em focalizar caixas de entrada em HTML. Causa problemas em vários dispositivos.</string>
   <string name="write_answers_message">Você deve definir para cada deck um campo para comparar com a resposta escrita. Você pode fazer isso através Anki Desktop (Propriedades dos Decks - &gt; Editar modelo - &gt; Layout do Cartão).\n\nSe nenhum campo de comparação é definido, sua resposta escrita será sempre comparada com a resposta inteira do cartão.</string>
-  <string name="pref_cardbrowser_skip_init_search">Fast Card Browser Open</string>
+  <string name="pref_cardbrowser_skip_init_search">Abrir navegador de cards rápido</string>
   <string name="pref_cardbrowser_skip_init_search_summ">Ignora a busca automática inicial quando abre o navegador de decks.</string>
   <string name="pref_keep_screen_on">Manter a Tela Ligada</string>
   <string name="pref_keep_screen_on_summ">Impedir que a tela seja desligada enquanto revisa</string>

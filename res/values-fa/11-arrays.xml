@@ -22,13 +22,13 @@
 <resources>
   <string-array name="newCardSchedulingLabels">
     <item>Spread out through reviews</item>
-    <item>After reviews</item>
-    <item>Before reviews</item>
+    <item>پس از مرور</item>
+    <item>قبل از مرور</item>
   </string-array>
   <string-array name="error_reporting_choice_labels">
-    <item>Always report</item>
-    <item>Never report</item>
-    <item>Ask me</item>
+    <item>هميشه گزارش بده</item>
+    <item>هرگز گزارش نده</item>
+    <item>بپرس</item>
   </string-array>
   <string-array name="widget_minimum_cards_due_labels">
     <item>10</item>
@@ -41,14 +41,14 @@
     <item>هرگز</item>
   </string-array>
   <string-array name="cram_review_order_labels">
-    <item>Show oldest modified first</item>
-    <item>Show in order added</item>
-    <item>Show in random order</item>
+    <item>اول آخرين تغييرات نشان داده شود</item>
+    <item>به ترتيب اضافه شدن نمايش داده شود</item>
+    <item>به صورت تصادفي نمايش داده شود</item>
   </string-array>
   <string-array name="studyoptions_more_new_card_order">
-    <item>New cards in random order</item>
-    <item>New cards in order added</item>
-    <item>New cards in reverse order added</item>
+    <item>كارتهاي جديد با ترتيب تصادفي</item>
+    <item>كارتهاي جديد به ترتيب اضافه شدن</item>
+    <item>كارتهاي جديد خلاف جهت اضافه شدن</item>
   </string-array>
   <string-array name="studyoptions_more_new_card_schedule">
     <item>گسترش جدید کارت از طریق بررسی</item>
@@ -57,8 +57,8 @@
   </string-array>
   <string-array name="studyoptions_more_rev_card_order">
     <item>بررسی کارت از بزرگترین فاصله</item>
-    <item>Review cards from smallest interval</item>
-    <item>Review cards in order due</item>
+    <item>مرور كارت از كوچكترين فاصله</item>
+    <item>مرور كارت به ترتيب موعد</item>
     <item>بررسی کارت در صورت تصادفی</item>
   </string-array>
   <string-array name="studyoptions_more_fail_card_option">
@@ -71,55 +71,55 @@
   <string-array name="gestures_labels">
     <item>هیچ عملیاتی</item>
     <item>نمایش پاسخ</item>
-    <item>Answer button 1</item>
-    <item>Answer button 2</item>
-    <item>Answer button 3</item>
-    <item>Answer button 4</item>
-    <item>Answer recommended (green)</item>
-    <item>Answer better than recommended</item>
-    <item>Undo</item>
+    <item>دكمه پاسخ 1</item>
+    <item>دكمه پاسخ 2</item>
+    <item>دكمه پاسخ 3</item>
+    <item>دكمه پاسخ 4</item>
+    <item>پاسخ توصيه شده-سبز</item>
+    <item>پاسخ بهتر از توصيه شده</item>
+    <item>برگشت</item>
     <item>ویرایش کارت</item>
     <item>علامت گذاری کارت</item>
-    <item>Lookup expression</item>
-    <item>Bury card</item>
+    <item>جستجوي عبارت</item>
+    <item>تعليق موقت</item>
     <item>تعلیق کارت</item>
     <item>حذف کارت</item>
-    <item>Clear Whiteboard</item>
-    <item>Play media</item>
-    <item>Abort learning</item>
+    <item>پاك كردن وايت برد</item>
+    <item>پخش رسانه</item>
+    <item>رد يادگيري</item>
   </string-array>
   <string-array name="theme_labels">
-    <item>Android Dark</item>
-    <item>Android Light</item>
-    <item>Blue</item>
+    <item>اندرويد تيره</item>
+    <item>اندرويد روشن</item>
+    <item>آبي</item>
     <item>سفید</item>
   </string-array>
   <string-array name="leech_action_labels">
     <item>تعلیق کارت</item>
-    <item>Tag only</item>
-    <item>Reset as new</item>
+    <item>تنها برچسب</item>
+    <item>برگرداندن به حالت جديد</item>
   </string-array>
   <string-array name="new_order_labels">
     <item>کارت های جدید در صورت تصادفی</item>
-    <item>New cards in order added</item>
+    <item>كارتهاي جديد به ترتيب اضافه شدن</item>
   </string-array>
   <string-array name="cram_deck_conf_order_labels">
-    <item>Oldest seen first</item>
-    <item>Random</item>
-    <item>Increasing intervals</item>
-    <item>Decreasing intervals</item>
-    <item>Most lapsed</item>
-    <item>Order added</item>
-    <item>Order due</item>
-    <item>Latest added first</item>
+    <item>اول قديمي ها ديده شود</item>
+    <item>تصادفي</item>
+    <item>افزايش فواصل</item>
+    <item>كاهش فواصل</item>
+    <item>بيشترين فاصله زماني</item>
+    <item>به ترتيب اضافه شدن</item>
+    <item>به ترتيب موعد</item>
+    <item>اولين اضافه شده هاي اخير</item>
   </string-array>
   <string-array name="cram_deck_conf_preset_labels">
     <item><![CDATA[<select preset>]]></item>
-    <item>Preview all new cards</item>
-    <item>Preview cards added today</item>
-    <item>Review today\'s forgotten cards</item>
-    <item>Review ahead by two days</item>
-    <item>Review due cards with tag</item>
+    <item>مرور مجدد همه كارتهاي جديد</item>
+    <item>پیش نمایش کارت اضافه شده امروز</item>
+    <item>مرور كارتهاي فراموش شده امروز</item>
+    <item>مرور دو روز پيش رو</item>
+    <item>مرور موعد كارت با برچسب</item>
     <item>Review due cards with decreasing intervals</item>
     <item>Cram all cards</item>
   </string-array>

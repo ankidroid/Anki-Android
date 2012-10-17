@@ -84,7 +84,10 @@
   <string name="info_rate">AnkiDroid bewerten</string>
   <string name="col_load_failed">Laden der Sammlung fehlgeschlagen.\nDrücken Sie \"zurück\", um AnkiDroid zu schließen.</string>
   <string name="import_title">Karten importieren</string>
-  <string name="import_message">Möchten Sie wirklich alle Karten aus der Datei %s importieren?</string>
+  <string name="import_message">Would you like to add the content of file %s to your collection, or replace your collection with it?</string>
+  <string name="import_message_add">Hinzufügen</string>
+  <string name="import_message_replace">Ersetzen</string>
+  <string name="import_message_replace_confirm">Ihre bestehende Sammlung wird gelöscht und durch die aus der Datei %s ersetzt. Sind Sie sicher?</string>
   <string name="import_log_success">Erfolgreich %d Karten importiert</string>
   <string name="import_log_error">Import fehlgeschlagen</string>
   <string name="import_log_no_apkg">Dies ist keine richtige apgk-Datei</string>

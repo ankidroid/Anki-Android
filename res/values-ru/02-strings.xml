@@ -84,7 +84,10 @@
   <string name="info_rate">Оценка AnkiDroid</string>
   <string name="col_load_failed">Сбой загрузки коллекции.\nНажмите кнопку назад, чтобы закрыть AnkiDroid.</string>
   <string name="import_title">Импорт карт</string>
-  <string name="import_message">Вы действительно хотите импортировать все карты из файла %s?</string>
+  <string name="import_message">Would you like to add the content of file %s to your collection, or replace your collection with it?</string>
+  <string name="import_message_add">Add</string>
+  <string name="import_message_replace">Replace</string>
+  <string name="import_message_replace_confirm">This will delete your existing collection and replace it with the data of file %s. Are you sure?</string>
   <string name="import_log_success">Успешно импортированы %d карты</string>
   <string name="import_log_error">Импорт не удался</string>
   <string name="import_log_no_apkg">Это негодный apkg-файл</string>
