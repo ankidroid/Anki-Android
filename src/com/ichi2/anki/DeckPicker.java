@@ -1611,7 +1611,7 @@ public class DeckPicker extends FragmentActivity {
                         mImportPath = null;
                     }
                 });
-                builder.setPositiveButton(res.getString(R.string.import_message_replace), new DialogInterface.OnClickListener() {
+                builder.setNeutralButton(res.getString(R.string.import_message_replace), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                     	Resources res = getResources();
