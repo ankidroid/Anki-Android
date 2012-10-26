@@ -60,8 +60,8 @@
   <string name="contextmenu_deckpicker_reset_reset_message">Redefinir idioma</string>
   <string name="contextmenu_deckpicker_optimize_deck">Otimizar banco de dados</string>
   <string name="contextmenu_deckpicker_rename_deck">Renomear deck</string>
-  <string name="contextmenu_deckpicker_collapse_deck">Collapse deck</string>
-  <string name="contextmenu_deckpicker_inflate_deck">Inflate deck</string>
+  <string name="contextmenu_deckpicker_collapse_deck">Recolher decks</string>
+  <string name="contextmenu_deckpicker_inflate_deck">Mostrar decks</string>
   <string name="contextmenu_deckpicker_set_custom_dictionary">Usar dicionário personalizado</string>
   <string name="menu_download_deck">Baixar deck</string>
   <string name="menu_download_shared_deck">Deck compartilhado</string>

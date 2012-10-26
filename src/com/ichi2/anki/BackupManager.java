@@ -158,13 +158,23 @@ public class BackupManager {
 
 
     public static void performBackup(String path) {
-        performBackup(path, BACKUP_INTERVAL);
+        performBackup(path, BACKUP_INTERVAL, false);
+    }
+
+
+    public static void performBackup(String path, boolean force) {
+        performBackup(path, BACKUP_INTERVAL, force);
     }
 
 
     public static void performBackup(String path, int interval) {
+        performBackup(path, interval, false);
+    }
+
+
+    public static void performBackup(String path, int interval, boolean force) {
         SharedPreferences prefs = AnkiDroidApp.getSharedPrefs(AnkiDroidApp.getInstance().getBaseContext());
-        if (!prefs.getBoolean("useBackup", true)) {
+        if (!prefs.getBoolean("useBackup", true) && !force) {
             return;
         }
         File collectionFile = new File(path);
@@ -189,7 +199,7 @@ public class BackupManager {
                 lastBackupDate = null;
             }
         }
-        if (lastBackupDate != null && lastBackupDate.getTime() + interval * 3600000 > Utils.intNow(1000)) {
+        if (lastBackupDate != null && lastBackupDate.getTime() + interval * 3600000 > Utils.intNow(1000) && !force) {
             Log.i(AnkiDroidApp.TAG, "performBackup: No backup created. Last backup younger than 5 hours");
             return;
         }

@@ -38,8 +38,8 @@
   <string name="card_browser_tags_shown">Tags: %1$s</string>
   <string name="card_browser_change_display_order">Alterar a ordem de exibição</string>
   <string name="card_browser_change_display_order_title">Escolha a ordem de exibição</string>
-  <string name="card_browser_change_display_order_reverse">Select a field twice to reverse.</string>
-  <string name="card_browser_order_reverse">(reverse)</string>
+  <string name="card_browser_change_display_order_reverse">Selecione um campo duas vezes para inverter a ordem.</string>
+  <string name="card_browser_order_reverse">(inverso)</string>
   <string name="card_browser_card_details">Detalhes do cartão</string>
   <string name="card_details_question">Pergunta</string>
   <string name="card_details_answer">Resposta</string>
@@ -62,14 +62,14 @@
   <string-array name="card_browser_order_labels">
     <item>Nenhuma distribuição(mais rápido)</item>
     <item>Por campo busca</item>
-    <item>By created time</item>
-    <item>By edited time</item>
-    <item>By changed time</item>
-    <item>By due time</item>
-    <item>By interval</item>
-    <item>By ease</item>
-    <item>By reviews</item>
-    <item>By lapses</item>
+    <item>Por ordem de criação</item>
+    <item>Por última edição</item>
+    <item>Por mudança no tempo do card</item>
+    <item>Por tempo programado</item>
+    <item>Por intervalo</item>
+    <item>Por facilidade</item>
+    <item>Por revisões</item>
+    <item>Por falhas</item>
   </string-array>
   <plurals name="card_browser_subtitle">
     <item quantity="one">1 de %2$d cartões mostrados</item>

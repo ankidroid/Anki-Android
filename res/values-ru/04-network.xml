@@ -66,6 +66,8 @@
   <string name="sync_conflict_message">Ваши колоды тут и на AnkiWeb-онлайн отличаются таким образом, что они не могут быть объединены вместе, так что нужно перезаписать одну колоду другой полностью.\n\nВы хотите выгрузить колоду отсюда или скачать колоду с AnkiWeb сюда?</string>
   <string name="sync_conflict_local">Выгрузка</string>
   <string name="sync_conflict_remote">Загрузить</string>
+  <string name="sync_conflict_remote_confirm">Do you really want to download the server\'s collection? Be aware that this will overwrite your local collection.</string>
+  <string name="sync_conflict_local_confirm">Do you really want to upload the local collection? Be aware that this will overwrite your collection on the server.</string>
   <string name="sync_conflict_cancel">Отменить синхронизацию</string>
   <string name="sync_prepare_syncing">Подготовка синхронизации...</string>
   <string name="sync_preparing_full_sync_message">Подготовка полной синхронизации...</string>

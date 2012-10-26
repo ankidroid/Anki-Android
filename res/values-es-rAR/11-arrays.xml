@@ -71,13 +71,13 @@
   <string-array name="gestures_labels">
     <item>Sin acción</item>
     <item>Mostrar respuesta</item>
-    <item>Answer button 1</item>
-    <item>Answer button 2</item>
-    <item>Answer button 3</item>
-    <item>Answer button 4</item>
-    <item>Answer recommended (green)</item>
-    <item>Answer better than recommended</item>
-    <item>Undo</item>
+    <item>Botón de respuesta 1</item>
+    <item>Botón de respuesta 2</item>
+    <item>Botón de respuesta 3</item>
+    <item>Botón de respuesta 4</item>
+    <item>Respuesta recomendada (verde)</item>
+    <item>Respuesta mejor que la recomendada</item>
+    <item>Deshacer</item>
     <item>Editar tarjeta</item>
     <item>Marcar tarjeta</item>
     <item>Buscar expresión</item>
@@ -85,8 +85,8 @@
     <item>Suspender tarjeta</item>
     <item>Eliminar tarjeta</item>
     <item>Limpiar pizarra</item>
-    <item>Play media</item>
-    <item>Abort learning</item>
+    <item>Reproducir multimedia</item>
+    <item>Detener el aprendizaje</item>
   </string-array>
   <string-array name="theme_labels">
     <item>Android oscuro</item>
@@ -104,23 +104,23 @@
     <item>Tarjetas nuevas en orden añadido</item>
   </string-array>
   <string-array name="cram_deck_conf_order_labels">
-    <item>Oldest seen first</item>
-    <item>Random</item>
+    <item>Ver primero las más antiguas</item>
+    <item>Al azar</item>
     <item>Increasing intervals</item>
     <item>Decreasing intervals</item>
     <item>Most lapsed</item>
     <item>Order added</item>
-    <item>Order due</item>
-    <item>Latest added first</item>
+    <item>Orden de tarjetas programadas</item>
+    <item>Primero las añadidas más recientemente</item>
   </string-array>
   <string-array name="cram_deck_conf_preset_labels">
     <item><![CDATA[<select preset>]]></item>
-    <item>Preview all new cards</item>
-    <item>Preview cards added today</item>
-    <item>Review today\'s forgotten cards</item>
-    <item>Review ahead by two days</item>
-    <item>Review due cards with tag</item>
+    <item>Previsualizar todas las tarjetas nuevas</item>
+    <item>Previsualizar tarjetas añadidas hoy</item>
+    <item>Revisar tarjetas olvidadas hoy</item>
+    <item>Revisar con dos días de antelación</item>
+    <item>Revisar tarjetas programadas con etiqueta</item>
     <item>Review due cards with decreasing intervals</item>
-    <item>Cram all cards</item>
+    <item>Empollar todas las tarjetas</item>
   </string-array>
 </resources>

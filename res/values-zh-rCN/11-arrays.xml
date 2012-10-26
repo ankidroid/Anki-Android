@@ -111,7 +111,7 @@
     <item>忘记最多的</item>
     <item>添加的顺序</item>
     <item>根据到期顺序</item>
-    <item>Latest added first</item>
+    <item>最晚添加的优先</item>
   </string-array>
   <string-array name="cram_deck_conf_preset_labels">
     <item><![CDATA[< 选择预置>]]></item>

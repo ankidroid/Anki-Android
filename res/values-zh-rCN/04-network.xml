@@ -66,6 +66,8 @@
   <string name="sync_conflict_message">您本地的牌组和AnkiWeb上的牌组存在冲突，需要以其中一侧覆盖另一侧。\n\n你想上传本地牌组，还是下载AnkiWeb上的牌组？</string>
   <string name="sync_conflict_local">上传</string>
   <string name="sync_conflict_remote">下载</string>
+  <string name="sync_conflict_remote_confirm">确认要下载服务器的牌组集合吗？注意这会覆盖掉本地的牌组集合。</string>
+  <string name="sync_conflict_local_confirm">确认要上传本地牌组集合吗？注意这会覆盖掉服务器端的牌组集合。</string>
   <string name="sync_conflict_cancel">取消同步</string>
   <string name="sync_prepare_syncing">准备同步...</string>
   <string name="sync_preparing_full_sync_message">准备完全同步…</string>

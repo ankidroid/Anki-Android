@@ -66,6 +66,8 @@
   <string name="sync_conflict_message">Je leersets hier en die op AnkiWeb verschillen zodanig, dat zij niet kunnen worden samengevoegd. Dus het is noodzakelijk om de leersets van een kant te overschrijven.\n\nWil je de lokale leersets uploaden, de leersets van AnkiWeb downloaden?</string>
   <string name="sync_conflict_local">Uploaden</string>
   <string name="sync_conflict_remote">Downloaden</string>
+  <string name="sync_conflict_remote_confirm">Do you really want to download the server\'s collection? Be aware that this will overwrite your local collection.</string>
+  <string name="sync_conflict_local_confirm">Do you really want to upload the local collection? Be aware that this will overwrite your collection on the server.</string>
   <string name="sync_conflict_cancel">Annuleer Synchroniseren</string>
   <string name="sync_prepare_syncing">Synchronisatie wordt voorbereid...</string>
   <string name="sync_preparing_full_sync_message">Volledige synchronisatie wordt voorbereid...</string>

@@ -66,6 +66,8 @@
   <string name="sync_conflict_message">Ihre Stapel hier und auf dem AnkiWeb-Server unterscheiden sich so stark, dass sie nicht vereinigt werden können; es ist deshalb nötig, eine Seite mit der anderen zu überschreiben.\n\nMöchen Sie die Stapel von hier hochladen, oder die Stapel von AnkiWeb herunterladen?</string>
   <string name="sync_conflict_local">Hochladen</string>
   <string name="sync_conflict_remote">Herunterladen</string>
+  <string name="sync_conflict_remote_confirm">Möchten Sie wirklich die Sammlung vom Server herunterladen? Beachten Sie, dass dies Ihre lokale Sammlung überschreibt.</string>
+  <string name="sync_conflict_local_confirm">Möchten Sie wirklich die lokale Sammlung zum Server hochladen? Dies überschreibt die Sammlung auf dem Server.</string>
   <string name="sync_conflict_cancel">Abbrechen</string>
   <string name="sync_prepare_syncing">Synchronisierung wird vorbereitet…</string>
   <string name="sync_preparing_full_sync_message">Bereite Synchronisierung vor…</string>

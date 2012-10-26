@@ -66,6 +66,8 @@
   <string name="sync_conflict_message">Sus mazos aquí y en AnkiWeb difieren de tal modo que no pueden ser combinados, por lo cual se precisa sobreescribir los mazos en uno de esos sitios con los del otro.\n\n¿Desde subir desde aquí sus mazos o descargar los mazos de AnkiWeb?</string>
   <string name="sync_conflict_local">Subir</string>
   <string name="sync_conflict_remote">Descargar</string>
+  <string name="sync_conflict_remote_confirm">Do you really want to download the server\'s collection? Be aware that this will overwrite your local collection.</string>
+  <string name="sync_conflict_local_confirm">Do you really want to upload the local collection? Be aware that this will overwrite your collection on the server.</string>
   <string name="sync_conflict_cancel">Cancelar sincronización</string>
   <string name="sync_prepare_syncing">Preparando sincronización...</string>
   <string name="sync_preparing_full_sync_message">Preparando sincronización completa...</string>

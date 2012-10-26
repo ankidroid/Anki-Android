@@ -84,7 +84,10 @@
   <string name="info_rate">امتیازدهی به آنکی دروید</string>
   <string name="col_load_failed">عدم موفقیت در بارگذاری مجموعه.\nبرای بستن آنکی دروید دکمه برگشت را فشار دهید.</string>
   <string name="import_title">درون ریزی کارتها</string>
-  <string name="import_message">آیا واقعا شما می خواهید تمام کارتها را از فایل%s وارد کنید؟</string>
+  <string name="import_message">Would you like to add the content of file %s to your collection, or replace your collection with it?</string>
+  <string name="import_message_add">Add</string>
+  <string name="import_message_replace">Replace</string>
+  <string name="import_message_replace_confirm">This will delete your existing collection and replace it with the data of file %s. Are you sure?</string>
   <string name="import_log_success">باموفقیت وارد شد %d کارتهای</string>
   <string name="import_log_error">عدم موفقیت در وارد کردن</string>
   <string name="import_log_no_apkg">این یک فایل apkg معتبر نیست</string>

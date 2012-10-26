@@ -22,6 +22,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Locale;
 
+import org.json.JSONObject;
+
+import com.ichi2.libanki.Sched;
 import com.ichi2.themes.StyledDialog;
 
 import android.speech.tts.TextToSpeech;
@@ -41,18 +44,18 @@ public class ReadText {
     private static int mOrd;
     private static int mQuestionAnswer;
     public static final String NO_TTS = "0";
-    public static ArrayList<String[]> mTextQueue = new ArrayList<String[]>();
+    public static ArrayList<String[]> sTextQueue = new ArrayList<String[]>();
     public static HashMap<String, String> mTtsParams;
 
     // private boolean mTtsReady = false;
 
-    private static void speak(String text, String loc) {
+    public static void speak(String text, String loc) {
         int result = mTts.setLanguage(new Locale(loc));
         if (result == TextToSpeech.LANG_MISSING_DATA || result == TextToSpeech.LANG_NOT_SUPPORTED) {
             Log.e(AnkiDroidApp.TAG, "Error loading locale " + loc.toString());
         } else {
         	if (mTts.isSpeaking()) {
-        		mTextQueue.add(new String[]{text, loc});
+        		sTextQueue.add(new String[]{text, loc});
         	} else {
                 mTts.speak(mTextToSpeak, TextToSpeech.QUEUE_FLUSH, mTtsParams);        		
         	}
@@ -141,23 +144,7 @@ public class ReadText {
                 } else {
                     Log.e(AnkiDroidApp.TAG, "Initialization of TTS failed");
                 }
-                mTts.setOnUtteranceProgressListener(new UtteranceProgressListener() {
-        			@Override
-        			public void onDone(String arg0) {
-        				if (mTextQueue.size() > 0) {
-        					String[] text = mTextQueue.remove(0);
-        					speak(text[0], text[1]);
-        				}
-        			}
-        			@Override
-        			public void onError(String arg0) {
-        			}
-        			@Override
-        			public void onStart(String arg0) {
-        			}
-                	
-                });
-
+                AnkiDroidApp.getCompat().setTtsOnUtteranceProgressListener(mTts);
             }
         });
         mTtsParams = new HashMap<String, String>();
@@ -175,8 +162,8 @@ public class ReadText {
 
     public static void stopTts() {
         if (mTts != null) {
-        	if (mTextQueue != null) {
-        		mTextQueue.clear();
+        	if (sTextQueue != null) {
+        		sTextQueue.clear();
         	}
             mTts.stop();
         }

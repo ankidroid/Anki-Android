@@ -40,8 +40,9 @@ import com.ichi2.anki.controller.ControllerManager;
 import com.ichi2.async.Connection;
 import com.ichi2.compat.Compat;
 import com.ichi2.compat.CompatV11;
-import com.ichi2.compat.CompatV4;
+import com.ichi2.compat.CompatV15;
 import com.ichi2.compat.CompatV5;
+import com.ichi2.compat.CompatV4;
 import com.ichi2.compat.CompatV9;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Storage;
@@ -108,6 +109,8 @@ public class AnkiDroidApp extends Application {
 
         if (android.os.Build.MODEL.toLowerCase().equals("nook") || android.os.Build.DEVICE.toLowerCase().equals("nook")) {
             mCompat = new CompatV4();
+        } else if (AnkiDroidApp.SDK_VERSION >= 15) {
+            mCompat = new CompatV15();
         } else if (AnkiDroidApp.SDK_VERSION >= 11) {
             mCompat = new CompatV11();
         } else if (AnkiDroidApp.SDK_VERSION >= 9) {

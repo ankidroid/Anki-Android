@@ -729,7 +729,13 @@ public class Collection {
         try {
             card.setDid(did != 0 ? did : note.model().getLong("did"));
             // if invalid did, use default instead
-            card.setDid(mDecks.get(card.getDid()).getLong("id"));
+            JSONObject deck = mDecks.get(card.getDid());
+            if (deck.getInt("dyn") == 1) {
+            	// must not be a filtered deck
+            	card.setDid(1);
+            } else {
+                card.setDid(deck.getLong("id"));            	
+            }
         } catch (JSONException e) {
             throw new RuntimeException(e);
         }

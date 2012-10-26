@@ -84,10 +84,13 @@
   <string name="info_rate">Puntúe AnkiDroid</string>
   <string name="col_load_failed">Carga de colección fallida.\nPresione atrás para cerrar AnkiDroid.</string>
   <string name="import_title">Importar tarjetas</string>
-  <string name="import_message">¿Desea realmente importar todas las tarjetas al archivo %s?</string>
+  <string name="import_message">Would you like to add the content of file %s to your collection, or replace your collection with it?</string>
+  <string name="import_message_add">Add</string>
+  <string name="import_message_replace">Replace</string>
+  <string name="import_message_replace_confirm">This will delete your existing collection and replace it with the data of file %s. Are you sure?</string>
   <string name="import_log_success">%d tarjetas importadas exitosamente</string>
   <string name="import_log_error">Importación fallida</string>
-  <string name="import_log_no_apkg">This is not a valid apkg file</string>
+  <string name="import_log_no_apkg">Este no es un archivo apkg válido</string>
   <string name="import_importing">Importando tarjetas.\nAguarde, por favor...</string>
   <string name="import_hint">Para importar tarjetas coloque el archivo apkg en el directorio %s y presione OK</string>
   <string name="import_no_file_found">No se ha encontrado un archivo apkg para importar</string>
@@ -98,7 +101,7 @@
     <item>Intervalos decrescientes</item>
     <item>Most lapses</item>
     <item>Order added</item>
-    <item>Order due</item>
+    <item>Orden de tarjetas programadas</item>
   </string-array>
   <plurals name="factadder_cards_added">
     <item quantity="one">1 tarjeta añadida</item>

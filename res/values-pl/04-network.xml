@@ -66,6 +66,8 @@
   <string name="sync_conflict_message">Twoje talie tutaj oraz na AnkiWeb różnią się do tego stopnia, że nie mogą być połączone. Konieczne jest zatem nadpisanie talii w jednym miejscu taliami skądinąd.\n\nCzy chciałbyś przesłać talie stąd czy pobrać talie z AnkiWeb?</string>
   <string name="sync_conflict_local">Wysyłanie</string>
   <string name="sync_conflict_remote">Pobieranie</string>
+  <string name="sync_conflict_remote_confirm">Do you really want to download the server\'s collection? Be aware that this will overwrite your local collection.</string>
+  <string name="sync_conflict_local_confirm">Do you really want to upload the local collection? Be aware that this will overwrite your collection on the server.</string>
   <string name="sync_conflict_cancel">Anuluj synchronizację</string>
   <string name="sync_prepare_syncing">Przygotowywanie synchronizacji...</string>
   <string name="sync_preparing_full_sync_message">Przygotowanie pełnej synchronizacji...</string>
