@@ -108,11 +108,10 @@ public class LaTeX {
      * @return
      */
     private static String _latexFromHtml(Collection col, String latex) {
-        StringBuffer sb = new StringBuffer();
         // entitydefs defines nbsp as \xa0 instead of a standard space, so we
         // replace it first
         latex = latex.replace("&nbsp;", " ");
-        latex = sb.toString().replaceAll("<br( /)?>", "\n");
+        latex = latex.replaceAll("<br( /)?>", "\n");
         // replace <div> etc with spaces
         latex = latex.replaceAll("<.+?>", " ");
         latex = Utils.stripHTML(latex);
