@@ -538,7 +538,7 @@ public class Utils {
      */
 
     /**
-     * MD5 checksum.
+     * SHA1 checksum.
      * Equivalent to python sha1.hexdigest()
      *
      * @param data the string to generate hash from
