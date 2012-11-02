@@ -542,7 +542,7 @@ public class Utils {
      * Equivalent to python sha1.hexdigest()
      *
      * @param data the string to generate hash from
-     * @return A string of length 32 containing the hexadecimal representation of the MD5 checksum of data.
+     * @return A string of length 40 containing the hexadecimal representation of the MD5 checksum of data.
      */
     public static String checksum(String data) {
         String result = "";
@@ -561,9 +561,14 @@ public class Utils {
             }
             BigInteger biginteger = new BigInteger(1, digest);
             result = biginteger.toString(16);
-            // pad with zeros to length of 32
-            if (result.length() < 32) {
-                result = "00000000000000000000000000000000".substring(0, 32 - result.length()) + result;
+            
+            // pad with zeros to length of 40 This method used to pad
+            // to the length of 32. As it turns out, sha1 has a digest
+            // size of 160 bits, leading to a hex digest size of 40,
+            // not 32.
+            if (result.length() < 40) {
+                String zeroes = "0000000000000000000000000000000000000000";
+                result = zeroes.substring(0, zeroes.length() - result.length()) + result;
             }
         }
         return result;
