@@ -907,6 +907,16 @@ public class Reviewer extends AnkiControllableActivity {
         return result;
     }
 
+    private void setFullScreen(boolean fullScreen) {
+        WindowManager.LayoutParams attrs = getWindow().getAttributes();
+        if (fullScreen) {
+            attrs.flags |= WindowManager.LayoutParams.FLAG_FULLSCREEN;
+        } else {
+            attrs.flags &= (~WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        }
+        getWindow().setAttributes(attrs);
+    }
+
 
     private Handler mTimerHandler = new Handler();
 
@@ -957,6 +967,7 @@ public class Reviewer extends AnkiControllableActivity {
 
             mBaseUrl = Utils.getBaseUrl(col.getMedia().getDir());
             restorePreferences();
+            setFullScreen(mPrefFullscreenReview);
 
             try {
                 String[] title = mSched.getCol().getDecks().current().getString("name").split("::");
@@ -1370,6 +1381,7 @@ public class Reviewer extends AnkiControllableActivity {
             getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                     WindowManager.LayoutParams.FLAG_FULLSCREEN);
         }
+        setFullScreen(mPrefFullscreenReview);
     }
 
 
