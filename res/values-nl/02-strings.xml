@@ -84,7 +84,10 @@
   <string name="info_rate">Geef AnkiDroid een cijfer</string>
   <string name="col_load_failed">Land van collectie mislukt.\nKlik terug om AnkiDroid te sluiten.</string>
   <string name="import_title">Importeer kaarten</string>
-  <string name="import_message">Weet u zeker dat u alle van van bestand %s wilt importeren?</string>
+  <string name="import_message">Would you like to add the content of file %s to your collection, or replace your collection with it?</string>
+  <string name="import_message_add">Add</string>
+  <string name="import_message_replace">Replace</string>
+  <string name="import_message_replace_confirm">This will delete your existing collection and replace it with the data of file %s. Are you sure?</string>
   <string name="import_log_success">%d kaarten zijn succesvol geimporteerd</string>
   <string name="import_log_error">Importeren mislukt</string>
   <string name="import_log_no_apkg">Dit is een onjuist apkg bestand</string>

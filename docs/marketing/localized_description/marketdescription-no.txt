@@ -1,4 +1,4 @@
-Husk hva som helst med AnkiDroid!
+Memorér hva som helst med AnkiDroid!
 
 AnkiDroid lærer deg innholdet i spørrekort veldig effektivt ved å vise kortene rett før du holder på å glemme innholdet. Programmet er helt kompatibelt med Anki (programvare for tidsbestemt gjentakelse - "spaced repetition"), og kan synkroniseres mot Anki. Anki er tilgjengelig for Windows, Linux og MacOS.
 

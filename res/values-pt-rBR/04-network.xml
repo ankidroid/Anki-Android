@@ -66,6 +66,8 @@
   <string name="sync_conflict_message">Seus decks aqui e em AnkiWeb diferem de tal forma que eles não podem ser mesclados juntos, por isso é necessário substituir os decks de um lado com os decks do outro.\n\nDeseja fazer upload dos decks daqui, ou baixar os decks de AnkiWeb?</string>
   <string name="sync_conflict_local">Fazer upload</string>
   <string name="sync_conflict_remote">Baixar</string>
+  <string name="sync_conflict_remote_confirm">Você realmente quer baixar a coleção do servidor? Isso irá sobrescrever a sua coleção local.</string>
+  <string name="sync_conflict_local_confirm">Você realmente quer fazer upload da coleção local? Isso irá sobrescrever a coleção no servidor.</string>
   <string name="sync_conflict_cancel">Cancelar sincronização</string>
   <string name="sync_prepare_syncing">Preparando sincronização...</string>
   <string name="sync_preparing_full_sync_message">Preparando sincronização completa...</string>
@@ -129,5 +131,5 @@
   <string name="upgrade_decks_button">Atualizar</string>
   <string name="upgrade_decks_failed">Estes decks não puderam ser atualizados\n%sPor favor abra-os no Anki Desktop e faça uma checagem no banco de dados Após você pode importa-los atraves do Anki Desktop.</string>
   <string name="upgrade_decks_media_failed">A copia dos arquivos de mídia ao novo diretório de mídias(%1$s)  falhou para estes decks:\n%2$sPor favor mova os arquivos de mídia manualmente.</string>
-  <string name="download_deck">Downloading deck (%d kb).\nPlease wait...</string>
+  <string name="download_deck">Baixando deck (%d kb).\nAguarde...</string>
 </resources>

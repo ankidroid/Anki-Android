@@ -66,6 +66,8 @@
   <string name="sync_conflict_message">Your decks here and on AnkiWeb differ in such a way that they can\'t be merged together, so it\'s necessary to overwrite the decks on one side with the decks from the other.\n\nDo you want to upload the decks from here, or download the decks from AnkiWeb?</string>
   <string name="sync_conflict_local">Upload</string>
   <string name="sync_conflict_remote">Download</string>
+  <string name="sync_conflict_remote_confirm">Do you really want to download the server\'s collection? Be aware that this will overwrite your local collection.</string>
+  <string name="sync_conflict_local_confirm">Do you really want to upload the local collection? Be aware that this will overwrite your collection on the server.</string>
   <string name="sync_conflict_cancel">Batal Sinkronisasi</string>
   <string name="sync_prepare_syncing">Mempersiapkan sinkronisasi…</string>
   <string name="sync_preparing_full_sync_message">Menyiapkan sinkronisasi penuh …</string>

@@ -16,7 +16,15 @@
 
 package com.ichi2.compat;
 
+import java.lang.reflect.Method;
+import java.util.ArrayList;
+
+import com.ichi2.anki.ReadText;
+
 import android.app.Activity;
+import android.speech.tts.TextToSpeech;
+import android.speech.tts.TextToSpeech.OnUtteranceCompletedListener;
+import android.speech.tts.UtteranceProgressListener;
 import android.view.View;
 import android.webkit.WebView;
 
@@ -37,4 +45,18 @@ public class CompatV4 implements Compat {
 	}
 	public void setSubtitle(Activity activity, String title) { }
 	public void setSubtitle(Activity activity, String title, boolean inverted) { }
+	@Override
+    public void setTtsOnUtteranceProgressListener(TextToSpeech tts) {
+    	tts.setOnUtteranceCompletedListener(new OnUtteranceCompletedListener() {
+			@Override
+			public void onUtteranceCompleted(String utteranceId) {
+				if (ReadText.sTextQueue.size() > 0) {
+					String[] text = ReadText.sTextQueue.remove(0);
+					ReadText.speak(text[0], text[1]);
+				}
+			}
+        });
+
+    }
+
 }

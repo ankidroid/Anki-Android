@@ -84,8 +84,10 @@
   <string name="info_rate">قيم أنكيدرويد</string>
   <string name="col_load_failed">فشل تحميل المجموعة-\nاضغط تراجع لإغلاق أنكيدرويد.</string>
   <string name="import_title">استيراد البطاقات</string>
-  <string name="import_message">هل تريد حقاً استيراد كافة البطاقات من الملف %s؟
-</string>
+  <string name="import_message">Would you like to add the content of file %s to your collection, or replace your collection with it?</string>
+  <string name="import_message_add">Add</string>
+  <string name="import_message_replace">Replace</string>
+  <string name="import_message_replace_confirm">This will delete your existing collection and replace it with the data of file %s. Are you sure?</string>
   <string name="import_log_success">استوردت %d بطاقة بنجاح</string>
   <string name="import_log_error">فشل الاستيراد</string>
   <string name="import_log_no_apkg">هذا ليس ملف apkg صالح</string>

@@ -105,7 +105,7 @@ public class RemoteMediaServer extends BasicHttpSyncer {
             int resultType = ret.getStatusLine().getStatusCode();
             if (resultType == 200) {
                 s = super.stream2String(ret.getEntity().getContent());
-                if (!s.equalsIgnoreCase("null") && s.length() != 0) {
+                if (s != null && !s.equalsIgnoreCase("null") && s.length() != 0) {
                     return Long.getLong(s);
                 }
             }

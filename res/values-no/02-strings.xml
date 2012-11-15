@@ -84,7 +84,10 @@
   <string name="info_rate">Bedøm AnkiDroid</string>
   <string name="col_load_failed">Henting av samling mislykkes.\nVelg tilbake for å lukke AnkiDroid.</string>
   <string name="import_title">Importer kort</string>
-  <string name="import_message">Vil du importere alle kortene i fil %s?</string>
+  <string name="import_message">Would you like to add the content of file %s to your collection, or replace your collection with it?</string>
+  <string name="import_message_add">Add</string>
+  <string name="import_message_replace">Replace</string>
+  <string name="import_message_replace_confirm">This will delete your existing collection and replace it with the data of file %s. Are you sure?</string>
   <string name="import_log_success">Importerte %d kort problemfritt</string>
   <string name="import_log_error">Import feilet</string>
   <string name="import_log_no_apkg">This is not a valid apkg file</string>

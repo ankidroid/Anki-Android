@@ -66,6 +66,8 @@
   <string name="sync_conflict_message">Vos paquets ici et sur AnkiWeb diffèrent de telle manière qu\'ils ne peuvent pas être fusionnés, il est donc nécessaire d\'écraser les uns ou les autres.\n\nVoulez vous garder et envoyer les paquets d\'ici, ou téléchargez les paquets de AnkiWeb ?</string>
   <string name="sync_conflict_local">Envoi</string>
   <string name="sync_conflict_remote">Télécharger</string>
+  <string name="sync_conflict_remote_confirm">Do you really want to download the server\'s collection? Be aware that this will overwrite your local collection.</string>
+  <string name="sync_conflict_local_confirm">Do you really want to upload the local collection? Be aware that this will overwrite your collection on the server.</string>
   <string name="sync_conflict_cancel">Annuler la synchronisation</string>
   <string name="sync_prepare_syncing">Préparation de la synchronisation...</string>
   <string name="sync_preparing_full_sync_message">Préparation d\'une synchronisation complète ...</string>

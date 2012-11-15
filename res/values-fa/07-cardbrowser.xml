@@ -31,15 +31,15 @@
   <string name="delete_card_title">حذف یادداشت</string>
   <string name="delete_card_message">آیا واقعا قصد دارید همه کارتهای این یادداشت را حذف کنید?\nعدم موفقیت جستجو: %s</string>
   <string name="card_browser_show_marked">فیلتر علامتگذاری شد</string>
-  <string name="card_browser_field">Change CardBrowser Field</string>
-  <string name="card_browser_field_title">Change CardBrowser Field</string>
+  <string name="card_browser_field">محدوده مرورگر کارت تغییر کرد</string>
+  <string name="card_browser_field_title">محدوده مرورگر کارت تغییر کرد</string>
   <string name="card_browser_show_suspended">فیلتر معلق شد</string>
   <string name="card_browser_search_by_tag">بوسیله برچسب فیلتر شد</string>
   <string name="card_browser_tags_shown">برچسب ها: %1$s</string>
   <string name="card_browser_change_display_order">سفارش تغییر صفحه نمایش</string>
   <string name="card_browser_change_display_order_title">سفارش انتخاب صفحه نمایش</string>
-  <string name="card_browser_change_display_order_reverse">Select a field twice to reverse.</string>
-  <string name="card_browser_order_reverse">(reverse)</string>
+  <string name="card_browser_change_display_order_reverse">انتخاب یک محدودۀ دوبرابر معکوس.  </string>
+  <string name="card_browser_order_reverse">(معکوس)</string>
   <string name="card_browser_card_details">جزئیات کارت</string>
   <string name="card_details_question">سوال</string>
   <string name="card_details_answer">پاسخ</string>
@@ -61,18 +61,18 @@
   <string name="card_details_card_model">مدل کارت</string>
   <string-array name="card_browser_order_labels">
     <item>مرتب سازی نکن (سریعتر)</item>
-    <item>By search field</item>
-    <item>By created time</item>
-    <item>By edited time</item>
-    <item>By changed time</item>
-    <item>By due time</item>
-    <item>By interval</item>
-    <item>By ease</item>
-    <item>By reviews</item>
+    <item>محدود جستجو</item>
+    <item>به وسیله زمان پیدایش</item>
+    <item>به وسیله زمان ویرایش شده</item>
+    <item>بوسیله زمان تغییر داده شده</item>
+    <item>بوسیله وظیفه زمان </item>
+    <item>به وسیله وقفه</item>
+    <item>به وسیله سهولت</item>
+    <item>به وسیله بررسی</item>
     <item>By lapses</item>
   </string-array>
   <plurals name="card_browser_subtitle">
-    <item quantity="one">1 of %2$d cards shown</item>
-    <item quantity="other">%1$d of %2$d cards shown</item>
+    <item quantity="one">1 of %2$d نمایش کارت</item>
+    <item quantity="other">%1$d of %2$d کارتهای نمایش داده شده</item>
   </plurals>
 </resources>

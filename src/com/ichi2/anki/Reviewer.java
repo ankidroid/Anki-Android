@@ -889,6 +889,16 @@ public class Reviewer extends AnkiActivity {
         return result;
     }
 
+    private void setFullScreen(boolean fullScreen) {
+        WindowManager.LayoutParams attrs = getWindow().getAttributes();
+        if (fullScreen) {
+            attrs.flags |= WindowManager.LayoutParams.FLAG_FULLSCREEN;
+        } else {
+            attrs.flags &= (~WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        }
+        getWindow().setAttributes(attrs);
+    }
+
 
     private Handler mTimerHandler = new Handler();
 
@@ -913,6 +923,16 @@ public class Reviewer extends AnkiActivity {
         super.onCreate(savedInstanceState);
         Log.i(AnkiDroidApp.TAG, "Reviewer - onCreate");
 
+        // Remove the status bar and title bar
+        if (mPrefFullscreenReview) {
+            getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                    WindowManager.LayoutParams.FLAG_FULLSCREEN);
+            // Do not hide the title bar in Honeycomb, since it contains the action bar.
+            if (AnkiDroidApp.SDK_VERSION <= 11) {
+                requestWindowFeature(Window.FEATURE_NO_TITLE);
+            }
+        }
+
         mChangeBorderStyle = Themes.getTheme() == Themes.THEME_ANDROID_LIGHT
                 || Themes.getTheme() == Themes.THEME_ANDROID_DARK;
 
@@ -929,6 +949,7 @@ public class Reviewer extends AnkiActivity {
 
             mBaseUrl = Utils.getBaseUrl(col.getMedia().getDir());
             restorePreferences();
+            setFullScreen(mPrefFullscreenReview);
 
             try {
                 String[] title = mSched.getCol().getDecks().current().getString("name").split("::");
@@ -937,16 +958,6 @@ public class Reviewer extends AnkiActivity {
                 throw new RuntimeException(e);
             }
             AnkiDroidApp.getCompat().setSubtitle(this, "", mInvertedColors);
-
-            // Remove the status bar and title bar
-            if (mPrefFullscreenReview) {
-                getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                        WindowManager.LayoutParams.FLAG_FULLSCREEN);
-                // Do not hide the title bar in Honeycomb, since it contains the action bar.
-                if (AnkiDroidApp.SDK_VERSION <= 11) {
-                    requestWindowFeature(Window.FEATURE_NO_TITLE);
-                }
-            }
 
             registerExternalStorageListener();
 
@@ -1353,6 +1364,7 @@ public class Reviewer extends AnkiActivity {
             getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                     WindowManager.LayoutParams.FLAG_FULLSCREEN);
         }
+        setFullScreen(mPrefFullscreenReview);
     }
 
 

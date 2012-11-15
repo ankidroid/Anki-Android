@@ -84,7 +84,10 @@
   <string name="info_rate">Valora AnkiDroid</string>
   <string name="col_load_failed">Ha fallat la càrrega de col lecció. \nPremeu Torna per tal de tancar AnkiDroid.</string>
   <string name="import_title">Targetes importades</string>
-  <string name="import_message">Segur que voleu importar totes les targetes de l\'arxiu %s?</string>
+  <string name="import_message">Would you like to add the content of file %s to your collection, or replace your collection with it?</string>
+  <string name="import_message_add">Add</string>
+  <string name="import_message_replace">Replace</string>
+  <string name="import_message_replace_confirm">This will delete your existing collection and replace it with the data of file %s. Are you sure?</string>
   <string name="import_log_success">S\'ha importat %d targetes correctament</string>
   <string name="import_log_error">No ha estat possible la importació</string>
   <string name="import_log_no_apkg">Això no és un fitxer apkg vàlid</string>

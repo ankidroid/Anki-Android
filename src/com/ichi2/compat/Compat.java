@@ -16,7 +16,11 @@
 
 package com.ichi2.compat;
 
+import java.lang.reflect.Method;
+import java.util.ArrayList;
+
 import android.app.Activity;
+import android.speech.tts.TextToSpeech;
 import android.view.View;
 import android.webkit.WebView;
 
@@ -49,4 +53,5 @@ public interface Compat {
     public abstract void setTitle(Activity activity, String title, boolean inverted);
     public abstract void setSubtitle(Activity activity, String title);
     public abstract void setSubtitle(Activity activity, String title, boolean inverted);
+    public abstract void setTtsOnUtteranceProgressListener(TextToSpeech tts);
 }
