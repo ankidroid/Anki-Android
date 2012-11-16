@@ -733,7 +733,7 @@ public class DeckTask extends
 				sched.reset();
 			}
 			int[] counts = sched.counts();
-			int totalNewCount = sched.newCount();
+			int totalNewCount = sched.totalNewForCurrentDeck();
 			int totalCount = sched.cardCount();
 			double progressMature = ((double) sched.matureCount()) / ((double) totalCount);
 			double progressAll = 1 - (((double) (totalNewCount + counts[1])) / ((double) totalCount));

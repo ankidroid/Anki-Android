@@ -64,6 +64,7 @@ public class CramDeckOptions extends PreferenceActivity implements OnSharedPrefe
 
     private BroadcastReceiver mUnmountReceiver = null;
 
+    // TODO: not anymore used in libanki?
     private String[] dynExamples = new String[] { null,
             "{'search'=\"is:new\", 'resched'=False, 'steps'=\"1\", 'order'=5}",
             "{'search'=\"added:1\", 'resched'=False, 'steps'=\"1\", 'order'=5}",

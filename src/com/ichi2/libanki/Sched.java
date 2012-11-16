@@ -104,11 +104,12 @@ public class Sched {
     private String mName = "std";
     private int mQueueLimit;
     private int mReportLimit;
-    private int mReps;
+    public int mReps;
     private boolean mHaveQueues;
     private int mToday;
     public long mDayCutoff;
-
+    private boolean mHaveCustomStudy;
+    
     private int mNewCount;
     private int mLrnCount;
     private int mRevCount;
@@ -142,6 +143,7 @@ public class Sched {
         mQueueLimit = 50;
         mReportLimit = 1000;
         mReps = 0;
+        mHaveCustomStudy = true;
         mHaveQueues = false;
         _updateCutoff();
 
@@ -294,7 +296,7 @@ public class Sched {
             }
             JSONObject conf = _lapseConf(card);
             try {
-                if (conf.getJSONArray("delays").length() > 1) {
+                if (card.getType() == 0 || conf.getJSONArray("delays").length() > 1) {
                     return 3;
                 }
             } catch (JSONException e) {
@@ -312,8 +314,10 @@ public class Sched {
     /**
      * Unbury cards when closing.
      */
-    public void onClose() {
+    public void unburyCards() {
+    	boolean mod = mCol.getDb().getMod();
         mCol.getDb().execute("UPDATE cards SET queue = type WHERE queue = -2");
+        mCol.getDb().setMod(mod);
     }
 
 
@@ -530,6 +534,12 @@ public class Sched {
         ArrayList<Object[]> data = new ArrayList<Object[]>();
         try {
             for (JSONObject deck : decks) {
+            	// if we've already seen the exact same deck name, remove the
+            	// invalid duplicate and reload
+            	if (lims.containsKey(deck.getString("name"))) {
+            		mCol.getDecks().rem(deck.getLong("id"), false, true);
+            		return deckDueList(counts);
+            	}
             	String p;
             	String[] parts = deck.getString("name").split("::");
             	if (parts.length < 2) {
@@ -547,6 +557,11 @@ public class Sched {
             	// new
             	int nlim = _deckNewLimitSingle(deck);
             	if (p.length() > 0) {
+            		if (!lims.containsKey(p)) {
+                		// if parent was missing, this deck is invalid, and we need to reload the deck list
+                		mCol.getDecks().rem(deck.getLong("id"), false, true);
+            			return deckDueList(counts);
+            		}
             		nlim = Math.min(nlim, lims.get(p)[0]);
             	}
             	int newC = _newForDeck(deck.getLong("id"), nlim);
@@ -630,10 +645,11 @@ public class Sched {
             }
             // limit the counts to the deck's limits
             JSONObject conf = mCol.getDecks().confForDid(did);
+            JSONObject deck = mCol.getDecks().get(did);
             try {
                 if (conf.getInt("dyn") == 0) {
-                    revCount = Math.min(revCount, conf.getJSONObject("rev").getInt("perDay"));
-                    newCount = Math.min(newCount, conf.getJSONObject("new").getInt("perDay"));
+                    revCount = Math.max(0, Math.min(revCount, conf.getJSONObject("rev").getInt("perDay") - deck.getJSONArray("revToday").getInt(1)));
+                    newCount = Math.max(0, Math.min(newCount, conf.getJSONObject("new").getInt("perDay") - deck.getJSONArray("newToday").getInt(1)));
                 }
             } catch (JSONException e) {
                 throw new RuntimeException(e);
@@ -926,6 +942,9 @@ public class Sched {
         }
     }
 
+    public int totalNewForCurrentDeck() {
+        return mCol.getDb().queryScalar("SELECT count() FROM cards WHERE did IN (SELECT id FROM cards WHERE did IN " + Utils.ids2str(mCol.getDecks().active()) + " AND queue = 0 AND due <= " + mToday + " LIMIT " + mReportLimit + ")", false);
+    }
 
     /**
      * Learning queues *********************************************************** ************************************
@@ -1233,7 +1252,12 @@ public class Sched {
 
     private int _startingLeft(Card card) {
         try {
-            JSONObject conf = _lrnConf(card);
+            JSONObject conf;
+        	if (card.getType() == 2) {
+        		conf = _lapseConf(card);
+        	} else {
+        		conf = _lrnConf(card);
+        	}
             int tot = conf.getJSONArray("delays").length();
             int tod = _leftToday(conf.getJSONArray("delays"), tot);
             return tot + tod * 1000;
@@ -1344,25 +1368,12 @@ public class Sched {
     }
 
 
-    public void removeFailed() {
-        removeFailed(null);
+    public void removeLrn() {
+    	removeLrn(null);
     }
 
-
-    private void removeFailed(long[] ids) {
-        removeFailed(ids, false);
-    }
-
-
-    private void removeFailed(boolean expiredOnly) {
-        removeFailed(null, expiredOnly);
-    }
-
-
-    /**
-     * Remove failed cards from the learning queue.
-     */
-    private void removeFailed(long[] ids, boolean expiredOnly) {
+    /* Remove cards from the learning queues. */
+    private void removeLrn(long[] ids) {
         String extra;
         if (ids != null && ids.length > 0) {
             extra = " AND id IN " + Utils.ids2str(ids);
@@ -1370,17 +1381,12 @@ public class Sched {
             // benchmarks indicate it's about 10x faster to search all decks with the index than scan the table
             extra = " AND did IN " + Utils.ids2str(mCol.getDecks().allIds());
         }
-        if (expiredOnly) {
-            extra += " AND odue <= " + mToday;
-        }
-        boolean mod = mCol.getDb().getMod();
+        // review cards in realearning
         mCol.getDb().execute(
                 "update cards set due = odue, queue = 2, mod = " + Utils.intNow() +
-                ", usn = " + mCol.usn() + ", odue = 0 where queue = 1 and type = 2 " + extra);
-        if (expiredOnly) {
-            // we don't want to bump the mod time when removing expired
-            mCol.getDb().setMod(mod);
-        }
+                ", usn = " + mCol.usn() + ", odue = 0 where queue IN (1,3) and type = 2 " + extra);
+        // new cards in learning
+        forgetCards(Utils.arrayList2array(mCol.getDb().queryColumn(Long.class, "SELECT id FROM cards WHERE queue IN (1,3) " + extra, 0)));
     }
 
 
@@ -1523,6 +1529,10 @@ public class Sched {
         }
     }
 
+    public int totalRevForCurrentDeck() {
+        return mCol.getDb().queryScalar("SELECT count() FROM cards WHERE did IN (SELECT id FROM cards WHERE did IN " + Utils.ids2str(mCol.getDecks().active()) + " AND queue = 2 LIMIT " + mReportLimit + ")", false);
+    }
+
 
     /**
      * Answering a review card **************************************************
@@ -1574,10 +1584,9 @@ public class Sched {
             }
             delay = _delayForGrade(conf, 0);
             card.setDue((long) (delay + Utils.now()));
+            card.setLeft(_startingLeft(card));
             // queue 1
             if (card.getDue() < mDayCutoff) {
-                int left = conf.getJSONArray("delays").length();
-                card.setLeft(left + _leftToday(conf.getJSONArray("delays"), left) * 1000);
                 mLrnCount += card.getLeft() / 1000;
                 card.setQueue(1);
                 _sortIntoLrn(card.getDue(), card.getId());
@@ -2144,6 +2153,10 @@ public class Sched {
             sb.append("\n\n");
             sb.append(context.getString(R.string.studyoptions_congrats_more_new));
         }
+        if (mHaveCustomStudy && mCol.getDecks().current().getInt("dyn") == 0) {
+            sb.append("\n\n");
+            sb.append(context.getString(R.string.studyoptions_congrats_custom));        	
+        }
         return sb.toString();
     }
 
@@ -2271,7 +2284,7 @@ public class Sched {
      */
     public void suspendCards(long[] ids) {
         remFromDyn(ids);
-        removeFailed(ids);
+        removeLrn(ids);
         mCol.getDb().execute(
                 "UPDATE cards SET queue = -1, mod = " + Utils.intNow() + ", usn = " + mCol.usn() + " WHERE id IN "
                         + Utils.ids2str(ids));
@@ -2295,8 +2308,6 @@ public class Sched {
         mCol.setDirty();
         long[] cids = Utils.arrayList2array(mCol.getDb().queryColumn(Long.class,
                 "SELECT id FROM cards WHERE nid = " + nid + " AND queue >= 0", 0));
-        remFromDyn(cids);
-        removeFailed(cids);
         mCol.getDb().execute("UPDATE cards SET queue = -2 WHERE id IN " + Utils.ids2str(cids));
     }
 
@@ -2313,17 +2324,6 @@ public class Sched {
 
     public int cardCount(String dids) {
         return mCol.getDb().queryScalar("SELECT count() FROM cards WHERE did IN " + dids, false);
-    }
-
-
-    /** LIBANKI: not in libanki */
-    public int newCount() {
-        return newCount(_deckLimit());
-    }
-
-
-    public int newCount(String dids) {
-        return mCol.getDb().queryScalar("SELECT count() FROM cards WHERE type = 0 AND did IN " + dids, false);
     }
 
 

@@ -52,6 +52,8 @@ public class Anki2Importer {
 	HashMap<String, HashMap<Integer, Long>> mCards;
 	HashMap<Long, Long> mDecks;
 	HashMap<Long, Long> mModelMap;
+    HashMap<String, String> mChangedGuids;
+
 
 	public Anki2Importer (Collection col, String file) {
 		mCol = col;
@@ -160,6 +162,9 @@ public class Anki2Importer {
                 cursor.close();
             }
         }
+        // we may need to rewrite the guid if the model schemas don't match,
+        // so we need to keep track of the changes for the card import stage
+        mChangedGuids = new HashMap<String, String>();
         // iterate over source collection
         ArrayList<Object[]> add = new ArrayList<Object[]>();
         ArrayList<Long> dirty = new ArrayList<Long>();
@@ -169,8 +174,26 @@ public class Anki2Importer {
             cursor = mSrc.getDb().getDatabase().rawQuery("SELECT * FROM notes", null);
             while (cursor.moveToNext()) {
             	Object[] note = new Object[]{cursor.getLong(0), cursor.getString(1), cursor.getLong(2), cursor.getLong(3), cursor.getInt(4), cursor.getString(5), cursor.getString(6), cursor.getString(7), cursor.getLong(8), cursor.getInt(9), cursor.getString(10)};
-            	// missing from local col?
-            	if (!mNotes.containsKey(note[1])) {
+            	String guid = (String)note[1];
+            	long mid = (Long)note[3];
+            	boolean canUseExisting = false;
+            	boolean alreadyHaveGuid = false;
+            	// do we have the same guid?
+            	if (!mNotes.containsKey(guid)) {
+            		alreadyHaveGuid = true;
+            		// and do they share the same model id?
+            		if ((Long)mNotes.get(guid)[2] == mid) {
+            			// and do they share the same schema?
+            			JSONObject srcM = mSrc.getModels().get(mid);
+            			JSONObject dstM = mDst.getModels().get((Long)mNotes.get(guid)[2]);
+            			if (mSrc.getModels().scmhash(srcM) == mSrc.getModels().scmhash(dstM)) {
+            				// then it's safe to treat as an exact duplicate
+            				canUseExisting = true;
+            			}
+            		}
+            	}
+            	// if we can't reuse an existing one, we'll need to add new
+            	if (!canUseExisting) {
             		// get corresponding local model
             		long lmid = _mid((Long) note[2]);
             		// ensure id is unique
@@ -185,6 +208,12 @@ public class Anki2Importer {
 //            		TODO: note[6] = _mungeMedia(note[3], note[6]);
             		add.add(note);
             		dirty.add((Long) note[0]);
+            		// if it was originally the same as a note in this deck but the models have diverged, we need to change the guid
+            		if (alreadyHaveGuid) {
+            			guid = Utils.guid64();
+            			mChangedGuids.put((String)note[1], guid);
+            			note[1] = guid;
+            		}
             		// note we have the added note
             		mNotes.put((String) note[1], new Object[]{note[0], note[3], note[2]});
             	} else {
@@ -367,6 +396,9 @@ public class Anki2Importer {
             			cursor.getInt(14), cursor.getInt(15), cursor.getLong(16), 
             			cursor.getLong(17), cursor.getInt(18), cursor.getString(19) };
             	String guid = (String) card[0];
+            	if (mChangedGuids.containsKey(guid)) {
+            		guid = mChangedGuids.get(guid);
+            	}
             	// does the card's note exist in dst col?
             	if (!mNotes.containsKey(guid)) {
             		continue;
@@ -398,6 +430,24 @@ public class Anki2Importer {
             	// review cards have a due date relative to collection
             	if ((Integer)card[7] == 2 || (Integer)card[7] == 3) {
             		card[8] = (Long) card[8] - aheadBy;
+            	}
+            	// if odid true, convert card from filtered to normal
+            	if ((Integer)card[15] != 0) {
+            		// odid
+            		card[15] = 0;
+            		// odue
+            		card[8] = card[14];
+            		card[14] = 0;
+            		// queue
+            		if ((Integer)card[6] == 1) { // type
+            			card[7] = 0;
+            		} else {
+            			card[7] = card[6];
+            		}
+            		// tpye
+            		if ((Integer)card[6] == 1) {
+            			card[6] = 0;
+            		}
             	}
             	cards.add(card);
             	// we need to import revlog, rewriting card ids and bumping usn
