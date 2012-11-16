@@ -2153,10 +2153,14 @@ public class Sched {
             sb.append("\n\n");
             sb.append(context.getString(R.string.studyoptions_congrats_more_new));
         }
-        if (mHaveCustomStudy && mCol.getDecks().current().getInt("dyn") == 0) {
-            sb.append("\n\n");
-            sb.append(context.getString(R.string.studyoptions_congrats_custom));        	
-        }
+        try {
+			if (mHaveCustomStudy && mCol.getDecks().current().getInt("dyn") == 0) {
+			    sb.append("\n\n");
+			    sb.append(context.getString(R.string.studyoptions_congrats_custom));        	
+			}
+		} catch (JSONException e) {
+			throw new RuntimeException(e);
+		}
         return sb.toString();
     }
 
