@@ -25,7 +25,7 @@
   <string name="statistics_mature">Maduras</string>
   <string name="statistics_relearn">Volver a aprender</string>
   <string name="statistics_learn">Aprender</string>
-  <string name="statistics_cram">Cram</string>
+  <string name="statistics_cram">Empollar</string>
   <string name="statistics_type_title">Estadísticas</string>
   <string name="stats_cards">Tarjetas</string>
   <string name="stats_answers">Respuestas</string>
@@ -53,7 +53,7 @@
   <string name="deck_summary_average_month">Promedio de tarjetas vistas en el último mes</string>
   <string name="deck_summary_average_year">Promedio de tarjetas vistas el último año</string>
   <string name="deck_summary_average_total">Promedio de tarjetas vistas desde siempre</string>
-  <string name="deck_summary_forecast">Forecast</string>
+  <string name="deck_summary_forecast">Pronóstico</string>
   <string name="deck_summary_tomorrow_due">Mañana habrá: &lt;b&gt;%d&lt;/b&gt; tarjetas programadas</string>
   <string name="deck_summary_tomorrow_new">Mañana habrá: &lt;b&gt;%d&lt;/b&gt; tarjetas nuevas</string>
   <string name="deck_summary_tomorrow_time">Tiempo estimado para mañana: &lt;b&gt;%d&lt;/b&gt; min.</string>
@@ -61,7 +61,7 @@
   <string name="deck_summary_cards_per_day">&lt;b&gt;%.1f&lt;/b&gt; tarjetas por día</string>
   <string name="deck_summary_deck_age">Edad del mazo: &lt;b&gt;%d&lt;/b&gt; días</string>
   <string name="deck_summary_all_decks">Todos los mazos</string>
-  <string name="stats_forecast">Forecast</string>
+  <string name="stats_forecast">Pronóstico</string>
   <string name="stats_review_count">Número de revisión</string>
   <string name="stats_review_time">Tiempo de revisión</string>
   <string-array name="next_review_in_s">

@@ -39,7 +39,7 @@
   <string name="ease3_learning">آسان</string>
   <string name="studyoptions_congrats_undo">باطل کردن %s</string>
   <string name="studyoptions_congrats_learnmore">بیشتر بدانید</string>
-  <string name="studyoptions_congrats_reviewearly">بررسی اولیه</string>
+  <string name="studyoptions_congrats_reviewearly">مرور زود هنگام</string>
   <string name="studyoptions_congrats_open_other_deck">بازکردن دسته کارت دیگر</string>
   <string name="studyoptions_congrats_finish">بازگشت به صفحه مطالعه</string>
   <string name="card_unsuspended">تعلیق کارت ناتمام ماند</string>
@@ -47,7 +47,7 @@
   <string name="menu_rotate">چرخش</string>
   <string name="menu_import">وارد کردن کارت</string>
   <string name="undo">باطل کردن</string>
-  <string name="undo_action_review">بررسی</string>
+  <string name="undo_action_review">مرور</string>
   <string name="undo_action_edit">ویرایش یادداشت</string>
   <string name="undo_action_bury">مخفی کردن یادداشت</string>
   <string name="undo_action_suspend_card">تعلیق کارت</string>
@@ -61,30 +61,30 @@
   <string name="contextmenu_deckpicker_optimize_deck">بهینه سازی پایگاه اطلاعات</string>
   <string name="contextmenu_deckpicker_rename_deck">تغییر نام دسته</string>
   <string name="contextmenu_deckpicker_collapse_deck">بستن دسته</string>
-  <string name="contextmenu_deckpicker_inflate_deck">Inflate دسته</string>
+  <string name="contextmenu_deckpicker_inflate_deck">گسترش دسته</string>
   <string name="contextmenu_deckpicker_set_custom_dictionary">تعیین واژه نامه سفارشی</string>
   <string name="menu_download_deck">دانلود دسته</string>
   <string name="menu_download_shared_deck">اشتراک گذاشتن دسته</string>
   <string name="menu_my_account">همگامسازی حساب</string>
   <string name="menu_preferences">تنظیمات</string>
-  <string name="menu_zeemote">Zeemote</string>
+  <string name="menu_zeemote">نوعی کنترل گر دستگاه گوشی</string>
   <string name="menu_about">درباره</string>
   <string name="menu_dismiss_note">نادیده گرفتن یادداشت...</string>
   <string name="menu_bury_note">مخفی کردن یادداشت</string>
   <string name="menu_suspend_card">تعلیق کارت</string>
   <string name="menu_suspend_note">تعلیق یادداشت</string>
-  <string name="menu_delete_note">حذف یادداشت</string>
-  <string name="delete_note_message">از حذف این یادداشت و تمام کارت هایش مطمئن هستید؟\n%s</string>
+  <string name="menu_delete_note">پاک کردن یادداشت</string>
+  <string name="delete_note_message">مطمئنید می خواهید این یادداشت و همه کارتهایش را پاک کنید؟\n%s</string>
   <string name="menu_edit_card">ویرایش کارت</string>
   <string name="menu_select">انتخاب کردن متن</string>
-  <string name="menu_search">Lookup in %1$s</string>
+  <string name="menu_search">جستجو در %1$s</string>
   <string name="menu_mark_card">علامت گذاری کارت</string>
-  <string name="menu_unmark_card">برداشتن علامتگذاری کارت</string>
+  <string name="menu_unmark_card">برداشتن نشانه کارت</string>
   <string name="new_deck">دسته جدید</string>
-  <string name="create">ایجاد</string>
-  <string name="new_dynamic_deck">دسته کارت جدید پویا</string>
+  <string name="create">ساختن</string>
+  <string name="new_dynamic_deck">دسته پویای جدید</string>
   <string name="studyoptions_feedback">پیشنهادات و انتقادات</string>
-  <string name="studyoptions_load_tutorial_deck">ایجاد آموزش</string>
+  <string name="studyoptions_load_tutorial_deck">ساختن خودآموز</string>
   <string name="night_mode">حالت شب</string>
   <string name="visit">مشاهده شده</string>
   <string name="later">بعدا</string>
@@ -93,13 +93,13 @@
   <string name="rebuild_cram_deck">درحال بازسازی دسته کارت آزمون.\nلطفا صبر کنید...</string>
   <string name="rebuild_cram_label">بازسازی</string>
   <string name="empty_cram_label">خالی</string>
-  <string name="empty_cram_deck">در حال تخلیه دسته کارت آزمون.\nلطفا صبر کنید...</string>
-  <string name="studyoptions_new_filtercram">فیلتر/آزمون</string>
-  <string name="review_early_deck_name">بررسی اولیه</string>
-  <string name="studyoptions_congrats_finished">تبریک ! کارتان در حال حاضر به پایان رسید.</string>
-  <string name="studyoptions_congrats_more_rev">امروز بررسی محدود به اتمام رسیده است، اما هنوز هم وجود دارد کارت هایی که در انتظار بررسی هستند. برای بهینه کردن حافظه، حد روزانه را در آپشن افزایش دهید. .</string>
-  <string name="studyoptions_congrats_more_new">کارتهای جدید بیشتری وجود دارد، اما حد روزانه رسیده است. شما می توانید حد را از منو گزینه افزایش دهید،اما لطفا بخاطر داشته باشید که این حجم کار بررسی کوتاه مدت شما را افزایش خواهد داد. </string>
-  <string name="sd_card_not_mounted">کارت حافظه قرارداده نشده است.</string>
+  <string name="empty_cram_deck">در حال خالی کردن دسته مطالعه فشرده .\nلطفا درنگ کنید...</string>
+  <string name="studyoptions_new_filtercram">فیلتر / مطالعه فشرده</string>
+  <string name="review_early_deck_name">مرور زود هنگام</string>
+  <string name="studyoptions_congrats_finished">تبریک ! این کار را به پایان رسانده اید.</string>
+  <string name="studyoptions_congrats_more_rev">به حد روزانه مرور رسیده اید، ولی هنوز کارتهایی هستند که باید مرور شوند. برای بهینه سازی حافظه، می توانید حد روزانه مرور را در بخش گزینه ها افزایش دهید.</string>
+  <string name="studyoptions_congrats_more_new">کارتهای جدید بیشتری موجودند ، ولی شما به حد روزانه مرور رسیده اید. می توانید این حد را در بخش گزینه ها افزایش دهید، ولی خواهشا به یاد داشته باشید که بار کاری مرور کوتاه مدت شما افزایش خواهد یافت.</string>
+  <string name="sd_card_not_mounted">کارت حافظه سوار نشده است.</string>
   <string name="studyoptions_options">گزینه ها</string>
   <string name="empty_cloze_warning">لطفا این یادداشت را ویرایش کنید و اضافه کنید بعضی cloze deletions  . (%1$s)</string>
   <string name="help_cloze">راهنما</string>
@@ -121,8 +121,8 @@
     <item>%s سال</item>
   </string-array>
   <plurals name="deckpicker_title">
-    <item quantity="one">1 of %2$d due (%3$s)</item>
-    <item quantity="other">%1$d of %2$d due (%3$s)</item>
+    <item quantity="one">1 of %2$d وظیفه (%3$s)</item>
+    <item quantity="other">%1$d of %2$d وظیفه (%3$s)</item>
   </plurals>
   <plurals name="deckpicker_title_minutes">
     <item quantity="one">1 دقیقه.</item>
@@ -133,19 +133,19 @@
     <item quantity="other">%1$d از %2$d تکالبف</item>
   </plurals>
   <plurals name="reviewer_window_title">
-    <item quantity="one">1 دقیقه از چپ</item>
-    <item quantity="other">%d دقیقه سمت چپ</item>
+    <item quantity="one">1 دقیقه مانده است</item>
+    <item quantity="other">دقیقه مانده است %d</item>
   </plurals>
   <plurals name="studyoptions_congrats_message">
-    <item quantity="one">فردا وجود خواهد داشت: 1 کارت برای بررسی و %2$s.\n تخمینی زمان: %3$s</item>
-    <item quantity="other">فردا وجود خواهد داشت: %1$d کارت برای بررسی و %2$s.\n تخمینی زمان: %3$s</item>
+    <item quantity="one">فردا 1 کارت برای مرور خواهید داشت و %2$s. \n زمان برآورد شده: %3$s</item>
+    <item quantity="other">فردا %1$d کارت برای مرور خواهید داشت و %2$s. \n زمان برآورد شده: %3$s</item>
   </plurals>
   <plurals name="studyoptions_congrats_new_cards">
     <item quantity="one">1 کارت جدید</item>
     <item quantity="other">%1$d کارت های جدید</item>
   </plurals>
   <plurals name="studyoptions_congrats_eta">
-    <item quantity="one">زمان تخمینی: 1 دقیقه.</item>
-    <item quantity="other">زمان تخمینی: %1$d دقیقه.</item>
+    <item quantity="one">زمان برآورد شده : 1 دقیقه.</item>
+    <item quantity="other">زمان برآورد شده : %1$d دقیقه.</item>
   </plurals>
 </resources>

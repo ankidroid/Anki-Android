@@ -46,9 +46,9 @@
   <string name="sync_log_db_error">Er deed zich een probleem met de database voor.</string>
   <string name="no_user_password_error_message">Om verder te gaan met deze actie, moet u een AnkiOnline-account hebben en ingelogd zijn.</string>
   <string name="username">Gebruikersnaam</string>
-  <string name="username_repeat">Repeat username</string>
+  <string name="username_repeat">Herhaal gebruikersnaam</string>
   <string name="password">Wachtwoord</string>
-  <string name="password_repeat">Repeat password</string>
+  <string name="password_repeat">Herhaal wachtwoord</string>
   <string name="log_in">Inloggen</string>
   <string name="sign_up_description">Heb je nog geen AnkiWeb account? Het is gratis!</string>
   <string name="sign_up">Meld je nu aan</string>
@@ -66,8 +66,8 @@
   <string name="sync_conflict_message">Je leersets hier en die op AnkiWeb verschillen zodanig, dat zij niet kunnen worden samengevoegd. Dus het is noodzakelijk om de leersets van een kant te overschrijven.\n\nWil je de lokale leersets uploaden, de leersets van AnkiWeb downloaden?</string>
   <string name="sync_conflict_local">Uploaden</string>
   <string name="sync_conflict_remote">Downloaden</string>
-  <string name="sync_conflict_remote_confirm">Do you really want to download the server\'s collection? Be aware that this will overwrite your local collection.</string>
-  <string name="sync_conflict_local_confirm">Do you really want to upload the local collection? Be aware that this will overwrite your collection on the server.</string>
+  <string name="sync_conflict_remote_confirm">Weer u zeker dat u de collectie van de server wilt downloaden? Deze zal u lokale collectie overschrijven.</string>
+  <string name="sync_conflict_local_confirm">Weet u zeker dat u de lokale collectie wilt uploaden? Deze zal uw collectie op de server overschrijven.</string>
   <string name="sync_conflict_cancel">Annuleer Synchroniseren</string>
   <string name="sync_prepare_syncing">Synchronisatie wordt voorbereid...</string>
   <string name="sync_preparing_full_sync_message">Volledige synchronisatie wordt voorbereid...</string>

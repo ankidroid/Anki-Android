@@ -106,10 +106,10 @@
   <string-array name="cram_deck_conf_order_labels">
     <item>Ver primero las más antiguas</item>
     <item>Al azar</item>
-    <item>Increasing intervals</item>
-    <item>Decreasing intervals</item>
-    <item>Most lapsed</item>
-    <item>Order added</item>
+    <item>Incrementando intervalos</item>
+    <item>Reduciendo intervalos</item>
+    <item>Más caducado</item>
+    <item>Orden añadido</item>
     <item>Orden de tarjetas programadas</item>
     <item>Primero las añadidas más recientemente</item>
   </string-array>
@@ -120,7 +120,7 @@
     <item>Revisar tarjetas olvidadas hoy</item>
     <item>Revisar con dos días de antelación</item>
     <item>Revisar tarjetas programadas con etiqueta</item>
-    <item>Review due cards with decreasing intervals</item>
+    <item>Revisar tarjetas programadas con intervalos decrecientes</item>
     <item>Empollar todas las tarjetas</item>
   </string-array>
 </resources>

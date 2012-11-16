@@ -47,7 +47,7 @@
   <string name="menu_rotate">Omkeren</string>
   <string name="menu_import">Kaarten importeren</string>
   <string name="undo">Ongedaan maken</string>
-  <string name="undo_action_review">herhalen</string>
+  <string name="undo_action_review">overhoren</string>
   <string name="undo_action_edit">bewerk notitie</string>
   <string name="undo_action_bury">verberg notitie</string>
   <string name="undo_action_suspend_card">blokkeer kaart</string>
