@@ -1496,7 +1496,9 @@ public class Reviewer extends AnkiActivity {
 
     private void stopTimer() {
         // Stop visible timer and card timer
-        mCardTimer.stop();
+    	if (mCardTimer != null) {
+            mCardTimer.stop();    		
+    	}
         if (mCurrentCard != null) {
              mCurrentCard.stopTimer();
         }
