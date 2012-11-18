@@ -40,6 +40,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.view.inputmethod.EditorInfo;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.EditText;
@@ -208,6 +209,13 @@ public class CardBrowser extends Activity {
 
     };
 
+    private void onSearch() {
+        mSearchTerms = mSearchEditText.getText().toString().toLowerCase();
+        if (mSearchTerms.length() == 0) {
+            mSearchEditText.setHint(R.string.downloaddeck_search);
+        }
+        searchCards();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -307,16 +315,22 @@ public class CardBrowser extends Activity {
         registerForContextMenu(mCardsListView);
 
         mSearchEditText = (EditText) findViewById(R.id.card_browser_search);
+        mSearchEditText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView view, int actionId, KeyEvent event) {
+                if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                    onSearch();
+                    return true;
+                }
+                return false;
+            }
+        });
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
         mSearchButton = (ImageButton) findViewById(R.id.card_browser_search_button);
         mSearchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mSearchTerms = mSearchEditText.getText().toString().toLowerCase();
-                if (mSearchTerms.length() == 0) {
-                    mSearchEditText.setHint(R.string.downloaddeck_search);
-                }
-                searchCards();
+                onSearch();
             }
         });
 

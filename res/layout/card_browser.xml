@@ -14,6 +14,8 @@
             android:layout_height="wrap_content"
             android:layout_width="0dip"
             android:layout_weight="5"
+            android:inputType="text"
+            android:imeOptions="actionSearch"
             android:hint="@string/downloaddeck_search"
             android:lines="1" />
         <ImageButton android:id="@+id/card_browser_search_button"
