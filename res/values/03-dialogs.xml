@@ -28,6 +28,7 @@
 <string name="contextmenu_deckpicker_delete_deck">Delete Deck</string>
 <string name="delete_deck_title">Delete Deck</string>
 <string name="delete_deck_message">Are you sure you wish to delete all cards in %s?</string>
+<string name="delete_cram_deck_message">Are you sure you wish to send all cards in %s back to their original decks?</string>
 <string name="delete_deck_confirm">Delete it</string>
 
 <string name="new_version_message">New Features:</string>
