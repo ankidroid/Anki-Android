@@ -781,8 +781,8 @@ public class Collection {
 
 
     // NOT IN LIBANKI //
-    public int cardCount(List<Long> dids) {
-        return mDb.queryScalar("SELECT count() FROM cards WHERE did IN " + Utils.ids2str(dids));
+    public int cardCount(long[] ls) {
+        return mDb.queryScalar("SELECT count() FROM cards WHERE did IN " + Utils.ids2str(ls));
     }
 
 
