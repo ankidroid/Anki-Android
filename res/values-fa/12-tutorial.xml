@@ -17,33 +17,33 @@
  
 <resources> 
  <string-array name="tutorial_questions"> 
-    <item><![CDATA[Thanks for installing AnkiDroid!<br />This is a short introduction.<br />What you see now is the <span style=\'font-weight:600;\'>question</span> part of a flashcard.<br />Please click on the large button below...]]></item> 
-    <item><![CDATA[The next card is shown now.<br />The idea is straightforward: Just like in &quot;real world&quot; paper flashcards, you write a question on the front and the answer on the back side of your cards.<br />(click the button to show the back side)]]></item> 
-    <item><![CDATA[&quot;What is the capital of Burkina Faso?&quot;<br />Think a bit about the answer and click then &quot;show answer&quot;]]></item> 
-    <item><![CDATA[بالاي هر دكمه پاسخ اطلاعاتي درباره زمان بعدي نمايش كارت نسبت به انتخاب شما يافت ميشود.]]></item> 
-    <item><![CDATA[The intention is to show you the card again, immediately before you would forget it. Empirical studies have shown that by this means information can be learned most efficiently.]]></item> 
-    <item><![CDATA[Some words about the organisation in AnkiDroid:<br /><br>All information has to be put into pairs of question and answer. If you want to learn in the other direction, you should create another card with swapped information.]]></item> 
-    <item><![CDATA[Cards are put together in decks and can there be organised by help of all sorts of tags.]]></item> 
-    <item><![CDATA[There are mainly two ways of getting new cards:<br />You either add premade decks of other users (choose &quot;shared decks&quot; in the decks summary) or create them by yourself.]]></item> 
-    <item><![CDATA[But anyway, creating own decks is essential to suit your needs perfectly. You can do this directly in AnkiDroid...]]></item> 
-    <item><![CDATA[Let\'s have a look on the top bar:<br />In the left top corner you find some numbers. The blue one tells you, how many new cards are still projected for today. The red number counts the failed cards (answered by &quot;again&quot;),]]></item> 
-    <item><![CDATA[On the right corner you find information about your thinking time of this card and about your performance.]]></item> 
-    <item><![CDATA[Albeit you can use AnkiDroid stand alone, it is fully connected to AnkiWeb, the syncing server of Anki Desktop (available for Linux, Windows, Mac).]]></item> 
-    <item><![CDATA[These have been the main points of AnkiDroid usage.<br /><br>For more information about the key concept of Anki, visit http://ankisrs.net/]]></item> 
+    <item><![CDATA[با تشکر برای نصب آنکی دروید!<br />این یک مقدمه کوتاه است.<br />آنچه را که اکنون می بینید هست<span style=\'font-weight:600;\'>question</span> قسمتی از یک فلش کارت.<br />لطفا روی دکمه بزرگ ذیل کلیک کنید...]]></item> 
+    <item><![CDATA[کارت بعدی در حال حاضر نمایش داده شده است.<br />ایده درست این است که: درست مثل &quot;real world&quot; فلش کارتهای کاغذی, که شما می نویسید یک سوال روی سمت جلو و پاسخ آن را در سمت پشت آن.<br />(کلیک برای نمایش پشت فلش کارت روی دکمه کلیک کنید)]]></item> 
+    <item><![CDATA[&quot;سرمایه بورکینافاسو چیست?&quot;<br />کمی درباره پاسخ فکر کنید و کلیک کنید روی &quot;نمایش کارت&quot;]]></item> 
+    <item><![CDATA[بالاي هر دكمه پاسخ ,بعد از اینکه به وسیله این دکمه پاسخ کارت دوباره نمایش داده شد, شما اطلاعاتی درباره زمان می یابید, .]]></item> 
+    <item><![CDATA[قصد این است که فورا قبل از اینکه کارت فراموش شود به شما دوباره آن نشان داده شود. مطالعات تجربی نشان داده است که با این شیوه اطلاعات به نحو موثری فراگرفته شده است.]]></item> 
+    <item><![CDATA[برخی لغات درباره سازمان در آنکی دروید:<br /><br>همه اطلاعات بصورت جفت پرسش و پاسخ قرار گرفته است. اگر شما می خواهید از طریق دستورالعمل دیگری یادگیری نمایید, باید کارتهای دیگری را که اطلاعات آن عوض شده ایجاد نمایید.]]></item> 
+    <item><![CDATA[کارتها با همدیگر در دسته ها قرار داده شده اند و می توانند به وسیله کمک گرفتن از برچسبهای مرتب شده ساماندهی شوند .]]></item> 
+    <item><![CDATA[عمدتا دو روش برای گرفتن کارتهای جدید وجود دارد:<br />یا شما دسته های از پیش ساخته شده را از دیگر کاربران اضافه می کنید (انتخاب کنید &quot;دسته های به اشتراک گذاشته شده&quot; در خلاصه دسته ها) یا خودتان آنها را می سازید.]]></item> 
+    <item><![CDATA[اما به هر حال, ایجاد دسته ها با توجه به نیازهای خود کاملا ضروری است. این کار را می توانید مستقیما در آنکی دروید انجام دهید...]]></item> 
+    <item><![CDATA[اجازه دهید نگاهی به نوار بالا داشته باشیم:<br />در گوشه بالا سمت چپ برخی اعداد را می بینید. ارقام آبی رنگ به شما می گوید, که چه تعداد کارت جدید در پروژه برای امروز باقیمانده. ارقام قرمز نشان دهنده کارتهای با پاسخ اشتباه است (answered by &quot;again&quot;),]]></item> 
+    <item><![CDATA[درگوشه سمت راست بالا شما اطلاعاتی درباره زمان فکر کردن این کارت و میزان کارایی پیدا می کنید.]]></item> 
+    <item><![CDATA[البته شما می توانید به تنهایی از آنکی دروید استفاده کنید, آن کاملا به آنکی وب وصل می شود, همگام سازی سرور از آنکی دسکتاپ (نرم افزار رایانه) انجام مس ود برای لینوکس،ویندوز و مکینتاش قابل دسترس است).]]></item> 
+    <item><![CDATA[نکات اصلی پرکاربرد در آنکی دروید وجود دارد.<br /><br>برای اطلاعات بیشتر درباره مفهوم کلیدی آنکی, ببینید http://ankisrs.net/]]></item> 
  </string-array>
  <string-array name="tutorial_answers">
-    <item><![CDATA[... in order to see the <span style=\'font-weight:600;\'>answer</span> part of the flashcard (below the line).<br />Click on the button on the right]]></item> 
-    <item><![CDATA[Let\'s assume you want to learn the world\'s capitals. Let the question be...<br />(click on one of the buttons to show the next card)]]></item> 
-    <item><![CDATA[&quot;Ouagadougou&quot; is the right answer. <br />You didn\'t know it? Click &quot;again&quot; to see the card again in a couple of minutes. Otherwise, click on the other buttons, depending on the easiness of the answer.]]></item> 
-    <item><![CDATA[ اين دوره زماني با آخرين زمان پاسخ كارت محاسبه مي شود.]]></item> 
-    <item><![CDATA[If you want to learn more about spaced repetition, visit:<br>http://en.wikipedia.org/wiki/Spaced_repetition_system]]></item> 
-    <item><![CDATA[Don\'t worry, this can be done automatically. There is no need of inserting the same information twice.]]></item> 
-    <item><![CDATA[You will learn about that quickly when you start to use AnkiDroid.]]></item> 
-    <item><![CDATA[You\'ll find thousands of premade decks to download and there are probably some which are useful for you.]]></item> 
-    <item><![CDATA[... or (a bit more convenient) with the desktop application Anki (downloadable for free under http://ankisrs.net/).<br><br>You can sync your decks with the desktop application very easily, so transfering the data is not a problem.]]></item> 
-    <item><![CDATA[the green one shows the number of cards you\'ve already learned before and which are due to review today.<br />The type of the actual cards is specified by an underline.]]></item> 
-    <item><![CDATA[The upper bar shows your progress, the lower one indicates the percentage of yes answers.]]></item> 
-    <item><![CDATA[Thus, you can easily sync your collection between AnkiDroid and Anki Desktop and use the latter for a more convenient card adding and managing.]]></item> 
-    <item><![CDATA[Just try it a bit out now and see, if it fits your needs.<br><br>Maybe start with the deck overview (hit menu on the main screen and choose &quot;all decks&quot;), where you can download premade decks or create your own (just use the menu there).]]></item> 
+    <item><![CDATA[... به منظور دیدن <span style=\'font-weight:600;\'>answer</span>قسمتی از فلش کارت (below the line).<br />کلیک کنید روی دکمه سمت راست]]></item> 
+    <item><![CDATA[اجازه دهید فرض کنیم شما می خواهید جهان سرمایه داری را یاد بگیرید. اجازه دهید سوال باشد...<br />(روی یکی از دکمه ها برای نمایش کارت بعدی کلیک کنید)]]></item> 
+    <item><![CDATA[&quot;Ouagadougou&quot; هست پاسخ صحیح. <br />شما آن را نمی دانستید? کلیک کنید روی &quot;again&quot; برای دیدن مجدد کارت در چند دقیقه. در غیر اینصورت, روی دکمه دیگر , با توجه به سهولت پاسخ کلیک کنید.]]></item> 
+    <item><![CDATA[این دوره زمانی از آخرین زمان پاسخ داده شده به کارت, راحتی انتخاب فعلی و انتخاب آسان پاسخ های قبلی آن کارت محاسبه می شود.]]></item> 
+    <item><![CDATA[برای یادگیری بیشتر درباره فواصل تکرار این سایت را ببینید:<br>http://en.wikipedia.org/wiki/Spaced_repetition_system]]></item> 
+    <item><![CDATA[اشتباه نکنید, این امر بصورت خودکار می تواند انجام شود. احتیاجی به الحاق کردن اطلاعات دوباره نیست.]]></item> 
+    <item><![CDATA[شما درباره آن به سرعت یاد خواهید گرفت وقتی که شروع به استفاده از آنکی دروید نمایید.]]></item> 
+    <item><![CDATA[ شما هزاران دسته از پیش ساخته شده را برای دانلود پیدا خواهید کرد که احتمالا برخی از آنها برای شما مفید است.]]></item> 
+    <item><![CDATA[... یا (یک راه مناسب) با نرم افزار رایانه آنکی دروید (قابل دانلود مجانی از http://ankisrs.net/).<br><br>می توانید دسته هایتان را با نرم افزار رایانه خیلی آسان همگام سازی نمایید, همچنین می توانید بدون هیچ مشکلی پایگاه داده اطلاعات خود را منتقل نمایید.]]></item> 
+    <item><![CDATA[ارقام سبز نیز نشان دهنده کارتهایی است که از قبل آماده یادگیری شده است در حالیکه دسته برای بازبینی امروز است.<br />نوع فعالیت کارتها با زیرخط مشخص شده است.]]></item> 
+    <item><![CDATA[در قسمت بالاتر مراحل پیشرفت یادگیری و در پایین تر درصد پاسخ بلی شما نمایش داده می شود.]]></item> 
+    <item><![CDATA[بنابراین, به آسانی می توانید مجموعه هایتان را بین آنکی دروید و آنکی وب همگام سازی کنید و بعدا از آن برای دسترسی سریعتر جهت اضافه کردن کارت و کنترل آن استفاده کنید.]]></item> 
+    <item><![CDATA[امتحان کنید و ببینید آن را اکنون, اگر آن متناسب با نیازهای شما بود.<br><br>احتمالا شروع کنید با دسته های اجمالی (بر روی منو در صفحه اصلی رفته و  &quot; همه دسته ها&quot;انتخاب کنید), جایی که شما می توانید دسته های از پیش ساخته شده یا ایجاد شده مال خودتان را دانلود کنید (اکنون از این منو استفاده کنید).]]></item> 
  </string-array>
 </resources>

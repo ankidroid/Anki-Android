@@ -84,10 +84,10 @@
   <string name="info_rate">Qualifique o AnkiDroid</string>
   <string name="col_load_failed">Carregamento da coleção falhou.\nPressione voltar para fechar AnkiDroid.</string>
   <string name="import_title">Importar Cartões</string>
-  <string name="import_message">Would you like to add the content of file %s to your collection, or replace your collection with it?</string>
-  <string name="import_message_add">Add</string>
-  <string name="import_message_replace">Replace</string>
-  <string name="import_message_replace_confirm">This will delete your existing collection and replace it with the data of file %s. Are you sure?</string>
+  <string name="import_message">Você gostaria de adicionar o conteúdo do arquivo %s para a sua coleção, ou substituir a sua coleção por ele?</string>
+  <string name="import_message_add">Adicionar</string>
+  <string name="import_message_replace">Substituir</string>
+  <string name="import_message_replace_confirm">Isto irá apagar a sua coleção atual e substituí-la pelo conteúdo do arquivo %s. Você tem certeza?</string>
   <string name="import_log_success">%d cartões importados com êxito</string>
   <string name="import_log_error">Importação falhou</string>
   <string name="import_log_no_apkg">Este não é um arquivo apkg válido</string>

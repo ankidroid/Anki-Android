@@ -61,14 +61,14 @@
   <string name="card_details_card_model">Model karty</string>
   <string-array name="card_browser_order_labels">
     <item>Bez sortowania (szybciej)</item>
-    <item>By search field</item>
-    <item>By created time</item>
-    <item>By edited time</item>
+    <item>Wg pola wyszukiwania</item>
+    <item>Wg utworzenia</item>
+    <item>Wg zmodyfikowania</item>
     <item>By changed time</item>
     <item>By due time</item>
-    <item>By interval</item>
-    <item>By ease</item>
-    <item>By reviews</item>
+    <item>Wg przerw</item>
+    <item>Wg łatwości</item>
+    <item>Wg powtórek</item>
     <item>By lapses</item>
   </string-array>
   <plurals name="card_browser_subtitle">

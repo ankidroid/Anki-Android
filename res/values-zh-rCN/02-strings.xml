@@ -84,10 +84,10 @@
   <string name="info_rate">评价AnkiDroid</string>
   <string name="col_load_failed">加载集合失败。\n 按back键，关闭AnkiDroid。</string>
   <string name="import_title">导入卡牌</string>
-  <string name="import_message">Would you like to add the content of file %s to your collection, or replace your collection with it?</string>
-  <string name="import_message_add">Add</string>
-  <string name="import_message_replace">Replace</string>
-  <string name="import_message_replace_confirm">This will delete your existing collection and replace it with the data of file %s. Are you sure?</string>
+  <string name="import_message">你想把文件%s中的内容添加到当前牌组集合中，还是用它替换当前牌组集合？</string>
+  <string name="import_message_add">添加</string>
+  <string name="import_message_replace">替换</string>
+  <string name="import_message_replace_confirm">这将删除你当前的牌组集合，并用文件%s中的内容加以替换。你确定吗？</string>
   <string name="import_log_success">成功导入 %d 张卡牌</string>
   <string name="import_log_error">导入失败</string>
   <string name="import_log_no_apkg">这不是一个正确的 apkg 文件</string>

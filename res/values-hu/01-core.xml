@@ -37,7 +37,7 @@
   <string name="ease2_successive">Nehéz</string>
   <string name="ease3_successive">Jó</string>
   <string name="ease3_learning">Könnyű</string>
-  <string name="studyoptions_congrats_undo">Undo %s</string>
+  <string name="studyoptions_congrats_undo">Visszavonás %s</string>
   <string name="studyoptions_congrats_learnmore">További tanulás</string>
   <string name="studyoptions_congrats_reviewearly">Korai ismétlés</string>
   <string name="studyoptions_congrats_open_other_deck">Másik pakli megnyitása</string>
@@ -45,9 +45,9 @@
   <string name="card_unsuspended">Kártya visszavonás nem sikerült</string>
   <string name="card_suspended">Kártya visszaállítva</string>
   <string name="menu_rotate">Forgatás</string>
-  <string name="menu_import">Import cards</string>
+  <string name="menu_import">Kártyák importálása</string>
   <string name="undo">Visszavonás</string>
-  <string name="undo_action_review">review</string>
+  <string name="undo_action_review">ismétlés</string>
   <string name="undo_action_edit">edit note</string>
   <string name="undo_action_bury">bury note</string>
   <string name="undo_action_suspend_card">suspend card</string>
@@ -103,7 +103,7 @@
   <string name="studyoptions_options">Beállítások</string>
   <string name="empty_cloze_warning">Szerkeszd ezt a megjegyzést és adj meg hozzá néhány közeli /törlést/. (%1$s)</string>
   <string name="help_cloze">segítség</string>
-  <string name="button_sync">Sync</string>
+  <string name="button_sync">Szinkronizálás</string>
   <string-array name="next_review_s">
     <item>1 másodperc</item>
     <item>1 perc</item>

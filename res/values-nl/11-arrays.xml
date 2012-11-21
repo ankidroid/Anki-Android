@@ -105,9 +105,9 @@
   </string-array>
   <string-array name="cram_deck_conf_order_labels">
     <item>Oldest seen first</item>
-    <item>Random</item>
-    <item>Increasing intervals</item>
-    <item>Decreasing intervals</item>
+    <item>Willekeurig</item>
+    <item>Toenemende intervallen</item>
+    <item>Afnemende intervallen</item>
     <item>Most lapsed</item>
     <item>Order added</item>
     <item>Order due</item>
@@ -115,9 +115,9 @@
   </string-array>
   <string-array name="cram_deck_conf_preset_labels">
     <item><![CDATA[<select preset>]]></item>
-    <item>Preview all new cards</item>
+    <item>Vooruitblik van nieuwe kaarten</item>
     <item>Preview cards added today</item>
-    <item>Review today\'s forgotten cards</item>
+    <item>Overhoor de vergeten kaarten van vandaag</item>
     <item>Review ahead by two days</item>
     <item>Review due cards with tag</item>
     <item>Review due cards with decreasing intervals</item>

@@ -889,6 +889,16 @@ public class Reviewer extends AnkiActivity {
         return result;
     }
 
+    private void setFullScreen(boolean fullScreen) {
+        WindowManager.LayoutParams attrs = getWindow().getAttributes();
+        if (fullScreen) {
+            attrs.flags |= WindowManager.LayoutParams.FLAG_FULLSCREEN;
+        } else {
+            attrs.flags &= (~WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        }
+        getWindow().setAttributes(attrs);
+    }
+
 
     private Handler mTimerHandler = new Handler();
 
@@ -939,6 +949,7 @@ public class Reviewer extends AnkiActivity {
 
             mBaseUrl = Utils.getBaseUrl(col.getMedia().getDir());
             restorePreferences();
+            setFullScreen(mPrefFullscreenReview);
 
             try {
                 String[] title = mSched.getCol().getDecks().current().getString("name").split("::");
@@ -1353,6 +1364,7 @@ public class Reviewer extends AnkiActivity {
             getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                     WindowManager.LayoutParams.FLAG_FULLSCREEN);
         }
+        setFullScreen(mPrefFullscreenReview);
     }
 
 
@@ -2544,14 +2556,12 @@ public class Reviewer extends AnkiActivity {
     public void fillFlashcard(boolean flip) {
         if (!flip) {
             Log.i(AnkiDroidApp.TAG, "base url = " + mBaseUrl);
-            if (mCurrentSimpleInterface) {
+            if (mCurrentSimpleInterface && mSimpleCard != null) {
                 mSimpleCard.setText(mCardContent);
-            } else if (mRefreshWebview) {
-            	if (mNextCard != null) {
-                    mNextCard.setBackgroundColor(mCurrentBackgroundColor);
-                    mNextCard.loadDataWithBaseURL(mBaseUrl, mCardContent.toString(), "text/html", "utf-8", null);
-                    mNextCard.setVisibility(View.VISIBLE);
-            	}
+            } else if (mRefreshWebview && mCard != null && mNextCard != null) {
+                mNextCard.setBackgroundColor(mCurrentBackgroundColor);
+                mNextCard.loadDataWithBaseURL(mBaseUrl, mCardContent.toString(), "text/html", "utf-8", null);
+                mNextCard.setVisibility(View.VISIBLE);
                 mCardFrame.removeView(mCard);
                 mCard.destroy();
                 mCard = mNextCard;
@@ -2562,7 +2572,7 @@ public class Reviewer extends AnkiActivity {
                 if (AnkiDroidApp.SDK_VERSION <= 7) {
                     mCard.setFocusableInTouchMode(true);
                 }
-            } else {
+            } else if (mCard != null) {
                 mCard.loadDataWithBaseURL(mBaseUrl, mCardContent.toString(), "text/html", "utf-8", null);
                 mCard.setBackgroundColor(mCurrentBackgroundColor);
             }

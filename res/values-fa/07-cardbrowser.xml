@@ -69,7 +69,7 @@
     <item>به وسیله وقفه</item>
     <item>به وسیله سهولت</item>
     <item>به وسیله بررسی</item>
-    <item>By lapses</item>
+    <item>بوسیله خطا</item>
   </string-array>
   <plurals name="card_browser_subtitle">
     <item quantity="one">1 of %2$d نمایش کارت</item>
