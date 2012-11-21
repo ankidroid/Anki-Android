@@ -328,7 +328,9 @@ public class Decks {
         return ids;
     }
 
-
+    /**
+     * Return the number of decks.
+     */
     public int count() {
         return mDecks.size();
     }
