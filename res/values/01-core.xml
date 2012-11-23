@@ -65,8 +65,7 @@
 <string name="ease3_learning">Easy</string>
 
 <string name="studyoptions_congrats_undo">Undo %s</string>
-<string name="studyoptions_congrats_learnmore">Learn More</string>
-<string name="studyoptions_congrats_reviewearly">Review Early</string>
+<string name="studyoptions_congrats_custom_study">Custom Study</string>
 <string name="studyoptions_congrats_open_other_deck">Open Other Deck</string>
 <string name="studyoptions_congrats_finish">Back to Study Screen</string>
 

@@ -17,9 +17,6 @@
 
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 	<PreferenceCategory android:title="@string/deck_conf_cram_filter">
-		<ListPreference
-			android:title="@string/deck_conf_cram_preset"
-			android:key="preset"/>
 		<EditTextPreference
 			android:title="@string/deck_conf_cram_search"
 			android:key="search" />

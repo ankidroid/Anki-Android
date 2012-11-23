@@ -26,14 +26,8 @@
 		android:layout_height="wrap_content"
 		android:layout_width="fill_parent"
 		android:gravity="center"
-		android:id="@+id/studyoptions_congrats_learnmore"
-		android:text="@string/studyoptions_congrats_learnmore" />
-	<Button
-		android:layout_height="wrap_content"
-		android:layout_width="fill_parent"
-		android:gravity="center"
-		android:id="@+id/studyoptions_congrats_reviewearly"
- 		android:text="@string/studyoptions_congrats_reviewearly" />
+		android:id="@+id/studyoptions_congrats_customstudy"
+		android:text="@string/studyoptions_congrats_custom_study" />
 	<Button
 		android:layout_height="wrap_content"
 		android:layout_width="fill_parent"

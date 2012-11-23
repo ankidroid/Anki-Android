@@ -469,10 +469,6 @@ public class CramDeckOptions extends PreferenceActivity implements OnSharedPrefe
         newOrderPref.setEntryValues(R.array.cram_deck_conf_order_values);
         newOrderPref.setValue(mPref.getString("order", "0"));
 
-        ListPreference leechActPref = (ListPreference) findPreference("preset");
-        leechActPref.setEntries(R.array.cram_deck_conf_preset_labels);
-        leechActPref.setEntryValues(R.array.cram_deck_conf_preset_values);
-        leechActPref.setValue("0");
         if (mPresetSearchSuffix != null) {
             EditTextPreference searchPref = (EditTextPreference) findPreference("search");
             searchPref.setText(mPresetSearchSuffix);
