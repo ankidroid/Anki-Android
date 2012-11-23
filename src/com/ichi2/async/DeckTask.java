@@ -655,7 +655,7 @@ public class DeckTask extends
         } else {
             publishProgress(result);
         }
-        return new TaskData(col.cardCount(col.getDecks().active()));
+        return new TaskData(col.cardCount(col.getDecks().allIds()));
     }
 
 

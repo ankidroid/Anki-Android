@@ -2558,14 +2558,12 @@ public class Reviewer extends AnkiActivity {
     public void fillFlashcard(boolean flip) {
         if (!flip) {
             Log.i(AnkiDroidApp.TAG, "base url = " + mBaseUrl);
-            if (mCurrentSimpleInterface) {
+            if (mCurrentSimpleInterface && mSimpleCard != null) {
                 mSimpleCard.setText(mCardContent);
-            } else if (mRefreshWebview) {
-            	if (mNextCard != null) {
-                    mNextCard.setBackgroundColor(mCurrentBackgroundColor);
-                    mNextCard.loadDataWithBaseURL(mBaseUrl, mCardContent.toString(), "text/html", "utf-8", null);
-                    mNextCard.setVisibility(View.VISIBLE);
-            	}
+            } else if (mRefreshWebview && mCard != null && mNextCard != null) {
+                mNextCard.setBackgroundColor(mCurrentBackgroundColor);
+                mNextCard.loadDataWithBaseURL(mBaseUrl, mCardContent.toString(), "text/html", "utf-8", null);
+                mNextCard.setVisibility(View.VISIBLE);
                 mCardFrame.removeView(mCard);
                 mCard.destroy();
                 mCard = mNextCard;
@@ -2576,7 +2574,7 @@ public class Reviewer extends AnkiActivity {
                 if (AnkiDroidApp.SDK_VERSION <= 7) {
                     mCard.setFocusableInTouchMode(true);
                 }
-            } else {
+            } else if (mCard != null) {
                 mCard.loadDataWithBaseURL(mBaseUrl, mCardContent.toString(), "text/html", "utf-8", null);
                 mCard.setBackgroundColor(mCurrentBackgroundColor);
             }
