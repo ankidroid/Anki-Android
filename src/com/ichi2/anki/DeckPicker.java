@@ -2275,7 +2275,7 @@ public class DeckPicker extends FragmentActivity {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         String deckName = mDialogEditText.getText().toString()
-                                .replaceAll("[\'\"\\s\\n\\r\\[\\]\\(\\)]", "");
+                                .replaceAll("[\'\"\\n\\r\\[\\]\\(\\)]", "");
                         Log.i(AnkiDroidApp.TAG, "Creating deck: " + deckName);
                         AnkiDroidApp.getCol().getDecks().id(deckName, true);
                         loadCounts();
