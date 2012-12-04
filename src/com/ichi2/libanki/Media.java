@@ -498,7 +498,8 @@ public class Media {
         List<String> fnames = new ArrayList<String>();
 
         try {
-            ZipOutputStream zos = new ZipOutputStream(new DeflaterOutputStream(new BufferedOutputStream(new FileOutputStream(f))));
+            ZipOutputStream zos = new ZipOutputStream(new BufferedOutputStream(new FileOutputStream(f)));
+            zos.setLevel(8);
 
             JSONObject files = new JSONObject();
             int cnt = 0;
@@ -515,6 +516,7 @@ public class Media {
                 while ((count = bis.read(buffer, 0, 2048)) != -1) {
                     zos.write(buffer, 0, count);
                 }
+                zos.closeEntry();
                 bis.close();
                 files.put(Integer.toString(cnt), fname);
                 sz += file.length();
@@ -526,6 +528,7 @@ public class Media {
             }
             if (finished) {
                 zos.putNextEntry(new ZipEntry("_finished"));
+                zos.closeEntry();
             }
             zos.putNextEntry(new ZipEntry("_meta"));
             zos.write(files.toString().getBytes());
