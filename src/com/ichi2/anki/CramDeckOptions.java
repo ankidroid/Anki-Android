@@ -145,7 +145,7 @@ public class CramDeckOptions extends PreferenceActivity implements OnSharedPrefe
                                 mDeck.put("delays", getDelays((String) mValues.get("steps")));
                             } else {
                                 mValues.put("steps", "1 10");
-                                mDeck.put("delays", null);
+                                mDeck.put("delays", new JSONArray());
                             }
                         } else if (entry.getKey().equals("steps")) {
                             String steps = (String) entry.getValue();
