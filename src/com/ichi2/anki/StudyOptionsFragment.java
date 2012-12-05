@@ -17,6 +17,7 @@ package com.ichi2.anki;
 import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnCancelListener;
+import android.content.DialogInterface.OnClickListener;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -49,6 +50,7 @@ import com.ichi2.async.DeckTask;
 import com.ichi2.async.DeckTask.TaskData;
 import com.ichi2.charts.ChartBuilder;
 import com.ichi2.libanki.Collection;
+import com.ichi2.libanki.Sched;
 import com.ichi2.libanki.Stats;
 import com.ichi2.libanki.Utils;
 import com.ichi2.themes.StyledDialog;
@@ -69,6 +71,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 public class StudyOptionsFragment extends Fragment {
@@ -694,10 +697,9 @@ public class StudyOptionsFragment extends Fragment {
     protected StyledDialog onCreateDialog(int id) {
         StyledDialog dialog = null;
         Resources res = getResources();
-        StyledDialog.Builder builder = new StyledDialog.Builder(this.getActivity());
+        StyledDialog.Builder builder1 = new StyledDialog.Builder(this.getActivity());
 
         switch (id) {
-
             case DIALOG_STATISTIC_TYPE:
                 dialog = ChartBuilder.getStatisticsDialog(getActivity(), new DialogInterface.OnClickListener() {
                     @Override
@@ -709,14 +711,14 @@ public class StudyOptionsFragment extends Fragment {
                 break;
 
             case DIALOG_CUSTOM_STUDY:
-                builder.setTitle(res.getString(R.string.custom_study));
-                builder.setIcon(android.R.drawable.ic_menu_sort_by_size);
-                builder.setItems(res.getStringArray(R.array.custom_study_options_labels), new DialogInterface.OnClickListener() {
+                builder1.setTitle(res.getString(R.string.custom_study));
+                builder1.setIcon(android.R.drawable.ic_menu_sort_by_size);
+                builder1.setItems(res.getStringArray(R.array.custom_study_options_labels), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        StyledDialog.Builder builder = new StyledDialog.Builder(StudyOptionsFragment.this.getActivity());
+                        StyledDialog.Builder builder2 = new StyledDialog.Builder(StudyOptionsFragment.this.getActivity());
                         Resources res = getResources();
-                    	builder.setTitle(res.getStringArray(R.array.custom_study_options_labels)[which]);
+                    	builder2.setTitle(res.getStringArray(R.array.custom_study_options_labels)[which]);
                     	DialogInterface.OnClickListener listener = null;
                     	switch (which + 1) {
                     	case CUSTOM_STUDY_NEW:
@@ -787,7 +789,14 @@ public class StudyOptionsFragment extends Fragment {
                     		listener = new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
-                                	// TODO
+                                	int forgottenDays = Integer.parseInt(((EditText) mCustomStudyEditText).getText().toString());
+                                	JSONArray ar = new JSONArray();
+                                	try {
+										ar.put(0, 1);
+									} catch (JSONException e) {
+										throw new RuntimeException(e);
+									}
+                                	createFilteredDeck(ar, new Object[]{String.format(Locale.US, "rated:%d:1", forgottenDays), 9999, Sched.DYN_RANDOM}, false);
                                 }
                             };
                     		break;
@@ -799,35 +808,10 @@ public class StudyOptionsFragment extends Fragment {
                     		listener = new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
-                                	// TODO
+                                	int days = Integer.parseInt(((EditText) mCustomStudyEditText).getText().toString());
+                                	createFilteredDeck(new JSONArray(), new Object[]{String.format(Locale.US, "prop:due<=%d", days), 9999, Sched.DYN_DUE}, true);
                                 }
                             };
-//                          if (AnkiDroidApp.colIsOpen()) {
-//                          try {
-//                              int days = Integer.parseInt(((EditText) mReviewEarlyView.findViewById(R.id.reviewearly_days_ahead)).getText().toString());
-//                              AnkiDroidApp.getSharedPrefs(getActivity()).edit().putInt("reviewAhead", days).commit();
-//                              Collection col = AnkiDroidApp.getCol();
-//                              JSONObject deck = col.getDecks().current();
-//                              String search = "prop:due<=" + String.valueOf(days) + " 'deck:" + deck.getString("name") + "'";
-//                              long id = AnkiDroidApp.getCol().getDecks().newDyn(getResources().getString(R.string.review_early_deck_name));
-//                              deck = col.getDecks().current();
-//                              JSONArray ar = deck.getJSONArray("terms");
-//                              ar.getJSONArray(0).put(0, search); // search: "prop:due<=X 'deck:DeckName'"
-//                              ar.getJSONArray(0).put(1, 1000);   // limit: 1000
-//                              ar.getJSONArray(0).put(2, 6);      // order: due
-//                              deck.put("terms", ar);
-//                              deck.put("resched", true);
-//                              deck.put("delays", null);
-//                              finishCongrats();
-//                              mProgressDialog = StyledProgressDialog.show(getActivity(), "",
-//                                      getResources().getString(R.string.rebuild_cram_deck), true);
-//                              DeckTask.launchDeckTask(DeckTask.TASK_TYPE_REBUILD_CRAM, mRebuildEarlyReviewListener, new DeckTask.TaskData(
-//                                      AnkiDroidApp.getCol(), AnkiDroidApp.getCol().getDecks().selected(), mFragmented));
-//                          } catch (NumberFormatException e) {
-//                              // ignore non numerical values
-//                          } catch (JSONException e) {
-//                              throw new RuntimeException(e);
-//                          }
                     		break;
 
                     	case CUSTOM_STUDY_RANDOM:
@@ -837,7 +821,8 @@ public class StudyOptionsFragment extends Fragment {
                     		listener = new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
-                                	// TODO
+                                	int randomCards = Integer.parseInt(((EditText) mCustomStudyEditText).getText().toString());
+                                	createFilteredDeck(new JSONArray(), new Object[]{"", randomCards, Sched.DYN_RANDOM}, true);
                                 }
                             };
                     		break;
@@ -849,7 +834,8 @@ public class StudyOptionsFragment extends Fragment {
                     		listener = new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
-                                	// TODO
+                                	String previewDays = ((EditText) mCustomStudyEditText).getText().toString();
+                                	createFilteredDeck(new JSONArray(), new Object[]{"is:new added:" + previewDays, 9999, Sched.DYN_OLDEST}, true);
                                 }
                             };
                     		break;
@@ -861,21 +847,22 @@ public class StudyOptionsFragment extends Fragment {
                     		listener = new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
-                                	// TODO
+                                	String tags = ((EditText) mCustomStudyEditText).getText().toString();
+                                	createFilteredDeck(new JSONArray(), new Object[]{"(is:new or is:due) " + tags, 9999, Sched.DYN_RANDOM}, true);
                                 }
                             };
                     		break;
                     	}
 
-                        builder.setContentView(mCustomStudyDetailsView);
-                        builder.setCancelable(true);
-                        builder.setNegativeButton(R.string.cancel, null);
-                        builder.setPositiveButton(R.string.ok, listener);
-                        builder.show();
+                        builder2.setContentView(mCustomStudyDetailsView);
+                        builder2.setCancelable(true);
+                        builder2.setNegativeButton(R.string.cancel, null);
+                        builder2.setPositiveButton(R.string.ok, listener);
+                        builder2.show();
                     }
                 });
-                builder.setCancelable(true);
-                dialog = builder.create();
+                builder1.setCancelable(true);
+                dialog = builder1.create();
                 break;
 
             default:
@@ -886,6 +873,55 @@ public class StudyOptionsFragment extends Fragment {
         return dialog;
     }
 
+    private void createFilteredDeck(JSONArray delays, Object[] terms, Boolean resched) {
+		JSONObject dyn;    	
+    	if (AnkiDroidApp.colIsOpen()) {
+    		Collection col = AnkiDroidApp.getCol();
+    		try {
+    			String deckName = col.getDecks().current().getString("name");
+    			String customStudyDeck = getResources().getString(R.string.custom_study_deck_name);
+    			JSONObject cur = col.getDecks().byName(customStudyDeck);
+    			if (cur != null) {
+    				if (cur.getInt("dyn") != 1) {
+                        StyledDialog.Builder builder = new StyledDialog.Builder(getActivity());
+                        builder.setMessage(R.string.custom_study_deck_exists);
+                        builder.setNegativeButton(getResources().getString(R.string.cancel), new OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                //
+                            }
+                        });
+                        builder.create().show();
+    					return;
+    				} else {
+    					// safe to empty
+    					col.getSched().emptyDyn(cur.getLong("id"));
+    					// reuse; don't delete as it may have children
+    					dyn = cur;
+    					col.getDecks().select(cur.getLong("id"));
+    				}
+    			} else {
+    				long did = col.getDecks().newDyn(customStudyDeck);
+    				dyn = col.getDecks().get(did);
+    			}
+    			// and then set various options
+    			dyn.put("delays", delays);
+    			JSONArray ar = dyn.getJSONArray("terms");
+    			ar.getJSONArray(0).put(0, new StringBuilder("deck:\"").append(deckName).append("\" ").append(terms[0]).toString());
+    			ar.getJSONArray(0).put(1, terms[1]);
+    			ar.getJSONArray(0).put(2, terms[2]);
+    			dyn.put("resched", resched);
+    			// generate cards
+    			finishCongrats();
+    			mProgressDialog = StyledProgressDialog.show(getActivity(), "",
+    					getResources().getString(R.string.rebuild_custom_study_deck), true);
+    			DeckTask.launchDeckTask(DeckTask.TASK_TYPE_REBUILD_CRAM, mRebuildCustomStudyListener, new DeckTask.TaskData(
+    					AnkiDroidApp.getCol(), AnkiDroidApp.getCol().getDecks().selected(), mFragmented));
+    		} catch (JSONException e) {
+    			throw new RuntimeException(e);
+    		}
+    	}
+    }
 
     void setFragmentContentView(View newView) {
         ViewGroup parent = (ViewGroup) this.getView();
@@ -1134,12 +1170,11 @@ public class StudyOptionsFragment extends Fragment {
         return preferences;
     }
 
-    DeckTask.TaskListener mRebuildEarlyReviewListener = new DeckTask.TaskListener() {
+    DeckTask.TaskListener mRebuildCustomStudyListener = new DeckTask.TaskListener() {
         @Override
         public void onPostExecute(TaskData result) {
             resetAndUpdateValuesFromDeck();
         }
-        
         @Override
         public void onPreExecute() {
         }

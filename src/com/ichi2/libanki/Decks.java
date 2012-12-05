@@ -355,8 +355,19 @@ public class Decks {
         }
     }
 
-
-    // byName
+    /** Get deck by NAME. */
+    public JSONObject byName(String name) {
+		try {
+			for (JSONObject m : mDecks.values()) {
+				if (m.get("name").equals(name)) {
+					return m;
+				}
+			}
+		} catch (JSONException e) {
+			throw new RuntimeException(e);
+		}
+		return null;
+    }
 
     /** Add or update an existing deck. Used for syncing and merging. */
     public void update(JSONObject g) {

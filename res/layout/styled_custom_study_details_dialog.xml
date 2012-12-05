@@ -37,22 +37,28 @@
 		android:layout_width="fill_parent"
 		android:layout_height="wrap_content"
 		android:orientation="horizontal">
-		<TextView android:id="@+id/custom_study_details_text2"
-			android:layout_width="0dip"
-			android:layout_height="wrap_content"
-			android:layout_weight="4"
-		android:gravity="left"
-			android:layout_marginLeft="4dip"
-			android:text=""
-			android:textSize="16dip"/>
+
+		<TextView
+		    android:id="@+id/custom_study_details_text2"
+		    android:layout_width="0dip"
+		    android:layout_height="wrap_content"
+		    android:layout_gravity="left"
+		    android:layout_marginLeft="4dip"
+		    android:layout_marginBottom="16dip"
+		    android:layout_weight="4"
+		    android:gravity="left"
+		    android:lines="2"
+		    android:text=""
+		    android:textSize="16sp" />
+
 		<EditText android:id="@+id/custom_study_details_edittext2"
 			android:layout_width="0dip"
 			android:layout_height="38dip"
 			android:layout_weight="1"
 			android:layout_marginRight="4dip"
-			android:gravity="center"
+			android:layout_marginBottom="16dip"
+			android:gravity="bottom"
 			android:inputType="number"
-			android:lines="1"
 			android:text="1"/>
 	</LinearLayout>
 </LinearLayout>

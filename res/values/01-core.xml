@@ -154,7 +154,8 @@
 <string name="empty_cram_label">Empty</string>
 <string name="empty_cram_deck">Emptying cram deck.\nPlease wait...</string>
 <string name="studyoptions_new_filtercram">Filter/Cram</string>
-<string name="review_early_deck_name">Review Early</string>
+<string name="custom_study_deck_name">Custom Study Session</string>
+<string name="custom_study_deck_exists">Please rename the existing Custom Study deck first.</string>
 
 <string name="studyoptions_congrats_finished">Congratulations! You have finished for now.</string>
 <string name="studyoptions_congrats_more_rev">Today\'s review limit has been reached, but there are still cards waiting to be reviewed. For optimum memory, consider increasing the daily limit in the options.</string>

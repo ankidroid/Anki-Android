@@ -87,4 +87,6 @@
 <string name="custom_study_preview">Preview new cards added in the last x days:</string>
 
 <string name="custom_study_tags">Enter tags:</string>
+<string name="rebuild_custom_study_deck">Rebuilding custom study deck.\nPlease wait...</string>
+
 </resources>
