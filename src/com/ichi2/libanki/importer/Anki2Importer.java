@@ -422,7 +422,7 @@ public class Anki2Importer {
             		card[8] = (Long) card[8] - aheadBy;
             	}
             	// if odid true, convert card from filtered to normal
-            	if ((Integer)card[15] != 0) {
+            	if ((Long)card[15] != 0) {
             		// odid
             		card[15] = 0;
             		// odue
