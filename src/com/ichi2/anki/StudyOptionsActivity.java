@@ -247,11 +247,9 @@ public class StudyOptionsActivity extends FragmentActivity {
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
             Log.i(AnkiDroidApp.TAG, "StudyOptions - onBackPressed()");
-            // if (mCurrentContentView == CONTENT_CONGRATS) {
-            // finishCongrats();
-            // } else {
-            closeStudyOptions();
-            // }
+            if (mCurrentFragment != null && !mCurrentFragment.congratsShowing()) {
+                closeStudyOptions();
+            }
             return true;
         }
         return super.onKeyDown(keyCode, event);

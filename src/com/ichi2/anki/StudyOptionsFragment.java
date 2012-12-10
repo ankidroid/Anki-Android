@@ -479,6 +479,7 @@ public class StudyOptionsFragment extends Fragment {
         // }
     }
 
+    
 
     @Override
     public void onPause() {
@@ -1068,8 +1069,17 @@ public class StudyOptionsFragment extends Fragment {
         }
     }
 
+    public boolean congratsShowing() {
+    	if (mCurrentContentView == CONTENT_CONGRATS) {
+        	finishCongrats();
+        	return true;
+    	} else {
+    		return false;
+    	}
+    }
 
     private void finishCongrats() {
+    	mCurrentContentView = CONTENT_STUDY_OPTIONS;
         mStudyOptionsView.setVisibility(View.INVISIBLE);
         mCongratsView.setVisibility(View.INVISIBLE);
         mCongratsView.setAnimation(ViewAnimation.fade(ViewAnimation.FADE_OUT, 500, 0));
@@ -1081,6 +1091,7 @@ public class StudyOptionsFragment extends Fragment {
 
 
     private void prepareCongratsView() {
+    	mCurrentContentView = CONTENT_CONGRATS;
         if (!AnkiDroidApp.colIsOpen() || !AnkiDroidApp.getCol().undoAvailable()) {
             mButtonCongratsUndo.setEnabled(false);
             mButtonCongratsUndo.setVisibility(View.GONE);
