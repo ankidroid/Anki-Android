@@ -25,6 +25,7 @@ import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.content.res.Configuration;
 import android.content.res.Resources;
+import android.content.res.Resources.NotFoundException;
 import android.graphics.Color;
 import android.graphics.Paint.Align;
 import android.os.Bundle;
@@ -985,7 +986,18 @@ public class StudyOptionsFragment extends Fragment {
             getActivity().setTitle(fullName);
         }
 
-        String desc = AnkiDroidApp.getCol().getDecks().getActualDescription();
+        String desc;
+        try {
+			if (deck.getInt("dyn") == 0) {
+			    desc = AnkiDroidApp.getCol().getDecks().getActualDescription();
+			    mTextDeckDescription.setMaxLines(3);
+			} else {
+				desc = getResources().getString(R.string.dyn_deck_desc);
+			    mTextDeckDescription.setMaxLines(5);
+			}
+		} catch (JSONException e) {
+			throw new RuntimeException(e);
+		}
         if (desc.length() > 0) {
             mTextDeckDescription.setText(Html.fromHtml(desc));
             mTextDeckDescription.setVisibility(View.VISIBLE);
