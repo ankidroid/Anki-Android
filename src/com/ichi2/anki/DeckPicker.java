@@ -2476,7 +2476,7 @@ public class DeckPicker extends FragmentActivity {
 
 
     private void integrityCheck() {
-    	if (AnkiDroidApp.colIsOpen()) {
+    	if (!AnkiDroidApp.colIsOpen()) {
     		loadCollection();
     		return;
     	}
