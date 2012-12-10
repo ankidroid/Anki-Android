@@ -45,8 +45,8 @@
   <string name="connection_error_message">Hálózati hiba történt.</string>
   <string name="sync_log_db_error">Adatbázishiba történt.</string>
   <string name="no_user_password_error_message">Ehhez  művelethez szükséged van egy bejelentkezett AnkiOnline fiókra.</string>
-  <string name="username">Felhasználói név</string>
-  <string name="username_repeat">Repeat username</string>
+  <string name="username">Email address</string>
+  <string name="username_repeat">Repeat email address</string>
   <string name="password">Jelszó</string>
   <string name="password_repeat">Jelszó mégegyszer</string>
   <string name="log_in">Bejelentkezés</string>
@@ -55,7 +55,7 @@
   <string name="logged_as">Bejelentkezve mint</string>
   <string name="log_out">Kijelentkezés</string>
   <string name="alert_logging_message">Bejelentkezés, kérem várjon...</string>
-  <string name="invalid_username_password">Érvénytelen felhasználói név vagy jelszó.</string>
+  <string name="invalid_username_password">Invalid email address or password.</string>
   <string name="login_generic_error">Nem sikerült bejelentkezni.</string>
   <string name="download_finished">Letöltés kész</string>
   <string name="personaldeckpicker_title">Online pakli megnyitása</string>

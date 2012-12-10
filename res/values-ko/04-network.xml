@@ -45,8 +45,8 @@
   <string name="connection_error_message">네트워크 오류가 발생했습니다.</string>
   <string name="sync_log_db_error">데이터베이스 오류가 발생했습니다.</string>
   <string name="no_user_password_error_message">이 작업을 계속 하기 위해서는 AnkiWeb 계정에 로그인해야 합니다.</string>
-  <string name="username">아이디</string>
-  <string name="username_repeat">사용자이름 재입력</string>
+  <string name="username">Email address</string>
+  <string name="username_repeat">Repeat email address</string>
   <string name="password">비밀번호</string>
   <string name="password_repeat">암호 재입력</string>
   <string name="log_in">로그인</string>
@@ -55,7 +55,7 @@
   <string name="logged_as">다음 사용자로 로그인 됨</string>
   <string name="log_out">로그아웃</string>
   <string name="alert_logging_message">로그인하는 중, 잠시 기다려 주십시오...</string>
-  <string name="invalid_username_password">잘못된 사용자 이름 또는 암호입니다.</string>
+  <string name="invalid_username_password">Invalid email address or password.</string>
   <string name="login_generic_error">로그인 실패.</string>
   <string name="download_finished">다운로드 완료</string>
   <string name="personaldeckpicker_title">암기묶음 온라인 열기</string>

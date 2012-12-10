@@ -26,6 +26,7 @@
   <string name="contextmenu_deckpicker_delete_deck">単語帳を削除</string>
   <string name="delete_deck_title">単語帳を削除</string>
   <string name="delete_deck_message">%S の中のすべてのカードを削除してもよろしいですか。</string>
+  <string name="delete_cram_deck_message">オリジナルのデッキに %s のすべてのカードを送信してもよろしいですか？</string>
   <string name="delete_deck_confirm">削除</string>
   <string name="new_version_message">新機能:</string>
   <string name="no_tts_available_title">テキスト読み上げ</string>
@@ -50,13 +51,16 @@
   <string name="intent_add_clear_all">すべて消去</string>
   <string name="intent_aedict_empty">カテゴリー \'default\' が空です。</string>
   <string name="intent_aedict_category">AnkiDroidにカードを登録するため、すべてのNotepadカテゴリを削除するか追、\'default\' という名前のカテゴリを追加してください。</string>
-  <string name="learnmore_title">「設定」についての情報</string>
-  <string name="learnmore_insructions">一時的に新しいカードを増やし、レビューの最大数を今日の学習セッション制限以下に増やすことができます。</string>
-  <string name="learnmore_extend_new_limit">新しいカード枚数の制限を増やす</string>
-  <string name="learnmore_extend_rev_limit">最大確認枚数の制限の増加</string>
-  <string name="reviewearly_title">早期評価の設定</string>
-  <string name="reviewearly_instructions">このオプションは、\'XXX\' と呼ばれる選択した単語帳を作成します。指定した期限日によって選択されたカードを作成し、単語帳が既に存在する場合には、再構成されます。</string>
-  <string name="reviewearly_days_ahead">これから何日間</string>
+  <string name="custom_study_new_total_new">単語帳の中の新しいカード枚数: %s</string>
+  <string name="custom_study_rev_total_rev">期限がきた枚数: %s</string>
+  <string name="custom_study_new_extend">今日の追加制限数を増加</string>
+  <string name="custom_study_rev_extend">今日の学習制限数を増加</string>
+  <string name="custom_study_forgotten"> 過去x 日間の忘れたカード枚数:</string>
+  <string name="custom_study_ahead">これから x 日間の学習枚数:</string>
+  <string name="custom_study_random">単語帳からランダムに選ばれた x枚のカード</string>
+  <string name="custom_study_preview">過去 x 日間に追加されたカードを見る:</string>
+  <string name="custom_study_tags">タグの入力</string>
+  <string name="rebuild_custom_study_deck">Rebuilding custom study deck.\nPlease wait...</string>
   <string-array name="about_content">
     <item><![CDATA[<h2>%1$s:<br/>Android用のフラッシュカード</h2>AnkiDroidは、デスクトップソフトウェア <a href="%2$s">Anki</a>と完全互換のフラッシュカードアプリです。あなたは、AnkiDroid と Anki Desktopのどちらでも教材を作成、ダウンロード、学習し、また、簡単に双方の同期をとることができます。]]></item>
     <item><![CDATA[AnkiDroid 良くするため、できるだけバグを、 <a href="%1$s"> ここに</a>報告して頂けると助かります。 新しい機能のアイデアも大歓迎 ！<a href="%2$s"> wiki</a> を使用して、<a href="%3$s"> フォーラム</a>で意見交換してください。]]></item>

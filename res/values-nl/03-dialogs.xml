@@ -26,6 +26,7 @@
   <string name="contextmenu_deckpicker_delete_deck">Verwijder set</string>
   <string name="delete_deck_title">Verwijder set</string>
   <string name="delete_deck_message">Weet je zeker dat je alle kaarten in %s wilt verwijderen?</string>
+  <string name="delete_cram_deck_message">Are you sure you wish to send all cards in %s back to their original decks?</string>
   <string name="delete_deck_confirm">Ja, verwijder</string>
   <string name="new_version_message">Nieuwe functies:</string>
   <string name="no_tts_available_title">Tekst-naar-Spraak</string>
@@ -50,13 +51,16 @@
   <string name="intent_add_clear_all">Alles legen</string>
   <string name="intent_aedict_empty">Categorie \'standaard\' is leeg</string>
   <string name="intent_aedict_category">Om kaarten aan AnkiDroid toe te voegen verwijder je alle Notepad categorieën of voeg een toe met de naam \'standaard\'</string>
-  <string name="learnmore_title">Leer meer instellingen</string>
-  <string name="learnmore_insructions">U kunt het maximumaantal nieuwe kaarten en herhalingen tijdelijk verhogen om de studeersessie van vandaag voort te zetten.</string>
-  <string name="learnmore_extend_new_limit">Verhoog maximum aantal nieuwe kaarten met</string>
-  <string name="learnmore_extend_rev_limit">Verhoog maximum aantal herhalingen met</string>
-  <string name="reviewearly_title">Overhoor eerder instellingen</string>
-  <string name="reviewearly_instructions">Met deze optie wordt een gefilterde set genaamd \'XXX\' gemaakt met de kaarten die binnen het opgegeven aantal dagen herhaald zullen worden. Als er al een gefilterd dek bestaat zal het worden geleegd en opnieuw ingesteld.</string>
-  <string name="reviewearly_days_ahead">Hoeveel dagen vooruit</string>
+  <string name="custom_study_new_total_new">New cards in deck: %s</string>
+  <string name="custom_study_rev_total_rev">Reviews due in deck: %s</string>
+  <string name="custom_study_new_extend">Increase today\'s new card limit by</string>
+  <string name="custom_study_rev_extend">Increase today\'s review limit by</string>
+  <string name="custom_study_forgotten">Review cards forgotten in last x days:</string>
+  <string name="custom_study_ahead">Review ahead by x days:</string>
+  <string name="custom_study_random">Select x cards randomly from the deck:</string>
+  <string name="custom_study_preview">Preview new cards added in the last x days:</string>
+  <string name="custom_study_tags">Enter tags:</string>
+  <string name="rebuild_custom_study_deck">Rebuilding custom study deck.\nPlease wait...</string>
   <string-array name="about_content">
     <item><![CDATA[<h2>%1$s:<br/>Flitskaarten voor Android</h2>AnkiDroid is een flitskaartprogramma dat volledig samenwerkt met de desktop programma <a href="%2$s">Anki</a>. Je kan content downloaden en leren op zowel AnkiDroid als Anki Desktop, en eenvoudig synchroniseren tussen beide.]]></item>
     <item><![CDATA[Om Ankidroid te verbeteren, stuur je <a href="%1$s">hier</a>  het foutenverslag op; ook nieuwe ideeën zijn van harte welkom! Lees de <a href="%2$s">wiki</a> en zeg ons gedag op het <a href="%3$s">forum</a>.]]></item>

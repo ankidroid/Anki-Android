@@ -38,8 +38,7 @@
   <string name="ease3_successive">Bom</string>
   <string name="ease3_learning">Fácil</string>
   <string name="studyoptions_congrats_undo">Undo %s</string>
-  <string name="studyoptions_congrats_learnmore">Aprender Mais</string>
-  <string name="studyoptions_congrats_reviewearly">Rever Antes</string>
+  <string name="studyoptions_congrats_custom_study">Custom Study</string>
   <string name="studyoptions_congrats_open_other_deck">Abrir Outro Deck</string>
   <string name="studyoptions_congrats_finish">Voltar à Tela de Estudo</string>
   <string name="card_unsuspended">Suspensão de cartão desfeita</string>
@@ -95,10 +94,12 @@
   <string name="empty_cram_label">Vazio</string>
   <string name="empty_cram_deck">Esvaziando deck do preparatório.\nPor favor aguarde...</string>
   <string name="studyoptions_new_filtercram">Filter/Cram</string>
-  <string name="review_early_deck_name">Review Early</string>
+  <string name="custom_study_deck_name">Custom Study Session</string>
+  <string name="custom_study_deck_exists">Please rename the existing Custom Study deck first.</string>
   <string name="studyoptions_congrats_finished">Parabéns! Você terminou por hora.</string>
   <string name="studyoptions_congrats_more_rev">O limite de revisão de hoje foi atingido, mas ainda existem cartões esperando para serem revistos. Para uma otima memória, considere aumentar o limite diário nas opções.</string>
   <string name="studyoptions_congrats_more_new">There are more new cards available, but the daily limit has been reached. You can increase the limit in the options, but please bear in mind that this will increase your short-term review workload.</string>
+  <string name="studyoptions_congrats_custom">To study outside of the normal schedule, click the Custom Study button below.</string>
   <string name="sd_card_not_mounted">Cartão SD não está montado.</string>
   <string name="studyoptions_options">Opções</string>
   <string name="empty_cloze_warning">Por favor edite esta nota e adicione algumas deleções fechadas. (%1$s)</string>

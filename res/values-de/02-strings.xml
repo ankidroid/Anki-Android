@@ -94,6 +94,7 @@
   <string name="import_importing">Karten werden importiert.\nBitte warten...</string>
   <string name="import_hint">Um Karten zu importieren, kopieren Sie die apkg-Datei ins Verzeichnis %s und drücken \'Ok\'</string>
   <string name="import_no_file_found">Keine importierbaren apkg-Dateien gefunden</string>
+  <string name="custom_study">Benutzerdefinierte Sitzung</string>
   <string-array name="dynOrderLabels">
     <item>Am frühesten gesehene zuerst</item>
     <item>Zufällig</item>

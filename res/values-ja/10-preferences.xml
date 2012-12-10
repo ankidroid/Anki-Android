@@ -94,7 +94,7 @@
   <string name="fullscreen_review">フルスクリーンでの評価</string>
   <string name="fullscreen_review_summ">カードの確認に全画面を使用するかどうか選択できます</string>
   <string name="zoom">ズームを有効にする</string>
-  <string name="zoom_summ">勉強中にズームコントロールを表示します</string>
+  <string name="zoom_summ">学習中にズームコントロールを表示します</string>
   <string name="zeemote">Zeemote JS1のサポート</string>
   <string name="zeemote_summ">Zeemote JS1 コント ローラーを使用して、レビューを実行します。</string>
   <string name="zeemote_actions">Zeemoteでの学習方法</string>
@@ -109,7 +109,7 @@
   <string name="zeemote_show_answer">マーキングしながら答えを表示</string>
   <string name="zeemote_show_answer_summ">選択肢 1-4 への割り当て</string>
   <string name="swipe">ジェスチャーを有効にする</string>
-  <string name="swipe_summ_off">画面と解答カードの切り替えにジェスチャを使用します. このオプションは, ズーム昨日と互換性がありません</string>
+  <string name="swipe_summ_off">ジェスチャの機能を有効にして、質問画面、解答画面の操作を可能にします。 このオプションは, ズーム機能と互換性がありません。</string>
   <string name="swipe_summ_on">水平方向のスワイプで画面を切り替えることができます. 他のアクションは下で設定します</string>
   <string name="pref_cat_actions">アクション</string>
   <string name="gestures_shake">シェイク</string>
@@ -136,7 +136,7 @@
   <string name="play_sounds_at_start_summ">質問/解答を表示した後すぐにサウンドを再生する</string>
   <string name="shake_intensity">モーションセンサーの反応基準</string>
   <string name="shake_intensity_summ">Shake認識のしきい値: XXX</string>
-  <string name="sync_fetch_missing_media">同期するメディアを取得しています</string>
+  <string name="sync_fetch_missing_media">同期中のメディア（音声、画像）の取得</string>
   <string name="sync_fetch_missing_media_summ">同期の際に不足しているメディアを自動的に取得する.</string>
   <string name="fix_hebrew_text">ヘブライ語母音への対応</string>
   <string name="fix_hebrew_text_summ">正しくヘブライ語の母音を描画するため回避策。</string>
@@ -220,12 +220,12 @@
   <string name="pref_simple_interface_summ">高速表示、htmlフォーマットは反映されません</string>
   <string name="pref_simple_interface_exclude_tags">標準のタグによる操作方法</string>
   <string name="pref_simple_interface_exclude_tags_summ">次のタグのためには、シンプルインターフェイスを使用しないでください: XXX</string>
-  <string name="deck_conf_deck_name">デッキ名</string>
-  <string name="deck_conf_deck_description">デッキの説明</string>
+  <string name="deck_conf_deck_name">単語帳の名前</string>
+  <string name="deck_conf_deck_description">単語帳の説明</string>
   <string name="deck_conf_conf_set">コンフィグのセット</string>
   <string name="deck_conf_pref_cat_options">オプション</string>
   <string name="deck_conf_new_cards">新しいカード</string>
-  <string name="deck_conf_rev_cards">格付け</string>
+  <string name="deck_conf_rev_cards">学習</string>
   <string name="deck_conf_lps_cards">未習得</string>
   <string name="deck_conf_other">その他</string>
   <string name="deck_conf_add_conf">コンフィグの追加／削除</string>

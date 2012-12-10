@@ -13,7 +13,7 @@ Masaüstü uygulaması Anki veya doğrudan Ankidroid yoluyla malzeme ekleyin Uyg
 • aralıklı yineleme (supermemo 2 algoritması)
 • metin okuma entegrasyonu
 • 6000'den fazla hazır deste
-• progress widget
+• ilerleme widget
 • ayrıntılı istatistikler
 • AnkiWeb ile eşitleme
 • açık kaynaklı
@@ -23,7 +23,7 @@ Masaüstü uygulaması Anki veya doğrudan Ankidroid yoluyla malzeme ekleyin Uyg
 • yazı tahtası
 • kart düzenleyici/ekleyici
 • kart tarayıcı
-• tablet layout
+• tablet düzeni
 • var olan toplama dosyalarını kullanma (Anki Masaüstü yoluyla)
 • sözlük entegrasyonu (ColorDict, GoldenDict, Leo.org, Aedict, çeşitli web sözlükleri)
 • sözlük gibi diğer uygulamalardan istek tabanlı kart ekleme
@@ -31,7 +31,7 @@ Masaüstü uygulaması Anki veya doğrudan Ankidroid yoluyla malzeme ekleyin Uyg
 • tam yedekleme sistemi
 • sürükleme, dokunma, sallama yoluyla komut verme
 • tamamen kişiselleştirilebilir
-• dynamic deck handling
+• dinamik deste kullanımı
 • gece modu
 • 27 dil seçeneği
 • Önceki bütün AnkiDroid sürümleri sitemizden indirilebilir

@@ -113,14 +113,13 @@
     <item>Order due</item>
     <item>Ostatnio dodane na początku</item>
   </string-array>
-  <string-array name="cram_deck_conf_preset_labels">
-    <item><![CDATA[<select preset>]]></item>
-    <item>Preview all new cards</item>
-    <item>Preview cards added today</item>
-    <item>Review today\'s forgotten cards</item>
-    <item>Review ahead by two days</item>
-    <item>Review due cards with tag</item>
-    <item>Review due cards with decreasing intervals</item>
-    <item>Cram all cards</item>
+  <string-array name="custom_study_options_labels">
+    <item>Increase today\'s new card limit</item>
+    <item>Increase today\'s review card limit</item>
+    <item>Review forgotten cards</item>
+    <item>Review ahead</item>
+    <item>Study a random selection of cards</item>
+    <item>Preview new cards</item>
+    <item>Limit to particular tags</item>
   </string-array>
 </resources>

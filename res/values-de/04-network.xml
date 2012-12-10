@@ -45,8 +45,8 @@
   <string name="connection_error_message">Ein Netzwerkfehler ist aufgetreten.</string>
   <string name="sync_log_db_error">Ein Datenbankfehler ist aufgetreten.</string>
   <string name="no_user_password_error_message">Um mit der Operation fortzufahren, müssen Sie ein AnkiWeb-Konto haben und eingeloggt sein.</string>
-  <string name="username">Benutzername</string>
-  <string name="username_repeat">Benutzername-Wiederholung</string>
+  <string name="username">E-Mail-Adresse</string>
+  <string name="username_repeat">E-Mail-Adresse wiederholen</string>
   <string name="password">Passwort</string>
   <string name="password_repeat">Passwort-Wiederholung</string>
   <string name="log_in">Einloggen</string>
@@ -55,7 +55,7 @@
   <string name="logged_as">Eingeloggt als</string>
   <string name="log_out">Ausloggen</string>
   <string name="alert_logging_message">Einloggen, bitte warten…</string>
-  <string name="invalid_username_password">Ungültiger Benutzername oder Passwort.</string>
+  <string name="invalid_username_password">E-Mail-Adresse oder Passwort ungültig.</string>
   <string name="login_generic_error">Fehler beim Anmelden.</string>
   <string name="download_finished">Herunterladen beendet</string>
   <string name="personaldeckpicker_title">Online-Stapel herunterladen</string>

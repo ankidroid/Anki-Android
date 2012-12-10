@@ -38,8 +38,7 @@
   <string name="ease3_successive">Bien</string>
   <string name="ease3_learning">Fácil</string>
   <string name="studyoptions_congrats_undo">Deshacer %s</string>
-  <string name="studyoptions_congrats_learnmore">Aprender más</string>
-  <string name="studyoptions_congrats_reviewearly">Repasar anticipadamente</string>
+  <string name="studyoptions_congrats_custom_study">Estudio Personalizado</string>
   <string name="studyoptions_congrats_open_other_deck">Abrir otro mazo</string>
   <string name="studyoptions_congrats_finish">Volver a la pantalla de Estudio</string>
   <string name="card_unsuspended">Suspensión de la tarjeta deshecha</string>
@@ -63,7 +62,7 @@
   <string name="contextmenu_deckpicker_collapse_deck">Contraer mazo</string>
   <string name="contextmenu_deckpicker_inflate_deck">Expandir mazo</string>
   <string name="contextmenu_deckpicker_set_custom_dictionary">Establecer diccionario personalizado</string>
-  <string name="menu_download_deck">Descargar mazo</string>
+  <string name="menu_download_deck">Descargar la baraja</string>
   <string name="menu_download_shared_deck">Mazo compartido</string>
   <string name="menu_my_account">Cuenta de sincronización</string>
   <string name="menu_preferences">Preferencias</string>
@@ -95,10 +94,12 @@
   <string name="empty_cram_label">Vaciar</string>
   <string name="empty_cram_deck">Vaciando mazo de empollar.\nPor favor, espera...</string>
   <string name="studyoptions_new_filtercram">Filtrar/Empollar</string>
-  <string name="review_early_deck_name">Repasar Antes</string>
+  <string name="custom_study_deck_name">Custom Study Session</string>
+  <string name="custom_study_deck_exists">Please rename the existing Custom Study deck first.</string>
   <string name="studyoptions_congrats_finished">¡Felicidades! Has terminado por ahora.</string>
   <string name="studyoptions_congrats_more_rev">Se ha alcanzado el límite de repasos de hoy, pero todavía hay tarjetas a la espera de ser repasadas. Para una memorización óptima, considera la posibilidad de aumentar el límite diario en las opciones.</string>
   <string name="studyoptions_congrats_more_new">Hay más tarjetas nuevas disponibles, pero el límite diario ha sido alcanzado. Puedes aumentar el límite en las opciones, pero ten en cuenta que esto también aumentará tu carga de trabajo de repasos a corto plazo.</string>
+  <string name="studyoptions_congrats_custom">Para estudiar fuera de la agenda normal, haga click en el botón Estudio Personalizado abajo.</string>
   <string name="sd_card_not_mounted">La tarjeta SD no está preparada.</string>
   <string name="studyoptions_options">Opciones</string>
   <string name="empty_cloze_warning">Por favor, edita esta nota y añade algunos huecos en el texto. (%1$s)</string>

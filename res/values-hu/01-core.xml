@@ -38,8 +38,7 @@
   <string name="ease3_successive">Jó</string>
   <string name="ease3_learning">Könnyű</string>
   <string name="studyoptions_congrats_undo">Visszavonás %s</string>
-  <string name="studyoptions_congrats_learnmore">További tanulás</string>
-  <string name="studyoptions_congrats_reviewearly">Korai ismétlés</string>
+  <string name="studyoptions_congrats_custom_study">Custom Study</string>
   <string name="studyoptions_congrats_open_other_deck">Másik pakli megnyitása</string>
   <string name="studyoptions_congrats_finish">Vissza a tanuló képernyőhöz</string>
   <string name="card_unsuspended">Kártya visszavonás nem sikerült</string>
@@ -95,10 +94,12 @@
   <string name="empty_cram_label">Üres</string>
   <string name="empty_cram_deck">Magoló pakli ürítés.\nKérlek várj...</string>
   <string name="studyoptions_new_filtercram">Filter/Cram</string>
-  <string name="review_early_deck_name">Review Early</string>
+  <string name="custom_study_deck_name">Custom Study Session</string>
+  <string name="custom_study_deck_exists">Please rename the existing Custom Study deck first.</string>
   <string name="studyoptions_congrats_finished">Gratulálok! Mára végeztél.</string>
   <string name="studyoptions_congrats_more_rev">A mai átnézési korlátot elérted, de még mindig maradt átnézendő kártya. Az optimális tanulás érdekében lehet, hogy meg kellene emelni a napi korlátot a Beállítások menüben.</string>
   <string name="studyoptions_congrats_more_new">There are more new cards available, but the daily limit has been reached. You can increase the limit in the options, but please bear in mind that this will increase your short-term review workload.</string>
+  <string name="studyoptions_congrats_custom">To study outside of the normal schedule, click the Custom Study button below.</string>
   <string name="sd_card_not_mounted">Az SD kártya nincs csatlakoztatva.</string>
   <string name="studyoptions_options">Beállítások</string>
   <string name="empty_cloze_warning">Szerkeszd ezt a megjegyzést és adj meg hozzá néhány közeli /törlést/. (%1$s)</string>

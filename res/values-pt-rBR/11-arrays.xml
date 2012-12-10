@@ -113,14 +113,13 @@
     <item>Ordem de revisão</item>
     <item>Cartões novos primeiro</item>
   </string-array>
-  <string-array name="cram_deck_conf_preset_labels">
-    <item><![CDATA[<select preset>]]></item>
-    <item>Visualizar todas as novas cartas</item>
-    <item>Visualizar cartões adicionados hoje</item>
-    <item>Revisar cartões esquecidos de hoje</item>
-    <item>Revisar cartões previstos para dois dias</item>
-    <item>Revisão cartões devidos com tag</item>
-    <item>Revisar cartões devidos com intervalos decrescentes</item>
-    <item>Cursinho com todos os cartões</item>
+  <string-array name="custom_study_options_labels">
+    <item>Aumentar o limite de cartões novos de hoje</item>
+    <item>Aumentar o limite de revisões de hoje</item>
+    <item>Revisar cartões esquecidos</item>
+    <item>Antecipar revisão</item>
+    <item>Revisar um grupo de cartões aleatórios</item>
+    <item>Estudar cartões novos</item>
+    <item>Limitar a tags específicas</item>
   </string-array>
 </resources>

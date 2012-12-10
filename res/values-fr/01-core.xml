@@ -38,8 +38,7 @@
   <string name="ease3_successive">Bon</string>
   <string name="ease3_learning">Facile</string>
   <string name="studyoptions_congrats_undo">Annuler %s</string>
-  <string name="studyoptions_congrats_learnmore">En savoir plus</string>
-  <string name="studyoptions_congrats_reviewearly">Réviser à l\'avance</string>
+  <string name="studyoptions_congrats_custom_study">Custom Study</string>
   <string name="studyoptions_congrats_open_other_deck">Ouvrir un autre paquet</string>
   <string name="studyoptions_congrats_finish">Retour à l’écran d’étude</string>
   <string name="card_unsuspended">Suspension de la carte annulée</string>
@@ -96,10 +95,12 @@
   <string name="empty_cram_deck">Paquet de bachotage en cours de vidage.\n
 Veuillez patienter...</string>
   <string name="studyoptions_new_filtercram">Filtrer/Bachoter</string>
-  <string name="review_early_deck_name">Réviser à l\'avance</string>
+  <string name="custom_study_deck_name">Custom Study Session</string>
+  <string name="custom_study_deck_exists">Please rename the existing Custom Study deck first.</string>
   <string name="studyoptions_congrats_finished">FÉLICITATIONS ! Vous avez terminé… pour l’instant !</string>
   <string name="studyoptions_congrats_more_rev">Vous avez atteint votre quota de révisions, mais il reste des cartes prévues pour aujourd’hui. Sauf à risquer l’oubli chronique, pensez à adapter le quota.</string>
   <string name="studyoptions_congrats_more_new">Il reste des nouvelles cartes disponibles, mais la limite journalière à été atteinte. Vous pouvez augmenter cette limite dans les options, mais garder à l\'esprit que cela augmentera votre charge de travail à court terme.</string>
+  <string name="studyoptions_congrats_custom">To study outside of the normal schedule, click the Custom Study button below.</string>
   <string name="sd_card_not_mounted">La carte SD n’est pas montée.</string>
   <string name="studyoptions_options">Options</string>
   <string name="empty_cloze_warning">N’oubliez pas le texte à trous. (%1$s)</string>

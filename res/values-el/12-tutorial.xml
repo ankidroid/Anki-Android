@@ -17,33 +17,33 @@
  
 <resources> 
  <string-array name="tutorial_questions"> 
-    <item><![CDATA[Thanks for installing AnkiDroid!<br />This is a short introduction.<br />What you see now is the <span style=\'font-weight:600;\'>question</span> part of a flashcard.<br />Please click on the large button below...]]></item> 
-    <item><![CDATA[The next card is shown now.<br />The idea is straightforward: Just like in &quot;real world&quot; paper flashcards, you write a question on the front and the answer on the back side of your cards.<br />(click the button to show the back side)]]></item> 
-    <item><![CDATA[&quot;What is the capital of Burkina Faso?&quot;<br />Think a bit about the answer and click then &quot;show answer&quot;]]></item> 
+    <item><![CDATA[Ευχαριστούμε που εγκαταστήσατε το AnkiDroid!<br />Αυτή είναι μια μικρή εισαγωγή.<br />Αυτό που βλέπετε τώρα είναι το τμήμα <span style=\'font-weight:600;\'>ερώτηση</span> μιας κάρτας.<br />Παρακαλούμε πατήστε στο μεγάλο κουμπί παρακάτω...]]></item> 
+    <item><![CDATA[Η επόμενη κάρτα εμφανίζεται τώρα.<br />Η ιδέα είναι απλή: Όπως και στις «αληθινές» κάρτες μνήμης, γράφετε την ερώτηση στη μπροστινή όψη και την απάντηση στην πίσω.<br />(πατήστε το κουμπί για να δείτε την πίσω όψη)]]></item> 
+    <item><![CDATA[«Ποια είναι η πρωτεύουσα της Μπουρκίνα Φάσο;»<br />Σκεφτείτε λίγο την απάντηση και κάντε κλικ «Εμφάνιση απάντησης»]]></item> 
     <item><![CDATA[Πάνω από κάθε κουμπί απάντησης, θα βρείτε πληροφορίες σχετικά με το χρόνο, μετά από τον οποίο η κάρτα θα εμφανιστεί ξανά αν απαντηθεί από αυτό το κουμπί.]]></item> 
     <item><![CDATA[Η πρόθεση είναι να σας δείξει την κάρτα ξανά, αμέσως πριν να την ξεχάσετε. Εμπειρικές μελέτες έχουν δείξει ότι με αυτό τον τρόπο πληροφορίες που μπορούν να μαθευτούν πιο αποτελεσματικά.]]></item> 
     <item><![CDATA[Λίγα λόγια για την οργάνωση του AnkiDroid:<br /><br>Όλες οι πληροφορίες πρέπει να τεθούν σε ζευγάρια ερωτήσεων και απαντήσεων. Αν θέλετε να μάθετε με την άλλη κατεύθυνση, θα πρέπει να δημιουργήσετε μια άλλη κάρτα με εναλλαγμένες πληροφορίες.]]></item> 
     <item><![CDATA[Οι κάρτες συλλέγονται σε τράπουλες και εκεί μπορούν να οργανωθούν με τη βοήθεια διαφόρων ετικετών.]]></item> 
-    <item><![CDATA[There are mainly two ways of getting new cards:<br />You either add premade decks of other users (choose &quot;shared decks&quot; in the decks summary) or create them by yourself.]]></item> 
+    <item><![CDATA[Υπάρχουν δύο κυρίως τρόποι για να πάρετε νέες κάρτες:<br />Είτε προσθέτετε προκατασκευασμένες τράπουλες άλλων χρηστών (επιλέξτε «κοινόχρηστες τράπουλες» στην περίληψη τραπουλών) ή τις δημιουργήτε εσείς.]]></item> 
     <item><![CDATA[Εν πάση περιπτώση, η δημιουργία των δικών σας τραπουλών είναι αναγκαία για την τέλεια ικανοποίηση των αναγκών σας. Αυτό μπορείτε Μπορείτε να το κάνετε αυτό απευθείας στο AnkiDroid...]]></item> 
-    <item><![CDATA[Let\'s have a look on the top bar:<br />In the left top corner you find some numbers. The blue one tells you, how many new cards are still projected for today. The red number counts the failed cards (answered by &quot;again&quot;),]]></item> 
+    <item><![CDATA[Ας εξετάσουμε λίγο την κορυφαία μπάρα:<br />Στην πάνω αριστερή γωνία θα βρείτε κάποιους αριθμούς. Ο μπλε σάς δείχνει πόσες νέες κάρτες προβλέπονται ακόμη για σήμερα. Ο κόκκινος αριθμός μετράει την αποτυχημένες κάρτες (απαντημένες «πάλι»),]]></item> 
     <item><![CDATA[Στη δεξιά γωνία θα βρείτε πληροφορίες σχετικά με το χρόνο σκέψης σας από αυτή την κάρτα και την επίδοσή σας.]]></item> 
-    <item><![CDATA[Albeit you can use AnkiDroid stand alone, it is fully connected to AnkiWeb, the syncing server of Anki Desktop (available for Linux, Windows, Mac).]]></item> 
+    <item><![CDATA[Αν και μπορείτε να χρησιμοποιήσετε το AnkiDroid μόνο του, συνδέεται πλήρως με το AnkiWeb, το διακομιστή συγχρονισμού του Anki Desktop (διαθέσιμο σε Linux, Windows, Mac).]]></item> 
     <item><![CDATA[Αυτά ήταν τα κύρια σημεία της χρήσης AnkiDroid.<br /><br>Για περισσότερες πληροφορίες σχετικά με τη βασική έννοια του Anki, επισκεφθείτε http://ankisrs.net/]]></item> 
  </string-array>
  <string-array name="tutorial_answers">
-    <item><![CDATA[... in order to see the <span style=\'font-weight:600;\'>answer</span> part of the flashcard (below the line).<br />Click on the button on the right]]></item> 
-    <item><![CDATA[Let\'s assume you want to learn the world\'s capitals. Let the question be...<br />(click on one of the buttons to show the next card)]]></item> 
-    <item><![CDATA[&quot;Ouagadougou&quot; is the right answer. <br />You didn\'t know it? Click &quot;again&quot; to see the card again in a couple of minutes. Otherwise, click on the other buttons, depending on the easiness of the answer.]]></item> 
+    <item><![CDATA[... για να δείτε το τμήμα <span style=\'font-weight:600;\'>απάντηση</span> της κάρτας (κάτω από τη γραμμή).<br />Πατήστε το κουμπί στα δεξιά]]></item> 
+    <item><![CDATA[Υποθέστε ότι θέλετε να μάθετε τις πρωτεύουσες του κόσμου. Έστω η ερώτηση...<br />(πατήστε ένα από τα κουμπιά για να δείτε την επόμενη κάρτα)]]></item> 
+    <item><![CDATA[«Ουαγκαντούγκου» είναι η σωστή απάντηση. <br />Δε το ξέρατε; Πατήστε το κουμπί «πάλι» για να ξαναδείτε την κάρτα σε λίγα λεπτά. Διαφορετικά, πατήστε τα άλλα κουμπιά, ανάλογα με την ευκολία της απάντησης.]]></item> 
     <item><![CDATA[Ο χρόνος αυτός υπολογίζεται από την τελευταία φορά που απαντήσατε την κάρτα, την τρέχουσα επιλογή ευκολίας και τις επιλογές ευκολίας των προηγούμενων απαντήσεων της εν λόγω κάρτας.]]></item> 
     <item><![CDATA[Αν θέλετε να μάθετε περισσότερα σχετικά με την επανάληψη σε διαστήματα, επισκευτείτε:<br>http://en.wikipedia.org/wiki/Spaced_repetition_system]]></item> 
     <item><![CDATA[Μην ανησυχείτε, αυτό μπορεί να γίνει αυτόματα. Δεν υπάρχει κανένας λόγος να εισάγετε την ίδια πληροφορία διπλά.]]></item> 
     <item><![CDATA[Θα μάθετε γρήγορα για αυτό όταν αρχίσετε να χρησιμοποιείτε το AnkiDroid.]]></item> 
-    <item><![CDATA[You\'ll find thousands of premade decks to download and there are probably some which are useful for you.]]></item> 
+    <item><![CDATA[Θα βρείτε χιλιάδες προκατασκευασμένες τράπουλες για κατέβασμα και πιθανότατα υπάρχουν κάποιες που θα σας είναι χρήσιμες.]]></item> 
     <item><![CDATA[... ή (πιο εύκολα) με την εφαρμογή desktop Anki (κατεβάστε την δωρεάν στο http://ankisrs.net/).<br><br>Μπορείτε να συγχρονίσετε τις τράπουλές σας με την εφαρμογή desktop πολύ εύκολα, οπότε μεταφέροντας τα δεδομένα δεν είναι πρόβλημα.]]></item> 
-    <item><![CDATA[the green one shows the number of cards you\'ve already learned before and which are due to review today.<br />The type of the actual cards is specified by an underline.]]></item> 
+    <item><![CDATA[ο πράσινος δείχνει τον αριθμός καρτών που έχετε ήδη μάθει πιο πριν και που οφείλονται για επανάληψη σήμερα.<br />Ο τύπος της παρούσας κάρτας επισημαίνεται με μια υπογράμμιση.]]></item> 
     <item><![CDATA[Η επάνω γραμμή δείχνει την πρόοδό σας, η κάτω δείχνει το ποσοστό των ναι απαντήσεων.]]></item> 
-    <item><![CDATA[Thus, you can easily sync your collection between AnkiDroid and Anki Desktop and use the latter for a more convenient card adding and managing.]]></item> 
+    <item><![CDATA[;Έτσι, μπορείτε εύκολα να συγχρονίσετε τη συλλογή σας μεταξύ AnkiDroid και Anki Desktop και να χρησιμοποιήσετε το δεύτερο για πιο βολική προσθήκη και διαχείριση καρτών.]]></item> 
     <item><![CDATA[Απλά δοκιμάστε το λίγο τώρα και δείτε, αν σας εξυπηρετεί.<br><br>Ίσως ξεκινήστε με την επισκόπηση τραπουλών (πατήστε μενού στην κύρια οθόνη και επιλέξτε &quot;όλες οι τράπουλες&quot;), όπου μπορείτε να κατεβάσετε έτοιμες τράπουλες ή να δημιουργήσετε τη δική σας (απλώς χρησιμοποιήστε το μενού εκεί).]]></item> 
  </string-array>
 </resources>

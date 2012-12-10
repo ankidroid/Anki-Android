@@ -45,8 +45,8 @@
   <string name="connection_error_message">Виникла помилка мережі.</string>
   <string name="sync_log_db_error">Виникла помилка бази даних.</string>
   <string name="no_user_password_error_message">Для продовження цієї дії, вам потрібно здійснити вхід в обліковий запис AnkiWeb.</string>
-  <string name="username">Ім’я користувача</string>
-  <string name="username_repeat">Повторити ім’я користувача</string>
+  <string name="username">Email address</string>
+  <string name="username_repeat">Repeat email address</string>
   <string name="password">Пароль</string>
   <string name="password_repeat">Повторити пароль</string>
   <string name="log_in">Ввійти</string>
@@ -55,7 +55,7 @@
   <string name="logged_as">Ви ввійшли як</string>
   <string name="log_out">Вийти</string>
   <string name="alert_logging_message">Здійснення входу, зачекайте, будь ласка...</string>
-  <string name="invalid_username_password">Неправильне ім’я користувача або пароль.</string>
+  <string name="invalid_username_password">Invalid email address or password.</string>
   <string name="login_generic_error">Ввійти не вдалося.</string>
   <string name="download_finished">Завантаження завершено</string>
   <string name="personaldeckpicker_title">Відкрити колоду онлайн</string>

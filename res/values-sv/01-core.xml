@@ -38,8 +38,7 @@
   <string name="ease3_successive">Bra</string>
   <string name="ease3_learning">Lätt</string>
   <string name="studyoptions_congrats_undo">Ångra %s</string>
-  <string name="studyoptions_congrats_learnmore">Lär dig mer</string>
-  <string name="studyoptions_congrats_reviewearly">Repetera tidigt</string>
+  <string name="studyoptions_congrats_custom_study">Custom Study</string>
   <string name="studyoptions_congrats_open_other_deck">Öppna annan kortlek</string>
   <string name="studyoptions_congrats_finish">Tillbaka till studieskärmen</string>
   <string name="card_unsuspended">Kort upplåst</string>
@@ -95,10 +94,12 @@
   <string name="empty_cram_label">Tom</string>
   <string name="empty_cram_deck">Tömmer kortleken för råpluggning.\nVänligen Vänta...</string>
   <string name="studyoptions_new_filtercram">Filtrera/Råplugga</string>
-  <string name="review_early_deck_name">Granska tidigt</string>
+  <string name="custom_study_deck_name">Custom Study Session</string>
+  <string name="custom_study_deck_exists">Please rename the existing Custom Study deck first.</string>
   <string name="studyoptions_congrats_finished">Grattis! Du är klar nu.</string>
   <string name="studyoptions_congrats_more_rev">Today\'s review limit has been reached, but there are still cards waiting to be reviewed. For optimum memory, consider increasing the daily limit in the options.</string>
   <string name="studyoptions_congrats_more_new">Det finns fler nya kort, men den dagliga gränsen har uppnåtts. Du kan höja gränsen i inställningarna, men kom ihåg att detta också ökar antalet repetitioner på kort sikt.</string>
+  <string name="studyoptions_congrats_custom">To study outside of the normal schedule, click the Custom Study button below.</string>
   <string name="sd_card_not_mounted">SD-kortet är inte monterat.</string>
   <string name="studyoptions_options">Alternativ</string>
   <string name="empty_cloze_warning">Please edit this note and add some cloze deletions. (%1$s)</string>

@@ -38,8 +38,7 @@
   <string name="ease3_successive">خوب</string>
   <string name="ease3_learning">آسان</string>
   <string name="studyoptions_congrats_undo">باطل کردن %s</string>
-  <string name="studyoptions_congrats_learnmore">بیشتر بدانید</string>
-  <string name="studyoptions_congrats_reviewearly">مرور زود هنگام</string>
+  <string name="studyoptions_congrats_custom_study">مطالعه سفارشی</string>
   <string name="studyoptions_congrats_open_other_deck">بازکردن دسته کارت دیگر</string>
   <string name="studyoptions_congrats_finish">بازگشت به صفحه مطالعه</string>
   <string name="card_unsuspended">تعلیق کارت ناتمام ماند</string>
@@ -95,10 +94,12 @@
   <string name="empty_cram_label">خالی</string>
   <string name="empty_cram_deck">در حال خالی کردن دسته مطالعه فشرده .\nلطفا درنگ کنید...</string>
   <string name="studyoptions_new_filtercram">فیلتر / مطالعه فشرده</string>
-  <string name="review_early_deck_name">مرور زود هنگام</string>
+  <string name="custom_study_deck_name">Custom Study Session</string>
+  <string name="custom_study_deck_exists">Please rename the existing Custom Study deck first.</string>
   <string name="studyoptions_congrats_finished">تبریک ! این کار را به پایان رسانده اید.</string>
   <string name="studyoptions_congrats_more_rev">به حد روزانه مرور رسیده اید، ولی هنوز کارتهایی هستند که باید مرور شوند. برای بهینه سازی حافظه، می توانید حد روزانه مرور را در بخش گزینه ها افزایش دهید.</string>
   <string name="studyoptions_congrats_more_new">کارتهای جدید بیشتری موجودند ، ولی شما به حد روزانه مرور رسیده اید. می توانید این حد را در بخش گزینه ها افزایش دهید، ولی خواهشا به یاد داشته باشید که بار کاری مرور کوتاه مدت شما افزایش خواهد یافت.</string>
+  <string name="studyoptions_congrats_custom">جهت مطالعه خارج از برنامه ، بر روی دکمه مطالعه سفارشی زیر کلیک کنید.</string>
   <string name="sd_card_not_mounted">کارت حافظه سوار نشده است.</string>
   <string name="studyoptions_options">گزینه ها</string>
   <string name="empty_cloze_warning">لطفا این یادداشت را ویرایش کنید و اضافه کنید بعضی cloze deletions  . (%1$s)</string>

@@ -94,6 +94,7 @@
   <string name="import_importing">Importowanie kart.\nProszę czekać...</string>
   <string name="import_hint">Aby zaimportować karty, umieść plik apkg w katalogu %s i naciśnij ok</string>
   <string name="import_no_file_found">Nie znaleziono prawidłowego pliku apkg do zaimportowania</string>
+  <string name="custom_study">Custom Study</string>
   <string-array name="dynOrderLabels">
     <item>Najstarszy jako pierwszy</item>
     <item>Losowo</item>

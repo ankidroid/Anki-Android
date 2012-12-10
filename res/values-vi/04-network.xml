@@ -45,8 +45,8 @@
   <string name="connection_error_message">Một lỗi mạng đã xảy ra.</string>
   <string name="sync_log_db_error">A database error has occurred.</string>
   <string name="no_user_password_error_message">In order to proceed with this operation, you need to have an AnkiWeb account and be logged in.</string>
-  <string name="username">Tên người dùng</string>
-  <string name="username_repeat">Repeat username</string>
+  <string name="username">Email address</string>
+  <string name="username_repeat">Repeat email address</string>
   <string name="password">Mật khẩu</string>
   <string name="password_repeat">Repeat password</string>
   <string name="log_in">Đăng nhập</string>
@@ -55,7 +55,7 @@
   <string name="logged_as">Đăng nhập như</string>
   <string name="log_out">Đăng xuất</string>
   <string name="alert_logging_message">Đăng nhập, xin vui lòng chờ...</string>
-  <string name="invalid_username_password">Tên người dùng hoặc mật khẩu không hợp lệ.</string>
+  <string name="invalid_username_password">Invalid email address or password.</string>
   <string name="login_generic_error">Failed to log in.</string>
   <string name="download_finished">Tải xuống hoàn tất</string>
   <string name="personaldeckpicker_title">Mở tập thẻ trực tuyến</string>

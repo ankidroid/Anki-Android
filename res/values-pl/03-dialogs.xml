@@ -26,6 +26,7 @@
   <string name="contextmenu_deckpicker_delete_deck">Skasuj talię</string>
   <string name="delete_deck_title">Skasuj talię</string>
   <string name="delete_deck_message">Czy na pewno usunąć wszystkie karty w %s?</string>
+  <string name="delete_cram_deck_message">Are you sure you wish to send all cards in %s back to their original decks?</string>
   <string name="delete_deck_confirm">Usuń ją</string>
   <string name="new_version_message">Nowe funkcje:</string>
   <string name="no_tts_available_title">Tekst do mowy</string>
@@ -50,13 +51,16 @@
   <string name="intent_add_clear_all">Wyczyść wszystko</string>
   <string name="intent_aedict_empty">Kategoria \'Domyślne\' jest pusta</string>
   <string name="intent_aedict_category">Aby dodać karty AnkiDroid usuń wszystkie kategorie Notatnika lub dodaj jedną o nazwie \'default\'</string>
-  <string name="learnmore_title">Study More Settings</string>
-  <string name="learnmore_insructions">You can temporarily increase your new cards and max reviews limits below to extend today\'s learning session.</string>
-  <string name="learnmore_extend_new_limit">Zwiększ limit nowych kart o</string>
-  <string name="learnmore_extend_rev_limit">Zwiększ maksymalną liczbę powtórek o</string>
-  <string name="reviewearly_title">Review Early Settings</string>
-  <string name="reviewearly_instructions">This option will create a Filtered Deck called \'XXX\' with the cards that are due for review in the number of days you select below. If such a Filtered Deck already exists it will be emptied and reconfigured.</string>
-  <string name="reviewearly_days_ahead">How many days ahead</string>
+  <string name="custom_study_new_total_new">New cards in deck: %s</string>
+  <string name="custom_study_rev_total_rev">Reviews due in deck: %s</string>
+  <string name="custom_study_new_extend">Increase today\'s new card limit by</string>
+  <string name="custom_study_rev_extend">Increase today\'s review limit by</string>
+  <string name="custom_study_forgotten">Review cards forgotten in last x days:</string>
+  <string name="custom_study_ahead">Review ahead by x days:</string>
+  <string name="custom_study_random">Select x cards randomly from the deck:</string>
+  <string name="custom_study_preview">Preview new cards added in the last x days:</string>
+  <string name="custom_study_tags">Enter tags:</string>
+  <string name="rebuild_custom_study_deck">Rebuilding custom study deck.\nPlease wait...</string>
   <string-array name="about_content">
     <item><![CDATA[<h2>%1$s:<br/>Fiszki dla Androida</h2>AnkiDroid to programowy odpowiednik pudełka z fiszkami, w pełni kompatybilny z desktopową wersją programu <a href="%2$s">Anki</a>. Karty z materiałem do nauki można tworzyć lub pobierać za pomocą zarówno AnkiDroida jak i wersji desktopowej Anki, a następnie łatwo synchronizować je pomiędzy tymi programami.]]></item>
     <item><![CDATA[Aby pomóc nam w ulepszaniu AnkiDroida, prosimy zgłaszać błędy <a href="%1$s">tutaj</a>; nowe pomysły też są mile widziane! Skorzystaj z <a href="%2$s">wiki</a> i przywitaj się na <a href="%3$s">forum</a>.]]></item>

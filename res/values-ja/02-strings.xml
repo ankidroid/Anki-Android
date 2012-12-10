@@ -94,6 +94,7 @@
   <string name="import_importing">カード取得中です\nしばらくお待ちください</string>
   <string name="import_hint">カードを取り込むためにapkg ファイルをフォルダに保管してください %s そしてＯＫボタンをクリックしてください</string>
   <string name="import_no_file_found">取り込み可能なapkgファイルは見つかりません</string>
+  <string name="custom_study">特設学習</string>
   <string-array name="dynOrderLabels">
     <item>古いものを先頭に</item>
     <item>ランダム</item>

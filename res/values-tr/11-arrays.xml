@@ -111,16 +111,15 @@
     <item>En çok yanıltan</item>
     <item>Ekleniş sırası</item>
     <item>Çıkma sırası</item>
-    <item>Latest added first</item>
+    <item>En son eklenenler ilk</item>
   </string-array>
-  <string-array name="cram_deck_conf_preset_labels">
-    <item><![CDATA[<select preset>]]></item>
-    <item>Bütün yeni kartları önizle</item>
-    <item>Bugün eklenen kartları önizle</item>
-    <item>Bugünkü unutulan kartları çalış</item>
-    <item>İki gün sonrasını önden çalış</item>
-    <item>Çıkacak olan etiketli kartları çalış</item>
-    <item>Çıkacak kartları azalan aralıklarla çalış</item>
-    <item>Bütün kartları inekle</item>
+  <string-array name="custom_study_options_labels">
+    <item>Bugünün yeni kart sınırını artırın</item>
+    <item>Bugünkü inceleme kart sınırını artırın</item>
+    <item>Unutulmuş kartları gözden geçirin</item>
+    <item>Gözden geçirme öncesinde</item>
+    <item>Rastgele seçilmiş kartları öğren</item>
+    <item>Yeni kartları önizleme</item>
+    <item>Belirli etiketleri sınırla</item>
   </string-array>
 </resources>

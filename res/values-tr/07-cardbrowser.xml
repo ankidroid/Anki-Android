@@ -38,8 +38,8 @@
   <string name="card_browser_tags_shown">Etiketler: %1$s</string>
   <string name="card_browser_change_display_order">Gösterme sırasını seç</string>
   <string name="card_browser_change_display_order_title">Gösterme sırasını seç</string>
-  <string name="card_browser_change_display_order_reverse">Select a field twice to reverse.</string>
-  <string name="card_browser_order_reverse">(reverse)</string>
+  <string name="card_browser_change_display_order_reverse">İki kez tersine çevirmek için bir alan seçin.</string>
+  <string name="card_browser_order_reverse">(ters)</string>
   <string name="card_browser_card_details">Kart bilgileri</string>
   <string name="card_details_question">Soru</string>
   <string name="card_details_answer">Yanıt</string>
@@ -62,14 +62,14 @@
   <string-array name="card_browser_order_labels">
     <item>Sıralamadan (daha hızlı)</item>
     <item>Arama alanına göre</item>
-    <item>By created time</item>
-    <item>By edited time</item>
-    <item>By changed time</item>
-    <item>By due time</item>
-    <item>By interval</item>
-    <item>By ease</item>
-    <item>By reviews</item>
-    <item>By lapses</item>
+    <item>Oluşturulma zamanına göre</item>
+    <item>Düzenleme zamanına göre</item>
+    <item>Değiştirilme zamanına göre</item>
+    <item>Zamana göre</item>
+    <item>Aralığa göre</item>
+    <item>Kolaylığa göre</item>
+    <item>İncelemelere göre</item>
+    <item>Süresi dolana göre</item>
   </string-array>
   <plurals name="card_browser_subtitle">
     <item quantity="one">%2$d kartın 1 tanesi gösteriliyor</item>
