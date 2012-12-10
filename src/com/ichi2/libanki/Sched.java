@@ -497,12 +497,13 @@ public class Sched {
         			}
         		}
         		if (show) {
-        			if (mCol.getDecks().get((Long) d[1]).getBoolean("collapsed")) {
+        			JSONObject deck = mCol.getDecks().get((Long) d[1]);
+        			if (deck.getBoolean("collapsed")) {
         				String[] name = (String[]) d[0];
         				name[name.length - 1] = name[name.length - 1] + " (+)";
         				d[0] = name;
         			}
-    				decksNet.add(d);
+    				decksNet.add(new Object[]{d[0], d[1], d[2], d[3], d[4], deck.getInt("dyn") != 0});
         		}
 			} catch (JSONException e) {
 				throw new RuntimeException(e);

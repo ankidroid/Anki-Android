@@ -60,6 +60,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
+import android.widget.TextView;
 
 import com.ichi2.anim.ActivityTransitionAnimation;
 import com.ichi2.anki.receiver.SdCardReceiver;
@@ -849,28 +850,35 @@ public class DeckPicker extends FragmentActivity {
         mDeckListView = (ListView) findViewById(R.id.files);
         mDeckListAdapter = new SimpleAdapter(this, mDeckList, R.layout.deck_item, new String[] { "name", "new", "lrn",
                 "rev", // "complMat", "complAll",
-                "sep" }, new int[] { R.id.DeckPickerName, R.id.deckpicker_new, R.id.deckpicker_lrn,
+                "sep", "dyn" }, new int[] { R.id.DeckPickerName, R.id.deckpicker_new, R.id.deckpicker_lrn,
                 R.id.deckpicker_rev, // R.id.deckpicker_bar_mat, R.id.deckpicker_bar_all,
-                R.id.DeckPickerName });
+                R.id.deckpicker_deck, R.id.DeckPickerName });
         mDeckListAdapter.setViewBinder(new SimpleAdapter.ViewBinder() {
             @Override
             public boolean setViewValue(View view, Object data, String text) {
-                if (view.getId() == R.id.DeckPickerName) {
-                    View parent = (View) view.getParent().getParent();
+                if (view.getId() == R.id.deckpicker_deck) {
                     if (text.equals("top")) {
-                        parent.setBackgroundResource(R.drawable.white_deckpicker_top);
+                    	view.setBackgroundResource(R.drawable.white_deckpicker_top);
                         return true;
                     } else if (text.equals("bot")) {
-                        parent.setBackgroundResource(R.drawable.white_deckpicker_bottom);
+                    	view.setBackgroundResource(R.drawable.white_deckpicker_bottom);
                         return true;
                     } else if (text.equals("ful")) {
-                        parent.setBackgroundResource(R.drawable.white_deckpicker_full);
+                    	view.setBackgroundResource(R.drawable.white_deckpicker_full);
                         return true;
                     } else if (text.equals("cen")) {
-                        parent.setBackgroundResource(R.drawable.white_deckpicker_center);
+                    	view.setBackgroundResource(R.drawable.white_deckpicker_center);
                         return true;
                     }
-                    return false;
+                } else if (view.getId() == R.id.DeckPickerName) {
+                	if (text.equals("d0")) {
+                		((TextView) view).setTextColor(getResources().getColor(R.color.black));
+                		return true;
+                	} else if (text.equals("d1")) {
+                		((TextView) view).setTextColor(getResources().getColor(R.color.dyn_deck));
+                		return true;
+                	}
+                }
                     // } else if (view.getId() == R.id.deckpicker_bar_mat || view.getId() == R.id.deckpicker_bar_all) {
                     // if (text.length() > 0 && !text.equals("-1.0")) {
                     // View parent = (View)view.getParent().getParent();
@@ -895,7 +903,6 @@ public class DeckPicker extends FragmentActivity {
                     // } else if (text.equals("-1")){
                     // view.setVisibility(View.INVISIBLE);
                     // return false;
-                }
                 return false;
             }
         });
@@ -2654,6 +2661,7 @@ public class DeckPicker extends FragmentActivity {
             m.put("new", ((Integer) d[2]).toString());
             m.put("lrn", ((Integer) d[3]).toString());
             m.put("rev", ((Integer) d[4]).toString());
+            m.put("dyn", ((Boolean) d[5]) ? "d1" : "d0");
             // m.put("complMat", ((Float)d[5]).toString());
             // m.put("complAll", ((Float)d[6]).toString());
             if (name.length == 1) {
