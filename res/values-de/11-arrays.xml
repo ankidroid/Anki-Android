@@ -115,10 +115,10 @@
   </string-array>
   <string-array name="custom_study_options_labels">
     <item>Erhöhe das heutige Tageslimit an neuen Karten</item>
-    <item>Erhöhung der heute bearbeitbaren Kartenmenge</item>
-    <item>Vergessene Karten nochmals durchsehen</item>
-    <item>weiterbewerten</item>
-    <item>Lerne eine zufällige Kartenauswahl</item>
+    <item>Das Tageslimit an Wiederholungen erhöhen</item>
+    <item>Vergessene Karten nochmals lernen</item>
+    <item>Im Voraus lernen</item>
+    <item>Zufällige Kartenauswahl lernen</item>
     <item>Zeige Vorschau von neuen Karten</item>
     <item>Auf bestimmte Tags beschränken</item>
   </string-array>
