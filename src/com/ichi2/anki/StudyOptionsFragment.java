@@ -1247,7 +1247,6 @@ public class StudyOptionsFragment extends Fragment {
 //                    SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(act.getBaseContext());
 //                    mPrefHideDueCount = preferences.getBoolean("hideDueCount", true);
 //                }
-
                 mTextTodayNew.setText(String.valueOf(newCards));
                 mTextTodayLrn.setText(String.valueOf(lrnCards));
 //                if (mPrefHideDueCount) {
@@ -1255,7 +1254,7 @@ public class StudyOptionsFragment extends Fragment {
 //                } else {
                     mTextTodayRev.setText(String.valueOf(revCards));
 //                }
-                mTextNewTotal.setText(String.valueOf(totalNew));
+                mTextNewTotal.setText(totalNew == 1000 ? ">1000" : String.valueOf(totalNew));
                 mTextTotal.setText(String.valueOf(totalCards));
                 if (eta != -1) {
                     mTextETA.setText(Integer.toString(eta));
