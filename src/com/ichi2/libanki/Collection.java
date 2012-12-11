@@ -20,6 +20,7 @@ package com.ichi2.libanki;
 import android.content.ContentValues;
 import android.content.res.Resources;
 import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
 import com.ichi2.anki.AnkiDatabaseManager;
@@ -288,19 +289,24 @@ public class Collection {
         // }
         if (mDb != null) {
             cleanup();
-            if (save) {
-                getDb().getDatabase().beginTransaction();
-                try {
-                    save();
-                    getDb().getDatabase().setTransactionSuccessful();
-                } finally {
-                    getDb().getDatabase().endTransaction();
-                }
-            } else {
-                if (getDb().getDatabase().inTransaction()) {
-                    getDb().getDatabase().endTransaction();
-                }
-                lock();
+            try {
+                SQLiteDatabase db = getDb().getDatabase();
+                if (save) {
+                    db.beginTransaction();
+                    try {
+                        save();
+                        db.setTransactionSuccessful();
+                    } finally {
+                        db.endTransaction();
+                    }
+                } else {
+                    if (db.inTransaction()) {
+                        db.endTransaction();
+                    }
+                    lock();
+                }            	
+            } catch (RuntimeException e) {
+    			AnkiDroidApp.saveExceptionReportFile(e, "closeDB");
             }
             AnkiDatabaseManager.closeDatabase(mPath);
             mDb = null;
