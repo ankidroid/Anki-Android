@@ -115,7 +115,7 @@ public class StudyOptionsFragment extends Fragment {
      */
     private int mStartedByBigWidget;
     private boolean mSwipeEnabled;
-    private int mCurrentContentView;
+    private int mCurrentContentView = CONTENT_STUDY_OPTIONS;
     boolean mInvertedColors = false;
 
     private boolean mDontSaveOnStop = false;

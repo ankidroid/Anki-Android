@@ -1285,7 +1285,6 @@ public class Collection {
                         "SELECT id FROM notes WHERE mid NOT IN " + Utils.ids2str(mModels.ids()), 0);
                 if (ids.size() != 0) {
                 	problems.add("Deleted " + ids.size() + " note(s) with missing note type.");
-                	// TODO: add return information about deleted notes
 	                _remNotes(Utils.arrayList2array(ids));
                 }
                 // cards with invalid ordinal
@@ -1300,7 +1299,7 @@ public class Collection {
                 		ords.add(tmpls.getJSONObject(t).getInt("ord"));
                 	}
                 	ids = mDb.queryColumn(Long.class,
-                            "SELECT id FROM cards WHERE ord NOT IN " + Utils.ids2str(ords) + " AND nid IN (SELECT id FROM notes WHERE mid = " + m.getLong("id"), 0);
+                            "SELECT id FROM cards WHERE ord NOT IN " + Utils.ids2str(ords) + " AND nid IN (SELECT id FROM notes WHERE mid = " + m.getLong("id") + ")", 0);
                 	if (ids.size() > 0) {
                     	problems.add("Deleted " + ids.size() + " card(s) with missing template.");
     	                remCards(Utils.arrayList2array(ids));   		

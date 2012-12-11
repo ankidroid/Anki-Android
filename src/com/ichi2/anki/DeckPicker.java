@@ -872,7 +872,7 @@ public class DeckPicker extends FragmentActivity {
                     }
                 } else if (view.getId() == R.id.DeckPickerName) {
                 	if (text.equals("d0")) {
-                		((TextView) view).setTextColor(getResources().getColor(R.color.black));
+                		((TextView) view).setTextColor(getResources().getColor(R.color.non_dyn_deck));
                 		return true;
                 	} else if (text.equals("d1")) {
                 		((TextView) view).setTextColor(getResources().getColor(R.color.dyn_deck));
