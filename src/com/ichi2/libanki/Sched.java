@@ -2643,7 +2643,7 @@ public class Sched {
         long now = Utils.intNow();
         ArrayList<Long> nids = new ArrayList<Long>();
         for (long id : cids) {
-        	long nid = mCol.getDb().queryScalar("SELECT nid FROM cards WHERE id = " + id);
+        	long nid = mCol.getDb().queryLongScalar("SELECT nid FROM cards WHERE id = " + id);
         	if (!nids.contains(nid)) {
         		nids.add(nid);
         	}
