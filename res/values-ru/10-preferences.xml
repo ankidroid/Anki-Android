@@ -47,7 +47,7 @@
   <string name="pref_cat_fonts">Шрифты</string>
   <string name="show_study_options_on_deck_load">Параметры обучения</string>
   <string name="show_study_options_on_deck_load_summ">Показать параметры обучения при загрузке колоды</string>
-  <string name="hide_due_count">Скрыть счетчик повторяемых карт</string>
+  <string name="hide_due_count">Скрыть количество повторов</string>
   <string name="hide_due_count_summ">Скрывает счетчик повторяемых карт</string>
   <string name="overtime">Дополнительное время</string>
   <string name="overtime_summ">Продолжить обучение после того, как достигнут лимит времени</string>

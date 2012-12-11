@@ -45,8 +45,8 @@
   <string name="connection_error_message">ネットワークエラーが発生しました。</string>
   <string name="sync_log_db_error">データベース エラーが発生しました。</string>
   <string name="no_user_password_error_message">この操作を続行するためには、AnkiWebのアカウント取得して、ログオンする必要があります。</string>
-  <string name="username">Email address</string>
-  <string name="username_repeat">Repeat email address</string>
+  <string name="username">メールアドレス</string>
+  <string name="username_repeat">もう一度メールアドレスを入力</string>
   <string name="password">パスワード</string>
   <string name="password_repeat">パスワードの再入力</string>
   <string name="log_in">ログイン</string>
@@ -55,7 +55,7 @@
   <string name="logged_as">ログイン名</string>
   <string name="log_out">ログアウト</string>
   <string name="alert_logging_message">ログインしています。しばらくお待ちください…</string>
-  <string name="invalid_username_password">Invalid email address or password.</string>
+  <string name="invalid_username_password">メールアドレスまたはパスワードが無効です</string>
   <string name="login_generic_error">ログインに失敗しました.</string>
   <string name="download_finished">ダウンロードが完了しました。</string>
   <string name="personaldeckpicker_title">オンライン単語帳を開く</string>

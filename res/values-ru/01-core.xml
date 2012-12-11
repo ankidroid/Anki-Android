@@ -45,7 +45,7 @@
   <string name="card_suspended">Карта снова приостановлена</string>
   <string name="menu_rotate">Перевернуть</string>
   <string name="menu_import">Импортировать карты</string>
-  <string name="undo">Откат</string>
+  <string name="undo">Отменить</string>
   <string name="undo_action_review">Просмотр</string>
   <string name="undo_action_edit">Редактировать заметку</string>
   <string name="undo_action_bury">Скрыть заметку</string>
@@ -94,8 +94,8 @@
   <string name="empty_cram_label">Очистить</string>
   <string name="empty_cram_deck">Очистка колоды для зубрёжки.\nПожалуйста, подождите...</string>
   <string name="studyoptions_new_filtercram">Фильтр/Зубрёжка</string>
-  <string name="custom_study_deck_name">Custom Study Session</string>
-  <string name="custom_study_deck_exists">Please rename the existing Custom Study deck first.</string>
+  <string name="custom_study_deck_name">Специальная учебная сессия</string>
+  <string name="custom_study_deck_exists">Пожалуйста, сначала переименуйте существующие специальные колоды.</string>
   <string name="studyoptions_congrats_finished">Поздравляем! На сегодня задание выполнено.</string>
   <string name="studyoptions_congrats_more_rev">Достигнут лимит количества просмотров на сегодня, но всё ещё есть карты ожидающие просмотра. Для оптимального запоминания рекомендуется увеличить ежедневный лимит в параметрах.</string>
   <string name="studyoptions_congrats_more_new">Есть ещё новые карты, но дневной лимит карт был уже выучен. Вы можете увеличить лимит, но учтите, что это увеличит и объёмы повторений в следующие дни.</string>

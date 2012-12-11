@@ -26,7 +26,7 @@
   <string name="contextmenu_deckpicker_delete_deck">Smazat balíček</string>
   <string name="delete_deck_title">Smazat balíček</string>
   <string name="delete_deck_message">Jste si jistý, že si přejete odstranit všechny karty v %s?</string>
-  <string name="delete_cram_deck_message">Are you sure you wish to send all cards in %s back to their original decks?</string>
+  <string name="delete_cram_deck_message">Jste si jistý, že si přejete poslat všechny karty v %s zpátky do jejich původního balíčku?</string>
   <string name="delete_deck_confirm">Smazat</string>
   <string name="new_version_message">Nové funkce:</string>
   <string name="no_tts_available_title">Předčítání</string>

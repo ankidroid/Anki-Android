@@ -22,11 +22,11 @@
 <resources>
   <string name="welcome_message">Mit AnkiDroid können Sie effizient große Mengen von Vokabeln oder anderem Material lernen. AnkiDroid zeigt Ihnen die Sachen, die Sie lernen möchten, bevor Sie sie vergessen.\n\n Um einen ersten Eindruck, wie alles funktioniert, zu erhalten, empfehlen wir Ihnen einen Einführungsstapel, welcher Ihnen einige einführende Informationen gibt, zu öffnen und einfach ein bisschen auszuprobieren. Drücken Sie einfach auf „Lernen starten“, nachdem Sie ihn geöffnet haben.\n\n Jetzt den Einführungsstapel erstellen?</string>
   <string name="check_db_title">Datenbank überprüfen</string>
-  <string name="check_db_result_message">Datenbank wurde überprüft und optimiert.\n Um %d kb geschrumpft</string>
+  <string name="check_db_result_message">Datenbank wurde überprüft und optimiert.\nUm %d kb geschrumpft</string>
   <string name="contextmenu_deckpicker_delete_deck">Stapel löschen</string>
   <string name="delete_deck_title">Stapel löschen</string>
   <string name="delete_deck_message">Sind Sie sicher, dass Sie alle Karten in %s löschen wollen?</string>
-  <string name="delete_cram_deck_message">Bist du sicher, dass du alle Karten aus %s wieder in ihren ursprünglichen Stapel einsortieren möchtest?</string>
+  <string name="delete_cram_deck_message">Sind Sie sicher, dass Sie alle Karten aus %s wieder in ihren ursprünglichen Stapel einsortieren möchten?</string>
   <string name="delete_deck_confirm">Löschen</string>
   <string name="new_version_message">Neue Funktionen:</string>
   <string name="no_tts_available_title">Vorlesen</string>
