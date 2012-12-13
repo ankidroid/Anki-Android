@@ -1188,6 +1188,7 @@ public class StudyOptionsFragment extends Fragment {
                 resetAndUpdateValuesFromDeck();
             } else if (requestCode == STATISTICS && mCurrentContentView == CONTENT_CONGRATS) {
                 resetAndUpdateValuesFromDeck();
+                mCurrentContentView = CONTENT_STUDY_OPTIONS;
                 setFragmentContentView(mStudyOptionsView);
             }
         }
