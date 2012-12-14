@@ -171,7 +171,7 @@ public class DownloadManagerService extends Service {
         SharedPreferences pref = AnkiDroidApp.getSharedPrefs(getBaseContext());
         mUsername = pref.getString("username", "");
         mPassword = pref.getString("password", "");
-        mDestination = AnkiDroidApp.getCurrentAnkiDroidDirectory(getBaseContext());
+        mDestination = AnkiDroidApp.getCurrentAnkiDroidDirectory();
     }
 
 
@@ -345,7 +345,7 @@ public class DownloadManagerService extends Service {
                         Utils.writeToFile(zipInputStream, deckFilename);
                     } else if (zipEntry.getName().startsWith("shared.media/", 0)) {
                         Log.i(AnkiDroidApp.TAG, "Folder created = " + new File(partialDeckPath + ".media/").mkdir());
-                        Log.i(AnkiDroidApp.TAG, "Destination = " + AnkiDroidApp.getStorageDirectory() + "/" + title
+                        Log.i(AnkiDroidApp.TAG, "Destination = " + AnkiDroidApp.getCurrentAnkiDroidDirectory() + "/" + title
                                 + ".media/" + zipEntry.getName().replace("shared.media/", ""));
                         Utils.writeToFile(zipInputStream,
                                 partialDeckPath + ".media/" + zipEntry.getName().replace("shared.media/", ""));

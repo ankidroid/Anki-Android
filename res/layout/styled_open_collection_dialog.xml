@@ -64,7 +64,7 @@
 		    android:layout_width="wrap_content"
 		    android:text="@string/open_collection"
 		    android:layout_marginTop="4dip"
-		    android:lines="4"
+		    android:minLines="4"
 		    android:layout_marginBottom="0dip"
 		    android:layout_marginLeft="12dip"
 		    android:layout_marginRight="12dip"

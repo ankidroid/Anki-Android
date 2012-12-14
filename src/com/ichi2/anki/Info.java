@@ -233,7 +233,7 @@ public class Info extends Activity {
 
             case TYPE_UPGRADE_DECKS:
                 sb.append("<html><body>");
-                File[] fileList = (new File(AnkiDroidApp.getCurrentAnkiDroidDirectory(this))).listFiles(new OldAnkiDeckFilter());
+                File[] fileList = (new File(AnkiDroidApp.getCurrentAnkiDroidDirectory())).listFiles(new OldAnkiDeckFilter());
                 StringBuilder fsb = new StringBuilder();
                 fsb.append("<ul>");
                 for (File f : fileList) {
@@ -243,7 +243,7 @@ public class Info extends Activity {
                 sb.append(res.getString(R.string.upgrade_decks_message, fsb.toString()));
                 sb.append("<ul><li>");
                 sb.append(res.getString(R.string.upgrade_decks_message_pos1,
-                		AnkiDroidApp.getCurrentAnkiDroidDirectory(this)));
+                		AnkiDroidApp.getCurrentAnkiDroidDirectory()));
                 sb.append("</li><li>");
                 sb.append(res.getString(R.string.upgrade_decks_message_pos2, res.getString(R.string.link_anki)));
                 sb.append("</li><li>");
@@ -266,7 +266,7 @@ public class Info extends Activity {
                             setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
                         }
                         Connection.upgradeDecks(mUpgradeListener,
-                                new Connection.Payload(new Object[] { AnkiDroidApp.getCurrentAnkiDroidDirectory(Info.this) }));
+                                new Connection.Payload(new Object[] { AnkiDroidApp.getCurrentAnkiDroidDirectory() }));
                     }
                 });
 

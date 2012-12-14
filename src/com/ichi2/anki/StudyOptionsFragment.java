@@ -576,7 +576,7 @@ public class StudyOptionsFragment extends Fragment {
                     public void onProgressUpdate(DeckTask.TaskData... values) {
                     }
                 },
-                new DeckTask.TaskData(AnkiDroidApp.getCurrentAnkiDroidDirectory(getActivity())
+                new DeckTask.TaskData(AnkiDroidApp.getCurrentAnkiDroidDirectory()
                         + AnkiDroidApp.COLLECTION_PATH));
     }
 

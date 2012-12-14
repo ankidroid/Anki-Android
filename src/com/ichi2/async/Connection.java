@@ -891,7 +891,7 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
 
     private Payload doInBackgroundDownloadSharedDeck(Payload data) {
         String url = (String) data.data[0];
-        String colFilename = AnkiDroidApp.getCurrentAnkiDroidDirectory(AnkiDroidApp.getInstance().getBaseContext()) + "/tmpImportFile.apkg";
+        String colFilename = AnkiDroidApp.getCurrentAnkiDroidDirectory() + "/tmpImportFile.apkg";
         URL fileUrl;
         URLConnection conn;
         InputStream cont;

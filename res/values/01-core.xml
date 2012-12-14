@@ -175,7 +175,7 @@
   <item quantity="other">Estimated time: %1$d min.</item>
 </plurals>
 
-<string name="sd_card_not_mounted">SD card is not mounted.</string>
+<string name="sd_card_not_mounted">SD card is not mounted.\n\nIf this is shown, because you don\'t have an external memory, you can store your collection in the internal memory, which is not recommended otherwise. You can choose this in the preferences (open them by clicking this text).</string>
 <string name="studyoptions_options">Options</string>
 <string name="empty_cloze_warning">Please edit this note and add some cloze deletions. (%1$s)</string>
 <string name="help_cloze">help</string>

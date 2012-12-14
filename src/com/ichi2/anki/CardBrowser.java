@@ -740,7 +740,7 @@ public class CardBrowser extends Activity {
                     public void onProgressUpdate(DeckTask.TaskData... values) {
                     }
                 },
-                new DeckTask.TaskData(AnkiDroidApp.getCurrentAnkiDroidDirectory(getBaseContext())
+                new DeckTask.TaskData(AnkiDroidApp.getCurrentAnkiDroidDirectory()
                         + AnkiDroidApp.COLLECTION_PATH));
     }
 

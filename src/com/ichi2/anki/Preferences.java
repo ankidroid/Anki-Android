@@ -323,7 +323,7 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
                     showDialog(DIALOG_ASYNC);
                 }
             } else if (key.equals("deckPath")) {
-                File decksDirectory = new File(AnkiDroidApp.getCurrentAnkiDroidDirectory(this));
+                File decksDirectory = new File(AnkiDroidApp.getCurrentAnkiDroidDirectory());
                 if (decksDirectory.exists()) {
                     AnkiDroidApp.createNoMediaFileIfMissing(decksDirectory);
                 }
@@ -442,7 +442,7 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
                 builder.setTitle(res.getString(R.string.fix_hebrew_text));
                 builder.setCancelable(false);
                 builder.setMessage(res.getString(R.string.fix_hebrew_instructions,
-                		AnkiDroidApp.getCurrentAnkiDroidDirectory(this)));
+                		AnkiDroidApp.getCurrentAnkiDroidDirectory()));
                 builder.setNegativeButton(R.string.cancel, null);
                 builder.setPositiveButton(
                         res.getString(R.string.fix_hebrew_download_font), new OnClickListener(){
