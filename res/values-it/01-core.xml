@@ -100,7 +100,7 @@
   <string name="studyoptions_congrats_more_rev">Il limite delle ripetizioni per oggi è stato raggiunto, ma ci sono ancora carte che aspettano di essere ripetute. Per un utilizzo ottimale della memoria, considera di aumentare il limite giornaliero nelle opzioni.</string>
   <string name="studyoptions_congrats_more_new">Ci sono ulteriori carte nuove disponibili, ma il limite giornaliero è stato raggiunto. Puoi aumentare il limite nelle opzioni, ma ricordati che ciò aumenterà il tuo carico di lavoro per le ripetizioni a breve termine.</string>
   <string name="studyoptions_congrats_custom">Per studiare al di fuori della normale tabella oraria, clicca sul bottone \'Studio Personalizzato\'sottostante.</string>
-  <string name="sd_card_not_mounted">La scheda SD non è montata.</string>
+  <string name="sd_card_not_mounted">SD card is not mounted.\n\nYou can store your collection in the internal memory too, though it\'s not recommended as you cannot access the file that easily. You can activate this in the preferences (open them by clicking this text).</string>
   <string name="studyoptions_options">Opzioni</string>
   <string name="empty_cloze_warning">Modifica questa nota e aggiungi testo da completare. (%1$s)</string>
   <string name="help_cloze">aiuto</string>

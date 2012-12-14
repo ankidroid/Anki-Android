@@ -100,6 +100,7 @@
   <string name="studyoptions_congrats_more_rev">Das Lern-Limit ist für heute erreicht, aber es verbleiben noch fällige Karten. Denken Sie für einen optimalen Lernerfolg darüber nach, das tägliche Limit in den Optionen zu erhöhen.</string>
   <string name="studyoptions_congrats_more_new">Es sind noch neue Karten verfügbar, aber das tägliche Lernlimit wurde erreicht. Sie können es in den Optionen erhöhen, bedenken Sie aber, dass dies Ihr kurzfristiges Arbeitspensum erhöht.</string>
   <string name="studyoptions_congrats_custom">Klicken Sie unten auf \"Benutzerdefiniertes Lernen\", um außerhalb des regulären Lehrplans zu lernen.</string>
+  <string name="sd_card_not_mounted">SD card is not mounted.\n\nYou can store your collection in the internal memory too, though it\'s not recommended as you cannot access the file that easily. You can activate this in the preferences (open them by clicking this text).</string>
   <string name="studyoptions_options">Einstellungen</string>
   <string name="empty_cloze_warning">Bitte bearbeiten Sie diese Notiz und fügen einige Lückentext-Streichungen ein (%1$s)</string>
   <string name="help_cloze">Hilfe</string>

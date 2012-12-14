@@ -32,5 +32,6 @@
     <item>Підтримка великих екранів планшетів</item>
     <item>значне поліпшення продуктивності</item>
     <item>card import function</item>
+    <item>collection can be saved on internal memory</item>
   </string-array>
 </resources>

@@ -100,7 +100,7 @@
   <string name="studyoptions_congrats_more_rev">Достигнут лимит количества просмотров на сегодня, но всё ещё есть карты ожидающие просмотра. Для оптимального запоминания рекомендуется увеличить ежедневный лимит в параметрах.</string>
   <string name="studyoptions_congrats_more_new">Есть ещё новые карты, но дневной лимит карт был уже выучен. Вы можете увеличить лимит, но учтите, что это увеличит и объёмы повторений в следующие дни.</string>
   <string name="studyoptions_congrats_custom">Чтобы изменить привычный график изучения колоды, нажмите \"Дополнительное обучение\" ниже.</string>
-  <string name="sd_card_not_mounted">SD карта не подключена.</string>
+  <string name="sd_card_not_mounted">SD card is not mounted.\n\nYou can store your collection in the internal memory too, though it\'s not recommended as you cannot access the file that easily. You can activate this in the preferences (open them by clicking this text).</string>
   <string name="studyoptions_options">Параметры</string>
   <string name="empty_cloze_warning">Пожалуйста, отредактируйте эту заметку и добавьте элементы с пропусками.(%1$s)</string>
   <string name="help_cloze">Справка</string>

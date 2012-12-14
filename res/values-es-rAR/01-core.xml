@@ -100,7 +100,7 @@
   <string name="studyoptions_congrats_more_rev">El límite de revisión para hoy ha sido alcanzado pero aún hay tarjetas esperando a ser revisadas. Para una memoria óptima considere incrementar el límite diario en las ocpiones.</string>
   <string name="studyoptions_congrats_more_new">Hay más tarjetas nuevas disponibles pero el límite diario ha sido alcanzado. Puede incrementar el límite en las opciones, pero por favor tenga en cuenta que esto incrementará el trabajo de revisión a corto plazo.</string>
   <string name="studyoptions_congrats_custom">Para estudiar por fuera de la programación normal, haga click en el botón inferior Estudio Personalizado.</string>
-  <string name="sd_card_not_mounted">La tarjeta SD no está montada.</string>
+  <string name="sd_card_not_mounted">SD card is not mounted.\n\nYou can store your collection in the internal memory too, though it\'s not recommended as you cannot access the file that easily. You can activate this in the preferences (open them by clicking this text).</string>
   <string name="studyoptions_options">Opciones</string>
   <string name="empty_cloze_warning">Por favor, edite esta nota y agregue algunos espacios en blanco. (%1$s)</string>
   <string name="help_cloze">Ayuda</string>

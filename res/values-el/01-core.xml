@@ -100,7 +100,7 @@
   <string name="studyoptions_congrats_more_rev">Φτάσατε το σημερινό όριο επανάληψης, αλλά υπάρχουν ακόμη κάρτες που περιμένουν επανεξέταση. Για βέλτιστη απομνημόνευση, εξετάστε το ενδεχόμενο αύξησης του ημερήσιου ορίου στις επιλογές.</string>
   <string name="studyoptions_congrats_more_new">Υπάρχουν διαθέσιμες νέες κάρτες, αλλά το ημερήσιο όριο έχει επιτευχθεί. Μπορείτε να αυξήσετε το όριο στις επιλογές, αλλά έχετε υπόψη ότι αυτό θα αυξήσει το βραχυπρόθεσμο φόρτο επανάληψης.</string>
   <string name="studyoptions_congrats_custom">Για μελέτη εκτός του κανονικού χρονοδιαγράμματος, κάντε κλικ στο κουμπί Προσαρμοσμένη Μελέτη παρακάτω.</string>
-  <string name="sd_card_not_mounted">Η κάρτα SD δεν έχει συνδεθεί.</string>
+  <string name="sd_card_not_mounted">SD card is not mounted.\n\nYou can store your collection in the internal memory too, though it\'s not recommended as you cannot access the file that easily. You can activate this in the preferences (open them by clicking this text).</string>
   <string name="studyoptions_options">Επιλογές</string>
   <string name="empty_cloze_warning">Παρακαλούμε συντάξτε αυτή τη σημείωση και προσθέστε μερικές κενές φράσεις. (%1$s)</string>
   <string name="help_cloze">βοήθεια</string>

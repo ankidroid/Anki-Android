@@ -32,5 +32,6 @@
     <item>поддержка большого размера экрана (планшета)</item>
     <item>тысячи улучшения производительности</item>
     <item>функция импорта карты</item>
+    <item>collection can be saved on internal memory</item>
   </string-array>
 </resources>

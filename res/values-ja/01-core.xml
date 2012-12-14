@@ -100,7 +100,7 @@
   <string name="studyoptions_congrats_more_rev">今日の学習目標を達成しました。まだ学習するカードは残っています。オプションの設定で、制限を増やすことを検討してください。</string>
   <string name="studyoptions_congrats_more_new">新しいカードが利用可能ですが、毎日の制限に達しています。オプションで、制限を増やすできますが、毎日の学習の負担が増加することに注意ください。</string>
   <string name="studyoptions_congrats_custom">通常のスケジュール以外で学習するには、下のカスタム学習ボタンをクリックします。</string>
-  <string name="sd_card_not_mounted">SD カードが挿入されていません。</string>
+  <string name="sd_card_not_mounted">SD card is not mounted.\n\nYou can store your collection in the internal memory too, though it\'s not recommended as you cannot access the file that easily. You can activate this in the preferences (open them by clicking this text).</string>
   <string name="studyoptions_options">オプション</string>
   <string name="empty_cloze_warning">ノートを編集して「穴空き設問」を追加してください。(%1$s)</string>
   <string name="help_cloze">ヘルプ</string>

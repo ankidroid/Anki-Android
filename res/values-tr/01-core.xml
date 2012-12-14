@@ -100,7 +100,7 @@
   <string name="studyoptions_congrats_more_rev">Bugünün çalışma sınırına ulaşıldı, ama hâlâ çalışılmayı bekleyen kartlar var. En uygun belleme için, seçeneklerden günlük sınırı artırabilirsiniz.</string>
   <string name="studyoptions_congrats_more_new">Daha çalışılacak yeni kartlar var, ama günlük sınıra ulaşıldı. Sınırı seçeneklerden artırabilirsiniz, ama lütfen unutmayın ki bu kısa vâdede çalışma yükünüzü artıracak.</string>
   <string name="studyoptions_congrats_custom">Normal program dışında çalışmak için, aşağıdaki Özel Eğitim düğmesini tıklatın.</string>
-  <string name="sd_card_not_mounted">SD kart takılı değil.</string>
+  <string name="sd_card_not_mounted">SD card is not mounted.\n\nYou can store your collection in the internal memory too, though it\'s not recommended as you cannot access the file that easily. You can activate this in the preferences (open them by clicking this text).</string>
   <string name="studyoptions_options">Seçenekler</string>
   <string name="empty_cloze_warning">Lütfen bu notu düzenleyip bazı boşluklar ekleyin. (%1$s)</string>
   <string name="help_cloze">Yardım</string>

@@ -100,7 +100,7 @@
   <string name="studyoptions_congrats_more_rev">Se ha alcanzado el límite de repasos de hoy, pero todavía hay tarjetas a la espera de ser repasadas. Para una memorización óptima, considera la posibilidad de aumentar el límite diario en las opciones.</string>
   <string name="studyoptions_congrats_more_new">Hay más tarjetas nuevas disponibles, pero el límite diario ha sido alcanzado. Puedes aumentar el límite en las opciones, pero ten en cuenta que esto también aumentará tu carga de trabajo de repasos a corto plazo.</string>
   <string name="studyoptions_congrats_custom">Para estudiar fuera de la agenda normal, haga click en el botón Estudio Personalizado abajo.</string>
-  <string name="sd_card_not_mounted">La tarjeta SD no está preparada.</string>
+  <string name="sd_card_not_mounted">SD card is not mounted.\n\nYou can store your collection in the internal memory too, though it\'s not recommended as you cannot access the file that easily. You can activate this in the preferences (open them by clicking this text).</string>
   <string name="studyoptions_options">Opciones</string>
   <string name="empty_cloze_warning">Por favor, edita esta nota y añade algunos huecos en el texto. (%1$s)</string>
   <string name="help_cloze">Ayuda</string>
