@@ -94,8 +94,8 @@
   <string name="empty_cram_label">Vaciar</string>
   <string name="empty_cram_deck">Vaciando mazo de empollar.\nPor favor, espera...</string>
   <string name="studyoptions_new_filtercram">Filtrar/Empollar</string>
-  <string name="custom_study_deck_name">Custom Study Session</string>
-  <string name="custom_study_deck_exists">Please rename the existing Custom Study deck first.</string>
+  <string name="custom_study_deck_name">Sesión de estudio personalizado</string>
+  <string name="custom_study_deck_exists">Primero tienes que renombrar el mazo de Estudio Personalizado.</string>
   <string name="studyoptions_congrats_finished">¡Felicidades! Has terminado por ahora.</string>
   <string name="studyoptions_congrats_more_rev">Se ha alcanzado el límite de repasos de hoy, pero todavía hay tarjetas a la espera de ser repasadas. Para una memorización óptima, considera la posibilidad de aumentar el límite diario en las opciones.</string>
   <string name="studyoptions_congrats_more_new">Hay más tarjetas nuevas disponibles, pero el límite diario ha sido alcanzado. Puedes aumentar el límite en las opciones, pero ten en cuenta que esto también aumentará tu carga de trabajo de repasos a corto plazo.</string>

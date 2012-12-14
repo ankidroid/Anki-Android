@@ -83,7 +83,7 @@
   <string name="pref_font_UI">使用フォントの設定</string>
   <string name="info_rate">AnkiDroidの評価</string>
   <string name="col_load_failed">コレクションの取り込みに失敗しました\n AnkiDroidに戻ってください</string>
-  <string name="import_title">カードの取得</string>
+  <string name="import_title">カードのインポート</string>
   <string name="import_message">ファイル%s の内容を、コレクションに追加、または、置き換えますか？</string>
   <string name="import_message_add">追加</string>
   <string name="import_message_replace">置換え</string>
@@ -95,7 +95,7 @@
   <string name="import_hint">カードを取り込むためにapkg ファイルをフォルダに保管してください %s そしてＯＫボタンをクリックしてください</string>
   <string name="import_no_file_found">取り込み可能なapkgファイルは見つかりません</string>
   <string name="custom_study">特設学習</string>
-  <string name="dyn_deck_desc">This is a special deck for studying outside of the normal schedule. Cards will be automatically returned to their original decks after you review them. Deleting this deck from the deck list will return all remaining cards to their original deck.</string>
+  <string name="dyn_deck_desc">これは、通常のスケジュール外の勉強のための特別の単語帳です。それらをレビューした後、カードは自動的に戻されます。この単語帳を単語帳リストから削除する事で残りのカードすべてがオリジナルの単語帳に戻されます。</string>
   <string-array name="dynOrderLabels">
     <item>古いものを先頭に</item>
     <item>ランダム</item>

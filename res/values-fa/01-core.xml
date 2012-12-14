@@ -94,8 +94,8 @@
   <string name="empty_cram_label">خالی</string>
   <string name="empty_cram_deck">در حال خالی کردن دسته مطالعه فشرده .\nلطفا درنگ کنید...</string>
   <string name="studyoptions_new_filtercram">فیلتر / مطالعه فشرده</string>
-  <string name="custom_study_deck_name">Custom Study Session</string>
-  <string name="custom_study_deck_exists">Please rename the existing Custom Study deck first.</string>
+  <string name="custom_study_deck_name">جلسه مطالعه سفارشی</string>
+  <string name="custom_study_deck_exists">لطفا ابتدا دسته مطالعه سفارشی را مجددا نام گذاری کنید.</string>
   <string name="studyoptions_congrats_finished">تبریک ! این کار را به پایان رسانده اید.</string>
   <string name="studyoptions_congrats_more_rev">به حد روزانه مرور رسیده اید، ولی هنوز کارتهایی هستند که باید مرور شوند. برای بهینه سازی حافظه، می توانید حد روزانه مرور را در بخش گزینه ها افزایش دهید.</string>
   <string name="studyoptions_congrats_more_new">کارتهای جدید بیشتری موجودند ، ولی شما به حد روزانه مرور رسیده اید. می توانید این حد را در بخش گزینه ها افزایش دهید، ولی خواهشا به یاد داشته باشید که بار کاری مرور کوتاه مدت شما افزایش خواهد یافت.</string>
