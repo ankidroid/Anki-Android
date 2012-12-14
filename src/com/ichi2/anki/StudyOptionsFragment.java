@@ -229,8 +229,8 @@ public class StudyOptionsFragment extends Fragment {
                 case R.id.studyoptions_congrats_undo:
                     if (AnkiDroidApp.colIsOpen()) {
                         col.undo();
-                        finishCongrats();
                         resetAndUpdateValuesFromDeck();
+                        finishCongrats();
                     }
                     return;
                 case R.id.studyoptions_congrats_open_other_deck:
@@ -240,6 +240,7 @@ public class StudyOptionsFragment extends Fragment {
                     showDialog(DIALOG_CUSTOM_STUDY);
                     return;
                 case R.id.studyoptions_congrats_finish:
+                    updateValuesFromDeck();
                     finishCongrats();
                     return;
                 case R.id.studyoptions_card_browser:
@@ -720,8 +721,8 @@ public class StudyOptionsFragment extends Fragment {
                                 deck.put("extendNew", n);
                                 col.getDecks().save(deck);
                                 col.getSched().extendLimits(n, 0);
-                                finishCongrats();
                                 resetAndUpdateValuesFromDeck();
+                                finishCongrats();
                             } catch (NumberFormatException e) {
                                 // ignore non numerical values
                             } catch (JSONException e) {
@@ -750,8 +751,8 @@ public class StudyOptionsFragment extends Fragment {
                                 deck.put("extendRev", n);
                                 col.getDecks().save(deck);
                                 col.getSched().extendLimits(0, n);
-                                finishCongrats();
                                 resetAndUpdateValuesFromDeck();
+                                finishCongrats();
                             } catch (NumberFormatException e) {
                                 // ignore non numerical values
                             } catch (JSONException e) {
@@ -1083,6 +1084,7 @@ public class StudyOptionsFragment extends Fragment {
 
     public boolean congratsShowing() {
     	if (mCurrentContentView == CONTENT_CONGRATS) {
+            updateValuesFromDeck();
         	finishCongrats();
         	return true;
     	} else {
@@ -1346,8 +1348,8 @@ public class StudyOptionsFragment extends Fragment {
                         if (mCongratsView != null && mCongratsView.getVisibility() == View.VISIBLE) {
                             if (AnkiDroidApp.colIsOpen()) {
                                 AnkiDroidApp.getCol().undo();
-                                finishCongrats();
                                 resetAndUpdateValuesFromDeck();
+                                finishCongrats();
                             }
                         } else {
                             openReviewer();
