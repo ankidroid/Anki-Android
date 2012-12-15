@@ -76,7 +76,7 @@
   <string name="delete_note_message">노트와 모든 카드를 정말로 삭제하시겠습니까? \n%s</string>
   <string name="menu_edit_card">카드 편집</string>
   <string name="menu_select">텍스트 선택</string>
-  <string name="menu_search">%1$초 찾아보기</string>
+  <string name="menu_search">%1$s초 찾아보기</string>
   <string name="menu_mark_card">카드 마크하기</string>
   <string name="menu_unmark_card">카드 마크 해제</string>
   <string name="new_deck">새 카드묶음</string>
