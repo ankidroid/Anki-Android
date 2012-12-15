@@ -68,6 +68,9 @@ public class Card implements Cloneable {
     private String mData = "";
     // END SQL table entries
 
+    /** Last interval. Used to determine if a card is young or mature. */
+    private int mLastIvl;
+
     private HashMap<String, String> mQA;
     private Note mNote;
 
@@ -572,8 +575,7 @@ public class Card implements Cloneable {
 
 
     public int getLastIvl() {
-        // TODO
-        return 0;
+        return mLastIvl;
     }
 
 
@@ -618,7 +620,7 @@ public class Card implements Cloneable {
 
 
     public void setLastIvl(int lastIvl) {
-        // mLastIvl = lastIvl;
+        mLastIvl = lastIvl;
     }
 
 
