@@ -529,6 +529,7 @@ public class Sched {
     public ArrayList<Object[]> deckDueList(int counts) {
         _checkDay();
         mCol.getDecks().recoverOrphans();
+        unburyCards();
         ArrayList<JSONObject> decks = mCol.getDecks().all();
         Collections.sort(decks, new DeckDueListComparator());
         HashMap<String, Integer[]> lims = new HashMap<String, Integer[]>();
@@ -1531,7 +1532,9 @@ public class Sched {
     }
 
     public int totalRevForCurrentDeck() {
-        return mCol.getDb().queryScalar("SELECT count() FROM cards WHERE did IN (SELECT id FROM cards WHERE did IN " + Utils.ids2str(mCol.getDecks().active()) + " AND queue = 2 LIMIT " + mReportLimit + ")", false);
+        return mCol.getDb().queryScalar(String.format(Locale.US,
+        		"SELECT count() FROM cards WHERE did IN (SELECT id FROM cards WHERE did IN %s AND queue = 2 AND due <= %d LIMIT %s)",
+        		Utils.ids2str(mCol.getDecks().active()), mToday, mReportLimit), false);
     }
 
 
