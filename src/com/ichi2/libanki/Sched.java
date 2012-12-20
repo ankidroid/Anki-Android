@@ -359,7 +359,7 @@ public class Sched {
     }
 
 
-    public void _updateStats(Card card, String type, int cnt) {
+    public void _updateStats(Card card, String type, long l) {
         String key = type + "Today";
         long did = card.getDid();
         ArrayList<JSONObject> list = mCol.getDecks().parents(did);
@@ -368,7 +368,7 @@ public class Sched {
             try {
                 JSONArray a = g.getJSONArray(key);
                 // add
-                a.put(1, a.getInt(1) + cnt);
+                a.put(1, a.getLong(1) + l);
             } catch (JSONException e) {
                 throw new RuntimeException(e);
             }
@@ -1354,7 +1354,7 @@ public class Sched {
     }
 
 
-    private void log(long id, int usn, int ease, int ivl, int lastIvl, int factor, int timeTaken, int type) {
+    private void log(long id, int usn, int ease, int ivl, int lastIvl, int factor, long timeTaken, int type) {
         try {
             mCol.getDb().execute("INSERT INTO revlog VALUES (?,?,?,?,?,?,?,?,?)",
                     new Object[] { Utils.now() * 1000, id, usn, ease, ivl, lastIvl, factor, timeTaken, type });
@@ -2459,7 +2459,7 @@ public class Sched {
                         .getDb()
                         .getDatabase()
                         .rawQuery(
-                                "SELECT avg(CASE WHEN ease > 1 THEN 1 ELSE 0 END), avg(time) FROM revlog WHERE type = 1 AND id > "
+                                "SELECT avg(CASE WHEN ease > 1 THEN 1.0 ELSE 0.0 END), avg(time) FROM revlog WHERE type = 1 AND id > "
                                         + ((mCol.getSched().getDayCutoff() - (7 * 86400)) * 1000), null);
                 if (!cur.moveToFirst()) {
                     return -1;
@@ -2470,7 +2470,7 @@ public class Sched {
                         .getDb()
                         .getDatabase()
                         .rawQuery(
-                                "SELECT avg(CASE WHEN ease = 3 THEN 1 ELSE 0 END), avg(time) FROM revlog WHERE type != 1 AND id > "
+                                "SELECT avg(CASE WHEN ease = 3 THEN 1.0 ELSE 0.0 END), avg(time) FROM revlog WHERE type != 1 AND id > "
                                         + ((mCol.getSched().getDayCutoff() - (7 * 86400)) * 1000), null);
                 if (!cur.moveToFirst()) {
                     return -1;
