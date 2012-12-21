@@ -154,12 +154,12 @@ public class CardEditor extends Activity {
 
     private LinearLayout mFieldsLayoutContainer;
 
-    private Button mSave;
-    private Button mCancel;
-    private Button mLater;
+    private Button mSaveButton;
+    private Button mCancelButton;
+    private Button mLaterButton;
     private TextView mTagsButton;
-    private TextView mModelButton;
-    private TextView mDeckButton;
+    private TextView mModelTextView;
+    private TextView mDeckTextView;
     private Button mSwapButton;
 
     private Note mEditorNote;
@@ -170,6 +170,7 @@ public class CardEditor extends Activity {
     /* indicates if a new fact is added or a card is edited */
     private boolean mAddNote;
 
+    //TODO Write a good comment
     private boolean mAedictIntent;
 
     /* indicates which activity called card editor */
@@ -338,11 +339,11 @@ public class CardEditor extends Activity {
 
         mFieldsLayoutContainer = (LinearLayout) findViewById(R.id.CardEditorEditFieldsLayout);
 
-        mSave = (Button) findViewById(R.id.CardEditorSaveButton);
-        mCancel = (Button) findViewById(R.id.CardEditorCancelButton);
-        mLater = (Button) findViewById(R.id.CardEditorLaterButton);
-        mDeckButton = (TextView) findViewById(R.id.CardEditorDeckText);
-        mModelButton = (TextView) findViewById(R.id.CardEditorModelText);
+        mSaveButton = (Button) findViewById(R.id.CardEditorSaveButton);
+        mCancelButton = (Button) findViewById(R.id.CardEditorCancelButton);
+        mLaterButton = (Button) findViewById(R.id.CardEditorLaterButton);
+        mDeckTextView = (TextView) findViewById(R.id.CardEditorDeckText);
+        mModelTextView = (TextView) findViewById(R.id.CardEditorModelText);
         mTagsButton = (TextView) findViewById(R.id.CardEditorTagText);
         mSwapButton = (Button) findViewById(R.id.CardEditorSwapButton);
         mSwapButton.setOnClickListener(new View.OnClickListener() {
@@ -452,11 +453,11 @@ public class CardEditor extends Activity {
                 }
             });
             modelButton.setVisibility(View.VISIBLE);
-            mSave.setText(getResources().getString(R.string.add));
-            mCancel.setText(getResources().getString(R.string.close));
+            mSaveButton.setText(getResources().getString(R.string.add));
+            mCancelButton.setText(getResources().getString(R.string.close));
 
-            mLater.setVisibility(View.VISIBLE);
-            mLater.setOnClickListener(new View.OnClickListener() {
+            mLaterButton.setVisibility(View.VISIBLE);
+            mLaterButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     String content = getFieldsText();
@@ -495,7 +496,7 @@ public class CardEditor extends Activity {
         // if Arabic reshaping is enabled, disable the Save button to avoid
         // saving the reshaped string to the deck
         if (mPrefFixArabic && !mAddNote) {
-            mSave.setEnabled(false);
+            mSaveButton.setEnabled(false);
         }
 
         ((LinearLayout) findViewById(R.id.CardEditorTagButton)).setOnClickListener(new View.OnClickListener() {
@@ -505,7 +506,7 @@ public class CardEditor extends Activity {
             }
         });
 
-        mSave.setOnClickListener(new View.OnClickListener() {
+        mSaveButton.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
@@ -514,7 +515,7 @@ public class CardEditor extends Activity {
                 }
                 boolean modified = false;
                 for (FieldEditText f : mEditFields) {
-                    modified = modified | f.updateField();
+                    modified = modified || f.updateField();
                 }
                 if (mAddNote) {
                     DeckTask.launchDeckTask(DeckTask.TASK_TYPE_ADD_FACT, mSaveFactHandler, new DeckTask.TaskData(
@@ -558,7 +559,7 @@ public class CardEditor extends Activity {
             }
         });
 
-        mCancel.setOnClickListener(new View.OnClickListener() {
+        mCancelButton.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
@@ -1396,11 +1397,11 @@ public class CardEditor extends Activity {
         if (mEditorNote.dupeOrEmpty(field.getText().toString()) > (checkEmptyToo ? 0 : 1)) {
             // TODO: theme backgrounds
             field.setBackgroundResource(R.drawable.white_edit_text_dupe);
-            mSave.setEnabled(false);
+            mSaveButton.setEnabled(false);
             return true;
         } else {
             field.setBackgroundResource(R.drawable.white_edit_text);
-            mSave.setEnabled(true);
+            mSaveButton.setEnabled(true);
             return false;
         }
     }
@@ -1440,7 +1441,7 @@ public class CardEditor extends Activity {
                 JSONObject model = mCol.getModels().current();
                 mEditorNote = new Note(mCol, model);
                 mEditorNote.model().put("did", mCurrentDid);
-                mModelButton.setText(getResources().getString(R.string.CardEditorModel,
+                mModelTextView.setText(getResources().getString(R.string.CardEditorModel,
                         model.getString("name")));
                 JSONArray tags = model.getJSONArray("tags");
                 for (int i = 0; i < tags.length(); i++) {
@@ -1463,7 +1464,7 @@ public class CardEditor extends Activity {
 
     private void updateDeck() {
         try {
-            mDeckButton.setText(getResources().getString(
+            mDeckTextView.setText(getResources().getString(
                     mAddNote ? R.string.CardEditorNoteDeck : R.string.CardEditorCardDeck,
                     mCol.getDecks().get(mCurrentDid).getString("name")));
         } catch (NotFoundException e) {

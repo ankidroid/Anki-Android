@@ -42,7 +42,7 @@
         <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
         <uses-feature android:name="android.hardware.bluetooth" android:required="false" />
     -->
-    
+
     <supports-screens
         android:anyDensity="true"
         android:largeScreens="true"
@@ -190,7 +190,7 @@
                 android:name="android.appwidget.provider"
                 android:resource="@xml/widget_provider_small" />
         </receiver>
-        
+
         <!-- Service to perform web API queries -->
         <service android:name="com.ichi2.widget.AnkiDroidWidgetSmall$UpdateService" />
 
@@ -241,5 +241,14 @@
                 <data android:scheme="file" />
             </intent-filter>
         </receiver>
+
+        <activity
+            android:name="com.ichi2.anki.MultimediaCardEditorActivity"
+            android:label="@string/deck" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.ichi2.anki.DeckPicker" />
+        </activity>
     </application>
+
 </manifest>
