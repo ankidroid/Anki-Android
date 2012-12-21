@@ -23,7 +23,7 @@
   <string name="CardEditorCancelButton">Anuluj</string>
   <string name="CardEditorSaveButton">Zapisz</string>
   <string name="CardEditorLaterButton">Później</string>
-  <string name="CardEditorLaterMessage">Saved information for later</string>
+  <string name="CardEditorLaterMessage">Zapisz informacje na później</string>
   <string name="CardEditorCardDeck">Karta talii: %s</string>
   <string name="CardEditorNoteDeck">Talia: %s</string>
   <string name="CardEditorModel">Rodzaj notatki: %s</string>
@@ -84,9 +84,9 @@
   <string name="info_rate">Oceń AnkiDroid</string>
   <string name="col_load_failed">Ładowanie kolekcji nie powiodło się.\nNaciśnij \"Back\" aby zamknąć AnkiDroid.</string>
   <string name="import_title">Importuj karty</string>
-  <string name="import_message">Would you like to add the content of file %s to your collection, or replace your collection with it?</string>
-  <string name="import_message_add">Add</string>
-  <string name="import_message_replace">Replace</string>
+  <string name="import_message">Czy chcesz dodać zawartość pliku %s do swojej kolekcji, albo zastąpić swoją kolekcję?</string>
+  <string name="import_message_add">Dodaj</string>
+  <string name="import_message_replace">Zastąp</string>
   <string name="import_message_replace_confirm">This will delete your existing collection and replace it with the data of file %s. Are you sure?</string>
   <string name="import_log_success">Pomyślnie zaimportowano %d kart</string>
   <string name="import_log_error">Importowanie nie powiodło się</string>

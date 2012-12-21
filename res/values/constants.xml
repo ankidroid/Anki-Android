@@ -166,8 +166,7 @@
 		<item>7</item>
 			</string-array>
 	
-	<string-array name="cram_deck_conf_preset_values">
-		<item>0</item>upgrade_decks_message
+	<string-array name="custom_study_options_values">
 		<item>1</item>
 		<item>2</item>
 		<item>3</item>

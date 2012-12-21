@@ -111,7 +111,7 @@ public class LaTeX {
         // entitydefs defines nbsp as \xa0 instead of a standard space, so we
         // replace it first
         latex = latex.replace("&nbsp;", " ");
-        latex = latex.replaceAll("<br( /)?>", "\n");
+        latex = latex.replaceAll("<br( /)?>|<div>", "\n");
         // replace <div> etc with spaces
         latex = latex.replaceAll("<.+?>", " ");
         latex = Utils.stripHTML(latex);

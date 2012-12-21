@@ -33,7 +33,7 @@
   <string name="studyoptions_eta">Tiempo estimado (min.):</string>
   <string name="studyoptions_start">Empezar a repasar</string>
   <string name="show_answer">Mostrar respuesta</string>
-  <string name="ease1_successive">De nuevo</string>
+  <string name="ease1_successive">Otra vez</string>
   <string name="ease2_successive">Difícil</string>
   <string name="ease3_successive">Bien</string>
   <string name="ease3_learning">Fácil</string>

@@ -17,6 +17,7 @@ package com.ichi2.anki;
 import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnCancelListener;
+import android.content.DialogInterface.OnClickListener;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -49,6 +50,7 @@ import com.ichi2.async.DeckTask;
 import com.ichi2.async.DeckTask.TaskData;
 import com.ichi2.charts.ChartBuilder;
 import com.ichi2.libanki.Collection;
+import com.ichi2.libanki.Sched;
 import com.ichi2.libanki.Stats;
 import com.ichi2.libanki.Utils;
 import com.ichi2.themes.StyledDialog;
@@ -69,6 +71,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 public class StudyOptionsFragment extends Fragment {
@@ -83,6 +86,13 @@ public class StudyOptionsFragment extends Fragment {
     private static final int STATISTICS = 4;
     private static final int DECK_OPTIONS = 5;
 
+    public static final int CUSTOM_STUDY_NEW = 1;
+    public static final int CUSTOM_STUDY_REV = 2;
+    public static final int CUSTOM_STUDY_FORGOT = 3;
+    public static final int CUSTOM_STUDY_AHEAD = 4;
+    public static final int CUSTOM_STUDY_RANDOM = 5;
+    public static final int CUSTOM_STUDY_PREVIEW = 6;
+    public static final int CUSTOM_STUDY_TAGS = 7;
     /**
      * Constants for selecting which content view to display
      */
@@ -90,8 +100,7 @@ public class StudyOptionsFragment extends Fragment {
     public static final int CONTENT_CONGRATS = 1;
 
     private static final int DIALOG_STATISTIC_TYPE = 0;
-    private static final int DIALOG_LEARN_MORE = 1;
-    private static final int DIALOG_REVIEW_EARLY = 2;
+    private static final int DIALOG_CUSTOM_STUDY = 1;
 
     private HashMap<Integer, StyledDialog> mDialogs = new HashMap<Integer, StyledDialog>();
 
@@ -138,14 +147,18 @@ public class StudyOptionsFragment extends Fragment {
      * UI elements for "Congrats" view
      */
     private View mCongratsView;
-    private View mLearnMoreView;
-    private View mReviewEarlyView;
+//    private View mLearnMoreView;
+//    private View mReviewEarlyView;
     private TextView mTextCongratsMessage;
     private Button mButtonCongratsUndo;
     private Button mButtonCongratsOpenOtherDeck;
     private Button mButtonCongratsFinish;
-    private Button mButtonCongratsLearnMore;
-    private Button mButtonCongratsReviewEarly;
+    private Button mButtonCongratsCustomStudy;
+
+    private View mCustomStudyDetailsView;
+    private TextView mCustomStudyTextView1;
+    private TextView mCustomStudyTextView2;
+    private EditText mCustomStudyEditText;
 
     /**
      * Swipe Detection
@@ -217,11 +230,8 @@ public class StudyOptionsFragment extends Fragment {
                 case R.id.studyoptions_congrats_open_other_deck:
                     closeStudyOptions();
                     return;
-                case R.id.studyoptions_congrats_learnmore:
-                    showDialog(DIALOG_LEARN_MORE);
-                    return;
-                case R.id.studyoptions_congrats_reviewearly:
-                    showDialog(DIALOG_REVIEW_EARLY);
+                case R.id.studyoptions_congrats_customstudy:
+                    showDialog(DIALOG_CUSTOM_STUDY);
                     return;
                 case R.id.studyoptions_congrats_finish:
                     finishCongrats();
@@ -651,8 +661,10 @@ public class StudyOptionsFragment extends Fragment {
         // The view that shows the congratulations view.
         mCongratsView = inflater.inflate(R.layout.studyoptions_congrats, null);
         // The view that shows the learn more options
-        mLearnMoreView = inflater.inflate(R.layout.styled_learn_more_dialog, null);
-        mReviewEarlyView = inflater.inflate(R.layout.styled_review_early_dialog, null);
+        mCustomStudyDetailsView = inflater.inflate(R.layout.styled_custom_study_details_dialog, null);
+        mCustomStudyTextView1 = (TextView) mCustomStudyDetailsView.findViewById(R.id.custom_study_details_text1);
+        mCustomStudyTextView2 = (TextView) mCustomStudyDetailsView.findViewById(R.id.custom_study_details_text2);
+        mCustomStudyEditText = (EditText) mCustomStudyDetailsView.findViewById(R.id.custom_study_details_edittext2);
 
         Themes.setWallpaper(mCongratsView);
 
@@ -661,8 +673,7 @@ public class StudyOptionsFragment extends Fragment {
 
         mTextCongratsMessage.setOnClickListener(mButtonClickListener);
         mButtonCongratsUndo = (Button) mCongratsView.findViewById(R.id.studyoptions_congrats_undo);
-        mButtonCongratsLearnMore = (Button) mCongratsView.findViewById(R.id.studyoptions_congrats_learnmore);
-        mButtonCongratsReviewEarly = (Button) mCongratsView.findViewById(R.id.studyoptions_congrats_reviewearly);
+        mButtonCongratsCustomStudy = (Button) mCongratsView.findViewById(R.id.studyoptions_congrats_customstudy);
         mButtonCongratsOpenOtherDeck = (Button) mCongratsView.findViewById(R.id.studyoptions_congrats_open_other_deck);
         if (mFragmented) {
             mButtonCongratsOpenOtherDeck.setVisibility(View.GONE);
@@ -670,8 +681,7 @@ public class StudyOptionsFragment extends Fragment {
         mButtonCongratsFinish = (Button) mCongratsView.findViewById(R.id.studyoptions_congrats_finish);
 
         mButtonCongratsUndo.setOnClickListener(mButtonClickListener);
-        mButtonCongratsLearnMore.setOnClickListener(mButtonClickListener);
-        mButtonCongratsReviewEarly.setOnClickListener(mButtonClickListener);
+        mButtonCongratsCustomStudy.setOnClickListener(mButtonClickListener);
         mButtonCongratsOpenOtherDeck.setOnClickListener(mButtonClickListener);
         mButtonCongratsFinish.setOnClickListener(mButtonClickListener);
     }
@@ -688,14 +698,6 @@ public class StudyOptionsFragment extends Fragment {
 
     private void onPrepareDialog(int id, StyledDialog styledDialog) {
     	switch (id) {
-    	case DIALOG_LEARN_MORE:
-    		SharedPreferences pref = AnkiDroidApp.getSharedPrefs(getActivity());
-    		((EditText) mLearnMoreView.findViewById(R.id.learnmore_extend_new_limit)).setText(Integer.toString(pref.getInt("extendNew", 10)));
-    		((EditText) mLearnMoreView.findViewById(R.id.learnmore_extend_rev_limit)).setText(Integer.toString(pref.getInt("extendRev", 50)));
-    		break;
-    	case DIALOG_REVIEW_EARLY:
-    		((EditText) mReviewEarlyView.findViewById(R.id.reviewearly_days_ahead)).setText(Integer.toString(AnkiDroidApp.getSharedPrefs(getActivity()).getInt("reviewAhead", 1)));
-    		break;
     	}
     }
 
@@ -703,10 +705,9 @@ public class StudyOptionsFragment extends Fragment {
     protected StyledDialog onCreateDialog(int id) {
         StyledDialog dialog = null;
         Resources res = getResources();
-        StyledDialog.Builder builder = new StyledDialog.Builder(this.getActivity());
+        StyledDialog.Builder builder1 = new StyledDialog.Builder(this.getActivity());
 
         switch (id) {
-
             case DIALOG_STATISTIC_TYPE:
                 dialog = ChartBuilder.getStatisticsDialog(getActivity(), new DialogInterface.OnClickListener() {
                     @Override
@@ -717,81 +718,159 @@ public class StudyOptionsFragment extends Fragment {
                 }, mFragmented);
                 break;
 
-            case DIALOG_LEARN_MORE:
-                builder.setTitle(res.getString(R.string.learnmore_title));
-                builder.setContentView(mLearnMoreView);
-                builder.setCancelable(true);
-                builder.setNegativeButton(R.string.cancel, null);
-                builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+            case DIALOG_CUSTOM_STUDY:
+                builder1.setTitle(res.getString(R.string.custom_study));
+                builder1.setIcon(android.R.drawable.ic_menu_sort_by_size);
+                builder1.setItems(res.getStringArray(R.array.custom_study_options_labels), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        if (AnkiDroidApp.colIsOpen()) {
-                            try {
-                                int n = Integer.parseInt(((EditText) mLearnMoreView.findViewById(R.id.learnmore_extend_new_limit)).getText().toString());
-                                int r = Integer.parseInt(((EditText) mLearnMoreView.findViewById(R.id.learnmore_extend_rev_limit)).getText().toString());
-                                Editor prefEd = AnkiDroidApp.getSharedPrefs(getActivity()).edit();
-                                prefEd.putInt("extendNew", n);
-                                prefEd.putInt("extendRev", r);
-                                prefEd.commit();
+                        StyledDialog.Builder builder2 = new StyledDialog.Builder(StudyOptionsFragment.this.getActivity());
+                        Resources res = getResources();
+                    	builder2.setTitle(res.getStringArray(R.array.custom_study_options_labels)[which]);
+                    	DialogInterface.OnClickListener listener = null;
+                    	switch (which + 1) {
+                    	case CUSTOM_STUDY_NEW:
+                    		if (AnkiDroidApp.colIsOpen()) {
                                 Collection col = AnkiDroidApp.getCol();
-                                JSONObject deck = col.getDecks().current();
-                                deck.put("extendNew", n);
-                                deck.put("extendRev", r);
-                                col.getDecks().save(deck);
-                                col.getSched().extendLimits(n, r);
-                                finishCongrats();
-                                resetAndUpdateValuesFromDeck();
-                            } catch (NumberFormatException e) {
-                                // ignore non numerical values
-                            } catch (JSONException e) {
-                                throw new RuntimeException(e);
-                            }
-                        }
+                        		mCustomStudyTextView1.setText(res.getString(R.string.custom_study_new_total_new, col.getSched().totalNewForCurrentDeck()));
+                    		}
+                    		mCustomStudyTextView2.setText(res.getString(R.string.custom_study_new_extend));
+                    		mCustomStudyEditText.setText(Integer.toString(AnkiDroidApp.getSharedPrefs(getActivity()).getInt("extendNew", 10)));
+                    		listener = new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    if (AnkiDroidApp.colIsOpen()) {
+                                        try {
+                                            int n = Integer.parseInt(mCustomStudyEditText.getText().toString());
+                                            AnkiDroidApp.getSharedPrefs(getActivity()).edit().putInt("extendNew", n).commit();
+                                            Collection col = AnkiDroidApp.getCol();
+                                            JSONObject deck = col.getDecks().current();
+                                            deck.put("extendNew", n);
+                                            col.getDecks().save(deck);
+                                            col.getSched().extendLimits(n, 0);
+                                            finishCongrats();
+                                            resetAndUpdateValuesFromDeck();
+                                        } catch (NumberFormatException e) {
+                                            // ignore non numerical values
+                                        } catch (JSONException e) {
+                                            throw new RuntimeException(e);
+                                        }
+                                    }
+                                }};
+                    		break;
+                    		
+                    	case CUSTOM_STUDY_REV:
+                    		if (AnkiDroidApp.colIsOpen()) {
+                                Collection col = AnkiDroidApp.getCol();
+                        		mCustomStudyTextView1.setText(res.getString(R.string.custom_study_rev_total_rev, col.getSched().totalRevForCurrentDeck()));
+                    		}
+                    		mCustomStudyTextView2.setText(res.getString(R.string.custom_study_rev_extend));
+                    		mCustomStudyEditText.setText(Integer.toString(AnkiDroidApp.getSharedPrefs(getActivity()).getInt("extendRev", 10)));
+                    		listener = new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    if (AnkiDroidApp.colIsOpen()) {
+                                        try {
+                                            int n = Integer.parseInt(mCustomStudyEditText.getText().toString());
+                                            AnkiDroidApp.getSharedPrefs(getActivity()).edit().putInt("extendRev", n).commit();
+                                            Collection col = AnkiDroidApp.getCol();
+                                            JSONObject deck = col.getDecks().current();
+                                            deck.put("extendRev", n);
+                                            col.getDecks().save(deck);
+                                            col.getSched().extendLimits(0, n);
+                                            finishCongrats();
+                                            resetAndUpdateValuesFromDeck();
+                                        } catch (NumberFormatException e) {
+                                            // ignore non numerical values
+                                        } catch (JSONException e) {
+                                            throw new RuntimeException(e);
+                                        }
+                                    }
+                                }
+                            };
+                    		break;
+
+                    	case CUSTOM_STUDY_FORGOT:
+                    		mCustomStudyTextView1.setText("");
+                    		mCustomStudyTextView2.setText(res.getString(R.string.custom_study_forgotten));
+                    		mCustomStudyEditText.setText(Integer.toString(AnkiDroidApp.getSharedPrefs(getActivity()).getInt("forgottenDays", 2)));
+                    		listener = new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                	int forgottenDays = Integer.parseInt(((EditText) mCustomStudyEditText).getText().toString());
+                                	JSONArray ar = new JSONArray();
+                                	try {
+										ar.put(0, 1);
+									} catch (JSONException e) {
+										throw new RuntimeException(e);
+									}
+                                	createFilteredDeck(ar, new Object[]{String.format(Locale.US, "rated:%d:1", forgottenDays), 9999, Sched.DYN_RANDOM}, false);
+                                }
+                            };
+                    		break;
+
+                    	case CUSTOM_STUDY_AHEAD:
+                    		mCustomStudyTextView1.setText("");
+                    		mCustomStudyTextView2.setText(res.getString(R.string.custom_study_ahead));
+                    		mCustomStudyEditText.setText(Integer.toString(AnkiDroidApp.getSharedPrefs(getActivity()).getInt("aheadDays", 1)));
+                    		listener = new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                	int days = Integer.parseInt(((EditText) mCustomStudyEditText).getText().toString());
+                                	createFilteredDeck(new JSONArray(), new Object[]{String.format(Locale.US, "prop:due<=%d", days), 9999, Sched.DYN_DUE}, true);
+                                }
+                            };
+                    		break;
+
+                    	case CUSTOM_STUDY_RANDOM:
+                    		mCustomStudyTextView1.setText("");
+                    		mCustomStudyTextView2.setText(res.getString(R.string.custom_study_random));
+                    		mCustomStudyEditText.setText(Integer.toString(AnkiDroidApp.getSharedPrefs(getActivity()).getInt("randomCards", 100)));
+                    		listener = new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                	int randomCards = Integer.parseInt(((EditText) mCustomStudyEditText).getText().toString());
+                                	createFilteredDeck(new JSONArray(), new Object[]{"", randomCards, Sched.DYN_RANDOM}, true);
+                                }
+                            };
+                    		break;
+
+                    	case CUSTOM_STUDY_PREVIEW:
+                    		mCustomStudyTextView1.setText("");
+                    		mCustomStudyTextView2.setText(res.getString(R.string.custom_study_preview));
+                    		mCustomStudyEditText.setText(Integer.toString(AnkiDroidApp.getSharedPrefs(getActivity()).getInt("previewDays", 1)));
+                    		listener = new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                	String previewDays = ((EditText) mCustomStudyEditText).getText().toString();
+                                	createFilteredDeck(new JSONArray(), new Object[]{"is:new added:" + previewDays, 9999, Sched.DYN_OLDEST}, true);
+                                }
+                            };
+                    		break;
+
+                    	case CUSTOM_STUDY_TAGS:
+                    		mCustomStudyTextView1.setText("");
+                    		mCustomStudyTextView2.setText(res.getString(R.string.custom_study_tags));
+                    		mCustomStudyEditText.setText(AnkiDroidApp.getSharedPrefs(getActivity()).getString("customTags", ""));
+                    		listener = new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                	String tags = ((EditText) mCustomStudyEditText).getText().toString();
+                                	createFilteredDeck(new JSONArray(), new Object[]{"(is:new or is:due) " + tags, 9999, Sched.DYN_RANDOM}, true);
+                                }
+                            };
+                    		break;
+                    	}
+
+                        builder2.setContentView(mCustomStudyDetailsView);
+                        builder2.setCancelable(true);
+                        builder2.setNegativeButton(R.string.cancel, null);
+                        builder2.setPositiveButton(R.string.ok, listener);
+                        builder2.show();
                     }
                 });
-                dialog = builder.create();
-                break;
-            case DIALOG_REVIEW_EARLY:
-                builder.setTitle(res.getString(R.string.reviewearly_title));
-                TextView instructionsView = ((TextView) mReviewEarlyView.findViewById(R.id.reviewearly_instructions));
-                String instructions = instructionsView.getText().toString();
-                instructionsView.setText(instructions.replaceAll("XXX", res.getString(R.string.review_early_deck_name)));
-                builder.setContentView(mReviewEarlyView);
-                builder.setCancelable(true);
-                builder.setNegativeButton(R.string.cancel, null);
-                builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        if (AnkiDroidApp.colIsOpen()) {
-                            try {
-                                int days = Integer.parseInt(((EditText) mReviewEarlyView.findViewById(R.id.reviewearly_days_ahead)).getText().toString());
-                                AnkiDroidApp.getSharedPrefs(getActivity()).edit().putInt("reviewAhead", days).commit();
-                                Collection col = AnkiDroidApp.getCol();
-                                JSONObject deck = col.getDecks().current();
-                                String search = "prop:due<=" + String.valueOf(days) + " 'deck:" + deck.getString("name") + "'";
-                                long id = AnkiDroidApp.getCol().getDecks().newDyn(getResources().getString(R.string.review_early_deck_name));
-                                deck = col.getDecks().current();
-                                JSONArray ar = deck.getJSONArray("terms");
-                                ar.getJSONArray(0).put(0, search); // search: "prop:due<=X 'deck:DeckName'"
-                                ar.getJSONArray(0).put(1, 1000);   // limit: 1000
-                                ar.getJSONArray(0).put(2, 6);      // order: due
-                                deck.put("terms", ar);
-                                deck.put("resched", true);
-                                deck.put("delays", null);
-                                finishCongrats();
-                                mProgressDialog = StyledProgressDialog.show(getActivity(), "",
-                                        getResources().getString(R.string.rebuild_cram_deck), true);
-                                DeckTask.launchDeckTask(DeckTask.TASK_TYPE_REBUILD_CRAM, mRebuildEarlyReviewListener, new DeckTask.TaskData(
-                                        AnkiDroidApp.getCol(), AnkiDroidApp.getCol().getDecks().selected(), mFragmented));
-                            } catch (NumberFormatException e) {
-                                // ignore non numerical values
-                            } catch (JSONException e) {
-                                throw new RuntimeException(e);
-                            }
-                        }
-                    }
-                });
-                dialog = builder.create();
+                builder1.setCancelable(true);
+                dialog = builder1.create();
                 break;
 
             default:
@@ -802,6 +881,55 @@ public class StudyOptionsFragment extends Fragment {
         return dialog;
     }
 
+    private void createFilteredDeck(JSONArray delays, Object[] terms, Boolean resched) {
+		JSONObject dyn;    	
+    	if (AnkiDroidApp.colIsOpen()) {
+    		Collection col = AnkiDroidApp.getCol();
+    		try {
+    			String deckName = col.getDecks().current().getString("name");
+    			String customStudyDeck = getResources().getString(R.string.custom_study_deck_name);
+    			JSONObject cur = col.getDecks().byName(customStudyDeck);
+    			if (cur != null) {
+    				if (cur.getInt("dyn") != 1) {
+                        StyledDialog.Builder builder = new StyledDialog.Builder(getActivity());
+                        builder.setMessage(R.string.custom_study_deck_exists);
+                        builder.setNegativeButton(getResources().getString(R.string.cancel), new OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                //
+                            }
+                        });
+                        builder.create().show();
+    					return;
+    				} else {
+    					// safe to empty
+    					col.getSched().emptyDyn(cur.getLong("id"));
+    					// reuse; don't delete as it may have children
+    					dyn = cur;
+    					col.getDecks().select(cur.getLong("id"));
+    				}
+    			} else {
+    				long did = col.getDecks().newDyn(customStudyDeck);
+    				dyn = col.getDecks().get(did);
+    			}
+    			// and then set various options
+    			dyn.put("delays", delays);
+    			JSONArray ar = dyn.getJSONArray("terms");
+    			ar.getJSONArray(0).put(0, new StringBuilder("deck:\"").append(deckName).append("\" ").append(terms[0]).toString());
+    			ar.getJSONArray(0).put(1, terms[1]);
+    			ar.getJSONArray(0).put(2, terms[2]);
+    			dyn.put("resched", resched);
+    			// generate cards
+    			finishCongrats();
+    			mProgressDialog = StyledProgressDialog.show(getActivity(), "",
+    					getResources().getString(R.string.rebuild_custom_study_deck), true);
+    			DeckTask.launchDeckTask(DeckTask.TASK_TYPE_REBUILD_CRAM, mRebuildCustomStudyListener, new DeckTask.TaskData(
+    					AnkiDroidApp.getCol(), AnkiDroidApp.getCol().getDecks().selected(), mFragmented));
+    		} catch (JSONException e) {
+    			throw new RuntimeException(e);
+    		}
+    	}
+    }
 
     void setFragmentContentView(View newView) {
         ViewGroup parent = (ViewGroup) this.getView();
@@ -1048,12 +1176,11 @@ public class StudyOptionsFragment extends Fragment {
         return preferences;
     }
 
-    DeckTask.TaskListener mRebuildEarlyReviewListener = new DeckTask.TaskListener() {
+    DeckTask.TaskListener mRebuildCustomStudyListener = new DeckTask.TaskListener() {
         @Override
         public void onPostExecute(TaskData result) {
             resetAndUpdateValuesFromDeck();
         }
-        
         @Override
         public void onPreExecute() {
         }

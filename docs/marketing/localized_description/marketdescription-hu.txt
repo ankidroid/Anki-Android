@@ -16,7 +16,7 @@ Adj a paklihoz új szavakat az asztali Ankival, vagy rögtön az AnkiDroiddal! A
 • előrehaladás widget
 • részletes statisztikák
 • AnkiWeb szinkronizálás
-• nyílt forráskód
+• nyílt forráskódú
 
 ★ További funkciók:
 • válaszok beírása (lehetőség)
@@ -28,7 +28,7 @@ Adj a paklihoz új szavakat az asztali Ankival, vagy rögtön az AnkiDroiddal! A
 • szótár-integráció (ColorDict, GoldenDict, Leo.org, Aedict, különböző webes szótárak)
 • kártyák hozzáadása más programokból (pl. szótárak)
 • egyéni betűtípus támogatás
-• biztonsági mentés
+• teljes mentési rendszer
 • navigáció elhúzással, érintéssel, rázással
 • teljesen testreszabható
 dinamikus pakli kezelés

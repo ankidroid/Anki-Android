@@ -64,7 +64,7 @@
   <string name="card_editor_reset">تنظیم مجدد</string>
   <string name="card_editor_copy_card">کپی کارت</string>
   <string name="card_editor_reset_card">پیشرفت تنظیم مجدد</string>
-  <string name="error_insufficient_memory">به دلیل عدم وجود حافظه کافی در دستگاه شما عملیات امکانپذیر نیست</string>
+  <string name="error_insufficient_memory">عملیات به علت نبود حافظه کافی در دستگاه شما امکانپذیر نیست</string>
   <string name="tutorial_load">ساختن خودآموز دسته کارت.\nلطفا صبر کنید...</string>
   <string name="tutorial_loading_error">خودآموز دسته کارت نمی تواند ایجاد شود</string>
   <string name="rename">تغییر نام</string>
@@ -84,10 +84,10 @@
   <string name="info_rate">امتیازدهی به آنکی دروید</string>
   <string name="col_load_failed">عدم موفقیت در بارگذاری مجموعه.\nبرای بستن آنکی دروید دکمه برگشت را فشار دهید.</string>
   <string name="import_title">درون ریزی کارتها</string>
-  <string name="import_message">Would you like to add the content of file %s to your collection, or replace your collection with it?</string>
-  <string name="import_message_add">Add</string>
-  <string name="import_message_replace">Replace</string>
-  <string name="import_message_replace_confirm">This will delete your existing collection and replace it with the data of file %s. Are you sure?</string>
+  <string name="import_message">آیا شما مایلید محتویات پوشه%s به مجموعه خود اضافه نمایید, یا آن را با مجموعه خود جابجا می کنید?</string>
+  <string name="import_message_add">اضافه کردن</string>
+  <string name="import_message_replace">جایگزین کردن</string>
+  <string name="import_message_replace_confirm">با این کار مجموعه کنونی شما پاک شده و با داده های پرونده%sجایگزین خواهد شد. آیا مطمئنید؟</string>
   <string name="import_log_success">باموفقیت وارد شد %d کارتهای</string>
   <string name="import_log_error">عدم موفقیت در وارد کردن</string>
   <string name="import_log_no_apkg">این یک فایل apkg معتبر نیست</string>

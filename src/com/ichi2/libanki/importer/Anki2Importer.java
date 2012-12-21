@@ -33,6 +33,7 @@ import com.ichi2.anki.AnkiDatabaseManager;
 import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.BackupManager;
 import com.ichi2.libanki.Collection;
+import com.ichi2.libanki.Note;
 import com.ichi2.libanki.Storage;
 import com.ichi2.libanki.Utils;
 
@@ -52,6 +53,10 @@ public class Anki2Importer {
 	HashMap<String, HashMap<Integer, Long>> mCards;
 	HashMap<Long, Long> mDecks;
 	HashMap<Long, Long> mModelMap;
+    HashMap<String, String> mChangedGuids;
+
+    private static final int GUID = 1;
+    private static final int MID = 2;
 
 	public Anki2Importer (Collection col, String file) {
 		mCol = col;
@@ -144,7 +149,7 @@ public class Anki2Importer {
 	// should note new for wizard
 
 	private void _importNotes() {
-		// build guid -> (id, mod, mid) hash
+		// build guid -> (id,mod,mid) hash & map of existing note ids
 		mNotes = new HashMap<String, Object[]>();
 		HashMap<Long, Boolean> existing = new HashMap<Long, Boolean>();
         Cursor cursor = null;
@@ -160,6 +165,9 @@ public class Anki2Importer {
                 cursor.close();
             }
         }
+        // we may need to rewrite the guid if the model schemas don't match,
+        // so we need to keep track of the changes for the card import stage
+        mChangedGuids = new HashMap<String, String>();
         // iterate over source collection
         ArrayList<Object[]> add = new ArrayList<Object[]>();
         ArrayList<Long> dirty = new ArrayList<Long>();
@@ -169,24 +177,21 @@ public class Anki2Importer {
             cursor = mSrc.getDb().getDatabase().rawQuery("SELECT * FROM notes", null);
             while (cursor.moveToNext()) {
             	Object[] note = new Object[]{cursor.getLong(0), cursor.getString(1), cursor.getLong(2), cursor.getLong(3), cursor.getInt(4), cursor.getString(5), cursor.getString(6), cursor.getString(7), cursor.getLong(8), cursor.getInt(9), cursor.getString(10)};
-            	// missing from local col?
-            	if (!mNotes.containsKey(note[1])) {
-            		// get corresponding local model
-            		long lmid = _mid((Long) note[2]);
+            	boolean shouldAdd = _uniquifyNote(note);
+            	if (shouldAdd) {
             		// ensure id is unique
             		while (existing.containsKey(note[0])) {
             			note[0] = ((Long)note[0]) + 999;
             		}
             		existing.put((Long) note[0], true);
-            		// rewrite internal ids, models etc.
-            		note[2] = lmid;
+            		// bump usn
             		note[4] = usn;
             		// update media references in case of dupes
 //            		TODO: note[6] = _mungeMedia(note[3], note[6]);
             		add.add(note);
             		dirty.add((Long) note[0]);
-            		// note we have the added note
-            		mNotes.put((String) note[1], new Object[]{note[0], note[3], note[2]});
+            		// note we have the added guid
+            		mNotes.put((String) note[GUID], new Object[]{note[0], note[3], note[MID]});
             	} else {
             		dupes += 1;
 //            		// update existing note - not yet tested; for post 2.0
@@ -214,12 +219,44 @@ public class Anki2Importer {
         mDst.getTags().registerNotes(dis);
 	}
 	
+	
+	// determine if note is a duplicate, and adjust mid and/or guid as required
+	// returns true if note should be added
+	
+	private boolean _uniquifyNote(Object[] note) {
+		String origGuid = (String) note[GUID];
+		long srcMid = (Long) note[MID];
+		long dstMid = _mid(srcMid);
+		// duplicate Schemas?
+		if (srcMid == dstMid) {
+			return !mNotes.containsKey(origGuid);
+		}
+		// differing schemas
+		note[MID] = dstMid;
+		if (!mNotes.containsKey(origGuid)) {
+			return true;
+		}
+		// as the schemas differ and we already have a note with a different note type, this note needs a new guid
+		while (true) {
+			note[GUID] = Utils.incGuid((String)note[GUID]);
+			mChangedGuids.put(origGuid, (String) note[GUID]);
+			// if we don't have an existing guid, we can add
+			if (!mNotes.containsKey((String)note[GUID])) {
+				return true;
+			}
+			// if the existing guid shares the same mid, we can reuse
+			if (dstMid == (Long) mNotes.get((String)note[GUID])[MID]) {
+				return false;
+			}
+		}
+	}
+
+
 	/** Models */
 	// Models in the two decks may share an ID but not a schema, so we need to
     // compare the field & template signature rather than just rely on ID. If
-    // we created a new model on a conflict then multiple imports would end up
-    // with lots of models however, so we store a list of "alternate versions"
-    // of a model in the model, so that importing a model is idempotent.
+	// the schemas don't match, we increment the mid and try again, creating a
+	// new model if necessary.
 
 	/* Prepare index of schema hashes */
 	private void _prepareModels() {
@@ -227,54 +264,36 @@ public class Anki2Importer {
 	}
 	
 	/* Return local id for remote MID */
-	private long _mid(long mid) {
+	private long _mid(long srcMid) {
 		try {
 			// already processed this mid?
-			if (mModelMap.containsKey(mid)) {
-				return mModelMap.get(mid);
+			if (mModelMap.containsKey(srcMid)) {
+				return mModelMap.get(srcMid);
 			}
-			JSONObject src = new JSONObject(mSrc.getModels().get(mid).toString());
-			// if it doesn't exist, we'll copy it over, preserving id
-			if (!mDst.getModels().have(mid)) {
-				mDst.getModels().update(src);
-				// if we're importing with a prefix, make the model default to it
-				if (mDeckPrefix != null) {
-					src.put("did", mDst.getDecks().current().getLong("id"));
-					// and give it a unique name if it's not a shared deck
-					if (!mDeckPrefix.equals("shared")) {
-						src.put("name", src.getString("name") + " (" + mDeckPrefix + ")");
-					}
+			long mid = srcMid;
+			JSONObject srcModel = new JSONObject(mSrc.getModels().get(srcMid).toString());
+			long srcScm = mSrc.getModels().scmhash(srcModel);
+			while (true) {
+				// missing from target col?
+				if (!mDst.getModels().have(mid)) {
+					// copy it over
+					JSONObject model = new JSONObject(srcModel.toString());
+					model.put("id", mid);
+					mDst.getModels().update(model);
+					break;
 				}
-				// make sure to bump usn
-				mDst.getModels().save(src);
-				mModelMap.put(mid, mid);
-				return mid;
-			}
-			// if it does exist, do the schema match?
-			JSONObject dst = mDst.getModels().get(mid);
-			long shash = mSrc.getModels().scmhash(src);
-			long dhash = mSrc.getModels().scmhash(dst);
-			if (shash == dhash) {
-				// reuse without modification
-				mModelMap.put(mid, mid);
-				return mid;
-			}
-			// try any alternative versions
-			JSONArray vers = dst.getJSONArray("vers");
-			for (int i = 0; i < vers.length(); i++) {
-				JSONObject m = mDst.getModels().get(vers.getLong(i));
-				if (mDst.getModels().scmhash(m) == shash) {
-					// valid alternate found; use that
-					mModelMap.put(mid, m.getLong("id"));
-					return m.getLong("id");
+				// there's an existing model; do the schemas match?
+				JSONObject dstModel = new JSONObject(mDst.getModels().get(mid).toString());
+				long dstScm = mDst.getModels().scmhash(dstModel);
+				if (srcScm == dstScm) {
+					// they do; we can reuse this mid
+					break;
 				}
+				// as they don't match, try next id
+				mid += 1;
 			}
-			// need to add a new alternate version, with new id
-			mDst.getModels().add(src);
-			vers.put(src.getLong("id"));
-			dst.put("vers", vers);
-			mDst.getModels().save(dst);
-			return src.getLong("id");
+			mModelMap.put(srcMid, mid);
+			return mid;
 		} catch (JSONException e) {
 			throw new RuntimeException(e);
 		}
@@ -367,6 +386,9 @@ public class Anki2Importer {
             			cursor.getInt(14), cursor.getInt(15), cursor.getLong(16), 
             			cursor.getLong(17), cursor.getInt(18), cursor.getString(19) };
             	String guid = (String) card[0];
+            	if (mChangedGuids.containsKey(guid)) {
+            		guid = mChangedGuids.get(guid);
+            	}
             	// does the card's note exist in dst col?
             	if (!mNotes.containsKey(guid)) {
             		continue;
@@ -398,6 +420,24 @@ public class Anki2Importer {
             	// review cards have a due date relative to collection
             	if ((Integer)card[7] == 2 || (Integer)card[7] == 3) {
             		card[8] = (Long) card[8] - aheadBy;
+            	}
+            	// if odid true, convert card from filtered to normal
+            	if ((Long)card[15] != 0) {
+            		// odid
+            		card[15] = 0;
+            		// odue
+            		card[8] = card[14];
+            		card[14] = 0;
+            		// queue
+            		if ((Integer)card[6] == 1) { // type
+            			card[7] = 0;
+            		} else {
+            			card[7] = card[6];
+            		}
+            		// tpye
+            		if ((Integer)card[6] == 1) {
+            			card[6] = 0;
+            		}
             	}
             	cards.add(card);
             	// we need to import revlog, rewriting card ids and bumping usn

@@ -264,7 +264,7 @@ public class DeckPicker extends FragmentActivity {
     				}
             		return;
                 case CONTEXT_MENU_DELETE_DECK:
-                    showDialog(DIALOG_DELETE_DECK);
+                    showDialog(DIALOG_DELETE_DECK);                		
                     return;
                 case CONTEXT_MENU_RESET_LANGUAGE:
                     // resetDeckLanguages(data.get("filepath"));
@@ -1361,9 +1361,15 @@ public class DeckPicker extends FragmentActivity {
             	}
                 builder.setTitle(res.getString(R.string.delete_deck_title));
                 builder.setIcon(R.drawable.ic_dialog_alert);
-                builder.setMessage(String.format(res.getString(R.string.delete_deck_message), "\'"
-                        + AnkiDroidApp.getCol().getDecks().name(mCurrentDid) + "\'"));
-                builder.setPositiveButton(res.getString(R.string.delete_deck_confirm),
+                boolean isDyn = AnkiDroidApp.getCol().getDecks().isDyn(mCurrentDid);
+                if (isDyn) {
+                    builder.setMessage(String.format(res.getString(R.string.delete_cram_deck_message), "\'"
+                            + AnkiDroidApp.getCol().getDecks().name(mCurrentDid) + "\'"));
+                } else {
+                    builder.setMessage(String.format(res.getString(R.string.delete_deck_message), "\'"
+                            + AnkiDroidApp.getCol().getDecks().name(mCurrentDid) + "\'"));                	
+                }
+                builder.setPositiveButton(res.getString(R.string.yes),
                         new DialogInterface.OnClickListener() {
 
                             @Override
@@ -2269,7 +2275,7 @@ public class DeckPicker extends FragmentActivity {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         String deckName = mDialogEditText.getText().toString()
-                                .replaceAll("[\'\"\\s\\n\\r\\[\\]\\(\\)]", "");
+                                .replaceAll("[\'\"\\n\\r\\[\\]\\(\\)]", "");
                         Log.i(AnkiDroidApp.TAG, "Creating deck: " + deckName);
                         AnkiDroidApp.getCol().getDecks().id(deckName, true);
                         loadCounts();

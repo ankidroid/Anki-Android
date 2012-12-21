@@ -66,8 +66,8 @@
   <string name="sync_conflict_message">Sus mazos aquí y en AnkiWeb difieren de tal modo que no pueden ser combinados, por lo cual se precisa sobreescribir los mazos en uno de esos sitios con los del otro.\n\n¿Desde subir desde aquí sus mazos o descargar los mazos de AnkiWeb?</string>
   <string name="sync_conflict_local">Subir</string>
   <string name="sync_conflict_remote">Descargar</string>
-  <string name="sync_conflict_remote_confirm">Do you really want to download the server\'s collection? Be aware that this will overwrite your local collection.</string>
-  <string name="sync_conflict_local_confirm">Do you really want to upload the local collection? Be aware that this will overwrite your collection on the server.</string>
+  <string name="sync_conflict_remote_confirm">¿Desea realmente descargar la colección desde el servidor? Tenga en cuenta que esto sobreescribirá su colección local.</string>
+  <string name="sync_conflict_local_confirm">¿Desea realmente subir la colección local? Tenga en cuenta que esto sobreescribirá la colección del servidor.</string>
   <string name="sync_conflict_cancel">Cancelar sincronización</string>
   <string name="sync_prepare_syncing">Preparando sincronización...</string>
   <string name="sync_preparing_full_sync_message">Preparando sincronización completa...</string>
@@ -92,10 +92,10 @@
   <string name="sync_remote_db_error">La base de datos descargada estaba corrompida. Intente por favor nuevamente.</string>
   <string name="sync_overwrite_error">Su colección actual no pudo ser sobreescrita por el archivo descargado.</string>
   <string name="sync_write_access_error">El archivo descargado no pudo ser guardado en la tarjeta SD. O bien su tarjeta SD está montada como sólo-escritura o bien no hay espacio suficiente.</string>
-  <string name="sync_deletions_message">Syncing deletions...</string>
+  <string name="sync_deletions_message">Sincronizando eliminaciones...</string>
   <string name="sync_small_objects_message">Sincronizando pequeños objetos...</string>
   <string name="sync_finish_message">Finalizando sincronización...</string>
-  <string name="sync_log_finish_error">Error while sending finish direction to server</string>
+  <string name="sync_log_finish_error">Error al enviar dirección terminal al servidor</string>
   <string name="sync_writing_db">Escribiendo cambios en base de datos...</string>
   <string name="sync_download_chunk">Descargando cambios...</string>
   <string name="sync_upload_chunk">Subiendo cambios...</string>

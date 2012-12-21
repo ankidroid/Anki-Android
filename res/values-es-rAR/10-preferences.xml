@@ -75,7 +75,7 @@
   <string name="reset_dialogs">Resetear diálogos</string>
   <string name="reset_dialogs_question">¿Resetear todos los diálogos?</string>
   <string name="reset_dialogs_summ">Resetear todos los diálogos configurados para no ser mostrados nuevamente</string>
-  <string name="reset_languages_question">¿Restablecer todas las funciones de idioma?</string>
+  <string name="reset_languages_question">¿Restablecer todas las tareas de idioma?</string>
   <string name="reset_messages">Restablecer mensajes</string>
   <string name="reset_messages_question">¿Mostrar el mensaje actual nuevamente?</string>
   <string name="reset_messages_summ">Mostrar los mensajes actuales de AnkiDroid otra vez</string>
@@ -102,10 +102,10 @@
   <string name="zeemote_b">Botón B</string>
   <string name="zeemote_c">Botón C</string>
   <string name="zeemote_d">Botón D</string>
-  <string name="zeemote_up">Stick up</string>
-  <string name="zeemote_down">Stick down</string>
-  <string name="zeemote_left">Stick left</string>
-  <string name="zeemote_right">Stick right</string>
+  <string name="zeemote_up">Picar arriba</string>
+  <string name="zeemote_down">Picar abajo</string>
+  <string name="zeemote_left">Picar a la izquierda</string>
+  <string name="zeemote_right">Picar a la derecha</string>
   <string name="zeemote_show_answer">Mostrar respuestas con acciones de marca</string>
   <string name="zeemote_show_answer_summ">Las acciones asignadas para las marcas 1-4 también muestran la respuesta.</string>
   <string name="swipe">Habilitar gestos</string>
@@ -183,7 +183,7 @@
   <string name="new_cards_order">Nuevo orden de tarjetas</string>
   <string name="new_cards_order_summ">Orden en que se muestra las nuevas tarjetas.</string>
   <string name="show_new_cards_in">Mostrar nuevas tarjetas en...</string>
-  <string name="new_card_spacing">New Card Spacing</string>
+  <string name="new_card_spacing">Nuevo espaciado de tarjeta</string>
   <string name="new_card_spacing_summ">Dónde distribuir las tarjetas nuevas durante la revisión.</string>
   <string name="show_new_cards">Mostrar nuevas tarjetas...</string>
   <string name="show_next_review_time">Próximo tiempo de revisión</string>
@@ -198,8 +198,8 @@
   <string name="filter_google_translate">Desde el Traductor de Google</string>
   <string name="filter_google_translate_summ">Guardar solamente la palabra fuente y la traducción</string>
   <string name="convert_fen_text_summ">Dibujar un tablero de ajedrez a partir de la notación de Edward Forsyth. La notación debe estar enmarcada en una etiqueta que contenga [fen][/fen].</string>
-  <string name="sync_set_journal_mode">Setting correct journal mode...</string>
-  <string name="async_mode">Synchronous off</string>
+  <string name="sync_set_journal_mode">Configurando correctamente el modo de diario...</string>
+  <string name="async_mode">Synchronous apagado</string>
   <string name="async_mode_summ">Esto acelera AnkiDroid pero podría corromper las bases de datos si hay una caída total del sistema Android. Utilice por tanto copias de seguridad</string>
   <string name="async_mode_message">Sepa que esta opción es menos segura y podría causar corrupciones en el mazo cuando Android se cuelgue (por ejemplo, debido a falta de energía).\nEs ALTAMENTE recomendado que use el sistema de copias de seguridad si activa esta opción.\n¿Activarla de todos modos?</string>
   <string name="fix_orientation">Corregir orientación</string>
@@ -209,8 +209,8 @@
   <string name="studyoptions_max_fail_card">Máximo de tarjetas falladas</string>
   <string name="show_broadcast_messages">Mostrar mensajes actuales</string>
   <string name="show_broadcast_messages_summ">Mostrar notificaciones de AnkiDroid como nuevas actualizaciones de la versión u otras novedades importantes</string>
-  <string name="input_workaround">Input Workaround</string>
-  <string name="input_workaround_summ">Workaround for focusing problems on HTML input boxes. Causes problems on several devices.</string>
+  <string name="input_workaround">Introducir solución</string>
+  <string name="input_workaround_summ">Solución para focalizar problemas en cuadros de entrada de HTML. Genera problemas en muchos dispositivos.</string>
   <string name="write_answers_message">Debe definir para cada mazo un campo que le permita comparar las respuestas escritas entre sí. Puede hacer esto mediante Anki Desktop (propiedades del mazo&gt; editar modelo&gt; tipo de tarjeta.)\n\nSi no se ha configurado un campo de comparación su respuesta escrita será comparada con toda la respuesta de la tarjeta.</string>
   <string name="pref_cardbrowser_skip_init_search">Apertura rápida del explorador de tarjetas</string>
   <string name="pref_cardbrowser_skip_init_search_summ">Saltear la búsqueda automática inicial cuando el explorador de tarjetas es abierto.</string>
@@ -259,9 +259,9 @@
   <string name="deck_conf_ren">Renombrar configuración</string>
   <string name="deck_conf_rem">Eliminar configuración</string>
   <string name="pref_cat_tibetan">Soporte para tibetano</string>
-  <string name="pref_cat_languages_advanced">Advanced support for typefaces</string>
+  <string name="pref_cat_languages_advanced">Soporte avanzado para tipografías</string>
   <string name="pref_enable_tibetan">Activar el soporte para tibetano</string>
-  <string name="pref_enable_tibetan_summ">Enables tibetan typeface for card browser and card editor. Typeface should be provided in /mnt/sdard/fonts/DDC_Uchen.ttf.</string>
+  <string name="pref_enable_tibetan_summ">Permite tipografía tibetana para el explorador y el editor de tarjetas. La tipografía debe ser colocada en /mnt/sdcard/fonts/DDC_Uchen.ttf.</string>
   <string name="pref_browser_editor_font">Fuente del explorador y el editor</string>
   <string name="pref_browser_editor_font_summ">Fuente predeterminada utilizada en el explorador de tarjetas y el editor de tarjetas. Fuentes personalizadas deben ser instaladas en la tarjeta SD en una carpeta llamada \'fonts\' dentro de su carpeta de AnkiDroid.</string>
   <string name="deck_conf_cram_filter">Filtro</string>
