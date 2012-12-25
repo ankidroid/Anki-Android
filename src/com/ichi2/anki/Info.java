@@ -43,7 +43,6 @@ import com.ichi2.async.Connection;
 import com.ichi2.async.Connection.OldAnkiDeckFilter;
 import com.ichi2.async.Connection.Payload;
 import com.ichi2.libanki.Utils;
-import com.ichi2.libanki.sync.BasicHttpSyncer;
 import com.ichi2.themes.StyledDialog;
 import com.ichi2.themes.StyledProgressDialog;
 import com.ichi2.themes.Themes;
@@ -60,10 +59,7 @@ import org.apache.http.conn.params.ConnPerRouteBean;
 import org.apache.http.conn.scheme.PlainSocketFactory;
 import org.apache.http.conn.scheme.Scheme;
 import org.apache.http.conn.scheme.SchemeRegistry;
-import org.apache.http.conn.ssl.SSLSocketFactory;
-import org.apache.http.conn.ssl.X509HostnameVerifier;
 import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.impl.conn.SingleClientConnManager;
 import org.apache.http.impl.conn.tsccm.ThreadSafeClientConnManager;
 import org.apache.http.params.*;
 import org.apache.http.util.EntityUtils;
@@ -95,8 +91,6 @@ public class Info extends Activity {
     private static final int DIALOG_SYNC_UPGRADE_REQUIRED = 2;
 
     private static final int LOG_IN_FOR_SYNC = 0;
-
-    private static final int CONN_TIMEOUT = 30000;
 
     private String mDialogMessage;
 
@@ -455,7 +449,7 @@ public class Info extends Activity {
                 httpParams.setParameter(CoreProtocolPNames.USE_EXPECT_CONTINUE, false);
                 httpParams.setParameter(CoreProtocolPNames.USER_AGENT, "AnkiDroid-" + AnkiDroidApp.getPkgVersion());
                 HttpProtocolParams.setVersion(httpParams, HttpVersion.HTTP_1_1);
-                HttpConnectionParams.setSoTimeout(httpParams, CONN_TIMEOUT);
+                HttpConnectionParams.setSoTimeout(httpParams, Connection.CONN_TIMEOUT);
 
                 // Registry
                 SchemeRegistry registry = new SchemeRegistry();

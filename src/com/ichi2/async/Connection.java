@@ -92,6 +92,7 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
     public static final int TASK_TYPE_REGISTER = 6;
     public static final int TASK_TYPE_UPGRADE_DECKS = 7;
     public static final int TASK_TYPE_DOWNLOAD_SHARED_DECK = 8;
+    public static final int CONN_TIMEOUT = 30000;
 
     private static Context sContext;
 

@@ -69,7 +69,6 @@ public class BasicHttpSyncer implements HttpSyncer {
 
     private static final String BOUNDARY = "Anki-sync-boundary";
     public static final String ANKIWEB_STATUS_OK = "OK";
-    private static final int SYNC_TIMEOUT = 30000;
 
     public volatile long bytesSent = 0;
     public volatile long bytesReceived = 0;
@@ -185,7 +184,7 @@ public class BasicHttpSyncer implements HttpSyncer {
             params.setParameter(CoreProtocolPNames.USE_EXPECT_CONTINUE, false);
             params.setParameter(CoreProtocolPNames.USER_AGENT, "AnkiDroid-" + AnkiDroidApp.getPkgVersion());
             HttpProtocolParams.setVersion(params, HttpVersion.HTTP_1_1);
-            HttpConnectionParams.setSoTimeout(params, SYNC_TIMEOUT);
+            HttpConnectionParams.setSoTimeout(params, Connection.CONN_TIMEOUT);
 
             // Registry
             SchemeRegistry registry = new SchemeRegistry();
