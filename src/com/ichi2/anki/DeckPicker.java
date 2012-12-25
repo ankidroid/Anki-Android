@@ -1504,7 +1504,7 @@ public class DeckPicker extends FragmentActivity {
                 break;
 
             case DIALOG_SYNC_UPGRADE_REQUIRED:
-            	builder.setMessage(res.getString(R.string.upgrade_required, res.getString(R.string.link_anki_beta)));
+            	builder.setMessage(res.getString(R.string.upgrade_required, res.getString(R.string.link_anki)));
                 builder.setPositiveButton(res.getString(R.string.retry), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
