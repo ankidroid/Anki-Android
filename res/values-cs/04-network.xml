@@ -45,7 +45,7 @@
   <string name="connection_error_message">Došlo k síťové chybě.</string>
   <string name="sync_log_db_error">Došlo k chybě databáze.</string>
   <string name="no_user_password_error_message">Chcete-li pokračovat v této operaci, musíte mít AnkiWeb účet a být přihlášen.</string>
-  <string name="username">Email address</string>
+  <string name="username">Emailová adresa</string>
   <string name="username_repeat">Repeat email address</string>
   <string name="password">Heslo</string>
   <string name="password_repeat">Opakujte heslo</string>

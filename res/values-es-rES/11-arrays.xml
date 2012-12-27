@@ -76,7 +76,7 @@
     <item>Botón de respuesta 3</item>
     <item>Botón de respuesta 4</item>
     <item>Respuesta recomendada (verde)</item>
-    <item>Respuesta mejor de lo recomendado</item>
+    <item>Respuesta mejor que la recomendada</item>
     <item>Deshacer</item>
     <item>Editar tarjeta</item>
     <item>Marcar tarjeta</item>
@@ -85,7 +85,7 @@
     <item>Suspender tarjeta</item>
     <item>Eliminar tarjeta</item>
     <item>Limpiar Pizarra</item>
-    <item>Reproducir multimedia</item>
+    <item>Reproducir archivos multimedia</item>
     <item>Interrumpir aprendizaje</item>
   </string-array>
   <string-array name="theme_labels">
@@ -101,15 +101,15 @@
   </string-array>
   <string-array name="new_order_labels">
     <item>Tarjetas nuevas en orden aleatorio</item>
-    <item>Tarjetas nuevas en orden añadido</item>
+    <item>Tarjetas nuevas en orden de adición</item>
   </string-array>
   <string-array name="cram_deck_conf_order_labels">
-    <item>Vistas más antiguamente primero</item>
+    <item>Más antiguas primero</item>
     <item>Aleatorio</item>
     <item>Intervalos crecientes</item>
     <item>Intervalos decrecientes</item>
     <item>Más atrasadas</item>
-    <item>Orden añadido</item>
+    <item>Orden de adición</item>
     <item>Orden programado</item>
     <item>Últimas añadidas primero</item>
   </string-array>

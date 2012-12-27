@@ -22,8 +22,8 @@
 <resources>
   <string name="connection_needed">Sie sind momentan offline.</string>
   <string name="currently_downloading">Wird gerade heruntergeladen</string>
-  <string name="starting_download">Starte Herunterladen…</string>
-  <string name="downloading">Herunterladen…</string>
+  <string name="starting_download">Starte Herunterladen...</string>
+  <string name="downloading">Herunterladen...</string>
   <string name="paused">Pausiert</string>
   <string name="downloaded">Heruntergeladen</string>
   <string name="error">Fehler</string>

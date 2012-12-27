@@ -47,7 +47,7 @@
   <string name="deck_summary_answers_mature">熟練カード: &lt;b&gt;%1$.1f %2$s&lt;/b&gt; %2$s (%4$dの内%3$d)</string>
   <string name="deck_summary_answers_young">未熟カード: &lt;b&gt;%1$.1f %2$s&lt;/b&gt; (%4$dの内%3$d)</string>
   <string name="deck_summary_answers_firstseen">初めて表示されたカード: &lt;b&gt;%1$.1f %2$s&lt;/b&gt; (%4$dの内%3$d)</string>
-  <string name="deck_summary_reviews">評価：</string>
+  <string name="deck_summary_reviews">カードの学習と評価：</string>
   <string name="deck_summary_news">新規カード:</string>
   <string name="deck_summary_average_week">先週の平均</string>
   <string name="deck_summary_average_month">先月の平均</string>
@@ -62,7 +62,7 @@
   <string name="deck_summary_deck_age">単語帳作成日: &lt;b&gt;%d&lt;/b&gt; 日前</string>
   <string name="deck_summary_all_decks">すべての単語帳</string>
   <string name="stats_forecast">予測</string>
-  <string name="stats_review_count">格付け枚数</string>
+  <string name="stats_review_count">カード評価枚数</string>
   <string name="stats_review_time">評価時間</string>
   <string-array name="next_review_in_s">
     <item>1秒で内</item>

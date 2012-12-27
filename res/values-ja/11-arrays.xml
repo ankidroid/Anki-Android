@@ -22,8 +22,8 @@
 <resources>
   <string-array name="newCardSchedulingLabels">
     <item>復習中に新しいカードを混ぜる</item>
-    <item>格付けの後で</item>
-    <item>格付けの前に</item>
+    <item>カード評価後</item>
+    <item>カード評価前に</item>
   </string-array>
   <string-array name="error_reporting_choice_labels">
     <item>常にレポートする</item>

@@ -33,7 +33,7 @@
   <string name="backup_del_collection_question">¿Realmente desea eliminar la colección y crear una nueva? ¡Esto borrará todo tu progreso de aprendizaje y eliminará todas las tarjetas!</string>
   <string name="backup_full_sync_from_server">Sincronización completa desde el servidor</string>
   <string name="backup_full_sync_from_server_question">¿Realmente deseas sobrescribir tu colección con la de AnkiWeb? ¡Esto borrará todo tu progreso de aprendizaje e información añadida desde la última sincronización!</string>
-  <string name="error_handling_title">Control de errores</string>
+  <string name="error_handling_title">Manejo de errores</string>
   <string name="error_handling_options">Opciones</string>
   <string name="backup_retry_opening">Reintentar apertura</string>
   <string name="backup_error_menu_repair">Reparar base de datos</string>

@@ -66,7 +66,6 @@
   <string name="menu_download_shared_deck">اشتراک گذاشتن دسته</string>
   <string name="menu_my_account">همگامسازی حساب</string>
   <string name="menu_preferences">تنظیمات</string>
-  <string name="menu_zeemote">نوعی کنترل گر دستگاه گوشی</string>
   <string name="menu_about">درباره</string>
   <string name="menu_dismiss_note">نادیده گرفتن یادداشت...</string>
   <string name="menu_bury_note">مخفی کردن یادداشت</string>
@@ -100,7 +99,7 @@
   <string name="studyoptions_congrats_more_rev">به حد روزانه مرور رسیده اید، ولی هنوز کارتهایی هستند که باید مرور شوند. برای بهینه سازی حافظه، می توانید حد روزانه مرور را در بخش گزینه ها افزایش دهید.</string>
   <string name="studyoptions_congrats_more_new">کارتهای جدید بیشتری موجودند ، ولی شما به حد روزانه مرور رسیده اید. می توانید این حد را در بخش گزینه ها افزایش دهید، ولی خواهشا به یاد داشته باشید که بار کاری مرور کوتاه مدت شما افزایش خواهد یافت.</string>
   <string name="studyoptions_congrats_custom">جهت مطالعه خارج از برنامه ، بر روی دکمه مطالعه سفارشی زیر کلیک کنید.</string>
-  <string name="sd_card_not_mounted">SD card is not mounted.\n\nYou can store your collection in the internal memory too, though it\'s not recommended as you cannot access the file that easily. You can activate this in the preferences (open them by clicking this text).</string>
+  <string name="sd_card_not_mounted">کارت حافظه قرار داده نشده.\n\nمی توانید مجموعه تان را روی یک حافظه داخلی ذخیره کنید, البته این عمل توصیه نمی شود. زیرا دستیابی به فایل ها به آسانی صورت نخواهد گرفت. در تنظیمات می توانید آن را فعال کنید (با کلیک بر روی این متن آنها را باز کنید).</string>
   <string name="studyoptions_options">گزینه ها</string>
   <string name="empty_cloze_warning">لطفا این یادداشت را ویرایش کنید و اضافه کنید بعضی cloze deletions  . (%1$s)</string>
   <string name="help_cloze">راهنما</string>

@@ -114,12 +114,12 @@
     <item>最晚添加的优先</item>
   </string-array>
   <string-array name="custom_study_options_labels">
-    <item>Increase today\'s new card limit</item>
-    <item>Increase today\'s review card limit</item>
-    <item>Review forgotten cards</item>
-    <item>Review ahead</item>
-    <item>Study a random selection of cards</item>
-    <item>Preview new cards</item>
-    <item>Limit to particular tags</item>
+    <item>增加今天的新卡牌数量限制</item>
+    <item>增加今天的复习数量限制</item>
+    <item>复习忘记的卡牌</item>
+    <item>提前复习</item>
+    <item>学习随机选择的卡牌。</item>
+    <item>预览新卡牌</item>
+    <item>仅限于特定标签</item>
   </string-array>
 </resources>

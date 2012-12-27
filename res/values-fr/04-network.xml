@@ -29,7 +29,7 @@
   <string name="error">Erreur</string>
   <string name="cancelling">Annulation...</string>
   <string name="connection_error_title">Attention</string>
-  <string name="connection_error_return_message">Une erreur réseau a s\'est produite. Réessayer ou annuler et revenir à l\'écran précédent.</string>
+  <string name="connection_error_return_message">Une erreur réseau s\'est produite. Réessayer ou annuler et revenir à l\'écran précédent.</string>
   <string name="retry">Réessayer</string>
   <string name="cancel">Annuler</string>
   <string name="download_overwrite">Écraser</string>
@@ -45,8 +45,8 @@
   <string name="connection_error_message">Une erreur réseau s\'est produite.</string>
   <string name="sync_log_db_error">Une erreur s\'est produite dans la base de données.</string>
   <string name="no_user_password_error_message">Afin de procéder à cette opération, vous devez avoir un compte AnkiWeb et être connecté.</string>
-  <string name="username">Email address</string>
-  <string name="username_repeat">Repeat email address</string>
+  <string name="username">Adresse électronique</string>
+  <string name="username_repeat">Confirmation de l\'adresse électronique</string>
   <string name="password">Mot de passe</string>
   <string name="password_repeat">Confirmation du mot de passe</string>
   <string name="log_in">Se connecter</string>
@@ -55,7 +55,7 @@
   <string name="logged_as">Connecté en tant que</string>
   <string name="log_out">Se déconnecter</string>
   <string name="alert_logging_message">Connexion, patientez s\'il vous plaît ...</string>
-  <string name="invalid_username_password">Invalid email address or password.</string>
+  <string name="invalid_username_password">Votre adresse électronique ou mot de passe est invalide.</string>
   <string name="login_generic_error">Échec de l\'ouverture de session.</string>
   <string name="download_finished">Téléchargement terminé</string>
   <string name="personaldeckpicker_title">Ouvrir un paquet en ligne</string>
@@ -63,11 +63,11 @@
   <string name="downloaddeck_search">Recherche</string>
   <string name="preferences_title">Préférences</string>
   <string name="deckpreferences_title">Préférences du paquet</string>
-  <string name="sync_conflict_message">Vos paquets ici et sur AnkiWeb diffèrent de telle manière qu\'ils ne peuvent pas être fusionnés, il est donc nécessaire d\'écraser les uns ou les autres.\n\nVoulez vous garder et envoyer les paquets d\'ici, ou téléchargez les paquets de AnkiWeb ?</string>
+  <string name="sync_conflict_message">Vos paquets ici et sur AnkiWeb diffèrent de telle manière qu\'ils ne peuvent pas être fusionnés, il est donc nécessaire d\'écraser les uns ou les autres.\n\nVoulez-vous garder et envoyer les paquets d\'ici, ou téléchargez les paquets de AnkiWeb ?</string>
   <string name="sync_conflict_local">Envoi</string>
   <string name="sync_conflict_remote">Télécharger</string>
-  <string name="sync_conflict_remote_confirm">Do you really want to download the server\'s collection? Be aware that this will overwrite your local collection.</string>
-  <string name="sync_conflict_local_confirm">Do you really want to upload the local collection? Be aware that this will overwrite your collection on the server.</string>
+  <string name="sync_conflict_remote_confirm">Êtes-vous sûr de vouloir récupérer la collection du serveur ? Soyez conscient que cela va écraser votre collection locale.</string>
+  <string name="sync_conflict_local_confirm">Êtes-vous sûr de vouloir charger la collection locale sur le serveur ? Soyez conscient que cela va écraser la collection du serveur.</string>
   <string name="sync_conflict_cancel">Annuler la synchronisation</string>
   <string name="sync_prepare_syncing">Préparation de la synchronisation...</string>
   <string name="sync_preparing_full_sync_message">Préparation d\'une synchronisation complète ...</string>

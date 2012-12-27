@@ -68,7 +68,7 @@
     <item>期限で</item>
     <item>間隔で</item>
     <item>容易さで</item>
-    <item>格付けで</item>
+    <item>カードの評価で</item>
     <item>未習得のもの</item>
   </string-array>
   <plurals name="card_browser_subtitle">

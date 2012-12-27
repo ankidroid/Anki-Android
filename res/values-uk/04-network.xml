@@ -45,8 +45,8 @@
   <string name="connection_error_message">Виникла помилка мережі.</string>
   <string name="sync_log_db_error">Виникла помилка бази даних.</string>
   <string name="no_user_password_error_message">Для продовження цієї дії, вам потрібно здійснити вхід в обліковий запис AnkiWeb.</string>
-  <string name="username">Email address</string>
-  <string name="username_repeat">Repeat email address</string>
+  <string name="username">Електронна адреса</string>
+  <string name="username_repeat">Ще раз електронна адреса</string>
   <string name="password">Пароль</string>
   <string name="password_repeat">Повторити пароль</string>
   <string name="log_in">Ввійти</string>
@@ -55,7 +55,7 @@
   <string name="logged_as">Ви ввійшли як</string>
   <string name="log_out">Вийти</string>
   <string name="alert_logging_message">Здійснення входу, зачекайте, будь ласка...</string>
-  <string name="invalid_username_password">Invalid email address or password.</string>
+  <string name="invalid_username_password">Некоректна електронна адреса або пароль.</string>
   <string name="login_generic_error">Ввійти не вдалося.</string>
   <string name="download_finished">Завантаження завершено</string>
   <string name="personaldeckpicker_title">Відкрити колоду онлайн</string>
@@ -66,8 +66,8 @@
   <string name="sync_conflict_message">Ваші колоди тут та в AnkiWeb відрізняються так, що їх не можна об’єднати, тому потрібно перезаписати колоди з одного боку колодами з іншого.\n\nБажаєте відвантажити колоди звідси, чи завантажити з AnkiWeb?</string>
   <string name="sync_conflict_local">Відвантаження</string>
   <string name="sync_conflict_remote">Завантаження</string>
-  <string name="sync_conflict_remote_confirm">Do you really want to download the server\'s collection? Be aware that this will overwrite your local collection.</string>
-  <string name="sync_conflict_local_confirm">Do you really want to upload the local collection? Be aware that this will overwrite your collection on the server.</string>
+  <string name="sync_conflict_remote_confirm">Ви справді бажаєте завантажити колекцію з сервера? Ця операція затре вашу локальну колекцію.</string>
+  <string name="sync_conflict_local_confirm">Ви справді бажаєте відвантажити локальну колекцію на сервер? Ця операція затре вашу колекцію на сервері.</string>
   <string name="sync_conflict_cancel">Відмінити синхронізацію</string>
   <string name="sync_prepare_syncing">Підготовка синхронізації...</string>
   <string name="sync_preparing_full_sync_message">Підготовка до повної синхронізації...</string>
@@ -131,5 +131,5 @@
   <string name="upgrade_decks_button">Оновлення</string>
   <string name="upgrade_decks_failed">Не можливо обновити ці колоди\n%sБудь ласка, відкрийте їх в Anki Desktop та здійсніть перевірку бази даних Після цього ви можете імпортувати їх через Anki Desktop.</string>
   <string name="upgrade_decks_media_failed">Копіювання файлів мультимедіа до нової медіа папки (%1$s) для цих колод не виконано:\n%2$sБудь ласка, перемістіть медіа файли вручну.</string>
-  <string name="download_deck">Downloading deck (%d kb).\nPlease wait...</string>
+  <string name="download_deck">Завантаження колоди (%d Кб).\nБудь-ласка, зачекайте...</string>
 </resources>

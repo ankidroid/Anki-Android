@@ -38,7 +38,7 @@
   <string name="ease3_successive">Bom</string>
   <string name="ease3_learning">Fácil</string>
   <string name="studyoptions_congrats_undo">Undo %s</string>
-  <string name="studyoptions_congrats_custom_study">Custom Study</string>
+  <string name="studyoptions_congrats_custom_study">Estudo Personalizado</string>
   <string name="studyoptions_congrats_open_other_deck">Abrir Outro Deck</string>
   <string name="studyoptions_congrats_finish">Voltar à Tela de Estudo</string>
   <string name="card_unsuspended">Suspensão de cartão desfeita</string>
@@ -46,11 +46,11 @@
   <string name="menu_rotate">Girar</string>
   <string name="menu_import">Import cards</string>
   <string name="undo">Desfazer</string>
-  <string name="undo_action_review">review</string>
+  <string name="undo_action_review">revisar</string>
   <string name="undo_action_edit">edit note</string>
   <string name="undo_action_bury">bury note</string>
-  <string name="undo_action_suspend_card">suspend card</string>
-  <string name="undo_action_suspend_note">suspend note</string>
+  <string name="undo_action_suspend_card">suspender cartão</string>
+  <string name="undo_action_suspend_note">suspender nota</string>
   <string name="undo_action_delete">delete note</string>
   <string name="undo_action_mark">mark note</string>
   <string name="finish_operation">Terminando a operação anterior (provavelmente criação de backup). \nPor favor aguarde...</string>
@@ -66,7 +66,6 @@
   <string name="menu_download_shared_deck">Deck compartilhado</string>
   <string name="menu_my_account">Conta de sincronização</string>
   <string name="menu_preferences">Preferências</string>
-  <string name="menu_zeemote">Zeemote</string>
   <string name="menu_about">Sobre</string>
   <string name="menu_dismiss_note">Nota ao Desfazer...</string>
   <string name="menu_bury_note">Enterrar Nota</string>

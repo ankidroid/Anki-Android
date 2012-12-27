@@ -66,7 +66,6 @@
   <string name="menu_download_shared_deck">공유된 암기묶음</string>
   <string name="menu_my_account">계정 동기화</string>
   <string name="menu_preferences">환경 설정</string>
-  <string name="menu_zeemote">Zeemote</string>
   <string name="menu_about">대하여</string>
   <string name="menu_dismiss_note">노트 무시하기...</string>
   <string name="menu_bury_note">노트 묻어두기</string>

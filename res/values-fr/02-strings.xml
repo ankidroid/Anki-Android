@@ -84,18 +84,18 @@
   <string name="info_rate">Noter AnkiDroid</string>
   <string name="col_load_failed">Le chargement de la collection à échoué.\nAppuyez sur retour pour fermer AnkiDroid.</string>
   <string name="import_title">Importer des cartes</string>
-  <string name="import_message">Would you like to add the content of file %s to your collection, or replace your collection with it?</string>
-  <string name="import_message_add">Add</string>
-  <string name="import_message_replace">Replace</string>
-  <string name="import_message_replace_confirm">This will delete your existing collection and replace it with the data of file %s. Are you sure?</string>
+  <string name="import_message">Voulez-vous ajouter le contenu du fichier %s à votre collection ou bien la remplacer par son contenu ?</string>
+  <string name="import_message_add">Ajouter</string>
+  <string name="import_message_replace">Remplacer</string>
+  <string name="import_message_replace_confirm">Ceci va supprimer votre collection existante et la remplacer par les données du fichier %s. Êtes-vous d\'accord ?</string>
   <string name="import_log_success">%d cartes importées avec succès</string>
   <string name="import_log_error">Échec de l\'importation</string>
   <string name="import_log_no_apkg">Ce n\'est pas un fichier apkg valide</string>
   <string name="import_importing">Import en cours\nVeuillez patienter...</string>
   <string name="import_hint">Pour importer des cartes, placez le fichier apkg dans le répertoire %s et appuyez sur ok</string>
   <string name="import_no_file_found">Aucun fichier apkg importable n\'a été trouvé</string>
-  <string name="custom_study">Custom Study</string>
-  <string name="dyn_deck_desc">This is a special deck for studying outside of the normal schedule. Cards will be automatically returned to their original decks after you review them. Deleting this deck from the deck list will return all remaining cards to their original deck.</string>
+  <string name="custom_study">Étude personnalisée</string>
+  <string name="dyn_deck_desc">Ceci est un paquet pour l\'étude en dehors des horaires normaux. Les cartes reviendront automatiquement à leur paquet d\'origine après leur révision. La suppression de ce paquet remettra toutes les cartes restantes dans leur paquet d\'origine.</string>
   <string-array name="dynOrderLabels">
     <item>Des plus au moins anciennes</item>
     <item>Aléatoirement</item>

@@ -52,7 +52,7 @@
   <string name="undo_action_suspend_card">suspender cartão</string>
   <string name="undo_action_suspend_note">suspender nota</string>
   <string name="undo_action_delete">deletar nota</string>
-  <string name="undo_action_mark">criar nota</string>
+  <string name="undo_action_mark">marcar nota</string>
   <string name="finish_operation">Terminando a operação anterior (provavelmente criação de backup). \nPor favor aguarde...</string>
   <string name="contextmenu_deckpicker_download_missing_media">Baixar mídia ausente</string>
   <string name="contextmenu_deckpicker_reset_language_assignments">Redefinir Atribuições de Idioma</string>
@@ -66,7 +66,6 @@
   <string name="menu_download_shared_deck">Deck compartilhado</string>
   <string name="menu_my_account">Conta de sincronização</string>
   <string name="menu_preferences">Preferências</string>
-  <string name="menu_zeemote">Zeemote</string>
   <string name="menu_about">Sobre</string>
   <string name="menu_dismiss_note">Nota ao Desfazer...</string>
   <string name="menu_bury_note">Enterrar Nota</string>
@@ -94,13 +93,13 @@
   <string name="empty_cram_label">Vazio</string>
   <string name="empty_cram_deck">Esvaziando deck do preparatório.\nPor favor aguarde...</string>
   <string name="studyoptions_new_filtercram">Filtro/Cursinho</string>
-  <string name="custom_study_deck_name">Custom Study Session</string>
-  <string name="custom_study_deck_exists">Please rename the existing Custom Study deck first.</string>
-  <string name="studyoptions_congrats_finished">Parabéns! Você terminou por hora.</string>
+  <string name="custom_study_deck_name">Sessão de Estudo Personalizado</string>
+  <string name="custom_study_deck_exists">Por favor renomeie o deck de estudo personalizado existente primeiro.</string>
+  <string name="studyoptions_congrats_finished">Parabéns! Você terminou por enquanto.</string>
   <string name="studyoptions_congrats_more_rev">O limite de revisão de hoje foi atingido, mas ainda existem cartões esperando para serem revistos. Para uma otima memória, considere aumentar o limite diário nas opções.</string>
   <string name="studyoptions_congrats_more_new">Existem mais cartões novos disponíveis, mas o limite diário foi alcançado. Você pode aumentar o limite nas opções, mas por favor, tenha em mente que isso vai aumentar sua carga de trabalho de revisão a curto prazo.</string>
   <string name="studyoptions_congrats_custom">Para estudar fora do agendamento normal, clique no botão Estudo Personalizado abaixo.</string>
-  <string name="sd_card_not_mounted">SD card is not mounted.\n\nYou can store your collection in the internal memory too, though it\'s not recommended as you cannot access the file that easily. You can activate this in the preferences (open them by clicking this text).</string>
+  <string name="sd_card_not_mounted">Cartão SD não está montado.\n\nVocê pode armazenar a sua coleção na memória interna também, embora não seja recomendado, pois você não consegue acessar o arquivo facilmente. Você pode ativar isso nas preferências (clique no texto para alterar).</string>
   <string name="studyoptions_options">Opções</string>
   <string name="empty_cloze_warning">Por favor edite esta nota e adicione algumas deleções fechadas. (%1$s)</string>
   <string name="help_cloze">ajuda</string>
