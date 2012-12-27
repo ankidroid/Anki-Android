@@ -26,6 +26,7 @@
   <string name="contextmenu_deckpicker_delete_deck">حذف دسته</string>
   <string name="delete_deck_title">حذف دسته</string>
   <string name="delete_deck_message">آیا برای حذف تمام کارتها اطمینان دارید در  %s?</string>
+  <string name="delete_cram_deck_message">آیا اطمینان دارید که می خواهید همه کارتهای موجود در %s به دسته اصلی خودتان برگردانید?</string>
   <string name="delete_deck_confirm">آن را حذف کنید</string>
   <string name="new_version_message">ویژگی های جدید:</string>
   <string name="no_tts_available_title">متن به گفتار</string>
@@ -50,13 +51,16 @@
   <string name="intent_add_clear_all">پاک کردن همه</string>
   <string name="intent_aedict_empty">دسته پیش فرض خالی است</string>
   <string name="intent_aedict_category">برای اضافه کردن کارت به آنکی دروید یا همه دسته ها را از نوت پد حذف کنید یا یک نام پیش فرض اضافه نمایید</string>
-  <string name="learnmore_title">مطالعه تنظیمات بیشتر</string>
-  <string name="learnmore_insructions">شما می توانید بطور موقت کارتهای جدیدتان را افزایش دهید و حداکثر محدودیت های زیر برای گسترش  فراگیری دوره آموزش  امروز را بررسی کنید.</string>
-  <string name="learnmore_extend_new_limit">افزایش محدود کارت های جدید</string>
-  <string name="learnmore_extend_rev_limit">افزایش محدود حداکثر بررسی</string>
-  <string name="reviewearly_title">بررسی تنظیمات اولیه</string>
-  <string name="reviewearly_instructions">این آپشن یک دسته کارت را بوجود خواهد آورد که نامیده شده \'XXX\' با کارتهایی که در موعد مقرر برای بازبیتی در برخی از روزهایی که انتخاب کرده اید. همچمنین اگر یک دسته کارت فیلتر شده وجود داشته باشد آن خالی خواهد شد و مجددا پیکربندی می شود.</string>
-  <string name="reviewearly_days_ahead">تعداد روزهای درپیش</string>
+  <string name="custom_study_new_total_new">کارت های جدید در دسته کارتها: %s</string>
+  <string name="custom_study_rev_total_rev">بررسی وظیفه در دسته: %s</string>
+  <string name="custom_study_new_extend">محدوده افزایش کارتهای جدید امروز</string>
+  <string name="custom_study_rev_extend">محدوده افزایش کارتهای برای بررسی امروز</string>
+  <string name="custom_study_forgotten">کارتهای فراموش شده در آخرین بررسی x روز:</string>
+  <string name="custom_study_ahead">بررسی پیش از موعد  x روز جلوتر:</string>
+  <string name="custom_study_random">انتخاب x کارت تصادفی از دسته کارتها:</string>
+  <string name="custom_study_preview">پیش نمایش کارت های جدید اضافه شده در  x روز پیش:</string>
+  <string name="custom_study_tags">با نرم افزار آنکی دروید شما بصورت کاملا کارآمد می توانید تعداد زیادی از واژگان و یا هر گونه مواد دیگری را یاد بگیرید. آنکی دروید به شما هرچیزی را که می خواهید یاد بگیرید نمایش می دهد قبل از آنکه آنها را فراموش کنید .\n\nبرای درک ابتدایی چگونگی کار با هرچیزی, توصیه می کنیم با یک دسته کارت خودآموز که به شما اطلاعات اولیه را می دهند شروع کنید, و کمی آن را امتحان کنید. فقط روی \"شروع بررسی\" کلیک کنید بعد  باز می شود it.\n\nآیا دسته کارت خودآموز الان ساخته شود؟</string>
+  <string name="rebuild_custom_study_deck">ساخت مجدد دسته مطالعه سفارشی.\nصبر کنید...</string>
   <string-array name="about_content">
     <item><![CDATA[<h2>%1$s:<br/>فلش کارتها برای اندروید</h2>آنکی دروید یک برنامه فلش کارت کاملا سازگار با برنامه کامپیو <a href="%2$s">Anki</a>. شما می توانید بسازید, شما می  توانید بسازید،دانلود کنید و یاد بگیرید از هر دو آنکی دروید یا آنکی دسکتاپ (نرم افزار کامپیوتر)ئ هر دو آنها خیلی آسان بایکدیگر همگامسازی می شوند,.]]></item>
     <item><![CDATA[برای کمک به ما در بهتر ساختن آنکی دروید, لطفا هر مشکلی را گزارش کنید <a href="%1$s">here</a>; همچنین ما از عقاید ویژه جدید استقبال می کنیم! لطفا استفاده کنید <a href="%2$s">wiki</a>و سلام بگویید در <a href="%3$s">forum</a>.]]></item>

@@ -176,8 +176,7 @@
 					    	android:gravity="center"
 						android:clickable="true"
 					    	android:textColor="@color/widget_big_font_color"
-						android:background="@drawable/white_btn_default"
-						android:text="@string/studyoptions_congrats_reviewearly"/>
+						android:background="@drawable/white_btn_default"/>
 					<TextView
 					    android:id="@+id/widget_big_learn_more"
 					    android:layout_width="0dip"
@@ -186,8 +185,7 @@
 						android:background="@drawable/white_btn_default"
 					    	android:gravity="center"
 						android:clickable="true"
-					    	android:textColor="@color/widget_big_font_color"
-						android:text="@string/studyoptions_congrats_learnmore"/>
+					    	android:textColor="@color/widget_big_font_color"/>
 				</LinearLayout>
 			</RelativeLayout>
 			<RelativeLayout

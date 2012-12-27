@@ -45,8 +45,8 @@
   <string name="connection_error_message">Telah terjadi ralat jaringan.</string>
   <string name="sync_log_db_error">Satu ralat database berlaku.</string>
   <string name="no_user_password_error_message">In order to proceed with this operation, you need to have an AnkiWeb account and be logged in.</string>
-  <string name="username">Nama</string>
-  <string name="username_repeat">Repeat username</string>
+  <string name="username">Email address</string>
+  <string name="username_repeat">Repeat email address</string>
   <string name="password">Kata laluan</string>
   <string name="password_repeat">Repeat password</string>
   <string name="log_in">Log in</string>
@@ -55,7 +55,7 @@
   <string name="logged_as">Login sebagai</string>
   <string name="log_out">Log keluar</string>
   <string name="alert_logging_message">Login, harap tunggu …</string>
-  <string name="invalid_username_password">Username atau password tidak valid.</string>
+  <string name="invalid_username_password">Invalid email address or password.</string>
   <string name="login_generic_error">Gagal untuk login.</string>
   <string name="download_finished">Muat turun selesai</string>
   <string name="personaldeckpicker_title">Buka Deck Online</string>

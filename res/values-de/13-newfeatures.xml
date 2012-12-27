@@ -28,9 +28,10 @@
     <item>Zusammenführen beim Synchronisieren jetzt möglich</item>
     <item>Verbesserte Statistiken</item>
     <item>Stapel werden nun in einer einzigen Sammlung gespeichert</item>
-    <item>Optionen können gemeinsam benutzt werden</item>
+    <item>Optionen können jetzt gemeinsam genutzt werden</item>
     <item>Tablet-Layout</item>
-    <item>Zahlreiche Performance-Verbesserungen</item>
+    <item>Zahlreiche Verbesserungen der Performance</item>
     <item>Karten-Importier-Funktion</item>
+    <item>collection can be saved on internal memory</item>
   </string-array>
 </resources>

@@ -17,32 +17,6 @@
 
 package com.ichi2.anki;
 
-import java.io.File;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
-import org.apache.http.HttpEntity;
-import org.apache.http.HttpResponse;
-import org.apache.http.client.ClientProtocolException;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.ResponseHandler;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.util.EntityUtils;
-
-import com.ichi2.anki.R;
-
-import com.ichi2.anim.ActivityTransitionAnimation;
-import com.ichi2.async.Connection;
-import com.ichi2.async.Connection.OldAnkiDeckFilter;
-import com.ichi2.async.Connection.Payload;
-import com.ichi2.libanki.Utils;
-import com.ichi2.themes.StyledDialog;
-import com.ichi2.themes.StyledProgressDialog;
-import com.ichi2.themes.Themes;
-
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.DialogInterface;
@@ -64,7 +38,39 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
+import com.ichi2.anim.ActivityTransitionAnimation;
+import com.ichi2.async.Connection;
+import com.ichi2.async.Connection.OldAnkiDeckFilter;
+import com.ichi2.async.Connection.Payload;
+import com.ichi2.libanki.Utils;
+import com.ichi2.themes.StyledDialog;
+import com.ichi2.themes.StyledProgressDialog;
+import com.ichi2.themes.Themes;
+import org.apache.commons.httpclient.contrib.ssl.EasySSLSocketFactory;
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.HttpVersion;
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.ResponseHandler;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.conn.params.ConnManagerPNames;
+import org.apache.http.conn.params.ConnPerRouteBean;
+import org.apache.http.conn.scheme.PlainSocketFactory;
+import org.apache.http.conn.scheme.Scheme;
+import org.apache.http.conn.scheme.SchemeRegistry;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.impl.conn.tsccm.ThreadSafeClientConnManager;
+import org.apache.http.params.*;
+import org.apache.http.util.EntityUtils;
+
+import javax.net.ssl.HostnameVerifier;
+import javax.net.ssl.SSLException;
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Shows an about box, which is a small HTML page.
@@ -233,7 +239,7 @@ public class Info extends Activity {
 
             case TYPE_UPGRADE_DECKS:
                 sb.append("<html><body>");
-                File[] fileList = (new File(AnkiDroidApp.getCurrentAnkiDroidDirectory(this))).listFiles(new OldAnkiDeckFilter());
+                File[] fileList = (new File(AnkiDroidApp.getCurrentAnkiDroidDirectory())).listFiles(new OldAnkiDeckFilter());
                 StringBuilder fsb = new StringBuilder();
                 fsb.append("<ul>");
                 for (File f : fileList) {
@@ -243,7 +249,7 @@ public class Info extends Activity {
                 sb.append(res.getString(R.string.upgrade_decks_message, fsb.toString()));
                 sb.append("<ul><li>");
                 sb.append(res.getString(R.string.upgrade_decks_message_pos1,
-                		AnkiDroidApp.getCurrentAnkiDroidDirectory(this)));
+                		AnkiDroidApp.getCurrentAnkiDroidDirectory()));
                 sb.append("</li><li>");
                 sb.append(res.getString(R.string.upgrade_decks_message_pos2, res.getString(R.string.link_anki)));
                 sb.append("</li><li>");
@@ -266,7 +272,7 @@ public class Info extends Activity {
                             setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
                         }
                         Connection.upgradeDecks(mUpgradeListener,
-                                new Connection.Payload(new Object[] { AnkiDroidApp.getCurrentAnkiDroidDirectory(Info.this) }));
+                                new Connection.Payload(new Object[] { AnkiDroidApp.getCurrentAnkiDroidDirectory() }));
                     }
                 });
 
@@ -434,7 +440,22 @@ public class Info extends Activity {
             protected String doInBackground(String... params) {
                 Log.i(AnkiDroidApp.TAG, "Info.ParseSharedDecks.doInBackground()");
                 HttpGet pageGet = new HttpGet(params[0]);
-                HttpClient client = new DefaultHttpClient();
+                HostnameVerifier hostnameVerifier = org.apache.http.conn.ssl.SSLSocketFactory.ALLOW_ALL_HOSTNAME_VERIFIER;
+
+                // HttpParams
+                HttpParams httpParams = new BasicHttpParams();
+                httpParams.setParameter(ConnManagerPNames.MAX_TOTAL_CONNECTIONS, 30);
+                httpParams.setParameter(ConnManagerPNames.MAX_CONNECTIONS_PER_ROUTE, new ConnPerRouteBean(30));
+                httpParams.setParameter(CoreProtocolPNames.USE_EXPECT_CONTINUE, false);
+                httpParams.setParameter(CoreProtocolPNames.USER_AGENT, "AnkiDroid-" + AnkiDroidApp.getPkgVersion());
+                HttpProtocolParams.setVersion(httpParams, HttpVersion.HTTP_1_1);
+                HttpConnectionParams.setSoTimeout(httpParams, Connection.CONN_TIMEOUT);
+
+                // Registry
+                SchemeRegistry registry = new SchemeRegistry();
+                registry.register(new Scheme("http", PlainSocketFactory.getSocketFactory(), 80));
+                registry.register(new Scheme("https", new EasySSLSocketFactory(), 443));
+                ThreadSafeClientConnManager cm = new ThreadSafeClientConnManager(httpParams, registry);
 
                 ResponseHandler<String> handler = new ResponseHandler<String>() {
     				@Override
@@ -450,15 +471,19 @@ public class Info extends Activity {
                         }
     				}
                 };
+
                 String pageHTML = null;
                 try {
+                    HttpClient client = new DefaultHttpClient(cm, httpParams);
                     while (pageHTML == null){
                         pageHTML = client.execute(pageGet, handler);
                     }
                 } catch (ClientProtocolException e) {
-                	pageHTML = "error";
+                	pageHTML = "ClientProtocolException: " + e.getMessage();
+                } catch (SSLException e) {
+                    pageHTML = "SSLException: " + e.getMessage();
                 } catch (IOException e) {
-                	pageHTML = "error";
+                	pageHTML = "IOException: " + e.getMessage();
                 }
 
                 Pattern pattern = Pattern.compile("</*div(\\sid=\\\"content\\\")*");

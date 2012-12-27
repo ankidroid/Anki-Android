@@ -38,8 +38,7 @@
   <string name="ease3_successive">不錯</string>
   <string name="ease3_learning">簡單</string>
   <string name="studyoptions_congrats_undo">復原 %s</string>
-  <string name="studyoptions_congrats_learnmore">繼續加油</string>
-  <string name="studyoptions_congrats_reviewearly">提早複習</string>
+  <string name="studyoptions_congrats_custom_study">Custom Study</string>
   <string name="studyoptions_congrats_open_other_deck">打開其他牌組</string>
   <string name="studyoptions_congrats_finish">回到學習畫面</string>
   <string name="card_unsuspended">復原暫停卡片</string>
@@ -95,11 +94,13 @@
   <string name="empty_cram_label">清空</string>
   <string name="empty_cram_deck">Emptying cram deck.\nPlease wait...</string>
   <string name="studyoptions_new_filtercram">Filter/Cram</string>
-  <string name="review_early_deck_name">提前復習</string>
+  <string name="custom_study_deck_name">Custom Study Session</string>
+  <string name="custom_study_deck_exists">Please rename the existing Custom Study deck first.</string>
   <string name="studyoptions_congrats_finished">恭喜！你完成今天的進度了。</string>
   <string name="studyoptions_congrats_more_rev">您已經達到今天卡片複習數量的上限了，不過還是有些卡片需要複習。建議您增加選項中每天卡片複習的上限。</string>
   <string name="studyoptions_congrats_more_new">雖然牌組還有新的卡片，但你的復習量已達每日的限制。你可以在選項增加復習量，但請注意，這將會加重你短期的復習量。</string>
-  <string name="sd_card_not_mounted">記憶卡尚未掛載.</string>
+  <string name="studyoptions_congrats_custom">To study outside of the normal schedule, click the Custom Study button below.</string>
+  <string name="sd_card_not_mounted">SD card is not mounted.\n\nYou can store your collection in the internal memory too, though it\'s not recommended as you cannot access the file that easily. You can activate this in the preferences (open them by clicking this text).</string>
   <string name="studyoptions_options">選項</string>
   <string name="empty_cloze_warning">Please edit this note and add some cloze deletions. (%1$s)</string>
   <string name="help_cloze">幫助</string>

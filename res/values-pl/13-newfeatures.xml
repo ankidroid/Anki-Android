@@ -32,5 +32,6 @@
     <item>Program wygląda lepiej na tabletach</item>
     <item>Mnóstwo poprawek przyśpieszających pracę</item>
     <item>Funkcja importu kart</item>
+    <item>collection can be saved on internal memory</item>
   </string-array>
 </resources>

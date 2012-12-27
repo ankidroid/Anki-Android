@@ -837,7 +837,7 @@ public class DeckTask extends
 		String path = params[0].getString();
 
 		// extract the deck from the zip file
-		String fileDir = AnkiDroidApp.getCurrentAnkiDroidDirectory(AnkiDroidApp.getInstance().getBaseContext()) + "/tmpzip";
+		String fileDir = AnkiDroidApp.getCurrentAnkiDroidDirectory() + "/tmpzip";
     	File dir = new File(fileDir);
     	if (dir.exists()) {
     		BackupManager.removeDir(dir);

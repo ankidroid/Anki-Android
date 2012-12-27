@@ -26,6 +26,7 @@
   <string name="contextmenu_deckpicker_delete_deck">묶음 삭제</string>
   <string name="delete_deck_title">묶음 삭제</string>
   <string name="delete_deck_message">%s에 있는 모든 카드를 정말로 삭제하시겠습니까?</string>
+  <string name="delete_cram_deck_message">Are you sure you wish to send all cards in %s back to their original decks?</string>
   <string name="delete_deck_confirm">삭제</string>
   <string name="new_version_message">﻿새로운 특징:</string>
   <string name="no_tts_available_title">문장 읽어주기 기능</string>
@@ -50,13 +51,16 @@
   <string name="intent_add_clear_all">모두 지우기</string>
   <string name="intent_aedict_empty">\'디볼트\' 카테고리가 비어 있습니다</string>
   <string name="intent_aedict_category">AnkiDroid에 카드를 추가하기위해 메모장 범주 삭제 또는 \'디폴트\'값으로 지정하기</string>
-  <string name="learnmore_title">Study More Settings</string>
-  <string name="learnmore_insructions">You can temporarily increase your new cards and max reviews limits below to extend today\'s learning session.</string>
-  <string name="learnmore_extend_new_limit">Increase new cards limit by</string>
-  <string name="learnmore_extend_rev_limit">Increase max reviews limit by</string>
-  <string name="reviewearly_title">Review Early Settings</string>
-  <string name="reviewearly_instructions">This option will create a Filtered Deck called \'XXX\' with the cards that are due for review in the number of days you select below. If such a Filtered Deck already exists it will be emptied and reconfigured.</string>
-  <string name="reviewearly_days_ahead">How many days ahead</string>
+  <string name="custom_study_new_total_new">New cards in deck: %s</string>
+  <string name="custom_study_rev_total_rev">Reviews due in deck: %s</string>
+  <string name="custom_study_new_extend">Increase today\'s new card limit by</string>
+  <string name="custom_study_rev_extend">Increase today\'s review limit by</string>
+  <string name="custom_study_forgotten">Review cards forgotten in last x days:</string>
+  <string name="custom_study_ahead">Review ahead by x days:</string>
+  <string name="custom_study_random">Select x cards randomly from the deck:</string>
+  <string name="custom_study_preview">Preview new cards added in the last x days:</string>
+  <string name="custom_study_tags">Enter tags:</string>
+  <string name="rebuild_custom_study_deck">Rebuilding custom study deck.\nPlease wait...</string>
   <string-array name="about_content">
     <item><![CDATA[<h2>%1$s:<br/>안드로이드용 플래시카드 암기 프로그램</h2>AnkiDroid는 데스크탑 버전<a href="%2$s">Anki</a>와 완벽하게 호환되는 플래시카드 어플리케이션입니다. AnkiDroid와 데스크탑용 Anki 모두에서 카드를 생성, 학습, 다운로드할 수 있으며 쉽게 동기화할 수 있습니다.]]></item>
     <item><![CDATA[[보다 향상된 AnkiDroid를 위해, 사용중 발생한 문제점을<a href="%1$s"> 여기<a>로 알려주세요; 새로운 기능이나 아이디어도 환영 합니다! <a href="%2$s"> 위 키</a>로 오신 후<a href="%3$s">포럼</a>에 오셔서 인사말도 남겨주셔요.]]></item>

@@ -26,6 +26,7 @@
   <string name="contextmenu_deckpicker_delete_deck">Smazat balíček</string>
   <string name="delete_deck_title">Smazat balíček</string>
   <string name="delete_deck_message">Jste si jistý, že si přejete odstranit všechny karty v %s?</string>
+  <string name="delete_cram_deck_message">Jste si jistý, že si přejete poslat všechny karty v %s zpátky do jejich původního balíčku?</string>
   <string name="delete_deck_confirm">Smazat</string>
   <string name="new_version_message">Nové funkce:</string>
   <string name="no_tts_available_title">Předčítání</string>
@@ -50,13 +51,16 @@
   <string name="intent_add_clear_all">Vymazat vše</string>
   <string name="intent_aedict_empty">Kategorie \'výchozí\' je prázdná</string>
   <string name="intent_aedict_category">Chcete-li přidat AnkiDroid karty, odstraňte všechny kategorie Poznámkového bloku nebo přidejte jednu s názvem \'default\'</string>
-  <string name="learnmore_title">Study More Settings</string>
-  <string name="learnmore_insructions">You can temporarily increase your new cards and max reviews limits below to extend today\'s learning session.</string>
-  <string name="learnmore_extend_new_limit">Zvýšit limit nových karet na</string>
-  <string name="learnmore_extend_rev_limit">Zvýšit max limit opakovaných na</string>
-  <string name="reviewearly_title">Review Early Settings</string>
-  <string name="reviewearly_instructions">This option will create a Filtered Deck called \'XXX\' with the cards that are due for review in the number of days you select below. If such a Filtered Deck already exists it will be emptied and reconfigured.</string>
-  <string name="reviewearly_days_ahead">How many days ahead</string>
+  <string name="custom_study_new_total_new">New cards in deck: %s</string>
+  <string name="custom_study_rev_total_rev">Reviews due in deck: %s</string>
+  <string name="custom_study_new_extend">Increase today\'s new card limit by</string>
+  <string name="custom_study_rev_extend">Increase today\'s review limit by</string>
+  <string name="custom_study_forgotten">Review cards forgotten in last x days:</string>
+  <string name="custom_study_ahead">Review ahead by x days:</string>
+  <string name="custom_study_random">Select x cards randomly from the deck:</string>
+  <string name="custom_study_preview">Preview new cards added in the last x days:</string>
+  <string name="custom_study_tags">Enter tags:</string>
+  <string name="rebuild_custom_study_deck">Rebuilding custom study deck.\nPlease wait...</string>
   <string-array name="about_content">
     <item><![CDATA[<h2>%1$s:<br/>Flashcards pro Android</h2>AnkiDroid je flashcard aplikace, která je plně kompatibilní s programem pro pc  <a href="%2$s">Anki</a>. Můžete vytvářet, stahovat a učit se v obou, v AnkiDroid nebo Anki pro pc, a vše mezi nimi velmi jednoduše synchronizovat.]]></item>
     <item><![CDATA[Pomozte nám, prosím, zlepšit AnkiDroid a nahlašte nám chyby <a href="%1$s">zde</a>; nové nápady jsou vítany také! Prosím, využijte <a href="%2$s">wiki</a> a podělte se s námi o poznatky na <a href="%3$s">fóru</a>.]]></item>

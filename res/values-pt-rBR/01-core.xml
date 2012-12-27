@@ -38,8 +38,7 @@
   <string name="ease3_successive">Bom</string>
   <string name="ease3_learning">Fácil</string>
   <string name="studyoptions_congrats_undo">Desfazer %s</string>
-  <string name="studyoptions_congrats_learnmore">Aprender Mais</string>
-  <string name="studyoptions_congrats_reviewearly">Rever Antes</string>
+  <string name="studyoptions_congrats_custom_study">Estudo personalizado</string>
   <string name="studyoptions_congrats_open_other_deck">Abrir Outro Deck</string>
   <string name="studyoptions_congrats_finish">Voltar à Tela de Estudo</string>
   <string name="card_unsuspended">Suspensão de cartão desfeita</string>
@@ -95,11 +94,13 @@
   <string name="empty_cram_label">Vazio</string>
   <string name="empty_cram_deck">Esvaziando deck do preparatório.\nPor favor aguarde...</string>
   <string name="studyoptions_new_filtercram">Filtro/Cursinho</string>
-  <string name="review_early_deck_name">Rever Antes</string>
+  <string name="custom_study_deck_name">Custom Study Session</string>
+  <string name="custom_study_deck_exists">Please rename the existing Custom Study deck first.</string>
   <string name="studyoptions_congrats_finished">Parabéns! Você terminou por hora.</string>
   <string name="studyoptions_congrats_more_rev">O limite de revisão de hoje foi atingido, mas ainda existem cartões esperando para serem revistos. Para uma otima memória, considere aumentar o limite diário nas opções.</string>
   <string name="studyoptions_congrats_more_new">Existem mais cartões novos disponíveis, mas o limite diário foi alcançado. Você pode aumentar o limite nas opções, mas por favor, tenha em mente que isso vai aumentar sua carga de trabalho de revisão a curto prazo.</string>
-  <string name="sd_card_not_mounted">Cartão SD não está montado.</string>
+  <string name="studyoptions_congrats_custom">Para estudar fora do agendamento normal, clique no botão Estudo Personalizado abaixo.</string>
+  <string name="sd_card_not_mounted">SD card is not mounted.\n\nYou can store your collection in the internal memory too, though it\'s not recommended as you cannot access the file that easily. You can activate this in the preferences (open them by clicking this text).</string>
   <string name="studyoptions_options">Opções</string>
   <string name="empty_cloze_warning">Por favor edite esta nota e adicione algumas deleções fechadas. (%1$s)</string>
   <string name="help_cloze">ajuda</string>

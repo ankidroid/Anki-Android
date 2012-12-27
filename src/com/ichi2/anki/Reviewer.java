@@ -1318,7 +1318,7 @@ public class Reviewer extends AnkiActivity {
                     public void onProgressUpdate(DeckTask.TaskData... values) {
                     }
                 },
-                new DeckTask.TaskData(AnkiDroidApp.getCurrentAnkiDroidDirectory(this)
+                new DeckTask.TaskData(AnkiDroidApp.getCurrentAnkiDroidDirectory()
                         + AnkiDroidApp.COLLECTION_PATH, 0, true));
     }
 
@@ -3356,7 +3356,7 @@ public class Reviewer extends AnkiActivity {
     private Html.ImageGetter mSimpleInterfaceImagegetter = new Html.ImageGetter () {
 
         public Drawable getDrawable(String source) {
-            String path = AnkiDroidApp.getCurrentAnkiDroidDirectory(Reviewer.this) + "/collection.media/" + source;
+            String path = AnkiDroidApp.getCurrentAnkiDroidDirectory() + "/collection.media/" + source;
             if ((new File(path)).exists()) {
                 Drawable d = Drawable.createFromPath(path);
                 d.setBounds(0,0,d.getIntrinsicWidth(),d.getIntrinsicHeight());

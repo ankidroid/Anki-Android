@@ -38,8 +38,7 @@
   <string name="ease3_successive">Buono</string>
   <string name="ease3_learning">Facile</string>
   <string name="studyoptions_congrats_undo">Annulla %s</string>
-  <string name="studyoptions_congrats_learnmore">Studia altre carte nuove</string>
-  <string name="studyoptions_congrats_reviewearly">Ripeti in anticipo</string>
+  <string name="studyoptions_congrats_custom_study">Studio Personalizzato</string>
   <string name="studyoptions_congrats_open_other_deck">Apri un altro mazzo</string>
   <string name="studyoptions_congrats_finish">Torna alla schermata di studio</string>
   <string name="card_unsuspended">Annulla la sospensione della carta</string>
@@ -95,11 +94,13 @@
   <string name="empty_cram_label">Svuota</string>
   <string name="empty_cram_deck">Svuoto mazzo per lo studio focalizzato.\nAttendi...</string>
   <string name="studyoptions_new_filtercram">Filtro/Studio focalizzato</string>
-  <string name="review_early_deck_name">Ripeti in anticipo</string>
+  <string name="custom_study_deck_name">Sessione di Studio Personalizzato</string>
+  <string name="custom_study_deck_exists">Si prega prima di modificare il nome   del mazzo di Studio Personalizzato esistente.</string>
   <string name="studyoptions_congrats_finished">Complimenti! Per ora hai finito.</string>
   <string name="studyoptions_congrats_more_rev">Il limite delle ripetizioni per oggi è stato raggiunto, ma ci sono ancora carte che aspettano di essere ripetute. Per un utilizzo ottimale della memoria, considera di aumentare il limite giornaliero nelle opzioni.</string>
   <string name="studyoptions_congrats_more_new">Ci sono ulteriori carte nuove disponibili, ma il limite giornaliero è stato raggiunto. Puoi aumentare il limite nelle opzioni, ma ricordati che ciò aumenterà il tuo carico di lavoro per le ripetizioni a breve termine.</string>
-  <string name="sd_card_not_mounted">La scheda SD non è montata.</string>
+  <string name="studyoptions_congrats_custom">Per studiare al di fuori della normale tabella oraria, clicca sul bottone \'Studio Personalizzato\'sottostante.</string>
+  <string name="sd_card_not_mounted">SD card is not mounted.\n\nYou can store your collection in the internal memory too, though it\'s not recommended as you cannot access the file that easily. You can activate this in the preferences (open them by clicking this text).</string>
   <string name="studyoptions_options">Opzioni</string>
   <string name="empty_cloze_warning">Modifica questa nota e aggiungi testo da completare. (%1$s)</string>
   <string name="help_cloze">aiuto</string>

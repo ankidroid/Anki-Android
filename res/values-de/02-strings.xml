@@ -74,7 +74,7 @@
   <string name="help_faq">Häufige Fragen</string>
   <string name="help_tutorial">Einführungsstapel</string>
   <string name="check_db">Datenbank überprüfen</string>
-  <string name="check_db_message">Prüfe Datenbank.\n Bitte warten...</string>
+  <string name="check_db_message">Prüfe Datenbank.\nBitte warten...</string>
   <string name="simple_interface_hint">Leere %s. Beachten Sie, dass die einfache Oberfläche keine Bilder/Sounds etc. anzeigen kann.</string>
   <string name="delete_deck">Lösche Stapel…\nBitte warten.</string>
   <string name="menu_cardbrowser">Kartenübersicht</string>
@@ -94,6 +94,8 @@
   <string name="import_importing">Karten werden importiert.\nBitte warten...</string>
   <string name="import_hint">Um Karten zu importieren, kopieren Sie die apkg-Datei ins Verzeichnis %s und drücken \'Ok\'</string>
   <string name="import_no_file_found">Keine importierbaren apkg-Dateien gefunden</string>
+  <string name="custom_study">Benutzerdefinierte Sitzung</string>
+  <string name="dyn_deck_desc">Dies ist ein besonderer Stapel, um außerhalb der normalen Planung zu lernen. Karten werden nach dem Lernen automatisch in ihren Originalstapel zurückgeschickt. Wird der Stapel gelöscht, werden alle verbleibenden Karten in ihren Originalstapel einsortiert.</string>
   <string-array name="dynOrderLabels">
     <item>Am frühesten gesehene zuerst</item>
     <item>Zufällig</item>

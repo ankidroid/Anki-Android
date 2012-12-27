@@ -45,8 +45,8 @@
   <string name="connection_error_message">Παρουσιάστηκε σφάλμα δικτύου.</string>
   <string name="sync_log_db_error">Παρουσιάστηκε σφάλμα στη βάση δεδομένων.</string>
   <string name="no_user_password_error_message">Για να προχωρήσετε με αυτήν τη λειτουργία, πρέπει να έχετε λογαριασμό στο AnkiWeb και να συνδεθείτε.</string>
-  <string name="username">Όνομα χρήστη</string>
-  <string name="username_repeat">Επανάληψη ονόματος χρήστη</string>
+  <string name="username">Email address</string>
+  <string name="username_repeat">Repeat email address</string>
   <string name="password">Κωδικός</string>
   <string name="password_repeat">Επανάληψη κωδικού</string>
   <string name="log_in">Σύνδεση</string>
@@ -55,7 +55,7 @@
   <string name="logged_as">Είστε συνδεδεμένοι ως</string>
   <string name="log_out">Αποσύνδεση</string>
   <string name="alert_logging_message">Σύνδεση, παρακαλώ περιμένετε...</string>
-  <string name="invalid_username_password">Άκυρο όνομα χρήστη ή κωδικός πρόσβασης.</string>
+  <string name="invalid_username_password">Invalid email address or password.</string>
   <string name="login_generic_error">Αποτυχία κατά την είσοδο.</string>
   <string name="download_finished">Η λήψη ολοκληρώθηκε</string>
   <string name="personaldeckpicker_title">Ανοίξτε τράπουλα από το δίκτυο</string>

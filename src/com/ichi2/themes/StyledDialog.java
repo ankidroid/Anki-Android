@@ -165,6 +165,10 @@ public class StyledDialog extends Dialog {
         }
     }
 
+    public void setButtonOnClickListener(int which, OnClickListener listener) {
+    	getButton(which).setOnClickListener(new OnClickForwarder(StyledDialog.this, which, listener));
+    }
+
 
     public void addMultiChoiceItems(String value, boolean checked) {
         mItemList.add(0, value);

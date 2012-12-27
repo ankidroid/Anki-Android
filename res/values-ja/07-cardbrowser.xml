@@ -24,8 +24,8 @@
   <string name="card_browser_load">書き込み中です\nしばらくお待ちください</string>
   <string name="card_browser_cardloading_error">カードの読み込みエラーです. おそらく端末のメモリ制限に関連しています. 小さい単語帳で再試行してください</string>
   <string name="card_browser_delete_card">ノートの削除</string>
-  <string name="card_browser_suspend_card">カードを中止する</string>
-  <string name="card_browser_unsuspend_card">利用停止を解除するカード</string>
+  <string name="card_browser_suspend_card">カードの非表示</string>
+  <string name="card_browser_unsuspend_card">カード非表示の解除</string>
   <string name="card_browser_mark_card">マーキング設定</string>
   <string name="card_browser_unmark_card">マーキング解除</string>
   <string name="delete_card_title">ノートの削除</string>

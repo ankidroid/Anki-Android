@@ -38,8 +38,7 @@
   <string name="ease3_successive">جيد</string>
   <string name="ease3_learning">سهل</string>
   <string name="studyoptions_congrats_undo">تراجع عن%s</string>
-  <string name="studyoptions_congrats_learnmore">تعلم المزيد</string>
-  <string name="studyoptions_congrats_reviewearly">استعراض مبكر</string>
+  <string name="studyoptions_congrats_custom_study">Custom Study</string>
   <string name="studyoptions_congrats_open_other_deck">افتح رزمة أخرى</string>
   <string name="studyoptions_congrats_finish">العودة إلى شاشة الدراسة</string>
   <string name="card_unsuspended">فك تعليق البطاقة</string>
@@ -95,11 +94,13 @@
   <string name="empty_cram_label">فارغ</string>
   <string name="empty_cram_deck">إفراغ حزمة المراجعة المركزة.\n يرجى الانتظار...</string>
   <string name="studyoptions_new_filtercram">تصفية/تركيز</string>
-  <string name="review_early_deck_name">مراجعة مبكرة</string>
+  <string name="custom_study_deck_name">Custom Study Session</string>
+  <string name="custom_study_deck_exists">Please rename the existing Custom Study deck first.</string>
   <string name="studyoptions_congrats_finished">تهانينا! لقد انتهيت لهذا الوقت.</string>
   <string name="studyoptions_congrats_more_rev">لقد بلغت حد المراجعة لهذا اليوم، ولكن لا زالت هناك بطاقات تنتظر المراجعة. للذاكرة المثلى، أعد التفكير في زيادة الحد اليومي من قائمة الخيارات.</string>
   <string name="studyoptions_congrats_more_new">هناك المزيد من البطاقات الجديدة المتاحة، ولكن وصلت إلى الحد الأقصى اليومي. يمكنك زيادة الحد الأقصى في الخيارات، ولكن يرجى أن تضع في الاعتبار أن ذلك سيزيد من عبء العمل الخاص بك للمراجعة قصيرة المدى.</string>
-  <string name="sd_card_not_mounted">لم تحمل البطاقة المؤمنة.</string>
+  <string name="studyoptions_congrats_custom">To study outside of the normal schedule, click the Custom Study button below.</string>
+  <string name="sd_card_not_mounted">SD card is not mounted.\n\nYou can store your collection in the internal memory too, though it\'s not recommended as you cannot access the file that easily. You can activate this in the preferences (open them by clicking this text).</string>
   <string name="studyoptions_options">خيارات</string>
   <string name="empty_cloze_warning">الرجاء تحرير هذه المذكرة، وإضافة بعض الفراغات للنصوص محذوفة. (%1$s)</string>
   <string name="help_cloze">مساعدة</string>

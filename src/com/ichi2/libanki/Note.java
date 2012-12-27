@@ -205,6 +205,10 @@ public class Note implements Cloneable {
     public void setitem(String key, String value) {
         mFields[_fieldOrd(key)] = value;
     }
+    
+    public boolean contains(String key) {
+    	return mFMap.containsKey(key);
+    }
 
 
     /**

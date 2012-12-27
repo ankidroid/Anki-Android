@@ -45,8 +45,8 @@
   <string name="connection_error_message">Възникна мрежова грешка.</string>
   <string name="sync_log_db_error">Възникнала е грешка в базата данни.</string>
   <string name="no_user_password_error_message">In order to proceed with this operation, you need to have an AnkiWeb account and be logged in.</string>
-  <string name="username">Потребителско име</string>
-  <string name="username_repeat">Repeat username</string>
+  <string name="username">Email address</string>
+  <string name="username_repeat">Repeat email address</string>
   <string name="password">Парола</string>
   <string name="password_repeat">Repeat password</string>
   <string name="log_in">Влизане</string>
@@ -55,7 +55,7 @@
   <string name="logged_as">Влез като</string>
   <string name="log_out">Изход</string>
   <string name="alert_logging_message">Регистриране, моля, изчакайте...</string>
-  <string name="invalid_username_password">Невалидни потребителско име или парола.</string>
+  <string name="invalid_username_password">Invalid email address or password.</string>
   <string name="login_generic_error">Не може да влезете.</string>
   <string name="download_finished">Изтеглянето завърши</string>
   <string name="personaldeckpicker_title">Отвори онлайн колода</string>

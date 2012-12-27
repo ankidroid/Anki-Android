@@ -35,7 +35,7 @@
   <string name="backup_full_sync_from_server_question">Opravdu chcete přepsat svou kolekci jinou z AnkiWeb? Tím se ztratí všechen váš pokrok v učení a přidané informace od poslední synchronizace!</string>
   <string name="error_handling_title">Ošetření chyb</string>
   <string name="error_handling_options">Možnosti</string>
-  <string name="backup_retry_opening">Retry opening</string>
+  <string name="backup_retry_opening">Znovu otevřít</string>
   <string name="backup_error_menu_repair">Opravit databázi</string>
   <string name="backup_repair_deck">Opravit</string>
   <string name="backup_repair_deck_progress">Opravuji databázi.\nPočkejte prosím...</string>

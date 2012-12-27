@@ -45,8 +45,8 @@
   <string name="connection_error_message">Een netwerkfout is opgetreden.</string>
   <string name="sync_log_db_error">Er deed zich een probleem met de database voor.</string>
   <string name="no_user_password_error_message">Om verder te gaan met deze actie, moet u een AnkiOnline-account hebben en ingelogd zijn.</string>
-  <string name="username">Gebruikersnaam</string>
-  <string name="username_repeat">Herhaal gebruikersnaam</string>
+  <string name="username">Email address</string>
+  <string name="username_repeat">Repeat email address</string>
   <string name="password">Wachtwoord</string>
   <string name="password_repeat">Herhaal wachtwoord</string>
   <string name="log_in">Inloggen</string>
@@ -55,7 +55,7 @@
   <string name="logged_as">Ingelogd als</string>
   <string name="log_out">Uitloggen</string>
   <string name="alert_logging_message">Inloggen, even geduld...</string>
-  <string name="invalid_username_password">Ongeldige gebruikersnaam of wachtwoord.</string>
+  <string name="invalid_username_password">Invalid email address or password.</string>
   <string name="login_generic_error">Inloggen niet gelukt.</string>
   <string name="download_finished">Download voltooid</string>
   <string name="personaldeckpicker_title">Open Online Set</string>

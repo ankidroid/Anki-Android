@@ -45,8 +45,8 @@
   <string name="connection_error_message">Ha ocurrido un error de red.</string>
   <string name="sync_log_db_error">Ha ocurrido un error en la base de datos.</string>
   <string name="no_user_password_error_message">Para continuar con esta operación debe poseer una cuenta en AnkiWeb e ingresar en ella.</string>
-  <string name="username">Usuario</string>
-  <string name="username_repeat">Repetir nombre de usuario</string>
+  <string name="username">Email address</string>
+  <string name="username_repeat">Repeat email address</string>
   <string name="password">Contraseña</string>
   <string name="password_repeat">Repetir contraseña</string>
   <string name="log_in">Ingresar a la cuenta</string>
@@ -55,7 +55,7 @@
   <string name="logged_as">Ingresado en la cuenta como</string>
   <string name="log_out">Saliendo de la cuenta</string>
   <string name="alert_logging_message">Ingresando a la cuenta, por favor aguarde...</string>
-  <string name="invalid_username_password">Usuario o contraseña inválidos.</string>
+  <string name="invalid_username_password">Invalid email address or password.</string>
   <string name="login_generic_error">No se pudo ingresar a la cuenta.</string>
   <string name="download_finished">Descarga terminada</string>
   <string name="personaldeckpicker_title">Abrir mazo en línea</string>
