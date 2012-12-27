@@ -72,7 +72,7 @@ public class Anki2Importer {
 			String fileDir = AnkiDroidApp.getCurrentAnkiDroidDirectory(AnkiDroidApp.getInstance().getBaseContext()) + "/tmpzip";
 			// from anki2.py
 			String colFile = fileDir + "/collection.anki2";
-			if (!Utils.unzip(mFile, fileDir) || !(new File(colFile)).exists()) {
+			if (!Utils.unzip(mFile, fileDir) || !(new File(colFile)).exists() || !Storage.Collection(colFile).validCollection()) {
 				return -2;
 			}
 			_prepareFiles(colFile);

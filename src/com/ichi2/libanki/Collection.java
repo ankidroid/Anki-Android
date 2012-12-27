@@ -1385,8 +1385,13 @@ public class Collection {
     public Models getModels() {
         return mModels;
     }
-
-
+    
+    /** Check if this collection is valid. */
+    public boolean validCollection() {
+    	//TODO: more validation code
+    	return mModels.validateModel();
+    }
+    
     public JSONObject getConf() {
         return mConf;
     }
