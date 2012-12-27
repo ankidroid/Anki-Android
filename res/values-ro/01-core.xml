@@ -75,7 +75,7 @@
   <string name="delete_note_message">Chiar doriţi să ştergeţi această notă şi toate cardurile ei?\n%s sale</string>
   <string name="menu_edit_card">Editare card</string>
   <string name="menu_select">Selectaţi text</string>
-  <string name="menu_search">Căutare în %1$s</string>
+  <string name="menu_search">Căutare în %1$ s</string>
   <string name="menu_mark_card">Marcare card</string>
   <string name="menu_unmark_card">Demarcare Card</string>
   <string name="new_deck">Pachet nou</string>
@@ -101,7 +101,7 @@
   <string name="studyoptions_congrats_custom">Pentru a studia în afara programului normal, faceţi clic pe butonul Studiu Personalizat de mai jos.</string>
   <string name="sd_card_not_mounted">SD card-ul nu este montat.\n\n Putetie stoca colecția în memoria internă, deşi nu este recomandat deoarece nu prea puteti accesa fișierul cu uşurinţă. Aveţi posibilitatea să o activaţi în Preferinţe (deschideţi-le făcând clic pe acest text).</string>
   <string name="studyoptions_options">Opţiuni</string>
-  <string name="empty_cloze_warning">Vă rugăm să editaţi această notă şi adăugaţi unele spatii goale. (%1$s)</string>
+  <string name="empty_cloze_warning">Vă rugăm să editaţi această notă şi adăugaţi unele spatii goale. (%1$ s)</string>
   <string name="help_cloze">ajutor</string>
   <string name="button_sync">Sincronizare</string>
   <string-array name="next_review_s">

@@ -75,7 +75,7 @@
   <string name="delete_note_message">Valóban törölni ezt a jegyzetet és az összes kártyáját?\n%s</string>
   <string name="menu_edit_card">Kártya szerkesztése</string>
   <string name="menu_select">Szöveg kijelölése</string>
-  <string name="menu_search">Keresés itt: %1$s</string>
+  <string name="menu_search">Keresés itt: %1$</string>
   <string name="menu_mark_card">Kártya megjelölése</string>
   <string name="menu_unmark_card">Kártyajelölés törlése</string>
   <string name="new_deck">Új pakli</string>

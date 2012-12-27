@@ -27,7 +27,7 @@
   <string name="CardEditorCardDeck">Pachet de carduri: %s</string>
   <string name="CardEditorNoteDeck">Notaţi pachetul: %s</string>
   <string name="CardEditorModel">Notati tipul: %s</string>
-  <string name="CardEditorTags">Tag-uri: %1$s</string>
+  <string name="CardEditorTags">Tag-uri: %1$ s</string>
   <string name="add_new_tag">Adăugaţi tag-ul</string>
   <string name="note_type">Noteaza tipul</string>
   <string name="sdcard_missing_message">Cardul SD este indisponibil, deoarece acesta este utilizat ca unitate de stocare USB. Deconectaţi portul USB pentru a accesa pachetele Anki.</string>
