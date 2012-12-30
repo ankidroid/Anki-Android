@@ -93,13 +93,13 @@
   <string name="empty_cram_label">Κενή</string>
   <string name="empty_cram_deck">Άδειασμα εντατικής τράπουλας.\nΠαρακαλούμε περιμένετε...</string>
   <string name="studyoptions_new_filtercram">Φιλτραρισμένη/Εντατική</string>
-  <string name="custom_study_deck_name">Custom Study Session</string>
-  <string name="custom_study_deck_exists">Please rename the existing Custom Study deck first.</string>
+  <string name="custom_study_deck_name">Προσαρμοσμένη μελέτη λειτουργίας</string>
+  <string name="custom_study_deck_exists">Παρακαλούμε μετονομάστε την υπάρχουσα τράπουλα Προσαρμοσμένης Μελέτης πρώτα.</string>
   <string name="studyoptions_congrats_finished">Συγχαρητήρια! Έχετε τελειώσει για τώρα.</string>
   <string name="studyoptions_congrats_more_rev">Φτάσατε το σημερινό όριο επανάληψης, αλλά υπάρχουν ακόμη κάρτες που περιμένουν επανεξέταση. Για βέλτιστη απομνημόνευση, εξετάστε το ενδεχόμενο αύξησης του ημερήσιου ορίου στις επιλογές.</string>
   <string name="studyoptions_congrats_more_new">Υπάρχουν διαθέσιμες νέες κάρτες, αλλά το ημερήσιο όριο έχει επιτευχθεί. Μπορείτε να αυξήσετε το όριο στις επιλογές, αλλά έχετε υπόψη ότι αυτό θα αυξήσει το βραχυπρόθεσμο φόρτο επανάληψης.</string>
   <string name="studyoptions_congrats_custom">Για μελέτη εκτός του κανονικού χρονοδιαγράμματος, κάντε κλικ στο κουμπί Προσαρμοσμένη Μελέτη παρακάτω.</string>
-  <string name="sd_card_not_mounted">SD card is not mounted.\n\nYou can store your collection in the internal memory too, though it\'s not recommended as you cannot access the file that easily. You can activate this in the preferences (open them by clicking this text).</string>
+  <string name="sd_card_not_mounted">Η κάρτα SD δεν έχει φορτώσει.\n\nΜπορείτε να αποθηκεύσετε τη συλλογή σας στην εσωτερική μνήμη επίσης, αν και δεν συνιστάται καθώς δε θα έχετε εύκολη πρόσβαση στο αρχείο αυτό. Αυτό μπορείτε να το ενεργοποιήσετε στις προτιμήσεις (Ανοίξτε τις, κάνοντας κλικ σε αυτό το κείμενο).</string>
   <string name="studyoptions_options">Επιλογές</string>
   <string name="empty_cloze_warning">Παρακαλούμε συντάξτε αυτή τη σημείωση και προσθέστε μερικές κενές φράσεις. (%1$s)</string>
   <string name="help_cloze">βοήθεια</string>

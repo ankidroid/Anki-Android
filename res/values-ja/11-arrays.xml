@@ -95,13 +95,13 @@
     <item>White</item>
   </string-array>
   <string-array name="leech_action_labels">
-    <item>非表示カード</item>
-    <item>タグだけで</item>
+    <item>非表示カードへ切替</item>
+    <item>タグを追加</item>
     <item>新らしいカードへリセット</item>
   </string-array>
   <string-array name="new_order_labels">
-    <item>ランダム順の新しいカード</item>
-    <item>追加順の新しいカード</item>
+    <item>ランダムに新しいカードを追加</item>
+    <item>追加順に新しいカードを追加</item>
   </string-array>
   <string-array name="cram_deck_conf_order_labels">
     <item>古いカードを先頭に</item>

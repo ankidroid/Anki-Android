@@ -67,10 +67,10 @@
   <string name="menu_my_account">アカウントの設定と同期</string>
   <string name="menu_preferences">設定</string>
   <string name="menu_about">このプログラムについて</string>
-  <string name="menu_dismiss_note">非表示への切替</string>
+  <string name="menu_dismiss_note">非表示カードへの切替</string>
   <string name="menu_bury_note">カードの一時非表示</string>
   <string name="menu_suspend_card">カードの非表示</string>
-  <string name="menu_suspend_note">カードの非表示</string>
+  <string name="menu_suspend_note">ノートの非表示</string>
   <string name="menu_delete_note">カードの削除</string>
   <string name="delete_note_message">このノートとすべてのカードを削除してもよろしいですか？\n%s</string>
   <string name="menu_edit_card">カードの編集</string>
