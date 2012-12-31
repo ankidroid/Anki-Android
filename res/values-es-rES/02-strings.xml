@@ -84,16 +84,18 @@
   <string name="info_rate">Puntúa AnkiDroid</string>
   <string name="col_load_failed">Error al cargar la colección.\nPresiona el botón de retroceso para cerrar AnkiDroid.</string>
   <string name="import_title">Importar Tarjetas</string>
-  <string name="import_message">Would you like to add the content of file %s to your collection, or replace your collection with it?</string>
-  <string name="import_message_add">Add</string>
-  <string name="import_message_replace">Replace</string>
-  <string name="import_message_replace_confirm">This will delete your existing collection and replace it with the data of file %s. Are you sure?</string>
+  <string name="import_message">¿Deseas añadir el contenido del archivo %s a tu colección, o reemplazar la colección con él?</string>
+  <string name="import_message_add">Añadir</string>
+  <string name="import_message_replace">Reemplazar</string>
+  <string name="import_message_replace_confirm">Esto eliminará tu colección actual y la reemplazará con los datos del archivo %s. ¿Estás seguro?</string>
   <string name="import_log_success">Se importaron con éxito %d tarjetas</string>
   <string name="import_log_error">La importación falló</string>
   <string name="import_log_no_apkg">Éste no es un archivo apkg válido</string>
   <string name="import_importing">Importando tarjetas.\nPor favor, espera...</string>
   <string name="import_hint">Para importar tarjetas, coloca el archivo apkg en el directorio %s y presiona ok</string>
   <string name="import_no_file_found">No se encontró ningún archivo apkg importable</string>
+  <string name="custom_study">Estudio personalizado</string>
+  <string name="dyn_deck_desc">Este es un mazo especial para estudiar fuera del programa normal. Las cartas serán devueltas automáticamente a sus mazos originales después de que las repases. Borrar este mazo de la lista de mazos devolverá todas las cartas restantes a su mazo original.</string>
   <string-array name="dynOrderLabels">
     <item>Vistas más antiguamente primero</item>
     <item>Aleatorio</item>

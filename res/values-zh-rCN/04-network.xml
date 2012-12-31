@@ -45,8 +45,8 @@
   <string name="connection_error_message">出现网络错误。</string>
   <string name="sync_log_db_error">发生数据库错误。</string>
   <string name="no_user_password_error_message">继续此操作，您需要一个AnkiWeb账户，并登陆。</string>
-  <string name="username">用户名</string>
-  <string name="username_repeat">重复用户名</string>
+  <string name="username">电子邮件地址</string>
+  <string name="username_repeat">重复电子邮件地址</string>
   <string name="password">密码</string>
   <string name="password_repeat">重复密码</string>
   <string name="log_in">登入</string>
@@ -55,7 +55,7 @@
   <string name="logged_as">登录为</string>
   <string name="log_out">登出</string>
   <string name="alert_logging_message">登入中，请稍等…</string>
-  <string name="invalid_username_password">无效的用户名或密码。</string>
+  <string name="invalid_username_password">错误的电子邮件地址或密码。</string>
   <string name="login_generic_error">登陆失败。</string>
   <string name="download_finished">下载完成</string>
   <string name="personaldeckpicker_title">打开线上牌组</string>

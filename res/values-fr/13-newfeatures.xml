@@ -32,5 +32,6 @@
     <item>présentation pour tablettes</item>
     <item>multiples améliorations des performances</item>
     <item>Fonctionnalité d\'importation de cartes</item>
+    <item>une collection peut être sauvegardée en mémoire interne</item>
   </string-array>
 </resources>

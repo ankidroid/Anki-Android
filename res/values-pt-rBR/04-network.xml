@@ -45,8 +45,8 @@
   <string name="connection_error_message">Ocorreu um erro de rede.</string>
   <string name="sync_log_db_error">Ocorreu um erro de banco de dados.</string>
   <string name="no_user_password_error_message">Para continuar com esta operação, você precisa ter uma conta AnkiWeb e estar logado.</string>
-  <string name="username">Nome de usuário</string>
-  <string name="username_repeat">Digite novamente o nome do usuário</string>
+  <string name="username">Endereço de e-mail</string>
+  <string name="username_repeat">Repita o endereço de e-mail</string>
   <string name="password">Senha</string>
   <string name="password_repeat">Digite novamente a senha</string>
   <string name="log_in">Logar</string>
@@ -55,7 +55,7 @@
   <string name="logged_as">Logado como</string>
   <string name="log_out">Sair</string>
   <string name="alert_logging_message">Fazendo login, por favor aguarde...</string>
-  <string name="invalid_username_password">Nome de usuário ou senha inválido.</string>
+  <string name="invalid_username_password">Endereço de e-mail ou senha inválido.</string>
   <string name="login_generic_error">Falha ao efetuar login.</string>
   <string name="download_finished">Download concluído</string>
   <string name="personaldeckpicker_title">Abrir Deck Online</string>

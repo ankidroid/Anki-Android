@@ -32,5 +32,6 @@
     <item>layout para tablet</item>
     <item>várias melhorias de performance</item>
     <item>função de importar cartões</item>
+    <item>coleção pode ser salva na memória interna</item>
   </string-array>
 </resources>

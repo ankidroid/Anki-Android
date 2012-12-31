@@ -45,8 +45,8 @@
   <string name="connection_error_message">Wystąpił błąd sieciowy.</string>
   <string name="sync_log_db_error">Wystąpił błąd bazy danych.</string>
   <string name="no_user_password_error_message">Aby wykonać tę operację musisz posiadać konto AnkiWeb i być zalogowany.</string>
-  <string name="username">Użytkownik</string>
-  <string name="username_repeat">Powtórz nazwę użytkownika</string>
+  <string name="username">Email address</string>
+  <string name="username_repeat">Repeat email address</string>
   <string name="password">Hasło</string>
   <string name="password_repeat">Powtórz hasło</string>
   <string name="log_in">Zaloguj się</string>
@@ -55,7 +55,7 @@
   <string name="logged_as">Zalogowany jako</string>
   <string name="log_out">Wyloguj się</string>
   <string name="alert_logging_message">Logowanie, proszę czekać...</string>
-  <string name="invalid_username_password">Błędna nazwa użytkownika lub hasło.</string>
+  <string name="invalid_username_password">Invalid email address or password.</string>
   <string name="login_generic_error">Nie można się zalogować.</string>
   <string name="download_finished">Pobieranie zakończone</string>
   <string name="personaldeckpicker_title">Otwórz talię online</string>

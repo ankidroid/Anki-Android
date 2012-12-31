@@ -38,8 +38,7 @@
   <string name="ease3_successive">Bra</string>
   <string name="ease3_learning">Lett</string>
   <string name="studyoptions_congrats_undo">Angre %s</string>
-  <string name="studyoptions_congrats_learnmore">Lær mer</string>
-  <string name="studyoptions_congrats_reviewearly">Tidlig gjennomgang</string>
+  <string name="studyoptions_congrats_custom_study">Custom Study</string>
   <string name="studyoptions_congrats_open_other_deck">Åpne en annen kortstokk</string>
   <string name="studyoptions_congrats_finish">Tilbake til læringsskjermen</string>
   <string name="card_unsuspended">Gjorde om suspendering av kort</string>
@@ -67,7 +66,6 @@
   <string name="menu_download_shared_deck">Delt kortstokk</string>
   <string name="menu_my_account">Synkroniser konto</string>
   <string name="menu_preferences">Innstillinger</string>
-  <string name="menu_zeemote">Zeemote</string>
   <string name="menu_about">Om</string>
   <string name="menu_dismiss_note">Ignorer notat...</string>
   <string name="menu_bury_note">Begrav notat</string>
@@ -95,11 +93,13 @@
   <string name="empty_cram_label">Tøm</string>
   <string name="empty_cram_deck">Tømmer pugge-kortstokken.\nVennligst vent...</string>
   <string name="studyoptions_new_filtercram">Filtrer/pugg</string>
-  <string name="review_early_deck_name">Tidlig gjennomgang</string>
+  <string name="custom_study_deck_name">Custom Study Session</string>
+  <string name="custom_study_deck_exists">Please rename the existing Custom Study deck first.</string>
   <string name="studyoptions_congrats_finished">Gratulerer! Du er ferdig for i dag.</string>
   <string name="studyoptions_congrats_more_rev">Du har nådd grensen for gjennomgang i dag, men det er fortsatt kort du ikke har gått gjennom. For best mulig effekt, bør du vurdere å øke grensen i alternativene.</string>
   <string name="studyoptions_congrats_more_new">Det finnes flere nye kort tilgjengelig, men den daglige grensen er nådd. Du kan øke grensen i innstillingene, men vær oppmerksom på at dette også vil øke den kortsiktige mengden av kort til repetering.</string>
-  <string name="sd_card_not_mounted">SD-kortet mangler.</string>
+  <string name="studyoptions_congrats_custom">To study outside of the normal schedule, click the Custom Study button below.</string>
+  <string name="sd_card_not_mounted">SD card is not mounted.\n\nYou can store your collection in the internal memory too, though it\'s not recommended as you cannot access the file that easily. You can activate this in the preferences (open them by clicking this text).</string>
   <string name="studyoptions_options">Alternativer</string>
   <string name="empty_cloze_warning">Vennligst rediger notatet og legg til noen innfyllingsfelt. (%1$s)</string>
   <string name="help_cloze">Hjelp</string>

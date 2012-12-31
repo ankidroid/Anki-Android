@@ -32,5 +32,6 @@
     <item>태블릿 레이아웃</item>
     <item>tons of performance improvements</item>
     <item>card import function</item>
+    <item>collection can be saved on internal memory</item>
   </string-array>
 </resources>

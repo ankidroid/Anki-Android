@@ -65,8 +65,7 @@
 <string name="ease3_learning">Easy</string>
 
 <string name="studyoptions_congrats_undo">Undo %s</string>
-<string name="studyoptions_congrats_learnmore">Learn More</string>
-<string name="studyoptions_congrats_reviewearly">Review Early</string>
+<string name="studyoptions_congrats_custom_study">Custom Study</string>
 <string name="studyoptions_congrats_open_other_deck">Open Other Deck</string>
 <string name="studyoptions_congrats_finish">Back to Study Screen</string>
 
@@ -100,7 +99,6 @@
 <!-- <string name="menu_synchronize">Synchronize</string> -->
 <string name="menu_my_account">Sync account</string>
 <string name="menu_preferences">Preferences</string>
-<string name="menu_zeemote">Zeemote</string>
 <!-- <string name="menu_deck_properties">Deck Properties</string> -->
 <string name="menu_about">About</string>
 
@@ -155,11 +153,13 @@
 <string name="empty_cram_label">Empty</string>
 <string name="empty_cram_deck">Emptying cram deck.\nPlease wait...</string>
 <string name="studyoptions_new_filtercram">Filter/Cram</string>
-<string name="review_early_deck_name">Review Early</string>
+<string name="custom_study_deck_name">Custom Study Session</string>
+<string name="custom_study_deck_exists">Please rename the existing Custom Study deck first.</string>
 
 <string name="studyoptions_congrats_finished">Congratulations! You have finished for now.</string>
 <string name="studyoptions_congrats_more_rev">Today\'s review limit has been reached, but there are still cards waiting to be reviewed. For optimum memory, consider increasing the daily limit in the options.</string>
 <string name="studyoptions_congrats_more_new">There are more new cards available, but the daily limit has been reached. You can increase the limit in the options, but please bear in mind that this will increase your short-term review workload.</string>
+<string name="studyoptions_congrats_custom">To study outside of the normal schedule, click the Custom Study button below.</string>
 
 <plurals name="studyoptions_congrats_message">
   <item quantity="one">Tomorrow there will be: 1 card to review and %2$s.\n Estimated time: %3$s</item>
@@ -174,7 +174,7 @@
   <item quantity="other">Estimated time: %1$d min.</item>
 </plurals>
 
-<string name="sd_card_not_mounted">SD card is not mounted.</string>
+<string name="sd_card_not_mounted">SD card is not mounted.\n\nYou can store your collection in the internal memory too, though it\'s not recommended as you cannot access the file that easily. You can activate this in the preferences (open them by clicking this text).</string>
 <string name="studyoptions_options">Options</string>
 <string name="empty_cloze_warning">Please edit this note and add some cloze deletions. (%1$s)</string>
 <string name="help_cloze">help</string>

@@ -101,5 +101,9 @@
 	<color name="night_green">#00cf00</color>
 	
 	<color name="actionbar_background">#f5f5f5</color>
-				
+
+	<color name="dyn_deck">#454545</color>
+	<color name="non_dyn_deck">#000000</color>
+		
+					
 </resources>

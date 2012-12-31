@@ -68,6 +68,9 @@ public class Card implements Cloneable {
     private String mData = "";
     // END SQL table entries
 
+    /** Last interval. Used to determine if a card is young or mature. */
+    private int mLastIvl;
+
     private HashMap<String, String> mQA;
     private Note mNote;
 
@@ -341,19 +344,18 @@ public class Card implements Cloneable {
     /**
      * Time taken to answer card, in integer MS.
      */
-    public int timeLimit() {
+    public long timeLimit() {
         JSONObject conf = mCol.getDecks().confForDid(mODid == 0 ? mDid : mODid);
-        int total = (int) ((Utils.now() - mTimerStarted) * 1000);
         try {
-            return conf.getInt("maxTaken") * 1000;
+            return conf.getLong("maxTaken") * 1000;
         } catch (JSONException e) {
             throw new RuntimeException(e);
         }
     }
 
 
-    public int timeTaken() {
-        int total = (int) ((Utils.now() - mTimerStarted) * 1000);
+    public long timeTaken() {
+        long total = (long) ((Utils.now() - mTimerStarted) * 1000);
         return Math.min(total, timeLimit());
     }
 
@@ -572,8 +574,7 @@ public class Card implements Cloneable {
 
 
     public int getLastIvl() {
-        // TODO
-        return 0;
+        return mLastIvl;
     }
 
 
@@ -618,7 +619,7 @@ public class Card implements Cloneable {
 
 
     public void setLastIvl(int lastIvl) {
-        // mLastIvl = lastIvl;
+        mLastIvl = lastIvl;
     }
 
 

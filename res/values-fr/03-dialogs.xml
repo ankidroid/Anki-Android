@@ -26,6 +26,7 @@
   <string name="contextmenu_deckpicker_delete_deck">Supprimer le paquet</string>
   <string name="delete_deck_title">Supprimer le paquet</string>
   <string name="delete_deck_message">Êtes-vous certain de vouloir supprimer toutes les cartes dans %s ?</string>
+  <string name="delete_cram_deck_message">Êtes-vous certain de vouloir renvoyer toutes les cartes en %s dans leur paquet d\'origine ?</string>
   <string name="delete_deck_confirm">Supprimer</string>
   <string name="new_version_message">Nouvelles fonctionnalités :</string>
   <string name="no_tts_available_title">Synthèse vocale</string>
@@ -50,13 +51,16 @@
   <string name="intent_add_clear_all">Effacer tout</string>
   <string name="intent_aedict_empty">La catégorie \'default\' est vide</string>
   <string name="intent_aedict_category">Pour ajouter des cartes à AnkiDroid, enlevez toutes les catégories du Bloc-notes, ou créez une catégorie \'default\'</string>
-  <string name="learnmore_title">Paramètres de révision supplémentaire</string>
-  <string name="learnmore_insructions">Vous pouvez ci-dessous augmenter temporairement vos limites de révisions maximales et de nouvelles cartes, afin de prolonger la séance d\'aujourd\'hui.</string>
-  <string name="learnmore_extend_new_limit">Augmenter la limite de nouvelles cartes de</string>
-  <string name="learnmore_extend_rev_limit">Augmenter la limite maximale de révision de</string>
-  <string name="reviewearly_title">Paramètres de révision à l\'avance</string>
-  <string name="reviewearly_instructions">Cette option va créer un Paquet Filtré nommé \'XXX\' contenant les cartes prévues à la révision dans le nombre de jours que vous sélectionnerez ci-dessous. Si un tel Paquet existe déjà, il sera vidé et reconfiguré.</string>
-  <string name="reviewearly_days_ahead">Combien de jours à l\'avance</string>
+  <string name="custom_study_new_total_new">Nouvelles cartes dans le paquet : %s</string>
+  <string name="custom_study_rev_total_rev">À revoir dans ce paquet : %s</string>
+  <string name="custom_study_new_extend">Augmenter la limite de nouvelles cartes pour aujourd\'hui de</string>
+  <string name="custom_study_rev_extend">Augmenter la limite de révision pour aujourd\'hui de</string>
+  <string name="custom_study_forgotten">Revoir les cartes oubliées dans les x derniers jours :</string>
+  <string name="custom_study_ahead">Réviser à l\'avance de x jours :</string>
+  <string name="custom_study_random">Sélectionner x cartes au hasard du paquet :</string>
+  <string name="custom_study_preview">Afficher les nouvelles cartes ajoutées dans les x derniers jours :</string>
+  <string name="custom_study_tags">Saisir les étiquettes :</string>
+  <string name="rebuild_custom_study_deck">Reconstruction du paquet d\'étude personnalisée.\nMerci de patienter…</string>
   <string-array name="about_content">
     <item><![CDATA[<h2>%1$s:<br/>Cartes à mémoriser pour Android</h2>AnkiDroid est une application de gestion de cartes à mémoriser (ou encore fiches-mémoire) qui est entièrement compatible avec le logiciel de bureau <a href="%2$s">Anki</a>. Vous pouvez créer, télécharger et apprendre du contenu sur à la fois Ankidroid et Anki, et les synchroniser très facilement.]]></item>
     <item><![CDATA[Pour nous aider à améliorer AnkiDroid, veuillez nous signaler tout bogue <a href="%1$s">ici</a> ; les suggestions sont également les bienvenues ! Veuillez utiliser notre <a href="%2$s">wiki</a> et nous dire bonjour sur le <a href="%3$s">forum</a>.]]></item>

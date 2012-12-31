@@ -25,7 +25,7 @@
   <string name="statistics_mature">سررسیده</string>
   <string name="statistics_relearn">بازآموزی</string>
   <string name="statistics_learn">یادگیری</string>
-  <string name="statistics_cram">برای امتحان</string>
+  <string name="statistics_cram">مطالعه فشرده</string>
   <string name="statistics_type_title">آمار</string>
   <string name="stats_cards">کارت</string>
   <string name="stats_answers">پاسخ</string>
@@ -46,7 +46,7 @@
   <string name="deck_summary_answers_correct">پاسخ صحیح</string>
   <string name="deck_summary_answers_mature">کارتهای سررسیده: &lt;b&gt;%1$.1f %2$s&lt;/b&gt; %2$s (%3$d of %4$d)</string>
   <string name="deck_summary_answers_young">کارت های جوان: &lt;b&gt; %1$.1f %2$s&lt;/b&gt; (%3$d of %4$d)</string>
-  <string name="deck_summary_answers_firstseen">Seen the first time: &lt;b&gt;%1$.1f %2$s&lt;/b&gt; (%3$d of %4$d)</string>
+  <string name="deck_summary_answers_firstseen">اولین بار دیده شده: &lt;b&gt;%1$.1f %2$s&lt;/b&gt; (%3$d of %4$d)</string>
   <string name="deck_summary_reviews">بررسی:</string>
   <string name="deck_summary_news">کارت های جدید:</string>
   <string name="deck_summary_average_week">بطور میانگین هفته گذشته مشاهده شده</string>

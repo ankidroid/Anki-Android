@@ -113,14 +113,13 @@
     <item>기간 순서대로</item>
     <item>Latest added first</item>
   </string-array>
-  <string-array name="cram_deck_conf_preset_labels">
-    <item><![CDATA[사전 설정 선택 ]]></item>
-    <item>모든 새로운 카드 미리 보기</item>
-    <item>오늘 추가된 카드를 미리 보기</item>
-    <item>오늘 잊은 카드를 리뷰</item>
-    <item>2일 앞서 리뷰</item>
-    <item>태그로 기한이 된 카드 검토</item>
-    <item>기간이 된 카드들을 간격을 감소하여 검토</item>
-    <item>모든 카드를 벼락공부하기</item>
+  <string-array name="custom_study_options_labels">
+    <item>Increase today\'s new card limit</item>
+    <item>Increase today\'s review card limit</item>
+    <item>Review forgotten cards</item>
+    <item>Review ahead</item>
+    <item>Study a random selection of cards</item>
+    <item>Preview new cards</item>
+    <item>Limit to particular tags</item>
   </string-array>
 </resources>

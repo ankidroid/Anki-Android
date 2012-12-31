@@ -113,14 +113,13 @@
     <item>根据到期顺序</item>
     <item>最晚添加的优先</item>
   </string-array>
-  <string-array name="cram_deck_conf_preset_labels">
-    <item><![CDATA[< 选择预置>]]></item>
-    <item>预览所有新卡牌</item>
-    <item>预览今天添加的卡牌</item>
-    <item>复习今天遗忘的卡牌</item>
-    <item>复习未来两天</item>
-    <item>复习有标记的到期卡牌</item>
-    <item>降低时间间隔时，复习到期的卡牌。</item>
-    <item>把所有的卡置为填鸭模式。</item>
+  <string-array name="custom_study_options_labels">
+    <item>增加今天的新卡牌数量限制</item>
+    <item>增加今天的复习数量限制</item>
+    <item>复习忘记的卡牌</item>
+    <item>提前复习</item>
+    <item>学习随机选择的卡牌。</item>
+    <item>预览新卡牌</item>
+    <item>仅限于特定标签</item>
   </string-array>
 </resources>

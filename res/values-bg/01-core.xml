@@ -22,7 +22,7 @@
 <resources>
   <string name="btn_continue">Continue</string>
   <string name="app_name">AnkiDroid</string>
-  <string name="attention">Attention</string>
+  <string name="attention">Внимание</string>
   <string name="yes">Да</string>
   <string name="no">Не</string>
   <string name="ok">OK</string>
@@ -38,8 +38,7 @@
   <string name="ease3_successive">Добре</string>
   <string name="ease3_learning">Лесно</string>
   <string name="studyoptions_congrats_undo">Undo %s</string>
-  <string name="studyoptions_congrats_learnmore">Научете повече</string>
-  <string name="studyoptions_congrats_reviewearly">Преглед ранни</string>
+  <string name="studyoptions_congrats_custom_study">Custom Study</string>
   <string name="studyoptions_congrats_open_other_deck">Отваряне на друга колода</string>
   <string name="studyoptions_congrats_finish">Обратно към екрана за учене</string>
   <string name="card_unsuspended">Скриване на картата отменено</string>
@@ -67,7 +66,6 @@
   <string name="menu_download_shared_deck">Споделена колода</string>
   <string name="menu_my_account">Sync account</string>
   <string name="menu_preferences">Предпочитания</string>
-  <string name="menu_zeemote">Контролер*</string>
   <string name="menu_about">Относно</string>
   <string name="menu_dismiss_note">Dismiss Note...</string>
   <string name="menu_bury_note">Bury Note</string>
@@ -95,11 +93,13 @@
   <string name="empty_cram_label">Empty</string>
   <string name="empty_cram_deck">Emptying cram deck.\nPlease wait...</string>
   <string name="studyoptions_new_filtercram">Filter/Cram</string>
-  <string name="review_early_deck_name">Review Early</string>
+  <string name="custom_study_deck_name">Custom Study Session</string>
+  <string name="custom_study_deck_exists">Please rename the existing Custom Study deck first.</string>
   <string name="studyoptions_congrats_finished">Congratulations! You have finished for now.</string>
   <string name="studyoptions_congrats_more_rev">Today\'s review limit has been reached, but there are still cards waiting to be reviewed. For optimum memory, consider increasing the daily limit in the options.</string>
   <string name="studyoptions_congrats_more_new">There are more new cards available, but the daily limit has been reached. You can increase the limit in the options, but please bear in mind that this will increase your short-term review workload.</string>
-  <string name="sd_card_not_mounted">SD card is not mounted.</string>
+  <string name="studyoptions_congrats_custom">To study outside of the normal schedule, click the Custom Study button below.</string>
+  <string name="sd_card_not_mounted">SD card is not mounted.\n\nYou can store your collection in the internal memory too, though it\'s not recommended as you cannot access the file that easily. You can activate this in the preferences (open them by clicking this text).</string>
   <string name="studyoptions_options">Options</string>
   <string name="empty_cloze_warning">Please edit this note and add some cloze deletions. (%1$s)</string>
   <string name="help_cloze">help</string>

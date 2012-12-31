@@ -45,8 +45,8 @@
   <string name="connection_error_message">Ett nätverksfel har uppstått.</string>
   <string name="sync_log_db_error">Ett databasfel har inträffat.</string>
   <string name="no_user_password_error_message">För att fortsätta med denna operation måste du ha ett AnkiWeb-konto och vara inloggad.</string>
-  <string name="username">Användarnamn</string>
-  <string name="username_repeat">Upprepa användarnamn</string>
+  <string name="username">Email address</string>
+  <string name="username_repeat">Repeat email address</string>
   <string name="password">Lösenord</string>
   <string name="password_repeat">Upprepa lösenord</string>
   <string name="log_in">Logga in</string>
@@ -55,7 +55,7 @@
   <string name="logged_as">Inloggad som</string>
   <string name="log_out">Logga ut</string>
   <string name="alert_logging_message">Loggar in, var god vänta...</string>
-  <string name="invalid_username_password">Ogiltigt användarnamn eller lösenord.</string>
+  <string name="invalid_username_password">Invalid email address or password.</string>
   <string name="login_generic_error">Kunde inte logga in.</string>
   <string name="download_finished">Hämtningen är färdig</string>
   <string name="personaldeckpicker_title">Öppna online-kortlek</string>

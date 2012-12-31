@@ -56,6 +56,7 @@ def replacechars(filename, fileExt, isCrowdin):
 					line = "    <item>0</item>\n"
 				line = string.replace(line, '\'', '\\\'')
 				line = string.replace(line, '\\\\\'', '\\\'')
+				line = string.replace(line, '\n\s', '\\n')
 				line = string.replace(line, 'amp;', '')
 				if re.search('%[0-9]\\s\\$|%[0-9]\\$\\s', line) != None:
 					errorOccured = True

@@ -23,8 +23,8 @@
   <string name="statistics_menu">Statistiky</string>
   <string name="statistics_young">Mladé</string>
   <string name="statistics_mature">Zralé</string>
-  <string name="statistics_relearn">Relearn</string>
-  <string name="statistics_learn">Learn</string>
+  <string name="statistics_relearn">Znovu učit</string>
+  <string name="statistics_learn">Učit se</string>
   <string name="statistics_cram">Šprtat</string>
   <string name="statistics_type_title">Statistiky</string>
   <string name="stats_cards">Karty</string>

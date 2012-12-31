@@ -393,7 +393,7 @@ public class Finder {
         String type;
         try {
             type = mCol.getConf().getString("sortType");
-            String sort;
+            String sort = null;
             if (type.startsWith("note")) {
                 if (type.startsWith("noteCrt")) {
                     sort = "n.id, c.ord";
@@ -401,8 +401,6 @@ public class Finder {
                     sort = "n.mod, c.ord";
                 } else if (type.startsWith("noteFld")) {
                     sort = "n.sfld COLLATE NOCASE, c.ord";
-                } else {
-                    throw new RuntimeException("wrong sort type " + type);
                 }
             } else if (type.startsWith("card")) {
                 if (type.startsWith("cardMod")) {
@@ -417,11 +415,11 @@ public class Finder {
                     sort = "c.lapses";
                 } else if (type.startsWith("cardIvl")) {
                     sort = "c.ivl";
-                } else {
-                    throw new RuntimeException("wrong sort type " + type);
                 }
-            } else {
-                throw new RuntimeException("wrong sort type " + type);
+            }
+            if (sort == null) {
+            	// deck has invalid sort order; revert to noteCrt
+            	sort = "n.id, c.ord";
             }
             boolean sortBackwards = Upgrade.upgradeJSONIfNecessary(mCol, mCol.getConf(), "sortBackwards", false);
             return new Pair<String, Boolean>(" ORDER BY " + sort, sortBackwards);
@@ -695,7 +693,8 @@ public class Finder {
             return "";
         }
         // gather nids
-        String regex = val.replace("_", ".").replace("%", ".*");
+        // Pattern.quote escapes the meta characters with \Q \E
+        String regex = Pattern.quote(val).replace("\\Q_\\E", ".").replace("\\Q%\\E", ".*");
         LinkedList<Long> nids = new LinkedList<Long>();
         Cursor cur = null;
         try {

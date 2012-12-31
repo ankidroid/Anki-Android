@@ -64,7 +64,7 @@
   <string name="card_editor_reset">Reimposta</string>
   <string name="card_editor_copy_card">Copia carta</string>
   <string name="card_editor_reset_card">Reimposta progresso</string>
-  <string name="error_insufficient_memory">Operazione non possibile a causa di memoria insufficiente sul tuo apparecchio</string>
+  <string name="error_insufficient_memory">Operazione non possibile a causa di memoria insufficiente sul tuo dispositivo</string>
   <string name="tutorial_load">Creazione del mazzo d\'esercizio.\nAttendi...</string>
   <string name="tutorial_loading_error">Il mazzo d\'esercizio non può essere creato</string>
   <string name="rename">Rinomina</string>
@@ -84,16 +84,18 @@
   <string name="info_rate">Valuta AnkiDroid</string>
   <string name="col_load_failed">Caricamento della collezione fallito.\nPremi indietro per chiudere AnkiDroid.</string>
   <string name="import_title">Importa carte</string>
-  <string name="import_message">Would you like to add the content of file %s to your collection, or replace your collection with it?</string>
-  <string name="import_message_add">Add</string>
-  <string name="import_message_replace">Replace</string>
-  <string name="import_message_replace_confirm">This will delete your existing collection and replace it with the data of file %s. Are you sure?</string>
+  <string name="import_message">Vuoi aggiungere il contenuto del file %s alla tua collezione, o sostituire la tua collezione con esso?</string>
+  <string name="import_message_add">Aggiungi</string>
+  <string name="import_message_replace">Sostituisci</string>
+  <string name="import_message_replace_confirm">La tua collezione esistente verrà eliminata e sostituita con i dati del file %s. Sei sicuro?</string>
   <string name="import_log_success">Importato %d carte con successo</string>
   <string name="import_log_error">Importazione fallita</string>
   <string name="import_log_no_apkg">Questo non è un file apkg valido</string>
   <string name="import_importing">Importazione carte.\nAttendi...</string>
   <string name="import_hint">Per importare carte, inserisci il file apkg nella cartella %s e premi ok</string>
   <string name="import_no_file_found">Nessun file apkg importabile trovato</string>
+  <string name="custom_study">Studio personalizzato</string>
+  <string name="dyn_deck_desc">Questo è un mazzo speciale per studiare al di fuori della pianificazione normale. Le carte ritorneranno automaticamente nel mazzo originale dopo che le hai ripetute. L\'eliminazione di questo mazzo dall\'elenco dei mazzi riporterà tutte le carte rimanenti nel loro mazzo originale.</string>
   <string-array name="dynOrderLabels">
     <item>Più vecchie visualizzate per prime</item>
     <item>Casuale</item>

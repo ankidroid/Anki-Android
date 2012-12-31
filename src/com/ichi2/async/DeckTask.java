@@ -655,7 +655,7 @@ public class DeckTask extends
         } else {
             publishProgress(result);
         }
-        return new TaskData(col.cardCount(col.getDecks().active()));
+        return new TaskData(col.cardCount(col.getDecks().allIds()));
     }
 
 
@@ -733,7 +733,7 @@ public class DeckTask extends
 				sched.reset();
 			}
 			int[] counts = sched.counts();
-			int totalNewCount = sched.newCount();
+			int totalNewCount = sched.totalNewForCurrentDeck();
 			int totalCount = sched.cardCount();
 			double progressMature = ((double) sched.matureCount()) / ((double) totalCount);
 			double progressAll = 1 - (((double) (totalNewCount + counts[1])) / ((double) totalCount));
@@ -768,6 +768,7 @@ public class DeckTask extends
 		Collection col = params[0].getCollection();
 		long did = params[0].getLong();
 		col.getDecks().rem(did, true);
+		col.getMedia().removeUnusedImages();		
 		return doInBackgroundLoadDeckCounts(new TaskData(col));
 	}
 
@@ -835,7 +836,7 @@ public class DeckTask extends
 		String path = params[0].getString();
 
 		// extract the deck from the zip file
-		String fileDir = AnkiDroidApp.getCurrentAnkiDroidDirectory(AnkiDroidApp.getInstance().getBaseContext()) + "/tmpzip";
+		String fileDir = AnkiDroidApp.getCurrentAnkiDroidDirectory() + "/tmpzip";
     	File dir = new File(fileDir);
     	if (dir.exists()) {
     		BackupManager.removeDir(dir);

@@ -26,7 +26,7 @@
     <item><![CDATA[Kartlar destelerde toplanmıştır ve her çeşit etiket yardımıyla düzenlenebilir.]]></item> 
     <item><![CDATA[Yeni kartlar edinmenin iki temel yolu vardır:<br />Ya diğer kullanıcıların hazır destelerini eklersiniz (deste bilgilerinde &quot;paylaşılan desteler&quot;i seçin) ya da kendiniz oluşturursunuz.]]></item> 
     <item><![CDATA[Yine de, ihtiyaçlarınızla tam olarak uyuşması için kendi destelerinizi oluşturmanız önemlidir. Bunu doğrudan AnkiDroid\'de...]]></item> 
-    <item><![CDATA[Let\'s have a look on the top bar:<br />In the left top corner you find some numbers. The blue one tells you, how many new cards are still projected for today. The red number counts the failed cards (answered by &quot;again&quot;),]]></item> 
+    <item><![CDATA[Hadi üst araç çubuğuna bir bakın:<br />Sol üst köşede bazı numaralar bulabilirsiniz. Mavi olan, bugün için projelenen hâla kaç yeni kart tahmin edilecek, Kırmızı olan, başarısız kartları (cevapnan &quot;tekrar&quot;),]]></item> 
     <item><![CDATA[Sağ köşede bu kartı düşünme süreniz ve başarımınız hakkında bilgiler bulunuyor.]]></item> 
     <item><![CDATA[Her ne kadar AnkiDroid\'i kendi başına kullanabilseniz de; AnkiWeb\'e, yâni Anki\'nin eşitleme sunucusuna tamamen bağlıdır (Linux, Windows, Mac için mevcut).]]></item> 
     <item><![CDATA[Bunlar AnkiDroid kullanımının temel noktalarıydı.<br /><br>Anki\'nin anafikri hakkında daha fazla bilgi için, http://ankisrs.net/ adresini ziyaret edin.]]></item> 
@@ -41,7 +41,7 @@
     <item><![CDATA[AnkiDroid\'i kullanmaya başladığınızda bunu kısa sürede öğreneceksiniz.]]></item> 
     <item><![CDATA[İndirmeye hazır binlerce deste bulabilirsiniz, muhtemelen bazıları işinize yarayacaktır.]]></item> 
     <item><![CDATA[... veya (biraz daha pratik) Anki masaüstü uygulamasıyla yapabilirsiniz (http://ankisrs.net/ adresinden ücretsiz indirilebilir).<br><br>Destelerinizi masaüstü uygulamasıyla çok kolay bir şekilde eşitleyebilirsiniz, yani veriyi aktarmak sorun değil.]]></item> 
-    <item><![CDATA[the green one shows the number of cards you\'ve already learned before and which are due to review today.<br />The type of the actual cards is specified by an underline.]]></item> 
+    <item><![CDATA[ yeşil olanı zaten öğrendiğin ve bugün gözden geçireceğin kart sayısını gösterir.<br />Gerçek kart tipi bir alt çizgi ile belirtilmektedir.]]></item> 
     <item><![CDATA[Üstteki çubuk ilerlemenizi gösterir, alttaki ise evet yanıtlarının yüzdesini belirtir.]]></item> 
     <item><![CDATA[Bu sâyede, koleksiyonunuzu AnkiDroid ve Anki Masaüstü arasında kolayca eşitleyebilir ve daha kullanışlı bir kart yönetimi için bilgisayarınızı kullanabilirsiniz.]]></item> 
     <item><![CDATA[Şimdi biraz deneyip ihtiyaçlarınıza uyup uymadığına bakın.<br><br>Deste genel bakışıyla başlamak iyi bir fikir olabilir (ana ekranda menüye basıp &quot;tüm desteler&quot;i seçin), orada hazır desteler indirebilir veya kendinizinkini oluşturabilirsiniz (menüyü kullanmanız yeterli).]]></item> 

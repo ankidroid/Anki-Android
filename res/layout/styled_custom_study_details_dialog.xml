@@ -24,32 +24,41 @@
 	android:layout_width="fill_parent"
 	android:gravity="center"
 	android:orientation="vertical">
-	<TextView android:id="@+id/reviewearly_instructions"
+	<TextView android:id="@+id/custom_study_details_text1"
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
 		android:layout_marginLeft="4dip"
 		android:layout_marginRight="4dip"
-		android:text="@string/reviewearly_instructions"
+		android:gravity="left"
+		android:layout_gravity="left"
+		android:text=""
 		android:textSize="16dip"/>
 	<LinearLayout
 		android:layout_width="fill_parent"
 		android:layout_height="wrap_content"
 		android:orientation="horizontal">
+
 		<TextView
-			android:layout_width="0dip"
-			android:layout_height="wrap_content"
-			android:layout_weight="4"
-			android:layout_marginLeft="4dip"
-			android:text="@string/reviewearly_days_ahead"
-			android:textSize="16dip"/>
-		<EditText android:id="@+id/reviewearly_days_ahead"
+		    android:id="@+id/custom_study_details_text2"
+		    android:layout_width="0dip"
+		    android:layout_height="wrap_content"
+		    android:layout_gravity="left"
+		    android:layout_marginLeft="4dip"
+		    android:layout_marginBottom="16dip"
+		    android:layout_weight="4"
+		    android:gravity="left|center"
+		    android:lines="2"
+		    android:text=""
+		    android:textSize="16sp" />
+
+		<EditText android:id="@+id/custom_study_details_edittext2"
 			android:layout_width="0dip"
 			android:layout_height="38dip"
 			android:layout_weight="1"
 			android:layout_marginRight="4dip"
-			android:gravity="center"
+			android:layout_marginBottom="16dip"
+			android:gravity="bottom"
 			android:inputType="number"
-			android:lines="1"
 			android:text="1"/>
 	</LinearLayout>
 </LinearLayout>

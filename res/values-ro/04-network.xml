@@ -45,8 +45,8 @@
   <string name="connection_error_message">A network error has ocurred.</string>
   <string name="sync_log_db_error">A database error has occurred.</string>
   <string name="no_user_password_error_message">In order to proceed with this operation, you need to have an AnkiWeb account and be logged in.</string>
-  <string name="username">Nume utilizator</string>
-  <string name="username_repeat">Repeat username</string>
+  <string name="username">Email address</string>
+  <string name="username_repeat">Repeat email address</string>
   <string name="password">Parolă</string>
   <string name="password_repeat">Repeat password</string>
   <string name="log_in">Log in</string>
@@ -55,7 +55,7 @@
   <string name="logged_as">Logged in as</string>
   <string name="log_out">Log out</string>
   <string name="alert_logging_message">Logging in, please wait...</string>
-  <string name="invalid_username_password">Invalid username or password.</string>
+  <string name="invalid_username_password">Invalid email address or password.</string>
   <string name="login_generic_error">Failed to log in.</string>
   <string name="download_finished">Download finished</string>
   <string name="personaldeckpicker_title">Open Online Deck</string>

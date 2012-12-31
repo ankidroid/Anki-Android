@@ -64,6 +64,7 @@ public class CramDeckOptions extends PreferenceActivity implements OnSharedPrefe
 
     private BroadcastReceiver mUnmountReceiver = null;
 
+    // TODO: not anymore used in libanki?
     private String[] dynExamples = new String[] { null,
             "{'search'=\"is:new\", 'resched'=False, 'steps'=\"1\", 'order'=5}",
             "{'search'=\"added:1\", 'resched'=False, 'steps'=\"1\", 'order'=5}",
@@ -144,7 +145,7 @@ public class CramDeckOptions extends PreferenceActivity implements OnSharedPrefe
                                 mDeck.put("delays", getDelays((String) mValues.get("steps")));
                             } else {
                                 mValues.put("steps", "1 10");
-                                mDeck.put("delays", null);
+                                mDeck.put("delays", new JSONArray());
                             }
                         } else if (entry.getKey().equals("steps")) {
                             String steps = (String) entry.getValue();
@@ -468,10 +469,6 @@ public class CramDeckOptions extends PreferenceActivity implements OnSharedPrefe
         newOrderPref.setEntryValues(R.array.cram_deck_conf_order_values);
         newOrderPref.setValue(mPref.getString("order", "0"));
 
-        ListPreference leechActPref = (ListPreference) findPreference("preset");
-        leechActPref.setEntries(R.array.cram_deck_conf_preset_labels);
-        leechActPref.setEntryValues(R.array.cram_deck_conf_preset_values);
-        leechActPref.setValue("0");
         if (mPresetSearchSuffix != null) {
             EditTextPreference searchPref = (EditTextPreference) findPreference("search");
             searchPref.setText(mPresetSearchSuffix);

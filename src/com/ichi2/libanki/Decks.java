@@ -328,7 +328,9 @@ public class Decks {
         return ids;
     }
 
-
+    /**
+     * Return the number of decks.
+     */
     public int count() {
         return mDecks.size();
     }
@@ -353,8 +355,19 @@ public class Decks {
         }
     }
 
-
-    // byName
+    /** Get deck by NAME. */
+    public JSONObject byName(String name) {
+		try {
+			for (JSONObject m : mDecks.values()) {
+				if (m.get("name").equals(name)) {
+					return m;
+				}
+			}
+		} catch (JSONException e) {
+			throw new RuntimeException(e);
+		}
+		return null;
+    }
 
     /** Add or update an existing deck. Used for syncing and merging. */
     public void update(JSONObject g) {
@@ -375,6 +388,8 @@ public class Decks {
         if (allNames().contains(newName) || newName.length() == 0) {
             return false;
         }
+        // ensure we have parents
+        newName = _ensureParents(newName);
         // rename children
         String oldName;
         try {
@@ -387,11 +402,11 @@ public class Decks {
                     save(grp);
                 }
             }
-            // adjust name and save
+            // adjust name
             g.put("name", newName);
-            save(g);
-            // ensure we have parents
+            // ensure we have parents again, as we may have renamed parent->child
             newName = _ensureParents(newName);
+            save(g);
             // renaming may have altered active did order
             maybeAddToActive();
         } catch (JSONException e) {
@@ -402,7 +417,7 @@ public class Decks {
 
 
     /** Ensure parents exist, and return name with case matching parents. */
-    private String _ensureParents(String name) {
+    public String _ensureParents(String name) {
         String s = "";
         String[] path = name.split("::");
         if (path.length < 2) {

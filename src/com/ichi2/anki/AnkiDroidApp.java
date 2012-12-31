@@ -167,15 +167,16 @@ public class AnkiDroidApp extends Application {
     }
 
 
-    public static String getStorageDirectory() {
-        return Environment.getExternalStorageDirectory().getAbsolutePath();
+    private static String getStorageDirectory() {
+        return Environment.getExternalStorageDirectory().getAbsolutePath();    		
+    }
+
+    private static String getInternalMemoryDirectory() {
+    	return Environment.getDataDirectory().getAbsolutePath() + "/data/" + AnkiDroidApp.getInstance().getPackageName() + "/files";
     }
 
     public static String getCacheStorageDirectory() {
-        File cache = new File(getStorageDirectory() +
-                "/Android/data/" +
-                AnkiDroidApp.getInstance().getPackageName() + "." +
-                AnkiDroidApp.getAppName() + "/cache/");
+        File cache = new File(getInternalMemoryDirectory() + "/cache");
         if (!cache.exists()) {
             cache.mkdirs();
         }
@@ -183,19 +184,22 @@ public class AnkiDroidApp extends Application {
     }
 
     public static String getCollectionPath() {
-        String deckPath = getSharedPrefs(sInstance.getApplicationContext()).getString("deckPath",
-                AnkiDroidApp.getDefaultAnkiDroidDirectory());
-        return deckPath + AnkiDroidApp.COLLECTION_PATH;
+    	return getCurrentAnkiDroidDirectory() + AnkiDroidApp.COLLECTION_PATH;
     }
 
 
-    public static String getDefaultAnkiDroidDirectory() {
+    private static String getDefaultAnkiDroidDirectory() {
         return getStorageDirectory() + "/AnkiDroid";
     }
 
 
-    public static String getCurrentAnkiDroidDirectory(Context context) {
-    	return AnkiDroidApp.getSharedPrefs(context).getString("deckPath", AnkiDroidApp.getDefaultAnkiDroidDirectory());
+    public static String getCurrentAnkiDroidDirectory() {
+    	SharedPreferences prefs = getSharedPrefs(sInstance.getApplicationContext());
+    	if (prefs.getBoolean("internalMemory", false)) {
+    		return getInternalMemoryDirectory();
+    	} else {
+    		return prefs.getString("deckPath", AnkiDroidApp.getDefaultAnkiDroidDirectory());
+    	}
     }
 
     public static void createDirectoryIfMissing(File decksDirectory) {
@@ -229,7 +233,7 @@ public class AnkiDroidApp extends Application {
 
 
     public static boolean isSdCardMounted() {
-        return Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState());
+        return Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState()) || getSharedPrefs(sInstance.getApplicationContext()).getBoolean("internalMemory", false);
     }
 
 

@@ -36,7 +36,7 @@
   <string name="clear_whiteboard">Despejar pizarra</string>
   <string name="session_question_limit_reached">Límite de preguntas por sesión alcanzado</string>
   <string name="session_time_limit_reached">Tiempo límite de la sesión alcanzado</string>
-  <string name="cram_edit_warning">Card editing not allowed while cramming</string>
+  <string name="cram_edit_warning">La edición de tarjetas no está permitida durante empollado</string>
   <string name="suspend_leeches">Suspender sanguijuelas</string>
   <string name="leech_suspend_notification">Tarjeta marcada como sanguijuela y suspendida</string>
   <string name="leech_notification">Tarjeta marcada como sanguijuela</string>
@@ -52,7 +52,7 @@
   <string name="close">Cerrar</string>
   <string name="select">Seleccionar</string>
   <string name="saving_changes">Guardando modificaciones...</string>
-  <string name="timebox_reached">Timebox reached!</string>
+  <string name="timebox_reached">¡Se acabó el tiempo!</string>
   <string name="studyoptions_welcome_title">Bienvenido a AnkiDroid</string>
   <string name="studyoptions_no_external_storage_title">No hay un dispositivo de almacenamiento externo disponible</string>
   <string name="studyoptions_no_external_storage_message">No hay un dispositivo de almacenamiento disponible. AnkiDroid requiere acceso a la tarjeta SD para leer y cargar sus mazos de Anki. Verifique que su tarjeta SD está montada e intente nuevamente.</string>
@@ -80,27 +80,29 @@
   <string name="menu_cardbrowser">Explorador de tarjetas</string>
   <string name="show_hint">Mostrar pista</string>
   <string name="pref_lang_other">Preferencias de idioma</string>
-  <string name="pref_font_UI">Custom UI Font</string>
+  <string name="pref_font_UI">Fuente personalizada de la interfaz de usuario</string>
   <string name="info_rate">Puntúe AnkiDroid</string>
   <string name="col_load_failed">Carga de colección fallida.\nPresione atrás para cerrar AnkiDroid.</string>
   <string name="import_title">Importar tarjetas</string>
-  <string name="import_message">Would you like to add the content of file %s to your collection, or replace your collection with it?</string>
-  <string name="import_message_add">Add</string>
-  <string name="import_message_replace">Replace</string>
-  <string name="import_message_replace_confirm">This will delete your existing collection and replace it with the data of file %s. Are you sure?</string>
+  <string name="import_message">¿Desea añadir el contenido del archivo %s a su colección, o reemplazar su colección con él?</string>
+  <string name="import_message_add">Añadir</string>
+  <string name="import_message_replace">Reemplazar</string>
+  <string name="import_message_replace_confirm">Esta operación eliminará la colección existente y la reemplazará con los datos del archivo %s. ¿Está seguro?</string>
   <string name="import_log_success">%d tarjetas importadas exitosamente</string>
   <string name="import_log_error">Importación fallida</string>
   <string name="import_log_no_apkg">Este no es un archivo apkg válido</string>
   <string name="import_importing">Importando tarjetas.\nAguarde, por favor...</string>
   <string name="import_hint">Para importar tarjetas coloque el archivo apkg en el directorio %s y presione OK</string>
   <string name="import_no_file_found">No se ha encontrado un archivo apkg para importar</string>
+  <string name="custom_study">Estudio personalizado</string>
+  <string name="dyn_deck_desc">Este es un mazo especial para estudiar por fuera del cronograma normal. Las tarjetas serán automáticamente devueltas a sus mazos originales luego de que las haya repasado. Borrar este mazo de la lista de mazos devolverá todas las tarjetas restantes a sus mazos originales.</string>
   <string-array name="dynOrderLabels">
     <item>La tarjeta más antigua fue vista por primera vez</item>
     <item>Al azar</item>
     <item>Intervalos crescientes</item>
     <item>Intervalos decrescientes</item>
-    <item>Most lapses</item>
-    <item>Order added</item>
+    <item>Intervalos mayores</item>
+    <item>Orden añadido</item>
     <item>Orden de tarjetas programadas</item>
   </string-array>
   <plurals name="factadder_cards_added">

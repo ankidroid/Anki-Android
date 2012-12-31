@@ -84,16 +84,18 @@
   <string name="info_rate">评价AnkiDroid</string>
   <string name="col_load_failed">加载集合失败。\n 按back键，关闭AnkiDroid。</string>
   <string name="import_title">导入卡牌</string>
-  <string name="import_message">Would you like to add the content of file %s to your collection, or replace your collection with it?</string>
-  <string name="import_message_add">Add</string>
-  <string name="import_message_replace">Replace</string>
-  <string name="import_message_replace_confirm">This will delete your existing collection and replace it with the data of file %s. Are you sure?</string>
+  <string name="import_message">你想把文件%s中的内容添加到当前牌组集合中，还是用它替换当前牌组集合？</string>
+  <string name="import_message_add">添加</string>
+  <string name="import_message_replace">替换</string>
+  <string name="import_message_replace_confirm">这将删除你当前的牌组集合，并用文件%s中的内容加以替换。你确定吗？</string>
   <string name="import_log_success">成功导入 %d 张卡牌</string>
   <string name="import_log_error">导入失败</string>
   <string name="import_log_no_apkg">这不是一个正确的 apkg 文件</string>
   <string name="import_importing">导入卡牌。\n请稍后...</string>
   <string name="import_hint">要导入卡牌，请把apkg文件放在%s目录中，然后按确定。</string>
   <string name="import_no_file_found">未找到可导入的apkg文件</string>
+  <string name="custom_study">自定义学习</string>
+  <string name="dyn_deck_desc">这是一个特殊牌组，在计划外学习。卡牌在复习后，会自动返回原来的牌组。在牌组列表中删除此牌组，将把所有卡牌发回原来的牌组。</string>
   <string-array name="dynOrderLabels">
     <item>优先显示老卡牌</item>
     <item>随机</item>

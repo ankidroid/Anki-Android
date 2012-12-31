@@ -45,8 +45,8 @@
   <string name="connection_error_message">حدث خطأ في شبكة الاتصال.</string>
   <string name="sync_log_db_error">حدث خطأ في قاعدة البيانات.</string>
   <string name="no_user_password_error_message">من أجل المضي بهذه العملية، تحتاج إلى لحساب أنكي ويب وتسجيل الدخول.</string>
-  <string name="username">اسم المستخدم</string>
-  <string name="username_repeat">تكرار اسم المستخدم</string>
+  <string name="username">Email address</string>
+  <string name="username_repeat">Repeat email address</string>
   <string name="password">كلمة المرور</string>
   <string name="password_repeat">تكرار كلمة السر</string>
   <string name="log_in">تسجيل الدخول</string>
@@ -55,7 +55,7 @@
   <string name="logged_as">تسجيل</string>
   <string name="log_out">تسجيل الخروج</string>
   <string name="alert_logging_message">تسجيل الدخول، الرجاء الانتظار...</string>
-  <string name="invalid_username_password">اسم المستخدم أو كلمة المرور غير صالحة.</string>
+  <string name="invalid_username_password">Invalid email address or password.</string>
   <string name="login_generic_error">فشل في تسجيل الدخول.</string>
   <string name="download_finished">انتهى التنزيل</string>
   <string name="personaldeckpicker_title">افتح رزمة في الانترنت</string>

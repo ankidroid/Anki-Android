@@ -26,6 +26,7 @@
   <string name="contextmenu_deckpicker_delete_deck">Видалити колоду</string>
   <string name="delete_deck_title">Видалити колоду</string>
   <string name="delete_deck_message">Ви певні, що хочете видалити всі картки в %s?</string>
+  <string name="delete_cram_deck_message">Ви впевнені що хочете відправити всі карти з %s назад до їх початкових колод?</string>
   <string name="delete_deck_confirm">Видалити</string>
   <string name="new_version_message">Нові особливості:</string>
   <string name="no_tts_available_title">Текст-в-мовлення</string>
@@ -48,15 +49,18 @@
   <string name="repair_deck_dialog">Ви дійсно бажаєте спробувати відновити базу даних?\n\nПеред початком спроби в підкаталозі \'%s\' буде створена копія.</string>
   <string name="intent_add_saved_information">Збережені дані</string>
   <string name="intent_add_clear_all">Очистити все</string>
-  <string name="intent_aedict_empty">Категорія  \'default\'  порожня</string>
+  <string name="intent_aedict_empty">Категорія  \'стандартна\'  порожня</string>
   <string name="intent_aedict_category">Щоб додати картки до AnkiDroid видаліть всі категорії Notepad або додайте категорію \'default\'</string>
-  <string name="learnmore_title">Study More Settings</string>
-  <string name="learnmore_insructions">You can temporarily increase your new cards and max reviews limits below to extend today\'s learning session.</string>
-  <string name="learnmore_extend_new_limit">Increase new cards limit by</string>
-  <string name="learnmore_extend_rev_limit">Increase max reviews limit by</string>
-  <string name="reviewearly_title">Review Early Settings</string>
-  <string name="reviewearly_instructions">This option will create a Filtered Deck called \'XXX\' with the cards that are due for review in the number of days you select below. If such a Filtered Deck already exists it will be emptied and reconfigured.</string>
-  <string name="reviewearly_days_ahead">How many days ahead</string>
+  <string name="custom_study_new_total_new">Нові карти в колоді: %s</string>
+  <string name="custom_study_rev_total_rev">Повторити сьогодні: %s</string>
+  <string name="custom_study_new_extend">Збільшити сьогоднішній ліміт нових карт на</string>
+  <string name="custom_study_rev_extend">Збільшити сьогоднішній ліміт повторення на</string>
+  <string name="custom_study_forgotten">Повторити карти забуті за останні x днів:</string>
+  <string name="custom_study_ahead">Переглянути наперед за х днів:</string>
+  <string name="custom_study_random">Вибрати х випадкових карт з колоди:</string>
+  <string name="custom_study_preview">Повторити нові карти додані за останні х днів:</string>
+  <string name="custom_study_tags">Мітки:</string>
+  <string name="rebuild_custom_study_deck">Перестворення додаткової колоди.\nБудь-ласка, зачекайте...</string>
   <string-array name="about_content">
     <item><![CDATA[<h2>%1$s:<br/>Картки для Android</h2>AnkiDroid це додаток для карток повністю сумісний з програмою для ПК <a href="%2$s">Anki</a>. Ви можете створювати, завантажувати та вивчати вміст на AnkiDroid або Anki Desktop та з легкістю здійснювати синхронізацію.]]></item>
     <item><![CDATA[Щоб зробити AnkiDroid кращою, будь ласка, доповідайте про виявлені недоліки <a href="%1$s">here</a>; ідеї для нових властивостей програми також вітаються! Будь ласка, користуйтесь <a href="%2$s">wiki</a> та скажіть Привіт на  <a href="%3$s">форумі</a>.]]></item>

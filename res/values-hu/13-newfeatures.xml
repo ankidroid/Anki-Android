@@ -31,6 +31,7 @@
     <item>a beállítások mostantól megoszthatók</item>
     <item>tablet elrendezés</item>
     <item>rengeteg teljesítmény javítás</item>
-    <item>card import function</item>
+    <item>Kártya importálás</item>
+    <item>collection can be saved on internal memory</item>
   </string-array>
 </resources>

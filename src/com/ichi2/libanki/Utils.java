@@ -125,6 +125,7 @@ public class Utils {
     private static final Pattern htmlEntitiesPattern = Pattern.compile("&#?\\w+;");
 
     private static final String ALL_CHARACTERS = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+    private static final String BASE91_EXTRA_CHARS = "!#$%&()*+,-./:;<=>?@[]^_`{|}~";
 
     /**The time in integer seconds. Pass scale=1000 to get milliseconds. */
     public static double now() {
@@ -462,7 +463,7 @@ public class Utils {
 
     // all printable characters minus quotes, backslash and separators
     public static String base91(int num) {
-    	return base62(num, "!#$%&()*+,-./:;<=>?@[]^_`{|}~");
+    	return base62(num, BASE91_EXTRA_CHARS);
     }
 
 
@@ -471,6 +472,22 @@ public class Utils {
     	return base91((new Random()).nextInt((int) (Math.pow(2, 61) - 1)));
     }
 
+    // increment a guid by one, for note type conflicts
+    public static String incGuid(String guid) {
+    	return new StringBuffer(_incGuid(new StringBuffer(guid).reverse().toString())).reverse().toString();
+    }
+
+    private static String _incGuid(String guid) {
+    	String table = ALL_CHARACTERS + BASE91_EXTRA_CHARS;
+    	int idx = table.indexOf(guid.substring(0, 1));
+    	if (idx + 1 == table.length()) {
+    		// overflow
+    		guid = table.substring(0, 1) + _incGuid(guid.substring(1, guid.length()));
+    	} else {
+    		guid = table.substring(idx + 1) + guid.substring(1, guid.length());
+    	}
+    	return guid;
+    }
 
 //    public static JSONArray listToJSONArray(List<Object> list) {
 //        JSONArray jsonArray = new JSONArray();
@@ -1060,7 +1077,7 @@ public class Utils {
 
     /** Returns a list of files for the installed custom fonts. */
     public static List<AnkiFont> getCustomFonts(Context context) {
-        String deckPath = AnkiDroidApp.getCurrentAnkiDroidDirectory(context);
+        String deckPath = AnkiDroidApp.getCurrentAnkiDroidDirectory();
         String fontsPath = deckPath + "/fonts/";
         File fontsDir = new File(fontsPath);
         int fontsCount = 0;
@@ -1094,8 +1111,8 @@ public class Utils {
 
     
     /** Returns a list of apkg-files. */
-    public static List<File> getImportableDecks(Context context) {
-        String deckPath = AnkiDroidApp.getCurrentAnkiDroidDirectory(context);
+    public static List<File> getImportableDecks() {
+        String deckPath = AnkiDroidApp.getCurrentAnkiDroidDirectory();
         File dir = new File(deckPath);
         int deckCount = 0;
         File[] deckList = null;

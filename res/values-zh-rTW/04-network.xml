@@ -45,8 +45,8 @@
   <string name="connection_error_message">網路出了點問題。</string>
   <string name="sync_log_db_error">資料庫發生了錯誤。</string>
   <string name="no_user_password_error_message">要繼續進行下一步，您需要有一個AnkiOnline的帳戶，並登入完成。.</string>
-  <string name="username">使用者名稱</string>
-  <string name="username_repeat">Repeat username</string>
+  <string name="username">Email address</string>
+  <string name="username_repeat">Repeat email address</string>
   <string name="password">密碼</string>
   <string name="password_repeat">Repeat password</string>
   <string name="log_in">登入</string>
@@ -55,7 +55,7 @@
   <string name="logged_as">登入為</string>
   <string name="log_out">登出</string>
   <string name="alert_logging_message">正在登入，請稍候...</string>
-  <string name="invalid_username_password">不正確的使用者名稱或密碼.</string>
+  <string name="invalid_username_password">Invalid email address or password.</string>
   <string name="login_generic_error">無法登入。</string>
   <string name="download_finished">下載完成</string>
   <string name="personaldeckpicker_title">打開線上牌組</string>

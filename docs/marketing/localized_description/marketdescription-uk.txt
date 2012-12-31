@@ -1,37 +1,37 @@
 Запам’ятовуйте будь що з AnkiDroid!
 
-AnkiDroid lets you learn flashcards very efficiently by showing them just before you will forget. It is fully compatible with the spaced repetition software Anki (including synchronization), which is available for Windows, Linux and MacOS.
+АнкіДроїд дозволяє вивчати карти дуже ефективно показуючи їх якраз перед тим як ви їх забудете. Програма повністю підтримує програмне забезпечення для повторення з затримкою від Анкі (включаючи синхронізацію), яка доступна під операційні системи Віндовс, Лінукс і Мак.
 
-Study all sorts of things wherever and whenever you want. Make good use of idle times on bus trips, in supermarket queues or any other waiting situation!
+Вивчайт будь-який тип інформації будь-де і будь-коли вам зручно. Використайте з користю час в автобусних поїздка, в черзі супермаркету або в будь-якій іншій ситуації коли доводиться чекати!
 
-Create your own flashcard decks or download free decks compiled for many languages and topics (more than 6000 available).
+Створіть вашу власну колоду карт або завантажте готові колоди безкоштовно для багатьох мов і тем (доступно більш ніж 6000).
 
-Add material through the desktop application Anki or directly through Ankidroid. The application even supports adding material automatically from a dictionary!
+Додавайте матеріал через настільну програму Анкі або напряму через АнкіДроїд. Програма навіть підтримує додавання матеріалу напряму з словника!
 
-★ Key features:
-• supported flashcard contents: text, images, sounds, LaTeX
-• spaced repetition (supermemo 2 algorithm)
-• text-to-speech integration
-• more than 6000 premade decks
-• progress widget
-• detailed statistics
-• syncing with AnkiWeb
-• open source
+★ Ключові особливості:
+• підримується текст, малюнки, звуки і LaTeX як вміст карт
+• повторення з затримкою (алгоритм суперпам'ять 2)
+• інтеграція з синтезаторами мови
+• більше ніж 6000 готових колод
+• віджет успіхів
+• детальна статистика
+• синхронізація з АнкіВеб
+• відкритий програмний код
 
-★ Additional features:
-• write answers (optional)
-• whiteboard
-• card editor/adder
-• card browser
-• tablet layout
-• import existing collection files (via Anki Desktop)
-• dictionary integration (ColorDict, GoldenDict, Leo.org, Aedict, diverse web dictionaries)
-• add cards by intent from other applications like dictionaries
-• custom font support
-• full backup system
-• navigation by swipe, tap, shake
-• fully customisable
-• dynamic deck handling
-• night mode
-• 27 localisations
-• All previous AnkiDroid versions can be downloaded from the website
+★ Додаткові особливості:
+• введення відповіді (по бажанню)
+• класна дошка
+• редактор карт
+• переглядач карт
+• підтримка планшетів
+• імпорт існуючих колекцій з файлів (через настільну програму Анкі)
+• інтеграція з словниками (ColorDict, GoldenDict, Leo.org, Aedict, різні онлайн перекладачі)
+• Додавання карток з інших програм
+• підтримка нестандартних шрифтів
+• повне резервне копіювання системи
+• навігація жестами, дотиком або потрясши телефоном
+• повністю настроюється
+• підтримка динамічних колод
+• нічний режим
+• перекладено на 27 мов
+• Всі попередні версії АнкіДроїда можуть бути завантажені з веб-сторінки

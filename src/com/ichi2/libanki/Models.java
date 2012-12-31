@@ -54,7 +54,9 @@ public class Models {
             + "\\\\documentclass[12pt]{article} " + "\\\\special{papersize=3in,5in} "
             + "\\\\usepackage[utf8]{inputenc} " + "\\\\usepackage{amssymb,amsmath} " + "\\\\pagestyle{empty} "
             + "\\\\setlength{\\\\parindent}{0in} " + "\\\\begin{document} " + "\", "
-            + "'latexPost': \"\\\\end{document}\", " + "'mod': 0, " + "'usn': 0, " + "'vers': [], " + "'type': "
+            + "'latexPost': \"\\\\end{document}\", " + "'mod': 0, " + "'usn': 0, " 
+            + "'vers': [], " // FIXME: remove when other clients have caught up 
+            + "'type': "
             + Sched.MODEL_STD + ", " + "'css': \" .card {" + "font-familiy: arial; " + "font-size: 20px; "
             + "text-align: center; " + "color:black; " + "background-color: white; }\"" + "}";
 
@@ -947,7 +949,7 @@ public class Models {
             // replace chozen cloze with type
             if (type == 'q') {
                 if (m.group(3) != null && m.group(3).length() != 0) {
-                    txt = m.replaceAll("<span class=cloze>[$3...]</span>");
+                    txt = m.replaceAll("<span class=cloze>[$3]</span>");
                 } else {
                     txt = m.replaceAll("<span class=cloze>[...]</span>");
                 }
@@ -1088,12 +1090,18 @@ public class Models {
     /** Return a hash of the schema, to see if models are compatible. */
     public long scmhash(JSONObject m) {
         String s = "";
-        JSONArray flds;
         try {
-            flds = m.getJSONArray("flds");
+        	JSONArray flds = m.getJSONArray("flds");
             for (int i = 0; i < flds.length(); ++i) {
                 s += flds.getJSONObject(i).getString("name");
             }
+            JSONArray tmpls = m.getJSONArray("tmpls");
+            for (int i = 0; i < tmpls.length(); ++i) {
+            	JSONObject t = tmpls.getJSONObject(i);
+                s += t.getString("name");
+                s += t.getString("qfmt");
+                s += t.getString("afmt");
+           }
         } catch (JSONException e) {
             throw new RuntimeException(e);
         }
@@ -1333,7 +1341,46 @@ public class Models {
         return m;
     }
 
+    /* Forward & Reverse */
+    
+    public static JSONObject addForwardReverse(Collection col) {
+    	String name = "Basic (and reversed card)";
+        Models mm = col.getModels();
+        JSONObject m = addBasicModel(col);
+        try {
+            m.put("name", name);
+            JSONObject t = mm.newTemplate("Card 2");
+            t.put("qfmt", "{{Back}}");
+            t.put("afmt", "{{FrontSide}}\n\n<hr id=answer>\n\n{{Front}}");
+            mm.addTemplate(m, t);
+        } catch (JSONException e) {
+            throw new RuntimeException(e);
+        }
+        return m;
+    }
 
+    
+    /* Forward & Optional Reverse */
+    
+    public static JSONObject addForwardOptionalReverse(Collection col) {
+    	String name = "Basic (optional reversed card)";
+        Models mm = col.getModels();
+        JSONObject m = addBasicModel(col);
+        try {
+            m.put("name", name);
+            JSONObject fm = mm.newField("Add Reverse");
+            mm.addField(m, fm);
+            JSONObject t = mm.newTemplate("Card 2");
+            t.put("qfmt", "{{#Add Reverse}}{{Back}}{{/Add Reverse}}");
+            t.put("afmt", "{{FrontSide}}\n\n<hr id=answer>\n\n{{Front}}");
+            mm.addTemplate(m, t);
+        } catch (JSONException e) {
+            throw new RuntimeException(e);
+        }
+        return m;
+    }
+
+    
     public static JSONObject addClozeModel(Collection col) {
         Models mm = col.getModels();
         JSONObject m = mm.newModel("Cloze");

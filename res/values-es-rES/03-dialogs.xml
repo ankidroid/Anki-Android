@@ -26,6 +26,7 @@
   <string name="contextmenu_deckpicker_delete_deck">Eliminar mazo</string>
   <string name="delete_deck_title">Eliminar mazo</string>
   <string name="delete_deck_message">¿Estás seguro que deseas eliminar todas las tarjetas en %s?</string>
+  <string name="delete_cram_deck_message">¿Estás seguro de que deseas mandar todas las tarjetas de %s de vuelta a sus mazos originales?</string>
   <string name="delete_deck_confirm">Eliminarlo</string>
   <string name="new_version_message">Nuevas funciones:</string>
   <string name="no_tts_available_title">Texto-a-Voz</string>
@@ -50,13 +51,16 @@
   <string name="intent_add_clear_all">Borrar todo</string>
   <string name="intent_aedict_empty">La categoría \'default\' está vacía</string>
   <string name="intent_aedict_category">Para añadir tarjetas AnkiDroid borra todas las categorías del Bloc de notas o agrega una llamada \'default\'</string>
-  <string name="learnmore_title">Ajustes de Estudiar Más</string>
-  <string name="learnmore_insructions">Puedes aumentar temporalmente los límites de tarjetas nuevas y repasos máximos aquí debajo para alargar la sesión de estudio de hoy.</string>
-  <string name="learnmore_extend_new_limit">Aumentar el límite de tarjetas nuevas en</string>
-  <string name="learnmore_extend_rev_limit">Aumentar el límite de repasos máximos en</string>
-  <string name="reviewearly_title">Configuración de Repasar Antes</string>
-  <string name="reviewearly_instructions">Esta opción creará un Mazo Filtrado llamado \'XXX\' con las tarjetas que están programadas para repaso en el número de días que selecciones aquí debajo. Si ya existe tal Mazo Filtrado, será vaciado y reconfigurado.</string>
-  <string name="reviewearly_days_ahead">Cuántos días de antelación</string>
+  <string name="custom_study_new_total_new">Tarjetas nuevas en el mazo: %s</string>
+  <string name="custom_study_rev_total_rev">Repasos pendientes en el mazo: %s</string>
+  <string name="custom_study_new_extend">Aumente el límite de nuevas tarjetas para hoy por</string>
+  <string name="custom_study_rev_extend">Aumento en el límite de hoy por</string>
+  <string name="custom_study_forgotten">Revisión de tarjetas olvidada en los últimos x días:</string>
+  <string name="custom_study_ahead">Revisión dentro de x días:</string>
+  <string name="custom_study_random">Selecciona x tarjetas al azar de la baraja:</string>
+  <string name="custom_study_preview">Previsualizar nuevas tarjetas añadidas en los últimos x días:</string>
+  <string name="custom_study_tags">Introducir etiquetas:</string>
+  <string name="rebuild_custom_study_deck">Se está reconstruyendo el mazo de estudio personalizado.\nEspera, por favor...</string>
   <string-array name="about_content">
     <item><![CDATA[<h2>%1$s:<br/>Tarjetas de estudio para Android</h2>AnkiDroid es una aplicación de tarjetas de estudio que es totalmente compatible con el software de escritorio <a href="%2$s">Anki</a>. Puedes crear, descargar y estudiar contenidos en ambos, AnkiDroid o Anki Escritorio, y sincronizarlos muy fácilmente.]]></item>
     <item><![CDATA[Para ayudarnos a mejorar AnkiDroid, por favor, infórmanos de cualquier error <a href="%1$s">aquí</a>; ¡también apreciamos mucho las ideas sobre nuevas funciones! Por favor, usa la <a href="%2$s">wiki</a> y salúdanos en el <a href="%3$s">foro</a>.]]></item>

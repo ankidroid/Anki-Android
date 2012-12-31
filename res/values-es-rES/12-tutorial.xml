@@ -22,14 +22,14 @@
     <item><![CDATA[&quot;¿Cuál es la capital de Burkina Faso?&quot;<br/>Piensa un poco en la respuesta y haz clic en &quot;mostrar respuesta&quot;]]></item> 
     <item><![CDATA[Por encima de cada botón de respuesta, encontrarás información sobre el tiempo que pasará antes de que la tarjeta se vuelva a mostrar en caso de responder con ese botón.]]></item> 
     <item><![CDATA[La intención es mostrarte la tarjeta de nuevo, inmediatamente antes de que la olvides. Estudios empíricos han mostrado que de este modo la información se puede aprender más eficientemente.]]></item> 
-    <item><![CDATA[Algunas palabras acerca de la organización en AnkiDroid:<br /><br>Toda la información tiene que ser presentada en pares de preguntas y respuestas. Si quieres aprender en la dirección inversa, debes crear otra tarjeta con la información intercambiada.]]></item> 
-    <item><![CDATA[Las tarjetas se agrupan en mazos y se pueden organizar con la ayuda de todo tipo de etiquetas.]]></item> 
+    <item><![CDATA[Algunas palabras acerca de la organización en AnkiDroid:<br /><br>Toda la información tiene que ser introducida en pares de preguntas y respuestas. Si quieres aprender en el sentido contrario, debes crear otra tarjeta con la información intercambiada.]]></item> 
+    <item><![CDATA[Las tarjetas se agrupan en mazos y pueden entonces ser organizadas con ayuda de todo tipo de etiquetas.]]></item> 
     <item><![CDATA[Existen principalmente dos maneras de obtener nuevas tarjetas:<br/>Agregar mazos pre-hechos de otros usuarios (elige &quot;mazos compartidos&quot; en el resumen de mazos) o crearlos tú mismo.]]></item> 
     <item><![CDATA[En cualquier caso, crear tus propios mazos es esencial para cubrir tus necesidades a la perfección. Puedes hacerlo directamente en AnkiDroid...]]></item> 
     <item><![CDATA[Vamos a echarle un vistazo a la barra superior:<br />En la esquina superior izquierda puedes ver algunos números. El azul te dice cuántas tarjetas nuevas están aún pendientes para hoy. El número rojo cuenta las tarjetas falladas (respondidas con &quot;Otra vez&quot;),]]></item> 
-    <item><![CDATA[En la esquina derecha se encuentra información acerca de tu tiempo de reflexion con esta tarjeta, y sobre tu rendimiento.]]></item> 
+    <item><![CDATA[En la esquina derecha encontrarás información sobre el tiempo en el que has estado pensando en esta tarjeta y sobre tu rendimiento.]]></item> 
     <item><![CDATA[Aunque puedes utilizar AnkiDroid independientemente, está totalmente conectado a AnkiWeb, el servidor de sincronización de la versión de escritorio de Anki (disponible para Linux, Windows, Mac).]]></item> 
-    <item><![CDATA[Estos han sido los principales puntos sobre el uso de AnkiDroid.<br /><br>Para más información sobre el concepto clave de Anki, visita http://ankisrs.net/]]></item> 
+    <item><![CDATA[Estos han sido los puntos principales acerca de el uso de AnkiDroid.<br /><br>Para más información sobre el concepto clave de Anki, visita http://ankisrs.net/]]></item> 
  </string-array>
  <string-array name="tutorial_answers">
     <item><![CDATA[... para ver el lado de la <span style=\'font-weight:600;\'>respuesta</span> de la tarjeta (por debajo de la línea)<br/>Haz clic en el botón más a la derecha de los cuatro botones]]></item> 
@@ -38,12 +38,12 @@
     <item><![CDATA[Este período de tiempo se calcula en base a la última vez que respondiste a la tarjeta, la facilidad de repuesta actual y facilidad de repuestas anteriores de la tarjeta.]]></item> 
     <item><![CDATA[Si quieres aprender más sobre el repaso espaciado, visita:<br>http://en.wikipedia.org/wiki/Spaced_repetition_system]]></item> 
     <item><![CDATA[No te preocupes, esto se puede hacer de forma automática. No es necesario introducir la misma información dos veces.]]></item> 
-    <item><![CDATA[Aprenderás rápidamente acerca de esto cuando empieces a utilizar AnkiDroid.]]></item> 
+    <item><![CDATA[Aprenderás sobre ello rápidamente cuando empieces a utilizar AnkiDroid.]]></item> 
     <item><![CDATA[Encontrarás miles de mazos pre-hechos para descargar y probablemente haya algunos que te sean útiles.]]></item> 
     <item><![CDATA[... o (un poco más cómodo) con la aplicación de escritorio Anki (descargable gratuitamente en http://ankisrs.net/).<br><br>Puedes sincronizar tus mazos con la aplicación de escritorio muy fácilmente, por lo que transferir los datos no es un problema.]]></item> 
     <item><![CDATA[el verde indica el número de tarjetas que ya aprendiste antes y que hoy están programadas para ser repasadas.<br />El tipo de la tarjeta actual está indicado en subrayado.]]></item> 
-    <item><![CDATA[La barra superior muestra tu progreso sobre el total de fichas programadas para hoy, la inferior indica el porcentaje de respuestas afirmativas (que son cualquiera excepto \"Otra vez\").]]></item> 
+    <item><![CDATA[La barra superior muestra tu progreso, mientras que la inferior indica el porcentaje de respuestas afirmativas.]]></item> 
     <item><![CDATA[Por lo tanto, puedes sincronizar tu colección entre AnkiDroid y Anki versión escritorio, y utilizar este último para agregar y administrar tarjetas de manera más cómoda.]]></item> 
-    <item><![CDATA[Pruébalo un poco ahora y comprueba si se ajusta a tus necesidades.<br><br>Tal vez puedas comenzar con el resumen de mazos (pulsa el botón menu en la pantalla principal y selecciona \"Todos los mazos\"), donde puedes descargar mazos prefabricados o crear los tuyos propios (sólo tienes que utilizar el menú de allí).]]></item> 
+    <item><![CDATA[Ahora simplemente pruébalo un poco y comprueba si se ajusta a tus necesidades.<br><br>Podrías empezar quizás con una visión general de los mazos (pulsa el botón menú en la pantalla principal y selecciona \"Todos los mazos\"), en donde puedes descargar mazos predefinidos o crear los tuyos propios (simplemente usa el menú que hay allí).]]></item> 
  </string-array>
 </resources>

@@ -26,6 +26,7 @@
   <string name="contextmenu_deckpicker_delete_deck">Suprimeix el paquet</string>
   <string name="delete_deck_title">Suprimeix el paquet</string>
   <string name="delete_deck_message">Esteu segur que voleu suprimir totes les targetes de %s?</string>
+  <string name="delete_cram_deck_message">Are you sure you wish to send all cards in %s back to their original decks?</string>
   <string name="delete_deck_confirm">Suprimeix</string>
   <string name="new_version_message">Noves funcions:</string>
   <string name="no_tts_available_title">Síntesi de veu</string>
@@ -50,13 +51,16 @@
   <string name="intent_add_clear_all">Neteja-ho tot</string>
   <string name="intent_aedict_empty">La categoria \'per omissió\' és buida</string>
   <string name="intent_aedict_category">Per afegir targetes de AnkiDroid treieu totes les categories del bloc de notes o afegiu-ne una anomenada \'per omissió\'</string>
-  <string name="learnmore_title">Més opcions de configuració d\'estudi</string>
-  <string name="learnmore_insructions">A sota podeu augmentar temporalment els vostres límits de targetes noves i de màxim número de comentaris per estendre la sessió d\'aprenentatge d\'avui.</string>
-  <string name="learnmore_extend_new_limit">Augmentar límit de targetes noves en</string>
-  <string name="learnmore_extend_rev_limit">Augmentar el límit màxim de comentaris en</string>
-  <string name="reviewearly_title">Paràmetres de la revisió inicial</string>
-  <string name="reviewearly_instructions">Aquesta opció genera un Paquet Filtrat anomenat \'XXX\' amb les targetes que han vencut, per a la revisió en el nombre de dies que seleccioneu a continuació. Si ja existeix aquest Paquet Filtrat es buidarà i es tornarà a configurar.</string>
-  <string name="reviewearly_days_ahead">Quants dies per endavant</string>
+  <string name="custom_study_new_total_new">New cards in deck: %s</string>
+  <string name="custom_study_rev_total_rev">Reviews due in deck: %s</string>
+  <string name="custom_study_new_extend">Increase today\'s new card limit by</string>
+  <string name="custom_study_rev_extend">Increase today\'s review limit by</string>
+  <string name="custom_study_forgotten">Review cards forgotten in last x days:</string>
+  <string name="custom_study_ahead">Review ahead by x days:</string>
+  <string name="custom_study_random">Select x cards randomly from the deck:</string>
+  <string name="custom_study_preview">Preview new cards added in the last x days:</string>
+  <string name="custom_study_tags">Enter tags:</string>
+  <string name="rebuild_custom_study_deck">Rebuilding custom study deck.\nPlease wait...</string>
   <string-array name="about_content">
     <item><![CDATA[<h2>%1$s: <br/> Targetes per memoritzar per Android </h2> AnkiDroid és una aplicació de gestió de tagetes per memoritzar, totalment compatible amb el programari d\'escriptori <a href="%2$s">Anki</a>. Podeu generar, descarregar i aprendre els continguts als dos programaris, a l\'Escriptori i a AnkiDroid Anki, i sincronitzar-los amb molta facilitat.]]</item>
     <item><![CDATA[AnkiDroid és <a href="%1$s">programari de codi obert<a/>, així que us animem a <a href="%2$s">unir-vos</a> als <a href="%3$s">col·laboradors</a>:-)]]></item>

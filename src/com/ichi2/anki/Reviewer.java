@@ -1335,7 +1335,7 @@ public class Reviewer extends AnkiControllableActivity {
                     public void onProgressUpdate(DeckTask.TaskData... values) {
                     }
                 },
-                new DeckTask.TaskData(AnkiDroidApp.getCurrentAnkiDroidDirectory(this)
+                new DeckTask.TaskData(AnkiDroidApp.getCurrentAnkiDroidDirectory()
                         + AnkiDroidApp.COLLECTION_PATH, 0, true));
     }
 
@@ -1513,7 +1513,9 @@ public class Reviewer extends AnkiControllableActivity {
 
     private void stopTimer() {
         // Stop visible timer and card timer
-        mCardTimer.stop();
+    	if (mCardTimer != null) {
+            mCardTimer.stop();
+    	}
         if (mCurrentCard != null) {
              mCurrentCard.stopTimer();
         }
@@ -2573,14 +2575,12 @@ public class Reviewer extends AnkiControllableActivity {
     public void fillFlashcard(boolean flip) {
         if (!flip) {
             Log.i(AnkiDroidApp.TAG, "base url = " + mBaseUrl);
-            if (mCurrentSimpleInterface) {
+            if (mCurrentSimpleInterface && mSimpleCard != null) {
                 mSimpleCard.setText(mCardContent);
-            } else if (mRefreshWebview) {
-            	if (mNextCard != null) {
-                    mNextCard.setBackgroundColor(mCurrentBackgroundColor);
-                    mNextCard.loadDataWithBaseURL(mBaseUrl, mCardContent.toString(), "text/html", "utf-8", null);
-                    mNextCard.setVisibility(View.VISIBLE);
-            	}
+            } else if (mRefreshWebview && mCard != null && mNextCard != null) {
+                mNextCard.setBackgroundColor(mCurrentBackgroundColor);
+                mNextCard.loadDataWithBaseURL(mBaseUrl, mCardContent.toString(), "text/html", "utf-8", null);
+                mNextCard.setVisibility(View.VISIBLE);
                 mCardFrame.removeView(mCard);
                 mCard.destroy();
                 mCard = mNextCard;
@@ -2591,7 +2591,7 @@ public class Reviewer extends AnkiControllableActivity {
                 if (AnkiDroidApp.SDK_VERSION <= 7) {
                     mCard.setFocusableInTouchMode(true);
                 }
-            } else {
+            } else if (mCard != null) {
                 mCard.loadDataWithBaseURL(mBaseUrl, mCardContent.toString(), "text/html", "utf-8", null);
                 mCard.setBackgroundColor(mCurrentBackgroundColor);
             }
@@ -3373,7 +3373,7 @@ public class Reviewer extends AnkiControllableActivity {
     private Html.ImageGetter mSimpleInterfaceImagegetter = new Html.ImageGetter () {
 
         public Drawable getDrawable(String source) {
-            String path = AnkiDroidApp.getCurrentAnkiDroidDirectory(Reviewer.this) + "/collection.media/" + source;
+            String path = AnkiDroidApp.getCurrentAnkiDroidDirectory() + "/collection.media/" + source;
             if ((new File(path)).exists()) {
                 Drawable d = Drawable.createFromPath(path);
                 d.setBounds(0,0,d.getIntrinsicWidth(),d.getIntrinsicHeight());

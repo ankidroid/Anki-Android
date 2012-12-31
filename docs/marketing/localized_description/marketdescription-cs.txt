@@ -13,7 +13,7 @@ Hlavní vlastnosti:
 • rozložené opakování (spaced repetition - algoritmus z programu Supermemo 2)
 • integrované předčítání textu
 • více než 6000 již vytvořených znalostních balíčků
-• widget pokroku
+• widget úspěšnosti
 • podrobné statistiky
 • synchronizace s AnkiWeb
 • open source
@@ -31,7 +31,7 @@ přidání/ editace karet
 • kompletní záložní systém
 • ovládání pomocí gest, kliknutí, třesení
 • plně přizpůsobitelný
-• dynamic deck handling
+• dynamicky přizpůsobitelné balíčky
 • noční režim
 • 27 lokalizací
 • Všechny předchozí verze AnkiDroid lze stáhnout z internetu

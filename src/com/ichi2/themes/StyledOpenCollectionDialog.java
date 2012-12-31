@@ -63,6 +63,9 @@ public class StyledOpenCollectionDialog extends Dialog {
 
 
     public static StyledOpenCollectionDialog show(Context context, CharSequence message, DialogInterface.OnCancelListener cancelListener) {
+    	return show(context, message, cancelListener, null);
+    }
+    public static StyledOpenCollectionDialog show(Context context, CharSequence message, DialogInterface.OnCancelListener cancelListener, View.OnClickListener textClickListener) {
         final StyledOpenCollectionDialog dialog = new StyledOpenCollectionDialog(context);
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
@@ -72,6 +75,9 @@ public class StyledOpenCollectionDialog extends Dialog {
         if (message != null) {
             TextView tv = (TextView) dialog.mMainLayout.findViewById(R.id.deckpicker_loading_layer_statusline);
             tv.setText(message);
+            if (textClickListener != null) {
+            	tv.setOnClickListener(textClickListener);
+            }
         }
 
         dialog.setContentView(dialog.mMainLayout);

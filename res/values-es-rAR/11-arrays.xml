@@ -106,21 +106,20 @@
   <string-array name="cram_deck_conf_order_labels">
     <item>Ver primero las más antiguas</item>
     <item>Al azar</item>
-    <item>Increasing intervals</item>
-    <item>Decreasing intervals</item>
-    <item>Most lapsed</item>
-    <item>Order added</item>
+    <item>Incrementando intervalos</item>
+    <item>Reduciendo intervalos</item>
+    <item>Más caducado</item>
+    <item>Orden añadido</item>
     <item>Orden de tarjetas programadas</item>
     <item>Primero las añadidas más recientemente</item>
   </string-array>
-  <string-array name="cram_deck_conf_preset_labels">
-    <item><![CDATA[<select preset>]]></item>
-    <item>Previsualizar todas las tarjetas nuevas</item>
-    <item>Previsualizar tarjetas añadidas hoy</item>
-    <item>Revisar tarjetas olvidadas hoy</item>
-    <item>Revisar con dos días de antelación</item>
-    <item>Revisar tarjetas programadas con etiqueta</item>
-    <item>Review due cards with decreasing intervals</item>
-    <item>Empollar todas las tarjetas</item>
+  <string-array name="custom_study_options_labels">
+    <item>Incrementar el límite de nuevas tarjetas para hoy</item>
+    <item>Incrementar el límite de tarjetas de revisión para el día de hoy</item>
+    <item>Revisar tarjetas olvidadas</item>
+    <item>Revisar por adelantado</item>
+    <item>Estudiar una selección azarosa de tarjetas</item>
+    <item>Previsualizar nuevas tarjetas</item>
+    <item>Limitar a etiquetas particulares</item>
   </string-array>
 </resources>

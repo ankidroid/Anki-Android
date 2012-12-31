@@ -23,9 +23,9 @@
   <string name="statistics_menu">Estadísticas</string>
   <string name="statistics_young">Jóvenes</string>
   <string name="statistics_mature">Maduras</string>
-  <string name="statistics_relearn">Reaprender</string>
-  <string name="statistics_learn">Aprender</string>
-  <string name="statistics_cram">Empollar</string>
+  <string name="statistics_relearn">Volver a aprender</string>
+  <string name="statistics_learn">Aprendido</string>
+  <string name="statistics_cram">Empollado</string>
   <string name="statistics_type_title">Estadísticas</string>
   <string name="stats_cards">Tarjetas</string>
   <string name="stats_answers">Respuestas</string>

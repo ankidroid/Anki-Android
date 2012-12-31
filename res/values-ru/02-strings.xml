@@ -54,8 +54,8 @@
   <string name="saving_changes">Сохранение изменений...</string>
   <string name="timebox_reached">Лимит времени достигнут!</string>
   <string name="studyoptions_welcome_title">Добро пожаловать в AnkiDroid</string>
-  <string name="studyoptions_no_external_storage_title">Не доступен накопитель данных</string>
-  <string name="studyoptions_no_external_storage_message">Не доступен накопитель данных. AnkiDroid должен иметь доступ к SD-карте для того, чтобы читать и загружать колоды. Убедитесь, что ваша SD-карта смонтирована и попробуйте еще раз.</string>
+  <string name="studyoptions_no_external_storage_title">Нет доступа к внешнему хранилищу</string>
+  <string name="studyoptions_no_external_storage_message">Не доступно внешнее хранилище. AnkiDroid должен иметь доступ к SD-карте для того, чтобы читать и загружать колоды. Убедитесь, что ваша SD-карта смонтирована и попробуйте еще раз.</string>
   <string name="fact_adder_intent_title">AnkiDroid Карта</string>
   <string name="fact_adder_swap">Обмен</string>
   <string name="deckpicker_select_dictionary_title">Выбрать словарь</string>
@@ -84,16 +84,18 @@
   <string name="info_rate">Оценка AnkiDroid</string>
   <string name="col_load_failed">Сбой загрузки коллекции.\nНажмите кнопку назад, чтобы закрыть AnkiDroid.</string>
   <string name="import_title">Импорт карт</string>
-  <string name="import_message">Would you like to add the content of file %s to your collection, or replace your collection with it?</string>
-  <string name="import_message_add">Add</string>
-  <string name="import_message_replace">Replace</string>
-  <string name="import_message_replace_confirm">This will delete your existing collection and replace it with the data of file %s. Are you sure?</string>
+  <string name="import_message">Вы хотите добавить данные файла %s в Вашу коллекцию, или заменить Вашу коллекции этими данными?</string>
+  <string name="import_message_add">Добавить</string>
+  <string name="import_message_replace">Заменить</string>
+  <string name="import_message_replace_confirm">Удалить Вашу существующую коллекцию и заменить её данными файла %s. Вы уверены?</string>
   <string name="import_log_success">Успешно импортированы %d карты</string>
   <string name="import_log_error">Импорт не удался</string>
   <string name="import_log_no_apkg">Это негодный apkg-файл</string>
   <string name="import_importing">Импортирование карт.\nПожалуйста, подождите...</string>
   <string name="import_hint">Чтобы импортировать карты, поместите файл apkg в каталог %s и нажмите ОК</string>
   <string name="import_no_file_found">Импортируемый файл apkg не найден</string>
+  <string name="custom_study">Дополнительное обучение</string>
+  <string name="dyn_deck_desc">Это специальная колода для изучения вне нормального расписания. Карты будут автоматически возвращены в их изначальную колоду после их просмотра. Удаление этой колоды из списка колод возвратит все оставшиеся карты в их изначальную колоду.</string>
   <string-array name="dynOrderLabels">
     <item>Старейшие появляться первыми</item>
     <item>Случайно</item>

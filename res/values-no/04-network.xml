@@ -45,8 +45,8 @@
   <string name="connection_error_message">Det oppstod en nettverksfeil.</string>
   <string name="sync_log_db_error">Det oppstod en databasefeil.</string>
   <string name="no_user_password_error_message">For å fortsette må du ha en AnkiWeb-konto og være logget inn.</string>
-  <string name="username">Brukernavn</string>
-  <string name="username_repeat">Gjenta brukernavn</string>
+  <string name="username">Email address</string>
+  <string name="username_repeat">Repeat email address</string>
   <string name="password">Passord</string>
   <string name="password_repeat">Gjenta passord</string>
   <string name="log_in">Logg inn</string>
@@ -55,7 +55,7 @@
   <string name="logged_as">Logget inn som</string>
   <string name="log_out">Logg ut</string>
   <string name="alert_logging_message">Logger inn, vennligst vent...</string>
-  <string name="invalid_username_password">Ugyldig brukernavn eller passord.</string>
+  <string name="invalid_username_password">Invalid email address or password.</string>
   <string name="login_generic_error">Kunne ikke logge inn.</string>
   <string name="download_finished">Nedlasting ferdig</string>
   <string name="personaldeckpicker_title">Åpne Online-kortstokk</string>

@@ -45,8 +45,8 @@
   <string name="connection_error_message">Si è verificato un errore di rete.</string>
   <string name="sync_log_db_error">Si è verificato un errore nel database.</string>
   <string name="no_user_password_error_message">Per procedere con questa operazione devi avere un account AnkiWeb ed essere connesso.</string>
-  <string name="username">Nome utente</string>
-  <string name="username_repeat">Ripeti il nome utente</string>
+  <string name="username">Indirizzo e-mail</string>
+  <string name="username_repeat">Ripeti indirizzo e-mail</string>
   <string name="password">Password</string>
   <string name="password_repeat">Ripeti la password</string>
   <string name="log_in">Accedi</string>
@@ -55,7 +55,7 @@
   <string name="logged_as">Connesso come</string>
   <string name="log_out">Esci</string>
   <string name="alert_logging_message">Accesso in corso, attendi...</string>
-  <string name="invalid_username_password">Nome utente o password non validi.</string>
+  <string name="invalid_username_password">Indirizzo email o password errati</string>
   <string name="login_generic_error">Impossibile effettuare l\'accesso.</string>
   <string name="download_finished">Download finito</string>
   <string name="personaldeckpicker_title">Apri il mazzo online</string>
@@ -66,8 +66,8 @@
   <string name="sync_conflict_message">I tuoi mazzi qui e su AnkiWeb differiscono in modo tale che non è possibile unirli. È necessario sovrascrivere i mazzi in un posto con quelli nell\'altro posto.\n\nVuoi caricare i mazzi da qui o scaricare i mazzi da AnkiWeb?</string>
   <string name="sync_conflict_local">Carica</string>
   <string name="sync_conflict_remote">Scarica</string>
-  <string name="sync_conflict_remote_confirm">Do you really want to download the server\'s collection? Be aware that this will overwrite your local collection.</string>
-  <string name="sync_conflict_local_confirm">Do you really want to upload the local collection? Be aware that this will overwrite your collection on the server.</string>
+  <string name="sync_conflict_remote_confirm">Vuoi davvero scaricare la collezione del server? Fai attenzione che questo sovrascriverà la tua collezione locale.</string>
+  <string name="sync_conflict_local_confirm">Vuoi davvero caricare la collezione locale? Fai attenzione che questo sovrascriverà la tua collezione sul server.</string>
   <string name="sync_conflict_cancel">Annulla Sincronizzazione</string>
   <string name="sync_prepare_syncing">Preparazione sincronizzazione...</string>
   <string name="sync_preparing_full_sync_message">Sincronizzazione completa in preparazione...</string>

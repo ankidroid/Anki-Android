@@ -20,6 +20,7 @@ package com.ichi2.libanki;
 import android.content.ContentValues;
 import android.content.res.Resources;
 import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
 import com.ichi2.anki.AnkiDatabaseManager;
@@ -288,19 +289,24 @@ public class Collection {
         // }
         if (mDb != null) {
             cleanup();
-            if (save) {
-                getDb().getDatabase().beginTransaction();
-                try {
-                    save();
-                    getDb().getDatabase().setTransactionSuccessful();
-                } finally {
-                    getDb().getDatabase().endTransaction();
-                }
-            } else {
-                if (getDb().getDatabase().inTransaction()) {
-                    getDb().getDatabase().endTransaction();
-                }
-                lock();
+            try {
+                SQLiteDatabase db = getDb().getDatabase();
+                if (save) {
+                    db.beginTransaction();
+                    try {
+                        save();
+                        db.setTransactionSuccessful();
+                    } finally {
+                        db.endTransaction();
+                    }
+                } else {
+                    if (db.inTransaction()) {
+                        db.endTransaction();
+                    }
+                    lock();
+                }            	
+            } catch (RuntimeException e) {
+    			AnkiDroidApp.saveExceptionReportFile(e, "closeDB");
             }
             AnkiDatabaseManager.closeDatabase(mPath);
             mDb = null;
@@ -357,7 +363,7 @@ public class Collection {
      */
     public void cleanup() {
         if (mDty) {
-            mSched.onClose();
+            mSched.unburyCards();
             mDty = false;
         }
     }
@@ -781,8 +787,8 @@ public class Collection {
 
 
     // NOT IN LIBANKI //
-    public int cardCount(List<Long> dids) {
-        return mDb.queryScalar("SELECT count() FROM cards WHERE did IN " + Utils.ids2str(dids));
+    public int cardCount(long[] ls) {
+        return mDb.queryScalar("SELECT count() FROM cards WHERE did IN " + Utils.ids2str(ls));
     }
 
 
@@ -1165,10 +1171,10 @@ public class Collection {
             long last = mDb.queryLongScalar("SELECT id FROM revlog WHERE cid = " + c.getId() + " ORDER BY id DESC LIMIT 1");
             mDb.execute("DELETE FROM revlog WHERE id = " + last);
             // and finally, update daily count
-            // FIXME: what to do in cramming case?
             int n = c.getQueue() == 3 ? 1 : c.getQueue();
             String type = (new String[] { "new", "lrn", "rev" })[n];
             mSched._updateStats(c, type, -1);
+            mSched.mReps -= 1;
             return c.getId();
 
     	case UNDO_EDIT_NOTE:
@@ -1271,6 +1277,7 @@ public class Collection {
     /** Fix possible problems and rebuild caches. */
     public long fixIntegrity() {
         File file = new File(mPath);
+        ArrayList<String> problems = new ArrayList<String>();
         long oldSize = file.length();
         try {
             mDb.getDatabase().beginTransaction();
@@ -1283,14 +1290,32 @@ public class Collection {
                 ArrayList<Long> ids = mDb.queryColumn(Long.class,
                         "SELECT id FROM notes WHERE mid NOT IN " + Utils.ids2str(mModels.ids()), 0);
                 if (ids.size() != 0) {
-                	// TODO: add return information about deleted notes
+                	problems.add("Deleted " + ids.size() + " note(s) with missing note type.");
 	                _remNotes(Utils.arrayList2array(ids));
+                }
+                // cards with invalid ordinal
+                for (JSONObject m : mModels.all()) {
+                	// ignore clozes
+                	if (m.getInt("type") != Sched.MODEL_STD) {
+                		continue;
+                	}
+                	ArrayList<Integer> ords = new ArrayList<Integer>();
+                	JSONArray tmpls = m.getJSONArray("tmpls");
+                	for (int t = 0; t < tmpls.length(); t++) {
+                		ords.add(tmpls.getJSONObject(t).getInt("ord"));
+                	}
+                	ids = mDb.queryColumn(Long.class,
+                            "SELECT id FROM cards WHERE ord NOT IN " + Utils.ids2str(ords) + " AND nid IN (SELECT id FROM notes WHERE mid = " + m.getLong("id") + ")", 0);
+                	if (ids.size() > 0) {
+                    	problems.add("Deleted " + ids.size() + " card(s) with missing template.");
+    	                remCards(Utils.arrayList2array(ids));   		
+                	}
                 }
                 // delete any notes with missing cards
                 ids = mDb.queryColumn(Long.class,
                         "SELECT id FROM notes WHERE id NOT IN (SELECT DISTINCT nid FROM cards)", 0);
                 if (ids.size() != 0) {
-                	// TODO: add return information about deleted notes
+                	problems.add("Deleted " + ids.size() + " note(s) with missing no cards.");
 	                _remNotes(Utils.arrayList2array(ids));
                 }
                 // tags
@@ -1299,11 +1324,15 @@ public class Collection {
                 for (JSONObject m : mModels.all()) {
                     updateFieldCache(Utils.arrayList2array(mModels.nids(m)));
                 }
+                // new cards can't have a due position > 32 bits
+                mDb.execute("UPDATE cards SET due = 1000000, mod = " + Utils.intNow() + ", usn = " + usn()
+                        + " WHERE due > 1000000 AND queue = 0");
                 // new card position
                 mConf.put("nextPos", mDb.queryScalar("SELECT max(due) + 1 FROM cards WHERE type = 0", false));
                 // reviews should have a reasonable due
                 ids = mDb.queryColumn(Long.class, "SELECT id FROM cards WHERE queue = 2 AND due > 10000", 0);
                 if (ids.size() > 0) {
+                	problems.add("Reviews had incorrect due date.");
                     mDb.execute("UPDATE cards SET due = 0, mod = " + Utils.intNow() + ", usn = " + usn()
                             + " WHERE id IN " + Utils.ids2str(Utils.arrayList2array(ids)));
                 }
@@ -1322,6 +1351,11 @@ public class Collection {
         optimize();
         file = new File(mPath);
         long newSize = file.length();
+        // if any problems were found, force a full sync
+        if (problems.size() > 0) {
+        	modSchema();
+        }
+        // TODO: report problems
         return (long) ((oldSize - newSize) / 1024);
     }
 
