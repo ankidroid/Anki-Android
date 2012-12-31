@@ -62,6 +62,20 @@ import com.ichi2.themes.StyledDialog;
 import com.ichi2.themes.StyledOpenCollectionDialog;
 import com.ichi2.themes.StyledProgressDialog;
 import com.ichi2.themes.Themes;
+import org.achartengine.ChartFactory;
+import org.achartengine.GraphicalView;
+import org.achartengine.chart.BarChart;
+import org.achartengine.model.XYMultipleSeriesDataset;
+import org.achartengine.model.XYSeries;
+import org.achartengine.renderer.XYMultipleSeriesRenderer;
+import org.achartengine.renderer.XYSeriesRenderer;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Locale;
 
 public class StudyOptionsFragment extends Fragment implements IAnkiControllable {
 
