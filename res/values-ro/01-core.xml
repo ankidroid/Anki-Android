@@ -121,15 +121,15 @@
     <item>%s ani</item>
   </string-array>
   <plurals name="deckpicker_title">
-    <item quantity="one">1 de %2$ d de facut (%3$ s)</item>
-    <item quantity="other">%1$ d de %2$ d de facut(%3$ s)</item>
+    <item quantity="one">1 de %2$d de facut (%3$s)</item>
+    <item quantity="other">%1$d de %2$d de facut(%3$s)</item>
   </plurals>
   <plurals name="deckpicker_title_minutes">
     <item quantity="one">1 min.</item>
     <item quantity="other">%d min.</item>
   </plurals>
   <plurals name="deckpicker_due">
-    <item quantity="one">1 de %2$ d de facut</item>
+    <item quantity="one">1 de %2$d de facut</item>
     <item quantity="other">%1$d din %2$d scadente</item>
   </plurals>
   <plurals name="reviewer_window_title">
@@ -137,15 +137,15 @@
     <item quantity="other">au mai ramas %d minute</item>
   </plurals>
   <plurals name="studyoptions_congrats_message">
-    <item quantity="one">Mâine va fi: 1 card de recapitulat şi %2$s.\n timpul estimat: %3$ s</item>
-    <item quantity="other">Mâine vor fi: %1$ d carduri de recapitulat şi %2$s.\n timp estimat: %3$ s</item>
+    <item quantity="one">Mâine va fi: 1 card de recapitulat şi %2$s.\n timpul estimat: %3$s</item>
+    <item quantity="other">Mâine vor fi: %1$d carduri de recapitulat şi %2$s.\n timp estimat: %3$s</item>
   </plurals>
   <plurals name="studyoptions_congrats_new_cards">
     <item quantity="one">1 card nou</item>
-    <item quantity="other">%1$ d carduri noi</item>
+    <item quantity="other">%1$d carduri noi</item>
   </plurals>
   <plurals name="studyoptions_congrats_eta">
     <item quantity="one">Timp estimat: 1 min.</item>
-    <item quantity="other">Timp estimat: %1$ d min.</item>
+    <item quantity="other">Timp estimat: %1$d min.</item>
   </plurals>
 </resources>
