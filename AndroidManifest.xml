@@ -22,7 +22,7 @@
     package="com.ichi2.anki"
     android:installLocation="auto"
     android:versionCode="30"
-    android:versionName="2.0beta22" >
+    android:versionName="2.0beta23" >
 
     <instrumentation
         android:name="android.test.InstrumentationTestRunner"
