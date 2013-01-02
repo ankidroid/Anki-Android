@@ -43,6 +43,7 @@ import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Note;
 import com.ichi2.libanki.Sched;
 import com.ichi2.libanki.Stats;
+import com.ichi2.libanki.Storage;
 import com.ichi2.libanki.Utils;
 import com.ichi2.libanki.importer.Anki2Importer;
 import com.ichi2.widget.WidgetStatus;
@@ -844,7 +845,7 @@ public class DeckTask extends
 
 		// from anki2.py
 		String colFile = fileDir + "/collection.anki2";
-		if (!Utils.unzip(path, fileDir) || !(new File(colFile)).exists()) {
+		if (!Utils.unzip(path, fileDir) || !(new File(colFile)).exists() || !Storage.Collection(colFile).validCollection()) {
 			return new TaskData(-2, null, true);
 		}
 
