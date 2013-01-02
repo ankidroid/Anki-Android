@@ -243,7 +243,7 @@
   <string name="deck_conf_max_rev">Maximale Wiederholungen/Tag</string>
   <string name="deck_conf_sibl_space">Geschwister separieren bis zu</string>
   <string name="deck_conf_easy_bonus">Bonus für \'einfach\'</string>
-  <string name="deck_conf_min_range">Maximaler Abstand von Geschwistern</string>
+  <string name="deck_conf_min_range">Minimaler Abstand von Geschwistern</string>
   <string name="deck_conf_ivl_fct">Interval-Faktor</string>
   <string name="deck_conf_max_ivl">Maximales Intervall</string>
   <string name="deck_conf_new_lps_ivl">Intervall für neue</string>
