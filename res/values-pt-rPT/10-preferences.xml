@@ -47,6 +47,8 @@
   <string name="pref_cat_messages">Messages and Feedback</string>
   <string name="pref_cat_performance">Performance</string>
   <string name="pref_cat_fonts">Fonts</string>
+  <string name="pref_cat_plugins">Plugins</string>
+  <string name="pref_cat_plugins_controllers">Controllers</string>
   <string name="show_study_options_on_deck_load">Opções de estudo ao carregar</string>
   <string name="show_study_options_on_deck_load_summ">Mostra tela de opções de estudo ao carregar um deck</string>
   <string name="hide_due_count">Ocultar contagem de devidos</string>
@@ -110,6 +112,7 @@
   <string name="zeemote_right">Joystick à direita</string>
   <string name="zeemote_show_answer">Mostrar respostas com ações de marca</string>
   <string name="zeemote_show_answer_summ">Ações atribuídas às marcas 1-4 também mostram a resposta.</string>
+  <string name="controller_pref_changed_toast">Controller %1$s will be %2$s the next time you start AnkiDroid</string>
   <string name="swipe">Ativar gestos</string>
   <string name="swipe_summ_off">Use gestos para alternar entre as telas e cartões de resposta. Esta opção não é compatível com os controles de zoom</string>
   <string name="swipe_summ_on">Deslizar horizontalmente para alternar entre as telas. Configure outras ações abaixo</string>

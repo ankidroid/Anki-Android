@@ -47,6 +47,8 @@
   <string name="pref_cat_messages">Μηνύματα και σχόλια</string>
   <string name="pref_cat_performance">Επίδοση</string>
   <string name="pref_cat_fonts">Γραμματοσειρές</string>
+  <string name="pref_cat_plugins">Plugins</string>
+  <string name="pref_cat_plugins_controllers">Controllers</string>
   <string name="show_study_options_on_deck_load">Επιλογές μελέτης στο φόρτωμα</string>
   <string name="show_study_options_on_deck_load_summ">Δείχνει την οθόνη των επιλογών μελέτης όταν φορτώνετε μια τράπουλα</string>
   <string name="hide_due_count">Απόκρυψη αριθμού αναμενώμενων</string>
@@ -110,6 +112,7 @@
   <string name="zeemote_right">Μοχλός δεξιά</string>
   <string name="zeemote_show_answer">Εμφάνιση απαντήσεων με μαρκάρισμα</string>
   <string name="zeemote_show_answer_summ">Ενέργειες που έχουν ανατεθεί σε σήματα 1-4 δείχνουν και την απάντηση.</string>
+  <string name="controller_pref_changed_toast">Controller %1$s will be %2$s the next time you start AnkiDroid</string>
   <string name="swipe">Ενεργοποίηση χειρονομίων</string>
   <string name="swipe_summ_off">Χρησιμοποιήστε χειρονομίες για να αλλάξετε μεταξύ οθόνων και να απαντήσετε κάρτες. Αυτή η επιλογή δεν είναι συμβατή με τους ελέγχους ζουμ</string>
   <string name="swipe_summ_on">Σαρώστε οριζόντια για να αλλάξετε οθόνες. Ρυθμίσετε άλλες ενέργειες παρακάτω</string>

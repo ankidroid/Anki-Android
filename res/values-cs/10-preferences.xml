@@ -47,6 +47,8 @@
   <string name="pref_cat_messages">Zprávy a zpětná vazba</string>
   <string name="pref_cat_performance">Výkon</string>
   <string name="pref_cat_fonts">Písma</string>
+  <string name="pref_cat_plugins">Plugins</string>
+  <string name="pref_cat_plugins_controllers">Controllers</string>
   <string name="show_study_options_on_deck_load">Studijní možnosti při načtení</string>
   <string name="show_study_options_on_deck_load_summ">Během načítání balíčku zobrazí obrazovku se studijními možnostmi</string>
   <string name="hide_due_count">Schovat počet k opakování</string>
@@ -110,6 +112,7 @@
   <string name="zeemote_right">Dát doprava</string>
   <string name="zeemote_show_answer">Zobrazit označené odpovědi</string>
   <string name="zeemote_show_answer_summ">Akce přiřazené ke značkám 1-4 zobrazí také odpověď.</string>
+  <string name="controller_pref_changed_toast">Controller %1$s will be %2$s the next time you start AnkiDroid</string>
   <string name="swipe">Povolit gesta</string>
   <string name="swipe_summ_off">Použít gesta pro přepínání mezi obrazovkami a zodpovězenými kartami. Toto nastavení není kompatibilní s ovládacími prvky lupy</string>
   <string name="swipe_summ_on">Vodorovné tažení k přepínání mezi obrazovkami. Konfigurace dalších akcí níže</string>

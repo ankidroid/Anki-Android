@@ -47,6 +47,8 @@
   <string name="pref_cat_messages">Сообщения и обратная связь</string>
   <string name="pref_cat_performance">Производительность</string>
   <string name="pref_cat_fonts">Шрифты</string>
+  <string name="pref_cat_plugins">Plugins</string>
+  <string name="pref_cat_plugins_controllers">Controllers</string>
   <string name="show_study_options_on_deck_load">Параметры обучения</string>
   <string name="show_study_options_on_deck_load_summ">Показать параметры обучения при загрузке колоды</string>
   <string name="hide_due_count">Скрыть количество повторов</string>
@@ -110,6 +112,7 @@
   <string name="zeemote_right">Джойстик направо</string>
   <string name="zeemote_show_answer">Показывать ответы с метками действий</string>
   <string name="zeemote_show_answer_summ">Действия, назначенные меткам 1-4 также показывают ответ.</string>
+  <string name="controller_pref_changed_toast">Controller %1$s will be %2$s the next time you start AnkiDroid</string>
   <string name="swipe">Включить жесты</string>
   <string name="swipe_summ_off">Используйте жесты для переключения между экранами. Не работает одновременно с кнопками масштабирования</string>
   <string name="swipe_summ_on">Горизонтальное движение для переключения между экранами. Настройка других действий ниже</string>
