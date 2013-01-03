@@ -62,11 +62,10 @@
   <string name="custom_study_tags">Enter tags:</string>
   <string name="rebuild_custom_study_deck">Rebuilding custom study deck.\nPlease wait...</string>
   <string-array name="about_content">
-    <item><![CDATA[<h2>%1$s: <br/> Targetes per memoritzar per Android </h2> AnkiDroid és una aplicació de gestió de tagetes per memoritzar, totalment compatible amb el programari d\'escriptori <a href="%2$s">Anki</a>. Podeu generar, descarregar i aprendre els continguts als dos programaris, a l\'Escriptori i a AnkiDroid Anki, i sincronitzar-los amb molta facilitat.]]
-    <![CDATA[AnkiDroid és <a href="%1$s">programari de codi obert<a/>, així que us animem a <a href="%2$s">unir-vos</a> als <a href="%3$s">col·laboradors</a>:-)]]></item>
-    <item><![CDATA[Els no desenvolupadors també podeu ajudar, per exemple <a href="%1$s"> amb la traducció</a> d\'AnkiDroid, l\'actualització de la wiki i de les captures de pantalla, <a href="%2$s"> col·labora amb</a> l\'Anki taula d\'Escriptori, o critant AnkiDroid al vostre blog!]]></item>
-    <item><![CDATA[Els no desenvolupadors també podeu ajudar, per exemple <a href="%1$s"> amb la traducció</a> d\'AnkiDroid, l\'actualització de la wiki i de les captures de pantalla, <a href="%2$s"> col·labora amb</a> l\'Anki taula d\'Escriptori, o critant AnkiDroid al vostre blog!]]></item>
-    <item><![CDATA[AnkiDroid és publica sota la <a href="%1$s"> llicència GNU GPL v3</a> i el codi font està disponible <a href="%2$s">aquí</a>.]]></item>
-    <item><![CDATA[AnkiDroid és publica sota la <a href="%1$s"> llicència GNU GPL v3</a> i el codi font està disponible <a href="%2$s">aquí</a>.]]></item>
+    <item><![CDATA[<h2>%1$s: <br/> Targetes per memoritzar per Android </h2> AnkiDroid és una aplicació de gestió de tagetes per memoritzar, totalment compatible amb el programari d\'escriptori <a href=\"%2$s\">Anki</a>. Podeu generar, descarregar i aprendre els continguts als dos programaris, a l\'Escriptori i a AnkiDroid Anki, i sincronitzar-los amb molta facilitat.]]></item>
+    <item><![CDATA[Per ajudar-nos a millorar AnkiDroid, podeu informar de qualsevol error <a href=\"%1$s\">aquí</a>; les noves idees també són benvingudes ! Si us plau, utilitzeu el <a href=\"%2$s\">wiki</a> i presenteu-vos al <a href=\"%3$s\"> Fòrum</a>.]]></item>
+    <item><![CDATA[AnkiDroid és <a href=\"%1$s\">programari de codi obert<a/>, així que us animem a <a href=\"%2$s\">unir-vos</a> als <a href=\"%3$s\">col·laboradors</a>:-)]]></item>
+    <item><![CDATA[Els no desenvolupadors també podeu ajudar, per exemple <a href=\"%1$s\">amb la traducció</a> d\'AnkiDroid, l\'actualització de la wiki i de les captures de pantalla, <a href=\"%2$s\">col·labora amb</a> l\'Anki taula d\'Escriptori, o critant AnkiDroid al vostre blog!]]></item>
+    <item><![CDATA[AnkiDroid és publica sota la <a href=\"%1$s\">llicència GNU GPL v3</a> i el codi font està disponible <a href=\"%2$s\">aquí</a>.]]></item>
   </string-array>
 </resources>
