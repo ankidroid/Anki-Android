@@ -1832,9 +1832,7 @@ public class Reviewer extends AnkiActivity {
             webView.setFocusableInTouchMode(false);
         }
         AnkiDroidApp.getCompat().setScrollbarFadingEnabled(webView, mPrefFadeScrollbars);
-        Log.i(AnkiDroidApp.TAG, "Focusable = " +
-                webView.isFocusable() + ", Focusable in touch mode = " +
-                webView.isFocusableInTouchMode());
+        Log.i(AnkiDroidApp.TAG, "Focusable = " + webView.isFocusable() + ", Focusable in touch mode = " + webView.isFocusableInTouchMode());
 
         return webView;
     }
@@ -2119,8 +2117,7 @@ public class Reviewer extends AnkiActivity {
 	            try {
 	                mSetTextIsSelectable = TextView.class.getMethod("setTextIsSelectable", boolean.class);
 	            } catch (Throwable e) {
-	                Log.i(AnkiDroidApp.TAG,
-	                        "mSetTextIsSelectable could not be found due to a too low Android version (< 3.0)");
+	                Log.i(AnkiDroidApp.TAG, "mSetTextIsSelectable could not be found due to a too low Android version (< 3.0)");
 	                mSetTextIsSelectable = null;
 	            }
 	            if (mSetTextIsSelectable != null) {

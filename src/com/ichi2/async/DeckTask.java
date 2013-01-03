@@ -452,8 +452,7 @@ public class DeckTask extends
 				doInBackgroundLoadTutorial(new TaskData(col));
 			}
 		} else {
-			Log.i(AnkiDroidApp.TAG,
-					"doInBackgroundOpenCollection: collection still open - reusing it");
+			Log.i(AnkiDroidApp.TAG, "doInBackgroundOpenCollection: collection still open - reusing it");
 			col = oldCol;
 		}
 		Object[] counts = null;
@@ -717,8 +716,7 @@ public class DeckTask extends
 				AnkiDroidApp.closeCollection(true);
 				BackupManager.performBackup(path);
 			} catch (RuntimeException e) {
-				Log.i(AnkiDroidApp.TAG,
-						"doInBackgroundCloseCollection: error occurred - collection not properly closed");
+				Log.i(AnkiDroidApp.TAG, "doInBackgroundCloseCollection: error occurred - collection not properly closed");
 			}
 		}
 		return null;

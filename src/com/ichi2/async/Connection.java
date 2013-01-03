@@ -270,8 +270,7 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
         boolean valid = false;
         if (ret != null) {
             data.returnType = ret.getStatusLine().getStatusCode();
-            Log.i(AnkiDroidApp.TAG, "doInBackgroundLogin - response from server: " + data.returnType + " ("
-                    + ret.getStatusLine().getReasonPhrase() + ")");
+            Log.i(AnkiDroidApp.TAG, "doInBackgroundLogin - response from server: " + data.returnType + " (" + ret.getStatusLine().getReasonPhrase() + ")");
             if (data.returnType == 200) {
                 try {
                     JSONObject jo = (new JSONObject(server.stream2String(ret.getEntity().getContent())));
