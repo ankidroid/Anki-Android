@@ -101,7 +101,7 @@
   <string name="studyoptions_congrats_custom">Pro studium mimo normální plán klepněte na tlačítko Vlastní studium.</string>
   <string name="sd_card_not_mounted">Paměťová karta není vložena.\n\n Svou kolekci si přesto můžete uložit do interní paměti, avšak toto není doporučeno, protože dostupnost tohoto souboru není tak snadná. Tuto volbu aktivujete v nastavení (které otevřete kliknutím na tento text).</string>
   <string name="studyoptions_options">Možnosti</string>
-  <string name="empty_cloze_warning">Please edit this note and add some cloze deletions. (%1$s)</string>
+  <string name="empty_cloze_warning">Prosím upravte tuto poznámku a přidejte nějaké doplňovačky.(%1$s)</string>
   <string name="help_cloze">Pomoc</string>
   <string name="button_sync">Synchronizovat</string>
   <string-array name="next_review_s">
