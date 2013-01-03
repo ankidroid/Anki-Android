@@ -106,7 +106,7 @@ public class Syncer {
                 rts = ra.getLong(3);
                 mMediaUsn = ra.getInt(4);
 
-                // Log.i(AnkiDroidApp.TAG, "Sync: getting meta data");
+                Log.i(AnkiDroidApp.TAG, "Sync: getting meta data");
                 JSONArray la = meta();
                 mLMod = la.getLong(0);
                 mLScm = la.getLong(1);
@@ -117,71 +117,71 @@ public class Syncer {
                     return new Object[] { "clockOff", diff };
                 }
                 if (mLMod == mRMod) {
-                    // Log.i(AnkiDroidApp.TAG, "Sync: no changes - returning");
+                    Log.i(AnkiDroidApp.TAG, "Sync: no changes - returning");
                     return new Object[] { "noChanges" };
                 } else if (mLScm != mRScm) {
-                    // Log.i(AnkiDroidApp.TAG, "Sync: full sync necessary - returning");
+                    Log.i(AnkiDroidApp.TAG, "Sync: full sync necessary - returning");
                     return new Object[] { "fullSync" };
                 }
                 mLNewer = mLMod > mRMod;
                 // step 2: deletions
                 publishProgress(con, R.string.sync_deletions_message);
 
-                // Log.i(AnkiDroidApp.TAG, "Sync: collection removed data");
+                Log.i(AnkiDroidApp.TAG, "Sync: collection removed data");
                 JSONObject lrem = removed();
                 JSONObject o = new JSONObject();
                 o.put("minUsn", mMinUsn);
                 o.put("lnewer", mLNewer);
                 o.put("graves", lrem);
 
-                // Log.i(AnkiDroidApp.TAG, "Sync: sending and receiving removed data");
+                Log.i(AnkiDroidApp.TAG, "Sync: sending and receiving removed data");
                 JSONObject rrem = mServer.start(o);
                 if (rrem == null) {
-                    // Log.i(AnkiDroidApp.TAG, "Sync: error - returning");
+                    Log.i(AnkiDroidApp.TAG, "Sync: error - returning");
                     return null;
                 }
                 if (rrem.has("errorType")) {
-                    // Log.i(AnkiDroidApp.TAG, "Sync: error - returning");
+                    Log.i(AnkiDroidApp.TAG, "Sync: error - returning");
                     return new Object[] { "error", rrem.get("errorType"), rrem.get("errorReason") };
                 }
 
-                // Log.i(AnkiDroidApp.TAG, "Sync: applying removed data");
+                Log.i(AnkiDroidApp.TAG, "Sync: applying removed data");
                 remove(rrem);
                 // ... and small objects
                 publishProgress(con, R.string.sync_small_objects_message);
 
-                // Log.i(AnkiDroidApp.TAG, "Sync: collection small changes");
+                Log.i(AnkiDroidApp.TAG, "Sync: collection small changes");
                 JSONObject lchg = changes();
                 JSONObject sch = new JSONObject();
                 sch.put("changes", lchg);
 
-                // Log.i(AnkiDroidApp.TAG, "Sync: sending and receiving small changes");
+                Log.i(AnkiDroidApp.TAG, "Sync: sending and receiving small changes");
                 JSONObject rchg = mServer.applyChanges(sch);
                 if (rchg == null) {
-                    // Log.i(AnkiDroidApp.TAG, "Sync: error - returning");
+                    Log.i(AnkiDroidApp.TAG, "Sync: error - returning");
                     return null;
                 }
                 if (rchg.has("errorType")) {
-                    // Log.i(AnkiDroidApp.TAG, "Sync: error - returning");
+                    Log.i(AnkiDroidApp.TAG, "Sync: error - returning");
                     return new Object[] { "error", rchg.get("errorType"), rchg.get("errorReason") };
                 }
 
-                // Log.i(AnkiDroidApp.TAG, "Sync: merging small changes");
+                Log.i(AnkiDroidApp.TAG, "Sync: merging small changes");
                 mergeChanges(lchg, rchg);
                 // step 3: stream large tables from server
                 publishProgress(con, R.string.sync_download_chunk);
                 while (true) {
-                    // Log.i(AnkiDroidApp.TAG, "Sync: downloading chunked data");
+                    Log.i(AnkiDroidApp.TAG, "Sync: downloading chunked data");
                     JSONObject chunk = mServer.chunk();
                     if (chunk == null) {
-                        // Log.i(AnkiDroidApp.TAG, "Sync: error - returning");
+                        Log.i(AnkiDroidApp.TAG, "Sync: error - returning");
                         return null;
                     }
                     if (chunk.has("errorType")) {
-                        // Log.i(AnkiDroidApp.TAG, "Sync: error - returning");
+                        Log.i(AnkiDroidApp.TAG, "Sync: error - returning");
                         return new Object[] { "error", chunk.get("errorType"), chunk.get("errorReason") };
                     }
-                    // Log.i(AnkiDroidApp.TAG, "Sync: applying chunked data");
+                    Log.i(AnkiDroidApp.TAG, "Sync: applying chunked data");
                     applyChunk(chunk);
                     if (chunk.getBoolean("done")) {
                         break;
@@ -190,11 +190,11 @@ public class Syncer {
                 // step 4: stream to server
                 publishProgress(con, R.string.sync_upload_chunk);
                 while (true) {
-                    // Log.i(AnkiDroidApp.TAG, "Sync: collecting chunked data");
+                    Log.i(AnkiDroidApp.TAG, "Sync: collecting chunked data");
                     JSONObject chunk = chunk();
                     JSONObject sech = new JSONObject();
                     sech.put("chunk", chunk);
-                    // Log.i(AnkiDroidApp.TAG, "Sync: sending chunked data");
+                    Log.i(AnkiDroidApp.TAG, "Sync: sending chunked data");
                     mServer.applyChunk(sech);
                     if (chunk.getBoolean("done")) {
                         break;
@@ -222,12 +222,12 @@ public class Syncer {
                 }
                 // finalize
                 publishProgress(con, R.string.sync_finish_message);
-                // Log.i(AnkiDroidApp.TAG, "Sync: sending finish command");
+                Log.i(AnkiDroidApp.TAG, "Sync: sending finish command");
                 long mod = mServer.finish();
                 if (mod == 0) {
                     return new Object[] { "finishError" };
                 }
-                // Log.i(AnkiDroidApp.TAG, "Sync: finishing");
+                Log.i(AnkiDroidApp.TAG, "Sync: finishing");
                 finish(mod);
 
                 publishProgress(con, R.string.sync_writing_db);

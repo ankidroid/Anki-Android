@@ -120,15 +120,15 @@ public class Anki2Importer {
 			long id = mDst.getDecks().id(mDeckPrefix);
 			mDst.getDecks().select(id);
 		}
-		// Log.i(AnkiDroidApp.TAG, "Import - preparing");
+		Log.i(AnkiDroidApp.TAG, "Import - preparing");
 		_prepareTS();
 		_prepareModels();
-		// Log.i(AnkiDroidApp.TAG, "Import - importing notes");
+		Log.i(AnkiDroidApp.TAG, "Import - importing notes");
 		_importNotes();
-		// Log.i(AnkiDroidApp.TAG, "Import - importing cards");
+		Log.i(AnkiDroidApp.TAG, "Import - importing cards");
 		int cnt = _importCards();
 //		_importMedia();
-		// Log.i(AnkiDroidApp.TAG, "Import - finishing");
+		Log.i(AnkiDroidApp.TAG, "Import - finishing");
 		_postImport();
 		// LIBANKI: vacuum and analyze is done in DeckTask
 		return cnt;

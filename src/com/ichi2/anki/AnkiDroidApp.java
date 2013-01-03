@@ -353,7 +353,7 @@ public class AnkiDroidApp extends Application {
 
     public static synchronized Collection openCollection(String path) {
     	mLock.lock();
-    	// Log.i(AnkiDroidApp.TAG, "openCollection: " + path);
+    	Log.i(AnkiDroidApp.TAG, "openCollection: " + path);
         try {
         	if (!colIsOpen() || !sInstance.mCurrentCollection.getPath().equals(path)) {
         		if (colIsOpen()) {
@@ -378,7 +378,7 @@ public class AnkiDroidApp extends Application {
 
     public static void closeCollection(boolean save) {
     	mLock.lock();
-    	// Log.i(AnkiDroidApp.TAG, "closeCollection");
+    	Log.i(AnkiDroidApp.TAG, "closeCollection");
         try {
         	sInstance.mAccessThreadCount--;
         	if (sInstance.mAccessThreadCount == 0 && sInstance.mCurrentCollection != null) {

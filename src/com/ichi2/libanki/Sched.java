@@ -201,7 +201,7 @@ public class Sched {
 
 
     public boolean answerCard(Card card, int ease) {
-        // Log.i(AnkiDroidApp.TAG, "answerCard - ease:" + ease);
+        Log.i(AnkiDroidApp.TAG, "answerCard - ease:" + ease);
         boolean isLeech = false;
         mCol.markUndo(Collection.UNDO_REVIEW, new Object[]{card});
         card.setReps(card.getReps() + 1);
@@ -2531,7 +2531,7 @@ public class Sched {
     // */
     //
     // private void updateDynamicIndices() {
-    // // // Log.i(AnkiDroidApp.TAG, "updateDynamicIndices - Updating indices...");
+    // // Log.i(AnkiDroidApp.TAG, "updateDynamicIndices - Updating indices...");
     // // // determine required columns
     // // if (mDeck.getQconf().getInt("revOrder")) {
     // //
