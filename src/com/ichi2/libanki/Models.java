@@ -1470,7 +1470,18 @@ public class Models {
 	private boolean validateBrackets(JSONObject value) {
 		String s = value.toString();
 		int count = 0;
-		for (char c : s.toCharArray()) {
+		boolean inQuotes = false;
+		char[] ar = s.toCharArray();
+		for (int i = 0; i < ar.length; i++) {
+			char c = ar[i];
+			// if in quotes, do not count
+			if (c == '"' && (i == 0 || (ar[i-1] != '\\'))) {
+				inQuotes = !inQuotes;
+				continue;
+			}
+			if (inQuotes) {
+				continue;
+			}
 			switch(c) {
 			case '{':
 				count++;
