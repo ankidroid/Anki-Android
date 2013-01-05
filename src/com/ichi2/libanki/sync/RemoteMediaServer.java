@@ -21,7 +21,9 @@ import android.util.Log;
 import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.async.Connection;
 
+import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
+import org.apache.http.StatusLine;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -101,10 +103,11 @@ public class RemoteMediaServer extends BasicHttpSyncer {
             if (ret == null) {
                 return 0;
             }
+            StatusLine sl = ret.getStatusLine();
+            HttpEntity ent = ret.getEntity();
             String s = "";
-            int resultType = ret.getStatusLine().getStatusCode();
-            if (resultType == 200) {
-                s = super.stream2String(ret.getEntity().getContent());
+            if (sl != null && sl.getStatusCode() == 200 && ent != null) {
+                s = super.stream2String(ent.getContent());
                 if (s != null && !s.equalsIgnoreCase("null") && s.length() != 0) {
                     return Long.getLong(s);
                 }
