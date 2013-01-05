@@ -311,7 +311,6 @@ public class Collection {
             AnkiDatabaseManager.closeDatabase(mPath);
             mDb = null;
             mMedia.close();
-            AnkiDroidApp.resetAccessThreadCount();
             // Log.i(AnkiDroidApp.TAG, "Collection closed");
         }
     }
