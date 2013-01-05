@@ -31,7 +31,7 @@
 
     <uses-sdk
         android:minSdkVersion="4"
-        android:targetSdkVersion="11" />
+        android:targetSdkVersion="4" />
 
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.VIBRATE" />
@@ -244,10 +244,15 @@
 
         <activity
             android:name="com.ichi2.anki.MultimediaCardEditorActivity"
-            android:label="@string/deck" >
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.ichi2.anki.DeckPicker" />
+            android:label="@string/fact_adder_intent_title" >
+        </activity>
+        <activity
+            android:name="com.ichi2.anki.EditTextFieldActivity"
+            android:label="@string/title_activity_edit_text" >
+        </activity>
+        <activity
+            android:name="com.ichi2.anki.EditImageActivity"
+            android:label="@string/title_activity_edit_image" >
         </activity>
     </application>
 

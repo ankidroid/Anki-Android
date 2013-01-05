@@ -4,6 +4,17 @@
         android:id="@+id/delete_note"
         android:orderInCategory="100"
         android:showAsAction="ifRoom|withText"
-        android:title="@string/menu_delete_note"/>
+        android:title="@string/menu_delete_note"
+        android:icon="@drawable/android_std_content_discard"
+        />
 
+        <item
+        android:id="@+id/save_note"
+        android:orderInCategory="100"
+        android:showAsAction="ifRoom|withText"
+        android:title="@string/CardEditorSaveButton"
+        />
+    
+    
+    
 </menu>
