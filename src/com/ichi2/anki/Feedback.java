@@ -611,7 +611,7 @@ public class Feedback extends AnkiActivity {
                     result.success = true;
                     result.returnType = respCode;
                     result.result = Utils.convertStreamToString(response.getEntity().getContent());
-                    // Log.i(AnkiDroidApp.TAG, String.format("postFeedback OK: %s", result.result));
+                    Log.i(AnkiDroidApp.TAG, String.format("postFeedback OK: %s", result.result));
                     break;
 
                 default:
