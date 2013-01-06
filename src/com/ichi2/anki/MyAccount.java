@@ -307,7 +307,7 @@ public class MyAccount extends AnkiActivity {
 
         @Override
         public void onPreExecute() {
-            // Log.i(AnkiDroidApp.TAG, "MyAccount - onPreExcecute");
+            Log.i(AnkiDroidApp.TAG, "MyAccount - onPreExcecute");
             if (mProgressDialog == null || !mProgressDialog.isShowing()) {
                 mProgressDialog = StyledProgressDialog.show(MyAccount.this, "",
                         getResources().getString(R.string.alert_logging_message), true);
@@ -317,13 +317,13 @@ public class MyAccount extends AnkiActivity {
 
         @Override
         public void onPostExecute(Payload data) {
-            // Log.i(AnkiDroidApp.TAG, "MyAccount - onPostExecute, succes = " + data.success);
+            Log.i(AnkiDroidApp.TAG, "MyAccount - onPostExecute, succes = " + data.success);
             if (mProgressDialog != null) {
                 mProgressDialog.dismiss();
             }
 
             if (data.success) {
-                // Log.i(AnkiDroidApp.TAG, "User successfully logged in!");
+                Log.i(AnkiDroidApp.TAG, "User successfully logged in!");
                 saveUserInformation((String) data.data[0], (String) data.data[1]);
 
                 Intent i = MyAccount.this.getIntent();
@@ -367,7 +367,7 @@ public class MyAccount extends AnkiActivity {
 
         @Override
         public void onPreExecute() {
-            // Log.i(AnkiDroidApp.TAG, "MyAccount - onPreExcecute");
+            Log.i(AnkiDroidApp.TAG, "MyAccount - onPreExcecute");
             if (mProgressDialog == null || !mProgressDialog.isShowing()) {
                 mProgressDialog = StyledProgressDialog.show(MyAccount.this, "",
                         getResources().getString(R.string.registering_message), true);
@@ -377,13 +377,13 @@ public class MyAccount extends AnkiActivity {
 
         @Override
         public void onPostExecute(Payload data) {
-            // Log.i(AnkiDroidApp.TAG, "MyAccount - onPostExecute, succes = " + data.success);
+            Log.i(AnkiDroidApp.TAG, "MyAccount - onPostExecute, succes = " + data.success);
             if (mProgressDialog != null) {
                 mProgressDialog.dismiss();
             }
 
             if (data.success) {
-                // Log.i(AnkiDroidApp.TAG, "User successfully registered!");
+                Log.i(AnkiDroidApp.TAG, "User successfully registered!");
                 saveUserInformation((String) data.data[0], (String) data.data[1]);
 
                 Intent i = MyAccount.this.getIntent();
@@ -416,7 +416,7 @@ public class MyAccount extends AnkiActivity {
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
-            // Log.i(AnkiDroidApp.TAG, "MyAccount - onBackPressed()");
+            Log.i(AnkiDroidApp.TAG, "MyAccount - onBackPressed()");
             finish();
             if (AnkiDroidApp.SDK_VERSION > 4) {
                 ActivityTransitionAnimation.slide(this, ActivityTransitionAnimation.FADE);

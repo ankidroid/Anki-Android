@@ -353,7 +353,7 @@ public class AnkiDroidApp extends Application {
 
     public static synchronized Collection openCollection(String path) {
     	mLock.lock();
-    	// Log.i(AnkiDroidApp.TAG, "openCollection: " + path);
+    	Log.i(AnkiDroidApp.TAG, "openCollection: " + path);
         try {
         	if (!colIsOpen() || !sInstance.mCurrentCollection.getPath().equals(path)) {
         		if (colIsOpen()) {
@@ -363,10 +363,10 @@ public class AnkiDroidApp extends Application {
         		}
         		sInstance.mCurrentCollection = Storage.Collection(path);
         		sInstance.mAccessThreadCount++;
-        		// Log.i(AnkiDroidApp.TAG, "Access to collection is requested: collection has been opened");
+        		Log.i(AnkiDroidApp.TAG, "Access to collection is requested: collection has been opened");
         	} else {
         		sInstance.mAccessThreadCount++;
-        		// Log.i(AnkiDroidApp.TAG, "Access to collection is requested: collection has not been reopened (count: " + sInstance.mAccessThreadCount + ")");
+        		Log.i(AnkiDroidApp.TAG, "Access to collection is requested: collection has not been reopened (count: " + sInstance.mAccessThreadCount + ")");
         	}
             return sInstance.mCurrentCollection;
 		} finally {
@@ -380,10 +380,10 @@ public class AnkiDroidApp extends Application {
 
     public static void closeCollection(boolean save) {
     	mLock.lock();
-    	// Log.i(AnkiDroidApp.TAG, "closeCollection");
+    	Log.i(AnkiDroidApp.TAG, "closeCollection");
         try {
         	sInstance.mAccessThreadCount--;
-    		// Log.i(AnkiDroidApp.TAG, "Access to collection jas been closed: (count: " + sInstance.mAccessThreadCount + ")");
+    		Log.i(AnkiDroidApp.TAG, "Access to collection jas been closed: (count: " + sInstance.mAccessThreadCount + ")");
         	if (sInstance.mAccessThreadCount == 0 && sInstance.mCurrentCollection != null) {
         		Collection col = sInstance.mCurrentCollection;
             	sInstance.mCurrentCollection = null;
@@ -403,6 +403,6 @@ public class AnkiDroidApp extends Application {
     public static void resetAccessThreadCount() {
     	sInstance.mAccessThreadCount = 0;
     	sInstance.mCurrentCollection = null;
-		// Log.i(AnkiDroidApp.TAG, "Access has been reset to 0");
+		Log.i(AnkiDroidApp.TAG, "Access has been reset to 0");
     }
 }

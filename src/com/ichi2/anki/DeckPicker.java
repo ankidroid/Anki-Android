@@ -404,7 +404,7 @@ public class DeckPicker extends FragmentActivity {
 
         @Override
         public void onPostExecute(Payload data) {
-            // Log.i(AnkiDroidApp.TAG, "onPostExecute");
+            Log.i(AnkiDroidApp.TAG, "onPostExecute");
             Resources res = DeckPicker.this.getResources();
         	mDontSaveOnStop = false;
             if (mProgressDialog != null) {
@@ -758,10 +758,10 @@ public class DeckPicker extends FragmentActivity {
     /** Called when the activity is first created. */
     @Override
     protected void onCreate(Bundle savedInstanceState) throws SQLException {   	
-        // Log.i(AnkiDroidApp.TAG, "DeckPicker - onCreate");
+        Log.i(AnkiDroidApp.TAG, "DeckPicker - onCreate");
         Intent intent = getIntent();
         if (!isTaskRoot()) {
-            // Log.i(AnkiDroidApp.TAG, "DeckPicker - onCreate: Detected multiple instance of this activity, closing it and return to root activity");
+            Log.i(AnkiDroidApp.TAG, "DeckPicker - onCreate: Detected multiple instance of this activity, closing it and return to root activity");
             Intent reloadIntent = new Intent(DeckPicker.this, DeckPicker.class);
             reloadIntent.setAction(Intent.ACTION_MAIN);
             if (intent != null && intent.getExtras() != null) {
@@ -1102,7 +1102,7 @@ public class DeckPicker extends FragmentActivity {
 
     @Override
     protected void onPause() {
-        // Log.i(AnkiDroidApp.TAG, "DeckPicker - onPause");
+        Log.i(AnkiDroidApp.TAG, "DeckPicker - onPause");
 
         super.onPause();
     }
@@ -1110,7 +1110,7 @@ public class DeckPicker extends FragmentActivity {
 
     @Override
     protected void onStop() {
-        // Log.i(AnkiDroidApp.TAG, "DeckPicker - onStop");
+        Log.i(AnkiDroidApp.TAG, "DeckPicker - onStop");
         super.onStop();
         if (!mDontSaveOnStop) {
             if (isFinishing()) {
@@ -1131,7 +1131,7 @@ public class DeckPicker extends FragmentActivity {
         if (mUnmountReceiver != null) {
             unregisterReceiver(mUnmountReceiver);
         }
-        // Log.i(AnkiDroidApp.TAG, "DeckPicker - onDestroy()");
+        Log.i(AnkiDroidApp.TAG, "DeckPicker - onDestroy()");
     }
 
 
@@ -1999,7 +1999,7 @@ public class DeckPicker extends FragmentActivity {
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
-            // Log.i(AnkiDroidApp.TAG, "DeckPicker - onBackPressed()");
+            Log.i(AnkiDroidApp.TAG, "DeckPicker - onBackPressed()");
             finishWithAnimation();
             return true;
         }
@@ -2299,7 +2299,7 @@ public class DeckPicker extends FragmentActivity {
                     public void onClick(DialogInterface dialog, int which) {
                         String deckName = mDialogEditText.getText().toString()
                                 .replaceAll("[\'\"\\n\\r\\[\\]\\(\\)]", "");
-                        // Log.i(AnkiDroidApp.TAG, "Creating deck: " + deckName);
+                        Log.i(AnkiDroidApp.TAG, "Creating deck: " + deckName);
                         AnkiDroidApp.getCol().getDecks().id(deckName, true);
                         loadCounts();
                     }
@@ -2478,7 +2478,7 @@ public class DeckPicker extends FragmentActivity {
         		showDialog(DIALOG_IMPORT);
         	}
         } else if (requestCode == REQUEST_REVIEW) {
-            // Log.i(AnkiDroidApp.TAG, "Result code = " + resultCode);
+            Log.i(AnkiDroidApp.TAG, "Result code = " + resultCode);
             switch (resultCode) {
                 case Reviewer.RESULT_SESSION_COMPLETED:
                 default:
@@ -2626,7 +2626,7 @@ public class DeckPicker extends FragmentActivity {
 
         @SuppressWarnings("unchecked")
         HashMap<String, String> data = (HashMap<String, String>) mDeckListAdapter.getItem(id);
-        // Log.i(AnkiDroidApp.TAG, "Selected " + deckFilename);
+        Log.i(AnkiDroidApp.TAG, "Selected " + deckFilename);
         long deckId = Long.parseLong(data.get("did"));
         AnkiDroidApp.getCol().getDecks().select(deckId);
         openStudyOptions(deckId);
@@ -2787,7 +2787,7 @@ public class DeckPicker extends FragmentActivity {
     // protected void onNewIntent(Intent intent) {
     // super.onNewIntent(intent);
     // String deck = intent.getStringExtra(EXTRA_DECK);
-    // // Log.d(AnkiDroidApp.TAG, "StudyOptions.onNewIntent: " + intent
+    // Log.d(AnkiDroidApp.TAG, "StudyOptions.onNewIntent: " + intent
     // + ", deck=" + deck);
     // // if (deck != null && !deck.equals(mDeckFilename)) {
     // // mDeckFilename = deck;
