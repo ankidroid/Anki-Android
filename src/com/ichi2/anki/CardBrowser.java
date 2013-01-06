@@ -358,7 +358,7 @@ public class CardBrowser extends Activity {
         if (mUnmountReceiver != null) {
             unregisterReceiver(mUnmountReceiver);
         }
-        // Log.i(AnkiDroidApp.TAG, "CardBrowser - onDestroy()");
+        Log.i(AnkiDroidApp.TAG, "CardBrowser - onDestroy()");
     }
 
 
@@ -372,7 +372,7 @@ public class CardBrowser extends Activity {
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
-            // Log.i(AnkiDroidApp.TAG, "CardBrowser - onBackPressed()");
+            Log.i(AnkiDroidApp.TAG, "CardBrowser - onBackPressed()");
             if (mSearchEditText.getText().length() == 0) {
                 closeCardBrowser(Activity.RESULT_OK);
             } else {
@@ -480,7 +480,7 @@ public class CardBrowser extends Activity {
         }
 
         if (requestCode == EDIT_CARD && resultCode != RESULT_CANCELED) {
-            // Log.i(AnkiDroidApp.TAG, "CardBrowser: Saving card...");
+            Log.i(AnkiDroidApp.TAG, "CardBrowser: Saving card...");
             DeckTask.launchDeckTask(DeckTask.TASK_TYPE_UPDATE_FACT, mUpdateCardHandler,
                     new DeckTask.TaskData(mCol.getSched(), sCardBrowserCard, false));
         } else if (requestCode == ADD_NOTE && resultCode == RESULT_OK) {
@@ -564,10 +564,10 @@ public class CardBrowser extends Activity {
                             public void onClick(DialogInterface dialog, int which) {
                                 String tag = allTags[which];
                                 if (mSelectedTags.contains(tag)) {
-                                    // Log.i(AnkiDroidApp.TAG, "unchecked tag: " + tag);
+                                    Log.i(AnkiDroidApp.TAG, "unchecked tag: " + tag);
                                     mSelectedTags.remove(tag);
                                 } else {
-                                    // Log.i(AnkiDroidApp.TAG, "checked tag: " + tag);
+                                    Log.i(AnkiDroidApp.TAG, "checked tag: " + tag);
                                     mSelectedTags.add(tag);
                                 }
                             }
@@ -659,13 +659,13 @@ public class CardBrowser extends Activity {
                 int flags = Integer.parseInt(card.get("flags"));
                 if (flags == 2 || flags == 3) {
                     ad.changeListItem(CONTEXT_MENU_MARK, res.getString(R.string.card_browser_unmark_card));
-                    // Log.d(AnkiDroidApp.TAG, "Selected Card is currently marked");
+                    Log.d(AnkiDroidApp.TAG, "Selected Card is currently marked");
                 } else {
                     ad.changeListItem(CONTEXT_MENU_MARK, res.getString(R.string.card_browser_mark_card));
                 }
                 if (flags == 1 || flags == 3) {
                     ad.changeListItem(CONTEXT_MENU_SUSPEND, res.getString(R.string.card_browser_unsuspend_card));
-                    // Log.d(AnkiDroidApp.TAG, "Selected Card is currently suspended");
+                    Log.d(AnkiDroidApp.TAG, "Selected Card is currently suspended");
                 } else {
                     ad.changeListItem(CONTEXT_MENU_SUSPEND, res.getString(R.string.card_browser_suspend_card));
                 }
@@ -678,10 +678,10 @@ public class CardBrowser extends Activity {
                     public void onClick(DialogInterface dialog, int which) {
                         String tag = allTags[which];
                         if (mSelectedTags.contains(tag)) {
-                            // Log.d(AnkiDroidApp.TAG, "unchecked tag: " + tag);
+                            Log.d(AnkiDroidApp.TAG, "unchecked tag: " + tag);
                             mSelectedTags.remove(tag);
                         } else {
-                            // Log.d(AnkiDroidApp.TAG, "checked tag: " + tag);
+                            Log.d(AnkiDroidApp.TAG, "checked tag: " + tag);
                             mSelectedTags.add(tag);
                         }
                     }

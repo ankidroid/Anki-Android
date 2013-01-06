@@ -381,7 +381,7 @@ public class StudyOptionsFragment extends Fragment {
     protected View createView(LayoutInflater inflater, Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        // Log.i(AnkiDroidApp.TAG, "StudyOptions - createView()");
+        Log.i(AnkiDroidApp.TAG, "StudyOptions - createView()");
 
         restorePreferences();
 
@@ -430,7 +430,7 @@ public class StudyOptionsFragment extends Fragment {
 
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
-        // Log.i(AnkiDroidApp.TAG, "onConfigurationChanged");
+        Log.i(AnkiDroidApp.TAG, "onConfigurationChanged");
 	if (mTextDeckName == null) {
 		// layout not yet initialized
 		return;
@@ -475,7 +475,7 @@ public class StudyOptionsFragment extends Fragment {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        // Log.i(AnkiDroidApp.TAG, "StudyOptions - onDestroy()");
+        Log.i(AnkiDroidApp.TAG, "StudyOptions - onDestroy()");
         // if (mUnmountReceiver != null) {
         // unregisterReceiver(mUnmountReceiver);
         // }
@@ -1131,7 +1131,7 @@ public class StudyOptionsFragment extends Fragment {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent intent) {
         super.onActivityResult(requestCode, resultCode, intent);
-        // Log.i(AnkiDroidApp.TAG, "StudyOptionsFragment: onActivityResult");
+        Log.i(AnkiDroidApp.TAG, "StudyOptionsFragment: onActivityResult");
 
         if (resultCode == DeckPicker.RESULT_DB_ERROR) {
             closeStudyOptions(DeckPicker.RESULT_DB_ERROR);
@@ -1169,7 +1169,7 @@ public class StudyOptionsFragment extends Fragment {
             } else if (requestCode == ADD_NOTE && resultCode != Activity.RESULT_CANCELED) {
                 resetAndUpdateValuesFromDeck();
             } else if (requestCode == REQUEST_REVIEW) {
-                // Log.i(AnkiDroidApp.TAG, "Result code = " + resultCode);
+                Log.i(AnkiDroidApp.TAG, "Result code = " + resultCode);
                 // TODO: Return to standard scheduler
                 // TODO: handle big widget
                 switch (resultCode) {
