@@ -117,7 +117,11 @@ public class CardBrowser extends Activity {
     private static final int BACKGROUND_SUSPENDED = 2;
     private static final int BACKGROUND_MARKED_SUSPENDED = 3;
 
+    // TODO(flerda@gmail.com): Fix card browser's undo.
+    // https://code.google.com/p/ankidroid/issues/detail?id=1561
+    /*
     private static final int MENU_UNDO = 0;
+    */
     private static final int MENU_ADD_NOTE = 1;
     private static final int MENU_SHOW_MARKED = 2;
     private static final int MENU_SELECT = 3;
@@ -398,8 +402,12 @@ public class CardBrowser extends Activity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuItem item;
+        // TODO(flerda@gmail.com): Fix card browser's undo.
+        // https://code.google.com/p/ankidroid/issues/detail?id=1561
+        /*
         item = menu.add(Menu.NONE, MENU_UNDO, Menu.NONE, R.string.undo);
         item.setIcon(R.drawable.ic_menu_revert);
+        */
         item = menu.add(Menu.NONE, MENU_ADD_NOTE, Menu.NONE, R.string.card_editor_add_card);
         item.setIcon(R.drawable.ic_menu_add);
         // TODO(flerda@gmail.com): Fix card browser fields.
@@ -429,7 +437,11 @@ public class CardBrowser extends Activity {
         if (mCol == null) {
             return false;
         }
+        // TODO(flerda@gmail.com): Fix card browser's undo.
+        // https://code.google.com/p/ankidroid/issues/detail?id=1561
+        /*
         menu.findItem(MENU_UNDO).setEnabled(mCol.undoAvailable());
+        */
         return true;
     }
 
@@ -438,11 +450,14 @@ public class CardBrowser extends Activity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
 
+            // TODO(flerda@gmail.com): Fix card browser's undo.
+            // https://code.google.com/p/ankidroid/issues/detail?id=1561
+            /*
             case MENU_UNDO:
-            	// TODO: Implement undo
-                // DeckTask.launchDeckTask(DeckTask.TASK_TYPE_UNDO, mUndoRedoHandler, new DeckTask.TaskData(0, mDeck, 0,
-                // true));
+                DeckTask.launchDeckTask(DeckTask.TASK_TYPE_UNDO, mUndoRedoHandler,
+                        new DeckTask.TaskData(0, mDeck, 0, true));
                 return true;
+            */
 
             case MENU_ADD_NOTE:
                 Intent intent = new Intent(CardBrowser.this, CardEditor.class);
