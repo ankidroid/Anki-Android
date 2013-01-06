@@ -1663,7 +1663,8 @@ public class DeckPicker extends FragmentActivity {
 	                                        Object[] info = result.getObjArray();
 	                                        updateDecksList((TreeSet<Object[]>) info[0], (Integer) info[1], (Integer) info[2]);
 		                                } else {
-		                                	handleDbError();
+                                            mDialogMessage = getResources().getString(R.string.import_log_no_apkg);                                			
+                                            showDialog(DIALOG_IMPORT_LOG);
 		                                }
 		                            }
 		                            @Override
