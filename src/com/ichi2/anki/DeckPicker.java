@@ -1372,16 +1372,9 @@ public class DeckPicker extends FragmentActivity {
             	if (!AnkiDroidApp.colIsOpen() || mDeckList == null) {
             		return null;
             	}
+            	// Message is set in onPrepareDialog
                 builder.setTitle(res.getString(R.string.delete_deck_title));
                 builder.setIcon(R.drawable.ic_dialog_alert);
-                boolean isDyn = AnkiDroidApp.getCol().getDecks().isDyn(mCurrentDid);
-                if (isDyn) {
-                    builder.setMessage(String.format(res.getString(R.string.delete_cram_deck_message), "\'"
-                            + AnkiDroidApp.getCol().getDecks().name(mCurrentDid) + "\'"));
-                } else {
-                    builder.setMessage(String.format(res.getString(R.string.delete_deck_message), "\'"
-                            + AnkiDroidApp.getCol().getDecks().name(mCurrentDid) + "\'"));                	
-                }
                 builder.setPositiveButton(res.getString(R.string.yes),
                         new DialogInterface.OnClickListener() {
 
@@ -1864,12 +1857,17 @@ public class DeckPicker extends FragmentActivity {
         StyledDialog ad = (StyledDialog) dialog;
         switch (id) {
             case DIALOG_DELETE_DECK:
-            	if (AnkiDroidApp.colIsOpen() || mDeckList == null || mDeckList.size() == 0) {
+            	if (!AnkiDroidApp.colIsOpen() || mDeckList == null || mDeckList.size() == 0) {
             		return;
             	}
-                mCurrentDid = Long.parseLong(mDeckList.get(mContextMenuPosition).get("did"));
-                ad.setMessage(String.format(res.getString(R.string.delete_deck_message),
-                        "\'" + AnkiDroidApp.getCol().getDecks().name(mCurrentDid) + "\'"));
+                boolean isDyn = AnkiDroidApp.getCol().getDecks().isDyn(mCurrentDid);
+                if (isDyn) {
+                    ad.setMessage(String.format(res.getString(R.string.delete_cram_deck_message), "\'"
+                            + AnkiDroidApp.getCol().getDecks().name(mCurrentDid) + "\'"));
+                } else {
+                    ad.setMessage(String.format(res.getString(R.string.delete_deck_message), "\'"
+                            + AnkiDroidApp.getCol().getDecks().name(mCurrentDid) + "\'"));                	
+                }
                 break;
 
             case DIALOG_CONTEXT_MENU:
