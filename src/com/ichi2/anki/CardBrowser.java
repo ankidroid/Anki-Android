@@ -106,21 +106,33 @@ public class CardBrowser extends Activity {
     private static final int DIALOG_CONTEXT_MENU = 1;
     private static final int DIALOG_RELOAD_CARDS = 2;
     private static final int DIALOG_TAGS = 3;
-	private static final int DIALOG_FIELD = 4;
+    // TODO(flerda@gmail.com): Fix card browser fields. See below.
+    // https://code.google.com/p/ankidroid/issues/detail?id=1310
+    /*
+    private static final int DIALOG_FIELD = 4;
+    */
 
     private static final int BACKGROUND_NORMAL = 0;
     private static final int BACKGROUND_MARKED = 1;
     private static final int BACKGROUND_SUSPENDED = 2;
     private static final int BACKGROUND_MARKED_SUSPENDED = 3;
 
+    // TODO(flerda@gmail.com): Fix card browser's undo.
+    // https://code.google.com/p/ankidroid/issues/detail?id=1561
+    /*
     private static final int MENU_UNDO = 0;
+    */
     private static final int MENU_ADD_NOTE = 1;
     private static final int MENU_SHOW_MARKED = 2;
     private static final int MENU_SELECT = 3;
     private static final int MENU_SELECT_SUSPENDED = 31;
     private static final int MENU_SELECT_TAG = 32;
     private static final int MENU_CHANGE_ORDER = 5;
-	private static final int MENU_FIELD = 6;
+    // TODO(flerda@gmail.com): Fix card browser fields. See below.
+    // https://code.google.com/p/ankidroid/issues/detail?id=1310
+    /*
+    private static final int MENU_FIELD = 6;
+    */
 
     private static final int EDIT_CARD = 0;
     private static final int ADD_NOTE = 1;
@@ -390,15 +402,25 @@ public class CardBrowser extends Activity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuItem item;
+        // TODO(flerda@gmail.com): Fix card browser's undo.
+        // https://code.google.com/p/ankidroid/issues/detail?id=1561
+        /*
         item = menu.add(Menu.NONE, MENU_UNDO, Menu.NONE, R.string.undo);
         item.setIcon(R.drawable.ic_menu_revert);
+        */
         item = menu.add(Menu.NONE, MENU_ADD_NOTE, Menu.NONE, R.string.card_editor_add_card);
         item.setIcon(R.drawable.ic_menu_add);
-		if (mWholeCollection == false) {
-			item = menu.add(Menu.NONE, MENU_FIELD, Menu.NONE, R.string.card_browser_field);
-			item.setIcon(R.drawable.ic_menu_add);
-		}
-		item = menu.add(Menu.NONE, MENU_CHANGE_ORDER, Menu.NONE, R.string.card_browser_change_display_order);
+        // TODO(flerda@gmail.com): Fix card browser fields.
+        // https://code.google.com/p/ankidroid/issues/detail?id=1310
+        // Currently this is disabled because it is obvious what to do when cards with different models are present in
+        // the deck.
+        /*
+        if (mWholeCollection == false) {
+            item = menu.add(Menu.NONE, MENU_FIELD, Menu.NONE, R.string.card_browser_field);
+            item.setIcon(R.drawable.ic_menu_add);
+        }
+        */
+        item = menu.add(Menu.NONE, MENU_CHANGE_ORDER, Menu.NONE, R.string.card_browser_change_display_order);
         item.setIcon(R.drawable.ic_menu_sort_by_size);
         item = menu.add(Menu.NONE, MENU_SHOW_MARKED, Menu.NONE, R.string.card_browser_show_marked);
         item.setIcon(R.drawable.ic_menu_star_on);
@@ -415,7 +437,11 @@ public class CardBrowser extends Activity {
         if (mCol == null) {
             return false;
         }
+        // TODO(flerda@gmail.com): Fix card browser's undo.
+        // https://code.google.com/p/ankidroid/issues/detail?id=1561
+        /*
         menu.findItem(MENU_UNDO).setEnabled(mCol.undoAvailable());
+        */
         return true;
     }
 
@@ -424,11 +450,14 @@ public class CardBrowser extends Activity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
 
+            // TODO(flerda@gmail.com): Fix card browser's undo.
+            // https://code.google.com/p/ankidroid/issues/detail?id=1561
+            /*
             case MENU_UNDO:
-            	// TODO: Implement undo
-                // DeckTask.launchDeckTask(DeckTask.TASK_TYPE_UNDO, mUndoRedoHandler, new DeckTask.TaskData(0, mDeck, 0,
-                // true));
+                DeckTask.launchDeckTask(DeckTask.TASK_TYPE_UNDO, mUndoRedoHandler,
+                        new DeckTask.TaskData(0, mDeck, 0, true));
                 return true;
+            */
 
             case MENU_ADD_NOTE:
                 Intent intent = new Intent(CardBrowser.this, CardEditor.class);
@@ -460,10 +489,13 @@ public class CardBrowser extends Activity {
             case MENU_CHANGE_ORDER:
                 showDialog(DIALOG_ORDER);
                 return true;
-			
-		case MENU_FIELD:
-			showDialog(DIALOG_FIELD);
-			return true;
+            // TODO(flerda@gmail.com): Fix card browser fields. See above.
+            // https://code.google.com/p/ankidroid/issues/detail?id=1310
+            /*
+            case MENU_FIELD:
+                showDialog(DIALOG_FIELD);
+                return true;
+            */
         }
 
         return false;
@@ -602,35 +634,39 @@ public class CardBrowser extends Activity {
                 });
                 dialog = builder.create();
                 break;
-//		case DIALOG_FIELD:
-//			builder.setTitle(res
-//					.getString(R.string.card_browser_field_title));
-//			builder.setIcon(android.R.drawable.ic_menu_sort_by_size);
-//			
-//	        HashMap<String, String> card = mAllCards.get(0);
-//	        
-//			String[][] items = mCol.getCard(Long.parseLong( card.get("id") )).note().items();
-//			
-//			
-//			mFields = new String[items.length+1];
-//			mFields[0]="SFLD";
-//			
-//			for (int i = 0; i < items.length; i++) {
-//				mFields[i+1] = items[i][0];
-//			}
-//			
-//			builder.setSingleChoiceItems(mFields, 0, new DialogInterface.OnClickListener() {
-//				@Override
-//				public void onClick(DialogInterface arg0, int which) {
-//					if (which != mField) {
-//						mField = which;
-//						AnkiDroidApp.getSharedPrefs(AnkiDroidApp.getInstance().getBaseContext()).edit().putInt("cardBrowserField", mField).commit();
-//						getCards();
-//					}
-//				}
-//	        });
-//			dialog = builder.create();
-//			break;
+            // TODO(flerda@gmail.com): Fix card browser fields. See above.
+            // https://code.google.com/p/ankidroid/issues/detail?id=1310
+            /*
+            case DIALOG_FIELD:
+                builder.setTitle(res
+                        .getString(R.string.card_browser_field_title));
+                builder.setIcon(android.R.drawable.ic_menu_sort_by_size);
+
+                HashMap<String, String> card = mAllCards.get(0);
+
+                String[][] items = mCol.getCard(Long.parseLong( card.get("id") )).note().items();
+
+                mFields = new String[items.length+1];
+                mFields[0]="SFLD";
+
+                for (int i = 0; i < items.length; i++) {
+                    mFields[i+1] = items[i][0];
+                }
+
+                builder.setSingleChoiceItems(mFields, 0, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface arg0, int which) {
+                        if (which != mField) {
+                            mField = which;
+                            AnkiDroidApp.getSharedPrefs(AnkiDroidApp.getInstance().getBaseContext()).edit()
+                                .putInt("cardBrowserField", mField).commit();
+                            getCards();
+                        }
+                    }
+                });
+                dialog = builder.create();
+                break;
+            */
         }
         return dialog;
     }
