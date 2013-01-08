@@ -31,7 +31,7 @@
 //        SharedPreferences prefs = AnkiDroidApp.getSharedPrefs(AnkiDroidApp.getInstance().getBaseContext());
 //        String path = prefs.getString("lastWidgetDeck", "");
 //        if (path != null && path.length() > 0 && AnkiDroidApp.isSdCardMounted()) {
-//            // Log.i(AnkiDroidApp.TAG, "BigWidget: reloading deck " + path);
+//            Log.i(AnkiDroidApp.TAG, "BigWidget: reloading deck " + path);
 //            mCol = Collection.currentCollection();
 //            if (mCol != null) {
 //                mCurrentCard = mCol.getSched().getCard();
