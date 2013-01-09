@@ -1,20 +1,15 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android" >
 
     <item
-        android:id="@+id/delete_note"
-        android:orderInCategory="100"
-        android:showAsAction="ifRoom|withText"
-        android:title="@string/menu_delete_note"
+        android:id="@+id/multimedia_delete_note"
         android:icon="@drawable/android_std_content_discard"
-        />
-
-        <item
-        android:id="@+id/save_note"
         android:orderInCategory="100"
         android:showAsAction="ifRoom|withText"
-        android:title="@string/CardEditorSaveButton"
-        />
-    
-    
-    
+        android:title="@string/menu_delete_note"/>
+    <item
+        android:id="@+id/multimedia_save_note"
+        android:orderInCategory="100"
+        android:showAsAction="ifRoom|withText"
+        android:title="@string/CardEditorSaveButton"/>
+
 </menu>
