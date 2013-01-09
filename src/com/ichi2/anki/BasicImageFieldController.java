@@ -41,11 +41,11 @@ public class BasicImageFieldController implements IFieldController
     }
 
     @Override
-    public void createUI(LinearLayout layout, final Activity context)
+    public void createUI(LinearLayout layout, final Activity activity)
     {
-        mActivity = context;
+        mActivity = activity;
 
-        Button btnSelectPhoto = new Button(context);
+        Button btnSelectPhoto = new Button(activity);
         btnSelectPhoto.setText("Gallery");
         btnSelectPhoto.setOnClickListener(new View.OnClickListener()
         {
@@ -53,7 +53,7 @@ public class BasicImageFieldController implements IFieldController
             public void onClick(View v)
             {
                 Intent i = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                context.startActivityForResult(i, ACTIVITY_SELECT_IMAGE);
+                activity.startActivityForResult(i, ACTIVITY_SELECT_IMAGE);
             }
         });
 

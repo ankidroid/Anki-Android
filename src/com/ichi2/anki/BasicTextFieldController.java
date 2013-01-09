@@ -35,9 +35,9 @@ public class BasicTextFieldController implements IFieldController
     }
 
     @Override
-    public void createUI(LinearLayout layout, Activity context)
+    public void createUI(LinearLayout layout, Activity activity)
     {
-        mEditText = new EditText(context);
+        mEditText = new EditText(activity);
         mEditText.setMinLines(3);
         mEditText.setText(mField.getText());
         layout.addView(mEditText, LinearLayout.LayoutParams.MATCH_PARENT);
