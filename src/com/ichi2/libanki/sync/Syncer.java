@@ -354,11 +354,23 @@ public class Syncer {
                     Log.e(AnkiDroidApp.TAG, "Sync - SanityCheck: there are unsynced tags");
                 }
             }
+            boolean found = false;
             for (JSONObject m : mCol.getModels().all()) {
-                if (m.getInt("usn") == -1) {
-                	ok = false;
-                    Log.e(AnkiDroidApp.TAG, "Sync - SanityCheck: unsynced model: " + m.getString("name"));
+                if (mCol.getServer()) {
+                    // the web upgrade was mistakenly setting usn
+                    if (m.getInt("usn") < 0) {
+                        m.put("usn", 0);
+                        found = true;
+                    }
+                } else {
+                    if (m.getInt("usn") == -1) {
+                        ok = false;
+                        Log.e(AnkiDroidApp.TAG, "Sync - SanityCheck: unsynced model: " + m.getString("name"));
+                    }
                 }
+            }
+            if (found) {
+                mCol.getModels().save();
             }
         } catch (JSONException e) {
             throw new RuntimeException(e);
