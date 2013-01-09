@@ -91,6 +91,9 @@ public class Anki2Importer {
 				for (int i = 0; i < names.length(); i++) {
 					String n = names.getString(i);
 					String o = media.getString(n);
+                    if (!o.startsWith("_") && !o.startsWith("latex-")) {
+                        continue;
+                    }
 					File of = new File(mediaDir + o);
 					if (!of.exists()) {
 						File newFile = new File(fileDir + "/" + n);
