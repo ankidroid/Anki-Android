@@ -279,6 +279,8 @@ public class Anki2Importer {
 					// copy it over
 					JSONObject model = new JSONObject(srcModel.toString());
 					model.put("id", mid);
+                    model.put("mod", Utils.intNow());
+                    model.put("usn", mCol.usn());
 					mDst.getModels().update(model);
 					break;
 				}
