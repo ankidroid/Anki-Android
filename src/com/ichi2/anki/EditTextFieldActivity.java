@@ -1,11 +1,9 @@
 package com.ichi2.anki;
 
-import com.ichi2.anki.multimediacard.IField;
-import com.ichi2.anki.multimediacard.IMultimediaEditableNote;
-
-import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;
+import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -13,178 +11,216 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
-public class EditTextFieldActivity extends Activity {
+import com.ichi2.anki.multimediacard.EFieldType;
+import com.ichi2.anki.multimediacard.IField;
+import com.ichi2.anki.multimediacard.IMultimediaEditableNote;
+import com.ichi2.anki.multimediacard.impl.AudioField;
+import com.ichi2.anki.multimediacard.impl.ImageField;
+import com.ichi2.anki.multimediacard.impl.TextField;
 
-	public static final String EXTRA_RESULT_FIELD = "edit.field.result.field";
-	public static final String EXTRA_RESULT_FIELD_INDEX = "edit.field.result.field.index";
+public class EditTextFieldActivity extends Activity
+{
 
-	IField mField;
-	IMultimediaEditableNote mNote;
-	int mFieldIndex;
+    public static final String EXTRA_RESULT_FIELD = "edit.field.result.field";
+    public static final String EXTRA_RESULT_FIELD_INDEX = "edit.field.result.field.index";
 
-	private IFieldController mFieldController;
+    IField mField;
+    IMultimediaEditableNote mNote;
+    int mFieldIndex;
 
-	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_edit_text);
+    private IFieldController mFieldController;
 
-		mField = (IField) this.getIntent().getExtras()
-				.getSerializable(MultimediaCardEditorActivity.EXTRA_FIELD);
-		
-		mNote = (IMultimediaEditableNote) this.getIntent().getSerializableExtra(MultimediaCardEditorActivity.EXTRA_WHOLE_NOTE);
-		
-		mFieldIndex = this.getIntent().getIntExtra(MultimediaCardEditorActivity.EXTRA_FIELD_INDEX, 0);
-		
-		recreateEditingUi();
-		
+    @Override
+    protected void onCreate(Bundle savedInstanceState)
+    {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_edit_text);
 
-		// Handling absence of the action bar!
-		int currentapiVersion = android.os.Build.VERSION.SDK_INT;
-		if (currentapiVersion <= android.os.Build.VERSION_CODES.GINGERBREAD_MR1) {
-			LinearLayout linearLayout = (LinearLayout) findViewById(R.id.LinearLayoutForSpareMenuFieldEdit);
-			createSpareMenu(linearLayout);
-		}
+        mField = (IField) this.getIntent().getExtras().getSerializable(MultimediaCardEditorActivity.EXTRA_FIELD);
 
-	}
+        mNote = (IMultimediaEditableNote) this.getIntent().getSerializableExtra(
+                MultimediaCardEditorActivity.EXTRA_WHOLE_NOTE);
 
-	private void recreateEditingUi() {
-		
-		IControllerFactory controllerFactory =  BasicControllerFactory.getInstance();
-		
-		mFieldController = controllerFactory.createControllerForField(mField);
-		
-		mFieldController.setField(mField);
-		mFieldController.setFieldIndex(mFieldIndex);
-		mFieldController.setNote(mNote);
-		
-		LinearLayout linearLayout = (LinearLayout) findViewById(R.id.LinearLayoutInScrollViewFieldEdit);
-		
-		linearLayout.removeAllViews();
-		
-		mFieldController.createUI(linearLayout, this);
-		
-	}
+        mFieldIndex = this.getIntent().getIntExtra(MultimediaCardEditorActivity.EXTRA_FIELD_INDEX, 0);
 
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.activity_edit_text, menu);
+        recreateEditingUi();
 
-		return true;
-	}
+        // Handling absence of the action bar!
+        int currentapiVersion = android.os.Build.VERSION.SDK_INT;
+        if (currentapiVersion <= android.os.Build.VERSION_CODES.GINGERBREAD_MR1)
+        {
+            LinearLayout linearLayout = (LinearLayout) findViewById(R.id.LinearLayoutForSpareMenuFieldEdit);
+            createSpareMenu(linearLayout);
+        }
 
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		switch (item.getItemId()) {
-		case R.id.multimedia_edit_field_to_text:
-			toTextField();
-			return true;
+    }
 
-		case R.id.multimedia_edit_field_to_image:
-			toImageField();
-			return true;
+    private void recreateEditingUi()
+    {
 
-		case R.id.multimedia_edit_field_to_audio:
-			toAudioField();
-			return true;
+        IControllerFactory controllerFactory = BasicControllerFactory.getInstance();
 
-		case R.id.multimedia_edit_field_done:
-			done();
-			return true;
+        mFieldController = controllerFactory.createControllerForField(mField);
 
-		case android.R.id.home:
+        if(mFieldController == null)
+        {
+            Log.d(AnkiDroidApp.TAG, "Field controller creation failed");
+            return;
+        }
+        
+        mFieldController.setField(mField);
+        mFieldController.setFieldIndex(mFieldIndex);
+        mFieldController.setNote(mNote);
 
-			return true;
-		}
-		return super.onOptionsItemSelected(item);
-	}
+        LinearLayout linearLayout = (LinearLayout) findViewById(R.id.LinearLayoutInScrollViewFieldEdit);
 
-	private void createSpareMenu(LinearLayout linearLayout) {
-		Button toTextButton = new Button(this);
-		toTextButton.setText("Text");
-		toTextButton.setOnClickListener(new View.OnClickListener() {
-			public void onClick(View v) {
-				toTextField();
-			}
+        linearLayout.removeAllViews();
 
-		});
-		linearLayout.addView(toTextButton);
+        mFieldController.createUI(linearLayout, this);
 
-		Button toImageButton = new Button(this);
-		toImageButton.setText("Image");
-		toImageButton.setOnClickListener(new View.OnClickListener() {
-			public void onClick(View v) {
-				toImageField();
-			}
+    }
 
-		});
-		linearLayout.addView(toImageButton);
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu)
+    {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.activity_edit_text, menu);
 
-		Button toAudioButton = new Button(this);
-		toAudioButton.setText("Audio");
-		toAudioButton.setOnClickListener(new View.OnClickListener() {
-			public void onClick(View v) {
-				toAudioField();
-			}
+        return true;
+    }
 
-		});
-		linearLayout.addView(toAudioButton);
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item)
+    {
+        switch (item.getItemId())
+        {
+            case R.id.multimedia_edit_field_to_text:
+                toTextField();
+                return true;
 
-		Button doneButton = new Button(this);
-		doneButton.setText("Done");
-		doneButton.setOnClickListener(new View.OnClickListener() {
-			public void onClick(View v) {
-				done();
-			}
+            case R.id.multimedia_edit_field_to_image:
+                toImageField();
+                return true;
 
-		});
-		linearLayout.addView(doneButton);
+            case R.id.multimedia_edit_field_to_audio:
+                toAudioField();
+                return true;
 
-	}
+            case R.id.multimedia_edit_field_done:
+                done();
+                return true;
 
-	protected void done() {
-		
-		mFieldController.onDone();
-		
-		showToast("Done");
-		Intent resultData = new Intent();
+            case android.R.id.home:
 
-		resultData.putExtra(EXTRA_RESULT_FIELD, mField);
-		resultData.putExtra(EXTRA_RESULT_FIELD_INDEX, mFieldIndex);
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
 
-		setResult(RESULT_OK, resultData);
+    private void createSpareMenu(LinearLayout linearLayout)
+    {
+        Button toTextButton = new Button(this);
+        toTextButton.setText("Text");
+        toTextButton.setOnClickListener(new View.OnClickListener()
+        {
+            public void onClick(View v)
+            {
+                toTextField();
+            }
 
-		finish();
-	}
+        });
+        linearLayout.addView(toTextButton);
 
-	protected void toAudioField() {
-		showToast("To audio");
-	}
+        Button toImageButton = new Button(this);
+        toImageButton.setText("Image");
+        toImageButton.setOnClickListener(new View.OnClickListener()
+        {
+            public void onClick(View v)
+            {
+                toImageField();
+            }
 
-	protected void toImageField() {
-		showToast("To image");
+        });
+        linearLayout.addView(toImageButton);
 
-	}
+        Button toAudioButton = new Button(this);
+        toAudioButton.setText("Audio");
+        toAudioButton.setOnClickListener(new View.OnClickListener()
+        {
+            public void onClick(View v)
+            {
+                toAudioField();
+            }
 
-	protected void toTextField() {
-		showToast("To text");
-	}
+        });
+        linearLayout.addView(toAudioButton);
 
-	private void showToast(CharSequence text) {
-		int duration = Toast.LENGTH_SHORT;
-		Toast toast = Toast.makeText(this, text, duration);
-		toast.show();
-	}
+        Button doneButton = new Button(this);
+        doneButton.setText("Done");
+        doneButton.setOnClickListener(new View.OnClickListener()
+        {
+            public void onClick(View v)
+            {
+                done();
+            }
 
-	@Override
-	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		if(mFieldController != null)
-		{
-			mFieldController.onActivityResult(requestCode, resultCode, data);
-		}
-		
-		super.onActivityResult(requestCode, resultCode, data);
-	}
-	
+        });
+        linearLayout.addView(doneButton);
+
+    }
+
+    protected void done()
+    {
+
+        mFieldController.onDone();
+
+        Intent resultData = new Intent();
+
+        resultData.putExtra(EXTRA_RESULT_FIELD, mField);
+        resultData.putExtra(EXTRA_RESULT_FIELD_INDEX, mFieldIndex);
+
+        setResult(RESULT_OK, resultData);
+
+        finish();
+    }
+
+    protected void toAudioField()
+    {
+        if (mField.getType() != EFieldType.AUDIO)
+        {
+            mField = new AudioField();
+            recreateEditingUi();
+        }
+    }
+
+    protected void toImageField()
+    {
+        if(mField.getType() != EFieldType.IMAGE)
+        {
+            mField = new ImageField();
+            recreateEditingUi();
+        }
+
+    }
+
+    protected void toTextField()
+    {
+        if(mField.getType() != EFieldType.TEXT)
+        {
+            mField = new TextField();
+            recreateEditingUi();
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data)
+    {
+        if (mFieldController != null)
+        {
+            mFieldController.onActivityResult(requestCode, resultCode, data);
+        }
+
+        super.onActivityResult(requestCode, resultCode, data);
+    }
+
 }
