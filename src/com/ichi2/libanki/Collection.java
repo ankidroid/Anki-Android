@@ -857,9 +857,13 @@ public class Collection {
         for (Object[] o : _fieldData(snids)) {
             String[] fields = Utils.splitFields((String) o[2]);
             JSONObject model = mModels.get((Long) o[1]);
-            // apply, relying on calling code to bump usn+mod
+            if (model == null) {
+                // note point to invalid model
+                continue;
+            }
             r.add(new Object[] { Utils.stripHTML(fields[mModels.sortIdx(model)]), Utils.fieldChecksum(fields[0]), o[0] });
         }
+        // apply, relying on calling code to bump usn+mod
         mDb.executeMany("UPDATE notes SET sfld=?, csum=? WHERE id=?", r);
     }
 
