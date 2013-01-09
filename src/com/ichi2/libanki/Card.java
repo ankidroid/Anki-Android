@@ -83,6 +83,8 @@ public class Card implements Cloneable {
     private boolean mIsLeechTagged;
     private boolean mIsLeechSuspended;
 
+    private boolean mWasNew = false;
+
     private Collection mCol;
 
 
@@ -695,5 +697,13 @@ public class Card implements Cloneable {
         } catch (CloneNotSupportedException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public boolean getWasNew() {
+        return mWasNew;
+    }
+
+    public void setWasNew(boolean mWasNew) {
+        this.mWasNew = mWasNew;
     }
 }

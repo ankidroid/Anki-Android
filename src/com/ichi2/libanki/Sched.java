@@ -205,8 +205,8 @@ public class Sched {
         boolean isLeech = false;
         mCol.markUndo(Collection.UNDO_REVIEW, new Object[]{card});
         card.setReps(card.getReps() + 1);
-        boolean wasNew = (card.getQueue() == 0);
-        if (wasNew) {
+        card.setWasNew((card.getQueue() == 0));
+        if (card.getWasNew()) {
             // came from the new queue, move to learning
             card.setQueue(1);
             // if it was a new card, it's now a learning card
@@ -227,7 +227,7 @@ public class Sched {
         }
         if (card.getQueue() == 1 || card.getQueue() == 3) {
             _answerLrnCard(card, ease);
-            if (!wasNew) {
+            if (!card.getWasNew()) {
                 _updateStats(card, "lrn");
             }
         } else if (card.getQueue() == 2) {
@@ -1095,7 +1095,7 @@ public class Sched {
         // ease 1=no, 2=yes, 3=remove
         JSONObject conf = _lrnConf(card);
         int type;
-        if (card.getODid() != 0) {
+        if (card.getODid() != 0 && !card.getWasNew()) {
             type = 3;
         } else if (card.getType() == 2) {
             type = 2;
