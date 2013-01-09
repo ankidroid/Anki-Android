@@ -159,7 +159,7 @@ public class MultimediaCardEditorActivity extends Activity {
 
 				@Override
 				public void onClick(View v) {
-					Intent i = new Intent(context, EditImageActivity.class);
+					Intent i = new Intent(context, EditTextFieldActivity.class);
 					putExtrasAndStartEditActivity(field, index, i);
 				}
 
