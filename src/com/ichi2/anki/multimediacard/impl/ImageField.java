@@ -3,69 +3,80 @@ package com.ichi2.anki.multimediacard.impl;
 import com.ichi2.anki.multimediacard.EFieldType;
 import com.ichi2.anki.multimediacard.IField;
 
-public class ImageField extends FieldBase implements IField{
+public class ImageField extends FieldBase implements IField
+{
 
-	/**
+    /**
 	 * 
 	 */
-	private static final long serialVersionUID = 4431611060655809687L;
-	String mImagePath = null;
-	
-	@Override
-	public EFieldType getType() {
-		return EFieldType.IMAGE;
-	}
+    private static final long serialVersionUID = 4431611060655809687L;
+    String mImagePath = null;
 
-	@Override
-	public boolean setType(EFieldType type) {
-		return false;
-	}
+    @Override
+    public EFieldType getType()
+    {
+        return EFieldType.IMAGE;
+    }
 
-	@Override
-	public boolean isModified() {
-		return getThisModified();
-	}
+    @Override
+    public boolean setType(EFieldType type)
+    {
+        return false;
+    }
 
-	@Override
-	public String getHtml() {
-		return null;
-	}
+    @Override
+    public boolean isModified()
+    {
+        return getThisModified();
+    }
 
-	@Override
-	public boolean setHtml(String html) {
-		return false;
-	}
+    @Override
+    public String getHtml()
+    {
+        return null;
+    }
 
-	@Override
-	public boolean setImagePath(String pathToImage) {
-		mImagePath = pathToImage;
-		setThisModified();
-		return true;
-	}
+    @Override
+    public boolean setHtml(String html)
+    {
+        return false;
+    }
 
-	@Override
-	public String getImagePath() {
-		return mImagePath;
-	}
+    @Override
+    public boolean setImagePath(String pathToImage)
+    {
+        mImagePath = pathToImage;
+        setThisModified();
+        return true;
+    }
 
-	@Override
-	public boolean setAudioPath(String pathToAudio) {
-		return false;
-	}
+    @Override
+    public String getImagePath()
+    {
+        return mImagePath;
+    }
 
-	@Override
-	public String getAudioPath() {
-		return null;
-	}
+    @Override
+    public boolean setAudioPath(String pathToAudio)
+    {
+        return false;
+    }
 
-	@Override
-	public String getText() {
-		return null;
-	}
+    @Override
+    public String getAudioPath()
+    {
+        return null;
+    }
 
-	@Override
-	public boolean setText(String text) {
-		return false;
-	}
+    @Override
+    public String getText()
+    {
+        return null;
+    }
 
+    @Override
+    public boolean setText(String text)
+    {
+        return false;
+    }
 }

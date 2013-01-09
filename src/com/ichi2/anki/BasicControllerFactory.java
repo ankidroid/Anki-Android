@@ -3,35 +3,39 @@ package com.ichi2.anki;
 import com.ichi2.anki.multimediacard.EFieldType;
 import com.ichi2.anki.multimediacard.IField;
 
-public class BasicControllerFactory implements IControllerFactory{
+public class BasicControllerFactory implements IControllerFactory
+{
 
-	private BasicControllerFactory()
-	{
-		
-	}
-	
-	public static IControllerFactory getInstance()
-	{
-		return new BasicControllerFactory();
-	}
+    private BasicControllerFactory()
+    {
 
-	@Override
-	public IFieldController createControllerForField(IField field) {
+    }
 
-		EFieldType type = field.getType();
-		
-		switch (type) {
-		case TEXT:
-			return new BasicTextFieldController();
+    public static IControllerFactory getInstance()
+    {
+        return new BasicControllerFactory();
+    }
 
-		default:
-			break;
-		}
-		
-		
-		return null;
-	}
-	
-	
-	
+    @Override
+    public IFieldController createControllerForField(IField field)
+    {
+
+        EFieldType type = field.getType();
+
+        switch (type)
+        {
+            case TEXT:
+                return new BasicTextFieldController();
+
+            case IMAGE:
+                return new BasicImageFieldController();
+
+            default:
+
+                break;
+        }
+
+        return null;
+    }
+
 }
