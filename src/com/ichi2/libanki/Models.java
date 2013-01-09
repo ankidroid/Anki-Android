@@ -266,7 +266,7 @@ public class Models {
     public JSONObject byName(String name) {
         for (JSONObject m : mModels.values()) {
             try {
-                if (m.getString("name").equalsIgnoreCase(name)) {
+                if (m.getString("name").equals(name)) {
                     return m;
                 }
             } catch (JSONException e) {
