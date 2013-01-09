@@ -1321,6 +1321,13 @@ public class Collection {
                 	problems.add("Deleted " + ids.size() + " note(s) with missing no cards.");
 	                _remNotes(Utils.arrayList2array(ids));
                 }
+
+                ids = mDb.queryColumn(Long.class,
+                        "SELECT id FROM cards WHERE nid NOT IN (SELECT id FROM notes)", 0);
+                if (ids.size() != 0) {
+                    problems.add("Deleted " + ids.size() + " card(s) with missing note.");
+                    remCards(Utils.arrayList2array(ids));
+                }
                 // tags
                 mTags.registerNotes();
                 // field cache
