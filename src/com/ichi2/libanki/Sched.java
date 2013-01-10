@@ -1128,22 +1128,20 @@ public class Sched {
                 // failed
             } else {
                 card.setLeft(_startingLeft(card));
-                if (card.getODid() != 0) {
-                    boolean resched = _resched(card);
-                    if (conf.has("mult") && resched) {
-                        // review that's lapsed
-                        try {
-                            card.setIvl(Math.max(1, (int) (card.getIvl() * conf.getDouble("mult"))));
-                        } catch (JSONException e) {
-                            throw new RuntimeException(e);
-                        }
-                    } else {
-                        // new card; no ivl adjustment
-                        // pass
+                boolean resched = _resched(card);
+                if (conf.has("mult") && resched) {
+                    // review that's lapsed
+                    try {
+                        card.setIvl(Math.max(1, (int) (card.getIvl() * conf.getDouble("mult"))));
+                    } catch (JSONException e) {
+                        throw new RuntimeException(e);
                     }
-                    if (resched) {
-                        card.setODue(mToday + 1);
-                    }
+                } else {
+                    // new card; no ivl adjustment
+                    // pass
+                }
+                if (resched && card.getODid() != 0) {
+                    card.setODue(mToday + 1);
                 }
             }
             int delay = _delayForGrade(conf, card.getLeft());
