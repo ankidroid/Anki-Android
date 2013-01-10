@@ -68,7 +68,8 @@ public class Models {
             "'media': [] }";
 
     private static final String defaultTemplate = "{'name': \"\", " + "'ord': None, " + "'qfmt': \"\", "
-            + "'afmt': \"\", " + "'did': None, " + "'bqfmt': \"\"," + "'bafmt': \"\" }";
+            + "'afmt': \"\", " + "'did': None, " + "'bqfmt': \"\"," + "'bafmt': \"\"," + "'bfont': \"Arial\"," +
+            "'bsize': 12 }";
 
     // /** Regex pattern used in removing tags from text before diff */
     // private static final Pattern sFactPattern = Pattern.compile("%\\([tT]ags\\)s");
