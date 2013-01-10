@@ -48,7 +48,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class Models {
-    private static final Pattern fClozePattern1 = Pattern.compile("\\{\\{cloze:(.+?)\\}\\}");
+    private static final Pattern fClozePattern1 = Pattern.compile("(?:\\{\\{|<%)cloze:(.+?)(?:\\}\\}|%>)");
     private static final Pattern fClozePattern2 = Pattern.compile("\\{\\{c(\\d+)::.+?\\}\\}");
 
     public static final String defaultModel = "{'sortf': 0, " + "'did': 1, " + "'latexPre': \""
@@ -1272,6 +1272,8 @@ public class Models {
         Matcher matcher1 = null;
         try {
             matcher1 = fClozePattern1.matcher(m.getJSONArray("tmpls").getJSONObject(0).getString("qfmt"));
+            // Libanki makes two finds for each case of the cloze tags, but we embed both in the pattern.
+            // Please note, that this approach is not 100% correct, as we allow cases like {{cloze:...%>
         } catch (JSONException e) {
             throw new RuntimeException(e);
         }

@@ -93,7 +93,7 @@ public class Collection {
 
     // Cloze regex
     private static final Pattern fClozePattern = Pattern.compile("\\{\\{cloze:");
-
+    private static final Pattern fAltClozePattern = Pattern.compile("<%cloze:");
     // other options
     public static final String defaultConf = "{"
             +
@@ -942,6 +942,8 @@ public class Collection {
             Models.fieldParser fparser = new Models.fieldParser(fields);
             Matcher m = fClozePattern.matcher(qfmt);
             format = m.replaceFirst("{{cq:" + String.valueOf(((Integer) data[4]) + 1) + ":");
+            m = fAltClozePattern.matcher(format);
+            format = m.replaceFirst("<%%cq:" + String.valueOf(((Integer) data[4]) + 1) + ":");
             html = mModels.getCmpldTemplate(format).execute(fparser);
             html = (String) AnkiDroidApp.getHooks().runFilter("mungeQA", html, "q", fields, model, data, this);
             d.put("q", html);
@@ -957,6 +959,8 @@ public class Collection {
             fparser = new Models.fieldParser(fields);
             m = fClozePattern.matcher(afmt);
             format = m.replaceFirst("{{ca:" + String.valueOf(((Integer) data[4]) + 1) + ":");
+            m = fAltClozePattern.matcher(format);
+            format = m.replaceFirst("<%%ca:" + String.valueOf(((Integer) data[4]) + 1) + ":");
             html = mModels.getCmpldTemplate(format).execute(fparser);
             html = (String) AnkiDroidApp.getHooks().runFilter("mungeQA", html, "a", fields, model, data, this);
             d.put("a", html);
