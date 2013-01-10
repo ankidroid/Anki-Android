@@ -1363,7 +1363,7 @@ public class Collection {
         long newSize = file.length();
         // if any problems were found, force a full sync
         if (problems.size() > 0) {
-        	modSchema();
+        	modSchema(false);
         }
         // TODO: report problems
         return (long) ((oldSize - newSize) / 1024);
