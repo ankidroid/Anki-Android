@@ -282,7 +282,7 @@ public class Note implements Cloneable {
                 String.class,
                 "SELECT flds FROM notes WHERE csum = " + csum + " AND id != " + (mId != 0 ? mId : 0) + " AND mid = "
                         + mMid, 0)) {
-            if (Utils.splitFields(flds)[0].equals(val)) {
+            if (Utils.stripHTML(Utils.splitFields(flds)[0]).equals(Utils.stripHTML(val))) {
                 return 2;
             }
         }

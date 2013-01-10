@@ -1088,7 +1088,7 @@ public class Models {
      */
 
     /** Return a hash of the schema, to see if models are compatible. */
-    public long scmhash(JSONObject m) {
+    public String scmhash(JSONObject m) {
         String s = "";
         try {
         	JSONArray flds = m.getJSONArray("flds");
@@ -1105,7 +1105,7 @@ public class Models {
         } catch (JSONException e) {
             throw new RuntimeException(e);
         }
-        return Utils.fieldChecksum(s);
+        return Utils.checksum(s);
     }
 
 
