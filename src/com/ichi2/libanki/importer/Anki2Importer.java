@@ -440,7 +440,7 @@ public class Anki2Importer {
             		} else {
             			card[7] = card[6];
             		}
-            		// tpye
+            		// type
             		if ((Integer)card[6] == 1) {
             			card[6] = 0;
             		}
