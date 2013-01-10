@@ -327,7 +327,18 @@ public class Anki2Importer {
 					}
 				}
 			}
-			// create in local
+            // Manually create any parents so we can pull in descriptions
+            String head = "";
+            String[] parents = name.split("::");
+            for (int i = 0; i < parents.length - 1; ++i) {
+                if (head.length() > 0) {
+                    head = head.concat("::");
+                }
+                head = head.concat(parents[i]);
+                long idInSrc = mSrc.getDecks().id(head);
+                _did(idInSrc);
+            }
+            // create in local
 			long newid = mDst.getDecks().id(name);
 			// pull conf over
 			if (g.has("conf") && g.getLong("conf") != 1) {
