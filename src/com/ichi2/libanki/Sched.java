@@ -205,8 +205,10 @@ public class Sched {
         boolean isLeech = false;
         mCol.markUndo(Collection.UNDO_REVIEW, new Object[]{card});
         card.setReps(card.getReps() + 1);
-        card.setWasNew((card.getQueue() == 0));
-        if (card.getWasNew()) {
+        // former is for logging new cards, latter also covers filt. decks
+        card.setWasNew((card.getType() == 0));
+        boolean wasNewQ = (card.getQueue() == 0);
+        if (wasNewQ) {
             // came from the new queue, move to learning
             card.setQueue(1);
             // if it was a new card, it's now a learning card
@@ -227,7 +229,7 @@ public class Sched {
         }
         if (card.getQueue() == 1 || card.getQueue() == 3) {
             _answerLrnCard(card, ease);
-            if (!card.getWasNew()) {
+            if (!wasNewQ) {
                 _updateStats(card, "lrn");
             }
         } else if (card.getQueue() == 2) {
