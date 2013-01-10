@@ -109,7 +109,12 @@ public class RemoteMediaServer extends BasicHttpSyncer {
             if (sl != null && sl.getStatusCode() == 200 && ent != null) {
                 s = super.stream2String(ent.getContent());
                 if (s != null && !s.equalsIgnoreCase("null") && s.length() != 0) {
-                    return Long.getLong(s);
+                	try {
+                        return Long.parseLong(s);                		
+                	} catch (NumberFormatException e) {
+                		AnkiDroidApp.saveExceptionReportFile(e, "RemoteMediaServerAddFiles:" + s);
+                		return 0;
+                	}
                 }
             }
             Log.e(AnkiDroidApp.TAG, "Error in RemoteMediaServer.addFiles(): " + ret.getStatusLine().getReasonPhrase());
