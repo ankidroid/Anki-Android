@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.provider.MediaStore;
+import android.support.v4.app.FragmentActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -22,7 +23,7 @@ public class BasicImageFieldController implements IFieldController
     protected static final int ACTIVITY_SELECT_IMAGE = 1;
     protected static final int ACTIVITY_TAKE_PICTURE = 2;
 
-    protected Activity mActivity;
+    protected FragmentActivity mActivity;
     protected Button mBtnGallery;
     protected Button mBtnCamera;
     protected ImageView mImagePreview;;
@@ -51,14 +52,18 @@ public class BasicImageFieldController implements IFieldController
     }
 
     @Override
-    public void createUI(LinearLayout layout, final Activity activity)
+    public void setFragmentActivity(FragmentActivity activity)
     {
         mActivity = activity;
+    };
 
+    @Override
+    public void createUI(LinearLayout layout)
+    {
         mImagePreview = new ImageView(mActivity);
         setPreviewImage(mField.getImagePath());
 
-        mBtnGallery = new Button(activity);
+        mBtnGallery = new Button(mActivity);
         mBtnGallery.setText("From Gallery");
         mBtnGallery.setOnClickListener(new View.OnClickListener()
         {
@@ -66,11 +71,11 @@ public class BasicImageFieldController implements IFieldController
             public void onClick(View v)
             {
                 Intent i = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                activity.startActivityForResult(i, ACTIVITY_SELECT_IMAGE);
+                mActivity.startActivityForResult(i, ACTIVITY_SELECT_IMAGE);
             }
         });
 
-        mBtnCamera = new Button(activity);
+        mBtnCamera = new Button(mActivity);
         mBtnCamera.setText("From Camera");
         mBtnCamera.setOnClickListener(new View.OnClickListener()
         {
