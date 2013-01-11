@@ -1,6 +1,9 @@
 package com.ichi2.anki;
 
+import java.util.ArrayList;
+
 import android.app.Activity;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v4.app.FragmentActivity;
 import android.view.View;
@@ -13,7 +16,7 @@ import com.ichi2.anki.multimediacard.EFieldType;
 import com.ichi2.anki.multimediacard.IField;
 import com.ichi2.anki.multimediacard.IMultimediaEditableNote;
 
-public class BasicTextFieldController implements IFieldController
+public class BasicTextFieldController implements IFieldController, DialogInterface.OnClickListener
 {
 
     IField mField;
@@ -21,6 +24,7 @@ public class BasicTextFieldController implements IFieldController
     private int mIndex;
     private EditText mEditText;
     private FragmentActivity mActivity;
+    private ArrayList<String> mPossibleClones;
 
     @Override
     public void setField(IField field)
@@ -68,6 +72,9 @@ public class BasicTextFieldController implements IFieldController
         {
             // Should be more than one text not empty fields for clone to make
             // sense
+            
+            mPossibleClones = new ArrayList<String>();
+            
             int numTextFields = 0;
             for (int i = 0; i < mNote.getNumberOfFields(); ++i)
             {
@@ -87,10 +94,16 @@ public class BasicTextFieldController implements IFieldController
                     continue;
                 }
 
+                if(curField.getText().contentEquals(mField.getText()))
+                {
+                    continue;
+                }
+                
+                mPossibleClones.add(curField.getText());
                 ++numTextFields;
             }
 
-            if (numTextFields < 2)
+            if (numTextFields < 1)
             {
                 return;
             }
@@ -99,6 +112,8 @@ public class BasicTextFieldController implements IFieldController
             // TODO Translation
             btnOtherField.setText("Clone");
             layoutTools.addView(btnOtherField);
+            
+            final BasicTextFieldController controller = this;
 
             btnOtherField.setOnClickListener(new OnClickListener()
             {
@@ -107,6 +122,10 @@ public class BasicTextFieldController implements IFieldController
                 public void onClick(View v)
                 {
                     PickCloneDialogFragment fragment = new PickCloneDialogFragment();
+                    
+                    fragment.setChoices(mPossibleClones);
+                    fragment.setOnclickListener(controller);
+                    
                     fragment.show(mActivity.getSupportFragmentManager(), "pick.clone");
                 }
             });
@@ -124,6 +143,13 @@ public class BasicTextFieldController implements IFieldController
     public void onDone()
     {
         mField.setText(mEditText.getText().toString());
+    }
+
+    //This is when the dialog for clone ends
+    @Override
+    public void onClick(DialogInterface dialog, int which)
+    {
+        mEditText.setText(mPossibleClones.get(which));        
     }
 
 }
