@@ -1,15 +1,14 @@
 package com.ichi2.anki;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
-import android.widget.Toast;
 
 import com.ichi2.anki.multimediacard.EFieldType;
 import com.ichi2.anki.multimediacard.IField;
@@ -18,7 +17,7 @@ import com.ichi2.anki.multimediacard.impl.AudioField;
 import com.ichi2.anki.multimediacard.impl.ImageField;
 import com.ichi2.anki.multimediacard.impl.TextField;
 
-public class EditTextFieldActivity extends Activity
+public class EditTextFieldActivity extends FragmentActivity
 {
 
     public static final String EXTRA_RESULT_FIELD = "edit.field.result.field";
@@ -52,7 +51,6 @@ public class EditTextFieldActivity extends Activity
             LinearLayout linearLayout = (LinearLayout) findViewById(R.id.LinearLayoutForSpareMenuFieldEdit);
             createSpareMenu(linearLayout);
         }
-
     }
 
     private void recreateEditingUi()
@@ -71,12 +69,14 @@ public class EditTextFieldActivity extends Activity
         mFieldController.setField(mField);
         mFieldController.setFieldIndex(mFieldIndex);
         mFieldController.setNote(mNote);
+        mFieldController.setFragmentActivity(this);
+              
 
         LinearLayout linearLayout = (LinearLayout) findViewById(R.id.LinearLayoutInScrollViewFieldEdit);
 
         linearLayout.removeAllViews();
 
-        mFieldController.createUI(linearLayout, this);
+        mFieldController.createUI(linearLayout);
 
     }
 
@@ -222,5 +222,4 @@ public class EditTextFieldActivity extends Activity
 
         super.onActivityResult(requestCode, resultCode, data);
     }
-
 }

@@ -1,7 +1,7 @@
 package com.ichi2.anki;
 
-import android.app.Activity;
 import android.content.Intent;
+import android.support.v4.app.FragmentActivity;
 import android.widget.LinearLayout;
 
 import com.ichi2.anki.multimediacard.IField;
@@ -21,8 +21,11 @@ public interface IFieldController
     // is aware of the field index in the note.
     void setFieldIndex(int index);
 
+    //Called before other
+    void setFragmentActivity(FragmentActivity activity);
+    
     // Layout is vertical inside a scroll view already
-    void createUI(LinearLayout layout, Activity activity);
+    void createUI(LinearLayout layout);
 
     // If the controller ever starts an activity for result, this is going to be
     // called back on result.

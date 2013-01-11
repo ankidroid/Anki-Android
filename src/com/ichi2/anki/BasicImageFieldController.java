@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.support.v4.app.FragmentActivity;
 
 import com.ichi2.anki.multimediacard.IField;
 import com.ichi2.anki.multimediacard.IMultimediaEditableNote;
@@ -16,7 +17,7 @@ import com.ichi2.anki.multimediacard.IMultimediaEditableNote;
 public class BasicImageFieldController implements IFieldController
 {
     protected static final int ACTIVITY_SELECT_IMAGE = 1;
-    protected Activity mActivity;
+    protected FragmentActivity mActivity;
 
     IField mField;
     IMultimediaEditableNote mNote;
@@ -39,13 +40,16 @@ public class BasicImageFieldController implements IFieldController
     {
         mIndex = index;
     }
+    
+    @Override
+    public void setFragmentActivity(FragmentActivity activity) {
+        mActivity = activity;
+    };
 
     @Override
-    public void createUI(LinearLayout layout, final Activity activity)
+    public void createUI(LinearLayout layout)
     {
-        mActivity = activity;
-
-        Button btnSelectPhoto = new Button(activity);
+        Button btnSelectPhoto = new Button(mActivity);
         btnSelectPhoto.setText("Gallery");
         btnSelectPhoto.setOnClickListener(new View.OnClickListener()
         {
@@ -53,7 +57,7 @@ public class BasicImageFieldController implements IFieldController
             public void onClick(View v)
             {
                 Intent i = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                activity.startActivityForResult(i, ACTIVITY_SELECT_IMAGE);
+                mActivity.startActivityForResult(i, ACTIVITY_SELECT_IMAGE);
             }
         });
 
