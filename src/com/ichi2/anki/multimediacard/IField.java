@@ -31,4 +31,16 @@ public interface IField extends Serializable
     String getText();
 
     boolean setText(String text);
+
+    /**
+     * Mark if the current media path is temporary and if it should be deleted
+     * once the media has been processed.
+     * 
+     * @param hasTemporaryMedia
+     *            True if the media is temporary, False if it is existing media.
+     * @return
+     */
+    public void setHasTemporaryMedia(boolean hasTemporaryMedia);
+
+    public boolean hasTemporaryMedia();
 }

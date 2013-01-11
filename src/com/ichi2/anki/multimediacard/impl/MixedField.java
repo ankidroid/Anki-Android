@@ -79,4 +79,16 @@ public class MixedField extends FieldBase implements IField
     {
         return false;
     }
+
+    @Override
+    public void setHasTemporaryMedia(boolean hasTemporaryMedia)
+    {
+    }
+
+    @Override
+    public boolean hasTemporaryMedia()
+    {
+        // TODO Auto-generated method stub
+        return false;
+    }
 }

@@ -37,6 +37,7 @@
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
     <!--
 	<uses-permission android:name="android.permission.BLUETOOTH" />
         <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
@@ -253,6 +254,10 @@
         <activity
             android:name="com.ichi2.anki.EditImageActivity"
             android:label="@string/title_activity_edit_image" >
+        </activity>
+        <activity
+            android:name="com.ichi2.anki.AudioRecorderActivity"
+            android:label="@string/title_activity_audio_recorder" >
         </activity>
     </application>
 

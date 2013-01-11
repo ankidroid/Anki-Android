@@ -79,4 +79,16 @@ public class TextField extends FieldBase implements IField
         setThisModified();
         return true;
     }
+
+    @Override
+    public void setHasTemporaryMedia(boolean hasTemporaryMedia)
+    {
+    }
+
+    @Override
+    public boolean hasTemporaryMedia()
+    {
+        // TODO Auto-generated method stub
+        return false;
+    }
 }

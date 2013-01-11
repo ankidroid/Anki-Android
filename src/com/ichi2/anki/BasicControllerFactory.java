@@ -30,6 +30,9 @@ public class BasicControllerFactory implements IControllerFactory
             case IMAGE:
                 return new BasicImageFieldController();
 
+            case AUDIO:
+                return new BasicAudioFieldController();
+
             default:
 
                 break;
