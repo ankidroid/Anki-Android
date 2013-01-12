@@ -10,6 +10,8 @@ import android.net.Uri;
 import android.provider.MediaStore;
 import android.support.v4.app.FragmentActivity;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.ViewGroup.LayoutParams;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -22,6 +24,7 @@ public class BasicImageFieldController implements IFieldController
 {
     protected static final int ACTIVITY_SELECT_IMAGE = 1;
     protected static final int ACTIVITY_TAKE_PICTURE = 2;
+    protected static final int IMAGE_PREVIEW_MAX_WIDTH = 100;
 
     protected FragmentActivity mActivity;
     protected Button mBtnGallery;
@@ -61,6 +64,10 @@ public class BasicImageFieldController implements IFieldController
     public void createUI(LinearLayout layout)
     {
         mImagePreview = new ImageView(mActivity);
+        mImagePreview.setAdjustViewBounds(true);
+        mImagePreview.setMaxHeight(IMAGE_PREVIEW_MAX_WIDTH);
+        ViewGroup.LayoutParams params = new ViewGroup.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+        mImagePreview.setLayoutParams(params);
         setPreviewImage(mField.getImagePath());
 
         mBtnGallery = new Button(mActivity);

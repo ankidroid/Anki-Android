@@ -1,19 +1,16 @@
 package com.ichi2.anki;
 
-import android.app.Activity;
-import android.content.Intent;
-import android.util.Log;
-import android.view.View;
-import android.widget.Button;
+import android.support.v4.app.FragmentActivity;
 import android.widget.LinearLayout;
 
+import com.ichi2.anki.multimediacard.AudioView;
 import com.ichi2.anki.multimediacard.IField;
 import com.ichi2.anki.multimediacard.IMultimediaEditableNote;
 
 public class BasicAudioFieldController implements IFieldController
 {
     protected static final int ACTIVITY_RECORD_AUDIO = 1;
-    protected Activity mActivity;
+    protected FragmentActivity mActivity;
 
     IField mField;
     IMultimediaEditableNote mNote;
@@ -38,43 +35,23 @@ public class BasicAudioFieldController implements IFieldController
     }
 
     @Override
-    public void createUI(LinearLayout layout, final Activity context)
+    public void createUI(LinearLayout layout)
     {
-        mActivity = context;
+        AudioView audioView = new AudioView(mActivity, R.drawable.av_play, R.drawable.av_pause, R.drawable.av_stop,
+                R.drawable.av_rec, R.drawable.av_rec_stop);
 
-        Button btnStartAudioRecordActivity = new Button(context);
-        btnStartAudioRecordActivity.setText("Record Audio");
-        btnStartAudioRecordActivity.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View v)
-            {
-                Intent audioRecorder = new Intent(mActivity, AudioRecorderActivity.class);
-                mActivity.startActivityForResult(audioRecorder, ACTIVITY_RECORD_AUDIO);
-            }
-        });
-
-        layout.addView(btnStartAudioRecordActivity, LinearLayout.LayoutParams.MATCH_PARENT);
-    }
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data)
-    {
-        if (resultCode == Activity.RESULT_CANCELED)
-        {
-            Log.d(AnkiDroidApp.TAG, "Cancelled");
-        }
-        else if (requestCode == ACTIVITY_RECORD_AUDIO)
-        {
-            Log.d("MainActivity", "" + ACTIVITY_RECORD_AUDIO);
-            IField value = (IField) data.getExtras().get("fieldValue");
-            Log.d(AnkiDroidApp.TAG, value.getAudioPath());
-        }
+        layout.addView(audioView, LinearLayout.LayoutParams.MATCH_PARENT);
     }
 
     @Override
     public void onDone()
     {
         //
+    }
+
+    @Override
+    public void setFragmentActivity(FragmentActivity activity)
+    {
+        mActivity = activity;
     }
 }

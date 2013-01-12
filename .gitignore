@@ -1,6 +1,7 @@
 #.classpath
 .project
 .settings
+.directory
 
 bin/
 gen/
