@@ -21,12 +21,12 @@ public class AudioRecorderActivity extends Activity
     public void onCreate(Bundle savedState)
     {
         super.onCreate(savedState);
+        LinearLayout layout = new LinearLayout(this);
 
         AudioView audioView = new AudioView(this, R.drawable.av_play, R.drawable.av_pause, R.drawable.av_stop,
                 R.drawable.av_rec, R.drawable.av_rec_stop);
         audioView.setAudioPath(mFileName);
 
-        LinearLayout layout = new LinearLayout(this);
         layout.addView(audioView);
         setContentView(layout);
     }

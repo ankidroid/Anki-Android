@@ -24,6 +24,8 @@ public class AudioView extends LinearLayout
     private MediaRecorder mRecorder = null;
     private MediaPlayer mPlayer = null;
 
+    OnRecordingFinishEventListener mOnRecordingFinishEventListener = null;
+
     private Status mStatus = Status.STOPPED;
 
     int mResPlayImage;
@@ -49,13 +51,13 @@ public class AudioView extends LinearLayout
         this.setOrientation(HORIZONTAL);
 
         mPlayPause = new PlayPauseButton(context);
-        addView(mPlayPause, new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
+        addView(mPlayPause, new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
 
         mStop = new StopButton(context);
-        addView(mStop, new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
+        addView(mStop, new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
 
         mRecord = new RecordButton(context);
-        addView(mRecord, new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
+        addView(mRecord, new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
     }
 
     public void setAudioPath(String audioPath)
@@ -78,6 +80,11 @@ public class AudioView extends LinearLayout
         {
             mRecord.setVisibility(INVISIBLE);
         }
+    }
+
+    public void setOnRecordingFinishEventListener(OnRecordingFinishEventListener listener)
+    {
+        mOnRecordingFinishEventListener = listener;
     }
 
     public void onPlay()
@@ -308,6 +315,10 @@ public class AudioView extends LinearLayout
                         setImageResource(mResRecordStopImage);
                         mStatus = Status.STOPPED;
                         onStopRecord();
+                        if (mOnRecordingFinishEventListener != null)
+                        {
+                            mOnRecordingFinishEventListener.onRecordingFinish(AudioView.this);
+                        }
                         break;
 
                     default:
@@ -338,5 +349,10 @@ public class AudioView extends LinearLayout
                     break;
             }
         }
+    }
+
+    public interface OnRecordingFinishEventListener
+    {
+        public void onRecordingFinish(View v);
     }
 }
