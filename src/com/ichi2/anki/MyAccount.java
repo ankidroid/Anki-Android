@@ -115,7 +115,7 @@ public class MyAccount extends AnkiActivity {
         InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
         inputMethodManager.hideSoftInputFromWindow(mUsername.getWindowToken(), 0);
 
-        String username = mUsername.getText().toString();
+        String username = mUsername.getText().toString().trim(); // trim spaces, issue 1586
         String password = mPassword.getText().toString();
 
         /*
@@ -137,7 +137,7 @@ public class MyAccount extends AnkiActivity {
         InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
         inputMethodManager.hideSoftInputFromWindow(mUsername.getWindowToken(), 0);
 
-        String username = mUsername1.getText().toString();
+        String username = mUsername1.getText().toString().trim(); // trim spaces, issue 1586
         String password = mPassword1.getText().toString();
 
         if (!"".equalsIgnoreCase(username) && !"".equalsIgnoreCase(password)) {
