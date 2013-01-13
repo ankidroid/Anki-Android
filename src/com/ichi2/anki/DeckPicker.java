@@ -731,6 +731,10 @@ public class DeckPicker extends FragmentActivity {
     	 switch (result.getInt()) {
     	 case BackupManager.RETURN_DECK_RESTORED:
     		 loadCollection();
+             Collection col = AnkiDroidApp.getCol();
+             if (col != null) {
+                 col.modSchema(false);
+             }
     		 break;
     	 case BackupManager.RETURN_ERROR:
     		 Themes.showThemedToast(DeckPicker.this, getResources().getString(R.string.backup_restore_error), true);

@@ -93,7 +93,7 @@ public class Collection {
 
     // Cloze regex
     private static final Pattern fClozePattern = Pattern.compile("\\{\\{cloze:");
-
+    private static final Pattern fAltClozePattern = Pattern.compile("<%cloze:");
     // other options
     public static final String defaultConf = "{"
             +
@@ -857,9 +857,13 @@ public class Collection {
         for (Object[] o : _fieldData(snids)) {
             String[] fields = Utils.splitFields((String) o[2]);
             JSONObject model = mModels.get((Long) o[1]);
-            // apply, relying on calling code to bump usn+mod
+            if (model == null) {
+                // note point to invalid model
+                continue;
+            }
             r.add(new Object[] { Utils.stripHTML(fields[mModels.sortIdx(model)]), Utils.fieldChecksum(fields[0]), o[0] });
         }
+        // apply, relying on calling code to bump usn+mod
         mDb.executeMany("UPDATE notes SET sfld=?, csum=? WHERE id=?", r);
     }
 
@@ -938,6 +942,8 @@ public class Collection {
             Models.fieldParser fparser = new Models.fieldParser(fields);
             Matcher m = fClozePattern.matcher(qfmt);
             format = m.replaceFirst("{{cq:" + String.valueOf(((Integer) data[4]) + 1) + ":");
+            m = fAltClozePattern.matcher(format);
+            format = m.replaceFirst("<%%cq:" + String.valueOf(((Integer) data[4]) + 1) + ":");
             html = mModels.getCmpldTemplate(format).execute(fparser);
             html = (String) AnkiDroidApp.getHooks().runFilter("mungeQA", html, "q", fields, model, data, this);
             d.put("q", html);
@@ -953,6 +959,8 @@ public class Collection {
             fparser = new Models.fieldParser(fields);
             m = fClozePattern.matcher(afmt);
             format = m.replaceFirst("{{ca:" + String.valueOf(((Integer) data[4]) + 1) + ":");
+            m = fAltClozePattern.matcher(format);
+            format = m.replaceFirst("<%%ca:" + String.valueOf(((Integer) data[4]) + 1) + ":");
             html = mModels.getCmpldTemplate(format).execute(fparser);
             html = (String) AnkiDroidApp.getHooks().runFilter("mungeQA", html, "a", fields, model, data, this);
             d.put("a", html);
@@ -1317,6 +1325,13 @@ public class Collection {
                 	problems.add("Deleted " + ids.size() + " note(s) with missing no cards.");
 	                _remNotes(Utils.arrayList2array(ids));
                 }
+
+                ids = mDb.queryColumn(Long.class,
+                        "SELECT id FROM cards WHERE nid NOT IN (SELECT id FROM notes)", 0);
+                if (ids.size() != 0) {
+                    problems.add("Deleted " + ids.size() + " card(s) with missing note.");
+                    remCards(Utils.arrayList2array(ids));
+                }
                 // tags
                 mTags.registerNotes();
                 // field cache
@@ -1352,7 +1367,7 @@ public class Collection {
         long newSize = file.length();
         // if any problems were found, force a full sync
         if (problems.size() > 0) {
-        	modSchema();
+        	modSchema(false);
         }
         // TODO: report problems
         return (long) ((oldSize - newSize) / 1024);

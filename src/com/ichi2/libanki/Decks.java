@@ -397,7 +397,9 @@ public class Decks {
             for (JSONObject grp : all()) {
                 if (grp.getString("name").startsWith(oldName + "::")) {
                     String on = grp.getString("name");
-                    String nn = on.replace(oldName + "::", newName + "::");
+                    // unlike the related code in libanki python the following replaceFirst call works with regex
+                    // pattern, so we need to escape the oldName:: with \Q, \E
+                    String nn = on.replaceFirst("\\Q" + oldName + "::\\E", newName + "::");
                     grp.put("name", nn);
                     save(grp);
                 }

@@ -816,7 +816,7 @@ public class StudyOptionsFragment extends Fragment {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                     	String previewDays = ((EditText) mCustomStudyEditText).getText().toString();
-                    	createFilteredDeck(new JSONArray(), new Object[]{"is:new added:" + previewDays, 9999, Sched.DYN_OLDEST}, true);
+                    	createFilteredDeck(new JSONArray(), new Object[]{"is:new added:" + previewDays, 9999, Sched.DYN_OLDEST}, false);
                     }
                 });
         		break;

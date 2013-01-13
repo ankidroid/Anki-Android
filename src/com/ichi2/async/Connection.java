@@ -571,7 +571,6 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
                 return data;
             }
             // save and note success state
-            col.save();
             if (retCode.equals("noChanges")) {
                 // publishProgress(R.string.sync_no_changes_message);
                 noChanges = true;

@@ -48,7 +48,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class Models {
-    private static final Pattern fClozePattern1 = Pattern.compile("\\{\\{cloze:(.+?)\\}\\}");
+    private static final Pattern fClozePattern1 = Pattern.compile("(?:\\{\\{|<%)cloze:(.+?)(?:\\}\\}|%>)");
     private static final Pattern fClozePattern2 = Pattern.compile("\\{\\{c(\\d+)::.+?\\}\\}");
 
     public static final String defaultModel = "{'sortf': 0, " + "'did': 1, " + "'latexPre': \""
@@ -68,7 +68,8 @@ public class Models {
             "'media': [] }";
 
     private static final String defaultTemplate = "{'name': \"\", " + "'ord': None, " + "'qfmt': \"\", "
-            + "'afmt': \"\", " + "'did': None, " + "'bqfmt': \"\"," + "'bafmt': \"\" }";
+            + "'afmt': \"\", " + "'did': None, " + "'bqfmt': \"\"," + "'bafmt': \"\"," + "'bfont': \"Arial\"," +
+            "'bsize': 12 }";
 
     // /** Regex pattern used in removing tags from text before diff */
     // private static final Pattern sFactPattern = Pattern.compile("%\\([tT]ags\\)s");
@@ -266,7 +267,7 @@ public class Models {
     public JSONObject byName(String name) {
         for (JSONObject m : mModels.values()) {
             try {
-                if (m.getString("name").equalsIgnoreCase(name)) {
+                if (m.getString("name").equals(name)) {
                     return m;
                 }
             } catch (JSONException e) {
@@ -1088,7 +1089,7 @@ public class Models {
      */
 
     /** Return a hash of the schema, to see if models are compatible. */
-    public long scmhash(JSONObject m) {
+    public String scmhash(JSONObject m) {
         String s = "";
         try {
         	JSONArray flds = m.getJSONArray("flds");
@@ -1105,7 +1106,7 @@ public class Models {
         } catch (JSONException e) {
             throw new RuntimeException(e);
         }
-        return Utils.fieldChecksum(s);
+        return Utils.checksum(s);
     }
 
 
@@ -1271,6 +1272,8 @@ public class Models {
         Matcher matcher1 = null;
         try {
             matcher1 = fClozePattern1.matcher(m.getJSONArray("tmpls").getJSONObject(0).getString("qfmt"));
+            // Libanki makes two finds for each case of the cloze tags, but we embed both in the pattern.
+            // Please note, that this approach is not 100% correct, as we allow cases like {{cloze:...%>
         } catch (JSONException e) {
             throw new RuntimeException(e);
         }

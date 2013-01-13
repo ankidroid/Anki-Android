@@ -568,7 +568,7 @@ public class Utils {
             byte[] digest = null;
             try {
                 md = MessageDigest.getInstance("SHA");
-                digest = md.digest(data.getBytes("UTF-8"));
+                digest = md.digest(stripHTML(data).getBytes("UTF-8"));
             } catch (NoSuchAlgorithmException e) {
                 Log.e(AnkiDroidApp.TAG, "Utils.checksum: No such algorithm. " + e.getMessage());
                 throw new RuntimeException(e);
@@ -597,7 +597,7 @@ public class Utils {
      * @return 32 bit unsigned number from first 8 digits of sha1 hash
      */
     public static long fieldChecksum(String data) {
-    	return Long.valueOf(checksum(data).substring(0, 8), 16);
+    	return Long.valueOf(checksum(stripHTMLMedia(data)).substring(0, 8), 16);
     }
     
     /**
