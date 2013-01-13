@@ -2456,6 +2456,9 @@ public class Reviewer extends AnkiActivity {
             // font-weight to 700
             content = content.replace("font-weight:600;", "font-weight:700;");
 
+            // CSS class for card-specific styling
+            String cardClass = "card card" + (mCurrentCard.getOrd()+1);
+            
             // Log.i(AnkiDroidApp.TAG, "content card = \n" + content);
             StringBuilder style = new StringBuilder();
             style.append(mCustomFontStyle);
@@ -2467,7 +2470,7 @@ public class Reviewer extends AnkiActivity {
 
             content = SmpToHtmlEntity(content);
             mCardContent = new SpannedString(mCardTemplate.replace("::content::", content).replace("::style::",
-                    style.toString()));
+                    style.toString()).replace("::class::", cardClass));
             // Log.i(AnkiDroidApp.TAG, "base url = " + mBaseUrl);
 
             fillFlashcard(mShowAnimations);
