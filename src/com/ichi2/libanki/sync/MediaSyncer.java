@@ -88,8 +88,8 @@ public class MediaSyncer {
             }
             long usn = mServer.addFiles(zipAdded.first);
             if (usn == 0) {
-            	// an error occurred, return
-            	return null;
+                // an error occurred, return
+                return null;
             }
             // after server has replied, safe to remove from log
             zipAdded.first.delete(); // remove the temporary file created by Media.zipAdded
@@ -105,7 +105,7 @@ public class MediaSyncer {
         if (cMediaSanity.first != 0 || sMediaSanity != cMediaSanity.second) {
             Log.e(AnkiDroidApp.TAG,
                     "Media sanity check failed. Diffs [local, server] - Logs: [" + cMediaSanity.first +
-                    ", 0], Counts: [" + cMediaSanity.second + ", " + sMediaSanity + "]");
+                            ", 0], Counts: [" + cMediaSanity.second + ", " + sMediaSanity + "]");
             if (cMediaSanity.first != 0) {
                 AnkiDroidApp.saveExceptionReportFile(new RuntimeException(
                         "Media sanity check failed. Logs not empty."), "doInBackgroundSync-mediaSync");
@@ -137,7 +137,7 @@ public class MediaSyncer {
 
     /**
      * Adds any media sent from the server.
-     * 
+     *
      * @param zip A temporary zip file that contains the media files.
      * @return True if zip is the last in set. Server returns new usn instead.
      */
