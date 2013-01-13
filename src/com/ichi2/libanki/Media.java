@@ -62,7 +62,7 @@ public class Media {
     public static final int MEDIA_REM = 1;
     public static final long SYNC_ZIP_SIZE = 2560 * 1024;
 
-    private static final Pattern fMediaRegexps[] = { Pattern.compile("(?i)(\\[sound:([^]]+)\\])"),
+    public static final Pattern fMediaRegexps[] = { Pattern.compile("(?i)(\\[sound:([^]]+)\\])"),
             Pattern.compile("(?i)(<img[^>]+src=[\"']?([^\"'>]+)[\"']?[^>]*>)") };
     private static final Pattern fSoundRegexps = Pattern.compile("\\[sound:(.*?)\\]");
     private static final Pattern fRemoteFilePattern = Pattern.compile("(https?|ftp)://");
@@ -234,7 +234,6 @@ public class Media {
         return l;
     }
 
-
     /**
      * Strips a string from media references.
      * 
@@ -346,6 +345,12 @@ public class Media {
         return new ArrayList<String>(files);
     }
 
+    // Copying on import
+    ////////////////////
+
+    public boolean have(String fname) {
+        return new File(fname, getDir()).exists();
+    }
 
     // Media syncing - changes and removal
     // ////////////////////////////////////

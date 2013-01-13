@@ -359,18 +359,18 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
     private String[] getCustomFonts(String defaultValue, boolean useFullPath) {
         List<AnkiFont> mFonts = Utils.getCustomFonts(this);
         int count = mFonts.size();
-        // Log.d(AnkiDroidApp.TAG, "There are " + count + " custom fonts");
+        Log.d(AnkiDroidApp.TAG, "There are " + count + " custom fonts");
         String[] names = new String[count + 1];
         names[0] = defaultValue;
         if (useFullPath) {
             for (int index = 1; index < count + 1; ++index) {
                 names[index] = mFonts.get(index-1).getPath();
-                // Log.d(AnkiDroidApp.TAG, "Adding custom font: " + names[index]);
+                Log.d(AnkiDroidApp.TAG, "Adding custom font: " + names[index]);
             }
         } else {
             for (int index = 1; index < count + 1; ++index) {
                 names[index] = mFonts.get(index-1).getName();
-                // Log.d(AnkiDroidApp.TAG, "Adding custom font: " + names[index]);
+                Log.d(AnkiDroidApp.TAG, "Adding custom font: " + names[index]);
             }
         }
         return names;
@@ -380,7 +380,7 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
-            // Log.i(AnkiDroidApp.TAG, "DeckOptions - onBackPressed()");
+            Log.i(AnkiDroidApp.TAG, "DeckOptions - onBackPressed()");
             closePreferences();
             return true;
         }

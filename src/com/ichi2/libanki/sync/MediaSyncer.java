@@ -43,7 +43,7 @@ public class MediaSyncer {
     public String sync(long mediaUsn, Connection con) {
         // step 1: check if there have been any changes
         con.publishProgress(R.string.sync_media_find);
-        // Log.i(AnkiDroidApp.TAG, "MediaSync: finding changed media");
+        Log.i(AnkiDroidApp.TAG, "MediaSync: finding changed media");
         mCol.getMedia().findChanges();
         long lUsn = mCol.getMedia().usn();
         if (lUsn == mediaUsn && !mCol.getMedia().hasChanged()) {
@@ -52,7 +52,7 @@ public class MediaSyncer {
 
         // step 2: send/recv deletions
         con.publishProgress(R.string.sync_media_remove);
-        // Log.i(AnkiDroidApp.TAG, "MediaSync: handling deleted media");
+        Log.i(AnkiDroidApp.TAG, "MediaSync: handling deleted media");
         List<String> lRem = removed();
         JSONArray rRem = mServer.remove(lRem, lUsn);
         if (rRem == null) {
@@ -63,7 +63,7 @@ public class MediaSyncer {
 
         // step 3: stream files from server
         con.publishProgress(R.string.sync_media_from_server);
-        // Log.i(AnkiDroidApp.TAG, "MediaSync: receiving media from server");
+        Log.i(AnkiDroidApp.TAG, "MediaSync: receiving media from server");
         while (true) {
             long usn = mCol.getMedia().usn();
             File zip = mServer.files(usn, mCol.getPath().replaceFirst("collection\\.anki2$", "tmpSyncFromServer.zip"));
@@ -78,7 +78,7 @@ public class MediaSyncer {
 
         // step 4: stream files to the server
         con.publishProgress(R.string.sync_media_to_server);
-        // Log.i(AnkiDroidApp.TAG, "MediaSync: sending media to server");
+        Log.i(AnkiDroidApp.TAG, "MediaSync: sending media to server");
         while (true) {
             Pair<File, List<String>> zipAdded = files();
             if (zipAdded.second == null || zipAdded.second.size() == 0) {
@@ -88,8 +88,8 @@ public class MediaSyncer {
             }
             long usn = mServer.addFiles(zipAdded.first);
             if (usn == 0) {
-            	// an error occurred, return
-            	return null;
+                // an error occurred, return
+                return null;
             }
             // after server has replied, safe to remove from log
             zipAdded.first.delete(); // remove the temporary file created by Media.zipAdded
@@ -99,13 +99,13 @@ public class MediaSyncer {
 
         // step 5: sanity check during beta testing
         con.publishProgress(R.string.sync_media_sanity_check);
-        // Log.i(AnkiDroidApp.TAG, "MediaSync: sanity check");
+        Log.i(AnkiDroidApp.TAG, "MediaSync: sanity check");
         long sMediaSanity = mServer.mediaSanity();
         Pair<Long, Long> cMediaSanity = mediaSanity();
         if (cMediaSanity.first != 0 || sMediaSanity != cMediaSanity.second) {
             Log.e(AnkiDroidApp.TAG,
                     "Media sanity check failed. Diffs [local, server] - Logs: [" + cMediaSanity.first +
-                    ", 0], Counts: [" + cMediaSanity.second + ", " + sMediaSanity + "]");
+                            ", 0], Counts: [" + cMediaSanity.second + ", " + sMediaSanity + "]");
             if (cMediaSanity.first != 0) {
                 AnkiDroidApp.saveExceptionReportFile(new RuntimeException(
                         "Media sanity check failed. Logs not empty."), "doInBackgroundSync-mediaSync");
@@ -137,7 +137,7 @@ public class MediaSyncer {
 
     /**
      * Adds any media sent from the server.
-     * 
+     *
      * @param zip A temporary zip file that contains the media files.
      * @return True if zip is the last in set. Server returns new usn instead.
      */

@@ -83,6 +83,8 @@ public class Card implements Cloneable {
     private boolean mIsLeechTagged;
     private boolean mIsLeechSuspended;
 
+    private boolean mWasNew = false;
+
     private Collection mCol;
 
 
@@ -337,7 +339,7 @@ public class Card implements Cloneable {
         	mTimerStarted += Utils.now() - mTimerStopped;
     	 	mTimerStopped = Double.NaN;
          } else {
-        	 // Log.i(AnkiDroidApp.TAG, "Card Timer: nothing to resume");
+        	 Log.i(AnkiDroidApp.TAG, "Card Timer: nothing to resume");
          }
      }
 
@@ -695,5 +697,13 @@ public class Card implements Cloneable {
         } catch (CloneNotSupportedException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public boolean getWasNew() {
+        return mWasNew;
+    }
+
+    public void setWasNew(boolean mWasNew) {
+        this.mWasNew = mWasNew;
     }
 }

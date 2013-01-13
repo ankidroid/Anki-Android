@@ -568,7 +568,7 @@ public class Utils {
             byte[] digest = null;
             try {
                 md = MessageDigest.getInstance("SHA");
-                digest = md.digest(data.getBytes("UTF-8"));
+                digest = md.digest(stripHTML(data).getBytes("UTF-8"));
             } catch (NoSuchAlgorithmException e) {
                 Log.e(AnkiDroidApp.TAG, "Utils.checksum: No such algorithm. " + e.getMessage());
                 throw new RuntimeException(e);
@@ -597,7 +597,7 @@ public class Utils {
      * @return 32 bit unsigned number from first 8 digits of sha1 hash
      */
     public static long fieldChecksum(String data) {
-    	return Long.valueOf(checksum(data).substring(0, 8), 16);
+    	return Long.valueOf(checksum(stripHTMLMedia(data)).substring(0, 8), 16);
     }
     
     /**
@@ -730,7 +730,7 @@ public class Utils {
             ZipEntry ze = zis.getNextEntry();
             while (ze != null) { 
                 String name = ze.getName();
-                // Log.i(AnkiDroidApp.TAG, "uncompress " + name);
+                Log.i(AnkiDroidApp.TAG, "uncompress " + name);
                 int n;
                 FileOutputStream fos = new FileOutputStream(targetDirectory + "/" + name);
                 while ((n = zis.read(buf, 0, 1024)) > -1) {
@@ -786,7 +786,7 @@ public class Utils {
      * @throws IOException 
      */
     public static void writeToFile(InputStream source, String destination) throws IOException {
-        // Log.i(AnkiDroidApp.TAG, "Creating new file... = " + destination);
+        Log.i(AnkiDroidApp.TAG, "Creating new file... = " + destination);
         new File(destination).createNewFile();
 
         long startTimeMillis = System.currentTimeMillis();
@@ -805,14 +805,14 @@ public class Utils {
         }
         long endTimeMillis = System.currentTimeMillis();
 
-        // Log.i(AnkiDroidApp.TAG, "Finished writing!");
+        Log.i(AnkiDroidApp.TAG, "Finished writing!");
         long durationSeconds = (endTimeMillis - startTimeMillis) / 1000;
         long sizeKb = sizeBytes / 1024;
         long speedKbSec = 0;
         if (endTimeMillis != startTimeMillis) {
             speedKbSec = sizeKb * 1000 / (endTimeMillis - startTimeMillis);
         }
-        // Log.d(AnkiDroidApp.TAG, "Utils.writeToFile: " + "Size: " + sizeKb + "Kb, " + "Duration: " + durationSeconds + "s, " + "Speed: " + speedKbSec + "Kb/s");
+        Log.d(AnkiDroidApp.TAG, "Utils.writeToFile: " + "Size: " + sizeKb + "Kb, " + "Duration: " + durationSeconds + "s, " + "Speed: " + speedKbSec + "Kb/s");
         output.close();
     }
 
@@ -859,14 +859,14 @@ public class Utils {
                             buff.write(indentation + " " + key + " : ");
                             buff.newLine();
                         }
-                        // Log.i(AnkiDroidApp.TAG, "	" + indentation + key + " : ");
+                        Log.i(AnkiDroidApp.TAG, "	" + indentation + key + " : ");
                         printJSONObject((JSONObject) value, indentation + "-", buff);
                     } else {
                         if (buff != null) {
                             buff.write(indentation + " " + key + " = " + jsonObject.get(key).toString());
                             buff.newLine();
                         }
-                        // Log.i(AnkiDroidApp.TAG, "	" + indentation + key + " = " + jsonObject.get(key).toString());
+                        Log.i(AnkiDroidApp.TAG, "	" + indentation + key + " = " + jsonObject.get(key).toString());
                     }
                 } catch (JSONException e) {
                     Log.e(AnkiDroidApp.TAG, "JSONException = " + e.getMessage());
@@ -880,7 +880,7 @@ public class Utils {
 
     /*
     public static void saveJSONObject(JSONObject jsonObject) throws IOException {
-        // Log.i(AnkiDroidApp.TAG, "saveJSONObject");
+        Log.i(AnkiDroidApp.TAG, "saveJSONObject");
         BufferedWriter buff = new BufferedWriter(new FileWriter("/sdcard/jsonObjectAndroid.txt", true));
         buff.write(jsonObject.toString());
         buff.close();
@@ -925,7 +925,7 @@ public class Utils {
     	df.setTimeZone(TimeZone.getTimeZone("GMT"));
     	Calendar cal = new GregorianCalendar(TimeZone.getTimeZone("GMT"));
     	cal.setTimeInMillis((long)date * 1000);
-    	// Log.d(AnkiDroidApp.TAG, "Value of " + name + ": " + cal.getTime().toGMTString());
+    	Log.d(AnkiDroidApp.TAG, "Value of " + name + ": " + cal.getTime().toGMTString());
 	}
 
 

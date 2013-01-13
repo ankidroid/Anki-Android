@@ -404,7 +404,7 @@ public class DeckPicker extends FragmentActivity {
 
         @Override
         public void onPostExecute(Payload data) {
-            // Log.i(AnkiDroidApp.TAG, "onPostExecute");
+            Log.i(AnkiDroidApp.TAG, "onPostExecute");
             Resources res = DeckPicker.this.getResources();
         	mDontSaveOnStop = false;
             if (mProgressDialog != null) {
@@ -731,6 +731,10 @@ public class DeckPicker extends FragmentActivity {
     	 switch (result.getInt()) {
     	 case BackupManager.RETURN_DECK_RESTORED:
     		 loadCollection();
+             Collection col = AnkiDroidApp.getCol();
+             if (col != null) {
+                 col.modSchema(false);
+             }
     		 break;
     	 case BackupManager.RETURN_ERROR:
     		 Themes.showThemedToast(DeckPicker.this, getResources().getString(R.string.backup_restore_error), true);
@@ -758,10 +762,10 @@ public class DeckPicker extends FragmentActivity {
     /** Called when the activity is first created. */
     @Override
     protected void onCreate(Bundle savedInstanceState) throws SQLException {   	
-        // Log.i(AnkiDroidApp.TAG, "DeckPicker - onCreate");
+        Log.i(AnkiDroidApp.TAG, "DeckPicker - onCreate");
         Intent intent = getIntent();
         if (!isTaskRoot()) {
-            // Log.i(AnkiDroidApp.TAG, "DeckPicker - onCreate: Detected multiple instance of this activity, closing it and return to root activity");
+            Log.i(AnkiDroidApp.TAG, "DeckPicker - onCreate: Detected multiple instance of this activity, closing it and return to root activity");
             Intent reloadIntent = new Intent(DeckPicker.this, DeckPicker.class);
             reloadIntent.setAction(Intent.ACTION_MAIN);
             if (intent != null && intent.getExtras() != null) {
@@ -1102,7 +1106,7 @@ public class DeckPicker extends FragmentActivity {
 
     @Override
     protected void onPause() {
-        // Log.i(AnkiDroidApp.TAG, "DeckPicker - onPause");
+        Log.i(AnkiDroidApp.TAG, "DeckPicker - onPause");
 
         super.onPause();
     }
@@ -1110,7 +1114,7 @@ public class DeckPicker extends FragmentActivity {
 
     @Override
     protected void onStop() {
-        // Log.i(AnkiDroidApp.TAG, "DeckPicker - onStop");
+        Log.i(AnkiDroidApp.TAG, "DeckPicker - onStop");
         super.onStop();
         if (!mDontSaveOnStop) {
             if (isFinishing()) {
@@ -1131,7 +1135,7 @@ public class DeckPicker extends FragmentActivity {
         if (mUnmountReceiver != null) {
             unregisterReceiver(mUnmountReceiver);
         }
-        // Log.i(AnkiDroidApp.TAG, "DeckPicker - onDestroy()");
+        Log.i(AnkiDroidApp.TAG, "DeckPicker - onDestroy()");
     }
 
 
@@ -1488,9 +1492,9 @@ public class DeckPicker extends FragmentActivity {
                 break;
 
             case DIALOG_SYNC_SANITY_ERROR:
-                builder.setPositiveButton(res.getString(R.string.sync_conflict_local), mSyncConflictResolutionListener);
-                builder.setNeutralButton(res.getString(R.string.sync_conflict_remote), mSyncConflictResolutionListener);
-                builder.setNegativeButton(res.getString(R.string.sync_conflict_cancel), mSyncConflictResolutionListener);
+                builder.setPositiveButton(res.getString(R.string.sync_conflict_local), mSyncSanityFailListener);
+                builder.setNeutralButton(res.getString(R.string.sync_conflict_remote), mSyncSanityFailListener);
+                builder.setNegativeButton(res.getString(R.string.sync_conflict_cancel), mSyncSanityFailListener);
                 builder.setTitle(res.getString(R.string.sync_log_title));
                 dialog = builder.create();
                 break;
@@ -1997,7 +2001,7 @@ public class DeckPicker extends FragmentActivity {
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
-            // Log.i(AnkiDroidApp.TAG, "DeckPicker - onBackPressed()");
+            Log.i(AnkiDroidApp.TAG, "DeckPicker - onBackPressed()");
             finishWithAnimation();
             return true;
         }
@@ -2135,7 +2139,7 @@ public class DeckPicker extends FragmentActivity {
         }
     }
 
-    private DialogInterface.OnClickListener mSyncConflictResolutionListener = new DialogInterface.OnClickListener() {
+    private DialogInterface.OnClickListener mSyncSanityFailListener = new DialogInterface.OnClickListener() {
         @Override
         public void onClick(DialogInterface dialog, int which) {
             Resources res = getResources();
@@ -2146,8 +2150,13 @@ public class DeckPicker extends FragmentActivity {
                     builder.setPositiveButton(res.getString(R.string.yes), new Dialog.OnClickListener() {
 						@Override
 						public void onClick(DialogInterface dialog, int which) {
-		                    sync("upload", mSyncMediaUsn);
-						}                    	
+                            Collection col = AnkiDroidApp.getCol();
+                            if (col != null) {
+                                col.modSchema(true);
+                                col.setMod();
+                                sync("upload", 0);
+                            }
+						}
                     });
                     builder.setNegativeButton(res.getString(R.string.no), null);
                     builder.setTitle(res.getString(R.string.sync_log_title));
@@ -2159,8 +2168,13 @@ public class DeckPicker extends FragmentActivity {
                     builder.setPositiveButton(res.getString(R.string.yes), new Dialog.OnClickListener() {
 						@Override
 						public void onClick(DialogInterface dialog, int which) {
-		                    sync("download", mSyncMediaUsn);
-						}                    	
+                            Collection col = AnkiDroidApp.getCol();
+                            if (col != null) {
+                                col.modSchema(true);
+                                col.setMod();
+                                sync("download", 0);
+                            }
+						}
                     });
                     builder.setNegativeButton(res.getString(R.string.no), null);
                     builder.setTitle(res.getString(R.string.sync_log_title));
@@ -2173,6 +2187,43 @@ public class DeckPicker extends FragmentActivity {
         }
     };
 
+    private DialogInterface.OnClickListener mSyncConflictResolutionListener = new DialogInterface.OnClickListener() {
+        @Override
+        public void onClick(DialogInterface dialog, int which) {
+            Resources res = getResources();
+            StyledDialog.Builder builder;
+            switch (which) {
+                case DialogInterface.BUTTON_POSITIVE:
+                    builder = new StyledDialog.Builder(DeckPicker.this);
+                    builder.setPositiveButton(res.getString(R.string.yes), new Dialog.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            sync("upload", mSyncMediaUsn);
+                        }
+                    });
+                    builder.setNegativeButton(res.getString(R.string.no), null);
+                    builder.setTitle(res.getString(R.string.sync_log_title));
+                    builder.setMessage(res.getString(R.string.sync_conflict_local_confirm));
+                    builder.show();
+                    break;
+                case DialogInterface.BUTTON_NEUTRAL:
+                    builder = new StyledDialog.Builder(DeckPicker.this);
+                    builder.setPositiveButton(res.getString(R.string.yes), new Dialog.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            sync("download", mSyncMediaUsn);
+                        }
+                    });
+                    builder.setNegativeButton(res.getString(R.string.no), null);
+                    builder.setTitle(res.getString(R.string.sync_log_title));
+                    builder.setMessage(res.getString(R.string.sync_conflict_remote_confirm));
+                    builder.show();
+                    break;
+                case DialogInterface.BUTTON_NEGATIVE:
+                default:
+            }
+        }
+    };
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -2297,7 +2348,7 @@ public class DeckPicker extends FragmentActivity {
                     public void onClick(DialogInterface dialog, int which) {
                         String deckName = mDialogEditText.getText().toString()
                                 .replaceAll("[\'\"\\n\\r\\[\\]\\(\\)]", "");
-                        // Log.i(AnkiDroidApp.TAG, "Creating deck: " + deckName);
+                        Log.i(AnkiDroidApp.TAG, "Creating deck: " + deckName);
                         AnkiDroidApp.getCol().getDecks().id(deckName, true);
                         loadCounts();
                     }
@@ -2476,7 +2527,7 @@ public class DeckPicker extends FragmentActivity {
         		showDialog(DIALOG_IMPORT);
         	}
         } else if (requestCode == REQUEST_REVIEW) {
-            // Log.i(AnkiDroidApp.TAG, "Result code = " + resultCode);
+            Log.i(AnkiDroidApp.TAG, "Result code = " + resultCode);
             switch (resultCode) {
                 case Reviewer.RESULT_SESSION_COMPLETED:
                 default:
@@ -2624,7 +2675,7 @@ public class DeckPicker extends FragmentActivity {
 
         @SuppressWarnings("unchecked")
         HashMap<String, String> data = (HashMap<String, String>) mDeckListAdapter.getItem(id);
-        // Log.i(AnkiDroidApp.TAG, "Selected " + deckFilename);
+        Log.i(AnkiDroidApp.TAG, "Selected " + deckFilename);
         long deckId = Long.parseLong(data.get("did"));
         AnkiDroidApp.getCol().getDecks().select(deckId);
         openStudyOptions(deckId);
@@ -2785,7 +2836,7 @@ public class DeckPicker extends FragmentActivity {
     // protected void onNewIntent(Intent intent) {
     // super.onNewIntent(intent);
     // String deck = intent.getStringExtra(EXTRA_DECK);
-    // // Log.d(AnkiDroidApp.TAG, "StudyOptions.onNewIntent: " + intent
+    // Log.d(AnkiDroidApp.TAG, "StudyOptions.onNewIntent: " + intent
     // + ", deck=" + deck);
     // // if (deck != null && !deck.equals(mDeckFilename)) {
     // // mDeckFilename = deck;

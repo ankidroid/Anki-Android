@@ -46,15 +46,15 @@ public class RemoteMediaServer extends BasicHttpSyncer {
         try {
             data.put("fnames", new JSONArray(fnames));
             data.put("minUsn", minUsn);
-            HttpResponse ret = super.req("remove", super.getInputStream(data.toString()));
+            HttpResponse ret = super.req("remove", getInputStream(data.toString()));
             if (ret == null) {
                 return null;
             }
-            String s = "";
+            String s;
             int resultType = ret.getStatusLine().getStatusCode();
             if (resultType == 200) {
                 s = super.stream2String(ret.getEntity().getContent());
-                if (!s.equalsIgnoreCase("null") && s.length() != 0) {
+                if (s != null && !s.equalsIgnoreCase("null") && s.length() != 0) {
                     return new JSONArray(s);
                 }
             }
@@ -74,7 +74,7 @@ public class RemoteMediaServer extends BasicHttpSyncer {
         JSONObject data = new JSONObject();
         try {
             data.put("minUsn", minUsn);
-            HttpResponse ret = super.req("files", super.getInputStream(data.toString()));
+            HttpResponse ret = super.req("files", getInputStream(data.toString()));
             if (ret == null) {
                 Log.e(AnkiDroidApp.TAG, "RemoteMediaServer.files: Exception during request");
                 return null;
@@ -105,11 +105,16 @@ public class RemoteMediaServer extends BasicHttpSyncer {
             }
             StatusLine sl = ret.getStatusLine();
             HttpEntity ent = ret.getEntity();
-            String s = "";
+            String s;
             if (sl != null && sl.getStatusCode() == 200 && ent != null) {
                 s = super.stream2String(ent.getContent());
                 if (s != null && !s.equalsIgnoreCase("null") && s.length() != 0) {
-                    return Long.getLong(s);
+                    try {
+                        return Long.parseLong(s);
+                    } catch (NumberFormatException e) {
+                        AnkiDroidApp.saveExceptionReportFile(e, "RemoteMediaServerAddFiles:" + s);
+                        return 0;
+                    }
                 }
             }
             Log.e(AnkiDroidApp.TAG, "Error in RemoteMediaServer.addFiles(): " + ret.getStatusLine().getReasonPhrase());
@@ -127,7 +132,7 @@ public class RemoteMediaServer extends BasicHttpSyncer {
         if (ret == null) {
             return 0;
         }
-        String s = "";
+        String s;
         int resultType = ret.getStatusLine().getStatusCode();
         if (resultType == 200) {
             try {
@@ -137,7 +142,7 @@ public class RemoteMediaServer extends BasicHttpSyncer {
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
-            if (!s.equalsIgnoreCase("null") && s.length() != 0) {
+            if (s != null && !s.equalsIgnoreCase("null") && s.length() != 0) {
                 return Long.parseLong(s);
             }
         }
