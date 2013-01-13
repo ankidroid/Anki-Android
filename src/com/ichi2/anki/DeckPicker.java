@@ -1492,9 +1492,9 @@ public class DeckPicker extends FragmentActivity {
                 break;
 
             case DIALOG_SYNC_SANITY_ERROR:
-                builder.setPositiveButton(res.getString(R.string.sync_conflict_local), mSyncConflictResolutionListener);
-                builder.setNeutralButton(res.getString(R.string.sync_conflict_remote), mSyncConflictResolutionListener);
-                builder.setNegativeButton(res.getString(R.string.sync_conflict_cancel), mSyncConflictResolutionListener);
+                builder.setPositiveButton(res.getString(R.string.sync_conflict_local), mSyncSanityFailListener);
+                builder.setNeutralButton(res.getString(R.string.sync_conflict_remote), mSyncSanityFailListener);
+                builder.setNegativeButton(res.getString(R.string.sync_conflict_cancel), mSyncSanityFailListener);
                 builder.setTitle(res.getString(R.string.sync_log_title));
                 dialog = builder.create();
                 break;
@@ -2139,7 +2139,7 @@ public class DeckPicker extends FragmentActivity {
         }
     }
 
-    private DialogInterface.OnClickListener mSyncConflictResolutionListener = new DialogInterface.OnClickListener() {
+    private DialogInterface.OnClickListener mSyncSanityFailListener = new DialogInterface.OnClickListener() {
         @Override
         public void onClick(DialogInterface dialog, int which) {
             Resources res = getResources();
@@ -2150,8 +2150,13 @@ public class DeckPicker extends FragmentActivity {
                     builder.setPositiveButton(res.getString(R.string.yes), new Dialog.OnClickListener() {
 						@Override
 						public void onClick(DialogInterface dialog, int which) {
-		                    sync("upload", mSyncMediaUsn);
-						}                    	
+                            Collection col = AnkiDroidApp.getCol();
+                            if (col != null) {
+                                col.modSchema(true);
+                                col.setMod();
+                                sync("upload", 0);
+                            }
+						}
                     });
                     builder.setNegativeButton(res.getString(R.string.no), null);
                     builder.setTitle(res.getString(R.string.sync_log_title));
@@ -2163,8 +2168,13 @@ public class DeckPicker extends FragmentActivity {
                     builder.setPositiveButton(res.getString(R.string.yes), new Dialog.OnClickListener() {
 						@Override
 						public void onClick(DialogInterface dialog, int which) {
-		                    sync("download", mSyncMediaUsn);
-						}                    	
+                            Collection col = AnkiDroidApp.getCol();
+                            if (col != null) {
+                                col.modSchema(true);
+                                col.setMod();
+                                sync("download", 0);
+                            }
+						}
                     });
                     builder.setNegativeButton(res.getString(R.string.no), null);
                     builder.setTitle(res.getString(R.string.sync_log_title));
@@ -2177,6 +2187,43 @@ public class DeckPicker extends FragmentActivity {
         }
     };
 
+    private DialogInterface.OnClickListener mSyncConflictResolutionListener = new DialogInterface.OnClickListener() {
+        @Override
+        public void onClick(DialogInterface dialog, int which) {
+            Resources res = getResources();
+            StyledDialog.Builder builder;
+            switch (which) {
+                case DialogInterface.BUTTON_POSITIVE:
+                    builder = new StyledDialog.Builder(DeckPicker.this);
+                    builder.setPositiveButton(res.getString(R.string.yes), new Dialog.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            sync("upload", mSyncMediaUsn);
+                        }
+                    });
+                    builder.setNegativeButton(res.getString(R.string.no), null);
+                    builder.setTitle(res.getString(R.string.sync_log_title));
+                    builder.setMessage(res.getString(R.string.sync_conflict_local_confirm));
+                    builder.show();
+                    break;
+                case DialogInterface.BUTTON_NEUTRAL:
+                    builder = new StyledDialog.Builder(DeckPicker.this);
+                    builder.setPositiveButton(res.getString(R.string.yes), new Dialog.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            sync("download", mSyncMediaUsn);
+                        }
+                    });
+                    builder.setNegativeButton(res.getString(R.string.no), null);
+                    builder.setTitle(res.getString(R.string.sync_log_title));
+                    builder.setMessage(res.getString(R.string.sync_conflict_remote_confirm));
+                    builder.show();
+                    break;
+                case DialogInterface.BUTTON_NEGATIVE:
+                default:
+            }
+        }
+    };
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
