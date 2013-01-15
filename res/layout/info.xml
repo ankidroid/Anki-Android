@@ -18,18 +18,26 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
 	android:orientation="vertical"
     android:layout_width="fill_parent"
-	android:layout_height="fill_parent">
-	<FrameLayout
+	android:layout_height="fill_parent"
+	android:layout_centerVertical="true"
+	android:layout_centerHorizontal="true">
+    	<RelativeLayout
         android:layout_width="fill_parent"
 		android:layout_height="fill_parent"
 		android:layout_alignParentTop="true"
 		android:layout_marginBottom="4dip"
 		android:fadingEdge="vertical"
+		android:gravity="center"
 		android:layout_above="@+id/info_buttons">
-	<WebView
+    	<FrameLayout
+        android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:fadingEdge="vertical">
+    	    	<WebView
         android:id="@+id/info"
-        android:layout_width="fill_parent"
-		android:layout_height="fill_parent"/>
+        android:gravity="center_vertical"
+        android:layout_width="wrap_content"
+		android:layout_height="wrap_content"/>
 	<RelativeLayout
         android:id="@+id/info_loading_layer"
 	    android:background="@color/white"
@@ -43,8 +51,9 @@
         android:layout_width="wrap_content"
 		android:layout_height="wrap_content"/>
 	</RelativeLayout>
-	 
+
 	</FrameLayout>
+		 </RelativeLayout>
 	<LinearLayout  android:id="@+id/info_buttons"
 	    android:layout_width="fill_parent"
 	    android:layout_height="wrap_content"
