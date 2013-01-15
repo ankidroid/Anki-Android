@@ -121,6 +121,7 @@ public class DeckPicker extends FragmentActivity {
     private static final int DIALOG_IMPORT_LOG = 29;
     private static final int DIALOG_IMPORT_HINT = 30;
     private static final int DIALOG_IMPORT_SELECT = 31;
+    public static final String UPGRADE_OLD_COLLECTION_RENAME = "collection.anki2.old";
 
     private String mDialogMessage;
     private int[] mRepairValues;
@@ -1052,18 +1053,18 @@ public class DeckPicker extends FragmentActivity {
 
     private void restartUpgradeProcess() {
         StyledDialog.Builder builder = new StyledDialog.Builder(DeckPicker.this);
-        builder.setTitle("Deck Upgrade");
+        builder.setTitle(R.string.deck_upgrade_title);
         builder.setIcon(R.drawable.ic_dialog_alert);
-        builder.setMessage("Be aware that this will rename your collection to \'collection.old\' and will create a new one from your old anki 1.x files. Do you really want to continue?");
-        builder.setPositiveButton("yes", new DialogInterface.OnClickListener() {
+        builder.setMessage(getString(R.string.deck_upgrade_rename_warning, UPGRADE_OLD_COLLECTION_RENAME));
+        builder.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 String path = AnkiDroidApp.getCollectionPath();
                 int i = 0;
-                String newPath = path.replace("collection.anki2", "collection.old" + i);
+                String newPath = path.replace("collection.anki2", UPGRADE_OLD_COLLECTION_RENAME + i);
                 while ((new File(newPath)).exists()) {
                     i++;
-                    newPath = path.replace("collection.anki2", "collection.old" + i);
+                    newPath = path.replace("collection.anki2", UPGRADE_OLD_COLLECTION_RENAME + i);
                 }
                 (new File(path)).renameTo(new File(newPath));
                 showUpgradeScreen(true, Info.UPGRADE_SCREEN_BASIC1);
@@ -1072,7 +1073,7 @@ public class DeckPicker extends FragmentActivity {
             }
         });
         builder.setCancelable(false);
-        builder.setNegativeButton("no", new DialogInterface.OnClickListener() {
+        builder.setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 AnkiDroidApp.getSharedPrefs(AnkiDroidApp.getInstance().getBaseContext())
@@ -1138,17 +1139,17 @@ public class DeckPicker extends FragmentActivity {
             if (!preferences.getString("lastUpgradeVersion", "").equals(AnkiDroidApp.getPkgVersion()) &&
                     (new File(AnkiDroidApp.getCurrentAnkiDroidDirectory()).listFiles(new OldAnkiDeckFilter()).length) > 0) {
                 StyledDialog.Builder builder = new StyledDialog.Builder(DeckPicker.this);
-                builder.setTitle("Deck Upgrade");
+                builder.setTitle(R.string.deck_upgrade_title);
                 builder.setIcon(R.drawable.ic_dialog_alert);
-                builder.setMessage("Did you already upgrade your decks properly after the last AnkiDroid update? If not, you can restart the upgrade process here");
-                builder.setPositiveButton("Restart", new DialogInterface.OnClickListener() {
+                builder.setMessage(R.string.deck_upgrade_already_upgraded);
+                builder.setPositiveButton(R.string.restart, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         restartUpgradeProcess();
                     }
                 });
                 builder.setCancelable(false);
-                builder.setNegativeButton("Do nothing", new DialogInterface.OnClickListener() {
+                builder.setNegativeButton(R.string.do_nothing, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         AnkiDroidApp.getSharedPrefs(AnkiDroidApp.getInstance().getBaseContext())
@@ -2339,7 +2340,7 @@ public class DeckPicker extends FragmentActivity {
         item.setIcon(R.drawable.ic_menu_send);
         item = menu.add(Menu.NONE, MENU_ABOUT, Menu.NONE, R.string.menu_about);
         item.setIcon(R.drawable.ic_menu_info_details);
-        item = menu.add(Menu.NONE, MENU_REUPGRADE, Menu.NONE, "Restart upgrade process");
+        item = menu.add(Menu.NONE, MENU_REUPGRADE, Menu.NONE, R.string.restart_upgrade_process);
         item.setIcon(R.drawable.ic_menu_preferences);
         
         return true;

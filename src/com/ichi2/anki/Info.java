@@ -256,17 +256,17 @@ public class Info extends Activity {
 
                 switch (mUpgradeStage) {
                     case UPGRADE_SCREEN_BASIC1:
-                        sb.append("This is a major update to Ankidroid and the upgrade process will take at least 5-10 minutes.<br><br>Do you want to proceed now or later?<br><br><a href=\"http://code.google.com/p/ankidroid/wiki/Upgrading?wl=en\">More info</a>");
-                        but.setText(res.getString(R.string.later));
+                        sb.append(getString(R.string.deck_upgrade_major_warning));
+                        but.setText(R.string.later);
                         but.setOnClickListener(new OnClickListener() {
                             @Override
                             public void onClick(View arg0) {
-                                Themes.showThemedToast(Info.this, "Please start Ankidroid again when you have time to upgrade!", false);
+                                Themes.showThemedToast(Info.this, getString(R.string.deck_upgrade_start_again_to_upgrade_toast), false);
                                 setResult(RESULT_CANCELED);
                                 finish();
                             }
                         });
-                        syncButton.setText("More Options");
+                        syncButton.setText(R.string.more_options);
                         syncButton.setOnClickListener(new OnClickListener() {
                             @Override
                             public void onClick(View arg0) {
@@ -276,7 +276,7 @@ public class Info extends Activity {
                                 finishWithAnimation();
                             }
                         });
-                        continueButton.setText("Now");
+                        continueButton.setText(R.string.now);
                         continueButton.setOnClickListener(new OnClickListener() {
                             @Override
                             public void onClick(View arg0) {
@@ -289,8 +289,8 @@ public class Info extends Activity {
                         break;
 
                     case UPGRADE_SCREEN_BASIC2:
-                        sb.append("The recommended upgrade method is to sync with a PC and upgrade with the desktop version of Anki.<br><br>Do you want to upgrade with a PC?");
-                        but.setText("Back");
+                        sb.append(getString(R.string.deck_upgrade_recommended_method));
+                        but.setText(R.string.back);
                         but.setOnClickListener(new OnClickListener() {
                             @Override
                             public void onClick(View arg0) {
@@ -301,7 +301,7 @@ public class Info extends Activity {
                                 finishWithAnimation(false);
                             }
                         });
-                        syncButton.setText(res.getString(R.string.no));
+                        syncButton.setText(android.R.string.no);
                         syncButton.setOnClickListener(new OnClickListener() {
                             @Override
                             public void onClick(View arg0) {
@@ -311,7 +311,7 @@ public class Info extends Activity {
                                 finishWithAnimation();
                             }
                         });
-                        continueButton.setText(res.getString(R.string.yes));
+                        continueButton.setText(android.R.string.yes);
                         continueButton.setOnClickListener(new OnClickListener() {
                             @Override
                             public void onClick(View arg0) {
@@ -324,9 +324,9 @@ public class Info extends Activity {
                         break;
 
                     case UPGRADE_SCREEN_MORE_OPTIONS:
-                        sb.append("You can create a new empty collection by clicking below.<br><br>If you want to downgrade back to AnkiDroid 1 then please (read <a href=\"http://code.google.com/p/ankidroid/wiki/Upgrading?wl=en#Continuing_to_use_AnkiDroid_1.1.3\">these instructions</a>).");
-                        but.setText(res.getString(R.string.upgrade_decks_button));
-                        but.setText("Back");
+                        sb.append(getString(R.string.deck_upgrade_more_options));
+                        but.setText(R.string.upgrade_decks_button);
+                        but.setText(R.string.back);
                         but.setOnClickListener(new OnClickListener() {
                             @Override
                             public void onClick(View arg0) {
@@ -337,16 +337,16 @@ public class Info extends Activity {
                                 finishWithAnimation(false);
                             }
                         });
-                        syncButton.setText("Create new collection");
+                        syncButton.setText(R.string.deck_upgrade_create_new_collection);
                         syncButton.setOnClickListener(new OnClickListener() {
                             @Override
                             public void onClick(View arg0) {
                                 StyledDialog.Builder builder = new StyledDialog.Builder(Info.this);
-                                builder.setTitle("Create New Collection");
+                                builder.setTitle(R.string.deck_upgrade_create_new_collection_title);
                                 builder.setIcon(R.drawable.ic_dialog_alert);
-                                builder.setMessage("Are you sure you want to do this? Your old data will not be imported.");
+                                builder.setMessage(R.string.deck_upgrade_not_import_warning);
                                 Resources res = getResources();
-                                builder.setPositiveButton(res.getString(R.string.yes), new DialogInterface.OnClickListener() {
+                                builder.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialog, int which) {
                                         Intent result = new Intent();
@@ -355,7 +355,7 @@ public class Info extends Activity {
                                         finishWithAnimation();
                                     }
                                 });
-                                builder.setNegativeButton(res.getString(R.string.no), null);
+                                builder.setNegativeButton(android.R.string.no, null);
                                 builder.show();
                             }
                         });
@@ -363,8 +363,8 @@ public class Info extends Activity {
                         break;
 
                     case UPGRADE_SCREEN_WEB_UPGRADE:
-                        sb.append("<b>This upgrade method is not recommended if you used media files, or have a big collection!</b><br><br>Your anki1 decks will be zipped and uploaded to AnkiWeb, and the converted collection will then be downloaded.<br><br>Please note that a stable internet connection is required, and that there is a 50MB file limit.<br><br>Users of Anki Desktop are strongly encouraged to use the PC based upgrade method.<br><br>Do you still want to proceed?");
-                        but.setText("Back");
+                        sb.append(getString(R.string.deck_upgrade_via_web));
+                        but.setText(R.string.back);
                         but.setOnClickListener(new OnClickListener() {
                             @Override
                             public void onClick(View arg0) {
@@ -376,7 +376,7 @@ public class Info extends Activity {
                             }
                         });
                         syncButton.setVisibility(View.GONE);
-                        continueButton.setText(res.getString(R.string.yes));
+                        continueButton.setText(android.R.string.yes);
                         continueButton.setOnClickListener(new OnClickListener() {
                             @Override
                             public void onClick(View arg0) {
@@ -392,8 +392,8 @@ public class Info extends Activity {
                         break;
 
                     case UPGRADE_SCREEN_PC_UPGRADE:
-                        sb.append("If you currently have an up-to-date version of your AnkiDroid collection in the Anki desktop software, you can upgrade from there and then download your upgraded collection by syncing with AnkiWeb.<br><br>Alternatively, you can copy your AnkiDroid collection to your PC using USB, then upgrade the collection and copy back to AnkiDroid.");
-                        but.setText("Back");
+                        sb.append(getString(R.string.deck_upgrade_via_anki_desktop));
+                        but.setText(R.string.back);
                         but.setOnClickListener(new OnClickListener() {
                             @Override
                             public void onClick(View arg0) {
@@ -404,7 +404,7 @@ public class Info extends Activity {
                                 finishWithAnimation(false);
                             }
                         });
-                        syncButton.setText("USB");
+                        syncButton.setText(R.string.usb);
                         syncButton.setOnClickListener(new OnClickListener() {
                             @Override
                             public void onClick(View arg0) {
@@ -414,7 +414,7 @@ public class Info extends Activity {
                                 finishWithAnimation();
                             }
                         });
-                        continueButton.setText("AnkiWeb");
+                        continueButton.setText(R.string.ankiweb);
                         continueButton.setOnClickListener(new OnClickListener() {
                             @Override
                             public void onClick(View arg0) {
@@ -427,8 +427,8 @@ public class Info extends Activity {
                         break;
 
                     case UPGRADE_SCREEN_MANUAL_UPGRADE:
-                        sb.append("Please copy all of your *.anki files (and any *.media folders) from your AnkiDroid folder to your Anki Desktop folder, and then install and start Anki Desktop version 2.0.4 or greater to upgrade your collection.<br><br>When the upgrade is completed, please export your collection from Anki2 and copy the collection.apkg file to your AnkiDroid folder and press the Import button below.<br><br><a href=\"http://code.google.com/p/ankidroid/wiki/Upgrading?wl=en#Option_1:_Using_USB_(recommended)\">More detailed information on upgrading using USB.</a>");
-                        but.setText("Back");
+                        sb.append(getString(R.string.deck_upgrade_manual));
+                        but.setText(R.string.back);
                         but.setOnClickListener(new OnClickListener() {
                             @Override
                             public void onClick(View arg0) {
@@ -439,7 +439,7 @@ public class Info extends Activity {
                                 finishWithAnimation(false);
                             }
                         });
-                        syncButton.setText("Import");
+                        syncButton.setText(R.string._import);
                         syncButton.setOnClickListener(new OnClickListener() {
                             @Override
                             public void onClick(View arg0) {
@@ -453,8 +453,8 @@ public class Info extends Activity {
                         break;
 
                     case UPGRADE_SCREEN_AUTO_UPGRADE:
-                        sb.append("Please install and start Anki Desktop version 2.0.4 or greater to upgrade your collection, then sync your upgraded collection with AnkiWeb and press the \"Download\" button.<br><br><a href=\"http://code.google.com/p/ankidroid/wiki/Upgrading?wl=en#Option_2:_Using_AnkiWeb_sync\">More detailed information on upgrading using AnkiWeb</a>");
-                        but.setText("Back");
+                        sb.append(getString(R.string.deck_upgrade_auto_upgrade));
+                        but.setText(R.string.back);
                         but.setOnClickListener(new OnClickListener() {
                             @Override
                             public void onClick(View arg0) {
@@ -465,7 +465,7 @@ public class Info extends Activity {
                                 finishWithAnimation(false);
                             }
                         });
-                        syncButton.setText("Download");
+                        syncButton.setText(R.string.download);
                         syncButton.setOnClickListener(new OnClickListener() {
                             @Override
                             public void onClick(View arg0) {
@@ -518,11 +518,11 @@ public class Info extends Activity {
         StyledDialog.Builder builder = new StyledDialog.Builder(this);
         switch (id) {
             case DIALOG_USER_NOT_LOGGED_IN_SYNC:
-                builder.setTitle(res.getString(R.string.connection_error_title));
+                builder.setTitle(R.string.connection_error_title);
                 builder.setIcon(R.drawable.ic_dialog_alert);
-                builder.setMessage(res.getString(R.string.no_user_password_error_message));
-                builder.setNegativeButton(res.getString(R.string.cancel), null);
-                builder.setPositiveButton(res.getString(R.string.log_in), new DialogInterface.OnClickListener() {
+                builder.setMessage(R.string.no_user_password_error_message);
+                builder.setNegativeButton(R.string.cancel, null);
+                builder.setPositiveButton(R.string.log_in, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 Intent myAccount = new Intent(Info.this, MyAccount.class);
@@ -537,21 +537,21 @@ public class Info extends Activity {
                 break;
 
             case DIALOG_SYNC_LOG:
-                builder.setTitle(res.getString(R.string.sync_log_title));
-                builder.setPositiveButton(res.getString(R.string.ok), null);
+                builder.setTitle(R.string.sync_log_title);
+                builder.setPositiveButton(android.R.string.ok, null);
                 dialog = builder.create();
                 break;
 
             case DIALOG_SYNC_UPGRADE_REQUIRED:
                 builder.setMessage(res.getString(R.string.upgrade_required, res.getString(R.string.link_anki)));
-                builder.setPositiveButton(res.getString(R.string.retry), new DialogInterface.OnClickListener() {
+                builder.setPositiveButton(R.string.retry, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 downloadCollection();
                             }
                         });
-                builder.setNegativeButton(res.getString(R.string.cancel), null);
-                builder.setTitle(res.getString(R.string.sync_log_title));
+                builder.setNegativeButton(android.R.string.cancel, null);
+                builder.setTitle(R.string.sync_log_title);
                 dialog = builder.create();
                 break;
         }
@@ -692,8 +692,7 @@ public class Info extends Activity {
 
                 ResponseHandler<String> handler = new ResponseHandler<String>() {
                     @Override
-                    public String handleResponse(HttpResponse response)
-                            throws ClientProtocolException, IOException {
+                    public String handleResponse(HttpResponse response) throws ClientProtocolException, IOException {
                         HttpEntity entity = response.getEntity();
                         String html;
                         if (entity != null) {
@@ -743,7 +742,8 @@ public class Info extends Activity {
                 if (start == -1 || end <= 0) {
                     return "error";
                 } else {
-                    return mShareDecksTemplate.replace("::content::",  pageHTML.substring(start, end)).replaceAll(">\nDownload(.|\n)*", ">Import</a></div>");
+                    return mShareDecksTemplate.replace("::content::",
+                            pageHTML.substring(start, end)).replaceAll(">\nDownload(.|\n)*", ">Import</a></div>");
                 }
             }
 
