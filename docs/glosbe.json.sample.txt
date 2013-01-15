@@ -1,0 +1,56 @@
+{
+  "result" : "ok",
+  "dest" : "eng",
+  "phrase" : "witaj",
+  "tuc" : [ {
+    "authors" : [ 1 ],
+    "meaningId" : 30425,
+    "meanings" : [ {
+      "text" : "greeting",
+      "language" : "eng"
+    } ],
+    "phrase" : {
+      "text" : "hello",
+      "languageCode" : "eng"
+    }
+  }, {
+    "authors" : [ 35 ],
+    "meaningId" : 6081957,
+    "meanings" : [ {
+      "text" : "A greeting used when someone arrives.",
+      "language" : "eng"
+    } ],
+    "phrase" : {
+      "text" : "welcome",
+      "languageCode" : "eng"
+    }
+  }, {
+    "authors" : [ 1 ],
+    "meaningId" : 13025,
+    "meanings" : [ {
+      "text" : "greeting given upon someone&#39;s arrival",
+      "language" : "eng"
+    } ],
+    "phrase" : {
+      "text" : "welcome",
+      "languageCode" : "eng"
+    }
+  }, {
+    "authors" : [ 1 ],
+    "meaningId" : 742087,
+    "meanings" : [ {
+      "text" : "welcome",
+      "language" : "eng"
+    } ],
+    "phrase" : null
+  }, {
+    "authors" : [ 1 ],
+    "meaningId" : 742083,
+    "meanings" : [ {
+      "text" : "hello",
+      "language" : "eng"
+    } ],
+    "phrase" : null
+  } ],
+  "from" : "pol"
+}

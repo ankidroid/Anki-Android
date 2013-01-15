@@ -9,11 +9,11 @@ public class MockNoteFactory {
 		note.setNumFields(3);
 		
 		TextField tf = new TextField();
-		tf.setText("Hello world");
+		tf.setText("world");
 		note.setField(0, tf);
 		
 		TextField tf2 = new TextField();
-		tf2.setText("Hallo Welt");
+		tf2.setText("Welt");
 		note.setField(1, tf2);
 		
 		ImageField imageField = new ImageField();

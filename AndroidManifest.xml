@@ -254,6 +254,10 @@
             android:name="com.ichi2.anki.EditImageActivity"
             android:label="@string/title_activity_edit_image" >
         </activity>
+        <activity
+            android:name="com.ichi2.anki.TranslationActivity"
+            android:label="@string/title_activity_translation" >
+        </activity>
     </application>
 
 </manifest>
