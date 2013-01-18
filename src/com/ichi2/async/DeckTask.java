@@ -247,7 +247,7 @@ public class DeckTask extends
 			return doInBackgroundEmptyCram(params);
 
 		case TASK_TYPE_IMPORT:
-			return doInBackgroundImport(params);
+			return doInBackgroundImportAdd(params);
 			
 		case TASK_TYPE_IMPORT_REPLACE:
 			return doInBackgroundImportReplace(params);
@@ -791,13 +791,15 @@ public class DeckTask extends
 				col, new Object[]{true, fragmented}));
 	}
 
-	private TaskData doInBackgroundImport(TaskData... params) {
-		Log.i(AnkiDroidApp.TAG, "doInBackgroundImport");
-		Collection col = params[0].getCollection();
-		String path = params[0].getString();
-		Anki2Importer imp = new Anki2Importer(col, path);
-		int addedCount = -1;
-		try {
+    private TaskData doInBackgroundImportAdd(TaskData... params) {
+        Log.i(AnkiDroidApp.TAG, "doInBackgroundImportAdd");
+        Collection col = params[0].getCollection();
+        String path = params[0].getString();
+        boolean clean = params[0].getBoolean();
+        Anki2Importer imp = new Anki2Importer(col, path);
+
+        int addedCount = -1;
+        try {
 			AnkiDb ankiDB = col.getDb();
 			ankiDB.getDatabase().beginTransaction();
 			try {
@@ -805,6 +807,10 @@ public class DeckTask extends
 				ankiDB.getDatabase().setTransactionSuccessful();
 			} finally {
 				ankiDB.getDatabase().endTransaction();
+                if (clean) {
+                    File tmpFile = new File(path);
+                    tmpFile.delete();
+                }
 			}
 			if (addedCount >= 0) {
 				ankiDB.execute("VACUUM");
@@ -822,9 +828,9 @@ public class DeckTask extends
 			return new TaskData(addedCount, counts, true);
 		} catch (RuntimeException e) {
 			Log.e(AnkiDroidApp.TAG,
-					"doInBackgroundImport - RuntimeException on importing cards: "
+					"doInBackgroundImportAdd - RuntimeException on importing cards: "
 							+ e);
-			AnkiDroidApp.saveExceptionReportFile(e, "doInBackgroundImport");
+			AnkiDroidApp.saveExceptionReportFile(e, "doInBackgroundImportAdd");
 			return new TaskData(false);
 		}
 	}
@@ -860,14 +866,17 @@ public class DeckTask extends
 			}
 		}
 
-		String colPath = col.getPath();
-		// unload collection and trigger a backup
-		AnkiDroidApp.closeCollection(true);
-		BackupManager.performBackup(colPath, true);
-		// overwrite collection
-		File f = new File(colFile);
-		f.renameTo(new File(colPath));
-		
+        String colPath;
+        if (col != null) {
+            // unload collection and trigger a backup
+            colPath = col.getPath();
+            AnkiDroidApp.closeCollection(true);
+            BackupManager.performBackup(colPath, true);
+        }
+        // overwrite collection
+        colPath = AnkiDroidApp.getCollectionPath();
+        File f = new File(colFile);
+        f.renameTo(new File(colPath));
 		int addedCount = -1;
 		try {
 			col = AnkiDroidApp.openCollection(colPath);
@@ -1146,7 +1155,13 @@ public class DeckTask extends
 			mMsg = string;
 		}
 
-		public TaskData(Collection col, int value) {
+        public TaskData(Collection col, String string, boolean bool) {
+            mCol = col;
+            mMsg = string;
+            mBool = bool;
+        }
+
+        public TaskData(Collection col, int value) {
 			mCol = col;
 			mInteger = value;
 		}

@@ -41,6 +41,7 @@ import android.widget.RelativeLayout;
 import com.ichi2.anim.ActivityTransitionAnimation;
 import com.ichi2.async.Connection;
 import com.ichi2.async.Connection.Payload;
+import com.ichi2.async.DeckTask;
 import com.ichi2.libanki.Utils;
 import com.ichi2.themes.StyledDialog;
 import com.ichi2.themes.StyledProgressDialog;
