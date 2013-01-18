@@ -14,38 +14,11 @@ import android.support.v4.app.FragmentActivity;
 import com.ichi2.anki.multimediacard.IField;
 import com.ichi2.anki.multimediacard.IMultimediaEditableNote;
 
-public class BasicImageFieldController implements IFieldController
+public class BasicImageFieldController extends FieldControllerBase implements IFieldController
 {
     protected static final int ACTIVITY_SELECT_IMAGE = 1;
-    protected FragmentActivity mActivity;
-
-    IField mField;
-    IMultimediaEditableNote mNote;
-    private int mIndex;
-
-    @Override
-    public void setField(IField field)
-    {
-        mField = field;
-    }
-
-    @Override
-    public void setNote(IMultimediaEditableNote note)
-    {
-        mNote = note;
-    }
-
-    @Override
-    public void setFieldIndex(int index)
-    {
-        mIndex = index;
-    }
     
-    @Override
-    public void setFragmentActivity(FragmentActivity activity) {
-        mActivity = activity;
-    };
-
+    
     @Override
     public void createUI(LinearLayout layout)
     {

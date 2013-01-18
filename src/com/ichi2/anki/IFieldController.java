@@ -22,7 +22,7 @@ public interface IFieldController
     void setFieldIndex(int index);
 
     //Called before other
-    void setFragmentActivity(FragmentActivity activity);
+    void setEditingActivity(EditFieldActivity activity);
     
     // Layout is vertical inside a scroll view already
     void createUI(LinearLayout layout);

@@ -3,6 +3,7 @@ package com.ichi2.anki;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.Menu;
@@ -17,6 +18,7 @@ import com.ichi2.anki.web.HttpFetcher;
 public class LoadPronounciationActivity extends Activity
 {
     public static String EXTRA_SOURCE = "com.ichi2.anki.LoadPronounciationActivity.extra.source";
+    public static String EXTRA_PRONUNCIATION_FILE_PATH = "com.ichi2.anki.LoadPronounciationActivity.extra.pronun.file.path";
 
     String mSource;
 
@@ -32,16 +34,17 @@ public class LoadPronounciationActivity extends Activity
 
     private String mMp3Address;
 
+    private LoadPronounciationActivity mActivity;
+
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_load_pronounciation);
         mSource = getIntent().getExtras().getString(EXTRA_SOURCE);
-
-        TextView wordToPronounce = (TextView) findViewById(R.id.textViewWordInLoadPronounciation);
-        wordToPronounce.setText(mSource);
-
+        
+        
+        
         Button buttonGo = (Button) findViewById(R.id.buttonGoLoadPronounciation);
         buttonGo.setOnClickListener(new OnClickListener()
         {
@@ -53,6 +56,8 @@ public class LoadPronounciationActivity extends Activity
 
             }
         });
+
+        mActivity = this;
 
     }
 
@@ -92,15 +97,15 @@ public class LoadPronounciationActivity extends Activity
         @Override
         protected String doInBackground(Void... params)
         {
-//            // TMP CODE
-//            if (mAddress.contentEquals(mTranslationAddress))
-//            {
-//                return MockTranslationFetcher.get();
-//            }
-//            else if (mAddress.contentEquals(mPronunciationAddress))
-//            {
-//                return MockPronounciationPageFetcher.get();
-//            }
+            // TMP CODE
+            if (mAddress.contentEquals(mTranslationAddress))
+            {
+                return MockTranslationFetcher.get();
+            }
+            else if (mAddress.contentEquals(mPronunciationAddress))
+            {
+                return MockPronounciationPageFetcher.get();
+            }
 
             // Should be just this
             return HttpFetcher.fetchThroughHttp(mAddress);
@@ -120,6 +125,35 @@ public class LoadPronounciationActivity extends Activity
         protected void onPostExecute(String result)
         {
             processPostFinished(this, result);
+        }
+
+    }
+
+    private class DownloadFileTask extends AsyncTask<Void, Void, String>
+    {
+
+        private String mAddress;
+
+        @Override
+        protected String doInBackground(Void... params)
+        {
+            return HttpFetcher.downloadFileToCache(mAddress, mActivity);
+        }
+
+        public void setAddress(String address)
+        {
+            mAddress = address;
+        }
+
+        public String getAddress()
+        {
+            return mAddress;
+        }
+
+        @Override
+        protected void onPostExecute(String result)
+        {
+            receiveMp3File(result);
         }
 
     }
@@ -161,27 +195,67 @@ public class LoadPronounciationActivity extends Activity
             return;
         }
 
-        
-        //Else 
+        // Else
         // First call returned
         if (post.getAddress().contentEquals(mPronunciationAddress))
         {
             // else here = pronunciation post returned;
-    
+
             mPronunciationPage = result;
-    
+
             getMp3AddressFromPronounciation();
-            
-            if(mMp3Address.contentEquals("no"))
+
+            if (mMp3Address.contentEquals("no"))
             {
                 return;
             }
-            
-            //Here a file can be fetched.
+
+            try
+            {
+                DownloadFileTask post2 = new DownloadFileTask();
+                post2.setAddress(mMp3Address);
+                post2.execute();
+            }
+            catch (Exception e)
+            {
+                progressDialog.dismiss();
+                // TODO Translation, proper handling
+                showToast("Something went wrong...");
+            }
+
+            return;
+
         }
 
+    }
+
+    public void receiveMp3File(String result)
+    {
+        if (result == null)
+        {
+            failNoPronunciation();
+            return;
+        }
+
+        if (result.startsWith("FAIL"))
+        {
+            failNoPronunciation();
+            return;
+        }
+
+        progressDialog.dismiss();
         
+        //TODO Translate
+        showToast("Pronounciation loaded!");
         
+        Intent resultData = new Intent();
+
+        resultData.putExtra(EXTRA_PRONUNCIATION_FILE_PATH, result);
+
+        setResult(RESULT_OK, resultData);
+
+        finish();
+
     }
 
     private void getMp3AddressFromPronounciation()
@@ -218,16 +292,15 @@ public class LoadPronounciationActivity extends Activity
             }
 
         }
-        
+
         mMp3Address = "http://dict.tu-chemnitz.de" + mPronunciationPage.substring(addrStart, indAddrEnd);
-        
-        //Freeing resources
+
+        // Freeing resources
         mPronunciationPage = null;
-        
 
     }
 
-    //It's okay with addresses
+    // It's okay with addresses
     @SuppressLint("DefaultLocale")
     private void getPronounciationAddressFromTranslation()
     {
@@ -267,7 +340,7 @@ public class LoadPronounciationActivity extends Activity
             // Must be equal to the word translating
             String titleValue = mTranslation.substring(indTitle + title.length(), indNextQuote);
 
-            if (!titleValue.toLowerCase().contentEquals(mSource))
+            if (!titleValue.toLowerCase().contentEquals(mSource.toLowerCase()))
             {
                 continue;
             }

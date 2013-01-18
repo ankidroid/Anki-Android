@@ -1,5 +1,6 @@
 package com.ichi2.anki;
 
+import java.io.File;
 import java.util.ArrayList;
 
 import android.app.Activity;
@@ -13,52 +14,25 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
-import com.google.gson.Gson;
-import com.ichi2.anki.glosbe.json.Response;
 import com.ichi2.anki.multimediacard.EFieldType;
 import com.ichi2.anki.multimediacard.IField;
 import com.ichi2.anki.multimediacard.IMultimediaEditableNote;
+import com.ichi2.anki.multimediacard.impl.AudioField;
 
 /**
  * @author zaur
  * 
  */
-public class BasicTextFieldController implements IFieldController, DialogInterface.OnClickListener
+public class BasicTextFieldController extends FieldControllerBase implements IFieldController, DialogInterface.OnClickListener
 {
 
     private static final int REQUEST_CODE_TRANSLATION = 101;
     private static final int REQUEST_CODE_PRONOUNCIATION = 102;
-    IField mField;
-    IMultimediaEditableNote mNote;
-    private int mIndex;
     private EditText mEditText;
-    private FragmentActivity mActivity;
     private ArrayList<String> mPossibleClones;
     private String mjson;
 
-    @Override
-    public void setField(IField field)
-    {
-        mField = field;
-    }
-
-    @Override
-    public void setNote(IMultimediaEditableNote note)
-    {
-        mNote = note;
-    }
-
-    @Override
-    public void setFieldIndex(int index)
-    {
-        mIndex = index;
-    }
-
-    @Override
-    public void setFragmentActivity(FragmentActivity activity)
-    {
-        mActivity = activity;
-    };
+   
 
     @Override
     public void createUI(LinearLayout layout)
@@ -177,7 +151,7 @@ public class BasicTextFieldController implements IFieldController, DialogInterfa
                 
                 Intent intent = new Intent(mActivity, LoadPronounciationActivity.class);
                 intent.putExtra(LoadPronounciationActivity.EXTRA_SOURCE, source);
-                mActivity.startActivityForResult(intent, REQUEST_CODE_TRANSLATION);
+                mActivity.startActivityForResult(intent, REQUEST_CODE_PRONOUNCIATION);
             }
         });
         
@@ -244,6 +218,11 @@ public class BasicTextFieldController implements IFieldController, DialogInterfa
                 {
                     continue;
                 }
+                
+                if(curField.getText() == null)
+                {
+                    continue;
+                }
 
                 if (curField.getText().length() == 0)
                 {
@@ -306,6 +285,29 @@ public class BasicTextFieldController implements IFieldController, DialogInterfa
             {
                 //TODO Translation
                 showToast("Translation failed");
+            }
+        }
+        
+        if(requestCode == REQUEST_CODE_PRONOUNCIATION && resultCode == Activity.RESULT_OK)
+        {
+            try
+            {
+                String pronuncPath = data.getExtras().get(LoadPronounciationActivity.EXTRA_PRONUNCIATION_FILE_PATH).toString();
+                File f = new File (pronuncPath);
+                if(!f.exists())
+                {
+                    //TODO Translation
+                    showToast("Getting pronunciation failed");
+                }
+                
+                AudioField af = new AudioField();
+                af.setAudioPath(pronuncPath);
+                mActivity.handleFieldChanged(af);
+            }
+            catch(Exception e)
+            {
+              //TODO Translation
+                showToast("Getting pronunciation failed");
             }
         }
     }

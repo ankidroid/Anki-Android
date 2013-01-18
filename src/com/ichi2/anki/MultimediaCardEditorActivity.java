@@ -129,7 +129,7 @@ public class MultimediaCardEditorActivity extends Activity {
 
 				@Override
 				public void onClick(View v) {
-					Intent i = new Intent(context, EditTextFieldActivity.class);
+					Intent i = new Intent(context, EditFieldActivity.class);
 					putExtrasAndStartEditActivity(field, index, i);
 				}
 
@@ -159,7 +159,7 @@ public class MultimediaCardEditorActivity extends Activity {
 
 				@Override
 				public void onClick(View v) {
-					Intent i = new Intent(context, EditTextFieldActivity.class);
+					Intent i = new Intent(context, EditFieldActivity.class);
 					putExtrasAndStartEditActivity(field, index, i);
 				}
 
@@ -217,8 +217,8 @@ public class MultimediaCardEditorActivity extends Activity {
 
 			if (resultCode == RESULT_OK) {
 
-				IField field = (IField) data.getSerializableExtra(EditTextFieldActivity.EXTRA_RESULT_FIELD);
-				int index = data.getIntExtra(EditTextFieldActivity.EXTRA_RESULT_FIELD_INDEX, -1);
+				IField field = (IField) data.getSerializableExtra(EditFieldActivity.EXTRA_RESULT_FIELD);
+				int index = data.getIntExtra(EditFieldActivity.EXTRA_RESULT_FIELD_INDEX, -1);
 
 				// Failed editing activity
 				if (index == -1) {

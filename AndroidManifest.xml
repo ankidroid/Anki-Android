@@ -247,7 +247,7 @@
             android:label="@string/fact_adder_intent_title" >
         </activity>
         <activity
-            android:name="com.ichi2.anki.EditTextFieldActivity"
+            android:name="com.ichi2.anki.EditFieldActivity"
             android:label="@string/title_activity_edit_text" >
         </activity>
         <activity
