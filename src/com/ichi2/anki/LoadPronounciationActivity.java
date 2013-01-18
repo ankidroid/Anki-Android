@@ -1,5 +1,8 @@
 package com.ichi2.anki;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.ProgressDialog;
@@ -9,7 +12,10 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.LinearLayout;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -19,6 +25,10 @@ public class LoadPronounciationActivity extends Activity
 {
     public static String EXTRA_SOURCE = "com.ichi2.anki.LoadPronounciationActivity.extra.source";
     public static String EXTRA_PRONUNCIATION_FILE_PATH = "com.ichi2.anki.LoadPronounciationActivity.extra.pronun.file.path";
+    
+    //Http Fetching is stopped on it
+    protected static String MP3_STOPPER = ".mp3\">Listen";
+    protected static String PRONUNC_STOPPER = "<img src=\"/pics/s1.png\"";
 
     String mSource;
 
@@ -35,6 +45,8 @@ public class LoadPronounciationActivity extends Activity
     private String mMp3Address;
 
     private LoadPronounciationActivity mActivity;
+    private LanguageListerBeolingus mLanguageLister;
+    private Spinner mSpinnerFrom;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -43,16 +55,27 @@ public class LoadPronounciationActivity extends Activity
         setContentView(R.layout.activity_load_pronounciation);
         mSource = getIntent().getExtras().getString(EXTRA_SOURCE);
         
+        LinearLayout linearLayout = (LinearLayout) findViewById(R.id.layoutInLoadPronActivity);
         
+        mLanguageLister = new LanguageListerBeolingus();
+
+        mSpinnerFrom = new Spinner(this);
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item,
+                mLanguageLister.getLanguages());
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        mSpinnerFrom.setAdapter(adapter);
+        linearLayout.addView(mSpinnerFrom);
         
-        Button buttonGo = (Button) findViewById(R.id.buttonGoLoadPronounciation);
-        buttonGo.setOnClickListener(new OnClickListener()
+        Button buttonLoadPronunciation = (Button) new Button(this);
+        buttonLoadPronunciation.setText("Load pronounciation!");
+        linearLayout.addView(buttonLoadPronunciation);
+        buttonLoadPronunciation.setOnClickListener(new OnClickListener()
         {
 
             @Override
             public void onClick(View v)
             {
-                go(v);
+                onLoadPronunciation(v);
 
             }
         });
@@ -69,7 +92,7 @@ public class LoadPronounciationActivity extends Activity
         return true;
     }
 
-    protected void go(View v)
+    protected void onLoadPronunciation(View v)
     {
         progressDialog = ProgressDialog.show(this, "Wait...", "Loading Online", true, false);
 
@@ -79,6 +102,7 @@ public class LoadPronounciationActivity extends Activity
         {
             BackgroundPost post = new BackgroundPost();
             post.setAddress(mTranslationAddress);
+//            post.setStopper(PRONUNC_STOPPER);
             post.execute();
         }
         catch (Exception e)
@@ -93,23 +117,35 @@ public class LoadPronounciationActivity extends Activity
     {
 
         private String mAddress;
+//        private String mStopper;
 
         @Override
         protected String doInBackground(Void... params)
         {
             // TMP CODE
-            if (mAddress.contentEquals(mTranslationAddress))
-            {
-                return MockTranslationFetcher.get();
-            }
-            else if (mAddress.contentEquals(mPronunciationAddress))
-            {
-                return MockPronounciationPageFetcher.get();
-            }
+//            if (mAddress.contentEquals(mTranslationAddress))
+//            {
+//                return MockTranslationFetcher.get();
+//            }
+//            else if (mAddress.contentEquals(mPronunciationAddress))
+//            {
+//                return MockPronounciationPageFetcher.get();
+//            }
 
             // Should be just this
-            return HttpFetcher.fetchThroughHttp(mAddress);
+//            return HttpFetcher.fetchThroughHttpUntil(getAddress(), getStopper());
+            return HttpFetcher.fetchThroughHttp(getAddress(), "ISO-8859-1");
         }
+
+//        private String getStopper()
+//        {
+//            return mStopper;
+//        }
+//        
+//        private void setStopper(String stopper)
+//        {
+//            mStopper = stopper;
+//        }
 
         public void setAddress(String address)
         {
@@ -183,6 +219,7 @@ public class LoadPronounciationActivity extends Activity
             {
                 BackgroundPost post2 = new BackgroundPost();
                 post2.setAddress(mPronunciationAddress);
+//                post2.setStopper(MP3_STOPPER);
                 post2.execute();
             }
             catch (Exception e)
@@ -269,7 +306,7 @@ public class LoadPronounciationActivity extends Activity
         // Freed
         mTranslation = null;
 
-        String mp3 = ".mp3\">Listen";
+        String mp3 = MP3_STOPPER;
 
         if (!mPronunciationPage.contains(mp3))
         {
@@ -300,11 +337,9 @@ public class LoadPronounciationActivity extends Activity
 
     }
 
-    // It's okay with addresses
-    @SuppressLint("DefaultLocale")
     private void getPronounciationAddressFromTranslation()
     {
-        String pronounciationIndicator = "<img src=\"/pics/s1.png\"";
+        String pronounciationIndicator = PRONUNC_STOPPER;
         if (!mTranslation.contains(pronounciationIndicator))
         {
             failNoPronunciation();
@@ -314,7 +349,7 @@ public class LoadPronounciationActivity extends Activity
         int indIndicator = 0;
         do
         {
-            indIndicator = mTranslation.indexOf(pronounciationIndicator);
+            indIndicator = mTranslation.indexOf(pronounciationIndicator, indIndicator + 1);
             if (indIndicator == -1)
             {
                 failNoPronunciation();
@@ -340,7 +375,7 @@ public class LoadPronounciationActivity extends Activity
             // Must be equal to the word translating
             String titleValue = mTranslation.substring(indTitle + title.length(), indNextQuote);
 
-            if (!titleValue.toLowerCase().contentEquals(mSource.toLowerCase()))
+            if (!titleValue.contentEquals(mSource))
             {
                 continue;
             }
@@ -392,8 +427,27 @@ public class LoadPronounciationActivity extends Activity
 
     private String computeAddressOfTranslationPage()
     {
-        String res = "http://dict.tu-chemnitz.de/dings.cgi?lang=en&service=deen&opterrors=0&optpro=0&query=Welt";
-        return res.replaceAll("Welt", mSource);
+        String address = "http://dict.tu-chemnitz.de/dings.cgi?lang=en&service=deen&opterrors=0&optpro=0&query=Welt";
+        
+        String strFrom = mSpinnerFrom.getSelectedItem().toString();
+        // Conversion to iso, lister created before.
+        String langCodeFrom = mLanguageLister.getCodeFor(strFrom);
+
+        String query;
+
+        try
+        {
+            query = URLEncoder.encode(mSource, "utf-8");
+        }
+        catch (UnsupportedEncodingException e)
+        {
+            query = mSource.replace(" ", "%20");
+        }
+
+        address = address.replaceAll("deen", langCodeFrom)
+                .replaceAll("Welt", query);
+        
+        return address;
     }
 
     private void showToast(CharSequence text)
@@ -403,3 +457,4 @@ public class LoadPronounciationActivity extends Activity
         toast.show();
     }
 }
+

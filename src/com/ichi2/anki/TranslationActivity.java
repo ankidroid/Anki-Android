@@ -40,7 +40,7 @@ public class TranslationActivity extends FragmentActivity implements DialogInter
 
     String mSource;
     String mTranslation;
-    private LanguagesLister mLanguageLister;
+    private LanguagesListerGlosbe mLanguageLister;
     private Spinner mSpinnerFrom;
     private Spinner mSpinnerTo;
     private ProgressDialog progressDialog;
@@ -72,7 +72,7 @@ public class TranslationActivity extends FragmentActivity implements DialogInter
         tv.setText("Powered by Glosbe.com");
         linearLayout.addView(tv);
 
-        mLanguageLister = new LanguagesLister();
+        mLanguageLister = new LanguagesListerGlosbe();
 
         mSpinnerFrom = new Spinner(this);
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item,
