@@ -27,6 +27,7 @@ public class BasicTextFieldController implements IFieldController, DialogInterfa
 {
 
     private static final int REQUEST_CODE_TRANSLATION = 101;
+    private static final int REQUEST_CODE_PRONOUNCIATION = 102;
     IField mField;
     IMultimediaEditableNote mNote;
     private int mIndex;
@@ -73,6 +74,7 @@ public class BasicTextFieldController implements IFieldController, DialogInterfa
 
         createCloneButton(layoutTools);
         createTranslateButton(layoutTools);
+        createPronounceButton(layoutTools);
         
 //        createTmpButton(layoutTools);
 
@@ -153,6 +155,34 @@ public class BasicTextFieldController implements IFieldController, DialogInterfa
 //        
 //        layoutTools.addView(tmpButton);
 //    }
+
+    private void createPronounceButton(LinearLayout layoutTools)
+    {
+        Button btnPronounce = new Button(mActivity);
+        // TODO Translation
+        btnPronounce.setText("Pronounce");
+        btnPronounce.setOnClickListener(new OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                String source =mEditText.getText().toString(); 
+                
+                if (source.length() == 0)
+                {
+                    // TODO Translation
+                    showToast("Input some text first...");
+                    return;
+                }
+                
+                Intent intent = new Intent(mActivity, LoadPronounciationActivity.class);
+                intent.putExtra(LoadPronounciationActivity.EXTRA_SOURCE, source);
+                mActivity.startActivityForResult(intent, REQUEST_CODE_TRANSLATION);
+            }
+        });
+        
+        layoutTools.addView(btnPronounce);
+    }
 
     // Here is all the functionality to provide translations
     private void createTranslateButton(LinearLayout layoutTools)

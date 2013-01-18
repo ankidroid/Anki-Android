@@ -258,6 +258,10 @@
             android:name="com.ichi2.anki.TranslationActivity"
             android:label="@string/title_activity_translation" >
         </activity>
+        <activity
+            android:name="com.ichi2.anki.LoadPronounciationActivity"
+            android:label="@string/title_activity_load_pronounciation" >
+        </activity>
     </application>
 
 </manifest>

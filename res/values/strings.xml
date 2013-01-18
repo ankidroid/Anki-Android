@@ -6,5 +6,6 @@
     <string name="hello_world">Hello world!</string>
     <string name="title_activity_edit_image">Editing image</string>
     <string name="title_activity_translation">Translation</string>
+    <string name="title_activity_load_pronounciation">Pronounciation</string>
 
 </resources>
