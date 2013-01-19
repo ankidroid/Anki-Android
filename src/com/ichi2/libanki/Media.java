@@ -16,6 +16,7 @@
 
 package com.ichi2.libanki;
 
+import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.net.Uri;
@@ -372,19 +373,27 @@ public class Media {
      * @param fnames The list of filenames to be deleted.
      */
     public void syncRemove(JSONArray fnames) {
-        for (int i = 0; i < fnames.length(); ++i) {
-            String f = fnames.optString(i);
-            if (f == "") {
-                continue;
+        mMediaDb.getDatabase().beginTransaction();
+        try {
+            for (int i = 0; i < fnames.length(); ++i) {
+                String f = fnames.optString(i);
+                if (f == "") {
+                    continue;
+                }
+                File file = new File(getDir(), f);
+                if (file.exists()) {
+                    file.delete();
+                }
+
+                mMediaDb.execute("delete from log where fname = ?", new String[]{f});
+                mMediaDb.execute("delete from media where fname = ?", new String[]{f});
             }
-            File file = new File(getDir(), f);
-            if (file.exists()) {
-                file.delete();
-            }
-            mMediaDb.execute("delete from log where fname = ?", new String[] { f });
-            mMediaDb.execute("delete from media where fname = ?", new String[] { f });
+            mMediaDb.execute("delete from log where type = ?", new String[]{Integer.toString(MEDIA_REM)});
+            mMediaDb.getDatabase().setTransactionSuccessful();
+        } finally {
+
+            mMediaDb.getDatabase().endTransaction();
         }
-        mMediaDb.execute("delete from log where type = ?", new String[] { Integer.toString(MEDIA_REM) });
     }
 
 
@@ -451,7 +460,7 @@ public class Media {
                 String csum = Utils.fileChecksum(path);
                 // append db
                 media.add(new Object[] { name, csum, _mtime(name) });
-                mMediaDb.execute("delete from log where fname = ?", new String[] { name });
+                mMediaDb.execute("delete from log where fname = ?", new String[]{name});
             }
         }
 
