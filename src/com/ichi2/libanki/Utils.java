@@ -567,8 +567,8 @@ public class Utils {
             MessageDigest md = null;
             byte[] digest = null;
             try {
-                md = MessageDigest.getInstance("SHA");
-                digest = md.digest(stripHTML(data).getBytes("UTF-8"));
+                md = MessageDigest.getInstance("SHA1");
+                digest = md.digest(data.getBytes("UTF-8"));
             } catch (NoSuchAlgorithmException e) {
                 Log.e(AnkiDroidApp.TAG, "Utils.checksum: No such algorithm. " + e.getMessage());
                 throw new RuntimeException(e);

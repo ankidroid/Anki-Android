@@ -180,4 +180,12 @@
 <string name="help_cloze">help</string>
 
 <string name="button_sync">Sync</string>
+    <string name="restart">Restart</string>
+    <string name="do_nothing">Do nothing</string>
+    <string name="more_options">More Options</string>
+    <string name="now">Now</string>
+    <string name="back">Back</string>
+    <string name="ankiweb">AnkiWeb</string>
+    <string name="usb">USB</string>
+    <string name="_import">Import</string>
 </resources>

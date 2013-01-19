@@ -382,14 +382,16 @@ public class AnkiDroidApp extends Application {
     	mLock.lock();
     	Log.i(AnkiDroidApp.TAG, "closeCollection");
         try {
-        	sInstance.mAccessThreadCount--;
-    		Log.i(AnkiDroidApp.TAG, "Access to collection jas been closed: (count: " + sInstance.mAccessThreadCount + ")");
-        	if (sInstance.mAccessThreadCount == 0 && sInstance.mCurrentCollection != null) {
-        		Collection col = sInstance.mCurrentCollection;
-            	sInstance.mCurrentCollection = null;
-        		col.close(save);
-        	}
-    	} finally {
+            if (sInstance.mAccessThreadCount > 0) {
+                sInstance.mAccessThreadCount--;
+            }
+            Log.i(AnkiDroidApp.TAG, "Access to collection jas been closed: (count: " + sInstance.mAccessThreadCount + ")");
+            if (sInstance.mAccessThreadCount == 0 && sInstance.mCurrentCollection != null) {
+                Collection col = sInstance.mCurrentCollection;
+                sInstance.mCurrentCollection = null;
+                col.close(save);
+            }
+        } finally {
     		mLock.unlock();
     	}
     	

@@ -40,8 +40,8 @@ import android.widget.Button;
 import android.widget.RelativeLayout;
 import com.ichi2.anim.ActivityTransitionAnimation;
 import com.ichi2.async.Connection;
-import com.ichi2.async.Connection.OldAnkiDeckFilter;
 import com.ichi2.async.Connection.Payload;
+import com.ichi2.async.DeckTask;
 import com.ichi2.libanki.Utils;
 import com.ichi2.themes.StyledDialog;
 import com.ichi2.themes.StyledProgressDialog;
@@ -66,7 +66,6 @@ import org.apache.http.util.EntityUtils;
 
 import javax.net.ssl.HostnameVerifier;
 import javax.net.ssl.SSLException;
-import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.regex.Matcher;
@@ -79,12 +78,24 @@ import java.util.regex.Pattern;
 public class Info extends Activity {
 
     public static final String TYPE_EXTRA = "infoType";
+    public static final String TYPE_UPGRADE_STAGE = "upgradeStage";
+    public static final String TYPE_ANINAMTION_RIGHT = "animationToRight";
 
     public static final int TYPE_ABOUT = 0;
     public static final int TYPE_WELCOME = 1;
     public static final int TYPE_NEW_VERSION = 2;
     public static final int TYPE_SHARED_DECKS = 3;
     public static final int TYPE_UPGRADE_DECKS = 4;
+
+    public static final int UPGRADE_SCREEN_BASIC1 = 0;
+    public static final int UPGRADE_SCREEN_BASIC2 = 1;
+    public static final int UPGRADE_SCREEN_MORE_OPTIONS = 2;
+    public static final int UPGRADE_SCREEN_WEB_UPGRADE = 3;
+    public static final int UPGRADE_SCREEN_PC_UPGRADE = 4;
+    public static final int UPGRADE_SCREEN_MANUAL_UPGRADE = 5;
+    public static final int UPGRADE_SCREEN_AUTO_UPGRADE = 6;
+    public static final int UPGRADE_CONTINUE = 7;
+    public static final int UPGRADE_IMPORT = 8;
 
     private static final int DIALOG_USER_NOT_LOGGED_IN_SYNC = 0;
     private static final int DIALOG_SYNC_LOG = 1;
@@ -95,12 +106,12 @@ public class Info extends Activity {
     private String mDialogMessage;
 
     private int mType;
+    private int mUpgradeStage = -1;
     private WebView mWebView;
     private RelativeLayout mLoadingLayer;
     private String mShareDecksTemplate;
     private StyledProgressDialog mProgressDialog;
     private StyledDialog mNoConnectionAlert;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -118,16 +129,16 @@ public class Info extends Activity {
 
         mWebView = (WebView) findViewById(R.id.info);
         mWebView.setBackgroundColor(res.getColor(Themes.getBackgroundColor()));
-        Themes.setWallpaper((View) mWebView.getParent());
+        Themes.setWallpaper((View) mWebView.getParent().getParent().getParent());
 
         Button continueButton = (Button) findViewById(R.id.info_continue);
         continueButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View arg0) {
-            	if (mType == TYPE_ABOUT) {
-            		Info.this.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=com.ichi2.anki")));
-            		return;
-            	}
+                if (mType == TYPE_ABOUT) {
+                    Info.this.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=com.ichi2.anki")));
+                    return;
+                }
                 setResult(RESULT_OK);
                 switch (mType) {
                     case TYPE_WELCOME:
@@ -141,10 +152,7 @@ public class Info extends Activity {
                     case TYPE_UPGRADE_DECKS:
                         break;
                 }
-                finish();
-                if (AnkiDroidApp.SDK_VERSION > 4) {
-                    ActivityTransitionAnimation.slide(Info.this, ActivityTransitionAnimation.LEFT);
-                }
+                finishWithAnimation();
             }
         });
 
@@ -197,10 +205,7 @@ public class Info extends Activity {
                         edit.putLong("lastTimeOpened", System.currentTimeMillis());
                         edit.putBoolean("createTutorial", true);
                         edit.commit();
-                        finish();
-                        if (AnkiDroidApp.SDK_VERSION > 4) {
-                            ActivityTransitionAnimation.slide(Info.this, ActivityTransitionAnimation.LEFT);
-                        }
+                        finishWithAnimation();
                     }
                 });
                 break;
@@ -224,13 +229,13 @@ public class Info extends Activity {
                 break;
 
             case TYPE_SHARED_DECKS:
-            	mLoadingLayer = (RelativeLayout) findViewById(R.id.info_loading_layer);
+                mLoadingLayer = (RelativeLayout) findViewById(R.id.info_loading_layer);
                 mLoadingLayer.setVisibility(View.VISIBLE);
-    			try {
-    				mShareDecksTemplate = Utils.convertStreamToString(getAssets().open("shared_decks_template.html"));
-    			} catch (IOException e) {
-    				e.printStackTrace();
-    			}
+                try {
+                    mShareDecksTemplate = Utils.convertStreamToString(getAssets().open("shared_decks_template.html"));
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
                 mWebView.setWebViewClient(new MobileAnkiWebview());
                 mWebView.loadUrl(res.getString(R.string.shared_decks_url));
                 mWebView.getSettings().setJavaScriptEnabled(true);
@@ -239,55 +244,261 @@ public class Info extends Activity {
 
             case TYPE_UPGRADE_DECKS:
                 sb.append("<html><body>");
-                File[] fileList = (new File(AnkiDroidApp.getCurrentAnkiDroidDirectory())).listFiles(new OldAnkiDeckFilter());
-                StringBuilder fsb = new StringBuilder();
-                fsb.append("<ul>");
-                for (File f : fileList) {
-                	fsb.append("<li>").append(f.getName().replace(".anki", "")).append("</li>");
-                }
-            	fsb.append("</ul>");
-                sb.append(res.getString(R.string.upgrade_decks_message, fsb.toString()));
-                sb.append("<ul><li>");
-                sb.append(res.getString(R.string.upgrade_decks_message_pos1,
-                		AnkiDroidApp.getCurrentAnkiDroidDirectory()));
-                sb.append("</li><li>");
-                sb.append(res.getString(R.string.upgrade_decks_message_pos2, res.getString(R.string.link_anki)));
-                sb.append("</li><li>");
-                sb.append(res.getString(R.string.upgrade_decks_message_pos3));
-                sb.append("</li></ul>");
-                sb.append(res.getString(R.string.upgrade_decks_message_finish));
-                sb.append("</body></html>");
-                mWebView.loadDataWithBaseURL("", sb.toString(), "text/html", "utf-8", null);
 
                 // add upgrade button
                 Button but = (Button) findViewById(R.id.info_tutorial);
                 but.setVisibility(View.VISIBLE);
-                but.setText(res.getString(R.string.upgrade_decks_button));
-                but.setOnClickListener(new OnClickListener() {
-                    @Override
-                    public void onClick(View arg0) {
-                        if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
-                            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
-                        } else if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
-                            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-                        }
-                        Connection.upgradeDecks(mUpgradeListener,
-                                new Connection.Payload(new Object[] { AnkiDroidApp.getCurrentAnkiDroidDirectory() }));
-                    }
-                });
 
                 // add sync button
                 Button syncButton = (Button) findViewById(R.id.info_sync);
                 syncButton.setVisibility(View.VISIBLE);
-                syncButton.setOnClickListener(new OnClickListener() {
-                    @Override
-                    public void onClick(View arg0) {
-                    	downloadCollection();
-                    }
-                });
+
+                mUpgradeStage = getIntent().getIntExtra(TYPE_UPGRADE_STAGE, -1);
+
+                switch (mUpgradeStage) {
+                    case UPGRADE_SCREEN_BASIC1:
+                        sb.append(getString(R.string.deck_upgrade_major_warning));
+                        but.setText(R.string.later);
+                        but.setOnClickListener(new OnClickListener() {
+                            @Override
+                            public void onClick(View arg0) {
+                                Themes.showThemedToast(Info.this, getString(R.string.deck_upgrade_start_again_to_upgrade_toast), false);
+                                setResult(RESULT_CANCELED);
+                                finish();
+                            }
+                        });
+                        syncButton.setText(R.string.more_options);
+                        syncButton.setOnClickListener(new OnClickListener() {
+                            @Override
+                            public void onClick(View arg0) {
+                                Intent result = new Intent();
+                                result.putExtra(TYPE_UPGRADE_STAGE, UPGRADE_SCREEN_MORE_OPTIONS);
+                                setResult(RESULT_OK, result);
+                                finishWithAnimation();
+                            }
+                        });
+                        continueButton.setText(R.string.now);
+                        continueButton.setOnClickListener(new OnClickListener() {
+                            @Override
+                            public void onClick(View arg0) {
+                                Intent result = new Intent();
+                                result.putExtra(TYPE_UPGRADE_STAGE, UPGRADE_SCREEN_BASIC2);
+                                setResult(RESULT_OK, result);
+                                finishWithAnimation();
+                            }
+                        });
+                        break;
+
+                    case UPGRADE_SCREEN_BASIC2:
+                        sb.append(getString(R.string.deck_upgrade_recommended_method));
+                        but.setText(R.string.back);
+                        but.setOnClickListener(new OnClickListener() {
+                            @Override
+                            public void onClick(View arg0) {
+                                Intent result = new Intent();
+                                result.putExtra(TYPE_UPGRADE_STAGE, UPGRADE_SCREEN_BASIC1);
+                                result.putExtra(TYPE_ANINAMTION_RIGHT, true);
+                                setResult(RESULT_OK, result);
+                                finishWithAnimation(false);
+                            }
+                        });
+                        syncButton.setText(android.R.string.no);
+                        syncButton.setOnClickListener(new OnClickListener() {
+                            @Override
+                            public void onClick(View arg0) {
+                                Intent result = new Intent();
+                                result.putExtra(TYPE_UPGRADE_STAGE, UPGRADE_SCREEN_WEB_UPGRADE);
+                                setResult(RESULT_OK, result);
+                                finishWithAnimation();
+                            }
+                        });
+                        continueButton.setText(android.R.string.yes);
+                        continueButton.setOnClickListener(new OnClickListener() {
+                            @Override
+                            public void onClick(View arg0) {
+                                Intent result = new Intent();
+                                result.putExtra(TYPE_UPGRADE_STAGE, UPGRADE_SCREEN_PC_UPGRADE);
+                                setResult(RESULT_OK, result);
+                                finishWithAnimation();
+                            }
+                        });
+                        break;
+
+                    case UPGRADE_SCREEN_MORE_OPTIONS:
+                        sb.append(getString(R.string.deck_upgrade_more_options));
+                        but.setText(R.string.upgrade_decks_button);
+                        but.setText(R.string.back);
+                        but.setOnClickListener(new OnClickListener() {
+                            @Override
+                            public void onClick(View arg0) {
+                                Intent result = new Intent();
+                                result.putExtra(TYPE_UPGRADE_STAGE, UPGRADE_SCREEN_BASIC1);
+                                result.putExtra(TYPE_ANINAMTION_RIGHT, true);
+                                setResult(RESULT_OK, result);
+                                finishWithAnimation(false);
+                            }
+                        });
+                        syncButton.setText(R.string.deck_upgrade_create_new_collection);
+                        syncButton.setOnClickListener(new OnClickListener() {
+                            @Override
+                            public void onClick(View arg0) {
+                                StyledDialog.Builder builder = new StyledDialog.Builder(Info.this);
+                                builder.setTitle(R.string.deck_upgrade_create_new_collection_title);
+                                builder.setIcon(R.drawable.ic_dialog_alert);
+                                builder.setMessage(R.string.deck_upgrade_not_import_warning);
+                                Resources res = getResources();
+                                builder.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        Intent result = new Intent();
+                                        result.putExtra(TYPE_UPGRADE_STAGE, UPGRADE_CONTINUE);
+                                        setResult(RESULT_OK, result);
+                                        finishWithAnimation();
+                                    }
+                                });
+                                builder.setNegativeButton(android.R.string.no, null);
+                                builder.show();
+                            }
+                        });
+                        continueButton.setVisibility(View.GONE);
+                        break;
+
+                    case UPGRADE_SCREEN_WEB_UPGRADE:
+                        sb.append(getString(R.string.deck_upgrade_via_web));
+                        but.setText(R.string.back);
+                        but.setOnClickListener(new OnClickListener() {
+                            @Override
+                            public void onClick(View arg0) {
+                                Intent result = new Intent();
+                                result.putExtra(TYPE_UPGRADE_STAGE, UPGRADE_SCREEN_BASIC2);
+                                result.putExtra(TYPE_ANINAMTION_RIGHT, true);
+                                setResult(RESULT_OK, result);
+                                finishWithAnimation(false);
+                            }
+                        });
+                        syncButton.setVisibility(View.GONE);
+                        continueButton.setText(android.R.string.yes);
+                        continueButton.setOnClickListener(new OnClickListener() {
+                            @Override
+                            public void onClick(View arg0) {
+                                if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
+                                    setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+                                } else if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
+                                    setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+                                }
+                                Connection.upgradeDecks(mUpgradeListener,
+                                        new Connection.Payload(new Object[]{AnkiDroidApp.getCurrentAnkiDroidDirectory()}));
+                            }
+                        });
+                        break;
+
+                    case UPGRADE_SCREEN_PC_UPGRADE:
+                        sb.append(getString(R.string.deck_upgrade_via_anki_desktop));
+                        but.setText(R.string.back);
+                        but.setOnClickListener(new OnClickListener() {
+                            @Override
+                            public void onClick(View arg0) {
+                                Intent result = new Intent();
+                                result.putExtra(TYPE_UPGRADE_STAGE, UPGRADE_SCREEN_BASIC2);
+                                result.putExtra(TYPE_ANINAMTION_RIGHT, true);
+                                setResult(RESULT_OK, result);
+                                finishWithAnimation(false);
+                            }
+                        });
+                        syncButton.setText(R.string.usb);
+                        syncButton.setOnClickListener(new OnClickListener() {
+                            @Override
+                            public void onClick(View arg0) {
+                                Intent result = new Intent();
+                                result.putExtra(TYPE_UPGRADE_STAGE, UPGRADE_SCREEN_MANUAL_UPGRADE);
+                                setResult(RESULT_OK, result);
+                                finishWithAnimation();
+                            }
+                        });
+                        continueButton.setText(R.string.ankiweb);
+                        continueButton.setOnClickListener(new OnClickListener() {
+                            @Override
+                            public void onClick(View arg0) {
+                                Intent result = new Intent();
+                                result.putExtra(TYPE_UPGRADE_STAGE, UPGRADE_SCREEN_AUTO_UPGRADE);
+                                setResult(RESULT_OK, result);
+                                finishWithAnimation();
+                            }
+                        });
+                        break;
+
+                    case UPGRADE_SCREEN_MANUAL_UPGRADE:
+                        sb.append(getString(R.string.deck_upgrade_manual));
+                        but.setText(R.string.back);
+                        but.setOnClickListener(new OnClickListener() {
+                            @Override
+                            public void onClick(View arg0) {
+                                Intent result = new Intent();
+                                result.putExtra(TYPE_UPGRADE_STAGE, UPGRADE_SCREEN_BASIC2);
+                                result.putExtra(TYPE_ANINAMTION_RIGHT, true);
+                                setResult(RESULT_OK, result);
+                                finishWithAnimation(false);
+                            }
+                        });
+                        syncButton.setText(R.string._import);
+                        syncButton.setOnClickListener(new OnClickListener() {
+                            @Override
+                            public void onClick(View arg0) {
+                                Intent result = new Intent();
+                                result.putExtra(TYPE_UPGRADE_STAGE, UPGRADE_IMPORT);
+                                setResult(RESULT_OK, result);
+                                finishWithAnimation(false);
+                            }
+                        });
+                        continueButton.setVisibility(View.GONE);
+                        break;
+
+                    case UPGRADE_SCREEN_AUTO_UPGRADE:
+                        sb.append(getString(R.string.deck_upgrade_auto_upgrade));
+                        but.setText(R.string.back);
+                        but.setOnClickListener(new OnClickListener() {
+                            @Override
+                            public void onClick(View arg0) {
+                                Intent result = new Intent();
+                                result.putExtra(TYPE_UPGRADE_STAGE, UPGRADE_SCREEN_PC_UPGRADE);
+                                result.putExtra(TYPE_ANINAMTION_RIGHT, true);
+                                setResult(RESULT_OK, result);
+                                finishWithAnimation(false);
+                            }
+                        });
+                        syncButton.setText(R.string.download);
+                        syncButton.setOnClickListener(new OnClickListener() {
+                            @Override
+                            public void onClick(View arg0) {
+                                downloadCollection();
+                            }
+                        });
+                        continueButton.setVisibility(View.GONE);
+                        break;
+
+                }
+
+//                File[] fileList = (new File(AnkiDroidApp.getCurrentAnkiDroidDirectory())).listFiles(new OldAnkiDeckFilter());
+//                StringBuilder fsb = new StringBuilder();
+//                fsb.append("<ul>");
+//                for (File f : fileList) {
+//                	fsb.append("<li>").append(f.getName().replace(".anki", "")).append("</li>");
+//                }
+//            	fsb.append("</ul>");
+//                sb.append(res.getString(R.string.upgrade_decks_message, fsb.toString()));
+//                sb.append("<ul><li>");
+//                sb.append(res.getString(R.string.upgrade_decks_message_pos1,
+//                		AnkiDroidApp.getCurrentAnkiDroidDirectory()));
+//                sb.append("</li><li>");
+//                sb.append(res.getString(R.string.upgrade_decks_message_pos2, res.getString(R.string.link_anki)));
+//                sb.append("</li><li>");
+//                sb.append(res.getString(R.string.upgrade_decks_message_pos3));
+//                sb.append("</li></ul>");
+//                sb.append(res.getString(R.string.upgrade_decks_message_finish));
+                sb.append("</body></html>");
+                mWebView.loadDataWithBaseURL("", sb.toString(), "text/html", "utf-8", null);
 
                 StyledDialog.Builder builder2 = new StyledDialog.Builder(this);
-
                 builder2.setTitle(res.getString(R.string.connection_error_title));
                 builder2.setIcon(R.drawable.ic_dialog_alert);
                 builder2.setMessage(res.getString(R.string.connection_needed));
@@ -307,43 +518,43 @@ public class Info extends Activity {
         Resources res = getResources();
         StyledDialog.Builder builder = new StyledDialog.Builder(this);
         switch (id) {
-        case DIALOG_USER_NOT_LOGGED_IN_SYNC:
-            builder.setTitle(res.getString(R.string.connection_error_title));
-            builder.setIcon(R.drawable.ic_dialog_alert);
-            builder.setMessage(res.getString(R.string.no_user_password_error_message));
-            builder.setNegativeButton(res.getString(R.string.cancel), null);
-            builder.setPositiveButton(res.getString(R.string.log_in), new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    Intent myAccount = new Intent(Info.this, MyAccount.class);
-                    myAccount.putExtra("notLoggedIn", true);
-                    startActivityForResult(myAccount, LOG_IN_FOR_SYNC);
-                    if (AnkiDroidApp.SDK_VERSION > 4) {
-                        ActivityTransitionAnimation.slide(Info.this, ActivityTransitionAnimation.FADE);
-                    }
-                }
-            });
-            dialog = builder.create();
-            break;
+            case DIALOG_USER_NOT_LOGGED_IN_SYNC:
+                builder.setTitle(R.string.connection_error_title);
+                builder.setIcon(R.drawable.ic_dialog_alert);
+                builder.setMessage(R.string.no_user_password_error_message);
+                builder.setNegativeButton(R.string.cancel, null);
+                builder.setPositiveButton(R.string.log_in, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                Intent myAccount = new Intent(Info.this, MyAccount.class);
+                                myAccount.putExtra("notLoggedIn", true);
+                                startActivityForResult(myAccount, LOG_IN_FOR_SYNC);
+                                if (AnkiDroidApp.SDK_VERSION > 4) {
+                                    ActivityTransitionAnimation.slide(Info.this, ActivityTransitionAnimation.FADE);
+                                }
+                            }
+                        });
+                dialog = builder.create();
+                break;
 
-        case DIALOG_SYNC_LOG:
-            builder.setTitle(res.getString(R.string.sync_log_title));
-            builder.setPositiveButton(res.getString(R.string.ok), null);
-            dialog = builder.create();
-            break;
+            case DIALOG_SYNC_LOG:
+                builder.setTitle(R.string.sync_log_title);
+                builder.setPositiveButton(android.R.string.ok, null);
+                dialog = builder.create();
+                break;
 
-        case DIALOG_SYNC_UPGRADE_REQUIRED:
-        	builder.setMessage(res.getString(R.string.upgrade_required, res.getString(R.string.link_anki)));
-            builder.setPositiveButton(res.getString(R.string.retry), new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                	downloadCollection();
-                }
-            });
-            builder.setNegativeButton(res.getString(R.string.cancel), null);
-            builder.setTitle(res.getString(R.string.sync_log_title));
-            dialog = builder.create();
-            break;
+            case DIALOG_SYNC_UPGRADE_REQUIRED:
+                builder.setMessage(res.getString(R.string.upgrade_required, res.getString(R.string.link_anki)));
+                builder.setPositiveButton(R.string.retry, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                downloadCollection();
+                            }
+                        });
+                builder.setNegativeButton(android.R.string.cancel, null);
+                builder.setTitle(R.string.sync_log_title);
+                dialog = builder.create();
+                break;
         }
         return dialog;
     }
@@ -353,23 +564,20 @@ public class Info extends Activity {
         Resources res = getResources();
         StyledDialog ad = (StyledDialog) dialog;
         switch (id) {
-    
-        case DIALOG_SYNC_LOG:
-        	ad.setMessage(mDialogMessage);
-        	break;
+            case DIALOG_SYNC_LOG:
+                ad.setMessage(mDialogMessage);
+                break;
         }
     }
 
-    
     private void downloadCollection() {
         SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(getBaseContext());
         String hkey = preferences.getString("hkey", "");
         if (hkey.length() == 0) {
             showDialog(DIALOG_USER_NOT_LOGGED_IN_SYNC);
         } else {
-            Connection.sync(mSyncListener, new Connection.Payload(new Object[] { hkey, 
-                    preferences.getBoolean("syncFetchesMedia", true),
-                    "download", 0 }));
+            Connection.sync(mSyncListener, new Connection.Payload(new Object[]{
+                    hkey, preferences.getBoolean("syncFetchesMedia", true), "download", 0}));
         }
     }
 
@@ -377,28 +585,54 @@ public class Info extends Activity {
     protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
         super.onActivityResult(requestCode, resultCode, intent);
         if (requestCode == LOG_IN_FOR_SYNC && resultCode == RESULT_OK) {
-        	downloadCollection();
+            downloadCollection();
         }
     }
-    
+
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
             if (mType == TYPE_SHARED_DECKS && mWebView.canGoBack()) {
                 mWebView.goBack();
+            } else if (mType == TYPE_UPGRADE_DECKS && mUpgradeStage != UPGRADE_SCREEN_BASIC1) {
+                Intent result = new Intent();
+                result.putExtra(TYPE_ANINAMTION_RIGHT, true);
+                switch (mUpgradeStage) {
+                    case UPGRADE_SCREEN_BASIC2:
+                        result.putExtra(TYPE_UPGRADE_STAGE, UPGRADE_SCREEN_BASIC1);
+                        break;
+
+                    case UPGRADE_SCREEN_MORE_OPTIONS:
+                        result.putExtra(TYPE_UPGRADE_STAGE, UPGRADE_SCREEN_BASIC1);
+                        break;
+
+                    case UPGRADE_SCREEN_WEB_UPGRADE:
+                        result.putExtra(TYPE_UPGRADE_STAGE, UPGRADE_SCREEN_BASIC2);
+                        break;
+
+                    case UPGRADE_SCREEN_PC_UPGRADE:
+                        result.putExtra(TYPE_UPGRADE_STAGE, UPGRADE_SCREEN_BASIC2);
+                        break;
+
+                    case UPGRADE_SCREEN_MANUAL_UPGRADE:
+                        result.putExtra(TYPE_UPGRADE_STAGE, UPGRADE_SCREEN_BASIC2);
+                        break;
+
+                    case UPGRADE_SCREEN_AUTO_UPGRADE:
+                        result.putExtra(TYPE_UPGRADE_STAGE, UPGRADE_SCREEN_PC_UPGRADE);
+                        break;
+                }
+                setResult(RESULT_OK, result);
+                finishWithAnimation(false);
             } else {
                 Log.i(AnkiDroidApp.TAG, "Info - onBackPressed()");
                 setResult(RESULT_CANCELED);
-                finish();
-                if (AnkiDroidApp.SDK_VERSION > 4) {
-                    ActivityTransitionAnimation.slide(Info.this, ActivityTransitionAnimation.LEFT);
-                }
+                finishWithAnimation();
             }
             return true;
         }
         return super.onKeyDown(keyCode, event);
     }
-
 
     private String getTitleString() {
         StringBuilder appName = new StringBuilder();
@@ -409,9 +643,9 @@ public class Info extends Activity {
     }
 
     private class MobileAnkiWebview extends WebViewClient {
-    	WebView mWebView;
-    	String mUrl;
-    	
+        WebView mWebView;
+        String mUrl;
+
         @Override
         public boolean shouldOverrideUrlLoading(WebView view, String url) {
             Log.i(AnkiDroidApp.TAG, "LoadSharedDecks: loading: " + url);
@@ -421,18 +655,18 @@ public class Info extends Activity {
 
         @Override
         public void onPageStarted(WebView view, String url, Bitmap favicon) {
-        	if (mUrl != null && mUrl.equals(url)) {
-        		super.onPageStarted(view, url, favicon);
-        	} else if (url.matches(".*/shared/download/[0-9]*")) {
+            if (mUrl != null && mUrl.equals(url)) {
+                super.onPageStarted(view, url, favicon);
+            } else if (url.matches(".*/shared/download/[0-9]*")) {
                 Connection.downloadSharedDeck(mDownloadDeckListener,
-                        new Connection.Payload(new Object[] { url }));
-        	} else {
-        		mLoadingLayer.setVisibility(View.VISIBLE);
+                        new Connection.Payload(new Object[]{url}));
+            } else {
+                mLoadingLayer.setVisibility(View.VISIBLE);
                 mWebView = view;
                 mUrl = url;
                 AsyncTask<String, Void, String> parseShareDecks = new ParseSharedDecks();
-                parseShareDecks.execute(url);        		
-        	}
+                parseShareDecks.execute(url);
+            }
         }
 
         private class ParseSharedDecks extends AsyncTask<String, Void, String> {
@@ -458,9 +692,8 @@ public class Info extends Activity {
                 ThreadSafeClientConnManager cm = new ThreadSafeClientConnManager(httpParams, registry);
 
                 ResponseHandler<String> handler = new ResponseHandler<String>() {
-    				@Override
-    				public String handleResponse(HttpResponse response)
-    						throws ClientProtocolException, IOException {
+                    @Override
+                    public String handleResponse(HttpResponse response) throws ClientProtocolException, IOException {
                         HttpEntity entity = response.getEntity();
                         String html;
                         if (entity != null) {
@@ -469,21 +702,21 @@ public class Info extends Activity {
                         } else {
                             return null;
                         }
-    				}
+                    }
                 };
 
                 String pageHTML = null;
                 try {
                     HttpClient client = new DefaultHttpClient(cm, httpParams);
-                    while (pageHTML == null){
+                    while (pageHTML == null) {
                         pageHTML = client.execute(pageGet, handler);
                     }
                 } catch (ClientProtocolException e) {
-                	pageHTML = "ClientProtocolException: " + e.getMessage();
+                    pageHTML = "ClientProtocolException: " + e.getMessage();
                 } catch (SSLException e) {
                     pageHTML = "SSLException: " + e.getMessage();
                 } catch (IOException e) {
-                	pageHTML = "IOException: " + e.getMessage();
+                    pageHTML = "IOException: " + e.getMessage();
                 }
 
                 Pattern pattern = Pattern.compile("</*div(\\sid=\\\"content\\\")*");
@@ -492,25 +725,26 @@ public class Info extends Activity {
                 int end = 0;
                 int inner = 0;
                 while (matcher.find()) {
-                	if (matcher.group().length() > 8) {
-                		start = matcher.start();
-                	} else if (start >= 0) {
-                		if (matcher.group().equals("<div")) {
-                			inner++;
-                		} else {
-                			if (inner == 0) {
-                				end = matcher.end();
-                				break;
-                			} else {
-                				inner--;
-                			}
-                		}
-                	}
+                    if (matcher.group().length() > 8) {
+                        start = matcher.start();
+                    } else if (start >= 0) {
+                        if (matcher.group().equals("<div")) {
+                            inner++;
+                        } else {
+                            if (inner == 0) {
+                                end = matcher.end();
+                                break;
+                            } else {
+                                inner--;
+                            }
+                        }
+                    }
                 }
                 if (start == -1 || end <= 0) {
-                	return "error";
+                    return "error";
                 } else {
-                	return mShareDecksTemplate.replace("::content::",  pageHTML.substring(start, end)).replaceAll(">\nDownload(.|\n)*", ">Import</a></div>");
+                    return mShareDecksTemplate.replace("::content::",
+                            pageHTML.substring(start, end)).replaceAll(">\nDownload(.|\n)*", ">Import</a></div>");
                 }
             }
 
@@ -526,7 +760,6 @@ public class Info extends Activity {
 
     }
 
-
     Connection.TaskListener mUpgradeListener = new Connection.TaskListener() {
 
         @Override
@@ -539,7 +772,6 @@ public class Info extends Activity {
             }
         }
 
-
         @Override
         public void onPreExecute() {
             Log.i(AnkiDroidApp.TAG, "Info: UpgradeDecks - onPreExcecute");
@@ -549,17 +781,16 @@ public class Info extends Activity {
             }
         }
 
-
         @Override
         public void onPostExecute(Payload data) {
-            Log.i(AnkiDroidApp.TAG, "Info: UpgradeDecks - onPostExecute, succes = " + data.success);
-        	Resources res = getResources();
+            Log.i(AnkiDroidApp.TAG, "Info: UpgradeDecks - onPostExecute, success = " + data.success);
+            Resources res = getResources();
             try {
                 if (mProgressDialog != null && mProgressDialog.isShowing()) {
                     mProgressDialog.dismiss();
-                }            	
+                }
             } catch (IllegalArgumentException e) {
-            	Log.e(AnkiDroidApp.TAG, "Info - IllegalArgumentException: " + e);
+                Log.e(AnkiDroidApp.TAG, "Info - IllegalArgumentException: " + e);
             }
 
             if (data.success) {
@@ -596,18 +827,15 @@ public class Info extends Activity {
                     }
                     builder.setMessage(failures);
                     builder.setPositiveButton(res.getString(R.string.ok), new Dialog.OnClickListener() {
-
-						@Override
-						public void onClick(DialogInterface dialog, int which) {
-		            		setResult(RESULT_OK);
-		                    finish();
-		                    if (AnkiDroidApp.SDK_VERSION > 4) {
-		                        ActivityTransitionAnimation.slide(Info.this, ActivityTransitionAnimation.LEFT);
-		                    }
-						}});
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    setResult(RESULT_OK);
+                                    finishWithAnimation();
+                                }
+                            });
                     builder.setCancelable(false);
                     builder.show();
-            	}
+                }
             } else {
                 StyledDialog.Builder builder = new StyledDialog.Builder(Info.this);
                 builder.setTitle(res.getString(R.string.connection_error_title));
@@ -618,7 +846,6 @@ public class Info extends Activity {
             }
         }
 
-
         @Override
         public void onDisconnected() {
             if (mNoConnectionAlert != null) {
@@ -626,10 +853,10 @@ public class Info extends Activity {
             }
         }
     };
-    
+
     Connection.TaskListener mDownloadDeckListener = new Connection.TaskListener() {
-    	int countDown = 0;
-    	
+        int countDown = 0;
+
         @Override
         public void onProgressUpdate(Object... values) {
             countDown = ((Integer) values[0]).intValue();
@@ -639,33 +866,31 @@ public class Info extends Activity {
             }
         }
 
-
         @Override
         public void onPreExecute() {
             Log.i(AnkiDroidApp.TAG, "Info: mDownloadDeckListener - onPreExcecute");
             if (mProgressDialog == null || !mProgressDialog.isShowing()) {
                 mProgressDialog = StyledProgressDialog.show(Info.this, "",
-                		getResources().getString(R.string.download_deck, countDown / 1024), true);
+                        getResources().getString(R.string.download_deck, countDown / 1024), true);
             }
         }
 
-
         @Override
         public void onPostExecute(Payload data) {
-            Log.i(AnkiDroidApp.TAG, "Info: mDownloadDeckListener - onPostExecute, succes = " + data.success);
-        	Resources res = getResources();
+            Log.i(AnkiDroidApp.TAG, "Info: mDownloadDeckListener - onPostExecute, success = " + data.success);
+            Resources res = getResources();
             try {
                 if (mProgressDialog != null && mProgressDialog.isShowing()) {
                     mProgressDialog.dismiss();
-                }            	
+                }
             } catch (IllegalArgumentException e) {
-            	Log.e(AnkiDroidApp.TAG, "Info - IllegalArgumentException: " + e);
+                Log.e(AnkiDroidApp.TAG, "Info - IllegalArgumentException: " + e);
             }
 
             if (data.success) {
-            	Intent intent = new Intent();
-            	intent.putExtra("importPath", (String) data.result);
-            	setResult(RESULT_OK, intent);
+                Intent intent = new Intent();
+                intent.putExtra("importPath", (String) data.result);
+                setResult(RESULT_OK, intent);
                 finish();
                 if (AnkiDroidApp.SDK_VERSION > 4) {
                     ActivityTransitionAnimation.slide(Info.this, ActivityTransitionAnimation.LEFT);
@@ -680,7 +905,6 @@ public class Info extends Activity {
             }
         }
 
-
         @Override
         public void onDisconnected() {
             if (mNoConnectionAlert != null) {
@@ -688,13 +912,12 @@ public class Info extends Activity {
             }
         }
     };
-    
+
     private Connection.TaskListener mSyncListener = new Connection.TaskListener() {
 
         String currentMessage;
         long countUp;
         long countDown;
-
 
         @Override
         public void onDisconnected() {
@@ -702,7 +925,6 @@ public class Info extends Activity {
                 mNoConnectionAlert.show();
             }
         }
-
 
         @Override
         public void onPreExecute() {
@@ -716,7 +938,6 @@ public class Info extends Activity {
                                 true, false);
             }
         }
-
 
         @Override
         public void onProgressUpdate(Object... values) {
@@ -743,7 +964,6 @@ public class Info extends Activity {
                         + res.getString(R.string.sync_up_down_size, countUp / 1024, countDown / 1024));
             }
         }
-
 
         @Override
         public void onPostExecute(Payload data) {
@@ -783,7 +1003,7 @@ public class Info extends Activity {
                     } else if (resultType.equals("upgradeRequired")) {
                         showDialog(DIALOG_SYNC_UPGRADE_REQUIRED);
                     } else {
-                    	if (result.length > 1 && result[1] instanceof Integer) {
+                        if (result.length > 1 && result[1] instanceof Integer) {
                             int type = (Integer) result[1];
                             switch (type) {
                                 case 503:
@@ -793,22 +1013,30 @@ public class Info extends Activity {
                                     mDialogMessage = res.getString(R.string.sync_log_error_specific,
                                             Integer.toString(type), (String) result[2]);
                                     break;
-                            }                    		
-                    	} else if (result[0] instanceof String) {
-                            mDialogMessage = res.getString(R.string.sync_log_error_specific,
-                                    -1, (String) result[0]);
-                    	} else {
+                            }
+                        } else if (result[0] instanceof String) {
+                            mDialogMessage = res.getString(R.string.sync_log_error_specific, -1, (String) result[0]);
+                        } else {
                             mDialogMessage = res.getString(R.string.sync_generic_error);
-                    	}
+                        }
                     }
                 }
             } else {
                 setResult(RESULT_OK);
-                finish();
-                if (AnkiDroidApp.SDK_VERSION > 4) {
-                    ActivityTransitionAnimation.slide(Info.this, ActivityTransitionAnimation.LEFT);
-                }
+                finishWithAnimation();
             }
         }
     };
+
+    private void finishWithAnimation() {
+        finishWithAnimation(true);
+    }
+
+    private void finishWithAnimation(boolean left) {
+        finish();
+        if (AnkiDroidApp.SDK_VERSION > 4) {
+            ActivityTransitionAnimation.slide(Info.this, left ?
+                    ActivityTransitionAnimation.LEFT : ActivityTransitionAnimation.RIGHT);
+        }
+    }
 }
