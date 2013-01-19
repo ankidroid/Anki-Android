@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="title_activity_edit_text">Editing text...</string>
+    <string name="menu_settings">Settings</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="title_activity_edit_image">Editing image</string>
+    <string name="title_activity_audio_recorder">Audio Recorder</string>
+
+</resources>

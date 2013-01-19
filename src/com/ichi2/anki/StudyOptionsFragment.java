@@ -304,7 +304,8 @@ public class StudyOptionsFragment extends Fragment {
                     }
                     return;
                 case R.id.studyoptions_add:
-                    addNote();
+                	addNoteMultimedia();
+                    //addNote();
                     return;
                 default:
                     return;
@@ -514,21 +515,28 @@ public class StudyOptionsFragment extends Fragment {
         mDontSaveOnStop = true;
         Intent reviewer = new Intent(getActivity(), Reviewer.class);
         startActivityForResult(reviewer, REQUEST_REVIEW);
-        if (AnkiDroidApp.SDK_VERSION > 4) {
-            ActivityTransitionAnimation.slide(getActivity(), ActivityTransitionAnimation.LEFT);
-        }
+        animateLeft();
         AnkiDroidApp.getCol().startTimebox();
     }
 
-
-    private void addNote() {
-        Intent intent = new Intent(getActivity(), CardEditor.class);
-        intent.putExtra(CardEditor.EXTRA_CALLER, CardEditor.CALLER_STUDYOPTIONS);
-        startActivityForResult(intent, ADD_NOTE);
-        if (AnkiDroidApp.SDK_VERSION > 4) {
+    private void addNoteMultimedia() {
+    	Intent intent = new Intent(getActivity(), MultimediaCardEditorActivity.class);
+    	startActivity(intent);
+        animateLeft();
+    }
+    
+//    Replaced by addNoteMultimedia
+//    private void addNote() {
+//    	Intent intent = new Intent(getActivity(), CardEditor.class);
+//        intent.putExtra(CardEditor.EXTRA_CALLER, CardEditor.CALLER_STUDYOPTIONS);
+//        startActivityForResult(intent, ADD_NOTE);
+//        animateLeft();
+//    }
+	private void animateLeft() {
+		if (AnkiDroidApp.SDK_VERSION > 4) {
             ActivityTransitionAnimation.slide(getActivity(), ActivityTransitionAnimation.LEFT);
         }
-    }
+	}
 
 
     public void reloadCollection() {
@@ -1089,9 +1097,7 @@ public class StudyOptionsFragment extends Fragment {
         mDontSaveOnStop = true;
         Intent cardBrowser = new Intent(getActivity(), CardBrowser.class);
         startActivityForResult(cardBrowser, BROWSE_CARDS);
-        if (AnkiDroidApp.SDK_VERSION > 4) {
-            ActivityTransitionAnimation.slide(getActivity(), ActivityTransitionAnimation.LEFT);
-        }
+        animateLeft();
     }
 
 
@@ -1336,7 +1342,8 @@ public class StudyOptionsFragment extends Fragment {
                             && Math.abs(velocityY) > AnkiDroidApp.sSwipeThresholdVelocity
                             && Math.abs(e1.getX() - e2.getX()) < AnkiDroidApp.sSwipeMaxOffPath) {
                         // up
-                        addNote();
+                        //addNote();
+                    	addNoteMultimedia();
                     }
 
                 } catch (Exception e) {
