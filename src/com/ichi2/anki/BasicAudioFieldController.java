@@ -65,6 +65,8 @@ public class BasicAudioFieldController implements IFieldController
             public void onRecordingFinish(View v)
             {
                 currentFilePath.setText("Recording done, you can preview it. Hit save after finish");
+                mField.setAudioPath(Environment.getExternalStorageDirectory() + "/ankidroid_temp_recaudio.3gp");
+                mField.setHasTemporaryMedia(true);
             }
         });
         layout.addView(audioView, LinearLayout.LayoutParams.MATCH_PARENT);
