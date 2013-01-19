@@ -21,7 +21,8 @@
 <resources>
 <!-- Be careful with a reordering. It will probably lead to a deletion of already translated strings on crowdin and should therefore only be done only immediately before release -->
 	<string-array name="new_version_features">
+		<item>upgrade wizard</item>
 		<item>bug fix: importing apkgs</item>
-	        <item>bug fix: media syncing</item>
+			        <item>bug fix: media syncing</item>
 				</string-array>
 </resources>

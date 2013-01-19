@@ -305,6 +305,7 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
             data.data = new Object[] { "wrong anki directory" };
             return data;
         }
+
         // step 1: gather all .anki files into a zip, without media.
         // we must store them as 1.anki, 2.anki and provide a map so we don't run into
         // encoding issues with the zip file.
@@ -312,7 +313,7 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
         JSONObject map = new JSONObject();
         byte[] buf = new byte[1024];
         String zipFilename = path + "/upload.zip";
-        String colFilename = path + "/collection.anki2";
+        String colFilename = path + AnkiDroidApp.COLLECTION_PATH;
         try {
             ZipOutputStream zos = new ZipOutputStream(new FileOutputStream(zipFilename));
             int n = 1;
@@ -443,7 +444,6 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
                 }
             }
             File newMediaDir = new File(col.getMedia().getDir());
-            AnkiDroidApp.closeCollection(false);
 
             // step 6. move media files to new media directory
             publishProgress(new Object[] { R.string.upgrade_decks_media });

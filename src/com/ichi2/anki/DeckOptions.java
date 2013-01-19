@@ -201,7 +201,7 @@ public class DeckOptions extends PreferenceActivity implements OnSharedPreferenc
                                 mOptions.getJSONObject("lapse").put("delays", getDelays(steps));
                             }
                         } else if (entry.getKey().equals("lapNewIvl")) {
-                            mOptions.getJSONObject("lapse").put("mult", Float.parseFloat((String) entry.getValue()));
+                            mOptions.getJSONObject("lapse").put("mult", Float.parseFloat((String) entry.getValue()) / 100);
                         } else if (entry.getKey().equals("lapMinIvl")) {
                             mOptions.getJSONObject("lapse").put("minInt", Integer.parseInt((String) entry.getValue()));
                         } else if (entry.getKey().equals("lapLeechThres")) {
