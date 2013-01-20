@@ -2,6 +2,12 @@ package com.ichi2.anki.multimediacard;
 
 import java.io.Serializable;
 
+
+/**
+ * @author zaur
+ *      
+ *      General interface for a field of any type.
+ */
 public interface IField extends Serializable
 {
     EFieldType getType();

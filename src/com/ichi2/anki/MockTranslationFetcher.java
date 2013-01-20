@@ -1,5 +1,12 @@
 package com.ichi2.anki;
 
+/**
+ * @author zaur
+ * 
+ *
+ *      class for tests
+ *      
+ */
 public class MockTranslationFetcher
 {
     public static String get()

@@ -4,9 +4,17 @@ import android.annotation.SuppressLint;
 import java.util.HashMap;
 import java.util.Map;
 
-//From google gdata 
-//
+// From google gdata 
+// Please, make sure the license allows to use this code, otherwise use and distribute it on your own risk!!
+// None of the committers is responsible for this distribution.
+// As of time of the commit the code below was in the public domain, publicly available on the web,
+// Apache license 2.0
 
+/**
+ *
+ *      This utility is needed to convert from HTML escape sequences into normal text.
+ *
+ */
 @SuppressLint("UseValueOf")
 public class Unescaper
 {

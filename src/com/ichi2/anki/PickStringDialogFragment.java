@@ -9,6 +9,12 @@ import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.widget.ArrayAdapter;
 
+/**
+ * @author zaur
+ *
+ *      This dialog fragment support a choice from a list of strings.
+ *
+ */
 public class PickStringDialogFragment extends DialogFragment
 {
     private ArrayList<String> mPossibleChoices;

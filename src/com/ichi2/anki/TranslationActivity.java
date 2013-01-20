@@ -24,12 +24,19 @@ import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.ichi2.anki.glosbe.json.Meaning;
+import com.ichi2.anki.glosbe.json.Phrase;
 import com.ichi2.anki.glosbe.json.Response;
 import com.ichi2.anki.glosbe.json.Tuc;
 import com.ichi2.anki.htmlutils.Unescaper;
 import com.ichi2.anki.runtimetools.TaskOperations;
 import com.ichi2.anki.web.HttpFetcher;
 
+/**
+ * @author zaur
+ * 
+ *         Activity used now with Glosbe.com to enable translation of words.
+ * 
+ */
 public class TranslationActivity extends FragmentActivity implements DialogInterface.OnClickListener, OnCancelListener
 {
 
@@ -73,7 +80,11 @@ public class TranslationActivity extends FragmentActivity implements DialogInter
         tv.setText("Powered by Glosbe.com");
         linearLayout.addView(tv);
 
-        mLanguageLister = new LanguagesListerGlosbe();
+        TextView tvFrom = new TextView(this);
+        tvFrom.setText("From:");
+        linearLayout.addView(tvFrom);
+
+        mLanguageLister = new LanguagesListerGlosbe(this);
 
         mSpinnerFrom = new Spinner(this);
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item,
@@ -81,6 +92,10 @@ public class TranslationActivity extends FragmentActivity implements DialogInter
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         mSpinnerFrom.setAdapter(adapter);
         linearLayout.addView(mSpinnerFrom);
+
+        TextView tvTo = new TextView(this);
+        tvTo.setText("To:");
+        linearLayout.addView(tvTo);
 
         mSpinnerTo = new Spinner(this);
         ArrayAdapter<String> adapterTo = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item,
@@ -134,19 +149,20 @@ public class TranslationActivity extends FragmentActivity implements DialogInter
 
     protected void translate()
     {
-        progressDialog = ProgressDialog.show(this,
-                "Wait...",
-                "Translating Online", true, false);
-        
+        progressDialog = ProgressDialog.show(this, "Wait...", "Translating Online", true, false);
+
         progressDialog.setCancelable(true);
         progressDialog.setOnCancelListener(this);
-        
+
         mWebServiceAddress = computeAddress();
-        
-        try {
+
+        try
+        {
             mTranslationLoadPost = new BackgroundPost();
             mTranslationLoadPost.execute();
-        } catch (Exception e) {
+        }
+        catch (Exception e)
+        {
             progressDialog.dismiss();
             // TODO Translation, proper handling
             showToast("Something went wrong...");
@@ -177,13 +193,13 @@ public class TranslationActivity extends FragmentActivity implements DialogInter
 
         address = address.replaceAll("FROMLANG", langCodeFrom).replaceAll("TOLANG", mLangCodeTo)
                 .replaceAll("SOURCE", query);
-        
+
         return address;
     }
 
     private void showPickTranslationDialog()
     {
-        if(mTranslation.startsWith("FAILED"))
+        if (mTranslation.startsWith("FAILED"))
         {
             // TODO Translation
             returnFailure("Fetching results from glosbe failed");
@@ -191,57 +207,92 @@ public class TranslationActivity extends FragmentActivity implements DialogInter
 
         Gson gson = new Gson();
         Response resp = gson.fromJson(mTranslation, Response.class);
-        
-        if(!resp.getResult().contentEquals("ok"))
+
+        if (!resp.getResult().contentEquals("ok"))
         {
-            //TODO Translation
+            // TODO Translation
             returnFailure("Fetching from glosbe was not successful");
         }
-        
-        mPossibleTranslations = new ArrayList<String>();
-        
-        List<Tuc> tucs = resp.getTuc();
-        
-        for (Tuc tuc : tucs)
+
+        mPossibleTranslations = parseJson(resp, mLangCodeTo);
+
+        if (mPossibleTranslations.size() == 0)
         {
-            if(tuc == null)
-            {
-                continue;
-            }
-            List<Meaning> meanings = tuc.getMeanings();
-            if(meanings == null)
-            {
-                continue;
-            }
-            for (Meaning meaning : meanings)
-            {
-                if(meaning == null)
-                {
-                    continue;
-                }
-                if(meaning.getLanguage().equals(mLangCodeTo))
-                {
-                    String unescappedString = Unescaper.unescapeHTML(meaning.getText());
-                    mPossibleTranslations.add(unescappedString);
-                }
-            }
-        }
-        
-        if(mPossibleTranslations.size() == 0)
-        {
-            //TODO Translation
+            // TODO Translation
             returnFailure("Such word was not found");
         }
-        
+
         PickStringDialogFragment fragment = new PickStringDialogFragment();
 
         fragment.setChoices(mPossibleTranslations);
         fragment.setOnclickListener(this);
-        //TODO translate
+        // TODO translate
         fragment.setTitle("Pick translation");
 
         fragment.show(this.getSupportFragmentManager(), "pick.translation");
-        
+
+    }
+
+    private static ArrayList<String> parseJson(Response resp, String languageCodeTo)
+    {
+        ArrayList<String> res = new ArrayList<String>();
+
+        /*
+         * The algorithm below includes the parsing of glosbe results.
+         * 
+         * Glosbe.com returns a list of different phrases in source and
+         * destination languages. This is done, probably, to improve the
+         * reader's understanding.
+         * 
+         * We leave here only the translations to the destination language.
+         */
+
+        List<Tuc> tucs = resp.getTuc();
+
+        for (Tuc tuc : tucs)
+        {
+            if (tuc == null)
+            {
+                continue;
+            }
+            List<Meaning> meanings = tuc.getMeanings();
+            if (meanings != null)
+            {
+                for (Meaning meaning : meanings)
+                {
+                    if (meaning == null)
+                    {
+                        continue;
+                    }
+                    if (meaning.getLanguage() == null)
+                    {
+                        continue;
+                    }
+                    if (meaning.getLanguage().contentEquals(languageCodeTo))
+                    {
+                        String unescappedString = Unescaper.unescapeHTML(meaning.getText());
+                        res.add(unescappedString);
+                    }
+                }
+            }
+
+            Phrase phrase = tuc.getPhrase();
+            if (phrase != null)
+            {
+                if (phrase.getLanguageCode() == null)
+                {
+                    continue;
+                }
+                if(phrase.getLanguageCode().contentEquals(languageCodeTo))
+                {
+                    String unescappedString = Unescaper.unescapeHTML(phrase.getText());
+                    res.add(unescappedString);
+                }
+            }
+
+        }
+
+        return res;
     }
 
     private void returnTheTranslation()
@@ -259,21 +310,22 @@ public class TranslationActivity extends FragmentActivity implements DialogInter
     {
         showToast(explanation);
         setResult(RESULT_CANCELED);
+        dismissCarefullyProgressDialog();
         finish();
     }
 
-
-    private void showToast(CharSequence text) {
-            int duration = Toast.LENGTH_SHORT;
-            Toast toast = Toast.makeText(this, text, duration);
-            toast.show();
+    private void showToast(CharSequence text)
+    {
+        int duration = Toast.LENGTH_SHORT;
+        Toast toast = Toast.makeText(this, text, duration);
+        toast.show();
     }
 
     @Override
     public void onClick(DialogInterface dialog, int which)
     {
         mTranslation = mPossibleTranslations.get(which);
-        returnTheTranslation();        
+        returnTheTranslation();
     }
 
     @Override
@@ -287,13 +339,14 @@ public class TranslationActivity extends FragmentActivity implements DialogInter
         TaskOperations.stopTaskGracefully(mTranslationLoadPost);
         dismissCarefullyProgressDialog();
     }
-    
+
     @Override
     protected void onPause()
     {
+        super.onPause();
         stopWorking();
     }
-    
+
     private void dismissCarefullyProgressDialog()
     {
         try
@@ -306,10 +359,10 @@ public class TranslationActivity extends FragmentActivity implements DialogInter
                 }
             }
         }
-        catch(Exception e)
+        catch (Exception e)
         {
             // nothing is done intentionally
         }
     }
-    
+
 }

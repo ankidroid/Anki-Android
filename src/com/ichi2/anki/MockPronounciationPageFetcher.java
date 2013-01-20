@@ -1,5 +1,11 @@
 package com.ichi2.anki;
 
+/**
+ * @author zaur
+ *
+ *      This is a class used for tests actually
+ *
+ */
 public class MockPronounciationPageFetcher
 {
 

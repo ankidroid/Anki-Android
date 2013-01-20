@@ -3,6 +3,16 @@ package com.ichi2.anki.multimediacard.impl;
 import com.ichi2.anki.multimediacard.EFieldType;
 import com.ichi2.anki.multimediacard.IField;
 
+/**
+ * @author zaur
+ *
+ *      THis is a field, which can come from outside of multimedia anki editor.
+ *      
+ *      Since fields there can support random HTML, we have to edit it also somehow.
+ *      
+ *      Mixed field transports the information.
+ *
+ */
 public class MixedField extends FieldBase implements IField
 {
 

@@ -18,6 +18,14 @@ import org.apache.http.protocol.HttpContext;
 
 import android.content.Context;
 
+/**
+ * @author zaur
+ *
+ *      Helper class to donwload from web.
+ *      
+ *      Used in AsyncTasks in Translation and Pronunication activities, and more...
+ *
+ */
 public class HttpFetcher
 {
 

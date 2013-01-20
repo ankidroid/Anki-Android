@@ -5,6 +5,14 @@ import java.util.ArrayList;
 import com.ichi2.anki.multimediacard.IField;
 import com.ichi2.anki.multimediacard.IMultimediaEditableNote;
 
+/**
+ * @author zaur
+ *
+ *      Implementation of the editable note.
+ *      
+ *      Has to be translate to and from anki db format.
+ */
+
 public class MultimediaEditableNote implements IMultimediaEditableNote {
 
 	/**

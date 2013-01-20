@@ -2,6 +2,12 @@ package com.ichi2.anki.multimediacard.impl;
 
 import com.ichi2.anki.multimediacard.IMultimediaEditableNote;
 
+/**
+ * @author zaur
+ *
+ *      Made for tests
+ *
+ */
 public class MockNoteFactory {
 	public static IMultimediaEditableNote makeNote()
 	{

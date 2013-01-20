@@ -3,6 +3,12 @@ package com.ichi2.anki.multimediacard.impl;
 import com.ichi2.anki.multimediacard.EFieldType;
 import com.ichi2.anki.multimediacard.IField;
 
+/**
+ * @author zaur
+ *
+ *      Field with an image.
+ *
+ */
 public class ImageField extends FieldBase implements IField
 {
 

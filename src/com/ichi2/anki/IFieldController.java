@@ -1,12 +1,23 @@
 package com.ichi2.anki;
 
 import android.content.Intent;
-import android.support.v4.app.FragmentActivity;
 import android.widget.LinearLayout;
 
 import com.ichi2.anki.multimediacard.IField;
 import com.ichi2.anki.multimediacard.IMultimediaEditableNote;
 
+/**
+ * @author zaur
+ *
+ *      A not in anki has fields. Each of the fields can be edited.
+ *      
+ *      A controller is about to decide, which UI elements have to be on the activity and what has to be done
+ *      there to edit a field.
+ *      
+ *      EditFieldActivity calls controller's set methods by protocol before it works on UI creation.
+ *      
+ *
+ */
 public interface IFieldController
 {
     // This is guaranteed to be called before create UI, so that the controller

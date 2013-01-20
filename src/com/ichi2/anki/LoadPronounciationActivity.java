@@ -23,9 +23,23 @@ import com.ichi2.anki.beolingus.parsing.BeolingusParser;
 import com.ichi2.anki.runtimetools.TaskOperations;
 import com.ichi2.anki.web.HttpFetcher;
 
+
+
+/**
+ * @author zaur
+ *      Activity to load pronunciation files from Beolingus.
+ *      
+ *      User picks a source language and the source is passed as extra.
+ *      
+ *      When activity finished, it passes the filepath as another extra to the caller.
+ *      
+ */
 public class LoadPronounciationActivity extends Activity implements OnCancelListener
 {
+    
+    //Must be passed in
     public static String EXTRA_SOURCE = "com.ichi2.anki.LoadPronounciationActivity.extra.source";
+    //Passed out as a result
     public static String EXTRA_PRONUNCIATION_FILE_PATH = "com.ichi2.anki.LoadPronounciationActivity.extra.pronun.file.path";
 
     String mSource;
@@ -61,7 +75,7 @@ public class LoadPronounciationActivity extends Activity implements OnCancelList
 
         LinearLayout linearLayout = (LinearLayout) findViewById(R.id.layoutInLoadPronActivity);
 
-        mLanguageLister = new LanguageListerBeolingus();
+        mLanguageLister = new LanguageListerBeolingus(this);
 
         mSpinnerFrom = new Spinner(this);
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item,
@@ -403,6 +417,8 @@ public class LoadPronounciationActivity extends Activity implements OnCancelList
     }
 
 
+    
+    // If the loading and dialog are cancelled
     @Override
     public void onCancel(DialogInterface dialog)
     {
@@ -418,6 +434,7 @@ public class LoadPronounciationActivity extends Activity implements OnCancelList
 
         finish();
     }
+    
 
     private void dismissCarefullyProgressDialog()
     {
@@ -431,7 +448,7 @@ public class LoadPronounciationActivity extends Activity implements OnCancelList
                 }
             }
         }
-        catch(Exception e)
+        catch (Exception e)
         {
             // nothing is done intentionally
         }
@@ -450,9 +467,9 @@ public class LoadPronounciationActivity extends Activity implements OnCancelList
 
     @Override
     protected void onPause()
-    {   
+    {
         super.onPause();
         dismissCarefullyProgressDialog();
-        stopAllTasks();    
+        stopAllTasks();
     }
 }

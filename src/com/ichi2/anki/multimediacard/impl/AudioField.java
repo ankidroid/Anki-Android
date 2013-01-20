@@ -3,6 +3,12 @@ package com.ichi2.anki.multimediacard.impl;
 import com.ichi2.anki.multimediacard.EFieldType;
 import com.ichi2.anki.multimediacard.IField;
 
+/**
+ * @author zaur
+ *
+ *      Implementation of Audio field type
+ *
+ */
 public class AudioField extends FieldBase implements IField
 {
 
