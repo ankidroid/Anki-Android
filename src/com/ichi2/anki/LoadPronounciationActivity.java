@@ -85,7 +85,7 @@ public class LoadPronounciationActivity extends Activity implements OnCancelList
         linearLayout.addView(mSpinnerFrom);
 
         Button buttonLoadPronunciation = (Button) new Button(this);
-        buttonLoadPronunciation.setText("Load pronounciation!");
+        buttonLoadPronunciation.setText(GTX(R.string.multimedia_editor_pron_load));
         linearLayout.addView(buttonLoadPronunciation);
         buttonLoadPronunciation.setOnClickListener(new OnClickListener()
         {
@@ -121,8 +121,7 @@ public class LoadPronounciationActivity extends Activity implements OnCancelList
     protected void onLoadPronunciation(View v)
     {
 
-        // TODO Translate
-        String message = "Looking up Beolingus...";
+        String message = GTX(R.string.multimedia_editor_searching_word);
 
         showProgressDialog(message);
 
@@ -138,8 +137,7 @@ public class LoadPronounciationActivity extends Activity implements OnCancelList
         catch (Exception e)
         {
             progressDialog.dismiss();
-            // TODO Translation, proper handling
-            showToast("Something went wrong...");
+            showToast(GTX(R.string.multimedia_editor_something_wrong));
         }
     }
 
@@ -148,7 +146,7 @@ public class LoadPronounciationActivity extends Activity implements OnCancelList
 
         dismissCarefullyProgressDialog();
 
-        progressDialog = ProgressDialog.show(this, "Wait...", message, true, false);
+        progressDialog = ProgressDialog.show(this, GTX(R.string.multimedia_editor_progress_wait_title), message, true, false);
         progressDialog.setCancelable(true);
         progressDialog.setOnCancelListener(this);
     }
@@ -281,8 +279,7 @@ public class LoadPronounciationActivity extends Activity implements OnCancelList
 
             try
             {
-                showToast("Word found!");
-                showProgressDialog("Looking up pronunciation...");
+                showProgressDialog(GTX(R.string.multimedia_editor_pron_looking_up));
                 mPostPronunciation = new BackgroundPost();
                 mPostPronunciation.setAddress(mPronunciationAddress);
                 mPostPronunciation.execute();
@@ -290,8 +287,7 @@ public class LoadPronounciationActivity extends Activity implements OnCancelList
             catch (Exception e)
             {
                 progressDialog.dismiss();
-                // TODO Translation
-                showToast("Something went wrong...");
+                showToast(GTX(R.string.multimedia_editor_something_wrong));
             }
 
             return;
@@ -318,8 +314,7 @@ public class LoadPronounciationActivity extends Activity implements OnCancelList
             // Download MP3 file
             try
             {
-                showToast("Pronunciation found!");
-                showProgressDialog("Downloading pronunciation...");
+                showProgressDialog(GTX(R.string.multimedia_editor_general_downloading));
                 mDownloadMp3Task = new DownloadFileTask();
                 mDownloadMp3Task.setAddress(mMp3Address);
                 mDownloadMp3Task.execute();
@@ -327,8 +322,7 @@ public class LoadPronounciationActivity extends Activity implements OnCancelList
             catch (Exception e)
             {
                 progressDialog.dismiss();
-                // TODO Translation, proper handling
-                showToast("Something went wrong...");
+                showToast(GTX(R.string.multimedia_editor_something_wrong));
             }
 
             return;
@@ -359,8 +353,7 @@ public class LoadPronounciationActivity extends Activity implements OnCancelList
 
         progressDialog.dismiss();
 
-        // TODO Translate
-        showToast("Pronounciation loaded!");
+        showToast(GTX(R.string.multimedia_editor_general_done));
 
         Intent resultData = new Intent();
 
@@ -374,7 +367,7 @@ public class LoadPronounciationActivity extends Activity implements OnCancelList
 
     private void failNoPronunciation()
     {
-        stop("No pronounciation");
+        stop(GTX(R.string.multimedia_editor_error_word_not_found));
         mPronunciationAddress = "no";
         mMp3Address = "no";
     }
@@ -472,4 +465,10 @@ public class LoadPronounciationActivity extends Activity implements OnCancelList
         dismissCarefullyProgressDialog();
         stopAllTasks();
     }
+    
+    private String GTX(int id)
+    {
+        return getText(id).toString();
+    }
+    
 }

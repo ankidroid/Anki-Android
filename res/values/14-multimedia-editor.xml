@@ -39,12 +39,25 @@
 <!-- pick the right translation imperative -->
 <string name="multimedia_editor_trans_pick_translation">Pick translation</string>
 
+<!-- Pronunciation Activity (Beolingus) -->
+<string name = "multimedia_editor_pron_load">Load</string>
+<string name = "multimedia_editor_pron_looking_up">Looking up pronunciation</string>
+
+
+<!-- General -->
+<!-- message on the progress dialog for the user to wait, means process -->
+<string name ="multimedia_editor_general_downloading">Downloading</string>
+<!-- when process finishes -->
+<string name = "multimedia_editor_general_done">Done</string>
 
 
 <!-- General word search and failures -->
 <string name = "multimedia_editor_error_word_not_found">The word was not found</string>
+
 <!-- failure when contacting glosbe or similar -->
 <string name = "multimedia_editor_trans_getting_failure">Getting translation failed</string>
+<string name = "multimedia_editor_searching_word">Searching the word</string>
+
 
 <!-- General -->
 <string name= "multimedia_editor_progress_wait_title">Wait</string>
