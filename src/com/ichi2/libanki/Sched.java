@@ -359,7 +359,7 @@ public class Sched {
     }
 
 
-    public void _updateStats(Card card, String type, int cnt) {
+    public void _updateStats(Card card, String type, long l) {
         String key = type + "Today";
         long did = card.getDid();
         ArrayList<JSONObject> list = mCol.getDecks().parents(did);
@@ -368,7 +368,7 @@ public class Sched {
             try {
                 JSONArray a = g.getJSONArray(key);
                 // add
-                a.put(1, a.getInt(1) + cnt);
+                a.put(1, a.getLong(1) + l);
             } catch (JSONException e) {
                 throw new RuntimeException(e);
             }
@@ -497,12 +497,13 @@ public class Sched {
         			}
         		}
         		if (show) {
-        			if (mCol.getDecks().get((Long) d[1]).getBoolean("collapsed")) {
+        			JSONObject deck = mCol.getDecks().get((Long) d[1]);
+        			if (deck.getBoolean("collapsed")) {
         				String[] name = (String[]) d[0];
         				name[name.length - 1] = name[name.length - 1] + " (+)";
         				d[0] = name;
         			}
-    				decksNet.add(d);
+    				decksNet.add(new Object[]{d[0], d[1], d[2], d[3], d[4], deck.getInt("dyn") != 0});
         		}
 			} catch (JSONException e) {
 				throw new RuntimeException(e);
@@ -528,6 +529,7 @@ public class Sched {
     public ArrayList<Object[]> deckDueList(int counts) {
         _checkDay();
         mCol.getDecks().recoverOrphans();
+        unburyCards();
         ArrayList<JSONObject> decks = mCol.getDecks().all();
         Collections.sort(decks, new DeckDueListComparator());
         HashMap<String, Integer[]> lims = new HashMap<String, Integer[]>();
@@ -943,7 +945,7 @@ public class Sched {
     }
 
     public int totalNewForCurrentDeck() {
-        return mCol.getDb().queryScalar("SELECT count() FROM cards WHERE did IN (SELECT id FROM cards WHERE did IN " + Utils.ids2str(mCol.getDecks().active()) + " AND queue = 0 AND due <= " + mToday + " LIMIT " + mReportLimit + ")", false);
+        return mCol.getDb().queryScalar("SELECT count() FROM cards WHERE id IN (SELECT id FROM cards WHERE did IN " + Utils.ids2str(mCol.getDecks().active()) + " AND queue = 0 LIMIT " + mReportLimit + ")", false);
     }
 
     /**
@@ -1353,7 +1355,7 @@ public class Sched {
     }
 
 
-    private void log(long id, int usn, int ease, int ivl, int lastIvl, int factor, int timeTaken, int type) {
+    private void log(long id, int usn, int ease, int ivl, int lastIvl, int factor, long timeTaken, int type) {
         try {
             mCol.getDb().execute("INSERT INTO revlog VALUES (?,?,?,?,?,?,?,?,?)",
                     new Object[] { Utils.now() * 1000, id, usn, ease, ivl, lastIvl, factor, timeTaken, type });
@@ -1530,7 +1532,9 @@ public class Sched {
     }
 
     public int totalRevForCurrentDeck() {
-        return mCol.getDb().queryScalar("SELECT count() FROM cards WHERE did IN (SELECT id FROM cards WHERE did IN " + Utils.ids2str(mCol.getDecks().active()) + " AND queue = 2 LIMIT " + mReportLimit + ")", false);
+        return mCol.getDb().queryScalar(String.format(Locale.US,
+        		"SELECT count() FROM cards WHERE did IN (SELECT id FROM cards WHERE did IN %s AND queue = 2 AND due <= %d LIMIT %s)",
+        		Utils.ids2str(mCol.getDecks().active()), mToday, mReportLimit), false);
     }
 
 
@@ -2458,7 +2462,7 @@ public class Sched {
                         .getDb()
                         .getDatabase()
                         .rawQuery(
-                                "SELECT avg(CASE WHEN ease > 1 THEN 1 ELSE 0 END), avg(time) FROM revlog WHERE type = 1 AND id > "
+                                "SELECT avg(CASE WHEN ease > 1 THEN 1.0 ELSE 0.0 END), avg(time) FROM revlog WHERE type = 1 AND id > "
                                         + ((mCol.getSched().getDayCutoff() - (7 * 86400)) * 1000), null);
                 if (!cur.moveToFirst()) {
                     return -1;
@@ -2469,7 +2473,7 @@ public class Sched {
                         .getDb()
                         .getDatabase()
                         .rawQuery(
-                                "SELECT avg(CASE WHEN ease = 3 THEN 1 ELSE 0 END), avg(time) FROM revlog WHERE type != 1 AND id > "
+                                "SELECT avg(CASE WHEN ease = 3 THEN 1.0 ELSE 0.0 END), avg(time) FROM revlog WHERE type != 1 AND id > "
                                         + ((mCol.getSched().getDayCutoff() - (7 * 86400)) * 1000), null);
                 if (!cur.moveToFirst()) {
                     return -1;
@@ -2642,7 +2646,7 @@ public class Sched {
         long now = Utils.intNow();
         ArrayList<Long> nids = new ArrayList<Long>();
         for (long id : cids) {
-        	long nid = mCol.getDb().queryScalar("SELECT nid FROM cards WHERE id = " + id);
+        	long nid = mCol.getDb().queryLongScalar("SELECT nid FROM cards WHERE id = " + id);
         	if (!nids.contains(nid)) {
         		nids.add(nid);
         	}

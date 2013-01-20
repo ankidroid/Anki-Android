@@ -22,8 +22,8 @@
 <resources>
   <string-array name="newCardSchedulingLabels">
     <item>復習中に新しいカードを混ぜる</item>
-    <item>格付けの後で</item>
-    <item>格付けの前に</item>
+    <item>カード評価後</item>
+    <item>カード評価前に</item>
   </string-array>
   <string-array name="error_reporting_choice_labels">
     <item>常にレポートする</item>
@@ -95,13 +95,13 @@
     <item>White</item>
   </string-array>
   <string-array name="leech_action_labels">
-    <item>休止カード</item>
-    <item>タグだけで</item>
+    <item>非表示カードへ切替</item>
+    <item>タグを追加</item>
     <item>新らしいカードへリセット</item>
   </string-array>
   <string-array name="new_order_labels">
-    <item>ランダム順の新しいカード</item>
-    <item>追加順の新しいカード</item>
+    <item>ランダムに新しいカードを追加</item>
+    <item>追加順に新しいカードを追加</item>
   </string-array>
   <string-array name="cram_deck_conf_order_labels">
     <item>古いカードを先頭に</item>
@@ -113,14 +113,13 @@
     <item>期限で並び替え</item>
     <item>最後の追加カードを先頭に</item>
   </string-array>
-  <string-array name="cram_deck_conf_preset_labels">
-    <item><![CDATA[<select preset>]]></item>
-    <item>すべての新しいカードをプレビューします。</item>
-    <item>今日、追加されたカードのプレビュー</item>
-    <item>今日忘れていたカードの再確認</item>
-    <item>二日分先の再確認</item>
-    <item>期限切れカードの再確認（タグで）</item>
-    <item>期限切れカードの再確認（減らした間隔で）</item>
-    <item>全てのカードの抽出</item>
+  <string-array name="custom_study_options_labels">
+    <item>今日の追加制限の増加</item>
+    <item>今日の復習カードの上限を増やす</item>
+    <item>忘れたカードの学習</item>
+    <item>学習の先行</item>
+    <item>カードをランダムに学習する。</item>
+    <item>新しいカードをプレビューする。</item>
+    <item>特定のタグの制限</item>
   </string-array>
 </resources>

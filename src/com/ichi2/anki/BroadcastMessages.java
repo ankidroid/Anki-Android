@@ -192,15 +192,13 @@ public class BroadcastMessages {
                         mMinVersion = getXmlValue(el, MIN_VERSION);
                         if (mMinVersion != null && mMinVersion.length() > 0
                                 && compareVersions(mMinVersion, currentVersion) > 0) {
-                            Log.i(AnkiDroidApp.TAG, "BroadcastMessage - too low AnkiDroid version (" + currentVersion
-                                    + "), message " + mNum + " only for >= " + mMinVersion);
+                            Log.i(AnkiDroidApp.TAG, "BroadcastMessage - too low AnkiDroid version (" + currentVersion + "), message " + mNum + " only for >= " + mMinVersion);
                             continue;
                         }
                         mMaxVersion = getXmlValue(el, MAX_VERSION);
                         if (mMaxVersion != null && mMaxVersion.length() > 0
                                 && compareVersions(mMaxVersion, currentVersion) < 0) {
-                            Log.i(AnkiDroidApp.TAG, "BroadcastMessage - too high AnkiDroid version (" + currentVersion
-                                    + "), message " + mNum + " only for <= " + mMaxVersion);
+                            Log.i(AnkiDroidApp.TAG, "BroadcastMessage - too high AnkiDroid version (" + currentVersion + "), message " + mNum + " only for <= " + mMaxVersion);
                             continue;
                         }
 

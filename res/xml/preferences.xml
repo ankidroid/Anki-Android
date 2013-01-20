@@ -26,9 +26,16 @@
             <EditTextPreference
                 android:defaultValue="/sdcard/AnkiDroid"
                 android:key="deckPath"
+                android:dependency="internalMemory"
                 android:summary="@string/col_path_summ"
                 android:title="@string/col_path" />
-        </PreferenceCategory>
+            <CheckBoxPreference
+                android:defaultValue="false"
+                android:disableDependentsState="true"
+                android:key="internalMemory"
+                android:summary="@string/pref_internal_memory_summ"
+                android:title="@string/pref_internal_memory" />
+            </PreferenceCategory>
         <PreferenceCategory android:title="@string/pref_cat_backup" >
             <CheckBoxPreference
                 android:defaultValue="true"
@@ -543,6 +550,10 @@
                 android:key="com.ichi2.filters.GoogleTranslaterFilter"
                 android:summary="@string/filter_google_translate_summ"
                 android:title="@string/filter_google_translate" />
+        </PreferenceCategory>
+    </PreferenceScreen>
+    <PreferenceScreen android:title="@string/pref_cat_plugins" android:key="plugins">
+        <PreferenceCategory android:title="@string/pref_cat_plugins_controllers"  android:key="plugins_controllers">
         </PreferenceCategory>
     </PreferenceScreen>
 </PreferenceScreen>

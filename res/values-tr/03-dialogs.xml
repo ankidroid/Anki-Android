@@ -26,6 +26,7 @@
   <string name="contextmenu_deckpicker_delete_deck">Desteyi Sil</string>
   <string name="delete_deck_title">Desteyi Sil</string>
   <string name="delete_deck_message">%s içindeki bütün kartları silmek istediğinize emin misiniz?</string>
+  <string name="delete_cram_deck_message">Tüm kartları orijinal destelerine %s geri göndermek istediğinizden emin misiniz?</string>
   <string name="delete_deck_confirm">Sil</string>
   <string name="new_version_message">Yeni Özellikler:</string>
   <string name="no_tts_available_title">Metin Okuma</string>
@@ -50,13 +51,16 @@
   <string name="intent_add_clear_all">Hepsini temizle</string>
   <string name="intent_aedict_empty">\"Varsayılan\" kategorisi boş</string>
   <string name="intent_aedict_category">AnkiDroid\'e kart eklemek için bütün Not Defteri kategorilerini kaldırın veya \"default\" isminde bir tane ekleyin</string>
-  <string name="learnmore_title">Daha Fazla Çalışma Ayarları</string>
-  <string name="learnmore_insructions">Yeni kart ve maksimum çalışma sınırlarınızı bugünkü çalışmanızı uzatmak için geçici olarak artırabilirsiniz.</string>
-  <string name="learnmore_extend_new_limit">Yeni kart sınırını şu kadar artır:</string>
-  <string name="learnmore_extend_rev_limit">Maksimum çalışma sınırını şu kadar artır:</string>
-  <string name="reviewearly_title">Erkenden Çalışma Ayarları</string>
-  <string name="reviewearly_instructions">Bu seçenek \"XXX\" adında aşağıda seçtiğiniz gün sayısı kadar sonra çalışılacak kartları içeren süzülmüş bir deste oluşturacak. Böyle bir süzülü deste zaten varsa boşaltılıp baştan yapılandırılacak.</string>
-  <string name="reviewearly_days_ahead">Kaç gün önceden</string>
+  <string name="custom_study_new_total_new">Desteden yeni kartlar: %s</string>
+  <string name="custom_study_rev_total_rev">Reviews due in deck: %s</string>
+  <string name="custom_study_new_extend">Bugünün yeni kart limitini artırın</string>
+  <string name="custom_study_rev_extend">Bugünün gözden geçirme limitini artırın</string>
+  <string name="custom_study_forgotten">Son x gündeki unutulan kartları izle:</string>
+  <string name="custom_study_ahead">X günleri önce izle:</string>
+  <string name="custom_study_random">X kartları rastgele desteden seç:</string>
+  <string name="custom_study_preview">Son x günlerdeki eklenen yeni kartları önizle:</string>
+  <string name="custom_study_tags">Etiketleri girin:</string>
+  <string name="rebuild_custom_study_deck">Özel çalışma destesi yapılandırılıyor.\nLütfen bekleyin...</string>
   <string-array name="about_content">
     <item><![CDATA[<h2>%1$s:<br/>Android için bilgi kartları</h2>AnkiDroid <a href="%2$s">Anki</a> masaüstü uygulamasıyla tamamen uyumlu bir bilgi kartı uygulamasıdır. İster AnkiDroid\'de ister Anki Masaüstünde içerikler oluşturabilir, indirebilir, öğrenebilir ve kolaylıkla eşitleyebilirsiniz.]]></item>
     <item><![CDATA[AnkiDroid\'i geliştirmemize yardımcı olmak için, lütfen karşılaştığınız sorunları <a href="%1$s">buradan</a> bildirin; yeni özellik fikirleri de çok iyi olur! Lütfen <a href="%2$s">vikiyi</a> kullanın ve <a href="%3$s">forumda</a> bir selam verin.]]></item>

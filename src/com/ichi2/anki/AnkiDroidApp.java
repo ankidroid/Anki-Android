@@ -17,6 +17,12 @@
 
 package com.ichi2.anki;
 
+import java.io.File;
+import java.io.IOException;
+import java.util.Locale;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
+
 import android.app.Application;
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -30,6 +36,7 @@ import android.util.Log;
 import android.view.Display;
 import android.view.WindowManager;
 
+import com.ichi2.anki.controller.ControllerManager;
 import com.ichi2.async.Connection;
 import com.ichi2.compat.Compat;
 import com.ichi2.compat.CompatV11;
@@ -40,12 +47,6 @@ import com.ichi2.compat.CompatV9;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Storage;
 import com.ichi2.libanki.hooks.Hooks;
-
-import java.io.File;
-import java.io.IOException;
-import java.util.Locale;
-import java.util.concurrent.locks.Lock;
-import java.util.concurrent.locks.ReentrantLock;
 
 /**
  * Application class.
@@ -145,6 +146,10 @@ public class AnkiDroidApp extends Application {
             // Reason: apply() not available on Android 1.5
             editor.commit();
         }
+        
+        getPluginManager().discoverPlugins();
+        Log.i(TAG, "App onCreate");
+        //getControllerManager().enableController();
     }
 
     /**
@@ -162,15 +167,16 @@ public class AnkiDroidApp extends Application {
     }
 
 
-    public static String getStorageDirectory() {
-        return Environment.getExternalStorageDirectory().getAbsolutePath();
+    private static String getStorageDirectory() {
+        return Environment.getExternalStorageDirectory().getAbsolutePath();    		
+    }
+
+    private static String getInternalMemoryDirectory() {
+    	return Environment.getDataDirectory().getAbsolutePath() + "/data/" + AnkiDroidApp.getInstance().getPackageName() + "/files";
     }
 
     public static String getCacheStorageDirectory() {
-        File cache = new File(getStorageDirectory() +
-                "/Android/data/" +
-                AnkiDroidApp.getInstance().getPackageName() + "." +
-                AnkiDroidApp.getAppName() + "/cache/");
+        File cache = new File(getInternalMemoryDirectory() + "/cache");
         if (!cache.exists()) {
             cache.mkdirs();
         }
@@ -178,19 +184,22 @@ public class AnkiDroidApp extends Application {
     }
 
     public static String getCollectionPath() {
-        String deckPath = getSharedPrefs(sInstance.getApplicationContext()).getString("deckPath",
-                AnkiDroidApp.getDefaultAnkiDroidDirectory());
-        return deckPath + AnkiDroidApp.COLLECTION_PATH;
+    	return getCurrentAnkiDroidDirectory() + AnkiDroidApp.COLLECTION_PATH;
     }
 
 
-    public static String getDefaultAnkiDroidDirectory() {
+    private static String getDefaultAnkiDroidDirectory() {
         return getStorageDirectory() + "/AnkiDroid";
     }
 
 
-    public static String getCurrentAnkiDroidDirectory(Context context) {
-    	return AnkiDroidApp.getSharedPrefs(context).getString("deckPath", AnkiDroidApp.getDefaultAnkiDroidDirectory());
+    public static String getCurrentAnkiDroidDirectory() {
+    	SharedPreferences prefs = getSharedPrefs(sInstance.getApplicationContext());
+    	if (prefs.getBoolean("internalMemory", false)) {
+    		return getInternalMemoryDirectory();
+    	} else {
+    		return prefs.getString("deckPath", AnkiDroidApp.getDefaultAnkiDroidDirectory());
+    	}
     }
 
     public static void createDirectoryIfMissing(File decksDirectory) {
@@ -224,7 +233,7 @@ public class AnkiDroidApp extends Application {
 
 
     public static boolean isSdCardMounted() {
-        return Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState());
+        return Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState()) || getSharedPrefs(sInstance.getApplicationContext()).getBoolean("internalMemory", false);
     }
 
 
@@ -345,6 +354,14 @@ public class AnkiDroidApp extends Application {
 
     public static Compat getCompat() {
         return sInstance.mCompat;
+    }
+
+    public static PluginManager getPluginManager() {
+        return PluginManager.getPluginManager();
+    }
+
+    public static ControllerManager getControllerManager() {
+        return ControllerManager.getControllerManager();
     }
 
     public static synchronized Collection openCollection(String path) {

@@ -77,31 +77,33 @@
   <string name="check_db_message">Έλεγχος βάσης δεδομένων.\nΠαρακαλούμε περιμένετε...</string>
   <string name="simple_interface_hint">Κενό %s. Έχετε το νου σας ότι το απλό interface δεν υποστηρίζει εικόνες/ήχους κτλ.</string>
   <string name="delete_deck">Διαγραφή τράπουλας...\nΠαρακαλούμε περιμένετε.</string>
-  <string name="menu_cardbrowser">Card browser</string>
-  <string name="show_hint">Show Hint</string>
-  <string name="pref_lang_other">Language Preferences</string>
-  <string name="pref_font_UI">Custom UI Font</string>
-  <string name="info_rate">Rate AnkiDroid</string>
-  <string name="col_load_failed">Collection loading failed.\nPress back to close AnkiDroid.</string>
-  <string name="import_title">Import Cards</string>
-  <string name="import_message">Would you like to add the content of file %s to your collection, or replace your collection with it?</string>
-  <string name="import_message_add">Add</string>
-  <string name="import_message_replace">Replace</string>
-  <string name="import_message_replace_confirm">This will delete your existing collection and replace it with the data of file %s. Are you sure?</string>
-  <string name="import_log_success">Successfully imported %d cards</string>
-  <string name="import_log_error">Import failed</string>
-  <string name="import_log_no_apkg">This is not a valid apkg file</string>
-  <string name="import_importing">Importing cards.\nPlease wait...</string>
-  <string name="import_hint">To import cards, place the apkg file in directory %s and press ok</string>
-  <string name="import_no_file_found">No importable apkg file found</string>
+  <string name="menu_cardbrowser">Ευρετήριο καρτών</string>
+  <string name="show_hint">Εμφάνιση υποδείξεων</string>
+  <string name="pref_lang_other">Προτιμήσεις Γλώσσας</string>
+  <string name="pref_font_UI">Προσαρμοσμένη γραμματοσειρά διαπροσωπίας</string>
+  <string name="info_rate">Αξιολογείστε το AnkiDroid</string>
+  <string name="col_load_failed">Η φόρτωση της συλλογής απέτυχε.\nΠιέστε πίσω, για να κλείσετε το AnkiDroid.</string>
+  <string name="import_title">Εισαγωγή καρτών</string>
+  <string name="import_message">Θέλετε να προσθέσετε το περιεχόμενο του αρχείου %s στη συλλογή σας, ή να αντικαταστήσετε τη συλλογή σας με αυτό;</string>
+  <string name="import_message_add">Προσθήκη</string>
+  <string name="import_message_replace">Αντικατάσταση</string>
+  <string name="import_message_replace_confirm">Αυτό θα διαγράψει την υπάρχουσα συλλογή σας και θα την αντικαταστήσει με τα δεδομένα του αρχείου %s. Είστε σίγουροι?</string>
+  <string name="import_log_success">Εισήχθησαν με επιτυχία %d κάρτες</string>
+  <string name="import_log_error">Αποτυχία εισαγωγής</string>
+  <string name="import_log_no_apkg">Αυτό δεν είναι έγκυρο αρχείο apkg</string>
+  <string name="import_importing">Εισαγωγής καρτών.\nΠαρακαλούμε περιμένετε...</string>
+  <string name="import_hint">Για να εισαγάγετε κάρτες, τοποθετήστε το αρχείο apkg στον κατάλογο %s και πατήστε ΟΚ</string>
+  <string name="import_no_file_found">Δεν βρέθηκε αρχείο apkg που να μπορεί να εισαχθεί</string>
+  <string name="custom_study">Προσαρμοσμένη μελέτη</string>
+  <string name="dyn_deck_desc">Αυτή είναι μια ειδική τράπουλα για μάθηση εκτός του κανονικού προγράμματος. Οι κάρτες θα επιστραφούν αυτόματα στην αρχική τους τράπουλα μετά την επανάληψή τους. Η διαγραφή αυτής της τράπουλας από τη λίστα τραπουλών θα επιστρέψει όλες τις κάρτες στην αρχική τους τράπουλα.</string>
   <string-array name="dynOrderLabels">
-    <item>Oldest seen first</item>
-    <item>Random</item>
-    <item>Increasing intervals</item>
-    <item>Decreasing intervals</item>
-    <item>Most lapses</item>
-    <item>Order added</item>
-    <item>Order due</item>
+    <item>Πρώτα οι παλαιότερα ειδωμένες</item>
+    <item>Τυχαία</item>
+    <item>Κατά αυξανόμενα διαστήματα</item>
+    <item>Κατά μειωνόμενα διαστήματα</item>
+    <item>Αυτές με περισσότερες ολισθήσεις</item>
+    <item>Κατά σειρά προσθήκης</item>
+    <item>Κατά σειρά οφειλής</item>
   </string-array>
   <plurals name="factadder_cards_added">
     <item quantity="one">1 κάρτα προστέθηκε</item>

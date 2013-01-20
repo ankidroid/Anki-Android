@@ -16,6 +16,10 @@
 
 package com.ichi2.anki;
 
+import java.util.ArrayList;
+
+import org.json.JSONException;
+
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -27,7 +31,7 @@ import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
+import android.os.Message;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
@@ -36,20 +40,14 @@ import android.view.MotionEvent;
 import android.widget.EditText;
 
 import com.ichi2.anim.ActivityTransitionAnimation;
+import com.ichi2.anki.controller.AnkiControllableFragmentActivity;
 import com.ichi2.anki.receiver.SdCardReceiver;
-import com.ichi2.libanki.Collection;
 import com.ichi2.themes.StyledDialog;
 import com.ichi2.themes.StyledOpenCollectionDialog;
 import com.ichi2.themes.Themes;
 import com.ichi2.widget.WidgetStatus;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.util.ArrayList;
-
-public class StudyOptionsActivity extends FragmentActivity {
+public class StudyOptionsActivity extends AnkiControllableFragmentActivity {
 
     private boolean mInvalidateMenu;
     
@@ -247,11 +245,9 @@ public class StudyOptionsActivity extends FragmentActivity {
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
             Log.i(AnkiDroidApp.TAG, "StudyOptions - onBackPressed()");
-            // if (mCurrentContentView == CONTENT_CONGRATS) {
-            // finishCongrats();
-            // } else {
-            closeStudyOptions();
-            // }
+            if (mCurrentFragment == null || !mCurrentFragment.congratsShowing()) {
+                closeStudyOptions();
+            }
             return true;
         }
         return super.onKeyDown(keyCode, event);
@@ -312,6 +308,19 @@ public class StudyOptionsActivity extends FragmentActivity {
             iFilter.addAction(SdCardReceiver.MEDIA_EJECT);
             iFilter.addAction(SdCardReceiver.MEDIA_MOUNT);
             registerReceiver(mUnmountReceiver, iFilter);
+        }
+    }
+
+	@Override
+	public Bundle getSupportedControllerActions() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+    @Override
+    public void handleControllerMessage(Message msg) {
+        if (mCurrentFragment != null) {
+            mCurrentFragment.handleControllerMessage(msg);
         }
     }
 }

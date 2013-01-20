@@ -45,8 +45,8 @@
   <string name="connection_error_message">Bir ağ hatası meydana geldi.</string>
   <string name="sync_log_db_error">Bir veritabanı hatası meydana geldi.</string>
   <string name="no_user_password_error_message">Bu işleme devam etmek için, bir AnkiWeb hesabınız olmalı ve giriş yapmış olmalısınız.</string>
-  <string name="username">Kullanıcı adı</string>
-  <string name="username_repeat">Kullanıcı adı (tekrar)</string>
+  <string name="username">Email address</string>
+  <string name="username_repeat">Repeat email address</string>
   <string name="password">Şifre</string>
   <string name="password_repeat">Şifre (tekrar)</string>
   <string name="log_in">Giriş yap</string>
@@ -55,7 +55,7 @@
   <string name="logged_as">Şu adla giriş yapıldı:</string>
   <string name="log_out">Çıkış yap</string>
   <string name="alert_logging_message">Giriş yapılıyor, lütfen bekleyin...</string>
-  <string name="invalid_username_password">Geçersiz kullanıcı adı veya şifre.</string>
+  <string name="invalid_username_password">Invalid email address or password.</string>
   <string name="login_generic_error">Giriş başarısız.</string>
   <string name="download_finished">İndirme bitti</string>
   <string name="personaldeckpicker_title">Çevrimiçi Deste Aç</string>
@@ -66,8 +66,8 @@
   <string name="sync_conflict_message">Buradaki ve AnkiWeb\'deki desteleriniz birbirleriyle birleştirilemeyecek şekilde farklıdır, bu yüzden bir taraftaki desteleri diğerleriyle değiştirmek gerekir.\n\nBuradaki desteleri yüklemek mi, yoksa AnkiWeb\'deki desteleri indirmek mi istiyorsunuz?</string>
   <string name="sync_conflict_local">Yükle</string>
   <string name="sync_conflict_remote">İndir</string>
-  <string name="sync_conflict_remote_confirm">Do you really want to download the server\'s collection? Be aware that this will overwrite your local collection.</string>
-  <string name="sync_conflict_local_confirm">Do you really want to upload the local collection? Be aware that this will overwrite your collection on the server.</string>
+  <string name="sync_conflict_remote_confirm">Sunucunun koleksiyonu istediğinizden emin misiniz? Unutmayın, yerel koleksiyonunuzun üzerine yazılır.</string>
+  <string name="sync_conflict_local_confirm">Yerel koleksiyonuzu göndermek istediğinizden emin misiniz? Unutmayın, bu sunucu üzerindeki koleksiyonun üzerine yazılır.</string>
   <string name="sync_conflict_cancel">Eşitlemeyi İptal Et</string>
   <string name="sync_prepare_syncing">Eşitlemeye hazırlanıyor...</string>
   <string name="sync_preparing_full_sync_message">Tam eşitlemeye hazırlanıyor...</string>
@@ -107,11 +107,11 @@
   <string name="sync_media_remove">Silinmiş ortamlar işleniyor...</string>
   <string name="sync_media_from_server">Ortamlar sunucudan alınıyor...</string>
   <string name="sync_media_to_server">Ortamlar sunucuya gönderiliyor...</string>
-  <string name="sync_media_sanity_check">Checking media counts...</string>
+  <string name="sync_media_sanity_check">Medya sayar denetleniyor...</string>
   <string name="sync_media_no_changes">Ortam dosyalarında değişiklik yok.</string>
   <string name="sync_media_success">Ortamlar başarıyla eşitlendi.</string>
-  <string name="sync_media_sanity_failed">Media sync completed, but the media count doesn\'t agree with the server. The next media sync will be full to correct any error.</string>
-  <string name="sync_media_error">Error syncing media data.</string>
+  <string name="sync_media_sanity_failed">Medya senkronizesi tamamlandır, fakat medya sayımı sunucuyla doğrulanamadı. Sonraki medya senkronizesi tam doğru ve hatasız olacak.</string>
+  <string name="sync_media_error">Medya veri senkronizasyonu hatası.</string>
   <string name="register_error">Bir hatâ meydana geldi. Lütfen sonra yeniden deneyin.</string>
   <string name="register_title">Üye ol</string>
   <string name="register_mismatch">Kullanıcı adı/şifre tekrarı uyuşmuyor veya boş. Lütfen yeniden girin.</string>
@@ -119,9 +119,9 @@
   <string name="upgrade_decks_zipping">Desteler yükleme için sıkıştırılıyor.\nLütfen bekleyin...</string>
   <string name="upgrade_decks_upload">Sıkıştırılmış desteler yükleniyor.\nLütfen bekleyin...</string>
   <string name="upgrade_decks_waiting">Bekleniyor, sıradaki yeriniz: %s\nLütfen bekleyin...</string>
-  <string name="upgrade_decks_upgrade_started">Upgrade started\nPlease waiting for finish...</string>
+  <string name="upgrade_decks_upgrade_started">Yükseltme başladı\nLütfen bitmesi için bekleyin...</string>
   <string name="upgrade_decks_downloading">Yükseltilen koleksiyon indiriliyor.\nLütfen bekleyin...</string>
-  <string name="upgrade_decks_media">Copying old media files to new media location.\nPlease wait...</string>
+  <string name="upgrade_decks_media">Yeni medya konuma eski medya dosyalarını kopyalanıyor.\nLütfen bekleyin ...</string>
   <string name="upgrade_decks_message">There is no Anki 2.0 collection available but one or more decks in the old Anki 1.2 format have been found:%sIn order to use your decks with the new version of AnkiDroid they need to be converted first into a single collection of the new Anki-2.0 format. There are three possibilities for this:</string>
   <string name="upgrade_decks_message_pos1">By using Anki Desktop 2.0, your decks will be converted at the first start. You can sync over AnkiWeb or just copy the new collection afterwards to your mobile device. Copy your decks from your AnkiDroid directory (%s) to your Anki Desktop 1.2 directory on your computer (if you haven\'t synced them anyway) and start Anki Desktop 2.0.</string>
   <string name="upgrade_decks_message_pos2">Eğer destelerinizi AnkiWeb üzerinden zaten eşitliyorsanız, destelerinizin biçimlendirilmesi için yalnızca %s adresine bir kez giriş yapmanız yeterli. Daha sonra yeni koleksiyonu mobil cihazınıza eşitleyin.</string>

@@ -748,9 +748,8 @@ public class Media {
      */
 	public void removeUnusedImages() {
 		List<String> listOfUnusedMedia = check().get(1); // Returns two lists, 2nd is unused media.
-		String mediaDir = AnkiDroidApp.getCurrentAnkiDroidDirectory(AnkiDroidApp.getInstance().getBaseContext()) + "/collection.media/";
 		for (String mediaName : listOfUnusedMedia) {
-			File mediaFile = new File(mediaDir + mediaName);
+			File mediaFile = new File(mDir + "/" + mediaName);
 			if (mediaFile.exists()) {
 				mediaFile.delete();
 			}

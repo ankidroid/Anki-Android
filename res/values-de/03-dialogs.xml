@@ -22,10 +22,11 @@
 <resources>
   <string name="welcome_message">Mit AnkiDroid können Sie effizient große Mengen von Vokabeln oder anderem Material lernen. AnkiDroid zeigt Ihnen die Sachen, die Sie lernen möchten, bevor Sie sie vergessen.\n\n Um einen ersten Eindruck, wie alles funktioniert, zu erhalten, empfehlen wir Ihnen einen Einführungsstapel, welcher Ihnen einige einführende Informationen gibt, zu öffnen und einfach ein bisschen auszuprobieren. Drücken Sie einfach auf „Lernen starten“, nachdem Sie ihn geöffnet haben.\n\n Jetzt den Einführungsstapel erstellen?</string>
   <string name="check_db_title">Datenbank überprüfen</string>
-  <string name="check_db_result_message">Datenbank wurde überprüft und optimiert.\n Um %d kb geschrumpft</string>
+  <string name="check_db_result_message">Datenbank wurde überprüft und optimiert.\nDie Größe wurde um %d kb reduziert</string>
   <string name="contextmenu_deckpicker_delete_deck">Stapel löschen</string>
   <string name="delete_deck_title">Stapel löschen</string>
   <string name="delete_deck_message">Sind Sie sicher, dass Sie alle Karten in %s löschen wollen?</string>
+  <string name="delete_cram_deck_message">Sind Sie sicher, dass Sie alle Karten aus %s wieder in ihren ursprünglichen Stapel einsortieren möchten?</string>
   <string name="delete_deck_confirm">Löschen</string>
   <string name="new_version_message">Neue Funktionen:</string>
   <string name="no_tts_available_title">Vorlesen</string>
@@ -50,13 +51,16 @@
   <string name="intent_add_clear_all">Alles löschen</string>
   <string name="intent_aedict_empty">Kategorie \'Standard\' ist leer</string>
   <string name="intent_aedict_category">Entfernen Sie alle Notepad-Kategorien um Karten zu AnkiDroid hinzuzufügen oder fügen Sie die Kategorie \'default\' hinzu</string>
-  <string name="learnmore_title">Mehr-Lernen-Einstellungen</string>
-  <string name="learnmore_insructions">Sie können vorübergehend das Neue-Karten- und Wiederholungs-Limit erhöhen, um heute mehr zu lernen.</string>
-  <string name="learnmore_extend_new_limit">Neue-Karten-Limit erhöhen um</string>
-  <string name="learnmore_extend_rev_limit">Wiederholungs-Limit erhöhen um</string>
-  <string name="reviewearly_title">Einstellung zum vorzeitigen Wiederholen</string>
-  <string name="reviewearly_instructions">Diese Option erstellt einen Filter-Stapel mit dem Namen \'XXX\', der alle alle Karten enthält, die in dem von Ihnen ausgewählten Zeitraum fällig sind. Wenn ein solcher Stapel bereits existiert, wird er geleert und neu konfiguriert.</string>
-  <string name="reviewearly_days_ahead">Wie viele Tage im Voraus?</string>
+  <string name="custom_study_new_total_new">Neue Karten im Stapel: %s</string>
+  <string name="custom_study_rev_total_rev">Fällige Wiederholungen des Stapels: %s</string>
+  <string name="custom_study_new_extend">Limit für neue Karten erhöhen um</string>
+  <string name="custom_study_rev_extend">Limit für Wiederholungen erhöhen um</string>
+  <string name="custom_study_forgotten">Karten wiederholen, die in den letzten x Tagen vergessen wurden:</string>
+  <string name="custom_study_ahead">X Tage im Voraus lernen:</string>
+  <string name="custom_study_random">x Karten zufällig aus dem Stapel wählen:</string>
+  <string name="custom_study_preview">Vorschau auf neue Karten, die in den letzten x Tagen hinzugefügt wurden:</string>
+  <string name="custom_study_tags">Tags eingeben:</string>
+  <string name="rebuild_custom_study_deck">Erstelle neuen Stapel für eine benutzerdefinierte Sitzung.\nBitte warten...</string>
   <string-array name="about_content">
     <item><![CDATA[<h2>%1$s:<br/>Karteikarten für Android</h2>AnkiDroid ist eine Karteikarten-Anwendung, die voll kompatibel ist mit der Desktop-Software <a href="%2$s">Anki</a>. Sie können mit beiden Programmen Inhalte erstellen, herunterladen und lernen und sie sehr einfach synchronisieren.]]></item>
     <item><![CDATA[Helfen Sie uns, AnkiDroid besser zu machen und melden alle Fehler <a href="%1$s">hier</a>; Ideen für neue Funktionen sind ebenfalls willkommen! Benutzen Sie das <a href="%2$s">Wiki</a> und sagen im <a href="%3$s">Forum</a> Hallo.]]></item>

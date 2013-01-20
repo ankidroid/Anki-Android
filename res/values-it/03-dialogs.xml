@@ -26,6 +26,7 @@
   <string name="contextmenu_deckpicker_delete_deck">Elimina il mazzo</string>
   <string name="delete_deck_title">Elimina il mazzo</string>
   <string name="delete_deck_message">Sei sicuro che vuoi eliminare tutte le carte in %s?</string>
+  <string name="delete_cram_deck_message">Sei sicuro di voler riportare tutte le carte in %s nel loro mazzo originale?</string>
   <string name="delete_deck_confirm">Elimina</string>
   <string name="new_version_message">Nuove funzionalità:</string>
   <string name="no_tts_available_title">Sintesi vocale</string>
@@ -50,13 +51,16 @@
   <string name="intent_add_clear_all">Cancella tutto</string>
   <string name="intent_aedict_empty">Categoria \'default\' è vuota</string>
   <string name="intent_aedict_category">Per aggiungere le carte ad AnkiDroid rimuovi tutte le categorie Notepad o aggiungine una chiamata \'default\'</string>
-  <string name="learnmore_title">Impostazioni studia altre carte nuove</string>
-  <string name="learnmore_insructions">Puoi aumentare temporaneamente il limite di carte nuove e di ripetizioni giornaliere qui sotto per estendere la sessione odierna.</string>
-  <string name="learnmore_extend_new_limit">Aumenta il limite di carte nuove di</string>
-  <string name="learnmore_extend_rev_limit">Aumenta il limite di ripetizioni di</string>
-  <string name="reviewearly_title">Impostazioni Ripeti in anticipo</string>
-  <string name="reviewearly_instructions">Questa opzione creerà un mazzo filtrato chiamato \'XXX\' con le carte in scadenza entro il numero di giorni selezionato qui sotto. Se un tale mazzo filtrato esiste già, verrà svuotato e riconfigurato.</string>
-  <string name="reviewearly_days_ahead">Quanti giorni in anticipo</string>
+  <string name="custom_study_new_total_new">Carte nuove nel mazzo: %s</string>
+  <string name="custom_study_rev_total_rev">Da ripetere nel mazzo: %s</string>
+  <string name="custom_study_new_extend">Aumenta il limite odierno di carte nuove di</string>
+  <string name="custom_study_rev_extend">Aumenta il limite odierno di ripetizioni di</string>
+  <string name="custom_study_forgotten">Ripeti carte dimenticate negli ultimi x giorni:</string>
+  <string name="custom_study_ahead">Ripeti in anticipo di x giorni:</string>
+  <string name="custom_study_random">Seleziona x carte casualmente dal mazzo:</string>
+  <string name="custom_study_preview">Anteprima carte nuove aggiunte negli ultimi x giorni:</string>
+  <string name="custom_study_tags">Inserisci etichette:</string>
+  <string name="rebuild_custom_study_deck">Ricreo il mazzo di studio personalizzato.\nAttendi...</string>
   <string-array name="about_content">
     <item><![CDATA[<h2>%1$s:<br/>Flashcard per Android</h2>AnkiDroid è un\'applicazione per flashcard pienamente compatibile con il software per desktop <a href="%2$s">Anki</a>. Puoi creare, scaricare e apprendere contenuti da entrambi, AnkiDroid o Anki Desktop, e sincronizzarli molto facilmente.]]></item>
     <item><![CDATA[Aiutaci a migliorare AnkiDroid: segnala per favore ogni problema <a href="%1$s">qui</a>; idee relative a nuove funzionalità sono benvenute! Usa il <a href="%2$s">wiki</a> e presentati sul <a href="%3$s">forum</a>.]]></item>

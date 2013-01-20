@@ -42,6 +42,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -906,8 +907,7 @@ public class Models {
 
             txt = _fields.get(tag);
 
-            Log.d(AnkiDroidApp.TAG, "Processing field modifier " + mod + ": extra = " + extra + ", field " + tag
-                    + " = " + txt);
+            Log.d(AnkiDroidApp.TAG, "Processing field modifier " + mod + ": extra = " + extra + ", field " + tag + " = " + txt);
 
             // built-in modifiers
             if (mod.equals("text")) {
@@ -1356,7 +1356,6 @@ public class Models {
         } catch (JSONException e) {
             throw new RuntimeException(e);
         }
-        mm.add(m);
         return m;
     }
 
@@ -1378,7 +1377,6 @@ public class Models {
         } catch (JSONException e) {
             throw new RuntimeException(e);
         }
-        mm.add(m);
         return m;
     }
 
@@ -1457,4 +1455,34 @@ public class Models {
         return mModels;
     }
 
+    /** Validate model entries. */
+	public boolean validateModel() {
+		Iterator<Entry<Long, JSONObject>> iterator = mModels.entrySet().iterator();
+		while (iterator.hasNext()) {
+			if (!validateBrackets(iterator.next().getValue())) {			
+				return false;
+			}
+		}
+		return true;
+	}
+
+	/** Check if there is a right bracket for every left bracket. */
+	private boolean validateBrackets(JSONObject value) {
+		String s = value.toString();
+		int count = 0;
+		for (char c : s.toCharArray()) {
+			switch(c) {
+			case '{':
+				count++;
+				break;
+			case '}':
+				count--;
+				if (count < 0) {
+					return false;
+				}
+				break;
+			}
+		}
+		return (count == 0);
+	}
 }

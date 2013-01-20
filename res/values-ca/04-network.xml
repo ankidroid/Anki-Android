@@ -45,8 +45,8 @@
   <string name="connection_error_message">Hi ha hagut un error de la xarxa.</string>
   <string name="sync_log_db_error">S\'ha produït un error de la base de dades.</string>
   <string name="no_user_password_error_message">Per tal de continuar, us cal un compte a AnkiWeb i us heu de registrar.</string>
-  <string name="username">Nom d\'usuari</string>
-  <string name="username_repeat">Repeteixi el nom d\'usuari</string>
+  <string name="username">Email address</string>
+  <string name="username_repeat">Repeat email address</string>
   <string name="password">Contrasenya</string>
   <string name="password_repeat">Repeteixi la contrasenya</string>
   <string name="log_in">Inicia la sessió</string>
@@ -55,7 +55,7 @@
   <string name="logged_as">Heu entrat com a</string>
   <string name="log_out">Desconnecta</string>
   <string name="alert_logging_message">S\'està iniciant la sessió, un moment...</string>
-  <string name="invalid_username_password">El nom d\'usuari o la contrasenya no són vàlids.</string>
+  <string name="invalid_username_password">Invalid email address or password.</string>
   <string name="login_generic_error">No ha estat possible iniciar la sessió.</string>
   <string name="download_finished">Ha acabat la baixada</string>
   <string name="personaldeckpicker_title">Obre un paquet de la xarxa</string>

@@ -111,16 +111,15 @@
     <item>З найбільшою кількістю ляпсів</item>
     <item>В порядку додавання</item>
     <item>В порядку черги</item>
-    <item>Latest added first</item>
+    <item>Остання додана іде першою</item>
   </string-array>
-  <string-array name="cram_deck_conf_preset_labels">
-    <item><![CDATA[<select preset>]]></item>
-    <item>Попередній перегляд усіх нових карток</item>
-    <item>Попередній перегляд карток, доданих сьогодні</item>
-    <item>Переглянути сьогоднішні забуті картки</item>
-    <item>Переглянути за два дні наперед</item>
-    <item>Огляд в порядку черги карток з міткою</item>
-    <item>Переглядати картки з черги, які мають зменшуваний інтервал</item>
-    <item>Зубрити всі картки</item>
+  <string-array name="custom_study_options_labels">
+    <item>Збільшити сьогоднішній ліміт нових карт</item>
+    <item>Збільшити сьогоднішній ліміт на повторення</item>
+    <item>Повторити забуті картки</item>
+    <item>Повторити наперед</item>
+    <item>Вивчити випадковий набір карт</item>
+    <item>Переглянути нові карти</item>
+    <item>Обмежити конкретними мітками</item>
   </string-array>
 </resources>

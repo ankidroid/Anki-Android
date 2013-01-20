@@ -42,10 +42,15 @@ import com.ichi2.libanki.sync.RemoteMediaServer;
 import com.ichi2.libanki.sync.RemoteServer;
 import com.ichi2.libanki.sync.Syncer;
 
+import org.apache.commons.httpclient.contrib.ssl.EasySSLSocketFactory;
+import org.apache.commons.httpclient.contrib.ssl.EasyX509TrustManager;
 import org.apache.http.HttpResponse;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import javax.net.ssl.HttpsURLConnection;
+import javax.net.ssl.SSLContext;
+import javax.net.ssl.TrustManager;
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
@@ -67,6 +72,9 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.net.URLConnection;
+import java.security.KeyManagementException;
+import java.security.KeyStoreException;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.TreeSet;
@@ -84,6 +92,7 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
     public static final int TASK_TYPE_REGISTER = 6;
     public static final int TASK_TYPE_UPGRADE_DECKS = 7;
     public static final int TASK_TYPE_DOWNLOAD_SHARED_DECK = 8;
+    public static final int CONN_TIMEOUT = 30000;
 
     private static Context sContext;
 
@@ -261,8 +270,7 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
         boolean valid = false;
         if (ret != null) {
             data.returnType = ret.getStatusLine().getStatusCode();
-            Log.i(AnkiDroidApp.TAG, "doInBackgroundLogin - response from server: " + data.returnType + " ("
-                    + ret.getStatusLine().getReasonPhrase() + ")");
+            Log.i(AnkiDroidApp.TAG, "doInBackgroundLogin - response from server: " + data.returnType + " (" + ret.getStatusLine().getReasonPhrase() + ")");
             if (data.returnType == 200) {
                 try {
                     JSONObject jo = (new JSONObject(server.stream2String(ret.getEntity().getContent())));
@@ -891,23 +899,39 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
 
     private Payload doInBackgroundDownloadSharedDeck(Payload data) {
         String url = (String) data.data[0];
-        String colFilename = AnkiDroidApp.getCurrentAnkiDroidDirectory(AnkiDroidApp.getInstance().getBaseContext()) + "/tmpImportFile.apkg";
+        String colFilename = AnkiDroidApp.getCurrentAnkiDroidDirectory() + "/tmpImportFile.apkg";
         URL fileUrl;
-        URLConnection conn;
-        InputStream cont;
+        HttpsURLConnection conn;
+        InputStream cont = null;
 		try {
 			fileUrl = new URL(url);
-	        conn = fileUrl.openConnection();
+            SSLContext context = SSLContext.getInstance("TLS");
+            context.init(null, new TrustManager[] { new EasyX509TrustManager(null) }, null);
+	        conn = (HttpsURLConnection)fileUrl.openConnection();
+            conn.setSSLSocketFactory(context.getSocketFactory());
 	        conn.setConnectTimeout(10000);
 	        conn.setReadTimeout(10000);        
 	        cont = conn.getInputStream();
-		} catch (MalformedURLException e2) {
+		} catch (MalformedURLException e) {
+            Log.e(AnkiDroidApp.TAG, "doInBackgroundDownloadSharedDeck: ", e);
             data.success = false;
             return data;			
 		} catch (IOException e) {
+            Log.e(AnkiDroidApp.TAG, "doInBackgroundDownloadSharedDeck: ", e);
             data.success = false;
             return data;			
-		}
+		} catch (NoSuchAlgorithmException e) {
+            Log.e(AnkiDroidApp.TAG, "doInBackgroundDownloadSharedDeck: ", e);
+            data.success = false;
+            return data;
+        } catch (KeyStoreException e) {
+            Log.e(AnkiDroidApp.TAG, "doInBackgroundDownloadSharedDeck: ", e);
+            return data;
+        } catch (KeyManagementException e) {
+            Log.e(AnkiDroidApp.TAG, "doInBackgroundDownloadSharedDeck: ", e);
+            data.success = false;
+            return data;
+        }
         if (cont == null) {
             data.success = false;
             return data;

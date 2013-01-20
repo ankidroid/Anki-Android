@@ -4,7 +4,7 @@ Mit AnkiDroid lassen sich Karteikarten sehr effizient auswendig lernen, indem si
 
 Lernen Sie alle möglichen Dinge, wo und wann Sie wollen. Nutzen Sie freie Zeit sinnvoll, sei es im Bus, in der Supermarkt-Warteschlange oder in irgend einer anderen Situation in der Sie warten müssen.
 
-Erstellen Sie eigenen Karteikarten-Stapel oder laden kostenlos vorgefertigte Stapel herunter (es sind mehr als 6000 Stapel zu verschiedenen Sprachen und Themen verfügbar).
+Erstellen Sie eigene Karteikarten-Stapel oder laden kostenlos vorgefertigte Stapel herunter (es sind mehr als 6000 Stapel zu verschiedenen Sprachen und Themen verfügbar).
 
 Fügen Sie neues Material mit der Desktop-Applikation oder direkt mit AnkiDroid hinzu. Es wird sogar das automatische Hinzufügen von Material aus einem Wörterbuch unterstützt!
 

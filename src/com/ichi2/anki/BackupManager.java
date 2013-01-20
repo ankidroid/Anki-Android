@@ -76,7 +76,7 @@ public class BackupManager {
 
     private static File getBackupDirectory() {
         SharedPreferences prefs = AnkiDroidApp.getSharedPrefs(AnkiDroidApp.getInstance().getBaseContext());
-        File directory = new File(prefs.getString("deckPath", AnkiDroidApp.getStorageDirectory()) + BACKUP_SUFFIX);
+        File directory = new File(prefs.getString("deckPath", AnkiDroidApp.getCurrentAnkiDroidDirectory()) + BACKUP_SUFFIX);
         if (!directory.isDirectory()) {
             directory.mkdirs();
         }
@@ -86,7 +86,7 @@ public class BackupManager {
 
     private static File getBrokenDirectory() {
         SharedPreferences prefs = AnkiDroidApp.getSharedPrefs(AnkiDroidApp.getInstance().getBaseContext());
-        File directory = new File(prefs.getString("deckPath", AnkiDroidApp.getStorageDirectory()) + BROKEN_DECKS_SUFFIX);
+        File directory = new File(prefs.getString("deckPath", AnkiDroidApp.getCurrentAnkiDroidDirectory()) + BROKEN_DECKS_SUFFIX);
         if (!directory.isDirectory()) {
             directory.mkdirs();
         }

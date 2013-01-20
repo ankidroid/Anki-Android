@@ -43,6 +43,7 @@ import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Note;
 import com.ichi2.libanki.Sched;
 import com.ichi2.libanki.Stats;
+import com.ichi2.libanki.Storage;
 import com.ichi2.libanki.Utils;
 import com.ichi2.libanki.importer.Anki2Importer;
 import com.ichi2.widget.WidgetStatus;
@@ -451,8 +452,7 @@ public class DeckTask extends
 				doInBackgroundLoadTutorial(new TaskData(col));
 			}
 		} else {
-			Log.i(AnkiDroidApp.TAG,
-					"doInBackgroundOpenCollection: collection still open - reusing it");
+			Log.i(AnkiDroidApp.TAG, "doInBackgroundOpenCollection: collection still open - reusing it");
 			col = oldCol;
 		}
 		Object[] counts = null;
@@ -716,8 +716,7 @@ public class DeckTask extends
 				AnkiDroidApp.closeCollection(true);
 				BackupManager.performBackup(path);
 			} catch (RuntimeException e) {
-				Log.i(AnkiDroidApp.TAG,
-						"doInBackgroundCloseCollection: error occurred - collection not properly closed");
+				Log.i(AnkiDroidApp.TAG, "doInBackgroundCloseCollection: error occurred - collection not properly closed");
 			}
 		}
 		return null;
@@ -836,7 +835,7 @@ public class DeckTask extends
 		String path = params[0].getString();
 
 		// extract the deck from the zip file
-		String fileDir = AnkiDroidApp.getCurrentAnkiDroidDirectory(AnkiDroidApp.getInstance().getBaseContext()) + "/tmpzip";
+		String fileDir = AnkiDroidApp.getCurrentAnkiDroidDirectory() + "/tmpzip";
     	File dir = new File(fileDir);
     	if (dir.exists()) {
     		BackupManager.removeDir(dir);
@@ -844,7 +843,7 @@ public class DeckTask extends
 
 		// from anki2.py
 		String colFile = fileDir + "/collection.anki2";
-		if (!Utils.unzip(path, fileDir) || !(new File(colFile)).exists()) {
+		if (!Utils.unzip(path, fileDir) || !(new File(colFile)).exists() || !Storage.Collection(colFile).validCollection()) {
 			return new TaskData(-2, null, true);
 		}
 

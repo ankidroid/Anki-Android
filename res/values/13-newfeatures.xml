@@ -21,16 +21,6 @@
 <resources>
 <!-- Be careful with a reordering. It will probably lead to a deletion of already translated strings on crowdin and should therefore only be done only immediately before release -->
 	<string-array name="new_version_features">
-		<item>complete revision</item>
-	        <item>libanki2.0 scheduling</item>
-	   	<item>new learning mode</item>
-		<item>new layout</item>
-		<item>merge syncing possible now</item>
-		<item>better statistics</item>
-		<item>decks are now saved in a single collection</item>
-		<item>options are shareable now</item>
-		<item>tablet layout</item>
-		<item>tons of performance improvements</item>
-		<item>card import function</item>
-		</string-array>
+	    <item>Plugin architecture (e.g. for Zeemote)</item>
+	</string-array>
 </resources>

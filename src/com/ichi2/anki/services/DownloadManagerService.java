@@ -171,7 +171,7 @@ public class DownloadManagerService extends Service {
         SharedPreferences pref = AnkiDroidApp.getSharedPrefs(getBaseContext());
         mUsername = pref.getString("username", "");
         mPassword = pref.getString("password", "");
-        mDestination = AnkiDroidApp.getCurrentAnkiDroidDirectory(getBaseContext());
+        mDestination = AnkiDroidApp.getCurrentAnkiDroidDirectory();
     }
 
 
@@ -231,8 +231,7 @@ public class DownloadManagerService extends Service {
      * cancelled.
      */
     public void removeCompletedDownloadsPrefs() {
-        Log.i(AnkiDroidApp.TAG,
-                "DownloadManagerService - Removing shared preferences of completed or cancelled downloads");
+        Log.i(AnkiDroidApp.TAG,  "DownloadManagerService - Removing shared preferences of completed or cancelled downloads");
 
         File dir = new File(mDestination + "/tmp/");
         File[] fileList = dir.listFiles(new IncompleteDownloadsFilter());
@@ -345,8 +344,7 @@ public class DownloadManagerService extends Service {
                         Utils.writeToFile(zipInputStream, deckFilename);
                     } else if (zipEntry.getName().startsWith("shared.media/", 0)) {
                         Log.i(AnkiDroidApp.TAG, "Folder created = " + new File(partialDeckPath + ".media/").mkdir());
-                        Log.i(AnkiDroidApp.TAG, "Destination = " + AnkiDroidApp.getStorageDirectory() + "/" + title
-                                + ".media/" + zipEntry.getName().replace("shared.media/", ""));
+                        Log.i(AnkiDroidApp.TAG, "Destination = " + AnkiDroidApp.getCurrentAnkiDroidDirectory() + "/" + title  + ".media/" + zipEntry.getName().replace("shared.media/", ""));
                         Utils.writeToFile(zipInputStream,
                                 partialDeckPath + ".media/" + zipEntry.getName().replace("shared.media/", ""));
                     }

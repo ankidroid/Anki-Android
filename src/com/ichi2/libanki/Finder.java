@@ -693,7 +693,8 @@ public class Finder {
             return "";
         }
         // gather nids
-        String regex = val.replace("_", ".").replace("%", ".*");
+        // Pattern.quote escapes the meta characters with \Q \E
+        String regex = Pattern.quote(val).replace("\\Q_\\E", ".").replace("\\Q%\\E", ".*");
         LinkedList<Long> nids = new LinkedList<Long>();
         Cursor cur = null;
         try {

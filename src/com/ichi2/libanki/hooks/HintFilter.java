@@ -37,10 +37,10 @@ public class HintFilter {
             Resources res = (Resources) args[1];
             // random id
             String domid = "hint" + txt.hashCode();
-            return "<a href=\"#\" onclick=\"this.style.display='none';document.getElementById('" +
+            return "<a class=hint href=\"#\" onclick=\"this.style.display='none';document.getElementById('" +
                     domid + "').style.display='block';return false;\">" +
                     res.getString(R.string.show_hint) + "</a><div id=\"" +
-            		domid + "\" style=\"display: none\">" + txt + "</div>";
+            		domid + "\" class=hint style=\"display: none\">" + txt + "</div>";
         }
     }
 }

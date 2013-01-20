@@ -46,7 +46,7 @@
 		    android:layout_marginLeft="4dip"
 		    android:layout_marginBottom="16dip"
 		    android:layout_weight="4"
-		    android:gravity="left"
+		    android:gravity="left|center"
 		    android:lines="2"
 		    android:text=""
 		    android:textSize="16sp" />

@@ -26,6 +26,7 @@
   <string name="contextmenu_deckpicker_delete_deck">Excluir Deck</string>
   <string name="delete_deck_title">Excluir Deck</string>
   <string name="delete_deck_message">Tem certeza que deseja excluir todas os cartões em %s?</string>
+  <string name="delete_cram_deck_message">Você tem certeza de que deseja enviar todos os cartões em %s para os decks originais?</string>
   <string name="delete_deck_confirm">Exclua o</string>
   <string name="new_version_message">Novos recursos:</string>
   <string name="no_tts_available_title">Texto para fala</string>
@@ -50,13 +51,16 @@
   <string name="intent_add_clear_all">Apagar tudo</string>
   <string name="intent_aedict_empty">Categoria \'padrão\' está vazia</string>
   <string name="intent_aedict_category">Para adicionar cartões ao AnkiDroid remova todas as categorias das notas ou adicione uma com o nome \'default\'</string>
-  <string name="learnmore_title">Configurações para Estudar Mais</string>
-  <string name="learnmore_insructions">Você pode aumentar temporariamente seus limites de cartões novos e de revisões abaixo para extender sua sessão de aprendizagem de hoje.</string>
-  <string name="learnmore_extend_new_limit">Aumentar limite de cartões novos por</string>
-  <string name="learnmore_extend_rev_limit">Aumentar limite máximo de revisões por</string>
-  <string name="reviewearly_title">Configurações de Revisar Antes</string>
-  <string name="reviewearly_instructions">Essa opção criará um Deck Filtrado chamado \'XXX\' com os cartões que são devidos à revisão no numero de dias que você selecionou abaixo. Se tal Deck Filtrado já existe ele será esvaziado e reconfigurado.</string>
-  <string name="reviewearly_days_ahead">Quantos dias de antecedência</string>
+  <string name="custom_study_new_total_new">Novos cartões no deck: %s</string>
+  <string name="custom_study_rev_total_rev">Revisões programadas no deck: %s</string>
+  <string name="custom_study_new_extend">Aumentar o limite de novos cartões hoje em</string>
+  <string name="custom_study_rev_extend">Aumentar o limite de revisões hoje em</string>
+  <string name="custom_study_forgotten">Revisar cartões esquecidos nos últimos x dias:</string>
+  <string name="custom_study_ahead">Adiantar revisão em x dias:</string>
+  <string name="custom_study_random">Selecione aleatoriamente x cartões do deck:</string>
+  <string name="custom_study_preview">Visualizar novos cartões adicionados nos últimos x dias:</string>
+  <string name="custom_study_tags">Filtrar por tags:</string>
+  <string name="rebuild_custom_study_deck">Reconstruindo deck de estudo personalizado.\nPor favor aguarde...</string>
   <string-array name="about_content">
     <item><![CDATA[<h2>%1$s:<br/>Cartões de estudo para Android</h2>AnkiDroid é a aplicação de cartões de estudo que é totalmente compatível com o software de desktop <a href="%2$s">Anki</a>. Você pode criar, baixar e aprender conteúdos em ambos,AnkiDroid ou Anki Desktop, e sincronizá-los facilmente.]]></item>
     <item><![CDATA[Para nos ajudar a fazer o AnkiDroid melhor, por favor reporte qualquer bug <a href="%1$s">aqui</a>; novas ideias são muito bem vindas também! Por favor use o <a href="%2$s">wiki</a> e diga Oi no <a href="%3$s">fórum</a>.]]></item>

@@ -108,19 +108,18 @@
     <item>Náhodně</item>
     <item>Rostoucí intervaly</item>
     <item>Klesající intervaly</item>
-    <item>Most lapsed</item>
+    <item>Nejvíce zapomínané</item>
     <item>V pořádí přidání</item>
-    <item>Order due</item>
-    <item>Latest added first</item>
+    <item>Podle opakování</item>
+    <item>Naposledy přidané první</item>
   </string-array>
-  <string-array name="cram_deck_conf_preset_labels">
-    <item><![CDATA[<select preset>]]></item>
-    <item>Náhled všech nových karet</item>
-    <item>Náhled dnes přidaných karet</item>
-    <item>Přezkoušet dnešní zapomenuté karty</item>
-    <item>Review ahead by two days</item>
-    <item>Review due cards with tag</item>
-    <item>Review due cards with decreasing intervals</item>
-    <item>Šprtat všechny karty</item>
+  <string-array name="custom_study_options_labels">
+    <item>Zvýšit dnešní limit nových karet</item>
+    <item>Zvýšit dnešní limit opakování</item>
+    <item>Opakovat zapomenuté karty</item>
+    <item>Opakovat dopředu</item>
+    <item>Studovat náhodný výběr karet</item>
+    <item>Zkoušení nových karet</item>
+    <item>Omezit podle štítků</item>
   </string-array>
 </resources>
