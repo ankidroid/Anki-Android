@@ -5,10 +5,9 @@ import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 
-
-import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
+import android.content.DialogInterface.OnCancelListener;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -28,9 +27,10 @@ import com.ichi2.anki.glosbe.json.Meaning;
 import com.ichi2.anki.glosbe.json.Response;
 import com.ichi2.anki.glosbe.json.Tuc;
 import com.ichi2.anki.htmlutils.Unescaper;
+import com.ichi2.anki.runtimetools.TaskOperations;
 import com.ichi2.anki.web.HttpFetcher;
 
-public class TranslationActivity extends FragmentActivity implements DialogInterface.OnClickListener
+public class TranslationActivity extends FragmentActivity implements DialogInterface.OnClickListener, OnCancelListener
 {
 
     // Something to translate
@@ -43,10 +43,11 @@ public class TranslationActivity extends FragmentActivity implements DialogInter
     private LanguagesListerGlosbe mLanguageLister;
     private Spinner mSpinnerFrom;
     private Spinner mSpinnerTo;
-    private ProgressDialog progressDialog;
+    private ProgressDialog progressDialog = null;
     private String mWebServiceAddress;
     private ArrayList<String> mPossibleTranslations;
     private String mLangCodeTo;
+    private BackgroundPost mTranslationLoadPost = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -137,11 +138,14 @@ public class TranslationActivity extends FragmentActivity implements DialogInter
                 "Wait...",
                 "Translating Online", true, false);
         
+        progressDialog.setCancelable(true);
+        progressDialog.setOnCancelListener(this);
+        
         mWebServiceAddress = computeAddress();
         
         try {
-            BackgroundPost post = new BackgroundPost();
-            post.execute();
+            mTranslationLoadPost = new BackgroundPost();
+            mTranslationLoadPost.execute();
         } catch (Exception e) {
             progressDialog.dismiss();
             // TODO Translation, proper handling
@@ -270,6 +274,42 @@ public class TranslationActivity extends FragmentActivity implements DialogInter
     {
         mTranslation = mPossibleTranslations.get(which);
         returnTheTranslation();        
+    }
+
+    @Override
+    public void onCancel(DialogInterface dialog)
+    {
+        stopWorking();
+    }
+
+    private void stopWorking()
+    {
+        TaskOperations.stopTaskGracefully(mTranslationLoadPost);
+        dismissCarefullyProgressDialog();
+    }
+    
+    @Override
+    protected void onPause()
+    {
+        stopWorking();
+    }
+    
+    private void dismissCarefullyProgressDialog()
+    {
+        try
+        {
+            if (progressDialog != null)
+            {
+                if (progressDialog.isShowing())
+                {
+                    progressDialog.dismiss();
+                }
+            }
+        }
+        catch(Exception e)
+        {
+            // nothing is done intentionally
+        }
     }
     
 }

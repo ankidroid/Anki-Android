@@ -257,6 +257,7 @@
         </activity>
         <activity
             android:name="com.ichi2.anki.TranslationActivity"
+            android:configChanges="keyboardHidden|orientation"
             android:label="@string/title_activity_translation" >
         </activity>   
         <activity
@@ -265,6 +266,7 @@
         </activity>
         <activity
             android:name="com.ichi2.anki.LoadPronounciationActivity"
+            android:configChanges="keyboardHidden|orientation"
             android:label="@string/title_activity_load_pronounciation" >
         </activity>
     </application>

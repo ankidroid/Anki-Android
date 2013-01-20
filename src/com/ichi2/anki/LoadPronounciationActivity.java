@@ -5,9 +5,10 @@ import java.net.URLEncoder;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
+import android.content.DialogInterface.OnCancelListener;
 import android.content.Intent;
 import android.os.AsyncTask;
-import android.os.AsyncTask.Status;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
@@ -19,9 +20,10 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.ichi2.anki.beolingus.parsing.BeolingusParser;
+import com.ichi2.anki.runtimetools.TaskOperations;
 import com.ichi2.anki.web.HttpFetcher;
 
-public class LoadPronounciationActivity extends Activity
+public class LoadPronounciationActivity extends Activity implements OnCancelListener
 {
     public static String EXTRA_SOURCE = "com.ichi2.anki.LoadPronounciationActivity.extra.source";
     public static String EXTRA_PRONUNCIATION_FILE_PATH = "com.ichi2.anki.LoadPronounciationActivity.extra.pronun.file.path";
@@ -47,9 +49,8 @@ public class LoadPronounciationActivity extends Activity
     private BackgroundPost mPostTranslation = null;
     private BackgroundPost mPostPronunciation = null;
     private DownloadFileTask mDownloadMp3Task = null;
-    
+
     private boolean mStopped;
-    
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -131,15 +132,11 @@ public class LoadPronounciationActivity extends Activity
     private void showProgressDialog(String message)
     {
 
-        if (progressDialog != null)
-        {
-            if (progressDialog.isShowing())
-            {
-                progressDialog.dismiss();
-            }
-        }
+        dismissCarefullyProgressDialog();
 
         progressDialog = ProgressDialog.show(this, "Wait...", message, true, false);
+        progressDialog.setCancelable(true);
+        progressDialog.setOnCancelListener(this);
     }
 
     /**
@@ -405,46 +402,57 @@ public class LoadPronounciationActivity extends Activity
         toast.show();
     }
 
+
     @Override
-    public void onBackPressed()
+    public void onCancel(DialogInterface dialog)
     {
-        
         mStopped = true;
-        
-        if(progressDialog != null)
-        {
-            if(progressDialog.isShowing())
-            {
-                progressDialog.dismiss();
-            }
-        }
 
-        AsyncTask<?, ?, ?> t;
-        t = mPostTranslation;
-        stopTask(t);
-        t = mPostPronunciation;
-        stopTask(t);
-        t = mDownloadMp3Task;
-        stopTask(t);
+        dismissCarefullyProgressDialog();
 
+        stopAllTasks();
 
         Intent resultData = new Intent();
 
         setResult(RESULT_CANCELED, resultData);
 
         finish();
-        
     }
 
-    private void stopTask(AsyncTask<?, ?, ?> t)
+    private void dismissCarefullyProgressDialog()
     {
-        if (t != null)
+        try
         {
-            if (t.getStatus() == Status.RUNNING)
+            if (progressDialog != null)
             {
-                t.cancel(true);
+                if (progressDialog.isShowing())
+                {
+                    progressDialog.dismiss();
+                }
             }
+        }
+        catch(Exception e)
+        {
+            // nothing is done intentionally
         }
     }
 
+    private void stopAllTasks()
+    {
+        AsyncTask<?, ?, ?> t;
+        t = mPostTranslation;
+        TaskOperations.stopTaskGracefully(t);
+        t = mPostPronunciation;
+        TaskOperations.stopTaskGracefully(t);
+        t = mDownloadMp3Task;
+        TaskOperations.stopTaskGracefully(t);
+    }
+
+    @Override
+    protected void onPause()
+    {   
+        super.onPause();
+        dismissCarefullyProgressDialog();
+        stopAllTasks();    
+    }
 }
