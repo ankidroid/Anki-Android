@@ -591,8 +591,10 @@ public class Anki2Importer {
         try {
             Utils.writeToFile(is, fname);
         } catch (IOException e) {
-            Log.e(AnkiDroidApp.TAG, "Anki2Importer._writeDstMedia: error while copying file", e);
-            throw new RuntimeException(e);
+            // the user likely used subdirectories
+            Log.e(AnkiDroidApp.TAG, String.format(Locale.US,
+                    "Anki2Importer._writeDstMedia: error copying file to %s (%s), ignoring and continuing.", fname,
+                    e.getMessage()));
         }
     }
 

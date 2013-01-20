@@ -49,6 +49,7 @@ public class Finder {
             .compile("(-)?\\'(([^\\'\\\\]|\\\\.)*)\\'|(-)?\"(([^\"\\\\]|\\\\.)*)\"|(-)?([^ ]+)|([ ]+)");
     private static final Pattern fPropPattern = Pattern.compile("(^.+?)(<=|>=|!=|=|<|>)(.+?$)");
     private static final Pattern fNidsPattern = Pattern.compile("[^0-9,]");
+    private static final Pattern fMidPattern = Pattern.compile("[^0-9]");
 
     private static final List<String> fValidEases = Arrays.asList(new String[] { "1", "2", "3", "4" });
     private static final List<String> fValidProps = Arrays
@@ -290,6 +291,8 @@ public class Finder {
                     addPred(s, _findTemplate(val));
                 } else if (cmd.equals("note")) {
                     addPred(s, _findModel(val));
+                } else if (cmd.equals("mid")) {
+                    addPred(s, _findMid(val));
                 } else if (cmd.equals("deck")) {
                     addPred(s, _findDeck(val));
                 } else if (cmd.equals("prop")) {
@@ -560,6 +563,12 @@ public class Finder {
         return "n.id in (" + val + ")";
     }
 
+    private String _findMid(String val) {
+        if (fMidPattern.matcher(val).find()) {
+            return "";
+        }
+        return "n.mid = " + val;
+    }
 
     private String _findModel(String val) {
         LinkedList<Long> ids = new LinkedList<Long>();

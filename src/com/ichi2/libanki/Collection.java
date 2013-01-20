@@ -59,7 +59,7 @@ public class Collection {
     public static final int SCHEMA_VERSION = 11;
     public static final String SYNC_URL = "https://ankiweb.net/";
     public static final int SYNC_VER = 5;
-    public static final String HELP_SITE = "http://ankisrs.net/docs/dev/manual.html";
+    public static final String HELP_SITE = "http://ankisrs.net/docs/manual.html";
 
     private AnkiDb mDb;
     private boolean mServer;
@@ -460,14 +460,28 @@ public class Collection {
         return (int) mDb.queryScalar("SELECT count() FROM notes");
     }
 
-
+    /**
+     * Return a new note with the default model from the deck
+     * @return The new note
+     */
     public Note newNote() {
-        return newNote(mModels.current());
+        return newNote(true);
     }
 
+    /**
+     * Return a new note with the model derived from the deck or the configuration
+     * @param forDeck When true it uses the model specified in the deck (mid), otherwise it uses the model specified in
+     *                the configuration (curModel)
+     * @return The new note
+     */
+    public Note newNote(boolean forDeck) {
+        return newNote(mModels.current(forDeck));
+    }
 
     /**
-     * Return a new note with the current model.
+     * Return a new note with a specific model
+     * @param m The model to use for the new note
+     * @return The new note
      */
     public Note newNote(JSONObject m) {
         return new Note(this, m);

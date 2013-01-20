@@ -210,25 +210,32 @@ public class Models {
 
     /**
      * Get current model.
+     * @return The JSONObject of the model, or null if not found in the deck and in the configuration.
      */
     public JSONObject current() {
-        JSONObject m;
-        try {
-            JSONObject curDeck = mCol.getDecks().current();
-            if (curDeck.has("mid")) {
-                m = get(mCol.getDecks().current().getLong("mid"));
-            } else {
-                m = get(mCol.getConf().getLong("curModel"));
-            }
-            if (m == null) {
-                if (!mModels.isEmpty()) {
-                    m = mModels.values().iterator().next();
-                }
-            }
-            return m;
-        } catch (JSONException e) {
-            throw new RuntimeException(e);
+        return current(true);
+    }
+
+    /**
+     * Get current model.
+     * @param forDeck If true, it tries to get the deck specified in deck by mid, otherwise or if the former is not
+     *                found, it uses the configuration`s field curModel.
+     * @return The JSONObject of the model, or null if not found in the deck and in the configuration.
+     */
+    public JSONObject current(boolean forDeck) {
+        JSONObject m = null;
+        if (forDeck) {
+            m = get(mCol.getDecks().current().optLong("mid", -1));
         }
+        if (m == null) {
+            m = get(mCol.getConf().optLong("curModel", -1));
+        }
+        if (m == null) {
+            if (!mModels.isEmpty()) {
+                m = mModels.values().iterator().next();
+            }
+        }
+        return m;
     }
 
 
