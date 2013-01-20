@@ -15,344 +15,357 @@ import com.ichi2.anki.AnkiDroidApp;
 
 public class AudioView extends LinearLayout
 {
-    protected String mAudioPath;
+	protected String mAudioPath;
 
-    protected PlayPauseButton mPlayPause = null;
-    protected StopButton mStop = null;
-    protected RecordButton mRecord = null;
+	protected PlayPauseButton mPlayPause = null;
+	protected StopButton mStop = null;
+	protected RecordButton mRecord = null;
 
-    private MediaRecorder mRecorder = null;
-    private MediaPlayer mPlayer = null;
+	private MediaRecorder mRecorder = null;
+	private MediaPlayer mPlayer = null;
 
-    OnRecordingFinishEventListener mOnRecordingFinishEventListener = null;
+	OnRecordingFinishEventListener mOnRecordingFinishEventListener = null;
 
-    private Status mStatus = Status.STOPPED;
+	private Status mStatus = Status.STOPPED;
 
-    int mResPlayImage;
-    int mResPauseImage;
-    int mResStopImage;
-    int mResRecordImage;
-    int mResRecordStopImage;
+	int mResPlayImage;
+	int mResPauseImage;
+	int mResStopImage;
+	int mResRecordImage;
+	int mResRecordStopImage;
 
-    enum Status
-    {
-        PLAYING, PAUSED, STOPPED, RECORDING
-    }
+	enum Status
+	{
+		PLAYING, PAUSED, STOPPED, RECORDING
+	}
 
-    public AudioView(Context context, int resPlay, int resPause, int resStop, int resRecord, int resRecordStop)
-    {
-        super(context);
-        mResPlayImage = resPlay;
-        mResPauseImage = resPause;
-        mResStopImage = resStop;
-        mResRecordImage = resRecord;
-        mResRecordStopImage = resRecordStop;
+	public AudioView(Context context, int resPlay, int resPause, int resStop, int resRecord, int resRecordStop,
+			String audioPath)
+	{
+		super(context);
+		mResPlayImage = resPlay;
+		mResPauseImage = resPause;
+		mResStopImage = resStop;
+		mResRecordImage = resRecord;
+		mResRecordStopImage = resRecordStop;
+		mAudioPath = audioPath;
 
-        this.setOrientation(HORIZONTAL);
+		this.setOrientation(HORIZONTAL);
 
-        mPlayPause = new PlayPauseButton(context);
-        addView(mPlayPause, new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
+		mPlayPause = new PlayPauseButton(context);
+		addView(mPlayPause, new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
 
-        mStop = new StopButton(context);
-        addView(mStop, new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
+		mStop = new StopButton(context);
+		addView(mStop, new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
 
-        mRecord = new RecordButton(context);
-        addView(mRecord, new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
-    }
+		mRecord = new RecordButton(context);
+		addView(mRecord, new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
+	}
 
-    public void setAudioPath(String audioPath)
-    {
-        mAudioPath = audioPath;
-    }
+	public void setAudioPath(String audioPath)
+	{
+		mAudioPath = audioPath;
+	}
 
-    public String getAudioPath()
-    {
-        return mAudioPath;
-    }
+	public String getAudioPath()
+	{
+		return mAudioPath;
+	}
 
-    public void setRecordButtonVisible(boolean isVisible)
-    {
-        if (isVisible)
-        {
-            mRecord.setVisibility(VISIBLE);
-        }
-        else
-        {
-            mRecord.setVisibility(INVISIBLE);
-        }
-    }
+	public void setRecordButtonVisible(boolean isVisible)
+	{
+		if (isVisible)
+		{
+			mRecord.setVisibility(VISIBLE);
+		}
+		else
+		{
+			mRecord.setVisibility(INVISIBLE);
+		}
+	}
 
-    public void setOnRecordingFinishEventListener(OnRecordingFinishEventListener listener)
-    {
-        mOnRecordingFinishEventListener = listener;
-    }
+	public void setOnRecordingFinishEventListener(OnRecordingFinishEventListener listener)
+	{
+		mOnRecordingFinishEventListener = listener;
+	}
 
-    public void onPlay()
-    {
-        startPlaying();
-        mPlayPause.update();
-        mStop.update();
-        mRecord.update();
-    }
+	public void onPlay()
+	{
+		startPlaying();
+		mPlayPause.update();
+		mStop.update();
+		mRecord.update();
+	}
 
-    public void onStop()
-    {
-        stopPlaying();
-        // Send state change signal to all buttons
-        mPlayPause.update();
-        mStop.update();
-        mRecord.update();
-    }
+	public void onStop()
+	{
+		stopPlaying();
+		// Send state change signal to all buttons
+		mPlayPause.update();
+		mStop.update();
+		mRecord.update();
+	}
 
-    public void onPause()
-    {
-        pausePlaying();
-        mPlayPause.update();
-        mStop.update();
-        mRecord.update();
-    }
+	public void onPause()
+	{
+		pausePlaying();
+		mPlayPause.update();
+		mStop.update();
+		mRecord.update();
+	}
 
-    public void onRecord()
-    {
-        startRecording();
-        mPlayPause.update();
-        mStop.update();
-        mRecord.update();
-    }
+	public void onRecord()
+	{
+		startRecording();
+		mPlayPause.update();
+		mStop.update();
+		mRecord.update();
+	}
 
-    public void onStopRecord()
-    {
-        stopRecording();
-        mPlayPause.update();
-        mStop.update();
-        mRecord.update();
-    }
+	public void onStopRecord()
+	{
+		stopRecording();
+		mPlayPause.update();
+		mStop.update();
+		mRecord.update();
+	}
 
-    private void startPlaying()
-    {
-        try
-        {
-            if (mPlayer == null)
-            {
-                mPlayer = new MediaPlayer();
+	private void startPlaying()
+	{
+		try
+		{
+			if (mAudioPath == null || mAudioPath.equals(""))
+			{
+				Log.e(AnkiDroidApp.TAG, "Cannot find valid audioPath. Use setAudioPath().");
+				return;
+			}
+			if (mPlayer == null)
+			{
+				mPlayer = new MediaPlayer();
+			}
+			mPlayer.setDataSource(mAudioPath);
+			mPlayer.prepare();
+			mPlayer.setOnCompletionListener(new OnCompletionListener()
+			{
+				@Override
+				public void onCompletion(MediaPlayer mp)
+				{
+					mStatus = Status.STOPPED;
+					onStop();
+				}
+			});
+			mPlayer.start();
+		}
+		catch (IOException e)
+		{
+			Log.e(AnkiDroidApp.TAG, "prepare() failed for file " + mAudioPath);
+		}
+	}
 
-                mPlayer.setDataSource(mAudioPath);
-                mPlayer.prepare();
-                mPlayer.setOnCompletionListener(new OnCompletionListener()
-                {
-                    @Override
-                    public void onCompletion(MediaPlayer mp)
-                    {
-                        mStatus = Status.STOPPED;
-                        onStop();
-                    }
-                });
-            }
-            mPlayer.start();
-        }
-        catch (IOException e)
-        {
-            Log.e(AnkiDroidApp.TAG, "prepare() failed");
-        }
-    }
+	private void stopPlaying()
+	{
+		mPlayer.release();
+		mPlayer = null;
+	}
 
-    private void stopPlaying()
-    {
-        mPlayer.release();
-        mPlayer = null;
-    }
+	private void pausePlaying()
+	{
+		mPlayer.pause();
+	}
 
-    private void pausePlaying()
-    {
-        mPlayer.pause();
-    }
+	private void startRecording()
+	{
+		try
+		{
+			if (mAudioPath == null || mAudioPath.equals(""))
+			{
+				Log.e(AnkiDroidApp.TAG, "Cannot find valid audioPath. Use setAudioPath().");
+				return;
+			}
+			if (mRecord != null)
+			{
+				mRecorder = new MediaRecorder();
+				mRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
+				mRecorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
+				mRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
+			}
+			mRecorder.setOutputFile(mAudioPath); // audioPath could change
+			// during lifetime
+			mRecorder.prepare();
+			mRecorder.start();
+		}
+		catch (IOException e)
+		{
+			Log.e(AnkiDroidApp.TAG, "prepare() failed for file " + mAudioPath);
+		}
+	}
 
-    private void startRecording()
-    {
-        mRecorder = new MediaRecorder();
-        mRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
-        mRecorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
-        mRecorder.setOutputFile(mAudioPath);
-        mRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
+	private void stopRecording()
+	{
+		mRecorder.stop();
+		mRecorder.release();
+		mRecorder = null;
+	}
 
-        try
-        {
-            mRecorder.prepare();
-        }
-        catch (IOException e)
-        {
-            Log.e(AnkiDroidApp.TAG, "prepare() failed");
-        }
+	protected class PlayPauseButton extends ImageButton
+	{
+		OnClickListener onClickListener = new View.OnClickListener()
+		{
+			@Override
+			public void onClick(View v)
+			{
+				switch (mStatus)
+				{
+					case PAUSED:
+					case STOPPED:
+						setImageResource(mResPauseImage);
+						mStatus = Status.PLAYING;
+						onPlay();
+						break;
 
-        mRecorder.start();
-    }
+					case PLAYING:
+						setImageResource(mResPlayImage);
+						mStatus = Status.PAUSED;
+						onPause();
+						break;
 
-    private void stopRecording()
-    {
-        mRecorder.stop();
-        mRecorder.release();
-        mRecorder = null;
-    }
+					case RECORDING:
+						// this button should be disabled
+				}
+			}
+		};
 
-    protected class PlayPauseButton extends ImageButton
-    {
-        OnClickListener onClickListener = new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View v)
-            {
-                switch (mStatus)
-                {
-                    case PAUSED:
-                    case STOPPED:
-                        setImageResource(mResPauseImage);
-                        mStatus = Status.PLAYING;
-                        onPlay();
-                        break;
+		public PlayPauseButton(Context context)
+		{
+			super(context);
+			setImageResource(mResPlayImage);
 
-                    case PLAYING:
-                        setImageResource(mResPlayImage);
-                        mStatus = Status.PAUSED;
-                        onPause();
-                        break;
+			setOnClickListener(onClickListener);
+		}
 
-                    case RECORDING:
-                        // this button should be disabled
-                }
-            }
-        };
+		public void update()
+		{
+			switch (mStatus)
+			{
+				case STOPPED:
+					setImageResource(mResPlayImage);
+					setEnabled(true);
+					break;
 
-        public PlayPauseButton(Context context)
-        {
-            super(context);
-            setImageResource(mResPlayImage);
+				case RECORDING:
+					setEnabled(false);
+					break;
 
-            setOnClickListener(onClickListener);
-        }
+				default:
+					setEnabled(true);
+					break;
+			}
+		}
+	}
 
-        public void update()
-        {
-            switch (mStatus)
-            {
-                case STOPPED:
-                    setImageResource(mResPlayImage);
-                    setEnabled(true);
-                    break;
+	protected class StopButton extends ImageButton
+	{
+		OnClickListener onClickListener = new View.OnClickListener()
+		{
+			@Override
+			public void onClick(View v)
+			{
+				switch (mStatus)
+				{
+					case PAUSED:
+					case PLAYING:
+						mStatus = Status.STOPPED;
+						onStop();
+						break;
 
-                case RECORDING:
-                    setEnabled(false);
-                    break;
+					case STOPPED:
+					case RECORDING:
+						// do nothing
+				}
+			}
+		};
 
-                default:
-                    setEnabled(true);
-                    break;
-            }
-        }
-    }
+		public StopButton(Context context)
+		{
+			super(context);
+			setImageResource(mResStopImage);
 
-    protected class StopButton extends ImageButton
-    {
-        OnClickListener onClickListener = new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View v)
-            {
-                switch (mStatus)
-                {
-                    case PAUSED:
-                    case PLAYING:
-                        mStatus = Status.STOPPED;
-                        onStop();
-                        break;
+			setOnClickListener(onClickListener);
+		}
 
-                    case STOPPED:
-                    case RECORDING:
-                        // do nothing
-                }
-            }
-        };
+		public void update()
+		{
+			switch (mStatus)
+			{
+				case RECORDING:
+					setEnabled(false);
+					break;
 
-        public StopButton(Context context)
-        {
-            super(context);
-            setImageResource(mResStopImage);
+				default:
+					setEnabled(true);
+			}
+			// It doesn't need to update itself on any other state changes
+		}
 
-            setOnClickListener(onClickListener);
-        }
+	}
 
-        public void update()
-        {
-            switch (mStatus)
-            {
-                case RECORDING:
-                    setEnabled(false);
-                    break;
+	protected class RecordButton extends ImageButton
+	{
+		OnClickListener onClickListener = new View.OnClickListener()
+		{
+			@Override
+			public void onClick(View v)
+			{
+				switch (mStatus)
+				{
+					case STOPPED:
+						setImageResource(mResRecordImage);
+						mStatus = Status.RECORDING;
+						onRecord();
+						break;
 
-                default:
-                    setEnabled(true);
-            }
-            // It doesn't need to update itself on any other state changes
-        }
+					case RECORDING:
+						setImageResource(mResRecordStopImage);
+						mStatus = Status.STOPPED;
+						onStopRecord();
+						if (mOnRecordingFinishEventListener != null)
+						{
+							mOnRecordingFinishEventListener.onRecordingFinish(AudioView.this);
+						}
+						break;
 
-    }
+					default:
+						// do nothing
+				}
+			}
+		};
 
-    protected class RecordButton extends ImageButton
-    {
-        OnClickListener onClickListener = new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View v)
-            {
-                switch (mStatus)
-                {
-                    case STOPPED:
-                        setImageResource(mResRecordImage);
-                        mStatus = Status.RECORDING;
-                        onRecord();
-                        break;
+		public RecordButton(Context context)
+		{
+			super(context);
+			setImageResource(mResRecordStopImage);
 
-                    case RECORDING:
-                        setImageResource(mResRecordStopImage);
-                        mStatus = Status.STOPPED;
-                        onStopRecord();
-                        if (mOnRecordingFinishEventListener != null)
-                        {
-                            mOnRecordingFinishEventListener.onRecordingFinish(AudioView.this);
-                        }
-                        break;
+			setOnClickListener(onClickListener);
+		}
 
-                    default:
-                        // do nothing
-                }
-            }
-        };
+		public void update()
+		{
+			switch (mStatus)
+			{
+				case PLAYING:
+				case PAUSED:
+					setEnabled(false);
+					break;
 
-        public RecordButton(Context context)
-        {
-            super(context);
-            setImageResource(mResRecordStopImage);
+				default:
+					setEnabled(true);
+					break;
+			}
+		}
+	}
 
-            setOnClickListener(onClickListener);
-        }
-
-        public void update()
-        {
-            switch (mStatus)
-            {
-                case PLAYING:
-                case PAUSED:
-                    setEnabled(false);
-                    break;
-
-                default:
-                    setEnabled(true);
-                    break;
-            }
-        }
-    }
-
-    public interface OnRecordingFinishEventListener
-    {
-        public void onRecordingFinish(View v);
-    }
+	public interface OnRecordingFinishEventListener
+	{
+		public void onRecordingFinish(View v);
+	}
 }

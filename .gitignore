@@ -2,7 +2,7 @@
 .project
 .settings
 .directory
-
+*.orig
 bin/
 gen/
 /testbin/com/ichi2/anki/AllTests.class
