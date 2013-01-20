@@ -59,7 +59,7 @@ public class Collection {
     public static final int SCHEMA_VERSION = 11;
     public static final String SYNC_URL = "https://ankiweb.net/";
     public static final int SYNC_VER = 5;
-    public static final String HELP_SITE = "http://ankisrs.net/docs/dev/manual.html";
+    public static final String HELP_SITE = "http://ankisrs.net/docs/manual.html";
 
     private AnkiDb mDb;
     private boolean mServer;
