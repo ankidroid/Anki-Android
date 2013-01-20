@@ -77,11 +77,11 @@ public class TranslationActivity extends FragmentActivity implements DialogInter
         LinearLayout linearLayout = (LinearLayout) findViewById(R.id.MainLayoutInTranslationActivity);
 
         TextView tv = new TextView(this);
-        tv.setText("Powered by Glosbe.com");
+        tv.setText(getText(R.string.multimedia_editor_trans_poweredglosbe));
         linearLayout.addView(tv);
 
         TextView tvFrom = new TextView(this);
-        tvFrom.setText("From:");
+        tvFrom.setText(getText(R.string.multimedia_editor_trans_from));
         linearLayout.addView(tvFrom);
 
         mLanguageLister = new LanguagesListerGlosbe(this);
@@ -94,7 +94,7 @@ public class TranslationActivity extends FragmentActivity implements DialogInter
         linearLayout.addView(mSpinnerFrom);
 
         TextView tvTo = new TextView(this);
-        tvTo.setText("To:");
+        tvTo.setText(getText(R.string.multimedia_editor_trans_to));
         linearLayout.addView(tvTo);
 
         mSpinnerTo = new Spinner(this);
@@ -105,8 +105,7 @@ public class TranslationActivity extends FragmentActivity implements DialogInter
         linearLayout.addView(mSpinnerTo);
 
         Button btnDone = new Button(this);
-        // TODO Translation
-        btnDone.setText("Translate");
+        btnDone.setText(getText(R.string.multimedia_editor_trans_translate));
         btnDone.setOnClickListener(new OnClickListener()
         {
             @Override
@@ -149,8 +148,10 @@ public class TranslationActivity extends FragmentActivity implements DialogInter
 
     protected void translate()
     {
-        progressDialog = ProgressDialog.show(this, "Wait...", "Translating Online", true, false);
 
+        progressDialog = ProgressDialog.show(this, getText(R.string.multimedia_editor_progress_wait_title),
+                getText(R.string.multimedia_editor_trans_translating_online), true, false);
+        
         progressDialog.setCancelable(true);
         progressDialog.setOnCancelListener(this);
 
@@ -164,8 +165,7 @@ public class TranslationActivity extends FragmentActivity implements DialogInter
         catch (Exception e)
         {
             progressDialog.dismiss();
-            // TODO Translation, proper handling
-            showToast("Something went wrong...");
+            showToast(getText(R.string.multimedia_editor_something_wrong));
         }
     }
 
@@ -201,8 +201,7 @@ public class TranslationActivity extends FragmentActivity implements DialogInter
     {
         if (mTranslation.startsWith("FAILED"))
         {
-            // TODO Translation
-            returnFailure("Fetching results from glosbe failed");
+            returnFailure(getText(R.string.multimedia_editor_trans_getting_failure).toString());
         }
 
         Gson gson = new Gson();
@@ -210,24 +209,21 @@ public class TranslationActivity extends FragmentActivity implements DialogInter
 
         if (!resp.getResult().contentEquals("ok"))
         {
-            // TODO Translation
-            returnFailure("Fetching from glosbe was not successful");
+            returnFailure(getText(R.string.multimedia_editor_trans_getting_failure).toString());
         }
 
         mPossibleTranslations = parseJson(resp, mLangCodeTo);
 
         if (mPossibleTranslations.size() == 0)
         {
-            // TODO Translation
-            returnFailure("Such word was not found");
+            returnFailure(getText(R.string.multimedia_editor_error_word_not_found).toString());
         }
 
         PickStringDialogFragment fragment = new PickStringDialogFragment();
 
         fragment.setChoices(mPossibleTranslations);
         fragment.setOnclickListener(this);
-        // TODO translate
-        fragment.setTitle("Pick translation");
+        fragment.setTitle(getText(R.string.multimedia_editor_trans_pick_translation).toString());
 
         fragment.show(this.getSupportFragmentManager(), "pick.translation");
 
@@ -283,7 +279,7 @@ public class TranslationActivity extends FragmentActivity implements DialogInter
                 {
                     continue;
                 }
-                if(phrase.getLanguageCode().contentEquals(languageCodeTo))
+                if (phrase.getLanguageCode().contentEquals(languageCodeTo))
                 {
                     String unescappedString = Unescaper.unescapeHTML(phrase.getText());
                     res.add(unescappedString);

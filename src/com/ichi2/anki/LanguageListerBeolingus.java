@@ -17,10 +17,10 @@ public class LanguageListerBeolingus extends LanguageListerBase
     {
         super();
         
-        addLanguage(context.getString(R.string.multimediaeditor_languages_english), "en-de");
-        addLanguage(context.getString(R.string.multimediaeditor_languages_german), "deen");
-        addLanguage(context.getString(R.string.multimediaeditor_languages_spanish), "es-de");
-        addLanguage(context.getString(R.string.multimediaeditor_languages_portuguese), "pt-de");
+        addLanguage(context.getString(R.string.multimedia_editor_languages_english), "en-de");
+        addLanguage(context.getString(R.string.multimedia_editor_languages_german), "deen");
+        addLanguage(context.getString(R.string.multimedia_editor_languages_spanish), "es-de");
+        addLanguage(context.getString(R.string.multimedia_editor_languages_portuguese), "pt-de");
     }
 
 }

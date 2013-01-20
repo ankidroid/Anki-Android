@@ -16,14 +16,40 @@
 <resources>
 
 <!--  languages -->
-<string name="multimediaeditor_languages_russian">Russian</string>
-<string name="multimediaeditor_languages_german">German</string>
-<string name="multimediaeditor_languages_nepali">Nepali</string>
-<string name="multimediaeditor_languages_slovak">Slovak</string>
-<string name="multimediaeditor_languages_french">French</string>
-<string name="multimediaeditor_languages_spanish">Spanish</string>
-<string name="multimediaeditor_languages_mandarin">Mandarin</string>
-<string name="multimediaeditor_languages_portuguese">Portuguese</string>
-<string name="multimediaeditor_languages_english">English</string>
+<string name="multimedia_editor_languages_russian">Russian</string>
+<string name="multimedia_editor_languages_german">German</string>
+<string name="multimedia_editor_languages_nepali">Nepali</string>
+<string name="multimedia_editor_languages_slovak">Slovak</string>
+<string name="multimedia_editor_languages_french">French</string>
+<string name="multimedia_editor_languages_spanish">Spanish</string>
+<string name="multimedia_editor_languages_mandarin">Mandarin</string>
+<string name="multimedia_editor_languages_portuguese">Portuguese</string>
+<string name="multimedia_editor_languages_english">English</string>
+
+
+<!-- Translation Activity (Glosbe)  -->
+<string name = "multimedia_editor_trans_poweredglosbe">Powered by glosbe.com</string>
+<!-- these are like translate f r o m  and t o  some othe languages -->
+<string name = "multimedia_editor_trans_from">From</string>
+<string name = "multimedia_editor_trans_to">To</string>
+<!-- imperative for the button title -->
+<string name = "multimedia_editor_trans_translate">Translate</string>
+<!-- waiting message -->
+<string name = "multimedia_editor_trans_translating_online">Translating online</string>
+<!-- pick the right translation imperative -->
+<string name="multimedia_editor_trans_pick_translation">Pick translation</string>
+
+
+
+<!-- General word search and failures -->
+<string name = "multimedia_editor_error_word_not_found">The word was not found</string>
+<!-- failure when contacting glosbe or similar -->
+<string name = "multimedia_editor_trans_getting_failure">Getting translation failed</string>
+
+<!-- General -->
+<string name= "multimedia_editor_progress_wait_title">Wait</string>
+<!-- not a good message, when an unexpected error happens -->
+<string name = "multimedia_editor_something_wrong">Sorry, something went wrong</string>
+
 
 </resources>

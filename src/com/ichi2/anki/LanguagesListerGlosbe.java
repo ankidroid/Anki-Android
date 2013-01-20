@@ -17,13 +17,13 @@ public class LanguagesListerGlosbe extends LanguageListerBase
     {
         super();
         
-        addLanguage(context.getString(R.string.multimediaeditor_languages_mandarin), "cmn");
-        addLanguage(context.getString(R.string.multimediaeditor_languages_spanish), "spa");
-        addLanguage(context.getString(R.string.multimediaeditor_languages_english), "eng");
-        addLanguage(context.getString(R.string.multimediaeditor_languages_nepali), "nep");
-        addLanguage(context.getString(R.string.multimediaeditor_languages_russian), "rus");
-        addLanguage(context.getString(R.string.multimediaeditor_languages_german), "deu");
-        addLanguage(context.getString(R.string.multimediaeditor_languages_slovak), "slk");
+        addLanguage(context.getString(R.string.multimedia_editor_languages_mandarin), "cmn");
+        addLanguage(context.getString(R.string.multimedia_editor_languages_spanish), "spa");
+        addLanguage(context.getString(R.string.multimedia_editor_languages_english), "eng");
+        addLanguage(context.getString(R.string.multimedia_editor_languages_nepali), "nep");
+        addLanguage(context.getString(R.string.multimedia_editor_languages_russian), "rus");
+        addLanguage(context.getString(R.string.multimedia_editor_languages_german), "deu");
+        addLanguage(context.getString(R.string.multimedia_editor_languages_slovak), "slk");
         
         
         //Add more here, should just work. 
