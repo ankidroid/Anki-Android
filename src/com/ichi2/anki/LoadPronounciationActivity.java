@@ -3,7 +3,6 @@ package com.ichi2.anki;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 
-import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -16,19 +15,18 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
 
+import com.ichi2.anki.beolingus.parsing.BeolingusParser;
 import com.ichi2.anki.web.HttpFetcher;
 
 public class LoadPronounciationActivity extends Activity
 {
     public static String EXTRA_SOURCE = "com.ichi2.anki.LoadPronounciationActivity.extra.source";
     public static String EXTRA_PRONUNCIATION_FILE_PATH = "com.ichi2.anki.LoadPronounciationActivity.extra.pronun.file.path";
+
+
     
-    //Http Fetching is stopped on it
-    protected static String MP3_STOPPER = ".mp3\">Listen";
-    protected static String PRONUNC_STOPPER = "<img src=\"/pics/s1.png\"";
 
     String mSource;
 
@@ -54,9 +52,9 @@ public class LoadPronounciationActivity extends Activity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_load_pronounciation);
         mSource = getIntent().getExtras().getString(EXTRA_SOURCE);
-        
+
         LinearLayout linearLayout = (LinearLayout) findViewById(R.id.layoutInLoadPronActivity);
-        
+
         mLanguageLister = new LanguageListerBeolingus();
 
         mSpinnerFrom = new Spinner(this);
@@ -65,7 +63,7 @@ public class LoadPronounciationActivity extends Activity
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         mSpinnerFrom.setAdapter(adapter);
         linearLayout.addView(mSpinnerFrom);
-        
+
         Button buttonLoadPronunciation = (Button) new Button(this);
         buttonLoadPronunciation.setText("Load pronounciation!");
         linearLayout.addView(buttonLoadPronunciation);
@@ -102,7 +100,7 @@ public class LoadPronounciationActivity extends Activity
         {
             BackgroundPost post = new BackgroundPost();
             post.setAddress(mTranslationAddress);
-//            post.setStopper(PRONUNC_STOPPER);
+            // post.setStopper(PRONUNC_STOPPER);
             post.execute();
         }
         catch (Exception e)
@@ -113,45 +111,65 @@ public class LoadPronounciationActivity extends Activity
         }
     }
 
+    /**
+     * @author zaur
+     * 
+     *         This class is used two times.
+     * 
+     *         First time from Beolingus it requests a page with the word
+     *         translation. Second time it loads a page with the link to mp3
+     *         pronunciation file.
+     * 
+     */
+    /**
+     * @author zaur
+     * 
+     */
+    /**
+     * @author zaur
+     * 
+     */
     private class BackgroundPost extends AsyncTask<Void, Void, String>
     {
 
         private String mAddress;
-//        private String mStopper;
+
+        // private String mStopper;
 
         @Override
         protected String doInBackground(Void... params)
         {
-            // TMP CODE
-//            if (mAddress.contentEquals(mTranslationAddress))
-//            {
-//                return MockTranslationFetcher.get();
-//            }
-//            else if (mAddress.contentEquals(mPronunciationAddress))
-//            {
-//                return MockPronounciationPageFetcher.get();
-//            }
+            // TMP CODE for quick testing
+            // if (mAddress.contentEquals(mTranslationAddress))
+            // {
+            // return MockTranslationFetcher.get();
+            // }
+            // else if (mAddress.contentEquals(mPronunciationAddress))
+            // {
+            // return MockPronounciationPageFetcher.get();
+            // }
 
             // Should be just this
-//            return HttpFetcher.fetchThroughHttpUntil(getAddress(), getStopper());
             return HttpFetcher.fetchThroughHttp(getAddress(), "ISO-8859-1");
         }
 
-//        private String getStopper()
-//        {
-//            return mStopper;
-//        }
-//        
-//        private void setStopper(String stopper)
-//        {
-//            mStopper = stopper;
-//        }
-
+        /**
+         * @param address
+         * 
+         *            Used to set the download address
+         * 
+         */
         public void setAddress(String address)
         {
             mAddress = address;
         }
 
+        /**
+         * @return
+         * 
+         *         Used to know, which of the posts finished, to differentiate.
+         * 
+         */
         public String getAddress()
         {
             return mAddress;
@@ -160,11 +178,20 @@ public class LoadPronounciationActivity extends Activity
         @Override
         protected void onPostExecute(String result)
         {
+            // Result here is the whole HTML of the page
+            // this is passed to ask for address and differentiate, which of the
+            // post has finished.
             processPostFinished(this, result);
         }
 
     }
 
+    /**
+     * @author zaur
+     * 
+     *         This is to load finally the MP3 file with pronunciation.
+     * 
+     */
     private class DownloadFileTask extends AsyncTask<Void, Void, String>
     {
 
@@ -181,11 +208,6 @@ public class LoadPronounciationActivity extends Activity
             mAddress = address;
         }
 
-        public String getAddress()
-        {
-            return mAddress;
-        }
-
         @Override
         protected void onPostExecute(String result)
         {
@@ -198,6 +220,8 @@ public class LoadPronounciationActivity extends Activity
     {
 
         // First call returned
+        // Means we get the page with the word translation,
+        // And we have to start fetching the page with pronunciation
         if (post.getAddress().contentEquals(mTranslationAddress))
         {
             mTranslation = result;
@@ -208,10 +232,11 @@ public class LoadPronounciationActivity extends Activity
                 return;
             }
 
-            // Will assign mPrononaddr
-            getPronounciationAddressFromTranslation();
+            mPronunciationAddress = BeolingusParser.getPronounciationAddressFromTranslation(mTranslation, mSource);
+
             if (mPronunciationAddress.contentEquals("no"))
             {
+                failNoPronunciation();
                 return;
             }
 
@@ -219,13 +244,12 @@ public class LoadPronounciationActivity extends Activity
             {
                 BackgroundPost post2 = new BackgroundPost();
                 post2.setAddress(mPronunciationAddress);
-//                post2.setStopper(MP3_STOPPER);
                 post2.execute();
             }
             catch (Exception e)
             {
                 progressDialog.dismiss();
-                // TODO Translation, proper handling
+                //TODO Translation
                 showToast("Something went wrong...");
             }
 
@@ -233,20 +257,24 @@ public class LoadPronounciationActivity extends Activity
         }
 
         // Else
-        // First call returned
+        // second call returned
+        // This is a call when pronunciation page has been fetched.
+        // We chekc if mp3 file could be downloaded and download it.
         if (post.getAddress().contentEquals(mPronunciationAddress))
         {
             // else here = pronunciation post returned;
 
             mPronunciationPage = result;
 
-            getMp3AddressFromPronounciation();
+            mMp3Address =  BeolingusParser.getMp3AddressFromPronounciation(mPronunciationPage);
 
             if (mMp3Address.contentEquals("no"))
             {
+                failNoPronunciation();
                 return;
             }
 
+            // Download MP3 file
             try
             {
                 DownloadFileTask post2 = new DownloadFileTask();
@@ -266,6 +294,7 @@ public class LoadPronounciationActivity extends Activity
 
     }
 
+    //This is called when MP3 Download is finished.
     public void receiveMp3File(String result)
     {
         if (result == null)
@@ -281,10 +310,10 @@ public class LoadPronounciationActivity extends Activity
         }
 
         progressDialog.dismiss();
-        
-        //TODO Translate
+
+        // TODO Translate
         showToast("Pronounciation loaded!");
-        
+
         Intent resultData = new Intent();
 
         resultData.putExtra(EXTRA_PRONUNCIATION_FILE_PATH, result);
@@ -295,121 +324,8 @@ public class LoadPronounciationActivity extends Activity
 
     }
 
-    private void getMp3AddressFromPronounciation()
-    {
-        if (mPronunciationPage.startsWith("FAILED"))
-        {
-            failNoPronunciation();
-            return;
-        }
-
-        // Freed
-        mTranslation = null;
-
-        String mp3 = MP3_STOPPER;
-
-        if (!mPronunciationPage.contains(mp3))
-        {
-            failNoPronunciation();
-            return;
-        }
-
-        int indMp3 = mPronunciationPage.indexOf(mp3);
-        int indAddrEnd = indMp3 + ".mp3".length();
-
-        int addrStart = 0;
-        // Back to find the address start;
-        while (indMp3 > 0)
-        {
-            indMp3 -= 1;
-            if (mPronunciationPage.charAt(indMp3) == '\"')
-            {
-                addrStart = indMp3 + 1;
-                break;
-            }
-
-        }
-
-        mMp3Address = "http://dict.tu-chemnitz.de" + mPronunciationPage.substring(addrStart, indAddrEnd);
-
-        // Freeing resources
-        mPronunciationPage = null;
-
-    }
-
-    private void getPronounciationAddressFromTranslation()
-    {
-        String pronounciationIndicator = PRONUNC_STOPPER;
-        if (!mTranslation.contains(pronounciationIndicator))
-        {
-            failNoPronunciation();
-            return;
-        }
-
-        int indIndicator = 0;
-        do
-        {
-            indIndicator = mTranslation.indexOf(pronounciationIndicator, indIndicator + 1);
-            if (indIndicator == -1)
-            {
-                failNoPronunciation();
-                return;
-            }
-            String title = "title=\"";
-
-            int indTitle = mTranslation.indexOf(title, indIndicator);
-
-            if (indTitle == -1)
-            {
-                failNoPronunciation();
-                return;
-            }
-
-            int indNextQuote = mTranslation.indexOf("\"", indTitle + title.length());
-            if (indNextQuote == -1)
-            {
-                failNoPronunciation();
-                return;
-            }
-
-            // Must be equal to the word translating
-            String titleValue = mTranslation.substring(indTitle + title.length(), indNextQuote);
-
-            if (!titleValue.contentEquals(mSource))
-            {
-                continue;
-            }
-
-            break;
-            // indIndicator is pointing to the right one indicator!
-        }
-        while (true);
-
-        String href = "href=\"";
-        // Rolling back for the reference
-        while (indIndicator > 0)
-        {
-            indIndicator -= 1;
-            if (!mTranslation.substring(indIndicator, indIndicator + href.length()).contentEquals(href))
-            {
-                continue;
-            }
-
-            break;
-            // indIndicator contains where href starts;
-        }
-
-        int indNextQuote = mTranslation.indexOf("\"", indIndicator + href.length());
-        if (indNextQuote == -1)
-        {
-            failNoPronunciation();
-            return;
-        }
-
-        String pronounciationAddress = mTranslation.substring(indIndicator + href.length(), indNextQuote);
-
-        mPronunciationAddress = "http://dict.tu-chemnitz.de" + pronounciationAddress;
-    }
+    
+    
 
     private void failNoPronunciation()
     {
@@ -422,13 +338,12 @@ public class LoadPronounciationActivity extends Activity
     {
         progressDialog.dismiss();
         showToast(string);
-
     }
 
     private String computeAddressOfTranslationPage()
     {
         String address = "http://dict.tu-chemnitz.de/dings.cgi?lang=en&service=deen&opterrors=0&optpro=0&query=Welt";
-        
+
         String strFrom = mSpinnerFrom.getSelectedItem().toString();
         // Conversion to iso, lister created before.
         String langCodeFrom = mLanguageLister.getCodeFor(strFrom);
@@ -444,9 +359,8 @@ public class LoadPronounciationActivity extends Activity
             query = mSource.replace(" ", "%20");
         }
 
-        address = address.replaceAll("deen", langCodeFrom)
-                .replaceAll("Welt", query);
-        
+        address = address.replaceAll("deen", langCodeFrom).replaceAll("Welt", query);
+
         return address;
     }
 
@@ -457,4 +371,3 @@ public class LoadPronounciationActivity extends Activity
         toast.show();
     }
 }
-
