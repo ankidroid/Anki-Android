@@ -11,6 +11,7 @@ public class ImageField extends FieldBase implements IField
 	 */
     private static final long serialVersionUID = 4431611060655809687L;
     String mImagePath = null;
+    private boolean mHasTemporaryMedia = false;
 
     @Override
     public EFieldType getType()
@@ -78,5 +79,17 @@ public class ImageField extends FieldBase implements IField
     public boolean setText(String text)
     {
         return false;
+    }
+
+    @Override
+    public void setHasTemporaryMedia(boolean hasTemporaryMedia)
+    {
+        mHasTemporaryMedia = hasTemporaryMedia;
+    }
+
+    @Override
+    public boolean hasTemporaryMedia()
+    {
+        return mHasTemporaryMedia;
     }
 }

@@ -7,6 +7,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -16,237 +17,293 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.ichi2.anki.multimediacard.AudioView;
 import com.ichi2.anki.multimediacard.IField;
 import com.ichi2.anki.multimediacard.IMultimediaEditableNote;
 import com.ichi2.anki.multimediacard.impl.MockNoteFactory;
 
-public class MultimediaCardEditorActivity extends Activity {
+public class MultimediaCardEditorActivity extends Activity
+{
+    public static final String EXTRA_CALLER = "CALLER";
+    public static final int CALLER_NOCALLER = 0;
+    public static final int CALLER_INDICLASH = 10;
 
-	private static final int REQUEST_CODE_EDIT_FIELD = 1;
-	
-	
-	static final String EXTRA_FIELD_INDEX = "multim.card.ed.extra.field.index";
-	static final String EXTRA_FIELD = "multim.card.ed.extra.field";
-	static final String EXTRA_WHOLE_NOTE = "multim.card.ed.extra.whole.note";
+    public static final int REQUEST_CODE_EDIT_FIELD = 1;
 
-	IMultimediaEditableNote mNote;
+    public static final String EXTRA_FIELD_INDEX = "multim.card.ed.extra.field.index";
+    public static final String EXTRA_FIELD = "multim.card.ed.extra.field";
+    public static final String EXTRA_WHOLE_NOTE = "multim.card.ed.extra.whole.note";
 
+    private static final String ACTION_CREATE_FLASHCARD = "org.openintents.action.CREATE_FLASHCARD";
+    private static final String ACTION_CREATE_FLASHCARD_SEND = "android.intent.action.SEND";
 
-	private LinearLayout mMainUIiLayout;
+    IMultimediaEditableNote mNote;
+    private LinearLayout mMainUIiLayout;
 
-	private IMultimediaEditableNote getNotePrivate() {
-		if (mNote == null) {
-			mNote = loadNote();
-		}
+    
+    /* indicates if a new fact is added or a card is edited */
+    private boolean mAddNote;
 
-		return mNote;
-	}
+    /* indicates which activity called card editor */
+    private int mCaller;
 
-	@SuppressLint("NewApi")
-	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_multimedia_card_editor);
+    @SuppressLint("NewApi")
+    @Override
+    protected void onCreate(Bundle savedInstanceState)
+    {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_multimedia_card_editor);
 
-		// Handling absence of the action bar!
-		int currentapiVersion = android.os.Build.VERSION.SDK_INT;
-		if (currentapiVersion <= android.os.Build.VERSION_CODES.GINGERBREAD_MR1) {
-			LinearLayout linearLayout = (LinearLayout) findViewById(R.id.LinearLayoutForSpareMenu);
-			createSpareMenu(linearLayout);
-		}
+        // Handling absence of the action bar!
+        int currentapiVersion = android.os.Build.VERSION.SDK_INT;
+        if (currentapiVersion <= android.os.Build.VERSION_CODES.GINGERBREAD_MR1)
+        {
+            LinearLayout linearLayout = (LinearLayout) findViewById(R.id.LinearLayoutForSpareMenu);
+            createSpareMenu(linearLayout);
+        }
 
-		mMainUIiLayout = (LinearLayout) findViewById(R.id.LinearLayoutInScrollView);
-		IMultimediaEditableNote note = getNotePrivate();
+        mMainUIiLayout = (LinearLayout) findViewById(R.id.LinearLayoutInScrollView);
 
-		recreateUi(note);
+        if (savedInstanceState != null)
+        {
+            mCaller = savedInstanceState.getInt("caller");
+            mAddNote = savedInstanceState.getBoolean("addFact");
+        }
+        else
+        {
+            _loadNote();
+        }
 
-	}
+        recreateUi(getNotePrivate());
+    }
 
-	private void createSpareMenu(LinearLayout linearLayout) {
-		Button saveButton = new Button(this);
-		saveButton.setText(getString(R.string.CardEditorSaveButton));
-		saveButton.setOnClickListener(new View.OnClickListener() {
-			public void onClick(View v) {
-				save();
-			}
-		});
-		linearLayout.addView(saveButton);
+    private IMultimediaEditableNote getNotePrivate()
+    {
+        if (mNote == null)
+        {
+            mNote = _loadNote();
+        }
 
-		Button deleteButton = new Button(this);
-		deleteButton.setText(getString(R.string.menu_delete_note));
-		deleteButton.setOnClickListener(new View.OnClickListener() {
-			public void onClick(View v) {
-				delete();
-			}
-		});
-		linearLayout.addView(deleteButton);
-	}
+        return mNote;
+    }
 
-	private void recreateUi(IMultimediaEditableNote note) {
+    private void createSpareMenu(LinearLayout linearLayout)
+    {
+        Button saveButton = new Button(this);
+        saveButton.setText(getString(R.string.CardEditorSaveButton));
+        saveButton.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                save();
+            }
+        });
+        linearLayout.addView(saveButton);
 
-		LinearLayout linearLayout = mMainUIiLayout;
-		
-		linearLayout.removeAllViews();
+        Button deleteButton = new Button(this);
+        deleteButton.setText(getString(R.string.menu_delete_note));
+        deleteButton.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                delete();
+            }
+        });
+        linearLayout.addView(deleteButton);
+    }
 
-		for (int i = 0; i < note.getNumberOfFields(); ++i) {
-			createNewViewer(linearLayout, note.getField(i), i);
-		}
+    private void recreateUi(IMultimediaEditableNote note)
+    {
 
-	}
+        LinearLayout linearLayout = mMainUIiLayout;
 
-	private void putExtrasAndStartEditActivity(final IField field,
-			final int index, Intent i) {
-		
-		i.putExtra(EXTRA_FIELD_INDEX, index);
-		i.putExtra(EXTRA_FIELD, field);
-		i.putExtra(EXTRA_WHOLE_NOTE, mNote);
-		
-		startActivityForResult(i, REQUEST_CODE_EDIT_FIELD);
-	}
+        linearLayout.removeAllViews();
 
-	private void createNewViewer(LinearLayout linearLayout, final IField field,
-			final int index) {
+        for (int i = 0; i < note.getNumberOfFields(); ++i)
+        {
+            createNewViewer(linearLayout, note.getField(i), i);
+        }
 
-		final MultimediaCardEditorActivity context = this;
+    }
 
-		switch (field.getType()) {
-		case TEXT:
+    private void putExtrasAndStartEditActivity(final IField field, final int index, Intent i)
+    {
 
-			// Create a text field and an edit button, opening editing for the
-			// text field
+        i.putExtra(EXTRA_FIELD_INDEX, index);
+        i.putExtra(EXTRA_FIELD, field);
+        i.putExtra(EXTRA_WHOLE_NOTE, mNote);
 
-			TextView textView = new TextView(this);
-			textView.setText(field.getText());
-			linearLayout.addView(textView,
-					LinearLayout.LayoutParams.MATCH_PARENT);
+        startActivityForResult(i, REQUEST_CODE_EDIT_FIELD);
+    }
 
-			Button editButtonText = new Button(this);
-			editButtonText.setText("Edit");
-			linearLayout.addView(editButtonText,
-					LinearLayout.LayoutParams.MATCH_PARENT);
+    private void createNewViewer(LinearLayout linearLayout, final IField field, final int index)
+    {
 
-			editButtonText.setOnClickListener(new View.OnClickListener() {
+        final MultimediaCardEditorActivity context = this;
 
-				@Override
-				public void onClick(View v) {
-					Intent i = new Intent(context, EditFieldActivity.class);
-					putExtrasAndStartEditActivity(field, index, i);
-				}
+        switch (field.getType())
+        {
+            case TEXT:
 
-			});
+                // Create a text field and an edit button, opening editing for
+                // the
+                // text field
 
-			break;
+                TextView textView = new TextView(this);
+                textView.setText(field.getText());
+                linearLayout.addView(textView, LinearLayout.LayoutParams.MATCH_PARENT);
 
-		case IMAGE:
+                break;
 
-			ImageView imgView = new ImageView(this);
-			//
-			// BitmapFactory.Options options = new BitmapFactory.Options();
-			// options.inSampleSize = 2;
-			// Bitmap bm = BitmapFactory.decodeFile(myJpgPath, options);
-			// jpgView.setImageBitmap(bm);
+            case IMAGE:
 
-			imgView.setImageURI(Uri.fromFile(new File(field.getImagePath())));
-			linearLayout.addView(imgView,
-					LinearLayout.LayoutParams.MATCH_PARENT);
+                ImageView imgView = new ImageView(this);
+                //
+                // BitmapFactory.Options options = new BitmapFactory.Options();
+                // options.inSampleSize = 2;
+                // Bitmap bm = BitmapFactory.decodeFile(myJpgPath, options);
+                // jpgView.setImageBitmap(bm);
 
-			Button editButtonImage = new Button(this);
-			editButtonImage.setText("Edit");
-			linearLayout.addView(editButtonImage,
-					LinearLayout.LayoutParams.MATCH_PARENT);
+                imgView.setImageURI(Uri.fromFile(new File(field.getImagePath())));
+                linearLayout.addView(imgView, LinearLayout.LayoutParams.MATCH_PARENT);
 
-			editButtonImage.setOnClickListener(new View.OnClickListener() {
+                break;
+            case AUDIO:
+                AudioView audioView = new AudioView(this, R.drawable.av_play, R.drawable.av_pause, R.drawable.av_stop,
+                        R.drawable.av_rec, R.drawable.av_rec_stop);
+                audioView.setRecordButtonVisible(false);
+                audioView.setAudioPath(field.getAudioPath());
+                linearLayout.addView(audioView);
+                break;
 
-				@Override
-				public void onClick(View v) {
-					Intent i = new Intent(context, EditFieldActivity.class);
-					putExtrasAndStartEditActivity(field, index, i);
-				}
+            default:
+                TextView unsupp = new TextView(this);
+                unsupp.setText("Unsupported field type");
+                unsupp.setEnabled(false);
+                linearLayout.addView(unsupp);
+                break;
+        }
 
-			});
+        Button editButtonText = new Button(this);
+        editButtonText.setText("Edit");
+        linearLayout.addView(editButtonText, LinearLayout.LayoutParams.MATCH_PARENT);
 
-			break;
+        editButtonText.setOnClickListener(new View.OnClickListener()
+        {
 
-		default:
-			TextView unsupp = new TextView(this);
-			unsupp.setText("Unsupported field type");
-			unsupp.setEnabled(false);
-			linearLayout.addView(unsupp);
-			break;
-		}
-	}
+            @Override
+            public void onClick(View v)
+            {
+                Intent i = new Intent(context, EditFieldActivity.class);
+                putExtrasAndStartEditActivity(field, index, i);
+            }
 
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		getMenuInflater().inflate(R.menu.activity_multimedia_card_editor, menu);
-		return true;
-	}
+        });
+    }
 
-	// Loads from extras or whatever else
-	private IMultimediaEditableNote loadNote() {
-		return getMockNote();
-	}
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu)
+    {
+        getMenuInflater().inflate(R.menu.activity_multimedia_card_editor, menu);
+        return true;
+    }
 
-	// Temporary implemented
-	private IMultimediaEditableNote getMockNote() {
-		return MockNoteFactory.makeNote();
-	}
+    // Loads from extras or whatever else
+    private IMultimediaEditableNote _loadNote()
+    {
+        Intent intent = getIntent();
+        mCaller = intent.getIntExtra(EXTRA_CALLER, CALLER_NOCALLER);
+        if (mCaller == CALLER_NOCALLER)
+        {
+            String action = intent.getAction();
+            if (action != null
+                    && (ACTION_CREATE_FLASHCARD.equals(action) || ACTION_CREATE_FLASHCARD_SEND.equals(action)))
+            {
+                mCaller = CALLER_INDICLASH;
+            }
+        }
 
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		switch (item.getItemId()) {
-		case R.id.multimedia_delete_note:
-			delete();
-			return true;
+        Log.i(AnkiDroidApp.TAG, "CardEditor: caller: " + mCaller);
 
-		case R.id.multimedia_save_note:
-			save();
-			return true;
+        // Not sure if following is required
+        // if (mCaller == CALLER_INDICLASH &&
+        // preferences.getBoolean("intentAdditionInstantAdd", false))
 
-		case android.R.id.home:
+        return getMockNote();
+    }
 
-			return true;
-		}
-		return super.onOptionsItemSelected(item);
-	}
+    // Temporary implemented
+    private IMultimediaEditableNote getMockNote()
+    {
+        return MockNoteFactory.makeNote();
+    }
 
-	@Override
-	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item)
+    {
+        switch (item.getItemId())
+        {
+            case R.id.multimedia_delete_note:
+                delete();
+                return true;
 
-		if (requestCode == REQUEST_CODE_EDIT_FIELD) {
+            case R.id.multimedia_save_note:
+                save();
+                return true;
 
-			if (resultCode == RESULT_OK) {
+            case android.R.id.home:
 
-				IField field = (IField) data.getSerializableExtra(EditFieldActivity.EXTRA_RESULT_FIELD);
-				int index = data.getIntExtra(EditFieldActivity.EXTRA_RESULT_FIELD_INDEX, -1);
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
 
-				// Failed editing activity
-				if (index == -1) {
-					return;
-				}
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data)
+    {
 
-				getNotePrivate().setField(index, field);
-				recreateUi(getNotePrivate());
-			}
+        if (requestCode == REQUEST_CODE_EDIT_FIELD)
+        {
 
-			super.onActivityResult(requestCode, resultCode, data);
-		}
+            if (resultCode == RESULT_OK)
+            {
 
-	}
+                IField field = (IField) data.getSerializableExtra(EditFieldActivity.EXTRA_RESULT_FIELD);
+                int index = data.getIntExtra(EditFieldActivity.EXTRA_RESULT_FIELD_INDEX, -1);
 
-	void save() {
-		CharSequence text = "Save clicked!";
-		showToast(text);
-	}
+                // Failed editing activity
+                if (index == -1)
+                {
+                    return;
+                }
 
-	void delete() {
-		CharSequence text = "Delete clicked!";
-		showToast(text);
-	}
+                getNotePrivate().setField(index, field);
+                recreateUi(getNotePrivate());
+            }
 
-	private void showToast(CharSequence text) {
-		int duration = Toast.LENGTH_SHORT;
-		Toast toast = Toast.makeText(this, text, duration);
-		toast.show();
-	}
+            super.onActivityResult(requestCode, resultCode, data);
+        }
+
+    }
+
+    void save()
+    {
+        CharSequence text = "Save clicked!";
+        showToast(text);
+    }
+
+    void delete()
+    {
+        CharSequence text = "Delete clicked!";
+        showToast(text);
+    }
+
+    private void showToast(CharSequence text)
+    {
+        int duration = Toast.LENGTH_SHORT;
+        Toast toast = Toast.makeText(this, text, duration);
+        toast.show();
+    }
 }

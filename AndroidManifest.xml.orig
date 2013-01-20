@@ -256,16 +256,17 @@
             android:label="@string/title_activity_edit_image" >
         </activity>
         <activity
+<<<<<<< HEAD
             android:name="com.ichi2.anki.TranslationActivity"
             android:label="@string/title_activity_translation" >
-        </activity>   
-        <activity
-            android:name="com.ichi2.anki.AudioRecorderActivity"
-            android:label="@string/title_activity_audio_recorder" >
         </activity>
         <activity
             android:name="com.ichi2.anki.LoadPronounciationActivity"
             android:label="@string/title_activity_load_pronounciation" >
+=======
+            android:name="com.ichi2.anki.AudioRecorderActivity"
+            android:label="@string/title_activity_audio_recorder" >
+>>>>>>> bibstha/master
         </activity>
     </application>
 

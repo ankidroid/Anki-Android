@@ -1,30 +1,31 @@
 package com.ichi2.anki.beolingus.parsing;
 
-
 /**
  * @author zaur
- *
- *      
- *      This class parses beolingus pages
- *
+ * 
+ * 
+ *         This class parses beolingus pages
+ * 
  */
 public class BeolingusParser
 {
     private static String PRONUNC_STOPPER = "<img src=\"/pics/s1.png\"";
     private static String MP3_STOPPER = ".mp3\">Listen";
-    
+
     /**
-     * @param translationHtml = html page from beolingus, with translation of the word we search
-     * @param wordToSearchFor 
+     * @param translationHtml
+     *            = html page from beolingus, with translation of the word we
+     *            search
+     * @param wordToSearchFor
      * @return "no" or http address of the page with translation
      * 
-     * First this function searches for the picture as described above, 
-     * this picture is in the pronunciation link.
+     *         First this function searches for the picture as described above,
+     *         this picture is in the pronunciation link.
      * 
-     * Then picture title is being compared to the word we search.
-     * If they match, means word found, and we have to go back in text,
-     * from image, inside the link, <a href="...
-     * and find there the address with pronunciation page, which is returned
+     *         Then picture title is being compared to the word we search. If
+     *         they match, means word found, and we have to go back in text,
+     *         from image, inside the link, <a href="... and find there the
+     *         address with pronunciation page, which is returned
      */
     public static String getPronounciationAddressFromTranslation(String translationHtml, String wordToSearchFor)
     {
@@ -33,7 +34,7 @@ public class BeolingusParser
         {
             return "no";
         }
-    
+
         int indIndicator = 0;
         do
         {
@@ -43,33 +44,33 @@ public class BeolingusParser
                 return "no";
             }
             String title = "title=\"";
-    
+
             int indTitle = translationHtml.indexOf(title, indIndicator);
-    
+
             if (indTitle == -1)
             {
                 return "no";
             }
-    
+
             int indNextQuote = translationHtml.indexOf("\"", indTitle + title.length());
             if (indNextQuote == -1)
             {
                 return "no";
             }
-    
+
             // Must be equal to the word translating
             String titleValue = translationHtml.substring(indTitle + title.length(), indNextQuote);
-    
+
             if (!titleValue.contentEquals(wordToSearchFor))
             {
                 continue;
             }
-    
+
             break;
             // indIndicator is pointing to the right one indicator!
         }
         while (true);
-    
+
         String href = "href=\"";
         // Rolling back for the reference
         while (indIndicator > 0)
@@ -79,23 +80,22 @@ public class BeolingusParser
             {
                 continue;
             }
-    
+
             break;
             // indIndicator contains where href starts;
         }
-    
+
         int indNextQuote = translationHtml.indexOf("\"", indIndicator + href.length());
         if (indNextQuote == -1)
         {
             return "no";
         }
-    
+
         String pronounciationAddress = translationHtml.substring(indIndicator + href.length(), indNextQuote);
-    
+
         return "http://dict.tu-chemnitz.de" + pronounciationAddress;
     }
 
-    
     // It searches for a link to mp3 file
     // First "mp3" is found, than it takes all the address, going before it.
     /**
@@ -135,6 +135,5 @@ public class BeolingusParser
         return "http://dict.tu-chemnitz.de" + pronunciationPageHtml.substring(addrStart, indAddrEnd);
 
     }
-    
-    
+
 }
