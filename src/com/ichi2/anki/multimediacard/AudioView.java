@@ -48,7 +48,6 @@ public class AudioView extends LinearLayout
 		mResStopImage = resStop;
 		mResRecordImage = resRecord;
 		mResRecordStopImage = resRecordStop;
-		mAudioPath = audioPath;
 
 		this.setOrientation(HORIZONTAL);
 

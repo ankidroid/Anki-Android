@@ -49,12 +49,32 @@ public class BasicTextFieldController extends FieldControllerBase implements IFi
         createCloneButton(layoutTools);
         createTranslateButton(layoutTools);
         createPronounceButton(layoutTools);
+        createClearButton(layoutTools);
         
 //        createTmpButton(layoutTools);
 
     }
 
     
+    private void createClearButton(LinearLayout layoutTools)
+    {
+        Button clearButton = new Button(mActivity);
+        clearButton.setText("Clear");
+        layoutTools.addView(clearButton);
+        
+        clearButton.setOnClickListener(new OnClickListener()
+        {
+            
+            @Override
+            public void onClick(View v)
+            {
+                mEditText.setText("");
+                
+            }
+        });        
+    }
+
+
     //Test of JSON parsing
 //    private void createTmpButton(LinearLayout layoutTools)
 //    {

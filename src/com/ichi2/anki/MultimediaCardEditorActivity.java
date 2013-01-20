@@ -172,7 +172,7 @@ public class MultimediaCardEditorActivity extends Activity
                 break;
             case AUDIO:
                 AudioView audioView = new AudioView(this, R.drawable.av_play, R.drawable.av_pause, R.drawable.av_stop,
-                        R.drawable.av_rec, R.drawable.av_rec_stop);
+                        R.drawable.av_rec, R.drawable.av_rec_stop, field.getAudioPath());
                 audioView.setRecordButtonVisible(false);
                 audioView.setAudioPath(field.getAudioPath());
                 linearLayout.addView(audioView);
