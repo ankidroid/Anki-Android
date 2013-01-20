@@ -36,7 +36,8 @@ public class BasicAudioFieldController extends FieldControllerBase implements IF
 
         AudioView audioView = new AudioView(mActivity, R.drawable.av_play, R.drawable.av_pause, R.drawable.av_stop,
                 R.drawable.av_rec, R.drawable.av_rec_stop);
-        audioView.setAudioPath(Environment.getExternalStorageDirectory() + "/ankidroid_temp_recaudio.3gp");
+//        audioView.setAudioPath(Environment.getExternalStorageDirectory() + "/ankidroid_temp_recaudio.3gp");
+        audioView.setAudioPath(mField.getAudioPath());
         audioView.setOnRecordingFinishEventListener(new AudioView.OnRecordingFinishEventListener()
         {
             @Override

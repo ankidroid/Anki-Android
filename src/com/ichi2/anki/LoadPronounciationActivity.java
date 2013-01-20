@@ -7,6 +7,7 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
+import android.os.AsyncTask.Status;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
@@ -43,6 +44,13 @@ public class LoadPronounciationActivity extends Activity
     private LanguageListerBeolingus mLanguageLister;
     private Spinner mSpinnerFrom;
 
+    private BackgroundPost mPostTranslation = null;
+    private BackgroundPost mPostPronunciation = null;
+    private DownloadFileTask mDownloadMp3Task = null;
+    
+    private boolean mStopped;
+    
+
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -77,6 +85,8 @@ public class LoadPronounciationActivity extends Activity
 
         mActivity = this;
 
+        mStopped = false;
+
     }
 
     @Override
@@ -105,10 +115,10 @@ public class LoadPronounciationActivity extends Activity
 
         try
         {
-            BackgroundPost post = new BackgroundPost();
-            post.setAddress(mTranslationAddress);
+            mPostTranslation = new BackgroundPost();
+            mPostTranslation.setAddress(mTranslationAddress);
             // post.setStopper(PRONUNC_STOPPER);
-            post.execute();
+            mPostTranslation.execute();
         }
         catch (Exception e)
         {
@@ -232,6 +242,11 @@ public class LoadPronounciationActivity extends Activity
     protected void processPostFinished(BackgroundPost post, String result)
     {
 
+        if (mStopped)
+        {
+            return;
+        }
+
         // First call returned
         // Means we get the page with the word translation,
         // And we have to start fetching the page with pronunciation
@@ -257,9 +272,9 @@ public class LoadPronounciationActivity extends Activity
             {
                 showToast("Word found!");
                 showProgressDialog("Looking up pronunciation...");
-                BackgroundPost post2 = new BackgroundPost();
-                post2.setAddress(mPronunciationAddress);
-                post2.execute();
+                mPostPronunciation = new BackgroundPost();
+                mPostPronunciation.setAddress(mPronunciationAddress);
+                mPostPronunciation.execute();
             }
             catch (Exception e)
             {
@@ -294,9 +309,9 @@ public class LoadPronounciationActivity extends Activity
             {
                 showToast("Pronunciation found!");
                 showProgressDialog("Downloading pronunciation...");
-                DownloadFileTask post2 = new DownloadFileTask();
-                post2.setAddress(mMp3Address);
-                post2.execute();
+                mDownloadMp3Task = new DownloadFileTask();
+                mDownloadMp3Task.setAddress(mMp3Address);
+                mDownloadMp3Task.execute();
             }
             catch (Exception e)
             {
@@ -314,6 +329,11 @@ public class LoadPronounciationActivity extends Activity
     // This is called when MP3 Download is finished.
     public void receiveMp3File(String result)
     {
+        if (mStopped)
+        {
+            return;
+        }
+
         if (result == null)
         {
             failNoPronunciation();
@@ -384,4 +404,47 @@ public class LoadPronounciationActivity extends Activity
         Toast toast = Toast.makeText(this, text, duration);
         toast.show();
     }
+
+    @Override
+    public void onBackPressed()
+    {
+        
+        mStopped = true;
+        
+        if(progressDialog != null)
+        {
+            if(progressDialog.isShowing())
+            {
+                progressDialog.dismiss();
+            }
+        }
+
+        AsyncTask<?, ?, ?> t;
+        t = mPostTranslation;
+        stopTask(t);
+        t = mPostPronunciation;
+        stopTask(t);
+        t = mDownloadMp3Task;
+        stopTask(t);
+
+
+        Intent resultData = new Intent();
+
+        setResult(RESULT_CANCELED, resultData);
+
+        finish();
+        
+    }
+
+    private void stopTask(AsyncTask<?, ?, ?> t)
+    {
+        if (t != null)
+        {
+            if (t.getStatus() == Status.RUNNING)
+            {
+                t.cancel(true);
+            }
+        }
+    }
+
 }
