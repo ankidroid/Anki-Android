@@ -2347,11 +2347,13 @@ public class Sched {
 
     /**
      * Bury all cards for note until next session.
+     * @param nid The id of the targetted note.
      */
     public void buryNote(long nid) {
         mCol.setDirty();
         long[] cids = Utils.arrayList2array(mCol.getDb().queryColumn(Long.class,
                 "SELECT id FROM cards WHERE nid = " + nid + " AND queue >= 0", 0));
+        removeLrn(cids);
         mCol.getDb().execute("UPDATE cards SET queue = -2 WHERE id IN " + Utils.ids2str(cids));
     }
 

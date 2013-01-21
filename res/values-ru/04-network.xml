@@ -45,8 +45,8 @@
   <string name="connection_error_message">Ошибка сети.</string>
   <string name="sync_log_db_error">Произошла ошибка базы данных.</string>
   <string name="no_user_password_error_message">Для того чтобы продолжить выполнение этой операции, необходимо иметь учетную запись AnkiWeb и войти в AnkiWeb.</string>
-  <string name="username">Имейл</string>
-  <string name="username_repeat">Повторите имейл</string>
+  <string name="username">Электронная почта</string>
+  <string name="username_repeat">Повторите адрес электронной почты</string>
   <string name="password">Пароль</string>
   <string name="password_repeat">Повторите пароль</string>
   <string name="log_in">Войти</string>
@@ -54,8 +54,8 @@
   <string name="sign_up">Зарегистрироваться</string>
   <string name="logged_as">Используется логин</string>
   <string name="log_out">Завершить сеанс</string>
-  <string name="alert_logging_message">Вход в систему, пожалуйста, подождите...</string>
-  <string name="invalid_username_password">Недопустимый имейл или пароль.</string>
+  <string name="alert_logging_message">Вход в систему. Пожалуйста, подождите...</string>
+  <string name="invalid_username_password">Неверный адрес электронной почты или пароль.</string>
   <string name="login_generic_error">Не удалось войти на сервер.</string>
   <string name="download_finished">Загрузка завершена</string>
   <string name="personaldeckpicker_title">Открыть онлайн-колоду</string>
