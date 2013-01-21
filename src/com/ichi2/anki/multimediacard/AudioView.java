@@ -164,13 +164,19 @@ public class AudioView extends LinearLayout
 
 	private void stopPlaying()
 	{
-		mPlayer.release();
-		mPlayer = null;
+		if (mStatus == Status.PLAYING)
+		{
+			mPlayer.release();
+			mPlayer = null;
+		}
 	}
 
 	private void pausePlaying()
 	{
-		mPlayer.pause();
+		if (mStatus == Status.PLAYING)
+		{
+			mPlayer.pause();
+		}
 	}
 
 	private void startRecording()
@@ -202,9 +208,12 @@ public class AudioView extends LinearLayout
 
 	private void stopRecording()
 	{
-		mRecorder.stop();
-		mRecorder.release();
-		mRecorder = null;
+		if (mStatus == Status.RECORDING)
+		{
+			mRecorder.stop();
+			mRecorder.release();
+			mRecorder = null;
+		}
 	}
 
 	protected class PlayPauseButton extends ImageButton
