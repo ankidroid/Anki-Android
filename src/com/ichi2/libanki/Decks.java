@@ -49,7 +49,7 @@ public class Decks {
 
     private static final String defaultDynamicDeck = "{" + "'newToday': [0, 0], " + // currentDay, count
             "'revToday': [0, 0], " + "'lrnToday': [0, 0], " + "'timeToday': [0, 0], " + // time in ms
-            "'collapsed': False, 'dyn': 1, 'desc': \"\", 'usn': 0, 'delays': None, 'separate': True, " +
+            "'collapsed': False, 'dyn': 1, 'desc': \"\", 'usn': 0, 'delays': null, 'separate': True, " +
             // list of (search, limit, order); we only use first element for now
             "'terms': [[\"\", 100, 0]], 'resched': True, " +
             // currently unused
