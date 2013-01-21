@@ -63,6 +63,9 @@
 <string name= "multimedia_editor_progress_wait_title">Wait</string>
 <!-- not a good message, when an unexpected error happens -->
 <string name = "multimedia_editor_something_wrong">Sorry, something went wrong</string>
+<string name="multimedia_editor_imgs_prev">&lt;&lt;</string>
+<string name="multimedia_editor_imgs_next">>></string>
+<string name="multimedia_editor_imgs_pick">Pick</string>
 
 
 </resources>

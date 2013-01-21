@@ -8,5 +8,6 @@
     <string name="title_activity_translation">Translation</string>
     <string name="title_activity_audio_recorder">Audio Recorder</string>
     <string name="title_activity_load_pronounciation">Pronounciation</string>
+    <string name="title_activity_search_image">Google Image Search</string>
 
 </resources>

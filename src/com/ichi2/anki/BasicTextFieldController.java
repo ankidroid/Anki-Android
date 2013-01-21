@@ -32,6 +32,8 @@ public class BasicTextFieldController extends FieldControllerBase implements IFi
     private static final int REQUEST_CODE_TRANSLATE_GLOSBE = 101;
     private static final int REQUEST_CODE_PRONOUNCIATION = 102;
     private static final int REQUEST_CODE_TRANSLATE_COLORDICT = 103;
+    private static final int REQUEST_CODE_IMAGE_SEARCH = 104;
+    
     private EditText mEditText;
     private ArrayList<String> mPossibleClones;
     private String mjson;
@@ -52,9 +54,39 @@ public class BasicTextFieldController extends FieldControllerBase implements IFi
         createTranslateButton(layoutTools);
         createPronounceButton(layoutTools);
         createClearButton(layoutTools);
+        createSearchImageButton(layoutTools);
 
         // createTmpButton(layoutTools);
 
+    }
+
+    private void createSearchImageButton(LinearLayout layoutTools)
+    {
+        Button clearButton = new Button(mActivity);
+        clearButton.setText("Image");
+        layoutTools.addView(clearButton);
+
+        clearButton.setOnClickListener(new OnClickListener()
+        {
+
+            @Override
+            public void onClick(View v)
+            {
+                String source = mEditText.getText().toString();
+
+                if (source.length() == 0)
+                {
+                    // TODO Translation
+                    showToast("Input some text first...");
+                    return;
+                }
+                
+                
+                Intent intent = new Intent(mActivity, SearchImageActivity.class);
+                intent.putExtra(SearchImageActivity.EXTRA_SOURCE, source);
+                mActivity.startActivityForResult(intent, REQUEST_CODE_IMAGE_SEARCH);
+            }
+        });
     }
 
     private void createClearButton(LinearLayout layoutTools)
