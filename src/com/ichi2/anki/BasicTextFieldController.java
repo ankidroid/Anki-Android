@@ -2,11 +2,14 @@ package com.ichi2.anki;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.List;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.support.v4.app.FragmentActivity;
+import android.content.pm.PackageManager;
+import android.view.Gravity;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -16,23 +19,22 @@ import android.widget.Toast;
 
 import com.ichi2.anki.multimediacard.EFieldType;
 import com.ichi2.anki.multimediacard.IField;
-import com.ichi2.anki.multimediacard.IMultimediaEditableNote;
 import com.ichi2.anki.multimediacard.impl.AudioField;
 
 /**
  * @author zaur
  * 
  */
-public class BasicTextFieldController extends FieldControllerBase implements IFieldController, DialogInterface.OnClickListener
+public class BasicTextFieldController extends FieldControllerBase implements IFieldController,
+        DialogInterface.OnClickListener
 {
 
-    private static final int REQUEST_CODE_TRANSLATION = 101;
+    private static final int REQUEST_CODE_TRANSLATE_GLOSBE = 101;
     private static final int REQUEST_CODE_PRONOUNCIATION = 102;
+    private static final int REQUEST_CODE_TRANSLATE_COLORDICT = 103;
     private EditText mEditText;
     private ArrayList<String> mPossibleClones;
     private String mjson;
-
-   
 
     @Override
     public void createUI(LinearLayout layout)
@@ -50,105 +52,28 @@ public class BasicTextFieldController extends FieldControllerBase implements IFi
         createTranslateButton(layoutTools);
         createPronounceButton(layoutTools);
         createClearButton(layoutTools);
-        
-//        createTmpButton(layoutTools);
+
+        // createTmpButton(layoutTools);
 
     }
 
-    
     private void createClearButton(LinearLayout layoutTools)
     {
         Button clearButton = new Button(mActivity);
         clearButton.setText("Clear");
         layoutTools.addView(clearButton);
-        
+
         clearButton.setOnClickListener(new OnClickListener()
         {
-            
+
             @Override
             public void onClick(View v)
             {
                 mEditText.setText("");
-                
+
             }
-        });        
+        });
     }
-
-
-    //Test of JSON parsing
-//    private void createTmpButton(LinearLayout layoutTools)
-//    {
-//        mjson = "{\n" +
-//                "  \"result\" : \"ok\",\n" +
-//                "  \"dest\" : \"eng\",\n" +
-//                "  \"phrase\" : \"witaj\",\n" +
-//                "  \"tuc\" : [ {\n" +
-//                "    \"authors\" : [ 1 ],\n" +
-//                "    \"meaningId\" : 30425,\n" +
-//                "    \"meanings\" : [ {\n" +
-//                "      \"text\" : \"greeting\",\n" +
-//                "      \"language\" : \"eng\"\n" +
-//                "    } ],\n" +
-//                "    \"phrase\" : {\n" +
-//                "      \"text\" : \"hello\",\n" +
-//                "      \"languageCode\" : \"eng\"\n" +
-//                "    }\n" +
-//                "  }, {\n" +
-//                "    \"authors\" : [ 35 ],\n" +
-//                "    \"meaningId\" : 6081957,\n" +
-//                "    \"meanings\" : [ {\n" +
-//                "      \"text\" : \"A greeting used when someone arrives.\",\n" +
-//                "      \"language\" : \"eng\"\n" +
-//                "    } ],\n" +
-//                "    \"phrase\" : {\n" +
-//                "      \"text\" : \"welcome\",\n" +
-//                "      \"languageCode\" : \"eng\"\n" +
-//                "    }\n" +
-//                "  }, {\n" +
-//                "    \"authors\" : [ 1 ],\n" +
-//                "    \"meaningId\" : 13025,\n" +
-//                "    \"meanings\" : [ {\n" +
-//                "      \"text\" : \"greeting given upon someone&#39;s arrival\",\n" +
-//                "      \"language\" : \"eng\"\n" +
-//                "    } ],\n" +
-//                "    \"phrase\" : {\n" +
-//                "      \"text\" : \"welcome\",\n" +
-//                "      \"languageCode\" : \"eng\"\n" +
-//                "    }\n" +
-//                "  }, {\n" +
-//                "    \"authors\" : [ 1 ],\n" +
-//                "    \"meaningId\" : 742087,\n" +
-//                "    \"meanings\" : [ {\n" +
-//                "      \"text\" : \"welcome\",\n" +
-//                "      \"language\" : \"eng\"\n" +
-//                "    } ],\n" +
-//                "    \"phrase\" : null\n" +
-//                "  }, {\n" +
-//                "    \"authors\" : [ 1 ],\n" +
-//                "    \"meaningId\" : 742083,\n" +
-//                "    \"meanings\" : [ {\n" +
-//                "      \"text\" : \"hello\",\n" +
-//                "      \"language\" : \"eng\"\n" +
-//                "    } ],\n" +
-//                "    \"phrase\" : null\n" +
-//                "  } ],\n" +
-//                "  \"from\" : \"pol\"\n" +
-//                "}";
-//        
-//        Button tmpButton = new Button(mActivity);
-//        tmpButton.setText("Json");
-//        tmpButton.setOnClickListener(new OnClickListener()
-//        {
-//            
-//            @Override
-//            public void onClick(View v)
-//            {
-//                translateJson();                
-//            }
-//        }); 
-//        
-//        layoutTools.addView(tmpButton);
-//    }
 
     private void createPronounceButton(LinearLayout layoutTools)
     {
@@ -160,21 +85,21 @@ public class BasicTextFieldController extends FieldControllerBase implements IFi
             @Override
             public void onClick(View v)
             {
-                String source =mEditText.getText().toString(); 
-                
+                String source = mEditText.getText().toString();
+
                 if (source.length() == 0)
                 {
                     // TODO Translation
                     showToast("Input some text first...");
                     return;
                 }
-                
+
                 Intent intent = new Intent(mActivity, LoadPronounciationActivity.class);
                 intent.putExtra(LoadPronounciationActivity.EXTRA_SOURCE, source);
                 mActivity.startActivityForResult(intent, REQUEST_CODE_PRONOUNCIATION);
             }
         });
-        
+
         layoutTools.addView(btnPronounce);
     }
 
@@ -189,21 +114,37 @@ public class BasicTextFieldController extends FieldControllerBase implements IFi
             @Override
             public void onClick(View v)
             {
-                String source =mEditText.getText().toString(); 
-                
-                if (source.length() == 0)
+                PickStringDialogFragment fragment = new PickStringDialogFragment();
+
+                ArrayList<String> translationSources = new ArrayList<String>();
+                translationSources.add("Glosbe.com");
+                translationSources.add("ColorDict");
+
+                fragment.setChoices(translationSources);
+                fragment.setOnclickListener(new DialogInterface.OnClickListener()
                 {
-                    // TODO Translation
-                    showToast("Input some text first...");
-                    return;
-                }
-                
-                Intent intent = new Intent(mActivity, TranslationActivity.class);
-                intent.putExtra(TranslationActivity.EXTRA_SOURCE, source);
-                mActivity.startActivityForResult(intent, REQUEST_CODE_TRANSLATION);
+
+                    @Override
+                    public void onClick(DialogInterface dialog, int which)
+                    {
+                        if (which == 0)
+                        {
+                            startTranslationWithGlosbe();
+                        }
+                        else if (which == 1)
+                        {
+                            startTranslationWithColorDict();
+                        }
+                    }
+                });
+
+                // TODO translate
+                fragment.setTitle("Pick");
+
+                fragment.show(mActivity.getSupportFragmentManager(), "pick.translation.source");
             }
         });
-        
+
         layoutTools.addView(btnTranslate);
     }
 
@@ -238,8 +179,8 @@ public class BasicTextFieldController extends FieldControllerBase implements IFi
                 {
                     continue;
                 }
-                
-                if(curField.getText() == null)
+
+                if (curField.getText() == null)
                 {
                     continue;
                 }
@@ -280,7 +221,7 @@ public class BasicTextFieldController extends FieldControllerBase implements IFi
 
                     fragment.setChoices(mPossibleClones);
                     fragment.setOnclickListener(controller);
-                    //TODO translate
+                    // TODO translate
                     fragment.setTitle("Pick");
 
                     fragment.show(mActivity.getSupportFragmentManager(), "pick.clone");
@@ -293,43 +234,58 @@ public class BasicTextFieldController extends FieldControllerBase implements IFi
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data)
     {
-        if(requestCode == REQUEST_CODE_TRANSLATION && resultCode == Activity.RESULT_OK)
+        if (requestCode == REQUEST_CODE_TRANSLATE_GLOSBE && resultCode == Activity.RESULT_OK)
         {
-            //Translation returned.
+            // Translation returned.
             try
             {
                 String translation = data.getExtras().get(TranslationActivity.EXTRA_TRANSLATION).toString();
                 mEditText.setText(translation);
             }
-            catch(Exception e)
+            catch (Exception e)
             {
-                //TODO Translation
+                // TODO Translation
                 showToast("Translation failed");
             }
         }
-        
-        if(requestCode == REQUEST_CODE_PRONOUNCIATION && resultCode == Activity.RESULT_OK)
+        else if (requestCode == REQUEST_CODE_PRONOUNCIATION && resultCode == Activity.RESULT_OK)
         {
             try
             {
-                String pronuncPath = data.getExtras().get(LoadPronounciationActivity.EXTRA_PRONUNCIATION_FILE_PATH).toString();
-                File f = new File (pronuncPath);
-                if(!f.exists())
+                String pronuncPath = data.getExtras().get(LoadPronounciationActivity.EXTRA_PRONUNCIATION_FILE_PATH)
+                        .toString();
+                File f = new File(pronuncPath);
+                if (!f.exists())
                 {
-                    //TODO Translation
+                    // TODO Translation
                     showToast("Getting pronunciation failed");
                 }
-                
+
                 AudioField af = new AudioField();
                 af.setAudioPath(pronuncPath);
                 mActivity.handleFieldChanged(af);
             }
-            catch(Exception e)
+            catch (Exception e)
             {
-              //TODO Translation
+                // TODO Translation
                 showToast("Getting pronunciation failed");
             }
         }
+        else if (requestCode == REQUEST_CODE_TRANSLATE_COLORDICT && resultCode == Activity.RESULT_OK)
+        {
+            String subject = data.getStringExtra(Intent.EXTRA_SUBJECT);
+            String text = data.getStringExtra(Intent.EXTRA_TEXT);
+            
+            mEditText.setText(subject + "\n" + text);
+            
+        }
+    }
+
+    public static boolean isIntentAvailable(Context context, Intent intent)
+    {
+        final PackageManager packageManager = context.getPackageManager();
+        List<?> list = packageManager.queryIntentActivities(intent, PackageManager.MATCH_DEFAULT_ONLY);
+        return list.size() > 0;
     }
 
     @Override
@@ -355,6 +311,54 @@ public class BasicTextFieldController extends FieldControllerBase implements IFi
         int duration = Toast.LENGTH_SHORT;
         Toast toast = Toast.makeText(mActivity, text, duration);
         toast.show();
+    }
+
+    // Only now not all APIs are used, may be later, they will be.
+    @SuppressWarnings("unused")
+    protected void startTranslationWithColorDict()
+    {
+        final String PICK_RESULT_ACTION = "colordict.intent.action.PICK_RESULT";
+        final String SEARCH_ACTION = "colordict.intent.action.SEARCH";
+        final String EXTRA_QUERY = "EXTRA_QUERY";
+        final String EXTRA_FULLSCREEN = "EXTRA_FULLSCREEN";
+        final String EXTRA_HEIGHT = "EXTRA_HEIGHT";
+        final String EXTRA_WIDTH = "EXTRA_WIDTH";
+        final String EXTRA_GRAVITY = "EXTRA_GRAVITY";
+        final String EXTRA_MARGIN_LEFT = "EXTRA_MARGIN_LEFT";
+        final String EXTRA_MARGIN_TOP = "EXTRA_MARGIN_TOP";
+        final String EXTRA_MARGIN_BOTTOM = "EXTRA_MARGIN_BOTTOM";
+        final String EXTRA_MARGIN_RIGHT = "EXTRA_MARGIN_RIGHT";
+
+        Intent intent = new Intent(PICK_RESULT_ACTION);
+        intent.putExtra(EXTRA_QUERY, mEditText.getText().toString()); // Search
+                                                                      // Query
+        intent.putExtra(EXTRA_FULLSCREEN, false); //
+        // intent.putExtra(EXTRA_HEIGHT, 400); //400pixel, if you don't specify,
+        // fill_parent"
+        intent.putExtra(EXTRA_GRAVITY, Gravity.BOTTOM);
+//        intent.putExtra(EXTRA_MARGIN_LEFT, 100);
+        if(!isIntentAvailable(mActivity, intent))
+        {
+            showToast("Install ColorDict first");
+            return;
+        }
+        mActivity.startActivityForResult(intent, REQUEST_CODE_TRANSLATE_COLORDICT);
+    }
+
+    protected void startTranslationWithGlosbe()
+    {
+        String source = mEditText.getText().toString();
+
+        if (source.length() == 0)
+        {
+            // TODO Translation
+            showToast("Input some text first...");
+            return;
+        }
+
+        Intent intent = new Intent(mActivity, TranslationActivity.class);
+        intent.putExtra(TranslationActivity.EXTRA_SOURCE, source);
+        mActivity.startActivityForResult(intent, REQUEST_CODE_TRANSLATE_GLOSBE);
     }
 
 }
