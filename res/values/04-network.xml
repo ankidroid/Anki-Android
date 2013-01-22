@@ -94,7 +94,7 @@
 <string name="sync_downloading_media">Downloading media %1$d/%2$d...</string>
 <string name="sync_log_uploading_message">Full sync from local</string>
 <string name="sync_log_downloading_message">Full sync from server</string>
-<string name="sync_log_clocks_unsynchronized">The clock on your device is incorrect by %1$d seconds%2$s; Syncing requires both your clock and timezone to be set correctly in order to avoid errors. Please ensure your date and time settings are setup correctly, then sync again.</string>
+<string name="sync_log_clocks_unsynchronized">The clock on your device is incorrect by %1$d seconds%2$s; Syncing requires both your clock and timezone to be set correctly in order to avoid errors. Please ensure the date, time, and timezone on your phone are set correctly, then sync again.</string>
 <string name="sync_log_clocks_unsynchronized_tz">, the device\'s time zone is possibly wrong</string>
 <string name="sync_log_clocks_unsynchronized_date">, the device\'s date is possibly wrong</string>
 <string name="sync_log_old_version">The synchronization protocol has changed, please upgrade to the latest AnkiDroid. See %s</string>
