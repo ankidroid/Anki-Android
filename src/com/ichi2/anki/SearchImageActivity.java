@@ -14,7 +14,9 @@ import java.util.List;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -31,10 +33,14 @@ import com.google.gson.Gson;
 import com.ichi2.anki.gimgsrch.json.ImageSearchResponse;
 import com.ichi2.anki.gimgsrch.json.ResponseData;
 import com.ichi2.anki.gimgsrch.json.Result;
+import com.ichi2.anki.web.HttpFetcher;
 
 public class SearchImageActivity extends Activity implements DialogInterface.OnCancelListener
 {
     public static final String EXTRA_SOURCE = "search.image.activity.extra.source";
+    //Passed out as a result
+    public static String EXTRA_IMAGE_FILE_PATH = "com.ichi2.anki.search.image.activity.extra.image.file.path";
+    
     private String mSource;
     private WebView mWebView;
     private Button mPrevButton;
@@ -44,6 +50,7 @@ public class SearchImageActivity extends Activity implements DialogInterface.OnC
     private int mCurrentImage;
     private String mTemplate = null;
     private Button mPickButton;
+    private DownloadFileTask mDownloadMp3Task;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -122,14 +129,77 @@ public class SearchImageActivity extends Activity implements DialogInterface.OnC
 
     }
 
+    /**
+     * @author zaur
+     * 
+     *         This is to load finally the MP3 file with pronunciation.
+     * 
+     */
+    private class DownloadFileTask extends AsyncTask<Void, Void, String>
+    {
+
+        private String mAddress;
+        private Context mActivity;
+
+        @Override
+        protected String doInBackground(Void... params)
+        {
+            return HttpFetcher.downloadFileToCache(mAddress, mActivity, "imgsearch");
+        }
+
+        public void setAddress(String address)
+        {
+            mAddress = address;
+        }
+
+        @Override
+        protected void onPostExecute(String result)
+        {
+            receiveImageFile(result);
+        }
+        
+        public void setActivity(Context mActivity)
+        {
+            this.mActivity = mActivity;
+        }
+
+    }
+    
+    
     protected void pickImage()
     {
         String imageUrl = mImages.get(mCurrentImage);
         
         //And here it is possible to download it... so on,
         // then return file path.
+
+        // Download MP3 file
+        try
+        {
+            progressDialog = ProgressDialog.show(this, GTX(R.string.multimedia_editor_progress_wait_title), "Saving Image", true, false);
+            mDownloadMp3Task = new DownloadFileTask();
+            mDownloadMp3Task.setActivity(this);
+            mDownloadMp3Task.setAddress(imageUrl);
+            mDownloadMp3Task.execute();
+        }
+        catch (Exception e)
+        {
+            progressDialog.dismiss();
+            returnFailure(GTX(R.string.multimedia_editor_something_wrong));
+        }
+    }
+
+    public void receiveImageFile(String result)
+    {
+        dismissCarefullyProgressDialog();
         
-        //TODO CONTINUE HERE
+        Intent resultData = new Intent();
+
+        resultData.putExtra(EXTRA_IMAGE_FILE_PATH, result);
+
+        setResult(RESULT_OK, resultData);
+
+        finish();
         
     }
 
@@ -434,4 +504,9 @@ public class SearchImageActivity extends Activity implements DialogInterface.OnC
 
     }
 
+    private String GTX(int id)
+    {
+        return getText(id).toString();
+    }
+    
 }

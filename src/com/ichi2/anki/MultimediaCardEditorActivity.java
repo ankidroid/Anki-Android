@@ -151,6 +151,7 @@ public class MultimediaCardEditorActivity extends Activity
 				// text field
 
 				TextView textView = new TextView(this);
+				textView.setMinLines(3);
 				textView.setText(field.getText());
 				linearLayout.addView(textView, LinearLayout.LayoutParams.MATCH_PARENT);
 

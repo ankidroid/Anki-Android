@@ -108,7 +108,8 @@ public class HttpFetcher
     //
     // }
 
-    public static String downloadFileToCache(String UrlToFile, Context context)
+    
+    public static String downloadFileToCache(String UrlToFile, Context context, String prefix)
     {
         try
         {
@@ -122,7 +123,7 @@ public class HttpFetcher
             urlConnection.connect();
 
             File outputDir = context.getCacheDir();
-            File file = File.createTempFile("pronounciation", extension, outputDir);
+            File file = File.createTempFile(prefix, extension, outputDir);
 
             FileOutputStream fileOutput = new FileOutputStream(file);
             InputStream inputStream = urlConnection.getInputStream();

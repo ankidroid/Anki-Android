@@ -232,7 +232,7 @@ public class LoadPronounciationActivity extends Activity implements OnCancelList
         @Override
         protected String doInBackground(Void... params)
         {
-            return HttpFetcher.downloadFileToCache(mAddress, mActivity);
+            return HttpFetcher.downloadFileToCache(mAddress, mActivity, "pronunc");
         }
 
         public void setAddress(String address)

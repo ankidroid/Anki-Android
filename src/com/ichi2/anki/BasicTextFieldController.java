@@ -15,11 +15,13 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.LinearLayout.LayoutParams;
 import android.widget.Toast;
 
 import com.ichi2.anki.multimediacard.EFieldType;
 import com.ichi2.anki.multimediacard.IField;
 import com.ichi2.anki.multimediacard.impl.AudioField;
+import com.ichi2.anki.multimediacard.impl.ImageField;
 
 /**
  * @author zaur
@@ -33,7 +35,7 @@ public class BasicTextFieldController extends FieldControllerBase implements IFi
     private static final int REQUEST_CODE_PRONOUNCIATION = 102;
     private static final int REQUEST_CODE_TRANSLATE_COLORDICT = 103;
     private static final int REQUEST_CODE_IMAGE_SEARCH = 104;
-    
+
     private EditText mEditText;
     private ArrayList<String> mPossibleClones;
     private String mjson;
@@ -50,21 +52,29 @@ public class BasicTextFieldController extends FieldControllerBase implements IFi
         layoutTools.setOrientation(LinearLayout.HORIZONTAL);
         layout.addView(layoutTools);
 
-        createCloneButton(layoutTools);
-        createTranslateButton(layoutTools);
-        createPronounceButton(layoutTools);
-        createClearButton(layoutTools);
-        createSearchImageButton(layoutTools);
+        LinearLayout.LayoutParams p = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT, 1);
 
-        // createTmpButton(layoutTools);
+        createCloneButton(layoutTools, p);
+        createClearButton(layoutTools, p);
+        
+        
+        
+        LinearLayout layoutTools2 = new LinearLayout(mActivity);
+        layoutTools2.setOrientation(LinearLayout.HORIZONTAL);
+        layout.addView(layoutTools2);
+
+        createTranslateButton(layoutTools2, p);
+        createPronounceButton(layoutTools2, p);
+        createSearchImageButton(layoutTools2, p);
 
     }
 
-    private void createSearchImageButton(LinearLayout layoutTools)
+    private void createSearchImageButton(LinearLayout layoutTools, LayoutParams p)
     {
         Button clearButton = new Button(mActivity);
         clearButton.setText("Image");
-        layoutTools.addView(clearButton);
+        layoutTools.addView(clearButton, p);
 
         clearButton.setOnClickListener(new OnClickListener()
         {
@@ -80,8 +90,7 @@ public class BasicTextFieldController extends FieldControllerBase implements IFi
                     showToast("Input some text first...");
                     return;
                 }
-                
-                
+
                 Intent intent = new Intent(mActivity, SearchImageActivity.class);
                 intent.putExtra(SearchImageActivity.EXTRA_SOURCE, source);
                 mActivity.startActivityForResult(intent, REQUEST_CODE_IMAGE_SEARCH);
@@ -89,11 +98,11 @@ public class BasicTextFieldController extends FieldControllerBase implements IFi
         });
     }
 
-    private void createClearButton(LinearLayout layoutTools)
+    private void createClearButton(LinearLayout layoutTools, LayoutParams p)
     {
         Button clearButton = new Button(mActivity);
         clearButton.setText("Clear");
-        layoutTools.addView(clearButton);
+        layoutTools.addView(clearButton, p);
 
         clearButton.setOnClickListener(new OnClickListener()
         {
@@ -107,7 +116,7 @@ public class BasicTextFieldController extends FieldControllerBase implements IFi
         });
     }
 
-    private void createPronounceButton(LinearLayout layoutTools)
+    private void createPronounceButton(LinearLayout layoutTools, LayoutParams p)
     {
         Button btnPronounce = new Button(mActivity);
         // TODO Translation
@@ -132,11 +141,11 @@ public class BasicTextFieldController extends FieldControllerBase implements IFi
             }
         });
 
-        layoutTools.addView(btnPronounce);
+        layoutTools.addView(btnPronounce, p);
     }
 
     // Here is all the functionality to provide translations
-    private void createTranslateButton(LinearLayout layoutTools)
+    private void createTranslateButton(LinearLayout layoutTool, LayoutParams ps)
     {
         Button btnTranslate = new Button(mActivity);
         // TODO Translation
@@ -177,7 +186,7 @@ public class BasicTextFieldController extends FieldControllerBase implements IFi
             }
         });
 
-        layoutTools.addView(btnTranslate);
+        layoutTool.addView(btnTranslate, ps);
     }
 
     /**
@@ -187,9 +196,10 @@ public class BasicTextFieldController extends FieldControllerBase implements IFi
      *            This creates a button, which will call a dialog, allowing to
      *            pick from another note's fields one, and use it's value in the
      *            current one.
+     * @param p 
      * 
      */
-    private void createCloneButton(LinearLayout layoutTools)
+    private void createCloneButton(LinearLayout layoutTools, LayoutParams p)
     {
         if (mNote.getNumberOfFields() > 1)
         {
@@ -239,7 +249,7 @@ public class BasicTextFieldController extends FieldControllerBase implements IFi
             Button btnOtherField = new Button(mActivity);
             // TODO Translation
             btnOtherField.setText("Clone");
-            layoutTools.addView(btnOtherField);
+            layoutTools.addView(btnOtherField, p);
 
             final BasicTextFieldController controller = this;
 
@@ -307,9 +317,23 @@ public class BasicTextFieldController extends FieldControllerBase implements IFi
         {
             String subject = data.getStringExtra(Intent.EXTRA_SUBJECT);
             String text = data.getStringExtra(Intent.EXTRA_TEXT);
-            
+
             mEditText.setText(subject + "\n" + text);
-            
+
+        }
+        else if (requestCode == REQUEST_CODE_IMAGE_SEARCH && resultCode == Activity.RESULT_OK)
+        {
+            String imgPath = data.getExtras().get(SearchImageActivity.EXTRA_IMAGE_FILE_PATH).toString();
+            File f = new File(imgPath);
+            if (!f.exists())
+            {
+                // TODO Translation
+                showToast("Getting image failed");
+            }
+
+            ImageField imgField = new ImageField();
+            imgField.setImagePath(imgPath);
+            mActivity.handleFieldChanged(imgField);
         }
     }
 
@@ -368,8 +392,8 @@ public class BasicTextFieldController extends FieldControllerBase implements IFi
         // intent.putExtra(EXTRA_HEIGHT, 400); //400pixel, if you don't specify,
         // fill_parent"
         intent.putExtra(EXTRA_GRAVITY, Gravity.BOTTOM);
-//        intent.putExtra(EXTRA_MARGIN_LEFT, 100);
-        if(!isIntentAvailable(mActivity, intent))
+        // intent.putExtra(EXTRA_MARGIN_LEFT, 100);
+        if (!isIntentAvailable(mActivity, intent))
         {
             showToast("Install ColorDict first");
             return;

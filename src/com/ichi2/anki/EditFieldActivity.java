@@ -9,6 +9,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.LinearLayout.LayoutParams;
 
 import com.ichi2.anki.multimediacard.EFieldType;
 import com.ichi2.anki.multimediacard.IField;
@@ -130,7 +131,8 @@ public class EditFieldActivity extends FragmentActivity
             }
 
         });
-        linearLayout.addView(toTextButton);
+        linearLayout.addView(toTextButton, new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT, 1));
+        
 
         Button toImageButton = new Button(this);
         toImageButton.setText("Image");
@@ -142,7 +144,7 @@ public class EditFieldActivity extends FragmentActivity
             }
 
         });
-        linearLayout.addView(toImageButton);
+        linearLayout.addView(toImageButton, new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT, 1));
 
         Button toAudioButton = new Button(this);
         toAudioButton.setText("Audio");
@@ -154,7 +156,7 @@ public class EditFieldActivity extends FragmentActivity
             }
 
         });
-        linearLayout.addView(toAudioButton);
+        linearLayout.addView(toAudioButton, new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT, 1));
 
         Button doneButton = new Button(this);
         doneButton.setText("Done");
@@ -166,7 +168,7 @@ public class EditFieldActivity extends FragmentActivity
             }
 
         });
-        linearLayout.addView(doneButton);
+        linearLayout.addView(doneButton, new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT, 1));
 
     }
 
