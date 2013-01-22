@@ -102,7 +102,7 @@ public class Collection {
             + "'collapseTime': 1200, " + "'timeLim': 0, " + "'estTimes': True, " + "'dueCounts': True, "
             +
             // other config
-            "'curModel': None, " + "'nextPos': 1, " + "'sortType': \"noteFld\", "
+            "'curModel': null, " + "'nextPos': 1, " + "'sortType': \"noteFld\", "
             + "'sortBackwards': False, 'addToCur': True }"; // add new to currently selected deck?
 
     public static final int UNDO_REVIEW = 0;

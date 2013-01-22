@@ -61,14 +61,14 @@ public class Models {
             + Sched.MODEL_STD + ", " + "'css': \" .card {" + "font-familiy: arial; " + "font-size: 20px; "
             + "text-align: center; " + "color:black; " + "background-color: white; }\"" + "}";
 
-    private static final String defaultField = "{'name': \"\", " + "'ord': None, " + "'sticky': False, " +
+    private static final String defaultField = "{'name': \"\", " + "'ord': null, " + "'sticky': False, " +
     // the following alter editing, and are used as defaults for the template wizard
             "'rtl': False, " + "'font': \"Arial\", " + "'size': 20, " +
             // reserved for future use
             "'media': [] }";
 
-    private static final String defaultTemplate = "{'name': \"\", " + "'ord': None, " + "'qfmt': \"\", "
-            + "'afmt': \"\", " + "'did': None, " + "'bqfmt': \"\"," + "'bafmt': \"\"," + "'bfont': \"Arial\"," +
+    private static final String defaultTemplate = "{'name': \"\", " + "'ord': null, " + "'qfmt': \"\", "
+            + "'afmt': \"\", " + "'did': null, " + "'bqfmt': \"\"," + "'bafmt': \"\"," + "'bfont': \"Arial\"," +
             "'bsize': 12 }";
 
     // /** Regex pattern used in removing tags from text before diff */
