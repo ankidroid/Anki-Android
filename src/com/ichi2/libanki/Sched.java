@@ -1799,7 +1799,7 @@ public class Sched {
         JSONObject deck = mCol.getDecks().get(did);
         try {
             if (deck.getInt("dyn") == 0) {
-                Log.e(AnkiDroidApp.TAG, "error: deck is not a dynamic deck");
+                Log.e(AnkiDroidApp.TAG, "error: deck is not a filtered deck");
                 return null;
             }
         } catch (JSONException e1) {
@@ -1925,7 +1925,7 @@ public class Sched {
 
     private int _dynIvlBoost(Card card) {
         if (card.getODid() == 0 || card.getType() != 2 || card.getFactor() == 0) {
-            Log.e(AnkiDroidApp.TAG, "error: deck is not a dynamic deck");
+            Log.e(AnkiDroidApp.TAG, "error: deck is not a filtered deck");
             return 0;
         }
         long elapsed = card.getIvl() - (card.getODue() - mToday);
