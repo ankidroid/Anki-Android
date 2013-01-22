@@ -1234,6 +1234,7 @@ public class DeckPicker extends FragmentActivity {
                     public void onClick(DialogInterface dialog, int which) {
                         AnkiDroidApp.getSharedPrefs(AnkiDroidApp.getInstance().getBaseContext())
                                 .edit().putString("lastUpgradeVersion", AnkiDroidApp.getPkgVersion()).commit();
+                        loadCollection();
                     }
                 });
                 builder.show();
