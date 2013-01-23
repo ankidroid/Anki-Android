@@ -38,7 +38,6 @@ public class BasicTextFieldController extends FieldControllerBase implements IFi
 
     private EditText mEditText;
     private ArrayList<String> mPossibleClones;
-    private String mjson;
 
     @Override
     public void createUI(LinearLayout layout)
@@ -57,9 +56,7 @@ public class BasicTextFieldController extends FieldControllerBase implements IFi
 
         createCloneButton(layoutTools, p);
         createClearButton(layoutTools, p);
-        
-        
-        
+
         LinearLayout layoutTools2 = new LinearLayout(mActivity);
         layoutTools2.setOrientation(LinearLayout.HORIZONTAL);
         layout.addView(layoutTools2);
@@ -70,10 +67,15 @@ public class BasicTextFieldController extends FieldControllerBase implements IFi
 
     }
 
+    private String gtxt(int id)
+    {
+        return mActivity.getText(id).toString();
+    }
+
     private void createSearchImageButton(LinearLayout layoutTools, LayoutParams p)
     {
         Button clearButton = new Button(mActivity);
-        clearButton.setText("Image");
+        clearButton.setText(gtxt(R.string.multimedia_editor_text_field_editing_show));
         layoutTools.addView(clearButton, p);
 
         clearButton.setOnClickListener(new OnClickListener()
@@ -86,8 +88,7 @@ public class BasicTextFieldController extends FieldControllerBase implements IFi
 
                 if (source.length() == 0)
                 {
-                    // TODO Translation
-                    showToast("Input some text first...");
+                    showToast(gtxt(R.string.multimedia_editor_text_field_editing_no_text));
                     return;
                 }
 
@@ -101,7 +102,7 @@ public class BasicTextFieldController extends FieldControllerBase implements IFi
     private void createClearButton(LinearLayout layoutTools, LayoutParams p)
     {
         Button clearButton = new Button(mActivity);
-        clearButton.setText("Clear");
+        clearButton.setText(gtxt(R.string.multimedia_editor_text_field_editing_clear));
         layoutTools.addView(clearButton, p);
 
         clearButton.setOnClickListener(new OnClickListener()
@@ -119,8 +120,7 @@ public class BasicTextFieldController extends FieldControllerBase implements IFi
     private void createPronounceButton(LinearLayout layoutTools, LayoutParams p)
     {
         Button btnPronounce = new Button(mActivity);
-        // TODO Translation
-        btnPronounce.setText("Pronounce");
+        btnPronounce.setText(gtxt(R.string.multimedia_editor_text_field_editing_say));
         btnPronounce.setOnClickListener(new OnClickListener()
         {
             @Override
@@ -130,8 +130,7 @@ public class BasicTextFieldController extends FieldControllerBase implements IFi
 
                 if (source.length() == 0)
                 {
-                    // TODO Translation
-                    showToast("Input some text first...");
+                    showToast(gtxt(R.string.multimedia_editor_text_field_editing_no_text));
                     return;
                 }
 
@@ -148,13 +147,25 @@ public class BasicTextFieldController extends FieldControllerBase implements IFi
     private void createTranslateButton(LinearLayout layoutTool, LayoutParams ps)
     {
         Button btnTranslate = new Button(mActivity);
-        // TODO Translation
-        btnTranslate.setText("Translate");
+        btnTranslate.setText(gtxt(R.string.multimedia_editor_text_field_editing_translate));
         btnTranslate.setOnClickListener(new OnClickListener()
         {
             @Override
             public void onClick(View v)
             {
+                String source = mEditText.getText().toString();
+
+                if (source.length() == 0)
+                {
+                    showToast(gtxt(R.string.multimedia_editor_text_field_editing_no_text));
+                    return;
+                }
+
+                if (source.contains(" "))
+                {
+                    showToast(gtxt(R.string.multimedia_editor_text_field_editing_many_words));
+                }
+
                 PickStringDialogFragment fragment = new PickStringDialogFragment();
 
                 ArrayList<String> translationSources = new ArrayList<String>();
@@ -179,8 +190,7 @@ public class BasicTextFieldController extends FieldControllerBase implements IFi
                     }
                 });
 
-                // TODO translate
-                fragment.setTitle("Pick");
+                fragment.setTitle(gtxt(R.string.multimedia_editor_trans_pick_translation_source));
 
                 fragment.show(mActivity.getSupportFragmentManager(), "pick.translation.source");
             }
@@ -196,7 +206,7 @@ public class BasicTextFieldController extends FieldControllerBase implements IFi
      *            This creates a button, which will call a dialog, allowing to
      *            pick from another note's fields one, and use it's value in the
      *            current one.
-     * @param p 
+     * @param p
      * 
      */
     private void createCloneButton(LinearLayout layoutTools, LayoutParams p)
@@ -247,8 +257,7 @@ public class BasicTextFieldController extends FieldControllerBase implements IFi
             }
 
             Button btnOtherField = new Button(mActivity);
-            // TODO Translation
-            btnOtherField.setText("Clone");
+            btnOtherField.setText(gtxt(R.string.multimedia_editor_text_field_editing_clone));
             layoutTools.addView(btnOtherField, p);
 
             final BasicTextFieldController controller = this;
@@ -263,8 +272,7 @@ public class BasicTextFieldController extends FieldControllerBase implements IFi
 
                     fragment.setChoices(mPossibleClones);
                     fragment.setOnclickListener(controller);
-                    // TODO translate
-                    fragment.setTitle("Pick");
+                    fragment.setTitle(gtxt(R.string.multimedia_editor_text_field_editing_clone_source));
 
                     fragment.show(mActivity.getSupportFragmentManager(), "pick.clone");
                 }
@@ -286,8 +294,7 @@ public class BasicTextFieldController extends FieldControllerBase implements IFi
             }
             catch (Exception e)
             {
-                // TODO Translation
-                showToast("Translation failed");
+                showToast(gtxt(R.string.multimedia_editor_trans_translation_failed));
             }
         }
         else if (requestCode == REQUEST_CODE_PRONOUNCIATION && resultCode == Activity.RESULT_OK)
@@ -299,8 +306,7 @@ public class BasicTextFieldController extends FieldControllerBase implements IFi
                 File f = new File(pronuncPath);
                 if (!f.exists())
                 {
-                    // TODO Translation
-                    showToast("Getting pronunciation failed");
+                    showToast(gtxt(R.string.multimedia_editor_pron_pronunciation_failed));
                 }
 
                 AudioField af = new AudioField();
@@ -309,8 +315,7 @@ public class BasicTextFieldController extends FieldControllerBase implements IFi
             }
             catch (Exception e)
             {
-                // TODO Translation
-                showToast("Getting pronunciation failed");
+                showToast(gtxt(R.string.multimedia_editor_pron_pronunciation_failed));
             }
         }
         else if (requestCode == REQUEST_CODE_TRANSLATE_COLORDICT && resultCode == Activity.RESULT_OK)
@@ -327,8 +332,7 @@ public class BasicTextFieldController extends FieldControllerBase implements IFi
             File f = new File(imgPath);
             if (!f.exists())
             {
-                // TODO Translation
-                showToast("Getting image failed");
+                showToast(gtxt(R.string.multimedia_editor_imgs_failed));
             }
 
             ImageField imgField = new ImageField();
@@ -395,7 +399,7 @@ public class BasicTextFieldController extends FieldControllerBase implements IFi
         // intent.putExtra(EXTRA_MARGIN_LEFT, 100);
         if (!isIntentAvailable(mActivity, intent))
         {
-            showToast("Install ColorDict first");
+            showToast(gtxt(R.string.multimedia_editor_trans_install_color_dict));
             return;
         }
         mActivity.startActivityForResult(intent, REQUEST_CODE_TRANSLATE_COLORDICT);
@@ -404,13 +408,6 @@ public class BasicTextFieldController extends FieldControllerBase implements IFi
     protected void startTranslationWithGlosbe()
     {
         String source = mEditText.getText().toString();
-
-        if (source.length() == 0)
-        {
-            // TODO Translation
-            showToast("Input some text first...");
-            return;
-        }
 
         Intent intent = new Intent(mActivity, TranslationActivity.class);
         intent.putExtra(TranslationActivity.EXTRA_SOURCE, source);
