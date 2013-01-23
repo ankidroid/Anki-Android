@@ -1176,4 +1176,18 @@ public class Utils {
         }
     }
 
+    /**
+     * Like org.json.JSONObject except that it doesn't escape forward slashes
+     * The necessity for this method is due to python's 2.7 json.dumps() function that doesn't escape chracter '/'.
+     * The org.json.JSONObject parser accepts both escaped and unescaped forward slashes, so we only need to worry for
+     * our output, when we write to the database or syncing.
+     *
+     * @param json a json object to serialize
+     * @return the json serialization of the object
+     * @see org.json.JSONObject#toString()
+     */
+    public static String jsonToString(JSONObject json) {
+        return json.toString().replaceAll("\\\\/", "/");
+    }
+
 }

@@ -817,15 +817,12 @@ public class DeckTask extends
 				ankiDB.execute("ANALYZE");
 			}
 
-			// actualize counts
-			Object[] counts = null;
-			if (addedCount != -1) {
-				DeckTask.TaskData result = doInBackgroundLoadDeckCounts(new TaskData(col));
-				if (result != null) {
-					counts = result.getObjArray();
-				}			
-			}
-			return new TaskData(addedCount, counts, true);
+            // Update the counts
+            DeckTask.TaskData result = doInBackgroundLoadDeckCounts(new TaskData(col));
+            if (result == null) {
+                return null;
+            }
+            return new TaskData(addedCount, result.getObjArray(), true);
 		} catch (RuntimeException e) {
 			Log.e(AnkiDroidApp.TAG,
 					"doInBackgroundImportAdd - RuntimeException on importing cards: "
@@ -902,14 +899,13 @@ public class DeckTask extends
 			}
 			// delete tmp dir
 			BackupManager.removeDir(dir);
-			
-			// actualize counts
-			Object[] counts = null;
-			DeckTask.TaskData result = doInBackgroundLoadDeckCounts(new TaskData(col));
-			if (result != null) {
-				counts = result.getObjArray();
-			}			
-			return new TaskData(addedCount, counts, true);
+
+            // Update the counts
+            DeckTask.TaskData result = doInBackgroundLoadDeckCounts(new TaskData(col));
+            if (result == null) {
+                return null;
+            }
+            return new TaskData(addedCount, result.getObjArray(), true);
 		} catch (RuntimeException e) {
 			Log.e(AnkiDroidApp.TAG,
 					"doInBackgroundImportReplace - RuntimeException on reopening collection: "

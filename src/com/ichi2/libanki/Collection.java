@@ -29,8 +29,6 @@ import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.Pair;
 import com.ichi2.anki.R;
 import com.ichi2.anki.UIUtils;
-import com.ichi2.async.DeckTask;
-import com.samskivert.mustache.Mustache;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -59,7 +57,7 @@ public class Collection {
     public static final int SCHEMA_VERSION = 11;
     public static final String SYNC_URL = "https://ankiweb.net/";
     public static final int SYNC_VER = 5;
-    public static final String HELP_SITE = "http://ankisrs.net/docs/dev/manual.html";
+    public static final String HELP_SITE = "http://ankisrs.net/docs/manual.html";
 
     private AnkiDb mDb;
     private boolean mServer;
@@ -102,7 +100,7 @@ public class Collection {
             + "'collapseTime': 1200, " + "'timeLim': 0, " + "'estTimes': True, " + "'dueCounts': True, "
             +
             // other config
-            "'curModel': None, " + "'nextPos': 1, " + "'sortType': \"noteFld\", "
+            "'curModel': null, " + "'nextPos': 1, " + "'sortType': \"noteFld\", "
             + "'sortBackwards': False, 'addToCur': True }"; // add new to currently selected deck?
 
     public static final int UNDO_REVIEW = 0;
@@ -221,7 +219,7 @@ public class Collection {
         values.put("dty", mDty ? 1 : 0);
         values.put("usn", mUsn);
         values.put("ls", mLs);
-        values.put("conf", mConf.toString());
+        values.put("conf", Utils.jsonToString(mConf));
         mDb.update("col", values);
     }
 
@@ -460,14 +458,28 @@ public class Collection {
         return (int) mDb.queryScalar("SELECT count() FROM notes");
     }
 
-
+    /**
+     * Return a new note with the default model from the deck
+     * @return The new note
+     */
     public Note newNote() {
-        return newNote(mModels.current());
+        return newNote(true);
     }
 
+    /**
+     * Return a new note with the model derived from the deck or the configuration
+     * @param forDeck When true it uses the model specified in the deck (mid), otherwise it uses the model specified in
+     *                the configuration (curModel)
+     * @return The new note
+     */
+    public Note newNote(boolean forDeck) {
+        return newNote(mModels.current(forDeck));
+    }
 
     /**
-     * Return a new note with the current model.
+     * Return a new note with a specific model
+     * @param m The model to use for the new note
+     * @return The new note
      */
     public Note newNote(JSONObject m) {
         return new Note(this, m);
@@ -941,9 +953,9 @@ public class Collection {
             // runFilter mungeFields for type "q"
             Models.fieldParser fparser = new Models.fieldParser(fields);
             Matcher m = fClozePattern.matcher(qfmt);
-            format = m.replaceFirst("{{cq:" + String.valueOf(((Integer) data[4]) + 1) + ":");
+            format = m.replaceFirst(String.format(Locale.US, "{{cq:%d:", ((Integer) data[4]) + 1));
             m = fAltClozePattern.matcher(format);
-            format = m.replaceFirst("<%%cq:" + String.valueOf(((Integer) data[4]) + 1) + ":");
+            format = m.replaceFirst(String.format(Locale.US, "<%%cq:%d:",((Integer) data[4]) + 1));
             html = mModels.getCmpldTemplate(format).execute(fparser);
             html = (String) AnkiDroidApp.getHooks().runFilter("mungeQA", html, "q", fields, model, data, this);
             d.put("q", html);
@@ -958,9 +970,9 @@ public class Collection {
             // runFilter mungeFields for type "a"
             fparser = new Models.fieldParser(fields);
             m = fClozePattern.matcher(afmt);
-            format = m.replaceFirst("{{ca:" + String.valueOf(((Integer) data[4]) + 1) + ":");
+            format = m.replaceFirst(String.format(Locale.US, "{{ca:%d:", ((Integer) data[4]) + 1));
             m = fAltClozePattern.matcher(format);
-            format = m.replaceFirst("<%%ca:" + String.valueOf(((Integer) data[4]) + 1) + ":");
+            format = m.replaceFirst(String.format(Locale.US, "<%%ca:%d:", ((Integer) data[4]) + 1));
             html = mModels.getCmpldTemplate(format).execute(fparser);
             html = (String) AnkiDroidApp.getHooks().runFilter("mungeQA", html, "a", fields, model, data, this);
             d.put("a", html);

@@ -22,6 +22,7 @@ import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.async.Connection;
 
 import org.apache.http.HttpEntity;
+import com.ichi2.libanki.Utils;
 import org.apache.http.HttpResponse;
 import org.apache.http.StatusLine;
 import org.json.JSONArray;
@@ -46,7 +47,7 @@ public class RemoteMediaServer extends BasicHttpSyncer {
         try {
             data.put("fnames", new JSONArray(fnames));
             data.put("minUsn", minUsn);
-            HttpResponse ret = super.req("remove", getInputStream(data.toString()));
+            HttpResponse ret = super.req("remove", getInputStream(Utils.jsonToString(data)));
             if (ret == null) {
                 return null;
             }
@@ -74,7 +75,7 @@ public class RemoteMediaServer extends BasicHttpSyncer {
         JSONObject data = new JSONObject();
         try {
             data.put("minUsn", minUsn);
-            HttpResponse ret = super.req("files", getInputStream(data.toString()));
+            HttpResponse ret = super.req("files", getInputStream(Utils.jsonToString(data)));
             if (ret == null) {
                 Log.e(AnkiDroidApp.TAG, "RemoteMediaServer.files: Exception during request");
                 return null;
