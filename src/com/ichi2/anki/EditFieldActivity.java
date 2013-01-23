@@ -122,7 +122,7 @@ public class EditFieldActivity extends FragmentActivity
     private void createSpareMenu(LinearLayout linearLayout)
     {
         Button toTextButton = new Button(this);
-        toTextButton.setText("Text");
+        toTextButton.setText(gtxt(R.string.multimedia_editor_field_editing_text));
         toTextButton.setOnClickListener(new View.OnClickListener()
         {
             public void onClick(View v)
@@ -135,7 +135,7 @@ public class EditFieldActivity extends FragmentActivity
         
 
         Button toImageButton = new Button(this);
-        toImageButton.setText("Image");
+        toTextButton.setText(gtxt(R.string.multimedia_editor_field_editing_image));
         toImageButton.setOnClickListener(new View.OnClickListener()
         {
             public void onClick(View v)
@@ -147,7 +147,7 @@ public class EditFieldActivity extends FragmentActivity
         linearLayout.addView(toImageButton, new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT, 1));
 
         Button toAudioButton = new Button(this);
-        toAudioButton.setText("Audio");
+        toTextButton.setText(gtxt(R.string.multimedia_editor_field_editing_audio));
         toAudioButton.setOnClickListener(new View.OnClickListener()
         {
             public void onClick(View v)
@@ -159,7 +159,7 @@ public class EditFieldActivity extends FragmentActivity
         linearLayout.addView(toAudioButton, new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT, 1));
 
         Button doneButton = new Button(this);
-        doneButton.setText("Done");
+        toTextButton.setText(gtxt(R.string.multimedia_editor_field_editing_done));
         doneButton.setOnClickListener(new View.OnClickListener()
         {
             public void onClick(View v)
@@ -230,5 +230,10 @@ public class EditFieldActivity extends FragmentActivity
     {
         mField = newField;        
         recreateEditingUi();
+    }
+    
+    private String gtxt(int id)
+    {
+        return getText(id).toString();
     }
 }

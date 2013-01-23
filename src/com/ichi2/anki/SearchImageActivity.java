@@ -2,12 +2,10 @@ package com.ichi2.anki;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
-import java.io.UnsupportedEncodingException;
 import java.net.InetAddress;
 import java.net.NetworkInterface;
 import java.net.URL;
 import java.net.URLConnection;
-import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.List;
@@ -34,13 +32,14 @@ import com.ichi2.anki.gimgsrch.json.ImageSearchResponse;
 import com.ichi2.anki.gimgsrch.json.ResponseData;
 import com.ichi2.anki.gimgsrch.json.Result;
 import com.ichi2.anki.web.HttpFetcher;
+import com.ichi2.anki.web.UrlTools;
 
 public class SearchImageActivity extends Activity implements DialogInterface.OnCancelListener
 {
     public static final String EXTRA_SOURCE = "search.image.activity.extra.source";
-    //Passed out as a result
+    // Passed out as a result
     public static String EXTRA_IMAGE_FILE_PATH = "com.ichi2.anki.search.image.activity.extra.image.file.path";
-    
+
     private String mSource;
     private WebView mWebView;
     private Button mPrevButton;
@@ -78,22 +77,20 @@ public class SearchImageActivity extends Activity implements DialogInterface.OnC
                 super.onPageFinished(view, url);
                 processPageLoadFinished();
             }
-            
+
             @Override
             public void onPageStarted(WebView view, String url, Bitmap favicon)
-            {             
+            {
                 super.onPageStarted(view, url, favicon);
                 processPageLoadStarted();
             }
-            
-            
+
         });
-        
-        
+
         mPickButton = (Button) findViewById(R.id.ImageSearchPick);
         mPickButton.setEnabled(false);
         mPickButton.setOnClickListener(new OnClickListener()
-        {   
+        {
             @Override
             public void onClick(View v)
             {
@@ -157,26 +154,26 @@ public class SearchImageActivity extends Activity implements DialogInterface.OnC
         {
             receiveImageFile(result);
         }
-        
+
         public void setActivity(Context mActivity)
         {
             this.mActivity = mActivity;
         }
 
     }
-    
-    
+
     protected void pickImage()
     {
         String imageUrl = mImages.get(mCurrentImage);
-        
-        //And here it is possible to download it... so on,
+
+        // And here it is possible to download it... so on,
         // then return file path.
 
         // Download MP3 file
         try
         {
-            progressDialog = ProgressDialog.show(this, GTX(R.string.multimedia_editor_progress_wait_title), "Saving Image", true, false);
+            progressDialog = ProgressDialog.show(this, gtxt(R.string.multimedia_editor_progress_wait_title),
+                    gtxt(R.string.multimedia_editor_imgs_saving_image), true, false);
             mDownloadMp3Task = new DownloadFileTask();
             mDownloadMp3Task.setActivity(this);
             mDownloadMp3Task.setAddress(imageUrl);
@@ -185,14 +182,14 @@ public class SearchImageActivity extends Activity implements DialogInterface.OnC
         catch (Exception e)
         {
             progressDialog.dismiss();
-            returnFailure(GTX(R.string.multimedia_editor_something_wrong));
+            returnFailure(gtxt(R.string.multimedia_editor_something_wrong));
         }
     }
 
     public void receiveImageFile(String result)
     {
         dismissCarefullyProgressDialog();
-        
+
         Intent resultData = new Intent();
 
         resultData.putExtra(EXTRA_IMAGE_FILE_PATH, result);
@@ -200,14 +197,14 @@ public class SearchImageActivity extends Activity implements DialogInterface.OnC
         setResult(RESULT_OK, resultData);
 
         finish();
-        
+
     }
 
     protected void processPageLoadStarted()
     {
         mPickButton.setEnabled(false);
         progressDialog = ProgressDialog.show(this, getText(R.string.multimedia_editor_progress_wait_title),
-                "Loading image", true, false);
+                gtxt(R.string.multimedia_editor_imgs_loading_image), true, false);
 
         progressDialog.setCancelable(true);
     }
@@ -255,7 +252,7 @@ public class SearchImageActivity extends Activity implements DialogInterface.OnC
                 String ip = getLocalIpAddress();
 
                 URL url = new URL("https://ajax.googleapis.com/ajax/services/search/images?"
-                        + "v=1.0&q=Q&userip=IP".replaceAll("Q", getQuery()).replaceAll("IP", ip));
+                        + "v=1.0&q=Q&userip=IP".replaceAll("Q", getQuery()).replaceAll("IP", UrlTools.encodeUrl(ip)));
                 URLConnection connection = url.openConnection();
                 connection.addRequestProperty("Referer", "anki.ichi2.com");
 
@@ -305,14 +302,7 @@ public class SearchImageActivity extends Activity implements DialogInterface.OnC
          */
         public String getQuery()
         {
-            try
-            {
-                return URLEncoder.encode(mQuery, "utf-8");
-            }
-            catch (UnsupportedEncodingException e)
-            {
-                return mQuery;
-            }
+            return UrlTools.encodeUrl(mQuery);
         }
 
     }
@@ -382,12 +372,12 @@ public class SearchImageActivity extends Activity implements DialogInterface.OnC
         }
         while (false);
 
-        returnFailure("Search failed");
+        returnFailure(gtxt(R.string.multimedia_editor_imgs_no_results));
     }
 
     private void proceedWithImages(ArrayList<String> theImages)
     {
-        showToast("Images found");
+        showToast(gtxt(R.string.multimedia_editor_imgs_images_found));
         dismissCarefullyProgressDialog();
 
         mImages = theImages;
@@ -490,7 +480,8 @@ public class SearchImageActivity extends Activity implements DialogInterface.OnC
 
         int min = Math.min(height, width);
 
-        String source = "<center><img width=\"WIDTH\" src=\"URL\" /> </center>".replaceAll("WIDTH", min / 2 + "");
+        String source = "<center>" + gtxt(R.string.multimedia_editor_imgs_pow_by_google) + "</center><br /><center><img width=\"WIDTH\" src=\"URL\" /> </center>"
+                .replaceAll("WIDTH", min / 2 + "");
 
         mTemplate = source;
 
@@ -504,9 +495,9 @@ public class SearchImageActivity extends Activity implements DialogInterface.OnC
 
     }
 
-    private String GTX(int id)
+    private String gtxt(int id)
     {
         return getText(id).toString();
     }
-    
+
 }
