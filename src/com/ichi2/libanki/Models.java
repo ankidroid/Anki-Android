@@ -25,8 +25,6 @@ import android.util.Log;
 
 import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.Pair;
-import com.ichi2.themes.HtmlColors;
-import com.mindprod.common11.StringTools;
 import com.samskivert.mustache.Mustache;
 import com.samskivert.mustache.Template;
 
@@ -196,7 +194,7 @@ public class Models {
                 throw new RuntimeException(e);
             }
             ContentValues val = new ContentValues();
-            val.put("models", array.toString());
+            val.put("models", Utils.jsonToString(array));
             mCol.getDb().update("col", val);
             mChanged = false;
         }
@@ -410,7 +408,7 @@ public class Models {
     public JSONObject copy(JSONObject m) {
         JSONObject m2 = null;
         try {
-            m2 = new JSONObject(m.toString());
+            m2 = new JSONObject(Utils.jsonToString(m));
             m2.put("name", m2.getString("name") + " copy");
         } catch (JSONException e) {
             throw new RuntimeException(e);
@@ -584,7 +582,7 @@ public class Models {
                 }
             }
             // remember old sort field
-            String sortf = m.getJSONArray("flds").getJSONObject(m.getInt("sortf")).toString();
+            String sortf = Utils.jsonToString(m.getJSONArray("flds").getJSONObject(m.getInt("sortf")));
             // move
             l.remove(oldidx);
             l.add(idx, field);
@@ -592,7 +590,7 @@ public class Models {
             // restore sort field
             ja = m.getJSONArray("flds");
             for (int i = 0; i < ja.length(); ++i) {
-                if (ja.getJSONObject(i).toString().equals(sortf)) {
+                if (Utils.jsonToString(ja.getJSONObject(i)).equals(sortf)) {
                     m.put("sortf", i);
                     break;
                 }

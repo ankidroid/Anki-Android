@@ -19,7 +19,6 @@ package com.ichi2.libanki;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Locale;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -327,8 +326,8 @@ public class Storage {
             agc.put("1", gc);
             ContentValues values = new ContentValues();
             values.put("conf", Collection.defaultConf);
-            values.put("decks", ag.toString());
-            values.put("dconf", agc.toString());
+            values.put("decks", Utils.jsonToString(ag));
+            values.put("dconf", Utils.jsonToString(agc));
             db.update("col", values);
         } catch (JSONException e) {
             throw new RuntimeException(e);

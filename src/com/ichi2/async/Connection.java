@@ -42,7 +42,6 @@ import com.ichi2.libanki.sync.RemoteMediaServer;
 import com.ichi2.libanki.sync.RemoteServer;
 import com.ichi2.libanki.sync.Syncer;
 
-import org.apache.commons.httpclient.contrib.ssl.EasySSLSocketFactory;
 import org.apache.commons.httpclient.contrib.ssl.EasyX509TrustManager;
 import org.apache.http.HttpResponse;
 import org.json.JSONException;
@@ -53,7 +52,6 @@ import javax.net.ssl.SSLContext;
 import javax.net.ssl.TrustManager;
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
-import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileFilter;
@@ -62,16 +60,13 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.io.OutputStream;
-import java.io.UnsupportedEncodingException;
 import java.lang.OutOfMemoryError;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
-import java.net.URLConnection;
 import java.security.KeyManagementException;
 import java.security.KeyStoreException;
 import java.security.NoSuchAlgorithmException;
@@ -341,7 +336,7 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
             }
             ZipEntry ze = new ZipEntry("map.json");
             zos.putNextEntry(ze);
-            InputStream in = new ByteArrayInputStream(map.toString().getBytes("UTF-8"));
+            InputStream in = new ByteArrayInputStream(Utils.jsonToString(map).getBytes("UTF-8"));
             int len;
             while ((len = in.read(buf)) >= 0) {
                 zos.write(buf, 0, len);
