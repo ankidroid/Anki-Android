@@ -29,8 +29,6 @@ import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.Pair;
 import com.ichi2.anki.R;
 import com.ichi2.anki.UIUtils;
-import com.ichi2.async.DeckTask;
-import com.samskivert.mustache.Mustache;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -221,7 +219,7 @@ public class Collection {
         values.put("dty", mDty ? 1 : 0);
         values.put("usn", mUsn);
         values.put("ls", mLs);
-        values.put("conf", mConf.toString());
+        values.put("conf", Utils.jsonToString(mConf));
         mDb.update("col", values);
     }
 

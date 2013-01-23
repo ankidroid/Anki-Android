@@ -143,12 +143,12 @@ public class Decks {
                 for (Map.Entry<Long, JSONObject> d : mDecks.entrySet()) {
                     decksarray.put(Long.toString(d.getKey()), d.getValue());
                 }
-                values.put("decks", decksarray.toString());
+                values.put("decks", Utils.jsonToString(decksarray));
                 JSONObject confarray = new JSONObject();
                 for (Map.Entry<Long, JSONObject> d : mDconf.entrySet()) {
                     confarray.put(Long.toString(d.getKey()), d.getValue());
                 }
-                values.put("dconf", confarray.toString());
+                values.put("dconf", Utils.jsonToString(confarray));
             } catch (JSONException e) {
                 throw new RuntimeException(e);
             }
