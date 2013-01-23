@@ -89,33 +89,17 @@
 <string name="custom_study_tags">Enter tags:</string>
 <string name="rebuild_custom_study_deck">Rebuilding custom study deck.\nPlease wait...</string>
     <string name="deck_upgrade_title">Deck Upgrade</string>
-    <string name="deck_upgrade_rename_warning">Be aware that this will rename your collection to \'%1$s\' and
-        will create a new one from your old anki 1.x files. Do you really want to continue?
-    </string>
-    <string name="deck_upgrade_already_upgraded">Did you already upgrade your decks properly after the last AnkiDroid
-        update? If not, you can restart the upgrade process here
-    </string>
-    <string name="deck_upgrade_major_warning">
-        <![CDATA[This is a major update to Ankidroid and the upgrade process will take at least 5-10 minutes.<br><br>Do you want to proceed now or later?<br><br><a href=\"http://code.google.com/p/ankidroid/wiki/Upgrading?wl=en\">More info</a>]]></string>
-    <string name="deck_upgrade_start_again_to_upgrade_toast">Please start Ankidroid again when you have time to
-        upgrade!
-    </string>
-    <string name="deck_upgrade_recommended_method">
-        <![CDATA[The recommended upgrade method is to sync with a PC and upgrade with the desktop version of Anki.<br><br>Do you want to upgrade with a PC?]]></string>
-    <string name="deck_upgrade_more_options">
-        <![CDATA[You can create a new empty collection by clicking below.<br><br>If you want to downgrade back to AnkiDroid 1 then please (read <a href=\"http://code.google.com/p/ankidroid/wiki/Upgrading?wl=en#Continuing_to_use_AnkiDroid_1.1.3\">these instructions</a>).]]></string>
+    <string name="deck_upgrade_rename_warning">Be aware that this will rename your collection to \'%1$s\' and will create a new one from your old anki 1.x files. Do you really want to continue?</string>
+    <string name="deck_upgrade_already_upgraded">Did you already upgrade your decks properly after the last AnkiDroid update? If not, you can restart the upgrade process here</string>
+    <string name="deck_upgrade_major_warning"><![CDATA[This is a major update to Ankidroid and the upgrade process will take at least 5–10 minutes.<br><br>Do you want to proceed now or later?<br><br><a href=\"http://code.google.com/p/ankidroid/wiki/Upgrading?wl=en\">More info</a>]]></string>
+    <string name="deck_upgrade_start_again_to_upgrade_toast">Please start Ankidroid again when you have time to upgrade!</string>
+    <string name="deck_upgrade_recommended_method"><![CDATA[The recommended upgrade method is to sync with a PC and upgrade with the desktop version of Anki.<br><br>Do you want to upgrade with a PC?]]></string>
+    <string name="deck_upgrade_more_options"><![CDATA[You can create a new empty collection by clicking below.<br><br>If you want to downgrade back to AnkiDroid 1 then please (read <a href=\"http://code.google.com/p/ankidroid/wiki/Upgrading?wl=en#Continuing_to_use_AnkiDroid_1.1.3\">these instructions</a>).]]></string>
     <string name="deck_upgrade_create_new_collection">Create new collection</string>
     <string name="deck_upgrade_create_new_collection_title">Create New Collection</string>
-    <string name="deck_upgrade_not_import_warning">Are you sure you want to do this? Your old data will not be
-        imported.
-    </string>
-    <string name="deck_upgrade_via_web">
-        <![CDATA[<b>This upgrade method is not recommended if you used media files, or have a big collection!</b><br><br>Your anki1 decks will be zipped and uploaded to AnkiWeb, and the converted collection will then be downloaded.<br><br>Please note that a stable internet connection is required, and that there is a 50MB file limit.<br><br>Users of Anki Desktop are strongly encouraged to use the PC based upgrade method.<br><br>Do you still want to proceed?]]></string>
-    <string name="deck_upgrade_via_anki_desktop">
-        <![CDATA[If you currently have an up-to-date version of your AnkiDroid collection in the Anki desktop software, you can upgrade from there and then download your upgraded collection by syncing with AnkiWeb.<br><br>Alternatively, you can copy your AnkiDroid collection to your PC using USB, then upgrade the collection and copy back to AnkiDroid.]]></string>
-    <string name="deck_upgrade_auto_upgrade">
-        <![CDATA[Please install and start Anki Desktop version 2.0.4 or greater to upgrade your collection, then sync your upgraded collection with AnkiWeb and press the \"Download\" button.<br><br><a href=\"http://code.google.com/p/ankidroid/wiki/Upgrading?wl=en#Option_2:_Using_AnkiWeb_sync\">More detailed information on upgrading using AnkiWeb</a>]]></string>
-    <string name="deck_upgrade_manual">
-        <![CDATA[Please copy all of your *.anki files (and any *.media folders) from your AnkiDroid folder to your Anki Desktop folder, and then install and start Anki Desktop version 2.0.4 or greater to upgrade your collection.<br><br>When the upgrade is completed, please export your collection from Anki2 and copy the collection.apkg file to your AnkiDroid folder and press the Import button below.<br><br><a href=\"http://code.google.com/p/ankidroid/wiki/Upgrading?wl=en#Option_1:_Using_USB_(recommended)\">More detailed information on upgrading using USB.</a>]]></string>
-
+    <string name="deck_upgrade_not_import_warning">Are you sure you want to do this? Your old data will not be imported.</string>
+    <string name="deck_upgrade_via_web"><![CDATA[<b>This upgrade method is not recommended if you used media files, or have a big collection!</b><br><br>Your anki1 decks will be zipped and uploaded to AnkiWeb, and the converted collection will then be downloaded.<br><br>Please note that a stable internet connection is required, and that there is a 50MB file limit.<br><br>Users of Anki Desktop are strongly encouraged to use the PC based upgrade method.<br><br>Do you still want to proceed?]]></string>
+    <string name="deck_upgrade_via_anki_desktop"><![CDATA[If you currently have an up-to-date version of your AnkiDroid collection in the Anki desktop software, you can upgrade from there and then download your upgraded collection by syncing with AnkiWeb.<br><br>Alternatively, you can copy your AnkiDroid collection to your PC using USB, then upgrade the collection and copy back to AnkiDroid.]]></string>
+    <string name="deck_upgrade_auto_upgrade"><![CDATA[Please install and start Anki Desktop version 2.0.4 or greater to upgrade your collection, then sync your upgraded collection with AnkiWeb and press the \"Download\" button.<br><br><a href=\"http://code.google.com/p/ankidroid/wiki/Upgrading?wl=en#Option_2:_Using_AnkiWeb_sync\">More detailed information on upgrading using AnkiWeb</a>]]></string>
+    <string name="deck_upgrade_manual"><![CDATA[Please copy all of your *.anki files (and any *.media folders) from your AnkiDroid folder to your Anki Desktop folder, and then install and start Anki Desktop version 2.0.4 or greater to upgrade your collection.<br><br>When the upgrade is completed, please export your collection from Anki2 and copy the collection.apkg file to your AnkiDroid folder and press the Import button below.<br><br><a href=\"http://code.google.com/p/ankidroid/wiki/Upgrading?wl=en#Option_1:_Using_USB_(recommended)\">More detailed information on upgrading using USB.</a>]]></string>
 </resources>

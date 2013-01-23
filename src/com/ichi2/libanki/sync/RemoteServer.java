@@ -20,6 +20,7 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 
+import com.ichi2.libanki.Utils;
 import org.apache.http.HttpResponse;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -42,7 +43,7 @@ public class RemoteServer extends BasicHttpSyncer {
             JSONObject jo = new JSONObject();
             jo.put("u", user);
             jo.put("p", pw);
-            return super.req("hostKey", super.getInputStream(jo.toString()), false);
+            return super.req("hostKey", super.getInputStream(Utils.jsonToString(jo)), false);
         } catch (JSONException e) {
             return null;
         }
@@ -69,7 +70,7 @@ public class RemoteServer extends BasicHttpSyncer {
         try {
             JSONObject jo = new JSONObject();
             jo.put("v", Collection.SYNC_VER);
-            return super.req("meta", super.getInputStream(jo.toString()));
+            return super.req("meta", super.getInputStream(Utils.jsonToString(jo)));
         } catch (JSONException e) {
             throw new RuntimeException(e);
         }
@@ -143,7 +144,7 @@ public class RemoteServer extends BasicHttpSyncer {
 
 
     private JSONObject _run(String cmd, JSONObject data) {
-        HttpResponse ret = super.req(cmd, super.getInputStream(data.toString()));
+        HttpResponse ret = super.req(cmd, super.getInputStream(Utils.jsonToString(data)));
         if (ret == null) {
             return null;
         }
