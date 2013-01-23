@@ -18,13 +18,10 @@
 package com.ichi2.libanki;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
@@ -79,7 +76,7 @@ public class Tags {
                 }
             }
             ContentValues val = new ContentValues();
-            val.put("tags", tags.toString());
+            val.put("tags", Utils.jsonToString(tags));
             mCol.getDb().update("col", val);
             mChanged = false;
         }

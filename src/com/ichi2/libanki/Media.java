@@ -16,7 +16,6 @@
 
 package com.ichi2.libanki;
 
-import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.net.Uri;
@@ -44,12 +43,10 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import java.util.zip.DeflaterOutputStream;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipException;
 import java.util.zip.ZipFile;
@@ -545,7 +542,7 @@ public class Media {
                 zos.closeEntry();
             }
             zos.putNextEntry(new ZipEntry("_meta"));
-            zos.write(files.toString().getBytes());
+            zos.write(Utils.jsonToString(files).getBytes());
             zos.close();
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);

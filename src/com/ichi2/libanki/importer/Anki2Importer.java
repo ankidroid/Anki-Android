@@ -275,13 +275,13 @@ public class Anki2Importer {
 				return mModelMap.get(srcMid);
 			}
 			long mid = srcMid;
-			JSONObject srcModel = new JSONObject(mSrc.getModels().get(srcMid).toString());
+			JSONObject srcModel = new JSONObject(Utils.jsonToString(mSrc.getModels().get(srcMid)));
 			String srcScm = mSrc.getModels().scmhash(srcModel);
 			while (true) {
 				// missing from target col?
 				if (!mDst.getModels().have(mid)) {
 					// copy it over
-					JSONObject model = new JSONObject(srcModel.toString());
+					JSONObject model = new JSONObject(Utils.jsonToString(srcModel));
 					model.put("id", mid);
                     model.put("mod", Utils.intNow());
                     model.put("usn", mCol.usn());
@@ -289,7 +289,7 @@ public class Anki2Importer {
 					break;
 				}
 				// there's an existing model; do the schemas match?
-				JSONObject dstModel = new JSONObject(mDst.getModels().get(mid).toString());
+				JSONObject dstModel = new JSONObject(Utils.jsonToString(mDst.getModels().get(mid)));
 				String dstScm = mDst.getModels().scmhash(dstModel);
 				if (srcScm.equals(dstScm)) {
 					// they do; we can reuse this mid
@@ -591,8 +591,10 @@ public class Anki2Importer {
         try {
             Utils.writeToFile(is, fname);
         } catch (IOException e) {
-            Log.e(AnkiDroidApp.TAG, "Anki2Importer._writeDstMedia: error while copying file", e);
-            throw new RuntimeException(e);
+            // the user likely used subdirectories
+            Log.e(AnkiDroidApp.TAG, String.format(Locale.US,
+                    "Anki2Importer._writeDstMedia: error copying file to %s (%s), ignoring and continuing.", fname,
+                    e.getMessage()));
         }
     }
 

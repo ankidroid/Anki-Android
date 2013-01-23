@@ -49,7 +49,7 @@ public class Decks {
 
     private static final String defaultDynamicDeck = "{" + "'newToday': [0, 0], " + // currentDay, count
             "'revToday': [0, 0], " + "'lrnToday': [0, 0], " + "'timeToday': [0, 0], " + // time in ms
-            "'collapsed': False, 'dyn': 1, 'desc': \"\", 'usn': 0, 'delays': None, 'separate': True, " +
+            "'collapsed': False, 'dyn': 1, 'desc': \"\", 'usn': 0, 'delays': null, 'separate': True, " +
             // list of (search, limit, order); we only use first element for now
             "'terms': [[\"\", 100, 0]], 'resched': True, " +
             // currently unused
@@ -143,12 +143,12 @@ public class Decks {
                 for (Map.Entry<Long, JSONObject> d : mDecks.entrySet()) {
                     decksarray.put(Long.toString(d.getKey()), d.getValue());
                 }
-                values.put("decks", decksarray.toString());
+                values.put("decks", Utils.jsonToString(decksarray));
                 JSONObject confarray = new JSONObject();
                 for (Map.Entry<Long, JSONObject> d : mDconf.entrySet()) {
                     confarray.put(Long.toString(d.getKey()), d.getValue());
                 }
-                values.put("dconf", confarray.toString());
+                values.put("dconf", Utils.jsonToString(confarray));
             } catch (JSONException e) {
                 throw new RuntimeException(e);
             }
