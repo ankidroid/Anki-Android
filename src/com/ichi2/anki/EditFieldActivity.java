@@ -61,17 +61,16 @@ public class EditFieldActivity extends FragmentActivity
 
         mFieldController = controllerFactory.createControllerForField(mField);
 
-        if(mFieldController == null)
+        if (mFieldController == null)
         {
             Log.d(AnkiDroidApp.TAG, "Field controller creation failed");
             return;
         }
-        
+
         mFieldController.setField(mField);
         mFieldController.setFieldIndex(mFieldIndex);
         mFieldController.setNote(mNote);
         mFieldController.setEditingActivity(this);
-              
 
         LinearLayout linearLayout = (LinearLayout) findViewById(R.id.LinearLayoutInScrollViewFieldEdit);
 
@@ -80,7 +79,6 @@ public class EditFieldActivity extends FragmentActivity
         mFieldController.createUI(linearLayout);
 
     }
-    
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu)
@@ -121,6 +119,9 @@ public class EditFieldActivity extends FragmentActivity
 
     private void createSpareMenu(LinearLayout linearLayout)
     {
+
+        LayoutParams pars = new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT, 1);
+
         Button toTextButton = new Button(this);
         toTextButton.setText(gtxt(R.string.multimedia_editor_field_editing_text));
         toTextButton.setOnClickListener(new View.OnClickListener()
@@ -131,11 +132,10 @@ public class EditFieldActivity extends FragmentActivity
             }
 
         });
-        linearLayout.addView(toTextButton, new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT, 1));
-        
+        linearLayout.addView(toTextButton, pars);
 
         Button toImageButton = new Button(this);
-        toTextButton.setText(gtxt(R.string.multimedia_editor_field_editing_image));
+        toImageButton.setText(gtxt(R.string.multimedia_editor_field_editing_image));
         toImageButton.setOnClickListener(new View.OnClickListener()
         {
             public void onClick(View v)
@@ -144,10 +144,10 @@ public class EditFieldActivity extends FragmentActivity
             }
 
         });
-        linearLayout.addView(toImageButton, new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT, 1));
+        linearLayout.addView(toImageButton, pars);
 
         Button toAudioButton = new Button(this);
-        toTextButton.setText(gtxt(R.string.multimedia_editor_field_editing_audio));
+        toAudioButton.setText(gtxt(R.string.multimedia_editor_field_editing_audio));
         toAudioButton.setOnClickListener(new View.OnClickListener()
         {
             public void onClick(View v)
@@ -156,10 +156,10 @@ public class EditFieldActivity extends FragmentActivity
             }
 
         });
-        linearLayout.addView(toAudioButton, new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT, 1));
+        linearLayout.addView(toAudioButton, pars);
 
         Button doneButton = new Button(this);
-        toTextButton.setText(gtxt(R.string.multimedia_editor_field_editing_done));
+        doneButton.setText(gtxt(R.string.multimedia_editor_field_editing_done));
         doneButton.setOnClickListener(new View.OnClickListener()
         {
             public void onClick(View v)
@@ -168,7 +168,7 @@ public class EditFieldActivity extends FragmentActivity
             }
 
         });
-        linearLayout.addView(doneButton, new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT, 1));
+        linearLayout.addView(doneButton, pars);
 
     }
 
@@ -198,7 +198,7 @@ public class EditFieldActivity extends FragmentActivity
 
     protected void toImageField()
     {
-        if(mField.getType() != EFieldType.IMAGE)
+        if (mField.getType() != EFieldType.IMAGE)
         {
             mField = new ImageField();
             recreateEditingUi();
@@ -208,7 +208,7 @@ public class EditFieldActivity extends FragmentActivity
 
     protected void toTextField()
     {
-        if(mField.getType() != EFieldType.TEXT)
+        if (mField.getType() != EFieldType.TEXT)
         {
             mField = new TextField();
             recreateEditingUi();
@@ -228,10 +228,10 @@ public class EditFieldActivity extends FragmentActivity
 
     public void handleFieldChanged(IField newField)
     {
-        mField = newField;        
+        mField = newField;
         recreateEditingUi();
     }
-    
+
     private String gtxt(int id)
     {
         return getText(id).toString();

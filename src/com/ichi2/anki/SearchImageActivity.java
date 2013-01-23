@@ -15,12 +15,15 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.Toast;
 
@@ -38,7 +41,7 @@ public class SearchImageActivity extends Activity implements DialogInterface.OnC
     public static String EXTRA_IMAGE_FILE_PATH = "com.ichi2.anki.search.image.activity.extra.image.file.path";
 
     private String mSource;
-//    private WebView mWebView;
+    private WebView mWebView;
     private Button mPrevButton;
     private Button mNextButton;
     private ProgressDialog progressDialog;
@@ -65,24 +68,24 @@ public class SearchImageActivity extends Activity implements DialogInterface.OnC
 
         // If translation fails this is a default - source will be returned.
 
-//        mWebView = (WebView) findViewById(R.id.ImageSearchWebView);
-//        mWebView.setWebViewClient(new WebViewClient()
-//        {
-//            @Override
-//            public void onPageFinished(WebView view, String url)
-//            {
-//                super.onPageFinished(view, url);
-//                processPageLoadFinished();
-//            }
-//
-//            @Override
-//            public void onPageStarted(WebView view, String url, Bitmap favicon)
-//            {
-//                super.onPageStarted(view, url, favicon);
-//                processPageLoadStarted();
-//            }
-//
-//        });
+        mWebView = (WebView) findViewById(R.id.ImageSearchWebView);
+        mWebView.setWebViewClient(new WebViewClient()
+        {
+            @Override
+            public void onPageFinished(WebView view, String url)
+            {
+                super.onPageFinished(view, url);
+                processPageLoadFinished();
+            }
+
+            @Override
+            public void onPageStarted(WebView view, String url, Bitmap favicon)
+            {
+                super.onPageStarted(view, url, favicon);
+                processPageLoadStarted();
+            }
+
+        });
 
         mPickButton = (Button) findViewById(R.id.ImageSearchPick);
         mPickButton.setEnabled(false);
@@ -404,7 +407,7 @@ public class SearchImageActivity extends Activity implements DialogInterface.OnC
 
         source = source.replaceAll("URL", mImages.get(mCurrentImage));
 
-//        mWebView.loadData(source, "text/html", null);
+        mWebView.loadData(source, "text/html", null);
 
     }
 
