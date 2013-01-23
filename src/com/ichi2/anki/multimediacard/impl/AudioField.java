@@ -14,8 +14,9 @@ import com.ichi2.anki.multimediacard.IField;
 public class AudioField extends FieldBase implements IField
 {
 	private static final long serialVersionUID = 5033819217738174719L;
-	String mAudioPath;
-	String mName;
+	private String mAudioPath;
+	private String mName;
+	private boolean mHasTemporaryMedia = false;
 
 	@Override
 	public EFieldType getType()
@@ -88,12 +89,13 @@ public class AudioField extends FieldBase implements IField
 	@Override
 	public void setHasTemporaryMedia(boolean hasTemporaryMedia)
 	{
+		mHasTemporaryMedia = hasTemporaryMedia;
 	}
 
 	@Override
 	public boolean hasTemporaryMedia()
 	{
-		return false;
+		return mHasTemporaryMedia;
 	}
 
 	@Override

@@ -1,18 +1,23 @@
 package com.ichi2.anki;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.Collections;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -31,6 +36,8 @@ import com.ichi2.async.DeckTask.TaskData;
 import com.ichi2.async.DeckTask.TaskListener;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Note;
+import com.ichi2.themes.StyledDialog;
+import com.ichi2.utils.JSONNameComparator;
 
 public class MultimediaCardEditorActivity extends Activity
 {
@@ -47,7 +54,11 @@ public class MultimediaCardEditorActivity extends Activity
 	private static final String ACTION_CREATE_FLASHCARD = "org.openintents.action.CREATE_FLASHCARD";
 	private static final String ACTION_CREATE_FLASHCARD_SEND = "android.intent.action.SEND";
 
-	private LinearLayout mMainUIiLayout;
+	private static final int DIALOG_MODEL_SELECT = 1;
+
+	private LinearLayout mEditorLayout;
+	private LinearLayout mButtonsLayout;
+	private Button mModelButton;
 
 	/* Data variables below, not UI Elements */
 	private Collection mCol;
@@ -69,17 +80,15 @@ public class MultimediaCardEditorActivity extends Activity
 		setContentView(R.layout.activity_multimedia_card_editor);
 
 		_initData();
-		_initActionBar();
-
-		mMainUIiLayout = (LinearLayout) findViewById(R.id.LinearLayoutInScrollView);
-
-		recreateUi(mNote);
+		_initUI();
+		_createEditorUI(mNote);
 	}
 
 	/**
-	 * Creates a TabBar in case action bar is not present
+	 * Creates a TabBar in case action bar is not present as well as other UI
+	 * Elements
 	 */
-	private void _initActionBar()
+	private void _initUI()
 	{
 		int currentapiVersion = android.os.Build.VERSION.SDK_INT;
 		if (currentapiVersion <= android.os.Build.VERSION_CODES.GINGERBREAD_MR1)
@@ -87,47 +96,77 @@ public class MultimediaCardEditorActivity extends Activity
 			LinearLayout linearLayout = (LinearLayout) findViewById(R.id.LinearLayoutForSpareMenu);
 			createSpareMenu(linearLayout);
 		}
+
+		mEditorLayout = (LinearLayout) findViewById(R.id.LinearLayoutInScrollView);
+		mButtonsLayout = (LinearLayout) findViewById(R.id.LinearLayoutForButtons);
+
+		LayoutParams pars = new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT, 1);
+
+		mModelButton = new Button(this);
+		mModelButton.setText("Model");
+		mModelButton.setOnClickListener(new OnClickListener()
+		{
+			@Override
+			public void onClick(View v)
+			{
+				showDialog(DIALOG_MODEL_SELECT);
+			}
+		});
+		mButtonsLayout.addView(mModelButton, pars);
 	}
 
-    private void createSpareMenu(LinearLayout linearLayout)
-    {
-        LayoutParams pars = new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT, 1);
-
-        Button saveButton = new Button(this);
-        saveButton.setText(getString(R.string.CardEditorSaveButton));
-        saveButton.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View v)
-            {
-                save();
-            }
-        });
-        linearLayout.addView(saveButton, pars);
-
-        Button deleteButton = new Button(this);
-        deleteButton.setText(getString(R.string.menu_delete_note));
-        deleteButton.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View v)
-            {
-                delete();
-            }
-        });
-        linearLayout.addView(deleteButton, pars);
-    }
-
-	private void recreateUi(IMultimediaEditableNote note)
+	private void createSpareMenu(LinearLayout linearLayout)
 	{
+		LayoutParams pars = new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT, 1);
 
-		LinearLayout linearLayout = mMainUIiLayout;
-
-		linearLayout.removeAllViews();
-
-		for (int i = 0; i < note.getNumberOfFields(); ++i)
+		Button saveButton = new Button(this);
+		saveButton.setText(getString(R.string.CardEditorSaveButton));
+		saveButton.setOnClickListener(new View.OnClickListener()
 		{
-			createNewViewer(linearLayout, note.getField(i), i);
+			@Override
+			public void onClick(View v)
+			{
+				save();
+			}
+		});
+		linearLayout.addView(saveButton, pars);
+
+		Button deleteButton = new Button(this);
+		deleteButton.setText(getString(R.string.menu_delete_note));
+		deleteButton.setOnClickListener(new View.OnClickListener()
+		{
+			@Override
+			public void onClick(View v)
+			{
+				delete();
+			}
+		});
+		linearLayout.addView(deleteButton, pars);
+	}
+
+	/**
+	 * Creates the UI for editor area inside EditorLayout
+	 * 
+	 * @param note
+	 */
+	private void _createEditorUI(IMultimediaEditableNote note)
+	{
+		try
+		{
+			LinearLayout linearLayout = mEditorLayout;
+
+			linearLayout.removeAllViews();
+
+			for (int i = 0; i < note.getNumberOfFields(); ++i)
+			{
+				createNewViewer(linearLayout, note.getField(i), i);
+			}
+
+			mModelButton.setText("Note type: " + mEditorNote.model().getString("name"));
+		}
+		catch (JSONException e)
+		{
+			throw new RuntimeException(e);
 		}
 
 	}
@@ -241,10 +280,8 @@ public class MultimediaCardEditorActivity extends Activity
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data)
 	{
-
 		if (requestCode == REQUEST_CODE_EDIT_FIELD)
 		{
-
 			if (resultCode == RESULT_OK)
 			{
 
@@ -258,10 +295,119 @@ public class MultimediaCardEditorActivity extends Activity
 				}
 
 				mNote.setField(index, field);
-				recreateUi(mNote);
+				_createEditorUI(mNote);
 			}
 
 			super.onActivityResult(requestCode, resultCode, data);
+		}
+	}
+
+	@Override
+	protected Dialog onCreateDialog(int id)
+	{
+		switch (id)
+		{
+			case DIALOG_MODEL_SELECT:
+				return _showModelSelectDialog();
+
+			default:
+				break;
+
+		}
+
+		return null;
+	}
+
+	private Dialog _showModelSelectDialog()
+	{
+		StyledDialog dialog = null;
+		StyledDialog.Builder builder = new StyledDialog.Builder(this);
+
+		ArrayList<CharSequence> dialogItems = new ArrayList<CharSequence>();
+		// Use this array to know which ID is associated with each
+		// Item(name)
+		final ArrayList<Long> dialogIds = new ArrayList<Long>();
+
+		ArrayList<JSONObject> models = mCol.getModels().all();
+		Collections.sort(models, new JSONNameComparator());
+		builder.setTitle(R.string.note_type);
+		for (JSONObject m : models)
+		{
+			try
+			{
+				dialogItems.add(m.getString("name"));
+				dialogIds.add(m.getLong("id"));
+			}
+			catch (JSONException e)
+			{
+				throw new RuntimeException(e);
+			}
+		}
+		// Convert to Array
+		String[] items2 = new String[dialogItems.size()];
+		dialogItems.toArray(items2);
+
+		builder.setItems(items2, new DialogInterface.OnClickListener()
+		{
+			@Override
+			public void onClick(DialogInterface dialog, int item)
+			{
+
+				long oldModelId;
+				try
+				{
+					oldModelId = mCol.getModels().current().getLong("id");
+				}
+				catch (JSONException e)
+				{
+					throw new RuntimeException(e);
+				}
+				long newId = dialogIds.get(item);
+				if (oldModelId != newId)
+				{
+					_changeCurrentModel(newId, oldModelId);
+					_createEditorUI(mNote);
+				}
+			}
+		});
+		dialog = builder.create();
+		return dialog;
+	}
+
+	protected void _changeCurrentModel(long newId, long oldModelId)
+	{
+		try
+		{
+			JSONObject currentModel = mCol.getModels().get(newId);
+			mCol.getModels().setCurrent(currentModel);
+			JSONObject cdeck = mCol.getDecks().current();
+
+			cdeck.put("mid", newId);
+
+			mCol.getDecks().save(cdeck);
+			int size = mNote.getNumberOfFields();
+			String[] oldValues = new String[size];
+			for (int i = 0; i < size; i++)
+			{
+				oldValues[i] = mNote.getField(i).getFormattedValue();
+			}
+			mEditorNote = new Note(mCol, currentModel);
+			mEditorNote.model().put("did", mCurrentDid);
+
+			MultimediaEditableNote newNote = NoteService.createEmptyNote(currentModel);
+			for (int i = 0; i < newNote.getNumberOfFields(); i++)
+			{
+				if (i < mNote.getNumberOfFields())
+				{
+					newNote.setField(i, mNote.getField(i));
+				}
+			}
+			mNote = newNote;
+
+		}
+		catch (JSONException e)
+		{
+			throw new RuntimeException(e);
 		}
 
 	}
