@@ -1,5 +1,6 @@
 package com.ichi2.anki;
 
+
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -14,6 +15,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -209,8 +211,21 @@ public class MultimediaCardEditorActivity extends Activity
 				// Bitmap bm = BitmapFactory.decodeFile(myJpgPath, options);
 				// jpgView.setImageBitmap(bm);
 
-				imgView.setImageURI(Uri.fromFile(new File(field.getImagePath())));
-				linearLayout.addView(imgView, LinearLayout.LayoutParams.MATCH_PARENT);
+
+                                LinearLayout.LayoutParams p = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
+				imgView.setImageURI(Uri.parse(new File(field.getImagePath()).toString()));
+				imgView.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
+				imgView.setAdjustViewBounds(true);
+				
+				DisplayMetrics metrics = new DisplayMetrics();
+			        getWindowManager().getDefaultDisplay().getMetrics(metrics);
+
+			        int height = metrics.heightPixels;
+			        int width = metrics.widthPixels;
+			        
+				imgView.setMaxHeight((int)Math.round(height*0.6));
+				imgView.setMaxWidth((int)Math.round(width*0.7));
+				linearLayout.addView(imgView, p);
 
 				break;
 			case AUDIO:

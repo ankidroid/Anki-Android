@@ -8,12 +8,12 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.provider.MediaStore;
+import android.util.DisplayMetrics;
 import android.view.View;
-import android.view.ViewGroup;
-import android.view.ViewGroup.LayoutParams;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.LinearLayout.LayoutParams;
 import android.widget.TextView;
 
 public class BasicImageFieldController extends FieldControllerBase implements IFieldController
@@ -32,12 +32,23 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
     public void createUI(LinearLayout layout)
     {
         mImagePreview = new ImageView(mActivity);
-        mImagePreview.setAdjustViewBounds(true);
-        mImagePreview.setMaxHeight(IMAGE_PREVIEW_MAX_WIDTH);
-        ViewGroup.LayoutParams params = new ViewGroup.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
-        mImagePreview.setLayoutParams(params);
-        setPreviewImage(mField.getImagePath());
+        
+        
 
+        LinearLayout.LayoutParams p = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
+        setPreviewImage(mField.getImagePath());
+        mImagePreview.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
+        mImagePreview.setAdjustViewBounds(true);
+        
+        DisplayMetrics metrics = new DisplayMetrics();
+        mActivity.getWindowManager().getDefaultDisplay().getMetrics(metrics);
+
+        int height = metrics.heightPixels;
+        int width = metrics.widthPixels;
+        
+        mImagePreview.setMaxHeight((int)Math.round(height*0.4));
+        mImagePreview.setMaxWidth((int)Math.round(width*0.6));
+        
         mBtnGallery = new Button(mActivity);
         mBtnGallery.setText("From Gallery");
         mBtnGallery.setOnClickListener(new View.OnClickListener()
@@ -78,7 +89,7 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
         TextView textView = new TextView(mActivity);
         textView.setText("Current Image");
         layout.addView(textView, LinearLayout.LayoutParams.MATCH_PARENT);
-        layout.addView(mImagePreview, LinearLayout.LayoutParams.MATCH_PARENT);
+        layout.addView(mImagePreview, LinearLayout.LayoutParams.MATCH_PARENT, p);
         layout.addView(mBtnGallery, LinearLayout.LayoutParams.MATCH_PARENT);
         layout.addView(mBtnCamera, LinearLayout.LayoutParams.MATCH_PARENT);
     }
@@ -123,7 +134,11 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
     {
         if (imagePath != null && !imagePath.equals(""))
         {
-            mImagePreview.setImageURI(Uri.fromFile(new File(imagePath)));
+            // Caused bug on API <= 7
+            // mImagePreview.setImageURI(Uri.fromFile(new File(imagePath)));
+            
+            //fix
+            mImagePreview.setImageURI(Uri.parse(new File(imagePath).toString()));
         }
     }
 }
