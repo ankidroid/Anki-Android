@@ -7,60 +7,61 @@ import com.ichi2.anki.multimediacard.IMultimediaEditableNote;
 
 /**
  * @author zaur
- *
- *      Implementation of the editable note.
- *      
- *      Has to be translate to and from anki db format.
+ * 
+ *         Implementation of the editable note.
+ * 
+ *         Has to be translate to and from anki db format.
  */
 
-public class MultimediaEditableNote implements IMultimediaEditableNote {
-
-	/**
-	 * 
-	 */
+public class MultimediaEditableNote implements IMultimediaEditableNote
+{
 	private static final long serialVersionUID = -6161821367135636659L;
 	boolean mIsModified = false;
-	
-	ArrayList<IField> mFields = null;
-	
+
+	ArrayList<IField> mFields;
+	private long mModelId;
+
 	void setThisModified()
 	{
 		mIsModified = true;
 	}
-	
-	boolean getThisModified()
+
+	@Override
+	public boolean isModified()
 	{
 		return mIsModified;
 	}
-	
-	//package
-	void setNumFields(int numberOfFields)
+
+	// package
+	public void setNumFields(int numberOfFields)
 	{
 		getFieldsPrivate().clear();
-		for(int i =0; i < numberOfFields; ++i)
+		for (int i = 0; i < numberOfFields; ++i)
 		{
 			getFieldsPrivate().add(null);
 		}
 	}
-	
+
 	private ArrayList<IField> getFieldsPrivate()
 	{
-		if(mFields == null)
+		if (mFields == null)
 		{
 			mFields = new ArrayList<IField>();
 		}
-		
+
 		return mFields;
 	}
-	
+
 	@Override
-	public int getNumberOfFields() {
+	public int getNumberOfFields()
+	{
 		return getFieldsPrivate().size();
 	}
 
 	@Override
-	public IField getField(int index) {
-		if(index >= 0 && index < getNumberOfFields())
+	public IField getField(int index)
+	{
+		if (index >= 0 && index < getNumberOfFields())
 		{
 			return getFieldsPrivate().get(index);
 		}
@@ -68,13 +69,14 @@ public class MultimediaEditableNote implements IMultimediaEditableNote {
 	}
 
 	@Override
-	public boolean setField(int index, IField field) {
-		if(index >= 0 && index < getNumberOfFields())
+	public boolean setField(int index, IField field)
+	{
+		if (index >= 0 && index < getNumberOfFields())
 		{
-			//If the same unchanged field is set.
-			if(getField(index) == field)
+			// If the same unchanged field is set.
+			if (getField(index) == field)
 			{
-				if(field.isModified())
+				if (field.isModified())
 				{
 					setThisModified();
 				}
@@ -83,19 +85,22 @@ public class MultimediaEditableNote implements IMultimediaEditableNote {
 			{
 				setThisModified();
 			}
-			
+
 			getFieldsPrivate().set(index, field);
-			
+
 			return true;
 		}
 		return false;
 	}
 
-	@Override
-	public boolean isModified() {
-		return getThisModified();
+	public void setModelId(long modelId)
+	{
+		mModelId = modelId;
 	}
 
-	
-	
+	public long getModelId()
+	{
+		return mModelId;
+	}
+
 }

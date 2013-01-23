@@ -39,15 +39,26 @@ public class AudioView extends LinearLayout
 		PLAYING, PAUSED, STOPPED, RECORDING
 	}
 
-	public AudioView(Context context, int resPlay, int resPause, int resStop, int resRecord, int resRecordStop,
+	public static AudioView createPlayerInstance(Context context, int resPlay, int resPause, int resStop,
 			String audioPath)
+	{
+		AudioView audioView = new AudioView(context, resPlay, resPause, resStop, audioPath);
+		return audioView;
+	}
+
+	public static AudioView createRecorderInstance(Context context, int resPlay, int resPause, int resStop,
+			int resRecord, int resRecordStop, String audioPath)
+	{
+		return new AudioView(context, resPlay, resPause, resStop, resRecord, resRecordStop, audioPath);
+	}
+
+	private AudioView(Context context, int resPlay, int resPause, int resStop, String audioPath)
 	{
 		super(context);
 		mResPlayImage = resPlay;
 		mResPauseImage = resPause;
 		mResStopImage = resStop;
-		mResRecordImage = resRecord;
-		mResRecordStopImage = resRecordStop;
+		mAudioPath = audioPath;
 
 		this.setOrientation(HORIZONTAL);
 
@@ -56,6 +67,16 @@ public class AudioView extends LinearLayout
 
 		mStop = new StopButton(context);
 		addView(mStop, new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
+	}
+
+	private AudioView(Context context, int resPlay, int resPause, int resStop, int resRecord, int resRecordStop,
+			String audioPath)
+	{
+		this(context, resPlay, resPause, resStop, audioPath);
+		mResRecordImage = resRecord;
+		mResRecordStopImage = resRecordStop;
+
+		this.setOrientation(HORIZONTAL);
 
 		mRecord = new RecordButton(context);
 		addView(mRecord, new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
@@ -93,7 +114,8 @@ public class AudioView extends LinearLayout
 		startPlaying();
 		mPlayPause.update();
 		mStop.update();
-		mRecord.update();
+		if (mRecord != null)
+			mRecord.update();
 	}
 
 	public void onStop()
@@ -102,7 +124,8 @@ public class AudioView extends LinearLayout
 		// Send state change signal to all buttons
 		mPlayPause.update();
 		mStop.update();
-		mRecord.update();
+		if (mRecord != null)
+			mRecord.update();
 	}
 
 	public void onPause()
@@ -110,7 +133,8 @@ public class AudioView extends LinearLayout
 		pausePlaying();
 		mPlayPause.update();
 		mStop.update();
-		mRecord.update();
+		if (mRecord != null)
+			mRecord.update();
 	}
 
 	public void onRecord()
@@ -118,7 +142,8 @@ public class AudioView extends LinearLayout
 		startRecording();
 		mPlayPause.update();
 		mStop.update();
-		mRecord.update();
+		if (mRecord != null)
+			mRecord.update();
 	}
 
 	public void onStopRecord()
@@ -126,7 +151,8 @@ public class AudioView extends LinearLayout
 		stopRecording();
 		mPlayPause.update();
 		mStop.update();
-		mRecord.update();
+		if (mRecord != null)
+			mRecord.update();
 	}
 
 	private void startPlaying()
@@ -157,25 +183,20 @@ public class AudioView extends LinearLayout
 		}
 		catch (IOException e)
 		{
-			Log.e(AnkiDroidApp.TAG, "prepare() failed for file " + mAudioPath);
+			Log.e(AnkiDroidApp.TAG, "prepare() failed for file " + mAudioPath + ", " + e.getMessage());
 		}
 	}
 
 	private void stopPlaying()
 	{
-		if (mStatus == Status.PLAYING)
-		{
-			mPlayer.release();
-			mPlayer = null;
-		}
+		mPlayer.release();
+		mPlayer = null;
+
 	}
 
 	private void pausePlaying()
 	{
-		if (mStatus == Status.PLAYING)
-		{
-			mPlayer.pause();
-		}
+		mPlayer.pause();
 	}
 
 	private void startRecording()
@@ -187,14 +208,15 @@ public class AudioView extends LinearLayout
 				Log.e(AnkiDroidApp.TAG, "Cannot find valid audioPath. Use setAudioPath().");
 				return;
 			}
-			if (mRecord != null)
+			if (mRecorder == null)
 			{
 				mRecorder = new MediaRecorder();
 				mRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
 				mRecorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
+				mRecorder.setOutputFile(mAudioPath); // audioPath could change
 				mRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
 			}
-			mRecorder.setOutputFile(mAudioPath); // audioPath could change
+
 			// during lifetime
 			mRecorder.prepare();
 			mRecorder.start();
@@ -207,12 +229,9 @@ public class AudioView extends LinearLayout
 
 	private void stopRecording()
 	{
-		if (mStatus == Status.RECORDING)
-		{
-			mRecorder.stop();
-			mRecorder.release();
-			mRecorder = null;
-		}
+		mRecorder.stop();
+		mRecorder.release();
+		mRecorder = null;
 	}
 
 	protected class PlayPauseButton extends ImageButton
@@ -222,6 +241,9 @@ public class AudioView extends LinearLayout
 			@Override
 			public void onClick(View v)
 			{
+				if (mAudioPath == null)
+					return;
+
 				switch (mStatus)
 				{
 					case PAUSED:
@@ -324,6 +346,9 @@ public class AudioView extends LinearLayout
 			@Override
 			public void onClick(View v)
 			{
+				if (mAudioPath == null)
+					return;
+
 				switch (mStatus)
 				{
 					case STOPPED:
