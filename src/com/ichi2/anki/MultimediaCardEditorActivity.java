@@ -2,12 +2,14 @@ package com.ichi2.anki;
 
 import java.io.File;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -21,6 +23,13 @@ import com.ichi2.anki.multimediacard.AudioView;
 import com.ichi2.anki.multimediacard.IField;
 import com.ichi2.anki.multimediacard.IMultimediaEditableNote;
 import com.ichi2.anki.multimediacard.impl.MockNoteFactory;
+import com.ichi2.anki.multimediacard.impl.MultimediaEditableNote;
+import com.ichi2.anki.servicelayer.NoteService;
+import com.ichi2.async.DeckTask;
+import com.ichi2.async.DeckTask.TaskData;
+import com.ichi2.async.DeckTask.TaskListener;
+import com.ichi2.libanki.Collection;
+import com.ichi2.libanki.Note;
 
 public class MultimediaCardEditorActivity extends Activity
 {
@@ -37,14 +46,19 @@ public class MultimediaCardEditorActivity extends Activity
 	private static final String ACTION_CREATE_FLASHCARD = "org.openintents.action.CREATE_FLASHCARD";
 	private static final String ACTION_CREATE_FLASHCARD_SEND = "android.intent.action.SEND";
 
-	IMultimediaEditableNote mNote;
 	private LinearLayout mMainUIiLayout;
 
-	/* indicates if a new fact is added or a card is edited */
-	private boolean mAddNote;
+	/* Data variables below, not UI Elements */
+	private Collection mCol;
+	private long mCurrentDid;
+	private IMultimediaEditableNote mNote;
+	private Note mEditorNote;
 
-	/* indicates which activity called card editor */
-	private int mCaller;
+	/**
+	 * Indicates if editor is working with new note or one that exists already
+	 * in the collection
+	 */
+	private boolean mAddNote;
 
 	@SuppressLint("NewApi")
 	@Override
@@ -53,37 +67,25 @@ public class MultimediaCardEditorActivity extends Activity
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_multimedia_card_editor);
 
-		// Handling absence of the action bar!
+		_initData();
+		_initActionBar();
+
+		mMainUIiLayout = (LinearLayout) findViewById(R.id.LinearLayoutInScrollView);
+
+		recreateUi(mNote);
+	}
+
+	/**
+	 * Creates a TabBar in case action bar is not present
+	 */
+	private void _initActionBar()
+	{
 		int currentapiVersion = android.os.Build.VERSION.SDK_INT;
 		if (currentapiVersion <= android.os.Build.VERSION_CODES.GINGERBREAD_MR1)
 		{
 			LinearLayout linearLayout = (LinearLayout) findViewById(R.id.LinearLayoutForSpareMenu);
 			createSpareMenu(linearLayout);
 		}
-
-		mMainUIiLayout = (LinearLayout) findViewById(R.id.LinearLayoutInScrollView);
-
-		if (savedInstanceState != null)
-		{
-			mCaller = savedInstanceState.getInt("caller");
-			mAddNote = savedInstanceState.getBoolean("addFact");
-		}
-		else
-		{
-			_loadNote();
-		}
-
-		recreateUi(getNotePrivate());
-	}
-
-	private IMultimediaEditableNote getNotePrivate()
-	{
-		if (mNote == null)
-		{
-			mNote = _loadNote();
-		}
-
-		return mNote;
 	}
 
 	private void createSpareMenu(LinearLayout linearLayout)
@@ -170,9 +172,8 @@ public class MultimediaCardEditorActivity extends Activity
 
 				break;
 			case AUDIO:
-				AudioView audioView = new AudioView(this, R.drawable.av_play, R.drawable.av_pause, R.drawable.av_stop,
-						R.drawable.av_rec, R.drawable.av_rec_stop, field.getAudioPath());
-				audioView.setRecordButtonVisible(false);
+				AudioView audioView = AudioView.createPlayerInstance(this, R.drawable.av_play, R.drawable.av_pause,
+						R.drawable.av_stop, field.getAudioPath());
 				linearLayout.addView(audioView);
 				break;
 
@@ -206,30 +207,6 @@ public class MultimediaCardEditorActivity extends Activity
 	{
 		getMenuInflater().inflate(R.menu.activity_multimedia_card_editor, menu);
 		return true;
-	}
-
-	// Loads from extras or whatever else
-	private IMultimediaEditableNote _loadNote()
-	{
-		Intent intent = getIntent();
-		mCaller = intent.getIntExtra(EXTRA_CALLER, CALLER_NOCALLER);
-		if (mCaller == CALLER_NOCALLER)
-		{
-			String action = intent.getAction();
-			if (action != null
-					&& (ACTION_CREATE_FLASHCARD.equals(action) || ACTION_CREATE_FLASHCARD_SEND.equals(action)))
-			{
-				mCaller = CALLER_INDICLASH;
-			}
-		}
-
-		Log.i(AnkiDroidApp.TAG, "CardEditor: caller: " + mCaller);
-
-		// Not sure if following is required
-		// if (mCaller == CALLER_INDICLASH &&
-		// preferences.getBoolean("intentAdditionInstantAdd", false))
-
-		return getMockNote();
 	}
 
 	// Temporary implemented
@@ -277,8 +254,8 @@ public class MultimediaCardEditorActivity extends Activity
 					return;
 				}
 
-				getNotePrivate().setField(index, field);
-				recreateUi(getNotePrivate());
+				mNote.setField(index, field);
+				recreateUi(mNote);
 			}
 
 			super.onActivityResult(requestCode, resultCode, data);
@@ -286,13 +263,7 @@ public class MultimediaCardEditorActivity extends Activity
 
 	}
 
-	void save()
-	{
-		CharSequence text = "Save clicked!";
-		showToast(text);
-	}
-
-	void delete()
+	private void delete()
 	{
 		CharSequence text = "Delete clicked!";
 		showToast(text);
@@ -303,5 +274,88 @@ public class MultimediaCardEditorActivity extends Activity
 		int duration = Toast.LENGTH_SHORT;
 		Toast toast = Toast.makeText(this, text, duration);
 		toast.show();
+	}
+
+	/**
+	 * If a note has been passed, loads it. Otherwise creates a new Note
+	 * 
+	 * Current does not support editing of note, just creating new notes
+	 * according to some note type
+	 */
+	private void _initData()
+	{
+		// Intent intent = getIntent();
+		// mCaller = intent.getIntExtra(EXTRA_CALLER, CALLER_NOCALLER);
+		// if (mCaller == CALLER_NOCALLER)
+		// {
+		// String action = intent.getAction();
+		// if (action != null
+		// && (ACTION_CREATE_FLASHCARD.equals(action) ||
+		// ACTION_CREATE_FLASHCARD_SEND.equals(action)))
+		// {
+		// mCaller = CALLER_INDICLASH;
+		// }
+		// }
+
+		// Log.i(AnkiDroidApp.TAG, "CardEditor: caller: " + mCaller);
+		try
+		{
+			mCol = AnkiDroidApp.getCol();
+
+			mCurrentDid = mCol.getDecks().current().getLong("id");
+			if (mCol.getDecks().isDyn(mCurrentDid))
+			{
+				mCurrentDid = 1;
+			}
+
+			mAddNote = true;
+
+			JSONObject currentModel = mCol.getModels().current();
+			mNote = NoteService.createEmptyNote(currentModel);
+			if (mNote == null)
+			{
+				throw new RuntimeException("Cannot create a Note");
+			}
+
+			mEditorNote = new Note(mCol, currentModel);
+			mEditorNote.model().put("did", mCurrentDid);
+			// TODO take care of tags @see CardEditor setNote(Note)
+		}
+		catch (JSONException e)
+		{
+			throw new RuntimeException(e);
+		}
+	}
+
+	private void save()
+	{
+		NoteService.saveMedia((MultimediaEditableNote) mNote);
+		NoteService.updateJsonNoteFromMultimediaNote(mNote, mEditorNote);
+		TaskListener listener = new TaskListener()
+		{
+
+			@Override
+			public void onProgressUpdate(TaskData... values)
+			{
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void onPreExecute()
+			{
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void onPostExecute(TaskData result)
+			{
+				// TODO Auto-generated method stub
+
+			}
+		};
+		DeckTask.launchDeckTask(DeckTask.TASK_TYPE_ADD_FACT, listener, new DeckTask.TaskData(mEditorNote));
+		// TODO Check what the listener does here
 	}
 }
