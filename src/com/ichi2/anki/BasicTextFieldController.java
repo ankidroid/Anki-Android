@@ -26,17 +26,36 @@ import com.ichi2.anki.multimediacard.impl.ImageField;
 /**
  * @author zaur
  * 
+ * 
+ *         One of the most powerful controllers - creates UI and works with the
+ *         field of textual type.
+ * 
+ *         Controllers work with the edit field activity and create UI on it to
+ *         edit a field.
+ * 
+ */
+/**
+ * @author zaur
+ *
+ */
+/**
+ * @author zaur
+ *
  */
 public class BasicTextFieldController extends FieldControllerBase implements IFieldController,
         DialogInterface.OnClickListener
 {
 
+    // Additional activities are started to perform translation/image search and
+    // so on, here are their request codes, to differentiate, when they return.
     private static final int REQUEST_CODE_TRANSLATE_GLOSBE = 101;
     private static final int REQUEST_CODE_PRONOUNCIATION = 102;
     private static final int REQUEST_CODE_TRANSLATE_COLORDICT = 103;
     private static final int REQUEST_CODE_IMAGE_SEARCH = 104;
 
     private EditText mEditText;
+    
+    //This is used to copy from another field value to this field
     private ArrayList<String> mPossibleClones;
 
     @Override
@@ -72,6 +91,14 @@ public class BasicTextFieldController extends FieldControllerBase implements IFi
         return mActivity.getText(id).toString();
     }
 
+    
+    /**
+     * 
+     * Google Image Search
+     * 
+     * @param layoutTools
+     * @param p
+     */
     private void createSearchImageButton(LinearLayout layoutTools, LayoutParams p)
     {
         Button clearButton = new Button(mActivity);
@@ -117,6 +144,12 @@ public class BasicTextFieldController extends FieldControllerBase implements IFi
         });
     }
 
+    /**
+     * @param layoutTools
+     * @param p
+     * 
+     * Button to load pronunciation from Beolingus
+     */
     private void createPronounceButton(LinearLayout layoutTools, LayoutParams p)
     {
         Button btnPronounce = new Button(mActivity);
@@ -155,6 +188,7 @@ public class BasicTextFieldController extends FieldControllerBase implements IFi
             {
                 String source = mEditText.getText().toString();
 
+                //Checks and warnings
                 if (source.length() == 0)
                 {
                     showToast(gtxt(R.string.multimedia_editor_text_field_editing_no_text));
@@ -165,7 +199,8 @@ public class BasicTextFieldController extends FieldControllerBase implements IFi
                 {
                     showToast(gtxt(R.string.multimedia_editor_text_field_editing_many_words));
                 }
-
+                
+                //Pick from two translation sources
                 PickStringDialogFragment fragment = new PickStringDialogFragment();
 
                 ArrayList<String> translationSources = new ArrayList<String>();
@@ -197,6 +232,9 @@ public class BasicTextFieldController extends FieldControllerBase implements IFi
         });
 
         layoutTool.addView(btnTranslate, ps);
+        
+        //flow continues in Start Translation with...
+        
     }
 
     /**
@@ -211,6 +249,7 @@ public class BasicTextFieldController extends FieldControllerBase implements IFi
      */
     private void createCloneButton(LinearLayout layoutTools, LayoutParams p)
     {
+        //Makes sense only for two and more fields
         if (mNote.getNumberOfFields() > 1)
         {
             // Should be more than one text not empty fields for clone to make
@@ -221,6 +260,7 @@ public class BasicTextFieldController extends FieldControllerBase implements IFi
             int numTextFields = 0;
             for (int i = 0; i < mNote.getNumberOfFields(); ++i)
             {
+                //Sort out non text and empty fields
                 IField curField = mNote.getField(i);
                 if (curField == null)
                 {
@@ -242,15 +282,18 @@ public class BasicTextFieldController extends FieldControllerBase implements IFi
                     continue;
                 }
 
+                //as well as the same field
                 if (curField.getText().contentEquals(mField.getText()))
                 {
                     continue;
                 }
 
+                //collect clone sources
                 mPossibleClones.add(curField.getText());
                 ++numTextFields;
             }
-
+            
+            //Nothing to clone from
             if (numTextFields < 1)
             {
                 return;
@@ -275,12 +318,25 @@ public class BasicTextFieldController extends FieldControllerBase implements IFi
                     fragment.setTitle(gtxt(R.string.multimedia_editor_text_field_editing_clone_source));
 
                     fragment.show(mActivity.getSupportFragmentManager(), "pick.clone");
+
+//                  flow continues in the onClick function
+
                 }
             });
 
         }
+
     }
 
+    
+    /*
+     * (non-Javadoc)
+     * @see com.ichi2.anki.IFieldController#onActivityResult(int, int, android.content.Intent)
+     *
+     *  When activity started from here returns, the EditFieldActivity passes control here back.
+     *  And the results from the started before activity are received.
+     *
+     */
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data)
     {
@@ -340,7 +396,15 @@ public class BasicTextFieldController extends FieldControllerBase implements IFi
             mActivity.handleFieldChanged(imgField);
         }
     }
+    
 
+    
+    /**
+     * @param context
+     * @param intent
+     * @return
+     * Needed to check, if the Color Dict is installed
+     */
     public static boolean isIntentAvailable(Context context, Intent intent)
     {
         final PackageManager packageManager = context.getPackageManager();
@@ -348,6 +412,7 @@ public class BasicTextFieldController extends FieldControllerBase implements IFi
         return list.size() > 0;
     }
 
+    //When Done button is clicked
     @Override
     public void onDone()
     {
