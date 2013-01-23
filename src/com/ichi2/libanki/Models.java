@@ -25,8 +25,6 @@ import android.util.Log;
 
 import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.Pair;
-import com.ichi2.themes.HtmlColors;
-import com.mindprod.common11.StringTools;
 import com.samskivert.mustache.Mustache;
 import com.samskivert.mustache.Template;
 
@@ -61,14 +59,14 @@ public class Models {
             + Sched.MODEL_STD + ", " + "'css': \" .card {" + "font-familiy: arial; " + "font-size: 20px; "
             + "text-align: center; " + "color:black; " + "background-color: white; }\"" + "}";
 
-    private static final String defaultField = "{'name': \"\", " + "'ord': None, " + "'sticky': False, " +
+    private static final String defaultField = "{'name': \"\", " + "'ord': null, " + "'sticky': False, " +
     // the following alter editing, and are used as defaults for the template wizard
             "'rtl': False, " + "'font': \"Arial\", " + "'size': 20, " +
             // reserved for future use
             "'media': [] }";
 
-    private static final String defaultTemplate = "{'name': \"\", " + "'ord': None, " + "'qfmt': \"\", "
-            + "'afmt': \"\", " + "'did': None, " + "'bqfmt': \"\"," + "'bafmt': \"\"," + "'bfont': \"Arial\"," +
+    private static final String defaultTemplate = "{'name': \"\", " + "'ord': null, " + "'qfmt': \"\", "
+            + "'afmt': \"\", " + "'did': null, " + "'bqfmt': \"\"," + "'bafmt': \"\"," + "'bfont': \"Arial\"," +
             "'bsize': 12 }";
 
     // /** Regex pattern used in removing tags from text before diff */
@@ -196,7 +194,7 @@ public class Models {
                 throw new RuntimeException(e);
             }
             ContentValues val = new ContentValues();
-            val.put("models", array.toString());
+            val.put("models", Utils.jsonToString(array));
             mCol.getDb().update("col", val);
             mChanged = false;
         }
@@ -210,25 +208,32 @@ public class Models {
 
     /**
      * Get current model.
+     * @return The JSONObject of the model, or null if not found in the deck and in the configuration.
      */
     public JSONObject current() {
-        JSONObject m;
-        try {
-            JSONObject curDeck = mCol.getDecks().current();
-            if (curDeck.has("mid")) {
-                m = get(mCol.getDecks().current().getLong("mid"));
-            } else {
-                m = get(mCol.getConf().getLong("curModel"));
-            }
-            if (m == null) {
-                if (!mModels.isEmpty()) {
-                    m = mModels.values().iterator().next();
-                }
-            }
-            return m;
-        } catch (JSONException e) {
-            throw new RuntimeException(e);
+        return current(true);
+    }
+
+    /**
+     * Get current model.
+     * @param forDeck If true, it tries to get the deck specified in deck by mid, otherwise or if the former is not
+     *                found, it uses the configuration`s field curModel.
+     * @return The JSONObject of the model, or null if not found in the deck and in the configuration.
+     */
+    public JSONObject current(boolean forDeck) {
+        JSONObject m = null;
+        if (forDeck) {
+            m = get(mCol.getDecks().current().optLong("mid", -1));
         }
+        if (m == null) {
+            m = get(mCol.getConf().optLong("curModel", -1));
+        }
+        if (m == null) {
+            if (!mModels.isEmpty()) {
+                m = mModels.values().iterator().next();
+            }
+        }
+        return m;
     }
 
 
@@ -403,7 +408,7 @@ public class Models {
     public JSONObject copy(JSONObject m) {
         JSONObject m2 = null;
         try {
-            m2 = new JSONObject(m.toString());
+            m2 = new JSONObject(Utils.jsonToString(m));
             m2.put("name", m2.getString("name") + " copy");
         } catch (JSONException e) {
             throw new RuntimeException(e);
@@ -577,7 +582,7 @@ public class Models {
                 }
             }
             // remember old sort field
-            String sortf = m.getJSONArray("flds").getJSONObject(m.getInt("sortf")).toString();
+            String sortf = Utils.jsonToString(m.getJSONArray("flds").getJSONObject(m.getInt("sortf")));
             // move
             l.remove(oldidx);
             l.add(idx, field);
@@ -585,7 +590,7 @@ public class Models {
             // restore sort field
             ja = m.getJSONArray("flds");
             for (int i = 0; i < ja.length(); ++i) {
-                if (ja.getJSONObject(i).toString().equals(sortf)) {
+                if (Utils.jsonToString(ja.getJSONObject(i)).equals(sortf)) {
                     m.put("sortf", i);
                     break;
                 }
