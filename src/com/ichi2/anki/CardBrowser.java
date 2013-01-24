@@ -527,6 +527,8 @@ public class CardBrowser extends Activity
 		if (requestCode == EDIT_CARD && resultCode == MultimediaCardEditorActivity.RESULT_DELETED)
 		{
 			deleteNote(sCardBrowserCard);
+			DeckTask.launchDeckTask(DeckTask.TASK_TYPE_DISMISS_NOTE, mDeleteNoteHandler,
+					new DeckTask.TaskData(mCol.getSched(), sCardBrowserCard, 3));
 		}
 		else if (requestCode == EDIT_CARD && resultCode != RESULT_CANCELED)
 		{
