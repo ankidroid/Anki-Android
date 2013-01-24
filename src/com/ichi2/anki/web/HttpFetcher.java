@@ -17,6 +17,7 @@ import org.apache.http.protocol.BasicHttpContext;
 import org.apache.http.protocol.HttpContext;
 
 import android.content.Context;
+import android.os.Environment;
 
 /**
  * @author zaur
@@ -124,6 +125,43 @@ public class HttpFetcher
 
             File outputDir = context.getCacheDir();
             File file = File.createTempFile(prefix, extension, outputDir);
+
+            FileOutputStream fileOutput = new FileOutputStream(file);
+            InputStream inputStream = urlConnection.getInputStream();
+
+            byte[] buffer = new byte[1024];
+            int bufferLength = 0;
+
+            while ((bufferLength = inputStream.read(buffer)) > 0)
+            {
+                fileOutput.write(buffer, 0, bufferLength);
+            }
+            fileOutput.close();
+
+            return file.getAbsolutePath();
+
+        }
+        catch (Exception e)
+        {
+            return "FAILED " + e.getMessage();
+        }
+    }
+    
+    public static String downloadFileToSdCard(String UrlToFile, Context context, String prefix)
+    {
+        try
+        {
+            URL url = new URL(UrlToFile);
+
+            String extension = UrlToFile.substring(UrlToFile.length() - 4);
+
+            HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
+            urlConnection.setRequestMethod("GET");
+            urlConnection.setDoOutput(true);
+            urlConnection.connect();
+
+            File SDCardRoot = Environment.getExternalStorageDirectory();
+            File file = File.createTempFile(prefix, extension, SDCardRoot);
 
             FileOutputStream fileOutput = new FileOutputStream(file);
             InputStream inputStream = urlConnection.getInputStream();

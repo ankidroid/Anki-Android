@@ -367,6 +367,8 @@ public class BasicTextFieldController extends FieldControllerBase implements IFi
 
                 AudioField af = new AudioField();
                 af.setAudioPath(pronuncPath);
+                //This is done to delete the file later.
+                af.setHasTemporaryMedia(true);
                 mActivity.handleFieldChanged(af);
             }
             catch (Exception e)
@@ -393,6 +395,7 @@ public class BasicTextFieldController extends FieldControllerBase implements IFi
 
             ImageField imgField = new ImageField();
             imgField.setImagePath(imgPath);
+            imgField.setHasTemporaryMedia(true);
             mActivity.handleFieldChanged(imgField);
         }
     }

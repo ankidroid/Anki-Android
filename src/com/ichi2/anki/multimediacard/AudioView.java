@@ -5,6 +5,7 @@ import java.io.IOException;
 import android.content.Context;
 import android.media.MediaPlayer;
 import android.media.MediaPlayer.OnCompletionListener;
+import android.media.MediaPlayer.OnPreparedListener;
 import android.media.MediaRecorder;
 import android.util.Log;
 import android.view.View;
@@ -39,6 +40,18 @@ public class AudioView extends LinearLayout
 		PLAYING, PAUSED, STOPPED, RECORDING
 	}
 
+	/**
+	 * @param context
+	 *  
+	 *  Resources for images
+	 * @param resPlay
+	 * @param resPause
+	 * @param resStop
+	 * 
+	 * @param audioPath
+	 * 
+	 * @return
+	 */
 	public static AudioView createPlayerInstance(Context context, int resPlay, int resPause, int resStop,
 			String audioPath)
 	{
@@ -169,17 +182,26 @@ public class AudioView extends LinearLayout
 				mPlayer = new MediaPlayer();
 			}
 			mPlayer.setDataSource(mAudioPath);
-			mPlayer.prepare();
+			mPlayer.setOnPreparedListener(new OnPreparedListener()
+                        {
+                            
+                            @Override
+                            public void onPrepared(MediaPlayer mp)
+                            {
+                                mPlayer.start();
+                            }
+                        });
 			mPlayer.setOnCompletionListener(new OnCompletionListener()
-			{
-				@Override
-				public void onCompletion(MediaPlayer mp)
-				{
-					mStatus = Status.STOPPED;
-					onStop();
-				}
-			});
-			mPlayer.start();
+                        {
+                                @Override
+                                public void onCompletion(MediaPlayer mp)
+                                {
+                                        mStatus = Status.STOPPED;
+                                        onStop();
+                                }
+                        });
+			mPlayer.prepare();
+			
 		}
 		catch (IOException e)
 		{
