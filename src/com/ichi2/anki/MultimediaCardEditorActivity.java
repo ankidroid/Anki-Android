@@ -65,10 +65,12 @@ public class MultimediaCardEditorActivity extends Activity
 	private static final String ACTION_CREATE_FLASHCARD_SEND = "android.intent.action.SEND";
 
 	private static final int DIALOG_MODEL_SELECT = 1;
+	private static final int DIALOG_DECK_SELECT = 2;
 
 	private LinearLayout mEditorLayout;
 	private LinearLayout mButtonsLayout;
 	private Button mModelButton;
+	private Button mDeckButton;
 
 	/* Data variables below, not UI Elements */
 	private Collection mCol;
@@ -124,6 +126,17 @@ public class MultimediaCardEditorActivity extends Activity
 			}
 		});
 		mButtonsLayout.addView(mModelButton, pars);
+
+		mDeckButton = new Button(this);
+		mDeckButton.setOnClickListener(new OnClickListener()
+		{
+			@Override
+			public void onClick(View v)
+			{
+				showDialog(DIALOG_DECK_SELECT);
+			}
+		});
+		mButtonsLayout.addView(mDeckButton, pars);
 	}
 
 	private void createSpareMenu(LinearLayout linearLayout)
@@ -174,6 +187,7 @@ public class MultimediaCardEditorActivity extends Activity
 			}
 
 			mModelButton.setText("Note type: " + mEditorNote.model().getString("name"));
+			mDeckButton.setText("Deck : " + mCol.getDecks().get(mCurrentDid).getString("name"));
 		}
 		catch (JSONException e)
 		{
@@ -339,6 +353,9 @@ public class MultimediaCardEditorActivity extends Activity
 			case DIALOG_MODEL_SELECT:
 				return _showModelSelectDialog();
 
+			case DIALOG_DECK_SELECT:
+				return _showDeckSelectDialog();
+
 			default:
 				break;
 
@@ -398,6 +415,69 @@ public class MultimediaCardEditorActivity extends Activity
 				}
 			}
 		});
+		dialog = builder.create();
+		return dialog;
+	}
+
+	private Dialog _showDeckSelectDialog()
+	{
+		StyledDialog dialog = null;
+		StyledDialog.Builder builder = new StyledDialog.Builder(this);
+
+		ArrayList<CharSequence> dialogDeckItems = new ArrayList<CharSequence>();
+		// Use this array to know which ID is associated with each
+		// Item(name)
+		final ArrayList<Long> dialogDeckIds = new ArrayList<Long>();
+
+		ArrayList<JSONObject> decks = mCol.getDecks().all();
+		Collections.sort(decks, new JSONNameComparator());
+		builder.setTitle(R.string.deck);
+		for (JSONObject d : decks)
+		{
+			try
+			{
+				if (d.getInt("dyn") == 0)
+				{
+					dialogDeckItems.add(d.getString("name"));
+					dialogDeckIds.add(d.getLong("id"));
+				}
+			}
+			catch (JSONException e)
+			{
+				throw new RuntimeException(e);
+			}
+		}
+		// Convert to Array
+		String[] items = new String[dialogDeckItems.size()];
+		dialogDeckItems.toArray(items);
+
+		builder.setItems(items, new DialogInterface.OnClickListener()
+		{
+			@Override
+			public void onClick(DialogInterface dialog, int item)
+			{
+				long newId = dialogDeckIds.get(item);
+				if (mCurrentDid != newId)
+				{
+					if (mAddNote)
+					{
+						try
+						{
+							// TODO: mEditorNote.setDid(newId);
+							mEditorNote.model().put("did", newId);
+							mCol.getModels().setChanged();
+						}
+						catch (JSONException e)
+						{
+							throw new RuntimeException(e);
+						}
+					}
+					mCurrentDid = newId;
+					_createEditorUI(mNote);
+				}
+			}
+		});
+
 		dialog = builder.create();
 		return dialog;
 	}
