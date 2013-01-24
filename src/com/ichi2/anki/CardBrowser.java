@@ -524,7 +524,11 @@ public class CardBrowser extends Activity
 			closeCardBrowser(DeckPicker.RESULT_DB_ERROR);
 		}
 
-		if (requestCode == EDIT_CARD && resultCode != RESULT_CANCELED)
+		if (requestCode == EDIT_CARD && resultCode == MultimediaCardEditorActivity.RESULT_DELETED)
+		{
+			deleteNote(sCardBrowserCard);
+		}
+		else if (requestCode == EDIT_CARD && resultCode != RESULT_CANCELED)
 		{
 			Log.i(AnkiDroidApp.TAG, "CardBrowser: Saving card...");
 			DeckTask.launchDeckTask(DeckTask.TASK_TYPE_UPDATE_FACT, mUpdateCardHandler,
@@ -924,6 +928,12 @@ public class CardBrowser extends Activity
 			{
 				mCards.remove(pos);
 			}
+		}
+		// Delete itself if not deleted
+		pos = getPosition(mCards, card.getId());
+		if (pos >= 0 && pos < mCards.size())
+		{
+			mCards.remove(pos);
 		}
 		updateList();
 	}
