@@ -91,6 +91,11 @@
 <string name ="multimedia_editor_text_field_editing_clone_source">Take from</string>
 
 
+<!-- Image Editing -->
+<!-- for buttons -->
+<string name ="multimedia_editor_image_field_editing_galery">Galery</string>
+<string name ="multimedia_editor_image_field_editing_photo">Photo</string>
+
 <!-- General -->
 <!-- message on the progress dialog for the user to wait, means process -->
 <string name ="multimedia_editor_general_downloading">Downloading</string>

@@ -67,7 +67,7 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
         mImagePreview.setMaxWidth((int)Math.round(width*0.6));
         
         mBtnGallery = new Button(mActivity);
-        mBtnGallery.setText("From Gallery");
+        mBtnGallery.setText(gtxt(R.string.multimedia_editor_image_field_editing_galery));
         mBtnGallery.setOnClickListener(new View.OnClickListener()
         {
             @Override
@@ -78,8 +78,10 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
             }
         });
 
+        
+        
         mBtnCamera = new Button(mActivity);
-        mBtnCamera.setText("From Camera");
+        mBtnCamera.setText(gtxt(R.string.multimedia_editor_image_field_editing_photo));
         mBtnCamera.setOnClickListener(new View.OnClickListener()
         {
             @Override
@@ -108,6 +110,12 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
         layout.addView(mBtnCamera, LinearLayout.LayoutParams.MATCH_PARENT);
     }
 
+    private String gtxt(int id)        
+    {
+        return mActivity.getText(id).toString();
+    }
+    
+    
     protected DisplayMetrics getDisplayMetrics()
     {
         if(mMetrics == null)
