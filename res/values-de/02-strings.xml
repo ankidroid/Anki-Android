@@ -93,7 +93,7 @@
   <string name="import_log_no_apkg">Dies ist keine gültige apgk-Datei</string>
   <string name="import_importing">Karten werden importiert.\nBitte warten...</string>
   <string name="import_hint">Um Karten zu importieren, kopieren Sie die apkg-Datei ins Verzeichnis %s und drücken \'Ok\'</string>
-  <string name="import_no_file_found">Keine importierbaren apkg-Dateien gefunden</string>
+  <string name="upgrade_import_no_file_found">Keine importierbaren apkg-Dateien gefunden</string>
   <string name="custom_study">Benutzerdefinierte Sitzung</string>
   <string name="dyn_deck_desc">Dies ist ein besonderer Stapel, um außerhalb der normalen Planung zu lernen. Karten werden nach dem Lernen automatisch in ihren Originalstapel zurückgeschickt. Wird der Stapel gelöscht, werden alle verbleibenden Karten in ihren Originalstapel einsortiert.</string>
   <string-array name="dynOrderLabels">

@@ -93,7 +93,7 @@
   <string name="import_log_no_apkg">Ce n\'est pas un fichier apkg valide</string>
   <string name="import_importing">Import en cours\nVeuillez patienter...</string>
   <string name="import_hint">Pour importer des cartes, placez le fichier apkg dans le répertoire %s et appuyez sur ok</string>
-  <string name="import_no_file_found">Aucun fichier apkg importable n\'a été trouvé</string>
+  <string name="upgrade_import_no_file_found">Aucun fichier apkg importable n\'a été trouvé</string>
   <string name="custom_study">Étude personnalisée</string>
   <string name="dyn_deck_desc">Ceci est un paquet pour l\'étude en dehors des horaires normaux. Les cartes reviendront automatiquement à leur paquet d\'origine après leur révision. La suppression de ce paquet remettra toutes les cartes restantes dans leur paquet d\'origine.</string>
   <string-array name="dynOrderLabels">

@@ -122,6 +122,7 @@ public class DeckPicker extends FragmentActivity {
     private static final int DIALOG_IMPORT_HINT = 30;
     private static final int DIALOG_IMPORT_SELECT = 31;
     public static final String UPGRADE_OLD_COLLECTION_RENAME = "collection.anki2.old";
+    public static final String IMPORT_REPLACE_COLLECTION_NAME = "collection.apkg";
 
     private static final int IMPORT_METHOD_ASK = 0;
     private static final int IMPORT_METHOD_ADD = 1;
@@ -2050,7 +2051,7 @@ public class DeckPicker extends FragmentActivity {
             case DIALOG_IMPORT_SELECT:
             	List<File> fileList = Utils.getImportableDecks();
             	if (fileList.size() == 0) {
-                    Themes.showThemedToast(DeckPicker.this, getResources().getString(R.string.import_no_file_found),
+                    Themes.showThemedToast(DeckPicker.this, getResources().getString(R.string.upgrade_import_no_file_found),
                             false);
             	}
                 ad.setEnabled(fileList.size() != 0);
@@ -2584,26 +2585,22 @@ public class DeckPicker extends FragmentActivity {
                 int type = intent.getIntExtra(Info.TYPE_UPGRADE_STAGE, Info.UPGRADE_SCREEN_BASIC1);
                 if (type == Info.UPGRADE_CONTINUE) {
                     showStartupScreensAndDialogs(AnkiDroidApp.getSharedPrefs(getBaseContext()), 3);
-                } else if (type == Info.UPGRADE_IMPORT) {
-                    // upgrade by import, set path to non null in order to show the dialog after having opened the collection
-                    mImportPath = "";
-                    mImportMethod = IMPORT_METHOD_REPLACE;
-                    if (Utils.getImportableDecks().size() == 0) {
-                        Themes.showThemedToast(DeckPicker.this, getResources().getString(R.string.import_no_file_found), false);
-                        showUpgradeScreen(true, Info.UPGRADE_SCREEN_MANUAL_UPGRADE, !intent.hasExtra(Info.TYPE_ANINAMTION_RIGHT));
-                    } else {
-                        showDialog(DIALOG_IMPORT_SELECT);
-                    }
                 } else {
-                    showUpgradeScreen(true, type, !intent.hasExtra(Info.TYPE_ANINAMTION_RIGHT));
+                    showUpgradeScreen(true, type, !intent.hasExtra(Info.TYPE_ANIMATION_RIGHT));
                 }
-            } else if (resultCode == RESULT_OK) {
-                if (!AnkiDroidApp.colIsOpen()) {
-                    AnkiDroidApp.openCollection(AnkiDroidApp.getCollectionPath());
-                }
-                loadCounts();
             } else {
-                finishWithAnimation();
+                if (resultCode == RESULT_OK) {
+                    if (mOpenCollectionDialog != null && mOpenCollectionDialog.isShowing()) {
+                        mOpenCollectionDialog.dismiss();
+                    }
+                    if (AnkiDroidApp.colIsOpen()) {
+                        AnkiDroidApp.closeCollection(true);
+                    }
+                    AnkiDroidApp.openCollection(AnkiDroidApp.getCollectionPath());
+                    loadCounts();
+                } else {
+                    finishWithAnimation();
+                }
             }
         } else if (requestCode == SHOW_INFO_WELCOME || requestCode == SHOW_INFO_NEW_VERSION) {
             if (resultCode == RESULT_OK) {

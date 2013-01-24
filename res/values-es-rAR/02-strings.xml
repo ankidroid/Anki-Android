@@ -93,7 +93,7 @@
   <string name="import_log_no_apkg">Este no es un archivo apkg válido</string>
   <string name="import_importing">Importando tarjetas.\nAguarde, por favor...</string>
   <string name="import_hint">Para importar tarjetas coloque el archivo apkg en el directorio %s y presione OK</string>
-  <string name="import_no_file_found">No se ha encontrado un archivo apkg para importar</string>
+  <string name="upgrade_import_no_file_found">No se ha encontrado un archivo apkg para importar</string>
   <string name="custom_study">Estudio personalizado</string>
   <string name="dyn_deck_desc">Este es un mazo especial para estudiar por fuera del cronograma normal. Las tarjetas serán automáticamente devueltas a sus mazos originales luego de que las haya repasado. Borrar este mazo de la lista de mazos devolverá todas las tarjetas restantes a sus mazos originales.</string>
   <string-array name="dynOrderLabels">

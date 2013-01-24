@@ -93,7 +93,7 @@
   <string name="import_log_no_apkg">Toto není platný apkg soubor</string>
   <string name="import_importing">Import karet.\nProsím čekejte...</string>
   <string name="import_hint">Pro import karet umístěte soubor apkg do adresáře %s a stiskněte ok</string>
-  <string name="import_no_file_found">Nebyl nalezen žádný soubor apkg pro import</string>
+  <string name="upgrade_import_no_file_found">Nebyl nalezen žádný soubor apkg pro import</string>
   <string name="custom_study">Vlastní učení</string>
   <string name="dyn_deck_desc">Toto je speciální balíček pro studium mimo normální plán. Karty se automaticky po opakování vrátí do svého původního balíčku. Odstraněním tohoto balíčku ze seznamu se všechny zbývající karty vrátí to jejich původního balíčku.</string>
   <string-array name="dynOrderLabels">
