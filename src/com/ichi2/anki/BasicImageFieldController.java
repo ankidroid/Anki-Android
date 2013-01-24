@@ -6,6 +6,7 @@ import java.io.IOException;
 import android.app.Activity;
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.provider.MediaStore;
 import android.util.DisplayMetrics;
@@ -15,6 +16,8 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.LinearLayout.LayoutParams;
 import android.widget.TextView;
+
+import com.ichi2.utils.BitmapUtil;
 
 public class BasicImageFieldController extends FieldControllerBase implements IFieldController
 {
@@ -27,25 +30,39 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
     protected ImageView mImagePreview;
 
     protected String mTempCameraImagePath;
+    private DisplayMetrics mMetrics = null;
 
+    
+    
+    private int getMaxImageSize()
+    {
+        DisplayMetrics metrics = getDisplayMetrics();
+
+        int height = metrics.heightPixels;
+        int width = metrics.widthPixels;
+        
+        return (int)Math.min(height * 0.4, width*0.6);
+    }
+    
     @Override
     public void createUI(LinearLayout layout)
     {
         mImagePreview = new ImageView(mActivity);
         
-        
-
-        LinearLayout.LayoutParams p = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
-        setPreviewImage(mField.getImagePath());
-        mImagePreview.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
-        mImagePreview.setAdjustViewBounds(true);
-        
-        DisplayMetrics metrics = new DisplayMetrics();
-        mActivity.getWindowManager().getDefaultDisplay().getMetrics(metrics);
+    
+      
+        DisplayMetrics metrics = getDisplayMetrics();
 
         int height = metrics.heightPixels;
         int width = metrics.widthPixels;
+
+
+        LinearLayout.LayoutParams p = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
+        setPreviewImage(mField.getImagePath(), getMaxImageSize());        
+        mImagePreview.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
+        mImagePreview.setAdjustViewBounds(true);
         
+                
         mImagePreview.setMaxHeight((int)Math.round(height*0.4));
         mImagePreview.setMaxWidth((int)Math.round(width*0.6));
         
@@ -94,6 +111,16 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
         layout.addView(mBtnCamera, LinearLayout.LayoutParams.MATCH_PARENT);
     }
 
+    protected DisplayMetrics getDisplayMetrics()
+    {
+        if(mMetrics == null)
+        {
+            mMetrics = new DisplayMetrics();
+            mActivity.getWindowManager().getDefaultDisplay().getMetrics(mMetrics);
+        }
+        return mMetrics;
+    }
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data)
     {
@@ -121,7 +148,7 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
             mField.setImagePath(mTempCameraImagePath);
             mField.setHasTemporaryMedia(true);
         }
-        setPreviewImage(mField.getImagePath());
+        setPreviewImage(mField.getImagePath(), getMaxImageSize());
     }
 
     @Override
@@ -130,15 +157,30 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
         //
     }
 
-    protected void setPreviewImage(String imagePath)
+    protected void setPreviewImage(String imagePath, int maxsize)
     {
         if (imagePath != null && !imagePath.equals(""))
         {
             // Caused bug on API <= 7
             // mImagePreview.setImageURI(Uri.fromFile(new File(imagePath)));
             
-            //fix
-            mImagePreview.setImageURI(Uri.parse(new File(imagePath).toString()));
+            //fix but crashes with out of memory
+            //mImagePreview.setImageURI(Uri.parse(new File(imagePath).toString()));
+            
+            
+            //fix for both
+            File f = new File(imagePath);
+            
+            Bitmap b = BitmapUtil.decodeFile(f, maxsize);
+            
+            mImagePreview.setImageBitmap(b);
         }
+    }
+
+    @Override
+    public void onDestroy()
+    {
+        ImageView imageView = mImagePreview;
+        BitmapUtil.freeImageView(imageView);   
     }
 }

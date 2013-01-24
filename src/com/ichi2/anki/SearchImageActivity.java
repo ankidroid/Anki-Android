@@ -52,6 +52,14 @@ public class SearchImageActivity extends Activity implements DialogInterface.OnC
     private DownloadFileTask mDownloadMp3Task;
 
     @Override
+    protected void onDestroy()
+    {
+             super.onDestroy();
+             //Saving memory
+             mWebView.clearCache(true);
+    }
+    
+    @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
@@ -313,7 +321,7 @@ public class SearchImageActivity extends Activity implements DialogInterface.OnC
         super.onResume();
 
         progressDialog = ProgressDialog.show(this, getText(R.string.multimedia_editor_progress_wait_title),
-                getText(R.string.multimedia_editor_trans_translating_online), true, false);
+                getText(R.string.multimedia_editor_imgs_searching_for_images), true, false);
 
         progressDialog.setCancelable(true);
         progressDialog.setOnCancelListener(this);
@@ -491,8 +499,7 @@ public class SearchImageActivity extends Activity implements DialogInterface.OnC
     @Override
     public void onCancel(DialogInterface dialog)
     {
-        // TODO Auto-generated method stub
-
+        // nothing
     }
 
     private String gtxt(int id)

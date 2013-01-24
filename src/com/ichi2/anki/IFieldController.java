@@ -44,4 +44,7 @@ public interface IFieldController
 
     // Is called to apply in the field new data from UI.
     void onDone();
+
+    //Called to free memory
+    void onDestroy();
 }

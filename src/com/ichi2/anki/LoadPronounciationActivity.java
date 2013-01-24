@@ -371,7 +371,11 @@ public class LoadPronounciationActivity extends Activity implements OnCancelList
 		progressDialog.dismiss();
 
 		showToast(GTX(R.string.multimedia_editor_general_done));
-
+		
+		
+		audioView.setVisibility(View.VISIBLE);
+		audioView.setAudioPath(result);
+		
 		// Intent resultData = new Intent();
 
 		// resultData.putExtra(EXTRA_PRONUNCIATION_FILE_PATH, result);

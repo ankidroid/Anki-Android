@@ -479,4 +479,11 @@ public class BasicTextFieldController extends FieldControllerBase implements IFi
         mActivity.startActivityForResult(intent, REQUEST_CODE_TRANSLATE_GLOSBE);
     }
 
+    @Override
+    public void onDestroy()
+    {
+        // TODO Auto-generated method stub
+        
+    }
+
 }

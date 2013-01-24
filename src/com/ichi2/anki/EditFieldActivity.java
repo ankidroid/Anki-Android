@@ -231,6 +231,15 @@ public class EditFieldActivity extends FragmentActivity
         mField = newField;
         recreateEditingUi();
     }
+    
+    @Override
+    protected void onDestroy()
+    {     
+        super.onDestroy();
+        
+        mFieldController.onDestroy();
+        
+    }
 
     private String gtxt(int id)
     {

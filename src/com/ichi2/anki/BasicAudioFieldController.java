@@ -91,4 +91,11 @@ public class BasicAudioFieldController extends FieldControllerBase implements IF
 		// TODO Auto-generated method stub
 
 	}
+
+    @Override
+    public void onDestroy()
+    {
+        // TODO Auto-generated method stub
+        
+    }
 }
