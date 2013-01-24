@@ -9,6 +9,7 @@ import org.json.JSONObject;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -51,6 +52,10 @@ public class MultimediaCardEditorActivity extends Activity
     public static final int CALLER_INDICLASH = 10;
 
     public static final int REQUEST_CODE_EDIT_FIELD = 1;
+
+	public static final int RESULT_DELETED = 2; // -1, 0, 1 are taken by default
+												// RESULT_CANCELLED, FIRST_USER,
+												// DELETED
 
     public static final String EXTRA_FIELD_INDEX = "multim.card.ed.extra.field.index";
     public static final String EXTRA_FIELD = "multim.card.ed.extra.field";
@@ -452,8 +457,52 @@ public class MultimediaCardEditorActivity extends Activity
 
     private void delete()
     {
-        CharSequence text = "Delete clicked!";
-        showToast(text);
+		DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener()
+		{
+			@Override
+			public void onClick(DialogInterface dialog, int which)
+			{
+				switch (which)
+				{
+					case DialogInterface.BUTTON_POSITIVE:
+						if (mAddNote)
+						{
+							finish();
+						}
+						else
+						{
+							DeckTask.launchDeckTask(DeckTask.TASK_TYPE_DISMISS_NOTE, new TaskListener()
+							{
+								@Override
+								public void onProgressUpdate(TaskData... values)
+								{
+								}
+
+								@Override
+								public void onPreExecute()
+								{
+								}
+
+								@Override
+								public void onPostExecute(TaskData result)
+								{
+								}
+							}, new DeckTask.TaskData(mCol.getSched(), mCard, 3));
+							setResult(RESULT_DELETED);
+							finish();
+						}
+						break;
+
+					case DialogInterface.BUTTON_NEGATIVE:
+						// Do nothing
+						break;
+				}
+			}
+		};
+
+		AlertDialog.Builder builder = new AlertDialog.Builder(this);
+		builder.setMessage("Are you sure you want to delete?").setPositiveButton("Yes", dialogClickListener)
+				.setNegativeButton("No", dialogClickListener).show();
     }
 
     private void showToast(CharSequence text)

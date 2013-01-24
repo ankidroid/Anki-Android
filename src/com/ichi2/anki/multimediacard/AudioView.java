@@ -1,18 +1,12 @@
 package com.ichi2.anki.multimediacard;
 
-import java.io.IOException;
-
 import android.content.Context;
 import android.media.MediaPlayer;
 import android.media.MediaPlayer.OnCompletionListener;
-import android.media.MediaPlayer.OnPreparedListener;
 import android.media.MediaRecorder;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
-
-import com.ichi2.anki.AnkiDroidApp;
 
 public class AudioView extends LinearLayout
 {
@@ -27,7 +21,7 @@ public class AudioView extends LinearLayout
 
 	OnRecordingFinishEventListener mOnRecordingFinishEventListener = null;
 
-	private Status mStatus = Status.STOPPED;
+	private Status mStatus = Status.IDLE;
 
 	int mResPlayImage;
 	int mResPauseImage;
@@ -37,13 +31,17 @@ public class AudioView extends LinearLayout
 
 	enum Status
 	{
-		PLAYING, PAUSED, STOPPED, RECORDING
+		IDLE, // Default initial state
+		INITIALIZED, // When datasource has been set
+		PLAYING, PAUSED, STOPPED, // The different possible states once playing
+								  // has started
+		RECORDING // The recorder being played status
 	}
 
 	/**
 	 * @param context
-	 *  
-	 *  Resources for images
+	 * 
+	 *            Resources for images
 	 * @param resPlay
 	 * @param resPause
 	 * @param resStop
@@ -97,7 +95,14 @@ public class AudioView extends LinearLayout
 
 	public void setAudioPath(String audioPath)
 	{
-		mAudioPath = audioPath;
+		if (mStatus == Status.IDLE)
+		{
+			mAudioPath = audioPath;
+		}
+		else
+		{
+			throw new RuntimeException("Cannot set audio path after it has been initialized");
+		}
 	}
 
 	public String getAudioPath()
@@ -122,18 +127,16 @@ public class AudioView extends LinearLayout
 		mOnRecordingFinishEventListener = listener;
 	}
 
-	public void onPlay()
+	public void notifyPlay()
 	{
-		startPlaying();
 		mPlayPause.update();
 		mStop.update();
 		if (mRecord != null)
 			mRecord.update();
 	}
 
-	public void onStop()
+	public void notifyStop()
 	{
-		stopPlaying();
 		// Send state change signal to all buttons
 		mPlayPause.update();
 		mStop.update();
@@ -141,119 +144,28 @@ public class AudioView extends LinearLayout
 			mRecord.update();
 	}
 
-	public void onPause()
+	public void notifyPause()
 	{
-		pausePlaying();
 		mPlayPause.update();
 		mStop.update();
 		if (mRecord != null)
 			mRecord.update();
 	}
 
-	public void onRecord()
+	public void notifyRecord()
 	{
-		startRecording();
 		mPlayPause.update();
 		mStop.update();
 		if (mRecord != null)
 			mRecord.update();
 	}
 
-	public void onStopRecord()
+	public void notifyStopRecord()
 	{
-		stopRecording();
 		mPlayPause.update();
 		mStop.update();
 		if (mRecord != null)
 			mRecord.update();
-	}
-
-	private void startPlaying()
-	{
-		try
-		{
-			if (mAudioPath == null || mAudioPath.equals(""))
-			{
-				Log.e(AnkiDroidApp.TAG, "Cannot find valid audioPath. Use setAudioPath().");
-				return;
-			}
-			if (mPlayer == null)
-			{
-				mPlayer = new MediaPlayer();
-			}
-			mPlayer.setDataSource(mAudioPath);
-			mPlayer.setOnPreparedListener(new OnPreparedListener()
-                        {
-                            
-                            @Override
-                            public void onPrepared(MediaPlayer mp)
-                            {
-                                mPlayer.start();
-                            }
-                        });
-			mPlayer.setOnCompletionListener(new OnCompletionListener()
-                        {
-                                @Override
-                                public void onCompletion(MediaPlayer mp)
-                                {
-                                        mStatus = Status.STOPPED;
-                                        onStop();
-                                }
-                        });
-			mPlayer.prepare();
-			
-		}
-		catch (IOException e)
-		{
-			Log.e(AnkiDroidApp.TAG, "prepare() failed for file " + mAudioPath + ", " + e.getMessage());
-		}
-	}
-
-	private void stopPlaying()
-	{
-		mPlayer.release();
-		mPlayer = null;
-
-	}
-
-	private void pausePlaying()
-	{
-		mPlayer.pause();
-	}
-
-	private void startRecording()
-	{
-		try
-		{
-			if (mAudioPath == null || mAudioPath.equals(""))
-			{
-				Log.e(AnkiDroidApp.TAG, "Cannot find valid audioPath. Use setAudioPath().");
-				return;
-			}
-			if (mRecorder == null)
-			{
-				mRecorder = new MediaRecorder();
-				mRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
-				mRecorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
-				mRecorder.setOutputFile(mAudioPath); // audioPath could change
-				mRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
-			}
-
-			// during lifetime
-			mRecorder.prepare();
-			mRecorder.start();
-		}
-		catch (IOException e)
-		{
-			Log.e(AnkiDroidApp.TAG, "prepare() failed for file " + mAudioPath);
-		}
-	}
-
-	private void stopRecording()
-	{
-		mRecorder.stop();
-		mRecorder.release();
-		mRecorder = null;
 	}
 
 	protected class PlayPauseButton extends ImageButton
@@ -268,21 +180,68 @@ public class AudioView extends LinearLayout
 
 				switch (mStatus)
 				{
+					case IDLE:
+						try
+						{
+							setImageResource(mResPauseImage);
+							mPlayer = new MediaPlayer();
+							mPlayer.setDataSource(getAudioPath());
+							mPlayer.setOnCompletionListener(new OnCompletionListener()
+							{
+								@Override
+								public void onCompletion(MediaPlayer mp)
+								{
+									mStatus = Status.STOPPED;
+									mPlayer.stop();
+									notifyStop();
+								}
+							});
+							mPlayer.prepare();
+							mPlayer.start();
+							mStatus = Status.PLAYING;
+							notifyPlay();
+						}
+						catch (Exception e)
+						{
+							throw new RuntimeException(e);
+						}
+						break;
+
 					case PAUSED:
-					case STOPPED:
-						setImageResource(mResPauseImage);
+						// -> Play, continue playing
 						mStatus = Status.PLAYING;
-						onPlay();
+						setImageResource(mResPauseImage);
+						mPlayer.start();
+						notifyPlay();
+						break;
+
+					case STOPPED:
+						// -> Play, start from beginning
+						mStatus = Status.PLAYING;
+						setImageResource(mResPauseImage);
+						try
+						{
+							mPlayer.prepare();
+							mPlayer.seekTo(0);
+						}
+						catch (Exception e)
+						{
+							throw new RuntimeException(e);
+						}
+						mPlayer.start();
+						notifyPlay();
 						break;
 
 					case PLAYING:
 						setImageResource(mResPlayImage);
+						mPlayer.pause();
 						mStatus = Status.PAUSED;
-						onPause();
+						notifyPause();
 						break;
 
 					case RECORDING:
 						// this button should be disabled
+						break;
 				}
 			}
 		};
@@ -299,6 +258,7 @@ public class AudioView extends LinearLayout
 		{
 			switch (mStatus)
 			{
+				case IDLE:
 				case STOPPED:
 					setImageResource(mResPlayImage);
 					setEnabled(true);
@@ -326,13 +286,14 @@ public class AudioView extends LinearLayout
 				{
 					case PAUSED:
 					case PLAYING:
+						mPlayer.stop();
 						mStatus = Status.STOPPED;
-						onStop();
+						notifyStop();
 						break;
 
+					case IDLE:
 					case STOPPED:
 					case RECORDING:
-						// do nothing
 				}
 			}
 		};
@@ -368,21 +329,42 @@ public class AudioView extends LinearLayout
 			@Override
 			public void onClick(View v)
 			{
+				// Since mAudioPath is not compulsory, we check if it exists
 				if (mAudioPath == null)
 					return;
 
 				switch (mStatus)
 				{
-					case STOPPED:
-						setImageResource(mResRecordImage);
-						mStatus = Status.RECORDING;
-						onRecord();
+					case IDLE: // If not already recorded or not already played
+					case STOPPED: // if already recorded or played
+						try
+						{
+							setImageResource(mResRecordImage);
+							mRecorder = new MediaRecorder();
+							mRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
+							mRecorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
+							mStatus = Status.INITIALIZED;
+							mRecorder.setOutputFile(mAudioPath); // audioPath
+																 // could
+																 // change
+							mRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
+							mRecorder.prepare();
+							mRecorder.start();
+							mStatus = Status.RECORDING;
+							notifyRecord();
+						}
+						catch (Exception e)
+						{
+							throw new RuntimeException(e);
+						}
 						break;
 
 					case RECORDING:
 						setImageResource(mResRecordStopImage);
-						mStatus = Status.STOPPED;
-						onStopRecord();
+						mRecorder.stop();
+						mStatus = Status.IDLE; // Back to idle, so if play
+											   // pressed, initialize player
+						notifyStopRecord();
 						if (mOnRecordingFinishEventListener != null)
 						{
 							mOnRecordingFinishEventListener.onRecordingFinish(AudioView.this);
