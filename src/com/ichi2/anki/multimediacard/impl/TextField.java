@@ -12,7 +12,7 @@ import com.ichi2.anki.multimediacard.IField;
 public class TextField extends FieldBase implements IField
 {
 	private static final long serialVersionUID = -6508967905716947525L;
-	String mText = "";
+	String mText = " - ";
 	private String mName;
 
 	@Override

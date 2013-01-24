@@ -90,6 +90,16 @@
 <!-- message when cloning -->
 <string name ="multimedia_editor_text_field_editing_clone_source">Take from</string>
 
+<!-- Multimedia Card Editor Activity -->
+<!-- for buttons -->
+<string name ="multimedia_editor_activity_note_type">Note type</string>
+<string name ="multimedia_editor_activity_deck">Deck</string>
+<string name ="multimedia_editor_activity_edit_button">Edit</string>
+<!-- delete confirmation -->
+<string name ="multimedia_editor_activity_delete_question">Delete the whole note?</string>
+<string name ="multimedia_editor_activity_delete_confirm">Delete</string>
+<string name ="multimedia_editor_activity_delete_reject">Keep</string>
+
 
 <!-- Image Editing -->
 <!-- for buttons -->

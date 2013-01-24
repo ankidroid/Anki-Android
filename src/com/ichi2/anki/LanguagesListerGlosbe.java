@@ -24,6 +24,7 @@ public class LanguagesListerGlosbe extends LanguageListerBase
         addLanguage(context.getString(R.string.multimedia_editor_languages_russian), "rus");
         addLanguage(context.getString(R.string.multimedia_editor_languages_german), "deu");
         addLanguage(context.getString(R.string.multimedia_editor_languages_slovak), "slk");
+        addLanguage(context.getString(R.string.multimedia_editor_languages_portuguese), "por");
         
         
         //Add more here, should just work. 

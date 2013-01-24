@@ -16,6 +16,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -25,13 +26,11 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.LinearLayout.LayoutParams;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.ichi2.anim.ActivityTransitionAnimation;
 import com.ichi2.anki.multimediacard.AudioView;
 import com.ichi2.anki.multimediacard.IField;
 import com.ichi2.anki.multimediacard.IMultimediaEditableNote;
-import com.ichi2.anki.multimediacard.impl.MockNoteFactory;
 import com.ichi2.anki.multimediacard.impl.MultimediaEditableNote;
 import com.ichi2.anki.servicelayer.NoteService;
 import com.ichi2.async.DeckTask;
@@ -53,25 +52,26 @@ public class MultimediaCardEditorActivity extends Activity
 
     public static final int REQUEST_CODE_EDIT_FIELD = 1;
 
-	public static final int RESULT_DELETED = 2; // -1, 0, 1 are taken by default
-												// RESULT_CANCELLED, FIRST_USER,
-												// DELETED
+    public static final int RESULT_DELETED = 2; // -1, 0, 1 are taken by default
+                                                // RESULT_CANCELLED, FIRST_USER,
+                                                // DELETED
 
     public static final String EXTRA_FIELD_INDEX = "multim.card.ed.extra.field.index";
     public static final String EXTRA_FIELD = "multim.card.ed.extra.field";
     public static final String EXTRA_WHOLE_NOTE = "multim.card.ed.extra.whole.note";
     public static final String EXTRA_CARD_ID = "CARD_ID";
 
-    private static final String ACTION_CREATE_FLASHCARD = "org.openintents.action.CREATE_FLASHCARD";
-    private static final String ACTION_CREATE_FLASHCARD_SEND = "android.intent.action.SEND";
+    // private static final String ACTION_CREATE_FLASHCARD =
+    // "org.openintents.action.CREATE_FLASHCARD";
+    // private static final String ACTION_CREATE_FLASHCARD_SEND = "android.intent.action.SEND";
 
     private static final int DIALOG_MODEL_SELECT = 1;
-	private static final int DIALOG_DECK_SELECT = 2;
+    private static final int DIALOG_DECK_SELECT = 2;
 
     private LinearLayout mEditorLayout;
     private LinearLayout mButtonsLayout;
     private Button mModelButton;
-	private Button mDeckButton;
+    private Button mDeckButton;
 
     /* Data variables below, not UI Elements */
     private Collection mCol;
@@ -117,9 +117,11 @@ public class MultimediaCardEditorActivity extends Activity
 
         LayoutParams pars = new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT, 1);
 
+        //DEPRECATED< BUT USED IN THE PROJECT.
         mModelButton = new Button(this);
         mModelButton.setOnClickListener(new OnClickListener()
         {
+            @SuppressWarnings("deprecation")
             @Override
             public void onClick(View v)
             {
@@ -128,16 +130,17 @@ public class MultimediaCardEditorActivity extends Activity
         });
         mButtonsLayout.addView(mModelButton, pars);
 
-		mDeckButton = new Button(this);
-		mDeckButton.setOnClickListener(new OnClickListener()
-		{
-			@Override
-			public void onClick(View v)
-			{
-				showDialog(DIALOG_DECK_SELECT);
-			}
-		});
-		mButtonsLayout.addView(mDeckButton, pars);
+        mDeckButton = new Button(this);
+        mDeckButton.setOnClickListener(new OnClickListener()
+        {
+            @SuppressWarnings("deprecation")
+            @Override
+            public void onClick(View v)
+            {
+                showDialog(DIALOG_DECK_SELECT);
+            }
+        });
+        mButtonsLayout.addView(mDeckButton, pars);
     }
 
     private void createSpareMenu(LinearLayout linearLayout)
@@ -187,14 +190,22 @@ public class MultimediaCardEditorActivity extends Activity
                 createNewViewer(linearLayout, note.getField(i), i);
             }
 
-            mModelButton.setText("Note type: " + mEditorNote.model().getString("name"));
-			mDeckButton.setText("Deck : " + mCol.getDecks().get(mCurrentDid).getString("name"));
+            mModelButton.setText(gtxt(R.string.multimedia_editor_activity_note_type) + " : "
+                    + mEditorNote.model().getString("name"));
+            mDeckButton.setText(gtxt(R.string.multimedia_editor_activity_deck) + " : "
+                    + mCol.getDecks().get(mCurrentDid).getString("name"));
         }
         catch (JSONException e)
         {
-            throw new RuntimeException(e);
+            Log.e("Multimedia Editor", e.getMessage());
+            return;
         }
 
+    }
+
+    private String gtxt(int id)
+    {
+        return getText(id).toString();
     }
 
     private void putExtrasAndStartEditActivity(final IField field, final int index, Intent i)
@@ -270,15 +281,12 @@ public class MultimediaCardEditorActivity extends Activity
                 break;
 
             default:
-                TextView unsupp = new TextView(this);
-                unsupp.setText("Unsupported field type");
-                unsupp.setEnabled(false);
-                linearLayout.addView(unsupp);
+                Log.e("multimedia editor", "Unsupported field type found");
                 break;
         }
 
         Button editButtonText = new Button(this);
-        editButtonText.setText("Edit");
+        editButtonText.setText(gtxt(R.string.multimedia_editor_activity_edit_button));
         linearLayout.addView(editButtonText, LinearLayout.LayoutParams.MATCH_PARENT);
 
         editButtonText.setOnClickListener(new View.OnClickListener()
@@ -302,10 +310,10 @@ public class MultimediaCardEditorActivity extends Activity
     }
 
     // Temporary implemented
-    private IMultimediaEditableNote getMockNote()
-    {
-        return MockNoteFactory.makeNote();
-    }
+//    private IMultimediaEditableNote getMockNote()
+//    {
+//        return MockNoteFactory.makeNote();
+//    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item)
@@ -360,8 +368,8 @@ public class MultimediaCardEditorActivity extends Activity
             case DIALOG_MODEL_SELECT:
                 return _showModelSelectDialog();
 
-			case DIALOG_DECK_SELECT:
-				return _showDeckSelectDialog();
+            case DIALOG_DECK_SELECT:
+                return _showDeckSelectDialog();
 
             default:
                 break;
@@ -393,7 +401,7 @@ public class MultimediaCardEditorActivity extends Activity
             }
             catch (JSONException e)
             {
-                throw new RuntimeException(e);
+                Log.e("Multimedia Editor", e.getMessage());
             }
         }
         // Convert to Array
@@ -412,7 +420,8 @@ public class MultimediaCardEditorActivity extends Activity
                 }
                 catch (JSONException e)
                 {
-                    throw new RuntimeException(e);
+                    Log.e("Multimedia Editor", e.getMessage());
+                    return;
                 }
                 long newId = dialogIds.get(item);
                 if (oldModelId != newId)
@@ -422,68 +431,68 @@ public class MultimediaCardEditorActivity extends Activity
                 }
             }
         });
-		dialog = builder.create();
-		return dialog;
-	}
+        dialog = builder.create();
+        return dialog;
+    }
 
-	private Dialog _showDeckSelectDialog()
-	{
-		StyledDialog dialog = null;
-		StyledDialog.Builder builder = new StyledDialog.Builder(this);
+    private Dialog _showDeckSelectDialog()
+    {
+        StyledDialog dialog = null;
+        StyledDialog.Builder builder = new StyledDialog.Builder(this);
 
-		ArrayList<CharSequence> dialogDeckItems = new ArrayList<CharSequence>();
-		// Use this array to know which ID is associated with each
-		// Item(name)
-		final ArrayList<Long> dialogDeckIds = new ArrayList<Long>();
+        ArrayList<CharSequence> dialogDeckItems = new ArrayList<CharSequence>();
+        // Use this array to know which ID is associated with each
+        // Item(name)
+        final ArrayList<Long> dialogDeckIds = new ArrayList<Long>();
 
-		ArrayList<JSONObject> decks = mCol.getDecks().all();
-		Collections.sort(decks, new JSONNameComparator());
-		builder.setTitle(R.string.deck);
-		for (JSONObject d : decks)
-		{
-			try
-			{
-				if (d.getInt("dyn") == 0)
-				{
-					dialogDeckItems.add(d.getString("name"));
-					dialogDeckIds.add(d.getLong("id"));
-				}
-			}
-			catch (JSONException e)
-			{
-				throw new RuntimeException(e);
-			}
-		}
-		// Convert to Array
-		String[] items = new String[dialogDeckItems.size()];
-		dialogDeckItems.toArray(items);
+        ArrayList<JSONObject> decks = mCol.getDecks().all();
+        Collections.sort(decks, new JSONNameComparator());
+        builder.setTitle(R.string.deck);
+        for (JSONObject d : decks)
+        {
+            try
+            {
+                if (d.getInt("dyn") == 0)
+                {
+                    dialogDeckItems.add(d.getString("name"));
+                    dialogDeckIds.add(d.getLong("id"));
+                }
+            }
+            catch (JSONException e)
+            {
+                Log.e("Multimedia Editor", e.getMessage());
+            }
+        }
+        // Convert to Array
+        String[] items = new String[dialogDeckItems.size()];
+        dialogDeckItems.toArray(items);
 
-		builder.setItems(items, new DialogInterface.OnClickListener()
-		{
-			@Override
-			public void onClick(DialogInterface dialog, int item)
-			{
-				long newId = dialogDeckIds.get(item);
-				if (mCurrentDid != newId)
-				{
-					if (mAddNote)
-					{
-						try
-						{
-							// TODO: mEditorNote.setDid(newId);
-							mEditorNote.model().put("did", newId);
-							mCol.getModels().setChanged();
-						}
-						catch (JSONException e)
-						{
-							throw new RuntimeException(e);
-						}
-					}
-					mCurrentDid = newId;
-					_createEditorUI(mNote);
-				}
-			}
-		});
+        builder.setItems(items, new DialogInterface.OnClickListener()
+        {
+            @Override
+            public void onClick(DialogInterface dialog, int item)
+            {
+                long newId = dialogDeckIds.get(item);
+                if (mCurrentDid != newId)
+                {
+                    if (mAddNote)
+                    {
+                        try
+                        {
+                            // TODO: mEditorNote.setDid(newId);
+                            mEditorNote.model().put("did", newId);
+                            mCol.getModels().setChanged();
+                        }
+                        catch (JSONException e)
+                        {
+                            Log.e("Multimedia Editor", e.getMessage());
+                        }
+                    }
+                    mCurrentDid = newId;
+                    _createEditorUI(mNote);
+                }
+            }
+        });
 
         dialog = builder.create();
         return dialog;
@@ -530,68 +539,63 @@ public class MultimediaCardEditorActivity extends Activity
         }
         catch (JSONException e)
         {
-            throw new RuntimeException(e);
+            Log.e("Multimedia Editor", e.getMessage());
         }
 
     }
 
     private void delete()
     {
-		DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener()
-		{
-			@Override
-			public void onClick(DialogInterface dialog, int which)
-			{
-				switch (which)
-				{
-					case DialogInterface.BUTTON_POSITIVE:
-						if (mAddNote)
-						{
-							finish();
-						}
-						else
-						{
-							DeckTask.launchDeckTask(DeckTask.TASK_TYPE_DISMISS_NOTE, new TaskListener()
-							{
-								@Override
-								public void onProgressUpdate(TaskData... values)
-								{
-								}
+        DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener()
+        {
+            @Override
+            public void onClick(DialogInterface dialog, int which)
+            {
+                switch (which)
+                {
+                    case DialogInterface.BUTTON_POSITIVE:
+                        if (mAddNote)
+                        {
+                            finish();
+                        }
+                        else
+                        {
+                            DeckTask.launchDeckTask(DeckTask.TASK_TYPE_DISMISS_NOTE, new TaskListener()
+                            {
+                                @Override
+                                public void onProgressUpdate(TaskData... values)
+                                {
+                                }
 
-								@Override
-								public void onPreExecute()
-								{
-								}
+                                @Override
+                                public void onPreExecute()
+                                {
+                                }
 
-								@Override
-								public void onPostExecute(TaskData result)
-								{
-								}
-							}, new DeckTask.TaskData(mCol.getSched(), mCard, 3));
-							setResult(RESULT_DELETED);
-							finish();
-						}
-						break;
+                                @Override
+                                public void onPostExecute(TaskData result)
+                                {
+                                }
+                            }, new DeckTask.TaskData(mCol.getSched(), mCard, 3));
+                            setResult(RESULT_DELETED);
+                            finish();
+                        }
+                        break;
 
-					case DialogInterface.BUTTON_NEGATIVE:
-						// Do nothing
-						break;
-				}
-			}
-		};
+                    case DialogInterface.BUTTON_NEGATIVE:
+                        // Do nothing
+                        break;
+                }
+            }
+        };
 
-		AlertDialog.Builder builder = new AlertDialog.Builder(this);
-		builder.setMessage("Are you sure you want to delete?").setPositiveButton("Yes", dialogClickListener)
-				.setNegativeButton("No", dialogClickListener).show();
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage(gtxt(R.string.multimedia_editor_activity_delete_question))
+                .setPositiveButton(gtxt(R.string.multimedia_editor_activity_delete_confirm), dialogClickListener)
+                .setNegativeButton(gtxt(R.string.multimedia_editor_activity_delete_reject), dialogClickListener).show();
     }
 
-    private void showToast(CharSequence text)
-    {
-        int duration = Toast.LENGTH_SHORT;
-        Toast toast = Toast.makeText(this, text, duration);
-        toast.show();
-    }
-
+    
     /**
      * If a note has been passed, loads it. Otherwise creates a new Note
      * 
@@ -631,7 +635,8 @@ public class MultimediaCardEditorActivity extends Activity
                 mNote = NoteService.createEmptyNote(currentModel);
                 if (mNote == null)
                 {
-                    throw new RuntimeException("Cannot create a Note");
+                    Log.e("Multimedia Editor", "Cannot create a Note");
+                    return;
                 }
 
                 mEditorNote = new Note(mCol, currentModel);
@@ -641,7 +646,8 @@ public class MultimediaCardEditorActivity extends Activity
         }
         catch (JSONException e)
         {
-            throw new RuntimeException(e);
+            Log.e("Multimedia Editor", e.getMessage());
+            return;
         }
     }
 
