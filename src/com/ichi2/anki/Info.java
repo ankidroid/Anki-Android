@@ -302,7 +302,7 @@ public class Info extends Activity {
                                 finishWithAnimation(false);
                             }
                         });
-                        syncButton.setText(android.R.string.no);
+                        syncButton.setText(R.string.no);
                         syncButton.setOnClickListener(new OnClickListener() {
                             @Override
                             public void onClick(View arg0) {
@@ -312,7 +312,7 @@ public class Info extends Activity {
                                 finishWithAnimation();
                             }
                         });
-                        continueButton.setText(android.R.string.yes);
+                        continueButton.setText(R.string.yes);
                         continueButton.setOnClickListener(new OnClickListener() {
                             @Override
                             public void onClick(View arg0) {
@@ -347,7 +347,7 @@ public class Info extends Activity {
                                 builder.setIcon(R.drawable.ic_dialog_alert);
                                 builder.setMessage(R.string.deck_upgrade_not_import_warning);
                                 Resources res = getResources();
-                                builder.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                                builder.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialog, int which) {
                                         Intent result = new Intent();
@@ -356,7 +356,7 @@ public class Info extends Activity {
                                         finishWithAnimation();
                                     }
                                 });
-                                builder.setNegativeButton(android.R.string.no, null);
+                                builder.setNegativeButton(R.string.no, null);
                                 builder.show();
                             }
                         });
@@ -377,7 +377,7 @@ public class Info extends Activity {
                             }
                         });
                         syncButton.setVisibility(View.GONE);
-                        continueButton.setText(android.R.string.yes);
+                        continueButton.setText(R.string.yes);
                         continueButton.setOnClickListener(new OnClickListener() {
                             @Override
                             public void onClick(View arg0) {
@@ -539,7 +539,7 @@ public class Info extends Activity {
 
             case DIALOG_SYNC_LOG:
                 builder.setTitle(R.string.sync_log_title);
-                builder.setPositiveButton(android.R.string.ok, null);
+                builder.setPositiveButton(R.string.ok, null);
                 dialog = builder.create();
                 break;
 
@@ -551,7 +551,7 @@ public class Info extends Activity {
                                 downloadCollection();
                             }
                         });
-                builder.setNegativeButton(android.R.string.cancel, null);
+                builder.setNegativeButton(R.string.cancel, null);
                 builder.setTitle(R.string.sync_log_title);
                 dialog = builder.create();
                 break;

@@ -1135,7 +1135,7 @@ public class DeckPicker extends FragmentActivity {
         builder.setTitle(R.string.deck_upgrade_title);
         builder.setIcon(R.drawable.ic_dialog_alert);
         builder.setMessage(getString(R.string.deck_upgrade_rename_warning, UPGRADE_OLD_COLLECTION_RENAME));
-        builder.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+        builder.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 AnkiDroidApp.closeCollection(true);
@@ -1153,7 +1153,7 @@ public class DeckPicker extends FragmentActivity {
             }
         });
         builder.setCancelable(false);
-        builder.setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+        builder.setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 AnkiDroidApp.getSharedPrefs(AnkiDroidApp.getInstance().getBaseContext())
