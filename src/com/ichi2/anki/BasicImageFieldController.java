@@ -15,9 +15,9 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.LinearLayout.LayoutParams;
-import android.widget.TextView;
 
 import com.ichi2.utils.BitmapUtil;
+import com.ichi2.utils.ExifUtil;
 
 public class BasicImageFieldController extends FieldControllerBase implements IFieldController
 {
@@ -177,6 +177,12 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
             File f = new File(imagePath);
             
             Bitmap b = BitmapUtil.decodeFile(f, maxsize);
+            
+            int currentapiVersion = android.os.Build.VERSION.SDK_INT;                
+            if (currentapiVersion >= android.os.Build.VERSION_CODES.ECLAIR)
+            {
+                b = ExifUtil.rotateFromCamera(f, b);
+            }
             
             mImagePreview.setImageBitmap(b);
         }
