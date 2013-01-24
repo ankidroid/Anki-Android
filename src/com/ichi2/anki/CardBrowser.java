@@ -319,7 +319,7 @@ public class CardBrowser extends Activity
 				sCardBrowserCard = mCol.getCard(cardId);
 				Intent editCard = new Intent(CardBrowser.this, MultimediaCardEditorActivity.class);
 				editCard.putExtra(CardEditor.EXTRA_CALLER, CardEditor.CALLER_CARDBROWSER_EDIT);
-				editCard.putExtra(MultimediaCardEditorActivity.EXTRA_NOTE_ID, sCardBrowserCard.note().getId());
+				editCard.putExtra(MultimediaCardEditorActivity.EXTRA_CARD_ID, sCardBrowserCard.getId());
 				startActivityForResult(editCard, EDIT_CARD);
 				if (AnkiDroidApp.SDK_VERSION > 4)
 				{

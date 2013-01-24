@@ -36,6 +36,7 @@ import com.ichi2.anki.servicelayer.NoteService;
 import com.ichi2.async.DeckTask;
 import com.ichi2.async.DeckTask.TaskData;
 import com.ichi2.async.DeckTask.TaskListener;
+import com.ichi2.libanki.Card;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Note;
 import com.ichi2.themes.StyledDialog;
@@ -53,7 +54,7 @@ public class MultimediaCardEditorActivity extends Activity
     public static final String EXTRA_FIELD_INDEX = "multim.card.ed.extra.field.index";
     public static final String EXTRA_FIELD = "multim.card.ed.extra.field";
     public static final String EXTRA_WHOLE_NOTE = "multim.card.ed.extra.whole.note";
-    public static final String EXTRA_NOTE_ID = "NOTE_ID";
+	public static final String EXTRA_CARD_ID = "CARD_ID";
 
     private static final String ACTION_CREATE_FLASHCARD = "org.openintents.action.CREATE_FLASHCARD";
     private static final String ACTION_CREATE_FLASHCARD_SEND = "android.intent.action.SEND";
@@ -69,6 +70,7 @@ public class MultimediaCardEditorActivity extends Activity
     private long mCurrentDid;
     private IMultimediaEditableNote mNote;
     private Note mEditorNote;
+	private Card mCard;
 
     /**
      * Indicates if editor is working with new note or one that exists already
@@ -108,7 +110,6 @@ public class MultimediaCardEditorActivity extends Activity
         LayoutParams pars = new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT, 1);
 
         mModelButton = new Button(this);
-        mModelButton.setText("Model");
         mModelButton.setOnClickListener(new OnClickListener()
         {
             @Override
@@ -376,7 +377,6 @@ public class MultimediaCardEditorActivity extends Activity
             @Override
             public void onClick(DialogInterface dialog, int item)
             {
-
                 long oldModelId;
                 try
                 {
@@ -470,10 +470,13 @@ public class MultimediaCardEditorActivity extends Activity
             mCol = AnkiDroidApp.getCol();
 
             Intent callerIntent = getIntent();
-            long noteId = callerIntent.getLongExtra(EXTRA_NOTE_ID, 0);
-            if (noteId != 0)
+			long cardId = callerIntent.getLongExtra(EXTRA_CARD_ID, 0);
+			if (cardId != 0)
             {
-                mEditorNote = mCol.getNote(noteId);
+				mCard = mCol.getCard(cardId);
+				mCurrentDid = mCard.getDid();
+				mEditorNote = mCard.note();
+				mCol.getModels().setCurrent(mEditorNote.model());
                 mNote = NoteService.createEmptyNote(mEditorNote.model());
                 NoteService.updateMultimediaNoteFromJsonNote(mEditorNote, mNote);
 
@@ -511,6 +514,7 @@ public class MultimediaCardEditorActivity extends Activity
     {
         NoteService.saveMedia((MultimediaEditableNote) mNote);
         NoteService.updateJsonNoteFromMultimediaNote(mNote, mEditorNote);
+
         TaskListener listener = new TaskListener()
         {
 
@@ -535,8 +539,22 @@ public class MultimediaCardEditorActivity extends Activity
 
             }
         };
-        DeckTask.launchDeckTask(DeckTask.TASK_TYPE_ADD_FACT, listener, new DeckTask.TaskData(mEditorNote));
-        // TODO Check what the listener does here
+
+		if (mAddNote)
+		{
+
+			DeckTask.launchDeckTask(DeckTask.TASK_TYPE_ADD_FACT, listener, new DeckTask.TaskData(mEditorNote));
+		}
+		else
+		{
+
+			DeckTask.launchDeckTask(DeckTask.TASK_TYPE_UPDATE_FACT, listener, new DeckTask.TaskData(mCol.getSched(),
+					mCard, false));
+		}
+
+		setResult(Activity.RESULT_OK);
+		finish();
+
     }
 
     private int getMaxImageSize()

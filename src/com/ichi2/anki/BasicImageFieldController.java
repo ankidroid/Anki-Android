@@ -103,9 +103,6 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
             }
         });
 
-        TextView textView = new TextView(mActivity);
-        textView.setText("Current Image");
-        layout.addView(textView, LinearLayout.LayoutParams.MATCH_PARENT);
         layout.addView(mImagePreview, LinearLayout.LayoutParams.MATCH_PARENT, p);
         layout.addView(mBtnGallery, LinearLayout.LayoutParams.MATCH_PARENT);
         layout.addView(mBtnCamera, LinearLayout.LayoutParams.MATCH_PARENT);
