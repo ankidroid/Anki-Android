@@ -1,9 +1,13 @@
 package com.ichi2.anki.multimediacard.impl;
 
 import java.io.File;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
+import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.multimediacard.EFieldType;
 import com.ichi2.anki.multimediacard.IField;
+import com.ichi2.libanki.Collection;
 
 /**
  * @author zaur
@@ -17,6 +21,8 @@ public class ImageField extends FieldBase implements IField
 	String mImagePath;
 	private boolean mHasTemporaryMedia = false;
 	private String mName;
+
+	private static final String PATH_REGEX = "<img.*src=[\"'](.*)[\"'].*/?>";
 
 	@Override
 	public EFieldType getType()
@@ -122,5 +128,20 @@ public class ImageField extends FieldBase implements IField
 		{
 			return "";
 		}
+	}
+
+	@Override
+	public void setFormattedString(String value)
+	{
+		Pattern p = Pattern.compile(PATH_REGEX);
+		Matcher m = p.matcher(value);
+		String res = "";
+		if (m.find())
+		{
+			res = m.group(1);
+		}
+		Collection col = AnkiDroidApp.getCol();
+		String mediaDir = col.getMedia().getDir() + "/";
+		setImagePath(mediaDir + res);
 	}
 }

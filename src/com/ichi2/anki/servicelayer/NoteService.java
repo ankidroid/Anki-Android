@@ -14,6 +14,8 @@ import org.json.JSONObject;
 import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.multimediacard.IField;
 import com.ichi2.anki.multimediacard.IMultimediaEditableNote;
+import com.ichi2.anki.multimediacard.impl.AudioField;
+import com.ichi2.anki.multimediacard.impl.ImageField;
 import com.ichi2.anki.multimediacard.impl.MultimediaEditableNote;
 import com.ichi2.anki.multimediacard.impl.TextField;
 import com.ichi2.libanki.Collection;
@@ -21,20 +23,6 @@ import com.ichi2.libanki.Note;
 
 public class NoteService
 {
-	/**
-	 * Saves note to the anki collection.
-	 * 
-	 * It saves the note data to the database and the files associated with the
-	 * note as well.
-	 * 
-	 * @param note
-	 * @param deckId
-	 */
-	public void save(IMultimediaEditableNote note, long deckId)
-	{
-
-	}
-
 	/**
 	 * Creates an empty Note from given Model
 	 * 
@@ -71,6 +59,36 @@ public class NoteService
 			e.printStackTrace();
 		}
 		return null;
+	}
+
+	public static void updateMultimediaNoteFromJsonNote(final Note editorNoteSrc, final IMultimediaEditableNote noteDst)
+	{
+		if (noteDst instanceof MultimediaEditableNote)
+		{
+			MultimediaEditableNote mmNote = (MultimediaEditableNote) noteDst;
+			String[] values = editorNoteSrc.getFields();
+			for (int i = 0; i < values.length; i++)
+			{
+				String value = values[i];
+				IField field = null;
+				if (value.startsWith("<img"))
+				{
+					field = new ImageField();
+				}
+				else if (value.startsWith("[sound:"))
+				{
+					field = new AudioField();
+				}
+				else
+				{
+					field = new TextField();
+				}
+				field.setFormattedString(value);
+				mmNote.setField(i, field);
+			}
+			mmNote.setModelId(editorNoteSrc.getMid());
+			// TODO: set current id of the note as well
+		}
 	}
 
 	/**

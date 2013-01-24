@@ -1,6 +1,5 @@
 package com.ichi2.anki;
 
-
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -52,6 +51,7 @@ public class MultimediaCardEditorActivity extends Activity
 	public static final String EXTRA_FIELD_INDEX = "multim.card.ed.extra.field.index";
 	public static final String EXTRA_FIELD = "multim.card.ed.extra.field";
 	public static final String EXTRA_WHOLE_NOTE = "multim.card.ed.extra.whole.note";
+	public static final String EXTRA_NOTE_ID = "NOTE_ID";
 
 	private static final String ACTION_CREATE_FLASHCARD = "org.openintents.action.CREATE_FLASHCARD";
 	private static final String ACTION_CREATE_FLASHCARD_SEND = "android.intent.action.SEND";
@@ -211,20 +211,19 @@ public class MultimediaCardEditorActivity extends Activity
 				// Bitmap bm = BitmapFactory.decodeFile(myJpgPath, options);
 				// jpgView.setImageBitmap(bm);
 
-
-                                LinearLayout.LayoutParams p = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
+				LinearLayout.LayoutParams p = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
 				imgView.setImageURI(Uri.parse(new File(field.getImagePath()).toString()));
 				imgView.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
 				imgView.setAdjustViewBounds(true);
-				
-				DisplayMetrics metrics = new DisplayMetrics();
-			        getWindowManager().getDefaultDisplay().getMetrics(metrics);
 
-			        int height = metrics.heightPixels;
-			        int width = metrics.widthPixels;
-			        
-				imgView.setMaxHeight((int)Math.round(height*0.6));
-				imgView.setMaxWidth((int)Math.round(width*0.7));
+				DisplayMetrics metrics = new DisplayMetrics();
+				getWindowManager().getDefaultDisplay().getMetrics(metrics);
+
+				int height = metrics.heightPixels;
+				int width = metrics.widthPixels;
+
+				imgView.setMaxHeight((int) Math.round(height * 0.6));
+				imgView.setMaxWidth((int) Math.round(width * 0.7));
 				linearLayout.addView(imgView, p);
 
 				break;
@@ -380,7 +379,7 @@ public class MultimediaCardEditorActivity extends Activity
 				long newId = dialogIds.get(item);
 				if (oldModelId != newId)
 				{
-					_changeCurrentModel(newId, oldModelId);
+					_changeCurrentModel(newId);
 					_createEditorUI(mNote);
 				}
 			}
@@ -389,7 +388,15 @@ public class MultimediaCardEditorActivity extends Activity
 		return dialog;
 	}
 
-	protected void _changeCurrentModel(long newId, long oldModelId)
+	/**
+	 * Change current model for the Note.
+	 * 
+	 * Changes both MultimediaNote and the mEditorNote (Note Object) and copies
+	 * existing values to both.
+	 * 
+	 * @param newId
+	 */
+	protected void _changeCurrentModel(long newId)
 	{
 		try
 		{
@@ -443,46 +450,45 @@ public class MultimediaCardEditorActivity extends Activity
 	/**
 	 * If a note has been passed, loads it. Otherwise creates a new Note
 	 * 
-	 * Current does not support editing of note, just creating new notes
-	 * according to some note type
+	 * It checks for a noteId, a long value with EXTRA_NOTE_ID as key. If not 0,
+	 * edits the note, else creates a new note
 	 */
 	private void _initData()
 	{
-		// Intent intent = getIntent();
-		// mCaller = intent.getIntExtra(EXTRA_CALLER, CALLER_NOCALLER);
-		// if (mCaller == CALLER_NOCALLER)
-		// {
-		// String action = intent.getAction();
-		// if (action != null
-		// && (ACTION_CREATE_FLASHCARD.equals(action) ||
-		// ACTION_CREATE_FLASHCARD_SEND.equals(action)))
-		// {
-		// mCaller = CALLER_INDICLASH;
-		// }
-		// }
-
-		// Log.i(AnkiDroidApp.TAG, "CardEditor: caller: " + mCaller);
 		try
 		{
 			mCol = AnkiDroidApp.getCol();
 
-			mCurrentDid = mCol.getDecks().current().getLong("id");
-			if (mCol.getDecks().isDyn(mCurrentDid))
+			Intent callerIntent = getIntent();
+			long noteId = callerIntent.getLongExtra(EXTRA_NOTE_ID, 0);
+			if (noteId != 0)
 			{
-				mCurrentDid = 1;
+				mEditorNote = mCol.getNote(noteId);
+				mNote = NoteService.createEmptyNote(mEditorNote.model());
+				NoteService.updateMultimediaNoteFromJsonNote(mEditorNote, mNote);
+
+				mAddNote = false;
 			}
-
-			mAddNote = true;
-
-			JSONObject currentModel = mCol.getModels().current();
-			mNote = NoteService.createEmptyNote(currentModel);
-			if (mNote == null)
+			else
 			{
-				throw new RuntimeException("Cannot create a Note");
-			}
+				mCurrentDid = mCol.getDecks().current().getLong("id");
+				if (mCol.getDecks().isDyn(mCurrentDid))
+				{
+					mCurrentDid = 1;
+				}
 
-			mEditorNote = new Note(mCol, currentModel);
-			mEditorNote.model().put("did", mCurrentDid);
+				mAddNote = true;
+
+				JSONObject currentModel = mCol.getModels().current();
+				mNote = NoteService.createEmptyNote(currentModel);
+				if (mNote == null)
+				{
+					throw new RuntimeException("Cannot create a Note");
+				}
+
+				mEditorNote = new Note(mCol, currentModel);
+				mEditorNote.model().put("did", mCurrentDid);
+			}
 			// TODO take care of tags @see CardEditor setNote(Note)
 		}
 		catch (JSONException e)

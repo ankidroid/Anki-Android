@@ -112,4 +112,10 @@ public class TextField extends FieldBase implements IField
 	{
 		return getText();
 	}
+
+	@Override
+	public void setFormattedString(String value)
+	{
+		mText = value;
+	}
 }

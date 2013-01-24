@@ -119,4 +119,11 @@ public class MixedField extends FieldBase implements IField
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	@Override
+	public void setFormattedString(String value)
+	{
+		// TODO Auto-generated method stub
+
+	}
 }

@@ -62,4 +62,6 @@ public interface IField extends Serializable
 	 * @return
 	 */
 	public String getFormattedValue();
+
+	void setFormattedString(String value);
 }
