@@ -27,20 +27,25 @@ public class BasicAudioFieldController extends FieldControllerBase implements IF
     {
         origAudioPath = mField.getAudioPath();
 
-        File f = new File(origAudioPath);
-
-        if (f.exists())
+        boolean bExist = false;
+        
+        if(origAudioPath != null)
         {
-            tempAudioPath = f.getAbsolutePath();
+            File f = new File(origAudioPath);
+
+            if (f.exists())
+            {
+                tempAudioPath = f.getAbsolutePath();
+                bExist = true;
+            }
         }
-        else
+        
+
+        if(!bExist)
         {
             File file = null;
             try
             {
-                // TODO a good strategy is to store audio files inside
-                // AnkiDroid/.tmp/
-                // which can be cleaned periodically
                 file = File.createTempFile("ankidroid_audiorec", ".3gp", Environment.getExternalStorageDirectory());
                 tempAudioPath = file.getAbsolutePath();
             }

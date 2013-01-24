@@ -4,6 +4,7 @@ import android.content.Context;
 import android.media.MediaPlayer;
 import android.media.MediaPlayer.OnCompletionListener;
 import android.media.MediaRecorder;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
@@ -101,7 +102,7 @@ public class AudioView extends LinearLayout
 		}
 		else
 		{
-			throw new RuntimeException("Cannot set audio path after it has been initialized");
+			Log.e("Audio View", "Cannot set audio path after it has been initialized");			
 		}
 	}
 
@@ -203,7 +204,7 @@ public class AudioView extends LinearLayout
 						}
 						catch (Exception e)
 						{
-							throw new RuntimeException(e);
+						    Log.e("AudioView", e.getMessage());
 						}
 						break;
 
@@ -226,7 +227,7 @@ public class AudioView extends LinearLayout
 						}
 						catch (Exception e)
 						{
-							throw new RuntimeException(e);
+						    Log.e("AudioView", e.getMessage());
 						}
 						mPlayer.start();
 						notifyPlay();
@@ -355,7 +356,7 @@ public class AudioView extends LinearLayout
 						}
 						catch (Exception e)
 						{
-							throw new RuntimeException(e);
+						    Log.e("AudioView", e.getMessage());
 						}
 						break;
 

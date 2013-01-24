@@ -1,5 +1,7 @@
 package com.ichi2.anki;
 
+import java.io.File;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
@@ -179,6 +181,47 @@ public class EditFieldActivity extends FragmentActivity
 
         Intent resultData = new Intent();
 
+        boolean bChangeToText = false;
+
+        if (mField.getType() == EFieldType.IMAGE)
+        {
+            if (mField.getImagePath() == null)
+            {
+                bChangeToText = true;
+            }
+
+            if (!bChangeToText)
+            {
+                File f = new File(mField.getImagePath());
+                if (!f.exists())
+                {
+                    bChangeToText = true;
+                }
+            }
+        }
+        else if (mField.getType() == EFieldType.AUDIO)
+        {
+            if (mField.getAudioPath() == null)
+            {
+                bChangeToText = true;
+            }
+
+            if (!bChangeToText)
+            {
+                File f = new File(mField.getAudioPath());
+                if (!f.exists())
+                {
+                    bChangeToText = true;
+                }
+            }
+        }
+
+        if(bChangeToText)
+        {
+            mField = new TextField();
+            mField.setText(" - ");
+        }
+        
         resultData.putExtra(EXTRA_RESULT_FIELD, mField);
         resultData.putExtra(EXTRA_RESULT_FIELD_INDEX, mFieldIndex);
 
@@ -231,14 +274,14 @@ public class EditFieldActivity extends FragmentActivity
         mField = newField;
         recreateEditingUi();
     }
-    
+
     @Override
     protected void onDestroy()
-    {     
+    {
         super.onDestroy();
-        
+
         mFieldController.onDestroy();
-        
+
     }
 
     private String gtxt(int id)
