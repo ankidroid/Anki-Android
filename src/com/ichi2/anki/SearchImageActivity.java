@@ -54,11 +54,11 @@ public class SearchImageActivity extends Activity implements DialogInterface.OnC
     @Override
     protected void onDestroy()
     {
-             super.onDestroy();
-             //Saving memory
-             mWebView.clearCache(true);
+        super.onDestroy();
+        // Saving memory
+        mWebView.clearCache(true);
     }
-    
+
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -480,17 +480,30 @@ public class SearchImageActivity extends Activity implements DialogInterface.OnC
             return mTemplate;
         }
 
-        DisplayMetrics metrics = new DisplayMetrics();
-        getWindowManager().getDefaultDisplay().getMetrics(metrics);
+        String source = "<html><body><center>"
+                        + gtxt(R.string.multimedia_editor_imgs_pow_by_google)
+                        + "</center><br /><center><img width=\"WIDTH\" src=\"URL\" /> </center></body></html>";
+                        
+        
+        int currentapiVersion = android.os.Build.VERSION.SDK_INT;                
+        if (currentapiVersion <= android.os.Build.VERSION_CODES.HONEYCOMB_MR2)
+        {
+            DisplayMetrics metrics = new DisplayMetrics();
+            getWindowManager().getDefaultDisplay().getMetrics(metrics);
 
-        int height = metrics.heightPixels;
-        int width = metrics.widthPixels;
+            int height = metrics.heightPixels;
+            int width = metrics.widthPixels;
 
-        int min = Math.min(height, width);
+            int min = Math.min(height, width);
 
-        String source = "<center>" + gtxt(R.string.multimedia_editor_imgs_pow_by_google) + "</center><br /><center><img width=\"WIDTHpx\" src=\"URL\" /> </center>"
-                .replaceAll("WIDTH", (int)Math.round(min * 0.85) + "");
-
+            source = source.replaceAll(
+                            "WIDTH", (int)Math.round(min * 0.85) + "");
+        }
+        else
+        {
+            source = source.replaceAll("WIDTH", "80%");
+        }
+        
         mTemplate = source;
 
         return source;

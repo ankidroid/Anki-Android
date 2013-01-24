@@ -2575,15 +2575,21 @@ public class Reviewer extends AnkiControllableActivity {
             if (mCurrentSimpleInterface && mSimpleCard != null) {
                 mSimpleCard.setText(mCardContent);
             } else if (mRefreshWebview && mCard != null && mNextCard != null) {
-                mNextCard.setBackgroundColor(mCurrentBackgroundColor);
-                mNextCard.loadDataWithBaseURL(mBaseUrl, mCardContent.toString(), "text/html", "utf-8", null);
-                mNextCard.setVisibility(View.VISIBLE);
-                mCardFrame.removeView(mCard);
-                mCard.destroy();
-                mCard = mNextCard;
-                mNextCard = createWebView();
-                mNextCard.setVisibility(View.GONE);
-                mCardFrame.addView(mNextCard, 0);
+                try{
+                    mNextCard.setBackgroundColor(mCurrentBackgroundColor);
+                    mNextCard.loadDataWithBaseURL(mBaseUrl, mCardContent.toString(), "text/html", "utf-8", null);
+                    mNextCard.setVisibility(View.VISIBLE);
+                    mCardFrame.removeView(mCard);
+//                    mCard.destroy();
+                    mCard = mNextCard;
+                    mNextCard = createWebView();
+                    mNextCard.setVisibility(View.GONE);
+                    mCardFrame.addView(mNextCard, 0);
+                }
+                catch(Exception e)
+                {
+                    Log.e("reviewer", e.getMessage());
+                }
                 // hunt for input issue 720, like android issue 3341
                 if (AnkiDroidApp.SDK_VERSION <= 7) {
                     mCard.setFocusableInTouchMode(true);
