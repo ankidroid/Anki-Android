@@ -68,7 +68,7 @@
 <!-- in controller when fails -->
 <string name = "multimedia_editor_imgs_failed">Image search failed</string>
 <!-- while searching -->
-<string name = "multimedia_editor_imgs_searching_for_images">Searhing for images</string>
+<string name = "multimedia_editor_imgs_searching_for_images">Searching for images</string>
 
 <!-- Field Editing General -->
 <!-- these are button names to convert field type -->

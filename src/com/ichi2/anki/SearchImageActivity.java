@@ -149,7 +149,7 @@ public class SearchImageActivity extends Activity implements DialogInterface.OnC
         @Override
         protected String doInBackground(Void... params)
         {
-            return HttpFetcher.downloadFileToCache(mAddress, mActivity, "imgsearch");
+            return HttpFetcher.downloadFileToSdCard(mAddress, mActivity, "imgsearch");
         }
 
         public void setAddress(String address)
@@ -488,8 +488,8 @@ public class SearchImageActivity extends Activity implements DialogInterface.OnC
 
         int min = Math.min(height, width);
 
-        String source = "<center>" + gtxt(R.string.multimedia_editor_imgs_pow_by_google) + "</center><br /><center><img width=\"WIDTH\" src=\"URL\" /> </center>"
-                .replaceAll("WIDTH", min / 2 + "");
+        String source = "<center>" + gtxt(R.string.multimedia_editor_imgs_pow_by_google) + "</center><br /><center><img width=\"WIDTHpx\" src=\"URL\" /> </center>"
+                .replaceAll("WIDTH", (int)Math.round(min * 0.85) + "");
 
         mTemplate = source;
 
