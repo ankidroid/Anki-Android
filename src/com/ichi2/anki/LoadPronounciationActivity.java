@@ -2,6 +2,7 @@ package com.ichi2.anki;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.util.Locale;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
@@ -84,7 +85,7 @@ public class LoadPronounciationActivity extends Activity implements OnCancelList
         linearLayout.addView(mSpinnerFrom);
        
         Button buttonLoadPronunciation = new Button(this);
-        buttonLoadPronunciation.setText(GTX(R.string.multimedia_editor_pron_load));
+        buttonLoadPronunciation.setText(gtxt(R.string.multimedia_editor_pron_load));
         linearLayout.addView(buttonLoadPronunciation);
         buttonLoadPronunciation.setOnClickListener(new OnClickListener()
         {
@@ -130,9 +131,11 @@ public class LoadPronounciationActivity extends Activity implements OnCancelList
     protected void onLoadPronunciation(View v)
     {
 
-        String message = GTX(R.string.multimedia_editor_searching_word);
+        String message = gtxt(R.string.multimedia_editor_searching_word);
 
         showProgressDialog(message);
+        
+        
 
         mTranslationAddress = computeAddressOfTranslationPage();
 
@@ -146,7 +149,7 @@ public class LoadPronounciationActivity extends Activity implements OnCancelList
         catch (Exception e)
         {
             progressDialog.dismiss();
-            showToast(GTX(R.string.multimedia_editor_something_wrong));
+            showToast(gtxt(R.string.multimedia_editor_something_wrong));
         }
     }
 
@@ -155,7 +158,7 @@ public class LoadPronounciationActivity extends Activity implements OnCancelList
 
         dismissCarefullyProgressDialog();
 
-        progressDialog = ProgressDialog.show(this, GTX(R.string.multimedia_editor_progress_wait_title), message, true,
+        progressDialog = ProgressDialog.show(this, gtxt(R.string.multimedia_editor_progress_wait_title), message, true,
                 false);
         progressDialog.setCancelable(true);
         progressDialog.setOnCancelListener(this);
@@ -275,7 +278,9 @@ public class LoadPronounciationActivity extends Activity implements OnCancelList
 
             if (mTranslation.startsWith("FAILED"))
             {
+                
                 failNoPronunciation();
+                
                 return;
             }
 
@@ -283,13 +288,20 @@ public class LoadPronounciationActivity extends Activity implements OnCancelList
 
             if (mPronunciationAddress.contentEquals("no"))
             {
+                
                 failNoPronunciation();
+                
+                if(!mSource.toLowerCase(Locale.getDefault()).contentEquals(mSource))
+                {
+                    showToastLong(gtxt(R.string.multimedia_editor_word_search_try_lower_case));
+                }
+                
                 return;
             }
 
             try
             {
-                showProgressDialog(GTX(R.string.multimedia_editor_pron_looking_up));
+                showProgressDialog(gtxt(R.string.multimedia_editor_pron_looking_up));
                 mPostPronunciation = new BackgroundPost();
                 mPostPronunciation.setAddress(mPronunciationAddress);
                 mPostPronunciation.execute();
@@ -297,7 +309,7 @@ public class LoadPronounciationActivity extends Activity implements OnCancelList
             catch (Exception e)
             {
                 progressDialog.dismiss();
-                showToast(GTX(R.string.multimedia_editor_something_wrong));
+                showToast(gtxt(R.string.multimedia_editor_something_wrong));
             }
 
             return;
@@ -324,7 +336,7 @@ public class LoadPronounciationActivity extends Activity implements OnCancelList
             // Download MP3 file
             try
             {
-                showProgressDialog(GTX(R.string.multimedia_editor_general_downloading));
+                showProgressDialog(gtxt(R.string.multimedia_editor_general_downloading));
                 mDownloadMp3Task = new DownloadFileTask();
                 mDownloadMp3Task.setAddress(mMp3Address);
                 mDownloadMp3Task.execute();
@@ -332,7 +344,7 @@ public class LoadPronounciationActivity extends Activity implements OnCancelList
             catch (Exception e)
             {
                 progressDialog.dismiss();
-                showToast(GTX(R.string.multimedia_editor_something_wrong));
+                showToast(gtxt(R.string.multimedia_editor_something_wrong));
             }
 
             return;
@@ -363,7 +375,7 @@ public class LoadPronounciationActivity extends Activity implements OnCancelList
 
         progressDialog.dismiss();
 
-        showToast(GTX(R.string.multimedia_editor_general_done));
+        showToast(gtxt(R.string.multimedia_editor_general_done));
 
         Intent resultData = new Intent();
 
@@ -377,7 +389,7 @@ public class LoadPronounciationActivity extends Activity implements OnCancelList
 
     private void failNoPronunciation()
     {
-        stop(GTX(R.string.multimedia_editor_error_word_not_found));
+        stop(gtxt(R.string.multimedia_editor_error_word_not_found));
         mPronunciationAddress = "no";
         mMp3Address = "no";
     }
@@ -419,6 +431,13 @@ public class LoadPronounciationActivity extends Activity implements OnCancelList
         toast.show();
     }
 
+    private void showToastLong(CharSequence text)
+    {
+        int duration = Toast.LENGTH_LONG;
+        Toast toast = Toast.makeText(this, text, duration);
+        toast.show();
+    }
+    
     // If the loading and dialog are cancelled
     @Override
     public void onCancel(DialogInterface dialog)
@@ -473,7 +492,7 @@ public class LoadPronounciationActivity extends Activity implements OnCancelList
         stopAllTasks();
     }
 
-    private String GTX(int id)
+    private String gtxt(int id)
     {
         return getText(id).toString();
     }

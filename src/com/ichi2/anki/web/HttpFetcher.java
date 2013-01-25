@@ -110,6 +110,17 @@ public class HttpFetcher
     
     public static String downloadFileToSdCard(String UrlToFile, Context context, String prefix)
     {
+        String str = downloadFileToSdCardMethod(UrlToFile, context, prefix, "GET");
+        if(str.startsWith("FAIL"))
+        {
+            str = downloadFileToSdCardMethod(UrlToFile, context, prefix, "POST");
+        }
+        
+        return str;
+    }
+    
+    public static String downloadFileToSdCardMethod(String UrlToFile, Context context, String prefix, String method)
+    {
         try
         {
             URL url = new URL(UrlToFile);
@@ -117,8 +128,11 @@ public class HttpFetcher
             String extension = UrlToFile.substring(UrlToFile.length() - 4);
 
             HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
-            urlConnection.setRequestMethod("GET");
-            urlConnection.setDoOutput(true);
+            urlConnection.setRequestMethod(method);
+            urlConnection.setRequestProperty("Referer", "com.ichi2.anki");
+            urlConnection.setRequestProperty("User-Agent","Mozilla/5.0 ( compatible ) ");
+            urlConnection.setRequestProperty("Accept","*/*");
+//            urlConnection.setDoOutput(true);
             urlConnection.connect();
 
             File SDCardRoot = Environment.getExternalStorageDirectory();

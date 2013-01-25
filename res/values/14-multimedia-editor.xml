@@ -54,6 +54,10 @@
 <string name = "multimedia_editor_pron_pronunciation_failed">Pronunciation failed</string>
 
 
+<string name = "multimedia_editor_word_search_try_lower_case">Try using only lower case characters</string>
+
+
+
 <!-- Image Search Activity -->
 <!-- in progress dialog when loading the image -->
 <string name = "multimedia_editor_imgs_saving_image">Saving image</string>

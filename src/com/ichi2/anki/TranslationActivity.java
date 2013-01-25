@@ -4,6 +4,7 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
@@ -197,10 +198,22 @@ public class TranslationActivity extends FragmentActivity implements DialogInter
         return address;
     }
 
+    private String gtxt(int id)
+    {
+        return getText(id).toString();
+    }
+    
+    private void showToastLong(CharSequence text)
+    {
+        int duration = Toast.LENGTH_LONG;
+        Toast toast = Toast.makeText(this, text, duration);
+        toast.show();
+    }
+    
     private void showPickTranslationDialog()
     {
         if (mTranslation.startsWith("FAILED"))
-        {
+        {   
             returnFailure(getText(R.string.multimedia_editor_trans_getting_failure).toString());
         }
 
@@ -209,6 +222,11 @@ public class TranslationActivity extends FragmentActivity implements DialogInter
 
         if (!resp.getResult().contentEquals("ok"))
         {
+            if(!mSource.toLowerCase(Locale.getDefault()).contentEquals(mSource))
+            {
+                showToastLong(gtxt(R.string.multimedia_editor_word_search_try_lower_case));
+            }
+            
             returnFailure(getText(R.string.multimedia_editor_trans_getting_failure).toString());
         }
 
@@ -216,6 +234,11 @@ public class TranslationActivity extends FragmentActivity implements DialogInter
 
         if (mPossibleTranslations.size() == 0)
         {
+            if(!mSource.toLowerCase(Locale.getDefault()).contentEquals(mSource))
+            {
+                showToastLong(gtxt(R.string.multimedia_editor_word_search_try_lower_case));
+            }
+            
             returnFailure(getText(R.string.multimedia_editor_error_word_not_found).toString());
         }
 
