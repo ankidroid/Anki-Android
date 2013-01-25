@@ -113,8 +113,12 @@ public class BasicHttpSyncer implements HttpSyncer {
         return req(method, fobj, comp, hkey, null);
     }
 
-
     public HttpResponse req(String method, InputStream fobj, int comp, boolean hkey, JSONObject registerData) {
+        return req(method, fobj, comp, hkey, registerData, null);
+    }
+
+    public HttpResponse req(String method, InputStream fobj, int comp, boolean hkey, JSONObject registerData,
+                            Connection.CancelCallback cancelCallback) {
         File tmpFileBuffer = null;
         try {
             String bdry = "--" + BOUNDARY;
@@ -191,6 +195,9 @@ public class BasicHttpSyncer implements HttpSyncer {
             registry.register(new Scheme("http", PlainSocketFactory.getSocketFactory(), 80));
             registry.register(new Scheme("https", new EasySSLSocketFactory(), 443));
             ThreadSafeClientConnManager cm = new ThreadSafeClientConnManager(params, registry);
+            if (cancelCallback != null) {
+                cancelCallback.setConnectionManager(cm);
+            }
 
             try {
                 HttpClient httpClient = new DefaultHttpClient(cm, params);

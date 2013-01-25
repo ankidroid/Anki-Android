@@ -139,10 +139,10 @@
 <string name="registering_message">Creating account.\nPlease wait...</string>
 
 <string name="upgrade_decks_zipping">Zipping decks for upload.\nPlease wait...</string>
-<string name="upgrade_decks_upload">Uploading zipped decks.\nPlease wait...</string>
+<string name="upgrade_decks_upload">Uploading zipped decks\nYou can cancel by pressing back.\nPlease wait...</string>
 <string name="upgrade_decks_waiting">Waiting, queue position: %s\nPlease wait...</string>
-<string name="upgrade_decks_upgrade_started">Upgrade started\nPlease waiting for finish...</string>
-<string name="upgrade_decks_downloading">Downloading upgraded collection.\nPlease wait...</string>
+<string name="upgrade_decks_upgrade_started">Upgrade started\nPlease wait...</string>
+<string name="upgrade_decks_downloading">Downloading upgraded collection\nYou can cancel by pressing back.\nPlease wait...</string>
 <string name="upgrade_decks_media">Copying old media files to new media location.\nPlease wait...</string>
 <string name="upgrade_decks_message">There is no Anki 2.0 collection available but one or more decks in the old Anki 1.2 format have been found:%sIn order to use your decks with the new version of AnkiDroid they need to be converted first into a single collection of the new Anki-2.0 format. There are three possibilities for this:</string>
 <string name="upgrade_decks_message_pos1">By using Anki Desktop 2.0, your decks will be converted at the first start. You can sync over AnkiWeb or just copy the new collection afterwards to your mobile device. Copy your decks from your AnkiDroid directory (%s) to your Anki Desktop 1.2 directory on your computer (if you haven\'t synced them anyway) and start Anki Desktop 2.0.</string>

@@ -275,6 +275,13 @@ public class DeckTask extends
 		mListener.onPostExecute(result);
 	}
 
+    @Override
+    protected void onCancelled() {
+        if (mListener instanceof CancellableTaskListener) {
+            ((CancellableTaskListener) mListener).onCancelled();
+        }
+    }
+
 	private TaskData doInBackgroundAddNote(TaskData[] params) {
 		Log.i(AnkiDroidApp.TAG, "doInBackgroundAddNote");
 		Note note = params[0].getNote();
@@ -1059,6 +1066,10 @@ public class DeckTask extends
 
 		public void onProgressUpdate(TaskData... values);
 	}
+
+    public static interface CancellableTaskListener extends TaskListener {
+         public void onCancelled();
+    }
 
 	public static class TaskData {
 		private Card mCard;

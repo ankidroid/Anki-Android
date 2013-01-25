@@ -759,7 +759,7 @@ public class DeckPicker extends FragmentActivity {
      @Override
      public void onProgressUpdate(TaskData... values) {
      }
-    
+
      };
 
     DeckTask.TaskListener mImportAddListener = new DeckTask.TaskListener() {

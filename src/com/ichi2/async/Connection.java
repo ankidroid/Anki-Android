@@ -44,6 +44,7 @@ import com.ichi2.libanki.sync.Syncer;
 
 import org.apache.commons.httpclient.contrib.ssl.EasyX509TrustManager;
 import org.apache.http.HttpResponse;
+import org.apache.http.impl.conn.tsccm.ThreadSafeClientConnManager;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -62,6 +63,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.lang.OutOfMemoryError;
+import java.lang.ref.WeakReference;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URI;
@@ -93,6 +95,7 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
 
     private static Connection sInstance;
     private TaskListener mListener;
+    private CancelCallback mCancelCallback;
 
     public static final int RETURN_TYPE_OUT_OF_MEMORY = -1;
 
@@ -127,6 +130,19 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
      * Runs on GUI thread
      */
     @Override
+    protected void onCancelled() {
+        if (mCancelCallback != null) {
+            mCancelCallback.cancelAllConnections();
+        }
+        if (mListener instanceof CancellableTaskListener) {
+            ((CancellableTaskListener) mListener).onCancelled();
+        }
+    }
+
+    /*
+     * Runs on GUI thread
+     */
+    @Override
     protected void onPreExecute() {
         if (mListener != null) {
             mListener.onPreExecute();
@@ -155,6 +171,20 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
         }
     }
 
+
+    public static boolean taskIsCancelled() {
+        return sInstance.isCancelled();
+    }
+
+    public static void cancelTask() {
+        try {
+            if (sInstance != null && sInstance.getStatus() != AsyncTask.Status.FINISHED) {
+                sInstance.cancel(true);
+            }
+        } catch (Exception e) {
+            return;
+        }
+    }
 
     public static Connection login(TaskListener listener, Payload data) {
         data.taskType = TASK_TYPE_LOGIN;
@@ -293,6 +323,9 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
 
 
     private Payload doInBackgroundUpgradeDecks(Payload data) {
+        // Enable http request canceller
+        mCancelCallback = new CancelCallback();
+
         String path = (String) data.data[0];
         File ankiDir = new File(path);
         if (!ankiDir.isDirectory()) {
@@ -360,24 +393,28 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
         // step 2: upload zip file to upgrade service and get token
         BasicHttpSyncer h = new BasicHttpSyncer(null, null);
         // note: server doesn't expect it to be gzip compressed, because the zip file is compressed
-        publishProgress(new Object[] { R.string.upgrade_decks_upload });
+        // enable cancelling
+        publishProgress(new Object[] { R.string.upgrade_decks_upload, null, true });
         try {
-            HttpResponse resp = h.req("upgrade/upload", new FileInputStream(zipFile), 0, false);
-            if (resp == null) {
+            HttpResponse resp = h.req("upgrade/upload", new FileInputStream(zipFile), 0, false, null, mCancelCallback);
+            if (resp == null && !isCancelled()) {
                 data.success = false;
                 data.data = new Object[] { "error when uploading" };
                 return data;
             }
-            String result = h.stream2String(resp.getEntity().getContent());
-            String key;
-            if (result.startsWith("ok:")) {
-                key = result.split(":")[1];
-            } else {
-                data.success = false;
-                data.data = new Object[] { "error when uploading" };
-                return data;
+            String result;
+            String key = null;
+            if (!isCancelled()) {
+                result = h.stream2String(resp.getEntity().getContent());
+                if (result != null && result.startsWith("ok:")) {
+                    key = result.split(":")[1];
+                } else {
+                    data.success = false;
+                    data.data = new Object[] { "error when uploading" };
+                    return data;
+                }
             }
-            while (true) {
+            while (true && !isCancelled()) {
                 result = h.stream2String(h.req("upgrade/status?key=" + key).getEntity().getContent());
                 if (result.equals("error")) {
                     data.success = false;
@@ -398,8 +435,17 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
             }
             // step 4: fetch upgraded file. this will return the .anki2 file directly, with
             // gzip compression if the client says it can handle it
-            publishProgress(new Object[] { R.string.upgrade_decks_downloading });
-            resp = h.req("upgrade/download?key=" + key);
+            if (!isCancelled()) {
+                publishProgress(new Object[] { R.string.upgrade_decks_downloading });
+                resp = h.req("upgrade/download?key=" + key, null, 6, true, null, mCancelCallback);
+                // uploads/downloads have finished so disable cancelling
+            }
+            publishProgress(new Object[] { R.string.upgrade_decks_downloading , null, false});
+            if (isCancelled()) {
+                data.success = false;
+                data.data = new Object[] { "cancelled" };
+                return data;
+            }
             if (resp == null) {
                 data.success = false;
                 data.data = new Object[] { "error downloading file" };
@@ -989,6 +1035,10 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
         public void onDisconnected();
     }
 
+    public static interface CancellableTaskListener extends TaskListener {
+        public void onCancelled();
+    }
+
     public static class Payload {
         public int taskType;
         public Object[] data;
@@ -1082,6 +1132,21 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
                 return true;
             }
             return false;
+        }
+    }
+
+    public class CancelCallback {
+        private WeakReference<ThreadSafeClientConnManager> mConnectionManager;
+
+        public void setConnectionManager(ThreadSafeClientConnManager connectionManager) {
+            mConnectionManager = new WeakReference<ThreadSafeClientConnManager>(connectionManager);
+        }
+
+        public void cancelAllConnections() {
+            ThreadSafeClientConnManager connectionManager = mConnectionManager.get();
+            if (connectionManager != null) {
+                connectionManager.shutdown();
+            }
         }
     }
 }

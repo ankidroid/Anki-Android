@@ -779,15 +779,23 @@ public class Info extends Activity {
 
     }
 
-    Connection.TaskListener mWebUpgradeListener = new Connection.TaskListener() {
+    Connection.TaskListener mWebUpgradeListener = new Connection.CancellableTaskListener() {
 
         @Override
         public void onProgressUpdate(Object... values) {
             int id = (Integer) values[0];
+            String arg = null;
             if (values.length > 1) {
-                mProgressDialog.setMessage(getResources().getString(id, (String) values[1]));
+                arg = (String) values[1];
+            }
+            if (arg != null) {
+                mProgressDialog.setMessage(getResources().getString(id, arg));
             } else {
                 mProgressDialog.setMessage(getResources().getString(id));
+            }
+            if (values.length > 2) {
+                boolean cancellable = (Boolean) values[2];
+                mProgressDialog.setCancelable(cancellable);
             }
         }
 
@@ -796,7 +804,13 @@ public class Info extends Activity {
             Log.i(AnkiDroidApp.TAG, "Info: UpgradeDecks - onPreExcecute");
             if (mProgressDialog == null || !mProgressDialog.isShowing()) {
                 mProgressDialog = StyledProgressDialog.show(Info.this, "",
-                        getResources().getString(R.string.upgrade_decks_zipping), true);
+                        getResources().getString(R.string.upgrade_decks_zipping), true, true,
+                        new DialogInterface.OnCancelListener() {
+                    @Override
+                    public void onCancel(DialogInterface dialogInterface) {
+                        Connection.cancelTask();
+                    }
+                });
             }
         }
 
@@ -870,6 +884,11 @@ public class Info extends Activity {
             if (mNoConnectionAlert != null) {
                 mNoConnectionAlert.show();
             }
+        }
+
+        @Override
+        public void onCancelled() {
+            upgradeCancelled();
         }
     };
 
@@ -1093,4 +1112,23 @@ public class Info extends Activity {
             setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         }
     }
+
+    public void upgradeCancelled() {
+        StyledDialog.Builder builder = new StyledDialog.Builder(Info.this);
+        builder.setTitle(getString(R.string.upgrade_deck_cancelled_title));
+        builder.setIcon(R.drawable.ic_dialog_alert);
+        builder.setMessage(getString(R.string.upgrade_deck_cancelled_description));
+        builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                Intent result = new Intent();
+                result.putExtra(TYPE_UPGRADE_STAGE, UPGRADE_SCREEN_BASIC1);
+                setResult(RESULT_OK, result);
+                finishWithAnimation();
+            }
+        });
+        builder.show();
+    }
+
+
 }
