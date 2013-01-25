@@ -874,7 +874,15 @@ public class Info extends Activity {
                 builder.setTitle(res.getString(R.string.connection_error_title));
                 builder.setIcon(R.drawable.ic_dialog_alert);
                 builder.setMessage((String) data.data[0]);
-                builder.setPositiveButton(res.getString(R.string.ok), null);
+                builder.setPositiveButton(res.getString(R.string.ok), new Dialog.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Intent result = new Intent();
+                        result.putExtra(TYPE_UPGRADE_STAGE, UPGRADE_SCREEN_BASIC1);
+                        setResult(RESULT_OK, result);
+                        finishWithAnimation();
+                    }
+                });
                 builder.show();
             }
         }

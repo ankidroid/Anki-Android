@@ -21,6 +21,7 @@ package com.ichi2.async;
 import android.app.Application;
 import android.content.Context;
 import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabaseCorruptException;
 import android.net.ConnectivityManager;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -74,6 +75,7 @@ import java.security.KeyStoreException;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.TreeSet;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
@@ -338,6 +340,7 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
         // we must store them as 1.anki, 2.anki and provide a map so we don't run into
         // encoding issues with the zip file.
         File[] fileList = ankiDir.listFiles(new OldAnkiDeckFilter());
+        List<String> corruptFiles = new ArrayList<String>();
         JSONObject map = new JSONObject();
         byte[] buf = new byte[1024];
         String zipFilename = path + "/upload.zip";
@@ -351,6 +354,10 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
                 try {
                     AnkiDb d = AnkiDatabaseManager.getDatabase(deckPath);
                     d.queryString("PRAGMA journal_mode = DELETE");
+                } catch (SQLiteDatabaseCorruptException e) {
+                    // ignore invalid .anki files
+                    corruptFiles.add(f.getName());
+                    continue;
                 } finally {
                     AnkiDatabaseManager.closeDatabase(deckPath);
                 }
@@ -366,6 +373,12 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
                 zos.closeEntry();
                 map.put(tmpName, f.getName());
                 n++;
+            }
+            // if all .anki files were found corrupted, abort
+            if (fileList.length == corruptFiles.size()) {
+                data.success = false;
+                data.data = new Object[] { sContext.getString(R.string.upgrade_deck_web_upgrade_failed) };
+                return data;
             }
             ZipEntry ze = new ZipEntry("map.json");
             zos.putNextEntry(ze);
@@ -387,19 +400,19 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
         // step 1.1: if it's over 50MB compressed, it must be upgraded by the user
         if (zipFile.length() > 50 * 1024 * 1024) {
             data.success = false;
-            data.data = new Object[] { "more than 50 mb, please upgrade via desktop" };
+            data.data = new Object[] { sContext.getString(R.string.upgrade_deck_web_upgrade_exceeds) };
             return data;
         }
         // step 2: upload zip file to upgrade service and get token
         BasicHttpSyncer h = new BasicHttpSyncer(null, null);
         // note: server doesn't expect it to be gzip compressed, because the zip file is compressed
         // enable cancelling
-        publishProgress(new Object[] { R.string.upgrade_decks_upload, null, true });
+        publishProgress(R.string.upgrade_decks_upload, null, true);
         try {
             HttpResponse resp = h.req("upgrade/upload", new FileInputStream(zipFile), 0, false, null, mCancelCallback);
             if (resp == null && !isCancelled()) {
                 data.success = false;
-                data.data = new Object[] { "error when uploading" };
+                data.data = new Object[] { sContext.getString(R.string.upgrade_deck_web_upgrade_failed) };
                 return data;
             }
             String result;
@@ -410,25 +423,25 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
                     key = result.split(":")[1];
                 } else {
                     data.success = false;
-                    data.data = new Object[] { "error when uploading" };
+                    data.data = new Object[] { sContext.getString(R.string.upgrade_deck_web_upgrade_failed) };
                     return data;
                 }
             }
-            while (true && !isCancelled()) {
+            while (!isCancelled()) {
                 result = h.stream2String(h.req("upgrade/status?key=" + key).getEntity().getContent());
                 if (result.equals("error")) {
                     data.success = false;
                     data.data = new Object[] { "error" };
                     return data;
                 } else if (result.startsWith("waiting:")) {
-                    publishProgress(new Object[] { R.string.upgrade_decks_upload, result.split(":")[1] });
+                    publishProgress(R.string.upgrade_decks_upload, result.split(":")[1]);
                 } else if (result.equals("upgrading")) {
                     publishProgress(new Object[] { R.string.upgrade_decks_upgrade_started });
                 } else if (result.equals("ready")) {
                     break;
                 } else {
                     data.success = false;
-                    data.data = new Object[] { "error" };
+                    data.data = new Object[] { sContext.getString(R.string.upgrade_deck_web_upgrade_failed) };
                     return data;
                 }
                 Thread.sleep(1000);
@@ -440,22 +453,21 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
                 resp = h.req("upgrade/download?key=" + key, null, 6, true, null, mCancelCallback);
                 // uploads/downloads have finished so disable cancelling
             }
-            publishProgress(new Object[] { R.string.upgrade_decks_downloading , null, false});
+            publishProgress(R.string.upgrade_decks_downloading, null, false);
             if (isCancelled()) {
-                data.success = false;
-                data.data = new Object[] { "cancelled" };
-                return data;
+                return null;
             }
             if (resp == null) {
                 data.success = false;
-                data.data = new Object[] { "error downloading file" };
+                data.data = new Object[] { sContext.getString(R.string.upgrade_deck_web_upgrade_failed) };
                 return data;
             }
             // step 5: check the received file is valid
             InputStream cont = resp.getEntity().getContent();
             if (!h.writeToFile(cont, colFilename)) {
                 data.success = false;
-                data.data = new Object[] { "error writing on the sd card" };
+                data.data = new Object[] { sContext.getString(R.string.upgrade_deck_web_upgrade_sdcard,
+                        new File(colFilename).length() / 1048576 + 1) };
                 (new File(colFilename)).delete();
                 return data;
             }
@@ -466,7 +478,7 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
                 AnkiDb d = AnkiDatabaseManager.getDatabase(colFilename);
                 if (!d.queryString("PRAGMA integrity_check").equalsIgnoreCase("ok")) {
                     data.success = false;
-                    data.data = new Object[] { "downloaded file was corrupt" };
+                    data.data = new Object[] { sContext.getResources() };
                     return data;
                 }
             } finally {
