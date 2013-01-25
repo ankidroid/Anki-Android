@@ -1,0 +1,2430 @@
+commit f3dc460d669d5d78a96b47da2008c8224dfc88d3
+Author: Zaur Molotnikov <qutorial@gmail.com>
+Date:   Fri Jan 25 13:31:16 2013 +0100
+
+    Before merging with 2.1
+
+commit 86adc42044bccdc65377515e56972ae661e32fde
+Merge: 300bdee 268d47b
+Author: Zaur Molotnikov <qutorial@gmail.com>
+Date:   Thu Jan 24 22:15:39 2013 +0100
+
+    Merged with bibek, new improvements ot Multimedia Activity
+
+commit 300bdee22bb1ec110bf33cd1aa3885d05d1a3f9d
+Author: Zaur Molotnikov <qutorial@gmail.com>
+Date:   Thu Jan 24 22:10:54 2013 +0100
+
+    Multimedia Editor throws replaced, translated
+
+commit 268d47bd66699a493423ee9366a2d5ee39645a23
+Author: Bibek Shrestha <bibekshrestha@gmail.com>
+Date:   Thu Jan 24 22:01:28 2013 +0100
+
+    Deckpicker also uses MMCardEditor
+
+commit 4cac7a8e7b82e51e099061ccc8d1a8c074b670e0
+Merge: 7f252ab 2a9ef1b
+Author: Zaur Molotnikov <qutorial@gmail.com>
+Date:   Thu Jan 24 21:43:21 2013 +0100
+
+    merged with Bibek, there ScrollView added
+
+commit 7f252ab7db7450b98878e081c4b3bd020c41ae1d
+Author: Zaur Molotnikov <qutorial@gmail.com>
+Date:   Thu Jan 24 21:42:16 2013 +0100
+
+    Null field bug fix
+
+commit 2a9ef1b7b6ef909c9e0c60d14df721ebc67dc3fa
+Author: Bibek Shrestha <bibekshrestha@gmail.com>
+Date:   Thu Jan 24 21:42:13 2013 +0100
+
+    Fixed scrolling
+
+commit f696810351edd41dd228d2aa50d4a6ccc939913a
+Author: Bibek Shrestha <bibekshrestha@gmail.com>
+Date:   Thu Jan 24 21:31:45 2013 +0100
+
+    Change of deck possible in MMCardEditor
+
+commit 10dc96c992bbf0a82cdca2de4c8f930bb3301de8
+Merge: e1a7a78 e4af83c
+Author: Zaur Molotnikov <qutorial@gmail.com>
+Date:   Thu Jan 24 20:58:43 2013 +0100
+
+    Fixes by bibek, incl delete button
+
+commit e1a7a786c351e53afb9c3ccbd45c3339b536e3c9
+Author: Zaur Molotnikov <qutorial@gmail.com>
+Date:   Thu Jan 24 20:57:15 2013 +0100
+
+    Image rotation bug
+
+commit e4af83c33dbdd375ad2d1c79a04e8b3649404c95
+Author: Bibek Shrestha <bibekshrestha@gmail.com>
+Date:   Thu Jan 24 20:39:16 2013 +0100
+
+    Card Delete implemented
+
+commit 0f9f5772af5238f3f3b400391cf37980ae0fe75f
+Author: Bibek Shrestha <bibekshrestha@gmail.com>
+Date:   Thu Jan 24 20:04:57 2013 +0100
+
+    AudioView state transition fixed
+
+commit b3c9763cec7005e7058577080261f148485ed854
+Author: Zaur Molotnikov <qutorial@gmail.com>
+Date:   Thu Jan 24 19:58:52 2013 +0100
+
+    Before rotation photo bug correction
+
+commit c37e2d81834bb1012c7ab395d0aeb2bf9f9d653c
+Author: Zaur Molotnikov <qutorial@gmail.com>
+Date:   Thu Jan 24 19:45:16 2013 +0100
+
+    Different html for different Android versions in Image Search
+
+commit 5b19dd6b723f265ac6dc5be1142e358da0974f11
+Author: Bibek Shrestha <bibekshrestha@gmail.com>
+Date:   Thu Jan 24 18:33:28 2013 +0100
+
+    preventing null pointer in bitmaputil
+
+commit 13030bdd1f0524adc9c2fdcc6bd3b6dc14e45974
+Author: Zaur Molotnikov <qutorial@gmail.com>
+Date:   Thu Jan 24 15:29:09 2013 +0100
+
+    Crashes with images
+
+commit 11d2d4cbd00467af1a15dc59ad73406f936e6f46
+Author: Bibek Shrestha <bibekshrestha@gmail.com>
+Date:   Thu Jan 24 14:14:53 2013 +0100
+
+    Fixed slide movements
+
+commit 2cebfd945a02421d3a6fb26391ba37657fb6ae67
+Merge: cdc4cf0 900f406
+Author: Zaur Molotnikov <qutorial@gmail.com>
+Date:   Thu Jan 24 14:01:04 2013 +0100
+
+    Merging with Bibek
+
+commit 900f40606fafd5a80490b52d1729f22da626de40
+Author: Bibek Shrestha <bibekshrestha@gmail.com>
+Date:   Thu Jan 24 13:58:09 2013 +0100
+
+    MultimediaCardEditor can now edit notes and cards
+
+commit cdc4cf0bf4f0856182ff72deccf89ad5a078aaaa
+Author: Zaur Molotnikov <qutorial@gmail.com>
+Date:   Thu Jan 24 13:56:34 2013 +0100
+
+    Media fixes
+
+commit 3fcddad8e4c82dd247a0805b3e879e55436b5b46
+Author: Zaur Molotnikov <qutorial@gmail.com>
+Date:   Thu Jan 24 12:32:27 2013 +0100
+
+    bug fixing, towards audio view
+
+commit 8b4c848d0e3c9a95c52c7570e77d49035635346a
+Author: Bibek Shrestha <bibekshrestha@gmail.com>
+Date:   Thu Jan 24 03:28:26 2013 +0100
+
+    Editing loads properly, saving not tested yet
+
+commit 27dd47a69362c65b34ff8c2b7df8b9f2269717b6
+Merge: b46ac18 955f020
+Author: Bibek Shrestha <bibekshrestha@gmail.com>
+Date:   Wed Jan 23 22:05:09 2013 +0100
+
+    Merge branch 'master' of https://github.com/qutorial/Anki-Android
+
+commit b46ac1877ba9a59dd79eb78c4823f8f3d126bc21
+Author: Bibek Shrestha <bibekshrestha@gmail.com>
+Date:   Wed Jan 23 22:05:00 2013 +0100
+
+    MultimediaCardEditor now supports change of Models
+
+commit 955f020e1d8e28b8c9d2e6dcb1a0cd14627cab67
+Author: Zaur Molotnikov <qutorial@gmail.com>
+Date:   Wed Jan 23 19:16:31 2013 +0100
+
+    Text field controller well commented
+
+commit 0602a7a416ca1209d905bfd5f30875bd4c7f9729
+Author: Zaur Molotnikov <qutorial@gmail.com>
+Date:   Wed Jan 23 19:05:15 2013 +0100
+
+    Text field controller translated
+
+commit 4727b2f536bed7c8818568acfaf4de9134eaa7df
+Author: Zaur Molotnikov <qutorial@gmail.com>
+Date:   Wed Jan 23 18:12:42 2013 +0100
+
+    1.6 bug solved, images look better
+
+commit 55815cb62743283734cbd8780ae322e10d327673
+Merge: 020c381 73f3fe9
+Author: Zaur Molotnikov <qutorial@gmail.com>
+Date:   Wed Jan 23 15:08:32 2013 +0100
+
+    Merging with bibek
+
+commit 020c3819057d9b531d5086a0cb30bf021a42b618
+Author: Zaur Molotnikov <qutorial@gmail.com>
+Date:   Wed Jan 23 14:59:07 2013 +0100
+
+    Testing with 2.1
+
+commit 73f3fe9136d7e131d0bdcb4900315c044640d77b
+Author: Bibek Shrestha <bibekshrestha@gmail.com>
+Date:   Wed Jan 23 14:39:07 2013 +0100
+
+    Cleanup: removed .orig files
+
+commit 1cce3f4ca33c05c9e3ef1604d6cd8bbb35133452
+Author: Bibek Shrestha <bibekshrestha@gmail.com>
+Date:   Wed Jan 23 14:36:38 2013 +0100
+
+    Missing files added
+
+commit bd0c65d22dffd22c2251638e5b853fdddf73118b
+Author: Bibek Shrestha <bibekshrestha@gmail.com>
+Date:   Wed Jan 23 14:36:06 2013 +0100
+
+    Adding new card works
+
+commit 9917c4ca32682eef0f9b6f4c014cff6b8f39082a
+Author: Zaur Molotnikov <qutorial@gmail.com>
+Date:   Wed Jan 23 14:01:47 2013 +0100
+
+    Activity image files removed from git
+
+commit 5bd88f71ca5c9926b450d8186b062444d8760e54
+Author: Zaur Molotnikov <qutorial@gmail.com>
+Date:   Wed Jan 23 13:30:28 2013 +0100
+
+    Activity fixes, translation fixes
+
+commit b4fe3f8da0adb47be67364e9c1b79b4d958d0bd2
+Author: Zaur Molotnikov <qutorial@gmail.com>
+Date:   Tue Jan 22 19:53:46 2013 +0100
+
+    Visual lifts, image search ready
+
+commit fe42be76a344444fa67e8f2e642d3b370f3af379
+Author: Zaur Molotnikov <qutorial@gmail.com>
+Date:   Mon Jan 21 23:50:54 2013 +0100
+
+    Image search half way
+
+commit 2bc2052f7feb689c7f548ae5116001b6ea178488
+Author: Zaur Molotnikov <qutorial@gmail.com>
+Date:   Mon Jan 21 12:40:03 2013 +0100
+
+    ColorDict integrated
+
+commit 45259966948e0f505961ba93a85ea0653bfe9aab
+Merge: 311d81b e794e22
+Author: Zaur Molotnikov <qutorial@gmail.com>
+Date:   Mon Jan 21 11:44:28 2013 +0100
+
+    Merging with bibek
+
+commit e794e22a8e2d42e662154c45499a147ba32ddab3
+Author: Bibek Shrestha <bibekshrestha@gmail.com>
+Date:   Mon Jan 21 01:35:54 2013 +0100
+
+    More condition check on MediaPlayer status
+
+commit 311d81b4d2c716fa247f9ae039e8dacce346e9ad
+Author: Zaur Molotnikov <qutorial@gmail.com>
+Date:   Sun Jan 20 22:56:42 2013 +0100
+
+    Merged with upstream and Bibek, player not working
+
+commit 8c35394ceb226df635860a48549b06697ec88517
+Merge: 523b6d1 5c121c0
+Author: Zaur Molotnikov <qutorial@gmail.com>
+Date:   Sun Jan 20 22:47:03 2013 +0100
+
+    Merge remote-tracking branch 'bibstha/master'
+
+commit 523b6d10d8f45c2162472c30b5a392273dd24899
+Merge: 9bd332b 1b3ef69
+Author: Zaur Molotnikov <qutorial@gmail.com>
+Date:   Sun Jan 20 22:44:51 2013 +0100
+
+    Merging with upstream
+
+commit 5c121c03e3cdd84334e9a2352e2951ba4dfaca0c
+Author: Bibek Shrestha <bibekshrestha@gmail.com>
+Date:   Sun Jan 20 22:37:11 2013 +0100
+
+    Fixed issue with null audioString
+
+commit 9bd332b8ea956b40d8977b5679e3f01613dacaf0
+Author: Zaur Molotnikov <qutorial@gmail.com>
+Date:   Sun Jan 20 22:03:01 2013 +0100
+
+    Pronunciation and translation activities translated
+
+commit 3b179a53a20e4ccc20cb2952e1d3a3470da71b5c
+Author: Zaur Molotnikov <qutorial@gmail.com>
+Date:   Sun Jan 20 21:49:44 2013 +0100
+
+    Translation continued
+
+commit b0c59ee9ce87fdf2e937f4fdd608a20642491df3
+Author: Zaur Molotnikov <qutorial@gmail.com>
+Date:   Sun Jan 20 21:31:23 2013 +0100
+
+    Two translation bugs fixed
+
+commit 798bc1f96683be5a3fceab0dd4e332eabbc1a004
+Author: Zaur Molotnikov <qutorial@gmail.com>
+Date:   Sun Jan 20 19:39:36 2013 +0100
+
+    Activity behavior bugs fixed
+
+commit 9908a48162af113242f3cd2f7b20a24c3176d1de
+Author: Zaur Molotnikov <qutorial@gmail.com>
+Date:   Sun Jan 20 18:50:33 2013 +0100
+
+    Towards playin pronunciation
+
+commit ce370096c408858ecea1c4360b37959811f1944c
+Merge: 66000d3 9ff68ee
+Author: Zaur Molotnikov <qutorial@gmail.com>
+Date:   Sun Jan 20 17:27:46 2013 +0100
+
+    Merging hard :)
+
+commit 66000d3b2de4df54689630f34eff5dcc1895180d
+Author: Zaur Molotnikov <qutorial@gmail.com>
+Date:   Sun Jan 20 16:44:52 2013 +0100
+
+    Refactoring : beolingus parsing separated
+
+commit 9ff68eefeadec921c2f6edbbdab3897c74026836
+Merge: ec9b043 9cac86b
+Author: Bibek Shrestha <bibekshrestha@gmail.com>
+Date:   Sat Jan 19 23:26:58 2013 +0100
+
+    Merge branch 'qutorial_master'
+
+commit 9cac86b649db771a5e4f75e1bbe0126d80a92859
+Author: Bibek Shrestha <bibekshrestha@gmail.com>
+Date:   Sat Jan 19 23:26:34 2013 +0100
+
+    Finished audio controller
+
+commit 5dd6402aa730f639165971028db300fb6225ec7d
+Author: Zaur Molotnikov <qutorial@gmail.com>
+Date:   Fri Jan 18 20:08:37 2013 +0100
+
+    Multiple languagesm pronunciation loading
+
+commit 7d566b5821e93aa9835e195ab622c1b44ae555c1
+Author: Zaur Molotnikov <qutorial@gmail.com>
+Date:   Fri Jan 18 18:45:59 2013 +0100
+
+    Before adding support for many languages
+
+commit 28a9a37c5f4a2fecc6e0642e6b56c228377bbbb6
+Author: Zaur Molotnikov <qutorial@gmail.com>
+Date:   Fri Jan 18 16:09:55 2013 +0100
+
+    Pronunciation mp3 file address computed from Beolingus
+
+commit 4c52f18413f36bf25052d79fdcda042a85456116
+Author: Zaur Molotnikov <qutorial@gmail.com>
+Date:   Tue Jan 15 14:59:23 2013 +0100
+
+    Glosbe integration finished, first iteration
+
+commit b1456e9f394d330e0f0d3f9a7e65c2d0bff56302
+Author: Bibek Shrestha <bibekshrestha@gmail.com>
+Date:   Sat Jan 12 14:33:38 2013 +0100
+
+    AudioView supports listening to recordfinishevent
+
+commit 885c2ccfe7fc1be0e8d0e1374e2c43b41ea643ee
+Author: Bibek Shrestha <bibekshrestha@gmail.com>
+Date:   Sat Jan 12 12:48:14 2013 +0100
+
+    AudioView implmentation in progress
+
+commit b519ebcf8fc396707823499371b3e463ab9f01eb
+Author: Zaur Molotnikov <qutorial@gmail.com>
+Date:   Fri Jan 11 15:38:43 2013 +0100
+
+    Cloning made
+
+commit 496c6072c277678219f4bb608feb423afe8733cc
+Merge: e7f02a7 513c183
+Author: Bibek Shrestha <bibekshrestha@gmail.com>
+Date:   Fri Jan 11 15:18:07 2013 +0100
+
+    Merged with Qutorial FragmentActivity
+
+commit e7f02a7a0f1af17c6ca77d675f4ae9f52744ac74
+Author: Bibek Shrestha <bibekshrestha@gmail.com>
+Date:   Fri Jan 11 15:15:16 2013 +0100
+
+    IField can say if the contained media is temporary
+
+commit 513c183d6a16fac51070efaa220fc2dc185e820f
+Author: Zaur Molotnikov <qutorial@gmail.com>
+Date:   Fri Jan 11 15:13:29 2013 +0100
+
+    Controller refactoring, step to field cloning
+
+commit 5852405d2090d747130ff3d4bd4a58878963c291
+Author: Zaur Molotnikov <qutorial@gmail.com>
+Date:   Wed Jan 9 19:10:58 2013 +0100
+
+    Field changing implementation started
+
+commit 0dd0b36dad48f86c6d514d2a36f7912d3cd43bd9
+Author: Zaur Molotnikov <qutorial@gmail.com>
+Date:   Wed Jan 9 18:55:09 2013 +0100
+
+    Syntax corrected a bit
+
+commit 87e20eb96e690800b4bda59bb34dc09fd19f8dae
+Author: Bibek Shrestha <bibekshrestha@gmail.com>
+Date:   Wed Jan 9 18:46:49 2013 +0100
+
+    Implemented BasicImageFieldController
+
+commit 61adfc685ab54f1f8b5a39b3c4d5950d49e9a5e9
+Author: Zaur Molotnikov <qutorial@gmail.com>
+Date:   Wed Jan 9 18:06:03 2013 +0100
+
+    The same activity to edit image
+
+commit 6213d32bdfa4d30f90d268feeef40837ecd2f1ef
+Author: Zaur Molotnikov <qutorial@gmail.com>
+Date:   Wed Jan 9 17:54:59 2013 +0100
+
+    Controllers started
+
+commit d4671dc01930d70ec4c7289a9fa2c93f6a4a7c76
+Author: Zaur Molotnikov <qutorial@gmail.com>
+Date:   Sat Jan 5 14:44:18 2013 +0100
+
+    Multimedia editing started
+
+commit ec9b0432c50faa5b71913863694555429c1ddc23
+Author: Bibek Shrestha <bibekshrestha@gmail.com>
+Date:   Fri Jan 4 00:25:25 2013 +0100
+
+    Information on individual packages
+
+commit 1b3ef69da74bbe76d0df5ef4a6a6a7b2666471ac
+Author: nobnago <norbert.nagold@gmail.com>
+Date:   Thu Jan 3 18:52:14 2013 +0100
+
+    bump version to 2.1alpha1
+
+commit fbd15b3be7421a5f394e465efeff8fdf2f2fd031
+Author: nobnago <norbert.nagold@gmail.com>
+Date:   Thu Jan 3 18:52:07 2013 +0100
+
+    localisation
+
+commit 71a0191765a96271a9845fd92f7fb2288d896111
+Author: nobnago <norbert.nagold@gmail.com>
+Date:   Thu Jan 3 18:42:20 2013 +0100
+
+    update new features
+
+commit c4895fe477f12dd8732bdc578e0b7c0559310e11
+Merge: b85175e add7f16
+Author: nobnago <norbert.nagold@gmail.com>
+Date:   Thu Jan 3 18:34:59 2013 +0100
+
+    Merge branch 'zeemote_plugin' of https://github.com/iniju/Anki-Android
+
+commit b85175e86553da735d721b6a546c3ebc51f77186
+Author: nobnago <norbert.nagold@gmail.com>
+Date:   Thu Jan 3 16:36:11 2013 +0100
+
+    localisation
+
+commit 30768098cda5321bd1ad4b4d9a0e5de141f71ee3
+Author: nobnago <norbert.nagold@gmail.com>
+Date:   Thu Jan 3 16:24:54 2013 +0100
+
+    clear newfeatures list
+
+commit ec18a0d79abef59578d1d351309955dd495a179b
+Author: nobnago <norbert.nagold@gmail.com>
+Date:   Thu Jan 3 16:06:17 2013 +0100
+
+    version 32
+
+commit 68fd246b5c7a62155f674d75b32420b38514d932
+Author: nobnago <norbert.nagold@gmail.com>
+Date:   Thu Jan 3 14:37:44 2013 +0100
+
+    bump version to 2.1alpha0
+
+commit 050e7a1a60ab856c1ae7d173695fab63e84d51d4
+Author: nobnago <norbert.nagold@gmail.com>
+Date:   Thu Jan 3 14:37:07 2013 +0100
+
+    change icons back to red (needs to be undone before releasing 2.1)
+    
+    Revert "change icons back to blue"
+    
+    This reverts commit 6c275b8b69220949df3b625415dd5403a75087fe.
+
+commit b41eddbbeae1bbd2518fb83a2d2fdf42d6732d7c
+Merge: badbf87 f4ac673
+Author: nobnago <norbert.nagold@gmail.com>
+Date:   Thu Jan 3 14:36:12 2013 +0100
+
+    Merge branch 'android_market_2.0'
+
+commit f4ac67379d4e6cc24a5f7b825eac03b7300a8bdb
+Author: nobnago <norbert.nagold@gmail.com>
+Date:   Thu Jan 3 14:15:03 2013 +0100
+
+    add icon svg
+
+commit 6c275b8b69220949df3b625415dd5403a75087fe
+Author: nobnago <norbert.nagold@gmail.com>
+Date:   Thu Jan 3 14:09:40 2013 +0100
+
+    change icons back to blue
+
+commit d899cbc8803c80200ae8a1c98ca87d3717c91b0c
+Author: iniju <inigo.aldana@gmail.com>
+Date:   Thu Jan 3 13:02:54 2013 +0100
+
+    fixed catalan localization
+
+commit badbf8765ee18e7d34faa79ca7f081586ef3c100
+Author: nobnago <norbert.nagold@gmail.com>
+Date:   Thu Jan 3 12:55:42 2013 +0100
+
+    uncomment logs
+
+commit 4e4bafed59520908e4f1e7f0b3cb71f96f59a236
+Author: nobnago <norbert.nagold@gmail.com>
+Date:   Thu Jan 3 11:36:00 2013 +0100
+
+    bump version 2.0
+
+commit bedccb3fa8a4a5702b85e31dce70fbe0868fce4b
+Author: nobnago <norbert.nagold@gmail.com>
+Date:   Thu Jan 3 11:35:50 2013 +0100
+
+    outcomment logs
+
+commit 0852bda15128b85a3bedb9cea01c7b813417e322
+Author: nobnago <norbert.nagold@gmail.com>
+Date:   Thu Jan 3 11:32:39 2013 +0100
+
+    fix multiline comments
+
+commit d3de13a6709ce44a501574600d3997b8525b5351
+Author: nobnago <norbert.nagold@gmail.com>
+Date:   Wed Jan 2 10:21:59 2013 +0100
+
+    bump version - beta23
+
+commit d1fc831d4a769284c5c54183060e2048f0a0bbc6
+Author: nobnago <norbert.nagold@gmail.com>
+Date:   Wed Jan 2 10:21:22 2013 +0100
+
+    localisation
+
+commit 60b0e51025bb62401b3c2a8fb7fe36771025f53f
+Merge: 704ad5e 59973c7
+Author: nobnago <norbert.nagold@gmail.com>
+Date:   Wed Jan 2 10:20:56 2013 +0100
+
+    Merge https://github.com/packlnd/Anki-Android
+
+commit add7f16688bf0d3a4cc85c72d1137e7827944851
+Merge: 2ff2f57 704ad5e
+Author: iniju <inigo.aldana@gmail.com>
+Date:   Mon Dec 31 11:15:37 2012 +0000
+
+    Merge branch 'master' of github.com:iniju/Anki-Android into zeemote_plugin
+
+commit 704ad5e2706454a150064d9ac060f1447f22b8b7
+Author: iniju <inigo.aldana@gmail.com>
+Date:   Mon Dec 31 11:13:22 2012 +0000
+
+    localization fixes
+
+commit 2ff2f5790d6b7af10198101493baaf004663fe89
+Author: iniju <inigo.aldana@gmail.com>
+Date:   Mon Dec 31 11:02:18 2012 +0000
+
+    Merge branch 'master' of github.com:iniju/Anki-Android into zeemote_plugin
+    
+    Conflicts:
+    	res/values-fa/06-statistics.xml
+    	src/com/ichi2/anki/StudyOptionsFragment.java
+
+commit 0838a8b3723c428ef12274c6bb7a584bf506fcc4
+Merge: 3d6c56b 3f26ed0
+Author: iniju <inigo.aldana@gmail.com>
+Date:   Mon Dec 31 10:56:59 2012 +0000
+
+    Merge branch 'master' of github.com:iniju/Anki-Android into zeemote_plugin
+    
+    Conflicts:
+    	res/values-fa/06-statistics.xml
+    	src/com/ichi2/anki/StudyOptionsFragment.java
+
+commit 3f26ed06dea87d7604bf7916d2d035353561c0ef
+Author: iniju <inigo.aldana@gmail.com>
+Date:   Sun Dec 30 12:05:10 2012 +0000
+
+    localization update
+
+commit 6e8109eb8e6e717a84f7b09af76d8f4146249a73
+Author: iniju <inigo.aldana@gmail.com>
+Date:   Thu Dec 27 19:29:03 2012 +0000
+
+    fix localization errors
+
+commit 59973c74b19c37712c469bdafbdb10cc665d7b93
+Merge: d55c2d9 17ffea9
+Author: Patrik Ackland <patrikackland@gmail.com>
+Date:   Thu Dec 27 15:03:23 2012 +0100
+
+    pulled changes
+
+commit d55c2d96484a99666182be460adde72090045317
+Author: Patrik Ackland <patrikackland@gmail.com>
+Date:   Thu Dec 27 14:43:05 2012 +0100
+
+    fix for issue 1378 (crash on certain cards)
+    
+    validate collection before importing
+
+commit 87ed28c1393211e83b90d29cb1ae3e880f0e2601
+Author: iniju <inigo.aldana@gmail.com>
+Date:   Thu Dec 27 12:27:01 2012 +0000
+
+    update localizations
+
+commit 2d01b29fa366922945488d456fbf645bf262b2f9
+Author: iniju <inigo.aldana@gmail.com>
+Date:   Thu Dec 27 11:50:55 2012 +0000
+
+    removed obsolete zeemote reference, and fixed typo
+
+commit 968654dc636e1be2b640ba9b58042a13e86d359f
+Author: iniju <inigo.aldana@gmail.com>
+Date:   Thu Dec 27 10:43:46 2012 +0000
+
+    added idea's eml to gitignore
+
+commit 17ffea93b3c39863f959d92f78c3df21818b74f8
+Author: iniju <inigo.aldana@gmail.com>
+Date:   Tue Dec 25 13:14:18 2012 +0000
+
+    Moved connection timeout to Connection class
+
+commit e0cfe552cf06634bb6ed96495daa12525adb625a
+Author: iniju <inigo.aldana@gmail.com>
+Date:   Tue Dec 25 13:01:16 2012 +0000
+
+    Fix for shared decks - changed connection to non beta url and use https, since http is not supported in new ankiweb domain.
+
+commit 58854cf921b8691115b8541662c72143afa972ef
+Merge: 7e66444 7921c52
+Author: Zaur Molotnikov <qutorial@gmail.com>
+Date:   Fri Dec 21 15:44:29 2012 +0100
+
+    Merge branch 'master' of https://github.com/nicolas-raoul/Anki-Android
+
+commit 7e664446d82559c3cce10d1f4966f74ed05b028f
+Author: Zaur Molotnikov <qutorial@gmail.com>
+Date:   Fri Dec 21 15:44:22 2012 +0100
+
+    First local changes, Zaur
+
+commit 6f7cb8d46743d77128936bb39c051b9903cf0098
+Author: iniju <inigo.aldana@gmail.com>
+Date:   Thu Dec 20 16:33:20 2012 +0100
+
+    various fixes for libanki (fix dublicate models for new decks, hint class, fix query wildcards, unbury cards in deckduelist
+
+commit 2b095a6d0a7ed002cfe25d55a183d16d1979e0dc
+Author: iniju <inigo.aldana@gmail.com>
+Date:   Thu Dec 20 10:08:13 2012 +0100
+
+    fix negative review time bug - issue 1449
+
+commit 38b4b80b90f8d57a5ad5786a320deb8ce182226c
+Author: iniju <inigo.aldana@gmail.com>
+Date:   Wed Dec 19 19:42:03 2012 +0100
+
+    removed libZControllerLib_Android.so - issue 1521
+
+commit 9063a9094444ac9b94f0f19138129718a5c2d5ab
+Merge: 4cc6345 d0637fa
+Author: nobnago <norbert.nagold@gmail.com>
+Date:   Sun Dec 16 05:18:55 2012 -0800
+
+    Merge pull request #6 from Oddegamra/patch-1
+    
+    Issue 1270: Wrong statistics of mature reviews
+
+commit 4cc6345e661838159dec0725ba76659d526e1896
+Author: nobnago <norbert.nagold@gmail.com>
+Date:   Sat Dec 15 17:56:38 2012 +0100
+
+    fix bug 3566264
+
+commit d0637fa4e7da5a67c1ee7d89f271c3a926a4f01b
+Author: Oddegamra <oddegamra@gmx.org>
+Date:   Sat Dec 15 12:40:34 2012 +0100
+
+    Issue 1270: Wrong statistics of mature reviews
+    
+    See https://code.google.com/p/ankidroid/issues/detail?id=1270
+
+commit ccb645023384377c1fd0c1b7cf629e48dba598c6
+Author: nobnago <norbert.nagold@gmail.com>
+Date:   Fri Dec 14 18:08:44 2012 +0100
+
+    localisation
+
+commit 513050a217ea2603b9e705c3deee8bec839a6312
+Author: nobnago <norbert.nagold@gmail.com>
+Date:   Fri Dec 14 18:04:03 2012 +0100
+
+    bump version
+
+commit 8c45f857c57ee3325f7776c1d9b577b433a04656
+Author: nobnago <norbert.nagold@gmail.com>
+Date:   Fri Dec 14 18:03:30 2012 +0100
+
+    add safety check for empty listview
+
+commit 5a51811a9baff553f2edae704d32fce0a98bad09
+Author: nobnago <norbert.nagold@gmail.com>
+Date:   Fri Dec 14 17:59:43 2012 +0100
+
+    better explanation for internal memory
+
+commit 117f029b4f927ec5aefbf19491f86f36481ce640
+Author: nobnago <norbert.nagold@gmail.com>
+Date:   Fri Dec 14 17:56:14 2012 +0100
+
+    add option to save on internal memory
+
+commit 99acf7b588c05748daa89776c8f3750b7d6aa841
+Author: nobnago <norbert.nagold@gmail.com>
+Date:   Fri Dec 14 16:14:57 2012 +0100
+
+    localisation
+
+commit 7596679ce863181727007c3d31485da9e97f0e91
+Author: nobnago <norbert.nagold@gmail.com>
+Date:   Fri Dec 14 15:56:01 2012 +0100
+
+    update values after finishing congrats view
+
+commit ad243285c0ea3af9bbcb09f55dff929731e367b1
+Author: nobnago <norbert.nagold@gmail.com>
+Date:   Fri Dec 14 12:10:00 2012 +0100
+
+    fix 1509
+
+commit 71a72eb7173964c7cd53a6f6ac60ef4545356a1f
+Author: nobnago <norbert.nagold@gmail.com>
+Date:   Thu Dec 13 13:28:58 2012 +0100
+
+    more consistent behaviour of back button in study options
+
+commit 5824693bb353044929675e794a0bc4f724967d54
+Author: nobnago <norbert.nagold@gmail.com>
+Date:   Tue Dec 11 12:58:57 2012 +0100
+
+    fix for issue 1503
+
+commit 5936bf9d91ea731181afbd8260b9d180ed3582db
+Author: nobnago <norbert.nagold@gmail.com>
+Date:   Tue Dec 11 12:43:41 2012 +0100
+
+    catch closing errors but report them nevertheless
+
+commit c45ee6f974ebd4bdd1b79a6771eae4ac441c31fc
+Author: nobnago <norbert.nagold@gmail.com>
+Date:   Tue Dec 11 12:32:52 2012 +0100
+
+    fix issue 1502
+
+commit db904d35fef1b48014f65553de769f63c86f7fcf
+Author: nobnago <norbert.nagold@gmail.com>
+Date:   Tue Dec 11 12:05:41 2012 +0100
+
+    localisation
+
+commit ba07b2950ed1c9ed09501bc71cc1671df8df9f1c
+Author: nobnago <norbert.nagold@gmail.com>
+Date:   Tue Dec 11 11:49:10 2012 +0100
+
+    fix bug 4081341
+
+commit 13c279dd3a347a086e3b90449ff1549bbc7c229a
+Author: nobnago <norbert.nagold@gmail.com>
+Date:   Mon Dec 10 19:47:39 2012 +0100
+
+    colour dyn decks in dck picker
+
+commit 5d75044dd86dc6b4825d4e6fa82de030c8d10015
+Author: nobnago <norbert.nagold@gmail.com>
+Date:   Mon Dec 10 19:14:44 2012 +0100
+
+    add hint for dyn decks
+
+commit 583656b6812ebd3e428397e9d9cc5223589946cd
+Author: nobnago <norbert.nagold@gmail.com>
+Date:   Mon Dec 10 18:52:15 2012 +0100
+
+    bump version to beta 21
+
+commit 9319c8afa1007144a672a3f604278c14d0b4ee7e
+Author: nobnago <norbert.nagold@gmail.com>
+Date:   Mon Dec 10 18:45:26 2012 +0100
+
+    fix minor issue which prevented db check start
+
+commit 5ac1b7102b8590b73d4cc87d0090c0d8d2755fd5
+Author: nobnago <norbert.nagold@gmail.com>
+Date:   Mon Dec 10 18:42:10 2012 +0100
+
+    consistent back key behaviour on study options
+
+commit 6e18bff7c0f0b8207a77b99208009f36378e89c8
+Author: nobnago <norbert.nagold@gmail.com>
+Date:   Mon Dec 10 18:27:46 2012 +0100
+
+    fix crashes when calling custom study details again
+
+commit da0a946634397371c42d989eafd5f362378a85b7
+Author: nobnago <norbert.nagold@gmail.com>
+Date:   Mon Dec 10 18:23:12 2012 +0100
+
+    localisation
+
+commit 888c8f502ce48f95eeda22d41b5f15d63f879952
+Author: nobnago <norbert.nagold@gmail.com>
+Date:   Mon Dec 10 18:09:14 2012 +0100
+
+    localisation
+
+commit 906fc01ea0ad2388464401c0fb00542a56881a4e
+Merge: 7c80d7a 7921c52
+Author: Patrik Ackland <patrikackland@gmail.com>
+Date:   Sat Dec 8 21:17:49 2012 +0100
+
+    Merge remote-tracking branch 'upstream/master'
+
+commit 7921c523e33cae37a7331396892feaf0830c4302
+Author: iniju <inigo.aldana@gmail.com>
+Date:   Thu Dec 6 17:30:19 2012 +0100
+
+    fixes for deck import, issue 1261
+
+commit 7c80d7af6eb784c421a8ef0bbed826bf6acd5257
+Author: Patrik Ackland <patrikackland@gmail.com>
+Date:   Wed Dec 5 17:48:10 2012 +0100
+
+    Cleaned up unnecessary code
+
+commit 48404ee53b494cfdb5f485ea40c8373c426ce65d
+Author: iniju <inigo.aldana@gmail.com>
+Date:   Wed Dec 5 02:30:01 2012 +0000
+
+    changed suspicious assignment, might be causing corruptions when cramming
+
+commit f1f4eaa6ded68081dd368c17ebe835be6b766972
+Author: iniju <inigo.aldana@gmail.com>
+Date:   Wed Dec 5 02:20:07 2012 +0000
+
+    completed custom studies and fix for issue 1494
+
+commit eb552cc157ed26321f45c0d588a69e29b7fbe7d4
+Merge: 1fee049 2937a5d
+Author: Patrik Ackland <patrikackland@gmail.com>
+Date:   Tue Dec 4 09:48:30 2012 +0100
+
+    Merge remote-tracking branch 'upstream/master'
+
+commit 2937a5d8c10608f6f6ac31884f1bb40ce6e21660
+Author: iniju <inigo.aldana@gmail.com>
+Date:   Tue Dec 4 02:51:22 2012 +0000
+
+    fix for media sanity error - issue 1255
+
+commit 1fee0493d12f925e1a907829a6923529376dcfec
+Author: Patrik Ackland <patrikackland@gmail.com>
+Date:   Wed Nov 28 01:04:11 2012 +0100
+
+    fix issue 1462
+    
+    media is not deleted when deck with media is deleted.
+
+commit 3392a3e63032987e7711eb7d6b796afcc7a7e899
+Merge: 1ab13b8 c867ab5
+Author: nobnago <norbert.nagold@gmail.com>
+Date:   Sat Nov 24 01:21:08 2012 -0800
+
+    Merge pull request #5 from packlnd/master
+    
+    Updated strings and regex + javadoc
+
+commit 1ab13b831626005d3b0c585cae4db0a52ce0149b
+Merge: b197aa6 7611d24
+Author: nobnago <norbert.nagold@gmail.com>
+Date:   Fri Nov 23 17:07:02 2012 +0100
+
+    Merge https://github.com/iniju/Anki-Android
+
+commit b197aa651965a1d605531169e459d14559b588b2
+Author: nobnago <norbert.nagold@gmail.com>
+Date:   Fri Nov 23 16:15:03 2012 +0100
+
+    start custom study
+
+commit c867ab550348e033d9b7f5e49f95c25d66407283
+Merge: da0c03d ea99b56
+Author: Patrik Ackland <patrikackland@gmail.com>
+Date:   Thu Nov 22 00:45:07 2012 +0100
+
+    Merge remote-tracking branch 'upstream/master'
+
+commit da0c03de970a4fcbd7e5e0dacd1f07dc368b1290
+Author: Patrik Ackland <patrikackland@gmail.com>
+Date:   Wed Nov 21 22:19:50 2012 +0100
+
+    Fixed problem with having space in decknames.
+    
+    Regex removed all spaces in the string. See issue 1386
+
+commit bd0993881e6cadafac03752537ecc37d13e4af33
+Author: Patrik Ackland <patrikackland@gmail.com>
+Date:   Wed Nov 21 19:37:04 2012 +0100
+
+    Test to see if line-ending is fixed
+
+commit ea99b566cb3b7783a4adb746bf8174581d50883c
+Merge: 7611d24 e544084
+Author: Nicolas Raoul <nicolas.raoul@gmail.com>
+Date:   Tue Nov 20 11:44:28 2012 +0900
+
+    Merge branch 'master' of https://github.com/packlnd/Anki-Android
+
+commit e5440849f3c0672172555b3f92c3d6ad9de09279
+Author: Patrik Ackland <patrikackland@gmail.com>
+Date:   Tue Nov 20 00:10:55 2012 +0100
+
+    Updated string (sync-login)
+    
+    Issue 1423. Updated swedish and english text from "username" to "epost
+    address"
+
+commit 7611d247b8483e8acc01e31eb53d8daa0ac4418e
+Author: iniju <inigo.aldana@gmail.com>
+Date:   Sun Nov 18 14:48:31 2012 +0000
+
+    fix for issue 1335
+
+commit cea67f9c2ce327e5385fac92879788899b8d221c
+Author: iniju <inigo.aldana@gmail.com>
+Date:   Sun Nov 18 13:37:46 2012 +0000
+
+    fix for card browser counts issue 1475
+
+commit 2c95369a0b7587ba498d09e1c8d783d48e829f66
+Author: nobnago <norbert.nagold@gmail.com>
+Date:   Sun Nov 18 13:14:45 2012 +0100
+
+    be more precise on delete cram deck dialog
+
+commit 270a0b3f2023c39c728325a2d4cb2ab9262d9493
+Author: nobnago <norbert.nagold@gmail.com>
+Date:   Sat Nov 17 18:14:14 2012 +0100
+
+    fix bug 3618135
+
+commit f9b14674c07c0ad2e1c89861def6a898b5d9daae
+Author: nobnago <norbert.nagold@gmail.com>
+Date:   Sat Nov 17 18:03:25 2012 +0100
+
+    issue 1479
+
+commit 25534f970f948d0f5619d8455514ced0eb0f3765
+Author: nobnago <norbert.nagold@gmail.com>
+Date:   Sat Nov 17 16:04:52 2012 +0100
+
+    remaining libanki stuff
+
+commit df608cbf9b3c15a298b9416b77c908a3cefcbb75
+Author: nobnago <norbert.nagold@gmail.com>
+Date:   Fri Nov 16 19:29:48 2012 +0100
+
+    forgot something
+
+commit 2ef811ad31f467fb226a11071dda7e28fb0a89ee
+Author: nobnago <norbert.nagold@gmail.com>
+Date:   Fri Nov 16 19:29:39 2012 +0100
+
+    farsi stirng
+
+commit bd6a0d7baa2e29ebb657fe1511c5f81be1310f79
+Author: nobnago <norbert.nagold@gmail.com>
+Date:   Fri Nov 16 19:13:11 2012 +0100
+
+    fix farsi string
+
+commit a271aa22105f4165241f25c3a9600647a7ba2403
+Author: nobnago <norbert.nagold@gmail.com>
+Date:   Fri Nov 16 19:11:27 2012 +0100
+
+    catching up on libanki
+
+commit 2048cd78993af9643bee70e9cccdebe235e7718c
+Author: nobnago <norbert.nagold@gmail.com>
+Date:   Fri Nov 16 17:04:55 2012 +0100
+
+    localisation
+
+commit cbdeaa3f650f5347428158cbdc45e07c97c94457
+Author: iniju <inigo.aldana@gmail.com>
+Date:   Thu Nov 15 21:34:57 2012 +0000
+
+    further fix for latex, issue 1368
+
+commit ed9a4c6ef8aca34a680e31a28c437b44c6babfdf
+Merge: 717da72 ffa3247
+Author: iniju <inigo.aldana@gmail.com>
+Date:   Thu Nov 15 21:33:53 2012 +0000
+
+    Merge branch 'master' of git://github.com/nicolas-raoul/Anki-Android
+    
+    Conflicts:
+    	res/values-fa/06-statistics.xml
+
+commit 3d6c56b4ec71dc7f0315839be3e66344c2f36292
+Author: iniju <inigo.aldana@gmail.com>
+Date:   Thu Nov 15 21:31:53 2012 +0000
+
+    further fix for latex, issue 1368
+
+commit 554ddc356f1e3dfce2397418ce6c41ce8d218753
+Merge: 1845842 ffa3247
+Author: iniju <inigo.aldana@gmail.com>
+Date:   Thu Nov 15 20:22:23 2012 +0000
+
+    Merge branch 'master' of git://github.com/nicolas-raoul/Anki-Android into zeemote_plugin
+
+commit ffa3247dbfbe074d6fbda7123312de1c460cad03
+Author: Vladimir Sizikov <vsizikov@gmail.com>
+Date:   Sun Nov 4 22:32:00 2012 +0100
+
+    Fixed issues 1463 and 1438: Fullscreen in Review Mode not working
+
+commit 89c326e46ccdd4f97595feffdcba5c44fe45b833
+Author: Nicolas Raoul <nicolas.raoul@gmail.com>
+Date:   Sat Nov 3 08:04:30 2012 +0900
+
+    Bumped version to 2.0beta20
+
+commit 72a0dc483e6e01778f392aa9736cd0a28d88ca72
+Merge: 7158a30 8356598
+Author: Nicolas Raoul <nicolas.raoul@gmail.com>
+Date:   Fri Nov 2 22:23:58 2012 +0900
+
+    Merge branch 'master' of https://github.com/the-kenny/Anki-Android
+
+commit 7158a30f8f8a4e1f118d8cfc047d83d0d989d113
+Merge: 4420ffe 45cf4f8
+Author: Nicolas Raoul <nicolas.raoul@gmail.com>
+Date:   Fri Nov 2 22:21:04 2012 +0900
+
+    Merge branch 'master' of https://github.com/the-kenny/Anki-Android
+
+commit 8356598ee4e7a41c9d4f37c6fa4bf168c5f09658
+Author: Moritz Ulrich <ulrich.moritz@googlemail.com>
+Date:   Fri Nov 2 14:20:45 2012 +0100
+
+    Fix docstring of Util.checksum
+
+commit 4420ffec3de0e67f5de0ec0909545edf501b9314
+Author: Nicolas Raoul <nicolas.raoul@gmail.com>
+Date:   Fri Nov 2 22:18:11 2012 +0900
+
+    HTML format has slightly changed
+
+commit 45cf4f81a9086e07d6f6c11613d34f94a953ea3e
+Author: Moritz Ulrich <ulrich.moritz@googlemail.com>
+Date:   Fri Nov 2 14:12:21 2012 +0100
+
+    Fix Util.checksum's padding for sha1. It must pad to 40 hex digits, not 32
+    
+    This fixes display of certain LaTeX formulas which hash starts with a
+    leading zero.
+
+commit 2152a087eb3b5c94d19fb105821183f5dbe67340
+Author: Moritz Ulrich <ulrich.moritz@googlemail.com>
+Date:   Fri Nov 2 00:08:59 2012 +0100
+
+    Fix bug with latex-file checksum calculation introduced in 5040ef
+    
+    Empty StringBuffer created but never filled, contents are used to
+    replace 'latex' string in _latexFromHtml. Thus latexFromHtml always
+    returns an empty string.
+    
+    Signed-off-by: Moritz Ulrich <ulrich.moritz@googlemail.com>
+
+commit 18458420065f038bd520ebd9a9268239d94a4563
+Merge: f899cb9 ad120e6
+Author: iniju <inigo.aldana@gmail.com>
+Date:   Fri Oct 26 02:34:39 2012 +0100
+
+    Merge branch 'master' of git://github.com/nobnago/Anki-Android into zeemote_plugin
+    
+    Conflicts:
+    	res/values-fa/06-statistics.xml
+    	src/com/ichi2/anki/AnkiDroidApp.java
+
+commit ad120e655b62720b02f6db73f2ac240d4ef15443
+Author: nobnago <norbert.nagold@gmail.com>
+Date:   Wed Oct 17 20:20:52 2012 +0200
+
+    forgot again something
+
+commit bc66c5c2aaef05db45824b62a427c3df016b744c
+Author: nobnago <norbert.nagold@gmail.com>
+Date:   Wed Oct 17 20:15:08 2012 +0200
+
+    more importing stuff
+
+commit 075e8e9e8b71d0f3c852b96fc9c6b6973f4a037c
+Author: nobnago <norbert.nagold@gmail.com>
+Date:   Wed Oct 17 19:51:59 2012 +0200
+
+    localisation
+
+commit 08e103c9db51c9981256f4f52b0ce7c2de44a1df
+Author: nobnago <norbert.nagold@gmail.com>
+Date:   Wed Oct 17 19:45:27 2012 +0200
+
+    minor fix for importing
+
+commit 2974503507a313ef594864c4a4217831b634b38a
+Author: nobnago <norbert.nagold@gmail.com>
+Date:   Wed Oct 17 19:04:19 2012 +0200
+
+    correct string
+
+commit b76cba1abaf1465e8d6b2a99ed432155e7c267da
+Author: nobnago <norbert.nagold@gmail.com>
+Date:   Tue Oct 16 22:27:55 2012 +0200
+
+    add replace import option
+
+commit 6818427742d44c71203d1783cc672fb0b2d717b7
+Author: nobnago <norbert.nagold@gmail.com>
+Date:   Tue Oct 16 21:28:09 2012 +0200
+
+    libanki changes
+
+commit 8d5701af943b055f0fa140affeea9122ad2145d4
+Author: nobnago <norbertnagold@gmail.com>
+Date:   Tue Oct 16 11:18:51 2012 +0200
+
+    localisation
+
+commit 399b50ea3066063c0cb647ed1ded8c92fa9863ff
+Author: nobnago <norbert.nagold@gmail.com>
+Date:   Mon Oct 15 21:15:04 2012 +0200
+
+    add safety question to upload/download option when sanity check fails
+
+commit 84df3dddd7755eb1327bfeeec4ace69923174a44
+Author: nobnago <norbert.nagold@gmail.com>
+Date:   Mon Oct 15 21:03:00 2012 +0200
+
+    don't show upload/download dialog on sync error
+
+commit cd911460eabd86713b9e3f7391adb51189af0472
+Author: nobnago <norbert.nagold@gmail.com>
+Date:   Mon Oct 15 20:57:23 2012 +0200
+
+    fix bug which broke anki desktop's card browser searching
+
+commit 9a5d997846d1affe2ae58c0af8b299823bcbcb1d
+Author: nobnago <norbert.nagold@gmail.com>
+Date:   Sat Oct 13 18:46:02 2012 +0200
+
+    bump version --> beta 19
+
+commit 6879ac20252e416fb915d790f786a650d43aacb4
+Author: nobnago <norbert.nagold@gmail.com>
+Date:   Sat Oct 13 18:43:22 2012 +0200
+
+    minor libanki change
+
+commit aaf2c888c61e35fab403fadad0306539e8b3ff79
+Author: nobnago <norbert.nagold@gmail.com>
+Date:   Sat Oct 13 18:37:41 2012 +0200
+
+    address issue 1412
+
+commit fa02220756161fe29b338b5fdd04465214ba989c
+Author: nobnago <norbert.nagold@gmail.com>
+Date:   Sat Oct 13 18:33:00 2012 +0200
+
+    forgot file
+
+commit e0453e065703454fc630aae2b21f7a7bd2587213
+Author: nobnago <norbert.nagold@gmail.com>
+Date:   Sat Oct 13 18:31:55 2012 +0200
+
+    fix bug 3627003
+
+commit 1920a132eddf3bf9e85ebea2ecfb352ecead54f8
+Author: nobnago <norbert.nagold@gmail.com>
+Date:   Sat Oct 13 18:07:34 2012 +0200
+
+    fix bug 3563229
+
+commit 135f48f947870375ef5ff1b63b2d1508270ac73d
+Author: nobnago <norbert.nagold@gmail.com>
+Date:   Sat Oct 13 17:59:04 2012 +0200
+
+    localisation
+
+commit 8b416524c90ad5a0164a1f62b1d2f8837c62a224
+Author: nobnago <norbert.nagold@gmail.com>
+Date:   Sat Oct 13 17:57:48 2012 +0200
+
+    fix issue 3640075
+
+commit f899cb98f6fb90c1b4d5d48aff786e813adcf237
+Author: iniju <inigo.aldana@gmail.com>
+Date:   Thu Oct 11 20:30:43 2012 +0100
+
+    support for zeemote plugin
+
+commit 717da72c15c7f5c8c662e562b2b96b75c26f7e42
+Author: iniju <inigo.aldana@gmail.com>
+Date:   Thu Oct 11 20:18:39 2012 +0100
+
+    fix in broken farsi localisation
+
+commit fe657201c5eac5e49bde048bdcd4cba866542b4b
+Author: Nicolas Raoul <nicolas.raoul@gmail.com>
+Date:   Thu Oct 11 13:31:23 2012 +0900
+
+    Fixed syntax in XML and Crowdin
+
+commit 03df65bdcd5dac88423435aa7dde0452ae7ec659
+Merge: 219470d 0b5ce04
+Author: Nicolas Raoul <nicolas.raoul@gmail.com>
+Date:   Thu Oct 11 13:25:09 2012 +0900
+
+    Merge branch 'master' of https://github.com/nobnago/Anki-Android
+
+commit 0b5ce04014c0b8d32015eacf8b85124470a8f13d
+Author: nobnago <norbert.nagold@gmail.com>
+Date:   Sun Oct 7 11:43:39 2012 +0200
+
+    more localisation
+
+commit 57b24b5857a1ac1fead5d576b5308ccca4cb1e0c
+Author: nobnago <norbert.nagold@gmail.com>
+Date:   Sun Oct 7 11:38:53 2012 +0200
+
+    fix catalanian string
+
+commit 22a498c65c3c12ae69391d5be385fc7a9a842d29
+Author: nobnago <norbert.nagold@gmail.com>
+Date:   Sun Oct 7 11:37:49 2012 +0200
+
+    add farsi (thanks to salehi)
+
+commit 219470de846f32c1b548f1abe07ce6fa7ce88bbc
+Author: Nicolas Raoul <nicolas.raoul@gmail.com>
+Date:   Tue Oct 2 17:13:27 2012 +0900
+
+    Fixed syntax in XML and Crowdin
+
+commit 20173260b75ce07f89a5cde868b780d3eb7b6661
+Author: nobnago <norbertnagold@gmail.com>
+Date:   Tue Oct 2 09:52:46 2012 +0200
+
+    fix string errors
+
+commit f7534a3258ee5e551def2787dd9d28b80266ed2f
+Author: nobnago <norbertnagold@gmail.com>
+Date:   Tue Oct 2 09:51:30 2012 +0200
+
+    add Argentinian localisation (thanks to zenarola)
+
+commit fcb3d29d18266b4a3410e8a51cd42f040bcac360
+Author: nobnago <norbert.nagold@gmail.com>
+Date:   Mon Sep 24 22:59:30 2012 +0200
+
+    first attempt to address issue 1255 (not tested yet)
+
+commit 676f45ca00452ad1dce486d330c54593a803dc68
+Author: nobnago <norbert.nagold@gmail.com>
+Date:   Mon Sep 24 22:30:51 2012 +0200
+
+    newest libanki (media import still missing)
+
+commit 3100cacc41014a52879796b905624e12624aa0c9
+Merge: fd809a1 f1a3690
+Author: Nicolas Raoul <nicolas.raoul@gmail.com>
+Date:   Mon Sep 24 15:18:55 2012 +0900
+
+    Merge branch 'prefs' of https://github.com/flerda/Anki-Android
+
+commit fd809a1c36672991adb8079aed9604528adf82c3
+Merge: 76e4cd9 34915b3
+Author: Nicolas Raoul <nicolas.raoul@gmail.com>
+Date:   Mon Sep 24 15:16:14 2012 +0900
+
+    Merge branch 'master' of https://github.com/nobnago/Anki-Android
+
+commit 76e4cd96944aaa2ace713a5f6e8a9399da9255ba
+Merge: a25e75e 1587d6e
+Author: Nicolas Raoul <nicolas.raoul@gmail.com>
+Date:   Mon Sep 24 15:13:46 2012 +0900
+
+    Merge branch 'permissions' of https://github.com/flerda/Anki-Android
+
+commit f1a3690f696344b84d36ead9c5f4db3f22ec344b
+Author: Flavio Lerda <flerda@gmail.com>
+Date:   Sun Sep 23 16:11:13 2012 +0100
+
+    Issue 1385: Crash when starting DeckOptions.
+    
+    We are currently parsing the selected choice for a list preference which
+    showing the deck options. However, the option might be unset, which
+    leads to a NullPointerException.
+    
+    Guard against this case by adding an explicit check.
+
+commit a25e75e6e9aa0fc0f331d155e1b0dca666012574
+Merge: 2f3f05e 237ac18
+Author: Nicolas Raoul <nicolas.raoul@gmail.com>
+Date:   Sun Sep 23 01:57:35 2012 +0900
+
+    Merge branch 'deck-description' of https://github.com/flerda/Anki-Android
+
+commit 34915b3dc73ef96dff4cd9e1f8dede9eb08079c0
+Author: nobnago <norbert.nagold@gmail.com>
+Date:   Sat Sep 22 17:10:59 2012 +0200
+
+    localisation
+
+commit 237ac187aabc0aa156f1ce9edeadc089c342eca5
+Author: Flavio Lerda <flerda@gmail.com>
+Date:   Sat Sep 22 15:25:19 2012 +0100
+
+    Issue 1382: Deck description HTML
+    
+    The deck description is defined to be HTML, but it is currently treated
+    as plain text by AnkiDroid when displaying it below the deck name.
+    
+    Parse it as HTML and convert it to a spannable string with formatting.
+    This fixes the displaying of the string but not the editing, which still
+    shows the HTML and requires you to edit the HTML. Using a rich-text
+    editor would be better there, but beyond the scope of 2.0, so leave it
+    as is for now.
+
+commit 1587d6e58f84355f5d9fb6c9eb79886565008b8b
+Author: Flavio Lerda <flerda@gmail.com>
+Date:   Sat Sep 22 15:21:54 2012 +0100
+
+    Do not require bluetooth.
+    
+    This is currently commented out, but this actually was an issue with the
+    1.1.3 release, so it is better to fix this now.
+    
+    The manifest element <uses-permission> does not actually defines an
+    attribute android:required, and instead that should be used with
+    <uses-feature>.
+    
+    With the current setup, if the block is uncommented, this means that the
+    application would not be available in the Google Play Store to devices
+    that do not have bluetooth.
+    
+    For more details see:
+      http://developer.android.com/guide/topics/manifest/uses-feature-element.html#bt-permission-handling
+
+commit 2f3f05e7dbede4e7fb8ce6374f6190bb321db5dc
+Author: Flavio Lerda <flerda@gmail.com>
+Date:   Sat Sep 22 15:19:30 2012 +0100
+
+    Issue 1294: Tapping on notification broken.
+    
+    In the 2.0 refactoring of the code, the notification pending intent was
+    pointing to a fragment instead of an activity, which will not work
+    correctly.
+    
+    Fix this by pointing to the DeckPicker, which is now the main entry
+    point for the application.
+
+commit 667f129af1f021120b452a348b8eaa01352e8552
+Merge: 5b9e8f5 397eed7
+Author: Nicolas Raoul <nicolas.raoul@gmail.com>
+Date:   Mon Sep 17 23:03:25 2012 +0900
+
+    Merge branch 'master' of https://github.com/nobnago/Anki-Android
+
+commit 397eed7530aaeafc7c7d6052eaa1bc586f1b9a78
+Author: iniju <inigo.aldana@gmail.com>
+Date:   Sun Sep 16 13:53:49 2012 +0100
+
+    rearranged menu options to show first the most frequently used items
+
+commit c27950a869c2cf486038abdd1b6eaaa6f0aed28b
+Author: iniju <inigo.aldana@gmail.com>
+Date:   Sun Sep 16 13:41:31 2012 +0100
+
+    preference for disabling card browser initial search.
+
+commit 966419746d90f68c7c8b262869213d4209c341ed
+Author: nobnago <norbert.nagold@gmail.com>
+Date:   Sat Sep 15 19:06:32 2012 +0200
+
+    fix issue 1335
+
+commit 5b9e8f55752c1c79e0d0960186a01e93105b8baf
+Merge: bf753d3 7a462da
+Author: Nicolas Raoul <nicolas.raoul@gmail.com>
+Date:   Fri Sep 14 10:57:51 2012 +0900
+
+    Fixed conflict
+
+commit 7a462da1937a543c9cd4cea2fcfedc15c182a0fe
+Author: nobnago <norbert.nagold@gmail.com>
+Date:   Thu Sep 13 23:36:38 2012 +0200
+
+    bump version --> beta18
+
+commit ec49bf45b7876622644b2aee2934017e6e71f771
+Author: nobnago <norbert.nagold@gmail.com>
+Date:   Thu Sep 13 23:34:18 2012 +0200
+
+    add collapse decks
+
+commit 6d60fc8c2ce2ba16b6e4b8e72965b4607c08383c
+Author: nobnago <norbert.nagold@gmail.com>
+Date:   Thu Sep 13 21:20:38 2012 +0200
+
+    some forgotten stuff
+
+commit b0d325feff932d947caf5a71e8f8e8296642ccfb
+Author: nobnago <norbertnagold@gmail.com>
+Date:   Thu Sep 13 11:35:49 2012 +0200
+
+    fix bug 3573227 (but send report about that nevertheless)
+
+commit 37a14f990e2ee2bd51643df7b3366c2ad5338a51
+Author: nobnago <norbertnagold@gmail.com>
+Date:   Thu Sep 13 11:11:09 2012 +0200
+
+    fix bug 3566194 (caused by old json-values of a wrong type)
+
+commit 1a6047e21ec167228b103f68fb77e8097871380b
+Author: nobnago <norbertnagold@gmail.com>
+Date:   Thu Sep 13 10:10:19 2012 +0200
+
+    fix bug 3565208 (returning from shared decks without picking one)
+
+commit df06e9f88a2452c925e78a73451949deacda1981
+Author: nobnago <norbertnagold@gmail.com>
+Date:   Thu Sep 13 10:02:45 2012 +0200
+
+    fix bug 3563212 (autoplay for dynamic decks)
+
+commit bf753d3f8b94227f74fb1c1bc2c36938e3f90f8a
+Merge: c1f4aad 96431bf
+Author: Nicolas Raoul <nicolas.raoul@gmail.com>
+Date:   Wed Sep 12 15:15:07 2012 +0900
+
+    Fixed conflicts
+
+commit c1f4aad9d712b72ec7583f98ce568ba29ce59202
+Author: Nicolas Raoul <nicolas.raoul@gmail.com>
+Date:   Wed Sep 12 15:05:00 2012 +0900
+
+    Canonical manifest format, to improve readability and surprise less readers. Sorry for the diffs but better do it sooner than later
+
+commit 96431bf97f0e8ae2c092e943c79213552426fc16
+Author: nobnago <norbert.nagold@gmail.com>
+Date:   Tue Sep 11 22:53:55 2012 +0200
+
+    add tts queue
+
+commit 103ca0baef917fd1f55478412df720265bdb7975
+Author: nobnago <norbert.nagold@gmail.com>
+Date:   Tue Sep 11 00:12:58 2012 +0200
+
+    bump version --> beta17
+
+commit d2c8aec21778430bc25dfccc210c6c94fb25ef21
+Author: nobnago <norbert.nagold@gmail.com>
+Date:   Tue Sep 11 00:12:52 2012 +0200
+
+    forgot something
+
+commit 3e16e51b41add4c97a928277f7a6dc6ec380f8d1
+Author: nobnago <norbert.nagold@gmail.com>
+Date:   Tue Sep 11 00:05:38 2012 +0200
+
+    adapt meta db to new deck design, readd tts etc...
+
+commit 2924a2ef05e0bd850631eb8c78448b45765586ac
+Author: nobnago <norbert.nagold@gmail.com>
+Date:   Mon Sep 10 22:54:45 2012 +0200
+
+    some forgotten things
+
+commit fe7a57c101dcea722fab5497df815b8763736f9f
+Author: Nicolas Raoul <nicolas.raoul@gmail.com>
+Date:   Mon Sep 10 17:35:16 2012 +0900
+
+    Minor syntax fixes
+
+commit eab18f2ed389199de91ec25456d9e287419f7d63
+Author: nobnago <norbertnagold@gmail.com>
+Date:   Mon Sep 10 10:26:49 2012 +0200
+
+    localisation
+
+commit 8ba0633c0ddd0ec9a250715cb4b530bebf607c44
+Merge: d58d10c 8d5706a
+Author: nobnago <norbertnagold@gmail.com>
+Date:   Mon Sep 10 10:19:54 2012 +0200
+
+    Merge https://github.com/nicolas-raoul/Anki-Android
+
+commit d58d10c73d3b0c53a7db0949a816dafa617d828b
+Merge: c65e16a 85225cc
+Author: nobnago <norbertnagold@gmail.com>
+Date:   Mon Sep 10 10:19:34 2012 +0200
+
+    Merge https://github.com/iniju/Anki-Android
+
+commit c65e16a25f472d2870779d92177830e5e874ed0a
+Author: nobnago <norbertnagold@gmail.com>
+Date:   Mon Sep 10 10:18:01 2012 +0200
+
+    libanki as of 2012/9/10
+
+commit 9727253a1b5b863b5a0a3765e6d702f1685929b3
+Author: nobnago <norbert.nagold@gmail.com>
+Date:   Sun Sep 9 20:11:47 2012 +0200
+
+    come more stuff for importing shared decks
+
+commit 2902baed10e97f0144d8e42dac99643372b47871
+Author: nobnago <norbert.nagold@gmail.com>
+Date:   Sun Sep 9 20:00:19 2012 +0200
+
+    shared decks downloading within ankidroid
+
+commit 8d5706ab9ff8b1ce480172ef97d818909a2fe022
+Author: Nicolas Raoul <nicolas.raoul@gmail.com>
+Date:   Thu Sep 6 15:49:46 2012 +0900
+
+    removed uncomplete instructions, the link to the wiki is more up-to-date
+
+commit 64461d5ba7e2117f6e2d09efc26613dbba19503f
+Author: nobnago <norbertnagold@gmail.com>
+Date:   Tue Sep 4 18:17:40 2012 +0200
+
+    localisation
+
+commit f307b391c8273a31f387a4c4e144e129764c8891
+Merge: 4292b2e 9153d4e
+Author: Nicolas Raoul <nicolas.raoul@gmail.com>
+Date:   Fri Aug 31 18:05:56 2012 +0900
+
+    Merge branch 'master' of https://github.com/nobnago/Anki-Android
+
+commit 9153d4e36df2ffb99ea4dcbc048a7bbb6d60ee78
+Author: nobnago <norbertnagold@gmail.com>
+Date:   Fri Aug 31 10:10:03 2012 +0200
+
+    localisation
+
+commit b05ceddb6e481a5b51a1f7f74fa9c975c17bb9c0
+Author: nobnago <norbertnagold@gmail.com>
+Date:   Fri Aug 31 10:02:15 2012 +0200
+
+    latest libanki
+
+commit 4292b2e56661c144fa7410510e5b3f69d44cf021
+Author: ospalh <ospalh@gmail.com>
+Date:   Wed Aug 29 12:14:18 2012 +0200
+
+    Bigger Whiteboard
+    This should fix issue #1336
+    Make the whiteboard square and big enough for both orientations.
+    Like this we don’t need the special resize and mRecreateBitmap
+    functions any more.
+    
+    (I guess we could reduce the height of the white board by the
+    height of the buttons and the title bar bit at some other time.)
+
+commit 1bb6004a75d6605f64872bbffae0ee76c24fa76e
+Merge: 1561b60 85225cc
+Author: Nicolas Raoul <nicolas.raoul@gmail.com>
+Date:   Tue Aug 28 11:37:52 2012 +0900
+
+    Merge branch 'master' of https://github.com/iniju/Anki-Android
+
+commit 85225ccc2f253c0bf344434934f93c8e23db69da
+Author: iniju <inigo.aldana@gmail.com>
+Date:   Tue Aug 28 01:52:11 2012 +0100
+
+    fix for 1282 - crash when updating card browser card not found in list
+
+commit 78f91fe8eb5735379da9a49365f861798e668617
+Merge: afac741 505f3e9
+Author: iniju <inigo.aldana@gmail.com>
+Date:   Tue Aug 28 00:47:06 2012 +0100
+
+    Merge branch 'master' of git://github.com/nobnago/Anki-Android
+    
+    Conflicts:
+    	src/com/ichi2/anki/CardBrowser.java
+
+commit afac741794f17345b061306c076c9ca86526b2dc
+Author: iniju <inigo.aldana@gmail.com>
+Date:   Tue Aug 28 00:34:43 2012 +0100
+
+    card browser - search on all fields
+
+commit 1561b60934ebf23a003f5626edb1be05a43a5ca8
+Author: Jan Berkel <jan.berkel@gmail.com>
+Date:   Mon Aug 27 22:25:45 2012 +0200
+
+    Link to beta anki site for deck upgrade
+
+commit b080961983a638d6fdc16bf845afb423771b7b46
+Author: nobnago <norbert.nagold@gmail.com>
+Date:   Mon Aug 27 19:10:43 2012 +0200
+
+    don't show <
+
+commit 505f3e936665d1401644bdcff232b47a8b5b8284
+Author: nobnago <norbert.nagold@gmail.com>
+Date:   Mon Aug 27 19:06:57 2012 +0200
+
+    libanki as of 2012/08/27
+
+commit 0df78e1ef32385646bece181906e3aa4c009be0e
+Author: nobnago <norbert.nagold@gmail.com>
+Date:   Sun Aug 26 23:51:43 2012 +0200
+
+    localisation
+
+commit 766218d96ebac5675f703dc0d7d1150739532e5e
+Author: nobnago <norbert.nagold@gmail.com>
+Date:   Sun Aug 26 23:51:25 2012 +0200
+
+    timer issues
+
+commit d77c497d6d416138c0ebdc1eb7cdd6c19898fb5e
+Author: nobnago <norbert.nagold@gmail.com>
+Date:   Sun Aug 26 22:24:59 2012 +0200
+
+    fix some simple interface problems (e.g. show images, fix <div>-problem)
+
+commit 371515900271a3c6f7660e13e5e6522b9fca51b2
+Author: nobnago <norbert.nagold@gmail.com>
+Date:   Sat Aug 18 13:38:23 2012 +0200
+
+    bump version (beta 16)
+
+commit f779647215fd5b634291e67736ab4d9533a69456
+Author: nobnago <norbert.nagold@gmail.com>
+Date:   Sat Aug 18 13:36:29 2012 +0200
+
+    localisation
+
+commit b47c8e88a874b4f8c578e55dd8b8aff6c6eff82a
+Merge: 090249e bffc82b
+Author: nobnago <norbert.nagold@gmail.com>
+Date:   Sat Aug 18 13:35:37 2012 +0200
+
+    Merge https://github.com/nicolas-raoul/Anki-Android
+
+commit 090249e9d971cfaba2fbde3b07678968fae6a7e5
+Author: nobnago <norbert.nagold@gmail.com>
+Date:   Sat Aug 18 13:32:46 2012 +0200
+
+    add forgotten dialog line
+
+commit 02c10d6dd59db8652e41b67f4bc98ca6101ff9bd
+Author: nobnago <norbert.nagold@gmail.com>
+Date:   Sat Aug 18 13:29:53 2012 +0200
+
+    fix issue 1330 (bury card causes sync fail)
+
+commit bffc82bd634f56d133bcd9400560b87be0278f8c
+Author: Nicolas Raoul <nicolas.raoul@gmail.com>
+Date:   Tue Aug 14 10:33:34 2012 +0900
+
+    Bumped version to 2.0beta15
+
+commit aa3922f04dcefd8ec57c4470de4fc470200b6854
+Merge: 9f93933 aff7297
+Author: Nicolas Raoul <nicolas.raoul@gmail.com>
+Date:   Tue Aug 14 10:26:43 2012 +0900
+
+    Merge branch 'master' of https://github.com/nobnago/Anki-Android
+
+commit 9f93933fdf99bf1bf60df404d14f04c3ca7c9cb6
+Merge: ff6c8e8 ef4610d
+Author: Nicolas Raoul <nicolas.raoul@gmail.com>
+Date:   Tue Aug 14 10:23:21 2012 +0900
+
+    Merge branch 'master' of https://github.com/flerda/Anki-Android
+
+commit ff6c8e8a65fb4731b3cc749a941dbc0c42fd43c6
+Author: Nicolas Raoul <nicolas.raoul@gmail.com>
+Date:   Tue Aug 14 10:15:33 2012 +0900
+
+    Revert "Improved relative font scaling" because we are in beta phase, code is supposed to be frozen, and the new code seems to surprise some people, so I guess it is better to wait for AnkiDroid 2.1
+    
+    This reverts commit 525f6238a80b7c78488f9d77173fa7f28a163f2e.
+
+commit ef4610dc6a5e9917e08aea6caa16e705247ea9ef
+Author: Flavio Lerda <flerda@gmail.com>
+Date:   Mon Aug 13 00:03:20 2012 +0100
+
+    One more update for the continuous build.
+
+commit 360bf0c6d389f5f88ae11ebef531701f6dd3ad71
+Author: Flavio Lerda <flerda@gmail.com>
+Date:   Mon Aug 13 00:00:12 2012 +0100
+
+    One more reference to continuous build account
+
+commit 6201da64c258389593f6ae395d0e216d2f4eea34
+Author: Flavio Lerda <flerda@gmail.com>
+Date:   Sun Aug 12 23:29:18 2012 +0100
+
+    Switch to SDK Tools 20.
+
+commit c49bb97c97036588a5276526e99f383c5ca106d0
+Author: Flavio Lerda <flerda@gmail.com>
+Date:   Sun Aug 12 23:28:44 2012 +0100
+
+    Use a shared account continuous builds.
+
+commit da0562db76ba432857e3be753a497555f9913c99
+Author: Flavio Lerda <flerda@gmail.com>
+Date:   Sun Aug 12 22:59:51 2012 +0100
+
+    Install the right SDK platform.
+    
+    SDK Platform Android 3.0, API 11, revision 2
+
+commit 6c5c08ff4d18e72212e7495e5043636a7b12563d
+Author: Nicolas Raoul <nicolas.raoul@gmail.com>
+Date:   Mon Aug 13 01:11:06 2012 +0900
+
+    Bumped version to 2.0beta14
+
+commit cb91d761b71c8c528e0304638c63633c2b24204e
+Author: HSM <ntsp.gm@gmail.com>
+Date:   Sun Aug 12 22:32:53 2012 +1000
+
+    Add support for mobile-specific styling.
+
+commit 525f6238a80b7c78488f9d77173fa7f28a163f2e
+Author: HSM <ntsp.gm@gmail.com>
+Date:   Sun Aug 12 21:27:10 2012 +1000
+
+    Improved relative font scaling
+
+commit aff72979202d3b87bb0156ff28860b0e7d4d1b62
+Author: nobnago <norbert.nagold@gmail.com>
+Date:   Fri Aug 10 23:25:32 2012 +0200
+
+    localisation
+
+commit 5cc8c91140dd4171c2056a6392a485ab760b045b
+Author: nobnago <norbert.nagold@gmail.com>
+Date:   Fri Aug 10 23:17:56 2012 +0200
+
+    change color too in action bar title (move uiutil compat code into normal compat)
+
+commit 6cfa9f64c7b3aec36fe994a9e96acab99f45518a
+Author: nobnago <norbert.nagold@gmail.com>
+Date:   Fri Aug 10 22:55:13 2012 +0200
+
+    only extend one step further in compatv11 (please change if wrong)
+
+commit da3daf0044ea19ad968d2ea3414f239460caf073
+Author: nobnago <norbert.nagold@gmail.com>
+Date:   Fri Aug 10 22:54:30 2012 +0200
+
+    dark action bar in night mode
+
+commit 74ca6a46e8cc0ab4dd2e406340883de971c0a008
+Author: nobnago <norbert.nagold@gmail.com>
+Date:   Fri Aug 10 22:48:07 2012 +0200
+
+    dark actionbar background on night mode
+
+commit 304383b2c3fe376e931acae9e834f12cc4d5c397
+Author: nobnago <norbert.nagold@gmail.com>
+Date:   Fri Aug 10 22:32:16 2012 +0200
+
+    hide theme preference
+
+commit 9b25581089c19cbcbdb5132842a729bcd8d0bdc2
+Author: nobnago <norbert.nagold@gmail.com>
+Date:   Fri Aug 10 22:26:53 2012 +0200
+
+    some lookup work
+
+commit 2d857e7b0e8e87df94c880fab86b4dbb06b3744e
+Author: nobnago <norbert.nagold@gmail.com>
+Date:   Fri Aug 10 21:20:40 2012 +0200
+
+    fix reviewer title
+
+commit 093f8df4c28fdad97fc3441dfbad73079508f3e8
+Author: nobnago <norbert.nagold@gmail.com>
+Date:   Fri Aug 10 21:16:22 2012 +0200
+
+    make learn more and review early prefs permanent
+
+commit 4008960323221c126faf0ce9ac19798492e67ffa
+Author: nobnago <norbert.nagold@gmail.com>
+Date:   Thu Aug 9 22:57:21 2012 +0200
+
+    fix npe in onstop
+
+commit accfaaa98f48a452beaa9473d747f9f7c093a502
+Author: nobnago <norbert.nagold@gmail.com>
+Date:   Thu Aug 9 08:51:17 2012 +0200
+
+    fix undo from congrats screen bug
+
+commit 9e87ce30ae133d23405903c71176fd8d4711b86d
+Merge: 317ab52 cb47396
+Author: nobnago <norbert.nagold@gmail.com>
+Date:   Thu Aug 9 08:36:25 2012 +0200
+
+    Merge https://github.com/iniju/Anki-Android
+
+commit cb47396297c8abad4ee1df833e6d692bb6507e34
+Author: iniju <inigo.aldana@gmail.com>
+Date:   Wed Aug 8 22:14:19 2012 +0100
+
+    left fling fix, also account for scrolled deckpicker when many decks - issue 1306
+
+commit 317ab5214e57e4b0a2f090f0e1f390425bc1c602
+Author: nobnago <norbertnagold@gmail.com>
+Date:   Wed Aug 8 10:47:44 2012 +0200
+
+    localisations
+
+commit f6df32012896e33644f373a639c3d57d95d46311
+Merge: a29dc72 1c0bae7
+Author: nobnago <norbertnagold@gmail.com>
+Date:   Wed Aug 8 10:37:06 2012 +0200
+
+    Merge https://github.com/iniju/Anki-Android
+
+commit a29dc72b9d6b0a5d14d748e1f633ad71ab170919
+Merge: 84a32ce d9cec83
+Author: nobnago <norbertnagold@gmail.com>
+Date:   Wed Aug 8 10:36:53 2012 +0200
+
+    Merge https://github.com/nicolas-raoul/Anki-Android
+
+commit 84a32ce8266ad6eadf96c162c31ecb228fd58bed
+Author: nobnago <norbertnagold@gmail.com>
+Date:   Wed Aug 8 10:36:28 2012 +0200
+
+    fix bug 1293
+
+commit 1c0bae7036bc2eadf68c17239d660d8e2a1cba1b
+Author: iniju <inigo.aldana@gmail.com>
+Date:   Wed Aug 8 01:47:52 2012 +0100
+
+    also reset after suspending card, so that its position in queue is refilled - remaining case for issue 1204
+
+commit 7d79fbc5732d66d32d5704ad1938b42f2a47c183
+Author: iniju <inigo.aldana@gmail.com>
+Date:   Wed Aug 8 00:40:26 2012 +0100
+
+    shorten a bit congratulations message about more cards available, so that all the buttons fit to screen, maybe we should add scrolling
+
+commit 50c4bca29781a93222b21cc2f2e560740ad69371
+Author: iniju <inigo.aldana@gmail.com>
+Date:   Wed Aug 8 00:39:16 2012 +0100
+
+    explain better that the increase in limits during learn more is temporary
+
+commit a862c818a4d86dc7c5c5aa1a480f1016124afe0b
+Author: iniju <inigo.aldana@gmail.com>
+Date:   Wed Aug 8 00:01:53 2012 +0100
+
+    correct mark/unmark icon on first card of reviewer - issue 1275
+
+commit 2cba01b7001d939650e30ff26a29e6e2ff2da7f9
+Author: iniju <inigo.aldana@gmail.com>
+Date:   Tue Aug 7 22:55:00 2012 +0100
+
+    gesture undo from congrats screen - issue 1300
+
+commit 0159faa16de5bbc380dc64ee4da14d07e226be94
+Author: iniju <inigo.aldana@gmail.com>
+Date:   Tue Aug 7 21:06:54 2012 +0100
+
+    fix for bug 3473217
+
+commit fa2e354ccfd2fa5fe3bd134c6079decce3d89ad1
+Author: iniju <inigo.aldana@gmail.com>
+Date:   Tue Aug 7 00:12:18 2012 +0100
+
+    added search icon to card browser, no functionality yet, just the graphics
+
+commit d9cec83cff2a2ddeaa92b4b823e47b5b3239fbd5
+Merge: d844a6e adc84c4
+Author: iniju <inigo.aldana@gmail.com>
+Date:   Mon Aug 6 21:39:28 2012 +0100
+
+    Merge branch 'master' of git://github.com/nobnago/Anki-Android
+    
+    Conflicts:
+    	res/values-de/01-core.xml
+    	res/values-de/03-dialogs.xml
+    	res/values-es/01-core.xml
+    	res/values-es/03-dialogs.xml
+    	res/values-no/01-core.xml
+    	res/values-no/02-strings.xml
+    	res/values-no/03-dialogs.xml
+    	res/values-zh-rCN/01-core.xml
+    	res/values-zh-rCN/02-strings.xml
+    	res/values-zh-rCN/03-dialogs.xml
+
+commit adc84c487696cd38d90e32675ca1451f615232ce
+Author: nobnago <norbert.nagold@gmail.com>
+Date:   Mon Aug 6 21:52:06 2012 +0200
+
+    bump version beta13
+
+commit 6f3deeda3ec1d2dd575659c9a6d427bfdce11e65
+Author: nobnago <norbert.nagold@gmail.com>
+Date:   Mon Aug 6 21:42:36 2012 +0200
+
+    add replayq to deck options
+
+commit 22871a497f08572c49605f5bdef8cfdf078d7dc1
+Author: nobnago <norbert.nagold@gmail.com>
+Date:   Mon Aug 6 21:21:10 2012 +0200
+
+    fix npe crash caused by mcurrentcard access before card has been loaded
+
+commit eaea5a411a16592209e6b98cf8811311f0dcee65
+Author: nobnago <norbert.nagold@gmail.com>
+Date:   Mon Aug 6 21:20:14 2012 +0200
+
+    localisation
+
+commit c07ccb615f7c860a985c9143e89efa85e8925c99
+Author: nobnago <norbert.nagold@gmail.com>
+Date:   Mon Aug 6 21:09:11 2012 +0200
+
+    fix bug 3459156
+
+commit 91a1733b4c629fb09f78e190d6907bc2c2411ecf
+Merge: 674e0f4 0c672bb
+Author: Nicolas Raoul <nicolas.raoul@gmail.com>
+Date:   Mon Aug 6 23:40:53 2012 +0900
+
+    Merge branch 'master' of https://github.com/nobnago/Anki-Android
+
+commit 0c672bbcd1b2811ad0bf1adcd904244773e1690e
+Author: nobnago <norbert.nagold@gmail.com>
+Date:   Mon Aug 6 17:17:24 2012 +0300
+
+    fix issue 1254 (reviewer counts)
+
+commit 674e0f427a68542fd312a7de4da5e4516dad4c37
+Merge: 6fb7b8c cf41b1d
+Author: Nicolas Raoul <nicolas.raoul@gmail.com>
+Date:   Mon Aug 6 16:34:04 2012 +0900
+
+    Merge branch 'master' of https://github.com/flerda/Anki-Android
+
+commit d844a6eac6c83e1f42a7b46fad9a86422192c3a3
+Author: iniju <inigo.aldana@gmail.com>
+Date:   Mon Aug 6 02:55:38 2012 +0100
+
+    localizations
+
+commit 6fb7b8c80eab7ed178feecd5286f1d892fa4699d
+Merge: fb52fb0 c4f12a8
+Author: Nicolas Raoul <nicolas.raoul@gmail.com>
+Date:   Mon Aug 6 10:52:44 2012 +0900
+
+    Merge branch 'master' of https://github.com/iniju/Anki-Android
+
+commit c4f12a8c139ed9fdadc507ca7c8bb3e0c33eef67
+Author: iniju <inigo.aldana@gmail.com>
+Date:   Mon Aug 6 02:48:13 2012 +0100
+
+    review early option in congratulations screen
+
+commit fb52fb0cb589450008f9767bdd57d8aefd910365
+Merge: 5d411d8 2956f20
+Author: Nicolas Raoul <nicolas.raoul@gmail.com>
+Date:   Mon Aug 6 10:10:18 2012 +0900
+
+    Merge branch 'master' of https://github.com/iniju/Anki-Android
+
+commit 2956f20b71982be49ef25b9d19faa4e7d4d92add
+Author: iniju <inigo.aldana@gmail.com>
+Date:   Sun Aug 5 23:09:44 2012 +0100
+
+    filtered deck from studyoptions, auto fill of deck restriction in search, rework of the signal to open cramdeckoptions, added filtered/cram button in studyoptions for fragmented since menu has new dynamic deck option from deckpicker. Also fixed some caching of values in cramdeckoptions: preset change now correctly updates the edittext fields, so we can edit the preset result.
+
+commit 5d411d85da68c2b9c0efd51699a20d302bab8534
+Merge: 88f5a5e fb6c647
+Author: Nicolas Raoul <nicolas.raoul@gmail.com>
+Date:   Sat Aug 4 14:14:22 2012 +0900
+
+    Merge branch 'master' of https://github.com/iniju/Anki-Android
+
+commit fb6c6478a8aedacc5af1b08b7a30ffbb2816ab38
+Author: iniju <inigo.aldana@gmail.com>
+Date:   Sat Aug 4 03:09:33 2012 +0100
+
+    undo last action in congratulations screen, undo resets upon opening new deck - revisiting issue 840
+
+commit c716e0c443e818f5ac74e7f61eb5558d8e7f956c
+Author: iniju <inigo.aldana@gmail.com>
+Date:   Fri Aug 3 23:22:48 2012 +0100
+
+    issue 1275 - correct mark/unmark indicator on review screen
+
+commit 9cbc30cb37ae24a48621d19dff8c546716b61a63
+Author: iniju <inigo.aldana@gmail.com>
+Date:   Fri Aug 3 22:55:12 2012 +0100
+
+    refresh counts after card browser return - issue 1268
+
+commit 1c9cccb163a19d2a66866c0be66060f93402f98a
+Author: iniju <inigo.aldana@gmail.com>
+Date:   Fri Aug 3 21:54:32 2012 +0100
+
+    override long click gesture is Long-Click-Workaround is enabled, even if gestures are disabled - issue 1258
+
+commit 88f5a5e5c4d7b639dad90b041edf9351fb753750
+Author: nobnago <norbert.nagold@gmail.com>
+Date:   Fri Aug 3 20:11:53 2012 +0200
+
+    fix typo in localisation
+
+commit 9429bc0efb5571fc7dbe7186039eea5b300264c9
+Author: nobnago <norbert.nagold@gmail.com>
+Date:   Fri Aug 3 20:08:17 2012 +0200
+
+    bump version → beta12
+
+commit 51aadf6112017a01e2931ad0398b21b48f41c20a
+Author: nobnago <norbert.nagold@gmail.com>
+Date:   Fri Aug 3 20:06:31 2012 +0200
+
+    localisation
+
+commit 3617e3ce6adb1873a6c07f3046dbf63a45097b8b
+Author: nobnago <norbert.nagold@gmail.com>
+Date:   Fri Aug 3 19:32:56 2012 +0200
+
+    check for valid apkg file and give user a message about if not
+
+commit d72cc0db365ace49412a252922d31f28f571a618
+Author: nobnago <norbert.nagold@gmail.com>
+Date:   Fri Aug 3 19:12:57 2012 +0200
+
+    make scrolling and gestures work together (do not execute gesture action when scrolling)
+
+commit a0f1bc03acff77f27b6f35123fed507d151abdd8
+Author: iniju <inigo.aldana@gmail.com>
+Date:   Fri Aug 3 01:51:56 2012 +0100
+
+    learn more functionality enabled
+
+commit 71c613a6fd742a7b70ef5fa91a5cab21407845c1
+Author: iniju <inigo.aldana@gmail.com>
+Date:   Thu Aug 2 23:22:20 2012 +0100
+
+    minor correction - issue 1262
+
+commit 8a357b4207c6d6b37afe999f3520163b5594d873
+Author: iniju <inigo.aldana@gmail.com>
+Date:   Thu Aug 2 23:04:27 2012 +0100
+
+    issue 1281: catch error and toast on corrupt font file
+
+commit c7576d34061036a0404b2bce95e971325825720d
+Author: iniju <inigo.aldana@gmail.com>
+Date:   Thu Aug 2 21:49:02 2012 +0100
+
+    Doh - Been staring at these stacktraces for ages and the error was actually obvious, I'm so blind
+
+commit 5f66e49a7b22e80f62dd09aed8e4b1471ee5fd89
+Author: iniju <inigo.aldana@gmail.com>
+Date:   Thu Aug 2 01:57:47 2012 +0100
+
+    fixed ON checkbox for mdpi
+
+commit 1962ca541e1c216d5e5d900554e3639718e7624d
+Merge: 350f71f 168a6f0
+Author: nobnago <norbertnagold@gmail.com>
+Date:   Wed Aug 1 10:47:09 2012 +0200
+
+    Merge https://github.com/nicolas-raoul/Anki-Android
+
+commit 350f71fd1a49cffb1fa9d83764692f60cf7d0468
+Merge: c5f6f70 af7db47
+Author: nobnago <norbertnagold@gmail.com>
+Date:   Wed Aug 1 10:46:17 2012 +0200
+
+    Merge branch 'master' of https://github.com/nobnago/Anki-Android
+
+commit c5f6f70396fc6f9e110aece2c5f9d07d4342d999
+Author: nobnago <norbertnagold@gmail.com>
+Date:   Wed Aug 1 10:37:53 2012 +0200
+
+    some white theme masterfiles
+
+commit 168a6f0641e8bcbffc39e5c6c4b2c0d63e0baace
+Author: iniju <inigo.aldana@gmail.com>
+Date:   Wed Aug 1 02:18:25 2012 +0100
+
+    issue 1263 - default deck and note type as in anki
+
+commit 413760de9922e3476dd5b761dad592e7efb34d50
+Author: iniju <inigo.aldana@gmail.com>
+Date:   Wed Aug 1 00:38:05 2012 +0100
+
+    disable add button in studyoptions of dynamic decks
+
+commit 09e14c6131a663d9969de1ee2b101adaf065a330
+Author: iniju <inigo.aldana@gmail.com>
+Date:   Wed Aug 1 00:26:00 2012 +0100
+
+    same purpose as previous
+
+commit 59cabb763e478f886a984487e6ac3da94c0a5d01
+Author: iniju <inigo.aldana@gmail.com>
+Date:   Wed Aug 1 00:25:28 2012 +0100
+
+    minor changes to help debug issue 1271
+
+commit b39a21dc6c35a1630cdd90a14949670d9666d905
+Author: iniju <inigo.aldana@gmail.com>
+Date:   Tue Jul 31 23:38:00 2012 +0100
+
+    minor correction in layout
+
+commit af7db47440e0859eb6094af007e135af6d4cf9af
+Author: nobnago <norbert.nagold@gmail.com>
+Date:   Tue Jul 31 12:05:47 2012 +0300
+
+    measure of precaution
+
+commit 81e7a6a6fa74db3316da2040a438bf9d8e04e9db
+Author: nobnago <norbert.nagold@gmail.com>
+Date:   Tue Jul 31 11:29:49 2012 +0300
+
+    haha, stupid me
+
+commit e929ea9f25b797f6bb04ad717a8097dd45593376
+Author: nobnago <norbert.nagold@gmail.com>
+Date:   Tue Jul 31 11:22:38 2012 +0300
+
+    update new features list
+
+commit 200c42a9abda839e01e13283ba24a7e8afdcded0
+Author: nobnago <norbert.nagold@gmail.com>
+Date:   Tue Jul 31 11:19:59 2012 +0300
+
+    hopefully fix bug 3472094
+
+commit 1aa20e499317eb14853143a686e91f516bffc7cf
+Author: nobnago <norbert.nagold@gmail.com>
+Date:   Tue Jul 31 11:14:01 2012 +0300
+
+    fix bug 3398037 (empty col)
+
+commit b850a08d6a433aa8bc101b95981ebcc3827fd443
+Author: nobnago <norbert.nagold@gmail.com>
+Date:   Tue Jul 31 11:10:04 2012 +0300
+
+    notify user about insufficient memory
+
+commit 85b535e6e4df2069ecf1f70661dc804e82468229
+Author: nobnago <norbert.nagold@gmail.com>
+Date:   Tue Jul 31 11:06:53 2012 +0300
+
+    same for full sync
+
+commit 6d65acf70d9ac7cedd0ab817514ce2bb9ae3b2c7
+Author: nobnago <norbert.nagold@gmail.com>
+Date:   Tue Jul 31 11:00:49 2012 +0300
+
+    catch OutOfMemoryError on syncing (save error report nevertheless)
+
+commit a2672b95bdcf14b0d64b652b40aa11c7db1879d8
+Author: nobnago <norbert.nagold@gmail.com>
+Date:   Tue Jul 31 10:53:06 2012 +0300
+
+    fix bug 3461019 (studyoptions turn crash)
+
+commit 35c5ef1d8d5dce17f9e93a566812cf626babafee
+Author: nobnago <norbert.nagold@gmail.com>
+Date:   Tue Jul 31 10:48:46 2012 +0300
+
+    fix  bug 3477045 (clipboard npe)
+
+commit 6d2b74b3e2a84f5a6ee5a1113c5f7645b037b9bc
+Author: nobnago <norbert.nagold@gmail.com>
+Date:   Tue Jul 31 00:06:22 2012 +0200
+
+    bump version --> 2.0 beta 11
+
+commit 77558e7661d238c4acc06d669913f9b2a3811ed8
+Author: nobnago <norbert.nagold@gmail.com>
+Date:   Tue Jul 31 00:06:09 2012 +0200
+
+    fix some col loading problems
+
+commit 3ae24606b0f6695f8c4382929ab4893666a96e3c
+Author: nobnago <norbert.nagold@gmail.com>
+Date:   Mon Jul 30 23:50:48 2012 +0200
+
+    localisation
+
+commit bd8c83212134fbe666fdcf19eaa95c101b6893f9
+Author: nobnago <norbert.nagold@gmail.com>
+Date:   Mon Jul 30 23:46:04 2012 +0200
+
+    add full sync option to info
+
+commit 952961c10c5a09e0cb8895862c4fac47dbb4851c
+Author: nobnago <norbert.nagold@gmail.com>
+Date:   Mon Jul 30 23:17:27 2012 +0200
+
+    get col directory always from ankidroidapp (do not confound default and current directory)
+
+commit d1d4dcadf27c4a55000b236e2fd4fdb2e76e512d
+Author: nobnago <norbert.nagold@gmail.com>
+Date:   Mon Jul 30 23:10:43 2012 +0200
+
+    add import dialogs
+
+commit 95ae85b04903e3b171b0123c894f73eb98c5eb6e
+Author: nobnago <norbert.nagold@gmail.com>
+Date:   Mon Jul 30 22:30:06 2012 +0200
+
+    better night mode colors
+
+commit d9c477ab9fa44f97413b9cba597445836ed3f1c4
+Author: nobnago <norbert.nagold@gmail.com>
+Date:   Mon Jul 30 22:15:36 2012 +0200
+
+    fix nook crashes
+
+commit 15721339b8859b777682b616fe195c5a99a22175
+Author: nobnago <norbert.nagold@gmail.com>
+Date:   Mon Jul 30 22:09:21 2012 +0200
+
+    add xhdpi icons
+
+commit 6bd9269e1cb91dd0f389aee2a3ddd29935eb4edc
+Merge: e5b441e f4530ec
+Author: nobnago <norbert.nagold@gmail.com>
+Date:   Mon Jul 30 21:32:34 2012 +0200
+
+    Merge https://github.com/nicolas-raoul/Anki-Android
+
+commit f4530ec7a99b8862110aeaa277f9fff63119aea3
+Merge: fbfec31 2dd0c30
+Author: Nicolas Raoul <nicolas.raoul@gmail.com>
+Date:   Mon Jul 30 09:18:46 2012 +0900
+
+    Merge branch 'master' of https://github.com/iniju/Anki-Android
+
+commit 2dd0c307bb4f33bd9e1cb00a9f447d17ac29e19c
+Author: iniju <inigo.aldana@gmail.com>
+Date:   Sun Jul 29 22:52:52 2012 +0100
+
+    localizations
+
+commit 580bb577933170384564970c6c86c8f76e034ebc
+Author: iniju <inigo.aldana@gmail.com>
+Date:   Sun Jul 29 22:38:57 2012 +0100
+
+    hebrew vowels fix - using modified font from DennisMe, improved logic for numerals and parentheses, preference correctly initialises relevant hook when app opens, dialog to download font.
+
+commit 178a37fdb7602357c60dabe877a4f4e594177dea
+Author: iniju <inigo.aldana@gmail.com>
+Date:   Sun Jul 29 20:15:45 2012 +0100
+
+    fix issue 1273, simplify templates cache
+
+commit 26ef3e83fb0437eddc5ffb6e7be52f0f999a19d8
+Author: iniju <inigo.aldana@gmail.com>
+Date:   Sun Jul 29 19:02:54 2012 +0100
+
+    grasping at straws, might help with issue 1271
+
+commit fbfec31bdda36673d294e977221e18622ac52e1d
+Merge: 9174cfc 6d0bc3f
+Author: Nicolas Raoul <nicolas.raoul@gmail.com>
+Date:   Sun Jul 29 23:26:56 2012 +0900
+
+    Merge branch 'master' of https://github.com/iniju/Anki-Android
+
+commit 6d0bc3f51548ece8d5aa3b029647ae5cd44ccf86
+Author: iniju <inigo.aldana@gmail.com>
+Date:   Sun Jul 29 11:23:54 2012 +0100
+
+    fix crash 3477043 - crashing when scrolling too early before card is ready on reviewer, card has to be long so that it scrolls.
+
+commit 9174cfc813fd60168d524f2a6c19f541c26bdc42
+Merge: db587f4 a95b95f
+Author: Nicolas Raoul <nicolas.raoul@gmail.com>
+Date:   Sun Jul 29 11:00:47 2012 +0900
+
+    Merge branch 'master' of https://github.com/iniju/Anki-Android
+
+commit a95b95f2797c025b3cb9026f87a5557efb229246
+Author: iniju <inigo.aldana@gmail.com>
+Date:   Sun Jul 29 00:03:28 2012 +0100
+
+    don't allow addition to cram decks - issue 1263
+
+commit 978ea6bb73d3238e3a98bb32eaf6cbe27d021a38
+Author: iniju <inigo.aldana@gmail.com>
+Date:   Sat Jul 28 23:12:21 2012 +0100
+
+    localizations
+
+commit 4ccde683da56f5c389754b8951c8ab32bc19b916
+Author: iniju <inigo.aldana@gmail.com>
+Date:   Sat Jul 28 23:01:14 2012 +0100
+
+    handling media check sanity failure: Forces next sync to download all media. Relevant notifications to the user. Also changed all inputstream.read to not abort if read count is zero.
+
+commit db587f4357825eab4f165e0056dc112203d5c98a
+Merge: ddeb75b fb07c84
+Author: Nicolas Raoul <nicolas.raoul@gmail.com>
+Date:   Sat Jul 28 22:55:41 2012 +0900
+
+    Merge branch 'master' of https://github.com/nobnago/Anki-Android
+
+commit 9d1af52a3d39ecba75d81a5e6de1d9d5aa6fedd4
+Merge: 7b61060 fb07c84
+Author: iniju <inigo.aldana@gmail.com>
+Date:   Sat Jul 28 13:56:55 2012 +0100
+
+    Merge branch 'master' of git://github.com/nobnago/Anki-Android
+
+commit 7b61060012f4a4b8e80420ef12ff42e1be9ef24b
+Author: iniju <inigo.aldana@gmail.com>
+Date:   Sat Jul 28 13:56:37 2012 +0100
+
+    copy media to new location during upgrade via ankiweb
+
+commit e5b441ebdfdd4bd09d70ae2a9eefe7cd602ae55c
+Merge: fb07c84 ddeb75b
+Author: nobnago <norbert.nagold@gmail.com>
+Date:   Sat Jul 28 14:46:41 2012 +0200
+
+    Merge https://github.com/nicolas-raoul/Anki-Android
+
+commit fb07c84dcc25b59f51a1b9ff5715c762023b012c
+Author: nobnago <norbert.nagold@gmail.com>
+Date:   Sat Jul 28 14:44:28 2012 +0200
+
+    bump version beta 10
+
+commit e34b3351fb16cc1cc04e33f069e62d7ef126cb7e
+Author: nobnago <norbert.nagold@gmail.com>
+Date:   Sat Jul 28 14:43:45 2012 +0200
+
+    localisation
+
+commit 703e035bbeaaa1fb95bb8131eac12d89b91bad0c
+Author: nobnago <norbert.nagold@gmail.com>
+Date:   Sat Jul 28 14:24:49 2012 +0200
+
+    fix bug 3457041
+
+commit 58e989258440c65bf26fb249c67fe5469be3db64
+Author: nobnago <norbert.nagold@gmail.com>
+Date:   Sat Jul 28 14:20:12 2012 +0200
+
+    fix bug 3468034
+
+commit a4af73801a4635cdfa6d3d5fb75665a3c3b0247e
+Author: nobnago <norbert.nagold@gmail.com>
+Date:   Sat Jul 28 14:17:32 2012 +0200
+
+    fix bug 3474049
+
+commit c32044686d2d5bc94bdc8fbc7651bec704817207
+Author: nobnago <norbert.nagold@gmail.com>
+Date:   Sat Jul 28 00:37:00 2012 +0200
+
+    localisation
+
+commit 7636a531996ece147df273c05ad57c1dfbf4a3ef
+Author: nobnago <norbert.nagold@gmail.com>
+Date:   Sat Jul 28 00:30:13 2012 +0200
+
+    add some logs, prevent db from being closed, catch errors in decktask
+
+commit 2fed3a404548e6fb8486dfcbd40dcc1aef42122e
+Author: nobnago <norbert.nagold@gmail.com>
+Date:   Sat Jul 28 00:13:47 2012 +0200
+
+    add import functionality.
+    - import works at the moment exclusively by clicking on a apkg-file in a filemanager and opening it with ankidroid, a dialog asks then if you really want to import
+    - for some reason, dialog is not shown when ankidroid is already open
+    - no test is written yet
+    - there are probably still some flaws
+
+commit 6a2d481aea31adbe5b7affda8bc0b1b2cff202a6
+Merge: 1d34140 c8e0bef
+Author: iniju <inigo.aldana@gmail.com>
+Date:   Fri Jul 27 21:02:06 2012 +0100
+
+    Merge branch 'master' of git://github.com/nobnago/Anki-Android

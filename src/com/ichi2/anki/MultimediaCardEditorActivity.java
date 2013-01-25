@@ -46,6 +46,7 @@ import com.ichi2.utils.JSONNameComparator;
 
 public class MultimediaCardEditorActivity extends Activity
 {
+    private static final String BUNDLE_KEY_SHUT_OFF = "key.multimedia.shut.off";
     public static final String EXTRA_CALLER = "CALLER";
     public static final int CALLER_NOCALLER = 0;
     public static final int CALLER_INDICLASH = 10;
@@ -91,19 +92,34 @@ public class MultimediaCardEditorActivity extends Activity
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
+        
         super.onCreate(savedInstanceState);
+        
+        if(savedInstanceState != null)
+        {
+            boolean b = savedInstanceState.getBoolean(BUNDLE_KEY_SHUT_OFF, false);
+            if(b)
+            {
+                finishCancel();
+                return;
+            }
+        }
+    
+        
+        
+        
         setContentView(R.layout.activity_multimedia_card_editor);
 
-        _initData();
-        _initUI();
-        _createEditorUI(mNote);
+        initData();
+        initUI();
+        createEditorUI(mNote);
     }
 
     /**
      * Creates a TabBar in case action bar is not present as well as other UI
      * Elements
      */
-    private void _initUI()
+    private void initUI()
     {
         int currentapiVersion = android.os.Build.VERSION.SDK_INT;
         if (currentapiVersion <= android.os.Build.VERSION_CODES.GINGERBREAD_MR1)
@@ -177,10 +193,29 @@ public class MultimediaCardEditorActivity extends Activity
      * 
      * @param note
      */
-    private void _createEditorUI(IMultimediaEditableNote note)
+    private void createEditorUI(IMultimediaEditableNote note)
     {
         try
         {
+            if(mNote == null)
+            {
+                finishCancel();
+                return;
+            }
+            else
+            {
+                for(int i = 0; i < mNote.getNumberOfFields(); ++i)
+                {
+                    IField f = mNote.getField(i);
+                    
+                    if(f == null)
+                    {
+                        finishCancel();
+                        return;
+                    }
+                }
+            }
+            
             LinearLayout linearLayout = mEditorLayout;
 
             linearLayout.removeAllViews();
@@ -353,7 +388,7 @@ public class MultimediaCardEditorActivity extends Activity
                 }
 
                 mNote.setField(index, field);
-                _createEditorUI(mNote);
+                createEditorUI(mNote);
             }
 
             super.onActivityResult(requestCode, resultCode, data);
@@ -366,10 +401,10 @@ public class MultimediaCardEditorActivity extends Activity
         switch (id)
         {
             case DIALOG_MODEL_SELECT:
-                return _showModelSelectDialog();
+                return showModelSelectDialog();
 
             case DIALOG_DECK_SELECT:
-                return _showDeckSelectDialog();
+                return showDeckSelectDialog();
 
             default:
                 break;
@@ -379,7 +414,7 @@ public class MultimediaCardEditorActivity extends Activity
         return null;
     }
 
-    private Dialog _showModelSelectDialog()
+    private Dialog showModelSelectDialog()
     {
         StyledDialog dialog = null;
         StyledDialog.Builder builder = new StyledDialog.Builder(this);
@@ -426,8 +461,8 @@ public class MultimediaCardEditorActivity extends Activity
                 long newId = dialogIds.get(item);
                 if (oldModelId != newId)
                 {
-                    _changeCurrentModel(newId);
-                    _createEditorUI(mNote);
+                    changeCurrentModel(newId);
+                    createEditorUI(mNote);
                 }
             }
         });
@@ -435,7 +470,7 @@ public class MultimediaCardEditorActivity extends Activity
         return dialog;
     }
 
-    private Dialog _showDeckSelectDialog()
+    private Dialog showDeckSelectDialog()
     {
         StyledDialog dialog = null;
         StyledDialog.Builder builder = new StyledDialog.Builder(this);
@@ -489,7 +524,7 @@ public class MultimediaCardEditorActivity extends Activity
                         }
                     }
                     mCurrentDid = newId;
-                    _createEditorUI(mNote);
+                    createEditorUI(mNote);
                 }
             }
         });
@@ -506,7 +541,7 @@ public class MultimediaCardEditorActivity extends Activity
      * 
      * @param newId
      */
-    protected void _changeCurrentModel(long newId)
+    protected void changeCurrentModel(long newId)
     {
         try
         {
@@ -589,7 +624,7 @@ public class MultimediaCardEditorActivity extends Activity
      * It checks for a noteId, a long value with EXTRA_NOTE_ID as key. If not 0,
      * edits the note, else creates a new note
      */
-    private void _initData()
+    private void initData()
     {
         try
         {
@@ -623,19 +658,30 @@ public class MultimediaCardEditorActivity extends Activity
                 if (mNote == null)
                 {
                     Log.e("Multimedia Editor", "Cannot create a Note");
-                    return;
+                    throw new Exception("Could not create a not");
                 }
 
                 mEditorNote = new Note(mCol, currentModel);
                 mEditorNote.model().put("did", mCurrentDid);
             }
             // TODO take care of tags @see CardEditor setNote(Note)
+            
         }
-        catch (JSONException e)
+        catch (Exception e)
         {
             Log.e("Multimedia Editor", e.getMessage());
+            
+            finishCancel();
+            
             return;
         }
+    }
+
+    private void finishCancel()
+    {
+        Intent resultData = new Intent();
+        setResult(RESULT_CANCELED, resultData);
+        finish();        
     }
 
     private void save()
@@ -717,6 +763,11 @@ public class MultimediaCardEditorActivity extends Activity
     protected void onDestroy()
     {
         super.onDestroy();
+        
+        if(mEditorLayout == null)
+        {
+            return;
+        }
 
         int n = mEditorLayout.getChildCount();
         for (int i = 0; i < n; ++i)
@@ -731,4 +782,14 @@ public class MultimediaCardEditorActivity extends Activity
 
         }
     }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState)
+    {
+        super.onSaveInstanceState(outState);
+        
+        outState.putBoolean(BUNDLE_KEY_SHUT_OFF, true);
+        
+    }
+    
 }

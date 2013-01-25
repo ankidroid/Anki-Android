@@ -17,7 +17,8 @@ import org.apache.http.protocol.BasicHttpContext;
 import org.apache.http.protocol.HttpContext;
 
 import android.content.Context;
-import android.os.Environment;
+
+import com.ichi2.utils.DiskUtil;
 
 /**
  * @author zaur
@@ -132,11 +133,10 @@ public class HttpFetcher
             urlConnection.setRequestProperty("Referer", "com.ichi2.anki");
             urlConnection.setRequestProperty("User-Agent","Mozilla/5.0 ( compatible ) ");
             urlConnection.setRequestProperty("Accept","*/*");
-//            urlConnection.setDoOutput(true);
             urlConnection.connect();
-
-            File SDCardRoot = Environment.getExternalStorageDirectory();
-            File file = File.createTempFile(prefix, extension, SDCardRoot);
+        
+            
+            File file = File.createTempFile(prefix, extension, DiskUtil.getStoringDirectory());
 
             FileOutputStream fileOutput = new FileOutputStream(file);
             InputStream inputStream = urlConnection.getInputStream();

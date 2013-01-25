@@ -190,7 +190,23 @@ public class NoteService
                 {
                     Collection col = AnkiDroidApp.getCol();
                     String mediaDir = col.getMedia().getDir() + "/";
+                    
+                    File mediaDirFile = new File(mediaDir);
+                    
+                    File parent = inFile.getParentFile();
+                    
+                    //If already there.
+                    if(mediaDirFile.getAbsolutePath().contentEquals(parent.getAbsolutePath()))
+                    {
+                        return;
+                    }
+                    
+                    
                     File outFile = new File(mediaDir + inFile.getName());
+                    
+                    
+                    
+                    
                     if (!outFile.exists())
                     {
                         if (field.hasTemporaryMedia())

@@ -26,6 +26,8 @@ public class EditFieldActivity extends FragmentActivity
     public static final String EXTRA_RESULT_FIELD = "edit.field.result.field";
     public static final String EXTRA_RESULT_FIELD_INDEX = "edit.field.result.field.index";
 
+    private static final String BUNDLE_KEY_SHUT_OFF = "key.edit.field.shut.off";
+
     IField mField;
     IMultimediaEditableNote mNote;
     int mFieldIndex;
@@ -36,6 +38,17 @@ public class EditFieldActivity extends FragmentActivity
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
+
+        if (savedInstanceState != null)
+        {
+            boolean b = savedInstanceState.getBoolean(BUNDLE_KEY_SHUT_OFF, false);
+            if (b)
+            {
+                finishCancel();
+                return;
+            }
+        }
+
         setContentView(R.layout.activity_edit_text);
 
         mField = (IField) this.getIntent().getExtras().getSerializable(MultimediaCardEditorActivity.EXTRA_FIELD);
@@ -54,6 +67,13 @@ public class EditFieldActivity extends FragmentActivity
             LinearLayout linearLayout = (LinearLayout) findViewById(R.id.LinearLayoutForSpareMenuFieldEdit);
             createSpareMenu(linearLayout);
         }
+    }
+
+    private void finishCancel()
+    {
+        Intent resultData = new Intent();
+        setResult(RESULT_CANCELED, resultData);
+        finish();
     }
 
     private void recreateEditingUi()
@@ -216,12 +236,12 @@ public class EditFieldActivity extends FragmentActivity
             }
         }
 
-        if(bChangeToText)
+        if (bChangeToText)
         {
             mField = new TextField();
             mField.setText(" - ");
         }
-        
+
         resultData.putExtra(EXTRA_RESULT_FIELD, mField);
         resultData.putExtra(EXTRA_RESULT_FIELD_INDEX, mFieldIndex);
 
@@ -280,7 +300,10 @@ public class EditFieldActivity extends FragmentActivity
     {
         super.onDestroy();
 
-        mFieldController.onDestroy();
+        if (mFieldController != null)
+        {
+            mFieldController.onDestroy();
+        }
 
     }
 
@@ -288,4 +311,12 @@ public class EditFieldActivity extends FragmentActivity
     {
         return getText(id).toString();
     }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState)
+    {
+        super.onSaveInstanceState(outState);
+        outState.putBoolean(BUNDLE_KEY_SHUT_OFF, true);
+    }
+
 }

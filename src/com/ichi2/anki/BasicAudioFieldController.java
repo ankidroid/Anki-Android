@@ -4,13 +4,12 @@ import java.io.File;
 import java.io.IOException;
 
 import android.content.Intent;
-import android.os.Environment;
 import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import com.ichi2.anki.multimediacard.AudioView;
+import com.ichi2.utils.DiskUtil;
 
 public class BasicAudioFieldController extends FieldControllerBase implements IFieldController
 {
@@ -46,7 +45,7 @@ public class BasicAudioFieldController extends FieldControllerBase implements IF
             File file = null;
             try
             {
-                file = File.createTempFile("ankidroid_audiorec", ".3gp", Environment.getExternalStorageDirectory());
+                file = File.createTempFile("ankidroid_audiorec", ".3gp", DiskUtil.getStoringDirectory());
                 tempAudioPath = file.getAbsolutePath();
             }
             catch (IOException e)

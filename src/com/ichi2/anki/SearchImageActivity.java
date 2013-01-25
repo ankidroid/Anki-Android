@@ -36,12 +36,14 @@ import com.ichi2.anki.web.UrlTools;
 
 public class SearchImageActivity extends Activity implements DialogInterface.OnCancelListener
 {
+    private static final String BUNDLE_KEY_SHUT_OFF = "key.multimedia.shut.off";
+
     public static final String EXTRA_SOURCE = "search.image.activity.extra.source";
     // Passed out as a result
     public static String EXTRA_IMAGE_FILE_PATH = "com.ichi2.anki.search.image.activity.extra.image.file.path";
 
     private String mSource;
-    private WebView mWebView;
+    private WebView mWebView = null;
     private Button mPrevButton;
     private Button mNextButton;
     private ProgressDialog progressDialog;
@@ -52,17 +54,48 @@ public class SearchImageActivity extends Activity implements DialogInterface.OnC
     private DownloadFileTask mDownloadMp3Task;
 
     @Override
+    protected void onSaveInstanceState(Bundle outState)
+    {
+        super.onSaveInstanceState(outState);
+
+        outState.putBoolean(BUNDLE_KEY_SHUT_OFF, true);
+
+    }
+
+    @Override
     protected void onDestroy()
     {
         super.onDestroy();
-        // Saving memory
-        mWebView.clearCache(true);
+
+        if (mWebView != null)
+        {
+            // Saving memory
+            mWebView.clearCache(true);
+        }
+    }
+
+    private void finishCancel()
+    {
+        Intent resultData = new Intent();
+        setResult(RESULT_CANCELED, resultData);
+        finish();
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
+
+        if (savedInstanceState != null)
+        {
+            boolean b = savedInstanceState.getBoolean(BUNDLE_KEY_SHUT_OFF, false);
+            if (b)
+            {
+                finishCancel();
+                return;
+            }
+        }
+
         setContentView(R.layout.activity_search_image);
 
         try
@@ -480,12 +513,10 @@ public class SearchImageActivity extends Activity implements DialogInterface.OnC
             return mTemplate;
         }
 
-        String source = "<html><body><center>"
-                        + gtxt(R.string.multimedia_editor_imgs_pow_by_google)
-                        + "</center><br /><center><img width=\"WIDTH\" src=\"URL\" /> </center></body></html>";
-                        
-        
-        int currentapiVersion = android.os.Build.VERSION.SDK_INT;                
+        String source = "<html><body><center>" + gtxt(R.string.multimedia_editor_imgs_pow_by_google)
+                + "</center><br /><center><img width=\"WIDTH\" src=\"URL\" /> </center></body></html>";
+
+        int currentapiVersion = android.os.Build.VERSION.SDK_INT;
         if (currentapiVersion <= android.os.Build.VERSION_CODES.HONEYCOMB_MR2)
         {
             DisplayMetrics metrics = new DisplayMetrics();
@@ -496,14 +527,13 @@ public class SearchImageActivity extends Activity implements DialogInterface.OnC
 
             int min = Math.min(height, width);
 
-            source = source.replaceAll(
-                            "WIDTH", (int)Math.round(min * 0.85) + "");
+            source = source.replaceAll("WIDTH", (int) Math.round(min * 0.85) + "");
         }
         else
         {
             source = source.replaceAll("WIDTH", "80%");
         }
-        
+
         mTemplate = source;
 
         return source;

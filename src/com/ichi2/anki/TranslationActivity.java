@@ -41,6 +41,8 @@ import com.ichi2.anki.web.HttpFetcher;
 public class TranslationActivity extends FragmentActivity implements DialogInterface.OnClickListener, OnCancelListener
 {
 
+    private static final String BUNDLE_KEY_SHUT_OFF = "key.multimedia.shut.off";
+
     // Something to translate
     public static final String EXTRA_SOURCE = "translation.activity.extra.source";
     // Translated result
@@ -57,10 +59,28 @@ public class TranslationActivity extends FragmentActivity implements DialogInter
     private String mLangCodeTo;
     private BackgroundPost mTranslationLoadPost = null;
 
+    private void finishCancel()
+    {
+        Intent resultData = new Intent();
+        setResult(RESULT_CANCELED, resultData);
+        finish();        
+    }
+    
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
+        
+        if(savedInstanceState != null)
+        {
+            boolean b = savedInstanceState.getBoolean(BUNDLE_KEY_SHUT_OFF, false);
+            if(b)
+            {
+                finishCancel();
+                return;
+            }
+        }
+        
         setContentView(R.layout.activity_translation);
 
         try
@@ -338,6 +358,15 @@ public class TranslationActivity extends FragmentActivity implements DialogInter
         int duration = Toast.LENGTH_SHORT;
         Toast toast = Toast.makeText(this, text, duration);
         toast.show();
+    }
+    
+    @Override
+    protected void onSaveInstanceState(Bundle outState)
+    {
+        super.onSaveInstanceState(outState);
+        
+        outState.putBoolean(BUNDLE_KEY_SHUT_OFF, true);
+        
     }
 
     @Override

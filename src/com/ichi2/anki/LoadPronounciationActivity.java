@@ -36,6 +36,7 @@ import com.ichi2.anki.web.HttpFetcher;
 public class LoadPronounciationActivity extends Activity implements OnCancelListener
 {
 
+    private static final String BUNDLE_KEY_SHUT_OFF = "key.multimedia.shut.off";
     // Must be passed in
     public static String EXTRA_SOURCE = "com.ichi2.anki.LoadPronounciationActivity.extra.source";
     // Passed out as a result
@@ -70,6 +71,17 @@ public class LoadPronounciationActivity extends Activity implements OnCancelList
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
+        
+        if(savedInstanceState != null)
+        {
+            boolean b = savedInstanceState.getBoolean(BUNDLE_KEY_SHUT_OFF, false);
+            if(b)
+            {
+                finishCancel();
+                return;
+            }
+        }
+        
         setContentView(R.layout.activity_load_pronounciation);
         mSource = getIntent().getExtras().getString(EXTRA_SOURCE);
 
@@ -386,6 +398,13 @@ public class LoadPronounciationActivity extends Activity implements OnCancelList
         finish();
 
     }
+    
+    private void finishCancel()
+    {
+        Intent resultData = new Intent();
+        setResult(RESULT_CANCELED, resultData);
+        finish();        
+    }
 
     private void failNoPronunciation()
     {
@@ -400,6 +419,13 @@ public class LoadPronounciationActivity extends Activity implements OnCancelList
         showToast(string);
     }
 
+    @Override
+    protected void onSaveInstanceState(Bundle outState)
+    {
+        super.onSaveInstanceState(outState);
+        outState.putBoolean(BUNDLE_KEY_SHUT_OFF, true);
+    }
+    
     private String computeAddressOfTranslationPage()
     {
         // Service name has to be replaced from the language lister.

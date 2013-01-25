@@ -12,5 +12,4 @@ public enum EFieldType {
 	TEXT, //Just text
 	IMAGE, //Just image
 	AUDIO, //Just audio
-	MIXED //Created by desktop version - random HTML
 }
