@@ -2653,7 +2653,6 @@ public class DeckPicker extends FragmentActivity {
         } else if (requestCode == REQUEST_REVIEW) {
             Log.i(AnkiDroidApp.TAG, "Result code = " + resultCode);
             switch (resultCode) {
-                case Reviewer.RESULT_SESSION_COMPLETED:
                 default:
                     // do not reload counts, if activity is created anew because it has been before destroyed by android
                 	loadCounts();

@@ -204,12 +204,7 @@
 	            android:key="writeAnswers"
 	            android:summary="@string/write_answers_summ"
 	            android:title="@string/write_answers" />
-<!--           	<CheckBoxPreference
-                android:defaultValue="true"
-                android:key="overtime"
-                android:summary="@string/overtime_summ"
-                android:title="@string/overtime" />
- -->            <CheckBoxPreference
+            <CheckBoxPreference
                 android:defaultValue="false"
                 android:key="fixOrientation"
                 android:summary="@string/fix_orientation_summ"

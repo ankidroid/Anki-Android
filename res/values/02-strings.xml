@@ -37,8 +37,6 @@
 <string name="show_whiteboard">Show Whiteboard</string>
 <string name="hide_whiteboard">Hide Whiteboard</string>
 <string name="clear_whiteboard">Clear Whiteboard</string>
-<string name="session_question_limit_reached">Session question limit reached</string>
-<string name="session_time_limit_reached">Session time limit reached</string>
 <string name="cram_edit_warning">Card editing not allowed while cramming</string>
 <string name="suspend_leeches">Suspend Leeches</string>
 <string name="leech_suspend_notification">Card marked as leech and suspended</string>
@@ -63,7 +61,15 @@
 
 <string name="saving_changes">Saving changes...</string>
 
-<string name="timebox_reached">Timebox reached!</string>
+<plurals name="timebox_reached">
+  <item quantity="one">1 card studied in %2$s</item>
+  <item quantity="other">%1$d cards studied in %2$s</item>
+</plurals>
+
+<plurals name="timebox_reached_minutes">
+  <item quantity="one">1 minute</item>
+  <item quantity="other">%1$d minutes</item>
+</plurals>
 
 <string name="studyoptions_welcome_title">Welcome to AnkiDroid</string>
 <string name="studyoptions_no_external_storage_title">No External Storage Available</string>

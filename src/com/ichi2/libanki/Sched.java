@@ -104,7 +104,7 @@ public class Sched {
     private String mName = "std";
     private int mQueueLimit;
     private int mReportLimit;
-    public int mReps;
+    private int mReps;
     private boolean mHaveQueues;
     private int mToday;
     public long mDayCutoff;
@@ -2779,6 +2779,14 @@ public class Sched {
         return mNewCount;
     }
 
+    public int getReps(){
+    	return mReps;
+    }
+    
+    public void setReps(int reps){
+    	mReps = reps;
+    }
+    
 
     // Needed for tests
     public LinkedList<long[]> getNewQueue() {
