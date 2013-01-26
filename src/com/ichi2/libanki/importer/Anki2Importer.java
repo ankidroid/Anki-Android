@@ -460,7 +460,8 @@ public class Anki2Importer {
             	// we need to import revlog, rewriting card ids and bumping usn
             	Cursor cur2 = null;
                 try {
-                    cur2 = mDst.getDb().getDatabase().rawQuery("SELECT * FROM revlog WHERE cid = " + scid, null);
+                    cur2 = mDst.getDb().getDatabase().rawQuery("SELECT * FROM revlog WHERE cid = ?",
+                            new String[]{Long.toString(scid)});
                     while (cur2.moveToNext()) {
                     	 Object[] rev = new Object[]{cur2.getLong(0), cur2.getLong(1),
                     			cur2.getInt(2), cur2.getInt(3), cur2.getLong(4),
