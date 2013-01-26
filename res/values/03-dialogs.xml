@@ -89,7 +89,7 @@
 <string name="custom_study_tags">Enter tags:</string>
 <string name="rebuild_custom_study_deck">Rebuilding custom study deck.\nPlease wait...</string>
     <string name="deck_upgrade_title">Deck Upgrade</string>
-    <string name="deck_upgrade_rename_warning">Be aware that this will rename your collection to \'%1$s\' and will create a new one from your old anki 1.x files. Do you really want to continue?</string>
+    <string name="deck_upgrade_rename_warning">Be aware that this will export your current collection to a file called \'%1$s\' and will create a new one from your old anki 1.x files. If desired, you can manually re-import the above apkg file after completing the wizard. Do you really want to continue?</string>
     <string name="deck_upgrade_already_upgraded">Did you already upgrade your decks properly after the last AnkiDroid update? If not, you can restart the upgrade process here</string>
     <string name="deck_upgrade_major_warning"><![CDATA[This is a major update to Ankidroid and the upgrade process will take at least 5–10 minutes.<br><br>Do you want to proceed now or later?<br><br><a href=\"http://code.google.com/p/ankidroid/wiki/Upgrading?wl=en\">More info</a>]]></string>
     <string name="deck_upgrade_start_again_to_upgrade_toast">Please start Ankidroid again when you have time to upgrade!</string>
@@ -107,4 +107,12 @@
     <string name="upgrade_deck_web_upgrade_failed">The upgrade process was unsuccessful. Please try again, or choose a different upgrade method</string>
     <string name="upgrade_deck_web_upgrade_exceeds">The total compressed size of your Anki1 decks exceeds the limit that the server can process (50 mb), please try upgrading with a different method.</string>
     <string name="upgrade_deck_web_upgrade_sdcard">The upgrade was completed, but there was an error while unpacking the resulting collection, please ensure that you have enough available disk (needed %1$d mb) and try again, or try upgrading with a different method.</string>
+    <string name="export_progress_title">Collection Export</string>
+    <string name="export_progress_exporting">Exporting collection, please wait...</string>
+    <string name="upgrade_deck_export_successful">Your old collection has been successfully exported, proceeding with
+        the upgrade process.
+    </string>
+    <string name="upgrade_deck_export_error">Error during the export of your old collection.
+        Would you like to continue with the upgrade process anyway (your old collection will be lost)?
+    </string>
 </resources>
