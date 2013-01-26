@@ -245,6 +245,7 @@ public class Info extends Activity {
                 break;
 
             case TYPE_UPGRADE_DECKS:
+                setTitle(R.string.deck_upgrade_title);
                 sb.append("<html><body>");
 
                 // add upgrade button
@@ -348,7 +349,6 @@ public class Info extends Activity {
                                 builder.setTitle(R.string.deck_upgrade_create_new_collection_title);
                                 builder.setIcon(R.drawable.ic_dialog_alert);
                                 builder.setMessage(R.string.deck_upgrade_not_import_warning);
-                                Resources res = getResources();
                                 builder.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialog, int which) {
@@ -472,12 +472,23 @@ public class Info extends Activity {
                                 finishWithAnimation(false);
                             }
                         });
-                        syncButton.setText(R.string.download);
+                        syncButton.setText(getString(R.string.upgrade_deck_sync_from_ankiweb));
                         syncButton.setOnClickListener(new OnClickListener() {
                             @Override
                             public void onClick(View arg0) {
-                                lockScreenOrientation();
-                                downloadCollection();
+                                StyledDialog.Builder builder = new StyledDialog.Builder(Info.this);
+                                builder.setTitle(R.string.upgrade_deck_sync_from_ankiweb);
+                                builder.setIcon(R.drawable.ic_dialog_alert);
+                                builder.setMessage(getString(R.string.upgrade_deck_have_you_synced));
+                                builder.setPositiveButton(R.string.confirm, new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        lockScreenOrientation();
+                                        downloadCollection();
+                                    }
+                                });
+                                builder.setNegativeButton(R.string.back, null);
+                                builder.show();
                             }
                         });
                         continueButton.setVisibility(View.GONE);

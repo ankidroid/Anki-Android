@@ -1275,14 +1275,14 @@ public class DeckPicker extends FragmentActivity {
                 builder.setTitle(R.string.deck_upgrade_title);
                 builder.setIcon(R.drawable.ic_dialog_alert);
                 builder.setMessage(R.string.deck_upgrade_already_upgraded);
-                builder.setPositiveButton(R.string.restart, new DialogInterface.OnClickListener() {
+                builder.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         restartUpgradeProcess();
                     }
                 });
                 builder.setCancelable(false);
-                builder.setNegativeButton(R.string.do_nothing, new DialogInterface.OnClickListener() {
+                builder.setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         AnkiDroidApp.getSharedPrefs(AnkiDroidApp.getInstance().getBaseContext())
