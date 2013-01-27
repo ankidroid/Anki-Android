@@ -257,6 +257,7 @@ public class Info extends Activity {
                 syncButton.setVisibility(View.VISIBLE);
 
                 mUpgradeStage = getIntent().getIntExtra(TYPE_UPGRADE_STAGE, -1);
+                boolean reupgrading = false;
 
                 switch (mUpgradeStage) {
                     case UPGRADE_SCREEN_BASIC1:
@@ -305,7 +306,7 @@ public class Info extends Activity {
                                 finishWithAnimation(false);
                             }
                         });
-                        syncButton.setText(R.string.no);
+                        syncButton.setText(getString(R.string.internet));
                         syncButton.setOnClickListener(new OnClickListener() {
                             @Override
                             public void onClick(View arg0) {
@@ -315,7 +316,7 @@ public class Info extends Activity {
                                 finishWithAnimation();
                             }
                         });
-                        continueButton.setText(R.string.yes);
+                        continueButton.setText(getString(R.string.pc));
                         continueButton.setOnClickListener(new OnClickListener() {
                             @Override
                             public void onClick(View arg0) {
@@ -328,7 +329,15 @@ public class Info extends Activity {
                         break;
 
                     case UPGRADE_SCREEN_MORE_OPTIONS:
-                        sb.append(getString(R.string.deck_upgrade_more_options));
+                        // If re-upgrading a collection exists already, so don't offer to make a new one
+                        if (new File(AnkiDroidApp.getCollectionPath()).exists()) {
+                            setTitle(getString(R.string.exit_wizard));
+                            reupgrading = true;
+                            sb.append(getString(R.string.deck_upgrade_more_options_exit));
+                        } else {
+                            sb.append(getString(R.string.deck_upgrade_more_options_new_collection));
+                        }
+                        sb.append(getString(R.string.deck_upgrade_more_options_downgrade));
                         but.setText(R.string.upgrade_decks_button);
                         but.setText(R.string.back);
                         but.setOnClickListener(new OnClickListener() {
@@ -341,27 +350,40 @@ public class Info extends Activity {
                                 finishWithAnimation(false);
                             }
                         });
-                        syncButton.setText(R.string.deck_upgrade_create_new_collection);
-                        syncButton.setOnClickListener(new OnClickListener() {
-                            @Override
-                            public void onClick(View arg0) {
-                                StyledDialog.Builder builder = new StyledDialog.Builder(Info.this);
-                                builder.setTitle(R.string.deck_upgrade_create_new_collection_title);
-                                builder.setIcon(R.drawable.ic_dialog_alert);
-                                builder.setMessage(R.string.deck_upgrade_not_import_warning);
-                                builder.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialog, int which) {
-                                        Intent result = new Intent();
-                                        result.putExtra(TYPE_UPGRADE_STAGE, UPGRADE_CONTINUE);
-                                        setResult(RESULT_OK, result);
-                                        finishWithAnimation();
-                                    }
-                                });
-                                builder.setNegativeButton(R.string.no, null);
-                                builder.show();
-                            }
-                        });
+                        if (reupgrading) {
+                            syncButton.setText(getString(R.string.upgrade_deck_dont_upgrade));
+                            syncButton.setOnClickListener(new OnClickListener() {
+                                @Override
+                                public void onClick(View arg0) {
+                                    Intent result = new Intent();
+                                    result.putExtra(TYPE_UPGRADE_STAGE, UPGRADE_CONTINUE);
+                                    setResult(RESULT_OK, result);
+                                    finishWithAnimation();
+                                }
+                            });
+                        } else {
+                            syncButton.setText(R.string.deck_upgrade_create_new_collection);
+                            syncButton.setOnClickListener(new OnClickListener() {
+                                @Override
+                                public void onClick(View arg0) {
+                                    StyledDialog.Builder builder = new StyledDialog.Builder(Info.this);
+                                    builder.setTitle(R.string.deck_upgrade_create_new_collection_title);
+                                    builder.setIcon(R.drawable.ic_dialog_alert);
+                                    builder.setMessage(R.string.deck_upgrade_not_import_warning);
+                                    builder.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            Intent result = new Intent();
+                                            result.putExtra(TYPE_UPGRADE_STAGE, UPGRADE_CONTINUE);
+                                            setResult(RESULT_OK, result);
+                                            finishWithAnimation();
+                                        }
+                                    });
+                                    builder.setNegativeButton(R.string.no, null);
+                                    builder.show();
+                                }
+                            });
+                        }
                         continueButton.setVisibility(View.GONE);
                         break;
 
@@ -815,7 +837,7 @@ public class Info extends Activity {
             Log.i(AnkiDroidApp.TAG, "Info: UpgradeDecks - onPreExcecute");
             if (mProgressDialog == null || !mProgressDialog.isShowing()) {
                 mProgressDialog = StyledProgressDialog.show(Info.this, "",
-                        getResources().getString(R.string.upgrade_decks_zipping), true, true,
+                        getResources().getString(R.string.upgrade_decks_zipping), true, false,
                         new DialogInterface.OnCancelListener() {
                     @Override
                     public void onCancel(DialogInterface dialogInterface) {
