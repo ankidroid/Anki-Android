@@ -378,10 +378,10 @@ public class BasicTextFieldController extends FieldControllerBase implements IFi
         }
         else if (requestCode == REQUEST_CODE_TRANSLATE_COLORDICT && resultCode == Activity.RESULT_OK)
         {
-            String subject = data.getStringExtra(Intent.EXTRA_SUBJECT);
+//            String subject = data.getStringExtra(Intent.EXTRA_SUBJECT);
             String text = data.getStringExtra(Intent.EXTRA_TEXT);
 
-            mEditText.setText(subject + "\n" + text);
+            mEditText.setText(text);
 
         }
         else if (requestCode == REQUEST_CODE_IMAGE_SEARCH && resultCode == Activity.RESULT_OK)
