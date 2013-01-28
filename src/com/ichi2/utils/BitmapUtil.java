@@ -4,12 +4,11 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 
-import android.annotation.SuppressLint;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Matrix;
 import android.graphics.drawable.BitmapDrawable;
-import android.media.ExifInterface;
+import android.graphics.drawable.Drawable;
+import android.util.Log;
 import android.widget.ImageView;
 
 /**
@@ -46,7 +45,7 @@ public class BitmapUtil
             o2.inSampleSize = scale;
             fis = new FileInputStream(theFile);
             bmp = BitmapFactory.decodeStream(fis, null, o2);
-            
+
             fis.close();
         }
         catch (IOException e)
@@ -57,16 +56,34 @@ public class BitmapUtil
 
     public static void freeImageView(ImageView imageView)
     {
-        if (imageView != null)
+        //This code behaves differently on various OS builds. That is why put into try catch.
+        try
         {
-            BitmapDrawable bd = (BitmapDrawable) imageView.getDrawable();
-            if (bd.getBitmap() != null)
+            if (imageView != null)
             {
-                bd.getBitmap().recycle();
-                imageView.setImageBitmap(null);
+                Drawable dr = imageView.getDrawable();
+
+                if (dr == null)
+                {
+                    return;
+                }
+
+                if (!(dr instanceof BitmapDrawable))
+                {
+                    return;
+                }
+                BitmapDrawable bd = (BitmapDrawable) imageView.getDrawable();
+                if (bd.getBitmap() != null)
+                {
+                    bd.getBitmap().recycle();
+                    imageView.setImageBitmap(null);
+                }
             }
         }
-
+        catch (Exception e)
+        {
+            Log.e("free image view", e.getMessage());
+        }
     }
 
 }
