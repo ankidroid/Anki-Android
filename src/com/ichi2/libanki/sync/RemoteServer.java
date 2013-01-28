@@ -16,18 +16,16 @@
 
 package com.ichi2.libanki.sync;
 
-import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
-
+import com.ichi2.async.Connection;
+import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Utils;
 import org.apache.http.HttpResponse;
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import com.ichi2.async.Connection;
-import com.ichi2.libanki.Collection;
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 
 public class RemoteServer extends BasicHttpSyncer {
 
@@ -103,24 +101,8 @@ public class RemoteServer extends BasicHttpSyncer {
 
 
     @Override
-    public JSONArray sanityCheck() {
-        try {
-            HttpResponse ret = super.req("sanityCheck", super.getInputStream("{}"));
-            if (ret == null) {
-                return null;
-            }
-            String s = super.stream2String(ret.getEntity().getContent());
-            if (s.equals("null")) {
-                return new JSONArray("[\"error\"]");
-            }
-            return new JSONArray(s);
-        } catch (IllegalStateException e) {
-            throw new RuntimeException(e);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        } catch (JSONException e) {
-            throw new RuntimeException(e);
-        }
+    public JSONObject sanityCheck2(JSONObject client) {
+        return _run("sanityCheck2", client);
     }
 
 

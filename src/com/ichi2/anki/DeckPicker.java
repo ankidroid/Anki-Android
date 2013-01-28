@@ -479,7 +479,10 @@ public class DeckPicker extends FragmentActivity {
                     } else if (resultType.equals("upgradeRequired")) {
                         showDialog(DIALOG_SYNC_UPGRADE_REQUIRED);
                     } else if (resultType.equals("sanityCheckError")) {
-                        mDialogMessage = res.getString(R.string.sync_log_error_fix, result[1] != null ? (" (" + (String) result[1] + ")") : "");
+                        Collection col = AnkiDroidApp.getCol();
+                        col.modSchema();
+                        col.save();
+                        mDialogMessage = res.getString(R.string.sync_sanity_failed);
                         showDialog(DIALOG_SYNC_SANITY_ERROR);
                     } else {
                     	if (result.length > 1 && result[1] instanceof Integer) {
@@ -1692,8 +1695,8 @@ public class DeckPicker extends FragmentActivity {
                 break;
 
             case DIALOG_SYNC_SANITY_ERROR:
-                builder.setPositiveButton(res.getString(R.string.sync_conflict_local), mSyncSanityFailListener);
-                builder.setNeutralButton(res.getString(R.string.sync_conflict_remote), mSyncSanityFailListener);
+                builder.setPositiveButton(getString(R.string.sync_sanity_local), mSyncSanityFailListener);
+                builder.setNeutralButton(getString(R.string.sync_sanity_remote), mSyncSanityFailListener);
                 builder.setNegativeButton(res.getString(R.string.sync_conflict_cancel), mSyncSanityFailListener);
                 builder.setTitle(res.getString(R.string.sync_log_title));
                 dialog = builder.create();

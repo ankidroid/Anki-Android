@@ -130,6 +130,7 @@
 <string name="sync_media_sanity_check">Checking media counts...</string>
 <string name="sync_media_no_changes">No changes to media files.</string>
 <string name="sync_media_success">Media synced successfully.</string>
+<string name="sync_sanity_failed">After syncing, the collection was in an inconsistent state. To fix this problem, AnkiDroid will force a full sync. Please choose which side you would like to keep, or cancel if you prefer to sync later.</string>
 <string name="sync_media_sanity_failed">Media sync completed, but the media count doesn\'t agree with the server. The next media sync will be full to correct any error.</string>
 <string name="sync_media_error">Error syncing media data.</string>
 
@@ -154,4 +155,6 @@
 <string name="upgrade_decks_failed">These decks could not be upgraded:\n%sPlease open them in Anki Desktop and do a database check. Afterwards you can import them via Anki Desktop.</string>
 <string name="upgrade_decks_media_failed">Copying the media files to the new media folder (%1$s) has failed for these decks:\n%2$sPlease move the media files manually.</string>
 <string name="download_deck">Downloading deck (%d kb).\nPlease wait...</string>
+    <string name="sync_sanity_local">Local</string>
+    <string name="sync_sanity_remote">Remote</string>
 </resources>
