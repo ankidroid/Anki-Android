@@ -235,11 +235,18 @@ public class TranslationActivity extends FragmentActivity implements DialogInter
         if (mTranslation.startsWith("FAILED"))
         {   
             returnFailure(getText(R.string.multimedia_editor_trans_getting_failure).toString());
+            return;
         }
 
         Gson gson = new Gson();
         Response resp = gson.fromJson(mTranslation, Response.class);
 
+        if(resp == null)
+        {
+            returnFailure(getText(R.string.multimedia_editor_trans_getting_failure).toString());
+            return;
+        }
+        
         if (!resp.getResult().contentEquals("ok"))
         {
             if(!mSource.toLowerCase(Locale.getDefault()).contentEquals(mSource))
@@ -248,7 +255,9 @@ public class TranslationActivity extends FragmentActivity implements DialogInter
             }
             
             returnFailure(getText(R.string.multimedia_editor_trans_getting_failure).toString());
+            return;
         }
+        
 
         mPossibleTranslations = parseJson(resp, mLangCodeTo);
 
@@ -260,6 +269,7 @@ public class TranslationActivity extends FragmentActivity implements DialogInter
             }
             
             returnFailure(getText(R.string.multimedia_editor_error_word_not_found).toString());
+            return;
         }
 
         PickStringDialogFragment fragment = new PickStringDialogFragment();
@@ -287,6 +297,11 @@ public class TranslationActivity extends FragmentActivity implements DialogInter
          */
 
         List<Tuc> tucs = resp.getTuc();
+        
+        if(tucs == null)
+        {
+            return res;
+        }
 
         for (Tuc tuc : tucs)
         {
