@@ -131,6 +131,12 @@
 <string name = "multimedia_editor_something_wrong">Sorry, something went wrong</string>
 
 
+<!-- Audio View -->
+<!-- Message when recording fails -->
+<string name = "multimedia_editor_audio_view_recording_failed">Recording failed</string>
+<string name = "multimedia_editor_audio_view_playing_failed">Playing failed</string>
+
+
 <!-- Activity Titles -->
 
     
