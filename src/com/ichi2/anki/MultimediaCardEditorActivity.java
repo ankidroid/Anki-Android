@@ -22,6 +22,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.HorizontalScrollView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.LinearLayout.LayoutParams;
@@ -70,7 +71,6 @@ public class MultimediaCardEditorActivity extends Activity
     private static final int DIALOG_DECK_SELECT = 2;
 
     private LinearLayout mEditorLayout;
-    private LinearLayout mButtonsLayout;
     private Button mModelButton;
     private Button mDeckButton;
 
@@ -129,10 +129,37 @@ public class MultimediaCardEditorActivity extends Activity
         }
 
         mEditorLayout = (LinearLayout) findViewById(R.id.LinearLayoutInScrollView);
-        mButtonsLayout = (LinearLayout) findViewById(R.id.LinearLayoutForButtons);
+        
+        LinearLayout mToolsLayout = (LinearLayout) findViewById(R.id.LinearLayoutForButtons);
 
-        LayoutParams pars = new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT, 1);
 
+        LayoutParams pars = new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT, 1);
+        
+        Button swapButton = new Button(this);
+        swapButton.setText(gtxt(R.string.multimedia_editor_activity_swap_button));
+        mToolsLayout.addView(swapButton, pars);
+        swapButton.setOnClickListener(new OnClickListener()
+        {
+            
+            @Override
+            public void onClick(View v)
+            {
+                swap();
+            }
+        });
+        
+        
+        LinearLayout mButtonsLayout = new LinearLayout(this);
+        mButtonsLayout.setOrientation(LinearLayout.HORIZONTAL);
+        mToolsLayout.addView(mButtonsLayout, pars);
+        
+        
+
+        pars = new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT, 1);
+
+        
+        
+        
         //DEPRECATED< BUT USED IN THE PROJECT.
         mModelButton = new Button(this);
         mModelButton.setOnClickListener(new OnClickListener()
@@ -157,6 +184,12 @@ public class MultimediaCardEditorActivity extends Activity
             }
         });
         mButtonsLayout.addView(mDeckButton, pars);
+    }
+
+    protected void swap()
+    {
+        mNote.circularSwap();
+        createEditorUI(mNote);
     }
 
     private void createSpareMenu(LinearLayout linearLayout)

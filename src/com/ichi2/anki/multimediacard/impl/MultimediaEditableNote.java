@@ -21,6 +21,22 @@ public class MultimediaEditableNote implements IMultimediaEditableNote
 	ArrayList<IField> mFields;
 	private long mModelId;
 
+	public void circularSwap()
+	{
+	    if(mFields == null)
+	        return;
+	    
+	    if(mFields.size() <= 1)
+	        return;
+	    
+	    ArrayList<IField> newFields = new ArrayList<IField>();
+	    newFields.add(mFields.get(mFields.size()-1));
+	    newFields.addAll(mFields);
+	    newFields.remove(mFields.size());
+	    
+	    mFields = newFields;	    
+	}
+	
 	void setThisModified()
 	{
 		mIsModified = true;
