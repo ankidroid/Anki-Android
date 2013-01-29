@@ -52,8 +52,6 @@
 <string name="show_study_options_on_deck_load_summ">Shows study options screen when loading a deck</string>
 <string name="hide_due_count">Hide due count</string>
 <string name="hide_due_count_summ">Hides the due count</string>
-<string name="overtime">Overtime</string>
-<string name="overtime_summ">Continue reviewing after time limit reached</string>
 <string name="show_progress_bars">Show progress bars</string>
 <string name="show_progress_bars_summ">Shows today\'s progress and proportion of today\'s yes answers while reviewing</string>
 <string name="fade_scrollbars">Fade scrollbars</string>
@@ -191,12 +189,7 @@
 <string name="studyoptions_tag">By Tag</string>
 <string name="studyoptions_tag_new">Show new cards by tag:</string>
 <string name="studyoptions_tag_rev">Show review cards by tag:</string>
-<string name="studyoptions_session_minutes">Session limit (minutes):</string>
-<string name="studyoptions_session_questions">Session limit (questions):</string>
-<string name="session_time_limit">Session Time Limit</string>
-<string name="session_time_limit_summ">The number of minutes in a session. Choose 0 for no limit.</string>
-<string name="session_question_limit">Session Question Limit</string>
-<string name="session_question_limit_summ">The number of questions in a session. Choose 0 for no limit.</string>
+
 <string name="new_cards_order">New Cards Order</string>
 <string name="new_cards_order_summ">The order in which to show new cards.</string>
 <string name="show_new_cards_in">Show new cards in...</string>

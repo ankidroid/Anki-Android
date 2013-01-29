@@ -125,7 +125,6 @@ public class Reviewer extends AnkiActivity {
      * Result codes that are returned when this activity finishes.
      */
     public static final int RESULT_DEFAULT = 50;
-    public static final int RESULT_SESSION_COMPLETED = 51;
     public static final int RESULT_NO_MORE_CARDS = 52;
     public static final int RESULT_EDIT_CARD_RESET = 53;
     public static final int RESULT_DECK_CLOSED = 55;
@@ -203,7 +202,6 @@ public class Reviewer extends AnkiActivity {
     /**
      * Variables to hold preferences
      */
-    private boolean mPrefOvertime;
     private boolean mPrefHideDueCount;
     private boolean mShowTimer;
     private boolean mPrefWhiteboard;
@@ -298,8 +296,6 @@ public class Reviewer extends AnkiActivity {
     private Card mCurrentCard;
     private int mCurrentEase;
 
-    private long mSessionTimeLimit;
-    private int mSessionCurrReps;
     private boolean mShowWhiteboard = false;
 
     private int mNextTimeTextColor;
@@ -671,7 +667,6 @@ public class Reviewer extends AnkiActivity {
     };
 
     private DeckTask.TaskListener mAnswerCardHandler = new DeckTask.TaskListener() {
-        private boolean mSessionComplete;
         private boolean mNoMoreCards;
 
 
@@ -709,54 +704,15 @@ public class Reviewer extends AnkiActivity {
                 }
                 Themes.showThemedToast(Reviewer.this, leechMessage, true);
             }
-
-            // // TODO: sessionLimithandling
-            // long sessionRepLimit = 100;//deck.getSessionRepLimit();
-            // long sessionTime = 1000;//deck.getSessionTimeLimit();
-            String sessionMessage = null;
-            // if ((sessionRepLimit > 0) && (mSessionCurrReps >= sessionRepLimit)) {
-            // sessionComplete = true;
-            // sessionMessage = res.getString(R.string.session_question_limit_reached);
-            // } else if ((sessionTime > 0) && (System.currentTimeMillis() >= mSessionTimeLimit)) {
-            // // session time limit reached, flag for halt once async task has completed.
-            // sessionComplete = true;
-            // sessionMessage = res.getString(R.string.session_time_limit_reached);
-            // } else if (mIsLastCard) {
-            // noMoreCards = true;
-            // mProgressDialog = StyledProgressDialog.show(Reviewer.this, "", getResources()
-            // .getString(R.string.saving_changes), true);
-            // setOutAnimation(true);
-            // } else {
-            // session limits not reached, show next card
-
-
-
-            mCurrentCard = values[0].getCard();
-            boolean timebox_reached = AnkiDroidApp.getCol().timeboxReached() != null ? true : false;
-            if (timebox_reached && mPrefOvertime && !AnkiDroidApp.getCol().getOvertime()) {
-            	AnkiDroidApp.getCol().setOvertime(true);
-            }
-            //String timebox_message = "Timebox finished!";
+            
+            mCurrentCard = values[0].getCard();            
             if (mCurrentCard == null) {
                 // If the card is null means that there are no more cards scheduled for review.
                 mNoMoreCards = true;
                 mProgressDialog = StyledProgressDialog.show(Reviewer.this, "",
                         getResources().getString(R.string.saving_changes), true);
                 setOutAnimation(false);
-            } else if (timebox_reached && !mPrefOvertime) {
-                //SharedPreferences preferences = PrefSettings.getSharedPrefs(getActivity().getBaseContext()); //getActivity().getBaseContext()
-                //boolean overtime = preferences.getBoolean("overtime", true);
-
-                mSessionComplete = true;
-                mProgressDialog = StyledProgressDialog.show(Reviewer.this, "",
-                        getResources().getString(R.string.saving_changes), true);
-                setOutAnimation(false);
-
-                sessionMessage = getResources().getString(R.string.timebox_reached);
             } else {
-                if (timebox_reached) {
-                    sessionMessage = getResources().getString(R.string.timebox_reached);
-                }
                 // Start reviewing next card
                 if (mPrefWriteAnswers) {
                     // only bother query deck if needed
@@ -768,14 +724,26 @@ public class Reviewer extends AnkiActivity {
                 Reviewer.this.unblockControls();
                 Reviewer.this.displayCardQuestion();
             }
+            
+            // Since reps are incremented on fetch of next card, we will miss counting the
+            // last rep since there isn't a next card. We manually account for it here.
+            if (mNoMoreCards) {
+                mSched.setReps(mSched.getReps() + 1);
+            }
+            
+            Long[] elapsed = AnkiDroidApp.getCol().timeboxReached();
+            if (elapsed != null) {
+                int nCards = elapsed[1].intValue();
+                int nMins = elapsed[0].intValue() / 60;
+                String mins = res.getQuantityString(R.plurals.timebox_reached_minutes, nMins, nMins);
+                String timeboxMessage = res.getQuantityString(R.plurals.timebox_reached, nCards, nCards, mins);
+                Themes.showThemedToast(Reviewer.this, timeboxMessage, true);
+                AnkiDroidApp.getCol().startTimebox();
+            }
+            
             // if (mChosenAnswer.getText().equals("")) {
             // setDueMessage();
             // }
-
-            // Show a message to user if a session limit has been reached.
-            if (sessionMessage != null) {
-                Themes.showThemedToast(Reviewer.this, sessionMessage, true);
-            }
         }
 
 
@@ -790,8 +758,6 @@ public class Reviewer extends AnkiActivity {
             // precedence when returning to study options.
             if (mNoMoreCards) {
                 closeReviewer(RESULT_NO_MORE_CARDS, true);
-            } else if (mSessionComplete) {
-                closeReviewer(RESULT_SESSION_COMPLETED, true);
             }
             if (mProgressDialog != null && mProgressDialog.isShowing()) {
                 mProgressDialog.dismiss();
@@ -981,12 +947,6 @@ public class Reviewer extends AnkiActivity {
                 e.printStackTrace();
             }
 
-            // Initialize session limits
-            // long timelimit = deck.getSessionTimeLimit() * 1000;
-            // Log.i(AnkiDroidApp.TAG, "SessionTimeLimit: " + timelimit + " ms.");
-            // mSessionTimeLimit = System.currentTimeMillis() + timelimit;
-            mSessionCurrReps = 0;
-
             // Initialize text-to-speech. This is an asynchronous operation.
             if (mSpeakText) {
                 ReadText.initializeTts(this);
@@ -1003,6 +963,9 @@ public class Reviewer extends AnkiActivity {
             // as the card to answer, no card will be answered.
             DeckTask.launchDeckTask(DeckTask.TASK_TYPE_ANSWER_CARD, mAnswerCardHandler, new DeckTask.TaskData(mSched,
                     null, 0));
+            
+            // Since we aren't actually answering a card, decrement the rep count
+            mSched.setReps(mSched.getReps() - 1);
         }
     }
 
@@ -1661,9 +1624,6 @@ public class Reviewer extends AnkiActivity {
         Sound.stopSounds();
         mCurrentEase = ease;
 
-        // Increment number reps counter
-        mSessionCurrReps++;
-
         setNextCardAnimation(false);
         DeckTask.launchDeckTask(DeckTask.TASK_TYPE_ANSWER_CARD, mAnswerCardHandler, new DeckTask.TaskData(mSched,
                 mCurrentCard, mCurrentEase));
@@ -2013,7 +1973,6 @@ public class Reviewer extends AnkiActivity {
     private SharedPreferences restorePreferences() {
         SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(getBaseContext());
         mPrefHideDueCount = preferences.getBoolean("hideDueCount", false);
-        mPrefOvertime = preferences.getBoolean("overtime", true);
         mPrefWhiteboard = preferences.getBoolean("whiteboard", false);
         mPrefWriteAnswers = preferences.getBoolean("writeAnswers", true);
         mPrefTextSelection = preferences.getBoolean("textSelection", true);
@@ -3117,7 +3076,6 @@ public class Reviewer extends AnkiActivity {
     }
 
     private void closeReviewer(int result, boolean saveDeck) {
-    	AnkiDroidApp.getCol().setOvertime(false);
         mTimeoutHandler.removeCallbacks(mShowAnswerTask);
         mTimeoutHandler.removeCallbacks(mShowQuestionTask);
         mTimerHandler.removeCallbacks(removeChosenAnswerText);

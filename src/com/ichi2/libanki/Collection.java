@@ -71,9 +71,6 @@ public class Collection {
 
     private double mStartTime;
     private int mStartReps;
-    private boolean mOvertime;
-
-    private int mRepsToday;
 
     // BEGIN: SQL table columns
     private long mCrt;
@@ -142,7 +139,6 @@ public class Collection {
         }
         mStartReps = 0;
         mStartTime = 0;
-        mOvertime = false;
         mSched = new Sched(this);
         // check for improper shutdown
         cleanup();
@@ -1116,19 +1112,9 @@ public class Collection {
     }
 
 
-    public void setOvertime(boolean overtime) {
-        mOvertime = overtime;
-    }
-
-
-    public boolean getOvertime() {
-        return mOvertime;
-    }
-
-
     public void startTimebox() {
         mStartTime = Utils.now();
-        mStartReps = mRepsToday;
+        mStartReps = mSched.getReps();
     }
 
 
@@ -1140,8 +1126,8 @@ public class Collection {
                 return null;
             }
             double elapsed = Utils.now() - mStartTime;
-            if (elapsed > mConf.getLong("timeLim") && !mOvertime) {
-                return new Long[] { mConf.getLong("timeLim"), (long) (mRepsToday - mStartReps) };
+            if (elapsed > mConf.getLong("timeLim")) {
+                return new Long[] { mConf.getLong("timeLim"), (long) (mSched.getReps() - mStartReps) };
             }
         } catch (JSONException e) {
             throw new RuntimeException(e);
@@ -1193,7 +1179,7 @@ public class Collection {
             int n = c.getQueue() == 3 ? 1 : c.getQueue();
             String type = (new String[] { "new", "lrn", "rev" })[n];
             mSched._updateStats(c, type, -1);
-            mSched.mReps -= 1;
+            mSched.setReps(mSched.getReps() - 1);
             return c.getId();
 
     	case UNDO_EDIT_NOTE:
