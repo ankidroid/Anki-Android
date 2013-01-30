@@ -18,9 +18,7 @@
 
 package com.ichi2.async;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -29,15 +27,15 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.TreeSet;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipOutputStream;
 
+import android.database.sqlite.SQLiteDatabaseCorruptException;
+import com.ichi2.anki.*;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import com.ichi2.anki.AnkiDb;
-import com.ichi2.anki.AnkiDroidApp;
-import com.ichi2.anki.BackupManager;
-import com.ichi2.anki.R;
 import com.ichi2.libanki.Card;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Note;
@@ -86,6 +84,7 @@ public class DeckTask extends
 	public static final int TASK_TYPE_IMPORT = 28;
 	public static final int TASK_TYPE_IMPORT_REPLACE = 29;
     public static final int TASK_TYPE_SEARCH_CARDS = 30;
+    public static final int TASK_TYPE_EXPORT_APKG = 31;
     
 	private static DeckTask sInstance;
 	private static DeckTask sOldInstance;
@@ -251,10 +250,13 @@ public class DeckTask extends
 			
 		case TASK_TYPE_IMPORT_REPLACE:
 			return doInBackgroundImportReplace(params);
-			
-		default:
-			return null;
-		}
+
+            case TASK_TYPE_EXPORT_APKG:
+                return doInBackgroundExportApkg(params);
+
+            default:
+                return null;
+        }
 	}
 
 	@Override
@@ -274,6 +276,13 @@ public class DeckTask extends
 	protected void onPostExecute(TaskData result) {
 		mListener.onPostExecute(result);
 	}
+
+    @Override
+    protected void onCancelled() {
+        if (mListener instanceof CancellableTaskListener) {
+            ((CancellableTaskListener) mListener).onCancelled();
+        }
+    }
 
 	private TaskData doInBackgroundAddNote(TaskData[] params) {
 		Log.i(AnkiDroidApp.TAG, "doInBackgroundAddNote");
@@ -927,7 +936,75 @@ public class DeckTask extends
 		}
 	}
 
-	private TaskData doInBackgroundRestoreDeck(TaskData... params) {
+    private TaskData doInBackgroundExportApkg(TaskData... params) {
+        Log.i(AnkiDroidApp.TAG, "doInBackgroundExportApkg");
+        Object[] data = params[0].getObjArray();
+        String colPath = (String) data[0];
+        String apkgPath = (String) data[1];
+        boolean includeMedia = (Boolean) data[2];
+
+        byte[] buf = new byte[1024];
+        try {
+            try {
+                AnkiDb d = AnkiDatabaseManager.getDatabase(colPath);
+                d.queryString("PRAGMA journal_mode = DELETE");
+            } catch (SQLiteDatabaseCorruptException e) {
+                // collection is invalid
+                return new TaskData(false);
+            } finally {
+                AnkiDatabaseManager.closeDatabase(colPath);
+            }
+
+            // export collection
+            ZipOutputStream zos = new ZipOutputStream(new FileOutputStream(apkgPath));
+            FileInputStream colFin = new FileInputStream(colPath);
+            ZipEntry ze = new ZipEntry("collection.anki2");
+            zos.putNextEntry(ze);
+            int len;
+            while ((len = colFin.read(buf)) >= 0) {
+                zos.write(buf, 0, len);
+            }
+            zos.closeEntry();
+            colFin.close();
+
+            // export media
+            JSONObject media = new JSONObject();
+            if (includeMedia) {
+                File mediaDir = new File(AnkiDroidApp.getCurrentAnkiDroidMediaDir());
+                if (mediaDir.exists() && mediaDir.isDirectory()) {
+                    File[] mediaFiles = mediaDir.listFiles();
+                    int c = 0;
+                    for (File f : mediaFiles) {
+                        FileInputStream mediaFin = new FileInputStream(f);
+                        ze = new ZipEntry(Integer.toString(c));
+                        zos.putNextEntry(ze);
+                        while ((len = mediaFin.read(buf)) >= 0) {
+                            zos.write(buf, 0, len);
+                        }
+                        zos.closeEntry();
+                        media.put(Integer.toString(c), f.getName());
+                    }
+                }
+            }
+            ze = new ZipEntry("media");
+            zos.putNextEntry(ze);
+            InputStream mediaIn = new ByteArrayInputStream(Utils.jsonToString(media).getBytes("UTF-8"));
+            while ((len = mediaIn.read(buf)) >= 0) {
+                zos.write(buf, 0, len);
+            }
+            zos.closeEntry();
+            zos.close();
+        } catch (FileNotFoundException e) {
+            return new TaskData(false);
+        } catch (IOException e) {
+            return new TaskData(false);
+        } catch (JSONException e) {
+            return new TaskData(false);
+        }
+        return new TaskData(true);
+    }
+
+    private TaskData doInBackgroundRestoreDeck(TaskData... params) {
 		 Log.i(AnkiDroidApp.TAG, "doInBackgroundRestoreDeck");
 		 Object[] data = params[0].getObjArray();
 		 Collection col = (Collection) data[0];
@@ -1059,6 +1136,10 @@ public class DeckTask extends
 
 		public void onProgressUpdate(TaskData... values);
 	}
+
+    public static interface CancellableTaskListener extends TaskListener {
+         public void onCancelled();
+    }
 
 	public static class TaskData {
 		private Card mCard;

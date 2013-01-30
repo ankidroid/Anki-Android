@@ -93,7 +93,7 @@
   <string name="import_log_no_apkg">Bu geçerli bir apkg dosyası değil</string>
   <string name="import_importing">Kartlar aktarılıyor.\nLütfen bekleyin...</string>
   <string name="import_hint">İçeri kart aktarmak için, apkg dosyasını %s dizinine yerleştirip Tamam\'a basın</string>
-  <string name="import_no_file_found">Aktarılabilecek apkg dosyası bulunmuyor</string>
+  <string name="upgrade_import_no_file_found">Aktarılabilecek apkg dosyası bulunmuyor</string>
   <string name="custom_study">Özel Eğitim</string>
   <string name="dyn_deck_desc">Bu normal çalışma programından farklı özel bir deste. Kartlar gözden geçirildikten sonra orijinal haline geri döner. Bu desteyi listeden silmek kalan tüm kartları orijinal destelerine geri döndürür.</string>
   <string-array name="dynOrderLabels">

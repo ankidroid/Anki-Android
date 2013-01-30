@@ -93,7 +93,7 @@
   <string name="import_log_no_apkg">Acesta nu este un fişier valid apkg</string>
   <string name="import_importing">Import carduri. \nVa rugam aşteptaţi...</string>
   <string name="import_hint">Pentru a importa cărţi, plasaţi fişierul apkg in directorul %s şi apăsaţi ok</string>
-  <string name="import_no_file_found">Nici un fişier apkg importabil nu a fost găsit</string>
+  <string name="upgrade_import_no_file_found">Nici un fişier apkg importabil nu a fost găsit</string>
   <string name="custom_study">Studiu personalizat</string>
   <string name="dyn_deck_desc">Acesta este un pachet special pentru a studia în afara programului normal. cardurile vor fi returnate automat la pachetele lor originale după ce le revizuiti. Şterge aceast pachet din lista de pachete va returna toate cărțile rămase in pachetele lor originale.</string>
   <string-array name="dynOrderLabels">

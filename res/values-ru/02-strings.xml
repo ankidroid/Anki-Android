@@ -93,7 +93,7 @@
   <string name="import_log_no_apkg">Это негодный apkg-файл</string>
   <string name="import_importing">Импортирование карт.\nПожалуйста, подождите...</string>
   <string name="import_hint">Чтобы импортировать карты, поместите файл apkg в каталог %s и нажмите ОК</string>
-  <string name="import_no_file_found">Импортируемый файл apkg не найден</string>
+  <string name="upgrade_import_no_file_found">Импортируемый файл apkg не найден</string>
   <string name="custom_study">Дополнительное обучение</string>
   <string name="dyn_deck_desc">Это специальная колода для изучения вне нормального расписания. Карты будут автоматически возвращены в их изначальную колоду после их просмотра. Удаление этой колоды из списка колод возвратит все оставшиеся карты в их изначальную колоду.</string>
   <string-array name="dynOrderLabels">

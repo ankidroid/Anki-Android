@@ -93,7 +93,7 @@
   <string name="import_log_no_apkg">To nie jst prawidłowy plik apkg</string>
   <string name="import_importing">Importowanie kart.\nProszę czekać...</string>
   <string name="import_hint">Aby zaimportować karty, umieść plik apkg w katalogu %s i naciśnij ok</string>
-  <string name="import_no_file_found">Nie znaleziono prawidłowego pliku apkg do zaimportowania</string>
+  <string name="upgrade_import_no_file_found">Nie znaleziono prawidłowego pliku apkg do zaimportowania</string>
   <string name="custom_study">Custom Study</string>
   <string name="dyn_deck_desc">This is a special deck for studying outside of the normal schedule. Cards will be automatically returned to their original decks after you review them. Deleting this deck from the deck list will return all remaining cards to their original deck.</string>
   <string-array name="dynOrderLabels">

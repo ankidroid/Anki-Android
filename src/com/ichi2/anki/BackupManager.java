@@ -16,7 +16,11 @@
 
 package com.ichi2.anki;
 
-import com.ichi2.anki.R;
+import android.content.SharedPreferences;
+import android.os.StatFs;
+import android.util.Log;
+import com.ichi2.libanki.Collection;
+import com.ichi2.libanki.Utils;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -24,19 +28,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Collections;
-import java.util.Date;
-import java.util.GregorianCalendar;
-import java.util.UnknownFormatConversionException;
-
-import com.ichi2.libanki.Collection;
-import com.ichi2.libanki.Utils;
-
-import android.content.SharedPreferences;
-import android.os.StatFs;
-import android.util.Log;
+import java.util.*;
 
 public class BackupManager {
 
@@ -109,6 +101,9 @@ public class BackupManager {
         }
 
         File collectionFile = new File(path);
+        if (!collectionFile.exists()) {
+            return false;
+        }
         File[] deckBackups = getBackups(collectionFile);
         int len = deckBackups.length;
         if (len == 0) {
