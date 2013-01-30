@@ -142,7 +142,6 @@ public class DeckPicker extends FragmentActivity {
     private static final int MENU_CREATE_DECK = 1;
     private static final int MENU_ADD_SHARED_DECK = 2;
     private static final int MENU_PREFERENCES = 3;
-    private static final int MENU_MY_ACCOUNT = 4;
     private static final int MENU_FEEDBACK = 5;
     private static final int MENU_HELP = 6;
     private static final int CHECK_DATABASE = 7;
@@ -2353,8 +2352,6 @@ public class DeckPicker extends FragmentActivity {
 
         item = menu.add(Menu.NONE, MENU_PREFERENCES, Menu.NONE, R.string.menu_preferences);
         item.setIcon(R.drawable.ic_menu_preferences);
-        item = menu.add(Menu.NONE, MENU_MY_ACCOUNT, Menu.NONE, R.string.menu_my_account);
-        item.setIcon(R.drawable.ic_menu_home);
         item = menu.add(Menu.NONE, MENU_ADD_SHARED_DECK, Menu.NONE, R.string.menu_get_shared_decks);
         item.setIcon(R.drawable.ic_menu_download);
         item = menu.add(Menu.NONE, MENU_CREATE_DECK, Menu.NONE, R.string.new_deck);
@@ -2504,10 +2501,6 @@ public class DeckPicker extends FragmentActivity {
             case MENU_IMPORT:
             	showDialog(DIALOG_IMPORT_HINT);
            	return true;
-
-            case MENU_MY_ACCOUNT:
-                startActivity(new Intent(DeckPicker.this, MyAccount.class));
-                return true;
 
             case MENU_PREFERENCES:
                 startActivityForResult(new Intent(DeckPicker.this, Preferences.class), PREFERENCES_UPDATE);
