@@ -19,11 +19,9 @@
 
 package com.ichi2.libanki;
 
-import android.annotation.TargetApi;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.net.Uri;
@@ -32,18 +30,16 @@ import android.util.Log;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
-
 import com.ichi2.anki.AnkiDb;
 import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.AnkiFont;
 import com.ichi2.anki.R;
-import com.ichi2.async.Connection.OldAnkiDeckFilter;
 import com.mindprod.common11.BigDate;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -64,13 +60,14 @@ import java.nio.channels.FileChannel;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.sql.Date;
-import java.text.Normalizer;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Collection;
+import java.util.HashMap;
+import java.util.Enumeration;
 import java.util.GregorianCalendar;
 import java.util.Iterator;
 import java.util.List;
@@ -82,7 +79,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.zip.Deflater;
 import java.util.zip.ZipEntry;
-import java.util.zip.ZipInputStream;
+import java.util.zip.ZipFile;
 
 /**
  * TODO comments
@@ -126,6 +123,8 @@ public class Utils {
 
     private static final String ALL_CHARACTERS = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
     private static final String BASE91_EXTRA_CHARS = "!#$%&()*+,-./:;<=>?@[]^_`{|}~";
+
+    public static final int FILE_COPY_BUFFER_SIZE = 2048;
 
     /**The time in integer seconds. Pass scale=1000 to get milliseconds. */
     public static double now() {
@@ -719,34 +718,65 @@ public class Utils {
     }
 
 
-    public static boolean unzip(String filename, String targetDirectory) {
-        try {
-        	File dir = new File(targetDirectory);
-        	if (!dir.exists() || !dir.isDirectory()) {
-        		dir.mkdirs();
-        	}
-            byte[] buf = new byte[1024];
-            ZipInputStream zis = new ZipInputStream(new FileInputStream(filename));
-            ZipEntry ze = zis.getNextEntry();
-            while (ze != null) { 
-                String name = ze.getName();
-                Log.i(AnkiDroidApp.TAG, "uncompress " + name);
-                int n;
-                FileOutputStream fos = new FileOutputStream(targetDirectory + "/" + name);
-                while ((n = zis.read(buf, 0, 1024)) > -1) {
-                    fos.write(buf, 0, n);                	
-                }
-                fos.close(); 
-                zis.closeEntry();
-                ze = zis.getNextEntry();
-
-            }
-            zis.close();
-            return true;
-        } catch (IOException e) {
-        	Log.e(AnkiDroidApp.TAG, "IOException on decompressing file " + filename);
-        	return false;
+    public static boolean unzipFiles(ZipFile zipFile, String targetDirectory, String[] zipEntries, HashMap<String, String> zipEntryToFilenameMap) {
+        byte[] buf = new byte[FILE_COPY_BUFFER_SIZE];
+        File dir = new File(targetDirectory);
+        if (!dir.exists() && !dir.mkdirs()) {
+            Log.e(AnkiDroidApp.TAG, "Utils.unzipFiles: Could not create target directory: " + targetDirectory);
+            return false;
         }
+        if (zipEntryToFilenameMap == null) {
+            zipEntryToFilenameMap = new HashMap<String, String>();
+        }
+        BufferedInputStream zis = null;
+        BufferedOutputStream bos = null;
+        try {
+            for (String requestedEntry : zipEntries) {
+                ZipEntry ze = zipFile.getEntry(requestedEntry);
+                if (ze != null) {
+                    String name = ze.getName();
+                    if (zipEntryToFilenameMap.containsKey(name)) {
+                        name = zipEntryToFilenameMap.get(name);
+                    }
+                    File destFile = new File(dir, name);
+                    File parentDir = destFile.getParentFile();
+                    if (!parentDir.exists() && !parentDir.mkdirs()) {
+                        return false;
+                    }
+                    if (!ze.isDirectory()) {
+                        Log.i(AnkiDroidApp.TAG, "uncompress " + name);
+                        zis = new BufferedInputStream(zipFile.getInputStream(ze));
+                        bos = new BufferedOutputStream(new FileOutputStream(destFile), FILE_COPY_BUFFER_SIZE);
+                        int n;
+                        while ((n = zis.read(buf, 0, FILE_COPY_BUFFER_SIZE)) != -1) {
+                            bos.write(buf, 0, n);
+                        }
+                        bos.flush();
+                        bos.close();
+                        zis.close();
+                    }
+                }
+            }
+        } catch (IOException e) {
+            Log.e(AnkiDroidApp.TAG, "Utils.unzipFiles: Error while unzipping archive.", e);
+            return false;
+        } finally {
+            try {
+                if (bos != null) {
+                    bos.close();
+                }
+            } catch (IOException e) {
+                Log.e(AnkiDroidApp.TAG, "Utils.unzipFiles: Error while closing output stream.", e);
+            }
+            try {
+                if (zis != null) {
+                    zis.close();
+                }
+            } catch (IOException e) {
+                Log.e(AnkiDroidApp.TAG, "Utils.unzipFiles: Error while closing zip input stream.", e);
+            }
+        }
+        return true;
     }
 
     /**
