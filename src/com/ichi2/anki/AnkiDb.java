@@ -303,4 +303,5 @@ public class AnkiDb {
             mDatabase.endTransaction();
         }
     }
+
 }

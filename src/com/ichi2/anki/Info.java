@@ -957,6 +957,7 @@ public class Info extends Activity {
         }
         @Override
         public void onProgressUpdate(DeckTask.TaskData... values) {
+            mProgressDialog.setMessage(values[0].getString());
         }
     };
 
