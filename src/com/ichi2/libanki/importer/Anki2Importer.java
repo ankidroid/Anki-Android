@@ -16,6 +16,19 @@
 
 package com.ichi2.libanki.importer;
 
+import android.database.Cursor;
+import android.util.Log;
+import com.ichi2.anki.AnkiDatabaseManager;
+import com.ichi2.anki.AnkiDroidApp;
+import com.ichi2.anki.BackupManager;
+import com.ichi2.libanki.Collection;
+import com.ichi2.libanki.Media;
+import com.ichi2.libanki.Storage;
+import com.ichi2.libanki.Utils;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -23,18 +36,6 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import com.ichi2.libanki.*;
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import android.database.Cursor;
-import android.util.Log;
-
-import com.ichi2.anki.AnkiDatabaseManager;
-import com.ichi2.anki.AnkiDroidApp;
-import com.ichi2.anki.BackupManager;
 
 public class Anki2Importer {
 
@@ -435,7 +436,7 @@ public class Anki2Importer {
             	card[4] = Utils.intNow();
             	card[5] = usn;
             	// review cards have a due date relative to collection
-            	if ((Integer)card[7] == 2 || (Integer)card[7] == 3) {
+            	if ((Integer)card[7] == 2 || (Integer)card[7] == 3 || (Integer)card[6] == 2) {
             		card[8] = (Long) card[8] - aheadBy;
             	}
             	// if odid true, convert card from filtered to normal
@@ -460,7 +461,8 @@ public class Anki2Importer {
             	// we need to import revlog, rewriting card ids and bumping usn
             	Cursor cur2 = null;
                 try {
-                    cur2 = mDst.getDb().getDatabase().rawQuery("SELECT * FROM revlog WHERE cid = " + scid, null);
+                    cur2 = mDst.getDb().getDatabase().rawQuery("SELECT * FROM revlog WHERE cid = ?",
+                            new String[]{Long.toString(scid)});
                     while (cur2.moveToNext()) {
                     	 Object[] rev = new Object[]{cur2.getLong(0), cur2.getLong(1),
                     			cur2.getInt(2), cur2.getInt(3), cur2.getLong(4),

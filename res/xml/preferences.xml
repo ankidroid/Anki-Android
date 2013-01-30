@@ -123,6 +123,15 @@
                 android:title="@string/pref_show_splashscreen" />
 	</PreferenceCategory>
         <PreferenceCategory android:title="@string/pref_cat_sync" >
+          <Preference
+                android:key="syncAccount"
+                android:dialogTitle="@string/sync_account"
+                android:summary="@string/sync_account_summ_logged_out"
+                android:title="@string/sync_account">
+                <intent
+                    android:targetPackage="com.ichi2.anki"
+                    android:targetClass="com.ichi2.anki.MyAccount"/>
+          </Preference>
           <CheckBoxPreference
                 android:defaultValue="true"
                 android:key="syncFetchesMedia"
@@ -204,12 +213,7 @@
 	            android:key="writeAnswers"
 	            android:summary="@string/write_answers_summ"
 	            android:title="@string/write_answers" />
-<!--           	<CheckBoxPreference
-                android:defaultValue="true"
-                android:key="overtime"
-                android:summary="@string/overtime_summ"
-                android:title="@string/overtime" />
- -->            <CheckBoxPreference
+            <CheckBoxPreference
                 android:defaultValue="false"
                 android:key="fixOrientation"
                 android:summary="@string/fix_orientation_summ"

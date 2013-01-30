@@ -31,8 +31,10 @@ import android.os.Bundle;
 import android.preference.CheckBoxPreference;
 import android.preference.EditTextPreference;
 import android.preference.ListPreference;
+import android.preference.Preference;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceManager;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.WindowManager.BadTokenException;
@@ -78,6 +80,7 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
     private CheckBoxPreference fadeScrollbars;
     private CheckBoxPreference convertFenText;
     private CheckBoxPreference fixHebrewText;
+    private Preference syncAccount;
     private ListPreference mLanguageSelection;
     private CharSequence[] mLanguageDialogLabels;
     private CharSequence[] mLanguageDialogValues;
@@ -124,6 +127,7 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
 //        ListPreference listpref = (ListPreference) getPreferenceScreen().findPreference("theme");
         convertFenText = (CheckBoxPreference) getPreferenceScreen().findPreference("convertFenText");
         fixHebrewText = (CheckBoxPreference) getPreferenceScreen().findPreference("fixHebrewText");
+        syncAccount = (Preference) getPreferenceScreen().findPreference("syncAccount");
 //        String theme = listpref.getValue();
 //        animationsCheckboxPreference.setEnabled(theme.equals("2") || theme.equals("3"));
         zoomCheckboxPreference.setEnabled(!swipeCheckboxPreference.isChecked());
@@ -263,6 +267,19 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
         super.onPause();
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        // syncAccount's summary can change while preferences are still open (user logs
+        // in from preferences screen), so we need to update it here.
+        SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(getBaseContext());
+        String username = preferences.getString("username", "");
+        if (TextUtils.isEmpty(username)) {
+            syncAccount.setSummary(R.string.sync_account_summ_logged_out);
+        } else {
+            syncAccount.setSummary(getString(R.string.sync_account_summ_logged_in, username));
+        }
+    }
 
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
         try {

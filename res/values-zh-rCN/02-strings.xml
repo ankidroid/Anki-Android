@@ -93,7 +93,7 @@
   <string name="import_log_no_apkg">这不是一个正确的 apkg 文件</string>
   <string name="import_importing">导入卡牌。\n请稍后...</string>
   <string name="import_hint">要导入卡牌，请把apkg文件放在%s目录中，然后按确定。</string>
-  <string name="import_no_file_found">未找到可导入的apkg文件</string>
+  <string name="upgrade_import_no_file_found">未找到可导入的apkg文件</string>
   <string name="custom_study">自定义学习</string>
   <string name="dyn_deck_desc">这是一个特殊牌组，在计划外学习。卡牌在复习后，会自动返回原来的牌组。在牌组列表中删除此牌组，将把所有卡牌发回原来的牌组。</string>
   <string-array name="dynOrderLabels">
