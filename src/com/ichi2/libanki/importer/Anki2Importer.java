@@ -16,107 +16,149 @@
 
 package com.ichi2.libanki.importer;
 
+import android.content.res.Resources;
 import android.database.Cursor;
 import android.util.Log;
+import com.google.gson.stream.JsonReader;
 import com.ichi2.anki.AnkiDatabaseManager;
 import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.BackupManager;
+import com.ichi2.anki.R;
+import com.ichi2.async.DeckTask;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Media;
 import com.ichi2.libanki.Storage;
 import com.ichi2.libanki.Utils;
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.*;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Locale;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.zip.ZipFile;
 
 public class Anki2Importer {
 
 	Collection mCol;
-	String mFile;
+	ZipFile mZip;
 	int mTotal;
 	ArrayList<String> mLog;
 	long mTs;
 	String mDeckPrefix = null;
+    DeckTask.ProgressCallback mProgress;
+    Resources mResources;
 
 	Collection mDst;
 	Collection mSrc;
+    String mDstMediaDir;
 
 	HashMap<String, Object[]> mNotes;
 	HashMap<String, HashMap<Integer, Long>> mCards;
 	HashMap<Long, Long> mDecks;
 	HashMap<Long, Long> mModelMap;
     HashMap<String, String> mChangedGuids;
+    private HashMap<String, String> nameToNum;
 
     private static final int GUID = 1;
     private static final int MID = 2;
 
-    private static final int MEDIAPICKLIMIT = 4096;
+    private static final int MEDIAPICKLIMIT = 1024;
 
-	public Anki2Importer (Collection col, String file) {
+    private static final String CHECKMARK = "\u2714";
+
+	public Anki2Importer (Collection col, String file, DeckTask.ProgressCallback progressCallback) throws IOException {
 		mCol = col;
-		mFile = file;
+		mZip = new ZipFile(new File(file), ZipFile.OPEN_READ);
 		mTotal = 0;
 		mLog = new ArrayList<String>();
-	}
+        mProgress = progressCallback;
+        if (mProgress != null) {
+            mResources = mProgress.getResources();
+        }
+        nameToNum = new HashMap<String, String>();
+    }
 
+    private void publishProgress(boolean unpacking, int notesDone, int cardsDone, boolean cleanup) {
+        if (mProgress != null && mResources != null) {
+            mProgress.publishProgress(new DeckTask.TaskData(mResources.getString(R.string.import_add_progress,
+                    (unpacking ? CHECKMARK: "-"), notesDone, cardsDone, (cleanup ? CHECKMARK: "-"))));
+        }
+    }
 
-	public int run() {
-		try	{
-			// extract the deck from the zip file
-			String fileDir = AnkiDroidApp.getCurrentAnkiDroidDirectory() + "/tmpzip";
-			// from anki2.py
-			String colFile = fileDir + "/collection.anki2";
-			if (!Utils.unzip(mFile, fileDir) || !(new File(colFile)).exists() || !Storage.Collection(colFile).validCollection()) {
-				return -2;
-			}
-			_prepareFiles(colFile);
-			int cnt = -1;
-			try {
-				cnt = _import();
-			} finally {
-				// do not close collection but close only db (in order not to confuse access counting in storage.java
-				AnkiDatabaseManager.closeDatabase(mSrc.getPath());
-			}
-			// import media
-			JSONObject media = new JSONObject(Utils.convertStreamToString(new FileInputStream(fileDir + "/media")));
-			String mediaDir = mCol.getMedia().getDir() + "/";
-			JSONArray names = media.names();
-			if (names != null) {
-				for (int i = 0; i < names.length(); i++) {
-					String n = names.getString(i);
-					String o = media.getString(n);
-                    if (!o.startsWith("_") && !o.startsWith("latex-")) {
+    public int run() {
+        publishProgress(false, 0, 0, false);
+        try {
+            // extract the deck from the zip file
+            String tempDir = AnkiDroidApp.getCurrentAnkiDroidDirectory() + "/tmpzip";
+            // from anki2.py
+            String colFile = tempDir + "/collection.anki2";
+            if (!Utils.unzipFiles(mZip, tempDir, new String[]{"collection.anki2", "media"}, null) ||
+                    !(new File(colFile)).exists() || !Storage.Collection(colFile).validCollection()) {
+                return -2;
+            }
+
+            // we need the media dict in advance, and we'll need a map of fname number to use during the import
+            File mediaMapFile = new File(tempDir, "media");
+            HashMap<String, String> numToName = new HashMap<String, String>();
+            if (mediaMapFile.exists()) {
+                JsonReader jr = new JsonReader(new FileReader(mediaMapFile));
+                jr.beginObject();
+                String name;
+                String num;
+                while (jr.hasNext()) {
+                    num = jr.nextName();
+                    name = jr.nextString();
+                    nameToNum.put(name, num);
+                    numToName.put(num, name);
+                }
+                jr.endObject();
+                jr.close();
+            }
+
+            _prepareFiles(colFile);
+            publishProgress(true, 0, 0, false);
+            int cnt = -1;
+            try {
+                cnt = _import();
+            } finally {
+                // do not close collection but close only db (in order not to confuse access counting in storage.java
+                AnkiDatabaseManager.closeDatabase(mSrc.getPath());
+            }
+            // import static media
+            String mediaDir = mCol.getMedia().getDir();
+            if (nameToNum.size() != 0) {
+                for (Map.Entry<String, String> entry : nameToNum.entrySet()) {
+                    String file = entry.getKey();
+                    String c = entry.getValue();
+                    if (!file.startsWith("_") && !file.startsWith("latex-")) {
                         continue;
                     }
-					File of = new File(mediaDir + o);
-					if (!of.exists()) {
-						File newFile = new File(fileDir + "/" + n);
-						newFile.renameTo(of);
-					}
-				}
-			}
-			// delete tmp dir
-			File dir = new File(fileDir);
-			BackupManager.removeDir(dir);
-			return cnt;
-         } catch (IOException e) {
-        	 return -1;
-	     } catch (JSONException e) {
-	    	 return -1;
-		}
-	}
+                    File of = new File(mediaDir, file);
+                    if (!of.exists()) {
+                        Utils.unzipFiles(mZip, mediaDir, new String[]{c}, numToName);
+                    }
+                }
+            }
+            mZip.close();
+            // delete tmp dir
+            File dir = new File(tempDir);
+            BackupManager.removeDir(dir);
+            publishProgress(true, 100, 100, true);
+            return cnt;
+        } catch (RuntimeException e) {
+            Log.e(AnkiDroidApp.TAG, "RuntimeException while importing ", e);
+            return -1;
+        } catch (IOException e) {
+            Log.e(AnkiDroidApp.TAG, "IOException while importing ", e);
+            return -1;
+        }
+    }
 
 	private void _prepareFiles(String src) {
 		mDst = mCol;
-		mSrc = Storage.Collection(src);
+        mDstMediaDir = mDst.getMedia().getDir() + File.separator;
+        mSrc = Storage.Collection(src);
 	}
 
 	private int _import() {
@@ -129,11 +171,12 @@ public class Anki2Importer {
 		_prepareTS();
 		_prepareModels();
 		Log.i(AnkiDroidApp.TAG, "Import - importing notes");
-		_importNotes();
+        _importNotes();
 		Log.i(AnkiDroidApp.TAG, "Import - importing cards");
-		int cnt = _importCards();
+        int cnt = _importCards();
 //		_importMedia();
 		Log.i(AnkiDroidApp.TAG, "Import - finishing");
+        publishProgress(true, 100, 100, false);
 		_postImport();
 		// LIBANKI: vacuum and analyze is done in DeckTask
 		return cnt;
@@ -159,7 +202,8 @@ public class Anki2Importer {
 		HashMap<Long, Boolean> existing = new HashMap<Long, Boolean>();
         Cursor cursor = null;
         try {
-            cursor = mDst.getDb().getDatabase().rawQuery("SELECT id, guid, mod, mid FROM notes", null);
+            // "SELECT id, guid, mod, mid FROM notes"
+            cursor = mDst.getDb().getDatabase().query("notes", new String[]{"id", "guid", "mod", "mid"}, null, null, null, null, null);
             while (cursor.moveToNext()) {
             	long id = cursor.getLong(0);
             	mNotes.put(cursor.getString(1), new Object[]{id, cursor.getLong(2), cursor.getLong(3)});
@@ -179,7 +223,12 @@ public class Anki2Importer {
         int usn = mDst.usn();
         int dupes = 0;
         try {
-            cursor = mSrc.getDb().getDatabase().rawQuery("SELECT * FROM notes", null);
+            // "SELECT * FROM notes"
+            cursor = mSrc.getDb().getDatabase().query("notes",
+                    new String[]{"id", "guid", "mid", "mod", "usn", "tags", "flds", "sfld", "csum", "flags", "data"},
+                    null, null, null, null, null);
+            int total = cursor.getCount();
+            int i = 0;
             while (cursor.moveToNext()) {
             	Object[] note = new Object[]{cursor.getLong(0), cursor.getString(1), cursor.getLong(2), cursor.getLong(3), cursor.getInt(4), cursor.getString(5), cursor.getString(6), cursor.getString(7), cursor.getLong(8), cursor.getInt(9), cursor.getString(10)};
             	boolean shouldAdd = _uniquifyNote(note);
@@ -208,6 +257,8 @@ public class Anki2Importer {
 //            			dirty.add(note[0]);
 //            		}
             	}
+                ++i;
+                publishProgress(true, i * 100 / total, 0, false);
             }
         } finally {
             if (cursor != null) {
@@ -368,7 +419,9 @@ public class Anki2Importer {
 		HashMap<Long, Boolean> existing = new HashMap<Long, Boolean>();
         Cursor cursor = null;
         try {
-            cursor = mDst.getDb().getDatabase().rawQuery("SELECT f.guid, c.ord, c.id FROM cards c, notes f WHERE c.nid = f.id", null);
+            // "SELECT f.guid, c.ord, c.id FROM cards c, notes f WHERE c.nid = f.id"
+            cursor = mDst.getDb().getDatabase().query("cards c, notes f", new String[]{"f.guid", "c.ord", "c.id"},
+                    "c.nid = f.id", null, null, null, null);
             while (cursor.moveToNext()) {
             	long cid = cursor.getLong(2);
             	existing.put(cid, true);
@@ -394,7 +447,10 @@ public class Anki2Importer {
         int usn = mDst.usn();
         long aheadBy = mSrc.getSched().getToday() - mDst.getSched().getToday();
         try {
-            cursor = mSrc.getDb().getDatabase().rawQuery("SELECT f.guid, f.mid, c.* FROM cards c, notes f WHERE c.nid = f.id", null);
+            cursor = mSrc.getDb().getDatabase().rawQuery(
+                    "SELECT f.guid, f.mid, c.* FROM cards c, notes f WHERE c.nid = f.id", null);
+            int total = cursor.getCount();
+            int ci = 0;
             while (cursor.moveToNext()) {
             	Object[] card = new Object[]{cursor.getString(0), cursor.getLong(1),
             			cursor.getLong(2), cursor.getLong(3), cursor.getLong(4), 
@@ -461,8 +517,10 @@ public class Anki2Importer {
             	// we need to import revlog, rewriting card ids and bumping usn
             	Cursor cur2 = null;
                 try {
-                    cur2 = mDst.getDb().getDatabase().rawQuery("SELECT * FROM revlog WHERE cid = ?",
-                            new String[]{Long.toString(scid)});
+//                    "SELECT * FROM revlog WHERE cid = ?"
+                    cur2 = mDst.getDb().getDatabase().query("revlog",
+                            new String[] {"id", "cid", "usn", "ease", "ivl", "lastIvl", "factor", "time", "type"},
+                            "cid = ?", new String[]{Long.toString(scid)}, null, null, null);
                     while (cur2.moveToNext()) {
                     	 Object[] rev = new Object[]{cur2.getLong(0), cur2.getLong(1),
                     			cur2.getInt(2), cur2.getInt(3), cur2.getLong(4),
@@ -478,6 +536,8 @@ public class Anki2Importer {
                     }
                 }
                 cnt += 1;
+                ++ci;
+                publishProgress(true, 100, ci * 100 / total, false);
             }
         } finally {
             if (cursor != null) {
@@ -499,8 +559,8 @@ public class Anki2Importer {
                 StringBuffer sb = new StringBuffer();
                 while (m.find()) {
                     String fname = m.group(2);
-                    InputStream srcData = _srcMediaData(fname);
-                    InputStream dstData = _dstMediaData(fname);
+                    BufferedInputStream srcData = _srcMediaData(fname);
+                    BufferedInputStream dstData = _dstMediaData(fname);
                     if (srcData == null) {
                         // file was not in source, ignore
                         m.appendReplacement(sb, m.group(0));
@@ -515,7 +575,7 @@ public class Anki2Importer {
                     if (mDst.getMedia().have(lname)) {
                         m.appendReplacement(sb, m.group(0).replace(fname, lname));
                         continue;
-                    } else if (dstData == null || srcData == dstData) { // if missing or the same, pass unmodified
+                    } else if (dstData == null || compareMedia(srcData, dstData)) { // if missing or the same, pass unmodified
                         // need to copy?
                         if (dstData == null) {
                             _writeDstMedia(fname, srcData);
@@ -534,16 +594,24 @@ public class Anki2Importer {
 		return fields;
 	}
 
+    private boolean compareMedia(BufferedInputStream lhis, BufferedInputStream rhis) {
+        byte[] lhbytes = _mediaPick(lhis);
+        byte[] rhbytes = _mediaPick(rhis);
+        boolean result = Arrays.equals(lhbytes, rhbytes);
+        return result;
+    }
+
     /**
      * Return the contents of the given input stream, limited to Anki2Importer.MEDIAPICKLIMIT bytes
      * This is only used for comparison of media files with the limited resources of mobile devices
      */
-    byte[] _mediaPick(InputStream is) {
+    byte[] _mediaPick(BufferedInputStream is) {
         try {
-            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            ByteArrayOutputStream baos = new ByteArrayOutputStream(MEDIAPICKLIMIT * 2);
             byte[] buf = new byte[MEDIAPICKLIMIT];
-            int readLen = 0;
+            int readLen;
             int readSoFar = 0;
+            is.mark(MEDIAPICKLIMIT * 2);
             while(true) {
                 readLen = is.read(buf);
                 baos.write(buf);
@@ -555,9 +623,10 @@ public class Anki2Importer {
                     break;
                 }
             }
-            is.close();
-            byte[] result = baos.toByteArray();
-            return Arrays.copyOf(result, MEDIAPICKLIMIT);
+            is.reset();
+            byte[] result = new byte[MEDIAPICKLIMIT];
+            System.arraycopy(baos.toByteArray(), 0, result, 0, Math.min(baos.size(), MEDIAPICKLIMIT));
+            return result;
         } catch (FileNotFoundException e) {
             return null;
         } catch (IOException e) {
@@ -565,9 +634,9 @@ public class Anki2Importer {
         }
     }
 
-    private InputStream _mediaData(String fname, String dir) {
+    private BufferedInputStream _mediaData(String fname, String dir) {
         try {
-            return new FileInputStream(new File(fname, dir));
+            return new BufferedInputStream(new FileInputStream(new File(dir, fname)), MEDIAPICKLIMIT * 2);
         } catch (FileNotFoundException e) {
             return null;
         }
@@ -577,21 +646,28 @@ public class Anki2Importer {
      * Data for FNAME in src collection.
      * @return A string containing the contents of fname, limited to Anki2Importer.MEDIAPICKLIMIT bytes
      */
-    private InputStream _srcMediaData(String fname) {
-        return _mediaData(fname, mSrc.getMedia().getDir());
+    private BufferedInputStream _srcMediaData(String fname) {
+        if (nameToNum.containsKey(fname)) {
+            try {
+                return new BufferedInputStream(mZip.getInputStream(mZip.getEntry(nameToNum.get(fname))));
+            } catch (IOException e) {
+                Log.e(AnkiDroidApp.TAG, "Could not extract media file " + fname + "from mZip file.");
+            }
+        }
+        return null;
     }
 
     /**
      * Data for FNAME in src collection.
      * @return A string containing the contents of fname, limited to Anki2Importer.MEDIAPICKLIMIT bytes
      */
-    private InputStream _dstMediaData(String fname) {
+    private BufferedInputStream _dstMediaData(String fname) {
         return _mediaData(fname, mDst.getMedia().getDir());
     }
 
-    private void _writeDstMedia(String fname, InputStream is) {
+    private void _writeDstMedia(String fname, BufferedInputStream is) {
         try {
-            Utils.writeToFile(is, fname);
+            Utils.writeToFile(is, mDstMediaDir + fname);
         } catch (IOException e) {
             // the user likely used subdirectories
             Log.e(AnkiDroidApp.TAG, String.format(Locale.US,
