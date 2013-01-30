@@ -93,7 +93,7 @@
   <string name="import_log_no_apkg">این فایل، یک فایل معتبر apkg نیست.</string>
   <string name="import_importing">وارد کردن کارت. \nPlease صبر کنید...</string>
   <string name="import_hint">برای وارد کردن کارتها,  apkg فایلهای در پوشه %s قرار داده و دکمه خب را فشار دهید</string>
-  <string name="import_no_file_found">فایل پیدا شده apkg قادر به وارد کردن نیست</string>
+  <string name="upgrade_import_no_file_found">فایل پیدا شده apkg قادر به وارد کردن نیست</string>
   <string name="custom_study">مطالعه بر اساس تنظیمات دلخواه</string>
   <string name="dyn_deck_desc">این یک دسته ویژه برای مطالعه در خارج از زمان بندی عادی می باشد.بعد از مرور کارتها آنها بطور خودکار به دسته های اصلی برگردانده خواهد شد.حذف کردن این دسته از لیست دسته ها سبب می شود که همه کارتهای باقیمانده نیز به دسته اصلی برگردانده شود.</string>
   <string-array name="dynOrderLabels">

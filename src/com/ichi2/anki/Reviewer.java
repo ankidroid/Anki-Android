@@ -917,14 +917,6 @@ public class Reviewer extends AnkiActivity {
             restorePreferences();
             setFullScreen(mPrefFullscreenReview);
 
-            try {
-                String[] title = mSched.getCol().getDecks().current().getString("name").split("::");
-                AnkiDroidApp.getCompat().setTitle(this, title[title.length - 1], mInvertedColors);
-            } catch (JSONException e) {
-                throw new RuntimeException(e);
-            }
-            AnkiDroidApp.getCompat().setSubtitle(this, "", mInvertedColors);
-
             registerExternalStorageListener();
 
             if (mNightMode) {
@@ -936,6 +928,15 @@ public class Reviewer extends AnkiActivity {
             mRefreshWebview = getRefreshWebviewAndInitializeWebviewVariables();
 
             initLayout(R.layout.flashcard);
+
+            try {
+                String[] title = mSched.getCol().getDecks().current().getString("name").split("::");
+                AnkiDroidApp.getCompat().setTitle(this, title[title.length - 1], mInvertedColors);
+            } catch (JSONException e) {
+                throw new RuntimeException(e);
+            }
+            AnkiDroidApp.getCompat().setSubtitle(this, "", mInvertedColors);
+
             if (mPrefTextSelection) {
                 clipboardSetText("");
             }

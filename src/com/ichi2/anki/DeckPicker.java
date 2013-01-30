@@ -121,7 +121,8 @@ public class DeckPicker extends FragmentActivity {
     private static final int DIALOG_IMPORT_LOG = 29;
     private static final int DIALOG_IMPORT_HINT = 30;
     private static final int DIALOG_IMPORT_SELECT = 31;
-    public static final String UPGRADE_OLD_COLLECTION_RENAME = "collection.anki2.old";
+    public static final String UPGRADE_OLD_COLLECTION_RENAME = "oldcollection.apkg";
+    public static final String IMPORT_REPLACE_COLLECTION_NAME = "collection.apkg";
 
     private static final int IMPORT_METHOD_ASK = 0;
     private static final int IMPORT_METHOD_ADD = 1;
@@ -477,7 +478,10 @@ public class DeckPicker extends FragmentActivity {
                     } else if (resultType.equals("upgradeRequired")) {
                         showDialog(DIALOG_SYNC_UPGRADE_REQUIRED);
                     } else if (resultType.equals("sanityCheckError")) {
-                        mDialogMessage = res.getString(R.string.sync_log_error_fix, result[1] != null ? (" (" + (String) result[1] + ")") : "");
+                        Collection col = AnkiDroidApp.getCol();
+                        col.modSchema();
+                        col.save();
+                        mDialogMessage = res.getString(R.string.sync_sanity_failed);
                         showDialog(DIALOG_SYNC_SANITY_ERROR);
                     } else {
                     	if (result.length > 1 && result[1] instanceof Integer) {
@@ -757,7 +761,7 @@ public class DeckPicker extends FragmentActivity {
      @Override
      public void onProgressUpdate(TaskData... values) {
      }
-    
+
      };
 
     DeckTask.TaskListener mImportAddListener = new DeckTask.TaskListener() {
@@ -832,6 +836,53 @@ public class DeckPicker extends FragmentActivity {
         @Override
         public void onProgressUpdate(DeckTask.TaskData... values) {
         }
+    };
+
+    DeckTask.TaskListener mUpgradeExportListener = new DeckTask.TaskListener() {
+        @Override
+        public void onPreExecute() {
+            if (mProgressDialog == null || !mProgressDialog.isShowing()) {
+                mProgressDialog = StyledProgressDialog
+                        .show(DeckPicker.this, getString(R.string.export_progress_title),
+                                getString(R.string.export_progress_exporting), true, false);
+            }
+        }
+        @Override
+        public void onPostExecute(DeckTask.TaskData result) {
+            if (mProgressDialog != null && mProgressDialog.isShowing()) {
+                mProgressDialog.dismiss();
+            }
+            StyledDialog.Builder builder = new StyledDialog.Builder(DeckPicker.this);
+            StyledDialog dialog;
+            if (result.getBoolean()) {
+                builder.setIcon(R.drawable.ic_dialog_info);
+                builder.setTitle(getString(R.string.export_progress_title));
+                builder.setMessage(getString(R.string.upgrade_deck_export_successful));
+            } else {
+                builder.setIcon(R.drawable.ic_dialog_alert);
+                builder.setTitle(R.string.export_progress_title);
+                builder.setMessage(getString(R.string.upgrade_deck_export_error));
+                builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        AnkiDroidApp.getSharedPrefs(AnkiDroidApp.getInstance().getBaseContext())
+                                .edit().putString("lastUpgradeVersion", AnkiDroidApp.getPkgVersion()).commit();
+                    }
+                });
+            }
+            builder.setPositiveButton(R.string.btn_continue, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    showUpgradeScreen(true, Info.UPGRADE_SCREEN_BASIC1);
+                    AnkiDroidApp.getSharedPrefs(AnkiDroidApp.getInstance().getBaseContext())
+                            .edit().putString("lastUpgradeVersion", AnkiDroidApp.getPkgVersion()).commit();
+                }
+            });
+            dialog = builder.create();
+            dialog.show();
+        }
+        @Override
+        public void onProgressUpdate(TaskData... values) { }
     };
 
     // ----------------------------------------------------------------------------
@@ -1134,25 +1185,30 @@ public class DeckPicker extends FragmentActivity {
         builder.setTitle(R.string.deck_upgrade_title);
         builder.setIcon(R.drawable.ic_dialog_alert);
         builder.setMessage(getString(R.string.deck_upgrade_rename_warning, UPGRADE_OLD_COLLECTION_RENAME));
-        builder.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+        builder.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 AnkiDroidApp.closeCollection(true);
-                String path = AnkiDroidApp.getCollectionPath();
-                int i = 0;
-                String newPath = path.replace("collection.anki2", UPGRADE_OLD_COLLECTION_RENAME + i);
-                while ((new File(newPath)).exists()) {
-                    i++;
-                    newPath = path.replace("collection.anki2", UPGRADE_OLD_COLLECTION_RENAME + i);
+
+                String path = AnkiDroidApp.getCurrentAnkiDroidDirectory();
+                File apkgExport = new File(path, UPGRADE_OLD_COLLECTION_RENAME);
+                if (apkgExport.exists()) {
+                    // rename any existing oldcollection.apkg files oldcollection.apkgi, i = 1, 2, 3,...
+                    int i = 0;
+                    File altname;
+                    do {
+                        altname = new File(path, UPGRADE_OLD_COLLECTION_RENAME + i);
+                        ++i;
+                    } while (altname.exists());
+                    apkgExport.renameTo(altname);
                 }
-                (new File(path)).renameTo(new File(newPath));
-                showUpgradeScreen(true, Info.UPGRADE_SCREEN_BASIC1);
-                AnkiDroidApp.getSharedPrefs(AnkiDroidApp.getInstance().getBaseContext())
-                        .edit().putString("lastUpgradeVersion", AnkiDroidApp.getPkgVersion()).commit();
+                DeckTask.launchDeckTask(DeckTask.TASK_TYPE_EXPORT_APKG, mUpgradeExportListener,
+                        new DeckTask.TaskData(new Object[] {AnkiDroidApp.getCollectionPath(),
+                                apkgExport.getAbsolutePath(), false}));
             }
         });
         builder.setCancelable(false);
-        builder.setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+        builder.setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 AnkiDroidApp.getSharedPrefs(AnkiDroidApp.getInstance().getBaseContext())
@@ -1221,14 +1277,14 @@ public class DeckPicker extends FragmentActivity {
                 builder.setTitle(R.string.deck_upgrade_title);
                 builder.setIcon(R.drawable.ic_dialog_alert);
                 builder.setMessage(R.string.deck_upgrade_already_upgraded);
-                builder.setPositiveButton(R.string.restart, new DialogInterface.OnClickListener() {
+                builder.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         restartUpgradeProcess();
                     }
                 });
                 builder.setCancelable(false);
-                builder.setNegativeButton(R.string.do_nothing, new DialogInterface.OnClickListener() {
+                builder.setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         AnkiDroidApp.getSharedPrefs(AnkiDroidApp.getInstance().getBaseContext())
@@ -1638,8 +1694,8 @@ public class DeckPicker extends FragmentActivity {
                 break;
 
             case DIALOG_SYNC_SANITY_ERROR:
-                builder.setPositiveButton(res.getString(R.string.sync_conflict_local), mSyncSanityFailListener);
-                builder.setNeutralButton(res.getString(R.string.sync_conflict_remote), mSyncSanityFailListener);
+                builder.setPositiveButton(getString(R.string.sync_sanity_local), mSyncSanityFailListener);
+                builder.setNeutralButton(getString(R.string.sync_sanity_remote), mSyncSanityFailListener);
                 builder.setNegativeButton(res.getString(R.string.sync_conflict_cancel), mSyncSanityFailListener);
                 builder.setTitle(res.getString(R.string.sync_log_title));
                 dialog = builder.create();
@@ -2049,7 +2105,7 @@ public class DeckPicker extends FragmentActivity {
             case DIALOG_IMPORT_SELECT:
             	List<File> fileList = Utils.getImportableDecks();
             	if (fileList.size() == 0) {
-                    Themes.showThemedToast(DeckPicker.this, getResources().getString(R.string.import_no_file_found),
+                    Themes.showThemedToast(DeckPicker.this, getResources().getString(R.string.upgrade_import_no_file_found),
                             false);
             	}
                 ad.setEnabled(fileList.size() != 0);
@@ -2577,26 +2633,22 @@ public class DeckPicker extends FragmentActivity {
                 int type = intent.getIntExtra(Info.TYPE_UPGRADE_STAGE, Info.UPGRADE_SCREEN_BASIC1);
                 if (type == Info.UPGRADE_CONTINUE) {
                     showStartupScreensAndDialogs(AnkiDroidApp.getSharedPrefs(getBaseContext()), 3);
-                } else if (type == Info.UPGRADE_IMPORT) {
-                    // upgrade by import, set path to non null in order to show the dialog after having opened the collection
-                    mImportPath = "";
-                    mImportMethod = IMPORT_METHOD_REPLACE;
-                    if (Utils.getImportableDecks().size() == 0) {
-                        Themes.showThemedToast(DeckPicker.this, getResources().getString(R.string.import_no_file_found), false);
-                        showUpgradeScreen(true, Info.UPGRADE_SCREEN_MANUAL_UPGRADE, !intent.hasExtra(Info.TYPE_ANINAMTION_RIGHT));
-                    } else {
-                        showDialog(DIALOG_IMPORT_SELECT);
-                    }
                 } else {
-                    showUpgradeScreen(true, type, !intent.hasExtra(Info.TYPE_ANINAMTION_RIGHT));
+                    showUpgradeScreen(true, type, !intent.hasExtra(Info.TYPE_ANIMATION_RIGHT));
                 }
-            } else if (resultCode == RESULT_OK) {
-                if (!AnkiDroidApp.colIsOpen()) {
-                    AnkiDroidApp.openCollection(AnkiDroidApp.getCollectionPath());
-                }
-                loadCounts();
             } else {
-                finishWithAnimation();
+                if (resultCode == RESULT_OK) {
+                    if (mOpenCollectionDialog != null && mOpenCollectionDialog.isShowing()) {
+                        mOpenCollectionDialog.dismiss();
+                    }
+                    if (AnkiDroidApp.colIsOpen()) {
+                        AnkiDroidApp.closeCollection(true);
+                    }
+                    AnkiDroidApp.openCollection(AnkiDroidApp.getCollectionPath());
+                    loadCounts();
+                } else {
+                    finishWithAnimation();
+                }
             }
         } else if (requestCode == SHOW_INFO_WELCOME || requestCode == SHOW_INFO_NEW_VERSION) {
             if (resultCode == RESULT_OK) {

@@ -1141,7 +1141,7 @@ public class Sched {
                 if (conf.has("mult") && resched) {
                     // review that's lapsed
                     try {
-                        card.setIvl(Math.max(1, (int) (card.getIvl() * conf.getDouble("mult"))));
+                        card.setIvl(Math.max(Math.max(1, (int) (card.getIvl() * conf.getDouble("mult"))), conf.getInt("minInt")));
                     } catch (JSONException e) {
                         throw new RuntimeException(e);
                     }

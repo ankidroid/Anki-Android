@@ -61,6 +61,7 @@ public class StyledDialog extends Dialog {
     @Override
     public void show() {
         try {
+            setCanceledOnTouchOutside(false);
             super.show();
         } catch (BadTokenException e) {
             Log.e(AnkiDroidApp.TAG, "Could not show dialog: " + e);
