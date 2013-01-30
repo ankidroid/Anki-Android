@@ -34,6 +34,7 @@ import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceManager;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.WindowManager.BadTokenException;
@@ -272,12 +273,11 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
         // syncAccount's summary can change while preferences are still open (user logs
         // in from preferences screen), so we need to update it here.
         SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(getBaseContext());
-        if (preferences.getString("hkey", "").length() > 0) {
-            String username = preferences.getString("username", "");
-            Resources res = getResources();
-            syncAccount.setSummary(String.format(res.getString(R.string.sync_account_summ_logged_in), username));
-        } else {
+        String username = preferences.getString("username", "");
+        if (TextUtils.isEmpty(username)) {
             syncAccount.setSummary(R.string.sync_account_summ_logged_out);
+        } else {
+            syncAccount.setSummary(getString(R.string.sync_account_summ_logged_in, username));
         }
     }
 
