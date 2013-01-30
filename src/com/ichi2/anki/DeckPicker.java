@@ -801,6 +801,7 @@ public class DeckPicker extends FragmentActivity {
         }
         @Override
         public void onProgressUpdate(DeckTask.TaskData... values) {
+            mProgressDialog.setMessage(values[0].getString());
         }
     };
 
@@ -836,6 +837,7 @@ public class DeckPicker extends FragmentActivity {
         }
         @Override
         public void onProgressUpdate(DeckTask.TaskData... values) {
+            mProgressDialog.setMessage(values[0].getString());
         }
     };
 

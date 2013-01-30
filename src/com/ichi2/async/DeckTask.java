@@ -18,40 +18,28 @@
 
 package com.ichi2.async;
 
-import java.io.*;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.TreeSet;
-import java.util.zip.ZipEntry;
-import java.util.zip.ZipOutputStream;
-
-import android.database.sqlite.SQLiteDatabaseCorruptException;
-import com.ichi2.anki.*;
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import com.ichi2.libanki.Card;
-import com.ichi2.libanki.Collection;
-import com.ichi2.libanki.Note;
-import com.ichi2.libanki.Sched;
-import com.ichi2.libanki.Stats;
-import com.ichi2.libanki.Storage;
-import com.ichi2.libanki.Utils;
-import com.ichi2.libanki.importer.Anki2Importer;
-import com.ichi2.widget.WidgetStatus;
-
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.database.SQLException;
+import android.database.sqlite.SQLiteDatabaseCorruptException;
 import android.os.AsyncTask;
 import android.util.Log;
+import com.google.gson.stream.JsonReader;
+import com.ichi2.anki.*;
+import com.ichi2.libanki.*;
+import com.ichi2.libanki.Collection;
+import com.ichi2.libanki.importer.Anki2Importer;
+import com.ichi2.widget.WidgetStatus;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.*;
+import java.util.*;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipFile;
+import java.util.zip.ZipOutputStream;
 
 /**
  * Loading in the background, so that AnkiDroid does not look like frozen.
@@ -802,21 +790,28 @@ public class DeckTask extends
 
     private TaskData doInBackgroundImportAdd(TaskData... params) {
         Log.i(AnkiDroidApp.TAG, "doInBackgroundImportAdd");
+        Resources res = AnkiDroidApp.getInstance().getBaseContext().getResources();
         Collection col = params[0].getCollection();
         String path = params[0].getString();
-        boolean clean = params[0].getBoolean();
-        Anki2Importer imp = new Anki2Importer(col, path);
+        boolean sharedDeckImport = params[0].getBoolean();
+
+        ProgressCallback pc = null;
+        // don't report progress on shared deck import (or maybe should we?)
+        if (!sharedDeckImport) {
+            pc = new ProgressCallback(this, res);
+        }
 
         int addedCount = -1;
         try {
-			AnkiDb ankiDB = col.getDb();
+            Anki2Importer imp = new Anki2Importer(col, path, pc);
+            AnkiDb ankiDB = col.getDb();
 			ankiDB.getDatabase().beginTransaction();
 			try {
 				addedCount = imp.run();
 				ankiDB.getDatabase().setTransactionSuccessful();
 			} finally {
 				ankiDB.getDatabase().endTransaction();
-                if (clean) {
+                if (sharedDeckImport) {
                     File tmpFile = new File(path);
                     tmpFile.delete();
                 }
@@ -826,25 +821,29 @@ public class DeckTask extends
 				ankiDB.execute("ANALYZE");
 			}
 
+            publishProgress(new TaskData(res.getString(R.string.import_update_counts)));
             // Update the counts
             DeckTask.TaskData result = doInBackgroundLoadDeckCounts(new TaskData(col));
             if (result == null) {
                 return null;
             }
             return new TaskData(addedCount, result.getObjArray(), true);
-		} catch (RuntimeException e) {
-			Log.e(AnkiDroidApp.TAG,
-					"doInBackgroundImportAdd - RuntimeException on importing cards: "
-							+ e);
-			AnkiDroidApp.saveExceptionReportFile(e, "doInBackgroundImportAdd");
-			return new TaskData(false);
-		}
-	}
+        } catch (RuntimeException e) {
+            Log.e(AnkiDroidApp.TAG, "doInBackgroundImportAdd - RuntimeException on importing cards: ", e);
+            AnkiDroidApp.saveExceptionReportFile(e, "doInBackgroundImportAdd");
+            return new TaskData(false);
+        } catch (IOException e) {
+            Log.e(AnkiDroidApp.TAG, "doInBackgroundImportAdd - IOException on importing cards: ", e);
+            AnkiDroidApp.saveExceptionReportFile(e, "doInBackgroundImportAdd");
+            return new TaskData(false);
+        }
+    }
 
 	private TaskData doInBackgroundImportReplace(TaskData... params) {
 		Log.i(AnkiDroidApp.TAG, "doInBackgroundImportReplace");
 		Collection col = params[0].getCollection();
 		String path = params[0].getString();
+        Resources res = AnkiDroidApp.getInstance().getBaseContext().getResources();
 
 		// extract the deck from the zip file
 		String fileDir = AnkiDroidApp.getCurrentAnkiDroidDirectory() + "/tmpzip";
@@ -853,9 +852,19 @@ public class DeckTask extends
     		BackupManager.removeDir(dir);
     	}
 
-		// from anki2.py
+        publishProgress(new TaskData(res.getString(R.string.import_unpacking)));
+        // from anki2.py
 		String colFile = fileDir + "/collection.anki2";
-		if (!Utils.unzip(path, fileDir) || !(new File(colFile)).exists()) {
+        ZipFile zip;
+        try {
+            zip = new ZipFile(new File(path), ZipFile.OPEN_READ);
+        } catch (IOException e) {
+            Log.e(AnkiDroidApp.TAG, "doInBackgroundImportReplace - Error while unzipping: ", e);
+            AnkiDroidApp.saveExceptionReportFile(e, "doInBackgroundImportReplace0");
+            return new TaskData(false);
+        }
+        if (!Utils.unzipFiles(zip, fileDir, new String[]{"collection.anki2", "media"}, null) ||
+                !(new File(colFile)).exists()) {
 			return new TaskData(-2, null, false);
 		}
 
@@ -872,6 +881,7 @@ public class DeckTask extends
 			}
 		}
 
+        publishProgress(new TaskData(res.getString(R.string.importing_collection)));
         String colPath;
         if (col != null) {
             // unload collection and trigger a backup
@@ -891,24 +901,41 @@ public class DeckTask extends
 			// data and rely on them running a media db check to get rid of any
 			// unwanted media. in the future we might also want to duplicate this step
 			// import media
-			JSONObject media = new JSONObject(Utils.convertStreamToString(new FileInputStream(fileDir + "/media")));
-			String mediaDir = col.getMedia().getDir() + "/";
-			JSONArray names = media.names();
-			if (names != null) {
-				for (int i = 0; i < names.length(); i++) {
-					String n = names.getString(i);
-					String o = media.getString(n);
-					File of = new File(mediaDir + o);
-					if (!of.exists()) {
-						of.delete();
-					}
-					File newFile = new File(fileDir + "/" + n);
-					newFile.renameTo(of);
-				}
-			}
-			// delete tmp dir
-			BackupManager.removeDir(dir);
+            HashMap<String, String> nameToNum = new HashMap<String, String>();
+            HashMap<String, String> numToName = new HashMap<String, String>();
+            File mediaMapFile = new File(fileDir, "media");
+            if (mediaMapFile.exists()) {
+                JsonReader jr = new JsonReader(new FileReader(mediaMapFile));
+                jr.beginObject();
+                String name;
+                String num;
+                while (jr.hasNext()) {
+                    num = jr.nextName();
+                    name = jr.nextString();
+                    nameToNum.put(name, num);
+                    numToName.put(num, name);
+                }
+                jr.endObject();
+                jr.close();
+            }
+            String mediaDir = col.getMedia().getDir();
+            int total = nameToNum.size();
+            int i = 0;
+            for (Map.Entry<String, String> entry : nameToNum.entrySet()) {
+                String file = entry.getKey();
+                String c = entry.getValue();
+                File of = new File(mediaDir, file);
+                if (!of.exists()) {
+                    Utils.unzipFiles(zip, mediaDir, new String[]{c}, numToName);
+                }
+                ++i;
+                publishProgress(new TaskData(res.getString(R.string.import_media_count, (i + 1) * 100 / total)));
+            }
+            zip.close();
+            // delete tmp dir
+            BackupManager.removeDir(dir);
 
+            publishProgress(new TaskData(res.getString(R.string.import_update_counts)));
             // Update the counts
             DeckTask.TaskData result = doInBackgroundLoadDeckCounts(new TaskData(col));
             if (result == null) {
@@ -916,25 +943,19 @@ public class DeckTask extends
             }
             return new TaskData(addedCount, result.getObjArray(), true);
 		} catch (RuntimeException e) {
-			Log.e(AnkiDroidApp.TAG,
-					"doInBackgroundImportReplace - RuntimeException on reopening collection: "
-							+ e);
-			AnkiDroidApp.saveExceptionReportFile(e, "doInBackgroundImportReplace1");
+			Log.e(AnkiDroidApp.TAG, "doInBackgroundImportReplace - RuntimeException: ", e);
+            AnkiDroidApp.saveExceptionReportFile(e, "doInBackgroundImportReplace1");
 			return new TaskData(false);
 		} catch (FileNotFoundException e) {
-			Log.e(AnkiDroidApp.TAG,
-					"doInBackgroundImportReplace - RuntimeException on reopening collection: "
-							+ e);
-			AnkiDroidApp.saveExceptionReportFile(e, "doInBackgroundImportReplace2");
+			Log.e(AnkiDroidApp.TAG, "doInBackgroundImportReplace - FileNotFoundException: ", e);
+            AnkiDroidApp.saveExceptionReportFile(e, "doInBackgroundImportReplace2");
 			return new TaskData(false);
-		} catch (JSONException e) {
-			Log.e(AnkiDroidApp.TAG,
-					"doInBackgroundImportReplace - RuntimeException on reopening collection: "
-							+ e);
-			AnkiDroidApp.saveExceptionReportFile(e, "doInBackgroundImportReplace3");
-			return new TaskData(false);
-		}
-	}
+		} catch (IOException e) {
+            Log.e(AnkiDroidApp.TAG, "doInBackgroundImportReplace - IOException: ", e);
+            AnkiDroidApp.saveExceptionReportFile(e, "doInBackgroundImportReplace3");
+            return new TaskData(false);
+        }
+    }
 
     private TaskData doInBackgroundExportApkg(TaskData... params) {
         Log.i(AnkiDroidApp.TAG, "doInBackgroundExportApkg");
@@ -1139,6 +1160,37 @@ public class DeckTask extends
 
     public static interface CancellableTaskListener extends TaskListener {
          public void onCancelled();
+    }
+
+    /**
+     * Helper class for allowing inner function to publish progress of an AsyncTask.
+     */
+    public class ProgressCallback {
+        private Resources res;
+        private DeckTask task;
+
+        public ProgressCallback(DeckTask task, Resources res) {
+            this.res = res;
+            if (res != null) {
+                this.task = task;
+            } else {
+                this.task = null;
+            }
+        }
+
+        public Resources getResources() {
+            return res;
+        }
+
+        public void publishProgress(TaskData values) {
+            if (task != null) {
+                task.doProgress(values);
+            }
+        }
+    }
+
+    public void doProgress(TaskData values){
+        publishProgress(values);
     }
 
 	public static class TaskData {
