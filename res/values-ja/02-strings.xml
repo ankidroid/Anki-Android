@@ -93,7 +93,7 @@
   <string name="import_log_no_apkg">これは取り込み可能なapkgファイルではありません</string>
   <string name="import_importing">カード取得中です\nしばらくお待ちください</string>
   <string name="import_hint">カードを取り込むためにapkg ファイルをフォルダに保管してください %s そしてＯＫボタンをクリックしてください</string>
-  <string name="import_no_file_found">取り込み可能なapkgファイルは見つかりません</string>
+  <string name="upgrade_import_no_file_found">取り込み可能なapkgファイルは見つかりません</string>
   <string name="custom_study">特設学習</string>
   <string name="dyn_deck_desc">これは、通常のスケジュール外の勉強のための特別の単語帳です。それらをレビューした後、カードは自動的に戻されます。この単語帳を単語帳リストから削除する事で残りのカードすべてがオリジナルの単語帳に戻されます。</string>
   <string-array name="dynOrderLabels">

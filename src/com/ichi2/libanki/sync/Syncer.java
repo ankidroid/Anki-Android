@@ -201,24 +201,10 @@ public class Syncer {
                     }
                 }
                 // step 5: sanity check during beta testing
-                JSONArray c = sanityCheck();
-                JSONArray s = mServer.sanityCheck();
-                if (c == null || s == null || s.getString(0).equals("error")) {
+                JSONObject c = sanityCheck();
+                JSONObject sanity = mServer.sanityCheck2(c);
+                if (sanity == null || !sanity.optString("status", "bad").equals("ok")) {
                     return new Object[] { "sanityCheckError", null };
-                }
-                boolean error = false;
-                for (int i = 0; i < s.getJSONArray(0).length(); i++) {
-                    if (c.getJSONArray(0).getLong(i) != s.getJSONArray(0).getLong(i)) {
-                        error = true;
-                    }
-                }
-                for (int i = 1; i < s.length(); i++) {
-                    if (c.getLong(i) != s.getLong(i)) {
-                        error = true;
-                    }
-                }
-                if (error) {
-                    return new Object[] { "sanityCheckError", "sanity check failed: local: " + c.toString() + ", remote: " + s.toString() };
                 }
                 // finalize
                 publishProgress(con, R.string.sync_finish_message);
@@ -314,44 +300,52 @@ public class Syncer {
     }
 
 
-    public JSONArray sanityCheck() {
-        boolean ok = true;
-        if (mCol.getDb().queryScalar("SELECT count() FROM cards WHERE nid NOT IN (SELECT id FROM notes)", false) != 0) {
-        	ok = false;
-            Log.e(AnkiDroidApp.TAG, "Sync - SanityCheck: there are cards without mother notes");
-        }
-        if (mCol.getDb().queryScalar(
-                        "SELECT count() FROM notes WHERE id NOT IN (SELECT DISTINCT nid FROM cards)", false) != 0) {
-        	ok = false;
-            Log.e(AnkiDroidApp.TAG, "Sync - SanityCheck: there are notes without cards");
-        }
-        if (mCol.getDb().queryScalar("SELECT count() FROM cards WHERE usn = -1", false) != 0) {
-        	ok = false;
-            Log.e(AnkiDroidApp.TAG, "Sync - SanityCheck: there are unsynced cards");        	
-        }
-        if (mCol.getDb().queryScalar("SELECT count() FROM notes WHERE usn = -1", false) != 0) {
-        	ok = false;
-            Log.e(AnkiDroidApp.TAG, "Sync - SanityCheck: there are unsynced notes");        	
-        }
-        if (mCol.getDb().queryScalar("SELECT count() FROM revlog WHERE usn = -1", false) != 0) {
-        	ok = false;
-            Log.e(AnkiDroidApp.TAG, "Sync - SanityCheck: there are unsynced revlogs");        	
-        }
-        if (mCol.getDb().queryScalar("SELECT count() FROM graves WHERE usn = -1", false) != 0) {
-        	ok = false;
-            Log.e(AnkiDroidApp.TAG, "Sync - SanityCheck: there are unsynced graves");
-        }
+    public JSONObject sanityCheck() {
+        JSONObject result = new JSONObject();
         try {
+            if (mCol.getDb().queryScalar("SELECT count() FROM cards WHERE nid NOT IN (SELECT id FROM notes)", false) != 0) {
+                Log.e(AnkiDroidApp.TAG, "Sync - SanityCheck: there are cards without mother notes");
+                result.put("client", "missing notes");
+                return result;
+            }
+            if (mCol.getDb().queryScalar(
+                    "SELECT count() FROM notes WHERE id NOT IN (SELECT DISTINCT nid FROM cards)", false) != 0) {
+                Log.e(AnkiDroidApp.TAG, "Sync - SanityCheck: there are notes without cards");
+                result.put("client", "missing cards");
+                return result;
+            }
+            if (mCol.getDb().queryScalar("SELECT count() FROM cards WHERE usn = -1", false) != 0) {
+                Log.e(AnkiDroidApp.TAG, "Sync - SanityCheck: there are unsynced cards");
+                result.put("client", "cards had usn = -1");
+                return result;
+            }
+            if (mCol.getDb().queryScalar("SELECT count() FROM notes WHERE usn = -1", false) != 0) {
+                Log.e(AnkiDroidApp.TAG, "Sync - SanityCheck: there are unsynced notes");
+                result.put("client", "notes had usn = -1");
+                return result;
+            }
+            if (mCol.getDb().queryScalar("SELECT count() FROM revlog WHERE usn = -1", false) != 0) {
+                Log.e(AnkiDroidApp.TAG, "Sync - SanityCheck: there are unsynced revlogs");
+                result.put("client", "revlog had usn = -1");
+                return result;
+            }
+            if (mCol.getDb().queryScalar("SELECT count() FROM graves WHERE usn = -1", false) != 0) {
+                Log.e(AnkiDroidApp.TAG, "Sync - SanityCheck: there are unsynced graves");
+                result.put("client", "graves had usn = -1");
+                return result;
+            }
             for (JSONObject g : mCol.getDecks().all()) {
                 if (g.getInt("usn") == -1) {
-                	ok = false;
                     Log.e(AnkiDroidApp.TAG, "Sync - SanityCheck: unsynced deck: " + g.getString("name"));
+                    result.put("client", "deck had usn = -1");
+                    return result;
                 }
             }
             for (Integer usn : mCol.getTags().allItems().values()) {
                 if (usn == -1) {
-                	ok = false;
                     Log.e(AnkiDroidApp.TAG, "Sync - SanityCheck: there are unsynced tags");
+                    result.put("client", "tag had usn = -1");
+                    return result;
                 }
             }
             boolean found = false;
@@ -364,40 +358,52 @@ public class Syncer {
                     }
                 } else {
                     if (m.getInt("usn") == -1) {
-                        ok = false;
                         Log.e(AnkiDroidApp.TAG, "Sync - SanityCheck: unsynced model: " + m.getString("name"));
+                        result.put("client", "model had usn = -1");
+                        return result;
                     }
                 }
             }
             if (found) {
                 mCol.getModels().save();
             }
-        } catch (JSONException e) {
+            mCol.getSched().reset();
+            // check for missing parent decks
+            mCol.getSched().deckDueList(Sched.DECK_INFORMATION_SIMPLE_COUNTS);
+            // return summary of deck
+            JSONArray ja = new JSONArray();
+            JSONArray sa = new JSONArray();
+            for (int c : mCol.getSched().counts()) {
+                sa.put(c);
+            }
+            ja.put(sa);
+            ja.put(mCol.getDb().queryScalar("SELECT count() FROM cards"));
+            ja.put(mCol.getDb().queryScalar("SELECT count() FROM notes"));
+            ja.put(mCol.getDb().queryScalar("SELECT count() FROM revlog"));
+            ja.put(mCol.getDb().queryScalar("SELECT count() FROM graves"));
+            ja.put(mCol.getModels().all().size());
+            ja.put(mCol.getDecks().all().size());
+            ja.put(mCol.getDecks().allConf().size());
+            result.put("client", ja);
+            return result;
+        } catch(JSONException e) {
+            Log.e(AnkiDroidApp.TAG, "Syncer.sanityCheck(): ", e);
             throw new RuntimeException(e);
         }
-        if (!ok) {
-            return null;
-        }
-        mCol.getSched().reset();
-        // check for missing parent decks
-        mCol.getSched().deckDueList(Sched.DECK_INFORMATION_SIMPLE_COUNTS);
-        // return summary of deck
-        JSONArray ja = new JSONArray();
-        JSONArray sa = new JSONArray();
-        for (int c : mCol.getSched().counts()) {
-            sa.put(c);
-        }
-        ja.put(sa);
-        ja.put(mCol.getDb().queryScalar("SELECT count() FROM cards"));
-        ja.put(mCol.getDb().queryScalar("SELECT count() FROM notes"));
-        ja.put(mCol.getDb().queryScalar("SELECT count() FROM revlog"));
-        ja.put(mCol.getDb().queryScalar("SELECT count() FROM graves"));
-        ja.put(mCol.getModels().all().size());
-        ja.put(mCol.getDecks().all().size());
-        ja.put(mCol.getDecks().allConf().size());
-        return ja;
     }
 
+//    private Map<String, Object> sanityCheck2(JSONArray client) {
+//        Object server = sanityCheck();
+//        Map<String, Object> result = new HashMap<String, Object>();
+//        if (client.equals(server)) {
+//            result.put("status", "ok");
+//        } else {
+//            result.put("status", "bad");
+//            result.put("c", client);
+//            result.put("s", server);
+//        }
+//        return result;
+//    }
 
     private String usnLim() {
         if (mCol.getServer()) {

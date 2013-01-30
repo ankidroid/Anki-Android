@@ -93,7 +93,7 @@
   <string name="import_log_no_apkg">Este não é um arquivo apkg válido</string>
   <string name="import_importing">Importando cartões.\nPor favor aguardar...</string>
   <string name="import_hint">Para importar cartões, coloque o arquivo apkg no diretório %s e pressione ok</string>
-  <string name="import_no_file_found">Nenhum arquivo apkg importável encontrado</string>
+  <string name="upgrade_import_no_file_found">Nenhum arquivo apkg importável encontrado</string>
   <string name="custom_study">Estudo personalizado</string>
   <string name="dyn_deck_desc">Esse é um deck especial para estudar fora do planejamento normal. Os cartões serão retornados automaticamente para os decks originais após revisá-los. Ao apagar esse deck da lista de decks os cartões restantes serão retornados para os decks originais.</string>
   <string-array name="dynOrderLabels">
