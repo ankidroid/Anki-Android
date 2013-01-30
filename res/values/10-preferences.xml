@@ -145,8 +145,8 @@
 <string name="sync_fetch_missing_media">Fetch media on sync</string>
 <string name="sync_fetch_missing_media_summ">Automatically fetch missing media when syncing.</string>
 <string name="sync_account">AnkiWeb account</string>
-<string name="sync_account_summ_logged_out">AnkiWeb account details required</string>
-<string name="sync_account_summ_logged_in">Using AnkiWeb ID: %s</string>
+<string name="sync_account_summ_logged_out">Not logged in</string>
+<string name="sync_account_summ_logged_in">%s</string>
 <string name="fix_hebrew_text">Fix for Hebrew vowels</string>
 <string name="fix_hebrew_text_summ">Workaround for rendering Hebrew vowels correctly.</string>
 <string name="fix_hebrew_instructions">This setting bypasses the RTL algorithm of Android to show Hebrew text with vowels correctly.\n\nFor this to work, you need to download font Tohu.ttf and copy it manually to:\n%s/fonts/\n\nYou won\'t have to modify your cards.</string>
