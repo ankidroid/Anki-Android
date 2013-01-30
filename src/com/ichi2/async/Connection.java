@@ -1148,16 +1148,18 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
     }
 
     public class CancelCallback {
-        private WeakReference<ThreadSafeClientConnManager> mConnectionManager;
+        private WeakReference<ThreadSafeClientConnManager> mConnectionManager = null;
 
         public void setConnectionManager(ThreadSafeClientConnManager connectionManager) {
             mConnectionManager = new WeakReference<ThreadSafeClientConnManager>(connectionManager);
         }
 
         public void cancelAllConnections() {
-            ThreadSafeClientConnManager connectionManager = mConnectionManager.get();
-            if (connectionManager != null) {
-                connectionManager.shutdown();
+            if (mConnectionManager != null) {
+                ThreadSafeClientConnManager connectionManager = mConnectionManager.get();
+                if (connectionManager != null) {
+                    connectionManager.shutdown();
+                }
             }
         }
     }

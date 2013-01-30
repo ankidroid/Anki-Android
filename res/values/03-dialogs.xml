@@ -93,8 +93,10 @@
     <string name="deck_upgrade_already_upgraded">Version 2 of AnkiDroid uses a new format for decks.\nIf you did not successfully upgrade your decks, you can restart the upgrade now to upgrade your decks.</string>
     <string name="deck_upgrade_major_warning"><![CDATA[This is a major update to Ankidroid and the upgrade process will take at least 10-20 minutes.<br><br>Do you want to proceed now or later?<br><br><a href=\"http://code.google.com/p/ankidroid/wiki/Upgrading?wl=en\">More info</a>]]></string>
     <string name="deck_upgrade_start_again_to_upgrade_toast">Please start Ankidroid again when you have time to upgrade!</string>
-    <string name="deck_upgrade_recommended_method"><![CDATA[The recommended upgrade method is to sync with a PC and upgrade with the desktop version of Anki.<br><br>Do you want to upgrade with a PC?]]></string>
-    <string name="deck_upgrade_more_options"><![CDATA[You can create a new empty collection by clicking below.<br><br>If you want to downgrade back to AnkiDroid 1 then please (read <a href=\"http://code.google.com/p/ankidroid/wiki/Upgrading?wl=en#Continuing_to_use_AnkiDroid_1.1.3\">these instructions</a>).]]></string>
+    <string name="deck_upgrade_recommended_method"><![CDATA[The recommended upgrade method is to sync with a PC and upgrade with the desktop version of Anki.<br><br>There is also an alternative method where you can upgrade over the internet if you do not have access to a PC, and your collection is not too big.]]></string>
+    <string name="deck_upgrade_more_options_exit">You can exit the upgrade wizard without importing your old cards by clicking the exit button below.</string>
+    <string name="deck_upgrade_more_options_new_collection">You can create a new empty collection by clicking below.</string>
+    <string name="deck_upgrade_more_options_downgrade"><![CDATA[<br><br>If you want to downgrade back to AnkiDroid 1 then please read <a href=\"http://code.google.com/p/ankidroid/wiki/Upgrading?wl=en#Continuing_to_use_AnkiDroid_1.1.3\">these instructions</a>.]]></string>
     <string name="deck_upgrade_create_new_collection">Create new collection</string>
     <string name="deck_upgrade_create_new_collection_title">Create New Collection</string>
     <string name="deck_upgrade_not_import_warning">Are you sure you want to do this? Your old data will not be imported.</string>
@@ -108,9 +110,10 @@
     <string name="upgrade_deck_web_upgrade_exceeds">The total compressed size of your Anki1 decks exceeds the limit that the server can process (50 mb), please try upgrading with a different method.</string>
     <string name="upgrade_deck_web_upgrade_sdcard">The upgrade was completed, but there was an error while unpacking the resulting collection, please ensure that you have enough available disk (needed %1$d mb) and try again, or try upgrading with a different method.</string>
     <string name="export_progress_title">Collection Export</string>
-    <string name="export_progress_exporting">Exporting collection, please wait...</string>
+    <string name="export_progress_exporting">Exporting collection, please wait…</string>
     <string name="upgrade_deck_export_successful">Your old collection has been successfully exported, proceeding with the upgrade process.</string>
     <string name="upgrade_deck_export_error">Error during the export of your old collection. Would you like to continue with the upgrade process anyway (your old collection will be lost)?</string>
     <string name="upgrade_deck_sync_from_ankiweb">Sync from AnkiWeb</string>
     <string name="upgrade_deck_have_you_synced">Are you sure you have upgraded your collection with Anki Desktop 2 and synced with AnkiWeb?</string>
+    <string name="upgrade_deck_dont_upgrade">Don\'t Upgrade</string>
 </resources>
