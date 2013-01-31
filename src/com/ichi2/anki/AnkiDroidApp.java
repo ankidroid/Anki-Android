@@ -40,10 +40,13 @@ import com.ichi2.compat.CompatV9;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Storage;
 import com.ichi2.libanki.hooks.Hooks;
+import org.apache.http.impl.conn.tsccm.ThreadSafeClientConnManager;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.Locale;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
@@ -72,6 +75,7 @@ public class AnkiDroidApp extends Application {
     private Collection mCurrentCollection;
     private int mAccessThreadCount = 0;
     private static final Lock mLock = new ReentrantLock();
+    private static final ExecutorService shutdownConnectionsExecutor = Executors.newSingleThreadExecutor();
 
 
     /** Global hooks */
@@ -410,5 +414,14 @@ public class AnkiDroidApp extends Application {
     	sInstance.mAccessThreadCount = 0;
     	sInstance.mCurrentCollection = null;
 		Log.i(AnkiDroidApp.TAG, "Access has been reset to 0");
+    }
+
+    public static void shutdownConnections(final ThreadSafeClientConnManager cm) {
+        shutdownConnectionsExecutor.submit(new Runnable() {
+            @Override
+            public void run() {
+                cm.shutdown();
+            }
+        });
     }
 }

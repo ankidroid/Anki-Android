@@ -113,7 +113,7 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
         }
 
         try {
-            if ((sInstance != null) && (sInstance.getStatus() != AsyncTask.Status.FINISHED)) {
+            if (sInstance != null && sInstance.getStatus() != AsyncTask.Status.FINISHED && !sInstance.isCancelled()) {
                 sInstance.get();
             }
         } catch (Exception e) {
@@ -1158,7 +1158,7 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
             if (mConnectionManager != null) {
                 ThreadSafeClientConnManager connectionManager = mConnectionManager.get();
                 if (connectionManager != null) {
-                    connectionManager.shutdown();
+                    AnkiDroidApp.shutdownConnections(connectionManager);
                 }
             }
         }
