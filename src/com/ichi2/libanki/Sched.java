@@ -109,7 +109,8 @@ public class Sched {
     private int mToday;
     public long mDayCutoff;
     private boolean mHaveCustomStudy;
-    
+    private boolean mSpreadRev = true;
+
     private int mNewCount;
     private int mLrnCount;
     private int mRevCount;
@@ -205,8 +206,10 @@ public class Sched {
         boolean isLeech = false;
         mCol.markUndo(Collection.UNDO_REVIEW, new Object[]{card});
         card.setReps(card.getReps() + 1);
-        boolean wasNew = (card.getQueue() == 0);
-        if (wasNew) {
+        // former is for logging new cards, latter also covers filt. decks
+        card.setWasNew((card.getType() == 0));
+        boolean wasNewQ = (card.getQueue() == 0);
+        if (wasNewQ) {
             // came from the new queue, move to learning
             card.setQueue(1);
             // if it was a new card, it's now a learning card
@@ -227,7 +230,7 @@ public class Sched {
         }
         if (card.getQueue() == 1 || card.getQueue() == 3) {
             _answerLrnCard(card, ease);
-            if (!wasNew) {
+            if (!wasNewQ) {
                 _updateStats(card, "lrn");
             }
         } else if (card.getQueue() == 2) {
@@ -510,6 +513,14 @@ public class Sched {
 			}
         }
         return new Object[] { decksNet, eta(counts), mCol.cardCount() };
+    }
+
+    public boolean getSpreadRev() {
+        return mSpreadRev;
+    }
+
+    public void setSpreadRev(boolean mSpreadRev) {
+        this.mSpreadRev = mSpreadRev;
     }
 
     public class DeckDueListComparator implements Comparator<JSONObject> {
@@ -1095,7 +1106,7 @@ public class Sched {
         // ease 1=no, 2=yes, 3=remove
         JSONObject conf = _lrnConf(card);
         int type;
-        if (card.getODid() != 0) {
+        if (card.getODid() != 0 && !card.getWasNew()) {
             type = 3;
         } else if (card.getType() == 2) {
             type = 2;
@@ -1126,22 +1137,20 @@ public class Sched {
                 // failed
             } else {
                 card.setLeft(_startingLeft(card));
-                if (card.getODid() != 0) {
-                    boolean resched = _resched(card);
-                    if (conf.has("mult") && resched) {
-                        // review that's lapsed
-                        try {
-                            card.setIvl(Math.max(1, (int) (card.getIvl() * conf.getDouble("mult"))));
-                        } catch (JSONException e) {
-                            throw new RuntimeException(e);
-                        }
-                    } else {
-                        // new card; no ivl adjustment
-                        // pass
+                boolean resched = _resched(card);
+                if (conf.has("mult") && resched) {
+                    // review that's lapsed
+                    try {
+                        card.setIvl(Math.max(1, (int) (card.getIvl() * conf.getDouble("mult"))));
+                    } catch (JSONException e) {
+                        throw new RuntimeException(e);
                     }
-                    if (resched) {
-                        card.setODue(mToday + 1);
-                    }
+                } else {
+                    // new card; no ivl adjustment
+                    // pass
+                }
+                if (resched && card.getODid() != 0) {
+                    card.setODue(mToday + 1);
                 }
             }
             int delay = _delayForGrade(conf, card.getLeft());
@@ -1358,7 +1367,7 @@ public class Sched {
     private void log(long id, int usn, int ease, int ivl, int lastIvl, int factor, long timeTaken, int type) {
         try {
             mCol.getDb().execute("INSERT INTO revlog VALUES (?,?,?,?,?,?,?,?,?)",
-                    new Object[] { Utils.now() * 1000, id, usn, ease, ivl, lastIvl, factor, timeTaken, type });
+                    new Object[]{Utils.now() * 1000, id, usn, ease, ivl, lastIvl, factor, timeTaken, type});
         } catch (SQLiteConstraintException e) {
             try {
                 Thread.sleep(10);
@@ -1673,6 +1682,30 @@ public class Sched {
         }
     }
 
+    private int _fuzzedIvl(int ivl) {
+        int[] minMax = _fuzzedIvlRange(ivl);
+        // Anki's python uses random.randint(a, b) which returns x in [a, b] while the eq Random().nextInt(a, b)
+        // returns x in [0, b-a), hence the +1 diff with libanki
+        return (new Random().nextInt(minMax[1] - minMax[0] + 1)) + minMax[0];
+    }
+
+    public int[] _fuzzedIvlRange(int ivl) {
+        int fuzz;
+        if (ivl < 2) {
+            return new int[]{1, 1};
+        } else if (ivl == 2) {
+            return new int[]{2, 3};
+        } else if (ivl < 7) {
+            fuzz = (int) (ivl * 0.25);
+        } else if (ivl < 30) {
+            fuzz = (int) (ivl * 0.15);
+        } else {
+            fuzz = (int) (ivl * 0.05);
+        }
+        // fuzz at least a day
+        fuzz = Math.max(fuzz, 1);
+        return new int[]{ivl - fuzz, ivl + fuzz};
+    }
 
     /** Integer interval after interval factor and prev+1 constraints applied */
     private int _constrainedIvl(int ivl, JSONObject conf, double prev) {
@@ -1708,6 +1741,9 @@ public class Sched {
      * Given IDEALIVL, return an IVL away from siblings.
      */
     private int _adjRevIvl(Card card, int idealIvl) {
+        if (getSpreadRev()) {
+            idealIvl = _fuzzedIvl(idealIvl);
+        }
         int idealDue = mToday + idealIvl;
         JSONObject conf;
         try {
@@ -1882,8 +1918,8 @@ public class Sched {
                 " ELSE due <= " + mToday + " END) THEN 2 ELSE 0 END)";
         mCol.getDb().executeMany(
                 "UPDATE cards SET odid = (CASE WHEN odid THEN odid ELSE did END), " +
-                "odue = (CASE WHEN odue THEN odue ELSE due END), did = ?, queue = " +
-                queue + ", due = ?, mod = ?, usn = ? WHERE id = ?", data);
+                        "odue = (CASE WHEN odue THEN odue ELSE due END), did = ?, queue = " +
+                        queue + ", due = ?, mod = ?, usn = ? WHERE id = ?", data);
     }
 
 

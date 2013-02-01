@@ -16,12 +16,15 @@
 
 package com.ichi2.libanki.importer;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.Locale;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
+import com.ichi2.libanki.*;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -32,10 +35,6 @@ import android.util.Log;
 import com.ichi2.anki.AnkiDatabaseManager;
 import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.BackupManager;
-import com.ichi2.libanki.Collection;
-import com.ichi2.libanki.Note;
-import com.ichi2.libanki.Storage;
-import com.ichi2.libanki.Utils;
 
 public class Anki2Importer {
 
@@ -57,6 +56,8 @@ public class Anki2Importer {
 
     private static final int GUID = 1;
     private static final int MID = 2;
+
+    private static final int MEDIAPICKLIMIT = 4096;
 
 	public Anki2Importer (Collection col, String file) {
 		mCol = col;
@@ -91,6 +92,9 @@ public class Anki2Importer {
 				for (int i = 0; i < names.length(); i++) {
 					String n = names.getString(i);
 					String o = media.getString(n);
+                    if (!o.startsWith("_") && !o.startsWith("latex-")) {
+                        continue;
+                    }
 					File of = new File(mediaDir + o);
 					if (!of.exists()) {
 						File newFile = new File(fileDir + "/" + n);
@@ -187,7 +191,7 @@ public class Anki2Importer {
             		// bump usn
             		note[4] = usn;
             		// update media references in case of dupes
-//            		TODO: note[6] = _mungeMedia(note[3], note[6]);
+            		note[6] = _mungeMedia((Long) note[MID], (String) note[6]);
             		add.add(note);
             		dirty.add((Long) note[0]);
             		// note we have the added guid
@@ -272,20 +276,22 @@ public class Anki2Importer {
 			}
 			long mid = srcMid;
 			JSONObject srcModel = new JSONObject(mSrc.getModels().get(srcMid).toString());
-			long srcScm = mSrc.getModels().scmhash(srcModel);
+			String srcScm = mSrc.getModels().scmhash(srcModel);
 			while (true) {
 				// missing from target col?
 				if (!mDst.getModels().have(mid)) {
 					// copy it over
 					JSONObject model = new JSONObject(srcModel.toString());
 					model.put("id", mid);
+                    model.put("mod", Utils.intNow());
+                    model.put("usn", mCol.usn());
 					mDst.getModels().update(model);
 					break;
 				}
 				// there's an existing model; do the schemas match?
 				JSONObject dstModel = new JSONObject(mDst.getModels().get(mid).toString());
-				long dstScm = mDst.getModels().scmhash(dstModel);
-				if (srcScm == dstScm) {
+				String dstScm = mDst.getModels().scmhash(dstModel);
+				if (srcScm.equals(dstScm)) {
 					// they do; we can reuse this mid
 					break;
 				}
@@ -321,7 +327,18 @@ public class Anki2Importer {
 					}
 				}
 			}
-			// create in local
+            // Manually create any parents so we can pull in descriptions
+            String head = "";
+            String[] parents = name.split("::");
+            for (int i = 0; i < parents.length - 1; ++i) {
+                if (head.length() > 0) {
+                    head = head.concat("::");
+                }
+                head = head.concat(parents[i]);
+                long idInSrc = mSrc.getDecks().id(head);
+                _did(idInSrc);
+            }
+            // create in local
 			long newid = mDst.getDecks().id(name);
 			// pull conf over
 			if (g.has("conf") && g.getLong("conf") != 1) {
@@ -434,7 +451,7 @@ public class Anki2Importer {
             		} else {
             			card[7] = card[6];
             		}
-            		// tpye
+            		// type
             		if ((Integer)card[6] == 1) {
             			card[6] = 0;
             		}
@@ -473,9 +490,111 @@ public class Anki2Importer {
 
 	private String _mungeMedia(long mid, String fields) {
 		String[] fs = Utils.splitFields(fields);
-		// TODO: repl
+
+        for (int i = 0; i < fs.length; ++i) {
+            for (Pattern p : Media.fMediaRegexps) {
+                Matcher m = p.matcher(fs[i]);
+                StringBuffer sb = new StringBuffer();
+                while (m.find()) {
+                    String fname = m.group(2);
+                    InputStream srcData = _srcMediaData(fname);
+                    InputStream dstData = _dstMediaData(fname);
+                    if (srcData == null) {
+                        // file was not in source, ignore
+                        m.appendReplacement(sb, m.group(0));
+                        continue;
+                    }
+                    // if model-local file exists from a previous import, use that
+                    int extPos = fname.lastIndexOf(".");
+                    if (extPos <= 0) {
+                        extPos = fname.length();
+                    }
+                    String lname = String.format(Locale.US, "%s_%d%s", fname.substring(0, extPos), mid, fname.substring(extPos));
+                    if (mDst.getMedia().have(lname)) {
+                        m.appendReplacement(sb, m.group(0).replace(fname, lname));
+                        continue;
+                    } else if (dstData == null || srcData == dstData) { // if missing or the same, pass unmodified
+                        // need to copy?
+                        if (dstData == null) {
+                            _writeDstMedia(fname, srcData);
+                        }
+                        m.appendReplacement(sb, m.group(0));
+                        continue;
+                    }
+                    // exists but does not match, so we need to dedupe
+                    _writeDstMedia(lname, srcData);
+                    m.appendReplacement(sb, m.group(0).replace(fname, lname));
+                }
+                m.appendTail(sb);
+                fs[i] = sb.toString();
+            }
+        }
 		return fields;
 	}
+
+    /**
+     * Return the contents of the given input stream, limited to Anki2Importer.MEDIAPICKLIMIT bytes
+     * This is only used for comparison of media files with the limited resources of mobile devices
+     */
+    byte[] _mediaPick(InputStream is) {
+        try {
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            byte[] buf = new byte[MEDIAPICKLIMIT];
+            int readLen = 0;
+            int readSoFar = 0;
+            while(true) {
+                readLen = is.read(buf);
+                baos.write(buf);
+                if (readLen == -1) {
+                    break;
+                }
+                readSoFar += readLen;
+                if (readSoFar > MEDIAPICKLIMIT) {
+                    break;
+                }
+            }
+            is.close();
+            byte[] result = baos.toByteArray();
+            return Arrays.copyOf(result, MEDIAPICKLIMIT);
+        } catch (FileNotFoundException e) {
+            return null;
+        } catch (IOException e) {
+            return null;
+        }
+    }
+
+    private InputStream _mediaData(String fname, String dir) {
+        try {
+            return new FileInputStream(new File(fname, dir));
+        } catch (FileNotFoundException e) {
+            return null;
+        }
+    }
+
+    /**
+     * Data for FNAME in src collection.
+     * @return A string containing the contents of fname, limited to Anki2Importer.MEDIAPICKLIMIT bytes
+     */
+    private InputStream _srcMediaData(String fname) {
+        return _mediaData(fname, mSrc.getMedia().getDir());
+    }
+
+    /**
+     * Data for FNAME in src collection.
+     * @return A string containing the contents of fname, limited to Anki2Importer.MEDIAPICKLIMIT bytes
+     */
+    private InputStream _dstMediaData(String fname) {
+        return _mediaData(fname, mDst.getMedia().getDir());
+    }
+
+    private void _writeDstMedia(String fname, InputStream is) {
+        try {
+            Utils.writeToFile(is, fname);
+        } catch (IOException e) {
+            Log.e(AnkiDroidApp.TAG, "Anki2Importer._writeDstMedia: error while copying file", e);
+            throw new RuntimeException(e);
+        }
+    }
 
 	/** post-import cleanup */
 

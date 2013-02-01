@@ -376,8 +376,10 @@ public class AnkiDroidApp extends Application {
         		}
         		sInstance.mCurrentCollection = Storage.Collection(path);
         		sInstance.mAccessThreadCount++;
+        		Log.i(AnkiDroidApp.TAG, "Access to collection is requested: collection has been opened");
         	} else {
         		sInstance.mAccessThreadCount++;
+        		Log.i(AnkiDroidApp.TAG, "Access to collection is requested: collection has not been reopened (count: " + sInstance.mAccessThreadCount + ")");
         	}
             return sInstance.mCurrentCollection;
 		} finally {
@@ -394,6 +396,7 @@ public class AnkiDroidApp extends Application {
     	Log.i(AnkiDroidApp.TAG, "closeCollection");
         try {
         	sInstance.mAccessThreadCount--;
+    		Log.i(AnkiDroidApp.TAG, "Access to collection jas been closed: (count: " + sInstance.mAccessThreadCount + ")");
         	if (sInstance.mAccessThreadCount == 0 && sInstance.mCurrentCollection != null) {
         		Collection col = sInstance.mCurrentCollection;
             	sInstance.mCurrentCollection = null;
@@ -413,5 +416,6 @@ public class AnkiDroidApp extends Application {
     public static void resetAccessThreadCount() {
     	sInstance.mAccessThreadCount = 0;
     	sInstance.mCurrentCollection = null;
+		Log.i(AnkiDroidApp.TAG, "Access has been reset to 0");
     }
 }

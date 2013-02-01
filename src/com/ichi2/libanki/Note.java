@@ -129,7 +129,7 @@ public class Note implements Cloneable {
         if (changeUsn) {
             mUsn = mCol.usn();        	
         }
-        String sfld = Utils.stripHTML(mFields[mCol.getModels().sortIdx(mModel)]);
+        String sfld = Utils.stripHTMLMedia(mFields[mCol.getModels().sortIdx(mModel)]);
         String tags = stringTags();
         long csum = Utils.fieldChecksum(mFields[0]);
         mCol.getDb().execute("INSERT OR REPLACE INTO notes VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
@@ -282,7 +282,7 @@ public class Note implements Cloneable {
                 String.class,
                 "SELECT flds FROM notes WHERE csum = " + csum + " AND id != " + (mId != 0 ? mId : 0) + " AND mid = "
                         + mMid, 0)) {
-            if (Utils.splitFields(flds)[0].equals(val)) {
+            if (Utils.stripHTMLMedia(Utils.splitFields(flds)[0]).equals(Utils.stripHTMLMedia(val))) {
                 return 2;
             }
         }
