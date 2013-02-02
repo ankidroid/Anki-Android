@@ -25,6 +25,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.preference.CheckBoxPreference;
 import android.preference.ListPreference;
@@ -50,7 +51,9 @@ import org.json.JSONObject;
 import com.ichi2.anim.ActivityTransitionAnimation;
 import com.ichi2.anki.R;
 import com.ichi2.anki.receiver.SdCardReceiver;
+import com.ichi2.async.DeckTask;
 import com.ichi2.libanki.Collection;
+import com.ichi2.themes.StyledProgressDialog;
 import com.ichi2.themes.Themes;
 
 /**
@@ -68,7 +71,7 @@ public class DeckOptions extends PreferenceActivity implements OnSharedPreferenc
 
         private Map<String, String> mValues = new HashMap<String, String>();
         private Map<String, String> mSummaries = new HashMap<String, String>();
-
+        private StyledProgressDialog mProgressDialog;
 
         public DeckPreferenceHack() {
             this.cacheValues();
@@ -176,7 +179,14 @@ public class DeckOptions extends PreferenceActivity implements OnSharedPreferenc
                             mOptions.getJSONObject("new").put("initialFactor",
                                     (int) (Integer.parseInt((String) entry.getValue()) * 10));
                         } else if (entry.getKey().equals("newOrder")) {
-                            mOptions.getJSONObject("new").put("order", Integer.parseInt((String) entry.getValue()));
+                            // Sorting is slow, so only do it if we change order
+                            int oldValue = mOptions.getJSONObject("new").getInt("order");
+                            int newValue = Integer.parseInt((String) entry.getValue());
+                            if (oldValue != newValue) {
+                                mOptions.getJSONObject("new").put("order", Integer.parseInt((String) entry.getValue()));
+                                DeckTask.launchDeckTask(DeckTask.TASK_TYPE_REORDER, mReorderHandler,
+                                        new DeckTask.TaskData(new Object[]{mCol, mOptions}));
+                            }
                         } else if (entry.getKey().equals("newPerDay")) {
                             mOptions.getJSONObject("new").put("perDay", Integer.parseInt((String) entry.getValue()));
                         } else if (entry.getKey().equals("newSeparate")) {
@@ -292,6 +302,26 @@ public class DeckOptions extends PreferenceActivity implements OnSharedPreferenc
                 // TODO Auto-generated method stub
                 return null;
             }
+            
+            private DeckTask.TaskListener mReorderHandler = new DeckTask.TaskListener() {
+                @Override
+                public void onPreExecute() {
+                    Resources res = getResources();
+                    mProgressDialog = StyledProgressDialog.show(DeckOptions.this, "",
+                            res.getString(R.string.reordering_cards), true);
+                }
+
+
+                @Override
+                public void onProgressUpdate(DeckTask.TaskData... values) {
+                }
+
+                
+                @Override
+                public void onPostExecute(DeckTask.TaskData result) {
+                    mProgressDialog.dismiss();
+                }
+            };
 
         }
 

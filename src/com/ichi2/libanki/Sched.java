@@ -2744,7 +2744,20 @@ public class Sched {
     }
 
 
-    // resortconf
+    public void resortConf(JSONObject conf) {
+        ArrayList<Long> dids = mCol.getDecks().didsForConf(conf);
+        try {
+            for (long did : dids) {
+                if (conf.getJSONObject("new").getLong("order") == 0) {
+                    randomizeCards(did);
+                } else {
+                    orderCards(did);
+                }
+            }
+        } catch (JSONException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
     /**
      * ************************************************************************* **********************
