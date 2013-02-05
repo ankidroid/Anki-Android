@@ -106,7 +106,7 @@ public class DeckOptions extends PreferenceActivity implements OnSharedPreferenc
                 mValues.put("revSpaceMax", Integer.toString((int) (revOptions.getDouble("fuzz") * 100)));
                 mValues.put("revSpaceMin", revOptions.getString("minSpace"));
                 mValues.put("easyBonus", Integer.toString((int) (revOptions.getDouble("ease4") * 100)));
-                mValues.put("revIvlFct", revOptions.getString("ivlFct"));
+                mValues.put("revIvlFct", Integer.toString((int) (revOptions.getDouble("ivlFct") * 100)));
                 mValues.put("revMaxIvl", revOptions.getString("maxIvl"));
                 // lapse
                 JSONObject lapOptions = mOptions.getJSONObject("lapse");
@@ -202,7 +202,8 @@ public class DeckOptions extends PreferenceActivity implements OnSharedPreferenc
                             mOptions.getJSONObject("rev").put("ease4",
                                     Integer.parseInt((String) entry.getValue()) / 100.0f);
                         } else if (entry.getKey().equals("revIvlFct")) {
-                            mOptions.getJSONObject("rev").put("ivlFct", Double.parseDouble((String) entry.getValue()));
+                            mOptions.getJSONObject("rev").put("ivlFct",
+                                    Integer.parseInt((String) entry.getValue()) / 100.0f);
                         } else if (entry.getKey().equals("revMaxIvl")) {
                             mOptions.getJSONObject("rev").put("maxIvl", Integer.parseInt((String) entry.getValue()));
                         } else if (entry.getKey().equals("lapSteps")) {
