@@ -31,6 +31,7 @@ import android.preference.CheckBoxPreference;
 import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceActivity;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.KeyEvent;
 
@@ -38,6 +39,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -67,16 +69,97 @@ public class DeckOptions extends PreferenceActivity implements OnSharedPreferenc
 
     private BroadcastReceiver mUnmountReceiver = null;
 
+    public class OptionRange {
+        public int min;
+        public int max;
+        
+        public OptionRange(int min, int max) {
+            this.min = min;
+            this.max = max;
+        }
+    }
+        
     public class DeckPreferenceHack implements SharedPreferences {
 
         private Map<String, String> mValues = new HashMap<String, String>();
         private Map<String, String> mSummaries = new HashMap<String, String>();
         private StyledProgressDialog mProgressDialog;
+        private Map<String, OptionRange> mNumericOptions = new HashMap<String, OptionRange>();
+        private Set<String> mBoolOptions = new HashSet<String>();
 
         public DeckPreferenceHack() {
+            mNumericOptions.put("maxAnswerTime", new OptionRange(30, 3600));
+            mNumericOptions.put("newFactor", new OptionRange(100, 999));
+            mNumericOptions.put("newOrder", new OptionRange(0, Integer.MAX_VALUE)); // list preference
+            mNumericOptions.put("newPerDay", new OptionRange(0, 9999));
+            mNumericOptions.put("newGradIvl", new OptionRange(1, 99));
+            mNumericOptions.put("newEasy", new OptionRange(1, 99));
+            mNumericOptions.put("revPerDay", new OptionRange(0, 9999));
+            mNumericOptions.put("revSpaceMax", new OptionRange(0, 100));
+            mNumericOptions.put("revSpaceMin", new OptionRange(0, 99));
+            mNumericOptions.put("easyBonus", new OptionRange(100, 1000));
+            mNumericOptions.put("revIvlFct", new OptionRange(0, 999));
+            mNumericOptions.put("revMaxIvl", new OptionRange(1, 99999));
+            mNumericOptions.put("lapMinIvl", new OptionRange(1, 99));
+            mNumericOptions.put("lapLeechThres", new OptionRange(0, 99));
+            mNumericOptions.put("lapLeechAct", new OptionRange(0, Integer.MAX_VALUE)); // list preference
+            mNumericOptions.put("lapNewIvl", new OptionRange(0, 100));
+            
+            mBoolOptions.add("showAnswerTimer");
+            mBoolOptions.add("autoPlayAudio");
+            mBoolOptions.add("replayQuestion");
+            mBoolOptions.add("newSeparate");
+                        
             this.cacheValues();
         }
 
+        public int getValidatedNumericInput(String key, Object value) {
+            String valueString = (String) value;
+            int valueInt;
+            
+            if (TextUtils.isEmpty(valueString)) {
+                // Resort to using currently set value if user enters nothing
+                valueInt = Integer.parseInt(mValues.get(key));
+            } else {
+                valueInt = Integer.parseInt(valueString);
+            }
+
+            if (valueInt < mNumericOptions.get(key).min) {
+                return mNumericOptions.get(key).min;
+            } else if (valueInt > mNumericOptions.get(key).max) {
+                return mNumericOptions.get(key).max;
+            } else {
+                return valueInt;
+            }
+        }
+        
+        public JSONArray getValidatedStepsInput(String steps) {
+            JSONArray ja = new JSONArray();
+            if (TextUtils.isEmpty(steps)) {
+                return ja;
+            }
+            for (String s : steps.split("\\s+")) {
+                try {
+                    float f = Float.parseFloat(s);
+                    // Steps can't be 0, negative, or non-serializable (too large), so it's invalid
+                    if (f <= 0 || Float.isInfinite(f)) {
+                        return null;
+                    }
+                    // Use whole numbers if we can (but still allow decimals)
+                    int i = (int)f;
+                    if (i == f) {
+                        ja.put(i);
+                    } else {
+                        ja.put(f);
+                    }
+                } catch (NumberFormatException e) {
+                    return null;
+                } catch (JSONException e) {
+                    throw new RuntimeException();
+                }
+            }
+            return ja;
+        }
 
         protected void cacheValues() {
             Log.i(AnkiDroidApp.TAG, "DeckOptions - CacheValues");
@@ -93,7 +176,7 @@ public class DeckOptions extends PreferenceActivity implements OnSharedPreferenc
                 mValues.put("replayQuestion", Boolean.toString(mOptions.getBoolean("replayq")));
                 // new
                 JSONObject newOptions = mOptions.getJSONObject("new");
-                mValues.put("newSteps", getDelays(newOptions.getJSONArray("delays")));
+                mValues.put("newSteps", getSteps(newOptions.getJSONArray("delays")));
                 mValues.put("newGradIvl", newOptions.getJSONArray("ints").getString(0));
                 mValues.put("newEasy", newOptions.getJSONArray("ints").getString(1));
                 mValues.put("newFactor", Integer.toString(newOptions.getInt("initialFactor") / 10));
@@ -106,11 +189,11 @@ public class DeckOptions extends PreferenceActivity implements OnSharedPreferenc
                 mValues.put("revSpaceMax", Integer.toString((int) (revOptions.getDouble("fuzz") * 100)));
                 mValues.put("revSpaceMin", revOptions.getString("minSpace"));
                 mValues.put("easyBonus", Integer.toString((int) (revOptions.getDouble("ease4") * 100)));
-                mValues.put("revIvlFct", revOptions.getString("ivlFct"));
+                mValues.put("revIvlFct", Integer.toString((int) (revOptions.getDouble("ivlFct") * 100)));
                 mValues.put("revMaxIvl", revOptions.getString("maxIvl"));
                 // lapse
                 JSONObject lapOptions = mOptions.getJSONObject("lapse");
-                mValues.put("lapSteps", getDelays(lapOptions.getJSONArray("delays")));
+                mValues.put("lapSteps", getSteps(lapOptions.getJSONArray("delays")));
                 mValues.put("lapNewIvl", Integer.toString((int) (lapOptions.getDouble("mult") * 100)));
                 mValues.put("lapMinIvl", lapOptions.getString("minInt"));
                 mValues.put("lapLeechThres", lapOptions.getString("leechFails"));
@@ -120,11 +203,10 @@ public class DeckOptions extends PreferenceActivity implements OnSharedPreferenc
             	finish();
             }
         }
-
+        
         public class Editor implements SharedPreferences.Editor {
 
             private ContentValues mUpdate = new ContentValues();
-
 
             @Override
             public SharedPreferences.Editor clear() {
@@ -140,86 +222,106 @@ public class DeckOptions extends PreferenceActivity implements OnSharedPreferenc
 
                 try {
                     for (Entry<String, Object> entry : mUpdate.valueSet()) {
-                        Log.i(AnkiDroidApp.TAG, "Change value for key '" + entry.getKey() + "': " + entry.getValue());
-                        if (entry.getKey().equals("name")) {
-                            if (!mCol.getDecks().rename(mDeck, (String) entry.getValue())) {
-                                Themes.showThemedToast(DeckOptions.this,
-                                        getResources().getString(R.string.rename_error, mDeck.get("name")), false);
+                        String key =  entry.getKey();
+                        Log.i(AnkiDroidApp.TAG, "Change value for key '" + key + "': " + entry.getValue());
+
+                        if (mNumericOptions.containsKey(key)) {
+                            // All numeric options must be non-empty and within range.
+                            int value = getValidatedNumericInput(key, entry.getValue());
+                        
+                            if (key.equals("maxAnswerTime")) {
+                                mOptions.put("maxTaken", value);
+                            } else if (key.equals("newFactor")) {
+                                mOptions.getJSONObject("new").put("initialFactor", value * 10);
+                            } else if (key.equals("newOrder")) {
+                                // Sorting is slow, so only do it if we change order
+                                int oldValue = mOptions.getJSONObject("new").getInt("order");
+                                if (oldValue != value) {
+                                    mOptions.getJSONObject("new").put("order", value);
+                                    DeckTask.launchDeckTask(DeckTask.TASK_TYPE_REORDER, mReorderHandler,
+                                            new DeckTask.TaskData(new Object[]{mCol, mOptions}));
+                                }
+                                mOptions.getJSONObject("new").put("order", value);
+                            } else if (key.equals("newPerDay")) {
+                                mOptions.getJSONObject("new").put("perDay", value);
+                            } else if (key.equals("newGradIvl")) {
+                                JSONArray ja = new JSONArray(); //[graduating, easy]
+                                ja.put(value);
+                                ja.put(mOptions.getJSONObject("new").getJSONArray("ints").get(1));
+                                mOptions.getJSONObject("new").put("ints", ja);
+                            } else if (key.equals("newEasy")) {
+                                JSONArray ja = new JSONArray(); //[graduating, easy]
+                                ja.put(mOptions.getJSONObject("new").getJSONArray("ints").get(0));
+                                ja.put(value);
+                                mOptions.getJSONObject("new").put("ints", ja);
+                            } else if (key.equals("revPerDay")) {
+                                mOptions.getJSONObject("rev").put("perDay", value);
+                            } else if (key.equals("revSpaceMax")) {
+                                mOptions.getJSONObject("rev").put("fuzz", value / 100.0f);
+                            } else if (key.equals("revSpaceMin")) {
+                                mOptions.getJSONObject("rev").put("minSpace", value);
+                            } else if (key.equals("easyBonus")) {
+                                mOptions.getJSONObject("rev").put("ease4", value / 100.0f);
+                            } else if (key.equals("revIvlFct")) {
+                                mOptions.getJSONObject("rev").put("ivlFct", value / 100.0f);
+                            } else if (key.equals("revMaxIvl")) {
+                                mOptions.getJSONObject("rev").put("maxIvl", value);
+                            } else if (key.equals("lapMinIvl")) {
+                                mOptions.getJSONObject("lapse").put("minInt", value);
+                            } else if (key.equals("lapLeechThres")) {
+                                mOptions.getJSONObject("lapse").put("leechFails", value);
+                            } else if (key.equals("lapLeechAct")) {
+                                mOptions.getJSONObject("lapse").put("leechAction", value);
+                            } else if (key.equals("lapNewIvl")) {
+                                mOptions.getJSONObject("lapse").put("mult", value / 100.0f);
                             }
-                        } else if (entry.getKey().equals("desc")) {
-                            mDeck.put("desc", (String) entry.getValue());
-                            mCol.getDecks().save(mDeck);
-                        } else if (entry.getKey().equals("deckConf")) {
-                            mCol.getDecks().setConf(mDeck, Long.parseLong((String) entry.getValue()));
-                            mOptions = mCol.getDecks().confForDid(mDeck.getLong("id"));
-                        } else if (entry.getKey().equals("maxAnswerTime")) {
-                            mOptions.put("maxTaken", Integer.parseInt((String) entry.getValue()));
-                        } else if (entry.getKey().equals("showAnswerTimer")) {
-                            mOptions.put("timer", (Boolean) entry.getValue() ? 1 : 0);
-                        } else if (entry.getKey().equals("autoPlayAudio")) {
-                            mOptions.put("autoplay", (Boolean) entry.getValue());
-                        } else if (entry.getKey().equals("replayQuestion")) {
-                            mOptions.put("replayq", (Boolean) entry.getValue());
-                        } else if (entry.getKey().equals("newSteps")) {
-                            String steps = (String) entry.getValue();
-                            if (steps.matches("[0-9\\s]*")) {
-                                mOptions.getJSONObject("new").put("delays", getDelays(steps));
+                        } else if (mBoolOptions.contains(key)){
+                            boolean enabled = (Boolean) entry.getValue();
+                            
+                            if (key.equals("showAnswerTimer")) {
+                                mOptions.put("timer", enabled ? 1 : 0);
+                            } else if (key.equals("autoPlayAudio")) {
+                                mOptions.put("autoplay", enabled);
+                            } else if (key.equals("replayQuestion")) {
+                                mOptions.put("replayq", enabled);
+                            } else if (key.equals("newSeparate")) {
+                                mOptions.getJSONObject("new").put("separate", enabled);
                             }
-                        } else if (entry.getKey().equals("newGradIvl")) {
-                            JSONArray ja = new JSONArray();
-                            ja.put(Integer.parseInt((String) entry.getValue()));
-                            ja.put(mOptions.getJSONObject("new").getJSONArray("ints").get(1));
-                            mOptions.getJSONObject("new").put("ints", ja);
-                        } else if (entry.getKey().equals("newEasy")) {
-                            JSONArray ja = new JSONArray();
-                            ja.put(mOptions.getJSONObject("new").getJSONArray("ints").get(0));
-                            ja.put(Integer.parseInt((String) entry.getValue()));
-                            mOptions.getJSONObject("new").put("ints", ja);
-                        } else if (entry.getKey().equals("initialFactor")) {
-                            mOptions.getJSONObject("new").put("initialFactor",
-                                    (int) (Integer.parseInt((String) entry.getValue()) * 10));
-                        } else if (entry.getKey().equals("newOrder")) {
-                            // Sorting is slow, so only do it if we change order
-                            int oldValue = mOptions.getJSONObject("new").getInt("order");
-                            int newValue = Integer.parseInt((String) entry.getValue());
-                            if (oldValue != newValue) {
-                                mOptions.getJSONObject("new").put("order", Integer.parseInt((String) entry.getValue()));
-                                DeckTask.launchDeckTask(DeckTask.TASK_TYPE_REORDER, mReorderHandler,
-                                        new DeckTask.TaskData(new Object[]{mCol, mOptions}));
+                        } else {
+                            // The rest of the options are all strings
+                            String value =  (String) entry.getValue();
+                            
+                            if (key.equals("name")) {
+                                if (!mCol.getDecks().rename(mDeck, value)) {
+                                    Themes.showThemedToast(DeckOptions.this,
+                                            getResources().getString(R.string.rename_error, mDeck.get("name")), false);
+                                }
+                            } else if (key.equals("desc")) {
+                                mDeck.put("desc", value);
+                                mCol.getDecks().save(mDeck);
+                            } else if (key.equals("deckConf")) {
+                                mCol.getDecks().setConf(mDeck, Long.parseLong(value));
+                                mOptions = mCol.getDecks().confForDid(mDeck.getLong("id"));
+                            } else if (key.equals("newSteps")) {
+                                JSONArray steps = getValidatedStepsInput(value);
+                                if (steps == null) {
+                                    Themes.showThemedToast(DeckOptions.this,
+                                            getResources().getString(R.string.steps_error), false);
+                                } else if (steps.length() == 0) {
+                                    Themes.showThemedToast(DeckOptions.this,
+                                            getResources().getString(R.string.steps_min_error), false);
+                                } else {
+                                    mOptions.getJSONObject("new").put("delays", steps);
+                                }
+                            } else if (key.equals("lapSteps")) {
+                                JSONArray steps = getValidatedStepsInput(value);
+                                if (steps != null) {
+                                    mOptions.getJSONObject("lapse").put("delays", steps);
+                                } else {
+                                    Themes.showThemedToast(DeckOptions.this,
+                                            getResources().getString(R.string.steps_error), false);
+                                }
                             }
-                        } else if (entry.getKey().equals("newPerDay")) {
-                            mOptions.getJSONObject("new").put("perDay", Integer.parseInt((String) entry.getValue()));
-                        } else if (entry.getKey().equals("newSeparate")) {
-                            mOptions.getJSONObject("new").put("separate", (Boolean) entry.getValue());
-                        } else if (entry.getKey().equals("revPerDay")) {
-                            mOptions.getJSONObject("rev").put("perDay", Integer.parseInt((String) entry.getValue()));
-                        } else if (entry.getKey().equals("revSpaceMax")) {
-                            mOptions.getJSONObject("rev").put("fuzz",
-                                    Integer.parseInt((String) entry.getValue()) / 100.0f);
-                        } else if (entry.getKey().equals("revSpaceMin")) {
-                            mOptions.getJSONObject("rev").put("minSpace", Integer.parseInt((String) entry.getValue()));
-                        } else if (entry.getKey().equals("easyBonus")) {
-                            mOptions.getJSONObject("rev").put("ease4",
-                                    Integer.parseInt((String) entry.getValue()) / 100.0f);
-                        } else if (entry.getKey().equals("revIvlFct")) {
-                            mOptions.getJSONObject("rev").put("ivlFct", Double.parseDouble((String) entry.getValue()));
-                        } else if (entry.getKey().equals("revMaxIvl")) {
-                            mOptions.getJSONObject("rev").put("maxIvl", Integer.parseInt((String) entry.getValue()));
-                        } else if (entry.getKey().equals("lapSteps")) {
-                            String steps = (String) entry.getValue();
-                            if (steps.matches("[0-9\\s]*")) {
-                                mOptions.getJSONObject("lapse").put("delays", getDelays(steps));
-                            }
-                        } else if (entry.getKey().equals("lapNewIvl")) {
-                            mOptions.getJSONObject("lapse").put("mult", Float.parseFloat((String) entry.getValue()) / 100);
-                        } else if (entry.getKey().equals("lapMinIvl")) {
-                            mOptions.getJSONObject("lapse").put("minInt", Integer.parseInt((String) entry.getValue()));
-                        } else if (entry.getKey().equals("lapLeechThres")) {
-                            mOptions.getJSONObject("lapse").put("leechFails",
-                                    Integer.parseInt((String) entry.getValue()));
-                        } else if (entry.getKey().equals("lapLeechAct")) {
-                            mOptions.getJSONObject("lapse").put("leechAction",
-                                    Integer.parseInt((String) entry.getValue()));
                         }
                     }
                 } catch (JSONException e) {
@@ -531,7 +633,7 @@ public class DeckOptions extends PreferenceActivity implements OnSharedPreferenc
     }
 
 
-    public static String getDelays(JSONArray a) {
+    public static String getSteps(JSONArray a) {
         StringBuilder sb = new StringBuilder();
         try {
             for (int i = 0; i < a.length(); i++) {
@@ -543,14 +645,6 @@ public class DeckOptions extends PreferenceActivity implements OnSharedPreferenc
         return sb.toString().trim();
     }
 
-
-    public static JSONArray getDelays(String delays) {
-        JSONArray ja = new JSONArray();
-        for (String s : delays.split(" ")) {
-            ja.put(Integer.parseInt(s));
-        }
-        return ja;
-    }
 
     public class JSONNameComparator implements Comparator<JSONObject> {
         @Override

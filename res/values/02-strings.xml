@@ -146,4 +146,6 @@
     <string name="restart_upgrade_process">Restart upgrade process</string>
     <string name="exit_wizard">Exit Wizard</string>
 
+<string name="steps_error">Steps must be numbers greater than 0</string>
+<string name="steps_min_error">At least one step is required</string>
 </resources>
