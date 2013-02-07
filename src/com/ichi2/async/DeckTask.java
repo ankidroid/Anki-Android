@@ -73,6 +73,7 @@ public class DeckTask extends
 	public static final int TASK_TYPE_IMPORT_REPLACE = 29;
     public static final int TASK_TYPE_SEARCH_CARDS = 30;
     public static final int TASK_TYPE_EXPORT_APKG = 31;
+    public static final int TASK_TYPE_REORDER = 32;
     
 	private static DeckTask sInstance;
 	private static DeckTask sOldInstance;
@@ -238,6 +239,9 @@ public class DeckTask extends
 			
 		case TASK_TYPE_IMPORT_REPLACE:
 			return doInBackgroundImportReplace(params);
+			
+		case TASK_TYPE_REORDER:
+                    return doInBackgroundReorder(params);
 
             case TASK_TYPE_EXPORT_APKG:
                 return doInBackgroundExportApkg(params);
@@ -1149,6 +1153,15 @@ public class DeckTask extends
 			col.getDb().getDatabase().endTransaction();
 		}
 	}
+	
+        private TaskData doInBackgroundReorder(TaskData... params) {
+            Log.i(AnkiDroidApp.TAG, "doInBackgroundReorder");
+            Object[] data = params[0].getObjArray();
+            Collection col = (Collection) data[0];
+            JSONObject conf = (JSONObject) data[1];
+            col.getSched().resortConf(conf);
+            return new TaskData(true);
+        }
 
 	public static interface TaskListener {
 		public void onPreExecute();

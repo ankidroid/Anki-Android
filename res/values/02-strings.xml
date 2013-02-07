@@ -60,7 +60,8 @@
 <string name="select">Select</string>
 
 <string name="saving_changes">Saving changes...</string>
-
+<string name="reordering_cards">Reordering cards...</string>
+    
 <plurals name="timebox_reached">
   <item quantity="one">1 card studied in %2$s</item>
   <item quantity="other">%1$d cards studied in %2$s</item>
