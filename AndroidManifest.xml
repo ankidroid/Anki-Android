@@ -21,8 +21,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.ichi2.anki"
     android:installLocation="auto"
-    android:versionCode="31"
-    android:versionName="2.0.1beta5" >
+    android:versionCode="32"
+    android:versionName="2.1alpha1" >
 
     <instrumentation
         android:name="android.test.InstrumentationTestRunner"
