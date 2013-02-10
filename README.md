@@ -28,7 +28,7 @@ To contribute, you should clone this repository and build on top of one of the r
 
 ### Step 1: Fork the repository
 
-Click the `Fork` button at the top of the main repository page to create your own fork.
+Go to the [ankidroid organization repository](https://github.com/ankidroid/Anki-Android) and click the `Fork` button at the top of the main repository page to create your own fork.
 
 ### Step 2: Check out the repository
 
