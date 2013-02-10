@@ -539,7 +539,22 @@ public class Decks {
     }
 
 
-    // didsforConf
+    public ArrayList<Long> didsForConf(JSONObject conf) {
+        ArrayList<Long> dids = new ArrayList<Long>();
+        Iterator<JSONObject> it = mDecks.values().iterator();
+        try {
+            while (it.hasNext()) {
+                JSONObject deck = it.next();
+                if (deck.has("conf") && deck.getLong("conf") == conf.getLong("id")) {
+                    dids.add(deck.getLong("id"));
+                }
+            }
+            return dids;
+        } catch (JSONException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    
     // restoretodefault
 
     /**

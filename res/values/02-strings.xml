@@ -60,7 +60,8 @@
 <string name="select">Select</string>
 
 <string name="saving_changes">Saving changes...</string>
-
+<string name="reordering_cards">Reordering cards...</string>
+    
 <plurals name="timebox_reached">
   <item quantity="one">1 card studied in %2$s</item>
   <item quantity="other">%1$d cards studied in %2$s</item>
@@ -145,4 +146,6 @@
     <string name="restart_upgrade_process">Restart upgrade process</string>
     <string name="exit_wizard">Exit Wizard</string>
 
+<string name="steps_error">Steps must be numbers greater than 0</string>
+<string name="steps_min_error">At least one step is required</string>
 </resources>
