@@ -7,7 +7,6 @@ For more details see:
 ## Future releases
 
 The branches for future releases are:  
-* Maintenance release: [v2.0.1-dev](https://github.com/ankidroid/Anki-Android/tree/v2.0.1-dev)  
 * Feature release: [v2.1-dev](https://github.com/ankidroid/Anki-Android/tree/v2.1-dev)
 
 To contribute, please base your changes on one of the two branches above and
@@ -18,6 +17,7 @@ Close to a release, you might be asked to contribute to new features a next rele
 ## Past releases
 
 To browse the code of previous releases, use one of the tags:  
+* 2.0.1 Release: [v2.0.1](https://github.com/ankidroid/Anki-Android/tree/v2.0.1)
 * 2.0 Release: [v2.0](https://github.com/ankidroid/Anki-Android/tree/v2.0)
 
 ## Contributing
@@ -44,8 +44,6 @@ Fetch the latest version of the AnkiDroid repository:
 
 Create a new feature branch for what you want to contribute:  
 `git checkout -b feature-name ankidroid/v2.1-dev`
-
-Note that if the feature is meant for the maintenance branch, the command should use `v2.0.1-dev` instead of `v2.1-dev`.
 
 ### Step 4: Make your changes
 
