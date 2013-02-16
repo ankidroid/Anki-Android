@@ -63,7 +63,9 @@
         <item name="android:radioButtonStyle">@style/White.CompoundButton.RadioButton</item>
 
         <!-- Dialog styles -->
+        <!--  TODO: uncomment after bumping API level
         <item name="android:actionBarStyle">@style/White.ActionBarStyle</item>
+-->
 
         <!-- Dialog styles -->
         <item name="android:alertDialogStyle">@style/White.AlertDialog</item>

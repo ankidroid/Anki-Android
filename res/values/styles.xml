@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
     <!-- Blue Theme -->
     <style name="Blue">
         <item name="android:background">@color/reviewer_background</item>
@@ -126,6 +126,7 @@
     </style>
     <style name="White.Button" parent="@android:style/Widget.Button">
         <item name="android:background">@drawable/white_btn_default</item>
+        <item name="android:textColor">@color/white_buttontext</item>
     </style>
     <style name="White.Button.Small" parent="@android:style/Widget.Button.Small">
         <item name="android:background">@drawable/white_btn_small</item>
@@ -192,10 +193,12 @@
         <item name="android:checkMark">@drawable/blue_btn_radio</item>
     </style>
 
+    <!-- TODO: uncomment after bumping API level
     <style name="White.ActionBarStyle" parent="@android:style/Widget.Holo.ActionBar">
        <item name="android:background">@color/actionbar_background</item>
        
     </style>
+    -->
 
     <!-- Widget Elements -->
     <style name="Widget.ProgressBar.Horizontal" parent="@android:style/Widget.ProgressBar.Horizontal">

@@ -91,6 +91,7 @@
 	<!-- colors for white theme -->
 	<color name="white_background">#f5f5f5</color>
 	<color name="white_background_night">#3d3d3d</color>
+	<color name="white_buttontext">#10171d</color>
 
 	<!-- top bar colors in reviewer -->
 	<color name="blue">#000099</color>
