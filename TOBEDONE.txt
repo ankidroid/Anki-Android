@@ -1,6 +1,0 @@
-Reminder functions which are not yet ported (but should be done sooner or later):
-
-Finder.java:
-- _findModel
-- _findTemplate
-- _findField
