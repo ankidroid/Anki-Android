@@ -43,7 +43,7 @@ Fetch the latest version of the AnkiDroid repository:
 `git fetch ankidroid`
 
 Create a new feature branch for what you want to contribute:  
-`git checkout -b feature-name ankidroid/v2.1-dev`
+`git checkout --no-track ankidroid/v2.1-dev -b feature-name`
 
 ### Step 4: Make your changes
 
