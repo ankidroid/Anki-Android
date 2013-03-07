@@ -126,6 +126,7 @@
     </style>
     <style name="White.Button" parent="@android:style/Widget.Button">
         <item name="android:background">@drawable/white_btn_default</item>
+        <item name="android:textColor">@color/white_buttontext</item>
     </style>
     <style name="White.Button.Small" parent="@android:style/Widget.Button.Small">
         <item name="android:background">@drawable/white_btn_small</item>
