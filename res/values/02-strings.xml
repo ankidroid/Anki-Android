@@ -94,6 +94,7 @@
 
 <string name="rename">Rename</string>
 <string name="rename_error">Deck %s could not be renamed</string>
+<string name="default_conf_delete_error">The default options group can\'t be removed</string>
 
 <plurals name="factadder_cards_added">
   <item quantity="one">1 card added</item>

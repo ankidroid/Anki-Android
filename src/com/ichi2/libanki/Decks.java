@@ -509,10 +509,10 @@ public class Decks {
         JSONObject c;
         long id;
         try {
-            c = new JSONObject(defaultConf);
+            c = new JSONObject(cloneFrom);
             while (true) {
                 id = Utils.intNow(1000);
-                if (!mDconf.containsKey(new Long(id))) {
+                if (!mDconf.containsKey(Long.valueOf(id))) {
                     break;
                 }
             }
@@ -521,13 +521,32 @@ public class Decks {
         } catch (JSONException e) {
             throw new RuntimeException(e);
         }
-        mDconf.put(new Long(id), c);
+        mDconf.put(Long.valueOf(id), c);
         save(c);
         return id;
     }
 
-
-    // remConf
+    /**
+     * Remove a configuration and update all decks using it.
+     */
+    public void remConf(long id) {
+        mCol.modSchema();
+        mDconf.remove(Long.valueOf(id));
+        for (JSONObject g : all()) {
+            // ignore cram decks
+            if (!g.has("conf")) {
+                continue;
+            }
+            try {
+                if (g.getString("conf").equals(Long.toString(id))) {
+                    g.put("conf", 1);
+                    save(g);
+                }
+            } catch (JSONException e) {
+                throw new RuntimeException(e);
+            }
+        }
+    }
 
     public void setConf(JSONObject deck, long id) {
         try {
@@ -555,7 +574,22 @@ public class Decks {
         }
     }
     
-    // restoretodefault
+    public void restoreToDefault(JSONObject conf) {
+        try {
+            int oldOrder = conf.getJSONObject("new").getInt("order");
+            JSONObject newConf = new JSONObject(defaultConf);
+            newConf.put("id", conf.getLong("id"));
+            newConf.put("name", conf.getString("name"));
+            mDconf.put(conf.getLong("id"), newConf);
+            save(newConf);
+            // if it was previously randomized, resort
+            if (oldOrder == 0) {
+                mCol.getSched().resortConf(newConf);
+            }
+        } catch (JSONException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
     /**
      * Deck utils *************************************************************** ********************************

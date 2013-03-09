@@ -24,8 +24,8 @@
 		android:key="desc" />
 	<PreferenceCategory android:title="@string/deck_conf_pref_cat_options">
 	<ListPreference
-            	android:title="@string/deck_conf_conf_set"
-		android:key="deckConf"/>
+           	android:title="@string/deck_conf_group"
+           	android:key="deckConf"/>
 	<PreferenceScreen android:title="@string/deck_conf_new_cards">
 		<EditTextPreference
         	    	android:title="@string/deck_conf_steps"
@@ -126,36 +126,60 @@
 			android:title="@string/deck_conf_leech_action"
 			android:key="lapLeechAct"/>
 	</PreferenceScreen>
-	<PreferenceScreen android:title="@string/deck_conf_general">
-		<EditTextPreference
-        	    	android:title="@string/deck_conf_max_time"
-        	    	android:summary="@string/deck_conf_seconds"
-        	    	android:numeric="integer"
-        	    	android:maxLength="4"
-		    	android:key="maxAnswerTime" />
-		<CheckBoxPreference
-			android:title="@string/deck_conf_timer"
-			android:key="showAnswerTimer" />
-		<CheckBoxPreference
-			android:title="@string/deck_conf_autoplay"
-			android:key="autoPlayAudio" />
-		<CheckBoxPreference
-			android:title="@string/deck_conf_replayq"
-        	android:summary="@string/deck_conf_replayq_summ"
-			android:key="replayQuestion" />
-			</PreferenceScreen>
-<!--
-    	<PreferenceScreen android:title="@string/deck_conf_add_conf">
-		<PreferenceScreen android:title="@string/deck_conf_add"
-		    android:enabled="false"
-			android:key="confAdd"/>
-		<PreferenceScreen android:title="@string/deck_conf_ren"
-		    android:enabled="false"
-			android:key="confRen"/>
-		<PreferenceScreen android:title="@string/deck_conf_rem"
-		    android:enabled="false"
-			android:key="confRem"/>
-		</PreferenceScreen>
--->	
-	</PreferenceCategory>
+    <PreferenceScreen android:title="@string/deck_conf_general" >
+        <EditTextPreference
+            android:maxLength="4"
+            android:numeric="integer"
+            android:summary="@string/deck_conf_seconds"
+            android:title="@string/deck_conf_max_time"
+            android:key="maxAnswerTime" />
+        <CheckBoxPreference
+            android:title="@string/deck_conf_timer"
+            android:key="showAnswerTimer" />
+        <CheckBoxPreference
+            android:title="@string/deck_conf_autoplay"
+            android:key="autoPlayAudio" />
+        <CheckBoxPreference
+            android:summary="@string/deck_conf_replayq_summ"
+            android:title="@string/deck_conf_replayq"
+            android:key="replayQuestion" />
+    </PreferenceScreen>
+    <PreferenceScreen android:title="@string/deck_conf_manage" >
+        <Preference
+            android:enabled="false"
+            android:title="@string/deck_conf_current_group"
+            android:key="currentConf" />
+        <EditTextPreference
+            android:summary="@string/deck_conf_add_summ"
+            android:title="@string/deck_conf_add"
+            android:key="confAdd" />
+        <com.ichi2.preferences.CustomDialogPreference
+            android:dialogIcon="@android:drawable/ic_dialog_alert"
+            android:dialogMessage="@string/deck_conf_remove_message"
+            android:dialogTitle="@string/deck_conf_remove_title"
+            android:negativeButtonText="@string/no"
+            android:positiveButtonText="@string/yes"
+            android:title="@string/deck_conf_remove"
+            android:key="confRemove" />
+        <EditTextPreference
+            android:title="@string/deck_conf_rename"
+            android:key="confRename" />
+        <com.ichi2.preferences.CustomDialogPreference
+            android:dialogIcon="@android:drawable/ic_dialog_alert"
+            android:dialogMessage="@string/deck_conf_reset_message"
+            android:dialogTitle="@string/deck_conf_reset_title"
+            android:negativeButtonText="@string/no"
+            android:positiveButtonText="@string/yes"
+            android:title="@string/deck_conf_reset_title"
+            android:key="confRestore" />
+        <com.ichi2.preferences.CustomDialogPreference
+            android:dialogIcon="@android:drawable/ic_dialog_alert"
+            android:dialogMessage="@string/deck_conf_set_subdecks_message"
+            android:dialogTitle="@string/deck_conf_set_subdecks_title"
+            android:negativeButtonText="@string/no"
+            android:positiveButtonText="@string/yes"
+            android:title="@string/deck_conf_set_subdecks"
+            android:key="confSetSubdecks" />
+    </PreferenceScreen>
+    </PreferenceCategory>
 </PreferenceScreen>

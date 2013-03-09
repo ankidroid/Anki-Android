@@ -250,13 +250,16 @@
 <!-- Deck configurations -->
 <string name="deck_conf_deck_name">Deck name</string>
 <string name="deck_conf_deck_description">Deck description</string>
-<string name="deck_conf_conf_set">Options group</string>
 <string name="deck_conf_pref_cat_options">Options</string>
+<string name="deck_conf_group">Group</string>
+<plurals name="deck_conf_group_summ">
+  <item quantity="one">%1$s\n1 deck uses this group</item>
+  <item quantity="other">%1$s\n%2$d decks use this group</item>
+</plurals>
 <string name="deck_conf_new_cards">New cards</string>
 <string name="deck_conf_rev_cards">Reviews</string>
 <string name="deck_conf_lps_cards">Lapses</string>
 <string name="deck_conf_general">General</string>
-<string name="deck_conf_add_conf">Add/delete options</string>
 <string name="deck_conf_steps">Steps (in minutes)</string>
 <string name="deck_conf_order">Order</string>
 <string name="deck_conf_new_cards_day">New cards/day</string>
@@ -283,9 +286,25 @@
 <string name="deck_conf_autoplay">Automatically play audio</string>
 <string name="deck_conf_replayq">Replay Question</string>
 <string name="deck_conf_replayq_summ">When answer shown, replay both question and answer audio</string>
-<string name="deck_conf_add">Add configuration</string>
-<string name="deck_conf_ren">Rename configuration</string>
-<string name="deck_conf_rem">Remove configuration</string>
+<string name="deck_conf_manage">Group management</string>
+<string name="deck_conf_current_group">Current group</string>
+<string name="deck_conf_rename">Rename</string>
+<string name="deck_conf_reset">Restore defaults</string>
+<string name="deck_conf_reset_title">Restore defaults</string>
+<string name="deck_conf_reset_message">Restore current options group to default values?</string>
+<string name="deck_conf_add">Add</string>
+<string name="deck_conf_add_summ">Create a copy of the current options group</string>
+<string name="deck_conf_remove">Remove</string>
+<string name="deck_conf_remove_title">Remove</string>
+<string name="deck_conf_remove_message">Remove current options group?</string>
+<string name="deck_conf_set_subdecks">Set for all subdecks</string>
+<plurals name="deck_conf_set_subdecks_summ">
+  <item quantity="one">1 subdeck will use this group</item>
+  <item quantity="other">%s subdecks will use this group</item>
+</plurals>
+<string name="deck_conf_set_subdecks_title">Set for all subdecks</string>
+<string name="deck_conf_set_subdecks_message">Set current options group for all of this deck\'s subdecks?</string>
+
 <string name="pref_cat_tibetan">Tibetan Support</string>
 <string name="pref_cat_languages_advanced">Advanced support for typefaces</string>
 <string name="pref_enable_tibetan">Enable Tibetan Support</string>
