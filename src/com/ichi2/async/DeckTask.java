@@ -74,6 +74,10 @@ public class DeckTask extends
     public static final int TASK_TYPE_SEARCH_CARDS = 30;
     public static final int TASK_TYPE_EXPORT_APKG = 31;
     public static final int TASK_TYPE_REORDER = 32;
+    public static final int TASK_TYPE_CONF_CHANGE = 33;
+    public static final int TASK_TYPE_CONF_RESET = 34;
+    public static final int TASK_TYPE_CONF_REMOVE = 35;
+    public static final int TASK_TYPE_CONF_SET_SUBDECKS = 36;
     
 	private static DeckTask sInstance;
 	private static DeckTask sOldInstance;
@@ -240,11 +244,23 @@ public class DeckTask extends
 		case TASK_TYPE_IMPORT_REPLACE:
 			return doInBackgroundImportReplace(params);
 			
-		case TASK_TYPE_REORDER:
+                case TASK_TYPE_EXPORT_APKG:
+                    return doInBackgroundExportApkg(params);
+                
+                case TASK_TYPE_REORDER:
                     return doInBackgroundReorder(params);
-
-            case TASK_TYPE_EXPORT_APKG:
-                return doInBackgroundExportApkg(params);
+                    
+                case TASK_TYPE_CONF_CHANGE:
+                    return doInBackgroundConfChange(params);
+                    
+                case TASK_TYPE_CONF_RESET:
+                    return doInBackgroundConfReset(params);
+                    
+                case TASK_TYPE_CONF_REMOVE:
+                    return doInBackgroundConfRemove(params);
+                    
+                case TASK_TYPE_CONF_SET_SUBDECKS:
+                    return doInBackgroundConfSetSubdecks(params);
 
             default:
                 return null;
@@ -1161,6 +1177,88 @@ public class DeckTask extends
             JSONObject conf = (JSONObject) data[1];
             col.getSched().resortConf(conf);
             return new TaskData(true);
+        }
+        
+        private TaskData doInBackgroundConfChange(TaskData... params) {
+            Log.i(AnkiDroidApp.TAG, "doInBackgroundConfChange");
+            Object[] data = params[0].getObjArray();
+            Collection col = (Collection) data[0];
+            JSONObject deck = (JSONObject) data[1];
+            JSONObject conf = (JSONObject) data[2];
+            try {
+                long newConfId = conf.getLong("id");
+                // If new config has a different sorting order, reorder the cards
+                int oldOrder = col.getDecks().getConf(deck.getLong("conf")).getJSONObject("new").getInt("order");
+                int newOrder = col.getDecks().getConf(newConfId).getJSONObject("new").getInt("order");
+                if (oldOrder != newOrder) {
+                    switch (newOrder) {
+                        case 0:
+                            col.getSched().randomizeCards(deck.getLong("id"));
+                            break;
+                        case 1:
+                            col.getSched().orderCards(deck.getLong("id"));
+                            break;
+                    }
+                }
+                col.getDecks().setConf(deck, newConfId);
+                return new TaskData(true);
+            } catch (JSONException e) {
+                return new TaskData(false);
+            }
+        }
+        
+        private TaskData doInBackgroundConfReset(TaskData... params) {
+            Log.i(AnkiDroidApp.TAG, "doInBackgroundConfReset");
+            Object[] data = params[0].getObjArray();
+            Collection col = (Collection) data[0];
+            JSONObject conf = (JSONObject) data[1];
+            col.getDecks().restoreToDefault(conf);
+            return new TaskData(true);
+        }
+        
+        private TaskData doInBackgroundConfRemove(TaskData... params) {
+            Log.i(AnkiDroidApp.TAG, "doInBackgroundConfRemove");
+            Object[] data = params[0].getObjArray();
+            Collection col = (Collection) data[0];
+            JSONObject conf = (JSONObject) data[1];
+            try {
+                int oldOrder = conf.getJSONObject("new").getInt("order");
+                // If cards are randomized in this group, they need to be reordered
+                // to the default ordering first, then we can delete the conf.
+                if (oldOrder == 0) {
+                    conf.getJSONObject("new").put("order", 1);
+                    col.getSched().resortConf(conf);
+                }
+                col.getDecks().remConf(conf.getLong("id"));
+                return new TaskData(true);
+            } catch (JSONException e) {
+                return new TaskData(false);
+            }
+        }
+        
+        private TaskData doInBackgroundConfSetSubdecks(TaskData... params) {
+            Log.i(AnkiDroidApp.TAG, "doInBackgroundConfSetSubdecks");
+            Object[] data = params[0].getObjArray();
+            Collection col = (Collection) data[0];
+            JSONObject deck = (JSONObject) data[1];
+            JSONObject conf = (JSONObject) data[2];
+            try {
+                TreeMap<String, Long> children = col.getDecks().children(deck.getLong("id"));
+                for (Map.Entry<String, Long> entry : children.entrySet()) {
+                    JSONObject child = col.getDecks().get(entry.getValue());
+                    if (child.getInt("dyn") == 1) {
+                        continue;
+                    }
+                    TaskData newParams = new TaskData(new Object[]{col, child, conf});
+                    boolean changed = doInBackgroundConfChange(newParams).getBoolean();
+                    if (!changed) {
+                        return new TaskData(false);
+                    }
+                }
+                return new TaskData(true);
+            } catch (JSONException e) {
+                return new TaskData(false);
+            }
         }
 
 	public static interface TaskListener {

@@ -34,15 +34,14 @@ import android.preference.PreferenceActivity;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.KeyEvent;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.TreeMap;
 import java.util.Map.Entry;
 import java.util.Set;
 
@@ -78,14 +77,13 @@ public class DeckOptions extends PreferenceActivity implements OnSharedPreferenc
             this.max = max;
         }
     }
-        
+
     public class DeckPreferenceHack implements SharedPreferences {
 
         private Map<String, String> mValues = new HashMap<String, String>();
         private Map<String, String> mSummaries = new HashMap<String, String>();
         private StyledProgressDialog mProgressDialog;
         private Map<String, OptionRange> mNumericOptions = new HashMap<String, OptionRange>();
-        private Set<String> mBoolOptions = new HashSet<String>();
 
         public DeckPreferenceHack() {
             mNumericOptions.put("maxAnswerTime", new OptionRange(30, 3600));
@@ -104,12 +102,7 @@ public class DeckOptions extends PreferenceActivity implements OnSharedPreferenc
             mNumericOptions.put("lapLeechThres", new OptionRange(0, 99));
             mNumericOptions.put("lapLeechAct", new OptionRange(0, Integer.MAX_VALUE)); // list preference
             mNumericOptions.put("lapNewIvl", new OptionRange(0, 100));
-            
-            mBoolOptions.add("showAnswerTimer");
-            mBoolOptions.add("autoPlayAudio");
-            mBoolOptions.add("replayQuestion");
-            mBoolOptions.add("newSeparate");
-                        
+                                    
             this.cacheValues();
         }
 
@@ -160,7 +153,7 @@ public class DeckOptions extends PreferenceActivity implements OnSharedPreferenc
             }
             return ja;
         }
-
+        
         protected void cacheValues() {
             Log.i(AnkiDroidApp.TAG, "DeckOptions - CacheValues");
 
@@ -170,6 +163,7 @@ public class DeckOptions extends PreferenceActivity implements OnSharedPreferenc
                 mValues.put("name", mDeck.getString("name"));
                 mValues.put("desc", mDeck.getString("desc"));
                 mValues.put("deckConf", mDeck.getString("conf"));
+                // general
                 mValues.put("maxAnswerTime", mOptions.getString("maxTaken"));
                 mValues.put("showAnswerTimer", Boolean.toString(mOptions.getInt("timer") == 1));
                 mValues.put("autoPlayAudio", Boolean.toString(mOptions.getBoolean("autoplay")));
@@ -198,6 +192,8 @@ public class DeckOptions extends PreferenceActivity implements OnSharedPreferenc
                 mValues.put("lapMinIvl", lapOptions.getString("minInt"));
                 mValues.put("lapLeechThres", lapOptions.getString("leechFails"));
                 mValues.put("lapLeechAct", lapOptions.getString("leechAction"));
+                // options group management
+                mValues.put("currentConf", mCol.getDecks().getConf(mDeck.getLong("conf")).getString("name"));
             } catch (JSONException e) {
             	addMissingValues();
             	finish();
@@ -238,7 +234,7 @@ public class DeckOptions extends PreferenceActivity implements OnSharedPreferenc
                                 int oldValue = mOptions.getJSONObject("new").getInt("order");
                                 if (oldValue != value) {
                                     mOptions.getJSONObject("new").put("order", value);
-                                    DeckTask.launchDeckTask(DeckTask.TASK_TYPE_REORDER, mReorderHandler,
+                                    DeckTask.launchDeckTask(DeckTask.TASK_TYPE_REORDER, mConfChangeHandler,
                                             new DeckTask.TaskData(new Object[]{mCol, mOptions}));
                                 }
                                 mOptions.getJSONObject("new").put("order", value);
@@ -275,35 +271,25 @@ public class DeckOptions extends PreferenceActivity implements OnSharedPreferenc
                             } else if (key.equals("lapNewIvl")) {
                                 mOptions.getJSONObject("lapse").put("mult", value / 100.0f);
                             }
-                        } else if (mBoolOptions.contains(key)){
-                            boolean enabled = (Boolean) entry.getValue();
-                            
-                            if (key.equals("showAnswerTimer")) {
-                                mOptions.put("timer", enabled ? 1 : 0);
-                            } else if (key.equals("autoPlayAudio")) {
-                                mOptions.put("autoplay", enabled);
-                            } else if (key.equals("replayQuestion")) {
-                                mOptions.put("replayq", enabled);
-                            } else if (key.equals("newSeparate")) {
-                                mOptions.getJSONObject("new").put("separate", enabled);
-                            }
                         } else {
-                            // The rest of the options are all strings
-                            String value =  (String) entry.getValue();
-                            
-                            if (key.equals("name")) {
-                                if (!mCol.getDecks().rename(mDeck, value)) {
+                            if (key.equals("showAnswerTimer")) {
+                                mOptions.put("timer", (Boolean) entry.getValue() ? 1 : 0);
+                            } else if (key.equals("autoPlayAudio")) {
+                                mOptions.put("autoplay", (Boolean) entry.getValue());
+                            } else if (key.equals("replayQuestion")) {
+                                mOptions.put("replayq", (Boolean) entry.getValue());
+                            } else if (key.equals("newSeparate")) {
+                                mOptions.getJSONObject("new").put("separate", (Boolean) entry.getValue());
+                            } else if (key.equals("name")) {
+                                if (!mCol.getDecks().rename(mDeck, (String) entry.getValue())) {
                                     Themes.showThemedToast(DeckOptions.this,
                                             getResources().getString(R.string.rename_error, mDeck.get("name")), false);
                                 }
                             } else if (key.equals("desc")) {
-                                mDeck.put("desc", value);
+                                mDeck.put("desc", (String) entry.getValue());
                                 mCol.getDecks().save(mDeck);
-                            } else if (key.equals("deckConf")) {
-                                mCol.getDecks().setConf(mDeck, Long.parseLong(value));
-                                mOptions = mCol.getDecks().confForDid(mDeck.getLong("id"));
                             } else if (key.equals("newSteps")) {
-                                JSONArray steps = getValidatedStepsInput(value);
+                                JSONArray steps = getValidatedStepsInput((String) entry.getValue());
                                 if (steps == null) {
                                     Themes.showThemedToast(DeckOptions.this,
                                             getResources().getString(R.string.steps_error), false);
@@ -314,12 +300,49 @@ public class DeckOptions extends PreferenceActivity implements OnSharedPreferenc
                                     mOptions.getJSONObject("new").put("delays", steps);
                                 }
                             } else if (key.equals("lapSteps")) {
-                                JSONArray steps = getValidatedStepsInput(value);
+                                JSONArray steps = getValidatedStepsInput((String) entry.getValue());
                                 if (steps != null) {
                                     mOptions.getJSONObject("lapse").put("delays", steps);
                                 } else {
                                     Themes.showThemedToast(DeckOptions.this,
                                             getResources().getString(R.string.steps_error), false);
+                                }
+                            } else if (key.equals("deckConf")) {
+                                long newConfId = Long.parseLong((String) entry.getValue());
+                                mOptions = mCol.getDecks().getConf(newConfId);
+                                DeckTask.launchDeckTask(DeckTask.TASK_TYPE_CONF_CHANGE, mConfChangeHandler,
+                                        new DeckTask.TaskData(new Object[]{mCol, mDeck, mOptions}));
+                            } else if (key.equals("confRename")) {
+                                String newName = (String) entry.getValue();
+                                if (!TextUtils.isEmpty(newName)) {
+                                    mOptions.put("name", newName);
+                                }
+                            } else if (key.equals("confReset")) {
+                                if ((Boolean) entry.getValue()) {
+                                    DeckTask.launchDeckTask(DeckTask.TASK_TYPE_CONF_RESET, mConfChangeHandler,
+                                            new DeckTask.TaskData(new Object[]{mCol, mOptions}));
+                                }
+                            } else if (key.equals("confAdd")) {
+                                String newName = (String) entry.getValue();
+                                if (!TextUtils.isEmpty(newName)) {
+                                    // New config clones current config
+                                    long id = mCol.getDecks().confId(newName, mOptions.toString());
+                                    mDeck.put("conf", id);
+                                    mCol.getDecks().save(mDeck);
+                                }
+                            } else if (key.equals("confRemove")) {
+                                if (mOptions.getLong("id") == 1) {
+                                    Themes.showThemedToast(DeckOptions.this,
+                                            getResources().getString(R.string.default_conf_delete_error), false);
+                                } else {
+                                    DeckTask.launchDeckTask(DeckTask.TASK_TYPE_CONF_REMOVE, mConfChangeHandler,
+                                            new DeckTask.TaskData(new Object[]{mCol, mOptions}));
+                                    mDeck.put("conf", 1);
+                                }
+                            } else if (key.equals("confSetSubdecks")) {
+                                if ((Boolean) entry.getValue()) {
+                                    DeckTask.launchDeckTask(DeckTask.TASK_TYPE_CONF_SET_SUBDECKS, mConfChangeHandler,
+                                            new DeckTask.TaskData(new Object[]{mCol, mDeck, mOptions}));
                                 }
                             }
                         }
@@ -340,6 +363,7 @@ public class DeckOptions extends PreferenceActivity implements OnSharedPreferenc
 
                 // make sure we refresh the parent cached values
                 cacheValues();
+                buildLists();
                 updateSummaries();
 
                 // and update any listeners
@@ -405,7 +429,7 @@ public class DeckOptions extends PreferenceActivity implements OnSharedPreferenc
                 return null;
             }
             
-            private DeckTask.TaskListener mReorderHandler = new DeckTask.TaskListener() {
+            private DeckTask.TaskListener mConfChangeHandler = new DeckTask.TaskListener() {
                 @Override
                 public void onPreExecute() {
                     Resources res = getResources();
@@ -421,10 +445,12 @@ public class DeckOptions extends PreferenceActivity implements OnSharedPreferenc
                 
                 @Override
                 public void onPostExecute(DeckTask.TaskData result) {
+                    cacheValues();
+                    buildLists();
+                    updateSummaries();
                     mProgressDialog.dismiss();
                 }
             };
-
         }
 
 
@@ -573,9 +599,18 @@ public class DeckOptions extends PreferenceActivity implements OnSharedPreferenc
     }
 
     protected void updateSummaries() {
+        Resources res = getResources();
         // for all text preferences, set summary as current database value
         for (String key : mPref.mValues.keySet()) {
             Preference pref = this.findPreference(key);
+            if (key.equals("deckConf")) {
+                String groupName = getOptionsGroupName();
+                int count = getOptionsGroupCount();
+                pref.setSummary(res.getQuantityString(R.plurals.deck_conf_group_summ,
+                        count, groupName, count));
+                continue;
+            }
+            
             String value = null;
             if (pref == null) {
                 continue;
@@ -599,6 +634,10 @@ public class DeckOptions extends PreferenceActivity implements OnSharedPreferenc
                 pref.setSummary(value);
             }
         }
+        // Update summaries of preference items that don't have values (aren't in mValues)
+        int subDeckCount = getSubdeckCount();
+        this.findPreference("confSetSubdecks").setSummary(res.getQuantityString(
+                R.plurals.deck_conf_set_subdecks_summ, subDeckCount, subDeckCount));
     }
 
 
@@ -646,6 +685,60 @@ public class DeckOptions extends PreferenceActivity implements OnSharedPreferenc
     }
 
 
+    /**
+     * Returns the number of decks using the options group of the current deck.
+     */
+    private int getOptionsGroupCount() {
+        int count = 0;
+        try {
+            long conf = mDeck.getLong("conf");
+            for (JSONObject deck : mCol.getDecks().all()) {
+                if (deck.getInt("dyn") == 1) {
+                    continue;
+                }
+                if (deck.getLong("conf") == conf) {
+                    count++;
+                }
+            }
+        } catch (JSONException e) {
+            throw new RuntimeException(e);
+        }
+        return count;
+    }
+    
+    /**
+     * Get the name of the currently set options group
+     */
+    private String getOptionsGroupName() {
+        long confId = mPref.getLong("deckConf", 0);
+        try {
+            return mCol.getDecks().getConf(confId).getString("name");
+        } catch (JSONException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    /**
+     * Get the number of (non-dynamic) subdecks for the current deck
+     */
+    private int getSubdeckCount() {
+        try {
+            int count = 0;
+            long did = mDeck.getLong("id");
+            TreeMap<String, Long> children = mCol.getDecks().children(did);
+            for (Map.Entry<String, Long> entry : children.entrySet()) {
+                JSONObject child = mCol.getDecks().get(entry.getValue());
+                if (child.getInt("dyn") == 1) {
+                    continue;
+                }
+                count++;
+            }
+            return count;
+        } catch (JSONException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    
     public class JSONNameComparator implements Comparator<JSONObject> {
         @Override
         public int compare(JSONObject lhs, JSONObject rhs) {
