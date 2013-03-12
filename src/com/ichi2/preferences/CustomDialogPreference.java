@@ -54,6 +54,18 @@ public class CustomDialogPreference extends DialogPreference implements DialogIn
                             AnkiDroidApp.getAppResources().getString(R.string.reset_confirmation), Toast.LENGTH_SHORT);
                     successReport.show();
                 }
+            } else if (this.getTitle().equals(mContext.getResources().getString(R.string.deck_conf_reset))) {
+                Editor editor = AnkiDroidApp.getSharedPrefs(mContext).edit();
+                editor.putBoolean("confReset", true);
+                editor.commit();
+            } else if (this.getTitle().equals(mContext.getResources().getString(R.string.deck_conf_remove))) {
+                Editor editor = AnkiDroidApp.getSharedPrefs(mContext).edit();
+                editor.putBoolean("confRemove", true);
+                editor.commit();
+            } else if (this.getTitle().equals(mContext.getResources().getString(R.string.deck_conf_set_subdecks))) {
+                Editor editor = AnkiDroidApp.getSharedPrefs(mContext).edit();
+                editor.putBoolean("confSetSubdecks", true);
+                editor.commit();
             } else {
                 if (MetaDB.resetLanguages(mContext)) {
                     Toast successReport = Toast.makeText(this.getContext(),
