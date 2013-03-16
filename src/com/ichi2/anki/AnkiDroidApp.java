@@ -34,8 +34,8 @@ import com.ichi2.async.Connection;
 import com.ichi2.compat.Compat;
 import com.ichi2.compat.CompatV11;
 import com.ichi2.compat.CompatV15;
-import com.ichi2.compat.CompatV5;
 import com.ichi2.compat.CompatV4;
+import com.ichi2.compat.CompatV5;
 import com.ichi2.compat.CompatV9;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Storage;
@@ -167,15 +167,11 @@ public class AnkiDroidApp extends Application {
     }
 
     private static String getInternalMemoryDirectory() {
-    	return Environment.getDataDirectory().getAbsolutePath() + "/data/" + AnkiDroidApp.getInstance().getPackageName() + "/files";
+        return sInstance.getFilesDir().getAbsolutePath();
     }
 
     public static String getCacheStorageDirectory() {
-        File cache = new File(getInternalMemoryDirectory() + "/cache");
-        if (!cache.exists()) {
-            cache.mkdirs();
-        }
-        return cache.getAbsolutePath();
+        return sInstance.getCacheDir().getAbsolutePath();
     }
 
     public static String getCollectionPath() {
