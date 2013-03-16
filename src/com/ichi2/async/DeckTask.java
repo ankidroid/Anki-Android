@@ -1222,11 +1222,12 @@ public class DeckTask extends
             Collection col = (Collection) data[0];
             JSONObject conf = (JSONObject) data[1];
             try {
-                int oldOrder = conf.getJSONObject("new").getInt("order");
-                // If cards are randomized in this group, they need to be reordered
-                // to the default ordering first, then we can delete the conf.
-                if (oldOrder == 0) {
-                    conf.getJSONObject("new").put("order", 1);
+                // When a conf is deleted, all decks using it revert to the default conf.
+                // Cards must be reordered according to the default conf.
+                int order = conf.getJSONObject("new").getInt("order");
+                int defaultOrder = col.getDecks().getConf(1).getJSONObject("new").getInt("order");
+                if (order != defaultOrder) {
+                    conf.getJSONObject("new").put("order", defaultOrder);
                     col.getSched().resortConf(conf);
                 }
                 col.getDecks().remConf(conf.getLong("id"));
