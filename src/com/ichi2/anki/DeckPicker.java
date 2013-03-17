@@ -2663,8 +2663,7 @@ public class DeckPicker extends FragmentActivity {
         	String oldPath = mPrefDeckPath;
             SharedPreferences pref = restorePreferences();
             String newLanguage = pref.getString("language", "");
-            if (!AnkiDroidApp.getLanguage().equals(newLanguage)) {
-                AnkiDroidApp.setLanguage(newLanguage);
+            if (AnkiDroidApp.setLanguage(newLanguage)) {
                 mInvalidateMenu = true;
             }
             if (mNotMountedDialog != null && mNotMountedDialog.isShowing() && pref.getBoolean("internalMemory", false)) {
