@@ -1083,16 +1083,15 @@ public class StudyOptionsFragment extends Fragment {
     }
 
     public boolean congratsShowing() {
-    	if (mCurrentContentView == CONTENT_CONGRATS) {
+        if (mCurrentContentView == CONTENT_CONGRATS) {
             updateValuesFromDeck();
-        	finishCongrats();
-        	return true;
-    	} else {
-    		return false;
-    	}
+            return true;
+        } else {
+            return false;
+        }
     }
 
-    private void finishCongrats() {
+    public void finishCongrats() {
     	mCurrentContentView = CONTENT_STUDY_OPTIONS;
         mStudyOptionsView.setVisibility(View.INVISIBLE);
         mCongratsView.setVisibility(View.INVISIBLE);
