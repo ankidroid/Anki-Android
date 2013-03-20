@@ -37,15 +37,12 @@ import android.widget.EditText;
 
 import com.ichi2.anim.ActivityTransitionAnimation;
 import com.ichi2.anki.receiver.SdCardReceiver;
-import com.ichi2.libanki.Collection;
 import com.ichi2.themes.StyledDialog;
 import com.ichi2.themes.StyledOpenCollectionDialog;
 import com.ichi2.themes.Themes;
 import com.ichi2.widget.WidgetStatus;
 
-import org.json.JSONArray;
 import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 
@@ -217,8 +214,7 @@ public class StudyOptionsActivity extends FragmentActivity {
         Log.i(AnkiDroidApp.TAG, "StudyOptionsActivity: onActivityResult");
         
         String newLanguage = AnkiDroidApp.getSharedPrefs(this).getString("language", "");
-        if (!AnkiDroidApp.getLanguage().equals(newLanguage)) {
-            AnkiDroidApp.setLanguage(newLanguage);
+        if (AnkiDroidApp.setLanguage(newLanguage)) {
             mInvalidateMenu = true;
         }
         if (mCurrentFragment != null) {
