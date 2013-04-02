@@ -49,6 +49,7 @@ import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.SpannedString;
+import android.text.TextUtils;
 import android.text.style.StrikethroughSpan;
 import android.text.style.StyleSpan;
 import android.text.style.UnderlineSpan;
@@ -221,6 +222,7 @@ public class Reviewer extends AnkiActivity {
     private int mShakeIntensity;
     private boolean mShakeActionStarted = false;
     private boolean mPrefFixArabic;
+    private boolean mPrefForceQuickUpdate;
     // Android WebView
     private boolean mSpeakText;
     private boolean mInvertedColors = false;
@@ -314,8 +316,19 @@ public class Reviewer extends AnkiActivity {
 
     private long mSavedTimer = 0;
 
-    private boolean mRefreshWebview = false;
-    private Map<String, AnkiFont> mCustomFonts;
+    /**
+     * Whether to use a single {@link WebView} and update its content.
+     *
+     * <p>If false, we will instead use two WebViews and switch them when changing the content. This is needed because
+     * of a bug in some versions of Android.
+     */
+    private boolean mUseQuickUpdate = false;
+    /**
+     * Maps font names into {@link AnkiFont} objects corresponding to them.
+     *
+     * <p>Should not be accessed directly but via {@link #getCustomFontsMap()}, as it is lazily initialized.
+     */
+    private Map<String, AnkiFont> mCustomFontsMap;
     private String mCustomDefaultFontCss;
     private String mCustomFontStyle;
 
@@ -925,7 +938,7 @@ public class Reviewer extends AnkiActivity {
                 mCurrentBackgroundColor = Color.WHITE;
             }
 
-            mRefreshWebview = getRefreshWebviewAndInitializeWebviewVariables();
+            mUseQuickUpdate = shouldUseQuickUpdate();
 
             initLayout(R.layout.flashcard);
 
@@ -1989,6 +2002,7 @@ public class Reviewer extends AnkiActivity {
         mRelativeButtonSize = preferences.getInt("answerButtonSize", 100);
         mInputWorkaround = preferences.getBoolean("inputWorkaround", false);
         mPrefFixArabic = preferences.getBoolean("fixArabicText", false);
+        mPrefForceQuickUpdate = preferences.getBoolean("forceQuickUpdate", false);
         mSpeakText = preferences.getBoolean("tts", false);
         mShowProgressBars = preferences.getBoolean("progressBars", true);
         mPrefFadeScrollbars = preferences.getBoolean("fadeScrollbars", false);
@@ -2101,7 +2115,7 @@ public class Reviewer extends AnkiActivity {
 			if (mCard == null) {
 	            mCard = createWebView();
 	            mCardFrame.addView(mCard);				
-	            if (mRefreshWebview) {
+	            if (!mUseQuickUpdate) {
 	                mNextCard = createWebView();
 	                mNextCard.setVisibility(View.GONE);
 	                mCardFrame.addView(mNextCard, 0);
@@ -2557,7 +2571,7 @@ public class Reviewer extends AnkiActivity {
             Log.i(AnkiDroidApp.TAG, "base url = " + mBaseUrl);
             if (mCurrentSimpleInterface && mSimpleCard != null) {
                 mSimpleCard.setText(mCardContent);
-            } else if (mRefreshWebview && mCard != null && mNextCard != null) {
+            } else if (!mUseQuickUpdate && mCard != null && mNextCard != null) {
                 mNextCard.setBackgroundColor(mCurrentBackgroundColor);
                 mNextCard.loadDataWithBaseURL(mBaseUrl, mCardContent.toString(), "text/html", "utf-8", null);
                 mNextCard.setVisibility(View.VISIBLE);
@@ -2675,7 +2689,7 @@ public class Reviewer extends AnkiActivity {
      */
     private String getCustomFontsStyle() {
         StringBuilder builder = new StringBuilder();
-        for (AnkiFont font : mCustomFonts.values()) {
+        for (AnkiFont font : getCustomFontsMap().values()) {
             builder.append(font.getDeclaration());
             builder.append('\n');
         }
@@ -2687,16 +2701,16 @@ public class Reviewer extends AnkiActivity {
     private String getDefaultFontStyle() {
         if (mCustomDefaultFontCss == null) {
             SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(getBaseContext());
-            String defaultFont = preferences.getString("defaultFont", null);
-            if (defaultFont != null && !"".equals(defaultFont) && mCustomFonts.containsKey(defaultFont)) {
-                mCustomDefaultFontCss = "BODY .question, BODY .answer { " + mCustomFonts.get(defaultFont).getCSS() + " }\n";
+            AnkiFont defaultFont = getCustomFontsMap().get(preferences.getString("defaultFont", null));
+            if (defaultFont != null) {
+                mCustomDefaultFontCss = "BODY .question, BODY .answer { " + defaultFont.getCSS() + " }\n";
             } else {
-                defaultFont = Themes.getReviewerFontName();
-                if (defaultFont == null || "".equals(defaultFont)) {
+                String defaultFontName = Themes.getReviewerFontName();
+                if (TextUtils.isEmpty(defaultFontName)) {
                     mCustomDefaultFontCss = "";
                 } else {
-                    mCustomDefaultFontCss = "BODY .question BODY .answer { font-family: '" + defaultFont +
-                            "' font-weight: normal; font-style: normal; font-stretch: normal; }\n";
+                    mCustomDefaultFontCss = "BODY .question BODY .answer { font-family: '" + defaultFont
+                            + "' font-weight: normal; font-style: normal; font-stretch: normal; }\n";
                 }
             }
         }
@@ -2954,22 +2968,55 @@ public class Reviewer extends AnkiActivity {
     }
 
 
-    public boolean getRefreshWebviewAndInitializeWebviewVariables() {
-        List<AnkiFont> fonts = Utils.getCustomFonts(getBaseContext());
-        mCustomFonts = new HashMap<String, AnkiFont>();
-        for (AnkiFont f : fonts) {
-            mCustomFonts.put(f.getName(), f);
-        }
+    /**
+     * @return true if the device is a Nook
+     */
+    private boolean isNookDevice() {
         for (String s : new String[] { "nook" }) {
             if (android.os.Build.DEVICE.toLowerCase().indexOf(s) != -1
                     || android.os.Build.MODEL.toLowerCase().indexOf(s) != -1) {
                 return true;
             }
         }
-        if (mCustomFonts.size() != 0) {
+        return false;
+    }
+
+
+    /**
+     * Returns a map from custom fonts names to the corresponding {@link AnkiFont} object.
+     *
+     * <p>The list of constructed lazily the first time is needed.
+     */
+    private Map<String, AnkiFont> getCustomFontsMap() {
+        if (mCustomFontsMap == null) {
+            List<AnkiFont> fonts = Utils.getCustomFonts(getBaseContext());
+            mCustomFontsMap = new HashMap<String, AnkiFont>();
+            for (AnkiFont f : fonts) {
+                mCustomFontsMap.put(f.getName(), f);
+            }
+        }
+        return mCustomFontsMap;
+    }
+
+
+    /**
+     * Returns true if we should update the content of a single {@link WebView} (called quick update) instead of switch
+     * between two instances.
+     *
+     * <p>Webview switching is needed in some versions of Android when using custom fonts because of a memory leak in
+     * WebView.
+     *
+     * <p>It is also needed to solve a refresh issue on Nook devices.
+     *
+     * @return true if we should use a single WebView
+     */
+    private boolean shouldUseQuickUpdate() {
+        if (mPrefForceQuickUpdate) {
+            // The user has requested us to use quick update in the preferences.
             return true;
         }
-        return false;
+        // Otherwise, use quick update only if there are no custom fonts.
+        return getCustomFontsMap().size() == 0 && !isNookDevice();
     }
 
 
