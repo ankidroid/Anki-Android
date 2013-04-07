@@ -15,20 +15,22 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res/com.ichi2.anki">
 	<PreferenceCategory android:title="@string/deck_conf_cram_filter">
 		<EditTextPreference
 			android:title="@string/deck_conf_cram_search"
 			android:key="search" />
-		<EditTextPreference
+		<com.ichi2.preferences.NumberRangePreference
 			android:title="@string/deck_conf_cram_limit"
 			android:numeric="integer"
+            app:max="9999"
+            app:min="1"
 			android:key="limit" />
 		<ListPreference
 			android:title="@string/deck_conf_cram_order"
 			android:key="order"/>
 	</PreferenceCategory>
-
 		<PreferenceCategory android:title="@string/deck_conf_cram_options">
 		<CheckBoxPreference
 			android:title="@string/deck_conf_cram_reschedule"
@@ -41,9 +43,10 @@
 			android:disableDependentsState="false"
 			android:summary="@string/deck_conf_cram_steps_summ"
 			android:key="stepsOn" />
-		<EditTextPreference
+		<com.ichi2.preferences.StepsPreference
 			android:title="@string/deck_conf_cram_steps"
 			android:dependency="stepsOn"
+            app:allowEmpty="false"
 			android:key="steps" />
 	</PreferenceCategory>
 </PreferenceScreen>

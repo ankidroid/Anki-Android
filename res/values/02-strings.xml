@@ -149,4 +149,5 @@
 
 <string name="steps_error">Steps must be numbers greater than 0</string>
 <string name="steps_min_error">At least one step is required</string>
+<string name="custom_study_invalid_number">Invalid number</string>
 </resources>
