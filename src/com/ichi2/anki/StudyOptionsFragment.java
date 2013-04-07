@@ -725,6 +725,7 @@ public class StudyOptionsFragment extends Fragment {
                                 finishCongrats();
                             } catch (NumberFormatException e) {
                                 // ignore non numerical values
+                                Themes.showThemedToast(getActivity().getBaseContext(), getResources().getString(R.string.custom_study_invalid_number), false);
                             } catch (JSONException e) {
                                 throw new RuntimeException(e);
                             }
@@ -755,6 +756,7 @@ public class StudyOptionsFragment extends Fragment {
                                 finishCongrats();
                             } catch (NumberFormatException e) {
                                 // ignore non numerical values
+                                Themes.showThemedToast(getActivity().getBaseContext(), getResources().getString(R.string.custom_study_invalid_number), false);
                             } catch (JSONException e) {
                                 throw new RuntimeException(e);
                             }
@@ -770,14 +772,17 @@ public class StudyOptionsFragment extends Fragment {
         		styledDialog.setButtonOnClickListener(Dialog.BUTTON_POSITIVE, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                    	int forgottenDays = Integer.parseInt(((EditText) mCustomStudyEditText).getText().toString());
-                    	JSONArray ar = new JSONArray();
-                    	try {
-							ar.put(0, 1);
-						} catch (JSONException e) {
-							throw new RuntimeException(e);
-						}
-                    	createFilteredDeck(ar, new Object[]{String.format(Locale.US, "rated:%d:1", forgottenDays), 9999, Sched.DYN_RANDOM}, false);
+                        JSONArray ar = new JSONArray();
+                        try {
+                            int forgottenDays = Integer.parseInt(((EditText) mCustomStudyEditText).getText().toString());
+                            ar.put(0, 1);
+                            createFilteredDeck(ar, new Object[]{String.format(Locale.US, "rated:%d:1", forgottenDays), 9999, Sched.DYN_RANDOM}, false);
+                        } catch (NumberFormatException e) {
+                            // ignore non numerical values
+                            Themes.showThemedToast(getActivity().getBaseContext(), getResources().getString(R.string.custom_study_invalid_number), false);
+                        } catch (JSONException e) {
+                            throw new RuntimeException(e);
+                        }
                     }
                 });
         		break;
@@ -789,8 +794,13 @@ public class StudyOptionsFragment extends Fragment {
         		styledDialog.setButtonOnClickListener(Dialog.BUTTON_POSITIVE, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                    	int days = Integer.parseInt(((EditText) mCustomStudyEditText).getText().toString());
-                    	createFilteredDeck(new JSONArray(), new Object[]{String.format(Locale.US, "prop:due<=%d", days), 9999, Sched.DYN_DUE}, true);
+                        try {
+                            int days = Integer.parseInt(((EditText) mCustomStudyEditText).getText().toString());
+                            createFilteredDeck(new JSONArray(), new Object[]{String.format(Locale.US, "prop:due<=%d", days), 9999, Sched.DYN_DUE}, true);    
+                        } catch (NumberFormatException e) {
+                            // ignore non numerical values
+                            Themes.showThemedToast(getActivity().getBaseContext(), getResources().getString(R.string.custom_study_invalid_number), false);
+                        }
                     }
                 });
         		break;
@@ -802,8 +812,13 @@ public class StudyOptionsFragment extends Fragment {
         		styledDialog.setButtonOnClickListener(Dialog.BUTTON_POSITIVE, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                    	int randomCards = Integer.parseInt(((EditText) mCustomStudyEditText).getText().toString());
-                    	createFilteredDeck(new JSONArray(), new Object[]{"", randomCards, Sched.DYN_RANDOM}, true);
+                        try {
+                            int randomCards = Integer.parseInt(((EditText) mCustomStudyEditText).getText().toString());
+                            createFilteredDeck(new JSONArray(), new Object[]{"", randomCards, Sched.DYN_RANDOM}, true);
+                        } catch (NumberFormatException e) {
+                            // ignore non numerical values
+                            Themes.showThemedToast(getActivity().getBaseContext(), getResources().getString(R.string.custom_study_invalid_number), false);
+                        }
                     }
                 });
         		break;

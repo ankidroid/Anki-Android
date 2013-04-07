@@ -50,6 +50,7 @@ import com.ichi2.anim.ActivityTransitionAnimation;
 import com.ichi2.anki.R;
 import com.ichi2.anki.receiver.SdCardReceiver;
 import com.ichi2.libanki.Collection;
+import com.ichi2.preferences.StepsPreference;
 import com.ichi2.themes.Themes;
 
 /**
@@ -94,7 +95,7 @@ public class CramDeckOptions extends PreferenceActivity implements OnSharedPrefe
                 mValues.put("limit", ar.getString(1));
                 mValues.put("order", ar.getString(2));
                 try {
-                    mValues.put("steps", getDelays(mDeck.getJSONArray("delays")));
+                    mValues.put("steps", StepsPreference.convertFromJSON(mDeck.getJSONArray("delays")));
                     mValues.put("stepsOn", Boolean.toString(true));
                 } catch (JSONException e) {
                     mValues.put("steps", "1 10");
@@ -142,16 +143,13 @@ public class CramDeckOptions extends PreferenceActivity implements OnSharedPrefe
                         } else if (entry.getKey().equals("stepsOn")) {
                             boolean on = (Boolean) entry.getValue();
                             if (on) {
-                                mDeck.put("delays", getDelays((String) mValues.get("steps")));
+                                mDeck.put("delays", StepsPreference.convertToJSON((String) mValues.get("steps")));
                             } else {
                                 mValues.put("steps", "1 10");
                                 mDeck.put("delays", new JSONArray());
                             }
                         } else if (entry.getKey().equals("steps")) {
-                            String steps = (String) entry.getValue();
-                            if (steps.matches("[0-9\\s]*")) {
-                                mDeck.put("delays", getDelays(steps));
-                            }
+                            mDeck.put("delays", StepsPreference.convertToJSON((String) entry.getValue()));
                         } else if (entry.getKey().equals("preset")) {
                             int i = Integer.parseInt((String) entry.getValue());
                             if (i > 0) {
@@ -475,27 +473,6 @@ public class CramDeckOptions extends PreferenceActivity implements OnSharedPrefe
         }
     }
 
-
-    public static String getDelays(JSONArray a) {
-        StringBuilder sb = new StringBuilder();
-        try {
-            for (int i = 0; i < a.length(); i++) {
-                sb.append(a.getString(i)).append(" ");
-            }
-        } catch (JSONException e) {
-            throw new RuntimeException(e);
-        }
-        return sb.toString().trim();
-    }
-
-
-    public static JSONArray getDelays(String delays) {
-        JSONArray ja = new JSONArray();
-        for (String s : delays.split(" ")) {
-            ja.put(Integer.parseInt(s));
-        }
-        return ja;
-    }
 
     public class JSONNameComparator implements Comparator<JSONObject> {
         @Override
