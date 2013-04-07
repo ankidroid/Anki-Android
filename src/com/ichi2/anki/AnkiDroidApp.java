@@ -56,6 +56,7 @@ public class AnkiDroidApp extends Application {
     public static final int SDK_VERSION = android.os.Build.VERSION.SDK_INT;
     public static final String LIBANKI_VERSION = "1.2.5";
     public static final String DROPBOX_PUBLIC_DIR = "/dropbox/Public/Anki";
+    public static final String APP_NAMESPACE = "http://schemas.android.com/apk/res/com.ichi2.anki";
 
     public static final int RESULT_TO_HOME = 501;
 
