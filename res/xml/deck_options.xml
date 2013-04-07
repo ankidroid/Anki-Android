@@ -17,186 +17,187 @@
 
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res/com.ichi2.anki" >
-	<EditTextPreference
-            	android:title="@string/deck_conf_deck_name"
-            	android:key="name" />
-	<EditTextPreference
-            	android:title="@string/deck_conf_deck_description"
-		android:key="desc" />
-	<PreferenceCategory android:title="@string/deck_conf_pref_cat_options">
-	<ListPreference
-           	android:title="@string/deck_conf_group"
-           	android:key="deckConf"/>
-	<PreferenceScreen android:title="@string/deck_conf_new_cards">
-		<com.ichi2.preferences.StepsPreference
-        	android:title="@string/deck_conf_steps"
-            app:allowEmpty="false"
-		 	android:key="newSteps" />
-		<ListPreference
-			android:title="@string/deck_conf_order"
-			android:summary=""
-			android:key="newOrder"/>
-		<com.ichi2.preferences.NumberRangePreference
-        	    	android:title="@string/deck_conf_new_cards_day"
-        	    	android:numeric="integer"
-                    app:max="9999"
-                    app:min="0"
-		 	android:key="newPerDay" />
-		<com.ichi2.preferences.NumberRangePreference
-        	    	android:title="@string/deck_conf_graduating_ivl"
-        	    	android:summary="@string/deck_conf_days"
-        	    	android:numeric="integer"
-        	    	app:max="99"
-                    app:min="1"
-		 	android:key="newGradIvl" />
-		<com.ichi2.preferences.NumberRangePreference
-        	    	android:title="@string/deck_conf_easy_ivl"
-        	    	android:summary="@string/deck_conf_days"
-        	    	android:numeric="integer"
-        	    	app:max="99"
-                    app:min="1"
-		 	android:key="newEasy" />
-		<com.ichi2.preferences.NumberRangePreference
-        	    	android:title="@string/deck_conf_start_ease"
-        	    	android:summary="@string/deck_conf_percent"
-        	    	android:numeric="integer"
-        	    	app:max="999"
-                    app:min="100"
-		 	android:key="newFactor" />
-		<CheckBoxPreference
-			android:title="@string/deck_conf_separate"
-			android:defaultValue="true"
-			android:summary="@string/deck_conf_separate_summ"
-			android:key="newSeparate" />
-	</PreferenceScreen>
-	<PreferenceScreen android:title="@string/deck_conf_rev_cards">
-		<com.ichi2.preferences.NumberRangePreference
-        	    	android:title="@string/deck_conf_max_rev"
-        	    	android:numeric="integer"
-        	    	app:max="9999"
-                    app:min="0"
-		 	android:key="revPerDay" />
-		<com.ichi2.preferences.NumberRangePreference
-        	    	android:title="@string/deck_conf_sibl_space"
-        	    	android:summary="@string/deck_conf_percent"
-        	    	android:numeric="integer"
-        	    	app:max="100"
-                    app:min="0"
-		 	android:key="revSpaceMax" />
-		<com.ichi2.preferences.NumberRangePreference
-        	    	android:title="@string/deck_conf_min_range"
-        	    	android:summary="@string/deck_conf_days"
-        	    	android:numeric="integer"
-        	    	app:max="99"
-                    app:min="0"
-		 	android:key="revSpaceMin" />
-		<com.ichi2.preferences.NumberRangePreference
-        	    	android:title="@string/deck_conf_easy_bonus"
-        	    	android:numeric="integer" 
-    	    	    android:summary="@string/deck_conf_percent"
-    	    	    app:max="1000"
-                    app:min="100"
-		 	android:key="easyBonus" />
-		<com.ichi2.preferences.NumberRangePreference
-        	    	android:title="@string/deck_conf_ivl_fct"
-        	    	android:inputType="numberDecimal"
-    	    	    android:summary="@string/deck_conf_percent"
-    	    	    app:max="999"
-                    app:min="0"
-		 	android:key="revIvlFct" />
-		<com.ichi2.preferences.NumberRangePreference
-        	    	android:title="@string/deck_conf_max_ivl"
-        	    	android:summary="@string/deck_conf_days"
-          	    	android:numeric="integer"
-          	    	app:max="99999"
-                    app:min="1"
-		 	android:key="revMaxIvl" />
-	</PreferenceScreen>
-	<PreferenceScreen android:title="@string/deck_conf_lps_cards">
-		<com.ichi2.preferences.StepsPreference
-        	    	android:title="@string/deck_conf_steps"
-                    app:allowEmpty="true"
-		 	android:key="lapSteps" />
-		<com.ichi2.preferences.NumberRangePreference
-        	    	android:title="@string/deck_conf_new_lps_ivl"
-        	    	android:summary="@string/deck_conf_percent"
-        	    	android:numeric="integer"
-        	    	app:max="100"
-                    app:min="0"
-		 	android:key="lapNewIvl" />
-		<com.ichi2.preferences.NumberRangePreference
-        	    	android:title="@string/deck_conf_min_ivl"
-        	    	android:summary="@string/deck_conf_days"
-        	    	android:numeric="integer"
-        	    	app:max="99"
-                    app:min="1"
-		 	android:key="lapMinIvl" />
-		<com.ichi2.preferences.NumberRangePreference
-        	    	android:title="@string/deck_conf_leech_thres"
-        	    	android:numeric="integer"
-        	    	android:summary="@string/deck_conf_fails"
-        	    	app:max="99"
-                    app:min="0"
- 		 	android:key="lapLeechThres" />
-		<ListPreference
-			android:title="@string/deck_conf_leech_action"
-			android:key="lapLeechAct"/>
-	</PreferenceScreen>
-    <PreferenceScreen android:title="@string/deck_conf_general" >
-        <com.ichi2.preferences.NumberRangePreference
-            android:numeric="integer"
-            android:summary="@string/deck_conf_seconds"
-            android:title="@string/deck_conf_max_time"
-            app:max="3600"
-            app:min="30"
-            android:key="maxAnswerTime" />
-        <CheckBoxPreference
-            android:title="@string/deck_conf_timer"
-            android:key="showAnswerTimer" />
-        <CheckBoxPreference
-            android:title="@string/deck_conf_autoplay"
-            android:key="autoPlayAudio" />
-        <CheckBoxPreference
-            android:summary="@string/deck_conf_replayq_summ"
-            android:title="@string/deck_conf_replayq"
-            android:key="replayQuestion" />
-    </PreferenceScreen>
-    <PreferenceScreen android:title="@string/deck_conf_manage" >
-        <Preference
-            android:enabled="false"
-            android:title="@string/deck_conf_current_group"
-            android:key="currentConf" />
-        <EditTextPreference
-            android:summary="@string/deck_conf_add_summ"
-            android:title="@string/deck_conf_add"
-            android:key="confAdd" />
-        <com.ichi2.preferences.CustomDialogPreference
-            android:dialogIcon="@android:drawable/ic_dialog_alert"
-            android:dialogMessage="@string/deck_conf_remove_message"
-            android:dialogTitle="@string/deck_conf_remove_title"
-            android:negativeButtonText="@string/no"
-            android:positiveButtonText="@string/yes"
-            android:title="@string/deck_conf_remove"
-            android:key="confRemove" />
-        <EditTextPreference
-            android:title="@string/deck_conf_rename"
-            android:key="confRename" />
-        <com.ichi2.preferences.CustomDialogPreference
-            android:dialogIcon="@android:drawable/ic_dialog_alert"
-            android:dialogMessage="@string/deck_conf_reset_message"
-            android:dialogTitle="@string/deck_conf_reset_title"
-            android:negativeButtonText="@string/no"
-            android:positiveButtonText="@string/yes"
-            android:title="@string/deck_conf_reset_title"
-            android:key="confRestore" />
-        <com.ichi2.preferences.CustomDialogPreference
-            android:dialogIcon="@android:drawable/ic_dialog_alert"
-            android:dialogMessage="@string/deck_conf_set_subdecks_message"
-            android:dialogTitle="@string/deck_conf_set_subdecks_title"
-            android:negativeButtonText="@string/no"
-            android:positiveButtonText="@string/yes"
-            android:title="@string/deck_conf_set_subdecks"
-            android:key="confSetSubdecks" />
-    </PreferenceScreen>
+
+    <EditTextPreference
+        android:key="name"
+        android:title="@string/deck_conf_deck_name" />
+    <EditTextPreference
+        android:key="desc"
+        android:title="@string/deck_conf_deck_description" />
+    <PreferenceCategory android:title="@string/deck_conf_pref_cat_options" >
+        <ListPreference
+            android:key="deckConf"
+            android:title="@string/deck_conf_group" />
+        <PreferenceScreen android:title="@string/deck_conf_new_cards" >
+            <com.ichi2.preferences.StepsPreference
+                android:key="newSteps"
+                android:title="@string/deck_conf_steps"
+                app:allowEmpty="false" />
+            <ListPreference
+                android:key="newOrder"
+                android:summary=""
+                android:title="@string/deck_conf_order" />
+            <com.ichi2.preferences.NumberRangePreference
+                android:key="newPerDay"
+                android:numeric="integer"
+                android:title="@string/deck_conf_new_cards_day"
+                app:max="9999"
+                app:min="0" />
+            <com.ichi2.preferences.NumberRangePreference
+                android:key="newGradIvl"
+                android:numeric="integer"
+                android:summary="@string/deck_conf_days"
+                android:title="@string/deck_conf_graduating_ivl"
+                app:max="99"
+                app:min="1" />
+            <com.ichi2.preferences.NumberRangePreference
+                android:key="newEasy"
+                android:numeric="integer"
+                android:summary="@string/deck_conf_days"
+                android:title="@string/deck_conf_easy_ivl"
+                app:max="99"
+                app:min="1" />
+            <com.ichi2.preferences.NumberRangePreference
+                android:key="newFactor"
+                android:numeric="integer"
+                android:summary="@string/deck_conf_percent"
+                android:title="@string/deck_conf_start_ease"
+                app:max="999"
+                app:min="100" />
+            <CheckBoxPreference
+                android:defaultValue="true"
+                android:key="newSeparate"
+                android:summary="@string/deck_conf_separate_summ"
+                android:title="@string/deck_conf_separate" />
+        </PreferenceScreen>
+        <PreferenceScreen android:title="@string/deck_conf_rev_cards" >
+            <com.ichi2.preferences.NumberRangePreference
+                android:key="revPerDay"
+                android:numeric="integer"
+                android:title="@string/deck_conf_max_rev"
+                app:max="9999"
+                app:min="0" />
+            <com.ichi2.preferences.NumberRangePreference
+                android:key="revSpaceMax"
+                android:numeric="integer"
+                android:summary="@string/deck_conf_percent"
+                android:title="@string/deck_conf_sibl_space"
+                app:max="100"
+                app:min="0" />
+            <com.ichi2.preferences.NumberRangePreference
+                android:key="revSpaceMin"
+                android:numeric="integer"
+                android:summary="@string/deck_conf_days"
+                android:title="@string/deck_conf_min_range"
+                app:max="99"
+                app:min="0" />
+            <com.ichi2.preferences.NumberRangePreference
+                android:key="easyBonus"
+                android:numeric="integer"
+                android:summary="@string/deck_conf_percent"
+                android:title="@string/deck_conf_easy_bonus"
+                app:max="1000"
+                app:min="100" />
+            <com.ichi2.preferences.NumberRangePreference
+                android:inputType="numberDecimal"
+                android:key="revIvlFct"
+                android:summary="@string/deck_conf_percent"
+                android:title="@string/deck_conf_ivl_fct"
+                app:max="999"
+                app:min="0" />
+            <com.ichi2.preferences.NumberRangePreference
+                android:key="revMaxIvl"
+                android:numeric="integer"
+                android:summary="@string/deck_conf_days"
+                android:title="@string/deck_conf_max_ivl"
+                app:max="99999"
+                app:min="1" />
+        </PreferenceScreen>
+        <PreferenceScreen android:title="@string/deck_conf_lps_cards" >
+            <com.ichi2.preferences.StepsPreference
+                android:key="lapSteps"
+                android:title="@string/deck_conf_steps"
+                app:allowEmpty="true" />
+            <com.ichi2.preferences.NumberRangePreference
+                android:key="lapNewIvl"
+                android:numeric="integer"
+                android:summary="@string/deck_conf_percent"
+                android:title="@string/deck_conf_new_lps_ivl"
+                app:max="100"
+                app:min="0" />
+            <com.ichi2.preferences.NumberRangePreference
+                android:key="lapMinIvl"
+                android:numeric="integer"
+                android:summary="@string/deck_conf_days"
+                android:title="@string/deck_conf_min_ivl"
+                app:max="99"
+                app:min="1" />
+            <com.ichi2.preferences.NumberRangePreference
+                android:key="lapLeechThres"
+                android:numeric="integer"
+                android:summary="@string/deck_conf_fails"
+                android:title="@string/deck_conf_leech_thres"
+                app:max="99"
+                app:min="0" />
+            <ListPreference
+                android:key="lapLeechAct"
+                android:title="@string/deck_conf_leech_action" />
+        </PreferenceScreen>
+        <PreferenceScreen android:title="@string/deck_conf_general" >
+            <com.ichi2.preferences.NumberRangePreference
+                android:key="maxAnswerTime"
+                android:numeric="integer"
+                android:summary="@string/deck_conf_seconds"
+                android:title="@string/deck_conf_max_time"
+                app:max="3600"
+                app:min="30" />
+            <CheckBoxPreference
+                android:key="showAnswerTimer"
+                android:title="@string/deck_conf_timer" />
+            <CheckBoxPreference
+                android:key="autoPlayAudio"
+                android:title="@string/deck_conf_autoplay" />
+            <CheckBoxPreference
+                android:key="replayQuestion"
+                android:summary="@string/deck_conf_replayq_summ"
+                android:title="@string/deck_conf_replayq" />
+        </PreferenceScreen>
+        <PreferenceScreen android:title="@string/deck_conf_manage" >
+            <Preference
+                android:enabled="false"
+                android:key="currentConf"
+                android:title="@string/deck_conf_current_group" />
+            <EditTextPreference
+                android:key="confAdd"
+                android:summary="@string/deck_conf_add_summ"
+                android:title="@string/deck_conf_add" />
+            <com.ichi2.preferences.CustomDialogPreference
+                android:dialogIcon="@android:drawable/ic_dialog_alert"
+                android:dialogMessage="@string/deck_conf_remove_message"
+                android:dialogTitle="@string/deck_conf_remove_title"
+                android:key="confRemove"
+                android:negativeButtonText="@string/no"
+                android:positiveButtonText="@string/yes"
+                android:title="@string/deck_conf_remove" />
+            <EditTextPreference
+                android:key="confRename"
+                android:title="@string/deck_conf_rename" />
+            <com.ichi2.preferences.CustomDialogPreference
+                android:dialogIcon="@android:drawable/ic_dialog_alert"
+                android:dialogMessage="@string/deck_conf_reset_message"
+                android:dialogTitle="@string/deck_conf_reset_title"
+                android:key="confRestore"
+                android:negativeButtonText="@string/no"
+                android:positiveButtonText="@string/yes"
+                android:title="@string/deck_conf_reset_title" />
+            <com.ichi2.preferences.CustomDialogPreference
+                android:dialogIcon="@android:drawable/ic_dialog_alert"
+                android:dialogMessage="@string/deck_conf_set_subdecks_message"
+                android:dialogTitle="@string/deck_conf_set_subdecks_title"
+                android:key="confSetSubdecks"
+                android:negativeButtonText="@string/no"
+                android:positiveButtonText="@string/yes"
+                android:title="@string/deck_conf_set_subdecks" />
+        </PreferenceScreen>
     </PreferenceCategory>
 </PreferenceScreen>

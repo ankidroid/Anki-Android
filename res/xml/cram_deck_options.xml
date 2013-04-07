@@ -16,37 +16,38 @@
 -->
 
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res/com.ichi2.anki">
-	<PreferenceCategory android:title="@string/deck_conf_cram_filter">
-		<EditTextPreference
-			android:title="@string/deck_conf_cram_search"
-			android:key="search" />
-		<com.ichi2.preferences.NumberRangePreference
-			android:title="@string/deck_conf_cram_limit"
-			android:numeric="integer"
+    xmlns:app="http://schemas.android.com/apk/res/com.ichi2.anki" >
+
+    <PreferenceCategory android:title="@string/deck_conf_cram_filter" >
+        <EditTextPreference
+            android:key="search"
+            android:title="@string/deck_conf_cram_search" />
+        <com.ichi2.preferences.NumberRangePreference
+            android:key="limit"
+            android:numeric="integer"
+            android:title="@string/deck_conf_cram_limit"
             app:max="9999"
-            app:min="1"
-			android:key="limit" />
-		<ListPreference
-			android:title="@string/deck_conf_cram_order"
-			android:key="order"/>
-	</PreferenceCategory>
-		<PreferenceCategory android:title="@string/deck_conf_cram_options">
-		<CheckBoxPreference
-			android:title="@string/deck_conf_cram_reschedule"
-			android:defaultValue="true"
-			android:summary="@string/deck_conf_cram_reschedule_summ"
-			android:key="resched" />
-	    <CheckBoxPreference
-			android:title="@string/deck_conf_cram_steps"
-			android:defaultValue="true"
-			android:disableDependentsState="false"
-			android:summary="@string/deck_conf_cram_steps_summ"
-			android:key="stepsOn" />
-		<com.ichi2.preferences.StepsPreference
-			android:title="@string/deck_conf_cram_steps"
-			android:dependency="stepsOn"
-            app:allowEmpty="false"
-			android:key="steps" />
-	</PreferenceCategory>
+            app:min="1" />
+        <ListPreference
+            android:key="order"
+            android:title="@string/deck_conf_cram_order" />
+    </PreferenceCategory>
+    <PreferenceCategory android:title="@string/deck_conf_cram_options" >
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:key="resched"
+            android:summary="@string/deck_conf_cram_reschedule_summ"
+            android:title="@string/deck_conf_cram_reschedule" />
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:disableDependentsState="false"
+            android:key="stepsOn"
+            android:summary="@string/deck_conf_cram_steps_summ"
+            android:title="@string/deck_conf_cram_steps" />
+        <com.ichi2.preferences.StepsPreference
+            android:dependency="stepsOn"
+            android:key="steps"
+            android:title="@string/deck_conf_cram_steps"
+            app:allowEmpty="false" />
+    </PreferenceCategory>
 </PreferenceScreen>
