@@ -53,7 +53,6 @@ import android.text.style.StrikethroughSpan;
 import android.text.style.StyleSpan;
 import android.text.style.UnderlineSpan;
 import android.util.Log;
-import android.view.ActionMode;
 import android.view.GestureDetector;
 import android.view.GestureDetector.SimpleOnGestureListener;
 import android.view.Gravity;
@@ -104,6 +103,7 @@ import com.ichi2.widget.WidgetStatus;
 import org.amr.arabic.ArabicUtilities;
 import org.json.JSONArray;
 import org.json.JSONException;
+import org.json.JSONObject;
 import org.xml.sax.XMLReader;
 
 import java.io.File;
@@ -2462,29 +2462,66 @@ public class Reviewer extends AnkiActivity {
      * Plays sounds (or TTS, if configured) for current shown side of card
      */
     private void playSounds() {
-    	// first check, if sound is activated for the current deck
-    	try {
-		long did = mCurrentCard.getODid();
-			if (!mSched.getCol().getDecks().confForDid(did == 0 ? mCurrentCard.getDid() : did).getBoolean("autoplay")) {
-				return;
-			}
+        try {
+            // first check, if sound is activated for the current deck
+            if (getConfigForCurrentCard().getBoolean("autoplay")) {
+                // We need to play the sounds from the proper side of the card
+                if (!mSpeakText) {
+                    Sound.playSounds(sDisplayAnswer ? MetaDB.LANGUAGES_QA_ANSWER : MetaDB.LANGUAGES_QA_QUESTION);
+                } else {
+                    // If the question is displayed or if the question should be replayed, read the question
+                    if (!sDisplayAnswer || getConfigForCurrentCard().getBoolean("replayq")) {
+                        readCardText(mCurrentCard, MetaDB.LANGUAGES_QA_QUESTION);
+                    }
+                    if (sDisplayAnswer) {
+                        readCardText(mCurrentCard, MetaDB.LANGUAGES_QA_ANSWER);
+                    }
+                }
+            }
+        } catch (JSONException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
-	        // We need to play the sounds from the proper side of the card
-	        if (!mSpeakText) {
-	            Sound.playSounds(sDisplayAnswer ? MetaDB.LANGUAGES_QA_ANSWER : MetaDB.LANGUAGES_QA_QUESTION);
-	        } else {
-	            if (sDisplayAnswer) {
-	            	if (mSched.getCol().getDecks().confForDid(mCurrentCard.getDid()).getBoolean("replayq")) {
-		                ReadText.textToSpeech(Utils.stripHTML(mCurrentCard.getQuestion(mCurrentSimpleInterface)), mCurrentCard.getDid(), mCurrentCard.getOrd(), MetaDB.LANGUAGES_QA_QUESTION);
-	    			}
-	                ReadText.textToSpeech(Utils.stripHTML(mCurrentCard.getPureAnswerForReading()), mCurrentCard.getDid(), mCurrentCard.getOrd(), MetaDB.LANGUAGES_QA_ANSWER);
-	            } else {
-	                ReadText.textToSpeech(Utils.stripHTML(mCurrentCard.getQuestion(mCurrentSimpleInterface)), mCurrentCard.getDid(), mCurrentCard.getOrd(), MetaDB.LANGUAGES_QA_QUESTION);
-	            }
-	        }
-		} catch (JSONException e) {
-			throw new RuntimeException(e);
-		}
+
+    /**
+     * Reads the text (using TTS) for the given side of a card.
+     * 
+     * @param card The card to play TTS for
+     * @param cardSide The side of the current card to play TTS for
+     */
+    private static void readCardText(final Card card, final int cardSide) {
+        if (MetaDB.LANGUAGES_QA_QUESTION == cardSide) {
+            ReadText.textToSpeech(Utils.stripHTML(card.getQuestion(true)), getDeckIdForCard(card), card.getOrd(),
+                    MetaDB.LANGUAGES_QA_QUESTION);
+        } else if (MetaDB.LANGUAGES_QA_ANSWER == cardSide) {
+            ReadText.textToSpeech(Utils.stripHTML(card.getPureAnswerForReading()), getDeckIdForCard(card),
+                    card.getOrd(),
+                    MetaDB.LANGUAGES_QA_ANSWER);
+        }
+    }
+
+
+    /**
+     * Returns the configuration for the current {@link Card}.
+     * 
+     * @return The configuration for the current {@link Card}
+     */
+    private JSONObject getConfigForCurrentCard() {
+        return mSched.getCol().getDecks().confForDid(getDeckIdForCard(mCurrentCard));
+    }
+
+
+    /**
+     * Returns the deck ID of the given {@link Card}.
+     * 
+     * @param card The {@link Card} to get the deck ID
+     * @return The deck ID of the {@link Card}
+     */
+    private static long getDeckIdForCard(final Card card) {
+        // Try to get the configuration by the original deck ID (available in case of a cram deck),
+        // else use the direct deck ID (in case of a 'normal' deck.
+        return card.getODid() == 0 ? card.getDid() : card.getODid();
     }
 
 
