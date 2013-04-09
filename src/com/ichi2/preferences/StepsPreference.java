@@ -16,9 +16,6 @@ package com.ichi2.preferences;
  * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
  ****************************************************************************************/
 
-import org.json.JSONArray;
-import org.json.JSONException;
-
 import android.content.Context;
 import android.preference.EditTextPreference;
 import android.text.TextUtils;
@@ -28,24 +25,33 @@ import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.R;
 import com.ichi2.themes.Themes;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+
 public class StepsPreference extends EditTextPreference {
 
     private final boolean mAllowEmpty;
 
+
     public StepsPreference(Context context, AttributeSet attrs, int defStyle) {
-        this(context, attrs);
-    }
-    
-    public StepsPreference(Context context, AttributeSet attrs) {
-        super(context, attrs);
-        mAllowEmpty = attrs.getAttributeBooleanValue(AnkiDroidApp.APP_NAMESPACE, "allowEmpty",
-                true);
+        super(context, attrs, defStyle);
+        if (attrs != null) {
+            mAllowEmpty = attrs.getAttributeBooleanValue(AnkiDroidApp.APP_NAMESPACE, "allowEmpty", true);
+        } else {
+            mAllowEmpty = true;
+        }
     }
 
-    public StepsPreference(Context context) {
-        super(context);
-        mAllowEmpty = true;
+
+    public StepsPreference(Context context, AttributeSet attrs) {
+        this(context, attrs, 0);
     }
+
+
+    public StepsPreference(Context context) {
+        this(context, null);
+    }
+
 
     @Override
     protected void onDialogClosed(boolean positiveResult) {
@@ -74,7 +80,7 @@ public class StepsPreference extends EditTextPreference {
         if (TextUtils.isEmpty(steps)) {
             return "";
         }
-        
+
         StringBuilder sb = new StringBuilder();
         for (String s : steps.split("\\s+")) {
             try {

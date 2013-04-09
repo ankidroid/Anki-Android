@@ -16,41 +16,43 @@ package com.ichi2.preferences;
  * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
  ****************************************************************************************/
 
-import com.ichi2.anki.AnkiDroidApp;
-
 import android.content.Context;
 import android.preference.EditTextPreference;
 import android.text.InputFilter;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 
+import com.ichi2.anki.AnkiDroidApp;
+
 public class NumberRangePreference extends EditTextPreference {
-   
+
     private final int mMin;
     private final int mMax;
-    
+
+
     public NumberRangePreference(Context context, AttributeSet attrs, int defStyle) {
-        this(context, attrs);
+        super(context, attrs, defStyle);
+        if (attrs != null) {
+            mMin = attrs.getAttributeIntValue(AnkiDroidApp.APP_NAMESPACE, "min", 0);
+            mMax = attrs.getAttributeIntValue(AnkiDroidApp.APP_NAMESPACE, "max", Integer.MAX_VALUE);
+        } else {
+            mMin = 0;
+            mMax = Integer.MAX_VALUE;
+        }
+        setMaxLength(String.valueOf(mMax).length());
     }
-    
+
+
     public NumberRangePreference(Context context, AttributeSet attrs) {
-        super(context, attrs);
-        
-        mMin = attrs.getAttributeIntValue(AnkiDroidApp.APP_NAMESPACE, "min", 0);
-        mMax = attrs.getAttributeIntValue(AnkiDroidApp.APP_NAMESPACE, "max", Integer.MAX_VALUE);
-        
-        // Cap number of digits in input
-        int maxLength = String.valueOf(mMax).length();
-        setMaxLength(maxLength);
+        this(context, attrs, 0);
     }
-    
+
+
     public NumberRangePreference(Context context) {
-        super(context);
-        mMin = 0;
-        mMax = Integer.MAX_VALUE;
+        this(context, null);
     }
-    
-    
+
+
     /**
      * Set the maximum number of digits that can appear in the text editor.
      * @param max Number of digits.
@@ -62,19 +64,19 @@ public class NumberRangePreference extends EditTextPreference {
         InputFilter[] newFilters = new InputFilter[filters.length + 1];
         System.arraycopy(filters, 0, newFilters, 0, filters.length);
         newFilters[newFilters.length-1] = new InputFilter.LengthFilter(max);
-        this.getEditText().setFilters(newFilters);
+        getEditText().setFilters(newFilters);
     }
-    
-    
+
+
     @Override
     protected void onDialogClosed(boolean positiveResult) {
         if (positiveResult) {
             String validated = getValidatedRange(getEditText().getText().toString());
-            this.setText(validated);
+            setText(validated);
         }
     }
-    
-    
+
+
     /**
      * Return the input number with the number rounded to the nearest bound if it is outside
      * of the acceptable range.
