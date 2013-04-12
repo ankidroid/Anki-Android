@@ -245,7 +245,8 @@
 <string name="pref_simple_interface_summ">Speeds up card showing but does not support all html features</string>
 <string name="pref_simple_interface_exclude_tags">Normal interface by tag</string>
 <string name="pref_simple_interface_exclude_tags_summ">Do not use simple interface for these tags: XXX</string>
-
+<string name="pref_force_quick_update_title">Force quick update of Webview</string>
+<string name="pref_force_quick_update_summary">Enabling this reduces flickering when flipping cards, but might cause the application to crash on some devices.</string>
 
 <!-- Deck configurations -->
 <string name="deck_conf_deck_name">Deck name</string>
