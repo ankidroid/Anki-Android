@@ -291,6 +291,11 @@
                 android:summary="@string/pref_simple_interface_exclude_tags_summ"
                 android:dependency="simpleInterface"
                 android:key="simpleInterfaceExcludeTags" />
+            <CheckBoxPreference
+                android:title="@string/pref_force_quick_update_title"
+                android:summary="@string/pref_force_quick_update_summary"
+                android:defaultValue="false"
+                android:key="forceQuickUpdate" />
             </PreferenceCategory>
         <PreferenceCategory android:title="@string/pref_cat_whiteboard" >
             <CheckBoxPreference
