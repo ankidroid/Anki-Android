@@ -2,6 +2,7 @@
 package com.ichi2.anki;
 
 import com.ichi2.anki.R;
+import com.ichi2.async.BaseAsyncTask;
 
 import java.io.IOException;
 import java.net.URL;
@@ -135,7 +136,7 @@ public class BroadcastMessages {
         }
     }
 
-    private static class DownloadBroadcastMessage extends AsyncTask<Activity, Void, Context> {
+    private static class DownloadBroadcastMessage extends BaseAsyncTask<Activity, Void, Context> {
 
         private static int mNum;
         private static String mMinVersion;
@@ -151,6 +152,7 @@ public class BroadcastMessages {
 
         @Override
         protected Context doInBackground(Activity... params) {
+            super.doInBackground(params);
             Log.i(AnkiDroidApp.TAG, "BroadcastMessage.DownloadBroadcastMessage.doInBackground()");
 
             Activity activity = params[0];
@@ -236,6 +238,7 @@ public class BroadcastMessages {
 
         @Override
         protected void onPostExecute(Context context) {
+            super.onPostExecute(context);
             Log.d(AnkiDroidApp.TAG, "BroadcastMessage.DownloadBroadcastMessage.onPostExecute()");
             if (!mShowDialog) {
                 return;
