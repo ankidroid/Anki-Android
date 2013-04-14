@@ -126,7 +126,7 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
      * @param params to pass to the task
      * @return the newly created task
      */
-    public static DeckTask launchDeckTask(int type, TaskListener listener, TaskData... params) {
+    public static DeckTask launchDeckTask(int type, Listener listener, TaskData... params) {
         sLatestInstance = new DeckTask(type, listener, sLatestInstance);
         sLatestInstance.execute(params);
         return sLatestInstance;
@@ -176,11 +176,11 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
     }
 
     private final int mType;
-    private final TaskListener mListener;
+    private final Listener mListener;
     private final DeckTask mPreviousTask;
 
 
-    public DeckTask(int type, TaskListener listener, DeckTask previousTask) {
+    public DeckTask(int type, Listener listener, DeckTask previousTask) {
         mType = type;
         mListener = listener;
         mPreviousTask = previousTask;
@@ -307,34 +307,30 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
                 return doInBackgroundConfSetSubdecks(params);
 
             default:
+                Log.e(AnkiDroidApp.TAG, "unknown task type: " + mType);
                 return null;
         }
     }
 
 
+    /** Delegates to the {@link TaskListener} for this task. */
     @Override
     protected void onPreExecute() {
-        mListener.onPreExecute();
+        mListener.onPreExecute(this);
     }
 
 
+    /** Delegates to the {@link TaskListener} for this task. */
     @Override
     protected void onProgressUpdate(TaskData... values) {
-        mListener.onProgressUpdate(values);
+        mListener.onProgressUpdate(this, values);
     }
 
 
+    /** Delegates to the {@link TaskListener} for this task. */
     @Override
     protected void onPostExecute(TaskData result) {
-        mListener.onPostExecute(result);
-    }
-
-
-    @Override
-    protected void onCancelled() {
-        if (mListener instanceof CancellableTaskListener) {
-            ((CancellableTaskListener) mListener).onCancelled();
-        }
+        mListener.onPostExecute(this, result);
     }
 
 
@@ -1297,18 +1293,82 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
         }
     }
 
-    public static interface TaskListener {
-        public void onPreExecute();
+    /**
+     * Listener for the status and result of a {@link DeckTask}.
+     * <p>
+     * Its methods are guaranteed to be invoked on the main thread.
+     * <p>
+     * Their semantics is equivalent to the methods of {@link AsyncTask}.
+     */
+    public static interface Listener {
+
+        /** Invoked before the task is started. */
+        void onPreExecute(DeckTask task);
 
 
-        public void onPostExecute(TaskData result);
+        /**
+         * Invoked after the task has completed.
+         * <p>
+         * The semantics of the result depends on the task itself.
+         */
+        void onPostExecute(DeckTask task, TaskData result);
 
 
-        public void onProgressUpdate(TaskData... values);
+        /**
+         * Invoked when the background task publishes an update.
+         * <p>
+         * The semantics of the update data depends on the task itself.
+         */
+        void onProgressUpdate(DeckTask task, TaskData... values);
+
     }
 
-    public static interface CancellableTaskListener extends TaskListener {
-        public void onCancelled();
+    /**
+     * Adapter for the old interface, where the DeckTask itself was not passed to the listener.
+     * <p>
+     * All methods are invoked on the main thread.
+     * <p>
+     * The semantics of the methods is equivalent to the semantics of the methods in the regular {@link Listener}.
+     */
+    public static abstract class TaskListener implements Listener {
+
+        /** Invoked before the task is started. */
+        public abstract void onPreExecute();
+
+
+        /**
+         * Invoked after the task has completed.
+         * <p>
+         * The semantics of the result depends on the task itself.
+         */
+        public abstract void onPostExecute(TaskData result);
+
+
+        /**
+         * Invoked when the background task publishes an update.
+         * <p>
+         * The semantics of the update data depends on the task itself.
+         */
+        public abstract void onProgressUpdate(TaskData... values);
+
+
+        @Override
+        public void onPreExecute(DeckTask task) {
+            onPreExecute();
+        }
+
+
+        @Override
+        public void onPostExecute(DeckTask task, TaskData result) {
+            onPostExecute(result);
+        }
+
+
+        @Override
+        public void onProgressUpdate(DeckTask task, TaskData... values) {
+            onProgressUpdate(values);
+        }
+
     }
 
     /**
