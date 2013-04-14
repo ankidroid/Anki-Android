@@ -108,6 +108,7 @@ import org.json.JSONObject;
 import org.xml.sax.XMLReader;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
@@ -122,6 +123,14 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class Reviewer extends AnkiActivity {
+
+    /**
+     * Whether to save the content of the card in the file system.
+     * <p>
+     * Set this to true for debugging only.
+     */
+    private static final boolean SAVE_CARD_CONTENT = false;
+
     /**
      * Result codes that are returned when this activity finishes.
      */
@@ -2447,6 +2456,19 @@ public class Reviewer extends AnkiActivity {
                     style.toString()).replace("::class::", cardClass));
             Log.i(AnkiDroidApp.TAG, "base url = " + mBaseUrl);
 
+            if (SAVE_CARD_CONTENT) {
+                try {
+                    FileOutputStream f = new FileOutputStream(
+                            new File(AnkiDroidApp.getCurrentAnkiDroidDirectory(), "card.html"));
+                    try {
+                        f.write(mCardContent.toString().getBytes());
+                    } finally {
+                        f.close();
+                    }
+                } catch (IOException e) {
+                    Log.d(AnkiDroidApp.TAG, "failed to save card", e);
+                }
+            }
             fillFlashcard(mShowAnimations);
         }
 
