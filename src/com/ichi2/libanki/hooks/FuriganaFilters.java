@@ -16,12 +16,19 @@
 
 package com.ichi2.libanki.hooks;
 
+import com.ichi2.anki.AnkiDroidApp;
+
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class FuriganaFilters {
     private static final Pattern r = Pattern.compile(" ?([^ >]+?)\\[(.+?)\\]");
-    private static final String ruby = "<ruby><rb>$1</rb><rt>$2</rt></ruby>";
+
+    // Since there is no ruby tag support in Android before 3.0 (SDK version 11), we must use an alternative
+    // approach to align the elements. Anki does the same thing in aqt/qt.py for earlier versions of qt.
+    // The fallback approach relies on CSS in the file /assets/flashcard_css
+    private static final String RUBY = AnkiDroidApp.SDK_VERSION >= 11 ? "<ruby><rb>$1</rb><rt>$2</rt></ruby>"
+            : "<span class='legacy_ruby_rb'><span class='legacy_ruby_rt'>$2</span>$1</span>";
 
 
     public void install(Hooks h) {
@@ -72,7 +79,7 @@ public class FuriganaFilters {
             Matcher m = r.matcher((String) arg);
             StringBuffer sb = new StringBuffer();
             while (m.find()) {
-                m.appendReplacement(sb, noSound(m, ruby));
+                m.appendReplacement(sb, noSound(m, RUBY));
             }
             m.appendTail(sb);
             return sb.toString();
