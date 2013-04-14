@@ -64,6 +64,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 import java.util.TreeSet;
+import java.util.concurrent.ExecutionException;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 import java.util.zip.ZipOutputStream;
@@ -105,24 +106,30 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
     public static final int TASK_TYPE_CONF_REMOVE = 35;
     public static final int TASK_TYPE_CONF_SET_SUBDECKS = 36;
 
-    private static DeckTask sInstance;
-    private static DeckTask sOldInstance;
+    /**
+     * The most recently started {@link DeckTask} instance.
+     */
+    private static DeckTask sLatestInstance;
 
     private static boolean sHadCardQueue = false;
 
-    private int mType;
-    private TaskListener mListener;
 
-
+    /**
+     * Starts a new {@link DeckTask}.
+     * <p>
+     * Tasks will be executed serially, in the order in which they are started.
+     * <p>
+     * This method must be called on the main thread.
+     *
+     * @param type of the task to start
+     * @param listener to the status and result of the task
+     * @param params to pass to the task
+     * @return the newly created task
+     */
     public static DeckTask launchDeckTask(int type, TaskListener listener, TaskData... params) {
-        sOldInstance = sInstance;
-
-        sInstance = new DeckTask();
-        sInstance.mListener = listener;
-        sInstance.mType = type;
-
-        sInstance.execute(params);
-        return sInstance;
+        sLatestInstance = new DeckTask(type, listener, sLatestInstance);
+        sLatestInstance.execute(params);
+        return sLatestInstance;
     }
 
 
@@ -131,9 +138,9 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
      */
     public static void waitToFinish() {
         try {
-            if ((sInstance != null) && (sInstance.getStatus() != AsyncTask.Status.FINISHED)) {
+            if ((sLatestInstance != null) && (sLatestInstance.getStatus() != AsyncTask.Status.FINISHED)) {
                 Log.i(AnkiDroidApp.TAG, "DeckTask: wait to finish");
-                sInstance.get();
+                sLatestInstance.get();
             }
         } catch (Exception e) {
             return;
@@ -143,8 +150,8 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
 
     public static void cancelTask() {
         try {
-            if ((sInstance != null) && (sInstance.getStatus() != AsyncTask.Status.FINISHED)) {
-                sInstance.cancel(true);
+            if ((sLatestInstance != null) && (sLatestInstance.getStatus() != AsyncTask.Status.FINISHED)) {
+                sLatestInstance.cancel(true);
             }
         } catch (Exception e) {
             return;
@@ -153,13 +160,13 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
 
 
     public static boolean taskIsCancelled() {
-        return sInstance.isCancelled();
+        return sLatestInstance.isCancelled();
     }
 
 
     public static boolean taskIsRunning() {
         try {
-            if ((sInstance != null) && (sInstance.getStatus() != AsyncTask.Status.FINISHED)) {
+            if ((sLatestInstance != null) && (sLatestInstance.getStatus() != AsyncTask.Status.FINISHED)) {
                 return true;
             }
         } catch (Exception e) {
@@ -168,28 +175,43 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
         return false;
     }
 
+    private final int mType;
+    private final TaskListener mListener;
+    private final DeckTask mPreviousTask;
+
+
+    public DeckTask(int type, TaskListener listener, DeckTask previousTask) {
+        mType = type;
+        mListener = listener;
+        mPreviousTask = previousTask;
+    }
+
 
     @Override
     protected TaskData doInBackground(TaskData... params) {
         // Wait for previous thread (if any) to finish before continuing
-        try {
-            if ((sOldInstance != null) && (sOldInstance.getStatus() != AsyncTask.Status.FINISHED)) {
-                Log.i(AnkiDroidApp.TAG, "Waiting for " + sOldInstance.mType + " to finish before starting "
-                        + sInstance.mType);
+        if (mPreviousTask != null && mPreviousTask.getStatus() != AsyncTask.Status.FINISHED) {
+            Log.i(AnkiDroidApp.TAG, "Waiting for " + mPreviousTask.mType + " to finish before starting " + mType);
 
-                // let user know if the last deck close is still performing a backup
-                if (mType == TASK_TYPE_OPEN_COLLECTION && sOldInstance.mType == TASK_TYPE_CLOSE_DECK) {
-                    publishProgress(new TaskData(AnkiDroidApp.getInstance().getBaseContext().getResources()
-                            .getString(R.string.finish_operation)));
-                }
-
-                sOldInstance.get();
+            // Let user know if the last deck close is still performing a backup.
+            if (mType == TASK_TYPE_OPEN_COLLECTION && mPreviousTask.mType == TASK_TYPE_CLOSE_DECK) {
+                publishProgress(new TaskData(AnkiDroidApp.getInstance().getBaseContext().getResources()
+                        .getString(R.string.finish_operation)));
             }
-        } catch (Exception e) {
-            Log.e(AnkiDroidApp.TAG,
-                    "doInBackground - Got exception while waiting for thread to finish: " + e.getMessage());
+            try {
+                mPreviousTask.get();
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+                // We have been interrupted, return immediately.
+                Log.e(AnkiDroidApp.TAG, "interrupted while waiting for previous task: " + mPreviousTask.mType, e);
+                return null;
+            } catch (ExecutionException e) {
+                // Ignore failures in the previous task.
+                Log.e(AnkiDroidApp.TAG, "previously running task failed with exception: " + mPreviousTask.mType, e);
+            }
         }
 
+        // Actually execute the task now that we are at the front of the queue.
         switch (mType) {
             case TASK_TYPE_OPEN_COLLECTION:
                 return doInBackgroundOpenCollection(params);
