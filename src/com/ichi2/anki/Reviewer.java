@@ -2709,8 +2709,13 @@ public class Reviewer extends AnkiActivity {
                 if (TextUtils.isEmpty(defaultFontName)) {
                     mCustomDefaultFontCss = "";
                 } else {
-                    mCustomDefaultFontCss = "BODY .question BODY .answer { font-family: '" + defaultFont
-                            + "' font-weight: normal; font-style: normal; font-stretch: normal; }\n";
+                    mCustomDefaultFontCss = String.format(
+                            "BODY .question, BODY .answer {"
+                            + "font-family: '%s';"
+                            + "font-weight: normal;"
+                            + "font-style: normal;"
+                            + "font-stretch: normal;"
+                            + "}\n", defaultFontName);
                 }
             }
         }
