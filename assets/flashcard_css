@@ -14,28 +14,22 @@ body {
   font-size: 250%;
 }
 
-ruby
-{
-	display: inline-table;
-	text-align: center;
-	white-space: nowrap;
-	text-indent: 0;
-	margin: 0;
-	vertical-align: -20%;
+.legacy_ruby_rb {
+  display: inline-block;
+  text-align: center;
+  line-height: 1;
+  white-space: nowrap;
+  vertical-align: baseline;
+  margin: 0;
+  padding: 0;
 }
 
-rb
-{
-	display: table-row-group;
-	line-height: 150%;
-}
-
-rt
-{
-	display: table-header-group;
-	font-size: 60%;
-	line-height: 40%;
-	letter-spacing: 0;
+.legacy_ruby_rt {
+  display: block;
+  text-decoration: none;
+  line-height: 1.2;
+  font-weight: normal;
+  font-size: 0.64em;
 }
 
 .chess_board
