@@ -112,7 +112,6 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
 
     private int mType;
     private TaskListener mListener;
-    private boolean mPreOperationDone = false;
 
 
     public static DeckTask launchDeckTask(int type, TaskListener listener, TaskData... params) {
@@ -174,10 +173,6 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
     protected TaskData doInBackground(TaskData... params) {
         // Wait for previous thread (if any) to finish before continuing
         try {
-            if (!mPreOperationDone) {
-                mListener.onPreExecute();
-                mPreOperationDone = true;
-            }
             if ((sOldInstance != null) && (sOldInstance.getStatus() != AsyncTask.Status.FINISHED)) {
                 Log.i(AnkiDroidApp.TAG, "Waiting for " + sOldInstance.mType + " to finish before starting "
                         + sInstance.mType);
@@ -297,10 +292,7 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
 
     @Override
     protected void onPreExecute() {
-        if (!mPreOperationDone) {
-            mListener.onPreExecute();
-            mPreOperationDone = true;
-        }
+        mListener.onPreExecute();
     }
 
 
