@@ -2725,14 +2725,14 @@ public class Reviewer extends AnkiActivity {
             SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(getBaseContext());
             AnkiFont defaultFont = getCustomFontsMap().get(preferences.getString("defaultFont", null));
             if (defaultFont != null) {
-                mCustomDefaultFontCss = "BODY .question, BODY .answer { " + defaultFont.getCSS() + " }\n";
+                mCustomDefaultFontCss = "BODY { " + defaultFont.getCSS() + " }\n";
             } else {
                 String defaultFontName = Themes.getReviewerFontName();
                 if (TextUtils.isEmpty(defaultFontName)) {
                     mCustomDefaultFontCss = "";
                 } else {
                     mCustomDefaultFontCss = String.format(
-                            "BODY .question, BODY .answer {"
+                            "BODY {"
                             + "font-family: '%s';"
                             + "font-weight: normal;"
                             + "font-style: normal;"
