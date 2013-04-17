@@ -47,6 +47,8 @@
   <string name="pref_cat_messages">Повідомлення та відгуки</string>
   <string name="pref_cat_performance">Продуктивність</string>
   <string name="pref_cat_fonts">Шрифти</string>
+  <string name="pref_cat_plugins">Plugins</string>
+  <string name="pref_cat_plugins_controllers">Controllers</string>
   <string name="show_study_options_on_deck_load">Параметри навчання при завантаженні</string>
   <string name="show_study_options_on_deck_load_summ">Показувати екран параметрів навчання при завантаженні колоди</string>
   <string name="hide_due_count">Приховати лічильник майбутніх переглядів</string>
@@ -110,6 +112,7 @@
   <string name="zeemote_right">Джойстик праворуч</string>
   <string name="zeemote_show_answer">Показувати відповідь при позначенні</string>
   <string name="zeemote_show_answer_summ">Дія, присвоєна позначкам 1-4 також показує відповідь.</string>
+  <string name="controller_pref_changed_toast">Controller %1$s will be %2$s the next time you start AnkiDroid</string>
   <string name="swipe">Увімкнути жести</string>
   <string name="swipe_summ_off">Використовувати жести для зміни екрану та відповіді на картки. Цей вибір не сумісний з управлінням масштабом</string>
   <string name="swipe_summ_on">Ковзання горизонтально для зміни екранів. Налаштуйте інші дії нижче</string>

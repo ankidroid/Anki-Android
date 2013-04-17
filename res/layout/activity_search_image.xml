@@ -1,0 +1,51 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/MainLayoutInImageSearchActivity"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".SearchImageActivity" >
+
+    <WebView
+        android:id="@+id/ImageSearchWebView"
+        android:layout_width="match_parent"
+        android:layout_weight="0.8" 
+        android:layout_height="0dip"
+        />
+
+     <Button
+            android:id="@+id/ImageSearchPick"
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/multimedia_editor_imgs_pick" />
+    
+    <LinearLayout
+        android:id="@+id/ImageSearchButtonsLayout"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right"
+        android:orientation="horizontal" >
+
+        <Button
+            android:id="@+id/ImageSearchPrev"
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="0dip"
+            android:layout_height="fill_parent"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="@string/multimedia_editor_imgs_prev" />
+
+        <Button
+            android:id="@+id/ImageSearchNext"
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="0dip"
+            android:layout_height="fill_parent"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="@string/multimedia_editor_imgs_next" />
+    </LinearLayout>
+
+</LinearLayout>

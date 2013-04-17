@@ -47,6 +47,8 @@
   <string name="pref_cat_messages">Mesajlar ve geribildirim</string>
   <string name="pref_cat_performance">Performans</string>
   <string name="pref_cat_fonts">Yazı tipleri</string>
+  <string name="pref_cat_plugins">Plugins</string>
+  <string name="pref_cat_plugins_controllers">Controllers</string>
   <string name="show_study_options_on_deck_load">Yüklemede çalışma seçenekleri</string>
   <string name="show_study_options_on_deck_load_summ">Deste yüklenirken çalışma seçenekleri ekranını gösterir</string>
   <string name="hide_due_count">Çıkacak sayısını gizle</string>
@@ -110,6 +112,7 @@
   <string name="zeemote_right">Çubuk sağa</string>
   <string name="zeemote_show_answer">İşâretleme eylemleriyle yanıtları göster</string>
   <string name="zeemote_show_answer_summ">1-4 işâretlerine atanan eylemler yanıtı da gösterir.</string>
+  <string name="controller_pref_changed_toast">Controller %1$s will be %2$s the next time you start AnkiDroid</string>
   <string name="swipe">Özel Hareketleri Etkinleştir</string>
   <string name="swipe_summ_off">Ekranlar arasında geçiş yapmak ve kartları yanıtlamak için özel hareketleri kullan. Bu seçenek yakınlaştırma denetimleriyle uyumlu değildir.</string>
   <string name="swipe_summ_on">Ekranlar arasında geçiş yapmak için yatay olarak sürükle. Diğer eylemleri aşağıda yapılandırın.</string>

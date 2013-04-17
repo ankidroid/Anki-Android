@@ -47,6 +47,8 @@
   <string name="pref_cat_messages">رسائل ومرئيات</string>
   <string name="pref_cat_performance">الأداء</string>
   <string name="pref_cat_fonts">الخطوط</string>
+  <string name="pref_cat_plugins">Plugins</string>
+  <string name="pref_cat_plugins_controllers">Controllers</string>
   <string name="show_study_options_on_deck_load">خيارات الدراسة عند التحميل</string>
   <string name="show_study_options_on_deck_load_summ">يعرض شاشة خيارات الدراسة عند تحميل الرزمة</string>
   <string name="hide_due_count">أخف عدد المستحق</string>
@@ -110,6 +112,7 @@
   <string name="zeemote_right">عصى اليمين</string>
   <string name="zeemote_show_answer">إظهار الإجابات التي بها إجراءات معلمة</string>
   <string name="zeemote_show_answer_summ">إجراءات معينة لتعليم 1-4 أيضا إظهار الإجابة.</string>
+  <string name="controller_pref_changed_toast">Controller %1$s will be %2$s the next time you start AnkiDroid</string>
   <string name="swipe">تمكين الحركات</string>
   <string name="swipe_summ_off">استخدم الحركات لتبديل بين الشاشات و بطاقات الإجابة. هذا الخيار لا يتوافق مع متحكمات التكبير</string>
   <string name="swipe_summ_on">اسحب أفقيا للتبديل بين الشاشات. قم بإعداد الإجراءات الأخرى أدناه</string>

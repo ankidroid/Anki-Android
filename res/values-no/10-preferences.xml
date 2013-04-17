@@ -47,6 +47,8 @@
   <string name="pref_cat_messages">Meldinger og tilbakemeldinger</string>
   <string name="pref_cat_performance">Ytelse</string>
   <string name="pref_cat_fonts">Skrifttyper</string>
+  <string name="pref_cat_plugins">Plugins</string>
+  <string name="pref_cat_plugins_controllers">Controllers</string>
   <string name="show_study_options_on_deck_load">Læringsvalg ved lasting</string>
   <string name="show_study_options_on_deck_load_summ">Vis læringsvalgskjermen når du laster inn en kortstokk</string>
   <string name="hide_due_count">Skjul hvor mange som står for tur</string>
@@ -110,6 +112,7 @@
   <string name="zeemote_right">Styrepinne til høyre</string>
   <string name="zeemote_show_answer">Vis svar med karakter-handlinger</string>
   <string name="zeemote_show_answer_summ">Handlinger tilordnet valgene 1-4 viser også svaret.</string>
+  <string name="controller_pref_changed_toast">Controller %1$s will be %2$s the next time you start AnkiDroid</string>
   <string name="swipe">Aktiver bevegelser</string>
   <string name="swipe_summ_off">Bruk bevegelser til å veksle mellom skjermer og besvare kort. Dette alternativet er ikke kompatibelt med zoomkontroller</string>
   <string name="swipe_summ_on">Sveip vannrett for å skifte mellom skjermer. Still inn andre handlinger under</string>

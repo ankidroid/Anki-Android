@@ -47,6 +47,8 @@
   <string name="pref_cat_messages">Messages and Feedback</string>
   <string name="pref_cat_performance">Prestanda</string>
   <string name="pref_cat_fonts">Teckensnitt</string>
+  <string name="pref_cat_plugins">Plugins</string>
+  <string name="pref_cat_plugins_controllers">Controllers</string>
   <string name="show_study_options_on_deck_load">Studieinställningar vid laddning</string>
   <string name="show_study_options_on_deck_load_summ">Visar studieinställningsskärmen när du laddar en kortlek</string>
   <string name="hide_due_count">Göm antal i kö</string>
@@ -110,6 +112,7 @@
   <string name="zeemote_right">Stick right</string>
   <string name="zeemote_show_answer">Show answers with mark actions</string>
   <string name="zeemote_show_answer_summ">Actions assigned to marks 1-4 also show answer.</string>
+  <string name="controller_pref_changed_toast">Controller %1$s will be %2$s the next time you start AnkiDroid</string>
   <string name="swipe">Aktivera gester</string>
   <string name="swipe_summ_off">Använd gester för att växla mellan skärmar och svarskort. Detta alternativ är ej kompatibelt med zoomkontrollerna</string>
   <string name="swipe_summ_on">Dra horisontellt för att byta mellan skärmar. Ställ in andra handlingar nedan</string>
