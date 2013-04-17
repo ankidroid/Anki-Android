@@ -311,7 +311,7 @@ public class StudyOptionsFragment extends Fragment {
                     }
                     return;
                 case R.id.studyoptions_add:
-                    addNote();
+                    addNoteMultimedia();
                     return;
                 default:
                     return;
@@ -547,6 +547,7 @@ public class StudyOptionsFragment extends Fragment {
         if (AnkiDroidApp.SDK_VERSION > 4) {
             ActivityTransitionAnimation.slide(getActivity(), ActivityTransitionAnimation.LEFT);
         }
+    }
 
 
     public void reloadCollection() {

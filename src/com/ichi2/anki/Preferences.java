@@ -265,11 +265,11 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
         browserEditorCustomFontsPreference.setEntryValues(getCustomFonts("", true));
     }
 
-    @Override
-    protected void onResume() {
-    	super.onResume();
-    	preparePluginsScreen();
-    }
+    //@Override
+    //protected void onResume() {
+    //	super.onResume();
+    //	preparePluginsScreen();
+    //}
 
     @Override
     protected void onPause() {
