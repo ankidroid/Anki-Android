@@ -115,7 +115,7 @@ public class Collection {
         R.string.undo_action_suspend_note,
         R.string.undo_action_delete,
         R.string.undo_action_mark};
-    
+
     private static final int UNDO_SIZE_MAX = 20;
 
     public Collection(AnkiDb db, String path) {
@@ -298,7 +298,7 @@ public class Collection {
                         db.endTransaction();
                     }
                     lock();
-                }            	
+                }
             } catch (RuntimeException e) {
     			AnkiDroidApp.saveExceptionReportFile(e, "closeDB");
             }
@@ -747,7 +747,7 @@ public class Collection {
             	// must not be a filtered deck
             	card.setDid(1);
             } else {
-                card.setDid(deck.getLong("id"));            	
+                card.setDid(deck.getLong("id"));
             }
         } catch (JSONException e) {
             throw new RuntimeException(e);
@@ -1039,7 +1039,7 @@ public class Collection {
     public List<Long> findCards(String search, Boolean order) {
         return new Finder(this).findCards(search, order.toString());
     }
-    
+
     public ArrayList<HashMap<String, String>> findCardsForCardBrowser(String search, String order, HashMap<String, String> deckNames) {
         return new Finder(this).findCardsForCardBrowser(search, order, deckNames);
     }
@@ -1141,7 +1141,7 @@ public class Collection {
      */
 
     /**
-     * [type, undoName, data] type 1 = review; type 2 = 
+     * [type, undoName, data] type 1 = review; type 2 =
      */
     public void clearUndo() {
         mUndo = new LinkedList<Object[]>();
@@ -1313,7 +1313,7 @@ public class Collection {
                             "SELECT id FROM cards WHERE ord NOT IN " + Utils.ids2str(ords) + " AND nid IN (SELECT id FROM notes WHERE mid = " + m.getLong("id") + ")", 0);
                 	if (ids.size() > 0) {
                     	problems.add("Deleted " + ids.size() + " card(s) with missing template.");
-    	                remCards(Utils.arrayList2array(ids));   		
+    	                remCards(Utils.arrayList2array(ids));
                 	}
                 }
                 // delete any notes with missing cards
@@ -1402,13 +1402,13 @@ public class Collection {
     public Models getModels() {
         return mModels;
     }
-    
+
     /** Check if this collection is valid. */
     public boolean validCollection() {
     	//TODO: more validation code
     	return mModels.validateModel();
     }
-    
+
     public JSONObject getConf() {
         return mConf;
     }
