@@ -1192,8 +1192,10 @@ public class Collection {
                 if (getDecks().active().contains(newCard.getDid())) {
                     card = newCard;
                     card.load();
-                    // reload qa-cache
-                    card.getQuestion(true);
+                    // Reloads the QA-cache.
+                    // Requests the simple interface version, since the only difference
+                    // is whether the CSS is added and that's not cached.
+                    card.getQuestion(true, true);
                 }
             }
             if (card == null) {
