@@ -1,15 +1,17 @@
 language: java
+branches:
+  only:
+    - /^v[0-9.]*-dev$/
+
 before_install:
-  # download the latest android sdk and unzip
-  - wget http://dl.google.com/android/android-sdk_r20-linux.tgz
-  - tar -zxf android-sdk_r20-linux.tgz
-  # setup your ANDROID_HOME and PATH environment variables
-  - export ANDROID_HOME=~/builds/ankidroid-continuous/Anki-Android/android-sdk-linux
-  - export PATH=${PATH}:${ANDROID_HOME}/tools:${ANDROID_HOME}/platform-tools
-  # Only update the SDK for the tools and platform-tools and whatever API level
-  # you are building for android.
-  - android update sdk --filter 1,2 --no-ui --force
-  - android list sdk
-  - android update sdk --filter 7 --no-ui --force
-  - android update project --path ~/builds/ankidroid-continuous/Anki-Android
-script: "ant clean debug"
+  # Needed to run Android SDK tools, which are 32-bit binaries.
+  - sudo apt-get update -qq
+  - if [ `uname -m` = x86_64 ]; then sudo apt-get install -qq --force-yes libgd2-xpm ia32-libs ia32-libs-multiarch > /dev/null; fi
+before_script:
+  # Configure Android SDK tools and platforms required to build.
+  - ./tools/travis/continuous-setup.sh ..
+script: "./tools/travis/continuous-build.sh"
+
+notifications:
+  email:
+    - flerda+ankidroid-continuous@gmail.com
