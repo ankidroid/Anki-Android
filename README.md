@@ -8,6 +8,7 @@ For more details see:
 
 The branches for future releases are:  
 * Feature release: [v2.1-dev](https://github.com/ankidroid/Anki-Android/tree/v2.1-dev)
+  [![Build Status](https://travis-ci.org/ankidroid/Anki-Android.png?branch=v2.1-dev)](https://travis-ci.org/ankidroid/Anki-Android)
 
 To contribute, please base your changes on one of the two branches above and
 send a pull request.  
