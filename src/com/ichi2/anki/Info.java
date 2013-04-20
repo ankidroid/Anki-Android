@@ -39,6 +39,7 @@ import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.RelativeLayout;
 import com.ichi2.anim.ActivityTransitionAnimation;
+import com.ichi2.async.BaseAsyncTask;
 import com.ichi2.async.Connection;
 import com.ichi2.async.Connection.Payload;
 import com.ichi2.async.DeckTask;
@@ -721,9 +722,10 @@ public class Info extends Activity {
             }
         }
 
-        private class ParseSharedDecks extends AsyncTask<String, Void, String> {
+        private class ParseSharedDecks extends BaseAsyncTask<String, Void, String> {
             @Override
             protected String doInBackground(String... params) {
+                super.doInBackground(params);
                 Log.i(AnkiDroidApp.TAG, "Info.ParseSharedDecks.doInBackground()");
                 HttpGet pageGet = new HttpGet(params[0]);
                 HostnameVerifier hostnameVerifier = org.apache.http.conn.ssl.SSLSocketFactory.ALLOW_ALL_HOSTNAME_VERIFIER;
@@ -802,6 +804,7 @@ public class Info extends Activity {
 
             @Override
             protected void onPostExecute(String html) {
+                super.onPostExecute(html);
                 Log.d(AnkiDroidApp.TAG, "Info.ParseSharedDecks.onPostExecute()");
                 if (mWebView != null && mUrl != null & html != null) {
                     mWebView.loadDataWithBaseURL(mUrl, html, null, "utf-8", mUrl);

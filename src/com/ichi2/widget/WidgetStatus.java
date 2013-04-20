@@ -19,6 +19,7 @@ import com.ichi2.anki.BackupManager;
 import com.ichi2.anki.DeckPicker;
 import com.ichi2.anki.MetaDB;
 import com.ichi2.anki.services.NotificationService;
+import com.ichi2.async.BaseAsyncTask;
 import com.ichi2.async.DeckTask.TaskData;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Decks;
@@ -172,7 +173,7 @@ public final class WidgetStatus {
         return null;
     }
 
-    private static class UpdateDeckStatusAsyncTask extends AsyncTask<Context, Void, Context> {
+    private static class UpdateDeckStatusAsyncTask extends BaseAsyncTask<Context, Void, Context> {
         private static final DeckStatus[] EMPTY_DECK_STATUS = new DeckStatus[0];
 
         private static DeckStatus[] mDecks = EMPTY_DECK_STATUS;
@@ -181,6 +182,7 @@ public final class WidgetStatus {
 
         @Override
         protected Context doInBackground(Context... params) {
+            super.doInBackground(params);
             Log.d(AnkiDroidApp.TAG, "WidgetStatus.UpdateDeckStatusAsyncTask.doInBackground()");
             Context context = params[0];
 
@@ -249,6 +251,7 @@ public final class WidgetStatus {
 
         @Override
         protected void onPostExecute(Context context) {
+            super.onPostExecute(context);
             Log.d(AnkiDroidApp.TAG, "WidgetStatus.UpdateDeckStatusAsyncTask.onPostExecute()");
             MetaDB.storeSmallWidgetStatus(context, mSmallWidgetStatus);
 //            MetaDB.storeWidgetStatus(context, mDecks);

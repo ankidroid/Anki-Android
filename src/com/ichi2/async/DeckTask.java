@@ -72,7 +72,7 @@ import java.util.zip.ZipOutputStream;
 /**
  * Loading in the background, so that AnkiDroid does not look like frozen.
  */
-public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, DeckTask.TaskData> {
+public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData, DeckTask.TaskData> {
 
     public static final int TASK_TYPE_OPEN_COLLECTION = 0;
     public static final int TASK_TYPE_SAVE_COLLECTION = 2;
@@ -189,6 +189,7 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
 
     @Override
     protected TaskData doInBackground(TaskData... params) {
+        super.doInBackground(params);
         // Wait for previous thread (if any) to finish before continuing
         if (mPreviousTask != null && mPreviousTask.getStatus() != AsyncTask.Status.FINISHED) {
             Log.i(AnkiDroidApp.TAG, "Waiting for " + mPreviousTask.mType + " to finish before starting " + mType);
@@ -316,6 +317,7 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
     /** Delegates to the {@link TaskListener} for this task. */
     @Override
     protected void onPreExecute() {
+        super.onPreExecute();
         mListener.onPreExecute(this);
     }
 
@@ -323,6 +325,7 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
     /** Delegates to the {@link TaskListener} for this task. */
     @Override
     protected void onProgressUpdate(TaskData... values) {
+        super.onProgressUpdate(values);
         mListener.onProgressUpdate(this, values);
     }
 
@@ -330,6 +333,7 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
     /** Delegates to the {@link TaskListener} for this task. */
     @Override
     protected void onPostExecute(TaskData result) {
+        super.onPostExecute(result);
         mListener.onPostExecute(this, result);
     }
 

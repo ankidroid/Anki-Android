@@ -80,7 +80,7 @@ import java.util.TreeSet;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
-public class Connection extends AsyncTask<Connection.Payload, Object, Connection.Payload> {
+public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connection.Payload> {
 
     public static final int TASK_TYPE_LOGIN = 0;
     public static final int TASK_TYPE_SYNC = 1;
@@ -133,6 +133,7 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
      */
     @Override
     protected void onCancelled() {
+        super.onCancelled();
         if (mCancelCallback != null) {
             mCancelCallback.cancelAllConnections();
         }
@@ -146,6 +147,7 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
      */
     @Override
     protected void onPreExecute() {
+        super.onPreExecute();
         if (mListener != null) {
             mListener.onPreExecute();
         }
@@ -157,6 +159,7 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
      */
     @Override
     protected void onPostExecute(Payload data) {
+        super.onPostExecute(data);
         if (mListener != null) {
             mListener.onPostExecute(data);
         }
@@ -168,6 +171,7 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
      */
     @Override
     protected void onProgressUpdate(Object... values) {
+        super.onProgressUpdate(values);
         if (mListener != null) {
             mListener.onProgressUpdate(values);
         }
@@ -244,6 +248,7 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
 
     @Override
     protected Payload doInBackground(Payload... params) {
+        super.doInBackground(params);
         if (params.length != 1)
             throw new IllegalArgumentException();
         return doOneInBackground(params[0]);
