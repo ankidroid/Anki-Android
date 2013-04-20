@@ -1,4 +1,3 @@
-package com.ichi2.preferences;
 
 /****************************************************************************************
  * Copyright (c) 2013 Houssam Salem <houssam.salem.au@gmail.com>                        *
@@ -15,6 +14,8 @@ package com.ichi2.preferences;
  * You should have received a copy of the GNU General Public License along with         *
  * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
  ****************************************************************************************/
+
+package com.ichi2.preferences;
 
 import android.content.Context;
 import android.preference.EditTextPreference;
@@ -35,21 +36,19 @@ public class StepsPreference extends EditTextPreference {
 
     public StepsPreference(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
-        if (attrs != null) {
-            mAllowEmpty = attrs.getAttributeBooleanValue(AnkiDroidApp.APP_NAMESPACE, "allowEmpty", true);
-        } else {
-            mAllowEmpty = true;
-        }
+        mAllowEmpty = getAllowEmptyFromAttributes(attrs);
     }
 
 
     public StepsPreference(Context context, AttributeSet attrs) {
-        this(context, attrs, 0);
+        super(context, attrs);
+        mAllowEmpty = getAllowEmptyFromAttributes(attrs);
     }
 
 
     public StepsPreference(Context context) {
-        this(context, null);
+        super(context);
+        mAllowEmpty = getAllowEmptyFromAttributes(null);
     }
 
 
@@ -90,7 +89,7 @@ public class StepsPreference extends EditTextPreference {
                     return null;
                 }
                 // Use whole numbers if we can (but still allow decimals)
-                int i = (int)f;
+                int i = (int) f;
                 if (i == f) {
                     sb.append(i).append(" ");
                 } else {
@@ -106,6 +105,7 @@ public class StepsPreference extends EditTextPreference {
 
     /**
      * Convert steps format.
+     * 
      * @param a JSONArray representation of steps.
      * @return The steps as a space-separated string.
      */
@@ -124,14 +124,20 @@ public class StepsPreference extends EditTextPreference {
 
     /**
      * Convert steps format.
+     * 
      * @param steps String representation of steps.
      * @return The steps as a JSONArray.
      */
     public static JSONArray convertToJSON(String steps) {
         JSONArray ja = new JSONArray();
-        for (String s : TextUtils.split(steps, " "))  {
+        for (String s : TextUtils.split(steps, " ")) {
             ja.put(s);
         }
         return ja;
+    }
+
+
+    private boolean getAllowEmptyFromAttributes(AttributeSet attrs) {
+        return attrs == null ? true : attrs.getAttributeBooleanValue(AnkiDroidApp.APP_NAMESPACE, "allowEmpty", true);
     }
 }

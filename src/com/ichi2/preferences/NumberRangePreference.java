@@ -1,5 +1,3 @@
-package com.ichi2.preferences;
-
 /****************************************************************************************
  * Copyright (c) 2013 Houssam Salem <houssam.salem.au@gmail.com>                        *
  *                                                                                      *
@@ -15,6 +13,8 @@ package com.ichi2.preferences;
  * You should have received a copy of the GNU General Public License along with         *
  * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
  ****************************************************************************************/
+
+package com.ichi2.preferences;
 
 import android.content.Context;
 import android.preference.EditTextPreference;
@@ -32,39 +32,25 @@ public class NumberRangePreference extends EditTextPreference {
 
     public NumberRangePreference(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
-        if (attrs != null) {
-            mMin = attrs.getAttributeIntValue(AnkiDroidApp.APP_NAMESPACE, "min", 0);
-            mMax = attrs.getAttributeIntValue(AnkiDroidApp.APP_NAMESPACE, "max", Integer.MAX_VALUE);
-        } else {
-            mMin = 0;
-            mMax = Integer.MAX_VALUE;
-        }
-        setMaxLength(String.valueOf(mMax).length());
+        mMin = getMinFromAttributes(attrs);
+        mMax = getMaxFromAttributes(attrs);
+        updateLengthLimit();
     }
 
 
     public NumberRangePreference(Context context, AttributeSet attrs) {
-        this(context, attrs, 0);
+        super(context, attrs);
+        mMin = getMinFromAttributes(attrs);
+        mMax = getMaxFromAttributes(attrs);
+        updateLengthLimit();
     }
 
 
     public NumberRangePreference(Context context) {
-        this(context, null);
-    }
-
-
-    /**
-     * Set the maximum number of digits that can appear in the text editor.
-     * @param max Number of digits.
-     */
-    private void setMaxLength(int max) {
-        // Clone the existing filters so we don't override them, then append our one
-        // at the end.
-        InputFilter[] filters = getEditText().getFilters();
-        InputFilter[] newFilters = new InputFilter[filters.length + 1];
-        System.arraycopy(filters, 0, newFilters, 0, filters.length);
-        newFilters[newFilters.length-1] = new InputFilter.LengthFilter(max);
-        getEditText().setFilters(newFilters);
+        super(context);
+        mMin = getMinFromAttributes(null);
+        mMax = getMaxFromAttributes(null);
+        updateLengthLimit();
     }
 
 
@@ -100,5 +86,43 @@ public class NumberRangePreference extends EditTextPreference {
             valueInt = mMax;
         }
         return String.valueOf(valueInt);
+    }
+
+
+    /**
+     * Returns the value of the min attribute, or its default value if not specified
+     * <p>
+     * This method should only be called once from the constructor.
+     */
+    private int getMinFromAttributes(AttributeSet attrs) {
+        return attrs == null ? 0 : attrs.getAttributeIntValue(AnkiDroidApp.APP_NAMESPACE, "min", 0);
+    }
+
+
+    /**
+     * Returns the value of the max attribute, or its default value if not specified
+     * <p>
+     * This method should only be called once from the constructor.
+     */
+    private int getMaxFromAttributes(AttributeSet attrs) {
+        return attrs == null ? Integer.MAX_VALUE
+                : attrs.getAttributeIntValue(AnkiDroidApp.APP_NAMESPACE, "max", Integer.MAX_VALUE);
+    }
+
+
+    /**
+     * Updates the maximum length allowed in the text field based on the current value of the {@link #mMax} field.
+     * <p>
+     * This method should only be called once from the constructor.
+     */
+    private void updateLengthLimit() {
+        int maxLength = String.valueOf(mMax).length();
+        // Clone the existing filters so we don't override them, then append our one
+        // at the end.
+        InputFilter[] filters = getEditText().getFilters();
+        InputFilter[] newFilters = new InputFilter[filters.length + 1];
+        System.arraycopy(filters, 0, newFilters, 0, filters.length);
+        newFilters[newFilters.length - 1] = new InputFilter.LengthFilter(maxLength);
+        getEditText().setFilters(newFilters);
     }
 }
