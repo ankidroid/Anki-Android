@@ -47,6 +47,8 @@
   <string name="pref_cat_messages">メッセージとフィードバック</string>
   <string name="pref_cat_performance">パフォーマンス</string>
   <string name="pref_cat_fonts">フォント</string>
+  <string name="pref_cat_plugins">Plugins</string>
+  <string name="pref_cat_plugins_controllers">Controllers</string>
   <string name="show_study_options_on_deck_load">ロード時に学習設定を表示</string>
   <string name="show_study_options_on_deck_load_summ">単語帳を読み込むときに学習のオプション画面を表示する</string>
   <string name="hide_due_count">期限切れカウントの非表示</string>
@@ -110,6 +112,7 @@
   <string name="zeemote_right">Stick right</string>
   <string name="zeemote_show_answer">マーキングしながら答えを表示</string>
   <string name="zeemote_show_answer_summ">選択肢 1-4 への割り当て</string>
+  <string name="controller_pref_changed_toast">Controller %1$s will be %2$s the next time you start AnkiDroid</string>
   <string name="swipe">ジェスチャーを有効にする</string>
   <string name="swipe_summ_off">ジェスチャの機能を有効にして、質問画面、解答画面の操作を可能にします。 このオプションは, ズーム機能と互換性がありません。</string>
   <string name="swipe_summ_on">水平方向のスワイプで画面を切り替えることができます. 他のアクションは下で設定します</string>

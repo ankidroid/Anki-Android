@@ -108,7 +108,7 @@ public class StudyOptionsFragment extends Fragment {
     private int mCustomDialogChoice;
     
 
-    private HashMap<Integer, StyledDialog> mDialogs = new HashMap<Integer, StyledDialog>();
+    private final HashMap<Integer, StyledDialog> mDialogs = new HashMap<Integer, StyledDialog>();
 
     /**
      * Preferences
@@ -189,7 +189,7 @@ public class StudyOptionsFragment extends Fragment {
     /**
      * Callbacks for UI events
      */
-    private View.OnClickListener mButtonClickListener = new View.OnClickListener() {
+    private final View.OnClickListener mButtonClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
         	Collection col = AnkiDroidApp.getCol();
@@ -311,7 +311,7 @@ public class StudyOptionsFragment extends Fragment {
                     }
                     return;
                 case R.id.studyoptions_add:
-                    addNote();
+                    addNoteMultimedia();
                     return;
                 default:
                     return;
@@ -402,6 +402,7 @@ public class StudyOptionsFragment extends Fragment {
         if (mSwipeEnabled) {
             gestureDetector = new GestureDetector(new MyGestureDetector());
             gestureListener = new View.OnTouchListener() {
+                @Override
                 public boolean onTouch(View v, MotionEvent event) {
                     if (gestureDetector.onTouchEvent(event)) {
                         return true;
@@ -522,17 +523,27 @@ public class StudyOptionsFragment extends Fragment {
         mDontSaveOnStop = true;
         Intent reviewer = new Intent(getActivity(), Reviewer.class);
         startActivityForResult(reviewer, REQUEST_REVIEW);
-        if (AnkiDroidApp.SDK_VERSION > 4) {
-            ActivityTransitionAnimation.slide(getActivity(), ActivityTransitionAnimation.LEFT);
-        }
+        animateLeft();
         AnkiDroidApp.getCol().startTimebox();
     }
 
 
-    private void addNote() {
-        Intent intent = new Intent(getActivity(), CardEditor.class);
+    private void addNoteMultimedia() {
+        Intent intent = new Intent(getActivity(), MultimediaCardEditorActivity.class);
         intent.putExtra(CardEditor.EXTRA_CALLER, CardEditor.CALLER_STUDYOPTIONS);
         startActivityForResult(intent, ADD_NOTE);
+        animateLeft();
+    }
+
+    // Replaced by addNoteMultimedia
+    // private void addNote() {
+    // Intent intent = new Intent(getActivity(), CardEditor.class);
+    // intent.putExtra(CardEditor.EXTRA_CALLER, CardEditor.CALLER_STUDYOPTIONS);
+    // startActivityForResult(intent, ADD_NOTE);
+    // animateLeft();
+    // }
+
+    private void animateLeft() {
         if (AnkiDroidApp.SDK_VERSION > 4) {
             ActivityTransitionAnimation.slide(getActivity(), ActivityTransitionAnimation.LEFT);
         }
@@ -634,9 +645,9 @@ public class StudyOptionsFragment extends Fragment {
             mDeckOptions.setOnClickListener(mButtonClickListener);
         }
 
-        mGlobalBar = (View) mStudyOptionsView.findViewById(R.id.studyoptions_global_bar);
-        mGlobalMatBar = (View) mStudyOptionsView.findViewById(R.id.studyoptions_global_mat_bar);
-        mBarsMax = (View) mStudyOptionsView.findViewById(R.id.studyoptions_progressbar_content);
+        mGlobalBar = mStudyOptionsView.findViewById(R.id.studyoptions_global_bar);
+        mGlobalMatBar = mStudyOptionsView.findViewById(R.id.studyoptions_global_mat_bar);
+        mBarsMax = mStudyOptionsView.findViewById(R.id.studyoptions_progressbar_content);
         mTextTodayNew = (TextView) mStudyOptionsView.findViewById(R.id.studyoptions_new);
         mTextTodayLrn = (TextView) mStudyOptionsView.findViewById(R.id.studyoptions_lrn);
         mTextTodayRev = (TextView) mStudyOptionsView.findViewById(R.id.studyoptions_rev);
@@ -795,7 +806,7 @@ public class StudyOptionsFragment extends Fragment {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         try {
-                            int days = Integer.parseInt(((EditText) mCustomStudyEditText).getText().toString());
+                            int days = Integer.parseInt((mCustomStudyEditText).getText().toString());
                             createFilteredDeck(new JSONArray(), new Object[]{String.format(Locale.US, "prop:due<=%d", days), 9999, Sched.DYN_DUE}, true);    
                         } catch (NumberFormatException e) {
                             // ignore non numerical values
@@ -843,7 +854,7 @@ public class StudyOptionsFragment extends Fragment {
         		styledDialog.setButtonOnClickListener(Dialog.BUTTON_POSITIVE, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                    	String tags = ((EditText) mCustomStudyEditText).getText().toString();
+                    	String tags = mCustomStudyEditText.getText().toString();
                     	createFilteredDeck(new JSONArray(), new Object[]{"(is:new or is:due) " + tags, 9999, Sched.DYN_RANDOM}, true);
                     }
                 });
@@ -1136,9 +1147,7 @@ public class StudyOptionsFragment extends Fragment {
         mDontSaveOnStop = true;
         Intent cardBrowser = new Intent(getActivity(), CardBrowser.class);
         startActivityForResult(cardBrowser, BROWSE_CARDS);
-        if (AnkiDroidApp.SDK_VERSION > 4) {
-            ActivityTransitionAnimation.slide(getActivity(), ActivityTransitionAnimation.LEFT);
-        }
+        animateLeft();
     }
 
 
@@ -1382,7 +1391,8 @@ public class StudyOptionsFragment extends Fragment {
                             && Math.abs(velocityY) > AnkiDroidApp.sSwipeThresholdVelocity
                             && Math.abs(e1.getX() - e2.getX()) < AnkiDroidApp.sSwipeMaxOffPath) {
                         // up
-                        addNote();
+                        // addNote();
+                        addNoteMultimedia();
                     }
 
                 } catch (Exception e) {

@@ -561,4 +561,8 @@
                 android:title="@string/filter_google_translate" />
         </PreferenceCategory>
     </PreferenceScreen>
+    <PreferenceScreen android:title="@string/pref_cat_plugins" android:key="plugins">
+        <PreferenceCategory android:title="@string/pref_cat_plugins_controllers"  android:key="plugins_controllers">
+        </PreferenceCategory>
+    </PreferenceScreen>
 </PreferenceScreen>

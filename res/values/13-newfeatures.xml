@@ -23,6 +23,6 @@
 	<string-array name="new_version_features">
 		<item>upgrade wizard</item>
 		<item>bug fix: importing apkgs</item>
-			        <item>bug fix: media syncing</item>
-				</string-array>
+	        <item>bug fix: media syncing</item>
+	</string-array>
 </resources>

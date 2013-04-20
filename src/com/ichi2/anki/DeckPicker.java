@@ -243,14 +243,14 @@ public class DeckPicker extends FragmentActivity {
     // LISTENERS
     // ----------------------------------------------------------------------------
 
-    private AdapterView.OnItemClickListener mDeckSelHandler = new AdapterView.OnItemClickListener() {
+    private final AdapterView.OnItemClickListener mDeckSelHandler = new AdapterView.OnItemClickListener() {
         @Override
         public void onItemClick(AdapterView<?> parent, View v, int p, long id) {
             handleDeckSelection(p);
         }
     };
 
-    private DialogInterface.OnClickListener mContextMenuListener = new DialogInterface.OnClickListener() {
+    private final DialogInterface.OnClickListener mContextMenuListener = new DialogInterface.OnClickListener() {
         @Override
         public void onClick(DialogInterface dialog, int item) {
             Resources res = getResources();
@@ -367,7 +367,7 @@ public class DeckPicker extends FragmentActivity {
 
 
         @Override
-        public void onPreExecute() {
+        public final void onPreExecute() {
         	mDontSaveOnStop = true;
             countUp = 0;
             countDown = 0;
@@ -388,7 +388,7 @@ public class DeckPicker extends FragmentActivity {
                 // This is the part Download missing media of syncing
                 int total = ((Integer) values[1]).intValue();
                 int done = ((Integer) values[2]).intValue();
-                values[0] = ((String) values[3]);
+                values[0] = (values[3]);
                 values[1] = res.getString(R.string.sync_downloading_media, done, total);
             } else if (values[0] instanceof Integer) {
                 int id = (Integer) values[0];
@@ -492,7 +492,7 @@ public class DeckPicker extends FragmentActivity {
                                     break;
                                 default:
                                     mDialogMessage = res.getString(R.string.sync_log_error_specific,
-                                            Integer.toString(type), (String) result[2]);
+                                            Integer.toString(type), result[2]);
                                     break;
                             }                    		
                     	} else if (result[0] instanceof String) {
@@ -1062,6 +1062,7 @@ public class DeckPicker extends FragmentActivity {
         if (mSwipeEnabled) {
             gestureDetector = new GestureDetector(new MyGestureDetector());
             mDeckListView.setOnTouchListener(new View.OnTouchListener() {
+                @Override
                 public boolean onTouch(View v, MotionEvent event) {
                     if (gestureDetector.onTouchEvent(event)) {
                         return true;
@@ -1120,7 +1121,7 @@ public class DeckPicker extends FragmentActivity {
 
 
     private void addNote() {
-        Intent intent = new Intent(DeckPicker.this, CardEditor.class);
+        Intent intent = new Intent(DeckPicker.this, MultimediaCardEditorActivity.class);
         intent.putExtra(CardEditor.EXTRA_CALLER, CardEditor.CALLER_DECKPICKER);
         startActivityForResult(intent, ADD_NOTE);
         if (AnkiDroidApp.SDK_VERSION > 4) {

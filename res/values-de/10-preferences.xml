@@ -47,6 +47,8 @@
   <string name="pref_cat_messages">Nachrichten und Rückmeldung</string>
   <string name="pref_cat_performance">Leistung</string>
   <string name="pref_cat_fonts">Schriften</string>
+  <string name="pref_cat_plugins">Plugins</string>
+  <string name="pref_cat_plugins_controllers">Controllers</string>
   <string name="show_study_options_on_deck_load">Lerneinstellungen zeigen</string>
   <string name="show_study_options_on_deck_load_summ">Lerneinstellungen beim Laden eines Stapels zeigen</string>
   <string name="hide_due_count">Fälligenzähler verbergen</string>
@@ -110,6 +112,7 @@
   <string name="zeemote_right">Joystick nach rechts</string>
   <string name="zeemote_show_answer">Zeige Antwort bei Intervall-Wahl</string>
   <string name="zeemote_show_answer_summ">Aktionen zur Wahl des Intervalls zeigen auch die Antwort.</string>
+  <string name="controller_pref_changed_toast">Controller %1$s will be %2$s the next time you start AnkiDroid</string>
   <string name="swipe">Gesten aktivieren</string>
   <string name="swipe_summ_off">Verwenden Sie Gesten, um zwischen Fenstern zu wechseln und Karten zu beantworten. Nicht kompatibel mit den Zoom-Schaltflächen</string>
   <string name="swipe_summ_on">Fensterwechsel mit horizontalem Wischen. Konfigurieren Sie zusätzliche Aktionen weiter unten</string>

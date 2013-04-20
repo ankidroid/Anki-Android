@@ -47,6 +47,8 @@
   <string name="pref_cat_messages">Messages et commentaires</string>
   <string name="pref_cat_performance">Performance</string>
   <string name="pref_cat_fonts">Polices de caractères</string>
+  <string name="pref_cat_plugins">Plugins</string>
+  <string name="pref_cat_plugins_controllers">Controllers</string>
   <string name="show_study_options_on_deck_load">Options d\'étude au démarrage</string>
   <string name="show_study_options_on_deck_load_summ">Montrer les options d\'études au chargement d\'un paquet</string>
   <string name="hide_due_count">Cacher le compteur de cartes planifiées</string>
@@ -110,6 +112,7 @@
   <string name="zeemote_right">Joystick droit</string>
   <string name="zeemote_show_answer">Afficher les réponses avec les marques</string>
   <string name="zeemote_show_answer_summ">Les boutons 1 à 4 affichent la réponse.</string>
+  <string name="controller_pref_changed_toast">Controller %1$s will be %2$s the next time you start AnkiDroid</string>
   <string name="swipe">Permettre la commande par geste</string>
   <string name="swipe_summ_off">Utilisez des gestes pour basculer entre les écrans et les cartes de réponse. Cette option n\'est pas compatible avec les commandes de contrôle du zoom</string>
   <string name="swipe_summ_on">Faites glisser horizontalement pour basculer entre les écrans. Configurez les autres actions ci-dessous</string>

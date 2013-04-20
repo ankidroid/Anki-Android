@@ -47,6 +47,8 @@
   <string name="pref_cat_messages">Messages and Feedback</string>
   <string name="pref_cat_performance">Performance</string>
   <string name="pref_cat_fonts">Fonts</string>
+  <string name="pref_cat_plugins">Plugins</string>
+  <string name="pref_cat_plugins_controllers">Controllers</string>
   <string name="show_study_options_on_deck_load">Опции за изследване на натоварване</string>
   <string name="show_study_options_on_deck_load_summ">Показва Опции за изследване при зареждане на колода</string>
   <string name="hide_due_count">Hide due count</string>
@@ -110,6 +112,7 @@
   <string name="zeemote_right">Stick right</string>
   <string name="zeemote_show_answer">Show answers with mark actions</string>
   <string name="zeemote_show_answer_summ">Actions assigned to marks 1-4 also show answer.</string>
+  <string name="controller_pref_changed_toast">Controller %1$s will be %2$s the next time you start AnkiDroid</string>
   <string name="swipe">Разреши движения</string>
   <string name="swipe_summ_off">Използвайте движения, за да превключвате между екрани и отговор карти. Тази опция не е съвместим с контролите за мащабиране</string>
   <string name="swipe_summ_on">Натискане хоризонтално, за превключване между екрани. Конфигуриране на други действия, по-долу</string>

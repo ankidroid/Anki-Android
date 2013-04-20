@@ -19,6 +19,14 @@
 
 package com.ichi2.anki;
 
+import java.io.File;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
+import java.util.TreeMap;
+
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
@@ -33,6 +41,7 @@ import android.preference.EditTextPreference;
 import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceActivity;
+import android.preference.PreferenceCategory;
 import android.preference.PreferenceManager;
 import android.text.TextUtils;
 import android.util.Log;
@@ -41,7 +50,6 @@ import android.view.WindowManager.BadTokenException;
 
 import com.hlidskialf.android.preference.SeekBarPreference;
 import com.ichi2.anim.ActivityTransitionAnimation;
-import com.ichi2.anki.R;
 import com.ichi2.async.DeckTask;
 import com.ichi2.libanki.Utils;
 import com.ichi2.libanki.hooks.ChessFilter;
@@ -49,13 +57,6 @@ import com.ichi2.libanki.hooks.HebrewFixFilter;
 import com.ichi2.themes.StyledDialog;
 import com.ichi2.themes.StyledProgressDialog;
 import com.ichi2.themes.Themes;
-
-import java.io.File;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
-import java.util.TreeMap;
 
 /**
  * Preferences dialog.
@@ -66,6 +67,7 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
     private static final int DIALOG_BACKUP = 2;
     private static final int DIALOG_HEBREW_FONT = 3;
     private static final int DIALOG_WRITE_ANSWERS = 4;
+    public static final String PLUGIN_PREFERENCE_PREFIX = "plugin.enabled:";
 
     // private boolean mVeecheckStatus;
     private PreferenceManager mPrefMan;
@@ -99,6 +101,7 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
     private StyledProgressDialog mProgressDialog;
     private boolean lockCheckAction = false;
     private String dialogMessage;
+    Map<String, String> mPlugins;
 
 
     @Override
@@ -133,6 +136,7 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
         zoomCheckboxPreference.setEnabled(!swipeCheckboxPreference.isChecked());
         initializeLanguageDialog();
         initializeCustomFontsDialog();
+        mPlugins = new HashMap<String, String>();
         for (String key : mShowValueInSummList) {
             updateListPreference(key);
         }
@@ -261,6 +265,11 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
         browserEditorCustomFontsPreference.setEntryValues(getCustomFonts("", true));
     }
 
+    //@Override
+    //protected void onResume() {
+    //	super.onResume();
+    //	preparePluginsScreen();
+    //}
 
     @Override
     protected void onPause() {
@@ -362,6 +371,8 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
                 } else {
                     HebrewFixFilter.uninstall(AnkiDroidApp.getHooks());
                 }
+            } else if (mPlugins.containsKey(key)) {
+                AnkiDroidApp.getPluginManager().pluginPrefChanged(this, mPlugins.get(key), sharedPreferences.getBoolean(key, false));
             }
         } catch (BadTokenException e) {
             Log.e(AnkiDroidApp.TAG, "Preferences: BadTokenException on showDialog: " + e);
@@ -496,4 +507,34 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
         }
     };
 
+    /**
+     * Create the dynamic PreferenceScreen that hosts the plugins.
+     */
+    void preparePluginsScreen() {
+        // Get list of installed plugins
+        PluginManager plm = AnkiDroidApp.getPluginManager();
+        plm.discoverPlugins();
+        mPlugins.clear();
+        if (plm.hasPlugins()) {
+        	Map<String, Map<String, String>> controllers = plm.getControllerPlugins();
+    		PreferenceCategory contrCategory = (PreferenceCategory) getPreferenceScreen().findPreference("plugins_controllers");
+        	if (controllers.size() > 0) {
+        		contrCategory.removeAll();
+        		contrCategory.setEnabled(true);
+        		for (String pluginKey : controllers.keySet()) {
+        			Map<String, String> plugin = controllers.get(pluginKey);
+        			CheckBoxPreference contrPref = new CheckBoxPreference(this);
+        			String pluginPrefKey = PLUGIN_PREFERENCE_PREFIX + pluginKey;
+        			contrPref.setKey(pluginPrefKey);
+        			contrPref.setDefaultValue(false);
+        			contrPref.setTitle(plugin.get("name"));
+        			contrPref.setSummary(plugin.get("package"));
+        			contrCategory.addPreference(contrPref);
+        			mPlugins.put(pluginPrefKey, pluginKey);
+        		}
+        	} else {
+        		contrCategory.setEnabled(false);
+        	}
+        }
+    }
 }
