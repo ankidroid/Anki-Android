@@ -38,6 +38,7 @@ import com.ichi2.anki.Download;
 import com.ichi2.anki.R;
 import com.ichi2.anki.SharedDeckDownload;
 import com.ichi2.anki.StudyOptionsFragment;
+import com.ichi2.async.BaseAsyncTask;
 import com.ichi2.async.Connection;
 import com.ichi2.async.DeckTask;
 import com.ichi2.async.Connection.Payload;
@@ -581,10 +582,11 @@ public class DownloadManagerService extends Service {
      * Async Tasks *
      ********************************************************************/
 
-    private class DownloadPersonalDeckTask extends AsyncTask<Download, Object, Download> {
+    private class DownloadPersonalDeckTask extends BaseAsyncTask<Download, Object, Download> {
 
         @Override
         protected Download doInBackground(Download... downloads) {
+            super.doInBackground(downloads);
             Download download = downloads[0];
 
             URL url;
@@ -730,12 +732,14 @@ public class DownloadManagerService extends Service {
 
         @Override
         protected void onProgressUpdate(Object... values) {
+            super.onProgressUpdate(values);
             notifyPersonalDeckObservers();
         }
 
 
         @Override
         protected void onPostExecute(Download download) {
+            super.onPostExecute(download);
             Log.i(AnkiDroidApp.TAG, "on post execute");
             if (download.getStatus() == Download.STATUS_COMPLETE) {
                 showNotification(download.getTitle(), download.getFilename());
@@ -751,10 +755,11 @@ public class DownloadManagerService extends Service {
         }
     }
 
-    private class DownloadSharedDeckTask extends AsyncTask<Download, Object, SharedDeckDownload> {
+    private class DownloadSharedDeckTask extends BaseAsyncTask<Download, Object, SharedDeckDownload> {
 
         @Override
         protected SharedDeckDownload doInBackground(Download... downloads) {
+            super.doInBackground(downloads);
             // SharedDeckDownload download = (SharedDeckDownload) downloads[0];
             //
             // URL url;
@@ -881,12 +886,14 @@ public class DownloadManagerService extends Service {
 
         @Override
         protected void onProgressUpdate(Object... values) {
+            super.onProgressUpdate(values);
             notifySharedDeckObservers();
         }
 
 
         @Override
         protected void onPostExecute(SharedDeckDownload download) {
+            super.onPostExecute(download);
             Log.i(AnkiDroidApp.TAG, "onPostExecute");
             if (download.getStatus() == Download.STATUS_COMPLETE) {
                 download.setStatus(SharedDeckDownload.STATUS_UPDATING);
@@ -914,7 +921,7 @@ public class DownloadManagerService extends Service {
         }
     }
 
-    private class UpdateDeckTask extends AsyncTask<Connection.Payload, Connection.Payload, Connection.Payload> {
+    private class UpdateDeckTask extends BaseAsyncTask<Connection.Payload, Connection.Payload, Connection.Payload> {
 
         private static final int sRunningAvgLength = 5;
         private long[] mRecentBatchTimings;
@@ -922,21 +929,15 @@ public class DownloadManagerService extends Service {
 
 
         @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-            // Pass
-        }
-
-
-        @Override
         protected void onProgressUpdate(Payload... values) {
+            super.onProgressUpdate(values);
             notifySharedDeckObservers();
         }
 
 
         @Override
         protected Payload doInBackground(Payload... args) {
-
+            super.doInBackground(args);
             Payload data = doInBackgroundLoadDeck(args);
             if (data.returnType == 0) {// DeckTask.DECK_LOADED) {
                 HashMap<String, Object> results = (HashMap<String, Object>) data.result;
