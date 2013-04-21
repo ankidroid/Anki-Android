@@ -48,6 +48,7 @@ import android.widget.TextView;
 
 import com.ichi2.anim.ActivityTransitionAnimation;
 import com.ichi2.anim.ViewAnimation;
+import com.ichi2.anki.multimediacard.activity.MultimediaCardEditorActivity;
 import com.ichi2.async.DeckTask;
 import com.ichi2.async.DeckTask.TaskData;
 import com.ichi2.charts.ChartBuilder;
@@ -522,17 +523,19 @@ public class StudyOptionsFragment extends Fragment {
         mDontSaveOnStop = true;
         Intent reviewer = new Intent(getActivity(), Reviewer.class);
         startActivityForResult(reviewer, REQUEST_REVIEW);
-        if (AnkiDroidApp.SDK_VERSION > 4) {
-            ActivityTransitionAnimation.slide(getActivity(), ActivityTransitionAnimation.LEFT);
-        }
+        animateLeft();
         AnkiDroidApp.getCol().startTimebox();
     }
 
 
     private void addNote() {
-        Intent intent = new Intent(getActivity(), CardEditor.class);
+        Intent intent = new Intent(getActivity(), MultimediaCardEditorActivity.class);
         intent.putExtra(CardEditor.EXTRA_CALLER, CardEditor.CALLER_STUDYOPTIONS);
         startActivityForResult(intent, ADD_NOTE);
+        animateLeft();
+    }
+
+    private void animateLeft() {
         if (AnkiDroidApp.SDK_VERSION > 4) {
             ActivityTransitionAnimation.slide(getActivity(), ActivityTransitionAnimation.LEFT);
         }
@@ -1136,9 +1139,7 @@ public class StudyOptionsFragment extends Fragment {
         mDontSaveOnStop = true;
         Intent cardBrowser = new Intent(getActivity(), CardBrowser.class);
         startActivityForResult(cardBrowser, BROWSE_CARDS);
-        if (AnkiDroidApp.SDK_VERSION > 4) {
-            ActivityTransitionAnimation.slide(getActivity(), ActivityTransitionAnimation.LEFT);
-        }
+        animateLeft();
     }
 
 

@@ -37,6 +37,7 @@
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
     <!--
 	<uses-permission android:name="android.permission.BLUETOOTH" />
         <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
@@ -241,5 +242,36 @@
                 <data android:scheme="file" />
             </intent-filter>
         </receiver>
+
+        <activity
+            android:name="com.ichi2.anki.multimediacard.activity.MultimediaCardEditorActivity"
+            android:configChanges="keyboardHidden|orientation"
+            android:label="@string/fact_adder_intent_title" >
+        </activity>
+        <activity
+            android:name="com.ichi2.anki.multimediacard.activity.EditFieldActivity"
+            android:configChanges="keyboardHidden|orientation"
+            android:label="@string/title_activity_edit_text" >
+        </activity>
+        <activity
+            android:name="com.ichi2.anki.multimediacard.activity.TranslationActivity"
+            android:configChanges="keyboardHidden|orientation"
+            android:label="@string/title_activity_translation" >
+        </activity>
+        <activity
+            android:name="com.ichi2.anki.AudioRecorderActivity"
+            android:configChanges="keyboardHidden|orientation"
+            android:label="@string/title_activity_audio_recorder" >
+        </activity>
+        <activity
+            android:name="com.ichi2.anki.multimediacard.activity.LoadPronounciationActivity"
+            android:configChanges="keyboardHidden|orientation"
+            android:label="@string/title_activity_load_pronounciation" >
+        </activity>
+        <activity
+            android:name="com.ichi2.anki.multimediacard.activity.SearchImageActivity"
+            android:configChanges="keyboardHidden|orientation"
+            android:label="@string/title_activity_search_image" >
+        </activity>
     </application>
 </manifest>

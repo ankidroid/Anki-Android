@@ -63,6 +63,7 @@ import android.widget.SimpleAdapter;
 import android.widget.TextView;
 
 import com.ichi2.anim.ActivityTransitionAnimation;
+import com.ichi2.anki.multimediacard.activity.MultimediaCardEditorActivity;
 import com.ichi2.anki.receiver.SdCardReceiver;
 import com.ichi2.async.Connection;
 import com.ichi2.async.Connection.OldAnkiDeckFilter;
@@ -1120,7 +1121,7 @@ public class DeckPicker extends FragmentActivity {
 
 
     private void addNote() {
-        Intent intent = new Intent(DeckPicker.this, CardEditor.class);
+        Intent intent = new Intent(DeckPicker.this, MultimediaCardEditorActivity.class);
         intent.putExtra(CardEditor.EXTRA_CALLER, CardEditor.CALLER_DECKPICKER);
         startActivityForResult(intent, ADD_NOTE);
         if (AnkiDroidApp.SDK_VERSION > 4) {
