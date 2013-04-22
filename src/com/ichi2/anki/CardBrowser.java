@@ -50,6 +50,7 @@ import android.widget.SimpleAdapter;
 import android.widget.TextView;
 
 import com.ichi2.anim.ActivityTransitionAnimation;
+import com.ichi2.anki.multimediacard.activity.MultimediaCardEditorActivity;
 import com.ichi2.anki.receiver.SdCardReceiver;
 import com.ichi2.async.DeckTask;
 import com.ichi2.async.DeckTask.TaskData;
@@ -322,11 +323,12 @@ public class CardBrowser extends Activity {
         mCardsListView.setOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent editCard = new Intent(CardBrowser.this, CardEditor.class);
-                editCard.putExtra(CardEditor.EXTRA_CALLER, CardEditor.CALLER_CARDBROWSER_EDIT);
                 mPositionInCardsList = position;
                 long cardId = Long.parseLong(mCards.get(mPositionInCardsList).get("id"));
                 sCardBrowserCard = mCol.getCard(cardId);
+                Intent editCard = new Intent(CardBrowser.this, MultimediaCardEditorActivity.class);
+                editCard.putExtra(CardEditor.EXTRA_CALLER, CardEditor.CALLER_CARDBROWSER_EDIT);
+                editCard.putExtra(MultimediaCardEditorActivity.EXTRA_CARD_ID, sCardBrowserCard.getId());
                 startActivityForResult(editCard, EDIT_CARD);
                 if (AnkiDroidApp.SDK_VERSION > 4) {
                     ActivityTransitionAnimation.slide(CardBrowser.this, ActivityTransitionAnimation.LEFT);
@@ -534,7 +536,11 @@ public class CardBrowser extends Activity {
             closeCardBrowser(DeckPicker.RESULT_DB_ERROR);
         }
 
-        if (requestCode == EDIT_CARD && resultCode != RESULT_CANCELED) {
+        if (requestCode == EDIT_CARD && resultCode == MultimediaCardEditorActivity.RESULT_DELETED) {
+            deleteNote(sCardBrowserCard);
+            DeckTask.launchDeckTask(DeckTask.TASK_TYPE_DISMISS_NOTE, mDeleteNoteHandler,
+                    new DeckTask.TaskData(mCol.getSched(), sCardBrowserCard, 3));
+        } else if (requestCode == EDIT_CARD && resultCode != RESULT_CANCELED) {
             Log.i(AnkiDroidApp.TAG, "CardBrowser: Saving card...");
             DeckTask.launchDeckTask(DeckTask.TASK_TYPE_UPDATE_FACT, mUpdateCardHandler,
                     new DeckTask.TaskData(mCol.getSched(), sCardBrowserCard, false));
@@ -868,6 +874,11 @@ public class CardBrowser extends Activity {
             if (pos >= 0 && pos < mCards.size()) {
                 mCards.remove(pos);
             }
+        }
+        // Delete itself if not deleted
+        pos = getPosition(mCards, card.getId());
+        if (pos >= 0 && pos < mCards.size()) {
+            mCards.remove(pos);
         }
         updateList();
     }
