@@ -1,0 +1,36 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <item
+        android:id="@+id/multimedia_edit_field_to_text"
+        android:icon="@drawable/text"
+        android:orderInCategory="100"
+        android:showAsAction="ifRoom|withText"
+        android:title="@string/multimedia_editor_field_editing_text"
+        />
+    
+    <item
+        android:id="@+id/multimedia_edit_field_to_image"
+        android:icon="@drawable/content_picture"
+        android:orderInCategory="100"
+        android:showAsAction="ifRoom|withText"
+        android:title="@string/multimedia_editor_field_editing_image"
+        />
+    
+    <item
+        android:id="@+id/multimedia_edit_field_to_audio"
+        android:icon="@drawable/device_access_mic"
+        android:orderInCategory="100"
+        android:showAsAction="ifRoom|withText"
+        android:title="@string/multimedia_editor_field_editing_audio"
+        />
+    
+    <item
+        android:id="@+id/multimedia_edit_field_done"
+        android:icon="@drawable/navigation_accept"
+        android:orderInCategory="100"
+        android:showAsAction="always"
+        android:title="@string/multimedia_editor_field_editing_done"
+        />
+    
+
+</menu>
