@@ -261,6 +261,7 @@ public class Storage {
         db.execute("PRAGMA legacy_file_format = 0");
         db.execute("VACUUM");
         _addSchema(db);
+        _updateIndices(db);
         db.execute("ANALYZE");
         return Collection.SCHEMA_VERSION;
     }
