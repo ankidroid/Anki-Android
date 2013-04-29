@@ -39,27 +39,23 @@
                 android:title="@string/deck_conf_order" />
             <com.ichi2.preferences.NumberRangePreference
                 android:key="newPerDay"
-                android:numeric="integer"
                 android:title="@string/deck_conf_new_cards_day"
                 app:max="9999"
                 app:min="0" />
             <com.ichi2.preferences.NumberRangePreference
                 android:key="newGradIvl"
-                android:numeric="integer"
                 android:summary="@string/deck_conf_days"
                 android:title="@string/deck_conf_graduating_ivl"
                 app:max="99"
                 app:min="1" />
             <com.ichi2.preferences.NumberRangePreference
                 android:key="newEasy"
-                android:numeric="integer"
                 android:summary="@string/deck_conf_days"
                 android:title="@string/deck_conf_easy_ivl"
                 app:max="99"
                 app:min="1" />
             <com.ichi2.preferences.NumberRangePreference
                 android:key="newFactor"
-                android:numeric="integer"
                 android:summary="@string/deck_conf_percent"
                 android:title="@string/deck_conf_start_ease"
                 app:max="999"
@@ -73,33 +69,28 @@
         <PreferenceScreen android:title="@string/deck_conf_rev_cards" >
             <com.ichi2.preferences.NumberRangePreference
                 android:key="revPerDay"
-                android:numeric="integer"
                 android:title="@string/deck_conf_max_rev"
                 app:max="9999"
                 app:min="0" />
             <com.ichi2.preferences.NumberRangePreference
                 android:key="revSpaceMax"
-                android:numeric="integer"
                 android:summary="@string/deck_conf_percent"
                 android:title="@string/deck_conf_sibl_space"
                 app:max="100"
                 app:min="0" />
             <com.ichi2.preferences.NumberRangePreference
                 android:key="revSpaceMin"
-                android:numeric="integer"
                 android:summary="@string/deck_conf_days"
                 android:title="@string/deck_conf_min_range"
                 app:max="99"
                 app:min="0" />
             <com.ichi2.preferences.NumberRangePreference
                 android:key="easyBonus"
-                android:numeric="integer"
                 android:summary="@string/deck_conf_percent"
                 android:title="@string/deck_conf_easy_bonus"
                 app:max="1000"
                 app:min="100" />
             <com.ichi2.preferences.NumberRangePreference
-                android:inputType="numberDecimal"
                 android:key="revIvlFct"
                 android:summary="@string/deck_conf_percent"
                 android:title="@string/deck_conf_ivl_fct"
@@ -107,7 +98,6 @@
                 app:min="0" />
             <com.ichi2.preferences.NumberRangePreference
                 android:key="revMaxIvl"
-                android:numeric="integer"
                 android:summary="@string/deck_conf_days"
                 android:title="@string/deck_conf_max_ivl"
                 app:max="99999"
@@ -120,21 +110,18 @@
                 app:allowEmpty="true" />
             <com.ichi2.preferences.NumberRangePreference
                 android:key="lapNewIvl"
-                android:numeric="integer"
                 android:summary="@string/deck_conf_percent"
                 android:title="@string/deck_conf_new_lps_ivl"
                 app:max="100"
                 app:min="0" />
             <com.ichi2.preferences.NumberRangePreference
                 android:key="lapMinIvl"
-                android:numeric="integer"
                 android:summary="@string/deck_conf_days"
                 android:title="@string/deck_conf_min_ivl"
                 app:max="99"
                 app:min="1" />
             <com.ichi2.preferences.NumberRangePreference
                 android:key="lapLeechThres"
-                android:numeric="integer"
                 android:summary="@string/deck_conf_fails"
                 android:title="@string/deck_conf_leech_thres"
                 app:max="99"
@@ -146,7 +133,6 @@
         <PreferenceScreen android:title="@string/deck_conf_general" >
             <com.ichi2.preferences.NumberRangePreference
                 android:key="maxAnswerTime"
-                android:numeric="integer"
                 android:summary="@string/deck_conf_seconds"
                 android:title="@string/deck_conf_max_time"
                 app:max="3600"
