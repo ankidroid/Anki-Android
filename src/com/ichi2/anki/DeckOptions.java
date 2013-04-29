@@ -148,9 +148,9 @@ public class DeckOptions extends PreferenceActivity implements OnSharedPreferenc
                         Log.i(AnkiDroidApp.TAG, "Change value for key '" + key + "': " + value);
                         
                         if (key.equals("maxAnswerTime")) {
-                            mOptions.put("maxTaken", Integer.parseInt((String) value));
+                            mOptions.put("maxTaken", (Integer) value);
                         } else if (key.equals("newFactor")) {
-                            mOptions.getJSONObject("new").put("initialFactor", Integer.parseInt((String) value) * 10);
+                            mOptions.getJSONObject("new").put("initialFactor", (Integer) value * 10);
                         } else if (key.equals("newOrder")) {
                             int newValue = Integer.parseInt((String) value);
                             // Sorting is slow, so only do it if we change order
@@ -162,37 +162,37 @@ public class DeckOptions extends PreferenceActivity implements OnSharedPreferenc
                             }
                             mOptions.getJSONObject("new").put("order", Integer.parseInt((String) value));
                         } else if (key.equals("newPerDay")) {
-                            mOptions.getJSONObject("new").put("perDay", Integer.parseInt((String) value));
+                            mOptions.getJSONObject("new").put("perDay", (Integer) value);
                         } else if (key.equals("newGradIvl")) {
                             JSONArray ja = new JSONArray(); //[graduating, easy]
-                            ja.put(Integer.parseInt((String) value));
+                            ja.put((Integer) value);
                             ja.put(mOptions.getJSONObject("new").getJSONArray("ints").get(1));
                             mOptions.getJSONObject("new").put("ints", ja);
                         } else if (key.equals("newEasy")) {
                             JSONArray ja = new JSONArray(); //[graduating, easy]
                             ja.put(mOptions.getJSONObject("new").getJSONArray("ints").get(0));
-                            ja.put(Integer.parseInt((String) value));
+                            ja.put((Integer) value);
                             mOptions.getJSONObject("new").put("ints", ja);
                         } else if (key.equals("revPerDay")) {
-                            mOptions.getJSONObject("rev").put("perDay", Integer.parseInt((String) value));
+                            mOptions.getJSONObject("rev").put("perDay", (Integer) value);
                         } else if (key.equals("revSpaceMax")) {
-                            mOptions.getJSONObject("rev").put("fuzz", Integer.parseInt((String) value) / 100.0f);
+                            mOptions.getJSONObject("rev").put("fuzz", (Integer) value / 100.0f);
                         } else if (key.equals("revSpaceMin")) {
-                            mOptions.getJSONObject("rev").put("minSpace", Integer.parseInt((String) value));
+                            mOptions.getJSONObject("rev").put("minSpace", (Integer) value);
                         } else if (key.equals("easyBonus")) {
-                            mOptions.getJSONObject("rev").put("ease4", Integer.parseInt((String) value) / 100.0f);
+                            mOptions.getJSONObject("rev").put("ease4", (Integer) value / 100.0f);
                         } else if (key.equals("revIvlFct")) {
-                            mOptions.getJSONObject("rev").put("ivlFct", Integer.parseInt((String) value) / 100.0f);
+                            mOptions.getJSONObject("rev").put("ivlFct", (Integer) value / 100.0f);
                         } else if (key.equals("revMaxIvl")) {
-                            mOptions.getJSONObject("rev").put("maxIvl", Integer.parseInt((String) value));
+                            mOptions.getJSONObject("rev").put("maxIvl", (Integer) value);
                         } else if (key.equals("lapMinIvl")) {
-                            mOptions.getJSONObject("lapse").put("minInt", Integer.parseInt((String) value));
+                            mOptions.getJSONObject("lapse").put("minInt", (Integer) value);
                         } else if (key.equals("lapLeechThres")) {
-                            mOptions.getJSONObject("lapse").put("leechFails", Integer.parseInt((String) value));
+                            mOptions.getJSONObject("lapse").put("leechFails", (Integer) value);
                         } else if (key.equals("lapLeechAct")) {
                             mOptions.getJSONObject("lapse").put("leechAction", Integer.parseInt((String) value));
                         } else if (key.equals("lapNewIvl")) {
-                            mOptions.getJSONObject("lapse").put("mult", Integer.parseInt((String) value) / 100.0f);
+                            mOptions.getJSONObject("lapse").put("mult", (Integer) value / 100.0f);
                         } else if (key.equals("showAnswerTimer")) {
                             mOptions.put("timer", (Boolean) value ? 1 : 0);
                         } else if (key.equals("autoPlayAudio")) {

@@ -19,6 +19,7 @@ package com.ichi2.preferences;
 import android.content.Context;
 import android.preference.EditTextPreference;
 import android.text.InputFilter;
+import android.text.InputType;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 
@@ -34,7 +35,7 @@ public class NumberRangePreference extends EditTextPreference {
         super(context, attrs, defStyle);
         mMin = getMinFromAttributes(attrs);
         mMax = getMaxFromAttributes(attrs);
-        updateLengthLimit();
+        updateSettings();
     }
 
 
@@ -42,7 +43,7 @@ public class NumberRangePreference extends EditTextPreference {
         super(context, attrs);
         mMin = getMinFromAttributes(attrs);
         mMax = getMaxFromAttributes(attrs);
-        updateLengthLimit();
+        updateSettings();
     }
 
 
@@ -50,7 +51,7 @@ public class NumberRangePreference extends EditTextPreference {
         super(context);
         mMin = getMinFromAttributes(null);
         mMax = getMaxFromAttributes(null);
-        updateLengthLimit();
+        updateSettings();
     }
 
 
@@ -60,6 +61,25 @@ public class NumberRangePreference extends EditTextPreference {
             String validated = getValidatedRange(getEditText().getText().toString());
             setText(validated);
         }
+    }
+
+
+    /*
+     * Since this preference deals with integers only, it makes sense to only store and retrieve
+     * integers. However, since it is extending EditTextPreference, the persistence and retrieval
+     * methods that are called are for a String type. The two methods below intercept the persistence
+     * and retrieval methods for Strings and replaces them with their Integer equivalents.
+     */
+    
+    @Override
+    protected String getPersistedString(String defaultReturnValue) {
+        return String.valueOf(getPersistedInt(mMin));
+    }
+
+
+    @Override
+    protected boolean persistString(String value) {
+        return persistInt(Integer.valueOf(value));
     }
 
 
@@ -111,14 +131,18 @@ public class NumberRangePreference extends EditTextPreference {
 
 
     /**
-     * Updates the maximum length allowed in the text field based on the current value of the {@link #mMax} field.
+     * Update settings to only allow integer input and set the maximum number of digits allowed in the text
+     * field based on the current value of the {@link #mMax} field.
      * <p>
      * This method should only be called once from the constructor.
      */
-    private void updateLengthLimit() {
+    private void updateSettings() {
+        // Only allow integer input
+        getEditText().setInputType(InputType.TYPE_CLASS_NUMBER);
+        
+        // Set max number of digits
         int maxLength = String.valueOf(mMax).length();
-        // Clone the existing filters so we don't override them, then append our one
-        // at the end.
+        // Clone the existing filters so we don't override them, then append our one at the end.
         InputFilter[] filters = getEditText().getFilters();
         InputFilter[] newFilters = new InputFilter[filters.length + 1];
         System.arraycopy(filters, 0, newFilters, 0, filters.length);
