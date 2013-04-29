@@ -132,7 +132,7 @@ public class CramDeckOptions extends PreferenceActivity implements OnSharedPrefe
                             mDeck.put("terms", ar);
                         } else if (entry.getKey().equals("limit")) {
                             JSONArray ar = mDeck.getJSONArray("terms");
-                            ar.getJSONArray(0).put(1, Integer.parseInt((String) entry.getValue()));
+                            ar.getJSONArray(0).put(1, (Integer) entry.getValue());
                             mDeck.put("terms", ar);
                         } else if (entry.getKey().equals("order")) {
                             JSONArray ar = mDeck.getJSONArray("terms");
