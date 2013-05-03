@@ -41,17 +41,24 @@ import android.view.WindowManager.BadTokenException;
 
 import com.hlidskialf.android.preference.SeekBarPreference;
 import com.ichi2.anim.ActivityTransitionAnimation;
-import com.ichi2.anki.R;
 import com.ichi2.async.DeckTask;
+import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Utils;
 import com.ichi2.libanki.hooks.ChessFilter;
 import com.ichi2.libanki.hooks.HebrewFixFilter;
+import com.ichi2.preferences.NumberRangePreference;
 import com.ichi2.themes.StyledDialog;
 import com.ichi2.themes.StyledProgressDialog;
 import com.ichi2.themes.Themes;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.File;
+import java.sql.Timestamp;
 import java.util.Arrays;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -68,6 +75,7 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
     private static final int DIALOG_WRITE_ANSWERS = 4;
 
     // private boolean mVeecheckStatus;
+    private Collection mCol;
     private PreferenceManager mPrefMan;
     private CheckBoxPreference zoomCheckboxPreference;
     private CheckBoxPreference keepScreenOnCheckBoxPreference;
@@ -90,17 +98,29 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
     private static String[] mShowValueInSummList = { "language", "dictionary", "reportErrorMode",
             "minimumCardsDueForNotification", "gestureShake", "gestureSwipeUp", "gestureSwipeDown", "gestureSwipeLeft",
             "gestureSwipeRight", "gestureDoubleTap", "gestureTapTop", "gestureTapBottom", "gestureTapRight",
-            "gestureLongclick", "gestureTapLeft"};//, "theme" };
+            "gestureLongclick", "gestureTapLeft", "newSpread", "useCurrent"};//, "theme" };
     private static String[] mShowValueInSummSeek = { "relativeDisplayFontSize", "relativeCardBrowserFontSize",
             "answerButtonSize", "whiteBoardStrokeWidth", "minShakeIntensity", "swipeSensibility",
-            "timeoutAnswerSeconds", "timeoutQuestionSeconds", "animationDuration", "backupMax" };
+            "timeoutAnswerSeconds", "timeoutQuestionSeconds", "animationDuration", "backupMax", "dayOffset" };
     private static String[] mShowValueInSummEditText = { "simpleInterfaceExcludeTags" };
+    private static String[] mShowValueInSummNumRange = { "timeLimit", "learnCutoff" };
     private TreeMap<String, String> mListsToUpdate = new TreeMap<String, String>();
     private StyledProgressDialog mProgressDialog;
     private boolean lockCheckAction = false;
     private String dialogMessage;
 
-
+    // Used for calculating dayOffset
+    private Calendar mStartDate;
+    
+    // The ones below are persisted in the collection
+    private CheckBoxPreference showEstimates;
+    private CheckBoxPreference showProgress;
+    private NumberRangePreference learnCutoff;
+    private NumberRangePreference timeLimit;
+    private ListPreference useCurrent;
+    private ListPreference newSpread;
+    private SeekBarPreference dayOffset;
+    
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         // Workaround for bug 4611: http://code.google.com/p/android/issues/detail?id=4611
@@ -109,12 +129,12 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
         }
         super.onCreate(savedInstanceState);
 
+        mCol = AnkiDroidApp.getCol();
         mPrefMan = getPreferenceManager();
         mPrefMan.setSharedPreferencesName(AnkiDroidApp.SHARED_PREFS_NAME);
 
         addPreferencesFromResource(R.xml.preferences);
 
-        getPreferenceScreen().getSharedPreferences().registerOnSharedPreferenceChangeListener(this);
         swipeCheckboxPreference = (CheckBoxPreference) getPreferenceScreen().findPreference("swipe");
         zoomCheckboxPreference = (CheckBoxPreference) getPreferenceScreen().findPreference("zoom");
         keepScreenOnCheckBoxPreference = (CheckBoxPreference) getPreferenceScreen().findPreference("keepScreenOn");
@@ -128,11 +148,53 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
         convertFenText = (CheckBoxPreference) getPreferenceScreen().findPreference("convertFenText");
         fixHebrewText = (CheckBoxPreference) getPreferenceScreen().findPreference("fixHebrewText");
         syncAccount = (Preference) getPreferenceScreen().findPreference("syncAccount");
+        showEstimates = (CheckBoxPreference) getPreferenceScreen().findPreference("showEstimates");
+        showProgress = (CheckBoxPreference) getPreferenceScreen().findPreference("showProgress");
+        learnCutoff = (NumberRangePreference) getPreferenceScreen().findPreference("learnCutoff");
+        timeLimit = (NumberRangePreference) getPreferenceScreen().findPreference("timeLimit");
+        useCurrent = (ListPreference) getPreferenceScreen().findPreference("useCurrent");
+        newSpread = (ListPreference) getPreferenceScreen().findPreference("newSpread");
+        dayOffset = (SeekBarPreference) getPreferenceScreen().findPreference("dayOffset");
 //        String theme = listpref.getValue();
 //        animationsCheckboxPreference.setEnabled(theme.equals("2") || theme.equals("3"));
         zoomCheckboxPreference.setEnabled(!swipeCheckboxPreference.isChecked());
+        
         initializeLanguageDialog();
         initializeCustomFontsDialog();
+        
+        if (mCol != null) {
+            // For collection preferences, we need to fetch the correct values from the collection
+            mStartDate = GregorianCalendar.getInstance();
+            Timestamp timestamp = new Timestamp(mCol.getCrt()*1000);
+            mStartDate.setTimeInMillis(timestamp.getTime());
+            dayOffset.setValue(mStartDate.get(Calendar.HOUR_OF_DAY));
+            try {
+                JSONObject conf = mCol.getConf();
+                learnCutoff.setValue(conf.getInt("collapseTime") / 60);
+                timeLimit.setValue(conf.getInt("timeLim") / 60);
+                showEstimates.setChecked(conf.getBoolean("estTimes"));
+                showProgress.setChecked(conf.getBoolean("dueCounts"));
+                newSpread.setValueIndex(conf.getInt("newSpread"));
+                useCurrent.setValueIndex(conf.getBoolean("addToCur") ? 0 : 1);
+            } catch (JSONException e) {
+                throw new RuntimeException();
+            } catch (NumberFormatException e) {
+                throw new RuntimeException();
+            }
+        } else {
+            // It's possible to open the preferences from the loading screen if no SD card is found.
+            // In that case, there will be no collection loaded, so we need to disable the settings
+            // that read from and write to the collection.
+            dayOffset.setEnabled(false);
+            learnCutoff.setEnabled(false);
+            timeLimit.setEnabled(false);
+            showEstimates.setEnabled(false);
+            showProgress.setEnabled(false);
+            newSpread.setEnabled(false);
+            useCurrent.setEnabled(false);
+        }
+
+        
         for (String key : mShowValueInSummList) {
             updateListPreference(key);
         }
@@ -142,6 +204,10 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
         for (String key : mShowValueInSummEditText) {
             updateEditTextPreference(key);
         }
+        for (String key : mShowValueInSummNumRange) {
+            updateNumberRangePreference(key);
+        }
+        
         if (AnkiDroidApp.SDK_VERSION <= 4) {
             fadeScrollbars.setChecked(false);
             fadeScrollbars.setEnabled(false);
@@ -215,6 +281,26 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
     }
 
 
+    private void updateNumberRangePreference(String key) {
+        NumberRangePreference numPref = (NumberRangePreference) getPreferenceScreen().findPreference(key);
+        try {
+            String value = Integer.toString(numPref.getValue());
+            if (mListsToUpdate.containsKey(key)) {
+                numPref.setSummary(replaceString(mListsToUpdate.get(key), value));
+             } else {
+                 String oldSum = (String) numPref.getSummary();
+                 if (oldSum.contains("XXX")) {
+                     mListsToUpdate.put(key,  oldSum);
+                     numPref.setSummary(replaceString(oldSum, value));
+                 } else {
+                     numPref.setSummary(value);
+                 }
+             }
+        } catch (NullPointerException e) {
+            Log.e(AnkiDroidApp.TAG, "Exception when updating NumberRangePreference: " + e);
+        }
+    }
+
     private String replaceString(String str, String value) {
         if (str.contains("XXX")) {
             return str.replace("XXX", value);
@@ -265,11 +351,14 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
     @Override
     protected void onPause() {
         super.onPause();
+        getPreferenceScreen().getSharedPreferences().unregisterOnSharedPreferenceChangeListener(this);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
+        getPreferenceScreen().getSharedPreferences().registerOnSharedPreferenceChangeListener(this);
+        
         // syncAccount's summary can change while preferences are still open (user logs
         // in from preferences screen), so we need to update it here.
         SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(getBaseContext());
@@ -281,6 +370,7 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
         }
     }
 
+        
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
         try {
             if (key.equals("swipe")) {
@@ -315,12 +405,6 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
                 Intent intent = this.getIntent();
                 setResult(DeckPicker.RESULT_RESTART, intent);
                 closePreferences();
-            } else if (Arrays.asList(mShowValueInSummList).contains(key)) {
-                updateListPreference(key);
-            } else if (Arrays.asList(mShowValueInSummSeek).contains(key)) {
-                updateSeekBarPreference(key);
-            } else if (Arrays.asList(mShowValueInSummEditText).contains(key)) {
-                updateEditTextPreference(key);
             } else if (key.equals("writeAnswers") && sharedPreferences.getBoolean("writeAnswers", true)) {
                 showDialog(DIALOG_WRITE_ANSWERS);
             } else if (key.equals("useBackup")) {
@@ -362,9 +446,46 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
                 } else {
                     HebrewFixFilter.uninstall(AnkiDroidApp.getHooks());
                 }
+            } else if (key.equals("showProgress")) {
+                mCol.getConf().put("dueCounts", showProgress.isChecked());
+                mCol.setMod();
+            } else if (key.equals("showEstimates")) {
+                mCol.getConf().put("estTimes", showEstimates.isChecked());
+                mCol.setMod();
+            } else if (key.equals("newSpread")) {
+                mCol.getConf().put("newSpread", Integer.parseInt(newSpread.getValue()));
+                mCol.setMod();
+            } else if (key.equals("timeLimit")) {
+                mCol.getConf().put("timeLim", timeLimit.getValue() * 60);
+                mCol.setMod();
+            } else if (key.equals("learnCutoff")) {
+                mCol.getConf().put("collapseTime", learnCutoff.getValue() * 60);
+                mCol.setMod();
+            } else if (key.equals("useCurrent")) {
+                mCol.getConf().put("addToCur", useCurrent.getValue().equals("0") ? true : false);
+                mCol.setMod();
+            } else if (key.equals("dayOffset")) {
+                int hours = dayOffset.getValue();
+                Calendar date = (Calendar)mStartDate.clone();
+                date.set(Calendar.HOUR_OF_DAY, hours);
+                mCol.setCrt(date.getTimeInMillis() / 1000);
+                mCol.setMod();
+            }
+            if (Arrays.asList(mShowValueInSummList).contains(key)) {
+                updateListPreference(key);
+            } else if (Arrays.asList(mShowValueInSummSeek).contains(key)) {
+                updateSeekBarPreference(key);
+            } else if (Arrays.asList(mShowValueInSummEditText).contains(key)) {
+                updateEditTextPreference(key);
+            } else if (Arrays.asList(mShowValueInSummNumRange).contains(key)) {
+                updateNumberRangePreference(key);
             }
         } catch (BadTokenException e) {
             Log.e(AnkiDroidApp.TAG, "Preferences: BadTokenException on showDialog: " + e);
+        } catch (NumberFormatException e) {
+            throw new RuntimeException();
+        } catch (JSONException e) {
+            throw new RuntimeException();
         }
     }
 
@@ -409,6 +530,9 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
         finish();
         if (AnkiDroidApp.SDK_VERSION > 4) {
             ActivityTransitionAnimation.slide(this, ActivityTransitionAnimation.FADE);
+        }
+        if (mCol != null) {
+            mCol.save();
         }
     }
 

@@ -118,4 +118,13 @@
 						<item>Limit to particular tags</item>
 											</string-array>
 	
+    <string-array name="add_to_cur_labels">
+        <item>Use current deck</item>
+        <item>Decide by note type</item>
+    </string-array>
+    <string-array name="new_spread_labels">
+        <item>Mix new cards and reviews</item>
+        <item>New cards after reviews</item>
+        <item>New cards before reviews</item>
+    </string-array>
    	</resources>
