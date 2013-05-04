@@ -1351,6 +1351,12 @@ public class Collection {
                             + " WHERE id IN " + Utils.ids2str(Utils.arrayList2array(ids)));
                 }
                 mDb.getDatabase().setTransactionSuccessful();
+                // DB must have indices. Older versions of AnkiDroid didn't create them for new collections.
+                int ixs = mDb.queryScalar("select count(name) from sqlite_master where type = 'index'");
+                if (ixs < 7) {
+                    problems.add("Indices were missing.");
+                    Storage.addIndices(mDb);
+                }
             } catch (JSONException e) {
                 throw new RuntimeException(e);
             } finally {
