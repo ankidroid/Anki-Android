@@ -70,6 +70,7 @@ import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.net.URLConnection;
 import java.security.KeyManagementException;
 import java.security.KeyStoreException;
 import java.security.NoSuchAlgorithmException;
@@ -958,16 +959,21 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
         String url = (String) data.data[0];
         String colFilename = AnkiDroidApp.getCurrentAnkiDroidDirectory() + "/tmpImportFile.apkg";
         URL fileUrl;
-        HttpsURLConnection conn;
+        URLConnection conn;
         InputStream cont = null;
 		try {
-			fileUrl = new URL(url);
-            SSLContext context = SSLContext.getInstance("TLS");
-            context.init(null, new TrustManager[] { new EasyX509TrustManager(null) }, null);
-	        conn = (HttpsURLConnection)fileUrl.openConnection();
-            conn.setSSLSocketFactory(context.getSocketFactory());
+		    fileUrl = new URL(url);
+		    if (url.startsWith("https")) {
+	            SSLContext context = SSLContext.getInstance("TLS");
+	            context.init(null, new TrustManager[] { new EasyX509TrustManager(null) }, null);
+	            HttpsURLConnection httpsConn = (HttpsURLConnection)fileUrl.openConnection();
+	            httpsConn.setSSLSocketFactory(context.getSocketFactory());
+	            conn = httpsConn;
+		    } else {
+		        conn = (HttpURLConnection)fileUrl.openConnection();
+		    }
 	        conn.setConnectTimeout(10000);
-	        conn.setReadTimeout(10000);        
+	        conn.setReadTimeout(10000);
 	        cont = conn.getInputStream();
 		} catch (MalformedURLException e) {
             Log.e(AnkiDroidApp.TAG, "doInBackgroundDownloadSharedDeck: ", e);
