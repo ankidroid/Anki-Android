@@ -1,0 +1,30 @@
+This directory contains tests and a test project for AnkiDroid.
+
+You can import this project into Eclipse as you did for the main project. You
+can also run the tests from the command line with:
+
+  ant clean debug test
+
+Make sure you have installed a version of the application that you have build before running the test. You can do some from the command line with:
+
+  cd ..
+  ant clean debug install
+  cd tests
+
+
+The output of the tests should look something like:
+
+test:
+     [echo] Running tests ...
+     [exec]
+     [exec] com.ichi2.utils.HtmlUtilTest:......
+     [exec] Test results for InstrumentationTestRunner=......
+     [exec] Time: 0.058
+     [exec]
+     [exec] OK (6 tests)
+     [exec]
+     [exec]
+
+assuming all the tests are passing.
+
+The test classes and the number of tests is subject to change.

@@ -38,7 +38,6 @@ import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.ichi2.anki.R;
-import com.ichi2.anki.htmlutils.Unescaper;
 import com.ichi2.anki.multimediacard.glosbe.json.Meaning;
 import com.ichi2.anki.multimediacard.glosbe.json.Phrase;
 import com.ichi2.anki.multimediacard.glosbe.json.Response;
@@ -46,6 +45,7 @@ import com.ichi2.anki.multimediacard.glosbe.json.Tuc;
 import com.ichi2.anki.multimediacard.language.LanguagesListerGlosbe;
 import com.ichi2.anki.runtimetools.TaskOperations;
 import com.ichi2.anki.web.HttpFetcher;
+import com.ichi2.utils.HtmlUtil;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
@@ -307,7 +307,7 @@ public class TranslationActivity extends FragmentActivity implements DialogInter
                         continue;
                     }
                     if (meaning.getLanguage().contentEquals(languageCodeTo)) {
-                        String unescappedString = Unescaper.unescapeHTML(meaning.getText());
+                        String unescappedString = HtmlUtil.unescape(meaning.getText());
                         res.add(unescappedString);
                     }
                 }
@@ -319,7 +319,7 @@ public class TranslationActivity extends FragmentActivity implements DialogInter
                     continue;
                 }
                 if (phrase.getLanguageCode().contentEquals(languageCodeTo)) {
-                    String unescappedString = Unescaper.unescapeHTML(phrase.getText());
+                    String unescappedString = HtmlUtil.unescape(phrase.getText());
                     res.add(unescappedString);
                 }
             }
