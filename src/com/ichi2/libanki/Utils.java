@@ -1124,12 +1124,18 @@ public class Utils {
 		}
         List<AnkiFont> fonts = new ArrayList<AnkiFont>();
         for (int i = 0; i < fontsCount; i++) {
-            AnkiFont font = AnkiFont.createAnkiFont(context, fontsList[i].getAbsolutePath(), false);
+            String filePath = fontsList[i].getAbsolutePath();
+            if (!filePath.endsWith(".ttf") && !filePath.endsWith(".ttc")) {
+                // Ignore files that do not look like fonts.
+                continue;
+            }
+            AnkiFont font = AnkiFont.createAnkiFont(context, filePath, false);
             if (font != null) {
                 fonts.add(font);
             }
         }
         for (int i = 0; i < ankiDroidFonts.length; i++) {
+            // Assume all files in the assets directory are actually fonts.
             AnkiFont font = AnkiFont.createAnkiFont(context, ankiDroidFonts[i], true);
         	if (font != null) {
                 fonts.add(font);
