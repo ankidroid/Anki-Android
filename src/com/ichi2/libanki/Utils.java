@@ -111,6 +111,9 @@ public class Utils {
     public static final int TIME_FORMAT_IN = 1;
     public static final int TIME_FORMAT_BEFORE = 2;
 
+    // List of all extensions we accept as font files.
+    private static final String[] FONT_FILE_EXTENSIONS = new String[] {".ttf",".ttc",".otf"};
+
     /* Prevent class from being instantiated */
     private Utils() { }
 
@@ -1096,6 +1099,16 @@ public class Utils {
     }
 
 
+    /** Returns only the filename extension. */
+    public static String getFileExtension(String filename) {
+        int dotPosition = filename.lastIndexOf('.');
+        if (dotPosition == -1) {
+            return "";
+        }
+        return filename.substring(dotPosition);
+    }
+
+
     /** Removes any character that are not valid as deck names. */
     public static String removeInvalidDeckNameCharacters(String name) {
         if (name == null) { return null; }
@@ -1125,13 +1138,17 @@ public class Utils {
         List<AnkiFont> fonts = new ArrayList<AnkiFont>();
         for (int i = 0; i < fontsCount; i++) {
             String filePath = fontsList[i].getAbsolutePath();
-            if (!filePath.endsWith(".ttf") && !filePath.endsWith(".ttc")) {
-                // Ignore files that do not look like fonts.
-                continue;
-            }
-            AnkiFont font = AnkiFont.createAnkiFont(context, filePath, false);
-            if (font != null) {
-                fonts.add(font);
+            String filePathExtension = getFileExtension(filePath);
+            for (String fontExtension : FONT_FILE_EXTENSIONS) {
+                // Go through the list of allowed extensios.
+                if (filePathExtension.equalsIgnoreCase(fontExtension)) {
+                    // This looks like a font file.
+                    AnkiFont font = AnkiFont.createAnkiFont(context, filePath, false);
+                    if (font != null) {
+                        fonts.add(font);
+                    }
+                    break;  // No need to look for other file extensions.
+                }
             }
         }
         for (int i = 0; i < ankiDroidFonts.length; i++) {
