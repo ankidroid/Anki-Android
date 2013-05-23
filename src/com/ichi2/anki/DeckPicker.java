@@ -2178,15 +2178,12 @@ public class DeckPicker extends FragmentActivity {
     // ----------------------------------------------------------------------------
 
     public void setStudyContentView(long deckId, Bundle cramConfig) {
-    	Fragment frag = (Fragment) getSupportFragmentManager().findFragmentById(R.id.studyoptions_fragment);
-    	if (frag == null || !(frag instanceof StudyOptionsFragment) || ((StudyOptionsFragment) frag).getShownIndex() != deckId) {
-            StudyOptionsFragment details = StudyOptionsFragment.newInstance(deckId, false, cramConfig);
-            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-//            ft.setCustomAnimations(R.anim.fade_in, R.anim.fade_out);
-            ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE);
-            ft.replace(R.id.studyoptions_fragment, details);
-            ft.commit();
-    	}
+        StudyOptionsFragment details = StudyOptionsFragment.newInstance(deckId, false, cramConfig);
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+//      ft.setCustomAnimations(R.anim.fade_in, R.anim.fade_out);
+        ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE);
+        ft.replace(R.id.studyoptions_fragment, details);
+        ft.commit();
     }
 
     public StudyOptionsFragment getFragment() {
