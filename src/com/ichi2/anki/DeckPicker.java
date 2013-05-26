@@ -530,13 +530,15 @@ public class DeckPicker extends FragmentActivity {
             		mOpenCollectionDialog.dismiss();
             	}
 
-                // update StudyOptions too if open
-                if (mFragmented) {
-                	StudyOptionsFragment frag = getFragment();
-                	if (frag != null) {
-                		frag.resetAndUpdateValuesFromDeck();
-                	}
-                }
+            	if (mFragmented) {
+                    try {
+                        // Pick the correct deck after sync. Updates the values in the fragment if same deck.
+                        long did = AnkiDroidApp.getCol().getDecks().current().getLong("id");
+                        selectDeck(did);
+                    } catch (JSONException e) {
+                        throw new RuntimeException();
+                    }
+            	}
             }
         }
     };
@@ -557,19 +559,7 @@ public class DeckPicker extends FragmentActivity {
             // select last loaded deck if any
             if (mFragmented) {
             	long did = col.getDecks().selected();
-            	for (int i = 0; i < mDeckList.size(); i++) {
-            		if (Long.parseLong(mDeckList.get(i).get("did")) == did) {
-            			final int lastPosition = i;
-                        mDeckListView.getViewTreeObserver().addOnGlobalLayoutListener(new OnGlobalLayoutListener() {
-                            @Override
-                            public void onGlobalLayout() {
-                            	mDeckListView.getViewTreeObserver().removeGlobalOnLayoutListener(this);
-                            	mDeckListView.performItemClick(null, lastPosition, 0);
-                            }
-                        });
-                        break;
-            		}
-            	}
+            	selectDeck(did);
             }
             if (AnkiDroidApp.colIsOpen() && mImportPath != null) {
             	showDialog(DIALOG_IMPORT);
@@ -2836,6 +2826,27 @@ public class DeckPicker extends FragmentActivity {
         }
     }
 
+
+    /**
+     * Programmatically click on a deck in the deck list.
+     * @param did The deck ID of the deck to select.
+     */
+    private void selectDeck(long did) {
+        Log.i(AnkiDroidApp.TAG, "Selected deck with ID " + did);
+        for (int i = 0; i < mDeckList.size(); i++) {
+            if (Long.parseLong(mDeckList.get(i).get("did")) == did) {
+                final int lastPosition = i;
+                mDeckListView.getViewTreeObserver().addOnGlobalLayoutListener(new OnGlobalLayoutListener() {
+                    @Override
+                    public void onGlobalLayout() {
+                        mDeckListView.getViewTreeObserver().removeGlobalOnLayoutListener(this);
+                        mDeckListView.performItemClick(null, lastPosition, 0);
+                    }
+                });
+                break;
+            }
+        }
+    }
 
     private void handleDeckSelection(int id) {
     	if (!AnkiDroidApp.colIsOpen()) {
