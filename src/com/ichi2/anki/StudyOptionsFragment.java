@@ -1132,6 +1132,15 @@ public class StudyOptionsFragment extends Fragment {
                     AnkiDroidApp.getCol().undoName(res)));
         }
         mTextCongratsMessage.setText(AnkiDroidApp.getCol().getSched().finishedMsg(getActivity()));
+        // Filtered decks must not have a custom study button
+        try {
+            if (AnkiDroidApp.getCol().getDecks().current().getInt("dyn") == 1) {
+                mButtonCongratsCustomStudy.setEnabled(false);
+                mButtonCongratsCustomStudy.setVisibility(View.GONE);
+            }
+        } catch (JSONException e) {
+            throw new RuntimeException();
+        }
     }
 
 
