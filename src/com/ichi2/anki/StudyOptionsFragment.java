@@ -940,8 +940,16 @@ public class StudyOptionsFragment extends Fragment {
     			ar.getJSONArray(0).put(1, terms[1]);
     			ar.getJSONArray(0).put(2, terms[2]);
     			dyn.put("resched", resched);
-    			// generate cards
-    			finishCongrats();
+    			
+    			if (mFragmented) {
+    			    finishCongrats();
+    			} else {
+        			// Load a new fragment. The config passed is null, so it uses the current deck. The deck we just
+        			// created is internally set as the current deck.
+        			((StudyOptionsActivity)getActivity()).loadContent(false, null);
+    			}
+    			
+    			// Initial rebuild
     			mProgressDialog = StyledProgressDialog.show(getActivity(), "",
     					getResources().getString(R.string.rebuild_custom_study_deck), true);
     			DeckTask.launchDeckTask(DeckTask.TASK_TYPE_REBUILD_CRAM, mRebuildCustomStudyListener, new DeckTask.TaskData(
