@@ -942,10 +942,13 @@ public class StudyOptionsFragment extends Fragment {
     			dyn.put("resched", resched);
     			
     			if (mFragmented) {
-    			    finishCongrats();
-    			} else {
-        			// Load a new fragment. The config passed is null, so it uses the current deck. The deck we just
-        			// created is internally set as the current deck.
+                    Bundle config = new Bundle();
+                    config.putString("searchSuffix", "'deck:" +dyn.getString("name") + "'");
+                    initAllContentViews(getLayoutInflater(config));
+                    finishCongrats();
+                } else {
+        			// Load a new fragment with the filtered deck view. The config passed is null, so it uses the
+        			// current deck. The deck we just created is internally set as the current deck.
         			((StudyOptionsActivity)getActivity()).loadContent(false, null);
     			}
     			
