@@ -15,4 +15,5 @@ function main() {
   ant clean debug
 }
 
+set -e
 main "$@"

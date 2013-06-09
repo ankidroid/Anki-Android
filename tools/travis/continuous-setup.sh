@@ -12,12 +12,14 @@ function download_and_install() {
 
   local filename="$(basename $uri)"
   wget $uri
+  mkdir -p $dst
   unzip -d $dst $filename
   rm $filename
 }
 
 function main() {
-  set -e
+  readonly base_uri="http://dl-ssl.google.com/android/repository"
+
   local root="."
   if [ $# -gt 0 ]; then
     root="$1"; shift
@@ -26,16 +28,21 @@ function main() {
 
   # Download the Android SDK and necessary components.
   download_and_install \
-    http://dl-ssl.google.com/android/repository/tools_r21.1-linux.zip \
+    $base_uri/tools_r21.1-linux.zip \
     $root/android
 
   download_and_install \
-    http://dl-ssl.google.com/android/repository/platform-tools_r16.0.2-linux.zip \
+    $base_uri/platform-tools_r16.0.2-linux.zip \
     $root/android
 
   download_and_install \
-    http://dl-ssl.google.com/android/repository/android-15_r03.zip \
+    $base_uri/android-15_r03.zip \
     $root/android/platforms
+
+  download_and_install \
+    $base_uri/sysimg_armv7a-15_r02.zip \
+    $root/android/system-images/android-15
 }
 
+set -e
 main "$@"
