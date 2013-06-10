@@ -70,36 +70,26 @@ public class StepsPreference extends EditTextPreference {
 
 
     /**
-     * Check if the string is a valid format for steps and return that string. Some cleanup
-     * is done if needed (e.g., turning 1.0 into 1, trimming whitespace) for better usability.
+     * Check if the string is a valid format for steps and return that string, reformatted for better
+     * usability if needed.
      * @param steps User input in text editor.
      * @return The correctly formatted string or null if the input is not valid.
      */
     private String getValidatedStepsInput(String steps) {
-        if (TextUtils.isEmpty(steps)) {
-            return "";
-        }
-
-        StringBuilder sb = new StringBuilder();
-        for (String s : steps.split("\\s+")) {
+        JSONArray ja = convertToJSON(steps);
+        if (ja == null) {
+            return null;
+        } else {
+            StringBuilder sb = new StringBuilder();
             try {
-                float f = Float.parseFloat(s);
-                // Steps can't be 0, negative, or non-serializable (too large), so it's invalid.
-                if (f <= 0 || Float.isInfinite(f)) {
-                    return null;
+                for (int i = 0; i < ja.length(); i++) {
+                    sb.append(ja.getString(i)).append(" ");
                 }
-                // Use whole numbers if we can (but still allow decimals)
-                int i = (int) f;
-                if (i == f) {
-                    sb.append(i).append(" ");
-                } else {
-                    sb.append(f).append(" ");
-                }
-            } catch (NumberFormatException e) {
-                return null;
+                return sb.toString().trim();
+            } catch (JSONException e) {
+                throw new RuntimeException(e);
             }
         }
-        return sb.toString().trim();
     }
 
 
@@ -123,15 +113,38 @@ public class StepsPreference extends EditTextPreference {
 
 
     /**
-     * Convert steps format.
-     * 
+     * Convert steps format. For better usability, rounded floats are converted to integers (e.g.,
+     * 1.0 is converted to 1).
+     *
      * @param steps String representation of steps.
-     * @return The steps as a JSONArray.
+     * @return The steps as a JSONArray or null if the steps are not valid.
      */
     public static JSONArray convertToJSON(String steps) {
         JSONArray ja = new JSONArray();
-        for (String s : TextUtils.split(steps, " ")) {
-            ja.put(s);
+        steps = steps.trim();
+        if (TextUtils.isEmpty(steps)) {
+            return ja;
+        }
+        try {
+            for (String s : steps.split("\\s+")) {
+                float f = Float.parseFloat(s);
+                // 0 or less is not a valid step.
+                if (f <= 0) {
+                    return null;
+                }
+                // Use whole numbers if we can (but still allow decimals)
+                int i = (int) f;
+                if (i == f) {
+                    ja.put(i);
+                } else {
+                    ja.put(f);
+                }
+            }
+        } catch (NumberFormatException e) {
+            return null;
+        } catch (JSONException e) {
+            // Can't serialize float. Value likely too big/small.
+            return null;
         }
         return ja;
     }
