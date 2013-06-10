@@ -22,20 +22,34 @@
     xmlns:app="http://schemas.android.com/apk/res/com.ichi2.anki" >
 
     <PreferenceScreen android:title="@string/pref_cat_general" >
-        <PreferenceCategory android:title="@string/pref_cat_decks" >
+        <PreferenceCategory android:title="@string/pref_cat_collection" >
             <EditTextPreference
                 android:defaultValue="/sdcard/AnkiDroid"
                 android:key="deckPath"
                 android:dependency="internalMemory"
                 android:summary="@string/col_path_summ"
                 android:title="@string/col_path" />
+            <com.hlidskialf.android.preference.SeekBarPreference
+                android:key="dayOffset"
+                android:summary="@string/day_offset_summ"
+                android:title="@string/day_offset"
+                app:interval="1"
+                app:min="0"
+                android:max="23" />
+            <ListPreference
+                android:key="useCurrent"
+                android:defaultValue=""
+                android:title="@string/use_current"
+                android:summary=""
+                android:entries="@array/add_to_cur_labels"
+                android:entryValues="@array/add_to_cur_values" />
             <CheckBoxPreference
                 android:defaultValue="false"
                 android:disableDependentsState="true"
                 android:key="internalMemory"
                 android:summary="@string/pref_internal_memory_summ"
                 android:title="@string/pref_internal_memory" />
-            </PreferenceCategory>
+        </PreferenceCategory>
         <PreferenceCategory android:title="@string/pref_cat_backup" >
             <CheckBoxPreference
                 android:defaultValue="true"
@@ -208,6 +222,25 @@
     </PreferenceScreen>
     <PreferenceScreen android:title="@string/pref_cat_reviewing" >
         <PreferenceCategory android:title="@string/pref_cat_reviewer_behaviour" >
+            <ListPreference
+                android:key="newSpread"
+                android:defaultValue=""
+                android:title="@string/new_spread"
+                android:summary=""
+                android:entries="@array/new_spread_labels"
+                android:entryValues="@array/new_spread_values" />
+            <com.ichi2.preferences.NumberRangePreference
+                android:key="learnCutoff"
+                android:title="@string/learn_cutoff"
+                android:summary="@string/learn_cutoff_summ"
+                app:min="0"
+                app:max="999" />
+            <com.ichi2.preferences.NumberRangePreference
+                android:key="timeLimit"
+                android:title="@string/time_limit"
+                android:summary="@string/time_limit_summ"
+                app:min="0"
+                app:max="9999" />
 	        <CheckBoxPreference
 	            android:defaultValue="true"
 	            android:key="writeAnswers"
@@ -256,10 +289,13 @@
                 android:summary="@string/fullscreen_review_summ"
                 android:title="@string/fullscreen_review" />
             <CheckBoxPreference
-                android:defaultValue="true"
-                android:key="showNextReviewTime"
-                android:summary="@string/show_next_review_time_summ"
-                android:title="@string/show_next_review_time" />
+                android:key="showEstimates"
+                android:title="@string/show_estimates"
+                android:summary="@string/show_estimates_summ" />
+            <CheckBoxPreference
+                android:key="showProgress"
+                android:title="@string/show_progress"
+                android:summary="@string/show_progress_summ" />
             <CheckBoxPreference
                 android:defaultValue="true"
                 android:key="progressBars"

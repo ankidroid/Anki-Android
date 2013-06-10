@@ -58,8 +58,8 @@ public class NumberRangePreference extends EditTextPreference {
     @Override
     protected void onDialogClosed(boolean positiveResult) {
         if (positiveResult) {
-            String validated = getValidatedRange(getEditText().getText().toString());
-            setText(validated);
+            int validated = getValidatedRangeFromString(getEditText().getText().toString());
+            setValue(validated);
         }
     }
 
@@ -84,30 +84,38 @@ public class NumberRangePreference extends EditTextPreference {
 
 
     /**
-     * Return the input number with the number rounded to the nearest bound if it is outside
+     * Return the string as an int with the number rounded to the nearest bound if it is outside
      * of the acceptable range.
      * @param input User input in text editor.
      * @return The input value within acceptable range.
      */
-    private String getValidatedRange(String input) {
-        int valueInt;
+    private int getValidatedRangeFromString(String input) {
         if (TextUtils.isEmpty(input)) {
-            valueInt = mMin;
+            return mMin;
         } else {
             try {
-                valueInt = Integer.parseInt(input);
+                return getValidatedRangeFromInt(Integer.parseInt(input));
             } catch (NumberFormatException e) {
-                valueInt = mMin;
+                return mMin;
             }
         }
-        if (valueInt < mMin) {
-            valueInt = mMin;
-        } else if (valueInt > mMax) {
-            valueInt = mMax;
-        }
-        return String.valueOf(valueInt);
     }
 
+
+    /**
+     * Return the integer rounded to the nearest bound if it is outside of the acceptable
+     * range.
+     * @param input Integer to validate.
+     * @return The input value within acceptable range.
+     */
+    private int getValidatedRangeFromInt(int input) {
+        if (input < mMin) {
+            input = mMin;
+        } else if (input > mMax) {
+            input = mMax;
+        }
+        return input;
+    }
 
     /**
      * Returns the value of the min attribute, or its default value if not specified
@@ -148,5 +156,24 @@ public class NumberRangePreference extends EditTextPreference {
         System.arraycopy(filters, 0, newFilters, 0, filters.length);
         newFilters[newFilters.length - 1] = new InputFilter.LengthFilter(maxLength);
         getEditText().setFilters(newFilters);
+    }
+    
+    /**
+     * Get the persisted value held by this preference.
+     * @return the persisted value.
+     */
+    public int getValue() {
+        return getPersistedInt(mMin);
+    }
+
+    
+    /**
+     * Set this preference's value. The value is validated and persisted as an Integer.
+     * @param value to set.
+     */
+    public void setValue(int value) {
+        int validated = getValidatedRangeFromInt(value);
+        setText(Integer.toString(validated));
+        persistInt(validated);
     }
 }

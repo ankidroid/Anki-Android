@@ -21,7 +21,7 @@
 <resources>
 
 <!-- preferences.xml -->
-<string name="pref_cat_decks">Decks</string>
+<string name="pref_cat_collection">Collection</string>
 <string name="pref_internal_memory">Use internal memory</string>
 <string name="pref_internal_memory_summ">Store collection in internal memory. This is not recommended, as you cannot access the collection file that easily</string>
 <string name="pref_cat_sync">Synchronization</string>
@@ -200,8 +200,6 @@
 <string name="new_card_spacing_summ">Where to distribute new cards during the review.</string>
 <string name="show_new_cards">Show new cards...</string>
 
-<string name="show_next_review_time">Next review time</string>
-<string name="show_next_review_time_summ">Shows the next review time depending on your choice</string>
 <string name="update_notification">Update notifications</string>
 <string name="update_notification_summ">Notify me when AnkiDroid is updated</string>
 
@@ -330,4 +328,16 @@
 <string name="pref_cat_intent_add">External data addition</string>
 
 
+<string name="show_estimates">Show button time</string>
+<string name="show_estimates_summ">Show next review time above answer buttons</string>
+<string name="show_progress">Show remaining</string>
+<string name="show_progress_summ">Show remaining card count during review</string>
+<string name="use_current">Deck for new cards</string>
+<string name="new_spread">New card position</string>
+<string name="learn_cutoff">Learn ahead limit</string>
+<string name="learn_cutoff_summ">XXX min(s)</string>
+<string name="time_limit">Timebox time limit</string>
+<string name="time_limit_summ">XXX min(s)</string>
+<string name="day_offset">Start of next day</string>
+<string name="day_offset_summ">Hours past midnight: XXX</string>
 </resources>
