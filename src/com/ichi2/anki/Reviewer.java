@@ -1759,7 +1759,7 @@ public class Reviewer extends AnkiActivity {
             mTextBarBlack.setVisibility(View.GONE);
             mTextBarBlue.setVisibility(View.GONE);
         }
-        
+
         if (mShowProgressBars) {
             mSessionProgressTotalBar = (View) findViewById(R.id.daily_bar);
             mSessionProgressBar = (View) findViewById(R.id.session_progress);
@@ -2103,7 +2103,7 @@ public class Reviewer extends AnkiActivity {
         } catch (JSONException e) {
             throw new RuntimeException();
         }
-        
+
         return preferences;
     }
 
@@ -2478,6 +2478,10 @@ public class Reviewer extends AnkiActivity {
 
             Log.i(AnkiDroidApp.TAG, "content card = \n" + content);
             StringBuilder style = new StringBuilder();
+            if (mNightMode) {
+                // Fallback to avoid black-on-black cards when there is no color in the user’s style.
+                style.append("html {color: white;}\n");
+            }
             style.append(mCustomFontStyle);
             Log.i(AnkiDroidApp.TAG, "::style::" + style);
 
