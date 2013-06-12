@@ -289,6 +289,11 @@
                 android:summary="@string/fullscreen_review_summ"
                 android:title="@string/fullscreen_review" />
             <CheckBoxPreference
+               android:defaultValue="false"
+                android:key="centerVertically"
+                android:summary="@string/vertical_centering_summ"
+                android:title="@string/vertical_centering" />
+            <CheckBoxPreference
                 android:key="showEstimates"
                 android:title="@string/show_estimates"
                 android:summary="@string/show_estimates_summ" />

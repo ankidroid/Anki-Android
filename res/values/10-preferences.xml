@@ -170,6 +170,8 @@
 <string name="animation_speed_summ">Duration of transition animations: XXX ms</string>
 <string name="eink_display">E-Ink Display Optimization</string>
 <string name="eink_display_summ">Disable all animations and do some optimization for E-Ink Display</string>
+<string name="vertical_centering">Center card content vertically</string>
+<string name="vertical_centering_summ">Center the content of the cards vertically instead of showing it at the top.</string>
 <!-- deck_properties.xml -->
 <!--<string name="deck_properties">Deck properties</string>-->
 <!--<string name="sync_on">Synchronize this deck</string>-->
