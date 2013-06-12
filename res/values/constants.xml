@@ -174,5 +174,14 @@
         <item>7</item>
     </string-array>
 
+    <string-array name="add_to_cur_values">
+        <item>0</item>
+        <item>1</item>
+    </string-array>
+    <string-array name="new_spread_values">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+    </string-array>
 
 </resources>

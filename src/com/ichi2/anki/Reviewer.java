@@ -220,7 +220,6 @@ public class Reviewer extends AnkiActivity {
     private boolean mInputWorkaround;
     private boolean mLongClickWorkaround;
     private boolean mPrefFullscreenReview;
-    private boolean mshowNextReviewTime;
     private boolean mZoomEnabled;
     private String mCollectionFilename;
     private int mRelativeButtonSize;
@@ -246,6 +245,10 @@ public class Reviewer extends AnkiActivity {
     private boolean mCurrentSimpleInterface = false;
     private ArrayList<String> mSimpleInterfaceExcludeTags;
     private int mAvailableInCardWidth;
+
+    // Preferences from the collection
+    private boolean mShowNextReviewTime;
+    private boolean mShowRemainingCardCount;
 
     // Answer card & cloze deletion variables
     /** The correct answer in the compare to field if answer should be given by learner.
@@ -1734,7 +1737,7 @@ public class Reviewer extends AnkiActivity {
         mNext1.setTextColor(res.getColor(R.color.next_time_failed_color));
         mNext2.setTextColor(res.getColor(R.color.next_time_usual_color));
 
-        if (!mshowNextReviewTime) {
+        if (!mShowNextReviewTime) {
             ((TextView) findViewById(R.id.nextTimeflip)).setVisibility(View.GONE);
             mNext1.setVisibility(View.GONE);
             mNext2.setVisibility(View.GONE);
@@ -1750,6 +1753,12 @@ public class Reviewer extends AnkiActivity {
         mTextBarBlack = (TextView) findViewById(R.id.black_number);
         mTextBarBlue = (TextView) findViewById(R.id.blue_number);
 
+        if (!mShowRemainingCardCount) {
+            mTextBarRed.setVisibility(View.GONE);
+            mTextBarBlack.setVisibility(View.GONE);
+            mTextBarBlue.setVisibility(View.GONE);
+        }
+        
         if (mShowProgressBars) {
             mSessionProgressTotalBar = (View) findViewById(R.id.daily_bar);
             mSessionProgressBar = (View) findViewById(R.id.session_progress);
@@ -1921,7 +1930,7 @@ public class Reviewer extends AnkiActivity {
         }
 
         // Show next review time
-        if (mshowNextReviewTime) {
+        if (mShowNextReviewTime) {
             mNext1.setText(mSched.nextIvlStr(mCurrentCard, 1));
             mNext2.setText(mSched.nextIvlStr(mCurrentCard, 2));
         if (buttonCount > 2) {
@@ -1979,18 +1988,22 @@ public class Reviewer extends AnkiActivity {
         if (mShowProgressBars) {
             switchVisibility(mProgressBars, visible, true);
         }
-        switchVisibility(mTextBarRed, visible, true);
-        switchVisibility(mTextBarBlack, visible, true);
-        switchVisibility(mTextBarBlue, visible, true);
+        if (mShowRemainingCardCount) {
+            switchVisibility(mTextBarRed, visible, true);
+            switchVisibility(mTextBarBlack, visible, true);
+            switchVisibility(mTextBarBlue, visible, true);
+        }
         switchVisibility(mChosenAnswer, visible, true);
     }
 
 
     private void initControls() {
         mCardFrame.setVisibility(View.VISIBLE);
-        mTextBarRed.setVisibility(View.VISIBLE);
-        mTextBarBlack.setVisibility(View.VISIBLE);
-        mTextBarBlue.setVisibility(View.VISIBLE);
+        if (mShowRemainingCardCount) {
+            mTextBarRed.setVisibility(View.VISIBLE);
+            mTextBarBlack.setVisibility(View.VISIBLE);
+            mTextBarBlue.setVisibility(View.VISIBLE);
+        }
         mChosenAnswer.setVisibility(View.VISIBLE);
         mFlipCardLayout.setVisibility(View.VISIBLE);
 
@@ -2013,7 +2026,6 @@ public class Reviewer extends AnkiActivity {
         mInvertedColors = mNightMode;
         mBlackWhiteboard = preferences.getBoolean("blackWhiteboard", true);
         mPrefFullscreenReview = preferences.getBoolean("fullscreenReview", false);
-        mshowNextReviewTime = preferences.getBoolean("showNextReviewTime", true);
         mZoomEnabled = preferences.getBoolean("zoom", false);
         mDisplayFontSize = preferences.getInt("relativeDisplayFontSize", 100);// Card.DEFAULT_FONT_SIZE_RATIO);
         mRelativeButtonSize = preferences.getInt("answerButtonSize", 100);
@@ -2082,6 +2094,14 @@ public class Reviewer extends AnkiActivity {
         	}
         }
 
+        // These are preferences we pull out of the collection instead of SharedPreferences
+        try {
+            mShowNextReviewTime = AnkiDroidApp.getCol().getConf().getBoolean("estTimes");
+            mShowRemainingCardCount = AnkiDroidApp.getCol().getConf().getBoolean("dueCounts");
+        } catch (JSONException e) {
+            throw new RuntimeException();
+        }
+        
         return preferences;
     }
 
