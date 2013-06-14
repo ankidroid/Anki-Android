@@ -2483,6 +2483,7 @@ public class Reviewer extends AnkiActivity {
 
             if (mNightMode) {
                 content = HtmlColors.invertColors(content);
+                cardClass += " night_mode";
             }
 
             content = SmpToHtmlEntity(content);
