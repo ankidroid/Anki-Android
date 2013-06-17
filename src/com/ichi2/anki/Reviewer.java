@@ -1759,7 +1759,7 @@ public class Reviewer extends AnkiActivity {
             mTextBarBlack.setVisibility(View.GONE);
             mTextBarBlue.setVisibility(View.GONE);
         }
-        
+
         if (mShowProgressBars) {
             mSessionProgressTotalBar = (View) findViewById(R.id.daily_bar);
             mSessionProgressBar = (View) findViewById(R.id.session_progress);
@@ -2103,7 +2103,7 @@ public class Reviewer extends AnkiActivity {
         } catch (JSONException e) {
             throw new RuntimeException();
         }
-        
+
         return preferences;
     }
 
@@ -2483,6 +2483,7 @@ public class Reviewer extends AnkiActivity {
 
             if (mNightMode) {
                 content = HtmlColors.invertColors(content);
+                cardClass += " night_mode";
             }
 
             content = SmpToHtmlEntity(content);

@@ -3,6 +3,11 @@ body {
   padding: 0px;
 }
 
+body.night_mode {
+  color: white;
+  background-color: black;
+}
+
 #content {
   margin: 0.5em;
 }
