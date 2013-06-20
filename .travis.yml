@@ -10,7 +10,7 @@ before_install:
 before_script:
   # Configure Android SDK tools and platforms required to build.
   - ./tools/travis/continuous-setup.sh ..
-script: "./tools/travis/continuous-build.sh"
+script: "./tools/travis/continuous-build-and-test.sh"
 
 notifications:
   email:
