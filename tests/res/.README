@@ -1,0 +1,4 @@
+This file left intentionally blank.
+
+It guarantees that the directory it lives in is created when checking out the
+repository.
