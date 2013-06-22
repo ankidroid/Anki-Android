@@ -54,6 +54,7 @@ import android.text.style.StrikethroughSpan;
 import android.text.style.StyleSpan;
 import android.text.style.UnderlineSpan;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.GestureDetector;
 import android.view.GestureDetector.SimpleOnGestureListener;
 import android.view.Gravity;
@@ -2125,7 +2126,7 @@ public class Reviewer extends AnkiActivity {
 			if (mSimpleCard == null) {
 	            mSimpleCard = new ScrollTextView(this);
 	            Themes.setRegularFont(mSimpleCard);
-	            mSimpleCard.setTextSize(mSimpleCard.getTextSize() * mDisplayFontSize / 100);
+	            mSimpleCard.setTextSize(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 10, getResources().getDisplayMetrics()) * mDisplayFontSize / 100);
 	            mSimpleCard.setGravity(Gravity.CENTER);
 	            try {
 	                mSetTextIsSelectable = TextView.class.getMethod("setTextIsSelectable", boolean.class);
@@ -2153,7 +2154,7 @@ public class Reviewer extends AnkiActivity {
 		} else {
 			if (mCard == null) {
 	            mCard = createWebView();
-	            mCardFrame.addView(mCard);
+                mCardFrame.addView(mCard);
 	            if (!mUseQuickUpdate) {
 	                mNextCard = createWebView();
 	                mNextCard.setVisibility(View.GONE);
@@ -3473,7 +3474,6 @@ public class Reviewer extends AnkiActivity {
     };
 
     private Spanned convertToSimple(String text) {
-    	text = text.replaceAll("</div>$", "").replaceAll("(</div>)*<div>", "<br>");
     	return Html.fromHtml(text, mSimpleInterfaceImagegetter, mSimpleInterfaceTagHandler);
     }
 }
