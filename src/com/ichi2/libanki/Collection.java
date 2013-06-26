@@ -29,6 +29,7 @@ import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.Pair;
 import com.ichi2.anki.R;
 import com.ichi2.anki.UIUtils;
+import com.samskivert.mustache.MustacheException;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -58,7 +59,10 @@ public class Collection {
     public static final String SYNC_URL = "https://ankiweb.net/";
     public static final int SYNC_VER = 5;
     public static final String HELP_SITE = "http://ankisrs.net/docs/manual.html";
-
+    private static final String TEMPLATE_ERROR = "<div style='background-color:#f44; color:#fff;'>%s</div>%s"+
+                                                 "<br><br><code style='font-size:80%%'>%s</code><br><br>"+
+                                                 "%s: <b>%s</b><br>%s: <b>%s</b><br><br>%s";
+    
     private AnkiDb mDb;
     private boolean mServer;
     private double mLastSave;
@@ -937,51 +941,63 @@ public class Collection {
             }
             fields.put("Card", template.getString("name"));
             fields.put("c" + (((Integer) data[4]) + 1), "1");
-
+            
             // render q & a
             HashMap<String, String> d = new HashMap<String, String>();
-            d.put("id", Long.toString((Long) data[0]));
-            String qfmt = template.getString("qfmt");
-            String afmt = template.getString("afmt");
-            String html;
-            String format;
-
-            // runFilter mungeFields for type "q"
-            Models.fieldParser fparser = new Models.fieldParser(fields);
-            Matcher m = fClozePattern.matcher(qfmt);
-            format = m.replaceFirst(String.format(Locale.US, "{{cq:%d:", ((Integer) data[4]) + 1));
-            m = fAltClozePattern.matcher(format);
-            format = m.replaceFirst(String.format(Locale.US, "<%%cq:%d:",((Integer) data[4]) + 1));
-            html = mModels.getCmpldTemplate(format).execute(fparser);
-            html = (String) AnkiDroidApp.getHooks().runFilter("mungeQA", html, "q", fields, model, data, this);
-            d.put("q", html);
-            // empty cloze?
-            if (model.getInt("type") == Sched.MODEL_CLOZE) {
-                if (getModels()._availClozeOrds(model, (String) data[6], false).size() == 0) {
-                    d.put("q", "Please edit this note and add some cloze deletions.");
+            try {
+                d.put("id", Long.toString((Long) data[0]));
+                String qfmt = template.getString("qfmt");
+                String afmt = template.getString("afmt");
+                String html;
+                String format;
+    
+                // runFilter mungeFields for type "q"
+                Models.fieldParser fparser = new Models.fieldParser(fields);
+                Matcher m = fClozePattern.matcher(qfmt);
+                format = m.replaceFirst(String.format(Locale.US, "{{cq:%d:", ((Integer) data[4]) + 1));
+                m = fAltClozePattern.matcher(format);
+                format = m.replaceFirst(String.format(Locale.US, "<%%cq:%d:",((Integer) data[4]) + 1));
+                html = mModels.getCmpldTemplate(format).execute(fparser);
+                html = (String) AnkiDroidApp.getHooks().runFilter("mungeQA", html, "q", fields, model, data, this);
+                d.put("q", html);
+                // empty cloze?
+                if (model.getInt("type") == Sched.MODEL_CLOZE) {
+                    if (getModels()._availClozeOrds(model, (String) data[6], false).size() == 0) {
+                        d.put("q", "Please edit this note and add some cloze deletions.");
+                    }
                 }
-            }
-            fields.put("FrontSide", mMedia.stripAudio(d.get("q")));
-
-            // runFilter mungeFields for type "a"
-            fparser = new Models.fieldParser(fields);
-            m = fClozePattern.matcher(afmt);
-            format = m.replaceFirst(String.format(Locale.US, "{{ca:%d:", ((Integer) data[4]) + 1));
-            m = fAltClozePattern.matcher(format);
-            format = m.replaceFirst(String.format(Locale.US, "<%%ca:%d:", ((Integer) data[4]) + 1));
-            html = mModels.getCmpldTemplate(format).execute(fparser);
-            html = (String) AnkiDroidApp.getHooks().runFilter("mungeQA", html, "a", fields, model, data, this);
-            d.put("a", html);
-            // empty cloze?
-            if (model.getInt("type") == Sched.MODEL_CLOZE) {
-                if (getModels()._availClozeOrds(model, (String) data[6], false).size() == 0) {
-                    d.put("q",
-                            AnkiDroidApp.getAppResources().getString(
-                                    com.ichi2.anki.R.string.empty_cloze_warning,
-                                    "<a href=" + HELP_SITE + "#cloze>" +
-                                    AnkiDroidApp.getAppResources().getString(
-                                            com.ichi2.anki.R.string.help_cloze) + "</a>"));
+                fields.put("FrontSide", mMedia.stripAudio(d.get("q")));
+    
+                // runFilter mungeFields for type "a"
+                fparser = new Models.fieldParser(fields);
+                m = fClozePattern.matcher(afmt);
+                format = m.replaceFirst(String.format(Locale.US, "{{ca:%d:", ((Integer) data[4]) + 1));
+                m = fAltClozePattern.matcher(format);
+                format = m.replaceFirst(String.format(Locale.US, "<%%ca:%d:", ((Integer) data[4]) + 1));
+                html = mModels.getCmpldTemplate(format).execute(fparser);
+                html = (String) AnkiDroidApp.getHooks().runFilter("mungeQA", html, "a", fields, model, data, this);
+                d.put("a", html);
+                // empty cloze?
+                if (model.getInt("type") == Sched.MODEL_CLOZE) {
+                    if (getModels()._availClozeOrds(model, (String) data[6], false).size() == 0) {
+                        d.put("q",
+                                AnkiDroidApp.getAppResources().getString(
+                                        com.ichi2.anki.R.string.empty_cloze_warning,
+                                        "<a href=" + HELP_SITE + "#cloze>" +
+                                        AnkiDroidApp.getAppResources().getString(
+                                                com.ichi2.anki.R.string.help_cloze) + "</a>"));
+                    }
                 }
+            } catch (MustacheException e) {
+                Resources res = AnkiDroidApp.getAppResources();
+                
+                String templateError = String.format(TEMPLATE_ERROR, res.getString(R.string.template_error),
+                        res.getString(R.string.template_error_detail), e.getMessage(),
+                        res.getString(R.string.note_type), model.getString("name"),
+                        res.getString(R.string.card_type), template.getString("name"),
+                        res.getString(R.string.template_error_fix));
+                d.put("q", templateError);
+                d.put("a", templateError);
             }
 
             return d;
