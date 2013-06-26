@@ -30,6 +30,7 @@
 <string name="CardEditorTags">Tags: %1$s</string>
 <string name="add_new_tag">Add new tag</string>
 <string name="note_type">Note type</string>
+<string name="card_type">Card type</string>
 
 <string name="sdcard_missing_message">SD card is unavailable because it is being used as USB storage. Disconnect USB to access your decks.</string>
 
@@ -150,4 +151,9 @@
 <string name="steps_error">Steps must be numbers greater than 0</string>
 <string name="steps_min_error">At least one step is required</string>
 <string name="custom_study_invalid_number">Invalid number</string>
+
+<string name="template_error">Template error:</string>
+<string name="template_error_detail">There is an error in the template of this card.</string>
+<string name="template_error_fix">Please use the card editor on the desktop client to fix the error.</string>
+
 </resources>
