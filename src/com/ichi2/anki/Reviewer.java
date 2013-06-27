@@ -220,7 +220,6 @@ public class Reviewer extends AnkiActivity {
     private boolean mInputWorkaround;
     private boolean mLongClickWorkaround;
     private boolean mPrefFullscreenReview;
-    private boolean mshowNextReviewTime;
     private boolean mZoomEnabled;
     private String mCollectionFilename;
     private int mRelativeButtonSize;
@@ -241,11 +240,16 @@ public class Reviewer extends AnkiActivity {
     private boolean mShowProgressBars;
     private boolean mPrefFadeScrollbars;
     private boolean mPrefUseTimer;
+    private boolean mPrefCenterVertically;
     private boolean mShowAnimations = false;
     private boolean mSimpleInterface = false;
     private boolean mCurrentSimpleInterface = false;
     private ArrayList<String> mSimpleInterfaceExcludeTags;
     private int mAvailableInCardWidth;
+
+    // Preferences from the collection
+    private boolean mShowNextReviewTime;
+    private boolean mShowRemainingCardCount;
 
     // Answer card & cloze deletion variables
     /** The correct answer in the compare to field if answer should be given by learner.
@@ -726,8 +730,8 @@ public class Reviewer extends AnkiActivity {
                 }
                 Themes.showThemedToast(Reviewer.this, leechMessage, true);
             }
-            
-            mCurrentCard = values[0].getCard();            
+
+            mCurrentCard = values[0].getCard();
             if (mCurrentCard == null) {
                 // If the card is null means that there are no more cards scheduled for review.
                 mNoMoreCards = true;
@@ -746,13 +750,13 @@ public class Reviewer extends AnkiActivity {
                 Reviewer.this.unblockControls();
                 Reviewer.this.displayCardQuestion();
             }
-            
+
             // Since reps are incremented on fetch of next card, we will miss counting the
             // last rep since there isn't a next card. We manually account for it here.
             if (mNoMoreCards) {
                 mSched.setReps(mSched.getReps() + 1);
             }
-            
+
             Long[] elapsed = AnkiDroidApp.getCol().timeboxReached();
             if (elapsed != null) {
                 int nCards = elapsed[1].intValue();
@@ -762,7 +766,7 @@ public class Reviewer extends AnkiActivity {
                 Themes.showThemedToast(Reviewer.this, timeboxMessage, true);
                 AnkiDroidApp.getCol().startTimebox();
             }
-            
+
             // if (mChosenAnswer.getText().equals("")) {
             // setDueMessage();
             // }
@@ -986,7 +990,7 @@ public class Reviewer extends AnkiActivity {
             // as the card to answer, no card will be answered.
             DeckTask.launchDeckTask(DeckTask.TASK_TYPE_ANSWER_CARD, mAnswerCardHandler, new DeckTask.TaskData(mSched,
                     null, 0));
-            
+
             // Since we aren't actually answering a card, decrement the rep count
             mSched.setReps(mSched.getReps() - 1);
         }
@@ -1064,9 +1068,9 @@ public class Reviewer extends AnkiActivity {
         if (!isFinishing()) {
             // try {
         	if (AnkiDroidApp.colIsOpen()) {
-                WidgetStatus.update(this, mSched.progressToday(null, mCurrentCard, true));        		
+                WidgetStatus.update(this, mSched.progressToday(null, mCurrentCard, true));
         	}
-            
+
             // } catch (JSONException e) {
             // throw new RuntimeException(e);
             // }
@@ -1282,7 +1286,7 @@ public class Reviewer extends AnkiActivity {
                             }
                         }
                         if (AnkiDroidApp.colIsOpen()) {
-                            onCreate(mSavedInstanceState);                        	
+                            onCreate(mSavedInstanceState);
                         } else {
                             finish();
                         }
@@ -1518,7 +1522,7 @@ public class Reviewer extends AnkiActivity {
                 mProgressDialog = StyledProgressDialog.show(Reviewer.this, "",
                         getResources().getString(R.string.saving_changes), true);
             }
-            DeckTask.launchDeckTask(DeckTask.TASK_TYPE_UNDO, mAnswerCardHandler, new DeckTask.TaskData(mSched));    		
+            DeckTask.launchDeckTask(DeckTask.TASK_TYPE_UNDO, mAnswerCardHandler, new DeckTask.TaskData(mSched));
     	}
     }
 
@@ -1611,7 +1615,7 @@ public class Reviewer extends AnkiActivity {
                 return easy ? EASE_EASY : EASE_MID;
             default:
                 return 0;
-            }    		
+            }
     	} catch (RuntimeException e) {
 			AnkiDroidApp.saveExceptionReportFile(e, "Reviewer-getRecommendedEase");
             closeReviewer(DeckPicker.RESULT_DB_ERROR, true);
@@ -1734,7 +1738,7 @@ public class Reviewer extends AnkiActivity {
         mNext1.setTextColor(res.getColor(R.color.next_time_failed_color));
         mNext2.setTextColor(res.getColor(R.color.next_time_usual_color));
 
-        if (!mshowNextReviewTime) {
+        if (!mShowNextReviewTime) {
             ((TextView) findViewById(R.id.nextTimeflip)).setVisibility(View.GONE);
             mNext1.setVisibility(View.GONE);
             mNext2.setVisibility(View.GONE);
@@ -1749,6 +1753,12 @@ public class Reviewer extends AnkiActivity {
         mTextBarRed = (TextView) findViewById(R.id.red_number);
         mTextBarBlack = (TextView) findViewById(R.id.black_number);
         mTextBarBlue = (TextView) findViewById(R.id.blue_number);
+
+        if (!mShowRemainingCardCount) {
+            mTextBarRed.setVisibility(View.GONE);
+            mTextBarBlack.setVisibility(View.GONE);
+            mTextBarBlue.setVisibility(View.GONE);
+        }
 
         if (mShowProgressBars) {
             mSessionProgressTotalBar = (View) findViewById(R.id.daily_bar);
@@ -1921,7 +1931,7 @@ public class Reviewer extends AnkiActivity {
         }
 
         // Show next review time
-        if (mshowNextReviewTime) {
+        if (mShowNextReviewTime) {
             mNext1.setText(mSched.nextIvlStr(mCurrentCard, 1));
             mNext2.setText(mSched.nextIvlStr(mCurrentCard, 2));
         if (buttonCount > 2) {
@@ -1979,18 +1989,22 @@ public class Reviewer extends AnkiActivity {
         if (mShowProgressBars) {
             switchVisibility(mProgressBars, visible, true);
         }
-        switchVisibility(mTextBarRed, visible, true);
-        switchVisibility(mTextBarBlack, visible, true);
-        switchVisibility(mTextBarBlue, visible, true);
+        if (mShowRemainingCardCount) {
+            switchVisibility(mTextBarRed, visible, true);
+            switchVisibility(mTextBarBlack, visible, true);
+            switchVisibility(mTextBarBlue, visible, true);
+        }
         switchVisibility(mChosenAnswer, visible, true);
     }
 
 
     private void initControls() {
         mCardFrame.setVisibility(View.VISIBLE);
-        mTextBarRed.setVisibility(View.VISIBLE);
-        mTextBarBlack.setVisibility(View.VISIBLE);
-        mTextBarBlue.setVisibility(View.VISIBLE);
+        if (mShowRemainingCardCount) {
+            mTextBarRed.setVisibility(View.VISIBLE);
+            mTextBarBlack.setVisibility(View.VISIBLE);
+            mTextBarBlue.setVisibility(View.VISIBLE);
+        }
         mChosenAnswer.setVisibility(View.VISIBLE);
         mFlipCardLayout.setVisibility(View.VISIBLE);
 
@@ -2013,7 +2027,6 @@ public class Reviewer extends AnkiActivity {
         mInvertedColors = mNightMode;
         mBlackWhiteboard = preferences.getBoolean("blackWhiteboard", true);
         mPrefFullscreenReview = preferences.getBoolean("fullscreenReview", false);
-        mshowNextReviewTime = preferences.getBoolean("showNextReviewTime", true);
         mZoomEnabled = preferences.getBoolean("zoom", false);
         mDisplayFontSize = preferences.getInt("relativeDisplayFontSize", 100);// Card.DEFAULT_FONT_SIZE_RATIO);
         mRelativeButtonSize = preferences.getInt("answerButtonSize", 100);
@@ -2028,6 +2041,7 @@ public class Reviewer extends AnkiActivity {
         mWaitQuestionSecond = preferences.getInt("timeoutQuestionSeconds", 60);
         mScrollingButtons = preferences.getBoolean("scrolling_buttons", false);
         mDoubleScrolling = preferences.getBoolean("double_scrolling", false);
+        mPrefCenterVertically =  preferences.getBoolean("centerVertically", false);
 
         mGesturesEnabled = AnkiDroidApp.initiateGestures(this, preferences);
         if (mGesturesEnabled) {
@@ -2082,6 +2096,14 @@ public class Reviewer extends AnkiActivity {
         	}
         }
 
+        // These are preferences we pull out of the collection instead of SharedPreferences
+        try {
+            mShowNextReviewTime = AnkiDroidApp.getCol().getConf().getBoolean("estTimes");
+            mShowRemainingCardCount = AnkiDroidApp.getCol().getConf().getBoolean("dueCounts");
+        } catch (JSONException e) {
+            throw new RuntimeException();
+        }
+
         return preferences;
     }
 
@@ -2126,24 +2148,24 @@ public class Reviewer extends AnkiActivity {
 			}
 			if (mSimpleCard.getVisibility() != View.VISIBLE || (mCard != null && mCard.getVisibility() == View .VISIBLE)) {
 				mSimpleCard.setVisibility(View.VISIBLE);
-				mCard.setVisibility(View.GONE);				
+				mCard.setVisibility(View.GONE);
 			}
 		} else {
 			if (mCard == null) {
 	            mCard = createWebView();
-	            mCardFrame.addView(mCard);				
+	            mCardFrame.addView(mCard);
 	            if (!mUseQuickUpdate) {
 	                mNextCard = createWebView();
 	                mNextCard.setVisibility(View.GONE);
 	                mCardFrame.addView(mNextCard, 0);
-		            mCard.setBackgroundColor(mCurrentBackgroundColor);        	
+		            mCard.setBackgroundColor(mCurrentBackgroundColor);
 
 	                mCustomFontStyle = getCustomFontsStyle() + getDefaultFontStyle();
 	            }
 			}
 			if (mCard.getVisibility() != View.VISIBLE || (mSimpleCard != null && mSimpleCard.getVisibility() == View .VISIBLE)) {
 				mSimpleCard.setVisibility(View.GONE);
-				mCard.setVisibility(View.VISIBLE);				
+				mCard.setVisibility(View.VISIBLE);
 			}
 		}
     }
@@ -2256,7 +2278,7 @@ public class Reviewer extends AnkiActivity {
     private void initTimer() {
         mShowTimer = mCurrentCard.showTimer();
         if (mShowTimer && mCardTimer.getVisibility() == View.INVISIBLE) {
-        	switchVisibility(mCardTimer, View.VISIBLE);        	
+        	switchVisibility(mCardTimer, View.VISIBLE);
         } else if (!mShowTimer && mCardTimer.getVisibility() != View.INVISIBLE) {
         	switchVisibility(mCardTimer, View.INVISIBLE);
         }
@@ -2449,7 +2471,11 @@ public class Reviewer extends AnkiActivity {
 
             // CSS class for card-specific styling
             String cardClass = "card card" + (mCurrentCard.getOrd()+1);
-            
+
+            if (mPrefCenterVertically) {
+                cardClass += " vertically_centered";
+            }
+
             Log.i(AnkiDroidApp.TAG, "content card = \n" + content);
             StringBuilder style = new StringBuilder();
             style.append(mCustomFontStyle);
@@ -2457,6 +2483,7 @@ public class Reviewer extends AnkiActivity {
 
             if (mNightMode) {
                 content = HtmlColors.invertColors(content);
+                cardClass += " night_mode";
             }
 
             content = SmpToHtmlEntity(content);
@@ -2530,7 +2557,7 @@ public class Reviewer extends AnkiActivity {
 
     /**
      * Reads the text (using TTS) for the given side of a card.
-     * 
+     *
      * @param card The card to play TTS for
      * @param cardSide The side of the current card to play TTS for
      */
@@ -2548,7 +2575,7 @@ public class Reviewer extends AnkiActivity {
 
     /**
      * Returns the configuration for the current {@link Card}.
-     * 
+     *
      * @return The configuration for the current {@link Card}
      */
     private JSONObject getConfigForCurrentCard() {
@@ -2558,7 +2585,7 @@ public class Reviewer extends AnkiActivity {
 
     /**
      * Returns the deck ID of the given {@link Card}.
-     * 
+     *
      * @param card The {@link Card} to get the deck ID
      * @return The deck ID of the {@link Card}
      */
@@ -2760,7 +2787,7 @@ public class Reviewer extends AnkiActivity {
 
     /**
      * Adds a div html tag around the contents to have an indication, where answer/question is displayed
-     * 
+     *
      * @param content
      * @param isAnswer if true then the class attribute is set to "answer", "question" otherwise.
      * @return
@@ -2790,7 +2817,7 @@ public class Reviewer extends AnkiActivity {
      * Anything that threatens common sense will break this logic, eg nested span/divs with CSS classes having font-size
      * declarations with relative units (40% dif inside 120% div inside 60% div). Broken HTML also breaks this.
      * Feel free to improve, but please keep it short and fast.
-     * 
+     *
      * @param content The HTML content that will be font-size-adjusted.
      * @param percentage The relative font size percentage defined in preferences
      * @return
@@ -2861,7 +2888,7 @@ public class Reviewer extends AnkiActivity {
     /**
      * Calculates a dynamic font size depending on the length of the contents taking into account that the input string
      * contains html-tags, which will not be displayed and therefore should not be taken into account.
-     * 
+     *
      * @param htmlContents
      * @return font size respecting MIN_DYNAMIC_FONT_SIZE and MAX_DYNAMIC_FONT_SIZE
      */
@@ -3109,7 +3136,7 @@ public class Reviewer extends AnkiActivity {
                 break;
             case GESTURE_UNDO:
             	if(mSched.getCol().undoAvailable()) {
-                	undo();            		
+                	undo();
             	}
             	break;
             case GESTURE_EDIT:
@@ -3397,7 +3424,7 @@ public class Reviewer extends AnkiActivity {
                 XMLReader xmlReader) {
 //            if(tag.equalsIgnoreCase("div")) {
 //            	output.append("\n");
-//            } else 
+//            } else
         	if(tag.equalsIgnoreCase("strike") || tag.equals("s")) {
                 int len = output.length();
                 if(opening) {
@@ -3438,7 +3465,7 @@ public class Reviewer extends AnkiActivity {
             if ((new File(path)).exists()) {
                 Drawable d = Drawable.createFromPath(path);
                 d.setBounds(0,0,d.getIntrinsicWidth(),d.getIntrinsicHeight());
-                return d;            	
+                return d;
             } else {
             	return null;
             }

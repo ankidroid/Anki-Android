@@ -1,0 +1,17 @@
+.legacy_ruby_rb {
+  display: inline-block;
+  text-align: center;
+  line-height: 1;
+  white-space: nowrap;
+  vertical-align: baseline;
+  margin: 0;
+  padding: 0;
+}
+
+.legacy_ruby_rt {
+  display: block;
+  text-decoration: none;
+  line-height: 1.2;
+  font-weight: normal;
+  font-size: 0.64em;
+}

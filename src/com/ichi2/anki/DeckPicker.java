@@ -616,8 +616,14 @@ public class DeckPicker extends FragmentActivity {
             Object[] res = result.getObjArray();
             updateDecksList((TreeSet<Object[]>) res[0], (Integer) res[1], (Integer) res[2]);
         	if (mOpenCollectionDialog != null && mOpenCollectionDialog.isShowing()) {
-            	mOpenCollectionDialog.dismiss();        		
+            	mOpenCollectionDialog.dismiss();
         	}
+            try {
+                // Ensure we have the correct deck selected in the deck list after we have updated it
+                setSelectedDeck(AnkiDroidApp.getCol().getDecks().current().getLong("id"));
+            } catch (JSONException e) {
+                throw  new RuntimeException();
+            }
         }
 
 
@@ -1579,16 +1585,6 @@ public class DeckPicker extends FragmentActivity {
 
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                if (AnkiDroidApp.getCol().getDecks().selected() == mCurrentDid) {
-                                    Fragment frag = (Fragment) getSupportFragmentManager().findFragmentById(
-                                            R.id.studyoptions_fragment);
-                                    if (frag != null && frag instanceof StudyOptionsFragment) {
-                                        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-                                        ft.remove(frag);
-                                        ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
-                                        ft.commit();
-                                    }
-                                }
                                 DeckTask.launchDeckTask(DeckTask.TASK_TYPE_DELETE_DECK, new DeckTask.TaskListener() {
                                     @Override
                                     public void onPreExecute() {
@@ -1604,6 +1600,9 @@ public class DeckPicker extends FragmentActivity {
                                         }
                                         Object[] res = result.getObjArray();
                                         updateDecksList((TreeSet<Object[]>) res[0], (Integer) res[1], (Integer) res[2]);
+                                        if (mFragmented) {
+                                            selectDeck(AnkiDroidApp.getCol().getDecks().selected());
+                                        }
                                         if (mProgressDialog.isShowing()) {
                                             try {
                                                 mProgressDialog.dismiss();
@@ -2843,6 +2842,22 @@ public class DeckPicker extends FragmentActivity {
                         mDeckListView.performItemClick(null, lastPosition, 0);
                     }
                 });
+                break;
+            }
+        }
+    }
+
+    /**
+     * Set which deck is selected (highlighted) in the deck list.
+     * <p>
+     * Note that this method does not change the currently selected deck in the collection, only the highlighted
+     * deck in the deck list. To select a deck, see {@link #selectDeck(long)}.
+     * @param did The deck ID of the deck to select.
+     */
+    public void setSelectedDeck(long did) {
+        for (int i = 0; i < mDeckList.size(); i++) {
+            if (Long.parseLong(mDeckList.get(i).get("did")) == did) {
+                mDeckListView.setItemChecked(i, true);
                 break;
             }
         }

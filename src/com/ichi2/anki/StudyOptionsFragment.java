@@ -940,8 +940,19 @@ public class StudyOptionsFragment extends Fragment {
     			ar.getJSONArray(0).put(1, terms[1]);
     			ar.getJSONArray(0).put(2, terms[2]);
     			dyn.put("resched", resched);
-    			// generate cards
-    			finishCongrats();
+    			
+    			if (mFragmented) {
+                    Bundle config = new Bundle();
+                    config.putString("searchSuffix", "'deck:" +dyn.getString("name") + "'");
+                    initAllContentViews(getLayoutInflater(config));
+                    finishCongrats();
+                } else {
+        			// Load a new fragment with the filtered deck view. The config passed is null, so it uses the
+        			// current deck. The deck we just created is internally set as the current deck.
+        			((StudyOptionsActivity)getActivity()).loadContent(false, null);
+    			}
+    			
+    			// Initial rebuild
     			mProgressDialog = StyledProgressDialog.show(getActivity(), "",
     					getResources().getString(R.string.rebuild_custom_study_deck), true);
     			DeckTask.launchDeckTask(DeckTask.TASK_TYPE_REBUILD_CRAM, mRebuildCustomStudyListener, new DeckTask.TaskData(
@@ -1132,6 +1143,15 @@ public class StudyOptionsFragment extends Fragment {
                     AnkiDroidApp.getCol().undoName(res)));
         }
         mTextCongratsMessage.setText(AnkiDroidApp.getCol().getSched().finishedMsg(getActivity()));
+        // Filtered decks must not have a custom study button
+        try {
+            if (AnkiDroidApp.getCol().getDecks().current().getInt("dyn") == 1) {
+                mButtonCongratsCustomStudy.setEnabled(false);
+                mButtonCongratsCustomStudy.setVisibility(View.GONE);
+            }
+        } catch (JSONException e) {
+            throw new RuntimeException();
+        }
     }
 
 

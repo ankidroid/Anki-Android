@@ -5,4 +5,4 @@
 #  - Have installed the Android SDK,
 #  - Have added android to the PATH system variable.
 
-android update project -p . -n AnkiDroid --target android-17
+android update project -p . -n AnkiDroid -s --target android-17
