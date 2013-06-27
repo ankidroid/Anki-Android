@@ -4,7 +4,7 @@
 
 # It assumes it is being executed on a Linux machine.
 
-TARGET=android-15
+TARGET=android-17
 ABI=armeabi-v7a
 DELAY_SECONDS=10  # Wait as many seconds before checking again.
 NOT_RUNNING_TIMEOUT_SECONDS=60  # Fail if not running for that many seconds. 
