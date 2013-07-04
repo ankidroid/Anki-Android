@@ -28,20 +28,24 @@ function main() {
 
   # Download the Android SDK and necessary components.
   download_and_install \
-    $base_uri/tools_r21.1-linux.zip \
+    $base_uri/tools_r22.0.1-linux.zip \
     $root/android
 
   download_and_install \
-    $base_uri/platform-tools_r16.0.2-linux.zip \
+    $base_uri/platform-tools_r17-linux.zip \
     $root/android
 
   download_and_install \
-    $base_uri/android-15_r03.zip \
+    $base_uri/build-tools_r17-linux.zip \
+    $root/android/build-tools
+
+  download_and_install \
+    $base_uri/android-17_r02.zip \
     $root/android/platforms
 
   download_and_install \
-    $base_uri/sysimg_armv7a-15_r02.zip \
-    $root/android/system-images/android-15
+    $base_uri/sysimg_armv7a-17_r02.zip \
+    $root/android/system-images/android-17
 }
 
 set -e
