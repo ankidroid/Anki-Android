@@ -40,6 +40,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 public class Syncer {
@@ -453,7 +454,7 @@ public class Syncer {
                     .getDb()
                     .getDatabase()
                     .rawQuery(
-                            String.format(
+                            String.format(Locale.US,
                                     "SELECT id, cid, %d, ease, ivl, lastIvl, factor, time, type FROM revlog WHERE %s",
                                     mMaxUsn, lim), null);
         } else if (table.equals("cards")) {
@@ -461,7 +462,7 @@ public class Syncer {
                     .getDb()
                     .getDatabase()
                     .rawQuery(
-                            String.format(
+                            String.format(Locale.US,
                                     "SELECT id, nid, did, ord, mod, %d, type, queue, due, ivl, factor, reps, lapses, left, odue, odid, flags, data FROM cards WHERE %s",
                                     mMaxUsn, lim), null);
         } else {
@@ -469,7 +470,7 @@ public class Syncer {
                     .getDb()
                     .getDatabase()
                     .rawQuery(
-                            String.format(
+                            String.format(Locale.US,
                                     "SELECT id, guid, mid, mod, %d, tags, flds, '', '', flags, data FROM notes WHERE %s",
                                     mMaxUsn, lim), null);
         }
