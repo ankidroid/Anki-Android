@@ -90,7 +90,9 @@ public class Anki2Importer {
         publishProgress(false, 0, 0, false);
         try {
             // extract the deck from the zip file
-            String tempDir = AnkiDroidApp.getCurrentAnkiDroidDirectory() + "/tmpzip";
+            // Issue 1501 workaround: we can't reuse the temp directory after it has been deleted,
+            // so any imports after the first one fail. Avoid this by appending a UUID.
+            String tempDir = AnkiDroidApp.getCurrentAnkiDroidDirectory() + "/tmpzip-" + UUID.randomUUID().toString();
             // from anki2.py
             String colFile = tempDir + "/collection.anki2";
             if (!Utils.unzipFiles(mZip, tempDir, new String[]{"collection.anki2", "media"}, null) ||
