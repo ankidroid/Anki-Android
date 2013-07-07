@@ -90,9 +90,7 @@ public class Anki2Importer {
         publishProgress(false, 0, 0, false);
         try {
             // extract the deck from the zip file
-            // Issue 1501 workaround: we can't reuse the temp directory after it has been deleted,
-            // so any imports after the first one fail. Avoid this by appending a UUID.
-            String tempDir = AnkiDroidApp.getCurrentAnkiDroidDirectory() + "/tmpzip-" + UUID.randomUUID().toString();
+            String tempDir = AnkiDroidApp.getCurrentAnkiDroidDirectory() + "/tmpzip";
             // from anki2.py
             String colFile = tempDir + "/collection.anki2";
             if (!Utils.unzipFiles(mZip, tempDir, new String[]{"collection.anki2", "media"}, null) ||
@@ -125,6 +123,7 @@ public class Anki2Importer {
                 cnt = _import();
             } finally {
                 // do not close collection but close only db (in order not to confuse access counting in storage.java
+                // Note that the media database is still open and needs to be closed below.
                 AnkiDatabaseManager.closeDatabase(mSrc.getPath());
             }
             // import static media
@@ -143,6 +142,7 @@ public class Anki2Importer {
                 }
             }
             mZip.close();
+            mSrc.getMedia().close();
             // delete tmp dir
             File dir = new File(tempDir);
             BackupManager.removeDir(dir);
