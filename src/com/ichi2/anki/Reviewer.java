@@ -2670,7 +2670,7 @@ public class Reviewer extends AnkiActivity {
                         }
                 }
             }
-            if (!mShowAnimations && mCardTimer.getVisibility() == View.INVISIBLE) {
+            if (!mShowAnimations && mShowTimer && mCardTimer.getVisibility() == View.INVISIBLE) {
                 switchTopBarVisibility(View.VISIBLE);
             }
             if (!sDisplayAnswer) {
