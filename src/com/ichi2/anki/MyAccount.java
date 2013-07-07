@@ -14,16 +14,14 @@
 
 package com.ichi2.anki;
 
-import com.ichi2.anki.R;
-
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.content.res.Resources;
-import android.net.Uri;
 import android.os.Bundle;
+import android.text.method.LinkMovementMethod;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
@@ -36,7 +34,6 @@ import android.widget.TextView;
 import com.ichi2.anim.ActivityTransitionAnimation;
 import com.ichi2.async.Connection;
 import com.ichi2.async.Connection.Payload;
-import com.ichi2.libanki.sync.BasicHttpSyncer;
 import com.ichi2.themes.StyledDialog;
 import com.ichi2.themes.StyledProgressDialog;
 import com.ichi2.themes.Themes;
@@ -207,7 +204,11 @@ public class MyAccount extends AnkiActivity {
         mPassword1 = (EditText) mRegisterView.findViewById(R.id.password1);
         mUsername2 = (EditText) mRegisterView.findViewById(R.id.username2);
         mPassword2 = (EditText) mRegisterView.findViewById(R.id.password2);
-
+        
+        // Make the terms of use link clickable
+        TextView terms = (TextView) mRegisterView.findViewById(R.id.terms_link);
+        terms.setMovementMethod(LinkMovementMethod.getInstance());
+        
         Button registerButton = (Button) mRegisterView.findViewById(R.id.register_button);
         registerButton.setOnClickListener(new OnClickListener() {
 
