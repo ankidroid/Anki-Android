@@ -236,7 +236,7 @@ public class Card implements Cloneable {
 
     public String getAnswer(boolean simple) {
         if (simple) {
-			return _getQA(false).get("a").replaceAll("<hr[^>]*>", "<br>─────<br>");
+        	return _getQA(false).get("a").replaceAll("<hr[^>]*>", "<br>\u2500\u2500\u2500\u2500\u2500<br>");
         } else {
             return css() + _getQA(false).get("a");
         }
