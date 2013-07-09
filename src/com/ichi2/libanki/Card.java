@@ -325,11 +325,6 @@ public class Card implements Cloneable {
     }
 
 
-    public void setTimer(double time) {
-        mTimerStarted = time;
-    }
-
-
      public void stopTimer() {
     	 mTimerStopped = Utils.now();
      }
@@ -358,6 +353,10 @@ public class Card implements Cloneable {
 
     public long timeTaken() {
         long total = (long) ((Utils.now() - mTimerStarted) * 1000);
+        // Workaround for 1449. Ensure we don't return negative times.
+        if (total < 0) {
+            total = timeLimit();
+        }
         return Math.min(total, timeLimit());
     }
 
