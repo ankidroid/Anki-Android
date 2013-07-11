@@ -38,7 +38,6 @@ import android.text.InputFilter;
 import android.text.Spanned;
 import android.text.TextWatcher;
 import android.text.method.KeyListener;
-import android.text.style.StrikethroughSpan;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.KeyEvent;
@@ -203,7 +202,6 @@ public class CardEditor extends Activity {
 
     private boolean mPrefFixArabic;
 
-    private int mFilledFields = 0;
 
     private DeckTask.TaskListener mSaveFactHandler = new DeckTask.TaskListener() {
         private boolean mCloseAfter = false;
@@ -1292,14 +1290,10 @@ public class CardEditor extends Activity {
         // get source text
         FieldEditText field = mEditFields.get(mSourcePosition);
         Editable sourceText = field.getText();
-        boolean sourceCutMode = field.getCutMode();
-        FieldEditText.WordRow[] sourceCutString = field.getCutString();
 
         // get target text
         field = mEditFields.get(mTargetPosition);
         Editable targetText = field.getText();
-        boolean targetCutMode = field.getCutMode();
-        FieldEditText.WordRow[] targetCutString = field.getCutString();
 
         if (len > mSourcePosition) {
             mEditFields.get(mSourcePosition).setText("");
@@ -1325,11 +1319,9 @@ public class CardEditor extends Activity {
         }
         if (sourceText != null) {
             mEditFields.get(mSourcePosition).setText(sourceText);
-            mEditFields.get(mSourcePosition).setCutMode(sourceCutMode, sourceCutString);
         }
         if (targetText != null) {
             mEditFields.get(mTargetPosition).setText(targetText);
-            mEditFields.get(mTargetPosition).setCutMode(targetCutMode, targetCutString);
         }
     }
 
@@ -1357,15 +1349,12 @@ public class CardEditor extends Activity {
             TextView label = newTextbox.getLabel();
             label.setTextColor(Color.BLACK);
             label.setPadding((int) UIUtils.getDensityAdjustedValue(this, 3.4f), 0, 0, 0);
-            ImageView circle = newTextbox.getCircle();
             mEditFields.add(newTextbox);
             FrameLayout frame = new FrameLayout(this);
             FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
                     ViewGroup.LayoutParams.WRAP_CONTENT, Gravity.RIGHT | Gravity.CENTER_VERTICAL);
             params.rightMargin = 10;
-            circle.setLayoutParams(params);
             frame.addView(newTextbox);
-            frame.addView(circle);
             mFieldsLayoutContainer.addView(label);
             mFieldsLayoutContainer.addView(frame);
         }
@@ -1488,12 +1477,6 @@ public class CardEditor extends Activity {
         public final String NEW_LINE = System.getProperty("line.separator");
         public final String NL_MARK = "newLineMark";
 
-        private WordRow mCutString[];
-        private boolean mCutMode = false;
-        private ImageView mCircle;
-        private KeyListener mKeyListener;
-        private Context mContext;
-
         private String mName;
         private int mOrd;
 
@@ -1502,7 +1485,6 @@ public class CardEditor extends Activity {
             super(context);
             mOrd = ord;
             mName = value[0];
-            mContext = context;
             String content = value[1];
             if (content == null) {
                 content = "";
@@ -1515,14 +1497,6 @@ public class CardEditor extends Activity {
                 this.setText(content);
             }
             this.setMinimumWidth(400);
-            this.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (mCutMode) {
-                        updateSpannables();
-                    }
-                }
-            });
             if (ord == 0) {
                 this.addTextChangedListener(new TextWatcher() {
                     @Override
@@ -1545,39 +1519,6 @@ public class CardEditor extends Activity {
         }
 
 
-        @Override
-        public void onTextChanged(CharSequence text, int start, int before, int after) {
-            super.onTextChanged(text, start, before, after);
-            if (mCircle != null) {
-                int visibility = mCircle.getVisibility();
-                if (text.length() == 0) {
-                    if (visibility == View.VISIBLE) {
-                        mFilledFields--;
-                        mCircle.setVisibility(View.GONE);
-                        mCircle.setAnimation(ViewAnimation.fade(ViewAnimation.FADE_OUT, 300, 0));
-                    }
-                } else if (visibility == View.GONE) {
-                    mFilledFields++;
-                    mCircle.setVisibility(View.VISIBLE);
-                    mCircle.setAnimation(ViewAnimation.fade(ViewAnimation.FADE_IN, 300, 0));
-                }
-            }
-        }
-
-
-        private void splitText(String text) {
-            text = text.replace(NEW_LINE, " " + NL_MARK + " ");
-            String[] cut = text.split("\\s");
-            mCutString = new WordRow[cut.length];
-            for (int i = 0; i < cut.length; i++) {
-                mCutString[i] = new WordRow(cut[i]);
-                if (mCutString[i].mWord.equals(NL_MARK)) {
-                    mCutString[i].mEnabled = true;
-                }
-            }
-        }
-
-
         public TextView getLabel() {
             TextView label = new TextView(this.getContext());
             label.setText(mName);
@@ -1585,81 +1526,8 @@ public class CardEditor extends Activity {
         }
 
 
-        public ImageView getCircle() {
-            mCircle = new ImageView(this.getContext());
-            mCircle.setImageResource(R.drawable.ic_circle_normal);
-            mKeyListener = FieldEditText.this.getKeyListener();
-            mCircle.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Editable editText = FieldEditText.this.getText();
-                    if (mCutMode) {
-                        setCutMode(false, null);
-                        updateContentAfterWordSelection(editText);
-                    } else {
-                        setCutMode(true, null);
-                        String text = editText.toString();
-                        splitText(text);
-                        int pos = 0;
-                        for (WordRow row : mCutString) {
-                            if (row.mWord.length() == 0 || row.mWord.equals(NL_MARK)) {
-                                continue;
-                            }
-                            row.mBegin = text.indexOf(row.mWord, pos);
-                            row.mEnd = row.mBegin + row.mWord.length();
-                            if (!row.mEnabled) {
-                                editText.setSpan(new StrikethroughSpan(), row.mBegin, row.mEnd, 0);
-                            }
-                            pos = row.mEnd;
-                        }
-                    }
-                }
-            });
-            if (this.getText().toString().length() > 0) {
-                mFilledFields++;
-                mCircle.setVisibility(View.VISIBLE);
-            } else {
-                mCircle.setVisibility(View.GONE);
-            }
-            return mCircle;
-        }
-
-
-        public boolean getCutMode() {
-            return mCutMode;
-        }
-
-
-        public WordRow[] getCutString() {
-            return mCutString;
-        }
-
-
-        public void setCutMode(boolean active, WordRow[] cutString) {
-            mCutMode = active;
-            if (mCutMode) {
-                mCircle.setImageResource(R.drawable.ic_circle_pressed);
-                InputMethodManager imm = (InputMethodManager) mContext.getSystemService(Context.INPUT_METHOD_SERVICE);
-                imm.hideSoftInputFromWindow(FieldEditText.this.getWindowToken(), 0);
-                FieldEditText.this.setKeyListener(null);
-                FieldEditText.this.setCursorVisible(false);
-                if (cutString != null) {
-                    mCutString = cutString;
-                }
-            } else {
-                mCircle.setImageResource(R.drawable.ic_circle_normal);
-                FieldEditText.this.setKeyListener(mKeyListener);
-                FieldEditText.this.setCursorVisible(true);
-            }
-        }
-
-
         public boolean updateField() {
-            if (mCutMode) {
-                updateContentAfterWordSelection(FieldEditText.this.getText());
-            }
             String newValue = this.getText().toString().replace(NEW_LINE, "<br>");
-            ;
             if (!mEditorNote.values()[mOrd].equals(newValue)) {
                 mEditorNote.values()[mOrd] = newValue;
                 return true;
@@ -1667,77 +1535,12 @@ public class CardEditor extends Activity {
             return false;
         }
 
-
-        public void updateContentAfterWordSelection(Editable editText) {
-            for (WordRow row : mCutString) {
-                if (row.mEnabled && !row.mWord.equals(NL_MARK)) {
-                    removeDeleted();
-                    break;
-                }
-            }
-            StrikethroughSpan[] ss = editText.getSpans(0, editText.length(), StrikethroughSpan.class);
-            for (StrikethroughSpan s : ss) {
-                editText.removeSpan(s);
-            }
-            mCutMode = false;
-        }
-
-
-        public void updateSpannables() {
-            int cursorPosition = this.getSelectionStart();
-            Editable editText = this.getText();
-            for (WordRow row : mCutString) {
-                if (row.mBegin <= cursorPosition && row.mEnd > cursorPosition) {
-                    if (!row.mEnabled) {
-                        StrikethroughSpan[] ss = this.getText().getSpans(cursorPosition, cursorPosition,
-                                StrikethroughSpan.class);
-                        if (ss.length != 0) {
-                            editText.removeSpan(ss[0]);
-                        }
-                        row.mEnabled = true;
-                    } else {
-                        editText.setSpan(new StrikethroughSpan(), row.mBegin, row.mEnd, 0);
-                        row.mEnabled = false;
-                        break;
-                    }
-                }
-            }
-            this.setText(editText);
-            this.setSelection(cursorPosition);
-        }
-
-
+        
         public String cleanText(String text) {
             text = text.replaceAll("\\s*(" + NL_MARK + "\\s*)+", NEW_LINE);
             text = text.replaceAll("^[,;:\\s\\)\\]" + NEW_LINE + "]*", "");
             text = text.replaceAll("[,;:\\s\\(\\[" + NEW_LINE + "]*$", "");
             return text;
-        }
-
-
-        public void removeDeleted() {
-            if (this.getText().length() > 0) {
-                StringBuilder sb = new StringBuilder();
-                for (WordRow row : mCutString) {
-                    if (row.mEnabled) {
-                        sb.append(row.mWord);
-                        sb.append(" ");
-                    }
-                }
-                this.setText(cleanText(sb.toString()));
-            }
-        }
-
-        private class WordRow {
-            public String mWord;
-            public int mBegin;
-            public int mEnd;
-            public boolean mEnabled = false;
-
-
-            WordRow(String word) {
-                mWord = word;
-            }
         }
     }
 
