@@ -58,7 +58,6 @@ public class EvernoteSync {
 	}
 
 	public static void login(Context ctx) {
-		//Toast.makeText(ctx ,"Evernote: Login..." , Toast.LENGTH_SHORT ).show();
 		mEvernoteSession = EvernoteSession.getInstance(ctx , CONSUMER_KEY , CONSUMER_SECRET , EVERNOTE_SERVICE );
 		mEvernoteSession.authenticate(ctx);
 	}
@@ -67,9 +66,8 @@ public class EvernoteSync {
 		try {
 			mEvernoteSession = EvernoteSession.getInstance(ctx , CONSUMER_KEY , CONSUMER_SECRET , EVERNOTE_SERVICE );
 			mEvernoteSession.logOut(ctx);
-			//Toast.makeText(ctx ,"Evernote: Ausgeloggt" , Toast.LENGTH_SHORT ).show();
 		} catch (InvalidAuthenticationException e) {
-			Log.e(AnkiDroidApp.TAG, "Evernote: Tried to call logout with not logged in", e);
+			Log.e(AnkiDroidApp.TAG, "Evernote: Tried logout with not logged in", e);
 		}
 	}
 
@@ -207,8 +205,9 @@ public class EvernoteSync {
 		}
 
 		long[] to_delete = new long[s.size()];
-		for (int i = 0; i < s.size(); i++)
+		for (int i = 0; i < s.size(); i++) {
 			to_delete[i] = s.get(i);
+		}
 		mCol.remNotes(to_delete);
 	}
 
@@ -248,7 +247,6 @@ public class EvernoteSync {
 		Log.i(AnkiDroidApp. TAG, "Evernote: " + note.getTitle() + " - anki note ID appended");
 	}
 
-	
 	public static class updateUsername extends AsyncTask<Void, String, String> {
 		private Context mContext;
 		public updateUsername(Context ctx){
@@ -282,7 +280,6 @@ public class EvernoteSync {
 			editor.commit();
 		}
 	}
-	
 
 	public void checkRequirements() {
 		if (mCol.getDecks().byName("Evernote").isNull("id")){
@@ -321,5 +318,4 @@ public class EvernoteSync {
 			e.printStackTrace();
 		}	
 	}
-
 }

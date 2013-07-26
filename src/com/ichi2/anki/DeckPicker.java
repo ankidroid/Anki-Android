@@ -2412,7 +2412,7 @@ public class DeckPicker extends FragmentActivity {
 
         item = menu.add(Menu.NONE, MENU_PREFERENCES, Menu.NONE, R.string.menu_preferences);
         item.setIcon(R.drawable.ic_menu_preferences);
-        
+
         mEvernoteSession = EvernoteSession.getInstance(this, CONSUMER_KEY , CONSUMER_SECRET , EVERNOTE_SERVICE );
         if (mEvernoteSession.isLoggedIn()) {
 	        item = menu.add(Menu.NONE, MENU_EVERNOTESYNC, Menu.NONE, R.string.menu_evernoteSync);

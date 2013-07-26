@@ -169,7 +169,6 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
         useCurrent = (ListPreference) getPreferenceScreen().findPreference("useCurrent");
         newSpread = (ListPreference) getPreferenceScreen().findPreference("newSpread");
         dayOffset = (SeekBarPreference) getPreferenceScreen().findPreference("dayOffset");
-        /** Evernote */
         evernoteSync = (Preference) getPreferenceScreen().findPreference("evernoteSync");
         evernoteSync_SearchString = (EditTextPreference) getPreferenceScreen().findPreference("evernoteSync_SearchString");
 //        String theme = listpref.getValue();
@@ -252,10 +251,7 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
 				return false;
 			}
 		});
-             
-        //mv
     }
-
 
     private void updateListPreference(String key) {
         ListPreference listpref = (ListPreference) getPreferenceScreen().findPreference(key);
@@ -409,6 +405,16 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
             syncAccount.setSummary(R.string.sync_account_summ_logged_out);
         } else {
             syncAccount.setSummary(getString(R.string.sync_account_summ_logged_in, username));
+        }
+        
+        if (mEvernoteSession.isLoggedIn()) {
+            String evernoteUsername = preferences.getString("evernoteUsername", "unknown");
+			evernoteSync.setSummary(getString(R.string.evernoteSync_logged_in, evernoteUsername));
+			evernoteSync.setTitle(getString(R.string.evernoteSync_logout));
+        }
+        else {
+			evernoteSync.setSummary(getString(R.string.evernoteSync_logged_out));
+			evernoteSync.setTitle(getString(R.string.evernoteSync_login));
         }
     }
 
@@ -570,7 +576,6 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
         }
         return super.onKeyDown(keyCode, event);
     }
-
 
     private void closePreferences() {
         finish();
