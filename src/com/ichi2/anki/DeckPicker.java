@@ -61,6 +61,7 @@ import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.ichi2.anim.ActivityTransitionAnimation;
 import com.ichi2.anki.multimediacard.activity.MultimediaCardEditorActivity;
@@ -78,6 +79,10 @@ import com.ichi2.themes.StyledOpenCollectionDialog;
 import com.ichi2.themes.StyledProgressDialog;
 import com.ichi2.themes.Themes;
 import com.ichi2.widget.WidgetStatus;
+import com.ichi2.anki.DeckPicker;
+import com.ichi2.anki.EvernoteSync;
+import com.ichi2.anki.R;
+import com.evernote.client.android.EvernoteSession;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -154,6 +159,8 @@ public class DeckPicker extends FragmentActivity {
     private static final int MENU_CARDBROWSER = 13;
     private static final int MENU_IMPORT = 14;
     private static final int MENU_REUPGRADE = 15;
+    /** Evernote */
+    private static final int MENU_EVERNOTE_SYNC = 18;
 
     /**
      * Context Menus
@@ -2401,6 +2408,10 @@ public class DeckPicker extends FragmentActivity {
 
         item = menu.add(Menu.NONE, MENU_PREFERENCES, Menu.NONE, R.string.menu_preferences);
         item.setIcon(R.drawable.ic_menu_preferences);
+        /** Evernote */
+        item = menu.add(Menu.NONE, MENU_EVERNOTE_SYNC, Menu.NONE, R.string.menu_evernote_sync);
+        item.setIcon(R.drawable.ic_menu_preferences);
+        
         item = menu.add(Menu.NONE, MENU_ADD_SHARED_DECK, Menu.NONE, R.string.menu_get_shared_decks);
         item.setIcon(R.drawable.ic_menu_download);
         item = menu.add(Menu.NONE, MENU_CREATE_DECK, Menu.NONE, R.string.new_deck);
@@ -2554,6 +2565,11 @@ public class DeckPicker extends FragmentActivity {
             case MENU_PREFERENCES:
                 startActivityForResult(new Intent(DeckPicker.this, Preferences.class), PREFERENCES_UPDATE);
                 return true;
+            
+             /** Evernote */
+            case MENU_EVERNOTE_SYNC:
+            	new EvernoteSync(this).sync();
+            	return true;
 
             case MENU_FEEDBACK:
                 Intent i = new Intent(DeckPicker.this, Feedback.class);
@@ -2602,6 +2618,18 @@ public class DeckPicker extends FragmentActivity {
         super.onActivityResult(requestCode, resultCode, intent);
 
         mDontSaveOnStop = false;
+        /** Evernote */
+        if (requestCode == EvernoteSession.REQUEST_CODE_OAUTH){
+	        if (resultCode == Activity.RESULT_OK) {
+	        	Toast.makeText(DeckPicker.this, "Evernote: Logged in", Toast.LENGTH_SHORT).show();
+	        	new EvernoteSync.UpdateUsername(this).execute();
+	        	new EvernoteSync(this).sync();
+	        }
+	        else if(resultCode == Activity.RESULT_CANCELED)
+	        {
+	        	Toast.makeText(DeckPicker.this, "Evernote: Login failed",Toast.LENGTH_SHORT).show();
+	        }
+	    }
         if (resultCode == RESULT_MEDIA_EJECTED) {
             showDialog(DIALOG_SD_CARD_NOT_MOUNTED);
             return;
