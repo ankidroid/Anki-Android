@@ -107,7 +107,6 @@ public class LaTeX {
      */
     private static String _latexFromHtml(Collection col, String latex) {
         latex = latex.replaceAll("<br( /)?>|<div>", "\n");
-        latex = latex.replaceAll("<.+?>", "");
         latex = Utils.stripHTML(latex);
         return latex;
     }
