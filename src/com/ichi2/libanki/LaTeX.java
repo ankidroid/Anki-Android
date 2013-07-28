@@ -17,8 +17,6 @@
 
 package com.ichi2.libanki;
 
-import android.text.Html;
-
 import com.ichi2.libanki.hooks.Hook;
 import com.ichi2.libanki.hooks.Hooks;
 
@@ -112,8 +110,7 @@ public class LaTeX {
         // replace it first
         latex = latex.replace("&nbsp;", " ");
         latex = latex.replaceAll("<br( /)?>|<div>", "\n");
-        // replace <div> etc with spaces
-        latex = latex.replaceAll("<.+?>", " ");
+        latex = latex.replaceAll("<.+?>", "");
         latex = Utils.stripHTML(latex);
         return latex;
     }
