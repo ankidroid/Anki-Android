@@ -16,7 +16,6 @@
 
 package com.ichi2.async;
 
-import android.annotation.TargetApi;
 import android.os.AsyncTask;
 
 import com.ichi2.utils.MethodLogger;
@@ -79,17 +78,6 @@ public class BaseAsyncTask<Params, Progress, Result> extends AsyncTask<Params, P
         }
         Threads.checkMainThread();
         super.onProgressUpdate(values);
-    }
-
-
-    @TargetApi(11)
-    @Override
-    protected void onCancelled(Result result) {
-        if (DEBUG) {
-            MethodLogger.log();
-        }
-        Threads.checkMainThread();
-        super.onCancelled(result);
     }
 
 
