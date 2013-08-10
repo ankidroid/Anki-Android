@@ -326,9 +326,9 @@ public class CardBrowser extends Activity {
                 mPositionInCardsList = position;
                 long cardId = Long.parseLong(mCards.get(mPositionInCardsList).get("id"));
                 sCardBrowserCard = mCol.getCard(cardId);
-                Intent editCard = new Intent(CardBrowser.this, MultimediaCardEditorActivity.class);
+                Intent editCard = new Intent(CardBrowser.this, CardEditor.class);
                 editCard.putExtra(CardEditor.EXTRA_CALLER, CardEditor.CALLER_CARDBROWSER_EDIT);
-                editCard.putExtra(MultimediaCardEditorActivity.EXTRA_CARD_ID, sCardBrowserCard.getId());
+                editCard.putExtra(CardEditor.EXTRA_CARD_ID, sCardBrowserCard.getId());
                 startActivityForResult(editCard, EDIT_CARD);
                 if (AnkiDroidApp.SDK_VERSION > 4) {
                     ActivityTransitionAnimation.slide(CardBrowser.this, ActivityTransitionAnimation.LEFT);
@@ -536,6 +536,9 @@ public class CardBrowser extends Activity {
             closeCardBrowser(DeckPicker.RESULT_DB_ERROR);
         }
 
+        // TODO(flerda): Currently we are using the regular card editor and
+        // delete is not possible. We should probably update this went
+        // switching back to the multimedia card editor.
         if (requestCode == EDIT_CARD && resultCode == MultimediaCardEditorActivity.RESULT_DELETED) {
             deleteNote(sCardBrowserCard);
             DeckTask.launchDeckTask(DeckTask.TASK_TYPE_DISMISS_NOTE, mDeleteNoteHandler,
