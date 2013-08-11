@@ -31,7 +31,7 @@
 
     <uses-sdk
         android:minSdkVersion="4"
-        android:targetSdkVersion="11" />
+        android:targetSdkVersion="18" />
 
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.VIBRATE" />
