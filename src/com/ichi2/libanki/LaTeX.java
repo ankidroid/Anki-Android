@@ -17,8 +17,6 @@
 
 package com.ichi2.libanki;
 
-import android.text.Html;
-
 import com.ichi2.libanki.hooks.Hook;
 import com.ichi2.libanki.hooks.Hooks;
 
@@ -108,12 +106,7 @@ public class LaTeX {
      * @return
      */
     private static String _latexFromHtml(Collection col, String latex) {
-        // entitydefs defines nbsp as \xa0 instead of a standard space, so we
-        // replace it first
-        latex = latex.replace("&nbsp;", " ");
         latex = latex.replaceAll("<br( /)?>|<div>", "\n");
-        // replace <div> etc with spaces
-        latex = latex.replaceAll("<.+?>", " ");
         latex = Utils.stripHTML(latex);
         return latex;
     }

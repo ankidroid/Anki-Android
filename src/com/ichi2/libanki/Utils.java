@@ -316,6 +316,9 @@ public class Utils {
      * @return The text with its HTML entities unescaped.
      */
     private static String entsToTxt(String html) {
+        // entitydefs defines nbsp as \xa0 instead of a standard space, so we
+        // replace it first
+        html = html.replace("&nbsp;", " ");
         Matcher htmlEntities = htmlEntitiesPattern.matcher(html);
         StringBuffer sb = new StringBuffer();
         while (htmlEntities.find()) {
