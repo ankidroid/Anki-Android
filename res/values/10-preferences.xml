@@ -91,6 +91,8 @@
 <string name="use_ruby_support_summ">If the characters \'[\' and \']\' are found, then the enclosed text is handled as a ruby annotation</string>
 <string name="display_font_size">Relative font size</string>
 <string name="display_font_size_summ">The font size to use in the display relative to the definitions in the deck. At the moment: XXX %</string>
+<string name="image_size">Relative image size</string>
+<string name="image_size_summ">The size of images to use during review, relative to the size of the original media files. At the moment: XXX %</string>
 <string name="card_browser_font_size">Card Browser font size</string>
 <string name="card_browser_font_size_summ">The relative font size to use in the card browser. At the moment: XXX %</string>
 <string name="button_size">Relative button size</string>
