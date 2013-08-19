@@ -193,6 +193,9 @@ public class Reviewer extends AnkiActivity {
     /** The percentage of the absolute font size specified in the deck. */
     private int mDisplayFontSize = 100;
 
+    /** The percentage of the original image size in the deck. */
+    private int mDisplayImageSize = 100;
+
     /** Pattern for font-size style declarations */
     private static final Pattern fFontSizePattern = Pattern.compile(
             "font-size\\s*:\\s*([0-9.]+)\\s*((?:px|pt|in|cm|mm|pc|%|em))\\s*;?", Pattern.CASE_INSENSITIVE);
@@ -223,6 +226,7 @@ public class Reviewer extends AnkiActivity {
     private boolean mPrefFullscreenReview;
     private boolean mZoomEnabled;
     private String mCollectionFilename;
+    private int mRelativeImageSize;
     private int mRelativeButtonSize;
     private boolean mDoubleScrolling;
     private boolean mScrollingButtons;
@@ -2030,6 +2034,7 @@ public class Reviewer extends AnkiActivity {
         mPrefFullscreenReview = preferences.getBoolean("fullscreenReview", false);
         mZoomEnabled = preferences.getBoolean("zoom", false);
         mDisplayFontSize = preferences.getInt("relativeDisplayFontSize", 100);// Card.DEFAULT_FONT_SIZE_RATIO);
+        mRelativeImageSize = preferences.getInt("relativeImageSize", 100);
         mRelativeButtonSize = preferences.getInt("answerButtonSize", 100);
         mInputWorkaround = preferences.getBoolean("inputWorkaround", false);
         mPrefFixArabic = preferences.getBoolean("fixArabicText", false);
@@ -2469,6 +2474,12 @@ public class Reviewer extends AnkiActivity {
             // In order to display the bold style correctly, we have to change
             // font-weight to 700
             content = content.replace("font-weight:600;", "font-weight:700;");
+
+            // Scale images.
+            if (mRelativeImageSize != 100) {
+                content = content.replace("<img src=", 
+                        String.format("<img style='zoom: %s;' src=", mRelativeImageSize / 100.0));
+            }
 
             // CSS class for card-specific styling
             String cardClass = "card card" + (mCurrentCard.getOrd()+1);
