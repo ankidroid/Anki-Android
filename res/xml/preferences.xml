@@ -313,6 +313,15 @@
                 android:title="@string/fade_scrollbars" />
             <com.hlidskialf.android.preference.SeekBarPreference
                 android:defaultValue="100"
+                android:key="relativeImageSize"
+                android:max="300"
+                android:summary="@string/image_size_summ"
+                android:text=" %"
+                android:title="@string/image_size"
+                app:interval="10"
+                app:min="50" />
+            <com.hlidskialf.android.preference.SeekBarPreference
+                android:defaultValue="100"
                 android:key="answerButtonSize"
                 android:max="170"
                 android:summary="@string/button_size_summ"
