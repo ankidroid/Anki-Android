@@ -31,8 +31,8 @@
 <string name="delete_cram_deck_message">Are you sure you wish to send all cards in %s back to their original decks?</string>
 <string name="delete_deck_confirm">Delete it</string>
 
-<string name="new_version_message">New Features:</string>
-
+<string name="new_version_message">AnkiDroid has been upgraded to version 2.0.2. An automatic database check will run to resolve known issues. <![CDATA[<b>This might take a few minutes.</b>]]> Changes in this release:</string>
+    
 <string name="no_tts_available_title">Text-to-Speech</string>
 <string name="no_tts_available_message">No text-to-speech language available</string>
 <string name="tts_no_tts">Don\'t speak</string>
