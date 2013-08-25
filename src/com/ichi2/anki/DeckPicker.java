@@ -68,6 +68,7 @@ import com.ichi2.async.Connection;
 import com.ichi2.async.Connection.OldAnkiDeckFilter;
 import com.ichi2.async.Connection.Payload;
 import com.ichi2.async.DeckTask;
+import com.ichi2.async.DeckTask.Listener;
 import com.ichi2.async.DeckTask.TaskData;
 import com.ichi2.charts.ChartBuilder;
 import com.ichi2.libanki.Collection;
@@ -1268,10 +1269,25 @@ public class DeckPicker extends FragmentActivity {
         } else if (mImportPath != null && AnkiDroidApp.colIsOpen()) {
             showDialog(DIALOG_IMPORT);
         } else {
-            // AnkiDroid is being updated and a collection already exists. Do any upgrade logic here.
+            // AnkiDroid is being updated and a collection already exists. Run a database check here since we could
+            // have added database fixes in between releases.
             if (!preferences.getString("lastUpgradeVersion", "").equals(AnkiDroidApp.getPkgVersion())) {
                 preferences.edit().putString("lastUpgradeVersion", AnkiDroidApp.getPkgVersion()).commit();
-                loadCollection();
+                DeckTask.launchDeckTask(DeckTask.TASK_TYPE_OPEN_COLLECTION, new Listener() {
+                    @Override
+                    public void onPostExecute(DeckTask task, TaskData result) {
+                        mOpenCollectionHandler.onPostExecute(result);
+                        integrityCheck();
+                    }
+
+                    @Override
+                    public void onPreExecute(DeckTask task) {
+                    }
+
+                    @Override
+                    public void onProgressUpdate(DeckTask task, TaskData... values) {
+                    }
+                }, new DeckTask.TaskData(AnkiDroidApp.getCollectionPath()));
             } else {
                 loadCollection();
             }
