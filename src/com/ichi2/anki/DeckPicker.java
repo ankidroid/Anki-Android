@@ -1268,29 +1268,10 @@ public class DeckPicker extends FragmentActivity {
         } else if (mImportPath != null && AnkiDroidApp.colIsOpen()) {
             showDialog(DIALOG_IMPORT);
         } else {
-            // if the collection is empty, user has already upgraded the app but maybe did not successfully upgrade the decks
-            if (!preferences.getString("lastUpgradeVersion", "").equals(AnkiDroidApp.getPkgVersion()) &&
-                    (new File(AnkiDroidApp.getCurrentAnkiDroidDirectory()).listFiles(new OldAnkiDeckFilter()).length) > 0) {
-                StyledDialog.Builder builder = new StyledDialog.Builder(DeckPicker.this);
-                builder.setTitle(R.string.deck_upgrade_title);
-                builder.setIcon(R.drawable.ic_dialog_alert);
-                builder.setMessage(R.string.deck_upgrade_already_upgraded);
-                builder.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        restartUpgradeProcess();
-                    }
-                });
-                builder.setCancelable(false);
-                builder.setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        AnkiDroidApp.getSharedPrefs(AnkiDroidApp.getInstance().getBaseContext())
-                                .edit().putString("lastUpgradeVersion", AnkiDroidApp.getPkgVersion()).commit();
-                        loadCollection();
-                    }
-                });
-                builder.show();
+            // AnkiDroid is being updated and a collection already exists. Do any upgrade logic here.
+            if (!preferences.getString("lastUpgradeVersion", "").equals(AnkiDroidApp.getPkgVersion())) {
+                preferences.edit().putString("lastUpgradeVersion", AnkiDroidApp.getPkgVersion()).commit();
+                loadCollection();
             } else {
                 loadCollection();
             }
