@@ -1343,12 +1343,15 @@ public class Reviewer extends AnkiActivity {
     }
 
 
+    /**
+     * Returns the text stored in the clipboard or the empty string if the clipboard is empty or contains something
+     * that cannot be convered to text.
+     *
+     * @return the text in clipboard or the empty string.
+     */
     private CharSequence clipboardGetText() {
-        if (mClipboard != null) {
-            return mClipboard.getText();
-        } else {
-        	return "";
-        }
+        CharSequence text = mClipboard != null ? mClipboard.getText() : null;
+        return text != null ? text : "";
     }
 
 
