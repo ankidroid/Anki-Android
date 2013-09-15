@@ -109,9 +109,12 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.xml.sax.XMLReader;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -238,6 +241,7 @@ public class Reviewer extends AnkiActivity {
     private boolean mShakeActionStarted = false;
     private boolean mPrefFixArabic;
     private boolean mPrefForceQuickUpdate;
+    private boolean mDisplayKanjiInfo = false;
     // Android WebView
     private boolean mSpeakText;
     private boolean mInvertedColors = false;
@@ -424,6 +428,9 @@ public class Reviewer extends AnkiActivity {
     private Method mSetTextIsSelectable = null;
 
     private Sched mSched;
+
+    // Stores kanji to display their meaning after answering cards
+    private static HashMap<String, String> sKanjiInfo = new HashMap<String, String>();
 
     // private int zEase;
 
@@ -2060,6 +2067,7 @@ public class Reviewer extends AnkiActivity {
         mWaitQuestionSecond = preferences.getInt("timeoutQuestionSeconds", 60);
         mScrollingButtons = preferences.getBoolean("scrolling_buttons", false);
         mDoubleScrolling = preferences.getBoolean("double_scrolling", false);
+        mDisplayKanjiInfo = preferences.getBoolean("displayKanjiInfo", false);
         mPrefCenterVertically =  preferences.getBoolean("centerVertically", false);
 
         mGesturesEnabled = AnkiDroidApp.initiateGestures(this, preferences);
@@ -2370,6 +2378,59 @@ public class Reviewer extends AnkiActivity {
     }
 
 
+    private void loadKanjiInfo() {
+        if (!sKanjiInfo.isEmpty()) {
+            return;
+        }
+
+        File file;
+        InputStream is;
+
+        is = this.getResources().openRawResource(R.raw.kanji_info);
+        BufferedReader reader = new BufferedReader(new InputStreamReader(is));
+
+        String line;
+
+        try {
+            while (reader.ready()) {
+                line = reader.readLine();
+                if (line.length() == 0 || line.startsWith("#")) {
+                    continue;
+                }
+
+                try {
+                    String[] kanjiInfoPair = line.split(" ", 2);
+                    sKanjiInfo.put(kanjiInfoPair[0], kanjiInfoPair[1]);
+                } catch (IndexOutOfBoundsException e) {
+                    Log.i(AnkiDroidApp.TAG, "Malformed entry in kanji_info.txt: " + line);
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    private String addKanjiInfo(String answer) {
+        loadKanjiInfo();
+
+        String kanjiInfo;
+
+        kanjiInfo = "\n\n<br/><br/><table style=\"color: #000000; background-color: #FFFFFF\">\n";
+
+        for (int i = 0; i < answer.length(); i++) {
+            String chr = (answer.substring(i, i + 1));
+            if (sKanjiInfo.containsKey(chr)) {
+                kanjiInfo = kanjiInfo + "<tr><td>" + chr + "</td><td>" + sKanjiInfo.get(chr) + "</td></tr>\n";
+            }
+        }
+
+        kanjiInfo = kanjiInfo + "</table>\n";
+
+        return kanjiInfo;
+    }
+
+
     private void displayCardAnswer() {
         Log.i(AnkiDroidApp.TAG, "displayCardAnswer");
 
@@ -2383,6 +2444,10 @@ public class Reviewer extends AnkiActivity {
 
         String answer = mCurrentCard.getAnswer(mCurrentSimpleInterface);
         answer = typeAnsAnswerFilter(answer);
+
+        if (mDisplayKanjiInfo) {
+            answer = answer + addKanjiInfo(mCurrentCard.getQuestion(mCurrentSimpleInterface));
+        }
 
         String displayString = "";
 
