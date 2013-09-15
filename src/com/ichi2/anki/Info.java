@@ -181,6 +181,9 @@ public class Info extends Activity {
                 sb.append(
                         String.format(content[4], res.getString(R.string.licence_wiki),
                                 res.getString(R.string.link_source))).append("<br/><br/>");
+                sb.append(
+                        String.format(content[5])).append("<br/><br/>");
+
                 sb.append("</body></html>");
                 mWebView.loadDataWithBaseURL("", sb.toString(), "text/html", "utf-8", null);
                 ((Button) findViewById(R.id.info_continue)).setText(res.getString(R.string.info_rate));
