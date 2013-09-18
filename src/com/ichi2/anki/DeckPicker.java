@@ -619,8 +619,11 @@ public class DeckPicker extends FragmentActivity {
             	mOpenCollectionDialog.dismiss();
         	}
             try {
-                // Ensure we have the correct deck selected in the deck list after we have updated it
-                setSelectedDeck(AnkiDroidApp.getCol().getDecks().current().getLong("id"));
+                // Ensure we have the correct deck selected in the deck list after we have updated it. Check first
+                // if the collection is open since it might have been closed before this task completes.
+                if (AnkiDroidApp.getCol() != null) {
+                    setSelectedDeck(AnkiDroidApp.getCol().getDecks().current().getLong("id"));
+                }
             } catch (JSONException e) {
                 throw  new RuntimeException();
             }
