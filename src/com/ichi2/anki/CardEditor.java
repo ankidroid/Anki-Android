@@ -198,6 +198,7 @@ public class CardEditor extends Activity {
     private String[] mSourceText;
     private int mSourcePosition = 0;
     private int mTargetPosition = 1;
+    private int mExtraContentPosition = 2;
     private boolean mCancelled = false;
 
     private boolean mPrefFixArabic;
@@ -1295,15 +1296,27 @@ public class CardEditor extends Activity {
         field = mEditFields.get(mTargetPosition);
         Editable targetText = field.getText();
 
+        Editable extraContentText = null;
+        if (len >= 3){
+            mExtraContentPosition = Math.min(mExtraContentPosition, len - 1);
+            // get extra content text
+            field = mEditFields.get(mExtraContentPosition);
+            extraContentText = field.getText();
+        }
+
         if (len > mSourcePosition) {
             mEditFields.get(mSourcePosition).setText("");
         }
         if (len > mTargetPosition) {
             mEditFields.get(mTargetPosition).setText("");
         }
+        if (len > mExtraContentPosition) {
+            mEditFields.get(mExtraContentPosition).setText("");
+        }
         if (reset) {
             mSourcePosition = 0;
             mTargetPosition = 1;
+            mExtraContentPosition = 2;
         } else {
             mTargetPosition++;
             while (mTargetPosition == mSourcePosition || mTargetPosition >= mEditFields.size()) {
@@ -1316,12 +1329,23 @@ public class CardEditor extends Activity {
                     mSourcePosition = 0;
                 }
             }
+            if (len >= 3) {
+                while ( mExtraContentPosition == mTargetPosition || mExtraContentPosition == mSourcePosition ) {
+                    mExtraContentPosition++;
+                    if (mExtraContentPosition >= len ){
+                        mExtraContentPosition = 0;
+                    }
+                }
+            }
         }
         if (sourceText != null) {
             mEditFields.get(mSourcePosition).setText(sourceText);
         }
         if (targetText != null) {
             mEditFields.get(mTargetPosition).setText(targetText);
+        }
+        if (extraContentText != null) {
+            mEditFields.get(mExtraContentPosition).setText(extraContentText);
         }
     }
 
