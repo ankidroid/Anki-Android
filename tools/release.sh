@@ -11,7 +11,8 @@ SUFFIX=""
 
 set -x
 
-# Version number to use
+# Increment version name
+# Ex: 2.1beta7 to 2.1beta8
 PREVIOUS_VERSION=`grep android:versionName AndroidManifest.xml | sed -e 's/.*="//' | sed -e 's/".*//'`
 if [ -n "$SUFFIX" ]; then
  PREVIOUS_VERSION=`echo $PREVIOUS_VERSION | sed -e "s/$SUFFIX//g"`
@@ -19,9 +20,16 @@ fi
 GUESSED_VERSION=`echo $PREVIOUS_VERSION | gawk -f tools/lib/increase-version.awk`
 VERSION=${1:-$GUESSED_VERSION$SUFFIX}
 
+# Increment version code
+# It is an integer in AndroidManifest that nobody actually sees.
+# Ex: 72 to 73
+PREVIOUS_CODE=`grep android:versionCode AndroidManifest.xml | sed -e 's/.*="//' | sed -e 's/".*//'`
+GUESSED_CODE=`expr $PREVIOUS_CODE + 1`
+
 # Edit AndroidManifest.xml to bump version string
-echo "Bumping version from $PREVIOUS_VERSION$SUFFIX to $VERSION"
+echo "Bumping version from $PREVIOUS_VERSION$SUFFIX to $VERSION (and code from $PREVIOUS_CODE to $GUESSED_CODE)"
 sed -i -e s/$PREVIOUS_VERSION$SUFFIX/$VERSION/g AndroidManifest.xml
+sed -i -e s/versionCode=\"$PREVIOUS_CODE/versionCode=\"$GUESSED_CODE/g AndroidManifest.xml
 
 # Generate signed APK
 ant clean release
