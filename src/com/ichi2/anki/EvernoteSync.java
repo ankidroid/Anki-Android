@@ -39,7 +39,7 @@ public class EvernoteSync {
 	private long LastSync;
 	private SharedPreferences prefs;
 	private Collection mCol;
-	private String tags;
+	private String searchString;
 	private long aNoteDid = 0;
 	private int eTotalNotes = 0;
 	private AsyncNoteStoreClient eNoteStore;
@@ -50,13 +50,13 @@ public class EvernoteSync {
 		this.activity = act;
 		prefs = act.getSharedPreferences(AnkiDroidApp.SHARED_PREFS_NAME, Context.MODE_PRIVATE);
 		LastSync = prefs.getLong("evernoteLastSync", new Date().getTime());
-		tags = prefs.getString("evernoteTags","");
+		searchString = prefs.getString("evernoteSearchString","");
 		mCol = AnkiDroidApp.getCol();
 		mEvernoteSession = EvernoteSession.getInstance(this.activity , CONSUMER_KEY , CONSUMER_SECRET , EVERNOTE_SERVICE );
 	}
 
 	public static void evernote_login(Context ctx) {
-		Toast.makeText(ctx ,"Evernote: Login..." , Toast.LENGTH_SHORT ).show();
+		//Toast.makeText(ctx ,"Evernote: Login..." , Toast.LENGTH_SHORT ).show();
 		mEvernoteSession = EvernoteSession.getInstance(ctx , CONSUMER_KEY , CONSUMER_SECRET , EVERNOTE_SERVICE );
 		mEvernoteSession.authenticate(ctx);
 	}
@@ -65,7 +65,7 @@ public class EvernoteSync {
 		try {
 			mEvernoteSession = EvernoteSession.getInstance(ctx , CONSUMER_KEY , CONSUMER_SECRET , EVERNOTE_SERVICE );
 			mEvernoteSession.logOut(ctx);
-			Toast.makeText(ctx ,"Evernote: Ausgeloggt" , Toast.LENGTH_SHORT ).show();
+			//Toast.makeText(ctx ,"Evernote: Ausgeloggt" , Toast.LENGTH_SHORT ).show();
 		} catch (InvalidAuthenticationException e) {
 			Log.e(AnkiDroidApp.TAG, "Evernote: Tried to call logout with not logged in", e);
 		}
@@ -81,7 +81,7 @@ public class EvernoteSync {
 
 		NoteFilter filter = new NoteFilter();
 		filter.setAscending(true);
-		filter.setWords("tag:" + tags);
+		filter.setWords(searchString);
 		int maxNotes = 999;
 		int offset = 0;
 		try {

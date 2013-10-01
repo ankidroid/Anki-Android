@@ -153,8 +153,8 @@
 <string name="evernoteSync_logout">Logout</string>
 <string name="evernoteSync_logged_out">Click to login</string>
 <string name="evernoteSync_logged_in">Logged in as %s</string>
-<string name="evernoteSync_tags">Tags to sync</string>
-<string name="evernoteSync_tags_list">%s</string>
+<string name="evernoteSync_SearchString">Tags to sync</string>
+<string name="evernoteSync_SearchString_list">%s</string>
 
 <string name="fix_hebrew_text">Fix for Hebrew vowels</string>
 <string name="fix_hebrew_text_summ">Workaround for rendering Hebrew vowels correctly.</string>

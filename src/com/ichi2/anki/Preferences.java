@@ -112,7 +112,7 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
     private static String[] mShowValueInSummSeek = { "relativeDisplayFontSize", "relativeCardBrowserFontSize",
             "answerButtonSize", "whiteBoardStrokeWidth", "minShakeIntensity", "swipeSensibility",
             "timeoutAnswerSeconds", "timeoutQuestionSeconds", "animationDuration", "backupMax", "dayOffset" };
-    private static String[] mShowValueInSummEditText = { "simpleInterfaceExcludeTags", "evernoteTags" };
+    private static String[] mShowValueInSummEditText = { "simpleInterfaceExcludeTags", "evernoteSearchString" };
     private static String[] mShowValueInSummNumRange = { "timeLimit", "learnCutoff" };
     private TreeMap<String, String> mListsToUpdate = new TreeMap<String, String>();
     private StyledProgressDialog mProgressDialog;
@@ -120,7 +120,7 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
     private String dialogMessage;
     /** Evernote */
     private Preference evernoteSync;
-    private EditTextPreference evernoteTags;
+    private EditTextPreference evernoteSearchString;
 
     // Used for calculating dayOffset
     private Calendar mStartDate;
@@ -170,7 +170,7 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
         dayOffset = (SeekBarPreference) getPreferenceScreen().findPreference("dayOffset");
         /** Evernote */
         evernoteSync = (Preference) getPreferenceScreen().findPreference("evernoteSync");
-        evernoteTags = (EditTextPreference) getPreferenceScreen().findPreference("evernoteTags");
+        evernoteSearchString = (EditTextPreference) getPreferenceScreen().findPreference("evernoteSearchString");
 //        String theme = listpref.getValue();
 //        animationsCheckboxPreference.setEnabled(theme.equals("2") || theme.equals("3"));
         zoomCheckboxPreference.setEnabled(!swipeCheckboxPreference.isChecked());
@@ -230,12 +230,10 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
         }
       /** Evernote */
         mEvernoteSession = EvernoteSession.getInstance(this, CONSUMER_KEY , CONSUMER_SECRET , EVERNOTE_SERVICE );
-        if (!mEvernoteSession.isLoggedIn()) {
-            
-        } else {
+        if (mEvernoteSession.isLoggedIn()) {
         	SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(getBaseContext());
-            String username = preferences.getString("evernoteUsername", "unknown");
-			evernoteSync.setSummary(getString(R.string.evernoteSync_logged_in, username));
+            String evernoteUsername = preferences.getString("evernoteUsername", "unknown");
+			evernoteSync.setSummary(getString(R.string.evernoteSync_logged_in, evernoteUsername));
 			evernoteSync.setTitle(getString(R.string.evernoteSync_logout));
         }
         evernoteSync.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
@@ -244,11 +242,10 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
 			public boolean onPreferenceClick(Preference preference) {
 				if(preference.getTitle().equals("Login")){
 					EvernoteSync.evernote_login(preference.getContext());
-					finish();
 				}
 				else {
 					EvernoteSync.evernote_logout(preference.getContext());
-					finish();
+					onResume();
 				}
 				return false;
 			}
@@ -411,6 +408,16 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
         } else {
             syncAccount.setSummary(getString(R.string.sync_account_summ_logged_in, username));
         }
+        
+        if (mEvernoteSession.isLoggedIn()) {
+            String evernoteUsername = preferences.getString("evernoteUsername", "unknown");
+			evernoteSync.setSummary(getString(R.string.evernoteSync_logged_in, evernoteUsername));
+			evernoteSync.setTitle(getString(R.string.evernoteSync_logout));
+        }
+        else {
+			evernoteSync.setSummary(getString(R.string.evernoteSync_logged_out));
+			evernoteSync.setTitle(getString(R.string.evernoteSync_login));
+        }
     }
 
         
@@ -514,10 +521,10 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
                 mCol.setCrt(date.getTimeInMillis() / 1000);
                 mCol.setMod();
                 /** Evernote */
-            } else if (key.equals("evernoteTags")) {
+            } else if (key.equals("evernoteSearchString")) {
 	        	SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(getBaseContext());
-	            String tags = preferences.getString("evernoteTags", "None");
-	            evernoteTags.setSummary(getString(R.string.evernoteSync_tags_list, tags));
+	            String tags = preferences.getString("evernoteSearchString", "None");
+	            evernoteSearchString.setSummary(getString(R.string.evernoteSync_SearchString_list, tags));
             }
             if (Arrays.asList(mShowValueInSummList).contains(key)) {
                 updateListPreference(key);

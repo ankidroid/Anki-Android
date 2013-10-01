@@ -245,6 +245,12 @@ public class DeckPicker extends FragmentActivity {
     private GestureDetector gestureDetector;
     View.OnTouchListener gestureListener;
     private boolean mSwipeEnabled;
+    
+    /** Evernote */
+	private static final String CONSUMER_KEY = "matthiasv-3883" ;
+	private static final String CONSUMER_SECRET = "a944056d8952611c" ;
+	private static final EvernoteSession.EvernoteService EVERNOTE_SERVICE = EvernoteSession.EvernoteService.PRODUCTION;
+    protected static EvernoteSession mEvernoteSession;
 
     // ----------------------------------------------------------------------------
     // LISTENERS
@@ -2407,9 +2413,13 @@ public class DeckPicker extends FragmentActivity {
 
         item = menu.add(Menu.NONE, MENU_PREFERENCES, Menu.NONE, R.string.menu_preferences);
         item.setIcon(R.drawable.ic_menu_preferences);
+        
         /** Evernote */
-        item = menu.add(Menu.NONE, MENU_EVERNOTE_SYNC, Menu.NONE, R.string.menu_evernote_sync);
-        item.setIcon(R.drawable.ic_menu_preferences);
+        mEvernoteSession = EvernoteSession.getInstance(this, CONSUMER_KEY , CONSUMER_SECRET , EVERNOTE_SERVICE );
+        if (mEvernoteSession.isLoggedIn()) {
+	        item = menu.add(Menu.NONE, MENU_EVERNOTE_SYNC, Menu.NONE, R.string.menu_evernote_sync);
+	        item.setIcon(R.drawable.ic_menu_preferences);
+        }
         
         item = menu.add(Menu.NONE, MENU_ADD_SHARED_DECK, Menu.NONE, R.string.menu_get_shared_decks);
         item.setIcon(R.drawable.ic_menu_download);
@@ -2681,9 +2691,9 @@ public class DeckPicker extends FragmentActivity {
         	String oldPath = mPrefDeckPath;
             SharedPreferences pref = restorePreferences();
             String newLanguage = pref.getString("language", "");
-            if (AnkiDroidApp.setLanguage(newLanguage)) {
+            //if (AnkiDroidApp.setLanguage(newLanguage)) {
                 mInvalidateMenu = true;
-            }
+            //}
             if (mNotMountedDialog != null && mNotMountedDialog.isShowing() && pref.getBoolean("internalMemory", false)) {
                 showStartupScreensAndDialogs(pref, 0);            	
             } else if (!mPrefDeckPath.equals(oldPath)) {
