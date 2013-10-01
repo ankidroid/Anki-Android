@@ -110,7 +110,7 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
             "gestureSwipeRight", "gestureDoubleTap", "gestureTapTop", "gestureTapBottom", "gestureTapRight",
             "gestureLongclick", "gestureTapLeft", "newSpread", "useCurrent"};//, "theme" };
     private static String[] mShowValueInSummSeek = { "relativeDisplayFontSize", "relativeCardBrowserFontSize",
-            "answerButtonSize", "whiteBoardStrokeWidth", "minShakeIntensity", "swipeSensibility",
+            "relativeImageSize", "answerButtonSize", "whiteBoardStrokeWidth", "minShakeIntensity", "swipeSensibility",
             "timeoutAnswerSeconds", "timeoutQuestionSeconds", "animationDuration", "backupMax", "dayOffset" };
     private static String[] mShowValueInSummEditText = { "simpleInterfaceExcludeTags", "evernoteSearchString" };
     private static String[] mShowValueInSummNumRange = { "timeLimit", "learnCutoff" };

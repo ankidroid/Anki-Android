@@ -430,7 +430,7 @@ public class CardEditor extends Activity {
             String contents = null;
             if (mSourceText != null) {
                 if (mAedictIntent && (mEditFields.size() == 3) && mSourceText[1].contains("[")) {
-                    contents = mSourceText[1].replaceFirst("\\[", "\u001f");
+                    contents = mSourceText[1].replaceFirst("\\[", "\u001f" + mSourceText[0] + "\u001f");
                     contents = contents.substring(0, contents.length() - 1);
                 } else {
                     mEditFields.get(0).setText(mSourceText[0]);
