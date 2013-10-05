@@ -59,7 +59,7 @@
         android:windowSoftInputMode="adjustResize" >
         <activity
             android:name="com.ichi2.anki.DeckPicker"
-            android:configChanges="keyboardHidden|orientation|locale"
+            android:configChanges="keyboardHidden|orientation|screenSize|locale"
             android:label="@string/app_name"
             android:theme="@style/Theme_Start" >
             <intent-filter>
@@ -105,11 +105,11 @@
         </activity>
         <activity
             android:name="com.ichi2.anki.StudyOptionsActivity"
-            android:configChanges="keyboardHidden|locale|orientation"
+            android:configChanges="keyboardHidden|locale|orientation|screenSize"
             android:label="StudyOptions" />
         <activity
             android:name="com.ichi2.anki.CardBrowser"
-            android:configChanges="keyboardHidden|orientation|locale"
+            android:configChanges="keyboardHidden|orientation|locale|screenSize"
             android:label="Card Browser" />
         <activity
             android:name="com.ichi2.anki.PersonalDeckPicker"
@@ -124,19 +124,19 @@
             android:configChanges="keyboardHidden|orientation|locale|screenSize" />
         <activity
             android:name="com.ichi2.anki.MyAccount"
-            android:configChanges="keyboardHidden|orientation|locale"
+            android:configChanges="keyboardHidden|orientation|locale|screenSize"
             android:label="@string/menu_my_account" />
         <activity
             android:name="com.ichi2.anki.Preferences"
-            android:configChanges="keyboardHidden|orientation|locale"
+            android:configChanges="keyboardHidden|orientation|locale|screenSize"
             android:label="@string/preferences_title" />
         <activity
             android:name="com.ichi2.anki.DeckOptions"
-            android:configChanges="locale"
+            android:configChanges="keyboardHidden|orientation|locale|screenSize"
             android:label="@string/deckpreferences_title" />
         <activity
             android:name="com.ichi2.anki.CramDeckOptions"
-            android:configChanges="locale"
+            android:configChanges="keyboardHidden|orientation|locale|screenSize"
             android:label="@string/deckpreferences_title" />
         <activity
             android:name="com.ichi2.anki.Info"
@@ -144,7 +144,7 @@
             android:label="@string/about_title" />
         <activity
             android:name="com.ichi2.anki.CardEditor"
-            android:configChanges="keyboardHidden|orientation|locale"
+            android:configChanges="keyboardHidden|orientation|locale|screenSize"
             android:label="@string/fact_adder_intent_title" >
             <intent-filter>
                 <action android:name="org.openintents.action.CREATE_FLASHCARD" />
@@ -165,7 +165,7 @@
             android:label="@string/feedback_title" />
         <activity
             android:name="com.ichi2.charts.ChartBuilder"
-            android:configChanges="orientation|locale" />
+            android:configChanges="keyboardHidden|orientation|locale|screenSize" />
         <activity
             android:name="com.ichi2.widget.WidgetDialog"
             android:launchMode="singleInstance"
@@ -244,32 +244,32 @@
 
         <activity
             android:name="com.ichi2.anki.multimediacard.activity.MultimediaCardEditorActivity"
-            android:configChanges="keyboardHidden|orientation"
+            android:configChanges="keyboardHidden|orientation|locale|screenSize"
             android:label="@string/fact_adder_intent_title" >
         </activity>
         <activity
             android:name="com.ichi2.anki.multimediacard.activity.EditFieldActivity"
-            android:configChanges="keyboardHidden|orientation"
+            android:configChanges="keyboardHidden|orientation|locale|screenSize"
             android:label="@string/title_activity_edit_text" >
         </activity>
         <activity
             android:name="com.ichi2.anki.multimediacard.activity.TranslationActivity"
-            android:configChanges="keyboardHidden|orientation"
+            android:configChanges="keyboardHidden|orientation|locale|screenSize"
             android:label="@string/title_activity_translation" >
         </activity>
         <activity
             android:name="com.ichi2.anki.AudioRecorderActivity"
-            android:configChanges="keyboardHidden|orientation"
+            android:configChanges="keyboardHidden|orientation|locale|screenSize"
             android:label="@string/title_activity_audio_recorder" >
         </activity>
         <activity
             android:name="com.ichi2.anki.multimediacard.activity.LoadPronounciationActivity"
-            android:configChanges="keyboardHidden|orientation"
+            android:configChanges="keyboardHidden|orientation|locale|screenSize"
             android:label="@string/title_activity_load_pronounciation" >
         </activity>
         <activity
             android:name="com.ichi2.anki.multimediacard.activity.SearchImageActivity"
-            android:configChanges="keyboardHidden|orientation"
+            android:configChanges="keyboardHidden|orientation|locale|screenSize"
             android:label="@string/title_activity_search_image" >
         </activity>
     </application>
