@@ -22,8 +22,8 @@
 <resources>
   <string name="CardEditorCancelButton">Hủy bỏ</string>
   <string name="CardEditorSaveButton">Lưu lại</string>
-  <string name="CardEditorLaterButton">Later</string>
-  <string name="CardEditorLaterMessage">Saved information for later</string>
+  <string name="CardEditorLaterButton">Sửa sau</string>
+  <string name="CardEditorLaterMessage">Lưu thông tin cho sau này</string>
   <string name="CardEditorCardDeck">Card deck: %s</string>
   <string name="CardEditorNoteDeck">Note deck: %s</string>
   <string name="CardEditorModel">Note type: %s</string>
@@ -89,16 +89,18 @@
   <string name="import_message_replace">Replace</string>
   <string name="import_message_replace_confirm">This will delete your existing collection and replace it with the data of file %s. Are you sure?</string>
   <string name="import_log_success">Successfully imported %d cards</string>
-  <string name="import_log_error">Import failed</string>
-  <string name="import_log_no_apkg">This is not a valid apkg file</string>
-  <string name="import_importing">Importing cards.\nPlease wait...</string>
-  <string name="import_hint">To import cards, place the apkg file in directory %s and press ok</string>
-  <string name="upgrade_import_no_file_found">No importable apkg file found</string>
+  <string name="import_log_error">Nhập thất bại</string>
+  <string name="import_log_no_apkg">Đây không phải tập tin apkg hợp lệ</string>
+  <string name="import_importing">Đang nhập thẻ.\nXin chờ chút...</string>
+  <string name="import_hint">Để nhập thẻ, đặt tập tin apkg vào đường dẫn %s và bấm ok</string>
+  <string name="upgrade_import_no_file_found">Không tìm thấy %1$s tập tin có thể nhập</string>
   <string name="custom_study">Custom Study</string>
   <string name="dyn_deck_desc">This is a special deck for studying outside of the normal schedule. Cards will be automatically returned to their original decks after you review them. Deleting this deck from the deck list will return all remaining cards to their original deck.</string>
+  <string name="restart_upgrade_process">Khởi động lại quá trình nâng cấp</string>
+  <string name="exit_wizard">Exit Wizard</string>
   <string-array name="dynOrderLabels">
     <item>Oldest seen first</item>
-    <item>Random</item>
+    <item>Ngẫu nhiên</item>
     <item>Increasing intervals</item>
     <item>Decreasing intervals</item>
     <item>Most lapses</item>

@@ -95,7 +95,7 @@
     <item>Blanc</item>
   </string-array>
   <string-array name="leech_action_labels">
-    <item>Suspèn la targeta</item>
+    <item>Suspèn la fitxa</item>
     <item>Només l\'etiqueta</item>
     <item>Reinicia de nou</item>
   </string-array>
@@ -111,15 +111,15 @@
     <item>Més espaiades</item>
     <item>Ordre en que s\'han afegit</item>
     <item>Per ordre de venciment</item>
-    <item>Latest added first</item>
+    <item>Primera les darrers que s\'ahn afegit</item>
   </string-array>
   <string-array name="custom_study_options_labels">
-    <item>Increase today\'s new card limit</item>
-    <item>Increase today\'s review card limit</item>
-    <item>Review forgotten cards</item>
-    <item>Review ahead</item>
-    <item>Study a random selection of cards</item>
-    <item>Preview new cards</item>
-    <item>Limit to particular tags</item>
+    <item>Augmenta el límit de fitxes d\'avui</item>
+    <item>Augmentar el límit de fitxes per revisar d\'avui</item>
+    <item>Revisa les fitxes oblidades</item>
+    <item>Revisa endavant</item>
+    <item>Estudi d\'una selecció aleatòria de les fitxes</item>
+    <item>Vista prèvia de les fitxes noves</item>
+    <item>Limit per a determinades etiquetes</item>
   </string-array>
 </resources>

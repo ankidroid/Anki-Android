@@ -78,7 +78,7 @@
   <string name="sync_downloading_media">Λήψη πολυμέσων %1$d/%2$d...</string>
   <string name="sync_log_uploading_message">Πλήρης συγχρονισμός από το τοπικό</string>
   <string name="sync_log_downloading_message">Πλήρης συγχρονισμός από το διακομιστή</string>
-  <string name="sync_log_clocks_unsynchronized">Η ώρα της συσκευής σας είναι διαφορετική από εκείνη του διακομιστή κατά %1$d δευτερόλεπτα%2$s· δεν είναι δυνατός ο συγχρονισμός.</string>
+  <string name="sync_log_clocks_unsynchronized">The clock on your device is incorrect by %1$d seconds%2$s; Syncing requires both your clock and timezone to be set correctly in order to avoid errors. Please ensure the date, time, and timezone on your phone are set correctly, then sync again.</string>
   <string name="sync_log_clocks_unsynchronized_tz">, η χρονική ζώνη της συσκευής είναι πιθανόν λανθασμένη</string>
   <string name="sync_log_clocks_unsynchronized_date">, η ημερομηνία της συσκευής είναι πιθανώς λάθος</string>
   <string name="sync_log_old_version">Το πρωτόκολλο συγχρονισμού έχει αλλάξει, παρακαλούμε αναβαθμίστε στην τελευταία έκδοση AnkiDroid. Δείτε http://code.google.com/p/ankidroid</string>
@@ -110,6 +110,7 @@
   <string name="sync_media_sanity_check">Έλεγχος αριθμού πολυμέσων...</string>
   <string name="sync_media_no_changes">Καμία αλλαγή στα αρχεία πολυμέσων.</string>
   <string name="sync_media_success">Τα πολυμέσα συγχρονίστηκαν με επιτυχία.</string>
+  <string name="sync_sanity_failed">After syncing, the collection was in an inconsistent state. To fix this problem, AnkiDroid will force a full sync. Please choose which side you would like to keep, or cancel if you prefer to sync later.</string>
   <string name="sync_media_sanity_failed">Ο συγχρονισμός πολυμέσων ολοκληρώθηκε, αλλά ο αριθμός πολυμέσων διαφέρει από αυτόν του διακομιστή. Ο επόμενος συγχρονισμός θα είναι πλήρης για να διορθώσει οτιδήποτε σφάλμα.</string>
   <string name="sync_media_error">Σφάλμα κατά το συγχρονισμό πολυμέσων.</string>
   <string name="register_error">Συνέβη σφάλμα. Παρακαλούμε ξαναπροσπαθήστε αργότερα.</string>
@@ -117,10 +118,10 @@
   <string name="register_mismatch">Η επανάληψη του ονόματος χρήστη/κωδικού δεν ταιριάζει ή είναι κενή. Παρακαλούμε πληκτρολογήστε τους ξανά.</string>
   <string name="registering_message">Δημιουργία λογαριασμού.\nΠαρακαλούμε περιμένετε...</string>
   <string name="upgrade_decks_zipping">Συμπίεση τραπουλών για αποστολή.\nΠαρακαλούμε περιμένετε...</string>
-  <string name="upgrade_decks_upload">Αποστολή συμπιεσμένων τραπουλών.\nΠαρακαλούμε περιμένετε...</string>
+  <string name="upgrade_decks_upload">Uploading zipped decks\nYou can cancel by pressing back.\nPlease wait...</string>
   <string name="upgrade_decks_waiting">Σε αναμονή, σειρά προτεραιότητας: %s\nΠαρακαλούμε περιμένετε...</string>
-  <string name="upgrade_decks_upgrade_started">Η αναβάθμιση ξεκίνησε\nΠαρακαλούμε αναμείνατε την ολοκλήρωση...</string>
-  <string name="upgrade_decks_downloading">Λήψη αναβαθμισμένης συλλογής.\nΠαρακαλούμε περιμένετε...</string>
+  <string name="upgrade_decks_upgrade_started">Upgrade started\nPlease wait...</string>
+  <string name="upgrade_decks_downloading">Downloading upgraded collection\nYou can cancel by pressing back.\nPlease wait...</string>
   <string name="upgrade_decks_media">Αντιγραφή παλαιών αρχείων πολυμέσων στο νέο κατάλογο πολυμέσων.\nΠαρακαλούμε περιμένετε...</string>
   <string name="upgrade_decks_message">Δε βρέθηκε διαθέσιμη συλλογή Anki 2.0 αλλά βρέθηκαν μία ή περισσότερες τράπουλές παλαιού τύπου Anki 1.2:%sΓια να χρησιμοποιήσετε τις τράπουλές σας με τη νέα έκδοση του AnkiDroid, πρέπει πρώτα να μετατραπούν σε μία συλλογή νέου τύπου Anki 2.0. Υπάρχουν τρεις επιλογές για να γίνει αυτό:</string>
   <string name="upgrade_decks_message_pos1">Χρησιμοποιώντας το Anki Desktop 2.0, οι τράπουλές σας θα μετατραπούν στην πρώτη εκκίνηση. Μπορείτε να συγχρονίσετε στο AnkiWeb, ή απλά να αντιγράψετε μετά την καινούργια συλλογή στο κινητό σας. Αντιγράψτε τις τράπουλές σας από τον κατάλογο του AnkiDroid (%s) στον κατάλογο του Anki Desktop 1.2 στον υπολογιστή σας (αν δεν τις έχετε συγχρονίσει ήδη εκεί) και ξεκινήστε το Anki Desktop 2.0.</string>
@@ -132,4 +133,6 @@
   <string name="upgrade_decks_failed">Αυτές οι τράπουλες δεν μπόρεσαν να αναβαθμιστούν:\n%sΠαρακαλούμε ανοίξτε τις στο Anki για να κάνετε έλεγχο στη βάση δεδομένων. Έπειτα μπορείτε να τις εισάγετε μέσω του Anki.</string>
   <string name="upgrade_decks_media_failed">Η αντιγραφή των αρχείων πολυμέσων στον νέο φάκελο πολυμέσων (%1$s) απέτυχε για αυτές τις τράπουλες:\n%2$sΠαρακαλούμε να μετακινήσετε τα αρχεία πολυμέσων χειροκίνητα.</string>
   <string name="download_deck">Λήψη τράπουλας(%d kb).\nΠαρακαλούμε περιμένετε...</string>
+  <string name="sync_sanity_local">Local</string>
+  <string name="sync_sanity_remote">Remote</string>
 </resources>

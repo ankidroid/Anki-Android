@@ -38,7 +38,7 @@
   <string name="ease3_successive">Dobrze</string>
   <string name="ease3_learning">Łatwo</string>
   <string name="studyoptions_congrats_undo">Cofnij %s</string>
-  <string name="studyoptions_congrats_custom_study">Custom Study</string>
+  <string name="studyoptions_congrats_custom_study">Nauka niestandardowa</string>
   <string name="studyoptions_congrats_open_other_deck">Otwórz inną talię</string>
   <string name="studyoptions_congrats_finish">Wróć do ekranu nauki</string>
   <string name="card_unsuspended">Karta reaktywowana</string>
@@ -52,7 +52,7 @@
   <string name="undo_action_suspend_card">zawieszenie karty</string>
   <string name="undo_action_suspend_note">zawieszenie notatki</string>
   <string name="undo_action_delete">usunięcie notatki</string>
-  <string name="undo_action_mark">zaznaczenie notatki</string>
+  <string name="undo_action_mark">wyróżnienie notatki</string>
   <string name="finish_operation">Kończenie poprzedniej operacji (najprawdopodobniej tworzenie kopii zapasowej).\nProszę czekać...</string>
   <string name="contextmenu_deckpicker_download_missing_media">Pobierz brakujące media</string>
   <string name="contextmenu_deckpicker_reset_language_assignments">Zresetuj przypisanie języka</string>
@@ -60,7 +60,7 @@
   <string name="contextmenu_deckpicker_optimize_deck">Optymalizacja bazy danych</string>
   <string name="contextmenu_deckpicker_rename_deck">Zmień nazwę talii</string>
   <string name="contextmenu_deckpicker_collapse_deck">Zwiń talię</string>
-  <string name="contextmenu_deckpicker_inflate_deck">Inflate deck</string>
+  <string name="contextmenu_deckpicker_inflate_deck">Zapełnij talię</string>
   <string name="contextmenu_deckpicker_set_custom_dictionary">Ustaw własny słownik</string>
   <string name="menu_download_deck">Pobierz talię</string>
   <string name="menu_download_shared_deck">Udostępniona talia</string>
@@ -70,17 +70,17 @@
   <string name="menu_dismiss_note">Odrzuć notatkę...</string>
   <string name="menu_bury_note">Ukryj notatkę</string>
   <string name="menu_suspend_card">Zawieś kartę</string>
-  <string name="menu_suspend_note">Notatka wstrzymana</string>
+  <string name="menu_suspend_note">Zawieś notatkę</string>
   <string name="menu_delete_note">Usuń notatkę</string>
   <string name="delete_note_message">Jesteś pewny, że chcesz usunąć tę notatkę i wszystkie jej karty?\n%s</string>
   <string name="menu_edit_card">Edytuj kartę</string>
   <string name="menu_select">Zaznacz tekst</string>
   <string name="menu_search">Wyszukiwanie w %1$s</string>
-  <string name="menu_mark_card">Oznacz kartę</string>
-  <string name="menu_unmark_card">Odznacz kartę</string>
+  <string name="menu_mark_card">Wyróżnij kartę</string>
+  <string name="menu_unmark_card">Usuń wyróżnienie karty</string>
   <string name="new_deck">Nowa talia</string>
   <string name="create">Utwórz</string>
-  <string name="new_dynamic_deck">Nowa talia dynamiczna</string>
+  <string name="new_dynamic_deck">Nowa talia filtrowana</string>
   <string name="studyoptions_feedback">Informacje zwrotne</string>
   <string name="studyoptions_load_tutorial_deck">Utwórz samouczek</string>
   <string name="night_mode">Tryb nocny</string>
@@ -93,17 +93,28 @@
   <string name="empty_cram_label">Wyczyść</string>
   <string name="empty_cram_deck">Czyszczenie talii.\nProszę czekać...</string>
   <string name="studyoptions_new_filtercram">Filtr/Cram</string>
-  <string name="custom_study_deck_name">Custom Study Session</string>
-  <string name="custom_study_deck_exists">Please rename the existing Custom Study deck first.</string>
+  <string name="custom_study_deck_name">Sesja nauki niestandardowej</string>
+  <string name="custom_study_deck_exists">Najpierw zmień nazwę istniejącej talii nauki niestandardowej.</string>
   <string name="studyoptions_congrats_finished">Gratulacje! Zakończono powtórki na dziś.</string>
-  <string name="studyoptions_congrats_more_rev">Dzisiejszy limit powtórek został wyczerpany ale wciąż pozostają karty do przeglądnięcia. Dla optymalnego zapamiętywania proszę rozważyć zwiększenie dziennego limitu w ustawieniach.</string>
-  <string name="studyoptions_congrats_more_new">There are more new cards available, but the daily limit has been reached. You can increase the limit in the options, but please bear in mind that this will increase your short-term review workload. limit w opcjach, ale miej na uwadze, że zwiększy to obciążenie krótkoterminowej pamięci.</string>
-  <string name="studyoptions_congrats_custom">To study outside of the normal schedule, click the Custom Study button below.</string>
-  <string name="sd_card_not_mounted">SD card is not mounted.\n\nYou can store your collection in the internal memory too, though it\'s not recommended as you cannot access the file that easily. You can activate this in the preferences (open them by clicking this text).</string>
+  <string name="studyoptions_congrats_more_rev">Dzisiejszy limit powtórek został wyczerpany, ale wciąż pozostają karty do przejrzenia. Dla optymalnego zapamiętywania proszę rozważyć zwiększenie dziennego limitu w ustawieniach.</string>
+  <string name="studyoptions_congrats_more_new">Pozostało więcej kart do przejrzenia, ale dzienny limit został osiągnięty. Możesz zwiększyć limit w opcjach, ale miej na uwadze, że zwiększy to ilość powtórzeń w najbliższych dniach.</string>
+  <string name="studyoptions_congrats_custom">Aby kontynuować naukę poza zwykłym schematem kliknij przycisk Nauki Niestandardowej poniżej.</string>
+  <string name="sd_card_not_mounted">Karta SD nie jest zamontowana.\n\nMożesz również przechowywać swoją kolekcję w pamięci wewnętrznej, jednak nie jest to zalecane, gdyż dostęp do tych plików nie będzie łatwy. Opcję tę możesz włączyć w ustawieniach (kliknij ten tekst).</string>
   <string name="studyoptions_options">Opcje</string>
-  <string name="empty_cloze_warning">Please edit this note and add some cloze deletions. (%1$s)</string>
+  <string name="empty_cloze_warning">Edytuj tę notatkę i dodaj jakieś luki w tekście. (%1$s)</string>
   <string name="help_cloze">pomoc</string>
   <string name="button_sync">Synchronizuj</string>
+  <string name="restart">Zrestartuj</string>
+  <string name="do_nothing">Nic nie rób</string>
+  <string name="more_options">Więcej opcji</string>
+  <string name="now">Teraz</string>
+  <string name="back">Wstecz</string>
+  <string name="ankiweb">AnkiWeb</string>
+  <string name="usb">USB</string>
+  <string name="_import">Importuj</string>
+  <string name="confirm">Potwierdź</string>
+  <string name="internet">Internet</string>
+  <string name="pc">PC</string>
   <string-array name="next_review_s">
     <item>1 sekunda</item>
     <item>1 minuta</item>
@@ -121,15 +132,15 @@
     <item>%s lat</item>
   </string-array>
   <plurals name="deckpicker_title">
-    <item quantity="one">1 z %2$d zaległych (%3$s)</item>
-    <item quantity="other">%1$d z %2$d zaległych (%3$s)</item>
+    <item quantity="one">1 z %2$d do przejrzenia (%3$s)</item>
+    <item quantity="other">%1$d z %2$d do przejrzenia (%3$s)</item>
   </plurals>
   <plurals name="deckpicker_title_minutes">
     <item quantity="one">1 min.</item>
     <item quantity="other">%d min.</item>
   </plurals>
   <plurals name="deckpicker_due">
-    <item quantity="one">1 z %2$d zaległe</item>
+    <item quantity="one">1 z %2$d do przejrzenia</item>
     <item quantity="other">%1$d z %2$d zaległych</item>
   </plurals>
   <plurals name="reviewer_window_title">

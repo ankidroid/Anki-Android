@@ -34,9 +34,9 @@
   <string name="backup_full_sync_from_server">Full sync from server</string>
   <string name="backup_full_sync_from_server_question">Do you really want to overwrite your collection with the one from AnkiWeb? This will drop all your learning progress and added information since your last sync!</string>
   <string name="error_handling_title">Error handling</string>
-  <string name="error_handling_options">Options</string>
+  <string name="error_handling_options">Valikud</string>
   <string name="backup_retry_opening">Retry opening</string>
-  <string name="backup_error_menu_repair">Repair database</string>
+  <string name="backup_error_menu_repair">Paranda andmebaasi</string>
   <string name="backup_repair_deck">Repair</string>
   <string name="backup_repair_deck_progress">Repairing database.\nPlease wait...</string>
   <string name="backup_restore_error">Collection could not be restored</string>

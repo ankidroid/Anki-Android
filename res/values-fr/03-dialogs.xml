@@ -23,8 +23,8 @@
   <string name="welcome_message">Avec AnkiDroid, vous pouvez apprendre efficacement de grandes quantités de vocabulaire comme bien d’autres types de contenus. AnkiDroid vous les rappelle juste avant que vous les oubliez.\n\nPour vous faire une idée, nous vous conseillons de commencer avec un paquet guide, qui vous donnera quelques indications. Une fois ouvert, il faut simplement « commencer à réviser ».\n\nCréer ce paquet guide ?</string>
   <string name="check_db_title">Vérifier la base de données</string>
   <string name="check_db_result_message">Base de données vérifiée et optimisée.\nÉconomie de %d Ko.</string>
-  <string name="contextmenu_deckpicker_delete_deck">Supprimer le paquet</string>
-  <string name="delete_deck_title">Supprimer le paquet</string>
+  <string name="contextmenu_deckpicker_delete_deck">Supprimer le jeu de cartes</string>
+  <string name="delete_deck_title">Supprimer le jeu de cartes</string>
   <string name="delete_deck_message">Êtes-vous certain de vouloir supprimer toutes les cartes dans %s ?</string>
   <string name="delete_cram_deck_message">Êtes-vous certain de vouloir renvoyer toutes les cartes en %s dans leur paquet d\'origine ?</string>
   <string name="delete_deck_confirm">Supprimer</string>
@@ -51,8 +51,8 @@
   <string name="intent_add_clear_all">Effacer tout</string>
   <string name="intent_aedict_empty">La catégorie \'default\' est vide</string>
   <string name="intent_aedict_category">Pour ajouter des cartes à AnkiDroid, enlevez toutes les catégories du Bloc-notes, ou créez une catégorie \'default\'</string>
-  <string name="custom_study_new_total_new">Nouvelles cartes dans le paquet : %s</string>
-  <string name="custom_study_rev_total_rev">À revoir dans ce paquet : %s</string>
+  <string name="custom_study_new_total_new">Nouvelles cartes dans le jeu de cartes : %s</string>
+  <string name="custom_study_rev_total_rev">À revoir dans ce jeu de cartes : %s</string>
   <string name="custom_study_new_extend">Augmenter la limite de nouvelles cartes pour aujourd\'hui de</string>
   <string name="custom_study_rev_extend">Augmenter la limite de révision pour aujourd\'hui de</string>
   <string name="custom_study_forgotten">Revoir les cartes oubliées dans les x derniers jours :</string>
@@ -61,6 +61,39 @@
   <string name="custom_study_preview">Afficher les nouvelles cartes ajoutées dans les x derniers jours :</string>
   <string name="custom_study_tags">Saisir les étiquettes :</string>
   <string name="rebuild_custom_study_deck">Reconstruction du paquet d\'étude personnalisée.\nMerci de patienter…</string>
+  <string name="deck_upgrade_title">Mise à jour du jeu de cartes</string>
+  <string name="deck_upgrade_rename_warning">Soyez conscient que cela va exporter votre collection actuelle dans un fichier nommé « %1$s » et en créera une nouvelle à partir de votre ancien fichier Anki 1.x. Si vous le souhaitez, vous pouvez réimporter manuellement le fichier apkg qui précède une fois l\'assistant terminé. Voulez-vous vraiment continuer?</string>
+  <string name="deck_upgrade_already_upgraded">La version 2 de AnkiDroid utilise un nouveau format pour les paquets.\nSi vous n\'avez pas migré avec succès vos paquets, vous pouvez redémarrer la mise à jour maintenant pour mettre à niveau vos paquets.</string>
+  <string name="deck_upgrade_major_warning"><![CDATA[Ceci est une mise à jour majeure de AnkiDroid. Le temps de mise à jour peut prendre entre 10 et 20 minutes.<br><br>Voulez vous commencer immédiatement ou le faire plus tard ?<br><br><a href="http://code.google.com/p/ankidroid/wiki/Upgrading?wl=en">Pluhttp://crowdin.net/translate/ankidroid/7303/en-fr#s d\'information</a>]]></string>
+  <string name="deck_upgrade_start_again_to_upgrade_toast">Merci de relancer AnkiDroid quand vous aurez le temps de le mettre à jour!</string>
+  <string name="deck_upgrade_recommended_method"><![CDATA[La méthode recommandée de mise à niveau consiste à se synchroniser avec un PC et de mettre à niveau avec la version bureau de Anki. <br><br>, il y a aussi une méthode alternative en passant par internet si vous n\'avez pas accès à un PC et que votre collection n\'est pas trop importante.]]></string>
+  <string name="deck_upgrade_more_options_exit">Vous pouvez quitter l\'assistant de mise à niveau sans importer vos anciennes cartes en cliquant sur le bouton de sortie ci-dessous.</string>
+  <string name="deck_upgrade_more_options_new_collection">Vous pouvez créer une nouvelle collection vide en cliquant ci-dessous.</string>
+  <string name="deck_upgrade_more_options_downgrade"><![CDATA[<br><br>si vous souhaitez revenir à AnkiDroid 1 alors veuillez lire <a href="http://code.google.com/p/ankidroid/wiki/Upgrading?wl=en#Continuing_to_use_AnkiDroid_1.1.3"> ces instructions</a>.]]></string>
+  <string name="deck_upgrade_create_new_collection">Créer une nouvelle collection</string>
+  <string name="deck_upgrade_create_new_collection_title">Créer une nouvelle collection</string>
+  <string name="deck_upgrade_not_import_warning">Êtes-vous sûr de vouloir faire ceci ? Votre ancienne collection ne sera pas importé.</string>
+  <string name="deck_upgrade_via_web"><![CDATA[<b>Cette méthode de mise à jour n\'est pas recommandée si vous utilisez du contenu multimédia ou si vous avez une grosse collection!</b><br><br>Votre jeu de carte anki1 sera compressé et envoyé vers AnkiWeb, puis la collection convertie sera alors téléchargée.<br><br>Veuillez noter qu\'il vous faut une connexion à Internet stable et que la taille maximum autorisée par fichier est de 50Mo.<br><br>Les utilisateurs de la version PC de Anki sont fortement encouragés à utiliser la méthode de mise à jour via PC.<br><br>Êtes-vous sûr de vouloir continuer?]]></string>
+  <string name="deck_upgrade_via_anki_desktop"><![CDATA[Si vous avez une version plus récente de votre collection AnkiDroid sur la version PC de Anki, vous pouvez récupérer cette collection depuis cette page en vous synchronisant sur AnkiWeb.<br><br>Autrement, vous pouvez copier votre collection AnkiDroid vers votre PC via USB, la mettre à jour, puis la copier à nouveau vers AnkiDroid.]]></string>
+  <string name="deck_upgrade_auto_upgrade"><![CDATA[Veuillez installer et lancer la version PC de Anki version 2.0.4 ou supérieur pour mettre à jour votre collection. Puis synchronisez votre collection mise à jour avec AnkiWeb et appuyez sur le bouton \'Télécharger\'.<br><br><a href="http://code.google.com/p/ankidroid/wiki/Upgrading?wl=en#Option_2:_Using_AnkiWeb_sync">Plus d\'information pour mettre à jour depuis AnkiWeb</a>]]></string>
+  <string name="deck_upgrade_manual"><![CDATA[Veuillez copier tous vos fichiers *.anki (et autres dossiers *.media) depuis votre dossier AnkiDroid vers le dossier Anki de votre ordinateur, et installez et démarrez la version PC 2.0.4 ou supérieur pour mettre à jour votre collection<br><br>Quand la mise à jour est terminée, veuillez exporter votre collection depuis Anki2 et copier le fichier collection.apkg vers votre dossier AnkiDroid et pressez sur le bouton \'Importer\' ci-dessous.<br><br><a href="http://code.google.com/p/ankidroid/wiki/Upgrading?wl=en#Option_1:_Using_USB_(recommended)">Plus d\'information sur la mise à jour par USB.</a>]]></string>
+  <string name="upgrade_deck_cancelled_title">Mise à jour annulée</string>
+  <string name="upgrade_deck_cancelled_description">La tentative de mise à niveau a été annulée, veuillez essayer de nouveau une des méthodes de mise à niveau disponibles.</string>
+  <string name="upgrade_deck_web_upgrade_failed">Le processus de mise à niveau a échoué. Veuillez essayer de nouveau, ou choisir une autre méthode</string>
+  <string name="upgrade_deck_web_upgrade_exceeds">La taille compressée totale de vos paquets Anki1 dépasse la limite que le serveur peut traiter (50 Mo), Veuillez essayer la mise à niveau avec une méthode différente.</string>
+  <string name="upgrade_deck_web_upgrade_sdcard">La mise à niveau est terminée, mais il y a eu une erreur lors de la décompression de la collection résultante, veuillez vous assurer que vous avez suffisamment d\'espace disponible sur le disque (%1$d Mo requis) et réessayez, ou essayez la mise à niveau avec une méthode différente.</string>
+  <string name="export_progress_title">Exportation de collection</string>
+  <string name="export_progress_exporting">Exportation de la collection, veuillez patienter…</string>
+  <string name="upgrade_deck_export_successful">Votre ancienne collection a été exportée avec succès, exécution du processus de mise à niveau.</string>
+  <string name="upgrade_deck_export_error">Erreur lors de l\'exportation de votre ancienne collection. Souhaitez-vous toute de même continuer avec le processus de mise à niveau (votre ancienne collection sera perdue) ?</string>
+  <string name="upgrade_deck_sync_from_ankiweb">Synchronisation depuis AnkiWeb</string>
+  <string name="upgrade_deck_have_you_synced">Êtes-vous sûr que vous avez mis à niveau votre collection avec Anki Desktop 2 et synchronisé avec AnkiWeb ?</string>
+  <string name="upgrade_deck_dont_upgrade">Ne pas mettre à niveau</string>
+  <string name="import_unpacking">Décompression de l\'archive.\nVeuillez patienter…</string>
+  <string name="importing_collection">Importation de la collection. \nVeuillez patienter…</string>
+  <string name="import_media_count">Importation des fichiers médias %1$d%%\nVeuillez patienter…</string>
+  <string name="import_update_counts">Mise à jour des compteurs des paquets.\nVeuillez patienter…</string>
+  <string name="import_add_progress">• Décompression de l\'archive %1$s\n• Importation des notes %2$d%%\n• Importation des cartes %3$d%%\n• Nettoyage %4$ s</string>
   <string-array name="about_content">
     <item><![CDATA[<h2>%1$s:<br/>Cartes à mémoriser pour Android</h2>AnkiDroid est une application de gestion de cartes à mémoriser (ou encore fiches-mémoire) qui est entièrement compatible avec le logiciel de bureau <a href="%2$s">Anki</a>. Vous pouvez créer, télécharger et apprendre du contenu sur à la fois Ankidroid et Anki, et les synchroniser très facilement.]]></item>
     <item><![CDATA[Pour nous aider à améliorer AnkiDroid, veuillez nous signaler tout bogue <a href="%1$s">ici</a> ; les suggestions sont également les bienvenues ! Veuillez utiliser notre <a href="%2$s">wiki</a> et nous dire bonjour sur le <a href="%3$s">forum</a>.]]></item>

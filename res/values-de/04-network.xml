@@ -78,7 +78,7 @@
   <string name="sync_downloading_media">Multimedia-Datei %1$d von %2$d wird heruntergeladen…</string>
   <string name="sync_log_uploading_message">Voll-Synchronisierung des lokalen Stapels</string>
   <string name="sync_log_downloading_message">Voll-Synchronisierung vom Server</string>
-  <string name="sync_log_clocks_unsynchronized">Die Zeit auf Ihrem Android-Gerät weicht um %1$d Sekunden von der Server-Zeit ab%2$s, es kann deshalb nicht synchronisiert werden.</string>
+  <string name="sync_log_clocks_unsynchronized">Die Uhr auf Ihrem Gerät geht falsch um %1$d Sekunden%2$s; Um zu synchronisieren müssen Ihre Uhr und Zeitzone korrekt eingestellt sein. Bitte stellen Sie sicher, dass Datum, Zeit und Zeitzone auf Ihrem Handy korrekt sind und synchronisieren Sie nochmals.</string>
   <string name="sync_log_clocks_unsynchronized_tz"> (die Zeitzone des Geräts ist vermutlich falsch eingestellt)</string>
   <string name="sync_log_clocks_unsynchronized_date"> (vermutlich stimmt das Gerätedatum nicht)</string>
   <string name="sync_log_old_version">Das Synchronisierungsprotokoll wurde verändert. Bitte aktualisieren Sie Ihre AnkiDroid-Version. Besuchen Sie für weitere Informationen http://code.google.com/p/ankidroid</string>
@@ -110,6 +110,7 @@
   <string name="sync_media_sanity_check">Prüfe Anzahl der Multimedia-Dateien...</string>
   <string name="sync_media_no_changes">Keine Multimedia-Dateien verändert.</string>
   <string name="sync_media_success">Multimedia-Dateien erfolgreich synchronisiert.</string>
+  <string name="sync_sanity_failed">Nach dem Synchronisieren war Ihre Sammlung in einem widersprüchlichen Zustand. Um dieses Problem zu beheben wird AnkiDroid eine vollständige Synchronisierung erzwingen. Bitte wählen Sie die Seite, die Sie behalten wollen oder brechen Sie ab, falls Sie später synchronisieren wollen.</string>
   <string name="sync_media_sanity_failed">Die Multimedia-Synchronisierung wurde abgeschlossen, aber die Medienanzahl stimmt nicht mit der auf dem Server überein. Die nächste Medien-Synchronisierung wird die Medien voll synchronisieren, um den Fehler zu beheben.</string>
   <string name="sync_media_error">Fehler beim Synchronisieren der Multimedia-Dateien.</string>
   <string name="register_error">Ein Fehler ist aufgetreten. Bitte versuchen Sie es später erneut.</string>
@@ -117,10 +118,10 @@
   <string name="register_mismatch">Die Wiederholung der Benutzernamens bzw. des Passworts ist falsch oder leer. Bitte geben Sie die Informationen erneut ein.</string>
   <string name="registering_message">Erstelle Konto.\nBitte warten...</string>
   <string name="upgrade_decks_zipping">Komprimiere Stapel fürs Hochladen.\nBitte warten...</string>
-  <string name="upgrade_decks_upload">Lade komprimierte Stapel hoch.\nBitte warten...</string>
+  <string name="upgrade_decks_upload">Komprimierte Stapel hochladen\nSie können durch drücken von \'zurück\' abbrechen.\nBitte warten Sie...</string>
   <string name="upgrade_decks_waiting">Warteschlagenposition: %s\nBitte warten...</string>
-  <string name="upgrade_decks_upgrade_started">Konvertierung gestartet.\nBitte warten Sie auf die Fertigstellung...</string>
-  <string name="upgrade_decks_downloading">Lade konvertierte Sammlung herunter.\nBitte warten...</string>
+  <string name="upgrade_decks_upgrade_started">Aktualisierung gestartet\nBitte warten Sie...</string>
+  <string name="upgrade_decks_downloading">Aktualisierte Sammlung herunterladen\nSie können durch drücken von \'zurück\' abbrechen.\nBitte warten Sie...</string>
   <string name="upgrade_decks_media">Kopiere alte Multimedia-Dateien ins neue Media-Verzeichnis.\nBitte warten...</string>
   <string name="upgrade_decks_message">Es ist keine Anki-2.0-Sammlung vorhanden, es wurden aber ein oder mehrere Stapel im alten Anki-1.2-Format gefunden:%sUm diese mit der neuen Version von AnkiDroid nutzen zu können, müssen sie in eine einzige Sammlung im neuen Anki-2.0-Format konvertiert werden. Es gibt dafür drei Möglichkeiten:</string>
   <string name="upgrade_decks_message_pos1">Wenn Sie Anki-Desktop-2.0 benutzen, werden Ihre Stapel beim ersten Start konvertiert. Sie können dann über AnkiWeb synchronisieren oder die neue Sammlung auf Ihr Mobilgerät kopieren. Kopieren Sie Ihre Stapel vom AnkiDroid-Verzeichnis (%s) in Ihr Anki-Desktop-1.2-Verzeichnis auf Ihrem Computer (wenn Sie sie nicht ohnehin synchronisiert haben) und starten Anki-Desktop-2.0.</string>
@@ -132,4 +133,6 @@
   <string name="upgrade_decks_failed">Diese Stapel konnten nicht konvertiert werden:\n%sBitte öffnen Sie sie in Anki Desktop und führen einen Datenbank-Check durch. Danach können Sie sie mit Anki Desktop importieren.</string>
   <string name="upgrade_decks_media_failed">Das Kopieren der Multimedia-Dateien ins neue Media-Verzeichnis (%1$s) ist für diese Stapel fehlgeschlagen:\n%2$sBitte kopieren Sie die Media-Dateien manuell.</string>
   <string name="download_deck">Stapel wird heruntergeladen (%d kb).\nBitte warten...</string>
+  <string name="sync_sanity_local">Lokal</string>
+  <string name="sync_sanity_remote">Entfernt</string>
 </resources>

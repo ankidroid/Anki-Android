@@ -52,7 +52,7 @@
   <string name="intent_aedict_empty">\"Varsayılan\" kategorisi boş</string>
   <string name="intent_aedict_category">AnkiDroid\'e kart eklemek için bütün Not Defteri kategorilerini kaldırın veya \"default\" isminde bir tane ekleyin</string>
   <string name="custom_study_new_total_new">Desteden yeni kartlar: %s</string>
-  <string name="custom_study_rev_total_rev">Reviews due in deck: %s</string>
+  <string name="custom_study_rev_total_rev">Destede çalışılacak kart: %s</string>
   <string name="custom_study_new_extend">Bugünün yeni kart limitini artırın</string>
   <string name="custom_study_rev_extend">Bugünün gözden geçirme limitini artırın</string>
   <string name="custom_study_forgotten">Son x gündeki unutulan kartları izle:</string>
@@ -61,6 +61,39 @@
   <string name="custom_study_preview">Son x günlerdeki eklenen yeni kartları önizle:</string>
   <string name="custom_study_tags">Etiketleri girin:</string>
   <string name="rebuild_custom_study_deck">Özel çalışma destesi yapılandırılıyor.\nLütfen bekleyin...</string>
+  <string name="deck_upgrade_title">Deste Yükseltme</string>
+  <string name="deck_upgrade_rename_warning">Bu, şu anki koleksiyonunuzu \"%1$s\" adında bir dosyaya çıkaracak ve eski Anki 1.x dosyalarınızdan yenisini oluşturacak. Arzu ederseniz, sihirbazı bitirdikten sonra yukarıdaki apkg dosyasını elle yeniden içeri aktarabilirsiniz. Gerçekten devam etmek istiyor musunuz?</string>
+  <string name="deck_upgrade_already_upgraded">Ankidroid\'in 2 sürümü desteler için yeni bir biçim kullanıyor.\nEğer destelerinizi başarıyla yükseltmediyseniz, yükseltmek için şu anda yükseltmeyi baştan başlatabilirsiniz.</string>
+  <string name="deck_upgrade_major_warning"><![CDATA[Bu AnkiDroid\'e büyük bir güncelleme ve yükseltme işlemi en az 10-20 dakika sürecek.<br><br>Şimdi mi yoksa daha sonra mı devam etmek istersiniz?<br><br><a href="http://code.google.com/p/ankidroid/wiki/Upgrading?wl=en">Daha fazla bilgi</a>]]></string>
+  <string name="deck_upgrade_start_again_to_upgrade_toast">Lütfen yükseltecek zamanınız olduğunda AnkiDroid\'i baştan başlatın!</string>
+  <string name="deck_upgrade_recommended_method"><![CDATA[Önerilen yükseltme yöntemi bir PC\'yle eşitlemek ve Anki\'nin masaüstü sürümüyle yükseltmektir.<br><br>Ayrıca bir PC\'ye erişiminiz yoksa, ve koleksiyonunuz fazla büyük değilse, internet üzerinden yükseltebileceğiniz alternatif bir yöntem de vardır.]]></string>
+  <string name="deck_upgrade_more_options_exit">Aşağıdaki çıkış düğmesine basarak eski kartlarınızı içeri aktarmadan yükseltme sihirbazından çıkabilirsiniz.</string>
+  <string name="deck_upgrade_more_options_new_collection">Aşağıya basarak yeni bir boş koleksiyon oluşturabilirsiniz.</string>
+  <string name="deck_upgrade_more_options_downgrade"><![CDATA[<br><br>Eğer AnkiDroid 1\'e geri alçaltmak isterseniz lütfen <a href="http://code.google.com/p/ankidroid/wiki/Upgrading?wl=en#Continuing_to_use_AnkiDroid_1.1.3">bu yönergeleri</a> okuyun.]]></string>
+  <string name="deck_upgrade_create_new_collection">Yeni koleksiyon oluştur</string>
+  <string name="deck_upgrade_create_new_collection_title">Yeni Koleksiyon Oluştur</string>
+  <string name="deck_upgrade_not_import_warning">Bunu yapmak istediğinize emin misiniz? Eski veriniz içeri aktarılmayacak.</string>
+  <string name="deck_upgrade_via_web"><![CDATA[<b>Bu yükseltme yöntemi eğer medya dosyaları kullandıysanız veya büyük bir koleksiyonunuz varsa önerilmez!</b><br><br>Anki 1 desteleriniz sıkıştırılıp AnkiWeb\'e yüklenecek, ardından dönüştürülen koleksiyon indirilecek.<br><br>Karalı bir internet bağlantısı gereklidir ve 50 MB bir dosya sınırı vardır.<br><br>Anki Masaüstü kullanıcılarının PC tabanlı yükseltme yöntemini kullanmaları şiddetle önerilir.<br><br>Devam etmek istiyor musunuz?]]></string>
+  <string name="deck_upgrade_via_anki_desktop"><![CDATA[Eğer şu anda Anki masaüstü yazılımında AnkiDroid koleksiyonunuzun güncel bir sürümü varsa, oradan yükseltip yükseltilen koleksiyonunuzu AnkiWeb\'le eşitleyerek indirebilirsiniz.<br><br>Alternatif olarak, AnkiDroid koleksiyonunuzu USB\'yle PC\'nize kopyalayıp, ardından koleksiyonu yükseltip AnkiDroid\'e geri kopyalayabilirsiniz.]]></string>
+  <string name="deck_upgrade_auto_upgrade"><![CDATA[Koleksiyonunuzu yükseltmek için lütfen Anki Masaüstü 2.0.4 veya daha üstü sürümünü yükleyip açın, ardından yükseltilen koleksiyonunuzu AnkiWeb\'le eşitleyip "İndir" düğmesine basın.<br><br><a href="http://code.google.com/p/ankidroid/wiki/Upgrading?wl=en#Option_2:_Using_AnkiWeb_sync">AnkiWeb kullanarak yükseltme konusunda daha ayrıntılı bilgi</a>]]></string>
+  <string name="deck_upgrade_manual"><![CDATA[Koleksiyonunuzu yükseltmek için lütfen bütün *.anki dosyalarınızı (ve *.media klasörlerinizi) AnkiDroid klasörünüzden Anki Masaüstü klasörünüze kopyalayın, ardından Anki Masaüstü 2.0.4 veya daha üstü sürümünü yükleyip açın.<br><br>Yükseltme tamamlandığında, lütfen koleksiyonunuzu Anki 2\'den çıkarıp collection.apkg dosyasını AnkiDroid klasörünüze kopyalayın ve aşağıdaki İçeri Aktar düğmesine basın.<br><br><a href="http://code.google.com/p/ankidroid/wiki/Upgrading?wl=en#Option_1:_Using_USB_(recommended)">USB kullanarak yükseltme konusunda daha ayrıntılı bilgi</a>]]></string>
+  <string name="upgrade_deck_cancelled_title">Yükseltme İptâl Edildi</string>
+  <string name="upgrade_deck_cancelled_description">Yükseltme girişimi iptâl edildi, lütfen mevcut yükseltme yöntemlerinden birini yeniden deneyin.</string>
+  <string name="upgrade_deck_web_upgrade_failed">Yükseltme işlemi başarısız oldu. Lütfen yeniden deneyin, veya farklı bir yükseltme yöntemi seçin.</string>
+  <string name="upgrade_deck_web_upgrade_exceeds">Anki 1 destelerinizin toplam sıkışık boyutu sunucunun işleyebildiği sınırı geçiyor (50 MB), lütfen farklı bir yöntemle yükseltmeyi deneyin.</string>
+  <string name="upgrade_deck_web_upgrade_sdcard">Yükseltme tamamlandı, fakat elde edilen koleksiyonu açarken bir hata meydana geldi. Lütfen yeterli mevcut alanınızın olduğundan (%1$d MB gerekiyor) emin olup yeniden deneyin, veya farklı bir yöntemle yükseltmeyi deneyin.</string>
+  <string name="export_progress_title">Koleksiyon Çıkarma</string>
+  <string name="export_progress_exporting">Koleksiyon çıkarılıyor, lütfen bekleyin…</string>
+  <string name="upgrade_deck_export_successful">Eski koleksiyonunuz başarıyla çıkarıldı, yükseltme işlemine devam ediliyor.</string>
+  <string name="upgrade_deck_export_error">Eski koleksiyonunuzun çıkarılması sırasında hata meydana geldi. Yükseltme işlemine yine de devam etmek ister misiniz? (Eski koleksiyonunuz kaybedilecek.)</string>
+  <string name="upgrade_deck_sync_from_ankiweb">AnkiWeb\'den Eşitle</string>
+  <string name="upgrade_deck_have_you_synced">Koleksiyonunuzu Anki Masaüstü 2\'yle yükseltip AnkiWeb\'le eşitlediğinize emin misiniz?</string>
+  <string name="upgrade_deck_dont_upgrade">Yükseltme</string>
+  <string name="import_unpacking">Arşiv açılıyor.\nLütfen bekleyin…</string>
+  <string name="importing_collection">Arşiv içeri aktarılıyor.\nLütfen bekleyin…</string>
+  <string name="import_media_count">Medya dosyaları %1$d%% içeri aktarılıyor.\nLütfen bekleyin…</string>
+  <string name="import_update_counts">Deste sayıları güncelleniyor.\nLütfen bekleyin…</string>
+  <string name="import_add_progress">• Arşiv açılıyor %1$s\n• Notların aktarımı %2$d%%\n• Kartların aktarımı %3$d%%\n• Temizlik %4$s</string>
   <string-array name="about_content">
     <item><![CDATA[<h2>%1$s:<br/>Android için bilgi kartları</h2>AnkiDroid <a href="%2$s">Anki</a> masaüstü uygulamasıyla tamamen uyumlu bir bilgi kartı uygulamasıdır. İster AnkiDroid\'de ister Anki Masaüstünde içerikler oluşturabilir, indirebilir, öğrenebilir ve kolaylıkla eşitleyebilirsiniz.]]></item>
     <item><![CDATA[AnkiDroid\'i geliştirmemize yardımcı olmak için, lütfen karşılaştığınız sorunları <a href="%1$s">buradan</a> bildirin; yeni özellik fikirleri de çok iyi olur! Lütfen <a href="%2$s">vikiyi</a> kullanın ve <a href="%3$s">forumda</a> bir selam verin.]]></item>

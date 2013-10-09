@@ -80,7 +80,7 @@
   <string name="menu_unmark_card">Unmark Card</string>
   <string name="new_deck">New deck</string>
   <string name="create">Create</string>
-  <string name="new_dynamic_deck">New dynamic deck</string>
+  <string name="new_dynamic_deck">New filtered deck</string>
   <string name="studyoptions_feedback">ความคิดเห็น</string>
   <string name="studyoptions_load_tutorial_deck">Create tutorial</string>
   <string name="night_mode">Night mode</string>
@@ -104,6 +104,17 @@
   <string name="empty_cloze_warning">Please edit this note and add some cloze deletions. (%1$s)</string>
   <string name="help_cloze">help</string>
   <string name="button_sync">Sync</string>
+  <string name="restart">Restart</string>
+  <string name="do_nothing">Do nothing</string>
+  <string name="more_options">More Options</string>
+  <string name="now">Now</string>
+  <string name="back">Back</string>
+  <string name="ankiweb">AnkiWeb</string>
+  <string name="usb">USB</string>
+  <string name="_import">Import</string>
+  <string name="confirm">Confirm</string>
+  <string name="internet">Internet</string>
+  <string name="pc">PC</string>
   <string-array name="next_review_s">
     <item>1 วินาที</item>
     <item>1 นาที</item>

@@ -45,8 +45,8 @@
   <string name="connection_error_message">Ошибка сети.</string>
   <string name="sync_log_db_error">Произошла ошибка базы данных.</string>
   <string name="no_user_password_error_message">Для того чтобы продолжить выполнение этой операции, необходимо иметь учетную запись AnkiWeb и войти в AnkiWeb.</string>
-  <string name="username">Электронная почта</string>
-  <string name="username_repeat">Повторите адрес электронной почты</string>
+  <string name="username">Имейл</string>
+  <string name="username_repeat">Повторите имейл</string>
   <string name="password">Пароль</string>
   <string name="password_repeat">Повторите пароль</string>
   <string name="log_in">Войти</string>
@@ -54,8 +54,8 @@
   <string name="sign_up">Зарегистрироваться</string>
   <string name="logged_as">Используется логин</string>
   <string name="log_out">Завершить сеанс</string>
-  <string name="alert_logging_message">Вход в систему. Пожалуйста, подождите...</string>
-  <string name="invalid_username_password">Неверный адрес электронной почты или пароль.</string>
+  <string name="alert_logging_message">Вход в систему, пожалуйста, подождите...</string>
+  <string name="invalid_username_password">Недопустимый имейл или пароль.</string>
   <string name="login_generic_error">Не удалось войти на сервер.</string>
   <string name="download_finished">Загрузка завершена</string>
   <string name="personaldeckpicker_title">Открыть онлайн-колоду</string>
@@ -78,7 +78,7 @@
   <string name="sync_downloading_media">Скачивание медиа-файлов %1$d/%2$d...</string>
   <string name="sync_log_uploading_message">Полностью синхронизировано с локальными данными</string>
   <string name="sync_log_downloading_message">Полная синхронизация с сервера</string>
-  <string name="sync_log_clocks_unsynchronized">Время на вашем Android-устройстве отличается на %1$d секунд от времени сервера%2$s, поэтому невозможно синхронизировать.</string>
+  <string name="sync_log_clocks_unsynchronized">Часы на вашем устройстве неверны на %1$d секунд%2$s; Для синхронизации необходимо, чтобы и часы и временная зона были корректными для избежания ошибок. Пожалуйста, установите корректную дату, время и временную зону вашего телефона и запустите синхронизацию снова.</string>
   <string name="sync_log_clocks_unsynchronized_tz">, установленная временная зона устройства возможно ошибочна</string>
   <string name="sync_log_clocks_unsynchronized_date">, дата, установленная в устройстве возможно неверная</string>
   <string name="sync_log_old_version">Протокол синхронизации был изменён, пожалуйста, установите последнюю версию AnkiDroid. (См. http://code.google.com/p/ankidroid)</string>
@@ -110,6 +110,7 @@
   <string name="sync_media_sanity_check">Проверка количества медиа-файлов...</string>
   <string name="sync_media_no_changes">Медиа-файлы не изменены.</string>
   <string name="sync_media_success">Медиа-файлы успешно синхронизированы.</string>
+  <string name="sync_sanity_failed">После синхронизации, некоторые данные вашей коллекции оказались в противоречивом состоянии. Чтобы устранить эту проблему AnkiDroid выполнит полную синхронизацию. Пожалуйста, выберите какую версию Вы хотите оставить, или отмените, если вы предпочитаете синхронизировать позже.</string>
   <string name="sync_media_sanity_failed">Синхронизация медиа-файлов завершена, но количество медиа-файлов на вашем мобильном устройстве не совпадает с количеством на сервере. При следующей синхронизации будут устранены все ошибки.</string>
   <string name="sync_media_error">Ошибка синхронизации медиа-данных.</string>
   <string name="register_error">Произошла ошибка. Пожалуйста, повторите попытку позже.</string>
@@ -117,10 +118,10 @@
   <string name="register_mismatch">Логин и/или пароль не соответствуют или пусты. Пожалуйста, введите снова.</string>
   <string name="registering_message">Создание учетной записи.\nПожалуйста, подождите...</string>
   <string name="upgrade_decks_zipping">Архивирование колод для выгрузки.\nПожалуйста, подождите...</string>
-  <string name="upgrade_decks_upload">Выгрузка заархивированных колод.\nПожалуйста подождите...</string>
+  <string name="upgrade_decks_upload">Выгрузка zip-архивированных колод\nВы можете прервать нажав кнопку назад.\nПожалуйста подождите...</string>
   <string name="upgrade_decks_waiting">Ожидание, позиция в очереди: %s\n Пожалуйста подождите...</string>
-  <string name="upgrade_decks_upgrade_started">Началось обновление.\nПожалуйста, дождитесь завершения...</string>
-  <string name="upgrade_decks_downloading">Загружаю обновлённую коллекцию.\nПожалуйста подождите...</string>
+  <string name="upgrade_decks_upgrade_started">Обновление начато\nПожалуйста подождите...</string>
+  <string name="upgrade_decks_downloading">Скачивание обновлённой коллекции\nВы можете прервать, нажав кнопку назад.\nПожалуйста подождите...</string>
   <string name="upgrade_decks_media">Копирование старых медиа-файлов в новую папку.\nПожалуйста, подождите...</string>
   <string name="upgrade_decks_message">Не найдена ни одна коллекция формата Anki 2.0, но найдены одна и более колод в старом формате Anki 1.2:%s Чтобы использовать ваши колоды в новой верии AnkiDroid, Вам нужно сначала их конвертировать в единую коллекцию нового Anki-2.0 формата. Существуют 3 возможности для этого:</string>
   <string name="upgrade_decks_message_pos1">Используя Anki Desktop 2.0 (настольная версия). При первом запуске программы Ваши колоды будут конвертированы. Затем Вы можете синхронизировать используя AnkiWeb или скопировав с настольного компьютера новую коллекцию на Ваше мобильное устройство. Скопируйте ваши колоды с мобильного устройства из AnkiDroid-каталога (%s) на настольный компьютер в каталог Anki Desktop 1.2 (если вы ещё не синхронизировали) и запустите Anki Desktop 2.0.</string>
@@ -132,4 +133,6 @@
   <string name="upgrade_decks_failed">Следующие колоды не были обновлены:\n%sПожалуйста, откройте их в Anki Desktop и выполните проверку базы данных. Затем Вы сможете их импортировать используя Anki Desktop.</string>
   <string name="upgrade_decks_media_failed">Копирование медиа-файлов в новую папку (%1$s) не удалось для колод:\n%2$sПожалуйста, переместите медиа-файлы вручную.</string>
   <string name="download_deck">Загрузка колоды (%d кбайт).\nПожалуйста, подождите...</string>
+  <string name="sync_sanity_local">Локально</string>
+  <string name="sync_sanity_remote">Удалённо</string>
 </resources>

@@ -78,7 +78,7 @@
   <string name="sync_downloading_media">Завантаження медіа %1$d/%2$d...</string>
   <string name="sync_log_uploading_message">Повна синхронізація з пристрою</string>
   <string name="sync_log_downloading_message">Повна синхронізація з сервера</string>
-  <string name="sync_log_clocks_unsynchronized">Час на вашому пристрої відрізняється від серверного на %1$d с%2$s; синхронізація не можлива.</string>
+  <string name="sync_log_clocks_unsynchronized">Годинник на вашому пристрої невірний на %1$d секунд %2$s; Для синхронізації необхідно, щоб і годинник і часовий пояс були коректними для уникнення помилок. Будь ласка, встановіть коректну дату, час і часовий пояс вашого телефону і почніть синхронізацію знову.</string>
   <string name="sync_log_clocks_unsynchronized_tz">, часовий пояс на пристрої ймовірно не правильний</string>
   <string name="sync_log_clocks_unsynchronized_date">, дата на пристрої ймовірно не правильна</string>
   <string name="sync_log_old_version">Протокол синхронізації змінено, будь ласка оновіть AnkiDroid до останньої версії. Дивіться %s</string>
@@ -110,6 +110,7 @@
   <string name="sync_media_sanity_check">Перевіряемо кількість медіа файлів...</string>
   <string name="sync_media_no_changes">Жодних змін в медіа файлах.</string>
   <string name="sync_media_success">Медіа успішно синхронізовано.</string>
+  <string name="sync_sanity_failed">Після синхронізації, деякі дані вашої колекції виявилися в суперечливому стані. Щоб усунути цю проблему, AnkiDroid виконає повну синхронізацію. Будь ласка, виберіть яку версію Ви хочете залишити, або скасуйте, якщо ви хочете синхронізувати пізніше.</string>
   <string name="sync_media_sanity_failed">Синхронізацію медіа завершено, але кількість медіа файлів не співпала з кількістю файлів на сервері. Наступна синхронізація буде повною, щоб виправити будь-які помилки.</string>
   <string name="sync_media_error">Помилка синхронізації даних медіа.</string>
   <string name="register_error">Виникла помилка. Будь ласка, спробуйте пізніше.</string>
@@ -117,10 +118,10 @@
   <string name="register_mismatch">Пара ім’я користувача/пароль не співпадає або порожня. Будь ласка, введіть ще раз.</string>
   <string name="registering_message">Створення облікового запису.\nБудь ласка, зачекайте...</string>
   <string name="upgrade_decks_zipping">Архівування колод для відвантаження.\nБудь ласка, зачекайте...</string>
-  <string name="upgrade_decks_upload">Відвантаження архівованих колод.\nБудь ласка, зачекайте...</string>
+  <string name="upgrade_decks_upload">Відвантаження zip-архівованих колод\nВи можете скасувати, натиснувши кнопку назад.\nБудь ласка, зачекайте...</string>
   <string name="upgrade_decks_waiting">Очікування, положення в черзі: %s\nБудь ласка, зачекайте...</string>
-  <string name="upgrade_decks_upgrade_started">Оновлення розпочате.\nБудь ласка, дочекайтесь завершення...</string>
-  <string name="upgrade_decks_downloading">Завантаження оновленої колекції.\nБудь ласка, зачекайте...</string>
+  <string name="upgrade_decks_upgrade_started">Розпочато оновлення\nБудь ласка, зачекайте...</string>
+  <string name="upgrade_decks_downloading">Завантаження оновленої збірки\nВи можете перервати, натиснувши кнопку назад.\nБудь ласка, зачекайте...</string>
   <string name="upgrade_decks_media">Копіювання старих файлів мультимедіа до нового місцезнаходження медіф. \nЗачекайте, будь ласка...</string>
   <string name="upgrade_decks_message">Немає жодної колекції Anki 2.0, але щонайменше одна колода в старому форматі Anki 1.2 була виявлена: %sIn. Для використання ваших колод з новою версією AnkiDroid їх спочатку потрібно перетворити в одну колекцію в форматі Anki-2.0. Для цього існує три можливості:</string>
   <string name="upgrade_decks_message_pos1">При використанні Anki Desktop 2.0, ваші колоди будуть перетворені при першому запуску. Після цього ви можете синхронізувати через AnkiWeb або просто скопіювати нову колекцію в мобільний пристрій. Скопіюйте ваші колоди з папки AnkiDroid (%s)в вашу папку Anki Desktop 1.2 на ПК (звичайно, якщо ви їх не синхронізували)та запустіть  Anki Desktop 2.0.</string>
@@ -132,4 +133,6 @@
   <string name="upgrade_decks_failed">Не можливо обновити ці колоди\n%sБудь ласка, відкрийте їх в Anki Desktop та здійсніть перевірку бази даних Після цього ви можете імпортувати їх через Anki Desktop.</string>
   <string name="upgrade_decks_media_failed">Копіювання файлів мультимедіа до нової медіа папки (%1$s) для цих колод не виконано:\n%2$sБудь ласка, перемістіть медіа файли вручну.</string>
   <string name="download_deck">Завантаження колоди (%d Кб).\nБудь-ласка, зачекайте...</string>
+  <string name="sync_sanity_local">Локально</string>
+  <string name="sync_sanity_remote">Віддалено</string>
 </resources>

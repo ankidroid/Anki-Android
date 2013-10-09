@@ -78,7 +78,7 @@
   <string name="sync_downloading_media">Downloading media %1$d/%2$d...</string>
   <string name="sync_log_uploading_message">Full sync from local</string>
   <string name="sync_log_downloading_message">Full sync from server</string>
-  <string name="sync_log_clocks_unsynchronized">The time of your device is different than that of the server by %1$d sec%2$s; unable to sync.</string>
+  <string name="sync_log_clocks_unsynchronized">The clock on your device is incorrect by %1$d seconds%2$s; Syncing requires both your clock and timezone to be set correctly in order to avoid errors. Please ensure the date, time, and timezone on your phone are set correctly, then sync again.</string>
   <string name="sync_log_clocks_unsynchronized_tz">, the device\'s time zone is possibly wrong</string>
   <string name="sync_log_clocks_unsynchronized_date">, the device\'s date is possibly wrong</string>
   <string name="sync_log_old_version">The synchronization protocol has changed, please upgrade to the latest AnkiDroid. See %s</string>
@@ -110,6 +110,7 @@
   <string name="sync_media_sanity_check">Checking media counts...</string>
   <string name="sync_media_no_changes">No changes to media files.</string>
   <string name="sync_media_success">Media synced successfully.</string>
+  <string name="sync_sanity_failed">After syncing, the collection was in an inconsistent state. To fix this problem, AnkiDroid will force a full sync. Please choose which side you would like to keep, or cancel if you prefer to sync later.</string>
   <string name="sync_media_sanity_failed">Media sync completed, but the media count doesn\'t agree with the server. The next media sync will be full to correct any error.</string>
   <string name="sync_media_error">Error syncing media data.</string>
   <string name="register_error">An error occurred. Please try again later.</string>
@@ -117,10 +118,10 @@
   <string name="register_mismatch">The username/password repetition does not match or is empty. Please re-enter.</string>
   <string name="registering_message">Creating account.\nPlease wait...</string>
   <string name="upgrade_decks_zipping">Zipping decks for upload.\nPlease wait...</string>
-  <string name="upgrade_decks_upload">Uploading zipped decks.\nPlease wait...</string>
+  <string name="upgrade_decks_upload">Uploading zipped decks\nYou can cancel by pressing back.\nPlease wait...</string>
   <string name="upgrade_decks_waiting">Waiting, queue position: %s\nPlease wait...</string>
-  <string name="upgrade_decks_upgrade_started">Upgrade started\nPlease waiting for finish...</string>
-  <string name="upgrade_decks_downloading">Downloading upgraded collection.\nPlease wait...</string>
+  <string name="upgrade_decks_upgrade_started">Upgrade started\nPlease wait...</string>
+  <string name="upgrade_decks_downloading">Downloading upgraded collection\nYou can cancel by pressing back.\nPlease wait...</string>
   <string name="upgrade_decks_media">Copying old media files to new media location.\nPlease wait...</string>
   <string name="upgrade_decks_message">There is no Anki 2.0 collection available but one or more decks in the old Anki 1.2 format have been found:%sIn order to use your decks with the new version of AnkiDroid they need to be converted first into a single collection of the new Anki-2.0 format. There are three possibilities for this:</string>
   <string name="upgrade_decks_message_pos1">By using Anki Desktop 2.0, your decks will be converted at the first start. You can sync over AnkiWeb or just copy the new collection afterwards to your mobile device. Copy your decks from your AnkiDroid directory (%s) to your Anki Desktop 1.2 directory on your computer (if you haven\'t synced them anyway) and start Anki Desktop 2.0.</string>
@@ -132,4 +133,6 @@
   <string name="upgrade_decks_failed">These decks could not be upgraded:\n%sPlease open them in Anki Desktop and do a database check. Afterwards you can import them via Anki Desktop.</string>
   <string name="upgrade_decks_media_failed">Copying the media files to the new media folder (%1$s) has failed for these decks:\n%2$sPlease move the media files manually.</string>
   <string name="download_deck">Downloading deck (%d kb).\nPlease wait...</string>
+  <string name="sync_sanity_local">Local</string>
+  <string name="sync_sanity_remote">Remote</string>
 </resources>

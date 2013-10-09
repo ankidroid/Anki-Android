@@ -61,6 +61,39 @@
   <string name="custom_study_preview">Повторити нові карти додані за останні х днів:</string>
   <string name="custom_study_tags">Мітки:</string>
   <string name="rebuild_custom_study_deck">Перестворення додаткової колоди.\nБудь-ласка, зачекайте...</string>
+  <string name="deck_upgrade_title">Апгрейд колоди</string>
+  <string name="deck_upgrade_rename_warning">Врахуйте, що буде експортована ваша поточна колекція в файл \'%1$s\' і буде створений один файл з ваших старих anki 1.x файлів. При бажанні, ви можете в ручну повторно імпортувати вищевказаний apkg файл після завершення майстра. Продовжити?</string>
+  <string name="deck_upgrade_already_upgraded">Друга версія AnkiDroid використовує новий формат для колод. \nЯкщо у Вас не вийшло успішно оновити колоди минулого разу, то ви можете повторити оновлення зараз.</string>
+  <string name="deck_upgrade_major_warning"><![CDATA[Це велике оновлення Ankidroid і процес оновлення може зайняти 10-20 хвилин.<br><br>Продовжити зараз чи пізніше?<br><br><a href="http://code.google.com/p/ankidroid/wiki/Upgrading?wl=en">Подробиці</a>]]></string>
+  <string name="deck_upgrade_start_again_to_upgrade_toast">Будь ласка запустіть AnkiDroid знову коли у вас є час для апгрейду!</string>
+  <string name="deck_upgrade_recommended_method"><![CDATA[Рекомендований метод оновлення - синхронізувати з ПК та оновити, використовуючи десктоп-версію Anki.<br><br>Також є альтернативний метод - оновити через інтернет, якщо у вас немає доступу до ПК, і ваша колекція не дуже велика.]]></string>
+  <string name="deck_upgrade_more_options_exit">Можна завершити роботу майстра оновлення без імпортування старих карт, натиснувши кнопку вихід.</string>
+  <string name="deck_upgrade_more_options_new_collection">Можна створити нову порожню колекцію, натиснувши кнопку нижче.</string>
+  <string name="deck_upgrade_more_options_downgrade"><![CDATA[<br><br>Якщо ви хочете понизити версію AnkiDroid до версії 1, будь ласка, прочитайте <a href="http://code.google.com/p/ankidroid/wiki/Upgrading?wl=en#Continuing_to_use_AnkiDroid_1.1.3">Інструкцію</a>.]]></string>
+  <string name="deck_upgrade_create_new_collection">Створити нову колекцію</string>
+  <string name="deck_upgrade_create_new_collection_title">Створити Нову Колекцію</string>
+  <string name="deck_upgrade_not_import_warning">Ви впевнені що хочете це зробити? Ваші старі дані буде імпортовано.</string>
+  <string name="deck_upgrade_via_web"><![CDATA[<b>Цей метод оновлення не рекомендується, якщо ви використовуєте медіа файли або велику колекцію!</b><br><br>Ваші Anki 1.x колоди будуть архівовані та завантажені на сервер AnkiWeb, після чого перетворена колекція буде завантажена з сервера.<br><br>Зверніть увагу, що стабільне інтернет з\'єднання обов\'язкове, і файл не повинен перевищувати 50Mb.<br><br>Користувачам Anki Desktop дуже рекомендовано використовувати Anki Desktop для оновлення.<br><br>Ви все ще хочете продовжити?]]></string>
+  <string name="deck_upgrade_via_anki_desktop"><![CDATA[Якщо у вас найновіша версія колекції AnkiDroid у вашій програмі Anki desktop, ви можете проапгейдитися за допомогою нею і потім вивантажити вашу колекцію синхронізувавши її через AnkiWeb.<br><br>Також ви можете просто скопіювати вашу колекцію через USB, проапгрейдити її на ПК та скопіювати назад у AnkiDroid.]]></string>
+  <string name="deck_upgrade_auto_upgrade"><![CDATA[Будь ласка інсталюйте та запустіть Anki Desktop версію 2.0.4 чи пізнішу аби проапгрейдити вашу колекцію, а потім синхронізуйте вашу проапгрейдину версію через AnkiWeb на натисніть кнопку "Завантажити" .<br><br><a href="http://code.google.com/p/ankidroid/wiki/Upgrading?wl=en#Option_2:_Using_AnkiWeb_sync">Більш детальна інформацію про апгрейд з допомогою AnkiWeb</a>]]></string>
+  <string name="deck_upgrade_manual"><![CDATA[Будь ласка скопіюйте всчі ваші *.anki файли (та будь які *.media теки) з вашої AnkiDroid теки до вашої Anki Desktop теки, і потім інсталюйте та запустіть Anki Desktop версії 2.0.4 чи пізнішох аби проапгрейдити вашу колекцію.<br><br>Коли апгрейд завершиться, будь ласка експортуйте вашу колекцію з Anki2, скопіюйте файл collection.apkg до вашої AnkiDroid теки та натисніть кнопку Імпортувати.<br><br><a href="http://code.google.com/p/ankidroid/wiki/Upgrading?wl=en#Option_1:_Using_USB_(recommended)">Більш детальна інформацію про апгрейд через USB.</a>]]></string>
+  <string name="upgrade_deck_cancelled_title">Оновлення скасовано</string>
+  <string name="upgrade_deck_cancelled_description">Спроба оновлення була скасована, будь ласка, спробуйте ще раз один з доступних методів оновлення.</string>
+  <string name="upgrade_deck_web_upgrade_failed">Процес оновлення завершено невдало. Повторіть спробу, або виберіть інший спосіб оновлення</string>
+  <string name="upgrade_deck_web_upgrade_exceeds">Загальний розмір ваших Anki 1.x колод перевищує ліміт в 50 Mb, будь ласка, спробуйте оновити колоди використовуючи інший метод.</string>
+  <string name="upgrade_deck_web_upgrade_sdcard">Оновлення завершено, але відбулася помилка при розпакуванні результуючої колекції, будь ласка, переконайтеся, що у вас є достатньо вільної пам\'яті (потрібно %1$d mb) і повторіть спробу або спробуйте оновити за допомогою іншого методу.</string>
+  <string name="export_progress_title">Експортувати колекцію</string>
+  <string name="export_progress_exporting">Експорт колекції, будь ласка, почекайте...</string>
+  <string name="upgrade_deck_export_successful">Стара колекція успішно експортована, виходячи з процесом оновлення.</string>
+  <string name="upgrade_deck_export_error">Помилка під час експорту старої колекції. Ви хотіли б продовжити з процесом оновлення (стара колекція буде втрачена)?</string>
+  <string name="upgrade_deck_sync_from_ankiweb">Синхронізація з AnkiWeb</string>
+  <string name="upgrade_deck_have_you_synced">Ви впевнені, що оновили вашу колекцію з Anki Desktop 2 і синхронізували з AnkiWeb?</string>
+  <string name="upgrade_deck_dont_upgrade">Не оновлювати</string>
+  <string name="import_unpacking">Розпакування архіву. \nБудь ласка, зачекайте...</string>
+  <string name="importing_collection">Імпорт колекції. \nБудь ласка, зачекайте...</string>
+  <string name="import_media_count">Імпорт медіа файлів %1$d%%\nБудь ласка, зачекайте...</string>
+  <string name="import_update_counts">Обчислення результатів оновлення. \nБудь ласка зачекайте ...</string>
+  <string name="import_add_progress">• Распаковується архів %1$s\n• Імпортовано заміток %2$d%%\n• Імпортовано карт %3$d%%\n• Очищено %4$s</string>
   <string-array name="about_content">
     <item><![CDATA[<h2>%1$s:<br/>Картки для Android</h2>AnkiDroid це додаток для карток повністю сумісний з програмою для ПК <a href="%2$s">Anki</a>. Ви можете створювати, завантажувати та вивчати вміст на AnkiDroid або Anki Desktop та з легкістю здійснювати синхронізацію.]]></item>
     <item><![CDATA[Щоб зробити AnkiDroid кращою, будь ласка, доповідайте про виявлені недоліки <a href="%1$s">here</a>; ідеї для нових властивостей програми також вітаються! Будь ласка, користуйтесь <a href="%2$s">wiki</a> та скажіть Привіт на  <a href="%3$s">форумі</a>.]]></item>

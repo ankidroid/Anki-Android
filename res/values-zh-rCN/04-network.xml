@@ -78,7 +78,7 @@
   <string name="sync_downloading_media">正在下载媒体文件%1$d/%2$d...</string>
   <string name="sync_log_uploading_message">从本地完全同步</string>
   <string name="sync_log_downloading_message">从服务器完全同步</string>
-  <string name="sync_log_clocks_unsynchronized">设备的时间与服务器的时间有%1$d秒%2$s的差异，无法同步。</string>
+  <string name="sync_log_clocks_unsynchronized">你设备上的时间有%1$d秒%2$s的误差；为避免出现错误，你的时间和时区需要设置正确才能进行同步。请确保你手机上的日期、时间和时区都已设置正确再进行同步。</string>
   <string name="sync_log_clocks_unsynchronized_tz">，设备的时区可能是错误的</string>
   <string name="sync_log_clocks_unsynchronized_date">，设备的日期可能是错误的</string>
   <string name="sync_log_old_version">同步协议已改变，请升级到最新的AnkiDroid。详见%s</string>
@@ -110,6 +110,7 @@
   <string name="sync_media_sanity_check">检查媒体数量...</string>
   <string name="sync_media_no_changes">媒体文件无更改。</string>
   <string name="sync_media_success">媒体同步成功。</string>
+  <string name="sync_sanity_failed">同步之后，牌组集合处于不一致的状态。AnkiDroid将会强制完全同步以修复这一问题。请选择你想保留哪一边的状态，如果你想稍后再同步，请取消</string>
   <string name="sync_media_sanity_failed">媒体同步完成，但媒体数量与服务器不一致。下一次将进行全部同步，以纠正错误。</string>
   <string name="sync_media_error">同步媒体数据出错.</string>
   <string name="register_error">发生错误。请稍后重试。</string>
@@ -117,10 +118,10 @@
   <string name="register_mismatch"> 用户名/密码重复不匹配，或者为空。请重新输入。</string>
   <string name="registering_message">创建账户。\n请等待...</string>
   <string name="upgrade_decks_zipping">压缩要上传的牌组。\n请等待...</string>
-  <string name="upgrade_decks_upload">上传压缩牌组。\n请等待...</string>
+  <string name="upgrade_decks_upload">正在上传压缩后的牌组\n按返回键取消操作\n请稍后……</string>
   <string name="upgrade_decks_waiting">等待，队列位置：%s\n请等待...</string>
-  <string name="upgrade_decks_upgrade_started">升级开始。\n请等待升级完成...</string>
-  <string name="upgrade_decks_downloading">下载已升级的集合。\n请等待...</string>
+  <string name="upgrade_decks_upgrade_started">升级已开始\n请稍候……</string>
+  <string name="upgrade_decks_downloading">正在下载升级的牌组\n按返回键取消操作\n请稍候……</string>
   <string name="upgrade_decks_media">复制旧媒体文件到新媒体位置。 \n 请稍候...</string>
   <string name="upgrade_decks_message">没有Anki 2.0集合可用，但找到一个或多个Anki 1.2 旧格式牌组：%s 为了在新版AnkiDroid中使用它们，您需要将其转换成Anki 2.0格式的单一集合。有三种方法：</string>
   <string name="upgrade_decks_message_pos1">使用Anki桌面客户端2.0，您的牌组将在首次启动时转换。您可以通过AnkiWeb同步，或者直接把新集合拷贝到移动设备上。从AnkiDroid拷贝牌组，复制到您计算机Anki桌面客户端1.2目录中(如果您还没有同步它们的话)，然后启动Anki桌面客户端2.0.</string>
@@ -132,4 +133,6 @@
   <string name="upgrade_decks_failed">这些牌组不能升级：\n%s请在Anki桌面客户端中打开它们，并进行数据库检查。之后可用Anki桌面客户端导入。</string>
   <string name="upgrade_decks_media_failed">复制媒体文件到新的媒体文件夹 （%1$s) 已失败，失败牌组如下：\n%2$s请手动移动媒体文件。</string>
   <string name="download_deck">下载卡牌组(%d kb).\n 请等待...</string>
+  <string name="sync_sanity_local">本地</string>
+  <string name="sync_sanity_remote">远程</string>
 </resources>

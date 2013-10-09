@@ -54,7 +54,7 @@
   <string name="undo_action_delete">Not silmeyi</string>
   <string name="undo_action_mark">Not işâretlemeyi</string>
   <string name="finish_operation">Önceki işlem tamamlanıyor (büyük olasılıkla yedekleme).\nLütfen bekleyin...</string>
-  <string name="contextmenu_deckpicker_download_missing_media">Eksik ortamı indir</string>
+  <string name="contextmenu_deckpicker_download_missing_media">Eksik medyayı indir</string>
   <string name="contextmenu_deckpicker_reset_language_assignments">Dil Görevlerini Sıfırla</string>
   <string name="contextmenu_deckpicker_reset_reset_message">Dil sıfırlama</string>
   <string name="contextmenu_deckpicker_optimize_deck">Veritabanını iyileştir</string>
@@ -80,7 +80,7 @@
   <string name="menu_unmark_card">İşaretini Kaldır</string>
   <string name="new_deck">Yeni deste</string>
   <string name="create">Oluştur</string>
-  <string name="new_dynamic_deck">Yeni dinamik deste</string>
+  <string name="new_dynamic_deck">Yeni süzülü deste</string>
   <string name="studyoptions_feedback">Geribildirim</string>
   <string name="studyoptions_load_tutorial_deck">Eğitime başla</string>
   <string name="night_mode">Gece modu</string>
@@ -104,6 +104,17 @@
   <string name="empty_cloze_warning">Lütfen bu notu düzenleyip bazı boşluklar ekleyin. (%1$s)</string>
   <string name="help_cloze">Yardım</string>
   <string name="button_sync">Eşitle</string>
+  <string name="restart">Baştan başlat</string>
+  <string name="do_nothing">Birşey yapma</string>
+  <string name="more_options">Daha Fazla Seçenek</string>
+  <string name="now">Şu anda</string>
+  <string name="back">Geri</string>
+  <string name="ankiweb">AnkiWeb</string>
+  <string name="usb">USB</string>
+  <string name="_import">İçeri aktar</string>
+  <string name="confirm">Onayla</string>
+  <string name="internet">İnternet</string>
+  <string name="pc">PC</string>
   <string-array name="next_review_s">
     <item>1 saniye</item>
     <item>1 dakika</item>

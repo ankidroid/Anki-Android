@@ -80,7 +80,7 @@
   <string name="menu_unmark_card">Demarcare Card</string>
   <string name="new_deck">Pachet nou</string>
   <string name="create">Creare</string>
-  <string name="new_dynamic_deck">Un nou pachet dinamic</string>
+  <string name="new_dynamic_deck">New filtered deck</string>
   <string name="studyoptions_feedback">Feedback</string>
   <string name="studyoptions_load_tutorial_deck">Creare tutorial</string>
   <string name="night_mode">Mod de noapte</string>
@@ -104,6 +104,17 @@
   <string name="empty_cloze_warning">Vă rugăm să editaţi această notă şi adăugaţi unele spatii goale. (%1$s)</string>
   <string name="help_cloze">ajutor</string>
   <string name="button_sync">Sincronizare</string>
+  <string name="restart">Restart</string>
+  <string name="do_nothing">Do nothing</string>
+  <string name="more_options">Mai multe opțiuni</string>
+  <string name="now">Acum</string>
+  <string name="back">Inapoi</string>
+  <string name="ankiweb">AnkiWeb</string>
+  <string name="usb">USB</string>
+  <string name="_import">Importeaza</string>
+  <string name="confirm">Confirma</string>
+  <string name="internet">Internet</string>
+  <string name="pc">PC</string>
   <string-array name="next_review_s">
     <item>1 secundă</item>
     <item>1 minut</item>
@@ -116,9 +127,9 @@
     <item>%s secunde</item>
     <item>%s minute</item>
     <item>%s ore</item>
-    <item>%s zile</item>
-    <item>%s luni</item>
-    <item>%s ani</item>
+    <item>% zile</item>
+    <item>% luni</item>
+    <item>% ani</item>
   </string-array>
   <plurals name="deckpicker_title">
     <item quantity="one">1 de %2$d de facut (%3$s)</item>

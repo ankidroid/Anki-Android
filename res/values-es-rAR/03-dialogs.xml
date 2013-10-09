@@ -61,6 +61,39 @@
   <string name="custom_study_preview">Previsualizar nuevas tarjetas añadidas en los últimos x días:</string>
   <string name="custom_study_tags">Introducir etiquetas:</string>
   <string name="rebuild_custom_study_deck">Reconstruyendo mazo de estudio personalizado.\nPor favor aguarde...</string>
+  <string name="deck_upgrade_title">Actualización del mazo</string>
+  <string name="deck_upgrade_rename_warning">Tenga en cuenta que esta operación exportará su colección actual a un archivo llamado \'%1$s\' y creará una nueva a partir de sus antiguos archivos de Anki 1.x. Si lo desea, puede volver a importar manualmente el archivo apkg luego de finalizar con el asistente. ¿Desea continuar?</string>
+  <string name="deck_upgrade_already_upgraded">La versión 2 de AnkiDroid utiliza un nuevo formato para los mazos.\nSi no logra actualizar correctamente sus mazos, puede reiniciar la actualización ahora para actualizar sus mazos.</string>
+  <string name="deck_upgrade_major_warning"><![CDATA[Esta es una actualización mayor de AnkiDroid. El proceso tomará al menos 10-20 minutos.<br><br>¿Desea continuar ahora o más tarde?<br><br><a href="http://code.google.com/p/ankidroid/wiki/Upgrading?wl=en">Más información</a>]]></string>
+  <string name="deck_upgrade_start_again_to_upgrade_toast">¡Por favor, reinicie AnkiDroid nuevamente cuando tenga tiempo de actualizar!</string>
+  <string name="deck_upgrade_recommended_method"><![CDATA[El método de actualización recomendado es sincronizar con una PC y actualizar desde la versión de escritorio de Anki.<br><br>Hay también un método alternativo mediante el cual puede actualizar desde internet si no tiene acceso a una PC y su colección no es muy grande.]]></string>
+  <string name="deck_upgrade_more_options_exit">Puede abanondar el asistente de actualización sin importar sus antiguas tarjetas cliqueando en el botón de salida debajo.</string>
+  <string name="deck_upgrade_more_options_new_collection">Puede crear una nueva colección vacía cliqueando debajo.</string>
+  <string name="deck_upgrade_more_options_downgrade"><![CDATA[<br><br>Si quiere volver a AnkiDroid 1 por favor lea <a href="http://code.google.com/p/ankidroid/wiki/Upgrading?wl=en#Continuing_to_use_AnkiDroid_1.1.3"> estas instrucciones</a>.]]></string>
+  <string name="deck_upgrade_create_new_collection">Crear nueva colección</string>
+  <string name="deck_upgrade_create_new_collection_title">Crear nueva colección</string>
+  <string name="deck_upgrade_not_import_warning">¿Está seguro de hacer esto? Sus datos anteriores no serán importados.</string>
+  <string name="deck_upgrade_via_web"><![CDATA[<b>Este método de actualización no es recomendado si utiliza archivos multimedia o tiene una colección muy grande.</b><br><br>Sus mazos de Anki 1 serán comprimidos y subidos a AnkiWeb. La colección convertida será luego descargada.<br><br>Por favor, tome en cuenta que se necesita una conexión a internet estable y que el límite de archivo es de 50MB.<br><br>Se recomienda enfáticamente a los usuarios de Anki Desktop a usar el método de actualización mediante PC.<br><br>¿Desea continuar?]]></string>
+  <string name="deck_upgrade_via_anki_desktop"><![CDATA[Si actualmente tiene una versión actualizada de su colección de AnkiDroid en su versión de escritorio de Anki, puede actualizar desde allí y luego descargar su colección actualizada sincronizando con AnkiWeb.<br><br>De lo contrario, puede copiar su colección de AnkiDroid a su PC usando el USB, luego actualizar su colección y copiarla de vuelta a AnkiDroid.]]></string>
+  <string name="deck_upgrade_auto_upgrade"><![CDATA[Por favor instale e inicie la versión 2.0.4 de Anki Desktop o más reciente para actualizar su colección, luego sincronice su colección actualizaa con AnkiWeb y presione el botón "Descargar".<br><br><a href="http://code.google.com/p/ankidroid/wiki/Upgrading?wl=en#Option_2:_Using_AnkiWeb_sync">Más información detallada sobre actualización desde AnkiWeb</a>]]></string>
+  <string name="deck_upgrade_manual"><![CDATA[Por favor, copie todos sus archivos *.anki (y cualquier carpeta *.media) desde su carpeta de AnkiDroid a la carpeta de Anki Desktop, y luego instale e inicie la versión 2.0.4 de Anki Desktop o más reciente para actualizar su colección.<br><br>Cuando la actualización esté completa, por favor exporte su colección desde Anki2 y copie el archivo de colección .apkg a su carpeta de AnkiDroid y presione el botón inferior de importación.<br><br><a href="http://code.google.com/p/ankidroid/wiki/Upgrading?wl=en#Option_1:_Using_USB_(recommended)">Más información detallada sobre actualizar en base a USB.</a>]]></string>
+  <string name="upgrade_deck_cancelled_title">Actualización cancelada</string>
+  <string name="upgrade_deck_cancelled_description">El intento de actualización fue cancelado. Por favor, intente nuevamente con uno de los métodos de actualización disponibles.</string>
+  <string name="upgrade_deck_web_upgrade_failed">El proceso de actualización no fue exitoso. Por favor intente nuevamente o elija un método de actualización diferente</string>
+  <string name="upgrade_deck_web_upgrade_exceeds">El tamaño comprimido total de sus mazos de Anki1 excede el límite que el servidor puede procesar (50 mb). Por favor, intente la actualización mediante un método diferente.</string>
+  <string name="upgrade_deck_web_upgrade_sdcard">La actualización fue completada, pero hubo un error mientras se descomprimía la colección final. Por favor, asegúrese de que tiene suficiente espacio en disco (se necesita %1$d mb) e intente nuevamente, o utilice un método de actualización diferente.</string>
+  <string name="export_progress_title">Exportación de colección</string>
+  <string name="export_progress_exporting">Exportando colección, por favor aguarde</string>
+  <string name="upgrade_deck_export_successful">Su antigua colección ha sido exitosamente exportada. Se continúa con el proceso de actualización.</string>
+  <string name="upgrade_deck_export_error">Hubo un error durante la exportación de su antigua colección. ¿Desea continuar con el proceso de actualización de todos modos (su antigua colección se perderá)?</string>
+  <string name="upgrade_deck_sync_from_ankiweb">Sincronizar desde AnkiWeb</string>
+  <string name="upgrade_deck_have_you_synced">¿Está seguro de que ha actualizado su colección con Anki Desktop 2 y sincronizado con AnkiWeb?</string>
+  <string name="upgrade_deck_dont_upgrade">No actualizar</string>
+  <string name="import_unpacking">Descomprimiendo archivo.\nPor favor aguarde</string>
+  <string name="importing_collection">Importando colección.\nPor favor aguarde</string>
+  <string name="import_media_count">Importando archivos multimedia%1$d%%\nPor favor aguarde</string>
+  <string name="import_update_counts">Actualizando cuentas de mazo.\nPor favor aguarde</string>
+  <string name="import_add_progress">• Descomprimiendo archivo %1$s\n• Importación de notas %2$d%%\n• Importación de tarjetas %3$d%%\n• Limpieza %4$s</string>
   <string-array name="about_content">
     <item><![CDATA[<h2>%1$s:<br/>Tarjetas de aprendizaje para Android</h2>AnkiDroid es una aplicación de tarjetas de aprendizaje completamente compatible con el software de escritorio <a href="%2$s">Anki</a>. Puede crear, descargar y aprender contenidos en ambos, AnkiDroid o Anki Desktop, y sincronizarlos muy fácilmente.]]></item>
     <item><![CDATA[Para ayudarnos a mejorar AnkiDroid reporte cualquier error <a href="%1$s">aquí</a>; ¡nuevas ideas sobre características son también bienvenidas! Utilice por favor el <a href="%2$s">wiki</a> y diga Hola en el <a href="%3$s">foro</a>.]]></item>
