@@ -78,7 +78,7 @@
   <string name="sync_downloading_media">Descargando archivos multimedia %1$d/%2$d...</string>
   <string name="sync_log_uploading_message">Sincronización completa desde el cliente</string>
   <string name="sync_log_downloading_message">Sincronización completa desde el servidor</string>
-  <string name="sync_log_clocks_unsynchronized">La hora de tu dispositivo es diferente de la del servidor en %1$d seg%2$s; no se pudo sincronizar.</string>
+  <string name="sync_log_clocks_unsynchronized">El reloj en tu dispositivo está desfasado en %1$d segundos%2$s; La sincronización requiere que tanto tu reloj como tu zona horaria estén ajustados correctamente para evitar errores. Por favor, asegúrate de que tus ajustes de fecha y hora estén configurados correctamente, y vuelve a sincronizar.</string>
   <string name="sync_log_clocks_unsynchronized_tz">, la zona horaria del dispositivo es probablemente errónea</string>
   <string name="sync_log_clocks_unsynchronized_date">, la fecha de dispositivo probablemente es errónea</string>
   <string name="sync_log_old_version">El protocolo de sincronización ha cambiado, por favor, actualice a la última versión de AnkiDroid. Vea %s</string>
@@ -110,6 +110,7 @@
   <string name="sync_media_sanity_check">Comprobando cuenta de archivos multimedia...</string>
   <string name="sync_media_no_changes">Sin cambios en los archivos multimedia.</string>
   <string name="sync_media_success">Archivos multimedia sincronizados correctamente.</string>
+  <string name="sync_sanity_failed">Tras la sincronización, la colección quedó en un estado inconsistente. Para solucionar este problema, AnkiDroid forzará una sincronización completa. Por favor, elige qué lado deseas conservar, o cancela si prefieres sincronizar más tarde.</string>
   <string name="sync_media_sanity_failed">La sincronización de los archivos multimedia se completó, pero el número de archivos no coincide con el del servidor. La próxima sincronización será completa para corregir cualquier error.</string>
   <string name="sync_media_error">Error al sincronizar datos multimedia.</string>
   <string name="register_error">Se ha producido un error. Inténtalo de nuevo más tarde.</string>
@@ -117,10 +118,10 @@
   <string name="register_mismatch">El nombre de usuario/contraseña repetido no coincide o está vacío. Por favor, vuelve a introducirlo.</string>
   <string name="registering_message">Creando cuenta.\nPor favor, espera...</string>
   <string name="upgrade_decks_zipping">Comprimiendo mazos para cargar\nPor favor, espera...</string>
-  <string name="upgrade_decks_upload">Cargando mazos comprimidos.\nPor favor, espera...</string>
+  <string name="upgrade_decks_upload">Subiendo mazos comprimidos\nPuedes cancelarlo apretando atrás.\nPor favor, espera...</string>
   <string name="upgrade_decks_waiting">En espera, posición en la cola: %s\nPor favor, espera...</string>
-  <string name="upgrade_decks_upgrade_started">Actualización iniciada\nPor favor, espera a que finalice...</string>
-  <string name="upgrade_decks_downloading">Descargando colección actualizada.\nPor favor, espera...</string>
+  <string name="upgrade_decks_upgrade_started">Actualización iniciada\nPor favor, espera...</string>
+  <string name="upgrade_decks_downloading">Descargando colección actualizada\nPuedes cancelarlo apretando atrás.\nPor favor, espera...</string>
   <string name="upgrade_decks_media">Copiando los antiguos archivos multimedia a la nueva ubicación multimedia.\nPor favor, espera...</string>
   <string name="upgrade_decks_message">No hay ninguna colección de Anki 2.0 disponible, pero se han encontrado uno o más mazos en el antiguo formato Anki 1.2:%sPara que puedas usar tus mazos con la nueva versión de Ankidroid, éstos necesitan ser convertidos primero a una colección única con el nuevo formato Anki 2.0. Hay tres formas de hacerlo:</string>
   <string name="upgrade_decks_message_pos1">Usando Anki Desktop 2.0, tus mazos serán convertidos al iniciar por primera vez el programa. Puedes sincronizarlos con AnkiWeb o simplemente copiar la nueva colección a tu dispositivo móvil. Para hacer esto último, copia tus mazos de tu directorio AnkiDroid (%s) al directorio de Anki Desktop 1.2 en tu ordenador (si no los has sincronizado ya) e inicia Anki Desktop 2.0.</string>
@@ -132,4 +133,6 @@
   <string name="upgrade_decks_failed">Estos mazos no pudieron ser actualizados:\n%sPor favor, ábrelos en Anki versión escritorio y haz una comprobación de la base de datos. Después podrás importarlos mediante Anki versión escritorio.</string>
   <string name="upgrade_decks_media_failed">La copia de los archivos multimedia a la nueva carpeta multimedia (%1$s) ha fallado con estos mazos:\n%2$sPor favor, mueve los archivos multimedia manualmente.</string>
   <string name="download_deck">Descargando mazo (%d kb).\nPor favor, espera...</string>
+  <string name="sync_sanity_local">Local</string>
+  <string name="sync_sanity_remote">Remoto</string>
 </resources>

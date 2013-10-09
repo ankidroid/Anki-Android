@@ -78,7 +78,7 @@
   <string name="sync_downloading_media">Laster ned media %1$d/%2$d...</string>
   <string name="sync_log_uploading_message">Full synkronisering fra lokal</string>
   <string name="sync_log_downloading_message">Full synkronisering fra serveren</string>
-  <string name="sync_log_clocks_unsynchronized">Tiden til enheten er forskjøvet i forhold til serveren med %1$d sekund %2$s; kan ikke synkronisere.</string>
+  <string name="sync_log_clocks_unsynchronized">The clock on your device is incorrect by %1$d seconds%2$s; Syncing requires both your clock and timezone to be set correctly in order to avoid errors. Please ensure the date, time, and timezone on your phone are set correctly, then sync again.</string>
   <string name="sync_log_clocks_unsynchronized_tz">, enhetens tidssone er muligens feil</string>
   <string name="sync_log_clocks_unsynchronized_date">, enhetens dato er muligens feil</string>
   <string name="sync_log_old_version">Synkronisering-protokollen er endret, du må oppgradere til den nyeste AnkiDroid. Se %s</string>
@@ -110,6 +110,7 @@
   <string name="sync_media_sanity_check">Kontrollerer antall media...</string>
   <string name="sync_media_no_changes">Ingen endringer i mediefiler.</string>
   <string name="sync_media_success">Media synkronisert uten problemer.</string>
+  <string name="sync_sanity_failed">After syncing, the collection was in an inconsistent state. To fix this problem, AnkiDroid will force a full sync. Please choose which side you would like to keep, or cancel if you prefer to sync later.</string>
   <string name="sync_media_sanity_failed">Mediesynkronisering fullført, men antallet media er enig det samme som på serveren. Neste mediesynkronisering blir en fullstendig synkronisering, for å rette eventuelle feil.</string>
   <string name="sync_media_error">Feil ved synkronisering av medie-data.</string>
   <string name="register_error">Det oppstod en feil. Vennligst prøv igjen senere.</string>
@@ -117,10 +118,10 @@
   <string name="register_mismatch">Brukernavnet eller passord-gjentakelsen samsvarer ikke, eller er tom. Vennligst skriv inn på nytt.</string>
   <string name="registering_message">Oppretter konto.\nVennligst vent...</string>
   <string name="upgrade_decks_zipping">Zipper kortstokker før opplasting.\nVennligst vent...</string>
-  <string name="upgrade_decks_upload">Laster opp zippede kortstokker.\nVennligst vent...</string>
+  <string name="upgrade_decks_upload">Uploading zipped decks\nYou can cancel by pressing back.\nPlease wait...</string>
   <string name="upgrade_decks_waiting">Venter, din plass i køen: %s\nVennligst vent...</string>
-  <string name="upgrade_decks_upgrade_started">Oppgradering startet\nVennligst vent til oppgraderingen er ferdig...</string>
-  <string name="upgrade_decks_downloading">Laster ned oppgradert samling.\nVennligst vent...</string>
+  <string name="upgrade_decks_upgrade_started">Upgrade started\nPlease wait...</string>
+  <string name="upgrade_decks_downloading">Downloading upgraded collection\nYou can cancel by pressing back.\nPlease wait...</string>
   <string name="upgrade_decks_media">Kopierer gamle mediefiler til ny medieplassering.\nVennligst vent...</string>
   <string name="upgrade_decks_message">Det finnes ingen Anki 2.0-samling tilgjengelig, men en eller flere kortstokker i det gamle Anki 1.2-formatet har blitt funnet:%sFor å bruke kortstokkene dine med den nye versjonen av AnkiDroid må de først konverteres til en enkelt samling i det nye Anki 2.0-formatet. Det er tre muligheter:</string>
   <string name="upgrade_decks_message_pos1">Kortstokkene dine konverteres ved første oppstart når du bruker Anki Desktop 2.0. Du kan synkronisere via AnkiWeb eller etterpå bare kopiere den nye samlingen til den mobile enheten din. Kopier kortstokkene dine fra AnkiDroid-mappen(%s) til Anki Desktop 1.2-mappen på datamaskinen din (hvis du ikke allikevel har synkronisert dem) og start Anki Desktop 2.0.</string>
@@ -132,4 +133,6 @@
   <string name="upgrade_decks_failed">Følgende kortstokker kan ikke oppgraderes:\n%sVennligst åpne dem i Anki Desktop og kontroller databasen. Etterpå kan du importere stokkene ved hjelp av Anki Desktop.</string>
   <string name="upgrade_decks_media_failed">Kopiering av mediafiler til ny mediemappe (%1$s) feilet for følgende kortstokker:\n%2$sVennligst flytt mediefilene manuelt.</string>
   <string name="download_deck">Downloading deck (%d kb).\nPlease wait...</string>
+  <string name="sync_sanity_local">Local</string>
+  <string name="sync_sanity_remote">Remote</string>
 </resources>

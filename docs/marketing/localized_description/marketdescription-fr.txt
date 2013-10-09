@@ -1,4 +1,4 @@
-Mémorisez tout avec AnkiDroid !
+Mémorisez n'importe quoi avec AnkiDroid !
 
 AnkiDroid vous permet d'apprendre des flashcards très efficacement en vous les montrant juste avant que ne les oubliez. Entièrement compatible avec le logiciel de répétition espacée Anki (incluant la synchronisation), qui est disponible pour Windows, Linux et MacOS.
 

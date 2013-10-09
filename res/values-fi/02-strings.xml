@@ -22,14 +22,14 @@
 <resources>
   <string name="CardEditorCancelButton">Peruuta</string>
   <string name="CardEditorSaveButton">Tallenna</string>
-  <string name="CardEditorLaterButton">Later</string>
+  <string name="CardEditorLaterButton">Myöhemmin</string>
   <string name="CardEditorLaterMessage">Saved information for later</string>
-  <string name="CardEditorCardDeck">Card deck: %s</string>
-  <string name="CardEditorNoteDeck">Note deck: %s</string>
-  <string name="CardEditorModel">Note type: %s</string>
+  <string name="CardEditorCardDeck">Korttipakka: %s</string>
+  <string name="CardEditorNoteDeck">Merkintäpaka: %s</string>
+  <string name="CardEditorModel">Merkinnän tyyppi: %s</string>
   <string name="CardEditorTags">Tunnisteet: %1$s</string>
   <string name="add_new_tag">Lisää uusi tunniste</string>
-  <string name="note_type">Note type</string>
+  <string name="note_type">Merkinnän tyyppi</string>
   <string name="sdcard_missing_message">SD-kortti ei ole käytettävissä, koska se on kytketty USB-tilassa. Irrota USB käyttääksesi korttipakkojasi.</string>
   <string name="show_whiteboard">Näytä ajastin / valkotaulu</string>
   <string name="hide_whiteboard">Piilota valkotaulu</string>
@@ -40,73 +40,75 @@
   <string name="suspend_leeches">Keskeyttää takiaiset</string>
   <string name="leech_suspend_notification">Kortti om merkitty takiaiseksi ja keskeytettiin</string>
   <string name="leech_notification">Kortti om merkitty takiaiseksi</string>
-  <string name="corrupt_font">Corrupt font file %s</string>
+  <string name="corrupt_font">Korruptoitunut kirjasintiedosto %s</string>
   <string name="about_title">Tietoja</string>
-  <string name="cardeditor_title_add_note">Add Note</string>
-  <string name="cardeditor_title_edit_card">Edit Note</string>
-  <string name="factadder_saving_error">Error saving note</string>
-  <string name="pref_lang_support">Language</string>
-  <string name="saving_facts">Saving note</string>
-  <string name="deck">Deck</string>
+  <string name="cardeditor_title_add_note">Lisää huomautus</string>
+  <string name="cardeditor_title_edit_card">Muokkaa huomautusta</string>
+  <string name="factadder_saving_error">Virhe tallennettaessa huomautusta</string>
+  <string name="pref_lang_support">Kieli</string>
+  <string name="saving_facts">Tallennetaan huomautusta</string>
+  <string name="deck">Pakka</string>
   <string name="add">Lisää</string>
   <string name="close">Sulje</string>
   <string name="select">Valitse</string>
   <string name="saving_changes">Tallennetaan muutokset ...</string>
-  <string name="timebox_reached">Timebox reached!</string>
+  <string name="timebox_reached">Aikaikkuna saavutettu!</string>
   <string name="studyoptions_welcome_title">Tervetuloa AnkiDroidiin</string>
   <string name="studyoptions_no_external_storage_title">Ulkoista Muistia Ei Ole Saatavilla</string>
   <string name="studyoptions_no_external_storage_message">Ulkoista muistia ei ole tällä hetkellä saatavilla. AnkiDroid tarvitsee saada käyttöönsä SD-korttikortti voidaksesi lukea ja ladata Anki-korttipakkoja. Tarkista, että SD-kortti on asennettu ja yritä uudelleen.</string>
-  <string name="fact_adder_intent_title">AnkiDroid Card</string>
-  <string name="fact_adder_swap">Swap</string>
-  <string name="deckpicker_select_dictionary_title">Select Dictionary</string>
-  <string name="deckpicker_select_dictionary_default">Default</string>
-  <string name="card_editor_add_card">Add note</string>
-  <string name="card_editor_reset">Reset</string>
-  <string name="card_editor_copy_card">Copy card</string>
-  <string name="card_editor_reset_card">Reset progress</string>
-  <string name="error_insufficient_memory">Operation not possible due to insufficient memory on your device</string>
-  <string name="tutorial_load">Creating tutorial deck.\nPlease wait...</string>
-  <string name="tutorial_loading_error">Tutorial deck could not be created</string>
-  <string name="rename">Rename</string>
-  <string name="rename_error">Deck %s could not be renamed</string>
-  <string name="help_title">Help</string>
-  <string name="help_online">Online help</string>
-  <string name="help_faq">FAQ</string>
-  <string name="help_tutorial">Tutorial deck</string>
-  <string name="check_db">Check database</string>
-  <string name="check_db_message">Checking database.\nPlease wait...</string>
+  <string name="fact_adder_intent_title">AnkiDroid-kortti</string>
+  <string name="fact_adder_swap">Vaihda</string>
+  <string name="deckpicker_select_dictionary_title">Valitse sanakirja</string>
+  <string name="deckpicker_select_dictionary_default">Oletus</string>
+  <string name="card_editor_add_card">Lisää huomautus</string>
+  <string name="card_editor_reset">Tyhjennä</string>
+  <string name="card_editor_copy_card">Kopioi kortti</string>
+  <string name="card_editor_reset_card">Tyhjennä edistyminen</string>
+  <string name="error_insufficient_memory">Operaatio ei ole mahdollista laitteesi vähäisen muistimäärän vuoksi</string>
+  <string name="tutorial_load">Luodaan ohjepakkaa.\nOdota...</string>
+  <string name="tutorial_loading_error">Ohjepakan luominen epäonnistui</string>
+  <string name="rename">Nimeä uudelleen</string>
+  <string name="rename_error">Pakkaa %s ei voitu nimetä uudelleen</string>
+  <string name="help_title">Ohje</string>
+  <string name="help_online">Verkko-ohje</string>
+  <string name="help_faq">UKK (FAQ)</string>
+  <string name="help_tutorial">Ohjepakka</string>
+  <string name="check_db">Tarkasta tietokanta</string>
+  <string name="check_db_message">Tarkastetaan tietokantaa.\nOdota...</string>
   <string name="simple_interface_hint">Empty %s. Bear in mind that simple interface cannot show pictures/sounds etc.</string>
-  <string name="delete_deck">Deleting deck...\nPlease wait.</string>
-  <string name="menu_cardbrowser">Card browser</string>
-  <string name="show_hint">Show Hint</string>
-  <string name="pref_lang_other">Language Preferences</string>
-  <string name="pref_font_UI">Custom UI Font</string>
-  <string name="info_rate">Rate AnkiDroid</string>
-  <string name="col_load_failed">Collection loading failed.\nPress back to close AnkiDroid.</string>
-  <string name="import_title">Import Cards</string>
-  <string name="import_message">Would you like to add the content of file %s to your collection, or replace your collection with it?</string>
-  <string name="import_message_add">Add</string>
-  <string name="import_message_replace">Replace</string>
-  <string name="import_message_replace_confirm">This will delete your existing collection and replace it with the data of file %s. Are you sure?</string>
-  <string name="import_log_success">Successfully imported %d cards</string>
-  <string name="import_log_error">Import failed</string>
-  <string name="import_log_no_apkg">This is not a valid apkg file</string>
-  <string name="import_importing">Importing cards.\nPlease wait...</string>
-  <string name="import_hint">To import cards, place the apkg file in directory %s and press ok</string>
-  <string name="upgrade_import_no_file_found">No importable apkg file found</string>
-  <string name="custom_study">Custom Study</string>
-  <string name="dyn_deck_desc">This is a special deck for studying outside of the normal schedule. Cards will be automatically returned to their original decks after you review them. Deleting this deck from the deck list will return all remaining cards to their original deck.</string>
+  <string name="delete_deck">Poistetaan pakkaa...\nOdota.</string>
+  <string name="menu_cardbrowser">Korttiselain</string>
+  <string name="show_hint">Näytä vihje</string>
+  <string name="pref_lang_other">Kieliasetukset</string>
+  <string name="pref_font_UI">Mukautettu käyttöliittymäkirjasin</string>
+  <string name="info_rate">Arvostele AnkiDroid</string>
+  <string name="col_load_failed">Kokoelman lataus epäonnistui.\nPaina takaisin-painiketta sulkeaksi AnkiDroidin.</string>
+  <string name="import_title">Tuo kortteja</string>
+  <string name="import_message">Haluatko lisätä tiedoston %s sisällön kokoelmaasi, vai korvata kokoelmasi sillä?</string>
+  <string name="import_message_add">Lisää</string>
+  <string name="import_message_replace">Korvaa</string>
+  <string name="import_message_replace_confirm">Tämä poistaa nykyisen kokoelman ja korvaa sen tiedoston %s tiedoilla. Haluatko varmasti jatkaa?</string>
+  <string name="import_log_success">Tuotiin %d korttia onnistuneesti</string>
+  <string name="import_log_error">Tuonti epäonnistui</string>
+  <string name="import_log_no_apkg">Tämä ei ole validi apkg-tiedosto</string>
+  <string name="import_importing">Tuodaan kortteja.\nOdota...</string>
+  <string name="import_hint">Tuodaksesi kortteja aseta apkg-tiedosto hakemistoon %s ja paina Ok-painiketta</string>
+  <string name="upgrade_import_no_file_found">No importable %1$s file found</string>
+  <string name="custom_study">Mukautettu opiskelu</string>
+  <string name="dyn_deck_desc">Tämä on erityispakka normaalin aikataulun ulkopuolella opiskeluun. Kortit palautetaan automaattisesti niiden alkuperäisiin pakkoihin läpikäynnin jälkeen. Tämän pakan poistaminen palauttaa kaikki sen sisältämät kortit alkuperäispakkoihin.</string>
+  <string name="restart_upgrade_process">Restart upgrade process</string>
+  <string name="exit_wizard">Exit Wizard</string>
   <string-array name="dynOrderLabels">
     <item>Oldest seen first</item>
-    <item>Random</item>
+    <item>Satunnainen</item>
     <item>Increasing intervals</item>
     <item>Decreasing intervals</item>
     <item>Most lapses</item>
-    <item>Order added</item>
+    <item>Lisäysjärjestyksessä</item>
     <item>Order due</item>
   </string-array>
   <plurals name="factadder_cards_added">
-    <item quantity="one">1 card added</item>
-    <item quantity="other">%d cards added</item>
+    <item quantity="one">Yksi kortti lisätty</item>
+    <item quantity="other">%d korttia lisätty</item>
   </plurals>
 </resources>

@@ -27,7 +27,7 @@
   <string name="statistics_learn">Aprendre</string>
   <string name="statistics_cram">Repàs</string>
   <string name="statistics_type_title">Estadístiques</string>
-  <string name="stats_cards">Targetes</string>
+  <string name="stats_cards">Fitxes</string>
   <string name="stats_answers">Respostes</string>
   <string name="stats_minutes">Minuts</string>
   <string name="stats_hours">Hores</string>
@@ -45,7 +45,7 @@
   <string name="deck_summary_average_interval">Interval mitjà:  &lt;b&gt;%.1f&lt;/b&gt; dies</string>
   <string name="deck_summary_answers_correct">Respostes correctes</string>
   <string name="deck_summary_answers_mature">Fitxes madures: &lt;b&gt;%1$.1f%2$s&lt;/b&gt;%2$s (%3$d de %4$d)</string>
-  <string name="deck_summary_answers_young">Targetes joves: &lt;b&gt;%1$.1f%2$s&lt;/b&gt; (%3$d de %4$d)</string>
+  <string name="deck_summary_answers_young">Fitxes joves: &lt;b&gt;%1$.1f%2$s&lt;/b&gt; (%3$d de %4$d)</string>
   <string name="deck_summary_answers_firstseen">Vist per primer cop: &lt;b&gt;%1$.1f%2$s&lt;/b&gt; (%3$d de %4$d)</string>
   <string name="deck_summary_reviews">Comentaris:</string>
   <string name="deck_summary_news">Noves fitxes:</string>

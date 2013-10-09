@@ -22,14 +22,14 @@
 <resources>
   <string name="CardEditorCancelButton">Poništi</string>
   <string name="CardEditorSaveButton">Sačuvaj</string>
-  <string name="CardEditorLaterButton">Later</string>
-  <string name="CardEditorLaterMessage">Saved information for later</string>
-  <string name="CardEditorCardDeck">Card deck: %s</string>
-  <string name="CardEditorNoteDeck">Note deck: %s</string>
-  <string name="CardEditorModel">Note type: %s</string>
-  <string name="CardEditorTags">Tags: %1$s</string>
-  <string name="add_new_tag">Add new tag</string>
-  <string name="note_type">Note type</string>
+  <string name="CardEditorLaterButton">Касније</string>
+  <string name="CardEditorLaterMessage">Сачувана информација</string>
+  <string name="CardEditorCardDeck">Карта шпила: %s</string>
+  <string name="CardEditorNoteDeck">Белешка шпила: %s</string>
+  <string name="CardEditorModel">Тип белешке: %s</string>
+  <string name="CardEditorTags">Ознаке: %1$s</string>
+  <string name="add_new_tag">Додај нову ознаку</string>
+  <string name="note_type">Тип белешке</string>
   <string name="sdcard_missing_message">SD kartica je nedostupna jer se upotrebljava kao USB. Isključite USB da bi dobili pristup špilovima.</string>
   <string name="show_whiteboard">Prikaži tajmer / tablu</string>
   <string name="hide_whiteboard">Sakrij Tablu za Pisanje</string>
@@ -40,73 +40,75 @@
   <string name="suspend_leeches">Suspendiraj Pijavice</string>
   <string name="leech_suspend_notification">Kartica je označena kao pijavica i suspendovana</string>
   <string name="leech_notification">Kartica označena kao pijavica</string>
-  <string name="corrupt_font">Corrupt font file %s</string>
+  <string name="corrupt_font">Оштећена датотека фонта %s</string>
   <string name="about_title">O programu</string>
-  <string name="cardeditor_title_add_note">Add Note</string>
-  <string name="cardeditor_title_edit_card">Edit Note</string>
-  <string name="factadder_saving_error">Error saving note</string>
-  <string name="pref_lang_support">Language</string>
-  <string name="saving_facts">Saving note</string>
-  <string name="deck">Deck</string>
+  <string name="cardeditor_title_add_note">Додај белешку</string>
+  <string name="cardeditor_title_edit_card">Уреди белешку</string>
+  <string name="factadder_saving_error">Грешка при чувању белешке</string>
+  <string name="pref_lang_support">Језик</string>
+  <string name="saving_facts">Сачуване белешке</string>
+  <string name="deck">Шпил</string>
   <string name="add">Додаj</string>
   <string name="close">Zatvori</string>
-  <string name="select">Select</string>
+  <string name="select">Изабери</string>
   <string name="saving_changes">Sačuvavanje izmena...</string>
-  <string name="timebox_reached">Timebox reached!</string>
-  <string name="studyoptions_welcome_title">Welcome to AnkiDroid</string>
+  <string name="timebox_reached">Лимит времена је достигнут!</string>
+  <string name="studyoptions_welcome_title">Добро дошли у AnkiDroid</string>
   <string name="studyoptions_no_external_storage_title">Nema SD Kartice</string>
   <string name="studyoptions_no_external_storage_message">Нема екстерних складиштење је тренутно доступна. АнкиДроид треба да имају приступ сдцард како би се читати и учитајте своје Анки палубама. Проверите да ли сдцард је монтирана и покушајте поново.</string>
-  <string name="fact_adder_intent_title">AnkiDroid Card</string>
-  <string name="fact_adder_swap">Swap</string>
-  <string name="deckpicker_select_dictionary_title">Select Dictionary</string>
-  <string name="deckpicker_select_dictionary_default">Default</string>
-  <string name="card_editor_add_card">Add note</string>
-  <string name="card_editor_reset">Reset</string>
-  <string name="card_editor_copy_card">Copy card</string>
-  <string name="card_editor_reset_card">Reset progress</string>
-  <string name="error_insufficient_memory">Operation not possible due to insufficient memory on your device</string>
-  <string name="tutorial_load">Creating tutorial deck.\nPlease wait...</string>
-  <string name="tutorial_loading_error">Tutorial deck could not be created</string>
-  <string name="rename">Rename</string>
-  <string name="rename_error">Deck %s could not be renamed</string>
-  <string name="help_title">Help</string>
-  <string name="help_online">Online help</string>
-  <string name="help_faq">FAQ</string>
-  <string name="help_tutorial">Tutorial deck</string>
-  <string name="check_db">Check database</string>
-  <string name="check_db_message">Checking database.\nPlease wait...</string>
-  <string name="simple_interface_hint">Empty %s. Bear in mind that simple interface cannot show pictures/sounds etc.</string>
-  <string name="delete_deck">Deleting deck...\nPlease wait.</string>
-  <string name="menu_cardbrowser">Card browser</string>
-  <string name="show_hint">Show Hint</string>
-  <string name="pref_lang_other">Language Preferences</string>
-  <string name="pref_font_UI">Custom UI Font</string>
-  <string name="info_rate">Rate AnkiDroid</string>
-  <string name="col_load_failed">Collection loading failed.\nPress back to close AnkiDroid.</string>
-  <string name="import_title">Import Cards</string>
-  <string name="import_message">Would you like to add the content of file %s to your collection, or replace your collection with it?</string>
-  <string name="import_message_add">Add</string>
-  <string name="import_message_replace">Replace</string>
-  <string name="import_message_replace_confirm">This will delete your existing collection and replace it with the data of file %s. Are you sure?</string>
-  <string name="import_log_success">Successfully imported %d cards</string>
-  <string name="import_log_error">Import failed</string>
-  <string name="import_log_no_apkg">This is not a valid apkg file</string>
-  <string name="import_importing">Importing cards.\nPlease wait...</string>
-  <string name="import_hint">To import cards, place the apkg file in directory %s and press ok</string>
-  <string name="upgrade_import_no_file_found">No importable apkg file found</string>
-  <string name="custom_study">Custom Study</string>
-  <string name="dyn_deck_desc">This is a special deck for studying outside of the normal schedule. Cards will be automatically returned to their original decks after you review them. Deleting this deck from the deck list will return all remaining cards to their original deck.</string>
+  <string name="fact_adder_intent_title">AnkiDroid карта</string>
+  <string name="fact_adder_swap">Размена</string>
+  <string name="deckpicker_select_dictionary_title">Изабери речник</string>
+  <string name="deckpicker_select_dictionary_default">Подразумевано</string>
+  <string name="card_editor_add_card">Додај белешку</string>
+  <string name="card_editor_reset">Ресетуј</string>
+  <string name="card_editor_copy_card">Копирај карту</string>
+  <string name="card_editor_reset_card">Ресетуј прогрес</string>
+  <string name="error_insufficient_memory">Операција је немогућа због недостатка меморије на вашем уређају</string>
+  <string name="tutorial_load">Креирање обучавајућег шпила.\nМолим сачекајте...</string>
+  <string name="tutorial_loading_error">Обучавајући шпил не може бити креиран</string>
+  <string name="rename">Преименуј</string>
+  <string name="rename_error">Шпил %s не може бити преименован</string>
+  <string name="help_title">Помоћ</string>
+  <string name="help_online">Онлајн помоћ</string>
+  <string name="help_faq">Питања и одговори</string>
+  <string name="help_tutorial">Обучавајући шпил</string>
+  <string name="check_db">Провера базе података</string>
+  <string name="check_db_message">Провера базе података.\nМолим сачекајте...</string>
+  <string name="simple_interface_hint">Празан %s. Имајте у виду да просто сучеље не може да приказује фотографије/звуке итд.</string>
+  <string name="delete_deck">Брисање шпила...\nМолим сачекајте.</string>
+  <string name="menu_cardbrowser">Прегледач карата</string>
+  <string name="show_hint">Приказуј савете</string>
+  <string name="pref_lang_other">Језичке поставке</string>
+  <string name="pref_font_UI">Фонт корисничког сучеља</string>
+  <string name="info_rate">Оцена AnkiDroid</string>
+  <string name="col_load_failed">Прекид учитавања колекције.\nПритисните дугме назад, да бисте затворили AnkiDroid.</string>
+  <string name="import_title">Увоз карата</string>
+  <string name="import_message">Желите ли да додате податке датотеке %s у вашу колекцију или да замените вашу колекцију тим подацима?</string>
+  <string name="import_message_add">Додај</string>
+  <string name="import_message_replace">Замени</string>
+  <string name="import_message_replace_confirm">Избрисати вашу постојећу колекцију и заменити је подацима из датотеке %s. Да ли сте сигурни?</string>
+  <string name="import_log_success">Успешно увезено %d карата</string>
+  <string name="import_log_error">Неуспешан увоз</string>
+  <string name="import_log_no_apkg">Ово је неодговарајућа apkg датотека</string>
+  <string name="import_importing">Увоз карата.\nМолим сачекајте...</string>
+  <string name="import_hint">Да бисте увезли карте, ставите датотеке apkg у фасциклу %s и кликните ОК</string>
+  <string name="upgrade_import_no_file_found">Пронађена је неувезена датотека %1$s</string>
+  <string name="custom_study">Допунска обука</string>
+  <string name="dyn_deck_desc">Ово су специјални шпилови за учење ван нормалног распореда. После прегледа, карте ће аутоматски бити враћене у њихов изворни шпил. Брисање овог шпила из списка шпилова, вратиће све остале карте у њихове изворне шпилове.</string>
+  <string name="restart_upgrade_process">Рестартуј процес обнављања</string>
+  <string name="exit_wizard">Излаз из чаробњака</string>
   <string-array name="dynOrderLabels">
-    <item>Oldest seen first</item>
-    <item>Random</item>
-    <item>Increasing intervals</item>
-    <item>Decreasing intervals</item>
-    <item>Most lapses</item>
-    <item>Order added</item>
-    <item>Order due</item>
+    <item>Најстарије се приказују прве</item>
+    <item>Случајно</item>
+    <item>Растући интервал</item>
+    <item>Опадајући интервал</item>
+    <item>Највећи лапсуси</item>
+    <item>Додат редослед прегледа</item>
+    <item>Одговарајући редослед</item>
   </string-array>
   <plurals name="factadder_cards_added">
-    <item quantity="one">1 card added</item>
-    <item quantity="other">%d cards added</item>
+    <item quantity="one">1 карта је додата</item>
+    <item quantity="other">%d карата је додато</item>
   </plurals>
 </resources>

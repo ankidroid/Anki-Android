@@ -60,7 +60,7 @@
   <string name="contextmenu_deckpicker_optimize_deck">Optimalizovat databázi</string>
   <string name="contextmenu_deckpicker_rename_deck">Přejmenovat balíček</string>
   <string name="contextmenu_deckpicker_collapse_deck">Sbalit balíček</string>
-  <string name="contextmenu_deckpicker_inflate_deck">Rozšířit balíček</string>
+  <string name="contextmenu_deckpicker_inflate_deck">Rozbalit balíček</string>
   <string name="contextmenu_deckpicker_set_custom_dictionary">Nastavit vlastní slovník</string>
   <string name="menu_download_deck">Stáhnout balíček</string>
   <string name="menu_download_shared_deck">Sdílený balíček</string>
@@ -68,7 +68,7 @@
   <string name="menu_preferences">Nastavení</string>
   <string name="menu_about">O aplikaci</string>
   <string name="menu_dismiss_note">Zamítnout poznámku...</string>
-  <string name="menu_bury_note">Odložit poznámku</string>
+  <string name="menu_bury_note">Přeskočit poznámku</string>
   <string name="menu_suspend_card">Vyřadit kartu</string>
   <string name="menu_suspend_note">Pozastavit poznámku</string>
   <string name="menu_delete_note">Odstranit poznámku</string>
@@ -80,7 +80,7 @@
   <string name="menu_unmark_card">Zrušit označení karty</string>
   <string name="new_deck">Nový balíček</string>
   <string name="create">Vytvořit</string>
-  <string name="new_dynamic_deck">Nový dynamický balíček</string>
+  <string name="new_dynamic_deck">Nový filtrovaný balíček</string>
   <string name="studyoptions_feedback">Feedback</string>
   <string name="studyoptions_load_tutorial_deck">Vytvořit kurz</string>
   <string name="night_mode">Noční režim</string>
@@ -101,9 +101,20 @@
   <string name="studyoptions_congrats_custom">Pro studium mimo normální plán klepněte na tlačítko Vlastní studium.</string>
   <string name="sd_card_not_mounted">Paměťová karta není vložena.\n\n Svou kolekci si přesto můžete uložit do interní paměti, avšak toto není doporučeno, protože dostupnost tohoto souboru není tak snadná. Tuto volbu aktivujete v nastavení (které otevřete kliknutím na tento text).</string>
   <string name="studyoptions_options">Možnosti</string>
-  <string name="empty_cloze_warning">Please edit this note and add some cloze deletions. (%1$s)</string>
+  <string name="empty_cloze_warning">Prosím upravte tuto poznámku a přidejte nějaké doplňovačky.(%1$s)</string>
   <string name="help_cloze">Pomoc</string>
   <string name="button_sync">Synchronizovat</string>
+  <string name="restart">Restartovat</string>
+  <string name="do_nothing">Nedělat nic</string>
+  <string name="more_options">Další možnosti</string>
+  <string name="now">Nyní</string>
+  <string name="back">Zpět</string>
+  <string name="ankiweb">AnkiWeb</string>
+  <string name="usb">USB</string>
+  <string name="_import">Importovat</string>
+  <string name="confirm">Potvrdit</string>
+  <string name="internet">Internet</string>
+  <string name="pc">PC</string>
   <string-array name="next_review_s">
     <item>1 sekunda</item>
     <item>1 minuta</item>

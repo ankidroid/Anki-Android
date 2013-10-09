@@ -93,9 +93,11 @@
   <string name="import_log_no_apkg">Questo non è un file apkg valido</string>
   <string name="import_importing">Importazione carte.\nAttendi...</string>
   <string name="import_hint">Per importare carte, inserisci il file apkg nella cartella %s e premi ok</string>
-  <string name="upgrade_import_no_file_found">Nessun file apkg importabile trovato</string>
+  <string name="upgrade_import_no_file_found">Nessun file importabile %1$s trovato</string>
   <string name="custom_study">Studio personalizzato</string>
   <string name="dyn_deck_desc">Questo è un mazzo speciale per studiare al di fuori della pianificazione normale. Le carte ritorneranno automaticamente nel mazzo originale dopo che le hai ripetute. L\'eliminazione di questo mazzo dall\'elenco dei mazzi riporterà tutte le carte rimanenti nel loro mazzo originale.</string>
+  <string name="restart_upgrade_process">Riavvia il processo di aggiornamento</string>
+  <string name="exit_wizard">Esci dalla procedura guidata</string>
   <string-array name="dynOrderLabels">
     <item>Più vecchie visualizzate per prime</item>
     <item>Casuale</item>

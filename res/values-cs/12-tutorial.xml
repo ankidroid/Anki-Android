@@ -26,7 +26,7 @@
     <item><![CDATA[Karty jsou shromažďovány do balíčků a můžou být organizovány pomocí nejrůznějších štítků.]]></item> 
     <item><![CDATA[K dispozici jsou dva způsoby, jak lze získat nové karty:<br/>Můžete si buď stáhnout sdílené balíčky ostatních uživatelů (zvolte &quot;Stáhnout balíček&quot; v části Všechny balíčky volbou v menu), nebo je můžete vytvářet sami]]></item> 
     <item><![CDATA[Nicméně, vytváření vlastních balíčků je důležité, aby vyhovovaly dokonale vašim potřebám. To můžete udělat přímo v AnkiDroid...]]></item> 
-    <item><![CDATA[Let\'s have a look on the top bar:<br />In the left top corner you find some numbers. The blue one tells you, how many new cards are still projected for today. The red number counts the failed cards (answered by &quot;again&quot;),]]></item> 
+    <item><![CDATA[Pojďme se podívat na horní lištu:<br/>V levém horním rohu najdete několik čísel. Modré vám řekne, kolik nových karet je pro dnešek připraveno k zobrazení. Červené číslo je počet neúspěšných karty (odpověď \"Znovu\"),]]></item> 
     <item><![CDATA[V pravém rohu najdete informaci o čase přemyšlení nad aktuální kartou a vaše výsledky.]]></item> 
     <item><![CDATA[Byť lze použít AnkiDroid samostatně, je plně propojen s AnkiWeb pomocí synchronizace.]]></item> 
     <item><![CDATA[To byly hlavní body použití AnkiDroid.<br/><br>Pro další informace o konceptu Anki, navštivte http://ankisrs.net/]]></item> 
@@ -41,7 +41,7 @@
     <item><![CDATA[Naučíte se to rychle, když začnete používat AnkiDroid.]]></item> 
     <item><![CDATA[Najdete zde tisíce balíčků ke stažení a pravděpodobně existují některé, které jsou užitečné i pro vás.]]></item> 
     <item><![CDATA[... nebo (a o něco pohodlněji) v aplikaci pro pc Anki (zdarma ke stažení v http://ankisrs.net/).<br><br> Lze velmi snadno synchronizovat balíčky s aplikací pro pc, takže přenos dat není problém.]]></item> 
-    <item><![CDATA[the green one shows the number of cards you\'ve already learned before and which are due to review today.<br />The type of the actual cards is specified by an underline.]]></item> 
+    <item><![CDATA[zelené ukazuje počet karet, které jste se již dříve učili a které jsou připravené k dnešnímu přezkoušení.<br/>Typ aktuálně zobrazené karty je určen podtržením čísla.]]></item> 
     <item><![CDATA[Horní pruh ukazuje váš proces učení, dolní udává procento odpovědí Ano.]]></item> 
     <item><![CDATA[Tedy, můžete snadno synchronizovat své sbírky mezi AnkiDroid a Anki pro PC (k dispozici pro Linux, Windows, Mac) a využít toto pro pohodlnější přidávání a správu vašich karet.]]></item> 
     <item><![CDATA[Zkuste to teď chvíli používat program a zjistěte, zda odpovídá vašim potřebám.<br><br>Možná, že můžete začít s přehledem balíčků (klikněte na menu na hlavní obrazovce a vyberte \"Všechny balíčky\"), kde si můžete stáhnout již vytvořené balíčky nebo si vytvořit vlastní (stačí zde použít menu).]]></item> 

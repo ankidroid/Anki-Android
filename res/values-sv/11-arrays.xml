@@ -97,7 +97,7 @@
   <string-array name="leech_action_labels">
     <item>Åsidosätt kort</item>
     <item>Endast etikett</item>
-    <item>Återställ som ny</item>
+    <item>Återställ som nytt</item>
   </string-array>
   <string-array name="new_order_labels">
     <item>Nya kort i slumpmässig ordning</item>
@@ -108,18 +108,18 @@
     <item>Slumpmässigt</item>
     <item>Ökande intervall</item>
     <item>Minskande intervall</item>
-    <item>Most lapsed</item>
+    <item>Mest förfallna</item>
     <item>Ordningen de lades till</item>
     <item>Efter förfallotid</item>
-    <item>Latest added first</item>
+    <item>Senast tillagda först</item>
   </string-array>
   <string-array name="custom_study_options_labels">
-    <item>Increase today\'s new card limit</item>
-    <item>Increase today\'s review card limit</item>
-    <item>Review forgotten cards</item>
-    <item>Review ahead</item>
-    <item>Study a random selection of cards</item>
-    <item>Preview new cards</item>
-    <item>Limit to particular tags</item>
+    <item>Öka dagens gräns för nya kort</item>
+    <item>Öka dagens gräns för kortrepetitioner</item>
+    <item>Repetera glömda kort</item>
+    <item>Repetera i förväg</item>
+    <item>Studera slumpvalda kort</item>
+    <item>Granska nya kort</item>
+    <item>Begränsa till vissa taggar</item>
   </string-array>
 </resources>

@@ -37,9 +37,9 @@
   <string name="session_question_limit_reached">目標単語数を達成</string>
   <string name="session_time_limit_reached">目標時間を達成</string>
   <string name="cram_edit_warning">総復習中はカードの編集はできません</string>
-  <string name="suspend_leeches">邪魔カードの非表示</string>
-  <string name="leech_suspend_notification">このカードは邪魔カードとして登録されました</string>
-  <string name="leech_notification">邪魔カードとして登録されました</string>
+  <string name="suspend_leeches">学習困難カードの非表示</string>
+  <string name="leech_suspend_notification">このカードは学習困難カードとして登録されました</string>
+  <string name="leech_notification">学習困難カードとして登録されました</string>
   <string name="corrupt_font">請われているフォントファイル %s</string>
   <string name="about_title">情報</string>
   <string name="cardeditor_title_add_note">ノートの追加</string>
@@ -93,9 +93,11 @@
   <string name="import_log_no_apkg">これは取り込み可能なapkgファイルではありません</string>
   <string name="import_importing">カード取得中です\nしばらくお待ちください</string>
   <string name="import_hint">カードを取り込むためにapkg ファイルをフォルダに保管してください %s そしてＯＫボタンをクリックしてください</string>
-  <string name="upgrade_import_no_file_found">取り込み可能なapkgファイルは見つかりません</string>
+  <string name="upgrade_import_no_file_found">読み込み可能な %1$ のファイルが見つかりません</string>
   <string name="custom_study">特設学習</string>
-  <string name="dyn_deck_desc">これは、通常のスケジュール外の勉強のための特別の単語帳です。それらをレビューした後、カードは自動的に戻されます。この単語帳を単語帳リストから削除する事で残りのカードすべてがオリジナルの単語帳に戻されます。</string>
+  <string name="dyn_deck_desc">指定された検索条件で抽出されたカードを集めた特設の単語帳です。学習スケジュールは無視されます。学習後、又は、単語帳を削除すると、各カードは元の単語帳に戻されます。</string>
+  <string name="restart_upgrade_process">アップグレードを再開します。</string>
+  <string name="exit_wizard">ウィザードの終了</string>
   <string-array name="dynOrderLabels">
     <item>古いものを先頭に</item>
     <item>ランダム</item>

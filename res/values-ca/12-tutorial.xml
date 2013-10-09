@@ -17,33 +17,33 @@
  
 <resources> 
  <string-array name="tutorial_questions"> 
-    <item><![CDATA[Gràcies per instal·lar l\'AnkiDroid!<br />Això és una breu introducció.<br />El que veieu ara és la <span style=\'font-weight:600;\'>pregunta</span> part d\'una targeta.<br />Cliqueu si us plau, al botó gran de sota...]]></item> 
-    <item><![CDATA[Ara es mostra la targeta següent.<br/>La idea és simple: Com a les targetes de catró, escribiu la pregunta a la part del davant i la resposta a la part del darrera de les vostres targetes.<br/>(cliqueu el botó per veure la part del darrera)]]></item> 
+    <item><![CDATA[Gràcies per instal·lar l\'AnkiDroid!<br />Això és una breu introducció.<br />El que veieu ara és la <span style=\'font-weight:600;\'>pregunta</span> part d\'una fitxa.<br />Cliqueu si us plau, al botó gran de sota...]]></item> 
+    <item><![CDATA[Ara es mostra la fitxa següent.<br/>La idea és simple: Com a les targetes de catró, escribiu la pregunta a la part del davant i la resposta a la part del darrera de les vostres fitxes.<br/>(cliqueu el botó per veure la part del darrera)]]></item> 
     <item><![CDATA[&quot;Quina és la capital de Burkina Faso?&quot;<br/>Penseu una mica la resposta i cliqueu &quot;mostra la resposta&quot;]]></item> 
-    <item><![CDATA[Per sobre de cada botó de resposta, trobareu informació sobre el temps, després del qual la targeta es mostrarà de nou en respondre amb aquest botó. ]]></item> 
-    <item><![CDATA[La idea és mostrar-vos de nou la targeta, just abans que la oblideu. Els estudis empírics han demostrat que d\'aquesta forma la informació significativa es pot aprendre més eficientment. ]]></item> 
-    <item><![CDATA[Ara sobre la organització i AnkiDroid:<br/><br>Tota la informació ha d\'estar en parelles de preguntes i respostes. Si voleu aprendre en la direcció contrària, heu de crear una altra targeta amb la informació intercanviada. ]]></item> 
-    <item><![CDATA[Les targetes s\'agrupen en paquets i es poden organitzar amb l&#39;ajuda de tot tipus d&#39;etiquetes.]]></item> 
-    <item><![CDATA[Hi ha dues maneres d\'obtenir noves targetes:<br/>Podeu descàrregar paquets preparats per altres usuaris (seleccioneu \"paquets compartits\" a la pantalla resum del paquet) o bé podeu generar els vostres propis paquets]]></item> 
+    <item><![CDATA[Per sobre de cada botó de resposta, trobareu informació sobre el temps, després del qual la fitxa es mostrarà de nou en respondre amb aquest botó. ]]></item> 
+    <item><![CDATA[La idea és mostrar-vos de nou la fitxa, just abans que la oblideu. Els estudis empírics han demostrat que d\'aquesta forma la informació significativa es pot aprendre més eficientment. ]]></item> 
+    <item><![CDATA[Ara sobre la organització i AnkiDroid:<br/><br>Tota la informació ha d\'estar en parelles de preguntes i respostes. Si voleu aprendre en la direcció contrària, heu de crear una altra fitxa amb la informació intercanviada. ]]></item> 
+    <item><![CDATA[Les fitxes s\'agrupen en paquets i es poden organitzar amb l&#39;ajuda de tot tipus d&#39;etiquetes.]]></item> 
+    <item><![CDATA[Hi ha dues maneres d\'obtenir noves fitxes:<br/>Podeu descàrregar paquets preparats per altres usuaris (seleccioneu \"paquets compartits\" a la pantalla resum del paquet) o bé podeu generar els vostres propis paquets]]></item> 
     <item><![CDATA[Però de tota manera, la creació de paquets pròpis és essencial per satisfer les vostres necessitats a la perfecció. Podeu fer això directament a AnkiDroid ... ]]></item> 
-    <item><![CDATA[Anem a fer una ullada a la barra superior:<br>A la cantonada superior esquerra trobareu alguns números. El blau ens diu que, com quantes targetes noves falten per veure avui. El número vermell indica les respostes fallades (respostes amb \"Nou\"),]]></item> 
-    <item><![CDATA[A la cantonada dreta trobareu informació sobre el temps que heu estat pensant en aquesta targeta i sobre el vostre rendiment.]]></item> 
+    <item><![CDATA[Anem a fer una ullada a la barra superior:<br>A la cantonada superior esquerra trobareu alguns números. El blau ens diu que, com quantes fitxes noves falten per veure avui. El número vermell indica les fitxes fallades (respostes amb \"Nou\"),]]></item> 
+    <item><![CDATA[A la cantonada dreta trobareu informació sobre el temps que heu estat pensant en aquesta fitxa i sobre el vostre rendiment.]]></item> 
     <item><![CDATA[Encara que podeu utilitzar AnkiDroid de forma independent, està totalment connectat a AnkiWeb, el servidor de sincronització de l\'Anki per a l\'Escriptori (disponible per a Linux, Windows i Mac).]]></item> 
     <item><![CDATA[Aquests han estat els principals punts d\'ús AnkiDroid. <br/><br> Per més informació sobre el concepte clau de Anki, visiteu http://ankisrs.net/ ]]></item> 
  </string-array>
  <string-array name="tutorial_answers">
-    <item><![CDATA[... per tal de veure la <span style=\'font-weight:600;\'>resposta</span> l\'altre part de la targeta (sota de la línia).<br />Cliqueu el botó de la dreta]]></item> 
-    <item><![CDATA[Posem per cas que voleu aprendre les capitals del món. I posem que la pregunta és...<br/>(cliqueu un dels botons per mostrar la propera targeta)]]></item> 
-    <item><![CDATA[&quot;Ouagadougou&quot; és la resposta correcta. <br/>No ho sabieu? Cliqueu &quot;De nou&quot; per tornar a veure la targeta en un parell de minuts. Si no, cliqueu els altres botons, segons la dificultat de la pregunta.]]></item> 
-    <item><![CDATA[ Aquest període de temps es calcula a partir de l\'última vegada que vàreu respondre la targeta, l&#39;elecció de la facilitat actual i la facilitat de triar les respostes anteriors de la targeta.]]></item> 
+    <item><![CDATA[... per tal de veure la <span style=\'font-weight:600;\'>resposta</span> l\'altre part de la fitxa (sota de la línia).<br />Cliqueu el botó de la dreta]]></item> 
+    <item><![CDATA[Posem per cas que voleu aprendre les capitals del món. I posem que la pregunta és...<br/>(cliqueu un dels botons per mostrar la propera fitxa)]]></item> 
+    <item><![CDATA[&quot;Ouagadougou&quot; és la resposta correcta. <br/>No ho sabieu? Cliqueu &quot;De nou&quot; per tornar a veure la fitxa en un parell de minuts. Si no, cliqueu els altres botons, segons la dificultat de la pregunta.]]></item> 
+    <item><![CDATA[ Aquest període de temps es calcula a partir de l\'última vegada que vàreu respondre la fitxa, l&#39;elecció de la facilitat actual i la facilitat de triar les respostes anteriors de la fitxa.]]></item> 
     <item><![CDATA[ Per obtenir més informació sobre la repetició espaiada, visiteu: <br> http://en.wikipedia.org/wiki/Spaced_repetition_system]]></item> 
     <item><![CDATA[ No us preocupeu, això es pot fer de forma automàtica. No cal introduir la mateixa informació dos cops.]]></item> 
     <item><![CDATA[ Ho aprendreu de seguida quan començeu a utilitzar AnkiDroid.]]></item> 
     <item><![CDATA[Trobareu milers de paquets preparats per descarregar i probablement hi ha alguns que us seràn d#39;utilitat.]]></item> 
     <item><![CDATA[ ... o (una mica més còmode), amb la aplicació Anki d\'escriptori (que es pot descarregar de forma gratuïta a http://ankisrs.net/). <br><br> Podeu sincronitzar els vostres paquets amb l&#39;aplicació d&#39;escriptori molt fàcilment, de manera que la transferència de dades no és cap problema.]]></item> 
-    <item><![CDATA[el verd mostra el número de targetes que ja heu après abans i que es revisaran avui.<br>Els subrratllat indica el tipus de les targetes actuals.</separator>]]></item> 
+    <item><![CDATA[el verd mostra el número de fitxes que ja heu après abans i que es revisaran avui.<br>Els subrratllat indica el tipus de les fitxes actuals.]]></item> 
     <item><![CDATA[ La barra superior mostra el progrés, la inferior indica el percentatge de respostes afirmatives.]]></item> 
-    <item><![CDATA[Per tant, podeu sincronitzar fàcilment la vostra col.lecció de targetes entre AnkiDroid i Anki per a l\'Escriptori i utilitzar aquest darrer per afegir targetes i gestionar-les de forma més còmode.]]></item> 
+    <item><![CDATA[Per tant, podeu sincronitzar fàcilment la vostra col.lecció entre AnkiDroid i Anki per a l\'Escriptori i utilitzar aquest darrer per afegir fitxes i gestionar-les de forma més còmode.]]></item> 
     <item><![CDATA[ Proveu-hp una mica ara i veieu si s&#39;ajusta a les vostres necessitats. <br><br> Podeu començar amb el paquet de presentació (premeu menú a la pantalla principal i trieu l&#39;opció \"tots els paquets\"), on es poden descarregar paquets prefabricats o generar els vostres propis (amb el menú que trobareu allà).]]></item> 
  </string-array>
 </resources>

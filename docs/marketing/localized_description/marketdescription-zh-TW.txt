@@ -1,37 +1,37 @@
-利用AnkiDroid記憶任何東西!
+用 AnkiDroid 記住任何東西!
 
-AnkiDroid lets you learn flashcards very efficiently by showing them just before you will forget. It is fully compatible with the spaced repetition software Anki (including synchronization), which is available for Windows, Linux and MacOS.
+AnkiDroid 在你快要忘記之前讓單字卡再次出現。 它完全相容於間隔式複習軟體 Anki （包括同步），Anki 可用於 Windows、 Linux 和 MacOS。
 
-Study all sorts of things wherever and whenever you want. 好好利用乘巴士、排隊等的空閒時間!
+無論何時何地，只要你想要，就可以學習各樣的知識。 可以好好利用閒置時間，像是搭乘巴士、在超市排隊、或其他需要等候的狀況!
 
-Create your own flashcard decks or download free decks compiled for many languages and topics (more than 6000 available).
+可以下載許多種語言和不同主題的牌組(超過6000個可用的牌組)，也可以建立自己的單字卡。
 
-Add material through the desktop application Anki or directly through Ankidroid. The application even supports adding material automatically from a dictionary!
+教材可透過電腦版 Anki 來新增，或是直接使用 AnkiDroid 來新增。 這應用程式甚至支援自動從字典中新增教材!
 
-★ Key features:
-• supported flashcard contents: text, images, sounds, LaTeX
-• spaced repetition (supermemo 2 algorithm)
-• text-to-speech integration
-• more than 6000 premade decks
-• progress widget
-• detailed statistics
-• syncing with AnkiWeb
-• open source
+★ 主要功能：
+• 支援的單字卡內容： 文字、 圖像、 聲音、 LaTeX
+• 間隔式複習 （supermemo 2 演算法）
+• 整合文字轉語音功能
+• 超過 6000 個預製的牌組
+• 進度小工具
+• 詳細的統計資料
+• 與 AnkiWeb 進行同步
+• 開放原始碼
 
-★ Additional features:
-• write answers (optional)
-• whiteboard
-• card editor/adder
-• card browser
-• tablet layout
-• import existing collection files (via Anki Desktop)
-• dictionary integration (ColorDict, GoldenDict, Leo.org, Aedict, diverse web dictionaries)
-• add cards by intent from other applications like dictionaries
-• custom font support
-• full backup system
-• navigation by swipe, tap, shake
-• fully customisable
-• dynamic deck handling
-• night mode
-• 27 localisations
-• All previous AnkiDroid versions can be downloaded from the website
+★ 附加功能：
+• 寫答案 （可選）
+• 白板
+• 編輯卡片/新增卡片
+• 卡片瀏覽器
+• 平板電腦佈局
+• 匯入現有的牌組收藏 （透過電腦版 Anki）
+• 字典整合 （ColorDict，GoldenDict，Leo.org，Aedict 以及許多的網路詞典)
+• 從其他應用程式，如字典，新增卡片內容
+• 支援自訂字體
+• 完整的備份系統
+• 可經由撥動、輕觸和搖動來瀏覽
+• 自訂性很高
+• 處理動態牌組
+• 夜間模式
+• 翻譯成 27 種語系
+• 所有以前的 AnkiDroid 版本都還可以從網站上下載

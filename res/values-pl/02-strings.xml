@@ -24,12 +24,12 @@
   <string name="CardEditorSaveButton">Zapisz</string>
   <string name="CardEditorLaterButton">Później</string>
   <string name="CardEditorLaterMessage">Zapisz informacje na później</string>
-  <string name="CardEditorCardDeck">Karta talii: %s</string>
-  <string name="CardEditorNoteDeck">Talia: %s</string>
+  <string name="CardEditorCardDeck">Talia karty: %s</string>
+  <string name="CardEditorNoteDeck">Talia notatki: %s</string>
   <string name="CardEditorModel">Rodzaj notatki: %s</string>
   <string name="CardEditorTags">Etykiety: %1$s</string>
   <string name="add_new_tag">Dodaj nową etykietę</string>
-  <string name="note_type">Rodzaj notatki</string>
+  <string name="note_type">Typ notatki</string>
   <string name="sdcard_missing_message">Karta SD jest niedostępna, ponieważ jest ona używana jako pamięć masowa USB. Odłącz USB, aby uzyskać dostęp do Twoich talii.</string>
   <string name="show_whiteboard">Pokaż zegar / tablicę</string>
   <string name="hide_whiteboard">Ukryj tablicę</string>
@@ -53,10 +53,10 @@
   <string name="select">Wybierz</string>
   <string name="saving_changes">Trwa zapisywanie zmian...</string>
   <string name="timebox_reached">Osiągnięto limit czasu!</string>
-  <string name="studyoptions_welcome_title">Witamy w AnkiDroid</string>
+  <string name="studyoptions_welcome_title">Witamy w AnkiDroidzie</string>
   <string name="studyoptions_no_external_storage_title">Brak zewnętrznej pamięci masowej</string>
-  <string name="studyoptions_no_external_storage_message">Brak zewnętrznej pamięci masowej. AnkiDroid potrzebuje dostępu do karty SD aby móc wczytać Twoje talie. Sprawdź, czy karta SD jest zamontowana i spróbuj ponownie.</string>
-  <string name="fact_adder_intent_title">Karta AnkiDroid</string>
+  <string name="studyoptions_no_external_storage_message">Brak zewnętrznej pamięci masowej. AnkiDroid potrzebuje dostępu do karty SD, aby móc wczytać Twoje talie. Sprawdź, czy karta SD jest zamontowana i spróbuj ponownie.</string>
+  <string name="fact_adder_intent_title">Karta AnkiDroida</string>
   <string name="fact_adder_swap">Zamień</string>
   <string name="deckpicker_select_dictionary_title">Wybierz słownik</string>
   <string name="deckpicker_select_dictionary_default">Domyślny</string>
@@ -87,15 +87,17 @@
   <string name="import_message">Czy chcesz dodać zawartość pliku %s do swojej kolekcji, albo zastąpić swoją kolekcję?</string>
   <string name="import_message_add">Dodaj</string>
   <string name="import_message_replace">Zastąp</string>
-  <string name="import_message_replace_confirm">This will delete your existing collection and replace it with the data of file %s. Are you sure?</string>
+  <string name="import_message_replace_confirm">Istniejąca kolekcja zostanie usunięta i zastąpiona danymi z pliku %s. Czy na pewno?</string>
   <string name="import_log_success">Pomyślnie zaimportowano %d kart</string>
   <string name="import_log_error">Importowanie nie powiodło się</string>
   <string name="import_log_no_apkg">To nie jst prawidłowy plik apkg</string>
   <string name="import_importing">Importowanie kart.\nProszę czekać...</string>
   <string name="import_hint">Aby zaimportować karty, umieść plik apkg w katalogu %s i naciśnij ok</string>
-  <string name="upgrade_import_no_file_found">Nie znaleziono prawidłowego pliku apkg do zaimportowania</string>
-  <string name="custom_study">Custom Study</string>
-  <string name="dyn_deck_desc">This is a special deck for studying outside of the normal schedule. Cards will be automatically returned to their original decks after you review them. Deleting this deck from the deck list will return all remaining cards to their original deck.</string>
+  <string name="upgrade_import_no_file_found">Nie znaleziono żadnych plików do zaimportowania (%1$s)</string>
+  <string name="custom_study">Nauka niestandardowa</string>
+  <string name="dyn_deck_desc">To jest specjalna talia do nauki poza normalnym trybem. Karty automatycznie powrócą do oryginalnych talii po ich przejrzeniu. Usunięcie tej talii z listy spowoduje przywrócenie pozostałych w niej kart do oryginalnych talii.</string>
+  <string name="restart_upgrade_process">Ponowne uruchomienie aktualizacji</string>
+  <string name="exit_wizard">Zakończ kreator</string>
   <string-array name="dynOrderLabels">
     <item>Najstarszy jako pierwszy</item>
     <item>Losowo</item>
@@ -103,7 +105,7 @@
     <item>Zmniejszane interwały</item>
     <item>Najwięcej pomyłek</item>
     <item>Kolejność dodana</item>
-    <item>Order due</item>
+    <item>W kolejności do przejrzenia</item>
   </string-array>
   <plurals name="factadder_cards_added">
     <item quantity="one">dodana 1 karta</item>

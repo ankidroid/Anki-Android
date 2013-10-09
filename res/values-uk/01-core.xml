@@ -80,7 +80,7 @@
   <string name="menu_unmark_card">Зняти позначку з картки</string>
   <string name="new_deck">Нова колода</string>
   <string name="create">Створити</string>
-  <string name="new_dynamic_deck">Нова динамічна колода</string>
+  <string name="new_dynamic_deck">Нова відфільтрована колода</string>
   <string name="studyoptions_feedback">Відгук</string>
   <string name="studyoptions_load_tutorial_deck">Створити підручник</string>
   <string name="night_mode">Нічний режим</string>
@@ -104,6 +104,17 @@
   <string name="empty_cloze_warning">Будь ласка, відредагуйте цю примітку та додайте пропуски.(%1$s)</string>
   <string name="help_cloze">допомога</string>
   <string name="button_sync">Синхронізувати</string>
+  <string name="restart">Перезапустити</string>
+  <string name="do_nothing">Нічого не робити</string>
+  <string name="more_options">Додаткові параметри</string>
+  <string name="now">Зараз</string>
+  <string name="back">Назад</string>
+  <string name="ankiweb">AnkiWeb</string>
+  <string name="usb">USB</string>
+  <string name="_import">Імпорт</string>
+  <string name="confirm">Підтвердити</string>
+  <string name="internet">Інтернет</string>
+  <string name="pc">ПК</string>
   <string-array name="next_review_s">
     <item>1 секунда</item>
     <item>1 хвилина</item>

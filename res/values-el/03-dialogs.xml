@@ -61,6 +61,39 @@
   <string name="custom_study_preview">Προεπισκόπηση νέων καρτών του προστέθηκαν στις τελευταίες x μέρες:</string>
   <string name="custom_study_tags">Εισάγετε ετικέτες:</string>
   <string name="rebuild_custom_study_deck">Ανασύσταση προσαρμοσμένης μελέτης.\nΠαρακαλούμε περιμένετε...</string>
+  <string name="deck_upgrade_title">Αναβάθμιση τράπουλας</string>
+  <string name="deck_upgrade_rename_warning">Be aware that this will export your current collection to a file called \'%1$s\' and will create a new one from your old anki 1.x files. If desired, you can manually re-import the above apkg file after completing the wizard. Do you really want to continue?</string>
+  <string name="deck_upgrade_already_upgraded">Version 2 of AnkiDroid uses a new format for decks.\nIf you did not successfully upgrade your decks, you can restart the upgrade now to upgrade your decks.</string>
+  <string name="deck_upgrade_major_warning"><![CDATA[This is a major update to Ankidroid and the upgrade process will take at least 10-20 minutes.<br><br>Do you want to proceed now or later?<br><br><a href="http://code.google.com/p/ankidroid/wiki/Upgrading?wl=en">More info</a>]]></string>
+  <string name="deck_upgrade_start_again_to_upgrade_toast">Παρακαλούμε ξεκινήστε το Ankidroid ξανά όταν έχετε χρόνο για την αναβάθμιση!</string>
+  <string name="deck_upgrade_recommended_method"><![CDATA[The recommended upgrade method is to sync with a PC and upgrade with the desktop version of Anki.<br><br>There is also an alternative method where you can upgrade over the internet if you do not have access to a PC, and your collection is not too big.]]></string>
+  <string name="deck_upgrade_more_options_exit">You can exit the upgrade wizard without importing your old cards by clicking the exit button below.</string>
+  <string name="deck_upgrade_more_options_new_collection">You can create a new empty collection by clicking below.</string>
+  <string name="deck_upgrade_more_options_downgrade"><![CDATA[<br><br>If you want to downgrade back to AnkiDroid 1 then please read <a href="http://code.google.com/p/ankidroid/wiki/Upgrading?wl=en#Continuing_to_use_AnkiDroid_1.1.3">these instructions</a>.]]></string>
+  <string name="deck_upgrade_create_new_collection">Δημιουργία νέας συλλογής</string>
+  <string name="deck_upgrade_create_new_collection_title">Δημιουργία Νέας Συλλογής</string>
+  <string name="deck_upgrade_not_import_warning">Είστε βέβαιοι ότι θέλετε να το κάνετε αυτό; Τα παλιά δεδομένα σας δεν θα εισαχθούν.</string>
+  <string name="deck_upgrade_via_web"><![CDATA[<b>This upgrade method is not recommended if you used media files, or have a big collection!</b><br><br>Your Anki1 decks will be zipped and uploaded to AnkiWeb, and the converted collection will then be downloaded.<br><br>Please note that a stable internet connection is required, and that there is a 50MB file limit.<br><br>Users of Anki Desktop are strongly encouraged to use the PC based upgrade method.<br><br>Do you still want to proceed?]]></string>
+  <string name="deck_upgrade_via_anki_desktop"><![CDATA[If you currently have an up-to-date version of your AnkiDroid collection in the Anki desktop software, you can upgrade from there and then download your upgraded collection by syncing with AnkiWeb.<br><br>Alternatively, you can copy your AnkiDroid collection to your PC using USB, then upgrade the collection and copy back to AnkiDroid.]]></string>
+  <string name="deck_upgrade_auto_upgrade"><![CDATA[Please install and start Anki Desktop version 2.0.4 or greater to upgrade your collection, then sync your upgraded collection with AnkiWeb and press the "Download" button.<br><br><a href="http://code.google.com/p/ankidroid/wiki/Upgrading?wl=en#Option_2:_Using_AnkiWeb_sync">More detailed information on upgrading using AnkiWeb</a>]]></string>
+  <string name="deck_upgrade_manual"><![CDATA[Please copy all of your *.anki files (and any *.media folders) from your AnkiDroid folder to your Anki Desktop folder, and then install and start Anki Desktop version 2.0.4 or greater to upgrade your collection.<br><br>When the upgrade is completed, please export your collection from Anki2 and copy the collection.apkg file to your AnkiDroid folder and press the Import button below.<br><br><a href="http://code.google.com/p/ankidroid/wiki/Upgrading?wl=en#Option_1:_Using_USB_(recommended)">More detailed information on upgrading using USB.</a>]]></string>
+  <string name="upgrade_deck_cancelled_title">Upgrade Cancelled</string>
+  <string name="upgrade_deck_cancelled_description">The upgrade attempt was cancelled, please try again one of the available upgrade methods.</string>
+  <string name="upgrade_deck_web_upgrade_failed">The upgrade process was unsuccessful. Please try again, or choose a different upgrade method</string>
+  <string name="upgrade_deck_web_upgrade_exceeds">The total compressed size of your Anki1 decks exceeds the limit that the server can process (50 mb), please try upgrading with a different method.</string>
+  <string name="upgrade_deck_web_upgrade_sdcard">The upgrade was completed, but there was an error while unpacking the resulting collection, please ensure that you have enough available disk (needed %1$d mb) and try again, or try upgrading with a different method.</string>
+  <string name="export_progress_title">Collection Export</string>
+  <string name="export_progress_exporting">Exporting collection, please wait…</string>
+  <string name="upgrade_deck_export_successful">Your old collection has been successfully exported, proceeding with the upgrade process.</string>
+  <string name="upgrade_deck_export_error">Error during the export of your old collection. Would you like to continue with the upgrade process anyway (your old collection will be lost)?</string>
+  <string name="upgrade_deck_sync_from_ankiweb">Sync from AnkiWeb</string>
+  <string name="upgrade_deck_have_you_synced">Are you sure you have upgraded your collection with Anki Desktop 2 and synced with AnkiWeb?</string>
+  <string name="upgrade_deck_dont_upgrade">Don\'t Upgrade</string>
+  <string name="import_unpacking">Unpacking archive.\nPlease wait…</string>
+  <string name="importing_collection">Importing collection.\nPlease wait…</string>
+  <string name="import_media_count">Importing media files %1$d%%\nPlease wait…</string>
+  <string name="import_update_counts">Updating deck counts.\nPlease wait…</string>
+  <string name="import_add_progress">• Unpacking archive %1$s\n• Import of notes %2$d%%\n• Import of cards %3$d%%\n• Cleanup %4$s</string>
   <string-array name="about_content">
     <item><![CDATA[<h2>%1$s:<br/>Κάρτες για το Android</h2>Το AnkiDroid είναι μία εφαρμογή καρτών που είναι πλήρως συμβατή με το λογισμικό <a href="%2$s">Anki</a>. Μπορείτε να δημιουργήσετε, να κατεβάσετε και να μάθετε κάρτες και στα δύο, AnkiDroid ή Anki και να συγχρονίζετε μεταξύ τους πολύ εύκολα.]]></item>
     <item><![CDATA[Για να μας βοηθήσετε να βελτιώσουμε το AnkiDroid, παρακαλούμε αναφέρετε τυχών σφάλματα <a href="%1$s">εδώ</a>. Ιδέες για νέα χαρακτηριστικά είναι ευπρόσδεκτες επίσης! Παρακαλούμε χρησιμοποιείστε το <a href="%2$s">wiki</a> και πείτε μας ένα Γεια στο <a href="%3$s">φόρουμ</a>.]]></item>
